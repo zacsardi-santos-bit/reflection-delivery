@@ -1,0 +1,272 @@
+patching file api/types/project_test.go
+patching file api/types/updatable_project_fields_test.go
+patching file pkg/webhook/client_test.go
+patching file server/backend/config_test.go
+patching file server/backend/database/mongo/client_test.go
+patching file server/backend/database/project_info_test.go
+patching file server/config_test.go
+patching file server/packs/pushpull_test.go
+patching file server/rpc/server_test.go
+patching file test/bench/grpc_bench_test.go
+patching file test/bench/webhook_bench_test.go
+patching file test/complex/main_test.go
+patching file test/helper/helper.go
+patching file test/integration/auth_webhook_test.go
+patching file test/integration/housekeeping_test.go
+{"Time":"2026-06-29T15:18:29.71053603Z","Action":"start","Package":"github.com/yorkie-team/yorkie/api/types"}
+{"Time":"2026-06-29T15:18:29.726466015Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestChangeSummary"}
+{"Time":"2026-06-29T15:18:29.726498682Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestChangeSummary","Output":"=== RUN   TestChangeSummary\n"}
+{"Time":"2026-06-29T15:18:29.726542207Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestChangeSummary/get_changes_range_test"}
+{"Time":"2026-06-29T15:18:29.726557359Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestChangeSummary/get_changes_range_test","Output":"=== RUN   TestChangeSummary/get_changes_range_test\n"}
+{"Time":"2026-06-29T15:18:29.726736559Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestChangeSummary/get_changes_range_test","Output":"--- PASS: TestChangeSummary/get_changes_range_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.726805634Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestChangeSummary/get_changes_range_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.726829929Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestChangeSummary","Output":"--- PASS: TestChangeSummary (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.726851667Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestChangeSummary","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.726864636Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo"}
+{"Time":"2026-06-29T15:18:29.726872702Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo","Output":"=== RUN   TestProjectInfo\n"}
+{"Time":"2026-06-29T15:18:29.726897887Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/require_auth_test"}
+{"Time":"2026-06-29T15:18:29.726909711Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/require_auth_test","Output":"=== RUN   TestProjectInfo/require_auth_test\n"}
+{"Time":"2026-06-29T15:18:29.726931061Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/require_auth_test","Output":"--- PASS: TestProjectInfo/require_auth_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.72695589Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/require_auth_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727066639Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/require_event_webhook_test"}
+{"Time":"2026-06-29T15:18:29.727086939Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/require_event_webhook_test","Output":"=== RUN   TestProjectInfo/require_event_webhook_test\n"}
+{"Time":"2026-06-29T15:18:29.727112439Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/require_event_webhook_test","Output":"--- PASS: TestProjectInfo/require_event_webhook_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727127447Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/require_event_webhook_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727138535Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/HasSubscriberLimit_test"}
+{"Time":"2026-06-29T15:18:29.727160062Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/HasSubscriberLimit_test","Output":"=== RUN   TestProjectInfo/HasSubscriberLimit_test\n"}
+{"Time":"2026-06-29T15:18:29.727169948Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/HasSubscriberLimit_test","Output":"--- PASS: TestProjectInfo/HasSubscriberLimit_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.72718459Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/HasSubscriberLimit_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.72720079Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/HasAttachmentLimit_test"}
+{"Time":"2026-06-29T15:18:29.727210698Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/HasAttachmentLimit_test","Output":"=== RUN   TestProjectInfo/HasAttachmentLimit_test\n"}
+{"Time":"2026-06-29T15:18:29.727227979Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/HasAttachmentLimit_test","Output":"--- PASS: TestProjectInfo/HasAttachmentLimit_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727239524Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/HasAttachmentLimit_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727254614Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/IsAttachmentLimitExceeded_test"}
+{"Time":"2026-06-29T15:18:29.727287102Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/IsAttachmentLimitExceeded_test","Output":"=== RUN   TestProjectInfo/IsAttachmentLimitExceeded_test\n"}
+{"Time":"2026-06-29T15:18:29.727298361Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/IsAttachmentLimitExceeded_test","Output":"--- PASS: TestProjectInfo/IsAttachmentLimitExceeded_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727314525Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/IsAttachmentLimitExceeded_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727323681Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/parse_test"}
+{"Time":"2026-06-29T15:18:29.727334702Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/parse_test","Output":"=== RUN   TestProjectInfo/parse_test\n"}
+{"Time":"2026-06-29T15:18:29.72735785Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/parse_test","Output":"--- PASS: TestProjectInfo/parse_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727370065Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo/parse_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727404593Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo","Output":"--- PASS: TestProjectInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727425652Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestProjectInfo","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727434877Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields"}
+{"Time":"2026-06-29T15:18:29.727442104Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields","Output":"=== RUN   TestUpdatableProjectFields\n"}
+{"Time":"2026-06-29T15:18:29.72750056Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/validation_test"}
+{"Time":"2026-06-29T15:18:29.727534321Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/validation_test","Output":"=== RUN   TestUpdatableProjectFields/validation_test\n"}
+{"Time":"2026-06-29T15:18:29.727581479Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/validation_test","Output":"--- PASS: TestUpdatableProjectFields/validation_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.72760177Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/validation_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727635069Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/project_name_format_test"}
+{"Time":"2026-06-29T15:18:29.727643692Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/project_name_format_test","Output":"=== RUN   TestUpdatableProjectFields/project_name_format_test\n"}
+{"Time":"2026-06-29T15:18:29.727692317Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/project_name_format_test","Output":"--- PASS: TestUpdatableProjectFields/project_name_format_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.72771432Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/project_name_format_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727724692Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/max_subscribers_per_document_test"}
+{"Time":"2026-06-29T15:18:29.727732433Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/max_subscribers_per_document_test","Output":"=== RUN   TestUpdatableProjectFields/max_subscribers_per_document_test\n"}
+{"Time":"2026-06-29T15:18:29.72774644Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/max_subscribers_per_document_test","Output":"--- PASS: TestUpdatableProjectFields/max_subscribers_per_document_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727757105Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/max_subscribers_per_document_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727774167Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/max_attachments_per_document_test"}
+{"Time":"2026-06-29T15:18:29.727784435Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/max_attachments_per_document_test","Output":"=== RUN   TestUpdatableProjectFields/max_attachments_per_document_test\n"}
+{"Time":"2026-06-29T15:18:29.727803445Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/max_attachments_per_document_test","Output":"--- PASS: TestUpdatableProjectFields/max_attachments_per_document_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727814983Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/max_attachments_per_document_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.72782256Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/remove_on_detach_test"}
+{"Time":"2026-06-29T15:18:29.727832609Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/remove_on_detach_test","Output":"=== RUN   TestUpdatableProjectFields/remove_on_detach_test\n"}
+{"Time":"2026-06-29T15:18:29.727843082Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/remove_on_detach_test","Output":"--- PASS: TestUpdatableProjectFields/remove_on_detach_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727860955Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields/remove_on_detach_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727872134Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields","Output":"--- PASS: TestUpdatableProjectFields (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727883007Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestUpdatableProjectFields","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727892396Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestSignupFields"}
+{"Time":"2026-06-29T15:18:29.727905184Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestSignupFields","Output":"=== RUN   TestSignupFields\n"}
+{"Time":"2026-06-29T15:18:29.72792342Z","Action":"run","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestSignupFields/password_validation_test"}
+{"Time":"2026-06-29T15:18:29.727940683Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestSignupFields/password_validation_test","Output":"=== RUN   TestSignupFields/password_validation_test\n"}
+{"Time":"2026-06-29T15:18:29.727956616Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestSignupFields/password_validation_test","Output":"--- PASS: TestSignupFields/password_validation_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727965047Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestSignupFields/password_validation_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.727975426Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestSignupFields","Output":"--- PASS: TestSignupFields (0.00s)\n"}
+{"Time":"2026-06-29T15:18:29.727991632Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Test":"TestSignupFields","Elapsed":0}
+{"Time":"2026-06-29T15:18:29.728002907Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:29.728674594Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/types","Output":"ok  \tgithub.com/yorkie-team/yorkie/api/types\t0.018s\n"}
+{"Time":"2026-06-29T15:18:29.728766868Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/api/types","Elapsed":0.018}
+{"Time":"2026-06-29T15:18:34.98859372Z","Action":"start","Package":"github.com/yorkie-team/yorkie/pkg/webhook"}
+{"Time":"2026-06-29T15:18:34.988696047Z","Action":"start","Package":"github.com/yorkie-team/yorkie/server"}
+{"Time":"2026-06-29T15:18:34.988759739Z","Action":"start","Package":"github.com/yorkie-team/yorkie/server/backend"}
+{"Time":"2026-06-29T15:18:34.988821425Z","Action":"start","Package":"github.com/yorkie-team/yorkie/server/backend/database"}
+{"Time":"2026-06-29T15:18:35.01001342Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestChangeInfo"}
+{"Time":"2026-06-29T15:18:35.01012966Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestChangeInfo","Output":"=== RUN   TestChangeInfo\n"}
+{"Time":"2026-06-29T15:18:35.010175431Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestChangeInfo/comparing_actorID_equals_after_calling_ToChange_test"}
+{"Time":"2026-06-29T15:18:35.010211034Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestChangeInfo/comparing_actorID_equals_after_calling_ToChange_test","Output":"=== RUN   TestChangeInfo/comparing_actorID_equals_after_calling_ToChange_test\n"}
+{"Time":"2026-06-29T15:18:35.010451924Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestChangeInfo/comparing_actorID_equals_after_calling_ToChange_test","Output":"--- PASS: TestChangeInfo/comparing_actorID_equals_after_calling_ToChange_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.010557703Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestChangeInfo/comparing_actorID_equals_after_calling_ToChange_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.010637447Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestChangeInfo","Output":"--- PASS: TestChangeInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.010706562Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestChangeInfo","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.010726855Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo"}
+{"Time":"2026-06-29T15:18:35.010754887Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo","Output":"=== RUN   TestClientInfo\n"}
+{"Time":"2026-06-29T15:18:35.010833976Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/attach/detach_document_test"}
+{"Time":"2026-06-29T15:18:35.01093472Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/attach/detach_document_test","Output":"=== RUN   TestClientInfo/attach/detach_document_test\n"}
+{"Time":"2026-06-29T15:18:35.011054382Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/attach/detach_document_test","Output":"--- PASS: TestClientInfo/attach/detach_document_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.011095122Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/attach/detach_document_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.011128219Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/check_if_in_project_test"}
+{"Time":"2026-06-29T15:18:35.011147048Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/check_if_in_project_test","Output":"=== RUN   TestClientInfo/check_if_in_project_test\n"}
+{"Time":"2026-06-29T15:18:35.011173512Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/check_if_in_project_test","Output":"--- PASS: TestClientInfo/check_if_in_project_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.011218831Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/check_if_in_project_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.011251479Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/check_if_in_project_error_test"}
+{"Time":"2026-06-29T15:18:35.011296814Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/check_if_in_project_error_test","Output":"=== RUN   TestClientInfo/check_if_in_project_error_test\n"}
+{"Time":"2026-06-29T15:18:35.011377468Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/check_if_in_project_error_test","Output":"--- PASS: TestClientInfo/check_if_in_project_error_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.011417199Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/check_if_in_project_error_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.01147252Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/client_deactivate_test"}
+{"Time":"2026-06-29T15:18:35.011510323Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/client_deactivate_test","Output":"=== RUN   TestClientInfo/client_deactivate_test\n"}
+{"Time":"2026-06-29T15:18:35.011550104Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/client_deactivate_test","Output":"--- PASS: TestClientInfo/client_deactivate_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.01156211Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/client_deactivate_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.011580731Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/client_not_activate_error_test"}
+{"Time":"2026-06-29T15:18:35.011597755Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/client_not_activate_error_test","Output":"=== RUN   TestClientInfo/client_not_activate_error_test\n"}
+{"Time":"2026-06-29T15:18:35.011614678Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/client_not_activate_error_test","Output":"--- PASS: TestClientInfo/client_not_activate_error_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.011630201Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/client_not_activate_error_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.011657008Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_not_attached_error_test"}
+{"Time":"2026-06-29T15:18:35.011665628Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_not_attached_error_test","Output":"=== RUN   TestClientInfo/document_not_attached_error_test\n"}
+{"Time":"2026-06-29T15:18:35.011683868Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_not_attached_error_test","Output":"--- PASS: TestClientInfo/document_not_attached_error_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.01169265Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_not_attached_error_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.011700158Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_never_attached_error_test"}
+{"Time":"2026-06-29T15:18:35.011707194Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_never_attached_error_test","Output":"=== RUN   TestClientInfo/document_never_attached_error_test\n"}
+{"Time":"2026-06-29T15:18:35.011722031Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_never_attached_error_test","Output":"--- PASS: TestClientInfo/document_never_attached_error_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.011731283Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_never_attached_error_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.011743373Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_already_attached_error_test"}
+{"Time":"2026-06-29T15:18:35.011760807Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_already_attached_error_test","Output":"=== RUN   TestClientInfo/document_already_attached_error_test\n"}
+{"Time":"2026-06-29T15:18:35.011780066Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_already_attached_error_test","Output":"--- PASS: TestClientInfo/document_already_attached_error_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.011789762Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_already_attached_error_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.011799283Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_detached_when_client_deactivate_test"}
+{"Time":"2026-06-29T15:18:35.011822235Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_detached_when_client_deactivate_test","Output":"=== RUN   TestClientInfo/document_detached_when_client_deactivate_test\n"}
+{"Time":"2026-06-29T15:18:35.011837448Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_detached_when_client_deactivate_test","Output":"--- PASS: TestClientInfo/document_detached_when_client_deactivate_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.011857999Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo/document_detached_when_client_deactivate_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.011868582Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo","Output":"--- PASS: TestClientInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.011890837Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestClientInfo","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.011952694Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID"}
+{"Time":"2026-06-29T15:18:35.011977712Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID","Output":"=== RUN   TestID\n"}
+{"Time":"2026-06-29T15:18:35.012010088Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID/get_ID_from_hex_test"}
+{"Time":"2026-06-29T15:18:35.012018338Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID/get_ID_from_hex_test","Output":"=== RUN   TestID/get_ID_from_hex_test\n"}
+{"Time":"2026-06-29T15:18:35.012027938Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID/get_ID_from_hex_test","Output":"--- PASS: TestID/get_ID_from_hex_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.012037951Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID/get_ID_from_hex_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.01204757Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID/get_ID_from_bytes_test"}
+{"Time":"2026-06-29T15:18:35.012057397Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID/get_ID_from_bytes_test","Output":"=== RUN   TestID/get_ID_from_bytes_test\n"}
+{"Time":"2026-06-29T15:18:35.012070117Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID/get_ID_from_bytes_test","Output":"--- PASS: TestID/get_ID_from_bytes_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.012085917Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID/get_ID_from_bytes_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.012094014Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID","Output":"--- PASS: TestID (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.012107454Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestID","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.012118275Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo"}
+{"Time":"2026-06-29T15:18:35.012129997Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo","Output":"=== RUN   TestLeadershipInfo\n"}
+{"Time":"2026-06-29T15:18:35.01214521Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/IsExpired_should_return_false_for_future_expiry"}
+{"Time":"2026-06-29T15:18:35.012155615Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/IsExpired_should_return_false_for_future_expiry","Output":"=== RUN   TestLeadershipInfo/IsExpired_should_return_false_for_future_expiry\n"}
+{"Time":"2026-06-29T15:18:35.012171696Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/IsExpired_should_return_false_for_future_expiry","Output":"--- PASS: TestLeadershipInfo/IsExpired_should_return_false_for_future_expiry (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.012181301Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/IsExpired_should_return_false_for_future_expiry","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.012192119Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/IsExpired_should_return_true_for_past_expiry"}
+{"Time":"2026-06-29T15:18:35.012200941Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/IsExpired_should_return_true_for_past_expiry","Output":"=== RUN   TestLeadershipInfo/IsExpired_should_return_true_for_past_expiry\n"}
+{"Time":"2026-06-29T15:18:35.012210264Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/IsExpired_should_return_true_for_past_expiry","Output":"--- PASS: TestLeadershipInfo/IsExpired_should_return_true_for_past_expiry (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.012223469Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/IsExpired_should_return_true_for_past_expiry","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.012236504Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/TimeUntilExpiry_should_return_correct_duration"}
+{"Time":"2026-06-29T15:18:35.012249188Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/TimeUntilExpiry_should_return_correct_duration","Output":"=== RUN   TestLeadershipInfo/TimeUntilExpiry_should_return_correct_duration\n"}
+{"Time":"2026-06-29T15:18:35.01226424Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/TimeUntilExpiry_should_return_correct_duration","Output":"--- PASS: TestLeadershipInfo/TimeUntilExpiry_should_return_correct_duration (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.01227333Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo/TimeUntilExpiry_should_return_correct_duration","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.012295148Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo","Output":"--- PASS: TestLeadershipInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.012302789Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestLeadershipInfo","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.01231192Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestProjectInfo"}
+{"Time":"2026-06-29T15:18:35.012329928Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestProjectInfo","Output":"=== RUN   TestProjectInfo\n"}
+{"Time":"2026-06-29T15:18:35.012344674Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestProjectInfo/update_fields_test"}
+{"Time":"2026-06-29T15:18:35.012353799Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestProjectInfo/update_fields_test","Output":"=== RUN   TestProjectInfo/update_fields_test\n"}
+{"Time":"2026-06-29T15:18:35.01239359Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestProjectInfo/update_fields_test","Output":"--- PASS: TestProjectInfo/update_fields_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.01242459Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestProjectInfo/update_fields_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.012438598Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestProjectInfo","Output":"--- PASS: TestProjectInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.012459336Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Test":"TestProjectInfo","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.012559893Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:35.013110396Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend/database","Output":"ok  \tgithub.com/yorkie-team/yorkie/server/backend/database\t0.024s\n"}
+{"Time":"2026-06-29T15:18:35.013141294Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend/database","Elapsed":0.024}
+{"Time":"2026-06-29T15:18:35.021192679Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig"}
+{"Time":"2026-06-29T15:18:35.021215665Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig","Output":"=== RUN   TestConfig\n"}
+{"Time":"2026-06-29T15:18:35.021315966Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig/validate_test"}
+{"Time":"2026-06-29T15:18:35.021342309Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig/validate_test","Output":"=== RUN   TestConfig/validate_test\n"}
+{"Time":"2026-06-29T15:18:35.021389397Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig/validate_test","Output":"--- PASS: TestConfig/validate_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.021430198Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig/validate_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.021523591Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig/parse_test"}
+{"Time":"2026-06-29T15:18:35.02154689Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig/parse_test","Output":"=== RUN   TestConfig/parse_test\n"}
+{"Time":"2026-06-29T15:18:35.021699848Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile"}
+{"Time":"2026-06-29T15:18:35.021739021Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile","Output":"=== RUN   TestNewConfigFromFile\n"}
+{"Time":"2026-06-29T15:18:35.021808857Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/fail_read_config_file_test"}
+{"Time":"2026-06-29T15:18:35.02184828Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/fail_read_config_file_test","Output":"=== RUN   TestNewConfigFromFile/fail_read_config_file_test\n"}
+{"Time":"2026-06-29T15:18:35.021912467Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig/parse_test","Output":"--- PASS: TestConfig/parse_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.021923653Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig/parse_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.021934782Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig","Output":"--- PASS: TestConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.021942297Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend","Test":"TestConfig","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.021951733Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:35.021979983Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/fail_read_config_file_test","Output":"--- PASS: TestNewConfigFromFile/fail_read_config_file_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.021994461Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/fail_read_config_file_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.022003306Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/read_empty_config_file_test"}
+{"Time":"2026-06-29T15:18:35.022013906Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/read_empty_config_file_test","Output":"=== RUN   TestNewConfigFromFile/read_empty_config_file_test\n"}
+{"Time":"2026-06-29T15:18:35.022356454Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/read_empty_config_file_test","Output":"--- PASS: TestNewConfigFromFile/read_empty_config_file_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.022386385Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/read_empty_config_file_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.022441359Z","Action":"run","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/read_default_config_file_test"}
+{"Time":"2026-06-29T15:18:35.02246029Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/read_default_config_file_test","Output":"=== RUN   TestNewConfigFromFile/read_default_config_file_test\n"}
+{"Time":"2026-06-29T15:18:35.022601685Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server/backend","Output":"ok  \tgithub.com/yorkie-team/yorkie/server/backend\t0.034s\n"}
+{"Time":"2026-06-29T15:18:35.022643956Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server/backend","Elapsed":0.034}
+{"Time":"2026-06-29T15:18:35.027330701Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/read_default_config_file_test","Output":"--- PASS: TestNewConfigFromFile/read_default_config_file_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.027602459Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile/read_default_config_file_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.027627958Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile","Output":"--- PASS: TestNewConfigFromFile (0.01s)\n"}
+{"Time":"2026-06-29T15:18:35.027639612Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server","Test":"TestNewConfigFromFile","Elapsed":0.01}
+{"Time":"2026-06-29T15:18:35.02765793Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:35.028318215Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC"}
+{"Time":"2026-06-29T15:18:35.028338166Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC","Output":"=== RUN   TestHMAC\n"}
+{"Time":"2026-06-29T15:18:35.028949486Z","Action":"output","Package":"github.com/yorkie-team/yorkie/server","Output":"ok  \tgithub.com/yorkie-team/yorkie/server\t0.040s\n"}
+{"Time":"2026-06-29T15:18:35.028977267Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/server","Elapsed":0.04}
+{"Time":"2026-06-29T15:18:35.029793093Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/valid_HMAC_key_test"}
+{"Time":"2026-06-29T15:18:35.036557902Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/valid_HMAC_key_test","Output":"=== RUN   TestHMAC/valid_HMAC_key_test\n"}
+{"Time":"2026-06-29T15:18:35.038419864Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/valid_HMAC_key_test","Output":"--- PASS: TestHMAC/valid_HMAC_key_test (0.01s)\n"}
+{"Time":"2026-06-29T15:18:35.038447651Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/valid_HMAC_key_test","Elapsed":0.01}
+{"Time":"2026-06-29T15:18:35.038462525Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/invalid_HMAC_key_test"}
+{"Time":"2026-06-29T15:18:35.038471387Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/invalid_HMAC_key_test","Output":"=== RUN   TestHMAC/invalid_HMAC_key_test\n"}
+{"Time":"2026-06-29T15:18:35.038775319Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/invalid_HMAC_key_test","Output":"--- PASS: TestHMAC/invalid_HMAC_key_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.038796058Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/invalid_HMAC_key_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.038813067Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/missing_HMAC_key_test"}
+{"Time":"2026-06-29T15:18:35.038827644Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/missing_HMAC_key_test","Output":"=== RUN   TestHMAC/missing_HMAC_key_test\n"}
+{"Time":"2026-06-29T15:18:35.038978117Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/missing_HMAC_key_test","Output":"--- PASS: TestHMAC/missing_HMAC_key_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.039002128Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/missing_HMAC_key_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.039026537Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/empty_body_test"}
+{"Time":"2026-06-29T15:18:35.0390361Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/empty_body_test","Output":"=== RUN   TestHMAC/empty_body_test\n"}
+{"Time":"2026-06-29T15:18:35.039275982Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/empty_body_test","Output":"--- PASS: TestHMAC/empty_body_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.039300928Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC/empty_body_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.039503719Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC","Output":"--- PASS: TestHMAC (0.01s)\n"}
+{"Time":"2026-06-29T15:18:35.03952508Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestHMAC","Elapsed":0.01}
+{"Time":"2026-06-29T15:18:35.039539313Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff"}
+{"Time":"2026-06-29T15:18:35.03954627Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff","Output":"=== RUN   TestBackoff\n"}
+{"Time":"2026-06-29T15:18:35.039663263Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff/retry_fail_test"}
+{"Time":"2026-06-29T15:18:35.03967883Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff/retry_fail_test","Output":"=== RUN   TestBackoff/retry_fail_test\n"}
+{"Time":"2026-06-29T15:18:35.048674487Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff/retry_fail_test","Output":"--- PASS: TestBackoff/retry_fail_test (0.01s)\n"}
+{"Time":"2026-06-29T15:18:35.048703518Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff/retry_fail_test","Elapsed":0.01}
+{"Time":"2026-06-29T15:18:35.048721189Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff/retry_succeed_timeout"}
+{"Time":"2026-06-29T15:18:35.048729137Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff/retry_succeed_timeout","Output":"=== RUN   TestBackoff/retry_succeed_timeout\n"}
+{"Time":"2026-06-29T15:18:35.048925345Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff/retry_succeed_timeout","Output":"--- PASS: TestBackoff/retry_succeed_timeout (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.048953218Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff/retry_succeed_timeout","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.049084777Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff","Output":"--- PASS: TestBackoff (0.01s)\n"}
+{"Time":"2026-06-29T15:18:35.049103242Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestBackoff","Elapsed":0.01}
+{"Time":"2026-06-29T15:18:35.049118362Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout"}
+{"Time":"2026-06-29T15:18:35.049131438Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout","Output":"=== RUN   TestRequestTimeout\n"}
+{"Time":"2026-06-29T15:18:35.049174665Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout/request_succeed_after_timeout"}
+{"Time":"2026-06-29T15:18:35.049196202Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout/request_succeed_after_timeout","Output":"=== RUN   TestRequestTimeout/request_succeed_after_timeout\n"}
+{"Time":"2026-06-29T15:18:35.060515968Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout/request_succeed_after_timeout","Output":"--- PASS: TestRequestTimeout/request_succeed_after_timeout (0.01s)\n"}
+{"Time":"2026-06-29T15:18:35.060547982Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout/request_succeed_after_timeout","Elapsed":0.01}
+{"Time":"2026-06-29T15:18:35.060563134Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout/request_fails_with_timeout_test"}
+{"Time":"2026-06-29T15:18:35.060578745Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout/request_fails_with_timeout_test","Output":"=== RUN   TestRequestTimeout/request_fails_with_timeout_test\n"}
+{"Time":"2026-06-29T15:18:35.066041882Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout/request_fails_with_timeout_test","Output":"--- PASS: TestRequestTimeout/request_fails_with_timeout_test (0.01s)\n"}
+{"Time":"2026-06-29T15:18:35.066064413Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout/request_fails_with_timeout_test","Elapsed":0.01}
+{"Time":"2026-06-29T15:18:35.071489288Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout","Output":"--- PASS: TestRequestTimeout (0.02s)\n"}
+{"Time":"2026-06-29T15:18:35.071518599Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestRequestTimeout","Elapsed":0.02}
+{"Time":"2026-06-29T15:18:35.071534501Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling"}
+{"Time":"2026-06-29T15:18:35.07154194Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling","Output":"=== RUN   TestErrorHandling\n"}
+{"Time":"2026-06-29T15:18:35.071617531Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling/request_fails_with_context_done_test"}
+{"Time":"2026-06-29T15:18:35.071629594Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling/request_fails_with_context_done_test","Output":"=== RUN   TestErrorHandling/request_fails_with_context_done_test\n"}
+{"Time":"2026-06-29T15:18:35.072148137Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling/request_fails_with_context_done_test","Output":"--- PASS: TestErrorHandling/request_fails_with_context_done_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.072169703Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling/request_fails_with_context_done_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.072196969Z","Action":"run","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling/request_fails_with_unreachable_url_test"}
+{"Time":"2026-06-29T15:18:35.072205708Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling/request_fails_with_unreachable_url_test","Output":"=== RUN   TestErrorHandling/request_fails_with_unreachable_url_test\n"}
+{"Time":"2026-06-29T15:18:35.072222757Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling/request_fails_with_unreachable_url_test","Output":"--- PASS: TestErrorHandling/request_fails_with_unreachable_url_test (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.072237554Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling/request_fails_with_unreachable_url_test","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.072346209Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling","Output":"--- PASS: TestErrorHandling (0.00s)\n"}
+{"Time":"2026-06-29T15:18:35.072355312Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Test":"TestErrorHandling","Elapsed":0}
+{"Time":"2026-06-29T15:18:35.072409371Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:35.073243535Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Output":"ok  \tgithub.com/yorkie-team/yorkie/pkg/webhook\t0.085s\n"}
+{"Time":"2026-06-29T15:18:35.073281798Z","Action":"pass","Package":"github.com/yorkie-team/yorkie/pkg/webhook","Elapsed":0.085}
+reward=1 graded=59 found=59 failed=0 parsed=59 framework=go exit_code=0

@@ -1,0 +1,23 @@
+{
+ "task": "prowler-cloud-prowler-5973",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds findings services/regions endpoint in api views.py + serializers.py + v1.yaml; F2P=4 HTTP-level tests with real postgres"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 23,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "braintree-braintree_android-1137",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits ThreeDSecureClient.kt/CardinalClient.kt/ThreeDSecureParams.kt; F2P adds 'when continueLookup is called with a null challengeObserver, throws BraintreeException' and 'tokenize_null_jwt_returns_error' (55 F2P JUnit tests parsed from TEST-*.xml)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 28,
+  "shallow": true
+ }
+}

@@ -1,0 +1,19 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p arrow_sql_gen --features postgres",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/9) arrow_sql_gen statement::tests::test_create_unique_index",
+    "(2/9) arrow_sql_gen statement::tests::test_table_creation_with_primary_keys",
+    "(3/9) arrow_sql_gen statement::create_table_postgres_tests::test_build_postgres_returns_vec",
+    "(4/9) arrow_sql_gen postgres::tests::test_big_decimal_from_sql",
+    "(5/9) arrow_sql_gen postgres::builder::tests::test_type_builder",
+    "(6/9) arrow_sql_gen statement::tests::test_table_insertion",
+    "(7/9) arrow_sql_gen statement::tests::test_basic_table_creation",
+    "(8/9) arrow_sql_gen statement::tests::test_table_insertion_with_list",
+    "(9/9) arrow_sql_gen statement::tests::test_create_index"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,4 @@
+patching file ci/release/changelogs/next.md
+patching file d2ir/d2ir.go
+patching file testdata/d2compiler/TestCompile2/nulls/basic/basic-edge.exp.json
+patching file testdata/d2compiler/TestCompile2/nulls/basic/nested-edge.exp.json

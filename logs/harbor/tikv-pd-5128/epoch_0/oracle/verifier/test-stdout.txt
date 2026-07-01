@@ -1,0 +1,18 @@
+patching file server/gc/safepoint_test.go
+{"Time":"2026-06-29T15:27:41.635535759Z","Action":"start","Package":"github.com/tikv/pd/server/gc"}
+{"Time":"2026-06-29T15:27:41.655108596Z","Action":"run","Package":"github.com/tikv/pd/server/gc","Test":"TestGCSafePointUpdateSequentially"}
+{"Time":"2026-06-29T15:27:41.655158856Z","Action":"output","Package":"github.com/tikv/pd/server/gc","Test":"TestGCSafePointUpdateSequentially","Output":"=== RUN   TestGCSafePointUpdateSequentially\n"}
+{"Time":"2026-06-29T15:27:41.655394448Z","Action":"output","Package":"github.com/tikv/pd/server/gc","Test":"TestGCSafePointUpdateSequentially","Output":"--- PASS: TestGCSafePointUpdateSequentially (0.00s)\n"}
+{"Time":"2026-06-29T15:27:41.655453531Z","Action":"pass","Package":"github.com/tikv/pd/server/gc","Test":"TestGCSafePointUpdateSequentially","Elapsed":0}
+{"Time":"2026-06-29T15:27:41.65547494Z","Action":"run","Package":"github.com/tikv/pd/server/gc","Test":"TestGCSafePointUpdateCurrently"}
+{"Time":"2026-06-29T15:27:41.655496405Z","Action":"output","Package":"github.com/tikv/pd/server/gc","Test":"TestGCSafePointUpdateCurrently","Output":"=== RUN   TestGCSafePointUpdateCurrently\n"}
+{"Time":"2026-06-29T15:27:41.659864908Z","Action":"output","Package":"github.com/tikv/pd/server/gc","Test":"TestGCSafePointUpdateCurrently","Output":"--- PASS: TestGCSafePointUpdateCurrently (0.00s)\n"}
+{"Time":"2026-06-29T15:27:41.659900081Z","Action":"pass","Package":"github.com/tikv/pd/server/gc","Test":"TestGCSafePointUpdateCurrently","Elapsed":0}
+{"Time":"2026-06-29T15:27:41.659918813Z","Action":"run","Package":"github.com/tikv/pd/server/gc","Test":"TestServiceGCSafePointUpdate"}
+{"Time":"2026-06-29T15:27:41.659943404Z","Action":"output","Package":"github.com/tikv/pd/server/gc","Test":"TestServiceGCSafePointUpdate","Output":"=== RUN   TestServiceGCSafePointUpdate\n"}
+{"Time":"2026-06-29T15:27:41.660457726Z","Action":"output","Package":"github.com/tikv/pd/server/gc","Test":"TestServiceGCSafePointUpdate","Output":"--- PASS: TestServiceGCSafePointUpdate (0.00s)\n"}
+{"Time":"2026-06-29T15:27:41.660483985Z","Action":"pass","Package":"github.com/tikv/pd/server/gc","Test":"TestServiceGCSafePointUpdate","Elapsed":0}
+{"Time":"2026-06-29T15:27:41.660508641Z","Action":"output","Package":"github.com/tikv/pd/server/gc","Output":"PASS\n"}
+{"Time":"2026-06-29T15:27:41.661477407Z","Action":"output","Package":"github.com/tikv/pd/server/gc","Output":"ok  \tgithub.com/tikv/pd/server/gc\t0.026s\n"}
+{"Time":"2026-06-29T15:27:41.66150944Z","Action":"pass","Package":"github.com/tikv/pd/server/gc","Elapsed":0.026}
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=go exit_code=0

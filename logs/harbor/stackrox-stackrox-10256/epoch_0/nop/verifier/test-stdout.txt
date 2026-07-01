@@ -1,0 +1,44 @@
+patching file operator/pkg/central/extensions/common_test.go
+patching file operator/pkg/central/extensions/reconcile_admin_password_test.go
+patching file operator/pkg/central/extensions/reconcile_central_db_password_test.go
+patching file operator/pkg/central/extensions/reconcile_scanner_db_password_test.go
+patching file operator/pkg/central/extensions/reconcile_scanner_v4_db_password_test.go
+patching file operator/pkg/central/extensions/reconcile_tls_test.go
+patching file operator/pkg/common/extensions/secret_reconciliator_test.go
+patching symbolic link operator/tests/central/central-basic/900-assert.yaml
+patching file operator/tests/central/central-basic/910-assert.yaml
+patching file operator/tests/central/central-basic/910-recreate.yaml
+patching symbolic link operator/tests/central/central-basic/920-assert-deleted.yaml
+patching symbolic link operator/tests/central/central-basic/920-assert.yaml
+patching symbolic link operator/tests/central/central-basic/920-delete-cr.yaml
+patching file operator/tests/common/central-cr-post-deletion-assert.yaml
+patching file operator/tests/common/delete-central-errors.yaml
+# github.com/stackrox/rox/operator/pkg/common/extensions [github.com/stackrox/rox/operator/pkg/common/extensions.test]
+operator/pkg/common/extensions/secret_reconciliator_test.go:80:77: undefined: OwnershipStrategyOwnerReference
+operator/pkg/common/extensions/secret_reconciliator_test.go:80:77: too many arguments in call to NewSecretReconciliator
+	have ("sigs.k8s.io/controller-runtime/pkg/client".Client, "sigs.k8s.io/controller-runtime/pkg/client".Client, *"github.com/stackrox/rox/operator/apis/platform/v1alpha1".Central, unknown type)
+	want ("sigs.k8s.io/controller-runtime/pkg/client".Client, "sigs.k8s.io/controller-runtime/pkg/client".Reader, "github.com/stackrox/rox/operator/pkg/types".K8sObject)
+operator/pkg/common/extensions/secret_reconciliator_test.go:298:20: undefined: OwnershipStrategy
+operator/pkg/common/extensions/secret_reconciliator_test.go:304:22: undefined: OwnershipStrategyOwnerReference
+operator/pkg/common/extensions/secret_reconciliator_test.go:310:22: undefined: OwnershipStrategyOwnerReference
+operator/pkg/common/extensions/secret_reconciliator_test.go:316:22: undefined: OwnershipStrategyOwnerReference
+operator/pkg/common/extensions/secret_reconciliator_test.go:322:22: undefined: OwnershipStrategyOwnerReference
+operator/pkg/common/extensions/secret_reconciliator_test.go:328:22: undefined: OwnershipStrategyOwnerReference
+operator/pkg/common/extensions/secret_reconciliator_test.go:334:22: undefined: OwnershipStrategyOwnerReference
+operator/pkg/common/extensions/secret_reconciliator_test.go:340:22: undefined: OwnershipStrategyOwnerReference
+operator/pkg/common/extensions/secret_reconciliator_test.go:340:22: too many errors
+# github.com/stackrox/rox/operator/pkg/central/extensions [github.com/stackrox/rox/operator/pkg/central/extensions.test]
+operator/pkg/central/extensions/reconcile_admin_password_test.go:57:29: undefined: labels.ManagedByValue
+operator/pkg/central/extensions/reconcile_admin_password_test.go:57:66: undefined: labels.ManagedByLabel
+operator/pkg/central/extensions/reconcile_admin_password_test.go:106:29: undefined: labels.ManagedByValue
+operator/pkg/central/extensions/reconcile_admin_password_test.go:106:66: undefined: labels.ManagedByLabel
+operator/pkg/central/extensions/reconcile_admin_password_test.go:135:29: undefined: labels.ManagedByValue
+operator/pkg/central/extensions/reconcile_admin_password_test.go:135:66: undefined: labels.ManagedByLabel
+operator/pkg/central/extensions/reconcile_central_db_password_test.go:107:29: undefined: labels.ManagedByValue
+operator/pkg/central/extensions/reconcile_central_db_password_test.go:107:66: undefined: labels.ManagedByLabel
+operator/pkg/central/extensions/reconcile_central_db_password_test.go:120:29: undefined: labels.ManagedByValue
+operator/pkg/central/extensions/reconcile_central_db_password_test.go:120:66: undefined: labels.ManagedByLabel
+operator/pkg/central/extensions/reconcile_central_db_password_test.go:120:66: too many errors
+FAIL	github.com/stackrox/rox/operator/pkg/central/extensions [build failed]
+FAIL	github.com/stackrox/rox/operator/pkg/common/extensions [build failed]
+reward=0 graded=203 found=203 failed=203 parsed=2 framework=go exit_code=1

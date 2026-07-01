@@ -1,0 +1,7 @@
+I'm working on updating the test suite for several popover-based components — things like dropdown menus, tooltips, educational popovers, help buttons, and overlay panels — as we migrate them to a new version of the underlying popover engine. The new engine behaves differently during testing: it depends on browser intersection detection APIs that aren't available in the test environment, so rendered elements can appear hidden rather than visible.
+
+Right now the tests don't have a way to render components with a specific feature flag enabled to activate the new popover code path. I need a shared testing utility that takes a feature flag name and a component, and renders the component with that flag turned on. Several tests across different component files need to use this utility.
+
+I also need to update some tests that check for element visibility to instead check for presence in the document, since the new popover implementation produces elements that are hidden (due to the missing browser API) but still present. For dropdown keyboard navigation tests, I need a way to find specific menu items by a test identifier rather than by their internal DOM IDs, since those IDs are fragile. The dropdown item and link components need to support a prop for this purpose.
+
+Finally, some snapshot tests that previously used a different rendering approach need their snapshot files cleared or updated so they pick up the new DOM-based output the next time they run.

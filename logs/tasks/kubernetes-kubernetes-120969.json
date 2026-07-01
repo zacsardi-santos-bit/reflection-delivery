@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-kubernetes-120969",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden go.mod flips `github.com/golang/mock v1.6.0`->`go.uber.org/mock v0.4.0`, revendors module, rewrites all mock source files; test.patch updates test imports; F2P=955 kubelet Go tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 94,
+  "shallow": true
+ }
+}

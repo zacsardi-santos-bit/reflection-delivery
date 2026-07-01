@@ -1,0 +1,23 @@
+{
+ "task": "moby-buildkit-6003",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds AgentConfig.Raw + ParseSSH raw parse/validation ('raw mode must supply exactly one socket path') + new raw_provider.go; F2P TestRawProvider runs full gRPC proxy echo, TestToAgentSource asserts reject-no-path/reject-regular-file/accept-socket/both-orderings"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

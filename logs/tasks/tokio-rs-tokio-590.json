@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-tokio-590",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds \"max_length: Option<usize>\" and \"pub fn with_max_length(limit: usize) -> Self\" to LinesCodec; F2P lines_decoder_max_length asserts codec.decode(buf).is_err() then resumes decoding subsequent lines"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

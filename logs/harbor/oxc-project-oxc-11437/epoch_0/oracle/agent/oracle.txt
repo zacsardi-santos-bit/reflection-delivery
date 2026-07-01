@@ -1,0 +1,1 @@
+patching file crates/oxc_linter/src/rules/eslint/no_loss_of_precision.rs

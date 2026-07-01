@@ -1,0 +1,336 @@
+patching file internal/image/common_test.go
+patching file internal/image/docker_schema1_test.go
+patching file internal/image/docker_schema2_test.go
+patching file internal/image/oci_test.go
+patching file manifest/docker_schema1_test.go
+patching file manifest/docker_schema2_test.go
+patching file manifest/oci_test.go
+{"Time":"2026-06-29T15:27:26.371192583Z","Action":"start","Package":"github.com/containers/image/v5/internal/image"}
+{"Time":"2026-06-29T15:27:26.371529803Z","Action":"start","Package":"github.com/containers/image/v5/manifest"}
+{"Time":"2026-06-29T15:27:26.376467449Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1FromManifest"}
+{"Time":"2026-06-29T15:27:26.376513298Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1FromManifest","Output":"=== RUN   TestManifestSchema1FromManifest\n"}
+{"Time":"2026-06-29T15:27:26.377187578Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1FromManifest","Output":"--- PASS: TestManifestSchema1FromManifest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.377238575Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1FromManifest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.377273638Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1FromComponents"}
+{"Time":"2026-06-29T15:27:26.377296272Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1FromComponents","Output":"=== RUN   TestManifestSchema1FromComponents\n"}
+{"Time":"2026-06-29T15:27:26.377325757Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1FromComponents","Output":"--- PASS: TestManifestSchema1FromComponents (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.377358486Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1FromComponents","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.377382693Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1Serialize"}
+{"Time":"2026-06-29T15:27:26.377405668Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1Serialize","Output":"=== RUN   TestManifestSchema1Serialize\n"}
+{"Time":"2026-06-29T15:27:26.377468483Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestLayerInfosToStrings"}
+{"Time":"2026-06-29T15:27:26.377496225Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestLayerInfosToStrings","Output":"=== RUN   TestLayerInfosToStrings\n"}
+{"Time":"2026-06-29T15:27:26.377523766Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestLayerInfosToStrings","Output":"--- PASS: TestLayerInfosToStrings (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.377547382Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestLayerInfosToStrings","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.377570367Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestCompressionVariantMIMEType"}
+{"Time":"2026-06-29T15:27:26.37759254Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestCompressionVariantMIMEType","Output":"=== RUN   TestCompressionVariantMIMEType\n"}
+{"Time":"2026-06-29T15:27:26.377620593Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestCompressionVariantMIMEType","Output":"--- PASS: TestCompressionVariantMIMEType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.377642997Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestCompressionVariantMIMEType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.377665831Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestUpdatedMIMEType"}
+{"Time":"2026-06-29T15:27:26.377687304Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestUpdatedMIMEType","Output":"=== RUN   TestUpdatedMIMEType\n"}
+{"Time":"2026-06-29T15:27:26.377717029Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestUpdatedMIMEType","Output":"--- PASS: TestUpdatedMIMEType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.377743809Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestUpdatedMIMEType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.377781346Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1FromManifest"}
+{"Time":"2026-06-29T15:27:26.377803219Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1FromManifest","Output":"=== RUN   TestSchema1FromManifest\n"}
+{"Time":"2026-06-29T15:27:26.378615978Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1Serialize","Output":"--- PASS: TestManifestSchema1Serialize (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.378645513Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1Serialize","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.378669529Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ManifestMIMEType"}
+{"Time":"2026-06-29T15:27:26.378691823Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ManifestMIMEType","Output":"=== RUN   TestManifestSchema1ManifestMIMEType\n"}
+{"Time":"2026-06-29T15:27:26.379003454Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ManifestMIMEType","Output":"--- PASS: TestManifestSchema1ManifestMIMEType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.379036884Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ManifestMIMEType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.379061992Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConfigInfo"}
+{"Time":"2026-06-29T15:27:26.379084396Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConfigInfo","Output":"=== RUN   TestManifestSchema1ConfigInfo\n"}
+{"Time":"2026-06-29T15:27:26.379332391Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConfigInfo","Output":"--- PASS: TestManifestSchema1ConfigInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.379357649Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConfigInfo","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.379385471Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConfigBlob"}
+{"Time":"2026-06-29T15:27:26.379407064Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConfigBlob","Output":"=== RUN   TestManifestSchema1ConfigBlob\n"}
+{"Time":"2026-06-29T15:27:26.379843724Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConfigBlob","Output":"--- PASS: TestManifestSchema1ConfigBlob (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.379873569Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConfigBlob","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.379901382Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1OCIConfig"}
+{"Time":"2026-06-29T15:27:26.379922503Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1OCIConfig","Output":"=== RUN   TestManifestSchema1OCIConfig\n"}
+{"Time":"2026-06-29T15:27:26.380665297Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1OCIConfig","Output":"--- PASS: TestManifestSchema1OCIConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.38072066Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1OCIConfig","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.380746509Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1LayerInfo"}
+{"Time":"2026-06-29T15:27:26.380770035Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1LayerInfo","Output":"=== RUN   TestManifestSchema1LayerInfo\n"}
+{"Time":"2026-06-29T15:27:26.381217672Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1LayerInfo","Output":"--- PASS: TestManifestSchema1LayerInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.381248178Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1LayerInfo","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.381271694Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1EmbeddedDockerReferenceConflicts"}
+{"Time":"2026-06-29T15:27:26.381293927Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1EmbeddedDockerReferenceConflicts","Output":"=== RUN   TestManifestSchema1EmbeddedDockerReferenceConflicts\n"}
+{"Time":"2026-06-29T15:27:26.381708995Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1EmbeddedDockerReferenceConflicts","Output":"--- PASS: TestManifestSchema1EmbeddedDockerReferenceConflicts (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.381739251Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1EmbeddedDockerReferenceConflicts","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.381763718Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1Inspect"}
+{"Time":"2026-06-29T15:27:26.381785861Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1Inspect","Output":"=== RUN   TestManifestSchema1Inspect\n"}
+{"Time":"2026-06-29T15:27:26.381819432Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1FromManifest","Output":"--- PASS: TestSchema1FromManifest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.381846923Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1FromManifest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.381869838Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1Initialize"}
+{"Time":"2026-06-29T15:27:26.381892923Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1Initialize","Output":"=== RUN   TestSchema1Initialize\n"}
+{"Time":"2026-06-29T15:27:26.382013946Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1Initialize","Output":"--- PASS: TestSchema1Initialize (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.382041097Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1Initialize","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.382064733Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1LayerInfos"}
+{"Time":"2026-06-29T15:27:26.382087487Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1LayerInfos","Output":"=== RUN   TestSchema1LayerInfos\n"}
+{"Time":"2026-06-29T15:27:26.3822086Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1Inspect","Output":"--- PASS: TestManifestSchema1Inspect (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.382232867Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1Inspect","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.382259708Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1UpdatedImageNeedsLayerDiffIDs"}
+{"Time":"2026-06-29T15:27:26.38228093Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1UpdatedImageNeedsLayerDiffIDs","Output":"=== RUN   TestManifestSchema1UpdatedImageNeedsLayerDiffIDs\n"}
+{"Time":"2026-06-29T15:27:26.382450857Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1LayerInfos","Output":"--- PASS: TestSchema1LayerInfos (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.382478979Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1LayerInfos","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.382511879Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1UpdateLayerInfos"}
+{"Time":"2026-06-29T15:27:26.382534062Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1UpdateLayerInfos","Output":"=== RUN   TestSchema1UpdateLayerInfos\n"}
+{"Time":"2026-06-29T15:27:26.382569726Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1UpdatedImageNeedsLayerDiffIDs","Output":"--- PASS: TestManifestSchema1UpdatedImageNeedsLayerDiffIDs (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.382592761Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1UpdatedImageNeedsLayerDiffIDs","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.382615956Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1UpdatedImage"}
+{"Time":"2026-06-29T15:27:26.382637659Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1UpdatedImage","Output":"=== RUN   TestManifestSchema1UpdatedImage\n"}
+{"Time":"2026-06-29T15:27:26.383238808Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1UpdateLayerInfos","Output":"--- PASS: TestSchema1UpdateLayerInfos (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.383265248Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1UpdateLayerInfos","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.383288774Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1ImageID"}
+{"Time":"2026-06-29T15:27:26.383310777Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1ImageID","Output":"=== RUN   TestSchema1ImageID\n"}
+{"Time":"2026-06-29T15:27:26.383544951Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1UpdatedImage","Output":"--- PASS: TestManifestSchema1UpdatedImage (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.383573694Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1UpdatedImage","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.38359726Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConvertToSchema2"}
+{"Time":"2026-06-29T15:27:26.383619023Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConvertToSchema2","Output":"=== RUN   TestManifestSchema1ConvertToSchema2\n"}
+{"Time":"2026-06-29T15:27:26.383980009Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1ImageID","Output":"--- PASS: TestSchema1ImageID (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.384004496Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema1ImageID","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.384031066Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2ListFromManifest"}
+{"Time":"2026-06-29T15:27:26.384052258Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2ListFromManifest","Output":"=== RUN   TestSchema2ListFromManifest\n"}
+{"Time":"2026-06-29T15:27:26.385066361Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2ListFromManifest","Output":"--- PASS: TestSchema2ListFromManifest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.38509833Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2ListFromManifest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.385122126Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSupportedSchema2MediaType"}
+{"Time":"2026-06-29T15:27:26.385145Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSupportedSchema2MediaType","Output":"=== RUN   TestSupportedSchema2MediaType\n"}
+{"Time":"2026-06-29T15:27:26.385175256Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSupportedSchema2MediaType","Output":"--- PASS: TestSupportedSchema2MediaType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.385198311Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSupportedSchema2MediaType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.385221536Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2FromManifest"}
+{"Time":"2026-06-29T15:27:26.385243229Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2FromManifest","Output":"=== RUN   TestSchema2FromManifest\n"}
+{"Time":"2026-06-29T15:27:26.385764487Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2FromManifest","Output":"--- PASS: TestSchema2FromManifest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.385797958Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2FromManifest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.385823767Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2UpdateLayerInfos"}
+{"Time":"2026-06-29T15:27:26.38584567Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2UpdateLayerInfos","Output":"=== RUN   TestSchema2UpdateLayerInfos\n"}
+{"Time":"2026-06-29T15:27:26.386405256Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConvertToSchema2","Output":"--- PASS: TestManifestSchema1ConvertToSchema2 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.386448161Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConvertToSchema2","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.386479368Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConvertToManifestOCI1"}
+{"Time":"2026-06-29T15:27:26.386501642Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConvertToManifestOCI1","Output":"=== RUN   TestManifestSchema1ConvertToManifestOCI1\n"}
+{"Time":"2026-06-29T15:27:26.387323024Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2UpdateLayerInfos","Output":"--- PASS: TestSchema2UpdateLayerInfos (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.387350996Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2UpdateLayerInfos","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.387376244Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2ImageID"}
+{"Time":"2026-06-29T15:27:26.387399159Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2ImageID","Output":"=== RUN   TestSchema2ImageID\n"}
+{"Time":"2026-06-29T15:27:26.387429815Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2ImageID","Output":"--- PASS: TestSchema2ImageID (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.387470387Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2ImageID","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.387493471Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2CanChangeLayerCompression"}
+{"Time":"2026-06-29T15:27:26.387515555Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2CanChangeLayerCompression","Output":"=== RUN   TestSchema2CanChangeLayerCompression\n"}
+{"Time":"2026-06-29T15:27:26.387589857Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2CanChangeLayerCompression","Output":"--- PASS: TestSchema2CanChangeLayerCompression (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.387621004Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSchema2CanChangeLayerCompression","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.387645201Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestParseLists"}
+{"Time":"2026-06-29T15:27:26.387675517Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestParseLists","Output":"=== RUN   TestParseLists\n"}
+{"Time":"2026-06-29T15:27:26.387946176Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestParseLists","Output":"--- PASS: TestParseLists (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.387971825Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestParseLists","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.387998986Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestChooseInstance"}
+{"Time":"2026-06-29T15:27:26.388020228Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestChooseInstance","Output":"=== RUN   TestChooseInstance\n"}
+{"Time":"2026-06-29T15:27:26.388831845Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConvertToManifestOCI1","Output":"--- PASS: TestManifestSchema1ConvertToManifestOCI1 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.388863483Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1ConvertToManifestOCI1","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.38888763Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertSchema1ToManifestOCIWithAnnotations"}
+{"Time":"2026-06-29T15:27:26.388911265Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertSchema1ToManifestOCIWithAnnotations","Output":"=== RUN   TestConvertSchema1ToManifestOCIWithAnnotations\n"}
+{"Time":"2026-06-29T15:27:26.388946899Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestChooseInstance","Output":"--- PASS: TestChooseInstance (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.388970074Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestChooseInstance","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.38899374Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestGuessMIMEType"}
+{"Time":"2026-06-29T15:27:26.389016094Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestGuessMIMEType","Output":"=== RUN   TestGuessMIMEType\n"}
+{"Time":"2026-06-29T15:27:26.389691195Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertSchema1ToManifestOCIWithAnnotations","Output":"--- PASS: TestConvertSchema1ToManifestOCIWithAnnotations (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.389720359Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertSchema1ToManifestOCIWithAnnotations","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.389744415Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1CanChangeLayerCompression"}
+{"Time":"2026-06-29T15:27:26.389766388Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1CanChangeLayerCompression","Output":"=== RUN   TestManifestSchema1CanChangeLayerCompression\n"}
+{"Time":"2026-06-29T15:27:26.390024118Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1CanChangeLayerCompression","Output":"--- PASS: TestManifestSchema1CanChangeLayerCompression (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.390049166Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema1CanChangeLayerCompression","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.390073643Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2FromManifest"}
+{"Time":"2026-06-29T15:27:26.390095686Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2FromManifest","Output":"=== RUN   TestManifestSchema2FromManifest\n"}
+{"Time":"2026-06-29T15:27:26.390572457Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2FromManifest","Output":"--- PASS: TestManifestSchema2FromManifest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.390610755Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2FromManifest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.390639318Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2FromComponents"}
+{"Time":"2026-06-29T15:27:26.390662073Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2FromComponents","Output":"=== RUN   TestManifestSchema2FromComponents\n"}
+{"Time":"2026-06-29T15:27:26.390686139Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2FromComponents","Output":"--- PASS: TestManifestSchema2FromComponents (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.390709514Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2FromComponents","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.390733601Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2Serialize"}
+{"Time":"2026-06-29T15:27:26.390755664Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2Serialize","Output":"=== RUN   TestManifestSchema2Serialize\n"}
+{"Time":"2026-06-29T15:27:26.391826804Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2Serialize","Output":"--- PASS: TestManifestSchema2Serialize (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.391871892Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2Serialize","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.391898001Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ManifestMIMEType"}
+{"Time":"2026-06-29T15:27:26.391922018Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ManifestMIMEType","Output":"=== RUN   TestManifestSchema2ManifestMIMEType\n"}
+{"Time":"2026-06-29T15:27:26.392196092Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ManifestMIMEType","Output":"--- PASS: TestManifestSchema2ManifestMIMEType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.392237685Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ManifestMIMEType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.392262743Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ConfigInfo"}
+{"Time":"2026-06-29T15:27:26.392285718Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ConfigInfo","Output":"=== RUN   TestManifestSchema2ConfigInfo\n"}
+{"Time":"2026-06-29T15:27:26.392710099Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestGuessMIMEType","Output":"--- PASS: TestGuessMIMEType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.39274341Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestGuessMIMEType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.392771883Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestDigest"}
+{"Time":"2026-06-29T15:27:26.392795078Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestDigest","Output":"=== RUN   TestDigest\n"}
+{"Time":"2026-06-29T15:27:26.392828649Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ConfigInfo","Output":"--- PASS: TestManifestSchema2ConfigInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.392851663Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ConfigInfo","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.392874618Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ConfigBlob"}
+{"Time":"2026-06-29T15:27:26.392903692Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ConfigBlob","Output":"=== RUN   TestManifestSchema2ConfigBlob\n"}
+{"Time":"2026-06-29T15:27:26.393341554Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestDigest","Output":"--- PASS: TestDigest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.393370708Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestDigest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.393394514Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestMatchesDigest"}
+{"Time":"2026-06-29T15:27:26.393416908Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestMatchesDigest","Output":"=== RUN   TestMatchesDigest\n"}
+{"Time":"2026-06-29T15:27:26.393458171Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ConfigBlob","Output":"--- PASS: TestManifestSchema2ConfigBlob (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.393484641Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2ConfigBlob","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.393507906Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2LayerInfo"}
+{"Time":"2026-06-29T15:27:26.393530009Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2LayerInfo","Output":"=== RUN   TestManifestSchema2LayerInfo\n"}
+{"Time":"2026-06-29T15:27:26.393558502Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2LayerInfo","Output":"--- PASS: TestManifestSchema2LayerInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.393580986Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2LayerInfo","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.393604572Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2EmbeddedDockerReferenceConflicts"}
+{"Time":"2026-06-29T15:27:26.393626425Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2EmbeddedDockerReferenceConflicts","Output":"=== RUN   TestManifestSchema2EmbeddedDockerReferenceConflicts\n"}
+{"Time":"2026-06-29T15:27:26.393711063Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2EmbeddedDockerReferenceConflicts","Output":"--- PASS: TestManifestSchema2EmbeddedDockerReferenceConflicts (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.39374222Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2EmbeddedDockerReferenceConflicts","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.393766527Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2Inspect"}
+{"Time":"2026-06-29T15:27:26.39378839Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2Inspect","Output":"=== RUN   TestManifestSchema2Inspect\n"}
+{"Time":"2026-06-29T15:27:26.393925878Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2Inspect","Output":"--- PASS: TestManifestSchema2Inspect (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.393952999Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2Inspect","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.393976655Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2UpdatedImageNeedsLayerDiffIDs"}
+{"Time":"2026-06-29T15:27:26.393998868Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2UpdatedImageNeedsLayerDiffIDs","Output":"=== RUN   TestManifestSchema2UpdatedImageNeedsLayerDiffIDs\n"}
+{"Time":"2026-06-29T15:27:26.39402626Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2UpdatedImageNeedsLayerDiffIDs","Output":"--- PASS: TestManifestSchema2UpdatedImageNeedsLayerDiffIDs (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.394060281Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2UpdatedImageNeedsLayerDiffIDs","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.394082995Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2UpdatedImage"}
+{"Time":"2026-06-29T15:27:26.394105069Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2UpdatedImage","Output":"=== RUN   TestManifestSchema2UpdatedImage\n"}
+{"Time":"2026-06-29T15:27:26.394562771Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestMatchesDigest","Output":"--- PASS: TestMatchesDigest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.394593758Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestMatchesDigest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.394617454Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestAddDummyV2S1Signature"}
+{"Time":"2026-06-29T15:27:26.394639507Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestAddDummyV2S1Signature","Output":"=== RUN   TestAddDummyV2S1Signature\n"}
+{"Time":"2026-06-29T15:27:26.395002155Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestAddDummyV2S1Signature","Output":"--- PASS: TestAddDummyV2S1Signature (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.39503207Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestAddDummyV2S1Signature","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.395055626Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestMIMETypeIsMultiImage"}
+{"Time":"2026-06-29T15:27:26.39500559Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2UpdatedImage","Output":"--- PASS: TestManifestSchema2UpdatedImage (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.395105672Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2UpdatedImage","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.395077519Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestMIMETypeIsMultiImage","Output":"=== RUN   TestMIMETypeIsMultiImage\n"}
+{"Time":"2026-06-29T15:27:26.395168427Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestMIMETypeIsMultiImage","Output":"--- PASS: TestMIMETypeIsMultiImage (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.395195047Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestMIMETypeIsMultiImage","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.395219364Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestNormalizedMIMEType"}
+{"Time":"2026-06-29T15:27:26.395241958Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestNormalizedMIMEType","Output":"=== RUN   TestNormalizedMIMEType\n"}
+{"Time":"2026-06-29T15:27:26.395266916Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestNormalizedMIMEType","Output":"--- PASS: TestNormalizedMIMEType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.395304262Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestNormalizedMIMEType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.395336351Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1IndexFromManifest"}
+{"Time":"2026-06-29T15:27:26.395359616Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1IndexFromManifest","Output":"=== RUN   TestOCI1IndexFromManifest\n"}
+{"Time":"2026-06-29T15:27:26.395131601Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestOCI"}
+{"Time":"2026-06-29T15:27:26.395430152Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestOCI","Output":"=== RUN   TestConvertToManifestOCI\n"}
+{"Time":"2026-06-29T15:27:26.395803407Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1IndexFromManifest","Output":"--- PASS: TestOCI1IndexFromManifest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.395829486Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1IndexFromManifest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.395854033Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestSupportedOCI1MediaType"}
+{"Time":"2026-06-29T15:27:26.395876107Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSupportedOCI1MediaType","Output":"=== RUN   TestSupportedOCI1MediaType\n"}
+{"Time":"2026-06-29T15:27:26.39590483Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestSupportedOCI1MediaType","Output":"--- PASS: TestSupportedOCI1MediaType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.395927735Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestSupportedOCI1MediaType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.39595104Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1FromManifest"}
+{"Time":"2026-06-29T15:27:26.395973043Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1FromManifest","Output":"=== RUN   TestOCI1FromManifest\n"}
+{"Time":"2026-06-29T15:27:26.396533921Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1FromManifest","Output":"--- PASS: TestOCI1FromManifest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.396567702Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1FromManifest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.396593281Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1UpdateLayerInfos"}
+{"Time":"2026-06-29T15:27:26.396617338Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1UpdateLayerInfos","Output":"=== RUN   TestOCI1UpdateLayerInfos\n"}
+{"Time":"2026-06-29T15:27:26.396548393Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestOCI","Output":"--- PASS: TestConvertToManifestOCI (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.396670017Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestOCI","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.396696447Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestOCIAllMediaTypes"}
+{"Time":"2026-06-29T15:27:26.396718921Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestOCIAllMediaTypes","Output":"=== RUN   TestConvertToManifestOCIAllMediaTypes\n"}
+{"Time":"2026-06-29T15:27:26.398016683Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestOCIAllMediaTypes","Output":"--- PASS: TestConvertToManifestOCIAllMediaTypes (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.398051156Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestOCIAllMediaTypes","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.398075352Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToOCIWithInvalidMIMEType"}
+{"Time":"2026-06-29T15:27:26.398098046Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToOCIWithInvalidMIMEType","Output":"=== RUN   TestConvertToOCIWithInvalidMIMEType\n"}
+{"Time":"2026-06-29T15:27:26.398308344Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToOCIWithInvalidMIMEType","Output":"--- PASS: TestConvertToOCIWithInvalidMIMEType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.398333382Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToOCIWithInvalidMIMEType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.398364259Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema1"}
+{"Time":"2026-06-29T15:27:26.398386753Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema1","Output":"=== RUN   TestConvertToManifestSchema1\n"}
+{"Time":"2026-06-29T15:27:26.3998396Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1UpdateLayerInfos","Output":"--- PASS: TestOCI1UpdateLayerInfos (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.399876175Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1UpdateLayerInfos","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.399907673Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1Inspect"}
+{"Time":"2026-06-29T15:27:26.399930047Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1Inspect","Output":"=== RUN   TestOCI1Inspect\n"}
+{"Time":"2026-06-29T15:27:26.399965751Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1Inspect","Output":"--- PASS: TestOCI1Inspect (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.399990027Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1Inspect","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.400014655Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1ImageID"}
+{"Time":"2026-06-29T15:27:26.400036818Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1ImageID","Output":"=== RUN   TestOCI1ImageID\n"}
+{"Time":"2026-06-29T15:27:26.400172984Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1ImageID","Output":"--- PASS: TestOCI1ImageID (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.400198463Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1ImageID","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.400222058Z","Action":"run","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1CanChangeLayerCompression"}
+{"Time":"2026-06-29T15:27:26.400244342Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1CanChangeLayerCompression","Output":"=== RUN   TestOCI1CanChangeLayerCompression\n"}
+{"Time":"2026-06-29T15:27:26.400384644Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1CanChangeLayerCompression","Output":"--- PASS: TestOCI1CanChangeLayerCompression (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.400409021Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Test":"TestOCI1CanChangeLayerCompression","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.400440068Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Output":"PASS\n"}
+{"Time":"2026-06-29T15:27:26.400802296Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema1","Output":"--- PASS: TestConvertToManifestSchema1 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.400846663Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema1","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.400873684Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertSchema2ToManifestOCIWithAnnotations"}
+{"Time":"2026-06-29T15:27:26.400908246Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertSchema2ToManifestOCIWithAnnotations","Output":"=== RUN   TestConvertSchema2ToManifestOCIWithAnnotations\n"}
+{"Time":"2026-06-29T15:27:26.400808615Z","Action":"output","Package":"github.com/containers/image/v5/manifest","Output":"ok  \tgithub.com/containers/image/v5/manifest\t0.029s\n"}
+{"Time":"2026-06-29T15:27:26.400974566Z","Action":"pass","Package":"github.com/containers/image/v5/manifest","Elapsed":0.029}
+{"Time":"2026-06-29T15:27:26.401752963Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertSchema2ToManifestOCIWithAnnotations","Output":"--- PASS: TestConvertSchema2ToManifestOCIWithAnnotations (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.411356204Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertSchema2ToManifestOCIWithAnnotations","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.411600513Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2CanChangeLayerCompression"}
+{"Time":"2026-06-29T15:27:26.411625732Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2CanChangeLayerCompression","Output":"=== RUN   TestManifestSchema2CanChangeLayerCompression\n"}
+{"Time":"2026-06-29T15:27:26.411656248Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2CanChangeLayerCompression","Output":"--- PASS: TestManifestSchema2CanChangeLayerCompression (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.411678832Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestSchema2CanChangeLayerCompression","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.411701957Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestLayerInfosToBlobInfos"}
+{"Time":"2026-06-29T15:27:26.41172373Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestLayerInfosToBlobInfos","Output":"=== RUN   TestManifestLayerInfosToBlobInfos\n"}
+{"Time":"2026-06-29T15:27:26.411747576Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestLayerInfosToBlobInfos","Output":"--- PASS: TestManifestLayerInfosToBlobInfos (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.411771171Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestLayerInfosToBlobInfos","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.411807997Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1FromManifest"}
+{"Time":"2026-06-29T15:27:26.41182992Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1FromManifest","Output":"=== RUN   TestManifestOCI1FromManifest\n"}
+{"Time":"2026-06-29T15:27:26.411854047Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1FromManifest","Output":"--- PASS: TestManifestOCI1FromManifest (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.411876871Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1FromManifest","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.411899656Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1FromComponents"}
+{"Time":"2026-06-29T15:27:26.411921268Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1FromComponents","Output":"=== RUN   TestManifestOCI1FromComponents\n"}
+{"Time":"2026-06-29T15:27:26.411944694Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1FromComponents","Output":"--- PASS: TestManifestOCI1FromComponents (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.411967388Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1FromComponents","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.411989962Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1Serialize"}
+{"Time":"2026-06-29T15:27:26.412011565Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1Serialize","Output":"=== RUN   TestManifestOCI1Serialize\n"}
+{"Time":"2026-06-29T15:27:26.412035101Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1Serialize","Output":"--- PASS: TestManifestOCI1Serialize (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.412069613Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1Serialize","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.412092477Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ManifestMIMEType"}
+{"Time":"2026-06-29T15:27:26.41211417Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ManifestMIMEType","Output":"=== RUN   TestManifestOCI1ManifestMIMEType\n"}
+{"Time":"2026-06-29T15:27:26.412137766Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ManifestMIMEType","Output":"--- PASS: TestManifestOCI1ManifestMIMEType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.41216053Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ManifestMIMEType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.412183205Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConfigInfo"}
+{"Time":"2026-06-29T15:27:26.412205658Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConfigInfo","Output":"=== RUN   TestManifestOCI1ConfigInfo\n"}
+{"Time":"2026-06-29T15:27:26.412229234Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConfigInfo","Output":"--- PASS: TestManifestOCI1ConfigInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.412254532Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConfigInfo","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.412278078Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConfigBlob"}
+{"Time":"2026-06-29T15:27:26.412300472Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConfigBlob","Output":"=== RUN   TestManifestOCI1ConfigBlob\n"}
+{"Time":"2026-06-29T15:27:26.412324438Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConfigBlob","Output":"--- PASS: TestManifestOCI1ConfigBlob (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.412347543Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConfigBlob","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.412370347Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1OCIConfig"}
+{"Time":"2026-06-29T15:27:26.41239201Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1OCIConfig","Output":"=== RUN   TestManifestOCI1OCIConfig\n"}
+{"Time":"2026-06-29T15:27:26.412415466Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1OCIConfig","Output":"--- PASS: TestManifestOCI1OCIConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.412443498Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1OCIConfig","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.4124712Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1LayerInfo"}
+{"Time":"2026-06-29T15:27:26.412493113Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1LayerInfo","Output":"=== RUN   TestManifestOCI1LayerInfo\n"}
+{"Time":"2026-06-29T15:27:26.412516539Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1LayerInfo","Output":"--- PASS: TestManifestOCI1LayerInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.412539223Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1LayerInfo","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.412562578Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1EmbeddedDockerReferenceConflicts"}
+{"Time":"2026-06-29T15:27:26.412584401Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1EmbeddedDockerReferenceConflicts","Output":"=== RUN   TestManifestOCI1EmbeddedDockerReferenceConflicts\n"}
+{"Time":"2026-06-29T15:27:26.412621457Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1EmbeddedDockerReferenceConflicts","Output":"--- PASS: TestManifestOCI1EmbeddedDockerReferenceConflicts (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.412643961Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1EmbeddedDockerReferenceConflicts","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.412667317Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1Inspect"}
+{"Time":"2026-06-29T15:27:26.41268937Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1Inspect","Output":"=== RUN   TestManifestOCI1Inspect\n"}
+{"Time":"2026-06-29T15:27:26.412712825Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1Inspect","Output":"--- PASS: TestManifestOCI1Inspect (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.41273559Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1Inspect","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.412758284Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1UpdatedImageNeedsLayerDiffIDs"}
+{"Time":"2026-06-29T15:27:26.412780087Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1UpdatedImageNeedsLayerDiffIDs","Output":"=== RUN   TestManifestOCI1UpdatedImageNeedsLayerDiffIDs\n"}
+{"Time":"2026-06-29T15:27:26.412804634Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1UpdatedImageNeedsLayerDiffIDs","Output":"--- PASS: TestManifestOCI1UpdatedImageNeedsLayerDiffIDs (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.412827679Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1UpdatedImageNeedsLayerDiffIDs","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.412850363Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1UpdatedImage"}
+{"Time":"2026-06-29T15:27:26.412872036Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1UpdatedImage","Output":"=== RUN   TestManifestOCI1UpdatedImage\n"}
+{"Time":"2026-06-29T15:27:26.41290093Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1UpdatedImage","Output":"--- PASS: TestManifestOCI1UpdatedImage (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.412923504Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1UpdatedImage","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.412946509Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConvertToManifestSchema1"}
+{"Time":"2026-06-29T15:27:26.412968552Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConvertToManifestSchema1","Output":"=== RUN   TestManifestOCI1ConvertToManifestSchema1\n"}
+{"Time":"2026-06-29T15:27:26.417182584Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConvertToManifestSchema1","Output":"--- PASS: TestManifestOCI1ConvertToManifestSchema1 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.417216896Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1ConvertToManifestSchema1","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.417240972Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema2"}
+{"Time":"2026-06-29T15:27:26.417263136Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema2","Output":"=== RUN   TestConvertToManifestSchema2\n"}
+{"Time":"2026-06-29T15:27:26.418817877Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema2","Output":"--- PASS: TestConvertToManifestSchema2 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.418847361Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema2","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.418876666Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema2AllMediaTypes"}
+{"Time":"2026-06-29T15:27:26.418898619Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema2AllMediaTypes","Output":"=== RUN   TestConvertToManifestSchema2AllMediaTypes\n"}
+{"Time":"2026-06-29T15:27:26.419176579Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema2AllMediaTypes","Output":"--- PASS: TestConvertToManifestSchema2AllMediaTypes (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.419202548Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToManifestSchema2AllMediaTypes","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.41923029Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToV2S2WithInvalidMIMEType"}
+{"Time":"2026-06-29T15:27:26.419252674Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToV2S2WithInvalidMIMEType","Output":"=== RUN   TestConvertToV2S2WithInvalidMIMEType\n"}
+{"Time":"2026-06-29T15:27:26.419595022Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToV2S2WithInvalidMIMEType","Output":"--- PASS: TestConvertToV2S2WithInvalidMIMEType (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.419625979Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestConvertToV2S2WithInvalidMIMEType","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.419649634Z","Action":"run","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1CanChangeLayerCompression"}
+{"Time":"2026-06-29T15:27:26.419671518Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1CanChangeLayerCompression","Output":"=== RUN   TestManifestOCI1CanChangeLayerCompression\n"}
+{"Time":"2026-06-29T15:27:26.419862707Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1CanChangeLayerCompression","Output":"--- PASS: TestManifestOCI1CanChangeLayerCompression (0.00s)\n"}
+{"Time":"2026-06-29T15:27:26.419890308Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Test":"TestManifestOCI1CanChangeLayerCompression","Elapsed":0}
+{"Time":"2026-06-29T15:27:26.419914265Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Output":"PASS\n"}
+{"Time":"2026-06-29T15:27:26.420431387Z","Action":"output","Package":"github.com/containers/image/v5/internal/image","Output":"ok  \tgithub.com/containers/image/v5/internal/image\t0.049s\n"}
+{"Time":"2026-06-29T15:27:26.420475233Z","Action":"pass","Package":"github.com/containers/image/v5/internal/image","Elapsed":0.049}
+reward=1 graded=80 found=80 failed=0 parsed=80 framework=go exit_code=0

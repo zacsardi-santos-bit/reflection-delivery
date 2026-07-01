@@ -1,0 +1,7 @@
+patching file pkg/kinflate/commands/configmap_test.go
+patching file pkg/kinflate/util/manifestloader_test.go
+# k8s.io/kubectl/pkg/kinflate/util_test [k8s.io/kubectl/pkg/kinflate/util.test]
+/go/src/k8s.io/kubectl/pkg/kinflate/util/manifestloader_test.go:32:18: undefined: kutil.ManifestLoader
+/go/src/k8s.io/kubectl/pkg/kinflate/util/manifestloader_test.go:51:18: undefined: kutil.ManifestLoader
+FAIL	k8s.io/kubectl/pkg/kinflate/util [build failed]
+reward=0 graded=4 found=4 failed=4 parsed=1 framework=go exit_code=1

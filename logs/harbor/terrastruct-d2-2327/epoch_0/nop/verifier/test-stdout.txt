@@ -1,0 +1,47 @@
+patching file e2etests/testdata/txtar/elk-title-near/dagre/board.exp.json
+patching file e2etests/testdata/txtar/elk-title-near/dagre/sketch.exp.svg
+patching file e2etests/testdata/txtar/elk-title-near/elk/board.exp.json
+patching file e2etests/testdata/txtar/elk-title-near/elk/sketch.exp.svg
+patching file e2etests/txtar.txt
+?   	oss.terrastruct.com/d2/e2etests/report	[no test files]
+=== RUN   TestE2E
+=== PAUSE TestE2E
+=== CONT  TestE2E
+=== RUN   TestE2E/txtar
+=== RUN   TestE2E/txtar/elk-title-near
+=== PAUSE TestE2E/txtar/elk-title-near
+=== CONT  TestE2E/txtar/elk-title-near
+[2m2026-06-29T15:17:01Z[0m [36mDEBUG[0m layout nested level=1 child=title gi={true }
+[2m2026-06-29T15:17:01Z[0m [36mDEBUG[0m default layout rootlevel=0 shapes=Objects: [title, ]
+[2m2026-06-29T15:17:01Z[0m [36mDEBUG[0m done rootlevel=0 shapes=Objects: [title, ]
+[2m2026-06-29T15:17:01Z[0m [36mDEBUG[0m default layout rootlevel=0 shapes=Objects: [a, a.a, a.b, b, b.c, ]
+[2m2026-06-29T15:17:01Z[0m [36mDEBUG[0m done rootlevel=0 shapes=Objects: [a, a.a, a.b, b, b.c, title, ]
+[2m2026-06-29T15:17:01Z[0m [36mDEBUG[0m layout nested level=1 child=title gi={true }
+[2m2026-06-29T15:17:01Z[0m [36mDEBUG[0m default layout rootlevel=0 shapes=Objects: [title, ]
+[2m2026-06-29T15:17:01Z[0m [36mDEBUG[0m done rootlevel=0 shapes=Objects: [title, ]
+[2m2026-06-29T15:17:01Z[0m [36mDEBUG[0m default layout rootlevel=0 shapes=Objects: [a, a.a, a.b, b, b.c, ]
+[2m2026-06-29T15:17:02Z[0m [36mDEBUG[0m done rootlevel=0 shapes=Objects: [a, a.a, a.b, b, b.c, title, ]
+    e2e_test.go:283: unexpected error: diff (rerun with $TESTDATA_ACCEPT=1 or $TA=1 to accept):
+        [1m--- a/testdata/txtar/elk-title-near/elk/board.exp.json[m
+        [1m+++ b/testdata/txtar/elk-title-near/elk/board.got.json[m
+        [36m@@ -15,8 +15,8 @@[m
+         [m      "id": "title",[m
+         [m      "type": "rectangle",[m
+         [m      "pos": {[m
+        [31m-[m[31m        "x": -95,[m
+        [31m-[m[31m        "y": -74[m
+        [32m+[m[32m        "x": -75,[m
+        [32m+[m[32m        "y": -29[m
+         [m      },[m
+         [m      "width": 408,[m
+         [m      "height": 66,[m
+--- FAIL: TestE2E (1.41s)
+    --- FAIL: TestE2E/txtar (0.00s)
+        --- FAIL: TestE2E/txtar/elk-title-near (1.40s)
+FAIL
+FAIL	oss.terrastruct.com/d2/e2etests	1.469s
+FAIL
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

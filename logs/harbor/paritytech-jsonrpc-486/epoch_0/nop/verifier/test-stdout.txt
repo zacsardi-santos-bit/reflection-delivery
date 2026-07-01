@@ -1,0 +1,58 @@
+patching file derive/tests/client.rs
+warning: /workspace/repo/pubsub/more-examples/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+  --> core-client/transports/src/lib.rs:20:17
+   |
+20 | #[derive(Debug, Fail)]
+   |                 ^---
+   |                 |
+   |                 `Fail` is not local
+   |                 move the `impl` block outside of this constant `_DERIVE_failure_Fail_FOR_RpcError`
+21 | pub enum RpcError {
+   |          -------- `RpcError` is not local
+   |
+   = note: the derive macro `Fail` defines the non-local `impl`, and may need to be changed
+   = note: the derive macro `Fail` may come from an old version of the `failure_derive` crate, try updating your dependency with `cargo update -p failure_derive`
+   = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+   = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+   = note: `#[warn(non_local_definitions)]` on by default
+   = note: this warning originates in the derive macro `Fail` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+  --> core-client/transports/src/lib.rs:20:17
+   |
+20 | #[derive(Debug, Fail)]
+   |                 ^---
+   |                 |
+   |                 `Display` is not local
+   |                 move the `impl` block outside of this constant `_DERIVE_failure_core_fmt_Display_FOR_RpcError`
+21 | pub enum RpcError {
+   |          -------- `RpcError` is not local
+   |
+   = note: the derive macro `Fail` defines the non-local `impl`, and may need to be changed
+   = note: the derive macro `Fail` may come from an old version of the `failure_derive` crate, try updating your dependency with `cargo update -p failure_derive`
+   = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+   = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+   = note: this warning originates in the derive macro `Fail` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `jsonrpc-client-transports` (lib) generated 2 warnings
+   Compiling jsonrpc-derive v13.1.0 (/workspace/repo/derive)
+error[E0599]: the method `map` exists for unit type `()`, but its trait bounds were not satisfied
+  --> derive/tests/client.rs:35:43
+   |
+35 |         .and_then(move |res| client.notify(res).map(move |_| res))
+   |                                                 ^^^
+   |
+   = note: the following trait bounds were not satisfied:
+           `(): futures::Future`
+           which is required by `&mut (): futures::Future`
+           `(): futures::Stream`
+           which is required by `&mut (): futures::Stream`
+           `(): Iterator`
+           which is required by `&mut (): Iterator`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `jsonrpc-derive` (test "client") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package jsonrpc-derive` exited with code 101
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=cargo exit_code=101

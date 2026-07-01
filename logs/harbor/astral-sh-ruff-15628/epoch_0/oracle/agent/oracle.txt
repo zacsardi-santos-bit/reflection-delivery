@@ -1,0 +1,7 @@
+patching file crates/ruff_linter/src/checkers/ast/analyze/statement.rs
+patching file crates/ruff_linter/src/checkers/ast/mod.rs
+patching file crates/ruff_linter/src/rules/flake8_tidy_imports/rules/banned_module_level_imports.rs
+patching file crates/ruff_linter/src/rules/flake8_tidy_imports/settings.rs
+patching file crates/ruff_linter/src/rules/pylint/mod.rs
+patching file crates/ruff_linter/src/rules/pylint/rules/import_outside_top_level.rs
+patching file crates/ruff_linter/src/rules/pylint/snapshots/ruff_linter__rules__pylint__tests__import_outside_top_level_with_banned.snap

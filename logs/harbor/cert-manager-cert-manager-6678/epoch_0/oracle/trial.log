@@ -1,0 +1,3 @@
+Trial cert-manager-cert-manager-6678__ocuFchp failed: Connection lost
+Failed to download logs to /home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04/cert-manager-cert-manager-6678__ocuFchp/agent
+Convention artifacts dir not found or download failed (best-effort)

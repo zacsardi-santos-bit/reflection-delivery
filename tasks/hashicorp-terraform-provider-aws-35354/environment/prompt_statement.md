@@ -1,0 +1,5 @@
+I'm working with the Terraform AWS provider and need to add support for managing AWS Security Lake custom log sources. Right now the provider has resources for the Security Lake data lake and for AWS-native log sources, but there's nothing for custom log sources — those have to be created and maintained manually outside of Terraform.
+
+I need a new Terraform resource that covers the full lifecycle of a custom log source, letting users declare the source name, version, event classes, a Glue crawler configuration with an IAM role, and a provider identity with an external ID and principal. The resource should use the source name as its identifier and support import, though the configuration and event class details won't be populated on import.
+
+Additionally, the test helper functions for the existing data lake and AWS log source tests need some cleanup: the base configuration should be a constant rather than a function, and the basic/tags/lifecycle config helpers should no longer require a random name parameter since it isn't actually used.

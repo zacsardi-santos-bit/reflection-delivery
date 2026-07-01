@@ -1,0 +1,26 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest --config jest.config.js src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx --coverage=false --watchAll=false --verbose",
+  "test_files": [
+    "src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists should display the create alert section renders the create alert section",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists should display the create alert section for artworks that are on loan",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists should display the create alert section for artworks that are on a permanent collection",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists should not display the create alert section for bidding closed artworks if artwork is ineligible for alerts",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists should not display the create alert section if artwork is ineligible for alerts",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists Artsy Guarantee section should be displayed when eligible for artsy guarantee",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists Artsy Guarantee section should not be displayed when ineligible for artsy guarantee",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists Artsy Guarantee section should track click to expand/collapse the Artsy Guarantee section",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists Shipping and taxes section Shipping estimate feature flag enabled Renders the ArtsyShippingEstimate component for an acquireable artwork with global shipping",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists Shipping and taxes section Shipping estimate feature flag enabled Does not render the ArtsyShippingEstimate component for an acquireable artwork without global shipping",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists Shipping and taxes section should track click to expand/collapse the Shipping and taxes section",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists Auction Timer should show if the artwork is in an auction",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists Auction Timer should show if the artwork is in a timed sale",
+    "/workspace/repo/src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx::ArtworkSidebarArtists Auction Timer should not show if the artwork is in a timed sale that has ended"
+  ],
+  "PASS_TO_PASS": []
+}

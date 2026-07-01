@@ -1,0 +1,23 @@
+{
+ "task": "project-monai-monai-1097",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden convutils.py: 'def gaussian_1d(sigma, truncated=4.0, approx=\"erf\", normalize=False)' with erf/sampled/scalespace branches raising NotImplementedError otherwise, plus new 'def polyval(coef, x)'; tests assert exact numeric kernel outputs and run a real backprop training loop over trainable sigm"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 10,
+  "shallow": true
+ }
+}

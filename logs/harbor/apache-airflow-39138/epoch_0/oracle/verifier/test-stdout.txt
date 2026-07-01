@@ -1,0 +1,29 @@
+patching file tests/api_connexion/endpoints/test_dag_parsing.py
+patching file tests/dag_processing/test_job_runner.py
+patching file tests/test_utils/db.py
+patching file tests/utils/test_db_cleanup.py
+============================= test session starts ==============================
+platform linux -- Python 3.10.20, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: icdiff-0.9, instafail-0.5.0, requests-mock-1.12.1, mock-3.15.1, timeouts-1.2.1, custom-exit-code-0.3.0, asyncio-1.4.0, time-machine-3.2.0, anyio-4.14.1
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+setup timeout: 0.0s, execution timeout: 0.0s, teardown timeout: 0.0s
+collecting ... collected 4 items
+
+tests/dag_processing/test_job_runner.py::TestDagProcessorJobRunner::test_file_paths_in_queue_sorted_by_priority PASSED [ 25%]
+tests/api_connexion/endpoints/test_dag_parsing.py::TestDagParsingRequest::test_201_and_400_requests PASSED [ 50%]
+tests/api_connexion/endpoints/test_dag_parsing.py::TestDagParsingRequest::test_bad_file_request PASSED [ 75%]
+tests/api_connexion/endpoints/test_dag_parsing.py::TestDagParsingRequest::test_bad_user_request PASSED [100%]
+==================== Warning summary. Total: 22, Unique: 8 =====================
+airflow: total 3, unique 3
+  runtest: total 3, unique 3
+other: total 11, unique 3
+  runtest: total 11, unique 3
+tests: total 8, unique 2
+  runtest: total 8, unique 2
+Warnings saved into /workspace/repo/tests/warnings.txt file.
+
+============================== 4 passed in 10.79s ==============================
+reward=1 graded=4 found=0 failed=0 parsed=4 framework=pytest exit_code=0

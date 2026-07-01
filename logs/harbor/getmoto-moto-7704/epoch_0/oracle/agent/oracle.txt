@@ -1,0 +1,7 @@
+patching file moto/backend_index.py
+patching file moto/backends.py
+patching file moto/networkmanager/__init__.py
+patching file moto/networkmanager/exceptions.py
+patching file moto/networkmanager/models.py
+patching file moto/networkmanager/responses.py
+patching file moto/networkmanager/urls.py

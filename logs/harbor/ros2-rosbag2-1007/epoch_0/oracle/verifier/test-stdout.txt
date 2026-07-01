@@ -1,0 +1,4 @@
+patching file rosbag2_transport/test/rosbag2_transport/mock_player.hpp
+patching file rosbag2_transport/test/rosbag2_transport/test_play_services.cpp
+patching file rosbag2_transport/test/rosbag2_transport/test_player_stop.cpp
+reward=1 graded=8 found=8 failed=0 parsed=8 framework=gtest exit_code=0

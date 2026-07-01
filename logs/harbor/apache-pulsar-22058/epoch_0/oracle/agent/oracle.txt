@@ -1,0 +1,9 @@
+patching file pulsar-broker/pom.xml
+patching file pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java
+patching file pulsar-broker/src/main/java/org/apache/pulsar/broker/namespace/NamespaceService.java
+patching file pulsar-broker/src/main/java/org/apache/pulsar/broker/service/BrokerService.java
+patching file pulsar-broker/src/main/java/org/apache/pulsar/broker/stats/PulsarBrokerOpenTelemetry.java
+patching file pulsar-common/src/main/java/org/apache/pulsar/common/stats/MetricsUtil.java
+patching file pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/OpenTelemetryService.java
+patching file pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/annotations/PulsarDeprecatedMetric.java
+patching file pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/annotations/package-info.java

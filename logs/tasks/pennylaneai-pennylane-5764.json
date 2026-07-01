@@ -1,0 +1,23 @@
+{
+ "task": "pennylaneai-pennylane-5764",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'def molecular_dipole(molecule, method=\"dhf\", ...' and parity mapping; F2P=30 real pytest ids"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 25,
+  "shallow": true
+ }
+}

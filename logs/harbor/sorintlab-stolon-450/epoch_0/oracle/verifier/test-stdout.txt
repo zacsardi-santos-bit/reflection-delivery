@@ -1,0 +1,42 @@
+patching file pkg/postgresql/utils_test.go
+patching file tests/integration/config_test.go
+{"Time":"2026-06-29T15:15:23.272651725Z","Action":"start","Package":"github.com/sorintlab/stolon/pkg/postgresql"}
+{"Time":"2026-06-29T15:15:23.281414363Z","Action":"run","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseTimelineHistory"}
+{"Time":"2026-06-29T15:15:23.281455218Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseTimelineHistory","Output":"=== RUN   TestParseTimelineHistory\n"}
+{"Time":"2026-06-29T15:15:23.281488385Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseTimelineHistory","Output":"    utils_test.go:50: test #0\n"}
+{"Time":"2026-06-29T15:15:23.28200574Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseTimelineHistory","Output":"    utils_test.go:50: test #1\n"}
+{"Time":"2026-06-29T15:15:23.282039152Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseTimelineHistory","Output":"--- PASS: TestParseTimelineHistory (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.282055408Z","Action":"pass","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseTimelineHistory","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.282067588Z","Action":"run","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestValidReplSlotName"}
+{"Time":"2026-06-29T15:15:23.282076185Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestValidReplSlotName","Output":"=== RUN   TestValidReplSlotName\n"}
+{"Time":"2026-06-29T15:15:23.282186542Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestValidReplSlotName","Output":"--- PASS: TestValidReplSlotName (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.282208562Z","Action":"pass","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestValidReplSlotName","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.282271689Z","Action":"run","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestExpand"}
+{"Time":"2026-06-29T15:15:23.28229199Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestExpand","Output":"=== RUN   TestExpand\n"}
+{"Time":"2026-06-29T15:15:23.282318532Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestExpand","Output":"--- PASS: TestExpand (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.282329506Z","Action":"pass","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestExpand","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.282342205Z","Action":"run","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseBinaryVersion"}
+{"Time":"2026-06-29T15:15:23.282354689Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseBinaryVersion","Output":"=== RUN   TestParseBinaryVersion\n"}
+{"Time":"2026-06-29T15:15:23.282385147Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseBinaryVersion","Output":"    utils_test.go:162: test #0\n"}
+{"Time":"2026-06-29T15:15:23.282401119Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseBinaryVersion","Output":"    utils_test.go:162: test #1\n"}
+{"Time":"2026-06-29T15:15:23.282417373Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseBinaryVersion","Output":"    utils_test.go:162: test #2\n"}
+{"Time":"2026-06-29T15:15:23.282427616Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseBinaryVersion","Output":"    utils_test.go:162: test #3\n"}
+{"Time":"2026-06-29T15:15:23.282447322Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseBinaryVersion","Output":"--- PASS: TestParseBinaryVersion (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.282461659Z","Action":"pass","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseBinaryVersion","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.282471299Z","Action":"run","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseVersion"}
+{"Time":"2026-06-29T15:15:23.282485189Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseVersion","Output":"=== RUN   TestParseVersion\n"}
+{"Time":"2026-06-29T15:15:23.282506471Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseVersion","Output":"    utils_test.go:196: test #0\n"}
+{"Time":"2026-06-29T15:15:23.282516381Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseVersion","Output":"--- PASS: TestParseVersion (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.282525939Z","Action":"pass","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestParseVersion","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.282535685Z","Action":"run","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestIsWalFileName"}
+{"Time":"2026-06-29T15:15:23.282544976Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestIsWalFileName","Output":"=== RUN   TestIsWalFileName\n"}
+{"Time":"2026-06-29T15:15:23.282560794Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestIsWalFileName","Output":"--- PASS: TestIsWalFileName (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.28257611Z","Action":"pass","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestIsWalFileName","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.28258826Z","Action":"run","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestWalFileNameNoTimeLine"}
+{"Time":"2026-06-29T15:15:23.282598646Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestWalFileNameNoTimeLine","Output":"=== RUN   TestWalFileNameNoTimeLine\n"}
+{"Time":"2026-06-29T15:15:23.282686146Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestWalFileNameNoTimeLine","Output":"--- PASS: TestWalFileNameNoTimeLine (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.282708532Z","Action":"pass","Package":"github.com/sorintlab/stolon/pkg/postgresql","Test":"TestWalFileNameNoTimeLine","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.282717248Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Output":"PASS\n"}
+{"Time":"2026-06-29T15:15:23.283118718Z","Action":"output","Package":"github.com/sorintlab/stolon/pkg/postgresql","Output":"ok  \tgithub.com/sorintlab/stolon/pkg/postgresql\t0.010s\n"}
+{"Time":"2026-06-29T15:15:23.283150077Z","Action":"pass","Package":"github.com/sorintlab/stolon/pkg/postgresql","Elapsed":0.011}
+reward=1 graded=7 found=7 failed=0 parsed=7 framework=go exit_code=0

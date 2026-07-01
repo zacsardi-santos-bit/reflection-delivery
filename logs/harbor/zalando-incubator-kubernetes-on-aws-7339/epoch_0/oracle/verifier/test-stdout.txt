@@ -1,0 +1,24 @@
+patching file test/e2e/Dockerfile
+patching file test/e2e/Makefile
+patching file test/e2e/external_dns.go
+patching file test/e2e/go.mod
+patching file test/e2e/go.sum
+patching file test/e2e/gpu.go
+patching file test/e2e/node_test.go
+{"Time":"2026-06-29T15:23:32.447811614Z","Action":"start","Package":"cluster-config-test"}
+{"Time":"2026-06-29T15:23:32.453184067Z","Action":"run","Package":"cluster-config-test","Test":"TestCronJobTimeZoneFeatureGateRemoved"}
+{"Time":"2026-06-29T15:23:32.453220772Z","Action":"output","Package":"cluster-config-test","Test":"TestCronJobTimeZoneFeatureGateRemoved","Output":"=== RUN   TestCronJobTimeZoneFeatureGateRemoved\n"}
+{"Time":"2026-06-29T15:23:32.453562565Z","Action":"output","Package":"cluster-config-test","Test":"TestCronJobTimeZoneFeatureGateRemoved","Output":"--- PASS: TestCronJobTimeZoneFeatureGateRemoved (0.00s)\n"}
+{"Time":"2026-06-29T15:23:32.453590895Z","Action":"pass","Package":"cluster-config-test","Test":"TestCronJobTimeZoneFeatureGateRemoved","Elapsed":0}
+{"Time":"2026-06-29T15:23:32.453608029Z","Action":"run","Package":"cluster-config-test","Test":"TestKubernetesV129AMIConfigured"}
+{"Time":"2026-06-29T15:23:32.45361782Z","Action":"output","Package":"cluster-config-test","Test":"TestKubernetesV129AMIConfigured","Output":"=== RUN   TestKubernetesV129AMIConfigured\n"}
+{"Time":"2026-06-29T15:23:32.453804709Z","Action":"output","Package":"cluster-config-test","Test":"TestKubernetesV129AMIConfigured","Output":"--- PASS: TestKubernetesV129AMIConfigured (0.00s)\n"}
+{"Time":"2026-06-29T15:23:32.453820537Z","Action":"pass","Package":"cluster-config-test","Test":"TestKubernetesV129AMIConfigured","Elapsed":0}
+{"Time":"2026-06-29T15:23:32.453889216Z","Action":"run","Package":"cluster-config-test","Test":"TestMasterNodePoolUsesV129"}
+{"Time":"2026-06-29T15:23:32.453910957Z","Action":"output","Package":"cluster-config-test","Test":"TestMasterNodePoolUsesV129","Output":"=== RUN   TestMasterNodePoolUsesV129\n"}
+{"Time":"2026-06-29T15:23:32.454025706Z","Action":"output","Package":"cluster-config-test","Test":"TestMasterNodePoolUsesV129","Output":"--- PASS: TestMasterNodePoolUsesV129 (0.00s)\n"}
+{"Time":"2026-06-29T15:23:32.454052089Z","Action":"pass","Package":"cluster-config-test","Test":"TestMasterNodePoolUsesV129","Elapsed":0}
+{"Time":"2026-06-29T15:23:32.454060895Z","Action":"output","Package":"cluster-config-test","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:32.454364784Z","Action":"output","Package":"cluster-config-test","Output":"ok  \tcluster-config-test\t0.006s\n"}
+{"Time":"2026-06-29T15:23:32.454402058Z","Action":"pass","Package":"cluster-config-test","Elapsed":0.007}
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=go exit_code=0

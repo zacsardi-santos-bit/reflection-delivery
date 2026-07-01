@@ -1,0 +1,23 @@
+{
+ "task": "scalar-scalar-4462",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds generateHeadingSlug/generateModelSlug/... and F2P 'should use custom model slug generator' expects 'model/custom-model'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 19,
+  "shallow": true
+ }
+}

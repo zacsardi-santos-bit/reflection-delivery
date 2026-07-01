@@ -1,0 +1,7 @@
+I'm working with Apache Sedona and I need two new geometry constructor functions added across all supported backends (Spark SQL, the DataFrame API, Flink, Snowflake, and the core Java library).
+
+The first is a way to create a Point geometry that carries a measure (M) coordinate in addition to the usual X and Y values. The text representation of such a point should follow the standard format for M-coordinate points. This constructor should be available as a SQL function, a DataFrame API function, and in the Flink and core Java layers.
+
+The second is a dedicated constructor that builds a Linestring geometry from Well-Known Binary (WKB) data. The input can be either raw binary bytes or a hex-encoded string — both should be supported. What makes this different from a general geometry-from-WKB function is that it should be linestring-specific: if the WKB actually encodes a different geometry type (like a point or polygon), the function should return null rather than returning a non-linestring geometry. If the input is not valid WKB at all, it should raise an error. It should also accept an optional spatial reference ID, and when one is provided, the geometry should carry that SRID (visible in the extended WKT output with the appropriate prefix). This function should be available in Spark SQL, the DataFrame API, Flink, and Snowflake.
+
+For both functions, null inputs should return null results in contexts where that behavior is expected (e.g., the DataFrame API).

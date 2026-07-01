@@ -1,0 +1,664 @@
+patching file crates/nu-plugin/src/plugin/interface/engine/tests.rs
+patching file crates/nu-plugin/src/plugin/interface/plugin/tests.rs
+patching file crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs
+patching file crates/nu-plugin/src/serializers/tests.rs
+patching file tests/plugins/custom_values.rs
+   Compiling nu-plugin v0.91.1 (/workspace/repo/crates/nu-plugin)
+error[E0599]: no method named `name` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:499:61
+    |
+499 |             assert_eq!("TestCustomValue", custom_value.item.name());
+    |                                                             ^^^^-- help: remove the arguments
+    |                                                             |
+    |                                                             field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `name` not found for this struct
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no function or associated item named `new` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:603:51
+    |
+603 |     let invalid_custom_value = PluginCustomValue::new(
+    |                                                   ^^^ function or associated item not found in `PluginCustomValue`
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- function or associated item `new` not found for this struct
+
+error[E0599]: no method named `name` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:969:25
+    |
+969 |     assert_eq!(expected.name(), custom_value.name());
+    |                         ^^^^-- help: remove the arguments
+    |                         |
+    |                         field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `name` not found for this struct
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no method named `name` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:969:46
+    |
+969 |     assert_eq!(expected.name(), custom_value.name());
+    |                                              ^^^^-- help: remove the arguments
+    |                                              |
+    |                                              field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no method named `data` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:970:25
+    |
+970 |     assert_eq!(expected.data(), custom_value.data());
+    |                         ^^^^-- help: remove the arguments
+    |                         |
+    |                         field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `data` not found for this struct
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+
+error[E0599]: no method named `data` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:970:46
+    |
+970 |     assert_eq!(expected.data(), custom_value.data());
+    |                                              ^^^^-- help: remove the arguments
+    |                                              |
+    |                                              field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+
+error[E0599]: no method named `source` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:971:26
+    |
+971 |     assert!(custom_value.source().is_none());
+    |                          ^^^^^^-- help: remove the arguments
+    |                          |
+    |                          field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the trait `StdError` defines an item `source`, but is explicitly unimplemented
+
+error[E0599]: no method named `name` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:998:25
+    |
+998 |     assert_eq!(expected.name(), custom_value.name());
+    |                         ^^^^-- help: remove the arguments
+    |                         |
+    |                         field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `name` not found for this struct
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no method named `name` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:998:46
+    |
+998 |     assert_eq!(expected.name(), custom_value.name());
+    |                                              ^^^^-- help: remove the arguments
+    |                                              |
+    |                                              field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no method named `data` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:999:25
+    |
+999 |     assert_eq!(expected.data(), custom_value.data());
+    |                         ^^^^-- help: remove the arguments
+    |                         |
+    |                         field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `data` not found for this struct
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+
+error[E0599]: no method named `data` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:999:46
+    |
+999 |     assert_eq!(expected.data(), custom_value.data());
+    |                                              ^^^^-- help: remove the arguments
+    |                                              |
+    |                                              field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+
+error[E0599]: no method named `source` found for reference `&PluginCustomValue` in the current scope
+    --> crates/nu-plugin/src/plugin/interface/engine/tests.rs:1000:26
+     |
+1000 |     assert!(custom_value.source().is_none());
+     |                          ^^^^^^-- help: remove the arguments
+     |                          |
+     |                          field, not a method
+     |
+     = help: items from traits can only be used if the trait is implemented and in scope
+     = note: the trait `StdError` defines an item `source`, but is explicitly unimplemented
+
+error[E0599]: no method named `source` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/plugin/tests.rs:652:40
+    |
+652 |     if let Some(source) = custom_value.source() {
+    |                                        ^^^^^^-- help: remove the arguments
+    |                                        |
+    |                                        field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the trait `StdError` defines an item `source`, but is explicitly unimplemented
+
+error[E0599]: no method named `source` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/plugin/tests.rs:682:40
+    |
+682 |     if let Some(source) = custom_value.source() {
+    |                                        ^^^^^^-- help: remove the arguments
+    |                                        |
+    |                                        field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the trait `StdError` defines an item `source`, but is explicitly unimplemented
+
+error[E0599]: no function or associated item named `new` found for struct `PluginCustomValue` in the current scope
+    --> crates/nu-plugin/src/plugin/interface/plugin/tests.rs:1095:62
+     |
+1095 |         Value::test_custom_value(Box::new(PluginCustomValue::new(
+     |                                                              ^^^ function or associated item not found in `PluginCustomValue`
+     |
+    ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+     |
+24   | pub struct PluginCustomValue {
+     | ---------------------------- function or associated item `new` not found for this struct
+
+error[E0599]: no function or associated item named `new` found for struct `PluginCustomValue` in the current scope
+    --> crates/nu-plugin/src/plugin/interface/plugin/tests.rs:1149:62
+     |
+1149 |         Value::test_custom_value(Box::new(PluginCustomValue::new(
+     |                                                              ^^^ function or associated item not found in `PluginCustomValue`
+     |
+    ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+     |
+24   | pub struct PluginCustomValue {
+     | ---------------------------- function or associated item `new` not found for this struct
+
+error[E0599]: no function or associated item named `new` found for struct `PluginCustomValue` in the current scope
+    --> crates/nu-plugin/src/plugin/interface/plugin/tests.rs:1156:62
+     |
+1156 |         Value::test_custom_value(Box::new(PluginCustomValue::new(
+     |                                                              ^^^ function or associated item not found in `PluginCustomValue`
+     |
+    ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+     |
+24   | pub struct PluginCustomValue {
+     | ---------------------------- function or associated item `new` not found for this struct
+
+error[E0599]: no method named `name` found for struct `PluginCustomValue` in the current scope
+  --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:22:58
+   |
+22 |     assert_eq!(original_value.value_string(), serialized.name());
+   |                                                          ^^^^-- help: remove the arguments
+   |                                                          |
+   |                                                          field, not a method
+   |
+  ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+   |
+24 | pub struct PluginCustomValue {
+   | ---------------------------- method `name` not found for this struct
+   |
+   = help: items from traits can only be used if the trait is implemented and in scope
+   = note: the following traits define an item `name`, perhaps you need to implement one of them:
+           candidate #1: `plugin::PluginEncoder`
+           candidate #2: `nu_protocol::engine::Command`
+           candidate #3: `SpanContents`
+
+error[E0599]: no method named `data` found for struct `PluginCustomValue` in the current scope
+  --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:39:36
+   |
+39 |         test_plugin_custom_value().data(),
+   |                                    ^^^^-- help: remove the arguments
+   |                                    |
+   |                                    field, not a method
+   |
+  ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+   |
+24 | pub struct PluginCustomValue {
+   | ---------------------------- method `data` not found for this struct
+   |
+   = help: items from traits can only be used if the trait is implemented and in scope
+   = note: the following trait defines an item `data`, perhaps you need to implement it:
+           candidate #1: `SpanContents`
+
+error[E0599]: no method named `data` found for struct `PluginCustomValue` in the current scope
+  --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:40:20
+   |
+40 |         serialized.data(),
+   |                    ^^^^-- help: remove the arguments
+   |                    |
+   |                    field, not a method
+   |
+  ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+   |
+24 | pub struct PluginCustomValue {
+   | ---------------------------- method `data` not found for this struct
+   |
+   = help: items from traits can only be used if the trait is implemented and in scope
+   = note: the following trait defines an item `data`, perhaps you need to implement it:
+           candidate #1: `SpanContents`
+
+error[E0599]: no method named `name` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:420:59
+    |
+420 |         assert_eq!("TestCustomValue", plugin_custom_value.name());
+    |                                                           ^^^^-- help: remove the arguments
+    |                                                           |
+    |                                                           field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no method named `data` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:422:40
+    |
+422 |             test_plugin_custom_value().data(),
+    |                                        ^^^^-- help: remove the arguments
+    |                                        |
+    |                                        field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `data` not found for this struct
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+
+error[E0599]: no method named `data` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:423:33
+    |
+423 |             plugin_custom_value.data()
+    |                                 ^^^^-- help: remove the arguments
+    |                                 |
+    |                                 field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+
+error[E0599]: no method named `name` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:450:33
+    |
+450 |             plugin_custom_value.name(),
+    |                                 ^^^^-- help: remove the arguments
+    |                                 |
+    |                                 field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no method named `name` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:473:33
+    |
+473 |             plugin_custom_value.name(),
+    |                                 ^^^^-- help: remove the arguments
+    |                                 |
+    |                                 field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no method named `name` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:493:33
+    |
+493 |             plugin_custom_value.name(),
+    |                                 ^^^^-- help: remove the arguments
+    |                                 |
+    |                                 field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no method named `name` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:516:33
+    |
+516 |             plugin_custom_value.name(),
+    |                                 ^^^^-- help: remove the arguments
+    |                                 |
+    |                                 field, not a method
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no function or associated item named `new` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:179:46
+    |
+179 |                     item: PluginCustomValue::new("Foo".into(), data.clone(), false, None),
+    |                                              ^^^ function or associated item not found in `PluginCustomValue`
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- function or associated item `new` not found for this struct
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `name` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:199:48
+    |
+199 |                     assert_eq!("Foo", val.item.name());
+    |                                                ^^^^-- help: remove the arguments
+    |                                                |
+    |                                                field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `name` not found for this struct
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `data` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:200:47
+    |
+200 |                     assert_eq!(data, val.item.data());
+    |                                               ^^^^-- help: remove the arguments
+    |                                               |
+    |                                               field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `data` not found for this struct
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `new` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:319:45
+    |
+319 |                 Box::new(PluginCustomValue::new(
+    |                                             ^^^ function or associated item not found in `PluginCustomValue`
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- function or associated item `new` not found for this struct
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `name` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:354:53
+    |
+354 |                         assert_eq!(name, plugin_val.name());
+    |                                                     ^^^^-- help: remove the arguments
+    |                                                     |
+    |                                                     field, not a method
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `data` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:355:53
+    |
+355 |                         assert_eq!(data, plugin_val.data());
+    |                                                     ^^^^-- help: remove the arguments
+    |                                                     |
+    |                                                     field, not a method
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `notify_on_drop` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:356:44
+    |
+356 |                         assert!(plugin_val.notify_on_drop());
+    |                                            ^^^^^^^^^^^^^^ method not found in `&PluginCustomValue`
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `new` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:179:46
+    |
+179 |                     item: PluginCustomValue::new("Foo".into(), data.clone(), false, None),
+    |                                              ^^^ function or associated item not found in `PluginCustomValue`
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- function or associated item `new` not found for this struct
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `name` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:199:48
+    |
+199 |                     assert_eq!("Foo", val.item.name());
+    |                                                ^^^^-- help: remove the arguments
+    |                                                |
+    |                                                field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `name` not found for this struct
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `data` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:200:47
+    |
+200 |                     assert_eq!(data, val.item.data());
+    |                                               ^^^^-- help: remove the arguments
+    |                                               |
+    |                                               field, not a method
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- method `data` not found for this struct
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `new` found for struct `PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:319:45
+    |
+319 |                 Box::new(PluginCustomValue::new(
+    |                                             ^^^ function or associated item not found in `PluginCustomValue`
+    |
+   ::: crates/nu-plugin/src/protocol/plugin_custom_value.rs:24:1
+    |
+24  | pub struct PluginCustomValue {
+    | ---------------------------- function or associated item `new` not found for this struct
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `name` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:354:53
+    |
+354 |                         assert_eq!(name, plugin_val.name());
+    |                                                     ^^^^-- help: remove the arguments
+    |                                                     |
+    |                                                     field, not a method
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `data` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:355:53
+    |
+355 |                         assert_eq!(data, plugin_val.data());
+    |                                                     ^^^^-- help: remove the arguments
+    |                                                     |
+    |                                                     field, not a method
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `data`, perhaps you need to implement it:
+            candidate #1: `SpanContents`
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `notify_on_drop` found for reference `&PluginCustomValue` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:356:44
+    |
+356 |                         assert!(plugin_val.notify_on_drop());
+    |                                            ^^^^^^^^^^^^^^ method not found in `&PluginCustomValue`
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `nu-plugin` (lib test) due to 41 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.74.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package nu-plugin` exited with code 101
+reward=0 graded=165 found=0 failed=0 parsed=0 framework=cargo exit_code=101

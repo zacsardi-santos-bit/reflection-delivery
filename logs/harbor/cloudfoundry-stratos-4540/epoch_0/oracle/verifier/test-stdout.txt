@@ -1,0 +1,736 @@
+patching file src/jetstream/apikeys_test.go
+patching file src/jetstream/auth_test.go
+patching file src/jetstream/middleware_test.go
+# github.com/mattn/go-sqlite3
+sqlite3-binding.c: In function 'sqlite3SelectNew':
+sqlite3-binding.c:125801:10: warning: function may return address of local variable [-Wreturn-local-addr]
+125801 |   return pNew;
+       |          ^~~~
+sqlite3-binding.c:125761:10: note: declared here
+125761 |   Select standin;
+       |          ^~~~~~~
+{"Time":"2026-06-29T15:15:23.853666754Z","Action":"start","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream"}
+{"Time":"2026-06-29T15:15:23.874530642Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey"}
+{"Time":"2026-06-29T15:15:23.874582826Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey","Output":"=== RUN   Test_addAPIKey\n"}
+{"Time":"2026-06-29T15:15:23.874598193Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey","Output":"=== PAUSE Test_addAPIKey\n"}
+{"Time":"2026-06-29T15:15:23.874606171Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey"}
+{"Time":"2026-06-29T15:15:23.874617869Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys"}
+{"Time":"2026-06-29T15:15:23.874639126Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"=== RUN   Test_listAPIKeys\n"}
+{"Time":"2026-06-29T15:15:23.874652015Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"=== PAUSE Test_listAPIKeys\n"}
+{"Time":"2026-06-29T15:15:23.874659121Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys"}
+{"Time":"2026-06-29T15:15:23.874667358Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys"}
+{"Time":"2026-06-29T15:15:23.874675464Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"=== RUN   Test_deleteAPIKeys\n"}
+{"Time":"2026-06-29T15:15:23.874684374Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"=== PAUSE Test_deleteAPIKeys\n"}
+{"Time":"2026-06-29T15:15:23.875455271Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys"}
+{"Time":"2026-06-29T15:15:23.87560036Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA"}
+{"Time":"2026-06-29T15:15:23.875671346Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA","Output":"=== RUN   TestLoginToUAA\n"}
+{"Time":"2026-06-29T15:15:23.875691042Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA","Output":"=== PAUSE TestLoginToUAA\n"}
+{"Time":"2026-06-29T15:15:23.875698945Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA"}
+{"Time":"2026-06-29T15:15:23.875707215Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin"}
+{"Time":"2026-06-29T15:15:23.875714361Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin","Output":"=== RUN   TestLocalLogin\n"}
+{"Time":"2026-06-29T15:15:23.875727846Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin","Output":"=== PAUSE TestLocalLogin\n"}
+{"Time":"2026-06-29T15:15:23.875735778Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin"}
+{"Time":"2026-06-29T15:15:23.875743887Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials"}
+{"Time":"2026-06-29T15:15:23.875802155Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials","Output":"=== RUN   TestLocalLoginWithBadCredentials\n"}
+{"Time":"2026-06-29T15:15:23.875829039Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials","Output":"=== PAUSE TestLocalLoginWithBadCredentials\n"}
+{"Time":"2026-06-29T15:15:23.875836662Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials"}
+{"Time":"2026-06-29T15:15:23.875858263Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope"}
+{"Time":"2026-06-29T15:15:23.875865873Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"=== RUN   TestLocalLoginWithNoAdminScope\n"}
+{"Time":"2026-06-29T15:15:23.875875088Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"=== PAUSE TestLocalLoginWithNoAdminScope\n"}
+{"Time":"2026-06-29T15:15:23.875881776Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope"}
+{"Time":"2026-06-29T15:15:23.875889594Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds"}
+{"Time":"2026-06-29T15:15:23.875899384Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds","Output":"=== RUN   TestLoginToUAAWithBadCreds\n"}
+{"Time":"2026-06-29T15:15:23.87590785Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds","Output":"=== PAUSE TestLoginToUAAWithBadCreds\n"}
+{"Time":"2026-06-29T15:15:23.875915175Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds"}
+{"Time":"2026-06-29T15:15:23.875922617Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken"}
+{"Time":"2026-06-29T15:15:23.875929861Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"=== RUN   TestLoginToUAAButCantSaveToken\n"}
+{"Time":"2026-06-29T15:15:23.875937018Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"=== PAUSE TestLoginToUAAButCantSaveToken\n"}
+{"Time":"2026-06-29T15:15:23.875944146Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken"}
+{"Time":"2026-06-29T15:15:23.875951338Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI"}
+{"Time":"2026-06-29T15:15:23.87600704Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"=== RUN   TestLoginToCNSI\n"}
+{"Time":"2026-06-29T15:15:23.876208459Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"=== PAUSE TestLoginToCNSI\n"}
+{"Time":"2026-06-29T15:15:23.876218467Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI"}
+{"Time":"2026-06-29T15:15:23.876231955Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithoutCNSIGuid"}
+{"Time":"2026-06-29T15:15:23.876257453Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithoutCNSIGuid","Output":"=== RUN   TestLoginToCNSIWithoutCNSIGuid\n"}
+{"Time":"2026-06-29T15:15:23.876267108Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithoutCNSIGuid","Output":"=== PAUSE TestLoginToCNSIWithoutCNSIGuid\n"}
+{"Time":"2026-06-29T15:15:23.876286995Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithoutCNSIGuid"}
+{"Time":"2026-06-29T15:15:23.876296322Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord"}
+{"Time":"2026-06-29T15:15:23.876314551Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord","Output":"=== RUN   TestLoginToCNSIWithMissingCNSIRecord\n"}
+{"Time":"2026-06-29T15:15:23.876324514Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord","Output":"=== PAUSE TestLoginToCNSIWithMissingCNSIRecord\n"}
+{"Time":"2026-06-29T15:15:23.876333938Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord"}
+{"Time":"2026-06-29T15:15:23.876341179Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds"}
+{"Time":"2026-06-29T15:15:23.876351473Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Output":"=== RUN   TestLoginToCNSIWithMissingCreds\n"}
+{"Time":"2026-06-29T15:15:23.876361001Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Output":"=== PAUSE TestLoginToCNSIWithMissingCreds\n"}
+{"Time":"2026-06-29T15:15:23.876367894Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds"}
+{"Time":"2026-06-29T15:15:23.876375191Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadUserIDinSession"}
+{"Time":"2026-06-29T15:15:23.876382169Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadUserIDinSession","Output":"=== RUN   TestLoginToCNSIWithBadUserIDinSession\n"}
+{"Time":"2026-06-29T15:15:23.876392325Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadUserIDinSession","Output":"=== PAUSE TestLoginToCNSIWithBadUserIDinSession\n"}
+{"Time":"2026-06-29T15:15:23.87639977Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadUserIDinSession"}
+{"Time":"2026-06-29T15:15:23.876407197Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout"}
+{"Time":"2026-06-29T15:15:23.876421044Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout","Output":"=== RUN   TestLogout\n"}
+{"Time":"2026-06-29T15:15:23.876429948Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout","Output":"=== PAUSE TestLogout\n"}
+{"Time":"2026-06-29T15:15:23.876437085Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout"}
+{"Time":"2026-06-29T15:15:23.87644462Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSaveCNSITokenWithInvalidInput"}
+{"Time":"2026-06-29T15:15:23.876454002Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSaveCNSITokenWithInvalidInput","Output":"=== RUN   TestSaveCNSITokenWithInvalidInput\n"}
+{"Time":"2026-06-29T15:15:23.876461536Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSaveCNSITokenWithInvalidInput","Output":"=== PAUSE TestSaveCNSITokenWithInvalidInput\n"}
+{"Time":"2026-06-29T15:15:23.876530251Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSaveCNSITokenWithInvalidInput"}
+{"Time":"2026-06-29T15:15:23.876649302Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord"}
+{"Time":"2026-06-29T15:15:23.876665007Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":"=== RUN   TestSetUAATokenRecord\n"}
+{"Time":"2026-06-29T15:15:23.87667565Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":"=== PAUSE TestSetUAATokenRecord\n"}
+{"Time":"2026-06-29T15:15:23.876692932Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord"}
+{"Time":"2026-06-29T15:15:23.876703955Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingAPIEndpoint"}
+{"Time":"2026-06-29T15:15:23.876715043Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingAPIEndpoint","Output":"=== RUN   TestLoginToCNSIWithMissingAPIEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.87672402Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingAPIEndpoint","Output":"    auth_test.go:672: Skipping for now - need to verify whether still needed.\n"}
+{"Time":"2026-06-29T15:15:23.876740703Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingAPIEndpoint","Output":"--- SKIP: TestLoginToCNSIWithMissingAPIEndpoint (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.876748666Z","Action":"skip","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingAPIEndpoint","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.876758477Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadCreds"}
+{"Time":"2026-06-29T15:15:23.876768631Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadCreds","Output":"=== RUN   TestLoginToCNSIWithBadCreds\n"}
+{"Time":"2026-06-29T15:15:23.876778081Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadCreds","Output":"    auth_test.go:703: Skipping for now - need to verify whether still needed.\n"}
+{"Time":"2026-06-29T15:15:23.876786545Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadCreds","Output":"--- SKIP: TestLoginToCNSIWithBadCreds (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.876794521Z","Action":"skip","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadCreds","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.876807373Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySession"}
+{"Time":"2026-06-29T15:15:23.876814693Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySession","Output":"=== RUN   TestVerifySession\n"}
+{"Time":"2026-06-29T15:15:23.876822433Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySession","Output":"=== PAUSE TestVerifySession\n"}
+{"Time":"2026-06-29T15:15:23.876829426Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySession"}
+{"Time":"2026-06-29T15:15:23.876847736Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate"}
+{"Time":"2026-06-29T15:15:23.87685515Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate","Output":"=== RUN   TestVerifySessionNoDate\n"}
+{"Time":"2026-06-29T15:15:23.876864779Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate","Output":"=== PAUSE TestVerifySessionNoDate\n"}
+{"Time":"2026-06-29T15:15:23.876878533Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate"}
+{"Time":"2026-06-29T15:15:23.876888392Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionExpired"}
+{"Time":"2026-06-29T15:15:23.876897635Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionExpired","Output":"=== RUN   TestVerifySessionExpired\n"}
+{"Time":"2026-06-29T15:15:23.876905968Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionExpired","Output":"=== PAUSE TestVerifySessionExpired\n"}
+{"Time":"2026-06-29T15:15:23.876914505Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionExpired"}
+{"Time":"2026-06-29T15:15:23.876923337Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFCluster"}
+{"Time":"2026-06-29T15:15:23.876930982Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFCluster","Output":"=== RUN   TestRegisterCFCluster\n"}
+{"Time":"2026-06-29T15:15:23.876938471Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFCluster","Output":"=== PAUSE TestRegisterCFCluster\n"}
+{"Time":"2026-06-29T15:15:23.87694531Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFCluster"}
+{"Time":"2026-06-29T15:15:23.876954437Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingName"}
+{"Time":"2026-06-29T15:15:23.876961497Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingName","Output":"=== RUN   TestRegisterCFClusterWithMissingName\n"}
+{"Time":"2026-06-29T15:15:23.876970076Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingName","Output":"=== PAUSE TestRegisterCFClusterWithMissingName\n"}
+{"Time":"2026-06-29T15:15:23.876978421Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingName"}
+{"Time":"2026-06-29T15:15:23.87698581Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint"}
+{"Time":"2026-06-29T15:15:23.876994502Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Output":"=== RUN   TestRegisterCFClusterWithMissingAPIEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.877003936Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Output":"=== PAUSE TestRegisterCFClusterWithMissingAPIEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.877012455Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint"}
+{"Time":"2026-06-29T15:15:23.877020825Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint"}
+{"Time":"2026-06-29T15:15:23.877027632Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint","Output":"=== RUN   TestRegisterCFClusterWithInvalidAPIEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.877036064Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint","Output":"=== PAUSE TestRegisterCFClusterWithInvalidAPIEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.877042918Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint"}
+{"Time":"2026-06-29T15:15:23.877052894Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request"}
+{"Time":"2026-06-29T15:15:23.877159963Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request","Output":"=== RUN   TestRegisterCFClusterWithBadV2Request\n"}
+{"Time":"2026-06-29T15:15:23.877193105Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request","Output":"=== PAUSE TestRegisterCFClusterWithBadV2Request\n"}
+{"Time":"2026-06-29T15:15:23.877200646Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request"}
+{"Time":"2026-06-29T15:15:23.877208342Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterButCantSaveCNSIRecord"}
+{"Time":"2026-06-29T15:15:23.877218518Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterButCantSaveCNSIRecord","Output":"=== RUN   TestRegisterCFClusterButCantSaveCNSIRecord\n"}
+{"Time":"2026-06-29T15:15:23.877228204Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterButCantSaveCNSIRecord","Output":"=== PAUSE TestRegisterCFClusterButCantSaveCNSIRecord\n"}
+{"Time":"2026-06-29T15:15:23.877235241Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterButCantSaveCNSIRecord"}
+{"Time":"2026-06-29T15:15:23.877244222Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIs"}
+{"Time":"2026-06-29T15:15:23.87725189Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIs","Output":"=== RUN   TestListCNSIs\n"}
+{"Time":"2026-06-29T15:15:23.877259243Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIs","Output":"    cnsi_test.go:192: TODO: fix this test\n"}
+{"Time":"2026-06-29T15:15:23.877268918Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIs","Output":"--- SKIP: TestListCNSIs (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.877276473Z","Action":"skip","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIs","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.877292542Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIsWhenListFails"}
+{"Time":"2026-06-29T15:15:23.877300916Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIsWhenListFails","Output":"=== RUN   TestListCNSIsWhenListFails\n"}
+{"Time":"2026-06-29T15:15:23.877308546Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIsWhenListFails","Output":"=== PAUSE TestListCNSIsWhenListFails\n"}
+{"Time":"2026-06-29T15:15:23.877316698Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIsWhenListFails"}
+{"Time":"2026-06-29T15:15:23.877326123Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithBadURL"}
+{"Time":"2026-06-29T15:15:23.877333779Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithBadURL","Output":"=== RUN   TestGetCFv2InfoWithBadURL\n"}
+{"Time":"2026-06-29T15:15:23.877341407Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithBadURL","Output":"=== PAUSE TestGetCFv2InfoWithBadURL\n"}
+{"Time":"2026-06-29T15:15:23.877365665Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithBadURL"}
+{"Time":"2026-06-29T15:15:23.877378618Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint"}
+{"Time":"2026-06-29T15:15:23.877385698Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint","Output":"=== RUN   TestGetCFv2InfoWithInvalidEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.877393476Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint","Output":"=== PAUSE TestGetCFv2InfoWithInvalidEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.877400596Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint"}
+{"Time":"2026-06-29T15:15:23.877410637Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfo"}
+{"Time":"2026-06-29T15:15:23.87741808Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfo","Output":"=== RUN   TestGetUserTokenInfo\n"}
+{"Time":"2026-06-29T15:15:23.877425499Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfo","Output":"=== PAUSE TestGetUserTokenInfo\n"}
+{"Time":"2026-06-29T15:15:23.877432521Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfo"}
+{"Time":"2026-06-29T15:15:23.877441429Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoNonsenseToken"}
+{"Time":"2026-06-29T15:15:23.877448379Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoNonsenseToken","Output":"=== RUN   TestGetUserTokenInfoNonsenseToken\n"}
+{"Time":"2026-06-29T15:15:23.877456034Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoNonsenseToken","Output":"=== PAUSE TestGetUserTokenInfoNonsenseToken\n"}
+{"Time":"2026-06-29T15:15:23.877463064Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoNonsenseToken"}
+{"Time":"2026-06-29T15:15:23.877471659Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoBadToken"}
+{"Time":"2026-06-29T15:15:23.87748531Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoBadToken","Output":"=== RUN   TestGetUserTokenInfoBadToken\n"}
+{"Time":"2026-06-29T15:15:23.877503127Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoBadToken","Output":"=== PAUSE TestGetUserTokenInfoBadToken\n"}
+{"Time":"2026-06-29T15:15:23.877509964Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoBadToken"}
+{"Time":"2026-06-29T15:15:23.87752616Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser"}
+{"Time":"2026-06-29T15:15:23.877533375Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":"=== RUN   TestAddLocalUser\n"}
+{"Time":"2026-06-29T15:15:23.877540875Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":"=== PAUSE TestAddLocalUser\n"}
+{"Time":"2026-06-29T15:15:23.877556382Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser"}
+{"Time":"2026-06-29T15:15:23.877564309Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername"}
+{"Time":"2026-06-29T15:15:23.877571276Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername","Output":"=== RUN   TestAddLocalUserMissingUsername\n"}
+{"Time":"2026-06-29T15:15:23.877586268Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername","Output":"=== PAUSE TestAddLocalUserMissingUsername\n"}
+{"Time":"2026-06-29T15:15:23.877593596Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername"}
+{"Time":"2026-06-29T15:15:23.877601583Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingPassword"}
+{"Time":"2026-06-29T15:15:23.877608517Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingPassword","Output":"=== RUN   TestAddLocalUserMissingPassword\n"}
+{"Time":"2026-06-29T15:15:23.877615905Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingPassword","Output":"=== PAUSE TestAddLocalUserMissingPassword\n"}
+{"Time":"2026-06-29T15:15:23.877623753Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingPassword"}
+{"Time":"2026-06-29T15:15:23.877634898Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate"}
+{"Time":"2026-06-29T15:15:23.877660947Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate","Output":"=== RUN   TestAddLocalUserDuplicate\n"}
+{"Time":"2026-06-29T15:15:23.87766843Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate","Output":"=== PAUSE TestAddLocalUserDuplicate\n"}
+{"Time":"2026-06-29T15:15:23.877675476Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate"}
+{"Time":"2026-06-29T15:15:23.877771712Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash"}
+{"Time":"2026-06-29T15:15:23.87779819Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":"=== RUN   TestFindPasswordHash\n"}
+{"Time":"2026-06-29T15:15:23.877816849Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":"=== PAUSE TestFindPasswordHash\n"}
+{"Time":"2026-06-29T15:15:23.877844998Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash"}
+{"Time":"2026-06-29T15:15:23.877853793Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime"}
+{"Time":"2026-06-29T15:15:23.877872404Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"=== RUN   TestUpdateLastLoginTime\n"}
+{"Time":"2026-06-29T15:15:23.877881058Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"=== PAUSE TestUpdateLastLoginTime\n"}
+{"Time":"2026-06-29T15:15:23.877890327Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime"}
+{"Time":"2026-06-29T15:15:23.877898776Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadPortalConfig"}
+{"Time":"2026-06-29T15:15:23.877906868Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadPortalConfig","Output":"=== RUN   TestLoadPortalConfig\n"}
+{"Time":"2026-06-29T15:15:23.877919203Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadPortalConfig","Output":"--- PASS: TestLoadPortalConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.877928331Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadPortalConfig","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.877944337Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadDatabaseConfig"}
+{"Time":"2026-06-29T15:15:23.877961464Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadDatabaseConfig","Output":"=== RUN   TestLoadDatabaseConfig\n"}
+{"Time":"2026-06-29T15:15:23.877970657Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadDatabaseConfig","Output":"--- PASS: TestLoadDatabaseConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.877980263Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadDatabaseConfig","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.877988503Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadDatabaseConfigWithInvalidSSLMode"}
+{"Time":"2026-06-29T15:15:23.877996636Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadDatabaseConfigWithInvalidSSLMode","Output":"=== RUN   TestLoadDatabaseConfigWithInvalidSSLMode\n"}
+{"Time":"2026-06-29T15:15:23.878008629Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadDatabaseConfigWithInvalidSSLMode","Output":"--- PASS: TestLoadDatabaseConfigWithInvalidSSLMode (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.878017065Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoadDatabaseConfigWithInvalidSSLMode","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.878025842Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware"}
+{"Time":"2026-06-29T15:15:23.878033904Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware","Output":"=== RUN   Test_apiKeyMiddleware\n"}
+{"Time":"2026-06-29T15:15:23.878043506Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware","Output":"=== PAUSE Test_apiKeyMiddleware\n"}
+{"Time":"2026-06-29T15:15:23.878051725Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware"}
+{"Time":"2026-06-29T15:15:23.87806617Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken"}
+{"Time":"2026-06-29T15:15:23.878078425Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"=== RUN   TestDoOauthFlowRequestWithValidToken\n"}
+{"Time":"2026-06-29T15:15:23.878125674Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"=== PAUSE TestDoOauthFlowRequestWithValidToken\n"}
+{"Time":"2026-06-29T15:15:23.878143385Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken"}
+{"Time":"2026-06-29T15:15:23.878151896Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken"}
+{"Time":"2026-06-29T15:15:23.878176429Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"=== RUN   TestDoOauthFlowRequestWithExpiredToken\n"}
+{"Time":"2026-06-29T15:15:23.878222678Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"=== PAUSE TestDoOauthFlowRequestWithExpiredToken\n"}
+{"Time":"2026-06-29T15:15:23.878248833Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken"}
+{"Time":"2026-06-29T15:15:23.878256631Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithFailedRefreshMethod"}
+{"Time":"2026-06-29T15:15:23.878269213Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithFailedRefreshMethod","Output":"=== RUN   TestDoOauthFlowRequestWithFailedRefreshMethod\n"}
+{"Time":"2026-06-29T15:15:23.878277917Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithFailedRefreshMethod","Output":"=== PAUSE TestDoOauthFlowRequestWithFailedRefreshMethod\n"}
+{"Time":"2026-06-29T15:15:23.878284806Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithFailedRefreshMethod"}
+{"Time":"2026-06-29T15:15:23.878295107Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidTokenFailFirst"}
+{"Time":"2026-06-29T15:15:23.878301958Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidTokenFailFirst","Output":"=== RUN   TestDoOauthFlowRequestWithValidTokenFailFirst\n"}
+{"Time":"2026-06-29T15:15:23.878309381Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidTokenFailFirst","Output":"    oauth_requests_test.go:405: Skipping for now.\n"}
+{"Time":"2026-06-29T15:15:23.878319258Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidTokenFailFirst","Output":"--- SKIP: TestDoOauthFlowRequestWithValidTokenFailFirst (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.878327666Z","Action":"skip","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidTokenFailFirst","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.87833802Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredTokenFailFirst"}
+{"Time":"2026-06-29T15:15:23.878348289Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredTokenFailFirst","Output":"=== RUN   TestDoOauthFlowRequestWithExpiredTokenFailFirst\n"}
+{"Time":"2026-06-29T15:15:23.878356412Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredTokenFailFirst","Output":"    oauth_requests_test.go:413: Skipping for now.\n"}
+{"Time":"2026-06-29T15:15:23.87850834Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredTokenFailFirst","Output":"--- SKIP: TestDoOauthFlowRequestWithExpiredTokenFailFirst (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.878527932Z","Action":"skip","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredTokenFailFirst","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.87853675Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithMissingCNSITokenRecord"}
+{"Time":"2026-06-29T15:15:23.878544128Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithMissingCNSITokenRecord","Output":"=== RUN   TestDoOauthFlowRequestWithMissingCNSITokenRecord\n"}
+{"Time":"2026-06-29T15:15:23.878552598Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithMissingCNSITokenRecord","Output":"    oauth_requests_test.go:421: Skipping for now - need to verify whether still needed.\n"}
+{"Time":"2026-06-29T15:15:23.878561658Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithMissingCNSITokenRecord","Output":"--- SKIP: TestDoOauthFlowRequestWithMissingCNSITokenRecord (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.878573601Z","Action":"skip","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithMissingCNSITokenRecord","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.878581922Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithInvalidCNSIRequest"}
+{"Time":"2026-06-29T15:15:23.878590007Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithInvalidCNSIRequest","Output":"=== RUN   TestDoOauthFlowRequestWithInvalidCNSIRequest\n"}
+{"Time":"2026-06-29T15:15:23.878597813Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithInvalidCNSIRequest","Output":"=== PAUSE TestDoOauthFlowRequestWithInvalidCNSIRequest\n"}
+{"Time":"2026-06-29T15:15:23.878604818Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithInvalidCNSIRequest"}
+{"Time":"2026-06-29T15:15:23.878612639Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithInvalidRefreshToken"}
+{"Time":"2026-06-29T15:15:23.878620099Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithInvalidRefreshToken","Output":"=== RUN   TestRefreshTokenWithInvalidRefreshToken\n"}
+{"Time":"2026-06-29T15:15:23.878627853Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithInvalidRefreshToken","Output":"=== PAUSE TestRefreshTokenWithInvalidRefreshToken\n"}
+{"Time":"2026-06-29T15:15:23.878634962Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithInvalidRefreshToken"}
+{"Time":"2026-06-29T15:15:23.878642252Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithDatabaseErrorOnSave"}
+{"Time":"2026-06-29T15:15:23.878649018Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithDatabaseErrorOnSave","Output":"=== RUN   TestRefreshTokenWithDatabaseErrorOnSave\n"}
+{"Time":"2026-06-29T15:15:23.878656225Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithDatabaseErrorOnSave","Output":"=== PAUSE TestRefreshTokenWithDatabaseErrorOnSave\n"}
+{"Time":"2026-06-29T15:15:23.878663018Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithDatabaseErrorOnSave"}
+{"Time":"2026-06-29T15:15:23.878670504Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest"}
+{"Time":"2026-06-29T15:15:23.878677676Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest","Output":"=== RUN   TestPassthroughDoRequest\n"}
+{"Time":"2026-06-29T15:15:23.878685472Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest","Output":"=== PAUSE TestPassthroughDoRequest\n"}
+{"Time":"2026-06-29T15:15:23.878728223Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest"}
+{"Time":"2026-06-29T15:15:23.878746001Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoURL"}
+{"Time":"2026-06-29T15:15:23.878754615Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoURL","Output":"=== RUN   TestPassthroughGetEchoURL\n"}
+{"Time":"2026-06-29T15:15:23.878767167Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoURL","Output":"=== PAUSE TestPassthroughGetEchoURL\n"}
+{"Time":"2026-06-29T15:15:23.878773971Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoURL"}
+{"Time":"2026-06-29T15:15:23.878794322Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoHeaders"}
+{"Time":"2026-06-29T15:15:23.878801309Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoHeaders","Output":"=== RUN   TestPassthroughGetEchoHeaders\n"}
+{"Time":"2026-06-29T15:15:23.878808729Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoHeaders","Output":"=== PAUSE TestPassthroughGetEchoHeaders\n"}
+{"Time":"2026-06-29T15:15:23.878815544Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoHeaders"}
+{"Time":"2026-06-29T15:15:23.878822781Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughMakeRequestURI"}
+{"Time":"2026-06-29T15:15:23.878829444Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughMakeRequestURI","Output":"=== RUN   TestPassthroughMakeRequestURI\n"}
+{"Time":"2026-06-29T15:15:23.878836657Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughMakeRequestURI","Output":"=== PAUSE TestPassthroughMakeRequestURI\n"}
+{"Time":"2026-06-29T15:15:23.878857731Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughMakeRequestURI"}
+{"Time":"2026-06-29T15:15:23.878866687Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID"}
+{"Time":"2026-06-29T15:15:23.87887377Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID","Output":"=== RUN   TestPassthroughGetPortalUserGUID\n"}
+{"Time":"2026-06-29T15:15:23.878885701Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID","Output":"=== PAUSE TestPassthroughGetPortalUserGUID\n"}
+{"Time":"2026-06-29T15:15:23.878894267Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID"}
+{"Time":"2026-06-29T15:15:23.878903975Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUIDWhenCorruptedSession"}
+{"Time":"2026-06-29T15:15:23.878912234Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUIDWhenCorruptedSession","Output":"=== RUN   TestPassthroughGetPortalUserGUIDWhenCorruptedSession\n"}
+{"Time":"2026-06-29T15:15:23.878920494Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUIDWhenCorruptedSession","Output":"=== PAUSE TestPassthroughGetPortalUserGUIDWhenCorruptedSession\n"}
+{"Time":"2026-06-29T15:15:23.878929872Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUIDWhenCorruptedSession"}
+{"Time":"2026-06-29T15:15:23.878938744Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetRequestParts"}
+{"Time":"2026-06-29T15:15:23.878945712Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetRequestParts","Output":"=== RUN   TestPassthroughGetRequestParts\n"}
+{"Time":"2026-06-29T15:15:23.878953241Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetRequestParts","Output":"=== PAUSE TestPassthroughGetRequestParts\n"}
+{"Time":"2026-06-29T15:15:23.878960295Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetRequestParts"}
+{"Time":"2026-06-29T15:15:23.87897143Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughBuildCNSIRequest"}
+{"Time":"2026-06-29T15:15:23.87897911Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughBuildCNSIRequest","Output":"=== RUN   TestPassthroughBuildCNSIRequest\n"}
+{"Time":"2026-06-29T15:15:23.87898866Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughBuildCNSIRequest","Output":"=== PAUSE TestPassthroughBuildCNSIRequest\n"}
+{"Time":"2026-06-29T15:15:23.87899552Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughBuildCNSIRequest"}
+{"Time":"2026-06-29T15:15:23.879003748Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithValidGUID"}
+{"Time":"2026-06-29T15:15:23.879010806Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithValidGUID","Output":"=== RUN   TestValidateCNSIListWithValidGUID\n"}
+{"Time":"2026-06-29T15:15:23.879018201Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithValidGUID","Output":"=== PAUSE TestValidateCNSIListWithValidGUID\n"}
+{"Time":"2026-06-29T15:15:23.879025183Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithValidGUID"}
+{"Time":"2026-06-29T15:15:23.879032397Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithInvalidGUID"}
+{"Time":"2026-06-29T15:15:23.879039302Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithInvalidGUID","Output":"=== RUN   TestValidateCNSIListWithInvalidGUID\n"}
+{"Time":"2026-06-29T15:15:23.879046594Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithInvalidGUID","Output":"=== PAUSE TestValidateCNSIListWithInvalidGUID\n"}
+{"Time":"2026-06-29T15:15:23.879053511Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithInvalidGUID"}
+{"Time":"2026-06-29T15:15:23.879063106Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession"}
+{"Time":"2026-06-29T15:15:23.879069988Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession","Output":"=== RUN   TestSession\n"}
+{"Time":"2026-06-29T15:15:23.879076906Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.879084063Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession","Output":"1 total assertion\n"}
+{"Time":"2026-06-29T15:15:23.87909095Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.879103122Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession","Output":"......\n"}
+{"Time":"2026-06-29T15:15:23.87911689Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession","Output":"7 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.879131569Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.879202766Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession","Output":"--- PASS: TestSession (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.879218158Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSession","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.879231672Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup"}
+{"Time":"2026-06-29T15:15:23.87924103Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"=== RUN   TestConsoleSetup\n"}
+{"Time":"2026-06-29T15:15:23.879655822Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Using In Memory Database file\"\n"}
+{"Time":"2026-06-29T15:15:23.885209778Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"========================\"\n"}
+{"Time":"2026-06-29T15:15:23.885239438Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"= Stratos DB Migration =\"\n"}
+{"Time":"2026-06-29T15:15:23.885253123Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"========================\"\n"}
+{"Time":"2026-06-29T15:15:23.885260639Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Database provider: sqlite3\"\n"}
+{"Time":"2026-06-29T15:15:23.885271048Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Current 0\"\n"}
+{"Time":"2026-06-29T15:15:23.885278528Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Target: 20200814140918\"\n"}
+{"Time":"2026-06-29T15:15:23.885298444Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migrations ....\"\n"}
+{"Time":"2026-06-29T15:15:23.885310589Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20170818120003_InitialSchema\"\n"}
+{"Time":"2026-06-29T15:15:23.885548747Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20170818162837_SetupSchema\"\n"}
+{"Time":"2026-06-29T15:15:23.885719312Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20170829154900_TokenDisconnected\"\n"}
+{"Time":"2026-06-29T15:15:23.885903923Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20171108102900_AuthType\"\n"}
+{"Time":"2026-06-29T15:15:23.88605934Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20180413135700_MetricsSchema\"\n"}
+{"Time":"2026-06-29T15:15:23.886094367Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20180627111300_UpdateMetadata\"\n"}
+{"Time":"2026-06-29T15:15:23.886123445Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20180703142800_SetupSchema\"\n"}
+{"Time":"2026-06-29T15:15:23.886324395Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20180813110300_RemoveStaleTokens\"\n"}
+{"Time":"2026-06-29T15:15:23.886783087Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20180824092600_LinkedTokens\"\n"}
+{"Time":"2026-06-29T15:15:23.887105814Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20180831104300_SSOEndpointFlag\"\n"}
+{"Time":"2026-06-29T15:15:23.887126545Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20180907123000_SSOSetupFlag\"\n"}
+{"Time":"2026-06-29T15:15:23.887263373Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20181129140500_UserFavorites\"\n"}
+{"Time":"2026-06-29T15:15:23.887409478Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20190305144600_EndpointSubtype\"\n"}
+{"Time":"2026-06-29T15:15:23.887637848Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20190515133200_AuthEndpoint\"\n"}
+{"Time":"2026-06-29T15:15:23.887777728Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20190522121200_LocalUsers\"\n"}
+{"Time":"2026-06-29T15:15:23.888174868Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20190621212700_ConfigSchema\"\n"}
+{"Time":"2026-06-29T15:15:23.888300793Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20190918092300_LocalUsersUpdates\"\n"}
+{"Time":"2026-06-29T15:15:23.888632891Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20190930092500_LocalUsersTriggerFix\"\n"}
+{"Time":"2026-06-29T15:15:23.888652586Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20191008121900_PrimaryKeys\"\n"}
+{"Time":"2026-06-29T15:15:23.888696541Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20200117152200_SesssionData\"\n"}
+{"Time":"2026-06-29T15:15:23.888805467Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Running migration: 20200814140918_ApiKeys\"\n"}
+{"Time":"2026-06-29T15:15:23.889134443Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"time=\"2026-06-29T15:15:23Z\" level=info msg=\"Migrating setup data to config store\"\n"}
+{"Time":"2026-06-29T15:15:23.889908489Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"..............\n"}
+{"Time":"2026-06-29T15:15:23.889933816Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"21 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.889961098Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.889979529Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Output":"--- PASS: TestConsoleSetup (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.889988568Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestConsoleSetup","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.889999551Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionContentType"}
+{"Time":"2026-06-29T15:15:23.890011767Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionContentType","Output":"=== RUN   TestVersionContentType\n"}
+{"Time":"2026-06-29T15:15:23.89002405Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionContentType","Output":"=== PAUSE TestVersionContentType\n"}
+{"Time":"2026-06-29T15:15:23.890033568Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionContentType"}
+{"Time":"2026-06-29T15:15:23.890042444Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode"}
+{"Time":"2026-06-29T15:15:23.890053701Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Output":"=== RUN   TestVersionStatusCode\n"}
+{"Time":"2026-06-29T15:15:23.890073349Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Output":"=== PAUSE TestVersionStatusCode\n"}
+{"Time":"2026-06-29T15:15:23.89009077Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode"}
+{"Time":"2026-06-29T15:15:23.890099405Z","Action":"run","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionDefault"}
+{"Time":"2026-06-29T15:15:23.890205652Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionDefault","Output":"=== RUN   TestVersionDefault\n"}
+{"Time":"2026-06-29T15:15:23.890275335Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionDefault","Output":"=== PAUSE TestVersionDefault\n"}
+{"Time":"2026-06-29T15:15:23.890291185Z","Action":"pause","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionDefault"}
+{"Time":"2026-06-29T15:15:23.890394663Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey"}
+{"Time":"2026-06-29T15:15:23.890449792Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey","Output":"=== CONT  Test_addAPIKey\n"}
+{"Time":"2026-06-29T15:15:23.890473792Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfo"}
+{"Time":"2026-06-29T15:15:23.890481764Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfo","Output":"=== CONT  TestGetUserTokenInfo\n"}
+{"Time":"2026-06-29T15:15:23.890765402Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfo","Output":"--- PASS: TestGetUserTokenInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.890791206Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfo","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.890803524Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionDefault"}
+{"Time":"2026-06-29T15:15:23.890819586Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionDefault","Output":"=== CONT  TestVersionDefault\n"}
+{"Time":"2026-06-29T15:15:23.890830947Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode"}
+{"Time":"2026-06-29T15:15:23.890838703Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Output":"=== CONT  TestVersionStatusCode\n"}
+{"Time":"2026-06-29T15:15:23.891518059Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Output":"2026/06/29 15:15:23 about to retrieve versions endpoint\n"}
+{"Time":"2026-06-29T15:15:23.89168795Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Output":"2026/06/29 15:15:23 receivedJson: \u0026{ProxyVersion:dev DatabaseVersion:20161117141922}\n"}
+{"Time":"2026-06-29T15:15:23.891758928Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Output":"..\n"}
+{"Time":"2026-06-29T15:15:23.891790336Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Output":"23 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.891811396Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.89182034Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionContentType"}
+{"Time":"2026-06-29T15:15:23.891827915Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionContentType","Output":"=== CONT  TestVersionContentType\n"}
+{"Time":"2026-06-29T15:15:23.891842009Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithInvalidGUID"}
+{"Time":"2026-06-29T15:15:23.891852579Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithInvalidGUID","Output":"=== CONT  TestValidateCNSIListWithInvalidGUID\n"}
+{"Time":"2026-06-29T15:15:23.892975767Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithValidGUID"}
+{"Time":"2026-06-29T15:15:23.893005887Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithValidGUID","Output":"=== CONT  TestValidateCNSIListWithValidGUID\n"}
+{"Time":"2026-06-29T15:15:23.893016099Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughBuildCNSIRequest"}
+{"Time":"2026-06-29T15:15:23.89302652Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughBuildCNSIRequest","Output":"=== CONT  TestPassthroughBuildCNSIRequest\n"}
+{"Time":"2026-06-29T15:15:23.893043904Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetRequestParts"}
+{"Time":"2026-06-29T15:15:23.893052172Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetRequestParts","Output":"=== CONT  TestPassthroughGetRequestParts\n"}
+{"Time":"2026-06-29T15:15:23.893061673Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUIDWhenCorruptedSession"}
+{"Time":"2026-06-29T15:15:23.893070046Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUIDWhenCorruptedSession","Output":"=== CONT  TestPassthroughGetPortalUserGUIDWhenCorruptedSession\n"}
+{"Time":"2026-06-29T15:15:23.893090297Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID"}
+{"Time":"2026-06-29T15:15:23.89311046Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID","Output":"=== CONT  TestPassthroughGetPortalUserGUID\n"}
+{"Time":"2026-06-29T15:15:23.893120605Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughMakeRequestURI"}
+{"Time":"2026-06-29T15:15:23.893131463Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughMakeRequestURI","Output":"=== CONT  TestPassthroughMakeRequestURI\n"}
+{"Time":"2026-06-29T15:15:23.893140998Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoHeaders"}
+{"Time":"2026-06-29T15:15:23.893147857Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoHeaders","Output":"=== CONT  TestPassthroughGetEchoHeaders\n"}
+{"Time":"2026-06-29T15:15:23.893155057Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoURL"}
+{"Time":"2026-06-29T15:15:23.893162595Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoURL","Output":"=== CONT  TestPassthroughGetEchoURL\n"}
+{"Time":"2026-06-29T15:15:23.893170109Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest"}
+{"Time":"2026-06-29T15:15:23.893181345Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest","Output":"=== CONT  TestPassthroughDoRequest\n"}
+{"Time":"2026-06-29T15:15:23.893198949Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithDatabaseErrorOnSave"}
+{"Time":"2026-06-29T15:15:23.893206043Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithDatabaseErrorOnSave","Output":"=== CONT  TestRefreshTokenWithDatabaseErrorOnSave\n"}
+{"Time":"2026-06-29T15:15:23.893213894Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithInvalidRefreshToken"}
+{"Time":"2026-06-29T15:15:23.893220541Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithInvalidRefreshToken","Output":"=== CONT  TestRefreshTokenWithInvalidRefreshToken\n"}
+{"Time":"2026-06-29T15:15:23.893227922Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithInvalidCNSIRequest"}
+{"Time":"2026-06-29T15:15:23.893235Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithInvalidCNSIRequest","Output":"=== CONT  TestDoOauthFlowRequestWithInvalidCNSIRequest\n"}
+{"Time":"2026-06-29T15:15:23.893242486Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithFailedRefreshMethod"}
+{"Time":"2026-06-29T15:15:23.893249535Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithFailedRefreshMethod","Output":"=== CONT  TestDoOauthFlowRequestWithFailedRefreshMethod\n"}
+{"Time":"2026-06-29T15:15:23.893264858Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionDefault","Output":"--- PASS: TestVersionDefault (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.893282975Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionDefault","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.893290988Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken"}
+{"Time":"2026-06-29T15:15:23.893301768Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"=== CONT  TestDoOauthFlowRequestWithExpiredToken\n"}
+{"Time":"2026-06-29T15:15:23.894273859Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"2026/06/29 15:15:23 about to retrieve versions endpoint\n"}
+{"Time":"2026-06-29T15:15:23.894301162Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"2026/06/29 15:15:23 about to retrieve versions endpoint\n"}
+{"Time":"2026-06-29T15:15:23.89605691Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.896087179Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"24 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.89611491Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.896139279Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Output":"--- PASS: TestVersionStatusCode (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.896153981Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionStatusCode","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.89616423Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken"}
+{"Time":"2026-06-29T15:15:23.896175396Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"=== CONT  TestDoOauthFlowRequestWithValidToken\n"}
+{"Time":"2026-06-29T15:15:23.899073581Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"..\n"}
+{"Time":"2026-06-29T15:15:23.89927759Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"26 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.899304306Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.8993351Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID","Output":"--- PASS: TestPassthroughGetPortalUserGUID (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.899350879Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.899368769Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID","Output":"27 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.899378114Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.89938707Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID","Output":"....."}
+{"Time":"2026-06-29T15:15:23.89939671Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUID","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.899407674Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware"}
+{"Time":"2026-06-29T15:15:23.89941681Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware","Output":"=== CONT  Test_apiKeyMiddleware\n"}
+{"Time":"2026-06-29T15:15:23.902234048Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware","Output":"....."}
+{"Time":"2026-06-29T15:15:23.902271839Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionContentType","Output":"--- PASS: TestVersionContentType (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.902336753Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVersionContentType","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.902396541Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime"}
+{"Time":"2026-06-29T15:15:23.902405888Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"=== CONT  TestUpdateLastLoginTime\n"}
+{"Time":"2026-06-29T15:15:23.907057426Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":".......\n"}
+{"Time":"2026-06-29T15:15:23.907308633Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"36 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.907343909Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.907720399Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.90774004Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"45 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.907749808Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.907880841Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":".....\n"}
+{"Time":"2026-06-29T15:15:23.90789534Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"45 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.907912132Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.908150346Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.90875502Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"46 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.908774016Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.908797475Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"."}
+{"Time":"2026-06-29T15:15:23.908809528Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithInvalidRefreshToken","Output":"--- PASS: TestRefreshTokenWithInvalidRefreshToken (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.908822728Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithInvalidRefreshToken","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.908832186Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetRequestParts","Output":"--- PASS: TestPassthroughGetRequestParts (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.908923789Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetRequestParts","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.908994408Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoURL","Output":"--- PASS: TestPassthroughGetEchoURL (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.909020826Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoURL","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.909059708Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithValidGUID","Output":"--- PASS: TestValidateCNSIListWithValidGUID (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.909357026Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithValidGUID","Output":"."}
+{"Time":"2026-06-29T15:15:23.909388863Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithValidGUID","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.909406633Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash"}
+{"Time":"2026-06-29T15:15:23.909418316Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":"=== CONT  TestFindPasswordHash\n"}
+{"Time":"2026-06-29T15:15:23.909432756Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.909445995Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":"47 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.909453543Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.909462343Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUIDWhenCorruptedSession","Output":"--- PASS: TestPassthroughGetPortalUserGUIDWhenCorruptedSession (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.909470539Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetPortalUserGUIDWhenCorruptedSession","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.909479708Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser"}
+{"Time":"2026-06-29T15:15:23.90948697Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":"=== CONT  TestAddLocalUser\n"}
+{"Time":"2026-06-29T15:15:23.920388043Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.920514382Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":"47 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.920549173Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.922309993Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate"}
+{"Time":"2026-06-29T15:15:23.922430208Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate","Output":"=== CONT  TestAddLocalUserDuplicate\n"}
+{"Time":"2026-06-29T15:15:23.922752092Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.924731079Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate","Output":"50 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.924874087Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.924906894Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate","Output":"."}
+{"Time":"2026-06-29T15:15:23.924966465Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingPassword"}
+{"Time":"2026-06-29T15:15:23.925033233Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingPassword","Output":"=== CONT  TestAddLocalUserMissingPassword\n"}
+{"Time":"2026-06-29T15:15:23.925594397Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingPassword","Output":"...."}
+{"Time":"2026-06-29T15:15:23.92561858Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername"}
+{"Time":"2026-06-29T15:15:23.925628053Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername","Output":"=== CONT  TestAddLocalUserMissingUsername\n"}
+{"Time":"2026-06-29T15:15:23.925639391Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughBuildCNSIRequest","Output":"--- PASS: TestPassthroughBuildCNSIRequest (0.03s)\n"}
+{"Time":"2026-06-29T15:15:23.929351293Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughBuildCNSIRequest","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:23.929410657Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoBadToken"}
+{"Time":"2026-06-29T15:15:23.929422421Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoBadToken","Output":"=== CONT  TestGetUserTokenInfoBadToken\n"}
+{"Time":"2026-06-29T15:15:23.929747654Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithInvalidGUID","Output":"--- PASS: TestValidateCNSIListWithInvalidGUID (0.03s)\n"}
+{"Time":"2026-06-29T15:15:23.929776461Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestValidateCNSIListWithInvalidGUID","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:23.92978998Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSaveCNSITokenWithInvalidInput"}
+{"Time":"2026-06-29T15:15:23.929801895Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSaveCNSITokenWithInvalidInput","Output":"=== CONT  TestSaveCNSITokenWithInvalidInput\n"}
+{"Time":"2026-06-29T15:15:23.937752973Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSaveCNSITokenWithInvalidInput","Output":"."}
+{"Time":"2026-06-29T15:15:23.937803944Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoBadToken","Output":"--- PASS: TestGetUserTokenInfoBadToken (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.937827651Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoBadToken","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.937837399Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoNonsenseToken"}
+{"Time":"2026-06-29T15:15:23.937844703Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoNonsenseToken","Output":"=== CONT  TestGetUserTokenInfoNonsenseToken\n"}
+{"Time":"2026-06-29T15:15:23.937995345Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoNonsenseToken","Output":"--- PASS: TestGetUserTokenInfoNonsenseToken (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.938103854Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetUserTokenInfoNonsenseToken","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.938134572Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint"}
+{"Time":"2026-06-29T15:15:23.938207476Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint","Output":"=== CONT  TestGetCFv2InfoWithInvalidEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.939238377Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint","Output":"..\n"}
+{"Time":"2026-06-29T15:15:23.939612942Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint","Output":"56 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.939635505Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.939726569Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithInvalidCNSIRequest","Output":"--- PASS: TestDoOauthFlowRequestWithInvalidCNSIRequest (0.04s)\n"}
+{"Time":"2026-06-29T15:15:23.943107777Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithInvalidCNSIRequest","Elapsed":0.04}
+{"Time":"2026-06-29T15:15:23.943164108Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint","Output":"--- PASS: TestGetCFv2InfoWithInvalidEndpoint (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.943198089Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithInvalidEndpoint","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.943206022Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIsWhenListFails"}
+{"Time":"2026-06-29T15:15:23.943214073Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIsWhenListFails","Output":"=== CONT  TestListCNSIsWhenListFails\n"}
+{"Time":"2026-06-29T15:15:23.943423234Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIsWhenListFails","Output":"--- PASS: TestListCNSIsWhenListFails (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.943449101Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestListCNSIsWhenListFails","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.943607226Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterButCantSaveCNSIRecord"}
+{"Time":"2026-06-29T15:15:23.943794666Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterButCantSaveCNSIRecord","Output":"=== CONT  TestRegisterCFClusterButCantSaveCNSIRecord\n"}
+{"Time":"2026-06-29T15:15:23.94683647Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterButCantSaveCNSIRecord","Output":".."}
+{"Time":"2026-06-29T15:15:23.94688791Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithBadURL"}
+{"Time":"2026-06-29T15:15:23.946904211Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithBadURL","Output":"=== CONT  TestGetCFv2InfoWithBadURL\n"}
+{"Time":"2026-06-29T15:15:23.946938135Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithBadURL","Output":"--- PASS: TestGetCFv2InfoWithBadURL (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.946970593Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestGetCFv2InfoWithBadURL","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.946980772Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request"}
+{"Time":"2026-06-29T15:15:23.946989242Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request","Output":"=== CONT  TestRegisterCFClusterWithBadV2Request\n"}
+{"Time":"2026-06-29T15:15:23.952609972Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.95273822Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request","Output":"57 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.95278444Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.953156421Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughMakeRequestURI","Output":"--- PASS: TestPassthroughMakeRequestURI (0.06s)\n"}
+{"Time":"2026-06-29T15:15:23.953199815Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughMakeRequestURI","Elapsed":0.06}
+{"Time":"2026-06-29T15:15:23.953348872Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint"}
+{"Time":"2026-06-29T15:15:23.95343062Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint","Output":"=== CONT  TestRegisterCFClusterWithInvalidAPIEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.9545113Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.954662705Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint","Output":"61 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.954697789Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.954723669Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithFailedRefreshMethod","Output":"--- PASS: TestDoOauthFlowRequestWithFailedRefreshMethod (0.06s)\n"}
+{"Time":"2026-06-29T15:15:23.954760615Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithFailedRefreshMethod","Elapsed":0.06}
+{"Time":"2026-06-29T15:15:23.954772694Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint"}
+{"Time":"2026-06-29T15:15:23.954781616Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Output":"=== CONT  TestRegisterCFClusterWithMissingAPIEndpoint\n"}
+{"Time":"2026-06-29T15:15:23.964330516Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Output":"."}
+{"Time":"2026-06-29T15:15:23.964396339Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint","Output":"--- PASS: TestRegisterCFClusterWithInvalidAPIEndpoint (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.964430277Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithInvalidAPIEndpoint","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.9645422Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingName"}
+{"Time":"2026-06-29T15:15:23.964651353Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingName","Output":"=== CONT  TestRegisterCFClusterWithMissingName\n"}
+{"Time":"2026-06-29T15:15:23.970816696Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Output":"--- PASS: TestRegisterCFClusterWithMissingAPIEndpoint (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.970885596Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.970896007Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Output":"61 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.970906003Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.970915206Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Output":"..."}
+{"Time":"2026-06-29T15:15:23.970924694Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingAPIEndpoint","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.970936297Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFCluster"}
+{"Time":"2026-06-29T15:15:23.970945644Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFCluster","Output":"=== CONT  TestRegisterCFCluster\n"}
+{"Time":"2026-06-29T15:15:23.970954919Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithDatabaseErrorOnSave","Output":"--- PASS: TestRefreshTokenWithDatabaseErrorOnSave (0.07s)\n"}
+{"Time":"2026-06-29T15:15:23.970963911Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRefreshTokenWithDatabaseErrorOnSave","Elapsed":0.07}
+{"Time":"2026-06-29T15:15:23.970973493Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingName","Output":"--- PASS: TestRegisterCFClusterWithMissingName (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.97098289Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithMissingName","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.970990906Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionExpired"}
+{"Time":"2026-06-29T15:15:23.970999427Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionExpired","Output":"=== CONT  TestVerifySessionExpired\n"}
+{"Time":"2026-06-29T15:15:23.97100807Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate"}
+{"Time":"2026-06-29T15:15:23.971016269Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate","Output":"=== CONT  TestVerifySessionNoDate\n"}
+{"Time":"2026-06-29T15:15:23.971025059Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate","Output":"....."}
+{"Time":"2026-06-29T15:15:23.971034004Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterButCantSaveCNSIRecord","Output":"--- PASS: TestRegisterCFClusterButCantSaveCNSIRecord (0.03s)\n"}
+{"Time":"2026-06-29T15:15:23.971053104Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterButCantSaveCNSIRecord","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:23.971062465Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySession"}
+{"Time":"2026-06-29T15:15:23.971070209Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySession","Output":"=== CONT  TestVerifySession\n"}
+{"Time":"2026-06-29T15:15:23.971079151Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request","Output":"--- PASS: TestRegisterCFClusterWithBadV2Request (0.02s)\n"}
+{"Time":"2026-06-29T15:15:23.971088093Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFClusterWithBadV2Request","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:23.971096212Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord"}
+{"Time":"2026-06-29T15:15:23.97110544Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":"=== CONT  TestSetUAATokenRecord\n"}
+{"Time":"2026-06-29T15:15:23.974499552Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.974546661Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":"67 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.974557556Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.975162327Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.975210529Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":"70 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.975226569Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":".."}
+{"Time":"2026-06-29T15:15:23.975264772Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoHeaders","Output":"--- PASS: TestPassthroughGetEchoHeaders (0.08s)\n"}
+{"Time":"2026-06-29T15:15:23.975278177Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughGetEchoHeaders","Elapsed":0.08}
+{"Time":"2026-06-29T15:15:23.975287683Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken"}
+{"Time":"2026-06-29T15:15:23.975299077Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"=== CONT  TestLoginToUAAButCantSaveToken\n"}
+{"Time":"2026-06-29T15:15:23.975326934Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"..\n"}
+{"Time":"2026-06-29T15:15:23.97533928Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.975359598Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"70 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.975372294Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.975437844Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Output":"--- PASS: TestSetUAATokenRecord (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.975467622Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSetUAATokenRecord","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.97547878Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout"}
+{"Time":"2026-06-29T15:15:23.975487266Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout","Output":"=== CONT  TestLogout\n"}
+{"Time":"2026-06-29T15:15:23.976021216Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.976661085Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout","Output":"77 total assertions.\n"}
+{"Time":"2026-06-29T15:15:23.976736123Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.976773474Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSaveCNSITokenWithInvalidInput","Output":"--- PASS: TestSaveCNSITokenWithInvalidInput (0.05s)\n"}
+{"Time":"2026-06-29T15:15:23.976787745Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestSaveCNSITokenWithInvalidInput","Elapsed":0.05}
+{"Time":"2026-06-29T15:15:23.976799671Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername","Output":"--- PASS: TestAddLocalUserMissingUsername (0.03s)\n"}
+{"Time":"2026-06-29T15:15:23.977827276Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername","Output":".........\n"}
+{"Time":"2026-06-29T15:15:23.977900024Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername","Output":"89 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.977927443Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.977961121Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingUsername","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:23.977969956Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadUserIDinSession"}
+{"Time":"2026-06-29T15:15:23.977977514Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadUserIDinSession","Output":"=== CONT  TestLoginToCNSIWithBadUserIDinSession\n"}
+{"Time":"2026-06-29T15:15:23.979501458Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadUserIDinSession","Output":"...."}
+{"Time":"2026-06-29T15:15:23.979550111Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds"}
+{"Time":"2026-06-29T15:15:23.979561016Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Output":"=== CONT  TestLoginToCNSIWithMissingCreds\n"}
+{"Time":"2026-06-29T15:15:23.980184418Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.980534223Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Output":"93 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.980559002Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.981185735Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.981214966Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Output":"93 total assertions"}
+{"Time":"2026-06-29T15:15:23.981226569Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout","Output":"--- PASS: TestLogout (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.981235275Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLogout","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.981244235Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate","Output":"--- PASS: TestVerifySessionNoDate (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.981506176Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.981531261Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.981779973Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionNoDate","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.981853252Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingPassword","Output":"--- PASS: TestAddLocalUserMissingPassword (0.06s)\n"}
+{"Time":"2026-06-29T15:15:23.981910538Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserMissingPassword","Elapsed":0.06}
+{"Time":"2026-06-29T15:15:23.981923216Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI"}
+{"Time":"2026-06-29T15:15:23.981949396Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"=== CONT  TestLoginToCNSI\n"}
+{"Time":"2026-06-29T15:15:23.982137559Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.982172322Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"93 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.982200719Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.98269987Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.982829485Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"94 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.98285432Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.986937454Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"..."}
+{"Time":"2026-06-29T15:15:23.986973511Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord"}
+{"Time":"2026-06-29T15:15:23.986993787Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord","Output":"=== CONT  TestLoginToCNSIWithMissingCNSIRecord\n"}
+{"Time":"2026-06-29T15:15:23.987004352Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithoutCNSIGuid"}
+{"Time":"2026-06-29T15:15:23.987012689Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithoutCNSIGuid","Output":"=== CONT  TestLoginToCNSIWithoutCNSIGuid\n"}
+{"Time":"2026-06-29T15:15:23.9870345Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySession","Output":"--- PASS: TestVerifySession (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.987044427Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySession","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.987054129Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFCluster","Output":"--- PASS: TestRegisterCFCluster (0.02s)\n"}
+{"Time":"2026-06-29T15:15:23.98706422Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestRegisterCFCluster","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:23.987072499Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionExpired","Output":"--- PASS: TestVerifySessionExpired (0.02s)\n"}
+{"Time":"2026-06-29T15:15:23.98721806Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestVerifySessionExpired","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:23.987252118Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin"}
+{"Time":"2026-06-29T15:15:23.98726471Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin","Output":"=== CONT  TestLocalLogin\n"}
+{"Time":"2026-06-29T15:15:23.98729174Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds"}
+{"Time":"2026-06-29T15:15:23.98730592Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds","Output":"=== CONT  TestLoginToUAAWithBadCreds\n"}
+{"Time":"2026-06-29T15:15:23.987324452Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope"}
+{"Time":"2026-06-29T15:15:23.987346174Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"=== CONT  TestLocalLoginWithNoAdminScope\n"}
+{"Time":"2026-06-29T15:15:23.991094924Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"..........\n"}
+{"Time":"2026-06-29T15:15:23.991139173Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"107 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.991358046Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.991619681Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"..\n"}
+{"Time":"2026-06-29T15:15:23.991656036Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"108 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.991774515Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.99181305Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"."}
+{"Time":"2026-06-29T15:15:23.991826398Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithoutCNSIGuid","Output":"--- PASS: TestLoginToCNSIWithoutCNSIGuid (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.991846397Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithoutCNSIGuid","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.991867587Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord","Output":"--- PASS: TestLoginToCNSIWithMissingCNSIRecord (0.00s)\n"}
+{"Time":"2026-06-29T15:15:23.991877087Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.991885821Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord","Output":"108 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.991897226Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord","Output":"\n"}
+{"Time":"2026-06-29T15:15:23.991915793Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCNSIRecord","Elapsed":0}
+{"Time":"2026-06-29T15:15:23.991924342Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Output":"--- PASS: TestLoginToCNSIWithMissingCreds (0.01s)\n"}
+{"Time":"2026-06-29T15:15:23.991933521Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithMissingCreds","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:23.991942957Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA"}
+{"Time":"2026-06-29T15:15:23.991952277Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA","Output":"=== CONT  TestLoginToUAA\n"}
+{"Time":"2026-06-29T15:15:23.992254021Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA","Output":"."}
+{"Time":"2026-06-29T15:15:23.992284929Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials"}
+{"Time":"2026-06-29T15:15:23.992303702Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials","Output":"=== CONT  TestLocalLoginWithBadCredentials\n"}
+{"Time":"2026-06-29T15:15:23.995559905Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials","Output":"............"}
+{"Time":"2026-06-29T15:15:23.995774499Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys"}
+{"Time":"2026-06-29T15:15:23.995808167Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"=== CONT  Test_deleteAPIKeys\n"}
+{"Time":"2026-06-29T15:15:23.99588234Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":".\n"}
+{"Time":"2026-06-29T15:15:23.996009233Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"125 total assertions\n"}
+{"Time":"2026-06-29T15:15:23.996042228Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.004965012Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"...\n"}
+{"Time":"2026-06-29T15:15:24.006026425Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"125 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.006068057Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.006101412Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadUserIDinSession","Output":"--- PASS: TestLoginToCNSIWithBadUserIDinSession (0.02s)\n"}
+{"Time":"2026-06-29T15:15:24.006127513Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSIWithBadUserIDinSession","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:24.006209635Z","Action":"cont","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys"}
+{"Time":"2026-06-29T15:15:24.006312113Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"=== CONT  Test_listAPIKeys\n"}
+{"Time":"2026-06-29T15:15:24.006443984Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"............\n"}
+{"Time":"2026-06-29T15:15:24.006695444Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"140 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.006739635Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.006792121Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"..."}
+{"Time":"2026-06-29T15:15:24.006829813Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"--- PASS: Test_deleteAPIKeys (0.00s)\n"}
+{"Time":"2026-06-29T15:15:24.006883292Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"...\n"}
+{"Time":"2026-06-29T15:15:24.006933691Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"146 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.007196607Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.007454462Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_deleteAPIKeys","Elapsed":0}
+{"Time":"2026-06-29T15:15:24.008056209Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey","Output":"--- PASS: Test_addAPIKey (0.11s)\n"}
+{"Time":"2026-06-29T15:15:24.009448387Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey","Output":"..........\n"}
+{"Time":"2026-06-29T15:15:24.009575756Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey","Output":"156 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.009611826Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.009639011Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_addAPIKey","Elapsed":0.11}
+{"Time":"2026-06-29T15:15:24.00966015Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"--- PASS: TestLoginToUAAButCantSaveToken (0.03s)\n"}
+{"Time":"2026-06-29T15:15:24.011117215Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":".\n"}
+{"Time":"2026-06-29T15:15:24.011168766Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"157 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.01122681Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.01124107Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAButCantSaveToken","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:24.011264524Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"--- PASS: Test_listAPIKeys (0.01s)\n"}
+{"Time":"2026-06-29T15:15:24.011450155Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.011476216Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"157 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.011495068Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.032556662Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"......\n"}
+{"Time":"2026-06-29T15:15:24.032930418Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"163 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.034123036Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.034675021Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_listAPIKeys","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:24.034720549Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware","Output":"--- PASS: Test_apiKeyMiddleware (0.14s)\n"}
+{"Time":"2026-06-29T15:15:24.03652292Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware","Output":"..\n"}
+{"Time":"2026-06-29T15:15:24.036650793Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware","Output":"165 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.037864568Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.037920936Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"Test_apiKeyMiddleware","Elapsed":0.14}
+{"Time":"2026-06-29T15:15:24.037986603Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"--- PASS: TestDoOauthFlowRequestWithValidToken (0.14s)\n"}
+{"Time":"2026-06-29T15:15:24.038579454Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.038624116Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"165 total assertions.\n"}
+{"Time":"2026-06-29T15:15:24.038658522Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.038687788Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithValidToken","Elapsed":0.14}
+{"Time":"2026-06-29T15:15:24.038741044Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"--- PASS: TestLoginToCNSI (0.06s)\n"}
+{"Time":"2026-06-29T15:15:24.039039507Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":".\n"}
+{"Time":"2026-06-29T15:15:24.039059285Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"167 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.039080917Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.039140436Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToCNSI","Elapsed":0.06}
+{"Time":"2026-06-29T15:15:24.039220826Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA","Output":"--- PASS: TestLoginToUAA (0.05s)\n"}
+{"Time":"2026-06-29T15:15:24.048250581Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA","Output":".\n"}
+{"Time":"2026-06-29T15:15:24.048298945Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA","Output":"168 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.048402211Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.048454376Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAA","Elapsed":0.05}
+{"Time":"2026-06-29T15:15:24.048482626Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds","Output":"--- PASS: TestLoginToUAAWithBadCreds (0.06s)\n"}
+{"Time":"2026-06-29T15:15:24.058591035Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds","Output":".....\n"}
+{"Time":"2026-06-29T15:15:24.058637405Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds","Output":"173 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.05864623Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.058663909Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLoginToUAAWithBadCreds","Elapsed":0.06}
+{"Time":"2026-06-29T15:15:24.058673407Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest","Output":"--- PASS: TestPassthroughDoRequest (0.16s)\n"}
+{"Time":"2026-06-29T15:15:24.065782223Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest","Output":".\n"}
+{"Time":"2026-06-29T15:15:24.065839971Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest","Output":"174 total assertions\n"}
+{"Time":"2026-06-29T15:15:24.065853053Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest","Output":"\n"}
+{"Time":"2026-06-29T15:15:24.065863984Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestPassthroughDoRequest","Elapsed":0.16}
+{"Time":"2026-06-29T15:15:24.065873989Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"--- PASS: TestDoOauthFlowRequestWithExpiredToken (0.17s)\n"}
+{"Time":"2026-06-29T15:15:26.507981758Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"........\n"}
+{"Time":"2026-06-29T15:15:26.508038081Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"182 total assertions\n"}
+{"Time":"2026-06-29T15:15:26.508075196Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Output":"\n"}
+{"Time":"2026-06-29T15:15:26.508095704Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestDoOauthFlowRequestWithExpiredToken","Elapsed":0.17}
+{"Time":"2026-06-29T15:15:26.508107177Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":"--- PASS: TestFindPasswordHash (2.60s)\n"}
+{"Time":"2026-06-29T15:15:26.517574647Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":"..\n"}
+{"Time":"2026-06-29T15:15:26.517661134Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":"184 total assertions\n"}
+{"Time":"2026-06-29T15:15:26.517702372Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Output":"\n"}
+{"Time":"2026-06-29T15:15:26.517719335Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestFindPasswordHash","Elapsed":2.6}
+{"Time":"2026-06-29T15:15:26.517734839Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"--- PASS: TestUpdateLastLoginTime (2.62s)\n"}
+{"Time":"2026-06-29T15:15:26.601543998Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"..\n"}
+{"Time":"2026-06-29T15:15:26.601676923Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"186 total assertions\n"}
+{"Time":"2026-06-29T15:15:26.601742247Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Output":"\n"}
+{"Time":"2026-06-29T15:15:26.601777524Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestUpdateLastLoginTime","Elapsed":2.62}
+{"Time":"2026-06-29T15:15:26.601797109Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":"--- PASS: TestAddLocalUser (2.69s)\n"}
+{"Time":"2026-06-29T15:15:28.872004722Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":".\n"}
+{"Time":"2026-06-29T15:15:28.872095451Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":"187 total assertions\n"}
+{"Time":"2026-06-29T15:15:28.872133311Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Output":"\n"}
+{"Time":"2026-06-29T15:15:28.8721543Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUser","Elapsed":2.69}
+{"Time":"2026-06-29T15:15:28.872164122Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"--- PASS: TestLocalLoginWithNoAdminScope (4.88s)\n"}
+{"Time":"2026-06-29T15:15:28.878416803Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":".\n"}
+{"Time":"2026-06-29T15:15:28.878463659Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"188 total assertions\n"}
+{"Time":"2026-06-29T15:15:28.878473901Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Output":"\n"}
+{"Time":"2026-06-29T15:15:28.878485206Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithNoAdminScope","Elapsed":4.88}
+{"Time":"2026-06-29T15:15:28.878494264Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials","Output":"--- PASS: TestLocalLoginWithBadCredentials (4.89s)\n"}
+{"Time":"2026-06-29T15:15:28.941030236Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials","Output":"....\n"}
+{"Time":"2026-06-29T15:15:28.941094865Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials","Output":"192 total assertions\n"}
+{"Time":"2026-06-29T15:15:28.941161635Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials","Output":"\n"}
+{"Time":"2026-06-29T15:15:28.941226824Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLoginWithBadCredentials","Elapsed":4.89}
+{"Time":"2026-06-29T15:15:28.941241709Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin","Output":"--- PASS: TestLocalLogin (4.95s)\n"}
+{"Time":"2026-06-29T15:15:31.105479639Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin","Output":".\n"}
+{"Time":"2026-06-29T15:15:31.105662909Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin","Output":"193 total assertions\n"}
+{"Time":"2026-06-29T15:15:31.105693811Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin","Output":"\n"}
+{"Time":"2026-06-29T15:15:31.105707656Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestLocalLogin","Elapsed":4.95}
+{"Time":"2026-06-29T15:15:31.105718293Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate","Output":"--- PASS: TestAddLocalUserDuplicate (7.18s)\n"}
+{"Time":"2026-06-29T15:15:31.105736451Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Test":"TestAddLocalUserDuplicate","Elapsed":7.18}
+{"Time":"2026-06-29T15:15:31.105745983Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Output":"PASS\n"}
+{"Time":"2026-06-29T15:15:31.107824657Z","Action":"output","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Output":"ok  \tgithub.com/cloudfoundry-incubator/stratos/src/jetstream\t7.254s\n"}
+{"Time":"2026-06-29T15:15:31.107912542Z","Action":"pass","Package":"github.com/cloudfoundry-incubator/stratos/src/jetstream","Elapsed":7.254}
+reward=1 graded=63 found=63 failed=0 parsed=69 framework=go exit_code=0

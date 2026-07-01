@@ -1,0 +1,592 @@
+patching file chain/tests/chain_test_helper.rs
+patching file chain/tests/test_txhashset_archive.rs
+   Compiling libc v0.2.51
+   Compiling unicode-xid v0.1.0
+   Compiling proc-macro2 v0.4.27
+   Compiling syn v0.15.31
+   Compiling cc v1.0.35
+   Compiling serde v1.0.90
+   Compiling rand_core v0.4.0
+   Compiling cfg-if v0.1.7
+   Compiling autocfg v0.1.2
+   Compiling num-traits v0.2.6
+   Compiling memchr v2.2.0
+   Compiling typenum v1.10.0
+   Compiling lazy_static v1.3.0
+   Compiling num-integer v0.1.39
+   Compiling quick-error v1.2.2
+   Compiling glob v0.2.11
+   Compiling semver-parser v0.7.0
+   Compiling ucd-util v0.1.3
+   Compiling regex v1.1.5
+   Compiling thread_local v0.3.6
+   Compiling rand_core v0.3.1
+   Compiling humantime v1.2.0
+   Compiling crc32fast v1.2.0
+   Compiling unicode-width v0.1.5
+   Compiling regex-syntax v0.6.6
+   Compiling semver v0.9.0
+   Compiling ryu v0.2.7
+   Compiling utf8-ranges v1.0.2
+   Compiling textwrap v0.11.0
+   Compiling rand_chacha v0.1.1
+   Compiling clang-sys v0.23.0
+   Compiling rustc_version v0.2.3
+   Compiling rand_pcg v0.1.2
+   Compiling proc-macro2 v0.3.5
+   Compiling libloading v0.5.0
+   Compiling miniz-sys v0.1.11
+   Compiling backtrace-sys v0.1.28
+   Compiling bitflags v1.0.4
+   Compiling ansi_term v0.11.0
+   Compiling termcolor v1.0.4
+   Compiling byteorder v1.3.1
+   Compiling linked-hash-map v0.5.2
+   Compiling nodrop v0.1.13
+   Compiling atty v0.2.11
+   Compiling quote v0.6.12
+   Compiling aho-corasick v0.7.3
+   Compiling memchr v1.0.2
+   Compiling rand v0.5.6
+   Compiling bindgen v0.37.4
+   Compiling yaml-rust v0.3.5
+   Compiling strsim v0.8.0
+   Compiling nom v3.2.1
+   Compiling vec_map v0.8.1
+   Compiling clap v2.33.0
+   Compiling which v1.0.5
+   Compiling quote v0.5.2
+   Compiling parking_lot_core v0.3.1
+   Compiling rand v0.6.5
+   Compiling backtrace v0.3.15
+   Compiling byte-tools v0.2.0
+   Compiling cexpr v0.2.3
+   Compiling peeking_take_while v0.1.2
+   Compiling traitobject v0.1.0
+   Compiling itoa v0.4.3
+   Compiling arrayref v0.3.5
+   Compiling stable_deref_trait v1.1.1
+   Compiling constant_time_eq v0.1.3
+   Compiling unsafe-any v0.4.2
+   Compiling block-buffer v0.3.3
+   Compiling owning_ref v0.4.0
+   Compiling ordered-float v1.0.2
+   Compiling yaml-rust v0.4.3
+   Compiling time v0.1.42
+   Compiling rand_os v0.1.3
+   Compiling grin_secp256k1zkp v0.7.7
+   Compiling rand_hc v0.1.0
+   Compiling generic-array v0.9.0
+   Compiling rand_xorshift v0.1.1
+   Compiling rand_isaac v0.1.1
+   Compiling rand_jitter v0.1.3
+   Compiling digest v0.7.6
+   Compiling arrayvec v0.4.10
+   Compiling smallvec v0.6.9
+   Compiling odds v0.2.26
+   Compiling scopeguard v0.3.3
+   Compiling num-bigint v0.2.2
+   Compiling rustc-demangle v0.1.14
+   Compiling safemem v0.3.0
+   Compiling dtoa v0.4.3
+   Compiling lock_api v0.1.5
+   Compiling crypto-mac v0.6.2
+   Compiling flate2 v1.0.7
+   Compiling base64 v0.9.3
+   Compiling arrayvec v0.3.25
+   Compiling typemap v0.3.3
+   Compiling thread-id v3.3.0
+   Compiling antidote v1.0.0
+   Compiling num-rational v0.2.1
+   Compiling fake-simd v0.1.2
+   Compiling num-iter v0.1.37
+   Compiling gcc v0.3.55
+   Compiling podio v0.1.6
+   Compiling same-file v1.0.4
+   Compiling log-mdc v0.1.0
+   Compiling num-complex v0.2.1
+   Compiling synstructure v0.10.1
+   Compiling failure_derive v0.1.5
+   Compiling arc-swap v0.3.11
+   Compiling fnv v1.0.6
+   Compiling rustc-serialize v0.3.24
+   Compiling walkdir v2.2.7
+   Compiling zip v0.5.2
+   Compiling sha2 v0.7.1
+   Compiling liblmdb-sys v0.2.2
+   Compiling parking_lot v0.6.4
+   Compiling hmac v0.6.3
+   Compiling rand v0.4.6
+   Compiling blake2-rfc v0.2.18
+   Compiling ripemd160 v0.7.0
+   Compiling pbkdf2 v0.2.3
+   Compiling num-traits v0.1.43
+   Compiling lru-cache v0.1.2
+   Compiling siphasher v0.2.3
+   Compiling remove_dir_all v0.5.1
+   Compiling bitflags v0.9.1
+   Compiling enum_primitive v0.1.1
+   Compiling supercow v0.1.0
+   Compiling tempfile v3.0.7
+   Compiling memmap v0.7.0
+   Compiling num v0.2.0
+   Compiling serde_derive v1.0.90
+   Compiling zeroize_derive v0.9.0
+   Compiling zeroize v0.9.1
+   Compiling failure v0.1.5
+   Compiling lmdb-zero v0.4.4
+   Compiling log v0.4.6
+   Compiling serde_json v1.0.39
+   Compiling serde_yaml v0.8.8
+   Compiling serde-value v0.5.3
+   Compiling chrono v0.4.6
+   Compiling uuid v0.6.5
+   Compiling env_logger v0.5.13
+   Compiling log4rs v0.8.3
+   Compiling grin_util v2.0.1-beta.1 (/workspace/repo/util)
+   Compiling grin_keychain v2.0.1-beta.1 (/workspace/repo/keychain)
+warning: unnecessary trailing semicolon
+   --> keychain/src/extkey_bip32.rs:125:91
+    |
+125 |         self.hmac_sha512 = HmacSha512::new_varkey(seed).expect("HMAC can take key of any size");;
+    |                                                                                                 ^ help: remove this semicolon
+    |
+    = note: `#[warn(redundant_semicolons)]` on by default
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> keychain/src/extkey_bip32.rs:388:13
+    |
+388 |         let key = r#try!(ExtendedPrivKey::new_master(secp, &mut hasher, &seed));
+    |                   ^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: unnecessary braces around block return value
+  --> keychain/src/mnemonic.rs:28:38
+   |
+28 |     pub static ref WORDS: Vec<String> = { include_str!("wordlists/en.txt").split_whitespace().map(|s| s.into()).collect() };
+   |                                         ^^                                                                               ^^
+   |
+   = note: `#[warn(unused_braces)]` on by default
+help: remove these braces
+   |
+28 -     pub static ref WORDS: Vec<String> = { include_str!("wordlists/en.txt").split_whitespace().map(|s| s.into()).collect() };
+28 +     pub static ref WORDS: Vec<String> = include_str!("wordlists/en.txt").split_whitespace().map(|s| s.into()).collect();
+   |
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+  --> keychain/src/mnemonic.rs:75:30
+   |
+75 |     let mut indexes: Vec<u16> = r#try!(words.iter().map(|x| search(x)).collect());
+   |                                 ^^^^^
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> keychain/src/mnemonic.rs:158:2
+    |
+158 |     r#try!(to_entropy(mnemonic));
+    |     ^^^^^
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> keychain/src/types.rs:223:3
+    |
+223 |         r#try!(write!(f, "{}(", stringify!(Identifier)));
+    |         ^^^^^
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> keychain/src/types.rs:224:3
+    |
+224 |         r#try!(write!(f, "{}", self.to_hex()));
+    |         ^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> keychain/src/extkey_bip32.rs:338:41
+    |
+338 |             Error::Ecdsa(ref e) => error::Error::description(e),
+    |                                                  ^^^^^^^^^^^
+
+   Compiling croaring-sys v0.3.9
+warning: `grin_keychain` (lib) generated 8 warnings (run `cargo fix --lib -p grin_keychain` to apply 1 suggestion)
+   Compiling croaring v0.3.9
+   Compiling grin_core v2.0.1-beta.1 (/workspace/repo/core)
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:78:9
+    |
+78  |     ( $(r#try!($rdr.$read_call($($val),*))),* )
+    |         ^^^^^
+    |
+   ::: core/src/core/block.rs:294:29
+    |
+294 |         let (height, timestamp) = ser_multiread!(reader, read_u64, read_i64);
+    |                                   ------------------------------------------ in this macro invocation
+    |
+    = note: `#[warn(deprecated)]` on by default
+    = note: this warning originates in the macro `ser_multiread` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:78:9
+    |
+78  |     ( $(r#try!($rdr.$read_call($($val),*))),* )
+    |         ^^^^^
+    |
+   ::: core/src/core/block.rs:301:44
+    |
+301 |         let (output_mmr_size, kernel_mmr_size) = ser_multiread!(reader, read_u64, read_u64);
+    |                                                  ------------------------------------------ in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiread` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |       $( r#try!($wrtr.$write_call($val)) );*
+    |          ^^^^^
+    |
+   ::: core/src/core/block.rs:339:3
+    |
+339 | /         ser_multiwrite!(
+340 | |             writer,
+341 | |             [write_u64, self.height],
+342 | |             [write_i64, self.timestamp.timestamp()],
+...   |
+350 | |             [write_u64, self.kernel_mmr_size]
+351 | |         );
+    | |_________- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: trailing semicolon in macro used in expression position
+   --> core/src/macros.rs:23:48
+    |
+23  |         $thing.iter().map($mapfn).collect::<Vec<_>>();
+    |                                                      ^
+    |
+   ::: core/src/core/block.rs:748:21
+    |
+748 |                 secp.commit_sum(map_vec!(cb_outs, |x| x.commitment()), vec![over_commit])?;
+    |                                 ------------------------------------- in this macro invocation
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #79813 <https://github.com/rust-lang/rust/issues/79813>
+    = note: `#[warn(semicolon_in_expressions_from_macros)]` on by default
+    = note: this warning originates in the macro `map_vec` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unnecessary parentheses around type
+   --> core/src/core/committed.rs:128:14
+    |
+128 |     ) -> Result<((Commitment, Commitment)), Error> {
+    |                 ^                        ^
+    |
+    = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+    |
+128 -     ) -> Result<((Commitment, Commitment)), Error> {
+128 +     ) -> Result<(Commitment, Commitment), Error> {
+    |
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+  --> core/src/macros.rs:78:9
+   |
+78 |     ( $(r#try!($rdr.$read_call($($val),*))),* )
+   |         ^^^^^
+   |
+  ::: core/src/core/compact_block.rs:88:4
+   |
+88 |             ser_multiread!(reader, read_u64, read_u64, read_u64);
+   |             ---------------------------------------------------- in this macro invocation
+   |
+   = note: this warning originates in the macro `ser_multiread` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |       $( r#try!($wrtr.$write_call($val)) );*
+    |          ^^^^^
+    |
+   ::: core/src/core/compact_block.rs:104:3
+    |
+104 | /         ser_multiwrite!(
+105 | |             writer,
+106 | |             [write_u64, self.out_full.len() as u64],
+107 | |             [write_u64, self.kern_full.len() as u64],
+108 | |             [write_u64, self.kern_ids.len() as u64]
+109 | |         );
+    | |_________- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |     $( r#try!($wrtr.$write_call($val)) );*
+    |        ^^^^^
+    |
+   ::: core/src/core/transaction.rs:202:3
+    |
+202 |         ser_multiwrite!(writer, [write_u64, self.fee], [write_u64, self.lock_height]);
+    |         ----------------------------------------------------------------------------- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |       $( r#try!($wrtr.$write_call($val)) );*
+    |          ^^^^^
+    |
+   ::: core/src/core/transaction.rs:431:3
+    |
+431 | /         ser_multiwrite!(
+432 | |             writer,
+433 | |             [write_u64, self.inputs.len() as u64],
+434 | |             [write_u64, self.outputs.len() as u64],
+435 | |             [write_u64, self.kernels.len() as u64]
+436 | |         );
+    | |_________- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:78:9
+    |
+78  |     ( $(r#try!($rdr.$read_call($($val),*))),* )
+    |         ^^^^^
+    |
+   ::: core/src/core/transaction.rs:451:4
+    |
+451 |             ser_multiread!(reader, read_u64, read_u64, read_u64);
+    |             ---------------------------------------------------- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiread` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: trailing semicolon in macro used in expression position
+   --> core/src/macros.rs:23:48
+    |
+23  |         $thing.iter().map($mapfn).collect::<Vec<_>>();
+    |                                                      ^
+    |
+   ::: core/src/pow/cuckatoo.rs:267:15
+    |
+267 |             s.nonces = map_vec!(s.nonces, |n| val[*n as usize]);
+    |                        ---------------------------------------- in this macro invocation
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #79813 <https://github.com/rust-lang/rust/issues/79813>
+    = note: this warning originates in the macro `map_vec` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |       $( r#try!($wrtr.$write_call($val)) );*
+    |          ^^^^^
+    |
+   ::: core/src/pow/types.rs:271:3
+    |
+271 | /         ser_multiwrite!(
+272 | |             writer,
+273 | |             [write_u64, self.total_difficulty.to_num()],
+274 | |             [write_u32, self.secondary_scaling]
+275 | |         );
+    | |_________- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> core/src/core/block.rs:124:23
+    |
+124 |     fn read(reader: &mut Reader) -> Result<HeaderEntry, ser::Error> {
+    |                          ^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+    = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+    |
+124 |     fn read(reader: &mut dyn Reader) -> Result<HeaderEntry, ser::Error> {
+    |                          +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> core/src/core/pmmr/backend.rs:56:33
+   |
+56 |     fn leaf_pos_iter(&self) -> Box<Iterator<Item = u64> + '_>;
+   |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+56 |     fn leaf_pos_iter(&self) -> Box<dyn Iterator<Item = u64> + '_>;
+   |                                    +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> core/src/core/pmmr/rewindable_pmmr.rs:53:31
+   |
+53 |     pub fn backend(&'a self) -> &Backend<T> {
+   |                                  ^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+53 |     pub fn backend(&'a self) -> &dyn Backend<T> {
+   |                                  +++
+
+   Compiling grin_store v2.0.1-beta.1 (/workspace/repo/store)
+warning: unnecessary parentheses around type
+   --> store/src/pmmr.rs:113:41
+    |
+113 |     fn get_hash(&self, pos: u64) -> Option<(Hash)> {
+    |                                            ^    ^
+    |
+    = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+    |
+113 -     fn get_hash(&self, pos: u64) -> Option<(Hash)> {
+113 +     fn get_hash(&self, pos: u64) -> Option<Hash> {
+    |
+
+warning: unnecessary parentheses around type
+   --> store/src/pmmr.rs:122:41
+    |
+122 |     fn get_data(&self, pos: u64) -> Option<(T::E)> {
+    |                                            ^    ^
+    |
+help: remove these parentheses
+    |
+122 -     fn get_data(&self, pos: u64) -> Option<(T::E)> {
+122 +     fn get_data(&self, pos: u64) -> Option<T::E> {
+    |
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> store/src/pmmr.rs:135:33
+    |
+135 |     fn leaf_pos_iter(&self) -> Box<Iterator<Item = u64> + '_> {
+    |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+    = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+    |
+135 |     fn leaf_pos_iter(&self) -> Box<dyn Iterator<Item = u64> + '_> {
+    |                                    +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> store/src/pmmr.rs:475:44
+    |
+475 |             |possible_dir_entry| -> Result<u32, Box<std::error::Error>> {
+    |                                                     ^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+475 |             |possible_dir_entry| -> Result<u32, Box<dyn std::error::Error>> {
+    |                                                     +++
+
+   Compiling grin_chain v2.0.1-beta.1 (/workspace/repo/chain)
+warning: `grin_core` (lib) generated 15 warnings (run `cargo fix --lib -p grin_core` to apply 4 suggestions)
+warning: `grin_store` (lib) generated 4 warnings (run `cargo fix --lib -p grin_store` to apply 4 suggestions)
+warning: unnecessary parentheses around type
+   --> chain/src/txhashset/txhashset.rs:919:53
+    |
+919 |     fn apply_output(&mut self, out: &Output) -> Result<(u64), Error> {
+    |                                                        ^   ^
+    |
+    = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+    |
+919 -     fn apply_output(&mut self, out: &Output) -> Result<(u64), Error> {
+919 +     fn apply_output(&mut self, out: &Output) -> Result<u64, Error> {
+    |
+
+warning: unnecessary parentheses around type
+    --> chain/src/txhashset/txhashset.rs:1210:47
+     |
+1210 |     pub fn validate_kernel_sums(&self) -> Result<((Commitment, Commitment)), Error> {
+     |                                                  ^                        ^
+     |
+help: remove these parentheses
+     |
+1210 -     pub fn validate_kernel_sums(&self) -> Result<((Commitment, Commitment)), Error> {
+1210 +     pub fn validate_kernel_sums(&self) -> Result<(Commitment, Commitment), Error> {
+     |
+
+warning: unnecessary parentheses around type
+    --> chain/src/txhashset/txhashset.rs:1233:14
+     |
+1233 |     ) -> Result<((Commitment, Commitment)), Error> {
+     |                 ^                        ^
+     |
+help: remove these parentheses
+     |
+1233 -     ) -> Result<((Commitment, Commitment)), Error> {
+1233 +     ) -> Result<(Commitment, Commitment), Error> {
+     |
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> chain/src/chain.rs:647:47
+    |
+647 |     pub fn kernel_data_write(&self, reader: &mut Read) -> Result<(), Error> {
+    |                                                  ^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+    = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+    |
+647 |     pub fn kernel_data_write(&self, reader: &mut dyn Read) -> Result<(), Error> {
+    |                                                  +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+    --> chain/src/chain.rs:1413:53
+     |
+1413 |                 let (utxo_sum, kernel_sum) = (sums, genesis as &Committed).verify_kernel_sums(
+     |                                                                 ^^^^^^^^^
+     |
+     = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+     = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+     |
+1413 |                 let (utxo_sum, kernel_sum) = (sums, genesis as &dyn Committed).verify_kernel_sums(
+     |                                                                 +++
+
+warning: unused borrow that must be used
+   --> chain/src/chain.rs:316:6
+    |
+316 |                     &self.orphans.add(orphan);
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^ the borrow produces a value
+    |
+    = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+    |
+316 |                     let _ = &self.orphans.add(orphan);
+    |                     +++++++
+
+warning: call to `.clone()` on a reference in this situation does nothing
+  --> chain/src/store.rs:48:63
+   |
+48 |         let db = store::Store::new(db_root, None, Some(STORE_SUBPATH.clone()), None)?;
+   |                                                                     ^^^^^^^^ help: remove this redundant call
+   |
+   = note: the type `str` does not implement `Clone`, so calling `clone` on `&str` copies the reference, which does not do anything and can be removed
+   = note: `#[warn(noop_method_call)]` on by default
+
+warning: call to `.clone()` on a reference in this situation does nothing
+    --> chain/src/txhashset/txhashset.rs:1437:48
+     |
+1437 |         if let Ok(n) = clean_files_by_prefix(data_dir.clone(), &pattern, 24 * 60 * 60) {
+     |                                                      ^^^^^^^^ help: remove this redundant call
+     |
+     = note: the type `Path` does not implement `Clone`, so calling `clone` on `&Path` copies the reference, which does not do anything and can be removed
+
+warning: `grin_chain` (lib) generated 8 warnings (run `cargo fix --lib -p grin_chain` to apply 7 suggestions)
+    Finished test [unoptimized + debuginfo] target(s) in 35.93s
+warning: the following packages contain code that will be rejected by a future version of Rust: grin_core v2.0.1-beta.1 (/workspace/repo/core), grin_secp256k1zkp v0.7.7, nom v3.2.1, rustc-serialize v0.3.24, traitobject v0.1.0
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+────────────
+ Nextest run ID 1386b858-db03-4875-83ae-93e8983c4257 with nextest profile: default
+    Starting 1 test across 1 binary
+        PASS [   4.092s] (1/1) grin_chain::test_txhashset_archive test
+────────────
+     Summary [   4.093s] 1 test run: 1 passed, 0 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

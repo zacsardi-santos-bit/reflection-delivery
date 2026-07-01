@@ -1,0 +1,24 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -v ./pkg/core/resources/apis/mesh ./pkg/plugins/policies/meshtrafficpermission/graph -count=1",
+  "test_files": [
+    "pkg/core/resources/apis/mesh/dataplane_validator_test.go",
+    "pkg/plugins/policies/meshtrafficpermission/graph/reachable_backend_refs_graph_test.go",
+    "pkg/plugins/policies/meshtrafficpermission/graph/reachable_services_graph_test.go",
+    "pkg/plugins/runtime/k8s/controllers/pod_converter_test.go",
+    "test/e2e/reachableservices/auto_reachable_mesh_services_k8s.go",
+    "test/e2e/reachableservices/auto_reachable_services_k8s.go",
+    "test/e2e/reachableservices/e2e_suite_test.go",
+    "test/e2e_env/multizone/multizone_suite_test.go",
+    "test/e2e_env/multizone/reachablebackends/reachablebackends.go",
+    "test/framework/deployments/testserver/deployment.go",
+    "test/framework/deployments/testserver/kubernetes.go"
+  ],
+  "num_test_files": 11,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kumahq/kuma/pkg/core/resources/apis/mesh::TestMesh",
+    "github.com/kumahq/kuma/pkg/plugins/policies/meshtrafficpermission/graph::TestGraph"
+  ],
+  "PASS_TO_PASS": []
+}

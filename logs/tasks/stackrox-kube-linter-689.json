@@ -1,0 +1,23 @@
+{
+ "task": "stackrox-kube-linter-689",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P includes readinessport::TestMissingReadinessPort/.../GrpcPortMissmatch and startupport tests; golden adds pkg/templates/readinessport/template.go, startupport/template.go, util/check_probe_port.go with gRPC handling"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

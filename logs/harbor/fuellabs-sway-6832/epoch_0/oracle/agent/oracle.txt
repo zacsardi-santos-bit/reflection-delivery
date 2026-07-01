@@ -1,0 +1,5 @@
+patching file sway-lib-std/src/crypto.sw
+patching file sway-lib-std/src/crypto/alt_bn128.sw
+patching file sway-lib-std/src/crypto/point2d.sw
+patching file sway-lib-std/src/crypto/scalar.sw
+patching file sway-lib-std/src/crypto/signature_error.sw

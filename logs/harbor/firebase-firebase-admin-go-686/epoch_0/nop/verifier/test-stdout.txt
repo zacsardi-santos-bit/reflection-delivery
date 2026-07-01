@@ -1,0 +1,16 @@
+patching file remoteconfig/condition_evaluator_test.go
+patching file remoteconfig/server_template_test.go
+# firebase.google.com/go/v4/remoteconfig [firebase.google.com/go/v4/remoteconfig.test]
+remoteconfig/condition_evaluator_test.go:30:50: undefined: oneOfCondition
+remoteconfig/condition_evaluator_test.go:30:66: undefined: namedCondition
+remoteconfig/condition_evaluator_test.go:31:8: undefined: namedCondition
+remoteconfig/condition_evaluator_test.go:38:57: undefined: namedCondition
+remoteconfig/condition_evaluator_test.go:39:8: undefined: conditionEvaluator
+remoteconfig/condition_evaluator_test.go:40:24: undefined: namedCondition
+remoteconfig/condition_evaluator_test.go:55:64: undefined: namedCondition
+remoteconfig/condition_evaluator_test.go:58:29: undefined: randomizationID
+remoteconfig/condition_evaluator_test.go:59:9: undefined: conditionEvaluator
+remoteconfig/condition_evaluator_test.go:60:25: undefined: namedCondition
+remoteconfig/condition_evaluator_test.go:60:25: too many errors
+FAIL	firebase.google.com/go/v4/remoteconfig [build failed]
+reward=0 graded=61 found=61 failed=61 parsed=1 framework=go exit_code=1

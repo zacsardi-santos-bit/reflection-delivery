@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-sigs-cluster-api-provider-aws-4882",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds ZoneType/ParentZoneName fields, \"func (s *SubnetSpec) IsEdge() bool\", SetZoneInfo, Subnets.IDs() excluding edge + IDsWithEdge(), and edge NAT routing; new F2P TestGetdNatGatewayForEdgeSubnet/zone_local-zone,_valid_nat_gateway_from_parent fails pre-patch, passes post-patch."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

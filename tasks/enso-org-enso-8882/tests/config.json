@@ -1,0 +1,18 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/app/ide-desktop/lib/dashboard && run-vitest run src/utilities/__tests__/jsonSchema.test.ts",
+  "test_files": [
+    "app/ide-desktop/lib/dashboard/src/utilities/__tests__/jsonSchema.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/app/ide-desktop/lib/dashboard/src/utilities/__tests__/jsonSchema.test.ts:: converting between constant value and schema (with seed=-896223001)",
+    "/workspace/repo/app/ide-desktop/lib/dashboard/src/utilities/__tests__/jsonSchema.test.ts:: string schema (with seed=698780960)",
+    "/workspace/repo/app/ide-desktop/lib/dashboard/src/utilities/__tests__/jsonSchema.test.ts:: number schema (with seed=1479941118)",
+    "/workspace/repo/app/ide-desktop/lib/dashboard/src/utilities/__tests__/jsonSchema.test.ts:: number multiples (with seed=-300509787)",
+    "/workspace/repo/app/ide-desktop/lib/dashboard/src/utilities/__tests__/jsonSchema.test.ts:: integer schema (with seed=1191386089)",
+    "/workspace/repo/app/ide-desktop/lib/dashboard/src/utilities/__tests__/jsonSchema.test.ts:: integer multiples (with seed=-636941714)"
+  ],
+  "PASS_TO_PASS": []
+}

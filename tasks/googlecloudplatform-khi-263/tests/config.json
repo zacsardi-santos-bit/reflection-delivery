@@ -1,0 +1,33 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/core/inspection/taskbase -count=1",
+  "test_files": [
+    "pkg/core/inspection/taskbase/fieldsetread_task_test.go",
+    "pkg/core/inspection/taskbase/historymodifier_task_test.go",
+    "pkg/core/inspection/taskbase/logfilter_task_test.go",
+    "pkg/core/inspection/taskbase/loggroup_task_test.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestCachedTask",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNewFieldSetReadTask/TaskModeRun:_should_read_and_set_fieldsets",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNewFieldSetReadTask/TaskModeDryRun:_should_not_read_any_fieldsets",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNewFieldSetReadTask/TaskModeRun:_should_read_and_set_fieldsets_for_logs_over_the_concurrency_count",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNewFieldSetReadTask",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestHistoryModifierTask/DryRun_mode",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestHistoryModifierTask/Normal_execution_with_multiple_logs_and_groups",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestHistoryModifierTask/Execution_with_an_error_in_one_of_the_logs",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestHistoryModifierTask/Empty_log_group_map",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestHistoryModifierTask",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNewLogFilterTask/should_return_an_empty_slice_for_an_empty_log_input_on_run_mode",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNewLogFilterTask/should_filter_logs_based_on_the_provided_function_on_run_mode",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNewLogFilterTask/should_return_an_empty_slice_and_perform_no_filtering_for_dryrun_mode",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNewLogFilterTask",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNwewLogGrouperTask/should_return_an_empty_map_for_empty_log_input_on_task_run_mode",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNwewLogGrouperTask/should_group_logs_correctly_based_on_the_provided_function_on_task_run_mode",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNwewLogGrouperTask/should_return_an_empty_map_on_task_dry_run_mode",
+    "github.com/GoogleCloudPlatform/khi/pkg/core/inspection/taskbase::TestNwewLogGrouperTask"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,169 @@
+patching file test/providers/pythonCompletion.fileRef.test.ts
+patching file test/providers/pythonCompletion.test.ts
+patching file test/util/fileReference.test.ts
+FAIL test/providers/pythonCompletion.fileRef.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../../src/util/fileReference' from 'test/providers/pythonCompletion.fileRef.test.ts'
+
+      16 | jest.mock('../../src/util');
+      17 |
+    > 18 | jest.mock('../../src/util/fileReference', () => ({
+         |      ^
+      19 |   loadFileReference: jest.fn(),
+      20 |   processConfigFileReferences: jest.fn(),
+      21 | }));
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.mock (test/providers/pythonCompletion.fileRef.test.ts:18:6)
+
+FAIL test/util/fileReference.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../../src/util/fileReference' from 'test/util/fileReference.test.ts'
+
+      26 | jest.mock('../../src/logger');
+      27 |
+    > 28 | const importModule = jest.mocked(esmModule.importModule);
+         |                        ^
+      29 | const runPython = jest.mocked(pythonUtils.runPython);
+      30 | const readFileMock = jest.mocked(fs.promises.readFile);
+      31 |
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.<anonymous> (test/util/fileReference.test.ts:28:24)
+
+FAIL test/providers/pythonCompletion.test.ts
+  PythonProvider
+    constructor
+      ✓ should initialize with correct properties (7 ms)
+      ✓ should initialize with python: syntax (1 ms)
+      ✓ should initialize with file:// prefix
+      ✓ should initialize with file:// prefix and function name (5 ms)
+    callApi
+      ✕ should call executePythonScript with correct parameters (7 ms)
+      error handling
+        ✓ should throw a specific error when Python script returns invalid result (4 ms)
+        ✓ should not throw an error when Python script returns a valid error (1 ms)
+        ✓ should throw an error when Python script returns null
+        ✓ should throw an error when Python script returns a non-object (1 ms)
+        ✓ should not throw an error when Python script returns a valid output (1 ms)
+    callEmbeddingApi
+      ✕ should call executePythonScript with correct parameters (2 ms)
+      ✓ should throw an error if Python script returns invalid result (1 ms)
+    callClassificationApi
+      ✕ should call executePythonScript with correct parameters (3 ms)
+      ✓ should throw an error if Python script returns invalid result
+    caching
+      ✓ should use cached result when available (1 ms)
+      ✓ should cache result when cache is enabled (1 ms)
+      ✓ should properly transform token usage in cached results
+      ✓ should preserve cached=false for fresh results with token usage (1 ms)
+      ✓ should handle missing token usage in cached results
+      ✓ should handle zero token usage in cached results
+      ✓ should not cache results with errors (1 ms)
+      ✓ should properly use different cache keys for different function names (1 ms)
+
+  ● PythonProvider › callApi › should call executePythonScript with correct parameters
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    - Expected
+    + Received
+
+      "/absolute/path/to/script.py",
+      "call_api",
+      Array [
+        "test prompt",
+    -   Object {
+    -     "config": Object {},
+    -   },
+    +   undefined,
+        Object {
+          "someContext": true,
+        },
+      ],
+      {"pythonExecutable": undefined},
+
+    Number of calls: 1
+
+      91 |       const result = await provider.callApi('test prompt', { someContext: true } as any);
+      92 |
+    > 93 |       expect(mockRunPython).toHaveBeenCalledWith(
+         |                             ^
+      94 |         expect.any(String),
+      95 |         'call_api',
+      96 |         ['test prompt', { config: {} }, { someContext: true }],
+
+      at Object.toHaveBeenCalledWith (test/providers/pythonCompletion.test.ts:93:29)
+
+  ● PythonProvider › callEmbeddingApi › should call executePythonScript with correct parameters
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    - Expected
+    + Received
+
+      "/absolute/path/to/script.py",
+      "call_embedding_api",
+      Array [
+        "test prompt",
+    -   Object {
+    -     "config": Object {},
+    -   },
+    +   undefined,
+      ],
+      {"pythonExecutable": undefined},
+
+    Number of calls: 1
+
+      151 |       const result = await provider.callEmbeddingApi('test prompt');
+      152 |
+    > 153 |       expect(mockRunPython).toHaveBeenCalledWith(
+          |                             ^
+      154 |         expect.any(String),
+      155 |         'call_embedding_api',
+      156 |         ['test prompt', { config: {} }],
+
+      at Object.toHaveBeenCalledWith (test/providers/pythonCompletion.test.ts:153:29)
+
+  ● PythonProvider › callClassificationApi › should call executePythonScript with correct parameters
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    - Expected
+    + Received
+
+      "/absolute/path/to/script.py",
+      "call_classification_api",
+      Array [
+        "test prompt",
+    -   Object {
+    -     "config": Object {},
+    -   },
+    +   undefined,
+      ],
+      {"pythonExecutable": undefined},
+
+    Number of calls: 1
+
+      177 |       const result = await provider.callClassificationApi('test prompt');
+      178 |
+    > 179 |       expect(mockRunPython).toHaveBeenCalledWith(
+          |                             ^
+      180 |         expect.any(String),
+      181 |         'call_classification_api',
+      182 |         ['test prompt', { config: {} }],
+
+      at Object.toHaveBeenCalledWith (test/providers/pythonCompletion.test.ts:179:29)
+
+Test Suites: 3 failed, 3 total
+Tests:       3 failed, 19 passed, 22 total
+Snapshots:   0 total
+Time:        2.095 s
+Ran all test suites matching /test\/providers\/pythonCompletion.fileRef.test.ts|test\/providers\/pythonCompletion.test.ts|test\/util\/fileReference.test.ts/i.
+{"numFailedTestSuites":3,"numFailedTests":3,"numPassedTestSuites":0,"numPassedTests":19,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":2,"numTodoTests":0,"numTotalTestSuites":3,"numTotalTests":22,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746410885,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782746412982,"message":"  ● Test suite failed to run\n\n    Cannot find module '../../src/util/fileReference' from 'test/providers/pythonCompletion.fileRef.test.ts'\n\n      16 | jest.mock('../../src/util');\n      17 |\n    > 18 | jest.mock('../../src/util/fileReference', () => ({\n         |      ^\n      19 |   loadFileReference: jest.fn(),\n      20 |   processConfigFileReferences: jest.fn(),\n      21 | }));\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)\n      at Object.mock (test/providers/pythonCompletion.fileRef.test.ts:18:6)\n","name":"/workspace/repo/test/providers/pythonCompletion.fileRef.test.ts","startTime":1782746412982,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746412982,"message":"  ● Test suite failed to run\n\n    Cannot find module '../../src/util/fileReference' from 'test/util/fileReference.test.ts'\n\n      26 | jest.mock('../../src/logger');\n      27 |\n    > 28 | const importModule = jest.mocked(esmModule.importModule);\n         |                        ^\n      29 | const runPython = jest.mocked(pythonUtils.runPython);\n      30 | const readFileMock = jest.mocked(fs.promises.readFile);\n      31 |\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)\n      at Object.<anonymous> (test/util/fileReference.test.ts:28:24)\n","name":"/workspace/repo/test/util/fileReference.test.ts","startTime":1782746412982,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":["PythonProvider","constructor"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider constructor should initialize with correct properties","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should initialize with correct properties"},{"ancestorTitles":["PythonProvider","constructor"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider constructor should initialize with python: syntax","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should initialize with python: syntax"},{"ancestorTitles":["PythonProvider","constructor"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider constructor should initialize with file:// prefix","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should initialize with file:// prefix"},{"ancestorTitles":["PythonProvider","constructor"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider constructor should initialize with file:// prefix and function name","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should initialize with file:// prefix and function name"},{"ancestorTitles":["PythonProvider","callApi"],"duration":7,"failureDetails":[{"matcherResult":{"message":"expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n- Expected\n+ Received\n\n  \"/absolute/path/to/script.py\",\n  \"call_api\",\n  Array [\n    \"test prompt\",\n-   Object {\n-     \"config\": Object {},\n-   },\n+   undefined,\n    Object {\n      \"someContext\": true,\n    },\n  ],\n  {\"pythonExecutable\": undefined},\n\nNumber of calls: 1","pass":false}}],"failureMessages":["Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n- Expected\n+ Received\n\n  \"/absolute/path/to/script.py\",\n  \"call_api\",\n  Array [\n    \"test prompt\",\n-   Object {\n-     \"config\": Object {},\n-   },\n+   undefined,\n    Object {\n      \"someContext\": true,\n    },\n  ],\n  {\"pythonExecutable\": undefined},\n\nNumber of calls: 1\n    at Object.toHaveBeenCalledWith (/workspace/repo/test/providers/pythonCompletion.test.ts:93:29)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)"],"fullName":"PythonProvider callApi should call executePythonScript with correct parameters","invocations":1,"location":null,"numPassingAsserts":0,"retryReasons":[],"status":"failed","title":"should call executePythonScript with correct parameters"},{"ancestorTitles":["PythonProvider","callApi","error handling"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider callApi error handling should throw a specific error when Python script returns invalid result","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should throw a specific error when Python script returns invalid result"},{"ancestorTitles":["PythonProvider","callApi","error handling"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider callApi error handling should not throw an error when Python script returns a valid error","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should not throw an error when Python script returns a valid error"},{"ancestorTitles":["PythonProvider","callApi","error handling"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider callApi error handling should throw an error when Python script returns null","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should throw an error when Python script returns null"},{"ancestorTitles":["PythonProvider","callApi","error handling"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider callApi error handling should throw an error when Python script returns a non-object","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should throw an error when Python script returns a non-object"},{"ancestorTitles":["PythonProvider","callApi","error handling"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider callApi error handling should not throw an error when Python script returns a valid output","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should not throw an error when Python script returns a valid output"},{"ancestorTitles":["PythonProvider","callEmbeddingApi"],"duration":2,"failureDetails":[{"matcherResult":{"message":"expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n- Expected\n+ Received\n\n  \"/absolute/path/to/script.py\",\n  \"call_embedding_api\",\n  Array [\n    \"test prompt\",\n-   Object {\n-     \"config\": Object {},\n-   },\n+   undefined,\n  ],\n  {\"pythonExecutable\": undefined},\n\nNumber of calls: 1","pass":false}}],"failureMessages":["Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n- Expected\n+ Received\n\n  \"/absolute/path/to/script.py\",\n  \"call_embedding_api\",\n  Array [\n    \"test prompt\",\n-   Object {\n-     \"config\": Object {},\n-   },\n+   undefined,\n  ],\n  {\"pythonExecutable\": undefined},\n\nNumber of calls: 1\n    at Object.toHaveBeenCalledWith (/workspace/repo/test/providers/pythonCompletion.test.ts:153:29)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)"],"fullName":"PythonProvider callEmbeddingApi should call executePythonScript with correct parameters","invocations":1,"location":null,"numPassingAsserts":0,"retryReasons":[],"status":"failed","title":"should call executePythonScript with correct parameters"},{"ancestorTitles":["PythonProvider","callEmbeddingApi"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider callEmbeddingApi should throw an error if Python script returns invalid result","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should throw an error if Python script returns invalid result"},{"ancestorTitles":["PythonProvider","callClassificationApi"],"duration":3,"failureDetails":[{"matcherResult":{"message":"expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n- Expected\n+ Received\n\n  \"/absolute/path/to/script.py\",\n  \"call_classification_api\",\n  Array [\n    \"test prompt\",\n-   Object {\n-     \"config\": Object {},\n-   },\n+   undefined,\n  ],\n  {\"pythonExecutable\": undefined},\n\nNumber of calls: 1","pass":false}}],"failureMessages":["Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n- Expected\n+ Received\n\n  \"/absolute/path/to/script.py\",\n  \"call_classification_api\",\n  Array [\n    \"test prompt\",\n-   Object {\n-     \"config\": Object {},\n-   },\n+   undefined,\n  ],\n  {\"pythonExecutable\": undefined},\n\nNumber of calls: 1\n    at Object.toHaveBeenCalledWith (/workspace/repo/test/providers/pythonCompletion.test.ts:179:29)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)"],"fullName":"PythonProvider callClassificationApi should call executePythonScript with correct parameters","invocations":1,"location":null,"numPassingAsserts":0,"retryReasons":[],"status":"failed","title":"should call executePythonScript with correct parameters"},{"ancestorTitles":["PythonProvider","callClassificationApi"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider callClassificationApi should throw an error if Python script returns invalid result","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should throw an error if Python script returns invalid result"},{"ancestorTitles":["PythonProvider","caching"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider caching should use cached result when available","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should use cached result when available"},{"ancestorTitles":["PythonProvider","caching"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider caching should cache result when cache is enabled","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should cache result when cache is enabled"},{"ancestorTitles":["PythonProvider","caching"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider caching should properly transform token usage in cached results","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should properly transform token usage in cached results"},{"ancestorTitles":["PythonProvider","caching"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider caching should preserve cached=false for fresh results with token usage","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should preserve cached=false for fresh results with token usage"},{"ancestorTitles":["PythonProvider","caching"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider caching should handle missing token usage in cached results","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should handle missing token usage in cached results"},{"ancestorTitles":["PythonProvider","caching"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider caching should handle zero token usage in cached results","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should handle zero token usage in cached results"},{"ancestorTitles":["PythonProvider","caching"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider caching should not cache results with errors","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should not cache results with errors"},{"ancestorTitles":["PythonProvider","caching"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"PythonProvider caching should properly use different cache keys for different function names","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should properly use different cache keys for different function names"}],"endTime":1782746412911,"message":"  ● PythonProvider › callApi › should call executePythonScript with correct parameters\n\n    expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n    - Expected\n    + Received\n\n      \"/absolute/path/to/script.py\",\n      \"call_api\",\n      Array [\n        \"test prompt\",\n    -   Object {\n    -     \"config\": Object {},\n    -   },\n    +   undefined,\n        Object {\n          \"someContext\": true,\n        },\n      ],\n      {\"pythonExecutable\": undefined},\n\n    Number of calls: 1\n\n      91 |       const result = await provider.callApi('test prompt', { someContext: true } as any);\n      92 |\n    > 93 |       expect(mockRunPython).toHaveBeenCalledWith(\n         |                             ^\n      94 |         expect.any(String),\n      95 |         'call_api',\n      96 |         ['test prompt', { config: {} }, { someContext: true }],\n\n      at Object.toHaveBeenCalledWith (test/providers/pythonCompletion.test.ts:93:29)\n\n  ● PythonProvider › callEmbeddingApi › should call executePythonScript with correct parameters\n\n    expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n    - Expected\n    + Received\n\n      \"/absolute/path/to/script.py\",\n      \"call_embedding_api\",\n      Array [\n        \"test prompt\",\n    -   Object {\n    -     \"config\": Object {},\n    -   },\n    +   undefined,\n      ],\n      {\"pythonExecutable\": undefined},\n\n    Number of calls: 1\n\n      151 |       const result = await provider.callEmbeddingApi('test prompt');\n      152 |\n    > 153 |       expect(mockRunPython).toHaveBeenCalledWith(\n          |                             ^\n      154 |         expect.any(String),\n      155 |         'call_embedding_api',\n      156 |         ['test prompt', { config: {} }],\n\n      at Object.toHaveBeenCalledWith (test/providers/pythonCompletion.test.ts:153:29)\n\n  ● PythonProvider › callClassificationApi › should call executePythonScript with correct parameters\n\n    expect(jest.fn()).toHaveBeenCalledWith(...expected)\n\n    - Expected\n    + Received\n\n      \"/absolute/path/to/script.py\",\n      \"call_classification_api\",\n      Array [\n        \"test prompt\",\n    -   Object {\n    -     \"config\": Object {},\n    -   },\n    +   undefined,\n      ],\n      {\"pythonExecutable\": undefined},\n\n    Number of calls: 1\n\n      177 |       const result = await provider.callClassificationApi('test prompt');\n      178 |\n    > 179 |       expect(mockRunPython).toHaveBeenCalledWith(\n          |                             ^\n      180 |         expect.any(String),\n      181 |         'call_classification_api',\n      182 |         ['test prompt', { config: {} }],\n\n      at Object.toHaveBeenCalledWith (test/providers/pythonCompletion.test.ts:179:29)\n","name":"/workspace/repo/test/providers/pythonCompletion.test.ts","startTime":1782746411365,"status":"failed","summary":""}],"wasInterrupted":false}
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

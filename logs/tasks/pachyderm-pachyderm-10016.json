@@ -1,0 +1,23 @@
+{
+ "task": "pachyderm-pachyderm-10016",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden removes '(l Level) log' DPanic-on-unknown-level, replaces with l.Check(level.coreLevel(),...), adds ContextInfo for expired ctx, and adds newBenchInfoLogger; test.patch adds TestDeadlineSpan + BenchmarkContextInfo_NotLogged and drops the 'invalid level' panic case"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 23,
+  "shallow": true
+ }
+}

@@ -1,0 +1,44 @@
+patching file src/js/components/TextInput/__tests__/__snapshots__/TextInput-test.tsx.snap
+PASS src/js/components/TextInput/__tests__/TextInput-test.tsx (6.171 s)
+  TextInput
+    ✓ should not have accessibility violations (120 ms)
+    ✓ basic (11 ms)
+    ✓ a11yTitle or aria-label (16 ms)
+    ✓ disabled (7 ms)
+    ✓ icon (18 ms)
+    ✓ icon reverse (10 ms)
+    ✓ suggestions (140 ms)
+    ✓ complex suggestions (88 ms)
+    ✓ close suggestion drop (137 ms)
+    ✓ let escape events propagage if there are no suggestions (57 ms)
+    ✓ calls onSuggestionsOpen (79 ms)
+    ✓ calls onSuggestionsClose (133 ms)
+    ✓ select suggestion (86 ms)
+    ✓ select a suggestion with onSelect (36 ms)
+    ✓ auto-select 2nd suggestion with defaultSuggestion (25 ms)
+    ✓ auto-select 1st suggestion via typing with defaultSuggestion (25 ms)
+    ✓ do not select any suggestion without defaultSuggestion (39 ms)
+    ✓ select a suggestion with onSuggestionSelect (30 ms)
+    ✓ select with onSuggestionSelect when onSelect is present (35 ms)
+    ✓ handles next and previous without suggestion (7 ms)
+    ✓ small drop height (74 ms)
+    ✓ medium drop height (75 ms)
+    ✓ large drop height (74 ms)
+    ✓ should return focus to input on select (21 ms)
+    ✓ should return focus to ref on select (24 ms)
+    ✓ should not have padding when plain="full" (6 ms)
+    ✓ should have padding when plain (5 ms)
+    ✓ should show non-string placeholder (9 ms)
+    ✓ should hide non-string placeholder when having a value (6 ms)
+    ✓ should only show default placeholder when placeholder is a
+  string (6 ms)
+    ✓ textAlign end (6 ms)
+    ✓ custom theme input font size (6 ms)
+    ✓ renders size (127 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       33 passed, 33 total
+Snapshots:   46 passed, 46 total
+Time:        6.79 s
+Ran all test suites matching /src\/js\/components\/TextInput\/__tests__\/TextInput-test.tsx/i.
+reward=1 graded=33 found=0 failed=0 parsed=0 framework=jest exit_code=0

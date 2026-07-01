@@ -1,0 +1,23 @@
+{
+ "task": "tektoncd-pipeline-1621",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden renames 'resources/pod.go b/pkg/pod/pod.go' with 'package pod', makes helpers private ('func credsInit', 'func orderContainers', 'func convertScripts'), and taskrun.go now calls 'pod.MakePod'; test uses lowercase helpers + 'pod.ManagedByLabelKey'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

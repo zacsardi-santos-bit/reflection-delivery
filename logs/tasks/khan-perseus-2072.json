@@ -1,0 +1,23 @@
+{
+ "task": "khan-perseus-2072",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds real MockWidget + scoreMockWidget using 'KhanAnswerTypes.number.createValidatorFunctional(stringValue, strings)' and getPromptJSON; renderer-api tests do renderer.setInputValue(['mock-widget 1'], '5') then scorePerseusItemTesting and assert correct/wrong/empty"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

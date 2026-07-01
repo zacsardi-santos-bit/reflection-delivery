@@ -1,0 +1,31 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/sqldb && go test -tags test_db_sqlite . -run \"TestExecuteBatchQuery|TestExecutePaginatedQuery|TestSQLSliceQueries\" -count=1 -v",
+  "test_files": [
+    "graph/db/benchmark_test.go",
+    "itest/lnd_graph_migration_test.go",
+    "sqldb/paginate_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/lightningnetwork/lnd/sqldb::TestExecuteBatchQuery/empty_input_returns_nil",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecuteBatchQuery/single_page_processes_all_items",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecuteBatchQuery/multiple_pages_process_correctly",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecuteBatchQuery/query_function_error_is_propagated",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecuteBatchQuery/callback_error_is_propagated",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecuteBatchQuery/query_error_in_second_page_is_propagated",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecuteBatchQuery",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecutePaginatedQuery/happy_path_multiple_pages",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecutePaginatedQuery/process_error_second_item",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecutePaginatedQuery/different_initial_cursor",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecutePaginatedQuery/single_page",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecutePaginatedQuery/query_error_first_call",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecutePaginatedQuery/query_error_second_call",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecutePaginatedQuery/empty_results",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecutePaginatedQuery/process_error_first_item",
+    "github.com/lightningnetwork/lnd/sqldb::TestExecutePaginatedQuery",
+    "github.com/lightningnetwork/lnd/sqldb::TestSQLSliceQueries"
+  ],
+  "PASS_TO_PASS": []
+}

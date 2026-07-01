@@ -1,0 +1,23 @@
+{
+ "task": "pola-rs-polars-10701",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden rewrites py-polars/polars/interchange/from_dataframe.py (+column.py/utils.py/convert.py) defining _construct_data_buffer/_construct_validity_buffer/_categorical_column_to_series/dtype_to_polars_dtype/get_buffer_length_in_elements; F2P=143 pytest tests across 5 interchange test files (categori"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

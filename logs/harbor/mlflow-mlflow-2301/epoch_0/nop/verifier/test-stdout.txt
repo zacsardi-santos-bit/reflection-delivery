@@ -1,0 +1,1242 @@
+patching file tests/tensorflow_autolog/test_tensorflow2_autolog.py
+patching file tests/tensorflow_autolog/test_tensorflow_autolog.py
+============================= test session starts ==============================
+platform linux -- Python 3.7.17, pytest-7.4.4, pluggy-1.2.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: forked-1.6.0, cov-4.1.0
+collecting ... collected 38 items / 26 deselected / 12 selected
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[True-0-early-True] FAILED [  8%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[True-1-early-True] FAILED [ 16%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[True-5-early-True] FAILED [ 25%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[False-0-early-True] FAILED [ 33%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[False-1-early-True] FAILED [ 41%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[False-5-early-True] FAILED [ 50%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_stop_does_not_log[True-11-early-True] FAILED [ 58%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_stop_does_not_log[False-11-early-True] FAILED [ 66%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_restore_doesnt_log[True-5-early-False] FAILED [ 75%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_restore_doesnt_log[False-5-early-False] FAILED [ 83%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_non_early_stop_callback_no_log[True-5-not-early-False] PASSED [ 91%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_non_early_stop_callback_no_log[False-5-not-early-False] PASSED [100%]
+
+=================================== FAILURES ===================================
+___________ test_tf_keras_autolog_early_stop_logs[True-0-early-True] ___________
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.12399999797344208, 'loss': 2.2925667762756348}, params={'batch_size': 'No...allbacks.History object at 0x2b9093b95690>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b9093af3050>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [True])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [0, 1, 5])
+    def test_tf_keras_autolog_early_stop_logs(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:211: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 9s - loss: 2.2945 - accuracy: 0.093832/32 [==============================] - 0s 1ms/step - loss: 2.3047 - accuracy: 0.0994
+Epoch 2/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.3146 - accuracy: 0.125032/32 [==============================] - 0s 766us/step - loss: 2.2978 - accuracy: 0.1194
+---------------------------- Captured stderr setup -----------------------------
+2026/06/29 15:24:51 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:24:51 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-0/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:51.508366: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:24:51.508921: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:24:51.508970: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:24:51.509022: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:24:51.509296: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:24:51.514984: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:51.620895: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:24:51.620956: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:24:51.621450: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:51.824174: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:24:51.824713: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:24:52.148317: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:24:52.148403: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:24:52.150844: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:24:52.151734: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:24:52.152819: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52
+2026-06-29 15:24:52.153634: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52/modal.trace.json.gz
+2026-06-29 15:24:52.155311: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52
+2026-06-29 15:24:52.155399: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52/modal.memory_profile.json.gz
+2026-06-29 15:24:52.155588: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52Dumped tool data for xplane.pb to /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmpg006ajur/train/plugins/profile/2026_06_29_15_24_52/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+--------------------------- Captured stderr teardown ---------------------------
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+---------------------------- Captured log teardown -----------------------------
+INFO     alembic.runtime.migration:migration.py:213 Context impl SQLiteImpl.
+INFO     alembic.runtime.migration:migration.py:220 Will assume non-transactional DDL.
+___________ test_tf_keras_autolog_early_stop_logs[True-1-early-True] ___________
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.11100000143051147, 'loss': 2.2982258796691895}, params={'batch_size': 'No...allbacks.History object at 0x2b9093b63110>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b9093b036d0>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [True])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [0, 1, 5])
+    def test_tf_keras_autolog_early_stop_logs(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:211: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 9s - loss: 2.3739 - accuracy: 0.093832/32 [==============================] - 0s 1ms/step - loss: 2.3399 - accuracy: 0.0974
+Epoch 2/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2675 - accuracy: 0.218832/32 [==============================] - 0s 915us/step - loss: 2.2965 - accuracy: 0.1228
+---------------------------- Captured stderr setup -----------------------------
+2026/06/29 15:24:53 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:24:53 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-1/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:53.380757: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:24:53.381200: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:24:53.381257: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:24:53.381309: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:24:53.381571: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:24:53.384800: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:53.495881: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:24:53.495958: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:24:53.496427: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:53.687545: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:24:53.687991: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:24:54.012029: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:24:54.012118: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:24:54.014405: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:24:54.015097: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:24:54.016127: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54
+2026-06-29 15:24:54.017298: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54/modal.trace.json.gz
+2026-06-29 15:24:54.019014: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54
+2026-06-29 15:24:54.019121: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54/modal.memory_profile.json.gz
+2026-06-29 15:24:54.019324: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54Dumped tool data for xplane.pb to /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmp5od24cc3/train/plugins/profile/2026_06_29_15_24_54/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+--------------------------- Captured stderr teardown ---------------------------
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+---------------------------- Captured log teardown -----------------------------
+INFO     alembic.runtime.migration:migration.py:213 Context impl SQLiteImpl.
+INFO     alembic.runtime.migration:migration.py:220 Will assume non-transactional DDL.
+___________ test_tf_keras_autolog_early_stop_logs[True-5-early-True] ___________
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.17499999701976776, 'loss': 2.260626792907715}, params={'batch_size': 'Non...allbacks.History object at 0x2b9093b61bd0>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b9093af3810>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [True])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [0, 1, 5])
+    def test_tf_keras_autolog_early_stop_logs(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:211: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 9s - loss: 2.4802 - accuracy: 0.062532/32 [==============================] - 0s 1ms/step - loss: 2.3483 - accuracy: 0.0950
+Epoch 2/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2808 - accuracy: 0.093832/32 [==============================] - 0s 932us/step - loss: 2.2976 - accuracy: 0.1307
+Epoch 3/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.3120 - accuracy: 0.062532/32 [==============================] - 0s 872us/step - loss: 2.2883 - accuracy: 0.1267
+Epoch 4/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2366 - accuracy: 0.281232/32 [==============================] - 0s 824us/step - loss: 2.2758 - accuracy: 0.1771
+Epoch 5/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2625 - accuracy: 0.187532/32 [==============================] - 0s 732us/step - loss: 2.2695 - accuracy: 0.1709
+Epoch 6/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2383 - accuracy: 0.218832/32 [==============================] - 0s 735us/step - loss: 2.2599 - accuracy: 0.1741
+---------------------------- Captured stderr setup -----------------------------
+2026/06/29 15:24:55 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:24:55 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-2/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:55.919185: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:24:55.919676: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:24:55.919715: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:24:55.919758: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:24:55.920032: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:24:55.926498: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:56.035139: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:24:56.035200: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:24:56.035639: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:56.229766: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:24:56.230288: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:24:56.547326: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:24:56.547408: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:24:56.549870: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:24:56.550779: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:24:56.551893: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56
+2026-06-29 15:24:56.552631: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56/modal.trace.json.gz
+2026-06-29 15:24:56.554398: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56
+2026-06-29 15:24:56.554493: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56/modal.memory_profile.json.gz
+2026-06-29 15:24:56.554755: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56Dumped tool data for xplane.pb to /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmpbw5l9g9u/train/plugins/profile/2026_06_29_15_24_56/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+--------------------------- Captured stderr teardown ---------------------------
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+---------------------------- Captured log teardown -----------------------------
+INFO     alembic.runtime.migration:migration.py:213 Context impl SQLiteImpl.
+INFO     alembic.runtime.migration:migration.py:220 Will assume non-transactional DDL.
+__________ test_tf_keras_autolog_early_stop_logs[False-0-early-True] ___________
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.11100000143051147, 'loss': 2.3009488582611084}, params={'batch_size': 'No...allbacks.History object at 0x2b9093a44e10>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b90917496d0>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [True])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [0, 1, 5])
+    def test_tf_keras_autolog_early_stop_logs(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:211: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 9s - loss: 2.3595 - accuracy: 0.031232/32 [==============================] - 0s 1ms/step - loss: 2.3429 - accuracy: 0.0892
+Epoch 2/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2819 - accuracy: 0.031232/32 [==============================] - 0s 846us/step - loss: 2.2972 - accuracy: 0.1166
+---------------------------- Captured stderr setup -----------------------------
+2026-06-29 15:24:57.533263: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:24:57.535011: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:24:57.535070: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:24:57.535116: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:24:57.535711: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:24:57.540620: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026/06/29 15:24:58 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:24:58 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-3/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:58.194326: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:24:58.194432: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:24:58.194921: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:24:58.390830: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:24:58.391375: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:24:58.709951: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:24:58.710019: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:24:58.712168: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:24:58.712869: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:24:58.713842: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58
+2026-06-29 15:24:58.714676: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58/modal.trace.json.gz
+2026-06-29 15:24:58.716307: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58
+2026-06-29 15:24:58.716394: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58/modal.memory_profile.json.gz
+2026-06-29 15:24:58.716591: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58Dumped tool data for xplane.pb to /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmp7xr9g9zw/train/plugins/profile/2026_06_29_15_24_58/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+__________ test_tf_keras_autolog_early_stop_logs[False-1-early-True] ___________
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.11299999803304672, 'loss': 2.302701711654663}, params={'batch_size': 'Non...allbacks.History object at 0x2b9093a95450>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b909174a790>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [True])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [0, 1, 5])
+    def test_tf_keras_autolog_early_stop_logs(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:211: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 9s - loss: 2.3321 - accuracy: 0.093832/32 [==============================] - 0s 1ms/step - loss: 2.3190 - accuracy: 0.1109
+Epoch 2/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2931 - accuracy: 0.125032/32 [==============================] - 0s 959us/step - loss: 2.2924 - accuracy: 0.1234
+---------------------------- Captured stderr setup -----------------------------
+2026-06-29 15:24:59.448896: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:24:59.450599: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:24:59.450642: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:24:59.450685: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:24:59.451219: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:24:59.453070: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026/06/29 15:24:59 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:24:59 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-4/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:00.099825: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:00.099943: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:00.100701: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:00.338556: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:25:00.339148: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:25:00.667970: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:00.668067: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:00.670712: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:25:00.671512: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:25:00.672711: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00
+2026-06-29 15:25:00.673850: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00/modal.trace.json.gz
+2026-06-29 15:25:00.675629: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00
+2026-06-29 15:25:00.675731: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00/modal.memory_profile.json.gz
+2026-06-29 15:25:00.675963: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00Dumped tool data for xplane.pb to /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmpczv2spb3/train/plugins/profile/2026_06_29_15_25_00/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+__________ test_tf_keras_autolog_early_stop_logs[False-5-early-True] ___________
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.15299999713897705, 'loss': 2.2559690475463867}, params={'batch_size': 'No...allbacks.History object at 0x2b9093a96f10>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b909174ab50>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [True])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [0, 1, 5])
+    def test_tf_keras_autolog_early_stop_logs(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:211: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 9s - loss: 2.3263 - accuracy: 0.125032/32 [==============================] - 0s 1ms/step - loss: 2.3216 - accuracy: 0.1161
+Epoch 2/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.3315 - accuracy: 0.093832/32 [==============================] - 0s 969us/step - loss: 2.2935 - accuracy: 0.1259
+Epoch 3/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2880 - accuracy: 0.125032/32 [==============================] - 0s 929us/step - loss: 2.2900 - accuracy: 0.1209
+Epoch 4/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2806 - accuracy: 0.062532/32 [==============================] - 0s 882us/step - loss: 2.2733 - accuracy: 0.1568
+Epoch 5/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2401 - accuracy: 0.218832/32 [==============================] - 0s 857us/step - loss: 2.2584 - accuracy: 0.1692
+Epoch 6/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2716 - accuracy: 0.093832/32 [==============================] - 0s 849us/step - loss: 2.2592 - accuracy: 0.1517
+---------------------------- Captured stderr setup -----------------------------
+2026-06-29 15:25:01.461415: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:25:01.463329: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:25:01.463386: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:25:01.463433: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:25:01.464136: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:25:01.467246: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026/06/29 15:25:01 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:25:01 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-5/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:02.214865: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:02.214932: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:02.215391: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:02.417041: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:25:02.417587: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:25:02.733712: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:02.733795: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:02.736021: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:25:02.736774: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:25:02.737905: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02
+2026-06-29 15:25:02.738716: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02/modal.trace.json.gz
+2026-06-29 15:25:02.740405: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02
+2026-06-29 15:25:02.740545: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02/modal.memory_profile.json.gz
+2026-06-29 15:25:02.740747: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02Dumped tool data for xplane.pb to /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmp7kaz3gku/train/plugins/profile/2026_06_29_15_25_02/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+__ test_tf_keras_autolog_early_stop_no_stop_does_not_log[True-11-early-True] ___
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.2370000034570694, 'loss': 2.2106261253356934}, params={'batch_size': 'Non...allbacks.History object at 0x2b9093afc4d0>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b9093af7d10>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [True])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [11])
+    def test_tf_keras_autolog_early_stop_no_stop_does_not_log(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:241: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 9s - loss: 2.3459 - accuracy: 0.125032/32 [==============================] - 0s 2ms/step - loss: 2.3209 - accuracy: 0.1038
+Epoch 2/10
+ 1/32 [..............................] - ETA: 1s - loss: 2.2935 - accuracy: 0.187532/32 [==============================] - 0s 973us/step - loss: 2.2989 - accuracy: 0.1185
+Epoch 3/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.3034 - accuracy: 0.156232/32 [==============================] - 0s 862us/step - loss: 2.2870 - accuracy: 0.1534
+Epoch 4/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.3169 - accuracy: 0.093832/32 [==============================] - 0s 779us/step - loss: 2.2853 - accuracy: 0.1399
+Epoch 5/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2826 - accuracy: 0.156232/32 [==============================] - 0s 740us/step - loss: 2.2708 - accuracy: 0.1751
+Epoch 6/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2623 - accuracy: 0.187532/32 [==============================] - 0s 746us/step - loss: 2.2582 - accuracy: 0.1890
+Epoch 7/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2636 - accuracy: 0.156232/32 [==============================] - 0s 724us/step - loss: 2.2552 - accuracy: 0.1803
+Epoch 8/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2005 - accuracy: 0.281232/32 [==============================] - 0s 704us/step - loss: 2.2376 - accuracy: 0.2188
+Epoch 9/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.1556 - accuracy: 0.343832/32 [==============================] - 0s 711us/step - loss: 2.2133 - accuracy: 0.2229
+Epoch 10/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2548 - accuracy: 0.156232/32 [==============================] - 0s 815us/step - loss: 2.2130 - accuracy: 0.2410
+---------------------------- Captured stderr setup -----------------------------
+2026/06/29 15:25:04 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:25:04 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-6/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:04.274368: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:25:04.274894: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:25:04.274938: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:25:04.274981: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:25:04.275308: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:25:04.280402: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:04.386656: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:04.386718: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:04.387151: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:04.601195: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:25:04.601726: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:25:04.928104: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:04.928213: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:04.931044: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:25:04.931916: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:25:04.932991: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04
+2026-06-29 15:25:04.933846: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04/modal.trace.json.gz
+2026-06-29 15:25:04.935712: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04
+2026-06-29 15:25:04.935815: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04/modal.memory_profile.json.gz
+2026-06-29 15:25:04.936026: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04Dumped tool data for xplane.pb to /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmpv1g_upms/train/plugins/profile/2026_06_29_15_25_04/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+--------------------------- Captured stderr teardown ---------------------------
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+---------------------------- Captured log teardown -----------------------------
+INFO     alembic.runtime.migration:migration.py:213 Context impl SQLiteImpl.
+INFO     alembic.runtime.migration:migration.py:220 Will assume non-transactional DDL.
+__ test_tf_keras_autolog_early_stop_no_stop_does_not_log[False-11-early-True] __
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.2290000021457672, 'loss': 2.20637583732605}, params={'batch_size': 'None'...allbacks.History object at 0x2b9093b03d90>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b90917c7990>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [True])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [11])
+    def test_tf_keras_autolog_early_stop_no_stop_does_not_log(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:241: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 9s - loss: 2.3074 - accuracy: 0.187532/32 [==============================] - 0s 1ms/step - loss: 2.3346 - accuracy: 0.1177
+Epoch 2/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.3066 - accuracy: 0.093832/32 [==============================] - 0s 751us/step - loss: 2.2995 - accuracy: 0.1148
+Epoch 3/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2850 - accuracy: 0.093832/32 [==============================] - 0s 726us/step - loss: 2.2834 - accuracy: 0.1308
+Epoch 4/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2659 - accuracy: 0.281232/32 [==============================] - 0s 745us/step - loss: 2.2791 - accuracy: 0.1742
+Epoch 5/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2994 - accuracy: 0.125032/32 [==============================] - 0s 738us/step - loss: 2.2713 - accuracy: 0.1687
+Epoch 6/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2386 - accuracy: 0.156232/32 [==============================] - 0s 718us/step - loss: 2.2538 - accuracy: 0.1824
+Epoch 7/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2175 - accuracy: 0.250032/32 [==============================] - 0s 721us/step - loss: 2.2393 - accuracy: 0.2095
+Epoch 8/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2917 - accuracy: 0.125032/32 [==============================] - 0s 713us/step - loss: 2.2288 - accuracy: 0.2271
+Epoch 9/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2486 - accuracy: 0.218832/32 [==============================] - 0s 707us/step - loss: 2.2219 - accuracy: 0.2222
+Epoch 10/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.1161 - accuracy: 0.281232/32 [==============================] - 0s 710us/step - loss: 2.1955 - accuracy: 0.2403
+---------------------------- Captured stderr setup -----------------------------
+2026-06-29 15:25:06.288136: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:25:06.290239: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:25:06.290350: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:25:06.290414: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:25:06.291234: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:25:06.293802: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026/06/29 15:25:06 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:25:06 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-7/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:06.950876: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:06.950939: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:06.951563: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:07.151216: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:25:07.151768: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:25:07.467770: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:07.467848: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:07.470130: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:25:07.470935: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:25:07.471914: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07
+2026-06-29 15:25:07.472733: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07/modal.trace.json.gz
+2026-06-29 15:25:07.474417: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07
+2026-06-29 15:25:07.474649: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07/modal.memory_profile.json.gz
+2026-06-29 15:25:07.474870: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07Dumped tool data for xplane.pb to /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmpajbqxt12/train/plugins/profile/2026_06_29_15_25_07/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+__ test_tf_keras_autolog_early_stop_no_restore_doesnt_log[True-5-early-False] __
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.1809999942779541, 'loss': 2.2529385089874268}, params={'batch_size': 'Non...allbacks.History object at 0x2b9093b922d0>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b9093a1ec50>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [False])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [5])
+    def test_tf_keras_autolog_early_stop_no_restore_doesnt_log(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:267: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 8s - loss: 2.3672 - accuracy: 0.125032/32 [==============================] - 0s 1ms/step - loss: 2.3247 - accuracy: 0.1029
+Epoch 2/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2592 - accuracy: 0.187532/32 [==============================] - 0s 871us/step - loss: 2.2886 - accuracy: 0.1412
+Epoch 3/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2741 - accuracy: 0.156232/32 [==============================] - 0s 925us/step - loss: 2.2895 - accuracy: 0.1238
+Epoch 4/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2691 - accuracy: 0.125032/32 [==============================] - 0s 882us/step - loss: 2.2771 - accuracy: 0.1475
+Epoch 5/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2904 - accuracy: 0.062532/32 [==============================] - 0s 845us/step - loss: 2.2651 - accuracy: 0.1595
+Epoch 6/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2569 - accuracy: 0.156232/32 [==============================] - 0s 861us/step - loss: 2.2447 - accuracy: 0.2060
+---------------------------- Captured stderr setup -----------------------------
+2026/06/29 15:25:08 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:25:08 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-8/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:09.101658: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:25:09.102124: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:25:09.102180: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:25:09.102228: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:25:09.102484: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:25:09.104500: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:09.201610: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:09.201665: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:09.202087: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:09.392300: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:25:09.392700: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:25:09.698216: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:09.698293: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:09.700002: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:25:09.700659: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:25:09.701617: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09
+2026-06-29 15:25:09.702469: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09/modal.trace.json.gz
+2026-06-29 15:25:09.704063: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09
+2026-06-29 15:25:09.704329: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09/modal.memory_profile.json.gz
+2026-06-29 15:25:09.704586: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09Dumped tool data for xplane.pb to /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmpzng52cf6/train/plugins/profile/2026_06_29_15_25_09/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+--------------------------- Captured stderr teardown ---------------------------
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+---------------------------- Captured log teardown -----------------------------
+INFO     alembic.runtime.migration:migration.py:213 Context impl SQLiteImpl.
+INFO     alembic.runtime.migration:migration.py:220 Will assume non-transactional DDL.
+_ test_tf_keras_autolog_early_stop_no_restore_doesnt_log[False-5-early-False] __
+tf_keras_random_data_run_with_callback = (<Run: data=<RunData: metrics={'accuracy': 0.15600000321865082, 'loss': 2.261970281600952}, params={'batch_size': 'Non...allbacks.History object at 0x2b9093b04390>, <tensorflow.python.keras.callbacks.EarlyStopping object at 0x2b90917c9d90>)
+
+    @pytest.mark.large
+    @pytest.mark.parametrize('restore_weights', [False])
+    @pytest.mark.parametrize('callback', ['early'])
+    @pytest.mark.parametrize('patience', [5])
+    def test_tf_keras_autolog_early_stop_no_restore_doesnt_log(tf_keras_random_data_run_with_callback):
+        run, history, callback = tf_keras_random_data_run_with_callback
+        metrics = run.data.metrics
+        params = run.data.params
+>       assert 'patience' in params
+E       AssertionError: assert 'patience' in {'batch_size': 'None', 'class_weight': 'None', 'epochs': '10', 'initial_epoch': '0', ...}
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:267: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+Epoch 1/10
+ 1/32 [..............................] - ETA: 9s - loss: 2.2994 - accuracy: 0.125032/32 [==============================] - 0s 1ms/step - loss: 2.3224 - accuracy: 0.1070
+Epoch 2/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2831 - accuracy: 0.156232/32 [==============================] - 0s 859us/step - loss: 2.3003 - accuracy: 0.1063
+Epoch 3/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2934 - accuracy: 0.156232/32 [==============================] - 0s 924us/step - loss: 2.2917 - accuracy: 0.1226
+Epoch 4/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2960 - accuracy: 0.125032/32 [==============================] - 0s 837us/step - loss: 2.2816 - accuracy: 0.1325
+Epoch 5/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.3038 - accuracy: 0.218832/32 [==============================] - 0s 918us/step - loss: 2.2667 - accuracy: 0.1677
+Epoch 6/10
+ 1/32 [..............................] - ETA: 0s - loss: 2.2956 - accuracy: 0.156232/32 [==============================] - 0s 858us/step - loss: 2.2647 - accuracy: 0.1552
+---------------------------- Captured stderr setup -----------------------------
+2026-06-29 15:25:10.695840: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026-06-29 15:25:10.697858: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2026-06-29 15:25:10.697916: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2026-06-29 15:25:10.697972: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (modal): /proc/driver/nvidia/version does not exist
+2026-06-29 15:25:10.698692: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX512F
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-06-29 15:25:10.701682: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2026/06/29 15:25:11 INFO mlflow.store.db.utils: Creating initial MLflow database tables...
+2026/06/29 15:25:11 INFO mlflow.store.db.utils: Updating database tables at sqlite:////tmp/pytest-of-root/pytest-9/test_tf_keras_autolog_early_st0/mlruns
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values
+INFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table
+INFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit
+INFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table
+INFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.
+INFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!
+INFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:11.340699: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:11.340764: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:11.341296: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+2026-06-29 15:25:11.539946: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2026-06-29 15:25:11.540479: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 1649455000 Hz
+2026-06-29 15:25:11.855599: I tensorflow/core/profiler/lib/profiler_session.cc:136] Profiler session initializing.
+2026-06-29 15:25:11.855686: I tensorflow/core/profiler/lib/profiler_session.cc:155] Profiler session started.
+2026-06-29 15:25:11.858278: I tensorflow/core/profiler/lib/profiler_session.cc:71] Profiler session collecting data.
+2026-06-29 15:25:11.858987: I tensorflow/core/profiler/lib/profiler_session.cc:172] Profiler session tear down.
+2026-06-29 15:25:11.860183: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11
+2026-06-29 15:25:11.861007: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for trace.json.gz to /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11/modal.trace.json.gz
+2026-06-29 15:25:11.862760: I tensorflow/core/profiler/rpc/client/save_profile.cc:137] Creating directory: /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11
+2026-06-29 15:25:11.862849: I tensorflow/core/profiler/rpc/client/save_profile.cc:143] Dumped gzipped tool data for memory_profile.json.gz to /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11/modal.memory_profile.json.gz
+2026-06-29 15:25:11.863051: I tensorflow/core/profiler/rpc/client/capture_profile.cc:251] Creating directory: /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11Dumped tool data for xplane.pb to /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11/modal.xplane.pb
+Dumped tool data for overview_page.pb to /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11/modal.overview_page.pb
+Dumped tool data for input_pipeline.pb to /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11/modal.input_pipeline.pb
+Dumped tool data for tensorflow_stats.pb to /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11/modal.tensorflow_stats.pb
+Dumped tool data for kernel_stats.pb to /tmp/tmpvclv4rt7/train/plugins/profile/2026_06_29_15_25_11/modal.kernel_stats.pb
+
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.7/site-packages/tensorflow/python/autograph/impl/api.py:22
+  /usr/local/lib/python3.7/site-packages/tensorflow/python/autograph/impl/api.py:22: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:64
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:64: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:86
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:86: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:130
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:130: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:167
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:167: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:203
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:203: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:233
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:233: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:259
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:259: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:284
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:284: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:353
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:353: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:362
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:362: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:381
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:381: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:391
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:391: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:409
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:409: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[True-0-early-True]
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[True-1-early-True]
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[True-5-early-True]
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[False-0-early-True]
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[False-1-early-True]
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[False-5-early-True]
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_stop_does_not_log[True-11-early-True]
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_stop_does_not_log[False-11-early-True]
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_restore_doesnt_log[True-5-early-False]
+FAILED tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_restore_doesnt_log[False-5-early-False]
+========== 10 failed, 2 passed, 26 deselected, 14 warnings in 28.75s ===========
+reward=0 graded=12 found=0 failed=0 parsed=28 framework=pytest exit_code=1

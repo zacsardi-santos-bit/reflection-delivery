@@ -1,0 +1,112 @@
+patching file packages/manager/cypress/e2e/core/parentChild/token-expiration.spec.ts
+patching file packages/manager/src/components/AccessPanel/UserSSHKeyPanel.test.tsx
+patching file packages/manager/src/features/Profile/DisplaySettings/TimezoneForm.test.tsx
+patching file packages/manager/src/layouts/Logout.test.tsx
+patching file packages/manager/src/layouts/OAuthCallback.test.tsx (renamed from packages/manager/src/layouts/OAuth.test.tsx)
+patching file packages/manager/src/request.test.tsx
+patching file packages/manager/src/store/authentication/authentication.test.ts
+
+ RUN  v3.0.5 /workspace/repo/packages/manager
+
+ ❯ src/request.test.tsx (0 test)
+ ❯ src/layouts/Logout.test.tsx (0 test)
+ ❯ src/layouts/OAuthCallback.test.tsx (0 test)
+ ❯ src/features/Profile/DisplaySettings/TimezoneForm.test.tsx (0 test)
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+stderr | src/components/AccessPanel/UserSSHKeyPanel.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+ ✓ src/components/AccessPanel/UserSSHKeyPanel.test.tsx (4 tests) 940ms
+   ✓ UserSSHKeyPanel > restricted user > should render an empty state 432ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/request.test.tsx [ src/request.test.tsx ]
+Error: Failed to resolve import "./utilities/authentication" from "src/request.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspace/repo/packages/manager/src/request.test.tsx:7:0
+  9  |  const __vi_import_3__ = await import("./request");
+  10 |  const __vi_import_4__ = await import("./store");
+  11 |  const __vi_import_5__ = await import("./utilities/authentication");
+     |                                       ^
+  12 |  
+  13 |  
+ ❯ TransformPluginContext._formatLog ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48670:41
+ ❯ TransformPluginContext.error ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48667:16
+ ❯ normalizeUrl ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46810:23
+ ❯ ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46929:37
+ ❯ TransformPluginContext.transform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46856:7
+ ❯ EnvironmentPluginContainer.transform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48465:18
+ ❯ loadAndTransform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:42166:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/layouts/Logout.test.tsx [ src/layouts/Logout.test.tsx ]
+Error: Failed to resolve import "src/utilities/authentication" from "src/layouts/Logout.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspace/repo/packages/manager/src/layouts/Logout.test.tsx:4:43
+  2  |  import { waitFor } from '@testing-library/react';
+  3  |  import * as React from 'react';
+  4  |  import { getAuthToken, setAuthToken } from 'src/utilities/authentication';
+     |                                              ^
+  5  |  import { renderWithTheme } from 'src/utilities/testHelpers';
+  6  |  import { Logout } from './Logout';
+ ❯ TransformPluginContext._formatLog ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48670:41
+ ❯ TransformPluginContext.error ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48667:16
+ ❯ normalizeUrl ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46810:23
+ ❯ ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46929:37
+ ❯ TransformPluginContext.transform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46856:7
+ ❯ EnvironmentPluginContainer.transform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48465:18
+ ❯ loadAndTransform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:42166:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/layouts/OAuthCallback.test.tsx [ src/layouts/OAuthCallback.test.tsx ]
+Error: Failed to resolve import "./OAuthCallback" from "src/layouts/OAuthCallback.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspace/repo/packages/manager/src/layouts/OAuthCallback.test.tsx:12:0
+  18 |  const __vi_import_8__ = await import("src/utilities/queryParams");
+  19 |  const __vi_import_9__ = await import("src/utilities/testHelpers");
+  20 |  const __vi_import_10__ = await import("./OAuthCallback");
+     |                                        ^
+  21 |  
+  22 |  
+ ❯ TransformPluginContext._formatLog ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48670:41
+ ❯ TransformPluginContext.error ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48667:16
+ ❯ normalizeUrl ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46810:23
+ ❯ ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46929:37
+ ❯ TransformPluginContext.transform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46856:7
+ ❯ EnvironmentPluginContainer.transform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48465:18
+ ❯ loadAndTransform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:42166:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/features/Profile/DisplaySettings/TimezoneForm.test.tsx [ src/features/Profile/DisplaySettings/TimezoneForm.test.tsx ]
+Error: Failed to resolve import "src/utilities/authentication" from "src/features/Profile/DisplaySettings/TimezoneForm.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspace/repo/packages/manager/src/features/Profile/DisplaySettings/TimezoneForm.test.tsx:6:45
+  4  |  import { profileFactory } from 'src/factories';
+  5  |  import { HttpResponse, http, server } from 'src/mocks/testServer';
+  6  |  import { clearAuthToken, setAuthToken } from 'src/utilities/authentication';
+     |                                                ^
+  7  |  import { renderWithTheme } from 'src/utilities/testHelpers';
+  8  |  import { TimezoneForm, getOptionLabel } from './TimezoneForm';
+ ❯ TransformPluginContext._formatLog ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48670:41
+ ❯ TransformPluginContext.error ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48667:16
+ ❯ normalizeUrl ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46810:23
+ ❯ ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46929:37
+ ❯ TransformPluginContext.transform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:46856:7
+ ❯ EnvironmentPluginContainer.transform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:48465:18
+ ❯ loadAndTransform ../../node_modules/vite/dist/node/chunks/dep-Cg8OuIew.js:42166:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  4 failed | 1 passed (5)
+      Tests  4 passed (4)
+   Start at  15:16:51
+   Duration  14.56s (transform 4.83s, setup 14.53s, collect 9.17s, tests 940ms, environment 3.12s, prepare 1.47s)
+
+reward=0 graded=26 found=0 failed=0 parsed=0 framework=vitest exit_code=1

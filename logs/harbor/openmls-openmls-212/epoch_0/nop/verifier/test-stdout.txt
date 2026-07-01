@@ -1,0 +1,435 @@
+patching file tests/test_encoding.rs
+patching file tests/utils/mod.rs
+   Compiling evercrypt-sys v0.0.3
+   Compiling evercrypt v0.0.3 (https://github.com/franziskuskiefer/evercrypt-rust.git?tag=v0.0.3#60ea9efc)
+   Compiling hpke-rs v0.0.2 (https://github.com/franziskuskiefer/hpke-rs.git?tag=v0.0.2#d63a6630)
+   Compiling openmls v0.2.0 (/workspace/repo)
+warning: unused import: `crate::ciphersuite::*`
+ --> src/group/managed_group/mod.rs:1:5
+  |
+1 | use crate::ciphersuite::*;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `codec::*`
+  --> src/group/mod.rs:17:9
+   |
+17 | pub use codec::*;
+   |         ^^^^^^^^
+
+warning: unused variable: `credential_bundle`
+  --> src/group/managed_group/mod.rs:43:9
+   |
+43 |         credential_bundle: &CredentialBundle,
+   |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `credential_bundle`
+  --> src/group/managed_group/mod.rs:65:9
+   |
+65 |         credential_bundle: &CredentialBundle,
+   |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `credential_bundle`
+  --> src/group/managed_group/mod.rs:85:9
+   |
+85 |         credential_bundle: &CredentialBundle,
+   |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `aad`
+  --> src/group/managed_group/mod.rs:86:9
+   |
+86 |         aad: &[u8],
+   |         ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `key_packages`
+  --> src/group/managed_group/mod.rs:87:9
+   |
+87 |         key_packages: Vec<KeyPackage>,
+   |         ^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_key_packages`
+
+warning: unused variable: `credential_bundle`
+  --> src/group/managed_group/mod.rs:95:9
+   |
+95 |         credential_bundle: &CredentialBundle,
+   |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `aad`
+  --> src/group/managed_group/mod.rs:96:9
+   |
+96 |         aad: &[u8],
+   |         ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `members`
+  --> src/group/managed_group/mod.rs:97:9
+   |
+97 |         members: &[usize],
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_members`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:105:9
+    |
+105 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `aad`
+   --> src/group/managed_group/mod.rs:106:9
+    |
+106 |         aad: &[u8],
+    |         ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `key_packages`
+   --> src/group/managed_group/mod.rs:107:9
+    |
+107 |         key_packages: Vec<KeyPackage>,
+    |         ^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_key_packages`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:115:9
+    |
+115 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `aad`
+   --> src/group/managed_group/mod.rs:116:9
+    |
+116 |         aad: &[u8],
+    |         ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `members`
+   --> src/group/managed_group/mod.rs:117:9
+    |
+117 |         members: &[usize],
+    |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_members`
+
+warning: unused variable: `message`
+   --> src/group/managed_group/mod.rs:131:39
+    |
+131 |     pub fn process_message(&mut self, message: MLSMessage) -> Vec<u8> {
+    |                                       ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_message`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:140:9
+    |
+140 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `message`
+   --> src/group/managed_group/mod.rs:141:9
+    |
+141 |         message: &[u8],
+    |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_message`
+
+warning: unused variable: `managed_group_config`
+   --> src/group/managed_group/mod.rs:161:41
+    |
+161 |     pub fn set_configuration(&mut self, managed_group_config: &ManagedGroupConfig) {
+    |                                         ^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_managed_group_config`
+
+warning: unused variable: `aad`
+   --> src/group/managed_group/mod.rs:171:31
+    |
+171 |     pub fn set_aad(&mut self, aad: &[u8]) {
+    |                               ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:180:9
+    |
+180 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:188:9
+    |
+188 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `reader`
+   --> src/group/managed_group/mod.rs:201:17
+    |
+201 |     pub fn load(reader: Box<dyn Read>, managed_group_config: &ManagedGroupConfig) -> ManagedGroup {
+    |                 ^^^^^^ help: if this is intentional, prefix it with an underscore: `_reader`
+
+warning: unused variable: `managed_group_config`
+   --> src/group/managed_group/mod.rs:201:40
+    |
+201 |     pub fn load(reader: Box<dyn Read>, managed_group_config: &ManagedGroupConfig) -> ManagedGroup {
+    |                                        ^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_managed_group_config`
+
+warning: unused variable: `writer`
+   --> src/group/managed_group/mod.rs:206:24
+    |
+206 |     pub fn save(&self, writer: Box<dyn Write>) {}
+    |                        ^^^^^^ help: if this is intentional, prefix it with an underscore: `_writer`
+
+warning: field `ciphersuite` is never read
+   --> src/ciphersuite/mod.rs:158:5
+    |
+157 | pub struct SignatureKeypair {
+    |            ---------------- field in this struct
+158 |     ciphersuite: &'static Ciphersuite,
+    |     ^^^^^^^^^^^
+    |
+    = note: `SignatureKeypair` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `verify` is never used
+  --> src/ciphersuite/signable.rs:20:8
+   |
+6  | pub trait Signable: Sized {
+   |           -------- method in this trait
+...
+20 |     fn verify(&self, credential: &Credential, signature: &Signature) -> bool {
+   |        ^^^^^^
+
+warning: field `0` is never read
+  --> src/group/mod.rs:23:11
+   |
+23 |     Codec(CodecError),
+   |     ----- ^^^^^^^^^^
+   |     |
+   |     field in this variant
+   |
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+23 |     Codec(()),
+   |           ~~
+
+warning: fields `managed_group_config`, `group`, `proposal_queue`, and `own_kpbs` are never read
+  --> src/group/managed_group/mod.rs:32:5
+   |
+31 | pub struct ManagedGroup {
+   |            ------------ fields in this struct
+32 |     managed_group_config: ManagedGroupConfig,
+   |     ^^^^^^^^^^^^^^^^^^^^
+33 |     group: MlsGroup,
+   |     ^^^^^
+34 |     proposal_queue: ProposalQueue,
+   |     ^^^^^^^^^^^^^^
+35 |     own_kpbs: Vec<KeyPackageBundle>,
+   |     ^^^^^^^^
+
+warning: fields `encrypt_hs_messages`, `update_policy`, and `callbacks` are never read
+   --> src/group/managed_group/mod.rs:212:5
+    |
+210 | pub struct ManagedGroupConfig {
+    |            ------------------ fields in this struct
+211 |     /// Defines whether handshake messages should be encrypted
+212 |     encrypt_hs_messages: bool,
+    |     ^^^^^^^^^^^^^^^^^^^
+213 |     /// Defines the update policy
+214 |     update_policy: UpdatePolicy,
+    |     ^^^^^^^^^^^^^
+215 |     /// Callbacks
+216 |     callbacks: ManagedGroupCallbacks,
+    |     ^^^^^^^^^
+    |
+    = note: `ManagedGroupConfig` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: fields `maximum_time`, `maximum_sent_messages`, and `maximum_received_messages` are never read
+   --> src/group/managed_group/mod.rs:223:5
+    |
+221 | pub struct UpdatePolicy {
+    |            ------------ fields in this struct
+222 |     /// Maximum time before an update in seconds
+223 |     maximum_time: u32,
+    |     ^^^^^^^^^^^^
+224 |     /// Maximum messages that are sent before an update in seconds
+225 |     maximum_sent_messages: u32,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+226 |     /// Maximum messages that are received before an update in seconds
+227 |     maximum_received_messages: u32,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `UpdatePolicy` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: fields `validate_add`, `validate_remove`, `member_added`, `member_removed`, `member_updated`, and `app_message_received` are never read
+   --> src/group/managed_group/mod.rs:261:5
+    |
+259 | pub struct ManagedGroupCallbacks {
+    |            --------------------- fields in this struct
+260 |     // Validator functions
+261 |     validate_add: Option<ValidateAdd>,
+    |     ^^^^^^^^^^^^
+262 |     validate_remove: Option<ValidateRemove>,
+    |     ^^^^^^^^^^^^^^^
+263 |     // Event listeners
+264 |     member_added: Option<MemberAdded>,
+    |     ^^^^^^^^^^^^
+265 |     member_removed: Option<MemberRemoved>,
+    |     ^^^^^^^^^^^^^^
+266 |     member_updated: Option<MemberUpdated>,
+    |     ^^^^^^^^^^^^^^
+267 |     app_message_received: Option<AppMessageReceived>,
+    |     ^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `ManagedGroupCallbacks` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `openmls` (lib) generated 33 warnings (run `cargo fix --lib -p openmls` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.58s
+────────────
+ Nextest run ID 257479d7-2305-4ef9-9f76-d9c72077156e with nextest profile: default
+    Starting 7 tests across 1 binary
+        PASS [   0.025s] openmls::test_encoding utils::test_setup
+        FAIL [   0.045s] openmls::test_encoding test_welcome_message_encoding
+  stdout ───
+
+    running 1 test
+    setup_sender zz: [157, 69, 78, 28, 247, 176, 40, 142, 96, 83, 212, 66, 191, 30, 98, 61, 64, 109, 40, 16, 48, 240, 53, 199, 4, 117, 94, 154, 41, 215, 132, 215]
+    seal key: [2, 96, 10, 1, 173, 174, 57, 213, 23, 224, 7, 240, 112, 34, 60, 221]
+    setup_sender zz: [123, 99, 6, 37, 215, 185, 228, 111, 86, 237, 165, 75, 16, 98, 100, 199, 242, 115, 116, 2, 220, 222, 76, 241, 61, 26, 105, 62, 200, 146, 215, 151]
+    seal key: [73, 206, 193, 122, 93, 237, 97, 80, 245, 248, 17, 191, 154, 67, 99, 202]
+    setup_receiver zz: [123, 99, 6, 37, 215, 185, 228, 111, 86, 237, 165, 75, 16, 98, 100, 199, 242, 115, 116, 2, 220, 222, 76, 241, 61, 26, 105, 62, 200, 146, 215, 151]
+    open key: [73, 206, 193, 122, 93, 237, 97, 80, 245, 248, 17, 191, 154, 67, 99, 202]
+    test test_welcome_message_encoding ... FAILED
+
+    failures:
+
+    failures:
+        test_welcome_message_encoding
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.03s
+
+  stderr ───
+
+    thread 'test_welcome_message_encoding' panicked at src/codec.rs:92:9:
+    not implemented
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.045s] openmls::test_encoding test_commit_encoding
+  stdout ───
+
+    running 1 test
+    setup_sender zz: [140, 164, 43, 82, 249, 255, 116, 94, 224, 174, 90, 19, 104, 84, 47, 117, 8, 19, 80, 28, 119, 188, 59, 21, 93, 56, 102, 12, 143, 90, 170, 253]
+    seal key: [141, 200, 216, 204, 1, 55, 212, 228, 155, 127, 106, 6, 170, 211, 181, 69]
+    setup_sender zz: [237, 0, 174, 198, 118, 209, 58, 93, 13, 171, 180, 98, 80, 104, 147, 77, 241, 21, 243, 209, 55, 74, 80, 178, 142, 54, 159, 112, 32, 204, 9, 186]
+    seal key: [212, 62, 246, 219, 213, 204, 17, 12, 226, 32, 14, 6, 79, 107, 30, 242]
+    setup_receiver zz: [237, 0, 174, 198, 118, 209, 58, 93, 13, 171, 180, 98, 80, 104, 147, 77, 241, 21, 243, 209, 55, 74, 80, 178, 142, 54, 159, 112, 32, 204, 9, 186]
+    open key: [212, 62, 246, 219, 213, 204, 17, 12, 226, 32, 14, 6, 79, 107, 30, 242]
+    test test_commit_encoding ... FAILED
+
+    failures:
+
+    failures:
+        test_commit_encoding
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.03s
+
+  stderr ───
+
+    thread 'test_commit_encoding' panicked at src/codec.rs:92:9:
+    not implemented
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.046s] openmls::test_encoding test_application_message_encoding
+  stdout ───
+
+    running 1 test
+    setup_sender zz: [224, 88, 97, 168, 55, 144, 24, 168, 181, 92, 28, 197, 253, 72, 58, 101, 143, 254, 197, 130, 148, 26, 165, 207, 148, 147, 185, 211, 56, 31, 211, 105]
+    seal key: [52, 210, 217, 172, 242, 151, 17, 77, 109, 85, 132, 254, 254, 170, 252, 44]
+    setup_sender zz: [217, 23, 78, 216, 129, 43, 37, 188, 154, 108, 56, 171, 218, 147, 135, 79, 96, 186, 114, 221, 88, 8, 129, 184, 14, 33, 174, 168, 152, 80, 159, 154]
+    seal key: [33, 31, 3, 91, 94, 139, 187, 32, 234, 253, 196, 189, 76, 61, 25, 2]
+    setup_receiver zz: [217, 23, 78, 216, 129, 43, 37, 188, 154, 108, 56, 171, 218, 147, 135, 79, 96, 186, 114, 221, 88, 8, 129, 184, 14, 33, 174, 168, 152, 80, 159, 154]
+    open key: [33, 31, 3, 91, 94, 139, 187, 32, 234, 253, 196, 189, 76, 61, 25, 2]
+    test test_application_message_encoding ... FAILED
+
+    failures:
+
+    failures:
+        test_application_message_encoding
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.03s
+
+  stderr ───
+
+    thread 'test_application_message_encoding' panicked at src/codec.rs:92:9:
+    not implemented
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.047s] openmls::test_encoding test_add_proposal_encoding
+  stdout ───
+
+    running 1 test
+    setup_sender zz: [187, 149, 78, 246, 247, 57, 176, 215, 57, 195, 151, 214, 140, 224, 234, 169, 145, 172, 135, 226, 251, 158, 156, 245, 21, 225, 98, 52, 178, 142, 200, 113]
+    seal key: [149, 36, 193, 37, 67, 26, 119, 8, 251, 8, 52, 131, 33, 10, 246, 169]
+    setup_sender zz: [140, 214, 159, 76, 236, 3, 1, 126, 79, 140, 103, 148, 252, 11, 171, 90, 240, 15, 42, 38, 237, 75, 63, 245, 213, 25, 104, 224, 121, 183, 32, 49]
+    seal key: [248, 137, 103, 97, 212, 99, 170, 67, 9, 189, 247, 200, 155, 39, 12, 67]
+    setup_receiver zz: [140, 214, 159, 76, 236, 3, 1, 126, 79, 140, 103, 148, 252, 11, 171, 90, 240, 15, 42, 38, 237, 75, 63, 245, 213, 25, 104, 224, 121, 183, 32, 49]
+    open key: [248, 137, 103, 97, 212, 99, 170, 67, 9, 189, 247, 200, 155, 39, 12, 67]
+    test test_add_proposal_encoding ... FAILED
+
+    failures:
+
+    failures:
+        test_add_proposal_encoding
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.03s
+
+  stderr ───
+
+    thread 'test_add_proposal_encoding' panicked at src/codec.rs:92:9:
+    not implemented
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.047s] openmls::test_encoding test_remove_proposal_encoding
+  stdout ───
+
+    running 1 test
+    setup_sender zz: [127, 62, 123, 90, 18, 222, 72, 95, 203, 165, 36, 205, 6, 179, 107, 203, 86, 119, 246, 214, 245, 9, 49, 221, 188, 167, 136, 130, 129, 28, 224, 186]
+    seal key: [55, 104, 249, 50, 64, 217, 124, 55, 142, 32, 199, 165, 143, 103, 117, 241]
+    setup_sender zz: [53, 52, 182, 64, 57, 119, 201, 199, 175, 56, 23, 18, 161, 142, 245, 234, 109, 206, 120, 129, 165, 197, 84, 210, 181, 36, 219, 137, 109, 155, 254, 37]
+    seal key: [42, 108, 82, 222, 225, 98, 122, 213, 156, 90, 206, 53, 224, 217, 168, 125]
+    setup_receiver zz: [53, 52, 182, 64, 57, 119, 201, 199, 175, 56, 23, 18, 161, 142, 245, 234, 109, 206, 120, 129, 165, 197, 84, 210, 181, 36, 219, 137, 109, 155, 254, 37]
+    open key: [42, 108, 82, 222, 225, 98, 122, 213, 156, 90, 206, 53, 224, 217, 168, 125]
+    test test_remove_proposal_encoding ... FAILED
+
+    failures:
+
+    failures:
+        test_remove_proposal_encoding
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.03s
+
+  stderr ───
+
+    thread 'test_remove_proposal_encoding' panicked at src/codec.rs:92:9:
+    not implemented
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.048s] openmls::test_encoding test_update_proposal_encoding
+  stdout ───
+
+    running 1 test
+    setup_sender zz: [228, 128, 26, 139, 98, 252, 222, 90, 239, 241, 88, 236, 124, 182, 171, 242, 107, 112, 135, 249, 0, 182, 79, 6, 227, 54, 37, 182, 80, 74, 86, 243]
+    seal key: [233, 11, 251, 72, 139, 15, 252, 35, 83, 205, 240, 210, 126, 160, 111, 4]
+    setup_sender zz: [170, 206, 87, 99, 46, 135, 254, 101, 191, 59, 128, 221, 110, 193, 221, 169, 66, 143, 195, 94, 176, 109, 10, 97, 164, 143, 101, 179, 155, 143, 190, 141]
+    seal key: [88, 66, 181, 0, 251, 197, 73, 136, 35, 174, 44, 28, 91, 245, 225, 181]
+    setup_receiver zz: [170, 206, 87, 99, 46, 135, 254, 101, 191, 59, 128, 221, 110, 193, 221, 169, 66, 143, 195, 94, 176, 109, 10, 97, 164, 143, 101, 179, 155, 143, 190, 141]
+    open key: [88, 66, 181, 0, 251, 197, 73, 136, 35, 174, 44, 28, 91, 245, 225, 181]
+    test test_update_proposal_encoding ... FAILED
+
+    failures:
+
+    failures:
+        test_update_proposal_encoding
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.03s
+
+  stderr ───
+
+    thread 'test_update_proposal_encoding' panicked at src/codec.rs:92:9:
+    not implemented
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.049s] 7 tests run: 1 passed, 6 failed, 0 skipped
+        FAIL [   0.047s] openmls::test_encoding test_add_proposal_encoding
+        FAIL [   0.046s] openmls::test_encoding test_application_message_encoding
+        FAIL [   0.045s] openmls::test_encoding test_commit_encoding
+        FAIL [   0.047s] openmls::test_encoding test_remove_proposal_encoding
+        FAIL [   0.048s] openmls::test_encoding test_update_proposal_encoding
+        FAIL [   0.045s] openmls::test_encoding test_welcome_message_encoding
+error: test run failed
+reward=0 graded=7 found=7 failed=6 parsed=7 framework=cargo exit_code=100

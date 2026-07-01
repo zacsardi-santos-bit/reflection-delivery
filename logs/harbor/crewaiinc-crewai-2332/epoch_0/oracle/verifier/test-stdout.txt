@@ -1,0 +1,72 @@
+patching file tests/security/__init__.py
+patching file tests/security/test_deterministic_fingerprints.py
+patching file tests/security/test_examples.py
+patching file tests/security/test_fingerprint.py
+patching file tests/security/test_integration.py
+patching file tests/security/test_security_config.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: subprocess-1.6.0, vcr-1.0.2, asyncio-1.4.0, anyio-4.14.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 44 items
+
+tests/security/test_deterministic_fingerprints.py::test_basic_deterministic_fingerprint PASSED [  2%]
+tests/security/test_deterministic_fingerprints.py::test_deterministic_fingerprint_with_metadata PASSED [  4%]
+tests/security/test_deterministic_fingerprints.py::test_agent_with_deterministic_fingerprint PASSED [  6%]
+tests/security/test_deterministic_fingerprints.py::test_task_with_deterministic_fingerprint PASSED [  9%]
+tests/security/test_deterministic_fingerprints.py::test_crew_with_deterministic_fingerprint PASSED [ 11%]
+tests/security/test_deterministic_fingerprints.py::test_recreating_components_with_same_seed PASSED [ 13%]
+tests/security/test_deterministic_fingerprints.py::test_security_config_with_seed_string PASSED [ 15%]
+tests/security/test_deterministic_fingerprints.py::test_complex_component_hierarchy_with_deterministic_fingerprints PASSED [ 18%]
+tests/security/test_examples.py::test_basic_usage_examples PASSED        [ 20%]
+tests/security/test_examples.py::test_accessing_fingerprints_example PASSED [ 22%]
+tests/security/test_examples.py::test_fingerprint_metadata_example PASSED [ 25%]
+tests/security/test_examples.py::test_fingerprint_with_security_config PASSED [ 27%]
+tests/security/test_examples.py::test_complete_workflow_example PASSED   [ 29%]
+tests/security/test_examples.py::test_security_preservation_during_copy PASSED [ 31%]
+tests/security/test_fingerprint.py::test_fingerprint_creation_with_defaults PASSED [ 34%]
+tests/security/test_fingerprint.py::test_fingerprint_creation_with_metadata PASSED [ 36%]
+tests/security/test_fingerprint.py::test_fingerprint_uuid_cannot_be_set PASSED [ 38%]
+tests/security/test_fingerprint.py::test_fingerprint_created_at_cannot_be_set PASSED [ 40%]
+tests/security/test_fingerprint.py::test_fingerprint_uuid_property PASSED [ 43%]
+tests/security/test_fingerprint.py::test_fingerprint_deterministic_generation PASSED [ 45%]
+tests/security/test_fingerprint.py::test_fingerprint_generate_classmethod PASSED [ 47%]
+tests/security/test_fingerprint.py::test_fingerprint_string_representation PASSED [ 50%]
+tests/security/test_fingerprint.py::test_fingerprint_equality PASSED     [ 52%]
+tests/security/test_fingerprint.py::test_fingerprint_hash PASSED         [ 54%]
+tests/security/test_fingerprint.py::test_fingerprint_to_dict PASSED      [ 56%]
+tests/security/test_fingerprint.py::test_fingerprint_from_dict PASSED    [ 59%]
+tests/security/test_fingerprint.py::test_fingerprint_json_serialization PASSED [ 61%]
+tests/security/test_fingerprint.py::test_invalid_uuid_str PASSED         [ 63%]
+tests/security/test_fingerprint.py::test_fingerprint_metadata_mutation PASSED [ 65%]
+tests/security/test_integration.py::test_agent_with_security_config PASSED [ 68%]
+tests/security/test_integration.py::test_agent_fingerprint_property PASSED [ 70%]
+tests/security/test_integration.py::test_crew_with_security_config PASSED [ 72%]
+tests/security/test_integration.py::test_crew_fingerprint_property PASSED [ 75%]
+tests/security/test_integration.py::test_task_with_security_config PASSED [ 77%]
+tests/security/test_integration.py::test_task_fingerprint_property PASSED [ 79%]
+tests/security/test_integration.py::test_end_to_end_fingerprinting PASSED [ 81%]
+tests/security/test_integration.py::test_fingerprint_persistence PASSED  [ 84%]
+tests/security/test_integration.py::test_shared_security_config_fingerprints PASSED [ 86%]
+tests/security/test_security_config.py::test_security_config_creation_with_defaults PASSED [ 88%]
+tests/security/test_security_config.py::test_security_config_fingerprint_generation PASSED [ 90%]
+tests/security/test_security_config.py::test_security_config_init_params PASSED [ 93%]
+tests/security/test_security_config.py::test_security_config_to_dict PASSED [ 95%]
+tests/security/test_security_config.py::test_security_config_from_dict PASSED [ 97%]
+tests/security/test_security_config.py::test_security_config_json_serialization PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/litellm/litellm_core_utils/get_model_cost_map.py:41
+  /usr/local/lib/python3.11/site-packages/litellm/litellm_core_utils/get_model_cost_map.py:41: DeprecationWarning: open_text is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+    with importlib.resources.open_text(
+
+../../usr/local/lib/python3.11/site-packages/litellm/utils.py:162
+  /usr/local/lib/python3.11/site-packages/litellm/utils.py:162: DeprecationWarning: open_text is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+    with resources.open_text(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 44 passed, 2 warnings in 5.18s ========================
+reward=1 (grader error: Extra data: line 62 column 1 (char 4205); fell back to exit_code=0)

@@ -1,0 +1,1051 @@
+patching file tests/pytests/functional/channel/test_req_channel.py
+patching file tests/pytests/functional/transport/tcp/test_pub_server.py
+patching file tests/pytests/unit/modules/test_minion.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+max open files: soft=1048576; hard=1048576
+salt-transport: zeromq
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: pytest_httpserver-1.1.5, flaky-3.8.1, salt-factories-1.0.5, helpers-namespace-2021.12.29, custom-exit-code-0.3.0, timeout-2.4.0, system-statistics-1.0.2, shell-utilities-1.9.7, pyfakefs-6.2.0, skip-markers-1.5.2
+collecting ... collected 25 items
+
+tests/pytests/unit/modules/test_minion.py::test_is_systemd_systemd FAILED [  4%]
+tests/pytests/unit/modules/test_minion.py::test_is_windows_system FAILED [  8%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_systemd FAILED [ 12%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_windows FAILED [ 16%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_invalid_delay FAILED [ 20%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_dispatch[neither] FAILED [ 24%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_dispatch[systemd] FAILED [ 28%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_dispatch[windows] FAILED [ 32%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_custom_command PASSED [ 36%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_systems[True-False-expected_service_call0] ERROR [ 40%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_systems[False-True-expected_service_call1] ERROR [ 44%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_override[False-None] ERROR [ 48%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_override[None-False] ERROR [ 52%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_non_service_systems[argv0-True] ERROR [ 56%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_non_service_systems[argv1-False] ERROR [ 60%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[True-False-None] ERROR [ 64%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[True-False-300] ERROR [ 68%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[False-True-None] ERROR [ 72%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[False-True-60] ERROR [ 76%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_failure[True-False] ERROR [ 80%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_failure[False-True] ERROR [ 84%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_without_schedule_retry ERROR [ 88%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_schedule_retry_service_restart_failure[True-False] ERROR [ 92%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_schedule_retry_service_restart_failure[False-True] ERROR [ 96%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_schedule_retry_non_service_system ERROR [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of test_minion_restart_service_systems[True-False-expected_service_call0] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b7b7190>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_ ERROR at setup of test_minion_restart_service_systems[False-True-expected_service_call1] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b88c610>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+______ ERROR at setup of test_minion_restart_service_override[False-None] ______
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b84af10>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+______ ERROR at setup of test_minion_restart_service_override[None-False] ______
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b648750>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+____ ERROR at setup of test_minion_restart_non_service_systems[argv0-True] _____
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b648bd0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+____ ERROR at setup of test_minion_restart_non_service_systems[argv1-False] ____
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b05c850>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_ ERROR at setup of test_minion_restart_with_schedule_retry_success[True-False-None] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b76ced0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_ ERROR at setup of test_minion_restart_with_schedule_retry_success[True-False-300] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b86a250>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_ ERROR at setup of test_minion_restart_with_schedule_retry_success[False-True-None] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b0db590>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_ ERROR at setup of test_minion_restart_with_schedule_retry_success[False-True-60] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b6eff90>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_ ERROR at setup of test_minion_restart_with_schedule_retry_failure[True-False] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b6109d0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_ ERROR at setup of test_minion_restart_with_schedule_retry_failure[False-True] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b833590>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_________ ERROR at setup of test_minion_restart_without_schedule_retry _________
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b6e76d0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_ ERROR at setup of test_minion_restart_schedule_retry_service_restart_failure[True-False] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b810210>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_ ERROR at setup of test_minion_restart_schedule_retry_service_restart_failure[False-True] _
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b70d050>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+___ ERROR at setup of test_minion_restart_schedule_retry_non_service_system ____
+
+    @pytest.fixture
+    def mock_system_detection():
+        """Mock functions to detect systemd and Windows systems"""
+>       with patch("salt.modules.minion._is_systemd_system") as mock_systemd, patch(
+            "salt.modules.minion._is_windows_system"
+        ) as mock_windows:
+
+tests/pytests/unit/modules/test_minion.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b719f10>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+=================================== FAILURES ===================================
+___________________________ test_is_systemd_systemd ____________________________
+
+    def test_is_systemd_systemd():
+        """Test if the system is a systemd system"""
+        with patch.dict(minion.__grains__, {"kernel": "Linux"}):
+            with patch("salt.utils.systemd.booted", return_value=True):
+>               assert minion._is_systemd_system() is True
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AttributeError: module 'salt.modules.minion' has no attribute '_is_systemd_system'
+
+tests/pytests/unit/modules/test_minion.py:78: AttributeError
+____________________________ test_is_windows_system ____________________________
+
+    def test_is_windows_system():
+        """Test if the system is a Windows system"""
+        with patch.dict(minion.__grains__, {"kernel": "Windows"}):
+>           assert minion._is_windows_system() is True
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'salt.modules.minion' has no attribute '_is_windows_system'
+
+tests/pytests/unit/modules/test_minion.py:89: AttributeError
+_________________________ test_schedule_retry_systemd __________________________
+
+    def test_schedule_retry_systemd():
+        """Test creating a scheduled retry for minion on Linux systems"""
+>       with patch("salt.modules.minion._is_systemd_system", return_value=False):
+
+tests/pytests/unit/modules/test_minion.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b833190>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_systemd_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+_________________________ test_schedule_retry_windows __________________________
+
+    def test_schedule_retry_windows():
+        """Test creating a scheduled retry for minion on Windows systems"""
+    
+>       with patch("salt.modules.minion._is_windows_system", return_value=False):
+
+tests/pytests/unit/modules/test_minion.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b61e010>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_is_windows_system'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+______________________ test_schedule_retry_invalid_delay _______________________
+
+    def test_schedule_retry_invalid_delay():
+        """Test _schedule_retry with invalid delay"""
+    
+>       with pytest.raises(minion.CommandExecutionError):
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'salt.modules.minion' has no attribute 'CommandExecutionError'
+
+tests/pytests/unit/modules/test_minion.py:149: AttributeError
+____________________ test_schedule_retry_dispatch[neither] _____________________
+
+is_systemd = False, is_windows = False, expected_result = False
+systemd_called = False, windows_called = False
+
+    @pytest.mark.parametrize(
+        "is_systemd,is_windows,expected_result,systemd_called,windows_called",
+        [
+            (False, False, False, False, False),  # Neither systemd nor windows
+            (True, False, None, True, False),  # Systemd system
+            (False, True, None, False, True),  # Windows system
+        ],
+        ids=["neither", "systemd", "windows"],
+    )
+    def test_schedule_retry_dispatch(
+        is_systemd, is_windows, expected_result, systemd_called, windows_called
+    ):
+        """Test _schedule_retry dispatching"""
+    
+        mock_schedule_retry_systemd = MagicMock()
+        mock_schedule_retry_windows = MagicMock()
+    
+>       with patch(
+            "salt.modules.minion._schedule_retry_systemd", mock_schedule_retry_systemd
+        ), patch(
+            "salt.modules.minion._schedule_retry_windows", mock_schedule_retry_windows
+        ), patch(
+            "salt.modules.minion._is_systemd_system", return_value=is_systemd
+        ), patch(
+            "salt.modules.minion._is_windows_system", return_value=is_windows
+        ):
+
+tests/pytests/unit/modules/test_minion.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b6a7890>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_schedule_retry_systemd'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+____________________ test_schedule_retry_dispatch[systemd] _____________________
+
+is_systemd = True, is_windows = False, expected_result = None
+systemd_called = True, windows_called = False
+
+    @pytest.mark.parametrize(
+        "is_systemd,is_windows,expected_result,systemd_called,windows_called",
+        [
+            (False, False, False, False, False),  # Neither systemd nor windows
+            (True, False, None, True, False),  # Systemd system
+            (False, True, None, False, True),  # Windows system
+        ],
+        ids=["neither", "systemd", "windows"],
+    )
+    def test_schedule_retry_dispatch(
+        is_systemd, is_windows, expected_result, systemd_called, windows_called
+    ):
+        """Test _schedule_retry dispatching"""
+    
+        mock_schedule_retry_systemd = MagicMock()
+        mock_schedule_retry_windows = MagicMock()
+    
+>       with patch(
+            "salt.modules.minion._schedule_retry_systemd", mock_schedule_retry_systemd
+        ), patch(
+            "salt.modules.minion._schedule_retry_windows", mock_schedule_retry_windows
+        ), patch(
+            "salt.modules.minion._is_systemd_system", return_value=is_systemd
+        ), patch(
+            "salt.modules.minion._is_windows_system", return_value=is_windows
+        ):
+
+tests/pytests/unit/modules/test_minion.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b4da610>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_schedule_retry_systemd'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+____________________ test_schedule_retry_dispatch[windows] _____________________
+
+is_systemd = False, is_windows = True, expected_result = None
+systemd_called = False, windows_called = True
+
+    @pytest.mark.parametrize(
+        "is_systemd,is_windows,expected_result,systemd_called,windows_called",
+        [
+            (False, False, False, False, False),  # Neither systemd nor windows
+            (True, False, None, True, False),  # Systemd system
+            (False, True, None, False, True),  # Windows system
+        ],
+        ids=["neither", "systemd", "windows"],
+    )
+    def test_schedule_retry_dispatch(
+        is_systemd, is_windows, expected_result, systemd_called, windows_called
+    ):
+        """Test _schedule_retry dispatching"""
+    
+        mock_schedule_retry_systemd = MagicMock()
+        mock_schedule_retry_windows = MagicMock()
+    
+>       with patch(
+            "salt.modules.minion._schedule_retry_systemd", mock_schedule_retry_systemd
+        ), patch(
+            "salt.modules.minion._schedule_retry_windows", mock_schedule_retry_windows
+        ), patch(
+            "salt.modules.minion._is_systemd_system", return_value=is_systemd
+        ), patch(
+            "salt.modules.minion._is_windows_system", return_value=is_windows
+        ):
+
+tests/pytests/unit/modules/test_minion.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1539: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mock.mock._patch object at 0x2ac85b631750>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'salt.modules.minion' from '/workspace/repo/salt/modules/minion.py'> does not have the attribute '_schedule_retry_systemd'
+
+/usr/local/lib/python3.11/site-packages/mock/mock.py:1509: AttributeError
+=============================== warnings summary ===============================
+salt/utils/pycrypto.py:27
+  /workspace/repo/salt/utils/pycrypto.py:27: DeprecationWarning: 'crypt' is deprecated and slated for removal in Python 3.13
+    import crypt
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/pytests/unit/modules/test_minion.py::test_is_systemd_systemd - A...
+FAILED tests/pytests/unit/modules/test_minion.py::test_is_windows_system - At...
+FAILED tests/pytests/unit/modules/test_minion.py::test_schedule_retry_systemd
+FAILED tests/pytests/unit/modules/test_minion.py::test_schedule_retry_windows
+FAILED tests/pytests/unit/modules/test_minion.py::test_schedule_retry_invalid_delay
+FAILED tests/pytests/unit/modules/test_minion.py::test_schedule_retry_dispatch[neither]
+FAILED tests/pytests/unit/modules/test_minion.py::test_schedule_retry_dispatch[systemd]
+FAILED tests/pytests/unit/modules/test_minion.py::test_schedule_retry_dispatch[windows]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_systems[True-False-expected_service_call0]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_systems[False-True-expected_service_call1]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_override[False-None]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_override[None-False]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_non_service_systems[argv0-True]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_non_service_systems[argv1-False]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[True-False-None]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[True-False-300]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[False-True-None]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[False-True-60]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_failure[True-False]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_failure[False-True]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_without_schedule_retry
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_schedule_retry_service_restart_failure[True-False]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_schedule_retry_service_restart_failure[False-True]
+ERROR tests/pytests/unit/modules/test_minion.py::test_minion_restart_schedule_retry_non_service_system
+============== 8 failed, 1 passed, 1 warning, 16 errors in 2.15s ===============
+reward=0 graded=25 found=0 failed=0 parsed=8 framework=pytest exit_code=1

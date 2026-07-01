@@ -1,0 +1,7 @@
+I'm working on adding CycloneDX SBOM output support to the osv-scanner tool. Right now the scanner can produce output in formats like table, JSON, Markdown, SARIF, and GitHub Annotations, but there's no way to get a CycloneDX-formatted bill of materials. I need to add support for two versions of the CycloneDX specification (1.4 and 1.5) as new output format options.
+
+To produce correct CycloneDX output, I also need helper utilities that can parse ecosystem-specific package identifiers. Packages from Java build systems use a colon to separate a group identifier from an artifact name. Go modules use slash-separated paths where the last segment is the package name and everything before it is the namespace — though some Go packages consist of just a domain with no slash, in which case the namespace should be empty and the full string is the name. PHP Composer packages use a slash-separated "vendor/package" format. Each of these parsers should return an error if the name is empty or doesn't conform to the expected structure.
+
+I also need a function that takes packages from multiple lock files and groups them by their standardized package URL, so that the same package appearing in multiple sources gets merged into a single entry. When merging, the dependency group annotations from all occurrences should be combined.
+
+The new reporter should support the standard verbosity levels already used by the other reporters in the package, writing log messages to the appropriate writer based on the configured level.

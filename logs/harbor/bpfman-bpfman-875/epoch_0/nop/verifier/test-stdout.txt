@@ -1,0 +1,13 @@
+patching file bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go
+patching file bpfman-operator/controllers/bpfman-operator/uprobe-program_test.go
+# github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-operator [github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-operator.test]
+bpfman-operator/controllers/bpfman-operator/uprobe-program_test.go:67:4: unknown field Target in struct literal of type "github.com/bpfman/bpfman/bpfman-operator/apis/v1alpha1".UprobeProgramSpec
+# github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent [github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent.test]
+bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go:79:4: unknown field Target in struct literal of type "github.com/bpfman/bpfman/bpfman-operator/apis/v1alpha1".UprobeProgramSpec
+bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go:219:41: undefined: bpfmaniov1alpha1.ContainerSelector
+bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go:249:18: undefined: getPods
+bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go:256:40: undefined: bpfmaniov1alpha1.ContainerSelector
+bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go:262:17: undefined: getPods
+FAIL	github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent [build failed]
+FAIL	github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-operator [build failed]
+reward=0 graded=18 found=18 failed=18 parsed=2 framework=go exit_code=1

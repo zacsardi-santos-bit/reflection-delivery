@@ -1,0 +1,45 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/commands ./internal/logging -count=1",
+  "test_files": [
+    "internal/commands/services_test.go",
+    "internal/logging/logger_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/authelia/authelia/v4/internal/logging::TestShouldRaiseErrorOnInvalidFile",
+    "github.com/authelia/authelia/v4/internal/commands::TestGetStorageProvider",
+    "github.com/authelia/authelia/v4/internal/commands::TestSignalService_Run/ShouldHandleSIGHUPSuccessfully",
+    "github.com/authelia/authelia/v4/internal/commands::TestSignalService_Run/ShouldHandleSIGHUPError",
+    "github.com/authelia/authelia/v4/internal/commands::TestSignalService_Run",
+    "github.com/authelia/authelia/v4/internal/commands::TestSvcSignalLogReOpenFunc/ShouldCreateServiceWithLogPath",
+    "github.com/authelia/authelia/v4/internal/commands::TestSvcSignalLogReOpenFunc/ShouldNotCreateServiceWithoutLogPath",
+    "github.com/authelia/authelia/v4/internal/commands::TestSvcSignalLogReOpenFunc",
+    "github.com/authelia/authelia/v4/internal/commands::TestLogReopenFiles",
+    "github.com/authelia/authelia/v4/internal/commands::TestSignalService_Shutdown",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXEnvCLIStringSliceValue/ShouldParseFromEnv",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXEnvCLIStringSliceValue/ShouldParseMultipleFromEnv",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXEnvCLIStringSliceValue/ShouldParseCLIExplicit",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXEnvCLIStringSliceValue/ShouldParseCLIImplicit",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXEnvCLIStringSliceValue",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXNormalizedPaths/ShouldAllowFiles",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXNormalizedPaths/ShouldSkipFilesNotExistImplicit",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXNormalizedPaths/ShouldNotErrFilesNotExistExplicit",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXNormalizedPaths/ShouldAllowDirectories",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXNormalizedPaths/ShouldAllowFilesDirectories",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXNormalizedPaths/ShouldRaiseErrOnOverlappingFilesDirectories",
+    "github.com/authelia/authelia/v4/internal/commands::TestLoadXNormalizedPaths"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/authelia/authelia/v4/internal/logging::TestShouldWriteLogsToFile",
+    "github.com/authelia/authelia/v4/internal/logging::TestShouldWriteLogsToFileAndStdout",
+    "github.com/authelia/authelia/v4/internal/logging::TestShouldFormatLogsAsJSON",
+    "github.com/authelia/authelia/v4/internal/logging::TestSetLevels",
+    "github.com/authelia/authelia/v4/internal/logging::TestFormatFilePath/ShouldReturnInput",
+    "github.com/authelia/authelia/v4/internal/logging::TestFormatFilePath/ShouldReturnStandardWithDateTime",
+    "github.com/authelia/authelia/v4/internal/logging::TestFormatFilePath/ShouldReturnStandardWithDateTimeFormatter",
+    "github.com/authelia/authelia/v4/internal/logging::TestFormatFilePath/ShouldReturnStandardWithDateTimeCustomLayout",
+    "github.com/authelia/authelia/v4/internal/logging::TestFormatFilePath"
+  ]
+}

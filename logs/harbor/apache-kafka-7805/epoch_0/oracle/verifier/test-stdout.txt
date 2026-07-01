@@ -1,0 +1,116 @@
+patching file clients/src/test/java/org/apache/kafka/clients/MetadataTest.java
+patching file core/src/test/scala/unit/kafka/admin/ReassignPartitionsClusterTest.scala
+To honour the JVM settings for this build a new JVM will be forked. Please consider using the daemon: https://docs.gradle.org/5.4.1/userguide/gradle_daemon.html.
+Daemon will be stopped at the end of the build stopping after processing
+
+> Configure project :
+Building project 'core' with Scala version 2.12.8
+Building project 'streams-scala' with Scala version 2.12.8
+
+> Task :generator:compileJava UP-TO-DATE
+> Task :generator:processResources NO-SOURCE
+> Task :generator:classes UP-TO-DATE
+> Task :clients:processMessages UP-TO-DATE
+> Task :clients:compileJava
+> Task :clients:processResources UP-TO-DATE
+> Task :clients:classes
+> Task :clients:checkstyleMain
+> Task :clients:compileTestJava
+> Task :clients:processTestResources UP-TO-DATE
+> Task :clients:testClasses
+> Task :clients:checkstyleTest
+
+> Task :clients:spotbugsMain
+The following classes needed for analysis were missing:
+  com.fasterxml.jackson.databind.node.JsonNodeType
+  com.fasterxml.jackson.databind.JsonNode
+  com.fasterxml.jackson.databind.ObjectMapper
+
+> Task :clients:test
+
+org.apache.kafka.clients.consumer.OffsetAndMetadataTest > testSerializationRoundtrip PASSED
+
+org.apache.kafka.clients.consumer.OffsetAndMetadataTest > testInvalidNegativeOffset PASSED
+
+org.apache.kafka.clients.consumer.OffsetAndMetadataTest > testDeserializationCompatibilityBeforeLeaderEpoch PASSED
+
+org.apache.kafka.clients.consumer.OffsetAndMetadataTest > testDeserializationCompatibilityWithLeaderEpoch PASSED
+
+org.apache.kafka.clients.producer.RecordMetadataTest > testNullChecksum PASSED
+
+org.apache.kafka.clients.producer.RecordMetadataTest > testConstructionWithRelativeOffset PASSED
+
+org.apache.kafka.clients.producer.RecordMetadataTest > testConstructionWithMissingRelativeOffset PASSED
+
+org.apache.kafka.clients.MetadataTest > testMaybeRequestUpdate PASSED
+
+org.apache.kafka.clients.producer.internals.ProducerMetadataTest > testMetadataAwaitAfterClose PASSED
+
+org.apache.kafka.clients.producer.internals.ProducerMetadataTest > testTopicExpiry PASSED
+
+org.apache.kafka.clients.MetadataTest > testClusterCopy PASSED
+
+org.apache.kafka.clients.MetadataTest > testMetadataTopicErrors PASSED
+
+org.apache.kafka.clients.MetadataTest > testInvalidTopicError PASSED
+
+org.apache.kafka.clients.MetadataTest > testOutOfBandEpochUpdate PASSED
+
+org.apache.kafka.clients.MetadataTest > testFailedUpdate PASSED
+
+org.apache.kafka.clients.MetadataTest > testRequestUpdate PASSED
+
+org.apache.kafka.clients.MetadataTest > testTopicAuthorizationError PASSED
+
+org.apache.kafka.clients.MetadataTest > testClusterListenerGetsNotifiedOfUpdate PASSED
+
+org.apache.kafka.clients.MetadataTest > testStaleMetadata PASSED
+
+org.apache.kafka.clients.MetadataTest > testTimeToNextUpdate_RetryBackoff PASSED
+
+org.apache.kafka.clients.MetadataTest > testLeaderMetadataInconsistentWithBrokerMetadata PASSED
+
+org.apache.kafka.clients.MetadataTest > testMetadataUpdateAfterClose PASSED
+
+org.apache.kafka.clients.MetadataTest > testRejectOldMetadata PASSED
+
+org.apache.kafka.clients.consumer.internals.ConsumerMetadataTest > testPatternSubscriptionNoInternalTopics PASSED
+
+org.apache.kafka.clients.consumer.internals.ConsumerMetadataTest > testTransientTopics PASSED
+
+org.apache.kafka.clients.consumer.internals.ConsumerMetadataTest > testNormalSubscription PASSED
+
+org.apache.kafka.clients.consumer.internals.ConsumerMetadataTest > testUserAssignment PASSED
+
+org.apache.kafka.clients.consumer.internals.ConsumerMetadataTest > testPatternSubscriptionIncludeInternalTopics PASSED
+
+org.apache.kafka.clients.MetadataTest > testIgnoreLeaderEpochInOlderMetadataResponse PASSED
+
+org.apache.kafka.clients.MetadataTest > testRequestVersion PASSED
+
+org.apache.kafka.clients.MetadataTest > testTimeToNextUpdate PASSED
+
+org.apache.kafka.clients.MetadataTest > testNoEpoch PASSED
+
+org.apache.kafka.clients.MetadataTest > testNodeIfOffline PASSED
+
+org.apache.kafka.clients.producer.internals.FutureRecordMetadataTest > testFutureGetWithSeconds PASSED
+
+org.apache.kafka.clients.producer.internals.FutureRecordMetadataTest > testFutureGetWithMilliSeconds PASSED
+
+org.apache.kafka.clients.producer.internals.ProducerMetadataTest > testMetadataUpdateWaitTime PASSED
+
+org.apache.kafka.clients.producer.internals.ProducerMetadataTest > testMetadataWaitAbortedOnFatalException PASSED
+
+org.apache.kafka.clients.producer.internals.ProducerMetadataTest > testMetadata PASSED
+
+org.apache.kafka.clients.producer.internals.ProducerMetadataTest > testTimeToNextUpdateOverwriteBackoff PASSED
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/5.4.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 1m 2s
+10 actionable tasks: 6 executed, 4 up-to-date
+Tests run: 39, Failures: 0, Errors: 0, Skipped: 0
+reward=1 graded=39 found=39 failed=0 parsed=39 framework=maven exit_code=0

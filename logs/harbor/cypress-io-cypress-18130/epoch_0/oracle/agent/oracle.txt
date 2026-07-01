@@ -1,0 +1,2 @@
+patching file packages/server/lib/errors.js
+patching file packages/server/lib/open_project.ts

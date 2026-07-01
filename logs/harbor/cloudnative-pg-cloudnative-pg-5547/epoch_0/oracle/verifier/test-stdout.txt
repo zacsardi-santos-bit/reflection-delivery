@@ -1,0 +1,20 @@
+patching file internal/management/controller/database_controller_sql_test.go
+patching file internal/management/controller/database_controller_test.go
+{"Time":"2026-06-29T15:20:50.57670295Z","Action":"start","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller"}
+{"Time":"2026-06-29T15:20:50.626995735Z","Action":"run","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches"}
+{"Time":"2026-06-29T15:20:50.627105143Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"=== RUN   TestWatches\n"}
+{"Time":"2026-06-29T15:20:50.62830099Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"Running Suite: Internal Management Controller Test Suite - /workspace/repo/internal/management/controller\n"}
+{"Time":"2026-06-29T15:20:50.628365539Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"=========================================================================================================\n"}
+{"Time":"2026-06-29T15:20:50.628374864Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"Random Seed: \u001b[1m1782746450\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:50.628384578Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"\n"}
+{"Time":"2026-06-29T15:20:50.628393472Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"Will run \u001b[1m8\u001b[0m of \u001b[1m8\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:20:50.643976516Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:50.644078803Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"\n"}
+{"Time":"2026-06-29T15:20:50.644203355Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"\u001b[38;5;10m\u001b[1mRan 8 of 8 Specs in 0.016 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:50.644242665Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"\u001b[38;5;10m\u001b[1mSUCCESS!\u001b[0m -- \u001b[38;5;10m\u001b[1m8 Passed\u001b[0m | \u001b[38;5;9m\u001b[1m0 Failed\u001b[0m | \u001b[38;5;11m\u001b[1m0 Pending\u001b[0m | \u001b[38;5;14m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:50.644260332Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Output":"--- PASS: TestWatches (0.02s)\n"}
+{"Time":"2026-06-29T15:20:50.644270037Z","Action":"pass","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Test":"TestWatches","Elapsed":0.02}
+{"Time":"2026-06-29T15:20:50.644281955Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Output":"PASS\n"}
+{"Time":"2026-06-29T15:20:50.64616637Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Output":"ok  \tgithub.com/cloudnative-pg/cloudnative-pg/internal/management/controller\t0.069s\n"}
+{"Time":"2026-06-29T15:20:50.646249157Z","Action":"pass","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Elapsed":0.07}
+reward=1 (grader error: Extra data: line 15 column 1 (char 445); fell back to exit_code=0)

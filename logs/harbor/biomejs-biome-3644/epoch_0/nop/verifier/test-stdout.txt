@@ -1,0 +1,31 @@
+patching file crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/invalid.jsx
+patching file crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/invalid.jsx.snap
+patching file crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/valid.jsx
+patching file crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/valid.jsx.snap
+
+running 2 tests
+FAIL [   0.00s] specs::nursery::use_aria_props_supported_by_role::valid_jsx
+FAIL [   0.00s] specs::nursery::use_aria_props_supported_by_role::invalid_jsx
+
+failures:
+
+---- specs::nursery::use_aria_props_supported_by_role::valid_jsx stdout ----
+thread 'specs::nursery::use_aria_props_supported_by_role::valid_jsx' panicked at crates/biome_js_analyze/tests/spec_tests.rs:37:9:
+could not find rule nursery/useAriaPropsSupportedByRole
+
+---- specs::nursery::use_aria_props_supported_by_role::invalid_jsx stdout ----
+thread 'specs::nursery::use_aria_props_supported_by_role::invalid_jsx' panicked at crates/biome_js_analyze/tests/spec_tests.rs:37:9:
+could not find rule nursery/useAriaPropsSupportedByRole
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    specs::nursery::use_aria_props_supported_by_role::invalid_jsx
+    specs::nursery::use_aria_props_supported_by_role::valid_jsx
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 1018 filtered out; finished in 0.01s
+
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

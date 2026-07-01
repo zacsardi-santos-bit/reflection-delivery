@@ -1,0 +1,5 @@
+I'm working on a gRPC scanner service that exposes several key-management operations — retrieving scan results, registering viewing keys, clearing stored results, and deleting keys. Right now, none of these operations validate how many keys are in the request. A client can send a request with zero keys or hundreds of keys and the service will try to process it without complaining.
+
+I'd like to add consistent input validation across all of these operations: if a request arrives with no keys, it should be rejected immediately with an invalid-argument error; if a request contains more keys than a reasonable per-request maximum, it should also be rejected with an invalid-argument error. The maximum should be a documented, publicly accessible constant so callers and tests can reference it.
+
+The service already has the happy-path logic working correctly — valid requests return the right results, registered keys, cleared-results confirmation, or deleted-keys confirmation. I just need the guard clauses added so that malformed requests are caught early, before any downstream work is done.

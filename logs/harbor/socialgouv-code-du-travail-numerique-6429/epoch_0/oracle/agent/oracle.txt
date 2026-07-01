@@ -1,0 +1,7 @@
+patching file packages/code-du-travail-frontend/src/modules/Location/LocationSearchInput.tsx
+patching file packages/code-du-travail-frontend/src/modules/common/Autocomplete/Autocomplete.tsx
+patching file packages/code-du-travail-frontend/src/modules/convention-collective/AgreementSearch/AgreementSearchInput.tsx
+patching file packages/code-du-travail-frontend/src/modules/enterprise/EnterpriseAgreementSearch/EnterpriseAgreementSearchInput.tsx
+patching file packages/code-du-travail-frontend/src/modules/home/Components/HomeSearch.tsx
+patching file packages/code-du-travail-frontend/src/modules/home/Search.tsx
+patching file packages/code-du-travail-frontend/src/modules/layout/header/SearchInput.tsx

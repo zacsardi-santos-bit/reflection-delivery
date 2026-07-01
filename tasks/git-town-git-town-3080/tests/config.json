@@ -1,0 +1,39 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test -json ./tools/format_self/... ./tools/format_unittests/... ./tools/structs_sorted/... -count=1",
+  "test_files": [
+    "tools/format_self/format_self_test.go",
+    "tools/format_unittests/format.go",
+    "tools/format_unittests/format_unittests.go",
+    "tools/format_unittests/format_unittests_test.go",
+    "tools/format_unittests/go.mod",
+    "tools/structs_sorted/structs_sorted_test.go"
+  ],
+  "num_test_files": 6,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/git-town/git-town/tools/format_self::TestFormatSelf/FormatFileContent/unformatted,_non-pointer_receiver",
+    "github.com/git-town/git-town/tools/format_self::TestFormatSelf/FormatLine",
+    "github.com/git-town/git-town/tools/format_self::TestFormatSelf/IsGoFile",
+    "github.com/git-town/git-town/tools/format_self::TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver",
+    "github.com/git-town/git-town/tools/format_self::TestFormatSelf/FormatFileContent/already_formatted",
+    "github.com/git-town/git-town/tools/format_self::TestFormatSelf/FormatFileContent",
+    "github.com/git-town/git-town/tools/format_self::TestFormatSelf",
+    "github.com/git-town/git-town/tools/format_unittests::TestFormatUnittests/IsTopLevelRunLine",
+    "github.com/git-town/git-town/tools/format_unittests::TestFormatUnittests/FormatFileContent/top-level_subtests",
+    "github.com/git-town/git-town/tools/format_unittests::TestFormatUnittests/IsGoTestFile",
+    "github.com/git-town/git-town/tools/format_unittests::TestFormatUnittests/FormatFileContent/no_subtests",
+    "github.com/git-town/git-town/tools/format_unittests::TestFormatUnittests/FormatFileContent/nested_subtests",
+    "github.com/git-town/git-town/tools/format_unittests::TestFormatUnittests/FormatFileContent",
+    "github.com/git-town/git-town/tools/format_unittests::TestFormatUnittests",
+    "github.com/git-town/git-town/tools/structs_sorted::TestStructsSorted/LintFile/unsorted_definition",
+    "github.com/git-town/git-town/tools/structs_sorted::TestStructsSorted/LintFile/definition_without_fields",
+    "github.com/git-town/git-town/tools/structs_sorted::TestStructsSorted/LintFile/ignored_definition",
+    "github.com/git-town/git-town/tools/structs_sorted::TestStructsSorted/LintFile/unsorted_instantiation",
+    "github.com/git-town/git-town/tools/structs_sorted::TestStructsSorted/LintFile/instantiation_without_fields",
+    "github.com/git-town/git-town/tools/structs_sorted::TestStructsSorted/LintFile/ignored_instantiation",
+    "github.com/git-town/git-town/tools/structs_sorted::TestStructsSorted/LintFile",
+    "github.com/git-town/git-town/tools/structs_sorted::TestStructsSorted"
+  ],
+  "PASS_TO_PASS": []
+}

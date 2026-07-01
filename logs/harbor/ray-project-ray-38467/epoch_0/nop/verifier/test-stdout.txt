@@ -1,0 +1,25 @@
+patching file python/ray/serve/tests/test_proxy_request_response.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: anyio-4.14.1
+collecting ... collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+____ ERROR collecting python/ray/serve/tests/test_proxy_request_response.py ____
+ImportError while importing test module '/workspace/repo/python/ray/serve/tests/test_proxy_request_response.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python/ray/serve/tests/test_proxy_request_response.py:7: in <module>
+    from ray.serve._private.proxy_request_response import (
+E   ModuleNotFoundError: No module named 'ray.serve._private.proxy_request_response'
+=========================== short test summary info ============================
+ERROR python/ray/serve/tests/test_proxy_request_response.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.25s ===============================
+reward=0 graded=13 found=0 failed=0 parsed=0 framework=pytest exit_code=2

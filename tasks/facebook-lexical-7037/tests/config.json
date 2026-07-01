@@ -1,0 +1,14 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest --selectProjects unit --testPathPattern='LexicalListPlugin' --testNamePattern='setBlocksType does not cause' --coverage=false --watchAll=false --json",
+  "test_files": [
+    "packages/lexical-playground/__tests__/e2e/List.spec.mjs",
+    "packages/lexical/src/__tests__/unit/LexicalListPlugin.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/lexical/src/__tests__/unit/LexicalListPlugin.test.tsx::@lexical/list tests $setBlocksType does not cause invalid ListItemNode children - regression #7036"
+  ],
+  "PASS_TO_PASS": []
+}

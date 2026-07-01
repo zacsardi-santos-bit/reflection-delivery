@@ -1,0 +1,8 @@
+patching file kubernetes/adapter_test.go
+# github.com/zalando-incubator/kube-ingress-aws-controller/kubernetes [github.com/zalando-incubator/kube-ingress-aws-controller/kubernetes.test]
+/go/src/github.com/zalando-incubator/kube-ingress-aws-controller/kubernetes/adapter_test.go:28:5: unknown field shared in struct literal of type Ingress
+/go/src/github.com/zalando-incubator/kube-ingress-aws-controller/kubernetes/adapter_test.go:37:7: undefined: ingressSharedAnnotation
+/go/src/github.com/zalando-incubator/kube-ingress-aws-controller/kubernetes/adapter_test.go:58:5: unknown field shared in struct literal of type Ingress
+/go/src/github.com/zalando-incubator/kube-ingress-aws-controller/kubernetes/adapter_test.go:67:7: undefined: ingressSharedAnnotation
+FAIL	github.com/zalando-incubator/kube-ingress-aws-controller/kubernetes [build failed]
+reward=0 graded=42 found=42 failed=42 parsed=1 framework=go exit_code=1

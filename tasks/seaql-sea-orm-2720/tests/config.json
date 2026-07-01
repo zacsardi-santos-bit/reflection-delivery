@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --test active_enum_tests --features sqlx-postgres,runtime-tokio-native-tls --no-fail-fast -E 'test(tests::)'",
+  "test_files": [
+    "tests/active_enum_tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "sea-orm::active_enum_tests tests::derive_partial_model_active_enum_casts_to_text"
+  ],
+  "PASS_TO_PASS": [
+    "sea-orm::active_enum_tests tests::active_enum_find_linked",
+    "sea-orm::active_enum_tests tests::active_enum_find_related",
+    "sea-orm::active_enum_tests tests::active_enum_child_find_related",
+    "sea-orm::active_enum_tests tests::create_enum_from",
+    "sea-orm::active_enum_tests tests::active_enum_child_find_linked",
+    "sea-orm::active_enum_tests tests::display_test"
+  ]
+}

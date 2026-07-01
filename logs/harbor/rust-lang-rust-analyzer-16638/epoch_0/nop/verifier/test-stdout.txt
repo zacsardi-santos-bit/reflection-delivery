@@ -1,0 +1,32 @@
+patching file crates/ide-assists/src/tests/generated.rs
+   Compiling ide-assists v0.0.0 (/workspace/repo/crates/ide-assists)
+    Finished `test` profile [unoptimized] target(s) in 17.14s
+────────────
+ Nextest run ID b8ebc207-209c-4e26-85c6-8d62c0dbb931 with nextest profile: default
+    Starting 1 test across 1 binary (2163 tests skipped)
+        FAIL [   0.032s] (1/1) ide-assists tests::generated::doctest_destructure_struct_binding
+  stdout ───
+
+    running 1 test
+    test tests::generated::doctest_destructure_struct_binding ... FAILED
+
+    failures:
+
+    failures:
+        tests::generated::doctest_destructure_struct_binding
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2163 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'tests::generated::doctest_destructure_struct_binding' panicked at crates/ide-assists/src/tests.rs:168:13:
+
+
+    Assist is not applicable: destructure_struct_binding
+    Available assists: add_explicit_type, inline_local_variable, promote_local_to_const
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.037s] 1 test run: 0 passed, 1 failed, 2163 skipped
+        FAIL [   0.032s] (1/1) ide-assists tests::generated::doctest_destructure_struct_binding
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

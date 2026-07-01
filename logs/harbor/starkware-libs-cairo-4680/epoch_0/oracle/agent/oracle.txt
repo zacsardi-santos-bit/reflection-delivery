@@ -1,0 +1,8 @@
+patching file crates/cairo-lang-lowering/src/lower/mod.rs
+patching file crates/cairo-lang-lowering/src/lower/test_data/usage
+patching file crates/cairo-lang-lowering/src/lower/test_data/while
+patching file crates/cairo-lang-lowering/src/lower/usage.rs
+patching file crates/cairo-lang-lowering/src/test_data/while
+patching file crates/cairo-lang-semantic/src/diagnostic.rs
+patching file crates/cairo-lang-semantic/src/expr/compute.rs
+patching file crates/cairo-lang-semantic/src/expr/test_data/while

@@ -1,0 +1,11 @@
+patching file consensus/core/src/tests/randomized_tests.rs
+   Compiling consensus-core v0.1.0 (/workspace/repo/consensus/core)
+    Finished test [unoptimized + debuginfo] target(s) in 13.91s
+------------
+ Nextest run ID 0ff10cf5-ed94-4ca3-88e2-88637fb069e9 with nextest profile: ci
+    Starting 0 tests across 1 binary (135 tests skipped)
+------------
+     Summary [   0.001s] 0 tests run: 0 passed, 135 skipped
+error: no tests to run
+(hint: use `--no-tests` to customize)
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=cargo exit_code=4

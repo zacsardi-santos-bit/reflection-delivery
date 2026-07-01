@@ -1,0 +1,21 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && RUSTFLAGS='--cap-lints allow' cargo nextest run --lib",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/11) warp reject::tests::find_cause",
+    "( 2/11) warp filters::fs::tests::test_sanitize_path",
+    "( 3/11) warp reject::tests::rejection_status",
+    "( 4/11) warp reject::tests::size_of_rejection",
+    "( 5/11) warp error::error_size_of",
+    "( 6/11) warp reply::tests::json_serde_error",
+    "( 7/11) warp reply::tests::response_builder_error",
+    "( 8/11) warp reject::tests::test_new_reject_api",
+    "( 9/11) warp reject::tests::combine_rejection_causes_with_none_left_and_some_right",
+    "(10/11) warp reject::tests::combine_rejection_causes_with_some_left_and_none_right",
+    "(11/11) warp reject::tests::unhandled_customs"
+  ],
+  "PASS_TO_PASS": []
+}

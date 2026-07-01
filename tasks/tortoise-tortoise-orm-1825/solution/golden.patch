@@ -1,0 +1,273 @@
+diff --git a/CHANGELOG.rst b/CHANGELOG.rst
+index 616a7f9..8f86397 100644
+--- a/CHANGELOG.rst
++++ b/CHANGELOG.rst
+@@ -9,6 +9,12 @@ Changelog
+ 0.23
+ ====
+ 
++0.23.1
++------
++Fixed
++^^^^^
++- Concurrent connection pool initialization (#1825)
++
+ 0.23.0
+ ------
+ Added
+diff --git a/tortoise/__init__.py b/tortoise/__init__.py
+index 2aace9a..575304f 100644
+--- a/tortoise/__init__.py
++++ b/tortoise/__init__.py
+@@ -399,7 +399,9 @@ class Tortoise:
+         table_name_generator: Callable[[Type["Model"]], str] | None = None,
+     ) -> None:
+         """
+-        Sets up Tortoise-ORM.
++        Sets up Tortoise-ORM: loads apps and models, configures database connections but does not
++        connect to the database yet. The actual connection or connection pool is established
++        lazily on first query execution.
+ 
+         You can configure using only one of ``config``, ``config_file``
+         and ``(db_url, modules)``.
+diff --git a/tortoise/backends/asyncpg/client.py b/tortoise/backends/asyncpg/client.py
+index a92beda..88a9d85 100644
+--- a/tortoise/backends/asyncpg/client.py
++++ b/tortoise/backends/asyncpg/client.py
+@@ -100,10 +100,10 @@ class AsyncpgDBClient(BasePostgresClient):
+         await self.close()
+ 
+     def acquire_connection(self) -> Union["PoolConnectionWrapper", "ConnectionWrapper"]:
+-        return PoolConnectionWrapper(self)
++        return PoolConnectionWrapper(self, self._pool_init_lock)
+ 
+     def _in_transaction(self) -> "TransactionContext":
+-        return TransactionContextPooled(TransactionWrapper(self))
++        return TransactionContextPooled(TransactionWrapper(self), self._pool_init_lock)
+ 
+     @translate_exceptions
+     async def execute_insert(self, query: str, values: list) -> Optional[asyncpg.Record]:
+diff --git a/tortoise/backends/base/client.py b/tortoise/backends/base/client.py
+index 7958364..ea08e88 100644
+--- a/tortoise/backends/base/client.py
++++ b/tortoise/backends/base/client.py
+@@ -222,10 +222,10 @@ class ConnectionWrapper(Generic[T_conn]):
+     """Wraps the connections with a lock to facilitate safe concurrent access when using
+     asyncio.gather, TaskGroup, or similar."""
+ 
+-    __slots__ = ("connection", "lock", "client")
++    __slots__ = ("connection", "_lock", "client")
+ 
+     def __init__(self, lock: asyncio.Lock, client: Any) -> None:
+-        self.lock: asyncio.Lock = lock
++        self._lock: asyncio.Lock = lock
+         self.client = client
+         self.connection: T_conn = client._connection
+ 
+@@ -235,12 +235,12 @@ class ConnectionWrapper(Generic[T_conn]):
+             self.connection = self.client._connection
+ 
+     async def __aenter__(self) -> T_conn:
+-        await self.lock.acquire()
++        await self._lock.acquire()
+         await self.ensure_connection()
+         return self.connection
+ 
+     async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+-        self.lock.release()
++        self._lock.release()
+ 
+ 
+ class TransactionContext(Generic[T_conn]):
+@@ -259,15 +259,19 @@ class TransactionContext(Generic[T_conn]):
+ class TransactionContextPooled(TransactionContext):
+     "A version of TransactionContext that uses a pool to acquire connections."
+ 
+-    __slots__ = ("conn_wrapper", "connection", "connection_name", "token")
++    __slots__ = ("connection", "connection_name", "token", "_pool_init_lock")
+ 
+-    def __init__(self, connection: Any) -> None:
++    def __init__(self, connection: Any, pool_init_lock: asyncio.Lock) -> None:
+         self.connection = connection
+         self.connection_name = connection.connection_name
++        self._pool_init_lock = pool_init_lock
+ 
+     async def ensure_connection(self) -> None:
+         if not self.connection._parent._pool:
+-            await self.connection._parent.create_connection(with_db=True)
++            # a safeguard against multiple concurrent tasks trying to initialize the pool
++            async with self._pool_init_lock:
++                if not self.connection._parent._pool:
++                    await self.connection._parent.create_connection(with_db=True)
+ 
+     async def __aenter__(self) -> T_conn:
+         await self.ensure_connection()
+@@ -315,25 +319,27 @@ class NestedTransactionContext(TransactionContext):
+ class PoolConnectionWrapper(Generic[T_conn]):
+     """Class to manage acquiring from and releasing connections to a pool."""
+ 
+-    def __init__(self, client: Any) -> None:
+-        self.pool = client._pool
++    def __init__(self, client: Any, pool_init_lock: asyncio.Lock) -> None:
+         self.client = client
+         self.connection: Optional[T_conn] = None
++        self._pool_init_lock = pool_init_lock
+ 
+     async def ensure_connection(self) -> None:
+-        if not self.pool:
+-            await self.client.create_connection(with_db=True)
+-            self.pool = self.client._pool
++        if not self.client._pool:
++            # a safeguard against multiple concurrent tasks trying to initialize the pool
++            async with self._pool_init_lock:
++                if not self.client._pool:
++                    await self.client.create_connection(with_db=True)
+ 
+     async def __aenter__(self) -> T_conn:
+         await self.ensure_connection()
+         # get first available connection. If none available, wait until one is released
+-        self.connection = await self.pool.acquire()
++        self.connection = await self.client._pool.acquire()
+         return cast(T_conn, self.connection)
+ 
+     async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+         # release the connection back to the pool
+-        await self.pool.release(self.connection)
++        await self.client._pool.release(self.connection)
+ 
+ 
+ class BaseTransactionWrapper:
+diff --git a/tortoise/backends/base_postgres/client.py b/tortoise/backends/base_postgres/client.py
+index 9fdb393..73131e4 100644
+--- a/tortoise/backends/base_postgres/client.py
++++ b/tortoise/backends/base_postgres/client.py
+@@ -1,4 +1,5 @@
+ import abc
++import asyncio
+ from asyncio.events import AbstractEventLoop
+ from functools import wraps
+ from typing import (
+@@ -90,6 +91,7 @@ class BasePostgresClient(BaseDBAsyncClient, abc.ABC):
+         self._template: dict = {}
+         self._pool = None
+         self._connection = None
++        self._pool_init_lock = asyncio.Lock()
+ 
+     @abc.abstractmethod
+     async def create_connection(self, with_db: bool) -> None:
+@@ -128,7 +130,7 @@ class BasePostgresClient(BaseDBAsyncClient, abc.ABC):
+             await self.close()
+ 
+     def acquire_connection(self) -> Union["ConnectionWrapper", "PoolConnectionWrapper"]:
+-        return PoolConnectionWrapper(self._pool)
++        return PoolConnectionWrapper(self._pool, self._pool_init_lock)
+ 
+     @abc.abstractmethod
+     def _in_transaction(self) -> "TransactionContext":
+diff --git a/tortoise/backends/mssql/client.py b/tortoise/backends/mssql/client.py
+index 424f5e7..db31e36 100644
+--- a/tortoise/backends/mssql/client.py
++++ b/tortoise/backends/mssql/client.py
+@@ -41,7 +41,7 @@ class MSSQLClient(ODBCClient):
+         self.dsn = f"DRIVER={driver};SERVER={host},{port};UID={user};PWD={password};"
+ 
+     def _in_transaction(self) -> "TransactionContext":
+-        return TransactionContextPooled(TransactionWrapper(self))
++        return TransactionContextPooled(TransactionWrapper(self), self._pool_init_lock)
+ 
+     @translate_exceptions
+     async def execute_insert(self, query: str, values: list) -> int:
+diff --git a/tortoise/backends/mysql/client.py b/tortoise/backends/mysql/client.py
+index d8b9e21..6ad9f57 100644
+--- a/tortoise/backends/mysql/client.py
++++ b/tortoise/backends/mysql/client.py
+@@ -108,6 +108,7 @@ class MySQLClient(BaseDBAsyncClient):
+         self._template: dict = {}
+         self._pool: Optional[mysql.Pool] = None
+         self._connection = None
++        self._pool_init_lock = asyncio.Lock()
+ 
+     async def create_connection(self, with_db: bool) -> None:
+         if charset_by_name(self.charset) is None:
+@@ -172,10 +173,10 @@ class MySQLClient(BaseDBAsyncClient):
+         await self.close()
+ 
+     def acquire_connection(self) -> Union["ConnectionWrapper", "PoolConnectionWrapper"]:
+-        return PoolConnectionWrapper(self)
++        return PoolConnectionWrapper(self, self._pool_init_lock)
+ 
+     def _in_transaction(self) -> "TransactionContext":
+-        return TransactionContextPooled(TransactionWrapper(self))
++        return TransactionContextPooled(TransactionWrapper(self), self._pool_init_lock)
+ 
+     @translate_exceptions
+     async def execute_insert(self, query: str, values: list) -> int:
+diff --git a/tortoise/backends/odbc/client.py b/tortoise/backends/odbc/client.py
+index 39bf160..aac6f63 100644
+--- a/tortoise/backends/odbc/client.py
++++ b/tortoise/backends/odbc/client.py
+@@ -70,6 +70,7 @@ class ODBCClient(BaseDBAsyncClient, ABC):
+         self._template: dict = {}
+         self._pool: Optional[asyncodbc.Pool] = None
+         self._connection = None
++        self._pool_init_lock = asyncio.Lock()
+ 
+     async def create_connection(self, with_db: bool) -> None:
+         self._template = {
+@@ -114,7 +115,7 @@ class ODBCClient(BaseDBAsyncClient, ABC):
+             self._pool = None
+ 
+     def acquire_connection(self) -> ConnWrapperType:
+-        return PoolConnectionWrapper(self)
++        return PoolConnectionWrapper(self, self._pool_init_lock)
+ 
+     @translate_exceptions
+     async def execute_many(self, query: str, values: list) -> None:
+diff --git a/tortoise/backends/oracle/client.py b/tortoise/backends/oracle/client.py
+index 153865a..b561a9f 100644
+--- a/tortoise/backends/oracle/client.py
++++ b/tortoise/backends/oracle/client.py
+@@ -57,10 +57,10 @@ class OracleClient(ODBCClient):
+         self.dsn = f"DRIVER={driver};DBQ={dbq};UID={user};PWD={password};"
+ 
+     def _in_transaction(self) -> "TransactionContext":
+-        return TransactionContextPooled(TransactionWrapper(self))
++        return TransactionContextPooled(TransactionWrapper(self), self._pool_init_lock)
+ 
+     def acquire_connection(self) -> Union["ConnectionWrapper", "PoolConnectionWrapper"]:
+-        return OraclePoolConnectionWrapper(self)
++        return OraclePoolConnectionWrapper(self, self._pool_init_lock)
+ 
+     async def db_create(self) -> None:
+         await self.create_connection(with_db=False)
+diff --git a/tortoise/backends/psycopg/client.py b/tortoise/backends/psycopg/client.py
+index 03e3e0d..b73d57f 100644
+--- a/tortoise/backends/psycopg/client.py
++++ b/tortoise/backends/psycopg/client.py
+@@ -193,10 +193,10 @@ class PsycopgClient(postgres_client.BasePostgresClient):
+     def acquire_connection(
+         self,
+     ) -> typing.Union[base_client.ConnectionWrapper, PoolConnectionWrapper]:
+-        return PoolConnectionWrapper(self)
++        return PoolConnectionWrapper(self, self._pool_init_lock)
+ 
+     def _in_transaction(self) -> base_client.TransactionContext:
+-        return base_client.TransactionContextPooled(TransactionWrapper(self))
++        return base_client.TransactionContextPooled(TransactionWrapper(self), self._pool_init_lock)
+ 
+ 
+ class TransactionWrapper(PsycopgClient, base_client.BaseTransactionWrapper):
+diff --git a/tortoise/backends/sqlite/client.py b/tortoise/backends/sqlite/client.py
+index 6045e9f..7372819 100644
+--- a/tortoise/backends/sqlite/client.py
++++ b/tortoise/backends/sqlite/client.py
+@@ -190,8 +190,8 @@ class SqliteTransactionContext(TransactionContext):
+             self.connection._connection = self.connection._parent._connection
+ 
+     async def __aenter__(self) -> T_conn:
+-        await self.ensure_connection()
+         await self._trxlock.acquire()
++        await self.ensure_connection()
+         self.token = connections.set(self.connection_name, self.connection)
+         await self.connection.begin()
+         return self.connection

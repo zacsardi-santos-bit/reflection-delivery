@@ -1,0 +1,23 @@
+{
+ "task": "googlecloudplatform-python-docs-samples-2707",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden defines all 18 '+def filter_*' and 7 '+def read_*' functions matching the 23 FAIL_TO_PASS tests; snapshot expected-output files (snap_filters_test.py/snap_reads_test.py) are in test.patch NOT golden; test runs snippets against 'gcloud beta emulators bigtable' and compares stdout"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 29,
+  "shallow": true
+ }
+}

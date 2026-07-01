@@ -1,0 +1,22 @@
+patching file pants-plugins/release/rules_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-7.0.1, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+rootdir: /workspace/repo, configfile: pyproject.toml
+collecting ... collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+_____________ ERROR collecting pants-plugins/release/rules_test.py _____________
+ImportError while importing test module '/workspace/repo/pants-plugins/release/rules_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+pants-plugins/release/rules_test.py:34: in <module>
+    from release.rules import StackStormSetupKwargsRequest
+E   ModuleNotFoundError: No module named 'release.rules'
+=========================== short test summary info ============================
+ERROR pants-plugins/release/rules_test.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 1.01s ===============================
+reward=0 graded=7 found=0 failed=0 parsed=0 framework=pytest exit_code=2

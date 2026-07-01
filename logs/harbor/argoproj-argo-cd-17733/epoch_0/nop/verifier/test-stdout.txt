@@ -1,0 +1,11 @@
+patching file controller/sync_test.go
+# github.com/argoproj/argo-cd/v2/controller [github.com/argoproj/argo-cd/v2/controller.test]
+controller/sync_test.go:363:44: undefined: testdata.LiveHTTPProxy
+controller/sync_test.go:364:46: undefined: testdata.TargetHTTPProxy
+controller/sync_test.go:387:46: undefined: testdata.TargetHTTPProxy
+controller/sync_test.go:425:44: undefined: testdata.LiveDeploymentEnvVarsYaml
+controller/sync_test.go:426:46: undefined: testdata.TargetDeploymentEnvVarsYaml
+controller/sync_test.go:477:44: undefined: testdata.MinimalImageReplicaDeploymentYaml
+controller/sync_test.go:478:46: undefined: testdata.AdditionalImageReplicaDeploymentYaml
+FAIL	github.com/argoproj/argo-cd/v2/controller [build failed]
+reward=0 graded=142 found=142 failed=142 parsed=1 framework=go exit_code=1

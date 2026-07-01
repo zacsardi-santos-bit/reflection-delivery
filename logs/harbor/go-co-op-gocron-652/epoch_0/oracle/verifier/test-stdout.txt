@@ -1,0 +1,15 @@
+patching file scheduler_test.go
+{"Time":"2026-06-29T15:32:03.305343404Z","Action":"start","Package":"github.com/go-co-op/gocron/v2"}
+{"Time":"2026-06-29T15:32:03.309733101Z","Action":"run","Package":"github.com/go-co-op/gocron/v2","Test":"TestScheduler_Jobs"}
+{"Time":"2026-06-29T15:32:03.309787621Z","Action":"output","Package":"github.com/go-co-op/gocron/v2","Test":"TestScheduler_Jobs","Output":"=== RUN   TestScheduler_Jobs\n"}
+{"Time":"2026-06-29T15:32:03.309822231Z","Action":"run","Package":"github.com/go-co-op/gocron/v2","Test":"TestScheduler_Jobs/order_is_equal"}
+{"Time":"2026-06-29T15:32:03.309845931Z","Action":"output","Package":"github.com/go-co-op/gocron/v2","Test":"TestScheduler_Jobs/order_is_equal","Output":"=== RUN   TestScheduler_Jobs/order_is_equal\n"}
+{"Time":"2026-06-29T15:32:03.31002623Z","Action":"output","Package":"github.com/go-co-op/gocron/v2","Test":"TestScheduler_Jobs/order_is_equal","Output":"2026/06/29 15:32:03 INFO: gocron: new scheduler created\n"}
+{"Time":"2026-06-29T15:32:03.31023019Z","Action":"output","Package":"github.com/go-co-op/gocron/v2","Test":"TestScheduler_Jobs/order_is_equal","Output":"--- PASS: TestScheduler_Jobs/order_is_equal (0.00s)\n"}
+{"Time":"2026-06-29T15:32:03.31026179Z","Action":"pass","Package":"github.com/go-co-op/gocron/v2","Test":"TestScheduler_Jobs/order_is_equal","Elapsed":0}
+{"Time":"2026-06-29T15:32:03.31029903Z","Action":"output","Package":"github.com/go-co-op/gocron/v2","Test":"TestScheduler_Jobs","Output":"--- PASS: TestScheduler_Jobs (0.00s)\n"}
+{"Time":"2026-06-29T15:32:03.31032351Z","Action":"pass","Package":"github.com/go-co-op/gocron/v2","Test":"TestScheduler_Jobs","Elapsed":0}
+{"Time":"2026-06-29T15:32:03.31034745Z","Action":"output","Package":"github.com/go-co-op/gocron/v2","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:03.31061131Z","Action":"output","Package":"github.com/go-co-op/gocron/v2","Output":"ok  \tgithub.com/go-co-op/gocron/v2\t0.005s\n"}
+{"Time":"2026-06-29T15:32:03.31066287Z","Action":"pass","Package":"github.com/go-co-op/gocron/v2","Elapsed":0.005}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

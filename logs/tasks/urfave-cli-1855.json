@@ -1,0 +1,23 @@
+{
+ "task": "urfave-cli-1855",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds json struct tags + MarshalJSON in command.go/args.go/flag_impl.go; F2P test 'TestJSONExportCommand' does json.Marshal(cmd) and assert.JSONEq against full nested schema"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

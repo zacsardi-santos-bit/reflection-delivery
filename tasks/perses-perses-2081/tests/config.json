@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/api/discovery/cuetils -count=1",
+  "test_files": [
+    "internal/api/discovery/cuetils/cuetils_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/perses/perses/internal/api/discovery/cuetils::TestNewFromSchema/PrometheusDatasource",
+    "github.com/perses/perses/internal/api/discovery/cuetils::TestNewFromSchema/TempoDatasource",
+    "github.com/perses/perses/internal/api/discovery/cuetils::TestNewFromSchema",
+    "github.com/perses/perses/internal/api/discovery/cuetils::TestBuildPluginAndInjectProxy/PrometheusDatasource",
+    "github.com/perses/perses/internal/api/discovery/cuetils::TestBuildPluginAndInjectProxy"
+  ],
+  "PASS_TO_PASS": []
+}

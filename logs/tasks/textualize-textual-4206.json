@@ -1,0 +1,23 @@
+{
+ "task": "textualize-textual-4206",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `recompose` flag through reactive.py/query.py/dom.py and Widget.refresh + `recompose()`/`_check_recompose` in widget.py; F2P `test_recompose` snap_compares recompose.py app using `reactive(0, recompose=True)` + data_bind against stored .ambr"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 28,
+  "shallow": true
+ }
+}

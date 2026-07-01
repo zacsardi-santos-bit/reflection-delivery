@@ -1,0 +1,19 @@
+patching file pipeline/backend/kubernetes/backend_options_test.go
+patching file pipeline/backend/kubernetes/pod_test.go
+patching file pipeline/backend/kubernetes/secrets_test.go
+# go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes [go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes.test]
+pipeline/backend/kubernetes/backend_options_test.go:92:3: unknown field Secrets in struct literal of type BackendOptions
+pipeline/backend/kubernetes/backend_options_test.go:92:14: undefined: SecretRef
+pipeline/backend/kubernetes/backend_options_test.go:96:13: undefined: SecretTarget
+pipeline/backend/kubernetes/backend_options_test.go:101:13: undefined: SecretTarget
+pipeline/backend/kubernetes/pod_test.go:561:3: unknown field NativeSecretsAllowFromStep in struct literal of type config
+pipeline/backend/kubernetes/pod_test.go:563:3: unknown field Secrets in struct literal of type BackendOptions
+pipeline/backend/kubernetes/pod_test.go:563:14: undefined: SecretRef
+pipeline/backend/kubernetes/pod_test.go:574:13: undefined: SecretTarget
+pipeline/backend/kubernetes/pod_test.go:579:13: undefined: SecretTarget
+pipeline/backend/kubernetes/secrets_test.go:25:9: undefined: newNativeSecretsProcessor
+pipeline/backend/kubernetes/secrets_test.go:25:9: too many errors
+{"Time":"2026-06-29T15:18:07.58725577Z","Action":"start","Package":"go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes"}
+{"Time":"2026-06-29T15:18:07.587344015Z","Action":"output","Package":"go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes","Output":"FAIL\tgo.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes [build failed]\n"}
+{"Time":"2026-06-29T15:18:07.587377456Z","Action":"fail","Package":"go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes","Elapsed":0}
+reward=0 graded=23 found=0 failed=0 parsed=1 framework=go exit_code=1

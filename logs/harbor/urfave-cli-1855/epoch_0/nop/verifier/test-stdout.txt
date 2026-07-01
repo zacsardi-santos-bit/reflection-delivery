@@ -1,0 +1,12 @@
+patching file command_test.go
+=== RUN   TestJSONExportCommand
+    command_test.go:3854: 
+        	Error Trace:	/workspace/repo/command_test.go:3854
+        	Error:      	Received unexpected error:
+        	            	json: unsupported type: func(context.Context, *cli.Command, string) error
+        	Test:       	TestJSONExportCommand
+--- FAIL: TestJSONExportCommand (0.00s)
+FAIL
+FAIL	github.com/urfave/cli/v3	0.005s
+FAIL
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=1

@@ -1,0 +1,23 @@
+{
+ "task": "linode-manager-11650",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P 'Expiring Tokens should properly expire tokens if given a 401 error' and 'Logout clears Auth token from local storage when mounted' assert the new localStorage auth utility behavior"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

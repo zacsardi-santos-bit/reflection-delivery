@@ -1,0 +1,43 @@
+patching file truss/tests/conftest.py
+patching file truss/tests/remote/baseten/test_api.py
+patching file truss/tests/remote/baseten/test_core.py
+patching file truss/tests/remote/baseten/test_remote.py
+patching file truss/tests/templates/control/control/test_server.py
+patching file truss/tests/templates/core/server/test_lazy_data_resolver.py
+patching file truss/tests/templates/core/server/test_secrets_resolver.py
+patching file truss/tests/templates/server/test_model_wrapper.py
+patching file truss/tests/test_config.py
+patching file truss/tests/test_model_inference.py
+patching file truss/tests/test_truss_handle.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.2.0, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo, configfile: pyproject.toml
+plugins: asyncio-0.23.8, cov-3.0.0, requests-mock-1.12.1, check-2.4.1, anyio-4.5.2, split-0.8.2
+asyncio: mode=Mode.STRICT
+collecting ... collected 205 items / 1 error / 92 deselected / 113 selected
+
+==================================== ERRORS ====================================
+_________________ ERROR collecting truss/tests/test_config.py __________________
+ImportError while importing test module '/workspace/repo/truss/tests/test_config.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+truss/tests/test_config.py:11: in <module>
+    from truss.base.truss_config import (
+E   ImportError: cannot import name '_map_to_supported_python_version' from 'truss.base.truss_config' (/workspace/repo/truss/base/truss_config.py)
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/pythonjsonlogger/jsonlogger.py:11
+  /usr/local/lib/python3.11/site-packages/pythonjsonlogger/jsonlogger.py:11: DeprecationWarning: pythonjsonlogger.jsonlogger has been moved to pythonjsonlogger.json
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR truss/tests/test_config.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+================== 92 deselected, 1 warning, 1 error in 1.86s ==================
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

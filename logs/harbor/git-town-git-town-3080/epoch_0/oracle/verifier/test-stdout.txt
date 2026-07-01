@@ -1,0 +1,167 @@
+patching file tools/format_self/format_self_test.go
+patching file tools/format_unittests/format.go
+patching file tools/format_unittests/format_unittests.go
+patching file tools/format_unittests/format_unittests_test.go
+patching file tools/format_unittests/go.mod
+patching file tools/structs_sorted/structs_sorted_test.go
+{"Time":"2026-06-29T15:23:41.690041641Z","Action":"start","Package":"github.com/git-town/git-town/tools/format_self"}
+{"Time":"2026-06-29T15:23:41.690249186Z","Action":"start","Package":"github.com/git-town/git-town/tools/format_unittests"}
+{"Time":"2026-06-29T15:23:41.691840149Z","Action":"start","Package":"github.com/git-town/git-town/tools/structs_sorted"}
+{"Time":"2026-06-29T15:23:41.705302975Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests"}
+{"Time":"2026-06-29T15:23:41.705389117Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests","Output":"=== RUN   TestFormatUnittests\n"}
+{"Time":"2026-06-29T15:23:41.70554164Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests","Output":"=== PAUSE TestFormatUnittests\n"}
+{"Time":"2026-06-29T15:23:41.705574871Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests"}
+{"Time":"2026-06-29T15:23:41.705598121Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests"}
+{"Time":"2026-06-29T15:23:41.705617192Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests","Output":"=== CONT  TestFormatUnittests\n"}
+{"Time":"2026-06-29T15:23:41.705752555Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsTopLevelRunLine"}
+{"Time":"2026-06-29T15:23:41.705784905Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsTopLevelRunLine","Output":"=== RUN   TestFormatUnittests/IsTopLevelRunLine\n"}
+{"Time":"2026-06-29T15:23:41.705824806Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsTopLevelRunLine","Output":"=== PAUSE TestFormatUnittests/IsTopLevelRunLine\n"}
+{"Time":"2026-06-29T15:23:41.705842727Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsTopLevelRunLine"}
+{"Time":"2026-06-29T15:23:41.705881418Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent"}
+{"Time":"2026-06-29T15:23:41.705911948Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent","Output":"=== RUN   TestFormatUnittests/FormatFileContent\n"}
+{"Time":"2026-06-29T15:23:41.70599709Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent","Output":"=== PAUSE TestFormatUnittests/FormatFileContent\n"}
+{"Time":"2026-06-29T15:23:41.706087702Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent"}
+{"Time":"2026-06-29T15:23:41.706141613Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsGoTestFile"}
+{"Time":"2026-06-29T15:23:41.706170024Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsGoTestFile","Output":"=== RUN   TestFormatUnittests/IsGoTestFile\n"}
+{"Time":"2026-06-29T15:23:41.706323767Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsGoTestFile","Output":"=== PAUSE TestFormatUnittests/IsGoTestFile\n"}
+{"Time":"2026-06-29T15:23:41.706443899Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsGoTestFile"}
+{"Time":"2026-06-29T15:23:41.70648246Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsTopLevelRunLine"}
+{"Time":"2026-06-29T15:23:41.706496431Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsTopLevelRunLine","Output":"=== CONT  TestFormatUnittests/IsTopLevelRunLine\n"}
+{"Time":"2026-06-29T15:23:41.706536401Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsGoTestFile"}
+{"Time":"2026-06-29T15:23:41.706558302Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsGoTestFile","Output":"=== CONT  TestFormatUnittests/IsGoTestFile\n"}
+{"Time":"2026-06-29T15:23:41.706596993Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsTopLevelRunLine","Output":"--- PASS: TestFormatUnittests/IsTopLevelRunLine (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.706621843Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsTopLevelRunLine","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.706643454Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent"}
+{"Time":"2026-06-29T15:23:41.706655974Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent","Output":"=== CONT  TestFormatUnittests/FormatFileContent\n"}
+{"Time":"2026-06-29T15:23:41.706678235Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/top-level_subtests"}
+{"Time":"2026-06-29T15:23:41.706701565Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/top-level_subtests","Output":"=== RUN   TestFormatUnittests/FormatFileContent/top-level_subtests\n"}
+{"Time":"2026-06-29T15:23:41.706836498Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/top-level_subtests","Output":"=== PAUSE TestFormatUnittests/FormatFileContent/top-level_subtests\n"}
+{"Time":"2026-06-29T15:23:41.706857248Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/top-level_subtests"}
+{"Time":"2026-06-29T15:23:41.70695975Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/nested_subtests"}
+{"Time":"2026-06-29T15:23:41.707054743Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/nested_subtests","Output":"=== RUN   TestFormatUnittests/FormatFileContent/nested_subtests\n"}
+{"Time":"2026-06-29T15:23:41.707135734Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/nested_subtests","Output":"=== PAUSE TestFormatUnittests/FormatFileContent/nested_subtests\n"}
+{"Time":"2026-06-29T15:23:41.707186655Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/nested_subtests"}
+{"Time":"2026-06-29T15:23:41.707311828Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/no_subtests"}
+{"Time":"2026-06-29T15:23:41.707383419Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/no_subtests","Output":"=== RUN   TestFormatUnittests/FormatFileContent/no_subtests\n"}
+{"Time":"2026-06-29T15:23:41.70743024Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/no_subtests","Output":"=== PAUSE TestFormatUnittests/FormatFileContent/no_subtests\n"}
+{"Time":"2026-06-29T15:23:41.707460041Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/no_subtests"}
+{"Time":"2026-06-29T15:23:41.707508282Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/top-level_subtests"}
+{"Time":"2026-06-29T15:23:41.707629885Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/top-level_subtests","Output":"=== CONT  TestFormatUnittests/FormatFileContent/top-level_subtests\n"}
+{"Time":"2026-06-29T15:23:41.707650815Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/no_subtests"}
+{"Time":"2026-06-29T15:23:41.707672005Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/no_subtests","Output":"=== CONT  TestFormatUnittests/FormatFileContent/no_subtests\n"}
+{"Time":"2026-06-29T15:23:41.707708876Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/top-level_subtests","Output":"--- PASS: TestFormatUnittests/FormatFileContent/top-level_subtests (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.707725657Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/top-level_subtests","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.707743987Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/nested_subtests"}
+{"Time":"2026-06-29T15:23:41.707835489Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/nested_subtests","Output":"=== CONT  TestFormatUnittests/FormatFileContent/nested_subtests\n"}
+{"Time":"2026-06-29T15:23:41.707918051Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/nested_subtests","Output":"--- PASS: TestFormatUnittests/FormatFileContent/nested_subtests (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.707988762Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/nested_subtests","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.708079594Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/no_subtests","Output":"--- PASS: TestFormatUnittests/FormatFileContent/no_subtests (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.708113315Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent/no_subtests","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.708125805Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsGoTestFile","Output":"--- PASS: TestFormatUnittests/IsGoTestFile (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.708143195Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/IsGoTestFile","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.708152496Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent","Output":"--- PASS: TestFormatUnittests/FormatFileContent (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.708167736Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests/FormatFileContent","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.708183156Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests","Output":"--- PASS: TestFormatUnittests (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.708197647Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_unittests","Test":"TestFormatUnittests","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.708237768Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:41.708311469Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf"}
+{"Time":"2026-06-29T15:23:41.70837336Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf","Output":"=== RUN   TestFormatSelf\n"}
+{"Time":"2026-06-29T15:23:41.708394531Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf","Output":"=== PAUSE TestFormatSelf\n"}
+{"Time":"2026-06-29T15:23:41.708422781Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf"}
+{"Time":"2026-06-29T15:23:41.708445652Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf"}
+{"Time":"2026-06-29T15:23:41.708553864Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf","Output":"=== CONT  TestFormatSelf\n"}
+{"Time":"2026-06-29T15:23:41.708631586Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent"}
+{"Time":"2026-06-29T15:23:41.70833659Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_unittests","Output":"ok  \tgithub.com/git-town/git-town/tools/format_unittests\t0.018s\n"}
+{"Time":"2026-06-29T15:23:41.708685667Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_unittests","Elapsed":0.018}
+{"Time":"2026-06-29T15:23:41.708654437Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent","Output":"=== RUN   TestFormatSelf/FormatFileContent\n"}
+{"Time":"2026-06-29T15:23:41.70883013Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent","Output":"=== PAUSE TestFormatSelf/FormatFileContent\n"}
+{"Time":"2026-06-29T15:23:41.708874771Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent"}
+{"Time":"2026-06-29T15:23:41.708895971Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatLine"}
+{"Time":"2026-06-29T15:23:41.708910922Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatLine","Output":"=== RUN   TestFormatSelf/FormatLine\n"}
+{"Time":"2026-06-29T15:23:41.708931932Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatLine","Output":"=== PAUSE TestFormatSelf/FormatLine\n"}
+{"Time":"2026-06-29T15:23:41.708949583Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatLine"}
+{"Time":"2026-06-29T15:23:41.708972433Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/IsGoFile"}
+{"Time":"2026-06-29T15:23:41.708993784Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/IsGoFile","Output":"=== RUN   TestFormatSelf/IsGoFile\n"}
+{"Time":"2026-06-29T15:23:41.709018114Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/IsGoFile","Output":"=== PAUSE TestFormatSelf/IsGoFile\n"}
+{"Time":"2026-06-29T15:23:41.709109426Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/IsGoFile"}
+{"Time":"2026-06-29T15:23:41.711958316Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent"}
+{"Time":"2026-06-29T15:23:41.711983077Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent","Output":"=== CONT  TestFormatSelf/FormatFileContent\n"}
+{"Time":"2026-06-29T15:23:41.709712889Z","Action":"run","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted"}
+{"Time":"2026-06-29T15:23:41.712025568Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatLine"}
+{"Time":"2026-06-29T15:23:41.712047929Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatLine","Output":"=== CONT  TestFormatSelf/FormatLine\n"}
+{"Time":"2026-06-29T15:23:41.71211262Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatLine","Output":"--- PASS: TestFormatSelf/FormatLine (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.712166281Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatLine","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.712194072Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_non-pointer_receiver"}
+{"Time":"2026-06-29T15:23:41.712252183Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_non-pointer_receiver","Output":"=== RUN   TestFormatSelf/FormatFileContent/unformatted,_non-pointer_receiver\n"}
+{"Time":"2026-06-29T15:23:41.712268393Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_non-pointer_receiver","Output":"--- PASS: TestFormatSelf/FormatFileContent/unformatted,_non-pointer_receiver (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.712295434Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_non-pointer_receiver","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.712334095Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver"}
+{"Time":"2026-06-29T15:23:41.712350695Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver","Output":"=== RUN   TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver\n"}
+{"Time":"2026-06-29T15:23:41.712453287Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/IsGoFile"}
+{"Time":"2026-06-29T15:23:41.712510858Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/IsGoFile","Output":"=== CONT  TestFormatSelf/IsGoFile\n"}
+{"Time":"2026-06-29T15:23:41.712535589Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/IsGoFile","Output":"--- PASS: TestFormatSelf/IsGoFile (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.712553049Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/IsGoFile","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.71257679Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver","Output":"=== PAUSE TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver\n"}
+{"Time":"2026-06-29T15:23:41.71259835Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver"}
+{"Time":"2026-06-29T15:23:41.712632981Z","Action":"run","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/already_formatted"}
+{"Time":"2026-06-29T15:23:41.712673932Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/already_formatted","Output":"=== RUN   TestFormatSelf/FormatFileContent/already_formatted\n"}
+{"Time":"2026-06-29T15:23:41.712697692Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/already_formatted","Output":"=== PAUSE TestFormatSelf/FormatFileContent/already_formatted\n"}
+{"Time":"2026-06-29T15:23:41.712708952Z","Action":"pause","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/already_formatted"}
+{"Time":"2026-06-29T15:23:41.712740583Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver"}
+{"Time":"2026-06-29T15:23:41.712779694Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver","Output":"=== CONT  TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver\n"}
+{"Time":"2026-06-29T15:23:41.712815775Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver","Output":"--- PASS: TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.712852106Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/unformatted,_pointer_receiver","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.712873676Z","Action":"cont","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/already_formatted"}
+{"Time":"2026-06-29T15:23:41.712894747Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/already_formatted","Output":"=== CONT  TestFormatSelf/FormatFileContent/already_formatted\n"}
+{"Time":"2026-06-29T15:23:41.712923837Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/already_formatted","Output":"--- PASS: TestFormatSelf/FormatFileContent/already_formatted (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.713018519Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent/already_formatted","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.71305189Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent","Output":"--- PASS: TestFormatSelf/FormatFileContent (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.712024978Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted","Output":"=== RUN   TestStructsSorted\n"}
+{"Time":"2026-06-29T15:23:41.713354276Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf/FormatFileContent","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.713398787Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf","Output":"--- PASS: TestFormatSelf (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.713416798Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_self","Test":"TestFormatSelf","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.713449148Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:41.713374127Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted","Output":"=== PAUSE TestStructsSorted\n"}
+{"Time":"2026-06-29T15:23:41.7135083Z","Action":"pause","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted"}
+{"Time":"2026-06-29T15:23:41.71353034Z","Action":"cont","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted"}
+{"Time":"2026-06-29T15:23:41.713571581Z","Action":"output","Package":"github.com/git-town/git-town/tools/format_self","Output":"ok  \tgithub.com/git-town/git-town/tools/format_self\t0.023s\n"}
+{"Time":"2026-06-29T15:23:41.713605531Z","Action":"pass","Package":"github.com/git-town/git-town/tools/format_self","Elapsed":0.024}
+{"Time":"2026-06-29T15:23:41.713576781Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted","Output":"=== CONT  TestStructsSorted\n"}
+{"Time":"2026-06-29T15:23:41.713920538Z","Action":"run","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile"}
+{"Time":"2026-06-29T15:23:41.713941799Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile","Output":"=== RUN   TestStructsSorted/LintFile\n"}
+{"Time":"2026-06-29T15:23:41.713974809Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile","Output":"=== PAUSE TestStructsSorted/LintFile\n"}
+{"Time":"2026-06-29T15:23:41.71400786Z","Action":"pause","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile"}
+{"Time":"2026-06-29T15:23:41.714042461Z","Action":"cont","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile"}
+{"Time":"2026-06-29T15:23:41.714085132Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile","Output":"=== CONT  TestStructsSorted/LintFile\n"}
+{"Time":"2026-06-29T15:23:41.714104172Z","Action":"run","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/unsorted_definition"}
+{"Time":"2026-06-29T15:23:41.714115112Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/unsorted_definition","Output":"=== RUN   TestStructsSorted/LintFile/unsorted_definition\n"}
+{"Time":"2026-06-29T15:23:41.716872261Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/unsorted_definition","Output":"--- PASS: TestStructsSorted/LintFile/unsorted_definition (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.716908172Z","Action":"pass","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/unsorted_definition","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.716971893Z","Action":"run","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/definition_without_fields"}
+{"Time":"2026-06-29T15:23:41.716988613Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/definition_without_fields","Output":"=== RUN   TestStructsSorted/LintFile/definition_without_fields\n"}
+{"Time":"2026-06-29T15:23:41.717040235Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/definition_without_fields","Output":"--- PASS: TestStructsSorted/LintFile/definition_without_fields (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.717060945Z","Action":"pass","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/definition_without_fields","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.717072635Z","Action":"run","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/ignored_definition"}
+{"Time":"2026-06-29T15:23:41.717093036Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/ignored_definition","Output":"=== RUN   TestStructsSorted/LintFile/ignored_definition\n"}
+{"Time":"2026-06-29T15:23:41.717209728Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/ignored_definition","Output":"--- PASS: TestStructsSorted/LintFile/ignored_definition (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.71730119Z","Action":"pass","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/ignored_definition","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.71731646Z","Action":"run","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/unsorted_instantiation"}
+{"Time":"2026-06-29T15:23:41.717354831Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/unsorted_instantiation","Output":"=== RUN   TestStructsSorted/LintFile/unsorted_instantiation\n"}
+{"Time":"2026-06-29T15:23:41.717418303Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/unsorted_instantiation","Output":"--- PASS: TestStructsSorted/LintFile/unsorted_instantiation (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.717431353Z","Action":"pass","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/unsorted_instantiation","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.717458303Z","Action":"run","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/instantiation_without_fields"}
+{"Time":"2026-06-29T15:23:41.717492784Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/instantiation_without_fields","Output":"=== RUN   TestStructsSorted/LintFile/instantiation_without_fields\n"}
+{"Time":"2026-06-29T15:23:41.717807451Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/instantiation_without_fields","Output":"--- PASS: TestStructsSorted/LintFile/instantiation_without_fields (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.717854002Z","Action":"pass","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/instantiation_without_fields","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.717881812Z","Action":"run","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/ignored_instantiation"}
+{"Time":"2026-06-29T15:23:41.717896403Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/ignored_instantiation","Output":"=== RUN   TestStructsSorted/LintFile/ignored_instantiation\n"}
+{"Time":"2026-06-29T15:23:41.71826255Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/ignored_instantiation","Output":"--- PASS: TestStructsSorted/LintFile/ignored_instantiation (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.718363463Z","Action":"pass","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile/ignored_instantiation","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.718395583Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile","Output":"--- PASS: TestStructsSorted/LintFile (0.01s)\n"}
+{"Time":"2026-06-29T15:23:41.718441474Z","Action":"pass","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted/LintFile","Elapsed":0.01}
+{"Time":"2026-06-29T15:23:41.718513876Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted","Output":"--- PASS: TestStructsSorted (0.00s)\n"}
+{"Time":"2026-06-29T15:23:41.718553736Z","Action":"pass","Package":"github.com/git-town/git-town/tools/structs_sorted","Test":"TestStructsSorted","Elapsed":0}
+{"Time":"2026-06-29T15:23:41.718565697Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:41.719003836Z","Action":"output","Package":"github.com/git-town/git-town/tools/structs_sorted","Output":"ok  \tgithub.com/git-town/git-town/tools/structs_sorted\t0.027s\n"}
+{"Time":"2026-06-29T15:23:41.719035857Z","Action":"pass","Package":"github.com/git-town/git-town/tools/structs_sorted","Elapsed":0.027}
+reward=1 graded=22 found=22 failed=0 parsed=22 framework=go exit_code=0

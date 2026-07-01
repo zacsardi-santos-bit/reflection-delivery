@@ -1,0 +1,23 @@
+{
+ "task": "ray-project-ray-38467",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden creates new module _private/proxy_request_response.py with ProxyRequest/ASGIProxyRequest/gRPCProxyRequest/ProxyResponse; F2P imports 'from ray.serve._private.proxy_request_response import (ASGIProxyRequest, gRPCProxyRequest, ProxyRequest, ProxyResponse)' and exercises 13 real behaviors"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 79,
+  "shallow": true
+ }
+}

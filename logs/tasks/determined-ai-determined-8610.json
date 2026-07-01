@@ -1,0 +1,23 @@
+{
+ "task": "determined-ai-determined-8610",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden changes validateMsgs in test_util.go: fixes deletion comparator (was 'return expectedUpserts[i] < expectedUpserts[j]' for expectedDeletions) and wraps each sort.Slice in 'if len(...) > 1'; test.patch adds TestOfflineChanges/TestOnlineChanges integration scenarios that had been silently wrong"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 39,
+  "shallow": true
+ }
+}

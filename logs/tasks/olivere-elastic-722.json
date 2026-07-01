@@ -1,0 +1,23 @@
+{
+ "task": "olivere-elastic-722",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds search_shards.go with 'func (c *Client) SearchShards(indices ...string) *SearchShardsService'; test.patch's search_shards_test.go references client.SearchShards so package fails to compile pre-patch, failing the 59 F2P unit tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

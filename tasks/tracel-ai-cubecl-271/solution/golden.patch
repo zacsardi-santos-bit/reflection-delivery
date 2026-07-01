@@ -1,0 +1,2243 @@
+diff --git a/crates/cubecl-linalg/src/matmul/components/batch/shared.rs b/crates/cubecl-linalg/src/matmul/components/batch/shared.rs
+index 787d5acb..a0fb9368 100644
+--- a/crates/cubecl-linalg/src/matmul/components/batch/shared.rs
++++ b/crates/cubecl-linalg/src/matmul/components/batch/shared.rs
+@@ -2,7 +2,6 @@ use cubecl_core as cubecl;
+ use cubecl_core::prelude::*;
+ 
+ use crate::matmul::components::global;
+-use crate::matmul::components::global::{Loader, Unloader};
+ 
+ #[cube]
+ /// Execute global matmul on lhs, rhs, writing in out.
+@@ -19,9 +18,9 @@ pub(crate) fn gmm_execute<EG: Numeric, ES: Numeric, GMM: global::Matmul<EG, ES>>
+     #[comptime] config: GMM::Config,
+ ) {
+     GMM::execute(
+-        GMM::Lhs::new::<GMM::Config>(lhs, x_offset, k_range.0, nth_batch, config),
+-        GMM::Rhs::new::<GMM::Config>(rhs, k_range.0, y_offset, nth_batch, config),
+-        GMM::Out::new(out, x_offset, y_offset, nth_batch),
++        GMM::init_lhs_loader(lhs, x_offset, k_range.0, nth_batch, config),
++        GMM::init_rhs_loader(rhs, k_range.0, y_offset, nth_batch, config),
++        GMM::init_unloader(out, x_offset, y_offset, nth_batch),
+         acc,
+         k_range,
+         config,
+diff --git a/crates/cubecl-linalg/src/matmul/components/config.rs b/crates/cubecl-linalg/src/matmul/components/config.rs
+index 64973530..6f21a12b 100644
+--- a/crates/cubecl-linalg/src/matmul/components/config.rs
++++ b/crates/cubecl-linalg/src/matmul/components/config.rs
+@@ -3,22 +3,6 @@ use cubecl_core::prelude::*;
+ use std::fmt::Debug;
+ use std::hash::Hash;
+ 
+-#[cube]
+-/// Gives indexes for the current unit
+-///
+-/// Typically corresponds directly to unit positions within the cube, but
+-/// can be customized
+-pub trait PlaneMapper {
+-    /// In which plane the unit lies
+-    ///
+-    /// Typically UNIT_POS_Y
+-    fn plane_id() -> u32;
+-    /// The position of the unit within the plane
+-    ///
+-    /// Typically UNIT_POS_X
+-    fn plane_unit() -> u32;
+-}
+-
+ /// A config for a matmul
+ ///
+ /// Useful to aggregate many trait bounds
+@@ -76,9 +60,30 @@ pub struct StageDim {
+     pub tile_size_y: u32,
+     pub num_tiles_x: u32,
+     pub num_tiles_y: u32,
++    pub num_tiles_per_buffer: u32,
+ }
+ 
+ impl StageDim {
++    pub fn new(
++        ident: Ident,
++        tile_size_x: u32,
++        tile_size_y: u32,
++        num_tiles_x: u32,
++        num_tiles_y: u32,
++    ) -> Self {
++        Self {
++            tile_size_x,
++            tile_size_y,
++            num_tiles_x,
++            num_tiles_y,
++            num_tiles_per_buffer: match ident {
++                Ident::Lhs => num_tiles_x,
++                Ident::Rhs => num_tiles_y,
++                Ident::Out => 0,
++            },
++        }
++    }
++
+     /// Returns the total number of elements of the stage
+     pub fn num_elements(&self) -> u32 {
+         self.num_tiles_x * self.num_tiles_y * self.tile_num_elements()
+@@ -98,4 +103,12 @@ impl StageDim {
+     pub fn num_elements_y_dim(&self) -> u32 {
+         self.num_tiles_y * self.tile_size_y
+     }
++
++    pub fn buffer_num_elements(&self) -> u32 {
++        // Would be cleaner with an option, but it's not supported for CubeType
++        if self.num_tiles_per_buffer == 0 {
++            panic!("Should not call buffer_num_elements on output")
++        }
++        self.tile_num_elements() * self.num_tiles_per_buffer
++    }
+ }
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/base.rs b/crates/cubecl-linalg/src/matmul/components/global/base.rs
+index 45d253b9..8b2828fd 100644
+--- a/crates/cubecl-linalg/src/matmul/components/global/base.rs
++++ b/crates/cubecl-linalg/src/matmul/components/global/base.rs
+@@ -2,7 +2,7 @@ use cubecl_core as cubecl;
+ use cubecl_core::prelude::*;
+ 
+ use crate::matmul::components::config::MatmulConfig;
+-use crate::matmul::components::stage::{self, StageReader, StageWriter, TilingOrderConfig};
++use crate::matmul::components::stage::{self, StageWriter, TilingOrderConfig};
+ use crate::matmul::components::MatmulKernel;
+ use crate::matmul::components::StageDim;
+ use crate::matmul::components::{Ident, MatrixLayout};
+@@ -29,8 +29,8 @@ use crate::matmul::components::{Ident, MatrixLayout};
+ pub trait Matmul<EG: Numeric, ES: Numeric>:
+     'static + Send + Sync + MatmulKernel<EG, EG, Config: Config>
+ {
+-    type Lhs: Loader<EG, ES>;
+-    type Rhs: Loader<EG, ES>;
++    type Lhs: Loader<EG, ES, Self::Config>;
++    type Rhs: Loader<EG, ES, Self::Config>;
+     type Out: Unloader<EG>;
+     type Accumulator: CubeType;
+ 
+@@ -49,30 +49,46 @@ pub trait Matmul<EG: Numeric, ES: Numeric>:
+         #[comptime] config: Self::Config,
+     );
+ 
++    fn init_lhs_loader(
++        lhs: &Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        nth_batch: u32,
++        #[comptime] config: Self::Config,
++    ) -> Self::Lhs;
++
++    fn init_rhs_loader(
++        rhs: &Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        nth_batch: u32,
++        #[comptime] config: Self::Config,
++    ) -> Self::Rhs;
++
++    fn init_unloader(
++        out: &mut Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        batch_offset: u32,
++    ) -> Self::Out;
++
+     fn init_accumulator(#[comptime] config: Self::Config) -> Self::Accumulator;
++
+     fn zero_accumulator(acc: &mut Self::Accumulator, #[comptime] config: Self::Config);
+ }
+ 
+ #[cube]
+ /// Input to the global matmul, responsible of filling the stage and providing a reader for it.
+ /// Advances along the k-dimension to fill the stage with further data.
+-pub trait Loader<EG: Numeric, ES: Numeric>: CubeType + 'static + Send + Sync {
++pub trait Loader<EG: Numeric, ES: Numeric, G: Config>: CubeType + 'static + Send + Sync {
+     /// The stage reader which matches the input of the underlying stage matmul.
+-    type StageReader: StageReader<ES>;
++    type StageReader: CubeType;
+ 
+     /// Fills the stage at the current k offset and returns a reader for it.
+-    fn fill_stage<G: Config>(this: &mut Self, #[comptime] config: G) -> Self::StageReader;
++    fn fill_stage(this: &mut Self, #[comptime] config: G) -> Self::StageReader;
+ 
+     /// Move the k offset by k_offset
+     fn advance_view(this: &mut Self, k_offset: u32);
+-
+-    fn new<G: Config>(
+-        tensor: &Tensor<Line<EG>>,
+-        x_offset: u32,
+-        y_offset: u32,
+-        nth_batch: u32,
+-        #[comptime] config: G,
+-    ) -> Self;
+ }
+ 
+ #[cube]
+@@ -86,8 +102,6 @@ pub trait Unloader<EG: Numeric>: CubeType + 'static + Send + Sync {
+     type StageWriter: StageWriter<EG>;
+ 
+     fn as_stage_writer<G: Config>(unloader: Self) -> Self::StageWriter;
+-
+-    fn new(tensor: &mut Tensor<Line<EG>>, x_offset: u32, y_offset: u32, batch_offset: u32) -> Self;
+ }
+ 
+ /// Configuration for the Global matmul (GMM) level
+@@ -117,7 +131,7 @@ pub trait Config: MatmulConfig {
+     fn plane_dim(&self) -> u32;
+ 
+     /// Returns the order in which tiles should be loaded to the stage
+-    fn tiling_order(&self) -> TilingOrderConfig;
++    fn tiling_order(&self, ident: Ident) -> TilingOrderConfig;
+ 
+     /// Whether it is necessary to add bound checks in the m dimension
+     fn check_m_bounds(&self) -> bool;
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/homogeneous.rs b/crates/cubecl-linalg/src/matmul/components/global/homogeneous/base.rs
+similarity index 74%
+rename from crates/cubecl-linalg/src/matmul/components/global/homogeneous.rs
+rename to crates/cubecl-linalg/src/matmul/components/global/homogeneous/base.rs
+index d72befa3..394240bc 100644
+--- a/crates/cubecl-linalg/src/matmul/components/global/homogeneous.rs
++++ b/crates/cubecl-linalg/src/matmul/components/global/homogeneous/base.rs
+@@ -1,8 +1,9 @@
+ use crate::matmul::components::config::MatmulConfig;
+-use crate::matmul::components::global::Loader;
++use crate::matmul::components::global::unloader::Unloader;
++use crate::matmul::components::global::{Config as _, Loader};
+ use crate::matmul::components::stage;
++use crate::matmul::components::stage::multi_buffer::{LhsReader, RhsReader};
+ use crate::matmul::components::stage::TilingOrderConfig;
+-use crate::matmul::components::stage::{LhsReader, RhsReader};
+ use crate::matmul::components::MatmulKernel;
+ use crate::matmul::components::StageDim;
+ use crate::matmul::components::{global, MatmulProblem};
+@@ -13,16 +14,12 @@ use cubecl_core as cubecl;
+ use cubecl_core::prelude::*;
+ use std::marker::PhantomData;
+ 
+-use super::{tensor_view, Config as _};
++use super::loader::{LhsLoader, RhsLoader};
+ 
+ /// Performs matrix multiplication at the global level, with each plane sharing the same responsibilities
+ /// - All planes load data to the stage
+ /// - All planes are used in the stage matmul computation
+-pub struct Matmul<
+-    EG: Numeric,
+-    ES: Numeric,
+-    SMM: stage::Matmul<ES, EG, LhsReader<ES>, RhsReader<ES>>,
+-> {
++pub struct Matmul<EG: Numeric, ES: Numeric, SMM: stage::Matmul<ES, EG>> {
+     _eg: PhantomData<EG>,
+     _es: PhantomData<ES>,
+     _stage_matmul: PhantomData<SMM>,
+@@ -33,11 +30,11 @@ impl<EG, ES, SMM> global::Matmul<EG, ES> for Matmul<EG, ES, SMM>
+ where
+     EG: Numeric,
+     ES: Numeric,
+-    SMM: stage::Matmul<ES, EG, LhsReader<ES>, RhsReader<ES>>,
++    SMM: stage::Matmul<ES, EG, Lhs = LhsReader<ES>, Rhs = RhsReader<ES>>,
+ {
+-    type Lhs = tensor_view::LhsLoader<EG, ES>;
+-    type Rhs = tensor_view::RhsLoader<EG, ES>;
+-    type Out = tensor_view::Unloader<EG>;
++    type Lhs = LhsLoader<EG, ES, SMM::Config>;
++    type Rhs = RhsLoader<EG, ES, SMM::Config>;
++    type Out = Unloader<EG>;
+     type Accumulator = SMM::Accumulator;
+ 
+     fn execute(
+@@ -53,10 +50,8 @@ where
+         let num_loops = (range + k_step - 1) / k_step;
+ 
+         for _ in 0..num_loops {
+-            let lhs_stage_reader =
+-                &tensor_view::LhsLoader::fill_stage::<Self::Config>(&mut lhs_loader, config);
+-            let rhs_stage_reader =
+-                &tensor_view::RhsLoader::fill_stage::<Self::Config>(&mut rhs_loader, config);
++            let lhs_stage_reader = &Self::Lhs::fill_stage(&mut lhs_loader, config);
++            let rhs_stage_reader = &Self::Rhs::fill_stage(&mut rhs_loader, config);
+ 
+             sync_units();
+ 
+@@ -69,11 +64,11 @@ where
+ 
+             sync_units();
+ 
+-            tensor_view::LhsLoader::advance_view(&mut lhs_loader, k_step);
+-            tensor_view::RhsLoader::advance_view(&mut rhs_loader, k_step);
++            Self::Lhs::advance_view(&mut lhs_loader, k_step);
++            Self::Rhs::advance_view(&mut rhs_loader, k_step);
+         }
+ 
+-        SMM::read_accumulator::<tensor_view::Unloader<EG>, Self::Config>(
++        SMM::read_accumulator::<Self::Out, Self::Config>(
+             acc,
+             &mut out_unloader,
+             config.to_smm_config(),
+@@ -81,6 +76,35 @@ where
+         );
+     }
+ 
++    fn init_lhs_loader(
++        lhs: &Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        nth_batch: u32,
++        #[comptime] config: Self::Config,
++    ) -> Self::Lhs {
++        Self::Lhs::new::<Self::Config>(lhs, x_offset, y_offset, nth_batch, config)
++    }
++
++    fn init_rhs_loader(
++        rhs: &Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        nth_batch: u32,
++        #[comptime] config: Self::Config,
++    ) -> Self::Rhs {
++        Self::Rhs::new::<Self::Config>(rhs, x_offset, y_offset, nth_batch, config)
++    }
++
++    fn init_unloader(
++        out: &mut Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        batch_offset: u32,
++    ) -> Self::Out {
++        Self::Out::new(out, x_offset, y_offset, batch_offset)
++    }
++
+     fn init_accumulator(#[comptime] config: Self::Config) -> Self::Accumulator {
+         SMM::init_accumulator(config.to_smm_config())
+     }
+@@ -94,7 +118,7 @@ impl<EG, ES, SMM> MatmulKernel<EG, EG> for Matmul<EG, ES, SMM>
+ where
+     EG: Numeric,
+     ES: Numeric,
+-    SMM: stage::Matmul<ES, EG, LhsReader<ES>, RhsReader<ES>>,
++    SMM: stage::Matmul<ES, EG>,
+ {
+     type Config = Config<SMM::Config>;
+ 
+@@ -181,8 +205,8 @@ impl<S: stage::Config> global::Config for Config<S> {
+         self.smm_config.plane_dim()
+     }
+ 
+-    fn tiling_order(&self) -> TilingOrderConfig {
+-        self.smm_config.tiling_order()
++    fn tiling_order(&self, ident: Ident) -> TilingOrderConfig {
++        self.smm_config.tiling_order(ident)
+     }
+ 
+     fn check_m_bounds(&self) -> bool {
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/cyclic_loading.rs b/crates/cubecl-linalg/src/matmul/components/global/homogeneous/cyclic_loading.rs
+similarity index 84%
+rename from crates/cubecl-linalg/src/matmul/components/global/tensor_view/cyclic_loading.rs
+rename to crates/cubecl-linalg/src/matmul/components/global/homogeneous/cyclic_loading.rs
+index b7950c02..5a6d3eda 100644
+--- a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/cyclic_loading.rs
++++ b/crates/cubecl-linalg/src/matmul/components/global/homogeneous/cyclic_loading.rs
+@@ -1,30 +1,17 @@
+-use crate::matmul::components::config::PlaneMapper;
++use crate::matmul::components::global::tensor_view::TensorReader;
+ use crate::matmul::components::global::Config;
+ use crate::matmul::components::stage::{
+-    TilingOrder, TilingOrderConfig, XMajorTiling, YMajorTiling,
++    ColMajorTiling, RowMajorTiling, TilingOrder, TilingOrderConfig,
+ };
+ use crate::matmul::components::{Ident, MatrixLayout};
+ use cubecl_core as cubecl;
+ use cubecl_core::prelude::*;
+ 
+-use super::base::TensorReader;
+-
+ #[derive(CubeType, Clone, Copy)]
+ /// Loads the content of all tiles in the tensor view using all planes,
+ /// iterating with steps determined by the plane's dimension.
+ pub struct CyclicLoading {}
+ 
+-#[cube]
+-impl PlaneMapper for CyclicLoading {
+-    fn plane_id() -> u32 {
+-        UNIT_POS_Y
+-    }
+-
+-    fn plane_unit() -> u32 {
+-        UNIT_POS_X
+-    }
+-}
+-
+ #[cube]
+ impl CyclicLoading {
+     pub fn load_to_slice<EG: Numeric, ES: Numeric, G: Config>(
+@@ -44,7 +31,7 @@ impl CyclicLoading {
+         #[allow(clippy::all)]
+         let _ = comptime!(check_jump_divides_well(num_stage_elements, jump_length));
+ 
+-        let unit_id = Self::plane_id() * config.plane_dim() + Self::plane_unit();
++        let unit_id = UNIT_POS_Y * config.plane_dim() + UNIT_POS_X;
+         let unit_position_base = unit_id * line_size;
+ 
+         for i in 0..num_loads_per_unit {
+@@ -54,12 +41,12 @@ impl CyclicLoading {
+             let nth_tile = unit_position / tile_num_elements;
+             let pos_within_tile = unit_position % tile_num_elements;
+ 
+-            let (tile_x, tile_y) = match config.tiling_order() {
+-                TilingOrderConfig::XMajor => {
+-                    XMajorTiling::to_x_y(nth_tile, stage_dim.num_tiles_x, stage_dim.num_tiles_y)
++            let (tile_x, tile_y) = match config.tiling_order(ident) {
++                TilingOrderConfig::RowMajor => {
++                    RowMajorTiling::to_x_y(nth_tile, stage_dim.num_tiles_x, stage_dim.num_tiles_y)
+                 }
+-                TilingOrderConfig::YMajor => {
+-                    YMajorTiling::to_x_y(nth_tile, stage_dim.num_tiles_x, stage_dim.num_tiles_y)
++                TilingOrderConfig::ColMajor => {
++                    ColMajorTiling::to_x_y(nth_tile, stage_dim.num_tiles_x, stage_dim.num_tiles_y)
+                 }
+             };
+ 
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/loader.rs b/crates/cubecl-linalg/src/matmul/components/global/homogeneous/loader.rs
+similarity index 50%
+rename from crates/cubecl-linalg/src/matmul/components/global/tensor_view/loader.rs
+rename to crates/cubecl-linalg/src/matmul/components/global/homogeneous/loader.rs
+index ba5c3cf8..01e8e1a4 100644
+--- a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/loader.rs
++++ b/crates/cubecl-linalg/src/matmul/components/global/homogeneous/loader.rs
+@@ -1,30 +1,40 @@
+-use crate::matmul::components::global::tensor_view::cyclic_loading::CyclicLoading;
++use std::marker::PhantomData;
++
++use crate::matmul::components::global::homogeneous;
++use crate::matmul::components::global::homogeneous::cyclic_loading::CyclicLoading;
++use crate::matmul::components::global::tensor_view::TensorReader;
+ use crate::matmul::components::global::Loader;
+-use crate::matmul::components::stage::{LhsReader, RhsReader, Stage};
++use crate::matmul::components::stage::multi_buffer::{LhsReader, RhsReader};
++use crate::matmul::components::stage::{self, Stage};
+ use crate::matmul::components::{global, Ident};
+ use cubecl_core as cubecl;
+ use cubecl_core::prelude::*;
+ 
+-use super::base::TensorReader;
+-
+ #[derive(CubeType)]
+-pub struct LhsLoader<EG: Numeric, ES: Numeric> {
++pub struct LhsLoader<EG: Numeric, ES: Numeric, S: stage::Config> {
+     pub tensor_view: TensorReader<EG>,
+     pub stage: Stage<ES>,
++    _config: PhantomData<S>,
+ }
+ 
+ #[derive(CubeType)]
+-pub struct RhsLoader<EG: Numeric, ES: Numeric> {
++pub struct RhsLoader<EG: Numeric, ES: Numeric, S: stage::Config> {
+     pub tensor_view: TensorReader<EG>,
+     pub stage: Stage<ES>,
++    _config: PhantomData<S>,
+ }
+ 
+ #[cube]
+-impl<EG: Numeric, ES: Numeric> Loader<EG, ES> for LhsLoader<EG, ES> {
++impl<EG: Numeric, ES: Numeric, S: stage::Config> Loader<EG, ES, homogeneous::Config<S>>
++    for LhsLoader<EG, ES, S>
++{
+     type StageReader = LhsReader<ES>;
+ 
+-    fn fill_stage<G: global::Config>(this: &mut Self, #[comptime] config: G) -> Self::StageReader {
+-        CyclicLoading::load_to_slice::<EG, ES, G>(
++    fn fill_stage(
++        this: &mut Self,
++        #[comptime] config: homogeneous::Config<S>,
++    ) -> Self::StageReader {
++        CyclicLoading::load_to_slice::<EG, ES, homogeneous::Config<S>>(
+             &this.tensor_view,
+             &mut this.stage.as_slice_mut(),
+             Ident::Lhs,
+@@ -36,8 +46,11 @@ impl<EG: Numeric, ES: Numeric> Loader<EG, ES> for LhsLoader<EG, ES> {
+     fn advance_view(this: &mut Self, k_offset: u32) {
+         this.tensor_view.update_view(k_offset, Ident::Lhs);
+     }
++}
+ 
+-    fn new<G: global::Config>(
++#[cube]
++impl<EG: Numeric, ES: Numeric, S: stage::Config> LhsLoader<EG, ES, S> {
++    pub fn new<G: global::Config>(
+         tensor: &Tensor<Line<EG>>,
+         x_offset: u32,
+         y_offset: u32,
+@@ -47,16 +60,25 @@ impl<EG: Numeric, ES: Numeric> Loader<EG, ES> for LhsLoader<EG, ES> {
+         let stage = Stage::new::<G::SmmConfig>(Ident::Lhs, config.to_smm_config());
+         let tensor_view = TensorReader::new(tensor, x_offset, y_offset, nth_batch);
+ 
+-        LhsLoader::<EG, ES> { tensor_view, stage }
++        LhsLoader::<EG, ES, S> {
++            tensor_view,
++            stage,
++            _config: PhantomData::<S>.runtime(),
++        }
+     }
+ }
+ 
+ #[cube]
+-impl<EG: Numeric, ES: Numeric> Loader<EG, ES> for RhsLoader<EG, ES> {
++impl<EG: Numeric, ES: Numeric, S: stage::Config> Loader<EG, ES, homogeneous::Config<S>>
++    for RhsLoader<EG, ES, S>
++{
+     type StageReader = RhsReader<ES>;
+ 
+-    fn fill_stage<G: global::Config>(this: &mut Self, #[comptime] config: G) -> Self::StageReader {
+-        CyclicLoading::load_to_slice::<EG, ES, G>(
++    fn fill_stage(
++        this: &mut Self,
++        #[comptime] config: homogeneous::Config<S>,
++    ) -> Self::StageReader {
++        CyclicLoading::load_to_slice::<EG, ES, homogeneous::Config<S>>(
+             &this.tensor_view,
+             &mut this.stage.as_slice_mut(),
+             Ident::Rhs,
+@@ -68,8 +90,11 @@ impl<EG: Numeric, ES: Numeric> Loader<EG, ES> for RhsLoader<EG, ES> {
+     fn advance_view(this: &mut Self, k_offset: u32) {
+         this.tensor_view.update_view(k_offset, Ident::Rhs);
+     }
++}
+ 
+-    fn new<G: global::Config>(
++#[cube]
++impl<EG: Numeric, ES: Numeric, S: stage::Config> RhsLoader<EG, ES, S> {
++    pub fn new<G: global::Config>(
+         tensor: &Tensor<Line<EG>>,
+         x_offset: u32,
+         y_offset: u32,
+@@ -79,6 +104,10 @@ impl<EG: Numeric, ES: Numeric> Loader<EG, ES> for RhsLoader<EG, ES> {
+         let stage = Stage::new::<G::SmmConfig>(Ident::Rhs, config.to_smm_config());
+         let tensor_view = TensorReader::new(tensor, x_offset, y_offset, nth_batch);
+ 
+-        RhsLoader::<EG, ES> { tensor_view, stage }
++        RhsLoader::<EG, ES, S> {
++            tensor_view,
++            stage,
++            _config: PhantomData::<S>.runtime(),
++        }
+     }
+ }
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/homogeneous/mod.rs b/crates/cubecl-linalg/src/matmul/components/global/homogeneous/mod.rs
+new file mode 100644
+index 00000000..28d30f6a
+--- /dev/null
++++ b/crates/cubecl-linalg/src/matmul/components/global/homogeneous/mod.rs
+@@ -0,0 +1,5 @@
++mod base;
++mod cyclic_loading;
++mod loader;
++
++pub use base::*;
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/mod.rs b/crates/cubecl-linalg/src/matmul/components/global/mod.rs
+index 269f7c3a..5ea724ba 100644
+--- a/crates/cubecl-linalg/src/matmul/components/global/mod.rs
++++ b/crates/cubecl-linalg/src/matmul/components/global/mod.rs
+@@ -1,6 +1,9 @@
+ pub mod homogeneous;
++pub mod producer_consumer;
+ pub mod tensor_view;
+ 
+ mod base;
++mod tilewise_unloading;
++mod unloader;
+ 
+ pub use base::*;
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/base.rs b/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/base.rs
+new file mode 100644
+index 00000000..b6d13933
+--- /dev/null
++++ b/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/base.rs
+@@ -0,0 +1,298 @@
++use crate::matmul::components::config::MatmulConfig;
++use crate::matmul::components::global::unloader::Unloader;
++use crate::matmul::components::global::{Config as _, Loader};
++use crate::matmul::components::stage;
++use crate::matmul::components::stage::single_buffer::{LhsBufferReader, RhsBufferReader};
++use crate::matmul::components::stage::TilingOrderConfig;
++use crate::matmul::components::MatmulKernel;
++use crate::matmul::components::StageDim;
++use crate::matmul::components::{global, MatmulProblem};
++use crate::matmul::components::{Ident, MatrixLayout};
++use crate::matmul::kernels::matmul::AdvancedConfig;
++
++use cubecl_core as cubecl;
++use cubecl_core::prelude::*;
++use std::marker::PhantomData;
++
++use super::loader::{LhsBufferLoader, RhsBufferLoader};
++
++/// Performs matrix multiplication at the global level, with planes split between two roles:
++/// - First n planes are used in the stage matmul computation, with n the number of planes needed by the underlying stage matmul
++/// - Remaining planes load data to the stage
++///
++/// Both roles alternate the buffer (tile index in dimension k) they are working on
++pub struct Matmul<EG: Numeric, ES: Numeric, SMM: stage::Matmul<ES, EG>> {
++    _eg: PhantomData<EG>,
++    _es: PhantomData<ES>,
++    _stage_matmul: PhantomData<SMM>,
++}
++
++#[cube]
++impl<EG, ES, SMM> global::Matmul<EG, ES> for Matmul<EG, ES, SMM>
++where
++    EG: Numeric,
++    ES: Numeric,
++    SMM: stage::Matmul<ES, EG, Lhs = LhsBufferReader<ES>, Rhs = RhsBufferReader<ES>>,
++{
++    type Lhs = LhsBufferLoader<EG, ES, SMM::Config>;
++    type Rhs = RhsBufferLoader<EG, ES, SMM::Config>;
++    type Out = Unloader<EG>;
++    type Accumulator = SMM::Accumulator;
++
++    fn execute(
++        mut lhs_loader: Self::Lhs,
++        mut rhs_loader: Self::Rhs,
++        mut out_unloader: Self::Out,
++        acc: &mut Self::Accumulator,
++        k_range: (u32, u32),
++        #[comptime] config: Self::Config,
++    ) {
++        let is_consumer = Self::is_consumer(config);
++
++        let num_buffers = config.stage_dim(Ident::Lhs).num_tiles_y;
++        let buffer_step = config.stage_dim(Ident::Lhs).tile_size_y;
++        let k_step = num_buffers * buffer_step; // equal to SMM::K
++
++        let range = k_range.1 - k_range.0;
++        let num_stages = (range + k_step - 1) / k_step;
++        let num_loops = num_stages * num_buffers;
++
++        for _ in 0..num_loops {
++            let lhs_stage_reader = Self::Lhs::fill_stage(&mut lhs_loader, config);
++            let rhs_stage_reader = Self::Rhs::fill_stage(&mut rhs_loader, config);
++
++            sync_units();
++
++            if is_consumer {
++                SMM::execute(
++                    &lhs_stage_reader,
++                    &rhs_stage_reader,
++                    acc,
++                    config.to_smm_config(),
++                );
++            }
++
++            Self::Lhs::advance_view(&mut lhs_loader, buffer_step);
++            Self::Rhs::advance_view(&mut rhs_loader, buffer_step);
++        }
++
++        if is_consumer {
++            SMM::read_accumulator::<Self::Out, Self::Config>(
++                acc,
++                &mut out_unloader,
++                config.to_smm_config(),
++                config,
++            );
++        }
++    }
++
++    fn init_lhs_loader(
++        lhs: &Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        nth_batch: u32,
++        #[comptime] config: Self::Config,
++    ) -> Self::Lhs {
++        Self::Lhs::new(
++            lhs,
++            x_offset,
++            y_offset,
++            nth_batch,
++            !Self::is_consumer(config),
++            config,
++        )
++    }
++
++    fn init_rhs_loader(
++        rhs: &Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        nth_batch: u32,
++        #[comptime] config: Self::Config,
++    ) -> Self::Rhs {
++        Self::Rhs::new(
++            rhs,
++            x_offset,
++            y_offset,
++            nth_batch,
++            !Self::is_consumer(config),
++            config,
++        )
++    }
++
++    fn init_unloader(
++        out: &mut Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        batch_offset: u32,
++    ) -> Self::Out {
++        Self::Out::new(out, x_offset, y_offset, batch_offset)
++    }
++
++    fn init_accumulator(#[comptime] config: Self::Config) -> Self::Accumulator {
++        SMM::init_accumulator(config.to_smm_config())
++    }
++
++    fn zero_accumulator(acc: &mut Self::Accumulator, #[comptime] config: Self::Config) {
++        SMM::zero_accumulator(acc, config.to_smm_config());
++    }
++}
++
++#[cube]
++impl<EG: Numeric, ES: Numeric, SMM: stage::Matmul<ES, EG>> Matmul<EG, ES, SMM> {
++    fn is_consumer(#[comptime] config: <Self as MatmulKernel<EG, EG>>::Config) -> bool {
++        UNIT_POS_Y < config.num_consumers()
++    }
++}
++
++impl<EG, ES, SMM> MatmulKernel<EG, EG> for Matmul<EG, ES, SMM>
++where
++    EG: Numeric,
++    ES: Numeric,
++    SMM: stage::Matmul<ES, EG>,
++{
++    type Config = Config<SMM::Config>;
++
++    fn check_config(config: Self::Config) {
++        assert!(config.num_producers() > 0, "There are no producer planes. Make sure there are more planes than the underlying stage matmul requires.");
++        assert!(
++            config.stage_dim(Ident::Lhs).num_tiles_y > 1,
++            "Producer-consumer needs at least 2 buffers."
++        );
++        SMM::check_config(config.to_smm_config());
++    }
++
++    fn check_availability<R: Runtime>(
++        client: &ComputeClient<R::Server, R::Channel>,
++    ) -> Result<(), &str> {
++        SMM::check_availability::<R>(client)
++    }
++
++    fn make_config(
++        problem: &MatmulProblem,
++        cube_dim: &CubeDim,
++        cube_count: &CubeCount,
++        advanced_config: &AdvancedConfig,
++    ) -> Self::Config {
++        let smm_config = SMM::make_config(problem, cube_dim, cube_count, advanced_config);
++
++        Config::new(
++            smm_config,
++            problem.m as u32 % SMM::M != 0,
++            problem.n as u32 % SMM::N != 0,
++            problem.lhs_layout,
++            problem.rhs_layout,
++            problem.lhs_line_size as u32,
++            problem.rhs_line_size as u32,
++            problem.out_line_size as u32,
++            cube_dim.y,
++        )
++    }
++}
++
++#[derive(CubeType, Copy, Clone, Debug, Hash, PartialEq, Eq)]
++/// Configuration for the HomogeneousGlobalMatmul
++pub struct Config<S: stage::Config> {
++    smm_config: S,
++    check_m_bounds: bool,
++    check_n_bounds: bool,
++    lhs_layout: MatrixLayout,
++    rhs_layout: MatrixLayout,
++    lhs_line_size: u32,
++    rhs_line_size: u32,
++    out_line_size: u32,
++    num_planes: u32,
++}
++
++impl<S: stage::Config> global::Config for Config<S> {
++    type SmmConfig = S;
++
++    fn to_smm_config(&self) -> Self::SmmConfig {
++        self.smm_config
++    }
++
++    fn global_line_size(&self, ident: Ident) -> u32 {
++        match ident {
++            Ident::Lhs => self.lhs_line_size,
++            Ident::Rhs => self.rhs_line_size,
++            Ident::Out => self.out_line_size,
++        }
++    }
++
++    fn stage_line_size(&self, ident: Ident) -> u32 {
++        self.smm_config.line_size(ident)
++    }
++
++    fn stage_dim(&self, ident: Ident) -> StageDim {
++        self.smm_config.stage_dim(ident)
++    }
++
++    fn layout(&self, ident: Ident) -> MatrixLayout {
++        match ident {
++            Ident::Lhs => self.lhs_layout,
++            Ident::Rhs => self.rhs_layout,
++            Ident::Out => self.smm_config.layout(Ident::Out),
++        }
++    }
++
++    fn num_planes(&self) -> u32 {
++        self.num_planes
++    }
++
++    fn plane_dim(&self) -> u32 {
++        self.smm_config.plane_dim()
++    }
++
++    fn tiling_order(&self, ident: Ident) -> TilingOrderConfig {
++        self.smm_config.tiling_order(ident)
++    }
++
++    fn check_m_bounds(&self) -> bool {
++        self.check_m_bounds
++    }
++
++    fn check_n_bounds(&self) -> bool {
++        self.check_n_bounds
++    }
++
++    fn transpose_load(&self, ident: Ident) -> bool {
++        self.layout(ident) != self.smm_config.layout(ident)
++    }
++}
++
++impl<S: stage::Config> MatmulConfig for Config<S> {}
++
++impl<S: stage::Config> Config<S> {
++    #[allow(clippy::too_many_arguments)]
++    pub fn new(
++        smm_config: S,
++        check_m_bounds: bool,
++        check_n_bounds: bool,
++        lhs_layout: MatrixLayout,
++        rhs_layout: MatrixLayout,
++        lhs_line_size: u32,
++        rhs_line_size: u32,
++        out_line_size: u32,
++        num_planes: u32,
++    ) -> Self {
++        Self {
++            smm_config,
++            check_m_bounds,
++            check_n_bounds,
++            lhs_layout,
++            rhs_layout,
++            lhs_line_size,
++            rhs_line_size,
++            out_line_size,
++            num_planes,
++        }
++    }
++
++    pub fn num_producers(&self) -> u32 {
++        self.num_planes() - self.num_consumers()
++    }
++
++    pub fn num_consumers(&self) -> u32 {
++        self.smm_config.num_planes()
++    }
++}
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/buffer_loading.rs b/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/buffer_loading.rs
+new file mode 100644
+index 00000000..f33f3a41
+--- /dev/null
++++ b/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/buffer_loading.rs
+@@ -0,0 +1,95 @@
++use crate::matmul::components::global::tensor_view::TensorReader;
++use crate::matmul::components::global::{producer_consumer, Config as _};
++use crate::matmul::components::{stage, Ident};
++use cubecl_core as cubecl;
++use cubecl_core::prelude::*;
++
++#[derive(CubeType, Clone, Copy)]
++/// Loads the content of all tiles in the tensor view using all planes,
++/// iterating with steps determined by the plane's dimension.
++pub struct BufferLoading {}
++
++#[cube]
++impl BufferLoading {
++    pub fn load_to_slice<EG: Numeric, ES: Numeric, S: stage::Config>(
++        read_view: &TensorReader<EG>,
++        buffer_slice: &mut SliceMut<Line<ES>>,
++        #[comptime] ident: Ident,
++        #[comptime] config: producer_consumer::Config<S>,
++    ) {
++        let stage_dim = config.stage_dim(ident);
++        let line_size = config.global_line_size(ident);
++
++        let num_buffer_elements = stage_dim.buffer_num_elements();
++
++        let num_planes = config.num_producers();
++        let total_units = comptime!(num_planes * config.plane_dim());
++        let jump_length = comptime!(total_units * line_size);
++        let num_loads_per_unit = num_buffer_elements / jump_length;
++
++        #[allow(clippy::all)]
++        let _ = comptime!(check_jump_divides_well(num_buffer_elements, jump_length));
++
++        let plane_id = UNIT_POS_Y - config.num_consumers();
++        let unit_id = plane_id * config.plane_dim() + UNIT_POS_X;
++        let unit_position_base = unit_id * line_size;
++
++        for i in 0..num_loads_per_unit {
++            let unit_position = unit_position_base + i * jump_length;
++
++            let tile_num_elements = stage_dim.tile_num_elements();
++            let nth_buffer_tile = unit_position / tile_num_elements;
++            let pos_within_tile = unit_position % tile_num_elements;
++
++            let (tile_x, tile_y) = get_tiles_x_y(nth_buffer_tile, ident);
++
++            let line_read = read_view.load_coalesced::<producer_consumer::Config<S>>(
++                tile_x,
++                tile_y,
++                pos_within_tile,
++                ident,
++                config,
++            );
++
++            match config.transpose_load(ident) {
++                false => {
++                    buffer_slice[unit_position / line_size] = Line::cast_from(line_read);
++                }
++                true => {
++                    #[allow(clippy::all)]
++                    let _ = comptime!(unsupported_transpose_load());
++                }
++            }
++        }
++    }
++}
++
++#[cube]
++fn get_tiles_x_y(nth_buffer_tile: u32, #[comptime] ident: Ident) -> (u32, u32) {
++    match comptime!(ident) {
++        Ident::Lhs => {
++            // Assuming ColMajor tiling order
++            (nth_buffer_tile, 0)
++        }
++        Ident::Rhs => {
++            // Assuming RowMajor tiling order
++            (0, nth_buffer_tile)
++        }
++        Ident::Out => {
++            //unreachable
++            (0u32, 0u32)
++        }
++    }
++}
++
++fn unsupported_transpose_load() {
++    panic!("Transpose load not yet supported in producer consumer setup")
++}
++
++fn check_jump_divides_well(num_stage_elements: u32, jump_length: u32) {
++    assert!(
++        num_stage_elements % jump_length == 0,
++        "Too many data will be loaded, resulting in out of bounds. 
++        Try setting line size and number of planes so that jump_length divides num_stage_elements."
++    );
++}
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/loader.rs b/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/loader.rs
+new file mode 100644
+index 00000000..7a9f7c69
+--- /dev/null
++++ b/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/loader.rs
+@@ -0,0 +1,185 @@
++use std::marker::PhantomData;
++
++use crate::matmul::components::global::base::Config as _;
++use crate::matmul::components::global::producer_consumer;
++use crate::matmul::components::global::producer_consumer::buffer_loading::BufferLoading;
++use crate::matmul::components::global::tensor_view::TensorReader;
++use crate::matmul::components::global::Loader;
++use crate::matmul::components::stage::single_buffer::{LhsBufferReader, RhsBufferReader};
++use crate::matmul::components::stage::TilingOrderConfig;
++use crate::matmul::components::stage::{self, Stage};
++use crate::matmul::components::{global, Ident};
++use cubecl_core as cubecl;
++use cubecl_core::prelude::*;
++
++#[derive(CubeType)]
++pub struct LhsBufferLoader<EG: Numeric, ES: Numeric, S: stage::Config> {
++    pub tensor_view: TensorReader<EG>,
++    pub stage: Stage<ES>,
++    buffer_iter: u32,
++    num_buffers: u32,
++    is_producer: bool,
++    _config: PhantomData<S>,
++}
++
++#[derive(CubeType)]
++pub struct RhsBufferLoader<EG: Numeric, ES: Numeric, S: stage::Config> {
++    pub tensor_view: TensorReader<EG>,
++    pub stage: Stage<ES>,
++    buffer_iter: u32,
++    num_buffers: u32,
++    is_producer: bool,
++    _config: PhantomData<S>,
++}
++
++#[cube]
++impl<EG: Numeric, ES: Numeric, S: stage::Config> Loader<EG, ES, producer_consumer::Config<S>>
++    for LhsBufferLoader<EG, ES, S>
++{
++    type StageReader = LhsBufferReader<ES>;
++
++    fn fill_stage(
++        this: &mut Self,
++        #[comptime] config: producer_consumer::Config<S>,
++    ) -> Self::StageReader {
++        if this.is_producer {
++            load_buffer::<EG, ES, S>(
++                this.buffer_iter,
++                &this.tensor_view,
++                &mut this.stage,
++                Ident::Lhs,
++                config,
++            );
++        }
++
++        LhsBufferReader::<ES> {
++            stage: this.stage,
++            buffer: this.buffer_iter,
++        }
++    }
++
++    fn advance_view(this: &mut Self, k_offset: u32) {
++        this.buffer_iter = (this.buffer_iter + 1) % this.num_buffers;
++        this.tensor_view.update_view(k_offset, Ident::Lhs);
++    }
++}
++
++#[cube]
++impl<EG: Numeric, ES: Numeric, S: stage::Config> LhsBufferLoader<EG, ES, S> {
++    pub fn new(
++        tensor: &Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        nth_batch: u32,
++        is_producer: bool,
++        #[comptime] config: producer_consumer::Config<S>,
++    ) -> Self {
++        let stage = Stage::new::<S>(Ident::Lhs, config.to_smm_config());
++        let tensor_view = TensorReader::new(tensor, x_offset, y_offset, nth_batch);
++
++        LhsBufferLoader::<EG, ES, S> {
++            tensor_view,
++            stage,
++            buffer_iter: 0,
++            num_buffers: config.stage_dim(Ident::Lhs).num_tiles_y,
++            is_producer,
++            _config: PhantomData::<S>.runtime(),
++        }
++    }
++}
++
++#[cube]
++impl<EG: Numeric, ES: Numeric, S: stage::Config> Loader<EG, ES, producer_consumer::Config<S>>
++    for RhsBufferLoader<EG, ES, S>
++{
++    type StageReader = RhsBufferReader<ES>;
++
++    fn fill_stage(
++        this: &mut Self,
++        #[comptime] config: producer_consumer::Config<S>,
++    ) -> Self::StageReader {
++        if this.is_producer {
++            load_buffer::<EG, ES, S>(
++                this.buffer_iter,
++                &this.tensor_view,
++                &mut this.stage,
++                Ident::Rhs,
++                config,
++            );
++        }
++
++        RhsBufferReader::<ES> {
++            stage: this.stage,
++            buffer: this.buffer_iter,
++        }
++    }
++
++    fn advance_view(this: &mut Self, k_offset: u32) {
++        this.buffer_iter = (this.buffer_iter + 1) % this.num_buffers;
++        this.tensor_view.update_view(k_offset, Ident::Rhs);
++    }
++}
++
++#[cube]
++impl<EG: Numeric, ES: Numeric, S: stage::Config> RhsBufferLoader<EG, ES, S> {
++    pub fn new(
++        tensor: &Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        nth_batch: u32,
++        is_producer: bool,
++        #[comptime] config: producer_consumer::Config<S>,
++    ) -> Self {
++        let stage = Stage::new::<S>(Ident::Rhs, config.to_smm_config());
++        let tensor_view = TensorReader::new(tensor, x_offset, y_offset, nth_batch);
++
++        RhsBufferLoader::<EG, ES, S> {
++            tensor_view,
++            stage,
++            buffer_iter: 0,
++            num_buffers: config.stage_dim(Ident::Rhs).num_tiles_x,
++            is_producer,
++            _config: PhantomData::<S>.runtime(),
++        }
++    }
++}
++
++#[cube]
++fn load_buffer<EG: Numeric, ES: Numeric, S: stage::Config>(
++    buffer_iter: u32,
++    tensor_view: &TensorReader<EG>,
++    stage: &mut Stage<ES>,
++    #[comptime] ident: Ident,
++    #[comptime] config: producer_consumer::Config<S>,
++) {
++    let buffer_num_elements = config.stage_dim(ident).buffer_num_elements();
++    let line_size = config.stage_line_size(ident);
++    let buffer_num_lines = buffer_num_elements / line_size;
++
++    #[allow(clippy::all)]
++    let _ = comptime!(check_buffers_contiguous(ident, config));
++
++    let start = buffer_iter * buffer_num_lines;
++    let end = start + buffer_num_lines;
++    let buffer_slice = &mut stage.as_slice_mut().slice_mut(start, end);
++
++    BufferLoading::load_to_slice::<EG, ES, S>(tensor_view, buffer_slice, ident, config);
++}
++
++fn check_buffers_contiguous<G: global::Config>(ident: Ident, config: G) {
++    match ident {
++        Ident::Lhs => {
++            if let TilingOrderConfig::RowMajor = config.tiling_order(ident) {
++                panic!("Lhs must have ColMajor tiling order in producer consumer setting")
++            }
++        }
++        Ident::Rhs => {
++            if let TilingOrderConfig::ColMajor = config.tiling_order(ident) {
++                panic!("Rhs must have RowMajor tiling order in producer consumer setting")
++            }
++        }
++        Ident::Out => {
++            unreachable!()
++        }
++    }
++}
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/mod.rs b/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/mod.rs
+new file mode 100644
+index 00000000..97d52ecf
+--- /dev/null
++++ b/crates/cubecl-linalg/src/matmul/components/global/producer_consumer/mod.rs
+@@ -0,0 +1,5 @@
++mod base;
++mod buffer_loading;
++mod loader;
++
++pub use base::*;
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/base.rs b/crates/cubecl-linalg/src/matmul/components/global/tensor_view.rs
+similarity index 100%
+rename from crates/cubecl-linalg/src/matmul/components/global/tensor_view/base.rs
+rename to crates/cubecl-linalg/src/matmul/components/global/tensor_view.rs
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/mod.rs b/crates/cubecl-linalg/src/matmul/components/global/tensor_view/mod.rs
+deleted file mode 100644
+index 874d2f30..00000000
+--- a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/mod.rs
++++ /dev/null
+@@ -1,8 +0,0 @@
+-mod base;
+-mod cyclic_loading;
+-mod loader;
+-mod tilewise_unloading;
+-mod unloader;
+-
+-pub use loader::{LhsLoader, RhsLoader};
+-pub use unloader::Unloader;
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/tilewise_unloading.rs b/crates/cubecl-linalg/src/matmul/components/global/tilewise_unloading.rs
+similarity index 81%
+rename from crates/cubecl-linalg/src/matmul/components/global/tensor_view/tilewise_unloading.rs
+rename to crates/cubecl-linalg/src/matmul/components/global/tilewise_unloading.rs
+index 84d6fae3..e374e412 100644
+--- a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/tilewise_unloading.rs
++++ b/crates/cubecl-linalg/src/matmul/components/global/tilewise_unloading.rs
+@@ -1,27 +1,14 @@
+-use crate::matmul::components::config::PlaneMapper;
++use crate::matmul::components::global::tensor_view::TensorWriter;
+ use crate::matmul::components::global::Config;
+ use crate::matmul::components::Ident;
+ use cubecl_core as cubecl;
+ use cubecl_core::prelude::*;
+ 
+-use super::base::TensorWriter;
+-
+ #[derive(CubeType)]
+ /// Writes the contents of a tile to the tensor view using a single plane,
+ /// iterating with steps determined by the plane's dimension.
+ pub struct TilewiseUnloading {}
+ 
+-#[cube]
+-impl PlaneMapper for TilewiseUnloading {
+-    fn plane_id() -> u32 {
+-        UNIT_POS_Y
+-    }
+-
+-    fn plane_unit() -> u32 {
+-        UNIT_POS_X
+-    }
+-}
+-
+ #[cube]
+ impl TilewiseUnloading {
+     pub fn unload_from_slice<EG: Numeric, ES: Numeric, G: Config>(
+@@ -42,7 +29,7 @@ impl TilewiseUnloading {
+         let _ = comptime!(check_line_size(out_line_size, slice_line_size));
+ 
+         for i in 0..num_unit_writes {
+-            let unit_write = TilewiseUnloading::plane_unit() * out_line_size + i * unit_step;
++            let unit_write = UNIT_POS_X * out_line_size + i * unit_step;
+ 
+             let value = slice[unit_write / out_line_size];
+             write_view.write_coalesced::<ES, G>(tile_x, tile_y, unit_write, value, config);
+diff --git a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/unloader.rs b/crates/cubecl-linalg/src/matmul/components/global/unloader.rs
+similarity index 76%
+rename from crates/cubecl-linalg/src/matmul/components/global/tensor_view/unloader.rs
+rename to crates/cubecl-linalg/src/matmul/components/global/unloader.rs
+index 05186c3f..8ce3fdf7 100644
+--- a/crates/cubecl-linalg/src/matmul/components/global/tensor_view/unloader.rs
++++ b/crates/cubecl-linalg/src/matmul/components/global/unloader.rs
+@@ -2,8 +2,8 @@ use cubecl_core as cubecl;
+ use cubecl_core::prelude::*;
+ 
+ use crate::matmul::components::global;
+-use crate::matmul::components::global::tensor_view::base::TensorWriter;
+-use crate::matmul::components::global::tensor_view::tilewise_unloading::TilewiseUnloading;
++use crate::matmul::components::global::tensor_view::TensorWriter;
++use crate::matmul::components::global::tilewise_unloading::TilewiseUnloading;
+ use crate::matmul::components::stage::StageWriter;
+ 
+ #[derive(CubeType)]
+@@ -18,8 +18,16 @@ impl<EG: Numeric> global::Unloader<EG> for Unloader<EG> {
+     fn as_stage_writer<G: global::Config>(this: Self) -> Self::StageWriter {
+         this
+     }
++}
+ 
+-    fn new(tensor: &mut Tensor<Line<EG>>, x_offset: u32, y_offset: u32, batch_offset: u32) -> Self {
++#[cube]
++impl<EG: Numeric> Unloader<EG> {
++    pub fn new(
++        tensor: &mut Tensor<Line<EG>>,
++        x_offset: u32,
++        y_offset: u32,
++        batch_offset: u32,
++    ) -> Self {
+         Unloader::<EG> {
+             tensor_view: TensorWriter::new(tensor, x_offset, y_offset, batch_offset),
+         }
+diff --git a/crates/cubecl-linalg/src/matmul/components/mod.rs b/crates/cubecl-linalg/src/matmul/components/mod.rs
+index 9ecf6572..3ef19984 100644
+--- a/crates/cubecl-linalg/src/matmul/components/mod.rs
++++ b/crates/cubecl-linalg/src/matmul/components/mod.rs
+@@ -8,5 +8,5 @@ mod config;
+ mod problem;
+ 
+ pub use base::*;
+-pub use config::{as_cmma_layout, Ident, MatrixLayout, PlaneMapper, StageDim};
++pub use config::{as_cmma_layout, Ident, MatrixLayout, StageDim};
+ pub use problem::MatmulProblem;
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/base.rs b/crates/cubecl-linalg/src/matmul/components/stage/base.rs
+index 04448803..8e06ea68 100644
+--- a/crates/cubecl-linalg/src/matmul/components/stage/base.rs
++++ b/crates/cubecl-linalg/src/matmul/components/stage/base.rs
+@@ -23,7 +23,7 @@ use super::tiling_order::TilingOrderConfig;
+ ///  - Data given as inputs by stage readers must always be valid. If the actual matrix multiplication
+ ///    should be done on smaller sizes than M, N and K, padding with zeros must be done beforehand.
+ ///  - Enough planes are launched to perform the whole computation
+-pub trait Matmul<I: Numeric, O: Numeric, Lhs: StageReader<I>, Rhs: StageReader<I>>:
++pub trait Matmul<I: Numeric, O: Numeric>:
+     'static + Send + Sync + MatmulKernel<I, O, Config: Config>
+ {
+     /// Number of rows of LHS
+@@ -37,8 +37,16 @@ pub trait Matmul<I: Numeric, O: Numeric, Lhs: StageReader<I>, Rhs: StageReader<I
+     /// The same Accumulator will be added to across multiple executions of the stage matmul.
+     type Accumulator: CubeType;
+ 
++    type Lhs: CubeType;
++    type Rhs: CubeType;
++
+     /// Executes the matrix multiplication of LHS and RHS, adding the result to the accumulator
+-    fn execute(lhs: &Lhs, rhs: &Rhs, acc: &mut Self::Accumulator, #[comptime] config: Self::Config);
++    fn execute(
++        lhs: &Self::Lhs,
++        rhs: &Self::Rhs,
++        acc: &mut Self::Accumulator,
++        #[comptime] config: Self::Config,
++    );
+ 
+     /// Reads the result of the accumulator and hands it to the stage writer
+     fn read_accumulator<Out: StageWriter<O>, G: global::Config>(
+@@ -55,21 +63,6 @@ pub trait Matmul<I: Numeric, O: Numeric, Lhs: StageReader<I>, Rhs: StageReader<I
+     fn zero_accumulator(acc: &mut Self::Accumulator, #[comptime] config: Self::Config);
+ }
+ 
+-#[cube]
+-/// Input to the stage matmul, responsible of handing slices of data
+-/// at precise locations in the stage
+-pub trait StageReader<ES: Numeric>: CubeType {
+-    /// Hands a portion of data from the stage, whose location is function of the
+-    /// plane, buffer and accumulator indexes.
+-    fn read_tile<S: Config>(
+-        this: &Self,
+-        compute_plane_offset: u32,
+-        buffer_offset: u32,
+-        accumulator_offset: u32,
+-        #[comptime] config: S,
+-    ) -> Slice<Line<ES>>;
+-}
+-
+ #[cube]
+ /// Responsible of writing the accumulated stage matmul output
+ /// to global memory
+@@ -109,7 +102,7 @@ pub trait Config: MatmulConfig {
+     fn plane_dim(&self) -> u32;
+ 
+     /// Returns the order in which tiles should be loaded to the stage
+-    fn tiling_order(&self) -> TilingOrderConfig;
++    fn tiling_order(&self, ident: Ident) -> TilingOrderConfig;
+ }
+ 
+ pub trait StageSize: 'static + Send + Sync {
+@@ -133,8 +126,11 @@ macro_rules! create_cmma_stage {
+ // This list is not exhaustive. Add what you need.
+ create_cmma_stage!(S1x1x1, 1, 1, 1);
+ create_cmma_stage!(S1x1x2, 1, 1, 2);
++create_cmma_stage!(S1x1x3, 1, 1, 3);
+ create_cmma_stage!(S1x2x1, 1, 2, 1);
++create_cmma_stage!(S1x2x2, 1, 2, 2);
+ create_cmma_stage!(S2x1x1, 2, 1, 1);
++create_cmma_stage!(S2x1x2, 2, 1, 2);
+ create_cmma_stage!(S2x2x1, 2, 2, 1);
+ create_cmma_stage!(S2x2x2, 2, 2, 2);
+ create_cmma_stage!(S4x4x1, 4, 4, 1);
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/mod.rs b/crates/cubecl-linalg/src/matmul/components/stage/mod.rs
+index 6536107d..a3496f1c 100644
+--- a/crates/cubecl-linalg/src/matmul/components/stage/mod.rs
++++ b/crates/cubecl-linalg/src/matmul/components/stage/mod.rs
+@@ -1,10 +1,10 @@
++pub mod multi_buffer;
++pub mod single_buffer;
++
+ mod base;
+-mod reader;
+-pub mod row_accumulate;
+ mod staging;
+ mod tiling_order;
+ 
+ pub use base::*;
+-pub use reader::{LhsReader, RhsReader};
+ pub use staging::Stage;
+ pub use tiling_order::*;
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/row_accumulate.rs b/crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/base.rs
+similarity index 83%
+rename from crates/cubecl-linalg/src/matmul/components/stage/row_accumulate.rs
+rename to crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/base.rs
+index b670bf06..25c07596 100644
+--- a/crates/cubecl-linalg/src/matmul/components/stage/row_accumulate.rs
++++ b/crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/base.rs
+@@ -4,19 +4,18 @@ use cubecl_core as cubecl;
+ use cubecl_core::prelude::*;
+ 
+ use crate::matmul::components::stage::base::Matmul as _;
++use crate::matmul::components::stage::{StageSize, TilingOrderConfig};
+ use crate::matmul::{
+     components::{
+         config::MatmulConfig,
+         global,
+-        stage::{self, Config as _, StageReader, StageWriter},
+-        tile, Ident, MatmulKernel, MatmulProblem, MatrixLayout, PlaneMapper, StageDim,
++        stage::{self, Config as _, StageWriter},
++        tile, Ident, MatmulKernel, MatmulProblem, MatrixLayout, StageDim,
+     },
+     kernels::matmul::{create_stage_dim, AdvancedConfig},
+ };
+ 
+ use super::reader::{LhsReader, RhsReader};
+-use super::tiling_order::TilingOrderConfig;
+-use super::StageSize;
+ 
+ /// Performs matrix multiplication at the stage level, where each plane is responsible for a row of tiles:
+ /// - One plane per tile in m dimension,
+@@ -33,8 +32,7 @@ pub struct Matmul<I: Numeric, O: Numeric, Acc: Numeric, TMM: tile::Matmul<I, Acc
+ }
+ 
+ #[cube]
+-impl<I, O, Acc, TMM, SS> stage::Matmul<I, O, LhsReader<I>, RhsReader<I>>
+-    for Matmul<I, O, Acc, TMM, SS>
++impl<I, O, Acc, TMM, SS> stage::Matmul<I, O> for Matmul<I, O, Acc, TMM, SS>
+ where
+     I: Numeric,
+     O: Numeric,
+@@ -45,6 +43,8 @@ where
+     const M: u32 = SS::NUM_M * TMM::M;
+     const N: u32 = SS::NUM_N * TMM::N;
+     const K: u32 = SS::NUM_K * TMM::K;
++    type Lhs = LhsReader<I>;
++    type Rhs = RhsReader<I>;
+     type Accumulator = Sequence<TMM::Accumulator>;
+ 
+     fn execute(
+@@ -58,24 +58,14 @@ where
+ 
+         #[unroll]
+         for buffer_iter in 0..SS::NUM_K {
+-            let tile_lhs = LhsReader::read_tile::<Self::Config>(
+-                lhs,
+-                Self::plane_id(),
+-                buffer_iter,
+-                0u32,
+-                config,
+-            );
++            let tile_lhs =
++                LhsReader::read_tile::<TMM::Config>(lhs, UNIT_POS_Y, buffer_iter, config);
+             TMM::fill_lhs(&tile_lhs, &mut instruction_lhs, config.to_tmm_config());
+ 
+             #[unroll]
+             for accumulator_iter in 0..acc.len() {
+-                let tile_rhs = RhsReader::read_tile::<Self::Config>(
+-                    rhs,
+-                    Self::plane_id(),
+-                    buffer_iter,
+-                    accumulator_iter,
+-                    config,
+-                );
++                let tile_rhs =
++                    RhsReader::read_tile::<TMM::Config>(rhs, buffer_iter, accumulator_iter, config);
+                 TMM::fill_rhs(&tile_rhs, &mut instruction_rhs, config.to_tmm_config());
+ 
+                 let accumulator = acc.index_mut(accumulator_iter);
+@@ -99,7 +89,7 @@ where
+         let num_tile_lines =
+             stage_config.stage_dim(Ident::Out).tile_num_elements() / out_smem_line_size;
+ 
+-        let start = num_tile_lines * Self::plane_id();
++        let start = num_tile_lines * UNIT_POS_Y;
+         let mut out_smem = SharedMemory::<Acc>::new_lined(
+             num_tile_lines * stage_config.num_planes(),
+             out_smem_line_size,
+@@ -113,7 +103,7 @@ where
+             SW::write::<Acc, G>(
+                 out,
+                 smem_slice.to_slice(),
+-                Self::plane_id(),
++                UNIT_POS_Y,
+                 accumulator_iter,
+                 global_config,
+             );
+@@ -182,29 +172,12 @@ where
+             rhs_stage_dim,
+             out_stage_dim,
+             cube_dim.y,
+-            advanced_config.tiling_order,
++            advanced_config.lhs_tiling_order,
++            advanced_config.rhs_tiling_order,
+         )
+     }
+ }
+ 
+-#[cube]
+-impl<I, O, Acc, Tmm, SS> PlaneMapper for Matmul<I, O, Acc, Tmm, SS>
+-where
+-    I: Numeric,
+-    O: Numeric,
+-    Acc: Numeric,
+-    Tmm: tile::Matmul<I, Acc>,
+-    SS: StageSize,
+-{
+-    fn plane_id() -> u32 {
+-        UNIT_POS_Y
+-    }
+-
+-    fn plane_unit() -> u32 {
+-        UNIT_POS_X
+-    }
+-}
+-
+ fn check_num_planes(expected_num_planes: u32, actual_num_planes: u32) {
+     assert_eq!(
+         expected_num_planes, actual_num_planes,
+@@ -214,14 +187,15 @@ fn check_num_planes(expected_num_planes: u32, actual_num_planes: u32) {
+ }
+ 
+ #[derive(CubeType, Copy, Clone, Debug, Hash, PartialEq, Eq)]
+-/// Configuration for the row accumulate matmul
++/// Configuration for the multi buffer matmul
+ pub struct Config<T: tile::Config> {
+     tmm_config: T,
+     lhs_stage_dim: StageDim,
+     rhs_stage_dim: StageDim,
+     out_stage_dim: StageDim,
+     num_planes: u32,
+-    tiling_order: TilingOrderConfig,
++    lhs_tiling_order: TilingOrderConfig,
++    rhs_tiling_order: TilingOrderConfig,
+ }
+ 
+ impl<T: tile::Config> stage::Config for Config<T> {
+@@ -255,8 +229,12 @@ impl<T: tile::Config> stage::Config for Config<T> {
+         self.tmm_config.plane_dim()
+     }
+ 
+-    fn tiling_order(&self) -> TilingOrderConfig {
+-        self.tiling_order
++    fn tiling_order(&self, ident: Ident) -> TilingOrderConfig {
++        match ident {
++            Ident::Lhs => self.lhs_tiling_order,
++            Ident::Rhs => self.rhs_tiling_order,
++            Ident::Out => unreachable!(),
++        }
+     }
+ }
+ 
+@@ -269,7 +247,8 @@ impl<T: tile::Config> Config<T> {
+         rhs_stage_dim: StageDim,
+         out_stage_dim: StageDim,
+         num_planes: u32,
+-        tiling_order: TilingOrderConfig,
++        lhs_tiling_order: TilingOrderConfig,
++        rhs_tiling_order: TilingOrderConfig,
+     ) -> Self {
+         Self {
+             tmm_config,
+@@ -277,7 +256,8 @@ impl<T: tile::Config> Config<T> {
+             rhs_stage_dim,
+             out_stage_dim,
+             num_planes,
+-            tiling_order,
++            lhs_tiling_order,
++            rhs_tiling_order,
+         }
+     }
+ }
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/mod.rs b/crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/mod.rs
+new file mode 100644
+index 00000000..fc9b99d5
+--- /dev/null
++++ b/crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/mod.rs
+@@ -0,0 +1,5 @@
++mod base;
++mod reader;
++
++pub use base::*;
++pub use reader::*;
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/reader.rs b/crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/reader.rs
+similarity index 52%
+rename from crates/cubecl-linalg/src/matmul/components/stage/reader.rs
+rename to crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/reader.rs
+index f65b1014..4e18df56 100644
+--- a/crates/cubecl-linalg/src/matmul/components/stage/reader.rs
++++ b/crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/reader.rs
+@@ -1,11 +1,9 @@
+-use crate::matmul::components::stage::StageReader;
+-use crate::matmul::components::Ident;
++use crate::matmul::components::stage::multi_buffer;
++use crate::matmul::components::stage::Stage;
++use crate::matmul::components::{tile, Ident};
+ use cubecl_core as cubecl;
+ use cubecl_core::prelude::*;
+ 
+-use super::staging::Stage;
+-use super::Config;
+-
+ #[derive(CubeType)]
+ /// Stage reader for LHS
+ pub struct LhsReader<ES: Numeric> {
+@@ -19,30 +17,36 @@ pub struct RhsReader<ES: Numeric> {
+ }
+ 
+ #[cube]
+-impl<ES: Numeric> StageReader<ES> for LhsReader<ES> {
+-    fn read_tile<S: Config>(
++impl<ES: Numeric> LhsReader<ES> {
++    pub fn read_tile<T: tile::Config>(
+         this: &Self,
+         compute_plane_offset: u32,
+         buffer_offset: u32,
+-        _accumulator_offset: u32,
+-        #[comptime] config: S,
++        #[comptime] config: multi_buffer::Config<T>,
+     ) -> Slice<Line<ES>> {
+-        this.stage
+-            .get_tile::<S>(compute_plane_offset, buffer_offset, Ident::Lhs, config)
++        this.stage.get_tile::<multi_buffer::Config<T>>(
++            compute_plane_offset,
++            buffer_offset,
++            Ident::Lhs,
++            config,
++        )
+     }
+ }
+ 
+ #[cube]
+-impl<ES: Numeric> StageReader<ES> for RhsReader<ES> {
+-    fn read_tile<S: Config>(
++impl<ES: Numeric> RhsReader<ES> {
++    pub fn read_tile<T: tile::Config>(
+         this: &Self,
+-        _compute_plane_offset: u32,
+         buffer_offset: u32,
+         accumulator_offset: u32,
+-        #[comptime] config: S,
++        #[comptime] config: multi_buffer::Config<T>,
+     ) -> Slice<Line<ES>> {
+-        this.stage
+-            .get_tile::<S>(buffer_offset, accumulator_offset, Ident::Rhs, config)
++        this.stage.get_tile::<multi_buffer::Config<T>>(
++            buffer_offset,
++            accumulator_offset,
++            Ident::Rhs,
++            config,
++        )
+     }
+ }
+ 
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/single_buffer/base.rs b/crates/cubecl-linalg/src/matmul/components/stage/single_buffer/base.rs
+new file mode 100644
+index 00000000..d4524dd4
+--- /dev/null
++++ b/crates/cubecl-linalg/src/matmul/components/stage/single_buffer/base.rs
+@@ -0,0 +1,248 @@
++use std::marker::PhantomData;
++
++use cubecl_core as cubecl;
++use cubecl_core::prelude::*;
++
++use crate::matmul::components::stage::base::Matmul as _;
++use crate::matmul::components::stage::{StageSize, TilingOrderConfig};
++use crate::matmul::{
++    components::{
++        config::MatmulConfig,
++        global,
++        stage::{self, Config as _, StageWriter},
++        tile, Ident, MatmulKernel, MatmulProblem, MatrixLayout, StageDim,
++    },
++    kernels::matmul::{create_stage_dim, AdvancedConfig},
++};
++
++use super::{LhsBufferReader, RhsBufferReader};
++
++/// Performs matrix multiplication at the stage level, where each plane is responsible for a row of tiles:
++/// - One plane per tile in m dimension,
++/// - One accumulator per tile in n dimension
++///
++/// Very similar to multi buffer, except is unable to have more than one buffer, and takes BufferReaders for StageReaders
++///
++/// # Assumptions
++/// - There are as many planes as the stage size in m
++pub struct Matmul<I: Numeric, O: Numeric, Acc: Numeric, TMM: tile::Matmul<I, Acc>, SS: StageSize> {
++    _input_precision: PhantomData<I>,
++    _output_precision: PhantomData<O>,
++    _accumulator_precision: PhantomData<Acc>,
++    _instruction: PhantomData<TMM>,
++    _block_size: PhantomData<SS>,
++}
++
++#[cube]
++impl<I, O, Acc, TMM, SS> stage::Matmul<I, O> for Matmul<I, O, Acc, TMM, SS>
++where
++    I: Numeric,
++    O: Numeric,
++    Acc: Numeric,
++    TMM: tile::Matmul<I, Acc>,
++    SS: StageSize,
++{
++    const M: u32 = SS::NUM_M * TMM::M;
++    const N: u32 = SS::NUM_N * TMM::N;
++    const K: u32 = SS::NUM_K * TMM::K;
++    type Accumulator = Sequence<TMM::Accumulator>;
++    type Lhs = LhsBufferReader<I>;
++    type Rhs = RhsBufferReader<I>;
++
++    fn execute(
++        lhs: &LhsBufferReader<I>,
++        rhs: &RhsBufferReader<I>,
++        acc: &mut Self::Accumulator,
++        #[comptime] config: Self::Config,
++    ) {
++        let mut instruction_lhs = TMM::init_lhs(config.to_tmm_config());
++        let mut instruction_rhs = TMM::init_rhs(config.to_tmm_config());
++
++        let tile_lhs = LhsBufferReader::read_tile::<TMM::Config>(lhs, UNIT_POS_Y, config);
++        TMM::fill_lhs(&tile_lhs, &mut instruction_lhs, config.to_tmm_config());
++
++        #[unroll]
++        for accumulator_iter in 0..acc.len() {
++            let tile_rhs = RhsBufferReader::read_tile::<TMM::Config>(rhs, accumulator_iter, config);
++            TMM::fill_rhs(&tile_rhs, &mut instruction_rhs, config.to_tmm_config());
++
++            let accumulator = acc.index_mut(accumulator_iter);
++            TMM::execute(
++                &instruction_lhs,
++                &instruction_rhs,
++                accumulator,
++                config.to_tmm_config(),
++            );
++        }
++    }
++
++    fn init_accumulator(#[comptime] config: Self::Config) -> Self::Accumulator {
++        let mut accumulators = Sequence::<TMM::Accumulator>::new();
++
++        #[unroll]
++        for _ in 0..SS::NUM_N {
++            accumulators.push(TMM::init_accumulator(config.to_tmm_config()));
++        }
++
++        accumulators
++    }
++
++    fn zero_accumulator(acc: &mut Self::Accumulator, #[comptime] config: Self::Config) {
++        #[unroll]
++        for i in 0..SS::NUM_N {
++            TMM::zero_accumulator(acc.index_mut(i), config.to_tmm_config());
++        }
++    }
++
++    fn read_accumulator<SW: StageWriter<O>, G: global::Config>(
++        acc: &Self::Accumulator,
++        out: &mut SW,
++        #[comptime] stage_config: Self::Config,
++        #[comptime] global_config: G,
++    ) {
++        let out_smem_line_size = global_config.stage_line_size(Ident::Out);
++        let num_tile_lines =
++            stage_config.stage_dim(Ident::Out).tile_num_elements() / out_smem_line_size;
++
++        let start = num_tile_lines * UNIT_POS_Y;
++        let mut out_smem = SharedMemory::<Acc>::new_lined(
++            num_tile_lines * stage_config.num_planes(),
++            out_smem_line_size,
++        );
++
++        #[unroll]
++        for accumulator_iter in 0..acc.len() {
++            let accumulator = acc.index(accumulator_iter);
++            let mut smem_slice = out_smem.slice_mut(start, start + num_tile_lines);
++            TMM::read_accumulator(accumulator, &mut smem_slice, stage_config.to_tmm_config());
++            SW::write::<Acc, G>(
++                out,
++                smem_slice.to_slice(),
++                UNIT_POS_Y,
++                accumulator_iter,
++                global_config,
++            );
++        }
++    }
++}
++
++impl<I, O, Acc, TMM, SS> MatmulKernel<I, O> for Matmul<I, O, Acc, TMM, SS>
++where
++    I: Numeric,
++    O: Numeric,
++    Acc: Numeric,
++    TMM: tile::Matmul<I, Acc>,
++    SS: StageSize,
++{
++    type Config = Config<TMM::Config>;
++
++    fn check_config(config: Self::Config) {
++        TMM::check_config(config.to_tmm_config());
++    }
++
++    fn check_availability<R: Runtime>(
++        client: &ComputeClient<R::Server, R::Channel>,
++    ) -> Result<(), &str> {
++        TMM::check_availability::<R>(client)
++    }
++
++    fn make_config(
++        problem: &MatmulProblem,
++        cube_dim: &CubeDim,
++        cube_count: &CubeCount,
++        advanced_config: &AdvancedConfig,
++    ) -> Self::Config {
++        let tmm_config = TMM::make_config(problem, cube_dim, cube_count, advanced_config);
++
++        let (stage_m, stage_n, stage_k) = (Self::M, Self::N, Self::K);
++        let (tile_m, tile_n, tile_k) = (TMM::M, TMM::N, TMM::K);
++        let (lhs_stage_dim, rhs_stage_dim, out_stage_dim) =
++            create_stage_dim(stage_m, stage_n, stage_k, tile_m, tile_n, tile_k);
++
++        Config::new(
++            tmm_config,
++            lhs_stage_dim,
++            rhs_stage_dim,
++            out_stage_dim,
++            lhs_stage_dim.num_tiles_x,
++            advanced_config.lhs_tiling_order,
++            advanced_config.rhs_tiling_order,
++        )
++    }
++}
++
++#[derive(CubeType, Copy, Clone, Debug, Hash, PartialEq, Eq)]
++/// Configuration for the single buffer matmul
++pub struct Config<T: tile::Config> {
++    tmm_config: T,
++    lhs_stage_dim: StageDim,
++    rhs_stage_dim: StageDim,
++    out_stage_dim: StageDim,
++    num_planes: u32,
++    lhs_tiling_order: TilingOrderConfig,
++    rhs_tiling_order: TilingOrderConfig,
++}
++
++impl<T: tile::Config> stage::Config for Config<T> {
++    type TmmConfig = T;
++
++    fn to_tmm_config(self) -> Self::TmmConfig {
++        self.tmm_config
++    }
++
++    fn line_size(&self, ident: Ident) -> u32 {
++        self.tmm_config.line_size(ident)
++    }
++
++    fn stage_dim(&self, ident: Ident) -> StageDim {
++        match ident {
++            Ident::Lhs => self.lhs_stage_dim,
++            Ident::Rhs => self.rhs_stage_dim,
++            Ident::Out => self.out_stage_dim,
++        }
++    }
++
++    fn layout(&self, ident: Ident) -> MatrixLayout {
++        self.tmm_config.layout(ident)
++    }
++
++    fn num_planes(&self) -> u32 {
++        self.num_planes
++    }
++
++    fn plane_dim(&self) -> u32 {
++        self.tmm_config.plane_dim()
++    }
++
++    fn tiling_order(&self, ident: Ident) -> TilingOrderConfig {
++        match ident {
++            Ident::Lhs => self.lhs_tiling_order,
++            Ident::Rhs => self.rhs_tiling_order,
++            Ident::Out => unreachable!(),
++        }
++    }
++}
++
++impl<T: tile::Config> MatmulConfig for Config<T> {}
++
++impl<T: tile::Config> Config<T> {
++    pub fn new(
++        tmm_config: T,
++        lhs_stage_dim: StageDim,
++        rhs_stage_dim: StageDim,
++        out_stage_dim: StageDim,
++        num_planes: u32,
++        lhs_tiling_order: TilingOrderConfig,
++        rhs_tiling_order: TilingOrderConfig,
++    ) -> Self {
++        Self {
++            tmm_config,
++            lhs_stage_dim,
++            rhs_stage_dim,
++            out_stage_dim,
++            num_planes,
++            lhs_tiling_order,
++            rhs_tiling_order,
++        }
++    }
++}
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/single_buffer/mod.rs b/crates/cubecl-linalg/src/matmul/components/stage/single_buffer/mod.rs
+new file mode 100644
+index 00000000..fc9b99d5
+--- /dev/null
++++ b/crates/cubecl-linalg/src/matmul/components/stage/single_buffer/mod.rs
+@@ -0,0 +1,5 @@
++mod base;
++mod reader;
++
++pub use base::*;
++pub use reader::*;
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/single_buffer/reader.rs b/crates/cubecl-linalg/src/matmul/components/stage/single_buffer/reader.rs
+new file mode 100644
+index 00000000..8796030c
+--- /dev/null
++++ b/crates/cubecl-linalg/src/matmul/components/stage/single_buffer/reader.rs
+@@ -0,0 +1,49 @@
++use crate::matmul::components::stage::single_buffer;
++use cubecl_core as cubecl;
++use cubecl_core::prelude::*;
++
++use crate::matmul::components::{stage::Stage, tile, Ident};
++
++#[derive(CubeType)]
++pub struct LhsBufferReader<ES: Numeric> {
++    pub stage: Stage<ES>,
++    pub buffer: u32,
++}
++
++#[derive(CubeType)]
++pub struct RhsBufferReader<ES: Numeric> {
++    pub stage: Stage<ES>,
++    pub buffer: u32,
++}
++
++#[cube]
++impl<ES: Numeric> LhsBufferReader<ES> {
++    pub fn read_tile<T: tile::Config>(
++        this: &Self,
++        compute_plane_offset: u32,
++        #[comptime] config: single_buffer::Config<T>,
++    ) -> Slice<Line<ES>> {
++        this.stage.get_tile::<single_buffer::Config<T>>(
++            compute_plane_offset,
++            this.buffer,
++            Ident::Lhs,
++            config,
++        )
++    }
++}
++
++#[cube]
++impl<ES: Numeric> RhsBufferReader<ES> {
++    pub fn read_tile<T: tile::Config>(
++        this: &Self,
++        accumulator_offset: u32,
++        #[comptime] config: single_buffer::Config<T>,
++    ) -> Slice<Line<ES>> {
++        this.stage.get_tile::<single_buffer::Config<T>>(
++            this.buffer,
++            accumulator_offset,
++            Ident::Rhs,
++            config,
++        )
++    }
++}
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/staging.rs b/crates/cubecl-linalg/src/matmul/components/stage/staging.rs
+index baad1f51..37d1c9bf 100644
+--- a/crates/cubecl-linalg/src/matmul/components/stage/staging.rs
++++ b/crates/cubecl-linalg/src/matmul/components/stage/staging.rs
+@@ -1,5 +1,5 @@
+ use crate::matmul::components::stage::tiling_order::{
+-    TilingOrderConfig, XMajorTiling, YMajorTiling,
++    ColMajorTiling, RowMajorTiling, TilingOrderConfig,
+ };
+ use crate::matmul::components::stage::{Config, TilingOrder};
+ use crate::matmul::components::Ident;
+@@ -37,12 +37,12 @@ impl<ES: Numeric> Stage<ES> {
+     ) -> Slice<Line<ES>> {
+         let stage_dim = config.stage_dim(ident);
+ 
+-        let nth_tile = match config.tiling_order() {
+-            TilingOrderConfig::XMajor => {
+-                XMajorTiling::to_nth_tile(x, y, stage_dim.num_tiles_x, stage_dim.num_tiles_y)
++        let nth_tile = match config.tiling_order(ident) {
++            TilingOrderConfig::RowMajor => {
++                RowMajorTiling::to_nth_tile(x, y, stage_dim.num_tiles_x, stage_dim.num_tiles_y)
+             }
+-            TilingOrderConfig::YMajor => {
+-                YMajorTiling::to_nth_tile(x, y, stage_dim.num_tiles_x, stage_dim.num_tiles_y)
++            TilingOrderConfig::ColMajor => {
++                ColMajorTiling::to_nth_tile(x, y, stage_dim.num_tiles_x, stage_dim.num_tiles_y)
+             }
+         };
+ 
+diff --git a/crates/cubecl-linalg/src/matmul/components/stage/tiling_order.rs b/crates/cubecl-linalg/src/matmul/components/stage/tiling_order.rs
+index b22873d9..0b7492ea 100644
+--- a/crates/cubecl-linalg/src/matmul/components/stage/tiling_order.rs
++++ b/crates/cubecl-linalg/src/matmul/components/stage/tiling_order.rs
+@@ -13,19 +13,19 @@ pub trait TilingOrder: Clone + Copy + 'static + Send + Sync {
+ #[derive(CubeType, Copy, Clone, PartialEq, Eq, Hash, Debug)]
+ /// Config determining which existing TilingOrder to use
+ pub enum TilingOrderConfig {
+-    XMajor,
+-    YMajor,
++    RowMajor,
++    ColMajor,
+ }
+ 
+ #[derive(Clone, Copy)]
+ /// Tiles are conceptually stored in row-major order, regardless of the actual data layout.
+-pub struct XMajorTiling {}
++pub struct RowMajorTiling {}
+ #[derive(Clone, Copy)]
+ /// Tiles are conceptually stored in column-major order, regardless of the actual data layout.
+-pub struct YMajorTiling {}
++pub struct ColMajorTiling {}
+ 
+ #[cube]
+-impl TilingOrder for XMajorTiling {
++impl TilingOrder for RowMajorTiling {
+     fn to_x_y(nth: u32, _num_x: u32, num_y: u32) -> (u32, u32) {
+         (nth / num_y, nth % num_y)
+     }
+@@ -36,7 +36,7 @@ impl TilingOrder for XMajorTiling {
+ }
+ 
+ #[cube]
+-impl TilingOrder for YMajorTiling {
++impl TilingOrder for ColMajorTiling {
+     fn to_x_y(nth: u32, num_x: u32, _num_y: u32) -> (u32, u32) {
+         (nth % num_x, nth / num_x)
+     }
+diff --git a/crates/cubecl-linalg/src/matmul/components/tile/plane.rs b/crates/cubecl-linalg/src/matmul/components/tile/plane.rs
+index 427c907c..1ed932b8 100644
+--- a/crates/cubecl-linalg/src/matmul/components/tile/plane.rs
++++ b/crates/cubecl-linalg/src/matmul/components/tile/plane.rs
+@@ -1,7 +1,7 @@
+ use crate::matmul::components::config::MatmulConfig;
+ use crate::matmul::components::tile::Config as TileConfig;
+ use crate::matmul::components::MatmulProblem;
+-use crate::matmul::components::{config::PlaneMapper, tile, Ident, MatmulKernel, MatrixLayout};
++use crate::matmul::components::{tile, Ident, MatmulKernel, MatrixLayout};
+ use crate::matmul::kernels::matmul::AdvancedConfig;
+ use cubecl_core::prelude::*;
+ use cubecl_core::{self as cubecl, Feature};
+@@ -28,19 +28,6 @@ pub struct PlaneMma<I: Numeric, O: Numeric, const M: u32, const N: u32, const K:
+     _output: PhantomData<O>,
+ }
+ 
+-#[cube]
+-impl<I: Numeric, O: Numeric, const M: u32, const N: u32, const K: u32> PlaneMapper
+-    for PlaneMma<I, O, M, N, K>
+-{
+-    fn plane_id() -> u32 {
+-        UNIT_POS_Y
+-    }
+-
+-    fn plane_unit() -> u32 {
+-        UNIT_POS_X
+-    }
+-}
+-
+ #[cube]
+ impl<I: Numeric, O: Numeric, const M: u32, const N: u32, const K: u32> tile::Matmul<I, O>
+     for PlaneMma<I, O, M, N, K>
+@@ -65,7 +52,7 @@ impl<I: Numeric, O: Numeric, const M: u32, const N: u32, const K: u32> tile::Mat
+         let num_jumps = Self::K / k_jump;
+         let compute_width = Self::N / row_division;
+ 
+-        let unit_offset = Self::plane_unit() % row_division * compute_width;
++        let unit_offset = UNIT_POS_X % row_division * compute_width;
+ 
+         #[unroll]
+         for k_outer in 0..num_jumps {
+@@ -94,11 +81,11 @@ impl<I: Numeric, O: Numeric, const M: u32, const N: u32, const K: u32> tile::Mat
+     }
+ 
+     fn fill_lhs(slice: &Slice<Line<I>>, lhs: &mut Self::Lhs, #[comptime] config: Config) {
+-        match comptime!(config.layout(Ident::Lhs)) {
++        match config.layout(Ident::Lhs) {
+             MatrixLayout::RowMajor => fill_parallel_lhs(
+                 slice,
+                 &mut lhs.to_slice_mut(),
+-                Self::plane_unit(),
++                UNIT_POS_X,
+                 Self::M,
+                 Self::K,
+                 config.line_size(Ident::Lhs),
+@@ -107,7 +94,7 @@ impl<I: Numeric, O: Numeric, const M: u32, const N: u32, const K: u32> tile::Mat
+             MatrixLayout::ColMajor => fill_perpendicular_lhs(
+                 slice,
+                 &mut lhs.to_slice_mut(),
+-                Self::plane_unit(),
++                UNIT_POS_X,
+                 Self::M,
+                 Self::K,
+                 config.line_size(Ident::Lhs),
+@@ -121,7 +108,7 @@ impl<I: Numeric, O: Numeric, const M: u32, const N: u32, const K: u32> tile::Mat
+             MatrixLayout::RowMajor => fill_perpendicular_rhs(
+                 slice,
+                 &mut rhs.to_slice_mut(),
+-                Self::plane_unit(),
++                UNIT_POS_X,
+                 Self::N,
+                 Self::K,
+                 config.line_size(Ident::Rhs),
+@@ -130,7 +117,7 @@ impl<I: Numeric, O: Numeric, const M: u32, const N: u32, const K: u32> tile::Mat
+             MatrixLayout::ColMajor => fill_parallel_rhs(
+                 slice,
+                 &mut rhs.to_slice_mut(),
+-                Self::plane_unit(),
++                UNIT_POS_X,
+                 Self::N,
+                 Self::K,
+                 config.line_size(Ident::Rhs),
+@@ -151,7 +138,7 @@ impl<I: Numeric, O: Numeric, const M: u32, const N: u32, const K: u32> tile::Mat
+         let compute_width = Self::N / row_division;
+         let num_lines = compute_width / line_size;
+ 
+-        let unit = Self::plane_unit();
++        let unit = UNIT_POS_X;
+ 
+         let row = unit / row_division;
+         let row_offset = row * Self::N / line_size;
+diff --git a/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/base.rs b/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/base.rs
+index edba158c..192eb078 100644
+--- a/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/base.rs
++++ b/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/base.rs
+@@ -5,10 +5,16 @@ use crate::matmul::components::{batch, global, tile};
+ use crate::matmul::components::{MatmulKernel, MatmulProblem};
+ use crate::matmul::kernels::matmul::AdvancedConfig;
+ 
+-type LhsStageReader<GMM, EG, ES> =
+-    <<GMM as global::Matmul<EG, ES>>::Lhs as global::Loader<EG, ES>>::StageReader;
+-type RhsStageReader<GMM, EG, ES> =
+-    <<GMM as global::Matmul<EG, ES>>::Rhs as global::Loader<EG, ES>>::StageReader;
++type LhsStageReader<GMM, EG, ES> = <<GMM as global::Matmul<EG, ES>>::Lhs as global::Loader<
++    EG,
++    ES,
++    <GMM as MatmulKernel<EG, EG>>::Config,
++>>::StageReader;
++type RhsStageReader<GMM, EG, ES> = <<GMM as global::Matmul<EG, ES>>::Rhs as global::Loader<
++    EG,
++    ES,
++    <GMM as MatmulKernel<EG, EG>>::Config,
++>>::StageReader;
+ 
+ /// Specifications for a matmul algorithm
+ pub trait Algorithm<EG: Numeric> {
+@@ -24,8 +30,8 @@ pub trait Algorithm<EG: Numeric> {
+     type StageMatmul: stage::Matmul<
+             Self::ES,
+             Self::EG,
+-            LhsStageReader<Self::GlobalMatmul, Self::EG, Self::ES>,
+-            RhsStageReader<Self::GlobalMatmul, Self::EG, Self::ES>,
++            Lhs = LhsStageReader<Self::GlobalMatmul, Self::EG, Self::ES>,
++            Rhs = RhsStageReader<Self::GlobalMatmul, Self::EG, Self::ES>,
+         > + MatmulKernel<Self::ES, Self::EG>;
+ 
+     type GlobalMatmul: global::Matmul<Self::EG, Self::ES>;
+diff --git a/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/cmma.rs b/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/cmma.rs
+index 7e2f2164..28e24016 100644
+--- a/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/cmma.rs
++++ b/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/cmma.rs
+@@ -23,7 +23,7 @@ impl<EG: Numeric> base::Algorithm<EG> for Cmma<EG> {
+     type TileMatmul = Accelerated16x16x16<Self::ES, Self::EA>;
+ 
+     type StageSize = S4x4x2;
+-    type StageMatmul = stage::row_accumulate::Matmul<
++    type StageMatmul = stage::multi_buffer::Matmul<
+         Self::ES,
+         Self::EG,
+         Self::EA,
+diff --git a/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/plane_mma.rs b/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/plane_mma.rs
+index a4af267f..d2541a2f 100644
+--- a/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/plane_mma.rs
++++ b/crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/plane_mma.rs
+@@ -23,7 +23,7 @@ impl<EG: Numeric> base::Algorithm<EG> for PlaneMma<EG> {
+     type TileMatmul = PlaneMma16x16x16<Self::ES, Self::EA>;
+ 
+     type StageSize = S4x4x2;
+-    type StageMatmul = stage::row_accumulate::Matmul<
++    type StageMatmul = stage::multi_buffer::Matmul<
+         Self::ES,
+         Self::EG,
+         Self::EA,
+diff --git a/crates/cubecl-linalg/src/matmul/kernels/matmul/config.rs b/crates/cubecl-linalg/src/matmul/kernels/matmul/config.rs
+index 565f6c75..4e0e2a57 100644
+--- a/crates/cubecl-linalg/src/matmul/kernels/matmul/config.rs
++++ b/crates/cubecl-linalg/src/matmul/kernels/matmul/config.rs
+@@ -1,11 +1,14 @@
+ use crate::matmul::components::stage;
++use crate::matmul::components::Ident;
+ use crate::matmul::components::MatrixLayout;
+ use crate::matmul::components::StageDim;
+ 
+ /// Configs that may impact performance
+ pub struct AdvancedConfig {
+-    /// Order in which tiles should be in shared memory
+-    pub tiling_order: stage::TilingOrderConfig,
++    /// Order in which tiles should be in lhs shared memory
++    pub lhs_tiling_order: stage::TilingOrderConfig,
++    /// Order in which tiles should be in rhs shared memory
++    pub rhs_tiling_order: stage::TilingOrderConfig,
+     /// Ensure the inputs to tile matmul are in specified layout
+     ///
+     /// # Notes
+@@ -21,7 +24,8 @@ pub struct AdvancedConfig {
+ impl Default for AdvancedConfig {
+     fn default() -> Self {
+         Self {
+-            tiling_order: stage::TilingOrderConfig::XMajor,
++            lhs_tiling_order: stage::TilingOrderConfig::RowMajor,
++            rhs_tiling_order: stage::TilingOrderConfig::RowMajor,
+             enforced_tile_layout: (None, None),
+         }
+     }
+@@ -35,26 +39,29 @@ pub fn create_stage_dim(
+     tile_n: u32,
+     tile_k: u32,
+ ) -> (StageDim, StageDim, StageDim) {
+-    let lhs_stage_dim = StageDim {
+-        tile_size_x: tile_m,
+-        tile_size_y: tile_k,
+-        num_tiles_x: stage_m / tile_m,
+-        num_tiles_y: stage_k / tile_k,
+-    };
++    let lhs_stage_dim = StageDim::new(
++        Ident::Lhs,
++        tile_m,
++        tile_k,
++        stage_m / tile_m,
++        stage_k / tile_k,
++    );
+ 
+-    let rhs_stage_dim = StageDim {
+-        tile_size_x: tile_k,
+-        tile_size_y: tile_n,
+-        num_tiles_x: stage_k / tile_k,
+-        num_tiles_y: stage_n / tile_n,
+-    };
++    let rhs_stage_dim = StageDim::new(
++        Ident::Rhs,
++        tile_k,
++        tile_n,
++        stage_k / tile_k,
++        stage_n / tile_n,
++    );
+ 
+-    let out_stage_dim = StageDim {
+-        tile_size_x: tile_m,
+-        tile_size_y: tile_n,
+-        num_tiles_x: stage_m / tile_m,
+-        num_tiles_y: stage_n / tile_n,
+-    };
++    let out_stage_dim = StageDim::new(
++        Ident::Out,
++        tile_m,
++        tile_n,
++        stage_m / tile_m,
++        stage_n / tile_n,
++    );
+ 
+     (lhs_stage_dim, rhs_stage_dim, out_stage_dim)
+ }

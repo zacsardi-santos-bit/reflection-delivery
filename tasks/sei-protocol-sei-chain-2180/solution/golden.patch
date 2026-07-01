@@ -1,0 +1,352 @@
+diff --git a/precompiles/common/expected_keepers.go b/precompiles/common/expected_keepers.go
+index 2cba5c881..e812a16a0 100644
+--- a/precompiles/common/expected_keepers.go
++++ b/precompiles/common/expected_keepers.go
+@@ -100,6 +100,8 @@ type StakingKeeper interface {
+ 	Delegate(goCtx context.Context, msg *stakingtypes.MsgDelegate) (*stakingtypes.MsgDelegateResponse, error)
+ 	BeginRedelegate(goCtx context.Context, msg *stakingtypes.MsgBeginRedelegate) (*stakingtypes.MsgBeginRedelegateResponse, error)
+ 	Undelegate(goCtx context.Context, msg *stakingtypes.MsgUndelegate) (*stakingtypes.MsgUndelegateResponse, error)
++	CreateValidator(goCtx context.Context, msg *stakingtypes.MsgCreateValidator) (*stakingtypes.MsgCreateValidatorResponse, error)
++	EditValidator(goCtx context.Context, msg *stakingtypes.MsgEditValidator) (*stakingtypes.MsgEditValidatorResponse, error)
+ }
+ 
+ type StakingQuerier interface {
+diff --git a/precompiles/staking/Staking.sol b/precompiles/staking/Staking.sol
+index 999209812..ea367b6b8 100644
+--- a/precompiles/staking/Staking.sol
++++ b/precompiles/staking/Staking.sol
+@@ -9,22 +9,85 @@ IStaking constant STAKING_CONTRACT = IStaking(
+ 
+ interface IStaking {
+     // Transactions
++    
++    /**
++     * @notice Delegate tokens to a validator
++     * @param valAddress The validator address to delegate to
++     * @dev Must send value (SEI) with this transaction for delegation amount
++     * @return success True if delegation was successful
++     */
+     function delegate(
+         string memory valAddress
+     ) payable external returns (bool success);
+ 
++    /**
++     * @notice Redelegate tokens from one validator to another
++     * @param srcAddress The source validator address
++     * @param dstAddress The destination validator address  
++     * @param amount Amount to redelegate in base units
++     * @return success True if redelegation was successful
++     */
+     function redelegate(
+         string memory srcAddress,
+         string memory dstAddress,
+         uint256 amount
+     ) external returns (bool success);
+ 
++    /**
++     * @notice Undelegate tokens from a validator
++     * @param valAddress The validator address to undelegate from
++     * @param amount Amount to undelegate in base units
++     * @return success True if undelegation was successful
++     */
+     function undelegate(
+         string memory valAddress,
+         uint256 amount
+     ) external returns (bool success);
+ 
++    /**
++     * @notice Create a new validator. Delegation amount must be provided as value in wei
++     * @param pubKeyHex Ed25519 public key in hex format (64 characters)
++     * @param moniker Validator display name
++     * @param commissionRate Initial commission rate (e.g. "0.05" for 5%)
++     * @param commissionMaxRate Maximum commission rate (e.g. "0.20" for 20%)
++     * @param commissionMaxChangeRate Maximum commission change rate per day (e.g. "0.01" for 1%)
++     * @param minSelfDelegation Minimum self-delegation amount in base units
++     * @return success True if validator creation was successful
++     */
++    function createValidator(
++        string memory pubKeyHex,
++        string memory moniker,
++        string memory commissionRate,
++        string memory commissionMaxRate,
++        string memory commissionMaxChangeRate,
++        uint256 minSelfDelegation
++    ) payable external returns (bool success);
++
++    /**
++     * @notice Edit an existing validator's parameters
++     * @param moniker New validator display name
++     * @param commissionRate New commission rate (e.g. "0.10" for 10%) 
++     *                      Pass empty string "" to not change commission rate
++     *                      Note: Commission can only be changed once per 24 hours
++     * @param minSelfDelegation New minimum self-delegation amount in base units
++     *                         Pass 0 to not change minimum self-delegation
++     *                         Note: Can only increase, cannot decrease below current value
++     * @return success True if validator edit was successful
++     */
++    function editValidator(
++        string memory moniker,
++        string memory commissionRate,
++        uint256 minSelfDelegation
++    ) external returns (bool success);
++
+     // Queries
++    
++    /**
++     * @notice Get delegation information for a delegator and validator pair
++     * @param delegator The delegator's address  
++     * @param valAddress The validator address
++     * @return delegation Delegation details including balance and shares
++     */
+     function delegation(
+         address delegator,
+         string memory valAddress
+diff --git a/precompiles/staking/abi.json b/precompiles/staking/abi.json
+index bec7f5df4..a94ad5733 100755
+--- a/precompiles/staking/abi.json
++++ b/precompiles/staking/abi.json
+@@ -1 +1 @@
+-[{"inputs":[{"internalType":"string","name":"valAddress","type":"string"}],"name":"delegate","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"string","name":"srcAddress","type":"string"},{"internalType":"string","name":"dstAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"redelegate","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"valAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"undelegate","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"delegator","type":"address"},{"internalType":"string","name":"valAddress","type":"string"}],"name":"delegation","outputs":[{"components":[{"components":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"string","name":"denom","type":"string"}],"internalType":"struct Balance","name":"balance","type":"tuple"},{"components":[{"internalType":"string","name":"delegator_address","type":"string"},{"internalType":"uint256","name":"shares","type":"uint256"},{"internalType":"uint256","name":"decimals","type":"uint256"},{"internalType":"string","name":"validator_address","type":"string"}],"internalType":"struct DelegationDetails","name":"delegation","type":"tuple"}],"internalType":"struct Delegation","name":"delegation","type":"tuple"}],"stateMutability":"view","type":"function"}]
+\ No newline at end of file
++[{"inputs":[{"internalType":"string","name":"valAddress","type":"string"}],"name":"delegate","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"string","name":"srcAddress","type":"string"},{"internalType":"string","name":"dstAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"redelegate","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"valAddress","type":"string"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"undelegate","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"pubKeyHex","type":"string"},{"internalType":"string","name":"moniker","type":"string"},{"internalType":"string","name":"commissionRate","type":"string"},{"internalType":"string","name":"commissionMaxRate","type":"string"},{"internalType":"string","name":"commissionMaxChangeRate","type":"string"},{"internalType":"uint256","name":"minSelfDelegation","type":"uint256"}],"name":"createValidator","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"string","name":"moniker","type":"string"},{"internalType":"string","name":"commissionRate","type":"string"},{"internalType":"uint256","name":"minSelfDelegation","type":"uint256"}],"name":"editValidator","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"delegator","type":"address"},{"internalType":"string","name":"valAddress","type":"string"}],"name":"delegation","outputs":[{"components":[{"components":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"string","name":"denom","type":"string"}],"internalType":"struct Balance","name":"balance","type":"tuple"},{"components":[{"internalType":"string","name":"delegator_address","type":"string"},{"internalType":"uint256","name":"shares","type":"uint256"},{"internalType":"uint256","name":"decimals","type":"uint256"},{"internalType":"string","name":"validator_address","type":"string"}],"internalType":"struct DelegationDetails","name":"delegation","type":"tuple"}],"internalType":"struct Delegation","name":"delegation","type":"tuple"}],"stateMutability":"view","type":"function"}]
+diff --git a/precompiles/staking/staking.go b/precompiles/staking/staking.go
+index dfeb2445d..45788e7ae 100644
+--- a/precompiles/staking/staking.go
++++ b/precompiles/staking/staking.go
+@@ -3,9 +3,11 @@ package staking
+ import (
+ 	"bytes"
+ 	"embed"
++	"encoding/hex"
+ 	"errors"
+ 	"math/big"
+ 
++	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
+ 	sdk "github.com/cosmos/cosmos-sdk/types"
+ 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
+ 	"github.com/ethereum/go-ethereum/accounts/abi"
+@@ -17,10 +19,12 @@ import (
+ )
+ 
+ const (
+-	DelegateMethod   = "delegate"
+-	RedelegateMethod = "redelegate"
+-	UndelegateMethod = "undelegate"
+-	DelegationMethod = "delegation"
++	DelegateMethod        = "delegate"
++	RedelegateMethod      = "redelegate"
++	UndelegateMethod      = "undelegate"
++	DelegationMethod      = "delegation"
++	CreateValidatorMethod = "createValidator"
++	EditValidatorMethod   = "editValidator"
+ )
+ 
+ const (
+@@ -39,10 +43,12 @@ type PrecompileExecutor struct {
+ 	bankKeeper     pcommon.BankKeeper
+ 	address        common.Address
+ 
+-	DelegateID   []byte
+-	RedelegateID []byte
+-	UndelegateID []byte
+-	DelegationID []byte
++	DelegateID        []byte
++	RedelegateID      []byte
++	UndelegateID      []byte
++	DelegationID      []byte
++	CreateValidatorID []byte
++	EditValidatorID   []byte
+ }
+ 
+ func NewPrecompile(stakingKeeper pcommon.StakingKeeper, stakingQuerier pcommon.StakingQuerier, evmKeeper pcommon.EVMKeeper, bankKeeper pcommon.BankKeeper) (*pcommon.Precompile, error) {
+@@ -66,6 +72,10 @@ func NewPrecompile(stakingKeeper pcommon.StakingKeeper, stakingQuerier pcommon.S
+ 			p.UndelegateID = m.ID
+ 		case DelegationMethod:
+ 			p.DelegationID = m.ID
++		case CreateValidatorMethod:
++			p.CreateValidatorID = m.ID
++		case EditValidatorMethod:
++			p.EditValidatorID = m.ID
+ 		}
+ 	}
+ 
+@@ -80,6 +90,10 @@ func (p PrecompileExecutor) RequiredGas(input []byte, method *abi.Method) uint64
+ 		return 70000
+ 	} else if bytes.Equal(method.ID, p.UndelegateID) {
+ 		return 50000
++	} else if bytes.Equal(method.ID, p.CreateValidatorID) {
++		return 100000
++	} else if bytes.Equal(method.ID, p.EditValidatorID) {
++		return 100000
+ 	}
+ 
+ 	// This should never happen since this is going to fail during Run
+@@ -106,6 +120,16 @@ func (p PrecompileExecutor) Execute(ctx sdk.Context, method *abi.Method, caller
+ 			return nil, errors.New("cannot call staking precompile from staticcall")
+ 		}
+ 		return p.undelegate(ctx, method, caller, args, value)
++	case CreateValidatorMethod:
++		if readOnly {
++			return nil, errors.New("cannot call staking precompile from staticcall")
++		}
++		return p.createValidator(ctx, method, caller, args, value, hooks, evm)
++	case EditValidatorMethod:
++		if readOnly {
++			return nil, errors.New("cannot call staking precompile from staticcall")
++		}
++		return p.editValidator(ctx, method, caller, args, value, hooks, evm)
+ 	case DelegationMethod:
+ 		return p.delegation(ctx, method, args, value)
+ 	}
+@@ -251,3 +275,151 @@ func (p PrecompileExecutor) delegation(ctx sdk.Context, method *abi.Method, args
+ 
+ 	return method.Outputs.Pack(delegation)
+ }
++
++func (p PrecompileExecutor) createValidator(ctx sdk.Context, method *abi.Method, caller common.Address, args []interface{}, value *big.Int, hooks *tracing.Hooks, evm *vm.EVM) ([]byte, error) {
++	if err := pcommon.ValidateArgsLength(args, 6); err != nil {
++		return nil, err
++	}
++
++	// Extract arguments
++	pubKeyHex := args[0].(string)
++	moniker := args[1].(string)
++	commissionRateStr := args[2].(string)
++	commissionMaxRateStr := args[3].(string)
++	commissionMaxChangeRateStr := args[4].(string)
++	minSelfDelegation := args[5].(*big.Int)
++
++	// Get validator address (caller's associated Sei address)
++	valAddress, associated := p.evmKeeper.GetSeiAddress(ctx, caller)
++	if !associated {
++		return nil, types.NewAssociationMissingErr(caller.Hex())
++	}
++
++	// Parse public key from hex
++	pubKeyBytes, err := hex.DecodeString(pubKeyHex)
++	if err != nil {
++		return nil, errors.New("invalid public key hex format")
++	}
++
++	// Create ed25519 public key
++	pubKey := &ed25519.PubKey{Key: pubKeyBytes}
++
++	// Parse commission rates
++	commissionRate, err := sdk.NewDecFromStr(commissionRateStr)
++	if err != nil {
++		return nil, errors.New("invalid commission rate")
++	}
++
++	commissionMaxRate, err := sdk.NewDecFromStr(commissionMaxRateStr)
++	if err != nil {
++		return nil, errors.New("invalid commission max rate")
++	}
++
++	commissionMaxChangeRate, err := sdk.NewDecFromStr(commissionMaxChangeRateStr)
++	if err != nil {
++		return nil, errors.New("invalid commission max change rate")
++	}
++
++	commission := stakingtypes.NewCommissionRates(commissionRate, commissionMaxRate, commissionMaxChangeRate)
++
++	if value == nil || value.Sign() == 0 {
++		return nil, errors.New("set `value` field to non-zero to send delegate fund")
++	}
++
++	coin, err := pcommon.HandlePaymentUsei(
++		ctx,
++		p.evmKeeper.GetSeiAddressOrDefault(ctx, p.address),
++		valAddress,
++		value,
++		p.bankKeeper,
++		p.evmKeeper,
++		hooks,
++		evm.GetDepth())
++	if err != nil {
++		return nil, err
++	}
++
++	description := stakingtypes.Description{
++		Moniker: moniker,
++	}
++
++	msg, err := stakingtypes.NewMsgCreateValidator(sdk.ValAddress(valAddress), pubKey, coin, description, commission, sdk.NewIntFromBigInt(minSelfDelegation))
++	if err != nil {
++		return nil, err
++	}
++
++	err = msg.ValidateBasic()
++	if err != nil {
++		return nil, err
++	}
++
++	// Call the staking keeper
++	_, err = p.stakingKeeper.CreateValidator(sdk.WrapSDKContext(ctx), msg)
++	if err != nil {
++		return nil, err
++	}
++
++	return method.Outputs.Pack(true)
++}
++
++func (p PrecompileExecutor) editValidator(ctx sdk.Context, method *abi.Method, caller common.Address, args []interface{}, value *big.Int, hooks *tracing.Hooks, evm *vm.EVM) ([]byte, error) {
++	if err := pcommon.ValidateNonPayable(value); err != nil {
++		return nil, err
++	}
++	if err := pcommon.ValidateArgsLength(args, 3); err != nil {
++		return nil, err
++	}
++
++	// Extract arguments
++	moniker := args[0].(string)
++	commissionRateStr := args[1].(string)
++	minSelfDelegation := args[2].(*big.Int)
++
++	// Get validator address (caller's associated Sei address)
++	valAddress, associated := p.evmKeeper.GetSeiAddress(ctx, caller)
++	if !associated {
++		return nil, types.NewAssociationMissingErr(caller.Hex())
++	}
++
++	// Parse commission rate - if empty string, don't change commission
++	var commissionRate *sdk.Dec
++	if commissionRateStr != "" {
++		rate, err := sdk.NewDecFromStr(commissionRateStr)
++		if err != nil {
++			return nil, errors.New("invalid commission rate")
++		}
++		commissionRate = &rate
++	}
++	// If commissionRateStr is empty, commissionRate remains nil
++
++	// Parse minSelfDelegation - if 0, don't change it
++	var minSelfDelegationPtr *sdk.Int
++	if minSelfDelegation.Sign() > 0 {
++		minSelf := sdk.NewIntFromBigInt(minSelfDelegation)
++		minSelfDelegationPtr = &minSelf
++	}
++	// If minSelfDelegation is 0, minSelfDelegationPtr remains nil
++
++	description := stakingtypes.Description{
++		Moniker: moniker,
++	}
++
++	msg := stakingtypes.NewMsgEditValidator(
++		sdk.ValAddress(valAddress),
++		description,
++		commissionRate,
++		minSelfDelegationPtr,
++	)
++
++	err := msg.ValidateBasic()
++	if err != nil {
++		return nil, err
++	}
++
++	_, err = p.stakingKeeper.EditValidator(sdk.WrapSDKContext(ctx), msg)
++	if err != nil {
++		return nil, err
++	}
++
++	return method.Outputs.Pack(true)
++}

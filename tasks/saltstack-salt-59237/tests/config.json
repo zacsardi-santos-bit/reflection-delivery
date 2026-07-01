@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/pytests/unit/test_minion.py -v --noconftest",
+  "test_files": [
+    "tests/pytests/unit/test_minion.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.pytests.unit.test_minion::test_send_req_tries[req_channel0]",
+    "tests.pytests.unit.test_minion::test_send_req_tries[req_channel1]",
+    "tests.pytests.unit.test_minion::test_mine_send_tries"
+  ],
+  "PASS_TO_PASS": [
+    "tests.pytests.unit.test_minion::test_minion_load_grains_false",
+    "tests.pytests.unit.test_minion::test_minion_load_grains_true",
+    "tests.pytests.unit.test_minion::test_minion_load_grains_default"
+  ]
+}

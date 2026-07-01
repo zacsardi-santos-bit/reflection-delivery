@@ -1,0 +1,340 @@
+patching file cmd/osv-scanner/main_test.go
+patching file internal/utility/purl/composer_test.go
+patching file internal/utility/purl/golang_test.go
+patching file internal/utility/purl/maven_test.go
+patching file internal/utility/purl/package_grouper_test.go
+patching file pkg/grouper/grouper_test.go
+patching file pkg/reporter/cyclonedx_test.go
+{"Time":"2026-06-29T15:32:35.345133396Z","Action":"start","Package":"github.com/google/osv-scanner/internal/utility/purl"}
+{"Time":"2026-06-29T15:32:35.345336636Z","Action":"start","Package":"github.com/google/osv-scanner/pkg/grouper"}
+{"Time":"2026-06-29T15:32:35.349254537Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldExtractPackages"}
+{"Time":"2026-06-29T15:32:35.34929573Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldExtractPackages","Output":"=== RUN   TestComposerExtraction_shouldExtractPackages\n"}
+{"Time":"2026-06-29T15:32:35.349314772Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldExtractPackages","Output":"=== PAUSE TestComposerExtraction_shouldExtractPackages\n"}
+{"Time":"2026-06-29T15:32:35.349324642Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldExtractPackages"}
+{"Time":"2026-06-29T15:32:35.349337292Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages"}
+{"Time":"2026-06-29T15:32:35.349347192Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages","Output":"=== RUN   TestComposerExtraction_shouldFilterPackages\n"}
+{"Time":"2026-06-29T15:32:35.349357506Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages","Output":"=== PAUSE TestComposerExtraction_shouldFilterPackages\n"}
+{"Time":"2026-06-29T15:32:35.349366574Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages"}
+{"Time":"2026-06-29T15:32:35.349376014Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages"}
+{"Time":"2026-06-29T15:32:35.349384677Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages","Output":"=== RUN   TestGolangExtraction_shouldExtractPackages\n"}
+{"Time":"2026-06-29T15:32:35.349393786Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages","Output":"=== PAUSE TestGolangExtraction_shouldExtractPackages\n"}
+{"Time":"2026-06-29T15:32:35.349402072Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages"}
+{"Time":"2026-06-29T15:32:35.349411786Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages"}
+{"Time":"2026-06-29T15:32:35.349420626Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages","Output":"=== RUN   TestGolangExtraction_shouldFilterPackages\n"}
+{"Time":"2026-06-29T15:32:35.349432679Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages","Output":"=== PAUSE TestGolangExtraction_shouldFilterPackages\n"}
+{"Time":"2026-06-29T15:32:35.34944261Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages"}
+{"Time":"2026-06-29T15:32:35.349451851Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldExtractPackages"}
+{"Time":"2026-06-29T15:32:35.349460065Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldExtractPackages","Output":"=== RUN   TestMavenExtraction_shouldExtractPackages\n"}
+{"Time":"2026-06-29T15:32:35.349472946Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldExtractPackages","Output":"=== PAUSE TestMavenExtraction_shouldExtractPackages\n"}
+{"Time":"2026-06-29T15:32:35.34948829Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldExtractPackages"}
+{"Time":"2026-06-29T15:32:35.349497509Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages"}
+{"Time":"2026-06-29T15:32:35.349505743Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages","Output":"=== RUN   TestMavenExtraction_shouldFilterPackages\n"}
+{"Time":"2026-06-29T15:32:35.349514556Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages","Output":"=== PAUSE TestMavenExtraction_shouldFilterPackages\n"}
+{"Time":"2026-06-29T15:32:35.349523011Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages"}
+{"Time":"2026-06-29T15:32:35.349531968Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGroupPackageByPURL_ShouldUnifyPackages"}
+{"Time":"2026-06-29T15:32:35.349542861Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGroupPackageByPURL_ShouldUnifyPackages","Output":"=== RUN   TestGroupPackageByPURL_ShouldUnifyPackages\n"}
+{"Time":"2026-06-29T15:32:35.34955279Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGroupPackageByPURL_ShouldUnifyPackages","Output":"=== PAUSE TestGroupPackageByPURL_ShouldUnifyPackages\n"}
+{"Time":"2026-06-29T15:32:35.349562647Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGroupPackageByPURL_ShouldUnifyPackages"}
+{"Time":"2026-06-29T15:32:35.34957239Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldExtractPackages"}
+{"Time":"2026-06-29T15:32:35.349580832Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldExtractPackages","Output":"=== CONT  TestComposerExtraction_shouldExtractPackages\n"}
+{"Time":"2026-06-29T15:32:35.349598405Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldExtractPackages","Output":"--- PASS: TestComposerExtraction_shouldExtractPackages (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.349608897Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldExtractPackages","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.349635873Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages"}
+{"Time":"2026-06-29T15:32:35.349644439Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages","Output":"=== CONT  TestComposerExtraction_shouldFilterPackages\n"}
+{"Time":"2026-06-29T15:32:35.349653297Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldExtractPackages"}
+{"Time":"2026-06-29T15:32:35.349675411Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldExtractPackages","Output":"=== CONT  TestMavenExtraction_shouldExtractPackages\n"}
+{"Time":"2026-06-29T15:32:35.349685086Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldExtractPackages","Output":"--- PASS: TestMavenExtraction_shouldExtractPackages (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.349697915Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldExtractPackages","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.349706412Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts"}
+{"Time":"2026-06-29T15:32:35.349726443Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Output":"=== RUN   TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts\n"}
+{"Time":"2026-06-29T15:32:35.349740446Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Output":"=== PAUSE TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts\n"}
+{"Time":"2026-06-29T15:32:35.349751514Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts"}
+{"Time":"2026-06-29T15:32:35.349766437Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_have_no_name"}
+{"Time":"2026-06-29T15:32:35.349778185Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_have_no_name","Output":"=== RUN   TestComposerExtraction_shouldFilterPackages/when_package_have_no_name\n"}
+{"Time":"2026-06-29T15:32:35.349794823Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_have_no_name","Output":"=== PAUSE TestComposerExtraction_shouldFilterPackages/when_package_have_no_name\n"}
+{"Time":"2026-06-29T15:32:35.349805539Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_have_no_name"}
+{"Time":"2026-06-29T15:32:35.349822309Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts"}
+{"Time":"2026-06-29T15:32:35.349832184Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Output":"=== CONT  TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts\n"}
+{"Time":"2026-06-29T15:32:35.349854063Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Output":"--- PASS: TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.349868259Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.349885126Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages"}
+{"Time":"2026-06-29T15:32:35.349901429Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages","Output":"=== CONT  TestGolangExtraction_shouldFilterPackages\n"}
+{"Time":"2026-06-29T15:32:35.349912859Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages/when_package_have_no_name"}
+{"Time":"2026-06-29T15:32:35.349826718Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/grouper","Test":"TestGroup"}
+{"Time":"2026-06-29T15:32:35.349957046Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/grouper","Test":"TestGroup","Output":"=== RUN   TestGroup\n"}
+{"Time":"2026-06-29T15:32:35.349994837Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/grouper","Test":"TestGroup","Output":"=== PAUSE TestGroup\n"}
+{"Time":"2026-06-29T15:32:35.350030111Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/grouper","Test":"TestGroup"}
+{"Time":"2026-06-29T15:32:35.350046203Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/grouper","Test":"TestGroup"}
+{"Time":"2026-06-29T15:32:35.350057634Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/grouper","Test":"TestGroup","Output":"=== CONT  TestGroup\n"}
+{"Time":"2026-06-29T15:32:35.350073758Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/grouper","Test":"TestGroup","Output":"--- PASS: TestGroup (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.350083559Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/grouper","Test":"TestGroup","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.350094025Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/grouper","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:35.349926186Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages/when_package_have_no_name","Output":"=== RUN   TestGolangExtraction_shouldFilterPackages/when_package_have_no_name\n"}
+{"Time":"2026-06-29T15:32:35.350141186Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/grouper","Output":"ok  \tgithub.com/google/osv-scanner/pkg/grouper\t0.005s\n"}
+{"Time":"2026-06-29T15:32:35.350151819Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages/when_package_have_no_name","Output":"=== PAUSE TestGolangExtraction_shouldFilterPackages/when_package_have_no_name\n"}
+{"Time":"2026-06-29T15:32:35.350173737Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages/when_package_have_no_name"}
+{"Time":"2026-06-29T15:32:35.350185425Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages/when_package_have_no_name"}
+{"Time":"2026-06-29T15:32:35.350194286Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages/when_package_have_no_name","Output":"=== CONT  TestGolangExtraction_shouldFilterPackages/when_package_have_no_name\n"}
+{"Time":"2026-06-29T15:32:35.350204997Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages/when_package_have_no_name","Output":"--- PASS: TestGolangExtraction_shouldFilterPackages/when_package_have_no_name (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.350160394Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/grouper","Elapsed":0.005}
+{"Time":"2026-06-29T15:32:35.350216375Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages/when_package_have_no_name","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.35025262Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages","Output":"--- PASS: TestGolangExtraction_shouldFilterPackages (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.350264071Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldFilterPackages","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.350273662Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_have_no_name"}
+{"Time":"2026-06-29T15:32:35.350284308Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_have_no_name","Output":"=== CONT  TestComposerExtraction_shouldFilterPackages/when_package_have_no_name\n"}
+{"Time":"2026-06-29T15:32:35.350295583Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_have_no_name","Output":"--- PASS: TestComposerExtraction_shouldFilterPackages/when_package_have_no_name (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.35031054Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages/when_package_have_no_name","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.350320443Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages","Output":"--- PASS: TestComposerExtraction_shouldFilterPackages (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.350329789Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestComposerExtraction_shouldFilterPackages","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.350338541Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGroupPackageByPURL_ShouldUnifyPackages"}
+{"Time":"2026-06-29T15:32:35.358431401Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGroupPackageByPURL_ShouldUnifyPackages","Output":"=== CONT  TestGroupPackageByPURL_ShouldUnifyPackages\n"}
+{"Time":"2026-06-29T15:32:35.358457846Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGroupPackageByPURL_ShouldUnifyPackages","Output":"--- PASS: TestGroupPackageByPURL_ShouldUnifyPackages (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.358469162Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGroupPackageByPURL_ShouldUnifyPackages","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.358480091Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages"}
+{"Time":"2026-06-29T15:32:35.358489479Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages","Output":"=== CONT  TestMavenExtraction_shouldFilterPackages\n"}
+{"Time":"2026-06-29T15:32:35.358502549Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts"}
+{"Time":"2026-06-29T15:32:35.358511729Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Output":"=== RUN   TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts\n"}
+{"Time":"2026-06-29T15:32:35.358521671Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Output":"=== PAUSE TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts\n"}
+{"Time":"2026-06-29T15:32:35.358530166Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts"}
+{"Time":"2026-06-29T15:32:35.35854017Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_have_no_name"}
+{"Time":"2026-06-29T15:32:35.358549017Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_have_no_name","Output":"=== RUN   TestMavenExtraction_shouldFilterPackages/when_package_have_no_name\n"}
+{"Time":"2026-06-29T15:32:35.35856143Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_have_no_name","Output":"=== PAUSE TestMavenExtraction_shouldFilterPackages/when_package_have_no_name\n"}
+{"Time":"2026-06-29T15:32:35.358573553Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_have_no_name"}
+{"Time":"2026-06-29T15:32:35.358595578Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts"}
+{"Time":"2026-06-29T15:32:35.358606065Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Output":"=== CONT  TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts\n"}
+{"Time":"2026-06-29T15:32:35.35861585Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Output":"--- PASS: TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.358626648Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_contains_less_than_2_parts","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.358635732Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_have_no_name"}
+{"Time":"2026-06-29T15:32:35.358644371Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_have_no_name","Output":"=== CONT  TestMavenExtraction_shouldFilterPackages/when_package_have_no_name\n"}
+{"Time":"2026-06-29T15:32:35.358653519Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_have_no_name","Output":"--- PASS: TestMavenExtraction_shouldFilterPackages/when_package_have_no_name (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.358662686Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages/when_package_have_no_name","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.358671537Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages","Output":"--- PASS: TestMavenExtraction_shouldFilterPackages (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.358696513Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestMavenExtraction_shouldFilterPackages","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.358705988Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages"}
+{"Time":"2026-06-29T15:32:35.358715217Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages","Output":"=== CONT  TestGolangExtraction_shouldExtractPackages\n"}
+{"Time":"2026-06-29T15:32:35.358724899Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry"}
+{"Time":"2026-06-29T15:32:35.358735453Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry","Output":"=== RUN   TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry\n"}
+{"Time":"2026-06-29T15:32:35.358744566Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry","Output":"=== PAUSE TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry\n"}
+{"Time":"2026-06-29T15:32:35.358753339Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry"}
+{"Time":"2026-06-29T15:32:35.358762183Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github"}
+{"Time":"2026-06-29T15:32:35.358780162Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github","Output":"=== RUN   TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github\n"}
+{"Time":"2026-06-29T15:32:35.358790051Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github","Output":"=== PAUSE TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github\n"}
+{"Time":"2026-06-29T15:32:35.358798274Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github"}
+{"Time":"2026-06-29T15:32:35.358807315Z","Action":"run","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain"}
+{"Time":"2026-06-29T15:32:35.358815446Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain","Output":"=== RUN   TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain\n"}
+{"Time":"2026-06-29T15:32:35.358824503Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain","Output":"=== PAUSE TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain\n"}
+{"Time":"2026-06-29T15:32:35.358833093Z","Action":"pause","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain"}
+{"Time":"2026-06-29T15:32:35.358841617Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry"}
+{"Time":"2026-06-29T15:32:35.358849769Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry","Output":"=== CONT  TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry\n"}
+{"Time":"2026-06-29T15:32:35.358859007Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry","Output":"--- PASS: TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.358870544Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_go_registry","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.35887879Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github"}
+{"Time":"2026-06-29T15:32:35.358886967Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github","Output":"=== CONT  TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github\n"}
+{"Time":"2026-06-29T15:32:35.358895879Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github","Output":"--- PASS: TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.358904643Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_comes_from_github","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.35891292Z","Action":"cont","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain"}
+{"Time":"2026-06-29T15:32:35.358924366Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain","Output":"=== CONT  TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain\n"}
+{"Time":"2026-06-29T15:32:35.358933608Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain","Output":"--- PASS: TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.358942446Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages/when_package_uses_a_domain","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.358950884Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages","Output":"--- PASS: TestGolangExtraction_shouldExtractPackages (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.358959935Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Test":"TestGolangExtraction_shouldExtractPackages","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.358968312Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:35.359023453Z","Action":"output","Package":"github.com/google/osv-scanner/internal/utility/purl","Output":"ok  \tgithub.com/google/osv-scanner/internal/utility/purl\t0.014s\n"}
+{"Time":"2026-06-29T15:32:35.359045517Z","Action":"pass","Package":"github.com/google/osv-scanner/internal/utility/purl","Elapsed":0.014}
+{"Time":"2026-06-29T15:32:35.40274837Z","Action":"start","Package":"github.com/google/osv-scanner/pkg/reporter"}
+{"Time":"2026-06-29T15:32:35.406625788Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.406655165Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Errorf","Output":"=== RUN   TestCycloneDXReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.406668932Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Errorf","Output":"=== PAUSE TestCycloneDXReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.406678838Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.406694345Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.406703859Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Warnf","Output":"=== RUN   TestCycloneDXReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.406713701Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Warnf","Output":"=== PAUSE TestCycloneDXReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.406721849Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.406731034Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.406740732Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Infof","Output":"=== RUN   TestCycloneDXReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.406751699Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Infof","Output":"=== PAUSE TestCycloneDXReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.40676026Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.406776221Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.406785036Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Verbosef","Output":"=== RUN   TestCycloneDXReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.406796993Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Verbosef","Output":"=== PAUSE TestCycloneDXReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.40680569Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.406814731Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew"}
+{"Time":"2026-06-29T15:32:35.406824506Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew","Output":"=== RUN   TestNew\n"}
+{"Time":"2026-06-29T15:32:35.406834892Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew","Output":"=== PAUSE TestNew\n"}
+{"Time":"2026-06-29T15:32:35.406844607Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew"}
+{"Time":"2026-06-29T15:32:35.406854672Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew_UnsupportedFormatter"}
+{"Time":"2026-06-29T15:32:35.40686381Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew_UnsupportedFormatter","Output":"=== RUN   TestNew_UnsupportedFormatter\n"}
+{"Time":"2026-06-29T15:32:35.406873441Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew_UnsupportedFormatter","Output":"=== PAUSE TestNew_UnsupportedFormatter\n"}
+{"Time":"2026-06-29T15:32:35.40688243Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew_UnsupportedFormatter"}
+{"Time":"2026-06-29T15:32:35.406892048Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.406901345Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Errorf","Output":"=== RUN   TestGHAnnotationsReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.406913443Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Errorf","Output":"=== PAUSE TestGHAnnotationsReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.406921785Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.406936103Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.406945243Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Warnf","Output":"=== RUN   TestGHAnnotationsReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.406955294Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Warnf","Output":"=== PAUSE TestGHAnnotationsReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.406963947Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.406972591Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.406982307Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Infof","Output":"=== RUN   TestGHAnnotationsReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.406992373Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Infof","Output":"=== PAUSE TestGHAnnotationsReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.40700581Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.40702517Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.40703493Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Verbosef","Output":"=== RUN   TestGHAnnotationsReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.407045028Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Verbosef","Output":"=== PAUSE TestGHAnnotationsReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.407053396Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.407063152Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.40707542Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Errorf","Output":"=== RUN   TestJSONReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.407084459Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Errorf","Output":"=== PAUSE TestJSONReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.407092505Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.407100947Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.407109287Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Warnf","Output":"=== RUN   TestJSONReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.407119879Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Warnf","Output":"=== PAUSE TestJSONReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.407129519Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.407138096Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.407146361Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Infof","Output":"=== RUN   TestJSONReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.407155016Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Infof","Output":"=== PAUSE TestJSONReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.407163348Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.407172081Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.40718054Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Verbosef","Output":"=== RUN   TestJSONReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.40718946Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Verbosef","Output":"=== PAUSE TestJSONReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.407197813Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.407206409Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.407215007Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Errorf","Output":"=== RUN   TestSarifReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.40722377Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Errorf","Output":"=== PAUSE TestSarifReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.407235459Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.407244574Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.40725308Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Warnf","Output":"=== RUN   TestSarifReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.407262136Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Warnf","Output":"=== PAUSE TestSarifReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.407270794Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.40727957Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.407287552Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Infof","Output":"=== RUN   TestSarifReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.407295984Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Infof","Output":"=== PAUSE TestSarifReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.407303928Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.407312355Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.407320436Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Verbosef","Output":"=== RUN   TestSarifReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.407329207Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Verbosef","Output":"=== PAUSE TestSarifReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.407337259Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.407345488Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.407353588Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Errorf","Output":"=== RUN   TestTableReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.407362313Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Errorf","Output":"=== PAUSE TestTableReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.407370783Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.407379403Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.407387987Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Warnf","Output":"=== RUN   TestTableReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.407397533Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Warnf","Output":"=== PAUSE TestTableReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.407405741Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.40741945Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.407428674Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Infof","Output":"=== RUN   TestTableReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.407438322Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Infof","Output":"=== PAUSE TestTableReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.407449774Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.40745963Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.407467737Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Verbosef","Output":"=== RUN   TestTableReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.407476207Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Verbosef","Output":"=== PAUSE TestTableReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.407484256Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.407492854Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenValidLevels"}
+{"Time":"2026-06-29T15:32:35.407501136Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenValidLevels","Output":"=== RUN   TestParseVerbosityLevel_GivenValidLevels\n"}
+{"Time":"2026-06-29T15:32:35.407510872Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenValidLevels","Output":"=== PAUSE TestParseVerbosityLevel_GivenValidLevels\n"}
+{"Time":"2026-06-29T15:32:35.407519776Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenValidLevels"}
+{"Time":"2026-06-29T15:32:35.407528103Z","Action":"run","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenInvalidLevels"}
+{"Time":"2026-06-29T15:32:35.407536372Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenInvalidLevels","Output":"=== RUN   TestParseVerbosityLevel_GivenInvalidLevels\n"}
+{"Time":"2026-06-29T15:32:35.407545016Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenInvalidLevels","Output":"=== PAUSE TestParseVerbosityLevel_GivenInvalidLevels\n"}
+{"Time":"2026-06-29T15:32:35.407586366Z","Action":"pause","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenInvalidLevels"}
+{"Time":"2026-06-29T15:32:35.407613694Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.407624406Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Errorf","Output":"=== CONT  TestCycloneDXReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.407639156Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Errorf","Output":"--- PASS: TestCycloneDXReporter_Errorf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.407656138Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Errorf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.407670741Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.407680496Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Warnf","Output":"=== CONT  TestSarifReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.407690076Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.40769859Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Errorf","Output":"=== CONT  TestJSONReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.407707793Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Errorf","Output":"--- PASS: TestJSONReporter_Errorf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.407728565Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Errorf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.407745425Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.4077542Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Verbosef","Output":"=== CONT  TestSarifReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.407768187Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Verbosef","Output":"--- PASS: TestSarifReporter_Verbosef (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.407778307Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Verbosef","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.407791292Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Warnf","Output":"--- PASS: TestSarifReporter_Warnf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.407814303Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Warnf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.407825219Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.407833676Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Errorf","Output":"=== CONT  TestSarifReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.407844233Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Errorf","Output":"--- PASS: TestSarifReporter_Errorf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.407853076Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Errorf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.407861334Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.407869721Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Warnf","Output":"=== CONT  TestGHAnnotationsReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.407878763Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Warnf","Output":"--- PASS: TestGHAnnotationsReporter_Warnf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.407887577Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Warnf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.40789611Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.407904176Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Verbosef","Output":"=== CONT  TestJSONReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.407912941Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Verbosef","Output":"--- PASS: TestJSONReporter_Verbosef (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.407921521Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Verbosef","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.407929676Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.407938604Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Infof","Output":"=== CONT  TestJSONReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.4079483Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Infof","Output":"--- PASS: TestJSONReporter_Infof (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.40795708Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Infof","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.407969201Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew_UnsupportedFormatter"}
+{"Time":"2026-06-29T15:32:35.407977754Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew_UnsupportedFormatter","Output":"=== CONT  TestNew_UnsupportedFormatter\n"}
+{"Time":"2026-06-29T15:32:35.407986535Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew_UnsupportedFormatter","Output":"--- PASS: TestNew_UnsupportedFormatter (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.407995115Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew_UnsupportedFormatter","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408003527Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew"}
+{"Time":"2026-06-29T15:32:35.408020537Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew","Output":"=== CONT  TestNew\n"}
+{"Time":"2026-06-29T15:32:35.408030487Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew","Output":"--- PASS: TestNew (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408039297Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestNew","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408047845Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.408059794Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Verbosef","Output":"=== CONT  TestCycloneDXReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.408068923Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Verbosef","Output":"--- PASS: TestCycloneDXReporter_Verbosef (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408077624Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Verbosef","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408085873Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.408094133Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Infof","Output":"=== CONT  TestCycloneDXReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.408104234Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Infof","Output":"--- PASS: TestCycloneDXReporter_Infof (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408113041Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Infof","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408121125Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.408129301Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Warnf","Output":"=== CONT  TestCycloneDXReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.408138239Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Warnf","Output":"--- PASS: TestCycloneDXReporter_Warnf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408146839Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestCycloneDXReporter_Warnf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408154948Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.40816297Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Infof","Output":"=== CONT  TestTableReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.408171766Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Infof","Output":"--- PASS: TestTableReporter_Infof (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.40818462Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Infof","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408193147Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenInvalidLevels"}
+{"Time":"2026-06-29T15:32:35.408201463Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenInvalidLevels","Output":"=== CONT  TestParseVerbosityLevel_GivenInvalidLevels\n"}
+{"Time":"2026-06-29T15:32:35.408211536Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenInvalidLevels","Output":"--- PASS: TestParseVerbosityLevel_GivenInvalidLevels (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.40822099Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenInvalidLevels","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.40822918Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenValidLevels"}
+{"Time":"2026-06-29T15:32:35.408237259Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenValidLevels","Output":"=== CONT  TestParseVerbosityLevel_GivenValidLevels\n"}
+{"Time":"2026-06-29T15:32:35.408246098Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenValidLevels","Output":"--- PASS: TestParseVerbosityLevel_GivenValidLevels (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408254827Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestParseVerbosityLevel_GivenValidLevels","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.40826292Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.408270964Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Verbosef","Output":"=== CONT  TestTableReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.408279636Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Verbosef","Output":"--- PASS: TestTableReporter_Verbosef (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408288461Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Verbosef","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408296685Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.408304667Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Errorf","Output":"=== CONT  TestTableReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.408313356Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Errorf","Output":"--- PASS: TestTableReporter_Errorf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408322099Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Errorf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.40833015Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.408338644Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Warnf","Output":"=== CONT  TestTableReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.408347305Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Warnf","Output":"--- PASS: TestTableReporter_Warnf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.40835587Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestTableReporter_Warnf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408363901Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Verbosef"}
+{"Time":"2026-06-29T15:32:35.408376158Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Verbosef","Output":"=== CONT  TestGHAnnotationsReporter_Verbosef\n"}
+{"Time":"2026-06-29T15:32:35.408393307Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Verbosef","Output":"--- PASS: TestGHAnnotationsReporter_Verbosef (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408404524Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Verbosef","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408412739Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Warnf"}
+{"Time":"2026-06-29T15:32:35.408421145Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Warnf","Output":"=== CONT  TestJSONReporter_Warnf\n"}
+{"Time":"2026-06-29T15:32:35.408430468Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Warnf","Output":"--- PASS: TestJSONReporter_Warnf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.40843893Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestJSONReporter_Warnf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408446933Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.408454977Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Infof","Output":"=== CONT  TestSarifReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.408463796Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Infof","Output":"--- PASS: TestSarifReporter_Infof (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408472254Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestSarifReporter_Infof","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408480293Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Infof"}
+{"Time":"2026-06-29T15:32:35.40848835Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Infof","Output":"=== CONT  TestGHAnnotationsReporter_Infof\n"}
+{"Time":"2026-06-29T15:32:35.408497074Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Infof","Output":"--- PASS: TestGHAnnotationsReporter_Infof (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408505588Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Infof","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408513619Z","Action":"cont","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Errorf"}
+{"Time":"2026-06-29T15:32:35.40852163Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Errorf","Output":"=== CONT  TestGHAnnotationsReporter_Errorf\n"}
+{"Time":"2026-06-29T15:32:35.408530316Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Errorf","Output":"--- PASS: TestGHAnnotationsReporter_Errorf (0.00s)\n"}
+{"Time":"2026-06-29T15:32:35.408553557Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Test":"TestGHAnnotationsReporter_Errorf","Elapsed":0}
+{"Time":"2026-06-29T15:32:35.408562526Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:35.408606534Z","Action":"output","Package":"github.com/google/osv-scanner/pkg/reporter","Output":"ok  \tgithub.com/google/osv-scanner/pkg/reporter\t0.006s\n"}
+{"Time":"2026-06-29T15:32:35.408620219Z","Action":"pass","Package":"github.com/google/osv-scanner/pkg/reporter","Elapsed":0.006}
+reward=1 graded=40 found=40 failed=0 parsed=40 framework=go exit_code=0

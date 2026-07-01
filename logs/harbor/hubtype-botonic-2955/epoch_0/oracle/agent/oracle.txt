@@ -1,0 +1,137 @@
+patching file package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+37 out of 37 hunks ignored -- saving rejects to file package-lock.json.rej
+patching file packages/botonic-core/src/models/legacy-types.ts
+patching file packages/botonic-react/src/components/index.ts
+patching file packages/botonic-react/src/components/whatsapp-media-carousel.tsx
+patching file packages/botonic-react/src/components/whatsapp-product-carousel.tsx
+patching file packages/botonic-react/src/components/whatsapp-product-list.tsx
+patching file packages/botonic-react/src/components/whatsapp-product.tsx
+patching file packages/botonic-react/src/util/functional.ts
+patching file package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+37 out of 37 hunks ignored -- saving rejects to file package-lock.json.rej
+patching file packages/botonic-core/src/models/legacy-types.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/botonic-core/src/models/legacy-types.ts.rej
+patching file packages/botonic-react/src/components/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/botonic-react/src/components/index.ts.rej
+The next patch would create the file packages/botonic-react/src/components/whatsapp-media-carousel.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/botonic-react/src/components/whatsapp-product-carousel.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/botonic-react/src/components/whatsapp-product-list.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/botonic-react/src/components/whatsapp-product.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/botonic-react/src/util/functional.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/package-lock.json b/package-lock.json
+|index 237a276d..646c22e5 100644
+|--- a/package-lock.json
+|+++ b/package-lock.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+37 out of 37 hunks ignored
+can't find file to patch at input line 1303
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/botonic-core/src/models/legacy-types.ts b/packages/botonic-core/src/models/legacy-types.ts
+|index c60769de..8da04bba 100644
+|--- a/packages/botonic-core/src/models/legacy-types.ts
+|+++ b/packages/botonic-core/src/models/legacy-types.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1347
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/botonic-react/src/components/index.ts b/packages/botonic-react/src/components/index.ts
+|index 5ce09577..adb1d96c 100644
+|--- a/packages/botonic-react/src/components/index.ts
+|+++ b/packages/botonic-react/src/components/index.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/packages/botonic-react/src/components/whatsapp-media-carousel.tsx
+patching file b/packages/botonic-react/src/components/whatsapp-product-carousel.tsx
+patching file b/packages/botonic-react/src/components/whatsapp-product-list.tsx
+patching file b/packages/botonic-react/src/components/whatsapp-product.tsx
+patching file b/packages/botonic-react/src/util/functional.ts
+patching file package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+37 out of 37 hunks ignored -- saving rejects to file package-lock.json.rej
+patching file packages/botonic-core/src/models/legacy-types.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/botonic-core/src/models/legacy-types.ts.rej
+patching file packages/botonic-react/src/components/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/botonic-react/src/components/index.ts.rej
+The next patch would create the file packages/botonic-react/src/components/whatsapp-media-carousel.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/botonic-react/src/components/whatsapp-product-carousel.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/botonic-react/src/components/whatsapp-product-list.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/botonic-react/src/components/whatsapp-product.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/botonic-react/src/util/functional.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+ERROR: golden patch failed to apply by all strategies

@@ -1,0 +1,7 @@
+patching file internal/config/starlark_test.go
+patching file tests/setup_test.go
+go: finding module for package go.starlark.net/starlark
+# agola.io/agola/internal/config
+internal/config/starlark_test.go:24:2: cannot find module providing package go.starlark.net/starlark: module lookup disabled by GOPROXY=off
+FAIL	agola.io/agola/internal/config [setup failed]
+reward=0 graded=18 found=0 failed=0 parsed=0 framework=go exit_code=1

@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --test subcommands --no-fail-fast",
+  "test_files": [
+    "tests/subcommands.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(2/4) television::subcommands tv_list_channels",
+    "(3/4) television::subcommands tv_version",
+    "(4/4) television::subcommands tv_help"
+  ],
+  "PASS_TO_PASS": [
+    "(1/4) television::subcommands tv_init_zsh"
+  ]
+}

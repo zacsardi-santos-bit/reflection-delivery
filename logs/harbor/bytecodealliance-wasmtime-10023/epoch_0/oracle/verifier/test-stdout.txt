@@ -1,0 +1,119 @@
+patching file tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw16_addu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i32_atomic_rmw16_addu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw8_addu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i32_atomic_rmw8_addu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw_add.wat (renamed from tests/disas/winch/x64/atomic/rmw/i32_atomic_rmw_add.wat)
+patching file tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw16_addu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw16_addu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw32_addu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw32_addu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw8_addu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw8_addu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw_add.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw_add.wat)
+patching file tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw16_andu.wat
+patching file tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw8_andu.wat
+patching file tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw_and.wat
+patching file tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw16_andu.wat
+patching file tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw32_andu.wat
+patching file tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw8_andu.wat
+patching file tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw_and.wat
+patching file tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw16_oru.wat
+patching file tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw8_oru.wat
+patching file tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw_or.wat
+patching file tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw16_oru.wat
+patching file tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw32_oru.wat
+patching file tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw8_oru.wat
+patching file tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw_or.wat
+patching file tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw16_subu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i32_atomic_rmw16_subu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw8_subu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i32_atomic_rmw8_subu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw_sub.wat (renamed from tests/disas/winch/x64/atomic/rmw/i32_atomic_rmw_sub.wat)
+patching file tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw16_subu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw16_subu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw32_subu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw32_subu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw8_subu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw8_subu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw_sub.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw_sub.wat)
+patching file tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw16_xchgu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i32_atomic_rmw16_xchgu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw8_xchgu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i32_atomic_rmw8_xchgu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw_xchg.wat (renamed from tests/disas/winch/x64/atomic/rmw/i32_atomic_rmw_xchg.wat)
+patching file tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw16_xchgu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw16_xchgu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw32_xchgu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw32_xchgu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw8_xchgu.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw8_xchgu.wat)
+patching file tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw_xchg.wat (renamed from tests/disas/winch/x64/atomic/rmw/i64_atomic_rmw_xchg.wat)
+patching file tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw16_xoru.wat
+patching file tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw8_xoru.wat
+patching file tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw_xor.wat
+patching file tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw16_xoru.wat
+patching file tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw32_xoru.wat
+patching file tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw8_xoru.wat
+patching file tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw_xor.wat
+
+running 42 tests
+winch::x64::atomic::rmw::add::i64_atomic_rmw16_addu ... ok
+winch::x64::atomic::rmw::add::i64_atomic_rmw8_addu ... ok
+winch::x64::atomic::rmw::and::i64_atomic_rmw32_andu ... ok
+winch::x64::atomic::rmw::add::i32_atomic_rmw16_addu ... ok
+winch::x64::atomic::rmw::add::i32_atomic_rmw8_addu ... ok
+winch::x64::atomic::rmw::and::i32_atomic_rmw16_andu ... ok
+winch::x64::atomic::rmw::and::i32_atomic_rmw_and ... ok
+winch::x64::atomic::rmw::and::i64_atomic_rmw16_andu ... ok
+winch::x64::atomic::rmw::add::i64_atomic_rmw32_addu ... ok
+winch::x64::atomic::rmw::or::i32_atomic_rmw_or ... ok
+winch::x64::atomic::rmw::or::i32_atomic_rmw8_oru ... ok
+winch::x64::atomic::rmw::add::i64_atomic_rmw_add ... ok
+winch::x64::atomic::rmw::or::i64_atomic_rmw16_oru ... ok
+winch::x64::atomic::rmw::and::i64_atomic_rmw_and ... ok
+winch::x64::atomic::rmw::add::i32_atomic_rmw_add ... ok
+winch::x64::atomic::rmw::and::i64_atomic_rmw8_andu ... ok
+winch::x64::atomic::rmw::and::i32_atomic_rmw8_andu ... ok
+winch::x64::atomic::rmw::or::i32_atomic_rmw16_oru ... ok
+winch::x64::atomic::rmw::sub::i64_atomic_rmw32_subu ... ok
+winch::x64::atomic::rmw::sub::i64_atomic_rmw_sub ... ok
+winch::x64::atomic::rmw::sub::i32_atomic_rmw16_subu ... ok
+winch::x64::atomic::rmw::sub::i64_atomic_rmw16_subu ... ok
+winch::x64::atomic::rmw::xchg::i32_atomic_rmw_xchg ... ok
+winch::x64::atomic::rmw::or::i64_atomic_rmw_or ... ok
+winch::x64::atomic::rmw::xchg::i64_atomic_rmw32_xchgu ... ok
+winch::x64::atomic::rmw::xchg::i32_atomic_rmw8_xchgu ... ok
+winch::x64::atomic::rmw::or::i64_atomic_rmw32_oru ... ok
+winch::x64::atomic::rmw::xchg::i64_atomic_rmw8_xchgu ... ok
+winch::x64::atomic::rmw::sub::i64_atomic_rmw8_subu ... ok
+winch::x64::atomic::rmw::or::i64_atomic_rmw8_oru ... ok
+winch::x64::atomic::rmw::sub::i32_atomic_rmw_sub ... ok
+winch::x64::atomic::rmw::xchg::i64_atomic_rmw_xchg ... ok
+winch::x64::atomic::rmw::xor::i32_atomic_rmw16_xoru ... ok
+winch::x64::atomic::rmw::xchg::i64_atomic_rmw16_xchgu ... ok
+winch::x64::atomic::rmw::xchg::i32_atomic_rmw16_xchgu ... ok
+winch::x64::atomic::rmw::sub::i32_atomic_rmw8_subu ... ok
+winch::x64::atomic::rmw::xor::i64_atomic_rmw_xor ... ok
+winch::x64::atomic::rmw::xor::i64_atomic_rmw32_xoru ... ok
+winch::x64::atomic::rmw::xor::i32_atomic_rmw8_xoru ... ok
+winch::x64::atomic::rmw::xor::i64_atomic_rmw8_xoru ... ok
+winch::x64::atomic::rmw::xor::i64_atomic_rmw16_xoru ... ok
+winch::x64::atomic::rmw::xor::i32_atomic_rmw_xor ... ok
+
+test result: ok. 42 passed; 0 failed; 0 ignored; 0 measured; 1823 filtered out; finished in 0.09s
+
+   Compiling winch-codegen v30.0.0 (/workspace/repo/winch/codegen)
+   Compiling cranelift-codegen v0.117.0 (/workspace/repo/cranelift/codegen)
+   Compiling cranelift-frontend v0.117.0 (/workspace/repo/cranelift/frontend)
+   Compiling cranelift-native v0.117.0 (/workspace/repo/cranelift/native)
+   Compiling cranelift-module v0.117.0 (/workspace/repo/cranelift/module)
+   Compiling cranelift-interpreter v0.117.0 (/workspace/repo/cranelift/interpreter)
+   Compiling cranelift-reader v0.117.0 (/workspace/repo/cranelift/reader)
+   Compiling cranelift-jit v0.117.0 (/workspace/repo/cranelift/jit)
+   Compiling wasmtime-cranelift v30.0.0 (/workspace/repo/crates/cranelift)
+   Compiling cranelift v0.117.0 (/workspace/repo/cranelift/umbrella)
+   Compiling cranelift-filetests v0.0.0 (/workspace/repo/cranelift/filetests)
+   Compiling wasmtime-winch v30.0.0 (/workspace/repo/crates/winch)
+   Compiling wasmtime v30.0.0 (/workspace/repo/crates/wasmtime)
+   Compiling wiggle v30.0.0 (/workspace/repo/crates/wiggle)
+   Compiling wasmtime-cli-flags v30.0.0 (/workspace/repo/crates/cli-flags)
+   Compiling wasmtime-wasi-config v30.0.0 (/workspace/repo/crates/wasi-config)
+   Compiling wasmtime-wast v30.0.0 (/workspace/repo/crates/wast)
+   Compiling wasmtime-explorer v30.0.0 (/workspace/repo/crates/explorer)
+   Compiling wasmtime-wasi-keyvalue v30.0.0 (/workspace/repo/crates/wasi-keyvalue)
+   Compiling component-test-util v0.0.0 (/workspace/repo/crates/misc/component-test-util)
+   Compiling test-programs-artifacts v0.0.0 (/workspace/repo/crates/test-programs/artifacts)
+   Compiling wasmtime-wasi v30.0.0 (/workspace/repo/crates/wasi)
+   Compiling wasi-common v30.0.0 (/workspace/repo/crates/wasi-common)
+   Compiling wasmtime-wasi-nn v30.0.0 (/workspace/repo/crates/wasi-nn)
+   Compiling wasmtime-wasi-http v30.0.0 (/workspace/repo/crates/wasi-http)
+   Compiling wasmtime-wasi-threads v30.0.0 (/workspace/repo/crates/wasi-threads)
+   Compiling wasmtime-cli v30.0.0 (/workspace/repo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 10s
+     Running tests/disas.rs (target/debug/deps/disas-ded750fc801d177f)
+reward=1 graded=42 found=42 failed=0 parsed=42 framework=lust exit_code=0

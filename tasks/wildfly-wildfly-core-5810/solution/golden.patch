@@ -1,0 +1,633 @@
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/AbstractInstMgrUpdateHandler.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/AbstractInstMgrUpdateHandler.java
+index 6df652866d..846c30d10e 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/AbstractInstMgrUpdateHandler.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/AbstractInstMgrUpdateHandler.java
+@@ -17,6 +17,7 @@ import java.util.Collection;
+ import java.util.List;
+ 
+ import org.jboss.as.controller.AttributeDefinition;
++import org.jboss.as.controller.ModelVersion;
+ import org.jboss.as.controller.ObjectTypeAttributeDefinition;
+ import org.jboss.as.controller.OperationContext;
+ import org.jboss.as.controller.OperationFailedException;
+@@ -63,16 +64,28 @@ abstract class AbstractInstMgrUpdateHandler extends InstMgrOperationStepHandler
+             .addArbitraryDescriptor(FILESYSTEM_PATH, ModelNode.TRUE)
+             .setMinSize(1)
+             .setRequired(false)
+-            .setAlternatives(InstMgrConstants.NO_RESOLVE_LOCAL_CACHE)
++            .setAlternatives(InstMgrConstants.NO_RESOLVE_LOCAL_CACHE, InstMgrConstants.USE_DEFAULT_LOCAL_CACHE)
+             .build();
+ 
++    /**
++     * @deprecated Use USE_DEFAULT_LOCAL_CACHE instead.
++     */
++    @Deprecated(forRemoval = true)
+     protected static final AttributeDefinition NO_RESOLVE_LOCAL_CACHE = SimpleAttributeDefinitionBuilder.create(InstMgrConstants.NO_RESOLVE_LOCAL_CACHE, ModelType.BOOLEAN)
+             .setStorageRuntime()
+             .setRuntimeServiceNotRequired()
+-            .setDefaultValue(ModelNode.FALSE)
+             .setRequired(false)
+             .setStorageRuntime()
+-            .setAlternatives(InstMgrConstants.LOCAL_CACHE)
++            .setAlternatives(InstMgrConstants.LOCAL_CACHE, InstMgrConstants.USE_DEFAULT_LOCAL_CACHE)
++            .setDeprecated(ModelVersion.create(24))
++            .build();
++
++    protected static final AttributeDefinition USE_DEFAULT_LOCAL_CACHE = SimpleAttributeDefinitionBuilder.create(InstMgrConstants.USE_DEFAULT_LOCAL_CACHE, ModelType.BOOLEAN)
++            .setStorageRuntime()
++            .setRuntimeServiceNotRequired()
++            .setRequired(false)
++            .setStorageRuntime()
++            .setAlternatives(InstMgrConstants.LOCAL_CACHE, InstMgrConstants.NO_RESOLVE_LOCAL_CACHE)
+             .build();
+ 
+     AbstractInstMgrUpdateHandler(InstMgrService imService, InstallationManagerFactory imf) {
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrConstants.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrConstants.java
+index 96476cb0ea..2abebd93f1 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrConstants.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrConstants.java
+@@ -53,6 +53,7 @@ public interface InstMgrConstants {
+     String MAVEN_REPO_FILE = "maven-repo-file";
+     String MAVEN_REPO_FILES = "maven-repo-files";
+     String NO_RESOLVE_LOCAL_CACHE = "no-resolve-local-cache";
++    String USE_DEFAULT_LOCAL_CACHE = "use-default-local-cache";
+     String OFFLINE = "offline";
+     String REPOSITORIES = "repositories";
+     String REPOSITORY = "repository";
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrListUpdatesHandler.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrListUpdatesHandler.java
+index 4544a846e9..efaf649265 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrListUpdatesHandler.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrListUpdatesHandler.java
+@@ -59,6 +59,7 @@ public class InstMgrListUpdatesHandler extends AbstractInstMgrUpdateHandler {
+             .addParameter(REPOSITORIES)
+             .addParameter(LOCAL_CACHE)
+             .addParameter(NO_RESOLVE_LOCAL_CACHE)
++            .addParameter(USE_DEFAULT_LOCAL_CACHE)
+             .addParameter(MAVEN_REPO_FILES)
+             .withFlags(OperationEntry.Flag.HOST_CONTROLLER_ONLY)
+             .setRuntimeOnly()
+@@ -72,12 +73,21 @@ public class InstMgrListUpdatesHandler extends AbstractInstMgrUpdateHandler {
+     public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+         final boolean offline = OFFLINE.resolveModelAttribute(context, operation).asBoolean(false);
+         final String pathLocalRepo = LOCAL_CACHE.resolveModelAttribute(context, operation).asStringOrNull();
+-        final boolean noResolveLocalCache = NO_RESOLVE_LOCAL_CACHE.resolveModelAttribute(context, operation).asBoolean(false);
++        final Boolean noResolveLocalCache = NO_RESOLVE_LOCAL_CACHE.resolveModelAttribute(context, operation).asBooleanOrNull();
++        final Boolean useDefaultLocalCache = USE_DEFAULT_LOCAL_CACHE.resolveModelAttribute(context, operation).asBooleanOrNull();
+         final Path localRepository = pathLocalRepo != null ? Path.of(pathLocalRepo) : null;
+         final List<ModelNode> mavenRepoFileIndexes = MAVEN_REPO_FILES.resolveModelAttribute(context, operation).asListOrEmpty();
+         final List<ModelNode> repositoriesMn = REPOSITORIES.resolveModelAttribute(context, operation).asListOrEmpty();
+ 
+-        if (pathLocalRepo != null && noResolveLocalCache) {
++        if (noResolveLocalCache != null && useDefaultLocalCache !=null) {
++            throw InstMgrLogger.ROOT_LOGGER.noResolveLocalCacheWithUseDefaultLocalCache();
++        }
++
++        if (pathLocalRepo != null && useDefaultLocalCache != null && useDefaultLocalCache) {
++            throw InstMgrLogger.ROOT_LOGGER.localCacheWithUseDefaultLocalCache();
++        }
++
++        if (pathLocalRepo != null && noResolveLocalCache !=null && noResolveLocalCache) {
+             throw InstMgrLogger.ROOT_LOGGER.localCacheWithNoResolveLocalCache();
+         }
+ 
+@@ -91,7 +101,10 @@ public class InstMgrListUpdatesHandler extends AbstractInstMgrUpdateHandler {
+                 context.acquireControllerLock();
+                 try {
+                     final Path homeDir = imService.getHomeDir();
+-                    final MavenOptions mavenOptions = new MavenOptions(localRepository, noResolveLocalCache, offline);
++                    boolean noResolveLocalCacheResult = noResolveLocalCache != null
++                            ? noResolveLocalCache
++                            : useDefaultLocalCache == null ? localRepository == null : (!useDefaultLocalCache && localRepository == null);
++                    final MavenOptions mavenOptions = new MavenOptions(localRepository, noResolveLocalCacheResult, offline);
+                     final InstallationManager im = imf.create(homeDir, mavenOptions);
+                     final Path listUpdatesWorkDir = imService.createTempDir("list-updates-");
+ 
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrOperationStepHandler.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrOperationStepHandler.java
+index c1deb0ae4f..5d7ecf4d0e 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrOperationStepHandler.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrOperationStepHandler.java
+@@ -101,7 +101,7 @@ abstract class InstMgrOperationStepHandler implements OperationStepHandler {
+             List<Path> entries = content
+                     .filter(e -> e.toFile().isDirectory() && e.getFileName().toString().equals(InstMgrConstants.MAVEN_REPO_DIR_NAME_IN_ZIP_FILES))
+                     .collect(Collectors.toList());
+-            if (entries.isEmpty() || entries.size() != 1) {
++            if (entries.size() != 1) {
+                 throw InstMgrLogger.ROOT_LOGGER.invalidZipEntry(InstMgrConstants.MAVEN_REPO_DIR_NAME_IN_ZIP_FILES);
+             }
+ 
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrPrepareRevertHandler.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrPrepareRevertHandler.java
+index 22a567f15c..eaffed1b9b 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrPrepareRevertHandler.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrPrepareRevertHandler.java
+@@ -80,13 +80,22 @@ public class InstMgrPrepareRevertHandler extends AbstractInstMgrUpdateHandler {
+     public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+         final boolean offline = OFFLINE.resolveModelAttribute(context, operation).asBoolean(false);
+         final String pathLocalRepo = LOCAL_CACHE.resolveModelAttribute(context, operation).asStringOrNull();
+-        final boolean noResolveLocalCache = NO_RESOLVE_LOCAL_CACHE.resolveModelAttribute(context, operation).asBoolean(false);
++        final Boolean noResolveLocalCache = NO_RESOLVE_LOCAL_CACHE.resolveModelAttribute(context, operation).asBooleanOrNull();
++        final Boolean useDefaultLocalCache = USE_DEFAULT_LOCAL_CACHE.resolveModelAttribute(context, operation).asBooleanOrNull();
+         final Path localRepository = pathLocalRepo != null ? Path.of(pathLocalRepo) : null;
+         final List<ModelNode> mavenRepoFileIndexes = MAVEN_REPO_FILES.resolveModelAttribute(context, operation).asListOrEmpty();
+         final List<ModelNode> repositoriesMn = REPOSITORIES.resolveModelAttribute(context, operation).asListOrEmpty();
+         final String revision = REVISION.resolveModelAttribute(context, operation).asString();
+ 
+-        if (pathLocalRepo != null && noResolveLocalCache) {
++        if (noResolveLocalCache != null && useDefaultLocalCache !=null) {
++            throw InstMgrLogger.ROOT_LOGGER.noResolveLocalCacheWithUseDefaultLocalCache();
++        }
++
++        if (pathLocalRepo != null && useDefaultLocalCache != null && useDefaultLocalCache) {
++            throw InstMgrLogger.ROOT_LOGGER.localCacheWithUseDefaultLocalCache();
++        }
++
++        if (pathLocalRepo != null && noResolveLocalCache != null && noResolveLocalCache) {
+             throw InstMgrLogger.ROOT_LOGGER.localCacheWithNoResolveLocalCache();
+         }
+ 
+@@ -106,7 +115,10 @@ public class InstMgrPrepareRevertHandler extends AbstractInstMgrUpdateHandler {
+                     imService.beginCandidateServer();
+                     addCompleteStep(context, imService, null);
+                     final Path homeDir = imService.getHomeDir();
+-                    final MavenOptions mavenOptions = new MavenOptions(localRepository, noResolveLocalCache, offline);
++                    boolean noResolveLocalCacheResult = noResolveLocalCache != null
++                            ? noResolveLocalCache
++                            : useDefaultLocalCache == null ? localRepository == null : (!useDefaultLocalCache && localRepository == null);
++                    final MavenOptions mavenOptions = new MavenOptions(localRepository, noResolveLocalCacheResult, offline);
+                     final InstallationManager im = imf.create(homeDir, mavenOptions);
+ 
+                     final List<Repository> repositories = new ArrayList<>();
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrPrepareUpdateHandler.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrPrepareUpdateHandler.java
+index 1e39aab694..ee1aad22d4 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrPrepareUpdateHandler.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/InstMgrPrepareUpdateHandler.java
+@@ -69,6 +69,7 @@ public class InstMgrPrepareUpdateHandler extends AbstractInstMgrUpdateHandler {
+             .addParameter(REPOSITORIES)
+             .addParameter(LOCAL_CACHE)
+             .addParameter(NO_RESOLVE_LOCAL_CACHE)
++            .addParameter(USE_DEFAULT_LOCAL_CACHE)
+             .addParameter(MAVEN_REPO_FILES)
+             .addParameter(LIST_UPDATES_WORK_DIR)
+             .withFlags(OperationEntry.Flag.HOST_CONTROLLER_ONLY)
+@@ -83,13 +84,22 @@ public class InstMgrPrepareUpdateHandler extends AbstractInstMgrUpdateHandler {
+     public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+         final boolean offline = OFFLINE.resolveModelAttribute(context, operation).asBoolean(false);
+         final String pathLocalRepo = LOCAL_CACHE.resolveModelAttribute(context, operation).asStringOrNull();
+-        final boolean noResolveLocalCache = NO_RESOLVE_LOCAL_CACHE.resolveModelAttribute(context, operation).asBoolean(false);
++        final Boolean noResolveLocalCache = NO_RESOLVE_LOCAL_CACHE.resolveModelAttribute(context, operation).asBooleanOrNull();
++        final Boolean useDefaultLocalCache = USE_DEFAULT_LOCAL_CACHE.resolveModelAttribute(context, operation).asBooleanOrNull();
+         final Path localRepository = pathLocalRepo != null ? Path.of(pathLocalRepo) : null;
+         final List<ModelNode> mavenRepoFileIndexes = MAVEN_REPO_FILES.resolveModelAttribute(context, operation).asListOrEmpty();
+         final List<ModelNode> repositoriesMn = REPOSITORIES.resolveModelAttribute(context, operation).asListOrEmpty();
+         final String listUpdatesWorkDir = LIST_UPDATES_WORK_DIR.resolveModelAttribute(context, operation).asStringOrNull();
+ 
+-        if (pathLocalRepo != null && noResolveLocalCache) {
++        if (noResolveLocalCache != null && useDefaultLocalCache != null) {
++            throw InstMgrLogger.ROOT_LOGGER.noResolveLocalCacheWithUseDefaultLocalCache();
++        }
++
++        if (pathLocalRepo != null && useDefaultLocalCache != null && useDefaultLocalCache) {
++            throw InstMgrLogger.ROOT_LOGGER.localCacheWithUseDefaultLocalCache();
++        }
++
++        if (pathLocalRepo != null && noResolveLocalCache!= null && noResolveLocalCache) {
+             throw InstMgrLogger.ROOT_LOGGER.localCacheWithNoResolveLocalCache();
+         }
+ 
+@@ -114,7 +124,11 @@ public class InstMgrPrepareUpdateHandler extends AbstractInstMgrUpdateHandler {
+                     addCompleteStep(context, imService, null);
+ 
+                     final Path homeDir = imService.getHomeDir();
+-                    final MavenOptions mavenOptions = new MavenOptions(localRepository, noResolveLocalCache, offline);
++
++                    boolean noResolveLocalCacheResult = noResolveLocalCache != null
++                            ? noResolveLocalCache
++                            : useDefaultLocalCache == null ? localRepository == null : (!useDefaultLocalCache && localRepository == null);
++                    final MavenOptions mavenOptions = new MavenOptions(localRepository, noResolveLocalCacheResult, offline);
+                     final InstallationManager im = imf.create(homeDir, mavenOptions);
+ 
+                     final List<Repository> repositories = new ArrayList<>();
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/AbstractInstMgrCommand.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/AbstractInstMgrCommand.java
+index 656f7ba9fb..578f77b9ae 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/AbstractInstMgrCommand.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/AbstractInstMgrCommand.java
+@@ -10,6 +10,8 @@ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.COR
+ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.HOST;
+ import static org.wildfly.core.instmgr.cli.UpdateCommand.CONFIRM_OPTION;
+ import static org.wildfly.core.instmgr.cli.UpdateCommand.DRY_RUN_OPTION;
++import static org.wildfly.core.instmgr.cli.UpdateCommand.NO_RESOLVE_LOCAL_CACHE_OPTION;
++import static org.wildfly.core.instmgr.cli.UpdateCommand.USE_DEFAULT_LOCAL_CACHE_OPTION;
+ 
+ import java.io.IOException;
+ import java.net.MalformedURLException;
+@@ -45,6 +47,8 @@ import org.wildfly.core.instmgr.InstMgrConstants;
+ @CommandDefinition(name = "abstract-inst-mgr-cmd", description = "", activator = InstMgrActivator.class)
+ public abstract class AbstractInstMgrCommand implements Command<CLICommandInvocation> {
+     static final PathElement CORE_SERVICE_INSTALLER = PathElement.pathElement(CORE_SERVICE, InstMgrGroupCommand.COMMAND_NAME);
++    static final String NO_RESOLVE_LOCAL_CACHE_OPTION= "no-resolve-local-cache";
++    static final String USE_DEFAULT_LOCAL_CACHE_OPTION = "use-default-local-cache";
+ 
+     @Option(name = "host", completer = AbstractInstMgrCommand.HostsCompleter.class, activator = AbstractInstMgrCommand.HostsActivator.class)
+     protected String host;
+@@ -121,6 +125,18 @@ public abstract class AbstractInstMgrCommand implements Command<CLICommandInvoca
+         }
+     }
+ 
++    public static class UseDefaultLocalCacheActivator extends AbstractRejectOptionActivator {
++        public UseDefaultLocalCacheActivator() {
++            super(NO_RESOLVE_LOCAL_CACHE_OPTION);
++        }
++    }
++
++    public static class NoResolveLocalCacheActivator extends AbstractRejectOptionActivator {
++        public NoResolveLocalCacheActivator() {
++            super(USE_DEFAULT_LOCAL_CACHE_OPTION);
++        }
++    }
++
+     public static class HostsCompleter implements OptionCompleter<CLICompleterInvocation> {
+         @Override
+         public void complete(CLICompleterInvocation completerInvocation) {
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/ListUpdatesAction.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/ListUpdatesAction.java
+index 35fa39ac45..29a367fa96 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/ListUpdatesAction.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/ListUpdatesAction.java
+@@ -24,7 +24,8 @@ public class ListUpdatesAction extends AbstractInstMgrCommand {
+     private final List<File> mavenRepoFiles;
+     private final List<String> repositories;
+     private final Path localCache;
+-    private final boolean noResolveLocalCache;
++    private final Boolean noResolveLocalCache;
++    private final Boolean useDefaultLocalCache;
+     private final boolean offline;
+     private final ModelNode headers;
+ 
+@@ -35,6 +36,7 @@ public class ListUpdatesAction extends AbstractInstMgrCommand {
+         this.noResolveLocalCache = builder.noResolveLocalCache;
+         this.offline = builder.offline;
+         this.headers = builder.headers;
++        this.useDefaultLocalCache = builder.useDefaultLocalCache;
+     }
+ 
+     @Override
+@@ -59,7 +61,14 @@ public class ListUpdatesAction extends AbstractInstMgrCommand {
+             op.get(InstMgrConstants.LOCAL_CACHE).set(localCache.normalize().toAbsolutePath().toString());
+         }
+ 
+-        op.get(InstMgrConstants.NO_RESOLVE_LOCAL_CACHE).set(noResolveLocalCache);
++        if (useDefaultLocalCache != null) {
++            op.get(InstMgrConstants.USE_DEFAULT_LOCAL_CACHE).set(useDefaultLocalCache);
++        }
++
++        if (noResolveLocalCache != null) {
++            op.get(InstMgrConstants.NO_RESOLVE_LOCAL_CACHE).set(noResolveLocalCache);
++        }
++
+         op.get(InstMgrConstants.OFFLINE).set(offline);
+ 
+         if (this.headers != null && headers.isDefined()) {
+@@ -76,12 +85,12 @@ public class ListUpdatesAction extends AbstractInstMgrCommand {
+         private List<String> repositories;
+         private Path localCache;
+ 
+-        private boolean noResolveLocalCache;
++        private Boolean noResolveLocalCache;
++        private Boolean useDefaultLocalCache;
+ 
+         public Builder() {
+             this.repositories = new ArrayList<>();
+             this.offline = false;
+-            this.noResolveLocalCache = false;
+             this.mavenRepoFiles = new ArrayList<>();
+         }
+ 
+@@ -94,7 +103,7 @@ public class ListUpdatesAction extends AbstractInstMgrCommand {
+ 
+         public Builder setRepositories(List<String> repositories) {
+             if (repositories != null) {
+-                this.repositories = new ArrayList<>(repositories);
++                this.repositories.addAll(repositories);
+             }
+             return this;
+         }
+@@ -106,11 +115,16 @@ public class ListUpdatesAction extends AbstractInstMgrCommand {
+             return this;
+         }
+ 
+-        public Builder setNoResolveLocalCache(boolean noResolveLocalCache) {
++        public Builder setNoResolveLocalCache(Boolean noResolveLocalCache) {
+             this.noResolveLocalCache = noResolveLocalCache;
+             return this;
+         }
+ 
++        public Builder setUseDefaultLocalCache(Boolean useDefaultLocalCache) {
++            this.useDefaultLocalCache = useDefaultLocalCache;
++            return this;
++        }
++
+         public Builder setOffline(boolean offline) {
+             this.offline = offline;
+             return this;
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/PrepareUpdateAction.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/PrepareUpdateAction.java
+index 0a1af5466a..9dc61a4c65 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/PrepareUpdateAction.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/PrepareUpdateAction.java
+@@ -25,7 +25,8 @@ public class PrepareUpdateAction extends AbstractInstMgrCommand {
+     private final List<File> mavenRepoFiles;
+     private final List<String> repositories;
+     private final Path localCache;
+-    private final boolean noResolveLocalCache;
++    private final Boolean noResolveLocalCache;
++    private final Boolean useDefaultLocalCache;
+ 
+     private final Path listUpdatesWorkDir;
+ 
+@@ -38,6 +39,7 @@ public class PrepareUpdateAction extends AbstractInstMgrCommand {
+         this.repositories = builder.repositories;
+         this.localCache = builder.localCache;
+         this.noResolveLocalCache = builder.noResolveLocalCache;
++        this.useDefaultLocalCache = builder.useDefaultLocalCache;
+         this.listUpdatesWorkDir = builder.listUpdatesWorkDir;
+         this.offline = builder.offline;
+         this.headers = builder.headers;
+@@ -65,7 +67,14 @@ public class PrepareUpdateAction extends AbstractInstMgrCommand {
+             op.get(InstMgrConstants.LOCAL_CACHE).set(localCache.normalize().toAbsolutePath().toString());
+         }
+ 
+-        op.get(InstMgrConstants.NO_RESOLVE_LOCAL_CACHE).set(noResolveLocalCache);
++        if (noResolveLocalCache != null) {
++            op.get(InstMgrConstants.NO_RESOLVE_LOCAL_CACHE).set(noResolveLocalCache);
++        }
++
++        if (useDefaultLocalCache != null) {
++            op.get(InstMgrConstants.USE_DEFAULT_LOCAL_CACHE).set(useDefaultLocalCache);
++        }
++
+         op.get(InstMgrConstants.OFFLINE).set(offline);
+ 
+         if (listUpdatesWorkDir != null) {
+@@ -86,13 +95,12 @@ public class PrepareUpdateAction extends AbstractInstMgrCommand {
+         private List<String> repositories;
+         private Path localCache;
+ 
+-        private boolean noResolveLocalCache;
++        private Boolean noResolveLocalCache;
++        private Boolean useDefaultLocalCache;
+         private Path listUpdatesWorkDir;
+ 
+         public Builder() {
+             this.repositories = new ArrayList<>();
+-            this.offline = false;
+-            this.noResolveLocalCache = false;
+             this.mavenRepoFiles = new ArrayList<>();
+         }
+ 
+@@ -103,7 +111,7 @@ public class PrepareUpdateAction extends AbstractInstMgrCommand {
+ 
+         public Builder setRepositories(List<String> repositories) {
+             if (repositories != null) {
+-                this.repositories = new ArrayList<>(repositories);
++                this.repositories.addAll(repositories);
+             }
+             return this;
+         }
+@@ -115,11 +123,16 @@ public class PrepareUpdateAction extends AbstractInstMgrCommand {
+             return this;
+         }
+ 
+-        public Builder setNoResolveLocalCache(boolean noResolveLocalCache) {
++        public Builder setNoResolveLocalCache(Boolean noResolveLocalCache) {
+             this.noResolveLocalCache = noResolveLocalCache;
+             return this;
+         }
+ 
++        public Builder setUseDefaultLocalCache(Boolean useDefaultLocalCache) {
++            this.useDefaultLocalCache = useDefaultLocalCache;
++            return this;
++        }
++
+         public Builder setOffline(boolean offline) {
+             this.offline = offline;
+             return this;
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/RevertCommand.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/RevertCommand.java
+index 9b2dd743f9..c67f0a98ed 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/RevertCommand.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/RevertCommand.java
+@@ -19,6 +19,7 @@ import org.jboss.as.cli.CommandContext;
+ import org.jboss.as.cli.Util;
+ import org.jboss.as.cli.impl.aesh.cmd.HeadersCompleter;
+ import org.jboss.as.cli.impl.aesh.cmd.HeadersConverter;
++import org.jboss.as.cli.operation.ParsedCommandLine;
+ import org.jboss.as.controller.client.ModelControllerClient;
+ import org.jboss.as.controller.client.Operation;
+ import org.jboss.as.controller.client.OperationBuilder;
+@@ -33,8 +34,10 @@ public class RevertCommand extends AbstractInstMgrCommand {
+     private List<String> repositories;
+     @Option(name = "local-cache")
+     private File localCache;
+-    @Option(name = "no-resolve-local-cache", hasValue = false)
++    @Option(name = NO_RESOLVE_LOCAL_CACHE_OPTION, hasValue = false, activator = AbstractInstMgrCommand.NoResolveLocalCacheActivator.class)
+     private boolean noResolveLocalCache;
++    @Option(name = USE_DEFAULT_LOCAL_CACHE_OPTION, hasValue = false, activator = AbstractInstMgrCommand.UseDefaultLocalCacheActivator.class)
++    private boolean useDefaultLocalCache;
+     @Option(name = "offline", hasValue = false)
+     private boolean offline;
+     @OptionList(name = "maven-repo-files")
+@@ -45,6 +48,9 @@ public class RevertCommand extends AbstractInstMgrCommand {
+     @Option(converter = HeadersConverter.class, completer = HeadersCompleter.class)
+     public ModelNode headers;
+ 
++    private Boolean optNoResolveLocalCache;
++    private Boolean optUseDefaultLocalCache;
++
+     @Override
+     public CommandResult execute(CLICommandInvocation commandInvocation) throws CommandException, InterruptedException {
+         final CommandContext ctx = commandInvocation.getCommandContext();
+@@ -54,6 +60,14 @@ public class RevertCommand extends AbstractInstMgrCommand {
+             return CommandResult.FAILURE;
+         }
+ 
++        ParsedCommandLine cmdParser = ctx.getParsedCommandLine();
++        optNoResolveLocalCache = cmdParser.hasProperty("--" + NO_RESOLVE_LOCAL_CACHE_OPTION) ? noResolveLocalCache : null;
++        optUseDefaultLocalCache = cmdParser.hasProperty("--" + USE_DEFAULT_LOCAL_CACHE_OPTION) ? useDefaultLocalCache : null;
++
++        if (optNoResolveLocalCache != null && optUseDefaultLocalCache != null) {
++            throw new CommandException(String.format("%s and %s cannot be used at the same time.", NO_RESOLVE_LOCAL_CACHE_OPTION, USE_DEFAULT_LOCAL_CACHE_OPTION));
++        }
++
+         commandInvocation.println("\nThe new installation is being prepared ...\n");
+         this.executeOp(ctx, this.host);
+         ctx.printLine("The candidate server has been generated. To apply it, restart the server with 'shutdown --perform-installation' command.");
+@@ -83,7 +97,14 @@ public class RevertCommand extends AbstractInstMgrCommand {
+             op.get(InstMgrConstants.LOCAL_CACHE).set(localCache.toPath().normalize().toAbsolutePath().toString());
+         }
+ 
+-        op.get(InstMgrConstants.NO_RESOLVE_LOCAL_CACHE).set(noResolveLocalCache);
++        if (optNoResolveLocalCache != null) {
++            op.get(InstMgrConstants.NO_RESOLVE_LOCAL_CACHE).set(noResolveLocalCache);
++        }
++
++        if (optUseDefaultLocalCache != null) {
++            op.get(InstMgrConstants.USE_DEFAULT_LOCAL_CACHE).set(useDefaultLocalCache);
++        }
++
+         op.get(InstMgrConstants.OFFLINE).set(offline);
+ 
+         if (revision != null) {
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/UpdateCommand.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/UpdateCommand.java
+index 8939a7ef21..52ebf8993d 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/UpdateCommand.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/cli/UpdateCommand.java
+@@ -20,6 +20,7 @@ import org.jboss.as.cli.CommandContext;
+ import org.jboss.as.cli.Util;
+ import org.jboss.as.cli.impl.aesh.cmd.HeadersCompleter;
+ import org.jboss.as.cli.impl.aesh.cmd.HeadersConverter;
++import org.jboss.as.cli.operation.ParsedCommandLine;
+ import org.jboss.as.controller.client.ModelControllerClient;
+ import org.jboss.as.controller.client.Operation;
+ import org.jboss.dmr.ModelNode;
+@@ -38,8 +39,10 @@ public class UpdateCommand extends AbstractInstMgrCommand {
+     private List<String> repositories;
+     @Option(name = "local-cache")
+     private File localCache;
+-    @Option(name = "no-resolve-local-cache", hasValue = false)
++    @Option(name = NO_RESOLVE_LOCAL_CACHE_OPTION, hasValue = false, activator = AbstractInstMgrCommand.NoResolveLocalCacheActivator.class, defaultValue = "true")
+     private boolean noResolveLocalCache;
++    @Option(name = USE_DEFAULT_LOCAL_CACHE_OPTION, hasValue = false, activator = AbstractInstMgrCommand.UseDefaultLocalCacheActivator.class)
++    private boolean useDefaultLocalCache;
+     @Option(name = "offline", hasValue = false)
+     private boolean offline;
+     @OptionList(name = "maven-repo-files")
+@@ -61,8 +64,13 @@ public class UpdateCommand extends AbstractInstMgrCommand {
+             throw new CommandException(String.format("%s and %s cannot be used at the same time.", CONFIRM_OPTION, DRY_RUN_OPTION));
+         }
+ 
++        ParsedCommandLine cmdParser = ctx.getParsedCommandLine();
++        final Boolean optNoResolveLocalCache = cmdParser.hasProperty("--" + NO_RESOLVE_LOCAL_CACHE_OPTION) ? noResolveLocalCache : null;
++        final Boolean optUseDefaultLocalCache = cmdParser.hasProperty("--" + USE_DEFAULT_LOCAL_CACHE_OPTION) ? useDefaultLocalCache : null;
++
+         ListUpdatesAction.Builder listUpdatesCmdBuilder = new ListUpdatesAction.Builder()
+-                .setNoResolveLocalCache(noResolveLocalCache)
++                .setNoResolveLocalCache(optNoResolveLocalCache)
++                .setUseDefaultLocalCache(optUseDefaultLocalCache)
+                 .setLocalCache(localCache)
+                 .setRepositories(repositories)
+                 .setMavenRepoFiles(mavenRepoFiles)
+@@ -119,7 +127,8 @@ public class UpdateCommand extends AbstractInstMgrCommand {
+                 commandInvocation.println("\nThe new installation is being prepared ...\n");
+                 // trigger an prepare-update
+                 PrepareUpdateAction.Builder prepareUpdateActionBuilder = new PrepareUpdateAction.Builder()
+-                        .setNoResolveLocalCache(noResolveLocalCache)
++                        .setNoResolveLocalCache(optNoResolveLocalCache)
++                        .setUseDefaultLocalCache(optUseDefaultLocalCache)
+                         .setLocalCache(localCache)
+                         .setRepositories(repositories)
+                         .setOffline(offline)
+@@ -146,7 +155,7 @@ public class UpdateCommand extends AbstractInstMgrCommand {
+         int maxLength = 0;
+         for (ModelNode artifactChange : changesMn) {
+             String channelName = artifactChange.get(InstMgrConstants.HISTORY_DETAILED_ARTIFACT_NAME).asString();
+-            maxLength = maxLength < channelName.length() ? channelName.length() : maxLength;
++            maxLength = Math.max(maxLength, channelName.length());
+         }
+         maxLength += 1;
+ 
+diff --git a/installation-manager/src/main/java/org/wildfly/core/instmgr/logging/InstMgrLogger.java b/installation-manager/src/main/java/org/wildfly/core/instmgr/logging/InstMgrLogger.java
+index 262fc3265c..bffbfa5800 100644
+--- a/installation-manager/src/main/java/org/wildfly/core/instmgr/logging/InstMgrLogger.java
++++ b/installation-manager/src/main/java/org/wildfly/core/instmgr/logging/InstMgrLogger.java
+@@ -81,6 +81,12 @@ public interface InstMgrLogger extends BasicLogger {
+     @Message(id = 20, value = "No custom patches installed found for the specified manifest maven coordinates: '%s'")
+     OperationFailedException noCustomPatchFound(String manifestGA);
+ 
++    @Message(id = 21, value = "You cannot use the 'local-cache' option when the 'use-default-local-cache' option is enabled.")
++    OperationFailedException localCacheWithUseDefaultLocalCache();
++
++    @Message(id = 22, value = "'no-resolve-local-cache' and 'use-default-local-cache' are mutually exclusive (specify only one).")
++    OperationFailedException noResolveLocalCacheWithUseDefaultLocalCache();
++
+     ////////////////////////////////////////////////
+     // Messages without IDs
+ 
+@@ -89,4 +95,6 @@ public interface InstMgrLogger extends BasicLogger {
+ 
+     @Message(id = Message.NONE, value = "The structure of directories and files in the .zip file is invalid. The '%s' directory cannot be found as a second-level entry in the extracted .zip file.")
+     ZipException invalidZipEntry(String directory);
++
++
+ }
+diff --git a/installation-manager/src/main/resources/org/wildfly/core/instmgr/LocalDescriptions.properties b/installation-manager/src/main/resources/org/wildfly/core/instmgr/LocalDescriptions.properties
+index c2b65ac3c7..4b6c3af169 100644
+--- a/installation-manager/src/main/resources/org/wildfly/core/instmgr/LocalDescriptions.properties
++++ b/installation-manager/src/main/resources/org/wildfly/core/instmgr/LocalDescriptions.properties
+@@ -26,6 +26,8 @@ installation-manager.list-updates.offline=Perform installation from local or fil
+ installation-manager.list-updates.repositories=Remote Maven repositories that contain the artifacts required to install the application server (multiple repositories are separated by commas). These repositories will override any other configured repositories in all channels for this operation only. Valid values are either URLs or ID::URL pairs.
+ installation-manager.list-updates.local-cache=Path to the local Maven repository cache. It overrides the default Maven repository at ~/.m2/repository.
+ installation-manager.list-updates.no-resolve-local-cache=Perform the operation without resolving or installing artifacts from/into local maven cache.
++installation-manager.list-updates.no-resolve-local-cache.deprecated=Use use-default-local-cache instead.
++installation-manager.list-updates.use-default-local-cache=Enable caching and resolving artifacts from the default local Maven repository.
+ installation-manager.list-updates.maven-repo-file=The index of the Maven Repository Zip file stream attached to the current operation. The Maven Repository Zip file contains the necessary artifacts to provide the server candidate with the most recently available updates.
+ installation-manager.list-updates.maven-repo-files=The indexes of the Maven Repository Zip file streams attached to the current operation. The Maven Repository Zip file contains the necessary artifacts to provide the server candidate with the most recently available updates.
+ 
+@@ -35,6 +37,8 @@ installation-manager.prepare-updates.offline=Perform installation from local or
+ installation-manager.prepare-updates.repositories=Remote Maven repositories that contain the artifacts required to install the application server. Specify multiple repositories separated by commas. These repositories will override any other configured repositories in all channels for this operation only. Valid values are either URLs or ID::URL pairs.
+ installation-manager.prepare-updates.local-cache=Path to the local Maven repository cache. It overrides the default Maven repository at ~/.m2/repository.
+ installation-manager.prepare-updates.no-resolve-local-cache=Perform the operation without resolving or installing artifacts from/into local maven cache.
++installation-manager.prepare-updates.no-resolve-local-cache.deprecated=Use use-default-local-cache instead.
++installation-manager.prepare-updates.use-default-local-cache=Enable caching and resolving artifacts from the default local Maven repository.
+ installation-manager.prepare-updates.maven-repo-file=The index of the Maven Repository Zip file stream attached to the current operation. The Maven Repository Zip file contains the necessary artifacts to provide the server candidate with the most recently available updates.
+ installation-manager.prepare-updates.maven-repo-files=The indexes of the Maven Repository Zip file streams attached to the current operation. The Maven Repository Zip file contains the necessary artifacts to provide the server candidate with the most recently available updates.
+ installation-manager.prepare-updates.work-dir=Directory name relative to the file system of the target server, that contains the Maven repository which provides a server candidate with the most recently available updates.
+@@ -46,6 +50,8 @@ installation-manager.prepare-revert.offline=Perform installation from local or f
+ installation-manager.prepare-revert.repositories=Remote Maven repositories that contain the artifacts required to install the application server (multiple repositories are separated by commas). These repositories will override any other configured repositories in all channels for this operation only. Valid values are either URLs or ID::URL pairs.
+ installation-manager.prepare-revert.local-cache=Path to the local Maven repository cache. It overrides the default Maven repository at ~/.m2/repository.
+ installation-manager.prepare-revert.no-resolve-local-cache=Perform the operation without resolving or installing artifacts from/into local maven cache.
++installation-manager.prepare-revert.no-resolve-local-cache.deprecated=Use use-default-local-cache instead.
++installation-manager.prepare-revert.use-default-local-cache=Enable caching and resolving artifacts from the default local Maven repository.
+ installation-manager.prepare-revert.maven-repo-file=The index of the Maven Repository Zip file stream attached to the current operation. The Maven Repository Zip file contains the necessary artifacts to provide the server candidate with the most recently available updates.
+ installation-manager.prepare-revert.maven-repo-files=The indexes of the Maven Repository Zip file streams attached to the current operation. The Maven Repository Zip file contains the necessary artifacts to provide the server candidate with the most recently available updates.
+ 
+diff --git a/installation-manager/src/main/resources/org/wildfly/core/instmgr/cli/command_resources.properties b/installation-manager/src/main/resources/org/wildfly/core/instmgr/cli/command_resources.properties
+index 2655103e37..f339861ac3 100644
+--- a/installation-manager/src/main/resources/org/wildfly/core/instmgr/cli/command_resources.properties
++++ b/installation-manager/src/main/resources/org/wildfly/core/instmgr/cli/command_resources.properties
+@@ -103,13 +103,16 @@ installer.revert.option.local-cache.description=\
+   system of the remote machine to which the JBoss CLI is connected.
+ 
+ installer.revert.option.no-resolve-local-cache.description=\
+-  Perform the operation without resolving or installing artifacts from/into the local maven cache.
++  Deprecated, use 'use-default-local-cache' instead. Perform the operation without resolving or installing artifacts from/into the local maven cache.
++
++installer.revert.option.use-default-local-cache.description=\
++  Enable caching and resolving artifacts from the default local Maven repository.
+ 
+ installer.revert.option.offline.description=\
+   Perform installation from local or file-system Maven repositories only.
+ 
+-installer.revert.option.maven-repo-file.description=\
+-  The location of the local Maven repository zip File. The file contains the necessary artifacts to prepare the server candidate we want to apply.
++installer.revert.option.maven-repo-files.description=\
++  Comma separated list of individual Maven repository zip Files that contain the necessary artifacts to prepare the server candidate we want to apply.
+ 
+ installer.revert.option.revision.description=\
+   Hash of an installation state of the previous version. The base server will be reverted to this installation state.
+@@ -157,7 +160,10 @@ installer.update.option.local-cache.description=\
+   system of the remote machine to which the JBoss CLI is connected.
+ 
+ installer.update.option.no-resolve-local-cache.description=\
+-  Perform the operation without resolving or installing artifacts from/into the local maven cache.
++  Deprecated, use 'use-default-local-cache' instead. Perform the operation without resolving or installing artifacts from/into the local maven cache.
++
++installer.update.option.use-default-local-cache.description=\
++  Enable caching and resolving artifacts from the default local Maven repository.
+ 
+ installer.update.option.offline.description=\
+   Perform installation from local or file-system Maven repositories only.
+@@ -166,6 +172,8 @@ installer.update.option.headers.description=\
+   Any operation headers. Depending on the target environment, preparing a server could take time because all the required artifacts need to be downloaded to provision \
+   the server candidate. You can use the operation headers to increase the default blocking timeout which is 300 seconds.
+ 
++installer.update.option.maven-repo-files.description=\
++  Comma separated list of individual Maven repository zip Files that contain the necessary artifacts to prepare the server candidate we want to apply.
+ 
+ # UPLOAD CUSTOM PATCHES
+ installer.upload-custom-patch.description=\

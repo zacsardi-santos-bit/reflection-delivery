@@ -1,0 +1,42 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && node scripts/ts-wrapper.js scripts/generateCliCode.ts pkg/rancher-desktop/assets/specs/command-api.yaml src/go/rdctl/pkg/options/generated/options.go && cd /workspace/repo/src/go/rdctl && go test -json ./pkg/plist ./pkg/reg -count=1",
+  "test_files": [
+    "bats/tests/helpers/vm.bash",
+    "bats/tests/preferences/surface-invalid-args.bats",
+    "e2e/backend.e2e.spec.ts",
+    "e2e/rdctl.e2e.spec.ts",
+    "pkg/rancher-desktop/config/__tests__/settings.spec.ts",
+    "pkg/rancher-desktop/config/__tests__/settingsMigrations.spec.ts",
+    "pkg/rancher-desktop/main/commandServer/__tests__/settingsValidator.spec.ts",
+    "src/go/rdctl/pkg/plist/plist_test.go",
+    "src/go/rdctl/pkg/reg/reg_test.go"
+  ],
+  "num_test_files": 9,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/plist::TestJsonToPlistFormat/handles_empty_bodies",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/plist::TestJsonToPlistFormat/Handles_arrays",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/plist::TestJsonToPlistFormat/Handles_everything",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/plist::TestJsonToPlistFormat/Escapes_problematic_strings",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/plist::TestJsonToPlistFormat",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/handles_empty_bodies",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/Handles_arrays",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/It_handles_a_full_settings_file",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/complains_about_bad_arguments/bad-hive:defaults",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/complains_about_bad_arguments/bad-hive:locked",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/complains_about_bad_arguments/hkcu:bad-profile",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/complains_about_bad_arguments/hklm:bad-profile",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/complains_about_bad_arguments",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/converts_the_registry-type_arguments_into_reg_headers/hkcu:defaults",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/converts_the_registry-type_arguments_into_reg_headers/hklm:defaults",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/converts_the_registry-type_arguments_into_reg_headers/hkcu:locked",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/converts_the_registry-type_arguments_into_reg_headers/hklm:locked",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/converts_the_registry-type_arguments_into_reg_headers",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/Handles_maps",
+    "github.com/rancher-sandbox/rancher-desktop/src/go/rdctl/pkg/reg::TestJsonToRegFormat/In_each_node,_it_first_writes_out_scalar_values_before_writing_out_sub-objects"
+  ]
+}

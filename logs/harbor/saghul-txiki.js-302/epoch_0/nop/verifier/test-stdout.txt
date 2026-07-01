@@ -1,0 +1,3 @@
+patching file tests/test-posix-socket.js
+posixsocket::test : FAIL
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cppunit exit_code=0

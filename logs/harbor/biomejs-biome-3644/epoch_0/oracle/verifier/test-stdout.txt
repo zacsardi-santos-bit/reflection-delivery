@@ -1,0 +1,12 @@
+patching file crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/invalid.jsx
+patching file crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/invalid.jsx.snap
+patching file crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/valid.jsx
+patching file crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/valid.jsx.snap
+
+running 2 tests
+PASS [   0.00s] specs::nursery::use_aria_props_supported_by_role::valid_jsx
+PASS [   0.00s] specs::nursery::use_aria_props_supported_by_role::invalid_jsx
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1018 filtered out; finished in 0.36s
+
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

@@ -1,0 +1,23 @@
+{
+ "task": "gopherjs-gopherjs-1333",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P gate runs 'gopherjs test -c -o /tmp/ft.js crypto/internal/edwards25519/field'; test overlay fe_alias_test.go calls quick.GopherJSInternalMaxCountCap(100), a symbol added ONLY by golden quick.go ('func GopherJSInternalMaxCountCap(newCap int)')"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "farm-fe-farm-2240",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden removes '{ exit: true }' from HMR error path and adds prefix 'console.error(`[Farm HMR] ${splitMessage.errorInfo}`)'; F2P e2e edits index.tsx to a syntax error, waits for '[Farm HMR] Parse `src/index.tsx` failed.', then recovers and expects 'recovered 123'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 21,
+  "shallow": true
+ }
+}

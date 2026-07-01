@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/cranelift && cargo nextest run --test filetests",
+  "test_files": [
+    "cranelift/filetests/filetests/isa/riscv64/issue8847-1.clif",
+    "cranelift/filetests/filetests/isa/riscv64/issue8847.clif",
+    "cranelift/filetests/filetests/isa/riscv64/return-call.clif"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) cranelift-tools::filetests filetests"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,23 @@
+{
+ "task": "payloadcms-payload-8220",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P=1 'should duplicate with localized blocks', P2P=44; test creates doc with localized blocks+nested arrays and localized group-in-tab, duplicates, asserts allLocales.myTab.group.en/es.nestedArray2[*].nestedText retained; golden rewrites beforeDuplicate hooks/traverseFields + duplicate.ts + sqlite/"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

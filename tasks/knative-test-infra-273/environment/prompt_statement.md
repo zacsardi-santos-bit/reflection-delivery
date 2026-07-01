@@ -1,0 +1,5 @@
+I'm working with a testgrid integration package that writes XML test results to a file, and I've run into a couple of problems. The output filename is currently a private constant inside the package, so anything outside the package that needs to refer to that file has to hardcode the name — I'd like to make it part of the public API instead.
+
+On top of that, whenever I call the function to write XML output more than once, it overwrites the file each time, so I end up with only the last result. I need it to append to the file so that multiple test suites can accumulate in a single output file across successive calls.
+
+There's also a helper that resolves the artifacts directory from an environment variable, but it has no tests, so I'm not confident it falls back to the default path correctly when the environment variable isn't set. I'd like that behavior verified and working: return the environment variable's value when it's set, and return a default of "./artifacts" when it's empty or missing.

@@ -1,0 +1,15 @@
+{
+  "test_framework": "gtest",
+  "test_command": "cd /workspace/repo && bazel --output_user_root=/root/.cache/bazel build --copt=-DENABLE_METRICS_PREVIEW --copt=-DENABLE_LOGS_PREVIEW //exporters/otlp:otlp_grpc_log_exporter_test && mkdir -p /workspace/test-results && ./bazel-bin/exporters/otlp/otlp_grpc_log_exporter_test --gtest_output=json:/tmp/gtest_raw.json && python3 -c \"import json; d=json.load(open('/tmp/gtest_raw.json')); ts=d.pop('testsuites'); open('/workspace/test-results/output.json','w').write(json.dumps({'testsuites':ts,**d}))\" && true",
+  "test_files": [
+    "exporters/otlp/test/otlp_grpc_log_exporter_test.cc"
+  ],
+  "num_test_files": 1,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "OtlpGrpcLogExporterTestPeer::ShutdownTest",
+    "OtlpGrpcLogExporterTestPeer::ExportUnitTest",
+    "OtlpGrpcLogExporterTestPeer::ExportIntegrationTest"
+  ],
+  "PASS_TO_PASS": []
+}

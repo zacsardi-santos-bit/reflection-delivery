@@ -1,0 +1,34 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/media/h265reader ./pkg/media/h265writer -count=1",
+  "test_files": [
+    "pkg/media/h265reader/h265reader_test.go",
+    "pkg/media/h265writer/h265writer_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/pion/webrtc/v4/pkg/media/h265reader::TestH265Reader_NextNAL",
+    "github.com/pion/webrtc/v4/pkg/media/h265reader::TestH265Reader_processByte",
+    "github.com/pion/webrtc/v4/pkg/media/h265reader::TestNAL_parseHeader",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestH265Writer_WriteRTP",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/VPS_NAL_unit",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/SPS_NAL_unit",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/PPS_NAL_unit",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/IDR_W_RADL_NAL_unit",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/IDR_N_LP_NAL_unit",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/TRAIL_R_NAL_unit",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/Empty_data",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/Single_byte",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/Fragmentation_Unit_with_VPS",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame/Fragmentation_Unit_with_TRAIL_R",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestIsKeyFrame",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestCheckAggregationPacketForKeyFrame/AP_with_VPS",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestCheckAggregationPacketForKeyFrame/AP_with_TRAIL_R",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestCheckAggregationPacketForKeyFrame/AP_with_multiple_NALUs_including_SPS",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestCheckAggregationPacketForKeyFrame/Malformed_AP_-_insufficient_data",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestCheckAggregationPacketForKeyFrame/Empty_AP",
+    "github.com/pion/webrtc/v4/pkg/media/h265writer::TestCheckAggregationPacketForKeyFrame"
+  ],
+  "PASS_TO_PASS": []
+}

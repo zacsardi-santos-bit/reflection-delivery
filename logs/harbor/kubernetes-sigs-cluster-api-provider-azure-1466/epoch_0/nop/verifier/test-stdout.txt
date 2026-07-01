@@ -1,0 +1,13 @@
+patching file api/v1alpha4/azurecluster_default_test.go
+patching file api/v1alpha4/azurecluster_validation_test.go
+patching file api/v1alpha4/azurecluster_webhook_test.go
+patching file templates/test/ci/cluster-template-prow-private.yaml
+# sigs.k8s.io/cluster-api-provider-azure/api/v1alpha4 [sigs.k8s.io/cluster-api-provider-azure/api/v1alpha4.test]
+api/v1alpha4/azurecluster_default_test.go:984:7: unknown field ControlPlaneOutboundLB in struct literal of type NetworkSpec
+api/v1alpha4/azurecluster_default_test.go:1000:7: unknown field ControlPlaneOutboundLB in struct literal of type NetworkSpec
+api/v1alpha4/azurecluster_default_test.go:1031:15: tc.cluster.setControlPlaneOutboundLBDefaults undefined (type *AzureCluster has no field or method setControlPlaneOutboundLBDefaults)
+api/v1alpha4/azurecluster_validation_test.go:1176:11: undefined: validateControlPlaneOutboundLB
+api/v1alpha4/azurecluster_webhook_test.go:236:7: unknown field ControlPlaneOutboundLB in struct literal of type NetworkSpec
+api/v1alpha4/azurecluster_webhook_test.go:243:7: unknown field ControlPlaneOutboundLB in struct literal of type NetworkSpec
+FAIL	sigs.k8s.io/cluster-api-provider-azure/api/v1alpha4 [build failed]
+reward=0 graded=258 found=258 failed=258 parsed=1 framework=go exit_code=1

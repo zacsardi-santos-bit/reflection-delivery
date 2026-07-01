@@ -1,0 +1,7 @@
+patching file transforms/mutate/label_test.go
+# github.com/qiniu/logkit/transforms/mutate [github.com/qiniu/logkit/transforms/mutate.test]
+/go/src/github.com/qiniu/logkit/transforms/mutate/label_test.go:13:12: undefined: Label
+/go/src/github.com/qiniu/logkit/transforms/mutate/label_test.go:24:13: undefined: Label
+/go/src/github.com/qiniu/logkit/transforms/mutate/label_test.go:36:13: undefined: Label
+FAIL	github.com/qiniu/logkit/transforms/mutate [build failed]
+reward=0 graded=15 found=15 failed=15 parsed=1 framework=go exit_code=1

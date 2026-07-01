@@ -1,0 +1,22 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /go/src/istio.io/istio && go test -json ./pilot/pkg/networking/core/v1alpha3 -count=1",
+  "test_files": [
+    "pilot/pkg/networking/core/v1alpha3/cluster_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "istio.io/istio/pilot/pkg/networking/core/v1alpha3::TestBuildSidecarClustersWithMeshWideTCPKeepalive"
+  ],
+  "PASS_TO_PASS": [
+    "istio.io/istio/pilot/pkg/networking/core/v1alpha3::TestGenerateVirtualHostDomains",
+    "istio.io/istio/pilot/pkg/networking/core/v1alpha3::TestOutboundListenerConflict_HTTPWithCurrentTCP",
+    "istio.io/istio/pilot/pkg/networking/core/v1alpha3::TestOutboundListenerConflict_TCPWithCurrentHTTP",
+    "istio.io/istio/pilot/pkg/networking/core/v1alpha3::TestOutboundListenerConflict_Unordered",
+    "istio.io/istio/pilot/pkg/networking/core/v1alpha3::TestOutboundListenerConflict_TCPWithCurrentTCP",
+    "istio.io/istio/pilot/pkg/networking/core/v1alpha3::TestInboundListenerConfig_HTTP",
+    "istio.io/istio/pilot/pkg/networking/core/v1alpha3::TestBuildGatewayClustersWithRingHashLb",
+    "istio.io/istio/pilot/pkg/networking/core/v1alpha3::TestBuildSidecarClustersWithIstioMutualAndSNI"
+  ]
+}

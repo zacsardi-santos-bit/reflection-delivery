@@ -1,0 +1,4 @@
+patching file kubectl-pg/cmd/list.go
+patching file pkg/cluster/cluster.go
+patching file pkg/cluster/k8sres.go
+patching file pkg/cluster/sync.go

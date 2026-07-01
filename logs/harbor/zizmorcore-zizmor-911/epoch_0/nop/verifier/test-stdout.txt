@@ -1,0 +1,52 @@
+patching file crates/zizmor/tests/integration/snapshots/integration__e2e__gha_hazmat.snap
+patching file crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-5.snap
+patching file crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-7.snap
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.91s
+────────────
+ Nextest run ID 007c23ee-2732-43e1-aadc-e60db62dee0b with nextest profile: default
+    Starting 1 test across 1 binary (42 tests skipped)
+        FAIL [   2.881s] (1/1) zizmor::integration snapshot::template_injection
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-5.snap
+    Snapshot: template_injection-5
+    Source: crates/zizmor/tests/integration/snapshot.rs:335
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: zizmor().input(input_under_test("template-injection/static-env.yml")).run()?
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       29    29 │    | |_______________________________- help: env.quux may expand into attacker-controllable code
+       30    30 │    |
+       31    31 │    = note: audit confidence → High
+       32    32 │ 
+       33       │-12 findings (9 suppressed): 0 unknown, 0 informational, 3 low, 0 medium, 0 high
+             33 │+9 findings (6 suppressed): 0 unknown, 0 informational, 3 low, 0 medium, 0 high
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test snapshot::template_injection ... FAILED
+
+    failures:
+
+    failures:
+        snapshot::template_injection
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 42 filtered out; finished in 2.86s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-5.snap.new
+
+    thread 'snapshot::template_injection' panicked at /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/insta-1.43.1/src/runtime.rs:679:13:
+    snapshot assertion for 'template_injection-5' failed in line 335
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   2.882s] 1 test run: 0 passed, 1 failed, 42 skipped
+        FAIL [   2.881s] (1/1) zizmor::integration snapshot::template_injection
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

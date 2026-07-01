@@ -1,0 +1,36 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/common/structurev2 -count=1",
+  "test_files": [
+    "pkg/common/structurev2/govalue_test.go",
+    "pkg/common/structurev2/standard_test.go",
+    "pkg/common/structurev2/yaml_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromGoValue/ScalarValue",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromGoValue/SliceValue",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromGoValue/MapValue",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromGoValue/ComplexValue",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromGoValue",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestAlphabeticalGoMapKeyOrderProvider",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestAppendPath",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestStandardSequenceNodeChildren",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestStandardMappingNodeChildren",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ScalarValue/Null",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ScalarValue/Boolean",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ScalarValue/String",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ScalarValue/Integer",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ScalarValue/Float",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ScalarValue/Timestamp",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ScalarValue",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/SequenceValue",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/MappingValue",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ComplexValue/Complex_yaml",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ComplexValue/Complex_json",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML/ComplexValue",
+    "github.com/GoogleCloudPlatform/khi/pkg/common/structurev2::TestFromYAML"
+  ],
+  "PASS_TO_PASS": []
+}

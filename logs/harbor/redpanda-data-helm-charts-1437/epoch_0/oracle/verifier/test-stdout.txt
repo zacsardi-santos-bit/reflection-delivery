@@ -1,0 +1,263 @@
+The next patch would delete the file charts/console/service_test.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+{"Time":"2026-06-29T15:15:47.504927913Z","Action":"start","Package":"github.com/redpanda-data/helm-charts/charts/console"}
+{"Time":"2026-06-29T15:15:47.601222103Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestValues"}
+{"Time":"2026-06-29T15:15:47.601325458Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestValues","Output":"=== RUN   TestValues\n"}
+{"Time":"2026-06-29T15:15:47.60455167Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestValues","Output":"--- PASS: TestValues (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.604608902Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestValues","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.604660965Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate"}
+{"Time":"2026-06-29T15:15:47.604683416Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate","Output":"=== RUN   TestTemplate\n"}
+{"Time":"2026-06-29T15:15:47.609851944Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/default-values"}
+{"Time":"2026-06-29T15:15:47.609889505Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/default-values","Output":"=== RUN   TestTemplate/default-values\n"}
+{"Time":"2026-06-29T15:15:47.63430604Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/default-values","Output":"--- PASS: TestTemplate/default-values (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.634393394Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/default-values","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.634469097Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-roles"}
+{"Time":"2026-06-29T15:15:47.634482738Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-roles","Output":"=== RUN   TestTemplate/console-with-roles\n"}
+{"Time":"2026-06-29T15:15:47.650230431Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-roles","Output":"--- PASS: TestTemplate/console-with-roles (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.650280824Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-roles","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.650323466Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-role-bindings"}
+{"Time":"2026-06-29T15:15:47.650339046Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-role-bindings","Output":"=== RUN   TestTemplate/console-with-role-bindings\n"}
+{"Time":"2026-06-29T15:15:47.666631574Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-role-bindings","Output":"--- PASS: TestTemplate/console-with-role-bindings (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.66678048Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-role-bindings","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.666822562Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-roles-and-bindings"}
+{"Time":"2026-06-29T15:15:47.666836663Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-roles-and-bindings","Output":"=== RUN   TestTemplate/console-with-roles-and-bindings\n"}
+{"Time":"2026-06-29T15:15:47.682967283Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-roles-and-bindings","Output":"--- PASS: TestTemplate/console-with-roles-and-bindings (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.683079028Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/console-with-roles-and-bindings","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.683140801Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-nulls"}
+{"Time":"2026-06-29T15:15:47.683228164Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-nulls","Output":"=== RUN   TestTemplate/autoscaling-nulls\n"}
+{"Time":"2026-06-29T15:15:47.696729339Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-nulls","Output":"--- PASS: TestTemplate/autoscaling-nulls (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.696829254Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-nulls","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.696919237Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-cpu"}
+{"Time":"2026-06-29T15:15:47.69697818Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-cpu","Output":"=== RUN   TestTemplate/autoscaling-cpu\n"}
+{"Time":"2026-06-29T15:15:47.713039897Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-cpu","Output":"--- PASS: TestTemplate/autoscaling-cpu (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.713121831Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-cpu","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.713197714Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-memory"}
+{"Time":"2026-06-29T15:15:47.713273467Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-memory","Output":"=== RUN   TestTemplate/autoscaling-memory\n"}
+{"Time":"2026-06-29T15:15:47.727887861Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-memory","Output":"--- PASS: TestTemplate/autoscaling-memory (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.727923203Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/autoscaling-memory","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.727944633Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/service-nodeport"}
+{"Time":"2026-06-29T15:15:47.727959924Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/service-nodeport","Output":"=== RUN   TestTemplate/service-nodeport\n"}
+{"Time":"2026-06-29T15:15:47.742970145Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/service-nodeport","Output":"--- PASS: TestTemplate/service-nodeport (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.74308077Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/service-nodeport","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.743113501Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/service-with-nodeport"}
+{"Time":"2026-06-29T15:15:47.743126652Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/service-with-nodeport","Output":"=== RUN   TestTemplate/service-with-nodeport\n"}
+{"Time":"2026-06-29T15:15:47.755393992Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/service-with-nodeport","Output":"--- PASS: TestTemplate/service-with-nodeport (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.755452585Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/service-with-nodeport","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.755527078Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-000"}
+{"Time":"2026-06-29T15:15:47.755585001Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-000","Output":"=== RUN   TestTemplate/case-000\n"}
+{"Time":"2026-06-29T15:15:47.770503998Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-000","Output":"--- PASS: TestTemplate/case-000 (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.770603972Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-000","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.770649024Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-001"}
+{"Time":"2026-06-29T15:15:47.770659885Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-001","Output":"=== RUN   TestTemplate/case-001\n"}
+{"Time":"2026-06-29T15:15:47.787464114Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-001","Output":"--- PASS: TestTemplate/case-001 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.787526967Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-001","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.787574089Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-002"}
+{"Time":"2026-06-29T15:15:47.787602381Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-002","Output":"=== RUN   TestTemplate/case-002\n"}
+{"Time":"2026-06-29T15:15:47.804076216Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-002","Output":"--- PASS: TestTemplate/case-002 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.804139079Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-002","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.804195251Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-003"}
+{"Time":"2026-06-29T15:15:47.804220542Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-003","Output":"=== RUN   TestTemplate/case-003\n"}
+{"Time":"2026-06-29T15:15:47.818961852Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-003","Output":"--- PASS: TestTemplate/case-003 (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.819078027Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-003","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.819139919Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-004"}
+{"Time":"2026-06-29T15:15:47.819240614Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-004","Output":"=== RUN   TestTemplate/case-004\n"}
+{"Time":"2026-06-29T15:15:47.833795125Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-004","Output":"--- PASS: TestTemplate/case-004 (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.833840747Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-004","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.833875868Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-005"}
+{"Time":"2026-06-29T15:15:47.833899469Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-005","Output":"=== RUN   TestTemplate/case-005\n"}
+{"Time":"2026-06-29T15:15:47.848247311Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-005","Output":"--- PASS: TestTemplate/case-005 (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.848316054Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-005","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.848334125Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-006"}
+{"Time":"2026-06-29T15:15:47.848346006Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-006","Output":"=== RUN   TestTemplate/case-006\n"}
+{"Time":"2026-06-29T15:15:47.863938312Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-006","Output":"--- PASS: TestTemplate/case-006 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.864095389Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-006","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.864209644Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-007"}
+{"Time":"2026-06-29T15:15:47.864245295Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-007","Output":"=== RUN   TestTemplate/case-007\n"}
+{"Time":"2026-06-29T15:15:47.88160571Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-007","Output":"--- PASS: TestTemplate/case-007 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.881643592Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-007","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.881657122Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-008"}
+{"Time":"2026-06-29T15:15:47.881667763Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-008","Output":"=== RUN   TestTemplate/case-008\n"}
+{"Time":"2026-06-29T15:15:47.896062147Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-008","Output":"--- PASS: TestTemplate/case-008 (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.896126899Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-008","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.89614341Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-009"}
+{"Time":"2026-06-29T15:15:47.896154941Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-009","Output":"=== RUN   TestTemplate/case-009\n"}
+{"Time":"2026-06-29T15:15:47.91181432Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-009","Output":"--- PASS: TestTemplate/case-009 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.911913295Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-009","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.911946066Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-010"}
+{"Time":"2026-06-29T15:15:47.911956836Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-010","Output":"=== RUN   TestTemplate/case-010\n"}
+{"Time":"2026-06-29T15:15:47.929725269Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-010","Output":"--- PASS: TestTemplate/case-010 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.929810493Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-010","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.929927218Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-011"}
+{"Time":"2026-06-29T15:15:47.92996916Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-011","Output":"=== RUN   TestTemplate/case-011\n"}
+{"Time":"2026-06-29T15:15:47.949221988Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-011","Output":"--- PASS: TestTemplate/case-011 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.949308431Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-011","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.949359094Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-012"}
+{"Time":"2026-06-29T15:15:47.949387185Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-012","Output":"=== RUN   TestTemplate/case-012\n"}
+{"Time":"2026-06-29T15:15:47.969747551Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-012","Output":"--- PASS: TestTemplate/case-012 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.969852356Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-012","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.970008303Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-013"}
+{"Time":"2026-06-29T15:15:47.970084326Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-013","Output":"=== RUN   TestTemplate/case-013\n"}
+{"Time":"2026-06-29T15:15:47.990580689Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-013","Output":"--- PASS: TestTemplate/case-013 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:47.990705224Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-013","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:47.990775387Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-014"}
+{"Time":"2026-06-29T15:15:47.990807659Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-014","Output":"=== RUN   TestTemplate/case-014\n"}
+{"Time":"2026-06-29T15:15:48.004038571Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-014","Output":"--- PASS: TestTemplate/case-014 (0.01s)\n"}
+{"Time":"2026-06-29T15:15:48.004133335Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-014","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:48.004250651Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-015"}
+{"Time":"2026-06-29T15:15:48.004297703Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-015","Output":"=== RUN   TestTemplate/case-015\n"}
+{"Time":"2026-06-29T15:15:48.026034Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-015","Output":"--- PASS: TestTemplate/case-015 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.026116314Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-015","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.026135054Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-016"}
+{"Time":"2026-06-29T15:15:48.026148355Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-016","Output":"=== RUN   TestTemplate/case-016\n"}
+{"Time":"2026-06-29T15:15:48.047804169Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-016","Output":"--- PASS: TestTemplate/case-016 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.047906283Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-016","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.04806287Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-017"}
+{"Time":"2026-06-29T15:15:48.048117662Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-017","Output":"=== RUN   TestTemplate/case-017\n"}
+{"Time":"2026-06-29T15:15:48.073560273Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-017","Output":"--- PASS: TestTemplate/case-017 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.0737362Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-017","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.073798563Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-018"}
+{"Time":"2026-06-29T15:15:48.073811774Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-018","Output":"=== RUN   TestTemplate/case-018\n"}
+{"Time":"2026-06-29T15:15:48.095806432Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-018","Output":"--- PASS: TestTemplate/case-018 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.095870785Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-018","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.095890096Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-019"}
+{"Time":"2026-06-29T15:15:48.095901307Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-019","Output":"=== RUN   TestTemplate/case-019\n"}
+{"Time":"2026-06-29T15:15:48.113134445Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-019","Output":"--- PASS: TestTemplate/case-019 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.113229179Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-019","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.113276092Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-020"}
+{"Time":"2026-06-29T15:15:48.113289222Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-020","Output":"=== RUN   TestTemplate/case-020\n"}
+{"Time":"2026-06-29T15:15:48.139281047Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-020","Output":"--- PASS: TestTemplate/case-020 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.139320039Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-020","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.13935536Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-021"}
+{"Time":"2026-06-29T15:15:48.139368461Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-021","Output":"=== RUN   TestTemplate/case-021\n"}
+{"Time":"2026-06-29T15:15:48.156513596Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-021","Output":"--- PASS: TestTemplate/case-021 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.156626281Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-021","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.156651552Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-022"}
+{"Time":"2026-06-29T15:15:48.156665022Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-022","Output":"=== RUN   TestTemplate/case-022\n"}
+{"Time":"2026-06-29T15:15:48.187938679Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-022","Output":"--- PASS: TestTemplate/case-022 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.188081145Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-022","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.188150368Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-023"}
+{"Time":"2026-06-29T15:15:48.188279514Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-023","Output":"=== RUN   TestTemplate/case-023\n"}
+{"Time":"2026-06-29T15:15:48.209900516Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-023","Output":"--- PASS: TestTemplate/case-023 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.210001851Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-023","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.210058743Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-024"}
+{"Time":"2026-06-29T15:15:48.210072024Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-024","Output":"=== RUN   TestTemplate/case-024\n"}
+{"Time":"2026-06-29T15:15:48.227074543Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-024","Output":"--- PASS: TestTemplate/case-024 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.2272462Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-024","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.227271312Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-025"}
+{"Time":"2026-06-29T15:15:48.227378556Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-025","Output":"=== RUN   TestTemplate/case-025\n"}
+{"Time":"2026-06-29T15:15:48.256621614Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-025","Output":"--- PASS: TestTemplate/case-025 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.256704618Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-025","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.256719398Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-026"}
+{"Time":"2026-06-29T15:15:48.256728689Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-026","Output":"=== RUN   TestTemplate/case-026\n"}
+{"Time":"2026-06-29T15:15:48.2765062Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-026","Output":"--- PASS: TestTemplate/case-026 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.276606634Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-026","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.276665487Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-027"}
+{"Time":"2026-06-29T15:15:48.27673435Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-027","Output":"=== RUN   TestTemplate/case-027\n"}
+{"Time":"2026-06-29T15:15:48.294860249Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-027","Output":"--- PASS: TestTemplate/case-027 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.294963683Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-027","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.295014475Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-028"}
+{"Time":"2026-06-29T15:15:48.295042517Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-028","Output":"=== RUN   TestTemplate/case-028\n"}
+{"Time":"2026-06-29T15:15:48.316326704Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-028","Output":"--- PASS: TestTemplate/case-028 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.316390067Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-028","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.316410878Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-029"}
+{"Time":"2026-06-29T15:15:48.316421648Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-029","Output":"=== RUN   TestTemplate/case-029\n"}
+{"Time":"2026-06-29T15:15:48.34461268Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-029","Output":"--- PASS: TestTemplate/case-029 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.344671392Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-029","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.344718934Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-030"}
+{"Time":"2026-06-29T15:15:48.344731555Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-030","Output":"=== RUN   TestTemplate/case-030\n"}
+{"Time":"2026-06-29T15:15:48.373813486Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-030","Output":"--- PASS: TestTemplate/case-030 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.373939292Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-030","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.373999074Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-031"}
+{"Time":"2026-06-29T15:15:48.374012285Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-031","Output":"=== RUN   TestTemplate/case-031\n"}
+{"Time":"2026-06-29T15:15:48.399214485Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-031","Output":"--- PASS: TestTemplate/case-031 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.399305369Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-031","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.399439445Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-032"}
+{"Time":"2026-06-29T15:15:48.399533909Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-032","Output":"=== RUN   TestTemplate/case-032\n"}
+{"Time":"2026-06-29T15:15:48.4343001Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-032","Output":"--- PASS: TestTemplate/case-032 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.434382784Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-032","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.434411545Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-033"}
+{"Time":"2026-06-29T15:15:48.434432366Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-033","Output":"=== RUN   TestTemplate/case-033\n"}
+{"Time":"2026-06-29T15:15:48.477633319Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-033","Output":"--- PASS: TestTemplate/case-033 (0.04s)\n"}
+{"Time":"2026-06-29T15:15:48.477814107Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-033","Elapsed":0.04}
+{"Time":"2026-06-29T15:15:48.477857459Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-034"}
+{"Time":"2026-06-29T15:15:48.477868369Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-034","Output":"=== RUN   TestTemplate/case-034\n"}
+{"Time":"2026-06-29T15:15:48.502921623Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-034","Output":"--- PASS: TestTemplate/case-034 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.503019387Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-034","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.503062449Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-035"}
+{"Time":"2026-06-29T15:15:48.5030953Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-035","Output":"=== RUN   TestTemplate/case-035\n"}
+{"Time":"2026-06-29T15:15:48.549110367Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-035","Output":"--- PASS: TestTemplate/case-035 (0.05s)\n"}
+{"Time":"2026-06-29T15:15:48.549222412Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-035","Elapsed":0.05}
+{"Time":"2026-06-29T15:15:48.549321857Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-036"}
+{"Time":"2026-06-29T15:15:48.549333897Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-036","Output":"=== RUN   TestTemplate/case-036\n"}
+{"Time":"2026-06-29T15:15:48.587740869Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-036","Output":"--- PASS: TestTemplate/case-036 (0.04s)\n"}
+{"Time":"2026-06-29T15:15:48.587857904Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-036","Elapsed":0.04}
+{"Time":"2026-06-29T15:15:48.58799759Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-037"}
+{"Time":"2026-06-29T15:15:48.588016711Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-037","Output":"=== RUN   TestTemplate/case-037\n"}
+{"Time":"2026-06-29T15:15:48.618452702Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-037","Output":"--- PASS: TestTemplate/case-037 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.618543546Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-037","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.618573957Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-038"}
+{"Time":"2026-06-29T15:15:48.618593298Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-038","Output":"=== RUN   TestTemplate/case-038\n"}
+{"Time":"2026-06-29T15:15:48.639734039Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-038","Output":"--- PASS: TestTemplate/case-038 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.639797022Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-038","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.639850544Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-039"}
+{"Time":"2026-06-29T15:15:48.639867275Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-039","Output":"=== RUN   TestTemplate/case-039\n"}
+{"Time":"2026-06-29T15:15:48.662554064Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-039","Output":"--- PASS: TestTemplate/case-039 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.662666539Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-039","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.662725341Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-040"}
+{"Time":"2026-06-29T15:15:48.662737202Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-040","Output":"=== RUN   TestTemplate/case-040\n"}
+{"Time":"2026-06-29T15:15:48.709487191Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-040","Output":"--- PASS: TestTemplate/case-040 (0.05s)\n"}
+{"Time":"2026-06-29T15:15:48.709584905Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-040","Elapsed":0.05}
+{"Time":"2026-06-29T15:15:48.709659369Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-041"}
+{"Time":"2026-06-29T15:15:48.709725862Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-041","Output":"=== RUN   TestTemplate/case-041\n"}
+{"Time":"2026-06-29T15:15:48.743564282Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-041","Output":"--- PASS: TestTemplate/case-041 (0.03s)\n"}
+{"Time":"2026-06-29T15:15:48.743626485Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-041","Elapsed":0.03}
+{"Time":"2026-06-29T15:15:48.743764191Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-042"}
+{"Time":"2026-06-29T15:15:48.744015832Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-042","Output":"=== RUN   TestTemplate/case-042\n"}
+{"Time":"2026-06-29T15:15:48.785077021Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-042","Output":"--- PASS: TestTemplate/case-042 (0.04s)\n"}
+{"Time":"2026-06-29T15:15:48.785332532Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-042","Elapsed":0.04}
+{"Time":"2026-06-29T15:15:48.785458337Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-043"}
+{"Time":"2026-06-29T15:15:48.78551396Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-043","Output":"=== RUN   TestTemplate/case-043\n"}
+{"Time":"2026-06-29T15:15:48.809864862Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-043","Output":"--- PASS: TestTemplate/case-043 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.809923345Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-043","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.809948656Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-044"}
+{"Time":"2026-06-29T15:15:48.809958806Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-044","Output":"=== RUN   TestTemplate/case-044\n"}
+{"Time":"2026-06-29T15:15:48.845741802Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-044","Output":"--- PASS: TestTemplate/case-044 (0.04s)\n"}
+{"Time":"2026-06-29T15:15:48.845885909Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-044","Elapsed":0.04}
+{"Time":"2026-06-29T15:15:48.845998734Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-045"}
+{"Time":"2026-06-29T15:15:48.846105258Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-045","Output":"=== RUN   TestTemplate/case-045\n"}
+{"Time":"2026-06-29T15:15:48.870915791Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-045","Output":"--- PASS: TestTemplate/case-045 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.870986725Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-045","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.871003055Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-046"}
+{"Time":"2026-06-29T15:15:48.871053497Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-046","Output":"=== RUN   TestTemplate/case-046\n"}
+{"Time":"2026-06-29T15:15:48.891710477Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-046","Output":"--- PASS: TestTemplate/case-046 (0.02s)\n"}
+{"Time":"2026-06-29T15:15:48.89176789Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-046","Elapsed":0.02}
+{"Time":"2026-06-29T15:15:48.891785061Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-047"}
+{"Time":"2026-06-29T15:15:48.891799011Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-047","Output":"=== RUN   TestTemplate/case-047\n"}
+{"Time":"2026-06-29T15:15:48.927969714Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-047","Output":"--- PASS: TestTemplate/case-047 (0.04s)\n"}
+{"Time":"2026-06-29T15:15:48.928067059Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-047","Elapsed":0.04}
+{"Time":"2026-06-29T15:15:48.92810174Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-048"}
+{"Time":"2026-06-29T15:15:48.928112631Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-048","Output":"=== RUN   TestTemplate/case-048\n"}
+{"Time":"2026-06-29T15:15:48.967877082Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-048","Output":"--- PASS: TestTemplate/case-048 (0.04s)\n"}
+{"Time":"2026-06-29T15:15:48.968042969Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-048","Elapsed":0.04}
+{"Time":"2026-06-29T15:15:48.968112823Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-049"}
+{"Time":"2026-06-29T15:15:48.968126943Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-049","Output":"=== RUN   TestTemplate/case-049\n"}
+{"Time":"2026-06-29T15:15:49.005122093Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-049","Output":"--- PASS: TestTemplate/case-049 (0.04s)\n"}
+{"Time":"2026-06-29T15:15:49.00529001Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate/case-049","Elapsed":0.04}
+{"Time":"2026-06-29T15:15:49.006495983Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate","Output":"--- PASS: TestTemplate (1.40s)\n"}
+{"Time":"2026-06-29T15:15:49.006629369Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestTemplate","Elapsed":1.4}
+{"Time":"2026-06-29T15:15:49.007974008Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestGenerateCases"}
+{"Time":"2026-06-29T15:15:49.00801533Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestGenerateCases","Output":"=== RUN   TestGenerateCases\n"}
+{"Time":"2026-06-29T15:15:49.008062472Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestGenerateCases","Output":"    chart_test.go:82: TestGenerateCases will only run if explicitly specified (-run \"TestGenerateCases\")\n"}
+{"Time":"2026-06-29T15:15:49.008077843Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestGenerateCases","Output":"--- SKIP: TestGenerateCases (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.008088673Z","Action":"skip","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestGenerateCases","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.008101864Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestServiceFunc"}
+{"Time":"2026-06-29T15:15:49.008111454Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestServiceFunc","Output":"=== RUN   TestServiceFunc\n"}
+{"Time":"2026-06-29T15:15:49.008121725Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestServiceFunc","Output":"--- PASS: TestServiceFunc (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.008131695Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Test":"TestServiceFunc","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.008143516Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Output":"PASS\n"}
+{"Time":"2026-06-29T15:15:49.009708145Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/console","Output":"ok  \tgithub.com/redpanda-data/helm-charts/charts/console\t1.504s\n"}
+{"Time":"2026-06-29T15:15:49.009762737Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/console","Elapsed":1.505}
+reward=1 graded=62 found=62 failed=0 parsed=63 framework=go exit_code=0

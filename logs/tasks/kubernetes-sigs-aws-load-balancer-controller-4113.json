@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-sigs-aws-load-balancer-controller-4113",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden fixes dedup in mergeListenPortConfigs: adds default cert first then \"if i == defaultCertMemberIndex && j == 0 { continue }\"; test asserts full listener certs [11111111,33333333,22222222,11111111] from input \"...11111111,33333333,22222222,,11111111\"."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

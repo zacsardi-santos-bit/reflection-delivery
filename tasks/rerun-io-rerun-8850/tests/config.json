@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p re_video --lib",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/7) re_video decode::ffmpeg_h264::ffmpeg::tests::test_sanitize_ffmpeg_log_message",
+    "(2/7) re_video demux::tests::test_latest_sample_index_at_presentation_timestamp",
+    "(3/7) re_video decode::ffmpeg_h264::sps::tests::test_read_bits",
+    "(4/7) re_video decode::ffmpeg_h264::version::tests::test_parse_ffmpeg_version",
+    "(5/7) re_video decode::ffmpeg_h264::sps::tests::test_read_exponential_golomb",
+    "(6/7) re_video decode::tests_enqueue_ahead::test_min_num_samples_to_enqueue_ahead_default",
+    "(7/7) re_video demux::tests::test_latest_at_idx"
+  ],
+  "PASS_TO_PASS": []
+}

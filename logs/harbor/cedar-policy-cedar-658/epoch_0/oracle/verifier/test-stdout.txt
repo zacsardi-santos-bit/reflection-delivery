@@ -1,0 +1,671 @@
+patching file cedar-policy-validator/src/human_schema/test.rs
+Hunk #1 succeeded at 1268 (offset 335 lines).
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /workspace/repo/cedar-wasm/Cargo.toml
+workspace: /workspace/repo/Cargo.toml
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /workspace/repo/cedar-wasm/Cargo.toml
+workspace: /workspace/repo/Cargo.toml
+warning: /workspace/repo/cedar-policy/Cargo.toml: `crate_type` is deprecated in favor of `crate-type` and will not work in the 2024 edition
+(in the `cedar_policy` library target)
+warning: /workspace/repo/cedar-wasm/Cargo.toml: `crate_type` is deprecated in favor of `crate-type` and will not work in the 2024 edition
+(in the `cedar_wasm` library target)
+   Compiling memchr v2.8.2
+   Compiling proc-macro2 v1.0.106
+   Compiling libc v0.2.186
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling cfg-if v1.0.4
+   Compiling parking_lot_core v0.9.12
+   Compiling equivalent v1.0.2
+   Compiling hashbrown v0.17.1
+   Compiling scopeguard v1.2.0
+   Compiling crunchy v0.2.4
+   Compiling smallvec v1.15.2
+   Compiling regex-syntax v0.8.11
+   Compiling object v0.37.3
+   Compiling tiny-keccak v2.0.2
+   Compiling shlex v2.0.1
+   Compiling siphasher v1.0.3
+   Compiling serde_core v1.0.228
+   Compiling lock_api v0.4.14
+   Compiling find-msvc-tools v0.1.9
+   Compiling same-file v1.0.6
+   Compiling fixedbitset v0.4.2
+   Compiling precomputed-hash v0.1.1
+   Compiling phf_shared v0.11.3
+   Compiling new_debug_unreachable v1.0.6
+   Compiling bit-vec v0.6.3
+   Compiling cc v1.2.65
+   Compiling aho-corasick v1.1.4
+   Compiling indexmap v2.14.0
+   Compiling either v1.16.0
+   Compiling log v0.4.33
+   Compiling walkdir v2.5.0
+   Compiling ident_case v1.0.1
+   Compiling bit-set v0.5.3
+   Compiling ena v0.14.4
+   Compiling pico-args v0.5.0
+   Compiling itertools v0.11.0
+   Compiling unicode-xid v0.2.6
+   Compiling strsim v0.11.1
+   Compiling zmij v1.0.21
+   Compiling petgraph v0.6.5
+   Compiling serde v1.0.228
+   Compiling thiserror v1.0.69
+   Compiling serde_json v1.0.150
+   Compiling itoa v1.0.18
+   Compiling tinyvec_macros v0.1.1
+   Compiling regex-automata v0.4.14
+   Compiling tinyvec v1.11.0
+   Compiling unicode-width v0.1.14
+   Compiling stacker v0.1.24
+   Compiling once_cell v1.21.4
+   Compiling unicode-normalization v0.1.25
+   Compiling unicode-script v0.5.8
+   Compiling rustc_lexer v0.1.0
+   Compiling itertools v0.12.1
+   Compiling lazy_static v1.5.0
+   Compiling nonempty v0.9.0
+   Compiling indent_write v2.2.0
+   Compiling cool_asserts v2.0.4
+   Compiling unicode-security v0.1.2
+   Compiling dirs-sys-next v0.1.2
+   Compiling syn v2.0.118
+   Compiling dirs-next v2.0.0
+   Compiling regex v1.12.4
+   Compiling lalrpop-util v0.20.2
+   Compiling parking_lot v0.12.5
+   Compiling term v0.7.0
+   Compiling string_cache v0.8.9
+   Compiling ascii-canvas v3.0.0
+   Compiling lalrpop v0.20.2
+   Compiling ar_archive_writer v0.5.2
+   Compiling psm v0.1.31
+   Compiling darling_core v0.23.0
+   Compiling serde_derive v1.0.228
+   Compiling thiserror-impl v1.0.69
+   Compiling miette-derive v5.10.0
+   Compiling darling_macro v0.23.0
+   Compiling cedar-policy-core v3.0.0 (/workspace/repo/cedar-policy-core)
+   Compiling cedar-policy-validator v3.0.0 (/workspace/repo/cedar-policy-validator)
+   Compiling darling v0.23.0
+   Compiling serde_with_macros v3.21.0
+   Compiling smol_str v0.2.2
+   Compiling miette v5.10.0
+   Compiling serde_with v3.21.0
+warning: unexpected `cfg` condition name: `fuzzing`
+   --> cedar-policy-core/src/ast/entity.rs:336:21
+    |
+336 |     #[cfg(any(test, fuzzing))]
+    |                     ^^^^^^^
+    |
+    = help: expected names are: `docsrs`, `feature`, and `test` and 31 more
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+   --> cedar-policy-core/src/ast/entity.rs:350:15
+    |
+350 |     #[cfg(not(fuzzing))]
+    |               ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+   --> cedar-policy-core/src/ast/entity.rs:355:11
+    |
+355 |     #[cfg(fuzzing)]
+    |           ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: elided lifetime has a name
+   --> cedar-policy-core/src/ast/request.rs:316:66
+    |
+316 |     pub fn iter<'s>(&'s self) -> Option<Box<dyn Iterator<Item = (&SmolStr, PartialValue)> + 's>> {
+    |                 -- lifetime `'s` declared here                   ^ this elided lifetime gets resolved as `'s`
+    |
+    = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/rbac.rs:321:31
+    |
+318 |     pub(crate) fn get_apply_specs_for_action<'a>(
+    |                                              -- lifetime `'a` declared here
+...
+321 |     ) -> impl Iterator<Item = &ValidatorApplySpec> + 'a {
+    |                               ^ this elided lifetime gets resolved as `'a`
+    |
+    = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/schema.rs:531:83
+    |
+531 |     pub(crate) fn get_entity_types_in<'a>(&'a self, entity: &'a EntityUID) -> Vec<&Name> {
+    |                                       -- lifetime `'a` declared here              ^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/schema.rs:551:31
+    |
+548 |     pub(crate) fn get_entity_types_in_set<'a>(
+    |                                           -- lifetime `'a` declared here
+...
+551 |     ) -> impl Iterator<Item = &Name> {
+    |                               ^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/typecheck.rs:307:15
+    |
+304 |     pub fn typecheck_by_request_env<'b>(
+    |                                     -- lifetime `'b` declared here
+...
+307 |     ) -> Vec<(RequestEnv, PolicyCheck)> {
+    |               ^^^^^^^^^^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/typecheck.rs:336:15
+    |
+332 |     fn apply_typecheck_fn_by_request_env<'b, F, C>(
+    |                                          -- lifetime `'b` declared here
+...
+336 |     ) -> Vec<(RequestEnv, C)>
+    |               ^^^^^^^^^^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/typecheck.rs:442:34
+    |
+438 |     fn link_request_env<'b>(
+    |                         -- lifetime `'b` declared here
+...
+442 |     ) -> Box<dyn Iterator<Item = RequestEnv> + 'b> {
+    |                                  ^^^^^^^^^^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+    --> cedar-policy-validator/src/typecheck.rs:2446:17
+     |
+2443 |     fn lookup_extension_function<'b>(
+     |                                  -- lifetime `'b` declared here
+...
+2446 |     ) -> Result<&ExtensionFunctionType, impl FnOnce(Expr) -> TypeError + 'b> {
+     |                 ^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/lib.rs:120:31
+    |
+116 |     fn validate_policy<'a>(
+    |                        -- lifetime `'a` declared here
+...
+120 |     ) -> impl Iterator<Item = ValidationError> + 'a {
+    |                               ^^^^^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/lib.rs:154:38
+    |
+150 |     fn validate_slots<'a>(
+    |                       -- lifetime `'a` declared here
+...
+154 |     ) -> Option<impl Iterator<Item = ValidationError> + 'a> {
+    |                                      ^^^^^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/lib.rs:188:31
+    |
+184 |     fn typecheck_policy<'a>(
+    |                         -- lifetime `'a` declared here
+...
+188 |     ) -> impl Iterator<Item = ValidationError> + 'a {
+    |                               ^^^^^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+
+warning: `cedar-policy-core` (lib) generated 4 warnings
+warning: `cedar-policy-validator` (lib) generated 10 warnings
+warning: `cedar-policy-validator` (lib test) generated 10 warnings (10 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 51.08s
+────────────
+ Nextest run ID bd57bf51-65ae-4d2a-adc9-7b65852e03d9 with nextest profile: default
+    Starting 427 tests across 1 binary
+        PASS [   0.313s] (  1/427) cedar-policy-validator coreschema::test::success_action_unknown
+        PASS [   0.320s] (  2/427) cedar-policy-validator coreschema::test::resource_type_not_declared_action_unspecified
+        PASS [   0.326s] (  3/427) cedar-policy-validator coreschema::test::resource_unspecified
+        PASS [   0.330s] (  4/427) cedar-policy-validator coreschema::test::action_unspecified
+        PASS [   0.331s] (  5/427) cedar-policy-validator coreschema::test::action_not_declared
+        PASS [   0.330s] (  6/427) cedar-policy-validator coreschema::test::success_context_unknown
+        PASS [   0.332s] (  7/427) cedar-policy-validator coreschema::test::context_extra_attribute
+        PASS [   0.333s] (  8/427) cedar-policy-validator coreschema::test::principal_type_not_declared_action_unspecified
+        PASS [   0.336s] (  9/427) cedar-policy-validator coreschema::test::principal_type_invalid
+        PASS [   0.336s] ( 10/427) cedar-policy-validator coreschema::test::context_missing_attribute
+        PASS [   0.335s] ( 11/427) cedar-policy-validator coreschema::test::resource_type_invalid
+        PASS [   0.338s] ( 12/427) cedar-policy-validator coreschema::test::context_attribute_heterogeneous_set
+        PASS [   0.339s] ( 13/427) cedar-policy-validator coreschema::test::context_attribute_wrong_type
+        PASS [   0.342s] ( 14/427) cedar-policy-validator coreschema::test::resource_type_not_declared
+        PASS [   0.343s] ( 15/427) cedar-policy-validator coreschema::test::success_concrete_request_with_context
+        PASS [   0.344s] ( 16/427) cedar-policy-validator coreschema::test::success_concrete_request_no_context
+        PASS [   0.347s] ( 17/427) cedar-policy-validator coreschema::test::principal_type_not_declared
+        PASS [   0.354s] ( 18/427) cedar-policy-validator coreschema::test::principal_unspecified
+        PASS [   0.203s] ( 19/427) cedar-policy-validator expr_iterator::tests::no_entities
+        PASS [   0.245s] ( 20/427) cedar-policy-validator expr_iterator::tests::entity_full_head
+        PASS [   0.250s] ( 21/427) cedar-policy-validator expr_iterator::tests::entity_and
+        PASS [   0.256s] ( 22/427) cedar-policy-validator expr_iterator::tests::entity_get_attr
+        PASS [   0.255s] ( 23/427) cedar-policy-validator expr_iterator::tests::entity_has_attr
+        PASS [   0.256s] ( 24/427) cedar-policy-validator expr_iterator::tests::entity_literal
+        PASS [   0.266s] ( 25/427) cedar-policy-validator expr_iterator::tests::entity_eq
+        PASS [   0.272s] ( 26/427) cedar-policy-validator expr_iterator::tests::entity_in
+        PASS [   0.272s] ( 27/427) cedar-policy-validator expr_iterator::tests::entity_in_set
+        PASS [   0.277s] ( 28/427) cedar-policy-validator expr_iterator::tests::entity_record
+        PASS [   0.288s] ( 29/427) cedar-policy-validator expr_iterator::tests::entity_if
+        PASS [   0.282s] ( 30/427) cedar-policy-validator expr_iterator::tests::entity_record_get_attr
+        PASS [   0.311s] ( 31/427) cedar-policy-validator coreschema::test::success_unknown_action_but_invalid_types
+        PASS [   0.287s] ( 32/427) cedar-policy-validator expr_iterator::tests::test_strs_atrs
+        PASS [   0.330s] ( 33/427) cedar-policy-validator coreschema::test::success_everything_unspecified
+        PASS [   0.301s] ( 34/427) cedar-policy-validator expr_iterator::tests::test_strs
+        PASS [   0.337s] ( 35/427) cedar-policy-validator coreschema::test::success_resource_unknown
+        PASS [   0.355s] ( 36/427) cedar-policy-validator coreschema::test::success_principal_unknown
+        PASS [   0.245s] ( 37/427) cedar-policy-validator expr_iterator::tests::test_strs_like
+        PASS [   0.231s] ( 38/427) cedar-policy-validator fuzzy_match::test::test_match1
+        PASS [   0.214s] ( 39/427) cedar-policy-validator fuzzy_match::test::test_match5
+        PASS [   0.236s] ( 40/427) cedar-policy-validator fuzzy_match::test::test_match2
+        PASS [   0.236s] ( 41/427) cedar-policy-validator fuzzy_match::test::test_match3
+        PASS [   0.227s] ( 42/427) cedar-policy-validator fuzzy_match::test::test_match6
+        PASS [   0.216s] ( 43/427) cedar-policy-validator fuzzy_match::test::test_match_empty
+        PASS [   0.242s] ( 44/427) cedar-policy-validator fuzzy_match::test::test_match4
+        PASS [   0.320s] ( 45/427) cedar-policy-validator expr_iterator::tests::test_strs_ext
+        PASS [   0.231s] ( 46/427) cedar-policy-validator fuzzy_match::test::test_match7
+        PASS [   0.294s] ( 47/427) cedar-policy-validator extensions::partial_evaluation::test::extension_schema_correctness
+        PASS [   0.306s] ( 48/427) cedar-policy-validator expr_iterator::tests::test_strs_lit
+        PASS [   0.309s] ( 49/427) cedar-policy-validator extensions::ipaddr::test::extension_schema_correctness
+        PASS [   0.315s] ( 50/427) cedar-policy-validator extensions::decimal::test::extension_schema_correctness
+        PASS [   0.275s] ( 51/427) cedar-policy-validator human_schema::ast::test::in_cedar
+        PASS [   0.284s] ( 52/427) cedar-policy-validator human_schema::ast::test::in_cedar2
+        PASS [   0.268s] ( 53/427) cedar-policy-validator human_schema::ast::test::in_unqual
+        PASS [   0.299s] ( 54/427) cedar-policy-validator human_schema::ast::test::in_cedar3
+        PASS [   0.259s] ( 55/427) cedar-policy-validator human_schema::test::appliesto_display_tests::test_empty_appliesto_display
+        PASS [   0.298s] ( 56/427) cedar-policy-validator human_schema::ast::test::is_cedar
+        PASS [   0.302s] ( 57/427) cedar-policy-validator human_schema::ast::test::is_cedar2
+        PASS [   0.271s] ( 58/427) cedar-policy-validator human_schema::test::demo_tests::empty_appliesto
+        PASS [   0.301s] ( 59/427) cedar-policy-validator human_schema::ast::test::qual
+        PASS [   0.320s] ( 60/427) cedar-policy-validator human_schema::ast::test::path_iter
+        PASS [   0.344s] ( 61/427) cedar-policy-validator human_schema::test::demo_tests::both_targets
+        PASS [   0.340s] ( 62/427) cedar-policy-validator human_schema::test::demo_tests::both_targets_flipped
+        PASS [   0.319s] ( 63/427) cedar-policy-validator human_schema::test::demo_tests::just_context
+        PASS [   0.344s] ( 64/427) cedar-policy-validator human_schema::test::demo_tests::duplicate_principal
+        PASS [   0.307s] ( 65/427) cedar-policy-validator human_schema::test::demo_tests::no_applies_to
+        PASS [   0.269s] ( 66/427) cedar-policy-validator human_schema::test::demo_tests::print_actions
+        PASS [   0.362s] ( 67/427) cedar-policy-validator human_schema::test::demo_tests::duplicate_resource
+        PASS [   0.348s] ( 68/427) cedar-policy-validator human_schema::test::demo_tests::just_principal
+        PASS [   0.330s] ( 69/427) cedar-policy-validator human_schema::test::demo_tests::principal_only
+        PASS [   0.368s] ( 70/427) cedar-policy-validator human_schema::test::demo_tests::just_resource
+        PASS [   0.340s] ( 71/427) cedar-policy-validator human_schema::test::demo_tests::principals_only
+        PASS [   0.355s] ( 72/427) cedar-policy-validator human_schema::test::demo_tests::resource_only
+        PASS [   0.344s] ( 73/427) cedar-policy-validator human_schema::test::demo_tests::resources_only
+        PASS [   0.344s] ( 74/427) cedar-policy-validator human_schema::test::demo_tests::simple_action
+        PASS [   0.368s] ( 75/427) cedar-policy-validator human_schema::test::demo_tests::simple_cross
+        PASS [   0.365s] ( 76/427) cedar-policy-validator human_schema::test::demo_tests::test_doc_cloud
+        PASS [   0.366s] ( 77/427) cedar-policy-validator human_schema::test::demo_tests::test_github
+        PASS [   0.367s] ( 78/427) cedar-policy-validator human_schema::test::demo_tests::tinytodo
+        PASS [   0.325s] ( 79/427) cedar-policy-validator human_schema::test::parser_tests::mixed_decls
+        PASS [   0.348s] ( 80/427) cedar-policy-validator human_schema::test::parser_tests::entity_decl_basic
+        PASS [   0.365s] ( 81/427) cedar-policy-validator human_schema::test::parser_tests::common_type_decl_basic
+        PASS [   0.349s] ( 82/427) cedar-policy-validator human_schema::test::translator_tests::duplicate_common_types
+        PASS [   0.376s] ( 83/427) cedar-policy-validator human_schema::test::parser_tests::action_decl_basic
+        PASS [   0.350s] ( 84/427) cedar-policy-validator human_schema::test::translator_tests::duplicate_namespace
+        PASS [   0.377s] ( 85/427) cedar-policy-validator human_schema::test::translator_tests::duplicate_action_types
+        PASS [   0.366s] ( 86/427) cedar-policy-validator human_schema::test::translator_tests::duplicate_entity_types
+        PASS [   0.443s] ( 87/427) cedar-policy-validator human_schema::test::translator_tests::type_name_cross_namespace
+        PASS [   0.430s] ( 88/427) cedar-policy-validator human_schema::test::translator_tests::type_name_resolution_basic
+        PASS [   0.427s] ( 89/427) cedar-policy-validator human_schema::test::translator_tests::type_name_resolution_cross_namespace
+        PASS [   0.451s] ( 90/427) cedar-policy-validator human_schema::test::translator_tests::type_name_resolution_empty_namespace
+        PASS [   0.347s] ( 91/427) cedar-policy-validator human_schema::to_json_schema::test::partition_entity_decl_resource
+        PASS [   0.386s] ( 92/427) cedar-policy-validator human_schema::to_json_schema::test::partition_entity_decl_principal
+        PASS [   0.286s] ( 93/427) cedar-policy-validator rbac::test::unspecified_entity_in_additional_constraints
+        PASS [   0.438s] ( 94/427) cedar-policy-validator human_schema::test::translator_tests::use_reserved_namespace
+        PASS [   0.299s] ( 95/427) cedar-policy-validator rbac::test::unspecified_entity_in_scope
+        PASS [   0.442s] ( 96/427) cedar-policy-validator rbac::test::get_possible_actions_eq
+        PASS [   0.433s] ( 97/427) cedar-policy-validator rbac::test::get_possible_actions_in_no_parents
+        PASS [   0.409s] ( 98/427) cedar-policy-validator rbac::test::get_possible_principals_eq
+        PASS [   0.486s] ( 99/427) cedar-policy-validator rbac::test::action_with_unspecified_principal_applies
+        PASS [   0.487s] (100/427) cedar-policy-validator rbac::test::action_with_unspecified_resource_applies
+        PASS [   0.418s] (101/427) cedar-policy-validator rbac::test::undefined_entity_type_in_principal_slot
+        PASS [   0.462s] (102/427) cedar-policy-validator rbac::test::get_possible_actions_in_set_no_parents
+        PASS [   0.451s] (103/427) cedar-policy-validator rbac::test::test_with_tc_computation
+        PASS [   0.473s] (104/427) cedar-policy-validator rbac::test::is_unknown_entity_condition
+        PASS [   0.410s] (105/427) cedar-policy-validator rbac::test::validate_action_apply_incorrect_principal
+        PASS [   0.445s] (106/427) cedar-policy-validator rbac::test::unspecified_principal_resource_with_scope_conditions
+        PASS [   0.455s] (107/427) cedar-policy-validator rbac::test::validate_action_apply_correct
+        PASS [   0.400s] (108/427) cedar-policy-validator rbac::test::validate_action_apply_incorrect_principal_and_resource
+        PASS [   0.358s] (109/427) cedar-policy-validator rbac::test::validate_action_id_empty_schema
+        PASS [   0.345s] (110/427) cedar-policy-validator rbac::test::validate_entity_type_empty_schema
+        PASS [   0.384s] (111/427) cedar-policy-validator rbac::test::validate_action_id_in_singleton_schema
+        PASS [   0.415s] (112/427) cedar-policy-validator rbac::test::validate_action_apply_incorrect_resource
+        PASS [   0.391s] (113/427) cedar-policy-validator rbac::test::validate_action_id_not_in_singleton_schema
+        PASS [   0.407s] (114/427) cedar-policy-validator rbac::test::validate_entity_type_in_singleton_schema
+        PASS [   0.408s] (115/427) cedar-policy-validator rbac::test::validate_equals_instead_of_in
+        PASS [   0.418s] (116/427) cedar-policy-validator rbac::test::validate_entity_type_not_in_singleton_schema
+        PASS [   0.406s] (117/427) cedar-policy-validator rbac::test::validate_namespaced_invalid_action
+        PASS [   0.412s] (118/427) cedar-policy-validator rbac::test::validate_namespaced_entity_type_in_schema
+        PASS [   0.448s] (119/427) cedar-policy-validator rbac::test::validate_namespaced_action_id_in_schema
+        PASS [   0.432s] (120/427) cedar-policy-validator rbac::test::validate_namespaced_invalid_entity_type
+        PASS [   0.462s] (121/427) cedar-policy-validator rbac::test::validate_principal_is
+        PASS [   0.428s] (122/427) cedar-policy-validator rbac::test::validate_principal_slot_in_singleton_schema
+        PASS [   0.509s] (123/427) cedar-policy-validator rbac::test::validate_principal_is_err
+        PASS [   0.443s] (124/427) cedar-policy-validator rbac::test::validate_resource_slot_in_singleton_schema
+        PASS [   0.483s] (125/427) cedar-policy-validator rbac::test::validate_resource_is
+        PASS [   0.382s] (126/427) cedar-policy-validator schema::namespace_def::action_entity_type_parses
+        PASS [   0.540s] (127/427) cedar-policy-validator rbac::test::validate_resource_is_err
+        PASS [   0.496s] (128/427) cedar-policy-validator rbac::test::validate_used_as_correct
+        PASS [   0.468s] (129/427) cedar-policy-validator rbac::test::validate_used_as_incorrect
+        PASS [   0.475s] (130/427) cedar-policy-validator schema::test::action_entity_hierarchy
+        PASS [   0.502s] (131/427) cedar-policy-validator schema::test::action_entity_attribute
+        PASS [   0.398s] (132/427) cedar-policy-validator schema::test::cannot_declare_action_type_when_prohibited
+        PASS [   0.456s] (133/427) cedar-policy-validator schema::test::can_declare_other_type_when_action_type_prohibited
+        PASS [   0.459s] (134/427) cedar-policy-validator schema::test::attribute_different_namespace
+        PASS [   0.475s] (135/427) cedar-policy-validator schema::test::applies_to_different_namespace
+        PASS [   0.450s] (136/427) cedar-policy-validator schema::test::cannot_declare_action_in_group_when_prohibited
+        PASS [   0.422s] (137/427) cedar-policy-validator schema::test::cant_use_namespace_in_entity_type
+        PASS [   0.438s] (138/427) cedar-policy-validator schema::test::counterexamples_from_cedar_134
+        PASS [   0.453s] (139/427) cedar-policy-validator schema::test::cross_fragment_duplicate_type
+        PASS [   0.430s] (140/427) cedar-policy-validator schema::test::cross_namespace_type
+        PASS [   0.454s] (141/427) cedar-policy-validator schema::test::cross_fragment_type
+        PASS [   0.408s] (142/427) cedar-policy-validator schema::test::entity_attribute_entity_type_with_declared_namespace
+        PASS [   0.423s] (143/427) cedar-policy-validator schema::test::defined_record_as_attrs
+        PASS [   0.428s] (144/427) cedar-policy-validator schema::test::entity_attribute_entity_type_with_namespace
+        PASS [   0.382s] (145/427) cedar-policy-validator schema::test::get_namespaces
+        PASS [   0.253s] (146/427) cedar-policy-validator schema::test::schema_no_fragments
+        PASS [   0.394s] (147/427) cedar-policy-validator schema::test::member_of_different_namespace
+        PASS [   0.286s] (148/427) cedar-policy-validator schema::test::schema_type_record_is_validator_type_record
+        PASS [   0.389s] (149/427) cedar-policy-validator schema::test::qualified_undeclared_common_types2
+        PASS [   0.411s] (150/427) cedar-policy-validator schema::test::qualified_undeclared_common_types
+        PASS [   0.381s] (151/427) cedar-policy-validator schema::test::same_type_different_namespace
+        PASS [   0.412s] (152/427) cedar-policy-validator schema::test::same_action_different_namespace
+        PASS [   0.523s] (153/427) cedar-policy-validator schema::test::namespaced_schema
+        PASS [   0.395s] (154/427) cedar-policy-validator schema::test::shape_not_record
+        PASS [   0.411s] (155/427) cedar-policy-validator schema::test::simple_action_entity
+        PASS [   0.395s] (156/427) cedar-policy-validator schema::test::simple_defined_type
+        PASS [   0.409s] (157/427) cedar-policy-validator schema::test::test_action_namespace_inference
+        PASS [   0.387s] (158/427) cedar-policy-validator schema::test::test_action_namespace_inference_multi
+        PASS [   0.408s] (159/427) cedar-policy-validator schema::test::test_action_namespace_inference_multi_success
+        PASS [   0.365s] (160/427) cedar-policy-validator schema::test::test_entity_type_namespace_parse_error
+        PASS [   0.254s] (161/427) cedar-policy-validator schema::test::test_from_schema_file_duplicate_entity
+        PASS [   0.273s] (162/427) cedar-policy-validator schema::test::test_from_schema_file_duplicate_action
+        PASS [   0.381s] (163/427) cedar-policy-validator schema::test::test_entity_type_namespace
+        PASS [   0.374s] (164/427) cedar-policy-validator schema::test::test_from_schema_file
+        PASS [   0.385s] (165/427) cedar-policy-validator schema::test::test_entity_type_no_namespace
+        PASS [   0.393s] (166/427) cedar-policy-validator schema::test::test_from_schema_file_action_cycle2
+        PASS [   0.408s] (167/427) cedar-policy-validator schema::test::test_from_schema_file_action_cycle1
+        PASS [   0.406s] (168/427) cedar-policy-validator schema::test::test_from_schema_file_undefined_action
+        PASS [   0.302s] (169/427) cedar-policy-validator schema_file_format::test::schema_file_unexpected_malformed_attribute
+        PASS [   0.373s] (170/427) cedar-policy-validator schema::test::test_from_schema_file_undefined_entities
+        PASS [   0.376s] (171/427) cedar-policy-validator schema::test::undeclared_type_in_attr
+        PASS [   0.375s] (172/427) cedar-policy-validator schema::test::undeclared_type_in_type_def
+        PASS [   0.223s] (173/427) cedar-policy-validator schema_file_format::test::test_action_type_parser2
+        PASS [   0.271s] (174/427) cedar-policy-validator schema_file_format::test::schema_file_with_missing_type
+        PASS [   0.380s] (175/427) cedar-policy-validator schema::test::undefined_entity_namespace_applies_to
+        PASS [   0.229s] (176/427) cedar-policy-validator schema_file_format::test::test_entity_type_parser2
+        PASS [   0.370s] (177/427) cedar-policy-validator schema::test::undefined_entity_namespace_member_of
+        PASS [   0.316s] (178/427) cedar-policy-validator schema_file_format::test::schema_file_with_missing_field
+        PASS [   0.267s] (179/427) cedar-policy-validator schema_file_format::test::test_action_type_parser1
+        PASS [   0.253s] (180/427) cedar-policy-validator schema_file_format::test::test_parse_namespaces
+        PASS [   0.265s] (181/427) cedar-policy-validator schema_file_format::test::test_entity_type_parser1
+        PASS [   0.266s] (182/427) cedar-policy-validator schema_file_format::test::test_schema_file_parser
+        PASS [   0.276s] (183/427) cedar-policy-validator schema_file_format::test::test_schema_file_with_extra_field
+        PASS [   0.252s] (184/427) cedar-policy-validator schema_file_format::test::test_schema_file_with_misplaced_field
+        PASS [   0.275s] (185/427) cedar-policy-validator schema_file_format::test::test_schema_file_with_misspelled_field
+        PASS [   0.225s] (186/427) cedar-policy-validator schema_file_format::test_duplicates_error::action
+        PASS [   0.259s] (187/427) cedar-policy-validator schema_file_format::test::test_schema_file_with_misspelled_required
+        PASS [   0.229s] (188/427) cedar-policy-validator schema_file_format::test_duplicates_error::entity_type
+        PASS [   0.201s] (189/427) cedar-policy-validator str_checks::test::idents
+        PASS [   0.261s] (190/427) cedar-policy-validator schema_file_format::test_duplicates_error::common_types
+        PASS [   0.257s] (191/427) cedar-policy-validator schema_file_format::test_duplicates_error::namespace
+        PASS [   0.212s] (192/427) cedar-policy-validator str_checks::test::strs
+        PASS [   0.260s] (193/427) cedar-policy-validator schema_file_format::test_duplicates_error::record_type
+        PASS [   0.306s] (194/427) cedar-policy-validator str_checks::test::b
+        PASS [   0.318s] (195/427) cedar-policy-validator str_checks::test::a
+        PASS [   0.315s] (196/427) cedar-policy-validator str_checks::test::problem_in_pattern
+        PASS [   0.326s] (197/427) cedar-policy-validator str_checks::test::trojan_source
+        PASS [   0.393s] (198/427) cedar-policy-validator test::top_level_validate
+        PASS [   0.333s] (199/427) cedar-policy-validator type_error::test_attr_access::context_access
+        PASS [   0.330s] (200/427) cedar-policy-validator type_error::test_attr_access::entity_access
+        PASS [   0.406s] (201/427) cedar-policy-validator test::top_level_validate_with_instantiations
+        PASS [   0.307s] (202/427) cedar-policy-validator type_error::test_attr_access::other_access
+        PASS [   0.409s] (203/427) cedar-policy-validator test::validate_finds_warning_and_error
+        PASS [   0.344s] (204/427) cedar-policy-validator typecheck::test_expr::add_sub_typechecks
+        PASS [   0.372s] (205/427) cedar-policy-validator typecheck::test_expr::add_sub_typecheck_fails
+        PASS [   0.356s] (206/427) cedar-policy-validator typecheck::test_expr::and_typechecks
+        PASS [   0.356s] (207/427) cedar-policy-validator typecheck::test_expr::contains_all_typecheck_fails
+        PASS [   0.393s] (208/427) cedar-policy-validator typecheck::test_expr::and_typecheck_fails
+        PASS [   0.358s] (209/427) cedar-policy-validator typecheck::test_expr::contains_all_typechecks
+        PASS [   0.383s] (210/427) cedar-policy-validator typecheck::test_expr::contains_all_typecheck_literals_false
+        PASS [   0.334s] (211/427) cedar-policy-validator typecheck::test_expr::contains_typechecks
+        PASS [   0.401s] (212/427) cedar-policy-validator typecheck::test_expr::contains_typecheck_fails
+        PASS [   0.367s] (213/427) cedar-policy-validator typecheck::test_expr::contains_typecheck_literals_false
+        PASS [   0.355s] (214/427) cedar-policy-validator typecheck::test_expr::entity_eq_is_false
+        PASS [   0.339s] (215/427) cedar-policy-validator typecheck::test_expr::entity_has_typechecks
+        PASS [   0.313s] (216/427) cedar-policy-validator typecheck::test_expr::eq_typechecks
+        PASS [   0.315s] (217/427) cedar-policy-validator typecheck::test_expr::heterogeneous_set
+        PASS [   0.322s] (218/427) cedar-policy-validator typecheck::test_expr::has_typecheck_fails
+        PASS [   0.336s] (219/427) cedar-policy-validator typecheck::test_expr::eq_typecheck_entity_literals_false
+        PASS [   0.342s] (220/427) cedar-policy-validator typecheck::test_expr::eq_typecheck_action_literals_false
+        PASS [   0.307s] (221/427) cedar-policy-validator typecheck::test_expr::if_false_ignores_then
+        PASS [   0.301s] (222/427) cedar-policy-validator typecheck::test_expr::if_true_ignore_else
+        PASS [   0.287s] (223/427) cedar-policy-validator typecheck::test_expr::if_typechecks
+        PASS [   0.304s] (224/427) cedar-policy-validator typecheck::test_expr::if_typecheck_fails
+        PASS [   0.328s] (225/427) cedar-policy-validator typecheck::test_expr::if_no_lub_error
+        PASS [   0.306s] (226/427) cedar-policy-validator typecheck::test_expr::in_set_typechecks_permissive
+        PASS [   0.308s] (227/427) cedar-policy-validator typecheck::test_expr::in_set_typechecks_strict
+        PASS [   0.303s] (228/427) cedar-policy-validator typecheck::test_expr::in_typecheck_fails
+        PASS [   0.294s] (229/427) cedar-policy-validator typecheck::test_expr::in_typechecks_permissive
+        PASS [   0.312s] (230/427) cedar-policy-validator typecheck::test_expr::in_typechecks
+        PASS [   0.318s] (231/427) cedar-policy-validator typecheck::test_expr::is_typecheck_fails
+        PASS [   0.303s] (232/427) cedar-policy-validator typecheck::test_expr::less_than_typecheck_fails
+        PASS [   0.324s] (233/427) cedar-policy-validator typecheck::test_expr::is_typechecks
+        PASS [   0.285s] (234/427) cedar-policy-validator typecheck::test_expr::mul_typechecks
+        PASS [   0.313s] (235/427) cedar-policy-validator typecheck::test_expr::less_than_typechecks
+        PASS [   0.308s] (236/427) cedar-policy-validator typecheck::test_expr::mul_typecheck_fails
+        PASS [   0.310s] (237/427) cedar-policy-validator typecheck::test_expr::like_typecheck_fails
+        PASS [   0.324s] (238/427) cedar-policy-validator typecheck::test_expr::like_typechecks
+        PASS [   0.294s] (239/427) cedar-policy-validator typecheck::test_expr::neg_typecheck_fails
+        PASS [   0.302s] (240/427) cedar-policy-validator typecheck::test_expr::neg_typechecks
+        PASS [   0.253s] (241/427) cedar-policy-validator typecheck::test_expr::or_false
+        PASS [   0.291s] (242/427) cedar-policy-validator typecheck::test_expr::not_typechecks
+        PASS [   0.288s] (243/427) cedar-policy-validator typecheck::test_expr::or_boolean
+        PASS [   0.299s] (244/427) cedar-policy-validator typecheck::test_expr::not_typecheck_fails
+        PASS [   0.282s] (245/427) cedar-policy-validator typecheck::test_expr::or_left_true_ignores_right
+        PASS [   0.300s] (246/427) cedar-policy-validator typecheck::test_expr::or_left_false_is_right
+        PASS [   0.297s] (247/427) cedar-policy-validator typecheck::test_expr::or_left_true_is_true
+        PASS [   0.313s] (248/427) cedar-policy-validator typecheck::test_expr::or_right_false_is_left
+        PASS [   0.295s] (249/427) cedar-policy-validator typecheck::test_expr::or_right_true_is_true
+        PASS [   0.307s] (250/427) cedar-policy-validator typecheck::test_expr::or_right_true_fails_left
+        PASS [   0.323s] (251/427) cedar-policy-validator typecheck::test_expr::or_typecheck_fails
+        PASS [   0.278s] (252/427) cedar-policy-validator typecheck::test_expr::primitives_typecheck
+        PASS [   0.292s] (253/427) cedar-policy-validator typecheck::test_expr::record_get_attr_does_not_exist
+        PASS [   0.301s] (254/427) cedar-policy-validator typecheck::test_expr::record_get_attr_lub_typecheck_fails
+        PASS [   0.319s] (255/427) cedar-policy-validator typecheck::test_expr::record_get_attr_incompatible
+        PASS [   0.326s] (256/427) cedar-policy-validator typecheck::test_expr::record_get_attr_lub_does_not_exist
+        PASS [   0.314s] (257/427) cedar-policy-validator typecheck::test_expr::record_get_attr_typecheck_fails
+        PASS [   0.310s] (258/427) cedar-policy-validator typecheck::test_expr::record_get_attr_typechecks
+        PASS [   0.337s] (259/427) cedar-policy-validator typecheck::test_expr::record_typechecks
+        PASS [   0.343s] (260/427) cedar-policy-validator typecheck::test_expr::record_lub_has_typechecks_strict
+        PASS [   0.348s] (261/427) cedar-policy-validator typecheck::test_expr::record_has_typechecks
+        PASS [   0.372s] (262/427) cedar-policy-validator typecheck::test_expr::record_lub_has_typechecks_permissive
+        PASS [   0.343s] (263/427) cedar-policy-validator typecheck::test_expr::set_typechecks
+        PASS [   0.354s] (264/427) cedar-policy-validator typecheck::test_expr::set_eq_is_not_false
+        PASS [   0.346s] (265/427) cedar-policy-validator typecheck::test_expr::slot_equals_typechecks
+        PASS [   0.331s] (266/427) cedar-policy-validator typecheck::test_expr::slot_has_typechecks
+        PASS [   0.329s] (267/427) cedar-policy-validator typecheck::test_expr::slot_typechecks
+        PASS [   0.336s] (268/427) cedar-policy-validator typecheck::test_expr::slot_in_typechecks
+        PASS [   0.358s] (269/427) cedar-policy-validator typecheck::test_extensions::decimal_extension_typechecks
+        PASS [   0.366s] (270/427) cedar-policy-validator typecheck::test_extensions::decimal_extension_typecheck_fails
+        PASS [   0.349s] (271/427) cedar-policy-validator typecheck::test_extensions::ip_extension_typecheck_fails
+        PASS [   0.338s] (272/427) cedar-policy-validator typecheck::test_namespace::multiple_namespaces_attributes
+        PASS [   0.357s] (273/427) cedar-policy-validator typecheck::test_extensions::ip_extension_typechecks
+        PASS [   0.348s] (274/427) cedar-policy-validator typecheck::test_namespace::multiple_namespaces_literals
+        PASS [   0.382s] (275/427) cedar-policy-validator typecheck::test_namespace::multiple_namespaces_applies_to
+        PASS [   0.365s] (276/427) cedar-policy-validator typecheck::test_namespace::multiple_namespaces_member_of
+        PASS [   0.346s] (277/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_can_type_error
+        PASS [   0.347s] (278/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_eq
+        PASS [   0.348s] (279/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_get_attr
+        PASS [   0.366s] (280/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_has
+        PASS [   0.354s] (281/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_in
+        PASS [   0.368s] (282/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_is_wrong_type_and
+        PASS [   0.335s] (283/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_type_applies_to
+        PASS [   0.366s] (284/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_is_wrong_type_when
+        PASS [   0.331s] (285/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_type_member_of
+        PASS [   0.373s] (286/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_type_in_attribute
+        PASS [   0.341s] (287/427) cedar-policy-validator typecheck::test_namespace::namespaced_entity_wrong_namespace
+        PASS [   0.367s] (288/427) cedar-policy-validator typecheck::test_optional_attributes::action_attrs_failing
+        PASS [   0.358s] (289/427) cedar-policy-validator typecheck::test_optional_attributes::action_attrs_passing
+        PASS [   0.331s] (290/427) cedar-policy-validator typecheck::test_optional_attributes::and_branches_union
+        PASS [   0.327s] (291/427) cedar-policy-validator typecheck::test_optional_attributes::and_branches_use_prior_effect
+        PASS [   0.344s] (292/427) cedar-policy-validator typecheck::test_optional_attributes::and_lhs_access_fails
+        PASS [   0.326s] (293/427) cedar-policy-validator typecheck::test_optional_attributes::and_lhs_true_has_rhs_effect
+        PASS [   0.330s] (294/427) cedar-policy-validator typecheck::test_optional_attributes::and_short_circuit_without_error
+        PASS [   0.330s] (295/427) cedar-policy-validator typecheck::test_optional_attributes::contains_all_no_effect
+        PASS [   0.351s] (296/427) cedar-policy-validator typecheck::test_optional_attributes::and_rhs_true_has_lhs_effect
+        PASS [   0.343s] (297/427) cedar-policy-validator typecheck::test_optional_attributes::contains_any_no_effect
+        PASS [   0.343s] (298/427) cedar-policy-validator typecheck::test_optional_attributes::else_access_fails
+        PASS [   0.342s] (299/427) cedar-policy-validator typecheck::test_optional_attributes::else_guarded_access_by_prior_effect
+        PASS [   0.333s] (300/427) cedar-policy-validator typecheck::test_optional_attributes::guarded_has_true_short_circuits
+        PASS [   0.337s] (301/427) cedar-policy-validator typecheck::test_optional_attributes::if_false_short_circuit_without_error
+        PASS [   0.349s] (302/427) cedar-policy-validator typecheck::test_optional_attributes::if_then_else_as_guard_empty_intersect_fails
+        PASS [   0.348s] (303/427) cedar-policy-validator typecheck::test_optional_attributes::if_then_else_can_use_guard_effect
+        PASS [   0.335s] (304/427) cedar-policy-validator typecheck::test_optional_attributes::if_then_else_else_access_fails
+        PASS [   0.324s] (305/427) cedar-policy-validator typecheck::test_optional_attributes::if_then_else_guard_union_then_equal_else
+        PASS [   0.315s] (306/427) cedar-policy-validator typecheck::test_optional_attributes::if_then_else_then_else_same
+        PASS [   0.308s] (307/427) cedar-policy-validator typecheck::test_optional_attributes::in_no_effect
+        PASS [   0.316s] (308/427) cedar-policy-validator typecheck::test_optional_attributes::in_list_no_effect
+        PASS [   0.328s] (309/427) cedar-policy-validator typecheck::test_optional_attributes::if_true_short_circuit_without_error
+        PASS [   0.309s] (310/427) cedar-policy-validator typecheck::test_optional_attributes::not_no_effect
+        PASS [   0.323s] (311/427) cedar-policy-validator typecheck::test_optional_attributes::like_no_effect
+        PASS [   0.296s] (312/427) cedar-policy-validator typecheck::test_optional_attributes::or_branches_use_prior_effect
+        PASS [   0.318s] (313/427) cedar-policy-validator typecheck::test_optional_attributes::or_branches_intersect
+        PASS [   0.334s] (314/427) cedar-policy-validator typecheck::test_optional_attributes::or_branches_empty_intersect_fails
+        PASS [   0.329s] (315/427) cedar-policy-validator typecheck::test_optional_attributes::or_lhs_access_fails
+        PASS [   0.329s] (316/427) cedar-policy-validator typecheck::test_optional_attributes::or_lhs_false_has_rhs_effect
+        PASS [   0.342s] (317/427) cedar-policy-validator typecheck::test_optional_attributes::or_rhs_false_has_lhs_effect
+        PASS [   0.359s] (318/427) cedar-policy-validator typecheck::test_optional_attributes::or_rhs_access_fails
+        PASS [   0.343s] (319/427) cedar-policy-validator typecheck::test_optional_attributes::principal_and_resource_in_effect
+        PASS [   0.343s] (320/427) cedar-policy-validator typecheck::test_optional_attributes::record_attr_has_no_effect
+        PASS [   0.390s] (321/427) cedar-policy-validator typecheck::test_optional_attributes::record_attr_no_effect
+        PASS [   0.375s] (322/427) cedar-policy-validator typecheck::test_optional_attributes::record_optional_attrs
+        PASS [   0.357s] (323/427) cedar-policy-validator typecheck::test_optional_attributes::resource_effect_access_principal_fails
+        PASS [   0.342s] (324/427) cedar-policy-validator typecheck::test_optional_attributes::simple_and_guard_principal
+        PASS [   0.387s] (325/427) cedar-policy-validator typecheck::test_optional_attributes::set_contains_no_effect
+        PASS [   0.383s] (326/427) cedar-policy-validator typecheck::test_optional_attributes::simple_and_guard_resource
+        PASS [   0.383s] (327/427) cedar-policy-validator typecheck::test_optional_attributes::then_guarded_access_by_prior_effect
+        PASS [   0.368s] (328/427) cedar-policy-validator typecheck::test_optional_attributes::true_no_effect
+        PASS [   0.386s] (329/427) cedar-policy-validator typecheck::test_optional_attributes::then_guarded_access_by_test
+        PASS [   0.420s] (330/427) cedar-policy-validator typecheck::test_policy::action_groups
+        PASS [   0.447s] (331/427) cedar-policy-validator typecheck::test_optional_attributes::unguarded_access_fails
+        PASS [   0.399s] (332/427) cedar-policy-validator typecheck::test_policy::entity_literal_typechecks
+        PASS [   0.426s] (333/427) cedar-policy-validator typecheck::test_policy::entity_attribute_recommendation
+        PASS [   0.408s] (334/427) cedar-policy-validator typecheck::test_policy::entity_lub_access_attribute
+        PASS [   0.441s] (335/427) cedar-policy-validator typecheck::test_policy::entity_lub_cant_access_attribute_not_shared
+        PASS [   0.450s] (336/427) cedar-policy-validator typecheck::test_policy::entity_lub_cant_have_undeclared_attribute
+        PASS [   0.442s] (337/427) cedar-policy-validator typecheck::test_policy::entity_lub_no_common_attributes_is_entity
+        PASS [   0.430s] (338/427) cedar-policy-validator typecheck::test_policy::entity_lub_no_common_attributes_might_have_declared_attribute
+        PASS [   0.422s] (339/427) cedar-policy-validator typecheck::test_policy::is_entity_lub
+        PASS [   0.427s] (340/427) cedar-policy-validator typecheck::test_policy::is_action
+        PASS [   0.445s] (341/427) cedar-policy-validator typecheck::test_policy::entity_record_lub_is_none
+        PASS [   0.436s] (342/427) cedar-policy-validator typecheck::test_policy::is_impossible
+        PASS [   0.393s] (343/427) cedar-policy-validator typecheck::test_policy::optional_attr_fail
+        PASS [   0.413s] (344/427) cedar-policy-validator typecheck::test_policy::policy_action_in
+        PASS [   0.438s] (345/427) cedar-policy-validator typecheck::test_policy::is_typechecks_singleton
+        PASS [   0.416s] (346/427) cedar-policy-validator typecheck::test_policy::policy_action_multiple_principal_attribute_access
+        PASS [   0.432s] (347/427) cedar-policy-validator typecheck::test_policy::policy_action_in_impossible
+        PASS [   0.397s] (348/427) cedar-policy-validator typecheck::test_policy::policy_context_invalid_attribute
+        PASS [   0.403s] (349/427) cedar-policy-validator typecheck::test_policy::policy_entity_has_then_get
+        PASS [   0.421s] (350/427) cedar-policy-validator typecheck::test_policy::policy_checked_in_multiple_envs
+        PASS [   0.420s] (351/427) cedar-policy-validator typecheck::test_policy::policy_entity_top_has
+        PASS [   0.424s] (352/427) cedar-policy-validator typecheck::test_policy::policy_entity_type_action_in
+        PASS [   0.444s] (353/427) cedar-policy-validator typecheck::test_policy::policy_entity_type_action_in_body
+        PASS [   0.428s] (354/427) cedar-policy-validator typecheck::test_policy::policy_entity_type_action_in_set
+        PASS [   0.445s] (355/427) cedar-policy-validator typecheck::test_policy::policy_entity_type_attr
+        PASS [   0.431s] (356/427) cedar-policy-validator typecheck::test_policy::policy_entity_type_principal_in_set
+        PASS [   0.429s] (357/427) cedar-policy-validator typecheck::test_policy::policy_if_entities_lub
+        PASS [   0.421s] (358/427) cedar-policy-validator typecheck::test_policy::policy_impossible_head
+        PASS [   0.423s] (359/427) cedar-policy-validator typecheck::test_policy::policy_impossible_not_has
+        PASS [   0.424s] (360/427) cedar-policy-validator typecheck::test_policy::policy_impossible_literal_euids
+        PASS [   0.457s] (361/427) cedar-policy-validator typecheck::test_policy::policy_entity_type_principal_in_set_user_only
+        PASS [   0.409s] (362/427) cedar-policy-validator typecheck::test_policy::policy_invalid_attribute
+        PASS [   0.401s] (363/427) cedar-policy-validator typecheck::test_policy::policy_invalid_attribute_2
+        PASS [   0.405s] (364/427) cedar-policy-validator typecheck::test_policy::policy_lub_entity_type_attr
+        PASS [   0.453s] (365/427) cedar-policy-validator typecheck::test_policy::policy_in_action_impossible
+        PASS [   0.354s] (366/427) cedar-policy-validator typecheck::test_policy::policy_principal_action_attribute_access
+        PASS [   0.363s] (367/427) cedar-policy-validator typecheck::test_policy::policy_no_conditions_attribute_access
+        PASS [   0.373s] (368/427) cedar-policy-validator typecheck::test_policy::policy_resource_narrows_principal
+        PASS [   0.375s] (369/427) cedar-policy-validator typecheck::test_policy::policy_single_action_attribute_access
+        PASS [   0.349s] (370/427) cedar-policy-validator typecheck::test_policy::record_entity_lub_non_term
+        PASS [   0.340s] (371/427) cedar-policy-validator typecheck::test_policy::templates::principal_eq_slot
+        PASS [   0.360s] (372/427) cedar-policy-validator typecheck::test_policy::templates::principal_in_slot
+        PASS [   0.337s] (373/427) cedar-policy-validator typecheck::test_policy::templates::principal_resource_in_slot
+        PASS [   0.359s] (374/427) cedar-policy-validator typecheck::test_policy::templates::principal_resource_eq_slot
+        PASS [   0.326s] (375/427) cedar-policy-validator typecheck::test_policy::templates::resource_in_slot
+        PASS [   0.345s] (376/427) cedar-policy-validator typecheck::test_policy::templates::principal_slot_safe_body
+        PASS [   0.333s] (377/427) cedar-policy-validator typecheck::test_policy::templates::resource_eq_slot
+        PASS [   0.366s] (378/427) cedar-policy-validator typecheck::test_policy::templates::principal_slot_error_body
+        PASS [   0.327s] (379/427) cedar-policy-validator typecheck::test_policy::templates::resource_slot_safe_body
+        PASS [   0.326s] (380/427) cedar-policy-validator typecheck::test_policy::templates::template_all_false
+        PASS [   0.319s] (381/427) cedar-policy-validator typecheck::test_policy::type_error_is_not_reported_for_every_cross_product_element
+        PASS [   0.361s] (382/427) cedar-policy-validator typecheck::test_policy::templates::resource_slot_error_body
+        PASS [   0.332s] (383/427) cedar-policy-validator typecheck::test_policy::validate_policy_with_typedef_schema
+        PASS [   0.341s] (384/427) cedar-policy-validator typecheck::test_strict::bool_eq_types_match
+        PASS [   0.338s] (385/427) cedar-policy-validator typecheck::test_strict::contains_all_strict_types_mismatch
+        PASS [   0.340s] (386/427) cedar-policy-validator typecheck::test_strict::contains_any_strict_types_mismatch
+        PASS [   0.308s] (387/427) cedar-policy-validator typecheck::test_strict::empty_set_literal
+        PASS [   0.338s] (388/427) cedar-policy-validator typecheck::test_strict::contains_strict_types_mismatch
+        PASS [   0.320s] (389/427) cedar-policy-validator typecheck::test_strict::entity_in_lub
+        PASS [   0.303s] (390/427) cedar-policy-validator typecheck::test_strict::eq_strict_types_mismatch
+        PASS [   0.313s] (391/427) cedar-policy-validator typecheck::test_strict::ext_struct_non_lit
+        PASS [   0.312s] (392/427) cedar-policy-validator typecheck::test_strict::false_eq_rewrites_to_false
+        PASS [   0.291s] (393/427) cedar-policy-validator typecheck::test_strict::if_bool_keeps_both
+        PASS [   0.287s] (394/427) cedar-policy-validator typecheck::test_strict::if_false_else_only
+        PASS [   0.297s] (395/427) cedar-policy-validator typecheck::test_strict::if_bool_strict_type_mismatch
+        PASS [   0.286s] (396/427) cedar-policy-validator typecheck::test_strict::set_strict_types_mismatch
+        PASS [   0.286s] (397/427) cedar-policy-validator typecheck::test_strict::strict_typecheck_catches_regular_type_error
+        PASS [   0.292s] (398/427) cedar-policy-validator typecheck::test_strict::if_true_then_only
+        PASS [   0.296s] (399/427) cedar-policy-validator typecheck::test_strict::test_extension
+        PASS [   0.312s] (400/427) cedar-policy-validator typecheck::test_strict::test_and
+        PASS [   0.301s] (401/427) cedar-policy-validator typecheck::test_strict::test_get_attr
+        PASS [   0.298s] (402/427) cedar-policy-validator typecheck::test_strict::test_has_attr
+        PASS [   0.307s] (403/427) cedar-policy-validator typecheck::test_strict::test_like
+        PASS [   0.287s] (404/427) cedar-policy-validator typecheck::test_strict::test_mul
+        PASS [   0.296s] (405/427) cedar-policy-validator typecheck::test_strict::test_or
+        PASS [   0.299s] (406/427) cedar-policy-validator typecheck::test_strict::test_unary
+        PASS [   0.298s] (407/427) cedar-policy-validator typecheck::test_strict::true_eq_rewrites_to_true
+        PASS [   0.291s] (408/427) cedar-policy-validator typecheck::test_strict::true_false_equality
+        PASS [   0.290s] (409/427) cedar-policy-validator typecheck::test_strict::true_false_set
+        PASS [   0.253s] (410/427) cedar-policy-validator types::test::json_display_of_schema_type_parses_to_schema_type
+        PASS [   0.256s] (411/427) cedar-policy-validator types::test::test_action_entity_lub
+        PASS [   0.301s] (412/427) cedar-policy-validator typecheck::test_type_annotation::expr_typechecks_with_correct_annotation
+        PASS [   0.213s] (413/427) cedar-policy-validator types::test::test_extension_lub
+        PASS [   0.169s] (414/427) cedar-policy-validator types::test::test_primitive_lub
+        PASS [   0.294s] (415/427) cedar-policy-validator typecheck::test_unspecified_entity::spec_principal_unspec_resource
+        PASS [   0.294s] (416/427) cedar-policy-validator typecheck::test_unspecified_entity::spec_resource_unspec_principal
+        PASS [   0.277s] (417/427) cedar-policy-validator types::test::record_entity_lub_non_term
+        PASS [   0.302s] (418/427) cedar-policy-validator typecheck::test_unspecified_entity::unspec_resource_unspec_principal
+        PASS [   0.271s] (419/427) cedar-policy-validator types::test::test_entity_lub
+        PASS [   0.272s] (420/427) cedar-policy-validator types::test::test_entity_lub_with_attributes
+        PASS [   0.162s] (421/427) cedar-policy-validator types::test::test_record_undef_lub
+        PASS [   0.216s] (422/427) cedar-policy-validator types::test::test_non_schema_type_display
+        PASS [   0.185s] (423/427) cedar-policy-validator types::test::test_record_lub
+        PASS [   0.133s] (424/427) cedar-policy-validator types::test::test_set_lub
+        PASS [   0.246s] (425/427) cedar-policy-validator types::test::test_record_entity_lub
+        PASS [   0.167s] (426/427) cedar-policy-validator types::test::text_extension_type_dislay
+        PASS [   0.186s] (427/427) cedar-policy-validator types::test::test_with_recursive_types
+────────────
+     Summary [   8.285s] 427 tests run: 427 passed, 0 skipped
+reward=1 graded=427 found=77 failed=0 parsed=427 framework=cargo exit_code=0

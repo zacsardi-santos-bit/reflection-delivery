@@ -1,0 +1,23 @@
+{
+ "task": "unionai-oss-pandera-1979",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden modifies 'pandera/typing/polars.py' (+~410 lines) implementing from_format/to_format & pydantic validators; F2P=44 real pytest tests e.g. 'test_typed_polars_dataframe'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

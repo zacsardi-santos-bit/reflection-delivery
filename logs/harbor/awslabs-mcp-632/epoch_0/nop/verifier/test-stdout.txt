@@ -1,0 +1,27 @@
+patching file src/aurora-dsql-mcp-server/tests/test_readonly_enforcement.py
+patching file src/aurora-dsql-mcp-server/tests/test_server.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/src/aurora-dsql-mcp-server
+configfile: pyproject.toml
+plugins: asyncio-1.4.0, mock-3.15.1, anyio-4.14.1, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 17 items / 1 error
+
+==================================== ERRORS ====================================
+_____________ ERROR collecting tests/test_readonly_enforcement.py ______________
+ImportError while importing test module '/workspace/repo/src/aurora-dsql-mcp-server/tests/test_readonly_enforcement.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_readonly_enforcement.py:25: in <module>
+    from awslabs.aurora_dsql_mcp_server.mutable_sql_detector import (
+E   ModuleNotFoundError: No module named 'awslabs.aurora_dsql_mcp_server.mutable_sql_detector'
+=========================== short test summary info ============================
+ERROR tests/test_readonly_enforcement.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.92s ===============================
+reward=0 graded=45 found=0 failed=0 parsed=0 framework=pytest exit_code=2

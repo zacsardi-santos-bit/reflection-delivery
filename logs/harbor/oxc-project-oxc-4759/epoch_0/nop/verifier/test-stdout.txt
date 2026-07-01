@@ -1,0 +1,101 @@
+patching file crates/oxc_minifier/tests/plugins/inject_global_variables.rs
+patching file crates/oxc_minifier/tests/plugins/mod.rs
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.3.0
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.155
+   Compiling rustversion v1.0.17
+   Compiling thiserror v1.0.61
+   Compiling siphasher v0.3.11
+   Compiling smawk v0.3.2
+   Compiling ryu v1.0.18
+   Compiling itoa v1.0.11
+   Compiling rand_core v0.6.4
+   Compiling unicode-linebreak v0.1.5
+   Compiling unicode-width v0.1.13
+   Compiling hashbrown v0.14.5
+   Compiling allocator-api2 v0.2.18
+   Compiling parking_lot_core v0.9.10
+   Compiling owo-colors v4.0.0
+   Compiling crossbeam-utils v0.8.20
+   Compiling smallvec v1.13.2
+   Compiling phf_shared v0.11.2
+   Compiling rand v0.8.5
+   Compiling scopeguard v1.2.0
+   Compiling static_assertions v1.1.0
+   Compiling rustc-hash v2.0.0
+   Compiling textwrap v0.16.1
+   Compiling once_cell v1.19.0
+   Compiling unicode-id-start v1.2.0
+   Compiling bitflags v2.6.0
+   Compiling ryu-js v1.0.1
+   Compiling nonmax v0.5.5
+   Compiling oxc_index v0.24.0 (/workspace/repo/crates/oxc_index)
+   Compiling lock_api v0.4.12
+   Compiling bumpalo v3.16.0
+   Compiling num-traits v0.2.19
+   Compiling equivalent v1.0.1
+   Compiling fixedbitset v0.4.2
+   Compiling indexmap v2.3.0
+   Compiling phf_generator v0.11.2
+   Compiling either v1.13.0
+   Compiling serde v1.0.204
+   Compiling assert-unchecked v0.1.2
+   Compiling memchr v2.7.4
+   Compiling serde_json v1.0.122
+   Compiling memoffset v0.9.1
+   Compiling vsimd v0.8.0
+   Compiling itertools v0.13.0
+   Compiling outref v0.5.1
+   Compiling oxc_allocator v0.24.0 (/workspace/repo/crates/oxc_allocator)
+   Compiling oxc_traverse v0.24.0 (/workspace/repo/crates/oxc_traverse)
+   Compiling seq-macro v0.3.5
+   Compiling lazy_static v1.5.0
+   Compiling daachorse v1.0.0
+   Compiling petgraph v0.6.5
+   Compiling quote v1.0.36
+   Compiling linked-hash-map v0.5.6
+   Compiling similar v2.6.0
+   Compiling base64-simd v0.8.0
+   Compiling pico-args v0.5.0
+   Compiling syn v2.0.69
+   Compiling console v0.15.8
+   Compiling dashmap v6.0.1
+   Compiling insta v1.39.0
+   Compiling num-integer v0.1.46
+   Compiling castaway v0.2.3
+   Compiling compact_str v0.8.0
+   Compiling num-bigint v0.4.6
+   Compiling thiserror-impl v1.0.61
+   Compiling miette-derive v7.2.0
+   Compiling phf_macros v0.11.2
+   Compiling oxc_ast_macros v0.24.0 (/workspace/repo/crates/oxc_ast_macros)
+   Compiling serde_derive v1.0.204
+   Compiling phf v0.11.2
+   Compiling miette v7.2.0
+   Compiling oxc_span v0.24.0 (/workspace/repo/crates/oxc_span)
+   Compiling oxc_diagnostics v0.24.0 (/workspace/repo/crates/oxc_diagnostics)
+   Compiling oxc_syntax v0.24.0 (/workspace/repo/crates/oxc_syntax)
+   Compiling oxc_ast v0.24.0 (/workspace/repo/crates/oxc_ast)
+   Compiling oxc_cfg v0.24.0 (/workspace/repo/crates/oxc_cfg)
+   Compiling oxc_sourcemap v0.24.0 (/workspace/repo/crates/oxc_sourcemap)
+   Compiling oxc_semantic v0.24.0 (/workspace/repo/crates/oxc_semantic)
+   Compiling oxc_parser v0.24.0 (/workspace/repo/crates/oxc_parser)
+   Compiling oxc_mangler v0.24.0 (/workspace/repo/crates/oxc_mangler)
+   Compiling oxc_codegen v0.24.0 (/workspace/repo/crates/oxc_codegen)
+   Compiling oxc_minifier v0.24.0 (/workspace/repo/crates/oxc_minifier)
+error[E0432]: unresolved imports `oxc_minifier::InjectGlobalVariables`, `oxc_minifier::InjectGlobalVariablesConfig`, `oxc_minifier::InjectImport`
+ --> crates/oxc_minifier/tests/plugins/inject_global_variables.rs:7:20
+  |
+7 | use oxc_minifier::{InjectGlobalVariables, InjectGlobalVariablesConfig, InjectImport};
+  |                    ^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^ no `InjectImport` in the root
+  |                    |                      |
+  |                    |                      no `InjectGlobalVariablesConfig` in the root
+  |                    no `InjectGlobalVariables` in the root
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `oxc_minifier` (test "mod") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.80.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package oxc_minifier` exited with code 101
+reward=0 graded=40 found=0 failed=0 parsed=0 framework=cargo exit_code=101

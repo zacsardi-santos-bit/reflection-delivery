@@ -1,0 +1,23 @@
+{
+ "task": "evcc-io-evcc-11547",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch switches imports to 'go.uber.org/mock/gomock' and 'emobilityMock := NewMockEmobilityI(ctrl)'; golden regenerates mocks (api/mock.go, loadpoint/mock.go, vehicle/mock.go), adds charger/eebus_test_mock.go, updates go.mod to go.uber.org/mock."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

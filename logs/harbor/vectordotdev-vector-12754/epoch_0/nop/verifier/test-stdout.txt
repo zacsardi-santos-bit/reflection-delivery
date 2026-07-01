@@ -1,0 +1,20 @@
+patching file lib/codecs/src/encoding/format/raw_message.rs
+   Compiling codecs v0.1.0 (/workspace/repo/lib/codecs)
+error[E0433]: failed to resolve: could not find `text` in `format`
+  --> lib/codecs/src/encoding/format/raw_message.rs:79:41
+   |
+79 |         let _: crate::encoding::format::text::TextSerializerConfig =
+   |                                         ^^^^ could not find `text` in `format`
+
+error[E0433]: failed to resolve: could not find `text` in `format`
+  --> lib/codecs/src/encoding/format/raw_message.rs:80:38
+   |
+80 |             crate::encoding::format::text::TextSerializerConfig::new();
+   |                                      ^^^^ could not find `text` in `format`
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `codecs` due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: build failed
+error: command /usr/local/rustup/toolchains/1.58.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package codecs exited with code 101
+reward=0 graded=48 found=0 failed=0 parsed=0 framework=cargo exit_code=101

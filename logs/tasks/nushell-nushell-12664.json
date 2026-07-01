@@ -1,0 +1,23 @@
+{
+ "task": "nushell-nushell-12664",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds from/msgpack.rs, from/msgpackz.rs, to/msgpack.rs, to/msgpackz.rs with error cases `MaxDepth` (\"MessagePack data is nested too deeply\"), `Reserved` marker mismatch, non-string map key error; F2P includes format_conversions::msgpack::{max_depth,non_string_map_key,reserved,u64_too_large,aft"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

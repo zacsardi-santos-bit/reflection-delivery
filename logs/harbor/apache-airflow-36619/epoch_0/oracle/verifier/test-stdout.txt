@@ -1,0 +1,105 @@
+patching file tests/providers/amazon/aws/auth_manager/avp/test_facade.py
+patching file tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py
+patching file tests/providers/amazon/aws/auth_manager/test_constants.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: time-machine-2.14.0, asyncio-1.4.0, anyio-4.3.0, mock-3.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 37 items
+
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client PASSED [  2%]
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_policy_store_id PASSED [  5%]
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_is_authorized_no_user PASSED [  8%]
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_is_authorized_successful[None-None-user0-expected_entities0-None-avp_response0-False] PASSED [ 10%]
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_is_authorized_successful[dummy_id-None-user1-expected_entities1-None-avp_response1-True] PASSED [ 13%]
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_is_authorized_successful[None-None-user2-expected_entities2-None-avp_response2-False] PASSED [ 16%]
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_is_authorized_successful[dummy_id-context3-user3-expected_entities3-expected_context3-avp_response3-True] PASSED [ 18%]
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_is_authorized_unsuccessful PASSED [ 21%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_avp_facade PASSED [ 24%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_get_user PASSED [ 27%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_get_user_return_none_when_not_logged_in PASSED [ 29%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_logged_in PASSED [ 32%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_logged_in_return_false_when_no_user_in_session PASSED [ 35%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_configuration[None-None-expected_user0-None] PASSED [ 37%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_configuration[details1-user1-expected_user1-test] PASSED [ 40%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_connection[None-None-expected_user0-None] PASSED [ 43%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_connection[details1-user1-expected_user1-conn_id] PASSED [ 45%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_dag[None-None-None-expected_user0-None-None] PASSED [ 48%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_dag[None-details1-user1-expected_user1-dag_1-None] PASSED [ 51%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_dag[DagAccessEntity.CODE-details2-user2-expected_user2-dag_1-expected_context2] PASSED [ 54%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_dataset[None-None-expected_user0-None] PASSED [ 56%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_dataset[details1-user1-expected_user1-uri] PASSED [ 59%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_pool[None-None-expected_user0-None] PASSED [ 62%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_pool[details1-user1-expected_user1-pool1] PASSED [ 64%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_variable[None-None-expected_user0-None] PASSED [ 67%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_variable[details1-user1-expected_user1-var1] PASSED [ 70%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_view[AccessView.CLUSTER_ACTIVITY-None-expected_user0] PASSED [ 72%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_is_authorized_view[AccessView.PLUGINS-user1-expected_user1] PASSED [ 75%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_get_url_login PASSED [ 78%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_get_url_logout PASSED [ 81%]
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py::TestAwsAuthManager::test_security_manager_return_default_security_manager PASSED [ 83%]
+tests/providers/amazon/aws/auth_manager/test_constants.py::TestAwsAuthManagerConstants::test_conf_enable_key PASSED [ 86%]
+tests/providers/amazon/aws/auth_manager/test_constants.py::TestAwsAuthManagerConstants::test_conf_section_name PASSED [ 89%]
+tests/providers/amazon/aws/auth_manager/test_constants.py::TestAwsAuthManagerConstants::test_conf_conn_id_key PASSED [ 91%]
+tests/providers/amazon/aws/auth_manager/test_constants.py::TestAwsAuthManagerConstants::test_conf_region_name_key PASSED [ 94%]
+tests/providers/amazon/aws/auth_manager/test_constants.py::TestAwsAuthManagerConstants::test_conf_saml_metadata_url_key PASSED [ 97%]
+tests/providers/amazon/aws/auth_manager/test_constants.py::TestAwsAuthManagerConstants::test_conf_avp_policy_store_id_key PASSED [100%]
+
+=============================== warnings summary ===============================
+tests/conftest.py:1151
+  /workspace/repo/tests/conftest.py:1151: PytestDeprecationWarning: A private pytest class or function was used.
+    warnings_recorder = WarningsRecorder()
+
+../../usr/local/lib/python3.11/site-packages/flask_appbuilder/models/sqla/__init__.py:105
+  /usr/local/lib/python3.11/site-packages/flask_appbuilder/models/sqla/__init__.py:105: MovedIn20Warning: Deprecated API features detected! These feature(s) are not compatible with SQLAlchemy 2.0. To prevent incompatible upgrades prior to updating applications, ensure requirements files are pinned to "sqlalchemy<2.0". Set environment variable SQLALCHEMY_WARN_20=1 to show all deprecation warnings.  Set environment variable SQLALCHEMY_SILENCE_UBER_WARNING=1 to silence this message. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    @as_declarative(name="Model", metaclass=ModelDeclarativeMeta)
+
+../../usr/local/lib/python3.11/site-packages/marshmallow_sqlalchemy/convert.py:17
+  /usr/local/lib/python3.11/site-packages/marshmallow_sqlalchemy/convert.py:17: DeprecationWarning: The '__version__' attribute is deprecated and will be removed in in a future version. Use feature detection or 'importlib.metadata.version("marshmallow")' instead.
+    _META_KWARGS_DEPRECATED = LooseVersion(ma.__version__) >= LooseVersion("3.10.0")
+
+../../usr/local/lib/python3.11/site-packages/marshmallow_sqlalchemy/convert.py:17
+../../usr/local/lib/python3.11/site-packages/marshmallow_sqlalchemy/convert.py:17
+  /usr/local/lib/python3.11/site-packages/marshmallow_sqlalchemy/convert.py:17: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    _META_KWARGS_DEPRECATED = LooseVersion(ma.__version__) >= LooseVersion("3.10.0")
+
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client
+  /usr/local/lib/python3.11/site-packages/connexion/decorators/validation.py:16: DeprecationWarning: Accessing jsonschema.draft4_format_checker is deprecated and will be removed in a future release. Instead, use the FORMAT_CHECKER attribute on the corresponding Validator.
+    from jsonschema import Draft4Validator, ValidationError, draft4_format_checker
+
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client
+  /usr/local/lib/python3.11/site-packages/connexion/json_schema.py:16: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
+    from jsonschema import Draft4Validator, RefResolver
+
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client
+  /usr/local/lib/python3.11/site-packages/connexion/json_schema.py:17: DeprecationWarning: jsonschema.exceptions.RefResolutionError is deprecated as of version 4.18.0. If you wish to catch potential reference resolution errors, directly catch referencing.exceptions.Unresolvable.
+    from jsonschema.exceptions import RefResolutionError, ValidationError  # noqa
+
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client
+  /workspace/repo/airflow/example_dags/example_subdag_operator.py:42: RemovedInAirflow3Warning: This class is deprecated. Please use `airflow.utils.task_group.TaskGroup`.
+    section_1 = SubDagOperator(
+
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client
+  /workspace/repo/airflow/example_dags/example_subdag_operator.py:51: RemovedInAirflow3Warning: This class is deprecated. Please use `airflow.utils.task_group.TaskGroup`.
+    section_2 = SubDagOperator(
+
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client
+  /workspace/repo/airflow/models/baseoperator.py:437: UserWarning: `multiple_outputs` is not supported in @task.bash tasks. Ignoring.
+    result = func(self, **kwargs, default_args=default_args)
+
+tests/providers/amazon/aws/auth_manager/avp/test_facade.py::TestAwsAuthManagerAmazonVerifiedPermissionsFacade::test_avp_client
+  /usr/local/lib/python3.11/site-packages/flask_limiter/extension.py:337: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+    warnings.warn(
+
+tests/providers/amazon/aws/auth_manager/test_aws_auth_manager.py: 15 warnings
+  /usr/local/lib/python3.11/site-packages/connexion/spec.py:50: DeprecationWarning: Passing a schema to Validator.iter_errors is deprecated and will be removed in a future release. Call validator.evolve(schema=new_schema).iter_errors(...) instead.
+    for error in instance_validator.iter_errors(instance['default'], instance):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 37 passed, 29 warnings in 8.54s ========================
+reward=1 graded=37 found=0 failed=0 parsed=18 framework=pytest exit_code=0

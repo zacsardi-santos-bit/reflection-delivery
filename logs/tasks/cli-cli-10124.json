@@ -1,0 +1,23 @@
+{
+ "task": "cli-cli-10124",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "17 F2P subtests incl TestListRun/list_tty, list_non-tty, list_json, no_results, web_mode, client_error and TestAutoLinkLister_List/http_error exercising the new autolink list command"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

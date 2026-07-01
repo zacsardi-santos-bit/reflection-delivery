@@ -1,0 +1,38 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js --coverage=false --json",
+  "test_files": [
+    "src/test/system_tests/test_utils.js",
+    "src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js",
+    "src/test/unit_tests/test_nc_nsfs_health.js"
+  ],
+  "num_test_files": 3,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible dn (both rw) account with dn inaccessible (both rw) - owner",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible dn (both rw) account with dn inaccessible (both rw) - group",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible dn (both rw) account with dn inaccessible (both rw) - other",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible uid gid (both rw) account with uid gid inaccessible (both rw) - owner",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible uid gid (both rw) account with uid gid inaccessible (both rw) - group",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible uid gid (both rw) account with uid gid inaccessible (both rw) - other",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account accessible dn (both rw) account with dn accessible (both rw) - owner",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account accessible dn (both rw) account with dn accessible (both rw) - group",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account accessible dn (both rw) account with dn naccessible (both rw) - other",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account accessible uid gid (both rw) account with uid gid accessible (both rw) - owner",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account accessible uid gid (both rw) account with uid gid accessible (both rw) - group",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account accessible uid gid (both rw) account with uid gid accessible (both rw) - other",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible dn (r) account with dn inaccessible (r) - owner",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible dn (r) account with dn inaccessible (r) - group",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible dn (r) account with dn inaccessible (both r) - other",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible uid gid (r) account with uid gid inaccessible (r) - owner",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible uid gid (r) account with uid gid inaccessible (r) - group",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible uid gid (r) account with uid gid inaccessible (r) - other",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible dn (w) account with dn inaccessible (w) - owner",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible dn (w) account with dn inaccessible (w) - group",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible dn (w) account with dn inaccessible (w) - other",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible uid gid (w) account with uid gid inaccessible (w) - owner",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible uid gid (w) account with uid gid inaccessible (w) - group",
+    "/workspace/repo/src/test/unit_tests/jest_tests/test_nc_nsfs_new_buckets_path_validation.test.js::new_buckets_path access validation account account inaccessible uid gid (w) account with uid gid inaccessible (w) - other"
+  ],
+  "PASS_TO_PASS": []
+}

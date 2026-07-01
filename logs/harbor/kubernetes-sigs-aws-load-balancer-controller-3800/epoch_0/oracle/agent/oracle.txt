@@ -1,0 +1,11 @@
+patching file .go-version
+patching file docs/guide/ingress/annotations.md
+patching file pkg/deploy/shield/protection_manager_mocks.go
+patching file pkg/deploy/shield/protection_synthesizer.go
+patching file pkg/deploy/wafregional/web_acl_association_manager_mocks.go
+patching file pkg/deploy/wafregional/web_acl_association_synthesizer.go
+patching file pkg/deploy/wafv2/web_acl_association_manager_mocks.go
+patching file pkg/deploy/wafv2/web_acl_association_synthesizer.go
+patching file pkg/ingress/model_build_load_balancer_addons.go
+patching file pkg/model/shield/protection.go
+patching file scripts/gen_mocks.sh

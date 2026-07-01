@@ -1,0 +1,64 @@
+patching file src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+rootdir: /workspace/repo/src/azure-cli
+collecting ... collected 4 items
+
+src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py::DecoratorFunctionsTestCase::test_check_is_msi_cluster PASSED [ 25%]
+src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py::AKSContextTestCase::test_get_detach_acr PASSED [ 50%]
+src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py::AKSContextTestCase::test_get_client_id_from_identity_or_sp_profile PASSED [ 75%]
+src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py::AKSUpdateDecoratorTestCase::test_process_attach_detach_acr PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.9/site-packages/requests/__init__.py:43
+  /usr/local/lib/python3.9/site-packages/requests/__init__.py:43: DeprecationWarning: 'urllib3[secure]' extra is deprecated and will be removed in a future release of urllib3 2.x. Read more in this issue: https://github.com/urllib3/urllib3/issues/2680
+    import urllib3
+
+../../usr/local/lib/python3.9/site-packages/packaging/markers.py:125
+  /usr/local/lib/python3.9/site-packages/packaging/markers.py:125: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+    VARIABLE.setParseAction(lambda s, l, t: Variable(ALIASES.get(t[0], t[0])))
+
+../../usr/local/lib/python3.9/site-packages/packaging/markers.py:132
+  /usr/local/lib/python3.9/site-packages/packaging/markers.py:132: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+    MARKER_OP.setParseAction(lambda s, l, t: Op(t[0]))
+
+../../usr/local/lib/python3.9/site-packages/packaging/markers.py:135
+  /usr/local/lib/python3.9/site-packages/packaging/markers.py:135: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+    MARKER_VALUE.setParseAction(lambda s, l, t: Value(t[0]))
+
+../../usr/local/lib/python3.9/site-packages/packaging/markers.py:142
+  /usr/local/lib/python3.9/site-packages/packaging/markers.py:142: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+    MARKER_ITEM.setParseAction(lambda s, l, t: tuple(t[0]))
+
+../../usr/local/lib/python3.9/site-packages/packaging/requirements.py:74
+  /usr/local/lib/python3.9/site-packages/packaging/requirements.py:74: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+    _VERSION_SPEC.setParseAction(lambda s, l, t: t._raw_spec or "")
+
+../../usr/local/lib/python3.9/site-packages/packaging/requirements.py:76
+  /usr/local/lib/python3.9/site-packages/packaging/requirements.py:76: PyparsingDeprecationWarning: 'originalTextFor' deprecated - use 'original_text_for'
+    VERSION_SPEC = originalTextFor(_VERSION_SPEC)("specifier")
+
+../../usr/local/lib/python3.9/site-packages/packaging/requirements.py:77
+  /usr/local/lib/python3.9/site-packages/packaging/requirements.py:77: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+    VERSION_SPEC.setParseAction(lambda s, l, t: t[1])
+
+../../usr/local/lib/python3.9/site-packages/packaging/requirements.py:79
+  /usr/local/lib/python3.9/site-packages/packaging/requirements.py:79: PyparsingDeprecationWarning: 'originalTextFor' deprecated - use 'original_text_for'
+    MARKER_EXPR = originalTextFor(MARKER_EXPR())("marker")
+
+../../usr/local/lib/python3.9/site-packages/packaging/requirements.py:80
+  /usr/local/lib/python3.9/site-packages/packaging/requirements.py:80: PyparsingDeprecationWarning: 'setParseAction' deprecated - use 'set_parse_action'
+    MARKER_EXPR.setParseAction(
+
+../../usr/local/lib/python3.9/site-packages/packaging/requirements.py:94
+  /usr/local/lib/python3.9/site-packages/packaging/requirements.py:94: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    REQUIREMENT.parseString("x[]")
+
+../../usr/local/lib/python3.9/site-packages/invoke/loader.py:3
+  /usr/local/lib/python3.9/site-packages/invoke/loader.py:3: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 4 passed, 12 warnings in 1.10s ========================
+reward=1 graded=4 found=0 failed=0 parsed=4 framework=pytest exit_code=0

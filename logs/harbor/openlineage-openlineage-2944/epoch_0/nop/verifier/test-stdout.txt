@@ -1,0 +1,507 @@
+patching file integration/sql/impl/tests/table_lineage/mod.rs
+patching file integration/sql/impl/tests/table_lineage/test_use.rs
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+   Compiling openlineage_sql v1.21.0 (/workspace/repo/integration/sql/impl)
+    Finished test [unoptimized + debuginfo] target(s) in 2.19s
+------------
+ Nextest run ID afc67583-491c-4d3c-8871-e1ab34f5ba2c with nextest profile: default
+    Starting 114 tests across 2 binaries (3 tests skipped)
+        PASS [   0.183s] openlineage_sql context::tests::test_coalesce_columns
+        PASS [   0.182s] openlineage_sql context::tests::test_collect_with_table
+        PASS [   0.181s] openlineage_sql tests::compare_db_meta
+        PASS [   0.178s] openlineage_sql::tests column_lineage::tests_aliases::test_circular_alias
+        PASS [   0.173s] openlineage_sql::tests column_lineage::tests_aliases::test_deeply_nested_alias_chain
+        PASS [   0.168s] openlineage_sql::tests column_lineage::tests_aliases::test_long_alias_used
+        PASS [   0.159s] openlineage_sql::tests column_lineage::tests_aliases::test_multiple_tables
+        PASS [   0.149s] openlineage_sql::tests column_lineage::tests_aliases::test_nested_renaming
+        PASS [   0.138s] openlineage_sql::tests column_lineage::tests_aliases::test_nested_renaming_with_join
+        PASS [   0.127s] openlineage_sql::tests column_lineage::tests_cte::test_simple_cte
+        PASS [   0.114s] openlineage_sql::tests column_lineage::tests_select::test_deeply_nested_selects
+        PASS [   0.103s] openlineage_sql::tests column_lineage::tests_select::test_multiple_derived_tables
+        PASS [   0.247s] openlineage_sql::tests column_lineage::tests_simple::test_column_name_inference
+        PASS [   0.221s] openlineage_sql::tests column_lineage::tests_simple::test_nested_select
+        PASS [   0.235s] openlineage_sql::tests column_lineage::tests_simple::test_compound_names
+        PASS [   0.209s] openlineage_sql::tests column_lineage::tests_simple::test_simple_aggregate
+        PASS [   0.196s] openlineage_sql::tests column_lineage::tests_simple::test_simple_case
+        PASS [   0.184s] openlineage_sql::tests column_lineage::tests_simple::test_simple_count
+        PASS [   0.162s] openlineage_sql::tests column_lineage::tests_simple::test_simple_join
+        PASS [   0.150s] openlineage_sql::tests column_lineage::tests_simple::test_simple_operators
+        PASS [   0.137s] openlineage_sql::tests column_lineage::tests_simple::test_simple_renaming
+        PASS [   0.127s] openlineage_sql::tests column_lineage::tests_simple::test_simple_select
+        FAIL [   0.117s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_catalog_keyword
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_databricks_with_catalog_keyword ---
+
+running 1 test
+test table_lineage::test_use::use_databricks_with_catalog_keyword ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_databricks_with_catalog_keyword
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_databricks_with_catalog_keyword ---
+thread 'table_lineage::test_use::use_databricks_with_catalog_keyword' panicked at impl/tests/table_lineage/test_use.rs:204:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.107s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_database_keyword
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_databricks_with_database_keyword ---
+
+running 1 test
+test table_lineage::test_use::use_databricks_with_database_keyword ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_databricks_with_database_keyword
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_databricks_with_database_keyword ---
+thread 'table_lineage::test_use::use_databricks_with_database_keyword' panicked at impl/tests/table_lineage/test_use.rs:166:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: None, schema: Some("my_schema"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.226s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_single_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_databricks_with_single_id ---
+
+running 1 test
+test table_lineage::test_use::use_databricks_with_single_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_databricks_with_single_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.02s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_databricks_with_single_id ---
+thread 'table_lineage::test_use::use_databricks_with_single_id' panicked at impl/tests/table_lineage/test_use.rs:147:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: Some("my_schema"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: None, schema: None, name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+ right: TableLineage { in_tables: [DbTableMeta { database: None, schema: Some("my_schema"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: None, schema: Some("db1"), name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.240s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_schema_keyword
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_databricks_with_schema_keyword ---
+
+running 1 test
+test table_lineage::test_use::use_databricks_with_schema_keyword ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_databricks_with_schema_keyword
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_databricks_with_schema_keyword ---
+thread 'table_lineage::test_use::use_databricks_with_schema_keyword' panicked at impl/tests/table_lineage/test_use.rs:185:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: None, schema: Some("my_schema"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.215s] openlineage_sql::tests table_lineage::test_use::use_generic_with_complex_select
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_generic_with_complex_select ---
+
+running 1 test
+test table_lineage::test_use::use_generic_with_complex_select ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_generic_with_complex_select
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.02s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_generic_with_complex_select ---
+thread 'table_lineage::test_use::use_generic_with_complex_select' panicked at impl/tests/table_lineage/test_use.rs:63:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: Some("schema1"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.150s] openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id ---
+
+running 1 test
+test table_lineage::test_use::use_generic_with_single_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_generic_with_single_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id ---
+thread 'table_lineage::test_use::use_generic_with_single_id' panicked at impl/tests/table_lineage/test_use.rs:25:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: None, schema: None, name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.203s] openlineage_sql::tests table_lineage::test_use::use_generic_with_full_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_generic_with_full_id ---
+
+running 1 test
+test table_lineage::test_use::use_generic_with_full_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_generic_with_full_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_generic_with_full_id ---
+thread 'table_lineage::test_use::use_generic_with_full_id' panicked at impl/tests/table_lineage/test_use.rs:44:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: Some("schema1"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.143s] openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id_and_single_table_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id_and_single_table_id ---
+
+running 1 test
+test table_lineage::test_use::use_generic_with_single_id_and_single_table_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_generic_with_single_id_and_single_table_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id_and_single_table_id ---
+thread 'table_lineage::test_use::use_generic_with_single_id_and_single_table_id' panicked at impl/tests/table_lineage/test_use.rs:101:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: Some("other_schema"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: Some("other_schema"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.191s] openlineage_sql::tests table_lineage::test_use::use_generic_with_full_id_and_full_table_id
+        PASS [   0.132s] openlineage_sql::tests table_lineage::test_use::use_hive_with_default_keyword
+        FAIL [   0.179s] openlineage_sql::tests table_lineage::test_use::use_generic_with_multiple_use_statements
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_generic_with_multiple_use_statements ---
+
+running 1 test
+test table_lineage::test_use::use_generic_with_multiple_use_statements ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_generic_with_multiple_use_statements
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_generic_with_multiple_use_statements ---
+thread 'table_lineage::test_use::use_generic_with_multiple_use_statements' panicked at impl/tests/table_lineage/test_use.rs:120:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "bar", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }, DbTableMeta { database: None, schema: None, name: "foo", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }, DbTableMeta { database: None, schema: None, name: "world", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: None, schema: None, name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "foo", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }, DbTableMeta { database: Some("db2"), schema: Some("schema2"), name: "bar", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }, DbTableMeta { database: Some("db3"), schema: Some("schema2"), name: "world", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: Some("db2"), schema: Some("schema2"), name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.123s] openlineage_sql::tests table_lineage::test_use::use_hive_with_single_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_hive_with_single_id ---
+
+running 1 test
+test table_lineage::test_use::use_hive_with_single_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_hive_with_single_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_hive_with_single_id ---
+thread 'table_lineage::test_use::use_hive_with_single_id' panicked at impl/tests/table_lineage/test_use.rs:356:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.113s] openlineage_sql::tests table_lineage::test_use::use_mssql_with_single_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_mssql_with_single_id ---
+
+running 1 test
+test table_lineage::test_use::use_mssql_with_single_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_mssql_with_single_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.02s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_mssql_with_single_id ---
+thread 'table_lineage::test_use::use_mssql_with_single_id' panicked at impl/tests/table_lineage/test_use.rs:318:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.103s] openlineage_sql::tests table_lineage::test_use::use_mysql_with_single_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_mysql_with_single_id ---
+
+running 1 test
+test table_lineage::test_use::use_mysql_with_single_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_mysql_with_single_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_mysql_with_single_id ---
+thread 'table_lineage::test_use::use_mysql_with_single_id' panicked at impl/tests/table_lineage/test_use.rs:337:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.222s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_full_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_full_id ---
+
+running 1 test
+test table_lineage::test_use::use_snowflake_with_schema_keyword_and_full_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_snowflake_with_schema_keyword_and_full_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_full_id ---
+thread 'table_lineage::test_use::use_snowflake_with_schema_keyword_and_full_id' panicked at impl/tests/table_lineage/test_use.rs:299:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: Some("my_schema"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.249s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_database_keyword
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_database_keyword ---
+
+running 1 test
+test table_lineage::test_use::use_snowflake_with_database_keyword ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_snowflake_with_database_keyword
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_database_keyword ---
+thread 'table_lineage::test_use::use_snowflake_with_database_keyword' panicked at impl/tests/table_lineage/test_use.rs:261:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.237s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_full_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_full_id ---
+
+running 1 test
+test table_lineage::test_use::use_snowflake_with_full_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_snowflake_with_full_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_full_id ---
+thread 'table_lineage::test_use::use_snowflake_with_full_id' panicked at impl/tests/table_lineage/test_use.rs:242:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: None, schema: None, name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: Some("my_schema"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: Some("db1"), schema: Some("my_schema"), name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.210s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_single_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_single_id ---
+
+running 1 test
+test table_lineage::test_use::use_snowflake_with_schema_keyword_and_single_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_snowflake_with_schema_keyword_and_single_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_single_id ---
+thread 'table_lineage::test_use::use_snowflake_with_schema_keyword_and_single_id' panicked at impl/tests/table_lineage/test_use.rs:280:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+ right: TableLineage { in_tables: [DbTableMeta { database: None, schema: Some("my_schema"), name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.198s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_single_id
+
+--- STDOUT:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_single_id ---
+
+running 1 test
+test table_lineage::test_use::use_snowflake_with_single_id ... FAILED
+
+failures:
+
+failures:
+    table_lineage::test_use::use_snowflake_with_single_id
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 113 filtered out; finished in 0.03s
+
+
+--- STDERR:              openlineage_sql::tests table_lineage::test_use::use_snowflake_with_single_id ---
+thread 'table_lineage::test_use::use_snowflake_with_single_id' panicked at impl/tests/table_lineage/test_use.rs:223:5:
+assertion `left == right` failed
+  left: TableLineage { in_tables: [DbTableMeta { database: None, schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: None, schema: None, name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+ right: TableLineage { in_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "my_table", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }], out_tables: [DbTableMeta { database: Some("db1"), schema: None, name: "Clients", quote_style: Some(QuoteStyle { database: None, schema: None, name: None }), provided_namespace: false, provided_field_schema: false }] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.187s] openlineage_sql::tests table_lineage::tests_alter::alter_contains_modified_table_as_output
+        PASS [   0.161s] openlineage_sql::tests table_lineage::tests_alter::alter_multiple_operations
+        PASS [   0.150s] openlineage_sql::tests table_lineage::tests_alter::alter_snowflake_swap_with
+        PASS [   0.138s] openlineage_sql::tests table_lineage::tests_alter::alter_table_rename
+        PASS [   0.126s] openlineage_sql::tests table_lineage::tests_copy::parse_copy_into_table
+        PASS [   0.240s] openlineage_sql::tests table_lineage::tests_copy::parse_copy_into_with_snowflake_internal_stages
+        PASS [   0.229s] openlineage_sql::tests table_lineage::tests_copy::parse_copy_into_with_snowflake_stage_locations
+        PASS [   0.217s] openlineage_sql::tests table_lineage::tests_copy::parse_pivot_table
+        PASS [   0.205s] openlineage_sql::tests table_lineage::tests_create::create_and_insert_multiple_stmts
+        PASS [   0.192s] openlineage_sql::tests table_lineage::tests_create::create_hive_external_table_if_not_exist
+        PASS [   0.180s] openlineage_sql::tests table_lineage::tests_create::create_replace_as_select
+        PASS [   0.168s] openlineage_sql::tests table_lineage::tests_create::create_stage
+        PASS [   0.154s] openlineage_sql::tests table_lineage::tests_create::create_view
+        PASS [   0.134s] openlineage_sql::tests table_lineage::tests_create::test_create_and_insert
+        PASS [   0.125s] openlineage_sql::tests table_lineage::tests_create::test_create_table
+        PASS [   0.113s] openlineage_sql::tests table_lineage::tests_create::test_create_table_clone
+        PASS [   0.102s] openlineage_sql::tests table_lineage::tests_create::test_create_table_like
+        PASS [   0.217s] openlineage_sql::tests table_lineage::tests_cte::parse_bugged_cte
+        PASS [   0.244s] openlineage_sql::tests table_lineage::tests_cte::cte_insert_overwrite
+        PASS [   0.233s] openlineage_sql::tests table_lineage::tests_cte::multiple_ctes
+        PASS [   0.206s] openlineage_sql::tests table_lineage::tests_cte::parse_recursive_cte
+        PASS [   0.194s] openlineage_sql::tests table_lineage::tests_cte::parse_simple_cte
+        PASS [   0.180s] openlineage_sql::tests table_lineage::tests_delete::delete_from
+        PASS [   0.157s] openlineage_sql::tests table_lineage::tests_delete::delete_from_using
+        PASS [   0.148s] openlineage_sql::tests table_lineage::tests_delete::delete_without_from_bigquery
+        PASS [   0.135s] openlineage_sql::tests table_lineage::tests_drop::drop_table
+        PASS [   0.124s] openlineage_sql::tests table_lineage::tests_error_handling::test_failing_statement_tokenizer_failes
+        PASS [   0.114s] openlineage_sql::tests table_lineage::tests_error_handling::test_failing_statement_with_insert
+        PASS [   0.102s] openlineage_sql::tests table_lineage::tests_insert::insert_cols_values
+        PASS [   0.214s] openlineage_sql::tests table_lineage::tests_insert::insert_nested_with_select
+        PASS [   0.175s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_multiple_unions
+        PASS [   0.153s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_partition
+        PASS [   0.143s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_partition_dates
+        PASS [   0.132s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_subqueries
+        PASS [   0.120s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_table
+        PASS [   0.109s] openlineage_sql::tests table_lineage::tests_insert::insert_select_table
+        PASS [   0.098s] openlineage_sql::tests table_lineage::tests_insert::insert_select_table_2
+        PASS [   0.258s] openlineage_sql::tests table_lineage::tests_insert::insert_group_by
+        PASS [   0.245s] openlineage_sql::tests table_lineage::tests_insert::insert_nested_select
+        PASS [   0.219s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_hive_sets_large
+        PASS [   0.207s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_multiple_subqueries
+        PASS [   0.174s] openlineage_sql::tests table_lineage::tests_insert::insert_snowflake_table
+        PASS [   0.149s] openlineage_sql::tests table_lineage::tests_insert::set_before_insert
+        PASS [   0.188s] openlineage_sql::tests table_lineage::tests_insert::insert_values
+        PASS [   0.202s] openlineage_sql::tests table_lineage::tests_insert::test_multiple_statements_delete_insert
+        PASS [   0.190s] openlineage_sql::tests table_lineage::tests_insert::test_multiple_statements_insert_insert
+        PASS [   0.176s] openlineage_sql::tests table_lineage::tests_insert::test_triple_statements_insert_insert_insert
+        PASS [   0.157s] openlineage_sql::tests table_lineage::tests_merge::merge_subquery_when_not_matched
+        PASS [   0.144s] openlineage_sql::tests table_lineage::tests_select::select_bigquery_escaping
+        PASS [   0.143s] openlineage_sql::tests table_lineage::tests_select::select_bq_array_function
+        PASS [   0.145s] openlineage_sql::tests table_lineage::tests_select::select_from_schema_table
+        PASS [   0.144s] openlineage_sql::tests table_lineage::tests_select::select_inner_join
+        PASS [   0.134s] openlineage_sql::tests table_lineage::tests_select::select_into
+        PASS [   0.122s] openlineage_sql::tests table_lineage::tests_select::select_join
+        PASS [   0.122s] openlineage_sql::tests table_lineage::tests_select::select_left_join
+        PASS [   0.158s] openlineage_sql::tests table_lineage::tests_select::select_window_function
+        PASS [   0.177s] openlineage_sql::tests table_lineage::tests_select::select_with_table_generator
+        PASS [   0.173s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_1
+        PASS [   0.162s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_2
+        PASS [   0.149s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_3
+        PASS [   0.232s] openlineage_sql::tests table_lineage::tests_select::select_redshift
+        PASS [   0.136s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_4
+        PASS [   0.219s] openlineage_sql::tests table_lineage::tests_select::select_simple
+        PASS [   0.124s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_5
+        PASS [   0.113s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_6
+        PASS [   0.101s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_7
+        PASS [   0.091s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_8
+        PASS [   0.097s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_9
+        PASS [   0.090s] openlineage_sql::tests table_lineage::tests_tpcds::test_tpcds_cte_query
+        PASS [   0.084s] openlineage_sql::tests table_lineage::tests_truncate::truncate_table
+        PASS [   0.084s] openlineage_sql::tests table_lineage::tests_update::update_table
+        PASS [   0.080s] openlineage_sql::tests table_lineage::tests_update::update_table_from
+        PASS [   0.071s] openlineage_sql::tests table_lineage::tests_update::update_table_from_subquery
+------------
+     Summary [   1.529s] 114 tests run: 97 passed, 17 failed, 3 skipped
+        FAIL [   0.117s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_catalog_keyword
+        FAIL [   0.107s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_database_keyword
+        FAIL [   0.240s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_schema_keyword
+        FAIL [   0.226s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_single_id
+        FAIL [   0.215s] openlineage_sql::tests table_lineage::test_use::use_generic_with_complex_select
+        FAIL [   0.203s] openlineage_sql::tests table_lineage::test_use::use_generic_with_full_id
+        FAIL [   0.179s] openlineage_sql::tests table_lineage::test_use::use_generic_with_multiple_use_statements
+        FAIL [   0.150s] openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id
+        FAIL [   0.143s] openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id_and_single_table_id
+        FAIL [   0.123s] openlineage_sql::tests table_lineage::test_use::use_hive_with_single_id
+        FAIL [   0.113s] openlineage_sql::tests table_lineage::test_use::use_mssql_with_single_id
+        FAIL [   0.103s] openlineage_sql::tests table_lineage::test_use::use_mysql_with_single_id
+        FAIL [   0.249s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_database_keyword
+        FAIL [   0.237s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_full_id
+        FAIL [   0.222s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_full_id
+        FAIL [   0.210s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_single_id
+        FAIL [   0.198s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_single_id
+error: test run failed
+reward=0 graded=119 found=114 failed=17 parsed=114 framework=cargo exit_code=100

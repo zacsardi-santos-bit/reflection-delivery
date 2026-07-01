@@ -1,0 +1,7 @@
+patching file crates/github-actions-expressions/src/context.rs
+patching file crates/zizmor/src/audit/bot_conditions.rs
+patching file crates/zizmor/src/audit/template_injection.rs
+patching file crates/zizmor/src/models.rs
+patching file crates/zizmor/src/models/coordinate.rs
+patching file crates/zizmor/src/utils.rs
+patching file docs/release-notes.md

@@ -1,0 +1,38 @@
+{
+  "test_framework": "junit",
+  "test_command": "bash -c 'set +e; cd /workspace/repo; ./gradlew :fdb-record-layer-lucene:test --tests com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest --no-daemon --no-watch-fs; GRADLE_STATUS=$?; find fdb-record-layer-lucene/.out/test-results -name TEST-com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest.xml 2>/dev/null -exec cat {} +; exit $GRADLE_STATUS'",
+  "test_files": [
+    "fdb-record-layer-lucene/src/test/java/com/apple/foundationdb/record/lucene/LuceneAutoCompletedMatchesTest.java",
+    "fdb-record-layer-lucene/src/test/java/com/apple/foundationdb/record/lucene/LuceneIndexTest.java",
+    "fdb-record-layer-lucene/src/test/java/com/apple/foundationdb/record/lucene/LuceneIndexTestUtils.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForGoodMor[text=Good morning!]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForGoodMor[text=It is all for the good, and I'll see you on the morrow]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForGoodMor[text=The more good we do, the more good we see]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForGoodMor[text=Good day!]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForGoodMor[text=Morning!]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\u4e0a\u65e0]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\u4e0a\u65e0 ]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\u4e0a\u65e0 eng]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\u306e\u4e2d\u306b]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\u30b7\u30a4\u30b3]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\u30b7\u30a4]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\u4e16]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=english wor]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\uc138\uc0c1\uc5d0english wor]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\uc5d0english wor]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForCjk[text=\uc5b4\ub824]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForQua[text=0]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForQua[text=1]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForQua[text=5]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::autoCompleteMatchesWithStopWord()",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForGoodMorInPhrase[text=0]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForHelloWorldInPhrase[text=0]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForHelloWorldInPhrase[text=1]",
+    "com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest::searchForHelloWorld[text=0]"
+  ],
+  "PASS_TO_PASS": []
+}

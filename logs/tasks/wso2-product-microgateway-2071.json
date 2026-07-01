@@ -1,0 +1,23 @@
+{
+ "task": "wso2-product-microgateway-2071",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden sets route Timeout=RouteTimeoutInSeconds(60s) + IdleTimeout=RouteIdleTimeoutInSeconds(300s); test.patch TestCreateRoute adds Timeout=60s/IdleTimeout=300s to expected route and asserts match"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 56,
+  "shallow": true
+ }
+}

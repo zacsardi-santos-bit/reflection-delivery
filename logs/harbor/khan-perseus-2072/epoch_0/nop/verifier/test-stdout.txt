@@ -1,0 +1,261 @@
+patching file packages/perseus-editor/src/__tests__/traversal.test.ts
+patching file packages/perseus/src/__tests__/__snapshots__/server-item-renderer.test.tsx.snap
+patching file packages/perseus/src/__tests__/perseus-markdown.test.ts
+patching file packages/perseus/src/__tests__/renderer-api.test.tsx
+patching file packages/perseus/src/__tests__/renderer.test.tsx
+patching file packages/perseus/src/__tests__/server-item-renderer.test.tsx
+patching file packages/perseus/src/__tests__/test-items/input-number-1-item.ts
+patching file packages/perseus/src/__tests__/test-items/mock-widget-1-item.ts
+patching file packages/perseus/src/__tests__/test-items/mock-widget-2-item.ts
+patching file packages/perseus/src/__tests__/widgets.test.ts
+patching file packages/perseus/src/widget-ai-utils/mock-widget/mock-widget.test.ts
+patching file packages/perseus/src/widget-ai-utils/mock-widget/prompt-utils.test.ts
+patching file packages/pure-markdown/src/__tests__/index.test.ts
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+FAIL packages/perseus/src/widget-ai-utils/mock-widget/prompt-utils.test.ts
+  ● Test suite failed to run
+
+    Cannot find module './prompt-utils' from 'packages/perseus/src/widget-ai-utils/mock-widget/prompt-utils.test.ts'
+
+    However, Jest was able to find:
+    	'./prompt-utils.test.ts'
+
+    You might want to include a file extension in your import, or update your 'moduleFileExtensions', which is currently ['js', 'mjs', 'cjs', 'jsx', 'ts', 'tsx', 'json', 'node'].
+
+    See https://jestjs.io/docs/configuration#modulefileextensions-arraystring
+
+    > 1 | import {getPromptJSON} from "./prompt-utils";
+        | ^
+      2 |
+      3 | import type {PerseusMockWidgetUserInput} from "../../validation.types";
+      4 |
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (packages/perseus/src/widget-ai-utils/mock-widget/prompt-utils.test.ts:1:1)
+
+PASS packages/pure-markdown/src/__tests__/index.test.ts
+  pure markdown
+    parser
+      ✓ should parse math (15 ms)
+      ✓ should parse math (3 ms)
+      ✓ should parse nested math (1 ms)
+      ✓ should parse nested math (1 ms)
+      ✓ should allow escaping in math
+      ✓ should allow escaping in math (1 ms)
+      ✓ should allow escaping in math
+      ✓ should allow escaping in math (1 ms)
+      ✓ should allow escaping in math
+      ✓ should allow escaping in math
+      ✓ should parse block math (1 ms)
+      ✓ should parse block math
+      ✓ should parse block math (1 ms)
+      ✓ should parse block math
+      ✓ should parse block math (1 ms)
+      ✓ should break on paragraphs (1 ms)
+      ✓ should break on paragraphs
+      ✓ should parse widget types and ids (1 ms)
+      ✓ should parse widget types and ids (1 ms)
+      ✓ should parse widget types and ids
+      ✓ should allow escaping widget identifiers (1 ms)
+      ✓ should parse widgets next to each other as widgets
+      ✓ should parse widgets next to each other as widgets (1 ms)
+      ✓ should parse multiple columns
+      ✓ should detect unescaped dollars (1 ms)
+      ✓ should detect unescaped dollars
+      ✓ should parse titled table with unescaped dollars (3 ms)
+
+PASS packages/perseus/src/__tests__/perseus-markdown.test.ts
+  perseus markdown
+    parser
+      ✓ should parse math (9 ms)
+      ✓ should parse math (2 ms)
+      ✓ should parse nested math (1 ms)
+      ✓ should parse nested math (1 ms)
+      ✓ should allow escaping in math
+      ✓ should allow escaping in math (1 ms)
+      ✓ should allow escaping in math (1 ms)
+      ✓ should allow escaping in math
+      ✓ should allow escaping in math (1 ms)
+      ✓ should allow escaping in math (1 ms)
+      ✓ should parse block math (1 ms)
+      ✓ should parse block math
+      ✓ should parse block math (1 ms)
+      ✓ should parse block math (1 ms)
+      ✓ should parse block math
+      ✓ should break on paragraphs
+      ✓ should break on paragraphs (1 ms)
+      ✓ should parse widget types and ids (1 ms)
+      ✓ should parse widget types and ids (1 ms)
+      ✓ should parse widget types and ids
+      ✓ should allow escaping widget identifiers (1 ms)
+      ✓ should parse widgets next to each other as widgets
+      ✓ should parse widgets next to each other as widgets (1 ms)
+      ✓ should parse multiple columns
+      ✓ should detect unescaped dollars (1 ms)
+      ✓ should detect unescaped dollars
+      ✓ should parse titled table with unescaped dollars (3 ms)
+    parser with linter
+      ✓ should lint unescaped dollars in titled table (2 ms)
+    output
+      ✓ should output paragraphs (2 ms)
+      ✓ should output columns (2 ms)
+      ✓ should render ```alt screenreader blocks (1 ms)
+      ✓ should output titled table with unescaped dollars (2 ms)
+    output with linter
+      ✓ should output titled table with unescaped dollars in lint (2 ms)
+    characterCount
+      ✓ should ignore Markdown and widgets but count TeX (1 ms)
+      ✓ should ignore Markdown and widgets but count TeX
+      ✓ should ignore Markdown and widgets but count TeX (1 ms)
+      ✓ should ignore Markdown and widgets but count TeX (1 ms)
+      ✓ should ignore Markdown and widgets but count TeX
+      ✓ should ignore Markdown and widgets but count TeX (1 ms)
+      ✓ should ignore Markdown and widgets but count TeX
+      ✓ should ignore Markdown and widgets but count TeX (1 ms)
+      ✓ should ignore Markdown and widgets but count TeX
+      ✓ should ignore Markdown and widgets but count TeX (1 ms)
+      ✓ should only count multiple sequential spaces within code
+      ✓ should only count multiple sequential spaces within code (1 ms)
+      ✓ should only count multiple sequential spaces within code
+      ✓ should only count multiple sequential spaces within code
+      ✓ should only count multiple sequential spaces within code
+      ✓ should only count multiple sequential spaces within code (4 ms)
+      ✓ should count spaces between inline elements (1 ms)
+      ✓ should count spaces between inline elements
+      ✓ should count spaces between inline elements
+      ✓ should not count spaces between block elements
+      ✓ should not count spaces between block elements (1 ms)
+      ✓ should not count spaces between block elements (1 ms)
+      ✓ should not count spaces between block elements
+
+PASS packages/perseus/src/__tests__/widgets.test.ts (12.377 s)
+  Widget API support
+    ✓ categorizer widget should provide static getUserInputFromProps function (11 ms)
+    ✓ expression widget should provide static getUserInputFromProps function (1 ms)
+    ✓ grapher widget should provide static getUserInputFromProps function (1 ms)
+    ✓ input-number widget should provide static getUserInputFromProps function
+    ✓ interactive-graph widget should provide static getUserInputFromProps function (1 ms)
+    ✓ numeric-input widget should provide static getUserInputFromProps function
+    ✓ radio widget should provide static getUserInputFromProps function (1 ms)
+    ✓ categorizer widget getUserInputFromProps should return the correct user input (1 ms)
+    ✓ expression widget getUserInputFromProps should return the correct user input (1 ms)
+    ✓ grapher widget getUserInputFromProps should return the correct user input
+    ✓ numeric-input widget getUserInputFromProps should return the correct user input (1 ms)
+    ✓ interactive-graph widget getUserInputFromProps should return the correct user input (1 ms)
+    ✓ numeric-input widget getUserInputFromProps should return the correct user input
+    ✓ radio widget getUserInputFromProps should return the correct user input (1 ms)
+  replaceWidget
+    ✓ replaces an existing widget (1 ms)
+    ✓ Throws when the replacement isn't available (10 ms)
+
+FAIL packages/perseus/src/__tests__/server-item-renderer.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../widgets/mock-widgets' from 'packages/perseus/src/__tests__/server-item-renderer.test.tsx'
+
+      20 | } from "../server-item-renderer";
+      21 | import {registerWidget} from "../widgets";
+    > 22 | import {MockWidget} from "../widgets/mock-widgets";
+         | ^
+      23 | import MockAssetLoadingWidgetExport, {
+      24 |     mockedAssetItem,
+      25 | } from "../widgets/mock-widgets/mock-asset-loading-widget";
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (packages/perseus/src/__tests__/server-item-renderer.test.tsx:22:1)
+
+FAIL packages/perseus/src/widget-ai-utils/mock-widget/mock-widget.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../../widgets/mock-widgets/mock-widget' from 'packages/perseus/src/widget-ai-utils/mock-widget/mock-widget.test.ts'
+
+      4 | import {registerWidget} from "../../widgets";
+      5 | import {renderQuestion} from "../../widgets/__testutils__/renderQuestion";
+    > 6 | import MockWidgetExport from "../../widgets/mock-widgets/mock-widget";
+        | ^
+      7 |
+      8 | import type {PerseusRenderer, MockWidget} from "@khanacademy/perseus-core";
+      9 | import type {UserEvent} from "@testing-library/user-event";
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (packages/perseus/src/widget-ai-utils/mock-widget/mock-widget.test.ts:6:1)
+
+FAIL packages/perseus/src/__tests__/renderer-api.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../widgets/mock-widgets' from 'packages/perseus/src/__tests__/renderer-api.test.tsx'
+
+      15 | import {registerWidget} from "../widgets";
+      16 | import {renderQuestion} from "../widgets/__testutils__/renderQuestion";
+    > 17 | import {MockWidget} from "../widgets/mock-widgets";
+         | ^
+      18 |
+      19 | import imageItem from "./test-items/image-item";
+      20 | import mockWidget1Item from "./test-items/mock-widget-1-item";
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (packages/perseus/src/__tests__/renderer-api.test.tsx:17:1)
+
+FAIL packages/perseus/src/__tests__/renderer.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module '../widgets/mock-widgets/mock-widget' from 'packages/perseus/src/__tests__/renderer.test.tsx'
+
+      21 | import {renderQuestion} from "../widgets/__testutils__/renderQuestion";
+      22 | import {simpleGroupQuestion} from "../widgets/group/group.testdata";
+    > 23 | import MockWidgetExport from "../widgets/mock-widgets/mock-widget";
+         | ^
+      24 |
+      25 | import type {APIOptions} from "../types";
+      26 | import type {PerseusRenderer, DropdownWidget} from "@khanacademy/perseus-core";
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (packages/perseus/src/__tests__/renderer.test.tsx:23:1)
+
+PASS packages/perseus-editor/src/__tests__/traversal.test.ts (15.04 s)
+  Traversal
+    ✓ should call a root level content field (6 ms)
+    ✓ should be able to modify root level content (2 ms)
+    ✓ should have access to widgets (1 ms)
+    ✓ should be able to modify widgetInfo (1 ms)
+    ✓ should have access to modify full renderer options (1 ms)
+    ✓ should upgrade widgets automagickally (5 ms)
+    ✓ should use defaults for missing options when upgrading widgets (1 ms)
+    ✓ should be able to see group widgets (1 ms)
+    ✓ should see upgraded widgets inside groups (1 ms)
+    ✓ should upgrade widgets in groups automagickally (1 ms)
+    ✓ should modify full renderer options inside of groups (2 ms)
+
+Test Suites: 5 failed, 4 passed, 9 total
+Tests:       110 passed, 110 total
+Snapshots:   8 passed, 8 total
+Time:        16.268 s
+Ran all test suites matching /packages\/perseus-editor\/src\/__tests__\/traversal.test.ts|packages\/perseus\/src\/__tests__\/perseus-markdown.test.ts|packages\/perseus\/src\/__tests__\/renderer-api.test.tsx|packages\/perseus\/src\/__tests__\/renderer.test.tsx|packages\/perseus\/src\/__tests__\/server-item-renderer.test.tsx|packages\/perseus\/src\/__tests__\/widgets.test.ts|packages\/perseus\/src\/widget-ai-utils\/mock-widget\/mock-widget.test.ts|packages\/perseus\/src\/widget-ai-utils\/mock-widget\/prompt-utils.test.ts|packages\/pure-markdown\/src\/__tests__\/index.test.ts/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=0 graded=163 found=0 failed=0 parsed=0 framework=jest exit_code=1

@@ -1,0 +1,11 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p parser -E 'test(/dyn_trait_type_weak/)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) parser tests::runner::ok::dyn_trait_type_weak"
+  ],
+  "PASS_TO_PASS": []
+}

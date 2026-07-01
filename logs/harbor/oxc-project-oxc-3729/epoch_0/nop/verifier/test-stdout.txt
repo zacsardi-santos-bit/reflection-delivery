@@ -1,0 +1,399 @@
+patching file crates/oxc_minifier/tests/closure/fold_conditions.rs
+patching file crates/oxc_minifier/tests/closure/fold_constants.rs
+patching file crates/oxc_minifier/tests/closure/substitute_alternate_syntax.rs
+patching file crates/oxc_minifier/tests/esbuild/mod.rs
+patching file crates/oxc_minifier/tests/oxc/code_removal.rs
+patching file crates/oxc_minifier/tests/oxc/folding.rs
+patching file crates/oxc_minifier/tests/oxc/precedence.rs
+patching file crates/oxc_minifier/tests/snapshots/addition_folding.snap
+patching file crates/oxc_minifier/tests/tdewolff/mod.rs
+patching file crates/oxc_minifier/tests/terser/fixtures/debugger.js
+   Compiling oxc_minifier v0.14.0 (/workspace/repo/crates/oxc_minifier)
+    Finished `test` profile [unoptimized] target(s) in 2.14s
+────────────
+ Nextest run ID 8c179c2e-3ba9-4f61-b3b0-22dfebcb032a with nextest profile: default
+    Starting 63 tests across 2 binaries (279 tests skipped)
+        FAIL [   0.094s] ( 1/63) oxc_minifier::mod closure::fold_constants::test_fold_void
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_fold_void ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_fold_void
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_fold_void' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source void 0
+      left: "void 0"
+     right: "void 0;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 17 tests still running
+        FAIL [   0.098s] ( 2/63) oxc_minifier::mod closure::fold_constants::test_null_comparison1
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_null_comparison1 ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_null_comparison1
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_null_comparison1' panicked at crates/oxc_minifier/tests/mod.rs:55:5:
+    assertion `left == right` failed: for source null == undefined
+      left: "true"
+     right: "true;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.100s] ( 3/63) oxc_minifier::mod closure::fold_constants::test_boolean_string_comparison
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_boolean_string_comparison ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_boolean_string_comparison
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_boolean_string_comparison' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source !x==''+y
+      left: "!x==''+y"
+     right: "!x==''+y;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.098s] ( 4/63) oxc_minifier::mod closure::fold_constants::test_string_string_comparison
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_string_string_comparison ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_string_string_comparison
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_string_string_comparison' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source 'a' < 'b'
+      left: "!0"
+     right: "!0;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.101s] ( 5/63) oxc_minifier::mod closure::fold_constants::test_fold_logical_op
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_fold_logical_op ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_fold_logical_op
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_fold_logical_op' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source x = true && x
+      left: "x=x"
+     right: "x=x;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.102s] ( 6/63) oxc_minifier::mod closure::fold_constants::test_nan_comparison
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_nan_comparison ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_nan_comparison
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_nan_comparison' panicked at crates/oxc_minifier/tests/mod.rs:55:5:
+    assertion `left == right` failed: for source NaN < 1
+      left: "false"
+     right: "false;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.102s] ( 7/63) oxc_minifier::mod closure::fold_constants::test_string_number_comparison
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_string_number_comparison ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_string_number_comparison
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_string_number_comparison' panicked at crates/oxc_minifier/tests/mod.rs:55:5:
+    assertion `left == right` failed: for source '1' < 2
+      left: "true"
+     right: "true;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.102s] ( 8/63) oxc_minifier::mod closure::fold_constants::test_undefined_comparison2
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_undefined_comparison2 ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_undefined_comparison2
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_undefined_comparison2' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source '123' !== void 0
+      left: "!0"
+     right: "!0;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.105s] ( 9/63) oxc_minifier::mod closure::fold_constants::js_typeof
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::js_typeof ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::js_typeof
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::js_typeof' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source x = typeof 1
+      left: "x='number'"
+     right: "x='number';"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.105s] (10/63) oxc_minifier::mod closure::fold_constants::test_boolean_boolean_comparison
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_boolean_boolean_comparison ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_boolean_boolean_comparison
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_boolean_boolean_comparison' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source !x==!y
+      left: "!x==!y"
+     right: "!x==!y;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.104s] (11/63) oxc_minifier::mod closure::fold_constants::test_number_boolean_comparison
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_number_boolean_comparison ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_number_boolean_comparison
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_number_boolean_comparison' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source +x==!y
+      left: "+x==!y"
+     right: "+x==!y;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.106s] (12/63) oxc_minifier::mod closure::fold_constants::test_fold_logical_op2
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_fold_logical_op2 ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_fold_logical_op2
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_fold_logical_op2' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source x = function(){} && x
+      left: "x=x"
+     right: "x=x;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.107s] (13/63) oxc_minifier::mod closure::fold_conditions::test_fold_not
+  stdout ───
+
+    running 1 test
+    test closure::fold_conditions::test_fold_not ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_conditions::test_fold_not
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_conditions::test_fold_not' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source while(!(x==y)){a=b;}
+      left: "for(;x!=y;)a=b"
+     right: "for(;x!=y;)a=b;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.107s] (14/63) oxc_minifier::mod closure::fold_constants::test_boolean_number_comparison
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_boolean_number_comparison ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_boolean_number_comparison
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_boolean_number_comparison' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source !x==+y
+      left: "!x==+y"
+     right: "!x==+y;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.107s] (15/63) oxc_minifier::mod closure::fold_constants::test_unary_ops_string_compare
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_unary_ops_string_compare ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_unary_ops_string_compare
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_unary_ops_string_compare' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source a=-1
+      left: "a=-1"
+     right: "a=-1;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.107s] (16/63) oxc_minifier::mod closure::fold_constants::test_fold_bit_shift
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_fold_bit_shift ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_fold_bit_shift
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_fold_bit_shift' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source x = 1 << 0
+      left: "x=1"
+     right: "x=1;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.105s] (17/63) oxc_minifier::mod closure::fold_constants::test_string_boolean_comparison
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_string_boolean_comparison ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_string_boolean_comparison
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_string_boolean_comparison' panicked at crates/oxc_minifier/tests/mod.rs:35:5:
+    assertion `left == right` failed: for source ''+x==!y
+      left: "''+x==!y"
+     right: "''+x==!y;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.106s] (18/63) oxc_minifier::mod closure::fold_constants::test_number_string_comparison
+  stdout ───
+
+    running 1 test
+    test closure::fold_constants::test_number_string_comparison ... FAILED
+
+    failures:
+
+    failures:
+        closure::fold_constants::test_number_string_comparison
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 341 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'closure::fold_constants::test_number_string_comparison' panicked at crates/oxc_minifier/tests/mod.rs:55:5:
+    assertion `left == right` failed: for source 1 < '2'
+      left: "true"
+     right: "true;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.109s] 18/63 tests run: 0 passed, 18 failed, 279 skipped
+        FAIL [   0.094s] ( 1/63) oxc_minifier::mod closure::fold_constants::test_fold_void
+        FAIL [   0.098s] ( 2/63) oxc_minifier::mod closure::fold_constants::test_null_comparison1
+        FAIL [   0.100s] ( 3/63) oxc_minifier::mod closure::fold_constants::test_boolean_string_comparison
+        FAIL [   0.098s] ( 4/63) oxc_minifier::mod closure::fold_constants::test_string_string_comparison
+        FAIL [   0.101s] ( 5/63) oxc_minifier::mod closure::fold_constants::test_fold_logical_op
+        FAIL [   0.102s] ( 6/63) oxc_minifier::mod closure::fold_constants::test_nan_comparison
+        FAIL [   0.102s] ( 7/63) oxc_minifier::mod closure::fold_constants::test_string_number_comparison
+        FAIL [   0.102s] ( 8/63) oxc_minifier::mod closure::fold_constants::test_undefined_comparison2
+        FAIL [   0.105s] ( 9/63) oxc_minifier::mod closure::fold_constants::js_typeof
+        FAIL [   0.105s] (10/63) oxc_minifier::mod closure::fold_constants::test_boolean_boolean_comparison
+        FAIL [   0.104s] (11/63) oxc_minifier::mod closure::fold_constants::test_number_boolean_comparison
+        FAIL [   0.106s] (12/63) oxc_minifier::mod closure::fold_constants::test_fold_logical_op2
+        FAIL [   0.107s] (13/63) oxc_minifier::mod closure::fold_conditions::test_fold_not
+        FAIL [   0.107s] (14/63) oxc_minifier::mod closure::fold_constants::test_boolean_number_comparison
+        FAIL [   0.107s] (15/63) oxc_minifier::mod closure::fold_constants::test_unary_ops_string_compare
+        FAIL [   0.107s] (16/63) oxc_minifier::mod closure::fold_constants::test_fold_bit_shift
+        FAIL [   0.105s] (17/63) oxc_minifier::mod closure::fold_constants::test_string_boolean_comparison
+        FAIL [   0.106s] (18/63) oxc_minifier::mod closure::fold_constants::test_number_string_comparison
+warning: 45/63 tests were not run due to test failure (run with --no-fail-fast to run all tests, or run with --max-fail)
+error: test run failed
+reward=0 graded=63 found=2 failed=2 parsed=18 framework=cargo exit_code=100

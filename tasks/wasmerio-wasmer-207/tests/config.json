@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo build -p wasmer-runtime-c-api && cargo nextest run -p wasmer-runtime-c-api",
+  "test_files": [
+    "lib/runtime-c-api/tests/.gitignore",
+    "lib/runtime-c-api/tests/CMakeLists.txt",
+    "lib/runtime-c-api/tests/test-module-imports.c"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) wasmer-runtime-c-api::runtime_c_api_tests test_c_api"
+  ],
+  "PASS_TO_PASS": []
+}

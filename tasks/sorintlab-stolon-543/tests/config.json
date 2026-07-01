@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "GO111MODULE=off GOPATH=/workspace/repo/gopath ./build > /dev/null 2>&1 && gosu stolontest env GOCACHE=/tmp/gocache GO111MODULE=off GOPATH=/workspace/repo/gopath STOLON_TEST_STORE_BACKEND=etcdv3 ETCD_BIN=/usr/local/bin/etcd STKEEPER_BIN=/workspace/repo/bin/stolon-keeper STSENTINEL_BIN=/workspace/repo/bin/stolon-sentinel STPROXY_BIN=/workspace/repo/bin/stolon-proxy STCTL_BIN=/workspace/repo/bin/stolonctl PATH=/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin /usr/local/go/bin/go test -json -timeout 300s -p 1 github.com/sorintlab/stolon/tests/integration -count=1 -run TestInitStandbyCluster",
+  "test_files": [
+    "tests/integration/ha_test.go",
+    "tests/integration/standby_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/sorintlab/stolon/tests/integration::TestInitStandbyCluster"
+  ],
+  "PASS_TO_PASS": []
+}

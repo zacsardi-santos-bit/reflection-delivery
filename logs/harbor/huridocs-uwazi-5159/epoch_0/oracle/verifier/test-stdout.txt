@@ -1,0 +1,229 @@
+patching file app/api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js
+patching file app/react/I18N/components/specs/Translate.spec.js
+patching file app/react/Markdown/components/specs/PublicForm.spec.js
+patching file e2e/suite2/translate.test.ts
+about to fork child process, waiting until server is ready for connections.
+forked process: 50
+child process started successfully, parent exiting
+  console.error
+    Warning: Each child in a list should have a unique "key" prop.
+    
+    Check the render method of `Translate`. See https://fb.me/react-warning-keys for more information.
+        in Fragment (created by Translate)
+        in Translate (created by Connect(Translate))
+        in Connect(Translate) (created by PublicForm)
+        in label (created by PublicForm)
+        in li (created by PublicForm)
+        in ul (created by PublicForm)
+        in div
+        in Unknown (created by ComponentWrapper)
+        in ComponentWrapper (created by Control)
+        in Control (created by Connect(Control))
+        in Connect(Control) (created by Modeled(Connect(Control)))
+        in Modeled(Connect(Control)) (created by FormGroup)
+        in FormGroup (created by Connect(FormGroup))
+        in Connect(FormGroup) (created by PublicForm)
+        in div (created by PublicForm)
+        in form (created by Form)
+        in Form (created by Connect(Form))
+        in Connect(Form) (created by LocalForm)
+        in LocalForm (created by PublicForm)
+        in PublicForm
+        in Provider (created by WrapperComponent)
+        in WrapperComponent
+
+      42 |     const lines = this.props.children.split('\n');
+      43 |     return (
+    > 44 |       <span
+         |       ^
+      45 |         onClick={this.onClick}
+      46 |         className={this.props.i18nmode ? 'translation active' : 'translation'}
+      47 |       >
+
+      at printWarning (../node_modules/react/cjs/react.development.js:315:30)
+      at error (../node_modules/react/cjs/react.development.js:287:5)
+      at validateExplicitKey (../node_modules/react/cjs/react.development.js:1630:5)
+      at validateChildKeys (../node_modules/react/cjs/react.development.js:1656:9)
+      at Object.createElementWithValidation [as createElement] (../node_modules/react/cjs/react.development.js:1806:7)
+      at Translate.render (react/I18N/components/Translate.js:44:7)
+      at finishClassComponent (../node_modules/react-dom/cjs/react-dom.development.js:17160:31)
+
+  console.error
+    Warning: Failed prop type: The prop `saveThesaurus` is marked as required in `MetadataFormFields`, but its value is `undefined`.
+        in MetadataFormFields (created by Connect(MetadataFormFields))
+        in Connect(MetadataFormFields) (created by PublicForm)
+        in div (created by PublicForm)
+        in form (created by Form)
+        in Form (created by Connect(Form))
+        in Connect(Form) (created by LocalForm)
+        in LocalForm (created by PublicForm)
+        in PublicForm
+        in Provider (created by WrapperComponent)
+        in WrapperComponent
+
+      at printWarning (../node_modules/prop-types/checkPropTypes.js:20:15)
+      at checkPropTypes (../node_modules/prop-types/checkPropTypes.js:83:11)
+      at validatePropTypes (../node_modules/react/cjs/react.development.js:1714:7)
+      at createElementWithValidation (../node_modules/react/cjs/react.development.js:1813:5)
+      at Connect.render (../node_modules/react-redux/lib/components/connectAdvanced.js:260:43)
+      at finishClassComponent (../node_modules/react-dom/cjs/react-dom.development.js:17160:31)
+      at updateClassComponent (../node_modules/react-dom/cjs/react-dom.development.js:17110:24)
+
+  console.error
+    Warning: Failed prop type: The prop `push` is marked as required in `MetadataFormFields`, but its value is `undefined`.
+        in MetadataFormFields (created by Connect(MetadataFormFields))
+        in Connect(MetadataFormFields) (created by PublicForm)
+        in div (created by PublicForm)
+        in form (created by Form)
+        in Form (created by Connect(Form))
+        in Connect(Form) (created by LocalForm)
+        in LocalForm (created by PublicForm)
+        in PublicForm
+        in Provider (created by WrapperComponent)
+        in WrapperComponent
+
+      at printWarning (../node_modules/prop-types/checkPropTypes.js:20:15)
+      at checkPropTypes (../node_modules/prop-types/checkPropTypes.js:83:11)
+      at validatePropTypes (../node_modules/react/cjs/react.development.js:1714:7)
+      at createElementWithValidation (../node_modules/react/cjs/react.development.js:1813:5)
+      at Connect.render (../node_modules/react-redux/lib/components/connectAdvanced.js:260:43)
+      at finishClassComponent (../node_modules/react-dom/cjs/react-dom.development.js:17160:31)
+      at updateClassComponent (../node_modules/react-dom/cjs/react-dom.development.js:17110:24)
+
+  console.error
+    Warning: Each child in a list should have a unique "key" prop.
+    
+    Check the render method of `PublicForm`. See https://fb.me/react-warning-keys for more information.
+        in li (created by PublicForm)
+        in PublicForm
+        in Provider (created by WrapperComponent)
+        in WrapperComponent
+
+      166 |             </MobileView>
+      167 |             <div className="preview-list">
+    > 168 |               <ul>
+          |               ^
+      169 |                 {this.state.files.map(file => (
+      170 |                   <li key={file.preview}>
+      171 |                     <div className="preview-title">{file.name}</div>
+
+      at printWarning (../node_modules/react/cjs/react.development.js:315:30)
+      at error (../node_modules/react/cjs/react.development.js:287:5)
+      at validateExplicitKey (../node_modules/react/cjs/react.development.js:1630:5)
+      at validateChildKeys (../node_modules/react/cjs/react.development.js:1656:9)
+      at Object.createElementWithValidation [as createElement] (../node_modules/react/cjs/react.development.js:1806:7)
+      at PublicForm.renderFileField (react/Markdown/components/PublicForm.js:168:15)
+      at PublicForm.renderFileField [as render] (react/Markdown/components/PublicForm.js:235:33)
+
+  console.error
+    Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.
+        in Captcha (created by ComponentWrapper)
+        in ComponentWrapper (created by Control)
+        in Control (created by Connect(Control))
+        in Connect(Control) (created by Modeled(Connect(Control)))
+        in Modeled(Connect(Control)) (created by DefaultConnectedControl)
+        in DefaultConnectedControl (created by Captcha)
+        in Captcha (created by PublicForm)
+        in li (created by PublicForm)
+        in ul (created by PublicForm)
+        in div
+        in Unknown (created by ComponentWrapper)
+
+      27 |     const response = await api.get(url);
+      28 |
+    > 29 |     this.setState(response.json);
+         |          ^
+      30 |   }
+      31 |
+      32 |   render() {
+
+      at printWarning (../node_modules/react-dom/cjs/react-dom.development.js:88:30)
+      at error (../node_modules/react-dom/cjs/react-dom.development.js:60:5)
+      at warnAboutUpdateOnUnmountedFiberInDEV (../node_modules/react-dom/cjs/react-dom.development.js:23161:5)
+      at scheduleUpdateOnFiber (../node_modules/react-dom/cjs/react-dom.development.js:21169:5)
+      at Object.enqueueSetState (../node_modules/react-dom/cjs/react-dom.development.js:12639:5)
+      at Captcha.Object.<anonymous>.Component.setState (../node_modules/react/cjs/react.development.js:471:16)
+      at Captcha.setState [as refresh] (react/Forms/components/Captcha.js:29:10)
+
+PASS Client app/react/Markdown/components/specs/PublicForm.spec.js (9.973 s)
+  PublicForm
+    ✓ should bind the MetadataFormFields change to this form (166 ms)
+    ✓ should render a generated ID as title if the option is marked (37 ms)
+    ✓ should load a generated Id as title after submit if the option is marked (68 ms)
+    ✓ should enable remote captcha (39 ms)
+    ✓ should render a form with file and attachments (42 ms)
+    ✓ should submit the values wrapped (48 ms)
+    ✓ should refresh the captcha and clear the form after submit (43 ms)
+    ✓ should refresh captcha and NOT clear the form on submission error (44 ms)
+    ✓ should keep attachments after a submission error (86 ms)
+
+  console.error
+    Warning: Each child in a list should have a unique "key" prop.
+    
+    Check the top-level render call using <span>. See https://fb.me/react-warning-keys for more information.
+        in Fragment
+
+      42 |     const lines = this.props.children.split('\n');
+      43 |     return (
+    > 44 |       <span
+         |       ^
+      45 |         onClick={this.onClick}
+      46 |         className={this.props.i18nmode ? 'translation active' : 'translation'}
+      47 |       >
+
+      at printWarning (../node_modules/react/cjs/react.development.js:315:30)
+      at error (../node_modules/react/cjs/react.development.js:287:5)
+      at validateExplicitKey (../node_modules/react/cjs/react.development.js:1630:5)
+      at validateChildKeys (../node_modules/react/cjs/react.development.js:1656:9)
+      at Object.createElementWithValidation [as createElement] (../node_modules/react/cjs/react.development.js:1806:7)
+      at Translate.render (react/I18N/components/Translate.js:44:7)
+      at ReactShallowRenderer._mountClassComponent (../node_modules/react-test-renderer/cjs/react-test-renderer-shallow.development.js:883:37)
+
+  console.error
+    Warning: Failed prop type: Invalid prop `edit` of type `boolean` supplied to `Translate`, expected `function`.
+        in Translate
+
+      58 |     it('should parse line break in multiline text', () => {
+      59 |       component = shallow(
+    > 60 |         <Translate>
+         |         ^
+      61 |           {`this
+      62 |       is
+      63 |       multiline
+
+      at printWarning (../node_modules/prop-types/checkPropTypes.js:20:15)
+      at checkPropTypes (../node_modules/prop-types/checkPropTypes.js:83:11)
+      at validatePropTypes (../node_modules/react/cjs/react.development.js:1714:7)
+      at Object.createElementWithValidation [as createElement] (../node_modules/react/cjs/react.development.js:1813:5)
+      at Object.<anonymous> (react/I18N/components/specs/Translate.spec.js:60:9)
+
+PASS Client app/react/I18N/components/specs/Translate.spec.js
+  Translate
+    render
+      ✓ should render the property children inside of a span (8 ms)
+      when i18nmode is true
+        ✓ should render the span with class active (2 ms)
+        onClick
+          ✓ should stop the event from going up (2 ms)
+          ✓ should call edit with context and children (2 ms)
+    markdown support
+      ✓ should parse line break in multiline text (6 ms)
+      ✓ should parse italic text in translation value (1 ms)
+    resetCachedTranslation
+      ✓ should set null the current catched translation
+    mapStateToProps
+      ✓ should try to translate the children and pass it on children (1 ms)
+      ✓ should allow overriding translation key (1 ms)
+      ✓ should store the current locale translation to be fast
+
+PASS Server app/api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js
+  migration update translations of settings tooltips
+    ✓ should have a delta number (43 ms)
+    ✓ should update the keys that have changed (24 ms)
+
+Test Suites: 3 passed, 3 total
+Tests:       21 passed, 21 total
+Snapshots:   0 total
+Time:        16.456 s
+Ran all test suites matching /app\/api\/migrations\/migrations\/113-update_translations_of_settings_tooltips\/specs\/113-update_translations_of_settings_tooltips.spec.js|app\/react\/I18N\/components\/specs\/Translate.spec.js|app\/react\/Markdown\/components\/specs\/PublicForm.spec.js/i in 2 projects.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":3,"numPassedTests":21,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":3,"numTotalTests":21,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782747138076,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["PublicForm"],"duration":166,"failureMessages":[],"fullName":"PublicForm should bind the MetadataFormFields change to this form","location":null,"status":"passed","title":"should bind the MetadataFormFields change to this form"},{"ancestorTitles":["PublicForm"],"duration":37,"failureMessages":[],"fullName":"PublicForm should render a generated ID as title if the option is marked","location":null,"status":"passed","title":"should render a generated ID as title if the option is marked"},{"ancestorTitles":["PublicForm"],"duration":68,"failureMessages":[],"fullName":"PublicForm should load a generated Id as title after submit if the option is marked","location":null,"status":"passed","title":"should load a generated Id as title after submit if the option is marked"},{"ancestorTitles":["PublicForm"],"duration":39,"failureMessages":[],"fullName":"PublicForm should enable remote captcha","location":null,"status":"passed","title":"should enable remote captcha"},{"ancestorTitles":["PublicForm"],"duration":42,"failureMessages":[],"fullName":"PublicForm should render a form with file and attachments","location":null,"status":"passed","title":"should render a form with file and attachments"},{"ancestorTitles":["PublicForm"],"duration":48,"failureMessages":[],"fullName":"PublicForm should submit the values wrapped","location":null,"status":"passed","title":"should submit the values wrapped"},{"ancestorTitles":["PublicForm"],"duration":43,"failureMessages":[],"fullName":"PublicForm should refresh the captcha and clear the form after submit","location":null,"status":"passed","title":"should refresh the captcha and clear the form after submit"},{"ancestorTitles":["PublicForm"],"duration":44,"failureMessages":[],"fullName":"PublicForm should refresh captcha and NOT clear the form on submission error","location":null,"status":"passed","title":"should refresh captcha and NOT clear the form on submission error"},{"ancestorTitles":["PublicForm"],"duration":86,"failureMessages":[],"fullName":"PublicForm should keep attachments after a submission error","location":null,"status":"passed","title":"should keep attachments after a submission error"}],"endTime":1782747148782,"message":"","name":"/workspace/repo/app/react/Markdown/components/specs/PublicForm.spec.js","startTime":1782747138809,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Translate","render"],"duration":8,"failureMessages":[],"fullName":"Translate render should render the property children inside of a span","location":null,"status":"passed","title":"should render the property children inside of a span"},{"ancestorTitles":["Translate","render","when i18nmode is true"],"duration":2,"failureMessages":[],"fullName":"Translate render when i18nmode is true should render the span with class active","location":null,"status":"passed","title":"should render the span with class active"},{"ancestorTitles":["Translate","render","when i18nmode is true","onClick"],"duration":2,"failureMessages":[],"fullName":"Translate render when i18nmode is true onClick should stop the event from going up","location":null,"status":"passed","title":"should stop the event from going up"},{"ancestorTitles":["Translate","render","when i18nmode is true","onClick"],"duration":2,"failureMessages":[],"fullName":"Translate render when i18nmode is true onClick should call edit with context and children","location":null,"status":"passed","title":"should call edit with context and children"},{"ancestorTitles":["Translate","markdown support"],"duration":6,"failureMessages":[],"fullName":"Translate markdown support should parse line break in multiline text","location":null,"status":"passed","title":"should parse line break in multiline text"},{"ancestorTitles":["Translate","markdown support"],"duration":1,"failureMessages":[],"fullName":"Translate markdown support should parse italic text in translation value","location":null,"status":"passed","title":"should parse italic text in translation value"},{"ancestorTitles":["Translate","resetCachedTranslation"],"duration":0,"failureMessages":[],"fullName":"Translate resetCachedTranslation should set null the current catched translation","location":null,"status":"passed","title":"should set null the current catched translation"},{"ancestorTitles":["Translate","mapStateToProps"],"duration":1,"failureMessages":[],"fullName":"Translate mapStateToProps should try to translate the children and pass it on children","location":null,"status":"passed","title":"should try to translate the children and pass it on children"},{"ancestorTitles":["Translate","mapStateToProps"],"duration":1,"failureMessages":[],"fullName":"Translate mapStateToProps should allow overriding translation key","location":null,"status":"passed","title":"should allow overriding translation key"},{"ancestorTitles":["Translate","mapStateToProps"],"duration":0,"failureMessages":[],"fullName":"Translate mapStateToProps should store the current locale translation to be fast","location":null,"status":"passed","title":"should store the current locale translation to be fast"}],"endTime":1782747150445,"message":"","name":"/workspace/repo/app/react/I18N/components/specs/Translate.spec.js","startTime":1782747148815,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["migration update translations of settings tooltips"],"duration":43,"failureMessages":[],"fullName":"migration update translations of settings tooltips should have a delta number","location":null,"status":"passed","title":"should have a delta number"},{"ancestorTitles":["migration update translations of settings tooltips"],"duration":24,"failureMessages":[],"fullName":"migration update translations of settings tooltips should update the keys that have changed","location":null,"status":"passed","title":"should update the keys that have changed"}],"endTime":1782747154527,"message":"","name":"/workspace/repo/app/api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js","startTime":1782747150456,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=21 found=21 failed=0 parsed=21 framework=jest exit_code=0

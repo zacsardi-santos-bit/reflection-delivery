@@ -1,0 +1,23 @@
+{
+ "task": "cadence-workflow-cadence-6630",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden moves timer-gate impls into common/clock (timer_gate.go, event_timer_gate.go) with stoppable real-time gate; test.patch adds common/clock/*timer_gate_test.go + service/history/queue tests; F2P=226"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

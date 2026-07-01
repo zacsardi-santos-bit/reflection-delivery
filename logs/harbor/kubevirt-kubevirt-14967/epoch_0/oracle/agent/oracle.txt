@@ -1,0 +1,10 @@
+patching file automation/repeated_test.sh
+patching file automation/test.sh
+patching file hack/conformance.sh
+patching file hack/linter/lint-paths.txt
+patching file pkg/liveupdate/memory/memory.go
+patching file pkg/virt-api/webhooks/utils.go
+patching file pkg/virt-api/webhooks/validating-webhook/admitters/BUILD.bazel
+patching file pkg/virtctl/create/clone/clone.go
+patching file pkg/virtctl/create/clone/clone_test.go
+patching file tests/operator/operator.go

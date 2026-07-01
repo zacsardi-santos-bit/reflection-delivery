@@ -1,0 +1,23 @@
+{
+ "task": "openelb-openelb-344",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden refactors production ipam.go: 'func (i *Manager) assignIPFromEip(allocate *svcRecord, eip ...) (string, error)' with real error returns (eip is deleting/disabled/out of range/no suitable ip); F2P=34 fake-client subtests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

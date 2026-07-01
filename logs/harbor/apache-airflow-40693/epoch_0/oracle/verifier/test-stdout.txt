@@ -1,0 +1,839 @@
+patching file tests/datasets/test_dataset.py
+patching file tests/models/test_dag.py
+patching file tests/models/test_taskinstance.py
+patching file tests/test_utils/db.py
+patching file tests/timetables/test_datasets_timetable.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: time-machine-3.2.0, timeouts-1.2.1, anyio-4.14.1, requests-mock-1.12.1, asyncio-1.4.0, cov-7.1.0, mock-3.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+setup timeout: 0.0s, execution timeout: 0.0s, teardown timeout: 0.0s
+collecting ... collected 659 items / 2 deselected / 657 selected
+
+tests/datasets/test_dataset.py::test_invalid_uris[empty] SKIPPED (The
+test is skipped as it is not a DB tests and --run-db-tests-only flag is
+passed to pytest. <Function test_invalid_uris[empty]>)                   [  0%]
+tests/datasets/test_dataset.py::test_invalid_uris[whitespace] SKIPPEDflag is passed to pytest. <Function test_invalid_uris[whitespace]>) [  0%]
+tests/datasets/test_dataset.py::test_invalid_uris[too_long] SKIPPED (The
+test is skipped as it is not a DB tests and --run-db-tests-only flag is
+passed to pytest. <Function test_invalid_uris[too_long]>)                [  0%]
+tests/datasets/test_dataset.py::test_invalid_uris[reserved_scheme] SKIPPEDag is passed to pytest. <Function test_invalid_uris[reserved_scheme]>) [  0%]
+tests/datasets/test_dataset.py::test_invalid_uris[non-ascii] SKIPPED
+flag is passed to pytest. <Function test_invalid_uris[non-ascii]>)       [  0%]
+tests/datasets/test_dataset.py::test_uri_with_scheme[scheme-less] SKIPPEDag is passed to pytest. <Function test_uri_with_scheme[scheme-less]>) [  0%]
+tests/datasets/test_dataset.py::test_uri_with_scheme[scheme-less-colon] SKIPPEDlag is passed to pytest. <Function test_uri_with_scheme[scheme-
+less-colon]>)                                                            [  1%]
+tests/datasets/test_dataset.py::test_uri_with_scheme[scheme-less-slash] SKIPPEDlag is passed to pytest. <Function test_uri_with_scheme[scheme-
+less-slash]>)                                                            [  1%]
+tests/datasets/test_dataset.py::test_uri_with_scheme[normal] SKIPPED
+flag is passed to pytest. <Function test_uri_with_scheme[normal]>)       [  1%]
+tests/datasets/test_dataset.py::test_uri_with_scheme[trailing-slash] SKIPPEDlag is passed to pytest. <Function test_uri_with_scheme[trailing-
+slash]>)                                                                 [  1%]
+tests/datasets/test_dataset.py::test_uri_with_auth SKIPPED (The test is
+skipped as it is not a DB tests and --run-db-tests-only flag is passed
+to pytest. <Function test_uri_with_auth>)                                [  1%]
+tests/datasets/test_dataset.py::test_uri_without_scheme SKIPPED (The
+test is skipped as it is not a DB tests and --run-db-tests-only flag is
+passed to pytest. <Function test_uri_without_scheme>)                    [  1%]
+tests/datasets/test_dataset.py::test_fspath SKIPPED (The test is skipped
+as it is not a DB tests and --run-db-tests-only flag is passed to
+pytest. <Function test_fspath>)                                          [  1%]
+tests/datasets/test_dataset.py::test_equal_when_same_uri SKIPPED (The
+test is skipped as it is not a DB tests and --run-db-tests-only flag is
+passed to pytest. <Function test_equal_when_same_uri>)                   [  2%]
+tests/datasets/test_dataset.py::test_not_equal_when_different_uri SKIPPEDag is passed to pytest. <Function test_not_equal_when_different_uri>) [  2%]
+tests/datasets/test_dataset.py::test_hash SKIPPED (The test is skipped
+as it is not a DB tests and --run-db-tests-only flag is passed to
+pytest. <Function test_hash>)                                            [  2%]
+tests/datasets/test_dataset.py::test_dataset_logic_operations SKIPPEDflag is passed to pytest. <Function test_dataset_logic_operations>) [  2%]
+tests/datasets/test_dataset.py::test_dataset_iter_datasets SKIPPED (The
+test is skipped as it is not a DB tests and --run-db-tests-only flag is
+passed to pytest. <Function test_dataset_iter_datasets>)                 [  2%]
+tests/datasets/test_dataset.py::test_dataset_evaluate SKIPPED (The test
+is skipped as it is not a DB tests and --run-db-tests-only flag is
+passed to pytest. <Function test_dataset_evaluate>)                      [  2%]
+tests/datasets/test_dataset.py::test_dataset_any_operations SKIPPED (The
+test is skipped as it is not a DB tests and --run-db-tests-only flag is
+passed to pytest. <Function test_dataset_any_operations>)                [  3%]
+tests/datasets/test_dataset.py::test_dataset_all_operations SKIPPED (The
+test is skipped as it is not a DB tests and --run-db-tests-only flag is
+passed to pytest. <Function test_dataset_all_operations>)                [  3%]
+tests/datasets/test_dataset.py::test_datasetbooleancondition_evaluate_iter SKIPPEDlag is passed to pytest. <Function
+test_datasetbooleancondition_evaluate_iter>)                             [  3%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs0-any-True] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs0-any-True]>)                                                       [  3%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs1-any-True] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs1-any-True]>)                                                       [  3%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs2-any-True] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs2-any-True]>)                                                       [  3%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs3-any-True] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs3-any-True]>)                                                       [  3%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs4-any-True] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs4-any-True]>)                                                       [  4%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs5-any-True] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs5-any-True]>)                                                       [  4%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs6-any-True] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs6-any-True]>)                                                       [  4%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs7-any-False] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs7-any-False]>)                                                      [  4%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs8-all-True] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs8-all-True]>)                                                       [  4%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs9-all-False] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs9-all-False]>)                                                      [  4%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs10-all-False] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs10-all-False]>)                                                     [  5%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs11-all-False] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs11-all-False]>)                                                     [  5%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs12-all-False] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs12-all-False]>)                                                     [  5%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs13-all-False] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs13-all-False]>)                                                     [  5%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs14-all-False] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs14-all-False]>)                                                     [  5%]
+tests/datasets/test_dataset.py::test_dataset_logical_conditions_evaluation_and_serialization[inputs15-all-False] SKIPPEDag is passed to pytest.
+<Function test_dataset_logical_conditions_evaluation_and_serialization[i
+nputs15-all-False]>)                                                     [  5%]
+tests/datasets/test_dataset.py::test_nested_dataset_conditions_with_serialization[status_values0-False] SKIPPEDag is passed to pytest.
+<Function test_nested_dataset_conditions_with_serialization[status_value
+s0-False]>)                                                              [  5%]
+tests/datasets/test_dataset.py::test_nested_dataset_conditions_with_serialization[status_values1-True] SKIPPEDag is passed to pytest. <Function
+test_nested_dataset_conditions_with_serialization[status_values1-True]>) [  6%]
+tests/datasets/test_dataset.py::test_nested_dataset_conditions_with_serialization[status_values2-True] SKIPPEDag is passed to pytest. <Function
+test_nested_dataset_conditions_with_serialization[status_values2-True]>) [  6%]
+tests/datasets/test_dataset.py::test_nested_dataset_conditions_with_serialization[status_values3-False] SKIPPEDag is passed to pytest.
+<Function test_nested_dataset_conditions_with_serialization[status_value
+s3-False]>)                                                              [  6%]
+tests/datasets/test_dataset.py::test_dataset_trigger_setup_and_serialization PASSED [  6%]
+tests/datasets/test_dataset.py::test_dataset_dag_run_queue_processing PASSED [  6%]
+tests/datasets/test_dataset.py::test_dag_with_complex_dataset_condition PASSED [  6%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected0] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected0]>)                  [  7%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected1] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected1]>)                  [  7%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected2] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected2]>)                  [  7%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected3] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected3]>)                  [  7%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected4] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected4]>)                  [  7%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected5] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected5]>)                  [  7%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected6] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected6]>)                  [  7%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected7] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected7]>)                  [  8%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected8] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected8]>)                  [  8%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected9] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected9]>)                  [  8%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected10] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected10]>)                 [  8%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected11] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected11]>)                 [  8%]
+tests/datasets/test_dataset.py::test_evaluate_datasets_expression[<lambda>-expected12] SKIPPEDag is passed to pytest. <Function
+test_evaluate_datasets_expression[<lambda>-expected12]>)                 [  8%]
+tests/datasets/test_dataset.py::test_datasets_expression_error[&] SKIPPEDag is passed to pytest. <Function test_datasets_expression_error[&]>) [  8%]
+tests/datasets/test_dataset.py::test_datasets_expression_error[|] SKIPPEDag is passed to pytest. <Function test_datasets_expression_error[|]>) [  9%]
+tests/datasets/test_dataset.py::test_datasets_expression_error[DatasetAll] SKIPPEDlag is passed to pytest. <Function
+test_datasets_expression_error[DatasetAll]>)                             [  9%]
+tests/datasets/test_dataset.py::test_datasets_expression_error[DatasetAny] SKIPPEDlag is passed to pytest. <Function
+test_datasets_expression_error[DatasetAny]>)                             [  9%]
+tests/datasets/test_dataset.py::test__sanitize_uri_raises_warning SKIPPEDag is passed to pytest. <Function test__sanitize_uri_raises_warning>) [  9%]
+tests/datasets/test_dataset.py::test__sanitize_uri_raises_exception SKIPPEDag is passed to pytest. <Function
+test__sanitize_uri_raises_exception>)                                    [  9%]
+tests/datasets/test_dataset.py::Test_DatasetAliasCondition::test_init PASSED [  9%]
+tests/datasets/test_dataset.py::Test_DatasetAliasCondition::test_as_expression PASSED [ 10%]
+tests/datasets/test_dataset.py::Test_DatasetAliasCondition::test_evalute PASSED [ 10%]
+tests/models/test_dag.py::TestDag::test_params_not_passed_is_empty_dict PASSED [ 10%]
+tests/models/test_dag.py::TestDag::test_params_passed_and_params_in_default_args_no_override PASSED [ 10%]
+tests/models/test_dag.py::TestDag::test_not_none_schedule_with_non_default_params PASSED [ 10%]
+tests/models/test_dag.py::TestDag::test_dag_invalid_default_view PASSED  [ 10%]
+tests/models/test_dag.py::TestDag::test_dag_default_view_default_value PASSED [ 10%]
+tests/models/test_dag.py::TestDag::test_dag_invalid_orientation PASSED   [ 11%]
+tests/models/test_dag.py::TestDag::test_dag_orientation_default_value PASSED [ 11%]
+tests/models/test_dag.py::TestDag::test_dag_as_context_manager PASSED    [ 11%]
+tests/models/test_dag.py::TestDag::test_dag_topological_sort_include_subdag_tasks PASSED [ 11%]
+tests/models/test_dag.py::TestDag::test_dag_topological_sort_dag_without_tasks PASSED [ 11%]
+tests/models/test_dag.py::TestDag::test_dag_naive_start_date_string PASSED [ 11%]
+tests/models/test_dag.py::TestDag::test_dag_naive_start_end_dates_strings PASSED [ 12%]
+tests/models/test_dag.py::TestDag::test_dag_start_date_propagates_to_end_date PASSED [ 12%]
+tests/models/test_dag.py::TestDag::test_dag_naive_default_args_start_date PASSED [ 12%]
+tests/models/test_dag.py::TestDag::test_dag_none_default_args_start_date PASSED [ 12%]
+tests/models/test_dag.py::TestDag::test_dag_task_priority_weight_total PASSED [ 12%]
+tests/models/test_dag.py::TestDag::test_dag_task_priority_weight_total_using_upstream PASSED [ 12%]
+tests/models/test_dag.py::TestDag::test_dag_task_priority_weight_total_using_absolute PASSED [ 12%]
+tests/models/test_dag.py::TestDag::test_dag_task_invalid_weight_rule PASSED [ 13%]
+tests/models/test_dag.py::TestDag::test_dag_task_custom_weight_strategy[StaticTestPriorityWeightStrategy-99] PASSED [ 13%]
+tests/models/test_dag.py::TestDag::test_dag_task_custom_weight_strategy[FactorPriorityWeightStrategy-3] PASSED [ 13%]
+tests/models/test_dag.py::TestDag::test_dag_task_not_registered_weight_strategy PASSED [ 13%]
+tests/models/test_dag.py::TestDag::test_get_num_task_instances PASSED    [ 13%]
+tests/models/test_dag.py::TestDag::test_get_task_instances_before PASSED [ 13%]
+tests/models/test_dag.py::TestDag::test_user_defined_filters_macros PASSED [ 14%]
+tests/models/test_dag.py::TestDag::test_set_jinja_env_additional_option PASSED [ 14%]
+tests/models/test_dag.py::TestDag::test_template_undefined PASSED        [ 14%]
+tests/models/test_dag.py::TestDag::test_template_env[False-True-SandboxedEnvironment] PASSED [ 14%]
+tests/models/test_dag.py::TestDag::test_template_env[False-False-SandboxedEnvironment] PASSED [ 14%]
+tests/models/test_dag.py::TestDag::test_template_env[True-False-NativeEnvironment] PASSED [ 14%]
+tests/models/test_dag.py::TestDag::test_template_env[True-True-SandboxedEnvironment] PASSED [ 14%]
+tests/models/test_dag.py::TestDag::test_resolve_template_files_value PASSED [ 15%]
+tests/models/test_dag.py::TestDag::test_resolve_template_files_list PASSED [ 15%]
+tests/models/test_dag.py::TestDag::test_following_previous_schedule PASSED [ 15%]
+tests/models/test_dag.py::TestDag::test_following_previous_schedule_daily_dag_cest_to_cet PASSED [ 15%]
+tests/models/test_dag.py::TestDag::test_following_previous_schedule_daily_dag_cet_to_cest PASSED [ 15%]
+tests/models/test_dag.py::TestDag::test_following_schedule_relativedelta PASSED [ 15%]
+tests/models/test_dag.py::TestDag::test_following_schedule_relativedelta_with_deprecated_schedule_interval PASSED [ 15%]
+tests/models/test_dag.py::TestDag::test_following_schedule_relativedelta_with_depr_schedule_interval_decorated_dag PASSED [ 16%]
+tests/models/test_dag.py::TestDag::test_previous_schedule_datetime_timezone PASSED [ 16%]
+tests/models/test_dag.py::TestDag::test_following_schedule_datetime_timezone PASSED [ 16%]
+tests/models/test_dag.py::TestDag::test_create_dagrun_when_schedule_is_none_and_empty_start_date PASSED [ 16%]
+tests/models/test_dag.py::TestDag::test_fail_dag_when_schedule_is_non_none_and_empty_start_date PASSED [ 16%]
+tests/models/test_dag.py::TestDag::test_following_schedule_datetime_timezone_utc0530 PASSED [ 16%]
+tests/models/test_dag.py::TestDag::test_dagtag_repr PASSED               [ 17%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db PASSED          [ 17%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_single_dag PASSED [ 17%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_multiple_dags PASSED [ 17%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_interval_save_runtime[None] PASSED [ 17%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_interval_save_runtime[@daily] PASSED [ 17%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_max_active_runs[running] PASSED [ 17%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_max_active_runs[queued] PASSED [ 18%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_has_import_error PASSED [ 18%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_datasets PASSED [ 18%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_unorphan_datasets PASSED [ 18%]
+tests/models/test_dag.py::TestDag::test_bulk_write_to_db_dataset_aliases PASSED [ 18%]
+tests/models/test_dag.py::TestDag::test_sync_to_db PASSED                [ 18%]
+tests/models/test_dag.py::TestDag::test_sync_to_db_default_view PASSED   [ 19%]
+tests/models/test_dag.py::TestDag::test_is_paused_subdag PASSED          [ 19%]
+tests/models/test_dag.py::TestDag::test_existing_dag_is_paused_upon_creation PASSED [ 19%]
+tests/models/test_dag.py::TestDag::test_new_dag_is_paused_upon_creation PASSED [ 19%]
+tests/models/test_dag.py::TestDag::test_existing_dag_is_paused_config PASSED [ 19%]
+tests/models/test_dag.py::TestDag::test_existing_dag_is_paused_after_limit PASSED [ 19%]
+tests/models/test_dag.py::TestDag::test_existing_dag_default_view PASSED [ 19%]
+tests/models/test_dag.py::TestDag::test_dag_is_deactivated_upon_dagfile_deletion PASSED [ 20%]
+tests/models/test_dag.py::TestDag::test_dag_naive_default_args_start_date_with_timezone PASSED [ 20%]
+tests/models/test_dag.py::TestDag::test_roots PASSED                     [ 20%]
+tests/models/test_dag.py::TestDag::test_leaves PASSED                    [ 20%]
+tests/models/test_dag.py::TestDag::test_tree_view PASSED                 [ 20%]
+tests/models/test_dag.py::TestDag::test_duplicate_task_ids_not_allowed_with_dag_context_manager PASSED [ 20%]
+tests/models/test_dag.py::TestDag::test_duplicate_task_ids_not_allowed_without_dag_context_manager PASSED [ 21%]
+tests/models/test_dag.py::TestDag::test_duplicate_task_ids_for_same_task_is_allowed PASSED [ 21%]
+tests/models/test_dag.py::TestDag::test_partial_subset_updates_all_references_while_deepcopy PASSED [ 21%]
+tests/models/test_dag.py::TestDag::test_partial_subset_taskgroup_join_ids PASSED [ 21%]
+tests/models/test_dag.py::TestDag::test_schedule_dag_no_previous_runs PASSED [ 21%]
+tests/models/test_dag.py::TestDag::test_dag_handle_callback_crash PASSED [ 21%]
+tests/models/test_dag.py::TestDag::test_dag_handle_callback_with_removed_task PASSED [ 21%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_after_fake_scheduled_previous PASSED [ 22%]
+tests/models/test_dag.py::TestDag::test_schedule_dag_once PASSED         [ 22%]
+tests/models/test_dag.py::TestDag::test_fractional_seconds PASSED        [ 22%]
+tests/models/test_dag.py::TestDag::test_pickling PASSED                  [ 22%]
+tests/models/test_dag.py::TestDag::test_rich_comparison_ops PASSED       [ 22%]
+tests/models/test_dag.py::TestDag::test_get_paused_dag_ids PASSED        [ 22%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[None-expected_timetable0-Never, external triggers only] PASSED [ 22%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[@daily-expected_timetable1-At 00:00] PASSED [ 23%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[@weekly-expected_timetable2-At 00:00, only on Sunday] PASSED [ 23%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[@monthly-expected_timetable3-At 00:00, on day 1 of the month] PASSED [ 23%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[@quarterly-expected_timetable4-At 00:00, on day 1 of the month, every 3 months] PASSED [ 23%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[@yearly-expected_timetable5-At 00:00, on day 1 of the month, only in January] PASSED [ 23%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[5 0 * 8 *-expected_timetable6-At 00:05, only in August] PASSED [ 23%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[@once-expected_timetable7-Once, as soon as possible] PASSED [ 24%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[schedule_interval_arg8-expected_timetable8-] PASSED [ 24%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_schedule_interval_arg[30 21 * * 5 1-expected_timetable9-] PASSED [ 24%]
+tests/models/test_dag.py::TestDag::test_timetable_and_description_from_dataset PASSED [ 24%]
+tests/models/test_dag.py::TestDag::test_schedule_interval_still_works PASSED [ 24%]
+tests/models/test_dag.py::TestDag::test_timetable_still_works PASSED     [ 24%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable0-Never, external triggers only] PASSED [ 24%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable1-At 00:00] PASSED [ 25%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable2-At 00:00] PASSED [ 25%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable3-At 00:00, only on Sunday] PASSED [ 25%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable4-At 00:00, only on Sunday] PASSED [ 25%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable5-At 00:00, on day 1 of the month] PASSED [ 25%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable6-At 00:00, on day 1 of the month] PASSED [ 25%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable7-At 00:00, on day 1 of the month, every 3 months] PASSED [ 26%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable8-At 00:00, on day 1 of the month, every 3 months] PASSED [ 26%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable9-At 00:00, on day 1 of the month, only in January] PASSED [ 26%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable10-At 00:00, on day 1 of the month, only in January] PASSED [ 26%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable11-At 00:05, only in August] PASSED [ 26%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable12-Once, as soon as possible] PASSED [ 26%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable13-] PASSED [ 26%]
+tests/models/test_dag.py::TestDag::test_description_from_timetable[timetable14-] PASSED [ 27%]
+tests/models/test_dag.py::TestDag::test_create_dagrun_run_id_is_generated PASSED [ 27%]
+tests/models/test_dag.py::TestDag::test_create_dagrun_run_type_is_obtained_from_run_id PASSED [ 27%]
+tests/models/test_dag.py::TestDag::test_create_dagrun_job_id_is_set PASSED [ 27%]
+tests/models/test_dag.py::TestDag::test_dag_add_task_checks_trigger_rule PASSED [ 27%]
+tests/models/test_dag.py::TestDag::test_dag_add_task_sets_default_task_group PASSED [ 27%]
+tests/models/test_dag.py::TestDag::test_clear_set_dagrun_state[queued] PASSED [ 28%]
+tests/models/test_dag.py::TestDag::test_clear_set_dagrun_state[running] PASSED [ 28%]
+tests/models/test_dag.py::TestDag::test_clear_set_dagrun_state_for_mapped_task[queued] PASSED [ 28%]
+tests/models/test_dag.py::TestDag::test_clear_set_dagrun_state_for_mapped_task[running] PASSED [ 28%]
+tests/models/test_dag.py::TestDag::test_dag_test_basic PASSED            [ 28%]
+tests/models/test_dag.py::TestDag::test_dag_test_with_dependencies PASSED [ 28%]
+tests/models/test_dag.py::TestDag::test_dag_test_with_fail_handler PASSED [ 28%]
+tests/models/test_dag.py::TestDag::test_dag_test_with_task_mapping PASSED [ 29%]
+tests/models/test_dag.py::TestDag::test_dag_connection_file PASSED       [ 29%]
+tests/models/test_dag.py::TestDag::test_clear_set_dagrun_state_for_subdag[queued] PASSED [ 29%]
+tests/models/test_dag.py::TestDag::test_clear_set_dagrun_state_for_subdag[running] PASSED [ 29%]
+tests/models/test_dag.py::TestDag::test_clear_set_dagrun_state_for_parent_dag[queued] PASSED [ 29%]
+tests/models/test_dag.py::TestDag::test_clear_set_dagrun_state_for_parent_dag[running] PASSED [ 29%]
+tests/models/test_dag.py::TestDag::test_clear_dag[None-None] PASSED      [ 29%]
+tests/models/test_dag.py::TestDag::test_clear_dag[removed-None] PASSED   [ 30%]
+tests/models/test_dag.py::TestDag::test_clear_dag[scheduled-None] PASSED [ 30%]
+tests/models/test_dag.py::TestDag::test_clear_dag[queued-None] PASSED    [ 30%]
+tests/models/test_dag.py::TestDag::test_clear_dag[success-None] PASSED   [ 30%]
+tests/models/test_dag.py::TestDag::test_clear_dag[restarting-None] PASSED [ 30%]
+tests/models/test_dag.py::TestDag::test_clear_dag[failed-None] PASSED    [ 30%]
+tests/models/test_dag.py::TestDag::test_clear_dag[up_for_retry-None] PASSED [ 31%]
+tests/models/test_dag.py::TestDag::test_clear_dag[up_for_reschedule-None] PASSED [ 31%]
+tests/models/test_dag.py::TestDag::test_clear_dag[upstream_failed-None] PASSED [ 31%]
+tests/models/test_dag.py::TestDag::test_clear_dag[skipped-None] PASSED   [ 31%]
+tests/models/test_dag.py::TestDag::test_clear_dag[deferred-None] PASSED  [ 31%]
+tests/models/test_dag.py::TestDag::test_clear_dag[shutdown-None] PASSED  [ 31%]
+tests/models/test_dag.py::TestDag::test_clear_dag[running-restarting] PASSED [ 31%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_info_once PASSED     [ 32%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_info_start_end_dates PASSED [ 32%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_info_catchup PASSED  [ 32%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_info_timedelta_schedule_and_catchup_false[@daily] PASSED [ 32%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_info_timedelta_schedule_and_catchup_false[schedule1] PASSED [ 32%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_info_timedelta_schedule_and_catchup_false[schedule2] PASSED [ 32%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_info_timedelta_schedule_and_catchup_true PASSED [ 33%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_info_timetable_exception PASSED [ 33%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_after_auto_align PASSED [ 33%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_after_not_for_subdags PASSED [ 33%]
+tests/models/test_dag.py::TestDag::test_next_dagrun_info_on_29_feb PASSED [ 33%]
+tests/models/test_dag.py::TestDag::test_replace_outdated_access_control_actions PASSED [ 33%]
+tests/models/test_dag.py::TestDag::test_validate_executor_field_executor_not_configured PASSED [ 33%]
+tests/models/test_dag.py::TestDag::test_validate_executor_field PASSED   [ 34%]
+tests/models/test_dag.py::TestDag::test_validate_params_on_trigger_dag PASSED [ 34%]
+tests/models/test_dag.py::TestDag::test_return_date_range_with_num_method PASSED [ 34%]
+tests/models/test_dag.py::TestDag::test_dag_owner_links PASSED           [ 34%]
+tests/models/test_dag.py::TestDag::test_schedule_dag_param[schedule_interval+schedule] PASSED [ 34%]
+tests/models/test_dag.py::TestDag::test_schedule_dag_param[timetable+schedule] PASSED [ 34%]
+tests/models/test_dag.py::TestDag::test_schedule_dag_param[timetable+schedule_interval] PASSED [ 35%]
+tests/models/test_dag.py::TestDag::test_continuous_schedule_interval_linmits_max_active_runs PASSED [ 35%]
+tests/models/test_dag.py::TestDagModel::test_dags_needing_dagruns_not_too_early PASSED [ 35%]
+tests/models/test_dag.py::TestDagModel::test_dags_needing_dagruns_datasets PASSED [ 35%]
+tests/models/test_dag.py::TestDagModel::test_dags_needing_dagruns_dataset_aliases PASSED [ 35%]
+tests/models/test_dag.py::TestDagModel::test_max_active_runs_not_none PASSED [ 35%]
+tests/models/test_dag.py::TestDagModel::test_dags_needing_dagruns_only_unpaused PASSED [ 35%]
+tests/models/test_dag.py::TestDagModel::test_dags_needing_dagruns_doesnot_send_dagmodel_with_import_errors PASSED [ 36%]
+tests/models/test_dag.py::TestDagModel::test_relative_fileloc[/workspace/repo/tests/dags/a.py-expected_relative0] PASSED [ 36%]
+tests/models/test_dag.py::TestDagModel::test_relative_fileloc[/tmp/foo.py-expected_relative1] PASSED [ 36%]
+tests/models/test_dag.py::TestDagModel::test_relative_fileloc_serialized[/workspace/repo/tests/dags/a.py-expected_relative0-/workspace/repo/tests/dags] PASSED [ 36%]
+tests/models/test_dag.py::TestDagModel::test_relative_fileloc_serialized[/workspace/repo/tests/dags/a.py-expected_relative0-/workspace/repo/airflow/example_dags] PASSED [ 36%]
+tests/models/test_dag.py::TestDagModel::test_relative_fileloc_serialized[/tmp/foo.py-expected_relative1-/workspace/repo/tests/dags] PASSED [ 36%]
+tests/models/test_dag.py::TestDagModel::test_relative_fileloc_serialized[/tmp/foo.py-expected_relative1-/workspace/repo/airflow/example_dags] PASSED [ 36%]
+tests/models/test_dag.py::TestDagModel::test__processor_dags_folder PASSED [ 37%]
+tests/models/test_dag.py::TestDagModel::test_dags_needing_dagruns_dataset_triggered_dag_info_queued_times PASSED [ 37%]
+tests/models/test_dag.py::TestDagModel::test_dataset_expression PASSED   [ 37%]
+tests/models/test_dag.py::TestDagModel::test_dag_executors PASSED        [ 37%]
+tests/models/test_dag.py::TestQueries::test_count_number_queries[3] PASSED [ 37%]
+tests/models/test_dag.py::TestQueries::test_count_number_queries[12] PASSED [ 37%]
+tests/models/test_dag.py::TestDagDecorator::test_fileloc PASSED          [ 38%]
+tests/models/test_dag.py::TestDagDecorator::test_set_dag_id PASSED       [ 38%]
+tests/models/test_dag.py::TestDagDecorator::test_default_dag_id PASSED   [ 38%]
+tests/models/test_dag.py::TestDagDecorator::test_documentation_added[use_dag_doc_md] PASSED [ 38%]
+tests/models/test_dag.py::TestDagDecorator::test_documentation_added[use_dag_docstring] PASSED [ 38%]
+tests/models/test_dag.py::TestDagDecorator::test_documentation_template_rendered PASSED [ 38%]
+tests/models/test_dag.py::TestDagDecorator::test_resolve_documentation_template_file_not_rendered PASSED [ 38%]
+tests/models/test_dag.py::TestDagDecorator::test_fails_if_arg_not_set PASSED [ 39%]
+tests/models/test_dag.py::TestDagDecorator::test_dag_param_resolves PASSED [ 39%]
+tests/models/test_dag.py::TestDagDecorator::test_dag_param_dagrun_parameterized PASSED [ 39%]
+tests/models/test_dag.py::TestDagDecorator::test_set_params_for_dag[42] PASSED [ 39%]
+tests/models/test_dag.py::TestDagDecorator::test_set_params_for_dag[0] PASSED [ 39%]
+tests/models/test_dag.py::TestDagDecorator::test_warning_location PASSED [ 39%]
+tests/models/test_dag.py::test_dag_timetable_match_schedule_interval[timetable0] PASSED [ 40%]
+tests/models/test_dag.py::test_dag_timetable_match_schedule_interval[timetable1] PASSED [ 40%]
+tests/models/test_dag.py::test_dag_schedule_interval_match_timetable[None] PASSED [ 40%]
+tests/models/test_dag.py::test_dag_schedule_interval_match_timetable[@once] PASSED [ 40%]
+tests/models/test_dag.py::test_dag_schedule_interval_match_timetable[@daily] PASSED [ 40%]
+tests/models/test_dag.py::test_dag_schedule_interval_match_timetable[schedule_interval3] PASSED [ 40%]
+tests/models/test_dag.py::test_dag_schedule_interval_change_after_init[None] PASSED [ 40%]
+tests/models/test_dag.py::test_dag_schedule_interval_change_after_init[@daily] PASSED [ 41%]
+tests/models/test_dag.py::test_dag_schedule_interval_change_after_init[schedule_interval2] PASSED [ 41%]
+tests/models/test_dag.py::test_dag_timetable_change_after_init[timetable0] PASSED [ 41%]
+tests/models/test_dag.py::test_dag_timetable_change_after_init[timetable1] PASSED [ 41%]
+tests/models/test_dag.py::test_set_task_instance_state[None-execution_date0] PASSED [ 41%]
+tests/models/test_dag.py::test_set_task_instance_state[test-run-id-None] PASSED [ 41%]
+tests/models/test_dag.py::test_set_task_instance_state_mapped PASSED     [ 42%]
+tests/models/test_dag.py::test_set_task_group_state[None-execution_date0] PASSED [ 42%]
+tests/models/test_dag.py::test_set_task_group_state[test-run-id-None] PASSED [ 42%]
+tests/models/test_dag.py::test_dag_teardowns_property_lists_all_teardown_tasks PASSED [ 42%]
+tests/models/test_dag.py::test_iter_dagrun_infos_between[in-dag-restriction] PASSED [ 42%]
+tests/models/test_dag.py::test_iter_dagrun_infos_between[out-of-dag-restriction] PASSED [ 42%]
+tests/models/test_dag.py::test_iter_dagrun_infos_between_error PASSED    [ 42%]
+tests/models/test_dag.py::test_get_next_data_interval[no-next-run] PASSED [ 43%]
+tests/models/test_dag.py::test_get_next_data_interval[modern] PASSED     [ 43%]
+tests/models/test_dag.py::test_get_next_data_interval[legacy] PASSED     [ 43%]
+tests/models/test_dag.py::test__time_restriction[dag_date0-tasks_date0-restrict0] PASSED [ 43%]
+tests/models/test_dag.py::test__time_restriction[dag_date1-tasks_date1-restrict1] PASSED [ 43%]
+tests/models/test_dag.py::test__tags_length[empty tags] PASSED           [ 43%]
+tests/models/test_dag.py::test__tags_length[one tag] PASSED              [ 43%]
+tests/models/test_dag.py::test__tags_length[two tags] PASSED             [ 44%]
+tests/models/test_dag.py::test__tags_length[a tag that's of just length 100] PASSED [ 44%]
+tests/models/test_dag.py::test__tags_length[two tags and one of them is of length > 100] PASSED [ 44%]
+tests/models/test_dag.py::test_get_dataset_triggered_next_run_info PASSED [ 44%]
+tests/models/test_dag.py::test_dag_uses_timetable_for_run_id PASSED      [ 44%]
+tests/models/test_dag.py::test_create_dagrun_disallow_manual_to_use_automated_run_id[backfill] PASSED [ 44%]
+tests/models/test_dag.py::test_create_dagrun_disallow_manual_to_use_automated_run_id[scheduled] PASSED [ 45%]
+tests/models/test_dag.py::test_create_dagrun_disallow_manual_to_use_automated_run_id[dataset_triggered] PASSED [ 45%]
+tests/models/test_dag.py::test_invalid_type_for_args PASSED              [ 45%]
+tests/models/test_dag.py::test_dag_init_validates_arg_types PASSED       [ 45%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_get_flat_relative_ids_with_setup PASSED [ 45%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_get_flat_relative_ids_with_setup_nested_ctx_mgr PASSED [ 45%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_get_flat_relative_ids_with_setup_nested_no_ctx_mgr PASSED [ 45%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_get_flat_relative_ids_follows_teardowns PASSED [ 46%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_get_flat_relative_ids_two_tasks_diff_setup_teardowns PASSED [ 46%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_get_flat_relative_ids_one_task_multiple_setup_teardowns PASSED [ 46%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_get_flat_relative_ids_with_setup_and_groups PASSED [ 46%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clear_upstream_not_your_setup PASSED [ 46%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_teardown_no_clear_setup PASSED [ 46%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_setup_clears_teardown PASSED [ 47%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_setup_clears_teardown_taskflow[False-False-expected0] PASSED [ 47%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_setup_clears_teardown_taskflow[False-True-expected1] PASSED [ 47%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_setup_clears_teardown_taskflow[True-False-expected2] PASSED [ 47%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_setup_clears_teardown_taskflow[True-True-expected3] PASSED [ 47%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_get_flat_relative_ids_two_tasks_diff_setup_teardowns_deeper PASSED [ 47%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_behavior_multiple_setups_for_work_task PASSED [ 47%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_behavior_multiple_setups_for_work_task2 PASSED [ 48%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_behavior_more_tertiary_weirdness PASSED [ 48%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_behavior_more_tertiary_weirdness2 PASSED [ 48%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_clearing_behavior_just_teardown PASSED [ 48%]
+tests/models/test_dag.py::TestTaskClearingSetupTeardownBehavior::test_validate_setup_teardown_trigger_rule PASSED [ 48%]
+tests/models/test_dag.py::test_statement_latest_runs_one_dag PASSED      [ 48%]
+tests/models/test_dag.py::test_statement_latest_runs_many_dag PASSED     [ 49%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_set_task_dates PASSED [ 49%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_current_state PASSED [ 49%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_set_dag PASSED [ 49%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_infer_dag PASSED [ 49%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_bitshift_compose_operators PASSED [ 49%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_init_on_load PASSED [ 49%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_requeue_over_dag_concurrency PASSED [ 50%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_requeue_over_max_active_tis_per_dag PASSED [ 50%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_requeue_over_max_active_tis_per_dagrun PASSED [ 50%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_requeue_over_pool_concurrency PASSED [ 50%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_not_requeue_non_requeueable_task_instance PASSED [ 50%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_mark_non_runnable_task_as_success PASSED [ 50%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_run_pooling_task PASSED [ 50%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_pool_slots_property PASSED [ 51%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_ti_updates_with_task PASSED [ 51%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_run_pooling_task_with_mark_success PASSED [ 51%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_run_pooling_task_with_skip PASSED [ 51%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_sigterm_calls_on_failure_callback PASSED [ 51%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_sigterm_works_with_retries PASSED [ 51%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_sigterm_doesnt_change_state_of_finished_tasks[success] PASSED [ 52%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_sigterm_doesnt_change_state_of_finished_tasks[failed] PASSED [ 52%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_sigterm_doesnt_change_state_of_finished_tasks[skipped] PASSED [ 52%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_wipes_next_fields[failed-AirflowException-0] PASSED [ 52%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_wipes_next_fields[skipped-AirflowSkipException-0] PASSED [ 52%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_wipes_next_fields[success-None-0] PASSED [ 52%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_wipes_next_fields[up_for_reschedule-exception3-0] PASSED [ 52%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_wipes_next_fields[up_for_retry-AirflowException-1] PASSED [ 53%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_retry_handling PASSED [ 53%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_next_retry_datetime PASSED [ 53%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_next_retry_datetime_short_or_zero_intervals[0] PASSED [ 53%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_next_retry_datetime_short_or_zero_intervals[0.5] PASSED [ 53%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_next_retry_datetime_short_or_zero_intervals[1] PASSED [ 53%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_reschedule_handling PASSED [ 54%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_mapped_reschedule_handling PASSED [ 54%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_mapped_task_reschedule_handling_clear_reschedules PASSED [ 54%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_reschedule_handling_clear_reschedules PASSED [ 54%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_depends_on_past PASSED [ 54%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_success-0-upstream_states0-True-None-True] PASSED [ 54%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_success-0-upstream_states1-True-None-False] PASSED [ 54%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_success-0-upstream_states2-True-upstream_failed-False] PASSED [ 55%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_success-0-upstream_states3-True-skipped-False] PASSED [ 55%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states4-True-None-True] PASSED [ 55%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states5-True-None-True] PASSED [ 55%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states6-True-None-True] PASSED [ 55%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states7-True-None-True] PASSED [ 55%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states8-True-skipped-False] PASSED [ 56%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states9-True-upstream_failed-False] PASSED [ 56%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states10-True-upstream_failed-False] PASSED [ 56%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states11-True-upstream_failed-False] PASSED [ 56%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states12-True-upstream_failed-False] PASSED [ 56%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states13-True-upstream_failed-False] PASSED [ 56%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_success-0-upstream_states14-True-upstream_failed-False] PASSED [ 56%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_failed-0-upstream_states15-True-skipped-False] PASSED [ 57%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_failed-0-upstream_states16-True-None-True] PASSED [ 57%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_failed-0-upstream_states17-True-skipped-False] PASSED [ 57%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_failed-0-upstream_states18-True-skipped-False] PASSED [ 57%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_failed-0-upstream_states19-True-skipped-False] PASSED [ 57%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_failed-0-upstream_states20-True-skipped-False] PASSED [ 57%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_failed-0-upstream_states21-True-None-False] PASSED [ 57%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_failed-0-upstream_states22-True-None-True] PASSED [ 58%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_failed-0-upstream_states23-True-None-False] PASSED [ 58%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one_failed-0-upstream_states24-True-skipped-False] PASSED [ 58%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_done-0-upstream_states25-True-None-True] PASSED [ 58%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_done-0-upstream_states26-True-None-False] PASSED [ 58%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_done-0-upstream_states27-True-None-False] PASSED [ 58%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_done-0-upstream_states28-True-None-False] PASSED [ 59%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_done_setup_success-0-upstream_states29-True-None-True] PASSED [ 59%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_done_setup_success-0-upstream_states30-True-None-False] PASSED [ 59%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_done_setup_success-0-upstream_states31-True-None-False] PASSED [ 59%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all_done_setup_success-0-upstream_states32-True-None-False] PASSED [ 59%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all setups succeeded - one] PASSED [ 59%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[all setups succeeded - two] PASSED [ 59%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[setups failed - one] PASSED [ 60%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[setups failed - two] PASSED [ 60%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[setups skipped - one] PASSED [ 60%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[setups skipped - two] PASSED [ 60%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[one setup failed one setup skipped] PASSED [ 60%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[is teardown one setup failed one setup success] PASSED [ 60%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[not teardown one setup failed one setup success] PASSED [ 61%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[is teardown one setup success one setup skipped] PASSED [ 61%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[not teardown one setup success one setup skipped] PASSED [ 61%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[not all done] PASSED [ 61%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[is teardown not all done one failed] PASSED [ 61%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[not teardown not all done one failed] PASSED [ 61%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[not all done one skipped0] PASSED [ 61%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies[not all done one skipped1] PASSED [ 62%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_success-upstream_states0-True-None-True] PASSED [ 62%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_success-upstream_states1-True-None-False] PASSED [ 62%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_success-upstream_states2-True-upstream_failed-False] PASSED [ 62%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_success-upstream_states3-True-skipped-False] PASSED [ 62%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_success-upstream_states4-True-removed-True] PASSED [ 62%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states5-True-None-True] PASSED [ 63%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states6-True-None-True] PASSED [ 63%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states7-True-None-True] PASSED [ 63%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states8-True-None-True] PASSED [ 63%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states9-True-skipped-False] PASSED [ 63%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states10-True-upstream_failed-False] PASSED [ 63%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states11-True-upstream_failed-False] PASSED [ 63%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states12-True-upstream_failed-False] PASSED [ 64%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states13-True-upstream_failed-False] PASSED [ 64%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states14-True-upstream_failed-False] PASSED [ 64%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_success-upstream_states15-True-upstream_failed-False] PASSED [ 64%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_failed-upstream_states16-True-skipped-False] PASSED [ 64%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_failed-upstream_states17-True-None-True] PASSED [ 64%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_failed-upstream_states18-True-skipped-False] PASSED [ 64%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_failed-upstream_states19-True-skipped-False] PASSED [ 65%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_failed-upstream_states20-True-skipped-False] PASSED [ 65%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_failed-upstream_states21-True-skipped-False] PASSED [ 65%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_failed-upstream_states22-True-None-False] PASSED [ 65%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_failed-upstream_states23-True-None-False] PASSED [ 65%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_failed-upstream_states24-True-None-True] PASSED [ 65%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_failed-upstream_states25-True-None-False] PASSED [ 66%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_failed-upstream_states26-True-skipped-False] PASSED [ 66%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[one_failed-upstream_states27-True-skipped-False] PASSED [ 66%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_done-upstream_states28-True-None-True] PASSED [ 66%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_done-upstream_states29-True-None-False] PASSED [ 66%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_done-upstream_states30-True-None-False] PASSED [ 66%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_task_dependencies_for_mapped[all_done-upstream_states31-True-None-False] PASSED [ 66%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_respects_prev_dagrun_dep PASSED [ 67%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_are_dependents_done[success-True] PASSED [ 67%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_are_dependents_done[skipped-True] PASSED [ 67%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_are_dependents_done[running-False] PASSED [ 67%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_are_dependents_done[failed-False] PASSED [ 67%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_are_dependents_done[None-False] PASSED [ 67%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_xcom_pull PASSED [ 68%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_xcom_pull_mapped PASSED [ 68%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_xcom_pull_after_success PASSED [ 68%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_xcom_pull_after_deferral PASSED [ 68%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_xcom_pull_different_execution_date PASSED [ 68%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_xcom_push_flag PASSED [ 68%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_xcom_without_multiple_outputs PASSED [ 68%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_xcom_with_multiple_outputs PASSED [ 69%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_xcom_with_multiple_outputs_and_no_mapping_result PASSED [ 69%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_post_execute_hook PASSED [ 69%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_and_change_state_before_execution PASSED [ 69%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_and_change_state_before_execution_provided_id_overrides PASSED [ 69%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_and_change_state_before_execution_with_exec_id PASSED [ 69%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_and_change_state_before_execution_dep_not_met PASSED [ 70%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_and_change_state_before_execution_dep_not_met_already_running PASSED [ 70%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_check_and_change_state_before_execution_dep_not_met_not_runnable_state PASSED [ 70%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_try_number PASSED [ 70%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_get_num_running_task_instances PASSED [ 70%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_get_num_running_task_instances_per_dagrun PASSED [ 70%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_log_url PASSED [ 70%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_mark_success_url PASSED [ 71%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_overwrite_params_with_dag_run_conf PASSED [ 71%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_overwrite_params_with_dag_run_none PASSED [ 71%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_overwrite_params_with_dag_run_conf_none PASSED [ 71%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_email_alert[True] PASSED [ 71%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_email_alert[False] PASSED [ 71%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_email_alert_with_config PASSED [ 71%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_email_alert_with_filenotfound_config PASSED [ 72%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_failure_mapped_taskflow[test_email_alert] PASSED [ 72%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_failure_mapped_taskflow[test_email_alert__1] PASSED [ 72%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_set_duration PASSED [ 72%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_set_duration_empty_dates PASSED [ 72%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_success_callback_no_race_condition PASSED [ 72%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_datasets PASSED [ 73%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_datasets_failed PASSED [ 73%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_mapped_current_state PASSED [ 73%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_datasets_skipped PASSED [ 73%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_dataset_extra PASSED [ 73%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_dataset_extra_ignore_different PASSED [ 73%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_dataset_extra_yield PASSED [ 73%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_dataset_alias PASSED [ 74%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_multiple_dataset_alias PASSED [ 74%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_dataset_alias_through_metadata PASSED [ 74%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_outlet_dataset_alias_dataset_not_exists PASSED [ 74%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_inlet_dataset_extra PASSED [ 74%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_inlet_dataset_extra_slice[<lambda>-expected0] PASSED [ 74%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_inlet_dataset_extra_slice[<lambda>-expected1] PASSED [ 75%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_inlet_dataset_extra_slice[<lambda>-expected2] PASSED [ 75%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_inlet_dataset_extra_slice[<lambda>-expected3] PASSED [ 75%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_inlet_dataset_extra_slice[<lambda>-expected4] PASSED [ 75%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_inlet_dataset_extra_slice[<lambda>-expected5] PASSED [ 75%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_changing_of_dataset_when_ddrq_is_already_populated PASSED [ 75%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti[cron/catchup] PASSED [ 75%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti[cron/no-catchup] PASSED [ 76%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti[no-sched/catchup] PASSED [ 76%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti[no-sched/no-catchup] PASSED [ 76%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti[timedelta/catchup] PASSED [ 76%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti[timedelta/no-catchup] PASSED [ 76%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti_success[cron/catchup] PASSED [ 76%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti_success[cron/no-catchup] PASSED [ 77%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti_success[no-sched/catchup] PASSED [ 77%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti_success[no-sched/no-catchup] PASSED [ 77%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti_success[timedelta/catchup] PASSED [ 77%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_ti_success[timedelta/no-catchup] PASSED [ 77%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_execution_date_success[cron/catchup] PASSED [ 77%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_execution_date_success[cron/no-catchup] PASSED [ 77%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_execution_date_success[no-sched/catchup] PASSED [ 78%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_execution_date_success[no-sched/no-catchup] PASSED [ 78%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_execution_date_success[timedelta/catchup] PASSED [ 78%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_execution_date_success[timedelta/no-catchup] PASSED [ 78%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_start_date_success[cron/catchup] PASSED [ 78%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_start_date_success[cron/no-catchup] PASSED [ 78%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_start_date_success[no-sched/catchup] PASSED [ 78%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_start_date_success[no-sched/no-catchup] PASSED [ 79%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_start_date_success[timedelta/catchup] PASSED [ 79%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_previous_start_date_success[timedelta/no-catchup] PASSED [ 79%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_get_previous_start_date_none PASSED [ 79%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_context_triggering_dataset_events_none PASSED [ 79%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_context_triggering_dataset_events PASSED [ 79%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_pendulum_template_dates PASSED [ 80%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_render PASSED [ 80%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_render_deprecated PASSED [ 80%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_connection[{{ conn.get("a_connection").host }}-hostvalue] PASSED [ 80%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_connection[{{ conn.get("a_connection", "unused_fallback").host }}-hostvalue] PASSED [ 80%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_connection[{{ conn.get("missing_connection", {"host": "fallback_host"}).host }}-fallback_host] PASSED [ 80%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_connection[{{ conn.a_connection.host }}-hostvalue] PASSED [ 80%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_connection[{{ conn.a_connection.login }}-loginvalue] PASSED [ 81%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_connection[{{ conn.a_connection.password }}-passwordvalue] PASSED [ 81%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_connection[{{ conn.a_connection.extra_dejson["extra__asana__workspace"] }}-extra1] PASSED [ 81%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_connection[{{ conn.a_connection.extra_dejson.extra__asana__workspace }}-extra1] PASSED [ 81%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_variable[{{ var.value.a_variable }}-a test value] PASSED [ 81%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_variable[{{ var.value.get("a_variable") }}-a test value] PASSED [ 81%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_variable[{{ var.value.get("a_variable", "unused_fallback") }}-a test value] PASSED [ 82%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_variable[{{ var.value.get("missing_variable", "fallback") }}-fallback] PASSED [ 82%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_variable_missing PASSED [ 82%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_json_variable[{{ var.value.a_variable }}-{\n  "a": {\n    "test": "value"\n  }\n}] PASSED [ 82%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_json_variable[{{ var.json.a_variable["a"]["test"] }}-value] PASSED [ 82%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_json_variable[{{ var.json.get("a_variable")["a"]["test"] }}-value] PASSED [ 82%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_json_variable[{{ var.json.get("a_variable", {"a": {"test": "unused_fallback"}})["a"]["test"] }}-value] PASSED [ 82%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_json_variable[{{ var.json.get("missing_variable", {"a": {"test": "fallback"}})["a"]["test"] }}-fallback] PASSED [ 83%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_json_variable_missing PASSED [ 83%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_deprecated_context[next_ds-2016-01-01] PASSED [ 83%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_deprecated_context[next_ds_nodash-20160101] PASSED [ 83%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_deprecated_context[prev_ds-2015-12-31] PASSED [ 83%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_deprecated_context[prev_ds_nodash-20151231] PASSED [ 83%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_deprecated_context[yesterday_ds-2015-12-31] PASSED [ 84%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_deprecated_context[yesterday_ds_nodash-20151231] PASSED [ 84%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_deprecated_context[tomorrow_ds-2016-01-02] PASSED [ 84%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_deprecated_context[tomorrow_ds_nodash-20160102] PASSED [ 84%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_template_with_custom_timetable_deprecated_context PASSED [ 84%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_execute_callback PASSED [ 84%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_finished_callbacks_handle_and_log_exception PASSED [ 84%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_failure PASSED [ 85%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_failure_updates_queued_task_updates_state PASSED [ 85%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_failure_no_task PASSED [ 85%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_failure_task_undefined PASSED [ 85%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_failure_fail_stop PASSED [ 85%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_does_not_retry_on_airflow_fail_exception PASSED [ 85%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_retries_on_other_exceptions PASSED [ 85%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_stacktrace_on_failure_starts_with_task_execute_method PASSED [ 86%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_echo_env_variables PASSED [ 86%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_system_exit_failed[code-positive-number] PASSED [ 86%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_system_exit_failed[code-negative-number] PASSED [ 86%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_system_exit_failed[code-text] PASSED [ 86%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_system_exit_failed[code-zero] PASSED [ 86%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_handle_system_exit_failed[code-none] PASSED [ 87%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_get_current_context_works_in_template PASSED [ 87%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_stats PASSED [ 87%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_command_as_list PASSED [ 87%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_generate_command_default_param PASSED [ 87%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_generate_command_specific_param PASSED [ 87%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_get_rendered_template_fields PASSED [ 87%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_set_state_up_for_retry PASSED [ 88%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_refresh_from_db PASSED [ 88%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_operator_field_with_serialization PASSED [ 88%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_clear_db_references PASSED [ 88%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_skipped_task_call_on_skipped_callback PASSED [ 88%]
+tests/models/test_taskinstance.py::TestTaskInstance::test_task_instance_history_is_created_when_ti_goes_for_retry PASSED [ 88%]
+tests/models/test_taskinstance.py::test_refresh_from_task[None-None] PASSED [ 89%]
+tests/models/test_taskinstance.py::test_refresh_from_task[None-test_pool2] PASSED [ 89%]
+tests/models/test_taskinstance.py::test_refresh_from_task[forced_queue-None] PASSED [ 89%]
+tests/models/test_taskinstance.py::test_refresh_from_task[forced_queue-test_pool2] PASSED [ 89%]
+tests/models/test_taskinstance.py::test_sensor_timeout[0-poke] PASSED    [ 89%]
+tests/models/test_taskinstance.py::test_sensor_timeout[0-reschedule] PASSED [ 89%]
+tests/models/test_taskinstance.py::test_sensor_timeout[1-poke] PASSED    [ 89%]
+tests/models/test_taskinstance.py::test_sensor_timeout[1-reschedule] PASSED [ 90%]
+tests/models/test_taskinstance.py::test_mapped_sensor_timeout[0-poke] PASSED [ 90%]
+tests/models/test_taskinstance.py::test_mapped_sensor_timeout[0-reschedule] PASSED [ 90%]
+tests/models/test_taskinstance.py::test_mapped_sensor_timeout[1-poke] PASSED [ 90%]
+tests/models/test_taskinstance.py::test_mapped_sensor_timeout[1-reschedule] PASSED [ 90%]
+tests/models/test_taskinstance.py::test_mapped_sensor_works[0-poke] PASSED [ 90%]
+tests/models/test_taskinstance.py::test_mapped_sensor_works[0-reschedule] PASSED [ 91%]
+tests/models/test_taskinstance.py::test_mapped_sensor_works[1-poke] PASSED [ 91%]
+tests/models/test_taskinstance.py::test_mapped_sensor_works[1-reschedule] PASSED [ 91%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_leaf[xcom_value0] PASSED [ 91%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_leaf[xcom_value1] PASSED [ 91%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_leaf[abc] PASSED [ 91%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_not_used[xcom_value0] PASSED [ 91%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_not_used[xcom_value1] PASSED [ 92%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_not_used[abc] PASSED [ 92%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_irrelevant[xcom_40-xcom_10] PASSED [ 92%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_irrelevant[xcom_40-xcom_11] PASSED [ 92%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_irrelevant[xcom_40-abc] PASSED [ 92%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_irrelevant[xcom_41-xcom_10] PASSED [ 92%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_irrelevant[xcom_41-xcom_11] PASSED [ 92%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_not_recorded_if_irrelevant[xcom_41-abc] PASSED [ 93%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_error_if_unmappable_type[abc-UnmappableXComTypePushed-unmappable return type 'str'] PASSED [ 93%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_error_if_unmappable_type[None-XComForMappingNotPushed-did not push XCom for task mapping] PASSED [ 93%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_kwargs_error_if_unmappable_type[123-UnmappableXComTypePushed-unmappable return type 'int'] PASSED [ 93%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_kwargs_error_if_unmappable_type[None-XComForMappingNotPushed-did not push XCom for task mapping] PASSED [ 93%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_task_group_expand_error_if_unmappable_type[123-UnmappableXComTypePushed-unmappable return type 'int'] PASSED [ 93%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_task_group_expand_error_if_unmappable_type[None-XComForMappingNotPushed-did not push XCom for task mapping] PASSED [ 94%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_task_group_expand_kwargs_error_if_unmappable_type[123-UnmappableXComTypePushed-unmappable return type 'int'] PASSED [ 94%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_task_group_expand_kwargs_error_if_unmappable_type[None-XComForMappingNotPushed-did not push XCom for task mapping] PASSED [ 94%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_kwargs_error_if_received_invalid[normal] PASSED [ 94%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_kwargs_error_if_received_invalid[mapped] PASSED [ 94%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_kwargs_override_partial[strict-taskflow] PASSED [ 94%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_kwargs_override_partial[strict-classic] PASSED [ 94%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_kwargs_override_partial[override-taskflow] PASSED [ 95%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_expand_kwargs_override_partial[override-classic] PASSED [ 95%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_error_if_upstream_does_not_push PASSED [ 95%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_error_if_unmappable_length PASSED [ 95%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_written_task_map[xcom_value0-3-None] PASSED [ 95%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_written_task_map[xcom_value1-2-expected_keys1] PASSED [ 95%]
+tests/models/test_taskinstance.py::TestTaskInstanceRecordTaskMapXComPush::test_no_error_on_changing_from_non_mapped_to_mapped PASSED [ 96%]
+tests/models/test_taskinstance.py::TestMappedTaskInstanceReceiveValue::test_map_literal[list] PASSED [ 96%]
+tests/models/test_taskinstance.py::TestMappedTaskInstanceReceiveValue::test_map_literal[dict] PASSED [ 96%]
+tests/models/test_taskinstance.py::TestMappedTaskInstanceReceiveValue::test_map_xcom[list] PASSED [ 96%]
+tests/models/test_taskinstance.py::TestMappedTaskInstanceReceiveValue::test_map_xcom[dict] PASSED [ 96%]
+tests/models/test_taskinstance.py::TestMappedTaskInstanceReceiveValue::test_map_product PASSED [ 96%]
+tests/models/test_taskinstance.py::TestMappedTaskInstanceReceiveValue::test_map_product_same PASSED [ 96%]
+tests/models/test_taskinstance.py::TestMappedTaskInstanceReceiveValue::test_map_literal_cross_product PASSED [ 97%]
+tests/models/test_taskinstance.py::TestMappedTaskInstanceReceiveValue::test_map_in_group PASSED [ 97%]
+tests/models/test_taskinstance.py::test_ti_xcom_pull_on_mapped_operator_return_lazy_iterable PASSED [ 97%]
+tests/models/test_taskinstance.py::test_ti_mapped_depends_on_mapped_xcom_arg PASSED [ 97%]
+tests/models/test_taskinstance.py::test_mapped_upstream_return_none_should_skip PASSED [ 97%]
+tests/models/test_taskinstance.py::test_expand_non_templated_field PASSED [ 97%]
+tests/models/test_taskinstance.py::test_mapped_task_does_not_error_in_mini_scheduler_if_upstreams_are_not_done PASSED [ 98%]
+tests/models/test_taskinstance.py::test_empty_operator_is_not_considered_in_mini_scheduler PASSED [ 98%]
+tests/models/test_taskinstance.py::test_mapped_task_expands_in_mini_scheduler_if_upstreams_are_done PASSED [ 98%]
+tests/models/test_taskinstance.py::test_mini_scheduler_not_skip_mapped_downstream_until_all_upstreams_finish PASSED [ 98%]
+tests/models/test_taskinstance.py::test_taskinstance_with_note PASSED    [ 98%]
+tests/models/test_taskinstance.py::test__refresh_from_db_should_not_increment_try_number PASSED [ 98%]
+tests/timetables/test_datasets_timetable.py::test_serialization SKIPPEDag is passed to pytest. <Function test_serialization>) [ 98%]
+tests/timetables/test_datasets_timetable.py::test_deserialization SKIPPEDag is passed to pytest. <Function test_deserialization>) [ 99%]
+tests/timetables/test_datasets_timetable.py::test_infer_manual_data_interval SKIPPEDlag is passed to pytest. <Function
+test_infer_manual_data_interval>)                                        [ 99%]
+tests/timetables/test_datasets_timetable.py::test_next_dagrun_info SKIPPEDag is passed to pytest. <Function test_next_dagrun_info>) [ 99%]
+tests/timetables/test_datasets_timetable.py::test_generate_run_id SKIPPEDag is passed to pytest. <Function test_generate_run_id>) [ 99%]
+tests/timetables/test_datasets_timetable.py::test_data_interval_for_events SKIPPEDlag is passed to pytest. <Function
+test_data_interval_for_events>)                                          [ 99%]
+tests/timetables/test_datasets_timetable.py::test_run_ordering_inheritance SKIPPEDlag is passed to pytest. <Function
+test_run_ordering_inheritance>)                                          [ 99%]
+tests/timetables/test_datasets_timetable.py::test_summary PASSED         [100%]
+==================== Warning summary. Total: 15, Unique: 7 =====================
+airflow: total 3, unique 3
+  runtest: total 3, unique 3
+other: total 2, unique 1
+  runtest: total 2, unique 1
+providers: total 2, unique 1
+  runtest: total 2, unique 1
+tests: total 8, unique 2
+  runtest: total 8, unique 2
+Warnings saved into /workspace/repo/tests/warnings.txt file.
+
+=========================== short test summary info ============================
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_invalid_uris[empty]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_invalid_uris[whitespace]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_invalid_uris[too_long]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_invalid_uris[reserved_scheme]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_invalid_uris[non-ascii]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_uri_with_scheme[scheme-less]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_uri_with_scheme[scheme-less-colon]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_uri_with_scheme[scheme-less-slash]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_uri_with_scheme[normal]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_uri_with_scheme[trailing-slash]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_uri_with_auth>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_uri_without_scheme>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_fspath>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_equal_when_same_uri>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_not_equal_when_different_uri>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_hash>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logic_operations>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_iter_datasets>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_evaluate>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_any_operations>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_all_operations>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_datasetbooleancondition_evaluate_iter>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs0-any-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs1-any-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs2-any-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs3-any-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs4-any-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs5-any-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs6-any-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs7-any-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs8-all-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs9-all-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs10-all-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs11-all-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs12-all-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs13-all-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs14-all-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_dataset_logical_conditions_evaluation_and_serialization[inputs15-all-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_nested_dataset_conditions_with_serialization[status_values0-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_nested_dataset_conditions_with_serialization[status_values1-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_nested_dataset_conditions_with_serialization[status_values2-True]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_nested_dataset_conditions_with_serialization[status_values3-False]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected0]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected1]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected2]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected3]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected4]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected5]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected6]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected7]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected8]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected9]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected10]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected11]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_evaluate_datasets_expression[<lambda>-expected12]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_datasets_expression_error[&]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_datasets_expression_error[|]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_datasets_expression_error[DatasetAll]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_datasets_expression_error[DatasetAny]>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test__sanitize_uri_raises_warning>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test__sanitize_uri_raises_exception>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_serialization>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_deserialization>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_infer_manual_data_interval>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_next_dagrun_info>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_generate_run_id>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_data_interval_for_events>
+SKIPPED [1] tests/conftest.py:608: The test is skipped as it is not a DB tests and --run-db-tests-only flag is passed to pytest. <Function test_run_ordering_inheritance>
+================ 589 passed, 68 skipped, 2 deselected in 35.51s ================
+reward=1 graded=589 found=0 failed=0 parsed=292 framework=pytest exit_code=0

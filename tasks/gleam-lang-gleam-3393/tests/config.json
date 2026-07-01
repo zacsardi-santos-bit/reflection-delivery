@@ -1,0 +1,30 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p gleam-core --no-fail-fast -E 'test(case_error_prints)'",
+  "test_files": [
+    "compiler-core/src/type_/tests/exhaustiveness.rs",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_aliased_unqualified_value.snap",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_alias.snap",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_names.snap",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_aliased_and_shadowed.snap",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_shadowed.snap",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_unqualified.snap",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_when_shadowed.snap",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_unqualifed_when_aliased.snap",
+    "compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_unqualified_value.snap"
+  ],
+  "num_test_files": 10,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/9) gleam-core type_::tests::exhaustiveness::case_error_prints_prelude_module_when_shadowed",
+    "(2/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_when_aliased_and_shadowed",
+    "(3/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_names",
+    "(4/9) gleam-core type_::tests::exhaustiveness::case_error_prints_prelude_module_unqualified",
+    "(5/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_when_shadowed",
+    "(6/9) gleam-core type_::tests::exhaustiveness::case_error_prints_unqualifed_when_aliased",
+    "(7/9) gleam-core type_::tests::exhaustiveness::case_error_prints_aliased_unqualified_value",
+    "(8/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_alias",
+    "(9/9) gleam-core type_::tests::exhaustiveness::case_error_prints_unqualified_value"
+  ],
+  "PASS_TO_PASS": []
+}

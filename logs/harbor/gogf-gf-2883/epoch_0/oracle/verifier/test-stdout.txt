@@ -1,0 +1,49 @@
+patching file os/gmutex/gmutex_z_bench_test.go
+patching file os/gmutex/gmutex_z_unit_mutex_test.go
+patching file os/gmutex/gmutex_z_unit_rwmutex_test.go
+{"Time":"2026-06-29T15:32:11.679991885Z","Action":"start","Package":"github.com/gogf/gf/v2/os/gmutex"}
+{"Time":"2026-06-29T15:32:11.686420526Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_Unlock"}
+{"Time":"2026-06-29T15:32:11.686481936Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_Unlock","Output":"=== RUN   Test_Mutex_Unlock\n"}
+{"Time":"2026-06-29T15:32:12.188184194Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_Unlock","Output":"--- PASS: Test_Mutex_Unlock (0.50s)\n"}
+{"Time":"2026-06-29T15:32:12.188256353Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_Unlock","Elapsed":0.5}
+{"Time":"2026-06-29T15:32:12.188291903Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_LockFunc"}
+{"Time":"2026-06-29T15:32:12.188313983Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_LockFunc","Output":"=== RUN   Test_Mutex_LockFunc\n"}
+{"Time":"2026-06-29T15:32:12.590500061Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_LockFunc","Output":"--- PASS: Test_Mutex_LockFunc (0.40s)\n"}
+{"Time":"2026-06-29T15:32:12.590581271Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_LockFunc","Elapsed":0.4}
+{"Time":"2026-06-29T15:32:12.590609191Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_TryLockFunc"}
+{"Time":"2026-06-29T15:32:12.590631451Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_TryLockFunc","Output":"=== RUN   Test_Mutex_TryLockFunc\n"}
+{"Time":"2026-06-29T15:32:13.092392619Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_TryLockFunc","Output":"--- PASS: Test_Mutex_TryLockFunc (0.50s)\n"}
+{"Time":"2026-06-29T15:32:13.092466258Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_Mutex_TryLockFunc","Elapsed":0.5}
+{"Time":"2026-06-29T15:32:13.092492018Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_RUnlock"}
+{"Time":"2026-06-29T15:32:13.092514548Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_RUnlock","Output":"=== RUN   Test_RWMutex_RUnlock\n"}
+{"Time":"2026-06-29T15:32:13.394248331Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_RUnlock","Output":"--- PASS: Test_RWMutex_RUnlock (0.30s)\n"}
+{"Time":"2026-06-29T15:32:13.39431894Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_RUnlock","Elapsed":0.3}
+{"Time":"2026-06-29T15:32:13.39434631Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_IsLocked"}
+{"Time":"2026-06-29T15:32:13.39436859Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_IsLocked","Output":"=== RUN   Test_RWMutex_IsLocked\n"}
+{"Time":"2026-06-29T15:32:13.495365682Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_IsLocked","Output":"--- PASS: Test_RWMutex_IsLocked (0.10s)\n"}
+{"Time":"2026-06-29T15:32:13.495433741Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_IsLocked","Elapsed":0.1}
+{"Time":"2026-06-29T15:32:13.495459561Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_Unlock"}
+{"Time":"2026-06-29T15:32:13.495482111Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_Unlock","Output":"=== RUN   Test_RWMutex_Unlock\n"}
+{"Time":"2026-06-29T15:32:13.996156595Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_Unlock","Output":"--- PASS: Test_RWMutex_Unlock (0.50s)\n"}
+{"Time":"2026-06-29T15:32:13.996233435Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_Unlock","Elapsed":0.5}
+{"Time":"2026-06-29T15:32:13.996260165Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_LockFunc"}
+{"Time":"2026-06-29T15:32:13.996282355Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_LockFunc","Output":"=== RUN   Test_RWMutex_LockFunc\n"}
+{"Time":"2026-06-29T15:32:14.399209169Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_LockFunc","Output":"--- PASS: Test_RWMutex_LockFunc (0.40s)\n"}
+{"Time":"2026-06-29T15:32:14.399280629Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_LockFunc","Elapsed":0.4}
+{"Time":"2026-06-29T15:32:14.399310959Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_TryLockFunc"}
+{"Time":"2026-06-29T15:32:14.399333328Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_TryLockFunc","Output":"=== RUN   Test_RWMutex_TryLockFunc\n"}
+{"Time":"2026-06-29T15:32:14.901600485Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_TryLockFunc","Output":"--- PASS: Test_RWMutex_TryLockFunc (0.50s)\n"}
+{"Time":"2026-06-29T15:32:14.901667244Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_TryLockFunc","Elapsed":0.5}
+{"Time":"2026-06-29T15:32:14.901697114Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_RLockFunc"}
+{"Time":"2026-06-29T15:32:14.901719554Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_RLockFunc","Output":"=== RUN   Test_RWMutex_RLockFunc\n"}
+{"Time":"2026-06-29T15:32:15.603314019Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_RLockFunc","Output":"--- PASS: Test_RWMutex_RLockFunc (0.70s)\n"}
+{"Time":"2026-06-29T15:32:15.603381649Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_RLockFunc","Elapsed":0.7}
+{"Time":"2026-06-29T15:32:15.603409568Z","Action":"run","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_TryRLockFunc"}
+{"Time":"2026-06-29T15:32:15.603433078Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_TryRLockFunc","Output":"=== RUN   Test_RWMutex_TryRLockFunc\n"}
+{"Time":"2026-06-29T15:32:15.603762126Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_TryRLockFunc","Output":"2026-06-29 15:32:15.603 lock1 done\n"}
+{"Time":"2026-06-29T15:32:20.605137598Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_TryRLockFunc","Output":"--- PASS: Test_RWMutex_TryRLockFunc (5.00s)\n"}
+{"Time":"2026-06-29T15:32:20.605207918Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Test":"Test_RWMutex_TryRLockFunc","Elapsed":5}
+{"Time":"2026-06-29T15:32:20.605233878Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:20.605608276Z","Action":"output","Package":"github.com/gogf/gf/v2/os/gmutex","Output":"ok  \tgithub.com/gogf/gf/v2/os/gmutex\t8.925s\n"}
+{"Time":"2026-06-29T15:32:20.605680535Z","Action":"pass","Package":"github.com/gogf/gf/v2/os/gmutex","Elapsed":8.926}
+reward=1 graded=10 found=10 failed=0 parsed=10 framework=go exit_code=0

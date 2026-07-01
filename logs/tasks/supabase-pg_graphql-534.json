@@ -1,0 +1,23 @@
+{
+ "task": "supabase-pg_graphql-534",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch issue_533: function with default public.uid() and addNums; golden sql_types.rs returns Some(DefaultValue::Null) when complex default can't parse"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

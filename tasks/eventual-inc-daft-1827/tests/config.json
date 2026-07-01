@@ -1,0 +1,42 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && maturin develop && pytest /workspace/repo/tests/dataframe/test_monotonically_increasing_id.py /workspace/repo/tests/table/test_monotonically_increasing_id.py -v",
+  "test_files": [
+    "tests/dataframe/test_monotonically_increasing_id.py",
+    "tests/table/test_monotonically_increasing_id.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_single_partition[arrow]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_single_partition[parquet]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_empty_table[arrow]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_empty_table[parquet]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-1]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-2]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-20]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-50]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-100]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-1]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-2]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-20]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-50]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-100]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-1]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-2]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-20]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-50]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-100]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-1]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-2]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-20]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-50]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-100]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_custom_col_name[arrow]",
+    "tests.dataframe.test_monotonically_increasing_id::test_monotonically_increasing_id_custom_col_name[parquet]",
+    "tests.table.test_monotonically_increasing_id::test_monotonically_increasing_id",
+    "tests.table.test_monotonically_increasing_id::test_monotonically_increasing_id_empty_table",
+    "tests.table.test_monotonically_increasing_id::test_monotonically_increasing_id_multiple_tables_in_micropartition"
+  ],
+  "PASS_TO_PASS": []
+}

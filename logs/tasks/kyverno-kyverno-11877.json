@@ -1,0 +1,23 @@
+{
+ "task": "kyverno-kyverno-11877",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden bumps k8s.io/apimachinery v0.31.4 -> v0.32.0 (and sibling k8s.io modules); v0.32 changes field.TooLong phrasing to 'may not be more than N bytes'. Tests assert errs[0].Error()=='name: Too long: may not be more than 63 bytes' across v1/v2/v2beta1 policy types."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

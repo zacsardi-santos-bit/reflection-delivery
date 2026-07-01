@@ -1,0 +1,7 @@
+patching file pkg/resourceapply/core_test.go
+patching file pkg/resourceapply/discovery_test.go
+# github.com/scylladb/scylla-operator/pkg/resourceapply [github.com/scylladb/scylla-operator/pkg/resourceapply.test]
+pkg/resourceapply/core_test.go:3025:36: undefined: ApplyEndpoints
+pkg/resourceapply/discovery_test.go:458:36: undefined: ApplyEndpointSlice
+FAIL	github.com/scylladb/scylla-operator/pkg/resourceapply [build failed]
+reward=0 graded=624 found=624 failed=624 parsed=1 framework=go exit_code=1

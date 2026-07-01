@@ -1,0 +1,23 @@
+{
+ "task": "apache-airflow-7866",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds suite/hooks/sheets.py (get_spreadsheet/get_sheet_titles/create_spreadsheet) and suite/operators/sheets.py (GoogleSheetsCreateSpreadsheet/GoogleSheetsToGCSOperator/GCStoGoogleSheets); F2P=16 exercise hook+operator behavior"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

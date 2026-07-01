@@ -1,0 +1,680 @@
+patching file .github/CODEOWNERS
+patching file .github/workflows/ci.yml
+patching file .github/workflows/codeql-analysis.yml
+patching file .github/workflows/generalized-deployments.yaml
+patching file .github/workflows/golangci-lint.yml
+patching file Dockerfile
+patching file cmd/go.mod
+patching file cmd/go.sum
+Hunk #1 succeeded at 51 with fuzz 3.
+Hunk #2 succeeded at 72 with fuzz 3.
+Hunk #3 succeeded at 81 with fuzz 3.
+Hunk #4 succeeded at 101 with fuzz 3.
+Hunk #5 succeeded at 268 with fuzz 3 (offset 133 lines).
+Hunk #6 succeeded at 281 (offset 134 lines).
+Hunk #7 succeeded at 310 with fuzz 3 (offset 134 lines).
+Hunk #8 succeeded at 354 with fuzz 3 (offset 134 lines).
+Hunk #9 succeeded at 497 with fuzz 1 (offset 232 lines).
+Hunk #10 FAILED at 302.
+Hunk #11 succeeded at 553 with fuzz 3 (offset 232 lines).
+Hunk #12 succeeded at 616 (offset 287 lines).
+Hunk #13 succeeded at 659 with fuzz 3 (offset 293 lines).
+Hunk #14 succeeded at 685 (offset 293 lines).
+Hunk #15 succeeded at 699 with fuzz 2 (offset 293 lines).
+Hunk #16 succeeded at 727 with fuzz 3 (offset 298 lines).
+Hunk #17 succeeded at 741 (offset 298 lines).
+Hunk #18 succeeded at 759 (offset 298 lines).
+Hunk #19 succeeded at 781 (offset 298 lines).
+Hunk #20 succeeded at 798 (offset 300 lines).
+Hunk #21 succeeded at 851 with fuzz 3 (offset 300 lines).
+Hunk #22 succeeded at 969 with fuzz 3 (offset 315 lines).
+1 out of 22 hunks FAILED -- saving rejects to file cmd/go.sum.rej
+patching file libs/clients/coingecko/client.go
+patching file libs/go.mod
+patching file libs/go.sum
+Hunk #1 succeeded at 216 with fuzz 3.
+Hunk #2 succeeded at 413 with fuzz 3.
+Hunk #3 succeeded at 523 with fuzz 3.
+Hunk #4 succeeded at 1099 with fuzz 1 (offset 478 lines).
+Hunk #5 succeeded at 1447 with fuzz 3 (offset 478 lines).
+Hunk #6 succeeded at 1740 with fuzz 2 (offset 657 lines).
+Hunk #7 succeeded at 1880 with fuzz 3 (offset 694 lines).
+Hunk #8 succeeded at 2012 with fuzz 2 (offset 750 lines).
+Hunk #9 succeeded at 2401 (offset 777 lines).
+patching file libs/middleware/rate_limiter.go
+patching file main/go.mod
+patching file main/go.sum
+patching file services/go.mod
+patching file services/go.sum
+Hunk #1 succeeded at 227 with fuzz 3.
+Hunk #2 succeeded at 426 with fuzz 3.
+Hunk #3 succeeded at 796 (offset 239 lines).
+Hunk #4 succeeded at 929 (offset 271 lines).
+Hunk #5 succeeded at 1298 with fuzz 3 (offset 271 lines).
+Hunk #6 succeeded at 1651 with fuzz 2 (offset 502 lines).
+Hunk #7 succeeded at 1804 with fuzz 3 (offset 535 lines).
+Hunk #8 succeeded at 1940 with fuzz 2 (offset 595 lines).
+patching file services/ratios/cache.go
+patching file services/ratios/service.go
+patching file services/rewards/cmd/rest_run.go
+patching file services/rewards/service.go
+patching file services/skus/service.go
+patching file tools/go.mod
+patching file tools/go.sum
+Hunk #1 succeeded at 226 with fuzz 3.
+Hunk #2 succeeded at 431 with fuzz 3.
+Hunk #3 succeeded at 559 with fuzz 3.
+Hunk #4 succeeded at 942 (offset 279 lines).
+Hunk #5 succeeded at 1357 with fuzz 3 (offset 279 lines).
+Hunk #6 succeeded at 1691 with fuzz 2 (offset 489 lines).
+Hunk #7 succeeded at 1847 with fuzz 3 (offset 525 lines).
+Hunk #8 succeeded at 1887 with fuzz 3 (offset 525 lines).
+Hunk #9 succeeded at 1982 with fuzz 2 (offset 587 lines).
+Hunk #10 succeeded at 2114 (offset 608 lines).
+Hunk #11 succeeded at 2184 (offset 608 lines).
+Hunk #12 succeeded at 2220 (offset 610 lines).
+Hunk #13 succeeded at 2347 (offset 610 lines).
+Hunk #14 succeeded at 2373 (offset 612 lines).
+Hunk #15 succeeded at 2466 (offset 612 lines).
+The next patch would create the file .github/CODEOWNERS,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .github/workflows/ci.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file .github/workflows/ci.yml.rej
+patching file .github/workflows/codeql-analysis.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file .github/workflows/codeql-analysis.yml.rej
+patching file .github/workflows/generalized-deployments.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/generalized-deployments.yaml.rej
+patching file .github/workflows/golangci-lint.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .github/workflows/golangci-lint.yml.rej
+patching file Dockerfile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file Dockerfile.rej
+patching file cmd/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file cmd/go.mod.rej
+patching file cmd/go.sum
+Hunk #1 succeeded at 51 with fuzz 3.
+Hunk #2 succeeded at 72 with fuzz 3.
+Hunk #3 succeeded at 81 with fuzz 3.
+Hunk #4 succeeded at 101 with fuzz 3.
+Hunk #5 FAILED at 135.
+Hunk #6 succeeded at 147 with fuzz 3.
+Hunk #7 succeeded at 176 with fuzz 3.
+Hunk #8 succeeded at 220 with fuzz 3.
+Hunk #9 succeeded at 265 with fuzz 3.
+Hunk #10 FAILED at 302.
+Hunk #11 succeeded at 321 with fuzz 3.
+Hunk #12 succeeded at 329 with fuzz 3.
+Hunk #13 succeeded at 684 with fuzz 3 (offset 318 lines).
+Hunk #14 succeeded at 712 with fuzz 3 (offset 320 lines).
+Hunk #15 succeeded at 726 with fuzz 3 (offset 320 lines).
+Hunk #16 succeeded at 757 with fuzz 3 (offset 328 lines).
+Hunk #17 succeeded at 773 with fuzz 3 (offset 330 lines).
+Hunk #18 succeeded at 791 with fuzz 3 (offset 330 lines).
+Hunk #19 succeeded at 813 with fuzz 3 (offset 330 lines).
+Hunk #20 succeeded at 828 with fuzz 3 (offset 330 lines).
+Hunk #21 succeeded at 881 with fuzz 3 (offset 330 lines).
+Hunk #22 succeeded at 1009 with fuzz 3 (offset 355 lines).
+2 out of 22 hunks FAILED -- saving rejects to file cmd/go.sum.rej
+patching file libs/clients/coingecko/client.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file libs/clients/coingecko/client.go.rej
+patching file libs/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file libs/go.mod.rej
+patching file libs/go.sum
+Hunk #1 succeeded at 216 with fuzz 3.
+Hunk #2 succeeded at 413 with fuzz 3.
+Hunk #3 succeeded at 523 with fuzz 3.
+Hunk #4 FAILED at 621.
+Hunk #5 succeeded at 969 with fuzz 3.
+Hunk #6 succeeded at 1083 with fuzz 3.
+Hunk #7 FAILED at 1186.
+Hunk #8 succeeded at 1262 with fuzz 3.
+Hunk #9 succeeded at 1624 with fuzz 3.
+2 out of 9 hunks FAILED -- saving rejects to file libs/go.sum.rej
+patching file libs/middleware/rate_limiter.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file libs/middleware/rate_limiter.go.rej
+patching file main/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file main/go.mod.rej
+patching file main/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file main/go.sum.rej
+patching file services/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file services/go.mod.rej
+patching file services/go.sum
+Hunk #1 succeeded at 227 with fuzz 3.
+Hunk #2 succeeded at 426 with fuzz 3.
+Hunk #3 succeeded at 557 with fuzz 3.
+Hunk #4 succeeded at 658 with fuzz 3.
+Hunk #5 succeeded at 1027 with fuzz 3.
+Hunk #6 succeeded at 1149 with fuzz 3.
+Hunk #7 FAILED at 1269.
+Hunk #8 succeeded at 1345 with fuzz 3.
+1 out of 8 hunks FAILED -- saving rejects to file services/go.sum.rej
+patching file services/ratios/cache.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file services/ratios/cache.go.rej
+patching file services/ratios/service.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file services/ratios/service.go.rej
+patching file services/rewards/cmd/rest_run.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file services/rewards/cmd/rest_run.go.rej
+patching file services/rewards/service.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file services/rewards/service.go.rej
+patching file services/skus/service.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file services/skus/service.go.rej
+patching file tools/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file tools/go.mod.rej
+patching file tools/go.sum
+Hunk #1 succeeded at 226 with fuzz 3.
+Hunk #2 succeeded at 431 with fuzz 3.
+Hunk #3 succeeded at 559 with fuzz 3.
+Hunk #4 succeeded at 663 with fuzz 3.
+Hunk #5 succeeded at 1078 with fuzz 3.
+Hunk #6 succeeded at 1202 with fuzz 3.
+Hunk #7 FAILED at 1322.
+Hunk #8 succeeded at 1362 with fuzz 3.
+Hunk #9 succeeded at 1395 with fuzz 3.
+Hunk #10 succeeded at 1506 with fuzz 3.
+Hunk #11 succeeded at 1576 with fuzz 3.
+Hunk #12 succeeded at 1610 with fuzz 3.
+Hunk #13 succeeded at 2368 with fuzz 3 (offset 631 lines).
+Hunk #14 succeeded at 2392 with fuzz 3 (offset 631 lines).
+Hunk #15 succeeded at 2485 with fuzz 3 (offset 631 lines).
+1 out of 15 hunks FAILED -- saving rejects to file tools/go.sum.rej
+patching file b/.github/CODEOWNERS
+can't find file to patch at input line 12
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+|index 72f25477..0b7a53e8 100644
+|--- a/.github/workflows/ci.yml
+|+++ b/.github/workflows/ci.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 43
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/codeql-analysis.yml b/.github/workflows/codeql-analysis.yml
+|index 48fcf92b..f84cdcb9 100644
+|--- a/.github/workflows/codeql-analysis.yml
+|+++ b/.github/workflows/codeql-analysis.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 67
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/generalized-deployments.yaml b/.github/workflows/generalized-deployments.yaml
+|index e3e0fc04..f406aa36 100644
+|--- a/.github/workflows/generalized-deployments.yaml
+|+++ b/.github/workflows/generalized-deployments.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 77
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/golangci-lint.yml b/.github/workflows/golangci-lint.yml
+|index aa91d396..106e8510 100644
+|--- a/.github/workflows/golangci-lint.yml
+|+++ b/.github/workflows/golangci-lint.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 161
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Dockerfile b/Dockerfile
+|index d2662364..c1814220 100644
+|--- a/Dockerfile
+|+++ b/Dockerfile
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 193
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/go.mod b/cmd/go.mod
+|index dc83480f..dee39d39 100644
+|--- a/cmd/go.mod
+|+++ b/cmd/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 227
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/go.sum b/cmd/go.sum
+|index 7ea90532..a3015455 100644
+|--- a/cmd/go.sum
+|+++ b/cmd/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+22 out of 22 hunks ignored
+can't find file to patch at input line 457
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/libs/clients/coingecko/client.go b/libs/clients/coingecko/client.go
+|index 1d928bae..a413f2f9 100644
+|--- a/libs/clients/coingecko/client.go
+|+++ b/libs/clients/coingecko/client.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 546
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/libs/go.mod b/libs/go.mod
+|index 0cd81bf8..5fef7198 100644
+|--- a/libs/go.mod
+|+++ b/libs/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 583
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/libs/go.sum b/libs/go.sum
+|index a1285b49..9a3cce3d 100644
+|--- a/libs/go.sum
+|+++ b/libs/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+9 out of 9 hunks ignored
+can't find file to patch at input line 672
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/libs/middleware/rate_limiter.go b/libs/middleware/rate_limiter.go
+|index 96a1fd75..1f9f5975 100644
+|--- a/libs/middleware/rate_limiter.go
+|+++ b/libs/middleware/rate_limiter.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 766
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/main/go.mod b/main/go.mod
+|index 5816a2d5..6940dff8 100644
+|--- a/main/go.mod
+|+++ b/main/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 803
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/main/go.sum b/main/go.sum
+|index 1779d105..97a3dd5e 100644
+|--- a/main/go.sum
+|+++ b/main/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 886
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/services/go.mod b/services/go.mod
+|index 229dcf05..87bc1b8f 100644
+|--- a/services/go.mod
+|+++ b/services/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 920
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/services/go.sum b/services/go.sum
+|index 4c054e27..d2f2dbf7 100644
+|--- a/services/go.sum
+|+++ b/services/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 1000
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/services/ratios/cache.go b/services/ratios/cache.go
+|index dafaabe4..0af5a612 100644
+|--- a/services/ratios/cache.go
+|+++ b/services/ratios/cache.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 1156
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/services/ratios/service.go b/services/ratios/service.go
+|index 1e81ebf4..8c1817fd 100644
+|--- a/services/ratios/service.go
+|+++ b/services/ratios/service.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 1219
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/services/rewards/cmd/rest_run.go b/services/rewards/cmd/rest_run.go
+|index 5e8a9367..1b13891a 100644
+|--- a/services/rewards/cmd/rest_run.go
+|+++ b/services/rewards/cmd/rest_run.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1240
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/services/rewards/service.go b/services/rewards/service.go
+|index 9d493506..b96c87f4 100644
+|--- a/services/rewards/service.go
+|+++ b/services/rewards/service.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1263
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/services/skus/service.go b/services/skus/service.go
+|index d08d0c67..862d459b 100644
+|--- a/services/skus/service.go
+|+++ b/services/skus/service.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1276
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/go.mod b/tools/go.mod
+|index 7449ec27..f93cebf9 100644
+|--- a/tools/go.mod
+|+++ b/tools/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 1313
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/go.sum b/tools/go.sum
+|index a6c1ef67..f9063bf5 100644
+|--- a/tools/go.sum
+|+++ b/tools/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+15 out of 15 hunks ignored
+The next patch would create the file .github/CODEOWNERS,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .github/workflows/ci.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file .github/workflows/ci.yml.rej
+patching file .github/workflows/codeql-analysis.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file .github/workflows/codeql-analysis.yml.rej
+patching file .github/workflows/generalized-deployments.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/generalized-deployments.yaml.rej
+patching file .github/workflows/golangci-lint.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .github/workflows/golangci-lint.yml.rej
+patching file Dockerfile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file Dockerfile.rej
+patching file cmd/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file cmd/go.mod.rej
+patching file cmd/go.sum
+Hunk #1 succeeded at 51 with fuzz 3.
+Hunk #2 succeeded at 72 with fuzz 3.
+Hunk #3 succeeded at 81 with fuzz 3.
+Hunk #4 succeeded at 101 with fuzz 3.
+Hunk #5 FAILED at 135.
+Hunk #6 succeeded at 147 with fuzz 3.
+Hunk #7 succeeded at 176 with fuzz 3.
+Hunk #8 succeeded at 220 with fuzz 3.
+Hunk #9 succeeded at 265 with fuzz 3.
+Hunk #10 FAILED at 302.
+Hunk #11 succeeded at 321 with fuzz 3.
+Hunk #12 succeeded at 329 with fuzz 3.
+Hunk #13 succeeded at 709 with fuzz 3 (offset 343 lines).
+Hunk #14 succeeded at 739 with fuzz 3 (offset 347 lines).
+Hunk #15 succeeded at 753 with fuzz 3 (offset 347 lines).
+Hunk #16 succeeded at 787 with fuzz 3 (offset 358 lines).
+Hunk #17 succeeded at 805 with fuzz 3 (offset 362 lines).
+Hunk #18 succeeded at 823 with fuzz 3 (offset 362 lines).
+Hunk #19 succeeded at 845 with fuzz 3 (offset 362 lines).
+Hunk #20 succeeded at 860 with fuzz 3 (offset 362 lines).
+Hunk #21 succeeded at 913 with fuzz 3 (offset 362 lines).
+Hunk #22 succeeded at 1049 with fuzz 3 (offset 395 lines).
+2 out of 22 hunks FAILED -- saving rejects to file cmd/go.sum.rej
+patching file libs/clients/coingecko/client.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file libs/clients/coingecko/client.go.rej
+patching file libs/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file libs/go.mod.rej
+patching file libs/go.sum
+Hunk #1 succeeded at 216 with fuzz 3.
+Hunk #2 succeeded at 413 with fuzz 3.
+Hunk #3 succeeded at 523 with fuzz 3.
+Hunk #4 FAILED at 621.
+Hunk #5 succeeded at 969 with fuzz 3.
+Hunk #6 succeeded at 1083 with fuzz 3.
+Hunk #7 FAILED at 1186.
+Hunk #8 succeeded at 1262 with fuzz 3.
+Hunk #9 succeeded at 1624 with fuzz 3.
+2 out of 9 hunks FAILED -- saving rejects to file libs/go.sum.rej
+patching file libs/middleware/rate_limiter.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file libs/middleware/rate_limiter.go.rej
+patching file main/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file main/go.mod.rej
+patching file main/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file main/go.sum.rej
+patching file services/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file services/go.mod.rej
+patching file services/go.sum
+Hunk #1 succeeded at 227 with fuzz 3.
+Hunk #2 succeeded at 426 with fuzz 3.
+Hunk #3 succeeded at 557 with fuzz 3.
+Hunk #4 succeeded at 658 with fuzz 3.
+Hunk #5 succeeded at 1027 with fuzz 3.
+Hunk #6 succeeded at 1149 with fuzz 3.
+Hunk #7 FAILED at 1269.
+Hunk #8 succeeded at 1345 with fuzz 3.
+1 out of 8 hunks FAILED -- saving rejects to file services/go.sum.rej
+patching file services/ratios/cache.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file services/ratios/cache.go.rej
+patching file services/ratios/service.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file services/ratios/service.go.rej
+patching file services/rewards/cmd/rest_run.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file services/rewards/cmd/rest_run.go.rej
+patching file services/rewards/service.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file services/rewards/service.go.rej
+patching file services/skus/service.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file services/skus/service.go.rej
+patching file tools/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file tools/go.mod.rej
+patching file tools/go.sum
+Hunk #1 succeeded at 226 with fuzz 3.
+Hunk #2 succeeded at 431 with fuzz 3.
+Hunk #3 succeeded at 559 with fuzz 3.
+Hunk #4 succeeded at 663 with fuzz 3.
+Hunk #5 succeeded at 1078 with fuzz 3.
+Hunk #6 succeeded at 1202 with fuzz 3.
+Hunk #7 FAILED at 1322.
+Hunk #8 succeeded at 1362 with fuzz 3.
+Hunk #9 succeeded at 1395 with fuzz 3.
+Hunk #10 succeeded at 1506 with fuzz 3.
+Hunk #11 succeeded at 1576 with fuzz 3.
+Hunk #12 succeeded at 1610 with fuzz 3.
+Hunk #13 succeeded at 2389 with fuzz 3 (offset 652 lines).
+Hunk #14 succeeded at 2413 with fuzz 3 (offset 652 lines).
+Hunk #15 succeeded at 2506 with fuzz 3 (offset 652 lines).
+1 out of 15 hunks FAILED -- saving rejects to file tools/go.sum.rej
+ERROR: golden patch failed to apply by all strategies

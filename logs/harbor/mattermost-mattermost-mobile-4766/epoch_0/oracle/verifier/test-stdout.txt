@@ -1,0 +1,79 @@
+patching file app/components/formatted_time.test.js
+patching file app/components/post_body/system_message_helpers.test.js
+patching file app/components/post_draft/draft_input/draft_input.test.js
+patching file app/components/post_draft/post_draft.test.js
+patching file app/components/post_draft/quick_actions/file_quick_action/file_quick_action.test.js
+patching file app/components/post_draft/read_only/read_only.test.js
+patching file app/components/profile_picture_button.test.js
+patching file app/screens/edit_profile/edit_profile.test.js
+patching file app/screens/thread/thread.ios.test.js
+patching file test/setup.js
+patching file test/testing_library.js
+PASS app/components/post_draft/draft_input/draft_input.test.js (21.237 s)
+  DraftInput
+    ✓ should send an alert when sending a message with a channel mention (20 ms)
+    ✓ should send an alert when sending a message with a group mention with group with count more than NOTIFY_ALL (2 ms)
+    ✓ should not send an alert when sending a message with a group mention with group with count less than NOTIFY_ALL (2 ms)
+    ✓ should not send an alert when sending a message with a channel mention when the user does not have channel mentions permission (2 ms)
+    ✓ should not send an alert when sending a message with a channel mention when the user does not have group mentions permission (1 ms)
+
+PASS app/components/post_body/system_message_helpers.test.js
+  renderSystemMessage
+    ✓ uses renderer for Channel Header update (38 ms)
+    ✓ uses renderer for Channel Display Name update (3 ms)
+    ✓ uses renderer for Channel Purpose update (2 ms)
+    ✓ uses renderer for archived channel (2 ms)
+    ✓ uses renderer for OLD archived channel without a username (3 ms)
+    ✓ uses renderer for unarchived channel (3 ms)
+    ✓ is null for non-qualifying system messages
+
+PASS app/components/post_draft/post_draft.test.js
+  PostDraft
+    ✓ Should render the DraftInput (77 ms)
+    ✓ Should render the Archived for channelIsArchived (12 ms)
+    ✓ Should render the Archived for deactivatedChannel (6 ms)
+    ✓ Should render the ReadOnly for channelIsReadOnly (33 ms)
+    ✓ Should render the ReadOnly for canPost (3 ms)
+
+PASS app/components/post_draft/quick_actions/file_quick_action/file_quick_action.test.js
+  FileQuickAction
+    ✓ should match snapshot (5 ms)
+    ✓ should return permission false if permission is denied in Android (2 ms)
+    ✓ should show permission denied alert and return permission false if permission is blocked in Android (1 ms)
+    ✓ hasStoragePermission returns true when permission has been granted (6 ms)
+
+PASS app/screens/thread/thread.ios.test.js
+  thread
+    ✓ should match snapshot, has root post (7 ms)
+    ✓ should match snapshot, no root post, loading (1 ms)
+    ✓ should match snapshot, render footer (4 ms)
+    ✓ should add/remove typing animation on mount/unmount (2 ms)
+
+PASS app/components/formatted_time.test.js
+  FormattedTime
+    ✓ should render correctly (24 ms)
+    ✓ should support localization (10 ms)
+    ✓ should fallback to default short format for unsupported locale of react-intl  (3 ms)
+
+PASS app/screens/edit_profile/edit_profile.test.js
+  edit_profile
+    ✓ should match snapshot (7 ms)
+    ✓ should match state on handleRemoveProfileImage (4 ms)
+
+PASS app/components/profile_picture_button.test.js
+  profile_picture_button
+    ✓ should match snapshot (6 ms)
+    ✓ should NOT return option to remove when profile picture is default (1 ms)
+    ✓ should return option to remove profile picture if customized (1 ms)
+
+PASS app/components/post_draft/read_only/read_only.test.js
+  PostDraft ReadOnly
+    ✓ Should match snapshot (25 ms)
+
+Test Suites: 9 passed, 9 total
+Tests:       34 passed, 34 total
+Snapshots:   28 passed, 28 total
+Time:        31.705 s
+Ran all test suites matching /app\/components\/formatted_time.test.js|app\/components\/post_body\/system_message_helpers.test.js|app\/components\/post_draft\/draft_input\/draft_input.test.js|app\/components\/post_draft\/post_draft.test.js|app\/components\/post_draft\/quick_actions\/file_quick_action\/file_quick_action.test.js|app\/components\/post_draft\/read_only\/read_only.test.js|app\/components\/profile_picture_button.test.js|app\/screens\/edit_profile\/edit_profile.test.js|app\/screens\/thread\/thread.ios.test.js/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=1 graded=34 found=0 failed=0 parsed=0 framework=jest exit_code=0

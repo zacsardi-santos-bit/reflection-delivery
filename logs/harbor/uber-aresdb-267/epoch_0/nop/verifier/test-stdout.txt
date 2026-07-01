@@ -1,0 +1,8 @@
+patching file datanode/bootstrap_manager_test.go
+patching file datanode/peer_source_test.go
+patching file memstore/bootstrap_test.go
+go: finding module for package github.com/uber/aresdb/datanode/bootstrap/mocks
+# github.com/uber/aresdb/datanode
+datanode/bootstrap_manager_test.go:13:2: module github.com/uber/aresdb/datanode/bootstrap/mocks: Get "https://proxy.golang.org/github.com/uber/aresdb/datanode/bootstrap/mocks/@v/list": dial tcp: lookup proxy.golang.org on 8.8.8.8:53: dial udp 8.8.8.8:53: connect: network is unreachable
+FAIL	github.com/uber/aresdb/datanode [setup failed]
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=1

@@ -1,0 +1,22 @@
+patching file types/priv_validator/priv_validator_test.go
+patching file types/priv_validator/socket_test.go
+patching file types/proposal_test.go
+patching file types/vote_test.go
+# github.com/tendermint/tendermint/types/priv_validator [github.com/tendermint/tendermint/types/priv_validator.test]
+/go/src/github.com/tendermint/tendermint/types/priv_validator/socket_test.go:131:58: undefined: socketClient
+/go/src/github.com/tendermint/tendermint/types/priv_validator/socket_test.go:131:73: undefined: PrivValidatorSocketServer
+/go/src/github.com/tendermint/tendermint/types/priv_validator/priv_validator_test.go:23:13: undefined: GenPrivValidatorJSON
+/go/src/github.com/tendermint/tendermint/types/priv_validator/priv_validator_test.go:31:12: undefined: LoadPrivValidatorJSON
+/go/src/github.com/tendermint/tendermint/types/priv_validator/priv_validator_test.go:46:13: undefined: LoadOrGenPrivValidatorJSON
+/go/src/github.com/tendermint/tendermint/types/priv_validator/priv_validator_test.go:50:12: undefined: LoadOrGenPrivValidatorJSON
+/go/src/github.com/tendermint/tendermint/types/priv_validator/priv_validator_test.go:94:9: undefined: PrivValidatorJSON
+/go/src/github.com/tendermint/tendermint/types/priv_validator/priv_validator_test.go:119:13: undefined: GenPrivValidatorJSON
+/go/src/github.com/tendermint/tendermint/types/priv_validator/priv_validator_test.go:163:13: undefined: GenPrivValidatorJSON
+/go/src/github.com/tendermint/tendermint/types/priv_validator/priv_validator_test.go:203:13: undefined: GenPrivValidatorJSON
+/go/src/github.com/tendermint/tendermint/types/priv_validator/priv_validator_test.go:203:13: too many errors
+# github.com/tendermint/tendermint/types [github.com/tendermint/tendermint/types.test]
+/go/src/github.com/tendermint/tendermint/types/proposal_test.go:15:30: undefined: TimeFormat
+/go/src/github.com/tendermint/tendermint/types/vote_test.go:21:30: undefined: TimeFormat
+FAIL	github.com/tendermint/tendermint/types [build failed]
+FAIL	github.com/tendermint/tendermint/types/priv_validator [build failed]
+reward=0 graded=63 found=63 failed=63 parsed=2 framework=go exit_code=1

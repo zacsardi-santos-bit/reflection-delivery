@@ -1,0 +1,41 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/test/integration && grep -q 'golang.org/x/crypto v0.17.0' ../../go.mod && TEST_ASSET_ETCD=/bin/false TEST_ASSET_KUBE_APISERVER=/bin/false TEST_ASSET_KUBECTL=/bin/false go test -v -count=1 -run '^TestRFC2136' ./rfc2136_dns01/...",
+  "test_files": [
+    "test/e2e/LICENSES",
+    "test/e2e/go.mod",
+    "test/e2e/go.sum",
+    "test/integration/LICENSES",
+    "test/integration/go.mod",
+    "test/integration/go.sum"
+  ],
+  "num_test_files": 6,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136CanaryLocalTestServer",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136ServerSuccess",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136ServerError",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136TsigClient",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverEmpty",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverWithoutHost",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverWithoutHostNorPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverIPv4WithoutPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverIPv4WithEmptyPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverIPv4WithPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverIPv6NotEnclosed",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverIPv6Empty",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverIPv6WithoutPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverIPv6WithEmptyPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverIPv6WithPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverFQDNWithoutPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverFQDNWithEmptyPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverFQDNWithPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverHostnameWithoutPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverHostnameWithEmptyPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136NameserverHostnameWithPort",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136DefaultTSIGAlgorithm",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136InvalidTSIGAlgorithm",
+    "github.com/cert-manager/cert-manager/integration-tests/rfc2136_dns01::TestRFC2136ValidUpdatePacket"
+  ],
+  "PASS_TO_PASS": []
+}

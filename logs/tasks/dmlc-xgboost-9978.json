@@ -1,0 +1,23 @@
+{
+ "task": "dmlc-xgboost-9978",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: evaluate_splits.h recomputes CalcWeight w/o lr, multi_target_tree_model.cc `split_conds_.resize(n, quiet_NaN())`, updater_quantile_hist LOG(FATAL) distributed guard; F2P TestSplitWithEta::HistMulti asserts split-structure invariance + eta-scaled leaves + NaN SplitCond"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

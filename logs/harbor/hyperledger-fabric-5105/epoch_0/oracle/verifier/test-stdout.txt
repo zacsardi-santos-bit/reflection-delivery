@@ -1,0 +1,11 @@
+patching file core/scc/cscc/write_batch_test.go
+{"Time":"2026-06-29T15:28:31.018960873Z","Action":"start","Package":"github.com/hyperledger/fabric/core/scc/cscc"}
+{"Time":"2026-06-29T15:28:31.099664933Z","Action":"output","Package":"github.com/hyperledger/fabric/core/scc/cscc","Output":"\u001b[34m2026-06-29 15:28:31.099 UTC 0001 INFO\u001b[0m [msp] \u001b[34;1mSetup\u001b[0m -\u003e MSP manager already up\n"}
+{"Time":"2026-06-29T15:28:31.100021076Z","Action":"run","Package":"github.com/hyperledger/fabric/core/scc/cscc","Test":"TestWriteBatch"}
+{"Time":"2026-06-29T15:28:31.10009413Z","Action":"output","Package":"github.com/hyperledger/fabric/core/scc/cscc","Test":"TestWriteBatch","Output":"=== RUN   TestWriteBatch\n"}
+{"Time":"2026-06-29T15:28:31.100352702Z","Action":"output","Package":"github.com/hyperledger/fabric/core/scc/cscc","Test":"TestWriteBatch","Output":"--- PASS: TestWriteBatch (0.00s)\n"}
+{"Time":"2026-06-29T15:28:31.100405039Z","Action":"pass","Package":"github.com/hyperledger/fabric/core/scc/cscc","Test":"TestWriteBatch","Elapsed":0}
+{"Time":"2026-06-29T15:28:31.100429225Z","Action":"output","Package":"github.com/hyperledger/fabric/core/scc/cscc","Output":"PASS\n"}
+{"Time":"2026-06-29T15:28:31.10171795Z","Action":"output","Package":"github.com/hyperledger/fabric/core/scc/cscc","Output":"ok  \tgithub.com/hyperledger/fabric/core/scc/cscc\t0.082s\n"}
+{"Time":"2026-06-29T15:28:31.101772406Z","Action":"pass","Package":"github.com/hyperledger/fabric/core/scc/cscc","Elapsed":0.083}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

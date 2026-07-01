@@ -1,0 +1,31 @@
+patching file tests/server/api/test_flow_runs.py
+patching file tests/server/orchestration/test_core_policy.py
+patching file tests/workers/test_base_worker.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: cov-7.1.0, env-1.6.0, flaky-3.8.1, timeout-2.4.0, flakefinder-1.1.0, asyncio-0.21.2, xdist-3.3.1, benchmark-5.2.3, anyio-3.7.1, respx-0.23.1
+timeout: 60.0s
+timeout method: signal
+timeout func_only: False
+asyncio: mode=Mode.AUTO
+collecting ... collected 162 items / 1 error
+
+==================================== ERRORS ====================================
+_______ ERROR collecting tests/server/orchestration/test_core_policy.py ________
+ImportError while importing test module '/workspace/repo/tests/server/orchestration/test_core_policy.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/server/orchestration/test_core_policy.py:20: in <module>
+    from prefect.server.orchestration.core_policy import (
+E   ImportError: cannot import name 'PreventDuplicateTransitions' from 'prefect.server.orchestration.core_policy' (/workspace/repo/src/prefect/server/orchestration/core_policy.py)
+=========================== short test summary info ============================
+ERROR tests/server/orchestration/test_core_policy.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.74s ===============================
+reward=0 graded=580 found=0 failed=0 parsed=0 framework=pytest exit_code=2

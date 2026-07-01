@@ -1,0 +1,7 @@
+patching file message/router_test.go
+# github.com/ThreeDotsLabs/watermill/message_test [github.com/ThreeDotsLabs/watermill/message.test]
+message/router_test.go:481:2: router.AddHandler("some_topic_handler", topic, sub, topic, pub, handlerFunc) (no value) used as value or type
+message/router_test.go:560:2: router.AddHandler("some_topic_handler", topic, sub, topic, pub, handlerFunc) (no value) used as value or type
+message/router_test.go:568:2: router.AddHandler("some_other_topic_handler", "some_other_topic", sub, "some_other_topic", pub, func(msg *message.Message) ([]*message.Message, error) {…}) (no value) used as value or type
+FAIL	github.com/ThreeDotsLabs/watermill/message [build failed]
+reward=0 graded=37 found=37 failed=37 parsed=1 framework=go exit_code=1

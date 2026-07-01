@@ -1,0 +1,40 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/deploy/kubernetes/helm/sloth/tests && go test -json . -count=1",
+  "test_files": [
+    "deploy/kubernetes/helm/sloth/tests/helm_chart_test.go",
+    "deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_custom.yaml",
+    "deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_custom_no_extras.yaml",
+    "deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_custom_slo_config.yaml",
+    "deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_default.yaml",
+    "deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_securityContext.yaml",
+    "deploy/kubernetes/helm/sloth/tests/values_test.go"
+  ],
+  "num_test_files": 7,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/slok/sloth/helm::TestChartDeployment/A_chart_without_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartDeployment"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/slok/sloth/helm::TestChartServiceAccount/A_chart_without_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartServiceAccount/A_chart_with_custom_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartServiceAccount",
+    "github.com/slok/sloth/helm::TestChartDeployment/A_chart_with_values_without_metrics_and_plugins_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartDeployment/A_chart_with_custom_slo_config_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartDeployment/A_chart_with_custom_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartPodMonitor/A_chart_without_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartPodMonitor/A_chart_with_custom_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartPodMonitor/A_chart_with_values_without_metrics_and_plugins_should_correctly.",
+    "github.com/slok/sloth/helm::TestChartPodMonitor",
+    "github.com/slok/sloth/helm::TestChartClusterRole/A_chart_with_custom_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartClusterRole/A_chart_without_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartClusterRole",
+    "github.com/slok/sloth/helm::TestChartClusterRoleBinding/A_chart_without_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartClusterRoleBinding/A_chart_with_custom_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartClusterRoleBinding",
+    "github.com/slok/sloth/helm::TestChartConfigMap/A_chart_without_values_should_not_render_a_configmap.",
+    "github.com/slok/sloth/helm::TestChartConfigMap/A_chart_with_custom_values_should_render_correctly.",
+    "github.com/slok/sloth/helm::TestChartConfigMap"
+  ]
+}

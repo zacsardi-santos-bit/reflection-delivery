@@ -1,0 +1,19 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/modules/socat && go test -json . -count=1 -run TestNewTarget",
+  "test_files": [
+    "modules/socat/examples_test.go",
+    "modules/socat/options_test.go",
+    "modules/socat/socat_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/testcontainers/testcontainers-go/modules/socat::TestNewTarget/exposed-port",
+    "github.com/testcontainers/testcontainers-go/modules/socat::TestNewTarget/exposed-port-zero",
+    "github.com/testcontainers/testcontainers-go/modules/socat::TestNewTarget/with-internal-port",
+    "github.com/testcontainers/testcontainers-go/modules/socat::TestNewTarget/with-internal-port-zero",
+    "github.com/testcontainers/testcontainers-go/modules/socat::TestNewTarget"
+  ],
+  "PASS_TO_PASS": []
+}

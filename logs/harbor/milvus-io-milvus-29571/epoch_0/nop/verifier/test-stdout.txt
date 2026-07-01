@@ -1,0 +1,10 @@
+patching file internal/datanode/writebuffer/bf_write_buffer_test.go
+patching file internal/datanode/writebuffer/insert_buffer_test.go
+patching file internal/datanode/writebuffer/l0_write_buffer_test.go
+# github.com/milvus-io/milvus/internal/datanode/writebuffer [github.com/milvus-io/milvus/internal/datanode/writebuffer.test]
+internal/datanode/writebuffer/insert_buffer_test.go:137:30: assignment mismatch: 3 variables but insertBuffer.Buffer returns 2 values
+internal/datanode/writebuffer/insert_buffer_test.go:156:15: assignment mismatch: 3 variables but insertBuffer.Buffer returns 2 values
+internal/datanode/writebuffer/insert_buffer_test.go:184:15: assignment mismatch: 3 variables but insertBuffer.Buffer returns 2 values
+internal/datanode/writebuffer/insert_buffer_test.go:200:14: assignment mismatch: 3 variables but insertBuffer.Buffer returns 2 values
+FAIL	github.com/milvus-io/milvus/internal/datanode/writebuffer [build failed]
+reward=0 graded=63 found=63 failed=63 parsed=1 framework=go exit_code=1

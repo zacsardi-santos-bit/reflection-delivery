@@ -1,0 +1,5 @@
+patching file search_shards_test.go
+# github.com/olivere/elastic [github.com/olivere/elastic.test]
+/go/src/github.com/olivere/elastic/search_shards_test.go:17:28: client.SearchShards undefined (type *Client has no field or method SearchShards)
+FAIL	github.com/olivere/elastic [build failed]
+reward=0 graded=59 found=59 failed=59 parsed=1 framework=go exit_code=1

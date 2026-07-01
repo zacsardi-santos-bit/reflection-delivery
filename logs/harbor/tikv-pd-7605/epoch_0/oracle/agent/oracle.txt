@@ -1,0 +1,12 @@
+patching file client/http/api.go
+patching file client/http/client.go
+patching file client/http/interface.go
+patching file client/http/request_info.go
+patching file client/http/types.go
+patching file go.mod
+patching file go.sum
+patching file server/cluster/cluster.go
+patching file tools/pd-ctl/main.go
+patching file tools/pd-ctl/pdctl/command/cluster_command.go
+patching file tools/pd-ctl/pdctl/command/global.go
+patching file tools/pd-ctl/pdctl/ctl.go

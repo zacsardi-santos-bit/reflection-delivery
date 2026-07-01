@@ -1,0 +1,5 @@
+patching file crates/host/src/wasmbus/providers/http_server/address.rs (renamed from crates/host/src/wasmbus/providers/http_server.rs)
+patching file crates/host/src/wasmbus/providers/http_server/mod.rs
+patching file crates/host/src/wasmbus/providers/http_server/path.rs
+patching file crates/provider-sdk/src/provider.rs
+patching file crates/test-util/src/provider.rs

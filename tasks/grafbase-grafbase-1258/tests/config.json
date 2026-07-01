@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p integration-tests -E 'test(mutation)'",
+  "test_files": [
+    "engine/crates/integration-tests/tests/federation/basic/mutation.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(4/4) integration-tests::integration_tests federation::basic::mutation::mutation_failure_should_stop_later_executions_if_required",
+    "(1/4) integration-tests::integration_tests federation::basic::caching::test_no_caching_on_mutation",
+    "(2/4) integration-tests::integration_tests federation::basic::streaming::can_run_a_mutation_via_execute_stream"
+  ],
+  "PASS_TO_PASS": [
+    "(3/4) integration-tests::integration_tests federation::basic::mutation::mutations_should_be_executed_sequentially"
+  ]
+}

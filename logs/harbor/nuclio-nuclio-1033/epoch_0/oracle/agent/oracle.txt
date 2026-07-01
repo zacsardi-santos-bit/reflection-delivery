@@ -1,0 +1,12 @@
+patching file cmd/processor/app/processor.go
+patching file pkg/functionconfig/types.go
+patching file pkg/platform/abstract/platform.go
+patching file pkg/platform/kube/platform.go
+patching file pkg/platform/local/platform.go
+patching file pkg/processor/build/builder.go
+patching file pkg/processor/runtime/golang/builtin.go
+patching file pkg/processor/trigger/cron/event.go
+patching file pkg/processor/trigger/kickstart/event.go
+patching file pkg/processor/trigger/kickstart/factory.go
+patching file pkg/processor/trigger/kickstart/trigger.go
+patching file pkg/processor/trigger/kickstart/types.go

@@ -1,0 +1,12 @@
+patching file docs/transactions.md
+patching file src/decorator/options/TransactionOptions.ts
+patching file src/decorator/transaction/Transaction.ts
+patching file src/driver/mysql/MysqlQueryRunner.ts
+patching file src/driver/oracle/OracleQueryRunner.ts
+patching file src/driver/postgres/PostgresQueryRunner.ts
+patching file src/driver/sqlite-abstract/AbstractSqliteQueryRunner.ts
+patching file src/driver/sqlserver/SqlServerConnectionOptions.ts
+patching file src/driver/sqlserver/SqlServerQueryRunner.ts
+patching file src/driver/types/IsolationLevel.ts
+patching file src/entity-manager/EntityManager.ts
+patching file src/query-runner/QueryRunner.ts

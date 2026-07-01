@@ -1,0 +1,11 @@
+patching file test/ocsp_test.go
+{"Time":"2026-06-29T15:15:23.303280248Z","Action":"start","Package":"github.com/nats-io/nats-server/v2/test"}
+{"Time":"2026-06-29T15:15:23.331367309Z","Action":"run","Package":"github.com/nats-io/nats-server/v2/test","Test":"TestOCSPGatewayReload"}
+{"Time":"2026-06-29T15:15:23.331490293Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/test","Test":"TestOCSPGatewayReload","Output":"=== RUN   TestOCSPGatewayReload\n"}
+{"Time":"2026-06-29T15:15:30.454566389Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/test","Test":"TestOCSPGatewayReload","Output":"    ocsp_test.go:2608: Expected 2 outbound gateway(s), got 1 (ulimit -n too low?)\n"}
+{"Time":"2026-06-29T15:15:30.458142807Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/test","Test":"TestOCSPGatewayReload","Output":"--- FAIL: TestOCSPGatewayReload (7.13s)\n"}
+{"Time":"2026-06-29T15:15:30.458218559Z","Action":"fail","Package":"github.com/nats-io/nats-server/v2/test","Test":"TestOCSPGatewayReload","Elapsed":7.13}
+{"Time":"2026-06-29T15:15:30.45824069Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/test","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:15:30.459590481Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/test","Output":"FAIL\tgithub.com/nats-io/nats-server/v2/test\t7.156s\n"}
+{"Time":"2026-06-29T15:15:30.459641962Z","Action":"fail","Package":"github.com/nats-io/nats-server/v2/test","Elapsed":7.156}
+reward=0 graded=1 found=1 failed=1 parsed=2 framework=go exit_code=1

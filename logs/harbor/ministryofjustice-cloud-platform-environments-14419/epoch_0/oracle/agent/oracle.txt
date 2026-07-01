@@ -1,0 +1,102 @@
+patching file .checksum
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/activities-api-dev/resources/irsa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/activities-api-dev/resources/rds.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/activities-api-dev/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/activities-api-preprod/resources/irsa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/activities-api-preprod/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-gold-scorecard-form-dev/resources/main.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/00-namespace.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/00-namespace.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/01-rbac.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/resources/ecr.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/resources/main.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/resources/serviceaccount.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/00-namespace.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/01-rbac.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/01-rbac.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/02-limitrange.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/02-limitrange.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/03-resourcequota.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/03-resourcequota.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/04-networkpolicy.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/04-networkpolicy.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/resources/ecr.tf (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/resources/ecr.tf)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/resources/main.tf (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/resources/main.tf)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/resources/serviceaccount.tf (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/resources/serviceaccount.tf)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/resources/variables.tf (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/resources/variables.tf)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-temperature-check-dev/resources/versions.tf (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/resources/versions.tf)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/digital-prison-reporting-mi-prototype/resources/sg.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-adjustments-dev/resources/analytical-platform-access.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-adjustments-dev/resources/versions.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-domain-events-preprod/resources/outputs-to-ssm-parameters.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-adjudications-api-dev/resources/rds.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-adjudications-api-dev/resources/s3.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-adjudications-api-preprod/resources/s3.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-adjudications-dev/resources/elasticache.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/00-namespace.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/01-rbac.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/02-limitrange.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/02-limitrange.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/03-resourcequota.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/03-resourcequota.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/04-networkpolicy.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/04-networkpolicy.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/resources/basic-auth.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/resources/ecr.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/resources/main.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/resources/serviceaccount.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-manage-supervisions-prototype/resources/versions.tf (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-prod/resources/versions.tf)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-micro-frontend-components-dev/06-certificate.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-pin-phone-monitor-dev/resources/elasticache.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-pin-phone-monitor-dev/resources/irsa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-pin-phone-monitor-dev/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-pin-phone-monitor-prod/resources/elasticache.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-pin-phone-monitor-prod/resources/irsa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-pin-phone-monitor-prod/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-pin-phone-monitor-qa/resources/elasticache.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-pin-phone-monitor-qa/resources/irsa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-pin-phone-monitor-qa/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-probation-integration-services-dev/05-certificates.yml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-probation-integration-services-dev/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-probation-integration-services-preprod/05-certificates.yml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-probation-integration-services-preprod/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-probation-integration-services-prod/05-certificates.yml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/hmpps-probation-integration-services-prod/resources/pingdom.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/iac-fees-dev/resources/api-gateway-iam.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/iac-fees-dev/resources/api-gateway.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/iac-fees-dev/resources/s3.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/iac-fees-dev/resources/versions.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/laa-cla-backend-staging/resources/rds.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/laa-cla-backend-uat/resources/rds.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/laa-crime-means-assessment-dev/resources/irsa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/laa-crime-means-assessment-dev/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/laa-hmrc-interface-uat/resources/ecr.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/laa-review-criminal-legal-aid-staging/04-networkpolicy.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/laa-review-criminal-legal-aid-staging/05-servicemonitor.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/00-namespace.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/01-rbac.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/poornima-dev/01-rbac.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/02-limitrange.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/poornima-dev/02-limitrange.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/03-resourcequota.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/poornima-dev/03-resourcequota.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/04-networkpolicy.yaml (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/poornima-dev/04-networkpolicy.yaml)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/resources/ecr.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/resources/main.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/resources/serviceaccount.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/manage-supervisions-design-history/resources/versions.tf (renamed from namespaces/live.cloud-platform.service.justice.gov.uk/poornima-dev/resources/versions.tf)
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/offender-events-dev/resources/outputs-to-ssm-parameters.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/offender-events-dev/resources/prison_to_probation_update-sub-queue.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/offender-events-preprod/resources/outputs-to-ssm-parameters.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/offender-events-preprod/resources/prison_to_probation_update-sub-queue.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/offender-events-prod/resources/outputs-to-ssm-parameters.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/offender-events-prod/resources/prison_to_probation_update-sub-queue.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/offender-management-production/APPLY_PIPELINE_SKIP_THIS_NAMESPACE
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/ops-pilot-test/resources/cross-iam-role-sa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/parliamentary-questions-development/resources/ecr.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/parliamentary-questions-production/resources/ecr.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/peoplefinder-production/resources/ecr.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/poornima-dev/00-namespace.yaml
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/poornima-dev/APPLY_PIPELINE_SKIP_THIS_NAMESPACE
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/poornima-dev/resources/main.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/poornima-dev/resources/variables.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/prison-to-probation-update-dev/resources/irsa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/prison-to-probation-update-preprod/resources/irsa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/prison-to-probation-update-prod/resources/irsa.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/prison-to-probation-update-prod/resources/main.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/prison-to-probation-update-prod/resources/prison-to-probation-update-queue.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/prison-to-probation-update-prod/resources/topic.tf
+patching file namespaces/live.cloud-platform.service.justice.gov.uk/prison-to-probation-update-prod/resources/variables.tf

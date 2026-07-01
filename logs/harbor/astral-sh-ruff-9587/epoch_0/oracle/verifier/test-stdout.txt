@@ -1,0 +1,8 @@
+patching file crates/ruff_linter/resources/test/fixtures/pylint/unnecessary_dunder_call.py
+============================= test session starts ==============================
+collected 1 item
+
+tests/test_cargo.py::test_PLC2801_unnecessary_dunder_call PASSED
+
+= 1 passed =
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=pytest exit_code=0

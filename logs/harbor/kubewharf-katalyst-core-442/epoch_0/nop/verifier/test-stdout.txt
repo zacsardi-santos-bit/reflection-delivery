@@ -1,0 +1,32 @@
+patching file pkg/agent/orm/checkpoint/checkpoint_test.go (renamed from pkg/agent/resourcemanager/outofband/checkpoint/checkpoint_test.go)
+patching file pkg/agent/orm/checkpoint_test.go (renamed from pkg/agent/resourcemanager/outofband/checkpoint_test.go)
+patching file pkg/agent/orm/endpoint/endpoint_test.go (renamed from pkg/agent/resourcemanager/outofband/endpoint/endpoint_test.go)
+patching file pkg/agent/orm/executor/executor_test.go (renamed from pkg/agent/resourcemanager/outofband/executor/executor_test.go)
+patching file pkg/agent/orm/manager_test.go (renamed from pkg/agent/resourcemanager/outofband/manager_test.go)
+patching file pkg/agent/orm/metamanager/manager_test.go (renamed from pkg/agent/resourcemanager/outofband/metamanager/manager_test.go)
+patching file pkg/agent/orm/pod_resource_test.go (renamed from pkg/agent/resourcemanager/outofband/pod_resource_test.go)
+github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint: no non-test Go files in /workspace/repo/pkg/agent/orm/endpoint
+github.com/kubewharf/katalyst-core/pkg/agent/orm/executor: no non-test Go files in /workspace/repo/pkg/agent/orm/executor
+github.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager: no non-test Go files in /workspace/repo/pkg/agent/orm/metamanager
+# github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint [github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint.test]
+pkg/agent/orm/checkpoint/checkpoint_test.go:30:20: undefined: PodResourcesEntry
+pkg/agent/orm/checkpoint/checkpoint_test.go:32:10: undefined: New
+# github.com/kubewharf/katalyst-core/pkg/agent/orm/executor [github.com/kubewharf/katalyst-core/pkg/agent/orm/executor.test]
+pkg/agent/orm/executor/executor_test.go:34:10: undefined: NewExecutor
+pkg/agent/orm/executor/executor_test.go:92:11: undefined: Impl
+# github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint [github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint.test]
+pkg/agent/orm/endpoint/endpoint_test.go:63:8: undefined: NewStoppedEndpointImpl
+pkg/agent/orm/endpoint/endpoint_test.go:181:58: undefined: Stub
+pkg/agent/orm/endpoint/endpoint_test.go:181:65: undefined: EndpointImpl
+pkg/agent/orm/endpoint/endpoint_test.go:182:7: undefined: NewResourcePluginStub
+pkg/agent/orm/endpoint/endpoint_test.go:187:12: undefined: NewEndpointImpl
+pkg/agent/orm/endpoint/endpoint_test.go:193:32: undefined: Stub
+pkg/agent/orm/endpoint/endpoint_test.go:193:41: undefined: EndpointImpl
+# github.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager [github.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager.test]
+pkg/agent/orm/metamanager/manager_test.go:89:13: undefined: NewManager
+FAIL	github.com/kubewharf/katalyst-core/pkg/agent/orm [build failed]
+FAIL	github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint [build failed]
+FAIL	github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint [build failed]
+FAIL	github.com/kubewharf/katalyst-core/pkg/agent/orm/executor [build failed]
+FAIL	github.com/kubewharf/katalyst-core/pkg/agent/orm/metamanager [build failed]
+reward=0 graded=19 found=19 failed=19 parsed=5 framework=go exit_code=1

@@ -1,0 +1,101 @@
+patching file sdk/nodejs/Makefile
+patching file sdk/nodejs/package.json
+patching file sdk/nodejs/tsconfig.json
+patching file sdk/nodejs/yarn.lock
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+188 out of 188 hunks ignored -- saving rejects to file sdk/nodejs/yarn.lock.rej
+patching file sdk/nodejs/Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/nodejs/Makefile.rej
+patching file sdk/nodejs/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/nodejs/package.json.rej
+patching file sdk/nodejs/tsconfig.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/nodejs/tsconfig.json.rej
+patching file sdk/nodejs/yarn.lock
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+188 out of 188 hunks ignored -- saving rejects to file sdk/nodejs/yarn.lock.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/nodejs/Makefile b/sdk/nodejs/Makefile
+|index 58a9484681..2eb75ddb45 100644
+|--- a/sdk/nodejs/Makefile
+|+++ b/sdk/nodejs/Makefile
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 27
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/nodejs/package.json b/sdk/nodejs/package.json
+|index b24dc34730..014706c4dc 100644
+|--- a/sdk/nodejs/package.json
+|+++ b/sdk/nodejs/package.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 49
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/nodejs/tsconfig.json b/sdk/nodejs/tsconfig.json
+|index c1a9ad1a1d..9e9f9cf551 100644
+|--- a/sdk/nodejs/tsconfig.json
+|+++ b/sdk/nodejs/tsconfig.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 63
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sdk/nodejs/yarn.lock b/sdk/nodejs/yarn.lock
+|index a51d9b6057..1f7399f36a 100644
+|--- a/sdk/nodejs/yarn.lock
+|+++ b/sdk/nodejs/yarn.lock
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+188 out of 188 hunks ignored
+patching file sdk/nodejs/Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/nodejs/Makefile.rej
+patching file sdk/nodejs/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sdk/nodejs/package.json.rej
+patching file sdk/nodejs/tsconfig.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file sdk/nodejs/tsconfig.json.rej
+patching file sdk/nodejs/yarn.lock
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+188 out of 188 hunks ignored -- saving rejects to file sdk/nodejs/yarn.lock.rej
+ERROR: golden patch failed to apply by all strategies

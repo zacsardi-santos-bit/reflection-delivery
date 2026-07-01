@@ -1,0 +1,7 @@
+patching file cmds/core/kexec/kexec_linux.go
+patching file pkg/boot/kexec/memory_linux.go
+patching file pkg/boot/linux/doc.go
+patching file pkg/boot/linux/load_linux.go
+patching file pkg/boot/linux/load_linux_arm64.go
+patching file pkg/boot/linux/load_linux_image.go
+patching file pkg/boot/linux/opts.go

@@ -1,0 +1,23 @@
+{
+ "task": "pulumi-pulumi-18750",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden swaps mocha transpiler ts-node->tsx ('node-option':['import=tsx']) + yarn.lock; F2P runs real 'correctly sets config on multiple stacks concurrently' test via fullyQualifiedStackName"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 39,
+  "shallow": true
+ }
+}

@@ -1,0 +1,2 @@
+patching file internal/provider/fixtures/resource_subaccount_environment_instance.yaml
+patching file internal/provider/resource_subaccount_environment_instance.go

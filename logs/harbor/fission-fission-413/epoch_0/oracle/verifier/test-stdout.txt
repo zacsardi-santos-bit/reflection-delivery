@@ -1,0 +1,22 @@
+patching file controller/api_test.go
+patching file merge_test.go
+patching file test/run_test.sh
+patching file test/test_utils.sh
+patching file test/tests/test_env_vars.sh
+{"Time":"2026-06-29T15:31:22.133586098Z","Action":"start","Package":"github.com/fission/fission"}
+{"Time":"2026-06-29T15:31:22.16862045Z","Action":"run","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecs"}
+{"Time":"2026-06-29T15:31:22.16867478Z","Action":"output","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecs","Output":"=== RUN   TestMergeContainerSpecs\n"}
+{"Time":"2026-06-29T15:31:22.168718079Z","Action":"output","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecs","Output":"--- PASS: TestMergeContainerSpecs (0.00s)\n"}
+{"Time":"2026-06-29T15:31:22.168741399Z","Action":"pass","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecs","Elapsed":0}
+{"Time":"2026-06-29T15:31:22.168775329Z","Action":"run","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecsSingle"}
+{"Time":"2026-06-29T15:31:22.168806449Z","Action":"output","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecsSingle","Output":"=== RUN   TestMergeContainerSpecsSingle\n"}
+{"Time":"2026-06-29T15:31:22.168838489Z","Action":"output","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecsSingle","Output":"--- PASS: TestMergeContainerSpecsSingle (0.00s)\n"}
+{"Time":"2026-06-29T15:31:22.168862199Z","Action":"pass","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecsSingle","Elapsed":0}
+{"Time":"2026-06-29T15:31:22.168886528Z","Action":"run","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecsNil"}
+{"Time":"2026-06-29T15:31:22.168908428Z","Action":"output","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecsNil","Output":"=== RUN   TestMergeContainerSpecsNil\n"}
+{"Time":"2026-06-29T15:31:22.168932098Z","Action":"output","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecsNil","Output":"--- PASS: TestMergeContainerSpecsNil (0.00s)\n"}
+{"Time":"2026-06-29T15:31:22.168957918Z","Action":"pass","Package":"github.com/fission/fission","Test":"TestMergeContainerSpecsNil","Elapsed":0}
+{"Time":"2026-06-29T15:31:22.168981318Z","Action":"output","Package":"github.com/fission/fission","Output":"PASS\n"}
+{"Time":"2026-06-29T15:31:22.169363936Z","Action":"output","Package":"github.com/fission/fission","Output":"ok  \tgithub.com/fission/fission\t0.035s\n"}
+{"Time":"2026-06-29T15:31:22.169436035Z","Action":"pass","Package":"github.com/fission/fission","Elapsed":0.036}
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=go exit_code=0

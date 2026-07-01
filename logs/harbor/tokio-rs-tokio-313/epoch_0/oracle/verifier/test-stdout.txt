@@ -1,0 +1,1251 @@
+patching file tests/current_thread.rs
+warning: unused doc comment
+  --> tokio-executor/src/global.rs:44:1
+   |
+44 | /// Thread-local tracking the current executor
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ rustdoc does not generate documentation for macro invocations
+   |
+   = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+note: the lint level is defined here
+  --> tokio-executor/src/lib.rs:33:54
+   |
+33 | #![deny(missing_docs, missing_debug_implementations, warnings)]
+   |                                                      ^^^^^^^^
+   = note: `#[warn(unused_doc_comments)]` implied by `#[warn(warnings)]`
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-executor/src/enter.rs:14:22
+   |
+14 |     on_exit: Vec<Box<Callback>>,
+   |                      ^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+   = note: `#[warn(bare_trait_objects)]` implied by `#[warn(warnings)]`
+help: use `dyn`
+   |
+14 |     on_exit: Vec<Box<dyn Callback>>,
+   |                      +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-executor/src/global.rs:155:47
+    |
+155 |         struct Reset<'a>(&'a Cell<Option<*mut Executor>>);
+    |                                               ^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+155 |         struct Reset<'a>(&'a Cell<Option<*mut dyn Executor>>);
+    |                                               +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-executor/src/lib.rs:137:37
+    |
+137 |     fn spawn(&mut self, future: Box<Future<Item = (), Error = ()> + Send>)
+    |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+137 |     fn spawn(&mut self, future: Box<dyn Future<Item = (), Error = ()> + Send>)
+    |                                     +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-executor/src/global.rs:45:49
+   |
+45 | thread_local!(static EXECUTOR: Cell<Option<*mut Executor>> = Cell::new(None));
+   |                                                 ^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+45 | thread_local!(static EXECUTOR: Cell<Option<*mut dyn Executor>> = Cell::new(None));
+   |                                                 +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-executor/src/global.rs:180:32
+    |
+180 | unsafe fn hide_lt<'a>(p: *mut (Executor + 'a)) -> *mut (Executor + 'static) {
+    |                                ^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+180 | unsafe fn hide_lt<'a>(p: *mut (dyn Executor + 'a)) -> *mut (Executor + 'static) {
+    |                                +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-executor/src/global.rs:180:57
+    |
+180 | unsafe fn hide_lt<'a>(p: *mut (Executor + 'a)) -> *mut (Executor + 'static) {
+    |                                                         ^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+180 | unsafe fn hide_lt<'a>(p: *mut (Executor + 'a)) -> *mut (dyn Executor + 'static) {
+    |                                                         +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-executor/src/global.rs:50:37
+   |
+50 |     fn spawn(&mut self, future: Box<Future<Item = (), Error = ()> + Send>)
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+50 |     fn spawn(&mut self, future: Box<dyn Future<Item = (), Error = ()> + Send>)
+   |                                     +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-executor/src/park.rs:130:21
+    |
+130 | impl Unpark for Box<Unpark> {
+    |                     ^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+130 | impl Unpark for Box<dyn Unpark> {
+    |                     +++
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-executor/src/park.rs:240:26
+    |
+240 |         match self.state.compare_and_swap(NOTIFY, IDLE, Ordering::SeqCst) {
+    |                          ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` implied by `#[warn(warnings)]`
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-executor/src/park.rs:251:26
+    |
+251 |         match self.state.compare_and_swap(IDLE, SLEEP, Ordering::SeqCst) {
+    |                          ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-executor/src/park.rs:282:26
+    |
+282 |         match self.state.compare_and_swap(IDLE, NOTIFY, Ordering::SeqCst) {
+    |                          ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-executor/src/park.rs:292:26
+    |
+292 |         match self.state.compare_and_swap(SLEEP, NOTIFY, Ordering::SeqCst) {
+    |                          ^^^^^^^^^^^^^^^^
+
+warning: `tokio-executor` (lib) generated 16 warnings (3 duplicates) (run `cargo fix --lib -p tokio-executor` to apply 8 suggestions)
+warning: unnecessary parentheses around block return value
+   --> tokio-timer/src/timer/entry.rs:173:18
+    |
+173 |         unsafe { (*self.when.get()) }
+    |                  ^                ^
+    |
+note: the lint level is defined here
+   --> tokio-timer/src/lib.rs:22:23
+    |
+22  | #![deny(missing_docs, warnings, missing_debug_implementations)]
+    |                       ^^^^^^^^
+    = note: `#[warn(unused_parens)]` implied by `#[warn(warnings)]`
+help: remove these parentheses
+    |
+173 -         unsafe { (*self.when.get()) }
+173 +         unsafe { *self.when.get() }
+    |
+
+warning: unnecessary parentheses around block return value
+   --> tokio-timer/src/timer/entry.rs:541:29
+    |
+541 |         self.ptr = unsafe { (*entry.next_atomic.get()) };
+    |                             ^                        ^
+    |
+help: remove these parentheses
+    |
+541 -         self.ptr = unsafe { (*entry.next_atomic.get()) };
+541 +         self.ptr = unsafe { *entry.next_atomic.get() };
+    |
+
+warning: unused doc comment
+  --> tokio-timer/src/timer/handle.rs:23:1
+   |
+23 | /// Tracks the timer for the current execution context.
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ rustdoc does not generate documentation for macro invocations
+   |
+   = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+   = note: `#[warn(unused_doc_comments)]` implied by `#[warn(warnings)]`
+
+warning: unnecessary trailing semicolon
+  --> tokio-timer/src/timer/level.rs:48:10
+   |
+48 |         };
+   |          ^ help: remove this semicolon
+   |
+   = note: `#[warn(redundant_semicolons)]` implied by `#[warn(warnings)]`
+
+warning: unnecessary parentheses around block return value
+   --> tokio-timer/src/timer/level.rs:168:5
+    |
+168 |     (1 << slot)
+    |     ^         ^
+    |
+help: remove these parentheses
+    |
+168 -     (1 << slot)
+168 +     1 << slot
+    |
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-timer/src/timer/mod.rs:167:17
+    |
+167 |     unpark: Box<Unpark>,
+    |                 ^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+    = note: `#[warn(bare_trait_objects)]` implied by `#[warn(warnings)]`
+help: use `dyn`
+    |
+167 |     unpark: Box<dyn Unpark>,
+    |                 +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-timer/src/timer/mod.rs:527:40
+    |
+527 |     fn new(start: Instant, unpark: Box<Unpark>) -> Inner {
+    |                                        ^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+527 |     fn new(start: Instant, unpark: Box<dyn Unpark>) -> Inner {
+    |                                        +++
+
+warning: use of deprecated method `std::sync::atomic::AtomicPtr::<T>::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-timer/src/timer/entry.rs:498:36
+    |
+498 |             let actual = self.head.compare_and_swap(curr, ptr, SeqCst);
+    |                                    ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` implied by `#[warn(warnings)]`
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-timer/src/timer/mod.rs:550:35
+    |
+550 |             let actual = self.num.compare_and_swap(curr, curr + 1, SeqCst);
+    |                                   ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+  --> tokio-timer/src/atomic.rs:38:24
+   |
+38 |             self.inner.compare_and_swap(
+   |                        ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> tokio-timer/src/deadline.rs:164:31
+    |
+164 |             Inner(ref e) => e.description(),
+    |                               ^^^^^^^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> tokio-timer/src/deadline.rs:166:31
+    |
+166 |             Timer(ref e) => e.description(),
+    |                               ^^^^^^^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+  --> tokio-timer/src/error.rs:76:14
+   |
+76 |         self.description().fmt(fmt)
+   |              ^^^^^^^^^^^
+
+warning: `tokio-timer` (lib) generated 13 warnings (run `cargo fix --lib -p tokio-timer` to apply 5 suggestions)
+warning: use of deprecated macro `try`: use the `?` operator instead
+  --> tokio-io/src/codec/decoder.rs:74:15
+   |
+74 |         match try!(self.decode(buf)) {
+   |               ^^^
+   |
+note: the lint level is defined here
+  --> tokio-io/src/lib.rs:9:54
+   |
+9  | #![deny(missing_docs, missing_debug_implementations, warnings)]
+   |                                                      ^^^^^^^^
+   = note: `#[warn(deprecated)]` implied by `#[warn(warnings)]`
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-io/src/framed_read.rs:185:33
+    |
+185 |                     let frame = try!(self.inner.decode_eof(&mut self.buffer));
+    |                                 ^^^
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-io/src/framed_read.rs:191:38
+    |
+191 |                 if let Some(frame) = try!(self.inner.decode(&mut self.buffer)) {
+    |                                      ^^^
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+  --> tokio-io/src/framed_write.rs:93:12
+   |
+93 |         Ok(try!(self.inner.close()))
+   |            ^^^
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-io/src/framed_write.rs:176:9
+    |
+176 |         try!(self.inner.encode(item, &mut self.buffer));
+    |         ^^^
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-io/src/framed_write.rs:169:13
+    |
+169 |             try!(self.poll_complete());
+    |             ^^^
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-io/src/framed_write.rs:208:12
+    |
+208 |         Ok(try!(self.inner.shutdown()))
+    |            ^^^
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-io/src/length_delimited.rs:353:23
+    |
+353 |                 match try!(self.decode_head(src)) {
+    |                       ^^^
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-io/src/length_delimited.rs:364:15
+    |
+364 |         match try!(self.decode_data(n, src)) {
+    |               ^^^
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-io/src/length_delimited.rs:504:9
+    |
+504 |         try!(self.set_frame(item.into_buf()));
+    |         ^^^
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-io/src/length_delimited.rs:500:13
+    |
+500 |         if !try!(self.do_write()).is_ready() {
+    |             ^^^
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-io/src/lib.rs:24:28
+   |
+24 | pub type IoFuture<T> = Box<Future<Item = T, Error = std_io::Error> + Send>;
+   |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+   = note: `#[warn(bare_trait_objects)]` implied by `#[warn(warnings)]`
+help: use `dyn`
+   |
+24 | pub type IoFuture<T> = Box<dyn Future<Item = T, Error = std_io::Error> + Send>;
+   |                            +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-io/src/lib.rs:27:28
+   |
+27 | pub type IoStream<T> = Box<Stream<Item = T, Error = std_io::Error> + Send>;
+   |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+27 | pub type IoStream<T> = Box<dyn Stream<Item = T, Error = std_io::Error> + Send>;
+   |                            +++
+
+warning: a method with this name may be added to the standard library in the future
+   --> tokio-io/src/framed_read.rs:205:43
+    |
+205 |             if 0 == try_ready!(self.inner.read_buf(&mut self.buffer)) {
+    |                                           ^^^^^^^^
+    |
+    = warning: once this associated item is added to the standard library, the ambiguity may cause an error or change in behavior!
+    = note: for more information, see issue #48919 <https://github.com/rust-lang/rust/issues/48919>
+    = help: call with fully qualified syntax `AsyncRead::read_buf(...)` to keep using the current method
+    = note: `#[warn(unstable_name_collisions)]` implied by `#[warn(warnings)]`
+
+warning: use of deprecated method `bytes::Buf::get_uint`: use get_uint_be or get_uint_le
+   --> tokio-io/src/length_delimited.rs:294:21
+    |
+294 |                 src.get_uint::<BigEndian>(field_len)
+    |                     ^^^^^^^^
+
+warning: use of deprecated method `bytes::Buf::get_uint`: use get_uint_be or get_uint_le
+   --> tokio-io/src/length_delimited.rs:296:21
+    |
+296 |                 src.get_uint::<LittleEndian>(field_len)
+    |                     ^^^^^^^^
+
+warning: use of deprecated method `bytes::BufMut::put_uint`: use put_uint_be or put_uint_le
+   --> tokio-io/src/length_delimited.rs:482:18
+    |
+482 |             head.put_uint::<BigEndian>(n as u64, self.builder.length_field_len);
+    |                  ^^^^^^^^
+
+warning: use of deprecated method `bytes::BufMut::put_uint`: use put_uint_be or put_uint_le
+   --> tokio-io/src/length_delimited.rs:484:18
+    |
+484 |             head.put_uint::<LittleEndian>(n as u64, self.builder.length_field_len);
+    |                  ^^^^^^^^
+
+warning: a method with this name may be added to the standard library in the future
+   --> tokio-io/src/length_delimited.rs:542:24
+    |
+542 |         self.get_mut().read_buf(buf)
+    |                        ^^^^^^^^
+    |
+    = warning: once this associated item is added to the standard library, the ambiguity may cause an error or change in behavior!
+    = note: for more information, see issue #48919 <https://github.com/rust-lang/rust/issues/48919>
+    = help: call with fully qualified syntax `AsyncRead::read_buf(...)` to keep using the current method
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> tokio-io/src/length_delimited.rs:901:26
+    |
+901 |         f.write_str(self.description())
+    |                          ^^^^^^^^^^^
+
+warning: a method with this name may be added to the standard library in the future
+  --> tokio-io/src/split.rs:42:38
+   |
+42 |             Async::Ready(mut l) => l.read_buf(buf),
+   |                                      ^^^^^^^^
+   |
+   = warning: once this associated item is added to the standard library, the ambiguity may cause an error or change in behavior!
+   = note: for more information, see issue #48919 <https://github.com/rust-lang/rust/issues/48919>
+   = help: call with fully qualified syntax `AsyncRead::read_buf(...)` to keep using the current method
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-io/src/lib.rs:65:19
+   |
+65 |     _assert::<Box<AsyncRead>>();
+   |                   ^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+65 |     _assert::<Box<dyn AsyncRead>>();
+   |                   +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-io/src/lib.rs:66:19
+   |
+66 |     _assert::<Box<AsyncWrite>>();
+   |                   ^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+66 |     _assert::<Box<dyn AsyncWrite>>();
+   |                   +++
+
+warning: `tokio-io` (lib) generated 23 warnings (run `cargo fix --lib -p tokio-io` to apply 4 suggestions)
+warning: unused doc comment
+   --> tokio-reactor/src/lib.rs:149:1
+    |
+149 | /// Tracks the reactor for the current execution context.
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ rustdoc does not generate documentation for macro invocations
+    |
+    = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+note: the lint level is defined here
+   --> tokio-reactor/src/lib.rs:31:23
+    |
+31  | #![deny(missing_docs, warnings, missing_debug_implementations)]
+    |                       ^^^^^^^^
+    = note: `#[warn(unused_doc_comments)]` implied by `#[warn(warnings)]`
+
+warning: unnecessary trailing semicolon
+   --> tokio-reactor/src/lib.rs:510:63
+    |
+510 |         let inner = mem::transmute::<usize, Weak<Inner>>(val);;
+    |                                                               ^ help: remove this semicolon
+    |
+    = note: `#[warn(redundant_semicolons)]` implied by `#[warn(warnings)]`
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-reactor/src/lib.rs:577:9
+    |
+577 |         try!(self.io.register(source,
+    |         ^^^
+    |
+    = note: `#[warn(deprecated)]` implied by `#[warn(warnings)]`
+
+warning: use of deprecated constant `std::sync::atomic::ATOMIC_USIZE_INIT`: the `new` function is now preferred
+  --> tokio-reactor/src/lib.rs:68:38
+   |
+68 | use std::sync::atomic::{AtomicUsize, ATOMIC_USIZE_INIT};
+   |                                      ^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated constant `std::sync::atomic::ATOMIC_USIZE_INIT`: the `new` function is now preferred
+   --> tokio-reactor/src/lib.rs:147:39
+    |
+147 | static HANDLE_FALLBACK: AtomicUsize = ATOMIC_USIZE_INIT;
+    |                                       ^^^^^^^^^^^^^^^^^
+    |
+help: replace the use of the deprecated constant
+    |
+147 | static HANDLE_FALLBACK: AtomicUsize = AtomicUsize::new(0);
+    |                                       ~~~~~~~~~~~~~~~~~~~
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-reactor/src/lib.rs:556:35
+    |
+556 |     fn add_source(&self, source: &Evented)
+    |                                   ^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+    = note: `#[warn(bare_trait_objects)]` implied by `#[warn(warnings)]`
+help: use `dyn`
+    |
+556 |     fn add_source(&self, source: &dyn Evented)
+    |                                   +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-reactor/src/lib.rs:586:42
+    |
+586 |     fn deregister_source(&self, source: &Evented) -> io::Result<()> {
+    |                                          ^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+586 |     fn deregister_source(&self, source: &dyn Evented) -> io::Result<()> {
+    |                                          +++
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-reactor/src/atomic_task.rs:168:26
+    |
+168 |         match self.state.compare_and_swap(WAITING, REGISTERING, Acquire) {
+    |                          ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-reactor/src/background.rs:162:13
+    |
+162 |            .compare_and_swap(0, SHUTDOWN_IDLE, SeqCst);
+    |             ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-reactor/src/background.rs:176:18
+    |
+176 |                 .compare_and_swap(curr, SHUTDOWN_NOW, SeqCst);
+    |                  ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-reactor/src/registration.rs:183:45
+    |
+183 |                     let actual = self.state.compare_and_swap(INIT, LOCKED, SeqCst);
+    |                                             ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-reactor/src/registration.rs:410:45
+    |
+410 |                     let actual = self.state.compare_and_swap(state, next, SeqCst);
+    |                                             ^^^^^^^^^^^^^^^^
+
+warning: calls to `std::mem::drop` with a value that implements `Copy` does nothing
+   --> tokio-reactor/src/lib.rs:481:13
+    |
+481 |             drop(handle.into_usize());
+    |             ^^^^^-------------------^
+    |                  |
+    |                  argument has type `usize`
+    |
+    = note: use `let _ = ...` to ignore the expression or result
+    = note: `#[warn(dropping_copy_types)]` implied by `#[warn(warnings)]`
+
+warning: unnecessary parentheses around assigned value
+  --> tokio-threadpool/src/pool/backup_stack.rs:17:27
+   |
+17 | const STACK_MASK: usize = ((1 << 16) - 1);
+   |                           ^             ^
+   |
+note: the lint level is defined here
+  --> tokio-threadpool/src/lib.rs:4:9
+   |
+4  | #![deny(warnings, missing_docs, missing_debug_implementations)]
+   |         ^^^^^^^^
+   = note: `#[warn(unused_parens)]` implied by `#[warn(warnings)]`
+help: remove these parentheses
+   |
+17 - const STACK_MASK: usize = ((1 << 16) - 1);
+17 + const STACK_MASK: usize = (1 << 16) - 1;
+   |
+
+warning: unnecessary parentheses around assigned value
+  --> tokio-threadpool/src/worker/stack.rs:41:27
+   |
+41 | const STACK_MASK: usize = ((1 << 16) - 1);
+   |                           ^             ^
+   |
+help: remove these parentheses
+   |
+41 - const STACK_MASK: usize = ((1 << 16) - 1);
+41 + const STACK_MASK: usize = (1 << 16) - 1;
+   |
+
+warning: trait objects without an explicit `dyn` are deprecated
+ --> tokio-threadpool/src/park/boxed.rs:6:31
+  |
+6 | pub(crate) type BoxPark = Box<Park<Unpark = BoxUnpark, Error = ()> + Send>;
+  |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+  = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+  = note: `#[warn(bare_trait_objects)]` implied by `#[warn(warnings)]`
+help: use `dyn`
+  |
+6 | pub(crate) type BoxPark = Box<dyn Park<Unpark = BoxUnpark, Error = ()> + Send>;
+  |                               +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+ --> tokio-threadpool/src/park/boxed.rs:7:33
+  |
+7 | pub(crate) type BoxUnpark = Box<Unpark>;
+  |                                 ^^^^^^
+  |
+  = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+  = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+  |
+7 | pub(crate) type BoxUnpark = Box<dyn Unpark>;
+  |                                 +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-threadpool/src/builder.rs:71:19
+   |
+71 |     new_park: Box<Fn(&WorkerId) -> BoxPark>,
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+71 |     new_park: Box<dyn Fn(&WorkerId) -> BoxPark>,
+   |                   +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-threadpool/src/callback.rs:10:12
+   |
+10 |     f: Arc<Fn(&Worker, &mut Enter) + Send + Sync>,
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+10 |     f: Arc<dyn Fn(&Worker, &mut Enter) + Send + Sync>,
+   |            +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-threadpool/src/config.rs:15:33
+   |
+15 |     pub after_start: Option<Arc<Fn() + Send + Sync>>,
+   |                                 ^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+15 |     pub after_start: Option<Arc<dyn Fn() + Send + Sync>>,
+   |                                 +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-threadpool/src/config.rs:16:33
+   |
+16 |     pub before_stop: Option<Arc<Fn() + Send + Sync>>,
+   |                                 ^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+16 |     pub before_stop: Option<Arc<dyn Fn() + Send + Sync>>,
+   |                                 +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> tokio-threadpool/src/task/mod.rs:57:22
+   |
+57 | type BoxFuture = Box<Future<Item = (), Error = ()> + Send + 'static>;
+   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+57 | type BoxFuture = Box<dyn Future<Item = (), Error = ()> + Send + 'static>;
+   |                      +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-threadpool/src/sender.rs:132:37
+    |
+132 |     fn spawn(&mut self, future: Box<Future<Item = (), Error = ()> + Send>)
+    |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+132 |     fn spawn(&mut self, future: Box<dyn Future<Item = (), Error = ()> + Send>)
+    |                                     +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tokio-threadpool/src/sender.rs:162:37
+    |
+162 |     fn spawn(&mut self, future: Box<Future<Item = (), Error = ()> + Send>)
+    |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+162 |     fn spawn(&mut self, future: Box<dyn Future<Item = (), Error = ()> + Send>)
+    |                                     +++
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/park/default_park.rs:102:26
+    |
+102 |         match self.state.compare_and_swap(NOTIFY, IDLE, SeqCst) {
+    |                          ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` implied by `#[warn(warnings)]`
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/park/default_park.rs:120:26
+    |
+120 |         match self.state.compare_and_swap(IDLE, SLEEP, SeqCst) {
+    |                          ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/park/default_park.rs:149:26
+    |
+149 |         match self.state.compare_and_swap(IDLE, NOTIFY, SeqCst) {
+    |                          ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/park/default_park.rs:159:26
+    |
+159 |         match self.state.compare_and_swap(SLEEP, NOTIFY, SeqCst) {
+    |                          ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> tokio-threadpool/src/park/default_park.rs:173:14
+    |
+173 |         self.description().fmt(fmt)
+    |              ^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/pool/backup.rs:190:41
+    |
+190 |                 let actual = self.state.compare_and_swap(
+    |                                         ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/pool/backup.rs:272:32
+    |
+272 |             let actual = state.compare_and_swap(
+    |                                ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+  --> tokio-threadpool/src/pool/backup_stack.rs:68:37
+   |
+68 |             let actual = self.state.compare_and_swap(
+   |                                     ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/pool/backup_stack.rs:113:41
+    |
+113 |                 let actual = self.state.compare_and_swap(
+    |                                         ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/pool/backup_stack.rs:141:37
+    |
+141 |             let actual = self.state.compare_and_swap(
+    |                                     ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/pool/mod.rs:170:37
+    |
+170 |             let actual = self.state.compare_and_swap(
+    |                                     ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/pool/mod.rs:244:43
+    |
+244 |             let actual = self.num_workers.compare_and_swap(
+    |                                           ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/pool/mod.rs:470:42
+    |
+470 |                 let actual = entry.state.compare_and_swap(
+    |                                          ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/sender.rs:111:43
+    |
+111 |             let actual = self.inner.state.compare_and_swap(
+    |                                           ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/task/blocking.rs:175:37
+    |
+175 |             let actual = self.state.compare_and_swap(
+    |                                     ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/task/blocking.rs:333:60
+    |
+333 | ...                   let actual: State = self.state.compare_and_swap(
+    |                                                      ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/task/mod.rs:132:40
+    |
+132 |         let actual: State = self.state.compare_and_swap(
+    |                                        ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/task/mod.rs:198:46
+    |
+198 |                 let prev: State = self.state.compare_and_swap(
+    |                                              ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/task/mod.rs:234:37
+    |
+234 |             let actual = self.state.compare_and_swap(
+    |                                     ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/task/mod.rs:245:45
+    |
+245 |                     let actual = self.state.compare_and_swap(
+    |                                             ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/entry.rs:103:37
+    |
+103 |             let actual = self.state.compare_and_swap(
+    |                                     ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/entry.rs:170:37
+    |
+170 |             let actual = self.state.compare_and_swap(
+    |                                     ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+  --> tokio-threadpool/src/worker/stack.rs:93:37
+   |
+93 |             let actual = self.state.compare_and_swap(
+   |                                     ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/stack.rs:148:41
+    |
+148 |                 let actual = self.state.compare_and_swap(
+    |                                         ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/stack.rs:176:37
+    |
+176 |             let actual = self.state.compare_and_swap(
+    |                                     ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/mod.rs:329:45
+    |
+329 |             let actual = self.entry().state.compare_and_swap(
+    |                                             ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/mod.rs:450:51
+    |
+450 |                     let actual = self.inner.state.compare_and_swap(
+    |                                                   ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/mod.rs:602:45
+    |
+602 |             let actual = self.entry().state.compare_and_swap(
+    |                                             ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/mod.rs:691:57
+    |
+691 |                         let actual = self.entry().state.compare_and_swap(
+    |                                                         ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/mod.rs:745:56
+    |
+745 |                 let actual: State = self.entry().state.compare_and_swap(
+    |                                                        ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tokio-threadpool/src/worker/mod.rs:763:61
+    |
+763 | ...                   let actual = self.entry().state.compare_and_swap(
+    |                                                       ^^^^^^^^^^^^^^^^
+
+warning: method `set_pushed` is never used
+   --> tokio-threadpool/src/pool/backup.rs:240:12
+    |
+229 | impl State {
+    | ---------- method in this implementation
+...
+240 |     pub fn set_pushed(&mut self) {
+    |            ^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` implied by `#[warn(warnings)]`
+
+warning: `tokio-reactor` (lib) generated 13 warnings (run `cargo fix --lib -p tokio-reactor` to apply 3 suggestions)
+warning: `tokio-threadpool` (lib) generated 43 warnings (run `cargo fix --lib -p tokio-threadpool` to apply 11 suggestions)
+warning: use of deprecated macro `try`: use the `?` operator instead
+   --> tokio-tcp/src/stream.rs:689:30
+    |
+689 |             if let Some(e) = try!(stream.io.get_ref().take_error()) {
+    |                              ^^^
+    |
+note: the lint level is defined here
+   --> tokio-tcp/src/lib.rs:23:23
+    |
+23  | #![deny(missing_docs, warnings, missing_debug_implementations)]
+    |                       ^^^^^^^^
+    = note: `#[warn(deprecated)]` implied by `#[warn(warnings)]`
+
+warning: a method with this name may be added to the standard library in the future
+   --> tokio-tcp/src/stream.rs:403:9
+    |
+403 |         <&TcpStream>::read_buf(&mut &*self, buf)
+    |         ^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: once this associated item is added to the standard library, the ambiguity may cause an error or change in behavior!
+    = note: for more information, see issue #48919 <https://github.com/rust-lang/rust/issues/48919>
+    = help: call with fully qualified syntax `tokio_io::AsyncRead::read_buf(...)` to keep using the current method
+    = note: `#[warn(unstable_name_collisions)]` implied by `#[warn(warnings)]`
+
+warning: unnecessary parentheses around type
+  --> tokio-udp/src/frame.rs:42:39
+   |
+42 |     fn poll(&mut self) -> Poll<Option<(Self::Item)>, Self::Error> {
+   |                                       ^          ^
+   |
+note: the lint level is defined here
+  --> tokio-udp/src/lib.rs:20:23
+   |
+20 | #![deny(missing_docs, warnings, missing_debug_implementations)]
+   |                       ^^^^^^^^
+   = note: `#[warn(unused_parens)]` implied by `#[warn(warnings)]`
+help: remove these parentheses
+   |
+42 -     fn poll(&mut self) -> Poll<Option<(Self::Item)>, Self::Error> {
+42 +     fn poll(&mut self) -> Poll<Option<Self::Item>, Self::Error> {
+   |
+
+warning: use of deprecated macro `try`: use the `?` operator instead
+  --> tokio-udp/src/frame.rs:69:19
+   |
+69 |             match try!(self.poll_complete()) {
+   |                   ^^^
+   |
+   = note: `#[warn(deprecated)]` implied by `#[warn(warnings)]`
+
+warning: `tokio-tcp` (lib) generated 2 warnings
+warning: `tokio-udp` (lib) generated 2 warnings (run `cargo fix --lib -p tokio-udp` to apply 1 suggestion)
+   Compiling tokio v0.1.5 (/workspace/repo)
+warning: unused doc comment
+   --> src/executor/current_thread/mod.rs:215:1
+    |
+215 | /// Current thread's task runner. This is set in `TaskRunner::with`
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ rustdoc does not generate documentation for macro invocations
+    |
+    = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+note: the lint level is defined here
+   --> src/lib.rs:67:23
+    |
+67  | #![deny(missing_docs, warnings, missing_debug_implementations)]
+    |                       ^^^^^^^^
+    = note: `#[warn(unused_doc_comments)]` implied by `#[warn(warnings)]`
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/scheduler.rs:128:23
+    |
+128 | struct Task(Spawn<Box<Future<Item = (), Error = ()>>>);
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+    = note: `#[warn(bare_trait_objects)]` implied by `#[warn(warnings)]`
+help: use `dyn`
+    |
+128 | struct Task(Spawn<Box<dyn Future<Item = (), Error = ()>>>);
+    |                       +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:212:29
+    |
+212 |     spawn: Cell<Option<*mut SpawnLocal>>,
+    |                             ^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+212 |     spawn: Cell<Option<*mut dyn SpawnLocal>>,
+    |                             +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+ --> src/runtime/shutdown.rs:9:27
+  |
+9 |     pub(super) inner: Box<Future<Item = (), Error = ()> + Send>,
+  |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+  = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+  |
+9 |     pub(super) inner: Box<dyn Future<Item = (), Error = ()> + Send>,
+  |                           +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:704:32
+    |
+704 | unsafe fn hide_lt<'a>(p: *mut (SpawnLocal + 'a)) -> *mut (SpawnLocal + 'static) {
+    |                                ^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+704 | unsafe fn hide_lt<'a>(p: *mut (dyn SpawnLocal + 'a)) -> *mut (SpawnLocal + 'static) {
+    |                                +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:704:59
+    |
+704 | unsafe fn hide_lt<'a>(p: *mut (SpawnLocal + 'a)) -> *mut (SpawnLocal + 'static) {
+    |                                                           ^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+704 | unsafe fn hide_lt<'a>(p: *mut (SpawnLocal + 'a)) -> *mut (dyn SpawnLocal + 'static) {
+    |                                                           +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:208:43
+    |
+208 |     fn spawn_local(&mut self, future: Box<Future<Item = (), Error = ()>>);
+    |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+208 |     fn spawn_local(&mut self, future: Box<dyn Future<Item = (), Error = ()>>);
+    |                                           +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:395:37
+    |
+395 |     fn spawn(&mut self, future: Box<Future<Item = (), Error = ()> + Send>)
+    |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+395 |     fn spawn(&mut self, future: Box<dyn Future<Item = (), Error = ()> + Send>)
+    |                                     +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:591:47
+    |
+591 |     pub fn spawn_local(&mut self, future: Box<Future<Item = (), Error = ()>>)
+    |                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+591 |     pub fn spawn_local(&mut self, future: Box<dyn Future<Item = (), Error = ()>>)
+    |                                               +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:609:37
+    |
+609 |     fn spawn(&mut self, future: Box<Future<Item = (), Error = ()> + Send>)
+    |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+609 |     fn spawn(&mut self, future: Box<dyn Future<Item = (), Error = ()> + Send>)
+    |                                     +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:675:43
+    |
+675 |     fn spawn_local(&mut self, future: Box<Future<Item = (), Error = ()>>) {
+    |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+675 |     fn spawn_local(&mut self, future: Box<dyn Future<Item = (), Error = ()>>) {
+    |                                           +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:684:43
+    |
+684 |     fn set_spawn<F, R>(&self, spawn: &mut SpawnLocal, f: F) -> R
+    |                                           ^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+684 |     fn set_spawn<F, R>(&self, spawn: &mut dyn SpawnLocal, f: F) -> R
+    |                                           +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/scheduler.rs:692:58
+    |
+692 | unsafe fn hide_lt<U: Unpark>(p: *mut ArcNode<U>) -> *mut UnsafeNotify {
+    |                                                          ^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+692 | unsafe fn hide_lt<U: Unpark>(p: *mut ArcNode<U>) -> *mut dyn UnsafeNotify {
+    |                                                          +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/scheduler.rs:173:42
+    |
+173 |     pub fn schedule(&mut self, item: Box<Future<Item = (), Error = ()>>) {
+    |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+173 |     pub fn schedule(&mut self, item: Box<dyn Future<Item = (), Error = ()>>) {
+    |                                          +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/scheduler.rs:363:28
+    |
+363 |     pub fn new(future: Box<Future<Item = (), Error = ()> + 'static>) -> Self {
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+363 |     pub fn new(future: Box<dyn Future<Item = (), Error = ()> + 'static>) -> Self {
+    |                            +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> src/runtime/task_executor.rs:72:37
+   |
+72 |     fn spawn(&mut self, future: Box<Future<Item = (), Error = ()> + Send>)
+   |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+72 |     fn spawn(&mut self, future: Box<dyn Future<Item = (), Error = ()> + Send>)
+   |                                     +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/scheduler.rs:693:30
+    |
+693 |     mem::transmute(p as *mut UnsafeNotify)
+    |                              ^^^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+693 |     mem::transmute(p as *mut dyn UnsafeNotify)
+    |                              +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> src/executor/current_thread/mod.rs:697:52
+    |
+697 |         let spawn = unsafe { hide_lt(spawn as *mut SpawnLocal) };
+    |                                                    ^^^^^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+697 |         let spawn = unsafe { hide_lt(spawn as *mut dyn SpawnLocal) };
+    |                                                    +++
+
+warning: `tokio` (lib) generated 18 warnings (run `cargo fix --lib -p tokio` to apply 17 suggestions)
+warning: trait objects without an explicit `dyn` are deprecated
+   --> tests/current_thread.rs:315:24
+    |
+315 |             _data: Box<Any>,
+    |                        ^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+    = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+    |
+315 |             _data: Box<dyn Any>,
+    |                        +++
+
+warning: `tokio` (test "current_thread") generated 1 warning (run `cargo fix --test "current_thread"` to apply 1 suggestion)
+    Finished test [unoptimized + debuginfo] target(s) in 1.73s
+────────────
+ Nextest run ID 555f623c-c2e4-46c6-8448-aa177ad33a02 with nextest profile: default
+    Starting 15 tests across 1 binary
+        PASS [   0.074s] ( 1/15) tokio::current_thread turn_has_polled
+        PASS [   0.075s] ( 2/15) tokio::current_thread nesting_run
+        PASS [   0.076s] ( 3/15) tokio::current_thread tick_on_infini_future
+        PASS [   0.078s] ( 4/15) tokio::current_thread spawn_many
+        PASS [   0.079s] ( 5/15) tokio::current_thread tasks_are_scheduled_fairly
+        PASS [   0.081s] ( 6/15) tokio::current_thread spawn_from_block_on_future
+        PASS [   0.081s] ( 7/15) tokio::current_thread run_in_future
+        PASS [   0.082s] ( 8/15) tokio::current_thread spawn_and_turn
+        PASS [   0.082s] ( 9/15) tokio::current_thread outstanding_tasks_are_dropped_when_executor_is_dropped
+        PASS [   0.082s] (10/15) tokio::current_thread spawn_in_drop
+        PASS [   0.081s] (11/15) tokio::current_thread spawn_from_block_on_all
+        PASS [   0.082s] (12/15) tokio::current_thread turn_fair
+        PASS [   0.083s] (13/15) tokio::current_thread does_not_set_global_executor_by_default
+        PASS [   0.469s] (14/15) tokio::current_thread hammer_turn
+        PASS [   1.074s] (15/15) tokio::current_thread block_waits
+────────────
+     Summary [   1.075s] 15 tests run: 15 passed, 0 skipped
+reward=1 graded=15 found=2 failed=0 parsed=15 framework=cargo exit_code=0

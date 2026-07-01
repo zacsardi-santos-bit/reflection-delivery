@@ -1,0 +1,282 @@
+patching file airflow/auth/managers/simple/__init__.py
+patching file airflow/auth/managers/simple/simple_auth_manager.py
+patching file airflow/auth/managers/simple/user.py
+patching file airflow/auth/managers/simple/views/__init__.py
+patching file airflow/auth/managers/simple/views/auth.py
+patching file airflow/config_templates/default_webserver_config.py
+patching file airflow/www/app.py
+patching file airflow/www/extensions/init_auth_manager.py
+patching file airflow/www/static/js/login/Form.tsx
+patching file airflow/www/static/js/login/index.tsx
+patching file airflow/www/templates/airflow/login.html
+patching file airflow/www/templates/appbuilder/navbar.html
+patching file airflow/www/webpack.config.js
+The next patch would create the file airflow/auth/managers/simple/__init__.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/simple_auth_manager.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/user.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/views/__init__.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/views/auth.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file airflow/config_templates/default_webserver_config.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/config_templates/default_webserver_config.py.rej
+patching file airflow/www/app.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file airflow/www/app.py.rej
+patching file airflow/www/extensions/init_auth_manager.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/www/extensions/init_auth_manager.py.rej
+The next patch would create the file airflow/www/static/js/login/Form.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/www/static/js/login/index.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/www/templates/airflow/login.html,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file airflow/www/templates/appbuilder/navbar.html
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/www/templates/appbuilder/navbar.html.rej
+patching file airflow/www/webpack.config.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/www/webpack.config.js.rej
+The next patch would create the file airflow/auth/managers/simple/__init__.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/simple_auth_manager.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/user.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/views/__init__.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/views/auth.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file airflow/config_templates/default_webserver_config.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/config_templates/default_webserver_config.py.rej
+patching file airflow/www/app.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file airflow/www/app.py.rej
+patching file airflow/www/extensions/init_auth_manager.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/www/extensions/init_auth_manager.py.rej
+The next patch would create the file airflow/www/static/js/login/Form.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/www/static/js/login/index.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/www/templates/airflow/login.html,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file airflow/www/templates/appbuilder/navbar.html
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/www/templates/appbuilder/navbar.html.rej
+patching file airflow/www/webpack.config.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/www/webpack.config.js.rej
+patching file b/airflow/auth/managers/simple/__init__.py
+patching file b/airflow/auth/managers/simple/simple_auth_manager.py
+patching file b/airflow/auth/managers/simple/user.py
+patching file b/airflow/auth/managers/simple/views/__init__.py
+patching file b/airflow/auth/managers/simple/views/auth.py
+can't find file to patch at input line 436
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/airflow/config_templates/default_webserver_config.py b/airflow/config_templates/default_webserver_config.py
+|index 3048bb21f4..71bdf9e99d 100644
+|--- a/airflow/config_templates/default_webserver_config.py
+|+++ b/airflow/config_templates/default_webserver_config.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 461
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/airflow/www/app.py b/airflow/www/app.py
+|index 270ffe5719..f5e1191fb4 100644
+|--- a/airflow/www/app.py
+|+++ b/airflow/www/app.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 483
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/airflow/www/extensions/init_auth_manager.py b/airflow/www/extensions/init_auth_manager.py
+|index f69734ce8a..6e6f1f8af1 100644
+|--- a/airflow/www/extensions/init_auth_manager.py
+|+++ b/airflow/www/extensions/init_auth_manager.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/airflow/www/static/js/login/Form.tsx
+patching file b/airflow/www/static/js/login/index.tsx
+patching file b/airflow/www/templates/airflow/login.html
+can't find file to patch at input line 675
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/airflow/www/templates/appbuilder/navbar.html b/airflow/www/templates/appbuilder/navbar.html
+|index 141d778d23..6f22d65343 100644
+|--- a/airflow/www/templates/appbuilder/navbar.html
+|+++ b/airflow/www/templates/appbuilder/navbar.html
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 689
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/airflow/www/webpack.config.js b/airflow/www/webpack.config.js
+|index df4e11042c..45d3f90a4d 100644
+|--- a/airflow/www/webpack.config.js
+|+++ b/airflow/www/webpack.config.js
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/__init__.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/simple_auth_manager.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/user.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/views/__init__.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/auth/managers/simple/views/auth.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file airflow/config_templates/default_webserver_config.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/config_templates/default_webserver_config.py.rej
+patching file airflow/www/app.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file airflow/www/app.py.rej
+patching file airflow/www/extensions/init_auth_manager.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/www/extensions/init_auth_manager.py.rej
+The next patch would create the file airflow/www/static/js/login/Form.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/www/static/js/login/index.tsx,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file airflow/www/templates/airflow/login.html,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file airflow/www/templates/appbuilder/navbar.html
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/www/templates/appbuilder/navbar.html.rej
+patching file airflow/www/webpack.config.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file airflow/www/webpack.config.js.rej
+ERROR: golden patch failed to apply by all strategies

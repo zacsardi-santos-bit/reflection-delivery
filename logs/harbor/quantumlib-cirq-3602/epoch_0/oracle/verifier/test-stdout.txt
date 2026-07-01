@@ -1,0 +1,92 @@
+patching file cirq/ionq/ionq_client_test.py
+patching file cirq/ionq/service_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+collecting ... collected 51 items
+
+cirq/ionq/ionq_client_test.py::test_ionq_exception_str PASSED            [  1%]
+cirq/ionq/ionq_client_test.py::test_ionq_not_found_exception_str PASSED  [  3%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_invalid_remote_host PASSED [  5%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_invalid_api_version PASSED [  7%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_invalid_target PASSED    [  9%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_time_travel PASSED       [ 11%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_attributes PASSED        [ 13%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job PASSED        [ 15%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job_default_target PASSED [ 17%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job_target_overrides_default_target PASSED [ 19%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job_no_targets PASSED [ 21%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job_unauthorized PASSED [ 23%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job_not_found PASSED [ 25%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job_not_retriable PASSED [ 27%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job_retry PASSED  [ 29%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job_retry_request_error PASSED [ 31%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_create_job_timeout PASSED [ 33%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_job PASSED           [ 35%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_job_unauthorized PASSED [ 37%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_job_not_found PASSED [ 39%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_job_not_retriable PASSED [ 41%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_job_retry PASSED     [ 43%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_list_jobs PASSED         [ 45%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_list_jobs_status PASSED  [ 47%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_list_jobs_limit PASSED   [ 49%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_list_jobs_batches PASSED [ 50%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_list_jobs_batches_does_not_divide_total PASSED [ 52%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_list_jobs_unauthorized PASSED [ 54%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_list_jobs_not_retriable PASSED [ 56%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_list_jobs_retry PASSED   [ 58%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_cancel_job PASSED        [ 60%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_cancel_job_unauthorized PASSED [ 62%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_cancel_job_not_found PASSED [ 64%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_cancel_job_not_retriable PASSED [ 66%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_cancel_job_retry PASSED  [ 68%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_delete_job PASSED        [ 70%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_delete_job_unauthorized PASSED [ 72%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_delete_job_not_found PASSED [ 74%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_delete_job_not_retriable PASSED [ 76%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_delete_job_retry PASSED  [ 78%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_current_calibrations PASSED [ 80%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_current_calibration_unauthorized PASSED [ 82%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_current_calibration_not_found PASSED [ 84%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_current_calibration_not_retriable PASSED [ 86%]
+cirq/ionq/ionq_client_test.py::test_ionq_client_get_calibration_retry PASSED [ 88%]
+cirq/ionq/service_test.py::test_service_run[qpu-expected_results0] PASSED [ 90%]
+cirq/ionq/service_test.py::test_service_run[simulator-expected_results1] PASSED [ 92%]
+cirq/ionq/service_test.py::test_service_get_job PASSED                   [ 94%]
+cirq/ionq/service_test.py::test_service_create_job PASSED                [ 96%]
+cirq/ionq/service_test.py::test_service_list_jobs PASSED                 [ 98%]
+cirq/ionq/service_test.py::test_service_get_current_calibration PASSED   [100%]
+
+=============================== warnings summary ===============================
+cirq/google/engine/client/quantum_v1alpha1/gapic/quantum_engine_service_client.py:19
+  /workspace/repo/cirq/google/engine/client/quantum_v1alpha1/gapic/quantum_engine_service_client.py:19: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('mpl_toolkits')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+../../usr/local/lib/python3.8/site-packages/google/oauth2/__init__.py:38
+  /usr/local/lib/python3.8/site-packages/google/oauth2/__init__.py:38: FutureWarning: You are using a Python version 3.8 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+    warnings.warn(eol_message.format("3.8"), FutureWarning)
+
+../../usr/local/lib/python3.8/site-packages/google/auth/__init__.py:52
+  /usr/local/lib/python3.8/site-packages/google/auth/__init__.py:52: FutureWarning: You are using a Python version 3.8 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+    warnings.warn(eol_message.format("3.8"), FutureWarning)
+
+../../usr/local/lib/python3.8/site-packages/google/auth/crypt/es.py:21
+  /usr/local/lib/python3.8/site-packages/google/auth/crypt/es.py:21: CryptographyDeprecationWarning: Python 3.8 is no longer supported by the Python core team and support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.8.
+    import cryptography.exceptions
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 51 passed, 7 warnings in 1.21s ========================
+reward=1 graded=51 found=0 failed=0 parsed=49 framework=pytest exit_code=0

@@ -1,0 +1,23 @@
+{
+ "task": "bevyengine-bevy-15810",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds no_std free fns in ops.rs: '+pub fn abs(x: f32)', '+pub fn sqrt(x: f32)', '+pub fn copysign(x: f32, y: f32)' with glob re-export '+pub use libm_ops_for_no_std::*;'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 41,
+  "shallow": true
+ }
+}

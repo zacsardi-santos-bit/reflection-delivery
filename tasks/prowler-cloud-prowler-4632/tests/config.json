@@ -1,0 +1,39 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/config/config_test.py /workspace/repo/tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py -v",
+  "test_files": [
+    "tests/config/config_test.py",
+    "tests/config/fixtures/config.yaml",
+    "tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.providers.aws.services.codebuild.codebuild_project_no_secrets_in_variables.codebuild_project_no_secrets_in_variables_test.Test_codebuild_project_no_secrets_in_variables::test_project_with_plaintext_credentials_but_not_sensitive",
+    "tests.providers.aws.services.codebuild.codebuild_project_no_secrets_in_variables.codebuild_project_no_secrets_in_variables_test.Test_codebuild_project_no_secrets_in_variables::test_project_with_sensitive_plaintext_credentials_exluded",
+    "tests.providers.aws.services.codebuild.codebuild_project_no_secrets_in_variables.codebuild_project_no_secrets_in_variables_test.Test_codebuild_project_no_secrets_in_variables::test_project_with_no_plaintext_credentials",
+    "tests.providers.aws.services.codebuild.codebuild_project_no_secrets_in_variables.codebuild_project_no_secrets_in_variables_test.Test_codebuild_project_no_secrets_in_variables::test_project_with_sensitive_plaintext_credentials_excluded_and_failed",
+    "tests.providers.aws.services.codebuild.codebuild_project_no_secrets_in_variables.codebuild_project_no_secrets_in_variables_test.Test_codebuild_project_no_secrets_in_variables::test_project_with_no_envvar",
+    "tests.providers.aws.services.codebuild.codebuild_project_no_secrets_in_variables.codebuild_project_no_secrets_in_variables_test.Test_codebuild_project_no_secrets_in_variables::test_project_with_multiple_sensitive_credentials",
+    "tests.providers.aws.services.codebuild.codebuild_project_no_secrets_in_variables.codebuild_project_no_secrets_in_variables_test.Test_codebuild_project_no_secrets_in_variables::test_project_with_sensitive_plaintext_credentials_excluded_and_not",
+    "tests.providers.aws.services.codebuild.codebuild_project_no_secrets_in_variables.codebuild_project_no_secrets_in_variables_test.Test_codebuild_project_no_secrets_in_variables::test_project_with_sensitive_plaintext_credentials",
+    "tests.providers.aws.services.codebuild.codebuild_project_no_secrets_in_variables.codebuild_project_no_secrets_in_variables_test.Test_codebuild_project_no_secrets_in_variables::test_no_project"
+  ],
+  "PASS_TO_PASS": [
+    "tests.config.config_test.Test_Config::test_get_available_compliance_frameworks",
+    "tests.config.config_test.Test_Config::test_load_and_validate_config_file_kubernetes",
+    "tests.config.config_test.Test_Config::test_load_and_validate_fixer_config_gcp",
+    "tests.config.config_test.Test_Config::test_load_and_validate_fixer_config_kubernetes",
+    "tests.config.config_test.Test_Config::test_load_and_validate_config_file_gcp",
+    "tests.config.config_test.Test_Config::test_load_and_validate_fixer_config_invalid_fixer_config_path",
+    "tests.config.config_test.Test_Config::test_check_current_version_with_latest",
+    "tests.config.config_test.Test_Config::test_load_and_validate_fixer_config_azure",
+    "tests.config.config_test.Test_Config::test_check_current_version_with_old",
+    "tests.config.config_test.Test_Config::test_load_and_validate_config_file_old_format",
+    "tests.config.config_test.Test_Config::test_load_and_validate_config_file_invalid_config_file_path",
+    "tests.config.config_test.Test_Config::test_load_and_validate_fixer_config_aws",
+    "tests.config.config_test.Test_Config::test_get_aws_available_regions",
+    "tests.config.config_test.Test_Config::test_load_and_validate_config_file_azure",
+    "tests.config.config_test.Test_Config::test_load_and_validate_config_file_aws"
+  ]
+}

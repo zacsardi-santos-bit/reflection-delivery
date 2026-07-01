@@ -1,0 +1,1655 @@
+patching file src/__tests__/client.ts
+patching file src/__tests__/dataMasking.ts
+patching file src/__tests__/optimistic.ts
+patching file src/__tests__/refetchQueries.ts
+patching file src/cache/core/__tests__/cache.ts
+patching file src/cache/inmemory/__tests__/cache.ts
+patching file src/cache/inmemory/__tests__/diffAgainstStore.ts
+patching file src/cache/inmemory/__tests__/entityStore.ts
+patching file src/cache/inmemory/__tests__/policies.ts
+patching file src/cache/inmemory/__tests__/readFromStore.ts
+patching file src/cache/inmemory/__tests__/roundtrip.ts
+patching file src/core/__tests__/ObservableQuery.ts
+patching file src/core/__tests__/QueryManager/index.ts
+patching file src/core/__tests__/fetchPolicies.ts
+PASS Core Tests src/cache/core/__tests__/cache.ts (19.728 s)
+  abstract cache
+    transformDocument
+      ✓ returns the document (125 ms)
+    transformForLink
+      ✓ returns the document
+    readQuery
+      ✓ runs the read method (2 ms)
+      ✓ defaults optimistic to false (2 ms)
+    readFragment
+      ✓ runs the read method (9 ms)
+      ✓ defaults optimistic to false (3 ms)
+    writeQuery
+      ✓ runs the write method
+    writeFragment
+      ✓ runs the write method (2 ms)
+    updateQuery
+      ✓ runs the readQuery & writeQuery methods (1 ms)
+      ✓ does not call writeQuery method if data is null (2 ms)
+      ✓ does not call writeQuery method if data is undefined
+      ✓ calls the readQuery & writeQuery methods with the options object (5 ms)
+      ✓ returns current value in memory if no update was made (4 ms)
+      ✓ returns the updated value in memory if an update was made
+      ✓ calls update function with the current value in memory (2 ms)
+    updateFragment
+      ✓ runs the readFragment & writeFragment methods (2 ms)
+      ✓ does not call writeFragment method if data is null (1 ms)
+      ✓ does not call writeFragment method if data is undefined
+      ✓ calls the readFragment & writeFragment methods with the options object (1 ms)
+      ✓ returns current value in memory if no update was made
+      ✓ returns the updated value in memory if an update was made
+      ✓ calls update function with the current value in memory
+  Cache type tests
+    modify
+      ○ skipped field types are inferred correctly from passed entity type
+      ○ skipped field method needs to return a value of the correct type
+      ○ skipped passing a function as `field` should infer all entity properties as possible input (interfaces)
+      ○ skipped passing a function as `field` should infer all entity properties as possible input (types)
+      ○ skipped passing a function as `field` w/o specifying an entity type
+      ○ skipped passing a function as `field` property w/o specifying an entity type
+      ○ skipped allows undefined as return value
+      ○ skipped Allow for mixed arrays on union fields
+      ○ skipped Allows partial return data
+
+PASS Core Tests src/cache/inmemory/__tests__/diffAgainstStore.ts (20.125 s)
+  defaultNormalizedCacheFactory
+    ✓ should return an EntityStore (9 ms)
+  diffing queries against the store
+    ✓ expects named fragments to return complete as false when diffd against the store (5 ms)
+    ✓ expects inline fragments to return complete as false when diffd against the store (1 ms)
+    ✓ returns nothing when the store is enough (3 ms)
+    ✓ caches root queries both under the ID of the node and the query name (5 ms)
+    ✓ does not swallow errors other than field errors (46 ms)
+    ✓ does not error on a correct query with union typed fragments (2 ms)
+    ✓ does not error on a query with fields missing from all but one named fragment (2 ms)
+    ✓ returns null result on a query with fields missing from matching named fragments (2 ms)
+    ✓ returns available fields if returnPartialData is true (5 ms)
+    ✓ will add a private id property (25 ms)
+    referential equality preservation
+      ✓ will return the previous result if there are no changes (1 ms)
+      ✓ will return parts of the previous result that changed (1 ms)
+      ✓ will return the previous result if there are no changes in child arrays (2 ms)
+      ✓ will not add zombie items when previousResult starts with the same items (1 ms)
+      ✓ will return the previous result if there are no changes in nested child arrays (1 ms)
+      ✓ will return parts of the previous result if there are changes in child arrays (3 ms)
+      ✓ will return the same items in a different order with `dataIdFromObject` (3 ms)
+      ✓ will return the same JSON scalar field object (3 ms)
+      ✓ will preserve equality with custom resolvers (9 ms)
+    malformed queries
+      ✓ throws for non-scalar query fields without selection sets (12 ms)
+    issue #4081
+      ✓ should not return results containing cycles (5 ms)
+
+PASS Core Tests src/cache/inmemory/__tests__/readFromStore.ts (20.445 s)
+  defaultNormalizedCacheFactory
+    ✓ should return an EntityStore (24 ms)
+  resultCacheMaxSize
+    ✓ uses default max size on caches if resultCacheMaxSize is not configured (1 ms)
+    ✓ configures max size on caches when resultCacheMaxSize is set
+  reading from the store
+    ✓ runs a nested query with proper fragment fields in arrays (6 ms)
+    ✓ rejects malformed queries (48 ms)
+    ✓ runs a basic query (1 ms)
+    ✓ runs a basic query with arguments (2 ms)
+    ✓ runs a basic query with custom directives (2 ms)
+    ✓ runs a basic query with default values for arguments (3 ms)
+    ✓ runs a nested query (3 ms)
+    ✓ runs a nested query with multiple fragments (3 ms)
+    ✓ runs a nested query with an array without IDs (1 ms)
+    ✓ runs a nested query with an array without IDs and a null (1 ms)
+    ✓ runs a nested query with an array with IDs and a null (1 ms)
+    ✓ runs a nested query - skips iterating into an empty array (2 ms)
+    ✓ returns null on a missing field (3 ms)
+    ✓ readQuery supports returnPartialData (11 ms)
+    ✓ readFragment supports returnPartialData (3 ms)
+    ✓ distinguishes between missing @client and non-@client fields (12 ms)
+    ✓ runs a nested query where the reference is null (1 ms)
+    ✓ runs an array of non-objects (1 ms)
+    ✓ runs an array of non-objects with null (1 ms)
+    ✓ will read from an arbitrary root id (1 ms)
+    ✓ properly handles the @connection directive (1 ms)
+    ✓ can use keyArgs function instead of @connection directive (1 ms)
+    ✓ refuses to return raw Reference objects (24 ms)
+    ✓ read functions for root query fields work with empty cache (2 ms)
+    ✓ custom read functions can map/filter dangling references (9 ms)
+    ✓ propagates eviction signals to parent queries (21 ms)
+    ✓ returns === results for different queries (27 ms)
+    ✓ does not canonicalize custom scalar objects (2 ms)
+    ✓ readQuery can opt out of canonization (4 ms)
+    ✓ readFragment can opt out of canonization (9 ms)
+
+PASS Core Tests src/cache/inmemory/__tests__/roundtrip.ts (22.027 s)
+  defaultNormalizedCacheFactory
+    ✓ should return an EntityStore (9 ms)
+  roundtrip
+    ✓ real graphql result (10 ms)
+    ✓ multidimensional array (#776) (16 ms)
+    ✓ array with null values (#1551) (5 ms)
+    ✓ enum arguments (3 ms)
+    ✓ with an alias (4 ms)
+    ✓ with variables (3 ms)
+    ✓ with GraphQLJSON scalar type (6 ms)
+    directives
+      ✓ should be able to query with skip directive true (2 ms)
+      ✓ should be able to query with skip directive false (2 ms)
+    fragments
+      ✓ should work on null fields (2 ms)
+      ✓ should work on basic inline fragments (3 ms)
+      ✓ should throw an error on two of the same inline fragment types (14 ms)
+      ✓ should resolve fields it can on interface with non matching inline fragments (3 ms)
+      ✓ should resolve on union types with spread fragments (5 ms)
+      ✓ should work with a fragment on the actual interface or union (4 ms)
+      ✓ should throw on error on two of the same spread fragment types (2 ms)
+      ✓ should resolve on @include and @skip with inline fragments (2 ms)
+      ✓ should resolve on @include and @skip with spread fragments (2 ms)
+
+PASS Core Tests src/cache/inmemory/__tests__/entityStore.ts (21.912 s)
+  EntityStore
+    ✓ should support result caching if so configured (10 ms)
+    ✓ should reclaim no-longer-reachable, unretained entities (24 ms)
+    ✓ should respect optimistic updates, when active (4 ms)
+    ✓ should respect retain/release methods (3 ms)
+    ✓ allows cache eviction (6 ms)
+    ✓ ignores retainment count for ROOT_QUERY (5 ms)
+    ✓ cache.gc is not confused by StoreObjects with stray __ref fields (2 ms)
+    ✓ allows evicting specific fields (14 ms)
+    ✓ allows evicting specific fields with specific arguments (5 ms)
+    ✓ allows evicting specific fields with specific arguments using EvictOptions (2 ms)
+    ✓ supports cache.identify(reference) (3 ms)
+    ✓ supports cache.identify(object) (7 ms)
+    ✓ gracefully handles eviction amid optimistic updates (3 ms)
+    ✓ supports toReference(obj, true) to persist obj (8 ms)
+    ✓ supports toReference(id) (4 ms)
+    ✓ should not over-invalidate fields with keyArgs (4 ms)
+    ✓ Refuses to merge { __ref } objects as StoreObjects (1 ms)
+
+PASS Core Tests src/__tests__/refetchQueries.ts (22.055 s)
+  client.refetchQueries
+    ✓ is public and callable (16 ms)
+    ✓ includes watched queries affected by updateCache (24 ms)
+    ✓ includes watched queries named in options.include (7 ms)
+    ✓ includes query DocumentNode objects specified in options.include (7 ms)
+    ✓ includes all queries when options.include === "all" (10 ms)
+    ✓ includes all active queries when options.include === "active" (9 ms)
+    ✓ includes queries named in refetchQueries even if they have no observers (15 ms)
+    ✓ should not include unwatched single queries (6 ms)
+    ✓ refetches watched queries if onQueryUpdated not provided (6 ms)
+    ✓ can run updateQuery function against optimistic cache layer (5 ms)
+    ✓ can return true from onQueryUpdated to choose default refetching behavior (4 ms)
+    ✓ can return true from onQueryUpdated when using options.updateCache (5 ms)
+    ✓ can return false from onQueryUpdated to skip/ignore a query (7 ms)
+    ✓ can refetch no-cache queries
+
+PASS Core Tests src/cache/inmemory/__tests__/cache.ts (22.284 s)
+  Cache
+    readQuery
+      ✓ will read some data from the store (1/2) (11 ms)
+      ✓ will read some data from the store (2/2) (2 ms)
+      ✓ will read some deeply nested data from the store (1/2) (12 ms)
+      ✓ will read some deeply nested data from the store (2/2) (2 ms)
+      ✓ will read some data from the store with variables (1/2) (1 ms)
+      ✓ will read some data from the store with variables (2/2)
+      ✓ will read some data from the store with null variables (1/2) (1 ms)
+      ✓ will read some data from the store with null variables (2/2) (1 ms)
+      ✓ should not mutate arguments passed in (1/2) (1 ms)
+      ✓ should not mutate arguments passed in (2/2) (7 ms)
+    readFragment
+      ✓ will throw an error when there is no fragment (1/2) (46 ms)
+      ✓ will throw an error when there is no fragment (2/2) (2 ms)
+      ✓ will throw an error when there is more than one fragment but no fragment name (1/2) (2 ms)
+      ✓ will throw an error when there is more than one fragment but no fragment name (2/2) (1 ms)
+      ✓ will read some deeply nested data from the store at any id (1/2) (3 ms)
+      ✓ will read some deeply nested data from the store at any id (2/2) (1 ms)
+      ✓ will read some data from the store with variables (1/2) (1 ms)
+      ✓ will read some data from the store with variables (2/2) (1 ms)
+      ✓ will return null when an id that can’t be found is provided (1/2) (1 ms)
+      ✓ will return null when an id that can’t be found is provided (2/2) (1 ms)
+      ✓ should not accidentally depend on unrelated entity fields (10 ms)
+      ✓ should not return null when ID found in optimistic layer (2 ms)
+    writeQuery
+      ✓ will write some data to the store (1/2) (1 ms)
+      ✓ will write some data to the store (2/2) (1 ms)
+      ✓ will write some deeply nested data to the store (2 ms)
+      ✓ will write some data to the store with variables (1/2)
+      ✓ will write some data to the store with variables (2/2) (1 ms)
+      ✓ will write some data to the store with variables where some are null (1/2)
+      ✓ will write some data to the store with variables where some are null (2/2) (1 ms)
+    writeFragment
+      ✓ will throw an error when there is no fragment (1/2) (2 ms)
+      ✓ will throw an error when there is no fragment (2/2) (2 ms)
+      ✓ will throw an error when there is more than one fragment but no fragment name (1/2) (2 ms)
+      ✓ will throw an error when there is more than one fragment but no fragment name (2/2) (1 ms)
+      ✓ will write some deeply nested data into the store at any id (1/2) (12 ms)
+      ✓ will write some deeply nested data into the store at any id (2/2) (3 ms)
+      ✓ writes data that can be read back (1/2) (1 ms)
+      ✓ writes data that can be read back (2/2) (1 ms)
+      ✓ will write some data to the store with variables (1/2) (11 ms)
+      ✓ will write some data to the store with variables (2/2)
+    cache.updateQuery and cache.updateFragment
+      ✓ should be batched (5 ms)
+    cache.restore
+      ✓ replaces cache.{store{Reader,Writer},maybeBroadcastWatch} (2 ms)
+    cache.batch
+      ✓ calls onWatchUpdated for each invalidated watch (4 ms)
+      ✓ works with cache.modify and INVALIDATE (2 ms)
+      ✓ does not pass previously invalidated queries to onWatchUpdated (3 ms)
+      ✓ returns options.update result for optimistic and non-optimistic batches (2 ms)
+    performTransaction
+      ✓ will not broadcast mid-transaction (1/2) (1 ms)
+      ✓ will not broadcast mid-transaction (2/2) (7 ms)
+    recordOptimisticTransaction
+      ✓ will only broadcast once (1/2) (4 ms)
+      ✓ will only broadcast once (2/2) (7 ms)
+  resultCacheMaxSize
+    ✓ uses default max size on caches if resultCacheMaxSize is not configured (1 ms)
+    ✓ configures max size on caches when resultCacheMaxSize is set (5 ms)
+  InMemoryCache#broadcastWatches
+    ✓ should keep distinct consumers distinct (issue #5733) (9 ms)
+    ✓ should pass WatchOptions through to cache.diff (6 ms)
+  InMemoryCache#modify
+    ✓ should work with single modifier function (1 ms)
+    ✓ should work with multiple modifier functions (2 ms)
+    ✓ should allow invalidation using details.INVALIDATE (3 ms)
+    ✓ should allow deletion using details.DELETE (3 ms)
+    ✓ can remove specific items from paginated lists (3 ms)
+    ✓ should not revisit deleted fields (2 ms)
+    ✓ should broadcast watches for queries with changed fields (6 ms)
+    ✓ should handle argument-determined field identities (25 ms)
+    ✓ should modify ROOT_QUERY only when options.id absent (3 ms)
+    ✓ warns if `modify` returns a mixed array of objects and references (6 ms)
+    ✓ warns if `modify` returns a Reference that is not part of the store as part of an array (3 ms)
+    ✓ warns if `modify` returns a Reference that is not part of the store (17 ms)
+  ReactiveVar and makeVar
+    ✓ should work with resultCaching enabled (default) (3 ms)
+    ✓ should work with resultCaching disabled (unusual) (2 ms)
+    ✓ should forget cache once all watches are cancelled (4 ms)
+    ✓ should remove all watchers when cache.reset() called (6 ms)
+    ✓ should recall forgotten vars once cache has watches again (3 ms)
+    ✓ should broadcast only once for multiple reads of same variable (2 ms)
+    ✓ should broadcast to manually added caches (3 ms)
+  TypedDocumentNode<Data, Variables>
+    ✓ should determine Data and Variables types of {write,read}{Query,Fragment} (6 ms)
+    ○ skipped should infer the types of modifier fields
+
+PASS Core Tests src/cache/inmemory/__tests__/policies.ts (22.45 s)
+  type policies
+    ✓ can specify basic keyFields (15 ms)
+    ✓ can specify composite keyFields (2 ms)
+    ✓ can specify nested keyFields with alias (2 ms)
+    ✓ keeps keyFields in specified order (3 ms)
+    ✓ serializes nested keyFields objects in stable order (4 ms)
+    ✓ accepts keyFields functions (3 ms)
+    ✓ works with fragments that contain aliased key fields (7 ms)
+    ✓ complains about missing key fields (108 ms)
+    ✓ does not clobber previous keyFields with undefined (1 ms)
+    ✓ does not remove previous typePolicies (2 ms)
+    ✓ support inheritance (16 ms)
+    ✓ typePolicies can be inherited from supertypes with fuzzy possibleTypes (4 ms)
+    ✓ runs read and merge functions for unidentified data (3 ms)
+    ✓ allows keyFields and keyArgs functions to return false (1 ms)
+    ✓ can read from foreign references using read helper (6 ms)
+    ✓ readField can read fields with arguments (1 ms)
+    ✓ readField warns if explicitly passed undefined `from` option (1 ms)
+    ✓ can return existing object from merge function (issue #6245) (1 ms)
+    ✓ can alter the root query __typename (2 ms)
+    ✓ can configure {query,mutation,subscription}Type:true (2 ms)
+    field policies
+      ✓ can filter arguments using keyArgs (4 ms)
+      ✓ can filter arguments using keyArgs in non-Query fields (1 ms)
+      ✓ assumes keyArgs:false when read and merge function present (3 ms)
+      ✓ can include optional arguments in field keyArgs policy (22 ms)
+      ✓ can return KeySpecifier arrays from keyArgs functions (2 ms)
+      ✓ can refer to directive @connection in field key shorthand array (2 ms)
+      ✓ can refer to directive @directive in field key shorthand array (2 ms)
+      ✓ can refer to directive @misdirective in field key shorthand array (1 ms)
+      ✓ can refer to variables in field key shorthand array (2 ms)
+      ✓ can use options.storage in read functions (2 ms)
+      ✓ can use read function to implement synthetic/computed keys (2 ms)
+      ✓ should return correct variables in read function (1 ms)
+      ✓ read and merge can cooperate through options.storage (5 ms)
+      ✓ read, merge, and modify functions can access options.storage (9 ms)
+      ✓ merge functions can deduplicate items using readField (3 ms)
+      ✓ readField helper function calls custom read functions (13 ms)
+      ✓ can return void to indicate missing field (2 ms)
+      ✓ can define custom merge functions and keyArgs simultaneously (6 ms)
+      ✓ can handle Relay-style pagination without args (33 ms)
+      ✓ can handle Relay-style pagination (174 ms)
+      ✓ runs nested merge functions as well as ancestors (3 ms)
+      ✓ should report dangling references returned by read functions (6 ms)
+      ✓ can force merging of unidentified non-normalized data (9 ms)
+      ✓ can force merging with merge:true field policy (3 ms)
+      ✓ can force merging with merge:true type policy (3 ms)
+      ✓ can force merging with inherited merge:true field policy (2 ms)
+      ✓ can force merging with inherited merge:true type policy (2 ms)
+      ✓ can force merging with inherited type policy merge function (4 ms)
+      ✓ can force merging references with non-normalized objects (5 ms)
+      ✓ can force merging with inherited field merge function (8 ms)
+
+  console.warn
+    No more mocked responses for the query: query number {
+      myNumber {
+        n
+      }
+    }
+    Expected variables: {}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1181:20)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1757:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at core/ObservableQuery.ts:152:14
+      at new Subscription (../node_modules/zen-observable/lib/Observable.js:197:34)
+      at ObservableQuery.subscribe (../node_modules/zen-observable/lib/Observable.js:279:14)
+      at Object.start (testing/internal/ObservableStream.ts:27:40)
+      at new ObservableStream (testing/internal/ObservableStream.ts:25:19)
+      at __tests__/client.ts:1842:22
+      at step (../node_modules/tslib/tslib.js:195:27)
+      at Object.next (../node_modules/tslib/tslib.js:176:57)
+      at ../node_modules/tslib/tslib.js:169:75
+      at Object.__awaiter (../node_modules/tslib/tslib.js:165:16)
+      at Object.<anonymous> (__tests__/client.ts:1831:42)
+
+PASS Core Tests src/__tests__/optimistic.ts (23.045 s)
+  optimistic mutation results
+    error handling
+      with `updateQueries`
+        ✓ handles a single error for a single mutation (67 ms)
+        ✓ handles errors produced by one mutation in a series (39 ms)
+        ✓ can run 2 mutations concurrently and handles all intermediate states well (115 ms)
+      with `update`
+        ✓ handles a single error for a single mutation (13 ms)
+        ✓ handles errors produced by one mutation in a series (13 ms)
+        ✓ can run 2 mutations concurrently and handles all intermediate states well (113 ms)
+    Apollo Client readQuery/readFragment optimistic results
+      ✓ client.readQuery should read the optimistic response of a mutation only when update function is called optimistically (9 ms)
+      ✓ should read the optimistic response of a mutation when making an ApolloClient.readFragment() call, if the `optimistic` param is set to true (8 ms)
+      ✓ should not read the optimistic response of a mutation when making an ApolloClient.readFragment() call, if the `optimistic` param is set to false (8 ms)
+    passing a function to optimisticResponse
+      ✓ will use a passed variable in optimisticResponse (12 ms)
+      ✓ will not update optimistically if optimisticResponse returns IGNORE sentinel object (8 ms)
+      ✓ allows IgnoreModifier as return value when inferring from a TypedDocumentNode mutation (1 ms)
+    optimistic updates using `updateQueries`
+      ✓ will insert a single itemAsync to the beginning (9 ms)
+      ✓ two array insert like mutations (63 ms)
+      ✓ two mutations, one fails (29 ms)
+      ✓ will handle dependent updates (33 ms)
+    optimistic updates using `update`
+      ✓ will insert a single itemAsync to the beginning (310 ms)
+      ✓ two array insert like mutations (63 ms)
+      ✓ two mutations, one fails (29 ms)
+      ✓ will handle dependent updates (32 ms)
+      ✓ final update ignores optimistic data (12 ms)
+  optimistic mutation - githunt comments
+    ✓ can post a new comment (11 ms)
+
+PASS Core Tests src/__tests__/dataMasking.ts (23.641 s)
+  client.watchQuery
+    ✓ masks queries when dataMasking is `true` (50 ms)
+    ✓ does not mask query when dataMasking is `false` (4 ms)
+    ✓ does not mask query by default (5 ms)
+    ✓ does not mask fragments marked with @unmask (6 ms)
+    ✓ does not mask fragments marked with @unmask added by document transforms (7 ms)
+    ✓ does not mask query when using a cache that does not support it (6 ms)
+    ✓ masks queries updated by the cache (13 ms)
+    ✓ does not trigger update when updating field in named fragment (137 ms)
+    ✓ masks result from cache when using with cache-first fetch policy (3 ms)
+    ✓ masks result from cache when using with cache-only fetch policy (2 ms)
+    ✓ masks cache and network result when using cache-and-network fetch policy (24 ms)
+    ✓ masks partial cache data when returnPartialData is `true` (24 ms)
+    ✓ masks partial data returned from data on errors with errorPolicy `all` (23 ms)
+    ✓ masks result returned from getCurrentResult when using cache-first fetchPolicy (24 ms)
+    ✓ masks result returned from getCurrentResult when using network-only fetchPolicy (22 ms)
+    ✓ masks result returned from getCurrentResult when using cache-and-network fetchPolicy (22 ms)
+    ✓ warns when accessing a unmasked field while using @unmask with mode: 'migrate' (26 ms)
+    ✓ does not warn when passing @unmask(mode: 'migrate') object to cache.identify (24 ms)
+    ✓ reads fragment by passing parent object to `from` (5 ms)
+    ✓ warns when passing parent object to `from` when id is masked (4 ms)
+    ✓ warns when passing parent object to `from` that is non-normalized (5 ms)
+    ✓ can lookup unmasked fragments from the fragment registry in queries (2 ms)
+    ✓ masks result of refetch (109 ms)
+    ✓ masks result of setVariables (112 ms)
+    ✓ masks result of setOptions (109 ms)
+    ✓ does not mask data passed to updateQuery (105 ms)
+    ✓ masks deferred fragments (106 ms)
+    ✓ masks deferred fragments within inline fragments (6 ms)
+    ✓ does not mask deferred fragments marked with @unmask (10 ms)
+    ✓ handles deferred fragments with a mix of masked and unmasked (7 ms)
+    ✓ warns and returns masked result when used with no-cache fetch policy (5 ms)
+    ✓ does not warn on no-cache queries when data masking is disabled (3 ms)
+    ✓ does not warn on no-cache queries when all fragments use `@unmask` (4 ms)
+    ✓ warns on no-cache queries when at least one fragment does not use `@unmask` (3 ms)
+  client.watchFragment
+    ✓ masks watched fragments when dataMasking is `true` (2 ms)
+    ✓ does not mask watched fragments when dataMasking is disabled (2 ms)
+    ✓ does not mask watched fragments by default (2 ms)
+    ✓ does not mask watched fragments marked with @unmask (1 ms)
+    ✓ masks watched fragments updated by the cache (2 ms)
+    ✓ does not trigger update on watched fragment when updating field in named fragment (102 ms)
+    ✓ triggers update to child watched fragment when updating field in named fragment (105 ms)
+    ✓ does not trigger update to watched fragments when updating field in named fragment with @nonreactive (205 ms)
+    ✓ does not trigger update to watched fragments when updating parent field with @nonreactive and child field (103 ms)
+    ✓ warns when accessing an unmasked field on a watched fragment while using @unmask with mode: 'migrate' (2 ms)
+    ✓ can lookup unmasked fragments from the fragment registry in watched fragments (2 ms)
+  client.query
+    ✓ masks data returned from client.query when dataMasking is `true` (3 ms)
+    ✓ does not mask data returned from client.query when dataMasking is `false` (2 ms)
+    ✓ does not mask data returned from client.query by default (4 ms)
+    ✓ handles errors returned when using errorPolicy `none` (6 ms)
+    ✓ handles errors returned when using errorPolicy `all` (6 ms)
+    ✓ masks fragment data in fields nulled by errors when using errorPolicy `all` (2 ms)
+    ✓ warns and returns masked result when used with no-cache fetch policy (2 ms)
+    ✓ does not warn on no-cache queries when data masking is disabled (4 ms)
+    ✓ does not warn on no-cache queries when all fragments use `@unmask` (3 ms)
+    ✓ warns on no-cache queries when at least one fragment does not use `@unmask` (3 ms)
+  client.subscribe
+    ✓ masks data returned from subscriptions when dataMasking is `true` (3 ms)
+    ✓ does not mask data returned from subscriptions when dataMasking is `false` (3 ms)
+    ✓ does not mask data returned from subscriptions by default (3 ms)
+    ✓ handles errors returned from the subscription when errorPolicy is `none` (3 ms)
+    ✓ handles errors returned from the subscription when errorPolicy is `all` (4 ms)
+    ✓ masks partial data for errors returned from the subscription when errorPolicy is `all` (3 ms)
+    ✓ warns and returns masked result when used with no-cache fetch policy (6 ms)
+    ✓ does not warn on no-cache queries when data masking is disabled (2 ms)
+    ✓ does not warn on no-cache queries when all fragments use `@unmask` (4 ms)
+    ✓ warns on no-cache queries when at least one fragment does not use `@unmask` (4 ms)
+  observableQuery.subscribeToMore
+    ✓ masks query data, does not mask updateQuery callback when dataMasking is `true` (9 ms)
+    ✓ does not mask data returned from subscriptions when dataMasking is `false` (6 ms)
+    ✓ does not mask data by default (6 ms)
+  client.mutate
+    ✓ masks data returned from client.mutate when dataMasking is `true` (5 ms)
+    ✓ does not mask data returned from client.mutate when dataMasking is `false` (3 ms)
+    ✓ does not mask data returned from client.mutate by default (4 ms)
+    ✓ does not mask data passed to update function (4 ms)
+    ✓ handles errors returned when using errorPolicy `none` (4 ms)
+    ✓ handles errors returned when using errorPolicy `all` (4 ms)
+    ✓ masks fragment data in fields nulled by errors when using errorPolicy `all` (3 ms)
+    ✓ warns and returns masked result when used with no-cache fetch policy (4 ms)
+    ✓ does not warn on no-cache queries when data masking is disabled (3 ms)
+    ✓ does not warn on no-cache queries when all fragments use `@unmask` (3 ms)
+    ✓ warns on no-cache queries when at least one fragment does not use `@unmask` (3 ms)
+
+  console.warn
+    No more mocked responses for the query: {
+      author {
+        name {
+          firstName
+          lastName
+        }
+        age
+        id
+        __typename
+      }
+    }
+    Expected variables: {}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1740:47)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at reobserveCacheFirst (core/ObservableQuery.ts:1190:19)
+      at listeners.add.oqListener (core/QueryInfo.ts:271:32)
+      at core/QueryInfo.ts:284:44
+          at Set.forEach (<anonymous>)
+      at QueryInfo.Object.<anonymous>.QueryInfo.notify (core/QueryInfo.ts:284:22)
+      at core/QueryInfo.ts:233:52
+      at Timeout.task (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+PASS Core Tests src/core/__tests__/fetchPolicies.ts (23.879 s)
+  network-only
+    ✓ requests from the network even if already in cache (36 ms)
+    ✓ saves data to the cache on success (5 ms)
+    ✓ does not save data to the cache on failure (9 ms)
+    ✓ updates the cache on a mutation (10 ms)
+  no-cache
+    ✓ requests from the network when not in cache (5 ms)
+    ✓ requests from the network even if already in cache (8 ms)
+    ✓ does not save the data to the cache on success (7 ms)
+    ✓ does not save data to the cache on failure (14 ms)
+    ✓ does not update the cache on a mutation (7 ms)
+    when notifyOnNetworkStatusChange is set
+      ✓ does not save the data to the cache on success (7 ms)
+      ✓ does not save data to the cache on failure (5 ms)
+      ✓ gives appropriate networkStatus for watched queries (110 ms)
+  cache-first
+    ✓ does not trigger network request during optimistic update (165 ms)
+  cache-only
+    ✓ allows explicit refetch to happen (104 ms)
+  cache-and-network
+    ✓ gives appropriate networkStatus for refetched queries (108 ms)
+  nextFetchPolicy
+    ✓ transitions network-only to cache-first (not using defaults) (138 ms)
+    ✓ transitions network-only to cache-first (using defaults) (137 ms)
+    ✓ transitions network-only to nextFetchPolicyNetworkOnlyToCacheFirst (not using defaults) (137 ms)
+    ✓ transitions network-only to nextFetchPolicyNetworkOnlyToCacheFirst (using defaults) (136 ms)
+    ✓ transitions cache-and-network to cache-first (not using defaults) (138 ms)
+    ✓ transitions cache-and-network to cache-first (using defaults) (136 ms)
+    ✓ transitions cache-and-network to nextFetchPolicyCacheAndNetworkToCacheFirst (not using defaults) (143 ms)
+    ✓ transitions cache-and-network to nextFetchPolicyCacheAndNetworkToCacheFirst (using defaults) (139 ms)
+    ✓ transitions cache-and-network to nextFetchPolicyAlwaysCacheFirst (not using defaults) (126 ms)
+    ✓ transitions cache-and-network to nextFetchPolicyAlwaysCacheFirst (using defaults) (125 ms)
+
+  console.warn
+    No more mocked responses for the query: {
+      author {
+        name {
+          firstName
+          lastName
+        }
+        age
+        __typename
+      }
+    }
+    Expected variables: {}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1744:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at reobserveCacheFirst (core/ObservableQuery.ts:1190:19)
+      at listeners.add.oqListener (core/QueryInfo.ts:271:32)
+      at core/QueryInfo.ts:284:44
+          at Set.forEach (<anonymous>)
+      at QueryInfo.Object.<anonymous>.QueryInfo.notify (core/QueryInfo.ts:284:22)
+      at core/QueryInfo.ts:233:52
+      at Timeout.task (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: query fetchLuke($id: String) {
+      people_one(id: $id) {
+        name
+      }
+    }
+    Expected variables: {"id":"1"}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: query fetchLuke($id: String) {
+      people_one(id: $id) {
+        name
+      }
+    }
+    Expected variables: {"id":"1"}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: query fetchLeia($id: String) {
+      people_one(id: $id) {
+        name
+      }
+    }
+    Expected variables: {"id":"2"}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+PASS Core Tests src/__tests__/client.ts (25.213 s)
+  client
+    ✓ can be loaded via require (35 ms)
+    ✓ can allow passing in a link (4 ms)
+    ✓ should throw an error if query option is missing or not wrapped with a "gql" tag (79 ms)
+    ✓ should throw an error if mutation option is missing (13 ms)
+    ✓ should allow for a single query to take place (23 ms)
+    ✓ should allow a single query with an apollo-link enabled network interface (24 ms)
+    ✓ should allow for a single query with complex default variables to take place (12 ms)
+    ✓ should allow for a single query with default values that get overridden with variables (10 ms)
+    ✓ should allow fragments on root query (6 ms)
+    ✓ should allow fragments on root query with ifm (5 ms)
+    ✓ should merge fragments on root query (9 ms)
+    ✓ store can be rehydrated from the server (2 ms)
+    ✓ store can be rehydrated from the server using the shadow method (2 ms)
+    ✓ stores shadow of restore returns the same result as accessing the method directly on the cache (5 ms)
+    ✓ should return errors correctly for a single query (5 ms)
+    ✓ should return GraphQL errors correctly for a single query with an apollo-link enabled network interface (2 ms)
+    ✓ should pass a network error correctly on a query with apollo-link network interface (9 ms)
+    ✓ should not warn when receiving multiple results from apollo-link network interface (2 ms)
+    ✓ should allow for subscribing to a request (7 ms)
+    ✓ should be able to transform queries (11 ms)
+    ✓ should be able to transform queries on network-only fetches (5 ms)
+    ✓ removes @client fields from the query before it reaches the link (3 ms)
+    ✓ should handle named fragments on mutations (8 ms)
+    ✓ should be able to handle named fragments on network-only queries (4 ms)
+    ✓ should be able to handle named fragments with multiple fragments (4 ms)
+    ✓ should be able to handle named fragments (3 ms)
+    ✓ should be able to handle inlined fragments on an Interface type (5 ms)
+    ✓ should be able to handle inlined fragments on an Interface type with introspection fragment matcher (4 ms)
+    ✓ should call updateQueries and update after mutation on query with inlined fragments on an Interface type (7 ms)
+    ✓ should send operationName along with the query to the server (2 ms)
+    ✓ should send operationName along with the mutation to the server (1 ms)
+    ✓ does not deduplicate queries if option is set to false (12 ms)
+    ✓ deduplicates queries by default (12 ms)
+    ✓ deduplicates queries if query context.queryDeduplication is set to true (14 ms)
+    ✓ does not deduplicate queries if query context.queryDeduplication is set to false (12 ms)
+    ✓ unsubscribes from deduplicated observables only once (3 ms)
+    ✓ should pass a network error correctly on a mutation (6 ms)
+    ✓ should pass a GraphQL error correctly on a mutation (4 ms)
+    ✓ should allow errors to be returned from a mutation (4 ms)
+    ✓ should strip errors on a mutation if ignored (3 ms)
+    ✓ should rollback optimistic after mutation got a GraphQL error (4 ms)
+    ✓ has a clearStore method which calls QueryManager (1 ms)
+    ✓ has an onClearStore method which takes a callback to be called after clearStore
+    ✓ onClearStore returns a method that unsubscribes the callback (1 ms)
+    ✓ has a resetStore method which calls QueryManager (1 ms)
+    ✓ has an onResetStore method which takes a callback to be called after resetStore
+    ✓ onResetStore returns a method that unsubscribes the callback (1 ms)
+    ✓ resetStore waits until all onResetStore callbacks are called (14 ms)
+    ✓ invokes onResetStore callbacks before notifying queries during resetStore call (16 ms)
+    ✓ has a reFetchObservableQueries method which calls QueryManager (1 ms)
+    ✓ has a refetchQueries method which calls QueryManager (1 ms)
+    ✓ does not call QueryManager.refetchQueries for mutations with no-cache policy (3 ms)
+    ✓ has a getObservableQueries method which calls QueryManager (1 ms)
+    ✓ should propagate errors from network interface to observers (1 ms)
+    ✓ should be able to refetch after there was a network error (114 ms)
+    ✓ should throw a GraphQL error (4 ms)
+    ✓ should warn if server returns wrong data (5 ms)
+    ✓ runs a query with the connection directive and writes it to the store key defined in the directive (5 ms)
+    ✓ runs query with cache field policy analogous to @connection (4 ms)
+    ✓ should remove the connection directive before the link is sent (4 ms)
+    ○ skipped should surface errors in observer.next as uncaught
+    ○ skipped should surfaces errors in observer.error as uncaught
+    deprecated options
+      ✓ errors when returnPartialData is used on query (1 ms)
+      ✓ errors when returnPartialData is used on watchQuery (1 ms)
+    accepts dataIdFromObject option
+      ✓ for internal store (4 ms)
+    cache-and-network fetchPolicy
+      ✓ warns when used with client.query (1 ms)
+      ✓ warns when used with client.query with defaultOptions (1 ms)
+      ✓ fetches from cache first, then network (104 ms)
+      ✓ does not fail if cache entry is not present (108 ms)
+      ✓ fails if network request fails (80 ms)
+      ✓ fetches from cache first, then network and does not have an unhandled error (5 ms)
+    standby queries
+      ✓ are not watching the store or notifying on updates (106 ms)
+      ✓ return the current result when coming out of standby (118 ms)
+    network-only fetchPolicy
+      ✓ forces the query to rerun (6 ms)
+      ✓ can be disabled with ssrMode (3 ms)
+      ✓ can temporarily be disabled with ssrForceFetchDelay (108 ms)
+  @connection
+    ✓ should run a query with the @connection directive and write the result to the store key defined in the directive (4 ms)
+    ✓ should run a query with the connection directive and filter arguments and write the result to the correct store key (4 ms)
+    ✓ should support cache field policies that filter key arguments (5 ms)
+    ✓ should broadcast changes for reactive variables (1015 ms)
+    ✓ should call forgetCache for reactive vars when stopped (28 ms)
+    default settings
+      ✓ allows setting default options for watchQuery (104 ms)
+      ✓ allows setting nextFetchPolicy in defaultOptions (119 ms)
+      ✓ can override global defaultOptions.watchQuery.nextFetchPolicy (105 ms)
+      ✓ allows setting default options for query (3 ms)
+      ✓ allows setting default options for mutation (5 ms)
+  custom document transforms
+    ✓ runs custom document transform when calling `query` (4 ms)
+    ✓ requests and caches fields added from custom document transforms when calling `query` (2 ms)
+    ✓ runs document transforms before reading from the cache when calling `query` (3 ms)
+    ✓ runs @client directives added from custom transforms through local state (2 ms)
+    ✓ runs custom transform only once when calling `query` (1 ms)
+    ✓ runs default transforms with no custom document transform when calling `query` (2 ms)
+    ✓ runs custom transform when calling `mutate` (2 ms)
+    ✓ runs custom transform on queries defined in refetchQueries using legacy option when calling `mutate` (8 ms)
+    ✓ requests and caches fields added from custom document transforms when calling `mutate` (2 ms)
+    ✓ runs custom transforms only once when running `mutation` (2 ms)
+    ✓ runs default transforms with no custom document transform when calling `mutate` (2 ms)
+    ✓ runs custom document transforms when calling `subscribe` (12 ms)
+    ✓ requests and caches fields added from custom document transforms when calling `subscribe` (2 ms)
+    ✓ runs custom transforms only once when calling `subscribe` (3 ms)
+    ✓ runs default transforms with no custom document transform when calling `subscribe` (3 ms)
+    ✓ runs custom document transforms when subscribing to observable after calling `watchQuery` (55 ms)
+    ✓ runs default transforms with no custom document transform when calling `watchQuery` (5 ms)
+    ✓ runs document transforms before reading from the cache when calling `watchQuery` (54 ms)
+    ✓ re-runs custom document transforms when calling `refetch` (58 ms)
+    ✓ re-runs custom document transforms when calling `fetchMore` (63 ms)
+    ✓ runs custom document transforms on the passed query and original query when calling `fetchMore` with a different query (68 ms)
+    ✓ re-runs custom document transforms when calling `setVariables` (60 ms)
+    ✓ re-runs custom document transforms when calling `setOptions` (61 ms)
+    ✓ runs custom document transforms when passing a new query to `setOptions` (64 ms)
+    ✓ runs custom document transforms with fragments defined in the fragment registery (3 ms)
+    ✓ runs custom document transforms on fragments that override registered fragments in the fragment registery (2 ms)
+    ✓ adds fragment definitions to the query for fragment spreads added from custom document transforms (3 ms)
+    ✓ runs custom transforms on active queries when calling `refetchQueries` with "include" (6 ms)
+    ✓ runs custom transforms on all queries when calling `refetchQueries` with "all" (7 ms)
+    ✓ runs custom transforms on matched queries when calling `refetchQueries` with string array (7 ms)
+    ✓ runs custom transforms on matched queries when calling `refetchQueries` with document nodes (5 ms)
+
+  console.warn
+    No more mocked responses for the query: query query($id: ID!) {
+      people_one(id: $id) {
+        name
+      }
+    }
+    Expected variables: {"id":1}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1744:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at core/ObservableQuery.ts:152:14
+      at new Subscription (../node_modules/zen-observable/lib/Observable.js:197:34)
+      at ObservableQuery.subscribe (../node_modules/zen-observable/lib/Observable.js:279:14)
+      at core/ObservableQuery.ts:234:33
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.result (core/ObservableQuery.ts:205:12)
+      at core/__tests__/ObservableQuery.ts:2220:31
+      at step (../node_modules/tslib/tslib.js:195:27)
+      at Object.next (../node_modules/tslib/tslib.js:176:57)
+      at fulfilled (../node_modules/tslib/tslib.js:166:62)
+
+  console.warn
+    No more mocked responses for the query: {
+      value
+    }
+    Expected variables: {}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1181:20)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: {
+      value
+    }
+    Expected variables: {}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1181:20)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: {
+      author {
+        name {
+          firstName
+          lastName
+        }
+        age
+        id
+        __typename
+      }
+    }
+    Expected variables: {}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1740:47)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at reobserveCacheFirst (core/ObservableQuery.ts:1190:19)
+      at listeners.add.oqListener (core/QueryInfo.ts:271:32)
+      at core/QueryInfo.ts:284:44
+          at Set.forEach (<anonymous>)
+      at QueryInfo.Object.<anonymous>.QueryInfo.notify (core/QueryInfo.ts:284:22)
+      at core/QueryInfo.ts:233:52
+      at Timeout.task (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: {
+      author {
+        name {
+          firstName
+          lastName
+        }
+        age
+        __typename
+      }
+    }
+    Expected variables: {}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1744:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at reobserveCacheFirst (core/ObservableQuery.ts:1190:19)
+      at listeners.add.oqListener (core/QueryInfo.ts:271:32)
+      at core/QueryInfo.ts:284:44
+          at Set.forEach (<anonymous>)
+      at QueryInfo.Object.<anonymous>.QueryInfo.notify (core/QueryInfo.ts:284:22)
+      at core/QueryInfo.ts:233:52
+      at Timeout.task (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: query fetchLuke($id: String) {
+      people_one(id: $id) {
+        name
+      }
+    }
+    Expected variables: {"id":"1"}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: query fetchLuke($id: String) {
+      people_one(id: $id) {
+        name
+      }
+    }
+    Expected variables: {"id":"1"}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: query fetchLeia($id: String) {
+      people_one(id: $id) {
+        name
+      }
+    }
+    Expected variables: {"id":"2"}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: query query($id: ID!) {
+      people_one(id: $id) {
+        name
+      }
+    }
+    Expected variables: {"id":1}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1191:18)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1744:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at core/ObservableQuery.ts:152:14
+      at new Subscription (../node_modules/zen-observable/lib/Observable.js:197:34)
+      at ObservableQuery.subscribe (../node_modules/zen-observable/lib/Observable.js:279:14)
+      at core/ObservableQuery.ts:234:33
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.result (core/ObservableQuery.ts:205:12)
+      at core/__tests__/ObservableQuery.ts:2220:31
+      at step (../node_modules/tslib/tslib.js:195:27)
+      at Object.next (../node_modules/tslib/tslib.js:176:57)
+      at fulfilled (../node_modules/tslib/tslib.js:166:62)
+
+  console.warn
+    No more mocked responses for the query: {
+      value
+    }
+    Expected variables: {}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1181:20)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+  console.warn
+    No more mocked responses for the query: {
+      value
+    }
+    Expected variables: {}
+    
+    This typically indicates a configuration error in your mocks setup, usually due to a typo or mismatched variable.
+
+      151 |
+      152 |       if (this.showWarnings) {
+    > 153 |         console.warn(
+          |                 ^
+      154 |           configError.message +
+      155 |             "\nThis typically indicates a configuration error in your mocks " +
+      156 |             "setup, usually due to a typo or mismatched variable."
+
+      at MockLink.Object.<anonymous>.MockLink.request (testing/core/mocking/mockLink.ts:153:17)
+      at Object.<anonymous>.ApolloLink.execute (link/core/ApolloLink.ts:70:12)
+      at QueryManager.Object.<anonymous>.QueryManager.getObservableFromLink (core/QueryManager.ts:1181:20)
+      at QueryManager.Object.<anonymous>.QueryManager.getResultsFromLink (core/QueryManager.ts:1229:12)
+      at resultsFromLink (core/QueryManager.ts:1711:12)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchQueryByPolicy (core/QueryManager.ts:1774:44)
+      at fromVariables (core/QueryManager.ts:1338:36)
+      at QueryManager.Object.<anonymous>.QueryManager.fetchConcastWithInfo (core/QueryManager.ts:1398:31)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.fetch (core/ObservableQuery.ts:819:53)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserveAsConcast (core/ObservableQuery.ts:986:40)
+      at ObservableQuery.Object.<anonymous>.ObservableQuery.reobserve (core/ObservableQuery.ts:1029:12)
+      at maybeFetch (core/ObservableQuery.ts:865:16)
+      at Timeout.task [as _onTimeout] (../node_modules/jsdom/lib/jsdom/browser/Window.js:519:19)
+
+PASS Core Tests src/core/__tests__/QueryManager/index.ts (31.033 s)
+  ✓ regression test for #10587 (166 ms)
+  ✓ handles changing variables in rapid succession before other request is completed (121 ms)
+  ObservableQuery
+    ✓ QueryInfo does not notify for !== but deep-equal results (204 ms)
+    ✓ ObservableQuery#map respects Symbol.species (5 ms)
+    setOptions
+      ✓ does not break refetch (109 ms)
+      ✓ rerenders when refetch is called (108 ms)
+      ✓ rerenders with new variables then shows correct data for previous variables (10 ms)
+      ✓ if query is refetched, and an error is returned, no other observer callbacks will be called (111 ms)
+      ✓ does a network request if fetchPolicy becomes networkOnly (111 ms)
+      ✓ does a network request if fetchPolicy is cache-only then store is reset then fetchPolicy becomes not cache-only (105 ms)
+      ✓ does a network request if fetchPolicy changes from cache-only (104 ms)
+      ✓ can set queries to standby and will not fetch when doing so (102 ms)
+      ✓ will not fetch when setting a cache-only query to standby (103 ms)
+      ✓ returns a promise which eventually returns data (6 ms)
+      to change pollInterval
+        ✓ starts polling if goes from 0 -> something (142 ms)
+        ✓ stops polling if goes from something -> 0 (105 ms)
+        ✓ can change from x>0 to y>0 (118 ms)
+    setVariables
+      ✓ reruns query if the variables change (107 ms)
+      ✓ does invalidate the currentResult data if the variables change (132 ms)
+      ✓ does invalidate the currentResult data if the variables change (134 ms)
+      ✓ does not invalidate the currentResult errors if the variables change (110 ms)
+      ✓ does not perform a query when unsubscribed if variables change (1 ms)
+      ✓ sets networkStatus to `setVariables` when fetching (108 ms)
+      ✓ sets networkStatus to `setVariables` when calling refetch with new variables (109 ms)
+      ✓ does not rerun query if variables do not change (105 ms)
+      ✓ handles variables changing while a query is in-flight (126 ms)
+    refetch
+      ✓ calls fetchRequest with fetchPolicy `network-only` when using a non-networked fetch policy (109 ms)
+      ✓ calling refetch with different variables before the query itself resolved will only yield the result for the new variables (103 ms)
+      ✓ calling refetch multiple times with different variables will return only results for the most recent variables (5 ms)
+      ✓ calls fetchRequest with fetchPolicy `no-cache` when using `no-cache` fetch policy (7 ms)
+      ✓ calls ObservableQuery.next even after hitting cache (13 ms)
+      ✓ resets fetchPolicy when variables change when using nextFetchPolicy (115 ms)
+      ✓ cache-and-network refetch should run @client(always: true) resolvers when network request fails (140 ms)
+      warnings about refetch({ variables })
+        ✓ should warn if passed { variables } and query does not declare any variables (114 ms)
+        ✓ should warn if passed { variables } and query does not declare $variables (108 ms)
+        ✓ should not warn if passed { variables } and query declares $variables (109 ms)
+    currentResult
+      ✓ returns the same value as observableQuery.next got (108 ms)
+      ✓ returns the current query status immediately (104 ms)
+      ✓ returns results from the store immediately (5 ms)
+      ✓ returns errors from the store immediately (4 ms)
+      ✓ returns referentially equal errors (20 ms)
+      ✓ returns errors with data if errorPolicy is all (8 ms)
+      ✓ errors out if errorPolicy is none (4 ms)
+      ✓ errors out if errorPolicy is none and the observable has completed (81 ms)
+      ✓ ignores errors with data if errorPolicy is ignore (5 ms)
+      ✓ returns partial data from the store immediately (113 ms)
+      ✓ returns loading even if full data is available when using network-only fetchPolicy (107 ms)
+      ✓ returns loading on no-cache fetchPolicy queries when calling getCurrentResult (7 ms)
+      ✓ handles multiple calls to getCurrentResult without losing data (8 ms)
+      ✓ fetchPolicy cache-and-network -> cache-and-network (17 ms)
+      ✓ fetchPolicy cache-first -> cache-first (12 ms)
+      ✓ fetchPolicy cache-first -> cache-and-network (10 ms)
+      ✓ fetchPolicy no-cache -> no-cache (7 ms)
+      ✓ fetchPolicy no-cache -> cache-and-network (9 ms)
+      ✓ fetchPolicy standby -> standby (8 ms)
+      ✓ fetchPolicy standby -> cache-and-network (7 ms)
+      ✓ fetchPolicy cache-only -> cache-only (7 ms)
+      ✓ fetchPolicy cache-only -> cache-and-network (8 ms)
+      mutations
+        ✓ returns optimistic mutation results from the store (110 ms)
+    assumeImmutableResults
+      ✓ should prevent costly (but safe) cloneDeep calls (8 ms)
+    resetQueryStoreErrors
+      ✓ should remove any GraphQLError's stored in the query store (4 ms)
+      ✓ should remove network error's stored in the query store (2 ms)
+    .query computed property
+      ✓ is equal to transformed query when instantiating via `watchQuery` (1 ms)
+      ✓ is referentially stable (1 ms)
+      ✓ is updated with transformed query when `setOptions` changes the query (2 ms)
+      ✓ reflects query run through custom transforms (1 ms)
+  QueryManager
+    ✓ handles GraphQL errors (4 ms)
+    ✓ handles GraphQL errors as data (2 ms)
+    ✓ handles GraphQL errors with data returned (2 ms)
+    ✓ empty error array (handle non-spec-compliant server) #156 (4 ms)
+    ✓ error array with nulls (handle non-spec-compliant server) #1185 (2 ms)
+    ✓ handles network errors (4 ms)
+    ✓ uses console.error to log unhandled errors (13 ms)
+    ✓ causes link unsubscription if unsubscribed (13 ms)
+    ✓ causes link unsubscription after reobserve (67 ms)
+    ✓ supports interoperability with other Observable implementations like RxJS (4 ms)
+    ✓ allows you to subscribe twice to one query (108 ms)
+    ✓ resolves all queries when one finishes after another (105 ms)
+    ✓ allows you to refetch queries (6 ms)
+    ✓ will return referentially equivalent data if nothing changed in a refetch (14 ms)
+    ✓ will return referentially equivalent data in getCurrentResult if nothing changed (5 ms)
+    ✓ sets networkStatus to `refetch` when refetching (7 ms)
+    ✓ allows you to refetch queries with promises (5 ms)
+    ✓ allows you to refetch queries with new variables (10 ms)
+    ✓ only modifies varaibles when refetching (6 ms)
+    ✓ continues to poll after refetch (206 ms)
+    ✓ sets networkStatus to `poll` if a polling query is in flight (33 ms)
+    ✓ can handle null values in arrays (#1551) (5 ms)
+    ✓ supports cache-only fetchPolicy fetching only cached data (5 ms)
+    ✓ runs a mutation (3 ms)
+    ✓ runs a mutation even when errors is empty array #2912 (3 ms)
+    ✓ runs a mutation with default errorPolicy equal to "none" (3 ms)
+    ✓ runs a mutation with variables (3 ms)
+    ✓ runs a mutation with object parameters and puts the result in the store (4 ms)
+    ✓ runs a mutation and puts the result in the store (4 ms)
+    ✓ runs a mutation and puts the result in the store with root key (3 ms)
+    ✓ doesn't return data while query is loading (13 ms)
+    ✓ updates result of previous query if the result of a new query overlaps (117 ms)
+    ✓ warns if you forget the template literal tag (41 ms)
+    ✓ should transform queries correctly when given a QueryTransformer (7 ms)
+    ✓ should transform mutations correctly (4 ms)
+    ✓ should reject a query promise given a network error (3 ms)
+    ✓ should reject a query promise given a GraphQL error (3 ms)
+    ✓ should not empty the store when a non-polling query fails due to a network error (6 ms)
+    ✓ should be able to unsubscribe from a polling query subscription (36 ms)
+    ✓ should not empty the store when a polling query fails due to a network error (24 ms)
+    ✓ should not fire next on an observer if there is no change in the result (103 ms)
+    ✓ should not return stale data when we orphan a real-id node in the store with a real-id node (6 ms)
+    ✓ should return partial data when configured when we orphan a real-id node in the store with a real-id node (4 ms)
+    ✓ should not write unchanged network results to cache (213 ms)
+    ✓ should disable feud-stopping logic after evict or modify (106 ms)
+    ✓ should not error when replacing unidentified data with a normalized ID (7 ms)
+    ✓ exposes errors on a refetch as a rejection (12 ms)
+    ✓ does not return incomplete data when two queries for the same item are executed (24 ms)
+    ✓ only increments "queryInfo.lastRequestId" when fetching data from network (5 ms)
+    ○ skipped handles an unsubscribe action that happens before data returns
+    polling queries
+      ✓ allows you to poll queries (56 ms)
+      ✓ does not poll during SSR (103 ms)
+      ✓ should let you handle multiple polled queries and unsubscribe from one of them (404 ms)
+      ✓ allows you to unsubscribe from polled queries (116 ms)
+      ✓ allows you to unsubscribe from polled query errors (117 ms)
+      ✓ exposes a way to start a polling query (54 ms)
+      ✓ exposes a way to stop a polling query (105 ms)
+      ✓ stopped polling queries still get updates (7 ms)
+    store resets
+      ✓ returns a promise resolving when all queries have been refetched (7 ms)
+      ✓ should change the store state to an empty state (1 ms)
+      ✓ should not refetch torn-down queries (52 ms)
+      ✓ should not error when resetStore called (3 ms)
+      ✓ should not error on a stopped query() (51 ms)
+      ✓ should throw an error on an inflight fetch query if the store is reset (105 ms)
+      ✓ should call refetch on a mocked Observable if the store is reset (4 ms)
+      ✓ should not call refetch on a cache-only Observable if the store is reset (52 ms)
+      ✓ should not call refetch on a standby Observable if the store is reset (53 ms)
+      ✓ should not call refetch on a non-subscribed Observable if the store is reset (52 ms)
+      ✓ should throw an error on an inflight query() if the store is reset (3 ms)
+      ○ skipped should only refetch once when we store reset
+    refetching observed queries
+      ✓ returns a promise resolving when all queries have been refetched (8 ms)
+      ✓ should only refetch once when we refetch observable queries (2 ms)
+      ✓ should not refetch torn-down queries (51 ms)
+      ✓ should not error after reFetchObservableQueries (102 ms)
+      ✓ should NOT throw an error on an inflight fetch query if the observable queries are refetched (102 ms)
+      ✓ should call refetch on a mocked Observable if the observed queries are refetched (4 ms)
+      ✓ should not call refetch on a cache-only Observable if the observed queries are refetched (52 ms)
+      ✓ should not call refetch on a standby Observable if the observed queries are refetched (52 ms)
+      ✓ should refetch on a standby Observable if the observed queries are refetched and the includeStandby parameter is set to true (51 ms)
+      ✓ should not call refetch on a non-subscribed Observable (51 ms)
+      ✓ should NOT throw an error on an inflight query() if the observed queries are refetched (2 ms)
+    refetching specified queries
+      ✓ returns a promise resolving when all queries have been refetched (9 ms)
+    loading state
+      ✓ should be passed as false if we are not watching a query (4 ms)
+      ✓ should be passed to the observer as true if we are returning partial data (8 ms)
+      ✓ should be passed to the observer as false if we are returning all the data (4 ms)
+      ✓ will update on `resetStore` (108 ms)
+      ✓ will be true when partial data may be returned (112 ms)
+    refetchQueries
+      ✓ should refetch the right query when a result is successfully returned (7 ms)
+      ✓ should not warn and continue when an unknown query name is asked to refetch (12 ms)
+      ✓ should ignore (with warning) a query named in refetchQueries that has no active subscriptions (6 ms)
+      ✓ should ignore (with warning) a document node in refetchQueries that has no active subscriptions (13 ms)
+      ✓ should ignore (with warning) a document node containing an anonymous query in refetchQueries that has no active subscriptions (7 ms)
+      ✓ also works with a query document and variables (233 ms)
+      ✓ also works with a query document node (227 ms)
+      ✓ also works with different references of a same query document node (229 ms)
+      ✓ also works with a conditional function that returns false (7 ms)
+      ✓ also works with a conditional function that returns an array of refetches (11 ms)
+      ✓ should refetch using the original query context (if any) (10 ms)
+      ✓ should refetch using the specified context, if provided (12 ms)
+    onQueryUpdated
+      ✓ should refetch the right query when a result is successfully returned (110 ms)
+      ✓ should refetch using the original query context (if any) (7 ms)
+      ✓ should refetch using the specified context, if provided (6 ms)
+    awaitRefetchQueries
+      ✓ should not wait for `refetchQueries` to complete before resolving the mutation, when `awaitRefetchQueries` is undefined (7 ms)
+      ✓ should not wait for `refetchQueries` to complete before resolving the mutation, when `awaitRefetchQueries` is false (9 ms)
+      ✓ should wait for `refetchQueries` to complete before resolving the mutation, when `awaitRefetchQueries` is `true` (8 ms)
+      ✓ should allow catching errors from `refetchQueries` when `awaitRefetchQueries` is `true` (5 ms)
+    store watchers
+      ✓ does not fill up the store on resolved queries (21 ms)
+    `no-cache` handling
+      ✓ should return a query result (if one exists) when a `no-cache` fetch policy is used (3 ms)
+    client awareness
+      ✓ should pass client awareness settings into the link chain via context (3 ms)
+    queryDeduplication
+      ✓ should be true when context is true, default is false and argument not provided (2 ms)
+      ✓ should allow overriding global queryDeduplication: true to false (1 ms)
+    missing cache field warnings
+      ✓ should show missing cache result fields warning when returnPartialData is false (6 ms)
+      ✓ should not show missing cache result fields warning when returnPartialData is true (4 ms)
+    defaultContext
+      ✓ ApolloClient and QueryManager share a `defaultContext` instance (default empty object) (1 ms)
+      ✓ ApolloClient and QueryManager share a `defaultContext` instance (provided option)
+      ✓ `defaultContext` cannot be reassigned on the user-facing `ApolloClient` (1 ms)
+      ✓ `defaultContext` will be applied to the context of a query (1 ms)
+      ✓ `defaultContext` will be applied to the context of a mutation (1 ms)
+      ✓ `defaultContext` will be applied to the context of a subscription (1 ms)
+      ✓ `ApolloClient.defaultContext` can be modified and changes will show up in future queries (1 ms)
+      ✓ `defaultContext` will be shallowly merged with explicit context (1 ms)
+      ✓ `defaultContext` will be shallowly merged with context from `defaultOptions.query.context (2 ms)
+      ✓ document existing behavior: `defaultOptions.query.context` will be completely overwritten by, not merged with, explicit context (1 ms)
+
+PASS Core Tests src/core/__tests__/ObservableQuery.ts (31.222 s)
+  ✓ regression test for #10587 (159 ms)
+  ✓ handles changing variables in rapid succession before other request is completed (117 ms)
+  QueryManager
+    ✓ handles GraphQL errors (24 ms)
+    ✓ handles GraphQL errors as data (4 ms)
+    ✓ handles GraphQL errors with data returned (3 ms)
+    ✓ empty error array (handle non-spec-compliant server) #156 (6 ms)
+    ✓ error array with nulls (handle non-spec-compliant server) #1185 (3 ms)
+    ✓ handles network errors (3 ms)
+    ✓ uses console.error to log unhandled errors (31 ms)
+    ✓ causes link unsubscription if unsubscribed (12 ms)
+    ✓ causes link unsubscription after reobserve (66 ms)
+    ✓ supports interoperability with other Observable implementations like RxJS (5 ms)
+    ✓ allows you to subscribe twice to one query (111 ms)
+    ✓ resolves all queries when one finishes after another (105 ms)
+    ✓ allows you to refetch queries (7 ms)
+    ✓ will return referentially equivalent data if nothing changed in a refetch (9 ms)
+    ✓ will return referentially equivalent data in getCurrentResult if nothing changed (2 ms)
+    ✓ sets networkStatus to `refetch` when refetching (4 ms)
+    ✓ allows you to refetch queries with promises (4 ms)
+    ✓ allows you to refetch queries with new variables (17 ms)
+    ✓ only modifies varaibles when refetching (5 ms)
+    ✓ continues to poll after refetch (206 ms)
+    ✓ sets networkStatus to `poll` if a polling query is in flight (32 ms)
+    ✓ can handle null values in arrays (#1551) (3 ms)
+    ✓ supports cache-only fetchPolicy fetching only cached data (5 ms)
+    ✓ runs a mutation (4 ms)
+    ✓ runs a mutation even when errors is empty array #2912 (3 ms)
+    ✓ runs a mutation with default errorPolicy equal to "none" (3 ms)
+    ✓ runs a mutation with variables (3 ms)
+    ✓ runs a mutation with object parameters and puts the result in the store (4 ms)
+    ✓ runs a mutation and puts the result in the store (3 ms)
+    ✓ runs a mutation and puts the result in the store with root key (3 ms)
+    ✓ doesn't return data while query is loading (15 ms)
+    ✓ updates result of previous query if the result of a new query overlaps (116 ms)
+    ✓ warns if you forget the template literal tag (44 ms)
+    ✓ should transform queries correctly when given a QueryTransformer (4 ms)
+    ✓ should transform mutations correctly (4 ms)
+    ✓ should reject a query promise given a network error (3 ms)
+    ✓ should reject a query promise given a GraphQL error (2 ms)
+    ✓ should not empty the store when a non-polling query fails due to a network error (5 ms)
+    ✓ should be able to unsubscribe from a polling query subscription (35 ms)
+    ✓ should not empty the store when a polling query fails due to a network error (29 ms)
+    ✓ should not fire next on an observer if there is no change in the result (106 ms)
+    ✓ should not return stale data when we orphan a real-id node in the store with a real-id node (12 ms)
+    ✓ should return partial data when configured when we orphan a real-id node in the store with a real-id node (5 ms)
+    ✓ should not write unchanged network results to cache (267 ms)
+    ✓ should disable feud-stopping logic after evict or modify (109 ms)
+    ✓ should not error when replacing unidentified data with a normalized ID (12 ms)
+    ✓ exposes errors on a refetch as a rejection (12 ms)
+    ✓ does not return incomplete data when two queries for the same item are executed (24 ms)
+    ✓ only increments "queryInfo.lastRequestId" when fetching data from network (4 ms)
+    ○ skipped handles an unsubscribe action that happens before data returns
+    polling queries
+      ✓ allows you to poll queries (53 ms)
+      ✓ does not poll during SSR (103 ms)
+      ✓ should let you handle multiple polled queries and unsubscribe from one of them (405 ms)
+      ✓ allows you to unsubscribe from polled queries (114 ms)
+      ✓ allows you to unsubscribe from polled query errors (115 ms)
+      ✓ exposes a way to start a polling query (53 ms)
+      ✓ exposes a way to stop a polling query (104 ms)
+      ✓ stopped polling queries still get updates (8 ms)
+    store resets
+      ✓ returns a promise resolving when all queries have been refetched (7 ms)
+      ✓ should change the store state to an empty state
+      ✓ should not refetch torn-down queries (52 ms)
+      ✓ should not error when resetStore called (3 ms)
+      ✓ should not error on a stopped query() (52 ms)
+      ✓ should throw an error on an inflight fetch query if the store is reset (108 ms)
+      ✓ should call refetch on a mocked Observable if the store is reset (2 ms)
+      ✓ should not call refetch on a cache-only Observable if the store is reset (52 ms)
+      ✓ should not call refetch on a standby Observable if the store is reset (54 ms)
+      ✓ should not call refetch on a non-subscribed Observable if the store is reset (52 ms)
+      ✓ should throw an error on an inflight query() if the store is reset (3 ms)
+      ○ skipped should only refetch once when we store reset
+    refetching observed queries
+      ✓ returns a promise resolving when all queries have been refetched (6 ms)
+      ✓ should only refetch once when we refetch observable queries (2 ms)
+      ✓ should not refetch torn-down queries (53 ms)
+      ✓ should not error after reFetchObservableQueries (107 ms)
+      ✓ should NOT throw an error on an inflight fetch query if the observable queries are refetched (103 ms)
+      ✓ should call refetch on a mocked Observable if the observed queries are refetched (4 ms)
+      ✓ should not call refetch on a cache-only Observable if the observed queries are refetched (52 ms)
+      ✓ should not call refetch on a standby Observable if the observed queries are refetched (52 ms)
+      ✓ should refetch on a standby Observable if the observed queries are refetched and the includeStandby parameter is set to true (53 ms)
+      ✓ should not call refetch on a non-subscribed Observable (52 ms)
+      ✓ should NOT throw an error on an inflight query() if the observed queries are refetched (1 ms)
+    refetching specified queries
+      ✓ returns a promise resolving when all queries have been refetched (8 ms)
+    loading state
+      ✓ should be passed as false if we are not watching a query (7 ms)
+      ✓ should be passed to the observer as true if we are returning partial data (10 ms)
+      ✓ should be passed to the observer as false if we are returning all the data (2 ms)
+      ✓ will update on `resetStore` (107 ms)
+      ✓ will be true when partial data may be returned (110 ms)
+    refetchQueries
+      ✓ should refetch the right query when a result is successfully returned (9 ms)
+      ✓ should not warn and continue when an unknown query name is asked to refetch (10 ms)
+      ✓ should ignore (with warning) a query named in refetchQueries that has no active subscriptions (6 ms)
+      ✓ should ignore (with warning) a document node in refetchQueries that has no active subscriptions (7 ms)
+      ✓ should ignore (with warning) a document node containing an anonymous query in refetchQueries that has no active subscriptions (6 ms)
+      ✓ also works with a query document and variables (231 ms)
+      ✓ also works with a query document node (227 ms)
+      ✓ also works with different references of a same query document node (227 ms)
+      ✓ also works with a conditional function that returns false (6 ms)
+      ✓ also works with a conditional function that returns an array of refetches (10 ms)
+      ✓ should refetch using the original query context (if any) (7 ms)
+      ✓ should refetch using the specified context, if provided (10 ms)
+    onQueryUpdated
+      ✓ should refetch the right query when a result is successfully returned (111 ms)
+      ✓ should refetch using the original query context (if any) (10 ms)
+      ✓ should refetch using the specified context, if provided (8 ms)
+    awaitRefetchQueries
+      ✓ should not wait for `refetchQueries` to complete before resolving the mutation, when `awaitRefetchQueries` is undefined (8 ms)
+      ✓ should not wait for `refetchQueries` to complete before resolving the mutation, when `awaitRefetchQueries` is false (9 ms)
+      ✓ should wait for `refetchQueries` to complete before resolving the mutation, when `awaitRefetchQueries` is `true` (8 ms)
+      ✓ should allow catching errors from `refetchQueries` when `awaitRefetchQueries` is `true` (6 ms)
+    store watchers
+      ✓ does not fill up the store on resolved queries (19 ms)
+    `no-cache` handling
+      ✓ should return a query result (if one exists) when a `no-cache` fetch policy is used (4 ms)
+    client awareness
+      ✓ should pass client awareness settings into the link chain via context (3 ms)
+    queryDeduplication
+      ✓ should be true when context is true, default is false and argument not provided (2 ms)
+      ✓ should allow overriding global queryDeduplication: true to false (1 ms)
+    missing cache field warnings
+      ✓ should show missing cache result fields warning when returnPartialData is false (7 ms)
+      ✓ should not show missing cache result fields warning when returnPartialData is true (4 ms)
+    defaultContext
+      ✓ ApolloClient and QueryManager share a `defaultContext` instance (default empty object) (1 ms)
+      ✓ ApolloClient and QueryManager share a `defaultContext` instance (provided option)
+      ✓ `defaultContext` cannot be reassigned on the user-facing `ApolloClient` (1 ms)
+      ✓ `defaultContext` will be applied to the context of a query (1 ms)
+      ✓ `defaultContext` will be applied to the context of a mutation (1 ms)
+      ✓ `defaultContext` will be applied to the context of a subscription
+      ✓ `ApolloClient.defaultContext` can be modified and changes will show up in future queries (1 ms)
+      ✓ `defaultContext` will be shallowly merged with explicit context (1 ms)
+      ✓ `defaultContext` will be shallowly merged with context from `defaultOptions.query.context (1 ms)
+      ✓ document existing behavior: `defaultOptions.query.context` will be completely overwritten by, not merged with, explicit context (1 ms)
+  ObservableQuery
+    ✓ QueryInfo does not notify for !== but deep-equal results (207 ms)
+    ✓ ObservableQuery#map respects Symbol.species (5 ms)
+    setOptions
+      ✓ does not break refetch (108 ms)
+      ✓ rerenders when refetch is called (110 ms)
+      ✓ rerenders with new variables then shows correct data for previous variables (7 ms)
+      ✓ if query is refetched, and an error is returned, no other observer callbacks will be called (109 ms)
+      ✓ does a network request if fetchPolicy becomes networkOnly (106 ms)
+      ✓ does a network request if fetchPolicy is cache-only then store is reset then fetchPolicy becomes not cache-only (103 ms)
+      ✓ does a network request if fetchPolicy changes from cache-only (104 ms)
+      ✓ can set queries to standby and will not fetch when doing so (104 ms)
+      ✓ will not fetch when setting a cache-only query to standby (104 ms)
+      ✓ returns a promise which eventually returns data (7 ms)
+      to change pollInterval
+        ✓ starts polling if goes from 0 -> something (117 ms)
+        ✓ stops polling if goes from something -> 0 (108 ms)
+        ✓ can change from x>0 to y>0 (119 ms)
+    setVariables
+      ✓ reruns query if the variables change (110 ms)
+      ✓ does invalidate the currentResult data if the variables change (134 ms)
+      ✓ does invalidate the currentResult data if the variables change (133 ms)
+      ✓ does not invalidate the currentResult errors if the variables change (107 ms)
+      ✓ does not perform a query when unsubscribed if variables change (1 ms)
+      ✓ sets networkStatus to `setVariables` when fetching (108 ms)
+      ✓ sets networkStatus to `setVariables` when calling refetch with new variables (108 ms)
+      ✓ does not rerun query if variables do not change (105 ms)
+      ✓ handles variables changing while a query is in-flight (125 ms)
+    refetch
+      ✓ calls fetchRequest with fetchPolicy `network-only` when using a non-networked fetch policy (108 ms)
+      ✓ calling refetch with different variables before the query itself resolved will only yield the result for the new variables (103 ms)
+      ✓ calling refetch multiple times with different variables will return only results for the most recent variables (2 ms)
+      ✓ calls fetchRequest with fetchPolicy `no-cache` when using `no-cache` fetch policy (5 ms)
+      ✓ calls ObservableQuery.next even after hitting cache (11 ms)
+      ✓ resets fetchPolicy when variables change when using nextFetchPolicy (119 ms)
+      ✓ cache-and-network refetch should run @client(always: true) resolvers when network request fails (132 ms)
+      warnings about refetch({ variables })
+        ✓ should warn if passed { variables } and query does not declare any variables (108 ms)
+        ✓ should warn if passed { variables } and query does not declare $variables (109 ms)
+        ✓ should not warn if passed { variables } and query declares $variables (109 ms)
+    currentResult
+      ✓ returns the same value as observableQuery.next got (109 ms)
+      ✓ returns the current query status immediately (103 ms)
+      ✓ returns results from the store immediately (4 ms)
+      ✓ returns errors from the store immediately (5 ms)
+      ✓ returns referentially equal errors (4 ms)
+      ✓ returns errors with data if errorPolicy is all (2 ms)
+      ✓ errors out if errorPolicy is none (4 ms)
+      ✓ errors out if errorPolicy is none and the observable has completed (23 ms)
+      ✓ ignores errors with data if errorPolicy is ignore (3 ms)
+      ✓ returns partial data from the store immediately (109 ms)
+      ✓ returns loading even if full data is available when using network-only fetchPolicy (107 ms)
+      ✓ returns loading on no-cache fetchPolicy queries when calling getCurrentResult (6 ms)
+      ✓ handles multiple calls to getCurrentResult without losing data (7 ms)
+      ✓ fetchPolicy cache-and-network -> cache-and-network (12 ms)
+      ✓ fetchPolicy cache-first -> cache-first (6 ms)
+      ✓ fetchPolicy cache-first -> cache-and-network (7 ms)
+      ✓ fetchPolicy no-cache -> no-cache (7 ms)
+      ✓ fetchPolicy no-cache -> cache-and-network (9 ms)
+      ✓ fetchPolicy standby -> standby (9 ms)
+      ✓ fetchPolicy standby -> cache-and-network (9 ms)
+      ✓ fetchPolicy cache-only -> cache-only (6 ms)
+      ✓ fetchPolicy cache-only -> cache-and-network (7 ms)
+      mutations
+        ✓ returns optimistic mutation results from the store (108 ms)
+    assumeImmutableResults
+      ✓ should prevent costly (but safe) cloneDeep calls (6 ms)
+    resetQueryStoreErrors
+      ✓ should remove any GraphQLError's stored in the query store (3 ms)
+      ✓ should remove network error's stored in the query store (4 ms)
+    .query computed property
+      ✓ is equal to transformed query when instantiating via `watchQuery` (1 ms)
+      ✓ is referentially stable
+      ✓ is updated with transformed query when `setOptions` changes the query (2 ms)
+      ✓ reflects query run through custom transforms (1 ms)
+
+Test Suites: 14 passed, 14 total
+Tests:       16 skipped, 865 passed, 881 total
+Snapshots:   51 passed, 51 total
+Time:        33.638 s
+Ran all test suites matching /src\/__tests__\/client.ts|src\/__tests__\/dataMasking.ts|src\/__tests__\/optimistic.ts|src\/__tests__\/refetchQueries.ts|src\/cache\/core\/__tests__\/cache.ts|src\/cache\/inmemory\/__tests__\/cache.ts|src\/cache\/inmemory\/__tests__\/diffAgainstStore.ts|src\/cache\/inmemory\/__tests__\/entityStore.ts|src\/cache\/inmemory\/__tests__\/policies.ts|src\/cache\/inmemory\/__tests__\/readFromStore.ts|src\/cache\/inmemory\/__tests__\/roundtrip.ts|src\/core\/__tests__\/ObservableQuery.ts|src\/core\/__tests__\/QueryManager\/index.ts|src\/core\/__tests__\/fetchPolicies.ts/i.
+reward=1 graded=863 found=0 failed=0 parsed=0 framework=jest exit_code=0

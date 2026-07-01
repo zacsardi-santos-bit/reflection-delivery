@@ -1,0 +1,33 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p grin_store --no-fail-fast",
+  "test_files": [
+    "store/tests/pmmr.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/21) grin_store::test_bitmap test_a_small_bitmap",
+    "( 2/21) grin_store::test_bitmap test_a_big_bitmap",
+    "( 3/21) grin_store::test_bitmap test_andnot_bitmap",
+    "( 4/21) grin_store::prune_list test_get_leaf_shift",
+    "( 5/21) grin_store::test_bitmap test_1000_inputs",
+    "( 6/21) grin_store::test_bitmap test_and_bitmap",
+    "( 7/21) grin_store::pmmr pmmr_append",
+    "( 8/21) grin_store::test_bitmap test_flip_bitmap",
+    "( 9/21) grin_store::pmmr pmmr_compact_single_leaves",
+    "(10/21) grin_store::pmmr pmmr_compact_horizon",
+    "(11/21) grin_store::pmmr pmmr_prune_compact",
+    "(12/21) grin_store::prune_list test_get_shift",
+    "(13/21) grin_store::prune_list test_is_pruned",
+    "(14/21) grin_store::pmmr pmmr_rewind",
+    "(15/21) grin_store::pmmr pmmr_compact_leaf_sibling",
+    "(16/21) grin_store::pmmr pmmr_reload",
+    "(17/21) grin_store::pmmr pmmr_compact_entire_peak",
+    "(18/21) grin_store::pmmr compact_twice",
+    "(19/21) grin_store::pmmr cleanup_rewind_files_test",
+    "(20/21) grin_store::utxo_set_perf test_leaf_set_performance",
+    "(21/21) grin_store::lmdb lmdb_allocate"
+  ],
+  "PASS_TO_PASS": []
+}

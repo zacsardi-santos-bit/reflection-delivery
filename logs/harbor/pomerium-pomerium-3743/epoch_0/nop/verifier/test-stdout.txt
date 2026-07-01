@@ -1,0 +1,19 @@
+patching file config/envoyconfig/listeners_test.go
+patching file config/options_test.go
+# github.com/pomerium/pomerium/config [github.com/pomerium/pomerium/config.test]
+config/options_test.go:762:36: too many arguments in call to options.GetSetResponseHeaders
+	have (bool)
+	want ()
+config/options_test.go:770:36: too many arguments in call to options.GetSetResponseHeaders
+	have (bool)
+	want ()
+config/options_test.go:775:70: too many arguments in call to options.GetSetResponseHeaders
+	have (bool)
+	want ()
+FAIL	github.com/pomerium/pomerium/config [build failed]
+# github.com/pomerium/pomerium/config/envoyconfig [github.com/pomerium/pomerium/config/envoyconfig.test]
+config/envoyconfig/listeners_test.go:132:90: too many arguments in call to b.buildMainHTTPConnectionManagerFilter
+	have (*"github.com/pomerium/pomerium/config".Options, []string, bool)
+	want (*"github.com/pomerium/pomerium/config".Options, []string)
+FAIL	github.com/pomerium/pomerium/config/envoyconfig [build failed]
+reward=0 graded=310 found=310 failed=310 parsed=2 framework=go exit_code=1

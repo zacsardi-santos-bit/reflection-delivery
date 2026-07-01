@@ -1,0 +1,23 @@
+{
+ "task": "electron-fiddle-1019",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds disable-download.ts returning \"process.platform === 'darwin' && process.arch === 'arm64' && semver.lt(version, '11.0.0')\"; tests override platform/arch and assert disableDownload('10.0.0')==true etc, plus component renders '.disabled-menu-tooltip'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

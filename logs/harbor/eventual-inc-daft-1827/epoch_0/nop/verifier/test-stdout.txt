@@ -1,0 +1,514 @@
+patching file tests/dataframe/test_monotonically_increasing_id.py
+patching file tests/table/test_monotonically_increasing_id.py
+🍹 Building a mixed python/rust project
+🔗 Found pyo3 bindings with abi3 support for Python ≥ 3.7
+🐍 Not using a specific python interpreter
+Ignoring typing-extensions: markers 'python_version < "3.10"' don't match your environment
+Ignoring pickle5: markers 'python_version < "3.8"' don't match your environment
+Ignoring getdaft: markers 'extra == "all"' don't match your environment
+Ignoring s3fs: markers 'extra == "aws"' don't match your environment
+Ignoring adlfs: markers 'extra == "azure"' don't match your environment
+Ignoring gcsfs: markers 'extra == "gcp"' don't match your environment
+Ignoring pyiceberg: markers 'extra == "iceberg"' don't match your environment
+Ignoring packaging: markers 'extra == "iceberg"' don't match your environment
+Ignoring numpy: markers 'extra == "numpy"' don't match your environment
+Ignoring pandas: markers 'extra == "pandas"' don't match your environment
+Ignoring ray: markers 'extra == "ray"' don't match your environment
+Ignoring packaging: markers 'extra == "ray"' don't match your environment
+Requirement already satisfied: pyarrow>=6.0.1 in /opt/venv/lib/python3.11/site-packages (12.0.0)
+Requirement already satisfied: psutil in /opt/venv/lib/python3.11/site-packages (7.2.2)
+Requirement already satisfied: tqdm in /opt/venv/lib/python3.11/site-packages (4.68.3)
+Requirement already satisfied: fsspec[http] in /opt/venv/lib/python3.11/site-packages (2026.6.0)
+Requirement already satisfied: numpy>=1.16.6 in /opt/venv/lib/python3.11/site-packages (from pyarrow>=6.0.1) (1.26.4)
+Requirement already satisfied: aiohttp!=4.0.0a0,!=4.0.0a1 in /opt/venv/lib/python3.11/site-packages (from fsspec[http]) (3.14.1)
+Requirement already satisfied: aiohappyeyeballs>=2.5.0 in /opt/venv/lib/python3.11/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]) (2.6.2)
+Requirement already satisfied: aiosignal>=1.4.0 in /opt/venv/lib/python3.11/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]) (1.4.0)
+Requirement already satisfied: attrs>=17.3.0 in /opt/venv/lib/python3.11/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]) (26.1.0)
+Requirement already satisfied: frozenlist>=1.1.1 in /opt/venv/lib/python3.11/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]) (1.8.0)
+Requirement already satisfied: multidict<7.0,>=4.5 in /opt/venv/lib/python3.11/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]) (6.7.1)
+Requirement already satisfied: propcache>=0.2.0 in /opt/venv/lib/python3.11/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]) (0.5.2)
+Requirement already satisfied: typing_extensions>=4.4 in /opt/venv/lib/python3.11/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]) (4.15.0)
+Requirement already satisfied: yarl<2.0,>=1.17.0 in /opt/venv/lib/python3.11/site-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]) (1.24.2)
+Requirement already satisfied: idna>=2.0 in /opt/venv/lib/python3.11/site-packages (from yarl<2.0,>=1.17.0->aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]) (3.18)
+    Finished dev [unoptimized + debuginfo] target(s) in 2.40s
+⚠️ Warning: Failed to set rpath for /workspace/repo/target/debug/libdaft.so: Failed to execute 'patchelf', did you install it? Hint: Try `pip install maturin[patchelf]` (or just `pip install patchelf`)
+📦 Built wheel for abi3 Python ≥ 3.7 to /tmp/.tmpgQICh6/getdaft-0.2.0.dev0-cp37-abi3-linux_x86_64.whl
+🛠 Installed getdaft-0.2.0.dev0
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /opt/venv/bin/python
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: benchmark-5.2.3
+collecting ... collected 29 items
+
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_single_partition[arrow] FAILED [  3%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_single_partition[parquet] FAILED [  6%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_empty_table[arrow] FAILED [ 10%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_empty_table[parquet] FAILED [ 13%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-1] FAILED [ 17%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-2] FAILED [ 20%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-20] FAILED [ 24%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-50] FAILED [ 27%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-100] FAILED [ 31%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-1] FAILED [ 34%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-2] FAILED [ 37%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-20] FAILED [ 41%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-50] FAILED [ 44%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-100] FAILED [ 48%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-1] FAILED [ 51%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-2] FAILED [ 55%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-20] FAILED [ 58%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-50] FAILED [ 62%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-100] FAILED [ 65%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-1] FAILED [ 68%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-2] FAILED [ 72%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-20] FAILED [ 75%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-50] FAILED [ 79%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-100] FAILED [ 82%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_custom_col_name[arrow] FAILED [ 86%]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_custom_col_name[parquet] FAILED [ 89%]
+tests/table/test_monotonically_increasing_id.py::test_monotonically_increasing_id FAILED [ 93%]
+tests/table/test_monotonically_increasing_id.py::test_monotonically_increasing_id_empty_table FAILED [ 96%]
+tests/table/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_tables_in_micropartition FAILED [100%]
+
+=================================== FAILURES ===================================
+___________ test_monotonically_increasing_id_single_partition[arrow] ___________
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1be6520>
+
+    def test_monotonically_increasing_id_single_partition(make_df) -> None:
+        data = {"a": [1, 2, 3, 4, 5]}
+>       df = make_df(data)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:10: AttributeError
+__________ test_monotonically_increasing_id_single_partition[parquet] __________
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1be65c0>
+
+    def test_monotonically_increasing_id_single_partition(make_df) -> None:
+        data = {"a": [1, 2, 3, 4, 5]}
+>       df = make_df(data)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:10: AttributeError
+_____________ test_monotonically_increasing_id_empty_table[arrow] ______________
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1be5a80>
+
+    def test_monotonically_increasing_id_empty_table(make_df) -> None:
+        data = {"a": []}
+>       df = make_df(data)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:20: AttributeError
+____________ test_monotonically_increasing_id_empty_table[parquet] _____________
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1be4fe0>
+
+    def test_monotonically_increasing_id_empty_table(make_df) -> None:
+        data = {"a": []}
+>       df = make_df(data)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:20: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-1] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca0040>
+repartition_nparts = 1
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-2] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca0180>
+repartition_nparts = 2
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-20] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca0680>
+repartition_nparts = 20
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-50] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca09a0>
+repartition_nparts = 50
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-100] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca0f40>
+repartition_nparts = 100
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-1] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca11c0>
+repartition_nparts = 1
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-2] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1be7f60>
+repartition_nparts = 2
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-20] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1be65c0>
+repartition_nparts = 20
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-50] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca1580>
+repartition_nparts = 50
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-100] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca18a0>
+repartition_nparts = 100
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_into_partition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data).into_partitions(repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:33: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-1] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca1940>
+repartition_nparts = 1
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-2] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca0f40>
+repartition_nparts = 2
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-20] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1cbc9a0>
+repartition_nparts = 20
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-50] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1cbca40>
+repartition_nparts = 50
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-100] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1cbcb80>
+repartition_nparts = 100
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-1] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1cbd1c0>
+repartition_nparts = 1
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-2] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1cbd4e0>
+repartition_nparts = 2
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-20] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1cbd760>
+repartition_nparts = 20
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-50] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca00e0>
+repartition_nparts = 50
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+_ test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-100] _
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1ca18a0>
+repartition_nparts = 100
+
+    @pytest.mark.parametrize("repartition_nparts", [1, 2, 20, 50, 100])
+    def test_monotonically_increasing_id_multiple_partitions_with_repartition(make_df, repartition_nparts) -> None:
+        ITEMS = [i for i in range(100)]
+    
+        data = {"a": ITEMS}
+>       df = make_df(data, repartition=repartition_nparts)._add_monotonically_increasing_id().collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:56: AttributeError
+___________ test_monotonically_increasing_id_custom_col_name[arrow] ____________
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1cbd080>
+
+    def test_monotonically_increasing_id_custom_col_name(make_df) -> None:
+        data = {"a": [1, 2, 3, 4, 5]}
+>       df = make_df(data)._add_monotonically_increasing_id("custom_id").collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:71: AttributeError
+__________ test_monotonically_increasing_id_custom_col_name[parquet] ___________
+
+make_df = <function make_df.<locals>._make_df at 0x2aeee1cbde40>
+
+    def test_monotonically_increasing_id_custom_col_name(make_df) -> None:
+        data = {"a": [1, 2, 3, 4, 5]}
+>       df = make_df(data)._add_monotonically_increasing_id("custom_id").collect()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'DataFrame' object has no attribute '_add_monotonically_increasing_id'
+
+tests/dataframe/test_monotonically_increasing_id.py:71: AttributeError
+_______________________ test_monotonically_increasing_id _______________________
+
+    def test_monotonically_increasing_id() -> None:
+        table = MicroPartition.from_pydict({"a": [1, 2, 3, 4, 5]})
+>       table = table.add_monotonically_increasing_id(0, "id")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MicroPartition' object has no attribute 'add_monotonically_increasing_id'
+
+tests/table/test_monotonically_increasing_id.py:10: AttributeError
+_________________ test_monotonically_increasing_id_empty_table _________________
+
+    def test_monotonically_increasing_id_empty_table() -> None:
+        table = MicroPartition.from_pydict({"a": []})
+>       table = table.add_monotonically_increasing_id(0, "id")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MicroPartition' object has no attribute 'add_monotonically_increasing_id'
+
+tests/table/test_monotonically_increasing_id.py:21: AttributeError
+______ test_monotonically_increasing_id_multiple_tables_in_micropartition ______
+
+    def test_monotonically_increasing_id_multiple_tables_in_micropartition() -> None:
+        table1 = Table.from_pydict({"a": [1, 2, 3]})
+        table2 = Table.from_pydict({"a": [4, 5, 6]})
+        table3 = Table.from_pydict({"a": [7, 8, 9]})
+    
+        table = MicroPartition._from_tables([table1, table2, table3])
+>       table = table.add_monotonically_increasing_id(0, "id")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'MicroPartition' object has no attribute 'add_monotonically_increasing_id'
+
+tests/table/test_monotonically_increasing_id.py:36: AttributeError
+=============================== warnings summary ===============================
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-2]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-20]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-50]
+tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-100]
+  /workspace/repo/daft/dataframe/dataframe.py:683: UserWarning: No columns specified for repartition; If you do not require rebalancing of partitions, you may instead prefer using `df.into_partitions(N)` which is a cheaper operation that avoids shuffling data.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_single_partition[arrow]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_single_partition[parquet]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_empty_table[arrow]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_empty_table[parquet]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-1]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-2]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-20]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-50]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[arrow-100]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-1]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-2]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-20]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-50]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_into_partition[parquet-100]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-1]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-2]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-20]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-50]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[arrow-100]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-1]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-2]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-20]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-50]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_partitions_with_repartition[parquet-100]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_custom_col_name[arrow]
+FAILED tests/dataframe/test_monotonically_increasing_id.py::test_monotonically_increasing_id_custom_col_name[parquet]
+FAILED tests/table/test_monotonically_increasing_id.py::test_monotonically_increasing_id
+FAILED tests/table/test_monotonically_increasing_id.py::test_monotonically_increasing_id_empty_table
+FAILED tests/table/test_monotonically_increasing_id.py::test_monotonically_increasing_id_multiple_tables_in_micropartition
+======================== 29 failed, 4 warnings in 0.38s ========================
+reward=0 (grader error: Extra data: line 43 column 1 (char 4234); fell back to exit_code=1)

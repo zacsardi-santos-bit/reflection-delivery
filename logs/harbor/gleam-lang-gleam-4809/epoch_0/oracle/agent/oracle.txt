@@ -1,0 +1,7 @@
+patching file CHANGELOG.md
+patching file compiler-core/src/ast.rs
+patching file compiler-core/src/javascript/decision.rs
+patching file compiler-core/src/language_server/code_action.rs
+patching file compiler-core/src/language_server/engine.rs
+patching file compiler-core/src/language_server/reference.rs
+patching file compiler-core/src/language_server/rename.rs

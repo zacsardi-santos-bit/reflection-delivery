@@ -1,0 +1,23 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run src/helpers/gcloud-pubsub-mq.unit.test.ts src/mq/gcloud-pubsub-mq.unit.test.ts",
+  "test_files": [
+    "src/helpers/gcloud-pubsub-mq.unit.test.ts",
+    "src/mq/gcloud-pubsub-mq.unit.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/mq/gcloud-pubsub-mq.unit.test.ts::enqueue should publish a message",
+    "/workspace/repo/src/mq/gcloud-pubsub-mq.unit.test.ts::enqueue should not publish a message when a delay is set",
+    "/workspace/repo/src/mq/gcloud-pubsub-mq.unit.test.ts::enqueue should throw an error if the message fails to be published",
+    "/workspace/repo/src/mq/gcloud-pubsub-mq.unit.test.ts::listen should listen for messages",
+    "/workspace/repo/src/mq/gcloud-pubsub-mq.unit.test.ts::listen should setup a message handler that acknowledges the message when it is handled successfully",
+    "/workspace/repo/src/mq/gcloud-pubsub-mq.unit.test.ts::listen should setup a message handler that nacks the message when it is handled unsuccessfully",
+    "/workspace/repo/src/helpers/gcloud-pubsub-mq.unit.test.ts::initGCloudPubSubMessageQueue should return a configured GCloudPubSubMessageQueue instance",
+    "/workspace/repo/src/helpers/gcloud-pubsub-mq.unit.test.ts::initGCloudPubSubMessageQueue should only explicitly provide options to the PubSub client if they are defined",
+    "/workspace/repo/src/helpers/gcloud-pubsub-mq.unit.test.ts::initGCloudPubSubMessageQueue should throw an error if the topic does not exist",
+    "/workspace/repo/src/helpers/gcloud-pubsub-mq.unit.test.ts::initGCloudPubSubMessageQueue should throw an error if the subscription does not exist"
+  ],
+  "PASS_TO_PASS": []
+}

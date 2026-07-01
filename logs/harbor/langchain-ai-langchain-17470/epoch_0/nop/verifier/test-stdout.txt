@@ -1,0 +1,42 @@
+patching file libs/partners/mongodb/tests/integration_tests/test_cache.py
+patching file libs/partners/mongodb/tests/unit_tests/test_cache.py
+patching file libs/partners/mongodb/tests/unit_tests/test_vectorstores.py
+patching file libs/partners/mongodb/tests/utils.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/libs/partners/mongodb
+configfile: pyproject.toml
+plugins: syrupy-5.3.4, asyncio-1.4.0, anyio-4.14.1, mock-3.15.1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 0 items / 2 errors
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/unit_tests/test_cache.py ________________
+ImportError while importing test module '/workspace/repo/libs/partners/mongodb/tests/unit_tests/test_cache.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/unit_tests/test_cache.py:13: in <module>
+    from langchain_mongodb.cache import MongoDBAtlasSemanticCache, MongoDBCache
+E   ModuleNotFoundError: No module named 'langchain_mongodb.cache'
+____________ ERROR collecting tests/unit_tests/test_vectorstores.py ____________
+ImportError while importing test module '/workspace/repo/libs/partners/mongodb/tests/unit_tests/test_vectorstores.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/unit_tests/test_vectorstores.py:9: in <module>
+    from tests.utils import ConsistentFakeEmbeddings, MockCollection
+tests/utils.py:23: in <module>
+    from langchain_mongodb.cache import MongoDBAtlasSemanticCache
+E   ModuleNotFoundError: No module named 'langchain_mongodb.cache'
+=========================== short test summary info ============================
+ERROR tests/unit_tests/test_cache.py
+ERROR tests/unit_tests/test_vectorstores.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 2 errors in 0.97s ===============================
+reward=0 graded=17 found=0 failed=0 parsed=0 framework=pytest exit_code=2

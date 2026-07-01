@@ -1,0 +1,20 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_infer/test_batch_bucket.py /workspace/repo/tests/test_infer/test_config_and_struct.py /workspace/repo/tests/test_infer/test_kvcache_manager.py /workspace/repo/tests/test_infer/test_request_handler.py -v",
+  "test_files": [
+    "tests/test_infer/test_batch_bucket.py",
+    "tests/test_infer/test_config_and_struct.py",
+    "tests/test_infer/test_kvcache_manager.py",
+    "tests/test_infer/test_request_handler.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_infer.test_batch_bucket::test_bucket",
+    "tests.test_infer.test_config_and_struct::test_config_and_inference",
+    "tests.test_infer.test_kvcache_manager::test_logical_blocks",
+    "tests.test_infer.test_kvcache_manager::test_cache_manager",
+    "tests.test_infer.test_request_handler::test_running_list_and_request_handler"
+  ],
+  "PASS_TO_PASS": []
+}

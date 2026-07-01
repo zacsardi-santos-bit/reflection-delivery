@@ -1,0 +1,12 @@
+patching file codex-rs/chatgpt/tests/apply_command_e2e.rs
+patching file codex-rs/chatgpt/tests/task_turn_fixture.json
+error: failed to load manifest for workspace member `/workspace/repo/codex-rs/chatgpt`
+referenced by workspace at `/workspace/repo/codex-rs/Cargo.toml`
+
+Caused by:
+  failed to read `/workspace/repo/codex-rs/chatgpt/Cargo.toml`
+
+Caused by:
+  No such file or directory (os error 2)
+error: command `/usr/local/rustup/toolchains/1.88.0-x86_64-unknown-linux-gnu/bin/cargo metadata '--format-version=1' --all-features --filter-platform x86_64-unknown-linux-gnu` failed with exit status: 101
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=cargo exit_code=102

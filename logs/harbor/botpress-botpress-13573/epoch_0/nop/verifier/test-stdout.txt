@@ -1,0 +1,25 @@
+patching file packages/cognitive/src/__tests__/client.test.ts
+patching file packages/cognitive/src/__tests__/client.ts
+patching file packages/cognitive/src/__tests__/models.json
+patching file packages/cognitive/src/__tests__/models.test.ts
+patching file packages/cognitive/src/interceptors.test.ts
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.4 /workspace/repo/packages/cognitive
+
+ ❯ src/interceptors.test.ts  (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/interceptors.test.ts [ src/interceptors.test.ts ]
+Error: Failed to load url ./interceptors (resolved id: ./interceptors) in /workspace/repo/packages/cognitive/src/interceptors.test.ts. Does the file exist?
+ ❯ loadAndTransform ../../../node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51969:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  15:13:23
+   Duration  502ms (transform 55ms, setup 0ms, collect 0ms, tests 0ms, environment 0ms, prepare 139ms)
+
+reward=0 graded=6 found=0 failed=0 parsed=0 framework=vitest exit_code=1

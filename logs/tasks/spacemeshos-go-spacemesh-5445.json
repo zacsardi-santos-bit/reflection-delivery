@@ -1,0 +1,23 @@
+{
+ "task": "spacemeshos-go-spacemesh-5445",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'GetLayerVerified(types.LayerID) (*types.Block, error)' to mesh interface + Mesh, filters txs by 'if t.State == types.APPLIED', and rewrites readLayer to use verified block; test.patch adds TestMesh_GetLayerVerified/TestReadLayer that call these"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,403 @@
+patching file packages/theme/src/cli/services/profile.test.ts
+patching file packages/theme/src/cli/utilities/errors.test.ts
+patching file packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts
+patching file packages/theme/src/cli/utilities/theme-environment/proxy.test.ts
+patching file packages/theme/src/cli/utilities/theme-environment/storefront-renderer.test.ts
+patching file packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts
+
+ RUN  v1.6.1 /workspace/repo/packages/theme
+
+ ✓ src/cli/utilities/errors.test.ts > errors > renderThrownError > renders AbortError with fatal error UI
+ ✓ src/cli/utilities/errors.test.ts > errors > renderThrownError > renders regular Error with error UI and debug output
+ ✓ src/cli/utilities/errors.test.ts > errors > createSyncingCatchError > creates error handler for delete preset
+ ✓ src/cli/utilities/errors.test.ts > errors > createSyncingCatchError > creates error handler for upload preset
+ ✓ src/cli/utilities/errors.test.ts > errors > createSyncingCatchError > creates error handler with custom headline
+ ✓ src/cli/utilities/errors.test.ts > errors > createAbortCatchError > creates error handler that exits process
+ × src/cli/utilities/errors.test.ts > errors > createFetchError > creates FetchError from Response-like object
+   → createFetchError is not a function
+ × src/cli/utilities/errors.test.ts > errors > createFetchError > creates FetchError with defaults for missing properties
+   → createFetchError is not a function
+ × src/cli/utilities/errors.test.ts > errors > extractFetchErrorInfo > extracts info from FetchError with all properties
+   → createFetchError is not a function
+ × src/cli/utilities/errors.test.ts > errors > extractFetchErrorInfo > extracts info with defaults for regular Error
+   → extractFetchErrorInfo is not a function
+ × src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using storefront API
+   → 
+ × src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using theme access API
+   → 
+ × src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using the section_id
+   → 
+ × src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using the app_block_id
+   → 
+ × src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using the section_id when section_id and app_block_id are provided
+   → 
+ × src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using query parameters
+   → 
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies Vanity CDN to through local server
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies requests to main global CDN for known local assets through local server
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies requests to main global CDN for known local theme extension assets through local server
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies urls in JS files
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies urls in Link header
+ × src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > patchRenderingResponse > replaces CDN links in body and headers
+   → Cannot read properties of undefined (reading 'status')
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > getProxyStorefrontHeaders > filters out hop-by-hop headers and adds required headers
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy non-GET requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy Cart requests as they are not supported by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy Checkout requests as they are not supported by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy CDN requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy CDN requests for extensions
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy requests with file extensions
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy requests with a non-default accept header
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should not proxy requests with a default accept header and no extension, allowing them to be rendered by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should not proxy HTML requests (based on the extension), allowing them to be rendered by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should not proxy HTML requests (based on the "accept" header), allowing them to be rendered by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy the /account requests as it may result on a 302 that must be followd
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should not proxy the /account/login requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy /account/login/multipass and /account/login/multipass/ requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy /account/login/multipass/<token> requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy /account/logout requests
+ ✓ src/cli/services/profile.test.ts > profile > outputs JSON to stdout when asJson is true
+ ✓ src/cli/services/profile.test.ts > profile > opens profile in browser when asJson is false
+ ✓ src/cli/services/profile.test.ts > profile > uses provided passwords for authentication
+ ✓ src/cli/services/profile.test.ts > profile > throws error when fetch fails
+ ✓ src/cli/services/profile.test.ts > profile > throws error when response status is not 200
+ × src/cli/utilities/theme-environment/hot-reload/server.test.ts > hot-reload server > emits hot-reload events with proper data
+   → expected '<div><link href="/cdn/path/assets/fil…' to be an instance of Response
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > should upload the development theme to remote
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > should initialize theme editor sync if themeEditorSync flag is passed
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > should skip deletion of remote files if noDelete flag is passed
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > mocks known endpoints
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > serves proxied local assets
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > serves local assets from the root in a backward compatible way
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > gets the right content for assets with non-breaking spaces
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > renders HTML
+ × src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > proxies other requests to SFR
+   → expected last "spy" call to have been called with [ …(2) ]
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > proxies .css.liquid assets with injected CDN
+ × src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > proxies .js.liquid assets replacing the error query string
+   → expected "spy" to be called with arguments: [ …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  Array [[22m
+[2m    "https://my-store.myshopify.com/cdn/shop/t/img/assets/file4.js?v=1782746788339&_fd=0&pb=0",[22m
+[32m-   Any<Object>,[90m
+[31m+   Object {[90m
+[31m+     "body": undefined,[90m
+[31m+     "duplex": undefined,[90m
+[31m+     "headers": Object {[90m
+[31m+       "cookie": undefined,[90m
+[31m+       "referer": "https://my-store.myshopify.com",[90m
+[31m+     },[90m
+[31m+     "ignoreResponseError": false,[90m
+[31m+     "method": "GET",[90m
+[31m+     "redirect": "manual",[90m
+[31m+   },[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m1[22m
+[39m
+ × src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > falls back to proxying if a rendering request fails with 4xx status
+   → expected "spy" to be called once, but got 0 times
+ × src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > forwards rendering error after proxy failure
+   → expected "spy" to be called once, but got 0 times
+ × src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > renders error page on network errors with hot reload script injected
+   → expected 'text/html' to deeply equal 'text/html; charset=utf-8'
+ × src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > renders error page on upload errors with hot reload script injected
+   → expected 'text/html' to deeply equal 'text/html; charset=utf-8'
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 18 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/cli/utilities/errors.test.ts > errors > createFetchError > creates FetchError from Response-like object
+TypeError: createFetchError is not a function
+ ❯ src/cli/utilities/errors.test.ts:102:14
+    100|       Object.defineProperty(response, 'url', {value: responseUrl})
+    101| 
+    102|       expect(createFetchError(response)).toMatchObject({
+       |              ^
+    103|         statusCode: response.status,
+    104|         statusMessage: response.statusText,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/18]⎯
+
+ FAIL  src/cli/utilities/errors.test.ts > errors > createFetchError > creates FetchError with defaults for missing properties
+TypeError: createFetchError is not a function
+ ❯ src/cli/utilities/errors.test.ts:113:14
+    111| 
+    112|     test('creates FetchError with defaults for missing properties', ()…
+    113|       expect(createFetchError(new Error('test error'), 'https://error.…
+       |              ^
+    114|         statusCode: 502,
+    115|         statusMessage: 'Bad Gateway',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/18]⎯
+
+ FAIL  src/cli/utilities/errors.test.ts > errors > extractFetchErrorInfo > extracts info from FetchError with all properties
+TypeError: createFetchError is not a function
+ ❯ src/cli/utilities/errors.test.ts:124:26
+    122|   describe('extractFetchErrorInfo', () => {
+    123|     test('extracts info from FetchError with all properties', () => {
+    124|       const fetchError = createFetchError({
+       |                          ^
+    125|         status: 404,
+    126|         statusText: 'Not Found',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/18]⎯
+
+ FAIL  src/cli/utilities/errors.test.ts > errors > extractFetchErrorInfo > extracts info with defaults for regular Error
+TypeError: extractFetchErrorInfo is not a function
+ ❯ src/cli/utilities/errors.test.ts:142:20
+    140|     test('extracts info with defaults for regular Error', () => {
+    141|       const error = new Error('test error')
+    142|       const info = extractFetchErrorInfo(error)
+       |                    ^
+    143| 
+    144|       expect(info.headline).toBe('Unexpected error during fetch with s…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > patchRenderingResponse > replaces CDN links in body and headers
+TypeError: Cannot read properties of undefined (reading 'status')
+ ❯ Module.patchRenderingResponse src/cli/utilities/theme-environment/proxy.ts:159:37
+    157|  */
+    158| export async function patchRenderingResponse(ctx: DevServerContext, ev…
+    159|   setResponseStatus(event, response.status, response.statusText)
+       |                                     ^
+    160|   setResponseHeaders(event, Object.fromEntries(response.headers.entrie…
+    161|   patchProxiedResponseHeaders(ctx, event, response)
+ ❯ src/cli/utilities/theme-environment/proxy.test.ts:171:37
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using storefront API
+{
+  message: [32m''[39m,
+  statusCode: [33m502[39m,
+  statusMessage: [32m'Bad Gateway'[39m,
+  data: { url: [32m'https://store.myshopify.com/products/1?_fd=0&pb=0'[39m },
+  stacks: []
+}
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { statusCode: 502, statusMessage: 'Bad Gateway', data: { url: 'https://store.myshopify.com/products/1?_fd=0&pb=0' } }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using theme access API
+{
+  message: [32m''[39m,
+  statusCode: [33m502[39m,
+  statusMessage: [32m'Bad Gateway'[39m,
+  data: {
+    url: [32m'https://theme-kit-access.shopifyapps.com/cli/sfr/products/1?_fd=0&pb=0'[39m
+  },
+  stacks: []
+}
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { statusCode: 502, statusMessage: 'Bad Gateway', data: { url: 'https://theme-kit-access.shopifyapps.com/cli/sfr/products/1?_fd=0&pb=0' } }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using the section_id
+{
+  message: [32m''[39m,
+  statusCode: [33m502[39m,
+  statusMessage: [32m'Bad Gateway'[39m,
+  data: {
+    url: [32m'https://store.myshopify.com/products/1?_fd=0&pb=0&section_id=sections--1__announcement-bar'[39m
+  },
+  stacks: []
+}
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { statusCode: 502, statusMessage: 'Bad Gateway', data: { url: 'https://store.myshopify.com/products/1?_fd=0&pb=0&section_id=sections--1__announcement-bar' } }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using the app_block_id
+{
+  message: [32m''[39m,
+  statusCode: [33m502[39m,
+  statusMessage: [32m'Bad Gateway'[39m,
+  data: {
+    url: [32m'https://store.myshopify.com/products/1?_fd=0&pb=0&app_block_id=00001111222233334444'[39m
+  },
+  stacks: []
+}
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { statusCode: 502, statusMessage: 'Bad Gateway', data: { url: 'https://store.myshopify.com/products/1?_fd=0&pb=0&app_block_id=00001111222233334444' } }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using the section_id when section_id and app_block_id are provided
+{
+  message: [32m''[39m,
+  statusCode: [33m502[39m,
+  statusMessage: [32m'Bad Gateway'[39m,
+  data: {
+    url: [32m'https://store.myshopify.com/products/1?_fd=0&pb=0&section_id=sections--1__announcement-bar'[39m
+  },
+  stacks: []
+}
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { statusCode: 502, statusMessage: 'Bad Gateway', data: { url: 'https://store.myshopify.com/products/1?_fd=0&pb=0&section_id=sections--1__announcement-bar' } }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using query parameters
+{
+  message: [32m''[39m,
+  statusCode: [33m502[39m,
+  statusMessage: [32m'Bad Gateway'[39m,
+  data: {
+    url: [32m'https://store.myshopify.com/products/1?_fd=0&pb=0&value=A&value=B'[39m
+  },
+  stacks: []
+}
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { statusCode: 502, statusMessage: 'Bad Gateway', data: { url: 'https://store.myshopify.com/products/1?_fd=0&pb=0&value=A&value=B' } }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > proxies other requests to SFR
+AssertionError: expected last "spy" call to have been called with [ …(2) ]
+
+[2mCompared values serialize to the same structure.
+Printing internal object structure without calling `toJSON` instead.[22m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  Array [[22m
+[32m-   URL {},[39m
+[31m+   "https://my-store.myshopify.com/path/to/something-else.js?_fd=0&pb=0",[39m
+[2m    ObjectContaining {[22m
+[2m      "headers": Object {[22m
+[2m        "referer": "https://my-store.myshopify.com",[22m
+[2m      },[22m
+[2m      "method": "GET",[22m
+[2m      "redirect": "manual",[22m
+[2m    },[22m
+[2m  ][22m
+
+ ❯ src/cli/utilities/theme-environment/theme-environment.test.ts:313:25
+    311| 
+    312|       expect(fetchStub).toHaveBeenCalledOnce()
+    313|       expect(fetchStub).toHaveBeenLastCalledWith(
+       |                         ^
+    314|         new URL(`https://${defaultServerContext.session.storeFqdn}/pat…
+    315|         expect.objectContaining({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > proxies .js.liquid assets replacing the error query string
+AssertionError: expected "spy" to be called with arguments: [ …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  Array [[22m
+[2m    "https://my-store.myshopify.com/cdn/shop/t/img/assets/file4.js?v=1782746788339&_fd=0&pb=0",[22m
+[32m-   Any<Object>,[90m
+[31m+   Object {[90m
+[31m+     "body": undefined,[90m
+[31m+     "duplex": undefined,[90m
+[31m+     "headers": Object {[90m
+[31m+       "cookie": undefined,[90m
+[31m+       "referer": "https://my-store.myshopify.com",[90m
+[31m+     },[90m
+[31m+     "ignoreResponseError": false,[90m
+[31m+     "method": "GET",[90m
+[31m+     "redirect": "manual",[90m
+[31m+   },[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m1[22m
+[39m
+ ❯ src/cli/utilities/theme-environment/theme-environment.test.ts:377:25
+    375|       expect(vi.mocked(render)).not.toHaveBeenCalled()
+    376| 
+    377|       expect(fetchStub).toHaveBeenCalledWith(
+       |                         ^
+    378|         new URL(`https://${defaultServerContext.session.storeFqdn}${pa…
+    379|         expect.any(Object),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > falls back to proxying if a rendering request fails with 4xx status
+AssertionError: expected "spy" to be called once, but got 0 times
+ ❯ src/cli/utilities/theme-environment/theme-environment.test.ts:393:25
+    391|       expect(vi.mocked(render)).toHaveBeenCalled()
+    392| 
+    393|       expect(fetchStub).toHaveBeenCalledOnce()
+       |                         ^
+    394|       expect(fetchStub).toHaveBeenLastCalledWith(
+    395|         new URL(`https://${defaultServerContext.session.storeFqdn}/non…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > forwards rendering error after proxy failure
+AssertionError: expected "spy" to be called once, but got 0 times
+ ❯ src/cli/utilities/theme-environment/theme-environment.test.ts:416:25
+    414|       expect(vi.mocked(render)).toHaveBeenCalled()
+    415| 
+    416|       expect(fetchStub).toHaveBeenCalledOnce()
+       |                         ^
+    417|       expect(fetchStub).toHaveBeenLastCalledWith(
+    418|         new URL(`https://${defaultServerContext.session.storeFqdn}/non…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > renders error page on network errors with hot reload script injected
+AssertionError: expected 'text/html' to deeply equal 'text/html; charset=utf-8'
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- text/html; charset=utf-8[39m
+[31m+ text/html[39m
+
+ ❯ src/cli/utilities/theme-environment/theme-environment.test.ts:439:45
+    437| 
+    438|       const {res, body} = await eventPromise
+    439|       expect(res.getHeader('content-type')).toEqual('text/html; charse…
+       |                                             ^
+    440|       expect(body).toMatch(/<title>Failed to render storefront with st…
+    441|       expect(body).toMatch('hotReloadScript')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > renders error page on upload errors with hot reload script injected
+AssertionError: expected 'text/html' to deeply equal 'text/html; charset=utf-8'
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- text/html; charset=utf-8[39m
+[31m+ text/html[39m
+
+ ❯ src/cli/utilities/theme-environment/theme-environment.test.ts:454:45
+    452| 
+    453|       const {res, body} = await eventPromise
+    454|       expect(res.getHeader('content-type')).toEqual('text/html; charse…
+       |                                             ^
+    455|       expect(body).toMatch(/<title>Failed to Upload Theme Files/i)
+    456|       expect(body).toMatch(/Error 1/)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/18]⎯
+
+ FAIL  src/cli/utilities/theme-environment/hot-reload/server.test.ts > hot-reload server > emits hot-reload events with proper data
+AssertionError: expected '<div><link href="/cdn/path/assets/fil…' to be an instance of Response
+ ❯ src/cli/utilities/theme-environment/hot-reload/server.test.ts:76:28
+     74|     )
+     75|     // Patches the rendering response:
+     76|     expect(renderResponse).toBeInstanceOf(Response)
+       |                            ^
+     77|     await expect((renderResponse as Response).text()).resolves.toEqual(
+     78|       '<div><link href="/cdn/path/assets/file.css"></link></div>',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/18]⎯
+
+ Test Files  5 failed | 1 passed (6)
+      Tests  18 failed | 41 passed (59)
+   Start at  15:26:23
+   Duration  4.70s (transform 2.31s, setup 42ms, collect 14.06s, tests 257ms, environment 1ms, prepare 1.10s)
+
+reward=0 (grader error: Extra data: line 78 column 1 (char 10707); fell back to exit_code=1)

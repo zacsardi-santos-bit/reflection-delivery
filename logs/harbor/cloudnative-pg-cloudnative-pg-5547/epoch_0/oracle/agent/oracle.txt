@@ -1,0 +1,3 @@
+patching file internal/management/controller/database_controller.go
+patching file internal/management/controller/database_controller_sql.go
+patching file pkg/management/postgres/instance.go

@@ -1,0 +1,554 @@
+patching file vergen-pretty/src/pretty/suffix.rs
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.46
+   Compiling syn v1.0.109
+   Compiling fnv v1.0.7
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.10.0
+   Compiling anyhow v1.0.103
+   Compiling rustversion v1.0.22
+   Compiling memchr v2.8.2
+   Compiling serde_core v1.0.228
+   Compiling once_cell v1.21.4
+   Compiling zmij v1.0.21
+   Compiling cfg-if v1.0.4
+   Compiling regex-syntax v0.8.11
+   Compiling serde_json v1.0.150
+   Compiling lazy_static v1.5.0
+   Compiling unicode-segmentation v1.13.3
+   Compiling log v0.4.33
+   Compiling thread_local v1.1.9
+   Compiling sharded-slab v0.1.7
+   Compiling smallvec v1.15.2
+   Compiling itoa v1.0.18
+   Compiling tracing-core v0.1.36
+   Compiling nu-ansi-term v0.50.3
+   Compiling convert_case v0.6.0
+   Compiling aho-corasick v1.1.4
+   Compiling tracing-log v0.2.0
+   Compiling tracing-subscriber v0.3.23
+   Compiling vergen-pretty v0.3.2 (/workspace/repo/vergen-pretty)
+   Compiling regex-automata v0.4.14
+   Compiling regex v1.12.4
+   Compiling darling_core v0.14.4
+   Compiling darling_macro v0.14.4
+   Compiling darling v0.14.4
+   Compiling derive_builder_core v0.13.1
+   Compiling derive_builder_macro v0.13.1
+   Compiling derive_builder v0.13.1
+warning: lint `illegal_floating_point_literal_pattern` has been removed: no longer a warning, float patterns behave the same as `==`
+   --> vergen-pretty/src/lib.rs:148:9
+    |
+148 |         illegal_floating_point_literal_pattern,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(renamed_and_removed_lints)]` on by default
+
+warning: lint `indirect_structural_match` has been removed: converted into hard error, see RFC #3535 <https://rust-lang.github.io/rfcs/3535-constants-in-patterns.html> for more information
+   --> vergen-pretty/src/lib.rs:152:9
+    |
+152 |         indirect_structural_match,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: lint `nontrivial_structural_match` has been removed: no longer needed, see RFC #3535 <https://rust-lang.github.io/rfcs/3535-constants-in-patterns.html> for more information
+   --> vergen-pretty/src/lib.rs:176:9
+    |
+176 |         nontrivial_structural_match,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: lint `pointer_structural_match` has been removed: converted into hard error, see RFC #3535 <https://rust-lang.github.io/rfcs/3535-constants-in-patterns.html> for more information
+   --> vergen-pretty/src/lib.rs:182:9
+    |
+182 |         pointer_structural_match,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: lint `suspicious_auto_trait_impls` has been removed: no longer needed, see issue #93367 <https://github.com/rust-lang/rust/issues/93367> for more information
+   --> vergen-pretty/src/lib.rs:194:9
+    |
+194 |         suspicious_auto_trait_impls,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: the lint level is defined here
+   --> vergen-pretty/src/lib.rs:184:9
+    |
+184 |         renamed_and_removed_lints,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: lint `temporary_cstring_as_ptr` has been renamed to `dangling_pointers_from_temporaries`
+   --> vergen-pretty/src/lib.rs:195:9
+    |
+195 |         temporary_cstring_as_ptr,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^ help: use the new name: `dangling_pointers_from_temporaries`
+
+warning: lint `unsupported_calling_conventions` has been removed: converted into hard error
+   --> vergen-pretty/src/lib.rs:216:9
+    |
+216 |         unsupported_calling_conventions,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: lint `where_clauses_object_safety` has been removed: converted into hard error, see PR #125380 <https://github.com/rust-lang/rust/pull/125380> for more information
+   --> vergen-pretty/src/lib.rs:240:9
+    |
+240 |         where_clauses_object_safety,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: lint `unused_tuple_struct_fields` has been renamed to `dead_code`
+   --> vergen-pretty/src/lib.rs:296:48
+    |
+296 | #![cfg_attr(all(msrv, any(beta, stable)), deny(unused_tuple_struct_fields))]
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^ help: use the new name: `dead_code`
+
+warning: lint `implied_bounds_entailment` has been removed: converted into hard error, see PR #117984 <https://github.com/rust-lang/rust/pull/117984> for more information
+   --> vergen-pretty/src/lib.rs:300:38
+    |
+300 |     deny(bindings_with_variant_name, implied_bounds_entailment)
+    |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:105:9
+    |
+105 |     all(msrv, feature = "unstable", nightly),
+    |         ^^^^
+    |
+    = help: expected names are: `clippy`, `debug_assertions`, `doc`, `docsrs`, `doctest`, `feature`, `fmt_debug`, `miri`, `overflow_checks`, `panic`, `proc_macro`, `relocation_model`, `rustfmt`, `sanitize`, `sanitizer_cfi_generalize_pointers`, `sanitizer_cfi_normalize_integers`, `target_abi`, `target_arch`, `target_endian`, `target_env`, `target_family`, `target_feature`, `target_has_atomic`, `target_has_atomic_equal_alignment`, `target_has_atomic_load_store`, `target_os`, `target_pointer_width`, `target_thread_local`, `target_vendor`, `test`, `ub_checks`, `unix`, and `windows`
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+note: the lint level is defined here
+   --> vergen-pretty/src/lib.rs:203:9
+    |
+203 |         unexpected_cfgs,
+    |         ^^^^^^^^^^^^^^^
+
+warning: unexpected `cfg` condition name: `nightly`
+   --> vergen-pretty/src/lib.rs:105:37
+    |
+105 |     all(msrv, feature = "unstable", nightly),
+    |                                     ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(nightly)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(nightly)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:117:5
+    |
+117 |     msrv,
+    |     ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:244:13
+    |
+244 | #![cfg_attr(msrv, allow(single_use_lifetimes))]
+    |             ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:247:9
+    |
+247 |     all(msrv, feature = "unstable", any(nightly, beta)),
+    |         ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `nightly`
+   --> vergen-pretty/src/lib.rs:247:41
+    |
+247 |     all(msrv, feature = "unstable", any(nightly, beta)),
+    |                                         ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(nightly)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(nightly)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `beta`
+   --> vergen-pretty/src/lib.rs:247:50
+    |
+247 |     all(msrv, feature = "unstable", any(nightly, beta)),
+    |                                                  ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(beta)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(beta)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:252:9
+    |
+252 |     all(msrv, feature = "unstable", nightly),
+    |         ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `nightly`
+   --> vergen-pretty/src/lib.rs:252:37
+    |
+252 |     all(msrv, feature = "unstable", nightly),
+    |                                     ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(nightly)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(nightly)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:267:17
+    |
+267 | #![cfg_attr(all(msrv, not(feature = "unstable"), nightly), deny(unstable_features))]
+    |                 ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `nightly`
+   --> vergen-pretty/src/lib.rs:267:50
+    |
+267 | #![cfg_attr(all(msrv, not(feature = "unstable"), nightly), deny(unstable_features))]
+    |                                                  ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(nightly)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(nightly)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:270:9
+    |
+270 |     all(msrv, nightly),
+    |         ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `nightly`
+   --> vergen-pretty/src/lib.rs:270:15
+    |
+270 |     all(msrv, nightly),
+    |               ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(nightly)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(nightly)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:275:9
+    |
+275 |     all(msrv, any(beta, nightly)),
+    |         ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `beta`
+   --> vergen-pretty/src/lib.rs:275:19
+    |
+275 |     all(msrv, any(beta, nightly)),
+    |                   ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(beta)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(beta)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `nightly`
+   --> vergen-pretty/src/lib.rs:275:25
+    |
+275 |     all(msrv, any(beta, nightly)),
+    |                         ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(nightly)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(nightly)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:296:17
+    |
+296 | #![cfg_attr(all(msrv, any(beta, stable)), deny(unused_tuple_struct_fields))]
+    |                 ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `beta`
+   --> vergen-pretty/src/lib.rs:296:27
+    |
+296 | #![cfg_attr(all(msrv, any(beta, stable)), deny(unused_tuple_struct_fields))]
+    |                           ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(beta)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(beta)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `stable`
+   --> vergen-pretty/src/lib.rs:296:33
+    |
+296 | #![cfg_attr(all(msrv, any(beta, stable)), deny(unused_tuple_struct_fields))]
+    |                                 ^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(stable)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(stable)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:299:9
+    |
+299 |     all(msrv, stable),
+    |         ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `stable`
+   --> vergen-pretty/src/lib.rs:299:15
+    |
+299 |     all(msrv, stable),
+    |               ^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(stable)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(stable)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:303:13
+    |
+303 | #![cfg_attr(msrv, deny(clippy::all, clippy::pedantic))]
+    |             ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:304:17
+    |
+304 | #![cfg_attr(all(msrv, lints_fix), allow(clippy::struct_field_names))]
+    |                 ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `lints_fix`
+   --> vergen-pretty/src/lib.rs:304:23
+    |
+304 | #![cfg_attr(all(msrv, lints_fix), allow(clippy::struct_field_names))]
+    |                       ^^^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(lints_fix)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(lints_fix)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:307:5
+    |
+307 |     msrv,
+    |     ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `msrv`
+   --> vergen-pretty/src/lib.rs:319:9
+    |
+319 |     all(msrv, feature = "unstable", nightly),
+    |         ^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(msrv)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(msrv)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `nightly`
+   --> vergen-pretty/src/lib.rs:319:37
+    |
+319 |     all(msrv, feature = "unstable", nightly),
+    |                                     ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(nightly)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(nightly)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `nightly`
+   --> vergen-pretty/src/lib.rs:322:22
+    |
+322 | #![cfg_attr(all(doc, nightly), feature(doc_auto_cfg))]
+    |                      ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(nightly)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(nightly)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `nightly`
+   --> vergen-pretty/src/lib.rs:323:25
+    |
+323 | #![cfg_attr(all(docsrs, nightly), feature(doc_cfg))]
+    |                         ^^^^^^^
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(nightly)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(nightly)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: `vergen-pretty` (lib) generated 39 warnings (run `cargo fix --lib -p vergen-pretty` to apply 2 suggestions)
+warning: `vergen-pretty` (lib test) generated 39 warnings (39 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.42s
+────────────
+ Nextest run ID c4c89307-e253-46e1-ba24-65a1a51f5a27 with nextest profile: default
+    Starting 15 tests across 1 binary
+        PASS [   0.063s] vergen-pretty utils::test_utils::has_value_none_is_none
+        FAIL [   0.067s] vergen-pretty pretty::suffix::test::split_key_non_vergen_returns_some
+  stdout ───
+
+    running 1 test
+    test pretty::suffix::test::split_key_non_vergen_returns_some ... FAILED
+
+    failures:
+
+    failures:
+        pretty::suffix::test::split_key_non_vergen_returns_some
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 14 filtered out; finished in 0.01s
+
+  stderr ───
+
+    thread 'pretty::suffix::test::split_key_non_vergen_returns_some' panicked at vergen-pretty/src/pretty/suffix.rs:108:9:
+    assertion failed: split_key(("test", "test")).is_some()
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 13 tests still running
+        FAIL [   0.070s] vergen-pretty pretty::suffix::test::split_kv_short_returns_some
+  stdout ───
+
+    running 1 test
+    test pretty::suffix::test::split_kv_short_returns_some ... FAILED
+
+    failures:
+
+    failures:
+        pretty::suffix::test::split_kv_short_returns_some
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 14 filtered out; finished in 0.01s
+
+  stderr ───
+
+    thread 'pretty::suffix::test::split_kv_short_returns_some' panicked at vergen-pretty/src/pretty/suffix.rs:114:9:
+    assertion failed: split_kv((vec!["test".to_string()], "test".to_string())).is_some()
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.070s] vergen-pretty utils::test_utils::split_key_no_vergen_is_none
+        PASS [   0.071s] vergen-pretty pretty::suffix::test::suffix_debug_works
+        PASS [   0.073s] vergen-pretty pretty::suffix::test::suffix_clone_works
+        PASS [   0.071s] vergen-pretty utils::test_utils::split_kv_too_short_is_none
+        PASS [   0.073s] vergen-pretty pretty::tests::pretty_clone_works
+        PASS [   0.073s] vergen-pretty pretty::prefix::test::prefix_debug_works
+        PASS [   0.073s] vergen-pretty pretty::tests::no_category_works
+        PASS [   0.075s] vergen-pretty pretty::suffix::test::display_suffix_works
+        PASS [   0.073s] vergen-pretty pretty::tests::default_display_works
+        PASS [   0.074s] vergen-pretty pretty::prefix::test::display_prefix_works
+        PASS [   0.076s] vergen-pretty pretty::prefix::test::prefix_clone_works
+        PASS [   0.078s] vergen-pretty pretty::tests::pretty_debug_works
+────────────
+     Summary [   0.081s] 15 tests run: 13 passed, 2 failed, 0 skipped
+        FAIL [   0.067s] vergen-pretty pretty::suffix::test::split_key_non_vergen_returns_some
+        FAIL [   0.070s] vergen-pretty pretty::suffix::test::split_kv_short_returns_some
+error: test run failed
+reward=0 graded=16 found=13 failed=2 parsed=15 framework=cargo exit_code=100

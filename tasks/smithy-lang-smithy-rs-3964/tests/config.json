@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/rust-runtime && cargo nextest run -p aws-smithy-runtime --test retries --features client,test-util",
+  "test_files": [
+    "aws/sdk-codegen/src/test/kotlin/software/amazon/smithy/rustsdk/RetryPartitionTest.kt",
+    "codegen-client/src/test/kotlin/software/amazon/smithy/rust/codegen/client/smithy/generators/ConfigOverrideRuntimePluginGeneratorTest.kt",
+    "rust-runtime/aws-smithy-runtime/tests/retries.rs"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) aws-smithy-runtime::retries token_bucket_exhausted_before_max_attempts",
+    "(2/2) aws-smithy-runtime::retries token_bucket_partitioning"
+  ],
+  "PASS_TO_PASS": []
+}

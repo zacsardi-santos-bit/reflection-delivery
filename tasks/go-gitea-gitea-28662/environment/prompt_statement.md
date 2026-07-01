@@ -1,0 +1,7 @@
+I'm working on Gitea and I've noticed two problems that need to be fixed.
+
+First, when running Gitea on MySQL, the database defaults to a case-insensitive collation. This means that if someone tries to create two branches or entities that differ only in casing, the database treats them as the same value. I want Gitea to automatically use a case-sensitive collation on MySQL (and MSSQL) so that values like "Branch" and "branch" are stored as distinct entries. I also need a way to inspect the current collation state of the database — checking whether the configured collation is case-sensitive, what collation is currently in use, and whether any table columns have inconsistent collations compared to what's expected. There should also be functionality to convert existing tables to a specified (or sensible default case-sensitive) collation, and the existing database conversion command should use this new functionality.
+
+Second, the branch creation API is rejecting branch names that contain emoji or other extended Unicode characters — for example, a branch named with an emoji in it. Since git itself supports these characters, the API should accept them and return a success response when creating such branches.
+
+Could you implement these two improvements? The collation checking should work correctly for both MySQL and MSSQL, including appropriate logic for determining if a collation name indicates case sensitivity, and for comparing collation names in a database-aware way.

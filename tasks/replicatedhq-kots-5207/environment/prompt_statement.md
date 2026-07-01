@@ -1,0 +1,5 @@
+I'm working on adding end-to-end test coverage for embedded cluster installation scenarios to our regression suite. We already have tests for existing cluster installs (airgapped and online, various RBAC levels), but the embedded cluster variants haven't been ported to the current end-to-end test framework yet. I need to add test specs for both embedded cluster airgapped and embedded cluster online installation flows.
+
+While doing this, I also noticed that the shared helper for validating dashboard metric graphs always tries to configure a metrics endpoint before checking that the graphs appear. That works fine for existing clusters where you need to manually enter the endpoint URL, but embedded clusters already have their metrics configured — so attempting that configuration step in an embedded cluster test causes failures. The helper needs to accept a parameter that tells it whether it's running against an existing cluster, so it can conditionally skip the endpoint configuration step when it's not needed.
+
+The existing cluster test specs also need to be updated to pass this new cluster-type flag when calling the dashboard graph validation helper.

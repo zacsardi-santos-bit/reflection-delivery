@@ -1,0 +1,35 @@
+patching file frontend/src/__tests__/cypress/cypress/pages/modelMetrics.ts
+patching file frontend/src/__tests__/cypress/cypress/tests/mocked/modelServing/modelMetrics.cy.ts
+patching file frontend/src/concepts/metrics/kserve/__tests__/utils.spec.ts
+patching file frontend/src/pages/modelServing/screens/projects/__tests__/nimUtils.spec.ts
+patching file frontend/src/pages/modelServing/screens/projects/__tests__/utils.spec.ts
+patching file frontend/src/utilities/__tests__/useEnableApplication.spec.tsx
+patching file frontend/src/utilities/__tests__/useWatchIntegrationComponents.spec.ts
+PASS src/concepts/metrics/kserve/__tests__/utils.spec.ts
+PASS src/utilities/__tests__/useWatchIntegrationComponents.spec.ts
+PASS src/pages/modelServing/screens/projects/__tests__/nimUtils.spec.ts (8.455 s)
+  ● Console
+
+    console.error
+      Error fetching NIM account template name: NIM account does not exist.
+
+      208 |     if (e instanceof Error) {
+      209 |       // eslint-disable-next-line no-console
+    > 210 |       console.error(`Error fetching NIM account template name: ${e.message}`);
+          |               ^
+      211 |     } else {
+      212 |       // eslint-disable-next-line no-console
+      213 |       console.error(`Error fetching NIM account template name: ${String(e)}`);
+
+      at error (src/pages/modelServing/screens/projects/nimUtils.ts:210:15)
+      at Object.<anonymous> (src/pages/modelServing/screens/projects/__tests__/nimUtils.spec.ts:147:20)
+
+PASS src/pages/modelServing/screens/projects/__tests__/utils.spec.ts (8.474 s)
+PASS src/utilities/__tests__/useEnableApplication.spec.tsx (10.343 s)
+
+Test Suites: 5 passed, 5 total
+Tests:       56 passed, 56 total
+Snapshots:   0 total
+Time:        11.601 s
+Ran all test suites matching /src\/concepts\/metrics\/kserve\/__tests__\/utils.spec.ts|src\/pages\/modelServing\/screens\/projects\/__tests__\/nimUtils.spec.ts|src\/pages\/modelServing\/screens\/projects\/__tests__\/utils.spec.ts|src\/utilities\/__tests__\/useEnableApplication.spec.tsx|src\/utilities\/__tests__\/useWatchIntegrationComponents.spec.ts/i.
+reward=1 graded=56 found=0 failed=0 parsed=0 framework=jest exit_code=0

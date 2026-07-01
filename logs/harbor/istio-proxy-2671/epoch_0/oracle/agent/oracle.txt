@@ -1,0 +1,125 @@
+patching file .gitignore
+patching file go.mod
+patching file go.sum
+Hunk #1 FAILED at 11.
+Hunk #2 succeeded at 34 with fuzz 3.
+Hunk #3 succeeded at 106 with fuzz 3.
+1 out of 3 hunks FAILED -- saving rejects to file go.sum.rej
+patching file testdata/bootstrap/server.yaml.tmpl
+patching file testdata/bootstrap/stats.yaml.tmpl
+patching file .gitignore
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .gitignore.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 11.
+Hunk #2 succeeded at 34 with fuzz 3.
+Hunk #3 succeeded at 106 with fuzz 3.
+1 out of 3 hunks FAILED -- saving rejects to file go.sum.rej
+patching file testdata/bootstrap/server.yaml.tmpl
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file testdata/bootstrap/server.yaml.tmpl.rej
+patching file testdata/bootstrap/stats.yaml.tmpl
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file testdata/bootstrap/stats.yaml.tmpl.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.gitignore b/.gitignore
+|index ac77ba2e..58cc5ee8 100644
+|--- a/.gitignore
+|+++ b/.gitignore
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 15
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index dd540d1c..ceb3cb6a 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 36
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 42d01733..b0195e78 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 74
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/testdata/bootstrap/server.yaml.tmpl b/testdata/bootstrap/server.yaml.tmpl
+|index 8cc069c5..6871564e 100644
+|--- a/testdata/bootstrap/server.yaml.tmpl
+|+++ b/testdata/bootstrap/server.yaml.tmpl
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 96
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/testdata/bootstrap/stats.yaml.tmpl b/testdata/bootstrap/stats.yaml.tmpl
+|index fccb28ba..dfcfc732 100644
+|--- a/testdata/bootstrap/stats.yaml.tmpl
+|+++ b/testdata/bootstrap/stats.yaml.tmpl
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file .gitignore
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .gitignore.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 11.
+Hunk #2 succeeded at 34 with fuzz 3.
+Hunk #3 succeeded at 106 with fuzz 3.
+1 out of 3 hunks FAILED -- saving rejects to file go.sum.rej
+patching file testdata/bootstrap/server.yaml.tmpl
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file testdata/bootstrap/server.yaml.tmpl.rej
+patching file testdata/bootstrap/stats.yaml.tmpl
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file testdata/bootstrap/stats.yaml.tmpl.rej
+ERROR: golden patch failed to apply by all strategies

@@ -1,0 +1,100 @@
+patching file tests/providers/amazon/aws/hooks/test_glue.py
+patching file tests/providers/amazon/aws/operators/test_glue.py
+patching file tests/providers/amazon/aws/sensors/test_glue_data_quality.py
+patching file tests/providers/amazon/aws/triggers/test_glue.py
+patching file tests/providers/amazon/aws/waiters/test_glue.py
+patching file tests/system/providers/amazon/aws/example_glue_data_quality.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: mock-3.15.1, asyncio-1.4.0, anyio-4.14.1, time-machine-3.2.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 74 items
+
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_get_iam_execution_role[/] PASSED [  1%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_get_iam_execution_role[/custom-path/] PASSED [  2%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_init_iam_role_value_error PASSED [  4%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_has_job_exists PASSED [  5%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_has_job_job_doesnt_exists PASSED [  6%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_role_arn_has_job_exists PASSED [  8%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_create_or_update_glue_job_create_new_job PASSED [  9%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_create_or_update_glue_job_create_new_job_without_s3_bucket PASSED [ 10%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_create_or_update_glue_job_update_existing_job PASSED [ 12%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_create_or_update_glue_job_worker_type PASSED [ 13%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_init_worker_type_value_error PASSED [ 14%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_initialize_job PASSED [ 16%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_print_job_logs_returns_token PASSED [ 17%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_print_job_logs_no_stream_yet PASSED [ 18%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_job_completion_success PASSED [ 20%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_job_completion_failure PASSED [ 21%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_async_job_completion_success PASSED [ 22%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueJobHook::test_async_job_completion_failure PASSED [ 24%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueDataQualityHook::test_glue_data_quality_hook PASSED [ 25%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueDataQualityHook::test_data_quality_ruleset_exists PASSED [ 27%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueDataQualityHook::test_quality_ruleset_doesnt_exists PASSED [ 28%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueDataQualityHook::test_validate_evaluation_results PASSED [ 29%]
+tests/providers/amazon/aws/hooks/test_glue.py::TestGlueDataQualityHook::test_validate_evaluation_results_should_fail_when_any_rules_failed PASSED [ 31%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_render_template PASSED [ 32%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_execute_without_failure[s3://glue-examples/glue-scripts/sample_aws_glue_job.py] PASSED [ 33%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_execute_without_failure[/glue-examples/glue-scripts/sample_aws_glue_job.py] PASSED [ 35%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_role_arn_execute_deferrable PASSED [ 36%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_execute_deferrable PASSED [ 37%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_execute_with_verbose_logging PASSED [ 39%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_execute_without_waiting_for_completion PASSED [ 40%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_log_correct_url PASSED [ 41%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_killed_without_stop_job_run_on_kill PASSED [ 43%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_killed_with_stop_job_run_on_kill PASSED [ 44%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueJobOperator::test_replace_script_file PASSED [ 45%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityOperator::test_init PASSED [ 47%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityOperator::test_execute_create_rule PASSED [ 48%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityOperator::test_execute_create_rule_should_fail_if_rule_already_exists PASSED [ 50%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityOperator::test_execute_update_rule PASSED [ 51%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityOperator::test_execute_update_rule_should_fail_if_rule_not_exists PASSED [ 52%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityOperator::test_validate_inputs PASSED [ 54%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityOperator::test_validate_inputs_error PASSED [ 55%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunOperator::test_init PASSED [ 56%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunOperator::test_start_data_quality_ruleset_evaluation_run PASSED [ 58%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunOperator::test_validate_inputs PASSED [ 59%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunOperator::test_validate_inputs_error PASSED [ 60%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunOperator::test_start_data_quality_ruleset_evaluation_run_wait_combinations[no_wait] PASSED [ 62%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunOperator::test_start_data_quality_ruleset_evaluation_run_wait_combinations[wait] PASSED [ 63%]
+tests/providers/amazon/aws/operators/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunOperator::test_start_data_quality_ruleset_evaluation_run_wait_combinations[defer] PASSED [ 64%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_base_aws_op_attributes PASSED [ 66%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_success_state PASSED [ 67%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_intermediate_state PASSED [ 68%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_failure_states[FAILED-not-soft-fail] PASSED [ 70%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_failure_states[FAILED-soft-fail] PASSED [ 71%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_failure_states[STOPPED-not-soft-fail] PASSED [ 72%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_failure_states[STOPPED-soft-fail] PASSED [ 74%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_failure_states[STOPPING-not-soft-fail] PASSED [ 75%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_failure_states[STOPPING-soft-fail] PASSED [ 77%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_failure_states[TIMEOUT-not-soft-fail] PASSED [ 78%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_poke_failure_states[TIMEOUT-soft-fail] PASSED [ 79%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_sensor_defer PASSED [ 81%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_execute_complete_succeeds_if_status_in_succeeded_states PASSED [ 82%]
+tests/providers/amazon/aws/sensors/test_glue_data_quality.py::TestGlueDataQualityRuleSetEvaluationRunSensor::test_execute_complete_fails_if_status_in_failure_states PASSED [ 83%]
+tests/providers/amazon/aws/triggers/test_glue.py::TestGlueJobTrigger::test_wait_job PASSED [ 85%]
+tests/providers/amazon/aws/triggers/test_glue.py::TestGlueJobTrigger::test_wait_job_failed PASSED [ 86%]
+tests/providers/amazon/aws/triggers/test_glue.py::TestGlueCatalogPartitionSensorTrigger::test_poke PASSED [ 87%]
+tests/providers/amazon/aws/triggers/test_glue.py::TestGlueDataQualityEvaluationRunCompletedTrigger::test_serialization PASSED [ 89%]
+tests/providers/amazon/aws/triggers/test_glue.py::TestGlueDataQualityEvaluationRunCompletedTrigger::test_run_success PASSED [ 90%]
+tests/providers/amazon/aws/waiters/test_glue.py::TestGlueDataQualityCustomWaiters::test_service_waiters PASSED [ 91%]
+tests/providers/amazon/aws/waiters/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunCompleteWaiter::test_data_quality_ruleset_evaluation_run_complete[SUCCEEDED] PASSED [ 93%]
+tests/providers/amazon/aws/waiters/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunCompleteWaiter::test_data_quality_ruleset_evaluation_run_failed[FAILED] PASSED [ 94%]
+tests/providers/amazon/aws/waiters/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunCompleteWaiter::test_data_quality_ruleset_evaluation_run_failed[STOPPED] PASSED [ 95%]
+tests/providers/amazon/aws/waiters/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunCompleteWaiter::test_data_quality_ruleset_evaluation_run_failed[STOPPING] PASSED [ 97%]
+tests/providers/amazon/aws/waiters/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunCompleteWaiter::test_data_quality_ruleset_evaluation_run_failed[TIMEOUT] PASSED [ 98%]
+tests/providers/amazon/aws/waiters/test_glue.py::TestGlueDataQualityRuleSetEvaluationRunCompleteWaiter::test_data_quality_ruleset_evaluation_run_wait PASSED [100%]
+===================== Warning summary. Total: 9, Unique: 5 =====================
+airflow: total 3, unique 3
+  runtest: total 3, unique 3
+other: total 2, unique 1
+  runtest: total 2, unique 1
+tests: total 4, unique 1
+  runtest: total 4, unique 1
+Warnings saved into /workspace/repo/tests/warnings.txt file.
+
+============================= 74 passed in 13.81s ==============================
+reward=1 graded=74 found=0 failed=0 parsed=54 framework=pytest exit_code=0

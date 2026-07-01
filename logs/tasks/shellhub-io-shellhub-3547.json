@@ -1,0 +1,23 @@
+{
+ "task": "shellhub-io-shellhub-3547",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden ListDevices splits cloud/enterprise/community modes with store.DeviceAcceptableFromRemoved / AsFalse / IfNotAccepted; tests assert DeviceList called with each mode + Acceptable bool"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

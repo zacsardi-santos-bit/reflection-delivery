@@ -1,0 +1,23 @@
+{
+ "task": "k8sgpt-ai-k8sgpt-855",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden registers `\"prometheus\": prometheus.NewPrometheus()` in integrations map + adds prometheus pkg; tests call i.Get(\"prometheus\") NotNil and require.Contains(i.List(),\"prometheus\")"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "google-site-kit-wp-9311",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden renames audienceSegmentationSetupComplete->audienceSegmentationSetupCompletedBy (default null, stores userID), adds AudienceSegmentationIntroductoryOverlayNotification.js; F2P run jest over CTA widget + overlay notification tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 36,
+  "shallow": true
+ }
+}

@@ -1,0 +1,21 @@
+patching file spec/async_spec.rb
+patching file spec/integrations/client_zpty_spec.rb
+patching file spec/options/async_zpty_name_spec.rb
+patching file spec/options/widget_lists_spec.rb
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="rspec" tests="10" skipped="0" failures="0" errors="0" time="5.801406" timestamp="2026-06-29T15:29:08+00:00" hostname="modal">
+<properties>
+<property name="seed" value="58183"/>
+</properties>
+<testcase classname="spec.async_spec" name="with asynchronous suggestions enabled `up-line-or-beginning-search` should show previous history entries" file="./spec/async_spec.rb" time="0.765095"></testcase>
+<testcase classname="spec.async_spec" name="with asynchronous suggestions enabled pressing ^C after fetching a suggestion terminates the prompt and begins a new one" file="./spec/async_spec.rb" time="0.451737"></testcase>
+<testcase classname="spec.options.widget_lists_spec" name="a zle widget when added to ZSH_AUTOSUGGEST_ACCEPT_WIDGETS accepts the suggestion when invoked" file="./spec/options/widget_lists_spec.rb" time="0.442203"></testcase>
+<testcase classname="spec.options.widget_lists_spec" name="a zle widget when added to ZSH_AUTOSUGGEST_CLEAR_WIDGETS clears the suggestion when invoked" file="./spec/options/widget_lists_spec.rb" time="0.460704"></testcase>
+<testcase classname="spec.options.widget_lists_spec" name="a zle widget when added to ZSH_AUTOSUGGEST_EXECUTE_WIDGETS executes the suggestion when invoked" file="./spec/options/widget_lists_spec.rb" time="0.452054"></testcase>
+<testcase classname="spec.options.widget_lists_spec" name="a zle widget when added to ZSH_AUTOSUGGEST_IGNORE_WIDGETS should not be wrapped with an autosuggest widget" file="./spec/options/widget_lists_spec.rb" time="0.251806"></testcase>
+<testcase classname="spec.options.widget_lists_spec" name="a zle widget that moves the cursor forward when added to ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS accepts the suggestion as far as the cursor is moved when invoked" file="./spec/options/widget_lists_spec.rb" time="0.482612"></testcase>
+<testcase classname="spec.options.widget_lists_spec" name="a zle widget that modifies the buffer when not added to any of the widget lists modifies the buffer and fetches a new suggestion" file="./spec/options/widget_lists_spec.rb" time="0.443975"></testcase>
+<testcase classname="spec.options.widget_lists_spec" name="a modification to the widget lists takes effect on the next cmd line" file="./spec/options/widget_lists_spec.rb" time="0.479387"></testcase>
+<testcase classname="spec.options.widget_lists_spec" name="a modification to the widget lists when manual rebind is enabled does not take effect until bind command is re-run" file="./spec/options/widget_lists_spec.rb" time="1.568440"></testcase>
+</testsuite>
+reward=1 graded=10 found=10 failed=0 parsed=10 framework=junit exit_code=0

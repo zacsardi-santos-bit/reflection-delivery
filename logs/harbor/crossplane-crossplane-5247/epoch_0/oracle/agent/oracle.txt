@@ -1,0 +1,10 @@
+patching file apis/apiextensions/fn/proto/v1beta1/run_function.pb.go
+patching file apis/apiextensions/fn/proto/v1beta1/run_function.proto
+patching file cmd/crank/beta/render/cmd.go
+patching file cmd/crank/beta/render/load.go
+patching file cmd/crank/beta/render/render.go
+patching file cmd/crank/beta/render/testdata/extra-resources.yaml
+patching file cmd/crossplane/core/core.go
+patching file internal/controller/apiextensions/composite/composition_functions.go
+patching file internal/controller/apiextensions/definition/reconciler.go
+patching file internal/features/features.go

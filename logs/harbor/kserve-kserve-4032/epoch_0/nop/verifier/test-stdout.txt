@@ -1,0 +1,32 @@
+patching file pkg/apis/serving/v1beta1/explainer_custom_test.go
+patching file pkg/apis/serving/v1beta1/inference_service_defaults_test.go
+patching file pkg/apis/serving/v1beta1/predictor_custom_test.go
+patching file pkg/apis/serving/v1beta1/predictor_huggingfaceruntime_test.go
+patching file pkg/apis/serving/v1beta1/predictor_lightgbm_test.go
+patching file pkg/apis/serving/v1beta1/predictor_onnxruntime_test.go
+patching file pkg/apis/serving/v1beta1/predictor_paddle_test.go
+patching file pkg/apis/serving/v1beta1/predictor_pmml_test.go
+patching file pkg/apis/serving/v1beta1/predictor_sklearn_test.go
+patching file pkg/apis/serving/v1beta1/predictor_tfserving_test.go
+patching file pkg/apis/serving/v1beta1/predictor_torchserve_test.go
+patching file pkg/apis/serving/v1beta1/predictor_triton_test.go
+patching file pkg/apis/serving/v1beta1/predictor_xgboost_test.go
+patching file pkg/apis/serving/v1beta1/transformer_custom_test.go
+patching file python/kserve/test/test_v1beta1_inference_services_config.py
+patching file python/kserve/test/test_v1beta1_resource_config.py
+# github.com/kserve/kserve/pkg/apis/serving/v1beta1 [github.com/kserve/kserve/pkg/apis/serving/v1beta1.test]
+pkg/apis/serving/v1beta1/explainer_custom_test.go:35:3: unknown field Resource in struct literal of type InferenceServicesConfig
+pkg/apis/serving/v1beta1/explainer_custom_test.go:35:13: undefined: ResourceConfig
+pkg/apis/serving/v1beta1/inference_service_defaults_test.go:55:5: unknown field Resource in struct literal of type InferenceServicesConfig
+pkg/apis/serving/v1beta1/inference_service_defaults_test.go:55:15: undefined: ResourceConfig
+pkg/apis/serving/v1beta1/inference_service_defaults_test.go:113:5: unknown field Resource in struct literal of type InferenceServicesConfig
+pkg/apis/serving/v1beta1/inference_service_defaults_test.go:113:15: undefined: ResourceConfig
+pkg/apis/serving/v1beta1/inference_service_defaults_test.go:171:5: unknown field Resource in struct literal of type InferenceServicesConfig
+pkg/apis/serving/v1beta1/inference_service_defaults_test.go:171:15: undefined: ResourceConfig
+pkg/apis/serving/v1beta1/inference_service_defaults_test.go:229:5: unknown field Resource in struct literal of type InferenceServicesConfig
+pkg/apis/serving/v1beta1/inference_service_defaults_test.go:229:15: undefined: ResourceConfig
+pkg/apis/serving/v1beta1/inference_service_defaults_test.go:229:5: too many errors
+{"Time":"2026-06-29T15:27:04.114051412Z","Action":"start","Package":"github.com/kserve/kserve/pkg/apis/serving/v1beta1"}
+{"Time":"2026-06-29T15:27:04.11415624Z","Action":"output","Package":"github.com/kserve/kserve/pkg/apis/serving/v1beta1","Output":"FAIL\tgithub.com/kserve/kserve/pkg/apis/serving/v1beta1 [build failed]\n"}
+{"Time":"2026-06-29T15:27:04.114198712Z","Action":"fail","Package":"github.com/kserve/kserve/pkg/apis/serving/v1beta1","Elapsed":0}
+reward=0 graded=276 found=0 failed=0 parsed=1 framework=go exit_code=1

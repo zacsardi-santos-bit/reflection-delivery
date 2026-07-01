@@ -1,0 +1,18 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/experimental/Badge && node /workspace/repo/node_modules/.bin/jest --watchAll=false --ci",
+  "test_files": [
+    "packages/experimental/Badge/src/__tests__/__snapshots__/Badge.test.tsx.snap"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/experimental/Badge/src/__tests__/Badge.test.tsx::Badge component tests Empty Badge",
+    "/workspace/repo/packages/experimental/Badge/src/__tests__/Badge.test.tsx::Badge component tests Badge all props",
+    "/workspace/repo/packages/experimental/Badge/src/__tests__/Badge.test.tsx::Badge component tests Badge tokens"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/experimental/Badge/src/__tests__/Badge.test.tsx::Badge component tests Check checkRenderConsistency for Badge",
+    "/workspace/repo/packages/experimental/Badge/src/__tests__/Badge.test.tsx::Badge component tests Badge re-renders correctly"
+  ]
+}

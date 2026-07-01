@@ -1,0 +1,16 @@
+patching file app/update_result_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: cov-7.1.0
+collecting ... collected 5 items
+
+app/update_result_test.py::UpdateResultTest::test_reads_correct_values_for_failed_result PASSED [ 20%]
+app/update_result_test.py::UpdateResultTest::test_reads_correct_values_for_successful_result PASSED [ 40%]
+app/update_result_test.py::UpdateResultTest::test_reads_default_values_for_empty_dict PASSED [ 60%]
+app/update_result_test.py::UpdateResultTest::test_writes_error_result_accurately PASSED [ 80%]
+app/update_result_test.py::UpdateResultTest::test_writes_success_result_accurately PASSED [100%]
+
+============================== 5 passed in 0.03s ===============================
+reward=1 graded=5 found=0 failed=0 parsed=5 framework=pytest exit_code=0

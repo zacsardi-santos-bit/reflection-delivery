@@ -1,0 +1,23 @@
+{
+ "task": "quarylabs-sqruff-1264",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds AlterAggregateStatementSegment (RENAME TO / OWNER TO / SET SCHEMA, star arg) and registers it in statement_segment; test.patch adds alter_aggregate.sql/.yml fixtures diffed by dialect_fixture_tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

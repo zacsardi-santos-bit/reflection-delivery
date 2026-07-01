@@ -1,0 +1,18 @@
+patching file dask/array/_array_expr/tests/__init__.py
+patching file dask/array/_array_expr/tests/test_collection.py
+patching file dask/array/tests/test_array_core.py
+patching file dask/array/tests/test_array_expr_incompatible.py
+patching file dask/array/tests/test_array_function.py
+patching file dask/array/tests/test_array_utils.py
+patching file dask/array/tests/test_dispatch.py
+patching file dask/array/tests/test_fft.py
+patching file dask/array/tests/test_random.py
+patching file dask/array/tests/test_rechunk.py
+patching file dask/array/tests/test_routines.py
+patching file dask/dataframe/tests/test_ufunc.py
+ERROR: usage: pytest [options] [file_or_dir] [file_or_dir] [...]
+pytest: error: unrecognized arguments: --runarrayexpr
+  inifile: /workspace/repo/pyproject.toml
+  rootdir: /workspace/repo
+
+reward=0 graded=12 found=0 failed=0 parsed=0 framework=pytest exit_code=4

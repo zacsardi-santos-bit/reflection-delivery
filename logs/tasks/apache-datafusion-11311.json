@@ -1,0 +1,23 @@
+{
+ "task": "apache-datafusion-11311",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds SubqueryType::SetPredicate -> PredicateOp::Exists -> Expr::Exists(Exists::new(...)); test asserts plan_str contains 'EXISTS (<subquery>)' for tpch query_4/query_5"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

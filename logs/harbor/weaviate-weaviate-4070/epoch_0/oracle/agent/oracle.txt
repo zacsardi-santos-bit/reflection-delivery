@@ -1,0 +1,4 @@
+patching file cloud/cloud.go
+patching file cloud/transport/client.go
+patching file cloud/transport/service.go (renamed from cloud/transport/cluster.go)
+patching file cloud/utils/utils.go

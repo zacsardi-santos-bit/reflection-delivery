@@ -1,0 +1,2201 @@
+diff --git a/contrib/test/ci/vars.yml b/contrib/test/ci/vars.yml
+index 202162f61..98ef3fde7 100644
+--- a/contrib/test/ci/vars.yml
++++ b/contrib/test/ci/vars.yml
+@@ -130,10 +130,6 @@ kata_skip_ctr_tests:
+   - 'test "ctr with default_env set in configuration"'
+   - 'test "ctr with absent mount that should be rejected"'
+   - 'test "ctr stop loop kill retry attempts"'
+-  - 'test "ctr that mounts container storage as read-only option but not recursively"'
+-  - 'test "ctr that mounts container storage as recursively read-only"'
+-  - 'test "ctr that fails to mount container storage as recursively read-only without readonly option"'
+-  - 'test "ctr that fails to mount container storage as recursively read-only without private propagation"'
+ kata_skip_devices_tests:
+   - 'test "additional devices permissions"'
+   - 'test "annotation devices support"'
+diff --git a/go.mod b/go.mod
+index feb361fc7..c6fc0907e 100644
+--- a/go.mod
++++ b/go.mod
+@@ -83,7 +83,7 @@ require (
+ 	sigs.k8s.io/release-sdk v0.11.0
+ 	sigs.k8s.io/release-utils v0.7.7
+ 	sigs.k8s.io/yaml v1.4.0
+-	tags.cncf.io/container-device-interface v0.6.2
++	tags.cncf.io/container-device-interface v0.7.2
+ )
+ 
+ require (
+@@ -227,6 +227,6 @@ require (
+ 	k8s.io/kube-openapi v0.0.0-20231113174909-778a5567bc1e // indirect
+ 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
+ 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
+-	tags.cncf.io/container-device-interface/specs-go v0.6.0 // indirect
++	tags.cncf.io/container-device-interface/specs-go v0.7.0 // indirect
+ 	zenhack.net/go/util v0.0.0-20230218002511-744d2d6d1739 // indirect
+ )
+diff --git a/go.sum b/go.sum
+index 3453a19c3..ff64efefd 100644
+--- a/go.sum
++++ b/go.sum
+@@ -2183,9 +2183,9 @@ sigs.k8s.io/structured-merge-diff/v4 v4.4.1 h1:150L+0vs/8DA78h1u02ooW1/fFq/Lwr+s
+ sigs.k8s.io/structured-merge-diff/v4 v4.4.1/go.mod h1:N8hJocpFajUSSeSJ9bOZ77VzejKZaXsTtZo4/u7Io08=
+ sigs.k8s.io/yaml v1.4.0 h1:Mk1wCc2gy/F0THH0TAp1QYyJNzRm2KCLy3o5ASXVI5E=
+ sigs.k8s.io/yaml v1.4.0/go.mod h1:Ejl7/uTz7PSA4eKMyQCUTnhZYNmLIl+5c2lQPGR2BPY=
+-tags.cncf.io/container-device-interface v0.6.2 h1:dThE6dtp/93ZDGhqaED2Pu374SOeUkBfuvkLuiTdwzg=
+-tags.cncf.io/container-device-interface v0.6.2/go.mod h1:Shusyhjs1A5Na/kqPVLL0KqnHQHuunol9LFeUNkuGVE=
+-tags.cncf.io/container-device-interface/specs-go v0.6.0 h1:V+tJJN6dqu8Vym6p+Ru+K5mJ49WL6Aoc5SJFSY0RLsQ=
+-tags.cncf.io/container-device-interface/specs-go v0.6.0/go.mod h1:hMAwAbMZyBLdmYqWgYcKH0F/yctNpV3P35f+/088A80=
++tags.cncf.io/container-device-interface v0.7.2 h1:MLqGnWfOr1wB7m08ieI4YJ3IoLKKozEnnNYBtacDPQU=
++tags.cncf.io/container-device-interface v0.7.2/go.mod h1:Xb1PvXv2BhfNb3tla4r9JL129ck1Lxv9KuU6eVOfKto=
++tags.cncf.io/container-device-interface/specs-go v0.7.0 h1:w/maMGVeLP6TIQJVYT5pbqTi8SCw/iHZ+n4ignuGHqg=
++tags.cncf.io/container-device-interface/specs-go v0.7.0/go.mod h1:hMAwAbMZyBLdmYqWgYcKH0F/yctNpV3P35f+/088A80=
+ zenhack.net/go/util v0.0.0-20230218002511-744d2d6d1739 h1:/QnbZBURrZUFvnxB4wDyRrPsWzh2KWbJ6AjUjohCHJ8=
+ zenhack.net/go/util v0.0.0-20230218002511-744d2d6d1739/go.mod h1:0lafdGg7tDb7RcXASgmJmRbLFLkAxu328+KGIs7icDE=
+diff --git a/internal/factory/container/device_linux.go b/internal/factory/container/device_linux.go
+index ac6988f22..268a92380 100644
+--- a/internal/factory/container/device_linux.go
++++ b/internal/factory/container/device_linux.go
+@@ -226,9 +226,8 @@ func (c *container) specInjectCDIDevices() error {
+ 		return nil
+ 	}
+ 
+-	registry := cdi.GetRegistry()
+-	if err := registry.Refresh(); err != nil {
+-		// We don't consider registry refresh failure a fatal error.
++	if err := cdi.Refresh(); err != nil {
++		// We don't consider a refresh failure a fatal error.
+ 		// For instance, a dynamically generated invalid CDI Spec file for
+ 		// any particular vendor shouldn't prevent injection of devices of
+ 		// different vendors. CDI itself knows better and it will fail the
+@@ -237,7 +236,7 @@ func (c *container) specInjectCDIDevices() error {
+ 		log.Warnf(context.TODO(), "CDI registry has errors: %v", err)
+ 	}
+ 
+-	if _, err := registry.InjectDevices(c.Spec().Config, requested...); err != nil {
++	if _, err := cdi.InjectDevices(c.Spec().Config, requested...); err != nil {
+ 		return fmt.Errorf("CDI device injection failed: %w", err)
+ 	}
+ 
+diff --git a/internal/oci/container.go b/internal/oci/container.go
+index f1e60d480..45a4253d0 100644
+--- a/internal/oci/container.go
++++ b/internal/oci/container.go
+@@ -87,12 +87,11 @@ func (c *Container) CRIAttributes() *types.ContainerAttributes {
+ 
+ // ContainerVolume is a bind mount for the container.
+ type ContainerVolume struct {
+-	ContainerPath     string                 `json:"container_path"`
+-	HostPath          string                 `json:"host_path"`
+-	Readonly          bool                   `json:"readonly"`
+-	RecursiveReadOnly bool                   `json:"recursive_read_only"`
+-	Propagation       types.MountPropagation `json:"propagation"`
+-	SelinuxRelabel    bool                   `json:"selinux_relabel"`
++	ContainerPath  string                 `json:"container_path"`
++	HostPath       string                 `json:"host_path"`
++	Readonly       bool                   `json:"readonly"`
++	Propagation    types.MountPropagation `json:"propagation"`
++	SelinuxRelabel bool                   `json:"selinux_relabel"`
+ }
+ 
+ // ContainerState represents the status of a container.
+diff --git a/internal/oci/oci.go b/internal/oci/oci.go
+index 7b887647f..11b46472c 100644
+--- a/internal/oci/oci.go
++++ b/internal/oci/oci.go
+@@ -214,18 +214,6 @@ func (r *Runtime) RuntimeSupportsIDMap(runtimeHandler string) bool {
+ 	return rh.RuntimeSupportsIDMap()
+ }
+ 
+-// RuntimeSupportsRROMounts returns whether the runtime of runtimeHandler supports
+-// the "runtime features" command and that the output advertises support for the
+-// Recursive Read-only (RRO) mount as an option.
+-func (r *Runtime) RuntimeSupportsRROMounts(runtimeHandler string) bool {
+-	rh, err := r.getRuntimeHandler(runtimeHandler)
+-	if err != nil {
+-		return false
+-	}
+-
+-	return rh.RuntimeSupportsRROMounts()
+-}
+-
+ func (r *Runtime) newRuntimeImpl(c *Container) (RuntimeImpl, error) {
+ 	rh, err := r.getRuntimeHandler(c.runtimeHandler)
+ 	if err != nil {
+diff --git a/pkg/config/config.go b/pkg/config/config.go
+index ddbb0de01..c2b873d9f 100644
+--- a/pkg/config/config.go
++++ b/pkg/config/config.go
+@@ -190,12 +190,6 @@ func (c *RootConfig) GetStore() (storage.Store, error) {
+ 	})
+ }
+ 
+-// runtimeHandlerFeatures represents the supported features of the runtime.
+-type runtimeHandlerFeatures struct {
+-	RecursiveReadOnlyMounts bool `json:"-"` // Internal use only.
+-	features.Features
+-}
+-
+ // RuntimeHandler represents each item of the "crio.runtime.runtimes" TOML
+ // config table.
+ type RuntimeHandler struct {
+@@ -249,7 +243,7 @@ type RuntimeHandler struct {
+ 
+ 	// Output of the "features" subcommand.
+ 	// This is populated dynamically and not read from config.
+-	features runtimeHandlerFeatures
++	features features.Features
+ }
+ 
+ // Multiple runtime Handlers in a map
+@@ -1156,7 +1150,9 @@ func (c *RuntimeConfig) Validate(systemContext *types.SystemContext, onExecution
+ 		}
+ 		c.HooksDir = hooksDirs
+ 
+-		cdi.GetRegistry(cdi.WithSpecDirs(c.CDISpecDirs...))
++		if err := cdi.Configure(cdi.WithSpecDirs(c.CDISpecDirs...)); err != nil {
++			return err
++		}
+ 
+ 		// Validate the pinns path
+ 		if err := c.ValidatePinnsPath("pinns"); err != nil {
+@@ -1264,7 +1260,7 @@ func (c *RuntimeConfig) ValidateRuntimes() error {
+ 				return err
+ 			}
+ 
+-			logrus.Warnf("Runtime handler %q is being ignored due to: %v", name, err)
++			logrus.Warnf("'%s is being ignored due to: %q", name, err)
+ 			failedValidation = append(failedValidation, name)
+ 		}
+ 	}
+@@ -1281,12 +1277,12 @@ func (c *RuntimeConfig) initializeRuntimeFeatures() {
+ 	for name, handler := range c.Runtimes {
+ 		versionOutput, err := cmdrunner.CombinedOutput(handler.RuntimePath, "--version")
+ 		if err != nil {
+-			logrus.Errorf("Unable to determine version of runtime handler %q: %v", name, err)
++			logrus.Errorf("Unable to determine version of runtime handler %s: %v", name, err)
+ 			continue
+ 		}
+ 
+ 		versionString := strings.ReplaceAll(strings.TrimSpace(string(versionOutput)), "\n", ", ")
+-		logrus.Infof("Using runtime handler %s", versionString)
++		logrus.Infof("Using runtime %s", versionString)
+ 
+ 		memoryBytes, err := handler.SetContainerMinMemory()
+ 		if err != nil {
+@@ -1304,33 +1300,10 @@ func (c *RuntimeConfig) initializeRuntimeFeatures() {
+ 			logrus.Errorf("Getting %s OCI runtime features failed: %s: %v", handler.RuntimePath, output, err)
+ 			continue
+ 		}
+-
+-		// Ignore error if we can't load runtime features.
+-		if err := handler.LoadRuntimeFeatures(output); err != nil {
+-			logrus.Errorf("Unable to load OCI features for runtime handler %q: %v", name, err)
+-			continue
+-		}
+-
+-		if handler.RuntimeSupportsIDMap() {
+-			logrus.Debugf("Runtime handler %q supports User and Group ID-mappings", name)
+-		}
+-
+-		// Recursive Read-only (RRO) mounts require runtime handler support,
+-		// such as runc v1.1 or crun v1.4. For Linux, the minimum kernel
+-		// version 5.12 or a kernel with the necessary changes backported
+-		// is required.
+-		rro := handler.RuntimeSupportsMountFlag("rro")
+-		if rro {
+-			logrus.Debugf("Runtime handler %q supports Recursive Read-only (RRO) mounts", name)
+-
+-			// A given runtime might support Recursive Read-only (RRO) mounts,
+-			// but the current kernel might not.
+-			if err := checkKernelRROMountSupport(); err != nil {
+-				logrus.Warnf("Runtime handler %q supports Recursive Read-only (RRO) mounts, but kernel does not: %v", name, err)
+-				rro = false
+-			}
++		// Ignore errors to Unmarshal too, we can't populate it.
++		if err := json.Unmarshal(output, &handler.features); err != nil {
++			logrus.Errorf("Unmarshalling OCI features failed: %s", err)
+ 		}
+-		handler.features.RecursiveReadOnlyMounts = rro
+ 	}
+ }
+ 
+@@ -1648,29 +1621,6 @@ func (r *RuntimeHandler) SetContainerMinMemory() (int64, error) {
+ 	return memoryBytes, nil
+ }
+ 
+-// LoadRuntimeFeatures loads features for a given runtime handler using the "features"
+-// sub-command output, where said output contains a JSON document called "Features
+-// Structure" that describes the runtime handler's supported features.
+-func (r *RuntimeHandler) LoadRuntimeFeatures(input []byte) error {
+-	if err := json.Unmarshal(input, &r.features); err != nil {
+-		return fmt.Errorf("unable to unmarshal features structure: %w", err)
+-	}
+-
+-	// All other properties of the Features Structure are optional and might be
+-	// either absent, empty, or set to the null value, with the exception of
+-	// OCIVersionMin and OCIVersionMax, which are required. Thus, the lack of
+-	// them should indicate that the Features Structure document is potentially
+-	// not valid.
+-	//
+-	// See the following for more details about the Features Structure:
+-	//   https://github.com/opencontainers/runtime-spec/blob/main/features.md
+-	if r.features.OCIVersionMin == "" || r.features.OCIVersionMax == "" {
+-		return errors.New("runtime features structure is not valid")
+-	}
+-
+-	return nil
+-}
+-
+ // RuntimeSupportsIDMap returns whether this runtime supports the "runtime features"
+ // command, and that the output of that command advertises IDMap mounts as an option
+ func (r *RuntimeHandler) RuntimeSupportsIDMap() bool {
+@@ -1683,11 +1633,6 @@ func (r *RuntimeHandler) RuntimeSupportsIDMap() bool {
+ 	return true
+ }
+ 
+-// RuntimeSupportsRROMounts returns whether this runtime supports the Recursive Read-only mount as an option.
+-func (r *RuntimeHandler) RuntimeSupportsRROMounts() bool {
+-	return r.features.RecursiveReadOnlyMounts
+-}
+-
+ // RuntimeSupportsMountFlag returns whether this runtime supports the specified mount option.
+ func (r *RuntimeHandler) RuntimeSupportsMountFlag(flag string) bool {
+ 	return slices.Contains(r.features.MountOptions, flag)
+diff --git a/pkg/config/config_freebsd.go b/pkg/config/config_freebsd.go
+index f0b22a786..cb0e616fb 100644
+--- a/pkg/config/config_freebsd.go
++++ b/pkg/config/config_freebsd.go
+@@ -1,7 +1,5 @@
+ package config
+ 
+-import "github.com/cri-o/cri-o/utils/errdefs"
+-
+ // Defaults if none are specified
+ // Defaults for linux/unix if none are specified
+ const (
+@@ -43,11 +41,6 @@ func selinuxEnabled() bool {
+ 	return false
+ }
+ 
+-// checkKernelRROMountSupport checks the kernel support for the Recursive Read-only (RRO) mounts.
+-func checkKernelRROMountSupport() error {
+-	return errdefs.ErrNotImplemented
+-}
+-
+ func (c *RuntimeConfig) ValidatePinnsPath(executable string) error {
+ 	return nil
+ }
+diff --git a/pkg/config/config_linux.go b/pkg/config/config_linux.go
+index 2d5811145..4fbf9ee70 100644
+--- a/pkg/config/config_linux.go
++++ b/pkg/config/config_linux.go
+@@ -1,16 +1,6 @@
+ package config
+ 
+-import (
+-	"errors"
+-	"fmt"
+-	"os"
+-	"sync"
+-
+-	"github.com/containers/storage/pkg/parsers/kernel"
+-	selinux "github.com/opencontainers/selinux/go-selinux"
+-	"github.com/sirupsen/logrus"
+-	"golang.org/x/sys/unix"
+-)
++import selinux "github.com/opencontainers/selinux/go-selinux"
+ 
+ // Defaults if none are specified
+ const (
+@@ -24,11 +14,6 @@ const (
+ 	DefaultPauseImage string = "registry.k8s.io/pause:3.9"
+ )
+ 
+-var (
+-	kernelRROSupportOnce  sync.Once
+-	kernelRROSupportError error
+-)
+-
+ func selinuxEnabled() bool {
+ 	return selinux.GetEnabled()
+ }
+@@ -39,105 +24,3 @@ func (c *RuntimeConfig) ValidatePinnsPath(executable string) error {
+ 
+ 	return err
+ }
+-
+-// checkKernelRROMountSupport checks the kernel support for the Recursive Read-only (RRO) mounts.
+-func checkKernelRROMountSupport() error {
+-	kernelRROSupportOnce.Do(func() {
+-		kernelRROSupportError = (func() error {
+-			// Check the current kernel version for RRO mounts support...
+-			err := validateKernelRROVersion()
+-			if err != nil {
+-				versionErr := err
+-				// ... and if the kernel version does not match the minimum required version,
+-				// then verify whether the kernel supports RRO mounts regardless, as often
+-				// Linux distributions provide heavily patched kernel releases, and the
+-				// current kernel might include backported support.
+-				err = validateKernelRROMount()
+-				if err != nil {
+-					err = fmt.Errorf("%w: %w", versionErr, err)
+-				}
+-			}
+-			return err
+-		})()
+-	})
+-
+-	return kernelRROSupportError
+-}
+-
+-// validateKernelRROVersion checks whether the current kernel version matches the release 5.12 or newer,
+-// which is the minimum required kernel version that supports Recursive Read-only (RRO) mounts.
+-func validateKernelRROVersion() error {
+-	kv, err := kernel.GetKernelVersion()
+-	if err != nil {
+-		return fmt.Errorf("unable to retrieve kernel version: %w", err)
+-	}
+-
+-	result := kernel.CompareKernelVersion(*kv,
+-		kernel.VersionInfo{
+-			Kernel: 5,
+-			Major:  12,
+-			Minor:  0,
+-		},
+-	)
+-	if result < 0 {
+-		return fmt.Errorf("kernel version %q does not support recursive read-only mounts", kv)
+-	}
+-
+-	return nil
+-}
+-
+-// validateKernelRROMount checks whether the current kernel can support Recursive Read-only mounts.
+-// It uses a test mount of tmpfs against which an attempt will be made to set the required attributes.
+-// If there is no failure in doing so, then the kernel has the required support.
+-func validateKernelRROMount() error {
+-	path, err := os.MkdirTemp("", "crio-rro-*")
+-	if err != nil {
+-		return fmt.Errorf("unable to create directory: %w", err)
+-	}
+-	defer func() {
+-		if err := os.RemoveAll(path); err != nil {
+-			logrus.Errorf("Unable to remove directory: %v", err)
+-		}
+-	}()
+-
+-	for {
+-		err = unix.Mount("", path, "tmpfs", 0, "")
+-		if !errors.Is(err, unix.EINTR) {
+-			break
+-		}
+-	}
+-	if err != nil {
+-		return fmt.Errorf("unable to mount directory %q using tmpfs: %w", path, err)
+-	}
+-	defer func() {
+-		var unmountErr error
+-		for {
+-			unmountErr = unix.Unmount(path, 0)
+-			if !errors.Is(unmountErr, unix.EINTR) {
+-				break
+-			}
+-		}
+-		if unmountErr != nil {
+-			logrus.Errorf("Unable to unmount directory %q: %v", path, unmountErr)
+-		}
+-	}()
+-
+-	for {
+-		err = unix.MountSetattr(-1, path, unix.AT_RECURSIVE,
+-			&unix.MountAttr{
+-				Attr_set: unix.MOUNT_ATTR_RDONLY,
+-			},
+-		)
+-		if !errors.Is(err, unix.EINTR) {
+-			break
+-		}
+-	}
+-	if err != nil {
+-		if !errors.Is(err, unix.ENOSYS) {
+-			return fmt.Errorf("unable to set mount attribute for directory %q: %w", path, err)
+-		}
+-		return fmt.Errorf("unable to set recursive read-only mount attribute: %w", err)
+-	}
+-
+-	return nil
+-}
+diff --git a/pkg/config/config_test.go b/pkg/config/config_test.go
+index 58f025f22..6554a73a8 100644
+--- a/pkg/config/config_test.go
++++ b/pkg/config/config_test.go
+@@ -1420,115 +1420,4 @@ var _ = t.Describe("Config", func() {
+ 			Expect(err).ToNot(HaveOccurred())
+ 		})
+ 	})
+-
+-	t.Describe("RuntimeHandlerFeatures", func() {
+-		It("should fail to load runtime features with nothing to load", func() {
+-			// Given
+-			handler := &config.RuntimeHandler{}
+-
+-			err := handler.LoadRuntimeFeatures([]byte(``))
+-
+-			// Then
+-			Expect(err).To(HaveOccurred())
+-		})
+-
+-		It("should fail to load runtime features with an empty document", func() {
+-			// Given
+-			handler := &config.RuntimeHandler{}
+-
+-			err := handler.LoadRuntimeFeatures([]byte(`{}`))
+-
+-			// Then
+-			Expect(err).To(HaveOccurred())
+-		})
+-
+-		It("should fail to load OCI runtime features when required attributes are missing", func() {
+-			// Given
+-			handler := &config.RuntimeHandler{}
+-
+-			err := handler.LoadRuntimeFeatures(
+-				[]byte(`
+-					{
+-					  "ociVersionMin": "1.0.0",
+-					  "mountOptions": ["ro"]
+-					}
+-				`),
+-			)
+-
+-			// Then
+-			Expect(err).To(HaveOccurred())
+-		})
+-
+-		It("should fail to load OCI runtime features when malformed document is used", func() {
+-			// Given
+-			handler := &config.RuntimeHandler{}
+-
+-			err := handler.LoadRuntimeFeatures(
+-				[]byte(`
+-					{
+-					  "ociVersionMin": "1.0.0",
+-					  "ociVersionMax": "1.2.0",
+-					  "mountOptions": ["ro",]
+-					}
+-				`),
+-			)
+-
+-			// Then
+-			Expect(err).To(HaveOccurred())
+-		})
+-
+-		It("should succeed to load OCI runtime features with support for RRO mounts", func() {
+-			// Given
+-			handler := &config.RuntimeHandler{}
+-
+-			err := handler.LoadRuntimeFeatures(
+-				[]byte(`
+-					{
+-					  "ociVersionMin": "1.0.0",
+-					  "ociVersionMax": "1.2.0",
+-					  "mountOptions": ["ro", "rro"]
+-					}
+-				`),
+-			)
+-
+-			// Then
+-			Expect(err).ToNot(HaveOccurred())
+-
+-			// When
+-			ok := handler.RuntimeSupportsMountFlag("rro")
+-
+-			// Then
+-			Expect(ok).To(BeTrue())
+-		})
+-
+-		It("should succeed to load OCI runtime features with support for ID-mapping", func() {
+-			// Given
+-			handler := &config.RuntimeHandler{}
+-
+-			err := handler.LoadRuntimeFeatures(
+-				[]byte(`
+-					{
+-					  "ociVersionMin": "1.0.0",
+-					  "ociVersionMax": "1.2.0",
+-					  "linux": {
+-					    "mountExtensions": {
+-					      "idmap": {
+-					        "enabled": true
+-					      }
+-					    }
+-					  }
+-					}
+-				`),
+-			)
+-
+-			// Then
+-			Expect(err).ToNot(HaveOccurred())
+-
+-			// When
+-			ok := handler.RuntimeSupportsIDMap()
+-
+-			// Then
+-			Expect(ok).To(BeTrue())
+-		})
+-	})
+ })
+diff --git a/pkg/config/config_unsupported.go b/pkg/config/config_unsupported.go
+index fddc183e6..fdf39d9f7 100644
+--- a/pkg/config/config_unsupported.go
++++ b/pkg/config/config_unsupported.go
+@@ -1,10 +1,7 @@
+-//go:build !linux && !freebsd && !windows
+-// +build !linux,!freebsd,!windows
++//go:build !linux && !freebsd
+ 
+ package config
+ 
+-import "github.com/cri-o/cri-o/utils/errdefs"
+-
+ // Defaults if none are specified
+ // This uses the Linux values, just to have something that compiles. They don’t even pass unit tests.
+ const (
+@@ -21,8 +18,3 @@ const (
+ func selinuxEnabled() bool {
+ 	return false
+ }
+-
+-// checkKernelRROMountSupport checks the kernel support for the Recursive Read-only (RRO) mounts.
+-func checkKernelRROMountSupport() error {
+-	return errdefs.ErrNotImplemented
+-}
+diff --git a/pkg/config/config_windows.go b/pkg/config/config_windows.go
+index 5da3c181f..4e1da5726 100644
+--- a/pkg/config/config_windows.go
++++ b/pkg/config/config_windows.go
+@@ -1,7 +1,5 @@
+ package config
+ 
+-import "github.com/cri-o/cri-o/utils/errdefs"
+-
+ // Defaults for linux/unix if none are specified
+ const (
+ 	cniConfigDir             = "C:\\cni\\etc\\net.d\\"
+@@ -21,8 +19,3 @@ const (
+ 	// CrioVersionPath is where the CRI-O version file is located
+ 	CrioConfigPath = "C:\\crio\\etc\\version"
+ )
+-
+-// checkKernelRROMountSupport checks the kernel support for the Recursive Read-only (RRO) mounts.
+-func checkKernelRROMountSupport() error {
+-	return errdefs.ErrNotImplemented
+-}
+diff --git a/pkg/config/reload.go b/pkg/config/reload.go
+index 6331c9f28..5d2fda162 100644
+--- a/pkg/config/reload.go
++++ b/pkg/config/reload.go
+@@ -71,7 +71,9 @@ func (c *Config) Reload() error {
+ 	if err := c.ReloadRuntimes(newConfig); err != nil {
+ 		return err
+ 	}
+-	cdi.GetRegistry(cdi.WithSpecDirs(newConfig.CDISpecDirs...))
++	if err := cdi.Configure(cdi.WithSpecDirs(newConfig.CDISpecDirs...)); err != nil {
++		return err
++	}
+ 
+ 	return nil
+ }
+diff --git a/pkg/config/workloads.go b/pkg/config/workloads.go
+index 9fe354619..349c16b54 100644
+--- a/pkg/config/workloads.go
++++ b/pkg/config/workloads.go
+@@ -117,7 +117,7 @@ func (w Workloads) FilterDisallowedAnnotations(allowed []string, toFilter map[st
+ 	if err != nil {
+ 		return err
+ 	}
+-	logrus.Infof("Allowed annotations are specified for workload %v", allowed)
++	logrus.Warnf("Allowed annotations are specified for workload %v", allowed)
+ 
+ 	for ann := range toFilter {
+ 		for _, d := range disallowed {
+diff --git a/scripts/patch-release/patch-release.go b/scripts/patch-release/patch-release.go
+index 1ccd83395..c057e540c 100644
+--- a/scripts/patch-release/patch-release.go
++++ b/scripts/patch-release/patch-release.go
+@@ -4,7 +4,6 @@ import (
+ 	"bytes"
+ 	"fmt"
+ 	"os"
+-	"regexp"
+ 	"strings"
+ 
+ 	"github.com/blang/semver/v4"
+@@ -25,8 +24,6 @@ const (
+ 	branchPrefix      = "release-"
+ )
+ 
+-var releaseMinorVersions = []string{"1.29", "1.28", "1.27"}
+-
+ func main() {
+ 	logrus.SetFormatter(&logrus.TextFormatter{DisableTimestamp: true})
+ 	if err := run(); err != nil {
+@@ -58,59 +55,29 @@ func run() error {
+ 		return fmt.Errorf("open local repo: %w", err)
+ 	}
+ 
+-	for _, minorVersion := range releaseMinorVersions {
+-		baseBranchName := branchPrefix + minorVersion // returns "release-x.y"
+-
+-		sv, err := getCurrentVersionFromReleaseBranch(repo, baseBranchName) // returns "x.y.z"
+-		if err != nil {
+-			return fmt.Errorf("current version from release branch %s to semver: %w", minorVersion, err)
+-		}
+-
+-		// Bump up the patch version
+-		sv.Patch++
+-
+-		if err := updateVersionAndCreatePR(
+-			repo, sv, baseBranchName, org, remote,
+-		); err != nil {
+-			return fmt.Errorf("update version in local repository: %w", err)
+-		}
+-	}
+-
+-	return nil
+-}
+-
+-func getCurrentVersionFromReleaseBranch(repo *git.Repo, baseBranchName string) (res semver.Version, err error) {
+-	logrus.Infof("Switching to branch: %s", baseBranchName)
+-	if err := repo.Checkout(baseBranchName); err != nil {
+-		return res, fmt.Errorf("checkout branch %s: %w", baseBranchName, err)
+-	}
+-
+-	versionFromVersionFile, err := getCurrentVersionFromVersionFile(versionFile) // returns "x.xx.x"
++	currentBranch, err := repo.CurrentBranch()
+ 	if err != nil {
+-		return res, fmt.Errorf("reading latest version: %w", err)
++		return fmt.Errorf("get current branch: %w", err)
+ 	}
++	logrus.Infof("Using current branch: %s", currentBranch)
+ 
+-	return convertStringToSemver(versionFromVersionFile)
+-}
+-
+-func getCurrentVersionFromVersionFile(versionFile string) (string, error) {
+-	versionPattern := `const\s+Version\s+=\s+"(.+)"`
+-
+-	content, err := os.ReadFile(versionFile)
++	newVersion, err := incVersion(version.Version)
+ 	if err != nil {
+-		return "", err
++		return fmt.Errorf("increment version: %w", err)
+ 	}
+ 
+-	re := regexp.MustCompile(versionPattern)
+-	matches := re.FindStringSubmatch(string(content))
+-	if len(matches) < 2 {
+-		return "", fmt.Errorf("unable to find version in %q", versionFile)
++	logrus.Infof("Using new version: %s", util.SemverToTagString(newVersion))
++
++	if err := updateVersionAndCreatePR(
++		repo, newVersion, currentBranch, org, remote,
++	); err != nil {
++		return fmt.Errorf("update version in local repository: %w", err)
+ 	}
+ 
+-	return matches[1], nil
++	return nil
+ }
+ 
+-func convertStringToSemver(tag string) (res semver.Version, err error) {
++func incVersion(tag string) (res semver.Version, err error) {
+ 	sv, err := util.TagStringToSemver(strings.TrimSpace(tag))
+ 	if err != nil {
+ 		return res, fmt.Errorf("convert tag string %s to semver: %w", tag, err)
+@@ -118,11 +85,15 @@ func convertStringToSemver(tag string) (res semver.Version, err error) {
+ 
+ 	// clear any suffix like `-dev`
+ 	sv.Pre = nil
++
++	// New patch version
++	sv.Patch++
++
+ 	return sv, nil
+ }
+ 
+ func updateVersionAndCreatePR(
+-	repo *git.Repo, newVersion semver.Version, baseBranchName, org, remote string,
++	repo *git.Repo, newVersion semver.Version, branch, org, remote string,
+ ) error {
+ 	logrus.Info("Updating repository")
+ 
+@@ -181,7 +152,7 @@ func updateVersionAndCreatePR(
+ 		newVersion, "/release-note-none",
+ 	)
+ 
+-	pr, err := gh.CreatePullRequest("cri-o", "cri-o", baseBranchName,
++	pr, err := gh.CreatePullRequest("cri-o", "cri-o", branch,
+ 		headBranchName,
+ 		title,
+ 		body,
+diff --git a/scripts/patch-release/patch-release_test.go b/scripts/patch-release/patch-release_test.go
+index d30035514..1e9132f31 100644
+--- a/scripts/patch-release/patch-release_test.go
++++ b/scripts/patch-release/patch-release_test.go
+@@ -11,44 +11,56 @@ import (
+ 
+ var _ = t.Describe("Automated Releases", func() {
+ 	t.Describe("Patch Release", func() {
+-		It("should read the version file", func() {
++		It("should modify the version file", func() {
+ 			tempFileName := "tempVersionFile"
+ 			tmpfile, err := os.CreateTemp("", tempFileName)
+ 			if err != nil {
+ 				Expect(err).ToNot(HaveOccurred())
+ 			}
+ 			defer os.Remove(tempFileName)
+-			currentVersion := "1.30.0"
+-			originalFileContent := getMockVersionFileContent(currentVersion)
++			oldVersion := "1.30.0"
++			newVersion := "1.30.1"
+ 
+-			if _, err := tmpfile.Write(originalFileContent); err != nil {
+-				tmpfile.Close()
+-				Expect(err).ToNot(HaveOccurred())
+-			}
+-			if err := tmpfile.Close(); err != nil {
+-				Expect(err).ToNot(HaveOccurred())
+-			}
++			originalFileContent := []byte(fmt.Sprintf(`
++  package version
+ 
+-			versionFromFile, err := getCurrentVersionFromVersionFile(tmpfile.Name())
+-			if err != nil {
+-				Expect(err).ToNot(HaveOccurred())
+-			}
++  import (
++    "errors"
++    "fmt"
++    "os"
++    "path/filepath"
++    "reflect"
++    "runtime"
++    "runtime/debug"
++    "strconv"
++    "strings"
++    "text/tabwriter"
+ 
+-			areVersionsTheSame := currentVersion == versionFromFile
++    "github.com/blang/semver/v4"
++    "github.com/containers/common/pkg/apparmor"
++    "github.com/containers/common/pkg/seccomp"
++    "github.com/google/renameio"
++    json "github.com/json-iterator/go"
++    "github.com/sirupsen/logrus"
++  )
+ 
+-			Expect(areVersionsTheSame).To(BeTrue())
+-		})
+-		It("should modify the version file", func() {
+-			tempFileName := "tempVersionFile"
+-			tmpfile, err := os.CreateTemp("", tempFileName)
+-			if err != nil {
+-				Expect(err).ToNot(HaveOccurred())
+-			}
+-			defer os.Remove(tempFileName)
+-			oldVersion := "1.30.0"
+-			newVersion := "1.30.1"
++  // Version is the version of the build.
++  const Version = "%s"
+ 
+-			originalFileContent := getMockVersionFileContent(oldVersion)
++  // Variables injected during build-time
++  var (
++    buildDate string
++  )
++
++  // ShouldCrioWipe opens the version file, and parses it and the version string
++  // If there is a parsing error, then crio should wipe, and the error is returned.
++  // if parsing is successful, it compares the major and minor versions
++  // and returns whether the major and minor versions are the same.
++  // If they differ, then crio should wipe.
++  func ShouldCrioWipe(versionFileName string) (bool, error) {
++    return shouldCrioWipe(versionFileName, Version)
++  }
++  `, oldVersion))
+ 			if _, err := tmpfile.Write(originalFileContent); err != nil {
+ 				tmpfile.Close()
+ 				Expect(err).ToNot(HaveOccurred())
+@@ -66,16 +78,7 @@ var _ = t.Describe("Automated Releases", func() {
+ 				Expect(err).ToNot(HaveOccurred())
+ 			}
+ 
+-			expectedModifiedContent := getMockVersionFileContent(newVersion)
+-			if !bytes.Equal(modifiedContent, expectedModifiedContent) {
+-				Expect(err).ToNot(HaveOccurred())
+-			}
+-		})
+-	})
+-})
+-
+-func getMockVersionFileContent(version string) []byte {
+-	return []byte(fmt.Sprintf(`
++			expectedModifiedContent := []byte(fmt.Sprintf(`
+   package version
+ 
+   import (
+@@ -114,5 +117,10 @@ func getMockVersionFileContent(version string) []byte {
+   func ShouldCrioWipe(versionFileName string) (bool, error) {
+     return shouldCrioWipe(versionFileName, Version)
+   }
+-  `, version))
+-}
++  `, newVersion))
++			if !bytes.Equal(modifiedContent, expectedModifiedContent) {
++				Expect(err).ToNot(HaveOccurred())
++			}
++		})
++	})
++})
+diff --git a/server/container_create_linux.go b/server/container_create_linux.go
+index 27cc6743a..b6dfd0b3a 100644
+--- a/server/container_create_linux.go
++++ b/server/container_create_linux.go
+@@ -333,8 +333,7 @@ func (s *Server) createSandboxContainer(ctx context.Context, ctr ctrfactory.Cont
+ 
+ 	s.resourceStore.SetStageForResource(ctx, ctr.Name(), "container volume configuration")
+ 	idMapSupport := s.Runtime().RuntimeSupportsIDMap(sb.RuntimeHandler())
+-	rroSupport := s.Runtime().RuntimeSupportsRROMounts(sb.RuntimeHandler())
+-	containerVolumes, ociMounts, err := addOCIBindMounts(ctx, ctr, mountLabel, s.config.RuntimeConfig.BindMountPrefix, s.config.AbsentMountSourcesToReject, maybeRelabel, skipRelabel, cgroup2RW, idMapSupport, rroSupport, s.Config().Root)
++	containerVolumes, ociMounts, err := addOCIBindMounts(ctx, ctr, mountLabel, s.config.RuntimeConfig.BindMountPrefix, s.config.AbsentMountSourcesToReject, maybeRelabel, skipRelabel, cgroup2RW, idMapSupport, s.Config().Root)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -996,7 +995,7 @@ func clearReadOnly(m *rspec.Mount) {
+ 	m.Options = append(m.Options, "rw")
+ }
+ 
+-func addOCIBindMounts(ctx context.Context, ctr ctrfactory.Container, mountLabel, bindMountPrefix string, absentMountSourcesToReject []string, maybeRelabel, skipRelabel, cgroup2RW, idMapSupport, rroSupport bool, storageRoot string) ([]oci.ContainerVolume, []rspec.Mount, error) {
++func addOCIBindMounts(ctx context.Context, ctr ctrfactory.Container, mountLabel, bindMountPrefix string, absentMountSourcesToReject []string, maybeRelabel, skipRelabel, cgroup2RW, idMapSupport bool, storageRoot string) ([]oci.ContainerVolume, []rspec.Mount, error) {
+ 	ctx, span := log.StartSpan(ctx)
+ 	defer span.End()
+ 
+@@ -1087,7 +1086,11 @@ func addOCIBindMounts(ctx context.Context, ctr ctrfactory.Container, mountLabel,
+ 			}
+ 		}
+ 
+-		options := []string{"rbind"}
++		options := []string{"rw"}
++		if m.Readonly {
++			options = []string{"ro"}
++		}
++		options = append(options, "rbind")
+ 
+ 		// mount propagation
+ 		switch m.Propagation {
+@@ -1119,34 +1122,6 @@ func addOCIBindMounts(ctx context.Context, ctr ctrfactory.Container, mountLabel,
+ 			options = append(options, "rprivate")
+ 		}
+ 
+-		// Recursive Read-only (RRO) support requires the mount to be
+-		// read-only and the mount propagation set to private.
+-		switch {
+-		case m.RecursiveReadOnly && m.Readonly:
+-			if !rroSupport {
+-				return nil, nil, fmt.Errorf(
+-					"recursive read-only mount support is not available for hostPath %q",
+-					m.HostPath,
+-				)
+-			}
+-			if m.Propagation != types.MountPropagation_PROPAGATION_PRIVATE {
+-				return nil, nil, fmt.Errorf(
+-					"recursive read-only mount requires private propagation for hostPath %q, got: %s",
+-					m.HostPath, m.Propagation,
+-				)
+-			}
+-			options = append(options, "rro")
+-		case m.RecursiveReadOnly:
+-			return nil, nil, fmt.Errorf(
+-				"recursive read-only mount conflicts with read-write mount for hostPath %q",
+-				m.HostPath,
+-			)
+-		case m.Readonly:
+-			options = append(options, "ro")
+-		default:
+-			options = append(options, "rw")
+-		}
+-
+ 		if m.SelinuxRelabel {
+ 			if skipRelabel {
+ 				log.Debugf(ctx, "Skipping relabel for %s because of super privileged container (type: spc_t)", src)
+@@ -1158,12 +1133,11 @@ func addOCIBindMounts(ctx context.Context, ctr ctrfactory.Container, mountLabel,
+ 		}
+ 
+ 		volumes = append(volumes, oci.ContainerVolume{
+-			ContainerPath:     dest,
+-			HostPath:          src,
+-			Readonly:          m.Readonly,
+-			RecursiveReadOnly: m.RecursiveReadOnly,
+-			Propagation:       m.Propagation,
+-			SelinuxRelabel:    m.SelinuxRelabel,
++			ContainerPath:  dest,
++			HostPath:       src,
++			Readonly:       m.Readonly,
++			Propagation:    m.Propagation,
++			SelinuxRelabel: m.SelinuxRelabel,
+ 		})
+ 
+ 		uidMappings := getOCIMappings(m.UidMappings)
+diff --git a/server/container_create_linux_test.go b/server/container_create_linux_test.go
+index 83e30e471..4c84bd3d4 100644
+--- a/server/container_create_linux_test.go
++++ b/server/container_create_linux_test.go
+@@ -31,7 +31,7 @@ func TestAddOCIBindsForDev(t *testing.T) {
+ 		t.Error(err)
+ 	}
+ 
+-	_, binds, err := addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, false, false, "")
++	_, binds, err := addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, false, "")
+ 	if err != nil {
+ 		t.Error(err)
+ 	}
+@@ -75,7 +75,7 @@ func TestAddOCIBindsForSys(t *testing.T) {
+ 		t.Error(err)
+ 	}
+ 
+-	_, binds, err := addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, false, false, "")
++	_, binds, err := addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, false, "")
+ 	if err != nil {
+ 		t.Error(err)
+ 	}
+@@ -90,148 +90,6 @@ func TestAddOCIBindsForSys(t *testing.T) {
+ 	}
+ }
+ 
+-func TestAddOCIBindsRROMounts(t *testing.T) {
+-	t.Parallel()
+-
+-	const hostPath = "/mnt"
+-
+-	ctr, err := container.New()
+-	if err != nil {
+-		t.Fatalf("Should create a container, got: %v", err)
+-	}
+-
+-	err = ctr.SetConfig(&types.ContainerConfig{
+-		Mounts: []*types.Mount{
+-			{
+-				HostPath:          hostPath,
+-				ContainerPath:     "/host",
+-				Readonly:          true,
+-				RecursiveReadOnly: true,
+-				Propagation:       0,
+-			},
+-		},
+-		Metadata: &types.ContainerMetadata{
+-			Name: "test-container",
+-		},
+-	}, &types.PodSandboxConfig{
+-		Metadata: &types.PodSandboxMetadata{
+-			Name: "test-pod",
+-		},
+-	})
+-	if err != nil {
+-		t.Fatalf("Should set container configuration, got: %v", err)
+-	}
+-
+-	ctx := context.TODO()
+-
+-	_, binds, err := addOCIBindMounts(ctx, ctr, "", "", nil, false, false, false, false, true, "")
+-	if err != nil {
+-		t.Errorf("Should not fail to create RRO mount, got: %v", err)
+-	}
+-
+-	hasRRO := false
+-	for _, m := range binds {
+-		if m.Source == hostPath {
+-			for _, o := range m.Options {
+-				if o == "rro" {
+-					hasRRO = true
+-				}
+-			}
+-		}
+-	}
+-
+-	if !hasRRO {
+-		t.Errorf("Should add an RRO mount to be created, got: %#v", binds)
+-	}
+-}
+-
+-func TestAddOCIBindsRROMountsError(t *testing.T) {
+-	t.Parallel()
+-
+-	cases := []struct {
+-		description string
+-		rroSupport  bool
+-		given       *types.Mount
+-		want        string
+-	}{
+-		{
+-			"should fail to add an RRO mount without RRO mounts support",
+-			false,
+-			&types.Mount{
+-				HostPath:          "/mnt",
+-				ContainerPath:     "/host",
+-				Readonly:          true,
+-				RecursiveReadOnly: true,
+-				Propagation:       0,
+-			},
+-			`recursive read-only mount support is not available for hostPath "/mnt"`,
+-		},
+-		{
+-			"should fail to add an RRO mount without readonly option",
+-			true,
+-			&types.Mount{
+-				HostPath:          "/mnt",
+-				ContainerPath:     "/host",
+-				Readonly:          false,
+-				RecursiveReadOnly: true,
+-				Propagation:       0,
+-			},
+-			`recursive read-only mount conflicts with read-write mount for hostPath "/mnt"`,
+-		},
+-		{
+-			"should fail to add an RRO mount without private propagation",
+-			true,
+-			&types.Mount{
+-				HostPath:          "/mnt",
+-				ContainerPath:     "/host",
+-				Readonly:          true,
+-				RecursiveReadOnly: true,
+-				Propagation:       2,
+-			},
+-			`recursive read-only mount requires private propagation for hostPath "/mnt", got: PROPAGATION_BIDIRECTIONAL`,
+-		},
+-	}
+-
+-	ctx := context.TODO()
+-
+-	for _, tc := range cases {
+-		tc := tc
+-		t.Run(tc.description, func(t *testing.T) {
+-			t.Parallel()
+-
+-			ctr, err := container.New()
+-			if err != nil {
+-				t.Fatalf("Should create a container, got: %v", err)
+-			}
+-
+-			err = ctr.SetConfig(&types.ContainerConfig{
+-				Mounts: []*types.Mount{
+-					tc.given,
+-				},
+-				Metadata: &types.ContainerMetadata{
+-					Name: "test-container",
+-				},
+-			}, &types.PodSandboxConfig{
+-				Metadata: &types.PodSandboxMetadata{
+-					Name: "test-pod",
+-				},
+-			})
+-			if err != nil {
+-				t.Fatalf("Should set container configuration, got: %v", err)
+-			}
+-
+-			_, _, err = addOCIBindMounts(ctx, ctr, "", "", nil, false, false, false, false, tc.rroSupport, "")
+-			if err == nil {
+-				t.Error("Should fail to add an RRO mount with a specific error")
+-			}
+-
+-			if tc.want != err.Error() {
+-				t.Errorf("Should fail to add an RRO mount with error %s, got %v", tc.want, err)
+-			}
+-		})
+-	}
+-}
+-
+ func TestAddOCIBindsCGroupRW(t *testing.T) {
+ 	ctr, err := container.New()
+ 	if err != nil {
+@@ -249,7 +107,7 @@ func TestAddOCIBindsCGroupRW(t *testing.T) {
+ 	}); err != nil {
+ 		t.Error(err)
+ 	}
+-	_, _, err = addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, true, false, false, "")
++	_, _, err = addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, true, false, "")
+ 	if err != nil {
+ 		t.Error(err)
+ 	}
+@@ -283,7 +141,7 @@ func TestAddOCIBindsCGroupRW(t *testing.T) {
+ 		t.Error(err)
+ 	}
+ 	var hasCgroupRO bool
+-	_, _, err = addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, false, false, "")
++	_, _, err = addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, false, "")
+ 	if err != nil {
+ 		t.Error(err)
+ 	}
+@@ -331,12 +189,12 @@ func TestAddOCIBindsErrorWithoutIDMap(t *testing.T) {
+ 	}); err != nil {
+ 		t.Fatal(err)
+ 	}
+-	_, _, err = addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, false, false, "")
++	_, _, err = addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, false, "")
+ 	if err == nil {
+ 		t.Errorf("Should have failed to create id mapped mount with no id map support")
+ 	}
+ 
+-	_, _, err = addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, true, false, "")
++	_, _, err = addOCIBindMounts(context.Background(), ctr, "", "", nil, false, false, false, true, "")
+ 	if err != nil {
+ 		t.Errorf("%v", err)
+ 	}
+diff --git a/server/container_restore.go b/server/container_restore.go
+index d8bb48564..b6218f6c8 100644
+--- a/server/container_restore.go
++++ b/server/container_restore.go
+@@ -323,8 +323,6 @@ func (s *Server) CRImportCheckpoint(
+ 			switch opt {
+ 			case "ro":
+ 				mount.Readonly = true
+-			case "rro":
+-				mount.RecursiveReadOnly = true
+ 			case "rprivate":
+ 				mount.Propagation = types.MountPropagation_PROPAGATION_PRIVATE
+ 			case "rshared":
+@@ -334,13 +332,6 @@ func (s *Server) CRImportCheckpoint(
+ 			}
+ 		}
+ 
+-		// Recursive Read-only (RRO) support requires the mount to be
+-		// read-only and the mount propagation set to private.
+-		if mount.RecursiveReadOnly {
+-			mount.Readonly = true
+-			mount.Propagation = types.MountPropagation_PROPAGATION_PRIVATE
+-		}
+-
+ 		log.Debugf(ctx, "Adding mounts %#v", mount)
+ 		containerConfig.Mounts = append(containerConfig.Mounts, mount)
+ 	}
+diff --git a/server/container_status.go b/server/container_status.go
+index be9298f8f..c90a4c5d4 100644
+--- a/server/container_status.go
++++ b/server/container_status.go
+@@ -53,12 +53,11 @@ func (s *Server) ContainerStatus(ctx context.Context, req *types.ContainerStatus
+ 	mounts := []*types.Mount{}
+ 	for _, cv := range c.Volumes() {
+ 		mounts = append(mounts, &types.Mount{
+-			ContainerPath:     cv.ContainerPath,
+-			HostPath:          cv.HostPath,
+-			Readonly:          cv.Readonly,
+-			RecursiveReadOnly: cv.RecursiveReadOnly,
+-			Propagation:       cv.Propagation,
+-			SelinuxRelabel:    cv.SelinuxRelabel,
++			ContainerPath:  cv.ContainerPath,
++			HostPath:       cv.HostPath,
++			Readonly:       cv.Readonly,
++			Propagation:    cv.Propagation,
++			SelinuxRelabel: cv.SelinuxRelabel,
+ 		})
+ 	}
+ 	resp.Status.Mounts = mounts
+diff --git a/server/runtime_status.go b/server/runtime_status.go
+index e672a86d8..c9b73f082 100644
+--- a/server/runtime_status.go
++++ b/server/runtime_status.go
+@@ -48,7 +48,10 @@ func (s *Server) Status(ctx context.Context, req *types.StatusRequest) (*types.S
+ 			}
+ 		}
+ 
+-		rro := runtime.RuntimeSupportsRROMounts()
++		// TODO: enable when CRI-O implemented Recursive Read-only (RRO) mounts
++		// rro := runtime.RuntimeSupportsMountFlag("rro")
++		rro := false
++
+ 		userns := runtime.RuntimeSupportsIDMap()
+ 		h := makeRuntimeHandler(name, rro, userns)
+ 		resp.RuntimeHandlers = append(resp.RuntimeHandlers, h)
+diff --git a/test/ctr.bats b/test/ctr.bats
+index 2894c7ae2..c9906ab9e 100644
+--- a/test/ctr.bats
++++ b/test/ctr.bats
+@@ -34,26 +34,6 @@ function check_oci_annotation() {
+ 	[ "$(jq -r .annotations.\""$key"\" < "$config")" = "$value" ]
+ }
+ 
+-# Helper to create two read/write volumes within the test directory,
+-# where the second volume, or a mount point, rather, will be nested
+-# within the first one. The helper outputs the path to the test
+-# volume (mount point) where it was created.
+-# Note: There is no need to explicitly clean, or unmount if you wish,
+-# the mounts points this helper creates, as these will be automatically
+-# cleaned up as part of the test teardown() function run.
+-function create_test_rro_mounts() {
+-	# Parent of "--root", keep in sync with test/helpers.bash file.
+-	directory="$TESTDIR"/test-volume
+-
+-	mkdir -p "$directory"
+-	mount -t tmpfs none "$directory"
+-
+-	mkdir -p "$directory"/test-sub-volume
+-	mount -t tmpfs none "$directory"/test-sub-volume
+-
+-	echo "$directory"
+-}
+-
+ @test "ctr not found correct error message" {
+ 	start_crio
+ 	run ! crictl inspect "container_not_exist"
+@@ -1016,126 +996,6 @@ function create_test_rro_mounts() {
+ 	crictl exec --sync "$ctr_id" findmnt -no TARGET,PROPAGATION "$CTR_DIR" | grep -v private
+ }
+ 
+-@test "ctr that mounts container storage as read-only option but not recursively" {
+-	# When SELinux is enabled and set to Enforcing, then the read-only
+-	# mounts within a container will stop sub-mounts access in a read-write
+-	# manner, and this test will then fail, thus it's best to disable it.
+-	# Note: This is not a problem on a systems without SELinux.
+-	if is_selinux_enforcing; then
+-		skip "SELinux is set to Enforcing"
+-	fi
+-
+-	# See https://www.shellcheck.net/wiki/SC2154 for more details.
+-	declare stderr
+-
+-	PARENT_DIR="$(create_test_rro_mounts)"
+-	CTR_DIR="/host"
+-
+-	jq --arg path "$PARENT_DIR" --arg ctr_dir "$CTR_DIR" \
+-		'  .mounts = [ {
+-			host_path: $path,
+-			container_path: $ctr_dir,
+-			readonly: true,
+-			propagation: 0
+-		} ]' \
+-		"$TESTDATA"/container_sleep.json > "$TESTDIR"/config
+-
+-	start_crio
+-
+-	ctr_id=$(crictl run "$TESTDIR"/config "$TESTDATA"/sandbox_config.json)
+-
+-	run ! --separate-stderr crictl exec --sync "$ctr_id" touch /host/test
+-	[[ "$stderr" == *"Read-only file system"* ]]
+-
+-	crictl exec --sync "$ctr_id" touch /host/test-sub-volume/test
+-}
+-
+-@test "ctr that mounts container storage as recursively read-only" {
+-	requires_kernel "5.12"
+-
+-	# Check for the minimum cri-tools version that supports RRO mounts.
+-	requires_crictl "1.30"
+-
+-	# See https://www.shellcheck.net/wiki/SC2154 for more details.
+-	declare stderr
+-
+-	PARENT_DIR="$(create_test_rro_mounts)"
+-	CTR_DIR="/host"
+-
+-	jq --arg path "$PARENT_DIR" --arg ctr_dir "$CTR_DIR" \
+-		'  .mounts = [ {
+-			host_path: $path,
+-			container_path: $ctr_dir,
+-			readonly: true,
+-			recursive_read_only: true,
+-			propagation: 0
+-		} ]' \
+-		"$TESTDATA"/container_sleep.json > "$TESTDIR"/config
+-
+-	start_crio
+-
+-	ctr_id=$(crictl run "$TESTDIR"/config "$TESTDATA"/sandbox_config.json)
+-
+-	run ! --separate-stderr crictl exec --sync "$ctr_id" touch /host/test
+-	[[ "$stderr" == *"Read-only file system"* ]]
+-
+-	run ! --separate-stderr crictl exec --sync "$ctr_id" touch /host/test-sub-volume/test
+-	[[ "$stderr" == *"Read-only file system"* ]]
+-}
+-
+-@test "ctr that fails to mount container storage as recursively read-only without readonly option" {
+-	# Check for the minimum cri-tools version that supports RRO mounts.
+-	requires_crictl "1.30"
+-
+-	# See https://www.shellcheck.net/wiki/SC2154 for more details.
+-	declare stderr
+-
+-	# Parent of "--root", keep in sync with test/helpers.bash file.
+-	PARENT_DIR="$TESTDIR"
+-	CTR_DIR="/host"
+-
+-	jq --arg path "$PARENT_DIR" --arg ctr_dir "$CTR_DIR" \
+-		'  .mounts = [ {
+-			host_path: $path,
+-			container_path: $ctr_dir,
+-			readonly: false,
+-			recursive_read_only: true,
+-		} ]' \
+-		"$TESTDATA"/container_sleep.json > "$TESTDIR"/config
+-
+-	start_crio
+-
+-	run ! --separate-stderr crictl run "$TESTDIR"/config "$TESTDATA"/sandbox_config.json
+-	[[ "$stderr" == *"recursive read-only mount conflicts with read-write mount"* ]]
+-}
+-
+-@test "ctr that fails to mount container storage as recursively read-only without private propagation" {
+-	# Check for the minimum cri-tools version that supports RRO mounts.
+-	requires_crictl "1.30"
+-
+-	# See https://www.shellcheck.net/wiki/SC2154 for more details.
+-	declare stderr
+-
+-	# Parent of "--root", keep in sync with test/helpers.bash file.
+-	PARENT_DIR="$TESTDIR"
+-	CTR_DIR="/host"
+-
+-	jq --arg path "$PARENT_DIR" --arg ctr_dir "$CTR_DIR" \
+-		'  .mounts = [ {
+-			host_path: $path,
+-			container_path: $ctr_dir,
+-			readonly: true,
+-			recursive_read_only: true,
+-			propagation: 2
+-		} ]' \
+-		"$TESTDATA"/container_sleep.json > "$TESTDIR"/config
+-
+-	start_crio
+-
+-	run ! --separate-stderr crictl run "$TESTDIR"/config "$TESTDATA"/sandbox_config.json
+-	[[ "$stderr" == *"recursive read-only mount requires private propagation"* ]]
+-}
+-
+ @test "ctr has containerenv" {
+ 	start_crio
+ 	ctr_id=$(crictl run "$TESTDATA"/container_redis.json "$TESTDATA"/sandbox_config.json)
+diff --git a/test/helpers.bash b/test/helpers.bash
+index ef0b251b8..e4a065333 100644
+--- a/test/helpers.bash
++++ b/test/helpers.bash
+@@ -264,44 +264,6 @@ function host_and_port_listens() {
+     netstat -ln46 | grep -E -q "${host}:${port}\b"
+ }
+ 
+-function check_kernel_version() {
+-    local version="$1"
+-
+-    required_major=${version%%.*}
+-    required_minor=${version##*.}
+-
+-    [[ $(uname -r) =~ ([0-9]+)\.([0-9]+) ]]
+-    major=${BASH_REMATCH[1]}
+-    minor=${BASH_REMATCH[2]}
+-
+-    ((major > required_major)) || ((major == required_major && minor >= required_minor))
+-}
+-
+-function check_crictl_version() {
+-    local version="$1"
+-
+-    required_major=${version%%.*}
+-    required_minor=${version##*.}
+-
+-    crictl_binary=${CRICTL_BINARY:-/usr/bin/crictl}
+-
+-    [[ $($crictl_binary --version) =~ ([0-9]+)\.([0-9]+) ]]
+-    major=${BASH_REMATCH[1]}
+-    minor=${BASH_REMATCH[2]}
+-
+-    ((major > required_major)) || ((major == required_major && minor >= required_minor))
+-}
+-
+-function requires_kernel() {
+-    check_kernel_version "$@" ||
+-        skip "requires kernel version \"$1\" or newer"
+-}
+-
+-function requires_crictl() {
+-    check_crictl_version "$@" ||
+-        skip "requires crictl version \"$1\" or newer"
+-}
+-
+ function cleanup_ctrs() {
+     crictl rm -a -f
+     rm -f "$HOOKSCHECK"
+@@ -404,16 +366,6 @@ function is_apparmor_enabled() {
+     grep -q Y "$APPARMOR_PARAMETERS_FILE_PATH" 2>/dev/null
+ }
+ 
+-function is_selinux_enabled() {
+-    selinuxenabled 2>/dev/null || false
+-}
+-
+-function is_selinux_enforcing() {
+-    command -v getenforce 1>/dev/null || false
+-
+-    [[ $(getenforce) == "Enforcing" ]]
+-}
+-
+ function prepare_network_conf() {
+     mkdir -p "$CRIO_CNI_CONFIG"
+     cat >"$CRIO_CNI_CONFIG/10-crio.conf" <<-EOF
+diff --git a/test/selinux.bats b/test/selinux.bats
+index e1deee083..be0481fa0 100644
+--- a/test/selinux.bats
++++ b/test/selinux.bats
+@@ -22,7 +22,7 @@ function teardown() {
+ }
+ 
+ @test "selinux skips relabeling if TrySkipVolumeSELinuxLabel annotation is present" {
+-	if ! is_selinux_enforcing; then
++	if [[ $(getenforce) != "Enforcing" ]]; then
+ 		skip "not enforcing"
+ 	fi
+ 
+@@ -86,7 +86,7 @@ function teardown() {
+ }
+ 
+ @test "selinux skips relabeling for super privileged container" {
+-	if ! is_selinux_enforcing; then
++	if [[ $(getenforce) != "Enforcing" ]]; then
+ 		skip "not enforcing"
+ 	fi
+ 	VOLUME="$TESTDIR"/dir
+diff --git a/vendor/modules.txt b/vendor/modules.txt
+index 83824a091..97c019df5 100644
+--- a/vendor/modules.txt
++++ b/vendor/modules.txt
+@@ -1620,14 +1620,13 @@ sigs.k8s.io/structured-merge-diff/v4/value
+ ## explicit; go 1.12
+ sigs.k8s.io/yaml
+ sigs.k8s.io/yaml/goyaml.v2
+-# tags.cncf.io/container-device-interface v0.6.2
+-## explicit; go 1.19
+-tags.cncf.io/container-device-interface/internal/multierror
++# tags.cncf.io/container-device-interface v0.7.2
++## explicit; go 1.20
+ tags.cncf.io/container-device-interface/internal/validation
+ tags.cncf.io/container-device-interface/internal/validation/k8s
+ tags.cncf.io/container-device-interface/pkg/cdi
+ tags.cncf.io/container-device-interface/pkg/parser
+-# tags.cncf.io/container-device-interface/specs-go v0.6.0
++# tags.cncf.io/container-device-interface/specs-go v0.7.0
+ ## explicit; go 1.19
+ tags.cncf.io/container-device-interface/specs-go
+ # zenhack.net/go/util v0.0.0-20230218002511-744d2d6d1739
+diff --git a/vendor/tags.cncf.io/container-device-interface/internal/multierror/multierror.go b/vendor/tags.cncf.io/container-device-interface/internal/multierror/multierror.go
+deleted file mode 100644
+index 07aca4a1d..000000000
+--- a/vendor/tags.cncf.io/container-device-interface/internal/multierror/multierror.go
++++ /dev/null
+@@ -1,82 +0,0 @@
+-/*
+-   Copyright © 2022 The CDI Authors
+-
+-   Licensed under the Apache License, Version 2.0 (the "License");
+-   you may not use this file except in compliance with the License.
+-   You may obtain a copy of the License at
+-
+-       http://www.apache.org/licenses/LICENSE-2.0
+-
+-   Unless required by applicable law or agreed to in writing, software
+-   distributed under the License is distributed on an "AS IS" BASIS,
+-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-   See the License for the specific language governing permissions and
+-   limitations under the License.
+-*/
+-
+-package multierror
+-
+-import (
+-	"strings"
+-)
+-
+-// New combines several errors into a single error. Parameters that are nil are
+-// ignored. If no errors are passed in or all parameters are nil, then the
+-// result is also nil.
+-func New(errors ...error) error {
+-	// Filter out nil entries.
+-	numErrors := 0
+-	for _, err := range errors {
+-		if err != nil {
+-			errors[numErrors] = err
+-			numErrors++
+-		}
+-	}
+-	if numErrors == 0 {
+-		return nil
+-	}
+-	return multiError(errors[0:numErrors])
+-}
+-
+-// multiError is the underlying implementation used by New.
+-//
+-// Beware that a null multiError is not the same as a nil error.
+-type multiError []error
+-
+-// multiError returns all individual error strings concatenated with "\n"
+-func (e multiError) Error() string {
+-	var builder strings.Builder
+-	for i, err := range e {
+-		if i > 0 {
+-			_, _ = builder.WriteString("\n")
+-		}
+-		_, _ = builder.WriteString(err.Error())
+-	}
+-	return builder.String()
+-}
+-
+-// Append returns a new multi error all errors concatenated. Errors that are
+-// multi errors get flattened, nil is ignored.
+-func Append(err error, errors ...error) error {
+-	var result multiError
+-	if m, ok := err.(multiError); ok {
+-		result = m
+-	} else if err != nil {
+-		result = append(result, err)
+-	}
+-
+-	for _, e := range errors {
+-		if e == nil {
+-			continue
+-		}
+-		if m, ok := e.(multiError); ok {
+-			result = append(result, m...)
+-		} else {
+-			result = append(result, e)
+-		}
+-	}
+-	if len(result) == 0 {
+-		return nil
+-	}
+-	return result
+-}
+diff --git a/vendor/tags.cncf.io/container-device-interface/internal/validation/k8s/objectmeta.go b/vendor/tags.cncf.io/container-device-interface/internal/validation/k8s/objectmeta.go
+index 5cf63dabf..fb86c67ac 100644
+--- a/vendor/tags.cncf.io/container-device-interface/internal/validation/k8s/objectmeta.go
++++ b/vendor/tags.cncf.io/container-device-interface/internal/validation/k8s/objectmeta.go
+@@ -20,10 +20,9 @@ limitations under the License.
+ package k8s
+ 
+ import (
++	"errors"
+ 	"fmt"
+ 	"strings"
+-
+-	"tags.cncf.io/container-device-interface/internal/multierror"
+ )
+ 
+ // TotalAnnotationSizeLimitB defines the maximum size of all annotations in characters.
+@@ -31,17 +30,17 @@ const TotalAnnotationSizeLimitB int = 256 * (1 << 10) // 256 kB
+ 
+ // ValidateAnnotations validates that a set of annotations are correctly defined.
+ func ValidateAnnotations(annotations map[string]string, path string) error {
+-	errors := multierror.New()
++	errs := []error{}
+ 	for k := range annotations {
+ 		// The rule is QualifiedName except that case doesn't matter, so convert to lowercase before checking.
+ 		for _, msg := range IsQualifiedName(strings.ToLower(k)) {
+-			errors = multierror.Append(errors, fmt.Errorf("%v.%v is invalid: %v", path, k, msg))
++			errs = append(errs, fmt.Errorf("%v.%v is invalid: %v", path, k, msg))
+ 		}
+ 	}
+ 	if err := ValidateAnnotationsSize(annotations); err != nil {
+-		errors = multierror.Append(errors, fmt.Errorf("%v is too long: %v", path, err))
++		errs = append(errs, fmt.Errorf("%v is too long: %v", path, err))
+ 	}
+-	return errors
++	return errors.Join(errs...)
+ }
+ 
+ // ValidateAnnotationsSize validates that a set of annotations is not too large.
+diff --git a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/cache.go b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/cache.go
+index c807b55fd..c2f7fe346 100644
+--- a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/cache.go
++++ b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/cache.go
+@@ -28,12 +28,11 @@ import (
+ 
+ 	"github.com/fsnotify/fsnotify"
+ 	oci "github.com/opencontainers/runtime-spec/specs-go"
+-	"tags.cncf.io/container-device-interface/internal/multierror"
+ 	cdi "tags.cncf.io/container-device-interface/specs-go"
+ )
+ 
+ // Option is an option to change some aspect of default CDI behavior.
+-type Option func(*Cache) error
++type Option func(*Cache)
+ 
+ // Cache stores CDI Specs loaded from Spec directories.
+ type Cache struct {
+@@ -54,16 +53,27 @@ type Cache struct {
+ // is detected. This option can be used to disable this behavior when a
+ // manually refreshed mode is preferable.
+ func WithAutoRefresh(autoRefresh bool) Option {
+-	return func(c *Cache) error {
++	return func(c *Cache) {
+ 		c.autoRefresh = autoRefresh
+-		return nil
+ 	}
+ }
+ 
+ // NewCache creates a new CDI Cache. The cache is populated from a set
+ // of CDI Spec directories. These can be specified using a WithSpecDirs
+ // option. The default set of directories is exposed in DefaultSpecDirs.
++//
++// Note:
++//
++//	The error returned by this function is always nil and it is only
++//	returned to maintain API compatibility with consumers.
+ func NewCache(options ...Option) (*Cache, error) {
++	return newCache(options...), nil
++}
++
++// newCache creates a CDI cache with the supplied options.
++// This function allows testing without handling the nil error returned by the
++// NewCache function.
++func newCache(options ...Option) *Cache {
+ 	c := &Cache{
+ 		autoRefresh: true,
+ 		watch:       &watch{},
+@@ -73,7 +83,8 @@ func NewCache(options ...Option) (*Cache, error) {
+ 	c.Lock()
+ 	defer c.Unlock()
+ 
+-	return c, c.configure(options...)
++	c.configure(options...)
++	return c
+ }
+ 
+ // Configure applies options to the Cache. Updates and refreshes the
+@@ -86,18 +97,16 @@ func (c *Cache) Configure(options ...Option) error {
+ 	c.Lock()
+ 	defer c.Unlock()
+ 
+-	return c.configure(options...)
++	c.configure(options...)
++
++	return nil
+ }
+ 
+ // Configure the Cache. Start/stop CDI Spec directory watch, refresh
+ // the Cache if necessary.
+-func (c *Cache) configure(options ...Option) error {
+-	var err error
+-
++func (c *Cache) configure(options ...Option) {
+ 	for _, o := range options {
+-		if err = o(c); err != nil {
+-			return fmt.Errorf("failed to apply cache options: %w", err)
+-		}
++		o(c)
+ 	}
+ 
+ 	c.dirErrors = make(map[string]error)
+@@ -108,8 +117,6 @@ func (c *Cache) configure(options ...Option) error {
+ 		c.watch.start(&c.Mutex, c.refresh, c.dirErrors)
+ 	}
+ 	c.refresh()
+-
+-	return nil
+ }
+ 
+ // Refresh rescans the CDI Spec directories and refreshes the Cache.
+@@ -125,11 +132,11 @@ func (c *Cache) Refresh() error {
+ 	}
+ 
+ 	// collect and return cached errors, much like refresh() does it
+-	var result error
+-	for _, errors := range c.errors {
+-		result = multierror.Append(result, errors...)
++	errs := []error{}
++	for _, specErrs := range c.errors {
++		errs = append(errs, errors.Join(specErrs...))
+ 	}
+-	return result
++	return errors.Join(errs...)
+ }
+ 
+ // Refresh the Cache by rescanning CDI Spec directories and files.
+@@ -139,12 +146,10 @@ func (c *Cache) refresh() error {
+ 		devices    = map[string]*Device{}
+ 		conflicts  = map[string]struct{}{}
+ 		specErrors = map[string][]error{}
+-		result     []error
+ 	)
+ 
+ 	// collect errors per spec file path and once globally
+ 	collectError := func(err error, paths ...string) {
+-		result = append(result, err)
+ 		for _, path := range paths {
+ 			specErrors[path] = append(specErrors[path], err)
+ 		}
+@@ -197,7 +202,11 @@ func (c *Cache) refresh() error {
+ 	c.devices = devices
+ 	c.errors = specErrors
+ 
+-	return multierror.New(result...)
++	errs := []error{}
++	for _, specErrs := range specErrors {
++		errs = append(errs, errors.Join(specErrs...))
++	}
++	return errors.Join(errs...)
+ }
+ 
+ // RefreshIfRequired triggers a refresh if necessary.
+diff --git a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/container-edits.go b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/container-edits.go
+index 688ddf78b..e5b50db1c 100644
+--- a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/container-edits.go
++++ b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/container-edits.go
+@@ -144,6 +144,20 @@ func (e *ContainerEdits) Apply(spec *oci.Spec) error {
+ 		}
+ 	}
+ 
++	if e.IntelRdt != nil {
++		// The specgen is missing functionality to set all parameters so we
++		// just piggy-back on it to initialize all structs and the copy over.
++		specgen.SetLinuxIntelRdtClosID(e.IntelRdt.ClosID)
++		spec.Linux.IntelRdt = e.IntelRdt.ToOCI()
++	}
++
++	for _, additionalGID := range e.AdditionalGIDs {
++		if additionalGID == 0 {
++			continue
++		}
++		specgen.AddProcessAdditionalGid(additionalGID)
++	}
++
+ 	return nil
+ }
+ 
+@@ -171,6 +185,11 @@ func (e *ContainerEdits) Validate() error {
+ 			return err
+ 		}
+ 	}
++	if e.IntelRdt != nil {
++		if err := ValidateIntelRdt(e.IntelRdt); err != nil {
++			return err
++		}
++	}
+ 
+ 	return nil
+ }
+@@ -192,6 +211,10 @@ func (e *ContainerEdits) Append(o *ContainerEdits) *ContainerEdits {
+ 	e.DeviceNodes = append(e.DeviceNodes, o.DeviceNodes...)
+ 	e.Hooks = append(e.Hooks, o.Hooks...)
+ 	e.Mounts = append(e.Mounts, o.Mounts...)
++	if o.IntelRdt != nil {
++		e.IntelRdt = o.IntelRdt
++	}
++	e.AdditionalGIDs = append(e.AdditionalGIDs, o.AdditionalGIDs...)
+ 
+ 	return e
+ }
+@@ -202,7 +225,25 @@ func (e *ContainerEdits) isEmpty() bool {
+ 	if e == nil {
+ 		return false
+ 	}
+-	return len(e.Env)+len(e.DeviceNodes)+len(e.Hooks)+len(e.Mounts) == 0
++	if len(e.Env) > 0 {
++		return false
++	}
++	if len(e.DeviceNodes) > 0 {
++		return false
++	}
++	if len(e.Hooks) > 0 {
++		return false
++	}
++	if len(e.Mounts) > 0 {
++		return false
++	}
++	if len(e.AdditionalGIDs) > 0 {
++		return false
++	}
++	if e.IntelRdt != nil {
++		return false
++	}
++	return true
+ }
+ 
+ // ValidateEnv validates the given environment variables.
+@@ -280,6 +321,15 @@ func (m *Mount) Validate() error {
+ 	return nil
+ }
+ 
++// ValidateIntelRdt validates the IntelRdt configuration.
++func ValidateIntelRdt(i *specs.IntelRdt) error {
++	// ClosID must be a valid Linux filename
++	if len(i.ClosID) >= 4096 || i.ClosID == "." || i.ClosID == ".." || strings.ContainsAny(i.ClosID, "/\n") {
++		return errors.New("invalid ClosID")
++	}
++	return nil
++}
++
+ // Ensure OCI Spec hooks are not nil so we can add hooks.
+ func ensureOCIHooks(spec *oci.Spec) {
+ 	if spec.Hooks == nil {
+diff --git a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/default-cache.go b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/default-cache.go
+new file mode 100644
+index 000000000..7886ee517
+--- /dev/null
++++ b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/default-cache.go
+@@ -0,0 +1,70 @@
++/*
++   Copyright © 2024 The CDI Authors
++
++   Licensed under the Apache License, Version 2.0 (the "License");
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an "AS IS" BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
++*/
++
++package cdi
++
++import (
++	"sync"
++
++	oci "github.com/opencontainers/runtime-spec/specs-go"
++)
++
++var (
++	defaultCache   *Cache
++	getDefaultOnce sync.Once
++)
++
++func getOrCreateDefaultCache(options ...Option) (*Cache, bool) {
++	var created bool
++	getDefaultOnce.Do(func() {
++		defaultCache = newCache(options...)
++		created = true
++	})
++	return defaultCache, created
++}
++
++// GetDefaultCache returns the default CDI cache instance.
++func GetDefaultCache() *Cache {
++	cache, _ := getOrCreateDefaultCache()
++	return cache
++}
++
++// Configure applies options to the default CDI cache. Updates and refreshes
++// the default cache if options are not empty.
++func Configure(options ...Option) error {
++	cache, created := getOrCreateDefaultCache(options...)
++	if len(options) == 0 || created {
++		return nil
++	}
++	return cache.Configure(options...)
++}
++
++// Refresh explicitly refreshes the default CDI cache instance.
++func Refresh() error {
++	return GetDefaultCache().Refresh()
++}
++
++// InjectDevices injects the given qualified devices to the given OCI Spec.
++// using the default CDI cache instance to resolve devices.
++func InjectDevices(ociSpec *oci.Spec, devices ...string) ([]string, error) {
++	return GetDefaultCache().InjectDevices(ociSpec, devices...)
++}
++
++// GetErrors returns all errors encountered during the last refresh of
++// the default CDI cache instance.
++func GetErrors() map[string][]error {
++	return GetDefaultCache().GetErrors()
++}
+diff --git a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/doc.go b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/doc.go
+index 1897ef1fc..0ea071455 100644
+--- a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/doc.go
++++ b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/doc.go
+@@ -29,8 +29,22 @@
+ // the vast majority of CDI consumers need. The API should be usable both
+ // by OCI runtime clients and runtime implementations.
+ //
++// # Default CDI Cache
++//
++// There is a default CDI cache instance which is always implicitly
++// available and instantiated the first time it is referenced directly
++// or indirectly. The most frequently used cache functions are available
++// as identically named package level functions which operate on the
++// default cache instance. Moreover, the registry also operates on the
++// same default cache. We plan to deprecate the registry and eventually
++// remove it in a future release.
++//
+ // # CDI Registry
+ //
++// Note: the Registry and its related interfaces are deprecated and will
++// be removed in a future version. Please use the default cache and its
++// related package-level function instead.
++//
+ // The primary interface to interact with CDI devices is the Registry. It
+ // is essentially a cache of all Specs and devices discovered in standard
+ // CDI directories on the host. The registry has two main functionality,
+diff --git a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/registry.go b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/registry.go
+index 7f12c777e..3113a05a2 100644
+--- a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/registry.go
++++ b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/registry.go
+@@ -29,6 +29,11 @@ import (
+ //
+ // The most commonly used Registry functions are for refreshing the
+ // registry and injecting CDI devices into an OCI Spec.
++//
++// Deprecated: Registry is deprecated and will be removed in a future
++// version. Please update your code to use the corresponding package-
++// level functions Configure(), Refresh(), InjectDevices(), GetErrors(),
++// and GetDefaultCache().
+ type Registry interface {
+ 	RegistryResolver
+ 	RegistryRefresher
+@@ -54,6 +59,10 @@ type Registry interface {
+ //
+ // GetSpecDirErrors returns any errors related to the configured
+ // Spec directories.
++//
++// Deprecated: RegistryRefresher is deprecated and will be removed
++// in a future version. Please use the default cache and its related
++// package-level functions instead.
+ type RegistryRefresher interface {
+ 	Configure(...Option) error
+ 	Refresh() error
+@@ -68,6 +77,10 @@ type RegistryRefresher interface {
+ // InjectDevices takes an OCI Spec and injects into it a set of
+ // CDI devices given by qualified name. It returns the names of
+ // any unresolved devices and an error if injection fails.
++//
++// Deprecated: RegistryRefresher is deprecated and will be removed
++// in a future version. Please use the default cache and its related
++// package-level functions instead.
+ type RegistryResolver interface {
+ 	InjectDevices(spec *oci.Spec, device ...string) (unresolved []string, err error)
+ }
+@@ -79,6 +92,12 @@ type RegistryResolver interface {
+ //
+ // ListDevices returns a slice with the names of qualified device
+ // known. The returned slice is sorted.
++//
++// Deprecated: RegistryDeviceDB is deprecated and will be removed
++// in a future version. Please use the default cache and its related
++// package-level functions instead.
++// and will be removed in a future version. Please use the default
++// cache and its related package-level functions instead.
+ type RegistryDeviceDB interface {
+ 	GetDevice(device string) *Device
+ 	ListDevices() []string
+@@ -99,6 +118,10 @@ type RegistryDeviceDB interface {
+ //
+ // WriteSpec writes the Spec with the given content and name to the
+ // last Spec directory.
++//
++// Deprecated: RegistrySpecDB is deprecated and will be removed
++// in a future version. Please use the default cache and its related
++// package-level functions instead.
+ type RegistrySpecDB interface {
+ 	ListVendors() []string
+ 	ListClasses() []string
+@@ -121,30 +144,35 @@ var (
+ 
+ // GetRegistry returns the CDI registry. If any options are given, those
+ // are applied to the registry.
++//
++// Deprecated: GetRegistry is deprecated and will be removed in a future
++// version. Please use the default cache and its related package-level
++// functions instead.
+ func GetRegistry(options ...Option) Registry {
+-	var new bool
+ 	initOnce.Do(func() {
+-		reg, _ = getRegistry(options...)
+-		new = true
++		reg = &registry{GetDefaultCache()}
+ 	})
+-	if !new && len(options) > 0 {
+-		reg.Configure(options...)
+-		reg.Refresh()
++	if len(options) > 0 {
++		// We don't care about errors here
++		_ = reg.Configure(options...)
+ 	}
+ 	return reg
+ }
+ 
+ // DeviceDB returns the registry interface for querying devices.
++//
++// Deprecated: DeviceDB is deprecated and will be removed in a future
++// version. Please use the default cache and its related package-level
++// functions instead.
+ func (r *registry) DeviceDB() RegistryDeviceDB {
+ 	return r
+ }
+ 
+ // SpecDB returns the registry interface for querying Specs.
++//
++// Deprecated: SpecDB is deprecated and will be removed in a future
++// version. Please use the default cache and its related package-level
++// functions instead.
+ func (r *registry) SpecDB() RegistrySpecDB {
+ 	return r
+ }
+-
+-func getRegistry(options ...Option) (*registry, error) {
+-	c, err := NewCache(options...)
+-	return &registry{c}, err
+-}
+diff --git a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/spec-dirs.go b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/spec-dirs.go
+index f339349bb..09005d690 100644
+--- a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/spec-dirs.go
++++ b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/spec-dirs.go
+@@ -44,13 +44,12 @@ var (
+ 
+ // WithSpecDirs returns an option to override the CDI Spec directories.
+ func WithSpecDirs(dirs ...string) Option {
+-	return func(c *Cache) error {
++	return func(c *Cache) {
+ 		specDirs := make([]string, len(dirs))
+ 		for i, dir := range dirs {
+ 			specDirs[i] = filepath.Clean(dir)
+ 		}
+ 		c.specDirs = specDirs
+-		return nil
+ 	}
+ }
+ 
+diff --git a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/spec.go b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/spec.go
+index 8bd63cc52..1a0a662b8 100644
+--- a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/spec.go
++++ b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/spec.go
+@@ -19,7 +19,6 @@ package cdi
+ import (
+ 	"encoding/json"
+ 	"fmt"
+-	"io/ioutil"
+ 	"os"
+ 	"path/filepath"
+ 	"strings"
+@@ -62,7 +61,7 @@ type Spec struct {
+ // assigned the given priority. If reading or parsing the Spec
+ // data fails ReadSpec returns a nil Spec and an error.
+ func ReadSpec(path string, priority int) (*Spec, error) {
+-	data, err := ioutil.ReadFile(path)
++	data, err := os.ReadFile(path)
+ 	switch {
+ 	case os.IsNotExist(err):
+ 		return nil, err
+diff --git a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/version.go b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/version.go
+index a61781278..e22669445 100644
+--- a/vendor/tags.cncf.io/container-device-interface/pkg/cdi/version.go
++++ b/vendor/tags.cncf.io/container-device-interface/pkg/cdi/version.go
+@@ -39,6 +39,7 @@ const (
+ 	v040 version = "v0.4.0"
+ 	v050 version = "v0.5.0"
+ 	v060 version = "v0.6.0"
++	v070 version = "v0.7.0"
+ 
+ 	// vEarliest is the earliest supported version of the CDI specification
+ 	vEarliest version = v030
+@@ -54,6 +55,7 @@ var validSpecVersions = requiredVersionMap{
+ 	v040: requiresV040,
+ 	v050: requiresV050,
+ 	v060: requiresV060,
++	v070: requiresV070,
+ }
+ 
+ // MinimumRequiredVersion determines the minimum spec version for the input spec.
+@@ -118,6 +120,29 @@ func (r requiredVersionMap) requiredVersion(spec *cdi.Spec) version {
+ 	return minVersion
+ }
+ 
++// requiresV070 returns true if the spec uses v0.7.0 features
++func requiresV070(spec *cdi.Spec) bool {
++	if spec.ContainerEdits.IntelRdt != nil {
++		return true
++	}
++	// The v0.7.0 spec allows additional GIDs to be specified at a spec level.
++	if len(spec.ContainerEdits.AdditionalGIDs) > 0 {
++		return true
++	}
++
++	for _, d := range spec.Devices {
++		if d.ContainerEdits.IntelRdt != nil {
++			return true
++		}
++		// The v0.7.0 spec allows additional GIDs to be specified at a device level.
++		if len(d.ContainerEdits.AdditionalGIDs) > 0 {
++			return true
++		}
++	}
++
++	return false
++}
++
+ // requiresV060 returns true if the spec uses v0.6.0 features
+ func requiresV060(spec *cdi.Spec) bool {
+ 	// The v0.6.0 spec allows annotations to be specified at a spec level
+diff --git a/vendor/tags.cncf.io/container-device-interface/specs-go/config.go b/vendor/tags.cncf.io/container-device-interface/specs-go/config.go
+index 4043b858f..a311ffa1d 100644
+--- a/vendor/tags.cncf.io/container-device-interface/specs-go/config.go
++++ b/vendor/tags.cncf.io/container-device-interface/specs-go/config.go
+@@ -3,7 +3,7 @@ package specs
+ import "os"
+ 
+ // CurrentVersion is the current version of the Spec.
+-const CurrentVersion = "0.6.0"
++const CurrentVersion = "0.7.0"
+ 
+ // Spec is the base configuration for CDI
+ type Spec struct {
+@@ -25,10 +25,12 @@ type Device struct {
+ 
+ // ContainerEdits are edits a container runtime must make to the OCI spec to expose the device.
+ type ContainerEdits struct {
+-	Env         []string      `json:"env,omitempty"`
+-	DeviceNodes []*DeviceNode `json:"deviceNodes,omitempty"`
+-	Hooks       []*Hook       `json:"hooks,omitempty"`
+-	Mounts      []*Mount      `json:"mounts,omitempty"`
++	Env            []string      `json:"env,omitempty"`
++	DeviceNodes    []*DeviceNode `json:"deviceNodes,omitempty"`
++	Hooks          []*Hook       `json:"hooks,omitempty"`
++	Mounts         []*Mount      `json:"mounts,omitempty"`
++	IntelRdt       *IntelRdt     `json:"intelRdt,omitempty"`
++	AdditionalGIDs []uint32      `json:"additionalGids,omitempty"`
+ }
+ 
+ // DeviceNode represents a device node that needs to be added to the OCI spec.
+@@ -60,3 +62,12 @@ type Hook struct {
+ 	Env      []string `json:"env,omitempty"`
+ 	Timeout  *int     `json:"timeout,omitempty"`
+ }
++
++// IntelRdt describes the Linux IntelRdt parameters to set in the OCI spec.
++type IntelRdt struct {
++	ClosID        string `json:"closID,omitempty"`
++	L3CacheSchema string `json:"l3CacheSchema,omitempty"`
++	MemBwSchema   string `json:"memBwSchema,omitempty"`
++	EnableCMT     bool   `json:"enableCMT,omitempty"`
++	EnableMBM     bool   `json:"enableMBM,omitempty"`
++}
+diff --git a/vendor/tags.cncf.io/container-device-interface/specs-go/oci.go b/vendor/tags.cncf.io/container-device-interface/specs-go/oci.go
+index 229ad52e0..1b4d576bf 100644
+--- a/vendor/tags.cncf.io/container-device-interface/specs-go/oci.go
++++ b/vendor/tags.cncf.io/container-device-interface/specs-go/oci.go
+@@ -36,3 +36,14 @@ func (d *DeviceNode) ToOCI() spec.LinuxDevice {
+ 		GID:      d.GID,
+ 	}
+ }
++
++// ToOCI returns the opencontainers runtime Spec LinuxIntelRdt for this IntelRdt config.
++func (i *IntelRdt) ToOCI() *spec.LinuxIntelRdt {
++	return &spec.LinuxIntelRdt{
++		ClosID:        i.ClosID,
++		L3CacheSchema: i.L3CacheSchema,
++		MemBwSchema:   i.MemBwSchema,
++		EnableCMT:     i.EnableCMT,
++		EnableMBM:     i.EnableMBM,
++	}
++}

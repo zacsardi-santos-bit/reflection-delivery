@@ -1,0 +1,723 @@
+patching file .changeset/mighty-suits-study.md
+patching file packages/config/src/config-deps.ts
+patching file packages/core/src/breakpoints.ts
+patching file packages/core/src/conditions.ts
+patching file packages/core/src/context.ts
+patching file packages/core/src/plugins/sort-mq.ts
+patching file packages/preset-base/src/patterns.ts
+patching file packages/preset-base/src/utilities/container.ts
+patching file packages/preset-base/src/utilities/index.ts
+patching file packages/preset-panda/src/containers.ts
+patching file packages/preset-panda/src/index.ts
+patching file packages/studio/scripts/studio.ts
+patching file packages/studio/styled-system/css/conditions.mjs
+patching file packages/studio/styled-system/css/css.mjs
+patching file packages/studio/styled-system/jsx/cq.d.ts
+patching file packages/studio/styled-system/jsx/cq.mjs
+patching file packages/studio/styled-system/jsx/index.d.ts
+patching file packages/studio/styled-system/jsx/index.mjs
+patching file packages/studio/styled-system/jsx/is-valid-prop.mjs
+patching file packages/studio/styled-system/patterns/cq.d.ts
+patching file packages/studio/styled-system/patterns/cq.mjs
+patching file packages/studio/styled-system/patterns/index.d.ts
+patching file packages/studio/styled-system/patterns/index.mjs
+patching file packages/studio/styled-system/types/conditions.d.ts
+patching file packages/studio/styled-system/types/prop-type.d.ts
+patching file packages/types/src/theme.ts
+patching file packages/types/src/tokens.ts
+patching file sandbox/preact-ts/src/app.tsx
+The next patch would create the file .changeset/mighty-suits-study.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/config/src/config-deps.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/config/src/config-deps.ts.rej
+patching file packages/core/src/breakpoints.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/core/src/breakpoints.ts.rej
+patching file packages/core/src/conditions.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/core/src/conditions.ts.rej
+patching file packages/core/src/context.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/core/src/context.ts.rej
+patching file packages/core/src/plugins/sort-mq.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/core/src/plugins/sort-mq.ts.rej
+patching file packages/preset-base/src/patterns.ts
+Hunk #1 succeeded at 462 (offset 18 lines).
+Hunk #2 succeeded at 501 with fuzz 3 (offset 18 lines).
+The next patch would create the file packages/preset-base/src/utilities/container.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/preset-base/src/utilities/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/preset-base/src/utilities/index.ts.rej
+The next patch would create the file packages/preset-panda/src/containers.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/preset-panda/src/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/preset-panda/src/index.ts.rej
+patching file packages/studio/scripts/studio.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/studio/scripts/studio.ts.rej
+patching file packages/studio/styled-system/css/conditions.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/css/conditions.mjs.rej
+patching file packages/studio/styled-system/css/css.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/css/css.mjs.rej
+The next patch would create the file packages/studio/styled-system/jsx/cq.d.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/studio/styled-system/jsx/cq.mjs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/studio/styled-system/jsx/index.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/jsx/index.d.ts.rej
+patching file packages/studio/styled-system/jsx/index.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/jsx/index.mjs.rej
+patching file packages/studio/styled-system/jsx/is-valid-prop.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/jsx/is-valid-prop.mjs.rej
+The next patch would create the file packages/studio/styled-system/patterns/cq.d.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/studio/styled-system/patterns/cq.mjs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/studio/styled-system/patterns/index.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/patterns/index.d.ts.rej
+patching file packages/studio/styled-system/patterns/index.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/patterns/index.mjs.rej
+patching file packages/studio/styled-system/types/conditions.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/types/conditions.d.ts.rej
+patching file packages/studio/styled-system/types/prop-type.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/types/prop-type.d.ts.rej
+patching file packages/types/src/theme.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/types/src/theme.ts.rej
+patching file packages/types/src/tokens.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/types/src/tokens.ts.rej
+patching file sandbox/preact-ts/src/app.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sandbox/preact-ts/src/app.tsx.rej
+The next patch would create the file .changeset/mighty-suits-study.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/config/src/config-deps.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/config/src/config-deps.ts.rej
+patching file packages/core/src/breakpoints.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/core/src/breakpoints.ts.rej
+patching file packages/core/src/conditions.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/core/src/conditions.ts.rej
+patching file packages/core/src/context.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/core/src/context.ts.rej
+patching file packages/core/src/plugins/sort-mq.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/core/src/plugins/sort-mq.ts.rej
+patching file packages/preset-base/src/patterns.ts
+Hunk #1 succeeded at 480 (offset 36 lines).
+Hunk #2 succeeded at 519 with fuzz 3 (offset 36 lines).
+The next patch would create the file packages/preset-base/src/utilities/container.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/preset-base/src/utilities/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/preset-base/src/utilities/index.ts.rej
+The next patch would create the file packages/preset-panda/src/containers.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/preset-panda/src/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/preset-panda/src/index.ts.rej
+patching file packages/studio/scripts/studio.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/studio/scripts/studio.ts.rej
+patching file packages/studio/styled-system/css/conditions.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/css/conditions.mjs.rej
+patching file packages/studio/styled-system/css/css.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/css/css.mjs.rej
+The next patch would create the file packages/studio/styled-system/jsx/cq.d.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/studio/styled-system/jsx/cq.mjs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/studio/styled-system/jsx/index.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/jsx/index.d.ts.rej
+patching file packages/studio/styled-system/jsx/index.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/jsx/index.mjs.rej
+patching file packages/studio/styled-system/jsx/is-valid-prop.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/jsx/is-valid-prop.mjs.rej
+The next patch would create the file packages/studio/styled-system/patterns/cq.d.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/studio/styled-system/patterns/cq.mjs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/studio/styled-system/patterns/index.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/patterns/index.d.ts.rej
+patching file packages/studio/styled-system/patterns/index.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/patterns/index.mjs.rej
+patching file packages/studio/styled-system/types/conditions.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/types/conditions.d.ts.rej
+patching file packages/studio/styled-system/types/prop-type.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/types/prop-type.d.ts.rej
+patching file packages/types/src/theme.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/types/src/theme.ts.rej
+patching file packages/types/src/tokens.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/types/src/tokens.ts.rej
+patching file sandbox/preact-ts/src/app.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sandbox/preact-ts/src/app.tsx.rej
+patching file b/.changeset/mighty-suits-study.md
+can't find file to patch at input line 129
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/config/src/config-deps.ts b/packages/config/src/config-deps.ts
+|index 1409213c6..2ba924dec 100644
+|--- a/packages/config/src/config-deps.ts
+|+++ b/packages/config/src/config-deps.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 150
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/core/src/breakpoints.ts b/packages/core/src/breakpoints.ts
+|index bf3822fcb..f22c02f28 100644
+|--- a/packages/core/src/breakpoints.ts
+|+++ b/packages/core/src/breakpoints.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 162
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/core/src/conditions.ts b/packages/core/src/conditions.ts
+|index 5d4df5215..8d9bd0ca1 100644
+|--- a/packages/core/src/conditions.ts
+|+++ b/packages/core/src/conditions.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 235
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/core/src/context.ts b/packages/core/src/context.ts
+|index a4c138e3b..23d812f32 100644
+|--- a/packages/core/src/context.ts
+|+++ b/packages/core/src/context.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 248
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/core/src/plugins/sort-mq.ts b/packages/core/src/plugins/sort-mq.ts
+|index 6d767a143..46131c8fc 100644
+|--- a/packages/core/src/plugins/sort-mq.ts
+|+++ b/packages/core/src/plugins/sort-mq.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 282
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/preset-base/src/patterns.ts b/packages/preset-base/src/patterns.ts
+|index 60c9f2f11..551029a26 100644
+|--- a/packages/preset-base/src/patterns.ts
+|+++ b/packages/preset-base/src/patterns.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file b/packages/preset-base/src/utilities/container.ts
+can't find file to patch at input line 338
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/preset-base/src/utilities/index.ts b/packages/preset-base/src/utilities/index.ts
+|index 3ca0e596d..d79058daf 100644
+|--- a/packages/preset-base/src/utilities/index.ts
+|+++ b/packages/preset-base/src/utilities/index.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+patching file b/packages/preset-panda/src/containers.ts
+can't find file to patch at input line 392
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/preset-panda/src/index.ts b/packages/preset-panda/src/index.ts
+|index 419c52568..2165164c6 100644
+|--- a/packages/preset-panda/src/index.ts
+|+++ b/packages/preset-panda/src/index.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 411
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/scripts/studio.ts b/packages/studio/scripts/studio.ts
+|index e97a94fd0..8c9e46b6b 100644
+|--- a/packages/studio/scripts/studio.ts
+|+++ b/packages/studio/scripts/studio.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 439
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/styled-system/css/conditions.mjs b/packages/studio/styled-system/css/conditions.mjs
+|index 362a06f03..1baf45c05 100644
+|--- a/packages/studio/styled-system/css/conditions.mjs
+|+++ b/packages/studio/styled-system/css/conditions.mjs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 451
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/styled-system/css/css.mjs b/packages/studio/styled-system/css/css.mjs
+|index ce285b8cb..c8c74b3e4 100644
+|--- a/packages/studio/styled-system/css/css.mjs
+|+++ b/packages/studio/styled-system/css/css.mjs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/packages/studio/styled-system/jsx/cq.d.ts
+patching file b/packages/studio/styled-system/jsx/cq.mjs
+can't find file to patch at input line 500
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/styled-system/jsx/index.d.ts b/packages/studio/styled-system/jsx/index.d.ts
+|index 8036e0b78..0dbc80540 100644
+|--- a/packages/studio/styled-system/jsx/index.d.ts
+|+++ b/packages/studio/styled-system/jsx/index.d.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 510
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/styled-system/jsx/index.mjs b/packages/studio/styled-system/jsx/index.mjs
+|index a08396130..33d3bc142 100644
+|--- a/packages/studio/styled-system/jsx/index.mjs
+|+++ b/packages/studio/styled-system/jsx/index.mjs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 521
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/styled-system/jsx/is-valid-prop.mjs b/packages/studio/styled-system/jsx/is-valid-prop.mjs
+|index 17df0a1a4..c983d83ce 100644
+|--- a/packages/studio/styled-system/jsx/is-valid-prop.mjs
+|+++ b/packages/studio/styled-system/jsx/is-valid-prop.mjs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/packages/studio/styled-system/patterns/cq.d.ts
+patching file b/packages/studio/styled-system/patterns/cq.mjs
+can't find file to patch at input line 589
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/styled-system/patterns/index.d.ts b/packages/studio/styled-system/patterns/index.d.ts
+|index 23a7ab028..6e9d4063c 100644
+|--- a/packages/studio/styled-system/patterns/index.d.ts
+|+++ b/packages/studio/styled-system/patterns/index.d.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 600
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/styled-system/patterns/index.mjs b/packages/studio/styled-system/patterns/index.mjs
+|index f20811e6f..94c88daac 100644
+|--- a/packages/studio/styled-system/patterns/index.mjs
+|+++ b/packages/studio/styled-system/patterns/index.mjs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 611
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/styled-system/types/conditions.d.ts b/packages/studio/styled-system/types/conditions.d.ts
+|index daf75e02b..85de044e7 100644
+|--- a/packages/studio/styled-system/types/conditions.d.ts
+|+++ b/packages/studio/styled-system/types/conditions.d.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 646
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/studio/styled-system/types/prop-type.d.ts b/packages/studio/styled-system/types/prop-type.d.ts
+|index 13c1523de..de0b637a6 100644
+|--- a/packages/studio/styled-system/types/prop-type.d.ts
+|+++ b/packages/studio/styled-system/types/prop-type.d.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 658
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/types/src/theme.ts b/packages/types/src/theme.ts
+|index 23724645d..d05b9c8ec 100644
+|--- a/packages/types/src/theme.ts
+|+++ b/packages/types/src/theme.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 677
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/types/src/tokens.ts b/packages/types/src/tokens.ts
+|index f12971e7c..bc50eb5d1 100644
+|--- a/packages/types/src/tokens.ts
+|+++ b/packages/types/src/tokens.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 689
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/sandbox/preact-ts/src/app.tsx b/sandbox/preact-ts/src/app.tsx
+|index 9ec3612f7..f91f20f95 100644
+|--- a/sandbox/preact-ts/src/app.tsx
+|+++ b/sandbox/preact-ts/src/app.tsx
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+The next patch would create the file .changeset/mighty-suits-study.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/config/src/config-deps.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/config/src/config-deps.ts.rej
+patching file packages/core/src/breakpoints.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/core/src/breakpoints.ts.rej
+patching file packages/core/src/conditions.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/core/src/conditions.ts.rej
+patching file packages/core/src/context.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/core/src/context.ts.rej
+patching file packages/core/src/plugins/sort-mq.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/core/src/plugins/sort-mq.ts.rej
+patching file packages/preset-base/src/patterns.ts
+Hunk #1 succeeded at 498 (offset 54 lines).
+Hunk #2 succeeded at 537 with fuzz 3 (offset 54 lines).
+The next patch would create the file packages/preset-base/src/utilities/container.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/preset-base/src/utilities/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/preset-base/src/utilities/index.ts.rej
+The next patch would create the file packages/preset-panda/src/containers.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/preset-panda/src/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/preset-panda/src/index.ts.rej
+patching file packages/studio/scripts/studio.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/studio/scripts/studio.ts.rej
+patching file packages/studio/styled-system/css/conditions.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/css/conditions.mjs.rej
+patching file packages/studio/styled-system/css/css.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/css/css.mjs.rej
+The next patch would create the file packages/studio/styled-system/jsx/cq.d.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/studio/styled-system/jsx/cq.mjs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/studio/styled-system/jsx/index.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/jsx/index.d.ts.rej
+patching file packages/studio/styled-system/jsx/index.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/jsx/index.mjs.rej
+patching file packages/studio/styled-system/jsx/is-valid-prop.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/jsx/is-valid-prop.mjs.rej
+The next patch would create the file packages/studio/styled-system/patterns/cq.d.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/studio/styled-system/patterns/cq.mjs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/studio/styled-system/patterns/index.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/patterns/index.d.ts.rej
+patching file packages/studio/styled-system/patterns/index.mjs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/patterns/index.mjs.rej
+patching file packages/studio/styled-system/types/conditions.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/types/conditions.d.ts.rej
+patching file packages/studio/styled-system/types/prop-type.d.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/studio/styled-system/types/prop-type.d.ts.rej
+patching file packages/types/src/theme.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/types/src/theme.ts.rej
+patching file packages/types/src/tokens.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/types/src/tokens.ts.rej
+patching file sandbox/preact-ts/src/app.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file sandbox/preact-ts/src/app.tsx.rej
+ERROR: golden patch failed to apply by all strategies

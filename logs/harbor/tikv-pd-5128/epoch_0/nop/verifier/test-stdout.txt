@@ -1,0 +1,7 @@
+patching file server/gc/safepoint_test.go
+# github.com/tikv/pd/server/gc [github.com/tikv/pd/server/gc.test]
+server/gc/safepoint_test.go:33:24: undefined: NewSafePointManager
+server/gc/safepoint_test.go:62:24: undefined: NewSafePointManager
+server/gc/safepoint_test.go:86:13: undefined: NewSafePointManager
+FAIL	github.com/tikv/pd/server/gc [build failed]
+reward=0 graded=3 found=3 failed=3 parsed=1 framework=go exit_code=1

@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "NEXTEST_EXPERIMENTAL_LIBTEST_JSON=1 cargo nextest run -p biome_css_analyze -E 'test(use_sorted_properties)' --message-format libtest-json",
+  "test_files": [
+    "crates/biome_css_analyze/tests/specs/nursery/useSortedProperties/invalid.css",
+    "crates/biome_css_analyze/tests/specs/nursery/useSortedProperties/invalid.css.snap",
+    "crates/biome_css_analyze/tests/specs/nursery/useSortedProperties/valid.css",
+    "crates/biome_css_analyze/tests/specs/nursery/useSortedProperties/valid.css.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_css_analyze::spec_tests specs::nursery::use_sorted_properties::valid_css",
+    "(2/2) biome_css_analyze::spec_tests specs::nursery::use_sorted_properties::invalid_css"
+  ],
+  "PASS_TO_PASS": []
+}

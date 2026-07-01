@@ -1,0 +1,30 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run src/activitypub/activity.unit.test.ts src/activitypub/actor.unit.test.ts src/activitypub/object.unit.test.ts src/activitypub/outbox.unit.test.ts src/activitypub/uri.unit.test.ts src/publishing/service.unit.test.ts",
+  "test_files": [
+    "src/activitypub/activity.unit.test.ts",
+    "src/activitypub/actor.unit.test.ts",
+    "src/activitypub/object.unit.test.ts",
+    "src/activitypub/outbox.unit.test.ts",
+    "src/activitypub/uri.unit.test.ts",
+    "src/publishing/service.unit.test.ts"
+  ],
+  "num_test_files": 6,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/activitypub/activity.unit.test.ts::FedifyActivitySender sendActivityToActorFollowers should send an Activity to the followers of an Actor",
+    "/workspace/repo/src/activitypub/actor.unit.test.ts::FedifyActorResolver resolveActorByHandle should resolve an actor by handle",
+    "/workspace/repo/src/activitypub/actor.unit.test.ts::FedifyActorResolver resolveActorByHandle should return null if the actor can not be resolved",
+    "/workspace/repo/src/activitypub/object.unit.test.ts::FedifyKvStoreObjectStore store should store an object",
+    "/workspace/repo/src/activitypub/object.unit.test.ts::FedifyKvStoreObjectStore store should throw an error if the object has no ID",
+    "/workspace/repo/src/activitypub/outbox.unit.test.ts::FedifyKvStoreOutbox add should add an activity to the outbox",
+    "/workspace/repo/src/activitypub/outbox.unit.test.ts::FedifyKvStoreOutbox add should throw an error if the activity has no ID",
+    "/workspace/repo/src/activitypub/uri.unit.test.ts::FedifyUriBuilder buildObjectUri should build a URI for an object",
+    "/workspace/repo/src/activitypub/uri.unit.test.ts::FedifyUriBuilder buildObjectUri should build a URI for an actors followers collection",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should throw an error if the actor can not be resolved",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should store the created ActivityPub objects",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should add the create activity to the outbox",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should send the create activity to the followers of the actor"
+  ],
+  "PASS_TO_PASS": []
+}

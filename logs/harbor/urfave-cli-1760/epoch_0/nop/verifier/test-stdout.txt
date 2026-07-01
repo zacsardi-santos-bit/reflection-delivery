@@ -1,0 +1,19 @@
+patching file command_test.go
+patching file flag_bool_with_inverse_test.go
+patching file flag_test.go
+patching file flag_value_source_test.go
+patching file value_source_test.go
+# github.com/urfave/cli/v3 [github.com/urfave/cli/v3.test]
+./value_source_test.go:15:11: undefined: envVarValueSource
+./value_source_test.go:16:27: undefined: ValueSource
+./value_source_test.go:21:12: undefined: envVarValueSource
+./value_source_test.go:30:12: undefined: envVarValueSource
+./value_source_test.go:40:11: undefined: envVarValueSource
+./value_source_test.go:48:11: undefined: envVarValueSource
+./value_source_test.go:60:25: source.LookupWithSource undefined (type ValueSources has no field or method LookupWithSource)
+./value_source_test.go:72:18: undefined: ValueSource
+./value_source_test.go:72:38: undefined: fileValueSource
+./value_source_test.go:75:12: undefined: fileValueSource
+./value_source_test.go:75:12: too many errors
+FAIL	github.com/urfave/cli/v3 [build failed]
+reward=0 graded=77 found=77 failed=77 parsed=1 framework=go exit_code=1

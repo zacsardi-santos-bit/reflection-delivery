@@ -1,0 +1,207 @@
+patching file packages/angular/src/executors/ng-packagr-lite/ng-packagr-lite.impl.spec.ts
+patching file packages/angular/src/executors/package/package.impl.spec.ts
+patching file packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.spec.ts
+patching file packages/node/src/executors/build/build.impl.spec.ts
+patching file packages/node/src/executors/package/package.impl.spec.ts
+patching file packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.spec.ts
+patching file packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.spec.ts
+patching file packages/workspace/src/core/affected-project-graph/affected-project-graph.spec.ts
+patching file packages/workspace/src/core/project-graph/project-graph.spec.ts
+patching file packages/workspace/src/generators/remove/lib/check-dependencies.spec.ts
+PASS angular packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.spec.ts (8.053 s)
+PASS node packages/node/src/executors/package/package.impl.spec.ts
+  ● Console
+
+    console.info
+      Compiling TypeScript files for project "nodelib"...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done compiling TypeScript files for project "nodelib".
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Copying asset files...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done copying asset files.
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Compiling TypeScript files for project "nodelib"...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done compiling TypeScript files for project "nodelib".
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Copying asset files...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done copying asset files.
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Compiling TypeScript files for project "nodelib"...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done compiling TypeScript files for project "nodelib".
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Copying asset files...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done copying asset files.
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Compiling TypeScript files for project "nodelib"...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done compiling TypeScript files for project "nodelib".
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Copying asset files...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done copying asset files.
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Compiling TypeScript files for project "nodelib"...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done compiling TypeScript files for project "nodelib".
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Copying asset files...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done copying asset files.
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Compiling TypeScript files for project "nodelib"...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done compiling TypeScript files for project "nodelib".
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Copying asset files...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done copying asset files.
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Compiling TypeScript files for project "nodelib"...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done compiling TypeScript files for project "nodelib".
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Copying asset files...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done copying asset files.
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Compiling TypeScript files for project "nodelib"...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done compiling TypeScript files for project "nodelib".
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Copying asset files...
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+    console.info
+      Done copying asset files.
+
+      at Object.info (../tao/src/shared/logger.ts:22:15)
+
+PASS workspace packages/workspace/src/core/affected-project-graph/affected-project-graph.spec.ts
+PASS workspace packages/workspace/src/core/project-graph/project-graph.spec.ts
+PASS web packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.spec.ts
+PASS angular packages/angular/src/executors/ng-packagr-lite/ng-packagr-lite.impl.spec.ts
+PASS angular packages/angular/src/executors/package/package.impl.spec.ts
+PASS web packages/web/src/executors/package/package.impl.spec.ts
+PASS react packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.spec.ts (14.47 s)
+PASS workspace packages/workspace/src/generators/remove/lib/check-dependencies.spec.ts
+PASS node packages/node/src/executors/build/build.impl.spec.ts
+  ● Console
+
+    console.info
+      [object Object]
+
+      at TapSubscriber._tapNext (src/executors/build/build.impl.ts:92:17)
+
+    console.info
+      [object Object]
+
+      at TapSubscriber._tapNext (src/executors/build/build.impl.ts:92:17)
+
+    console.info
+      [object Object]
+
+      at TapSubscriber._tapNext (src/executors/build/build.impl.ts:92:17)
+
+
+Test Suites: 11 passed, 11 total
+Tests:       48 passed, 48 total
+Snapshots:   6 passed, 6 total
+Time:        46.437 s
+Ran all test suites matching /ng-packagr-lite\.impl\.spec|executors\/package\/package\.impl\.spec|add-template-support-and-presets-to-eslint\.spec|executors\/build\/build\.impl\.spec|babelrc-9-4-0\.spec|create-babelrc-for-workspace-libs\.spec|affected-project-graph\.spec|project-graph\/project-graph\.spec|check-dependencies\.spec/i in 5 projects.
+reward=1 graded=48 found=0 failed=0 parsed=0 framework=jest exit_code=0

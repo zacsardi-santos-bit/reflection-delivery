@@ -1,0 +1,23 @@
+{
+ "task": "autogluon-autogluon-4958",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden makes ensemble name optional (default WeightedEnsemble), predict uses set(self.model_names).issubset(data.keys()), and adds tunable.py module; F2P incl skip_hpo + can_be_initialized + fit_and_predict"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

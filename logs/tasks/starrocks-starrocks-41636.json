@@ -1,0 +1,23 @@
+{
+ "task": "starrocks-starrocks-41636",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'INIT_GC_SIZE' to traits and 'int gc()' scanning via 'if (p->ids[i] != IdTraits::ID_INIT && IdTraits::exists(p->ids[i]))'; test asserts 'EXPECT_EQ(cnts[0], (size_t)96)' after 1M adds with only 4 live ids"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 67,
+  "shallow": true
+ }
+}

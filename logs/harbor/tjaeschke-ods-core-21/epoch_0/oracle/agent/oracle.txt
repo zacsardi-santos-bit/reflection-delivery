@@ -1,0 +1,6 @@
+patching file jenkins/webhook-proxy/Dockerfile
+patching file jenkins/webhook-proxy/go.mod
+patching file jenkins/webhook-proxy/main.go
+patching file jenkins/webhook-proxy/pipeline.template.json
+patching file sonarqube/Dockerfile
+patching file sonarqube/ocp-config/sonarqube.yml

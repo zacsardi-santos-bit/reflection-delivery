@@ -1,0 +1,23 @@
+{
+ "task": "polarsource-polar-3304",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden creates server/polar/checkout/{endpoints,schemas,service,auth}.py; 97 F2P in tests.checkout.test_endpoints/test_service exercise real behavior (Stripe mock, DB session, httpx status/metadata/tax assertions)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 21,
+  "shallow": true
+ }
+}

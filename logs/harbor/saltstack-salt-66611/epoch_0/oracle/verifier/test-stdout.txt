@@ -1,0 +1,53 @@
+patching file tests/pytests/unit/modules/test_mac_brew_pkg.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+max open files: soft=1048576; hard=1048576
+salt-transport: zeromq
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: skip-markers-1.5.2, custom-exit-code-0.3.0, helpers-namespace-2021.12.29, salt-factories-1.0.5, timeout-2.4.0, pyfakefs-6.2.0, pytest_httpserver-1.1.5, flaky-3.8.1, shell-utilities-1.9.7, system-statistics-1.0.2
+collecting ... collected 33 items
+
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_list_taps PASSED   [  3%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_tap_installed PASSED [  6%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_tap_failure PASSED [  9%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_tap PASSED         [ 12%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_homebrew_prefix_env PASSED [ 15%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_homebrew_prefix_command PASSED [ 18%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_homebrew_prefix_returns_none PASSED [ 21%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_homebrew_prefix_returns_none_even_with_execution_errors PASSED [ 24%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_homebrew_os_bin_fallback_apple_silicon PASSED [ 27%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_homebrew_bin PASSED [ 30%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_list_pkgs_removed PASSED [ 33%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_list_pkgs_versions_true PASSED [ 36%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_list_pkgs_homebrew_cask_pakages PASSED [ 39%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_list_pkgs_no_context PASSED [ 42%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_version PASSED     [ 45%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_latest_version PASSED [ 48%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_latest_version_multiple_names PASSED [ 51%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_latest_version_with_options PASSED [ 54%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_remove PASSED      [ 57%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_remove_with_options PASSED [ 60%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_refresh_db_failure PASSED [ 63%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_refresh_db PASSED  [ 66%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_install PASSED     [ 69%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_hold PASSED        [ 72%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_hold_not_installed PASSED [ 75%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_hold_pinned PASSED [ 78%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_unhold PASSED      [ 81%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_unhold_not_installed PASSED [ 84%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_unhold_not_pinned PASSED [ 87%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_info_installed PASSED [ 90%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_info_installed_extra_options PASSED [ 93%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_list_upgrades PASSED [ 96%]
+tests/pytests/unit/modules/test_mac_brew_pkg.py::test_list_upgrades_with_options PASSED [100%]
+
+=============================== warnings summary ===============================
+salt/utils/pycrypto.py:27
+  /workspace/repo/salt/utils/pycrypto.py:27: DeprecationWarning: 'crypt' is deprecated and slated for removal in Python 3.13
+    import crypt
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 33 passed, 1 warning in 1.10s =========================
+reward=1 graded=33 found=0 failed=0 parsed=33 framework=pytest exit_code=0

@@ -1,0 +1,26 @@
+patching file assets/tests/consolidated_1_1_tests.yaml
+patching file internal/graph/check_fast_path_test.go
+patching file internal/graph/object_providers_test.go
+patching file pkg/typesystem/typesystem_test.go
+# github.com/openfga/openfga/pkg/typesystem [github.com/openfga/openfga/pkg/typesystem.test]
+pkg/typesystem/typesystem_test.go:5649:19: typesys.IsRelationWithRecursiveTTUAndAlgebraicOperations undefined (type *TypeSystem has no field or method IsRelationWithRecursiveTTUAndAlgebraicOperations)
+pkg/typesystem/typesystem_test.go:6420:19: typesys.IsRelationWithRecursiveTTUAndAlgebraicOperations undefined (type *TypeSystem has no field or method IsRelationWithRecursiveTTUAndAlgebraicOperations)
+# github.com/openfga/openfga/internal/graph [github.com/openfga/openfga/internal/graph.test]
+internal/graph/check_fast_path_test.go:2754:24: checker.recursiveTTUFastPathUnionAlgebraicOperations undefined (type *LocalChecker has no field or method recursiveTTUFastPathUnionAlgebraicOperations)
+internal/graph/object_providers_test.go:35:13: undefined: newSimpleRecursiveObjectProvider
+internal/graph/object_providers_test.go:65:14: undefined: newSimpleRecursiveObjectProvider
+internal/graph/object_providers_test.go:77:14: undefined: newSimpleRecursiveObjectProvider
+internal/graph/object_providers_test.go:101:14: undefined: newSimpleRecursiveObjectProvider
+internal/graph/object_providers_test.go:124:14: undefined: newSimpleRecursiveObjectProvider
+internal/graph/object_providers_test.go:149:13: undefined: newComplexTTURecursiveObjectProvider
+internal/graph/object_providers_test.go:152:12: undefined: newComplexTTURecursiveObjectProvider
+internal/graph/object_providers_test.go:155:12: undefined: newComplexTTURecursiveObjectProvider
+internal/graph/object_providers_test.go:187:15: undefined: newComplexTTURecursiveObjectProvider
+internal/graph/object_providers_test.go:187:15: too many errors
+{"Time":"2026-06-29T15:16:47.245733112Z","Action":"start","Package":"github.com/openfga/openfga/internal/graph"}
+{"Time":"2026-06-29T15:16:47.245832212Z","Action":"output","Package":"github.com/openfga/openfga/internal/graph","Output":"FAIL\tgithub.com/openfga/openfga/internal/graph [build failed]\n"}
+{"Time":"2026-06-29T15:16:47.245865701Z","Action":"start","Package":"github.com/openfga/openfga/pkg/typesystem"}
+{"Time":"2026-06-29T15:16:47.245934561Z","Action":"output","Package":"github.com/openfga/openfga/pkg/typesystem","Output":"FAIL\tgithub.com/openfga/openfga/pkg/typesystem [build failed]\n"}
+{"Time":"2026-06-29T15:16:47.245962511Z","Action":"fail","Package":"github.com/openfga/openfga/pkg/typesystem","Elapsed":0}
+{"Time":"2026-06-29T15:16:47.245868641Z","Action":"fail","Package":"github.com/openfga/openfga/internal/graph","Elapsed":0}
+reward=0 graded=991 found=0 failed=0 parsed=2 framework=go exit_code=1

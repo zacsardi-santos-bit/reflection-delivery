@@ -1,0 +1,23 @@
+{
+ "task": "storybookjs-storybook-30162",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `transformPreviewFile`, previewFile/skipPreviewTransformation/skipVitestSetupTransformation to check(), sequential-numbered prompt, and preview writeFileSync; F2P assert exact check return objects + inline-snapshot prompts and `tags: [/*'a11y-test'*/]` transforms"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 84,
+  "shallow": true
+ }
+}

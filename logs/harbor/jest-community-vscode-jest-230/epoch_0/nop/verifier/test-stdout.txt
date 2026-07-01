@@ -1,0 +1,50 @@
+patching file tests/DebugCodeLens/DebugCodeLensProvider.test.ts
+patching file tests/TestResults/TestResult.test.ts
+patching file tests/TestResults/TestResultProvider.test.ts (renamed from tests/TestResultProvider.test.ts)
+patching file tests/TestResults/__snapshots__/index.test.ts.snap
+patching file tests/TestResults/index.test.ts
+FAIL tests/TestResults/index.test.ts
+  TestResults
+    module.exports
+      ✕ should match the snapshot (2ms)
+
+  ● TestResults › module.exports › should match the snapshot
+
+    Cannot find module '../../src/TestResults' from 'index.test.ts'
+      
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:191:17)
+      at Object.<anonymous> (tests/TestResults/index.test.ts:6:20)
+          at new Promise (<anonymous>)
+
+FAIL tests/TestResults/TestResult.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../../src/TestResults/TestResult' from 'TestResult.test.ts'
+      
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:191:17)
+      at Object.<anonymous> (tests/TestResults/TestResult.test.ts:3:6)
+          at Generator.next (<anonymous>)
+
+FAIL tests/TestResults/TestResultProvider.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../../src/TestResults/TestResultProvider' from 'TestResultProvider.test.ts'
+      
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:191:17)
+      at Object.<anonymous> (tests/TestResults/TestResultProvider.test.ts:3:6)
+          at Generator.next (<anonymous>)
+
+FAIL tests/DebugCodeLens/DebugCodeLensProvider.test.ts
+  ● Test suite failed to run
+
+    Cannot find module '../../src/TestResults' from 'DebugCodeLensProvider.test.ts'
+      
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:191:17)
+      at Object.<anonymous> (tests/DebugCodeLens/DebugCodeLensProvider.test.ts:37:23)
+
+Test Suites: 4 failed, 4 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        1.066s
+Ran all test suites matching /tests\/DebugCodeLens\/DebugCodeLensProvider.test.ts|tests\/TestResults\/TestResult.test.ts|tests\/TestResults\/TestResultProvider.test.ts|tests\/TestResults\/index.test.ts/i.
+{"numFailedTestSuites":4,"numFailedTests":1,"numPassedTestSuites":0,"numPassedTests":0,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":3,"numTotalTestSuites":4,"numTotalTests":1,"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"unmatched":0,"updated":0},"startTime":1782746650165,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":["TestResults","module.exports"],"failureMessages":["Error: Cannot find module '../../src/TestResults' from 'index.test.ts'\n    at Resolver.resolveModule (/workspace/repo/node_modules/jest-resolve/build/index.js:191:17)\n    at Resolver._getVirtualMockPath (/workspace/repo/node_modules/jest-resolve/build/index.js:308:23)\n    at Resolver._getAbsolutPath (/workspace/repo/node_modules/jest-resolve/build/index.js:291:10)\n    at Resolver.getModuleID (/workspace/repo/node_modules/jest-resolve/build/index.js:264:31)\n    at Runtime._shouldMock (/workspace/repo/node_modules/jest-runtime/build/index.js:585:37)\n    at Runtime.requireModuleOrMock (/workspace/repo/node_modules/jest-runtime/build/index.js:405:14)\n    at Object.<anonymous> (/workspace/repo/tests/TestResults/index.test.ts:6:20)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:46:12\n    at new Promise (<anonymous>)"],"fullName":"TestResults module.exports should match the snapshot","status":"failed","title":"should match the snapshot"}],"endTime":1782746651111,"message":"  ● TestResults › module.exports › should match the snapshot\n\n    Cannot find module '../../src/TestResults' from 'index.test.ts'\n      \n      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:191:17)\n      at Object.<anonymous> (tests/TestResults/index.test.ts:6:20)\n          at new Promise (<anonymous>)\n","name":"/workspace/repo/tests/TestResults/index.test.ts","startTime":1782746650812,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746651233,"message":"  ● Test suite failed to run\n\n    Cannot find module '../../src/TestResults/TestResult' from 'TestResult.test.ts'\n      \n      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:191:17)\n      at Object.<anonymous> (tests/TestResults/TestResult.test.ts:3:6)\n          at Generator.next (<anonymous>)\n","name":"/workspace/repo/tests/TestResults/TestResult.test.ts","startTime":1782746651233,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746651233,"message":"  ● Test suite failed to run\n\n    Cannot find module '../../src/TestResults/TestResultProvider' from 'TestResultProvider.test.ts'\n      \n      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:191:17)\n      at Object.<anonymous> (tests/TestResults/TestResultProvider.test.ts:3:6)\n          at Generator.next (<anonymous>)\n","name":"/workspace/repo/tests/TestResults/TestResultProvider.test.ts","startTime":1782746651233,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746651233,"message":"  ● Test suite failed to run\n\n    Cannot find module '../../src/TestResults' from 'DebugCodeLensProvider.test.ts'\n      \n      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:191:17)\n      at Object.<anonymous> (tests/DebugCodeLens/DebugCodeLensProvider.test.ts:37:23)\n","name":"/workspace/repo/tests/DebugCodeLens/DebugCodeLensProvider.test.ts","startTime":1782746651233,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=36 found=1 failed=1 parsed=4 framework=jest exit_code=1

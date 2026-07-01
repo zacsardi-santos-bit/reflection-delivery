@@ -1,0 +1,5 @@
+I'm working on the containerd runtime and need to add a utility for translating user and group IDs from container-space to host-space when using Linux user namespaces. Right now there's no shared package for this translation, and I need something that correctly handles multiple ID mapping ranges — not just a single range.
+
+The utility should take a container-side UID and GID pair along with separate lists of UID and GID mapping ranges, and return the corresponding host-side UID and GID. If the container UID or GID doesn't fall within any of the provided mapping ranges, it should return an error. It also needs to safely handle integer overflow: if adding the offset to the base host ID would wrap around a 32-bit unsigned integer, that must be caught and returned as an error. Additionally, the maximum possible 32-bit unsigned integer value should be treated as a reserved sentinel and also rejected with an error when it appears as a computed host ID.
+
+This utility would live in a new internal package and be used by other parts of the runtime that need to remap file ownership when preparing container snapshots.

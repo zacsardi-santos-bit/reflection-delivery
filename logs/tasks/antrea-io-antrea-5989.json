@@ -1,0 +1,23 @@
+{
+ "task": "antrea-io-antrea-5989",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.sh runs 'go test -json ./pkg/antctl ./pkg/antctl/output ...' and grade.py classifies FAIL_TO_PASS via parsed status"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

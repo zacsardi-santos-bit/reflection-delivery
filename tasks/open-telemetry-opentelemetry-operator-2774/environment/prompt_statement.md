@@ -1,0 +1,3 @@
+I'm working on the operator bridge component and trying to upgrade the OpAMP protocol library it depends on. The newer version of the library extends the client interface with new protocol capabilities for sending custom messages and declaring custom capabilities. The test mock has already been updated to implement these new interface methods, but the module dependency files still reference the old library version, causing the package to fail to compile.
+
+I need to update the module dependency files to reference the newer library version so that the code compiles and all existing agent tests pass again.

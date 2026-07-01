@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cd /workspace/repo && cargo nextest run -p vmm --lib -E 'test(~devices::virtio::queue::tests::test_add_used)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(2/2) vmm devices::virtio::queue::tests::test_add_used_batches_ring_idx"
+  ],
+  "PASS_TO_PASS": [
+    "(1/2) vmm devices::virtio::queue::tests::test_add_used"
+  ]
+}

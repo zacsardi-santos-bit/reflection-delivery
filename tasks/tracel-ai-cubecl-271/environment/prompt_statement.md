@@ -1,0 +1,7 @@
+I'm working on a GPU matrix multiplication library and I need to add a producer-consumer execution strategy for pipelining data loading with computation. Right now the only strategy available is homogeneous — every compute unit does both loading and computation in lockstep. I want to split the work so that some planes act as "producers" (loading data into shared buffers) and others act as "consumers" (performing the actual matrix multiply-accumulate), enabling double- and triple-buffered pipelines.
+
+As part of this, the existing stage-level implementation should be renamed from its current name to "multi buffer" to better describe what it does. A new "single buffer" stage variant is also needed for the pipelined workflow, since in the pipelined approach each buffer is filled and consumed one at a time. The new producer-consumer global strategy should use this single-buffer stage variant underneath.
+
+I also need to update the tiling order configuration so that the left-hand side and right-hand side operands each have their own independent tiling order setting, rather than sharing one combined setting. The variant names for the tiling order should also be updated to use clearer names: one for row-major tiling and one for column-major tiling.
+
+Finally, a few new stage size type aliases need to be added to support the new multi-stage configurations — specifically for cases where the k-dimension of the stage has 2 or 3 tiles (for double and triple buffering).

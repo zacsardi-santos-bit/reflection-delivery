@@ -1,0 +1,23 @@
+{
+ "task": "slok-sloth-674",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds plugin.go with 'func (p plugin) ProcessSLO(...)' returning error 'denominator corrected SLI requires SLI event type' for raw SLI and emitting volume-scaled SLI + metadata correction rules; test asserts assert.Error for raw/wrong-var/invalid-expr and assert.Equal(expRes, gotRes) for valid"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

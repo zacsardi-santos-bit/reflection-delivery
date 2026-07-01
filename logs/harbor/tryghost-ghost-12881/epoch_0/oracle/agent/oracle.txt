@@ -1,0 +1,3 @@
+patching file core/server/data/migrations/versions/4.3/09-add-price-id-column-to-subscriptions-table.js
+patching file core/server/data/migrations/versions/4.3/10-populate-stripe-price-id-in-subscriptions.js
+patching file core/server/data/schema/schema.js

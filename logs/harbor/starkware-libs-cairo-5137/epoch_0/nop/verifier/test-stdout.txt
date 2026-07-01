@@ -1,0 +1,18 @@
+patching file tests/e2e_test.rs
+   Compiling tests v2.5.4 (/workspace/repo/tests)
+error[E0599]: no method named `with_minimal_movable_functions` found for struct `OptimizationConfig` in the current scope
+  --> tests/e2e_test.rs:32:39
+   |
+32 |         OptimizationConfig::default().with_minimal_movable_functions(),
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: there is a method with a similar name: `with_moveable_functions`
+
+error[E0599]: no method named `with_minimal_movable_functions` found for struct `OptimizationConfig` in the current scope
+  --> tests/e2e_test.rs:42:39
+   |
+42 |         OptimizationConfig::default().with_minimal_movable_functions(),
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: there is a method with a similar name: `with_moveable_functions`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `tests` (test "e2e_test") due to 2 previous errors
+error: command `/usr/local/rustup/toolchains/1.75.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package tests` exited with code 101
+reward=0 graded=98 found=0 failed=0 parsed=0 framework=cargo exit_code=101

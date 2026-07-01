@@ -1,0 +1,9 @@
+patching file storage/storage_dest_test.go
+patching file storage/storage_test.go
+# github.com/containers/image/v5/storage [github.com/containers/image/v5/storage.test]
+storage/storage_dest_test.go:89:10: undefined: layerID
+storage/storage_dest_test.go:97:9: undefined: layerID
+{"Time":"2026-06-29T15:31:02.225069625Z","Action":"start","Package":"github.com/containers/image/v5/storage"}
+{"Time":"2026-06-29T15:31:02.225142085Z","Action":"output","Package":"github.com/containers/image/v5/storage","Output":"FAIL\tgithub.com/containers/image/v5/storage [build failed]\n"}
+{"Time":"2026-06-29T15:31:02.225186645Z","Action":"fail","Package":"github.com/containers/image/v5/storage","Elapsed":0}
+reward=0 graded=22 found=0 failed=0 parsed=1 framework=go exit_code=1

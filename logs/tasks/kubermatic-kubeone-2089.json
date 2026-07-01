@@ -1,0 +1,23 @@
+{
+ "task": "kubermatic-kubeone-2089",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds ciliumCNI() helper + CILIUM template var + '/etc/sysctl.d/99-zzz-override_cilium.conf' with 'net.ipv4.conf.all.rp_filter = 0' to all 4 OS templates; F2P TestKubeadm{Debian,CentOS,AmazonLinux,Flatcar}/cilium"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

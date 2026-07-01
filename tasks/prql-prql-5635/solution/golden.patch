@@ -1,0 +1,17 @@
+diff --git a/prqlc/prqlc/src/semantic/resolver/flatten.rs b/prqlc/prqlc/src/semantic/resolver/flatten.rs
+index 2a350662..d28aafb8 100644
+--- a/prqlc/prqlc/src/semantic/resolver/flatten.rs
++++ b/prqlc/prqlc/src/semantic/resolver/flatten.rs
+@@ -77,7 +77,11 @@ impl PlFold for Flattener {
+                     }
+                     TransformKind::Group { by, pipeline } => {
+                         let sort_undone = self.sort_undone;
+-                        self.sort_undone = true;
++                        // Only mark sort as undone if there's an actual partition.
++                        // Empty group {} should preserve sort (fixes #5100).
++                        if !matches!(by.kind, ExprKind::Tuple(ref fields) if fields.is_empty()) {
++                            self.sort_undone = true;
++                        }
+ 
+                         let input = self.fold_expr(*t.input)?;
+ 

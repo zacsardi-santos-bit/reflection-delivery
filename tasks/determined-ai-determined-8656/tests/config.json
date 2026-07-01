@@ -1,0 +1,29 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./agent/cmd/determined-agent ./agent/internal/options -count=1",
+  "test_files": [
+    "agent/cmd/determined-agent/run_test.go",
+    "agent/internal/options/options_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/determined-ai/determined/agent/internal/options::TestUnmarshalOptions/agent_config_no_log",
+    "github.com/determined-ai/determined/agent/internal/options::TestUnmarshalOptions/agent_config_with_log",
+    "github.com/determined-ai/determined/agent/internal/options::TestUnmarshalOptions/default_options_config",
+    "github.com/determined-ai/determined/agent/internal/options::TestUnmarshalOptions/full_options_config",
+    "github.com/determined-ai/determined/agent/internal/options::TestUnmarshalOptions",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::Test_visibleGPUsFromEnvironment/Nothing_in_environment",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::Test_visibleGPUsFromEnvironment/CUDA_defined",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::Test_visibleGPUsFromEnvironment/ROCR_defined",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::Test_visibleGPUsFromEnvironment",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::TestMergeAgentConfigViaNewViper/empty_config",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::TestMergeAgentConfigViaNewViper/default_config",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::TestMergeAgentConfigViaNewViper",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::TestMergeAgentConfigViaViperWithDefaults/default_config",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::TestMergeAgentConfigViaViperWithDefaults",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::TestMergeAgentConfigViaViperWithDefaultsEnvAndFlags/default_config",
+    "github.com/determined-ai/determined/agent/cmd/determined-agent::TestMergeAgentConfigViaViperWithDefaultsEnvAndFlags"
+  ],
+  "PASS_TO_PASS": []
+}

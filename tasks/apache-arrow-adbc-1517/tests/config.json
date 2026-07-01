@@ -1,0 +1,25 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo/java && mvn install -DskipTests -B && mvn -pl driver/flight-sql test -Dtest=\"GetObjectsTests,HeaderTest\" -Dsurefire.failIfNoSpecifiedTests=false -B",
+  "test_files": [
+    "java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/GetObjectsTests.java",
+    "java/driver/flight-sql/src/test/java/org/apache/arrow/adbc/driver/flightsql/HeaderTest.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Arrow::test_1",
+    "Arrow::test_2",
+    "Arrow::test_3",
+    "Arrow::test_4",
+    "Arrow::test_5",
+    "Arrow::test_6",
+    "Arrow::test_7",
+    "Arrow::test_8",
+    "Arrow::test_9",
+    "Arrow::test_10",
+    "Arrow::test_11",
+    "Arrow::test_12"
+  ],
+  "PASS_TO_PASS": []
+}

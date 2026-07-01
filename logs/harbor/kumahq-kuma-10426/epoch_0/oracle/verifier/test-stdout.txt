@@ -1,0 +1,81 @@
+patching file pkg/config/loader_test.go
+patching file pkg/xds/ingress/dataplane_test.go
+patching file pkg/xds/sync/proxy_builder_test.go
+patching file pkg/zone/available_services_test.go
+patching file pkg/zone/zone_suite_test.go
+patching file test/e2e_env/multizone/connectivity/available_services.go
+patching file test/e2e_env/multizone/multizone_suite_test.go
+patching file test/e2e_env/multizone/sync/sync.go
+patching file test/framework/constants.go
+patching file test/framework/setup.go
+patching file test/framework/universal_app.go
+patching file test/framework/universal_cluster.go
+{"Time":"2026-06-29T15:24:18.725724289Z","Action":"start","Package":"github.com/kumahq/kuma/pkg/config"}
+{"Time":"2026-06-29T15:24:18.730219085Z","Action":"start","Package":"github.com/kumahq/kuma/pkg/xds/ingress"}
+{"Time":"2026-06-29T15:24:18.898191781Z","Action":"run","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig"}
+{"Time":"2026-06-29T15:24:18.898282146Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"=== RUN   TestConfig\n"}
+{"Time":"2026-06-29T15:24:18.900776651Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"Running Suite: Configuration Suite - /workspace/repo/pkg/config\n"}
+{"Time":"2026-06-29T15:24:18.900871516Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"===============================================================\n"}
+{"Time":"2026-06-29T15:24:18.900963291Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"Random Seed: \u001b[1m1782746658\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:18.901007483Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:24:18.901122249Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"Will run \u001b[1m3\u001b[0m of \u001b[1m3\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:24:18.901200893Z","Action":"run","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress"}
+{"Time":"2026-06-29T15:24:18.901224344Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"=== RUN   TestIngress\n"}
+{"Time":"2026-06-29T15:24:18.903251196Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"Running Suite: Ingress Suite - /workspace/repo/pkg/xds/ingress\n"}
+{"Time":"2026-06-29T15:24:18.903303279Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"==============================================================\n"}
+{"Time":"2026-06-29T15:24:18.90332871Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"Random Seed: \u001b[1m1782746658\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:18.903343501Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"\n"}
+{"Time":"2026-06-29T15:24:18.903447836Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"Will run \u001b[1m10\u001b[0m of \u001b[1m10\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:24:18.910382116Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:18.910431038Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"\n"}
+{"Time":"2026-06-29T15:24:18.91048415Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"\u001b[38;5;10m\u001b[1mRan 10 of 10 Specs in 0.007 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:18.910524443Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"\u001b[38;5;10m\u001b[1mSUCCESS!\u001b[0m -- \u001b[38;5;10m\u001b[1m10 Passed\u001b[0m | \u001b[38;5;9m\u001b[1m0 Failed\u001b[0m | \u001b[38;5;11m\u001b[1m0 Pending\u001b[0m | \u001b[38;5;14m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:18.910652269Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Output":"--- PASS: TestIngress (0.01s)\n"}
+{"Time":"2026-06-29T15:24:18.910705952Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Test":"TestIngress","Elapsed":0.01}
+{"Time":"2026-06-29T15:24:18.910758724Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Output":"PASS\n"}
+{"Time":"2026-06-29T15:24:18.912814008Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Output":"ok  \tgithub.com/kumahq/kuma/pkg/xds/ingress\t0.183s\n"}
+{"Time":"2026-06-29T15:24:18.91286523Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/xds/ingress","Elapsed":0.183}
+{"Time":"2026-06-29T15:24:18.958073709Z","Action":"start","Package":"github.com/kumahq/kuma/pkg/xds/sync"}
+{"Time":"2026-06-29T15:24:18.961996097Z","Action":"start","Package":"github.com/kumahq/kuma/pkg/zone"}
+{"Time":"2026-06-29T15:24:18.963419408Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:18.96345422Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:24:18.963548235Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;10m\u001b[1mRan 3 of 3 Specs in 0.063 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:18.963796067Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;10m\u001b[1mSUCCESS!\u001b[0m -- \u001b[38;5;10m\u001b[1m3 Passed\u001b[0m | \u001b[38;5;9m\u001b[1m0 Failed\u001b[0m | \u001b[38;5;11m\u001b[1m0 Pending\u001b[0m | \u001b[38;5;14m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:18.963993527Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"--- PASS: TestConfig (0.07s)\n"}
+{"Time":"2026-06-29T15:24:18.96404848Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Elapsed":0.07}
+{"Time":"2026-06-29T15:24:18.964173896Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Output":"PASS\n"}
+{"Time":"2026-06-29T15:24:18.966263902Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Output":"ok  \tgithub.com/kumahq/kuma/pkg/config\t0.240s\n"}
+{"Time":"2026-06-29T15:24:18.966354906Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/config","Elapsed":0.241}
+{"Time":"2026-06-29T15:24:19.118692204Z","Action":"run","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone"}
+{"Time":"2026-06-29T15:24:19.118786608Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"=== RUN   TestZone\n"}
+{"Time":"2026-06-29T15:24:19.120305695Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"Running Suite: Zone Suite - /workspace/repo/pkg/zone\n"}
+{"Time":"2026-06-29T15:24:19.120353858Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"====================================================\n"}
+{"Time":"2026-06-29T15:24:19.120476184Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"Random Seed: \u001b[1m1782746659\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:19.120518586Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"\n"}
+{"Time":"2026-06-29T15:24:19.120558758Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"Will run \u001b[1m1\u001b[0m of \u001b[1m1\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:24:19.123323347Z","Action":"run","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync"}
+{"Time":"2026-06-29T15:24:19.12337612Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"=== RUN   TestSync\n"}
+{"Time":"2026-06-29T15:24:19.157343182Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:19.157416406Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"\n"}
+{"Time":"2026-06-29T15:24:19.157432346Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"\u001b[38;5;10m\u001b[1mRan 1 of 1 Specs in 0.037 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:19.157487719Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"\u001b[38;5;10m\u001b[1mSUCCESS!\u001b[0m -- \u001b[38;5;10m\u001b[1m1 Passed\u001b[0m | \u001b[38;5;9m\u001b[1m0 Failed\u001b[0m | \u001b[38;5;11m\u001b[1m0 Pending\u001b[0m | \u001b[38;5;14m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:19.157567283Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Output":"--- PASS: TestZone (0.04s)\n"}
+{"Time":"2026-06-29T15:24:19.157726401Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/zone","Test":"TestZone","Elapsed":0.04}
+{"Time":"2026-06-29T15:24:19.157859158Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Output":"PASS\n"}
+{"Time":"2026-06-29T15:24:19.159658828Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/zone","Output":"ok  \tgithub.com/kumahq/kuma/pkg/zone\t0.197s\n"}
+{"Time":"2026-06-29T15:24:19.159769644Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/zone","Elapsed":0.198}
+{"Time":"2026-06-29T15:24:19.448617864Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"Running Suite: Sync Suite - /workspace/repo/pkg/xds/sync\n"}
+{"Time":"2026-06-29T15:24:19.448668287Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"========================================================\n"}
+{"Time":"2026-06-29T15:24:19.448685888Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"Random Seed: \u001b[1m1782746659\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:19.448696398Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\n"}
+{"Time":"2026-06-29T15:24:19.448713829Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"Will run \u001b[1m4\u001b[0m of \u001b[1m4\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:24:19.895998217Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:19.896109552Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\n"}
+{"Time":"2026-06-29T15:24:19.896178756Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\u001b[38;5;10m\u001b[1mRan 4 of 4 Specs in 0.448 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:19.896223808Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\u001b[38;5;10m\u001b[1mSUCCESS!\u001b[0m -- \u001b[38;5;10m\u001b[1m4 Passed\u001b[0m | \u001b[38;5;9m\u001b[1m0 Failed\u001b[0m | \u001b[38;5;11m\u001b[1m0 Pending\u001b[0m | \u001b[38;5;14m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:24:19.896293632Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"--- PASS: TestSync (0.77s)\n"}
+{"Time":"2026-06-29T15:24:19.896333634Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Elapsed":0.77}
+{"Time":"2026-06-29T15:24:19.896348134Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Output":"PASS\n"}
+{"Time":"2026-06-29T15:24:19.8984459Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Output":"ok  \tgithub.com/kumahq/kuma/pkg/xds/sync\t0.936s\n"}
+{"Time":"2026-06-29T15:24:19.898510713Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/xds/sync","Elapsed":0.94}
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=go exit_code=0

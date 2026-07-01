@@ -1,0 +1,23 @@
+{
+ "task": "newrelic-node-newrelic-3021",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds lib/instrumentation/@azure/functions.js with cold-start tracking + structured warn({data:{expectedVars,found}}); F2P 'warns for missing env vars','buildCloudResourceId returns correct string' run via borp/tap"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

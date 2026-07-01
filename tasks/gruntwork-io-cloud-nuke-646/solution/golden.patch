@@ -1,0 +1,521 @@
+diff --git a/README.md b/README.md
+index 522ab23..7d695fb 100644
+--- a/README.md
++++ b/README.md
+@@ -109,6 +109,9 @@ Cloud-nuke suppports 🔎 inspecting and 🔥💀 deleting the following AWS res
+ | SES                     | SES receipt filter                                       |
+ | AWS Certificate Manager | Certificates                                             |
+ | CodeDeploy              | Applications                                             |
++| Route53                 | Hosted Zones                                             |
++| Route53                 | CIDR collections                                         |
++| Route53                 | Traffic Policies                                         |
+ 
+ > **WARNING:** The RDS APIs also interact with neptune and document db resources.
+ > Running `cloud-nuke aws --resource-type rds` without a config file will remove any neptune and document db resources
+@@ -515,10 +518,10 @@ of the file that are supported are listed here.
+ | ec2-dedicated-hosts         | EC2DedicatedHosts            | ✅ (EC2 Name Tag)                      | ✅ (Allocation Time)                 | ❌    |
+ | ec2-dhcp-option             | EC2DhcpOption                | ❌                                     | ❌                                   | ❌    |
+ | ec2-keypairs                | EC2KeyPairs                  | ✅ (Key Pair Name)                     | ✅ (Creation Time)                   | ✅    |
+-| ec2-ipam                	   | EC2IPAM			                   | ✅ (IPAM name)                    	    | ✅ (Creation Time)                   | ✅    |
+-| ec2-ipam-pool               | EC2IPAMPool			               | ✅ (IPAM Pool name)                    | ✅ (Creation Time)                   | ✅    |
+-| ec2-ipam-resource-discovery | EC2IPAMResourceDiscovery		   | ✅ (IPAM Discovery Name)               | ✅ (Creation Time)                   | ✅    |
+-| ec2-ipam-scope              | EC2IPAMScope		 						        | ✅ (IPAM Scope Name)               		  | ✅ (Creation Time)                   | ✅    |
++| ec2-ipam                	   | EC2IPAM			               | ✅ (IPAM name)                    	   | ✅ (Creation Time)                   | ✅    |
++| ec2-ipam-pool               | EC2IPAMPool			             | ✅ (IPAM Pool name)                    | ✅ (Creation Time)                   | ✅    |
++| ec2-ipam-resource-discovery | EC2IPAMResourceDiscovery		 | ✅ (IPAM Discovery Name)               | ✅ (Creation Time)                   | ✅    |
++| ec2-ipam-scope              | EC2IPAMScope		 						 | ✅ (IPAM Scope Name)               		 | ✅ (Creation Time)                   | ✅    |
+ | ecr                         | ECRRepository                | ✅ (Repository Name)                   | ✅ (Creation Time)                   | ❌    |
+ | ecscluster                  | ECSCluster                   | ✅ (Cluster Name)                      | ❌                                   | ❌    |
+ | ecsserv                     | ECSService                   | ✅ (Service Name)                      | ✅ (Creation Time)                   | ❌    |
+@@ -563,6 +566,9 @@ of the file that are supported are listed here.
+ | transit-gateway-route-table | TransitGatewayRouteTable     | ❌                                     | ✅ (Creation Time)                   | ❌    |
+ | transit-gateway-attachment  | TransitGatewaysVpcAttachment | ❌                                     | ✅ (Creation Time)                   | ❌    |
+ | vpc                         | VPC                          | ✅ (EC2 Name Tag)                      | ✅ (First Seen Tag Time)             | ❌    |
++| route53-hosted-zone         | Route53HostedZone            | ✅ (Hosted zone name)                  | ❌                                   | ❌    |
++| route53-cidr-collection     | Route53CIDRCollection        | ✅ (Cidr collection name)              | ❌                                   | ❌    |
++| route53-traffic-policy      | Route53TrafficPolicy         | ✅ (Traffic policy name)               | ❌                                   | ❌    |
+ 
+ ### How to Use
+ 
+diff --git a/aws/resource_registry.go b/aws/resource_registry.go
+index d909c69..63a8a9c 100644
+--- a/aws/resource_registry.go
++++ b/aws/resource_registry.go
+@@ -119,6 +119,9 @@ func getRegisteredRegionalResources() []AwsResource {
+ 		&resources.EC2IPAMPool{},
+ 		&resources.EC2IPAMByoasn{},
+ 		&resources.EC2IPAMCustomAllocation{},
++		&resources.Route53HostedZone{},
++		&resources.Route53CidrCollection{},
++		&resources.Route53TrafficPolicy{},
+ 	}
+ }
+ 
+diff --git a/aws/resources/route53_cidr_collection.go b/aws/resources/route53_cidr_collection.go
+new file mode 100644
+index 0000000..c9caa80
+--- /dev/null
++++ b/aws/resources/route53_cidr_collection.go
+@@ -0,0 +1,111 @@
++package resources
++
++import (
++	"context"
++
++	"github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/service/route53"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
++	"github.com/gruntwork-io/cloud-nuke/report"
++)
++
++func (r *Route53CidrCollection) getAll(c context.Context, configObj config.Config) ([]*string, error) {
++	var ids []*string
++
++	result, err := r.Client.ListCidrCollections(&route53.ListCidrCollectionsInput{})
++	if err != nil {
++		logging.Errorf("[Failed] unable to list cidr collection: %s", err)
++		return nil, err
++	}
++
++	for _, r := range result.CidrCollections {
++		if configObj.Route53CIDRCollection.ShouldInclude(config.ResourceValue{
++			Name: r.Name,
++		}) {
++			ids = append(ids, r.Id)
++		}
++	}
++	return ids, nil
++}
++
++func (r *Route53CidrCollection) nukeCidrLocations(id *string) (err error) {
++	// get attached cidr blocks
++	loc, err := r.Client.ListCidrBlocks(&route53.ListCidrBlocksInput{
++		CollectionId: id,
++	})
++	if err != nil {
++		logging.Errorf("[Failed] unable to list cidr blocks: %v", err)
++		return err
++	}
++
++	var changes []*route53.CidrCollectionChange
++	for _, block := range loc.CidrBlocks {
++		changes = append(changes, &route53.CidrCollectionChange{
++			CidrList:     []*string{block.CidrBlock},
++			Action:       aws.String("DELETE_IF_EXISTS"),
++			LocationName: block.LocationName,
++		})
++	}
++
++	_, err = r.Client.ChangeCidrCollection(&route53.ChangeCidrCollectionInput{
++		Id:      id,
++		Changes: changes,
++	})
++	if err != nil {
++		logging.Errorf("[Failed] unable to list cidr collections: %v", err)
++		return err
++	}
++
++	logging.Debugf("[Route53 CIDR location] Successfully nuked cidr location(s)")
++	return nil
++}
++
++func (r *Route53CidrCollection) nukeAll(identifiers []*string) (err error) {
++	if len(identifiers) == 0 {
++		logging.Debugf("No Route53 Cidr collection to nuke in region %s", r.Region)
++		return nil
++	}
++	logging.Debugf("Deleting all Route53 Cidr collection in region %s", r.Region)
++
++	var deletedIds []*string
++	for _, id := range identifiers {
++
++		err := func() error {
++
++			// remove the cidr blocks
++			if err := r.nukeCidrLocations(id); err != nil {
++				return err
++			}
++
++			// delete the cidr collection
++			if _, err = r.Client.DeleteCidrCollection(&route53.DeleteCidrCollectionInput{
++				Id: id,
++			}); err != nil {
++				logging.Errorf("[Failed] unable to nuke the cidr collection: %v ", err)
++				return err
++			}
++
++			return nil
++		}()
++
++		// Record status of this resource
++		e := report.Entry{
++			Identifier:   aws.StringValue(id),
++			ResourceType: "Route53 cidr collection",
++			Error:        err,
++		}
++		report.Record(e)
++
++		if err != nil {
++			logging.Errorf("[Failed] %s: %s", *id, err)
++		} else {
++			deletedIds = append(deletedIds, id)
++			logging.Debugf("Deleted Route53 cidr collection: %s", aws.StringValue(id))
++		}
++	}
++
++	logging.Debugf("[OK] %d Route53 cidr collection(s) deleted in %s", len(deletedIds), r.Region)
++
++	return nil
++}
+diff --git a/aws/resources/route53_cidr_collection_types.go b/aws/resources/route53_cidr_collection_types.go
+new file mode 100644
+index 0000000..96eb198
+--- /dev/null
++++ b/aws/resources/route53_cidr_collection_types.go
+@@ -0,0 +1,58 @@
++package resources
++
++import (
++	"context"
++
++	awsgo "github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/aws/session"
++	"github.com/aws/aws-sdk-go/service/route53"
++	"github.com/aws/aws-sdk-go/service/route53/route53iface"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/go-commons/errors"
++)
++
++// Route53CidrCollection - represents all Route53CidrCollection
++type Route53CidrCollection struct {
++	BaseAwsResource
++	Client route53iface.Route53API
++	Region string
++	Ids    []string
++}
++
++func (r *Route53CidrCollection) Init(session *session.Session) {
++	r.Client = route53.New(session)
++}
++
++// ResourceName - the simple name of the aws resource
++func (r *Route53CidrCollection) ResourceName() string {
++	return "route53-cidr-collection"
++}
++
++func (r *Route53CidrCollection) MaxBatchSize() int {
++	// Tentative batch size to ensure AWS doesn't throttle
++	return 49
++}
++
++// ResourceIdentifiers - The ids of the cidr collections
++func (r *Route53CidrCollection) ResourceIdentifiers() []string {
++	return r.Ids
++}
++
++func (r *Route53CidrCollection) GetAndSetIdentifiers(c context.Context, configObj config.Config) ([]string, error) {
++	identifiers, err := r.getAll(c, configObj)
++	if err != nil {
++		return nil, err
++	}
++
++	r.Ids = awsgo.StringValueSlice(identifiers)
++	return r.Ids, nil
++}
++
++// Nuke - nuke 'em all!!!
++func (r *Route53CidrCollection) Nuke(identifiers []string) error {
++	if err := r.nukeAll(awsgo.StringSlice(identifiers)); err != nil {
++		return errors.WithStackTrace(err)
++	}
++
++	return nil
++}
+diff --git a/aws/resources/route53_hostedzone.go b/aws/resources/route53_hostedzone.go
+new file mode 100644
+index 0000000..16b9dfe
+--- /dev/null
++++ b/aws/resources/route53_hostedzone.go
+@@ -0,0 +1,64 @@
++package resources
++
++import (
++	"context"
++
++	"github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/service/route53"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
++	"github.com/gruntwork-io/cloud-nuke/report"
++)
++
++func (r *Route53HostedZone) getAll(c context.Context, configObj config.Config) ([]*string, error) {
++	var ids []*string
++
++	result, err := r.Client.ListHostedZones(&route53.ListHostedZonesInput{})
++	if err != nil {
++		logging.Errorf("[Failed] unable to list hosted-zones: %s", err)
++		return nil, err
++	}
++
++	for _, r := range result.HostedZones {
++		if configObj.Route53HostedZone.ShouldInclude(config.ResourceValue{
++			Name: r.Name,
++		}) {
++			ids = append(ids, r.Id)
++		}
++	}
++	return ids, nil
++}
++
++func (r *Route53HostedZone) nukeAll(identifiers []*string) (err error) {
++	if len(identifiers) == 0 {
++		logging.Debugf("No Route53 Hosted Zones to nuke in region %s", r.Region)
++		return nil
++	}
++	logging.Debugf("Deleting all Route53 Hosted Zones in region %s", r.Region)
++
++	var deletedIds []*string
++	for _, id := range identifiers {
++		_, err := r.Client.DeleteHostedZone(&route53.DeleteHostedZoneInput{
++			Id: id,
++		})
++
++		// Record status of this resource
++		e := report.Entry{
++			Identifier:   aws.StringValue(id),
++			ResourceType: "Route53 hosted zone",
++			Error:        err,
++		}
++		report.Record(e)
++
++		if err != nil {
++			logging.Errorf("[Failed] %s: %s", *id, err)
++		} else {
++			deletedIds = append(deletedIds, id)
++			logging.Debugf("Deleted Route53 Hosted Zone: %s", aws.StringValue(id))
++		}
++	}
++
++	logging.Debugf("[OK] %d Route53 hosted zone(s) deleted in %s", len(deletedIds), r.Region)
++
++	return nil
++}
+diff --git a/aws/resources/route53_hostedzone_types.go b/aws/resources/route53_hostedzone_types.go
+new file mode 100644
+index 0000000..7084d32
+--- /dev/null
++++ b/aws/resources/route53_hostedzone_types.go
+@@ -0,0 +1,58 @@
++package resources
++
++import (
++	"context"
++
++	awsgo "github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/aws/session"
++	"github.com/aws/aws-sdk-go/service/route53"
++	"github.com/aws/aws-sdk-go/service/route53/route53iface"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/go-commons/errors"
++)
++
++// Route53HostedZone - represents all Route53HostedZone
++type Route53HostedZone struct {
++	BaseAwsResource
++	Client route53iface.Route53API
++	Region string
++	Ids    []string
++}
++
++func (r *Route53HostedZone) Init(session *session.Session) {
++	r.Client = route53.New(session)
++}
++
++// ResourceName - the simple name of the aws resource
++func (r *Route53HostedZone) ResourceName() string {
++	return "route53-hosted-zone"
++}
++
++func (r *Route53HostedZone) MaxBatchSize() int {
++	// Tentative batch size to ensure AWS doesn't throttle
++	return 49
++}
++
++// ResourceIdentifiers - The ids hosted zones
++func (r *Route53HostedZone) ResourceIdentifiers() []string {
++	return r.Ids
++}
++
++func (r *Route53HostedZone) GetAndSetIdentifiers(c context.Context, configObj config.Config) ([]string, error) {
++	identifiers, err := r.getAll(c, configObj)
++	if err != nil {
++		return nil, err
++	}
++
++	r.Ids = awsgo.StringValueSlice(identifiers)
++	return r.Ids, nil
++}
++
++// Nuke - nuke 'em all!!!
++func (r *Route53HostedZone) Nuke(identifiers []string) error {
++	if err := r.nukeAll(awsgo.StringSlice(identifiers)); err != nil {
++		return errors.WithStackTrace(err)
++	}
++
++	return nil
++}
+diff --git a/aws/resources/route53_traffic_policy.go b/aws/resources/route53_traffic_policy.go
+new file mode 100644
+index 0000000..bd2b03c
+--- /dev/null
++++ b/aws/resources/route53_traffic_policy.go
+@@ -0,0 +1,67 @@
++package resources
++
++import (
++	"context"
++
++	"github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/service/route53"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
++	"github.com/gruntwork-io/cloud-nuke/report"
++)
++
++func (r *Route53TrafficPolicy) getAll(c context.Context, configObj config.Config) ([]*string, error) {
++	var ids []*string
++
++	result, err := r.Client.ListTrafficPolicies(&route53.ListTrafficPoliciesInput{})
++	if err != nil {
++		logging.Errorf("[Failed] unable to list traffic policies: %v", err)
++		return nil, err
++	}
++
++	for _, summary := range result.TrafficPolicySummaries {
++		if configObj.Route53TrafficPolicy.ShouldInclude(config.ResourceValue{
++			Name: summary.Name,
++		}) {
++			ids = append(ids, summary.Id)
++			// store the corresponding version, as this is required for nuking
++			r.versionMap[*summary.Id] = summary.LatestVersion
++		}
++	}
++	return ids, nil
++}
++
++func (r *Route53TrafficPolicy) nukeAll(identifiers []*string) (err error) {
++	if len(identifiers) == 0 {
++		logging.Debugf("No Route53 Traffic Policy to nuke in region %s", r.Region)
++		return nil
++	}
++	logging.Debugf("Deleting all Route53 Traffic Policy in region %s", r.Region)
++
++	var deletedIds []*string
++	for _, id := range identifiers {
++		_, err := r.Client.DeleteTrafficPolicy(&route53.DeleteTrafficPolicyInput{
++			Id:      id,
++			Version: r.versionMap[*id],
++		})
++
++		// Record status of this resource
++		e := report.Entry{
++			Identifier:   aws.StringValue(id),
++			ResourceType: "Route53 Traffic Policy",
++			Error:        err,
++		}
++		report.Record(e)
++
++		if err != nil {
++			logging.Errorf("[Failed] %s: %s", *id, err)
++		} else {
++			deletedIds = append(deletedIds, id)
++			logging.Debugf("Deleted Route53 Traffic Policy: %s", aws.StringValue(id))
++		}
++	}
++
++	logging.Debugf("[OK] %d Route53 Traffic Policy(s) deleted in %s", len(deletedIds), r.Region)
++
++	return nil
++}
+diff --git a/aws/resources/route53_traffic_policy_types.go b/aws/resources/route53_traffic_policy_types.go
+new file mode 100644
+index 0000000..db8dc33
+--- /dev/null
++++ b/aws/resources/route53_traffic_policy_types.go
+@@ -0,0 +1,60 @@
++package resources
++
++import (
++	"context"
++
++	awsgo "github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/aws/session"
++	"github.com/aws/aws-sdk-go/service/route53"
++	"github.com/aws/aws-sdk-go/service/route53/route53iface"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/go-commons/errors"
++)
++
++// Route53TrafficPolicy - represents all Route53TrafficPolicy
++type Route53TrafficPolicy struct {
++	BaseAwsResource
++	Client     route53iface.Route53API
++	Region     string
++	Ids        []string
++	versionMap map[string]*int64
++}
++
++func (r *Route53TrafficPolicy) Init(session *session.Session) {
++	r.Client = route53.New(session)
++	r.versionMap = make(map[string]*int64)
++}
++
++// ResourceName - the simple name of the aws resource
++func (r *Route53TrafficPolicy) ResourceName() string {
++	return "route53-traffic-policy"
++}
++
++func (r *Route53TrafficPolicy) MaxBatchSize() int {
++	// Tentative batch size to ensure AWS doesn't throttle
++	return 49
++}
++
++// ResourceIdentifiers - The ids of traffic policies
++func (r *Route53TrafficPolicy) ResourceIdentifiers() []string {
++	return r.Ids
++}
++
++func (r *Route53TrafficPolicy) GetAndSetIdentifiers(c context.Context, configObj config.Config) ([]string, error) {
++	identifiers, err := r.getAll(c, configObj)
++	if err != nil {
++		return nil, err
++	}
++
++	r.Ids = awsgo.StringValueSlice(identifiers)
++	return r.Ids, nil
++}
++
++// Nuke - nuke 'em all!!!
++func (r *Route53TrafficPolicy) Nuke(identifiers []string) error {
++	if err := r.nukeAll(awsgo.StringSlice(identifiers)); err != nil {
++		return errors.WithStackTrace(err)
++	}
++
++	return nil
++}
+diff --git a/config/config.go b/config/config.go
+index 9ec5e65..5f7abc4 100644
+--- a/config/config.go
++++ b/config/config.go
+@@ -91,6 +91,9 @@ type Config struct {
+ 	TransitGatewaysVpcAttachment    ResourceType               `yaml:"TransitGatewaysVpcAttachment"`
+ 	TransitGatewayPeeringAttachment ResourceType               `yaml:"TransitGatewayPeeringAttachment"`
+ 	VPC                             ResourceType               `yaml:"VPC"`
++	Route53HostedZone               ResourceType               `yaml:"Route53HostedZone"`
++	Route53CIDRCollection           ResourceType               `yaml:"Route53CIDRCollection"`
++	Route53TrafficPolicy            ResourceType               `yaml:"Route53TrafficPolicy"`
+ }
+ 
+ func (c *Config) addTimeAfterFilter(timeFilter *time.Time, fieldName string) {

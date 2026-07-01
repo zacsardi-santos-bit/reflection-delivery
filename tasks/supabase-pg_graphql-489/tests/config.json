@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo pgrx install --pg-config /usr/lib/postgresql/15/bin/pg_config && (set -o pipefail; rc=0; su -s /bin/bash postgres -c 'cd /workspace/repo && ./bin/installcheck page_info function_calls function_calls_unsupported resolve_graphiql_schema' 2>&1 | awk '$1==\"test\" && $3==\"...\" && ($4==\"ok\" || $4==\"FAILED\") {if($4==\"ok\") print \"PASS [   0.001s] pg_graphql \" $2; else print \"FAIL [   0.001s] pg_graphql \" $2; next} {print}' || rc=$?; exit $rc)",
+  "test_files": [
+    "test/expected/function_calls.out",
+    "test/expected/function_calls_unsupported.out",
+    "test/expected/page_info.out",
+    "test/expected/resolve_graphiql_schema.out",
+    "test/sql/page_info.sql"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "pg_graphql page_info",
+    "pg_graphql function_calls",
+    "pg_graphql function_calls_unsupported",
+    "pg_graphql resolve_graphiql_schema"
+  ],
+  "PASS_TO_PASS": []
+}

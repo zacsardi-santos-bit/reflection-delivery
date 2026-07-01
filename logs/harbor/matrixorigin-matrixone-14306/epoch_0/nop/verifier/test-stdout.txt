@@ -1,0 +1,7 @@
+patching file pkg/frontend/authenticate_test.go
+patching file test/distributed/cases/udf/udf.result
+patching file test/distributed/cases/udf/udf.sql
+# github.com/matrixorigin/matrixone/pkg/frontend [github.com/matrixorigin/matrixone/pkg/frontend.test]
+pkg/frontend/authenticate_test.go:313:18: undefined: checkDatabaseExistsOrNot
+FAIL	github.com/matrixorigin/matrixone/pkg/frontend [build failed]
+reward=0 graded=2 found=2 failed=2 parsed=1 framework=go exit_code=1

@@ -1,0 +1,19 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/datafusion/substrait && cargo nextest run --no-fail-fast -E 'test(tpch_test)'",
+  "test_files": [
+    "datafusion/substrait/tests/cases/consumer_integration.rs",
+    "datafusion/substrait/tests/testdata/tpch_substrait_plans/query_4.json",
+    "datafusion/substrait/tests/testdata/tpch_substrait_plans/query_5.json"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_3",
+    "(2/5) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_4",
+    "(3/5) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_2",
+    "(4/5) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_5",
+    "(5/5) datafusion-substrait::substrait_integration cases::consumer_integration::tests::tpch_test_1"
+  ],
+  "PASS_TO_PASS": []
+}

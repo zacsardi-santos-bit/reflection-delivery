@@ -1,0 +1,250 @@
+patching file prqlc/prqlc/tests/integration/sql.rs
+   Compiling prqlc v0.13.8 (/workspace/repo/prqlc/prqlc)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.41s
+────────────
+ Nextest run ID 34f039ae-43d3-4b5b-b496-db8a37d55f4c with nextest profile: default
+    Starting 241 tests across 3 binaries (254 tests skipped)
+        PASS [   0.025s] (  1/241) prqlc sql::keywords::test_sql_keywords
+        PASS [   0.033s] (  2/241) prqlc::integration sql::json_of_test
+        PASS [   0.055s] (  3/241) prqlc sql::test::test_end_with_new_line
+        PASS [   0.072s] (  4/241) prqlc sql::gen_expr::test::test_range_of_ranges
+        PASS [   0.074s] (  5/241) prqlc sql::dialect::tests::test_dialect_from_str
+        PASS [   0.101s] (  6/241) prqlc::integration sql::like_concat::case_2_sqlite
+        PASS [   0.103s] (  7/241) prqlc::integration sql::date_to_text_operator::case_4_mssql
+        PASS [   0.103s] (  8/241) prqlc::integration sql::date_to_text_operator::case_1_clickhouse
+        PASS [   0.105s] (  9/241) prqlc::integration sql::date_to_text_operator::case_5_mysql
+        PASS [   0.104s] ( 10/241) prqlc::integration sql::date_to_text_operator::case_2_duckdb
+        PASS [   0.106s] ( 11/241) prqlc::integration sql::like_concat::case_1_generic
+        PASS [   0.106s] ( 12/241) prqlc::integration sql::date_to_text_operator::case_3_postgres
+        PASS [   0.113s] ( 13/241) prqlc::integration sql::large_query
+        PASS [   0.120s] ( 14/241) prqlc sql::pq::test::test_ctes_of_pipeline
+        PASS [   0.097s] ( 15/241) prqlc::integration sql::test_1535
+        PASS [   0.152s] ( 16/241) prqlc sql::gen_query::test::test_derive_filter
+        PASS [   0.126s] ( 17/241) prqlc::integration sql::shortest_prql_version
+        PASS [   0.154s] ( 18/241) prqlc sql::gen_query::test::test_variable_after_aggregate
+        PASS [   0.157s] ( 19/241) prqlc sql::gen_query::test::test_filter_windowed
+        PASS [   0.162s] ( 20/241) prqlc sql::gen_query::test::test_distinct_on_with_aggregate
+        PASS [   0.090s] ( 21/241) prqlc::integration sql::test_array_03
+        PASS [   0.151s] ( 22/241) prqlc::integration sql::test_append
+        PASS [   0.101s] ( 23/241) prqlc::integration sql::test_bare_s_string_02
+        PASS [   0.102s] ( 24/241) prqlc::integration sql::test_bare_s_string_01
+        PASS [   0.112s] ( 25/241) prqlc::integration sql::test_append_with_cte
+        PASS [   0.100s] ( 26/241) prqlc::integration sql::test_bare_s_string_03
+        PASS [   0.113s] ( 27/241) prqlc::integration sql::test_bare_s_string
+        PASS [   0.153s] ( 28/241) prqlc::integration sql::test_append_select_compute
+        PASS [   0.106s] ( 29/241) prqlc::integration sql::test_bare_s_string_04
+        PASS [   0.154s] ( 30/241) prqlc::integration sql::test_append_select_multiple
+        PASS [   0.127s] ( 31/241) prqlc::integration sql::test_array_01
+        PASS [   0.102s] ( 32/241) prqlc::integration sql::test_case_02
+        PASS [   0.153s] ( 33/241) prqlc::integration sql::test_array_02
+        PASS [   0.108s] ( 34/241) prqlc::integration sql::test_case_01
+        PASS [   0.100s] ( 35/241) prqlc::integration sql::test_closures_and_pipelines
+        PASS [   0.144s] ( 36/241) prqlc::integration sql::test_basic_agg
+        PASS [   0.045s] ( 37/241) prqlc::integration sql::test_distinct_05
+        PASS [   0.094s] ( 38/241) prqlc::integration sql::test_dates
+        PASS [   0.150s] ( 39/241) prqlc::integration sql::test_case_03
+        PASS [   0.114s] ( 40/241) prqlc::integration sql::test_column_name_extraction_in_s_strings
+        PASS [   0.153s] ( 41/241) prqlc::integration sql::test_casting
+        PASS [   0.114s] ( 42/241) prqlc::integration sql::test_conflicting_names_at_split
+        PASS [   0.110s] ( 43/241) prqlc::integration sql::test_datetime_parsing
+        PASS [   0.113s] ( 44/241) prqlc::integration sql::test_datetime
+        PASS [   0.130s] ( 45/241) prqlc::integration sql::test_custom_transforms
+        PASS [   0.111s] ( 46/241) prqlc::integration sql::test_distinct_02
+        PASS [   0.117s] ( 47/241) prqlc::integration sql::test_distinct_03
+        PASS [   0.136s] ( 48/241) prqlc::integration sql::test_datetime_sqlite
+        PASS [   0.128s] ( 49/241) prqlc::integration sql::test_direct_table_references
+        PASS [   0.109s] ( 50/241) prqlc::integration sql::test_distinct_04
+        PASS [   0.115s] ( 51/241) prqlc::integration sql::test_distinct_06
+        PASS [   0.117s] ( 52/241) prqlc::integration sql::test_distinct_07
+        PASS [   0.045s] ( 53/241) prqlc::integration sql::test_error_code
+        PASS [   0.111s] ( 54/241) prqlc::integration sql::test_distinct_08
+        PASS [   0.159s] ( 55/241) prqlc::integration sql::test_distinct_01
+        PASS [   0.101s] ( 56/241) prqlc::integration sql::test_distinct_on_01
+        PASS [   0.113s] ( 57/241) prqlc::integration sql::test_distinct_09
+        PASS [   0.107s] ( 58/241) prqlc::integration sql::test_distinct_on_03
+        PASS [   0.114s] ( 59/241) prqlc::integration sql::test_distinct_on_02
+        PASS [   0.106s] ( 60/241) prqlc::integration sql::test_distinct_on_04
+        PASS [   0.100s] ( 61/241) prqlc::integration sql::test_excess_columns
+        PASS [   0.100s] ( 62/241) prqlc::integration sql::test_exclude_columns_01
+        PASS [   0.124s] ( 63/241) prqlc::integration sql::test_double_stars
+        PASS [   0.099s] ( 64/241) prqlc::integration sql::test_exclude_columns_03
+        PASS [   0.097s] ( 65/241) prqlc::integration sql::test_exclude_columns_04
+        PASS [   0.107s] ( 66/241) prqlc::integration sql::test_exclude_columns_05
+        PASS [   0.103s] ( 67/241) prqlc::integration sql::test_exclude_columns_06
+        PASS [   0.162s] ( 68/241) prqlc::integration sql::test_distinct_on_sort_on_compute
+        PASS [   0.167s] ( 69/241) prqlc::integration sql::test_double_aggregate
+        PASS [   0.108s] ( 70/241) prqlc::integration sql::test_exclude_columns_07
+        PASS [   0.121s] ( 71/241) prqlc::integration sql::test_f_string
+        PASS [   0.158s] ( 72/241) prqlc::integration sql::test_exclude_columns_02
+        PASS [   0.105s] ( 73/241) prqlc::integration sql::test_filter_and_select_unchanged_alias
+        PASS [   0.101s] ( 74/241) prqlc::integration sql::test_from_text_02
+        PASS [   0.104s] ( 75/241) prqlc::integration sql::test_from_text_01
+        PASS [   0.146s] ( 76/241) prqlc::integration sql::test_filter
+        PASS [   0.101s] ( 77/241) prqlc::integration sql::test_from_text_03
+        PASS [   0.133s] ( 78/241) prqlc::integration sql::test_from_json
+        PASS [   0.105s] ( 79/241) prqlc::integration sql::test_from_text_04
+        PASS [   0.101s] ( 80/241) prqlc::integration sql::test_from_text_06
+        PASS [   0.104s] ( 81/241) prqlc::integration sql::test_from_text_05
+        PASS [   0.103s] ( 82/241) prqlc::integration sql::test_from_text_07
+        PASS [   0.173s] ( 83/241) prqlc::integration sql::test_filter_and_select_changed_alias
+        PASS [   0.097s] ( 84/241) prqlc::integration sql::test_group_exclude
+        PASS [   0.105s] ( 85/241) prqlc::integration sql::test_group_take_n_02
+        PASS [   0.113s] ( 86/241) prqlc::integration sql::test_group_take_n_01
+        PASS [   0.107s] ( 87/241) prqlc::integration sql::test_header
+        PASS [   0.107s] ( 88/241) prqlc::integration sql::test_import
+        PASS [   0.096s] ( 89/241) prqlc::integration sql::test_in_values_err_01
+        PASS [   0.109s] ( 90/241) prqlc::integration sql::test_in_no_values
+        PASS [   0.111s] ( 91/241) prqlc::integration sql::test_in_values_01
+        PASS [   0.106s] ( 92/241) prqlc::integration sql::test_inline_tables
+        PASS [   0.139s] ( 93/241) prqlc::integration sql::test_ident_escaping
+        PASS [   0.105s] ( 94/241) prqlc::integration sql::test_intersect_01
+        PASS [   0.151s] ( 95/241) prqlc::integration sql::test_header_target_error
+        PASS [   0.105s] ( 96/241) prqlc::integration sql::test_intersect_02
+        PASS [   0.177s] ( 97/241) prqlc::integration sql::test_group_all
+        PASS [   0.108s] ( 98/241) prqlc::integration sql::test_intersect_03
+        PASS [   0.107s] ( 99/241) prqlc::integration sql::test_intersect_04
+        PASS [   0.108s] (100/241) prqlc::integration sql::test_intersect_05
+        PASS [   0.099s] (101/241) prqlc::integration sql::test_intersect_06
+        PASS [   0.106s] (102/241) prqlc::integration sql::test_intervals
+        PASS [   0.106s] (103/241) prqlc::integration sql::test_into
+        PASS [   0.105s] (104/241) prqlc::integration sql::test_join_side_literal
+        PASS [   0.157s] (105/241) prqlc::integration sql::test_intersect_07
+        PASS [   0.112s] (106/241) prqlc::integration sql::test_join_side_literal_err
+        PASS [   0.147s] (107/241) prqlc::integration sql::test_interval
+        PASS [   0.100s] (108/241) prqlc::integration sql::test_join_with_param_name_collision
+        PASS [   0.117s] (109/241) prqlc::integration sql::test_join_side_literal_via_func
+        PASS [   0.112s] (110/241) prqlc::integration sql::test_join_side_literal_via_func_err
+        PASS [   0.103s] (111/241) prqlc::integration sql::test_literal
+        PASS [   0.137s] (112/241) prqlc::integration sql::test_join
+        PASS [   0.116s] (113/241) prqlc::integration sql::test_loop
+        PASS [   0.113s] (114/241) prqlc::integration sql::test_missing_columns_group_complex_compute
+        PASS [   0.129s] (115/241) prqlc::integration sql::test_lineage
+        PASS [   0.115s] (116/241) prqlc::integration sql::test_name_resolving
+        PASS [   0.146s] (117/241) prqlc::integration sql::test_loop_2
+        PASS [   0.144s] (118/241) prqlc::integration sql::test_lower
+        PASS [   0.151s] (119/241) prqlc::integration sql::test_name_inference
+        PASS [   0.127s] (120/241) prqlc::integration sql::test_name_shadowing
+        PASS [   0.091s] (121/241) prqlc::integration sql::test_nulls_01
+        PASS [   0.107s] (122/241) prqlc::integration sql::test_nonatomic_table
+        PASS [   0.095s] (123/241) prqlc::integration sql::test_nulls_04
+        PASS [   0.111s] (124/241) prqlc::integration sql::test_nulls_03
+        PASS [   0.101s] (125/241) prqlc::integration sql::test_output_column_deduplication
+        PASS [   0.105s] (126/241) prqlc::integration sql::test_numbers
+        PASS [   0.101s] (127/241) prqlc::integration sql::test_param_declarations
+        PASS [   0.164s] (128/241) prqlc::integration sql::test_nonatomic
+        PASS [   0.098s] (129/241) prqlc::integration sql::test_params
+        PASS [   0.141s] (130/241) prqlc::integration sql::test_not_in_values
+        PASS [   0.151s] (131/241) prqlc::integration sql::test_nulls_02
+        PASS [   0.135s] (132/241) prqlc::integration sql::test_precedence_01
+        PASS [   0.047s] (133/241) prqlc::integration sql::test_quoting_style::case_1_generic
+        PASS [   0.045s] (134/241) prqlc::integration sql::test_quoting_style::case_2_snowflake
+        PASS [   0.143s] (135/241) prqlc::integration sql::test_precedence_02
+        PASS [   0.150s] (136/241) prqlc::integration sql::test_precedence_03
+        PASS [   0.100s] (137/241) prqlc::integration sql::test_quoting_02
+        PASS [   0.112s] (138/241) prqlc::integration sql::test_quoting_01
+        PASS [   0.148s] (139/241) prqlc::integration sql::test_precedence_04
+        PASS [   0.097s] (140/241) prqlc::integration sql::test_quoting_03
+        PASS [   0.098s] (141/241) prqlc::integration sql::test_quoting_04
+        PASS [   0.157s] (142/241) prqlc::integration sql::test_precedence_05
+        PASS [   0.100s] (143/241) prqlc::integration sql::test_quoting_05
+        PASS [   0.049s] (144/241) prqlc::integration sql::test_redshift_interval_quoting::case_1
+        PASS [   0.101s] (145/241) prqlc::integration sql::test_quoting_06
+        PASS [   0.048s] (146/241) prqlc::integration sql::test_redshift_interval_quoting::case_2
+        PASS [   0.048s] (147/241) prqlc::integration sql::test_redshift_interval_quoting::case_3
+        PASS [   0.153s] (148/241) prqlc::integration sql::test_precedence_division
+        PASS [   0.101s] (149/241) prqlc::integration sql::test_ranges
+        PASS [   0.160s] (150/241) prqlc::integration sql::test_prql_to_sql_table
+        PASS [   0.054s] (151/241) prqlc::integration sql::test_redshift_keyword_quoting::case_1_redshift_quotes_only_keywords
+        PASS [   0.049s] (152/241) prqlc::integration sql::test_redshift_keyword_quoting::case_2_postgres_does_not_quote_redshift_keywords
+        PASS [   0.046s] (153/241) prqlc::integration sql::test_redshift_keyword_quoting::case_3_generic_does_not_quote_redshift_keywords
+        PASS [   0.049s] (154/241) prqlc::integration sql::test_redshift_quotes_only_keywords_mixed
+        PASS [   0.180s] (155/241) prqlc::integration sql::test_prql_to_sql_1
+        PASS [   0.136s] (156/241) prqlc::integration sql::test_read_parquet_duckdb
+        PASS [   0.109s] (157/241) prqlc::integration sql::test_redshift_uses_double_pipe_over_concat
+        PASS [   0.113s] (158/241) prqlc::integration sql::test_remove_01
+        PASS [   0.124s] (159/241) prqlc::integration sql::test_relation_aliasing
+        PASS [   0.122s] (160/241) prqlc::integration sql::test_relation_var_name_clashes_02
+        PASS [   0.112s] (161/241) prqlc::integration sql::test_remove_03
+        PASS [   0.127s] (162/241) prqlc::integration sql::test_relation_literal_quoting
+        PASS [   0.127s] (163/241) prqlc::integration sql::test_relation_var_name_clashes_01
+        PASS [   0.103s] (164/241) prqlc::integration sql::test_remove_04
+        PASS [   0.187s] (165/241) prqlc::integration sql::test_read_parquet_with_named_args
+        PASS [   0.123s] (166/241) prqlc::integration sql::test_remove_02
+        PASS [   0.105s] (167/241) prqlc::integration sql::test_remove_06
+        PASS [   0.114s] (168/241) prqlc::integration sql::test_remove_05
+        PASS [   0.161s] (169/241) prqlc::integration sql::test_redshift_text_contains_uses_double_pipe
+        PASS [   0.120s] (170/241) prqlc::integration sql::test_rn_ids_are_unique
+        PASS [   0.162s] (171/241) prqlc::integration sql::test_regex_search
+        PASS [   0.120s] (172/241) prqlc::integration sql::test_same_column_names
+        PASS [   0.131s] (173/241) prqlc::integration sql::test_returning_constants_only
+        PASS [   0.105s] (174/241) prqlc::integration sql::test_select_repeated_and_derived
+        PASS [   0.063s] (175/241) prqlc::integration sql::test_sql_options
+        PASS [   0.092s] (176/241) prqlc::integration sql::test_sorts_03
+        PASS [   0.103s] (177/241) prqlc::integration sql::test_sort_in_nested_join
+        PASS [   0.095s] (178/241) prqlc::integration sql::test_sorts_02
+        PASS [   0.104s] (179/241) prqlc::integration sql::test_sort_in_nested_append
+        PASS [   0.086s] (180/241) prqlc::integration sql::test_sql_of_ast_02
+        PASS [   0.108s] (181/241) prqlc::integration sql::test_sort_select_redundant_cte
+        PASS [   0.095s] (182/241) prqlc::integration sql::test_static_analysis
+        PASS [   0.150s] (183/241) prqlc::integration sql::test_sort_before_aggregate
+        PASS [   0.126s] (184/241) prqlc::integration sql::test_sorts_01
+        PASS [   0.150s] (185/241) prqlc::integration sql::test_sort_filter_derive_join_select
+        PASS [   0.162s] (186/241) prqlc::integration sql::test_sort_cast_filter_join_select
+        PASS [   0.161s] (187/241) prqlc::integration sql::test_sort_cast_filter_join_select_with_alias
+        PASS [   0.170s] (188/241) prqlc::integration sql::test_sort_in_nested_join_with_extra_derive_and_select
+        PASS [   0.146s] (189/241) prqlc::integration sql::test_sql_of_ast_1
+        PASS [   0.145s] (190/241) prqlc::integration sql::test_stdlib_math_module
+        PASS [   0.143s] (191/241) prqlc::integration sql::test_stdlib_math_module_mssql
+        PASS [   0.165s] (192/241) prqlc::integration sql::test_stdlib
+        PASS [   0.104s] (193/241) prqlc::integration sql::test_table_alias_02
+        PASS [   0.109s] (194/241) prqlc::integration sql::test_table_definition_with_expr_call
+        PASS [   0.118s] (195/241) prqlc::integration sql::test_table_declarations
+        PASS [   0.098s] (196/241) prqlc::integration sql::test_table_s_string_01
+        PASS [   0.117s] (197/241) prqlc::integration sql::test_table_names_between_splits_01
+        PASS [   0.127s] (198/241) prqlc::integration sql::test_strings
+        PASS [   0.106s] (199/241) prqlc::integration sql::test_table_names_between_splits_02
+        PASS [   0.104s] (200/241) prqlc::integration sql::test_table_s_string_04
+        PASS [   0.128s] (201/241) prqlc::integration sql::test_table_s_string_02
+        PASS [   0.171s] (202/241) prqlc::integration sql::test_stdlib_text_module
+        PASS [   0.112s] (203/241) prqlc::integration sql::test_table_s_string_05
+        PASS [   0.172s] (204/241) prqlc::integration sql::test_table_alias_01
+        PASS [   0.135s] (205/241) prqlc::integration sql::test_table_s_string_03
+        PASS [   0.118s] (206/241) prqlc::integration sql::test_table_variable_in_scalar_context
+        PASS [   0.123s] (207/241) prqlc::integration sql::test_table_s_string_06
+        PASS [   0.112s] (208/241) prqlc::integration sql::test_take_01
+        PASS [   0.129s] (209/241) prqlc::integration sql::test_take_02
+        PASS [   0.109s] (210/241) prqlc::integration sql::test_take_04
+        PASS [   0.118s] (211/241) prqlc::integration sql::test_take_03
+        PASS [   0.115s] (212/241) prqlc::integration sql::test_take_05
+        PASS [   0.108s] (213/241) prqlc::integration sql::test_take_08
+        PASS [   0.113s] (214/241) prqlc::integration sql::test_take_07
+        PASS [   0.110s] (215/241) prqlc::integration sql::test_take_09
+        PASS [   0.107s] (216/241) prqlc::integration sql::test_take_10
+        PASS [   0.118s] (217/241) prqlc::integration sql::test_take_06
+        PASS [   0.107s] (218/241) prqlc::integration sql::test_target_clickhouse
+        PASS [   0.102s] (219/241) prqlc::integration sql::test_toposort
+        PASS [   0.100s] (220/241) prqlc::integration sql::test_type_as_column_name
+        PASS [   0.093s] (221/241) prqlc::integration sql::test_unused_alias
+        PASS [   0.128s] (222/241) prqlc::integration sql::test_type_error_placement
+        PASS [   0.149s] (223/241) prqlc::integration sql::test_targets
+        PASS [   0.158s] (224/241) prqlc::integration sql::test_take_mssql
+        PASS [   0.139s] (225/241) prqlc::integration sql::test_window_function_coalesce
+        PASS [   0.141s] (226/241) prqlc::integration sql::test_upper
+        PASS [   0.138s] (227/241) prqlc::integration sql::test_window_functions_00
+        PASS [   0.138s] (228/241) prqlc::integration sql::test_window_functions_03
+        PASS [   0.133s] (229/241) prqlc::integration sql::test_window_functions_04
+        PASS [   0.138s] (230/241) prqlc::integration sql::test_window_functions_05
+        PASS [   0.139s] (231/241) prqlc::integration sql::test_window_functions_08
+        PASS [   0.142s] (232/241) prqlc::integration sql::test_window_functions_07
+        PASS [   0.164s] (233/241) prqlc::integration sql::test_window_functions_02
+        PASS [   0.143s] (234/241) prqlc::integration sql::test_window_functions_06
+        PASS [   0.143s] (235/241) prqlc::integration sql::test_window_functions_09
+        PASS [   0.136s] (236/241) prqlc::integration sql::test_window_functions_10
+        PASS [   0.135s] (237/241) prqlc::integration sql::test_window_functions_11
+        PASS [   0.129s] (238/241) prqlc::integration sql::test_window_functions_13
+        PASS [   0.122s] (239/241) prqlc::integration sql::test_window_single_item_range
+        PASS [   0.158s] (240/241) prqlc::integration sql::test_window_functions_12
+        PASS [   0.131s] (241/241) prqlc::integration sql::unstable_ordering
+────────────
+     Summary [   1.641s] 241 tests run: 241 passed, 254 skipped
+reward=1 graded=241 found=50 failed=0 parsed=241 framework=cargo exit_code=0

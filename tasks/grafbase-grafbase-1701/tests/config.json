@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --profile ci --no-fail-fast -p parser-openapi -E 'test(test_amadeus_schema)'",
+  "test_files": [
+    "engine/crates/parser-openapi/src/tests/mod.rs",
+    "engine/crates/parser-openapi/src/tests/snapshots/parser_openapi__tests__amadeus_schema.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) parser-openapi tests::test_amadeus_schema"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,198 @@
+patching file 'front/pages/api/v1/w/[wId]/files/fileId.test.ts'
+patching file 'front/pages/api/w/[wId]/files/[fileId]/index.test.ts'
+ * Starting PostgreSQL 16 database server
+   ...done.
+Starting redis-server: redis-server.
+
+ RUN  v3.0.8 /workspace/repo/front
+
+stderr | pages/api/v1/w/[wId]/files/fileId.test.ts
+Warning: forwardRef render functions accept exactly two parameters: props and ref. Did you forget to use the ref parameter?
+
+stderr | pages/api/w/[wId]/files/[fileId]/index.test.ts
+Warning: forwardRef render functions accept exactly two parameters: props and ref. Did you forget to use the ref parameter?
+
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > GET /api/v1/w/[wId]/files/[fileId] > should return 404 for non-existent file
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > GET /api/w/[wId]/files/[fileId] > should return 404 for non-existent file
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > GET /api/v1/w/[wId]/files/[fileId] > should allow API key to view file for GET request
+stdout | pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should return 403 without builder permissions on non-conversation files
+Error in test:
+AssertionError: expected 200 to be 403 // Object.is equality
+    at [90m/workspace/repo/front/[39mpages/api/v1/w/[wId]/files/fileId.test.ts:243:36
+[90m    at processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at [90m/workspace/repo/front/[39mtests/utils/utils.ts:14:9
+    at [90m/workspace/repo/front/[39mnode_modules/[4msequelize[24m/src/sequelize.js:1196:18
+    at [90m/workspace/repo/front/[39mtests/utils/utils.ts:13:7
+    at [90mfile:///workspace/repo/front/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:563:22 {
+  actual: [33m200[39m,
+  expected: [33m403[39m,
+  showDiff: [33mtrue[39m,
+  operator: [32m'strictEqual'[39m
+}
+
+stdout | pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should return 403 when user is not a builder for non-conversation files
+Error in test:
+AssertionError: expected 200 to be 403 // Object.is equality
+    at [90m/workspace/repo/front/[39mpages/api/w/[wId]/files/[fileId]/index.test.ts:211:36
+[90m    at processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at [90m/workspace/repo/front/[39mtests/utils/utils.ts:14:9
+    at [90m/workspace/repo/front/[39mnode_modules/[4msequelize[24m/src/sequelize.js:1196:18
+    at [90m/workspace/repo/front/[39mtests/utils/utils.ts:13:7
+    at [90mfile:///workspace/repo/front/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:563:22 {
+  actual: [33m200[39m,
+  expected: [33m403[39m,
+  showDiff: [33mtrue[39m,
+  operator: [32m'strictEqual'[39m
+}
+
+stdout | pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should return 403 when using system key without builder permissions
+Error in test:
+AssertionError: expected 204 to be 403 // Object.is equality
+    at [90m/workspace/repo/front/[39mpages/api/v1/w/[wId]/files/fileId.test.ts:328:36
+[90m    at processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at [90m/workspace/repo/front/[39mtests/utils/utils.ts:14:9
+    at [90m/workspace/repo/front/[39mnode_modules/[4msequelize[24m/src/sequelize.js:1196:18
+    at [90m/workspace/repo/front/[39mtests/utils/utils.ts:13:7
+    at [90mfile:///workspace/repo/front/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:563:22 {
+  actual: [33m204[39m,
+  expected: [33m403[39m,
+  showDiff: [33mtrue[39m,
+  operator: [32m'strictEqual'[39m
+}
+
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should return error for non-supported use cases for non-system keys
+ × pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should return 403 without builder permissions on non-conversation files
+   → expected 200 to be 403 // Object.is equality
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should allow non-builder to modify conversation files
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should allow system API key to modify any file
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should return error for non-supported use cases for non-system keys
+ × pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should return 403 when using system key without builder permissions
+   → expected 204 to be 403 // Object.is equality
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should allow non-builder to delete conversation files
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should allow system API key to delete any file
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > Method Support /api/v1/w/[wId]/files/[fileId] > should return 405 for unsupported methods
+stdout | pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should return 403 when user is not a builder for non-conversation files
+Error in test:
+AssertionError: expected 204 to be 403 // Object.is equality
+    at [90m/workspace/repo/front/[39mpages/api/w/[wId]/files/[fileId]/index.test.ts:272:36
+[90m    at processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at [90m/workspace/repo/front/[39mtests/utils/utils.ts:14:9
+    at [90m/workspace/repo/front/[39mnode_modules/[4msequelize[24m/src/sequelize.js:1196:18
+    at [90m/workspace/repo/front/[39mtests/utils/utils.ts:13:7
+    at [90mfile:///workspace/repo/front/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:563:22 {
+  actual: [33m204[39m,
+  expected: [33m403[39m,
+  showDiff: [33mtrue[39m,
+  operator: [32m'strictEqual'[39m
+}
+
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > GET /api/w/[wId]/files/[fileId] > should allow any role to view file for GET request
+ × pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should return 403 when user is not a builder for non-conversation files
+   → expected 200 to be 403 // Object.is equality
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should allow regular user to modify conversation files
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should allow admin to modify any file
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should allow builder to modify any file
+ × pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should return 403 when user is not a builder for non-conversation files
+   → expected 204 to be 403 // Object.is equality
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should allow regular user to delete conversation files
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should allow admin to delete any file
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should allow builder to delete any file
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > Method Support /api/w/[wId]/files/[fileId] > should return 405 for unsupported methods
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should return 403 without builder permissions on non-conversation files
+AssertionError: expected 200 to be 403 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 403[39m
+[31m+ 200[39m
+
+ ❯ pages/api/v1/w/[wId]/files/fileId.test.ts:243:36
+    241| 
+    242|       await handler(req, res);
+    243|       expect(res._getStatusCode()).toBe(403);
+       |                                    ^
+    244|       expect(res._getJSONData()).toEqual({
+    245|         error: {
+ ❯ tests/utils/utils.ts:14:9
+ ❯ node_modules/sequelize/src/sequelize.js:1196:18
+ ❯ tests/utils/utils.ts:13:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should return 403 when using system key without builder permissions
+AssertionError: expected 204 to be 403 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 403[39m
+[31m+ 204[39m
+
+ ❯ pages/api/v1/w/[wId]/files/fileId.test.ts:328:36
+    326| 
+    327|       await handler(req, res);
+    328|       expect(res._getStatusCode()).toBe(403);
+       |                                    ^
+    329|       expect(res._getJSONData()).toEqual({
+    330|         error: {
+ ❯ tests/utils/utils.ts:14:9
+ ❯ node_modules/sequelize/src/sequelize.js:1196:18
+ ❯ tests/utils/utils.ts:13:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should return 403 when user is not a builder for non-conversation files
+AssertionError: expected 200 to be 403 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 403[39m
+[31m+ 200[39m
+
+ ❯ pages/api/w/[wId]/files/[fileId]/index.test.ts:211:36
+    209| 
+    210|       await handler(req, res);
+    211|       expect(res._getStatusCode()).toBe(403);
+       |                                    ^
+    212|       expect(res._getJSONData()).toEqual({
+    213|         error: {
+ ❯ tests/utils/utils.ts:14:9
+ ❯ node_modules/sequelize/src/sequelize.js:1196:18
+ ❯ tests/utils/utils.ts:13:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should return 403 when user is not a builder for non-conversation files
+AssertionError: expected 204 to be 403 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 403[39m
+[31m+ 204[39m
+
+ ❯ pages/api/w/[wId]/files/[fileId]/index.test.ts:272:36
+    270| 
+    271|       await handler(req, res);
+    272|       expect(res._getStatusCode()).toBe(403);
+       |                                    ^
+    273|       expect(res._getJSONData()).toEqual({
+    274|         error: {
+ ❯ tests/utils/utils.ts:14:9
+ ❯ node_modules/sequelize/src/sequelize.js:1196:18
+ ❯ tests/utils/utils.ts:13:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  4 failed | 18 passed (22)
+   Start at  15:26:12
+   Duration  5.47s (transform 1.32s, setup 490ms, collect 7.44s, tests 395ms, environment 1.04s, prepare 269ms)
+
+reward=0 graded=22 found=0 failed=0 parsed=0 framework=vitest exit_code=1

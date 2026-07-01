@@ -1,0 +1,23 @@
+{
+ "task": "foundationdb-fdb-record-layer-2713",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.sh runs './gradlew :fdb-record-layer-lucene:test --tests ...LuceneAutoCompletedMatchesTest' + dumps JUnit XML; F2P=24 (searchForCjk, searchForGoodMor, autoCompleteMatchesWithStopWord)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 8,
+  "shallow": true
+ }
+}

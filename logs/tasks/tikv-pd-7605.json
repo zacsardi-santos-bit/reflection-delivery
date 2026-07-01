@@ -1,0 +1,23 @@
+{
+ "task": "tikv-pd-7605",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'var PDCli pd.Client' + 'func SetNewPDClient' and rewrites showClusterCommandFunc to 'PDCli.GetCluster(context.Background())'; F2P 'TestClusterAndPing' runs go test on ./pd-ctl/tests/cluster"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

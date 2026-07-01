@@ -1,0 +1,25 @@
+patching file sdk/nodejs/npm/workspaces_test.go
+patching file tests/integration/integration_nodejs_test.go
+patching file tests/integration/nodejs/npm-and-yarn-not-a-workspace/infra/Pulumi.yaml
+patching file tests/integration/nodejs/npm-and-yarn-not-a-workspace/infra/index.ts
+patching file tests/integration/nodejs/npm-and-yarn-not-a-workspace/infra/package.json
+patching file tests/integration/nodejs/npm-and-yarn-not-a-workspace/package.json
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/infra/Pulumi.yaml
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/infra/index.ts
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/infra/package.json
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/package.json
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/packages/my-random/index.ts
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/packages/my-random/package.json
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/infra/Pulumi.yaml
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/infra/index.ts
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/infra/package.json
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/package.json
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/packages/my-random/index.ts
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/packages/my-random/package.json
+# github.com/pulumi/pulumi/sdk/v3/nodejs/npm [github.com/pulumi/pulumi/sdk/v3/nodejs/npm.test]
+nodejs/npm/workspaces_test.go:26:15: undefined: FindWorkspaceRoot
+nodejs/npm/workspaces_test.go:35:12: undefined: FindWorkspaceRoot
+nodejs/npm/workspaces_test.go:37:26: undefined: ErrNotInWorkspace
+FAIL	github.com/pulumi/pulumi/sdk/v3/nodejs/npm [build failed]
+FAIL
+reward=0 graded=11 found=11 failed=11 parsed=1 framework=go exit_code=1

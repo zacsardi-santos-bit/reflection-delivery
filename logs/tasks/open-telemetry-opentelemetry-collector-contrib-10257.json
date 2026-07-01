@@ -1,0 +1,23 @@
+{
+ "task": "open-telemetry-opentelemetry-collector-contrib-10257",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden clamps: 'if min > avg { min = avg }' / 'if max < avg { max = avg }'; test asserts serialized 'min=10,max=15,sum=30,count=2' for avg>boundary case; F2P=3"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 16,
+  "shallow": true
+ }
+}

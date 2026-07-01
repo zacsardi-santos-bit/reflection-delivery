@@ -1,0 +1,23 @@
+{
+ "task": "ovh-cds-7501",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden guards matrix/template interpolation behind '!Status.IsTerminated()' and returns empty permutation when terminated; TestSkipMatrix asserts each job.Status==Skipped and run.Status==Skipped"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 44,
+  "shallow": true
+ }
+}

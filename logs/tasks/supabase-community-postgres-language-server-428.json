@@ -1,0 +1,23 @@
+{
+ "task": "supabase-community-postgres-language-server-428",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P pgt_lsp::server test_multiple_content_changes_single_request; golden sorts change_indices by start desc and applies last-to-first: 'process from last to first to avoid position invalidation'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

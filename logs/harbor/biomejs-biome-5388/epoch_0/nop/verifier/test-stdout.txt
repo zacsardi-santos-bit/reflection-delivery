@@ -1,0 +1,316 @@
+patching file crates/biome_cli/tests/snapshots/main_configuration/incorrect_rule_name.snap
+patching file crates/biome_js_analyze/tests/spec_tests.rs
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/default_package.js
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/default_package.js.snap
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/default_package.options.json
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/foo.js
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/foo.js.snap
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/invalid.js
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/invalid.js.snap
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/sub/foo.js
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/sub/foo.js.snap
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/sub/importPrivate.js
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/sub/importPrivate.js.snap
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/sub/index.js
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/sub/index.js.snap
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/sub2/default_package_nested.js
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/sub2/default_package_nested.js.snap
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/sub2/default_package_nested.options.json
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/valid.js
+patching file crates/biome_js_analyze/tests/specs/correctness/noPrivateImports/valid.js.snap
+patching file crates/biome_js_analyze/tests/specs/nursery/noPackagePrivateImports/invalid.js
+patching file crates/biome_js_analyze/tests/specs/nursery/noPackagePrivateImports/invalid.js.snap
+patching file crates/biome_js_analyze/tests/specs/nursery/noPackagePrivateImports/valid.js
+patching file crates/biome_js_analyze/tests/specs/nursery/noPackagePrivateImports/valid.js.snap
+   Compiling proc-macro2 v1.0.94
+   Compiling unicode-ident v1.0.8
+   Compiling serde v1.0.219
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.170
+   Compiling unicode-segmentation v1.12.0
+   Compiling once_cell v1.20.3
+   Compiling memchr v2.7.4
+   Compiling hashbrown v0.15.2
+   Compiling rustc-hash v2.1.1
+   Compiling syn v1.0.109
+   Compiling autocfg v1.1.0
+   Compiling parking_lot_core v0.9.9
+   Compiling biome_string_case v0.5.7 (/workspace/repo/crates/biome_string_case)
+   Compiling scopeguard v1.1.0
+   Compiling hashbrown v0.14.5
+   Compiling rustc-hash v1.1.0
+   Compiling bitflags v2.8.0
+   Compiling camino v1.1.9
+   Compiling unicode-width v0.1.12
+   Compiling itoa v1.0.6
+   Compiling adler2 v2.0.0
+   Compiling gimli v0.31.0
+   Compiling ryu v1.0.13
+   Compiling lock_api v0.4.11
+   Compiling similar v2.7.0
+   Compiling rustix v1.0.1
+   Compiling miniz_oxide v0.8.0
+   Compiling rustc-demangle v0.1.24
+   Compiling object v0.36.0
+   Compiling linux-raw-sys v0.9.2
+   Compiling pin-project-lite v0.2.13
+   Compiling termcolor v1.4.1
+   Compiling tracing-core v0.1.33
+   Compiling log v0.4.26
+   Compiling drop_bomb v0.1.5
+   Compiling thiserror v1.0.63
+   Compiling unicode-bom v2.0.3
+   Compiling biome_unicode_table v0.5.7 (/workspace/repo/crates/biome_unicode_table)
+   Compiling equivalent v1.0.1
+   Compiling serde_json v1.0.140
+   Compiling void v1.0.2
+   Compiling json-strip-comments v1.0.2
+   Compiling simdutf8 v0.1.4
+   Compiling result v1.0.0
+   Compiling countme v3.0.1
+   Compiling aho-corasick v1.1.2
+   Compiling prettyplease v0.2.30
+   Compiling crossbeam-utils v0.8.19
+   Compiling regex-syntax v0.8.5
+   Compiling bstr v1.8.0
+   Compiling fnv v1.0.7
+   Compiling strsim v0.10.0
+   Compiling addr2line v0.24.1
+   Compiling quote v1.0.40
+   Compiling ident_case v1.0.1
+   Compiling either v1.13.0
+   Compiling rayon-core v1.12.1
+   Compiling seize v0.5.0
+   Compiling path-dedot v3.1.1
+   Compiling syn v2.0.96
+   Compiling same-file v1.0.6
+   Compiling minimal-lexical v0.2.1
+   Compiling proc-macro-error-attr2 v2.0.0
+   Compiling biome_diagnostics_categories v0.5.7 (/workspace/repo/crates/biome_diagnostics_categories)
+   Compiling terminal_size v0.4.2
+   Compiling option-ext v0.2.0
+   Compiling papaya v0.2.0
+   Compiling walkdir v2.5.0
+   Compiling dirs-sys v0.5.0
+   Compiling nom v7.1.3
+   Compiling path-absolutize v3.1.1
+   Compiling getrandom v0.2.15
+   Compiling num-traits v0.2.19
+   Compiling bytecount v0.6.7
+   Compiling backtrace v0.3.74
+   Compiling crossbeam-epoch v0.9.18
+   Compiling regex-automata v0.4.8
+   Compiling crossbeam-channel v0.5.11
+   Compiling crossbeam-queue v0.3.11
+   Compiling static_assertions v1.1.0
+   Compiling rand_core v0.6.4
+   Compiling directories v6.0.0
+   Compiling ppv-lite86 v0.2.17
+   Compiling crossbeam-deque v0.8.5
+   Compiling radium v0.7.0
+   Compiling tap v1.0.1
+   Compiling stable_deref_trait v1.2.0
+   Compiling itertools v0.10.5
+   Compiling crossbeam v0.8.4
+   Compiling elsa v1.10.0
+   Compiling rand_chacha v0.3.1
+   Compiling wyz v0.5.1
+   Compiling natord v1.0.9
+   Compiling proc-macro-error2 v2.0.1
+   Compiling funty v2.0.0
+   Compiling rayon v1.10.0
+   Compiling rand v0.8.5
+   Compiling byteorder v1.5.0
+   Compiling biome_markup v0.5.7 (/workspace/repo/crates/biome_markup)
+   Compiling bytemuck v1.21.0
+   Compiling inotify-sys v0.1.5
+   Compiling filetime v0.2.25
+   Compiling mio v1.0.1
+   Compiling roaring v0.10.10
+   Compiling darling_core v0.14.4
+   Compiling bitvec v1.0.1
+   Compiling inotify v0.11.0
+   Compiling regex v1.11.1
+   Compiling globset v0.4.16
+   Compiling rust-lapper v1.1.0
+   Compiling notify-types v2.0.0
+   Compiling tokio v1.44.1
+   Compiling lazy_static v1.5.0
+   Compiling notify v8.0.0
+   Compiling append-only-vec v0.1.7
+   Compiling console v0.15.5
+   Compiling linked-hash-map v0.5.6
+   Compiling ignore v0.4.23
+   Compiling case v1.0.0
+   Compiling json_comments v0.2.2
+   Compiling biome_diagnostics_macros v0.5.7 (/workspace/repo/crates/biome_diagnostics_macros)
+   Compiling biome_deserialize_macros v0.6.0 (/workspace/repo/crates/biome_deserialize_macros)
+   Compiling pin-project-internal v1.0.12
+   Compiling serde_derive v1.0.219
+   Compiling tracing-attributes v0.1.28
+   Compiling enumflags2_derive v0.7.11
+   Compiling thiserror-impl v1.0.63
+   Compiling miette-derive v7.5.0
+   Compiling bpaf_derive v0.5.17
+   Compiling darling_macro v0.14.4
+   Compiling globwalk v0.9.1
+   Compiling tests_macros v0.0.0 (/workspace/repo/crates/tests_macros)
+   Compiling pin-project v1.0.12
+   Compiling insta v1.42.2
+   Compiling miette v7.5.0
+   Compiling darling v0.14.4
+   Compiling bpaf v0.9.19
+   Compiling derive_builder_core v0.13.1
+   Compiling tracing v0.1.41
+   Compiling derive_builder_macro v0.13.1
+   Compiling derive_builder v0.13.1
+   Compiling biome_text_size v0.5.7 (/workspace/repo/crates/biome_text_size)
+   Compiling smallvec v1.14.0
+   Compiling enumflags2 v0.7.11
+   Compiling indexmap v2.8.0
+   Compiling serde_ini v0.2.0
+   Compiling node-semver v2.2.0
+   Compiling grit-util v0.5.1
+   Compiling biome_text_edit v0.5.7 (/workspace/repo/crates/biome_text_edit)
+   Compiling biome_console v0.5.7 (/workspace/repo/crates/biome_console)
+   Compiling dashmap v5.5.3
+   Compiling parking_lot v0.12.3
+   Compiling biome_rowan v0.5.7 (/workspace/repo/crates/biome_rowan)
+   Compiling grit-pattern-matcher v0.5.1
+   Compiling biome_flags v0.0.0 (/workspace/repo/crates/biome_flags)
+   Compiling oxc_resolver v4.2.0
+   Compiling biome_json_syntax v0.5.7 (/workspace/repo/crates/biome_json_syntax)
+   Compiling biome_diagnostics v0.5.7 (/workspace/repo/crates/biome_diagnostics)
+   Compiling biome_css_syntax v0.5.7 (/workspace/repo/crates/biome_css_syntax)
+   Compiling biome_grit_syntax v0.5.7 (/workspace/repo/crates/biome_grit_syntax)
+   Compiling biome_graphql_syntax v0.1.0 (/workspace/repo/crates/biome_graphql_syntax)
+   Compiling biome_html_syntax v0.5.7 (/workspace/repo/crates/biome_html_syntax)
+   Compiling biome_control_flow v0.5.7 (/workspace/repo/crates/biome_control_flow)
+   Compiling biome_json_factory v0.5.7 (/workspace/repo/crates/biome_json_factory)
+   Compiling biome_html_factory v0.5.7 (/workspace/repo/crates/biome_html_factory)
+   Compiling biome_parser v0.5.7 (/workspace/repo/crates/biome_parser)
+   Compiling biome_suppression v0.5.7 (/workspace/repo/crates/biome_suppression)
+   Compiling biome_fs v0.5.7 (/workspace/repo/crates/biome_fs)
+   Compiling biome_json_parser v0.5.7 (/workspace/repo/crates/biome_json_parser)
+   Compiling biome_graphql_factory v0.1.0 (/workspace/repo/crates/biome_graphql_factory)
+   Compiling biome_deserialize v0.6.0 (/workspace/repo/crates/biome_deserialize)
+   Compiling biome_html_parser v0.0.1 (/workspace/repo/crates/biome_html_parser)
+   Compiling biome_graphql_parser v0.1.0 (/workspace/repo/crates/biome_graphql_parser)
+   Compiling biome_grit_factory v0.5.7 (/workspace/repo/crates/biome_grit_factory)
+   Compiling biome_aria_metadata v0.5.7 (/workspace/repo/crates/biome_aria_metadata)
+   Compiling biome_grit_parser v0.1.0 (/workspace/repo/crates/biome_grit_parser)
+   Compiling biome_formatter v0.5.7 (/workspace/repo/crates/biome_formatter)
+   Compiling biome_analyze v0.5.7 (/workspace/repo/crates/biome_analyze)
+   Compiling biome_json_value v0.1.0 (/workspace/repo/crates/biome_json_value)
+   Compiling biome_glob v0.1.0 (/workspace/repo/crates/biome_glob)
+   Compiling biome_package v0.5.7 (/workspace/repo/crates/biome_package)
+   Compiling biome_css_factory v0.5.7 (/workspace/repo/crates/biome_css_factory)
+   Compiling biome_css_semantic v0.0.0 (/workspace/repo/crates/biome_css_semantic)
+   Compiling biome_project_layout v0.0.1 (/workspace/repo/crates/biome_project_layout)
+   Compiling biome_css_parser v0.5.7 (/workspace/repo/crates/biome_css_parser)
+   Compiling biome_css_analyze v0.5.7 (/workspace/repo/crates/biome_css_analyze)
+   Compiling biome_json_analyze v0.5.7 (/workspace/repo/crates/biome_json_analyze)
+   Compiling biome_graphql_analyze v0.0.1 (/workspace/repo/crates/biome_graphql_analyze)
+   Compiling biome_json_formatter v0.5.7 (/workspace/repo/crates/biome_json_formatter)
+   Compiling biome_html_formatter v0.0.0 (/workspace/repo/crates/biome_html_formatter)
+   Compiling biome_graphql_formatter v0.1.0 (/workspace/repo/crates/biome_graphql_formatter)
+   Compiling biome_grit_formatter v0.0.0 (/workspace/repo/crates/biome_grit_formatter)
+   Compiling biome_css_formatter v0.5.7 (/workspace/repo/crates/biome_css_formatter)
+   Compiling biome_aria v0.5.7 (/workspace/repo/crates/biome_aria)
+   Compiling biome_js_syntax v0.5.7 (/workspace/repo/crates/biome_js_syntax)
+   Compiling biome_js_factory v0.5.7 (/workspace/repo/crates/biome_js_factory)
+   Compiling biome_js_semantic v0.5.7 (/workspace/repo/crates/biome_js_semantic)
+   Compiling biome_dependency_graph v0.0.1 (/workspace/repo/crates/biome_dependency_graph)
+   Compiling biome_js_parser v0.5.7 (/workspace/repo/crates/biome_js_parser)
+   Compiling biome_js_analyze v0.5.7 (/workspace/repo/crates/biome_js_analyze)
+   Compiling biome_js_formatter v0.5.7 (/workspace/repo/crates/biome_js_formatter)
+   Compiling biome_grit_patterns v0.0.1 (/workspace/repo/crates/biome_grit_patterns)
+   Compiling biome_plugin_loader v0.0.1 (/workspace/repo/crates/biome_plugin_loader)
+   Compiling biome_configuration v0.0.1 (/workspace/repo/crates/biome_configuration)
+   Compiling biome_service v0.0.0 (/workspace/repo/crates/biome_service)
+   Compiling biome_test_utils v0.0.0 (/workspace/repo/crates/biome_test_utils)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 42s
+     Running tests/spec_tests.rs (target/debug/deps/spec_tests-b47395efb235e00f)
+
+running 10 tests
+  FAIL [   0.001s] specs::correctness::no_private_imports::default_package_options_json
+  FAIL [   0.001s] specs::correctness::no_private_imports::sub::foo_js
+  FAIL [   0.001s] specs::correctness::no_private_imports::sub::import_private_js
+  FAIL [   0.001s] specs::correctness::no_private_imports::default_package_js
+  FAIL [   0.001s] specs::correctness::no_private_imports::sub2::default_package_nested_options_json
+  FAIL [   0.001s] specs::correctness::no_private_imports::valid_js
+  FAIL [   0.001s] specs::correctness::no_private_imports::sub::index_js
+  FAIL [   0.001s] specs::correctness::no_private_imports::sub2::default_package_nested_js
+  FAIL [   0.001s] specs::correctness::no_private_imports::foo_js
+  FAIL [   0.001s] specs::correctness::no_private_imports::invalid_js
+
+failures:
+
+---- specs::correctness::no_private_imports::default_package_options_json stdout ----
+
+thread 'specs::correctness::no_private_imports::default_package_options_json' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+
+---- specs::correctness::no_private_imports::sub::foo_js stdout ----
+
+thread 'specs::correctness::no_private_imports::sub::foo_js' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+
+---- specs::correctness::no_private_imports::sub::import_private_js stdout ----
+
+thread 'specs::correctness::no_private_imports::sub::import_private_js' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+
+---- specs::correctness::no_private_imports::default_package_js stdout ----
+
+thread 'specs::correctness::no_private_imports::default_package_js' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+
+---- specs::correctness::no_private_imports::sub2::default_package_nested_options_json stdout ----
+
+thread 'specs::correctness::no_private_imports::sub2::default_package_nested_options_json' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+
+---- specs::correctness::no_private_imports::valid_js stdout ----
+
+thread 'specs::correctness::no_private_imports::valid_js' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+
+---- specs::correctness::no_private_imports::sub::index_js stdout ----
+
+thread 'specs::correctness::no_private_imports::sub::index_js' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+
+---- specs::correctness::no_private_imports::sub2::default_package_nested_js stdout ----
+
+thread 'specs::correctness::no_private_imports::sub2::default_package_nested_js' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+
+---- specs::correctness::no_private_imports::foo_js stdout ----
+
+thread 'specs::correctness::no_private_imports::foo_js' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+
+---- specs::correctness::no_private_imports::invalid_js stdout ----
+
+thread 'specs::correctness::no_private_imports::invalid_js' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+could not find rule correctness/noPrivateImports
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    specs::correctness::no_private_imports::default_package_js
+    specs::correctness::no_private_imports::default_package_options_json
+    specs::correctness::no_private_imports::foo_js
+    specs::correctness::no_private_imports::invalid_js
+    specs::correctness::no_private_imports::sub2::default_package_nested_js
+    specs::correctness::no_private_imports::sub2::default_package_nested_options_json
+    specs::correctness::no_private_imports::sub::foo_js
+    specs::correctness::no_private_imports::sub::import_private_js
+    specs::correctness::no_private_imports::sub::index_js
+    specs::correctness::no_private_imports::valid_js
+
+test result: FAILED. 0 passed; 10 failed; 0 ignored; 0 measured; 1275 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p biome_js_analyze --test spec_tests`
+reward=0 graded=10 found=10 failed=10 parsed=10 framework=cargo exit_code=101

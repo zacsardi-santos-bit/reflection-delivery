@@ -1,0 +1,1186 @@
+patching file tests/driver/runner_test.py
+patching file tests/track/params_test.py
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.8.20, pytest-5.4.0, py-1.11.0, pluggy-0.13.1 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+benchmark: 3.2.2 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo, inifile: setup.cfg
+plugins: benchmark-3.2.2, asyncio-0.14.0
+[1mcollecting ... [0mcollected 221 items
+
+tests/driver/runner_test.py::RegisterRunnerTests::test_multi_cluster_runner_class_should_be_wrapped <- tests/__init__.py [32mPASSED[0m[33m [  0%][0m
+tests/driver/runner_test.py::RegisterRunnerTests::test_multi_cluster_runner_class_with_context_manager_should_be_wrapped_with_context_manager_enabled <- tests/__init__.py [32mPASSED[0m[33m [  0%][0m
+tests/driver/runner_test.py::RegisterRunnerTests::test_runner_function_should_be_wrapped <- tests/__init__.py [32mPASSED[0m[33m [  1%][0m
+tests/driver/runner_test.py::RegisterRunnerTests::test_single_cluster_runner_class_should_be_wrapped <- tests/__init__.py [32mPASSED[0m[33m [  1%][0m
+tests/driver/runner_test.py::RegisterRunnerTests::test_single_cluster_runner_class_with_context_manager_should_be_wrapped_with_context_manager_enabled <- tests/__init__.py [32mPASSED[0m[33m [  2%][0m
+tests/driver/runner_test.py::SelectiveJsonParserTests::test_list_length [32mPASSED[0m[33m [  2%][0m
+tests/driver/runner_test.py::SelectiveJsonParserTests::test_parse_all_expected [32mPASSED[0m[33m [  3%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_bulk_index_error <- tests/__init__.py [32mPASSED[0m[33m [  3%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_bulk_index_error_no_shards <- tests/__init__.py [32mPASSED[0m[33m [  4%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_bulk_index_missing_params <- tests/__init__.py [32mPASSED[0m[33m [  4%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_bulk_index_success_with_metadata <- tests/__init__.py [32mPASSED[0m[33m [  4%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_bulk_index_success_without_metadata_and_without_doc_type <- tests/__init__.py [32mPASSED[0m[33m [  5%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_bulk_index_success_without_metadata_with_doc_type <- tests/__init__.py [32mPASSED[0m[33m [  5%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_mixed_bulk_with_detailed_stats_body_as_string <- tests/__init__.py [32mPASSED[0m[33m [  6%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_mixed_bulk_with_simple_stats <- tests/__init__.py [32mPASSED[0m[33m [  6%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_simple_bulk_with_detailed_stats_body_as_list <- tests/__init__.py [32mPASSED[0m[33m [  7%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_simple_bulk_with_detailed_stats_body_as_unrecognized_type <- tests/__init__.py [32mPASSED[0m[33m [  7%][0m
+tests/driver/runner_test.py::BulkIndexRunnerTests::test_simple_bulk_with_timeout_and_headers <- tests/__init__.py [31mFAILED[0m[31m [  8%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_force_merge_override_request_timeout <- tests/__init__.py [32mPASSED[0m[31m [  8%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_force_merge_with_defaults <- tests/__init__.py [31mFAILED[0m[31m [  9%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_force_merge_with_params <- tests/__init__.py [32mPASSED[0m[31m [  9%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_force_merge_with_polling <- tests/__init__.py [32mPASSED[0m[31m [  9%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_force_merge_with_polling_and_params <- tests/__init__.py [32mPASSED[0m[31m [ 10%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_force_merge_with_polling_no_timeout <- tests/__init__.py [32mPASSED[0m[31m [ 10%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_force_merge_with_timeout_and_headers <- tests/__init__.py [31mFAILED[0m[31m [ 11%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_optimize_with_defaults <- tests/__init__.py [31mFAILED[0m[31m [ 11%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_optimize_with_params <- tests/__init__.py [31mFAILED[0m[31m [ 12%][0m
+tests/driver/runner_test.py::ForceMergeRunnerTests::test_optimize_with_timeout_and_headers <- tests/__init__.py [31mFAILED[0m[31m [ 12%][0m
+tests/driver/runner_test.py::IndicesStatsRunnerTests::test_indices_stats_with_failed_condition <- tests/__init__.py [32mPASSED[0m[31m [ 13%][0m
+tests/driver/runner_test.py::IndicesStatsRunnerTests::test_indices_stats_with_non_existing_path <- tests/__init__.py [32mPASSED[0m[31m [ 13%][0m
+tests/driver/runner_test.py::IndicesStatsRunnerTests::test_indices_stats_with_successful_condition <- tests/__init__.py [32mPASSED[0m[31m [ 14%][0m
+tests/driver/runner_test.py::IndicesStatsRunnerTests::test_indices_stats_with_timeout_and_headers <- tests/__init__.py [31mFAILED[0m[31m [ 14%][0m
+tests/driver/runner_test.py::IndicesStatsRunnerTests::test_indices_stats_without_parameters <- tests/__init__.py [32mPASSED[0m[31m [ 14%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_query_hits_total_as_number <- tests/__init__.py [32mPASSED[0m[31m [ 15%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_query_match_all <- tests/__init__.py [32mPASSED[0m[31m [ 15%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_query_match_all_doc_type_fallback <- tests/__init__.py [32mPASSED[0m[31m [ 16%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_query_match_only_request_body_defined <- tests/__init__.py [32mPASSED[0m[31m [ 16%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_query_match_using_request_params <- tests/__init__.py [32mPASSED[0m[31m [ 17%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_query_no_detailed_results <- tests/__init__.py [32mPASSED[0m[31m [ 17%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_query_with_timeout_and_headers <- tests/__init__.py [31mFAILED[0m[31m [ 18%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_scroll_query_cannot_clear_scroll <- tests/__init__.py [32mPASSED[0m[31m [ 18%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_scroll_query_no_request_cache <- tests/__init__.py [32mPASSED[0m[31m [ 19%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_scroll_query_only_one_page <- tests/__init__.py [32mPASSED[0m[31m [ 19%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_scroll_query_only_one_page_only_request_body_defined <- tests/__init__.py [32mPASSED[0m[31m [ 19%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_scroll_query_request_all_pages <- tests/__init__.py [32mPASSED[0m[31m [ 20%][0m
+tests/driver/runner_test.py::QueryRunnerTests::test_scroll_query_with_explicit_number_of_pages <- tests/__init__.py [32mPASSED[0m[31m [ 20%][0m
+tests/driver/runner_test.py::PutPipelineRunnerTests::test_create_pipeline <- tests/__init__.py [32mPASSED[0m[31m [ 21%][0m
+tests/driver/runner_test.py::PutPipelineRunnerTests::test_param_body_mandatory <- tests/__init__.py [32mPASSED[0m[31m [ 21%][0m
+tests/driver/runner_test.py::PutPipelineRunnerTests::test_param_id_mandatory <- tests/__init__.py [32mPASSED[0m[31m [ 22%][0m
+tests/driver/runner_test.py::ClusterHealthRunnerTests::test_accepts_better_cluster_status <- tests/__init__.py [31mFAILED[0m[31m [ 22%][0m
+tests/driver/runner_test.py::ClusterHealthRunnerTests::test_cluster_health_with_timeout_and_headers <- tests/__init__.py [31mFAILED[0m[31m [ 23%][0m
+tests/driver/runner_test.py::ClusterHealthRunnerTests::test_rejects_relocating_shards <- tests/__init__.py [32mPASSED[0m[31m [ 23%][0m
+tests/driver/runner_test.py::ClusterHealthRunnerTests::test_rejects_unknown_cluster_status <- tests/__init__.py [31mFAILED[0m[31m [ 23%][0m
+tests/driver/runner_test.py::ClusterHealthRunnerTests::test_waits_for_expected_cluster_status <- tests/__init__.py [31mFAILED[0m[31m [ 24%][0m
+tests/driver/runner_test.py::CreateIndexRunnerTests::test_create_with_timeout_and_headers <- tests/__init__.py [31mFAILED[0m[31m [ 24%][0m
+tests/driver/runner_test.py::CreateIndexRunnerTests::test_creates_multiple_indices <- tests/__init__.py [32mPASSED[0m[31m [ 25%][0m
+tests/driver/runner_test.py::CreateIndexRunnerTests::test_ignore_invalid_params <- tests/__init__.py [32mPASSED[0m[31m [ 25%][0m
+tests/driver/runner_test.py::CreateIndexRunnerTests::test_param_indices_mandatory <- tests/__init__.py [32mPASSED[0m[31m [ 26%][0m
+tests/driver/runner_test.py::CreateDataStreamRunnerTests::test_creates_multiple_data_streams <- tests/__init__.py [32mPASSED[0m[31m [ 26%][0m
+tests/driver/runner_test.py::CreateDataStreamRunnerTests::test_param_data_streams_mandatory <- tests/__init__.py [32mPASSED[0m[31m [ 27%][0m
+tests/driver/runner_test.py::DeleteIndexRunnerTests::test_deletes_all_indices <- tests/__init__.py [32mPASSED[0m[31m [ 27%][0m
+tests/driver/runner_test.py::DeleteIndexRunnerTests::test_deletes_existing_indices <- tests/__init__.py [32mPASSED[0m[31m [ 28%][0m
+tests/driver/runner_test.py::DeleteDataStreamRunnerTests::test_deletes_all_data_streams <- tests/__init__.py [32mPASSED[0m[31m [ 28%][0m
+tests/driver/runner_test.py::DeleteDataStreamRunnerTests::test_deletes_existing_data_streams <- tests/__init__.py [32mPASSED[0m[31m [ 28%][0m
+tests/driver/runner_test.py::CreateIndexTemplateRunnerTests::test_create_index_templates <- tests/__init__.py [32mPASSED[0m[31m [ 29%][0m
+tests/driver/runner_test.py::CreateIndexTemplateRunnerTests::test_param_templates_mandatory <- tests/__init__.py [32mPASSED[0m[31m [ 29%][0m
+tests/driver/runner_test.py::DeleteIndexTemplateRunnerTests::test_deletes_all_index_templates <- tests/__init__.py [32mPASSED[0m[31m [ 30%][0m
+tests/driver/runner_test.py::DeleteIndexTemplateRunnerTests::test_deletes_only_existing_index_templates <- tests/__init__.py [32mPASSED[0m[31m [ 30%][0m
+tests/driver/runner_test.py::DeleteIndexTemplateRunnerTests::test_param_templates_mandatory <- tests/__init__.py [32mPASSED[0m[31m [ 31%][0m
+tests/driver/runner_test.py::CreateMlDatafeedTests::test_create_ml_datafeed <- tests/__init__.py [32mPASSED[0m[31m [ 31%][0m
+tests/driver/runner_test.py::CreateMlDatafeedTests::test_create_ml_datafeed_fallback <- tests/__init__.py [32mPASSED[0m[31m [ 32%][0m
+tests/driver/runner_test.py::DeleteMlDatafeedTests::test_delete_ml_datafeed <- tests/__init__.py [32mPASSED[0m[31m [ 32%][0m
+tests/driver/runner_test.py::DeleteMlDatafeedTests::test_delete_ml_datafeed_fallback <- tests/__init__.py [32mPASSED[0m[31m [ 33%][0m
+tests/driver/runner_test.py::StartMlDatafeedTests::test_start_ml_datafeed_with_body <- tests/__init__.py [32mPASSED[0m[31m [ 33%][0m
+tests/driver/runner_test.py::StartMlDatafeedTests::test_start_ml_datafeed_with_body_fallback <- tests/__init__.py [32mPASSED[0m[31m [ 33%][0m
+tests/driver/runner_test.py::StartMlDatafeedTests::test_start_ml_datafeed_with_params <- tests/__init__.py [32mPASSED[0m[31m [ 34%][0m
+tests/driver/runner_test.py::StopMlDatafeedTests::test_stop_ml_datafeed <- tests/__init__.py [32mPASSED[0m[31m [ 34%][0m
+tests/driver/runner_test.py::StopMlDatafeedTests::test_stop_ml_datafeed_fallback <- tests/__init__.py [32mPASSED[0m[31m [ 35%][0m
+tests/driver/runner_test.py::CreateMlJobTests::test_create_ml_job <- tests/__init__.py [32mPASSED[0m[31m [ 35%][0m
+tests/driver/runner_test.py::CreateMlJobTests::test_create_ml_job_fallback <- tests/__init__.py [32mPASSED[0m[31m [ 36%][0m
+tests/driver/runner_test.py::DeleteMlJobTests::test_delete_ml_job <- tests/__init__.py [32mPASSED[0m[31m [ 36%][0m
+tests/driver/runner_test.py::DeleteMlJobTests::test_delete_ml_job_fallback <- tests/__init__.py [32mPASSED[0m[31m [ 37%][0m
+tests/driver/runner_test.py::OpenMlJobTests::test_open_ml_job <- tests/__init__.py [32mPASSED[0m[31m [ 37%][0m
+tests/driver/runner_test.py::OpenMlJobTests::test_open_ml_job_fallback <- tests/__init__.py [32mPASSED[0m[31m [ 38%][0m
+tests/driver/runner_test.py::CloseMlJobTests::test_close_ml_job <- tests/__init__.py [32mPASSED[0m[31m [ 38%][0m
+tests/driver/runner_test.py::CloseMlJobTests::test_close_ml_job_fallback <- tests/__init__.py [32mPASSED[0m[31m [ 38%][0m
+tests/driver/runner_test.py::RawRequestRunnerTests::test_issue_create_index <- tests/__init__.py [32mPASSED[0m[31m [ 39%][0m
+tests/driver/runner_test.py::RawRequestRunnerTests::test_issue_delete_index <- tests/__init__.py [32mPASSED[0m[31m [ 39%][0m
+tests/driver/runner_test.py::RawRequestRunnerTests::test_issue_msearch <- tests/__init__.py [32mPASSED[0m[31m [ 40%][0m
+tests/driver/runner_test.py::RawRequestRunnerTests::test_issue_request_with_defaults <- tests/__init__.py [32mPASSED[0m[31m [ 40%][0m
+tests/driver/runner_test.py::RawRequestRunnerTests::test_raises_missing_slash <- tests/__init__.py [32mPASSED[0m[31m [ 41%][0m
+tests/driver/runner_test.py::RawRequestRunnerTests::test_raw_with_timeout_and_opaqueid <- tests/__init__.py [31mFAILED[0m[31m [ 41%][0m
+tests/driver/runner_test.py::SleepTests::test_missing_parameter <- tests/__init__.py [32mPASSED[0m[31m [ 42%][0m
+tests/driver/runner_test.py::SleepTests::test_sleep <- tests/__init__.py [32mPASSED[0m[31m [ 42%][0m
+tests/driver/runner_test.py::DeleteSnapshotRepositoryTests::test_delete_snapshot_repository <- tests/__init__.py [32mPASSED[0m[31m [ 42%][0m
+tests/driver/runner_test.py::CreateSnapshotRepositoryTests::test_create_snapshot_repository <- tests/__init__.py [32mPASSED[0m[31m [ 43%][0m
+tests/driver/runner_test.py::CreateSnapshotTests::test_create_snapshot_no_wait <- tests/__init__.py [32mPASSED[0m[31m [ 43%][0m
+tests/driver/runner_test.py::CreateSnapshotTests::test_create_snapshot_wait_for_completion <- tests/__init__.py [32mPASSED[0m[31m [ 44%][0m
+tests/driver/runner_test.py::WaitForSnapshotCreateTests::test_wait_for_snapshot_create_entire_lifecycle <- tests/__init__.py [32mPASSED[0m[31m [ 44%][0m
+tests/driver/runner_test.py::WaitForSnapshotCreateTests::test_wait_for_snapshot_create_failure <- tests/__init__.py [32mPASSED[0m[31m [ 45%][0m
+tests/driver/runner_test.py::WaitForSnapshotCreateTests::test_wait_for_snapshot_create_immediate_success <- tests/__init__.py [32mPASSED[0m[31m [ 45%][0m
+tests/driver/runner_test.py::RestoreSnapshotTests::test_restore_snapshot <- tests/__init__.py [31mFAILED[0m[31m [ 46%][0m
+tests/driver/runner_test.py::RestoreSnapshotTests::test_restore_snapshot_with_body <- tests/__init__.py [32mPASSED[0m[31m [ 46%][0m
+tests/driver/runner_test.py::IndicesRecoveryTests::test_waits_for_ongoing_indices_recovery <- tests/__init__.py [32mPASSED[0m[31m [ 47%][0m
+tests/driver/runner_test.py::ShrinkIndexTests::test_shrink_index_derives_shrink_node <- tests/__init__.py [32mPASSED[0m[31m [ 47%][0m
+tests/driver/runner_test.py::ShrinkIndexTests::test_shrink_index_with_shrink_node <- tests/__init__.py [32mPASSED[0m[31m [ 47%][0m
+tests/driver/runner_test.py::PutSettingsTests::test_put_settings <- tests/__init__.py [32mPASSED[0m[31m [ 48%][0m
+tests/driver/runner_test.py::CreateTransformTests::test_create_transform <- tests/__init__.py [32mPASSED[0m[31m [ 48%][0m
+tests/driver/runner_test.py::StartTransformTests::test_start_transform <- tests/__init__.py [32mPASSED[0m[31m [ 49%][0m
+tests/driver/runner_test.py::WaitForTransformTests::test_wait_for_transform <- tests/__init__.py [32mPASSED[0m[31m [ 49%][0m
+tests/driver/runner_test.py::WaitForTransformTests::test_wait_for_transform_progress <- tests/__init__.py [32mPASSED[0m[31m [ 50%][0m
+tests/driver/runner_test.py::DeleteTransformTests::test_delete_transform <- tests/__init__.py [32mPASSED[0m[31m [ 50%][0m
+tests/driver/runner_test.py::RetryTests::test_assumes_success_if_runner_returns_non_dict <- tests/__init__.py [32mPASSED[0m[31m [ 51%][0m
+tests/driver/runner_test.py::RetryTests::test_does_not_retry_on_application_error_if_not_wanted <- tests/__init__.py [32mPASSED[0m[31m [ 51%][0m
+tests/driver/runner_test.py::RetryTests::test_does_not_retry_on_timeout_if_not_wanted <- tests/__init__.py [32mPASSED[0m[31m [ 52%][0m
+tests/driver/runner_test.py::RetryTests::test_is_does_not_retry_on_success <- tests/__init__.py [32mPASSED[0m[31m [ 52%][0m
+tests/driver/runner_test.py::RetryTests::test_is_transparent_on_application_error_when_no_retries <- tests/__init__.py [32mPASSED[0m[31m [ 52%][0m
+tests/driver/runner_test.py::RetryTests::test_is_transparent_on_exception_when_no_retries <- tests/__init__.py [32mPASSED[0m[31m [ 53%][0m
+tests/driver/runner_test.py::RetryTests::test_is_transparent_on_success_when_no_retries <- tests/__init__.py [32mPASSED[0m[31m [ 53%][0m
+tests/driver/runner_test.py::RetryTests::test_retries_mixed_timeout_and_application_errors <- tests/__init__.py [32mPASSED[0m[31m [ 54%][0m
+tests/driver/runner_test.py::RetryTests::test_retries_on_application_error_if_wanted <- tests/__init__.py [32mPASSED[0m[31m [ 54%][0m
+tests/driver/runner_test.py::RetryTests::test_retries_on_timeout_if_wanted_and_raises_if_no_recovery <- tests/__init__.py [32mPASSED[0m[31m [ 55%][0m
+tests/driver/runner_test.py::RetryTests::test_retries_on_timeout_if_wanted_and_returns_first_call <- tests/__init__.py [32mPASSED[0m[31m [ 55%][0m
+tests/driver/runner_test.py::RetryTests::test_retries_until_success <- tests/__init__.py [32mPASSED[0m[31m [ 56%][0m
+tests/track/params_test.py::SliceTests::test_slice_with_slice_larger_than_source [32mPASSED[0m[31m [ 56%][0m
+tests/track/params_test.py::SliceTests::test_slice_with_source_larger_than_slice [32mPASSED[0m[31m [ 57%][0m
+tests/track/params_test.py::ConflictingIdsBuilderTests::test_no_id_conflicts [32mPASSED[0m[31m [ 57%][0m
+tests/track/params_test.py::ConflictingIdsBuilderTests::test_random_conflicts [32mPASSED[0m[31m [ 57%][0m
+tests/track/params_test.py::ConflictingIdsBuilderTests::test_sequential_conflicts [32mPASSED[0m[31m [ 58%][0m
+tests/track/params_test.py::ActionMetaDataTests::test_generate_action_meta_data_create [32mPASSED[0m[31m [ 58%][0m
+tests/track/params_test.py::ActionMetaDataTests::test_generate_action_meta_data_create_with_conflicts [32mPASSED[0m[31m [ 59%][0m
+tests/track/params_test.py::ActionMetaDataTests::test_generate_action_meta_data_typeless [32mPASSED[0m[31m [ 59%][0m
+tests/track/params_test.py::ActionMetaDataTests::test_generate_action_meta_data_with_id_and_zero_conflict_probability [32mPASSED[0m[31m [ 60%][0m
+tests/track/params_test.py::ActionMetaDataTests::test_generate_action_meta_data_with_id_conflicts [32mPASSED[0m[31m [ 60%][0m
+tests/track/params_test.py::ActionMetaDataTests::test_generate_action_meta_data_with_id_conflicts_and_recency_bias [32mPASSED[0m[31m [ 61%][0m
+tests/track/params_test.py::ActionMetaDataTests::test_generate_action_meta_data_without_id_conflicts [32mPASSED[0m[31m [ 61%][0m
+tests/track/params_test.py::IndexDataReaderTests::test_read_bulk_larger_than_number_of_docs [32mPASSED[0m[31m [ 61%][0m
+tests/track/params_test.py::IndexDataReaderTests::test_read_bulk_smaller_than_number_of_docs [32mPASSED[0m[31m [ 62%][0m
+tests/track/params_test.py::IndexDataReaderTests::test_read_bulk_smaller_than_number_of_docs_and_multiple_clients [32mPASSED[0m[31m [ 62%][0m
+tests/track/params_test.py::IndexDataReaderTests::test_read_bulk_with_external_id_and_zero_conflict_probability [32mPASSED[0m[31m [ 63%][0m
+tests/track/params_test.py::IndexDataReaderTests::test_read_bulk_with_id_conflicts [32mPASSED[0m[31m [ 63%][0m
+tests/track/params_test.py::IndexDataReaderTests::test_read_bulk_with_offset [32mPASSED[0m[31m [ 64%][0m
+tests/track/params_test.py::IndexDataReaderTests::test_read_bulks_and_assume_metadata_line_in_source_file [32mPASSED[0m[31m [ 64%][0m
+tests/track/params_test.py::InvocationGeneratorTests::test_build_conflicting_ids [32mPASSED[0m[31m [ 65%][0m
+tests/track/params_test.py::InvocationGeneratorTests::test_calculate_bounds [32mPASSED[0m[31m [ 65%][0m
+tests/track/params_test.py::InvocationGeneratorTests::test_calculate_bounds_for_multiple_clients_per_worker [32mPASSED[0m[31m [ 66%][0m
+tests/track/params_test.py::InvocationGeneratorTests::test_calculate_non_multiple_bounds_16_clients [32mPASSED[0m[31m [ 66%][0m
+tests/track/params_test.py::InvocationGeneratorTests::test_calculate_non_multiple_bounds_6_clients [32mPASSED[0m[31m [ 66%][0m
+tests/track/params_test.py::InvocationGeneratorTests::test_calculate_number_of_bulks [32mPASSED[0m[31m [ 67%][0m
+tests/track/params_test.py::InvocationGeneratorTests::test_iterator_chaining_respects_context_manager [32mPASSED[0m[31m [ 67%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_valid_param_source [32mPASSED[0m[31m [ 68%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_conflict_probability_not_numeric [32mPASSED[0m[31m [ 68%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_conflict_probability_too_high [32mPASSED[0m[31m [ 69%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_conflict_probability_too_low [32mPASSED[0m[31m [ 69%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_conflict_probability_zero [32mPASSED[0m[31m [ 70%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_conflicts_and_data_streams [32mPASSED[0m[31m [ 70%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_fraction_larger_batch_size [32mPASSED[0m[31m [ 71%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_fraction_smaller_batch_size [32mPASSED[0m[31m [ 71%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_ingest_percentage_not_numeric [32mPASSED[0m[31m [ 71%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_ingest_percentage_too_high [32mPASSED[0m[31m [ 72%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_ingest_percentage_too_low [32mPASSED[0m[31m [ 72%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_metadata_in_source_file_but_conflicts [32mPASSED[0m[31m [ 73%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_negative_bulk_size [32mPASSED[0m[31m [ 73%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_non_numeric_bulk_size [32mPASSED[0m[31m [ 74%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_unknown_id_conflicts [32mPASSED[0m[31m [ 74%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_with_unknown_on_conflict_setting [32mPASSED[0m[31m [ 75%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_without_corpora_definition [32mPASSED[0m[31m [ 75%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_create_without_params [32mPASSED[0m[31m [ 76%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_filters_corpora [32mPASSED[0m[31m [ 76%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_filters_corpora_by_data_stream [32mPASSED[0m[31m [ 76%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_ingests_all_documents_by_default [32mPASSED[0m[31m [ 77%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_passes_all_corpora_by_default [32mPASSED[0m[31m [ 77%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_raises_exception_if_no_corpus_matches [32mPASSED[0m[31m [ 78%][0m
+tests/track/params_test.py::BulkIndexParamSourceTests::test_restricts_number_of_bulks_if_required [32mPASSED[0m[31m [ 78%][0m
+tests/track/params_test.py::BulkDataGeneratorTests::test_generate_bulks_from_multiple_corpora [32mPASSED[0m[31m [ 79%][0m
+tests/track/params_test.py::BulkDataGeneratorTests::test_generate_two_bulks [32mPASSED[0m[31m [ 79%][0m
+tests/track/params_test.py::BulkDataGeneratorTests::test_internal_params_take_precedence [32mPASSED[0m[31m [ 80%][0m
+tests/track/params_test.py::ParamsRegistrationTests::test_can_register_class_as_param_source [32mPASSED[0m[31m [ 80%][0m
+tests/track/params_test.py::ParamsRegistrationTests::test_can_register_function_as_param_source [32mPASSED[0m[31m [ 80%][0m
+tests/track/params_test.py::ParamsRegistrationTests::test_can_register_legacy_class_as_param_source [32mPASSED[0m[31m [ 81%][0m
+tests/track/params_test.py::ParamsRegistrationTests::test_can_register_legacy_function_as_param_source [32mPASSED[0m[31m [ 81%][0m
+tests/track/params_test.py::SleepParamSourceTests::test_duration_parameter_negative_number [32mPASSED[0m[31m [ 82%][0m
+tests/track/params_test.py::SleepParamSourceTests::test_duration_parameter_wrong_type [32mPASSED[0m[31m [ 82%][0m
+tests/track/params_test.py::SleepParamSourceTests::test_missing_duration_parameter [32mPASSED[0m[31m [ 83%][0m
+tests/track/params_test.py::SleepParamSourceTests::test_param_source_passes_all_parameters [32mPASSED[0m[31m [ 83%][0m
+tests/track/params_test.py::CreateIndexParamSourceTests::test_create_index_from_track_with_settings [32mPASSED[0m[31m [ 84%][0m
+tests/track/params_test.py::CreateIndexParamSourceTests::test_create_index_from_track_without_settings [32mPASSED[0m[31m [ 84%][0m
+tests/track/params_test.py::CreateIndexParamSourceTests::test_create_index_inline_with_body [32mPASSED[0m[31m [ 85%][0m
+tests/track/params_test.py::CreateIndexParamSourceTests::test_create_index_inline_without_body [32mPASSED[0m[31m [ 85%][0m
+tests/track/params_test.py::CreateIndexParamSourceTests::test_filter_index [32mPASSED[0m[31m [ 85%][0m
+tests/track/params_test.py::CreateDataStreamParamSourceTests::test_create_data_stream [32mPASSED[0m[31m [ 86%][0m
+tests/track/params_test.py::CreateDataStreamParamSourceTests::test_create_data_stream_inline_without_body [32mPASSED[0m[31m [ 86%][0m
+tests/track/params_test.py::CreateDataStreamParamSourceTests::test_filter_data_stream [32mPASSED[0m[31m [ 87%][0m
+tests/track/params_test.py::DeleteIndexParamSourceTests::test_delete_index_by_name [32mPASSED[0m[31m [ 87%][0m
+tests/track/params_test.py::DeleteIndexParamSourceTests::test_delete_index_from_track [32mPASSED[0m[31m [ 88%][0m
+tests/track/params_test.py::DeleteIndexParamSourceTests::test_delete_no_index [32mPASSED[0m[31m [ 88%][0m
+tests/track/params_test.py::DeleteIndexParamSourceTests::test_filter_index_from_track [32mPASSED[0m[31m [ 89%][0m
+tests/track/params_test.py::DeleteDataStreamParamSourceTests::test_delete_data_stream_by_name [32mPASSED[0m[31m [ 89%][0m
+tests/track/params_test.py::DeleteDataStreamParamSourceTests::test_delete_data_stream_from_track [32mPASSED[0m[31m [ 90%][0m
+tests/track/params_test.py::DeleteDataStreamParamSourceTests::test_delete_no_data_stream [32mPASSED[0m[31m [ 90%][0m
+tests/track/params_test.py::DeleteDataStreamParamSourceTests::test_filter_data_stream_from_track [32mPASSED[0m[31m [ 90%][0m
+tests/track/params_test.py::CreateIndexTemplateParamSourceTests::test_create_index_template_from_track [32mPASSED[0m[31m [ 91%][0m
+tests/track/params_test.py::CreateIndexTemplateParamSourceTests::test_create_index_template_inline [32mPASSED[0m[31m [ 91%][0m
+tests/track/params_test.py::DeleteIndexTemplateParamSourceTests::test_delete_index_template_by_name [32mPASSED[0m[31m [ 92%][0m
+tests/track/params_test.py::DeleteIndexTemplateParamSourceTests::test_delete_index_template_by_name_and_matching_indices [32mPASSED[0m[31m [ 92%][0m
+tests/track/params_test.py::DeleteIndexTemplateParamSourceTests::test_delete_index_template_by_name_and_matching_indices_missing_index_pattern [32mPASSED[0m[31m [ 93%][0m
+tests/track/params_test.py::DeleteIndexTemplateParamSourceTests::test_delete_index_template_from_track [32mPASSED[0m[31m [ 93%][0m
+tests/track/params_test.py::SearchParamSourceTests::test_create_without_index [32mPASSED[0m[31m [ 94%][0m
+tests/track/params_test.py::SearchParamSourceTests::test_invalid_data_stream_with_type [32mPASSED[0m[31m [ 94%][0m
+tests/track/params_test.py::SearchParamSourceTests::test_passes_cache [31mFAILED[0m[31m [ 95%][0m
+tests/track/params_test.py::SearchParamSourceTests::test_passes_request_parameters [31mFAILED[0m[31m [ 95%][0m
+tests/track/params_test.py::SearchParamSourceTests::test_replaces_body_params [32mPASSED[0m[31m [ 95%][0m
+tests/track/params_test.py::SearchParamSourceTests::test_user_specified_data_stream_overrides_defaults [31mFAILED[0m[31m [ 96%][0m
+tests/track/params_test.py::SearchParamSourceTests::test_user_specified_overrides_defaults [31mFAILED[0m[31m [ 96%][0m
+tests/track/params_test.py::SearchParamSourceTests::test_uses_data_stream [31mFAILED[0m[31m [ 97%][0m
+tests/track/params_test.py::ForceMergeParamSourceTests::test_default_force_merge_index [32mPASSED[0m[31m [ 97%][0m
+tests/track/params_test.py::ForceMergeParamSourceTests::test_force_merge_all_params [32mPASSED[0m[31m [ 98%][0m
+tests/track/params_test.py::ForceMergeParamSourceTests::test_force_merge_by_data_stream_name [32mPASSED[0m[31m [ 98%][0m
+tests/track/params_test.py::ForceMergeParamSourceTests::test_force_merge_data_stream_from_track [32mPASSED[0m[31m [ 99%][0m
+tests/track/params_test.py::ForceMergeParamSourceTests::test_force_merge_index_by_name [32mPASSED[0m[31m [ 99%][0m
+tests/track/params_test.py::ForceMergeParamSourceTests::test_force_merge_index_from_track [32mPASSED[0m[31m [100%][0m
+
+=================================== FAILURES ===================================
+[31m[1m________ BulkIndexRunnerTests.test_simple_bulk_with_timeout_and_headers ________[0m
+
+args = (<tests.driver.runner_test.BulkIndexRunnerTests testMethod=test_simple_bulk_with_timeout_and_headers>, <MagicMock name='Elasticsearch' id='47675153192272'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:310: in test_simple_bulk_with_timeout_and_headers
+    es.bulk.assert_called_with(doc_type=[33m"[39;49;00m[33m_doc[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.bulk' id='47675153191552'>, args = ()
+kwargs = {'body': 'index_line\nindex_line\nindex_line\n', 'doc_type': '_doc', 'headers': {'x-test-id': '1234'}, 'index': 'test1', ...}
+expected = ((), {'body': 'index_line\nindex_line\nindex_line\n', 'doc_type': '_doc', 'headers': {'x-test-id': '1234'}, 'index': 'test1', ...})
+actual = call(body='index_line\nindex_line\nindex_line\n', index='test1', doc_type='_doc', params={})
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c6613a0>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: bulk(doc_type='_doc', params={}, body='index_line\nindex_line\nindex_line\n', headers={'x-test-id': '1234'}, index='test1', opaque_id='DESIRED-OPAQUE-ID', request_timeout=3.0)[0m
+[1m[31mE           Actual: bulk(body='index_line\nindex_line\nindex_line\n', index='test1', doc_type='_doc', params={})[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_____________ ForceMergeRunnerTests.test_force_merge_with_defaults _____________[0m
+
+args = (<tests.driver.runner_test.ForceMergeRunnerTests testMethod=test_force_merge_with_defaults>, <MagicMock name='Elasticsearch' id='47675150365456'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:948: in test_force_merge_with_defaults
+    es.indices.forcemerge.assert_called_once_with(index=[33m"[39;49;00m[33m_all[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.indices.forcemerge' id='47675150726000'>
+args = (), kwargs = {'index': '_all'}, expected = ((), {'index': '_all'})
+actual = call(index='_all', request_timeout=None)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c576a60>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: forcemerge(index='_all')[0m
+[1m[31mE           Actual: forcemerge(index='_all', request_timeout=None)[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_______ ForceMergeRunnerTests.test_force_merge_with_timeout_and_headers ________[0m
+
+args = (<tests.driver.runner_test.ForceMergeRunnerTests testMethod=test_force_merge_with_timeout_and_headers>, <MagicMock name='Elasticsearch' id='47675153304880'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:960: in test_force_merge_with_timeout_and_headers
+    es.indices.forcemerge.assert_called_once_with(headers={[33m"[39;49;00m[33mheader1[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mvalue1[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.indices.forcemerge' id='47675151801648'>
+args = ()
+kwargs = {'headers': {'header1': 'value1'}, 'index': '_all', 'opaque_id': 'test-id', 'request_timeout': 3.0}
+expected = ((), {'headers': {'header1': 'value1'}, 'index': '_all', 'opaque_id': 'test-id', 'request_timeout': 3.0})
+actual = call(index='_all', request_timeout=3.0)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c576040>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: forcemerge(headers={'header1': 'value1'}, index='_all', opaque_id='test-id', request_timeout=3.0)[0m
+[1m[31mE           Actual: forcemerge(index='_all', request_timeout=3.0)[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m______________ ForceMergeRunnerTests.test_optimize_with_defaults _______________[0m
+
+args = (<tests.driver.runner_test.ForceMergeRunnerTests testMethod=test_optimize_with_defaults>, <MagicMock name='Elasticsearch' id='47675155607856'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:1107: in test_optimize_with_defaults
+    es.transport.perform_request.assert_called_once_with(method=[33m"[39;49;00m[33mPOST[39;49;00m[33m"[39;49;00m, url=[33m"[39;49;00m[33m/_optimize[39;49;00m[33m"[39;49;00m, params={}, headers={})[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.transport.perform_request' id='47675150876832'>
+args = ()
+kwargs = {'headers': {}, 'method': 'POST', 'params': {}, 'url': '/_optimize'}
+expected = ((), {'headers': {}, 'method': 'POST', 'params': {}, 'url': '/_optimize'})
+actual = call('POST', '/_optimize', timeout=None)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c456ee0>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: perform_request(method='POST', url='/_optimize', params={}, headers={})[0m
+[1m[31mE           Actual: perform_request('POST', '/_optimize', timeout=None)[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_______________ ForceMergeRunnerTests.test_optimize_with_params ________________[0m
+
+args = (<tests.driver.runner_test.ForceMergeRunnerTests testMethod=test_optimize_with_params>, <MagicMock name='Elasticsearch' id='47675150859376'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:1131: in test_optimize_with_params
+    es.transport.perform_request.assert_called_once_with(method=[33m"[39;49;00m[33mPOST[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.transport.perform_request' id='47675159649248'>
+args = ()
+kwargs = {'headers': {}, 'method': 'POST', 'params': {'max_num_segments': 3, 'request_timeout': 17000}, 'url': '/_optimize'}
+expected = ((), {'headers': {}, 'method': 'POST', 'params': {'max_num_segments': 3, 'request_timeout': 17000}, 'url': '/_optimize'})
+actual = call('POST', '/_optimize?max_num_segments=3', timeout=17000)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c5a6ee0>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: perform_request(method='POST', url='/_optimize', params={'request_timeout': 17000, 'max_num_segments': 3}, headers={})[0m
+[1m[31mE           Actual: perform_request('POST', '/_optimize?max_num_segments=3', timeout=17000)[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_________ ForceMergeRunnerTests.test_optimize_with_timeout_and_headers _________[0m
+
+args = (<tests.driver.runner_test.ForceMergeRunnerTests testMethod=test_optimize_with_timeout_and_headers>, <MagicMock name='Elasticsearch' id='47675153277856'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:1118: in test_optimize_with_timeout_and_headers
+    es.transport.perform_request.assert_called_once_with(method=[33m"[39;49;00m[33mPOST[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.transport.perform_request' id='47675153127936'>
+args = ()
+kwargs = {'headers': {'header1': 'value1', 'x-opaque-id': 'test-id'}, 'method': 'POST', 'params': {'request_timeout': 3.0}, 'url': '/_optimize'}
+expected = ((), {'headers': {'header1': 'value1', 'x-opaque-id': 'test-id'}, 'method': 'POST', 'params': {'request_timeout': 3.0}, 'url': '/_optimize'})
+actual = call('POST', '/_optimize', timeout=3.0)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c576af0>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: perform_request(method='POST', url='/_optimize', params={'request_timeout': 3.0}, headers={'header1': 'value1', 'x-opaque-id': 'test-id'})[0m
+[1m[31mE           Actual: perform_request('POST', '/_optimize', timeout=3.0)[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_____ IndicesStatsRunnerTests.test_indices_stats_with_timeout_and_headers ______[0m
+
+args = (<tests.driver.runner_test.IndicesStatsRunnerTests testMethod=test_indices_stats_with_timeout_and_headers>, <MagicMock name='Elasticsearch' id='47675155609056'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:1162: in test_indices_stats_with_timeout_and_headers
+    es.indices.stats.assert_called_once_with(index=[33m"[39;49;00m[33m_all[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.indices.stats' id='47675150877024'>
+args = ()
+kwargs = {'headers': {'header1': 'value1'}, 'index': '_all', 'metric': '_all', 'opaque_id': 'test-id1', ...}
+expected = ((), {'headers': {'header1': 'value1'}, 'index': '_all', 'metric': '_all', 'opaque_id': 'test-id1', ...})
+actual = call(index='_all', metric='_all')
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3be6ac10>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: stats(index='_all', metric='_all', headers={'header1': 'value1'}, opaque_id='test-id1', request_timeout=3.0)[0m
+[1m[31mE           Actual: stats(index='_all', metric='_all')[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_____________ QueryRunnerTests.test_query_with_timeout_and_headers _____________[0m
+
+args = (<tests.driver.runner_test.QueryRunnerTests testMethod=test_query_with_timeout_and_headers>, <MagicMock name='Elasticsearch' id='47675151873408'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:1376: in test_query_with_timeout_and_headers
+    es.transport.perform_request.assert_called_once_with([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.transport.perform_request' id='47675148940720'>
+args = ('GET', '/_all/_search')
+kwargs = {'body': {'query': {'match_all': {}}}, 'headers': {'header1': 'value1', 'x-opaque-id': 'test-id1'}, 'params': {'request_cache': 'true', 'request_timeout': 3.0}}
+expected = (('GET', '/_all/_search'), {'body': {'query': {'match_all': {}}}, 'headers': {'header1': 'value1', 'x-opaque-id': 'test-id1'}, 'params': {'request_cache': 'true', 'request_timeout': 3.0}})
+actual = call('GET', '/_all/_search', params={'request_cache': 'true'}, body={'query': {'match_all': {}}}, headers=None)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c576af0>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: perform_request('GET', '/_all/_search', params={'request_timeout': 3.0, 'request_cache': 'true'}, body={'query': {'match_all': {}}}, headers={'header1': 'value1', 'x-opaque-id': 'test-id1'})[0m
+[1m[31mE           Actual: perform_request('GET', '/_all/_search', params={'request_cache': 'true'}, body={'query': {'match_all': {}}}, headers=None)[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_________ ClusterHealthRunnerTests.test_accepts_better_cluster_status __________[0m
+
+args = (<tests.driver.runner_test.ClusterHealthRunnerTests testMethod=test_accepts_better_cluster_status>, <MagicMock name='Elasticsearch' id='47675148953728'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:2163: in test_accepts_better_cluster_status
+    es.cluster.health.assert_called_once_with(params={[33m"[39;49;00m[33mwait_for_status[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33myellow[39;49;00m[33m"[39;49;00m})[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.cluster.health' id='47675156424400'>
+args = (), kwargs = {'params': {'wait_for_status': 'yellow'}}
+expected = ((), {'params': {'wait_for_status': 'yellow'}})
+actual = call(index=None, params={'wait_for_status': 'yellow'})
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c7fef70>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: health(params={'wait_for_status': 'yellow'})[0m
+[1m[31mE           Actual: health(index=None, params={'wait_for_status': 'yellow'})[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m____ ClusterHealthRunnerTests.test_cluster_health_with_timeout_and_headers _____[0m
+
+args = (<tests.driver.runner_test.ClusterHealthRunnerTests testMethod=test_cluster_health_with_timeout_and_headers>, <MagicMock name='Elasticsearch' id='47675156478272'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:2193: in test_cluster_health_with_timeout_and_headers
+    es.cluster.health.assert_called_once_with(headers={[33m"[39;49;00m[33mheader1[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mvalue1[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.cluster.health' id='47675148898752'>
+args = ()
+kwargs = {'headers': {'header1': 'value1'}, 'opaque_id': 'testid-1', 'params': {'wait_for_status': 'yellow'}, 'request_timeout': 3.0}
+expected = ((), {'headers': {'header1': 'value1'}, 'opaque_id': 'testid-1', 'params': {'wait_for_status': 'yellow'}, 'request_timeout': 3.0})
+actual = call(index=None, params={'wait_for_status': 'yellow'})
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c7d73a0>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: health(headers={'header1': 'value1'}, opaque_id='testid-1', params={'wait_for_status': 'yellow'}, request_timeout=3.0)[0m
+[1m[31mE           Actual: health(index=None, params={'wait_for_status': 'yellow'})[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_________ ClusterHealthRunnerTests.test_rejects_unknown_cluster_status _________[0m
+
+args = (<tests.driver.runner_test.ClusterHealthRunnerTests testMethod=test_rejects_unknown_cluster_status>, <MagicMock name='Elasticsearch' id='47675154796112'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:2253: in test_rejects_unknown_cluster_status
+    es.cluster.health.assert_called_once_with(params={[33m"[39;49;00m[33mwait_for_status[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mgreen[39;49;00m[33m"[39;49;00m})[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.cluster.health' id='47675155801856'>
+args = (), kwargs = {'params': {'wait_for_status': 'green'}}
+expected = ((), {'params': {'wait_for_status': 'green'}})
+actual = call(index=None, params={'wait_for_status': 'green'})
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c7d79d0>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: health(params={'wait_for_status': 'green'})[0m
+[1m[31mE           Actual: health(index=None, params={'wait_for_status': 'green'})[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_______ ClusterHealthRunnerTests.test_waits_for_expected_cluster_status ________[0m
+
+args = (<tests.driver.runner_test.ClusterHealthRunnerTests testMethod=test_waits_for_expected_cluster_status>, <MagicMock name='Elasticsearch' id='47675158894768'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:2136: in test_waits_for_expected_cluster_status
+    es.cluster.health.assert_called_once_with(params={[33m"[39;49;00m[33mwait_for_status[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mgreen[39;49;00m[33m"[39;49;00m})[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.cluster.health' id='47675153157424'>
+args = (), kwargs = {'params': {'wait_for_status': 'green'}}
+expected = ((), {'params': {'wait_for_status': 'green'}})
+actual = call(index=None, params={'wait_for_status': 'green'})
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c7feaf0>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: health(params={'wait_for_status': 'green'})[0m
+[1m[31mE           Actual: health(index=None, params={'wait_for_status': 'green'})[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m_________ CreateIndexRunnerTests.test_create_with_timeout_and_headers __________[0m
+
+args = (<tests.driver.runner_test.CreateIndexRunnerTests testMethod=test_create_with_timeout_and_headers>, <MagicMock name='Elasticsearch' id='47675159649440'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:2310: in test_create_with_timeout_and_headers
+    es.indices.create.assert_called_once_with(index=[33m"[39;49;00m[33mindexA[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.indices.create' id='47675151924528'>
+args = ()
+kwargs = {'body': {'settings': {}}, 'headers': {'header1': 'value1'}, 'index': 'indexA', 'opaque_id': 'test-id1', ...}
+expected = ((), {'body': {'settings': {}}, 'headers': {'header1': 'value1'}, 'index': 'indexA', 'opaque_id': 'test-id1', ...})
+actual = call(index='indexA', body={'settings': {}}, params={'wait_for_active_shards': 'true'})
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c55d040>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: create(index='indexA', body={'settings': {}}, headers={'header1': 'value1'}, opaque_id='test-id1', params={'wait_for_active_shards': 'true'}, request_timeout=3.0)[0m
+[1m[31mE           Actual: create(index='indexA', body={'settings': {}}, params={'wait_for_active_shards': 'true'})[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m___________ RawRequestRunnerTests.test_raw_with_timeout_and_opaqueid ___________[0m
+
+args = (<tests.driver.runner_test.RawRequestRunnerTests testMethod=test_raw_with_timeout_and_opaqueid>, <MagicMock name='Elasticsearch' id='47675153216272'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:3118: in test_raw_with_timeout_and_opaqueid
+    es.transport.perform_request.assert_called_once_with(method=[33m"[39;49;00m[33mGET[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.transport.perform_request' id='47675150367520'>
+args = ()
+kwargs = {'body': [{'index': 'test'}, {'from': 0, 'query': {'match_all': {}}, 'size': 10}, {'index': 'test', 'search_type': 'df...nt-Type': 'application/x-ndjson', 'x-opaque-id': 'test-id1'}, 'method': 'GET', 'params': {'request_timeout': 3.0}, ...}
+expected = ((), {'body': [{'index': 'test'}, {'from': 0, 'query': {'match_all': {}}, 'size': 10}, {'index': 'test', 'search_type'...t-Type': 'application/x-ndjson', 'x-opaque-id': 'test-id1'}, 'method': 'GET', 'params': {'request_timeout': 3.0}, ...})
+actual = call(method='GET', url='/_msearch', headers={'Content-Type': 'application/x-ndjson'}, body=[{'index': 'test'}, {'query...m': 0, 'size': 10}, {'index': 'test', 'search_type': 'dfs_query_then_fetch'}, {'query': {'match_all': {}}}], params={})
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c7d7160>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: perform_request(method='GET', url='/_msearch', headers={'Content-Type': 'application/x-ndjson', 'x-opaque-id': 'test-id1'}, body=[{'index': 'test'}, {'query': {'match_all': {}}, 'from': 0, 'size': 10}, {'index': 'test', 'search_type': 'dfs_query_then_fetch'}, {'query': {'match_all': {}}}], params={'request_timeout': 3.0})[0m
+[1m[31mE           Actual: perform_request(method='GET', url='/_msearch', headers={'Content-Type': 'application/x-ndjson'}, body=[{'index': 'test'}, {'query': {'match_all': {}}, 'from': 0, 'size': 10}, {'index': 'test', 'search_type': 'dfs_query_then_fetch'}, {'query': {'match_all': {}}}], params={})[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m__________________ RestoreSnapshotTests.test_restore_snapshot __________________[0m
+
+args = (<tests.driver.runner_test.RestoreSnapshotTests testMethod=test_restore_snapshot>, <MagicMock name='Elasticsearch' id='47675153304256'>)
+kwargs = {}
+
+    [94mdef[39;49;00m[90m [39;49;00m[92masync_wrapper[39;49;00m(*args, **kwargs):[90m[39;49;00m
+>       asyncio.run(t(*args, **kwargs), debug=[94mTrue[39;49;00m)[90m[39;49;00m
+
+[1m[31mtests/__init__.py[0m:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.8/asyncio/runners.py[0m:44: in run
+    [94mreturn[39;49;00m loop.run_until_complete(main)[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/asyncio/base_events.py[0m:616: in run_until_complete
+    [94mreturn[39;49;00m future.result()[90m[39;49;00m
+[1m[31mtests/driver/runner_test.py[0m:3484: in test_restore_snapshot
+    es.snapshot.restore.assert_called_once_with(repository=[33m"[39;49;00m[33mbackups[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:925: in assert_called_once_with
+    [94mreturn[39;49;00m [96mself[39;49;00m.assert_called_with(*args, **kwargs)[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='Elasticsearch.snapshot.restore' id='47675153191120'>
+args = ()
+kwargs = {'params': {'request_timeout': 7200}, 'repository': 'backups', 'snapshot': 'snapshot-001', 'wait_for_completion': True}
+expected = ((), {'params': {'request_timeout': 7200}, 'repository': 'backups', 'snapshot': 'snapshot-001', 'wait_for_completion': True})
+actual = call(repository='backups', snapshot='snapshot-001', body=None, wait_for_completion=True, params={'request_timeout': 7200})
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x2b5c3c7d7a60>
+cause = None
+
+    [94mdef[39;49;00m[90m [39;49;00m[92massert_called_with[39;49;00m([96mself[39;49;00m, /, *args, **kwargs):[90m[39;49;00m
+    [90m    [39;49;00m[33m"""assert that the last call was made with the specified arguments.[39;49;00m
+    [33m[39;49;00m
+    [33m    Raises an AssertionError if the args and keyword args passed in are[39;49;00m
+    [33m    different to the last call to the mock."""[39;49;00m[90m[39;49;00m
+        [94mif[39;49;00m [96mself[39;49;00m.call_args [95mis[39;49;00m [94mNone[39;49;00m:[90m[39;49;00m
+            expected = [96mself[39;49;00m._format_mock_call_signature(args, kwargs)[90m[39;49;00m
+            actual = [33m'[39;49;00m[33mnot called.[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+            error_message = ([33m'[39;49;00m[33mexpected call not found.[39;49;00m[33m\n[39;49;00m[33mExpected: [39;49;00m[33m%s[39;49;00m[33m\n[39;49;00m[33mActual: [39;49;00m[33m%s[39;49;00m[33m'[39;49;00m[90m[39;49;00m
+                    % (expected, actual))[90m[39;49;00m
+            [94mraise[39;49;00m [96mAssertionError[39;49;00m(error_message)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mdef[39;49;00m[90m [39;49;00m[92m_error_message[39;49;00m():[90m[39;49;00m
+            msg = [96mself[39;49;00m._format_mock_failure_message(args, kwargs)[90m[39;49;00m
+            [94mreturn[39;49;00m msg[90m[39;49;00m
+        expected = [96mself[39;49;00m._call_matcher((args, kwargs))[90m[39;49;00m
+        actual = [96mself[39;49;00m._call_matcher([96mself[39;49;00m.call_args)[90m[39;49;00m
+        [94mif[39;49;00m expected != actual:[90m[39;49;00m
+            cause = expected [94mif[39;49;00m [96misinstance[39;49;00m(expected, [96mException[39;49;00m) [94melse[39;49;00m [94mNone[39;49;00m[90m[39;49;00m
+>           [94mraise[39;49;00m [96mAssertionError[39;49;00m(_error_message()) [94mfrom[39;49;00m[90m [39;49;00m[04m[96mcause[39;49;00m[90m[39;49;00m
+[1m[31mE           AssertionError: expected call not found.[0m
+[1m[31mE           Expected: restore(repository='backups', snapshot='snapshot-001', wait_for_completion=True, params={'request_timeout': 7200})[0m
+[1m[31mE           Actual: restore(repository='backups', snapshot='snapshot-001', body=None, wait_for_completion=True, params={'request_timeout': 7200})[0m
+
+[1m[31m/usr/local/lib/python3.8/unittest/mock.py[0m:913: AssertionError
+[31m[1m___________________ SearchParamSourceTests.test_passes_cache ___________________[0m
+
+self = <tests.track.params_test.SearchParamSourceTests testMethod=test_passes_cache>
+
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_passes_cache[39;49;00m([96mself[39;49;00m):[90m[39;49;00m
+        index1 = track.Index(name=[33m"[39;49;00m[33mindex1[39;49;00m[33m"[39;49;00m, types=[[33m"[39;49;00m[33mtype1[39;49;00m[33m"[39;49;00m])[90m[39;49;00m
+    [90m[39;49;00m
+        source = params.SearchParamSource(track=track.Track(name=[33m"[39;49;00m[33munit-test[39;49;00m[33m"[39;49;00m, indices=[index1]), params={[90m[39;49;00m
+            [33m"[39;49;00m[33mbody[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                [33m"[39;49;00m[33mquery[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mmatch_all[39;49;00m[33m"[39;49;00m: {}[90m[39;49;00m
+                }[90m[39;49;00m
+            },[90m[39;49;00m
+            [33m"[39;49;00m[33mheaders[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                [33m"[39;49;00m[33mheader1[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mvalue1[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+            },[90m[39;49;00m
+            [33m"[39;49;00m[33mcache[39;49;00m[33m"[39;49;00m: [94mTrue[39;49;00m[90m[39;49;00m
+        })[90m[39;49;00m
+        p = source.params()[90m[39;49;00m
+    [90m[39;49;00m
+>       [96mself[39;49;00m.assertEqual([94m9[39;49;00m, [96mlen[39;49;00m(p))[90m[39;49;00m
+[1m[31mE       AssertionError: 9 != 6[0m
+
+[1m[31mtests/track/params_test.py[0m:1841: AssertionError
+[31m[1m____________ SearchParamSourceTests.test_passes_request_parameters _____________[0m
+
+self = <tests.track.params_test.SearchParamSourceTests testMethod=test_passes_request_parameters>
+
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_passes_request_parameters[39;49;00m([96mself[39;49;00m):[90m[39;49;00m
+        index1 = track.Index(name=[33m"[39;49;00m[33mindex1[39;49;00m[33m"[39;49;00m, types=[[33m"[39;49;00m[33mtype1[39;49;00m[33m"[39;49;00m])[90m[39;49;00m
+    [90m[39;49;00m
+        source = params.SearchParamSource(track=track.Track(name=[33m"[39;49;00m[33munit-test[39;49;00m[33m"[39;49;00m, indices=[index1]), params={[90m[39;49;00m
+            [33m"[39;49;00m[33mrequest-params[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                [33m"[39;49;00m[33m_source_include[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33msome_field[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+            },[90m[39;49;00m
+            [33m"[39;49;00m[33mbody[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                [33m"[39;49;00m[33mquery[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mmatch_all[39;49;00m[33m"[39;49;00m: {}[90m[39;49;00m
+                }[90m[39;49;00m
+            }[90m[39;49;00m
+        })[90m[39;49;00m
+        p = source.params()[90m[39;49;00m
+    [90m[39;49;00m
+>       [96mself[39;49;00m.assertEqual([94m9[39;49;00m, [96mlen[39;49;00m(p))[90m[39;49;00m
+[1m[31mE       AssertionError: 9 != 6[0m
+
+[1m[31mtests/track/params_test.py[0m:1921: AssertionError
+[31m[1m__ SearchParamSourceTests.test_user_specified_data_stream_overrides_defaults ___[0m
+
+self = <tests.track.params_test.SearchParamSourceTests testMethod=test_user_specified_data_stream_overrides_defaults>
+
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_user_specified_data_stream_overrides_defaults[39;49;00m([96mself[39;49;00m):[90m[39;49;00m
+        ds1 = track.DataStream(name=[33m"[39;49;00m[33mdata-stream-1[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        source = params.SearchParamSource(track=track.Track(name=[33m"[39;49;00m[33munit-test[39;49;00m[33m"[39;49;00m, data_streams=[ds1]), params={[90m[39;49;00m
+            [33m"[39;49;00m[33mdata-stream[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mdata-stream-2[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mcache[39;49;00m[33m"[39;49;00m: [94mFalse[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mresponse-compression-enabled[39;49;00m[33m"[39;49;00m: [94mFalse[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mrequest-timeout[39;49;00m[33m"[39;49;00m: [94m1.0[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mbody[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                [33m"[39;49;00m[33mquery[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mmatch_all[39;49;00m[33m"[39;49;00m: {}[90m[39;49;00m
+                }[90m[39;49;00m
+            }[90m[39;49;00m
+        })[90m[39;49;00m
+        p = source.params()[90m[39;49;00m
+    [90m[39;49;00m
+>       [96mself[39;49;00m.assertEqual([94m9[39;49;00m, [96mlen[39;49;00m(p))[90m[39;49;00m
+[1m[31mE       AssertionError: 9 != 6[0m
+
+[1m[31mtests/track/params_test.py[0m:1987: AssertionError
+[31m[1m________ SearchParamSourceTests.test_user_specified_overrides_defaults _________[0m
+
+self = <tests.track.params_test.SearchParamSourceTests testMethod=test_user_specified_overrides_defaults>
+
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_user_specified_overrides_defaults[39;49;00m([96mself[39;49;00m):[90m[39;49;00m
+        index1 = track.Index(name=[33m"[39;49;00m[33mindex1[39;49;00m[33m"[39;49;00m, types=[[33m"[39;49;00m[33mtype1[39;49;00m[33m"[39;49;00m])[90m[39;49;00m
+    [90m[39;49;00m
+        source = params.SearchParamSource(track=track.Track(name=[33m"[39;49;00m[33munit-test[39;49;00m[33m"[39;49;00m, indices=[index1]), params={[90m[39;49;00m
+            [33m"[39;49;00m[33mindex[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33m_all[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mtype[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtype1[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mcache[39;49;00m[33m"[39;49;00m: [94mFalse[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mresponse-compression-enabled[39;49;00m[33m"[39;49;00m: [94mFalse[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mopaque-id[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33m12345abcde[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mbody[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                [33m"[39;49;00m[33mquery[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mmatch_all[39;49;00m[33m"[39;49;00m: {}[90m[39;49;00m
+                }[90m[39;49;00m
+            }[90m[39;49;00m
+        })[90m[39;49;00m
+        p = source.params()[90m[39;49;00m
+    [90m[39;49;00m
+>       [96mself[39;49;00m.assertEqual([94m9[39;49;00m, [96mlen[39;49;00m(p))[90m[39;49;00m
+[1m[31mE       AssertionError: 9 != 6[0m
+
+[1m[31mtests/track/params_test.py[0m:1955: AssertionError
+[31m[1m_________________ SearchParamSourceTests.test_uses_data_stream _________________[0m
+
+self = <tests.track.params_test.SearchParamSourceTests testMethod=test_uses_data_stream>
+
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_uses_data_stream[39;49;00m([96mself[39;49;00m):[90m[39;49;00m
+        ds1 = track.DataStream(name=[33m"[39;49;00m[33mdata-stream-1[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        source = params.SearchParamSource(track=track.Track(name=[33m"[39;49;00m[33munit-test[39;49;00m[33m"[39;49;00m, data_streams=[ds1]), params={[90m[39;49;00m
+            [33m"[39;49;00m[33mbody[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                [33m"[39;49;00m[33mquery[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mmatch_all[39;49;00m[33m"[39;49;00m: {}[90m[39;49;00m
+                }[90m[39;49;00m
+            },[90m[39;49;00m
+            [33m"[39;49;00m[33mrequest-timeout[39;49;00m[33m"[39;49;00m: [94m1.0[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mheaders[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                [33m"[39;49;00m[33mheader1[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mvalue1[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                [33m"[39;49;00m[33mheader2[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mvalue2[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+            },[90m[39;49;00m
+            [33m"[39;49;00m[33mopaque-id[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33m12345abcde[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            [33m"[39;49;00m[33mcache[39;49;00m[33m"[39;49;00m: [94mTrue[39;49;00m[90m[39;49;00m
+        })[90m[39;49;00m
+        p = source.params()[90m[39;49;00m
+    [90m[39;49;00m
+>       [96mself[39;49;00m.assertEqual([94m9[39;49;00m, [96mlen[39;49;00m(p))[90m[39;49;00m
+[1m[31mE       AssertionError: 9 != 6[0m
+
+[1m[31mtests/track/params_test.py[0m:1875: AssertionError
+[33m=============================== warnings summary ===============================[0m
+esrally/__init__.py:22
+  /workspace/repo/esrally/__init__.py:22: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources
+
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+/usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('sphinxcontrib')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+-- Docs: https://docs.pytest.org/en/latest/warnings.html
+=========================== short test summary info ============================
+FAILED tests/driver/runner_test.py::BulkIndexRunnerTests::test_simple_bulk_with_timeout_and_headers
+FAILED tests/driver/runner_test.py::ForceMergeRunnerTests::test_force_merge_with_defaults
+FAILED tests/driver/runner_test.py::ForceMergeRunnerTests::test_force_merge_with_timeout_and_headers
+FAILED tests/driver/runner_test.py::ForceMergeRunnerTests::test_optimize_with_defaults
+FAILED tests/driver/runner_test.py::ForceMergeRunnerTests::test_optimize_with_params
+FAILED tests/driver/runner_test.py::ForceMergeRunnerTests::test_optimize_with_timeout_and_headers
+FAILED tests/driver/runner_test.py::IndicesStatsRunnerTests::test_indices_stats_with_timeout_and_headers
+FAILED tests/driver/runner_test.py::QueryRunnerTests::test_query_with_timeout_and_headers
+FAILED tests/driver/runner_test.py::ClusterHealthRunnerTests::test_accepts_better_cluster_status
+FAILED tests/driver/runner_test.py::ClusterHealthRunnerTests::test_cluster_health_with_timeout_and_headers
+FAILED tests/driver/runner_test.py::ClusterHealthRunnerTests::test_rejects_unknown_cluster_status
+FAILED tests/driver/runner_test.py::ClusterHealthRunnerTests::test_waits_for_expected_cluster_status
+FAILED tests/driver/runner_test.py::CreateIndexRunnerTests::test_create_with_timeout_and_headers
+FAILED tests/driver/runner_test.py::RawRequestRunnerTests::test_raw_with_timeout_and_opaqueid
+FAILED tests/driver/runner_test.py::RestoreSnapshotTests::test_restore_snapshot
+FAILED tests/track/params_test.py::SearchParamSourceTests::test_passes_cache
+FAILED tests/track/params_test.py::SearchParamSourceTests::test_passes_request_parameters
+FAILED tests/track/params_test.py::SearchParamSourceTests::test_user_specified_data_stream_overrides_defaults
+FAILED tests/track/params_test.py::SearchParamSourceTests::test_user_specified_overrides_defaults
+FAILED tests/track/params_test.py::SearchParamSourceTests::test_uses_data_stream
+[31m================== [31m[1m20 failed[0m, [32m201 passed[0m, [33m7 warnings[0m[31m in 4.22s[0m[31m ==================[0m
+reward=0 (grader error: Extra data: line 236 column 1 (char 20774); fell back to exit_code=1)

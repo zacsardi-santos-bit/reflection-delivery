@@ -1,0 +1,4 @@
+patching file datanode/bootstrap/mocks/Bootstrapable.go
+patching file datanode/bootstrap_manager.go (renamed from datanode/bootstrap.go)
+patching file datanode/datanode.go
+patching file datanode/peer_source.go

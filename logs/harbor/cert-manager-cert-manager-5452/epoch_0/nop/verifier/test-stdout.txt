@@ -1,0 +1,8 @@
+patching file pkg/issuer/acme/dns/azuredns/azuredns_test.go
+go: finding module for package github.com/Azure/azure-sdk-for-go/sdk/azidentity
+go: finding module for package github.com/Azure/azure-sdk-for-go/sdk/azcore/policy
+go: finding module for package github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud
+# github.com/cert-manager/cert-manager/pkg/issuer/acme/dns/azuredns
+pkg/issuer/acme/dns/azuredns/azuredns_test.go:23:2: cannot find module providing package github.com/Azure/azure-sdk-for-go/sdk/azcore/cloud: module lookup disabled by GOPROXY=off
+FAIL	github.com/cert-manager/cert-manager/pkg/issuer/acme/dns/azuredns [setup failed]
+reward=0 graded=4 found=0 failed=0 parsed=0 framework=go exit_code=1

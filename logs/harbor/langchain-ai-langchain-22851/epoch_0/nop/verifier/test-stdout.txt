@@ -1,0 +1,1461 @@
+patching file libs/core/tests/unit_tests/prompts/test_chat.py
+patching file libs/core/tests/unit_tests/runnables/test_graph.py
+patching file libs/core/tests/unit_tests/runnables/test_runnable.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.0, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/libs/core
+configfile: pyproject.toml
+plugins: asyncio-0.21.1, syrupy-4.0.2, mock-3.15.1, anyio-4.14.1
+asyncio: mode=Mode.AUTO
+collecting ... collected 135 items / 7 deselected / 128 selected
+
+libs/core/tests/unit_tests/prompts/test_chat.py::test_create_chat_prompt_template_from_template PASSED [  0%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_create_chat_prompt_template_from_template_partial PASSED [  1%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_create_system_message_prompt_template_from_template_partial PASSED [  2%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_create_system_message_prompt_list_template PASSED [  3%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_create_system_message_prompt_list_template_partial_variables_not_null PASSED [  3%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_message_prompt_template_from_template_file PASSED [  4%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_prompt_template PASSED [  5%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_prompt_template_from_messages PASSED [  6%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_prompt_template_from_messages_using_role_strings PASSED [  7%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_prompt_template_from_messages_mustache PASSED [  7%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_prompt_template_with_messages PASSED [  8%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_invalid_input_variables_extra PASSED [  9%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_invalid_input_variables_missing PASSED [ 10%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_infer_variables PASSED [ 10%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_valid_with_partial_variables PASSED [ 11%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_valid_infer_variables PASSED [ 12%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_from_role_strings PASSED [ 13%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_convert_to_message[args0-expected0] PASSED [ 14%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_convert_to_message[{question}-expected1] PASSED [ 14%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_convert_to_message[args2-expected2] PASSED [ 15%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_convert_to_message[args3-expected3] PASSED [ 16%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_prompt_template_indexing PASSED [ 17%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_prompt_template_append_and_extend PASSED [ 17%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_convert_to_message_is_strict PASSED [ 18%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_message_partial PASSED [ 19%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_tmpl_from_messages_multipart_text PASSED [ 20%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_tmpl_from_messages_multipart_text_with_template PASSED [ 21%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_tmpl_from_messages_multipart_image PASSED [ 21%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_tmpl_from_messages_multipart_formatting_with_path PASSED [ 22%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_messages_placeholder PASSED [ 23%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_messages_placeholder_with_max PASSED [ 24%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_prompt_message_placeholder_partial PASSED [ 25%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_prompt_message_placeholder_tuple PASSED [ 25%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_messages_prompt_accepts_list PASSED [ 26%]
+libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_input_schema FAILED [ 27%]
+libs/core/tests/unit_tests/runnables/test_graph.py::test_graph_single_runnable PASSED [ 28%]
+libs/core/tests/unit_tests/runnables/test_graph.py::test_graph_sequence FAILED [ 28%]
+libs/core/tests/unit_tests/runnables/test_graph.py::test_graph_sequence_map FAILED [ 29%]
+libs/core/tests/unit_tests/runnables/test_graph.py::test_runnable_get_graph_with_invalid_input_type PASSED [ 30%]
+libs/core/tests/unit_tests/runnables/test_graph.py::test_runnable_get_graph_with_invalid_output_type PASSED [ 31%]
+libs/core/tests/unit_tests/runnables/test_graph.py::test_graph_mermaid_escape_node_label PASSED [ 32%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_schemas FAILED [ 32%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_passthrough_assign_schema PASSED [ 33%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_lambda_schemas PASSED [ 34%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_with_types_with_type_generics PASSED [ 35%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_schema_complex_seq PASSED [ 35%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_configurable_fields FAILED [ 36%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_configurable_alts_factory PASSED [ 37%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_configurable_fields_prefix_keys PASSED [ 38%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_configurable_fields_example PASSED [ 39%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_passthrough_tap_async PASSED [ 39%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_with_config_metadata_passthrough PASSED [ 40%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_with_config PASSED [ 41%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_default_method_implementations PASSED [ 42%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_prompt PASSED [ 42%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_prompt_template_params PASSED [ 43%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_with_listeners PASSED [ 44%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_with_listeners_async PASSED [ 45%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_stream_log_retriever PASSED [ 46%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_stream_log_lists PASSED [ 46%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_seq_dict_prompt_llm PASSED [ 47%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_seq_prompt_dict PASSED [ 48%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_router_runnable PASSED [ 49%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_higher_order_lambda_runnable PASSED [ 50%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_seq_prompt_map PASSED [ 50%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_map_stream PASSED [ 51%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_map_stream_iterator_input PASSED [ 52%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_map_astream PASSED [ 53%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_map_astream_iterator_input PASSED [ 53%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_with_config_with_config PASSED [ 54%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_metadata_is_merged PASSED [ 55%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_tags_are_appended PASSED [ 56%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_bind_bind PASSED [ 57%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_bind_with_lambda PASSED [ 57%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_bind_with_lambda_async PASSED [ 58%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_deep_stream PASSED [ 59%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_deep_stream_assign FAILED [ 60%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_deep_astream PASSED [ 60%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_deep_astream_assign FAILED [ 61%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_sequence_transform PASSED [ 62%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_sequence_atransform PASSED [ 63%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_each_simple PASSED [ 64%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_each PASSED  [ 64%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_recursive_lambda PASSED [ 65%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_retrying PASSED [ 66%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_async_retrying PASSED [ 67%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_lambda_stream PASSED [ 67%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_lambda_stream_with_callbacks PASSED [ 68%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_lambda_astream PASSED [ 69%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_lambda_astream_with_callbacks PASSED [ 70%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_seq_batch_return_exceptions PASSED [ 71%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_seq_abatch_return_exceptions PASSED [ 71%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_init PASSED [ 72%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_init_coercion[branches0] PASSED [ 73%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_init_coercion[branches1] PASSED [ 74%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_init_coercion[branches2] PASSED [ 75%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_invoke_call_counts PASSED [ 75%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_invoke PASSED [ 76%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_batch PASSED [ 77%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_ainvoke PASSED [ 78%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_invoke_callbacks PASSED [ 78%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_ainvoke_callbacks PASSED [ 79%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_abatch PASSED [ 80%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_stream PASSED [ 81%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_stream_with_callbacks PASSED [ 82%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_astream PASSED [ 82%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_astream_with_callbacks PASSED [ 83%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_representation_of_runnables PASSED [ 84%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_tool_from_runnable FAILED [ 85%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_gen PASSED [ 85%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_gen_context_config PASSED [ 86%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_iter_context_config PASSED [ 87%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_lambda_context_config PASSED [ 88%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_runnable_gen_transform PASSED [ 89%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_with_config_callbacks PASSED [ 89%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_ainvoke_on_returned_runnable PASSED [ 90%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_invoke_stream_passthrough_assign_trace PASSED [ 91%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_ainvoke_astream_passthrough_assign_trace PASSED [ 92%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_astream_log_deep_copies PASSED [ 92%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_transform_of_runnable_lambda_with_dicts PASSED [ 93%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_atransform_of_runnable_lambda_with_dicts PASSED [ 94%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_default_transform_with_dicts PASSED [ 95%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_default_atransform_with_dicts PASSED [ 96%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_passthrough_transform_with_dicts PASSED [ 96%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_passthrough_atransform_with_dicts PASSED [ 97%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_listeners PASSED [ 98%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_listeners_async PASSED [ 99%]
+libs/core/tests/unit_tests/runnables/test_runnable.py::test_closing_iterator_doesnt_raise_error PASSED [100%]
+
+=================================== FAILURES ===================================
+____________________________ test_chat_input_schema ____________________________
+
+    def test_chat_input_schema() -> None:
+        prompt_all_required = ChatPromptTemplate.from_messages(
+            messages=[MessagesPlaceholder("history", optional=False), ("user", "${input}")]
+        )
+        prompt_all_required.input_variables == {"input"}
+>       prompt_all_required.optional_variables == {"history"}
+E       AttributeError: 'ChatPromptTemplate' object has no attribute 'optional_variables'
+
+libs/core/tests/unit_tests/prompts/test_chat.py:797: AttributeError
+_____________________________ test_graph_sequence ______________________________
+
+snapshot = SnapshotAssertion(name='snapshot', num_executions=0)
+
+    def test_graph_sequence(snapshot: SnapshotAssertion) -> None:
+        fake_llm = FakeListLLM(responses=["a"])
+        prompt = PromptTemplate.from_template("Hello, {name}!")
+        list_parser = CommaSeparatedListOutputParser()
+    
+        sequence = prompt | fake_llm | list_parser
+        graph = sequence.get_graph()
+        assert graph.to_json() == {
+            "nodes": [
+                {
+                    "id": 0,
+                    "type": "schema",
+                    "data": "PromptInput",
+                },
+                {
+                    "id": 1,
+                    "type": "runnable",
+                    "data": {
+                        "id": ["langchain", "prompts", "prompt", "PromptTemplate"],
+                        "name": "PromptTemplate",
+                    },
+                },
+                {
+                    "id": 2,
+                    "type": "runnable",
+                    "data": {
+                        "id": ["langchain_core", "language_models", "fake", "FakeListLLM"],
+                        "name": "FakeListLLM",
+                    },
+                },
+                {
+                    "id": 3,
+                    "type": "runnable",
+                    "data": {
+                        "id": [
+                            "langchain",
+                            "output_parsers",
+                            "list",
+                            "CommaSeparatedListOutputParser",
+                        ],
+                        "name": "CommaSeparatedListOutputParser",
+                    },
+                },
+                {
+                    "id": 4,
+                    "type": "schema",
+                    "data": "CommaSeparatedListOutputParserOutput",
+                },
+            ],
+            "edges": [
+                {"source": 0, "target": 1},
+                {"source": 1, "target": 2},
+                {"source": 3, "target": 4},
+                {"source": 2, "target": 3},
+            ],
+        }
+>       assert graph.to_json(with_schemas=True) == {
+            "nodes": [
+                {
+                    "id": 0,
+                    "type": "schema",
+                    "data": {
+                        "title": "PromptInput",
+                        "type": "object",
+                        "properties": {"name": {"title": "Name", "type": "string"}},
+                        "required": ["name"],
+                    },
+                },
+                {
+                    "id": 1,
+                    "type": "runnable",
+                    "data": {
+                        "id": ["langchain", "prompts", "prompt", "PromptTemplate"],
+                        "name": "PromptTemplate",
+                    },
+                },
+                {
+                    "id": 2,
+                    "type": "runnable",
+                    "data": {
+                        "id": ["langchain_core", "language_models", "fake", "FakeListLLM"],
+                        "name": "FakeListLLM",
+                    },
+                },
+                {
+                    "id": 3,
+                    "type": "runnable",
+                    "data": {
+                        "id": [
+                            "langchain",
+                            "output_parsers",
+                            "list",
+                            "CommaSeparatedListOutputParser",
+                        ],
+                        "name": "CommaSeparatedListOutputParser",
+                    },
+                },
+                {
+                    "id": 4,
+                    "type": "schema",
+                    "data": {
+                        "items": {"type": "string"},
+                        "title": "CommaSeparatedListOutputParserOutput",
+                        "type": "array",
+                    },
+                },
+            ],
+            "edges": [
+                {"source": 0, "target": 1},
+                {"source": 1, "target": 2},
+                {"source": 3, "target": 4},
+                {"source": 2, "target": 3},
+            ],
+        }
+E       AssertionError: assert {'edges': [{'...': 'schema'}]} == {'edges': [{'...': 'schema'}]}
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'nodes': [{'data': {'properties': {'name': {'title': 'Name', 'type': 'string'}}, 'title': 'PromptInput', 'type': 'obj...s': {'type': 'string'}, 'title': 'CommaSeparatedListOutputParserOutput', 'type': 'array'}, 'id': 4, 'type': 'schema'}]} != {'nodes': [{'data': {'properties': {'name': {'title': 'Name', 'type': 'string'}}, 'required': ['name'], 'title': 'Prom...s': {'type': 'string'}, 'title': 'CommaSeparatedListOutputParserOutput', 'type': 'array'}, 'id': 4, 'type': 'schema'}]}
+E         Full diff:
+E           {
+E            'edges': [{'source': 0,
+E                       'target': 1},...
+E         
+E         ...Full output truncated (40 lines hidden), use '-vv' to show
+
+libs/core/tests/unit_tests/runnables/test_graph.py:88: AssertionError
+___________________________ test_graph_sequence_map ____________________________
+
+snapshot = SnapshotAssertion(name='snapshot', num_executions=0)
+
+    def test_graph_sequence_map(snapshot: SnapshotAssertion) -> None:
+        fake_llm = FakeListLLM(responses=["a"])
+        prompt = PromptTemplate.from_template("Hello, {name}!")
+        list_parser = CommaSeparatedListOutputParser()
+        str_parser = StrOutputParser()
+        xml_parser = XMLOutputParser()
+    
+        def conditional_str_parser(input: str) -> Runnable:
+            if input == "a":
+                return str_parser
+            else:
+                return xml_parser
+    
+        sequence: Runnable = (
+            prompt
+            | fake_llm
+            | {
+                "as_list": list_parser,
+                "as_str": conditional_str_parser,
+            }
+        )
+        graph = sequence.get_graph()
+>       assert graph.to_json(with_schemas=True) == {
+            "nodes": [
+                {
+                    "id": 0,
+                    "type": "schema",
+                    "data": {
+                        "title": "PromptInput",
+                        "type": "object",
+                        "properties": {"name": {"title": "Name", "type": "string"}},
+                        "required": ["name"],
+                    },
+                },
+                {
+                    "id": 1,
+                    "type": "runnable",
+                    "data": {
+                        "id": ["langchain", "prompts", "prompt", "PromptTemplate"],
+                        "name": "PromptTemplate",
+                    },
+                },
+                {
+                    "id": 2,
+                    "type": "runnable",
+                    "data": {
+                        "id": ["langchain_core", "language_models", "fake", "FakeListLLM"],
+                        "name": "FakeListLLM",
+                    },
+                },
+                {
+                    "id": 3,
+                    "type": "schema",
+                    "data": {
+                        "title": "RunnableParallel<as_list,as_str>Input",
+                        "anyOf": [
+                            {"type": "string"},
+                            {"$ref": "#/definitions/AIMessage"},
+                            {"$ref": "#/definitions/HumanMessage"},
+                            {"$ref": "#/definitions/ChatMessage"},
+                            {"$ref": "#/definitions/SystemMessage"},
+                            {"$ref": "#/definitions/FunctionMessage"},
+                            {"$ref": "#/definitions/ToolMessage"},
+                        ],
+                        "definitions": {
+                            "ToolCall": {
+                                "title": "ToolCall",
+                                "type": "object",
+                                "properties": {
+                                    "name": {"title": "Name", "type": "string"},
+                                    "args": {"title": "Args", "type": "object"},
+                                    "id": {"title": "Id", "type": "string"},
+                                },
+                                "required": ["name", "args", "id"],
+                            },
+                            "InvalidToolCall": {
+                                "title": "InvalidToolCall",
+                                "type": "object",
+                                "properties": {
+                                    "name": {"title": "Name", "type": "string"},
+                                    "args": {"title": "Args", "type": "string"},
+                                    "id": {"title": "Id", "type": "string"},
+                                    "error": {"title": "Error", "type": "string"},
+                                },
+                                "required": ["name", "args", "id", "error"],
+                            },
+                            "UsageMetadata": {
+                                "title": "UsageMetadata",
+                                "type": "object",
+                                "properties": {
+                                    "input_tokens": {
+                                        "title": "Input Tokens",
+                                        "type": "integer",
+                                    },
+                                    "output_tokens": {
+                                        "title": "Output Tokens",
+                                        "type": "integer",
+                                    },
+                                    "total_tokens": {
+                                        "title": "Total Tokens",
+                                        "type": "integer",
+                                    },
+                                },
+                                "required": [
+                                    "input_tokens",
+                                    "output_tokens",
+                                    "total_tokens",
+                                ],
+                            },
+                            "AIMessage": {
+                                "title": "AIMessage",
+                                "description": AnyStr(),
+                                "type": "object",
+                                "properties": {
+                                    "content": {
+                                        "title": "Content",
+                                        "anyOf": [
+                                            {"type": "string"},
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "anyOf": [
+                                                        {"type": "string"},
+                                                        {"type": "object"},
+                                                    ]
+                                                },
+                                            },
+                                        ],
+                                    },
+                                    "additional_kwargs": {
+                                        "title": "Additional Kwargs",
+                                        "type": "object",
+                                    },
+                                    "response_metadata": {
+                                        "title": "Response Metadata",
+                                        "type": "object",
+                                    },
+                                    "type": {
+                                        "title": "Type",
+                                        "default": "ai",
+                                        "enum": ["ai"],
+                                        "type": "string",
+                                    },
+                                    "name": {"title": "Name", "type": "string"},
+                                    "id": {"title": "Id", "type": "string"},
+                                    "example": {
+                                        "title": "Example",
+                                        "default": False,
+                                        "type": "boolean",
+                                    },
+                                    "tool_calls": {
+                                        "title": "Tool Calls",
+                                        "default": [],
+                                        "type": "array",
+                                        "items": {"$ref": "#/definitions/ToolCall"},
+                                    },
+                                    "invalid_tool_calls": {
+                                        "title": "Invalid Tool Calls",
+                                        "default": [],
+                                        "type": "array",
+                                        "items": {"$ref": "#/definitions/InvalidToolCall"},
+                                    },
+                                    "usage_metadata": {
+                                        "$ref": "#/definitions/UsageMetadata"
+                                    },
+                                },
+                                "required": ["content"],
+                            },
+                            "HumanMessage": {
+                                "title": "HumanMessage",
+                                "description": AnyStr(),
+                                "type": "object",
+                                "properties": {
+                                    "content": {
+                                        "title": "Content",
+                                        "anyOf": [
+                                            {"type": "string"},
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "anyOf": [
+                                                        {"type": "string"},
+                                                        {"type": "object"},
+                                                    ]
+                                                },
+                                            },
+                                        ],
+                                    },
+                                    "additional_kwargs": {
+                                        "title": "Additional Kwargs",
+                                        "type": "object",
+                                    },
+                                    "response_metadata": {
+                                        "title": "Response Metadata",
+                                        "type": "object",
+                                    },
+                                    "type": {
+                                        "title": "Type",
+                                        "default": "human",
+                                        "enum": ["human"],
+                                        "type": "string",
+                                    },
+                                    "name": {"title": "Name", "type": "string"},
+                                    "id": {"title": "Id", "type": "string"},
+                                    "example": {
+                                        "title": "Example",
+                                        "default": False,
+                                        "type": "boolean",
+                                    },
+                                },
+                                "required": ["content"],
+                            },
+                            "ChatMessage": {
+                                "title": "ChatMessage",
+                                "description": AnyStr(),
+                                "type": "object",
+                                "properties": {
+                                    "content": {
+                                        "title": "Content",
+                                        "anyOf": [
+                                            {"type": "string"},
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "anyOf": [
+                                                        {"type": "string"},
+                                                        {"type": "object"},
+                                                    ]
+                                                },
+                                            },
+                                        ],
+                                    },
+                                    "additional_kwargs": {
+                                        "title": "Additional Kwargs",
+                                        "type": "object",
+                                    },
+                                    "response_metadata": {
+                                        "title": "Response Metadata",
+                                        "type": "object",
+                                    },
+                                    "type": {
+                                        "title": "Type",
+                                        "default": "chat",
+                                        "enum": ["chat"],
+                                        "type": "string",
+                                    },
+                                    "name": {"title": "Name", "type": "string"},
+                                    "id": {"title": "Id", "type": "string"},
+                                    "role": {"title": "Role", "type": "string"},
+                                },
+                                "required": ["content", "role"],
+                            },
+                            "SystemMessage": {
+                                "title": "SystemMessage",
+                                "description": AnyStr(),
+                                "type": "object",
+                                "properties": {
+                                    "content": {
+                                        "title": "Content",
+                                        "anyOf": [
+                                            {"type": "string"},
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "anyOf": [
+                                                        {"type": "string"},
+                                                        {"type": "object"},
+                                                    ]
+                                                },
+                                            },
+                                        ],
+                                    },
+                                    "additional_kwargs": {
+                                        "title": "Additional Kwargs",
+                                        "type": "object",
+                                    },
+                                    "response_metadata": {
+                                        "title": "Response Metadata",
+                                        "type": "object",
+                                    },
+                                    "type": {
+                                        "title": "Type",
+                                        "default": "system",
+                                        "enum": ["system"],
+                                        "type": "string",
+                                    },
+                                    "name": {"title": "Name", "type": "string"},
+                                    "id": {"title": "Id", "type": "string"},
+                                },
+                                "required": ["content"],
+                            },
+                            "FunctionMessage": {
+                                "title": "FunctionMessage",
+                                "description": AnyStr(),
+                                "type": "object",
+                                "properties": {
+                                    "content": {
+                                        "title": "Content",
+                                        "anyOf": [
+                                            {"type": "string"},
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "anyOf": [
+                                                        {"type": "string"},
+                                                        {"type": "object"},
+                                                    ]
+                                                },
+                                            },
+                                        ],
+                                    },
+                                    "additional_kwargs": {
+                                        "title": "Additional Kwargs",
+                                        "type": "object",
+                                    },
+                                    "response_metadata": {
+                                        "title": "Response Metadata",
+                                        "type": "object",
+                                    },
+                                    "type": {
+                                        "title": "Type",
+                                        "default": "function",
+                                        "enum": ["function"],
+                                        "type": "string",
+                                    },
+                                    "name": {"title": "Name", "type": "string"},
+                                    "id": {"title": "Id", "type": "string"},
+                                },
+                                "required": ["content", "name"],
+                            },
+                            "ToolMessage": {
+                                "title": "ToolMessage",
+                                "description": AnyStr(),
+                                "type": "object",
+                                "properties": {
+                                    "content": {
+                                        "title": "Content",
+                                        "anyOf": [
+                                            {"type": "string"},
+                                            {
+                                                "type": "array",
+                                                "items": {
+                                                    "anyOf": [
+                                                        {"type": "string"},
+                                                        {"type": "object"},
+                                                    ]
+                                                },
+                                            },
+                                        ],
+                                    },
+                                    "additional_kwargs": {
+                                        "title": "Additional Kwargs",
+                                        "type": "object",
+                                    },
+                                    "response_metadata": {
+                                        "title": "Response Metadata",
+                                        "type": "object",
+                                    },
+                                    "type": {
+                                        "title": "Type",
+                                        "default": "tool",
+                                        "enum": ["tool"],
+                                        "type": "string",
+                                    },
+                                    "name": {"title": "Name", "type": "string"},
+                                    "id": {"title": "Id", "type": "string"},
+                                    "tool_call_id": {
+                                        "title": "Tool Call Id",
+                                        "type": "string",
+                                    },
+                                },
+                                "required": ["content", "tool_call_id"],
+                            },
+                        },
+                    },
+                },
+                {
+                    "id": 4,
+                    "type": "schema",
+                    "data": {
+                        "title": "RunnableParallel<as_list,as_str>Output",
+                        "type": "object",
+                        "properties": {
+                            "as_list": {
+                                "title": "As List",
+                                "type": "array",
+                                "items": {"type": "string"},
+                            },
+                            "as_str": {"title": "As Str"},
+                        },
+                    },
+                },
+                {
+                    "id": 5,
+                    "type": "runnable",
+                    "data": {
+                        "id": [
+                            "langchain",
+                            "output_parsers",
+                            "list",
+                            "CommaSeparatedListOutputParser",
+                        ],
+                        "name": "CommaSeparatedListOutputParser",
+                    },
+                },
+                {
+                    "id": 6,
+                    "type": "schema",
+                    "data": {"title": "conditional_str_parser_input", "type": "string"},
+                },
+                {
+                    "id": 7,
+                    "type": "schema",
+                    "data": {"title": "conditional_str_parser_output"},
+                },
+                {
+                    "id": 8,
+                    "type": "runnable",
+                    "data": {
+                        "id": ["langchain", "schema", "output_parser", "StrOutputParser"],
+                        "name": "StrOutputParser",
+                    },
+                },
+                {
+                    "id": 9,
+                    "type": "runnable",
+                    "data": {
+                        "id": [
+                            "langchain_core",
+                            "output_parsers",
+                            "xml",
+                            "XMLOutputParser",
+                        ],
+                        "name": "XMLOutputParser",
+                    },
+                },
+            ],
+            "edges": [
+                {"source": 0, "target": 1},
+                {"source": 1, "target": 2},
+                {"source": 3, "target": 5},
+                {"source": 5, "target": 4},
+                {"source": 6, "target": 8},
+                {"source": 8, "target": 7},
+                {"source": 6, "target": 9},
+                {"source": 9, "target": 7},
+                {"source": 3, "target": 6},
+                {"source": 7, "target": 4},
+                {"source": 2, "target": 3},
+            ],
+        }
+E       AssertionError: assert {'edges': [{'...nable'}, ...]} == {'edges': [{'...nable'}, ...]}
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'nodes': [{'data': {'properties': {'name': {'title': 'Name', 'type': 'string'}}, 'title': 'PromptInput', 'type': 'obj...ist', 'CommaSeparatedListOutputParser'], 'name': 'CommaSeparatedListOutputParser'}, 'id': 5, 'type': 'runnable'}, ...]} != {'nodes': [{'data': {'properties': {'name': {'title': 'Name', 'type': 'string'}}, 'required': ['name'], 'title': 'Prom...ist', 'CommaSeparatedListOutputParser'], 'name': 'CommaSeparatedListOutputParser'}, 'id': 5, 'type': 'runnable'}, ...]}
+E         Full diff:
+E           {
+E            'edges': [{'source': 0,
+E                       'target': 1},...
+E         
+E         ...Full output truncated (625 lines hidden), use '-vv' to show
+
+libs/core/tests/unit_tests/runnables/test_graph.py:172: AssertionError
+_________________________________ test_schemas _________________________________
+
+snapshot = dict({
+  'anyOf': list([
+    dict({
+      '$ref': '#/definitions/AIMessage',
+    }),
+    dict({
+      '$ref': '#/defin...     ]),
+      'title': 'UsageMetadata',
+      'type': 'object',
+    }),
+  }),
+  'title': 'FakeListChatModelOutput',
+})
+
+    def test_schemas(snapshot: SnapshotAssertion) -> None:
+        fake = FakeRunnable()  # str -> int
+    
+        assert fake.input_schema.schema() == {
+            "title": "FakeRunnableInput",
+            "type": "string",
+        }
+        assert fake.output_schema.schema() == {
+            "title": "FakeRunnableOutput",
+            "type": "integer",
+        }
+        assert fake.config_schema(include=["tags", "metadata", "run_name"]).schema() == {
+            "title": "FakeRunnableConfig",
+            "type": "object",
+            "properties": {
+                "metadata": {"title": "Metadata", "type": "object"},
+                "run_name": {"title": "Run Name", "type": "string"},
+                "tags": {"items": {"type": "string"}, "title": "Tags", "type": "array"},
+            },
+        }
+    
+        fake_bound = FakeRunnable().bind(a="b")  # str -> int
+    
+        assert fake_bound.input_schema.schema() == {
+            "title": "FakeRunnableInput",
+            "type": "string",
+        }
+        assert fake_bound.output_schema.schema() == {
+            "title": "FakeRunnableOutput",
+            "type": "integer",
+        }
+    
+        fake_w_fallbacks = FakeRunnable().with_fallbacks((fake,))  # str -> int
+    
+        assert fake_w_fallbacks.input_schema.schema() == {
+            "title": "FakeRunnableInput",
+            "type": "string",
+        }
+        assert fake_w_fallbacks.output_schema.schema() == {
+            "title": "FakeRunnableOutput",
+            "type": "integer",
+        }
+    
+        def typed_lambda_impl(x: str) -> int:
+            return len(x)
+    
+        typed_lambda = RunnableLambda(typed_lambda_impl)  # str -> int
+    
+        assert typed_lambda.input_schema.schema() == {
+            "title": "typed_lambda_impl_input",
+            "type": "string",
+        }
+        assert typed_lambda.output_schema.schema() == {
+            "title": "typed_lambda_impl_output",
+            "type": "integer",
+        }
+    
+        async def typed_async_lambda_impl(x: str) -> int:
+            return len(x)
+    
+        typed_async_lambda: Runnable = RunnableLambda(typed_async_lambda_impl)  # str -> int
+    
+        assert typed_async_lambda.input_schema.schema() == {
+            "title": "typed_async_lambda_impl_input",
+            "type": "string",
+        }
+        assert typed_async_lambda.output_schema.schema() == {
+            "title": "typed_async_lambda_impl_output",
+            "type": "integer",
+        }
+    
+        fake_ret = FakeRetriever()  # str -> List[Document]
+    
+        assert fake_ret.input_schema.schema() == {
+            "title": "FakeRetrieverInput",
+            "type": "string",
+        }
+        assert fake_ret.output_schema.schema() == {
+            "title": "FakeRetrieverOutput",
+            "type": "array",
+            "items": {"$ref": "#/definitions/Document"},
+            "definitions": {
+                "Document": {
+                    "title": "Document",
+                    "description": AnyStr(),
+                    "type": "object",
+                    "properties": {
+                        "page_content": {"title": "Page Content", "type": "string"},
+                        "metadata": {"title": "Metadata", "type": "object"},
+                        "id": {
+                            "title": "Id",
+                            "type": "string",
+                        },
+                        "type": {
+                            "title": "Type",
+                            "enum": ["Document"],
+                            "default": "Document",
+                            "type": "string",
+                        },
+                    },
+                    "required": ["page_content"],
+                }
+            },
+        }
+    
+        fake_llm = FakeListLLM(responses=["a"])  # str -> List[List[str]]
+    
+        assert fake_llm.input_schema.schema() == snapshot
+        assert fake_llm.output_schema.schema() == {
+            "title": "FakeListLLMOutput",
+            "type": "string",
+        }
+    
+        fake_chat = FakeListChatModel(responses=["a"])  # str -> List[List[str]]
+    
+        assert fake_chat.input_schema.schema() == snapshot
+        assert fake_chat.output_schema.schema() == snapshot
+    
+        chat_prompt = ChatPromptTemplate.from_messages(
+            [
+                MessagesPlaceholder(variable_name="history"),
+                ("human", "Hello, how are you?"),
+            ]
+        )
+    
+>       assert chat_prompt.input_schema.schema() == {
+            "title": "PromptInput",
+            "type": "object",
+            "properties": {
+                "history": {
+                    "title": "History",
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {"$ref": "#/definitions/AIMessage"},
+                            {"$ref": "#/definitions/HumanMessage"},
+                            {"$ref": "#/definitions/ChatMessage"},
+                            {"$ref": "#/definitions/SystemMessage"},
+                            {"$ref": "#/definitions/FunctionMessage"},
+                            {"$ref": "#/definitions/ToolMessage"},
+                        ]
+                    },
+                }
+            },
+            "required": ["history"],
+            "definitions": {
+                "ToolCall": {
+                    "title": "ToolCall",
+                    "type": "object",
+                    "properties": {
+                        "name": {"title": "Name", "type": "string"},
+                        "args": {"title": "Args", "type": "object"},
+                        "id": {"title": "Id", "type": "string"},
+                    },
+                    "required": ["name", "args", "id"],
+                },
+                "InvalidToolCall": {
+                    "title": "InvalidToolCall",
+                    "type": "object",
+                    "properties": {
+                        "name": {"title": "Name", "type": "string"},
+                        "args": {"title": "Args", "type": "string"},
+                        "id": {"title": "Id", "type": "string"},
+                        "error": {"title": "Error", "type": "string"},
+                    },
+                    "required": ["name", "args", "id", "error"],
+                },
+                "UsageMetadata": {
+                    "title": "UsageMetadata",
+                    "type": "object",
+                    "properties": {
+                        "input_tokens": {"title": "Input Tokens", "type": "integer"},
+                        "output_tokens": {"title": "Output Tokens", "type": "integer"},
+                        "total_tokens": {"title": "Total Tokens", "type": "integer"},
+                    },
+                    "required": ["input_tokens", "output_tokens", "total_tokens"],
+                },
+                "AIMessage": {
+                    "title": "AIMessage",
+                    "description": "Message from an AI.\n\nAIMessage is returned from a chat model as a response to a prompt.\n\nThis message represents the output of the model and consists of both\nthe raw output as returned by the model together standardized fields\n(e.g., tool calls, usage metadata) added by the LangChain framework.",  # noqa: E501
+                    "type": "object",
+                    "properties": {
+                        "content": {
+                            "title": "Content",
+                            "anyOf": [
+                                {"type": "string"},
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "anyOf": [{"type": "string"}, {"type": "object"}]
+                                    },
+                                },
+                            ],
+                        },
+                        "additional_kwargs": {
+                            "title": "Additional Kwargs",
+                            "type": "object",
+                        },
+                        "response_metadata": {
+                            "title": "Response Metadata",
+                            "type": "object",
+                        },
+                        "type": {
+                            "title": "Type",
+                            "default": "ai",
+                            "enum": ["ai"],
+                            "type": "string",
+                        },
+                        "name": {"title": "Name", "type": "string"},
+                        "id": {"title": "Id", "type": "string"},
+                        "example": {
+                            "title": "Example",
+                            "default": False,
+                            "type": "boolean",
+                        },
+                        "tool_calls": {
+                            "title": "Tool Calls",
+                            "default": [],
+                            "type": "array",
+                            "items": {"$ref": "#/definitions/ToolCall"},
+                        },
+                        "invalid_tool_calls": {
+                            "title": "Invalid Tool Calls",
+                            "default": [],
+                            "type": "array",
+                            "items": {"$ref": "#/definitions/InvalidToolCall"},
+                        },
+                        "usage_metadata": {"$ref": "#/definitions/UsageMetadata"},
+                    },
+                    "required": ["content"],
+                },
+                "HumanMessage": {
+                    "title": "HumanMessage",
+                    "description": 'Message from a human.\n\nHumanMessages are messages that are passed in from a human to the model.\n\nExample:\n\n    .. code-block:: python\n\n        from langchain_core.messages import HumanMessage, SystemMessage\n\n        messages = [\n            SystemMessage(\n                content="You are a helpful assistant! Your name is Bob."\n            ),\n            HumanMessage(\n                content="What is your name?"\n            )\n        ]\n\n        # Instantiate a chat model and invoke it with the messages\n        model = ...\n        print(model.invoke(messages))',  # noqa: E501
+                    "type": "object",
+                    "properties": {
+                        "content": {
+                            "title": "Content",
+                            "anyOf": [
+                                {"type": "string"},
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "anyOf": [{"type": "string"}, {"type": "object"}]
+                                    },
+                                },
+                            ],
+                        },
+                        "additional_kwargs": {
+                            "title": "Additional Kwargs",
+                            "type": "object",
+                        },
+                        "response_metadata": {
+                            "title": "Response Metadata",
+                            "type": "object",
+                        },
+                        "type": {
+                            "title": "Type",
+                            "default": "human",
+                            "enum": ["human"],
+                            "type": "string",
+                        },
+                        "name": {"title": "Name", "type": "string"},
+                        "id": {"title": "Id", "type": "string"},
+                        "example": {
+                            "title": "Example",
+                            "default": False,
+                            "type": "boolean",
+                        },
+                    },
+                    "required": ["content"],
+                },
+                "ChatMessage": {
+                    "title": "ChatMessage",
+                    "description": "Message that can be assigned an arbitrary speaker (i.e. role).",  # noqa: E501
+                    "type": "object",
+                    "properties": {
+                        "content": {
+                            "title": "Content",
+                            "anyOf": [
+                                {"type": "string"},
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "anyOf": [{"type": "string"}, {"type": "object"}]
+                                    },
+                                },
+                            ],
+                        },
+                        "additional_kwargs": {
+                            "title": "Additional Kwargs",
+                            "type": "object",
+                        },
+                        "response_metadata": {
+                            "title": "Response Metadata",
+                            "type": "object",
+                        },
+                        "type": {
+                            "title": "Type",
+                            "default": "chat",
+                            "enum": ["chat"],
+                            "type": "string",
+                        },
+                        "name": {"title": "Name", "type": "string"},
+                        "id": {"title": "Id", "type": "string"},
+                        "role": {"title": "Role", "type": "string"},
+                    },
+                    "required": ["content", "role"],
+                },
+                "SystemMessage": {
+                    "title": "SystemMessage",
+                    "description": 'Message for priming AI behavior.\n\nThe system message is usually passed in as the first of a sequence\nof input messages.\n\nExample:\n\n    .. code-block:: python\n\n        from langchain_core.messages import HumanMessage, SystemMessage\n\n        messages = [\n            SystemMessage(\n                content="You are a helpful assistant! Your name is Bob."\n            ),\n            HumanMessage(\n                content="What is your name?"\n            )\n        ]\n\n        # Define a chat model and invoke it with the messages\n        print(model.invoke(messages))',  # noqa: E501
+                    "type": "object",
+                    "properties": {
+                        "content": {
+                            "title": "Content",
+                            "anyOf": [
+                                {"type": "string"},
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "anyOf": [{"type": "string"}, {"type": "object"}]
+                                    },
+                                },
+                            ],
+                        },
+                        "additional_kwargs": {
+                            "title": "Additional Kwargs",
+                            "type": "object",
+                        },
+                        "response_metadata": {
+                            "title": "Response Metadata",
+                            "type": "object",
+                        },
+                        "type": {
+                            "title": "Type",
+                            "default": "system",
+                            "enum": ["system"],
+                            "type": "string",
+                        },
+                        "name": {"title": "Name", "type": "string"},
+                        "id": {"title": "Id", "type": "string"},
+                    },
+                    "required": ["content"],
+                },
+                "FunctionMessage": {
+                    "title": "FunctionMessage",
+                    "description": "Message for passing the result of executing a tool back to a model.\n\nFunctionMessage are an older version of the ToolMessage schema, and\ndo not contain the tool_call_id field.\n\nThe tool_call_id field is used to associate the tool call request with the\ntool call response. This is useful in situations where a chat model is able\nto request multiple tool calls in parallel.",  # noqa: E501
+                    "type": "object",
+                    "properties": {
+                        "content": {
+                            "title": "Content",
+                            "anyOf": [
+                                {"type": "string"},
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "anyOf": [{"type": "string"}, {"type": "object"}]
+                                    },
+                                },
+                            ],
+                        },
+                        "additional_kwargs": {
+                            "title": "Additional Kwargs",
+                            "type": "object",
+                        },
+                        "response_metadata": {
+                            "title": "Response Metadata",
+                            "type": "object",
+                        },
+                        "type": {
+                            "title": "Type",
+                            "default": "function",
+                            "enum": ["function"],
+                            "type": "string",
+                        },
+                        "name": {"title": "Name", "type": "string"},
+                        "id": {"title": "Id", "type": "string"},
+                    },
+                    "required": ["content", "name"],
+                },
+                "ToolMessage": {
+                    "title": "ToolMessage",
+                    "description": "Message for passing the result of executing a tool back to a model.\n\nToolMessages contain the result of a tool invocation. Typically, the result\nis encoded inside the `content` field.\n\nExample: A TooMessage representing a result of 42 from a tool call with id\n\n    .. code-block:: python\n\n        from langchain_core.messages import ToolMessage\n\n        ToolMessage(content='42', tool_call_id='call_Jja7J89XsjrOLA5r!MEOW!SL')\n\nThe tool_call_id field is used to associate the tool call request with the\ntool call response. This is useful in situations where a chat model is able\nto request multiple tool calls in parallel.",  # noqa: E501
+                    "type": "object",
+                    "properties": {
+                        "content": {
+                            "title": "Content",
+                            "anyOf": [
+                                {"type": "string"},
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "anyOf": [{"type": "string"}, {"type": "object"}]
+                                    },
+                                },
+                            ],
+                        },
+                        "additional_kwargs": {
+                            "title": "Additional Kwargs",
+                            "type": "object",
+                        },
+                        "response_metadata": {
+                            "title": "Response Metadata",
+                            "type": "object",
+                        },
+                        "type": {
+                            "title": "Type",
+                            "default": "tool",
+                            "enum": ["tool"],
+                            "type": "string",
+                        },
+                        "name": {"title": "Name", "type": "string"},
+                        "id": {"title": "Id", "type": "string"},
+                        "tool_call_id": {"title": "Tool Call Id", "type": "string"},
+                    },
+                    "required": ["content", "tool_call_id"],
+                },
+            },
+        }
+E       AssertionError: assert {'definitions...pe': 'object'} == {'definitions...ptInput', ...}
+E         Omitting 4 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'required': ['history']}
+E         Full diff:
+E           {
+E            'definitions': {'AIMessage': {'description': 'Message from an AI.\n'
+E                                                         '\n'...
+E         
+E         ...Full output truncated (348 lines hidden), use '-vv' to show
+
+libs/core/tests/unit_tests/runnables/test_runnable.py:350: AssertionError
+___________________________ test_configurable_fields ___________________________
+
+    def test_configurable_fields() -> None:
+        fake_llm = FakeListLLM(responses=["a"])  # str -> List[List[str]]
+    
+        assert fake_llm.invoke("...") == "a"
+    
+        fake_llm_configurable = fake_llm.configurable_fields(
+            responses=ConfigurableField(
+                id="llm_responses",
+                name="LLM Responses",
+                description="A list of fake responses for this LLM",
+            )
+        )
+    
+        assert fake_llm_configurable.invoke("...") == "a"
+    
+        assert fake_llm_configurable.config_schema().schema() == {
+            "title": "RunnableConfigurableFieldsConfig",
+            "type": "object",
+            "properties": {"configurable": {"$ref": "#/definitions/Configurable"}},
+            "definitions": {
+                "Configurable": {
+                    "title": "Configurable",
+                    "type": "object",
+                    "properties": {
+                        "llm_responses": {
+                            "title": "LLM Responses",
+                            "description": "A list of fake responses for this LLM",
+                            "default": ["a"],
+                            "type": "array",
+                            "items": {"type": "string"},
+                        }
+                    },
+                }
+            },
+        }
+    
+        fake_llm_configured = fake_llm_configurable.with_config(
+            configurable={"llm_responses": ["b"]}
+        )
+    
+        assert fake_llm_configured.invoke("...") == "b"
+    
+        prompt = PromptTemplate.from_template("Hello, {name}!")
+    
+        assert prompt.invoke({"name": "John"}) == StringPromptValue(text="Hello, John!")
+    
+        prompt_configurable = prompt.configurable_fields(
+            template=ConfigurableField(
+                id="prompt_template",
+                name="Prompt Template",
+                description="The prompt template for this chain",
+            )
+        )
+    
+        assert prompt_configurable.invoke({"name": "John"}) == StringPromptValue(
+            text="Hello, John!"
+        )
+    
+        assert prompt_configurable.config_schema().schema() == {
+            "title": "RunnableConfigurableFieldsConfig",
+            "type": "object",
+            "properties": {"configurable": {"$ref": "#/definitions/Configurable"}},
+            "definitions": {
+                "Configurable": {
+                    "title": "Configurable",
+                    "type": "object",
+                    "properties": {
+                        "prompt_template": {
+                            "title": "Prompt Template",
+                            "description": "The prompt template for this chain",
+                            "default": "Hello, {name}!",
+                            "type": "string",
+                        }
+                    },
+                }
+            },
+        }
+    
+        prompt_configured = prompt_configurable.with_config(
+            configurable={"prompt_template": "Hello, {name}! {name}!"}
+        )
+    
+        assert prompt_configured.invoke({"name": "John"}) == StringPromptValue(
+            text="Hello, John! John!"
+        )
+    
+>       assert prompt_configurable.with_config(
+            configurable={"prompt_template": "Hello {name} in {lang}"}
+        ).input_schema.schema() == {
+            "title": "PromptInput",
+            "type": "object",
+            "properties": {
+                "lang": {"title": "Lang", "type": "string"},
+                "name": {"title": "Name", "type": "string"},
+            },
+            "required": ["lang", "name"],
+        }
+E       AssertionError: assert {'properties'...pe': 'object'} == {'properties'...pe': 'object'}
+E         Omitting 3 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'required': ['lang', 'name']}
+E         Full diff:
+E           {
+E            'properties': {'lang': {'title': 'Lang',
+E                                    'type': 'string'},...
+E         
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+libs/core/tests/unit_tests/runnables/test_runnable.py:1055: AssertionError
+___________________________ test_deep_stream_assign ____________________________
+
+    def test_deep_stream_assign() -> None:
+        prompt = (
+            SystemMessagePromptTemplate.from_template("You are a nice assistant.")
+            + "{question}"
+        )
+        llm = FakeStreamingListLLM(responses=["foo-lish"])
+    
+        chain: Runnable = prompt | llm | {"str": StrOutputParser()}
+    
+        stream = chain.stream({"question": "What up"})
+    
+        chunks = []
+        for chunk in stream:
+            chunks.append(chunk)
+    
+        assert len(chunks) == len("foo-lish")
+        assert add(chunks) == {"str": "foo-lish"}
+    
+        chain_with_assign = chain.assign(hello=itemgetter("str") | llm)
+    
+>       assert chain_with_assign.input_schema.schema() == {
+            "title": "PromptInput",
+            "type": "object",
+            "properties": {"question": {"title": "Question", "type": "string"}},
+            "required": ["question"],
+        }
+E       AssertionError: assert {'properties'...pe': 'object'} == {'properties'...pe': 'object'}
+E         Omitting 3 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'required': ['question']}
+E         Full diff:
+E           {
+E            'properties': {'question': {'title': 'Question',
+E                                        'type': 'string'}},...
+E         
+E         ...Full output truncated (4 lines hidden), use '-vv' to show
+
+libs/core/tests/unit_tests/runnables/test_runnable.py:3800: AssertionError
+___________________________ test_deep_astream_assign ___________________________
+
+    async def test_deep_astream_assign() -> None:
+        prompt = (
+            SystemMessagePromptTemplate.from_template("You are a nice assistant.")
+            + "{question}"
+        )
+        llm = FakeStreamingListLLM(responses=["foo-lish"])
+    
+        chain: Runnable = prompt | llm | {"str": StrOutputParser()}
+    
+        stream = chain.astream({"question": "What up"})
+    
+        chunks = []
+        async for chunk in stream:
+            chunks.append(chunk)
+    
+        assert len(chunks) == len("foo-lish")
+        assert add(chunks) == {"str": "foo-lish"}
+    
+        chain_with_assign = chain.assign(
+            hello=itemgetter("str") | llm,
+        )
+    
+>       assert chain_with_assign.input_schema.schema() == {
+            "title": "PromptInput",
+            "type": "object",
+            "properties": {"question": {"title": "Question", "type": "string"}},
+            "required": ["question"],
+        }
+E       AssertionError: assert {'properties'...pe': 'object'} == {'properties'...pe': 'object'}
+E         Omitting 3 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'required': ['question']}
+E         Full diff:
+E           {
+E            'properties': {'question': {'title': 'Question',
+E                                        'type': 'string'}},...
+E         
+E         ...Full output truncated (4 lines hidden), use '-vv' to show
+
+libs/core/tests/unit_tests/runnables/test_runnable.py:3926: AssertionError
+___________________________ test_tool_from_runnable ____________________________
+
+    async def test_tool_from_runnable() -> None:
+        prompt = (
+            SystemMessagePromptTemplate.from_template("You are a nice assistant.")
+            + "{question}"
+        )
+        llm = FakeStreamingListLLM(responses=["foo-lish"])
+    
+        chain = prompt | llm | StrOutputParser()
+    
+        chain_tool = tool("chain_tool", chain)
+    
+        assert isinstance(chain_tool, BaseTool)
+        assert chain_tool.name == "chain_tool"
+        assert chain_tool.run({"question": "What up"}) == chain.invoke(
+            {"question": "What up"}
+        )
+        assert await chain_tool.arun({"question": "What up"}) == await chain.ainvoke(
+            {"question": "What up"}
+        )
+        assert chain_tool.description.endswith(repr(chain))
+        assert chain_tool.args_schema.schema() == chain.input_schema.schema()
+>       assert chain_tool.args_schema.schema() == {
+            "properties": {"question": {"title": "Question", "type": "string"}},
+            "title": "PromptInput",
+            "type": "object",
+            "required": ["question"],
+        }
+E       AssertionError: assert {'properties'...pe': 'object'} == {'properties'...pe': 'object'}
+E         Omitting 3 identical items, use -vv to show
+E         Right contains 1 more item:
+E         {'required': ['question']}
+E         Full diff:
+E           {
+E            'properties': {'question': {'title': 'Question',
+E                                        'type': 'string'}},...
+E         
+E         ...Full output truncated (4 lines hidden), use '-vv' to show
+
+libs/core/tests/unit_tests/runnables/test_runnable.py:4979: AssertionError
+=============================== warnings summary ===============================
+tests/unit_tests/prompts/test_chat.py::test_message_prompt_template_from_template_file
+  /workspace/repo/libs/core/langchain_core/prompts/prompt.py:220: DeprecationWarning: `input_variables' is deprecated and ignored.
+    warnings.warn(
+
+tests/unit_tests/runnables/test_runnable.py::test_map_astream_iterator_input
+  /workspace/repo/libs/core/langchain_core/_api/beta_decorator.py:87: LangChainBetaWarning: The function `loads` is in beta. It is actively being worked on, so the API may change.
+    warn_beta(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+--------------------------- snapshot report summary ----------------------------
+13 snapshots passed.
+============================= slowest 5 durations ==============================
+1.44s call     tests/unit_tests/runnables/test_runnable.py::test_retrying
+0.73s call     tests/unit_tests/runnables/test_runnable.py::test_map_astream
+0.59s call     tests/unit_tests/runnables/test_runnable.py::test_map_stream
+0.42s call     tests/unit_tests/runnables/test_runnable.py::test_runnable_branch_astream
+0.29s call     tests/unit_tests/runnables/test_runnable.py::test_map_astream_iterator_input
+=========================== short test summary info ============================
+FAILED libs/core/tests/unit_tests/prompts/test_chat.py::test_chat_input_schema
+FAILED libs/core/tests/unit_tests/runnables/test_graph.py::test_graph_sequence
+FAILED libs/core/tests/unit_tests/runnables/test_graph.py::test_graph_sequence_map
+FAILED libs/core/tests/unit_tests/runnables/test_runnable.py::test_schemas - ...
+FAILED libs/core/tests/unit_tests/runnables/test_runnable.py::test_configurable_fields
+FAILED libs/core/tests/unit_tests/runnables/test_runnable.py::test_deep_stream_assign
+FAILED libs/core/tests/unit_tests/runnables/test_runnable.py::test_deep_astream_assign
+FAILED libs/core/tests/unit_tests/runnables/test_runnable.py::test_tool_from_runnable
+=========== 8 failed, 120 passed, 7 deselected, 2 warnings in 8.54s ============
+reward=0 graded=128 found=0 failed=0 parsed=121 framework=pytest exit_code=1

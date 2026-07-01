@@ -1,0 +1,23 @@
+{
+ "task": "go-task-task-2380",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch: 'entrypoint, err := Search(...)' (one return) + new TestResolveDir/TestDefaultDir/TestGetConfig_*; golden defines 'func Search(...)(string,error)', 'func ResolveDir(...)', 'func GetConfig(dir string)(*ast.TaskRC,error)' with local-first Merge"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

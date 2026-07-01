@@ -1,0 +1,41 @@
+patching file crates/component-macro/tests/expanded/char_async.rs
+patching file crates/component-macro/tests/expanded/conventions_async.rs
+patching file crates/component-macro/tests/expanded/dead-code_async.rs
+patching file crates/component-macro/tests/expanded/direct-import_async.rs
+patching file crates/component-macro/tests/expanded/flags_async.rs
+patching file crates/component-macro/tests/expanded/floats_async.rs
+patching file crates/component-macro/tests/expanded/integers_async.rs
+patching file crates/component-macro/tests/expanded/lists_async.rs
+patching file crates/component-macro/tests/expanded/many-arguments_async.rs
+patching file crates/component-macro/tests/expanded/multi-return_async.rs
+patching file crates/component-macro/tests/expanded/multiversion_async.rs
+patching file crates/component-macro/tests/expanded/records_async.rs
+patching file crates/component-macro/tests/expanded/rename_async.rs
+patching file crates/component-macro/tests/expanded/resources-import_async.rs
+patching file crates/component-macro/tests/expanded/share-types_async.rs
+patching file crates/component-macro/tests/expanded/simple-functions_async.rs
+patching file crates/component-macro/tests/expanded/simple-lists_async.rs
+patching file crates/component-macro/tests/expanded/simple-wasi_async.rs
+patching file crates/component-macro/tests/expanded/small-anonymous_async.rs
+patching file crates/component-macro/tests/expanded/smoke_async.rs
+patching file crates/component-macro/tests/expanded/strings_async.rs
+patching file crates/component-macro/tests/expanded/unversioned-foo_async.rs
+patching file crates/component-macro/tests/expanded/use-paths_async.rs
+patching file crates/component-macro/tests/expanded/variants_async.rs
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+   Compiling wasmtime-wit-bindgen v26.0.0 (/workspace/repo/crates/wit-bindgen)
+   Compiling wasmtime-component-macro v26.0.0 (/workspace/repo/crates/component-macro)
+   Compiling wasmtime v26.0.0 (/workspace/repo/crates/wasmtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.11s
+────────────
+ Nextest run ID 08b2d7c8-3e35-4f8b-948a-51d5e7da0567 with nextest profile: default
+    Starting 1 test across 3 binaries
+        PASS [   1.278s] (1/1) wasmtime-component-macro::expanded expand_wits
+────────────
+     Summary [   1.278s] 1 test run: 1 passed, 0 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

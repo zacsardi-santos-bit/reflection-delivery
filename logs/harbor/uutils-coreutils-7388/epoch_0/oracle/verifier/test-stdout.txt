@@ -1,0 +1,12 @@
+patching file tests/by-util/test_expr.rs
+   Compiling uu_expr v0.0.30 (/workspace/repo/src/uu/expr)
+   Compiling coreutils v0.0.30 (/workspace/repo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.62s
+────────────
+ Nextest run ID 1397bc31-9585-4500-87e2-d89e2af14c70 with nextest profile: default
+    Starting 2 tests across 3 binaries (3527 tests skipped)
+        PASS [   0.190s] (1/2) coreutils::tests test_yes::test_long_input
+        PASS [   0.710s] (2/2) coreutils::tests test_expr::test_long_input
+────────────
+     Summary [   0.726s] 2 tests run: 2 passed, 3527 skipped
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

@@ -1,0 +1,7 @@
+I'm working on adding a "connection announcement" feature to the ShellHub namespace system. The idea is that each namespace should be able to configure a custom text message that gets displayed when a user establishes a connection to a device within that namespace. Right now, there's no such field anywhere in the system.
+
+I need the namespace settings model to be updated to include this new field, and existing data in the database needs to be migrated so that existing namespaces get the field initialized to an empty string. The migration should also be reversible so we can roll back cleanly. When a namespace is first created during system setup, the connection announcement should default to an empty string.
+
+On the frontend side, I need a new component for editing namespace settings that includes a text area for the connection announcement alongside the existing name field. The text area should be clearly labeled "Connection Announcement" and should show a brief description of what it does. The component should start in read-only mode and switch to edit mode when the user clicks an edit button. When saved, both the name and the connection announcement should be sent to the backend together. If the API call fails, an appropriate error notification should appear.
+
+The frontend data store also needs to be updated so that namespace objects carry the connection announcement field in their settings. The store should handle reading, storing, and updating namespace data including this new field.

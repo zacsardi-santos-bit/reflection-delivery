@@ -1,0 +1,23 @@
+{
+ "task": "openziti-ziti-1716",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden changes 'func (self *impl) PeerConnected(peer *Peer) error' returning error on duplicate address; test 'assert.NoError(t, m.PeerConnected(p))'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "mikro-orm-mikro-orm-5817",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden changes 'if (prop.enum || !prop.persist) { return; }' to 'if (prop.enum) { return; }' so non-persisted FK scalar props keep unsigned/length/autoincrement/columnType; test.patch snapshots add '@Property({ unsigned: true, ... persist: false })'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 8,
+  "shallow": true
+ }
+}

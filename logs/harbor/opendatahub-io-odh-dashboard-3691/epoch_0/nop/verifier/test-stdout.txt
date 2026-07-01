@@ -1,0 +1,149 @@
+patching file frontend/src/__tests__/cypress/cypress/pages/modelMetrics.ts
+patching file frontend/src/__tests__/cypress/cypress/tests/mocked/modelServing/modelMetrics.cy.ts
+patching file frontend/src/concepts/metrics/kserve/__tests__/utils.spec.ts
+patching file frontend/src/pages/modelServing/screens/projects/__tests__/nimUtils.spec.ts
+patching file frontend/src/pages/modelServing/screens/projects/__tests__/utils.spec.ts
+patching file frontend/src/utilities/__tests__/useEnableApplication.spec.tsx
+patching file frontend/src/utilities/__tests__/useWatchIntegrationComponents.spec.ts
+FAIL src/concepts/metrics/kserve/__tests__/utils.spec.ts
+  ● isValidNimMetricsDataObject › should return true when given a valid value
+
+    TypeError: Cannot read properties of undefined (reading 'REQUEST_OUTCOMES')
+
+      128 |           {
+      129 |             title: 'Requests outcomes',
+    > 130 |             type: NimMetricsGraphTypes.REQUEST_OUTCOMES,
+          |                                        ^
+      131 |             queries: [
+      132 |               {
+      133 |                 title: 'Number of successful incoming requests',
+
+      at Object.REQUEST_OUTCOMES (src/concepts/metrics/kserve/__tests__/utils.spec.ts:130:40)
+
+  ● isValidNimMetricsDataObject › should return false when given an invalid value
+
+    TypeError: Cannot read properties of undefined (reading 'REQUEST_OUTCOMES')
+
+      151 |           {
+      152 |             title: 'Requests outcomes',
+    > 153 |             type: NimMetricsGraphTypes.REQUEST_OUTCOMES,
+          |                                        ^
+      154 |             queries: [
+      155 |               {
+      156 |                 title: 'Number of successful incoming requests',
+
+      at Object.REQUEST_OUTCOMES (src/concepts/metrics/kserve/__tests__/utils.spec.ts:153:40)
+
+  ● isValidNimMetricsDataObject › should return false when given an insane value
+
+    TypeError: (0 , _utils.isValidNimMetricsDataObject) is not a function
+
+      175 |
+      176 |   it('should return false when given an insane value', () => {
+    > 177 |     expect(isValidNimMetricsDataObject(null)).toBe(false);
+          |                                       ^
+      178 |     expect(isValidNimMetricsDataObject(undefined)).toBe(false);
+      179 |     expect(isValidNimMetricsDataObject({})).toBe(false);
+      180 |     expect(isValidNimMetricsDataObject([])).toBe(false);
+
+      at Object.<anonymous> (src/concepts/metrics/kserve/__tests__/utils.spec.ts:177:39)
+
+FAIL src/utilities/__tests__/useWatchIntegrationComponents.spec.ts
+  ● useWatchIntegrationComponents › should update component status when integration app is enabled
+
+    TypeError: Cannot read properties of undefined (reading 'SUCCESS')
+
+      63 |       isEnabled: true,
+      64 |       canInstall: true,
+    > 65 |       variablesValidationStatus: VariablesValidationStatus.SUCCESS,
+         |                                                            ^
+      66 |       error: '',
+      67 |     });
+      68 |
+
+      at Object.SUCCESS (src/utilities/__tests__/useWatchIntegrationComponents.spec.ts:65:60)
+
+  ● useWatchIntegrationComponents › should handle error response
+
+    TypeError: Cannot read properties of undefined (reading 'UNKNOWN')
+
+      80 |       isEnabled: false,
+      81 |       canInstall: false,
+    > 82 |       variablesValidationStatus: VariablesValidationStatus.UNKNOWN,
+         |                                                            ^
+      83 |       error: errorMessage,
+      84 |     });
+      85 |
+
+      at Object.UNKNOWN (src/utilities/__tests__/useWatchIntegrationComponents.spec.ts:82:60)
+
+  ● useWatchIntegrationComponents › should update on forceComponentsUpdate
+
+    TypeError: Cannot read properties of undefined (reading 'SUCCESS')
+
+      102 |       isEnabled: true,
+      103 |       canInstall: true,
+    > 104 |       variablesValidationStatus: VariablesValidationStatus.SUCCESS,
+          |                                                            ^
+      105 |       error: '',
+      106 |     });
+      107 |
+
+      at Object.SUCCESS (src/utilities/__tests__/useWatchIntegrationComponents.spec.ts:104:60)
+
+PASS src/pages/modelServing/screens/projects/__tests__/utils.spec.ts (6.467 s)
+PASS src/pages/modelServing/screens/projects/__tests__/nimUtils.spec.ts (6.482 s)
+  ● Console
+
+    console.error
+      Error fetching NIM account template name: NIM account does not exist.
+
+      208 |     if (e instanceof Error) {
+      209 |       // eslint-disable-next-line no-console
+    > 210 |       console.error(`Error fetching NIM account template name: ${e.message}`);
+          |               ^
+      211 |     } else {
+      212 |       // eslint-disable-next-line no-console
+      213 |       console.error(`Error fetching NIM account template name: ${String(e)}`);
+
+      at error (src/pages/modelServing/screens/projects/nimUtils.ts:210:15)
+      at Object.<anonymous> (src/pages/modelServing/screens/projects/__tests__/nimUtils.spec.ts:147:20)
+
+FAIL src/utilities/__tests__/useEnableApplication.spec.tsx (7.069 s)
+  ● useEnableApplication › should handle integration app enablement success
+
+    TypeError: Cannot read properties of undefined (reading 'SUCCESS')
+
+      72 |       isInstalled: true,
+      73 |       canInstall: true,
+    > 74 |       variablesValidationStatus: VariablesValidationStatus.SUCCESS,
+         |                                                            ^
+      75 |       variablesValidationTimestamp: '2023-01-01',
+      76 |     });
+      77 |
+
+      at Object.SUCCESS (src/utilities/__tests__/useEnableApplication.spec.tsx:74:60)
+
+  ● useEnableApplication › should handle API errors
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "API Error"
+    Received: undefined
+
+      116 |
+      117 |     expect(renderResult.result.current[0]).toBe(EnableApplicationStatus.FAILED);
+    > 118 |     expect(renderResult.result.current[1]).toBe(errorMessage);
+          |                                            ^
+      119 |     expect(mockDispatch).toHaveBeenCalled();
+      120 |     expect(renderResult).hookToHaveUpdateCount(2);
+      121 |   });
+
+      at Object.toBe (src/utilities/__tests__/useEnableApplication.spec.tsx:118:44)
+
+Test Suites: 3 failed, 2 passed, 5 total
+Tests:       8 failed, 48 passed, 56 total
+Snapshots:   0 total
+Time:        8.039 s
+Ran all test suites matching /src\/concepts\/metrics\/kserve\/__tests__\/utils.spec.ts|src\/pages\/modelServing\/screens\/projects\/__tests__\/nimUtils.spec.ts|src\/pages\/modelServing\/screens\/projects\/__tests__\/utils.spec.ts|src\/utilities\/__tests__\/useEnableApplication.spec.tsx|src\/utilities\/__tests__\/useWatchIntegrationComponents.spec.ts/i.
+reward=0 graded=56 found=0 failed=0 parsed=0 framework=jest exit_code=1

@@ -1,0 +1,23 @@
+{
+ "task": "googleapis-google-cloud-go-11292",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "GOWORK=off go test -json . ./apiv1 -count=1; F2P=109 e.g. 'cloud.google.com/go/pubsub/v2::TestMaxExtensionPeriod'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 29,
+  "shallow": true
+ }
+}

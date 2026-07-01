@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./exercises/rectangles -count=1",
+  "test_files": [
+    "exercises/rectangles/cases_test.go",
+    "exercises/rectangles/rectangles_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "_/workspace/repo/exercises/rectangles::TestRectangles"
+  ],
+  "PASS_TO_PASS": []
+}

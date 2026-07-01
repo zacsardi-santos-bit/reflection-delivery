@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd sea-orm-migration && DATABASE_URL='sqlite::memory:' cargo nextest run --no-default-features --features sqlx-sqlite,runtime-async-std-native-tls",
+  "test_files": [
+    "sea-orm-migration/tests/common/migration/m20220118_000004_create_tea_enum.rs",
+    "sea-orm-migration/tests/main.rs",
+    "tests/common/features/schema.rs"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) sea-orm-migration util::tests::test_get_file_stem",
+    "(2/2) sea-orm-migration::main main"
+  ],
+  "PASS_TO_PASS": []
+}

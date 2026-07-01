@@ -1,0 +1,23 @@
+{
+ "task": "awslabs-mcp-632",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds mutable_sql_detector.py (detect_mutating_keywords, check_sql_injection_risk, detect_transaction_bypass_attempt via real regexes) + consts (ERROR_WRITE_QUERY_PROHIBITED etc.) and edits server.py to validate before connecting; test_server asserts 'mock_get_connection.assert_not_called()' o"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

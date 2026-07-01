@@ -1,0 +1,20 @@
+patching file api/v1beta2/network_types_test.go
+patching file controllers/awscluster_controller_test.go
+patching file controlplane/eks/controllers/awsmanagedcontrolplane_controller_test.go
+patching file pkg/cloud/services/network/natgateways_test.go
+patching file pkg/cloud/services/network/routetables_test.go
+patching file pkg/cloud/services/network/subnets_test.go
+# sigs.k8s.io/cluster-api-provider-aws/v2/pkg/cloud/services/network [sigs.k8s.io/cluster-api-provider-aws/v2/pkg/cloud/services/network.test]
+pkg/cloud/services/network/natgateways_test.go:819:5: unknown field ZoneType in struct literal of type "sigs.k8s.io/cluster-api-provider-aws/v2/api/v1beta2".SubnetSpec
+pkg/cloud/services/network/natgateways_test.go:819:29: cannot infer T (/go/pkg/mod/k8s.io/utils@v0.0.0-20240102154912-e7106e64919e/ptr/ptr.go:50:9)
+pkg/cloud/services/network/natgateways_test.go:819:38: undefined: infrav1.ZoneTypeLocalZone
+pkg/cloud/services/network/natgateways_test.go:820:5: unknown field ParentZoneName in struct literal of type "sigs.k8s.io/cluster-api-provider-aws/v2/api/v1beta2".SubnetSpec
+pkg/cloud/services/network/natgateways_test.go:830:5: unknown field ZoneType in struct literal of type "sigs.k8s.io/cluster-api-provider-aws/v2/api/v1beta2".SubnetSpec
+pkg/cloud/services/network/natgateways_test.go:830:29: cannot infer T (/go/pkg/mod/k8s.io/utils@v0.0.0-20240102154912-e7106e64919e/ptr/ptr.go:50:9)
+pkg/cloud/services/network/natgateways_test.go:830:38: undefined: infrav1.ZoneTypeLocalZone
+pkg/cloud/services/network/natgateways_test.go:831:5: unknown field ParentZoneName in struct literal of type "sigs.k8s.io/cluster-api-provider-aws/v2/api/v1beta2".SubnetSpec
+pkg/cloud/services/network/natgateways_test.go:841:29: cannot infer T (/go/pkg/mod/k8s.io/utils@v0.0.0-20240102154912-e7106e64919e/ptr/ptr.go:50:9)
+pkg/cloud/services/network/natgateways_test.go:841:38: undefined: infrav1.ZoneTypeLocalZone
+pkg/cloud/services/network/natgateways_test.go:841:29: too many errors
+FAIL	sigs.k8s.io/cluster-api-provider-aws/v2/pkg/cloud/services/network [build failed]
+reward=0 graded=159 found=159 failed=159 parsed=1 framework=go exit_code=1

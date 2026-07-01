@@ -1,0 +1,736 @@
+patching file .api-reports/api-report-cache.api.md
+patching file .api-reports/api-report-core.api.md
+patching file .api-reports/api-report-masking.api.md
+patching file .api-reports/api-report-react.api.md
+patching file .api-reports/api-report-react_context.api.md
+patching file .api-reports/api-report-react_hooks.api.md
+patching file .api-reports/api-report-react_internal.api.md
+patching file .api-reports/api-report-react_ssr.api.md
+patching file .api-reports/api-report-testing.api.md
+patching file .api-reports/api-report-testing_core.api.md
+patching file .api-reports/api-report-testing_react.api.md
+patching file .api-reports/api-report-utilities.api.md
+patching file .api-reports/api-report.api.md
+patching file .changeset/moody-lobsters-listen.md
+patching file .changeset/tall-cups-suffer.md
+patching file .changeset/yellow-cats-judge.md
+patching file .size-limits.json
+patching file src/cache/core/cache.ts
+patching file src/cache/core/types/DataProxy.ts
+patching file src/cache/inmemory/inMemoryCache.ts
+patching file src/cache/inmemory/readFromStore.ts
+patching file src/config/jest/areMissingFieldErrorsEqual.ts
+patching file src/config/jest/setup.ts
+patching file src/core/ObservableQuery.ts
+patching file src/core/QueryInfo.ts
+patching file src/core/QueryManager.ts
+patching file src/react/hooks/useFragment.ts
+patching file .api-reports/api-report-cache.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .api-reports/api-report-cache.api.md.rej
+patching file .api-reports/api-report-core.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .api-reports/api-report-core.api.md.rej
+patching file .api-reports/api-report-masking.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-masking.api.md.rej
+patching file .api-reports/api-report-react.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react.api.md.rej
+patching file .api-reports/api-report-react_context.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_context.api.md.rej
+patching file .api-reports/api-report-react_hooks.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_hooks.api.md.rej
+patching file .api-reports/api-report-react_internal.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_internal.api.md.rej
+patching file .api-reports/api-report-react_ssr.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_ssr.api.md.rej
+patching file .api-reports/api-report-testing.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-testing.api.md.rej
+patching file .api-reports/api-report-testing_core.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-testing_core.api.md.rej
+patching file .api-reports/api-report-testing_react.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-testing_react.api.md.rej
+patching file .api-reports/api-report-utilities.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-utilities.api.md.rej
+patching file .api-reports/api-report.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .api-reports/api-report.api.md.rej
+The next patch would create the file .changeset/moody-lobsters-listen.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file .changeset/tall-cups-suffer.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file .changeset/yellow-cats-judge.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .size-limits.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .size-limits.json.rej
+patching file src/cache/core/cache.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file src/cache/core/cache.ts.rej
+patching file src/cache/core/types/DataProxy.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/cache/core/types/DataProxy.ts.rej
+patching file src/cache/inmemory/inMemoryCache.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file src/cache/inmemory/inMemoryCache.ts.rej
+patching file src/cache/inmemory/readFromStore.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/cache/inmemory/readFromStore.ts.rej
+The next patch would create the file src/config/jest/areMissingFieldErrorsEqual.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/config/jest/setup.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/config/jest/setup.ts.rej
+patching file src/core/ObservableQuery.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/core/ObservableQuery.ts.rej
+patching file src/core/QueryInfo.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/QueryInfo.ts.rej
+patching file src/core/QueryManager.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file src/core/QueryManager.ts.rej
+patching file src/react/hooks/useFragment.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file src/react/hooks/useFragment.ts.rej
+patching file .api-reports/api-report-cache.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .api-reports/api-report-cache.api.md.rej
+patching file .api-reports/api-report-core.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .api-reports/api-report-core.api.md.rej
+patching file .api-reports/api-report-masking.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-masking.api.md.rej
+patching file .api-reports/api-report-react.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react.api.md.rej
+patching file .api-reports/api-report-react_context.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_context.api.md.rej
+patching file .api-reports/api-report-react_hooks.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_hooks.api.md.rej
+patching file .api-reports/api-report-react_internal.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_internal.api.md.rej
+patching file .api-reports/api-report-react_ssr.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_ssr.api.md.rej
+patching file .api-reports/api-report-testing.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-testing.api.md.rej
+patching file .api-reports/api-report-testing_core.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-testing_core.api.md.rej
+patching file .api-reports/api-report-testing_react.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-testing_react.api.md.rej
+patching file .api-reports/api-report-utilities.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-utilities.api.md.rej
+patching file .api-reports/api-report.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .api-reports/api-report.api.md.rej
+The next patch would create the file .changeset/moody-lobsters-listen.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file .changeset/tall-cups-suffer.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file .changeset/yellow-cats-judge.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .size-limits.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .size-limits.json.rej
+patching file src/cache/core/cache.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file src/cache/core/cache.ts.rej
+patching file src/cache/core/types/DataProxy.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/cache/core/types/DataProxy.ts.rej
+patching file src/cache/inmemory/inMemoryCache.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file src/cache/inmemory/inMemoryCache.ts.rej
+patching file src/cache/inmemory/readFromStore.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/cache/inmemory/readFromStore.ts.rej
+The next patch would create the file src/config/jest/areMissingFieldErrorsEqual.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/config/jest/setup.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/config/jest/setup.ts.rej
+patching file src/core/ObservableQuery.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/core/ObservableQuery.ts.rej
+patching file src/core/QueryInfo.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/QueryInfo.ts.rej
+patching file src/core/QueryManager.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file src/core/QueryManager.ts.rej
+patching file src/react/hooks/useFragment.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file src/react/hooks/useFragment.ts.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-cache.api.md b/.api-reports/api-report-cache.api.md
+|index 8c3625138..2f9d87749 100644
+|--- a/.api-reports/api-report-cache.api.md
+|+++ b/.api-reports/api-report-cache.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 65
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-core.api.md b/.api-reports/api-report-core.api.md
+|index cf7e1713a..7f465fcf7 100644
+|--- a/.api-reports/api-report-core.api.md
+|+++ b/.api-reports/api-report-core.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 123
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-masking.api.md b/.api-reports/api-report-masking.api.md
+|index 37019fcb7..04d1b0b7e 100644
+|--- a/.api-reports/api-report-masking.api.md
+|+++ b/.api-reports/api-report-masking.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 172
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-react.api.md b/.api-reports/api-report-react.api.md
+|index b7c867aba..9f6825a98 100644
+|--- a/.api-reports/api-report-react.api.md
+|+++ b/.api-reports/api-report-react.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 221
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-react_context.api.md b/.api-reports/api-report-react_context.api.md
+|index 6b7e8e338..31b07cd35 100644
+|--- a/.api-reports/api-report-react_context.api.md
+|+++ b/.api-reports/api-report-react_context.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 270
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-react_hooks.api.md b/.api-reports/api-report-react_hooks.api.md
+|index 0423c0457..6a42b131e 100644
+|--- a/.api-reports/api-report-react_hooks.api.md
+|+++ b/.api-reports/api-report-react_hooks.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 319
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-react_internal.api.md b/.api-reports/api-report-react_internal.api.md
+|index 3b35b5d2e..878aade40 100644
+|--- a/.api-reports/api-report-react_internal.api.md
+|+++ b/.api-reports/api-report-react_internal.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 368
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-react_ssr.api.md b/.api-reports/api-report-react_ssr.api.md
+|index 4c7861925..9473257b4 100644
+|--- a/.api-reports/api-report-react_ssr.api.md
+|+++ b/.api-reports/api-report-react_ssr.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 417
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-testing.api.md b/.api-reports/api-report-testing.api.md
+|index 5c4c3372d..d5f11ed5c 100644
+|--- a/.api-reports/api-report-testing.api.md
+|+++ b/.api-reports/api-report-testing.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 466
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-testing_core.api.md b/.api-reports/api-report-testing_core.api.md
+|index 5c4c3372d..d5f11ed5c 100644
+|--- a/.api-reports/api-report-testing_core.api.md
+|+++ b/.api-reports/api-report-testing_core.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 515
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-testing_react.api.md b/.api-reports/api-report-testing_react.api.md
+|index 36697ad11..ef5f9c65b 100644
+|--- a/.api-reports/api-report-testing_react.api.md
+|+++ b/.api-reports/api-report-testing_react.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 564
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report-utilities.api.md b/.api-reports/api-report-utilities.api.md
+|index 0cd7b2ab0..eba0eb938 100644
+|--- a/.api-reports/api-report-utilities.api.md
+|+++ b/.api-reports/api-report-utilities.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 614
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.api-reports/api-report.api.md b/.api-reports/api-report.api.md
+|index cf7e1713a..7f465fcf7 100644
+|--- a/.api-reports/api-report.api.md
+|+++ b/.api-reports/api-report.api.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+patching file b/.changeset/moody-lobsters-listen.md
+patching file b/.changeset/tall-cups-suffer.md
+patching file b/.changeset/yellow-cats-judge.md
+can't find file to patch at input line 723
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.size-limits.json b/.size-limits.json
+|index e5f66a456..594a84ef8 100644
+|--- a/.size-limits.json
+|+++ b/.size-limits.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 734
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/cache/core/cache.ts b/src/cache/core/cache.ts
+|index 8f443cbc3..5ce05c8c7 100644
+|--- a/src/cache/core/cache.ts
+|+++ b/src/cache/core/cache.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 799
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/cache/core/types/DataProxy.ts b/src/cache/core/types/DataProxy.ts
+|index 746cd174a..5ccf9ad67 100644
+|--- a/src/cache/core/types/DataProxy.ts
+|+++ b/src/cache/core/types/DataProxy.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 838
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/cache/inmemory/inMemoryCache.ts b/src/cache/inmemory/inMemoryCache.ts
+|index 7be5b921a..37237cc32 100644
+|--- a/src/cache/inmemory/inMemoryCache.ts
+|+++ b/src/cache/inmemory/inMemoryCache.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 905
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/cache/inmemory/readFromStore.ts b/src/cache/inmemory/readFromStore.ts
+|index e88113782..c14b8db1e 100644
+|--- a/src/cache/inmemory/readFromStore.ts
+|+++ b/src/cache/inmemory/readFromStore.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/src/config/jest/areMissingFieldErrorsEqual.ts
+can't find file to patch at input line 991
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/config/jest/setup.ts b/src/config/jest/setup.ts
+|index 141d0e413..93b812ac8 100644
+|--- a/src/config/jest/setup.ts
+|+++ b/src/config/jest/setup.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1013
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/ObservableQuery.ts b/src/core/ObservableQuery.ts
+|index 2f35f7731..8093105b6 100644
+|--- a/src/core/ObservableQuery.ts
+|+++ b/src/core/ObservableQuery.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1035
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/QueryInfo.ts b/src/core/QueryInfo.ts
+|index 2c065972b..b6794aa3c 100644
+|--- a/src/core/QueryInfo.ts
+|+++ b/src/core/QueryInfo.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1048
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/core/QueryManager.ts b/src/core/QueryManager.ts
+|index 066dc137d..bb0b7115d 100644
+|--- a/src/core/QueryManager.ts
+|+++ b/src/core/QueryManager.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 1118
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/src/react/hooks/useFragment.ts b/src/react/hooks/useFragment.ts
+|index 98cdfa6b2..3355c8329 100644
+|--- a/src/react/hooks/useFragment.ts
+|+++ b/src/react/hooks/useFragment.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+patching file .api-reports/api-report-cache.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .api-reports/api-report-cache.api.md.rej
+patching file .api-reports/api-report-core.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .api-reports/api-report-core.api.md.rej
+patching file .api-reports/api-report-masking.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-masking.api.md.rej
+patching file .api-reports/api-report-react.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react.api.md.rej
+patching file .api-reports/api-report-react_context.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_context.api.md.rej
+patching file .api-reports/api-report-react_hooks.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_hooks.api.md.rej
+patching file .api-reports/api-report-react_internal.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_internal.api.md.rej
+patching file .api-reports/api-report-react_ssr.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-react_ssr.api.md.rej
+patching file .api-reports/api-report-testing.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-testing.api.md.rej
+patching file .api-reports/api-report-testing_core.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-testing_core.api.md.rej
+patching file .api-reports/api-report-testing_react.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-testing_react.api.md.rej
+patching file .api-reports/api-report-utilities.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .api-reports/api-report-utilities.api.md.rej
+patching file .api-reports/api-report.api.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .api-reports/api-report.api.md.rej
+The next patch would create the file .changeset/moody-lobsters-listen.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file .changeset/tall-cups-suffer.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file .changeset/yellow-cats-judge.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .size-limits.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .size-limits.json.rej
+patching file src/cache/core/cache.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file src/cache/core/cache.ts.rej
+patching file src/cache/core/types/DataProxy.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/cache/core/types/DataProxy.ts.rej
+patching file src/cache/inmemory/inMemoryCache.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file src/cache/inmemory/inMemoryCache.ts.rej
+patching file src/cache/inmemory/readFromStore.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/cache/inmemory/readFromStore.ts.rej
+The next patch would create the file src/config/jest/areMissingFieldErrorsEqual.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file src/config/jest/setup.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/config/jest/setup.ts.rej
+patching file src/core/ObservableQuery.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file src/core/ObservableQuery.ts.rej
+patching file src/core/QueryInfo.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file src/core/QueryInfo.ts.rej
+patching file src/core/QueryManager.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file src/core/QueryManager.ts.rej
+patching file src/react/hooks/useFragment.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file src/react/hooks/useFragment.ts.rej
+ERROR: golden patch failed to apply by all strategies

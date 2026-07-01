@@ -1,0 +1,113 @@
+patching file modules/packages/conda/metadata_test.go
+patching file modules/packages/debian/metadata_test.go
+patching file modules/zstd/zstd_test.go
+patching file tests/integration/api_packages_conda_test.go
+{"Time":"2026-06-29T15:30:52.228504152Z","Action":"start","Package":"code.gitea.io/gitea/modules/packages/conda"}
+{"Time":"2026-06-29T15:30:52.235128354Z","Action":"start","Package":"code.gitea.io/gitea/modules/packages/debian"}
+{"Time":"2026-06-29T15:30:52.316034696Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage"}
+{"Time":"2026-06-29T15:30:52.316172648Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage","Output":"=== RUN   TestParsePackage\n"}
+{"Time":"2026-06-29T15:30:52.31625254Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/MissingIndexFile"}
+{"Time":"2026-06-29T15:30:52.316379603Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/MissingIndexFile","Output":"=== RUN   TestParsePackage/MissingIndexFile\n"}
+{"Time":"2026-06-29T15:30:52.316442004Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/MissingIndexFile","Output":"--- PASS: TestParsePackage/MissingIndexFile (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.316654359Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/MissingIndexFile","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.31669999Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/MissingAboutFile"}
+{"Time":"2026-06-29T15:30:52.31671166Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/MissingAboutFile","Output":"=== RUN   TestParsePackage/MissingAboutFile\n"}
+{"Time":"2026-06-29T15:30:52.31716818Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/MissingAboutFile","Output":"--- PASS: TestParsePackage/MissingAboutFile (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.317201701Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/MissingAboutFile","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.317217991Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/InvalidName"}
+{"Time":"2026-06-29T15:30:52.317228711Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/InvalidName","Output":"=== RUN   TestParsePackage/InvalidName\n"}
+{"Time":"2026-06-29T15:30:52.317281922Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/InvalidName","Output":"--- PASS: TestParsePackage/InvalidName (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.317307473Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/InvalidName","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.317343334Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/InvalidVersion"}
+{"Time":"2026-06-29T15:30:52.317377704Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/InvalidVersion","Output":"=== RUN   TestParsePackage/InvalidVersion\n"}
+{"Time":"2026-06-29T15:30:52.317498787Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/InvalidVersion","Output":"--- PASS: TestParsePackage/InvalidVersion (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.317523548Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/InvalidVersion","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.31765486Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/Valid"}
+{"Time":"2026-06-29T15:30:52.317682681Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/Valid","Output":"=== RUN   TestParsePackage/Valid\n"}
+{"Time":"2026-06-29T15:30:52.317932876Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/Valid","Output":"--- PASS: TestParsePackage/Valid (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.318030599Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/Valid","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.31811298Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/.tar.bz2"}
+{"Time":"2026-06-29T15:30:52.318151021Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/.tar.bz2","Output":"=== RUN   TestParsePackage/.tar.bz2\n"}
+{"Time":"2026-06-29T15:30:52.318601271Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/.tar.bz2","Output":"--- PASS: TestParsePackage/.tar.bz2 (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.318636312Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/.tar.bz2","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.318751844Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/.conda"}
+{"Time":"2026-06-29T15:30:52.318777984Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/.conda","Output":"=== RUN   TestParsePackage/.conda\n"}
+{"Time":"2026-06-29T15:30:52.321165096Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage"}
+{"Time":"2026-06-29T15:30:52.321203037Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage","Output":"=== RUN   TestParsePackage\n"}
+{"Time":"2026-06-29T15:30:52.321249878Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/MissingControlFile"}
+{"Time":"2026-06-29T15:30:52.321266138Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/MissingControlFile","Output":"=== RUN   TestParsePackage/MissingControlFile\n"}
+{"Time":"2026-06-29T15:30:52.321589835Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/MissingControlFile","Output":"--- PASS: TestParsePackage/MissingControlFile (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.321633266Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/MissingControlFile","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.321679167Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression"}
+{"Time":"2026-06-29T15:30:52.321694517Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression","Output":"=== RUN   TestParsePackage/Compression\n"}
+{"Time":"2026-06-29T15:30:52.321715528Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/Unsupported"}
+{"Time":"2026-06-29T15:30:52.321725638Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/Unsupported","Output":"=== RUN   TestParsePackage/Compression/Unsupported\n"}
+{"Time":"2026-06-29T15:30:52.321760319Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/Unsupported","Output":"--- PASS: TestParsePackage/Compression/Unsupported (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.321771869Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/Unsupported","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.321792319Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/#00"}
+{"Time":"2026-06-29T15:30:52.32180582Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/#00","Output":"=== RUN   TestParsePackage/Compression/#00\n"}
+{"Time":"2026-06-29T15:30:52.321899492Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/#00/TrailingSlash"}
+{"Time":"2026-06-29T15:30:52.321918262Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/#00/TrailingSlash","Output":"=== RUN   TestParsePackage/Compression/#00/TrailingSlash\n"}
+{"Time":"2026-06-29T15:30:52.321946603Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/#00/TrailingSlash","Output":"--- PASS: TestParsePackage/Compression/#00/TrailingSlash (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.321968123Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/#00/TrailingSlash","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.321995394Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/#00","Output":"--- PASS: TestParsePackage/Compression/#00 (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.322007834Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/#00","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.322133417Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.gz"}
+{"Time":"2026-06-29T15:30:52.322155287Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.gz","Output":"=== RUN   TestParsePackage/Compression/.gz\n"}
+{"Time":"2026-06-29T15:30:52.322917564Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.gz/TrailingSlash"}
+{"Time":"2026-06-29T15:30:52.323010966Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.gz/TrailingSlash","Output":"=== RUN   TestParsePackage/Compression/.gz/TrailingSlash\n"}
+{"Time":"2026-06-29T15:30:52.323150719Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.gz/TrailingSlash","Output":"--- PASS: TestParsePackage/Compression/.gz/TrailingSlash (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.32319739Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.gz/TrailingSlash","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.32321827Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.gz","Output":"--- PASS: TestParsePackage/Compression/.gz (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.323329073Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.gz","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.323419564Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.xz"}
+{"Time":"2026-06-29T15:30:52.323458215Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.xz","Output":"=== RUN   TestParsePackage/Compression/.xz\n"}
+{"Time":"2026-06-29T15:30:52.325474869Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/.conda","Output":"--- PASS: TestParsePackage/.conda (0.01s)\n"}
+{"Time":"2026-06-29T15:30:52.325634492Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage/.conda","Elapsed":0.01}
+{"Time":"2026-06-29T15:30:52.325716604Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage","Output":"--- PASS: TestParsePackage (0.01s)\n"}
+{"Time":"2026-06-29T15:30:52.325740574Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/conda","Test":"TestParsePackage","Elapsed":0.01}
+{"Time":"2026-06-29T15:30:52.325771155Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Output":"PASS\n"}
+{"Time":"2026-06-29T15:30:52.328016143Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/conda","Output":"ok  \tcode.gitea.io/gitea/modules/packages/conda\t0.099s\n"}
+{"Time":"2026-06-29T15:30:52.328055044Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/conda","Elapsed":0.1}
+{"Time":"2026-06-29T15:30:52.331005098Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.xz/TrailingSlash"}
+{"Time":"2026-06-29T15:30:52.336360873Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.xz/TrailingSlash","Output":"=== RUN   TestParsePackage/Compression/.xz/TrailingSlash\n"}
+{"Time":"2026-06-29T15:30:52.336472895Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.xz/TrailingSlash","Output":"--- PASS: TestParsePackage/Compression/.xz/TrailingSlash (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.336507906Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.xz/TrailingSlash","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.336546177Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.xz","Output":"--- PASS: TestParsePackage/Compression/.xz (0.01s)\n"}
+{"Time":"2026-06-29T15:30:52.336592178Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.xz","Elapsed":0.01}
+{"Time":"2026-06-29T15:30:52.336608838Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.zst"}
+{"Time":"2026-06-29T15:30:52.336629809Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.zst","Output":"=== RUN   TestParsePackage/Compression/.zst\n"}
+{"Time":"2026-06-29T15:30:52.338245243Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.zst/TrailingSlash"}
+{"Time":"2026-06-29T15:30:52.338298495Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.zst/TrailingSlash","Output":"=== RUN   TestParsePackage/Compression/.zst/TrailingSlash\n"}
+{"Time":"2026-06-29T15:30:52.338618722Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.zst/TrailingSlash","Output":"--- PASS: TestParsePackage/Compression/.zst/TrailingSlash (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.338666683Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.zst/TrailingSlash","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.338693663Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.zst","Output":"--- PASS: TestParsePackage/Compression/.zst (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.338713753Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression/.zst","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.338731754Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression","Output":"--- PASS: TestParsePackage/Compression (0.02s)\n"}
+{"Time":"2026-06-29T15:30:52.338743074Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage/Compression","Elapsed":0.02}
+{"Time":"2026-06-29T15:30:52.338756754Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage","Output":"--- PASS: TestParsePackage (0.02s)\n"}
+{"Time":"2026-06-29T15:30:52.338766865Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParsePackage","Elapsed":0.02}
+{"Time":"2026-06-29T15:30:52.338883697Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile"}
+{"Time":"2026-06-29T15:30:52.338912018Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile","Output":"=== RUN   TestParseControlFile\n"}
+{"Time":"2026-06-29T15:30:52.338937208Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidName"}
+{"Time":"2026-06-29T15:30:52.338953149Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidName","Output":"=== RUN   TestParseControlFile/InvalidName\n"}
+{"Time":"2026-06-29T15:30:52.33898921Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidName","Output":"--- PASS: TestParseControlFile/InvalidName (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.33900067Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidName","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.33901094Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidVersion"}
+{"Time":"2026-06-29T15:30:52.33901989Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidVersion","Output":"=== RUN   TestParseControlFile/InvalidVersion\n"}
+{"Time":"2026-06-29T15:30:52.339075661Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidVersion","Output":"--- PASS: TestParseControlFile/InvalidVersion (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.339100412Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidVersion","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.339117462Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidArchitecture"}
+{"Time":"2026-06-29T15:30:52.339135023Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidArchitecture","Output":"=== RUN   TestParseControlFile/InvalidArchitecture\n"}
+{"Time":"2026-06-29T15:30:52.339157403Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidArchitecture","Output":"--- PASS: TestParseControlFile/InvalidArchitecture (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.339189874Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/InvalidArchitecture","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.339202594Z","Action":"run","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/Valid"}
+{"Time":"2026-06-29T15:30:52.339219164Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/Valid","Output":"=== RUN   TestParseControlFile/Valid\n"}
+{"Time":"2026-06-29T15:30:52.339300016Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/Valid","Output":"--- PASS: TestParseControlFile/Valid (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.339322207Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile/Valid","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.339392118Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile","Output":"--- PASS: TestParseControlFile (0.00s)\n"}
+{"Time":"2026-06-29T15:30:52.339417079Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Test":"TestParseControlFile","Elapsed":0}
+{"Time":"2026-06-29T15:30:52.339441029Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Output":"PASS\n"}
+{"Time":"2026-06-29T15:30:52.34182696Z","Action":"output","Package":"code.gitea.io/gitea/modules/packages/debian","Output":"ok  \tcode.gitea.io/gitea/modules/packages/debian\t0.107s\n"}
+{"Time":"2026-06-29T15:30:52.341889862Z","Action":"pass","Package":"code.gitea.io/gitea/modules/packages/debian","Elapsed":0.107}
+reward=1 graded=25 found=25 failed=0 parsed=25 framework=go exit_code=0

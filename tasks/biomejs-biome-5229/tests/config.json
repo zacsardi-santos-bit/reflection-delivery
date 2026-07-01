@@ -1,0 +1,24 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_js_analyze --test spec_tests -E 'test(no_useless_escape)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noUselessEscapeInRegex/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noUselessEscapeInString/invalid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noUselessEscapeInString/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noUselessEscapeInString/valid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noUselessEscapeInString/valid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noUselessEscapeInString/valid.jsx",
+    "crates/biome_js_analyze/tests/specs/nursery/noUselessEscapeInString/valid.jsx.snap"
+  ],
+  "num_test_files": 7,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) biome_js_analyze::spec_tests specs::nursery::no_useless_escape_in_string::valid_jsx",
+    "(2/5) biome_js_analyze::spec_tests specs::nursery::no_useless_escape_in_string::invalid_js",
+    "(3/5) biome_js_analyze::spec_tests specs::nursery::no_useless_escape_in_string::valid_js",
+    "(5/5) biome_js_analyze::spec_tests specs::nursery::no_useless_escape_in_regex::invalid_js"
+  ],
+  "PASS_TO_PASS": [
+    "(4/5) biome_js_analyze::spec_tests specs::nursery::no_useless_escape_in_regex::valid_js"
+  ]
+}

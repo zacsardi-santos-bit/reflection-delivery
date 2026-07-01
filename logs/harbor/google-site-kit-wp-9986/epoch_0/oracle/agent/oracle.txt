@@ -1,0 +1,11 @@
+patching file assets/js/components/DashboardMainApp.js
+patching file assets/js/components/consent-mode/ConsentModeSetupCTAWidget.js
+patching file assets/js/components/consent-mode/ConsentModeSetupCTAWidget.stories.js
+patching file assets/js/components/consent-mode/__snapshots__/ConsentModeSetupCTAWidget.test.js.snap
+patching file assets/js/googlesitekit/notifications/components/Notification/index.js
+patching file assets/js/googlesitekit/notifications/components/common/Description.js
+patching file assets/js/googlesitekit/notifications/components/common/LearnMoreLink.js
+patching file assets/js/googlesitekit/notifications/components/layout/SingleColumnNotificationWithSVG.js
+patching file assets/js/googlesitekit/notifications/register-defaults.js
+patching file assets/sass/components/dashboard/_googlesitekit-consent-mode-setup-cta.scss
+patching file assets/sass/components/dashboard/_googlesitekit-setup-cta-banner.scss

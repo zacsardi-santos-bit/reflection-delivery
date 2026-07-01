@@ -1,0 +1,139 @@
+patching file packages/cli/test/fixtures/unit/commands/build/.gitignore
+patching file packages/cli/test/fixtures/unit/commands/build/node/.vercel/project.json
+patching file packages/cli/test/fixtures/unit/commands/build/node/api/es6.js
+patching file packages/cli/test/fixtures/unit/commands/build/node/api/index.js
+patching file packages/cli/test/fixtures/unit/commands/build/node/api/mjs.mjs
+patching file packages/cli/test/fixtures/unit/commands/build/node/api/typescript.ts
+patching file packages/cli/test/fixtures/unit/commands/build/static/.vercel/project.json
+patching file packages/cli/test/fixtures/unit/commands/build/static/index.html
+patching file packages/cli/test/fixtures/unit/commands/build/third-party-builder/.vercel/builders/.gitignore
+patching file packages/cli/test/fixtures/unit/commands/build/third-party-builder/.vercel/builders/node_modules/txt-builder/index.js
+patching file packages/cli/test/fixtures/unit/commands/build/third-party-builder/.vercel/builders/node_modules/txt-builder/package.json
+patching file packages/cli/test/fixtures/unit/commands/build/third-party-builder/.vercel/project.json
+patching file packages/cli/test/fixtures/unit/commands/build/third-party-builder/api/foo.txt
+patching file packages/cli/test/fixtures/unit/commands/build/third-party-builder/vercel.json
+patching file packages/cli/test/unit/commands/build.test.ts
+jest-haste-map: Haste module naming collision: nextjs
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/test/dev/fixtures/10-nextjs-node/package.json
+    * <rootDir>/test/dev/fixtures/25-nextjs-src-dir/package.json
+
+ts-jest[ts-jest-transformer] (WARN) Use 'ts-jest' entry point in v28 will resolve in refactored transformer. If you wish to use legacy transformer, please adjust your Jest 'transform' config. For example:
+     module.exports = {
+        transform: {
+           '^.+\\.tsx?$': 'ts-jest/legacy'
+        }
+     }
+  
+ts-jest[ts-jest-transformer] (WARN) Use 'ts-jest' entry point in v28 will resolve in refactored transformer. If you wish to use legacy transformer, please adjust your Jest 'transform' config. For example:
+     module.exports = {
+        transform: {
+           '^.+\\.tsx?$': 'ts-jest/legacy'
+        }
+     }
+  
+  console.warn
+    Warning: Detected "engines": { "node": ">= 14" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version
+
+      34788 |             semver_1.intersects(`${latest.major + 1}.x`, node) &&
+      34789 |             !meta.isDev) {
+    > 34790 |             console.warn(`Warning: Detected "engines": { "node": "${node}" } in your \`package.json\` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version`);
+            |                     ^
+      34791 |         }
+      34792 |         nodeVersion = node;
+      34793 |         isAuto = false;
+
+      at Object.getNodeVersion (../build-utils/dist/index.js:34790:21)
+      at downloadInstallAndBundle (../node/dist/index.js:104009:25)
+      at Object.build (../node/dist/index.js:104206:77)
+      at Object.main [as default] (src/src/commands/build.ts:352:25)
+      at Object.<anonymous> (test/unit/test/unit/commands/build.test.ts:51:24)
+
+  console.log
+    Installing dependencies...
+
+      at Object.runNpmInstall (../build-utils/dist/index.js:34902:17)
+
+yarn install v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ node ./scripts/preinstall.js
+[1/4] Resolving packages...
+success Already up-to-date.
+Done in 0.62s.
+  console.warn
+    Warning: Detected "engines": { "node": ">= 14" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version
+
+      34788 |             semver_1.intersects(`${latest.major + 1}.x`, node) &&
+      34789 |             !meta.isDev) {
+    > 34790 |             console.warn(`Warning: Detected "engines": { "node": "${node}" } in your \`package.json\` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version`);
+            |                     ^
+      34791 |         }
+      34792 |         nodeVersion = node;
+      34793 |         isAuto = false;
+
+      at Object.getNodeVersion (../build-utils/dist/index.js:34790:21)
+      at downloadInstallAndBundle (../node/dist/index.js:104009:25)
+      at Object.build (../node/dist/index.js:104206:77)
+      at Object.main [as default] (src/src/commands/build.ts:352:25)
+      at Object.<anonymous> (test/unit/test/unit/commands/build.test.ts:51:24)
+
+  console.warn
+    Warning: Detected "engines": { "node": ">= 14" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version
+
+      34788 |             semver_1.intersects(`${latest.major + 1}.x`, node) &&
+      34789 |             !meta.isDev) {
+    > 34790 |             console.warn(`Warning: Detected "engines": { "node": "${node}" } in your \`package.json\` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version`);
+            |                     ^
+      34791 |         }
+      34792 |         nodeVersion = node;
+      34793 |         isAuto = false;
+
+      at Object.getNodeVersion (../build-utils/dist/index.js:34790:21)
+      at downloadInstallAndBundle (../node/dist/index.js:104009:25)
+      at Object.build (../node/dist/index.js:104206:77)
+      at Object.main [as default] (src/src/commands/build.ts:352:25)
+      at Object.<anonymous> (test/unit/test/unit/commands/build.test.ts:51:24)
+
+  console.warn
+    Warning: Detected "engines": { "node": ">= 14" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version
+
+      34788 |             semver_1.intersects(`${latest.major + 1}.x`, node) &&
+      34789 |             !meta.isDev) {
+    > 34790 |             console.warn(`Warning: Detected "engines": { "node": "${node}" } in your \`package.json\` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version`);
+            |                     ^
+      34791 |         }
+      34792 |         nodeVersion = node;
+      34793 |         isAuto = false;
+
+      at Object.getNodeVersion (../build-utils/dist/index.js:34790:21)
+      at downloadInstallAndBundle (../node/dist/index.js:104009:25)
+      at Object.build (../node/dist/index.js:104206:77)
+      at Object.main [as default] (src/src/commands/build.ts:352:25)
+      at Object.<anonymous> (test/unit/test/unit/commands/build.test.ts:51:24)
+
+  console.log
+    Using TypeScript 4.3.4 (no local tsconfig.json)
+
+      at Object.register (../node/dist/index.js:104458:17)
+          at async Promise.all (index 0)
+
+PASS test/unit/commands/build.test.ts (6.221 s)
+  build
+    ✓ should build with `@vercel/static` (82 ms)
+    ✓ should build with `@vercel/node` (3134 ms)
+    ✓ should build with 3rd party Builder (33 ms)
+
+ts-jest[ts-jest-transformer] (WARN) Use 'ts-jest' entry point in v28 will resolve in refactored transformer. If you wish to use legacy transformer, please adjust your Jest 'transform' config. For example:
+     module.exports = {
+        transform: {
+           '^.+\\.tsx?$': 'ts-jest/legacy'
+        }
+     }
+  
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        6.325 s
+Ran all test suites matching /test\/unit\/commands\/build.test.ts/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=1 graded=3 found=0 failed=0 parsed=0 framework=jest exit_code=0

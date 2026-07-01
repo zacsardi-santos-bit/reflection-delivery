@@ -1,0 +1,325 @@
+patching file tests/disas/winch/x64/f32x4_extract_lane/first_lane_avx.wat
+patching file tests/disas/winch/x64/f32x4_extract_lane/second_lane_avx.wat
+patching file tests/disas/winch/x64/f64x2_extract_lane/first_lane_avx.wat
+patching file tests/disas/winch/x64/f64x2_extract_lane/second_lane_avx.wat
+patching file tests/disas/winch/x64/i16x8_extract_lane_s/const_avx.wat
+patching file tests/disas/winch/x64/i16x8_extract_lane_u/const.wat
+patching file tests/disas/winch/x64/i32x4_extract_lane/const_avx.wat
+patching file tests/disas/winch/x64/i64x2_extract_lane/const.wat
+patching file tests/disas/winch/x64/i8x16_extract_lane_s/const_avx.wat
+patching file tests/disas/winch/x64/i8x16_extract_lane_u/const_avx.wat
+patching file tests/misc_testsuite/winch/_simd_lane.wast
+   Compiling proc-macro2 v1.0.92
+   Compiling unicode-ident v1.0.8
+   Compiling libc v0.2.161
+   Compiling serde v1.0.215
+   Compiling cfg-if v1.0.0
+   Compiling log v0.4.22
+   Compiling foldhash v0.1.3
+   Compiling equivalent v1.0.1
+   Compiling itoa v1.0.14
+   Compiling shlex v1.3.0
+   Compiling anyhow v1.0.93
+   Compiling bitflags v2.6.0
+   Compiling once_cell v1.19.0
+   Compiling memchr v2.5.0
+   Compiling rustix v0.38.43
+   Compiling linux-raw-sys v0.4.14
+   Compiling typenum v1.15.0
+   Compiling version_check v0.9.4
+   Compiling leb128 v0.2.5
+   Compiling sptr v0.3.2
+   Compiling cranelift-bitset v0.117.0 (/workspace/repo/cranelift/bitset)
+   Compiling allocator-api2 v0.2.20
+   Compiling ryu v1.0.9
+   Compiling cranelift-isle v0.117.0 (/workspace/repo/cranelift/isle/isle)
+   Compiling libm v0.2.8
+   Compiling target-lexicon v0.13.0
+   Compiling cobs v0.2.3
+   Compiling embedded-io v0.4.0
+   Compiling cranelift-codegen-shared v0.117.0 (/workspace/repo/cranelift/codegen/shared)
+   Compiling pulley-interpreter v30.0.0 (/workspace/repo/pulley)
+   Compiling generic-array v0.14.5
+   Compiling bumpalo v3.16.0
+   Compiling semver v1.0.17
+   Compiling hashbrown v0.15.2
+   Compiling thiserror v1.0.65
+   Compiling wasmparser v0.223.0
+   Compiling cpufeatures v0.2.7
+   Compiling rustc-hash v2.0.0
+   Compiling autocfg v1.1.0
+   Compiling wasm-encoder v0.223.0
+   Compiling heck v0.5.0
+   Compiling wasmtime-math v30.0.0 (/workspace/repo/crates/math)
+   Compiling serde_json v1.0.107
+   Compiling quote v1.0.36
+   Compiling jobserver v0.1.32
+   Compiling termcolor v1.4.1
+   Compiling winnow v0.5.39
+   Compiling aho-corasick v1.0.2
+   Compiling id-arena v2.2.1
+   Compiling syn v2.0.90
+   Compiling crc32fast v1.3.2
+   Compiling unicode-xid v0.2.3
+   Compiling either v1.13.0
+   Compiling crossbeam-utils v0.8.20
+   Compiling cc v1.2.5
+   Compiling pkg-config v0.3.29
+   Compiling dirs-sys-next v0.1.2
+   Compiling cpp_demangle v0.4.3
+   Compiling wasmtime-component-util v30.0.0 (/workspace/repo/crates/component-util)
+   Compiling rayon-core v1.12.0
+   Compiling rustc-demangle v0.1.24
+   Compiling zstd-safe v7.0.0
+   Compiling itertools v0.12.1
+   Compiling rayon v1.5.3
+   Compiling winch-codegen v30.0.0 (/workspace/repo/winch/codegen)
+   Compiling unicode-width v0.2.0
+   Compiling pin-project-lite v0.2.14
+   Compiling utf8parse v0.2.1
+   Compiling wasmtime-jit-icache-coherence v30.0.0 (/workspace/repo/crates/jit-icache-coherence)
+   Compiling colorchoice v1.0.0
+   Compiling anstyle-parse v0.2.1
+   Compiling byteorder v1.4.3
+   Compiling cranelift-codegen-meta v0.117.0 (/workspace/repo/cranelift/codegen/meta)
+   Compiling anstyle-query v1.0.0
+   Compiling uuid v1.0.0
+   Compiling crossbeam-epoch v0.9.18
+   Compiling async-trait v0.1.71
+   Compiling encoding_rs v0.8.31
+   Compiling wasmtime-cache v30.0.0 (/workspace/repo/crates/cache)
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.2
+   Compiling is_terminal_polyfill v1.70.1
+   Compiling wasmtime-component-macro v30.0.0 (/workspace/repo/crates/component-macro)
+   Compiling crossbeam-deque v0.8.1
+   Compiling digest v0.10.7
+   Compiling anstyle v1.0.8
+   Compiling debugid v0.8.0
+   Compiling fxhash v0.2.1
+   Compiling directories-next v2.0.0
+   Compiling capstone-sys v0.16.0
+   Compiling zstd-sys v2.0.9+zstd.1.5.5
+   Compiling sha2 v0.10.2
+   Compiling ittapi-sys v0.4.0
+   Compiling wasmtime-asm-macros v30.0.0 (/workspace/repo/crates/asm-macros)
+   Compiling base64 v0.21.0
+   Compiling wasmtime-slab v30.0.0 (/workspace/repo/crates/slab)
+   Compiling paste v1.0.7
+   Compiling io-lifetimes v2.0.3
+   Compiling tinyvec_macros v0.1.0
+   Compiling tinyvec v1.6.0
+   Compiling tracing-core v0.1.31
+   Compiling regex-syntax v0.7.4
+   Compiling num_cpus v1.16.0
+   Compiling getrandom v0.2.9
+   Compiling percent-encoding v2.2.0
+   Compiling unicode-bidi v0.3.8
+   Compiling bytes v1.5.0
+   Compiling io-extras v0.18.3
+   Compiling humantime v2.1.0
+   Compiling unicode-normalization v0.1.21
+   Compiling form_urlencoded v1.1.0
+   Compiling ambient-authority v0.0.2
+   Compiling cap-primitives v3.4.1
+   Compiling regex-automata v0.3.3
+   Compiling maybe-owned v0.3.4
+   Compiling futures-core v0.3.31
+   Compiling memfd v0.6.4
+   Compiling fs-set-times v0.20.1
+   Compiling idna v0.3.0
+   Compiling futures-sink v0.3.31
+   Compiling ipnet v2.5.0
+   Compiling dirs-next v2.0.0
+   Compiling mio v0.8.11
+   Compiling signal-hook-registry v1.4.1
+   Compiling socket2 v0.5.7
+   Compiling wast v35.0.2
+   Compiling url v2.3.1
+   Compiling serde_derive v1.0.215
+   Compiling derive_arbitrary v1.4.0
+   Compiling thiserror-impl v1.0.65
+   Compiling wasmtime-versioned-export-macros v30.0.0 (/workspace/repo/crates/versioned-export-macros)
+   Compiling trait-variant v0.1.2
+   Compiling tracing-attributes v0.1.26
+   Compiling tokio-macros v2.1.0
+   Compiling cap-std v3.4.1
+   Compiling shellexpand v2.1.0
+   Compiling anstream v0.6.15
+   Compiling regex v1.9.1
+   Compiling pin-utils v0.1.0
+   Compiling ittapi v0.4.0
+   Compiling wiggle-macro v30.0.0 (/workspace/repo/crates/wiggle/macro)
+   Compiling futures-task v0.3.31
+   Compiling futures-util v0.3.31
+   Compiling rand_core v0.6.3
+   Compiling ring v0.17.3
+   Compiling ppv-lite86 v0.2.16
+   Compiling terminal_size v0.3.0
+   Compiling rand_chacha v0.3.1
+   Compiling fnv v1.0.7
+   Compiling cranelift-codegen v0.117.0 (/workspace/repo/cranelift/codegen)
+   Compiling cap-fs-ext v3.4.1
+   Compiling strsim v0.11.1
+   Compiling env_filter v0.1.2
+   Compiling wasmtime-fiber v30.0.0 (/workspace/repo/crates/fiber)
+   Compiling wasmtime-jit-debug v30.0.0 (/workspace/repo/crates/jit-debug)
+   Compiling wasmtime v30.0.0 (/workspace/repo/crates/wasmtime)
+   Compiling clap_lex v0.7.2
+   Compiling system-interface v0.27.1
+   Compiling arbitrary v1.4.1
+   Compiling clap_builder v4.5.17
+   Compiling tokio v1.30.0
+   Compiling env_logger v0.11.5
+   Compiling rand v0.8.5
+   Compiling http v1.0.0
+   Compiling cranelift-control v0.117.0 (/workspace/repo/cranelift/control)
+   Compiling clap_derive v4.5.13
+   Compiling futures-channel v0.3.31
+   Compiling is-terminal v0.4.10
+   Compiling slab v0.4.7
+   Compiling witx v0.9.1
+   Compiling openvino-finder v0.8.0
+   Compiling untrusted v0.9.0
+   Compiling rustls-pki-types v1.3.1
+   Compiling tracing v0.1.37
+   Compiling same-file v1.0.6
+   Compiling iana-time-zone v0.1.61
+   Compiling spin v0.9.8
+   Compiling walkdir v2.3.3
+   Compiling openvino-sys v0.8.0
+   Compiling cap-rand v3.4.1
+   Compiling cap-time-ext v3.4.1
+   Compiling smallvec v1.13.2
+   Compiling lazy_static v1.4.0
+   Compiling rustls v0.22.4
+   Compiling httparse v1.8.0
+   Compiling futures-io v0.3.31
+   Compiling camino v1.1.4
+   Compiling regex-syntax v0.6.25
+   Compiling wiggle-generate v30.0.0 (/workspace/repo/crates/wiggle/generate)
+   Compiling futures v0.3.31
+   Compiling spdx v0.10.1
+   Compiling http-body v1.0.0
+   Compiling env_logger v0.10.0
+   Compiling libloading v0.8.1
+   Compiling zeroize v1.7.0
+   Compiling overload v0.1.1
+   Compiling try-lock v0.2.4
+   Compiling subtle v2.5.0
+   Compiling nu-ansi-term v0.46.0
+   Compiling wasmtime-wasi-nn v30.0.0 (/workspace/repo/crates/wasi-nn)
+   Compiling want v0.3.0
+   Compiling file-per-thread-logger v0.2.0
+   Compiling tracing-log v0.1.3
+   Compiling sharded-slab v0.1.4
+   Compiling thread_local v1.1.4
+   Compiling httpdate v1.0.2
+   Compiling rustversion v1.0.14
+   Compiling http-body-util v0.1.0
+   Compiling webpki-roots v0.26.1
+   Compiling regex-automata v0.1.10
+   Compiling wasmtime-cli v30.0.0 (/workspace/repo)
+   Compiling num-traits v0.2.19
+   Compiling fastrand v2.0.1
+   Compiling half v1.8.2
+   Compiling ciborium-io v0.2.0
+   Compiling tokio-util v0.7.4
+   Compiling bitflags v1.3.2
+   Compiling ciborium-ll v0.2.0
+   Compiling region v3.0.2
+   Compiling tempfile v3.8.0
+   Compiling matchers v0.1.0
+   Compiling postcard v1.0.8
+   Compiling indexmap v2.7.0
+   Compiling serde_spanned v0.6.5
+   Compiling cranelift-entity v0.117.0 (/workspace/repo/cranelift/entity)
+   Compiling toml_datetime v0.6.5
+   Compiling regalloc2 v0.11.1
+   Compiling clap v4.5.17
+   Compiling cap-net-ext v3.4.1
+   Compiling cargo-platform v0.1.2
+   Compiling tracing-subscriber v0.3.17
+   Compiling cranelift-bforest v0.117.0 (/workspace/repo/cranelift/bforest)
+   Compiling toml_edit v0.22.4
+   Compiling clap_complete v4.5.28
+   Compiling gimli v0.31.0
+   Compiling object v0.36.5
+   Compiling fxprof-processed-profile v0.6.0
+   Compiling h2 v0.4.4
+   Compiling cargo_metadata v0.18.1
+   Compiling openvino v0.8.0
+   Compiling toml v0.8.10
+   Compiling itertools v0.10.5
+   Compiling listenfd v1.0.0
+   Compiling memmap2 v0.2.3
+   Compiling cast v0.3.0
+   Compiling wasmtime-wast-util v30.0.0 (/workspace/repo/crates/wast-util)
+   Compiling tinytemplate v1.2.1
+   Compiling escape8259 v0.5.2
+   Compiling ciborium v0.2.0
+   Compiling addr2line v0.24.1
+   Compiling filecheck v0.5.0
+   Compiling threadpool v1.8.1
+   Compiling rustls-webpki v0.102.2
+   Compiling criterion-plot v0.5.0
+   Compiling anes v0.1.6
+   Compiling similar v2.2.0
+   Compiling oorandom v11.1.3
+   Compiling libtest-mimic v0.7.0
+   Compiling bstr v1.6.0
+   Compiling criterion v0.5.1
+   Compiling wasmtime-test-macros v0.0.0 (/workspace/repo/crates/test-macros)
+   Compiling component-macro-test v0.0.0 (/workspace/repo/crates/misc/component-macro-test)
+   Compiling bytesize v1.3.0
+   Compiling hyper v1.0.1
+   Compiling wit-parser v0.223.0
+   Compiling wasmprinter v0.223.0
+   Compiling wasm-metadata v0.223.0
+   Compiling tokio-rustls v0.25.0
+   Compiling wast v223.0.0
+   Compiling zstd v0.13.0
+   Compiling wasmtime-environ v30.0.0 (/workspace/repo/crates/environ)
+   Compiling wasmtime-wit-bindgen v30.0.0 (/workspace/repo/crates/wit-bindgen)
+   Compiling wit-component v0.223.0
+   Compiling wat v1.223.0
+   Compiling test-programs-artifacts v0.0.0 (/workspace/repo/crates/test-programs/artifacts)
+   Compiling capstone v0.12.0
+   Compiling cranelift-frontend v0.117.0 (/workspace/repo/cranelift/frontend)
+   Compiling cranelift-native v0.117.0 (/workspace/repo/cranelift/native)
+   Compiling cranelift-module v0.117.0 (/workspace/repo/cranelift/module)
+   Compiling cranelift-reader v0.117.0 (/workspace/repo/cranelift/reader)
+   Compiling cranelift-interpreter v0.117.0 (/workspace/repo/cranelift/interpreter)
+   Compiling cranelift-jit v0.117.0 (/workspace/repo/cranelift/jit)
+   Compiling wasmtime-cranelift v30.0.0 (/workspace/repo/crates/cranelift)
+   Compiling cranelift v0.117.0 (/workspace/repo/cranelift/umbrella)
+   Compiling cranelift-filetests v0.0.0 (/workspace/repo/cranelift/filetests)
+   Compiling wasmtime-winch v30.0.0 (/workspace/repo/crates/winch)
+   Compiling wiggle v30.0.0 (/workspace/repo/crates/wiggle)
+   Compiling wasmtime-wast v30.0.0 (/workspace/repo/crates/wast)
+   Compiling wasmtime-cli-flags v30.0.0 (/workspace/repo/crates/cli-flags)
+   Compiling wasmtime-wasi-config v30.0.0 (/workspace/repo/crates/wasi-config)
+   Compiling wasmtime-explorer v30.0.0 (/workspace/repo/crates/explorer)
+   Compiling wasmtime-wasi-keyvalue v30.0.0 (/workspace/repo/crates/wasi-keyvalue)
+   Compiling component-test-util v0.0.0 (/workspace/repo/crates/misc/component-test-util)
+   Compiling wasmtime-wasi v30.0.0 (/workspace/repo/crates/wasi)
+   Compiling wasi-common v30.0.0 (/workspace/repo/crates/wasi-common)
+   Compiling wasmtime-wasi-threads v30.0.0 (/workspace/repo/crates/wasi-threads)
+   Compiling wasmtime-wasi-http v30.0.0 (/workspace/repo/crates/wasi-http)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 15s
+────────────
+ Nextest run ID 5e991800-af5e-409b-9d7c-f1213290c1b3 with nextest profile: default
+    Starting 10 tests across 1 binary (1865 tests skipped)
+        PASS [   0.324s] ( 1/10) wasmtime-cli::disas ./tests/disas/winch/x64/i32x4_extract_lane/const_avx.wat
+        PASS [   0.326s] ( 2/10) wasmtime-cli::disas ./tests/disas/winch/x64/i16x8_extract_lane_s/const_avx.wat
+        PASS [   0.328s] ( 3/10) wasmtime-cli::disas ./tests/disas/winch/x64/i64x2_extract_lane/const.wat
+        PASS [   0.332s] ( 4/10) wasmtime-cli::disas ./tests/disas/winch/x64/f64x2_extract_lane/second_lane_avx.wat
+        PASS [   0.333s] ( 5/10) wasmtime-cli::disas ./tests/disas/winch/x64/f32x4_extract_lane/second_lane_avx.wat
+        PASS [   0.333s] ( 6/10) wasmtime-cli::disas ./tests/disas/winch/x64/i8x16_extract_lane_u/const_avx.wat
+        PASS [   0.335s] ( 7/10) wasmtime-cli::disas ./tests/disas/winch/x64/f32x4_extract_lane/first_lane_avx.wat
+        PASS [   0.335s] ( 8/10) wasmtime-cli::disas ./tests/disas/winch/x64/i16x8_extract_lane_u/const.wat
+        PASS [   0.337s] ( 9/10) wasmtime-cli::disas ./tests/disas/winch/x64/i8x16_extract_lane_s/const_avx.wat
+        PASS [   0.336s] (10/10) wasmtime-cli::disas ./tests/disas/winch/x64/f64x2_extract_lane/first_lane_avx.wat
+────────────
+     Summary [   0.340s] 10 tests run: 10 passed, 1865 skipped
+reward=1 graded=10 found=2 failed=0 parsed=10 framework=cargo-nextest exit_code=0

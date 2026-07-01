@@ -1,0 +1,23 @@
+{
+ "task": "zizmorcore-zizmor-969",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test adds new fixture computed-indices.yml + snapshot assertion 'zizmor().input(...computed-indices.yml).args([\"--persona=pedantic\"]).run()?'; snapshots tighten span '-184:18 +184:22' and shorten '-expression can be replaced... +can be replaced by its static evaluation'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

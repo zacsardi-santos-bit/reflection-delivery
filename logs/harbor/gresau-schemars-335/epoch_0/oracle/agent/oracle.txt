@@ -1,0 +1,15 @@
+patching file CHANGELOG.md
+patching file docs/3-generating.md
+patching file docs/_includes/examples/serialize_contract.rs
+patching file docs/_includes/examples/serialize_contract.schema.json
+patching file schemars/examples/serialize_contract.rs
+patching file schemars/examples/serialize_contract.schema.json
+patching file schemars/src/_private/mod.rs
+patching file schemars/src/generate.rs
+patching file schemars/src/json_schema_impls/decimal.rs
+patching file schemars/src/lib.rs
+patching file schemars/src/transform.rs
+patching file schemars_derive/src/ast/mod.rs
+patching file schemars_derive/src/attr/schemars_to_serde.rs
+patching file schemars_derive/src/lib.rs
+patching file schemars_derive/src/schema_exprs.rs

@@ -1,0 +1,23 @@
+{
+ "task": "mystenlabs-sui-18022",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden test_dag.rs adds 'pub(crate) fn create_random_dag'; test_dag_builder.rs changes 'pub fn min_ancestor_links(mut self, include_leader: bool, seed: Option<u64>)'; block_manager.rs 'pub(crate) fn is_empty'. F2P asserts 'assert_eq!(sequenced_leaders_1, sequenced_leaders_2)'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 36,
+  "shallow": true
+ }
+}

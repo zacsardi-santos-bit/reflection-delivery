@@ -1,0 +1,44 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/react-router && npx vitest run tests/link.test.tsx tests/useNavigate.test.tsx",
+  "test_files": [
+    "packages/react-router/tests/link.test.tsx",
+    "packages/react-router/tests/useNavigate.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating from /posts/$postId to ./info and the current route is /posts/$postId/details",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating from /posts/$postId to ../$postId and the current route is /posts/$postId/details",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating from /invoices to ./invoiceId and the current route is /posts/$postId/details",
+    "/workspace/repo/packages/react-router/tests/useNavigate.test.tsx:: when navigating from /posts/$postId to ./info and the current route is /posts/$postId/details",
+    "/workspace/repo/packages/react-router/tests/useNavigate.test.tsx:: when navigating from /posts/$postId to ../$postId and the current route is /posts/$postId/details",
+    "/workspace/repo/packages/react-router/tests/useNavigate.test.tsx:: when navigating from /invoices to ./invoiceId and the current route is /posts/$postId/details"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when a Link is disabled",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when the current route is the root",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when the current route is the root with beforeLoad that throws",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with a base url",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with search",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with invalid search",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with a loader",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with a loader that errors",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with a beforeLoad that redirects",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with a beforeLoad that returns context",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with a beforeLoad that throws an error",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with a beforeLoad that throws an error bubbles to the root",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with a beforeLoad that throws an error bubbles to the nearest parent",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating to /posts with params",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating from /posts to ./$postId",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating from /posts to ../posts/$postId",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: Link when navigating from /posts/$postId to /posts/$postId/info and the current route is /posts/$postId/details",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: createLink should pass the \"disabled\" prop to the rendered target element",
+    "/workspace/repo/packages/react-router/tests/link.test.tsx:: createLink should pass the \"foo\" prop to the rendered target element",
+    "/workspace/repo/packages/react-router/tests/useNavigate.test.tsx:: when navigating to /posts",
+    "/workspace/repo/packages/react-router/tests/useNavigate.test.tsx:: when navigating from /posts to ./$postId",
+    "/workspace/repo/packages/react-router/tests/useNavigate.test.tsx:: when navigating from /posts to ../posts/$postId",
+    "/workspace/repo/packages/react-router/tests/useNavigate.test.tsx:: when navigating from /posts/$postId to /posts/$postId/info and the current route is /posts/$postId/details"
+  ]
+}

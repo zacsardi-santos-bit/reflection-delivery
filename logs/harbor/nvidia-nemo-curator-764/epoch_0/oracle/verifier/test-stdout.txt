@@ -1,0 +1,27 @@
+patching file ray-curator/tests/backends/utils.py
+patching file ray-curator/tests/stages/test_base.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/ray-curator
+configfile: pyproject.toml
+collecting ... collected 16 items / 1 deselected / 15 selected
+
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_all PASSED [  6%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_batch_size_override PASSED [ 13%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_multiple_parameters PASSED [ 20%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_none_parameters_preserve_original PASSED [ 26%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_chained_with_calls PASSED [ 33%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_class_variable_vs_instance_variable_isolation PASSED [ 40%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_single_operation PASSED [ 46%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations[configs0] PASSED [ 53%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations[configs1] PASSED [ 60%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations_with_name_changed[configs0-True] PASSED [ 66%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations_with_name_changed[configs1-False] PASSED [ 73%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_apply_with_non_unique_stage_names_error PASSED [ 80%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_apply_with_unknown_stage_name_error PASSED [ 86%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_apply_with_empty_operations PASSED [ 93%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_composite_stage_inputs_and_outputs PASSED [100%]
+
+======================= 15 passed, 1 deselected in 0.91s =======================
+reward=1 graded=15 found=0 failed=0 parsed=16 framework=pytest exit_code=0

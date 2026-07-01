@@ -1,0 +1,23 @@
+{
+ "task": "sveltejs-svelte-10491",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "11 vitest F2P (child-combinator, general-siblings-combinator, nested-css, omit-scoping-attribute-whitespace-multiple, special-characters...) compile input.svelte and diff against expected.css/expected.html; golden edits css-analyze.js/css-prune.js."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 19,
+  "shallow": true
+ }
+}

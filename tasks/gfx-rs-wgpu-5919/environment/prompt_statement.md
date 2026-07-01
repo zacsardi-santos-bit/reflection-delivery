@@ -1,0 +1,5 @@
+I'm working on the naga shader compiler library and want to introduce two improvements. First, I'd like to add platform-conditional compilation for certain shader output backends — specifically, I want Metal shader output to only be compiled when targeting Apple platforms, and DirectX shader output only when targeting Windows. Currently enabling those backends compiles them for every platform, even ones where they'd never be used.
+
+Second, to make conditional compilation easier to manage across the entire codebase, I want to introduce short cfg aliases for each shader output backend. Right now there are long, repeated feature flag conditions scattered throughout many source files. By introducing named aliases in a build script, I can replace all those verbose conditions with concise, readable names throughout the source and test files.
+
+Could you help me set up the build script with these cfg aliases, add the new platform-conditional features to the Cargo manifest, and update all the conditional compilation attributes in the source files to use the new aliases?

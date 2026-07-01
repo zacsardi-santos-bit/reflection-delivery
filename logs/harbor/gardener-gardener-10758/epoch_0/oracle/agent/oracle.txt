@@ -1,0 +1,23 @@
+patching file example/seed-crds/10-crd-monitoring.coreos.com_alertmanagers.yaml
+patching file example/seed-crds/10-crd-monitoring.coreos.com_podmonitors.yaml
+patching file example/seed-crds/10-crd-monitoring.coreos.com_probes.yaml
+patching file example/seed-crds/10-crd-monitoring.coreos.com_prometheusagents.yaml
+patching file example/seed-crds/10-crd-monitoring.coreos.com_prometheuses.yaml
+patching file example/seed-crds/10-crd-monitoring.coreos.com_prometheusrules.yaml
+patching file example/seed-crds/10-crd-monitoring.coreos.com_scrapeconfigs.yaml
+patching file example/seed-crds/10-crd-monitoring.coreos.com_servicemonitors.yaml
+patching file example/seed-crds/10-crd-monitoring.coreos.com_thanosrulers.yaml
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 1049 with fuzz 1 (offset 570 lines).
+patching file imagevector/containers.yaml
+patching file pkg/component/observability/monitoring/blackboxexporter/garden/scrapeconfig.go
+patching file pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_alertmanagers.yaml
+patching file pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_podmonitors.yaml
+patching file pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_probes.yaml
+patching file pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusagents.yaml
+patching file pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheuses.yaml
+patching file pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusrules.yaml
+patching file pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_scrapeconfigs.yaml
+patching file pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_servicemonitors.yaml
+patching file pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_thanosrulers.yaml

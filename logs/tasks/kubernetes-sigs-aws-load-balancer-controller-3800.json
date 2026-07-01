@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-sigs-aws-load-balancer-controller-3800",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds sentinel 'none'/'false' handling: \"case wafv2ACLARNNone:\" and \"errors.Wrap(err, \\\"failed to get shield protection on LoadBalancer\\\")\"; grade.py parses Go -json output; F2P=521 real tests."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

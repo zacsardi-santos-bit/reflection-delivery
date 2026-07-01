@@ -1,0 +1,30 @@
+patching file router/router_test.go
+patching file zititest/go.mod
+patching file zititest/go.sum
+Hunk #1 succeeded at 444 with fuzz 1 (offset 213 lines).
+Hunk #2 succeeded at 989 (offset 402 lines).
+Hunk #3 succeeded at 1007 (offset 402 lines).
+Hunk #4 succeeded at 1582 (offset 559 lines).
+patching file zititest/models/links-test/configs/router.yml.tmpl
+patching file zititest/models/zrok-test/configs/ctrl.yml.tmpl
+patching file zititest/models/zrok-test/configs/router.yml.tmpl
+patching file zititest/models/zrok-test/configs/zrok-frontend.yml.tmpl
+patching file zititest/models/zrok-test/configs/zrok.yml.tmpl
+patching file zititest/models/zrok-test/main.go
+patching file zititest/zitilab/cli/get_entity_id.go (renamed from zititest/zitilab/actions/edge/get_entity_id.go)
+patching file zititest/zitilab/component_common.go
+patching file zititest/zitilab/component_controller.go
+patching file zititest/zitilab/component_echo_server.go
+patching file zititest/zitilab/component_router.go
+patching file zititest/zitilab/component_zcat.go
+patching file zititest/zitilab/component_ziti_edge_tunnel.go
+patching file zititest/zitilab/component_ziti_tunnel.go
+patching file zititest/zitilab/component_zrok_controller.go
+patching file zititest/zitilab/component_zrok_frontend.go
+patching file zititest/zitilab/component_zrok_looptest.go
+patching file zititest/zitilab/stageziti/stageziti.go
+# github.com/openziti/ziti/router [github.com/openziti/ziti/router.test]
+router/router_test.go:45:10: cannot use struct{InitialEndpoints []*UpdatableAddress; LocalBinding string; DefaultRequestTimeout time.Duration; Options *channel.Options; DataDir string; Heartbeats env.HeartbeatOptions; StartupTimeout time.Duration}{…} (value of type struct{InitialEndpoints []*UpdatableAddress; LocalBinding string; DefaultRequestTimeout time.Duration; Options *channel.Options; DataDir string; Heartbeats env.HeartbeatOptions; StartupTimeout time.Duration}) as struct{InitialEndpoints []*UpdatableAddress; LocalBinding string; DefaultRequestTimeout time.Duration; Options *channel.Options; DataDir string; Heartbeats env.HeartbeatOptions} value in struct literal
+router/router_test.go:86:10: cannot use struct{InitialEndpoints []*UpdatableAddress; LocalBinding string; DefaultRequestTimeout time.Duration; Options *channel.Options; DataDir string; Heartbeats env.HeartbeatOptions; StartupTimeout time.Duration}{…} (value of type struct{InitialEndpoints []*UpdatableAddress; LocalBinding string; DefaultRequestTimeout time.Duration; Options *channel.Options; DataDir string; Heartbeats env.HeartbeatOptions; StartupTimeout time.Duration}) as struct{InitialEndpoints []*UpdatableAddress; LocalBinding string; DefaultRequestTimeout time.Duration; Options *channel.Options; DataDir string; Heartbeats env.HeartbeatOptions} value in struct literal
+FAIL	github.com/openziti/ziti/router [build failed]
+reward=0 graded=3 found=3 failed=3 parsed=1 framework=go exit_code=1

@@ -1,0 +1,13 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && make && python3 -c \"import subprocess,sys,json,os;args=sys.argv[1:];of=next((a.split('=',1)[1] for a in args if a.startswith('--outputFile=')),None);r=subprocess.run(['./build/tjs','tests/test-posix-socket.js']);p=r.returncode==0;res={'numFailedTestSuites':0 if p else 1,'numPassedTestSuites':1 if p else 0,'numFailedTests':0 if p else 1,'numPassedTests':1 if p else 0,'numPendingTests':0,'numTotalTests':1,'numTotalTestSuites':1,'success':p,'testResults':[{'name':'tests/test-posix-socket.js','status':'passed' if p else 'failed','message':'','assertionResults':[{'title':'posix-socket','status':'passed' if p else 'failed','ancestorTitles':[],'fullName':'posix-socket','failureMessages':[] if p else ['test failed'],'numPassingAsserts':1 if p else 0}]}]};d=json.dumps(res);of and (os.makedirs(os.path.dirname(of),exist_ok=True) or open(of,'w').write(d));print(d);sys.exit(0 if p else 1)\"",
+  "test_files": [
+    "tests/test-posix-socket.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "tests/test-posix-socket.js::posix-socket"
+  ],
+  "PASS_TO_PASS": []
+}

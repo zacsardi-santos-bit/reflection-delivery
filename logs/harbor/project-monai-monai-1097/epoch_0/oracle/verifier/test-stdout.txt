@@ -1,0 +1,68 @@
+patching file tests/test_gaussian.py
+patching file tests/test_gaussian_filter.py
+patching file tests/test_polyval.py
+patching file tests/test_rand_gaussian_sharpen.py
+patching file tests/test_rand_gaussian_sharpend.py
+patching file tests/test_rand_gaussian_smooth.py
+patching file tests/test_rand_gaussian_smoothd.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+collecting ... collected 51 items
+
+tests/test_gaussian.py::TestGaussian1d::test_gaussian PASSED             [  1%]
+tests/test_gaussian.py::TestGaussian1d::test_norm_false_0 PASSED         [  3%]
+tests/test_gaussian.py::TestGaussian1d::test_norm_false_1 PASSED         [  5%]
+tests/test_gaussian.py::TestGaussian1d::test_norm_false_2 PASSED         [  7%]
+tests/test_gaussian.py::TestGaussian1d::test_norm_false_3 PASSED         [  9%]
+tests/test_gaussian.py::TestGaussian1d::test_scalespace_gaussian PASSED  [ 11%]
+tests/test_gaussian.py::TestGaussian1d::test_wrong_sigma PASSED          [ 13%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_00 PASSED [ 15%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_01 PASSED [ 17%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_02 PASSED [ 19%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_03 PASSED [ 21%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_04 PASSED [ 23%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_05 PASSED [ 25%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_06 PASSED [ 27%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_07 PASSED [ 29%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_08 PASSED [ 31%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_09 PASSED [ 33%]
+tests/test_gaussian_filter.py::GaussianFilterBackprop::test_train_10 PASSED [ 35%]
+tests/test_gaussian_filter.py::GaussianFilterTestCase::test_1d PASSED    [ 37%]
+tests/test_gaussian_filter.py::GaussianFilterTestCase::test_2d PASSED    [ 39%]
+tests/test_gaussian_filter.py::GaussianFilterTestCase::test_3d PASSED    [ 41%]
+tests/test_gaussian_filter.py::GaussianFilterTestCase::test_3d_sigmas PASSED [ 43%]
+tests/test_gaussian_filter.py::GaussianFilterTestCase::test_wrong_args PASSED [ 45%]
+tests/test_polyval.py::TestPolyval::test_floats_0 PASSED                 [ 47%]
+tests/test_polyval.py::TestPolyval::test_floats_1 PASSED                 [ 49%]
+tests/test_polyval.py::TestPolyval::test_floats_2 PASSED                 [ 50%]
+tests/test_polyval.py::TestPolyval::test_floats_3 PASSED                 [ 52%]
+tests/test_polyval.py::TestPolyval::test_floats_4 PASSED                 [ 54%]
+tests/test_polyval.py::TestPolyval::test_floats_5 PASSED                 [ 56%]
+tests/test_polyval.py::TestPolyval::test_floats_6 PASSED                 [ 58%]
+tests/test_polyval.py::TestPolyval::test_gpu_0 PASSED                    [ 60%]
+tests/test_polyval.py::TestPolyval::test_gpu_1 PASSED                    [ 62%]
+tests/test_polyval.py::TestPolyval::test_gpu_2 PASSED                    [ 64%]
+tests/test_polyval.py::TestPolyval::test_gpu_3 PASSED                    [ 66%]
+tests/test_polyval.py::TestPolyval::test_gpu_4 PASSED                    [ 68%]
+tests/test_polyval.py::TestPolyval::test_gpu_5 PASSED                    [ 70%]
+tests/test_polyval.py::TestPolyval::test_gpu_6 PASSED                    [ 72%]
+tests/test_rand_gaussian_sharpen.py::TestRandGaussianSharpen::test_value_0 PASSED [ 74%]
+tests/test_rand_gaussian_sharpen.py::TestRandGaussianSharpen::test_value_1 PASSED [ 76%]
+tests/test_rand_gaussian_sharpen.py::TestRandGaussianSharpen::test_value_2 PASSED [ 78%]
+tests/test_rand_gaussian_sharpen.py::TestRandGaussianSharpen::test_value_3 PASSED [ 80%]
+tests/test_rand_gaussian_sharpend.py::TestRandGaussianSharpend::test_value_0 PASSED [ 82%]
+tests/test_rand_gaussian_sharpend.py::TestRandGaussianSharpend::test_value_1 PASSED [ 84%]
+tests/test_rand_gaussian_sharpend.py::TestRandGaussianSharpend::test_value_2 PASSED [ 86%]
+tests/test_rand_gaussian_sharpend.py::TestRandGaussianSharpend::test_value_3 PASSED [ 88%]
+tests/test_rand_gaussian_smooth.py::TestRandGaussianSmooth::test_value_0 PASSED [ 90%]
+tests/test_rand_gaussian_smooth.py::TestRandGaussianSmooth::test_value_1 PASSED [ 92%]
+tests/test_rand_gaussian_smooth.py::TestRandGaussianSmooth::test_value_2 PASSED [ 94%]
+tests/test_rand_gaussian_smoothd.py::TestRandGaussianSmoothd::test_value_0 PASSED [ 96%]
+tests/test_rand_gaussian_smoothd.py::TestRandGaussianSmoothd::test_value_1 PASSED [ 98%]
+tests/test_rand_gaussian_smoothd.py::TestRandGaussianSmoothd::test_value_2 PASSED [100%]
+
+============================== 51 passed in 9.84s ==============================
+reward=1 graded=51 found=0 failed=0 parsed=51 framework=pytest exit_code=0

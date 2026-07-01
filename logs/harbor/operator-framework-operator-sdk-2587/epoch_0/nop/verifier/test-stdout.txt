@@ -1,0 +1,14 @@
+patching file hack/tests/e2e-ansible-molecule.sh
+patching file pkg/ansible/watches/watches_test.go
+patching file test/ansible-memcached/molecule.yml
+patching file test/ansible/build/Dockerfile
+patching file test/ansible/deploy/crds/test.example.com_collections_crd.yaml
+patching file test/ansible/fixture_collection/galaxy.yml
+patching file test/ansible/fixture_collection/roles/dummy/tasks/main.yml
+patching file test/ansible/molecule/cluster/tasks/collections_test.yml
+patching file test/ansible/molecule/cluster/verify.yml
+patching file test/ansible/watches.yaml
+# github.com/operator-framework/operator-sdk/pkg/ansible/watches [github.com/operator-framework/operator-sdk/pkg/ansible/watches.test]
+pkg/ansible/watches/watches_test.go:747:23: undefined: getPossibleRolePaths
+FAIL	github.com/operator-framework/operator-sdk/pkg/ansible/watches [build failed]
+reward=0 graded=36 found=36 failed=36 parsed=1 framework=go exit_code=1

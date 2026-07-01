@@ -1,0 +1,23 @@
+{
+ "task": "scylladb-scylla-operator-1703",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds ApplyEndpoints (core.go) + ApplyEndpointSlice (discovery.go); test.patch adds TestApplyEndpoints/TestApplyEndpointSlice calling ApplyEndpoints(...)/ApplyEndpointSlice(...); F2P=624 whole package"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 18,
+  "shallow": true
+ }
+}

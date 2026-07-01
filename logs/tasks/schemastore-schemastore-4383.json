@@ -1,0 +1,23 @@
+{
+ "task": "schemastore-schemastore-4383",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds src/schemas/json/gematik-tiger.json + catalog entry fileMatch ['**/tiger.yml','**/tiger.yaml']; test runs cli.js check --schema-name gematik-tiger.json validating tiger.yaml"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

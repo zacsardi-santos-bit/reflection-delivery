@@ -1,0 +1,28 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl flink-streaming-java install -DskipTests -Drat.skip=true -Dcheckstyle.skip=true -q && mvn -pl flink-connectors/flink-connector-kafka-base test -Dtest=FlinkKafkaConsumerBaseTest -DfailIfNoTests=false -Drat.skip=true -Dcheckstyle.skip=true",
+  "test_files": [
+    "flink-connectors/flink-connector-kafka-base/src/test/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumerBaseTest.java",
+    "flink-streaming-java/src/test/java/org/apache/flink/streaming/util/MockStreamingRuntimeContext.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "flink-connector-kafka-base::test_1",
+    "flink-connector-kafka-base::test_2",
+    "flink-connector-kafka-base::test_3",
+    "flink-connector-kafka-base::test_4",
+    "flink-connector-kafka-base::test_5",
+    "flink-connector-kafka-base::test_6",
+    "flink-connector-kafka-base::test_7",
+    "flink-connector-kafka-base::test_8",
+    "flink-connector-kafka-base::test_9",
+    "flink-connector-kafka-base::test_10",
+    "flink-connector-kafka-base::test_11",
+    "flink-connector-kafka-base::test_12",
+    "flink-connector-kafka-base::test_13",
+    "flink-connector-kafka-base::test_14",
+    "flink-connector-kafka-base::test_15"
+  ],
+  "PASS_TO_PASS": []
+}

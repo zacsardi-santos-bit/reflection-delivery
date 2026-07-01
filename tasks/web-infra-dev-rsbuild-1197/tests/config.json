@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "mkdir -p /workspace/test-results && cd /workspace/repo/e2e && (npx playwright test cases/image-compress/index.test.ts cases/svg/svgo-minify-id-prefix/index.test.ts cases/svg/svgo-minify-view-box/index.test.ts --reporter=json > /tmp/pw_out.json 2>/dev/null || true) && node -e 'try{var raw=require(\"fs\").readFileSync(\"/tmp/pw_out.json\",\"utf-8\");var idx=raw.indexOf(\"{\");var pw=JSON.parse(idx>=0?raw.slice(idx):raw);function p(s){(s.specs||[]).forEach(function(sp){console.log((sp.ok?\"PASS\":\"FAIL\")+\" [   0.000s] \"+(s.file||s.title||\"test\")+\" \"+sp.title)});(s.suites||[]).forEach(p)}(pw.suites||[]).forEach(p)}catch(e){console.log(\"FAIL [   0.000s] test run failed\")}'",
+  "test_files": [
+    "e2e/cases/image-compress/index.test.ts",
+    "e2e/cases/svg/svgo-minify-id-prefix/index.test.ts",
+    "e2e/cases/svg/svgo-minify-view-box/index.test.ts",
+    "e2e/cases/svg/svgo.test.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "cases/image-compress/index.test.ts should compress image with use plugin-image-compress",
+    "cases/svg/svgo-minify-id-prefix/index.test.ts should add id prefix after svgo minification",
+    "cases/svg/svgo-minify-view-box/index.test.ts should preserve viewBox after svgo minification"
+  ],
+  "PASS_TO_PASS": []
+}

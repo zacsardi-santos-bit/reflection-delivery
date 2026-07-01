@@ -1,0 +1,23 @@
+{
+ "task": "elastic-apm-agent-nodejs-4417",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden package.json removes '\"request\": \"^2.88.2\",'; test cmd guards \"os.path.exists('node_modules/request') and (...sys.exit(1))\" then runs migrated tests that do real http.request/http.get against live servers"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

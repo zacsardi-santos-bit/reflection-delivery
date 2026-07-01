@@ -1,0 +1,23 @@
+{
+ "task": "hashicorp-terraform-provider-aws-32748",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden removes FindStackByID (find.go) and adds 'func FindStackByName(...)' using retry.NotFoundError / errCodeValidationError 'does not exist' NotFound handling; updates callers in cloudformation + serverlessrepo"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 86,
+  "shallow": true
+ }
+}

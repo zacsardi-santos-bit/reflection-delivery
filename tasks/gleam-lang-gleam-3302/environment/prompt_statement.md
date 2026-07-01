@@ -1,0 +1,7 @@
+I'd like the Gleam language server to offer a code action to automatically convert assertive pattern bindings into case expressions. Right now, if I want to refactor one of these statements — maybe because I want to add more match branches or make the error handling more visible — I have to rewrite everything by hand. It would be much nicer if the language server could just suggest a refactoring action when my cursor is on one of those statements.
+
+The converted code should keep the same pattern in the case block and add a wildcard fallback that panics. Only the real named variables from the pattern should be extracted into a binding on the left-hand side — discards shouldn't count. If there's just one named variable, bind it directly; if there are several, collect them into a tuple; if there are none at all, use a discard binding and return a neutral value from the matching arm. The indentation in the generated code should match where the original statement was.
+
+The action should work with all the pattern shapes I might use: constructors, lists, tuples, bit arrays, string prefix patterns, and aliases. When I have nested assertive bindings, the action should only convert the one my cursor is on and leave the others alone.
+
+There's also a related bug: when the compiler reports a type mismatch for an aliased pattern inside a case expression, the error underline covers one fewer character than it should. It ought to span the full extent of the aliased pattern including the alias name.

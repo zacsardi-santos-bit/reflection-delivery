@@ -1,0 +1,23 @@
+{
+ "task": "prefecthq-prefect-11695",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "class PreventDuplicateTransitions(BaseOrchestrationRule): ... if initial_transition_id == proposed_transition_id: await self.reject_transition(state=None, reason='This run has already made this state transition.')"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 24,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "tuanchauict-monosketch-614",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden creates group.ts (`add`/`remove`/`changeOrder`) + exports Rectangle with `fromRect`; group.test.ts runs `target.add(...); expect(Array.from(target.items)).toEqual([...])` on real objects"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

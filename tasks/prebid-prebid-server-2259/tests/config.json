@@ -1,0 +1,41 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./endpoints -count=1",
+  "test_files": [
+    "endpoints/setuid_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/prebid/prebid-server/endpoints::TestNewCookieSyncEndpoint",
+    "github.com/prebid/prebid-server/endpoints::TestCookieSyncHandle",
+    "github.com/prebid/prebid-server/endpoints::TestCookieSyncParseRequest",
+    "github.com/prebid/prebid-server/endpoints::TestSetLimit",
+    "github.com/prebid/prebid-server/endpoints::TestSetCooperativeSync",
+    "github.com/prebid/prebid-server/endpoints::TestWriteParseRequestErrorMetrics",
+    "github.com/prebid/prebid-server/endpoints::TestCookieSyncWriteParseRequestErrorMetrics",
+    "github.com/prebid/prebid-server/endpoints::TestParseTypeFilter",
+    "github.com/prebid/prebid-server/endpoints::TestParseBidderFilter",
+    "github.com/prebid/prebid-server/endpoints::TestCookieSyncHandleError",
+    "github.com/prebid/prebid-server/endpoints::TestCookieSyncWriteBidderMetrics",
+    "github.com/prebid/prebid-server/endpoints::TestCookieSyncHandleResponse",
+    "github.com/prebid/prebid-server/endpoints::TestMapBidderStatusToAnalytics",
+    "github.com/prebid/prebid-server/endpoints::TestUsersyncPrivacyGDPRAllowsHostCookie",
+    "github.com/prebid/prebid-server/endpoints::TestUsersyncPrivacyGDPRAllowsBidderSync",
+    "github.com/prebid/prebid-server/endpoints::TestUsersyncPrivacyCCPAAllowsBidderSync",
+    "github.com/prebid/prebid-server/endpoints::TestCombineErrors",
+    "github.com/prebid/prebid-server/endpoints::TestCurrencyRatesEndpoint",
+    "github.com/prebid/prebid-server/endpoints::TestGetUIDs",
+    "github.com/prebid/prebid-server/endpoints::TestGetUIDsWithNoSyncs",
+    "github.com/prebid/prebid-server/endpoints::TestGetUIDWIthNoCookie",
+    "github.com/prebid/prebid-server/endpoints::TestSetUIDEndpoint",
+    "github.com/prebid/prebid-server/endpoints::TestSetUIDEndpointMetrics",
+    "github.com/prebid/prebid-server/endpoints::TestOptedOut",
+    "github.com/prebid/prebid-server/endpoints::TestSiteCookieCheck",
+    "github.com/prebid/prebid-server/endpoints::TestGetResponseFormat",
+    "github.com/prebid/prebid-server/endpoints::TestStatusNoContent",
+    "github.com/prebid/prebid-server/endpoints::TestStatusWithContent",
+    "github.com/prebid/prebid-server/endpoints::TestVersion"
+  ],
+  "PASS_TO_PASS": []
+}

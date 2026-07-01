@@ -1,0 +1,284 @@
+patching file packages/react-templates/src/components/Dropdown/__tests__/SimpleDropdown.test.tsx
+patching file packages/react-templates/src/components/Dropdown/__tests__/__snapshots__/SimpleDropdown.test.tsx.snap
+patching file packages/react-templates/src/components/Select/__tests__/CheckboxSelect.test.tsx (renamed from packages/react-templates/src/components/Select/CheckboxSelect.test.tsx)
+patching file packages/react-templates/src/components/Select/__tests__/CheckboxSelectSnapshots.test.tsx (renamed from packages/react-templates/src/components/Select/CheckboxSelectSnapshots.test.tsx)
+patching file packages/react-templates/src/components/Select/__tests__/SimpleSelect.test.tsx
+patching file packages/react-templates/src/components/Select/__tests__/__snapshots__/CheckboxSelectSnapshots.test.tsx.snap (renamed from packages/react-templates/src/components/Select/__snapshots__/CheckboxSelectSnapshots.test.tsx.snap)
+patching file packages/react-templates/src/components/Select/__tests__/__snapshots__/SimpleSelect.test.tsx.snap
+jest-haste-map: duplicate manual mock found: index
+  The following files share their name; please delete one of them:
+    * <rootDir>/packages/react-core/src/components/HelperText/__mocks__/index.ts
+    * <rootDir>/packages/react-core/src/components/Button/__mocks__/index.ts
+
+jest-haste-map: duplicate manual mock found: index
+  The following files share their name; please delete one of them:
+    * <rootDir>/packages/react-core/src/components/Button/__mocks__/index.ts
+    * <rootDir>/packages/react-core/src/components/Menu/__mocks__/index.ts
+
+jest-haste-map: duplicate manual mock found: index
+  The following files share their name; please delete one of them:
+    * <rootDir>/packages/react-core/src/components/Menu/__mocks__/index.ts
+    * <rootDir>/packages/react-core/src/helpers/__mocks__/index.ts
+
+jest-haste-map: duplicate manual mock found: index
+  The following files share their name; please delete one of them:
+    * <rootDir>/packages/react-core/src/helpers/__mocks__/index.ts
+    * <rootDir>/packages/react-core/src/helpers/Popper/__mocks__/index.ts
+
+PASS packages/react-templates/src/components/Select/__tests__/SimpleSelect.test.tsx (13.605 s)
+  ✓ renders checkbox select with options (347 ms)
+  ✓ selects options when clicked (283 ms)
+  ✓ calls the onSelect callback with the selected value when an option is selected (626 ms)
+  ✓ toggles the select menu when the toggle button is clicked (256 ms)
+  ✓ displays custom toggle content (14 ms)
+  ✓ Passes toggleWidth (29 ms)
+  ✓ Passes additional toggleProps (23 ms)
+  ✓ calls the onToggle callback when the select opens or closes (70 ms)
+  ✓ does not call the onToggle callback when the toggle is not clicked (4 ms)
+  ✓ disables the select when isDisabled prop is true (21 ms)
+  ✓ passes other SelectOption props to the SelectOption component (48 ms)
+  ✓ checkbox select with no props snapshot (13 ms)
+  ✓ Matches snapshot (53 ms)
+
+  console.error
+    Warning: Encountered two children with the same key, `separator`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+        at ul
+        at MenuList (/workspace/repo/packages/react-core/src/components/Menu/MenuList.tsx:20:3)
+        at DropdownList (/workspace/repo/packages/react-core/src/components/Dropdown/DropdownList.tsx:13:3)
+        at div
+        at /workspace/repo/packages/react-core/src/components/Menu/MenuContent.tsx:22:11
+        at div
+        at MenuBase (/workspace/repo/packages/react-core/src/components/Menu/Menu.tsx:92:5)
+        at Menu
+        at Popper (/workspace/repo/packages/react-core/src/helpers/Popper/Popper.tsx:180:3)
+        at DropdownBase (/workspace/repo/packages/react-core/src/components/Dropdown/Dropdown.tsx:75:3)
+        at Dropdown
+        at SimpleDropdownBase (/workspace/repo/packages/react-templates/src/components/Dropdown/SimpleDropdown.tsx:58:3)
+        at SimpleDropdown
+
+      260 |
+      261 |     const toggle = screen.getByRole('button', { name: 'Dropdown' });
+    > 262 |     await user.click(toggle);
+          |     ^
+      263 |
+      264 |     expect(asFragment()).toMatchSnapshot();
+      265 |   });
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:15293:11)
+      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:15330:21)
+      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:15821:16)
+      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:19167:28)
+      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:19924:3)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21618:14)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at Object.eventWrapper (node_modules/@testing-library/react/dist/pure.js:78:28)
+      at Object.wrapEvent (node_modules/@testing-library/user-event/dist/cjs/event/wrapEvent.js:6:28)
+      at Object.dispatchEvent (node_modules/@testing-library/user-event/dist/cjs/event/dispatchEvent.js:45:22)
+      at Object.dispatchUIEvent (node_modules/@testing-library/user-event/dist/cjs/event/dispatchEvent.js:22:26)
+      at Mouse.up (node_modules/@testing-library/user-event/dist/cjs/system/pointer/mouse.js:100:30)
+      at PointerHost.release (node_modules/@testing-library/user-event/dist/cjs/system/pointer/index.js:84:28)
+      at pointerAction (node_modules/@testing-library/user-event/dist/cjs/pointer/index.js:59:47)
+      at Object.pointer (node_modules/@testing-library/user-event/dist/cjs/pointer/index.js:32:9)
+      at Object.asyncWrapper (node_modules/@testing-library/react/dist/pure.js:71:14)
+      at Object.<anonymous> (packages/react-templates/src/components/Dropdown/__tests__/SimpleDropdown.test.tsx:262:5)
+
+  console.error
+    Warning: Encountered two children with the same key, `separator`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+        at ul
+        at MenuList (/workspace/repo/packages/react-core/src/components/Menu/MenuList.tsx:20:3)
+        at DropdownList (/workspace/repo/packages/react-core/src/components/Dropdown/DropdownList.tsx:13:3)
+        at div
+        at /workspace/repo/packages/react-core/src/components/Menu/MenuContent.tsx:22:11
+        at div
+        at MenuBase (/workspace/repo/packages/react-core/src/components/Menu/Menu.tsx:92:5)
+        at Menu
+        at Popper (/workspace/repo/packages/react-core/src/helpers/Popper/Popper.tsx:180:3)
+        at DropdownBase (/workspace/repo/packages/react-core/src/components/Dropdown/Dropdown.tsx:75:3)
+        at Dropdown
+        at SimpleDropdownBase (/workspace/repo/packages/react-templates/src/components/Dropdown/SimpleDropdown.tsx:58:3)
+        at SimpleDropdown
+
+      260 |
+      261 |     const toggle = screen.getByRole('button', { name: 'Dropdown' });
+    > 262 |     await user.click(toggle);
+          |     ^
+      263 |
+      264 |     expect(asFragment()).toMatchSnapshot();
+      265 |   });
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:15293:11)
+      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:15330:21)
+      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:15821:16)
+      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:19174:28)
+      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:19924:3)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21618:14)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performSyncWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:26085:20)
+      at flushSyncCallbacks (node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at Object.eventWrapper (node_modules/@testing-library/react/dist/pure.js:78:28)
+      at Object.wrapEvent (node_modules/@testing-library/user-event/dist/cjs/event/wrapEvent.js:6:28)
+      at Object.dispatchEvent (node_modules/@testing-library/user-event/dist/cjs/event/dispatchEvent.js:45:22)
+      at Object.dispatchUIEvent (node_modules/@testing-library/user-event/dist/cjs/event/dispatchEvent.js:22:26)
+      at Mouse.up (node_modules/@testing-library/user-event/dist/cjs/system/pointer/mouse.js:100:30)
+      at PointerHost.release (node_modules/@testing-library/user-event/dist/cjs/system/pointer/index.js:84:28)
+      at pointerAction (node_modules/@testing-library/user-event/dist/cjs/pointer/index.js:59:47)
+      at Object.pointer (node_modules/@testing-library/user-event/dist/cjs/pointer/index.js:32:9)
+      at Object.asyncWrapper (node_modules/@testing-library/react/dist/pure.js:71:14)
+      at Object.<anonymous> (packages/react-templates/src/components/Dropdown/__tests__/SimpleDropdown.test.tsx:262:5)
+
+  console.error
+    Warning: Encountered two children with the same key, `separator`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+        at ul
+        at MenuList (/workspace/repo/packages/react-core/src/components/Menu/MenuList.tsx:20:3)
+        at DropdownList (/workspace/repo/packages/react-core/src/components/Dropdown/DropdownList.tsx:13:3)
+        at div
+        at /workspace/repo/packages/react-core/src/components/Menu/MenuContent.tsx:22:11
+        at div
+        at MenuBase (/workspace/repo/packages/react-core/src/components/Menu/Menu.tsx:92:5)
+        at Menu
+        at Popper (/workspace/repo/packages/react-core/src/helpers/Popper/Popper.tsx:180:3)
+        at DropdownBase (/workspace/repo/packages/react-core/src/components/Dropdown/Dropdown.tsx:75:3)
+        at Dropdown
+        at SimpleDropdownBase (/workspace/repo/packages/react-templates/src/components/Dropdown/SimpleDropdown.tsx:58:3)
+        at SimpleDropdown
+
+      260 |
+      261 |     const toggle = screen.getByRole('button', { name: 'Dropdown' });
+    > 262 |     await user.click(toggle);
+          |     ^
+      263 |
+      264 |     expect(asFragment()).toMatchSnapshot();
+      265 |   });
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:15293:11)
+      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:15330:21)
+      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:15821:16)
+      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:19174:28)
+      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:19924:3)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21618:14)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25738:74)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at Object.eventWrapper (node_modules/@testing-library/react/dist/pure.js:78:28)
+      at Object.wrapEvent (node_modules/@testing-library/user-event/dist/cjs/event/wrapEvent.js:6:28)
+      at Object.dispatchEvent (node_modules/@testing-library/user-event/dist/cjs/event/dispatchEvent.js:45:22)
+      at Object.dispatchUIEvent (node_modules/@testing-library/user-event/dist/cjs/event/dispatchEvent.js:22:26)
+      at Mouse.up (node_modules/@testing-library/user-event/dist/cjs/system/pointer/mouse.js:100:30)
+      at PointerHost.release (node_modules/@testing-library/user-event/dist/cjs/system/pointer/index.js:84:28)
+      at pointerAction (node_modules/@testing-library/user-event/dist/cjs/pointer/index.js:59:47)
+      at Object.pointer (node_modules/@testing-library/user-event/dist/cjs/pointer/index.js:32:9)
+      at Object.asyncWrapper (node_modules/@testing-library/react/dist/pure.js:71:14)
+      at Object.<anonymous> (packages/react-templates/src/components/Dropdown/__tests__/SimpleDropdown.test.tsx:262:5)
+
+  console.error
+    Warning: Encountered two children with the same key, `separator`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+        at ul
+        at MenuList (/workspace/repo/packages/react-core/src/components/Menu/MenuList.tsx:20:3)
+        at DropdownList (/workspace/repo/packages/react-core/src/components/Dropdown/DropdownList.tsx:13:3)
+        at div
+        at /workspace/repo/packages/react-core/src/components/Menu/MenuContent.tsx:22:11
+        at div
+        at MenuBase (/workspace/repo/packages/react-core/src/components/Menu/Menu.tsx:92:5)
+        at Menu
+        at Popper (/workspace/repo/packages/react-core/src/helpers/Popper/Popper.tsx:180:3)
+        at DropdownBase (/workspace/repo/packages/react-core/src/components/Dropdown/Dropdown.tsx:75:3)
+        at Dropdown
+        at SimpleDropdownBase (/workspace/repo/packages/react-templates/src/components/Dropdown/SimpleDropdown.tsx:58:3)
+        at SimpleDropdown
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnOnInvalidKey (node_modules/react-dom/cjs/react-dom.development.js:15293:11)
+      at reconcileChildrenArray (node_modules/react-dom/cjs/react-dom.development.js:15330:21)
+      at reconcileChildFibers (node_modules/react-dom/cjs/react-dom.development.js:15821:16)
+      at reconcileChildren (node_modules/react-dom/cjs/react-dom.development.js:19174:28)
+      at updateHostComponent (node_modules/react-dom/cjs/react-dom.development.js:19924:3)
+      at beginWork (node_modules/react-dom/cjs/react-dom.development.js:21618:14)
+      at beginWork$1 (node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+      at workLoopSync (node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+      at renderRootSync (node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25738:74)
+      at workLoop (node_modules/scheduler/cjs/scheduler.development.js:266:34)
+      at flushWork (node_modules/scheduler/cjs/scheduler.development.js:239:14)
+      at performWorkUntilDeadline (node_modules/scheduler/cjs/scheduler.development.js:533:21)
+
+PASS packages/react-templates/src/components/Dropdown/__tests__/SimpleDropdown.test.tsx (15.125 s)
+  Dropdown toggle
+    ✓ Renders dropdown toggle as not disabled when isDisabled is not true (106 ms)
+    ✓ Renders dropdown toggle as disabled when isDisabled is true (68 ms)
+    ✓ Passes toggleVariant (14 ms)
+    ✓ Passes toggleWidth (18 ms)
+    ✓ Passes additional toggleProps (46 ms)
+    ✓ Passes toggleAriaLabel (16 ms)
+    ✓ Calls onToggle with next isOpen state when dropdown toggle is clicked (311 ms)
+    ✓ Does not call onToggle when dropdown toggle is not clicked (87 ms)
+    ✓ Calls toggle onSelect when item is clicked (504 ms)
+    ✓ Does not call toggle onSelect when item is not clicked (208 ms)
+    ✓ Does not pass isToggleFullWidth to menu toggle by default (38 ms)
+    ✓ Passes isToggleFullWidth to menu toggle when passed in (21 ms)
+    ✓ Does not focus toggle on item select by default (123 ms)
+    ✓ Focuses toggle on item select when shouldFocusToggleOnSelect is true (127 ms)
+    ✓ Matches snapshot (11 ms)
+  Dropdown items
+    ✓ Renders with items (52 ms)
+    ✓ Renders with a link item (47 ms)
+    ✓ Renders with items not disabled by default (64 ms)
+    ✓ Renders with a disabled item (124 ms)
+    ✓ Spreads props on item (94 ms)
+    ✓ Calls item onClick when clicked (248 ms)
+    ✓ Does not call item onClick when not clicked (396 ms)
+    ✓ Does not call item onClick when clicked and item is disabled (240 ms)
+    ✓ Matches snapshot (353 ms)
+
+PASS packages/react-templates/src/components/Select/__tests__/CheckboxSelectSnapshots.test.tsx (27.271 s)
+  ✓ checkbox select with no props snapshot (92 ms)
+  ✓ opened checkbox select snapshot (227 ms)
+
+PASS packages/react-templates/src/components/Select/__tests__/CheckboxSelect.test.tsx (28.673 s)
+  ✓ renders checkbox select with options (559 ms)
+  ✓ selects options when clicked (209 ms)
+  ✓ deselects options when an already selected option is clicked (247 ms)
+  ✓ calls the onSelect callback with the selected value when an option is selected (139 ms)
+  ✓ does not call the onSelect callback when no options are selected (50 ms)
+  ✓ toggles the select menu when the toggle button is clicked (110 ms)
+  ✓ displays custom toggle content (18 ms)
+  ✓ Passes toggleWidth (14 ms)
+  ✓ Passes additional toggleProps (15 ms)
+  ✓ calls the onToggle callback when the select opens or closes (83 ms)
+  ✓ does not call the onToggle callback when the toggle is not clicked (5 ms)
+  ✓ disables the select when isDisabled prop is true (32 ms)
+  ✓ passes other SelectOption props to the SelectOption component (66 ms)
+  ✓ displays the badge count when options are selected (148 ms)
+
+Test Suites: 4 passed, 4 total
+Tests:       53 passed, 53 total
+Snapshots:   6 passed, 6 total
+Time:        30.524 s
+Ran all test suites matching /packages\/react-templates\/src\/components\/Dropdown\/__tests__\/SimpleDropdown.test.tsx|packages\/react-templates\/src\/components\/Select\/__tests__\/CheckboxSelect.test.tsx|packages\/react-templates\/src\/components\/Select\/__tests__\/CheckboxSelectSnapshots.test.tsx|packages\/react-templates\/src\/components\/Select\/__tests__\/SimpleSelect.test.tsx/i.
+reward=1 graded=53 found=0 failed=0 parsed=0 framework=jest exit_code=0

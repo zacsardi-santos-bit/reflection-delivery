@@ -1,0 +1,23 @@
+{
+ "task": "jaegertracing-jaeger-1771",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: cache maps map[string]uint64, Update(service,operation,expireTime uint64), createIndexKey(...startTime uint64...), expireTime/startTime computed once in writer.WriteSpan"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

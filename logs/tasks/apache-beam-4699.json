@@ -1,0 +1,23 @@
+{
+ "task": "apache-beam-4699",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds SqlQuery7.java (TUMBLE window + MAX(price) JOIN on maxprice) + NexmarkLauncher wiring; test.patch adds SqlQuery7Test with PAssert; F2P Apache::test_1"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

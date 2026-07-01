@@ -1,0 +1,23 @@
+{
+ "task": "apache-datafusion-sqlparser-rs-2142",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden parses [WITH] [ENCRYPTED] PASSWORD {'str'|NULL} + AST AlterUserPassword Display; test verified_stmt(\"ALTER USER u1 PASSWORD 'AAA'\"), ENCRYPTED PASSWORD, PASSWORD NULL, WITH PASSWORD normalized"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

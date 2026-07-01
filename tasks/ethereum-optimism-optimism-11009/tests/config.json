@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./op-supervisor/supervisor/backend/source -count=1",
+  "test_files": [
+    "op-supervisor/supervisor/backend/source/heads_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/source::TestUnsafeHeadUpdates/NotifyOfNewHeads",
+    "github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/source::TestUnsafeHeadUpdates/ResubscribeOnError",
+    "github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/source::TestUnsafeHeadUpdates",
+    "github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/source::TestSafeHeadUpdates",
+    "github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/source::TestFinalizedHeadUpdates"
+  ],
+  "PASS_TO_PASS": []
+}

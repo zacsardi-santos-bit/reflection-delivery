@@ -1,0 +1,43 @@
+patching file minijinja/tests/lexer-inputs/line-comment.txt
+patching file minijinja/tests/lexer-inputs/line-statement.txt
+patching file minijinja/tests/snapshots/test_lexer__lexer@line-comment.txt.snap
+patching file minijinja/tests/snapshots/test_lexer__lexer@line-statement.txt.snap
+patching file minijinja/tests/test_lexer.rs
+   Compiling memchr v2.7.1
+   Compiling proc-macro2 v1.0.79
+   Compiling unicode-ident v1.0.12
+   Compiling libc v0.2.153
+   Compiling lazy_static v1.4.0
+   Compiling serde v1.0.197
+   Compiling regex-automata v0.1.10
+   Compiling unicode-segmentation v1.11.0
+   Compiling regex-syntax v0.8.2
+   Compiling log v0.4.21
+   Compiling serde_json v1.0.114
+   Compiling same-file v1.0.6
+   Compiling itoa v1.0.10
+   Compiling ryu v1.0.17
+   Compiling linked-hash-map v0.5.6
+   Compiling walkdir v2.5.0
+   Compiling aho-corasick v1.1.3
+   Compiling bstr v0.2.17
+   Compiling bstr v1.9.1
+   Compiling similar v2.4.0
+   Compiling regex-automata v0.4.6
+   Compiling quote v1.0.35
+   Compiling console v0.15.8
+   Compiling syn v2.0.53
+   Compiling similar-asserts v1.5.0
+   Compiling globset v0.4.14
+   Compiling serde_derive v1.0.197
+   Compiling insta v1.38.0
+   Compiling minijinja v2.0.0-alpha.0 (/workspace/repo/minijinja)
+    Finished test [unoptimized + debuginfo] target(s) in 21.34s
+────────────
+ Nextest run ID 3b609024-db9a-4d65-9e10-989ce01a3e17 with nextest profile: default
+    Starting 2 tests across 1 binary
+        PASS [   0.165s] (1/2) minijinja::test_lexer test_trim_blocks
+        PASS [   0.219s] (2/2) minijinja::test_lexer test_lexer
+────────────
+     Summary [   0.220s] 2 tests run: 2 passed, 0 skipped
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

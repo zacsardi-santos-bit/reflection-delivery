@@ -1,0 +1,16 @@
+patching file apis/externalsecrets/v1beta1/secretstore_vault_types.go
+patching file apis/externalsecrets/v1beta1/zz_generated.deepcopy.go
+patching file config/crds/bases/external-secrets.io_clustersecretstores.yaml
+patching file config/crds/bases/external-secrets.io_secretstores.yaml
+patching file config/crds/bases/generators.external-secrets.io_vaultdynamicsecrets.yaml
+patching file deploy/crds/bundle.yaml
+patching file docs/api/spec.md
+patching file docs/provider/hashicorp-vault.md
+patching file docs/snippets/full-secret-store.yaml
+patching file docs/snippets/vault-mtls-store.yaml
+patching file e2e/framework/addon/vault.go
+patching file e2e/framework/testcase.go
+patching file e2e/k8s/vault.values.yaml
+patching file e2e/suites/provider/cases/vault/provider.go
+patching file e2e/suites/provider/cases/vault/vault.go
+patching file pkg/provider/vault/vault.go

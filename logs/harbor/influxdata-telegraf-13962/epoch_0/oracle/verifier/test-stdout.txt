@@ -1,0 +1,50 @@
+patching file plugins/inputs/nvidia_smi/nvidia_smi_test.go
+{"Time":"2026-06-29T15:32:04.307075229Z","Action":"start","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi"}
+{"Time":"2026-06-29T15:32:04.324937584Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML"}
+{"Time":"2026-06-29T15:32:04.325017901Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML","Output":"=== RUN   TestGatherValidXML\n"}
+{"Time":"2026-06-29T15:32:04.325252474Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1070_Ti"}
+{"Time":"2026-06-29T15:32:04.325328477Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1070_Ti","Output":"=== RUN   TestGatherValidXML/GeForce_GTX_1070_Ti\n"}
+{"Time":"2026-06-29T15:32:04.326249219Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1070_Ti","Output":"2026/06/29 15:32:04 D! [] Using schema version in v10\n"}
+{"Time":"2026-06-29T15:32:04.326662828Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1070_Ti","Output":"--- PASS: TestGatherValidXML/GeForce_GTX_1070_Ti (0.00s)\n"}
+{"Time":"2026-06-29T15:32:04.326685734Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1070_Ti","Elapsed":0}
+{"Time":"2026-06-29T15:32:04.326705799Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1660_Ti"}
+{"Time":"2026-06-29T15:32:04.326724522Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1660_Ti","Output":"=== RUN   TestGatherValidXML/GeForce_GTX_1660_Ti\n"}
+{"Time":"2026-06-29T15:32:04.327822753Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1660_Ti","Output":"2026/06/29 15:32:04 D! [] Using schema version in v11\n"}
+{"Time":"2026-06-29T15:32:04.33142642Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1660_Ti","Output":"--- PASS: TestGatherValidXML/GeForce_GTX_1660_Ti (0.00s)\n"}
+{"Time":"2026-06-29T15:32:04.331482474Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/GeForce_GTX_1660_Ti","Elapsed":0}
+{"Time":"2026-06-29T15:32:04.331499477Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P400"}
+{"Time":"2026-06-29T15:32:04.331506724Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P400","Output":"=== RUN   TestGatherValidXML/Quadro_P400\n"}
+{"Time":"2026-06-29T15:32:04.332701617Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P400","Output":"2026/06/29 15:32:04 D! [] Using schema version in v11\n"}
+{"Time":"2026-06-29T15:32:04.333831124Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P400","Output":"--- PASS: TestGatherValidXML/Quadro_P400 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:04.33386023Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P400","Elapsed":0}
+{"Time":"2026-06-29T15:32:04.333887679Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P2000"}
+{"Time":"2026-06-29T15:32:04.333900085Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P2000","Output":"=== RUN   TestGatherValidXML/Quadro_P2000\n"}
+{"Time":"2026-06-29T15:32:04.333994647Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P2000","Output":"2026/06/29 15:32:04 D! [] Using schema version in v12\n"}
+{"Time":"2026-06-29T15:32:04.335530658Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P2000","Output":"--- PASS: TestGatherValidXML/Quadro_P2000 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:04.335550465Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Quadro_P2000","Elapsed":0}
+{"Time":"2026-06-29T15:32:04.335628039Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Tesla_T4"}
+{"Time":"2026-06-29T15:32:04.335637535Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Tesla_T4","Output":"=== RUN   TestGatherValidXML/Tesla_T4\n"}
+{"Time":"2026-06-29T15:32:04.335886711Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Tesla_T4","Output":"2026/06/29 15:32:04 D! [] Using schema version in v11\n"}
+{"Time":"2026-06-29T15:32:04.336864294Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Tesla_T4","Output":"--- PASS: TestGatherValidXML/Tesla_T4 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:04.336892339Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/Tesla_T4","Elapsed":0}
+{"Time":"2026-06-29T15:32:04.336929152Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A10G"}
+{"Time":"2026-06-29T15:32:04.336942158Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A10G","Output":"=== RUN   TestGatherValidXML/A10G\n"}
+{"Time":"2026-06-29T15:32:04.337214154Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A10G","Output":"2026/06/29 15:32:04 D! [] Using schema version in v11\n"}
+{"Time":"2026-06-29T15:32:04.33821667Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A10G","Output":"--- PASS: TestGatherValidXML/A10G (0.00s)\n"}
+{"Time":"2026-06-29T15:32:04.338233076Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A10G","Elapsed":0}
+{"Time":"2026-06-29T15:32:04.338271804Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/RTC_3080_schema_v12"}
+{"Time":"2026-06-29T15:32:04.338279627Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/RTC_3080_schema_v12","Output":"=== RUN   TestGatherValidXML/RTC_3080_schema_v12\n"}
+{"Time":"2026-06-29T15:32:04.338589659Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/RTC_3080_schema_v12","Output":"2026/06/29 15:32:04 D! [] Using schema version in v12\n"}
+{"Time":"2026-06-29T15:32:04.340585286Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/RTC_3080_schema_v12","Output":"--- PASS: TestGatherValidXML/RTC_3080_schema_v12 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:04.340611301Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/RTC_3080_schema_v12","Elapsed":0}
+{"Time":"2026-06-29T15:32:04.340679307Z","Action":"run","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A100-SXM4_schema_v12"}
+{"Time":"2026-06-29T15:32:04.340694115Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A100-SXM4_schema_v12","Output":"=== RUN   TestGatherValidXML/A100-SXM4_schema_v12\n"}
+{"Time":"2026-06-29T15:32:04.340920989Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A100-SXM4_schema_v12","Output":"2026/06/29 15:32:04 D! [] Using schema version in v12\n"}
+{"Time":"2026-06-29T15:32:04.34270503Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A100-SXM4_schema_v12","Output":"--- PASS: TestGatherValidXML/A100-SXM4_schema_v12 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:04.342736915Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML/A100-SXM4_schema_v12","Elapsed":0}
+{"Time":"2026-06-29T15:32:04.342747096Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML","Output":"--- PASS: TestGatherValidXML (0.02s)\n"}
+{"Time":"2026-06-29T15:32:04.342831688Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Test":"TestGatherValidXML","Elapsed":0.02}
+{"Time":"2026-06-29T15:32:04.342848127Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:04.343742946Z","Action":"output","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Output":"ok  \tgithub.com/influxdata/telegraf/plugins/inputs/nvidia_smi\t0.036s\n"}
+{"Time":"2026-06-29T15:32:04.343770228Z","Action":"pass","Package":"github.com/influxdata/telegraf/plugins/inputs/nvidia_smi","Elapsed":0.037}
+reward=1 graded=9 found=9 failed=0 parsed=9 framework=go exit_code=0

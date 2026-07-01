@@ -1,0 +1,19 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && pnpm vitest run packages/schema/test/Either/eitherFromUnion.test.ts --reporter=json --outputFile=/tmp/vitest-raw.json; python3 -c \"import json; d=json.load(open('/tmp/vitest-raw.json')); open('/workspace/test-results/output.json','w').write(json.dumps(d,separators=(',',':')))\"",
+  "test_files": [
+    "packages/schema/test/Either/eitherFromUnion.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/schema/test/Either/eitherFromUnion.test.ts:: Either/eitherFromUnion property tests",
+    "/workspace/repo/packages/schema/test/Either/eitherFromUnion.test.ts:: Either/eitherFromUnion decoding success",
+    "/workspace/repo/packages/schema/test/Either/eitherFromUnion.test.ts:: Either/eitherFromUnion decoding error",
+    "/workspace/repo/packages/schema/test/Either/eitherFromUnion.test.ts:: Either/eitherFromUnion decoding prefer right",
+    "/workspace/repo/packages/schema/test/Either/eitherFromUnion.test.ts:: Either/eitherFromUnion encoding success",
+    "/workspace/repo/packages/schema/test/Either/eitherFromUnion.test.ts:: Either/eitherFromUnion encoding error",
+    "/workspace/repo/packages/schema/test/Either/eitherFromUnion.test.ts:: Either/eitherFromUnion encoding don't overlap"
+  ],
+  "PASS_TO_PASS": []
+}

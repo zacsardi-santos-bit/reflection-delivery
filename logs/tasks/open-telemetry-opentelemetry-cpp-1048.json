@@ -1,0 +1,23 @@
+{
+ "task": "open-telemetry-opentelemetry-cpp-1048",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds otlp_grpc_log_exporter.{h,cc} + otlp_log_recordable.h + BUILD/CMake; test.sh builds & runs otlp_grpc_log_exporter_test with 3 gtest cases exercising Export success/CANCELLED/Shutdown via MockLogsServiceStub"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 48,
+  "shallow": true
+ }
+}

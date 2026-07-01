@@ -1,0 +1,23 @@
+{
+ "task": "apache-hudi-11265",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch adds behavioral tests e.g. 'GenericRecord real = CONVERTER.convert(json, schema); Assertions.assertEquals(record, real);' for decimal/date/time/timestamp/duration/uuid logical types"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

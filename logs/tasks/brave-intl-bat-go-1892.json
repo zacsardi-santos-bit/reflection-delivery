@@ -1,0 +1,23 @@
+{
+ "task": "brave-intl-bat-go-1892",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'func (o *Order) CreateRadomCheckoutSessionWithTime' in model.go and 'AppendOrderMetadataInt64' in repository.go; F2P TestOrder_CreateRadomCheckoutSessionWithTime/{no_items,no_radom_success_uri,client_success,...} run via go test -json ./skus/model/..."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

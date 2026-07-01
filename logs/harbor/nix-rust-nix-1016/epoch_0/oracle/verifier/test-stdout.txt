@@ -1,0 +1,13 @@
+patching file test/sys/mod.rs
+patching file test/sys/test_inotify.rs
+warning: no edition set: defaulting to the 2015 edition while the latest is 2024
+   Compiling nix v0.13.0 (/workspace/repo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.26s
+────────────
+ Nextest run ID 3a92ab88-8da2-4638-b624-1383c048eb48 with nextest profile: default
+    Starting 2 tests across 1 binary (166 tests skipped)
+        PASS [   0.029s] (1/2) nix::test sys::test_inotify::test_inotify
+        PASS [   0.029s] (2/2) nix::test sys::test_inotify::test_inotify_multi_events
+────────────
+     Summary [   0.030s] 2 tests run: 2 passed, 166 skipped
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

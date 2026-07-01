@@ -1,0 +1,55 @@
+patching file internal/jsonpath/jsonpath_test.go
+patching file tests/v2/e2e/assets/index_correction.yaml
+patching file tests/v2/e2e/crud/grpc_test.go
+patching file tests/v2/e2e/crud/kubernetes_test.go
+patching file tests/v2/e2e/kubernetes/client.go
+patching file tests/v2/e2e/kubernetes/doc.go
+patching file tests/v2/e2e/kubernetes/resources.go
+patching file tests/v2/e2e/kubernetes/rollout.go
+patching file tests/v2/e2e/kubernetes/status.go
+=== RUN   TestJSONPathEval
+=== RUN   TestJSONPathEval/empty_length
+=== RUN   TestJSONPathEval/root
+=== RUN   TestJSONPathEval/access_map_length
+=== RUN   TestJSONPathEval/access_array
+=== RUN   TestJSONPathEval/access_array_length
+=== RUN   TestJSONPathEval/missing_key
+=== RUN   TestJSONPathEval/length_on_non-array
+=== RUN   TestJSONPathEval/nested_key_access
+=== RUN   TestJSONPathEval/*_for_map
+    jsonpath_test.go:152: got error = key '*' not found, wantErr = false
+    jsonpath_test.go:154: error details: key '*' not found
+=== RUN   TestJSONPathEval/*.key
+    jsonpath_test.go:152: got error = key '*' not found, wantErr = false
+    jsonpath_test.go:154: error details: key '*' not found
+=== RUN   TestJSONPathEval/*.*
+    jsonpath_test.go:152: got error = key '*' not found, wantErr = false
+    jsonpath_test.go:154: error details: key '*' not found
+=== RUN   TestJSONPathEval/*.*_for_array
+    jsonpath_test.go:152: got error = unexpected array when accessing '*', wantErr = false
+    jsonpath_test.go:154: error details: unexpected array when accessing '*'
+=== RUN   TestJSONPathEval/array_index
+    jsonpath_test.go:152: got error = unexpected array when accessing '0', wantErr = false
+    jsonpath_test.go:154: error details: unexpected array when accessing '0'
+=== RUN   TestJSONPathEval/sum
+    jsonpath_test.go:152: got error = key 'sum()' not found, wantErr = false
+    jsonpath_test.go:154: error details: key 'sum()' not found
+--- FAIL: TestJSONPathEval (0.00s)
+    --- PASS: TestJSONPathEval/empty_length (0.00s)
+    --- PASS: TestJSONPathEval/root (0.00s)
+    --- PASS: TestJSONPathEval/access_map_length (0.00s)
+    --- PASS: TestJSONPathEval/access_array (0.00s)
+    --- PASS: TestJSONPathEval/access_array_length (0.00s)
+    --- PASS: TestJSONPathEval/missing_key (0.00s)
+    --- PASS: TestJSONPathEval/length_on_non-array (0.00s)
+    --- PASS: TestJSONPathEval/nested_key_access (0.00s)
+    --- FAIL: TestJSONPathEval/*_for_map (0.00s)
+    --- FAIL: TestJSONPathEval/*.key (0.00s)
+    --- FAIL: TestJSONPathEval/*.* (0.00s)
+    --- FAIL: TestJSONPathEval/*.*_for_array (0.00s)
+    --- FAIL: TestJSONPathEval/array_index (0.00s)
+    --- FAIL: TestJSONPathEval/sum (0.00s)
+FAIL
+FAIL	github.com/vdaas/vald/internal/jsonpath	0.006s
+FAIL
+reward=0 graded=15 found=0 failed=0 parsed=0 framework=go exit_code=1

@@ -1,0 +1,1467 @@
+diff --git a/crates/nu-cmd-dataframe/src/dataframe/values/nu_dataframe/custom_value.rs b/crates/nu-cmd-dataframe/src/dataframe/values/nu_dataframe/custom_value.rs
+index 973dc40e6..d70298be6 100644
+--- a/crates/nu-cmd-dataframe/src/dataframe/values/nu_dataframe/custom_value.rs
++++ b/crates/nu-cmd-dataframe/src/dataframe/values/nu_dataframe/custom_value.rs
+@@ -34,13 +34,23 @@ impl CustomValue for NuDataFrame {
+         self
+     }
+ 
+-    fn follow_path_int(&self, count: usize, span: Span) -> Result<Value, ShellError> {
+-        self.get_value(count, span)
++    fn follow_path_int(
++        &self,
++        _self_span: Span,
++        count: usize,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
++        self.get_value(count, path_span)
+     }
+ 
+-    fn follow_path_string(&self, column_name: String, span: Span) -> Result<Value, ShellError> {
+-        let column = self.column(&column_name, span)?;
+-        Ok(column.into_value(span))
++    fn follow_path_string(
++        &self,
++        _self_span: Span,
++        column_name: String,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
++        let column = self.column(&column_name, path_span)?;
++        Ok(column.into_value(path_span))
+     }
+ 
+     fn partial_cmp(&self, other: &Value) -> Option<std::cmp::Ordering> {
+diff --git a/crates/nu-command/src/database/values/sqlite.rs b/crates/nu-command/src/database/values/sqlite.rs
+index e1c18e97b..6e0e11a38 100644
+--- a/crates/nu-command/src/database/values/sqlite.rs
++++ b/crates/nu-command/src/database/values/sqlite.rs
+@@ -372,19 +372,29 @@ impl CustomValue for SQLiteDatabase {
+         self
+     }
+ 
+-    fn follow_path_int(&self, _count: usize, span: Span) -> Result<Value, ShellError> {
++    fn follow_path_int(
++        &self,
++        _self_span: Span,
++        _index: usize,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
+         // In theory we could support this, but tables don't have an especially well-defined order
+-        Err(ShellError::IncompatiblePathAccess { type_name: "SQLite databases do not support integer-indexed access. Try specifying a table name instead".into(), span })
++        Err(ShellError::IncompatiblePathAccess { type_name: "SQLite databases do not support integer-indexed access. Try specifying a table name instead".into(), span: path_span })
+     }
+ 
+-    fn follow_path_string(&self, _column_name: String, span: Span) -> Result<Value, ShellError> {
+-        let db = open_sqlite_db(&self.path, span)?;
++    fn follow_path_string(
++        &self,
++        _self_span: Span,
++        _column_name: String,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
++        let db = open_sqlite_db(&self.path, path_span)?;
+ 
+-        read_single_table(db, _column_name, span, self.ctrlc.clone()).map_err(|e| {
++        read_single_table(db, _column_name, path_span, self.ctrlc.clone()).map_err(|e| {
+             ShellError::GenericError {
+                 error: "Failed to read from SQLite database".into(),
+                 msg: e.to_string(),
+-                span: Some(span),
++                span: Some(path_span),
+                 help: None,
+                 inner: vec![],
+             }
+diff --git a/crates/nu-plugin/Cargo.toml b/crates/nu-plugin/Cargo.toml
+index fee5d5f9d..54df0482c 100644
+--- a/crates/nu-plugin/Cargo.toml
++++ b/crates/nu-plugin/Cargo.toml
+@@ -16,7 +16,7 @@ nu-protocol = { path = "../nu-protocol", version = "0.91.1" }
+ 
+ bincode = "1.3"
+ rmp-serde = "1.1"
+-serde = { version = "1.0" }
++serde = "1.0"
+ serde_json = { workspace = true }
+ log = "0.4"
+ miette = { workspace = true }
+diff --git a/crates/nu-plugin/src/plugin/interface/engine.rs b/crates/nu-plugin/src/plugin/interface/engine.rs
+index 8060f77bc..89f1a4660 100644
+--- a/crates/nu-plugin/src/plugin/interface/engine.rs
++++ b/crates/nu-plugin/src/plugin/interface/engine.rs
+@@ -12,8 +12,8 @@ use nu_protocol::{
+ 
+ use crate::{
+     protocol::{
+-        CallInfo, CustomValueOp, EngineCall, EngineCallId, EngineCallResponse, PluginCall,
+-        PluginCallId, PluginCallResponse, PluginCustomValue, PluginInput, PluginOption,
++        CallInfo, CustomValueOp, EngineCall, EngineCallId, EngineCallResponse, Ordering,
++        PluginCall, PluginCallId, PluginCallResponse, PluginCustomValue, PluginInput, PluginOption,
+         ProtocolInfo,
+     },
+     LabeledError, PluginOutput,
+@@ -683,6 +683,16 @@ impl EngineInterface {
+         self.write(PluginOutput::Option(PluginOption::GcDisabled(disabled)))?;
+         self.flush()
+     }
++
++    /// Write a call response of [`Ordering`], for `partial_cmp`.
++    pub(crate) fn write_ordering(
++        &self,
++        ordering: Option<impl Into<Ordering>>,
++    ) -> Result<(), ShellError> {
++        let response = PluginCallResponse::Ordering(ordering.map(|o| o.into()));
++        self.write(PluginOutput::CallResponse(self.context()?, response))?;
++        self.flush()
++    }
+ }
+ 
+ impl Interface for EngineInterface {
+diff --git a/crates/nu-plugin/src/plugin/interface/plugin.rs b/crates/nu-plugin/src/plugin/interface/plugin.rs
+index 1318cb298..0f8ac47a4 100644
+--- a/crates/nu-plugin/src/plugin/interface/plugin.rs
++++ b/crates/nu-plugin/src/plugin/interface/plugin.rs
+@@ -6,15 +6,15 @@ use std::{
+ };
+ 
+ use nu_protocol::{
+-    IntoInterruptiblePipelineData, ListStream, PipelineData, PluginSignature, ShellError, Spanned,
+-    Value,
++    ast::Operator, IntoInterruptiblePipelineData, IntoSpanned, ListStream, PipelineData,
++    PluginSignature, ShellError, Span, Spanned, Value,
+ };
+ 
+ use crate::{
+     plugin::{context::PluginExecutionContext, gc::PluginGc, PluginSource},
+     protocol::{
+-        CallInfo, CustomValueOp, EngineCall, EngineCallId, EngineCallResponse, PluginCall,
+-        PluginCallId, PluginCallResponse, PluginCustomValue, PluginInput, PluginOption,
++        CallInfo, CustomValueOp, EngineCall, EngineCallId, EngineCallResponse, Ordering,
++        PluginCall, PluginCallId, PluginCallResponse, PluginCustomValue, PluginInput, PluginOption,
+         PluginOutput, ProtocolInfo, StreamId, StreamMessage,
+     },
+     sequence::Sequence,
+@@ -454,6 +454,9 @@ impl InterfaceManager for PluginInterfaceManager {
+                 let response = match response {
+                     PluginCallResponse::Error(err) => PluginCallResponse::Error(err),
+                     PluginCallResponse::Signature(sigs) => PluginCallResponse::Signature(sigs),
++                    PluginCallResponse::Ordering(ordering) => {
++                        PluginCallResponse::Ordering(ordering)
++                    }
+                     PluginCallResponse::PipelineData(data) => {
+                         // If there's an error with initializing this stream, change it to a plugin
+                         // error response, but send it anyway
+@@ -804,22 +807,93 @@ impl PluginInterface {
+         }
+     }
+ 
+-    /// Collapse a custom value to its base value.
+-    pub(crate) fn custom_value_to_base_value(
++    /// Do a custom value op that expects a value response (i.e. most of them)
++    fn custom_value_op_expecting_value(
+         &self,
+         value: Spanned<PluginCustomValue>,
++        op: CustomValueOp,
+     ) -> Result<Value, ShellError> {
++        let op_name = op.name();
+         let span = value.span;
+-        let call = PluginCall::CustomValueOp(value, CustomValueOp::ToBaseValue);
++        let call = PluginCall::CustomValueOp(value, op);
+         match self.plugin_call(call, &None)? {
+             PluginCallResponse::PipelineData(out_data) => Ok(out_data.into_value(span)),
+             PluginCallResponse::Error(err) => Err(err.into()),
+             _ => Err(ShellError::PluginFailedToDecode {
+-                msg: "Received unexpected response to plugin CustomValueOp::ToBaseValue call"
+-                    .into(),
++                msg: format!("Received unexpected response to custom value {op_name}() call"),
++            }),
++        }
++    }
++
++    /// Collapse a custom value to its base value.
++    pub(crate) fn custom_value_to_base_value(
++        &self,
++        value: Spanned<PluginCustomValue>,
++    ) -> Result<Value, ShellError> {
++        self.custom_value_op_expecting_value(value, CustomValueOp::ToBaseValue)
++    }
++
++    /// Follow a numbered cell path on a custom value - e.g. `value.0`.
++    pub(crate) fn custom_value_follow_path_int(
++        &self,
++        value: Spanned<PluginCustomValue>,
++        index: Spanned<usize>,
++    ) -> Result<Value, ShellError> {
++        self.custom_value_op_expecting_value(value, CustomValueOp::FollowPathInt(index))
++    }
++
++    /// Follow a named cell path on a custom value - e.g. `value.column`.
++    pub(crate) fn custom_value_follow_path_string(
++        &self,
++        value: Spanned<PluginCustomValue>,
++        column_name: Spanned<String>,
++    ) -> Result<Value, ShellError> {
++        self.custom_value_op_expecting_value(value, CustomValueOp::FollowPathString(column_name))
++    }
++
++    /// Invoke comparison logic for custom values.
++    pub(crate) fn custom_value_partial_cmp(
++        &self,
++        value: PluginCustomValue,
++        mut other_value: Value,
++    ) -> Result<Option<Ordering>, ShellError> {
++        PluginCustomValue::verify_source(&mut other_value, &self.state.source)?;
++        // Note: the protocol is always designed to have a span with the custom value, but this
++        // operation doesn't support one.
++        let call = PluginCall::CustomValueOp(
++            value.into_spanned(Span::unknown()),
++            CustomValueOp::PartialCmp(other_value),
++        );
++        match self.plugin_call(call, &None)? {
++            PluginCallResponse::Ordering(ordering) => Ok(ordering),
++            PluginCallResponse::Error(err) => Err(err.into()),
++            _ => Err(ShellError::PluginFailedToDecode {
++                msg: "Received unexpected response to custom value partial_cmp() call".into(),
+             }),
+         }
+     }
++
++    /// Invoke functionality for an operator on a custom value.
++    pub(crate) fn custom_value_operation(
++        &self,
++        left: Spanned<PluginCustomValue>,
++        operator: Spanned<Operator>,
++        mut right: Value,
++    ) -> Result<Value, ShellError> {
++        PluginCustomValue::verify_source(&mut right, &self.state.source)?;
++        self.custom_value_op_expecting_value(left, CustomValueOp::Operation(operator, right))
++    }
++
++    /// Notify the plugin about a dropped custom value.
++    pub(crate) fn custom_value_dropped(&self, value: PluginCustomValue) -> Result<(), ShellError> {
++        // Note: the protocol is always designed to have a span with the custom value, but this
++        // operation doesn't support one.
++        self.custom_value_op_expecting_value(
++            value.into_spanned(Span::unknown()),
++            CustomValueOp::Dropped,
++        )
++        .map(|_| ())
++    }
+ }
+ 
+ /// Check that custom values in call arguments come from the right source
+diff --git a/crates/nu-plugin/src/plugin/mod.rs b/crates/nu-plugin/src/plugin/mod.rs
+index 897b78e0a..342d1b0aa 100644
+--- a/crates/nu-plugin/src/plugin/mod.rs
++++ b/crates/nu-plugin/src/plugin/mod.rs
+@@ -1,6 +1,8 @@
+ use nu_engine::documentation::get_flags_section;
+-
++use nu_protocol::ast::Operator;
++use std::cmp::Ordering;
+ use std::ffi::OsStr;
++
+ use std::sync::mpsc::TrySendError;
+ use std::sync::{mpsc, Arc, Mutex};
+ 
+@@ -21,7 +23,9 @@ use std::os::unix::process::CommandExt;
+ #[cfg(windows)]
+ use std::os::windows::process::CommandExt;
+ 
+-use nu_protocol::{PipelineData, PluginSignature, ShellError, Spanned, Value};
++use nu_protocol::{
++    CustomValue, IntoSpanned, PipelineData, PluginSignature, ShellError, Spanned, Value,
++};
+ 
+ use self::gc::PluginGc;
+ 
+@@ -279,6 +283,112 @@ pub trait Plugin: Sync {
+         call: &EvaluatedCall,
+         input: &Value,
+     ) -> Result<Value, LabeledError>;
++
++    /// Collapse a custom value to plain old data.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::to_base_value`], but
++    /// the method can be implemented differently if accessing plugin state is desirable.
++    fn custom_value_to_base_value(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Spanned<Box<dyn CustomValue>>,
++    ) -> Result<Value, LabeledError> {
++        let _ = engine;
++        custom_value
++            .item
++            .to_base_value(custom_value.span)
++            .map_err(LabeledError::from)
++    }
++
++    /// Follow a numbered cell path on a custom value - e.g. `value.0`.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::follow_path_int`], but
++    /// the method can be implemented differently if accessing plugin state is desirable.
++    fn custom_value_follow_path_int(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Spanned<Box<dyn CustomValue>>,
++        index: Spanned<usize>,
++    ) -> Result<Value, LabeledError> {
++        let _ = engine;
++        custom_value
++            .item
++            .follow_path_int(custom_value.span, index.item, index.span)
++            .map_err(LabeledError::from)
++    }
++
++    /// Follow a named cell path on a custom value - e.g. `value.column`.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::follow_path_string`],
++    /// but the method can be implemented differently if accessing plugin state is desirable.
++    fn custom_value_follow_path_string(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Spanned<Box<dyn CustomValue>>,
++        column_name: Spanned<String>,
++    ) -> Result<Value, LabeledError> {
++        let _ = engine;
++        custom_value
++            .item
++            .follow_path_string(custom_value.span, column_name.item, column_name.span)
++            .map_err(LabeledError::from)
++    }
++
++    /// Implement comparison logic for custom values.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::partial_cmp`], but
++    /// the method can be implemented differently if accessing plugin state is desirable.
++    ///
++    /// Note that returning an error here is unlikely to produce desired behavior, as `partial_cmp`
++    /// lacks a way to produce an error. At the moment the engine just logs the error, and the
++    /// comparison returns `None`.
++    fn custom_value_partial_cmp(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Box<dyn CustomValue>,
++        other_value: Value,
++    ) -> Result<Option<Ordering>, LabeledError> {
++        let _ = engine;
++        Ok(custom_value.partial_cmp(&other_value))
++    }
++
++    /// Implement functionality for an operator on a custom value.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::operation`], but
++    /// the method can be implemented differently if accessing plugin state is desirable.
++    fn custom_value_operation(
++        &self,
++        engine: &EngineInterface,
++        left: Spanned<Box<dyn CustomValue>>,
++        operator: Spanned<Operator>,
++        right: Value,
++    ) -> Result<Value, LabeledError> {
++        let _ = engine;
++        left.item
++            .operation(left.span, operator.item, operator.span, &right)
++            .map_err(LabeledError::from)
++    }
++
++    /// Handle a notification that all copies of a custom value within the engine have been dropped.
++    ///
++    /// This notification is only sent if [`CustomValue::notify_plugin_on_drop`] was true. Unlike
++    /// the other custom value handlers, a span is not provided.
++    ///
++    /// Note that a new custom value is created each time it is sent to the engine - if you intend
++    /// to accept a custom value and send it back, you may need to implement some kind of unique
++    /// reference counting in your plugin, as you will receive multiple drop notifications even if
++    /// the data within is identical.
++    ///
++    /// The default implementation does nothing. Any error generated here is unlikely to be visible
++    /// to the user, and will only show up in the engine's log output.
++    fn custom_value_dropped(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Box<dyn CustomValue>,
++    ) -> Result<(), LabeledError> {
++        let _ = (engine, custom_value);
++        Ok(())
++    }
+ }
+ 
+ /// The streaming API for a Nushell plugin
+@@ -357,6 +467,112 @@ pub trait StreamingPlugin: Sync {
+         call: &EvaluatedCall,
+         input: PipelineData,
+     ) -> Result<PipelineData, LabeledError>;
++
++    /// Collapse a custom value to plain old data.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::to_base_value`], but
++    /// the method can be implemented differently if accessing plugin state is desirable.
++    fn custom_value_to_base_value(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Spanned<Box<dyn CustomValue>>,
++    ) -> Result<Value, LabeledError> {
++        let _ = engine;
++        custom_value
++            .item
++            .to_base_value(custom_value.span)
++            .map_err(LabeledError::from)
++    }
++
++    /// Follow a numbered cell path on a custom value - e.g. `value.0`.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::follow_path_int`], but
++    /// the method can be implemented differently if accessing plugin state is desirable.
++    fn custom_value_follow_path_int(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Spanned<Box<dyn CustomValue>>,
++        index: Spanned<usize>,
++    ) -> Result<Value, LabeledError> {
++        let _ = engine;
++        custom_value
++            .item
++            .follow_path_int(custom_value.span, index.item, index.span)
++            .map_err(LabeledError::from)
++    }
++
++    /// Follow a named cell path on a custom value - e.g. `value.column`.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::follow_path_string`],
++    /// but the method can be implemented differently if accessing plugin state is desirable.
++    fn custom_value_follow_path_string(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Spanned<Box<dyn CustomValue>>,
++        column_name: Spanned<String>,
++    ) -> Result<Value, LabeledError> {
++        let _ = engine;
++        custom_value
++            .item
++            .follow_path_string(custom_value.span, column_name.item, column_name.span)
++            .map_err(LabeledError::from)
++    }
++
++    /// Implement comparison logic for custom values.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::partial_cmp`], but
++    /// the method can be implemented differently if accessing plugin state is desirable.
++    ///
++    /// Note that returning an error here is unlikely to produce desired behavior, as `partial_cmp`
++    /// lacks a way to produce an error. At the moment the engine just logs the error, and the
++    /// comparison returns `None`.
++    fn custom_value_partial_cmp(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Box<dyn CustomValue>,
++        other_value: Value,
++    ) -> Result<Option<Ordering>, LabeledError> {
++        let _ = engine;
++        Ok(custom_value.partial_cmp(&other_value))
++    }
++
++    /// Implement functionality for an operator on a custom value.
++    ///
++    /// The default implementation of this method just calls [`CustomValue::operation`], but
++    /// the method can be implemented differently if accessing plugin state is desirable.
++    fn custom_value_operation(
++        &self,
++        engine: &EngineInterface,
++        left: Spanned<Box<dyn CustomValue>>,
++        operator: Spanned<Operator>,
++        right: Value,
++    ) -> Result<Value, LabeledError> {
++        let _ = engine;
++        left.item
++            .operation(left.span, operator.item, operator.span, &right)
++            .map_err(LabeledError::from)
++    }
++
++    /// Handle a notification that all copies of a custom value within the engine have been dropped.
++    ///
++    /// This notification is only sent if [`CustomValue::notify_plugin_on_drop`] was true. Unlike
++    /// the other custom value handlers, a span is not provided.
++    ///
++    /// Note that a new custom value is created each time it is sent to the engine - if you intend
++    /// to accept a custom value and send it back, you may need to implement some kind of unique
++    /// reference counting in your plugin, as you will receive multiple drop notifications even if
++    /// the data within is identical.
++    ///
++    /// The default implementation does nothing. Any error generated here is unlikely to be visible
++    /// to the user, and will only show up in the engine's log output.
++    fn custom_value_dropped(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Box<dyn CustomValue>,
++    ) -> Result<(), LabeledError> {
++        let _ = (engine, custom_value);
++        Ok(())
++    }
+ }
+ 
+ /// All [Plugin]s can be used as [StreamingPlugin]s, but input streams will be fully consumed
+@@ -381,6 +597,59 @@ impl<T: Plugin> StreamingPlugin for T {
+         <Self as Plugin>::run(self, name, engine, call, &input_value)
+             .map(|value| PipelineData::Value(value, None))
+     }
++
++    fn custom_value_to_base_value(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Spanned<Box<dyn CustomValue>>,
++    ) -> Result<Value, LabeledError> {
++        <Self as Plugin>::custom_value_to_base_value(self, engine, custom_value)
++    }
++
++    fn custom_value_follow_path_int(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Spanned<Box<dyn CustomValue>>,
++        index: Spanned<usize>,
++    ) -> Result<Value, LabeledError> {
++        <Self as Plugin>::custom_value_follow_path_int(self, engine, custom_value, index)
++    }
++
++    fn custom_value_follow_path_string(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Spanned<Box<dyn CustomValue>>,
++        column_name: Spanned<String>,
++    ) -> Result<Value, LabeledError> {
++        <Self as Plugin>::custom_value_follow_path_string(self, engine, custom_value, column_name)
++    }
++
++    fn custom_value_partial_cmp(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Box<dyn CustomValue>,
++        other_value: Value,
++    ) -> Result<Option<Ordering>, LabeledError> {
++        <Self as Plugin>::custom_value_partial_cmp(self, engine, custom_value, other_value)
++    }
++
++    fn custom_value_operation(
++        &self,
++        engine: &EngineInterface,
++        left: Spanned<Box<dyn CustomValue>>,
++        operator: Spanned<Operator>,
++        right: Value,
++    ) -> Result<Value, LabeledError> {
++        <Self as Plugin>::custom_value_operation(self, engine, left, operator, right)
++    }
++
++    fn custom_value_dropped(
++        &self,
++        engine: &EngineInterface,
++        custom_value: Box<dyn CustomValue>,
++    ) -> Result<(), LabeledError> {
++        <Self as Plugin>::custom_value_dropped(self, engine, custom_value)
++    }
+ }
+ 
+ /// Function used to implement the communication protocol between
+@@ -580,7 +849,7 @@ pub fn serve_plugin(plugin: &impl StreamingPlugin, encoder: impl PluginEncoder +
+                     custom_value,
+                     op,
+                 } => {
+-                    try_or_report!(engine, custom_value_op(&engine, custom_value, op));
++                    try_or_report!(engine, custom_value_op(plugin, &engine, custom_value, op));
+                 }
+             }
+         }
+@@ -591,22 +860,65 @@ pub fn serve_plugin(plugin: &impl StreamingPlugin, encoder: impl PluginEncoder +
+ }
+ 
+ fn custom_value_op(
++    plugin: &impl StreamingPlugin,
+     engine: &EngineInterface,
+     custom_value: Spanned<PluginCustomValue>,
+     op: CustomValueOp,
+ ) -> Result<(), ShellError> {
+     let local_value = custom_value
+         .item
+-        .deserialize_to_custom_value(custom_value.span)?;
++        .deserialize_to_custom_value(custom_value.span)?
++        .into_spanned(custom_value.span);
+     match op {
+         CustomValueOp::ToBaseValue => {
+-            let result = local_value
+-                .to_base_value(custom_value.span)
++            let result = plugin
++                .custom_value_to_base_value(engine, local_value)
++                .map(|value| PipelineData::Value(value, None));
++            engine
++                .write_response(result)
++                .and_then(|writer| writer.write())
++        }
++        CustomValueOp::FollowPathInt(index) => {
++            let result = plugin
++                .custom_value_follow_path_int(engine, local_value, index)
+                 .map(|value| PipelineData::Value(value, None));
+             engine
+                 .write_response(result)
+-                .and_then(|writer| writer.write_background())?;
+-            Ok(())
++                .and_then(|writer| writer.write())
++        }
++        CustomValueOp::FollowPathString(column_name) => {
++            let result = plugin
++                .custom_value_follow_path_string(engine, local_value, column_name)
++                .map(|value| PipelineData::Value(value, None));
++            engine
++                .write_response(result)
++                .and_then(|writer| writer.write())
++        }
++        CustomValueOp::PartialCmp(mut other_value) => {
++            PluginCustomValue::deserialize_custom_values_in(&mut other_value)?;
++            match plugin.custom_value_partial_cmp(engine, local_value.item, other_value) {
++                Ok(ordering) => engine.write_ordering(ordering),
++                Err(err) => engine
++                    .write_response(Err(err))
++                    .and_then(|writer| writer.write()),
++            }
++        }
++        CustomValueOp::Operation(operator, mut right) => {
++            PluginCustomValue::deserialize_custom_values_in(&mut right)?;
++            let result = plugin
++                .custom_value_operation(engine, local_value, operator, right)
++                .map(|value| PipelineData::Value(value, None));
++            engine
++                .write_response(result)
++                .and_then(|writer| writer.write())
++        }
++        CustomValueOp::Dropped => {
++            let result = plugin
++                .custom_value_dropped(engine, local_value.item)
++                .map(|_| PipelineData::Empty);
++            engine
++                .write_response(result)
++                .and_then(|writer| writer.write())
+         }
+     }
+ }
+diff --git a/crates/nu-plugin/src/protocol/mod.rs b/crates/nu-plugin/src/protocol/mod.rs
+index 97a01cc9e..29aa8ff3f 100644
+--- a/crates/nu-plugin/src/protocol/mod.rs
++++ b/crates/nu-plugin/src/protocol/mod.rs
+@@ -10,8 +10,8 @@ pub(crate) mod test_util;
+ 
+ pub use evaluated_call::EvaluatedCall;
+ use nu_protocol::{
+-    engine::Closure, Config, PipelineData, PluginSignature, RawStream, ShellError, Span, Spanned,
+-    Value,
++    ast::Operator, engine::Closure, Config, PipelineData, PluginSignature, RawStream, ShellError,
++    Span, Spanned, Value,
+ };
+ pub use plugin_custom_value::PluginCustomValue;
+ pub use protocol_info::ProtocolInfo;
+@@ -131,6 +131,31 @@ pub enum PluginCall<D> {
+ pub enum CustomValueOp {
+     /// [`to_base_value()`](nu_protocol::CustomValue::to_base_value)
+     ToBaseValue,
++    /// [`follow_path_int()`](nu_protocol::CustomValue::follow_path_int)
++    FollowPathInt(Spanned<usize>),
++    /// [`follow_path_string()`](nu_protocol::CustomValue::follow_path_string)
++    FollowPathString(Spanned<String>),
++    /// [`partial_cmp()`](nu_protocol::CustomValue::partial_cmp)
++    PartialCmp(Value),
++    /// [`operation()`](nu_protocol::CustomValue::operation)
++    Operation(Spanned<Operator>, Value),
++    /// Notify that the custom value has been dropped, if
++    /// [`notify_plugin_on_drop()`](nu_protocol::CustomValue::notify_plugin_on_drop) is true
++    Dropped,
++}
++
++impl CustomValueOp {
++    /// Get the name of the op, for error messages.
++    pub(crate) fn name(&self) -> &'static str {
++        match self {
++            CustomValueOp::ToBaseValue => "to_base_value",
++            CustomValueOp::FollowPathInt(_) => "follow_path_int",
++            CustomValueOp::FollowPathString(_) => "follow_path_string",
++            CustomValueOp::PartialCmp(_) => "partial_cmp",
++            CustomValueOp::Operation(_, _) => "operation",
++            CustomValueOp::Dropped => "dropped",
++        }
++    }
+ }
+ 
+ /// Any data sent to the plugin
+@@ -306,6 +331,7 @@ impl From<ShellError> for LabeledError {
+ pub enum PluginCallResponse<D> {
+     Error(LabeledError),
+     Signature(Vec<PluginSignature>),
++    Ordering(Option<Ordering>),
+     PipelineData(D),
+ }
+ 
+@@ -330,6 +356,34 @@ pub enum PluginOption {
+     GcDisabled(bool),
+ }
+ 
++/// This is just a serializable version of [std::cmp::Ordering], and can be converted 1:1
++#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
++pub enum Ordering {
++    Less,
++    Equal,
++    Greater,
++}
++
++impl From<std::cmp::Ordering> for Ordering {
++    fn from(value: std::cmp::Ordering) -> Self {
++        match value {
++            std::cmp::Ordering::Less => Ordering::Less,
++            std::cmp::Ordering::Equal => Ordering::Equal,
++            std::cmp::Ordering::Greater => Ordering::Greater,
++        }
++    }
++}
++
++impl From<Ordering> for std::cmp::Ordering {
++    fn from(value: Ordering) -> Self {
++        match value {
++            Ordering::Less => std::cmp::Ordering::Less,
++            Ordering::Equal => std::cmp::Ordering::Equal,
++            Ordering::Greater => std::cmp::Ordering::Greater,
++        }
++    }
++}
++
+ /// Information received from the plugin
+ ///
+ /// Note: exported for internal use, not public.
+diff --git a/crates/nu-plugin/src/protocol/plugin_custom_value.rs b/crates/nu-plugin/src/protocol/plugin_custom_value.rs
+index 74da7f12c..50f92f9dd 100644
+--- a/crates/nu-plugin/src/protocol/plugin_custom_value.rs
++++ b/crates/nu-plugin/src/protocol/plugin_custom_value.rs
+@@ -1,9 +1,9 @@
+-use std::sync::Arc;
++use std::{cmp::Ordering, sync::Arc};
+ 
+-use nu_protocol::{CustomValue, ShellError, Span, Spanned, Value};
++use nu_protocol::{ast::Operator, CustomValue, IntoSpanned, ShellError, Span, Value};
+ use serde::{Deserialize, Serialize};
+ 
+-use crate::plugin::PluginSource;
++use crate::plugin::{PluginInterface, PluginSource};
+ 
+ #[cfg(test)]
+ mod tests;
+@@ -22,41 +22,171 @@ mod tests;
+ /// values sent matches the plugin it is being sent to.
+ #[derive(Clone, Debug, Serialize, Deserialize)]
+ pub struct PluginCustomValue {
+-    /// The name of the custom value as defined by the plugin (`value_string()`)
+-    pub name: String,
+-    /// The bincoded representation of the custom value on the plugin side
+-    pub data: Vec<u8>,
++    #[serde(flatten)]
++    shared: SerdeArc<SharedContent>,
+ 
+     /// Which plugin the custom value came from. This is not defined on the plugin side. The engine
+     /// side is responsible for maintaining it, and it is not sent over the serialization boundary.
+     #[serde(skip, default)]
+-    pub(crate) source: Option<Arc<PluginSource>>,
++    source: Option<Arc<PluginSource>>,
++}
++
++/// Content shared across copies of a plugin custom value.
++#[derive(Clone, Debug, Serialize, Deserialize)]
++struct SharedContent {
++    /// The name of the custom value as defined by the plugin (`value_string()`)
++    name: String,
++    /// The bincoded representation of the custom value on the plugin side
++    data: Vec<u8>,
++    /// True if the custom value should notify the source if all copies of it are dropped.
++    ///
++    /// This is not serialized if `false`, since most custom values don't need it.
++    #[serde(default, skip_serializing_if = "is_false")]
++    notify_on_drop: bool,
++}
++
++fn is_false(b: &bool) -> bool {
++    !b
+ }
+ 
+ #[typetag::serde]
+ impl CustomValue for PluginCustomValue {
+-    fn clone_value(&self, span: nu_protocol::Span) -> nu_protocol::Value {
++    fn clone_value(&self, span: Span) -> Value {
+         Value::custom_value(Box::new(self.clone()), span)
+     }
+ 
+     fn value_string(&self) -> String {
+-        self.name.clone()
++        self.name().to_owned()
++    }
++
++    fn to_base_value(&self, span: Span) -> Result<Value, ShellError> {
++        self.get_plugin(Some(span), "get base value")?
++            .custom_value_to_base_value(self.clone().into_spanned(span))
++    }
++
++    fn follow_path_int(
++        &self,
++        self_span: Span,
++        index: usize,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
++        self.get_plugin(Some(self_span), "follow cell path")?
++            .custom_value_follow_path_int(
++                self.clone().into_spanned(self_span),
++                index.into_spanned(path_span),
++            )
++    }
++
++    fn follow_path_string(
++        &self,
++        self_span: Span,
++        column_name: String,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
++        self.get_plugin(Some(self_span), "follow cell path")?
++            .custom_value_follow_path_string(
++                self.clone().into_spanned(self_span),
++                column_name.into_spanned(path_span),
++            )
++    }
++
++    fn partial_cmp(&self, other: &Value) -> Option<Ordering> {
++        self.get_plugin(Some(other.span()), "perform comparison")
++            .and_then(|plugin| {
++                // We're passing Span::unknown() here because we don't have one, and it probably
++                // shouldn't matter here and is just a consequence of the API
++                plugin.custom_value_partial_cmp(self.clone(), other.clone())
++            })
++            .unwrap_or_else(|err| {
++                // We can't do anything with the error other than log it.
++                log::warn!(
++                    "Error in partial_cmp on plugin custom value (source={source:?}): {err}",
++                    source = self.source
++                );
++                None
++            })
++            .map(|ordering| ordering.into())
+     }
+ 
+-    fn to_base_value(
++    fn operation(
+         &self,
+-        span: nu_protocol::Span,
+-    ) -> Result<nu_protocol::Value, nu_protocol::ShellError> {
++        lhs_span: Span,
++        operator: Operator,
++        op_span: Span,
++        right: &Value,
++    ) -> Result<Value, ShellError> {
++        self.get_plugin(Some(lhs_span), "invoke operator")?
++            .custom_value_operation(
++                self.clone().into_spanned(lhs_span),
++                operator.into_spanned(op_span),
++                right.clone(),
++            )
++    }
++
++    fn as_any(&self) -> &dyn std::any::Any {
++        self
++    }
++}
++
++impl PluginCustomValue {
++    /// Create a new [`PluginCustomValue`].
++    pub(crate) fn new(
++        name: String,
++        data: Vec<u8>,
++        notify_on_drop: bool,
++        source: Option<Arc<PluginSource>>,
++    ) -> PluginCustomValue {
++        PluginCustomValue {
++            shared: SerdeArc(Arc::new(SharedContent {
++                name,
++                data,
++                notify_on_drop,
++            })),
++            source,
++        }
++    }
++
++    /// The name of the custom value as defined by the plugin (`value_string()`)
++    pub fn name(&self) -> &str {
++        &self.shared.name
++    }
++
++    /// The bincoded representation of the custom value on the plugin side
++    pub fn data(&self) -> &[u8] {
++        &self.shared.data
++    }
++
++    /// True if the custom value should notify the source if all copies of it are dropped.
++    pub fn notify_on_drop(&self) -> bool {
++        self.shared.notify_on_drop
++    }
++
++    /// Which plugin the custom value came from. This is not defined on the plugin side. The engine
++    /// side is responsible for maintaining it, and it is not sent over the serialization boundary.
++    #[cfg(test)]
++    pub(crate) fn source(&self) -> &Option<Arc<PluginSource>> {
++        &self.source
++    }
++
++    /// Create the [`PluginCustomValue`] with the given source.
++    #[cfg(test)]
++    pub(crate) fn with_source(mut self, source: Option<Arc<PluginSource>>) -> PluginCustomValue {
++        self.source = source;
++        self
++    }
++
++    /// Helper to get the plugin to implement an op
++    fn get_plugin(&self, span: Option<Span>, for_op: &str) -> Result<PluginInterface, ShellError> {
+         let wrap_err = |err: ShellError| ShellError::GenericError {
+             error: format!(
+-                "Unable to spawn plugin `{}` to get base value",
++                "Unable to spawn plugin `{}` to {for_op}",
+                 self.source
+                     .as_ref()
+                     .map(|s| s.name())
+                     .unwrap_or("<unknown>")
+             ),
+             msg: err.to_string(),
+-            span: Some(span),
++            span,
+             help: None,
+             inner: vec![err],
+         };
+@@ -69,25 +199,13 @@ impl CustomValue for PluginCustomValue {
+ 
+         // Envs probably should be passed here, but it's likely that the plugin is already running
+         let empty_envs = std::iter::empty::<(&str, &str)>();
+-        let plugin = source
+-            .persistent(Some(span))
+-            .and_then(|p| p.get(|| Ok(empty_envs)))
+-            .map_err(wrap_err)?;
+ 
+-        plugin
+-            .custom_value_to_base_value(Spanned {
+-                item: self.clone(),
+-                span,
+-            })
++        source
++            .persistent(span)
++            .and_then(|p| p.get(|| Ok(empty_envs)))
+             .map_err(wrap_err)
+     }
+ 
+-    fn as_any(&self) -> &dyn std::any::Any {
+-        self
+-    }
+-}
+-
+-impl PluginCustomValue {
+     /// Serialize a custom value into a [`PluginCustomValue`]. This should only be done on the
+     /// plugin side.
+     pub(crate) fn serialize_from_custom_value(
+@@ -95,12 +213,9 @@ impl PluginCustomValue {
+         span: Span,
+     ) -> Result<PluginCustomValue, ShellError> {
+         let name = custom_value.value_string();
++        let notify_on_drop = custom_value.notify_plugin_on_drop();
+         bincode::serialize(custom_value)
+-            .map(|data| PluginCustomValue {
+-                name,
+-                data,
+-                source: None,
+-            })
++            .map(|data| PluginCustomValue::new(name, data, notify_on_drop, None))
+             .map_err(|err| ShellError::CustomValueFailedToEncode {
+                 msg: err.to_string(),
+                 span,
+@@ -113,7 +228,7 @@ impl PluginCustomValue {
+         &self,
+         span: Span,
+     ) -> Result<Box<dyn CustomValue>, ShellError> {
+-        bincode::deserialize::<Box<dyn CustomValue>>(&self.data).map_err(|err| {
++        bincode::deserialize::<Box<dyn CustomValue>>(self.data()).map_err(|err| {
+             ShellError::CustomValueFailedToDecode {
+                 msg: err.to_string(),
+                 span,
+@@ -199,7 +314,7 @@ impl PluginCustomValue {
+                         Ok(())
+                     } else {
+                         Err(ShellError::CustomValueIncorrectForPlugin {
+-                            name: custom_value.name.clone(),
++                            name: custom_value.name().to_owned(),
+                             span,
+                             dest_plugin: source.name().to_owned(),
+                             src_plugin: custom_value.source.as_ref().map(|s| s.name().to_owned()),
+@@ -363,3 +478,62 @@ impl PluginCustomValue {
+         }
+     }
+ }
++
++impl Drop for PluginCustomValue {
++    fn drop(&mut self) {
++        // If the custom value specifies notify_on_drop and this is the last copy, we need to let
++        // the plugin know about it if we can.
++        if self.source.is_some() && self.notify_on_drop() && Arc::strong_count(&self.shared) == 1 {
++            self.get_plugin(None, "drop")
++                // While notifying drop, we don't need a copy of the source
++                .and_then(|plugin| {
++                    plugin.custom_value_dropped(PluginCustomValue {
++                        shared: self.shared.clone(),
++                        source: None,
++                    })
++                })
++                .unwrap_or_else(|err| {
++                    // We shouldn't do anything with the error except log it
++                    let name = self.name();
++                    log::warn!("Failed to notify drop of custom value ({name}): {err}")
++                });
++        }
++    }
++}
++
++/// A serializable `Arc`, to avoid having to have the serde `rc` feature enabled.
++#[derive(Clone, Debug)]
++#[repr(transparent)]
++struct SerdeArc<T>(Arc<T>);
++
++impl<T> Serialize for SerdeArc<T>
++where
++    T: Serialize,
++{
++    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
++    where
++        S: serde::Serializer,
++    {
++        self.0.serialize(serializer)
++    }
++}
++
++impl<'de, T> Deserialize<'de> for SerdeArc<T>
++where
++    T: Deserialize<'de>,
++{
++    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
++    where
++        D: serde::Deserializer<'de>,
++    {
++        T::deserialize(deserializer).map(Arc::new).map(SerdeArc)
++    }
++}
++
++impl<T> std::ops::Deref for SerdeArc<T> {
++    type Target = Arc<T>;
++
++    fn deref(&self) -> &Self::Target {
++        &self.0
++    }
++}
+diff --git a/crates/nu-plugin/src/protocol/test_util.rs b/crates/nu-plugin/src/protocol/test_util.rs
+index f473ba1c5..c12dc7883 100644
+--- a/crates/nu-plugin/src/protocol/test_util.rs
++++ b/crates/nu-plugin/src/protocol/test_util.rs
+@@ -31,11 +31,7 @@ pub(crate) fn test_plugin_custom_value() -> PluginCustomValue {
+     let data = bincode::serialize(&expected_test_custom_value() as &dyn CustomValue)
+         .expect("bincode serialization of the expected_test_custom_value() failed");
+ 
+-    PluginCustomValue {
+-        name: "TestCustomValue".into(),
+-        data,
+-        source: None,
+-    }
++    PluginCustomValue::new("TestCustomValue".into(), data, false, None)
+ }
+ 
+ pub(crate) fn expected_test_custom_value() -> TestCustomValue {
+@@ -43,8 +39,5 @@ pub(crate) fn expected_test_custom_value() -> TestCustomValue {
+ }
+ 
+ pub(crate) fn test_plugin_custom_value_with_source() -> PluginCustomValue {
+-    PluginCustomValue {
+-        source: Some(PluginSource::new_fake("test").into()),
+-        ..test_plugin_custom_value()
+-    }
++    test_plugin_custom_value().with_source(Some(PluginSource::new_fake("test").into()))
+ }
+diff --git a/crates/nu-protocol/src/value/custom_value.rs b/crates/nu-protocol/src/value/custom_value.rs
+index d5550cdb7..9c96741fe 100644
+--- a/crates/nu-protocol/src/value/custom_value.rs
++++ b/crates/nu-protocol/src/value/custom_value.rs
+@@ -26,18 +26,30 @@ pub trait CustomValue: fmt::Debug + Send + Sync {
+     fn as_any(&self) -> &dyn std::any::Any;
+ 
+     /// Follow cell path by numeric index (e.g. rows)
+-    fn follow_path_int(&self, _count: usize, span: Span) -> Result<Value, ShellError> {
++    fn follow_path_int(
++        &self,
++        self_span: Span,
++        index: usize,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
++        let _ = (self_span, index);
+         Err(ShellError::IncompatiblePathAccess {
+             type_name: self.value_string(),
+-            span,
++            span: path_span,
+         })
+     }
+ 
+     /// Follow cell path by string key (e.g. columns)
+-    fn follow_path_string(&self, _column_name: String, span: Span) -> Result<Value, ShellError> {
++    fn follow_path_string(
++        &self,
++        self_span: Span,
++        column_name: String,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
++        let _ = (self_span, column_name);
+         Err(ShellError::IncompatiblePathAccess {
+             type_name: self.value_string(),
+-            span,
++            span: path_span,
+         })
+     }
+ 
+@@ -54,11 +66,23 @@ pub trait CustomValue: fmt::Debug + Send + Sync {
+     /// Default impl raises [`ShellError::UnsupportedOperator`].
+     fn operation(
+         &self,
+-        _lhs_span: Span,
++        lhs_span: Span,
+         operator: Operator,
+         op: Span,
+-        _right: &Value,
++        right: &Value,
+     ) -> Result<Value, ShellError> {
++        let _ = (lhs_span, right);
+         Err(ShellError::UnsupportedOperator { operator, span: op })
+     }
++
++    /// For custom values in plugins: return `true` here if you would like to be notified when all
++    /// copies of this custom value are dropped in the engine.
++    ///
++    /// The notification will take place via
++    /// [`.custom_value_dropped()`](crate::StreamingPlugin::custom_value_dropped) on the plugin.
++    ///
++    /// The default is `false`.
++    fn notify_plugin_on_drop(&self) -> bool {
++        false
++    }
+ }
+diff --git a/crates/nu-protocol/src/value/mod.rs b/crates/nu-protocol/src/value/mod.rs
+index 9bc522fd0..82b83f172 100644
+--- a/crates/nu-protocol/src/value/mod.rs
++++ b/crates/nu-protocol/src/value/mod.rs
+@@ -1106,18 +1106,19 @@ impl Value {
+                                 });
+                             }
+                         }
+-                        Value::CustomValue { val, .. } => {
+-                            current = match val.follow_path_int(*count, *origin_span) {
+-                                Ok(val) => val,
+-                                Err(err) => {
+-                                    if *optional {
+-                                        return Ok(Value::nothing(*origin_span));
+-                                    // short-circuit
+-                                    } else {
+-                                        return Err(err);
++                        Value::CustomValue { ref val, .. } => {
++                            current =
++                                match val.follow_path_int(current.span(), *count, *origin_span) {
++                                    Ok(val) => val,
++                                    Err(err) => {
++                                        if *optional {
++                                            return Ok(Value::nothing(*origin_span));
++                                        // short-circuit
++                                        } else {
++                                            return Err(err);
++                                        }
+                                     }
+-                                }
+-                            };
++                                };
+                         }
+                         Value::Nothing { .. } if *optional => {
+                             return Ok(Value::nothing(*origin_span)); // short-circuit
+@@ -1249,8 +1250,22 @@ impl Value {
+ 
+                             current = Value::list(list, span);
+                         }
+-                        Value::CustomValue { val, .. } => {
+-                            current = val.follow_path_string(column_name.clone(), *origin_span)?;
++                        Value::CustomValue { ref val, .. } => {
++                            current = match val.follow_path_string(
++                                current.span(),
++                                column_name.clone(),
++                                *origin_span,
++                            ) {
++                                Ok(val) => val,
++                                Err(err) => {
++                                    if *optional {
++                                        return Ok(Value::nothing(*origin_span));
++                                    // short-circuit
++                                    } else {
++                                        return Err(err);
++                                    }
++                                }
++                            }
+                         }
+                         Value::Nothing { .. } if *optional => {
+                             return Ok(Value::nothing(*origin_span)); // short-circuit
+@@ -2652,6 +2667,9 @@ impl Value {
+                 val.extend(rhs);
+                 Ok(Value::binary(val, span))
+             }
++            (Value::CustomValue { val: lhs, .. }, rhs) => {
++                lhs.operation(self.span(), Operator::Math(Math::Append), op, rhs)
++            }
+             _ => Err(ShellError::OperatorMismatch {
+                 op_span: op,
+                 lhs_ty: self.get_type().to_string(),
+diff --git a/crates/nu_plugin_custom_values/src/cool_custom_value.rs b/crates/nu_plugin_custom_values/src/cool_custom_value.rs
+index 76150876d..66203869c 100644
+--- a/crates/nu_plugin_custom_values/src/cool_custom_value.rs
++++ b/crates/nu_plugin_custom_values/src/cool_custom_value.rs
+@@ -1,7 +1,9 @@
+-use nu_protocol::{CustomValue, ShellError, Span, Value};
++use std::cmp::Ordering;
++
++use nu_protocol::{ast, CustomValue, ShellError, Span, Value};
+ use serde::{Deserialize, Serialize};
+ 
+-#[derive(Clone, Debug, Serialize, Deserialize)]
++#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+ pub struct CoolCustomValue {
+     pub(crate) cool: String,
+ }
+@@ -44,7 +46,7 @@ impl CoolCustomValue {
+ 
+ #[typetag::serde]
+ impl CustomValue for CoolCustomValue {
+-    fn clone_value(&self, span: nu_protocol::Span) -> Value {
++    fn clone_value(&self, span: Span) -> Value {
+         Value::custom_value(Box::new(self.clone()), span)
+     }
+ 
+@@ -52,13 +54,94 @@ impl CustomValue for CoolCustomValue {
+         self.typetag_name().to_string()
+     }
+ 
+-    fn to_base_value(&self, span: nu_protocol::Span) -> Result<Value, ShellError> {
++    fn to_base_value(&self, span: Span) -> Result<Value, ShellError> {
+         Ok(Value::string(
+             format!("I used to be a custom value! My data was ({})", self.cool),
+             span,
+         ))
+     }
+ 
++    fn follow_path_int(
++        &self,
++        _self_span: Span,
++        index: usize,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
++        if index == 0 {
++            Ok(Value::string(&self.cool, path_span))
++        } else {
++            Err(ShellError::AccessBeyondEnd {
++                max_idx: 0,
++                span: path_span,
++            })
++        }
++    }
++
++    fn follow_path_string(
++        &self,
++        self_span: Span,
++        column_name: String,
++        path_span: Span,
++    ) -> Result<Value, ShellError> {
++        if column_name == "cool" {
++            Ok(Value::string(&self.cool, path_span))
++        } else {
++            Err(ShellError::CantFindColumn {
++                col_name: column_name,
++                span: path_span,
++                src_span: self_span,
++            })
++        }
++    }
++
++    fn partial_cmp(&self, other: &Value) -> Option<Ordering> {
++        if let Value::CustomValue { val, .. } = other {
++            val.as_any()
++                .downcast_ref()
++                .and_then(|other: &CoolCustomValue| PartialOrd::partial_cmp(self, other))
++        } else {
++            None
++        }
++    }
++
++    fn operation(
++        &self,
++        lhs_span: Span,
++        operator: ast::Operator,
++        op_span: Span,
++        right: &Value,
++    ) -> Result<Value, ShellError> {
++        match operator {
++            // Append the string inside `cool`
++            ast::Operator::Math(ast::Math::Append) => {
++                if let Some(right) = right
++                    .as_custom_value()
++                    .ok()
++                    .and_then(|c| c.as_any().downcast_ref::<CoolCustomValue>())
++                {
++                    Ok(Value::custom_value(
++                        Box::new(CoolCustomValue {
++                            cool: format!("{}{}", self.cool, right.cool),
++                        }),
++                        op_span,
++                    ))
++                } else {
++                    Err(ShellError::OperatorMismatch {
++                        op_span,
++                        lhs_ty: self.typetag_name().into(),
++                        lhs_span,
++                        rhs_ty: right.get_type().to_string(),
++                        rhs_span: right.span(),
++                    })
++                }
++            }
++            _ => Err(ShellError::UnsupportedOperator {
++                operator,
++                span: op_span,
++            }),
++        }
++    }
++
+     fn as_any(&self) -> &dyn std::any::Any {
+         self
+     }
+diff --git a/crates/nu_plugin_custom_values/src/drop_check.rs b/crates/nu_plugin_custom_values/src/drop_check.rs
+new file mode 100644
+index 000000000..a9d5f5e72
+--- /dev/null
++++ b/crates/nu_plugin_custom_values/src/drop_check.rs
+@@ -0,0 +1,50 @@
++use nu_protocol::{record, CustomValue, ShellError, Span, Value};
++use serde::{Deserialize, Serialize};
++
++#[derive(Clone, Debug, Serialize, Deserialize)]
++pub struct DropCheck {
++    pub(crate) msg: String,
++}
++
++impl DropCheck {
++    pub(crate) fn new(msg: String) -> DropCheck {
++        DropCheck { msg }
++    }
++
++    pub(crate) fn into_value(self, span: Span) -> Value {
++        Value::custom_value(Box::new(self), span)
++    }
++
++    pub(crate) fn notify(&self) {
++        eprintln!("DropCheck was dropped: {}", self.msg);
++    }
++}
++
++#[typetag::serde]
++impl CustomValue for DropCheck {
++    fn clone_value(&self, span: Span) -> Value {
++        self.clone().into_value(span)
++    }
++
++    fn value_string(&self) -> String {
++        "DropCheck".into()
++    }
++
++    fn to_base_value(&self, span: Span) -> Result<Value, ShellError> {
++        Ok(Value::record(
++            record! {
++                "msg" => Value::string(&self.msg, span)
++            },
++            span,
++        ))
++    }
++
++    fn as_any(&self) -> &dyn std::any::Any {
++        self
++    }
++
++    fn notify_plugin_on_drop(&self) -> bool {
++        // This is what causes Nushell to let us know when the value is dropped
++        true
++    }
++}
+diff --git a/crates/nu_plugin_custom_values/src/main.rs b/crates/nu_plugin_custom_values/src/main.rs
+index 0d1df03b0..078872d71 100644
+--- a/crates/nu_plugin_custom_values/src/main.rs
++++ b/crates/nu_plugin_custom_values/src/main.rs
+@@ -1,11 +1,14 @@
+ mod cool_custom_value;
++mod drop_check;
+ mod second_custom_value;
+ 
+ use cool_custom_value::CoolCustomValue;
++use drop_check::DropCheck;
++use second_custom_value::SecondCustomValue;
++
+ use nu_plugin::{serve_plugin, EngineInterface, MsgPackSerializer, Plugin};
+ use nu_plugin::{EvaluatedCall, LabeledError};
+-use nu_protocol::{Category, PluginSignature, ShellError, SyntaxShape, Value};
+-use second_custom_value::SecondCustomValue;
++use nu_protocol::{Category, CustomValue, PluginSignature, ShellError, SyntaxShape, Value};
+ 
+ struct CustomValuePlugin;
+ 
+@@ -34,6 +37,10 @@ impl Plugin for CustomValuePlugin {
+                     "the custom value to update",
+                 )
+                 .category(Category::Experimental),
++            PluginSignature::build("custom-value drop-check")
++                .usage("Generates a custom value that prints a message when dropped")
++                .required("msg", SyntaxShape::String, "the message to print on drop")
++                .category(Category::Experimental),
+         ]
+     }
+ 
+@@ -49,6 +56,7 @@ impl Plugin for CustomValuePlugin {
+             "custom-value generate2" => self.generate2(engine, call),
+             "custom-value update" => self.update(call, input),
+             "custom-value update-arg" => self.update(call, &call.req(0)?),
++            "custom-value drop-check" => self.drop_check(call),
+             _ => Err(LabeledError {
+                 label: "Plugin call with wrong name signature".into(),
+                 msg: "the signature used to call the plugin does not match any name in the plugin signature vector".into(),
+@@ -56,6 +64,18 @@ impl Plugin for CustomValuePlugin {
+             }),
+         }
+     }
++
++    fn custom_value_dropped(
++        &self,
++        _engine: &EngineInterface,
++        custom_value: Box<dyn CustomValue>,
++    ) -> Result<(), LabeledError> {
++        // This is how we implement our drop behavior for DropCheck.
++        if let Some(drop_check) = custom_value.as_any().downcast_ref::<DropCheck>() {
++            drop_check.notify();
++        }
++        Ok(())
++    }
+ }
+ 
+ impl CustomValuePlugin {
+@@ -101,6 +121,10 @@ impl CustomValuePlugin {
+         }
+         .into())
+     }
++
++    fn drop_check(&self, call: &EvaluatedCall) -> Result<Value, LabeledError> {
++        Ok(DropCheck::new(call.req(0)?).into_value(call.head))
++    }
+ }
+ 
+ fn main() {

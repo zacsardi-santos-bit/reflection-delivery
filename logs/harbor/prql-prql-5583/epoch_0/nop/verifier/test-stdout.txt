@@ -1,0 +1,63 @@
+patching file prqlc/prqlc/tests/integration/sql.rs
+   Compiling prqlc v0.13.8 (/workspace/repo/prqlc/prqlc)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.27s
+────────────
+ Nextest run ID 3229f712-c6d6-4586-9375-5e68a2ba6be6 with nextest profile: default
+    Starting 2 tests across 3 binaries (494 tests skipped)
+        PASS [   0.098s] (1/2) prqlc::integration sql::test_snowflake_row_number_with_explicit_sort
+        FAIL [   0.187s] (2/2) prqlc::integration sql::test_snowflake_row_number_requires_order_by
+────────────
+     Summary [   0.190s] 2 tests run: 1 passed, 1 failed, 494 skipped
+        FAIL [   0.187s] (2/2) prqlc::integration sql::test_snowflake_row_number_requires_order_by
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot: snowflake_row_number_requires_order_by
+    Source: prqlc/prqlc/tests/integration/sql.rs:6474
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: compile_with_sql_dialect(
+        r###"
+        from invoices
+        group { customer_id } (take 1)
+        "###,
+        sql::Dialect::Snowflake,
+    )
+    .unwrap()
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        1     1 │ WITH "table_0" AS (
+        2     2 │   SELECT
+        3     3 │     *,
+        4       │-    ROW_NUMBER() OVER (
+        5       │-      PARTITION BY "customer_id"
+        6       │-      ORDER BY
+        7       │-        1
+        8       │-    ) AS "_expr_0"
+              4 │+    ROW_NUMBER() OVER (PARTITION BY "customer_id") AS "_expr_0"
+        9     5 │   FROM
+       10     6 │     "invoices"
+       11     7 │ )
+       12     8 │ SELECT
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test sql::test_snowflake_row_number_requires_order_by ... FAILED
+
+    failures:
+
+    failures:
+        sql::test_snowflake_row_number_requires_order_by
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 419 filtered out; finished in 0.17s
+
+  stderr ───
+
+    thread 'sql::test_snowflake_row_number_requires_order_by' panicked at /usr/local/cargo/registry/src/index.crates.io-1949cf8c6b5b557f/insta-1.43.2/src/runtime.rs:694:13:
+    snapshot assertion for 'snowflake_row_number_requires_order_by' failed in line 6474
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+error: test run failed
+reward=0 graded=2 found=0 failed=0 parsed=2 framework=cargo exit_code=100

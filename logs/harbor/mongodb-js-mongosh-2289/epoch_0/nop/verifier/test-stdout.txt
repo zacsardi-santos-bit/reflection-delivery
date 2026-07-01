@@ -1,0 +1,74 @@
+patching file packages/build/src/npm-packages/bump.spec.ts
+patching file packages/build/src/npm-packages/publish.spec.ts
+patching file packages/connectivity-tests/package.json
+patching file packages/e2e-tests/package.json
+patching file packages/e2e-tests/test/e2e.spec.ts
+
+
+  npm-packages bump
+    bumpMongoshReleasePackages
+      1) throws if MONGOSH_RELEASE_VERSION is not set
+    updateShellApiMongoshVersion
+      2) updates the file to the set version
+
+  npm-packages publishNpmPackages
+    3) throws if mongosh is not existent when publishing all
+    4) takes mongosh version and pushes tags
+    5) does not manually push tags with auxiliary packages
+    6) calls lerna to publish packages for a real version
+    ✔ reverts the assume unchanged even on spawn failure
+
+
+  1 passing (20ms)
+  6 failing
+
+  1) npm-packages bump
+       bumpMongoshReleasePackages
+         throws if MONGOSH_RELEASE_VERSION is not set:
+
+      AssertionError: expected '(0 , bump_1.bumpMongoshReleasePackage…' to equal 'MONGOSH_RELEASE_VERSION version not s…'
+      + expected - actual
+
+      -(0 , bump_1.bumpMongoshReleasePackages) is not a function
+      +MONGOSH_RELEASE_VERSION version not specified during mongosh bump
+      
+      at Context.<anonymous> (src/npm-packages/bump.spec.ts:36:42)
+      at processImmediate (node:internal/timers:483:21)
+
+  2) npm-packages bump
+       updateShellApiMongoshVersion
+         updates the file to the set version:
+     TypeError: (0 , bump_1.updateShellApiMongoshVersion) is not a function
+      at Context.<anonymous> (src/npm-packages/bump.spec.ts:50:41)
+      at processImmediate (node:internal/timers:483:21)
+
+  3) npm-packages publishNpmPackages
+       throws if mongosh is not existent when publishing all:
+     AssertionError: expected [Function] to throw an error
+      at Context.<anonymous> (src/npm-packages/publish.spec.ts:39:7)
+      at processImmediate (node:internal/timers:483:21)
+
+  4) npm-packages publishNpmPackages
+       takes mongosh version and pushes tags:
+     Error: Refusing to publish packages with multiple versions: 0.7.0,1.2.0
+      at publishNpmPackages (src/npm-packages/publish.ts:18:11)
+      at Context.<anonymous> (src/npm-packages/publish.spec.ts:49:23)
+      at processImmediate (node:internal/timers:483:21)
+
+  5) npm-packages publishNpmPackages
+       does not manually push tags with auxiliary packages:
+     Error: Refusing to publish packages with multiple versions: 0.7.0,1.2.0
+      at publishNpmPackages (src/npm-packages/publish.ts:18:11)
+      at Context.<anonymous> (src/npm-packages/publish.spec.ts:67:23)
+      at processImmediate (node:internal/timers:483:21)
+
+  6) npm-packages publishNpmPackages
+       calls lerna to publish packages for a real version:
+     Error: Refusing to publish packages with multiple versions: 0.7.0,1.2.0
+      at publishNpmPackages (src/npm-packages/publish.ts:18:11)
+      at Context.<anonymous> (src/npm-packages/publish.spec.ts:91:23)
+      at processImmediate (node:internal/timers:483:21)
+
+
+
+reward=0 graded=7 found=7 failed=6 parsed=9 framework=mocha exit_code=6

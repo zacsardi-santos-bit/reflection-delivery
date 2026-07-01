@@ -1,0 +1,78 @@
+patching file tests/qchem/of_tests/test_molecular_dipole.py
+patching file tests/qchem/of_tests/test_observable_of.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo/tests
+configfile: pytest.ini
+plugins: mock-3.15.1, flaky-3.8.1, cov-7.1.0, xdist-3.8.0, benchmark-5.2.3
+collecting ... collected 57 items
+
+tests/qchem/of_tests/test_molecular_dipole.py::test_openfermion_molecular_dipole[disable_new_opmath_cm-symbols0-geometry0-0-None-None-jordan_wigner-coeffs0-ops0] PASSED [  1%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_openfermion_molecular_dipole[disable_new_opmath_cm-symbols1-geometry1-0-None-None-parity-coeffs1-ops1] PASSED [  3%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_openfermion_molecular_dipole[disable_new_opmath_cm-symbols2-geometry2-1-None-None-jordan_wigner-coeffs2-ops2] PASSED [  5%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_openfermion_molecular_dipole[disable_new_opmath_cm-symbols3-geometry3-0-2-2-bravyi_kitaev-coeffs3-ops3] PASSED [  7%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_openfermion_molecular_dipole[enable_new_opmath_cm-symbols0-geometry0-0-None-None-jordan_wigner-coeffs0-ops0] PASSED [  8%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_openfermion_molecular_dipole[enable_new_opmath_cm-symbols1-geometry1-0-None-None-parity-coeffs1-ops1] PASSED [ 10%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_openfermion_molecular_dipole[enable_new_opmath_cm-symbols2-geometry2-1-None-None-jordan_wigner-coeffs2-ops2] PASSED [ 12%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_openfermion_molecular_dipole[enable_new_opmath_cm-symbols3-geometry3-0-2-2-bravyi_kitaev-coeffs3-ops3] PASSED [ 14%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[disable_new_opmath_cm-symbols0-geometry0-0-None-None-jordan_wigner-eig_ref0] PASSED [ 15%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[disable_new_opmath_cm-symbols1-geometry1-0-None-None-parity-eig_ref1] PASSED [ 17%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[disable_new_opmath_cm-symbols2-geometry2-1-None-None-jordan_wigner-eig_ref2] PASSED [ 19%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[disable_new_opmath_cm-symbols3-geometry3-0-2-2-bravyi_kitaev-eig_ref3] PASSED [ 21%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[enable_new_opmath_cm-symbols0-geometry0-0-None-None-jordan_wigner-eig_ref0] PASSED [ 22%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[enable_new_opmath_cm-symbols1-geometry1-0-None-None-parity-eig_ref1] PASSED [ 24%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[enable_new_opmath_cm-symbols2-geometry2-1-None-None-jordan_wigner-eig_ref2] PASSED [ 26%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[enable_new_opmath_cm-symbols3-geometry3-0-2-2-bravyi_kitaev-eig_ref3] PASSED [ 28%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_custom_wiremap_dipole[disable_new_opmath_cm-wiremap0] PASSED [ 29%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_custom_wiremap_dipole[disable_new_opmath_cm-wiremap1] PASSED [ 31%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_custom_wiremap_dipole[enable_new_opmath_cm-wiremap0] PASSED [ 33%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_custom_wiremap_dipole[enable_new_opmath_cm-wiremap1] PASSED [ 35%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_molecular_dipole_error PASSED [ 36%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_real_dipole[disable_new_opmath_cm-openfermion-None] PASSED [ 38%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_real_dipole[disable_new_opmath_cm-dhf-None] PASSED [ 40%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_real_dipole[disable_new_opmath_cm-dhf-args2] PASSED [ 42%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_real_dipole[enable_new_opmath_cm-openfermion-None] PASSED [ 43%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_real_dipole[enable_new_opmath_cm-dhf-None] PASSED [ 45%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_real_dipole[enable_new_opmath_cm-dhf-args2] PASSED [ 47%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_coordinate_units_for_molecular_dipole[openfermion] PASSED [ 49%]
+tests/qchem/of_tests/test_molecular_dipole.py::test_coordinate_units_for_molecular_dipole[dhf] PASSED [ 50%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[None-fermion_ops0-0.25-bravyi_KITAEV-terms_exp0] PASSED [ 52%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[None-fermion_ops1-0.25-JORDAN_wigner-terms_exp1] PASSED [ 54%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[None-fermion_ops2-0.5-JORDAN_wigner-terms_exp2] PASSED [ 56%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[None-fermion_ops3-0-JORDAN_wigner-terms_exp3] PASSED [ 57%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[None-fermion_ops4-0.5-JORDAN_wigner-terms_exp4] PASSED [ 59%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[None-fermion_ops5-0.25-bravyi_KITAEV-terms_exp5] PASSED [ 61%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires1-fermion_ops0-0.25-bravyi_KITAEV-terms_exp0] PASSED [ 63%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires1-fermion_ops1-0.25-JORDAN_wigner-terms_exp1] PASSED [ 64%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires1-fermion_ops2-0.5-JORDAN_wigner-terms_exp2] PASSED [ 66%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires1-fermion_ops3-0-JORDAN_wigner-terms_exp3] PASSED [ 68%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires1-fermion_ops4-0.5-JORDAN_wigner-terms_exp4] PASSED [ 70%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires1-fermion_ops5-0.25-bravyi_KITAEV-terms_exp5] PASSED [ 71%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires2-fermion_ops0-0.25-bravyi_KITAEV-terms_exp0] PASSED [ 73%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires2-fermion_ops1-0.25-JORDAN_wigner-terms_exp1] PASSED [ 75%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires2-fermion_ops2-0.5-JORDAN_wigner-terms_exp2] PASSED [ 77%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires2-fermion_ops3-0-JORDAN_wigner-terms_exp3] PASSED [ 78%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires2-fermion_ops4-0.5-JORDAN_wigner-terms_exp4] PASSED [ 80%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires2-fermion_ops5-0.25-bravyi_KITAEV-terms_exp5] PASSED [ 82%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires3-fermion_ops0-0.25-bravyi_KITAEV-terms_exp0] PASSED [ 84%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires3-fermion_ops1-0.25-JORDAN_wigner-terms_exp1] PASSED [ 85%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires3-fermion_ops2-0.5-JORDAN_wigner-terms_exp2] PASSED [ 87%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires3-fermion_ops3-0-JORDAN_wigner-terms_exp3] PASSED [ 89%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires3-fermion_ops4-0.5-JORDAN_wigner-terms_exp4] PASSED [ 91%]
+tests/qchem/of_tests/test_observable_of.py::test_observable[custom_wires3-fermion_ops5-0.25-bravyi_KITAEV-terms_exp5] PASSED [ 92%]
+tests/qchem/of_tests/test_observable_of.py::test_exceptions_observable[fermion_ops0-JORDAN_wigner-Elements in the lists are expected to be of type 'FermionOperator'] PASSED [ 94%]
+tests/qchem/of_tests/test_observable_of.py::test_exceptions_observable[fermion_ops1-no_valid_transformation-Please set 'mapping' to 'jordan_wigner', 'parity', or 'bravyi_kitaev'] PASSED [ 96%]
+tests/qchem/of_tests/test_observable_of.py::test_import_of PASSED        [ 98%]
+tests/qchem/of_tests/test_observable_of.py::test_import_pyscf PASSED     [100%]
+
+=============================== warnings summary ===============================
+qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[disable_new_opmath_cm-symbols3-geometry3-0-2-2-bravyi_kitaev-eig_ref3]
+qchem/of_tests/test_molecular_dipole.py::test_differentiable_molecular_dipole[enable_new_opmath_cm-symbols3-geometry3-0-2-2-bravyi_kitaev-eig_ref3]
+  /workspace/repo/pennylane/fermi/conversion.py:503: RuntimeWarning: divide by zero encountered in log2
+    bin_range = int(2 ** np.ceil(np.log2(n)))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 57 passed, 2 warnings in 7.15s ========================
+reward=1 (grader error: Extra data: line 72 column 1 (char 7325); fell back to exit_code=0)

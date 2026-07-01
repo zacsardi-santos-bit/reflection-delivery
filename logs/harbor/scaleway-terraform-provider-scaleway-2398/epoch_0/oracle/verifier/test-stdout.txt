@@ -1,0 +1,16 @@
+patching file scaleway/resource_job_definition_test.go
+{"Time":"2026-06-29T15:21:40.038165022Z","Action":"start","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway"}
+{"Time":"2026-06-29T15:21:40.053897343Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Output":"2026/06/29 15:21:40 [INFO] start domain record test with domain: scaleway-terraform.com\n"}
+{"Time":"2026-06-29T15:21:40.053963212Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Output":"2026/06/29 15:21:40 [INFO] environment variable TF_TEST_DOMAIN_ZONE is required\n"}
+{"Time":"2026-06-29T15:21:40.054104454Z","Action":"run","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron"}
+{"Time":"2026-06-29T15:21:40.054165676Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"=== RUN   TestAccScalewayJobDefinition_Cron\n"}
+{"Time":"2026-06-29T15:21:40.055723079Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"=== PAUSE TestAccScalewayJobDefinition_Cron\n"}
+{"Time":"2026-06-29T15:21:40.055753746Z","Action":"pause","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron"}
+{"Time":"2026-06-29T15:21:40.055782719Z","Action":"cont","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron"}
+{"Time":"2026-06-29T15:21:40.055805183Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"=== CONT  TestAccScalewayJobDefinition_Cron\n"}
+{"Time":"2026-06-29T15:21:43.4861797Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Output":"--- PASS: TestAccScalewayJobDefinition_Cron (3.43s)\n"}
+{"Time":"2026-06-29T15:21:43.551816123Z","Action":"pass","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Test":"TestAccScalewayJobDefinition_Cron","Elapsed":3.43}
+{"Time":"2026-06-29T15:21:43.594499663Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Output":"PASS\n"}
+{"Time":"2026-06-29T15:21:43.594668387Z","Action":"output","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Output":"ok  \tgithub.com/scaleway/terraform-provider-scaleway/v2/scaleway\t3.556s\n"}
+{"Time":"2026-06-29T15:21:43.594699363Z","Action":"pass","Package":"github.com/scaleway/terraform-provider-scaleway/v2/scaleway","Elapsed":3.557}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

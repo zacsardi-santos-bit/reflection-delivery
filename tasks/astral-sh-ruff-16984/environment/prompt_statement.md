@@ -1,0 +1,9 @@
+I'm working on adding a new semantic syntax check to the Python parser. Python has a special built-in read-only constant — you can check its value anywhere in your code, but you are not allowed to write to it, name things after it, or bind it in any way. Python's own compiler treats this as a hard syntax error. Deleting it is also invalid in modern Python, though older Python versions permitted it.
+
+Right now the parser doesn't flag any of these violations, so code that Python itself would reject passes through without any diagnostic. I'd like the semantic syntax checker to detect all the contexts where this protected name can be illegally bound: direct assignment, tuple unpacking, function and class definitions, function parameters, type parameters (including in type aliases), import statements that bind the name, with-statement aliases, exception handler names, match-statement captures, and type alias names. Each violation should produce a clear error saying the name cannot be assigned to.
+
+The deletion case needs to be version-aware: on older Python it was permitted, so deletion should only be flagged when the configured target Python version is new enough that the syntax was already removed. The error message for deletion should identify the target Python version and mention when the syntax was removed.
+
+Reading the value of this name should remain perfectly valid with no errors. Likewise, importing something from a module that happens to carry this name, or importing it under a different alias, is fine — only cases where the binding name itself is this protected identifier should be flagged.
+
+There's also a gap in the test infrastructure: the semantic checker is currently tested with a hard-coded default Python version rather than the one configured for the file being parsed, so version-specific checks don't behave correctly in tests. That needs to be fixed so the configured target version is passed through to the checker.

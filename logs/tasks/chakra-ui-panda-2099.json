@@ -1,0 +1,23 @@
+{
+ "task": "chakra-ui-panda-2099",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'const cq = definePattern' container-query pattern, container.ts utility, and extends sort-mq.ts with 'const atRuleName = P.union('media', 'container')'; F2P 'preset patterns cq', 'preset patterns jsx Cq', 'should sort container queries'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

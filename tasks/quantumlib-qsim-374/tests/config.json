@@ -1,0 +1,20 @@
+{
+  "test_framework": "gtest",
+  "test_command": "ln -sf /usr/include/eigen3 /workspace/repo/eigen && cd /workspace/repo/tests && g++ -O2 -std=c++14 -I /workspace/repo/tests/googletest/googletest/include -fopenmp -o /workspace/repo/tests/mps_statespace_test.x mps_statespace_test.cc -L /workspace/repo/tests/googletest/googletest/make/lib -lgtest -lpthread && /usr/local/bin/run_mps_gtest",
+  "test_files": [
+    "tests/mps_statespace_test.cc"
+  ],
+  "num_test_files": 1,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "MPSStateSpaceTest::Create",
+    "MPSStateSpaceTest::BlockOffset",
+    "MPSStateSpaceTest::SetZero",
+    "MPSStateSpaceTest::Copy",
+    "MPSStateSpaceTest::ToWaveFunctionZero",
+    "MPSStateSpaceTest::ToWaveFunction3",
+    "MPSStateSpaceTest::ToWaveFunction5",
+    "MPSStateSpaceTest::InnerProduct4"
+  ],
+  "PASS_TO_PASS": []
+}

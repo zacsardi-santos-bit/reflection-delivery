@@ -1,0 +1,10 @@
+patching file java/driver/flight-sql/pom.xml
+patching file java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/BaseFlightReader.java
+patching file java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/FlightInfoReader.java
+patching file java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/FlightSqlClientWithCallOptions.java
+patching file java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/FlightSqlConnection.java
+patching file java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/FlightSqlDriverUtil.java
+patching file java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/GetInfoMetadataReader.java
+patching file java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/GetObjectsMetadataReaders.java
+patching file java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/InfoMetadataBuilder.java
+patching file java/driver/flight-sql/src/main/java/org/apache/arrow/adbc/driver/flightsql/RootArrowReader.java

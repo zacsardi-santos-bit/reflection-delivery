@@ -1,0 +1,5 @@
+patching file prow/pod-utils/gcs/metadata_test.go
+# k8s.io/test-infra/prow/pod-utils/gcs [k8s.io/test-infra/prow/pod-utils/gcs.test]
+prow/pod-utils/gcs/metadata_test.go:125:38: undefined: MetadataFromFileName
+FAIL	k8s.io/test-infra/prow/pod-utils/gcs [build failed]
+reward=0 graded=20 found=20 failed=20 parsed=1 framework=go exit_code=1

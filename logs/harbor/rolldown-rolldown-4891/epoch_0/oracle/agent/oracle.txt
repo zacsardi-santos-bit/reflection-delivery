@@ -1,0 +1,8 @@
+patching file crates/rolldown/src/stages/generate_stage/compute_cross_chunk_links.rs
+patching file crates/rolldown/src/stages/link_stage/create_exports_for_ecma_modules.rs
+patching file crates/rolldown_binding/src/options/plugin/binding_builtin_plugin.rs
+patching file crates/rolldown_binding/src/options/plugin/config/binding_module_preload_polyfill_plugin_config.rs
+patching file crates/rolldown_binding/src/options/plugin/config/mod.rs
+patching file crates/rolldown_plugin_module_preload_polyfill/src/lib.rs
+patching file packages/rolldown/src/binding.d.ts
+patching file packages/rolldown/src/builtin-plugin/constructors.ts

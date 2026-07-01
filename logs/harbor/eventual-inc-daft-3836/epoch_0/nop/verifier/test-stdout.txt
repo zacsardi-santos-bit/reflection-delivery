@@ -1,0 +1,328 @@
+patching file tests/sql/test_sql_table_functions.py
+🍹 Building a mixed python/rust project
+🐍 Found CPython 3.11 at /workspace/venv/bin/python
+🔗 Found pyo3 bindings with abi3-py3.9 support
+📡 Using build options features from pyproject.toml
+Ignoring typing-extensions: markers 'python_full_version < "3.10"' don't match your environment
+Ignoring getdaft: markers 'extra == "all"' don't match your environment
+Ignoring boto3: markers 'extra == "aws"' don't match your environment
+Ignoring daft-dashboard: markers 'extra == "dashboard"' don't match your environment
+Ignoring deltalake: markers 'extra == "deltalake"' don't match your environment
+Ignoring pyarrow: markers 'extra == "hudi"' don't match your environment
+Ignoring pyiceberg: markers 'extra == "iceberg"' don't match your environment
+Ignoring packaging: markers 'extra == "iceberg"' don't match your environment
+Ignoring lancedb: markers 'extra == "lance"' don't match your environment
+Ignoring numpy: markers 'extra == "numpy"' don't match your environment
+Ignoring pandas: markers 'extra == "pandas"' don't match your environment
+Ignoring ray: markers 'platform_system != "Windows" and extra == "ray"' don't match your environment
+Ignoring ray: markers 'platform_system == "Windows" and extra == "ray"' don't match your environment
+Ignoring packaging: markers 'extra == "ray"' don't match your environment
+Ignoring connectorx: markers 'extra == "sql"' don't match your environment
+Ignoring sqlalchemy: markers 'extra == "sql"' don't match your environment
+Ignoring sqlglot: markers 'extra == "sql"' don't match your environment
+Ignoring unitycatalog: markers 'extra == "unity"' don't match your environment
+Requirement already satisfied: pyarrow>=8.0.0 in /workspace/venv/lib/python3.11/site-packages (24.0.0)
+Requirement already satisfied: fsspec in /workspace/venv/lib/python3.11/site-packages (2026.6.0)
+Requirement already satisfied: tqdm in /workspace/venv/lib/python3.11/site-packages (4.68.3)
+   Compiling arrow2 v0.17.4 (/workspace/repo/src/arrow2)
+   Compiling common-error v0.3.0-dev0 (/workspace/repo/src/common/error)
+   Compiling common-arrow-ffi v0.3.0-dev0 (/workspace/repo/src/common/arrow-ffi)
+   Compiling serde_arrow v0.11.8
+   Compiling daft-decoding v0.3.0-dev0 (/workspace/repo/src/daft-decoding)
+   Compiling daft-minhash v0.3.0-dev0 (/workspace/repo/src/daft-minhash)
+   Compiling daft-hash v0.3.0-dev0 (/workspace/repo/src/daft-hash)
+   Compiling common-resource-request v0.3.0-dev0 (/workspace/repo/src/common/resource-request)
+   Compiling common-treenode v0.3.0-dev0 (/workspace/repo/src/common/treenode)
+   Compiling common-io-config v0.3.0-dev0 (/workspace/repo/src/common/io-config)
+   Compiling common-runtime v0.3.0-dev0 (/workspace/repo/src/common/runtime)
+   Compiling common-partitioning v0.3.0-dev0 (/workspace/repo/src/common/partitioning)
+   Compiling daft-schema v0.3.0-dev0 (/workspace/repo/src/daft-schema)
+   Compiling daft-sketch v0.3.0-dev0 (/workspace/repo/src/daft-sketch)
+   Compiling daft-core v0.3.0-dev0 (/workspace/repo/src/daft-core)
+   Compiling common-file-formats v0.3.0-dev0 (/workspace/repo/src/common/file-formats)
+   Compiling common-daft-config v0.3.0-dev0 (/workspace/repo/src/common/daft-config)
+   Compiling daft-io v0.3.0-dev0 (/workspace/repo/src/daft-io)
+   Compiling daft-dsl v0.3.0-dev0 (/workspace/repo/src/daft-dsl)
+   Compiling daft-image v0.3.0-dev0 (/workspace/repo/src/daft-image)
+   Compiling daft-algebra v0.3.0-dev0 (/workspace/repo/src/daft-algebra)
+   Compiling daft-functions v0.3.0-dev0 (/workspace/repo/src/daft-functions)
+   Compiling daft-functions-json v0.3.0-dev0 (/workspace/repo/src/daft-functions-json)
+   Compiling common-scan-info v0.3.0-dev0 (/workspace/repo/src/common/scan-info)
+   Compiling daft-logical-plan v0.3.0-dev0 (/workspace/repo/src/daft-logical-plan)
+   Compiling daft-recordbatch v0.3.0-dev0 (/workspace/repo/src/daft-recordbatch)
+   Compiling daft-catalog v0.3.0-dev0 (/workspace/repo/src/daft-catalog)
+   Compiling daft-physical-plan v0.3.0-dev0 (/workspace/repo/src/daft-physical-plan)
+   Compiling daft-local-plan v0.3.0-dev0 (/workspace/repo/src/daft-local-plan)
+   Compiling daft-session v0.3.0-dev0 (/workspace/repo/src/daft-session)
+   Compiling daft-catalog-python-catalog v0.3.0-dev0 (/workspace/repo/src/daft-catalog/python-catalog)
+   Compiling daft-stats v0.3.0-dev0 (/workspace/repo/src/daft-stats)
+   Compiling daft-json v0.3.0-dev0 (/workspace/repo/src/daft-json)
+   Compiling daft-csv v0.3.0-dev0 (/workspace/repo/src/daft-csv)
+   Compiling daft-parquet v0.3.0-dev0 (/workspace/repo/src/daft-parquet)
+   Compiling daft-scan v0.3.0-dev0 (/workspace/repo/src/daft-scan)
+   Compiling daft-micropartition v0.3.0-dev0 (/workspace/repo/src/daft-micropartition)
+   Compiling daft-sql v0.3.0-dev0 (/workspace/repo/src/daft-sql)
+   Compiling daft-scheduler v0.3.0-dev0 (/workspace/repo/src/daft-scheduler)
+   Compiling daft-py-runners v0.3.0-dev0 (/workspace/repo/src/daft-py-runners)
+   Compiling daft-writers v0.3.0-dev0 (/workspace/repo/src/daft-writers)
+   Compiling daft-context v0.3.0-dev0 (/workspace/repo/src/daft-context)
+   Compiling daft-local-execution v0.3.0-dev0 (/workspace/repo/src/daft-local-execution)
+   Compiling daft-connect v0.3.0-dev0 (/workspace/repo/src/daft-connect)
+   Compiling daft v0.3.0-dev0 (/workspace/repo)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 05s
+⚠️ Warning: Failed to set rpath for /workspace/repo/target/maturin/libdaft.so: Failed to execute 'patchelf', did you install it? Hint: Try `pip install maturin[patchelf]` (or just `pip install patchelf`)
+📦 Built wheel for abi3 Python ≥ 3.9 to /tmp/.tmp4Tli3q/getdaft-0.3.0.dev0-cp39-abi3-linux_x86_64.whl
+✏️ Setting installed package as editable
+🛠 Installed getdaft-0.3.0.dev0
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /workspace/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+collecting ... collected 17 items
+
+tests/sql/test_sql_table_functions.py::test_sql_read_json PASSED         [  5%]
+tests/sql/test_sql_table_functions.py::test_sql_read_json_path PASSED    [ 11%]
+tests/sql/test_sql_table_functions.py::test_sql_read_json_paths PASSED   [ 17%]
+tests/sql/test_sql_table_functions.py::test_sql_read_with_schema FAILED  [ 23%]
+tests/sql/test_sql_table_functions.py::test_sql_read_parquet PASSED      [ 29%]
+tests/sql/test_sql_table_functions.py::test_sql_read_parquet_path PASSED [ 35%]
+tests/sql/test_sql_table_functions.py::test_sql_read_parquet_paths PASSED [ 41%]
+tests/sql/test_sql_table_functions.py::test_sql_read_csv PASSED          [ 47%]
+tests/sql/test_sql_table_functions.py::test_sql_read_csv_path PASSED     [ 52%]
+tests/sql/test_sql_table_functions.py::test_sql_read_csv_paths PASSED    [ 58%]
+tests/sql/test_sql_table_functions.py::test_sql_read_csv_with_schema FAILED [ 64%]
+tests/sql/test_sql_table_functions.py::test_read_csv_headers[True] PASSED [ 70%]
+tests/sql/test_sql_table_functions.py::test_read_csv_headers[False] PASSED [ 76%]
+tests/sql/test_sql_table_functions.py::test_read_csv_quote[True] PASSED  [ 82%]
+tests/sql/test_sql_table_functions.py::test_read_csv_quote[False] PASSED [ 88%]
+tests/sql/test_sql_table_functions.py::test_read_csv_other_options[=>] PASSED [ 94%]
+tests/sql/test_sql_table_functions.py::test_read_csv_other_options[:=] PASSED [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_sql_read_with_schema ___________________________
+
+    def test_sql_read_with_schema():
+>       actual = daft.sql("""SELECT * FROM read_json('tests/assets/json-data/sample1.jsonl', schema := {
+            'x': 'int',
+            'y': 'string',
+            'z': 'bool',
+        });""")
+
+tests/sql/test_sql_table_functions.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+sql = "SELECT * FROM read_json('tests/assets/json-data/sample1.jsonl', schema := {\n        'x': 'int',\n        'y': 'string',\n        'z': 'bool',\n    });"
+catalog = <daft.sql.sql.SQLCatalog object at 0x2b35a1a0f290>
+register_globals = True
+
+    @PublicAPI
+    def sql(sql: str, catalog: Optional[SQLCatalog] = None, register_globals: bool = True) -> DataFrame:
+        """Run a SQL query, returning the results as a DataFrame.
+    
+        .. WARNING::
+            This features is early in development and will likely experience API changes.
+    
+        Examples:
+            A simple example joining 2 dataframes together using a SQL statement, relying on Daft to detect the names of
+            SQL tables using their corresponding Python variable names.
+    
+            >>> import daft
+            >>>
+            >>> df1 = daft.from_pydict({"a": [1, 2, 3], "b": ["foo", "bar", "baz"]})
+            >>> df2 = daft.from_pydict({"a": [1, 2, 3], "c": ["daft", None, None]})
+            >>>
+            >>> # Daft automatically detects `df1` and `df2` from your Python global namespace
+            >>> result_df = daft.sql("SELECT * FROM df1 JOIN df2 ON df1.a = df2.a")
+            >>> result_df.show()
+            ╭───────┬──────┬──────╮
+            │ a     ┆ b    ┆ c    │
+            │ ---   ┆ ---  ┆ ---  │
+            │ Int64 ┆ Utf8 ┆ Utf8 │
+            ╞═══════╪══════╪══════╡
+            │ 1     ┆ foo  ┆ daft │
+            ├╌╌╌╌╌╌╌┼╌╌╌╌╌╌┼╌╌╌╌╌╌┤
+            │ 2     ┆ bar  ┆ None │
+            ├╌╌╌╌╌╌╌┼╌╌╌╌╌╌┼╌╌╌╌╌╌┤
+            │ 3     ┆ baz  ┆ None │
+            ╰───────┴──────┴──────╯
+            <BLANKLINE>
+            (Showing first 3 of 3 rows)
+    
+            A more complex example using a SQLCatalog to create a named table called `"my_table"`, which can then be referenced from inside your SQL statement.
+    
+            >>> import daft
+            >>> from daft.sql import SQLCatalog
+            >>>
+            >>> df = daft.from_pydict({"a": [1, 2, 3], "b": ["foo", "bar", "baz"]})
+            >>>
+            >>> # Register dataframes as tables in SQL explicitly with names
+            >>> catalog = SQLCatalog({"my_table": df})
+            >>>
+            >>> daft.sql("SELECT a FROM my_table", catalog=catalog).show()
+            ╭───────╮
+            │ a     │
+            │ ---   │
+            │ Int64 │
+            ╞═══════╡
+            │ 1     │
+            ├╌╌╌╌╌╌╌┤
+            │ 2     │
+            ├╌╌╌╌╌╌╌┤
+            │ 3     │
+            ╰───────╯
+            <BLANKLINE>
+            (Showing first 3 of 3 rows)
+    
+        Args:
+            sql (str): SQL query to execute
+            catalog (SQLCatalog, optional): Catalog of tables to use in the query.
+                Defaults to None, in which case a catalog will be built from variables
+                in the callers scope.
+            register_globals (bool, optional): Whether to incorporate global
+                variables into the supplied catalog, in which case a copy of the
+                catalog will be made and the original not modified. Defaults to True.
+    
+        Returns:
+            DataFrame: Dataframe containing the results of the query
+        """
+        if register_globals:
+            try:
+                # Caller is back from func, analytics, annotation
+                caller_frame = inspect.currentframe().f_back.f_back.f_back  # type: ignore
+                caller_vars = {**caller_frame.f_globals, **caller_frame.f_locals}  # type: ignore
+            except AttributeError as exc:
+                # some interpreters might not implement currentframe; all reasonable
+                # errors above should be AttributeError
+                raise DaftCoreException("Cannot get caller environment, please provide a catalog") from exc
+            catalog_ = SQLCatalog({k: v for k, v in caller_vars.items() if isinstance(v, DataFrame)})
+            if catalog is not None:
+                catalog_._copy_from(catalog)
+            catalog = catalog_
+        elif catalog is None:
+            raise DaftCoreException("Must supply a catalog if register_globals is False")
+    
+        planning_config = get_context().daft_planning_config
+    
+        _py_catalog = catalog._catalog
+>       _py_logical = _sql(sql, _py_catalog, planning_config)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.InvalidSQLException: Unsupported SQL: 'unexpected named argument: schema'
+
+daft/sql/sql.py:188: InvalidSQLException
+________________________ test_sql_read_csv_with_schema _________________________
+
+sample_csv_path = 'tests/assets/mvp.csv'
+
+    def test_sql_read_csv_with_schema(sample_csv_path):
+>       actual = daft.sql("""SELECT * FROM read_csv('tests/assets/mvp.csv', schema := {
+            'a': 'double',
+            'b': 'string',
+        });""")
+
+tests/sql/test_sql_table_functions.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+sql = "SELECT * FROM read_csv('tests/assets/mvp.csv', schema := {\n        'a': 'double',\n        'b': 'string',\n    });"
+catalog = <daft.sql.sql.SQLCatalog object at 0x2b357b1295d0>
+register_globals = True
+
+    @PublicAPI
+    def sql(sql: str, catalog: Optional[SQLCatalog] = None, register_globals: bool = True) -> DataFrame:
+        """Run a SQL query, returning the results as a DataFrame.
+    
+        .. WARNING::
+            This features is early in development and will likely experience API changes.
+    
+        Examples:
+            A simple example joining 2 dataframes together using a SQL statement, relying on Daft to detect the names of
+            SQL tables using their corresponding Python variable names.
+    
+            >>> import daft
+            >>>
+            >>> df1 = daft.from_pydict({"a": [1, 2, 3], "b": ["foo", "bar", "baz"]})
+            >>> df2 = daft.from_pydict({"a": [1, 2, 3], "c": ["daft", None, None]})
+            >>>
+            >>> # Daft automatically detects `df1` and `df2` from your Python global namespace
+            >>> result_df = daft.sql("SELECT * FROM df1 JOIN df2 ON df1.a = df2.a")
+            >>> result_df.show()
+            ╭───────┬──────┬──────╮
+            │ a     ┆ b    ┆ c    │
+            │ ---   ┆ ---  ┆ ---  │
+            │ Int64 ┆ Utf8 ┆ Utf8 │
+            ╞═══════╪══════╪══════╡
+            │ 1     ┆ foo  ┆ daft │
+            ├╌╌╌╌╌╌╌┼╌╌╌╌╌╌┼╌╌╌╌╌╌┤
+            │ 2     ┆ bar  ┆ None │
+            ├╌╌╌╌╌╌╌┼╌╌╌╌╌╌┼╌╌╌╌╌╌┤
+            │ 3     ┆ baz  ┆ None │
+            ╰───────┴──────┴──────╯
+            <BLANKLINE>
+            (Showing first 3 of 3 rows)
+    
+            A more complex example using a SQLCatalog to create a named table called `"my_table"`, which can then be referenced from inside your SQL statement.
+    
+            >>> import daft
+            >>> from daft.sql import SQLCatalog
+            >>>
+            >>> df = daft.from_pydict({"a": [1, 2, 3], "b": ["foo", "bar", "baz"]})
+            >>>
+            >>> # Register dataframes as tables in SQL explicitly with names
+            >>> catalog = SQLCatalog({"my_table": df})
+            >>>
+            >>> daft.sql("SELECT a FROM my_table", catalog=catalog).show()
+            ╭───────╮
+            │ a     │
+            │ ---   │
+            │ Int64 │
+            ╞═══════╡
+            │ 1     │
+            ├╌╌╌╌╌╌╌┤
+            │ 2     │
+            ├╌╌╌╌╌╌╌┤
+            │ 3     │
+            ╰───────╯
+            <BLANKLINE>
+            (Showing first 3 of 3 rows)
+    
+        Args:
+            sql (str): SQL query to execute
+            catalog (SQLCatalog, optional): Catalog of tables to use in the query.
+                Defaults to None, in which case a catalog will be built from variables
+                in the callers scope.
+            register_globals (bool, optional): Whether to incorporate global
+                variables into the supplied catalog, in which case a copy of the
+                catalog will be made and the original not modified. Defaults to True.
+    
+        Returns:
+            DataFrame: Dataframe containing the results of the query
+        """
+        if register_globals:
+            try:
+                # Caller is back from func, analytics, annotation
+                caller_frame = inspect.currentframe().f_back.f_back.f_back  # type: ignore
+                caller_vars = {**caller_frame.f_globals, **caller_frame.f_locals}  # type: ignore
+            except AttributeError as exc:
+                # some interpreters might not implement currentframe; all reasonable
+                # errors above should be AttributeError
+                raise DaftCoreException("Cannot get caller environment, please provide a catalog") from exc
+            catalog_ = SQLCatalog({k: v for k, v in caller_vars.items() if isinstance(v, DataFrame)})
+            if catalog is not None:
+                catalog_._copy_from(catalog)
+            catalog = catalog_
+        elif catalog is None:
+            raise DaftCoreException("Must supply a catalog if register_globals is False")
+    
+        planning_config = get_context().daft_planning_config
+    
+        _py_catalog = catalog._catalog
+>       _py_logical = _sql(sql, _py_catalog, planning_config)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.InvalidSQLException: Unsupported SQL: 'unexpected named argument: schema'
+
+daft/sql/sql.py:188: InvalidSQLException
+=========================== short test summary info ============================
+FAILED tests/sql/test_sql_table_functions.py::test_sql_read_with_schema - daf...
+FAILED tests/sql/test_sql_table_functions.py::test_sql_read_csv_with_schema
+========================= 2 failed, 15 passed in 1.90s =========================
+reward=0 graded=17 found=0 failed=0 parsed=11 framework=pytest exit_code=1

@@ -1,0 +1,17 @@
+patching file README.md
+patching file cmd/zz_gen_cmd_dnshelp.go
+patching file docs/content/dns/zz_gen_manageengine.md
+patching file docs/data/zz_cli_help.toml
+patching file providers/dns/manageengine/internal/client.go
+patching file providers/dns/manageengine/internal/fixtures/error.json
+patching file providers/dns/manageengine/internal/fixtures/error_bad_request.json
+patching file providers/dns/manageengine/internal/fixtures/zone_domains_all.json
+patching file providers/dns/manageengine/internal/fixtures/zone_record_create.json
+patching file providers/dns/manageengine/internal/fixtures/zone_record_delete.json
+patching file providers/dns/manageengine/internal/fixtures/zone_record_update.json
+patching file providers/dns/manageengine/internal/fixtures/zone_records_all.json
+patching file providers/dns/manageengine/internal/identity.go
+patching file providers/dns/manageengine/internal/types.go
+patching file providers/dns/manageengine/manageengine.go
+patching file providers/dns/manageengine/manageengine.toml
+patching file providers/dns/zz_gen_dns_providers.go

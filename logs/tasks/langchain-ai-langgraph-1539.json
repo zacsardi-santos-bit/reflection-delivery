@@ -1,0 +1,23 @@
+{
+ "task": "langchain-ai-langgraph-1539",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds patch_checkpoint_map() in pregel/config.py and map_output_values pending_writes=True handling in io.py; 24 F2P nested-subgraph interrupt tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 40,
+  "shallow": true
+ }
+}

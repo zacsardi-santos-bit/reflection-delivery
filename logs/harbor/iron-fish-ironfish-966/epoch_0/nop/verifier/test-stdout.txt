@@ -1,0 +1,30 @@
+patching file ironfish/src/telemetry/submit.test.ts
+patching file ironfish/src/telemetry/telemetry.test.ts
+patching file ironfish/src/telemetry/telemetryBackgroundTask.test.ts
+jest-haste-map: Haste module naming collision: ironfish
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/package.json
+    * <rootDir>/build/package.json
+
+FAIL ironfish src/telemetry/telemetry.test.ts
+  ● Test suite failed to run
+
+    [96msrc/telemetry/telemetry.test.ts[0m:[93m4[0m:[93m24[0m - [91merror[0m[90m TS2307: [0mCannot find module './interfaces/metric' or its corresponding type declarations.
+
+    [7m4[0m import { Metric } from './interfaces/metric'
+    [7m [0m [91m                       ~~~~~~~~~~~~~~~~~~~~~[0m
+    [96msrc/telemetry/telemetry.test.ts[0m:[93m5[0m:[93m27[0m - [91merror[0m[90m TS2307: [0mCannot find module './telemetry' or its corresponding type declarations.
+
+    [7m5[0m import { Telemetry } from './telemetry'
+    [7m [0m [91m                          ~~~~~~~~~~~~~[0m
+
+Snapshot Summary
+ › 1 snapshot file obsolete from 1 test suite. To remove it, run `npm run npx -- -u`.
+   ↳   • src/telemetry/__snapshots__/submit.test.ts.snap
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   1 file obsolete, 0 total
+Time:        4.958 s
+Ran all test suites matching /src\/telemetry\/submit.test.ts|src\/telemetry\/telemetry.test.ts|src\/telemetry\/telemetryBackgroundTask.test.ts/i.
+{"numFailedTestSuites":1,"numFailedTests":0,"numPassedTestSuites":0,"numPassedTests":0,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":1,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":0,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":true,"filesAdded":0,"filesRemoved":1,"filesRemovedList":["/workspace/repo/ironfish/src/telemetry/__snapshots__/submit.test.ts.snap"],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746899137,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782746904096,"message":"  ● Test suite failed to run\n\n    \u001b[96msrc/telemetry/telemetry.test.ts\u001b[0m:\u001b[93m4\u001b[0m:\u001b[93m24\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module './interfaces/metric' or its corresponding type declarations.\n\n    \u001b[7m4\u001b[0m import { Metric } from './interfaces/metric'\n    \u001b[7m \u001b[0m \u001b[91m                       ~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[96msrc/telemetry/telemetry.test.ts\u001b[0m:\u001b[93m5\u001b[0m:\u001b[93m27\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module './telemetry' or its corresponding type declarations.\n\n    \u001b[7m5\u001b[0m import { Telemetry } from './telemetry'\n    \u001b[7m \u001b[0m \u001b[91m                          ~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/ironfish/src/telemetry/telemetry.test.ts","startTime":1782746904096,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=6 found=0 failed=0 parsed=1 framework=jest exit_code=1

@@ -1,0 +1,28 @@
+patching file spec/unit/resource/build_essential_spec.rb
+patching file spec/unit/resource/data/InstallHistory_with_CLT.plist
+patching file spec/unit/resource/data/InstallHistory_without_CLT.plist
+WARNING: Shared example group 'with a chef repo' has been previously defined at:
+  /usr/local/bundle/gems/cheffish-15.0.0/lib/cheffish/rspec/repository_support.rb:12
+...and you are now defining it at:
+  /workspace/repo/spec/support/shared/integration/integration_helper.rb:109
+The new definition will overwrite the original one.
+Run options:
+  include {:focus=>true}
+  exclude {:provider=>#<Proc: ./spec/spec_helper.rb:213>, :arch=>#<Proc: ./spec/spec_helper.rb:207>, :requires_ifconfig=>true, :choco_installed=>true, :ruby=>"2.7.8", :chef=>"16.0.166", :not_intel_64bit=>true, :rhel_gte_8=>true, :rhel8=>true, :rhel7=>true, :rhel6=>true, :rhel=>true, :not_wpar=>true, :broken=>true, :openssl_lt_101=>true, :requires_unprivileged_user=>true, :selinux_only=>true, :sles11=>true, :suse_only=>true, :aix_only=>true, :system_windows_service_gem_only=>true, :solaris_only=>true, :windows_service_requires_assign_token=>true, :windows_domain_joined_only=>true, :windows_powershell_dsc_only=>true, :ruby32_only=>true, :windows_gte_10=>true, :windows32_only=>true, :windows64_only=>true, :win2012r2_only=>true, :macos_1014=>true, :macos_only=>true, :windows_only=>true, :volatile_from_verify=>false, :volatile=>true, :external=>true}
+
+All examples were filtered out; ignoring {:focus=>true}
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="rspec" tests="9" failures="0" errors="0" time="0.017225" timestamp="2026-06-29T15:17:19+00:00">
+  <!-- Randomized with seed 45142 -->
+  <properties/>
+  <testcase classname="spec.unit.resource.build_essential_spec" name="Chef::Resource::BuildEssential has a resource name of :build_essential" file="./spec/unit/resource/build_essential_spec.rb" time="0.001251"/>
+  <testcase classname="spec.unit.resource.build_essential_spec" name="Chef::Resource::BuildEssential sets the default action as :install" file="./spec/unit/resource/build_essential_spec.rb" time="0.000179"/>
+  <testcase classname="spec.unit.resource.build_essential_spec" name="Chef::Resource::BuildEssential supports :install action" file="./spec/unit/resource/build_essential_spec.rb" time="0.001177"/>
+  <testcase classname="spec.unit.resource.build_essential_spec" name="Chef::Resource::BuildEssential when not settting a resource name the name defaults to an empty string" file="./spec/unit/resource/build_essential_spec.rb" time="0.000134"/>
+  <testcase classname="spec.unit.resource.build_essential_spec" name="Chef::Resource::BuildEssential#xcode_cli_installed? returns true if the CLI is in the InstallHistory plist" file="./spec/unit/resource/build_essential_spec.rb" time="0.009592"/>
+  <testcase classname="spec.unit.resource.build_essential_spec" name="Chef::Resource::BuildEssential#xcode_cli_installed? returns false if the pkgutil doesn't list the package" file="./spec/unit/resource/build_essential_spec.rb" time="0.001423"/>
+  <testcase classname="spec.unit.resource.build_essential_spec" name="Chef::Resource::BuildEssential#xcode_cli_package_label returns a package name on macOS &lt; 10.15" file="./spec/unit/resource/build_essential_spec.rb" time="0.000363"/>
+  <testcase classname="spec.unit.resource.build_essential_spec" name="Chef::Resource::BuildEssential#xcode_cli_package_label returns a package name on macOS 10.15+" file="./spec/unit/resource/build_essential_spec.rb" time="0.000276"/>
+  <testcase classname="spec.unit.resource.build_essential_spec" name="Chef::Resource::BuildEssential#xcode_cli_package_label returns nil if no update is listed" file="./spec/unit/resource/build_essential_spec.rb" time="0.001487"/>
+</testsuite>
+reward=1 graded=9 found=9 failed=0 parsed=9 framework=junit exit_code=0

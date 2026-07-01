@@ -1,0 +1,23 @@
+{
+ "task": "wallarm-ingress-358",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds opentracing annotation parser + template funcs buildOpentracing/opentracingPropagateContext/opentracingForLocation/shouldLoadOpentracingModule; F2P TestOpentracingPropagateContext asserts grpc->'opentracing_grpc_propagate_context;' vs http->'opentracing_propagate_context;', TestIngressAn"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 21,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "tauri-apps-tauri-9788",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds trait method 'fn set_title_bar_style(&self, style: tauri_utils::TitleBarStyle) -> Result<()>;' to core/tauri-runtime/src/lib.rs and a real wry impl; test.patch adds the no-op mock so the crate compiles"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

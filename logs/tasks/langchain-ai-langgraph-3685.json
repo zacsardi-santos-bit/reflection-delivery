@@ -1,0 +1,23 @@
+{
+ "task": "langchain-ai-langgraph-3685",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P asserts 'app.invoke(Input(query=..., inner=InnerObject(yo=1)))' and checkpointer resume/update_state with structured State/Input/Output pydantic models"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 56,
+  "shallow": true
+ }
+}

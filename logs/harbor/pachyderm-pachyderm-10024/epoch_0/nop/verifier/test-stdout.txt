@@ -1,0 +1,11 @@
+patching file src/internal/clusterstate/v2.10.0/pipelines_test.go
+patching file src/internal/clusterstate/v2.8.0_test.go
+Starting PostgreSQL 15 database server: main.
+/var/run/postgresql:5432 - accepting connections
+# github.com/pachyderm/pachyderm/v2/src/internal/clusterstate [github.com/pachyderm/pachyderm/v2/src/internal/clusterstate.test]
+src/internal/clusterstate/v2.8.0_test.go:31:71: undefined: State_2_8_0
+src/internal/clusterstate/v2.8.0_test.go:32:52: undefined: State_2_8_0
+{"Time":"2026-06-29T15:16:55.864778193Z","Action":"start","Package":"github.com/pachyderm/pachyderm/v2/src/internal/clusterstate"}
+{"Time":"2026-06-29T15:16:55.864869454Z","Action":"output","Package":"github.com/pachyderm/pachyderm/v2/src/internal/clusterstate","Output":"FAIL\tgithub.com/pachyderm/pachyderm/v2/src/internal/clusterstate [build failed]\n"}
+{"Time":"2026-06-29T15:16:55.864912124Z","Action":"fail","Package":"github.com/pachyderm/pachyderm/v2/src/internal/clusterstate","Elapsed":0}
+reward=0 graded=1 found=0 failed=0 parsed=1 framework=go exit_code=1

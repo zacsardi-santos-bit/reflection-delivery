@@ -1,0 +1,23 @@
+{
+ "task": "biomejs-biome-3823",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "cargo test -p biome_js_analyze --test spec_tests nursery::no_secrets | awk -f /tmp/c2g.awk; F2P=['specs/nursery/no_secrets/invalid_js','.../valid_js']"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 10,
+  "shallow": true
+ }
+}

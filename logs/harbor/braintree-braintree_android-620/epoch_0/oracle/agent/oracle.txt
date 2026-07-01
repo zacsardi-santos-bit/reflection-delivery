@@ -1,0 +1,16 @@
+patching file BraintreeCore/src/main/java/com/braintreepayments/api/BraintreeClient.java
+patching file BraintreeCore/src/main/java/com/braintreepayments/api/ConfigurationCache.java
+patching file BraintreeCore/src/main/java/com/braintreepayments/api/ConfigurationLoader.java
+patching file BraintreeCore/src/main/java/com/braintreepayments/api/ConfigurationLoaderCallback.java
+patching file BraintreeCore/src/main/java/com/braintreepayments/api/ConfigurationLoaderResult.java
+patching file BraintreeCore/src/main/java/com/braintreepayments/api/UUIDHelper.java
+patching file CHANGELOG.md
+patching file SharedUtils/src/main/java/com/braintreepayments/api/BraintreeSharedPreferences.java
+patching file SharedUtils/src/main/java/com/braintreepayments/api/BraintreeSharedPreferencesException.java
+patching file SharedUtils/src/main/java/com/braintreepayments/api/UnexpectedException.java
+patching file TestUtils/src/main/java/com/braintreepayments/api/BraintreeActivityTestRule.java
+patching file TestUtils/src/main/java/com/braintreepayments/api/MockConfigurationLoaderBuilder.java
+patching file TestUtils/src/main/java/com/braintreepayments/api/SharedPreferencesHelper.java
+patching file Venmo/src/main/java/com/braintreepayments/api/VenmoClient.java
+patching file Venmo/src/main/java/com/braintreepayments/api/VenmoSharedPrefsWriter.java
+patching file build.gradle

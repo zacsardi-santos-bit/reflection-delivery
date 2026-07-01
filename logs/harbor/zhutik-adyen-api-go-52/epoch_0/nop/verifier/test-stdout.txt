@@ -1,0 +1,18 @@
+patching file adyen_test.go
+patching file checkout_gateway_test.go
+patching file checkout_test.go
+patching file environment_test.go
+# github.com/zhutik/adyen-api-go [github.com/zhutik/adyen-api-go.test]
+./checkout_gateway_test.go:14:14: undefined: PaymentMethods
+./checkout_gateway_test.go:18:21: instance.Checkout undefined (type *Adyen has no field or method Checkout)
+./checkout_test.go:11:15: undefined: PaymentMethodsResponse
+./checkout_test.go:16:9: undefined: PaymentMethodsResponse
+./checkout_test.go:17:21: undefined: PaymentMethodDetails
+./checkout_test.go:18:4: undefined: PaymentMethodDetails
+./checkout_test.go:19:16: undefined: PaymentMethodDetailsInfo
+./checkout_test.go:20:6: undefined: PaymentMethodDetailsInfo
+./checkout_test.go:25:4: undefined: PaymentMethodDetails
+./checkout_test.go:26:16: undefined: PaymentMethodDetailsInfo
+./checkout_test.go:26:16: too many errors
+FAIL	github.com/zhutik/adyen-api-go [build failed]
+reward=0 graded=50 found=50 failed=50 parsed=1 framework=go exit_code=1

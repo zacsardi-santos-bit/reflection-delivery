@@ -1,0 +1,10 @@
+patching file prqlc/prqlc/tests/integration/sql.rs
+   Compiling prqlc v0.13.11 (/workspace/repo/prqlc/prqlc)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.22s
+────────────
+ Nextest run ID 30560882-d79d-4cb9-88ee-2509b07fe1f4 with nextest profile: default
+    Starting 1 test across 3 binaries (510 tests skipped)
+        PASS [   0.091s] (1/1) prqlc::integration sql::test_group_empty_preserves_sort
+────────────
+     Summary [   0.094s] 1 test run: 1 passed, 510 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

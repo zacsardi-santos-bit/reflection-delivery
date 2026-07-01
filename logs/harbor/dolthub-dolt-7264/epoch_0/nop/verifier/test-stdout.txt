@@ -1,0 +1,9 @@
+patching file go/cmd/dolt/commands/sqlserver/minver_test.go
+# github.com/dolthub/dolt/go/cmd/dolt/commands/sqlserver [github.com/dolthub/dolt/go/cmd/dolt/commands/sqlserver.test]
+cmd/dolt/commands/sqlserver/minver_test.go:115:9: undefined: nullUnsupported
+cmd/dolt/commands/sqlserver/minver_test.go:245:45: undefined: MinVerFieldInfo
+cmd/dolt/commands/sqlserver/minver_test.go:252:10: undefined: MinVerFieldInfoFromLine
+cmd/dolt/commands/sqlserver/minver_test.go:255:9: undefined: MinVerFieldInfo
+cmd/dolt/commands/sqlserver/minver_test.go:265:9: undefined: MinVerFieldInfoFromStructField
+FAIL	github.com/dolthub/dolt/go/cmd/dolt/commands/sqlserver [build failed]
+reward=0 graded=69 found=69 failed=69 parsed=1 framework=go exit_code=1

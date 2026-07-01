@@ -1,0 +1,6 @@
+patching file internal/factory/container/device_test.go
+# github.com/cri-o/cri-o/internal/factory/container_test [github.com/cri-o/cri-o/internal/factory/container.test]
+internal/factory/container/device_test.go:207:18: undefined: cdi.Configure
+internal/factory/container/device_test.go:210:15: undefined: cdi.Refresh
+FAIL	github.com/cri-o/cri-o/internal/factory/container [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

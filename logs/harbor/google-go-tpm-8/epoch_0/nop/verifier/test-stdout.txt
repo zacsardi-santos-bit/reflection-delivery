@@ -1,0 +1,13 @@
+patching file tpm2/encoding_test.go
+patching file tpm2/tpm2_test.go
+# _/workspace/repo/tpm2 [_/workspace/repo/tpm2.test]
+tpm2/tpm2_test.go:289:13: undefined: Private
+tpm2/tpm2_test.go:293:15: undefined: LoadExternal
+tpm2/tpm2_test.go:325:22: undefined: Certify
+tpm2/tpm2_test.go:332:31: cannot use signerPub (variable of type []byte) as *rsa.PublicKey value in argument to rsa.VerifyPKCS1v15
+tpm2/tpm2_test.go:357:13: undefined: Private
+tpm2/tpm2_test.go:361:27: undefined: LoadExternal
+tpm2/tpm2_test.go:382:22: undefined: Certify
+tpm2/tpm2_test.go:389:31: cannot use signerPub (variable of type []byte) as *rsa.PublicKey value in argument to rsa.VerifyPKCS1v15
+FAIL	_/workspace/repo/tpm2 [build failed]
+reward=0 graded=21 found=21 failed=21 parsed=1 framework=go exit_code=1

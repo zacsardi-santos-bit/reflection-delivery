@@ -1,0 +1,23 @@
+{
+ "task": "ng-bootstrap-ng-bootstrap-2769",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden renames misc/api-doc.js -> misc/api-doc.ts with 'export function parseOutApiDocs(programFiles: string[])'; jest runs misc/api-doc.spec.ts exercising real doc extraction"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

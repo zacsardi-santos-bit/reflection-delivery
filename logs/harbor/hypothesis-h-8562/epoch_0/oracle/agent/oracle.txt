@@ -1,0 +1,4 @@
+patching file h/services/__init__.py
+patching file h/services/annotation_sync.py
+patching file h/services/search_index.py
+patching file h/tasks/indexer.py

@@ -1,0 +1,25 @@
+patching file pkg/cli/cmd/run/run_test.go
+patching file pkg/cli/kubernetes/portforward/application_watcher_test.go
+patching file pkg/cli/kubernetes/portforward/labels_test.go
+patching file pkg/cli/kubernetes/portforward/util_test.go
+patching file test/functional/shared/cli/cli_test.go
+# github.com/radius-project/radius/pkg/cli/kubernetes/portforward [github.com/radius-project/radius/pkg/cli/kubernetes/portforward.test]
+pkg/cli/kubernetes/portforward/application_watcher_test.go:42:24: undefined: CreateLabelSelectorForApplication
+pkg/cli/kubernetes/portforward/application_watcher_test.go:45:38: unknown field LabelSelector in struct literal of type Options
+pkg/cli/kubernetes/portforward/labels_test.go:28:19: undefined: CreateLabelSelectorForApplication
+pkg/cli/kubernetes/portforward/labels_test.go:34:18: undefined: CreateLabelSelectorForApplication
+pkg/cli/kubernetes/portforward/labels_test.go:42:19: undefined: CreateLabelSelectorForDashboard
+pkg/cli/kubernetes/portforward/util_test.go:178:24: undefined: CreateLabelSelectorForApplication
+# github.com/radius-project/radius/pkg/cli/cmd/run [github.com/radius-project/radius/pkg/cli/cmd/run.test]
+pkg/cli/cmd/run/run_test.go:168:39: undefined: portforward.CreateLabelSelectorForApplication
+pkg/cli/cmd/run/run_test.go:187:45: undefined: portforward.CreateLabelSelectorForDashboard
+pkg/cli/cmd/run/run_test.go:277:3: unknown field kubernetesClient in struct literal of type Runner
+pkg/cli/cmd/run/run_test.go:305:83: appPortforwardOptions.LabelSelector undefined (type "github.com/radius-project/radius/pkg/cli/kubernetes/portforward".Options has no field or method LabelSelector)
+pkg/cli/cmd/run/run_test.go:311:116: dashboardPortforwardOptions.LabelSelector undefined (type "github.com/radius-project/radius/pkg/cli/kubernetes/portforward".Options has no field or method LabelSelector)
+pkg/cli/cmd/run/run_test.go:363:39: undefined: portforward.CreateLabelSelectorForApplication
+pkg/cli/cmd/run/run_test.go:453:3: unknown field kubernetesClient in struct literal of type Runner
+pkg/cli/cmd/run/run_test.go:481:83: appPortforwardOptions.LabelSelector undefined (type "github.com/radius-project/radius/pkg/cli/kubernetes/portforward".Options has no field or method LabelSelector)
+pkg/cli/cmd/run/run_test.go:510:40: s.LabelSelector undefined (type "github.com/radius-project/radius/pkg/cli/kubernetes/portforward".Options has no field or method LabelSelector)
+FAIL	github.com/radius-project/radius/pkg/cli/cmd/run [build failed]
+FAIL	github.com/radius-project/radius/pkg/cli/kubernetes/portforward [build failed]
+reward=0 graded=30 found=30 failed=30 parsed=2 framework=go exit_code=1

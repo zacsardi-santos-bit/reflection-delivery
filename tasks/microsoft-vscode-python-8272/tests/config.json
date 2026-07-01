@@ -1,0 +1,23 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && TS_NODE_TRANSPILE_ONLY=true ./node_modules/.bin/mocha --require /workspace/logging-stub.js --require ts-node/register --require out/test/unittests.js --ui tdd src/test/debugger/extension/adapter/activator.unit.test.ts src/test/debugger/extension/adapter/logging.unit.test.ts",
+  "test_files": [
+    "src/test/debugger/extension/adapter/activator.unit.test.ts",
+    "src/test/debugger/extension/adapter/logging.unit.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "::Debugging - Adapter Factory and logger Registration Register Adapter Factory if inside the DA experiment",
+    "::Debugging - Adapter Factory and logger Registration Register a disposable item if inside the DA experiment",
+    "::Debugging - Adapter Factory and logger Registration Send experiment group telemetry if inside the DA experiment",
+    "::Debugging - Adapter Factory and logger Registration Don't register the Adapter Factory if not inside the DA experiment",
+    "::Debugging - Adapter Factory and logger Registration Don't register a disposable item if not inside the DA experiment",
+    "::Debugging - Adapter Factory and logger Registration Send control group telemetry if inside the DA experiment control group",
+    "::Debugging - Adapter Factory and logger Registration Don't send any telemetry if not inside the DA experiment nor control group",
+    "::Debugging - Session Logging Create logger using session without logToFile",
+    "::Debugging - Session Logging Create logger using session with logToFile set to false",
+    "::Debugging - Session Logging Create logger using session with logToFile set to true"
+  ],
+  "PASS_TO_PASS": []
+}

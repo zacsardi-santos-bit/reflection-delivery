@@ -1,0 +1,4 @@
+patching file pkg/pull/pull.go
+patching file pkg/upstream/replicated.go
+patching file pkg/util/caching-reader.go
+patching file pkg/util/extract.go

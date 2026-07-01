@@ -1,0 +1,23 @@
+{
+ "task": "seanmonstar-reqwest-2081",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds retry for h2 REFUSED_STREAM: 'if err.is_reset() && err.is_remote() && err.reason() == Some(h2::Reason::REFUSED_STREAM)'; F2P test 'highly_concurrent_requests_to_slow_http2_server_with_low_max_concurrent_streams' exercises real hang/queue behavior"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest modin/data_management/test/test_dispatcher.py modin/test/test_publisher.py -v --no-header -p no:cacheprovider && pytest modin/pandas/test/test_api.py -v --no-header -p no:cacheprovider",
+  "test_files": [
+    "modin/data_management/test/test_dispatcher.py",
+    "modin/pandas/test/test_api.py",
+    "modin/test/test_publisher.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "modin.pandas.test.test_api::test_top_level_api_equality",
+    "modin.pandas.test.test_api::test_dataframe_api_equality",
+    "modin.pandas.test.test_api::test_series_api_equality"
+  ],
+  "PASS_TO_PASS": []
+}

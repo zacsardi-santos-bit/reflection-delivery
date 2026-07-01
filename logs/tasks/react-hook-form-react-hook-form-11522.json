@@ -1,0 +1,23 @@
+{
+ "task": "react-hook-form-react-hook-form-11522",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds src/logic/createFormControl.ts, src/useSubscribe.ts and rewires useForm/useController/useWatch; F2P includes 'subscribe should subscribe to correct form state and prevent form re-render' + new subscribe.test.tsx"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

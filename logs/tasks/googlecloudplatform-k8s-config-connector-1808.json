@@ -1,0 +1,23 @@
+{
+ "task": "googlecloudplatform-k8s-config-connector-1808",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: '-port = flag.Int(\"port\", 50051,...)' -> '+port = flag.Int(\"port\", 8443,...)'; test.patch client dials '[::]:8443'; test builds+starts server then runs go test"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 24,
+  "shallow": true
+ }
+}

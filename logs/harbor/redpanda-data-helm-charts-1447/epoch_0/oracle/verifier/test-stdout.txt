@@ -1,0 +1,10 @@
+patching file charts/connectors/chart_test.go
+{"Time":"2026-06-29T15:28:02.544788841Z","Action":"start","Package":"github.com/redpanda-data/helm-charts/charts/connectors"}
+{"Time":"2026-06-29T15:28:02.63700718Z","Action":"run","Package":"github.com/redpanda-data/helm-charts/charts/connectors","Test":"TestServiceConfig"}
+{"Time":"2026-06-29T15:28:02.637099284Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/connectors","Test":"TestServiceConfig","Output":"=== RUN   TestServiceConfig\n"}
+{"Time":"2026-06-29T15:28:02.637249871Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/connectors","Test":"TestServiceConfig","Output":"--- PASS: TestServiceConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:28:02.637288362Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/connectors","Test":"TestServiceConfig","Elapsed":0}
+{"Time":"2026-06-29T15:28:02.637314014Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/connectors","Output":"PASS\n"}
+{"Time":"2026-06-29T15:28:02.639273019Z","Action":"output","Package":"github.com/redpanda-data/helm-charts/charts/connectors","Output":"ok  \tgithub.com/redpanda-data/helm-charts/charts/connectors\t0.094s\n"}
+{"Time":"2026-06-29T15:28:02.639350362Z","Action":"pass","Package":"github.com/redpanda-data/helm-charts/charts/connectors","Elapsed":0.095}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

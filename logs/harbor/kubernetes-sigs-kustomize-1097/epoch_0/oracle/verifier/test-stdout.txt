@@ -1,0 +1,14 @@
+patching file plugin/builtin/namespacetransformer/NamespaceTransformer_test.go
+{"Time":"2026-06-29T15:23:18.711964377Z","Action":"start","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer"}
+{"Time":"2026-06-29T15:23:18.777750074Z","Action":"run","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Test":"TestNamespaceTransformer1"}
+{"Time":"2026-06-29T15:23:18.777815932Z","Action":"output","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Test":"TestNamespaceTransformer1","Output":"=== RUN   TestNamespaceTransformer1\n"}
+{"Time":"2026-06-29T15:23:35.804840506Z","Action":"output","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Test":"TestNamespaceTransformer1","Output":"--- PASS: TestNamespaceTransformer1 (17.03s)\n"}
+{"Time":"2026-06-29T15:23:35.804922544Z","Action":"pass","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Test":"TestNamespaceTransformer1","Elapsed":17.03}
+{"Time":"2026-06-29T15:23:35.804965217Z","Action":"run","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Test":"TestNamespaceTransformerClusterLevelKinds"}
+{"Time":"2026-06-29T15:23:35.804994333Z","Action":"output","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Test":"TestNamespaceTransformerClusterLevelKinds","Output":"=== RUN   TestNamespaceTransformerClusterLevelKinds\n"}
+{"Time":"2026-06-29T15:23:37.898056367Z","Action":"output","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Test":"TestNamespaceTransformerClusterLevelKinds","Output":"--- PASS: TestNamespaceTransformerClusterLevelKinds (2.09s)\n"}
+{"Time":"2026-06-29T15:23:37.898206864Z","Action":"pass","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Test":"TestNamespaceTransformerClusterLevelKinds","Elapsed":2.09}
+{"Time":"2026-06-29T15:23:37.906238758Z","Action":"output","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:37.916855996Z","Action":"output","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Output":"ok  \tsigs.k8s.io/kustomize/plugin/builtin/namespacetransformer\t19.204s\n"}
+{"Time":"2026-06-29T15:23:37.918923868Z","Action":"pass","Package":"sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer","Elapsed":19.207}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

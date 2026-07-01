@@ -1,0 +1,23 @@
+{
+ "task": "kubevirt-kubevirt-2068",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden generic_device.go adds socket-deletion detection ('done chan struct{}', fsnotify-style restart) and retry/backoff in device_controller.go; test.patch adds 'It(\"Should stop if the device plugin socket file is deleted\")' and 'It(\"should restart the device plugin with delays if it returns errors"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 52,
+  "shallow": true
+ }
+}

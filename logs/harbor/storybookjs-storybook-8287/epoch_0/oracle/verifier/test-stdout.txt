@@ -1,0 +1,120 @@
+patching file addons/knobs/src/KnobManager.test.js
+patching file lib/client-api/src/hooks.test.js
+lerna notice cli v3.16.4
+lerna info filter [ '@storybook/addons', '@storybook/addon-knobs' ]
+lerna info Executing command in 2 packages: "yarn run prepare"
+lerna info run Ran npm script 'prepare' in '@storybook/addons' in 2.4s:
+yarn run v1.22.22
+$ node ../../scripts/prepare.js
+TSFILE: /workspace/repo/lib/addons/dist/types.d.ts
+TSFILE: /workspace/repo/lib/addons/dist/index.d.ts
+TSFILE: /workspace/repo/lib/addons/dist/hooks.d.ts
+TSFILE: /workspace/repo/lib/addons/dist/make-decorator.d.ts
+TSFILE: /workspace/repo/lib/addons/dist/storybook-channel-mock.d.ts
+TSFILE: /workspace/repo/lib/addons/dist/public_api.d.ts
+Built: @storybook/addons@5.3.0-alpha.7
+Done in 2.22s.
+lerna info run Ran npm script 'prepare' in '@storybook/addon-knobs' in 4.6s:
+yarn run v1.22.22
+$ node ../../scripts/prepare.js
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/types.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Text.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Number.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Color.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Boolean.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Object.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Select.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Radio.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Array.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Date.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Button.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Files.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Checkboxes.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/Options.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/types/index.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/type-defs.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/KnobStore.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/shared.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/converters.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/KnobManager.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/registerKnobs.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/index.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/PropForm.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/components/Panel.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/register.d.ts
+TSFILE: /workspace/repo/addons/knobs/dist/__types__/knob-test-cases.d.ts
+Built: @storybook/addon-knobs@5.3.0-alpha.7
+Done in 4.48s.
+lerna success run Ran npm script 'prepare' in 2 packages in 7.1s:
+lerna success - @storybook/addon-knobs
+lerna success - @storybook/addons
+jest-haste-map: Haste module naming collision: react-scripts
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/app/react/src/server/__mocks__/react-scripts-2-0-0/package.json
+    * <rootDir>/app/react/src/server/__mocks__/react-scripts-2-1-0/package.json
+
+PASS lib/client-api/src/hooks.test.js
+  Preview hooks
+    useEffect
+      ✓ triggers the effect from story function (3ms)
+      ✓ triggers the effect from decorator (1ms)
+      ✓ triggers the effect from decorator if story call comes before useEffect
+      ✓ retriggers the effect if no deps array is provided (1ms)
+      ✓ doesn't retrigger the effect if empty deps array is provided
+      ✓ doesn't retrigger the effect from decorator if story has changed (1ms)
+      ✓ doesn't retrigger the effect from decorator if story has changed and story call comes before useEffect
+      ✓ doesn't retrigger the effect from if decorator calls story twice (1ms)
+      ✓ retriggers the effect if some of the deps are changed
+      ✓ doesn't retrigger the effect if none of the deps are changed
+      ✓ performs cleanup when retriggering
+      ✓ doesn't perform cleanup when keeping the current effect (1ms)
+      ✓ performs cleanup when removing the decorator
+    useChannel
+      ✓ calls .on when rendering the decorator (1ms)
+      ✓ calls .removeListener when removing the decorator
+    useStoryContext
+      ✓ returns current context (1ms)
+    useParameter
+      ✓ will pull value from storyStore
+      ✓ will return default value (1ms)
+      ✓ will return undefined when no value is found
+    useMemo
+      ✓ performs the calculation
+      ✓ performs the calculation once if deps are unchanged
+      ✓ performs the calculation again if deps are changed (1ms)
+    useCallback
+      ✓ returns the callback
+      ✓ returns the previous callback reference if deps are unchanged
+      ✓ creates new callback reference if deps are changed (1ms)
+    useRef
+      ✓ attaches initial value
+      ✓ stores mutations
+    useState
+      ✓ sets initial state
+      ✓ calculates initial state
+      ✓ performs synchronous state updates
+      ✓ triggers only the last effect when updating state synchronously (5ms)
+      ✓ performs synchronous state updates with updater function (1ms)
+      ✓ performs asynchronous state updates
+    useReducer
+      ✓ sets initial state (1ms)
+      ✓ calculates initial state
+      ✓ performs synchronous state updates
+      ✓ performs asynchronous state updates (1ms)
+
+PASS addons/knobs/src/KnobManager.test.js
+  KnobManager
+    knob()
+      when the knob is present in the knobStore
+        ✓ should return the existing knob value when types match (2ms)
+        ✓ should update the existing knob options when types match
+        ✓ should return the new default knob value when type has changed (1ms)
+      when the knob is not present in the knobStore
+        ✓ should return the new default knob value when default has changed (1ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       41 passed, 41 total
+Snapshots:   0 total
+Time:        3.48s
+Ran all test suites matching /addons\/knobs\/src\/KnobManager.test.js|lib\/client-api\/src\/hooks.test.js/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":2,"numPassedTests":41,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":41,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746440891,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect triggers the effect from story function","location":null,"status":"passed","title":"triggers the effect from story function"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect triggers the effect from decorator","location":null,"status":"passed","title":"triggers the effect from decorator"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect triggers the effect from decorator if story call comes before useEffect","location":null,"status":"passed","title":"triggers the effect from decorator if story call comes before useEffect"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect retriggers the effect if no deps array is provided","location":null,"status":"passed","title":"retriggers the effect if no deps array is provided"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect doesn't retrigger the effect if empty deps array is provided","location":null,"status":"passed","title":"doesn't retrigger the effect if empty deps array is provided"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect doesn't retrigger the effect from decorator if story has changed","location":null,"status":"passed","title":"doesn't retrigger the effect from decorator if story has changed"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect doesn't retrigger the effect from decorator if story has changed and story call comes before useEffect","location":null,"status":"passed","title":"doesn't retrigger the effect from decorator if story has changed and story call comes before useEffect"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect doesn't retrigger the effect from if decorator calls story twice","location":null,"status":"passed","title":"doesn't retrigger the effect from if decorator calls story twice"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect retriggers the effect if some of the deps are changed","location":null,"status":"passed","title":"retriggers the effect if some of the deps are changed"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect doesn't retrigger the effect if none of the deps are changed","location":null,"status":"passed","title":"doesn't retrigger the effect if none of the deps are changed"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect performs cleanup when retriggering","location":null,"status":"passed","title":"performs cleanup when retriggering"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect doesn't perform cleanup when keeping the current effect","location":null,"status":"passed","title":"doesn't perform cleanup when keeping the current effect"},{"ancestorTitles":["Preview hooks","useEffect"],"failureMessages":[],"fullName":"Preview hooks useEffect performs cleanup when removing the decorator","location":null,"status":"passed","title":"performs cleanup when removing the decorator"},{"ancestorTitles":["Preview hooks","useChannel"],"failureMessages":[],"fullName":"Preview hooks useChannel calls .on when rendering the decorator","location":null,"status":"passed","title":"calls .on when rendering the decorator"},{"ancestorTitles":["Preview hooks","useChannel"],"failureMessages":[],"fullName":"Preview hooks useChannel calls .removeListener when removing the decorator","location":null,"status":"passed","title":"calls .removeListener when removing the decorator"},{"ancestorTitles":["Preview hooks","useStoryContext"],"failureMessages":[],"fullName":"Preview hooks useStoryContext returns current context","location":null,"status":"passed","title":"returns current context"},{"ancestorTitles":["Preview hooks","useParameter"],"failureMessages":[],"fullName":"Preview hooks useParameter will pull value from storyStore","location":null,"status":"passed","title":"will pull value from storyStore"},{"ancestorTitles":["Preview hooks","useParameter"],"failureMessages":[],"fullName":"Preview hooks useParameter will return default value","location":null,"status":"passed","title":"will return default value"},{"ancestorTitles":["Preview hooks","useParameter"],"failureMessages":[],"fullName":"Preview hooks useParameter will return undefined when no value is found","location":null,"status":"passed","title":"will return undefined when no value is found"},{"ancestorTitles":["Preview hooks","useMemo"],"failureMessages":[],"fullName":"Preview hooks useMemo performs the calculation","location":null,"status":"passed","title":"performs the calculation"},{"ancestorTitles":["Preview hooks","useMemo"],"failureMessages":[],"fullName":"Preview hooks useMemo performs the calculation once if deps are unchanged","location":null,"status":"passed","title":"performs the calculation once if deps are unchanged"},{"ancestorTitles":["Preview hooks","useMemo"],"failureMessages":[],"fullName":"Preview hooks useMemo performs the calculation again if deps are changed","location":null,"status":"passed","title":"performs the calculation again if deps are changed"},{"ancestorTitles":["Preview hooks","useCallback"],"failureMessages":[],"fullName":"Preview hooks useCallback returns the callback","location":null,"status":"passed","title":"returns the callback"},{"ancestorTitles":["Preview hooks","useCallback"],"failureMessages":[],"fullName":"Preview hooks useCallback returns the previous callback reference if deps are unchanged","location":null,"status":"passed","title":"returns the previous callback reference if deps are unchanged"},{"ancestorTitles":["Preview hooks","useCallback"],"failureMessages":[],"fullName":"Preview hooks useCallback creates new callback reference if deps are changed","location":null,"status":"passed","title":"creates new callback reference if deps are changed"},{"ancestorTitles":["Preview hooks","useRef"],"failureMessages":[],"fullName":"Preview hooks useRef attaches initial value","location":null,"status":"passed","title":"attaches initial value"},{"ancestorTitles":["Preview hooks","useRef"],"failureMessages":[],"fullName":"Preview hooks useRef stores mutations","location":null,"status":"passed","title":"stores mutations"},{"ancestorTitles":["Preview hooks","useState"],"failureMessages":[],"fullName":"Preview hooks useState sets initial state","location":null,"status":"passed","title":"sets initial state"},{"ancestorTitles":["Preview hooks","useState"],"failureMessages":[],"fullName":"Preview hooks useState calculates initial state","location":null,"status":"passed","title":"calculates initial state"},{"ancestorTitles":["Preview hooks","useState"],"failureMessages":[],"fullName":"Preview hooks useState performs synchronous state updates","location":null,"status":"passed","title":"performs synchronous state updates"},{"ancestorTitles":["Preview hooks","useState"],"failureMessages":[],"fullName":"Preview hooks useState triggers only the last effect when updating state synchronously","location":null,"status":"passed","title":"triggers only the last effect when updating state synchronously"},{"ancestorTitles":["Preview hooks","useState"],"failureMessages":[],"fullName":"Preview hooks useState performs synchronous state updates with updater function","location":null,"status":"passed","title":"performs synchronous state updates with updater function"},{"ancestorTitles":["Preview hooks","useState"],"failureMessages":[],"fullName":"Preview hooks useState performs asynchronous state updates","location":null,"status":"passed","title":"performs asynchronous state updates"},{"ancestorTitles":["Preview hooks","useReducer"],"failureMessages":[],"fullName":"Preview hooks useReducer sets initial state","location":null,"status":"passed","title":"sets initial state"},{"ancestorTitles":["Preview hooks","useReducer"],"failureMessages":[],"fullName":"Preview hooks useReducer calculates initial state","location":null,"status":"passed","title":"calculates initial state"},{"ancestorTitles":["Preview hooks","useReducer"],"failureMessages":[],"fullName":"Preview hooks useReducer performs synchronous state updates","location":null,"status":"passed","title":"performs synchronous state updates"},{"ancestorTitles":["Preview hooks","useReducer"],"failureMessages":[],"fullName":"Preview hooks useReducer performs asynchronous state updates","location":null,"status":"passed","title":"performs asynchronous state updates"}],"endTime":1782746444317,"message":"","name":"/workspace/repo/lib/client-api/src/hooks.test.js","startTime":1782746442042,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["KnobManager","knob()","when the knob is present in the knobStore"],"failureMessages":[],"fullName":"KnobManager knob() when the knob is present in the knobStore should return the existing knob value when types match","location":null,"status":"passed","title":"should return the existing knob value when types match"},{"ancestorTitles":["KnobManager","knob()","when the knob is present in the knobStore"],"failureMessages":[],"fullName":"KnobManager knob() when the knob is present in the knobStore should update the existing knob options when types match","location":null,"status":"passed","title":"should update the existing knob options when types match"},{"ancestorTitles":["KnobManager","knob()","when the knob is present in the knobStore"],"failureMessages":[],"fullName":"KnobManager knob() when the knob is present in the knobStore should return the new default knob value when type has changed","location":null,"status":"passed","title":"should return the new default knob value when type has changed"},{"ancestorTitles":["KnobManager","knob()","when the knob is not present in the knobStore"],"failureMessages":[],"fullName":"KnobManager knob() when the knob is not present in the knobStore should return the new default knob value when default has changed","location":null,"status":"passed","title":"should return the new default knob value when default has changed"}],"endTime":1782746444363,"message":"","name":"/workspace/repo/addons/knobs/src/KnobManager.test.js","startTime":1782746442042,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=41 found=41 failed=0 parsed=41 framework=jest exit_code=0

@@ -1,0 +1,1162 @@
+diff --git a/docs/source/openapi.json b/docs/source/openapi.json
+index 214b3204..f83e9d2b 100644
+--- a/docs/source/openapi.json
++++ b/docs/source/openapi.json
+@@ -1192,7 +1192,8 @@
+           "bool",
+           "list",
+           "audio",
+-          "image"
++          "image",
++          "datetime"
+         ]
+       },
+       "Histogram": {
+@@ -1213,6 +1214,24 @@
+           }
+         }
+       },
++      "DatetimeHistogram": {
++        "type": "object",
++        "required": ["hist", "bin_edges"],
++        "properties": {
++          "hist": {
++            "type": "array",
++            "items": {
++              "type": "integer"
++            }
++          },
++          "bin_edges": {
++            "type": "array",
++            "items": {
++              "type": "string"
++            }
++          }
++        }
++      },
+       "NumericalStatisticsItem": {
+         "type": "object",
+         "required": [
+@@ -1245,6 +1264,38 @@
+           }
+         }
+       },
++      "DatetimeStatisticsItem": {
++        "type": "object",
++        "required": [
++          "nan_count",
++          "nan_proportion",
++          "min",
++          "max",
++          "mean",
++          "median",
++          "std",
++          "histogram"
++        ],
++        "properties": {
++          "nan_count": {
++            "type": "integer"
++          },
++          "nan_proportion": {
++            "type": "number"
++          },
++          "min": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
++          "max": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
++          "mean": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
++          "median": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
++          "std": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
++          "histogram": {
++            "oneOf": [
++              { "$ref": "#/components/schemas/DatetimeHistogram" },
++              { "type": "null" }
++            ]
++          }
++        }
++      },
+       "CategoricalStatisticsItem": {
+         "type": "object",
+         "description": "note that fields 'no_label_count' and 'no_label_proportion' are not required, because some old entries still miss them, and we don't want to recompute all of them. See https://github.com/huggingface/dataset-viewer/issues/2573.",
+@@ -1296,6 +1347,9 @@
+           {
+             "$ref": "#/components/schemas/NumericalStatisticsItem"
+           },
++          {
++            "$ref": "#/components/schemas/DatetimeStatisticsItem"
++          },
+           {
+             "$ref": "#/components/schemas/CategoricalStatisticsItem"
+           },
+@@ -5941,6 +5995,375 @@
+                       "partial": false
+                     }
+                   },
++                  "A split (CL-ETM/datetimeevents) with a datetime column": {
++                    "summary": "Statistics on a split with datetime columns 'charttime', 'storetime' and 'value'. ",
++                    "description": "Try with https://datasets-server.huggingface.co/statistics?dataset=CL-ETM/datetimeevents&config=mnist&split=train.",
++                    "value": {
++                      "num_examples": 6653174,
++                      "statistics": [
++                          {
++                              "column_name": "caregiver_id",
++                              "column_type": "int",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "min": 45,
++                                  "max": 99872,
++                                  "mean": 49146.20367,
++                                  "median": 46354.0,
++                                  "std": 28893.09204,
++                                  "histogram": {
++                                      "hist": [
++                                          586864,
++                                          696061,
++                                          882127,
++                                          627295,
++                                          759981,
++                                          594546,
++                                          544977,
++                                          653948,
++                                          507192,
++                                          800183
++                                      ],
++                                      "bin_edges": [
++                                          45,
++                                          10028,
++                                          20011,
++                                          29994,
++                                          39977,
++                                          49960,
++                                          59943,
++                                          69926,
++                                          79909,
++                                          89892,
++                                          99872
++                                      ]
++                                  }
++                              }
++                          },
++                          {
++                              "column_name": "charttime",
++                              "column_type": "datetime",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "min": "2110-01-13 09:39:00",
++                                  "max": "2214-07-26 08:00:00",
++                                  "mean": "2153-03-20 23:15:24",
++                                  "median": "2153-01-19 04:19:30",
++                                  "std": "8691 days, 20:22:21.464930",
++                                  "histogram": {
++                                      "hist": [
++                                          644662,
++                                          824869,
++                                          883173,
++                                          884980,
++                                          861445,
++                                          863916,
++                                          838647,
++                                          664347,
++                                          156213,
++                                          30922
++                                      ],
++                                      "bin_edges": [
++                                          "2110-01-13 09:39:00",
++                                          "2120-06-27 07:05:07",
++                                          "2130-12-10 04:31:14",
++                                          "2141-05-24 01:57:21",
++                                          "2151-11-05 23:23:28",
++                                          "2162-04-19 20:49:35",
++                                          "2172-10-01 18:15:42",
++                                          "2183-03-16 15:41:49",
++                                          "2193-08-28 13:07:56",
++                                          "2204-02-11 10:34:03",
++                                          "2214-07-26 08:00:00"
++                                      ]
++                                  }
++                              }
++                          },
++                          {
++                              "column_name": "hadm_id",
++                              "column_type": "int",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "min": 20000094,
++                                  "max": 29999828,
++                                  "mean": 25027899.88926,
++                                  "median": 25052613.0,
++                                  "std": 2869146.55704,
++                                  "histogram": {
++                                      "hist": [
++                                          638196,
++                                          656157,
++                                          656168,
++                                          661133,
++                                          678335,
++                                          693220,
++                                          676587,
++                                          653053,
++                                          674626,
++                                          665699
++                                      ],
++                                      "bin_edges": [
++                                          20000094,
++                                          21000068,
++                                          22000042,
++                                          23000016,
++                                          23999990,
++                                          24999964,
++                                          25999938,
++                                          26999912,
++                                          27999886,
++                                          28999860,
++                                          29999828
++                                      ]
++                                  }
++                              }
++                          },
++                          {
++                              "column_name": "itemid",
++                              "column_type": "int",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "min": 224183,
++                                  "max": 230120,
++                                  "mean": 225487.4805,
++                                  "median": 224290.0,
++                                  "std": 1820.04267,
++                                  "histogram": {
++                                      "hist": [
++                                          3742726,
++                                          568047,
++                                          1012645,
++                                          75427,
++                                          21011,
++                                          41780,
++                                          311155,
++                                          100074,
++                                          249544,
++                                          530765
++                                      ],
++                                      "bin_edges": [
++                                          224183,
++                                          224777,
++                                          225371,
++                                          225965,
++                                          226559,
++                                          227153,
++                                          227747,
++                                          228341,
++                                          228935,
++                                          229529,
++                                          230120
++                                      ]
++                                  }
++                              }
++                          },
++                          {
++                              "column_name": "stay_id",
++                              "column_type": "int",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "min": 30000153,
++                                  "max": 39999858,
++                                  "mean": 34988877.57506,
++                                  "median": 34997302.0,
++                                  "std": 2873138.27766,
++                                  "histogram": {
++                                      "hist": [
++                                          669019,
++                                          638622,
++                                          695479,
++                                          665010,
++                                          659205,
++                                          659496,
++                                          696313,
++                                          662500,
++                                          671230,
++                                          636300
++                                      ],
++                                      "bin_edges": [
++                                          30000153,
++                                          31000124,
++                                          32000095,
++                                          33000066,
++                                          34000037,
++                                          35000008,
++                                          35999979,
++                                          36999950,
++                                          37999921,
++                                          38999892,
++                                          39999858
++                                      ]
++                                  }
++                              }
++                          },
++                          {
++                              "column_name": "storetime",
++                              "column_type": "datetime",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "min": "2110-01-13 13:13:00",
++                                  "max": "2214-07-26 09:20:00",
++                                  "mean": "2153-03-20 23:57:17",
++                                  "median": "2153-01-19 03:42:00",
++                                  "std": "8691 days, 20:22:32.902370",
++                                  "histogram": {
++                                      "hist": [
++                                          644728,
++                                          824803,
++                                          883215,
++                                          884951,
++                                          861438,
++                                          863915,
++                                          838652,
++                                          664336,
++                                          156214,
++                                          30922
++                                      ],
++                                      "bin_edges": [
++                                          "2110-01-13 13:13:00",
++                                          "2120-06-27 10:25:43",
++                                          "2130-12-10 07:38:26",
++                                          "2141-05-24 04:51:09",
++                                          "2151-11-06 02:03:52",
++                                          "2162-04-19 23:16:35",
++                                          "2172-10-01 20:29:18",
++                                          "2183-03-16 17:42:01",
++                                          "2193-08-28 14:54:44",
++                                          "2204-02-11 12:07:27",
++                                          "2214-07-26 09:20:00"
++                                      ]
++                                  }
++                              }
++                          },
++                          {
++                              "column_name": "subject_id",
++                              "column_type": "int",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "min": 10000032,
++                                  "max": 16657691,
++                                  "mean": 13340551.62433,
++                                  "median": 13334004.0,
++                                  "std": 1927957.39956,
++                                  "histogram": {
++                                      "hist": [
++                                          638347,
++                                          684908,
++                                          691450,
++                                          631212,
++                                          672810,
++                                          659625,
++                                          641987,
++                                          654011,
++                                          702989,
++                                          675835
++                                      ],
++                                      "bin_edges": [
++                                          10000032,
++                                          10665798,
++                                          11331564,
++                                          11997330,
++                                          12663096,
++                                          13328862,
++                                          13994628,
++                                          14660394,
++                                          15326160,
++                                          15991926,
++                                          16657691
++                                      ]
++                                  }
++                              }
++                          },
++                          {
++                              "column_name": "value",
++                              "column_type": "datetime",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "min": "2109-08-02 00:00:00",
++                                  "max": "2214-07-24 09:57:00",
++                                  "mean": "2153-03-17 00:32:04",
++                                  "median": "2153-01-15 00:00:00",
++                                  "std": "8691 days, 20:07:56.642090",
++                                  "histogram": {
++                                      "hist": [
++                                          611811,
++                                          820557,
++                                          897262,
++                                          880309,
++                                          876200,
++                                          860348,
++                                          845238,
++                                          673106,
++                                          157352,
++                                          30991
++                                      ],
++                                      "bin_edges": [
++                                          "2109-08-02 00:00:00",
++                                          "2120-01-31 03:23:43",
++                                          "2130-07-31 06:47:26",
++                                          "2141-01-28 10:11:09",
++                                          "2151-07-29 13:34:52",
++                                          "2162-01-26 16:58:35",
++                                          "2172-07-26 20:22:18",
++                                          "2183-01-24 23:46:01",
++                                          "2193-07-25 03:09:44",
++                                          "2204-01-24 06:33:27",
++                                          "2214-07-24 09:57:00"
++                                      ]
++                                  }
++                              }
++                          },
++                          {
++                              "column_name": "valueuom",
++                              "column_type": "string_label",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "no_label_count": 0,
++                                  "no_label_proportion": 0.0,
++                                  "n_unique": 2,
++                                  "frequencies": {
++                                      "Date and Time": 1885855,
++                                      "Date": 4767319
++                                  }
++                              }
++                          },
++                          {
++                              "column_name": "warning",
++                              "column_type": "int",
++                              "column_statistics": {
++                                  "nan_count": 0,
++                                  "nan_proportion": 0.0,
++                                  "min": 0,
++                                  "max": 1,
++                                  "mean": 0.00028,
++                                  "median": 0.0,
++                                  "std": 0.01674,
++                                  "histogram": {
++                                      "hist": [
++                                          6651308,
++                                          1866
++                                      ],
++                                      "bin_edges": [
++                                          0,
++                                          1,
++                                          1
++                                      ]
++                                  }
++                              }
++                          }
++                      ],
++                      "partial": true
++                    }
++                  },
+                   "A split (nyu-mll/glue) with a string (text) column": {
+                     "summary": "Statistics on a string column. The column 'hypothesis' contains more than 30 different strings, so the statistics are a histogram of the string lengths.",
+                     "description": "Try with https://datasets-server.huggingface.co/statistics?dataset=nyu-mll/glue&config=ax&split=test.",
+diff --git a/docs/source/statistics.md b/docs/source/statistics.md
+index 3b061c01..15e820da 100644
+--- a/docs/source/statistics.md
++++ b/docs/source/statistics.md
+@@ -165,7 +165,7 @@ The response JSON contains three keys:
+ 
+ ## Response structure by data type
+ 
+-Currently, statistics are supported for strings, float and integer numbers, lists, audio and image data and the special [`datasets.ClassLabel`](https://huggingface.co/docs/datasets/package_reference/main_classes#datasets.ClassLabel) feature type of the [`datasets`](https://huggingface.co/docs/datasets/) library.
++Currently, statistics are supported for strings, float and integer numbers, lists, datetimes, audio and image data and the special [`datasets.ClassLabel`](https://huggingface.co/docs/datasets/package_reference/main_classes#datasets.ClassLabel) feature type of the [`datasets`](https://huggingface.co/docs/datasets/) library.
+ 
+ `column_type` in response can be one of the following values:
+ 
+@@ -178,6 +178,7 @@ Currently, statistics are supported for strings, float and integer numbers, list
+ * `list` - for lists of any other data types (including lists)
+ * `audio` - for audio data
+ * `image` - for image data
++* `datetime` - for datetime data 
+ 
+ ### `class_label`
+ 
+@@ -216,7 +217,7 @@ This type represents categorical data encoded as [`ClassLabel`](https://huggingf
+ 
+ The following measures are returned for float data types:
+ 
+-* minimum, maximum, mean, and standard deviation values
++* minimum, maximum, mean, median, and standard deviation values
+ * number and proportion of `null` and `NaN` values (`NaN` values are treated as `null`)
+ * histogram with 10 bins
+ 
+@@ -273,7 +274,7 @@ The following measures are returned for float data types:
+ 
+ The following measures are returned for integer data types:
+ 
+-* minimum, maximum, mean, and standard deviation values
++* minimum, maximum, mean, median, and standard deviation values
+ * number and proportion of `null` values
+ * histogram with less than or equal to 10 bins
+ 
+@@ -377,7 +378,7 @@ If the proportion of unique values in a string column within requested split is
+ 
+ If string column does not satisfy the conditions to be treated as a `string_label`, it is considered to be a column containing texts and response contains statistics over text lengths which are calculated by character number. The following measures are computed:
+ 
+-* minimum, maximum, mean, and standard deviation of text lengths
++* minimum, maximum, mean, median, and standard deviation of text lengths
+ * number and proportion of `null` values
+ * histogram of text lengths with 10 bins
+ 
+@@ -434,7 +435,7 @@ If string column does not satisfy the conditions to be treated as a `string_labe
+ 
+ For lists, the distribution of their lengths is computed. The following measures are returned:
+ 
+-* minimum, maximum, mean, and standard deviation of lists lengths
++* minimum, maximum, mean, median, and standard deviation of lists lengths
+ * number and proportion of `null` values
+ * histogram of lists lengths with up to 10 bins
+ 
+@@ -480,7 +481,7 @@ Note that dictionaries of lists are not supported.
+ 
+ For audio data, the distribution of audio files durations is computed. The following measures are returned:
+ 
+-* minimum, maximum, mean, and standard deviation of audio files durations
++* minimum, maximum, mean, median, and standard deviation of audio files durations
+ * number and proportion of `null` values
+ * histogram of audio files durations with 10 bins
+ 
+@@ -539,7 +540,7 @@ For audio data, the distribution of audio files durations is computed. The follo
+ 
+ For image data, the distribution of images widths is computed. The following measures are returned:
+ 
+-* minimum, maximum, mean, and standard deviation of widths of image files
++* minimum, maximum, mean, median, and standard deviation of widths of image files
+ * number and proportion of `null` values
+ * histogram of images widths with 10 bins
+ 
+@@ -591,3 +592,61 @@ For image data, the distribution of images widths is computed. The following mea
+ 
+ </p>
+ </details>
++
++### datetime
++
++The distribution of datetime is computed. The following measures are returned:
++
++* minimum, maximum, mean, median, and standard deviation of datetimes represented as strings with precision up to seconds
++* number and proportion of `null` values
++* histogram of datetimes with 10 bins
++
++<details><summary>Example </summary>
++<p>
++
++```json
++{
++    "column_name": "date",
++    "column_type": "datetime",
++    "column_statistics": {
++        "nan_count": 0,
++        "nan_proportion": 0.0,
++        "min": "2013-05-18 04:54:11",
++        "max": "2013-06-20 10:01:41",
++        "mean": "2013-05-27 18:03:39",
++        "median": "2013-05-23 11:55:50",
++        "std": "11 days, 4:57:32.322450",
++        "histogram": {
++            "hist": [
++                318776,
++                393036,
++                173904,
++                0,
++                0,
++                0,
++                0,
++                0,
++                0,
++                206284
++            ],
++            "bin_edges": [
++                "2013-05-18 04:54:11",
++                "2013-05-21 12:36:57",
++                "2013-05-24 20:19:43",
++                "2013-05-28 04:02:29",
++                "2013-05-31 11:45:15",
++                "2013-06-03 19:28:01",
++                "2013-06-07 03:10:47",
++                "2013-06-10 10:53:33",
++                "2013-06-13 18:36:19",
++                "2013-06-17 02:19:05",
++                "2013-06-20 10:01:41"
++            ]
++        }
++    }
++}
++```
++
++</p>
++</details>
++
+diff --git a/libs/libcommon/pyproject.toml b/libs/libcommon/pyproject.toml
+index a4c24250..391364d9 100644
+--- a/libs/libcommon/pyproject.toml
++++ b/libs/libcommon/pyproject.toml
+@@ -77,6 +77,7 @@ module = [
+     "moto.*",
+     "aiobotocore.*",
+     "requests.*",
++    "dateutil.*"
+ ]
+ ignore_missing_imports = true
+ 
+diff --git a/libs/libcommon/src/libcommon/utils.py b/libs/libcommon/src/libcommon/utils.py
+index c85079b6..c86077d5 100644
+--- a/libs/libcommon/src/libcommon/utils.py
++++ b/libs/libcommon/src/libcommon/utils.py
+@@ -15,6 +15,7 @@ from typing import Any, Optional, TypeVar, Union, cast
+ import orjson
+ import pandas as pd
+ import pytz
++from dateutil import parser
+ from huggingface_hub import constants, hf_hub_download
+ from requests.exceptions import ReadTimeout
+ 
+@@ -93,6 +94,79 @@ def get_datetime(days: Optional[float] = None) -> datetime:
+     return date
+ 
+ 
++def is_datetime(string: str) -> bool:
++    try:
++        parser.parse(string)
++        return True
++    except ValueError:
++        return False
++
++
++def get_timezone(string: str) -> Any:
++    return parser.parse(string).tzinfo
++
++
++def datetime_to_string(dt: datetime, format: str = "%Y-%m-%d %H:%M:%S%z") -> str:
++    if dt.utcoffset() == timedelta(0):
++        format = "%Y-%m-%d %H:%M:%S"  # do not display +0000
++    return dt.strftime(format)
++
++
++def identify_datetime_format(datetime_string: str) -> Optional[str]:
++    # Common datetime formats
++    common_formats = [
++        "%Y-%m-%dT%H:%M:%S%Z",
++        "%Y-%m-%dT%H:%M:%S%z",
++        "%Y-%m-%dT%H:%M:%S",
++        "%Y-%m-%dT%H:%M:%S.%f",
++        "%Y-%m-%d %H:%M:%S%Z",
++        "%Y-%m-%d %H:%M:%S%z",
++        "%Y-%m-%d %H:%M:%S",
++        "%Y-%m-%d %H:%M",
++        "%Y-%m-%d",
++        "%d-%m-%Y %H:%M:%S%Z",
++        "%d-%m-%Y %H:%M:%S%z",
++        "%d-%m-%Y %H:%M:%S",
++        "%d-%m-%Y %H:%M",
++        "%d-%m-%Y",
++        "%m-%d-%Y %H:%M:%S%Z",
++        "%m-%d-%Y %H:%M:%S%z",
++        "%m-%d-%Y %H:%M:%S",
++        "%m-%d-%Y %H:%M",
++        "%m-%d-%Y",
++        "%Y/%m/%d %H:%M:%S%Z",
++        "%Y/%m/%d %H:%M:%S%z",
++        "%Y/%m/%d %H:%M:%S",
++        "%Y/%m/%d %H:%M",
++        "%Y/%m/%d",
++        "%d/%m/%Y %H:%M:%S%Z",
++        "%d/%m/%Y %H:%M:%S%z",
++        "%d/%m/%Y %H:%M:%S",
++        "%d/%m/%Y %H:%M",
++        "%d/%m/%Y",
++        "%m/%d/%Y %H:%M:%S%Z",
++        "%m/%d/%Y %H:%M:%S%z",
++        "%m/%d/%Y %H:%M:%S",
++        "%m/%d/%Y %H:%M",
++        "%m/%d/%Y",
++        "%B %d, %Y",
++        "%d %B %Y",
++        "%m-%Y",
++        "%Y-%m",
++        "%m/%Y",
++        "%Y/%m",
++        "%Y",
++    ]
++
++    for fmt in common_formats:
++        try:
++            _ = datetime.strptime(datetime_string, fmt)
++            return fmt
++        except ValueError:
++            continue
++    return None
++
++
+ def get_duration(started_at: datetime) -> float:
+     """
+     Get time in seconds that has passed from `started_at` until now.
+diff --git a/services/worker/README.md b/services/worker/README.md
+index b7722ed1..a1ae1a75 100644
+--- a/services/worker/README.md
++++ b/services/worker/README.md
+@@ -116,6 +116,7 @@ The response has three fields: `num_examples`, `statistics`, and `partial`. `par
+ * `list` - for lists of other data types (including lists)
+ * `audio` - for audio data
+ * `image` - for image data
++* `datetime` - for datetime data
+ 
+ `column_statistics` content depends on the feature type, see examples below.
+ ##### class_label
+@@ -591,6 +592,59 @@ Shows distribution of image files widths.
+ </p>
+ </details>
+ 
++
++##### datetime
++
++Shows distribution of datetimes.
++
++<details><summary>example: </summary>
++<p>
++
++```python
++{
++    "column_name": "date",
++    "column_type": "datetime",
++    "column_statistics": {
++        "nan_count": 0,
++        "nan_proportion": 0.0,
++        "min": "2013-05-18 04:54:11",
++        "max": "2013-06-20 10:01:41",
++        "mean": "2013-05-27 18:03:39",
++        "median": "2013-05-23 11:55:50",
++        "std": "11 days, 4:57:32.322450",
++        "histogram": {
++            "hist": [
++                318776,
++                393036,
++                173904,
++                0,
++                0,
++                0,
++                0,
++                0,
++                0,
++                206284
++            ],
++            "bin_edges": [
++                "2013-05-18 04:54:11",
++                "2013-05-21 12:36:57",
++                "2013-05-24 20:19:43",
++                "2013-05-28 04:02:29",
++                "2013-05-31 11:45:15",
++                "2013-06-03 19:28:01",
++                "2013-06-07 03:10:47",
++                "2013-06-10 10:53:33",
++                "2013-06-13 18:36:19",
++                "2013-06-17 02:19:05",
++                "2013-06-20 10:01:41"
++            ]
++        }
++    }
++}
++```
++</p>
++</details>
++
+ ### Splits worker
+ 
+ The `splits` worker does not need any additional configuration.
+diff --git a/services/worker/src/worker/job_runners/split/descriptive_statistics.py b/services/worker/src/worker/job_runners/split/descriptive_statistics.py
+index 95158225..468f9bb9 100644
+--- a/services/worker/src/worker/job_runners/split/descriptive_statistics.py
++++ b/services/worker/src/worker/job_runners/split/descriptive_statistics.py
+@@ -4,6 +4,7 @@ import logging
+ from collections import Counter
+ from pathlib import Path
+ from typing import Any, Optional, TypedDict, Union
++from unittest.mock import patch
+ 
+ import polars as pl
+ import pyarrow.parquet as pq
+@@ -39,6 +40,7 @@ from worker.statistics_utils import (
+     AudioColumn,
+     BoolColumn,
+     ClassLabelColumn,
++    DatetimeColumn,
+     FloatColumn,
+     ImageColumn,
+     IntColumn,
+@@ -57,7 +59,15 @@ class SplitDescriptiveStatisticsResponse(TypedDict):
+ 
+ 
+ SupportedColumns = Union[
+-    ClassLabelColumn, IntColumn, FloatColumn, StringColumn, BoolColumn, ListColumn, AudioColumn, ImageColumn
++    ClassLabelColumn,
++    IntColumn,
++    FloatColumn,
++    StringColumn,
++    BoolColumn,
++    ListColumn,
++    AudioColumn,
++    ImageColumn,
++    DatetimeColumn,
+ ]
+ 
+ 
+@@ -215,29 +225,34 @@ def compute_descriptive_statistics_response(
+                 return ListColumn(feature_name=dataset_feature_name, n_samples=num_examples)
+ 
+         if isinstance(dataset_feature, dict):
+-            if dataset_feature.get("_type") == "ClassLabel":
++            _type = dataset_feature.get("_type")
++            if _type == "ClassLabel":
+                 return ClassLabelColumn(
+                     feature_name=dataset_feature_name, n_samples=num_examples, feature_dict=dataset_feature
+                 )
+ 
+-            if dataset_feature.get("_type") == "Audio":
++            if _type == "Audio":
+                 return AudioColumn(feature_name=dataset_feature_name, n_samples=num_examples)
+ 
+-            if dataset_feature.get("_type") == "Image":
++            if _type == "Image":
+                 return ImageColumn(feature_name=dataset_feature_name, n_samples=num_examples)
+ 
+-            if dataset_feature.get("_type") == "Value":
+-                if dataset_feature.get("dtype") in INTEGER_DTYPES:
++            if _type == "Value":
++                dtype = dataset_feature.get("dtype", "")
++                if dtype in INTEGER_DTYPES:
+                     return IntColumn(feature_name=dataset_feature_name, n_samples=num_examples)
+ 
+-                if dataset_feature.get("dtype") in FLOAT_DTYPES:
++                if dtype in FLOAT_DTYPES:
+                     return FloatColumn(feature_name=dataset_feature_name, n_samples=num_examples)
+ 
+-                if dataset_feature.get("dtype") in STRING_DTYPES:
++                if dtype in STRING_DTYPES:
+                     return StringColumn(feature_name=dataset_feature_name, n_samples=num_examples)
+ 
+-                if dataset_feature.get("dtype") == "bool":
++                if dtype == "bool":
+                     return BoolColumn(feature_name=dataset_feature_name, n_samples=num_examples)
++
++                if dtype.startswith("timestamp"):
++                    return DatetimeColumn(feature_name=dataset_feature_name, n_samples=num_examples)
+         return None
+ 
+     columns: list[SupportedColumns] = []
+@@ -249,7 +264,7 @@ def compute_descriptive_statistics_response(
+     if not columns:
+         raise NoSupportedFeaturesError(
+             "No columns for statistics computation found. Currently supported feature types are: "
+-            f"{NUMERICAL_DTYPES}, {STRING_DTYPES}, ClassLabel, list/Sequence and bool. "
++            f"{NUMERICAL_DTYPES}, {STRING_DTYPES}, ClassLabel, Image, Audio, list/Sequence, datetime and bool. "
+         )
+ 
+     column_names_str = ", ".join([column.name for column in columns])
+@@ -259,25 +274,30 @@ def compute_descriptive_statistics_response(
+         f"\nColumn types counts: {column_counts}. "
+     )
+ 
+-    for column in columns:
+-        if isinstance(column, AudioColumn) or isinstance(column, ImageColumn):
+-            column_stats = column.compute_and_prepare_response(local_parquet_split_directory)
+-        else:
+-            try:
+-                data = pl.DataFrame._from_arrow(
+-                    pq.read_table(
+-                        local_parquet_split_directory,
+-                        columns=[column.name],
+-                        schema=Features.from_dict({column.name: features[column.name]}).arrow_schema,
++    with patch.object(
++        StringColumn,
++        "ENABLE_DATETIME",
++        StringColumn.ENABLE_DATETIME or dataset.startswith("lhoestq/") or dataset.startswith("cfahlgren1/"),
++    ):  # TODO(QL): enable for everyone
++        for column in columns:
++            if isinstance(column, AudioColumn) or isinstance(column, ImageColumn):
++                column_stats = column.compute_and_prepare_response(local_parquet_split_directory)
++            else:
++                try:
++                    data = pl.DataFrame._from_arrow(
++                        pq.read_table(
++                            local_parquet_split_directory,
++                            columns=[column.name],
++                            schema=Features.from_dict({column.name: features[column.name]}).arrow_schema,
++                        )
+                     )
+-                )
+-            except Exception as error:
+-                raise PolarsParquetReadError(
+-                    f"Error reading parquet file(s) at {local_parquet_split_directory=}, columns=[{column.name}]: {error}",
+-                    error,
+-                )
+-            column_stats = column.compute_and_prepare_response(data)
+-        all_stats.append(column_stats)
++                except Exception as error:
++                    raise PolarsParquetReadError(
++                        f"Error reading parquet file(s) at {local_parquet_split_directory=}, columns=[{column.name}]: {error}",
++                        error,
++                    )
++                column_stats = column.compute_and_prepare_response(data)
++            all_stats.append(column_stats)
+ 
+     if not all_stats:
+         raise NoSupportedFeaturesError(
+diff --git a/services/worker/src/worker/statistics_utils.py b/services/worker/src/worker/statistics_utils.py
+index f2651bb0..6a6bfb31 100644
+--- a/services/worker/src/worker/statistics_utils.py
++++ b/services/worker/src/worker/statistics_utils.py
+@@ -1,5 +1,6 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # Copyright 2024 The HuggingFace Authors.
++import datetime
+ import enum
+ import io
+ import logging
+@@ -14,6 +15,7 @@ from datasets import Features
+ from libcommon.exceptions import (
+     StatisticsComputationError,
+ )
++from libcommon.utils import datetime_to_string, get_timezone, identify_datetime_format, is_datetime
+ from PIL import Image
+ from tqdm.contrib.concurrent import thread_map
+ 
+@@ -50,6 +52,7 @@ class ColumnType(str, enum.Enum):
+     STRING_TEXT = "string_text"
+     AUDIO = "audio"
+     IMAGE = "image"
++    DATETIME = "datetime"
+ 
+ 
+ class Histogram(TypedDict):
+@@ -57,17 +60,33 @@ class Histogram(TypedDict):
+     bin_edges: list[Union[int, float]]
+ 
+ 
++class DatetimeHistogram(TypedDict):
++    hist: list[int]
++    bin_edges: list[str]  # edges are string representations of dates
++
++
+ class NumericalStatisticsItem(TypedDict):
+     nan_count: int
+     nan_proportion: float
+-    min: Optional[float]  # might be None in very rare cases when the whole column is only None values
+-    max: Optional[float]
++    min: Optional[Union[int, float]]  # might be None in very rare cases when the whole column is only None values
++    max: Optional[Union[int, float]]
+     mean: Optional[float]
+     median: Optional[float]
+     std: Optional[float]
+     histogram: Optional[Histogram]
+ 
+ 
++class DatetimeStatisticsItem(TypedDict):
++    nan_count: int
++    nan_proportion: float
++    min: Optional[str]  # might be None in very rare cases when the whole column is only None values
++    max: Optional[str]
++    mean: Optional[str]
++    median: Optional[str]
++    std: Optional[str]  # string representation of timedelta
++    histogram: Optional[DatetimeHistogram]
++
++
+ class CategoricalStatisticsItem(TypedDict):
+     nan_count: int
+     nan_proportion: float
+@@ -83,7 +102,9 @@ class BoolStatisticsItem(TypedDict):
+     frequencies: dict[str, int]
+ 
+ 
+-SupportedStatistics = Union[NumericalStatisticsItem, CategoricalStatisticsItem, BoolStatisticsItem]
++SupportedStatistics = Union[
++    NumericalStatisticsItem, CategoricalStatisticsItem, BoolStatisticsItem, DatetimeStatisticsItem
++]
+ 
+ 
+ class StatisticsPerColumnItem(TypedDict):
+@@ -449,6 +470,7 @@ class IntColumn(Column):
+ 
+ class StringColumn(Column):
+     transform_column = IntColumn
++    ENABLE_DATETIME = False
+ 
+     @staticmethod
+     def is_class(n_unique: int, n_samples: int) -> bool:
+@@ -456,6 +478,13 @@ class StringColumn(Column):
+             n_unique / n_samples <= MAX_PROPORTION_STRING_LABELS and n_unique <= MAX_NUM_STRING_LABELS
+         ) or n_unique <= NUM_BINS
+ 
++    @staticmethod
++    def is_datetime(data: pl.DataFrame, column_name: str) -> bool:
++        """Check if first 100 non-null samples in a column match datetime format."""
++
++        values = data.filter(pl.col(column_name).is_not_null()).head(100)[column_name].to_list()
++        return all(is_datetime(value) for value in values) if len(values) > 0 else False
++
+     @classmethod
+     def compute_transformed_data(
+         cls,
+@@ -473,9 +502,23 @@ class StringColumn(Column):
+         data: pl.DataFrame,
+         column_name: str,
+         n_samples: int,
+-    ) -> Union[CategoricalStatisticsItem, NumericalStatisticsItem]:
++    ) -> Union[CategoricalStatisticsItem, NumericalStatisticsItem, DatetimeStatisticsItem]:
+         nan_count, nan_proportion = nan_count_proportion(data, column_name, n_samples)
+         n_unique = data[column_name].n_unique()
++        if cls.ENABLE_DATETIME and cls.is_datetime(data, column_name):
++            try:
++                stats: DatetimeStatisticsItem = DatetimeColumn.compute_statistics(
++                    data,
++                    column_name=column_name,
++                    n_samples=n_samples,
++                )
++                return stats
++            except Exception as error:
++                logging.info(
++                    f"Column {column_name} is datetime, but datetime stats compute failed ({error}), "
++                    f"compute string stats instead. "
++                )
++
+         if cls.is_class(n_unique, n_samples):
+             labels2counts: dict[str, int] = value_counts(data, column_name) if nan_count != n_samples else {}
+             logging.debug(f"{n_unique=} {nan_count=} {nan_proportion=} {labels2counts=}")
+@@ -499,7 +542,12 @@ class StringColumn(Column):
+ 
+     def compute_and_prepare_response(self, data: pl.DataFrame) -> StatisticsPerColumnItem:
+         stats = self.compute_statistics(data, column_name=self.name, n_samples=self.n_samples)
+-        string_type = ColumnType.STRING_LABEL if "frequencies" in stats else ColumnType.STRING_TEXT
++        if "frequencies" in stats:
++            string_type = ColumnType.STRING_LABEL
++        elif isinstance(stats["histogram"]["bin_edges"][0], str):
++            string_type = ColumnType.DATETIME
++        else:
++            string_type = ColumnType.STRING_TEXT
+         return StatisticsPerColumnItem(
+             column_name=self.name,
+             column_type=string_type,
+@@ -699,3 +747,111 @@ class ImageColumn(MediaColumn):
+     @classmethod
+     def transform(cls, example: Optional[Union[bytes, dict[str, Any]]]) -> Optional[int]:
+         return cls.get_width(example)
++
++
++class DatetimeColumn(Column):
++    transform_column = IntColumn
++
++    @classmethod
++    def compute_transformed_data(
++        cls,
++        data: pl.DataFrame,
++        column_name: str,
++        transformed_column_name: str,
++        min_date: datetime.datetime,
++    ) -> pl.DataFrame:
++        return data.select((pl.col(column_name) - min_date).dt.total_seconds().alias(transformed_column_name))
++
++    @staticmethod
++    def shift_and_convert_to_string(base_date: datetime.datetime, seconds: Union[int, float]) -> str:
++        return datetime_to_string(base_date + datetime.timedelta(seconds=seconds))
++
++    @staticmethod
++    def get_format(data: pl.DataFrame, column_name: str) -> str:
++        values = data.filter(pl.col(column_name).is_not_null()).head(100)[column_name].to_list()
++        formats = [identify_datetime_format(value) for value in values]
++        if len(set(formats)) == 1:
++            datetime_format = formats[0]
++            if not datetime_format:
++                raise StatisticsComputationError(
++                    f"Values are datetime but format is not identified. Example: {values[0]}. "
++                )
++        else:
++            raise StatisticsComputationError(f"Multiple datetime formats detected: {set(formats)}. ")
++
++        return datetime_format
++
++    @classmethod
++    def _compute_statistics(
++        cls,
++        data: pl.DataFrame,
++        column_name: str,
++        n_samples: int,
++    ) -> DatetimeStatisticsItem:
++        nan_count, nan_proportion = nan_count_proportion(data, column_name, n_samples)
++        if nan_count == n_samples:  # all values are None
++            return DatetimeStatisticsItem(
++                nan_count=n_samples,
++                nan_proportion=1.0,
++                min=None,
++                max=None,
++                mean=None,
++                median=None,
++                std=None,
++                histogram=None,
++            )
++        original_timezone = None
++        if isinstance(data[column_name].dtype, pl.String):
++            # let polars identify format itself. provide manually in case of error
++            try:
++                original_timezone = get_timezone(data[column_name][0])
++                data = data.with_columns(pl.col(column_name).str.to_datetime())
++            except pl.ComputeError:
++                datetime_format = cls.get_format(data, column_name)
++                data = data.with_columns(pl.col(column_name).str.to_datetime(format=datetime_format))
++                original_timezone = None
++
++        min_date: datetime.datetime = data[column_name].min()  # type: ignore   # mypy infers type of datetime column .min() incorrectly
++        timedelta_column_name = f"{column_name}_timedelta"
++        # compute distribution of time passed from min date in **seconds**
++        timedelta_df = cls.compute_transformed_data(data, column_name, timedelta_column_name, min_date)
++        timedelta_stats: NumericalStatisticsItem = cls.transform_column.compute_statistics(
++            timedelta_df,
++            column_name=timedelta_column_name,
++            n_samples=n_samples,
++        )
++        # to assure mypy that these values are not None to pass to conversion functions:
++        assert timedelta_stats["histogram"] is not None  # nosec
++        assert timedelta_stats["max"] is not None  # nosec
++        assert timedelta_stats["mean"] is not None  # nosec
++        assert timedelta_stats["median"] is not None  # nosec
++        assert timedelta_stats["std"] is not None  # nosec
++
++        if original_timezone:
++            min_date = min_date.astimezone(original_timezone)
++
++        datetime_bin_edges = [
++            cls.shift_and_convert_to_string(min_date, seconds) for seconds in timedelta_stats["histogram"]["bin_edges"]
++        ]
++
++        return DatetimeStatisticsItem(
++            nan_count=nan_count,
++            nan_proportion=nan_proportion,
++            min=datetime_to_string(min_date),
++            max=cls.shift_and_convert_to_string(min_date, timedelta_stats["max"]),
++            mean=cls.shift_and_convert_to_string(min_date, timedelta_stats["mean"]),
++            median=cls.shift_and_convert_to_string(min_date, timedelta_stats["median"]),
++            std=str(datetime.timedelta(seconds=timedelta_stats["std"])),
++            histogram=DatetimeHistogram(
++                hist=timedelta_stats["histogram"]["hist"],
++                bin_edges=datetime_bin_edges,
++            ),
++        )
++
++    def compute_and_prepare_response(self, data: pl.DataFrame) -> StatisticsPerColumnItem:
++        stats = self.compute_statistics(data, column_name=self.name, n_samples=self.n_samples)
++        return StatisticsPerColumnItem(
++            column_name=self.name,
++            column_type=ColumnType.DATETIME,
++            column_statistics=stats,
++        )

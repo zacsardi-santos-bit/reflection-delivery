@@ -1,0 +1,5 @@
+I've been tracking down a tricky bug in our test infrastructure. We have a shared helper that creates a temporary local storage instance for unit tests, but it turns out the helper is deleting the temporary directory immediately after creating it. The issue is that the directory guard object is consumed inside the helper and dropped before the function even returns — so by the time any test tries to use the storage, the underlying directory is already gone.
+
+I'd like to fix this so that callers control how long the temporary directory lives. The helper should return the directory guard alongside the storage instance as a pair, rather than just returning the storage alone. That way, the test can hold on to the guard for as long as it needs the directory to exist, and the cleanup happens naturally when the test scope ends.
+
+This affects tests throughout several packages since they all rely on this shared helper, so the fix needs to happen at the source — the helper's return type needs to change, and all the places that call it need to be updated to unpack the returned pair and keep the guard alive.

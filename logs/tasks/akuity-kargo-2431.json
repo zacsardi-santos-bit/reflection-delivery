@@ -1,0 +1,23 @@
+{
+ "task": "akuity-kargo-2431",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden migrates handler signatures from workqueue.RateLimitingInterface to workqueue.TypedRateLimitingInterface[reconcile.Request] and bumps go.mod/go.sum, matching issue's framework major-version upgrade breakage. F2P TestArgoCDAppOperationCompleted_Update/* verify enqueue behavior via 'go test -js"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 31,
+  "shallow": true
+ }
+}

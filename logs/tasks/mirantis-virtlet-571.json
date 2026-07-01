@@ -1,0 +1,23 @@
+{
+ "task": "mirantis-virtlet-571",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden adds ctx to interfaces ('DownloadFile(ctx context.Context, endpoint Endpoint, w io.Writer) error') and wires it via 'req = req.WithContext(ctx); resp, err := client.Do(req)'; F2P TestCancelDownload cancels ctx then asserts 'strings.Contains(err.Error(), \"context canceled\")'."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

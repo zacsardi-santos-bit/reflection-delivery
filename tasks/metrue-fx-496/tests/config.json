@@ -1,0 +1,29 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./provisioner/darwin ./provisioner/linux -count=1",
+  "test_files": [
+    "provisioner/darwin/darwin_test.go",
+    "provisioner/linux/linux_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/metrue/fx/provisioner/darwin::TestDriverProvision/SSHConnectError",
+    "github.com/metrue/fx/provisioner/darwin::TestDriverProvision/SSHConnectionNotOK",
+    "github.com/metrue/fx/provisioner/darwin::TestDriverProvision/DockerAndFxAgentOK",
+    "github.com/metrue/fx/provisioner/darwin::TestDriverProvision/DockerNotReady",
+    "github.com/metrue/fx/provisioner/darwin::TestDriverProvision/FxAgentNotReady",
+    "github.com/metrue/fx/provisioner/darwin::TestDriverProvision/DockerAndFxAgentReady",
+    "github.com/metrue/fx/provisioner/darwin::TestDriverProvision",
+    "github.com/metrue/fx/provisioner/darwin::TestRunCommand",
+    "github.com/metrue/fx/provisioner/linux::TestDriverProvision/SSHConnectError",
+    "github.com/metrue/fx/provisioner/linux::TestDriverProvision/SSHConnectionNotOK",
+    "github.com/metrue/fx/provisioner/linux::TestDriverProvision/DockerAndFxAgentOK",
+    "github.com/metrue/fx/provisioner/linux::TestDriverProvision/DockerNotReady",
+    "github.com/metrue/fx/provisioner/linux::TestDriverProvision/FxAgentNotReady",
+    "github.com/metrue/fx/provisioner/linux::TestDriverProvision/DockerAndFxAgentNotReady",
+    "github.com/metrue/fx/provisioner/linux::TestDriverProvision",
+    "github.com/metrue/fx/provisioner/linux::TestRunCommand"
+  ],
+  "PASS_TO_PASS": []
+}

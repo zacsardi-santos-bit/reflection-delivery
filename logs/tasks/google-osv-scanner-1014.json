@@ -1,0 +1,23 @@
+{
+ "task": "google-osv-scanner-1014",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'func FromComposer', 'func FromMaven', 'func Group', CycloneDXReporter and sbom models; F2P covers purl extraction, GroupByPURL, and reporter tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 7,
+  "shallow": true
+ }
+}

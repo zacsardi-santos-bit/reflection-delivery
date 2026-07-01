@@ -1,0 +1,5 @@
+I'm working with a genomic interval library, and I'd like to add convenient, named types for the standard BED format variants — the 3-column, 4-column, 6-column, and 12-column forms. Right now the library has great trait infrastructure and lower-level primitives, but there are no ready-to-use structs that correspond directly to the common BED format levels that bioinformatics users expect.
+
+I'd like each of these new types to be constructible by passing the relevant fields directly, and to expose those fields via accessor methods. They should implement the existing coordinates trait so they integrate naturally with the rest of the library's functionality. Importantly, all four types should be importable directly from the crate root so users don't have to dig into module paths to find them.
+
+The 3-column type should hold chromosome, start, and end. The 4-column type should additionally hold a name. The 6-column type should add score and strand. The 12-column type should cover the full BED specification with thick coordinates, color, and block information.

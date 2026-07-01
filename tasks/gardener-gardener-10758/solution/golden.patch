@@ -1,0 +1,1369 @@
+diff --git a/example/seed-crds/10-crd-monitoring.coreos.com_alertmanagers.yaml b/example/seed-crds/10-crd-monitoring.coreos.com_alertmanagers.yaml
+index e7e3c11eec..7654b28a44 100644
+--- a/example/seed-crds/10-crd-monitoring.coreos.com_alertmanagers.yaml
++++ b/example/seed-crds/10-crd-monitoring.coreos.com_alertmanagers.yaml
+@@ -3533,6 +3533,60 @@ spec:
+                   - name
+                   type: object
+                 type: array
++              dnsConfig:
++                description: Defines the DNS configuration for the pods.
++                properties:
++                  nameservers:
++                    description: |-
++                      A list of DNS name server IP addresses.
++                      This will be appended to the base nameservers generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                  options:
++                    description: |-
++                      A list of DNS resolver options.
++                      This will be merged with the base options generated from DNSPolicy.
++                      Resolution options given in Options
++                      will override those that appear in the base DNSPolicy.
++                    items:
++                      description: PodDNSConfigOption defines DNS resolver options
++                        of a pod.
++                      properties:
++                        name:
++                          description: Name is required and must be unique.
++                          minLength: 1
++                          type: string
++                        value:
++                          description: Value is optional.
++                          type: string
++                      required:
++                      - name
++                      type: object
++                    type: array
++                    x-kubernetes-list-map-keys:
++                    - name
++                    x-kubernetes-list-type: map
++                  searches:
++                    description: |-
++                      A list of DNS search domains for host-name lookup.
++                      This will be appended to the base search paths generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                type: object
++              dnsPolicy:
++                description: Defines the DNS policy for the pods.
++                enum:
++                - ClusterFirstWithHostNet
++                - ClusterFirst
++                - Default
++                - None
++                type: string
+               enableFeatures:
+                 description: |-
+                   Enable access to Alertmanager feature flags. By default, no features are enabled.
+diff --git a/example/seed-crds/10-crd-monitoring.coreos.com_podmonitors.yaml b/example/seed-crds/10-crd-monitoring.coreos.com_podmonitors.yaml
+index 4ad9be082e..0a7cd61e80 100644
+--- a/example/seed-crds/10-crd-monitoring.coreos.com_podmonitors.yaml
++++ b/example/seed-crds/10-crd-monitoring.coreos.com_podmonitors.yaml
+@@ -134,6 +134,23 @@ spec:
+                       type: string
+                     type: array
+                 type: object
++              nativeHistogramBucketLimit:
++                description: |-
++                  If there are more than this many buckets in a native histogram,
++                  buckets will be merged to stay within the limit.
++                  It requires Prometheus >= v2.45.0.
++                format: int64
++                type: integer
++              nativeHistogramMinBucketFactor:
++                anyOf:
++                - type: integer
++                - type: string
++                description: |-
++                  If the growth factor of one bucket to the next is smaller than this,
++                  buckets will be merged to increase the factor sufficiently.
++                  It requires Prometheus >= v2.50.0.
++                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
++                x-kubernetes-int-or-string: true
+               podMetricsEndpoints:
+                 description: Defines how to scrape metrics from the selected pods.
+                 items:
+@@ -1064,6 +1081,11 @@ spec:
+                 description: The scrape class to apply.
+                 minLength: 1
+                 type: string
++              scrapeClassicHistograms:
++                description: |-
++                  Whether to scrape a classic histogram that is also exposed as a native histogram.
++                  It requires Prometheus >= v2.45.0.
++                type: boolean
+               scrapeProtocols:
+                 description: |-
+                   `scrapeProtocols` defines the protocols to negotiate during a scrape. It tells clients the
+diff --git a/example/seed-crds/10-crd-monitoring.coreos.com_probes.yaml b/example/seed-crds/10-crd-monitoring.coreos.com_probes.yaml
+index 477dea1246..b85e986d09 100644
+--- a/example/seed-crds/10-crd-monitoring.coreos.com_probes.yaml
++++ b/example/seed-crds/10-crd-monitoring.coreos.com_probes.yaml
+@@ -299,6 +299,23 @@ spec:
+                   Example module configuring in the blackbox exporter:
+                   https://github.com/prometheus/blackbox_exporter/blob/master/example.yml
+                 type: string
++              nativeHistogramBucketLimit:
++                description: |-
++                  If there are more than this many buckets in a native histogram,
++                  buckets will be merged to stay within the limit.
++                  It requires Prometheus >= v2.45.0.
++                format: int64
++                type: integer
++              nativeHistogramMinBucketFactor:
++                anyOf:
++                - type: integer
++                - type: string
++                description: |-
++                  If the growth factor of one bucket to the next is smaller than this,
++                  buckets will be merged to increase the factor sufficiently.
++                  It requires Prometheus >= v2.50.0.
++                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
++                x-kubernetes-int-or-string: true
+               oauth2:
+                 description: OAuth2 for the URL. Only valid in Prometheus versions
+                   2.27.0 and newer.
+@@ -659,6 +676,11 @@ spec:
+                 description: The scrape class to apply.
+                 minLength: 1
+                 type: string
++              scrapeClassicHistograms:
++                description: |-
++                  Whether to scrape a classic histogram that is also exposed as a native histogram.
++                  It requires Prometheus >= v2.45.0.
++                type: boolean
+               scrapeProtocols:
+                 description: |-
+                   `scrapeProtocols` defines the protocols to negotiate during a scrape. It tells clients the
+diff --git a/example/seed-crds/10-crd-monitoring.coreos.com_prometheusagents.yaml b/example/seed-crds/10-crd-monitoring.coreos.com_prometheusagents.yaml
+index 2b0b00e4e6..60a8029fcf 100644
+--- a/example/seed-crds/10-crd-monitoring.coreos.com_prometheusagents.yaml
++++ b/example/seed-crds/10-crd-monitoring.coreos.com_prometheusagents.yaml
+@@ -2842,6 +2842,60 @@ spec:
+                   - name
+                   type: object
+                 type: array
++              dnsConfig:
++                description: Defines the DNS configuration for the pods.
++                properties:
++                  nameservers:
++                    description: |-
++                      A list of DNS name server IP addresses.
++                      This will be appended to the base nameservers generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                  options:
++                    description: |-
++                      A list of DNS resolver options.
++                      This will be merged with the base options generated from DNSPolicy.
++                      Resolution options given in Options
++                      will override those that appear in the base DNSPolicy.
++                    items:
++                      description: PodDNSConfigOption defines DNS resolver options
++                        of a pod.
++                      properties:
++                        name:
++                          description: Name is required and must be unique.
++                          minLength: 1
++                          type: string
++                        value:
++                          description: Value is optional.
++                          type: string
++                      required:
++                      - name
++                      type: object
++                    type: array
++                    x-kubernetes-list-map-keys:
++                    - name
++                    x-kubernetes-list-type: map
++                  searches:
++                    description: |-
++                      A list of DNS search domains for host-name lookup.
++                      This will be appended to the base search paths generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                type: object
++              dnsPolicy:
++                description: Defines the DNS policy for the pods.
++                enum:
++                - ClusterFirstWithHostNet
++                - ClusterFirst
++                - Default
++                - None
++                type: string
+               enableFeatures:
+                 description: |-
+                   Enable access to Prometheus feature flags. By default, no features are enabled.
+@@ -3089,7 +3143,8 @@ spec:
+                   it (https://kubernetes.io/docs/concepts/configuration/overview/).
+ 
+                   When hostNetwork is enabled, this will set the DNS policy to
+-                  `ClusterFirstWithHostNet` automatically.
++                  `ClusterFirstWithHostNet` automatically (unless `.spec.DNSPolicy` is set
++                  to a different value).
+                 type: boolean
+               ignoreNamespaceSelectors:
+                 description: |-
+@@ -4671,7 +4726,7 @@ spec:
+               otlp:
+                 description: |-
+                   Settings related to the OTLP receiver feature.
+-                  It requires Prometheus >= v2.54.0.
++                  It requires Prometheus >= v2.55.0.
+                 properties:
+                   promoteResourceAttributes:
+                     description: List of OpenTelemetry Attributes that should be promoted
+@@ -5248,6 +5303,24 @@ spec:
+ 
+                         It requires Prometheus >= v2.25.0.
+                       type: object
++                    messageVersion:
++                      description: |-
++                        The Remote Write message's version to use when writing to the endpoint.
++
++                        `Version1.0` corresponds to the `prometheus.WriteRequest` protobuf message introduced in Remote Write 1.0.
++                        `Version2.0` corresponds to the `io.prometheus.write.v2.Request` protobuf message introduced in Remote Write 2.0.
++
++                        When `Version2.0` is selected, Prometheus will automatically be
++                        configured to append the metadata of scraped metrics to the WAL.
++
++                        Before setting this field, consult with your remote storage provider
++                        what message version it supports.
++
++                        It requires Prometheus >= v2.54.0.
++                      enum:
++                      - V1.0
++                      - V2.0
++                      type: string
+                     metadataConfig:
+                       description: MetadataConfig configures the sending of series
+                         metadata to the remote storage.
+@@ -5712,7 +5785,7 @@ spec:
+                     sendExemplars:
+                       description: |-
+                         Enables sending of exemplars over remote write. Note that
+-                        exemplar-storage itself must be enabled using the `spec.enableFeature`
++                        exemplar-storage itself must be enabled using the `spec.enableFeatures`
+                         option for exemplars to be scraped in the first place.
+ 
+                         It requires Prometheus >= v2.27.0.
+@@ -5971,6 +6044,7 @@ spec:
+                       type: object
+                     url:
+                       description: The URL of the endpoint to send samples to.
++                      minLength: 1
+                       type: string
+                     writeRelabelConfigs:
+                       description: The list of remote write relabel configurations.
+@@ -6063,6 +6137,20 @@ spec:
+                   - url
+                   type: object
+                 type: array
++              remoteWriteReceiverMessageVersions:
++                description: |-
++                  List of the protobuf message versions to accept when receiving the
++                  remote writes.
++
++                  It requires Prometheus >= v2.54.0.
++                items:
++                  enum:
++                  - V1.0
++                  - V2.0
++                  type: string
++                minItems: 1
++                type: array
++                x-kubernetes-list-type: set
+               replicaExternalLabelName:
+                 description: |-
+                   Name of Prometheus external label used to denote the replica name.
+diff --git a/example/seed-crds/10-crd-monitoring.coreos.com_prometheuses.yaml b/example/seed-crds/10-crd-monitoring.coreos.com_prometheuses.yaml
+index 4dc89551da..578bb00c0f 100644
+--- a/example/seed-crds/10-crd-monitoring.coreos.com_prometheuses.yaml
++++ b/example/seed-crds/10-crd-monitoring.coreos.com_prometheuses.yaml
+@@ -3524,6 +3524,60 @@ spec:
+               disableCompaction:
+                 description: When true, the Prometheus compaction is disabled.
+                 type: boolean
++              dnsConfig:
++                description: Defines the DNS configuration for the pods.
++                properties:
++                  nameservers:
++                    description: |-
++                      A list of DNS name server IP addresses.
++                      This will be appended to the base nameservers generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                  options:
++                    description: |-
++                      A list of DNS resolver options.
++                      This will be merged with the base options generated from DNSPolicy.
++                      Resolution options given in Options
++                      will override those that appear in the base DNSPolicy.
++                    items:
++                      description: PodDNSConfigOption defines DNS resolver options
++                        of a pod.
++                      properties:
++                        name:
++                          description: Name is required and must be unique.
++                          minLength: 1
++                          type: string
++                        value:
++                          description: Value is optional.
++                          type: string
++                      required:
++                      - name
++                      type: object
++                    type: array
++                    x-kubernetes-list-map-keys:
++                    - name
++                    x-kubernetes-list-type: map
++                  searches:
++                    description: |-
++                      A list of DNS search domains for host-name lookup.
++                      This will be appended to the base search paths generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                type: object
++              dnsPolicy:
++                description: Defines the DNS policy for the pods.
++                enum:
++                - ClusterFirstWithHostNet
++                - ClusterFirst
++                - Default
++                - None
++                type: string
+               enableAdminAPI:
+                 description: |-
+                   Enables access to the Prometheus web admin API.
+@@ -3807,7 +3861,8 @@ spec:
+                   it (https://kubernetes.io/docs/concepts/configuration/overview/).
+ 
+                   When hostNetwork is enabled, this will set the DNS policy to
+-                  `ClusterFirstWithHostNet` automatically.
++                  `ClusterFirstWithHostNet` automatically (unless `.spec.DNSPolicy` is set
++                  to a different value).
+                 type: boolean
+               ignoreNamespaceSelectors:
+                 description: |-
+@@ -5379,7 +5434,7 @@ spec:
+               otlp:
+                 description: |-
+                   Settings related to the OTLP receiver feature.
+-                  It requires Prometheus >= v2.54.0.
++                  It requires Prometheus >= v2.55.0.
+                 properties:
+                   promoteResourceAttributes:
+                     description: List of OpenTelemetry Attributes that should be promoted
+@@ -6751,6 +6806,24 @@ spec:
+ 
+                         It requires Prometheus >= v2.25.0.
+                       type: object
++                    messageVersion:
++                      description: |-
++                        The Remote Write message's version to use when writing to the endpoint.
++
++                        `Version1.0` corresponds to the `prometheus.WriteRequest` protobuf message introduced in Remote Write 1.0.
++                        `Version2.0` corresponds to the `io.prometheus.write.v2.Request` protobuf message introduced in Remote Write 2.0.
++
++                        When `Version2.0` is selected, Prometheus will automatically be
++                        configured to append the metadata of scraped metrics to the WAL.
++
++                        Before setting this field, consult with your remote storage provider
++                        what message version it supports.
++
++                        It requires Prometheus >= v2.54.0.
++                      enum:
++                      - V1.0
++                      - V2.0
++                      type: string
+                     metadataConfig:
+                       description: MetadataConfig configures the sending of series
+                         metadata to the remote storage.
+@@ -7215,7 +7288,7 @@ spec:
+                     sendExemplars:
+                       description: |-
+                         Enables sending of exemplars over remote write. Note that
+-                        exemplar-storage itself must be enabled using the `spec.enableFeature`
++                        exemplar-storage itself must be enabled using the `spec.enableFeatures`
+                         option for exemplars to be scraped in the first place.
+ 
+                         It requires Prometheus >= v2.27.0.
+@@ -7474,6 +7547,7 @@ spec:
+                       type: object
+                     url:
+                       description: The URL of the endpoint to send samples to.
++                      minLength: 1
+                       type: string
+                     writeRelabelConfigs:
+                       description: The list of remote write relabel configurations.
+@@ -7566,6 +7640,20 @@ spec:
+                   - url
+                   type: object
+                 type: array
++              remoteWriteReceiverMessageVersions:
++                description: |-
++                  List of the protobuf message versions to accept when receiving the
++                  remote writes.
++
++                  It requires Prometheus >= v2.54.0.
++                items:
++                  enum:
++                  - V1.0
++                  - V2.0
++                  type: string
++                minItems: 1
++                type: array
++                x-kubernetes-list-type: set
+               replicaExternalLabelName:
+                 description: |-
+                   Name of Prometheus external label used to denote the replica name.
+@@ -7712,6 +7800,12 @@ spec:
+                     type: object
+                 type: object
+                 x-kubernetes-map-type: atomic
++              ruleQueryOffset:
++                description: |-
++                  Defines the offset the rule evaluation timestamp of this particular group by the specified duration into the past.
++                  It requires Prometheus >= v2.53.0.
++                pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
++                type: string
+               ruleSelector:
+                 description: |-
+                   PrometheusRule objects to be selected for rule evaluation. An empty
+@@ -7789,6 +7883,18 @@ spec:
+                         type: string
+                     type: object
+                 type: object
++              runtime:
++                description: RuntimeConfig configures the values for the Prometheus
++                  process behavior
++                properties:
++                  goGC:
++                    description: |-
++                      The Go garbage collection target percentage. Lowering this number may increase the CPU usage.
++                      See: https://tip.golang.org/doc/gc-guide#GOGC
++                    format: int32
++                    minimum: -1
++                    type: integer
++                type: object
+               sampleLimit:
+                 description: |-
+                   SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
+diff --git a/example/seed-crds/10-crd-monitoring.coreos.com_prometheusrules.yaml b/example/seed-crds/10-crd-monitoring.coreos.com_prometheusrules.yaml
+index 503decfda4..0998ac6024 100644
+--- a/example/seed-crds/10-crd-monitoring.coreos.com_prometheusrules.yaml
++++ b/example/seed-crds/10-crd-monitoring.coreos.com_prometheusrules.yaml
+@@ -74,6 +74,14 @@ spec:
+                         More info: https://github.com/thanos-io/thanos/blob/main/docs/components/rule.md#partial-response
+                       pattern: ^(?i)(abort|warn)?$
+                       type: string
++                    query_offset:
++                      description: |-
++                        Defines the offset the rule evaluation timestamp of this particular group by the specified duration into the past.
++
++                        It requires Prometheus >= v2.53.0.
++                        It is not supported for ThanosRuler.
++                      pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
++                      type: string
+                     rules:
+                       description: List of alerting and recording rules.
+                       items:
+diff --git a/example/seed-crds/10-crd-monitoring.coreos.com_scrapeconfigs.yaml b/example/seed-crds/10-crd-monitoring.coreos.com_scrapeconfigs.yaml
+index d2400a775b..2005ef465a 100644
+--- a/example/seed-crds/10-crd-monitoring.coreos.com_scrapeconfigs.yaml
++++ b/example/seed-crds/10-crd-monitoring.coreos.com_scrapeconfigs.yaml
+@@ -8663,6 +8663,23 @@ spec:
+                   Prometheus uses the default value (e.g. /metrics).
+                 minLength: 1
+                 type: string
++              nativeHistogramBucketLimit:
++                description: |-
++                  If there are more than this many buckets in a native histogram,
++                  buckets will be merged to stay within the limit.
++                  It requires Prometheus >= v2.45.0.
++                format: int64
++                type: integer
++              nativeHistogramMinBucketFactor:
++                anyOf:
++                - type: integer
++                - type: string
++                description: |-
++                  If the growth factor of one bucket to the next is smaller than this,
++                  buckets will be merged to increase the factor sufficiently.
++                  It requires Prometheus >= v2.50.0.
++                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
++                x-kubernetes-int-or-string: true
+               noProxy:
+                 description: |-
+                   `noProxy` is a comma-separated string that can contain IPs, CIDR notation, domain names
+@@ -11214,6 +11231,11 @@ spec:
+                 description: The scrape class to apply.
+                 minLength: 1
+                 type: string
++              scrapeClassicHistograms:
++                description: |-
++                  Whether to scrape a classic histogram that is also exposed as a native histogram.
++                  It requires Prometheus >= v2.45.0.
++                type: boolean
+               scrapeInterval:
+                 description: ScrapeInterval is the interval between consecutive scrapes.
+                 pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
+@@ -11266,10 +11288,15 @@ spec:
+                     targets:
+                       description: List of targets for this static configuration.
+                       items:
+-                        description: Target represents a target for Prometheus to
+-                          scrape
++                        description: |-
++                          Target represents a target for Prometheus to scrape
++                          kubebuilder:validation:MinLength:=1
+                         type: string
++                      minItems: 1
+                       type: array
++                      x-kubernetes-list-type: set
++                  required:
++                  - targets
+                   type: object
+                 type: array
+               targetLimit:
+diff --git a/example/seed-crds/10-crd-monitoring.coreos.com_servicemonitors.yaml b/example/seed-crds/10-crd-monitoring.coreos.com_servicemonitors.yaml
+index f581a03948..ff04d5139f 100644
+--- a/example/seed-crds/10-crd-monitoring.coreos.com_servicemonitors.yaml
++++ b/example/seed-crds/10-crd-monitoring.coreos.com_servicemonitors.yaml
+@@ -1067,6 +1067,23 @@ spec:
+                       type: string
+                     type: array
+                 type: object
++              nativeHistogramBucketLimit:
++                description: |-
++                  If there are more than this many buckets in a native histogram,
++                  buckets will be merged to stay within the limit.
++                  It requires Prometheus >= v2.45.0.
++                format: int64
++                type: integer
++              nativeHistogramMinBucketFactor:
++                anyOf:
++                - type: integer
++                - type: string
++                description: |-
++                  If the growth factor of one bucket to the next is smaller than this,
++                  buckets will be merged to increase the factor sufficiently.
++                  It requires Prometheus >= v2.50.0.
++                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
++                x-kubernetes-int-or-string: true
+               podTargetLabels:
+                 description: |-
+                   `podTargetLabels` defines the labels which are transferred from the
+@@ -1084,6 +1101,11 @@ spec:
+                 description: The scrape class to apply.
+                 minLength: 1
+                 type: string
++              scrapeClassicHistograms:
++                description: |-
++                  Whether to scrape a classic histogram that is also exposed as a native histogram.
++                  It requires Prometheus >= v2.45.0.
++                type: boolean
+               scrapeProtocols:
+                 description: |-
+                   `scrapeProtocols` defines the protocols to negotiate during a scrape. It tells clients the
+diff --git a/example/seed-crds/10-crd-monitoring.coreos.com_thanosrulers.yaml b/example/seed-crds/10-crd-monitoring.coreos.com_thanosrulers.yaml
+index ecfb81ae0f..123cecdda3 100644
+--- a/example/seed-crds/10-crd-monitoring.coreos.com_thanosrulers.yaml
++++ b/example/seed-crds/10-crd-monitoring.coreos.com_thanosrulers.yaml
+@@ -2527,6 +2527,60 @@ spec:
+                   - name
+                   type: object
+                 type: array
++              dnsConfig:
++                description: Defines the DNS configuration for the pods.
++                properties:
++                  nameservers:
++                    description: |-
++                      A list of DNS name server IP addresses.
++                      This will be appended to the base nameservers generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                  options:
++                    description: |-
++                      A list of DNS resolver options.
++                      This will be merged with the base options generated from DNSPolicy.
++                      Resolution options given in Options
++                      will override those that appear in the base DNSPolicy.
++                    items:
++                      description: PodDNSConfigOption defines DNS resolver options
++                        of a pod.
++                      properties:
++                        name:
++                          description: Name is required and must be unique.
++                          minLength: 1
++                          type: string
++                        value:
++                          description: Value is optional.
++                          type: string
++                      required:
++                      - name
++                      type: object
++                    type: array
++                    x-kubernetes-list-map-keys:
++                    - name
++                    x-kubernetes-list-type: map
++                  searches:
++                    description: |-
++                      A list of DNS search domains for host-name lookup.
++                      This will be appended to the base search paths generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                type: object
++              dnsPolicy:
++                description: Defines the DNS policy for the pods.
++                enum:
++                - ClusterFirstWithHostNet
++                - ClusterFirst
++                - Default
++                - None
++                type: string
+               enforcedNamespaceLabel:
+                 description: |-
+                   EnforcedNamespaceLabel enforces adding a namespace label of origin for each alert
+diff --git a/go.mod b/go.mod
+index 04c12dfd89..efad078308 100644
+--- a/go.mod
++++ b/go.mod
+@@ -32,7 +32,7 @@ require (
+ 	github.com/onsi/gomega v1.35.0
+ 	github.com/opencontainers/image-spec v1.1.0
+ 	github.com/pelletier/go-toml v1.9.5
+-	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.77.2
++	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.78.0
+ 	github.com/prometheus/blackbox_exporter v0.25.0
+ 	github.com/prometheus/client_golang v1.20.5
+ 	github.com/prometheus/common v0.60.1
+diff --git a/go.sum b/go.sum
+index 3d98252fd7..447ba93a9e 100644
+--- a/go.sum
++++ b/go.sum
+@@ -479,8 +479,8 @@ github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRI
+ github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+ github.com/prashantv/gostub v1.1.0 h1:BTyx3RfQjRHnUWaGF9oQos79AlQ5k8WNktv7VGvVH4g=
+ github.com/prashantv/gostub v1.1.0/go.mod h1:A5zLQHz7ieHGG7is6LLXLz7I8+3LZzsrV0P1IAHhP5U=
+-github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.77.2 h1:F/MALZ518KfI1zEg+Kg8/uTzoXKDyqw+LNC/5irJlJE=
+-github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.77.2/go.mod h1:D0KY8md81DQKdaR/cXwnhoWB3MYYyc/UjvqE8GFkIvA=
++github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.78.0 h1:b2L36QF60oB8Ty97UOCOnN2VnRbT6eaxzYda9kmk9zE=
++github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.78.0/go.mod h1:SvsRXw4m1F2vk7HquU5h475bFpke27mIUswfyw9u3ug=
+ github.com/prometheus/blackbox_exporter v0.25.0 h1:cInPsiPsILpwYbir9A9cwJ8pjcf4/cGOuGR0BstQtuc=
+ github.com/prometheus/blackbox_exporter v0.25.0/go.mod h1:SpTDn8xW1XOstBQ1uVgw54eTHIuB6HHVPe1xxLFIlaM=
+ github.com/prometheus/client_golang v0.9.1/go.mod h1:7SWBe2y4D6OKWSNQJUaRYU/AaXPKyh/dDVn+NZz0KFw=
+diff --git a/imagevector/containers.yaml b/imagevector/containers.yaml
+index cd65efc01b..01880a63be 100644
+--- a/imagevector/containers.yaml
++++ b/imagevector/containers.yaml
+@@ -190,7 +190,7 @@ images:
+ - name: prometheus-operator
+   sourceRepository: github.com/prometheus-operator/prometheus-operator
+   repository: quay.io/prometheus-operator/prometheus-operator
+-  tag: v0.77.2
++  tag: v0.78.0
+   labels:
+   - name: 'gardener.cloud/cve-categorisation'
+     value:
+@@ -241,7 +241,7 @@ images:
+ - name: configmap-reloader
+   sourceRepository: github.com/prometheus-operator/prometheus-operator
+   repository: quay.io/prometheus-operator/prometheus-config-reloader
+-  tag: v0.77.2
++  tag: v0.78.0
+   labels:
+   - name: gardener.cloud/cve-categorisation
+     value:
+diff --git a/pkg/component/observability/monitoring/blackboxexporter/garden/scrapeconfig.go b/pkg/component/observability/monitoring/blackboxexporter/garden/scrapeconfig.go
+index b75b2972e2..3e417fce74 100644
+--- a/pkg/component/observability/monitoring/blackboxexporter/garden/scrapeconfig.go
++++ b/pkg/component/observability/monitoring/blackboxexporter/garden/scrapeconfig.go
+@@ -23,7 +23,7 @@ func ScrapeConfig(namespace string, kubeAPIServerTargets []monitoringv1alpha1.Ta
+ 				MetricsPath: ptr.To("/probe"),
+ 				StaticConfigs: []monitoringv1alpha1.StaticConfig{{
+ 					Targets: targets,
+-					Labels:  map[monitoringv1.LabelName]string{"purpose": "availability"},
++					Labels:  map[string]string{"purpose": "availability"},
+ 				}},
+ 				RelabelConfigs: []monitoringv1.RelabelConfig{
+ 					{
+diff --git a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_alertmanagers.yaml b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_alertmanagers.yaml
+index e7e3c11eec..7654b28a44 100644
+--- a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_alertmanagers.yaml
++++ b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_alertmanagers.yaml
+@@ -3533,6 +3533,60 @@ spec:
+                   - name
+                   type: object
+                 type: array
++              dnsConfig:
++                description: Defines the DNS configuration for the pods.
++                properties:
++                  nameservers:
++                    description: |-
++                      A list of DNS name server IP addresses.
++                      This will be appended to the base nameservers generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                  options:
++                    description: |-
++                      A list of DNS resolver options.
++                      This will be merged with the base options generated from DNSPolicy.
++                      Resolution options given in Options
++                      will override those that appear in the base DNSPolicy.
++                    items:
++                      description: PodDNSConfigOption defines DNS resolver options
++                        of a pod.
++                      properties:
++                        name:
++                          description: Name is required and must be unique.
++                          minLength: 1
++                          type: string
++                        value:
++                          description: Value is optional.
++                          type: string
++                      required:
++                      - name
++                      type: object
++                    type: array
++                    x-kubernetes-list-map-keys:
++                    - name
++                    x-kubernetes-list-type: map
++                  searches:
++                    description: |-
++                      A list of DNS search domains for host-name lookup.
++                      This will be appended to the base search paths generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                type: object
++              dnsPolicy:
++                description: Defines the DNS policy for the pods.
++                enum:
++                - ClusterFirstWithHostNet
++                - ClusterFirst
++                - Default
++                - None
++                type: string
+               enableFeatures:
+                 description: |-
+                   Enable access to Alertmanager feature flags. By default, no features are enabled.
+diff --git a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_podmonitors.yaml b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_podmonitors.yaml
+index 4ad9be082e..0a7cd61e80 100644
+--- a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_podmonitors.yaml
++++ b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_podmonitors.yaml
+@@ -134,6 +134,23 @@ spec:
+                       type: string
+                     type: array
+                 type: object
++              nativeHistogramBucketLimit:
++                description: |-
++                  If there are more than this many buckets in a native histogram,
++                  buckets will be merged to stay within the limit.
++                  It requires Prometheus >= v2.45.0.
++                format: int64
++                type: integer
++              nativeHistogramMinBucketFactor:
++                anyOf:
++                - type: integer
++                - type: string
++                description: |-
++                  If the growth factor of one bucket to the next is smaller than this,
++                  buckets will be merged to increase the factor sufficiently.
++                  It requires Prometheus >= v2.50.0.
++                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
++                x-kubernetes-int-or-string: true
+               podMetricsEndpoints:
+                 description: Defines how to scrape metrics from the selected pods.
+                 items:
+@@ -1064,6 +1081,11 @@ spec:
+                 description: The scrape class to apply.
+                 minLength: 1
+                 type: string
++              scrapeClassicHistograms:
++                description: |-
++                  Whether to scrape a classic histogram that is also exposed as a native histogram.
++                  It requires Prometheus >= v2.45.0.
++                type: boolean
+               scrapeProtocols:
+                 description: |-
+                   `scrapeProtocols` defines the protocols to negotiate during a scrape. It tells clients the
+diff --git a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_probes.yaml b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_probes.yaml
+index 477dea1246..b85e986d09 100644
+--- a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_probes.yaml
++++ b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_probes.yaml
+@@ -299,6 +299,23 @@ spec:
+                   Example module configuring in the blackbox exporter:
+                   https://github.com/prometheus/blackbox_exporter/blob/master/example.yml
+                 type: string
++              nativeHistogramBucketLimit:
++                description: |-
++                  If there are more than this many buckets in a native histogram,
++                  buckets will be merged to stay within the limit.
++                  It requires Prometheus >= v2.45.0.
++                format: int64
++                type: integer
++              nativeHistogramMinBucketFactor:
++                anyOf:
++                - type: integer
++                - type: string
++                description: |-
++                  If the growth factor of one bucket to the next is smaller than this,
++                  buckets will be merged to increase the factor sufficiently.
++                  It requires Prometheus >= v2.50.0.
++                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
++                x-kubernetes-int-or-string: true
+               oauth2:
+                 description: OAuth2 for the URL. Only valid in Prometheus versions
+                   2.27.0 and newer.
+@@ -659,6 +676,11 @@ spec:
+                 description: The scrape class to apply.
+                 minLength: 1
+                 type: string
++              scrapeClassicHistograms:
++                description: |-
++                  Whether to scrape a classic histogram that is also exposed as a native histogram.
++                  It requires Prometheus >= v2.45.0.
++                type: boolean
+               scrapeProtocols:
+                 description: |-
+                   `scrapeProtocols` defines the protocols to negotiate during a scrape. It tells clients the
+diff --git a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusagents.yaml b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusagents.yaml
+index 2b0b00e4e6..60a8029fcf 100644
+--- a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusagents.yaml
++++ b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusagents.yaml
+@@ -2842,6 +2842,60 @@ spec:
+                   - name
+                   type: object
+                 type: array
++              dnsConfig:
++                description: Defines the DNS configuration for the pods.
++                properties:
++                  nameservers:
++                    description: |-
++                      A list of DNS name server IP addresses.
++                      This will be appended to the base nameservers generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                  options:
++                    description: |-
++                      A list of DNS resolver options.
++                      This will be merged with the base options generated from DNSPolicy.
++                      Resolution options given in Options
++                      will override those that appear in the base DNSPolicy.
++                    items:
++                      description: PodDNSConfigOption defines DNS resolver options
++                        of a pod.
++                      properties:
++                        name:
++                          description: Name is required and must be unique.
++                          minLength: 1
++                          type: string
++                        value:
++                          description: Value is optional.
++                          type: string
++                      required:
++                      - name
++                      type: object
++                    type: array
++                    x-kubernetes-list-map-keys:
++                    - name
++                    x-kubernetes-list-type: map
++                  searches:
++                    description: |-
++                      A list of DNS search domains for host-name lookup.
++                      This will be appended to the base search paths generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                type: object
++              dnsPolicy:
++                description: Defines the DNS policy for the pods.
++                enum:
++                - ClusterFirstWithHostNet
++                - ClusterFirst
++                - Default
++                - None
++                type: string
+               enableFeatures:
+                 description: |-
+                   Enable access to Prometheus feature flags. By default, no features are enabled.
+@@ -3089,7 +3143,8 @@ spec:
+                   it (https://kubernetes.io/docs/concepts/configuration/overview/).
+ 
+                   When hostNetwork is enabled, this will set the DNS policy to
+-                  `ClusterFirstWithHostNet` automatically.
++                  `ClusterFirstWithHostNet` automatically (unless `.spec.DNSPolicy` is set
++                  to a different value).
+                 type: boolean
+               ignoreNamespaceSelectors:
+                 description: |-
+@@ -4671,7 +4726,7 @@ spec:
+               otlp:
+                 description: |-
+                   Settings related to the OTLP receiver feature.
+-                  It requires Prometheus >= v2.54.0.
++                  It requires Prometheus >= v2.55.0.
+                 properties:
+                   promoteResourceAttributes:
+                     description: List of OpenTelemetry Attributes that should be promoted
+@@ -5248,6 +5303,24 @@ spec:
+ 
+                         It requires Prometheus >= v2.25.0.
+                       type: object
++                    messageVersion:
++                      description: |-
++                        The Remote Write message's version to use when writing to the endpoint.
++
++                        `Version1.0` corresponds to the `prometheus.WriteRequest` protobuf message introduced in Remote Write 1.0.
++                        `Version2.0` corresponds to the `io.prometheus.write.v2.Request` protobuf message introduced in Remote Write 2.0.
++
++                        When `Version2.0` is selected, Prometheus will automatically be
++                        configured to append the metadata of scraped metrics to the WAL.
++
++                        Before setting this field, consult with your remote storage provider
++                        what message version it supports.
++
++                        It requires Prometheus >= v2.54.0.
++                      enum:
++                      - V1.0
++                      - V2.0
++                      type: string
+                     metadataConfig:
+                       description: MetadataConfig configures the sending of series
+                         metadata to the remote storage.
+@@ -5712,7 +5785,7 @@ spec:
+                     sendExemplars:
+                       description: |-
+                         Enables sending of exemplars over remote write. Note that
+-                        exemplar-storage itself must be enabled using the `spec.enableFeature`
++                        exemplar-storage itself must be enabled using the `spec.enableFeatures`
+                         option for exemplars to be scraped in the first place.
+ 
+                         It requires Prometheus >= v2.27.0.
+@@ -5971,6 +6044,7 @@ spec:
+                       type: object
+                     url:
+                       description: The URL of the endpoint to send samples to.
++                      minLength: 1
+                       type: string
+                     writeRelabelConfigs:
+                       description: The list of remote write relabel configurations.
+@@ -6063,6 +6137,20 @@ spec:
+                   - url
+                   type: object
+                 type: array
++              remoteWriteReceiverMessageVersions:
++                description: |-
++                  List of the protobuf message versions to accept when receiving the
++                  remote writes.
++
++                  It requires Prometheus >= v2.54.0.
++                items:
++                  enum:
++                  - V1.0
++                  - V2.0
++                  type: string
++                minItems: 1
++                type: array
++                x-kubernetes-list-type: set
+               replicaExternalLabelName:
+                 description: |-
+                   Name of Prometheus external label used to denote the replica name.
+diff --git a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheuses.yaml b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheuses.yaml
+index 4dc89551da..578bb00c0f 100644
+--- a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheuses.yaml
++++ b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheuses.yaml
+@@ -3524,6 +3524,60 @@ spec:
+               disableCompaction:
+                 description: When true, the Prometheus compaction is disabled.
+                 type: boolean
++              dnsConfig:
++                description: Defines the DNS configuration for the pods.
++                properties:
++                  nameservers:
++                    description: |-
++                      A list of DNS name server IP addresses.
++                      This will be appended to the base nameservers generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                  options:
++                    description: |-
++                      A list of DNS resolver options.
++                      This will be merged with the base options generated from DNSPolicy.
++                      Resolution options given in Options
++                      will override those that appear in the base DNSPolicy.
++                    items:
++                      description: PodDNSConfigOption defines DNS resolver options
++                        of a pod.
++                      properties:
++                        name:
++                          description: Name is required and must be unique.
++                          minLength: 1
++                          type: string
++                        value:
++                          description: Value is optional.
++                          type: string
++                      required:
++                      - name
++                      type: object
++                    type: array
++                    x-kubernetes-list-map-keys:
++                    - name
++                    x-kubernetes-list-type: map
++                  searches:
++                    description: |-
++                      A list of DNS search domains for host-name lookup.
++                      This will be appended to the base search paths generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                type: object
++              dnsPolicy:
++                description: Defines the DNS policy for the pods.
++                enum:
++                - ClusterFirstWithHostNet
++                - ClusterFirst
++                - Default
++                - None
++                type: string
+               enableAdminAPI:
+                 description: |-
+                   Enables access to the Prometheus web admin API.
+@@ -3807,7 +3861,8 @@ spec:
+                   it (https://kubernetes.io/docs/concepts/configuration/overview/).
+ 
+                   When hostNetwork is enabled, this will set the DNS policy to
+-                  `ClusterFirstWithHostNet` automatically.
++                  `ClusterFirstWithHostNet` automatically (unless `.spec.DNSPolicy` is set
++                  to a different value).
+                 type: boolean
+               ignoreNamespaceSelectors:
+                 description: |-
+@@ -5379,7 +5434,7 @@ spec:
+               otlp:
+                 description: |-
+                   Settings related to the OTLP receiver feature.
+-                  It requires Prometheus >= v2.54.0.
++                  It requires Prometheus >= v2.55.0.
+                 properties:
+                   promoteResourceAttributes:
+                     description: List of OpenTelemetry Attributes that should be promoted
+@@ -6751,6 +6806,24 @@ spec:
+ 
+                         It requires Prometheus >= v2.25.0.
+                       type: object
++                    messageVersion:
++                      description: |-
++                        The Remote Write message's version to use when writing to the endpoint.
++
++                        `Version1.0` corresponds to the `prometheus.WriteRequest` protobuf message introduced in Remote Write 1.0.
++                        `Version2.0` corresponds to the `io.prometheus.write.v2.Request` protobuf message introduced in Remote Write 2.0.
++
++                        When `Version2.0` is selected, Prometheus will automatically be
++                        configured to append the metadata of scraped metrics to the WAL.
++
++                        Before setting this field, consult with your remote storage provider
++                        what message version it supports.
++
++                        It requires Prometheus >= v2.54.0.
++                      enum:
++                      - V1.0
++                      - V2.0
++                      type: string
+                     metadataConfig:
+                       description: MetadataConfig configures the sending of series
+                         metadata to the remote storage.
+@@ -7215,7 +7288,7 @@ spec:
+                     sendExemplars:
+                       description: |-
+                         Enables sending of exemplars over remote write. Note that
+-                        exemplar-storage itself must be enabled using the `spec.enableFeature`
++                        exemplar-storage itself must be enabled using the `spec.enableFeatures`
+                         option for exemplars to be scraped in the first place.
+ 
+                         It requires Prometheus >= v2.27.0.
+@@ -7474,6 +7547,7 @@ spec:
+                       type: object
+                     url:
+                       description: The URL of the endpoint to send samples to.
++                      minLength: 1
+                       type: string
+                     writeRelabelConfigs:
+                       description: The list of remote write relabel configurations.
+@@ -7566,6 +7640,20 @@ spec:
+                   - url
+                   type: object
+                 type: array
++              remoteWriteReceiverMessageVersions:
++                description: |-
++                  List of the protobuf message versions to accept when receiving the
++                  remote writes.
++
++                  It requires Prometheus >= v2.54.0.
++                items:
++                  enum:
++                  - V1.0
++                  - V2.0
++                  type: string
++                minItems: 1
++                type: array
++                x-kubernetes-list-type: set
+               replicaExternalLabelName:
+                 description: |-
+                   Name of Prometheus external label used to denote the replica name.
+@@ -7712,6 +7800,12 @@ spec:
+                     type: object
+                 type: object
+                 x-kubernetes-map-type: atomic
++              ruleQueryOffset:
++                description: |-
++                  Defines the offset the rule evaluation timestamp of this particular group by the specified duration into the past.
++                  It requires Prometheus >= v2.53.0.
++                pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
++                type: string
+               ruleSelector:
+                 description: |-
+                   PrometheusRule objects to be selected for rule evaluation. An empty
+@@ -7789,6 +7883,18 @@ spec:
+                         type: string
+                     type: object
+                 type: object
++              runtime:
++                description: RuntimeConfig configures the values for the Prometheus
++                  process behavior
++                properties:
++                  goGC:
++                    description: |-
++                      The Go garbage collection target percentage. Lowering this number may increase the CPU usage.
++                      See: https://tip.golang.org/doc/gc-guide#GOGC
++                    format: int32
++                    minimum: -1
++                    type: integer
++                type: object
+               sampleLimit:
+                 description: |-
+                   SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
+diff --git a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusrules.yaml b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusrules.yaml
+index 503decfda4..0998ac6024 100644
+--- a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusrules.yaml
++++ b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_prometheusrules.yaml
+@@ -74,6 +74,14 @@ spec:
+                         More info: https://github.com/thanos-io/thanos/blob/main/docs/components/rule.md#partial-response
+                       pattern: ^(?i)(abort|warn)?$
+                       type: string
++                    query_offset:
++                      description: |-
++                        Defines the offset the rule evaluation timestamp of this particular group by the specified duration into the past.
++
++                        It requires Prometheus >= v2.53.0.
++                        It is not supported for ThanosRuler.
++                      pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
++                      type: string
+                     rules:
+                       description: List of alerting and recording rules.
+                       items:
+diff --git a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_scrapeconfigs.yaml b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_scrapeconfigs.yaml
+index d2400a775b..2005ef465a 100644
+--- a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_scrapeconfigs.yaml
++++ b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_scrapeconfigs.yaml
+@@ -8663,6 +8663,23 @@ spec:
+                   Prometheus uses the default value (e.g. /metrics).
+                 minLength: 1
+                 type: string
++              nativeHistogramBucketLimit:
++                description: |-
++                  If there are more than this many buckets in a native histogram,
++                  buckets will be merged to stay within the limit.
++                  It requires Prometheus >= v2.45.0.
++                format: int64
++                type: integer
++              nativeHistogramMinBucketFactor:
++                anyOf:
++                - type: integer
++                - type: string
++                description: |-
++                  If the growth factor of one bucket to the next is smaller than this,
++                  buckets will be merged to increase the factor sufficiently.
++                  It requires Prometheus >= v2.50.0.
++                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
++                x-kubernetes-int-or-string: true
+               noProxy:
+                 description: |-
+                   `noProxy` is a comma-separated string that can contain IPs, CIDR notation, domain names
+@@ -11214,6 +11231,11 @@ spec:
+                 description: The scrape class to apply.
+                 minLength: 1
+                 type: string
++              scrapeClassicHistograms:
++                description: |-
++                  Whether to scrape a classic histogram that is also exposed as a native histogram.
++                  It requires Prometheus >= v2.45.0.
++                type: boolean
+               scrapeInterval:
+                 description: ScrapeInterval is the interval between consecutive scrapes.
+                 pattern: ^(0|(([0-9]+)y)?(([0-9]+)w)?(([0-9]+)d)?(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
+@@ -11266,10 +11288,15 @@ spec:
+                     targets:
+                       description: List of targets for this static configuration.
+                       items:
+-                        description: Target represents a target for Prometheus to
+-                          scrape
++                        description: |-
++                          Target represents a target for Prometheus to scrape
++                          kubebuilder:validation:MinLength:=1
+                         type: string
++                      minItems: 1
+                       type: array
++                      x-kubernetes-list-type: set
++                  required:
++                  - targets
+                   type: object
+                 type: array
+               targetLimit:
+diff --git a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_servicemonitors.yaml b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_servicemonitors.yaml
+index f581a03948..ff04d5139f 100644
+--- a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_servicemonitors.yaml
++++ b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_servicemonitors.yaml
+@@ -1067,6 +1067,23 @@ spec:
+                       type: string
+                     type: array
+                 type: object
++              nativeHistogramBucketLimit:
++                description: |-
++                  If there are more than this many buckets in a native histogram,
++                  buckets will be merged to stay within the limit.
++                  It requires Prometheus >= v2.45.0.
++                format: int64
++                type: integer
++              nativeHistogramMinBucketFactor:
++                anyOf:
++                - type: integer
++                - type: string
++                description: |-
++                  If the growth factor of one bucket to the next is smaller than this,
++                  buckets will be merged to increase the factor sufficiently.
++                  It requires Prometheus >= v2.50.0.
++                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
++                x-kubernetes-int-or-string: true
+               podTargetLabels:
+                 description: |-
+                   `podTargetLabels` defines the labels which are transferred from the
+@@ -1084,6 +1101,11 @@ spec:
+                 description: The scrape class to apply.
+                 minLength: 1
+                 type: string
++              scrapeClassicHistograms:
++                description: |-
++                  Whether to scrape a classic histogram that is also exposed as a native histogram.
++                  It requires Prometheus >= v2.45.0.
++                type: boolean
+               scrapeProtocols:
+                 description: |-
+                   `scrapeProtocols` defines the protocols to negotiate during a scrape. It tells clients the
+diff --git a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_thanosrulers.yaml b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_thanosrulers.yaml
+index ecfb81ae0f..123cecdda3 100644
+--- a/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_thanosrulers.yaml
++++ b/pkg/component/observability/monitoring/prometheusoperator/templates/crd-monitoring.coreos.com_thanosrulers.yaml
+@@ -2527,6 +2527,60 @@ spec:
+                   - name
+                   type: object
+                 type: array
++              dnsConfig:
++                description: Defines the DNS configuration for the pods.
++                properties:
++                  nameservers:
++                    description: |-
++                      A list of DNS name server IP addresses.
++                      This will be appended to the base nameservers generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                  options:
++                    description: |-
++                      A list of DNS resolver options.
++                      This will be merged with the base options generated from DNSPolicy.
++                      Resolution options given in Options
++                      will override those that appear in the base DNSPolicy.
++                    items:
++                      description: PodDNSConfigOption defines DNS resolver options
++                        of a pod.
++                      properties:
++                        name:
++                          description: Name is required and must be unique.
++                          minLength: 1
++                          type: string
++                        value:
++                          description: Value is optional.
++                          type: string
++                      required:
++                      - name
++                      type: object
++                    type: array
++                    x-kubernetes-list-map-keys:
++                    - name
++                    x-kubernetes-list-type: map
++                  searches:
++                    description: |-
++                      A list of DNS search domains for host-name lookup.
++                      This will be appended to the base search paths generated from DNSPolicy.
++                    items:
++                      minLength: 1
++                      type: string
++                    type: array
++                    x-kubernetes-list-type: set
++                type: object
++              dnsPolicy:
++                description: Defines the DNS policy for the pods.
++                enum:
++                - ClusterFirstWithHostNet
++                - ClusterFirst
++                - Default
++                - None
++                type: string
+               enforcedNamespaceLabel:
+                 description: |-
+                   EnforcedNamespaceLabel enforces adding a namespace label of origin for each alert

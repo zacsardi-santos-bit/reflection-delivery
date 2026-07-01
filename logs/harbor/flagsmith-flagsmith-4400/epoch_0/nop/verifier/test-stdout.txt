@@ -1,0 +1,67 @@
+patching file api/tests/unit/api/test_unit_api.py
+patching file api/tests/unit/audit/test_unit_audit_models.py
+patching file api/tests/unit/audit/test_unit_audit_signals.py
+patching file api/tests/unit/integrations/grafana/test_views.py
+Starting PostgreSQL 17 database server: main.
+localhost:5432 - accepting connections
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.2.2, pluggy-1.2.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+django: version: 3.2.25, settings: app.settings.test (from option)
+rootdir: /workspace/repo/api, configfile: pyproject.toml
+plugins: requests-mock-1.11.0, freezegun-0.4.2, cov-4.1.0, django-4.7.0, mock-3.10.0, lazy-fixture-0.6.3, xdist-3.2.1, django-test-migrations-1.2.0
+collecting ... collected 17 items / 2 errors
+
+==================================== ERRORS ====================================
+_________ ERROR collecting tests/unit/audit/test_unit_audit_signals.py _________
+ImportError while importing test module '/workspace/repo/api/tests/unit/audit/test_unit_audit_signals.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/site-packages/_pytest/python.py:618: in _importtestmodule
+    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)
+/usr/local/lib/python3.11/site-packages/_pytest/pathlib.py:533: in import_path
+    importlib.import_module(module_name)
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+/usr/local/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:168: in exec_module
+    exec(co, module.__dict__)
+tests/unit/audit/test_unit_audit_signals.py:13: in <module>
+    from integrations.grafana.models import (
+E   ImportError: cannot import name 'GrafanaOrganisationConfiguration' from 'integrations.grafana.models' (/workspace/repo/api/integrations/grafana/models.py)
+________ ERROR collecting tests/unit/integrations/grafana/test_views.py ________
+ImportError while importing test module '/workspace/repo/api/tests/unit/integrations/grafana/test_views.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/site-packages/_pytest/python.py:618: in _importtestmodule
+    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)
+/usr/local/lib/python3.11/site-packages/_pytest/pathlib.py:533: in import_path
+    importlib.import_module(module_name)
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+/usr/local/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:168: in exec_module
+    exec(co, module.__dict__)
+tests/unit/integrations/grafana/test_views.py:8: in <module>
+    from integrations.grafana.models import GrafanaOrganisationConfiguration
+E   ImportError: cannot import name 'GrafanaOrganisationConfiguration' from 'integrations.grafana.models' (/workspace/repo/api/integrations/grafana/models.py)
+=========================== short test summary info ============================
+ERROR tests/unit/audit/test_unit_audit_signals.py
+ERROR tests/unit/integrations/grafana/test_views.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 2 errors in 1.10s ===============================
+reward=0 graded=34 found=0 failed=0 parsed=0 framework=pytest exit_code=2

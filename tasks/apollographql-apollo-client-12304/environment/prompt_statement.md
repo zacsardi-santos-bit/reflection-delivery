@@ -1,0 +1,7 @@
+I'm working with the Apollo Client cache and running into an issue where incomplete or missing cache reads return an empty object instead of something that clearly indicates "no data." This makes it really hard to write reliable checks in my code — I can't tell whether I got an empty successful result or whether the cache simply had nothing to return.
+
+There are a few related problems: in some cases when fields are missing, the cache throws an error instead of returning a structured incomplete result, which forces me to use try/catch blocks for what should be a normal "data not yet available" scenario. Also, when the cache does report missing fields, the error information comes back as an array even when there's just one logical missing-field error.
+
+I'd like the cache to return a clear absence indicator (not an empty object) when there's no data available for a query, to surface missing-field errors as a single error object rather than an array, and to stop throwing exceptions for missing-field scenarios — instead returning a properly structured result that indicates incompleteness. When observable queries have no complete cache data, their emitted results should also clearly reflect this with a value that unambiguously means "nothing available" rather than an empty object.
+
+Additionally, it would be helpful if the class representing a missing-field error were directly importable from the cache package's main entry point.

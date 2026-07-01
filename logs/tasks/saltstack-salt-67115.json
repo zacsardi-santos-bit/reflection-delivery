@@ -1,0 +1,23 @@
+{
+ "task": "saltstack-salt-67115",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Single F2P test_get_result exercises 15 cases (result flag, retcode override, boolean passthrough, nested changes dict): e.g. ({'retcode': -1, 'result': True}, False) and ({'changes': {'result': True, 'retcode': 1}}, False)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 22,
+  "shallow": true
+ }
+}

@@ -1,0 +1,105 @@
+patching file graphql-dgs-spring-webflux-autoconfigure/src/test/kotlin/com/netflix/graphql/dgs/webflux/MalformedQueryContentTest.kt
+patching file graphql-dgs-spring-webmvc-autoconfigure/src/test/kotlin/com/netflix/graphql/dgs/webmvc/MalformedQueryContentTest.kt
+patching file graphql-dgs-spring-webmvc/src/test/kotlin/com/netflix/graphql/dgs/mvc/DgsRestControllerTest.kt
+patching file graphql-dgs/src/test/kotlin/com/netflix/graphql/dgs/internal/DefaultDgsQueryExecutorTest.kt
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources NO-SOURCE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:inspectClassesForKotlinIC UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:compileTestKotlin NO-SOURCE
+> Task :buildSrc:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:compileTestJava NO-SOURCE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:test NO-SOURCE
+> Task :buildSrc:validatePlugins UP-TO-DATE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build UP-TO-DATE
+> Task :graphql-dgs-mocking:kaptGenerateStubsKotlin UP-TO-DATE
+> Task :graphql-dgs-mocking:kaptKotlin UP-TO-DATE
+> Task :graphql-dgs-mocking:compileKotlin UP-TO-DATE
+> Task :graphql-dgs-mocking:compileJava NO-SOURCE
+> Task :graphql-error-types:kaptGenerateStubsKotlin UP-TO-DATE
+> Task :graphql-error-types:kaptKotlin UP-TO-DATE
+> Task :graphql-error-types:compileKotlin UP-TO-DATE
+> Task :graphql-error-types:compileJava UP-TO-DATE
+> Task :graphql-dgs:kaptGenerateStubsKotlin UP-TO-DATE
+> Task :graphql-dgs:kaptKotlin UP-TO-DATE
+> Task :graphql-dgs:compileKotlin UP-TO-DATE
+> Task :graphql-dgs:compileJava UP-TO-DATE
+> Task :graphql-dgs:processResources NO-SOURCE
+> Task :graphql-dgs:classes UP-TO-DATE
+> Task :graphql-dgs:kaptGenerateStubsTestKotlin
+> Task :graphql-dgs:kaptTestKotlin UP-TO-DATE
+> Task :graphql-dgs:compileTestKotlin
+> Task :graphql-dgs:compileTestJava UP-TO-DATE
+> Task :graphql-dgs:processTestResources UP-TO-DATE
+> Task :graphql-dgs:testClasses UP-TO-DATE
+> Task :graphql-dgs-mocking:processResources NO-SOURCE
+> Task :graphql-dgs-mocking:classes UP-TO-DATE
+> Task :graphql-dgs-mocking:inspectClassesForKotlinIC UP-TO-DATE
+> Task :graphql-dgs-mocking:jar UP-TO-DATE
+> Task :graphql-error-types:processResources UP-TO-DATE
+> Task :graphql-error-types:classes UP-TO-DATE
+> Task :graphql-error-types:inspectClassesForKotlinIC UP-TO-DATE
+> Task :graphql-error-types:jar UP-TO-DATE
+
+> Task :graphql-dgs:test
+
+DefaultDgsQueryExecutorTest > Returns a GraphQL Error wth BAD_REQUEST described in the extensions() FAILED
+    java.lang.NullPointerException at DefaultDgsQueryExecutorTest.kt:159
+
+17 tests completed, 1 failed
+
+> Task :graphql-dgs:test FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':graphql-dgs:test'.
+> There were failing tests. See the report at: file:///workspace/repo/graphql-dgs/build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.3.3/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD FAILED in 29s
+28 actionable tasks: 3 executed, 25 up-to-date
+START_JUNIT_XML
+<testsuite name="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" tests="17" skipped="0" failures="1" errors="0" timestamp="2026-06-29T15:26:56" hostname="modal" time="2.131">
+  <testcase name="extractJsonWithString()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="1.694"/>
+  <testcase name="extractJsonAsObjectTypeRefWithVariables()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.049"/>
+  <testcase name="extractJsonAsObjectTypeRefWithHeadersNotThrow()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.035"/>
+  <testcase name="extractJsonAsObjectAsMap()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.04"/>
+  <testcase name="extractJsonAsObjectError()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.022"/>
+  <testcase name="extractJsonAsObjectClazzWithVariables()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.014"/>
+  <testcase name="documentContext()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.091"/>
+  <testcase name="extractJsonAsObjectClazzWithHeadersNotThrow()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.014"/>
+  <testcase name="extractError()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.037"/>
+  <testcase name="extractJsonAsObject()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.012"/>
+  <testcase name="extractJsonWithObjectListAsMap()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.011"/>
+  <testcase name="documentContextWithTypename()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.012"/>
+  <testcase name="extractJsonAsObjectWithTypeRef()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.025"/>
+  <testcase name="withFieldNamedErrors()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.012"/>
+  <testcase name="extractJsonWithListOfString()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.011"/>
+  <testcase name="extractJsonAsTypeRefError()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.015"/>
+  <testcase name="Returns a GraphQL Error wth BAD_REQUEST described in the extensions()" classname="com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest" time="0.016">
+    <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
+  </testcase>
+</testsuite>
+reward=0 graded=17 found=17 failed=1 parsed=17 framework=junit exit_code=0

@@ -1,0 +1,82 @@
+patching file components/divider/__tests__/__snapshots__/demo.test.js.snap
+  console.log
+    Current React Version: 17.0.2
+
+      at Object.<anonymous> (tests/setup.js:8:9)
+
+FAIL components/divider/__tests__/demo.test.js
+  ✓ renders ./components/divider/demo/customize-style.md correctly (2104 ms)
+  ✓ renders ./components/divider/demo/horizontal.md correctly (24 ms)
+  ✓ renders ./components/divider/demo/plain.md correctly (20 ms)
+  ✓ renders ./components/divider/demo/vertical.md correctly (22 ms)
+  ✕ renders ./components/divider/demo/with-text.md correctly (23 ms)
+
+  ● renders ./components/divider/demo/with-text.md correctly
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `renders ./components/divider/demo/with-text.md correctly 1`
+
+    - Snapshot  - 28
+    + Received  +  0
+
+    @@ -39,34 +39,6 @@
+          </span>
+        </div>,
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.
+        </p>,
+    -   <div
+    -     class="ant-divider ant-divider-horizontal ant-divider-with-text ant-divider-with-text-left ant-divider-no-default-orientation-margin-left"
+    -     role="separator"
+    -   >
+    -     <span
+    -       class="ant-divider-inner-text"
+    -       style="margin-left:0"
+    -     >
+    -       Left Text with 0 orientationMargin
+    -     </span>
+    -   </div>,
+    -   <p>
+    -     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.
+    -   </p>,
+    -   <div
+    -     class="ant-divider ant-divider-horizontal ant-divider-with-text ant-divider-with-text-right ant-divider-no-default-orientation-margin-right"
+    -     role="separator"
+    -   >
+    -     <span
+    -       class="ant-divider-inner-text"
+    -       style="margin-right:50px"
+    -     >
+    -       Right Text with 50px orientationMargin
+    -     </span>
+    -   </div>,
+    -   <p>
+    -     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonne merninisti licere mihi ista probare, quae sunt a te dicta? Refert tamen, quo modo.
+    -   </p>,
+      ]
+
+      68 |       ariaConvert(wrapper);
+      69 |
+    > 70 |       expect(wrapper).toMatchSnapshot();
+         |                       ^
+      71 |       MockDate.reset();
+      72 |
+      73 |       errSpy();
+
+      at Object.<anonymous> (tests/shared/demoTest.ts:70:23)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+ › 1 snapshot failed.
+Snapshot Summary
+ › 1 snapshot failed from 1 test suite. Inspect your code changes or re-run jest with `-u` to update them.
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 passed, 5 total
+Snapshots:   1 failed, 4 passed, 5 total
+Time:        4.887 s
+Ran all test suites matching /components\/divider\/__tests__\/demo.test.js/i.
+reward=0 graded=5 found=0 failed=0 parsed=0 framework=jest exit_code=1

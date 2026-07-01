@@ -1,0 +1,8 @@
+patching file crates/teloxide-macros/CHANGELOG.md
+patching file crates/teloxide-macros/src/attr.rs
+patching file crates/teloxide-macros/src/bot_commands.rs
+patching file crates/teloxide-macros/src/command.rs
+patching file crates/teloxide-macros/src/command_attr.rs
+patching file crates/teloxide-macros/src/command_enum.rs
+patching file crates/teloxide/examples/command.rs
+patching file crates/teloxide/src/utils/command.rs

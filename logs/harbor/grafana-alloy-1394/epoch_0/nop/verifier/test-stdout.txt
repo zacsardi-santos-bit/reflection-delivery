@@ -1,0 +1,17 @@
+patching file internal/service/cluster/discovery/peer_discovery_test.go
+# github.com/grafana/alloy/internal/service/cluster/discovery [github.com/grafana/alloy/internal/service/cluster/discovery.test]
+internal/service/cluster/discovery/peer_discovery_test.go:22:28: undefined: Options
+internal/service/cluster/discovery/peer_discovery_test.go:29:10: undefined: Options
+internal/service/cluster/discovery/peer_discovery_test.go:38:10: undefined: Options
+internal/service/cluster/discovery/peer_discovery_test.go:47:10: undefined: Options
+internal/service/cluster/discovery/peer_discovery_test.go:59:10: undefined: Options
+internal/service/cluster/discovery/peer_discovery_test.go:70:10: undefined: Options
+internal/service/cluster/discovery/peer_discovery_test.go:80:10: undefined: Options
+internal/service/cluster/discovery/peer_discovery_test.go:90:10: undefined: Options
+internal/service/cluster/discovery/peer_discovery_test.go:101:10: undefined: Options
+internal/service/cluster/discovery/peer_discovery_test.go:337:81: undefined: goDiscoverFactory
+internal/service/cluster/discovery/peer_discovery_test.go:101:10: too many errors
+{"Time":"2026-06-29T15:16:46.626927541Z","Action":"start","Package":"github.com/grafana/alloy/internal/service/cluster/discovery"}
+{"Time":"2026-06-29T15:16:46.627032691Z","Action":"output","Package":"github.com/grafana/alloy/internal/service/cluster/discovery","Output":"FAIL\tgithub.com/grafana/alloy/internal/service/cluster/discovery [build failed]\n"}
+{"Time":"2026-06-29T15:16:46.627090318Z","Action":"fail","Package":"github.com/grafana/alloy/internal/service/cluster/discovery","Elapsed":0}
+reward=0 (grader error: Extra data: line 34 column 1 (char 2652); fell back to exit_code=1)

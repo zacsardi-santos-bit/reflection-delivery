@@ -1,0 +1,5 @@
+I'm working on a lint rule that detects invalid suffix arguments passed to a path object's suffix-replacement method. Right now the rule catches the case where someone passes a suffix without a leading dot — which would fail at runtime. But I realized there's another case that also fails at runtime and isn't being caught: passing just a lone dot as the suffix. Python's path library rejects that too.
+
+I'd like to extend the rule to also flag the lone-dot case. The two situations should behave slightly differently: for the dotless case, there's an obvious automatic fix (insert the missing dot), but for the lone-dot case the intent is unclear, so no automatic fix should be offered. The error message for the lone-dot case should reflect that the suffix is simply invalid, while the existing message for the dotless case can stay as-is.
+
+Since the rule now catches a broader category of invalid suffixes — not just dotless ones — it would also make sense to update its name and all references to it to reflect this wider scope.

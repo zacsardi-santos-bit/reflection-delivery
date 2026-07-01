@@ -1,0 +1,1901 @@
+diff --git a/.github/workflows/go.yml b/.github/workflows/go.yml
+index fd3b818..85e80b3 100644
+--- a/.github/workflows/go.yml
++++ b/.github/workflows/go.yml
+@@ -27,19 +27,20 @@ jobs:
+       - name: Install Dependency
+         run: sudo apt-get update && sudo apt-get -y install librocksdb-dev
+ 
+-      - name: Clear cache
+-        run: go clean -modcache
+-
+-      - name: Cache Go modules
+-        uses: actions/cache@v2
+-        with:
+-          path: ~/go/pkg/mod
+-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+-          restore-keys: |
+-            ${{ runner.os }}-go-
+-
+       - name: Check Format
+-        run: if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then exit 1; fi
++        run: |
++          unformatted=$(gofmt -s -l .)
++          if [ "$unformatted" != "" ]; then
++            echo "the following files are not formatted:"
++            for file in $unformatted; do
++              echo "$file:"
++              gofmt -s -d "$file"
++              echo "------"
++            done
++            exit 1
++          fi
++          
++      
+ 
+       - name: Lint
+         uses: golangci/golangci-lint-action@v3.6.0
+diff --git a/config/cluster_options.go b/config/cluster_options.go
+index d9ac2cb..3710af4 100644
+--- a/config/cluster_options.go
++++ b/config/cluster_options.go
+@@ -2,16 +2,81 @@ package config
+ 
+ import "time"
+ 
++// Config holds configuration options for a distributed database.
+ type Config struct {
+-	ReplicationFactor   int
+-	ShardingStrategy    string
+-	SchedulingStrategy  string
+-	LogDataStorage      string
+-	LogDataStoragePath  string
+-	SnapshotStorage     string
++	// ReplicationFactor specifies the number of replicas for each piece of data,
++	// impacting redundancy and availability.
++	ReplicationFactor int
++
++	// ShardingStrategy defines the strategy for data sharding, determining how data
++	// is partitioned and distributed across nodes in the cluster.
++	ShardingStrategy string
++
++	// SchedulingStrategy specifies the task scheduling strategy, affecting data balancing
++	// and load distribution.
++	SchedulingStrategy string
++
++	// LogDataStorage specifies the storage type for log data, which could be disk,
++	// network storage, etc.
++	LogDataStorage string
++
++	// LogDataStoragePath is the path for storing log data.
++	LogDataStoragePath string
++
++	// SnapshotStorage specifies the storage type for snapshot data, used for backup
++	// and restoration.
++	SnapshotStorage string
++
++	// SnapshotStoragePath is the path for storing snapshot data.
+ 	SnapshotStoragePath string
+-	LogDataStorageSize  int64
+-	HeartbeatInterval   time.Duration
+-	MetaNodes           []string
+-	StoreNodes          []string
++
++	// LogDataStorageSize specifies the maximum capacity for log data storage.
++	LogDataStorageSize int64
++
++	// HeartbeatInterval defines the interval for heartbeats, used to maintain communication
++	// and state synchronization among nodes in the cluster.
++	HeartbeatInterval time.Duration
++
++	// MetaNodes contains the addresses of metadata nodes, used for managing the cluster's
++	// metadata information.
++	MetaNodes []string
++
++	// StoreNodes contains the addresses of storage nodes, used for storing and
++	// accessing actual data.
++	StoreNodes []string
++}
++
++// RegionConfig encapsulates configuration and boundary information for a specific region
++// within a distributed Raft-based database.
++type RegionConfig struct {
++	// Options contains a set of configuration options specific to the behavior of the Raft region.
++	Options Options
++
++	// Config holds additional configuration settings related to the operation of the Raft region.
++	Config Config
++
++	// Id represents the unique identifier for the Raft region.
++	Id int64
++
++	// Start specifies the starting boundary key of the Raft region.
++	Start []byte
++
++	// End specifies the ending boundary key of the Raft region.
++	End []byte
++}
++
++// StoreConfig encapsulates configuration and identification information for a store
++// within a distributed system.
++type StoreConfig struct {
++	// Options contains a set of configuration options specific to the behavior of the store.
++	Options Options
++
++	// Config holds additional configuration settings related to the operation of the store.
++	Config Config
++
++	// Id represents the unique identifier for the store.
++	Id int64
++
++	// Addr specifies the network address at which the store can be accessed.
++	Addr string
+ }
+diff --git a/config/options.go b/config/options.go
+index f9d6a15..5a33c3e 100644
+--- a/config/options.go
++++ b/config/options.go
+@@ -1,19 +1,75 @@
+ package config
+ 
+-import "os"
++import (
++	"github.com/ByteStorage/FlyDB/lib/wal"
++	"os"
++)
+ 
++// Options is a comprehensive configuration struct that
++// encapsulates various settings for configuring the behavior of a database.
+ type Options struct {
+-	DirPath      string // Database data directory
+-	DataFileSize int64  // Size of data files
+-	SyncWrite    bool   // Whether to persist data on every write
+-	IndexType    IndexerType
+-	FIOType      FIOType
++	// DirPath specifies the path to the directory where the database will store its data files.
++	DirPath string
++
++	// DataFileSize defines the maximum size of each data file in the database.
++	DataFileSize int64
++
++	// SyncWrite determines whether the database should ensure data persistence with
++	// every write operation.
++	SyncWrite bool
++
++	// IndexType selects the type of indexing mechanism to be used for efficient data retrieval.
++	IndexType IndexerType
++
++	// FIOType indicates the type of file I/O optimization to be applied by the database.
++	FIOType FIOType
++}
++
++// ColumnOptions are configurations for database column families
++type ColumnOptions struct {
++	// DbMemoryOptions contains configuration settings
++	// for managing database memory usage and caching.
++	DbMemoryOptions DbMemoryOptions
++
++	// WalOptions contains configuration settings for the Write-Ahead Logging (WAL) mechanism.
++	WalOptions wal.Options
++}
++
++// DbMemoryOptions is related to configuration of database memory tables
++type DbMemoryOptions struct {
++	// Option contains a set of database configuration options
++	// to influence memory management behavior.
++	Option Options
++
++	// LogNum specifies the number of logs to keep in memory
++	// for efficient access and performance.
++	LogNum uint32
++
++	// FileSize defines the maximum size of data files to be kept in memory.
++	FileSize int64
++
++	// SaveTime determines the interval at which data should be
++	// saved from memory to disk to ensure durability.
++	SaveTime int64
++
++	// MemSize sets the limit on the amount of memory to be used for caching purposes.
++	MemSize int64
++
++	// TotalMemSize defines the overall memory capacity allocated for database operations.
++	TotalMemSize int64
++
++	// ColumnName identifies the specific database column to which these memory options apply.
++	ColumnName string
++
++	// Wal is a reference to the Write-Ahead Logging (WAL) mechanism that ensures data durability.
++	Wal *wal.Wal
+ }
+ 
+ // IteratorOptions is the configuration for index iteration.
+ type IteratorOptions struct {
+ 	// Prefix specifies the prefix value for keys to iterate over. Default is empty.
+ 	Prefix []byte
++
+ 	// Reverse indicates whether to iterate in reverse order.
+ 	// Default is false for forward iteration.
+ 	Reverse bool
+@@ -23,6 +79,7 @@ type IteratorOptions struct {
+ type WriteBatchOptions struct {
+ 	// MaxBatchNum is the maximum number of data entries in a batch.
+ 	MaxBatchNum uint
++
+ 	// SyncWrites indicates whether to sync (persist) the data on batch commit.
+ 	SyncWrites bool
+ }
+@@ -46,6 +103,9 @@ const (
+ 
+ 	// SkipList
+ 	SkipList
++
++	// ARTWithBloom index With Bloom Filter
++	ARTWithBloom
+ )
+ 
+ const (
+@@ -69,3 +129,14 @@ var DefaultWriteBatchOptions = WriteBatchOptions{
+ 	MaxBatchNum: 10000,
+ 	SyncWrites:  true,
+ }
++
++var DefaultDbMemoryOptions = DbMemoryOptions{
++	Option:       DefaultOptions,
++	LogNum:       1000,
++	FileSize:     256 * 1024 * 1024, // 256MB
++	SaveTime:     100 * 1000,
++	MemSize:      256 * 1024 * 1024,      // 256MB
++	TotalMemSize: 1 * 1024 * 1024 * 1024, // 2GB
++	ColumnName:   "default",
++	Wal:          nil,
++}
+diff --git a/config/region_config.go b/config/region_config.go
+deleted file mode 100644
+index 35e5822..0000000
+--- a/config/region_config.go
++++ /dev/null
+@@ -1,9 +0,0 @@
+-package config
+-
+-type RegionConfig struct {
+-	Options Options
+-	Config  Config
+-	Id      int64
+-	Start   []byte
+-	End     []byte
+-}
+diff --git a/config/store_config.go b/config/store_config.go
+deleted file mode 100644
+index d75b714..0000000
+--- a/config/store_config.go
++++ /dev/null
+@@ -1,8 +0,0 @@
+-package config
+-
+-type StoreConfig struct {
+-	Options Options
+-	Config  Config
+-	Id      int64
+-	Addr    string
+-}
+diff --git a/config/tcpConfig.go b/config/tcpConfig.go
+deleted file mode 100644
+index c8c7a49..0000000
+--- a/config/tcpConfig.go
++++ /dev/null
+@@ -1,21 +0,0 @@
+-package config
+-
+-// TcpServerConfiguration define global tcp server config
+-type TcpServerConfiguration struct {
+-	Host       string
+-	Port       int
+-	MaxClients int
+-}
+-
+-// Configuration is global tcp server config
+-var Configuration *TcpServerConfiguration
+-
+-// Init global tcp server config
+-func Init() *TcpServerConfiguration {
+-	Configuration = &TcpServerConfiguration{
+-		Host:       "127.0.0.1",
+-		Port:       6379,
+-		MaxClients: 10000,
+-	}
+-	return Configuration
+-}
+diff --git a/db/column/column.go b/db/column/column.go
+new file mode 100644
+index 0000000..d9be1a6
+--- /dev/null
++++ b/db/column/column.go
+@@ -0,0 +1,212 @@
++package column
++
++import (
++	"errors"
++	"fmt"
++	"github.com/ByteStorage/FlyDB/config"
++	"github.com/ByteStorage/FlyDB/db/memory"
++	"github.com/ByteStorage/FlyDB/lib/wal"
++	"io/ioutil"
++	"os"
++	"strings"
++	"sync"
++)
++
++// Column is a column family
++type Column interface {
++	// CreateColumnFamily create column family
++	CreateColumnFamily(name string) error
++	// DropColumnFamily drop column family
++	DropColumnFamily(name string) error
++	// ListColumnFamilies list column families
++	ListColumnFamilies() ([]string, error)
++	// Put a key/value pair into the column family
++	Put(cf string, key []byte, value []byte) error
++	// Get a value from the column family
++	Get(cf string, key []byte) ([]byte, error)
++	// Delete a key from the column family
++	Delete(cf string, key []byte) error
++	// Keys returns all keys in the column family
++	Keys(cf string) ([][]byte, error)
++}
++
++// NewColumn create a column family
++func NewColumn(option config.ColumnOptions) (Column, error) {
++	// create wal, all column family share a wal
++	w, err := wal.NewWal(option.WalOptions)
++	if err != nil {
++		return nil, err
++	}
++
++	// load column family
++	col, err := loadColumn(option)
++	if err != nil {
++		return nil, err
++	}
++
++	// if column family exists, return it
++	if len(col) > 0 {
++		columnFamily := make(map[string]*memory.Db)
++		for k, v := range col {
++			columnFamily[k] = v
++		}
++		return &column{
++			option:       option,
++			mux:          sync.RWMutex{},
++			columnFamily: columnFamily,
++			wal:          w,
++		}, nil
++	}
++
++	// if column family not exists, create a new column family
++	if option.DbMemoryOptions.ColumnName == "" {
++		option.DbMemoryOptions.ColumnName = "default"
++	}
++
++	// set wal, the wal is a global wal of all column family
++	option.DbMemoryOptions.Wal = w
++
++	// create a new db
++	db, err := memory.NewDB(option.DbMemoryOptions)
++	if err != nil {
++		return nil, err
++	}
++	return &column{
++		option: option,
++		mux:    sync.RWMutex{},
++		columnFamily: map[string]*memory.Db{
++			option.DbMemoryOptions.ColumnName: db,
++		},
++		wal: w,
++	}, nil
++}
++
++// column is a column family, it contains a wal and a map of column family
++// the map of column family is a map of column family name and column family
++// the wal is a global wal of all column family
++type column struct {
++	mux          sync.RWMutex          // protect column family
++	wal          *wal.Wal              // wal of all column family
++	columnFamily map[string]*memory.Db // column family map
++	option       config.ColumnOptions  // column family options
++}
++
++// CreateColumnFamily creates a new column family and associates it with the specified name.
++// If a column family with the same name already exists, it returns an error.
++// Column families are logical groups within the database that can contain different types of data. Each column family has its own in-memory table, Write-Ahead Logging (WAL), and persistent storage.
++//
++// Parameters:
++// - name: The name of the column family to create.
++//
++// Returns:
++//   - If the column family is successfully created, it returns nil.
++//     If a column family with the same name already exists or an error occurs during creation,
++//     it returns the corresponding error message.
++func (c *column) CreateColumnFamily(name string) error {
++	c.mux.Lock()
++	defer c.mux.Unlock()
++	if _, ok := c.columnFamily[name]; ok {
++		return errors.New("column family already exists")
++	}
++	c.option.DbMemoryOptions.ColumnName = name
++	db, err := memory.NewDB(c.option.DbMemoryOptions)
++	if err != nil {
++		return err
++	}
++	c.columnFamily[name] = db
++	return nil
++}
++
++// DropColumnFamily deletes a column family with the specified name.
++// If the column family does not exist, it returns an error.
++// This operation removes the associated data files and configurations for the column family.
++//
++// Parameters:
++// - name: The name of the column family to delete.
++//
++// Returns:
++//   - If the column family is successfully deleted, it returns nil.
++//     If the column family does not exist or an error occurs during deletion,
++//     it returns the corresponding error message.
++func (c *column) DropColumnFamily(name string) error {
++	c.mux.Lock()
++	defer c.mux.Unlock()
++	if _, ok := c.columnFamily[name]; !ok {
++		return errors.New("column family not exists")
++	}
++	err := os.RemoveAll(c.option.DbMemoryOptions.Option.DirPath + "/" + name)
++	if err != nil {
++		return err
++	}
++	delete(c.columnFamily, name)
++	return nil
++}
++
++// ListColumnFamilies returns a list of all existing column families in the database.
++//
++// Returns:
++//   - A slice of strings containing the names of all existing column families.
++//   - If there are no column families or an error occurs during retrieval,
++//     it returns an empty slice and an error message.
++func (c *column) ListColumnFamilies() ([]string, error) {
++	c.mux.RLock()
++	defer c.mux.RUnlock()
++	var list []string
++	for k := range c.columnFamily {
++		list = append(list, k)
++	}
++	return list, nil
++}
++
++func (c *column) Put(cf string, key []byte, value []byte) error {
++	return c.columnFamily[cf].Put(key, value)
++}
++
++func (c *column) Get(cf string, key []byte) ([]byte, error) {
++	return c.columnFamily[cf].Get(key)
++}
++
++func (c *column) Delete(cf string, key []byte) error {
++	return c.columnFamily[cf].Delete(key)
++}
++
++func (c *column) Keys(cf string) ([][]byte, error) {
++	return c.columnFamily[cf].Keys()
++}
++
++// loadColumn loads and initializes column families from the specified base directory path.
++//
++// Parameters:
++// - option: Configuration options for loading the column families.
++//
++// Returns:
++// - A map where keys are column family names and values are corresponding in-memory databases (memory.Db).
++// - If the base directory does not exist, an error is returned.
++// - If there are any errors while loading or initializing column families, an error is returned.
++func loadColumn(option config.ColumnOptions) (map[string]*memory.Db, error) {
++	base := option.DbMemoryOptions.Option.DirPath
++	base = strings.Trim(base, "/")
++	// Check if the base path exists
++	if _, err := os.Stat(base); os.IsNotExist(err) {
++		return nil, fmt.Errorf("directory does not exist: %s", base)
++	}
++	// List all directories under the base path
++	dirs, err := ioutil.ReadDir(base)
++	if err != nil {
++		return nil, err
++	}
++	columns := make(map[string]*memory.Db)
++	for _, dir := range dirs {
++		if dir.IsDir() {
++			colName := dir.Name()
++			dirPath := base + "/" + colName
++			option.DbMemoryOptions.Option.DirPath = dirPath
++			db, err := memory.NewDB(option.DbMemoryOptions)
++			if err != nil {
++				return nil, err
++			}
++			columns[colName] = db
++		}
++	}
++	return columns, nil
++}
+diff --git a/db/engine/db.go b/db/engine/db.go
+index a27cd88..80d9189 100644
+--- a/db/engine/db.go
++++ b/db/engine/db.go
+@@ -4,6 +4,7 @@
+ package engine
+ 
+ import (
++	"fmt"
+ 	"github.com/ByteStorage/FlyDB/config"
+ 	data2 "github.com/ByteStorage/FlyDB/db/data"
+ 	"github.com/ByteStorage/FlyDB/db/index"
+@@ -549,7 +550,7 @@ func (db *DB) Clean() {
+ 		_ = db.Close()
+ 		err := os.RemoveAll(db.options.DirPath)
+ 		if err != nil {
+-			panic(err)
++			_ = fmt.Errorf("clean db error: %v", err)
+ 		}
+ 	}
+ }
+diff --git a/db/index/art_with_bloom.go b/db/index/art_with_bloom.go
+new file mode 100644
+index 0000000..4e20db4
+--- /dev/null
++++ b/db/index/art_with_bloom.go
+@@ -0,0 +1,71 @@
++package index
++
++import (
++	"github.com/ByteStorage/FlyDB/db/data"
++	"github.com/ByteStorage/FlyDB/lib/bloom"
++	art "github.com/plar/go-adaptive-radix-tree"
++	"sync"
++)
++
++// AdaptiveRadixTreeWithBloom Adaptive Radix Tree Index
++// The following link is the ART library written by go.
++// If you need to know more about it, please go to the corresponding warehouse.
++// https://github.com/plar/go-adaptive-radix-tree
++type AdaptiveRadixTreeWithBloom struct {
++	tree   art.Tree
++	lock   *sync.RWMutex
++	filter *bloom.Filter
++}
++
++// NewARTWithBloom Initializes the adaptive radix tree index
++func NewARTWithBloom() *AdaptiveRadixTreeWithBloom {
++	return &AdaptiveRadixTreeWithBloom{
++		tree:   art.New(),
++		lock:   new(sync.RWMutex),
++		filter: bloom.NewBloomFilter(1000, 0.01),
++	}
++}
++
++func (artree *AdaptiveRadixTreeWithBloom) Put(key []byte, pst *data.LogRecordPst) bool {
++	artree.lock.Lock()
++	defer artree.lock.Unlock()
++	artree.tree.Insert(key, pst)
++	artree.filter.Add(key)
++	return true
++}
++
++func (artree *AdaptiveRadixTreeWithBloom) Get(key []byte) *data.LogRecordPst {
++	if !artree.filter.MayContainItem(key) {
++		return nil
++	}
++	artree.lock.RLock()
++	defer artree.lock.RUnlock()
++	value, found := artree.tree.Search(key)
++	if !found {
++		return nil
++	}
++	return value.(*data.LogRecordPst)
++}
++
++func (artree *AdaptiveRadixTreeWithBloom) Delete(key []byte) bool {
++	if !artree.filter.MayContainItem(key) {
++		return false
++	}
++	artree.lock.Lock()
++	defer artree.lock.Unlock()
++	_, deleted := artree.tree.Delete(key)
++	return deleted
++}
++
++func (artree *AdaptiveRadixTreeWithBloom) Size() int {
++	artree.lock.RLock()
++	defer artree.lock.RUnlock()
++	size := artree.tree.Size()
++	return size
++}
++
++func (artree *AdaptiveRadixTreeWithBloom) Iterator(reverse bool) Iterator {
++	artree.lock.RLock()
++	defer artree.lock.RUnlock()
++	return NewARTreeIterator(artree.tree, reverse)
++}
+diff --git a/db/index/index.go b/db/index/index.go
+index 9a06acc..698cab4 100644
+--- a/db/index/index.go
++++ b/db/index/index.go
+@@ -39,6 +39,9 @@ const (
+ 
+ 	// SkipList Index
+ 	SkipListIndex
++
++	// ARTWithBloom index With Bloom Filter
++	ARTWithBloom
+ )
+ 
+ func NewIndexer(typeIndex IndexType, dirPath string) Indexer {
+@@ -49,6 +52,8 @@ func NewIndexer(typeIndex IndexType, dirPath string) Indexer {
+ 		return NewART()
+ 	case SkipListIndex:
+ 		return NewSkipList()
++	case ARTWithBloom:
++		return NewARTWithBloom()
+ 	default:
+ 		panic("unsupported index type")
+ 	}
+diff --git a/db/memory/api.go b/db/memory/api.go
+new file mode 100644
+index 0000000..fecb673
+--- /dev/null
++++ b/db/memory/api.go
+@@ -0,0 +1,19 @@
++package memory
++
++type Api interface {
++	CreateColumnFamily(name string) error
++	DropColumnFamily(name string) error
++	Put(key []byte, value []byte) error
++	Get(key []byte) ([]byte, error)
++	Delete(key []byte) error
++	Keys() ([][]byte, error)
++	Close() error
++	ListColumnFamilies() ([]string, error)
++	PutCF(cf string, key []byte, value []byte) error
++	GetCF(cf string, key []byte) ([]byte, error)
++	DeleteCF(cf string, key []byte) error
++	KeysCF(cf string) ([][]byte, error)
++}
++
++// Put: We can divide one column to many column families. Each column family has its own memTable and SSTable.
++// Like MySQL divide one table to many partitions. Each partition has its own value and index.
+diff --git a/db/memory/db.go b/db/memory/db.go
+new file mode 100644
+index 0000000..5393c22
+--- /dev/null
++++ b/db/memory/db.go
+@@ -0,0 +1,368 @@
++package memory
++
++import (
++	"github.com/ByteStorage/FlyDB/config"
++	"github.com/ByteStorage/FlyDB/db/engine"
++	"github.com/ByteStorage/FlyDB/lib/wal"
++	"io"
++	"log"
++	"os"
++	"sync"
++)
++
++const (
++	// Record types
++	putType    = byte(1)
++	deleteType = byte(2)
++)
++
++type Db struct {
++	option            config.DbMemoryOptions
++	db                *engine.DB
++	mem               *MemTable
++	oldList           []*MemTable
++	wal               *wal.Wal
++	oldListChan       chan *MemTable
++	totalSize         int64
++	activeSize        int64
++	walTask           chan func()
++	errMsgCh          chan string
++	mux               sync.RWMutex
++	walDataMtList     []*MemTable
++	walDataMtListChan chan *MemTable
++}
++
++// NewDB create a new db of wal and memTable
++func NewDB(option config.DbMemoryOptions) (*Db, error) {
++	// create a new memTable
++	mem := NewMemTable()
++
++	// dir path has been changed to dir path + column name
++	option.Option.DirPath = option.Option.DirPath + "/" + option.ColumnName
++	option.Option.IndexType = config.ARTWithBloom
++	db, err := engine.NewDB(option.Option)
++	if err != nil {
++		return nil, err
++	}
++
++	w := option.Wal
++
++	// if wal is nil, create a new wal
++	// if wal is not nil, the wal was created by column family
++	if option.Wal == nil {
++		walOptions := wal.Options{
++			DirPath:  option.Option.DirPath,
++			FileSize: option.FileSize,
++			SaveTime: option.SaveTime,
++			LogNum:   option.LogNum,
++		}
++		w, err = wal.NewWal(walOptions)
++		if err != nil {
++			return nil, err
++		}
++	}
++
++	// initialize db
++	d := &Db{
++		mem:               mem,
++		db:                db,
++		option:            option,
++		oldList:           make([]*MemTable, 0),
++		oldListChan:       make(chan *MemTable, 1000000),
++		activeSize:        0,
++		totalSize:         0,
++		wal:               w,
++		walTask:           make(chan func(), 10000000),
++		mux:               sync.RWMutex{},
++		walDataMtList:     make([]*MemTable, 0),
++		walDataMtListChan: make(chan *MemTable, 1000000),
++		errMsgCh:          make(chan string, 1000000),
++	}
++
++	// when loading, the system will execute the every record in wal
++	d.load()
++	// async write to db
++	go d.async()
++	// async save wal
++	go d.wal.AsyncSave()
++	// async handler error message
++	go d.handlerErrMsg()
++	// async worker
++	go d.work()
++	return d, nil
++}
++
++func (d *Db) handlerErrMsg() {
++	msgLog := d.option.Option.DirPath + "/error.log"
++	for msg := range d.errMsgCh {
++		// write to log
++		_ = os.WriteFile(msgLog, []byte(msg), 0666)
++	}
++}
++
++var putTypeInt = int64(1)
++
++func (d *Db) Put(key []byte, value []byte) error {
++	d.mux.Lock()
++	defer d.mux.Unlock()
++	// calculate key and value size
++	keyLen := int64(len(key))
++	valueLen := int64(len(value))
++
++	//d.walTask <- func() {
++	//	// Write to wal, try 3 times
++	//	ok := false
++	//	for i := 0; i < 3; i++ {
++	//		err := d.wal.Put(key, value)
++	//		if err == nil {
++	//			ok = true
++	//			break
++	//		}
++	//	}
++	//	if !ok {
++	//		err := d.wal.Delete(key)
++	//		if err != nil {
++	//			d.errMsgCh <- "write to wal error when delete the key: " + string(key) + " error: " + err.Error()
++	//		}
++	//	}
++	//}
++
++	// if sync write, save wal
++	if d.option.Option.SyncWrite {
++		err := d.wal.Save()
++		if err != nil {
++			return err
++		}
++	}
++
++	// if all memTable size > total memTable size, write to db
++	if d.totalSize > d.option.TotalMemSize {
++		return d.db.Put(key, value)
++	}
++
++	// if active memTable size > define size, change to immutable memTable
++	if d.activeSize+keyLen+valueLen > d.option.MemSize {
++		// add to immutable memTable list
++		if putTypeInt == 1 {
++			d.addOldMemTable(d.mem)
++		} else {
++			d.addWalDataToMemTable(d.mem)
++			putTypeInt = 1
++		}
++		// create new active memTable
++		d.mem = NewMemTable()
++		d.activeSize = 0
++	}
++
++	// write to active memTable
++	d.mem.Put(string(key), value)
++
++	// add size
++	d.activeSize += keyLen + valueLen
++	d.totalSize += keyLen + valueLen
++	return nil
++}
++
++func (d *Db) Get(key []byte) ([]byte, error) {
++	d.mux.RLock()
++	defer d.mux.RUnlock()
++	// first get from memTable
++	value, err := d.mem.Get(string(key))
++	if err == nil {
++		return value, nil
++	}
++
++	mtList := append(append([]*MemTable(nil), d.walDataMtList...), d.oldList...)
++
++	// if active memTable not found, get from immutable memTable
++	for _, list := range mtList {
++		value, err = list.Get(string(key))
++		if err == nil {
++			return value, nil
++		}
++	}
++
++	// if immutable memTable not found, get from db
++	return d.db.Get(key)
++}
++
++func (d *Db) Delete(key []byte) error {
++	d.mux.Lock()
++	defer d.mux.Unlock()
++
++	d.walTask <- func() {
++		// Write to wal, try 3 times
++		ok := false
++		for i := 0; i < 3; i++ {
++			err := d.wal.Delete(key)
++			if err == nil {
++				ok = true
++				break
++			}
++		}
++		if !ok {
++			err := d.wal.Delete(key)
++			if err != nil {
++				d.errMsgCh <- "write to wal error when delete the key: " + string(key) + " error: " + err.Error()
++			}
++		}
++	}
++
++	//err := d.pool.Submit(func() {
++	//	// Write to wal, try 3 times
++	//	ok := false
++	//	for i := 0; i < 3; i++ {
++	//		err := d.wal.Delete(key)
++	//		if err == nil {
++	//			ok = true
++	//			break
++	//		}
++	//	}
++	//	if !ok {
++	//		err := d.wal.Delete(key)
++	//		if err != nil {
++	//			d.errMsgCh <- "write to wal error when delete the key: " + string(key) + " error: " + err.Error()
++	//		}
++	//	}
++	//})
++	// get from active memTable
++	get, err := d.mem.Get(string(key))
++	if err == nil {
++		d.activeSize -= int64(len(key) + len(get))
++		d.totalSize -= int64(len(key) + len(get))
++		d.mem.Delete(string(key))
++		return nil
++	}
++	// get from immutable memTable
++	mtList := append(append([]*MemTable(nil), d.walDataMtList...), d.oldList...)
++	for _, list := range mtList {
++		get, err = list.Get(string(key))
++		if err == nil {
++			d.totalSize -= int64(len(key) + len(get))
++			list.Delete(string(key))
++			return nil
++		}
++	}
++	// get from db
++	return d.db.Delete(key)
++}
++
++func (d *Db) Keys() ([][]byte, error) {
++	d.mux.RLock()
++	defer d.mux.RUnlock()
++
++	// Create a slice to hold the keys
++	keys := make([][]byte, 0)
++
++	// Collect keys from the active MemTable
++	for key := range d.mem.table {
++		keys = append(keys, []byte(key))
++	}
++
++	// Collect keys from the immutable MemTables (WAL data MemTables)
++	for _, mt := range d.walDataMtList {
++		for key := range mt.table {
++			keys = append(keys, []byte(key))
++		}
++	}
++
++	// Collect keys from the old MemTables (flushed MemTables)
++	for _, mt := range d.oldList {
++		for key := range mt.table {
++			keys = append(keys, []byte(key))
++		}
++	}
++
++	// Collect keys from the persistent storage (your DB implementation)
++	persistentKeys := d.db.GetListKeys()
++	keys = append(keys, persistentKeys...)
++
++	return keys, nil
++}
++
++func (d *Db) Close() error {
++	err := d.wal.Save()
++	if err != nil {
++		return err
++	}
++	return d.db.Close()
++}
++
++func (d *Db) work() {
++	for task := range d.walTask {
++		task()
++	}
++}
++
++func (d *Db) addOldMemTable(oldList *MemTable) {
++	d.oldListChan <- oldList
++}
++
++func (d *Db) addWalDataToMemTable(walDataMt *MemTable) {
++	d.walDataMtListChan <- walDataMt
++}
++
++func (d *Db) async() {
++	for oldList := range d.oldListChan {
++		for key, value := range oldList.table {
++			// Write to db, try 3 times
++			ok := false
++			for i := 0; i < 3; i++ {
++				err := d.db.Put([]byte(key), value)
++				if err == nil {
++					ok = true
++					break
++				}
++			}
++			if !ok {
++				err := d.wal.Delete([]byte(key))
++				if err != nil {
++					d.errMsgCh <- "write to wal error when delete the key: " + string(key) + " error: " + err.Error()
++				}
++			}
++			d.totalSize -= int64(len(key) + len(value))
++		}
++	}
++}
++
++func (d *Db) Clean() {
++	d.db.Clean()
++}
++
++func (d *Db) load() {
++	// Initialize reading from the start of the WAL.
++	d.wal.InitReading()
++
++	for {
++		record, err := d.wal.ReadNext()
++		if err == io.EOF {
++			break
++		}
++		if err != nil {
++			// Handle the error: log it, panic, return, etc.
++			log.Printf("Error reading from WAL: %v", err)
++			return
++		}
++
++		switch record.Type {
++		case putType:
++			// Assuming Db has a Put method
++			putTypeInt = 0
++			err := d.Put(record.Key, record.Value)
++			if err != nil {
++				// Handle the error: log it, panic, return, etc.
++				log.Printf("Error applying PUT from WAL: %v", err)
++			}
++		case deleteType:
++			// Assuming Db has a Delete method
++			err := d.Delete(record.Key)
++			if err != nil {
++				// Handle the error: log it, panic, return, etc.
++				log.Printf("Error applying DELETE from WAL: %v", err)
++			}
++		default:
++			// Handle unknown type.
++			log.Printf("Unknown record type in WAL: %v", record.Type)
++		}
++	}
++}
+diff --git a/db/memory/memory.go b/db/memory/memory.go
+new file mode 100644
+index 0000000..99194fb
+--- /dev/null
++++ b/db/memory/memory.go
+@@ -0,0 +1,46 @@
++package memory
++
++import (
++	"errors"
++	"sync"
++)
++
++// MemTable is an in-memory table
++type MemTable struct {
++	table map[string][]byte // key -> value
++	mutex sync.RWMutex      // protect table
++}
++
++// NewMemTable create a new MemTable
++func NewMemTable() *MemTable {
++	return &MemTable{
++		table: make(map[string][]byte),
++	}
++}
++
++// Put a key-value pair into the table
++func (m *MemTable) Put(key string, value []byte) {
++	m.mutex.Lock()
++	defer m.mutex.Unlock()
++	m.table[key] = value
++}
++
++// Get a value from the table
++func (m *MemTable) Get(key string) ([]byte, error) {
++	m.mutex.RLock()
++	defer m.mutex.RUnlock()
++
++	value, ok := m.table[key]
++	if !ok {
++		return nil, errors.New("key not found")
++	}
++
++	return value, nil
++}
++
++// Delete a key from the table
++func (m *MemTable) Delete(key string) {
++	m.mutex.Lock()
++	defer m.mutex.Unlock()
++	delete(m.table, key)
++}
+diff --git a/go.mod b/go.mod
+index 231c2d5..8f28b68 100644
+--- a/go.mod
++++ b/go.mod
+@@ -18,9 +18,9 @@ require (
+ 	github.com/klauspost/reedsolomon v1.11.7
+ 	github.com/pkg/errors v0.9.1
+ 	github.com/plar/go-adaptive-radix-tree v1.0.5
++	github.com/spaolacci/murmur3 v1.1.0
+ 	github.com/stretchr/testify v1.8.2
+ 	github.com/tecbot/gorocksdb v0.0.0-20191217155057-f0fad39f321c
+-	github.com/tidwall/wal v1.1.7
+ 	go.etcd.io/bbolt v1.3.7
+ 	go.uber.org/zap v1.24.0
+ 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+@@ -47,12 +47,9 @@ require (
+ 	github.com/kr/pretty v0.3.0 // indirect
+ 	github.com/mattn/go-colorable v0.1.12 // indirect
+ 	github.com/mattn/go-isatty v0.0.16 // indirect
++	github.com/panjf2000/ants v1.3.0 // indirect
+ 	github.com/pmezard/go-difflib v1.0.0 // indirect
+ 	github.com/rogpeppe/go-internal v1.9.0 // indirect
+-	github.com/tidwall/gjson v1.14.4 // indirect
+-	github.com/tidwall/match v1.1.1 // indirect
+-	github.com/tidwall/pretty v1.2.1 // indirect
+-	github.com/tidwall/tinylru v1.2.1 // indirect
+ 	go.uber.org/atomic v1.7.0 // indirect
+ 	go.uber.org/multierr v1.6.0 // indirect
+ 	golang.org/x/net v0.8.0 // indirect
+diff --git a/go.sum b/go.sum
+index 028de76..8c568fd 100644
+--- a/go.sum
++++ b/go.sum
+@@ -140,6 +140,8 @@ github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742/go.mod h1:bx2lN
+ github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=
+ github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
+ github.com/nbutton23/zxcvbn-go v0.0.0-20180912185939-ae427f1e4c1d/go.mod h1:o96djdrsSGy3AWPyBgZMAGfxZNfgntdJG+11KU4QvbU=
++github.com/panjf2000/ants v1.3.0 h1:8pQ+8leaLc9lys2viEEr8md0U4RN6uOSUCE9bOYjQ9M=
++github.com/panjf2000/ants v1.3.0/go.mod h1:AaACblRPzq35m1g3enqYcxspbbiOJJYaxU2wMpm1cXY=
+ github.com/pascaldekloe/goe v0.1.0 h1:cBOtyMzM9HTpWjXfbbunk26uA6nG3a8n06Wieeh0MwY=
+ github.com/pascaldekloe/goe v0.1.0/go.mod h1:lzWF7FIEvWOWxwDKqyGYQf6ZUaNfKdP144TG7ZOy1lc=
+ github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+@@ -169,6 +171,8 @@ github.com/rogpeppe/go-internal v1.9.0 h1:73kH8U+JUqXU8lRuOHeVHaa/SZPifC7BkcraZV
+ github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
+ github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
+ github.com/sirupsen/logrus v1.4.2/go.mod h1:tLMulIdttU9McNUspp0xgXVQah82FyeX6MwdIuYE2rE=
++github.com/spaolacci/murmur3 v1.1.0 h1:7c1g84S4BPRrfL5Xrdp6fOJ206sU9y293DDHaoy0bLI=
++github.com/spaolacci/murmur3 v1.1.0/go.mod h1:JwIasOWyU6f++ZhiEuf87xNszmSA2myDM2Kzu9HwQUA=
+ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+ github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+ github.com/stretchr/objx v0.4.0/go.mod h1:YvHI0jy2hoMjB+UWwv71VJQ9isScKT/TqJzVSSt89Yw=
+@@ -186,19 +190,6 @@ github.com/stretchr/testify v1.8.2 h1:+h33VjcLVPDHtOdpUCuF+7gSuG3yGIftsP1YvFihtJ
+ github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
+ github.com/tecbot/gorocksdb v0.0.0-20191217155057-f0fad39f321c h1:g+WoO5jjkqGAzHWCjJB1zZfXPIAaDpzXIEJ0eS6B5Ok=
+ github.com/tecbot/gorocksdb v0.0.0-20191217155057-f0fad39f321c/go.mod h1:ahpPrc7HpcfEWDQRZEmnXMzHY03mLDYMCxeDzy46i+8=
+-github.com/tidwall/gjson v1.10.2/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
+-github.com/tidwall/gjson v1.14.4 h1:uo0p8EbA09J7RQaflQ1aBRffTR7xedD2bcIVSYxLnkM=
+-github.com/tidwall/gjson v1.14.4/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
+-github.com/tidwall/match v1.1.1 h1:+Ho715JplO36QYgwN9PGYNhgZvoUSc9X2c80KVTi+GA=
+-github.com/tidwall/match v1.1.1/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
+-github.com/tidwall/pretty v1.2.0/go.mod h1:ITEVvHYasfjBbM0u2Pg8T2nJnzm8xPwvNhhsoaGGjNU=
+-github.com/tidwall/pretty v1.2.1 h1:qjsOFOWWQl+N3RsoF5/ssm1pHmJJwhjlSbZ51I6wMl4=
+-github.com/tidwall/pretty v1.2.1/go.mod h1:ITEVvHYasfjBbM0u2Pg8T2nJnzm8xPwvNhhsoaGGjNU=
+-github.com/tidwall/tinylru v1.1.0/go.mod h1:3+bX+TJ2baOLMWTnlyNWHh4QMnFyARg2TLTQ6OFbzw8=
+-github.com/tidwall/tinylru v1.2.1 h1:VgBr72c2IEr+V+pCdkPZUwiQ0KJknnWIYbhxAVkYfQk=
+-github.com/tidwall/tinylru v1.2.1/go.mod h1:9bQnEduwB6inr2Y7AkBP7JPgCkyrhTV/ZpX0oOOpBI4=
+-github.com/tidwall/wal v1.1.7 h1:emc1TRjIVsdKKSnpwGBAcsAGg0767SvUk8+ygx7Bb+4=
+-github.com/tidwall/wal v1.1.7/go.mod h1:r6lR1j27W9EPalgHiB7zLJDYu3mzW5BQP5KrzBpYY/E=
+ github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
+ go.etcd.io/bbolt v1.3.7 h1:j+zJOnnEjF/kyHlDDgGnVL/AIqIJPq8UoB2GSNfkUfQ=
+ go.etcd.io/bbolt v1.3.7/go.mod h1:N9Mkw9X8x5fupy0IKsmuqVtoGDyxsaDlbk4Rd05IAQw=
+diff --git a/lib/bloom/bloom.go b/lib/bloom/bloom.go
+new file mode 100644
+index 0000000..684a83d
+--- /dev/null
++++ b/lib/bloom/bloom.go
+@@ -0,0 +1,65 @@
++package bloom
++
++import (
++	"github.com/spaolacci/murmur3"
++	"math"
++)
++
++// Filter represents a structure for the filter itself.
++type Filter struct {
++	bitSet    []bool // Bit array to hold the state of the data
++	size      uint32 // Size of the bit array
++	numHashes uint8  // Number of hash functions to use
++}
++
++// NewBloomFilter initializes a new Bloom filter based on the expected number of items and desired false positive rate.
++func NewBloomFilter(expectedItems uint32, fpRate float64) *Filter {
++	// Calculate the size of bit array using the expected number of items and desired false positive rate
++	size := uint32(-float64(expectedItems) * math.Log(fpRate) / (math.Ln2 * math.Ln2))
++	// Calculate the optimal number of hash functions based on the size of bit array and expected number of items
++	numHashes := uint8(float64(size) / float64(expectedItems) * math.Ln2)
++
++	return &Filter{
++		bitSet:    make([]bool, size),
++		size:      size,
++		numHashes: numHashes,
++	}
++}
++
++// Add inserts an item into the Bloom filter.
++func (f *Filter) Add(item []byte) {
++	hashes := f.hash(item)
++	// For each hash value, find the position and set the bit to true
++	for i := uint8(0); i < f.numHashes; i++ {
++		position := hashes[i] % f.size
++		f.bitSet[position] = true
++	}
++}
++
++// MayContainItem checks if an item is possibly in the set.
++// If it returns false, the item is definitely not in the set.
++// If it returns true, the item might be in the set, but it can also be a false positive.
++func (f *Filter) MayContainItem(item []byte) bool {
++	hashes := f.hash(item)
++	for i := uint8(0); i < f.numHashes; i++ {
++		position := hashes[i] % f.size
++		if !f.bitSet[position] {
++			return false
++		}
++	}
++	return true
++}
++
++// hash produces multiple hash values for an item.
++// It leverages two hash values from murmur3 and generates as many as needed through a linear combination.
++func (f *Filter) hash(item []byte) []uint32 {
++	h1, h2 := murmur3.Sum128(item) // Get two 64-bit hash values
++	var result []uint32
++
++	// Use the two hash values to generate the required number of hash functions.
++	for i := uint8(0); i < f.numHashes; i++ {
++		h := h1 + uint64(i)*h2
++		result = append(result, uint32(h))
++	}
++	return result
++}
+diff --git a/lib/wal/wal.go b/lib/wal/wal.go
+index cd76791..1d4af8c 100644
+--- a/lib/wal/wal.go
++++ b/lib/wal/wal.go
+@@ -1,49 +1,308 @@
+ package wal
+ 
+ import (
+-	"github.com/tidwall/wal"
++	"encoding/binary"
++	"errors"
++	"hash/crc32"
++	"io"
++	"os"
++	"time"
++
++	"github.com/ByteStorage/FlyDB/db/fileio"
+ )
+ 
+-const FileName = "/tmp/flydb/wal"
++const (
++	// Record types
++	putType    = byte(1)
++	deleteType = byte(2)
++
++	// File names for WAL
++	walFileName = "/db.wal"
++)
+ 
++// Wal is a write-ahead log.
+ type Wal struct {
+-	log *wal.Log
++	m          *fileio.MMapIO // MMapIOManager
++	logNum     uint32         // Log number
++	saveTime   int64          // Save time
++	dirPath    string         // Dir path
++	readOffset int64          // Read offset
++	filesize   int64          // File size
+ }
+ 
+-func (w *Wal) Write(data []byte) error {
+-	index, err := w.log.LastIndex()
++// NewWal creates a new WAL.
++func NewWal(options Options) (*Wal, error) {
++	// Construct the full path to the WAL file using the given directory path and
++	// a predefined file name.
++	fileName := options.DirPath + walFileName
++
++	// Check if the WAL file exists.
++	stat, err := os.Stat(fileName)
+ 	if err != nil {
+-		return err
++		// If the file doesn't exist, create the necessary directory and the file itself.
++		if os.IsNotExist(err) {
++			err := os.MkdirAll(options.DirPath, os.ModePerm)
++			if err != nil {
++				return nil, err
++			}
++			_, err = os.Create(fileName)
++			if err != nil {
++				return nil, err
++			}
++		}
++	} else {
++		// If the file exists, calculate the log number based on its size and
++		// the specified file size.
++		options.LogNum = uint32(stat.Size() / options.FileSize)
+ 	}
+-	return w.log.Write(index+1, data)
++
++	// Create a memory-mapped I/O manager for the WAL file.
++	mapIO, err := fileio.NewMMapIOManager(fileName, options.FileSize)
++	if err != nil {
++		return nil, err
++	}
++
++	// Initialize and return a new WAL instance with the provided options and created I/O manager.
++	return &Wal{
++		m:        mapIO,
++		logNum:   options.LogNum,
++		saveTime: options.SaveTime,
++		dirPath:  options.DirPath,
++		filesize: options.FileSize,
++	}, nil
++}
++
++// Put writes a record to the WAL.
++// +---------+-----------+-----------+----------------+--- ... ---+
++// |CRC (4B) | Size (2B) | Type (1B) | Log number (4B)| Payload   |
++// +---------+-----------+-----------+----------------+--- ... ---+
++// Same as above, with the addition of
++// Log number = 32bit log file number, so that we can distinguish between
++// records written by the most recent log writer vs a previous one.
++func (w *Wal) writeRecord(recordType byte, key, value []byte) error {
++	// Prepare the payload based on record type
++	var payload []byte
++	switch recordType {
++	case putType:
++		payload = append(key, value...)
++	case deleteType:
++		payload = key
++	default:
++		return errors.New("unknown record type")
++	}
++
++	size := uint16(4 + len(payload)) // 4 bytes for log number
++	buffer := make([]byte, 4+2+1+4+len(payload))
++
++	// Compute CRC
++	crc := crc32.ChecksumIEEE(buffer[4:])
++	binary.LittleEndian.PutUint32(buffer, crc)
++
++	// Write size
++	binary.LittleEndian.PutUint16(buffer[4:], size)
++
++	// Write type
++	buffer[4+2] = recordType
++
++	// Write log number
++	binary.LittleEndian.PutUint32(buffer[4+2+1:], w.logNum)
++
++	// Write payload
++	copy(buffer[4+2+1+4:], payload)
++
++	_, err := w.m.Write(buffer)
++	return err
+ }
+ 
+-func (w *Wal) Read(index uint64) ([]byte, error) {
+-	return w.log.Read(index)
++// Put writes a record to the WAL.
++func (w *Wal) Put(key []byte, value []byte) error {
++	return w.writeRecord(putType, key, value)
+ }
+ 
+-func (w *Wal) ReadLast() ([]byte, error) {
+-	index, err := w.log.LastIndex()
++// Delete writes a delete record to the WAL.
++func (w *Wal) Delete(key []byte) error {
++	return w.writeRecord(deleteType, key, nil)
++}
++
++// Record is a structure that holds information about a record from the WAL.
++type Record struct {
++	Type  byte
++	Key   []byte
++	Value []byte
++}
++
++// InitReading Initializes the WAL reading position to the start of the file.
++func (w *Wal) InitReading() {
++	w.readOffset = 0
++}
++
++// ReadNext reads the next operation from the WAL.
++func (w *Wal) ReadNext() (*Record, error) {
++	buffer := make([]byte, 4+2+1+4) // Buffer size to read headers
++
++	//TODO: has bug here, get the buffer is [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
++	_, err := w.m.Read(buffer, w.readOffset)
++	if err == io.EOF {
++		return nil, io.EOF
++	}
++	if err != nil {
++		return nil, err
++	}
++
++	// Move readOffset
++	w.readOffset += int64(len(buffer))
++
++	// Verify CRC
++	expectedCRC := binary.LittleEndian.Uint32(buffer)
++	if crc32.ChecksumIEEE(buffer[4:]) != expectedCRC {
++		return nil, errors.New("corrupted record found")
++	}
++
++	// Get record size and type
++	size := binary.LittleEndian.Uint16(buffer[4:])
++	recordType := buffer[4+2]
++
++	// Read the payload
++	payload := make([]byte, size-4) // Subtract 4 for log number
++	_, err = w.m.Read(payload, w.readOffset)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return w.log.Read(index)
++
++	// Move readOffset again
++	w.readOffset += int64(len(payload))
++
++	// Parse based on record type
++	switch recordType {
++	case putType:
++		return &Record{Type: putType, Key: payload[:len(payload)-len(buffer)], Value: payload[len(payload)-len(buffer):]}, nil
++	case deleteType:
++		return &Record{Type: deleteType, Key: payload, Value: nil}, nil
++	default:
++		return nil, errors.New("unknown record type")
++	}
+ }
+ 
+-func New() (*Wal, error) {
+-	log, err := wal.Open(FileName, nil)
++func (w *Wal) Compact() error {
++	// Create a map to track the latest put operations and a set to track deleted keys
++	latestPuts := make(map[string][]byte)
++	deletedKeys := make(map[string]bool)
++
++	w.InitReading()
++	for {
++		record, err := w.ReadNext()
++		if err == io.EOF {
++			break
++		}
++		if err != nil {
++			return err
++		}
++		if record.Type == putType {
++			latestPuts[string(record.Key)] = record.Value
++			// If the key was previously deleted, ensure it's removed from the deletedKeys set
++			delete(deletedKeys, string(record.Key))
++		} else if record.Type == deleteType {
++			delete(latestPuts, string(record.Key))
++			deletedKeys[string(record.Key)] = true
++		}
++	}
++
++	// Step 2: Create a temporary WAL for writing compressed records
++	tmpWALPath := w.dirPath + "/db.tmp.wal"
++	tmpWAL, err := fileio.NewMMapIOManager(tmpWALPath, w.filesize) // assuming w.m provides FileSize method
++	if err != nil {
++		return err
++	}
++	defer tmpWAL.Close()
++
++	// Step 3: Write records to temporary WAL
++	for key, value := range latestPuts {
++		// Skip the key if it was deleted
++		if _, deleted := deletedKeys[key]; deleted {
++			continue
++		}
++		// TODO: Consider adding the log number, if necessary.
++		err = w.writeToSpecificWAL(tmpWAL, putType, []byte(key), value)
++		if err != nil {
++			return err
++		}
++	}
++
++	// Rename files to replace the old WAL with the compacted one
++	err = os.Rename(tmpWALPath, w.dirPath+walFileName)
+ 	if err != nil {
+-		return &Wal{}, err
++		return err
++	}
++
++	// Reinitialize mmap with the compacted file
++	w.m, err = fileio.NewMMapIOManager(w.dirPath+walFileName, w.filesize)
++	if err != nil {
++		return err
+ 	}
+-	index, err := log.LastIndex()
++
++	return nil
++}
++
++func (w *Wal) writeToSpecificWAL(targetWAL *fileio.MMapIO, recordType byte, key, value []byte) error {
++	// Prepare the payload based on record type
++	var payload []byte
++	switch recordType {
++	case putType:
++		payload = append(key, value...)
++	case deleteType:
++		payload = key
++	default:
++		return errors.New("unknown record type")
++	}
++
++	size := uint16(4 + len(payload)) // 4 bytes for log number
++	buffer := make([]byte, 4+2+1+4+len(payload))
++
++	// Compute CRC
++	crc := crc32.ChecksumIEEE(buffer[4:])
++	binary.LittleEndian.PutUint32(buffer, crc)
++
++	// Write size
++	binary.LittleEndian.PutUint16(buffer[4:], size)
++
++	// Write type
++	buffer[4+2] = recordType
++
++	// Write log number
++	binary.LittleEndian.PutUint32(buffer[4+2+1:], w.logNum)
++
++	// Write payload
++	copy(buffer[4+2+1+4:], payload)
++
++	_, err := targetWAL.Write(buffer)
++	return err
++}
++
++// Save flushes the WAL to disk.
++func (w *Wal) Save() error {
++	return w.m.Sync()
++}
++
++// Close closes the WAL.
++func (w *Wal) Close() error {
++	return w.m.Close()
++}
++
++func (w *Wal) Clean() error {
++	err := w.m.Close()
+ 	if err != nil {
+-		return &Wal{}, err
++		return err
+ 	}
+-	if index == 0 {
+-		err := log.Write(1, []byte("--------------------"))
++	return os.RemoveAll(w.dirPath)
++}
++
++// AsyncSave periodically flushes the WAL to disk.
++func (w *Wal) AsyncSave() {
++	for range time.Tick(time.Duration(w.saveTime)) {
++		err := w.Save()
+ 		if err != nil {
+-			return &Wal{}, err
++			// TODO how to fix this error?
++			continue
+ 		}
+ 	}
+-	return &Wal{log: log}, nil
+ }
+diff --git a/lib/wal/wal_db.go b/lib/wal/wal_db.go
+deleted file mode 100644
+index 7184ee5..0000000
+--- a/lib/wal/wal_db.go
++++ /dev/null
+@@ -1,57 +0,0 @@
+-package wal
+-
+-import "encoding/json"
+-
+-type WriteMessage struct {
+-	Key   []byte
+-	Value []byte
+-	Type  int //0: put, 1: get , 2: delete , 3: update
+-}
+-
+-func (w *Wal) Put(key []byte, value []byte) error {
+-	marshal, err := json.Marshal(&WriteMessage{
+-		Key:   key,
+-		Value: value,
+-		Type:  0,
+-	})
+-	if err != nil {
+-		return err
+-	}
+-	return w.Write(marshal)
+-}
+-
+-func (w *Wal) Get(key []byte) error {
+-	marshal, err := json.Marshal(&WriteMessage{
+-		Key:   key,
+-		Type:  1,
+-		Value: nil,
+-	})
+-	if err != nil {
+-		return err
+-	}
+-	return w.Write(marshal)
+-}
+-
+-func (w *Wal) Delete(key []byte) error {
+-	marshal, err := json.Marshal(&WriteMessage{
+-		Key:   key,
+-		Type:  2,
+-		Value: nil,
+-	})
+-	if err != nil {
+-		return err
+-	}
+-	return w.Write(marshal)
+-}
+-
+-func (w *Wal) Update(key []byte, value []byte) error {
+-	marshal, err := json.Marshal(&WriteMessage{
+-		Key:   key,
+-		Value: value,
+-		Type:  0,
+-	})
+-	if err != nil {
+-		return err
+-	}
+-	return w.Write(marshal)
+-}
+diff --git a/lib/wal/wal_options.go b/lib/wal/wal_options.go
+new file mode 100644
+index 0000000..1d64c53
+--- /dev/null
++++ b/lib/wal/wal_options.go
+@@ -0,0 +1,18 @@
++package wal
++
++// Options encapsulates configuration settings for the Write-Ahead Logging (WAL)
++// mechanism in a database.
++type Options struct {
++	// DirPath specifies the directory path where Write-Ahead Logging (WAL) files will be stored.
++	DirPath string
++
++	// FileSize determines the maximum size of individual WAL files.
++	FileSize int64
++
++	// SaveTime defines the interval at which WAL data should be persisted from memory to disk.
++	SaveTime int64
++
++	// LogNum specifies the number of WAL logs to retain, influencing performance and
++	// recovery behavior.
++	LogNum uint32
++}
+diff --git a/protocol/tcp/reply.go b/protocol/tcp/reply.go
+deleted file mode 100644
+index ae20fc4..0000000
+--- a/protocol/tcp/reply.go
++++ /dev/null
+@@ -1,71 +0,0 @@
+-package tcp
+-
+-import (
+-	"bufio"
+-	"context"
+-	"fmt"
+-	"github.com/ByteStorage/FlyDB/lib/sync/boolAm"
+-	"github.com/ByteStorage/FlyDB/protocol/tcpIF"
+-	"io"
+-	"net"
+-	"sync"
+-)
+-
+-var _ tcpIF.Handler = (*TcpReplyHandler)(nil)
+-
+-type TcpReplyHandler struct {
+-	activeConn sync.Map
+-	isClosed   boolAm.Boolean
+-}
+-
+-// NewHandler create a new handler
+-func NewHandler() *TcpReplyHandler {
+-	return &TcpReplyHandler{}
+-}
+-
+-// Handle client connection
+-func (t *TcpReplyHandler) Handle(ctx context.Context, conn net.Conn) {
+-	if t.isClosed.GetBoolAtomic() {
+-		_ = conn.Close()
+-		return
+-	}
+-
+-	client := &ReplyClient{
+-		Conn: conn,
+-	}
+-	t.activeConn.Store(client, struct{}{})
+-
+-	reader := bufio.NewReader(conn)
+-	for {
+-		msg, err := reader.ReadString('\n')
+-		if err != nil {
+-			if err == io.EOF {
+-				fmt.Println("client close connection")
+-				t.activeConn.Delete(client)
+-			} else {
+-				fmt.Println("read message error: ", err)
+-			}
+-			return
+-		}
+-
+-		if msg[:2] == "\\n" {
+-			client.Waiting.Add(1)
+-			buf := []byte(msg)
+-			_, _ = conn.Write(buf)
+-			client.Waiting.Done()
+-		}
+-	}
+-
+-}
+-
+-// Close handler
+-func (t *TcpReplyHandler) Close() error {
+-	fmt.Println("tcp server close")
+-	t.isClosed.SetBoolAtomic(true)
+-	t.activeConn.Range(func(key, value interface{}) bool {
+-		client := key.(*ReplyClient)
+-		_ = client.Close()
+-		return true
+-	})
+-	return nil
+-}
+diff --git a/protocol/tcp/replyClient.go b/protocol/tcp/replyClient.go
+deleted file mode 100644
+index 7fd8c7c..0000000
+--- a/protocol/tcp/replyClient.go
++++ /dev/null
+@@ -1,21 +0,0 @@
+-package tcp
+-
+-import (
+-	"github.com/ByteStorage/FlyDB/lib/sync/wait"
+-	"net"
+-	"time"
+-)
+-
+-//var _ tcpIF.Handler = (*ReplyClient)(nil)
+-
+-type ReplyClient struct {
+-	Conn    net.Conn
+-	Waiting wait.Wait
+-}
+-
+-// Close client connection
+-func (r *ReplyClient) Close() error {
+-	r.Waiting.WaitTimeout(10 * time.Second)
+-	_ = r.Conn.Close()
+-	return nil
+-}
+diff --git a/protocol/tcp/server.go b/protocol/tcp/server.go
+deleted file mode 100644
+index 699953e..0000000
+--- a/protocol/tcp/server.go
++++ /dev/null
+@@ -1,86 +0,0 @@
+-package tcp
+-
+-import (
+-	"context"
+-	"fmt"
+-	"github.com/ByteStorage/FlyDB/protocol/tcpIF"
+-	"net"
+-	"os"
+-	"os/signal"
+-	"sync"
+-	"syscall"
+-)
+-
+-type Config struct {
+-	Address string
+-}
+-
+-// ListenAndServeBySignal start tcp server by signal
+-func ListenAndServeBySignal(cfg *Config, handler tcpIF.Handler) error {
+-	closeChan := make(chan struct{})
+-	// listen system-level signal
+-	signalChan := make(chan os.Signal, 1)
+-	// syscall.SIGHUP: terminal closed
+-	// syscall.SIGINT: ctrl + c
+-	// syscall.SIGTERM: kill
+-	// syscall.SIGQUIT: ctrl + \
+-	signal.Notify(signalChan, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+-
+-	// receive signal
+-	// when receive a signal, send a signal to closeChan
+-	// closeChan will close tcp server
+-	go func() {
+-		s := <-signalChan
+-		switch s {
+-		case syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
+-			closeChan <- struct{}{}
+-		}
+-	}()
+-
+-	listener, err := net.Listen("tcp", cfg.Address)
+-	if err != nil {
+-		return err
+-	}
+-	fmt.Println("tcp server start listen on: ", cfg.Address)
+-
+-	// start tcp server
+-	ListenAndServe(listener, handler, closeChan)
+-
+-	return nil
+-}
+-
+-// ListenAndServe start tcp server
+-// closeChan is a channel to close tcp server
+-// when closeChan receive a signal, tcp server will close
+-func ListenAndServe(listener net.Listener, handler tcpIF.Handler, closeChan <-chan struct{}) {
+-	defer func() {
+-		_ = listener.Close()
+-		_ = handler.Close()
+-	}()
+-
+-	go func() {
+-		// wait for close signal
+-		<-closeChan
+-		fmt.Println("tcp server close but is shutting down...")
+-		_ = listener.Close()
+-		_ = handler.Close()
+-	}()
+-
+-	ctx := context.Background()
+-	var wg sync.WaitGroup
+-	for {
+-		conn, err := listener.Accept()
+-		if err != nil {
+-			break
+-		}
+-		fmt.Println("accept new connection: ", conn.RemoteAddr().String())
+-		wg.Add(1)
+-		go func() {
+-			defer func() {
+-				wg.Done()
+-			}()
+-			handler.Handle(ctx, conn)
+-		}()
+-	}
+-	wg.Wait()
+-}
+diff --git a/protocol/tcp/tcp_server/main.go b/protocol/tcp/tcp_server/main.go
+deleted file mode 100644
+index 3cdf2ad..0000000
+--- a/protocol/tcp/tcp_server/main.go
++++ /dev/null
+@@ -1,18 +0,0 @@
+-package main
+-
+-import (
+-	"fmt"
+-	"github.com/ByteStorage/FlyDB/config"
+-	tcp2 "github.com/ByteStorage/FlyDB/protocol/tcp"
+-	"strconv"
+-)
+-
+-func main() {
+-	tpcDefaultConfig := config.Init()
+-	err := tcp2.ListenAndServeBySignal(&tcp2.Config{
+-		Address: tpcDefaultConfig.Host + ":" + strconv.Itoa(tpcDefaultConfig.Port),
+-	}, tcp2.NewHandler())
+-	if err != nil {
+-		fmt.Println(err)
+-	}
+-}
+diff --git a/protocol/tcpIF/handle.go b/protocol/tcpIF/handle.go
+deleted file mode 100644
+index 1c8df59..0000000
+--- a/protocol/tcpIF/handle.go
++++ /dev/null
+@@ -1,14 +0,0 @@
+-package tcpIF
+-
+-import (
+-	"context"
+-	"net"
+-)
+-
+-type Handler interface {
+-	// Handle client connection
+-	Handle(ct context.Context, conn net.Conn)
+-
+-	// Close handler
+-	Close() error
+-}

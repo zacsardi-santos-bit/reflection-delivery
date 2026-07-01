@@ -1,0 +1,437 @@
+patching file Makefile
+patching file apis/core/v1alpha1/cluster_types.go
+patching file apis/core/v1alpha1/pd_types.go
+patching file apis/core/v1alpha1/tidb_types.go
+patching file apis/core/v1alpha1/zz_generated.deepcopy.go
+patching file cmd/testing-workload/main.go
+patching file cmd/testing-workload/ping.go
+patching file cmd/testing-workload/workload.go
+patching file examples/bootstrap-sql/00-cluster.yaml
+patching file examples/bootstrap-sql/03-tidb.yaml
+patching file go.work.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file go.work.sum.rej
+patching file hack/lib/build.sh
+patching file hack/lib/e2e.sh
+patching file manifests/crd/core.pingcap.com_clusters.yaml
+patching file manifests/crd/core.pingcap.com_tidbgroups.yaml
+patching file manifests/crd/core.pingcap.com_tidbs.yaml
+patching file pkg/configs/tidb/config.go
+patching file pkg/controllers/tidb/tasks/pod.go
+patching file pkg/scheme/scheme.go
+patching file Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Makefile.rej
+patching file apis/core/v1alpha1/cluster_types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file apis/core/v1alpha1/cluster_types.go.rej
+patching file apis/core/v1alpha1/pd_types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file apis/core/v1alpha1/pd_types.go.rej
+patching file apis/core/v1alpha1/tidb_types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file apis/core/v1alpha1/tidb_types.go.rej
+patching file apis/core/v1alpha1/zz_generated.deepcopy.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file apis/core/v1alpha1/zz_generated.deepcopy.go.rej
+patching file cmd/testing-workload/main.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file cmd/testing-workload/main.go.rej
+The next patch would create the file cmd/testing-workload/ping.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file cmd/testing-workload/workload.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file examples/bootstrap-sql/00-cluster.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file examples/bootstrap-sql/00-cluster.yaml.rej
+patching file examples/bootstrap-sql/03-tidb.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file examples/bootstrap-sql/03-tidb.yaml.rej
+patching file go.work.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file go.work.sum.rej
+patching file hack/lib/build.sh
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file hack/lib/build.sh.rej
+patching file hack/lib/e2e.sh
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file hack/lib/e2e.sh.rej
+patching file manifests/crd/core.pingcap.com_clusters.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file manifests/crd/core.pingcap.com_clusters.yaml.rej
+patching file manifests/crd/core.pingcap.com_tidbgroups.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file manifests/crd/core.pingcap.com_tidbgroups.yaml.rej
+patching file manifests/crd/core.pingcap.com_tidbs.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file manifests/crd/core.pingcap.com_tidbs.yaml.rej
+patching file pkg/configs/tidb/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/configs/tidb/config.go.rej
+patching file pkg/controllers/tidb/tasks/pod.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controllers/tidb/tasks/pod.go.rej
+patching file pkg/scheme/scheme.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/scheme/scheme.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Makefile b/Makefile
+|index d327e6c5f..7ec169e48 100644
+|--- a/Makefile
+|+++ b/Makefile
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 18
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/apis/core/v1alpha1/cluster_types.go b/apis/core/v1alpha1/cluster_types.go
+|index 0c4e204dd..ee1a1c9e1 100644
+|--- a/apis/core/v1alpha1/cluster_types.go
+|+++ b/apis/core/v1alpha1/cluster_types.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 42
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/apis/core/v1alpha1/pd_types.go b/apis/core/v1alpha1/pd_types.go
+|index 513ba9feb..efa62730e 100644
+|--- a/apis/core/v1alpha1/pd_types.go
+|+++ b/apis/core/v1alpha1/pd_types.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 56
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/apis/core/v1alpha1/tidb_types.go b/apis/core/v1alpha1/tidb_types.go
+|index 12fae3198..58de0d0b0 100644
+|--- a/apis/core/v1alpha1/tidb_types.go
+|+++ b/apis/core/v1alpha1/tidb_types.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 85
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/apis/core/v1alpha1/zz_generated.deepcopy.go b/apis/core/v1alpha1/zz_generated.deepcopy.go
+|index 58eb59d0b..c3881af71 100644
+|--- a/apis/core/v1alpha1/zz_generated.deepcopy.go
+|+++ b/apis/core/v1alpha1/zz_generated.deepcopy.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 160
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/testing-workload/main.go b/cmd/testing-workload/main.go
+|index d83edc128..c602055c7 100644
+|--- a/cmd/testing-workload/main.go
+|+++ b/cmd/testing-workload/main.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file b/cmd/testing-workload/ping.go
+patching file b/cmd/testing-workload/workload.go
+can't find file to patch at input line 473
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/bootstrap-sql/00-cluster.yaml b/examples/bootstrap-sql/00-cluster.yaml
+|index 8c0f0e64b..61f2a6024 100644
+|--- a/examples/bootstrap-sql/00-cluster.yaml
+|+++ b/examples/bootstrap-sql/00-cluster.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 485
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/bootstrap-sql/03-tidb.yaml b/examples/bootstrap-sql/03-tidb.yaml
+|index 0eaf05c4b..b429e879f 100644
+|--- a/examples/bootstrap-sql/03-tidb.yaml
+|+++ b/examples/bootstrap-sql/03-tidb.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 496
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.work.sum b/go.work.sum
+|index 49ad8ebc1..f270e6465 100644
+|--- a/go.work.sum
+|+++ b/go.work.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 516
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/hack/lib/build.sh b/hack/lib/build.sh
+|index e879d9427..8d6972518 100644
+|--- a/hack/lib/build.sh
+|+++ b/hack/lib/build.sh
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 529
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/hack/lib/e2e.sh b/hack/lib/e2e.sh
+|index 29573ccba..7c4c3e889 100755
+|--- a/hack/lib/e2e.sh
+|+++ b/hack/lib/e2e.sh
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 542
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/manifests/crd/core.pingcap.com_clusters.yaml b/manifests/crd/core.pingcap.com_clusters.yaml
+|index 2c9234c89..246cb953c 100644
+|--- a/manifests/crd/core.pingcap.com_clusters.yaml
+|+++ b/manifests/crd/core.pingcap.com_clusters.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 570
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/manifests/crd/core.pingcap.com_tidbgroups.yaml b/manifests/crd/core.pingcap.com_tidbgroups.yaml
+|index 8c63714ce..9b406929c 100644
+|--- a/manifests/crd/core.pingcap.com_tidbgroups.yaml
+|+++ b/manifests/crd/core.pingcap.com_tidbgroups.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 599
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/manifests/crd/core.pingcap.com_tidbs.yaml b/manifests/crd/core.pingcap.com_tidbs.yaml
+|index aeafd5e20..db7a1b123 100644
+|--- a/manifests/crd/core.pingcap.com_tidbs.yaml
+|+++ b/manifests/crd/core.pingcap.com_tidbs.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 628
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/configs/tidb/config.go b/pkg/configs/tidb/config.go
+|index 9258ac5e3..09afeb8df 100644
+|--- a/pkg/configs/tidb/config.go
+|+++ b/pkg/configs/tidb/config.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 641
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/controllers/tidb/tasks/pod.go b/pkg/controllers/tidb/tasks/pod.go
+|index b294d1d3a..64457633d 100644
+|--- a/pkg/controllers/tidb/tasks/pod.go
+|+++ b/pkg/controllers/tidb/tasks/pod.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 661
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/scheme/scheme.go b/pkg/scheme/scheme.go
+|index b88994a3f..138dd0b4a 100644
+|--- a/pkg/scheme/scheme.go
+|+++ b/pkg/scheme/scheme.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Makefile.rej
+patching file apis/core/v1alpha1/cluster_types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file apis/core/v1alpha1/cluster_types.go.rej
+patching file apis/core/v1alpha1/pd_types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file apis/core/v1alpha1/pd_types.go.rej
+patching file apis/core/v1alpha1/tidb_types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file apis/core/v1alpha1/tidb_types.go.rej
+patching file apis/core/v1alpha1/zz_generated.deepcopy.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file apis/core/v1alpha1/zz_generated.deepcopy.go.rej
+patching file cmd/testing-workload/main.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file cmd/testing-workload/main.go.rej
+The next patch would create the file cmd/testing-workload/ping.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file cmd/testing-workload/workload.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file examples/bootstrap-sql/00-cluster.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file examples/bootstrap-sql/00-cluster.yaml.rej
+patching file examples/bootstrap-sql/03-tidb.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file examples/bootstrap-sql/03-tidb.yaml.rej
+patching file go.work.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file go.work.sum.rej
+patching file hack/lib/build.sh
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file hack/lib/build.sh.rej
+patching file hack/lib/e2e.sh
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file hack/lib/e2e.sh.rej
+patching file manifests/crd/core.pingcap.com_clusters.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file manifests/crd/core.pingcap.com_clusters.yaml.rej
+patching file manifests/crd/core.pingcap.com_tidbgroups.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file manifests/crd/core.pingcap.com_tidbgroups.yaml.rej
+patching file manifests/crd/core.pingcap.com_tidbs.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file manifests/crd/core.pingcap.com_tidbs.yaml.rej
+patching file pkg/configs/tidb/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/configs/tidb/config.go.rej
+patching file pkg/controllers/tidb/tasks/pod.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controllers/tidb/tasks/pod.go.rej
+patching file pkg/scheme/scheme.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/scheme/scheme.go.rej
+ERROR: golden patch failed to apply by all strategies

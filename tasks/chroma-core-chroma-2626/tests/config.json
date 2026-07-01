@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/go && go test -json ./pkg/coordinator/grpc -count=1 -run TestConvertSegmentToProto",
+  "test_files": [
+    "chromadb/test/db/test_system.py",
+    "chromadb/test/segment/distributed/test_protobuf_translation.py",
+    "go/pkg/coordinator/grpc/proto_model_convert_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/chroma-core/chroma/go/pkg/coordinator/grpc::TestConvertSegmentToProto"
+  ],
+  "PASS_TO_PASS": []
+}

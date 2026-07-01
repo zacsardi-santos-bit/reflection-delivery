@@ -1,0 +1,15 @@
+patching file tunny_test.go
+# _/workspace/repo [_/workspace/repo.test]
+./tunny_test.go:33:10: undefined: NewFunc
+./tunny_test.go:77:10: undefined: NewFunc
+./tunny_test.go:92:10: undefined: NewFunc
+./tunny_test.go:110:10: undefined: NewCallback
+./tunny_test.go:134:10: undefined: NewFunc
+./tunny_test.go:148:10: undefined: NewFunc
+./tunny_test.go:160:10: undefined: NewFunc
+./tunny_test.go:180:10: undefined: NewFunc
+./tunny_test.go:237:10: undefined: New
+./tunny_test.go:237:24: undefined: Worker
+./tunny_test.go:237:24: too many errors
+FAIL	_/workspace/repo [build failed]
+reward=0 graded=8 found=8 failed=8 parsed=1 framework=go exit_code=1

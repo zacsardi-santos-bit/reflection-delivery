@@ -1,0 +1,23 @@
+{
+ "task": "hashicorp-terraform-provider-azurerm-23733",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch account_id_test.go 'TestDataFlowID' calls 'ValidateNetAppAccountID(tc.Input, \"test\")'; golden adds 'func ValidateNetAppAccountID' in validate/account_id.go; F2P=55 validate-package unit tests gated on the package compiling with the new validator"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 29,
+  "shallow": true
+ }
+}

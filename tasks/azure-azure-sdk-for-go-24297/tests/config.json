@@ -1,0 +1,25 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/sdk/messaging/azservicebus && go test -json ./internal/tracing -count=1",
+  "test_files": [
+    "sdk/messaging/azservicebus/internal/tracing/attributes_test.go",
+    "sdk/messaging/azservicebus/internal/tracing/propagation_test.go",
+    "sdk/messaging/azservicebus/internal/tracing/tracing_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestGetMessageAttributes/nil_message",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestGetMessageAttributes/empty_message",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestGetMessageAttributes/message_with_messageId_and_correlationId",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestGetMessageAttributes/message_with_all_attributes",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestGetMessageAttributes",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestPropagation/nil_message",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestPropagation/non-nil_message",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestPropagation",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestStartSpan",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestGetOperationType",
+    "github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing::TestGetSpanKind"
+  ],
+  "PASS_TO_PASS": []
+}

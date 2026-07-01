@@ -1,0 +1,24 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/packages/build && NODE_PATH=/workspace/repo/node_modules npx mocha -r ../../scripts/import-expansions.js --timeout 30000 -r ts-node/register/transpile-only --require /tmp/sinon-chai-setup.js src/npm-packages/bump.spec.ts src/npm-packages/publish.spec.ts",
+  "test_files": [
+    "packages/build/src/npm-packages/bump.spec.ts",
+    "packages/build/src/npm-packages/publish.spec.ts",
+    "packages/connectivity-tests/package.json",
+    "packages/e2e-tests/package.json",
+    "packages/e2e-tests/test/e2e.spec.ts"
+  ],
+  "num_test_files": 5,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/build/src/npm-packages/bump.spec.ts::npm-packages bump bumpMongoshReleasePackages throws if MONGOSH_RELEASE_VERSION is not set",
+    "/workspace/repo/packages/build/src/npm-packages/bump.spec.ts::npm-packages bump updateShellApiMongoshVersion updates the file to the set version",
+    "/workspace/repo/packages/build/src/npm-packages/publish.spec.ts::npm-packages publishNpmPackages throws if mongosh is not existent when publishing all",
+    "/workspace/repo/packages/build/src/npm-packages/publish.spec.ts::npm-packages publishNpmPackages takes mongosh version and pushes tags",
+    "/workspace/repo/packages/build/src/npm-packages/publish.spec.ts::npm-packages publishNpmPackages does not manually push tags with auxiliary packages",
+    "/workspace/repo/packages/build/src/npm-packages/publish.spec.ts::npm-packages publishNpmPackages calls lerna to publish packages for a real version"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/build/src/npm-packages/publish.spec.ts::npm-packages publishNpmPackages reverts the assume unchanged even on spawn failure"
+  ]
+}

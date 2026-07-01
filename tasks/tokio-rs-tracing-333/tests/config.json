@@ -1,0 +1,22 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p tracing-subscriber --test filter --test same_len_filters --no-fail-fast",
+  "test_files": [
+    "tracing-subscriber/tests/filter.rs",
+    "tracing-subscriber/tests/same_len_filters.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/8) tracing-subscriber::filter level_filter_event",
+    "(2/8) tracing-subscriber::same_len_filters same_length_targets",
+    "(3/8) tracing-subscriber::filter level_filter_event_with_target",
+    "(4/8) tracing-subscriber::filter same_name_spans",
+    "(7/8) tracing-subscriber::same_len_filters same_num_fields_event",
+    "(8/8) tracing-subscriber::same_len_filters same_num_fields_and_name_len"
+  ],
+  "PASS_TO_PASS": [
+    "(5/8) tracing-subscriber::filter field_filter_events",
+    "(6/8) tracing-subscriber::filter span_name_filter_is_dynamic"
+  ]
+}

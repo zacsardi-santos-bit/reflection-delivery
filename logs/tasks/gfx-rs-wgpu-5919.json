@@ -1,0 +1,23 @@
+{
+ "task": "gfx-rs-wgpu-5919",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden naga/build.rs: cfg_aliases!{ ... spv_out: {feature=\"spv-out\"}, ...}; test.patch spirv_capabilities.rs: '#![cfg(all(feature=\"wgsl-in\", spv_out))]'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

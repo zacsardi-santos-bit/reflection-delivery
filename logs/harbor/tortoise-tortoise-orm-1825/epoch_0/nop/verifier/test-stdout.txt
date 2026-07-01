@@ -1,0 +1,61 @@
+patching file tests/test_concurrency.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=function
+collecting ... collected 12 items
+
+tests/test_concurrency.py::TestConcurrencyIsolated::test_concurrency_create PASSED [  8%]
+tests/test_concurrency.py::TestConcurrencyIsolated::test_concurrency_read PASSED [ 16%]
+tests/test_concurrency.py::TestConcurrencyIsolated::test_concurrent_get_or_create PASSED [ 25%]
+tests/test_concurrency.py::TestConcurrencyIsolated::test_concurrent_transactions_with_multiple_ops PASSED [ 33%]
+tests/test_concurrency.py::TestConcurrencyIsolated::test_concurrent_transactions_with_single_op PASSED [ 41%]
+tests/test_concurrency.py::TestConcurrencyIsolated::test_nested_concurrent_transactions_with_multiple_ops PASSED [ 50%]
+tests/test_concurrency.py::TestConcurrencyIsolated::test_nonconcurrent_get_or_create PASSED [ 58%]
+tests/test_concurrency.py::TestConcurrencyTransactioned::test_concurrency_create PASSED [ 66%]
+tests/test_concurrency.py::TestConcurrencyTransactioned::test_concurrency_read PASSED [ 75%]
+tests/test_concurrency.py::TestConcurrencyTransactioned::test_nonconcurrent_get_or_create PASSED [ 83%]
+tests/test_concurrency.py::TestConcurrentDBConnectionInitialization::test_concurrent_queries PASSED [ 91%]
+tests/test_concurrency.py::TestConcurrentDBConnectionInitialization::test_concurrent_transactions FAILED [100%]
+
+=================================== FAILURES ===================================
+____ TestConcurrentDBConnectionInitialization.test_concurrent_transactions _____
+
+self = <tests.test_concurrency.TestConcurrentDBConnectionInitialization testMethod=test_concurrent_transactions>
+
+    async def test_concurrent_transactions(self) -> None:
+        async def transaction() -> None:
+            async with in_transaction():
+                await connections.get("models").execute_query("SELECT 1")
+    
+>       await asyncio.gather(*[transaction() for _ in range(100)])
+
+tests/test_concurrency.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_concurrency.py:112: in transaction
+    async with in_transaction():
+tortoise/backends/sqlite/client.py:196: in __aenter__
+    await self.connection.begin()
+tortoise/backends/sqlite/client.py:236: in begin
+    await self._connection.commit()
+/usr/local/lib/python3.11/site-packages/aiosqlite/core.py:165: in commit
+    await self._execute(self._conn.commit)
+                        ^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Connection(Thread-12, stopped 46808382801600)>
+
+    @property
+    def _conn(self) -> sqlite3.Connection:
+        if self._connection is None:
+>           raise ValueError("no active connection")
+E           ValueError: no active connection
+
+/usr/local/lib/python3.11/site-packages/aiosqlite/core.py:83: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_concurrency.py::TestConcurrentDBConnectionInitialization::test_concurrent_transactions
+========================= 1 failed, 11 passed in 7.11s =========================
+reward=0 graded=12 found=0 failed=0 parsed=12 framework=pytest exit_code=1

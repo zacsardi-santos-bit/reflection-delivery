@@ -1,0 +1,24 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/relayer && go test -json ./relays/parachain -count=1 -run \"^(TestGenerateHashSides|TestMakeStorageKey)\"",
+  "test_files": [
+    "relayer/relays/parachain/types_test.go",
+    "test/README.md",
+    "test/scripts/start-services.sh",
+    "test/src/fixtures/index.js",
+    "test/src/subclient/index.js",
+    "test/test/basic-channel.js",
+    "test/test/bootstrap.js"
+  ],
+  "num_test_files": 7,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/snowfork/snowbridge/relayer/relays/parachain::TestMakeStorageKey",
+    "github.com/snowfork/snowbridge/relayer/relays/parachain::TestGenerateHashSidesSingleLeaf",
+    "github.com/snowfork/snowbridge/relayer/relays/parachain::TestGenerateHashSidesProof4Of6",
+    "github.com/snowfork/snowbridge/relayer/relays/parachain::TestGenerateHashSidesProof5Of6",
+    "github.com/snowfork/snowbridge/relayer/relays/parachain::TestGenerateHashSidesProof5Of8",
+    "github.com/snowfork/snowbridge/relayer/relays/parachain::TestGenerateHashSidesLeafPositionTooHigh"
+  ],
+  "PASS_TO_PASS": []
+}

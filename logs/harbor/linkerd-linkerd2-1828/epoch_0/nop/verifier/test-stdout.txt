@@ -1,0 +1,21 @@
+patching file cli/cmd/profile_test.go
+patching file controller/api/proxy/profile_listener_test.go
+patching file controller/api/proxy/profile_watcher_test.go
+# github.com/linkerd/linkerd2/controller/api/proxy [github.com/linkerd/linkerd2/controller/api/proxy.test]
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_listener_test.go:117:3: unknown field ResponseClasses in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".RouteSpec
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_listener_test.go:120:5: unknown field IsFailure in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".ResponseClass
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_listener_test.go:141:3: unknown field ResponseClasses in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".RouteSpec
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_listener_test.go:144:5: unknown field IsFailure in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".ResponseClass
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_listener_test.go:245:6: unknown field ResponseClasses in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".RouteSpec
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_listener_test.go:322:6: unknown field ResponseClasses in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".RouteSpec
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_listener_test.go:343:6: unknown field ResponseClasses in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".RouteSpec
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_listener_test.go:365:6: unknown field ResponseClasses in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".RouteSpec
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_watcher_test.go:44:8: unknown field ResponseClasses in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".RouteSpec
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_watcher_test.go:51:10: unknown field IsFailure in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".ResponseClass
+/go/src/github.com/linkerd/linkerd2/controller/api/proxy/profile_watcher_test.go:44:8: too many errors
+# github.com/linkerd/linkerd2/cli/cmd [github.com/linkerd/linkerd2/cli/cmd.test]
+/go/src/github.com/linkerd/linkerd2/cli/cmd/profile_test.go:46:6: unknown field ResponseClasses in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".RouteSpec
+/go/src/github.com/linkerd/linkerd2/cli/cmd/profile_test.go:54:8: unknown field IsFailure in struct literal of type "github.com/linkerd/linkerd2/controller/gen/apis/serviceprofile/v1alpha1".ResponseClass
+FAIL	github.com/linkerd/linkerd2/cli/cmd [build failed]
+FAIL	github.com/linkerd/linkerd2/controller/api/proxy [build failed]
+reward=0 graded=110 found=110 failed=110 parsed=2 framework=go exit_code=1

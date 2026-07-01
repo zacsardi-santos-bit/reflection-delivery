@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-tokio-6348",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds is_closed/is_empty/len to bounded+unbounded rx across block,bounded,chan,list,unbounded; F2P=116 incl 'test_rx_len_on_empty_channel_without_senders','test_rx_is_closed_when_dropping_all_senders' via 'cargo nextest run -p tokio --test sync_mpsc --test sync_mpsc_weak'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

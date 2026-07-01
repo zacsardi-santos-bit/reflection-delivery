@@ -1,0 +1,5 @@
+We're using the Kong Kubernetes Ingress Controller and running into a couple of issues with how protocol annotations are handled. First, when we try to configure services to use WebSocket protocols — both the secure and non-secure variants — the controller treats those values as invalid even though Kong supports them natively. We'd like those protocol values to be recognized as valid throughout the controller.
+
+Second, and more frustratingly, the admission webhook isn't catching invalid protocol annotation values when we submit Ingress or HTTPRoute resources. We can push a misconfigured resource to the cluster without any error at creation time, and only find out something is wrong later when things aren't working as expected. We'd like the webhook to reject resources with invalid protocol annotations immediately, returning a clear error message that tells us which value is unrecognized.
+
+Finally, when invalid protocol annotations are encountered during the processing of backend services, there should be a recorded translation failure that operators can inspect to understand what went wrong, rather than silently ignoring the problem.

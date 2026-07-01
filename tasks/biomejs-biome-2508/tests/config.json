@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p biome_js_analyze --test spec_tests -E 'test(~use_adjacent_overload_signatures)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/useAdjacentOverloadSignatures/invalid.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/useAdjacentOverloadSignatures/invalid.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/useAdjacentOverloadSignatures/valid.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/useAdjacentOverloadSignatures/valid.ts.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_js_analyze::spec_tests specs::nursery::use_adjacent_overload_signatures::valid_ts",
+    "(2/2) biome_js_analyze::spec_tests specs::nursery::use_adjacent_overload_signatures::invalid_ts"
+  ],
+  "PASS_TO_PASS": []
+}

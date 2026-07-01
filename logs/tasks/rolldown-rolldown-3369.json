@@ -1,0 +1,23 @@
+{
+ "task": "rolldown-rolldown-3369",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits cjs_ast_analyzer.rs + bind_imports_and_exports.rs + ecma_view.rs (interop layer); test adds issue-3364 fixture and fixes bundler_esm_cjs_tests/26 snapshot to route via import_foo.default.bar"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

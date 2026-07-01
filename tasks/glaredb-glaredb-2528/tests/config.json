@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p pgrepr",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/6) pgrepr writer::tests::test_text_writer",
+    "(2/6) pgrepr reader::tests::read_sql_bool",
+    "(3/6) pgrepr scalar::tests::test_from_datafusion_timestamp_second",
+    "(4/6) pgrepr writer::tests::test_binary_writer",
+    "(5/6) pgrepr notice::tests::notice_severity_to_from_string",
+    "(6/6) pgrepr scalar::tests::test_get_timezone"
+  ],
+  "PASS_TO_PASS": []
+}

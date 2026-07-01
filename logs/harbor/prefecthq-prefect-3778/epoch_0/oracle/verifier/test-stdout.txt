@@ -1,0 +1,237 @@
+patching file tests/agent/test_k8s_agent.py
+patching file tests/cli/test_agent.py
+patching file tests/run_configs/test_kubernetes.py
+patching file tests/serialization/test_run_configs.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-7.4.4, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: cov-5.0.0, time-machine-2.15.0, xdist-3.6.1, env-0.8.2
+collecting ... collected 105 items
+
+tests/agent/test_k8s_agent.py::test_k8s_agent_init PASSED                [  0%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_config_options PASSED      [  1%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_deploy_flow[0.10.0-prefect execute cloud-flow] PASSED [  2%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_deploy_flow[0.6.0+134-prefect execute cloud-flow] PASSED [  3%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_deploy_flow[0.13.0-prefect execute flow-run] PASSED [  4%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_deploy_flow[0.13.1+134-prefect execute flow-run] PASSED [  5%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_deploy_flow_uses_environment_metadata PASSED [  6%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_deploy_flow_raises PASSED  [  7%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_replace_yaml_uses_user_env_vars PASSED [  8%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_replace_yaml_respects_multiple_image_secrets PASSED [  9%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_replace_yaml PASSED        [ 10%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_replace_yaml_responds_to_logging_config[True] PASSED [ 11%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_replace_yaml_responds_to_logging_config[False] PASSED [ 12%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_replace_yaml_no_pull_secrets PASSED [ 13%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_removes_yaml_no_volume PASSED [ 14%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_includes_agent_labels_in_job PASSED [ 15%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml PASSED [ 16%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_env_vars PASSED [ 17%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_backend_default PASSED [ 18%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_local_version[version0] PASSED [ 19%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_local_version[version1] PASSED [ 20%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_local_version[version2] PASSED [ 20%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_latest PASSED [ 21%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_no_resource_manager PASSED [ 22%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_labels PASSED [ 23%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_no_image_pull_secrets PASSED [ 24%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_contains_image_pull_secrets PASSED [ 25%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_contains_resources PASSED [ 26%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_generate_deployment_yaml_rbac PASSED [ 27%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_start_max_polls PASSED     [ 28%]
+tests/agent/test_k8s_agent.py::test_k8s_gent_start_max_polls_count PASSED [ 29%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_start_max_polls_zero PASSED [ 30%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_manage_jobs_pass PASSED    [ 31%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_manage_jobs_delete_jobs PASSED [ 32%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_manage_jobs_reports_failed_pods PASSED [ 33%]
+tests/agent/test_k8s_agent.py::test_k8s_agent_manage_jobs_client_call PASSED [ 34%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_null_or_univeral_run_config[None] PASSED [ 35%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_null_or_univeral_run_config[run_config1] PASSED [ 36%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_errors_if_non_kubernetesrun_run_config PASSED [ 37%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_uses_job_template_provided_in_run_config PASSED [ 38%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_uses_job_template_path_provided_in_run_config PASSED [ 39%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_metadata PASSED [ 40%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image[on-storage] PASSED [ 40%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image[on-run_config] PASSED [ 41%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image[default] PASSED [ 42%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_environment_variables PASSED [ 43%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_resources PASSED [ 44%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_service_account_name PASSED [ 45%]
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image_pull_secrets PASSED [ 46%]
+tests/cli/test_agent.py::test_help[agent] PASSED                         [ 47%]
+tests/cli/test_agent.py::test_help[agent start] PASSED                   [ 48%]
+tests/cli/test_agent.py::test_help[agent install] PASSED                 [ 49%]
+tests/cli/test_agent.py::test_help[agent local] PASSED                   [ 50%]
+tests/cli/test_agent.py::test_help[agent local start] PASSED             [ 51%]
+tests/cli/test_agent.py::test_help[agent local install] PASSED           [ 52%]
+tests/cli/test_agent.py::test_help[agent docker] PASSED                  [ 53%]
+tests/cli/test_agent.py::test_help[agent docker start] PASSED            [ 54%]
+tests/cli/test_agent.py::test_help[agent kubernetes] PASSED              [ 55%]
+tests/cli/test_agent.py::test_help[agent kubernetes start] PASSED        [ 56%]
+tests/cli/test_agent.py::test_help[agent kubernetes install] PASSED      [ 57%]
+tests/cli/test_agent.py::test_help[agent fargate] PASSED                 [ 58%]
+tests/cli/test_agent.py::test_help[agent fargate start] PASSED           [ 59%]
+tests/cli/test_agent.py::test_help[agent ecs] PASSED                     [ 60%]
+tests/cli/test_agent.py::test_help[agent ecs start] PASSED               [ 60%]
+tests/cli/test_agent.py::test_agent_start[local-prefect.agent.local.LocalAgent--p path1 -p path2 -f --no-storage-labels --no-hostname-label-extra_kwargs0-False] PASSED [ 61%]
+tests/cli/test_agent.py::test_agent_start[local-prefect.agent.local.LocalAgent--p path1 -p path2 -f --no-storage-labels --no-hostname-label-extra_kwargs0-True] PASSED [ 62%]
+tests/cli/test_agent.py::test_agent_start[docker-prefect.agent.docker.DockerAgent---base-url testurl --no-pull --show-flow-logs --volume volume1 --volume volume2 --network testnetwork --no-docker-interface-extra_kwargs1-False] PASSED [ 63%]
+tests/cli/test_agent.py::test_agent_start[docker-prefect.agent.docker.DockerAgent---base-url testurl --no-pull --show-flow-logs --volume volume1 --volume volume2 --network testnetwork --no-docker-interface-extra_kwargs1-True] PASSED [ 64%]
+tests/cli/test_agent.py::test_agent_start[kubernetes-prefect.agent.kubernetes.KubernetesAgent-extra_cmd2-extra_kwargs2-False] PASSED [ 65%]
+tests/cli/test_agent.py::test_agent_start[kubernetes-prefect.agent.kubernetes.KubernetesAgent-extra_cmd2-extra_kwargs2-True] PASSED [ 66%]
+tests/cli/test_agent.py::test_agent_start[fargate-prefect.agent.fargate.FargateAgent---launchType=EC2 --taskRoleArn=my-task-role-extra_kwargs3-False] PASSED [ 67%]
+tests/cli/test_agent.py::test_agent_start[fargate-prefect.agent.fargate.FargateAgent---launchType=EC2 --taskRoleArn=my-task-role-extra_kwargs3-True] PASSED [ 68%]
+tests/cli/test_agent.py::test_agent_start[ecs-prefect.agent.ecs.ECSAgent---cluster TEST-CLUSTER --launch-type EC2 --task-role-arn TEST-TASK-ROLE-ARN --task-definition task-definition-path.yaml --run-task-kwargs run-task-kwargs-path.yaml-extra_kwargs4-False] PASSED [ 69%]
+tests/cli/test_agent.py::test_agent_start[ecs-prefect.agent.ecs.ECSAgent---cluster TEST-CLUSTER --launch-type EC2 --task-role-arn TEST-TASK-ROLE-ARN --task-definition task-definition-path.yaml --run-task-kwargs run-task-kwargs-path.yaml-extra_kwargs4-True] SKIPPED [ 70%]
+tests/cli/test_agent.py::test_agent_start_fails PASSED                   [ 71%]
+tests/cli/test_agent.py::test_agent_local_install[False] PASSED          [ 72%]
+tests/cli/test_agent.py::test_agent_local_install[True] PASSED           [ 73%]
+tests/cli/test_agent.py::test_agent_kubernetes_install[False] PASSED     [ 74%]
+tests/cli/test_agent.py::test_agent_kubernetes_install[True] PASSED      [ 75%]
+tests/cli/test_agent.py::test_agent_install_fails_non_valid_agent PASSED [ 76%]
+tests/run_configs/test_kubernetes.py::test_no_args PASSED                [ 77%]
+tests/run_configs/test_kubernetes.py::test_labels PASSED                 [ 78%]
+tests/run_configs/test_kubernetes.py::test_cant_specify_both_job_template_and_job_template_path PASSED [ 79%]
+tests/run_configs/test_kubernetes.py::test_remote_job_template_path PASSED [ 80%]
+tests/run_configs/test_kubernetes.py::test_local_job_template_path[local] PASSED [ 80%]
+tests/run_configs/test_kubernetes.py::test_local_job_template_path[file] PASSED [ 81%]
+tests/run_configs/test_kubernetes.py::test_local_job_template_path[None] PASSED [ 82%]
+tests/run_configs/test_kubernetes.py::test_job_template[dict] PASSED     [ 83%]
+tests/run_configs/test_kubernetes.py::test_job_template[str] PASSED      [ 84%]
+tests/run_configs/test_kubernetes.py::test_cpu_limit_and_request_acceptable_types PASSED [ 85%]
+tests/run_configs/test_kubernetes.py::test_service_account_name_and_image_pull_secrets PASSED [ 86%]
+tests/serialization/test_run_configs.py::test_serialized_run_config_sorts_labels PASSED [ 87%]
+tests/serialization/test_run_configs.py::test_serialize_universal_run[config0] PASSED [ 88%]
+tests/serialization/test_run_configs.py::test_serialize_universal_run[config1] PASSED [ 89%]
+tests/serialization/test_run_configs.py::test_serialize_kubernetes_run[config0] PASSED [ 90%]
+tests/serialization/test_run_configs.py::test_serialize_kubernetes_run[config1] PASSED [ 91%]
+tests/serialization/test_run_configs.py::test_serialize_kubernetes_run[config2] PASSED [ 92%]
+tests/serialization/test_run_configs.py::test_serialize_local_run[config0] PASSED [ 93%]
+tests/serialization/test_run_configs.py::test_serialize_local_run[config1] PASSED [ 94%]
+tests/serialization/test_run_configs.py::test_serialize_docker_run[config0] PASSED [ 95%]
+tests/serialization/test_run_configs.py::test_serialize_docker_run[config1] PASSED [ 96%]
+tests/serialization/test_run_configs.py::test_serialize_ecs_run[config0] PASSED [ 97%]
+tests/serialization/test_run_configs.py::test_serialize_ecs_run[config1] PASSED [ 98%]
+tests/serialization/test_run_configs.py::test_serialize_ecs_run[config2] PASSED [ 99%]
+tests/serialization/test_run_configs.py::test_serialize_ecs_run[config3] PASSED [100%]
+
+=============================== warnings summary ===============================
+src/prefect/core/flow.py:52
+  /workspace/repo/src/prefect/core/flow.py:52: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    ParameterDetails = TypedDict("ParameterDetails", {"default": Any, "required": bool})
+
+../../usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1562: 18 warnings
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1562: RemovedInMarshmallow4Warning: Passing field metadata as keyword arguments is deprecated. Use the explicit `metadata=...` argument instead. Additional metadata: {'key': <fields.String(dump_default=<marshmallow.missing>, attribute=None, validate=None, required=False, load_only=False, dump_only=False, load_default=<marshmallow.missing>, allow_none=False, error_messages={'required': 'Missing data for required field.', 'null': 'Field may not be null.', 'validator_failed': 'Invalid value.', 'invalid': 'Not a valid string.', 'invalid_utf8': 'Not a valid utf-8 string.'})>}
+    super().__init__(**kwargs)
+
+../../usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1562
+../../usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1562
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1562: RemovedInMarshmallow4Warning: Passing field metadata as keyword arguments is deprecated. Use the explicit `metadata=...` argument instead. Additional metadata: {'key': <class 'marshmallow.fields.String'>}
+    super().__init__(**kwargs)
+
+../../usr/local/lib/python3.8/site-packages/_pytest/config/__init__.py:1373
+  /usr/local/lib/python3.8/site-packages/_pytest/config/__init__.py:1373: PytestConfigWarning: Unknown config option: usedevelop
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+tests/agent/test_k8s_agent.py: 70 warnings
+  /workspace/repo/src/prefect/utilities/agent.py:68: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    if LooseVersion(core_version) < LooseVersion("0.13.0"):
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_null_or_univeral_run_config[None]
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_null_or_univeral_run_config[None] is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_null_or_univeral_run_config[run_config1]
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_null_or_univeral_run_config[run_config1] is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_errors_if_non_kubernetesrun_run_config
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_errors_if_non_kubernetesrun_run_config is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_uses_job_template_provided_in_run_config
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_uses_job_template_provided_in_run_config is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_uses_job_template_path_provided_in_run_config
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_uses_job_template_path_provided_in_run_config is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_metadata
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_metadata is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image[on-storage]
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image[on-storage] is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image[on-run_config]
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image[on-run_config] is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image[default]
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image[default] is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_environment_variables
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_environment_variables is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_resources
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_resources is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_service_account_name
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_service_account_name is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image_pull_secrets
+  /usr/local/lib/python3.8/site-packages/_pytest/fixtures.py:895: PytestRemovedIn8Warning: Support for nose tests is deprecated and will be removed in a future release.
+  tests/agent/test_k8s_agent.py::TestK8sAgentRunConfig::test_generate_job_spec_image_pull_secrets is using nose-specific method: `setup(self)`
+  To remove this warning, rename it to `setup_method(self)`
+  See docs: https://docs.pytest.org/en/stable/deprecations.html#support-for-tests-written-for-nose
+    fixture_result = next(generator)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] tests/cli/test_agent.py:119: No deprecated version for ECS agent
+================= 104 passed, 1 skipped, 105 warnings in 7.83s =================
+reward=1 graded=104 found=0 failed=0 parsed=44 framework=pytest exit_code=0

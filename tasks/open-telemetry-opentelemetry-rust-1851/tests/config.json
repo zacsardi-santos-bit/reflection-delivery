@@ -1,0 +1,12 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p opentelemetry-semantic-conventions --test version_test",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) opentelemetry-semantic-conventions::version_test test_schema_url_is_1_26_0",
+    "(2/2) opentelemetry-semantic-conventions::version_test test_messaging_client_id_is_updated"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,2 @@
+patching file BrickKit/bricks/src/main/java/com/wayfair/brickkit/brick/DataModel.java
+patching file BrickKit/bricks/src/main/java/com/wayfair/brickkit/brick/DataModel.kt

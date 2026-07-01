@@ -1,0 +1,23 @@
+{
+ "task": "saltstack-salt-68292",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "24 F2P in test_minion (test_is_systemd_systemd, test_schedule_retry_*, test_minion_restart_service_systems/override/non_service_systems, ...); golden adds _is_systemd_system/_is_windows_system/_schedule_retry/_restart_service and restart(schedule_retry, retry_delay) delegation"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 23,
+  "shallow": true
+ }
+}

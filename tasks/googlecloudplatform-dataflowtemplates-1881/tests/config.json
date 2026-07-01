@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/cicd && go test -json ./internal/flags -count=1",
+  "test_files": [
+    "cicd/internal/flags/common-flags_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags::TestModulesToBuild"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/GoogleCloudPlatform/DataflowTemplates/cicd/internal/flags::TestDefaultExcludedSubModules"
+  ]
+}

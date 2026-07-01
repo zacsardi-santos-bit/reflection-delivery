@@ -1,0 +1,22 @@
+patching file src/test/debugger/extension/adapter/activator.unit.test.ts
+patching file src/test/debugger/extension/adapter/logging.unit.test.ts
+
+
+  Debugging - Adapter Factory and logger Registration
+    ✓ Register Adapter Factory if inside the DA experiment
+    ✓ Register a disposable item if inside the DA experiment
+    ✓ Send experiment group telemetry if inside the DA experiment
+    ✓ Don't register the Adapter Factory if not inside the DA experiment
+    ✓ Don't register a disposable item if not inside the DA experiment
+    ✓ Send control group telemetry if inside the DA experiment control group
+    ✓ Don't send any telemetry if not inside the DA experiment nor control group
+
+  Debugging - Session Logging
+    ✓ Create logger using session without logToFile
+    ✓ Create logger using session with logToFile set to false
+    ✓ Create logger using session with logToFile set to true
+
+
+  10 passing (540ms)
+
+reward=1 graded=10 found=10 failed=0 parsed=10 framework=mocha exit_code=0

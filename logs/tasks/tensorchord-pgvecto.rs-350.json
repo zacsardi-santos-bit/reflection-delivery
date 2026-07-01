@@ -1,0 +1,23 @@
+{
+ "task": "tensorchord-pgvecto.rs-350",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds crates/embedding/{lib.rs,openai.rs}; 3 F2P tests use httpmock::MockServer (localhost, offline) exercising real HTTP: success returns Ok+vector, empty data -> try_pop_embedding Err, 502 -> Err"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

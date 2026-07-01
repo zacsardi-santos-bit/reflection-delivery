@@ -1,0 +1,30 @@
+patching file query-engine/connector-test-kit-rs/query-engine-tests/Cargo.toml
+patching file query-engine/connector-test-kit-rs/query-engine-tests/tests/new/mod.rs
+patching file query-engine/connector-test-kit-rs/query-engine-tests/tests/new/relation_load_strategy.rs
+patching file query-engine/core-tests/tests/query_validation_tests/unknown_argument.expected.json
+   Compiling query-structure v0.0.0 (/workspace/repo/query-engine/query-structure)
+   Compiling core-tests v0.1.0 (/workspace/repo/query-engine/core-tests)
+   Compiling query-connector v0.1.0 (/workspace/repo/query-engine/connectors/query-connector)
+   Compiling schema v0.1.0 (/workspace/repo/query-engine/schema)
+   Compiling dmmf v0.1.0 (/workspace/repo/query-engine/dmmf)
+   Compiling sql-query-connector v0.1.0 (/workspace/repo/query-engine/connectors/sql-query-connector)
+   Compiling query-core v0.1.0 (/workspace/repo/query-engine/core)
+   Compiling mongodb-query-connector v0.1.0 (/workspace/repo/query-engine/connectors/mongodb-query-connector)
+   Compiling request-handlers v0.1.0 (/workspace/repo/query-engine/request-handlers)
+warning: unused variable: `adapter`
+  --> query-engine/request-handlers/src/load_executor.rs:28:29
+   |
+28 |         ConnectorKind::Js { adapter, _phantom } => {
+   |                             ^^^^^^^ help: try ignoring the field: `adapter: _`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: `request-handlers` (lib) generated 1 warning (run `cargo fix --lib -p request-handlers` to apply 1 suggestion)
+    Finished test [unoptimized + debuginfo] target(s) in 35.12s
+────────────
+ Nextest run ID 518c6fcb-0c80-4e34-8afb-bb049cbd80f9 with nextest profile: default
+    Starting 1 test across 2 binaries (11 tests skipped)
+        PASS [   0.066s] (1/1) core-tests::query_validation_tests postgres_basic_unknown_argument
+────────────
+     Summary [   0.067s] 1 test run: 1 passed, 11 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

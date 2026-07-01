@@ -1,0 +1,23 @@
+{
+ "task": "bytecodealliance-wasmtime-8850",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden changes worst_case_size() '124' -> '168' in riscv64/inst/mod.rs; test.patch adds issue8847.clif/issue8847-1.clif/return-call.clif regression filetests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 36,
+  "shallow": true
+ }
+}

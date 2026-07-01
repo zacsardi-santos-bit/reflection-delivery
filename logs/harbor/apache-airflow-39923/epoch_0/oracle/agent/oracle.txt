@@ -1,0 +1,7 @@
+patching file airflow/providers/amazon/aws/hooks/glue.py
+patching file airflow/providers/amazon/aws/operators/glue.py
+patching file airflow/providers/amazon/aws/sensors/glue.py
+patching file airflow/providers/amazon/aws/triggers/glue.py
+patching file airflow/providers/amazon/aws/waiters/glue.json
+patching file docs/apache-airflow-providers-amazon/operators/glue.rst
+patching file docs/spelling_wordlist.txt

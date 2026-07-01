@@ -1,0 +1,3061 @@
+diff --git a/packages/graphql/src/graphql/directives/type-dependant-directives/authorization.ts b/packages/graphql/src/graphql/directives/type-dependant-directives/authorization.ts
+index dd267a07c..2765854fd 100644
+--- a/packages/graphql/src/graphql/directives/type-dependant-directives/authorization.ts
++++ b/packages/graphql/src/graphql/directives/type-dependant-directives/authorization.ts
+@@ -18,15 +18,15 @@
+  */
+ 
+ import { astFromDirective, astFromInputObjectType } from "@graphql-tools/utils";
+-import type { TypeDefinitionNode, DirectiveDefinitionNode } from "graphql";
++import type { DirectiveDefinitionNode, TypeDefinitionNode } from "graphql";
+ import {
+-    GraphQLString,
+-    GraphQLSchema,
++    DirectiveLocation,
++    GraphQLBoolean,
+     GraphQLDirective,
+     GraphQLInputObjectType,
+     GraphQLList,
+-    GraphQLBoolean,
+-    DirectiveLocation,
++    GraphQLSchema,
++    GraphQLString,
+ } from "graphql";
+ import {
+     AUTHORIZATION_FILTER_OPERATION,
+diff --git a/packages/graphql/src/graphql/directives/vector.ts b/packages/graphql/src/graphql/directives/vector.ts
+index 914685639..9a5565f51 100644
+--- a/packages/graphql/src/graphql/directives/vector.ts
++++ b/packages/graphql/src/graphql/directives/vector.ts
+@@ -66,11 +66,6 @@ export const vectorDirective = new GraphQLDirective({
+                             provider: {
+                                 type: VectorProviderEnum,
+                             },
+-                            // callback: {
+-                            //     description:
+-                            //         "The name of the callback function that will be used to populate the fields values.",
+-                            //     type: GraphQLString,
+-                            // },
+                         },
+                     })
+                 )
+diff --git a/packages/graphql/src/schema/validation/Neo4jValidationContext.ts b/packages/graphql/src/schema/validation/Neo4jValidationContext.ts
+new file mode 100644
+index 000000000..89d5d252f
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/Neo4jValidationContext.ts
+@@ -0,0 +1,95 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import type { Maybe } from "@graphql-tools/utils";
++import type {
++    DefinitionNode,
++    DocumentNode,
++    EnumTypeDefinitionNode,
++    GraphQLError,
++    GraphQLSchema,
++    InterfaceTypeDefinitionNode,
++    InterfaceTypeExtensionNode,
++    ObjectTypeDefinitionNode,
++    ObjectTypeExtensionNode,
++    UnionTypeDefinitionNode,
++    UnionTypeExtensionNode,
++} from "graphql";
++import { Kind } from "graphql";
++import { SDLValidationContext } from "graphql/validation/ValidationContext";
++
++export type TypeMapWithExtensions = Record<
++    string,
++    {
++        extensions: (ObjectTypeExtensionNode | InterfaceTypeExtensionNode | UnionTypeExtensionNode)[];
++        definition:
++            | ObjectTypeDefinitionNode
++            | InterfaceTypeDefinitionNode
++            | UnionTypeDefinitionNode
++            | EnumTypeDefinitionNode;
++    }
++>;
++export class Neo4jValidationContext extends SDLValidationContext {
++    public readonly typeMapWithExtensions?: TypeMapWithExtensions;
++    public readonly callbacks?: any;
++    constructor(
++        ast: DocumentNode,
++        schema: Maybe<GraphQLSchema>,
++        onError: (error: GraphQLError) => void,
++        callbacks?: any
++    ) {
++        super(ast, schema, onError);
++        this.callbacks = callbacks;
++        this.typeMapWithExtensions = buildTypeMapWithExtensions(ast.definitions);
++    }
++}
++
++// build a type map to access specific types and their extensions
++function buildTypeMapWithExtensions(definitions: Readonly<DefinitionNode[]>): TypeMapWithExtensions {
++    return definitions.reduce((acc, def): TypeMapWithExtensions => {
++        if (
++            def.kind === Kind.OBJECT_TYPE_DEFINITION ||
++            def.kind === Kind.INTERFACE_TYPE_DEFINITION ||
++            def.kind === Kind.UNION_TYPE_DEFINITION ||
++            def.kind === Kind.ENUM_TYPE_DEFINITION ||
++            def.kind === Kind.OBJECT_TYPE_EXTENSION ||
++            def.kind === Kind.INTERFACE_TYPE_EXTENSION ||
++            def.kind === Kind.UNION_TYPE_EXTENSION
++        ) {
++            const typeName = def.name.value;
++            if (!acc[typeName]) {
++                acc[typeName] = { extensions: [], definition: undefined };
++            }
++            if (
++                def.kind === Kind.OBJECT_TYPE_EXTENSION ||
++                def.kind === Kind.INTERFACE_TYPE_EXTENSION ||
++                def.kind === Kind.UNION_TYPE_EXTENSION
++            ) {
++                if (acc[typeName].extensions) {
++                    acc[typeName].extensions.push(def);
++                } else {
++                    acc[typeName].extensions = [def];
++                }
++            } else {
++                acc[typeName].definition = def;
++            }
++        }
++        return acc;
++    }, {});
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/authentication.ts b/packages/graphql/src/schema/validation/custom-rules/directives/authentication.ts
+new file mode 100644
+index 000000000..f3556023d
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/authentication.ts
+@@ -0,0 +1,106 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import type { ASTVisitor, FieldDefinitionNode, ObjectTypeDefinitionNode } from "graphql";
++import { authenticationDirectiveScaffold } from "../../../../graphql/directives/type-dependant-directives/authentication";
++import { isRootType } from "../../../../utils/is-root-type";
++import { asArray } from "../../../../utils/utils";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { fieldIsInRootType } from "../utils/location-helpers/is-in-root-type";
++import { fieldIsInSubscriptionType } from "../utils/location-helpers/is-in-subscription-type";
++import { typeIsANodeType } from "../utils/location-helpers/is-node-type";
++import { getPathToNode } from "../utils/path-parser";
++
++export function validateAuthenticationDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
++    }
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            if (
++                !fieldDefinitionNode.directives?.find(
++                    (directive) => directive.name.value === authenticationDirectiveScaffold.name
++                )
++            ) {
++                return;
++            }
++
++            const isValidLocation =
++                (fieldIsInNodeType({ path, ancestors, typeMapWithExtensions }) ||
++                    fieldIsInRootType({ path, ancestors, typeMapWithExtensions })) &&
++                !fieldIsInSubscriptionType({ path, ancestors, typeMapWithExtensions });
++
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${authenticationDirectiveScaffold.name}" requires in a type with "@node" or in root types: Query, and Mutation`,
++                        []
++                    );
++                }
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${authenticationDirectiveScaffold.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++        ObjectTypeDefinition(objectTypeDefinitionNode: ObjectTypeDefinitionNode, _key, _parent, path, ancestors) {
++            const { directives } = objectTypeDefinitionNode;
++            const objectTypeExtensionNodes = typeMapWithExtensions[objectTypeDefinitionNode.name.value]?.extensions;
++            const extensionsDirectives = asArray(objectTypeExtensionNodes).flatMap((extensionNode) => {
++                return extensionNode.directives ?? [];
++            });
++            const allDirectives = [...(directives ?? []), ...extensionsDirectives];
++            if (!allDirectives.find((directive) => directive.name.value === authenticationDirectiveScaffold.name)) {
++                return;
++            }
++            const isValidLocation =
++                (typeIsANodeType({ objectTypeDefinitionNode, typeMapWithExtensions }) ||
++                    isRootType(objectTypeDefinitionNode)) &&
++                objectTypeDefinitionNode.name.value !== "Subscription";
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${authenticationDirectiveScaffold.name}" requires in a type with "@node" or in root types: Query, and Mutation`,
++                        []
++                    );
++                }
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [objectTypeDefinitionNode],
++                        path: [...pathToNode[0], `@${authenticationDirectiveScaffold.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++    };
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/authorization.ts b/packages/graphql/src/schema/validation/custom-rules/directives/authorization.ts
+index de88487ec..958c3c4c2 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/authorization.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/authorization.ts
+@@ -16,21 +16,107 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type { DirectiveNode } from "graphql";
+-import { AuthorizationAnnotationArguments } from "../../../../schema-model/annotation/AuthorizationAnnotation";
+-import { DocumentValidationError } from "../utils/document-validation-error";
+ 
+-export function verifyAuthorization() {
+-    return function ({ directiveNode }: { directiveNode: DirectiveNode }) {
+-        for (const arg of AuthorizationAnnotationArguments) {
+-            if (directiveNode.arguments?.find((a) => a.name.value === arg)) {
++import type { ASTVisitor, FieldDefinitionNode, ObjectTypeDefinitionNode } from "graphql";
++import { authenticationDirectiveScaffold } from "../../../../graphql/directives/type-dependant-directives/authentication";
++import { authorizationDirectiveScaffold } from "../../../../graphql/directives/type-dependant-directives/authorization";
++import { asArray } from "../../../../utils/utils";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { fieldIsInRootType } from "../utils/location-helpers/is-in-root-type";
++import { typeIsANodeType } from "../utils/location-helpers/is-node-type";
++import { getPathToNode } from "../utils/path-parser";
++
++export function validateAuthorizationDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
++    }
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            const authorizationDirective = fieldDefinitionNode.directives?.find(
++                (directive) => directive.name.value === authorizationDirectiveScaffold.name
++            );
++
++            if (!authorizationDirective) {
+                 return;
+             }
+-        }
+ 
+-        throw new DocumentValidationError(
+-            `@authorization requires at least one of ${AuthorizationAnnotationArguments.join(", ")} arguments`,
+-            []
+-        );
++            const isValidLocation = fieldIsInNodeType({ path, ancestors, typeMapWithExtensions });
++
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    // add specific error message for Root types usage
++                    if (fieldIsInRootType({ path, ancestors, typeMapWithExtensions })) {
++                        throw new DocumentValidationError(
++                            `Directive @${authorizationDirectiveScaffold.name} is not supported on fields of the Query type. Did you mean to use @${authenticationDirectiveScaffold.name}?`,
++                            []
++                        );
++                    }
++
++                    throw new DocumentValidationError(
++                        `Directive "@${authorizationDirectiveScaffold.name}" requires in a type with "@node"`,
++                        []
++                    );
++                }
++                if (authorizationDirective.arguments?.length === 0) {
++                    throw new DocumentValidationError(
++                        `@${authorizationDirectiveScaffold.name} requires at least one of ${[...authorizationDirectiveScaffold.args.map((arg) => arg.name)].join(", ")} arguments`,
++                        []
++                    );
++                }
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${authorizationDirectiveScaffold.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++        ObjectTypeDefinition(objectTypeDefinitionNode: ObjectTypeDefinitionNode, _key, _parent, path, ancestors) {
++            const { directives } = objectTypeDefinitionNode;
++            const objectTypeExtensionNodes = typeMapWithExtensions[objectTypeDefinitionNode.name.value]?.extensions;
++            const extensionsDirectives = asArray(objectTypeExtensionNodes).flatMap((extensionNode) => {
++                return extensionNode.directives ?? [];
++            });
++            const allDirectives = [...(directives ?? []), ...extensionsDirectives];
++            const authorizationDirective = allDirectives.find(
++                (directive) => directive.name.value === authorizationDirectiveScaffold.name
++            );
++            if (!authorizationDirective) {
++                return;
++            }
++            const isValidLocation = typeIsANodeType({ objectTypeDefinitionNode, typeMapWithExtensions });
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "@${authorizationDirectiveScaffold.name}" requires in a type with "@node"`,
++                        []
++                    );
++                }
++                if (authorizationDirective.arguments?.length === 0) {
++                    throw new DocumentValidationError(
++                        `@${authorizationDirectiveScaffold.name} requires at least one of ${authorizationDirectiveScaffold.args.join(", ")} arguments`,
++                        []
++                    );
++                }
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [objectTypeDefinitionNode],
++                        path: [...pathToNode[0], `@${authorizationDirectiveScaffold.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
+     };
+ }
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/coalesce.ts b/packages/graphql/src/schema/validation/custom-rules/directives/coalesce.ts
+index 63319dd22..22b0be28f 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/coalesce.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/coalesce.ts
+@@ -16,51 +16,103 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type { DirectiveNode, FieldDefinitionNode, EnumTypeDefinitionNode } from "graphql";
++
++import type { ASTVisitor, EnumTypeDefinitionNode, FieldDefinitionNode, TypeNode } from "graphql";
+ import { Kind } from "graphql";
++import { GRAPHQL_BUILTIN_SCALAR_TYPES, SPATIAL_TYPES, TEMPORAL_SCALAR_TYPES } from "../../../../constants";
++import { coalesceDirective } from "../../../../graphql/directives";
++import type { Neo4jValidationContext, TypeMapWithExtensions } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { fieldIsInRelationshipPropertiesType } from "../utils/location-helpers/is-in-relationship-properties-type";
++import { getPathToNode } from "../utils/path-parser";
+ import { assertArgumentHasSameTypeAsField } from "../utils/same-type-argument-as-field";
+-import { getInnerTypeName, isArrayType } from "../utils/utils";
+-import { GRAPHQL_BUILTIN_SCALAR_TYPES, isSpatial, isTemporal } from "../../../../constants";
+-import { DocumentValidationError } from "../utils/document-validation-error";
+-import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
+-
+-export function verifyCoalesce(enums: EnumTypeDefinitionNode[]) {
+-    return function ({
+-        directiveNode,
+-        traversedDef,
+-    }: {
+-        directiveNode: DirectiveNode;
+-        traversedDef: ObjectOrInterfaceWithExtensions | FieldDefinitionNode;
+-    }) {
+-        if (traversedDef.kind !== Kind.FIELD_DEFINITION) {
+-            // delegate
+-            return;
+-        }
+-        const coalesceArg = directiveNode.arguments?.find((a) => a.name.value === "value");
+-        const expectedType = getInnerTypeName(traversedDef.type);
+ 
+-        if (!coalesceArg) {
+-            // delegate to DirectiveArgumentOfCorrectType rule
+-            return;
+-        }
++export function validateCoalesceDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
++    }
++    const enumsTypes: EnumTypeDefinitionNode[] = Object.values(typeMapWithExtensions)
++        .map((type) => type.definition)
++        .filter((definition): definition is EnumTypeDefinitionNode => definition.kind === Kind.ENUM_TYPE_DEFINITION);
+ 
+-        if (!isArrayType(traversedDef)) {
+-            if (isSpatial(expectedType)) {
+-                throw new DocumentValidationError(`@coalesce is not supported by Spatial types.`, ["value"]);
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            const coalesce = fieldDefinitionNode.directives?.find(
++                (directive) => directive.name.value === coalesceDirective.name
++            );
++            if (!coalesce) {
++                return;
+             }
+-            if (isTemporal(expectedType)) {
+-                throw new DocumentValidationError(`@coalesce is not supported by Temporal types.`, ["value"]);
++            const valueArg = coalesce.arguments?.find((arg) => arg.name.value === "value");
++            if (!valueArg) {
++                return;
+             }
+-            if (
+-                !GRAPHQL_BUILTIN_SCALAR_TYPES.includes(expectedType) &&
+-                !enums.find((x) => x.name.value === expectedType)
+-            ) {
+-                throw new DocumentValidationError(
+-                    `@coalesce directive can only be used on types: Int | Float | String | Boolean | ID | Enum`,
+-                    []
++            const isValidLocation =
++                fieldIsInNodeType({ path, ancestors, typeMapWithExtensions }) ||
++                fieldIsInRelationshipPropertiesType({ path, ancestors, typeMapWithExtensions });
++
++            const { isValid, errorMsg, errorPath } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive @"${coalesceDirective.name}" requires in a type with "@node" or within the "@relationshipProperties" directive`,
++                        []
++                    );
++                }
++                assertTypeIsSupportedByCoalesce(fieldDefinitionNode.type, typeMapWithExtensions);
++                // for compatibility with previous helper we generate the enumTypes here, but it can be passed the typeMap instead.
++                assertArgumentHasSameTypeAsField({
++                    directiveName: coalesceDirective.name,
++                    traversedDef: fieldDefinitionNode,
++                    argument: valueArg,
++                    enums: enumsTypes,
++                });
++            });
++
++            if (!isValid) {
++                const pathToNode = getPathToNode(path, ancestors);
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${coalesceDirective.name}`, ...errorPath],
++                        errorMsg,
++                    })
+                 );
+             }
+-        }
+-        assertArgumentHasSameTypeAsField({ directiveName: "@coalesce", traversedDef, argument: coalesceArg, enums });
++        },
+     };
+ }
++
++function assertTypeIsSupportedByCoalesce(typeNode: TypeNode, typeMapWithExtensions: TypeMapWithExtensions): void {
++    if (typeNode.kind === Kind.LIST_TYPE) {
++        assertTypeIsSupportedByCoalesce(typeNode.type, typeMapWithExtensions);
++    }
++    if (typeNode.kind === Kind.NON_NULL_TYPE) {
++        assertTypeIsSupportedByCoalesce(typeNode.type, typeMapWithExtensions);
++    }
++
++    if (typeNode.kind === Kind.NAMED_TYPE) {
++        if (GRAPHQL_BUILTIN_SCALAR_TYPES.includes(typeNode.name.value)) {
++            return;
++        }
++
++        if (SPATIAL_TYPES.includes(typeNode.name.value)) {
++            throw new DocumentValidationError(`@${coalesceDirective.name} is not supported by Spatial types.`, []);
++        }
++
++        if (TEMPORAL_SCALAR_TYPES.includes(typeNode.name.value)) {
++            throw new DocumentValidationError(`@${coalesceDirective.name} is not supported by Temporal types.`, []);
++        }
++        // check if the type is an enum
++        const typeFromMap = typeMapWithExtensions[typeNode.name.value];
++        if (typeFromMap?.definition.kind === Kind.ENUM_TYPE_DEFINITION) {
++            return;
++        }
++
++        throw new DocumentValidationError(
++            `@${coalesceDirective.name} directive can only be used on types: Int | Float | String | Boolean | ID | Enum`,
++            []
++        );
++    }
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/cypher.ts b/packages/graphql/src/schema/validation/custom-rules/directives/cypher.ts
+new file mode 100644
+index 000000000..66a7af284
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/cypher.ts
+@@ -0,0 +1,68 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import type { ASTVisitor, FieldDefinitionNode } from "graphql";
++import { cypherDirective } from "../../../../graphql/directives";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { fieldIsInRootType } from "../utils/location-helpers/is-in-root-type";
++import { fieldIsInSubscriptionType } from "../utils/location-helpers/is-in-subscription-type";
++import { getPathToNode } from "../utils/path-parser";
++
++export function validateCypherDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
++    }
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            if (
++                !fieldDefinitionNode.directives?.length ||
++                !fieldDefinitionNode.directives.find((directive) => directive.name.value === cypherDirective.name)
++            ) {
++                return;
++            }
++            const isValidLocation =
++                (fieldIsInNodeType({ path, ancestors, typeMapWithExtensions }) ||
++                    fieldIsInRootType({ path, ancestors, typeMapWithExtensions })) &&
++                !fieldIsInSubscriptionType({ path, ancestors, typeMapWithExtensions });
++
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${cypherDirective.name}" requires in a type with "@node" or on root types: Query, and Mutation`,
++                        []
++                    );
++                }
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${cypherDirective.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++    };
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/default.ts b/packages/graphql/src/schema/validation/custom-rules/directives/default.ts
+index 3b4022dc7..7d4b4fa5f 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/default.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/default.ts
+@@ -16,77 +16,109 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type { DirectiveNode, EnumTypeDefinitionNode, FieldDefinitionNode, StringValueNode } from "graphql";
++
++import type { ASTVisitor, EnumTypeDefinitionNode, FieldDefinitionNode, TypeNode } from "graphql";
+ import { Kind } from "graphql";
++import { GraphQLDate } from "graphql-compose";
+ import { GRAPHQL_BUILTIN_SCALAR_TYPES } from "../../../../constants";
+-import { GraphQLDate, GraphQLDateTime, GraphQLLocalDateTime } from "../../../../graphql/scalars";
+-import { GraphQLLocalTime, parseLocalTime } from "../../../../graphql/scalars/LocalTime";
+-import { GraphQLTime, validateTime } from "../../../../graphql/scalars/Time";
+-import { DocumentValidationError } from "../utils/document-validation-error";
+-import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
++import { defaultDirective } from "../../../../graphql/directives";
++import { GraphQLDateTime, GraphQLLocalDateTime, GraphQLLocalTime, GraphQLTime } from "../../../../graphql/scalars";
++import type { Neo4jValidationContext, TypeMapWithExtensions } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { fieldIsInRelationshipPropertiesType } from "../utils/location-helpers/is-in-relationship-properties-type";
++import { getPathToNode } from "../utils/path-parser";
+ import { assertArgumentHasSameTypeAsField } from "../utils/same-type-argument-as-field";
+-import { getInnerTypeName, isArrayType } from "../utils/utils";
+-
+-// TODO: schema-generation: save enums as map
+ 
+-export function verifyDefault(enums: EnumTypeDefinitionNode[]) {
+-    return function ({
+-        directiveNode,
+-        traversedDef,
+-    }: {
+-        directiveNode: DirectiveNode;
+-        traversedDef: ObjectOrInterfaceWithExtensions | FieldDefinitionNode;
+-    }) {
+-        if (traversedDef.kind !== Kind.FIELD_DEFINITION) {
+-            // delegate
+-            return;
+-        }
++export function validateDefaultDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
++    }
+ 
+-        const defaultArg = directiveNode.arguments?.find((a) => a.name.value === "value");
+-        const expectedType = getInnerTypeName(traversedDef.type);
++    const enumsTypes: EnumTypeDefinitionNode[] = Object.values(typeMapWithExtensions)
++        .map((type) => type.definition)
++        .filter((definition): definition is EnumTypeDefinitionNode => definition.kind === Kind.ENUM_TYPE_DEFINITION);
+ 
+-        if (!defaultArg) {
+-            // delegate to DirectiveArgumentOfCorrectType rule
+-            return;
+-        }
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            const defDirective = fieldDefinitionNode.directives?.find(
++                (directive) => directive.name.value === defaultDirective.name
++            );
++            if (!defDirective) {
++                return;
++            }
++            const valueArg = defDirective.arguments?.find((arg) => arg.name.value === "value");
++            if (!valueArg) {
++                return;
++            }
++            const isValidLocation =
++                fieldIsInNodeType({ path, ancestors, typeMapWithExtensions }) ||
++                fieldIsInRelationshipPropertiesType({ path, ancestors, typeMapWithExtensions });
+ 
+-        if (!isArrayType(traversedDef)) {
+-            if ([GraphQLDateTime.name, GraphQLLocalDateTime.name, GraphQLDate.name].includes(expectedType)) {
+-                if (Number.isNaN(Date.parse((defaultArg?.value as StringValueNode).value))) {
+-                    throw new DocumentValidationError(
+-                        `@default.${defaultArg.name.value} is not a valid ${expectedType}`,
+-                        ["value"]
+-                    );
+-                }
+-            } else if (expectedType === GraphQLTime.name) {
+-                try {
+-                    validateTime((defaultArg?.value as StringValueNode).value);
+-                } catch {
++            const { isValid, errorMsg, errorPath } = assertValid(() => {
++                if (!isValidLocation) {
+                     throw new DocumentValidationError(
+-                        `@default.${defaultArg.name.value} is not a valid ${expectedType}`,
+-                        ["value"]
++                        `Directive "${defaultDirective.name}" requires in a type with "@node" or within the "@relationshipProperties" directive`,
++                        []
+                     );
+                 }
+-            } else if (expectedType === GraphQLLocalTime.name) {
+-                try {
+-                    parseLocalTime((defaultArg?.value as StringValueNode).value);
+-                } catch {
+-                    throw new DocumentValidationError(
+-                        `@default.${defaultArg.name.value} is not a valid ${expectedType}`,
+-                        ["value"]
+-                    );
+-                }
+-            } else if (
+-                !GRAPHQL_BUILTIN_SCALAR_TYPES.includes(expectedType) &&
+-                !enums.some((x) => x.name.value === expectedType) &&
+-                expectedType !== "BigInt"
+-            ) {
+-                throw new DocumentValidationError(
+-                    `@default directive can only be used on fields of type Int, Float, String, Boolean, ID, BigInt, DateTime, Date, Time, LocalDateTime or LocalTime.`,
+-                    []
++                assertTypeIsSupportedByDefault(fieldDefinitionNode.type, typeMapWithExtensions);
++                // for compatibility with previous helper we generate the enumTypes here, but it can be passed the typeMap instead.
++                assertArgumentHasSameTypeAsField({
++                    directiveName: defaultDirective.name,
++                    traversedDef: fieldDefinitionNode,
++                    argument: valueArg,
++                    enums: enumsTypes,
++                });
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${defaultDirective.name}`, ...errorPath],
++                        errorMsg,
++                    })
+                 );
+             }
+-        }
+-        assertArgumentHasSameTypeAsField({ directiveName: "@default", traversedDef, argument: defaultArg, enums });
++        },
+     };
+ }
++
++function assertTypeIsSupportedByDefault(typeNode: TypeNode, typeMapWithExtensions: TypeMapWithExtensions): void {
++    if (typeNode.kind === Kind.LIST_TYPE) {
++        assertTypeIsSupportedByDefault(typeNode.type, typeMapWithExtensions);
++    }
++    if (typeNode.kind === Kind.NON_NULL_TYPE) {
++        assertTypeIsSupportedByDefault(typeNode.type, typeMapWithExtensions);
++    }
++
++    if (typeNode.kind === Kind.NAMED_TYPE) {
++        if (
++            GRAPHQL_BUILTIN_SCALAR_TYPES.includes(typeNode.name.value) ||
++            [
++                GraphQLDateTime.name,
++                GraphQLLocalDateTime.name,
++                GraphQLDate.name,
++                GraphQLTime.name,
++                GraphQLLocalTime.name,
++            ].includes(typeNode.name.value) ||
++            typeNode.name.value === BigInt.name
++        ) {
++            return;
++        }
++
++        // check if the type is an enum
++        const typeFromMap = typeMapWithExtensions[typeNode.name.value];
++        if (typeFromMap?.definition.kind === Kind.ENUM_TYPE_DEFINITION) {
++            return;
++        }
++
++        throw new DocumentValidationError(
++            `@${defaultDirective.name} directive can only be used on fields of type Int, Float, String, Boolean, ID, BigInt, DateTime, Date, Time, LocalDateTime or LocalTime.`,
++            []
++        );
++    }
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/fulltext.ts b/packages/graphql/src/schema/validation/custom-rules/directives/fulltext.ts
+index b347127d5..7ecf72bc4 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/fulltext.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/fulltext.ts
+@@ -16,69 +16,114 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type { DirectiveNode, FieldDefinitionNode } from "graphql";
+-import { Kind } from "graphql";
++
++import type { ASTVisitor, FieldDefinitionNode, ObjectTypeDefinitionNode, TypeNode } from "graphql";
++import { GraphQLID, GraphQLString, Kind } from "graphql";
++import { fulltextDirective } from "../../../../graphql/directives";
+ import type { FulltextField } from "../../../../schema-model/annotation/FulltextAnnotation";
+ import { parseValueNode } from "../../../../schema-model/parser/parse-value-node";
+-import { DocumentValidationError } from "../utils/document-validation-error";
+-import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
++import { asArray } from "../../../../utils/utils";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { typeIsANodeType } from "../utils/location-helpers/is-node-type";
+ 
+-export function verifyFulltext({
+-    directiveNode,
+-    traversedDef,
+-}: {
+-    directiveNode: DirectiveNode;
+-    traversedDef: ObjectOrInterfaceWithExtensions | FieldDefinitionNode;
+-}) {
+-    if (traversedDef.kind !== Kind.OBJECT_TYPE_DEFINITION && traversedDef.kind !== Kind.OBJECT_TYPE_EXTENSION) {
+-        // delegate
+-        return;
+-    }
+-    const indexesArg = directiveNode.arguments?.find((a) => a.name.value === "indexes");
+-    if (!indexesArg) {
+-        // delegate to DirectiveArgumentOfCorrectType rule
+-        return;
++export function validateFulltextDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
+     }
+-    const indexesValue = parseValueNode(indexesArg.value) as FulltextField[];
+-    const compatibleFields = traversedDef.fields?.filter((f) => {
+-        if (f.type.kind === Kind.NON_NULL_TYPE) {
+-            const innerType = f.type.type;
+-            if (innerType.kind === Kind.NAMED_TYPE) {
+-                return ["String", "ID"].includes(innerType.name.value);
+-            }
+-        }
+-        if (f.type.kind === Kind.NAMED_TYPE) {
+-            return ["String", "ID"].includes(f.type.name.value);
+-        }
+-        return false;
+-    });
+-    indexesValue.forEach((index) => {
+-        const indexName = index.indexName;
+-        const indexNames = indexesValue.filter((i) => indexName === i.indexName);
+-        if (indexNames.length > 1) {
+-            throw new DocumentValidationError(
+-                `@fulltext.indexes invalid value for: ${indexName}. Duplicate index name.`,
+-                ["indexes"]
++    return {
++        ObjectTypeDefinition(objectTypeDefinitionNode: ObjectTypeDefinitionNode, _key, _parent, _path, _ancestors) {
++            const { directives } = objectTypeDefinitionNode;
++            const objectTypeExtensionNodes = typeMapWithExtensions[objectTypeDefinitionNode.name.value]?.extensions;
++            const extensionsDirectives = asArray(objectTypeExtensionNodes).flatMap((extensionNode) => {
++                return extensionNode.directives ?? [];
++            });
++            const allDirectives = [...(directives ?? []), ...extensionsDirectives];
++            const appliedFulltextDirective = allDirectives.find(
++                (directive) => directive.name.value === fulltextDirective.name
+             );
+-        }
++            if (!appliedFulltextDirective) {
++                return;
++            }
++            const indexesArg = appliedFulltextDirective.arguments?.find((a) => a.name.value === "indexes");
++            if (!indexesArg) {
++                // delegate to DirectiveArgumentOfCorrectType rule
++                return;
++            }
+ 
+-        const queryName = index.queryName;
+-        const queryNames = indexesValue.filter((i) => queryName === i.queryName);
+-        if (queryNames.length > 1) {
+-            throw new DocumentValidationError(
+-                `@fulltext.indexes invalid value for: ${queryName}. Duplicate query name.`,
+-                ["indexes"]
+-            );
+-        }
++            const compatibleFields = getFulltextCompatibleFields(objectTypeDefinitionNode);
++            const isValidLocation = typeIsANodeType({ objectTypeDefinitionNode, typeMapWithExtensions });
++            const { isValid, errorMsg, errorPath } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${fulltextDirective.name}" requires in a type with "@node"`,
++                        []
++                    );
++                }
++                const indexesValues = parseValueNode(indexesArg.value) as FulltextField[];
++
++                indexesValues.forEach((indexValue) => {
++                    const indexName = indexValue.indexName;
++                    const indexNames = indexesValues.filter((i) => indexName === i.indexName);
++                    if (indexNames.length > 1) {
++                        throw new DocumentValidationError(
++                            `@${fulltextDirective.name}.indexes invalid value for: ${indexName}. Duplicate index name.`,
++                            ["indexes"]
++                        );
++                    }
+ 
+-        (index.fields || []).forEach((field) => {
+-            const foundField = compatibleFields?.some((f) => f.name.value === field);
+-            if (!foundField) {
+-                throw new DocumentValidationError(
+-                    `@fulltext.indexes invalid value for: ${indexName}. Field ${field} is not of type String or ID.`,
+-                    ["indexes"]
++                    const queryName = indexValue.queryName;
++                    const queryNames = indexesValues.filter((i) => queryName === i.queryName);
++                    if (queryNames.length > 1) {
++                        throw new DocumentValidationError(
++                            `@${fulltextDirective.name}.indexes invalid value for: ${queryName}. Duplicate query name.`,
++                            ["indexes"]
++                        );
++                    }
++                    asArray(indexValue.fields).forEach((indexField) => {
++                        if (!compatibleFields[indexField]) {
++                            throw new DocumentValidationError(
++                                `@${fulltextDirective.name}.indexes invalid value for: ${indexValue.indexName}. Field ${indexField} is not of type String or ID.`,
++                                ["indexes"]
++                            );
++                        }
++                    });
++                });
++            });
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [objectTypeDefinitionNode],
++                        path: [objectTypeDefinitionNode.name.value, `@${fulltextDirective.name}`, ...errorPath],
++                        errorMsg,
++                    })
+                 );
+             }
+-        });
+-    });
++        },
++    };
++}
++
++function getFulltextCompatibleFields(
++    objectTypeDefinitionNode: ObjectTypeDefinitionNode
++): Record<string, FieldDefinitionNode> {
++    return (objectTypeDefinitionNode.fields ?? []).reduce(
++        (acc, f): Record<string, FieldDefinitionNode> => {
++            if (isFieldFullTextCompatible(f.type)) {
++                acc[f.name.value] = f;
++            }
++            return acc;
++        },
++        {} as Record<string, FieldDefinitionNode>
++    );
++}
++
++function isFieldFullTextCompatible(fieldType: TypeNode): boolean {
++    if (fieldType.kind === Kind.NAMED_TYPE) {
++        return [GraphQLString.name, GraphQLID.name].includes(fieldType.name.value);
++    }
++    if (fieldType.kind === Kind.NON_NULL_TYPE) {
++        return isFieldFullTextCompatible(fieldType.type);
++    }
++    return false;
+ }
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/id.ts b/packages/graphql/src/schema/validation/custom-rules/directives/id.ts
+index cb77b9074..9a9a99016 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/id.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/id.ts
+@@ -16,37 +16,62 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type { DirectiveNode, FieldDefinitionNode } from "graphql";
+-import { Kind } from "graphql";
+-import { parseValueNode } from "../../../../schema-model/parser/parse-value-node";
+-import { getInnerTypeName } from "../utils/utils";
+-import { DocumentValidationError } from "../utils/document-validation-error";
+-import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
+ 
+-export function verifyId({
+-    directiveNode,
+-    traversedDef,
+-}: {
+-    directiveNode: DirectiveNode;
+-    traversedDef: ObjectOrInterfaceWithExtensions | FieldDefinitionNode;
+-}) {
+-    if (traversedDef.kind !== Kind.FIELD_DEFINITION) {
+-        // delegate
+-        return;
+-    }
+-    // TODO: remove the following as the argument "autogenerate" does not exists anymore
+-    const autogenerateArg = directiveNode.arguments?.find((x) => x.name.value === "autogenerate");
+-    if (autogenerateArg) {
+-        const autogenerate = parseValueNode(autogenerateArg.value);
+-        if (!autogenerate) {
+-            return;
+-        }
++import { GraphQLID, Kind, type ASTVisitor, type FieldDefinitionNode, type TypeNode } from "graphql";
++import { idDirective, relationshipPropertiesDirective } from "../../../../graphql/directives";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { fieldIsInRelationshipPropertiesType } from "../utils/location-helpers/is-in-relationship-properties-type";
++import { getPathToNode } from "../utils/path-parser";
++
++export function validateIdDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
+     }
+ 
+-    if (traversedDef.type.kind === Kind.LIST_TYPE) {
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            if (!fieldDefinitionNode.directives?.find((directive) => directive.name.value === idDirective.name)) {
++                return;
++            }
++            const isValidLocation =
++                fieldIsInNodeType({ path, ancestors, typeMapWithExtensions }) ||
++                fieldIsInRelationshipPropertiesType({ path, ancestors, typeMapWithExtensions });
++
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${idDirective.name}" requires in a type with "@node" or within the "@${relationshipPropertiesDirective.name}" directive`,
++                        []
++                    );
++                }
++                assertTypeIsSupportedByID(fieldDefinitionNode.type);
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${idDirective.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++    };
++}
++
++function assertTypeIsSupportedByID(type: TypeNode): void {
++    if (type.kind === Kind.LIST_TYPE) {
+         throw new DocumentValidationError("Cannot autogenerate an array.", ["@id"]);
+     }
+-    if (getInnerTypeName(traversedDef.type) !== "ID") {
++    if (type.kind === Kind.NON_NULL_TYPE) {
++        return assertTypeIsSupportedByID(type.type);
++    }
++    if (GraphQLID.name !== type.name.value) {
+         throw new DocumentValidationError("Cannot autogenerate a non ID field.", ["@id"]);
+     }
+ }
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/limit.ts b/packages/graphql/src/schema/validation/custom-rules/directives/limit.ts
+index 888980b41..7300c1d85 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/limit.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/limit.ts
+@@ -16,25 +16,108 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type { DirectiveNode } from "graphql";
+-import { DocumentValidationError } from "../utils/document-validation-error";
++
++import type { ASTVisitor, DirectiveNode, InterfaceTypeDefinitionNode, ObjectTypeDefinitionNode } from "graphql";
++import { limitDirective } from "../../../../graphql/directives";
++import { asArray } from "../../../../utils/utils";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import type { AssertionResponse } from "../utils/document-validation-error";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { typeIsANodeType } from "../utils/location-helpers/is-node-type";
+ import { parseArgumentToInt } from "../utils/utils";
+ 
+-export function verifyLimit({ directiveNode }: { directiveNode: DirectiveNode }) {
+-    const defaultArg = directiveNode.arguments?.find((a) => a.name.value === "default");
+-    const maxArg = directiveNode.arguments?.find((a) => a.name.value === "max");
++export function validateLimitDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
++    }
++    return {
++        InterfaceTypeDefinition(
++            interfaceTypeDefinitionNode: InterfaceTypeDefinitionNode,
++            _key,
++            _parent,
++            _path,
++            _ancestors
++        ) {
++            const { directives } = interfaceTypeDefinitionNode;
++            const objectTypeExtensionNodes = typeMapWithExtensions[interfaceTypeDefinitionNode.name.value]?.extensions;
++            const extensionsDirectives = asArray(objectTypeExtensionNodes).flatMap((extensionNode) => {
++                return extensionNode.directives ?? [];
++            });
++            const allDirectives = [...(directives ?? []), ...extensionsDirectives];
++            const appliedLimitDirective = allDirectives.find(
++                (directive) => directive.name.value === limitDirective.name
++            );
++            if (!appliedLimitDirective) {
++                return;
++            }
++
++            const { isValid, errorMsg, errorPath } = assertValid(() => {
++                assertLimitDirectiveIsValid(appliedLimitDirective);
++            });
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [interfaceTypeDefinitionNode],
++                        path: [interfaceTypeDefinitionNode.name.value, `@${limitDirective.name}`, ...errorPath],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++        ObjectTypeDefinition(objectTypeDefinitionNode: ObjectTypeDefinitionNode, _key, _parent, _path, _ancestors) {
++            const { directives } = objectTypeDefinitionNode;
++            const objectTypeExtensionNodes = typeMapWithExtensions[objectTypeDefinitionNode.name.value]?.extensions;
++            const extensionsDirectives = asArray(objectTypeExtensionNodes).flatMap((extensionNode) => {
++                return extensionNode.directives ?? [];
++            });
++            const allDirectives = [...(directives ?? []), ...extensionsDirectives];
++            const appliedLimitDirective = allDirectives.find(
++                (directive) => directive.name.value === limitDirective.name
++            );
++            if (!appliedLimitDirective) {
++                return;
++            }
++            const { isValid, errorMsg, errorPath } = assertValid(() => {
++                const isValidLocation = typeIsANodeType({ objectTypeDefinitionNode, typeMapWithExtensions });
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${limitDirective.name}" requires in a type with "@node" or in an interface type`,
++                        []
++                    );
++                }
++                assertLimitDirectiveIsValid(appliedLimitDirective);
++            });
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [objectTypeDefinitionNode],
++                        path: [objectTypeDefinitionNode.name.value, `@${limitDirective.name}`, ...errorPath],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++    };
++}
++
++// shared assertion code between limit validation between interface and object types
++function assertLimitDirectiveIsValid(appliedLimitDirective: DirectiveNode): AssertionResponse | undefined {
++    const defaultArg = appliedLimitDirective.arguments?.find((a) => a.name.value === "default");
++    const maxArg = appliedLimitDirective.arguments?.find((a) => a.name.value === "max");
+     if (!defaultArg && !maxArg) {
+         // nothing to check, fields are optional
+         return;
+     }
+     const defaultLimit = parseArgumentToInt(defaultArg);
+     const maxLimit = parseArgumentToInt(maxArg);
++
+     if (defaultLimit) {
+         const defaultValue = defaultLimit.toNumber();
+         // default must be greater than 0
+         if (defaultValue <= 0) {
+             throw new DocumentValidationError(
+-                `@limit.default invalid value: ${defaultValue}. Must be greater than 0.`,
++                `@${limitDirective.name}.default invalid value: ${defaultValue}. Must be greater than 0.`,
+                 ["default"]
+             );
+         }
+@@ -43,9 +126,10 @@ export function verifyLimit({ directiveNode }: { directiveNode: DirectiveNode })
+         const maxValue = maxLimit.toNumber();
+         // max must be greater than 0
+         if (maxValue <= 0) {
+-            throw new DocumentValidationError(`@limit.max invalid value: ${maxValue}. Must be greater than 0.`, [
+-                "max",
+-            ]);
++            throw new DocumentValidationError(
++                `@${limitDirective.name}.max invalid value: ${maxValue}. Must be greater than 0.`,
++                ["max"]
++            );
+         }
+     }
+     if (defaultLimit && maxLimit) {
+@@ -54,7 +138,7 @@ export function verifyLimit({ directiveNode }: { directiveNode: DirectiveNode })
+         // default must be smaller than max
+         if (maxLimit < defaultLimit) {
+             throw new DocumentValidationError(
+-                `@limit.max invalid value: ${maxValue}. Must be greater than limit.default: ${defaultValue}.`,
++                `@${limitDirective.name}.max invalid value: ${maxValue}. Must be greater than limit.default: ${defaultValue}.`,
+                 ["max"]
+             );
+         }
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/populated-by.ts b/packages/graphql/src/schema/validation/custom-rules/directives/populated-by.ts
+new file mode 100644
+index 000000000..a56a7f6f0
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/populated-by.ts
+@@ -0,0 +1,125 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import {
++    GraphQLBoolean,
++    GraphQLFloat,
++    GraphQLID,
++    GraphQLInt,
++    GraphQLString,
++    type ASTVisitor,
++    type FieldDefinitionNode,
++} from "graphql";
++import { populatedByDirective } from "../../../../graphql/directives";
++import {
++    GraphQLBigInt,
++    GraphQLDate,
++    GraphQLDateTime,
++    GraphQLDuration,
++    GraphQLLocalDateTime,
++    GraphQLLocalTime,
++    GraphQLTime,
++} from "../../../../graphql/scalars";
++import { parseValueNode } from "../../../../schema-model/parser/parse-value-node";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { fieldIsInRelationshipPropertiesType } from "../utils/location-helpers/is-in-relationship-properties-type";
++import { getPathToNode } from "../utils/path-parser";
++import { getInnerTypeName } from "../utils/utils";
++
++export function validatePopulatedByDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
++    }
++    const callbacks = context.callbacks;
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            const appliedPopulatedByDirective = fieldDefinitionNode.directives?.find(
++                (directive) => directive.name.value === populatedByDirective.name
++            );
++            if (!appliedPopulatedByDirective) {
++                return;
++            }
++            const callbackArg = appliedPopulatedByDirective.arguments?.find((x) => x.name.value === "callback");
++            if (!callbackArg) {
++                // delegate to DirectiveArgumentOfCorrectType rule
++                return;
++            }
++            const isValidLocation =
++                fieldIsInNodeType({ path, ancestors, typeMapWithExtensions }) ||
++                fieldIsInRelationshipPropertiesType({ path, ancestors, typeMapWithExtensions });
++
++            const { isValid, errorMsg, errorPath } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${populatedByDirective.name}" requires in a type with "@node" or within the "@relationshipProperties" directive`,
++                        []
++                    );
++                }
++                const callbackName = parseValueNode(callbackArg.value);
++                if (!callbacks) {
++                    throw new DocumentValidationError(
++                        `@${populatedByDirective.name}.callback needs to be provided in features option.`,
++                        ["callback"]
++                    );
++                }
++                if (typeof (callbacks || {})[callbackName] !== "function") {
++                    throw new DocumentValidationError(
++                        `@${populatedByDirective.name}.callback \`${callbackName}\` must be of type Function.`,
++                        ["callback"]
++                    );
++                }
++                if (
++                    ![
++                        GraphQLInt.name,
++                        GraphQLFloat.name,
++                        GraphQLString.name,
++                        GraphQLBoolean.name,
++                        GraphQLID.name,
++                        GraphQLBigInt.name,
++                        GraphQLDateTime.name,
++                        GraphQLDate.name,
++                        GraphQLTime.name,
++                        GraphQLLocalDateTime.name,
++                        GraphQLLocalTime.name,
++                        GraphQLDuration.name,
++                    ].includes(getInnerTypeName(fieldDefinitionNode.type))
++                ) {
++                    throw new DocumentValidationError(
++                        "@populatedBy can only be used on fields of type Int, Float, String, Boolean, ID, BigInt, DateTime, Date, Time, LocalDateTime, LocalTime or Duration.",
++                        []
++                    );
++                }
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${populatedByDirective.name}`, ...errorPath],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++    };
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/populatedBy.ts b/packages/graphql/src/schema/validation/custom-rules/directives/populatedBy.ts
+deleted file mode 100644
+index 1c0ce1fce..000000000
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/populatedBy.ts
++++ /dev/null
+@@ -1,76 +0,0 @@
+-/*
+- * Copyright (c) "Neo4j"
+- * Neo4j Sweden AB [http://neo4j.com]
+- *
+- * This file is part of Neo4j.
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-import { Kind, type DirectiveNode, type FieldDefinitionNode } from "graphql";
+-import { parseValueNode } from "../../../../schema-model/parser/parse-value-node";
+-import type { Neo4jGraphQLCallbacks } from "../../../../types";
+-import { DocumentValidationError } from "../utils/document-validation-error";
+-import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
+-import { getInnerTypeName } from "../utils/utils";
+-
+-export function verifyPopulatedBy(callbacks?: Neo4jGraphQLCallbacks) {
+-    return function ({
+-        directiveNode,
+-        traversedDef,
+-    }: {
+-        directiveNode: DirectiveNode;
+-        traversedDef: ObjectOrInterfaceWithExtensions | FieldDefinitionNode;
+-    }) {
+-        const callbackArg = directiveNode.arguments?.find((x) => x.name.value === "callback");
+-        if (!callbackArg) {
+-            // delegate to DirectiveArgumentOfCorrectType rule
+-            return;
+-        }
+-        if (traversedDef.kind !== Kind.FIELD_DEFINITION) {
+-            // delegate to KnownDirectivesRule
+-            return;
+-        }
+-        const callbackName = parseValueNode(callbackArg.value);
+-        if (!callbacks) {
+-            throw new DocumentValidationError(`@populatedBy.callback needs to be provided in features option.`, [
+-                "callback",
+-            ]);
+-        }
+-        if (typeof (callbacks || {})[callbackName] !== "function") {
+-            throw new DocumentValidationError(`@populatedBy.callback \`${callbackName}\` must be of type Function.`, [
+-                "callback",
+-            ]);
+-        }
+-        if (
+-            ![
+-                "Int",
+-                "Float",
+-                "String",
+-                "Boolean",
+-                "ID",
+-                "BigInt",
+-                "DateTime",
+-                "Date",
+-                "Time",
+-                "LocalDateTime",
+-                "LocalTime",
+-                "Duration",
+-            ].includes(getInnerTypeName(traversedDef.type))
+-        ) {
+-            throw new DocumentValidationError(
+-                "@populatedBy can only be used on fields of type Int, Float, String, Boolean, ID, BigInt, DateTime, Date, Time, LocalDateTime, LocalTime or Duration.",
+-                []
+-            );
+-        }
+-    };
+-}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/relationship.ts b/packages/graphql/src/schema/validation/custom-rules/directives/relationship.ts
+index 85bcf24a9..f6bb52fd2 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/relationship.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/relationship.ts
+@@ -16,181 +16,136 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type {
+-    DirectiveNode,
+-    EnumTypeDefinitionNode,
+-    FieldDefinitionNode,
+-    InterfaceTypeDefinitionNode,
+-    InterfaceTypeExtensionNode,
+-    ObjectTypeDefinitionNode,
+-    UnionTypeDefinitionNode,
+-} from "graphql";
+-import { Kind } from "graphql";
+-import { parseValueNode } from "../../../../schema-model/parser/parse-value-node";
+-import { DocumentValidationError } from "../utils/document-validation-error";
++
++import type { ASTVisitor, FieldDefinitionNode, ObjectTypeDefinitionNode, ObjectTypeExtensionNode } from "graphql";
+ import {
+-    getInheritedTypeNames,
+-    hydrateInterfaceWithImplementedTypesMap,
+-} from "../utils/interface-to-implementing-types";
+-import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
+-import { getPrettyName } from "../utils/utils";
++    declareRelationshipDirective,
++    relationshipDirective,
++    relationshipPropertiesDirective,
++} from "../../../../graphql/directives";
++import { parseValueNode } from "../../../../schema-model/parser/parse-value-node";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInInterfaceType } from "../utils/location-helpers/is-in-interface-type";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { getPathToNode } from "../utils/path-parser";
++import { getInnerTypeName } from "../utils/utils";
+ 
+-export function verifyRelationshipArgumentValue(
+-    objectTypeToRelationshipsPerRelationshipTypeMap: Map<string, Map<string, [string, string, string][]>>,
+-    interfaceToImplementationsMap: Map<string, Set<string>>,
+-    extra?: {
+-        enums: EnumTypeDefinitionNode[];
+-        interfaces: (InterfaceTypeDefinitionNode | InterfaceTypeExtensionNode)[];
+-        unions: UnionTypeDefinitionNode[];
+-        objects: ObjectTypeDefinitionNode[];
++export function validateRelationshipDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
+     }
+-) {
+-    return function ({
+-        directiveNode,
+-        traversedDef,
+-        parentDef,
+-    }: {
+-        directiveNode: DirectiveNode;
+-        traversedDef: ObjectOrInterfaceWithExtensions | FieldDefinitionNode;
+-        parentDef?: ObjectOrInterfaceWithExtensions;
+-    }) {
+-        if (traversedDef.kind !== Kind.FIELD_DEFINITION) {
+-            // delegate
+-            return;
+-        }
+-        if (!parentDef) {
+-            console.error("No parent definition");
+-            return;
+-        }
+-        const typeArg = directiveNode.arguments?.find((a) => a.name.value === "type");
+-        const directionArg = directiveNode.arguments?.find((a) => a.name.value === "direction");
+-        const propertiesArg = directiveNode.arguments?.find((a) => a.name.value === "properties");
+-        if (!typeArg && !directionArg) {
+-            // delegate to DirectiveArgumentOfCorrectType rule
+-            return;
+-        }
+-
+-        if (typeArg && directionArg) {
+-            const fieldType = getPrettyName(traversedDef.type);
+-            const typeValue = parseValueNode(typeArg.value);
+-            const directionValue = parseValueNode(directionArg.value);
+-            const currentRelationship: [string, string, string] = [traversedDef.name.value, directionValue, fieldType];
+-            verifyRelationshipFields(
+-                parentDef,
+-                currentRelationship,
+-                typeValue,
+-                objectTypeToRelationshipsPerRelationshipTypeMap,
+-                interfaceToImplementationsMap
+-            );
+-        }
+-
+-        if (propertiesArg) {
+-            const propertiesValue = parseValueNode(propertiesArg.value);
+-            if (!extra) {
+-                throw new Error("Missing data: Enums, Interfaces, Unions.");
+-            }
++    return {
++        // At the object level we need to check that the relationship directive is not applied to multiple fields of the same type
++        ObjectTypeDefinition(objectTypeDefinitionNode: ObjectTypeDefinitionNode, _key, _parent, _path, _ancestors) {
++            const fieldTypes = new Map<string, string>();
++            const extensionsFields = (
++                (typeMapWithExtensions[objectTypeDefinitionNode.name.value]?.extensions ??
++                    []) as ObjectTypeExtensionNode[]
++            ).flatMap((extension) => extension.fields ?? []);
+ 
+-            const relationshipPropertiesInterface = extra.interfaces.filter(
+-                (i) =>
+-                    i.name.value.toLowerCase() === propertiesValue.toLowerCase() &&
+-                    i.kind === Kind.INTERFACE_TYPE_DEFINITION
+-            );
+-
+-            if (relationshipPropertiesInterface.length > 0) {
+-                throw new DocumentValidationError(
+-                    `@relationship.properties invalid. The @relationshipProperties directive must be applied to a type and not an interface, a breaking change introduced in version 5.0.0.`,
+-                    ["properties"]
++            [...(objectTypeDefinitionNode.fields ?? []), ...extensionsFields].forEach((field) => {
++                const appliedRelationship = field.directives?.find(
++                    (directive) => directive.name.value === relationshipDirective.name
+                 );
+-            }
++                if (!appliedRelationship) {
++                    return;
++                }
++                const fieldType = getInnerTypeName(field.type);
++                const relationshipDirectionArgument = appliedRelationship.arguments?.find(
++                    (a) => a.name.value === "direction"
++                );
++                const relationshipTypeArgument = appliedRelationship.arguments?.find((a) => a.name.value === "type");
++                if (!relationshipDirectionArgument || !relationshipTypeArgument) {
++                    // delegate to DirectiveArgumentOfCorrectType rule
++                    return;
++                }
++                const directionArgAsString = parseValueNode(relationshipDirectionArgument.value);
++                const relationshipTypeArgumentAsString = parseValueNode(relationshipTypeArgument.value);
++                // create a map key of field type + relationship type + relationship direction to check for uniqueness
++                const validUniqueRelationshipKey = `${fieldType}-${relationshipTypeArgumentAsString}-${directionArgAsString}`;
+ 
+-            const relationshipPropertiesType = extra.objects.filter(
+-                (i) =>
+-                    i.name.value.toLowerCase() === propertiesValue.toLowerCase() &&
+-                    i.kind === Kind.OBJECT_TYPE_DEFINITION
++                if (fieldTypes.has(validUniqueRelationshipKey)) {
++                    context.reportError(
++                        createGraphQLError({
++                            nodes: [field],
++                            path: [
++                                objectTypeDefinitionNode.name.value,
++                                field.name.value,
++                                `@${relationshipDirective.name}`,
++                            ],
++                            errorMsg: `@${relationshipDirective.name} invalid. Multiple fields of the same type cannot have a relationship with the same direction and type combination.`,
++                        })
++                    );
++                } else {
++                    fieldTypes.set(validUniqueRelationshipKey, field.name.value);
++                }
++            });
++        },
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            const appliedRelationship = fieldDefinitionNode.directives?.find(
++                (directive) => directive.name.value === relationshipDirective.name
+             );
+-
+-            if (relationshipPropertiesType.length > 1) {
+-                throw new DocumentValidationError(
+-                    `@relationship.properties invalid. Cannot have more than 1 type represent the relationship properties.`,
+-                    ["properties"]
+-                );
++            if (!appliedRelationship) {
++                return;
+             }
+-            if (!relationshipPropertiesType.length) {
+-                throw new DocumentValidationError(
+-                    `@relationship.properties invalid. Cannot find type to represent the relationship properties: ${propertiesValue}.`,
+-                    ["properties"]
+-                );
++            const isValidLocation = fieldIsInNodeType({ path, ancestors, typeMapWithExtensions });
++            const [pathToNode, _traversedDef, parentOfTraversedDef] = getPathToNode(path, ancestors);
++            const typeArg = appliedRelationship.arguments?.find((a) => a.name.value === "type");
++            const directionArg = appliedRelationship.arguments?.find((a) => a.name.value === "direction");
++            const propertiesArg = appliedRelationship.arguments?.find((a) => a.name.value === "properties");
++            if (!typeArg || !directionArg) {
++                // delegate to DirectiveArgumentOfCorrectType rule
++                return;
+             }
+-            const isRelationshipPropertiesTypeAnnotated = relationshipPropertiesType[0]?.directives?.some(
+-                (d) => d.name.value === "relationshipProperties"
+-            );
+ 
+-            if (!isRelationshipPropertiesTypeAnnotated) {
+-                throw new DocumentValidationError(
+-                    `@relationship.properties invalid. Properties type ${propertiesValue} must use directive \`@relationshipProperties\`.`,
+-                    ["properties"]
++            const { isValid, errorMsg, errorPath } = assertValid(() => {
++                if (!isValidLocation) {
++                    if (fieldIsInInterfaceType({ path, ancestors, typeMapWithExtensions })) {
++                        // throw more specific error for interface types as in the past it was possible to have relationships on interfaces
++                        throw new DocumentValidationError(
++                            `Invalid directive usage: Directive @${relationshipDirective.name} is not supported on fields of interface types (${parentOfTraversedDef?.name.value}). Since version 5.0.0, interface fields can only have @${declareRelationshipDirective.name}. Please add the @relationship directive to the fields in all types which implement it.`,
++                            []
++                        );
++                    }
++                    throw new DocumentValidationError(
++                        `Directive "${relationshipDirective.name}" requires in a type with "@node"`,
++                        []
++                    );
++                }
++                if (propertiesArg) {
++                    // find the relationshipProperties type, if type does not exist, throw error
++                    const propertiesArgAsString = parseValueNode(propertiesArg.value);
++                    const propertiesType = typeMapWithExtensions[propertiesArgAsString]?.definition;
++                    if (!propertiesType) {
++                        throw new DocumentValidationError(
++                            `@${relationshipDirective.name}.properties invalid. Cannot find type to represent the relationship properties: ${propertiesArgAsString}.`,
++                            ["properties"]
++                        );
++                    }
++                    if (
++                        !propertiesType.directives?.find(
++                            (directive) => directive.name.value === relationshipPropertiesDirective.name
++                        )
++                    ) {
++                        throw new DocumentValidationError(
++                            `@${relationshipDirective.name}.properties invalid. Properties type ${propertiesArgAsString} must use directive \`@${relationshipPropertiesDirective.name}\`.`,
++                            ["properties"]
++                        );
++                    }
++                }
++            });
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode, `@${relationshipDirective.name}`, ...errorPath],
++                        errorMsg,
++                    })
+                 );
+             }
+-        }
++        },
+     };
+ }
+-
+-function getUpdatedRelationshipFieldsForCurrentType(
+-    relationshipFieldsForCurrentType: Map<string, [string, string, string][]> | undefined,
+-    currentRelationship: [string, string, string],
+-    typeValue: any
+-) {
+-    const updatedRelationshipFieldsForCurrentType =
+-        relationshipFieldsForCurrentType || new Map<string, [string, string, string][]>();
+-    const updatedRelationshipsWithSameRelationshipType = (
+-        relationshipFieldsForCurrentType?.get(typeValue) || []
+-    ).concat([currentRelationship]);
+-    updatedRelationshipFieldsForCurrentType.set(typeValue, updatedRelationshipsWithSameRelationshipType);
+-    return updatedRelationshipFieldsForCurrentType;
+-}
+-
+-function checkRelationshipFieldsForDuplicates(
+-    relationshipFieldsForDependentType: Map<string, [string, string, string][]> | undefined,
+-    currentRelationship: [string, string, string],
+-    typeValue: any
+-) {
+-    if (!relationshipFieldsForDependentType) {
+-        return;
+-    }
+-    const relationshipsWithSameRelationshipType = relationshipFieldsForDependentType.get(typeValue);
+-    relationshipsWithSameRelationshipType?.forEach(([fieldName, existingDirection, existingFieldType]) => {
+-        if (
+-            fieldName !== currentRelationship[0] &&
+-            existingDirection === currentRelationship[1] &&
+-            existingFieldType === currentRelationship[2]
+-        ) {
+-            throw new DocumentValidationError(
+-                `@relationship invalid. Multiple fields of the same type cannot have a relationship with the same direction and type combination.`,
+-                []
+-            );
+-        }
+-    });
+-}
+-
+-function verifyRelationshipFields(
+-    parentDef: ObjectOrInterfaceWithExtensions,
+-    currentRelationship: [string, string, string],
+-    typeValue: any,
+-    objectTypeToRelationshipsPerRelationshipTypeMap: Map<string, Map<string, [string, string, string][]>>,
+-    interfaceToImplementationsMap: Map<string, Set<string>>
+-) {
+-    const relationshipFieldsForCurrentType = objectTypeToRelationshipsPerRelationshipTypeMap.get(parentDef.name.value);
+-    checkRelationshipFieldsForDuplicates(relationshipFieldsForCurrentType, currentRelationship, typeValue);
+-    objectTypeToRelationshipsPerRelationshipTypeMap.set(
+-        parentDef.name.value,
+-        getUpdatedRelationshipFieldsForCurrentType(relationshipFieldsForCurrentType, currentRelationship, typeValue)
+-    );
+-
+-    const inheritedTypeNames = getInheritedTypeNames(parentDef, interfaceToImplementationsMap);
+-    inheritedTypeNames.forEach((typeName) => {
+-        const inheritedRelationshipFields = objectTypeToRelationshipsPerRelationshipTypeMap.get(typeName);
+-        checkRelationshipFieldsForDuplicates(inheritedRelationshipFields, currentRelationship, typeValue);
+-    });
+-
+-    hydrateInterfaceWithImplementedTypesMap(parentDef, interfaceToImplementationsMap);
+-}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/relay-id.ts b/packages/graphql/src/schema/validation/custom-rules/directives/relay-id.ts
+new file mode 100644
+index 000000000..c76836612
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/relay-id.ts
+@@ -0,0 +1,61 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import type { ASTVisitor, FieldDefinitionNode } from "graphql";
++import { relayIdDirective } from "../../../../graphql/directives";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { getPathToNode } from "../utils/path-parser";
++
++export function validateRelayIdDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
++    }
++
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            if (!fieldDefinitionNode.directives?.find((directive) => directive.name.value === relayIdDirective.name)) {
++                return;
++            }
++            const isValidLocation = fieldIsInNodeType({ path, ancestors, typeMapWithExtensions });
++
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${relayIdDirective.name}" requires in a type with "@node"`,
++                        []
++                    );
++                }
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${relayIdDirective.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++    };
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/subscriptionAuthorization.ts b/packages/graphql/src/schema/validation/custom-rules/directives/subscriptionAuthorization.ts
+new file mode 100644
+index 000000000..e5d733021
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/subscriptionAuthorization.ts
+@@ -0,0 +1,100 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import type { ASTVisitor, FieldDefinitionNode, ObjectTypeDefinitionNode } from "graphql";
++import { subscriptionsAuthorizationDirectiveScaffold } from "../../../../graphql/directives/type-dependant-directives/subscriptions-authorization";
++import { asArray } from "../../../../utils/utils";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { typeIsANodeType } from "../utils/location-helpers/is-node-type";
++import { getPathToNode } from "../utils/path-parser";
++
++export function validateSubscriptionAuthorizationDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
++    }
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            const appliedSubscriptionDirective = fieldDefinitionNode.directives?.find(
++                (directive) => directive.name.value === subscriptionsAuthorizationDirectiveScaffold.name
++            );
++
++            if (!appliedSubscriptionDirective) {
++                return;
++            }
++
++            const isValidLocation = fieldIsInNodeType({ path, ancestors, typeMapWithExtensions });
++
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${subscriptionsAuthorizationDirectiveScaffold.name}" requires in a type with "@node"`,
++                        []
++                    );
++                }
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${subscriptionsAuthorizationDirectiveScaffold.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++        ObjectTypeDefinition(objectTypeDefinitionNode: ObjectTypeDefinitionNode, _key, _parent, path, ancestors) {
++            const { directives } = objectTypeDefinitionNode;
++            const objectTypeExtensionNodes = typeMapWithExtensions[objectTypeDefinitionNode.name.value]?.extensions;
++            const extensionsDirectives = asArray(objectTypeExtensionNodes).flatMap((extensionNode) => {
++                return extensionNode.directives ?? [];
++            });
++            const allDirectives = [...(directives ?? []), ...extensionsDirectives];
++            const appliedSubscriptionDirective = allDirectives.find(
++                (directive) => directive.name.value === subscriptionsAuthorizationDirectiveScaffold.name
++            );
++            if (!appliedSubscriptionDirective) {
++                return;
++            }
++            const isValidLocation = typeIsANodeType({ objectTypeDefinitionNode, typeMapWithExtensions });
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${subscriptionsAuthorizationDirectiveScaffold.name}" requires in a type with "@node"`,
++                        []
++                    );
++                }
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [objectTypeDefinitionNode],
++                        path: [...pathToNode[0], `@${subscriptionsAuthorizationDirectiveScaffold.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++    };
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/timestamp.ts b/packages/graphql/src/schema/validation/custom-rules/directives/timestamp.ts
+index 47a8bbb34..f519c80e7 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/timestamp.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/timestamp.ts
+@@ -16,27 +16,68 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type { FieldDefinitionNode } from "graphql";
++
++import type { ASTVisitor, FieldDefinitionNode, TypeNode } from "graphql";
+ import { Kind } from "graphql";
+-import { getInnerTypeName } from "../utils/utils";
+-import { DocumentValidationError } from "../utils/document-validation-error";
+-import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
++import { timestampDirective } from "../../../../graphql/directives";
++import { GraphQLDateTime, GraphQLTime } from "../../../../graphql/scalars";
++import type { Neo4jValidationContext } from "../../Neo4jValidationContext";
++import { assertValid, createGraphQLError, DocumentValidationError } from "../utils/document-validation-error";
++import { fieldIsInNodeType } from "../utils/location-helpers/is-in-node-type";
++import { fieldIsInRelationshipPropertiesType } from "../utils/location-helpers/is-in-relationship-properties-type";
++import { getPathToNode } from "../utils/path-parser";
+ 
+-export function verifyTimestamp({
+-    traversedDef,
+-}: {
+-    traversedDef: ObjectOrInterfaceWithExtensions | FieldDefinitionNode;
+-}) {
+-    if (traversedDef.kind !== Kind.FIELD_DEFINITION) {
+-        // delegate
+-        return;
++export function validateTimestampDirective(context: Neo4jValidationContext): ASTVisitor {
++    const typeMapWithExtensions = context.typeMapWithExtensions;
++    if (!typeMapWithExtensions) {
++        throw new Error("No typeMapWithExtensions found in the context");
+     }
+-    if (traversedDef.type.kind === Kind.LIST_TYPE) {
+-        throw new DocumentValidationError("Cannot autogenerate an array.", ["@timestamp"]);
++    return {
++        FieldDefinition(fieldDefinitionNode: FieldDefinitionNode, _key, _parent, path, ancestors) {
++            if (
++                !fieldDefinitionNode.directives?.find((directive) => directive.name.value === timestampDirective.name)
++            ) {
++                return;
++            }
++            const isValidLocation =
++                fieldIsInNodeType({ path, ancestors, typeMapWithExtensions }) ||
++                fieldIsInRelationshipPropertiesType({ path, ancestors, typeMapWithExtensions });
++
++            const { isValid, errorMsg } = assertValid(() => {
++                if (!isValidLocation) {
++                    throw new DocumentValidationError(
++                        `Directive "${timestampDirective.name}" requires in a type with "@node" or within the "@relationshipProperties" directive`,
++                        []
++                    );
++                }
++                assertTypeIsSupportedByTimestamp(fieldDefinitionNode.type);
++            });
++            const pathToNode = getPathToNode(path, ancestors);
++
++            if (!isValid) {
++                context.reportError(
++                    createGraphQLError({
++                        nodes: [fieldDefinitionNode],
++                        path: [...pathToNode[0], `@${timestampDirective.name}`],
++                        errorMsg,
++                    })
++                );
++            }
++        },
++    };
++}
++
++function assertTypeIsSupportedByTimestamp(type: TypeNode): void {
++    if (type.kind === Kind.NON_NULL_TYPE) {
++        return assertTypeIsSupportedByTimestamp(type.type);
++    }
++    if (type.kind === Kind.LIST_TYPE) {
++        throw new DocumentValidationError("Cannot autogenerate an array.", [`@${timestampDirective.name}`]);
+     }
+-    if (!["DateTime", "Time"].includes(getInnerTypeName(traversedDef.type))) {
++
++    if (![GraphQLDateTime.name, GraphQLTime.name].includes(type.name.value)) {
+         throw new DocumentValidationError("Cannot timestamp Temporal fields lacking time zone information.", [
+-            "@timestamp",
++            `@${timestampDirective.name}`,
+         ]);
+     }
+ }
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/valid-directive-field-location.ts b/packages/graphql/src/schema/validation/custom-rules/directives/valid-directive-field-location.ts
+deleted file mode 100644
+index 095790ae1..000000000
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/valid-directive-field-location.ts
++++ /dev/null
+@@ -1,203 +0,0 @@
+-/*
+- * Copyright (c) "Neo4j"
+- * Neo4j Sweden AB [http://neo4j.com]
+- *
+- * This file is part of Neo4j.
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-import type {
+-    ASTVisitor,
+-    DirectiveNode,
+-    FieldDefinitionNode,
+-    InterfaceTypeDefinitionNode,
+-    InterfaceTypeExtensionNode,
+-    ObjectTypeDefinitionNode,
+-    ObjectTypeExtensionNode,
+-} from "graphql";
+-import { Kind } from "graphql";
+-import type { SDLValidationContext } from "graphql/validation/ValidationContext";
+-import * as directives from "../../../../graphql/directives";
+-import { typeDependantDirectivesScaffolds } from "../../../../graphql/directives/type-dependant-directives/scaffolds";
+-import { SCHEMA_CONFIGURATION_FIELD_DIRECTIVES } from "../../../../schema-model/library-directives";
+-import { isInArray } from "../../../../utils/is-in-array";
+-import { DocumentValidationError, assertValid, createGraphQLError } from "../utils/document-validation-error";
+-import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
+-import { getPathToNode } from "../utils/path-parser";
+-
+-export function ValidDirectiveAtFieldLocation(context: SDLValidationContext): ASTVisitor {
+-    return {
+-        Directive(directiveNode: DirectiveNode, _key, _parent, path, ancestors) {
+-            const [pathToNode, traversedDef, parentOfTraversedDef] = getPathToNode(path, ancestors);
+-            if (!traversedDef || traversedDef.kind !== Kind.FIELD_DEFINITION) {
+-                // this rule only checks field location
+-                return;
+-            }
+-            if (!parentOfTraversedDef) {
+-                console.error("No parent of last definition traversed");
+-                return;
+-            }
+-            const shouldRunThisRule = isDirectiveValidAtLocation({
+-                directiveNode,
+-                traversedDef,
+-                parentDef: parentOfTraversedDef,
+-            });
+-
+-            if (!shouldRunThisRule) {
+-                return;
+-            }
+-
+-            const { isValid, errorMsg, errorPath } = assertValid(shouldRunThisRule);
+-            if (!isValid) {
+-                context.reportError(
+-                    createGraphQLError({
+-                        nodes: [traversedDef],
+-                        path: [...pathToNode, ...errorPath],
+-                        errorMsg,
+-                    })
+-                );
+-            }
+-        },
+-    };
+-}
+-
+-function isDirectiveValidAtLocation({
+-    directiveNode,
+-    traversedDef,
+-    parentDef,
+-}: {
+-    directiveNode: DirectiveNode;
+-    traversedDef: FieldDefinitionNode;
+-    parentDef: ObjectOrInterfaceWithExtensions;
+-}) {
+-    if (isLocationFieldOfRootType(parentDef)) {
+-        return () =>
+-            validFieldOfRootTypeLocation({
+-                directiveNode,
+-                traversedDef: traversedDef,
+-                parentDef,
+-            });
+-    }
+-    if (isLocationFieldOfInterfaceType(parentDef)) {
+-        return () =>
+-            validFieldOfInterfaceTypeLocation({
+-                directiveNode,
+-                parentDef,
+-            });
+-    }
+-
+-    return;
+-}
+-
+-function isLocationFieldOfRootType(
+-    parentDef: ObjectOrInterfaceWithExtensions
+-): parentDef is ObjectTypeDefinitionNode | ObjectTypeExtensionNode {
+-    return (
+-        parentDef &&
+-        (parentDef.kind === Kind.OBJECT_TYPE_DEFINITION || parentDef.kind === Kind.OBJECT_TYPE_EXTENSION) &&
+-        ["Query", "Mutation", "Subscription"].includes(parentDef.name.value)
+-    );
+-}
+-
+-function isLocationFieldOfInterfaceType(
+-    parentDef: ObjectOrInterfaceWithExtensions
+-): parentDef is InterfaceTypeDefinitionNode | InterfaceTypeExtensionNode {
+-    return (
+-        parentDef &&
+-        (parentDef.kind === Kind.INTERFACE_TYPE_DEFINITION || parentDef.kind === Kind.INTERFACE_TYPE_EXTENSION)
+-    );
+-}
+-
+-function noDirectivesAllowedAtLocation({
+-    directiveNode,
+-    parentDef,
+-}: {
+-    directiveNode: DirectiveNode;
+-    parentDef: ObjectOrInterfaceWithExtensions;
+-}) {
+-    const allDirectivesDefinedByNeo4jGraphQL = Object.values(directives).concat(typeDependantDirectivesScaffolds);
+-    const directiveAtInvalidLocation = allDirectivesDefinedByNeo4jGraphQL.find(
+-        (d) => d.name === directiveNode.name.value
+-    );
+-    if (directiveAtInvalidLocation) {
+-        if (directiveAtInvalidLocation.name === "relationship" && parentDef.kind === Kind.INTERFACE_TYPE_DEFINITION) {
+-            throw new DocumentValidationError(
+-                `Invalid directive usage: Directive @${directiveAtInvalidLocation.name} is not supported on fields of interface types (${parentDef.name.value}). Since version 5.0.0, interface fields can only have @declareRelationship. Please add the @relationship directive to the fields in all types which implement it.`,
+-                [`@${directiveNode.name.value}`]
+-            );
+-        } else {
+-            throw new DocumentValidationError(
+-                `Invalid directive usage: Directive @${directiveAtInvalidLocation.name} is not supported on fields of the ${parentDef.name.value} type.`,
+-                [`@${directiveNode.name.value}`]
+-            );
+-        }
+-    }
+-}
+-
+-/** only the @cypher and @authentication directives are valid on fields of Root types: Query, Mutation; no directives valid on fields of Subscription */
+-function validFieldOfRootTypeLocation({
+-    directiveNode,
+-    traversedDef,
+-    parentDef,
+-}: {
+-    directiveNode: DirectiveNode;
+-    traversedDef: FieldDefinitionNode;
+-    parentDef: ObjectTypeDefinitionNode | ObjectTypeExtensionNode;
+-}) {
+-    if (parentDef.name.value !== "Subscription") {
+-        // some directives are valid on Query | Mutation
+-        if (directiveNode.name.value === "cypher") {
+-            // @cypher is valid
+-            return;
+-        }
+-        if (directiveNode.name.value === "authentication") {
+-            // @authentication is valid
+-            return;
+-        }
+-        const isDirectiveCombinedWithCypher = traversedDef.directives?.some(
+-            (directive) => directive.name.value === "cypher"
+-        );
+-        // explicitly checked for "enhanced" error messages
+-        if (directiveNode.name.value === "authorization" && isDirectiveCombinedWithCypher) {
+-            throw new DocumentValidationError(
+-                `Invalid directive usage: Directive @authorization is not supported on fields of the ${parentDef.name.value} type. Did you mean to use @authentication?`,
+-                [`@${directiveNode.name.value}`]
+-            );
+-        }
+-    }
+-    noDirectivesAllowedAtLocation({ directiveNode, parentDef });
+-}
+-
+-/** only a subset of field directives are allowed on interface fields */
+-function validFieldOfInterfaceTypeLocation({
+-    directiveNode,
+-    parentDef,
+-}: {
+-    directiveNode: DirectiveNode;
+-    parentDef: InterfaceTypeDefinitionNode | InterfaceTypeExtensionNode;
+-}) {
+-    if (isInArray(SCHEMA_CONFIGURATION_FIELD_DIRECTIVES, directiveNode.name.value)) {
+-        return;
+-    }
+-    if (directiveNode.name.value === "declareRelationship") {
+-        // allow @declareRelationship as an instruction for schema generation
+-        return;
+-    }
+-    if (directiveNode.name.value === "private") {
+-        // allow @private for now
+-        return;
+-    }
+-
+-    noDirectivesAllowedAtLocation({ directiveNode, parentDef });
+-}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/valid-directive.ts b/packages/graphql/src/schema/validation/custom-rules/directives/valid-directive.ts
+deleted file mode 100644
+index a21749072..000000000
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/valid-directive.ts
++++ /dev/null
+@@ -1,155 +0,0 @@
+-/*
+- * Copyright (c) "Neo4j"
+- * Neo4j Sweden AB [http://neo4j.com]
+- *
+- * This file is part of Neo4j.
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-import type {
+-    ASTVisitor,
+-    DirectiveNode,
+-    EnumTypeDefinitionNode,
+-    InterfaceTypeDefinitionNode,
+-    ObjectTypeDefinitionNode,
+-    UnionTypeDefinitionNode,
+-} from "graphql";
+-import type { SDLValidationContext } from "graphql/validation/ValidationContext";
+-import type { Neo4jGraphQLCallbacks } from "../../../../types";
+-import type { ValidationFunction } from "../utils/document-validation-error";
+-import { assertValid, createGraphQLError } from "../utils/document-validation-error";
+-import { getPathToNode } from "../utils/path-parser";
+-import { verifyAuthorization } from "./authorization";
+-import { verifyCoalesce } from "./coalesce";
+-import { verifyDefault } from "./default";
+-import { verifyFulltext } from "./fulltext";
+-import { verifyLimit } from "./limit";
+-import { verifyPopulatedBy } from "./populatedBy";
+-import { verifyRelationshipArgumentValue } from "./relationship";
+-
+-function getValidationFunction(
+-    directiveName: string,
+-    objectTypeToFieldNameDirectionAndFieldTypePerRelationshipTypeMap: Map<
+-        string,
+-        Map<string, [string, string, string][]>
+-    >,
+-    interfaceToImplementationsMap: Map<string, Set<string>>,
+-    extra: {
+-        enums: EnumTypeDefinitionNode[];
+-        interfaces: InterfaceTypeDefinitionNode[];
+-        unions: UnionTypeDefinitionNode[];
+-        objects: ObjectTypeDefinitionNode[];
+-    },
+-    callbacks?: Neo4jGraphQLCallbacks
+-): ValidationFunction | undefined {
+-    switch (directiveName) {
+-        case "coalesce":
+-            return verifyCoalesce(extra.enums);
+-        case "default":
+-            return verifyDefault(extra.enums);
+-        case "fulltext":
+-            return verifyFulltext;
+-        case "populatedBy":
+-            return verifyPopulatedBy(callbacks);
+-        case "limit":
+-            return verifyLimit;
+-        case "relationship":
+-            return verifyRelationshipArgumentValue(
+-                objectTypeToFieldNameDirectionAndFieldTypePerRelationshipTypeMap,
+-                interfaceToImplementationsMap,
+-                extra
+-            );
+-        case "authorization":
+-            return verifyAuthorization();
+-        default:
+-            return;
+-    }
+-}
+-
+-function extraDefinitionsProvided(extra: {
+-    enums?: EnumTypeDefinitionNode[];
+-    interfaces?: InterfaceTypeDefinitionNode[];
+-    unions?: UnionTypeDefinitionNode[];
+-    objects?: ObjectTypeDefinitionNode[];
+-}): extra is {
+-    enums: EnumTypeDefinitionNode[];
+-    interfaces: InterfaceTypeDefinitionNode[];
+-    unions: UnionTypeDefinitionNode[];
+-    objects: ObjectTypeDefinitionNode[];
+-} {
+-    if (!extra.enums || !extra.interfaces || !extra.unions || !extra.objects) {
+-        return false;
+-    }
+-    return true;
+-}
+-
+-export function directiveIsValid(
+-    extra: {
+-        enums?: EnumTypeDefinitionNode[];
+-        interfaces?: InterfaceTypeDefinitionNode[];
+-        unions?: UnionTypeDefinitionNode[];
+-        objects?: ObjectTypeDefinitionNode[];
+-    },
+-    callbacks?: Neo4jGraphQLCallbacks
+-) {
+-    if (!extraDefinitionsProvided(extra)) {
+-        throw new Error("Missing data.");
+-    }
+-    return function (context: SDLValidationContext): ASTVisitor {
+-        const objectTypeToFieldNameDirectionAndFieldTypePerRelationshipTypeMap = new Map<
+-            string,
+-            Map<string, [string, string, string][]>
+-        >();
+-        const interfaceToImplementationsMap = new Map<string, Set<string>>();
+-        return {
+-            Directive(directiveNode: DirectiveNode, _key, _parent, path, ancestors) {
+-                const validationFn = getValidationFunction(
+-                    directiveNode.name.value,
+-                    objectTypeToFieldNameDirectionAndFieldTypePerRelationshipTypeMap,
+-                    interfaceToImplementationsMap,
+-                    extra,
+-                    callbacks
+-                );
+-                if (!validationFn) {
+-                    return;
+-                }
+-
+-                const [pathToNode, traversedDef, parentOfTraversedDef] = getPathToNode(path, ancestors);
+-                const pathToHere = [...pathToNode, `@${directiveNode.name.value}`];
+-
+-                if (!traversedDef) {
+-                    console.error("No last definition traversed");
+-                    return;
+-                }
+-
+-                const { isValid, errorMsg, errorPath } = assertValid(() =>
+-                    validationFn({
+-                        directiveNode,
+-                        traversedDef,
+-                        parentDef: parentOfTraversedDef,
+-                    })
+-                );
+-                if (!isValid) {
+-                    context.reportError(
+-                        createGraphQLError({
+-                            nodes: [directiveNode, traversedDef],
+-                            path: [...pathToHere, ...errorPath],
+-                            errorMsg,
+-                        })
+-                    );
+-                }
+-            },
+-        };
+-    };
+-}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/features/valid-relationship-properties.ts b/packages/graphql/src/schema/validation/custom-rules/features/valid-relationship-properties.ts
+index c07f65e38..5f6af9ce9 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/features/valid-relationship-properties.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/features/valid-relationship-properties.ts
+@@ -91,22 +91,5 @@ function assertRelationshipProperties(traversedDef: ObjectOrInterfaceWithExtensi
+                 throw new DocumentValidationError(`Invalid @relationshipProperties field: ${message}`, errorPath);
+             }
+         });
+-
+-        if (field.directives) {
+-            const forbiddenDirectives = [
+-                "authorization",
+-                "authentication",
+-                "subscriptionsAuthorization",
+-                "relationship",
+-                "cypher",
+-            ];
+-            const foundForbiddenDirective = field.directives.find((d) => forbiddenDirectives.includes(d.name.value));
+-            if (foundForbiddenDirective) {
+-                throw new DocumentValidationError(
+-                    `Invalid @relationshipProperties field: Cannot use the @${foundForbiddenDirective.name.value} directive on relationship properties.`,
+-                    errorPath
+-                );
+-            }
+-        }
+     });
+ }
+diff --git a/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/get-parent-type.ts b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/get-parent-type.ts
+new file mode 100644
+index 000000000..85e6d4dc7
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/get-parent-type.ts
+@@ -0,0 +1,46 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import { type ASTNode } from "graphql";
++import type { TypeMapWithExtensions } from "../../../Neo4jValidationContext";
++import { getPathToNode } from "../path-parser";
++
++export function getParentType({
++    path,
++    ancestors,
++    typeMapWithExtensions,
++}: {
++    path: readonly (string | number)[];
++    ancestors: readonly (ASTNode | readonly ASTNode[])[];
++    typeMapWithExtensions: TypeMapWithExtensions;
++}) {
++    const [pathToNode, _traversedDef, parentOfTraversedDef] = getPathToNode(path, ancestors);
++    if (!parentOfTraversedDef) {
++        throw new Error(
++            `Internal validation error: field with path: ${pathToNode.join(", ")} is in a type that does not exist in the typeMapWithExtensions`
++        );
++    }
++    const parentTypeAndExtensions = typeMapWithExtensions[parentOfTraversedDef.name.value];
++    if (!parentTypeAndExtensions) {
++        throw new Error(
++            `Internal validation error: field with path: ${pathToNode.join(", ")} is in a type that does not exist in the typeMapWithExtensions`
++        );
++    }
++    return parentTypeAndExtensions;
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-interface-type.ts b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-interface-type.ts
+new file mode 100644
+index 000000000..e2cfbdc18
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-interface-type.ts
+@@ -0,0 +1,35 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import { Kind, type ASTNode } from "graphql";
++import type { TypeMapWithExtensions } from "../../../Neo4jValidationContext";
++import { getParentType } from "./get-parent-type";
++
++export function fieldIsInInterfaceType({
++    path,
++    ancestors,
++    typeMapWithExtensions,
++}: {
++    path: readonly (string | number)[];
++    ancestors: readonly (ASTNode | readonly ASTNode[])[];
++    typeMapWithExtensions: TypeMapWithExtensions;
++}): boolean {
++    const parentTypeAndExtensions = getParentType({ path, ancestors, typeMapWithExtensions });
++    return parentTypeAndExtensions.definition.kind === Kind.INTERFACE_TYPE_DEFINITION;
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-node-type.ts b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-node-type.ts
+new file mode 100644
+index 000000000..cb6e1c95e
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-node-type.ts
+@@ -0,0 +1,40 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import { type ASTNode } from "graphql";
++import { nodeDirective } from "../../../../../graphql/directives";
++import type { TypeMapWithExtensions } from "../../../Neo4jValidationContext";
++import { getParentType } from "./get-parent-type";
++
++export function fieldIsInNodeType({
++    path,
++    ancestors,
++    typeMapWithExtensions,
++}: {
++    path: readonly (string | number)[];
++    ancestors: readonly (ASTNode | readonly ASTNode[])[];
++    typeMapWithExtensions: TypeMapWithExtensions;
++}): boolean {
++    const parentTypeAndExtensions = getParentType({ path, ancestors, typeMapWithExtensions });
++    const allDirectives = [
++        ...(parentTypeAndExtensions.definition.directives ?? []),
++        ...parentTypeAndExtensions.extensions.flatMap((ext) => ext.directives ?? []),
++    ];
++    return !!allDirectives?.find((directive) => directive.name.value === nodeDirective.name);
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-relationship-properties-type.ts b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-relationship-properties-type.ts
+new file mode 100644
+index 000000000..95badf3e0
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-relationship-properties-type.ts
+@@ -0,0 +1,40 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import { type ASTNode } from "graphql";
++import { relationshipPropertiesDirective } from "../../../../../graphql/directives";
++import type { TypeMapWithExtensions } from "../../../Neo4jValidationContext";
++import { getParentType } from "./get-parent-type";
++
++export function fieldIsInRelationshipPropertiesType({
++    path,
++    ancestors,
++    typeMapWithExtensions,
++}: {
++    path: readonly (string | number)[];
++    ancestors: readonly (ASTNode | readonly ASTNode[])[];
++    typeMapWithExtensions: TypeMapWithExtensions;
++}): boolean {
++    const parentTypeAndExtensions = getParentType({ path, ancestors, typeMapWithExtensions });
++    const allDirectives = [
++        ...(parentTypeAndExtensions.definition.directives ?? []),
++        ...parentTypeAndExtensions.extensions.flatMap((ext) => ext.directives ?? []),
++    ];
++    return !!allDirectives?.find((directive) => directive.name.value === relationshipPropertiesDirective.name);
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-root-type.ts b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-root-type.ts
+new file mode 100644
+index 000000000..e23893872
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-root-type.ts
+@@ -0,0 +1,39 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import { Kind, type ASTNode } from "graphql";
++import { isRootType } from "../../../../../utils/is-root-type";
++import type { TypeMapWithExtensions } from "../../../Neo4jValidationContext";
++import { getParentType } from "./get-parent-type";
++
++export function fieldIsInRootType({
++    path,
++    ancestors,
++    typeMapWithExtensions,
++}: {
++    path: readonly (string | number)[];
++    ancestors: readonly (ASTNode | readonly ASTNode[])[];
++    typeMapWithExtensions: TypeMapWithExtensions;
++}): boolean {
++    const parentTypeAndExtensions = getParentType({ path, ancestors, typeMapWithExtensions });
++    return (
++        parentTypeAndExtensions.definition.kind === Kind.OBJECT_TYPE_DEFINITION &&
++        isRootType(parentTypeAndExtensions.definition)
++    );
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-subscription-type.ts b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-subscription-type.ts
+new file mode 100644
+index 000000000..168802d3f
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-in-subscription-type.ts
+@@ -0,0 +1,35 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import { type ASTNode } from "graphql";
++import type { TypeMapWithExtensions } from "../../../Neo4jValidationContext";
++import { getParentType } from "./get-parent-type";
++
++export function fieldIsInSubscriptionType({
++    path,
++    ancestors,
++    typeMapWithExtensions,
++}: {
++    path: readonly (string | number)[];
++    ancestors: readonly (ASTNode | readonly ASTNode[])[];
++    typeMapWithExtensions: TypeMapWithExtensions;
++}): boolean {
++    const parentTypeAndExtensions = getParentType({ path, ancestors, typeMapWithExtensions });
++    return parentTypeAndExtensions.definition.name.value === "Subscription";
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-node-type.ts b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-node-type.ts
+new file mode 100644
+index 000000000..c81d7d43b
+--- /dev/null
++++ b/packages/graphql/src/schema/validation/custom-rules/utils/location-helpers/is-node-type.ts
+@@ -0,0 +1,41 @@
++/*
++ * Copyright (c) "Neo4j"
++ * Neo4j Sweden AB [http://neo4j.com]
++ *
++ * This file is part of Neo4j.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++import { type ObjectTypeDefinitionNode } from "graphql";
++import { nodeDirective } from "../../../../../graphql/directives";
++import { asArray } from "../../../../../utils/utils";
++import type { TypeMapWithExtensions } from "../../../Neo4jValidationContext";
++
++export function typeIsANodeType({
++    objectTypeDefinitionNode,
++    typeMapWithExtensions,
++}: {
++    objectTypeDefinitionNode: ObjectTypeDefinitionNode;
++    typeMapWithExtensions: TypeMapWithExtensions;
++}): boolean {
++    const { directives } = objectTypeDefinitionNode;
++    const objectTypeExtensionNodes = typeMapWithExtensions[objectTypeDefinitionNode.name.value]?.extensions;
++
++    const extensionsDirectives = asArray(objectTypeExtensionNodes).flatMap((extensionNode) => {
++        return extensionNode.directives ?? [];
++    });
++    const allDirectives = [...(directives ?? []), ...extensionsDirectives];
++
++    return !!allDirectives?.find((directive) => directive.name.value === nodeDirective.name);
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/utils/same-type-argument-as-field.ts b/packages/graphql/src/schema/validation/custom-rules/utils/same-type-argument-as-field.ts
+index 8cdf5e82e..6baa59887 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/utils/same-type-argument-as-field.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/utils/same-type-argument-as-field.ts
+@@ -17,8 +17,18 @@
+  * limitations under the License.
+  */
+ import type { ArgumentNode, EnumTypeDefinitionNode, FieldDefinitionNode, ValueNode } from "graphql";
+-import { Kind } from "graphql";
++import { GraphQLFloat, GraphQLID, GraphQLInt, GraphQLString, Kind } from "graphql";
+ import { isSpatial, isTemporal } from "../../../../constants";
++import {
++    GraphQLBigInt,
++    GraphQLDate,
++    GraphQLDateTime,
++    GraphQLLocalDateTime,
++    GraphQLLocalTime,
++    GraphQLTime,
++} from "../../../../graphql/scalars";
++import { parseLocalTime } from "../../../../graphql/scalars/LocalTime";
++import { validateTime } from "../../../../graphql/scalars/Time";
+ import { DocumentValidationError } from "./document-validation-error";
+ import { fromValueKind, getInnerTypeName, isArrayType } from "./utils";
+ 
+@@ -38,7 +48,7 @@ export function assertArgumentHasSameTypeAsField({
+     if (isArrayType(traversedDef)) {
+         if (argument.value.kind !== Kind.LIST) {
+             throw new DocumentValidationError(
+-                `${directiveName}.${argument.name.value} on ${expectedType} list fields must be a list of ${expectedType} values`,
++                `@${directiveName}.${argument.name.value} on ${expectedType} list fields must be a list of ${expectedType} values`,
+                 [argument.name.value]
+             );
+         }
+@@ -50,7 +60,7 @@ export function assertArgumentHasSameTypeAsField({
+             }
+             if (!doTypesMatch(expectedType, v, enums)) {
+                 throw new DocumentValidationError(
+-                    `${directiveName}.${argument.name.value} on ${expectedType} list fields must be a list of ${expectedType} values`,
++                    `@${directiveName}.${argument.name.value} on ${expectedType} list fields must be a list of ${expectedType} values`,
+                     [argument.name.value]
+                 );
+             }
+@@ -58,7 +68,7 @@ export function assertArgumentHasSameTypeAsField({
+     } else {
+         if (!doTypesMatch(expectedType, argument.value, enums)) {
+             throw new DocumentValidationError(
+-                `${directiveName}.${argument.name.value} on ${expectedType} fields must be of type ${expectedType}`,
++                `@${directiveName}.${argument.name.value} on ${expectedType} fields must be of type ${expectedType}`,
+                 [argument.name.value]
+             );
+         }
+@@ -66,21 +76,71 @@ export function assertArgumentHasSameTypeAsField({
+ }
+ 
+ function doTypesMatch(expectedType: string, argumentValueType: ValueNode, enums: EnumTypeDefinitionNode[]): boolean {
+-    const isSpatialOrTemporal = isSpatial(expectedType) || isTemporal(expectedType);
+-    if (isSpatialOrTemporal) {
+-        return true;
++    if (expectedType === GraphQLID.name) {
++        return Boolean(fromValueKind(argumentValueType, enums, expectedType) === GraphQLString.name.toLowerCase());
+     }
+-    if (expectedType.toLowerCase() === "id") {
+-        return !!(fromValueKind(argumentValueType, enums, expectedType)?.toLowerCase() === "string");
++
++    if (expectedType === GraphQLBigInt.name) {
++        const kind = fromValueKind(argumentValueType, enums, expectedType);
++        return Boolean(kind == GraphQLInt.name.toLowerCase() || kind == GraphQLString.name.toLowerCase());
+     }
+-    if (expectedType.toLowerCase() === "bigint") {
++
++    if (expectedType === GraphQLFloat.name) {
+         const kind = fromValueKind(argumentValueType, enums, expectedType)?.toLowerCase();
+-        return !!(kind == "int" || kind == "string");
++        return Boolean(kind == GraphQLInt.name.toLowerCase() || kind == GraphQLFloat.name.toLowerCase());
+     }
+ 
+-    if (expectedType.toLowerCase() === "float") {
+-        const kind = fromValueKind(argumentValueType, enums, expectedType)?.toLowerCase();
+-        return !!(kind == "int" || kind == "float");
++    if ([GraphQLDateTime.name, GraphQLLocalDateTime.name, GraphQLDate.name].includes(expectedType)) {
++        return isValidDateTime(argumentValueType);
++    }
++
++    if (expectedType === GraphQLTime.name) {
++        return isValidTime(argumentValueType);
+     }
++
++    if (expectedType === GraphQLLocalTime.name) {
++        return isValidLocalTime(argumentValueType);
++    }
++
++    // TODO: Spatial types and some of the temporal types values are not yet validated.
++    if (isSpatial(expectedType) || isTemporal(expectedType)) {
++        return true;
++    }
++
+     return fromValueKind(argumentValueType, enums, expectedType)?.toLowerCase() === expectedType.toLowerCase();
+ }
++
++// TODO: isValidTime and isValidLocalTime are as they were in the original `@default` validation rules,
++// this is an improvement compared to the previous implementation as initially it was tested only for the default directive,
++// but it can be improved further without using the try-catch,
++
++function isValidTime(valueNode: ValueNode): boolean {
++    if (valueNode.kind !== Kind.STRING) {
++        return false;
++    }
++    try {
++        validateTime(valueNode.value);
++    } catch {
++        return false;
++    }
++    return true;
++}
++
++function isValidLocalTime(valueNode: ValueNode): boolean {
++    if (valueNode.kind !== Kind.STRING) {
++        return false;
++    }
++    try {
++        parseLocalTime(valueNode.value);
++    } catch {
++        return false;
++    }
++    return true;
++}
++
++function isValidDateTime(valueNode: ValueNode): boolean {
++    if (valueNode.kind !== Kind.STRING) {
++        return false;
++    }
++    return !Number.isNaN(Date.parse(valueNode.value));
++}
+diff --git a/packages/graphql/src/schema/validation/custom-rules/valid-types/valid-field-types.ts b/packages/graphql/src/schema/validation/custom-rules/valid-types/valid-field-types.ts
+index d58e114e5..0316ce87a 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/valid-types/valid-field-types.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/valid-types/valid-field-types.ts
+@@ -21,8 +21,6 @@ import type { ASTVisitor, DirectiveNode, FieldDefinitionNode } from "graphql";
+ import { Kind } from "graphql";
+ import type { SDLValidationContext } from "graphql/validation/ValidationContext";
+ import { SCALAR_TYPES } from "../../../../constants";
+-import { verifyId } from "../directives/id";
+-import { verifyTimestamp } from "../directives/timestamp";
+ import type { ValidationFunction } from "../utils/document-validation-error";
+ import { DocumentValidationError, assertValid, createGraphQLError } from "../utils/document-validation-error";
+ import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
+@@ -63,10 +61,6 @@ function verifyRelationshipFieldType({
+ 
+ function getValidationFunction(directiveName: string): ValidationFunction | undefined {
+     switch (directiveName) {
+-        case "id":
+-            return verifyId;
+-        case "timestamp":
+-            return verifyTimestamp;
+         case "relationship":
+             return verifyRelationshipFieldType;
+         case "declareRelationship":
+diff --git a/packages/graphql/src/schema/validation/utils/invalid-directive-combinations.ts b/packages/graphql/src/schema/validation/utils/invalid-directive-combinations.ts
+index 9c37219ea..0688d0382 100644
+--- a/packages/graphql/src/schema/validation/utils/invalid-directive-combinations.ts
++++ b/packages/graphql/src/schema/validation/utils/invalid-directive-combinations.ts
+@@ -44,7 +44,7 @@ export const invalidFieldCombinations: InvalidFieldCombinations = {
+         "settable",
+         "selectable",
+     ],
+-    cypher: ["jwtClaim", "alias", "id", "relationship"],
++    cypher: ["alias", "id", "relationship"],
+     default: ["jwtClaim", "populatedBy", "relationship"],
+     id: ["jwtClaim", "cypher", "populatedBy", "customResolver", "relationship", "timestamp"],
+     populatedBy: ["jwtClaim", "id", "default", "relationship"],
+@@ -62,7 +62,7 @@ export const invalidFieldCombinations: InvalidFieldCombinations = {
+         "populatedBy",
+     ],
+     timestamp: ["jwtClaim", "id"],
+-    jwtClaim: FIELD_DIRECTIVES,
++    jwtClaim: FIELD_DIRECTIVES.filter((directive) => directive !== "cypher"),
+     relayId: ["jwtClaim"],
+     subscriptionsAuthorization: ["jwtClaim", "customResolver", "relationship"],
+     selectable: ["jwtClaim", "customResolver"],
+diff --git a/packages/graphql/src/schema/validation/utils/map-error.ts b/packages/graphql/src/schema/validation/utils/map-error.ts
+index ca1c9cc04..6dcdadf41 100644
+--- a/packages/graphql/src/schema/validation/utils/map-error.ts
++++ b/packages/graphql/src/schema/validation/utils/map-error.ts
+@@ -18,9 +18,9 @@
+  */
+ 
+ import type { ArgumentNode, DirectiveNode, GraphQLError } from "graphql";
+-import { VALIDATION_ERROR_CODES } from "./validation-error-codes";
+ import { lowerFirst } from "../../../utils/lower-first";
+ import { createGraphQLError } from "../custom-rules/utils/document-validation-error";
++import { VALIDATION_ERROR_CODES } from "./validation-error-codes";
+ 
+ export function mapError(error: GraphQLError): GraphQLError {
+     const { nodes, message } = error;
+@@ -34,6 +34,7 @@ export function mapError(error: GraphQLError): GraphQLError {
+     }
+     return createGraphQLError({
+         nodes,
++        path: error.path,
+         errorMsg: replacedMessage,
+     });
+ }
+diff --git a/packages/graphql/src/schema/validation/validate-document.ts b/packages/graphql/src/schema/validation/validate-document.ts
+index 8f6355907..67e757da1 100644
+--- a/packages/graphql/src/schema/validation/validate-document.ts
++++ b/packages/graphql/src/schema/validation/validate-document.ts
+@@ -35,7 +35,10 @@ import { GraphQLSchema, Kind, extendSchema, specifiedDirectives, validateSchema
+ import { specifiedSDLRules } from "graphql/validation/specifiedRules";
+ import pluralize from "pluralize";
+ import * as directives from "../../graphql/directives";
++import { authenticationDirectiveScaffold } from "../../graphql/directives/type-dependant-directives/authentication";
++import { authorizationDirectiveScaffold } from "../../graphql/directives/type-dependant-directives/authorization";
+ import { typeDependantDirectivesScaffolds } from "../../graphql/directives/type-dependant-directives/scaffolds";
++import { subscriptionsAuthorizationDirectiveScaffold } from "../../graphql/directives/type-dependant-directives/subscriptions-authorization";
+ import { SortDirection } from "../../graphql/enums/SortDirection";
+ import { CartesianPointDistance } from "../../graphql/input-objects/CartesianPointDistance";
+ import { CartesianPointInput } from "../../graphql/input-objects/CartesianPointInput";
+@@ -46,8 +49,19 @@ import { Point } from "../../graphql/objects/Point";
+ import * as scalars from "../../graphql/scalars";
+ import type { Neo4jFeaturesSettings } from "../../types";
+ import { isRootType } from "../../utils/is-root-type";
+-import { directiveIsValid } from "./custom-rules/directives/valid-directive";
+-import { ValidDirectiveAtFieldLocation } from "./custom-rules/directives/valid-directive-field-location";
++import { validateAuthenticationDirective } from "./custom-rules/directives/authentication";
++import { validateAuthorizationDirective } from "./custom-rules/directives/authorization";
++import { validateCoalesceDirective } from "./custom-rules/directives/coalesce";
++import { validateCypherDirective } from "./custom-rules/directives/cypher";
++import { validateDefaultDirective } from "./custom-rules/directives/default";
++import { validateFulltextDirective } from "./custom-rules/directives/fulltext";
++import { validateIdDirective } from "./custom-rules/directives/id";
++import { validateLimitDirective } from "./custom-rules/directives/limit";
++import { validatePopulatedByDirective } from "./custom-rules/directives/populated-by";
++import { validateRelationshipDirective } from "./custom-rules/directives/relationship";
++import { validateRelayIdDirective } from "./custom-rules/directives/relay-id";
++import { validateSubscriptionAuthorizationDirective } from "./custom-rules/directives/subscriptionAuthorization";
++import { validateTimestampDirective } from "./custom-rules/directives/timestamp";
+ import { ErrorIfSingleRelationships } from "./custom-rules/error-single-relationships";
+ import { ValidJwtDirectives } from "./custom-rules/features/valid-jwt-directives";
+ import { ValidRelationshipDeclaration } from "./custom-rules/features/valid-relationship-declaration";
+@@ -138,7 +152,11 @@ function filterDocument(document: DocumentNode, filterDirectives: boolean = fals
+     // currentDirectiveDirective is of type ConstDirectiveNode, has to be any to support GraphQL 15
+     const filterDirectiveNodes = (directives: readonly any[] | undefined): any[] | undefined => {
+         return directives?.filter((directive) => {
+-            return !["authentication", "authorization", "subscriptionsAuthorization"].includes(directive.name.value);
++            return ![
++                authenticationDirectiveScaffold.name,
++                authorizationDirectiveScaffold.name,
++                subscriptionsAuthorizationDirectiveScaffold.name,
++            ].includes(directive.name.value);
+         });
+     };
+ 
+@@ -191,18 +209,11 @@ function filterDocument(document: DocumentNode, filterDirectives: boolean = fals
+ function runValidationRulesOnFilteredDocument({
+     schema,
+     document,
+-    extra,
+     userCustomResolvers,
+     features,
+ }: {
+     schema: GraphQLSchema;
+     document: DocumentNode;
+-    extra: {
+-        enums?: EnumTypeDefinitionNode[];
+-        interfaces?: InterfaceTypeDefinitionNode[];
+-        unions?: UnionTypeDefinitionNode[];
+-        objects?: ObjectTypeDefinitionNode[];
+-    };
+     userCustomResolvers?: IResolvers | Array<IResolvers>;
+     features: Neo4jFeaturesSettings | undefined;
+ }) {
+@@ -210,8 +221,6 @@ function runValidationRulesOnFilteredDocument({
+         document,
+         [
+             ...specifiedSDLRules,
+-            directiveIsValid(extra, features?.populatedBy?.callbacks),
+-            ValidDirectiveAtFieldLocation,
+             DirectiveCombinationValid,
+             SchemaOrTypeDirectives,
+             ValidJwtDirectives,
+@@ -231,8 +240,23 @@ function runValidationRulesOnFilteredDocument({
+             }),
+             ValidListInNodeType,
+             WarnIfSubscriptionsAuthorizationMissing(Boolean(features?.subscriptions)),
++            // directives validations
++            validateAuthorizationDirective,
++            validateAuthenticationDirective,
++            validateCoalesceDirective,
++            validateCypherDirective,
++            validateDefaultDirective,
++            validateFulltextDirective,
++            validateIdDirective,
++            validateLimitDirective,
++            validatePopulatedByDirective,
++            validateRelationshipDirective,
++            validateRelayIdDirective,
++            validateTimestampDirective,
++            validateSubscriptionAuthorizationDirective,
+         ],
+-        schema
++        schema,
++        features?.populatedBy?.callbacks
+     );
+     const filteredErrors = errors.filter((e) => e.message !== "Query root type must be provided.");
+     if (filteredErrors.length) {
+@@ -259,7 +283,7 @@ function validateDocument({
+     userCustomResolvers?: IResolvers | Array<IResolvers>;
+ }): void {
+     const filteredDocument = filterDocument(document);
+-    const { additionalDirectives, additionalTypes, ...extra } = additionalDefinitions;
++    const { additionalDirectives, additionalTypes } = additionalDefinitions;
+     const schemaToExtend = new GraphQLSchema({
+         directives: [
+             ...Object.values(directives),
+@@ -283,7 +307,6 @@ function validateDocument({
+     runValidationRulesOnFilteredDocument({
+         schema: schemaToExtend,
+         document: filteredDocument,
+-        extra,
+         userCustomResolvers,
+         features,
+     });
+diff --git a/packages/graphql/src/schema/validation/validate-sdl.ts b/packages/graphql/src/schema/validation/validate-sdl.ts
+index 0794d55ea..d42bc3815 100644
+--- a/packages/graphql/src/schema/validation/validate-sdl.ts
++++ b/packages/graphql/src/schema/validation/validate-sdl.ts
+@@ -18,22 +18,31 @@
+  */
+ 
+ import type { Maybe } from "@graphql-tools/utils/typings/types";
+-import type { DocumentNode, GraphQLSchema, GraphQLError } from "graphql";
++import type { ASTVisitor, DocumentNode, GraphQLError, GraphQLSchema } from "graphql";
+ import { visit, visitInParallel } from "graphql";
+-import type { SDLValidationRule } from "graphql/validation/ValidationContext";
+-import { SDLValidationContext } from "graphql/validation/ValidationContext";
++import type { SDLValidationContext } from "graphql/validation/ValidationContext";
++import type { Neo4jGraphQLCallbacks } from "../../types";
++import { Neo4jValidationContext } from "./Neo4jValidationContext";
+ import { mapError } from "./utils/map-error";
+ 
++type Neo4jValidationRule = <T extends SDLValidationContext>(context: T) => ASTVisitor;
++
+ export function validateSDL(
+     documentAST: DocumentNode,
+-    rules: ReadonlyArray<SDLValidationRule>,
+-    schemaToExtend?: Maybe<GraphQLSchema>
++    rules: ReadonlyArray<Neo4jValidationRule>,
++    schemaToExtend?: Maybe<GraphQLSchema>,
++    callbacks?: Neo4jGraphQLCallbacks
+ ): ReadonlyArray<GraphQLError> {
+     const errors: Array<GraphQLError> = [];
+-    const context = new SDLValidationContext(documentAST, schemaToExtend, (error) => {
+-        const mappedError = mapError(error);
+-        errors.push(mappedError);
+-    });
++    const context = new Neo4jValidationContext(
++        documentAST,
++        schemaToExtend,
++        (error) => {
++            const mappedError = mapError(error);
++            errors.push(mappedError);
++        },
++        callbacks
++    );
+     const visitors = rules.map((rule) => rule(context));
+     visit(documentAST, visitInParallel(visitors));
+     return errors;
+diff --git a/packages/graphql/src/utils/is-root-type.ts b/packages/graphql/src/utils/is-root-type.ts
+index 89228462f..00505c173 100644
+--- a/packages/graphql/src/utils/is-root-type.ts
++++ b/packages/graphql/src/utils/is-root-type.ts
+@@ -17,10 +17,10 @@
+  * limitations under the License.
+  */
+ 
+-import type { ObjectTypeDefinitionNode } from "graphql";
++import type { TypeDefinitionNode } from "graphql";
+ 
+ const rootTypes = ["Query", "Mutation", "Subscription"];
+ 
+-export function isRootType(definition: ObjectTypeDefinitionNode): boolean {
++export function isRootType(definition: TypeDefinitionNode): boolean {
+     return rootTypes.includes(definition.name.value);
+ }

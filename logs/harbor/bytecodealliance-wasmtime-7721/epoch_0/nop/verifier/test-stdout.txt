@@ -1,0 +1,178 @@
+patching file tests/misc_testsuite/winch/memory_fill.wast
+patching file tests/misc_testsuite/winch/memory_grow.wast
+patching file tests/misc_testsuite/winch/memory_init.wast
+patching file tests/misc_testsuite/winch/memory_size.wast
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+   Compiling wasmtime-wasi v17.0.0 (/workspace/repo/crates/wasi)
+   Compiling wasmtime-cli v17.0.0 (/workspace/repo)
+   Compiling wasmtime-wasi-http v17.0.0 (/workspace/repo/crates/wasi-http)
+   Compiling wasmtime-wasi-threads v17.0.0 (/workspace/repo/crates/wasi-threads)
+    Finished test [unoptimized + debuginfo] target(s) in 58.01s
+────────────
+ Nextest run ID 14887166-6da3-4876-a817-4cf072dbcd95 with nextest profile: default
+    Starting 8 tests across 1 binary (1873 tests skipped)
+        FAIL [   0.079s] (1/8) wasmtime-cli::all wast::Winch::misc::winch::memory_fill
+  stdout ───
+
+    running 1 test
+    test wast::Winch::misc::winch::memory_fill ... FAILED
+
+    failures:
+
+    failures:
+        wast::Winch::misc::winch::memory_fill
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1880 filtered out; finished in 0.03s
+
+  stderr ───
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemoryFill
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 7 tests still running
+        FAIL [   0.080s] (2/8) wasmtime-cli::all wast::Winch::misc::winch::memory_grow
+  stdout ───
+
+    running 1 test
+    test wast::Winch::misc::winch::memory_grow ... FAILED
+
+    failures:
+
+    failures:
+        wast::Winch::misc::winch::memory_grow
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1880 filtered out; finished in 0.03s
+
+  stderr ───
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemoryGrow
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.080s] (3/8) wasmtime-cli::all wast::Winch::misc::winch::memory_fill_pooling
+  stdout ───
+
+    running 1 test
+    test wast::Winch::misc::winch::memory_fill_pooling ... FAILED
+
+    failures:
+
+    failures:
+        wast::Winch::misc::winch::memory_fill_pooling
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1880 filtered out; finished in 0.03s
+
+  stderr ───
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemoryFill
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.080s] (4/8) wasmtime-cli::all wast::Winch::misc::winch::memory_size_pooling
+  stdout ───
+
+    running 1 test
+    test wast::Winch::misc::winch::memory_size_pooling ... FAILED
+
+    failures:
+
+    failures:
+        wast::Winch::misc::winch::memory_size_pooling
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1880 filtered out; finished in 0.03s
+
+  stderr ───
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemorySize
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemoryGrow
+
+        FAIL [   0.081s] (5/8) wasmtime-cli::all wast::Winch::misc::winch::memory_grow_pooling
+  stdout ───
+
+    running 1 test
+    test wast::Winch::misc::winch::memory_grow_pooling ... FAILED
+
+    failures:
+
+    failures:
+        wast::Winch::misc::winch::memory_grow_pooling
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1880 filtered out; finished in 0.03s
+
+  stderr ───
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemoryGrow
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.081s] (6/8) wasmtime-cli::all wast::Winch::misc::winch::memory_size
+  stdout ───
+
+    running 1 test
+    test wast::Winch::misc::winch::memory_size ... FAILED
+
+    failures:
+
+    failures:
+        wast::Winch::misc::winch::memory_size
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1880 filtered out; finished in 0.03s
+
+  stderr ───
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemorySize
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemoryGrow
+
+        FAIL [   0.082s] (7/8) wasmtime-cli::all wast::Winch::misc::winch::memory_init
+  stdout ───
+
+    running 1 test
+    test wast::Winch::misc::winch::memory_init ... FAILED
+
+    failures:
+
+    failures:
+        wast::Winch::misc::winch::memory_init
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1880 filtered out; finished in 0.03s
+
+  stderr ───
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemoryInit
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.087s] (8/8) wasmtime-cli::all wast::Winch::misc::winch::memory_init_pooling
+  stdout ───
+
+    running 1 test
+    test wast::Winch::misc::winch::memory_init_pooling ... FAILED
+
+    failures:
+
+    failures:
+        wast::Winch::misc::winch::memory_init_pooling
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1880 filtered out; finished in 0.04s
+
+  stderr ───
+    thread '<unnamed>' panicked at winch/codegen/src/visitor.rs:1479:5:
+    not yet implemented: MemoryInit
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.091s] 8 tests run: 0 passed, 8 failed, 1873 skipped
+        FAIL [   0.079s] (1/8) wasmtime-cli::all wast::Winch::misc::winch::memory_fill
+        FAIL [   0.080s] (2/8) wasmtime-cli::all wast::Winch::misc::winch::memory_grow
+        FAIL [   0.080s] (3/8) wasmtime-cli::all wast::Winch::misc::winch::memory_fill_pooling
+        FAIL [   0.080s] (4/8) wasmtime-cli::all wast::Winch::misc::winch::memory_size_pooling
+        FAIL [   0.081s] (5/8) wasmtime-cli::all wast::Winch::misc::winch::memory_grow_pooling
+        FAIL [   0.081s] (6/8) wasmtime-cli::all wast::Winch::misc::winch::memory_size
+        FAIL [   0.082s] (7/8) wasmtime-cli::all wast::Winch::misc::winch::memory_init
+        FAIL [   0.087s] (8/8) wasmtime-cli::all wast::Winch::misc::winch::memory_init_pooling
+error: test run failed
+reward=0 graded=8 found=5 failed=5 parsed=8 framework=cargo exit_code=100

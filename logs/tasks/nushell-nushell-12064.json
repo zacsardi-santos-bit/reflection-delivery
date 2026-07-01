@@ -1,0 +1,23 @@
+{
+ "task": "nushell-nushell-12064",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds plugin/gc.rs `pub struct PluginGc`, config/plugin_gc.rs with `report_invalid_value(\"must not be negative\", ...)`, plugin_list.rs, plugin_stop.rs, persistent.rs; F2P includes plugin::gc::tests::timeout_past_deadline, no_timeout_if_disabled_by_config"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

@@ -1,0 +1,5 @@
+I'm working with a cloud resource cleanup tool that automates deletion of AWS resources to keep environments tidy. It supports a wide variety of resource types, but I noticed it has no support for Route 53 resources at all. When I run a full cleanup, hosted zones, CIDR collections, and traffic policies are just left behind and I have to delete them manually.
+
+I'd like to add support for all three of these Route 53 resource types so they can be discovered and deleted automatically like everything else. Each type should support name-based filtering so I can exclude certain resources from deletion using regular expressions — the same way other resource types work. The configuration system should also be updated to recognize these three new categories.
+
+For CIDR collections specifically, the cleanup needs to handle removing the associated CIDR blocks before deleting the collection itself. For traffic policies, the deletion API requires knowing the latest version of the policy, so that version needs to be tracked when listing policies and then used when deleting them.

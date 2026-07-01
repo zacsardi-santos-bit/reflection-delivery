@@ -1,0 +1,4 @@
+patching file ray-curator/ray_curator/examples/video/video_split_clip_example.py
+patching file ray-curator/ray_curator/stages/video/io/clip_writer.py
+patching file ray-curator/ray_curator/utils/storage_utils.py
+patching file ray-curator/ray_curator/utils/writer_utils.py

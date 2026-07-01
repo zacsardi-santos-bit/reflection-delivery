@@ -1,0 +1,23 @@
+{
+ "task": "aquasecurity-trivy-6292",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "func parseStringPrimitive(input string) string { r := regexp.MustCompile(`((\\$|\\%)\\{.+\\})`); ... s = strings.Replace(s, \"$\", \"$$\", 1); s = strings.Replace(s, \"%\", \"%%\", 1)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 48,
+  "shallow": true
+ }
+}

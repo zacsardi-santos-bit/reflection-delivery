@@ -1,0 +1,76 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_return/RET503.py
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.43s
+────────────
+ Nextest run ID abfc3b63-ea7b-4f29-95be-417c6b859210 with nextest profile: default
+    Starting 12 tests across 1 binary (2088 tests skipped)
+        PASS [   0.225s] ( 1/12) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturnvalue_path_new_ret502_py_expects
+        PASS [   0.229s] ( 2/12) ruff_linter rules::flake8_return::tests::preview_rules::rule_superfluouselsecontinue_path_new_ret507_py_expects
+        PASS [   0.231s] ( 3/12) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselseraise_path_new_ret506_py_expects
+        PASS [   0.232s] ( 4/12) ruff_linter rules::flake8_return::tests::preview_rules::rule_superfluouselseraise_path_new_ret506_py_expects
+        PASS [   0.234s] ( 5/12) ruff_linter rules::flake8_return::tests::preview_rules::rule_superfluouselsebreak_path_new_ret508_py_expects
+        PASS [   0.234s] ( 6/12) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+        PASS [   0.234s] ( 7/12) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsecontinue_path_new_ret507_py_expects
+        PASS [   0.235s] ( 8/12) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsebreak_path_new_ret508_py_expects
+        PASS [   0.244s] ( 9/12) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryassign_path_new_ret504_py_expects
+        PASS [   0.245s] (10/12) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryreturnnone_path_new_ret501_py_expects
+        PASS [   0.247s] (11/12) ruff_linter rules::flake8_return::tests::preview_rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+        FAIL [   0.246s] (12/12) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__RET503_RET503.py.snap
+    Snapshot: RET503_RET503.py
+    Source: crates/ruff_linter/src/rules/flake8_return/mod.rs:34
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+      446   446 │ ℹ Unsafe fix
+      447   447 │ 368 368 |     if baz() > 3:
+      448   448 │ 369 369 |         return 1
+      449   449 │ 370 370 |     bar()
+      450       │-    371 |+    return None
+            450 │+    371 |+    return None
+            451 │+371 372 | 
+            452 │+372 373 | 
+            453 │+373 374 | def f():
+            454 │+
+            455 │+RET503.py:378:13: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            456 │+    |
+            457 │+376 |     else:
+            458 │+377 |         with c:
+            459 │+378 |             d
+            460 │+    |             ^ RET503
+            461 │+    |
+            462 │+    = help: Add explicit `return` statement
+            463 │+
+            464 │+ℹ Unsafe fix
+            465 │+376 376 |     else:
+            466 │+377 377 |         with c:
+            467 │+378 378 |             d
+            468 │+    379 |+            return None
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2099 filtered out; finished in 0.18s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__RET503_RET503.py.snap.new
+    thread 'rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'RET503_RET503.py' failed in line 34
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   0.254s] 12 tests run: 11 passed, 1 failed, 2088 skipped
+        FAIL [   0.246s] (12/12) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects
+error: test run failed
+reward=0 graded=13 found=0 failed=0 parsed=12 framework=cargo exit_code=100

@@ -1,0 +1,13 @@
+patching file crates/loro-internal/examples/event.rs
+patching file crates/loro-internal/src/container/richtext/style_range_map.rs
+patching file crates/loro-internal/src/event.rs
+patching file crates/loro-internal/src/fuzz.rs
+patching file crates/loro-internal/src/fuzz/recursive_refactored.rs
+patching file crates/loro-internal/src/fuzz/richtext.rs
+patching file crates/loro-internal/src/fuzz/tree.rs
+patching file crates/loro-internal/src/handler.rs
+patching file crates/loro-internal/src/obs.rs
+patching file crates/loro-wasm/src/convert.rs
+patching file crates/loro-wasm/src/lib.rs
+patching file crates/loro/src/lib.rs
+patching file loro-js/src/index.ts

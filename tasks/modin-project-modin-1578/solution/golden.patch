@@ -1,0 +1,290 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index b5df9fd1..13cd0e10 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -54,6 +54,19 @@ jobs:
+           architecture: "x64"
+       - run: pip install -r requirements.txt
+       - run: python -m pytest modin/test/test_headers.py
++  test-internals:
++    runs-on: ubuntu-latest
++    name: test-internals
++    steps:
++      - uses: actions/checkout@v1
++        with:
++          fetch-depth: 1
++      - uses: actions/setup-python@v1
++        with:
++          python-version: "3.6.x"
++          architecture: "x64"
++      - run: pip install -r requirements.txt
++      - run: python -m pytest modin/test/test_publisher.py modin/data_management/test/test_dispatcher.py
+   test-all:
+     needs: [lint-flake8, lint-black, test-api, test-headers]
+     runs-on: ubuntu-latest
+diff --git a/modin/__init__.py b/modin/__init__.py
+index f071589b..69a909ac 100644
+--- a/modin/__init__.py
++++ b/modin/__init__.py
+@@ -15,6 +15,7 @@ import os
+ import sys
+ import warnings
+ from packaging import version
++import collections
+ 
+ from ._version import get_versions
+ 
+@@ -84,9 +85,48 @@ def get_partition_format():
+     return os.environ.get("MODIN_BACKEND", "Pandas").title()
+ 
+ 
++class Publisher(object):
++    def __init__(self, name, value):
++        self.name = name
++        self.__value = value
++        self.__subs = set()
++        self.__once = collections.defaultdict(set)
++
++    def subscribe(self, callback):
++        self.__subs.add(callback)
++        callback(self)
++
++    def once(self, onvalue, callback):
++        if onvalue == self.__value:
++            callback(self)
++        else:
++            self.__once[onvalue].add(callback)
++
++    def get(self):
++        return self.__value
++
++    def put(self, value):
++        oldvalue, self.__value = self.__value, value
++        if oldvalue != value:
++            for callback in self.__subs:
++                callback(self)
++            try:
++                once = self.__once[value]
++            except KeyError:
++                return
++            if once:
++                for callback in once:
++                    callback(self)
++            del self.__once[value]
++
++
+ __version__ = "0.6.3"
+-__execution_engine__ = get_execution_engine()
+-__partition_format__ = get_partition_format()
++execution_engine = Publisher(name="execution_engine", value=get_execution_engine())
++partition_format = Publisher(name="partition_format", value=get_partition_format())
++
++# for backwards compatibility, remove when all items are migrated to new PubSub model
++__execution_engine__ = execution_engine.get()
++__partition_format__ = partition_format.get()
+ 
+ # We don't want these used outside of this file.
+ del get_execution_engine
+diff --git a/modin/data_management/dispatcher.py b/modin/data_management/dispatcher.py
+index 86215cca..4f90fa16 100644
+--- a/modin/data_management/dispatcher.py
++++ b/modin/data_management/dispatcher.py
+@@ -13,9 +13,7 @@
+ 
+ import os
+ 
+-from modin import __execution_engine__ as execution_engine
+-from modin import __partition_format__ as partition_format
+-
++from modin import execution_engine, partition_format
+ from modin.data_management import factories
+ 
+ 
+@@ -65,18 +63,27 @@ class EngineDispatcher(object):
+     __engine = None
+ 
+     @classmethod
+-    def _update_engine(cls):
++    def get_engine(cls) -> factories.BaseFactory:
++        # mostly for testing
++        return cls.__engine
++
++    @classmethod
++    def _update_engine(cls, _):
+         if os.environ.get("MODIN_EXPERIMENTAL", "").title() == "True":
+             factory_fmt, experimental = "Experimental{}On{}Factory", True
+         else:
+             factory_fmt, experimental = "{}On{}Factory", False
+-        factory_name = factory_fmt.format(partition_format, execution_engine)
++        factory_name = factory_fmt.format(
++            partition_format.get(), execution_engine.get()
++        )
+         try:
+             cls.__engine = getattr(factories, factory_name)
+         except AttributeError:
+             if not experimental:
+                 # allow missing factories in experimenal mode only
+-                raise FactoryNotFoundError(partition_format, execution_engine)
++                raise FactoryNotFoundError(
++                    partition_format.get(), execution_engine.get()
++                )
+             cls.__engine = StubFactory.set_failing_name(factory_name)
+ 
+     @classmethod
+@@ -164,4 +171,5 @@ class EngineDispatcher(object):
+         return cls.__engine._to_pickle(*args, **kwargs)
+ 
+ 
+-EngineDispatcher._update_engine()
++execution_engine.subscribe(EngineDispatcher._update_engine)
++partition_format.subscribe(EngineDispatcher._update_engine)
+diff --git a/modin/pandas/__init__.py b/modin/pandas/__init__.py
+index 39164273..b2296d4b 100644
+--- a/modin/pandas/__init__.py
++++ b/modin/pandas/__init__.py
+@@ -134,7 +134,7 @@ from .general import (
+     unique,
+ )
+ from .plotting import Plotting as plotting
+-from .. import __execution_engine__ as execution_engine
++from .. import execution_engine, Publisher
+ 
+ # Set this so that Pandas doesn't try to multithread by itself
+ os.environ["OMP_NUM_THREADS"] = "1"
+@@ -238,28 +238,47 @@ def initialize_ray():
+         ray.worker.global_worker.run_function_on_all_workers(import_pandas)
+ 
+ 
+-if execution_engine == "Ray":
+-    import ray
++DEFAULT_NPARTITIONS = 4
++_is_first_update = {}
++dask_client = None
+ 
+-    initialize_ray()
+-    num_cpus = ray.cluster_resources()["CPU"]
+-elif execution_engine == "Dask":  # pragma: no cover
+-    from distributed.client import get_client
+-    import warnings
+ 
+-    if threading.current_thread().name == "MainThread":
+-        warnings.warn("The Dask Engine for Modin is experimental.")
++def _update_engine(publisher: Publisher):
++    global DEFAULT_NPARTITIONS, dask_client
++
++    num_cpus = DEFAULT_NPARTITIONS
++    if publisher.get() == "Ray":
++        import ray
++
++        if _is_first_update.get("Ray", True):
++            initialize_ray()
++        num_cpus = ray.cluster_resources()["CPU"]
++    elif publisher.get() == "Dask":  # pragma: no cover
++        from distributed.client import get_client
++
++        if threading.current_thread().name == "MainThread" and _is_first_update.get(
++            "Dask", True
++        ):
++            import warnings
++
++            warnings.warn("The Dask Engine for Modin is experimental.")
++
+         try:
+-            client = get_client()
++            dask_client = get_client()
+         except ValueError:
+             from distributed import Client
+ 
+             num_cpus = os.environ.get("MODIN_CPUS", None) or multiprocessing.cpu_count()
+-            client = Client(n_workers=int(num_cpus))
+-elif execution_engine != "Python":
+-    raise ImportError("Unrecognized execution engine: {}.".format(execution_engine))
++            dask_client = Client(n_workers=int(num_cpus))
++
++    elif publisher.get() != "Python":
++        raise ImportError("Unrecognized execution engine: {}.".format(publisher.get()))
++
++    _is_first_update[publisher.get()] = False
++    DEFAULT_NPARTITIONS = max(4, int(num_cpus))
++
+ 
+-DEFAULT_NPARTITIONS = max(4, int(num_cpus))
++execution_engine.subscribe(_update_engine)
+ 
+ __all__ = [
+     "DataFrame",
+diff --git a/modin/pandas/dataframe.py b/modin/pandas/dataframe.py
+index 4b7ec152..7fae5ed9 100644
+--- a/modin/pandas/dataframe.py
++++ b/modin/pandas/dataframe.py
+@@ -1813,8 +1813,8 @@ class DataFrame(BasePandasDataset):
+             return frame
+ 
+     @property
+-    def sparse(self):
+-        return self._default_to_pandas(pandas.DataFrame.sparse)
++    def sparse(self, data=None):
++        return self._default_to_pandas(pandas.DataFrame.sparse, data=data)
+ 
+     def squeeze(self, axis=None):
+         axis = self._get_axis_number(axis) if axis is not None else None
+diff --git a/modin/pandas/series.py b/modin/pandas/series.py
+index 7942f89c..412b74cf 100644
+--- a/modin/pandas/series.py
++++ b/modin/pandas/series.py
+@@ -1092,8 +1092,8 @@ class Series(BasePandasDataset):
+         )
+ 
+     @property
+-    def sparse(self):
+-        return self._default_to_pandas(pandas.Series.sparse)
++    def sparse(self, data=None):
++        return self._default_to_pandas(pandas.Series.sparse, data=data)
+ 
+     def squeeze(self, axis=None):
+         if axis is not None:
+diff --git a/modin/pandas/test/test_dataframe.py b/modin/pandas/test/test_dataframe.py
+index 8d6e3f8c..38334690 100644
+--- a/modin/pandas/test/test_dataframe.py
++++ b/modin/pandas/test/test_dataframe.py
+@@ -2776,19 +2776,6 @@ class TestDataFrameDefault:
+             except TypeError:
+                 pass
+ 
+-    @pytest.mark.parametrize("data", test_data_values, ids=test_data_keys)
+-    def test_hasattr_sparse(self, data):
+-        modin_df = pd.DataFrame(data)
+-        pandas_df = pandas.DataFrame(data)
+-        try:
+-            pandas_result = hasattr(pandas_df, "sparse")
+-        except Exception as e:
+-            with pytest.raises(type(e)):
+-                hasattr(modin_df, "sparse")
+-        else:
+-            modin_result = hasattr(modin_df, "sparse")
+-            assert modin_result == pandas_result
+-
+ 
+ class TestDataFrameReduction_A:
+     @pytest.mark.parametrize("data", test_data_values, ids=test_data_keys)
+diff --git a/modin/pandas/test/test_series.py b/modin/pandas/test/test_series.py
+index 47c51c36..3733ecf2 100644
+--- a/modin/pandas/test/test_series.py
++++ b/modin/pandas/test/test_series.py
+@@ -3785,16 +3785,3 @@ def test_encode(data, encoding_type):
+     else:
+         modin_result = modin_series.str.encode(encoding=encoding_type)
+         df_equals(modin_result, pandas_result)
+-
+-
+-@pytest.mark.parametrize("data", test_string_data_values, ids=test_string_data_keys)
+-def test_hasattr_sparse(data):
+-    modin_series, pandas_series = create_test_series(data)
+-    try:
+-        pandas_result = hasattr(pandas_series, "sparse")
+-    except Exception as e:
+-        with pytest.raises(type(e)):
+-            hasattr(modin_series, "sparse")
+-    else:
+-        modin_result = hasattr(modin_series, "sparse")
+-        assert modin_result == pandas_result

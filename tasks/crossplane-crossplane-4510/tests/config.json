@@ -1,0 +1,35 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/xcrd -count=1",
+  "test_files": [
+    "internal/xcrd/crd_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/crossplane/crossplane/internal/xcrd::TestIsEstablished/IsNotEstablished",
+    "github.com/crossplane/crossplane/internal/xcrd::TestIsEstablished/IsEstablished",
+    "github.com/crossplane/crossplane/internal/xcrd::TestIsEstablished",
+    "github.com/crossplane/crossplane/internal/xcrd::TestForCompositeResource/Successful",
+    "github.com/crossplane/crossplane/internal/xcrd::TestForCompositeResource/EmptyOpenAPIV3Schema",
+    "github.com/crossplane/crossplane/internal/xcrd::TestForCompositeResource/NilCompositeResourceValidation",
+    "github.com/crossplane/crossplane/internal/xcrd::TestForCompositeResource",
+    "github.com/crossplane/crossplane/internal/xcrd::TestValidateClaimNames/MissingClaimNames",
+    "github.com/crossplane/crossplane/internal/xcrd::TestValidateClaimNames/KindConflict",
+    "github.com/crossplane/crossplane/internal/xcrd::TestValidateClaimNames/ListKindConflict",
+    "github.com/crossplane/crossplane/internal/xcrd::TestValidateClaimNames/SingularConflict",
+    "github.com/crossplane/crossplane/internal/xcrd::TestValidateClaimNames/PluralConflict",
+    "github.com/crossplane/crossplane/internal/xcrd::TestValidateClaimNames",
+    "github.com/crossplane/crossplane/internal/xcrd::TestForCompositeResourceClaim",
+    "github.com/crossplane/crossplane/internal/xcrd::TestForCompositeResourceClaimEmptyXrd",
+    "github.com/crossplane/crossplane/internal/xcrd::TestSetCrdMetadata/set_crd_annotations",
+    "github.com/crossplane/crossplane/internal/xcrd::TestSetCrdMetadata/set_crd_labels",
+    "github.com/crossplane/crossplane/internal/xcrd::TestSetCrdMetadata/append_labels",
+    "github.com/crossplane/crossplane/internal/xcrd::TestSetCrdMetadata/labels_and_annotations",
+    "github.com/crossplane/crossplane/internal/xcrd::TestSetCrdMetadata/no_labels_and_no_annotations",
+    "github.com/crossplane/crossplane/internal/xcrd::TestSetCrdMetadata",
+    "github.com/crossplane/crossplane/internal/xcrd::FuzzForCompositeResourceXcrd",
+    "github.com/crossplane/crossplane/internal/xcrd::FuzzForCompositeResourceClaim"
+  ],
+  "PASS_TO_PASS": []
+}

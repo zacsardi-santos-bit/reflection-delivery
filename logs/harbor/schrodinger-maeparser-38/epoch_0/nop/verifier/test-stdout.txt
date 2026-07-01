@@ -1,0 +1,44 @@
+patching file test/MaeBlockTest.cpp
+patching file test/MaeParserTest.cpp
+patching file test/UsageDemo.cpp
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: filesystem iostreams unit_test_framework 
+-- Configuring done
+-- Generating done
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    BUILD_TESTING
+
+
+-- Build files have been written to: /workspace/repo/build
+[ 14%] Building CXX object CMakeFiles/maeparser.dir/Buffer.cpp.o
+[ 14%] Building CXX object CMakeFiles/maeparser.dir/MaeBlock.cpp.o
+[ 21%] Building CXX object CMakeFiles/maeparser.dir/MaeParser.cpp.o
+In file included from /workspace/repo/MaeBlock.cpp:4:
+/workspace/repo/MaeParser.hpp:118:24: error: 'class schrodinger::mae::IndexedBlockBuffer' has virtual functions and accessible non-virtual destructor [-Werror=non-virtual-dtor]
+  118 | class EXPORT_MAEPARSER IndexedBlockBuffer
+      |                        ^~~~~~~~~~~~~~~~~~
+cc1plus: some warnings being treated as errors
+make[2]: *** [CMakeFiles/maeparser.dir/build.make:90: CMakeFiles/maeparser.dir/MaeBlock.cpp.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+In file included from /workspace/repo/MaeParser.cpp:8:
+/workspace/repo/MaeParser.hpp:118:24: error: 'class schrodinger::mae::IndexedBlockBuffer' has virtual functions and accessible non-virtual destructor [-Werror=non-virtual-dtor]
+  118 | class EXPORT_MAEPARSER IndexedBlockBuffer
+      |                        ^~~~~~~~~~~~~~~~~~
+cc1plus: some warnings being treated as errors
+make[2]: *** [CMakeFiles/maeparser.dir/build.make:104: CMakeFiles/maeparser.dir/MaeParser.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:100: CMakeFiles/maeparser.dir/all] Error 2
+make: *** [Makefile:146: all] Error 2
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=ctest exit_code=2

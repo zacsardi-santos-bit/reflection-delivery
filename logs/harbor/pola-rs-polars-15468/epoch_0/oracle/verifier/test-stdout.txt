@@ -1,0 +1,55 @@
+patching file py-polars/tests/unit/operations/test_sort.py
+🍹 Building a mixed python/rust project
+🔗 Found pyo3 bindings with abi3 support for Python ≥ 3.8
+🐍 Not using a specific python interpreter
+Ignoring adbc_driver_manager: markers 'extra == "adbc"' don't match your environment
+Ignoring adbc_driver_sqlite: markers 'extra == "adbc"' don't match your environment
+Ignoring nest_asyncio: markers 'extra == "async"' don't match your environment
+Ignoring cloudpickle: markers 'extra == "cloudpickle"' don't match your environment
+Ignoring connectorx: markers 'extra == "connectorx"' don't match your environment
+Ignoring deltalake: markers 'extra == "deltalake"' don't match your environment
+Ignoring fastexcel: markers 'extra == "fastexcel"' don't match your environment
+Ignoring fsspec: markers 'extra == "fsspec"' don't match your environment
+Ignoring gevent: markers 'extra == "gevent"' don't match your environment
+Ignoring matplotlib: markers 'extra == "matplotlib"' don't match your environment
+Ignoring numpy: markers 'extra == "numpy"' don't match your environment
+Ignoring openpyxl: markers 'extra == "openpyxl"' don't match your environment
+Ignoring pyarrow: markers 'extra == "pandas"' don't match your environment
+Ignoring pandas: markers 'extra == "pandas"' don't match your environment
+Ignoring hvplot: markers 'extra == "plot"' don't match your environment
+Ignoring pyarrow: markers 'extra == "pyarrow"' don't match your environment
+Ignoring pydantic: markers 'extra == "pydantic"' don't match your environment
+Ignoring pyiceberg: markers 'extra == "pyiceberg"' don't match your environment
+Ignoring pyxlsb: markers 'extra == "pyxlsb"' don't match your environment
+Ignoring sqlalchemy: markers 'extra == "sqlalchemy"' don't match your environment
+Ignoring pandas: markers 'extra == "sqlalchemy"' don't match your environment
+Ignoring backports.zoneinfo: markers 'python_version < "3.9" and extra == "timezone"' don't match your environment
+Ignoring tzdata: markers 'platform_system == "Windows" and extra == "timezone"' don't match your environment
+Ignoring xlsx2csv: markers 'extra == "xlsx2csv"' don't match your environment
+Ignoring xlsxwriter: markers 'extra == "xlsxwriter"' don't match your environment
+Ignoring polars: markers 'extra == "all"' don't match your environment
+   Compiling polars-core v0.39.2 (/workspace/repo/crates/polars-core)
+   Compiling polars-ops v0.39.2 (/workspace/repo/crates/polars-ops)
+   Compiling polars-ffi v0.39.2 (/workspace/repo/crates/polars-ffi)
+   Compiling polars-time v0.39.2 (/workspace/repo/crates/polars-time)
+   Compiling polars-io v0.39.2 (/workspace/repo/crates/polars-io)
+   Compiling polars-plan v0.39.2 (/workspace/repo/crates/polars-plan)
+   Compiling polars-pipe v0.39.2 (/workspace/repo/crates/polars-pipe)
+   Compiling polars-lazy v0.39.2 (/workspace/repo/crates/polars-lazy)
+   Compiling polars-sql v0.39.2 (/workspace/repo/crates/polars-sql)
+   Compiling polars v0.39.2 (/workspace/repo/crates/polars)
+   Compiling py-polars v0.20.22 (/workspace/repo/py-polars)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2m 57s
+📦 Built wheel for abi3 Python ≥ 3.8 to /tmp/.tmpQpQXvK/polars-0.20.22-cp38-abi3-linux_x86_64.whl
+🛠 Installed polars-0.20.22
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /workspace/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo/py-polars
+configfile: pyproject.toml
+collecting ... collected 1 item
+
+tests/unit/operations/test_sort.py::test_top_k PASSED                    [100%]
+
+============================== 1 passed in 0.41s ===============================
+reward=1 graded=1 found=0 failed=0 parsed=1 framework=pytest exit_code=0

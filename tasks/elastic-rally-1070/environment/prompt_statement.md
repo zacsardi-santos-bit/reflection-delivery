@@ -1,0 +1,7 @@
+I'm working on Rally and I need to add support for passing custom request timeouts, custom HTTP headers, and opaque request identifiers through to the Elasticsearch API for the various benchmark runner operations. Right now, even if I specify these in my track configuration, they're silently ignored — the underlying API calls never receive them. I'd like all the main operation runners (bulk indexing, searching/querying, force merge, index creation, cluster health, raw requests, and index stats) to properly forward a request timeout, custom headers, and an opaque identifier when they are provided in the operation parameters.
+
+For operations that go through the low-level transport layer directly, the opaque identifier should be injected into the headers dictionary under a specific opaque-ID header key, and the request timeout should be passed in the query params dictionary. For operations that use the higher-level client methods, the timeout and opaque identifier should be passed as dedicated keyword arguments, and the headers dictionary should be passed directly.
+
+Additionally, the search parameter source should be updated to include these three new fields in its output so they flow through to the query runner. When any of these values is not specified, the parameter should be present in the output but set to a null/absent value rather than being missing from the dictionary entirely.
+
+Finally, when no body is specified for a snapshot restore operation, the body should not be passed to the API as an explicit null value — it should simply be omitted.

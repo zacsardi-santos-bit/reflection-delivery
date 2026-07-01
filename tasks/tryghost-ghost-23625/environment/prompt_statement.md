@@ -1,0 +1,5 @@
+I'm working on a posts statistics service that currently tracks subscriber conversions per post, but I need to add support for page view data as well. We already have an analytics data source integrated that can return top pages by visit count — I just need to wire it into the posts stats service so it can return a combined view of traffic and email performance per post.
+
+The new capability should accept a date range and timezone, query the analytics source for top pages, match those pages back to posts in our database using a UUID field, then enrich each result with email engagement data (subscriber count and open rate). If the analytics source isn't configured, returns nothing, or throws an error, the method should return an empty array rather than failing. I also need to make sure the date range parameters are correctly transformed when passed to the analytics client.
+
+Additionally, I noticed the analytics client currently adds some default parameters to every request URL that are no longer necessary. Those defaults should be cleaned up so they're no longer sent automatically.

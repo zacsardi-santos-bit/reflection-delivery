@@ -1,0 +1,27 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p tokio --test current_thread --no-fail-fast",
+  "test_files": [
+    "tests/current_thread.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/15) tokio::current_thread spawn_from_block_on_all",
+    "( 2/15) tokio::current_thread turn_fair",
+    "( 3/15) tokio::current_thread turn_has_polled",
+    "( 4/15) tokio::current_thread does_not_set_global_executor_by_default",
+    "( 5/15) tokio::current_thread spawn_in_drop",
+    "( 6/15) tokio::current_thread spawn_many",
+    "( 7/15) tokio::current_thread spawn_from_block_on_future",
+    "( 8/15) tokio::current_thread tick_on_infini_future",
+    "( 9/15) tokio::current_thread tasks_are_scheduled_fairly",
+    "(10/15) tokio::current_thread outstanding_tasks_are_dropped_when_executor_is_dropped",
+    "(11/15) tokio::current_thread spawn_and_turn",
+    "(12/15) tokio::current_thread run_in_future",
+    "(13/15) tokio::current_thread nesting_run",
+    "(14/15) tokio::current_thread hammer_turn",
+    "(15/15) tokio::current_thread block_waits"
+  ],
+  "PASS_TO_PASS": []
+}

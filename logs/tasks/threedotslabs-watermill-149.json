@@ -1,0 +1,23 @@
+{
+ "task": "threedotslabs-watermill-149",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds AddHandler() returning *Handler with AddMiddleware; test.patch adds TestRouter_AddMiddleware_to_handler asserting per-handler middleware ordering"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

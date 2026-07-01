@@ -1,0 +1,23 @@
+{
+ "task": "hyperledger-fabric-5105",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds StartWriteBatch/FinishWriteBatch + CallCount to ChaincodeStub mocks and vendored shim; F2P TestWriteBatch calls them and asserts call counts"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 28,
+  "shallow": true
+ }
+}

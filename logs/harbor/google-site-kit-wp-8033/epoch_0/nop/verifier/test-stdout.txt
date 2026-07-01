@@ -1,0 +1,139 @@
+patching file assets/js/components/notifications/OfflineNotification.test.js
+patching file assets/js/googlesitekit/datastore/ui/ui.test.js
+patching file assets/js/hooks/useMonitorInternetConnection.test.js
+patching file tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_0_small.png
+patching file tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_1_medium.png
+patching file tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_2_large.png
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+FAIL assets/js/googlesitekit/datastore/ui/ui.test.js (67.628 s)
+  ● core/ui store › actions › resetInViewHook › increments the value of core/ui useInViewResetCount
+
+    TypeError: registry.select(...).getInViewResetCount is not a function
+
+      35 | 				const resetCount = registry
+      36 | 					.select( CORE_UI )
+    > 37 | 					.getInViewResetCount();
+         | 					 ^
+      38 | 
+      39 | 				// The reset count starts at zero.
+      40 | 				expect( resetCount ).toBe( 0 );
+
+      at call (assets/js/googlesitekit/datastore/ui/ui.test.js:37:7)
+      at tryCatch (node_modules/regenerator-runtime/runtime.js:45:40)
+      at Generator._invoke (node_modules/regenerator-runtime/runtime.js:274:22)
+      at Generator.prototype.<computed> [as next] (node_modules/regenerator-runtime/runtime.js:97:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:16)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:25:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:32:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:21:12)
+
+  ● core/ui store › actions › setIsOnline › sets the isOnline value
+
+    TypeError: registry.select(...).getIsOnline is not a function
+
+      52 | 		describe( 'setIsOnline', () => {
+      53 | 			it( 'sets the isOnline value', async () => {
+    > 54 | 				const isOnline = registry.select( CORE_UI ).getIsOnline();
+         | 				                                            ^
+      55 | 
+      56 | 				// isOnline has initial state set to true.
+      57 | 				expect( isOnline ).toBe( true );
+
+      at call (assets/js/googlesitekit/datastore/ui/ui.test.js:54:49)
+      at tryCatch (node_modules/regenerator-runtime/runtime.js:45:40)
+      at Generator._invoke (node_modules/regenerator-runtime/runtime.js:274:22)
+      at Generator.prototype.<computed> [as next] (node_modules/regenerator-runtime/runtime.js:97:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:16)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:25:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:32:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:21:12)
+
+  ● core/ui store › selectors › getInViewResetCount › returns a specific key in state
+
+    TypeError: registry.select(...).getInViewResetCount is not a function
+
+      275 | 				const resetCount = registry
+      276 | 					.select( CORE_UI )
+    > 277 | 					.getInViewResetCount();
+          | 					 ^
+      278 | 
+      279 | 				// The reset count starts at zero.
+      280 | 				expect( resetCount ).toBe( 0 );
+
+      at Object.<anonymous> (assets/js/googlesitekit/datastore/ui/ui.test.js:277:7)
+
+  ● core/ui store › selectors › getIsOnline › returns isOnline value from the state
+
+    TypeError: registry.select(...).getIsOnline is not a function
+
+      294 | 		describe( 'getIsOnline', () => {
+      295 | 			it( 'returns isOnline value from the state', () => {
+    > 296 | 				const isOnline = registry.select( CORE_UI ).getIsOnline();
+          | 				                                            ^
+      297 | 
+      298 | 				// isOnline has initial state set to true.
+      299 | 				expect( isOnline ).toBe( true );
+
+      at Object.<anonymous> (assets/js/googlesitekit/datastore/ui/ui.test.js:296:49)
+
+FAIL assets/js/hooks/useMonitorInternetConnection.test.js
+  ● Test suite failed to run
+
+    Cannot find module './useMonitorInternetConnection' from 'assets/js/hooks/useMonitorInternetConnection.test.js'
+
+    However, Jest was able to find:
+    	'./useMonitorInternetConnection.test.js'
+
+    You might want to include a file extension in your import, or update your 'moduleFileExtensions', which is currently ['js', 'json', 'jsx', 'ts', 'tsx', 'node'].
+
+    See https://jestjs.io/docs/en/configuration#modulefileextensions-arraystring
+
+      27 | } from '../../../tests/js/test-utils';
+      28 | import { CORE_UI } from '../googlesitekit/datastore/ui/constants';
+    > 29 | import { useMonitorInternetConnection } from './useMonitorInternetConnection';
+         | ^
+      30 | 
+      31 | describe( 'useMonitorInternetConnection', () => {
+      32 | 	let registry;
+
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:306:11)
+      at Object.<anonymous> (assets/js/hooks/useMonitorInternetConnection.test.js:29:1)
+
+FAIL assets/js/components/notifications/OfflineNotification.test.js
+  ● Test suite failed to run
+
+    Cannot find module './OfflineNotification' from 'assets/js/components/notifications/OfflineNotification.test.js'
+
+    However, Jest was able to find:
+    	'./OfflineNotification.test.js'
+
+    You might want to include a file extension in your import, or update your 'moduleFileExtensions', which is currently ['js', 'json', 'jsx', 'ts', 'tsx', 'node'].
+
+    See https://jestjs.io/docs/en/configuration#modulefileextensions-arraystring
+
+      26 | } from '../../../../tests/js/test-utils';
+      27 | import { CORE_UI } from '../../googlesitekit/datastore/ui/constants';
+    > 28 | import OfflineNotification from './OfflineNotification';
+         | ^
+      29 | 
+      30 | describe( 'OfflineNotification', () => {
+      31 | 	let registry;
+
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:306:11)
+      at Object.<anonymous> (assets/js/components/notifications/OfflineNotification.test.js:28:1)
+
+A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to find leaks.
+Test Suites: 3 failed, 3 total
+Tests:       4 failed, 22 passed, 26 total
+Snapshots:   0 total
+Time:        71.667 s
+Ran all test suites matching /assets\/js\/components\/notifications\/OfflineNotification.test.js|assets\/js\/googlesitekit\/datastore\/ui\/ui.test.js|assets\/js\/hooks\/useMonitorInternetConnection.test.js/i.
+reward=0 graded=34 found=0 failed=0 parsed=0 framework=jest exit_code=1

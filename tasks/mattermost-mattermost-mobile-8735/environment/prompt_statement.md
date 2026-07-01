@@ -1,0 +1,5 @@
+I'm working on adding a channel banner feature to the Mattermost mobile app. Admins can set a banner with custom text and a background color on channels, and we need the mobile app to display this banner at the top of the channel header. The banner should only show for users on a premium license — not professional or enterprise tiers — and only in standard or private channels, not in direct messages or group conversations. If the banner info is incomplete (missing text, missing background color, or not enabled), the banner should silently not appear.
+
+When a user taps the banner, it should open a bottom sheet to show the full banner content. The bottom sheet should have the title "Channel Banner" and include a close button.
+
+I also need a utility function that given a hex background color (with or without a leading hash), returns either black or white as the appropriate text color based on the luminance of the background. This ensures banner text stays readable regardless of what color an admin picks. For invalid or empty color strings, it should return an empty string rather than throwing.

@@ -1,0 +1,5 @@
+I'm working on the Mattermost mobile project and I've noticed that our test files are full of duplicated boilerplate. Each test file that needs to render a component with internationalization support or with a Redux store defines its own local rendering helper function from scratch. There are also multiple test files each declaring the same mock for a native image picker library, even though it's always the same mock setup.
+
+I'd like to centralize these testing utilities so that there's one shared place to define the rendering helpers — one that wraps a component with just an internationalization provider, one with just a Redux provider, and one with both. These helpers should use sensible defaults so callers only need to supply what's different. Individual test files should then import from this shared utility instead of defining their own local versions.
+
+The image picker mock should also be moved to the global test setup so it applies everywhere automatically, and individual test files no longer need their own copies of it.

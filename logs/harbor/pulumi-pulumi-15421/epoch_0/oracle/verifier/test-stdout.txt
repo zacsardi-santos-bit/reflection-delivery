@@ -1,0 +1,84 @@
+patching file sdk/nodejs/npm/workspaces_test.go
+patching file tests/integration/integration_nodejs_test.go
+patching file tests/integration/nodejs/npm-and-yarn-not-a-workspace/infra/Pulumi.yaml
+patching file tests/integration/nodejs/npm-and-yarn-not-a-workspace/infra/index.ts
+patching file tests/integration/nodejs/npm-and-yarn-not-a-workspace/infra/package.json
+patching file tests/integration/nodejs/npm-and-yarn-not-a-workspace/package.json
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/infra/Pulumi.yaml
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/infra/index.ts
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/infra/package.json
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/package.json
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/packages/my-random/index.ts
+patching file tests/integration/nodejs/npm-and-yarn-workspaces/packages/my-random/package.json
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/infra/Pulumi.yaml
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/infra/index.ts
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/infra/package.json
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/package.json
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/packages/my-random/index.ts
+patching file tests/integration/nodejs/yarn-workspaces-nohoist/packages/my-random/package.json
+=== RUN   TestNPMInstall
+=== RUN   TestNPMInstall/development
+    manager_test.go:153: [fakeNPMRegistry] GET /@pulumi/pulumi
+    manager_test.go:153: [fakeNPMRegistry] POST /-/npm/v1/security/advisories/bulk
+    manager_test.go:153: [fakeNPMRegistry] POST /-/npm/v1/security/audits/quick
+    manager_test.go:153: [fakeNPMRegistry] GET /@pulumi/pulumi/-/pulumi-3.0.0.tgz
+    io.go:432: 
+    io.go:432: added 1 package in 109ms
+=== RUN   TestNPMInstall/production
+    manager_test.go:153: [fakeNPMRegistry] GET /@pulumi/pulumi
+    manager_test.go:153: [fakeNPMRegistry] POST /-/npm/v1/security/advisories/bulk
+    manager_test.go:153: [fakeNPMRegistry] POST /-/npm/v1/security/audits/quick
+    manager_test.go:153: [fakeNPMRegistry] GET /@pulumi/pulumi/-/pulumi-3.0.0.tgz
+    io.go:432: 
+    io.go:432: added 1 package in 100ms
+--- PASS: TestNPMInstall (1.20s)
+    --- PASS: TestNPMInstall/development (0.74s)
+    --- PASS: TestNPMInstall/production (0.47s)
+=== RUN   TestYarnInstall
+=== RUN   TestYarnInstall/development
+    io.go:432: yarn install v1.22.22
+    io.go:432: info No lockfile found.
+    io.go:432: [1/4] Resolving packages...
+    manager_test.go:153: [fakeNPMRegistry] GET /@pulumi/pulumi
+    io.go:432: [2/4] Fetching packages...
+    manager_test.go:153: [fakeNPMRegistry] GET /@pulumi/pulumi/-/pulumi-3.0.0.tgz
+    io.go:432: [3/4] Linking dependencies...
+    io.go:432: [4/4] Building fresh packages...
+    io.go:432: success Saved lockfile.
+    io.go:432: Done in 0.10s.
+=== RUN   TestYarnInstall/production
+    io.go:432: yarn install v1.22.22
+    io.go:432: info No lockfile found.
+    io.go:432: [1/4] Resolving packages...
+    manager_test.go:153: [fakeNPMRegistry] GET /@pulumi/pulumi
+    io.go:432: [2/4] Fetching packages...
+    io.go:432: [3/4] Linking dependencies...
+    io.go:432: [4/4] Building fresh packages...
+    io.go:432: success Saved lockfile.
+    io.go:432: Done in 0.08s.
+--- PASS: TestYarnInstall (0.60s)
+    --- PASS: TestYarnInstall/development (0.34s)
+    --- PASS: TestYarnInstall/production (0.26s)
+=== RUN   TestNPMInstallCmd
+=== PAUSE TestNPMInstallCmd
+=== RUN   TestFindWorkspaceRoot
+=== PAUSE TestFindWorkspaceRoot
+=== RUN   TestFindWorkspaceRootNotInWorkspace
+=== PAUSE TestFindWorkspaceRootNotInWorkspace
+=== CONT  TestNPMInstallCmd
+=== RUN   TestNPMInstallCmd/production=true
+=== PAUSE TestNPMInstallCmd/production=true
+=== RUN   TestNPMInstallCmd/production=false
+=== PAUSE TestNPMInstallCmd/production=false
+=== CONT  TestNPMInstallCmd/production=true
+=== CONT  TestFindWorkspaceRoot
+=== CONT  TestNPMInstallCmd/production=false
+=== CONT  TestFindWorkspaceRootNotInWorkspace
+--- PASS: TestFindWorkspaceRootNotInWorkspace (0.00s)
+--- PASS: TestFindWorkspaceRoot (0.00s)
+--- PASS: TestNPMInstallCmd (0.00s)
+    --- PASS: TestNPMInstallCmd/production=true (0.00s)
+    --- PASS: TestNPMInstallCmd/production=false (0.00s)
+PASS
+ok  	github.com/pulumi/pulumi/sdk/v3/nodejs/npm	1.810s
+reward=1 graded=11 found=0 failed=0 parsed=0 framework=go exit_code=0

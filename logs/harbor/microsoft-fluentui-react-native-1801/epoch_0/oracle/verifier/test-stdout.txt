@@ -1,0 +1,9 @@
+patching file packages/components/Avatar/src/__tests__/__snapshots__/Avatar.test.jsx.snap
+PASS src/__tests__/Avatar.test.jsx (6.628 s)
+
+Test Suites: 1 passed, 1 total
+Tests:       49 passed, 49 total
+Snapshots:   1 passed, 1 total
+Time:        6.685 s
+Ran all test suites.
+reward=1 graded=49 found=0 failed=0 parsed=0 framework=jest exit_code=0

@@ -1,0 +1,65 @@
+patching file fetch/fetch_test.go
+patching file node/node_test.go
+patching file p2p/dhtdiscovery/discovery_test.go
+patching file p2p/server/deadline_adjuster_test.go
+{"Time":"2026-06-29T15:32:14.15675165Z","Action":"start","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery"}
+{"Time":"2026-06-29T15:32:14.169326779Z","Action":"start","Package":"github.com/spacemeshos/go-spacemesh/p2p/server"}
+{"Time":"2026-06-29T15:32:14.180906094Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity"}
+{"Time":"2026-06-29T15:32:14.180984414Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Output":"=== RUN   TestSanity\n"}
+{"Time":"2026-06-29T15:32:14.187580389Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestDeadlineAdjuster"}
+{"Time":"2026-06-29T15:32:14.187636105Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestDeadlineAdjuster","Output":"=== RUN   TestDeadlineAdjuster\n"}
+{"Time":"2026-06-29T15:32:14.188144779Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestDeadlineAdjuster","Output":"--- PASS: TestDeadlineAdjuster (0.00s)\n"}
+{"Time":"2026-06-29T15:32:14.188176297Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestDeadlineAdjuster","Elapsed":0}
+{"Time":"2026-06-29T15:32:14.188340691Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer"}
+{"Time":"2026-06-29T15:32:14.188393883Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer","Output":"=== RUN   TestServer\n"}
+{"Time":"2026-06-29T15:32:14.192666808Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Output":"    discovery_test.go:40: Host 0: QmQ3KPAzoPfzJYodU6j8khN2P2j5m2Dk9o6P3m7z2rUS3L\n"}
+{"Time":"2026-06-29T15:32:14.192760602Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Output":"    discovery_test.go:40: Host 1: QmQFuxxwCqTijWChYPxvXq89rf3FvkuyhUuf7SGwWru32Q\n"}
+{"Time":"2026-06-29T15:32:14.19281735Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Output":"    discovery_test.go:40: Host 2: QmTAcNLt7qcazh5AwttvamA7tNvaKjP9jP74bTxQVPcwFZ\n"}
+{"Time":"2026-06-29T15:32:14.192827916Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Output":"    discovery_test.go:40: Host 3: QmVn6k5X84pE6bkZiZFmZVwZK4nkSebUTHhLMZ7LdKAhte\n"}
+{"Time":"2026-06-29T15:32:14.192842018Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Output":"    discovery_test.go:40: Host 4: QmW8YKifpc1wo5o561rwNQn6AHLZj4ZGHXLhbTZeL8TAUh\n"}
+{"Time":"2026-06-29T15:32:14.192848928Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Output":"    discovery_test.go:40: Host 5: QmaevsyH433h6wG1rKCZPCkqTPNyq11SDyYfjhbs3yiSnT\n"}
+{"Time":"2026-06-29T15:32:14.192887928Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Output":"    discovery_test.go:40: Host 6: Qmaighnt9xFA8vAgDhRcHdwM9F3bYPQ8TU1yQukFX9mQRK\n"}
+{"Time":"2026-06-29T15:32:14.20357649Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/ReceiveMessage"}
+{"Time":"2026-06-29T15:32:14.203661781Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/ReceiveMessage","Output":"=== RUN   TestServer/ReceiveMessage\n"}
+{"Time":"2026-06-29T15:32:14.204083411Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/ReceiveMessage","Output":"--- PASS: TestServer/ReceiveMessage (0.00s)\n"}
+{"Time":"2026-06-29T15:32:14.204182143Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/ReceiveMessage","Elapsed":0}
+{"Time":"2026-06-29T15:32:14.204233683Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/ReceiveError"}
+{"Time":"2026-06-29T15:32:14.204285262Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/ReceiveError","Output":"=== RUN   TestServer/ReceiveError\n"}
+{"Time":"2026-06-29T15:32:14.204498711Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/ReceiveError","Output":"--- PASS: TestServer/ReceiveError (0.00s)\n"}
+{"Time":"2026-06-29T15:32:14.204534246Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/ReceiveError","Elapsed":0}
+{"Time":"2026-06-29T15:32:14.204555629Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/DialError"}
+{"Time":"2026-06-29T15:32:14.204571033Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/DialError","Output":"=== RUN   TestServer/DialError\n"}
+{"Time":"2026-06-29T15:32:14.204768557Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/DialError","Output":"--- PASS: TestServer/DialError (0.00s)\n"}
+{"Time":"2026-06-29T15:32:14.204868291Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/DialError","Elapsed":0}
+{"Time":"2026-06-29T15:32:14.204933762Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/NotConnected"}
+{"Time":"2026-06-29T15:32:14.205020025Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/NotConnected","Output":"=== RUN   TestServer/NotConnected\n"}
+{"Time":"2026-06-29T15:32:14.20507525Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/NotConnected","Output":"--- PASS: TestServer/NotConnected (0.00s)\n"}
+{"Time":"2026-06-29T15:32:14.205085305Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/NotConnected","Elapsed":0}
+{"Time":"2026-06-29T15:32:14.205107099Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/limit_overflow"}
+{"Time":"2026-06-29T15:32:14.205117264Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/limit_overflow","Output":"=== RUN   TestServer/limit_overflow\n"}
+{"Time":"2026-06-29T15:32:14.205160141Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/limit_overflow","Output":"--- PASS: TestServer/limit_overflow (0.00s)\n"}
+{"Time":"2026-06-29T15:32:14.205182144Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer/limit_overflow","Elapsed":0}
+{"Time":"2026-06-29T15:32:14.205199231Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer","Output":"--- PASS: TestServer (0.02s)\n"}
+{"Time":"2026-06-29T15:32:14.205225101Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestServer","Elapsed":0.02}
+{"Time":"2026-06-29T15:32:14.205233263Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestQueued"}
+{"Time":"2026-06-29T15:32:14.205260706Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestQueued","Output":"=== RUN   TestQueued\n"}
+{"Time":"2026-06-29T15:32:14.728458144Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestQueued","Output":"    server_test.go:187: 76\n"}
+{"Time":"2026-06-29T15:32:14.728594374Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestQueued","Output":"--- PASS: TestQueued (0.52s)\n"}
+{"Time":"2026-06-29T15:32:14.728734941Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"TestQueued","Elapsed":0.52}
+{"Time":"2026-06-29T15:32:14.728782885Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"FuzzResponseConsistency"}
+{"Time":"2026-06-29T15:32:14.72879297Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"FuzzResponseConsistency","Output":"=== RUN   FuzzResponseConsistency\n"}
+{"Time":"2026-06-29T15:32:14.72882543Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"FuzzResponseConsistency","Output":"--- PASS: FuzzResponseConsistency (0.00s)\n"}
+{"Time":"2026-06-29T15:32:14.728871922Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"FuzzResponseConsistency","Elapsed":0}
+{"Time":"2026-06-29T15:32:14.728899034Z","Action":"run","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"FuzzResponseSafety"}
+{"Time":"2026-06-29T15:32:14.728928029Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"FuzzResponseSafety","Output":"=== RUN   FuzzResponseSafety\n"}
+{"Time":"2026-06-29T15:32:14.729050277Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"FuzzResponseSafety","Output":"--- PASS: FuzzResponseSafety (0.00s)\n"}
+{"Time":"2026-06-29T15:32:14.729113725Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Test":"FuzzResponseSafety","Elapsed":0}
+{"Time":"2026-06-29T15:32:14.72914927Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:14.730632165Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Output":"ok  \tgithub.com/spacemeshos/go-spacemesh/p2p/server\t0.561s\n"}
+{"Time":"2026-06-29T15:32:14.730683524Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/server","Elapsed":0.561}
+{"Time":"2026-06-29T15:32:15.206251299Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Output":"--- PASS: TestSanity (1.03s)\n"}
+{"Time":"2026-06-29T15:32:15.206361839Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Test":"TestSanity","Elapsed":1.03}
+{"Time":"2026-06-29T15:32:15.206424966Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:15.208190507Z","Action":"output","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Output":"ok  \tgithub.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery\t1.051s\n"}
+{"Time":"2026-06-29T15:32:15.208316361Z","Action":"pass","Package":"github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery","Elapsed":1.052}
+reward=1 graded=11 found=11 failed=0 parsed=11 framework=go exit_code=0

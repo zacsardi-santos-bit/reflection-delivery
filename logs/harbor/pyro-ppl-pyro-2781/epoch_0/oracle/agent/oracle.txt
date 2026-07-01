@@ -1,0 +1,3 @@
+patching file pyro/contrib/funsor/handlers/replay_messenger.py
+patching file pyro/contrib/funsor/infer/__init__.py
+patching file pyro/contrib/funsor/infer/discrete.py

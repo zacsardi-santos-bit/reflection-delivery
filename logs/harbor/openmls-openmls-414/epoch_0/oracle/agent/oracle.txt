@@ -1,0 +1,4 @@
+patching file src/group/managed_group/config.rs
+patching file src/group/managed_group/mod.rs
+patching file src/group/managed_group/test_managed_group.rs
+patching file src/key_store/mod.rs

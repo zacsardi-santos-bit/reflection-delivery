@@ -1,0 +1,21 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx --coverage=false --verbose --json",
+  "test_files": [
+    "desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx",
+    "desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx::Metrics should filter metrics based on name column value",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx::Metrics should select a specific metric from the dropdown filters the data using click events",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx::Metrics should ensure metrics starting with auth, multiprocessing and python.gc are not displayed",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx::Table renders table with data",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx::Table handles row selection",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx::Table handles row click",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx::Table renders pagination when provided with valid stats",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx::Table does not render pagination when totalPages is 0"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,23 @@
+{
+ "task": "moby-moby-47032",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden upgrades vendored otelhttptrace 0.40.0->0.45.0 (clienttrace.go, httptrace.go, semconvutil, version.go 'return \"0.45.0\"') + vendor.mod/sum/modules.txt; test calls real otelhttptrace.Version() which reflects the vendored library version"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 19,
+  "shallow": true
+ }
+}

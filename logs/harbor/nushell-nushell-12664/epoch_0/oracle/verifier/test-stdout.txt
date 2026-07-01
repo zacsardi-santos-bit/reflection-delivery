@@ -1,0 +1,208 @@
+patching file crates/nu-command/tests/format_conversions/mod.rs
+patching file crates/nu-command/tests/format_conversions/msgpack.rs
+patching file crates/nu-command/tests/format_conversions/msgpackz.rs
+patching file tests/fixtures/formats/msgpack/.gitignore
+patching file tests/fixtures/formats/msgpack/generate.nu
+patching file tests/fixtures/formats/msgpack/objects.nuon
+patching file tests/fixtures/formats/msgpack/sample.nuon
+   Compiling syn v2.0.58
+   Compiling tracing-core v0.1.32
+   Compiling regex-automata v0.4.6
+   Compiling rstest_macros v0.18.2
+   Compiling relative-path v1.9.2
+   Compiling slab v0.4.9
+   Compiling futures-sink v0.3.30
+   Compiling diff v0.1.13
+   Compiling yansi v0.5.1
+   Compiling futures-task v0.3.30
+   Compiling pin-utils v0.1.0
+   Compiling bytes v1.6.0
+   Compiling socket2 v0.5.6
+   Compiling doc-comment v0.3.3
+   Compiling httparse v1.8.0
+   Compiling try-lock v0.2.5
+   Compiling syn v1.0.109
+   Compiling predicates-core v1.0.6
+   Compiling heapless v0.8.0
+   Compiling futures-channel v0.3.30
+   Compiling want v0.3.1
+   Compiling pretty_assertions v1.4.0
+   Compiling tower-service v0.3.2
+   Compiling httpdate v1.0.3
+   Compiling env_logger v0.8.4
+   Compiling hash32 v0.3.1
+   Compiling difflib v0.4.0
+   Compiling sdd v0.2.0
+   Compiling tracing v0.1.40
+   Compiling http v0.2.12
+   Compiling tokio v1.37.0
+   Compiling stable_deref_trait v1.2.0
+   Compiling blocking v1.5.1
+   Compiling termtree v0.4.1
+   Compiling assert_cmd v2.0.14
+   Compiling nu v0.92.3 (/workspace/repo)
+   Compiling predicates v3.1.0
+   Compiling quickcheck v1.0.3
+   Compiling predicates-tree v1.0.9
+   Compiling scc v2.1.0
+   Compiling bstr v1.9.1
+   Compiling wait-timeout v0.2.0
+   Compiling futures-util v0.3.30
+   Compiling regex-lite v0.1.5
+   Compiling condtype v1.3.0
+   Compiling nu-glob v0.92.3 (/workspace/repo/crates/nu-glob)
+   Compiling http-body v0.4.6
+   Compiling nu-pretty-hex v0.92.3 (/workspace/repo/crates/nu-pretty-hex)
+   Compiling regex v1.10.4
+   Compiling parse-zoneinfo v0.3.0
+   Compiling chrono-tz-build v0.2.1
+   Compiling chrono-tz v0.8.6
+   Compiling quickcheck_macros v1.0.0
+   Compiling futures-executor v0.3.30
+   Compiling tokio-util v0.7.10
+   Compiling futures v0.3.30
+   Compiling serde_derive v1.0.197
+   Compiling thiserror-impl v1.0.58
+   Compiling typetag-impl v0.2.16
+   Compiling miette-derive v7.2.0
+   Compiling strum_macros v0.26.2
+   Compiling openssl-macros v0.1.1
+   Compiling rust-embed-impl v8.3.0
+   Compiling stability v0.2.0
+   Compiling serde_repr v0.1.19
+   Compiling divan-macros v0.1.14
+   Compiling serial_test_derive v3.1.0
+   Compiling h2 v0.3.26
+   Compiling serial_test v3.1.0
+   Compiling rust-embed v8.3.0
+   Compiling thiserror v1.0.58
+   Compiling pwd v1.4.0
+   Compiling interprocess v1.2.1
+   Compiling pest v2.7.9
+   Compiling wax v0.6.0
+   Compiling dialoguer v0.11.0
+   Compiling umask v2.1.0
+   Compiling nu-path v0.92.3 (/workspace/repo/crates/nu-path)
+   Compiling hyper v0.14.28
+   Compiling strum v0.26.2
+   Compiling serde v1.0.197
+   Compiling pest_meta v2.7.9
+   Compiling pest_generator v2.7.9
+   Compiling pest_derive v2.7.9
+   Compiling rstest v0.18.2
+   Compiling bitflags v2.5.0
+   Compiling chrono v0.4.37
+   Compiling serde_json v1.0.115
+   Compiling erased-serde v0.4.4
+   Compiling rmp-serde v1.2.0
+   Compiling byte-unit v5.1.4
+   Compiling bincode v1.3.3
+   Compiling linked-hash-map v0.5.6
+   Compiling url v2.5.0
+   Compiling serde_spanned v0.6.5
+   Compiling toml_datetime v0.6.5
+   Compiling serde_urlencoded v0.7.1
+   Compiling csv v1.3.0
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling rustix v0.38.32
+   Compiling nix v0.28.0
+   Compiling crossterm v0.27.0
+   Compiling openssl v0.10.64
+   Compiling toml_edit v0.22.9
+   Compiling typetag v0.2.16
+   Compiling nu-json v0.92.3 (/workspace/repo/crates/nu-json)
+   Compiling lsp-types v0.95.1
+   Compiling lsp-server v0.7.6
+   Compiling assert-json-diff v2.0.2
+   Compiling mockito v1.4.0
+   Compiling ratatui v0.26.2
+   Compiling procfs-core v0.16.0
+   Compiling chrono-humanize v0.2.3
+   Compiling rusqlite v0.31.0
+   Compiling calamine v0.24.0
+   Compiling human-date-parser v0.1.2
+   Compiling nu-utils v0.92.3 (/workspace/repo/crates/nu-utils)
+   Compiling nu-term-grid v0.92.3 (/workspace/repo/crates/nu-term-grid)
+   Compiling toml v0.8.12
+   Compiling dtparse v2.0.0
+   Compiling trash v3.3.1
+   Compiling ctrlc v3.4.4
+   Compiling terminal_size v0.3.0
+   Compiling which v6.0.1
+   Compiling miette v7.2.0
+   Compiling tempfile v3.10.1
+   Compiling procfs v0.16.0
+   Compiling clap_builder v4.5.2
+   Compiling nu-test-support v0.92.3 (/workspace/repo/crates/nu-test-support)
+   Compiling xattr v1.3.1
+   Compiling native-tls v0.2.11
+   Compiling fd-lock v4.0.2
+   Compiling reedline v0.31.0 (https://github.com/nushell/reedline?branch=main#4cf8c75d)
+   Compiling ureq v2.9.6
+   Compiling nu-system v0.92.3 (/workspace/repo/crates/nu-system)
+   Compiling nu-protocol v0.92.3 (/workspace/repo/crates/nu-protocol)
+   Compiling clap v4.5.4
+   Compiling uucore v0.0.25
+   Compiling divan v0.1.14
+   Compiling uu_whoami v0.0.25
+   Compiling uu_mktemp v0.0.25
+   Compiling uu_mv v0.0.25
+   Compiling uu_cp v0.0.25
+   Compiling uu_mkdir v0.0.25
+   Compiling uu_uname v0.0.25
+   Compiling nu-engine v0.92.3 (/workspace/repo/crates/nu-engine)
+   Compiling nu-plugin v0.92.3 (/workspace/repo/crates/nu-plugin)
+   Compiling nu-color-config v0.92.3 (/workspace/repo/crates/nu-color-config)
+   Compiling nu-table v0.92.3 (/workspace/repo/crates/nu-table)
+   Compiling nu-parser v0.92.3 (/workspace/repo/crates/nu-parser)
+   Compiling nu-cmd-plugin v0.92.3 (/workspace/repo/crates/nu-cmd-plugin)
+   Compiling nu-cmd-lang v0.92.3 (/workspace/repo/crates/nu-cmd-lang)
+   Compiling nu-cmd-base v0.92.3 (/workspace/repo/crates/nu-cmd-base)
+   Compiling nuon v0.92.3 (/workspace/repo/crates/nuon)
+   Compiling nu-cli v0.92.3 (/workspace/repo/crates/nu-cli)
+   Compiling nu-command v0.92.3 (/workspace/repo/crates/nu-command)
+   Compiling nu-cmd-extra v0.92.3 (/workspace/repo/crates/nu-cmd-extra)
+   Compiling nu-lsp v0.92.3 (/workspace/repo/crates/nu-lsp)
+   Compiling nu-explore v0.92.3 (/workspace/repo/crates/nu-explore)
+   Compiling nu-std v0.92.3 (/workspace/repo/crates/nu-std)
+   Compiling nu-plugin-test-support v0.92.3 (/workspace/repo/crates/nu-plugin-test-support)
+   Compiling nu-cmd-dataframe v0.92.3 (/workspace/repo/crates/nu-cmd-dataframe)
+    Finished test [unoptimized + debuginfo] target(s) in 1m 15s
+────────────
+ Nextest run ID 2e4f5eb1-d02f-42d6-9d30-77bf736aa59a with nextest profile: default
+    Starting 32 tests across 50 binaries (3829 tests skipped)
+        PASS [   0.053s] ( 1/32) nu-plugin serializers::msgpack::tests::call_round_trip_run
+        PASS [   0.055s] ( 2/32) nu-plugin serializers::msgpack::tests::call_round_trip_customvalueop
+        PASS [   0.023s] ( 3/32) nu-plugin serializers::msgpack::tests::decode_eof
+        PASS [   0.028s] ( 4/32) nu-plugin serializers::msgpack::tests::call_round_trip_signature
+        PASS [   0.085s] ( 5/32) nu-command formats::from::msgpack::test::test_examples
+        PASS [   0.086s] ( 6/32) nu-command formats::to::msgpack::test::test_examples
+        PASS [   0.034s] ( 7/32) nu-plugin serializers::msgpack::tests::decode_gibberish
+        PASS [   0.035s] ( 8/32) nu-plugin serializers::msgpack::tests::decode_io_error
+        PASS [   0.033s] ( 9/32) nu-plugin serializers::msgpack::tests::input_round_trip_stream_data_list
+        PASS [   0.035s] (10/32) nu-plugin serializers::msgpack::tests::input_round_trip_stream_data_raw
+        PASS [   0.022s] (11/32) nu-plugin serializers::msgpack::tests::output_round_trip_option
+        PASS [   0.023s] (12/32) nu-plugin serializers::msgpack::tests::output_round_trip_stream_data_list
+        PASS [   0.022s] (13/32) nu-plugin serializers::msgpack::tests::output_round_trip_stream_data_raw
+        PASS [   0.024s] (14/32) nu-plugin serializers::msgpack::tests::response_round_trip_error
+        PASS [   0.027s] (15/32) nu-plugin serializers::msgpack::tests::response_round_trip_error_none
+        PASS [   0.025s] (16/32) nu-plugin serializers::msgpack::tests::response_round_trip_plugin_custom_value
+        PASS [   0.028s] (17/32) nu-plugin serializers::msgpack::tests::response_round_trip_signature
+        PASS [   0.026s] (18/32) nu-plugin serializers::msgpack::tests::response_round_trip_value
+        PASS [   0.199s] (19/32) nu-command::main format_conversions::msgpackz::sample_roundtrip
+        PASS [   0.206s] (20/32) nu-command::main format_conversions::msgpack::sample_roundtrip
+        PASS [   0.368s] (21/32) nu-command::main format_conversions::msgpack::after_eof
+        PASS [   0.368s] (22/32) nu-command::main format_conversions::msgpack::eof
+        PASS [   0.433s] (23/32) nu-command::main format_conversions::msgpack::non_utf8
+        PASS [   0.444s] (24/32) nu-command::main format_conversions::msgpack::timestamp_wrong_length
+        PASS [   0.453s] (25/32) nu-command::main format_conversions::msgpack::reserved
+        PASS [   0.458s] (26/32) nu-command::main format_conversions::msgpack::u64_too_large
+        PASS [   0.461s] (27/32) nu-command::main format_conversions::msgpack::objects
+        PASS [   0.467s] (28/32) nu-command::main format_conversions::msgpack::empty
+        PASS [   0.468s] (29/32) nu-command::main format_conversions::msgpack::max_depth
+        PASS [   0.468s] (30/32) nu-command::main format_conversions::msgpack::non_string_map_key
+        PASS [   0.469s] (31/32) nu-command::main format_conversions::msgpack::other_extension_type
+        PASS [   0.471s] (32/32) nu-command::main format_conversions::msgpack::sample
+────────────
+     Summary [   0.483s] 32 tests run: 32 passed, 3829 skipped
+reward=1 graded=32 found=11 failed=0 parsed=32 framework=cargo exit_code=0

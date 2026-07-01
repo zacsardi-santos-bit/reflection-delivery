@@ -1,0 +1,4 @@
+patching file src/cmd/services/m3query/config/config.go
+patching file src/cmd/services/m3query/config/testdata/sample_config.yml
+patching file src/query/api/v1/handler/prometheus/native/read.go
+patching file src/query/api/v1/httpd/handler.go

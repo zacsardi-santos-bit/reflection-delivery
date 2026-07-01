@@ -1,0 +1,23 @@
+{
+ "task": "terrastruct-d2-2299",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `case \"leaf\":` and `case \"connected\":` in ampersandFilter; F2P subtests 'leaf-filter'/'connected-filter' assert style.fill via assertCompile"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 19,
+  "shallow": true
+ }
+}

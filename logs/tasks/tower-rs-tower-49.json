@@ -1,0 +1,23 @@
+{
+ "task": "tower-rs-tower-49",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds full `tower-in-flight-limit` crate (`InFlightLimit`, shared `Arc<Shared>` capacity pool, reserve/release on completion/error/drop); 7 F2P nextest tests e.g. `response_future_drop_releases_capacity`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

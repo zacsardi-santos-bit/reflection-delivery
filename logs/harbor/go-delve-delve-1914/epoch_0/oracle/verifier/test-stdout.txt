@@ -1,0 +1,78 @@
+patching file service/dap/daptest/client.go
+patching file service/dap/server_test.go
+{"Time":"2026-06-29T15:20:21.327728022Z","Action":"run","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry"}
+{"Time":"2026-06-29T15:20:21.328142466Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"=== RUN   TestStopOnEntry\n"}
+{"Time":"2026-06-29T15:20:21.676814615Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"DAP server listening at: [::]:18976\n"}
+{"Time":"2026-06-29T15:20:21.776915307Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"Connecting to server at: [::]:18976\n"}
+{"Time":"2026-06-29T15:20:21.822254532Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"2026-06-29T15:20:21Z error layer=dap Unsupported command: cannot process 'stackTrace' request\n"}
+{"Time":"2026-06-29T15:20:21.822751553Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"2026-06-29T15:20:21Z error layer=dap Unsupported command: cannot process 'stackTrace' request\n"}
+{"Time":"2026-06-29T15:20:21.827756253Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"4\n"}
+{"Time":"2026-06-29T15:20:21.829007478Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"2026-06-29T15:20:21Z error layer=dap Process 1726 has exited with status 0\n"}
+{"Time":"2026-06-29T15:20:21.829216117Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"--- PASS: TestStopOnEntry (0.50s)\n"}
+{"Time":"2026-06-29T15:20:21.829281107Z","Action":"pass","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Elapsed":0.5}
+{"Time":"2026-06-29T15:20:21.829313817Z","Action":"run","Package":"github.com/go-delve/delve/service/dap","Test":"TestContinueOnEntry"}
+{"Time":"2026-06-29T15:20:21.829346807Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestContinueOnEntry","Output":"=== RUN   TestContinueOnEntry\n"}
+{"Time":"2026-06-29T15:20:21.829447922Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestContinueOnEntry","Output":"DAP server listening at: [::]:58689\n"}
+{"Time":"2026-06-29T15:20:21.930146238Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestContinueOnEntry","Output":"Connecting to server at: [::]:58689\n"}
+{"Time":"2026-06-29T15:20:21.974472193Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestContinueOnEntry","Output":"4\n"}
+{"Time":"2026-06-29T15:20:21.975651708Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestContinueOnEntry","Output":"2026-06-29T15:20:21Z error layer=dap Process 1739 has exited with status 0\n"}
+{"Time":"2026-06-29T15:20:21.975903223Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestContinueOnEntry","Output":"--- PASS: TestContinueOnEntry (0.15s)\n"}
+{"Time":"2026-06-29T15:20:21.975936724Z","Action":"pass","Package":"github.com/go-delve/delve/service/dap","Test":"TestContinueOnEntry","Elapsed":0.15}
+{"Time":"2026-06-29T15:20:21.975978528Z","Action":"run","Package":"github.com/go-delve/delve/service/dap","Test":"TestSetBreakpoint"}
+{"Time":"2026-06-29T15:20:21.975988854Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestSetBreakpoint","Output":"=== RUN   TestSetBreakpoint\n"}
+{"Time":"2026-06-29T15:20:21.976083369Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestSetBreakpoint","Output":"DAP server listening at: [::]:38417\n"}
+{"Time":"2026-06-29T15:20:22.076908389Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestSetBreakpoint","Output":"Connecting to server at: [::]:38417\n"}
+{"Time":"2026-06-29T15:20:22.114057298Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestSetBreakpoint","Output":"2026-06-29T15:20:22Z error layer=dap ERROR:could not find statement at /workspace/repo/_fixtures/increment.go:100, please use a line with a statement\n"}
+{"Time":"2026-06-29T15:20:22.128048062Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestSetBreakpoint","Output":"4\n"}
+{"Time":"2026-06-29T15:20:22.128871673Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestSetBreakpoint","Output":"2026-06-29T15:20:22Z error layer=dap Process 1746 has exited with status 0\n"}
+{"Time":"2026-06-29T15:20:22.129126693Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestSetBreakpoint","Output":"--- PASS: TestSetBreakpoint (0.15s)\n"}
+{"Time":"2026-06-29T15:20:22.129195979Z","Action":"pass","Package":"github.com/go-delve/delve/service/dap","Test":"TestSetBreakpoint","Elapsed":0.15}
+{"Time":"2026-06-29T15:20:22.129221098Z","Action":"run","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchDebugRequest"}
+{"Time":"2026-06-29T15:20:22.129238514Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchDebugRequest","Output":"=== RUN   TestLaunchDebugRequest\n"}
+{"Time":"2026-06-29T15:20:22.129310625Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchDebugRequest","Output":"DAP server listening at: [::]:47254\n"}
+{"Time":"2026-06-29T15:20:22.229339265Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchDebugRequest","Output":"Connecting to server at: [::]:47254\n"}
+{"Time":"2026-06-29T15:20:24.148977089Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchDebugRequest","Output":"4\n"}
+{"Time":"2026-06-29T15:20:24.150011392Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchDebugRequest","Output":"2026-06-29T15:20:24Z error layer=dap Process 2556 has exited with status 0\n"}
+{"Time":"2026-06-29T15:20:24.152132429Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchDebugRequest","Output":"could not remove /workspace/repo/service/dap/__debug_bin: remove /workspace/repo/service/dap/__debug_bin: no such file or directory\n"}
+{"Time":"2026-06-29T15:20:24.152225361Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchDebugRequest","Output":"--- PASS: TestLaunchDebugRequest (2.02s)\n"}
+{"Time":"2026-06-29T15:20:24.15225078Z","Action":"pass","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchDebugRequest","Elapsed":2.02}
+{"Time":"2026-06-29T15:20:24.152264451Z","Action":"run","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchTestRequest"}
+{"Time":"2026-06-29T15:20:24.152272994Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchTestRequest","Output":"=== RUN   TestLaunchTestRequest\n"}
+{"Time":"2026-06-29T15:20:24.152280736Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchTestRequest","Output":"DAP server listening at: [::]:23418\n"}
+{"Time":"2026-06-29T15:20:24.250946661Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchTestRequest","Output":"Connecting to server at: [::]:23418\n"}
+{"Time":"2026-06-29T15:20:25.356402128Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchTestRequest","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-06-29T15:20:25.356463552Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Output":"PASS\n"}
+{"Time":"2026-06-29T15:20:25.357511095Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Output":"2026-06-29T15:20:25Z error layer=dap Process 3488 has exited with status 0\n"}
+{"Time":"2026-06-29T15:20:25.362574295Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Output":"could not remove /workspace/repo/service/dap/__mytestdir: remove /workspace/repo/service/dap/__mytestdir: no such file or directory\n"}
+{"Time":"2026-06-29T15:20:25.362623871Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchTestRequest","Output":"--- PASS: TestLaunchTestRequest (1.21s)\n"}
+{"Time":"2026-06-29T15:20:25.362662019Z","Action":"pass","Package":"github.com/go-delve/delve/service/dap","Test":"TestLaunchTestRequest","Elapsed":1.21}
+{"Time":"2026-06-29T15:20:25.362704604Z","Action":"run","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests"}
+{"Time":"2026-06-29T15:20:25.362714339Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"=== RUN   TestBadLaunchRequests\n"}
+{"Time":"2026-06-29T15:20:25.362724244Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"DAP server listening at: [::]:44156\n"}
+{"Time":"2026-06-29T15:20:25.458618148Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"Connecting to server at: [::]:44156\n"}
+{"Time":"2026-06-29T15:20:25.459430922Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: The program attribute is missing in debug configuration.\n"}
+{"Time":"2026-06-29T15:20:25.459972151Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: The program attribute is missing in debug configuration.\n"}
+{"Time":"2026-06-29T15:20:25.460201171Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: The program attribute is missing in debug configuration.\n"}
+{"Time":"2026-06-29T15:20:25.460439927Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: The program attribute is missing in debug configuration.\n"}
+{"Time":"2026-06-29T15:20:25.460614514Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: Unsupported 'mode' value \"remote\" in debug configuration.\n"}
+{"Time":"2026-06-29T15:20:25.461005472Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: Unsupported 'mode' value \"notamode\" in debug configuration.\n"}
+{"Time":"2026-06-29T15:20:25.461245379Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: Unsupported 'mode' value %!q(float64=12345) in debug configuration.\n"}
+{"Time":"2026-06-29T15:20:25.462255696Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: could not launch process: fork/exec /tmp/increment.5aeffe0a_does_not_exist: no such file or directory\n"}
+{"Time":"2026-06-29T15:20:25.479945311Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"stat /tmp/increment.5aeffe0a_does_not_exist: directory not found\n"}
+{"Time":"2026-06-29T15:20:25.480887543Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: Build error: exit status 1\n"}
+{"Time":"2026-06-29T15:20:25.481424365Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"2026-06-29T15:20:25Z error layer=dap Failed to launch: not an executable file\n"}
+{"Time":"2026-06-29T15:20:25.482064104Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Output":"--- PASS: TestBadLaunchRequests (0.12s)\n"}
+{"Time":"2026-06-29T15:20:25.482127201Z","Action":"pass","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadLaunchRequests","Elapsed":0.12}
+{"Time":"2026-06-29T15:20:25.482146881Z","Action":"run","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadlyFormattedMessageToServer"}
+{"Time":"2026-06-29T15:20:25.482164258Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadlyFormattedMessageToServer","Output":"=== RUN   TestBadlyFormattedMessageToServer\n"}
+{"Time":"2026-06-29T15:20:25.48225753Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadlyFormattedMessageToServer","Output":"DAP server listening at: [::]:48329\n"}
+{"Time":"2026-06-29T15:20:25.583346786Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadlyFormattedMessageToServer","Output":"Connecting to server at: [::]:48329\n"}
+{"Time":"2026-06-29T15:20:25.583973846Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadlyFormattedMessageToServer","Output":"2026-06-29T15:20:25Z error layer=dap DAP error: Request command 'unknown' is not supported\n"}
+{"Time":"2026-06-29T15:20:25.6846305Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadlyFormattedMessageToServer","Output":"--- PASS: TestBadlyFormattedMessageToServer (0.20s)\n"}
+{"Time":"2026-06-29T15:20:25.684768271Z","Action":"pass","Package":"github.com/go-delve/delve/service/dap","Test":"TestBadlyFormattedMessageToServer","Elapsed":0.2}
+{"Time":"2026-06-29T15:20:25.684948737Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Output":"PASS\n"}
+{"Time":"2026-06-29T15:20:25.686625173Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Output":"ok  \tgithub.com/go-delve/delve/service/dap\t4.368s [no tests to run]\n"}
+{"Time":"2026-06-29T15:20:25.686688089Z","Action":"pass","Package":"github.com/go-delve/delve/service/dap","Elapsed":4.369}
+{"Time":"2026-06-29T15:20:25.687238982Z","Action":"output","Package":"github.com/go-delve/delve/service/dap/daptest","Output":"?   \tgithub.com/go-delve/delve/service/dap/daptest\t[no test files]\n"}
+{"Time":"2026-06-29T15:20:25.687593054Z","Action":"skip","Package":"github.com/go-delve/delve/service/dap/daptest","Elapsed":0}
+reward=1 graded=7 found=7 failed=0 parsed=7 framework=go exit_code=0

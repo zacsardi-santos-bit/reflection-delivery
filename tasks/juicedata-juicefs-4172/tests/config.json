@@ -1,0 +1,33 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/meta -count=1",
+  "test_files": [
+    "pkg/meta/random_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/juicedata/juicefs/pkg/meta::TestRemoveSecret",
+    "github.com/juicedata/juicefs/pkg/meta::TestEncrypt",
+    "github.com/juicedata/juicefs/pkg/meta::TestOlderThan",
+    "github.com/juicedata/juicefs/pkg/meta::TestParseRedisVersion/Should_return_error_for_invalid_redisVersion",
+    "github.com/juicedata/juicefs/pkg/meta::TestParseRedisVersion/Should_parse_redisVersion",
+    "github.com/juicedata/juicefs/pkg/meta::TestParseRedisVersion",
+    "github.com/juicedata/juicefs/pkg/meta::TestParseRedisInfo/Should_parse_the_fields_we_are_interested_in",
+    "github.com/juicedata/juicefs/pkg/meta::TestParseRedisInfo",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#00",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#01",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#02",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#03",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#04",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#05",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#06",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#07",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#08",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#09",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv/#10",
+    "github.com/juicedata/juicefs/pkg/meta::Test_setPasswordFromEnv",
+    "github.com/juicedata/juicefs/pkg/meta::TestEscape"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,5 @@
+I'm trying to build a custom transaction retry wrapper for Mongoose documents. The problem is that when I save a document inside a transaction and then abort the transaction, the document's modified state gets cleared — just like after a successful save. So when I try to save the document again in a retry attempt, there are no changes to send to the database and the updates get silently lost.
+
+What I need is a way to take a snapshot of a document's pending modifications before I attempt the transaction save, and then restore that snapshot if the transaction fails, so the document is back in its "dirty" state and I can try saving it again. The snapshot and restore should cover everything: top-level fields, nested paths, single nested subdocuments, and document array elements.
+
+I'd also find it useful to be able to explicitly clear all of a document's pending modifications — so that a save afterwards writes nothing, even if the document had unsaved changes. This too should clear the modified state on all subdocuments, not just the root.

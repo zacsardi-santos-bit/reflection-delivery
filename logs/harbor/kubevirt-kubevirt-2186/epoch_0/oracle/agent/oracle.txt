@@ -1,0 +1,7 @@
+patching file WORKSPACE
+patching file images/cdi-http-import-server/BUILD.bazel
+patching file images/cdi-http-import-server/entrypoint.sh
+patching file pkg/virt-config/config-map.go
+patching file pkg/virt-handler/cmd-client/client.go
+patching file pkg/virt-handler/vm.go
+patching file pkg/virt-launcher/virtwrap/manager.go

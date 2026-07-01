@@ -1,0 +1,7 @@
+I'm working on the deployment configuration controller in OpenShift and I've noticed that the status update logic always advances the "observed generation" field unconditionally. This is causing problems because when the controller encounters situations where it defers or cannot complete processing — such as an error mid-reconciliation — it still incorrectly reports that it has observed the latest configuration generation.
+
+The fix I need is to make the observed generation update conditional. The function that calculates a new deployment config status should accept an explicit boolean flag indicating whether the observed generation should be advanced. When that flag is true, the returned status should reflect the current metadata generation; when it's false, the returned status should preserve whatever the previously observed generation was.
+
+This also means the internal status-update helper that calls the status calculation function needs to be updated to accept and forward this flag to the calculation. Different code paths in the controller's main reconciliation loop should pass true or false depending on whether they have fully processed the configuration change.
+
+Additionally, the import aliases throughout the affected controller files should be updated to use the apps-prefixed naming convention that the rest of the codebase is moving toward (replacing the older deploy-prefixed aliases).

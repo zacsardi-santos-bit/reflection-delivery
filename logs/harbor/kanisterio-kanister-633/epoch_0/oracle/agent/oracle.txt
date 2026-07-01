@@ -1,0 +1,7 @@
+patching file pkg/kube/discover.go
+patching file pkg/kube/snapshot/apis/v1alpha1/types.go
+patching file pkg/kube/snapshot/apis/v1beta1/types.go
+patching file pkg/kube/snapshot/snapshot.go
+patching file pkg/kube/snapshot/snapshot_alpha.go
+patching file pkg/kube/snapshot/snapshot_beta.go
+patching file pkg/kube/volume/volume.go

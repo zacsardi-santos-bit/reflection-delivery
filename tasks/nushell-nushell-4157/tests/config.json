@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --test main -E 'test(sanitized)' --no-fail-fast",
+  "test_files": [
+    "tests/shell/pipeline/commands/external.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/4) nu::main shell::pipeline::commands::external::external_command_arguments::ampersands_are_sanitized_before_passing_to_subshell",
+    "(2/4) nu::main shell::pipeline::commands::external::external_command_arguments::semicolons_are_sanitized_before_passing_to_subshell",
+    "(3/4) nu::main shell::pipeline::commands::external::external_command_arguments::subcommands_are_sanitized_before_passing_to_subshell",
+    "(4/4) nu::main shell::pipeline::commands::external::external_command_arguments::shell_arguments_are_sanitized_even_if_coming_from_other_commands"
+  ],
+  "PASS_TO_PASS": []
+}

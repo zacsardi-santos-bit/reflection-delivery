@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-sigs-kubebuilder-1443",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P TestEncodeDecodeExtraFields exercises 'c.config.EncodeExtraFields(c.key, ...)' then DecodeExtraFields and reflect.DeepEqual round-trip; golden implements EncodeExtraFields/DecodeExtraFields + version-aware plugin section"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 17,
+  "shallow": true
+ }
+}

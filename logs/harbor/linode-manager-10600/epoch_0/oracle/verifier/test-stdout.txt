@@ -1,0 +1,23 @@
+patching file packages/manager/src/layouts/OAuth.test.tsx
+patching file packages/manager/src/store/authentication/authentication.test.ts
+
+ RUN  v2.1.1 /workspace/repo/packages/manager
+
+ ✓ src/store/authentication/authentication.test.ts  (4 tests) 5ms
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+stderr | src/layouts/OAuth.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/layouts/OAuth.test.tsx > layouts/OAuth > parseQueryParams > Should redirect to logout path when nonce is different
+Warning: `ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+ ✓ src/layouts/OAuth.test.tsx  (9 tests) 58ms
+
+ Test Files  2 passed (2)
+      Tests  13 passed (13)
+   Start at  15:17:44
+   Duration  8.43s (transform 3.16s, setup 3.38s, collect 5.95s, tests 63ms, environment 957ms, prepare 292ms)
+
+reward=1 graded=12 found=0 failed=0 parsed=0 framework=vitest exit_code=0

@@ -1,0 +1,7 @@
+I'm working on the litehtml C++ project and I want to enable strict compiler warning settings so that every warning is treated as an error. When I add these strict settings to the build configuration, the entire build fails because the codebase has accumulated a number of common C++ issues that were being silently ignored.
+
+The problems I'm seeing include: comparing signed loop counters directly against unsigned container size values, checking whether a string is empty by comparing it to a string literal rather than using the appropriate empty-check method, comparing the result of string search operations against a signed literal instead of the correct unsigned sentinel, partially initialized aggregate types where only some fields are given values in brace initializers, function parameters that are named in signatures but never used in the body, and null pointer returns expressed as the integer zero rather than the proper null literal.
+
+On top of that, some of the URL parsing tests only specify part of the expected URL structure in their test data — they provide three URL components but the struct they initialize has five fields, leaving the query string and fragment uninitialized.
+
+I need to fix all of these issues throughout the production code, the Linux container implementation, and the test infrastructure, so that the project compiles cleanly under the strict warning settings. The URL test data also needs to be corrected to fully specify all five URL components for each test case.

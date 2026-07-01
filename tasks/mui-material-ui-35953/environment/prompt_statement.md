@@ -1,0 +1,5 @@
+I'm working with Joy UI's text input and multi-line text area components and running into a frustrating issue with the slot customization API. When I pass keyboard event handlers (for key-press and key-release events) through the slot props to customize the inner input element, those handlers never actually fire. The component just ignores them. This makes it impossible to respond to keyboard events using the documented slot customization approach.
+
+I'm also noticing that when I compose tab panels with the tab navigation components, the first panel's content isn't visible by default even though the first tab should be active. I'd expect the content of the initially-active tab to be shown immediately without any extra configuration.
+
+Can you fix the text input and multi-line text area components so that keyboard event handlers provided via slot customization are properly forwarded to the underlying native elements? Also, when a slot-level event handler is provided, it should take priority over any top-level handler of the same type. And please look into why the first tab panel isn't visible by default in the tab navigation component.

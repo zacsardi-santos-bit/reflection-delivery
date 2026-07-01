@@ -1,0 +1,6 @@
+patching file pkg/mqtrigger/mqtmanager_test.go
+go: finding module for package github.com/fission/fission/pkg/mqtrigger/messageQueue
+# github.com/fission/fission/pkg/mqtrigger
+pkg/mqtrigger/mqtmanager_test.go:26:2: cannot find module providing package github.com/fission/fission/pkg/mqtrigger/messageQueue: module lookup disabled by GOPROXY=off
+FAIL	github.com/fission/fission/pkg/mqtrigger [setup failed]
+reward=0 graded=14 found=0 failed=0 parsed=0 framework=go exit_code=1

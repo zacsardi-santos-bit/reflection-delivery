@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo +stable nextest run -p ruma-events --features unstable-msc3401,unstable-msc4075,unstable-msc2747 --no-fail-fast -E 'test(serialize_legacy) | test(deserialize_legacy) | test(memberships_do_expire) | test(tests::deserialize_member_event) | test(notify_event)' 2>&1 | tee /tmp/nx.txt && grep -q PASS /tmp/nx.txt",
+  "test_files": [
+    "crates/ruma-events/tests/it/call.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "ruma-events call::member::tests::memberships_do_expire",
+    "ruma-events call::member::tests::serialize_legacy_call_member_event_content",
+    "ruma-events call::notify::tests::notify_event_serialization",
+    "ruma-events call::member::tests::deserialize_legacy_call_member_event_content",
+    "ruma-events call::member::tests::deserialize_member_event",
+    "ruma-events call::notify::tests::notify_event_deserialization"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,3 @@
+patching file clients/src/main/java/org/apache/kafka/clients/Metadata.java
+patching file clients/src/main/java/org/apache/kafka/common/requests/MetadataResponse.java
+patching file core/src/main/scala/kafka/controller/KafkaController.scala

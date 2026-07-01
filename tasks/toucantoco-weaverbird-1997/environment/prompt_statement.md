@@ -1,0 +1,5 @@
+I'm having a problem with the variable-aware if-then-else pipeline step when conditions use relative dates with variable placeholders. When I try to create a step where the condition is a date-bound filter and the date value is specified as a relative date structure (with a duration and offset), the step fails to parse if the actual date field contains a template variable reference rather than a real date. It throws a validation error saying the placeholder string is an invalid value.
+
+This means I can't define if-then-else conditions like "filter rows where the date falls within the previous year relative to a user-supplied start date," because those user-supplied dates are variable placeholders that only get resolved at runtime.
+
+I'd expect the variable-aware version of this step to accept template variable placeholders in the date field of relative date conditions — including when multiple such conditions are combined with AND logic — and to correctly resolve those placeholders when the step is rendered with actual variable values. It should work the same way it already does for simple (non-relative) date conditions.

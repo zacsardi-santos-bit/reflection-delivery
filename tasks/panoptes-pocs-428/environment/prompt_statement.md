@@ -1,0 +1,5 @@
+I'm working on a sensor monitoring system that reads data from multiple hardware boards and needs to persist and transmit those readings asynchronously. Right now there's no clean way to do this — sensor data production and recording are tangled together.
+
+I'd like a background worker component in the sensors package that runs in its own thread and continuously pulls readings off a shared queue, calling a configurable save function and a configurable send function for each one. The worker should be resilient: if a save or send call throws an exception, it should log the error and keep going rather than crashing. It should also handle garbage data placed on the queue gracefully — things like None values or malformed entries should generate a warning log but not kill the thread.
+
+The worker should support being started and stopped cleanly, expose the internal queue so producers can submit readings, and default to running as a daemon thread (though it should also support non-daemon mode). When the save and send callbacks are not provided, valid readings should simply be discarded without errors.

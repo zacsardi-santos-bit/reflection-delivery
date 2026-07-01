@@ -1,0 +1,4 @@
+patching file master/.golangci.yml
+patching file master/internal/api_user.go
+patching file master/internal/user/postgres_users.go
+patching file master/pkg/model/user.go

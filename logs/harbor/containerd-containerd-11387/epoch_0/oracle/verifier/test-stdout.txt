@@ -1,0 +1,10 @@
+patching file core/events/http2_test.go
+{"Time":"2026-06-29T15:27:00.253481689Z","Action":"start","Package":"github.com/containerd/containerd/v2/core/events"}
+{"Time":"2026-06-29T15:27:00.25777619Z","Action":"run","Package":"github.com/containerd/containerd/v2/core/events","Test":"TestHttp2SettingEnableConnectProtocol"}
+{"Time":"2026-06-29T15:27:00.25781052Z","Action":"output","Package":"github.com/containerd/containerd/v2/core/events","Test":"TestHttp2SettingEnableConnectProtocol","Output":"=== RUN   TestHttp2SettingEnableConnectProtocol\n"}
+{"Time":"2026-06-29T15:27:00.25788192Z","Action":"output","Package":"github.com/containerd/containerd/v2/core/events","Test":"TestHttp2SettingEnableConnectProtocol","Output":"--- PASS: TestHttp2SettingEnableConnectProtocol (0.00s)\n"}
+{"Time":"2026-06-29T15:27:00.25790595Z","Action":"pass","Package":"github.com/containerd/containerd/v2/core/events","Test":"TestHttp2SettingEnableConnectProtocol","Elapsed":0}
+{"Time":"2026-06-29T15:27:00.25794197Z","Action":"output","Package":"github.com/containerd/containerd/v2/core/events","Output":"PASS\n"}
+{"Time":"2026-06-29T15:27:00.25812908Z","Action":"output","Package":"github.com/containerd/containerd/v2/core/events","Output":"ok  \tgithub.com/containerd/containerd/v2/core/events\t0.004s\n"}
+{"Time":"2026-06-29T15:27:00.258205Z","Action":"pass","Package":"github.com/containerd/containerd/v2/core/events","Elapsed":0.005}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

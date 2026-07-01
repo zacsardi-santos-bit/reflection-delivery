@@ -1,0 +1,18 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && ./node_modules/.bin/jest components/divider/__tests__/demo.test.js --config .jest.js --cache=false --no-coverage --watchAll=false",
+  "test_files": [
+    "components/divider/__tests__/__snapshots__/demo.test.js.snap"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/components/divider/__tests__/demo.test.js::renders ./components/divider/demo/with-text.md correctly"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/components/divider/__tests__/demo.test.js::renders ./components/divider/demo/customize-style.md correctly",
+    "/workspace/repo/components/divider/__tests__/demo.test.js::renders ./components/divider/demo/horizontal.md correctly",
+    "/workspace/repo/components/divider/__tests__/demo.test.js::renders ./components/divider/demo/plain.md correctly",
+    "/workspace/repo/components/divider/__tests__/demo.test.js::renders ./components/divider/demo/vertical.md correctly"
+  ]
+}

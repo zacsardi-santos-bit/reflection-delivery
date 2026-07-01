@@ -1,0 +1,110 @@
+patching file ghost/core/test/e2e-api/admin/__snapshots__/emails.test.js.snap
+patching file ghost/core/test/integration/services/email-service/email-event-storage.test.js
+patching file ghost/core/test/integration/services/mailgun-email-suppression-list.test.js
+patching file ghost/core/test/utils/fixtures/data-generator.js
+patching file ghost/email-analytics-provider-mailgun/test/provider-mailgun.test.js
+patching file ghost/email-analytics-service/test/email-analytics-service.test.js
+
+
+  EmailAnalyticsService
+    getStatus
+      ✔ returns status object
+    getLastNonOpenedEventTimestamp
+      ✔ returns the queried timestamp before the fallback
+      ✔ returns the fallback if nothing is found
+    getLastSeenOpenedEventTimestamp
+      ✔ returns the queried timestamp before the fallback
+      ✔ returns the fallback if nothing is found
+      - returns the cached value before the fallback
+    Fetching events
+      fetchLatestOpenedEvents
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching from 2026-06-29T14:59:44.901Z until 2026-06-29T15:28:44.901Z (maxEvents: Infinity)
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching finished
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] No new events found
+        ✔ fetches only opened events
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Skipping fetchLatestOpenedEvents because end (Mon Jun 29 2026 15:28:44 GMT+0000 (Coordinated Universal Time)) is before begin (Tue Jun 30 2026 15:29:44 GMT+0000 (Coordinated Universal Time))
+        ✔ quits if the end is before the begin
+      fetchLatestNonOpenedEvents
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching from 2026-06-29T14:59:44.908Z until 2026-06-29T15:28:44.908Z (maxEvents: Infinity)
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching finished
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] No new events found
+        ✔ fetches only non-opened events
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Skipping fetchLatestNonOpenedEvents because end (Mon Jun 29 2026 15:28:44 GMT+0000 (Coordinated Universal Time)) is before begin (Tue Jun 30 2026 15:29:44 GMT+0000 (Coordinated Universal Time))
+        ✔ quits if the end is before the begin
+      fetchScheduled
+        ✔ returns 0 when nothing is scheduled
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Scheduling fetch from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z
+        ✔ returns 0 when fetch is canceled
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Scheduling fetch from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z (maxEvents: 100)
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching finished
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] No new events found
+        ✔ fetches events with correct parameters
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Scheduling fetch from 2023-01-02T00:00:00.000Z until 2023-01-01T00:00:00.000Z
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Ending fetchScheduled because end is before begin
+        ✔ bails when end date is before begin date
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Scheduling fetch from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z (maxEvents: 100)
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching finished
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] No new events found
+        ✔ resets fetchScheduledData when no events are fetched
+      fetchMissing
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching from 2026-06-29T12:59:44.917Z until 2026-06-29T14:59:44.917Z (maxEvents: Infinity)
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Fetching finished
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] No new events found
+        ✔ fetches missing events
+    processEventBatch
+      with functional processor
+        ✔ uses passed-in event processor
+        ✔ handles opened
+        ✔ handles delivered
+        ✔ handles failed (permanent)
+        ✔ handles failed (temporary)
+        ✔ handles unsubscribed
+        ✔ handles complained
+        ✔ doens't handle other event types
+      with null processor results
+        ✔ delivered returns unprocessable
+        ✔ opened returns unprocessable
+        ✔ failed (permanent) returns unprocessable
+        ✔ failed (temporary) returns unprocessable
+        ✔ unsubscribed returns unprocessable
+        ✔ complained returns unprocessable
+    aggregateStats
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Aggregating for 2 emails
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Aggregating for 2 emails took 1ms
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Aggregating for 2 members
+[2026-06-29 15:29:44] [36mINFO[39m [EmailAnalytics] Aggregating for 2 members took 0ms
+      ✔ calls appropriate query for each email id and member id
+    aggregateEmailStats
+      ✔ returns the query result
+    aggregateMemberStats
+      ✔ returns the query result
+
+  EventProcessingResult
+    ✔ has expected initial state
+    ✔ has expected populated initial state
+    ✔ has correct totalEvents value
+    merge()
+      ✔ adds counts and merges id arrays
+      ✔ deduplicates id arrays
+
+
+  37 passing (38ms)
+  1 pending
+
+
+
+  EmailAnalyticsProviderMailgun
+    fetchLatest()
+      ✔ passes the correct parameters to mailgun-client
+      ✔ can use end timestamp
+      ✔ can use end without begin
+      ✔ can use max events
+      ✔ uses custom tags when supplied
+      ✔ uses provided events when supplied
+
+
+  6 passing (8ms)
+
+reward=1 graded=6 found=6 failed=0 parsed=40 framework=mocha exit_code=0

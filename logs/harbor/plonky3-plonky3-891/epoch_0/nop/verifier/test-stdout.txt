@@ -1,0 +1,83 @@
+patching file fri/tests/fri.rs
+patching file fri/tests/pcs.rs
+patching file uni-stark/tests/fib_air.rs
+patching file uni-stark/tests/mul_air.rs
+   Compiling tracing-core v0.1.36
+   Compiling syn v2.0.118
+   Compiling clap_builder v4.6.0
+   Compiling regex-automata v0.4.14
+   Compiling num-integer v0.1.46
+   Compiling num-bigint v0.4.6
+   Compiling transpose v0.2.3
+   Compiling regex v1.12.4
+   Compiling clap v4.6.1
+   Compiling serde_derive v1.0.228
+   Compiling tracing-attributes v0.1.31
+   Compiling zerocopy-derive v0.8.52
+   Compiling thiserror-impl v2.0.18
+   Compiling thiserror v2.0.18
+   Compiling cobs v0.3.0
+   Compiling tracing v0.1.44
+   Compiling zerocopy v0.8.52
+   Compiling serde v1.0.228
+   Compiling p3-util v0.1.0 (/workspace/repo/util)
+   Compiling tinytemplate v1.2.1
+   Compiling postcard v1.1.3
+   Compiling p3-field v0.1.0 (/workspace/repo/field)
+   Compiling p3-matrix v0.1.0 (/workspace/repo/matrix)
+   Compiling p3-symmetric v0.1.0 (/workspace/repo/symmetric)
+   Compiling p3-challenger v0.1.0 (/workspace/repo/challenger)
+   Compiling p3-keccak v0.1.0 (/workspace/repo/keccak)
+   Compiling p3-dft v0.1.0 (/workspace/repo/dft)
+   Compiling p3-interpolation v0.1.0 (/workspace/repo/interpolation)
+   Compiling p3-air v0.1.0 (/workspace/repo/air)
+   Compiling p3-mds v0.1.0 (/workspace/repo/mds)
+   Compiling p3-commit v0.1.0 (/workspace/repo/commit)
+   Compiling half v2.7.1
+   Compiling p3-poseidon2 v0.1.0 (/workspace/repo/poseidon2)
+   Compiling p3-fri v0.1.0 (/workspace/repo/fri)
+   Compiling p3-merkle-tree v0.1.0 (/workspace/repo/merkle-tree)
+   Compiling p3-uni-stark v0.1.0 (/workspace/repo/uni-stark)
+   Compiling p3-monty-31 v0.1.0 (/workspace/repo/monty-31)
+   Compiling p3-mersenne-31 v0.1.0 (/workspace/repo/mersenne-31)
+   Compiling p3-goldilocks v0.1.0 (/workspace/repo/goldilocks)
+   Compiling ciborium-ll v0.2.2
+   Compiling ciborium v0.2.2
+   Compiling p3-circle v0.1.0 (/workspace/repo/circle)
+   Compiling p3-baby-bear v0.1.0 (/workspace/repo/baby-bear)
+   Compiling criterion v0.6.0
+error[E0432]: unresolved import `p3_fri::create_test_fri_params`
+  --> uni-stark/tests/fib_air.rs:10:43
+   |
+10 | use p3_fri::{HidingFriPcs, TwoAdicFriPcs, create_test_fri_params};
+   |                                           ^^^^^^^^^^^^^^^^^^^^^^
+   |                                           |
+   |                                           no `create_test_fri_params` in the root
+   |                                           help: a similar name exists in the module: `create_test_fri_config`
+
+error[E0432]: unresolved imports `p3_fri::FriParameters`, `p3_fri::create_test_fri_params_zk`
+  --> uni-stark/tests/mul_air.rs:14:14
+   |
+14 | use p3_fri::{FriParameters, HidingFriPcs, TwoAdicFriPcs, create_test_fri_params_zk};
+   |              ^^^^^^^^^^^^^                               ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |              |                                           |
+   |              |                                           no `create_test_fri_params_zk` in the root
+   |              |                                           help: a similar name exists in the module: `create_test_fri_config_zk`
+   |              no `FriParameters` in the root
+
+error[E0560]: struct `CirclePcs<Mersenne31, MerkleTreeMmcs<Mersenne31, u8, SerializingHasher<Keccak256Hash>, CompressionFunctionFromHasher<Keccak256Hash, 2, 32>, 32>, ExtensionMmcs<Mersenne31, BinomialExtensionField<Mersenne31, 3>, MerkleTreeMmcs<Mersenne31, u8, SerializingHasher<Keccak256Hash>, CompressionFunctionFromHasher<Keccak256Hash, 2, 32>, 32>>>` has no field named `fri_params`
+   --> uni-stark/tests/mul_air.rs:333:9
+    |
+333 |         fri_params,
+    |         ^^^^^^^^^^ `CirclePcs<Mersenne31, MerkleTreeMmcs<Mersenne31, u8, SerializingHasher<Keccak256Hash>, CompressionFunctionFromHasher<Keccak256Hash, 2, 32>, 32>, ExtensionMmcs<Mersenne31, BinomialExtensionField<Mersenne31, 3>, MerkleTreeMmcs<Mersenne31, u8, SerializingHasher<Keccak256Hash>, CompressionFunctionFromHasher<Keccak256Hash, 2, 32>, 32>>>` does not have this field
+    |
+    = note: available fields are: `fri_config`
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `p3-uni-stark` (test "fib_air") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+Some errors have detailed explanations: E0432, E0560.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `p3-uni-stark` (test "mul_air") due to 2 previous errors
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package p3-fri --package p3-uni-stark` exited with code 101
+reward=0 graded=58 found=0 failed=0 parsed=0 framework=cargo exit_code=101

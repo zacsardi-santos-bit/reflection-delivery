@@ -1,0 +1,7 @@
+patching file internal/plugin/slo/contrib/denominator_corrected_rules_v1/plugin_test.go
+{"ImportPath":"github.com/slok/sloth/internal/plugin/slo/contrib/denominator_corrected_rules_v1","Action":"build-output","Output":"github.com/slok/sloth/internal/plugin/slo/contrib/denominator_corrected_rules_v1: no non-test Go files in /workspace/repo/internal/plugin/slo/contrib/denominator_corrected_rules_v1\n"}
+{"ImportPath":"github.com/slok/sloth/internal/plugin/slo/contrib/denominator_corrected_rules_v1","Action":"build-fail"}
+{"Time":"2026-06-29T15:25:15.646230493Z","Action":"start","Package":"github.com/slok/sloth/internal/plugin/slo/contrib/denominator_corrected_rules_v1"}
+{"Time":"2026-06-29T15:25:15.646312603Z","Action":"output","Package":"github.com/slok/sloth/internal/plugin/slo/contrib/denominator_corrected_rules_v1","Output":"FAIL\tgithub.com/slok/sloth/internal/plugin/slo/contrib/denominator_corrected_rules_v1 [build failed]\n"}
+{"Time":"2026-06-29T15:25:15.646340423Z","Action":"fail","Package":"github.com/slok/sloth/internal/plugin/slo/contrib/denominator_corrected_rules_v1","Elapsed":0,"FailedBuild":"github.com/slok/sloth/internal/plugin/slo/contrib/denominator_corrected_rules_v1"}
+reward=0 graded=5 found=0 failed=0 parsed=1 framework=go exit_code=1

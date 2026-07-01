@@ -1,0 +1,34 @@
+patching file pkg/pod/creds_init_test.go
+patching file pkg/pod/entrypoint_lookup_test.go
+patching file pkg/pod/entrypoint_test.go
+patching file pkg/pod/pod_test.go (renamed from pkg/reconciler/taskrun/resources/pod_test.go)
+patching file pkg/pod/script_test.go
+patching file pkg/pod/workingdir_init_test.go
+patching file pkg/reconciler/taskrun/taskrun_test.go
+# github.com/tektoncd/pipeline/pkg/pod [github.com/tektoncd/pipeline/pkg/pod.test]
+/go/src/github.com/tektoncd/pipeline/pkg/pod/creds_init_test.go:120:4: kubeclient declared and not used
+/go/src/github.com/tektoncd/pipeline/pkg/pod/creds_init_test.go:121:25: invalid operation: cannot call non-function credsInit (untyped string constant "credential-initializer")
+/go/src/github.com/tektoncd/pipeline/pkg/pod/entrypoint_lookup_test.go:43:14: undefined: resolveEntrypoints
+/go/src/github.com/tektoncd/pipeline/pkg/pod/entrypoint_test.go:59:38: undefined: toolsMount
+/go/src/github.com/tektoncd/pipeline/pkg/pod/entrypoint_test.go:59:50: undefined: downwardMount
+/go/src/github.com/tektoncd/pipeline/pkg/pod/entrypoint_test.go:70:51: undefined: toolsMount
+/go/src/github.com/tektoncd/pipeline/pkg/pod/entrypoint_test.go:80:38: undefined: toolsMount
+/go/src/github.com/tektoncd/pipeline/pkg/pod/entrypoint_test.go:82:23: undefined: orderContainers
+/go/src/github.com/tektoncd/pipeline/pkg/pod/entrypoint_test.go:94:38: undefined: toolsMount
+/go/src/github.com/tektoncd/pipeline/pkg/pod/entrypoint_test.go:115:4: undefined: readyAnnotation
+/go/src/github.com/tektoncd/pipeline/pkg/pod/entrypoint_test.go:115:4: too many errors
+FAIL	github.com/tektoncd/pipeline/pkg/pod [build failed]
+# github.com/tektoncd/pipeline/pkg/reconciler/taskrun [github.com/tektoncd/pipeline/pkg/reconciler/taskrun.test]
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:291:20: undefined: pod.ManagedByLabelKey
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:291:43: undefined: pod.ManagedByLabelValue
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:330:20: undefined: pod.ManagedByLabelKey
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:330:43: undefined: pod.ManagedByLabelValue
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:553:20: undefined: pod.ManagedByLabelKey
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:553:43: undefined: pod.ManagedByLabelValue
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:591:20: undefined: pod.ManagedByLabelKey
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:591:43: undefined: pod.ManagedByLabelValue
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:630:20: undefined: pod.ManagedByLabelKey
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:630:43: undefined: pod.ManagedByLabelValue
+/go/src/github.com/tektoncd/pipeline/pkg/reconciler/taskrun/taskrun_test.go:630:43: too many errors
+FAIL	github.com/tektoncd/pipeline/pkg/reconciler/taskrun [build failed]
+reward=0 graded=103 found=103 failed=103 parsed=2 framework=go exit_code=1

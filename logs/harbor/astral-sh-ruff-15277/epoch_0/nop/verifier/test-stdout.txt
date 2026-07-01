@@ -1,0 +1,477 @@
+patching file crates/ruff_linter/resources/test/fixtures/ruff/RUF046.py
+   Compiling unicode-ident v1.0.14
+   Compiling proc-macro2 v1.0.92
+   Compiling memchr v2.7.4
+   Compiling cfg-if v1.0.0
+   Compiling serde v1.0.217
+   Compiling libc v0.2.169
+   Compiling ppv-lite86 v0.2.17
+   Compiling either v1.11.0
+   Compiling regex-syntax v0.8.5
+   Compiling siphasher v0.3.11
+   Compiling stable_deref_trait v1.2.0
+   Compiling rustversion v1.0.15
+   Compiling once_cell v1.20.2
+   Compiling heck v0.5.0
+   Compiling log v0.4.22
+   Compiling writeable v0.5.5
+   Compiling litemap v0.7.3
+   Compiling thiserror v1.0.67
+   Compiling ruff_text_size v0.0.0 (/workspace/repo/crates/ruff_text_size)
+   Compiling unicode-width v0.1.13
+   Compiling itertools v0.13.0
+   Compiling phf_shared v0.11.2
+   Compiling ryu v1.0.17
+   Compiling smallvec v1.13.2
+   Compiling itoa v1.0.11
+   Compiling getopts v0.2.21
+   Compiling rustc-hash v2.1.0
+   Compiling aho-corasick v1.1.3
+   Compiling ruff_source_file v0.0.0 (/workspace/repo/crates/ruff_source_file)
+   Compiling icu_locid_transform_data v1.5.0
+   Compiling icu_properties_data v1.5.0
+   Compiling glob v0.3.2
+   Compiling seahash v4.1.0
+   Compiling static_assertions v1.1.0
+   Compiling bitflags v2.6.0
+   Compiling phf v0.11.2
+   Compiling utf8_iter v1.0.4
+   Compiling hashbrown v0.15.2
+   Compiling icu_normalizer_data v1.5.0
+   Compiling fnv v1.0.7
+   Compiling tinyvec_macros v0.1.1
+   Compiling write16 v1.0.0
+   Compiling equivalent v1.0.1
+   Compiling ident_case v1.0.1
+   Compiling utf16_iter v1.0.5
+   Compiling strsim v0.10.0
+   Compiling tinyvec v1.6.0
+   Compiling autocfg v1.2.0
+   Compiling anyhow v1.0.95
+   Compiling unic-char-range v0.9.0
+   Compiling ucd-trie v0.1.6
+   Compiling thiserror v2.0.9
+   Compiling percent-encoding v2.3.1
+   Compiling unic-common v0.9.0
+   Compiling version-ranges v0.1.1
+   Compiling unic-ucd-version v0.9.0
+   Compiling unic-char-property v0.9.0
+   Compiling form_urlencoded v1.2.1
+   Compiling unicode-width v0.2.0
+   Compiling peg-runtime v0.8.3
+   Compiling winnow v0.6.18
+   Compiling lazy_static v1.4.0
+   Compiling newtype-uuid v1.1.3
+   Compiling num-traits v0.2.18
+   Compiling matches v0.1.10
+   Compiling serde_json v1.0.134
+   Compiling quote v1.0.38
+   Compiling filetime v0.2.25
+   Compiling getrandom v0.2.14
+   Compiling unscanny v0.1.0
+   Compiling paste v1.0.15
+   Compiling syn v2.0.93
+   Compiling rand_core v0.6.4
+   Compiling ruff_python_trivia v0.0.0 (/workspace/repo/crates/ruff_python_trivia)
+   Compiling utf8parse v0.2.1
+   Compiling regex-automata v0.4.8
+   Compiling unicode-normalization v0.1.24
+   Compiling vte_generate_state_changes v0.1.1
+   Compiling rand_chacha v0.3.1
+   Compiling peg-macros v0.8.4
+   Compiling unic-ucd-category v0.9.0
+   Compiling annotate-snippets v0.6.1
+   Compiling castaway v0.2.3
+   Compiling urlencoding v2.1.3
+   Compiling rand v0.8.5
+   Compiling boxcar v0.2.7
+   Compiling iana-time-zone v0.1.60
+   Compiling chic v1.2.2
+   Compiling ruff_python_stdlib v0.0.0 (/workspace/repo/crates/ruff_python_stdlib)
+   Compiling quick-xml v0.37.1
+   Compiling is-docker v0.2.0
+   Compiling path-dedot v3.1.1
+   Compiling similar v2.6.0
+   Compiling yansi-term v0.1.2
+   Compiling vte v0.11.1
+   Compiling is-wsl v0.4.0
+   Compiling phf_generator v0.11.2
+   Compiling annotate-snippets v0.9.2
+   Compiling path-absolutize v3.1.1
+   Compiling console v0.15.8
+   Compiling colored v2.2.0
+   Compiling phf_codegen v0.11.2
+   Compiling fern v0.7.1
+   Compiling pathdiff v0.2.3
+   Compiling unicode_names2_generator v1.3.0
+   Compiling linked-hash-map v0.5.6
+   Compiling typed-arena v2.0.2
+   Compiling natord v1.0.9
+   Compiling strip-ansi-escapes v0.2.0
+   Compiling chrono v0.4.39
+   Compiling unicode_names2 v1.3.0
+   Compiling peg v0.8.4
+   Compiling regex v1.11.1
+   Compiling bstr v1.11.1
+   Compiling globset v0.4.15
+   Compiling synstructure v0.13.1
+   Compiling darling_core v0.20.8
+   Compiling test-case-core v3.3.1
+   Compiling ruff_cache v0.0.0 (/workspace/repo/crates/ruff_cache)
+   Compiling serde_derive v1.0.217
+   Compiling zerofrom-derive v0.1.4
+   Compiling yoke-derive v0.7.4
+   Compiling zerovec-derive v0.10.3
+   Compiling displaydoc v0.2.5
+   Compiling thiserror-impl v1.0.67
+   Compiling icu_provider_macros v1.5.0
+   Compiling is-macro v0.3.7
+   Compiling ruff_macros v0.0.0 (/workspace/repo/crates/ruff_macros)
+   Compiling uuid-macro-internal v1.11.0
+   Compiling thiserror-impl v2.0.9
+   Compiling libcst_derive v1.4.0
+   Compiling strum_macros v0.26.4
+   Compiling test-case-macros v3.3.1
+   Compiling darling_macro v0.20.8
+   Compiling uuid v1.11.0
+   Compiling test-case v3.3.1
+   Compiling pest v2.7.11
+   Compiling libcst v1.5.1
+   Compiling zerofrom v0.1.4
+   Compiling yoke v0.7.4
+   Compiling zerovec v0.10.4
+   Compiling strum v0.26.3
+   Compiling darling v0.20.8
+   Compiling serde_with_macros v3.12.0
+   Compiling ruff_index v0.0.0 (/workspace/repo/crates/ruff_index)
+   Compiling tinystr v0.7.6
+   Compiling icu_collections v1.5.0
+   Compiling pest_meta v2.7.11
+   Compiling icu_locid v1.5.0
+   Compiling pest_generator v2.7.11
+   Compiling icu_provider v1.5.0
+   Compiling icu_locid_transform v1.5.0
+   Compiling pest_derive v2.7.11
+   Compiling icu_properties v1.5.1
+   Compiling compact_str v0.8.1
+   Compiling indexmap v2.7.0
+   Compiling serde_spanned v0.6.7
+   Compiling toml_datetime v0.6.8
+   Compiling rust-stemmers v1.2.0
+   Compiling serde_with v3.12.0
+   Compiling pep440_rs v0.7.3
+   Compiling ruff_diagnostics v0.0.0 (/workspace/repo/crates/ruff_diagnostics)
+   Compiling toml_edit v0.22.20
+   Compiling quick-junit v0.5.1
+   Compiling ruff_python_ast v0.0.0 (/workspace/repo/crates/ruff_python_ast)
+   Compiling ruff_notebook v0.0.0 (/workspace/repo/crates/ruff_notebook)
+   Compiling insta v1.41.1
+   Compiling imperative v1.0.6
+   Compiling icu_normalizer v1.5.0
+   Compiling idna_adapter v1.2.0
+   Compiling toml v0.8.19
+   Compiling idna v1.0.3
+   Compiling url v2.5.4
+   Compiling pep508_rs v0.9.1
+   Compiling ruff_python_parser v0.0.0 (/workspace/repo/crates/ruff_python_parser)
+   Compiling ruff_python_literal v0.0.0 (/workspace/repo/crates/ruff_python_literal)
+   Compiling pyproject-toml v0.13.4
+   Compiling ruff_python_semantic v0.0.0 (/workspace/repo/crates/ruff_python_semantic)
+   Compiling ruff_python_codegen v0.0.0 (/workspace/repo/crates/ruff_python_codegen)
+   Compiling ruff_python_index v0.0.0 (/workspace/repo/crates/ruff_python_index)
+   Compiling ruff_linter v0.8.6 (/workspace/repo/crates/ruff_linter)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 56.04s
+────────────
+ Nextest run ID 932d1424-d8c5-4d1e-b940-7a7bf652cdf8 with nextest profile: default
+    Starting 1 test across 1 binary (2217 tests skipped)
+        FAIL [   0.173s] (1/1) ruff_linter rules::ruff::tests::preview_rules::rule_unnecessarycasttoint_path_new_ruf046_py_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__preview__RUF046_RUF046.py.snap
+    Snapshot: preview__RUF046_RUF046.py
+    Source: crates/ruff_linter/src/rules/ruff/mod.rs:437
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+     1000  1000 │ 160 |   
+     1001  1001 │ 161 | / int(round(1,
+     1002  1002 │ 162 | |           0))
+     1003  1003 │     | |_____________^ RUF046
+           1004 │+163 |   
+           1005 │+164 |   # function calls may need to retain parentheses
+     1004  1006 │     |
+     1005  1007 │     = help: Remove unnecessary `int` call
+     1006  1008 │ 
+     1007  1009 │ ℹ Safe fix
+    ┈┈┈┈┈┈┈┈┈┈┈┈┼┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+     1010  1012 │ 160 160 | 
+     1011  1013 │ 161     |-int(round(1,
+     1012  1014 │ 162     |-          0))
+     1013  1015 │     161 |+round(1,
+     1014       │-    162 |+          0)
+           1016 │+    162 |+          0)
+           1017 │+163 163 | 
+           1018 │+164 164 | # function calls may need to retain parentheses
+           1019 │+165 165 | # if the parentheses for the call itself
+           1020 │+
+           1021 │+RUF046.py:168:1: RUF046 [*] Value being cast to `int` is already an integer
+           1022 │+    |
+           1023 │+166 |   # lie on the next line.
+           1024 │+167 |   # See https://github.com/astral-sh/ruff/issues/15263
+           1025 │+168 | / int(round
+           1026 │+169 | | (1))
+           1027 │+    | |____^ RUF046
+           1028 │+170 |   
+           1029 │+171 |   int(round # a comment
+           1030 │+    |
+           1031 │+    = help: Remove unnecessary `int` call
+           1032 │+
+           1033 │+ℹ Safe fix
+           1034 │+165 165 | # if the parentheses for the call itself
+           1035 │+166 166 | # lie on the next line.
+           1036 │+167 167 | # See https://github.com/astral-sh/ruff/issues/15263
+           1037 │+168     |-int(round
+           1038 │+169     |-(1))
+           1039 │+    168 |+round
+           1040 │+    169 |+(1)
+           1041 │+170 170 | 
+           1042 │+171 171 | int(round # a comment
+           1043 │+172 172 | # and another comment
+           1044 │+
+           1045 │+RUF046.py:171:1: RUF046 [*] Value being cast to `int` is already an integer
+           1046 │+    |
+           1047 │+169 |   (1))
+           1048 │+170 |   
+           1049 │+171 | / int(round # a comment
+           1050 │+172 | | # and another comment
+           1051 │+173 | | (10)
+           1052 │+174 | | )
+           1053 │+    | |_^ RUF046
+           1054 │+175 |   
+           1055 │+176 |   int(round (17)) # this is safe without parens
+           1056 │+    |
+           1057 │+    = help: Remove unnecessary `int` call
+           1058 │+
+           1059 │+ℹ Safe fix
+           1060 │+168 168 | int(round
+           1061 │+169 169 | (1))
+           1062 │+170 170 | 
+           1063 │+171     |-int(round # a comment
+           1064 │+    171 |+round # a comment
+           1065 │+172 172 | # and another comment
+           1066 │+173 173 | (10)
+           1067 │+174     |-)
+           1068 │+175 174 | 
+           1069 │+176 175 | int(round (17)) # this is safe without parens
+           1070 │+177 176 | 
+           1071 │+
+           1072 │+RUF046.py:176:1: RUF046 [*] Value being cast to `int` is already an integer
+           1073 │+    |
+           1074 │+174 | )
+           1075 │+175 | 
+           1076 │+176 | int(round (17)) # this is safe without parens
+           1077 │+    | ^^^^^^^^^^^^^^^ RUF046
+           1078 │+177 | 
+           1079 │+178 | int( round (
+           1080 │+    |
+           1081 │+    = help: Remove unnecessary `int` call
+           1082 │+
+           1083 │+ℹ Safe fix
+           1084 │+173 173 | (10)
+           1085 │+174 174 | )
+           1086 │+175 175 | 
+           1087 │+176     |-int(round (17)) # this is safe without parens
+           1088 │+    176 |+round (17) # this is safe without parens
+           1089 │+177 177 | 
+           1090 │+178 178 | int( round (
+           1091 │+179 179 |                 17
+           1092 │+
+           1093 │+RUF046.py:178:1: RUF046 [*] Value being cast to `int` is already an integer
+           1094 │+    |
+           1095 │+176 |   int(round (17)) # this is safe without parens
+           1096 │+177 |   
+           1097 │+178 | / int( round (
+           1098 │+179 | |                 17
+           1099 │+180 | |             )) # this is also safe without parens
+           1100 │+    | |______________^ RUF046
+           1101 │+181 |   
+           1102 │+182 |   int((round)  # Comment
+           1103 │+    |
+           1104 │+    = help: Remove unnecessary `int` call
+           1105 │+
+           1106 │+ℹ Safe fix
+           1107 │+175 175 | 
+           1108 │+176 176 | int(round (17)) # this is safe without parens
+           1109 │+177 177 | 
+           1110 │+178     |-int( round (
+           1111 │+    178 |+round (
+           1112 │+179 179 |                 17
+           1113 │+180     |-            )) # this is also safe without parens
+           1114 │+    180 |+            ) # this is also safe without parens
+           1115 │+181 181 | 
+           1116 │+182 182 | int((round)  # Comment
+           1117 │+183 183 | (42)
+           1118 │+
+           1119 │+RUF046.py:182:1: RUF046 [*] Value being cast to `int` is already an integer
+           1120 │+    |
+           1121 │+180 |               )) # this is also safe without parens
+           1122 │+181 |   
+           1123 │+182 | / int((round)  # Comment
+           1124 │+183 | | (42)
+           1125 │+184 | | )
+           1126 │+    | |_^ RUF046
+           1127 │+185 |   
+           1128 │+186 |   int((round  # Comment
+           1129 │+    |
+           1130 │+    = help: Remove unnecessary `int` call
+           1131 │+
+           1132 │+ℹ Safe fix
+           1133 │+179 179 |                 17
+           1134 │+180 180 |             )) # this is also safe without parens
+           1135 │+181 181 | 
+           1136 │+182     |-int((round)  # Comment
+           1137 │+    182 |+(round)  # Comment
+           1138 │+183 183 | (42)
+           1139 │+184     |-)
+           1140 │+185 184 | 
+           1141 │+186 185 | int((round  # Comment
+           1142 │+187 186 | )(42)
+           1143 │+
+           1144 │+RUF046.py:186:1: RUF046 [*] Value being cast to `int` is already an integer
+           1145 │+    |
+           1146 │+184 |   )
+           1147 │+185 |   
+           1148 │+186 | / int((round  # Comment
+           1149 │+187 | | )(42)
+           1150 │+188 | | )
+           1151 │+    | |_^ RUF046
+           1152 │+189 |   
+           1153 │+190 |   int(  # Unsafe fix because of this comment
+           1154 │+    |
+           1155 │+    = help: Remove unnecessary `int` call
+           1156 │+
+           1157 │+ℹ Safe fix
+           1158 │+183 183 | (42)
+           1159 │+184 184 | )
+           1160 │+185 185 | 
+           1161 │+186     |-int((round  # Comment
+           1162 │+    186 |+(round  # Comment
+           1163 │+187 187 | )(42)
+           1164 │+188     |-)
+           1165 │+189 188 | 
+           1166 │+190 189 | int(  # Unsafe fix because of this comment
+           1167 │+191 190 | (  # Comment
+           1168 │+
+           1169 │+RUF046.py:190:1: RUF046 [*] Value being cast to `int` is already an integer
+           1170 │+    |
+           1171 │+188 |   )
+           1172 │+189 |   
+           1173 │+190 | / int(  # Unsafe fix because of this comment
+           1174 │+191 | | (  # Comment
+           1175 │+192 | |     (round
+           1176 │+193 | | )  # Comment
+           1177 │+194 | | )(42)
+           1178 │+195 | | )
+           1179 │+    | |_^ RUF046
+           1180 │+196 |   
+           1181 │+197 |   int(
+           1182 │+    |
+           1183 │+    = help: Remove unnecessary `int` call
+           1184 │+
+           1185 │+ℹ Safe fix
+           1186 │+187 187 | )(42)
+           1187 │+188 188 | )
+           1188 │+189 189 | 
+           1189 │+190     |-int(  # Unsafe fix because of this comment
+           1190 │+191 190 | (  # Comment
+           1191 │+192 191 |     (round
+           1192 │+193 192 | )  # Comment
+           1193 │+194 193 | )(42)
+           1194 │+195     |-)
+           1195 │+196 194 | 
+           1196 │+197 195 | int(
+           1197 │+198 196 |     round(
+           1198 │+
+           1199 │+RUF046.py:197:1: RUF046 [*] Value being cast to `int` is already an integer
+           1200 │+    |
+           1201 │+195 |   )
+           1202 │+196 |   
+           1203 │+197 | / int(
+           1204 │+198 | |     round(
+           1205 │+199 | |         42
+           1206 │+200 | |     ) # unsafe fix because of this comment
+           1207 │+201 | | )
+           1208 │+    | |_^ RUF046
+           1209 │+202 |   
+           1210 │+203 |   int(
+           1211 │+    |
+           1212 │+    = help: Remove unnecessary `int` call
+           1213 │+
+           1214 │+ℹ Safe fix
+           1215 │+194 194 | )(42)
+           1216 │+195 195 | )
+           1217 │+196 196 | 
+           1218 │+197     |-int(
+           1219 │+198     |-    round(
+           1220 │+    197 |+round(
+           1221 │+199 198 |         42
+           1222 │+200     |-    ) # unsafe fix because of this comment
+           1223 │+201     |-)
+           1224 │+    199 |+    )
+           1225 │+202 200 | 
+           1226 │+203 201 | int(
+           1227 │+204 202 |     round(
+           1228 │+
+           1229 │+RUF046.py:203:1: RUF046 [*] Value being cast to `int` is already an integer
+           1230 │+    |
+           1231 │+201 |   )
+           1232 │+202 |   
+           1233 │+203 | / int(
+           1234 │+204 | |     round(
+           1235 │+205 | |         42
+           1236 │+206 | |     ) 
+           1237 │+207 | | # unsafe fix because of this comment
+           1238 │+208 | | )
+           1239 │+    | |_^ RUF046
+           1240 │+    |
+           1241 │+    = help: Remove unnecessary `int` call
+           1242 │+
+           1243 │+ℹ Safe fix
+           1244 │+200 200 |     ) # unsafe fix because of this comment
+           1245 │+201 201 | )
+           1246 │+202 202 | 
+           1247 │+203     |-int(
+           1248 │+204     |-    round(
+           1249 │+    203 |+round(
+           1250 │+205 204 |         42
+           1251 │+206     |-    ) 
+           1252 │+207     |-# unsafe fix because of this comment
+           1253 │+208     |-)
+           1254 │+    205 |+    )
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::ruff::tests::preview_rules::rule_unnecessarycasttoint_path_new_ruf046_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::ruff::tests::preview_rules::rule_unnecessarycasttoint_path_new_ruf046_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2217 filtered out; finished in 0.14s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__preview__RUF046_RUF046.py.snap.new
+    thread 'rules::ruff::tests::preview_rules::rule_unnecessarycasttoint_path_new_ruf046_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.41.1/src/runtime.rs:680:13:
+    snapshot assertion for 'preview__RUF046_RUF046.py' failed in line 437
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   0.180s] 1 test run: 0 passed, 1 failed, 2217 skipped
+        FAIL [   0.173s] (1/1) ruff_linter rules::ruff::tests::preview_rules::rule_unnecessarycasttoint_path_new_ruf046_py_expects
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

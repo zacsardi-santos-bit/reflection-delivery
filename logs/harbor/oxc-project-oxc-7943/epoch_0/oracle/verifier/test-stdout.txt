@@ -1,0 +1,12 @@
+patching file crates/oxc_linter/src/rules/eslint/no_restricted_imports.rs
+Hunk #1 succeeded at 1660 (offset 46 lines).
+   Compiling oxc_linter v0.15.2 (/workspace/repo/crates/oxc_linter)
+    Finished `test` profile [unoptimized] target(s) in 15.96s
+────────────
+ Nextest run ID 6e1b9c65-9cf9-4d7d-938e-c371d6f008eb with nextest profile: default
+    Starting 2 tests across 2 binaries (648 tests skipped)
+        PASS [   0.072s] (1/2) oxc_linter rules::eslint::no_restricted_imports::test_no_restricted_imports_object_config
+        PASS [   0.200s] (2/2) oxc_linter rules::eslint::no_restricted_imports::test
+────────────
+     Summary [   0.202s] 2 tests run: 2 passed, 648 skipped
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

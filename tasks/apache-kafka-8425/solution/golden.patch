@@ -1,0 +1,322 @@
+diff --git a/streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamsPartitionAssignor.java b/streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamsPartitionAssignor.java
+index 9603d865da..ce5070289c 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamsPartitionAssignor.java
++++ b/streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamsPartitionAssignor.java
+@@ -800,7 +800,13 @@ public class StreamsPartitionAssignor implements ConsumerPartitionAssignor, Conf
+                     log.debug("Fetched end offsets did not contain the changelog {} of task {}", changelog, task);
+                     throw new IllegalStateException("Could not get end offset for " + changelog);
+                 }
+-                taskEndOffsetSums.computeIfPresent(task, (id, curOffsetSum) -> curOffsetSum + offsetResult.offset());
++                final long newEndOffsetSum = taskEndOffsetSums.get(task) + offsetResult.offset();
++                if (newEndOffsetSum < 0) {
++                    taskEndOffsetSums.put(task, Long.MAX_VALUE);
++                    break;
++                } else {
++                    taskEndOffsetSums.put(task, newEndOffsetSum);
++                }
+             }
+         }
+         return taskEndOffsetSums;
+diff --git a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignor.java b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignor.java
+index 5404733962..57e744e439 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignor.java
++++ b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignor.java
+@@ -47,10 +47,10 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+     public Map<UUID, List<TaskId>> assign(final SortedMap<TaskId, SortedSet<RankedClient>> statefulTasksToRankedClients,
+                                           final int balanceFactor,
+                                           final Set<UUID> clients,
+-                                          final Map<UUID, Integer> clientsToNumberOfStreamThreads) {
++                                          final Map<UUID, Integer> clientsToNumberOfStreamThreads,
++                                          final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients) {
+         checkClientsAndNumberOfStreamThreads(clientsToNumberOfStreamThreads, clients);
+         final Map<UUID, List<TaskId>> assignment = initAssignment(clients);
+-        final Map<TaskId, List<UUID>> tasksToCaughtUpClients = tasksToCaughtUpClients(statefulTasksToRankedClients);
+         assignTasksWithCaughtUpClients(
+             assignment,
+             tasksToCaughtUpClients,
+@@ -101,28 +101,6 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+         return assignment;
+     }
+ 
+-    /**
+-     * Maps tasks to clients with caught-up states for the task.
+-     *
+-     * @param statefulTasksToRankedClients ranked clients map
+-     * @return map from tasks with caught-up clients to the list of client candidates
+-     */
+-    private Map<TaskId, List<UUID>> tasksToCaughtUpClients(final SortedMap<TaskId, SortedSet<RankedClient>> statefulTasksToRankedClients) {
+-        final Map<TaskId, List<UUID>> taskToCaughtUpClients = new HashMap<>();
+-        for (final SortedMap.Entry<TaskId, SortedSet<RankedClient>> taskToRankedClients : statefulTasksToRankedClients.entrySet()) {
+-            final SortedSet<RankedClient> rankedClients = taskToRankedClients.getValue();
+-            for (final RankedClient rankedClient : rankedClients) {
+-                if (rankedClient.rank() == Task.LATEST_OFFSET || rankedClient.rank() == 0) {
+-                    final TaskId taskId = taskToRankedClients.getKey();
+-                    taskToCaughtUpClients.computeIfAbsent(taskId, ignored -> new ArrayList<>()).add(rankedClient.clientId());
+-                } else {
+-                    break;
+-                }
+-            }
+-        }
+-        return taskToCaughtUpClients;
+-    }
+-
+     /**
+      * Maps a task to the client that host the task according to the previous assignment.
+      *
+@@ -145,7 +123,7 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+      * @param tasksToCaughtUpClients map from task UUIDs to lists of caught-up clients
+      */
+     private void assignTasksWithCaughtUpClients(final Map<UUID, List<TaskId>> assignment,
+-                                                final Map<TaskId, List<UUID>> tasksToCaughtUpClients,
++                                                final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients,
+                                                 final Map<TaskId, SortedSet<RankedClient>> statefulTasksToRankedClients) {
+         // If a task was previously assigned to a client that is caught-up and still exists, give it back to the client
+         final Map<TaskId, UUID> previouslyRunningTasksToPreviousClients =
+@@ -157,7 +135,7 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+         // If a task's previous host client was not caught-up or no longer exists, assign it to the caught-up client
+         // with the least tasks
+         for (final TaskId taskId : unassignedTasksWithCaughtUpClients) {
+-            final List<UUID> caughtUpClients = tasksToCaughtUpClients.get(taskId);
++            final SortedSet<UUID> caughtUpClients = tasksToCaughtUpClients.get(taskId);
+             UUID clientWithLeastTasks = null;
+             int minTaskPerStreamThread = Integer.MAX_VALUE;
+             for (final UUID client : caughtUpClients) {
+@@ -179,7 +157,7 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+      * @param statefulTasksToRankedClients ranked clients map
+      */
+     private void assignTasksWithoutCaughtUpClients(final Map<UUID, List<TaskId>> assignment,
+-                                                   final Map<TaskId, List<UUID>> tasksToCaughtUpClients,
++                                                   final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients,
+                                                    final Map<TaskId, SortedSet<RankedClient>> statefulTasksToRankedClients) {
+         final SortedSet<TaskId> unassignedTasksWithoutCaughtUpClients = new TreeSet<>(statefulTasksToRankedClients.keySet());
+         unassignedTasksWithoutCaughtUpClients.removeAll(tasksToCaughtUpClients.keySet());
+@@ -215,7 +193,7 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+     private void balance(final Map<UUID, List<TaskId>> assignment,
+                          final int balanceFactor,
+                          final Map<TaskId, SortedSet<RankedClient>> statefulTasksToRankedClients,
+-                         final Map<TaskId, List<UUID>> tasksToCaughtUpClients,
++                         final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients,
+                          final Map<UUID, Integer> clientsToNumberOfStreamThreads) {
+         final List<UUID> clients = new ArrayList<>(assignment.keySet());
+         Collections.sort(clients);
+@@ -244,7 +222,7 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+     private void maybeMoveSourceTasksWithoutCaughtUpClients(final Map<UUID, List<TaskId>> assignment,
+                                                             final int balanceFactor,
+                                                             final Map<TaskId, SortedSet<RankedClient>> statefulTasksToRankedClients,
+-                                                            final Map<TaskId, List<UUID>> tasksToCaughtUpClients,
++                                                            final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients,
+                                                             final Map<UUID, Integer> clientsToNumberOfStreamThreads,
+                                                             final UUID sourceClientId,
+                                                             final List<TaskId> sourceTasks) {
+@@ -267,7 +245,7 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+ 
+     private void maybeMoveSourceTasksWithCaughtUpClients(final Map<UUID, List<TaskId>> assignment,
+                                                          final int balanceFactor,
+-                                                         final Map<TaskId, List<UUID>> tasksToCaughtUpClients,
++                                                         final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients,
+                                                          final Map<UUID, Integer> clientsToNumberOfStreamThreads,
+                                                          final UUID sourceClientId,
+                                                          final List<TaskId> sourceTasks) {
+@@ -295,7 +273,7 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+      * @return a list of task UUIDs that does not have a caught-up client
+      */
+     private List<TaskId> assignedTasksWithoutCaughtUpClientsThatMightBeMoved(final List<TaskId> tasks,
+-                                                                             final Map<TaskId, List<UUID>> tasksToCaughtUpClients) {
++                                                                             final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients) {
+         return assignedTasksThatMightBeMoved(tasks, tasksToCaughtUpClients, false);
+     }
+ 
+@@ -307,12 +285,12 @@ public class DefaultStateConstrainedBalancedAssignor implements StateConstrained
+      * @return a list of task UUIDs that have a caught-up client
+      */
+     private List<TaskId> assignedTasksWithCaughtUpClientsThatMightBeMoved(final List<TaskId> tasks,
+-                                                                          final Map<TaskId, List<UUID>> tasksToCaughtUpClients) {
++                                                                          final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients) {
+         return assignedTasksThatMightBeMoved(tasks, tasksToCaughtUpClients, true);
+     }
+ 
+     private List<TaskId> assignedTasksThatMightBeMoved(final List<TaskId> tasks,
+-                                                       final Map<TaskId, List<UUID>> tasksToCaughtUpClients,
++                                                       final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients,
+                                                        final boolean isCaughtUp) {
+         final List<TaskId> tasksWithCaughtUpClients = new ArrayList<>();
+         for (int i = tasks.size() - 1; i >= 0; --i) {
+diff --git a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/HighAvailabilityTaskAssignor.java b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/HighAvailabilityTaskAssignor.java
+index 09fc8c5a1e..f63661035e 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/HighAvailabilityTaskAssignor.java
++++ b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/HighAvailabilityTaskAssignor.java
+@@ -18,6 +18,7 @@ package org.apache.kafka.streams.processor.internals.assignment;
+ 
+ import static java.util.Arrays.asList;
+ import static org.apache.kafka.streams.processor.internals.assignment.RankedClient.buildClientRankingsByTask;
++import static org.apache.kafka.streams.processor.internals.assignment.RankedClient.tasksToCaughtUpClients;
+ import static org.apache.kafka.streams.processor.internals.assignment.TaskMovement.getMovements;
+ 
+ import java.util.ArrayList;
+@@ -55,6 +56,7 @@ public class HighAvailabilityTaskAssignor implements TaskAssignor {
+     private final AssignmentConfigs configs;
+ 
+     private final SortedMap<TaskId, SortedSet<RankedClient>> statefulTasksToRankedCandidates;
++    private final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients;
+ 
+     public HighAvailabilityTaskAssignor(final Map<UUID, ClientState> clientStates,
+                                         final Set<TaskId> allTasks,
+@@ -77,6 +79,7 @@ public class HighAvailabilityTaskAssignor implements TaskAssignor {
+ 
+         statefulTasksToRankedCandidates =
+             buildClientRankingsByTask(statefulTasks, clientStates, configs.acceptableRecoveryLag);
++        tasksToCaughtUpClients = tasksToCaughtUpClients(statefulTasksToRankedCandidates);
+     }
+ 
+     @Override
+@@ -97,7 +100,8 @@ public class HighAvailabilityTaskAssignor implements TaskAssignor {
+                 statefulTasksToRankedCandidates,
+                 configs.balanceFactor,
+                 sortedClients,
+-                clientsToNumberOfThreads
++                clientsToNumberOfThreads,
++                tasksToCaughtUpClients
+             );
+ 
+         // ---------------- Warmup Replica Tasks ---------------- //
+@@ -112,6 +116,7 @@ public class HighAvailabilityTaskAssignor implements TaskAssignor {
+         final List<TaskMovement> movements = getMovements(
+             statefulActiveTaskAssignment,
+             balancedStatefulActiveTaskAssignment,
++            tasksToCaughtUpClients,
+             configs.maxWarmupReplicas);
+ 
+         for (final TaskMovement movement : movements) {
+diff --git a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/RankedClient.java b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/RankedClient.java
+index d73bf2afd8..9fba11b696 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/RankedClient.java
++++ b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/RankedClient.java
+@@ -18,6 +18,7 @@ package org.apache.kafka.streams.processor.internals.assignment;
+ 
+ import static org.apache.kafka.streams.processor.internals.assignment.SubscriptionInfo.UNKNOWN_OFFSET_SUM;
+ 
++import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Set;
+@@ -78,6 +79,28 @@ public class RankedClient implements Comparable<RankedClient> {
+         return Objects.hash(clientId, rank);
+     }
+ 
++    /**
++     * Maps tasks to clients with caught-up states for the task.
++     *
++     * @param statefulTasksToRankedClients ranked clients map
++     * @return map from tasks with caught-up clients to the list of client candidates
++     */
++    static Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients(final SortedMap<TaskId, SortedSet<RankedClient>> statefulTasksToRankedClients) {
++        final Map<TaskId, SortedSet<UUID>> taskToCaughtUpClients = new HashMap<>();
++        for (final SortedMap.Entry<TaskId, SortedSet<RankedClient>> taskToRankedClients : statefulTasksToRankedClients.entrySet()) {
++            final SortedSet<RankedClient> rankedClients = taskToRankedClients.getValue();
++            for (final RankedClient rankedClient : rankedClients) {
++                if (rankedClient.rank() == Task.LATEST_OFFSET || rankedClient.rank() == 0) {
++                    final TaskId taskId = taskToRankedClients.getKey();
++                    taskToCaughtUpClients.computeIfAbsent(taskId, ignored -> new TreeSet<>()).add(rankedClient.clientId());
++                } else {
++                    break;
++                }
++            }
++        }
++        return taskToCaughtUpClients;
++    }
++
+     /**
+      * Rankings are computed as follows, with lower being more caught up:
+      *      Rank -1: active running task
+diff --git a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/StateConstrainedBalancedAssignor.java b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/StateConstrainedBalancedAssignor.java
+index 8f8921a5b3..a52ea2a936 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/StateConstrainedBalancedAssignor.java
++++ b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/StateConstrainedBalancedAssignor.java
+@@ -30,5 +30,6 @@ public interface StateConstrainedBalancedAssignor {
+     Map<UUID, List<TaskId>> assign(final SortedMap<TaskId, SortedSet<RankedClient>> statefulTasksToRankedClients,
+                                    final int balanceFactor,
+                                    final Set<UUID> clients,
+-                                   final Map<UUID, Integer> clientsToNumberOfStreamThreads);
++                                   final Map<UUID, Integer> clientsToNumberOfStreamThread,
++                                   final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients);
+ }
+diff --git a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovement.java b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovement.java
+index 872c9f6766..6394b7b717 100644
+--- a/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovement.java
++++ b/streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovement.java
+@@ -17,10 +17,13 @@
+ package org.apache.kafka.streams.processor.internals.assignment;
+ 
+ import java.util.HashMap;
++import java.util.Iterator;
+ import java.util.LinkedList;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Objects;
++import java.util.Set;
++import java.util.SortedSet;
+ import java.util.UUID;
+ import org.apache.kafka.streams.processor.TaskId;
+ import org.slf4j.Logger;
+@@ -59,13 +62,17 @@ public class TaskMovement {
+     }
+ 
+     /**
+-     * Returns a list of the movements of tasks from statefulActiveTaskAssignment to balancedStatefulActiveTaskAssignment
++     * Computes the movement of tasks from the state constrained to the balanced assignment. Tasks whose destination
++     * clients are caught-up, or whose source clients are not caught-up, will be moved immediately.
++     *
+      * @param statefulActiveTaskAssignment the initial assignment, with source clients
+      * @param balancedStatefulActiveTaskAssignment the final assignment, with destination clients
++     * @return list of the task movements from statefulActiveTaskAssignment to balancedStatefulActiveTaskAssignment
+      */
+     static List<TaskMovement> getMovements(final Map<UUID, List<TaskId>> statefulActiveTaskAssignment,
+-        final Map<UUID, List<TaskId>> balancedStatefulActiveTaskAssignment,
+-        final int maxWarmupReplicas) {
++                                           final Map<UUID, List<TaskId>> balancedStatefulActiveTaskAssignment,
++                                           final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients,
++                                           final int maxWarmupReplicas) {
+         if (statefulActiveTaskAssignment.size() != balancedStatefulActiveTaskAssignment.size()) {
+             throw new IllegalStateException("Tried to compute movements but assignments differ in size.");
+         }
+@@ -82,20 +89,34 @@ public class TaskMovement {
+         for (final Map.Entry<UUID, List<TaskId>> sourceClientEntry : statefulActiveTaskAssignment.entrySet()) {
+             final UUID source = sourceClientEntry.getKey();
+ 
+-            for (final TaskId task : sourceClientEntry.getValue()) {
++            final Iterator<TaskId> sourceClientTasksIterator = sourceClientEntry.getValue().iterator();
++            while (sourceClientTasksIterator.hasNext()) {
++                final TaskId task = sourceClientTasksIterator.next();
+                 final UUID destination = taskToDestinationClient.get(task);
+                 if (destination == null) {
+                     log.error("Task {} is assigned to client {} in initial assignment but has no owner in the final " +
+                                   "balanced assignment.", task, source);
+                     throw new IllegalStateException("Found task in initial assignment that was not assigned in the final.");
+                 } else if (!source.equals(destination)) {
+-                    movements.add(new TaskMovement(task, source, destination));
+-                    if (movements.size() == maxWarmupReplicas) {
+-                        return movements;
++                    if (destinationClientIsCaughtUp(task, destination, tasksToCaughtUpClients)) {
++                        sourceClientTasksIterator.remove();
++                        statefulActiveTaskAssignment.get(destination).add(task);
++                    } else {
++                        movements.add(new TaskMovement(task, source, destination));
++                        if (movements.size() == maxWarmupReplicas) {
++                            return movements;
++                        }
+                     }
+                 }
+             }
+         }
+         return movements;
+     }
+-}
+\ No newline at end of file
++
++    private static boolean destinationClientIsCaughtUp(final TaskId task,
++                                                       final UUID destination,
++                                                       final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients) {
++        final Set<UUID> caughtUpClients = tasksToCaughtUpClients.get(task);
++        return caughtUpClients != null && caughtUpClients.contains(destination);
++    }
++}

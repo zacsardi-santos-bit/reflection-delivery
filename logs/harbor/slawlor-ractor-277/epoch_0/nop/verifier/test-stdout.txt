@@ -1,0 +1,116 @@
+patching file ractor/src/actor/tests/mod.rs
+patching file ractor/src/actor/tests/supervisor.rs
+   Compiling ractor v0.12.3 (/workspace/repo/ractor)
+error[E0599]: no method named `stop_children_and_wait` found for struct `ActorRef<()>` in the current scope
+    --> ractor/src/actor/tests/supervisor.rs:1281:24
+     |
+1281 |             this_actor.stop_children_and_wait(None, None).await;
+     |                        ^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: ractor/src/actor/actor_ref.rs:21:1
+     |
+21   | pub struct ActorRef<TMessage> {
+     | ----------------------------- method `stop_children_and_wait` not found for this struct
+     |
+help: there is a method `stop_and_wait` with a similar name
+     |
+1281 |             this_actor.stop_and_wait(None, None).await;
+     |                        ~~~~~~~~~~~~~
+
+error[E0599]: no method named `stop_children` found for struct `ActorRef<()>` in the current scope
+    --> ractor/src/actor/tests/supervisor.rs:1389:20
+     |
+1389 |     supervisor_ref.stop_children(None);
+     |                    ^^^^^^^^^^^^^ method not found in `ActorRef<()>`
+     |
+    ::: ractor/src/actor/actor_ref.rs:21:1
+     |
+21   | pub struct ActorRef<TMessage> {
+     | ----------------------------- method `stop_children` not found for this struct
+
+error[E0599]: no method named `stop_children_and_wait` found for struct `ActorRef<()>` in the current scope
+    --> ractor/src/actor/tests/supervisor.rs:1363:24
+     |
+1363 |             this_actor.stop_children_and_wait(None, None).await;
+     |                        ^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: ractor/src/actor/actor_ref.rs:21:1
+     |
+21   | pub struct ActorRef<TMessage> {
+     | ----------------------------- method `stop_children_and_wait` not found for this struct
+     |
+help: there is a method `stop_and_wait` with a similar name
+     |
+1363 |             this_actor.stop_and_wait(None, None).await;
+     |                        ~~~~~~~~~~~~~
+
+error[E0599]: no method named `drain_children_and_wait` found for struct `ActorRef<()>` in the current scope
+    --> ractor/src/actor/tests/supervisor.rs:1446:24
+     |
+1446 |             this_actor.drain_children_and_wait(None).await;
+     |                        ^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: ractor/src/actor/actor_ref.rs:21:1
+     |
+21   | pub struct ActorRef<TMessage> {
+     | ----------------------------- method `drain_children_and_wait` not found for this struct
+     |
+help: there is a method `kill_and_wait` with a similar name
+     |
+1446 |             this_actor.kill_and_wait(None).await;
+     |                        ~~~~~~~~~~~~~
+
+error[E0599]: no method named `drain_children` found for struct `ActorRef<()>` in the current scope
+    --> ractor/src/actor/tests/supervisor.rs:1554:20
+     |
+1554 |     supervisor_ref.drain_children();
+     |                    ^^^^^^^^^^^^^^ method not found in `ActorRef<()>`
+     |
+    ::: ractor/src/actor/actor_ref.rs:21:1
+     |
+21   | pub struct ActorRef<TMessage> {
+     | ----------------------------- method `drain_children` not found for this struct
+
+error[E0599]: no method named `drain_children_and_wait` found for struct `ActorRef<()>` in the current scope
+    --> ractor/src/actor/tests/supervisor.rs:1528:24
+     |
+1528 |             this_actor.drain_children_and_wait(None).await;
+     |                        ^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: ractor/src/actor/actor_ref.rs:21:1
+     |
+21   | pub struct ActorRef<TMessage> {
+     | ----------------------------- method `drain_children_and_wait` not found for this struct
+     |
+help: there is a method `kill_and_wait` with a similar name
+     |
+1528 |             this_actor.kill_and_wait(None).await;
+     |                        ~~~~~~~~~~~~~
+
+error[E0599]: no method named `is_message_type_of` found for struct `ActorCell` in the current scope
+    --> ractor/src/actor/tests/mod.rs:1150:34
+     |
+1150 |     assert_eq!(Some(true), actor.is_message_type_of::<EmptyMessage>());
+     |                                  ^^^^^^^^^^^^^^^^^^ method not found in `ActorCell`
+     |
+    ::: ractor/src/actor/actor_cell.rs:198:1
+     |
+198  | pub struct ActorCell {
+     | -------------------- method `is_message_type_of` not found for this struct
+
+error[E0599]: no method named `is_message_type_of` found for struct `ActorCell` in the current scope
+    --> ractor/src/actor/tests/mod.rs:1151:35
+     |
+1151 |     assert_eq!(Some(false), actor.is_message_type_of::<i64>());
+     |                                   ^^^^^^^^^^^^^^^^^^ method not found in `ActorCell`
+     |
+    ::: ractor/src/actor/actor_cell.rs:198:1
+     |
+198  | pub struct ActorCell {
+     | -------------------- method `is_message_type_of` not found for this struct
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `ractor` (lib test) due to 8 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package ractor` exited with code 101
+reward=0 graded=5 found=0 failed=0 parsed=0 framework=cargo exit_code=101

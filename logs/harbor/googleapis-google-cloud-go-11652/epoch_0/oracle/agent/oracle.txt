@@ -1,0 +1,9 @@
+patching file spanner/client.go
+patching file spanner/go.mod
+patching file spanner/grpc_client.go
+patching file spanner/ot_metrics.go
+patching file spanner/pdml.go
+patching file spanner/read.go
+patching file spanner/sessionclient.go
+patching file spanner/trace.go
+patching file spanner/transaction.go

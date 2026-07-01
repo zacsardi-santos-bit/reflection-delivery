@@ -1,0 +1,7 @@
+patching file kolibri/core/exams/api.py
+patching file kolibri/core/exams/models.py
+patching file kolibri/core/exams/serializers.py
+patching file kolibri/plugins/coach/assets/src/composables/quizCreationSpecs.js
+patching file kolibri/plugins/coach/assets/src/composables/useQuizCreation.js
+patching file kolibri/plugins/coach/assets/src/views/plan/CreateExamPage/index.vue
+patching file kolibri/plugins/coach/class_summary_api.py

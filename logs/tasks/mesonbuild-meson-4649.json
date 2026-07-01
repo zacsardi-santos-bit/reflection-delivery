@@ -1,0 +1,23 @@
+{
+ "task": "mesonbuild-meson-4649",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "FIXABLE",
+  "reason_code": "FIXABLE_STRUCTURE",
+  "evidence": "test.patch = only 'diff --git a/README.md ... +' (blank line); the FAIL_TO_PASS test 'def test_summary(self):' and its fixture 'test cases/unit/74 summary/subprojects/sub2/meson.build' are added by golden.patch (run_unittests.py hunk), not by test.patch"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

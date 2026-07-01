@@ -1,0 +1,13 @@
+patching file README.md
+patching file examples/column-sort/index.js
+patching file examples/customize-columns/index.js
+patching file examples/customize-sorting/index.js
+patching file examples/examples.js
+patching file examples/resizable-columns/index.js
+patching file examples/simple/index.js
+patching file package.json
+patching file src/MUIDataTable.js
+patching file src/components/Popover.js
+patching file src/components/TableResize.js
+patching file src/hooks/useColumnDrop.js
+patching file src/utils.js

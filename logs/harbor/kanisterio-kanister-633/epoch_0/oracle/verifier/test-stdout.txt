@@ -1,0 +1,11 @@
+patching file pkg/kube/snapshot/snapshot_test.go
+{"Time":"2026-06-29T15:27:07.093545616Z","Action":"start","Package":"github.com/kanisterio/kanister/pkg/kube/snapshot"}
+{"Time":"2026-06-29T15:27:07.104988259Z","Action":"run","Package":"github.com/kanisterio/kanister/pkg/kube/snapshot","Test":"Test"}
+{"Time":"2026-06-29T15:27:07.10503996Z","Action":"output","Package":"github.com/kanisterio/kanister/pkg/kube/snapshot","Test":"Test","Output":"=== RUN   Test\n"}
+{"Time":"2026-06-29T15:27:07.114932276Z","Action":"output","Package":"github.com/kanisterio/kanister/pkg/kube/snapshot","Test":"Test","Output":"OK: 4 passed, 2 skipped\n"}
+{"Time":"2026-06-29T15:27:07.114998878Z","Action":"output","Package":"github.com/kanisterio/kanister/pkg/kube/snapshot","Test":"Test","Output":"--- PASS: Test (0.01s)\n"}
+{"Time":"2026-06-29T15:27:07.115020908Z","Action":"pass","Package":"github.com/kanisterio/kanister/pkg/kube/snapshot","Test":"Test","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:07.115064348Z","Action":"output","Package":"github.com/kanisterio/kanister/pkg/kube/snapshot","Output":"PASS\n"}
+{"Time":"2026-06-29T15:27:07.115606942Z","Action":"output","Package":"github.com/kanisterio/kanister/pkg/kube/snapshot","Output":"ok  \tgithub.com/kanisterio/kanister/pkg/kube/snapshot\t0.022s\n"}
+{"Time":"2026-06-29T15:27:07.115676647Z","Action":"pass","Package":"github.com/kanisterio/kanister/pkg/kube/snapshot","Elapsed":0.022}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

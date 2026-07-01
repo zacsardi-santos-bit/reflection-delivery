@@ -1,0 +1,23 @@
+{
+ "task": "streamdal-plumber-321",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch asserts output[0].Source == 'Collection - Test Collection' and 'Dead Letter Stage - Test Stage'; golden uses fmt.Sprintf(\"Collection - %s\", ...) and strings.Title(r.Type)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 24,
+  "shallow": true
+ }
+}

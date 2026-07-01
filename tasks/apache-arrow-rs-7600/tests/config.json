@@ -1,0 +1,35 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p parquet --features arrow,encryption --test encryption --no-fail-fast",
+  "test_files": [
+    "parquet/tests/encryption/encryption.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(19/22) parquet::encryption encryption::test_uniform_encryption_plaintext_footer_with_key_retriever",
+    "( 1/22) parquet::encryption encryption::test_write_encrypted_column",
+    "( 2/22) parquet::encryption encryption::test_aes_ctr_encryption",
+    "( 3/22) parquet::encryption encryption::test_decrypting_without_decryption_properties_fails",
+    "( 4/22) parquet::encryption encryption::test_non_uniform_encryption_plaintext_footer",
+    "( 5/22) parquet::encryption encryption::test_non_uniform_encryption",
+    "( 6/22) parquet::encryption encryption::test_plaintext_footer_signature_verification",
+    "( 7/22) parquet::encryption encryption::test_non_uniform_encryption_plaintext_footer_with_key_retriever",
+    "( 8/22) parquet::encryption encryption::test_non_uniform_encryption_disabled_aad_storage",
+    "( 9/22) parquet::encryption encryption::test_uniform_encryption_with_key_retriever",
+    "(10/22) parquet::encryption encryption::test_write_non_uniform_encryption_column_missmatch",
+    "(11/22) parquet::encryption encryption::test_plaintext_footer_read_without_decryption",
+    "(12/22) parquet::encryption encryption::test_decrypt_page_index_uniform",
+    "(13/22) parquet::encryption encryption::test_retrieve_row_group_statistics_after_encrypted_write",
+    "(14/22) parquet::encryption encryption::test_decrypt_page_index_non_uniform",
+    "(15/22) parquet::encryption encryption::test_non_uniform_encryption_with_key_retriever",
+    "(16/22) parquet::encryption encryption::test_write_encrypted_struct_field",
+    "(17/22) parquet::encryption encryption::test_uniform_encryption",
+    "(18/22) parquet::encryption encryption::test_uniform_encryption_roundtrip"
+  ],
+  "PASS_TO_PASS": [
+    "(20/22) parquet::encryption encryption::test_write_non_uniform_encryption",
+    "(21/22) parquet::encryption encryption::test_write_uniform_encryption",
+    "(22/22) parquet::encryption encryption::test_write_uniform_encryption_plaintext_footer"
+  ]
+}

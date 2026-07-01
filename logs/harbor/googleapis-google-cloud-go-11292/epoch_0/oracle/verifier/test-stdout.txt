@@ -1,0 +1,801 @@
+patching file pubsub/v2/apiv1/schema_client_example_go123_test.go
+patching file pubsub/v2/apiv1/schema_client_example_test.go
+patching file pubsub/v2/apiv1/subscription_admin_client_example_go123_test.go
+patching file pubsub/v2/apiv1/subscription_admin_client_example_test.go
+patching file pubsub/v2/apiv1/topic_admin_client_example_go123_test.go
+patching file pubsub/v2/apiv1/topic_admin_client_example_test.go
+patching file pubsub/v2/example_subscription_iterator_test.go
+patching file pubsub/v2/example_test.go
+patching file pubsub/v2/example_topic_iterator_test.go
+patching file pubsub/v2/integration_test.go
+patching file pubsub/v2/iterator_test.go
+patching file pubsub/v2/mock_test.go
+patching file pubsub/v2/pstest_test.go
+patching file pubsub/v2/pubsub_test.go
+patching file pubsub/v2/pullstream_test.go
+patching file pubsub/v2/schema_test.go
+patching file pubsub/v2/streaming_pull_test.go
+patching file pubsub/v2/subscription_test.go
+patching file pubsub/v2/timeout_test.go
+patching file pubsub/v2/topic_test.go
+patching file pubsub/v2/trace_test.go
+{"Time":"2026-06-29T15:29:33.855842518Z","Action":"start","Package":"cloud.google.com/go/pubsub/v2"}
+{"Time":"2026-06-29T15:29:33.856014967Z","Action":"start","Package":"cloud.google.com/go/pubsub/v2/apiv1"}
+{"Time":"2026-06-29T15:29:33.862266607Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2/apiv1","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-06-29T15:29:33.862333956Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2/apiv1","Output":"PASS\n"}
+{"Time":"2026-06-29T15:29:33.862617145Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2/apiv1","Output":"ok  \tcloud.google.com/go/pubsub/v2/apiv1\t0.006s [no tests to run]\n"}
+{"Time":"2026-06-29T15:29:33.862679585Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2/apiv1","Elapsed":0.007}
+{"Time":"2026-06-29T15:29:33.868029439Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerCancel"}
+{"Time":"2026-06-29T15:29:33.881634694Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerCancel","Output":"=== RUN   TestFlowControllerCancel\n"}
+{"Time":"2026-06-29T15:29:33.881734813Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerCancel","Output":"=== PAUSE TestFlowControllerCancel\n"}
+{"Time":"2026-06-29T15:29:33.881908102Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerCancel"}
+{"Time":"2026-06-29T15:29:33.881932262Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerLargeRequest"}
+{"Time":"2026-06-29T15:29:33.881952942Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerLargeRequest","Output":"=== RUN   TestFlowControllerLargeRequest\n"}
+{"Time":"2026-06-29T15:29:33.881975592Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerLargeRequest","Output":"=== PAUSE TestFlowControllerLargeRequest\n"}
+{"Time":"2026-06-29T15:29:33.881996112Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerLargeRequest"}
+{"Time":"2026-06-29T15:29:33.882017322Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerNoStarve"}
+{"Time":"2026-06-29T15:29:33.882037582Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerNoStarve","Output":"=== RUN   TestFlowControllerNoStarve\n"}
+{"Time":"2026-06-29T15:29:33.882058852Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerNoStarve","Output":"=== PAUSE TestFlowControllerNoStarve\n"}
+{"Time":"2026-06-29T15:29:33.882079451Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerNoStarve"}
+{"Time":"2026-06-29T15:29:33.882105931Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerSaturation"}
+{"Time":"2026-06-29T15:29:33.882126141Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerSaturation","Output":"=== RUN   TestFlowControllerSaturation\n"}
+{"Time":"2026-06-29T15:29:33.882147451Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerSaturation","Output":"=== PAUSE TestFlowControllerSaturation\n"}
+{"Time":"2026-06-29T15:29:33.882167121Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerSaturation"}
+{"Time":"2026-06-29T15:29:33.882187921Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount"}
+{"Time":"2026-06-29T15:29:33.882209761Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount","Output":"=== RUN   TestFlowControllerUnboundedCount\n"}
+{"Time":"2026-06-29T15:29:33.882230821Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount","Output":"=== PAUSE TestFlowControllerUnboundedCount\n"}
+{"Time":"2026-06-29T15:29:33.882250631Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount"}
+{"Time":"2026-06-29T15:29:33.8822846Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount2"}
+{"Time":"2026-06-29T15:29:33.88230635Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount2","Output":"=== RUN   TestFlowControllerUnboundedCount2\n"}
+{"Time":"2026-06-29T15:29:33.88232897Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount2","Output":"=== PAUSE TestFlowControllerUnboundedCount2\n"}
+{"Time":"2026-06-29T15:29:33.88234902Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount2"}
+{"Time":"2026-06-29T15:29:33.882371Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedBytes"}
+{"Time":"2026-06-29T15:29:33.88239136Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedBytes","Output":"=== RUN   TestFlowControllerUnboundedBytes\n"}
+{"Time":"2026-06-29T15:29:33.88241421Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedBytes","Output":"=== PAUSE TestFlowControllerUnboundedBytes\n"}
+{"Time":"2026-06-29T15:29:33.88243455Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedBytes"}
+{"Time":"2026-06-29T15:29:33.88245673Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Admin"}
+{"Time":"2026-06-29T15:29:33.88247706Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Admin","Output":"=== RUN   TestIntegration_Admin\n"}
+{"Time":"2026-06-29T15:29:33.882501269Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Admin","Output":"=== PAUSE TestIntegration_Admin\n"}
+{"Time":"2026-06-29T15:29:33.882521959Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Admin"}
+{"Time":"2026-06-29T15:29:33.882543429Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishReceive"}
+{"Time":"2026-06-29T15:29:33.882564159Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishReceive","Output":"=== RUN   TestIntegration_PublishReceive\n"}
+{"Time":"2026-06-29T15:29:33.882585059Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishReceive","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.882617969Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishReceive","Output":"--- SKIP: TestIntegration_PublishReceive (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.882639299Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishReceive","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.882664249Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_LargePublishSize"}
+{"Time":"2026-06-29T15:29:33.882684379Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_LargePublishSize","Output":"=== RUN   TestIntegration_LargePublishSize\n"}
+{"Time":"2026-06-29T15:29:33.882704788Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_LargePublishSize","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.882727358Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_LargePublishSize","Output":"--- SKIP: TestIntegration_LargePublishSize (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.882748378Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_LargePublishSize","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.882769038Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CancelReceive"}
+{"Time":"2026-06-29T15:29:33.882789308Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CancelReceive","Output":"=== RUN   TestIntegration_CancelReceive\n"}
+{"Time":"2026-06-29T15:29:33.882820568Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CancelReceive","Output":"=== PAUSE TestIntegration_CancelReceive\n"}
+{"Time":"2026-06-29T15:29:33.882840828Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CancelReceive"}
+{"Time":"2026-06-29T15:29:33.882875128Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_NeverExpire"}
+{"Time":"2026-06-29T15:29:33.882895638Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_NeverExpire","Output":"=== RUN   TestIntegration_CreateSubscription_NeverExpire\n"}
+{"Time":"2026-06-29T15:29:33.882918067Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_NeverExpire","Output":"=== PAUSE TestIntegration_CreateSubscription_NeverExpire\n"}
+{"Time":"2026-06-29T15:29:33.882938377Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_NeverExpire"}
+{"Time":"2026-06-29T15:29:33.882962757Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription"}
+{"Time":"2026-06-29T15:29:33.882983537Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription","Output":"=== RUN   TestIntegration_UpdateSubscription\n"}
+{"Time":"2026-06-29T15:29:33.883006837Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription","Output":"=== PAUSE TestIntegration_UpdateSubscription\n"}
+{"Time":"2026-06-29T15:29:33.883027077Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription"}
+{"Time":"2026-06-29T15:29:33.883049187Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription_ExpirationPolicy"}
+{"Time":"2026-06-29T15:29:33.883070207Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription_ExpirationPolicy","Output":"=== RUN   TestIntegration_UpdateSubscription_ExpirationPolicy\n"}
+{"Time":"2026-06-29T15:29:33.883093257Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription_ExpirationPolicy","Output":"=== PAUSE TestIntegration_UpdateSubscription_ExpirationPolicy\n"}
+{"Time":"2026-06-29T15:29:33.883114376Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription_ExpirationPolicy"}
+{"Time":"2026-06-29T15:29:33.883136146Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateTopicLabels"}
+{"Time":"2026-06-29T15:29:33.883156656Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateTopicLabels","Output":"=== RUN   TestIntegration_UpdateTopicLabels\n"}
+{"Time":"2026-06-29T15:29:33.883177876Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateTopicLabels","Output":"=== PAUSE TestIntegration_UpdateTopicLabels\n"}
+{"Time":"2026-06-29T15:29:33.883197826Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateTopicLabels"}
+{"Time":"2026-06-29T15:29:33.883218836Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublicTopic"}
+{"Time":"2026-06-29T15:29:33.883238686Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublicTopic","Output":"=== RUN   TestIntegration_PublicTopic\n"}
+{"Time":"2026-06-29T15:29:33.883260606Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublicTopic","Output":"=== PAUSE TestIntegration_PublicTopic\n"}
+{"Time":"2026-06-29T15:29:33.883281356Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublicTopic"}
+{"Time":"2026-06-29T15:29:33.883363425Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Errors"}
+{"Time":"2026-06-29T15:29:33.883411455Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Errors","Output":"=== RUN   TestIntegration_Errors\n"}
+{"Time":"2026-06-29T15:29:33.883435535Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Errors","Output":"=== PAUSE TestIntegration_Errors\n"}
+{"Time":"2026-06-29T15:29:33.883455875Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Errors"}
+{"Time":"2026-06-29T15:29:33.883479195Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_TopicLevel"}
+{"Time":"2026-06-29T15:29:33.883499665Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_TopicLevel","Output":"=== RUN   TestIntegration_MessageStoragePolicy_TopicLevel\n"}
+{"Time":"2026-06-29T15:29:33.883521355Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_TopicLevel","Output":"=== PAUSE TestIntegration_MessageStoragePolicy_TopicLevel\n"}
+{"Time":"2026-06-29T15:29:33.883541154Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_TopicLevel"}
+{"Time":"2026-06-29T15:29:33.883563924Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_ProjectLevel"}
+{"Time":"2026-06-29T15:29:33.883584334Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_ProjectLevel","Output":"=== RUN   TestIntegration_MessageStoragePolicy_ProjectLevel\n"}
+{"Time":"2026-06-29T15:29:33.883606754Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_ProjectLevel","Output":"=== PAUSE TestIntegration_MessageStoragePolicy_ProjectLevel\n"}
+{"Time":"2026-06-29T15:29:33.883627784Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_ProjectLevel"}
+{"Time":"2026-06-29T15:29:33.883649354Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_KMS"}
+{"Time":"2026-06-29T15:29:33.883669664Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_KMS","Output":"=== RUN   TestIntegration_CreateTopic_KMS\n"}
+{"Time":"2026-06-29T15:29:33.883691734Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_KMS","Output":"=== PAUSE TestIntegration_CreateTopic_KMS\n"}
+{"Time":"2026-06-29T15:29:33.883711684Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_KMS"}
+{"Time":"2026-06-29T15:29:33.883732943Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_MessageStoragePolicy"}
+{"Time":"2026-06-29T15:29:33.883752903Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_MessageStoragePolicy","Output":"=== RUN   TestIntegration_CreateTopic_MessageStoragePolicy\n"}
+{"Time":"2026-06-29T15:29:33.883773683Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_MessageStoragePolicy","Output":"=== PAUSE TestIntegration_CreateTopic_MessageStoragePolicy\n"}
+{"Time":"2026-06-29T15:29:33.883793823Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_MessageStoragePolicy"}
+{"Time":"2026-06-29T15:29:33.883814063Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_Basic"}
+{"Time":"2026-06-29T15:29:33.883833523Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_Basic","Output":"=== RUN   TestIntegration_OrderedKeys_Basic\n"}
+{"Time":"2026-06-29T15:29:33.883858563Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_Basic","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.883897513Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_Basic","Output":"--- SKIP: TestIntegration_OrderedKeys_Basic (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.883920323Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_Basic","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.883942612Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_JSON"}
+{"Time":"2026-06-29T15:29:33.883962942Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_JSON","Output":"=== RUN   TestIntegration_OrderedKeys_JSON\n"}
+{"Time":"2026-06-29T15:29:33.883983182Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_JSON","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.884004342Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_JSON","Output":"--- SKIP: TestIntegration_OrderedKeys_JSON (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.884024742Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_JSON","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.884045422Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_ResumePublish"}
+{"Time":"2026-06-29T15:29:33.884065812Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_ResumePublish","Output":"=== RUN   TestIntegration_OrderedKeys_ResumePublish\n"}
+{"Time":"2026-06-29T15:29:33.884086412Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_ResumePublish","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.884108092Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_ResumePublish","Output":"--- SKIP: TestIntegration_OrderedKeys_ResumePublish (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.884128492Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_ResumePublish","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.884150281Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_SubscriptionOrdering"}
+{"Time":"2026-06-29T15:29:33.884169971Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_SubscriptionOrdering","Output":"=== RUN   TestIntegration_OrderedKeys_SubscriptionOrdering\n"}
+{"Time":"2026-06-29T15:29:33.884190221Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_SubscriptionOrdering","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.884211691Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_SubscriptionOrdering","Output":"--- SKIP: TestIntegration_OrderedKeys_SubscriptionOrdering (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.884232201Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderedKeys_SubscriptionOrdering","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.884252671Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderingWithExactlyOnce"}
+{"Time":"2026-06-29T15:29:33.884272111Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderingWithExactlyOnce","Output":"=== RUN   TestIntegration_OrderingWithExactlyOnce\n"}
+{"Time":"2026-06-29T15:29:33.884292191Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderingWithExactlyOnce","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.884314001Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderingWithExactlyOnce","Output":"--- SKIP: TestIntegration_OrderingWithExactlyOnce (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.884343281Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_OrderingWithExactlyOnce","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.88436813Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_DeadLetterPolicy"}
+{"Time":"2026-06-29T15:29:33.88438836Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_DeadLetterPolicy","Output":"=== RUN   TestIntegration_CreateSubscription_DeadLetterPolicy\n"}
+{"Time":"2026-06-29T15:29:33.88441009Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_DeadLetterPolicy","Output":"=== PAUSE TestIntegration_CreateSubscription_DeadLetterPolicy\n"}
+{"Time":"2026-06-29T15:29:33.88442991Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_DeadLetterPolicy"}
+{"Time":"2026-06-29T15:29:33.88445047Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_DeliveryAttempt"}
+{"Time":"2026-06-29T15:29:33.88447112Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_DeliveryAttempt","Output":"=== RUN   TestIntegration_DeadLetterPolicy_DeliveryAttempt\n"}
+{"Time":"2026-06-29T15:29:33.88449206Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_DeliveryAttempt","Output":"=== PAUSE TestIntegration_DeadLetterPolicy_DeliveryAttempt\n"}
+{"Time":"2026-06-29T15:29:33.88451163Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_DeliveryAttempt"}
+{"Time":"2026-06-29T15:29:33.88453235Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_ClearDeadLetter"}
+{"Time":"2026-06-29T15:29:33.88455289Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_ClearDeadLetter","Output":"=== RUN   TestIntegration_DeadLetterPolicy_ClearDeadLetter\n"}
+{"Time":"2026-06-29T15:29:33.884574249Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_ClearDeadLetter","Output":"=== PAUSE TestIntegration_DeadLetterPolicy_ClearDeadLetter\n"}
+{"Time":"2026-06-29T15:29:33.884594699Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_ClearDeadLetter"}
+{"Time":"2026-06-29T15:29:33.884615219Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_BadEndpoint"}
+{"Time":"2026-06-29T15:29:33.884635109Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_BadEndpoint","Output":"=== RUN   TestIntegration_BadEndpoint\n"}
+{"Time":"2026-06-29T15:29:33.884656779Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_BadEndpoint","Output":"=== PAUSE TestIntegration_BadEndpoint\n"}
+{"Time":"2026-06-29T15:29:33.884676369Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_BadEndpoint"}
+{"Time":"2026-06-29T15:29:33.884696929Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Filter_CreateSubscription"}
+{"Time":"2026-06-29T15:29:33.884716299Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Filter_CreateSubscription","Output":"=== RUN   TestIntegration_Filter_CreateSubscription\n"}
+{"Time":"2026-06-29T15:29:33.884736929Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Filter_CreateSubscription","Output":"=== PAUSE TestIntegration_Filter_CreateSubscription\n"}
+{"Time":"2026-06-29T15:29:33.884756589Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Filter_CreateSubscription"}
+{"Time":"2026-06-29T15:29:33.884784168Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_RetryPolicy"}
+{"Time":"2026-06-29T15:29:33.884804788Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_RetryPolicy","Output":"=== RUN   TestIntegration_RetryPolicy\n"}
+{"Time":"2026-06-29T15:29:33.884826048Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_RetryPolicy","Output":"=== PAUSE TestIntegration_RetryPolicy\n"}
+{"Time":"2026-06-29T15:29:33.884846288Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_RetryPolicy"}
+{"Time":"2026-06-29T15:29:33.884876798Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetachSubscription"}
+{"Time":"2026-06-29T15:29:33.884896498Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetachSubscription","Output":"=== RUN   TestIntegration_DetachSubscription\n"}
+{"Time":"2026-06-29T15:29:33.884917058Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetachSubscription","Output":"=== PAUSE TestIntegration_DetachSubscription\n"}
+{"Time":"2026-06-29T15:29:33.884936748Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetachSubscription"}
+{"Time":"2026-06-29T15:29:33.884957128Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_SchemaAdmin"}
+{"Time":"2026-06-29T15:29:33.884976448Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_SchemaAdmin","Output":"=== RUN   TestIntegration_SchemaAdmin\n"}
+{"Time":"2026-06-29T15:29:33.884998077Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_SchemaAdmin","Output":"=== PAUSE TestIntegration_SchemaAdmin\n"}
+{"Time":"2026-06-29T15:29:33.885017827Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_SchemaAdmin"}
+{"Time":"2026-06-29T15:29:33.885038227Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateSchema"}
+{"Time":"2026-06-29T15:29:33.885057657Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateSchema","Output":"=== RUN   TestIntegration_ValidateSchema\n"}
+{"Time":"2026-06-29T15:29:33.885078367Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateSchema","Output":"=== PAUSE TestIntegration_ValidateSchema\n"}
+{"Time":"2026-06-29T15:29:33.885097937Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateSchema"}
+{"Time":"2026-06-29T15:29:33.885119037Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateMessage"}
+{"Time":"2026-06-29T15:29:33.885139827Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateMessage","Output":"=== RUN   TestIntegration_ValidateMessage\n"}
+{"Time":"2026-06-29T15:29:33.885161357Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateMessage","Output":"=== PAUSE TestIntegration_ValidateMessage\n"}
+{"Time":"2026-06-29T15:29:33.885181107Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateMessage"}
+{"Time":"2026-06-29T15:29:33.885201476Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicRetention"}
+{"Time":"2026-06-29T15:29:33.885221086Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicRetention","Output":"=== RUN   TestIntegration_TopicRetention\n"}
+{"Time":"2026-06-29T15:29:33.885241026Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicRetention","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.885262856Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicRetention","Output":"--- SKIP: TestIntegration_TopicRetention (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.885289896Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicRetention","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.885311266Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ExactlyOnceDelivery_PublishReceive"}
+{"Time":"2026-06-29T15:29:33.885330886Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ExactlyOnceDelivery_PublishReceive","Output":"=== RUN   TestIntegration_ExactlyOnceDelivery_PublishReceive\n"}
+{"Time":"2026-06-29T15:29:33.885350906Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ExactlyOnceDelivery_PublishReceive","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.885372166Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ExactlyOnceDelivery_PublishReceive","Output":"--- SKIP: TestIntegration_ExactlyOnceDelivery_PublishReceive (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.885392695Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ExactlyOnceDelivery_PublishReceive","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.885413305Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicUpdateSchema"}
+{"Time":"2026-06-29T15:29:33.885432675Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicUpdateSchema","Output":"=== RUN   TestIntegration_TopicUpdateSchema\n"}
+{"Time":"2026-06-29T15:29:33.885452705Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicUpdateSchema","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.885474035Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicUpdateSchema","Output":"--- SKIP: TestIntegration_TopicUpdateSchema (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.885494435Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_TopicUpdateSchema","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.885514845Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetectProjectID"}
+{"Time":"2026-06-29T15:29:33.885534995Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetectProjectID","Output":"=== RUN   TestIntegration_DetectProjectID\n"}
+{"Time":"2026-06-29T15:29:33.885555495Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetectProjectID","Output":"2026/06/29 15:29:33 No 'Application Default Credentials' found.\n"}
+{"Time":"2026-06-29T15:29:33.885575605Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetectProjectID","Output":"    integration_test.go:2161: test credentials not present, skipping\n"}
+{"Time":"2026-06-29T15:29:33.885596935Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetectProjectID","Output":"--- SKIP: TestIntegration_DetectProjectID (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.885617494Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetectProjectID","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.885637814Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishCompression"}
+{"Time":"2026-06-29T15:29:33.885657314Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishCompression","Output":"=== RUN   TestIntegration_PublishCompression\n"}
+{"Time":"2026-06-29T15:29:33.885677314Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishCompression","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:29:33.885699274Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishCompression","Output":"--- SKIP: TestIntegration_PublishCompression (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.885727244Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublishCompression","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.885747784Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMakeBatches"}
+{"Time":"2026-06-29T15:29:33.885767564Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMakeBatches","Output":"=== RUN   TestMakeBatches\n"}
+{"Time":"2026-06-29T15:29:33.885788204Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMakeBatches","Output":"=== PAUSE TestMakeBatches\n"}
+{"Time":"2026-06-29T15:29:33.885807723Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMakeBatches"}
+{"Time":"2026-06-29T15:29:33.885828533Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCalcFieldSize"}
+{"Time":"2026-06-29T15:29:33.885978263Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCalcFieldSize","Output":"=== RUN   TestCalcFieldSize\n"}
+{"Time":"2026-06-29T15:29:33.886004273Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCalcFieldSize","Output":"=== PAUSE TestCalcFieldSize\n"}
+{"Time":"2026-06-29T15:29:33.886024322Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCalcFieldSize"}
+{"Time":"2026-06-29T15:29:33.886044822Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMaxExtensionPeriod"}
+{"Time":"2026-06-29T15:29:33.886064312Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMaxExtensionPeriod","Output":"=== RUN   TestMaxExtensionPeriod\n"}
+{"Time":"2026-06-29T15:29:33.886087092Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMaxExtensionPeriod","Output":"--- PASS: TestMaxExtensionPeriod (0.01s)\n"}
+{"Time":"2026-06-29T15:29:33.886107722Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMaxExtensionPeriod","Elapsed":0.01}
+{"Time":"2026-06-29T15:29:33.886129152Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestAckDistribution"}
+{"Time":"2026-06-29T15:29:33.886149902Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestAckDistribution","Output":"=== RUN   TestAckDistribution\n"}
+{"Time":"2026-06-29T15:29:33.886169962Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestAckDistribution","Output":"    iterator_test.go:141: broken\n"}
+{"Time":"2026-06-29T15:29:33.886192502Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestAckDistribution","Output":"--- SKIP: TestAckDistribution (0.00s)\n"}
+{"Time":"2026-06-29T15:29:33.886212982Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestAckDistribution","Elapsed":0}
+{"Time":"2026-06-29T15:29:33.886233431Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_ModifyAckContextDeadline"}
+{"Time":"2026-06-29T15:29:33.886252941Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_ModifyAckContextDeadline","Output":"=== RUN   TestIterator_ModifyAckContextDeadline\n"}
+{"Time":"2026-06-29T15:29:38.884245716Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_ModifyAckContextDeadline","Output":"--- PASS: TestIterator_ModifyAckContextDeadline (5.00s)\n"}
+{"Time":"2026-06-29T15:29:38.884301766Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_ModifyAckContextDeadline","Elapsed":5}
+{"Time":"2026-06-29T15:29:38.884329416Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_SynchronousPullCancel"}
+{"Time":"2026-06-29T15:29:38.884349686Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_SynchronousPullCancel","Output":"=== RUN   TestIterator_SynchronousPullCancel\n"}
+{"Time":"2026-06-29T15:29:38.885918828Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_SynchronousPullCancel","Output":"--- PASS: TestIterator_SynchronousPullCancel (0.00s)\n"}
+{"Time":"2026-06-29T15:29:38.885966368Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_SynchronousPullCancel","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.885988238Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration"}
+{"Time":"2026-06-29T15:29:38.886007688Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration","Output":"=== RUN   TestIterator_BoundedDuration\n"}
+{"Time":"2026-06-29T15:29:38.886029088Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_the_min_duration"}
+{"Time":"2026-06-29T15:29:38.886048518Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_the_min_duration","Output":"=== RUN   TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_the_min_duration\n"}
+{"Time":"2026-06-29T15:29:38.886072678Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_the_min_duration","Output":"--- PASS: TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_the_min_duration (0.00s)\n"}
+{"Time":"2026-06-29T15:29:38.886098067Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_the_min_duration","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.886119307Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_1_minute_when_using_exactly_once"}
+{"Time":"2026-06-29T15:29:38.886139087Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_1_minute_when_using_exactly_once","Output":"=== RUN   TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_1_minute_when_using_exactly_once\n"}
+{"Time":"2026-06-29T15:29:38.886167717Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_1_minute_when_using_exactly_once","Output":"--- PASS: TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_1_minute_when_using_exactly_once (0.00s)\n"}
+{"Time":"2026-06-29T15:29:38.886188337Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_be_updated_to_1_minute_when_using_exactly_once","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.886208967Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here,_even_though_exactly_once_is_enabled"}
+{"Time":"2026-06-29T15:29:38.886228597Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here,_even_though_exactly_once_is_enabled","Output":"=== RUN   TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here,_even_though_exactly_once_is_enabled\n"}
+{"Time":"2026-06-29T15:29:38.886250277Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here,_even_though_exactly_once_is_enabled","Output":"--- PASS: TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here,_even_though_exactly_once_is_enabled (0.00s)\n"}
+{"Time":"2026-06-29T15:29:38.886271517Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here,_even_though_exactly_once_is_enabled","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.886292327Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here"}
+{"Time":"2026-06-29T15:29:38.886318886Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here","Output":"=== RUN   TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here\n"}
+{"Time":"2026-06-29T15:29:38.886347886Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here","Output":"--- PASS: TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here (0.00s)\n"}
+{"Time":"2026-06-29T15:29:38.886368466Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_here","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.886388916Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_when_neither_durations_are_set"}
+{"Time":"2026-06-29T15:29:38.886408386Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_when_neither_durations_are_set","Output":"=== RUN   TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_when_neither_durations_are_set\n"}
+{"Time":"2026-06-29T15:29:38.886429656Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_when_neither_durations_are_set","Output":"--- PASS: TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_when_neither_durations_are_set (0.00s)\n"}
+{"Time":"2026-06-29T15:29:38.886450376Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_not_be_updated_when_neither_durations_are_set","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.886470936Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_should_not_be_updated_here_since_it_is_within_both_boundaries"}
+{"Time":"2026-06-29T15:29:38.886490436Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_should_not_be_updated_here_since_it_is_within_both_boundaries","Output":"=== RUN   TestIterator_BoundedDuration/AckDeadline_should_should_not_be_updated_here_since_it_is_within_both_boundaries\n"}
+{"Time":"2026-06-29T15:29:38.886512415Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_should_not_be_updated_here_since_it_is_within_both_boundaries","Output":"--- PASS: TestIterator_BoundedDuration/AckDeadline_should_should_not_be_updated_here_since_it_is_within_both_boundaries (0.00s)\n"}
+{"Time":"2026-06-29T15:29:38.886533085Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration/AckDeadline_should_should_not_be_updated_here_since_it_is_within_both_boundaries","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.886554395Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration","Output":"--- PASS: TestIterator_BoundedDuration (0.00s)\n"}
+{"Time":"2026-06-29T15:29:38.886574745Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_BoundedDuration","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.886595315Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_StreamingPullExactlyOnce"}
+{"Time":"2026-06-29T15:29:38.886614625Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_StreamingPullExactlyOnce","Output":"=== RUN   TestIterator_StreamingPullExactlyOnce\n"}
+{"Time":"2026-06-29T15:29:38.898828496Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_StreamingPullExactlyOnce","Output":"--- PASS: TestIterator_StreamingPullExactlyOnce (0.01s)\n"}
+{"Time":"2026-06-29T15:29:38.898865116Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIterator_StreamingPullExactlyOnce","Elapsed":0.01}
+{"Time":"2026-06-29T15:29:38.898890036Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestAddToDistribution"}
+{"Time":"2026-06-29T15:29:38.898909566Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestAddToDistribution","Output":"=== RUN   TestAddToDistribution\n"}
+{"Time":"2026-06-29T15:29:38.901308564Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestAddToDistribution","Output":"--- PASS: TestAddToDistribution (0.00s)\n"}
+{"Time":"2026-06-29T15:29:38.901341774Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestAddToDistribution","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.901363294Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPingStreamAckDeadline"}
+{"Time":"2026-06-29T15:29:38.901382824Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPingStreamAckDeadline","Output":"=== RUN   TestPingStreamAckDeadline\n"}
+{"Time":"2026-06-29T15:29:43.907239093Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPingStreamAckDeadline","Output":"--- PASS: TestPingStreamAckDeadline (5.01s)\n"}
+{"Time":"2026-06-29T15:29:43.907303773Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPingStreamAckDeadline","Elapsed":5.01}
+{"Time":"2026-06-29T15:29:43.907327713Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests"}
+{"Time":"2026-06-29T15:29:43.907347723Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests","Output":"=== RUN   TestExactlyOnceProcessRequests\n"}
+{"Time":"2026-06-29T15:29:43.907368793Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoResults"}
+{"Time":"2026-06-29T15:29:43.907388293Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoResults","Output":"=== RUN   TestExactlyOnceProcessRequests/NoResults\n"}
+{"Time":"2026-06-29T15:29:43.907409963Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoResults","Output":"--- PASS: TestExactlyOnceProcessRequests/NoResults (0.00s)\n"}
+{"Time":"2026-06-29T15:29:43.907430692Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoResults","Elapsed":0}
+{"Time":"2026-06-29T15:29:43.907451502Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoErrorsNilAckResult"}
+{"Time":"2026-06-29T15:29:43.907470832Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoErrorsNilAckResult","Output":"=== RUN   TestExactlyOnceProcessRequests/NoErrorsNilAckResult\n"}
+{"Time":"2026-06-29T15:29:43.907496252Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoErrorsNilAckResult","Output":"--- PASS: TestExactlyOnceProcessRequests/NoErrorsNilAckResult (0.00s)\n"}
+{"Time":"2026-06-29T15:29:43.907516792Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoErrorsNilAckResult","Elapsed":0}
+{"Time":"2026-06-29T15:29:43.907536992Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoErrors"}
+{"Time":"2026-06-29T15:29:43.907556282Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoErrors","Output":"=== RUN   TestExactlyOnceProcessRequests/NoErrors\n"}
+{"Time":"2026-06-29T15:29:43.907577332Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoErrors","Output":"--- PASS: TestExactlyOnceProcessRequests/NoErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:29:43.907597642Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/NoErrors","Elapsed":0}
+{"Time":"2026-06-29T15:29:43.907618302Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/PermanentErrorInvalidAckID"}
+{"Time":"2026-06-29T15:29:43.907643311Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/PermanentErrorInvalidAckID","Output":"=== RUN   TestExactlyOnceProcessRequests/PermanentErrorInvalidAckID\n"}
+{"Time":"2026-06-29T15:29:43.907677781Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/PermanentErrorInvalidAckID","Output":"--- PASS: TestExactlyOnceProcessRequests/PermanentErrorInvalidAckID (0.00s)\n"}
+{"Time":"2026-06-29T15:29:43.907698451Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/PermanentErrorInvalidAckID","Elapsed":0}
+{"Time":"2026-06-29T15:29:43.907718801Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/TransientErrorRetry"}
+{"Time":"2026-06-29T15:29:43.907738091Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/TransientErrorRetry","Output":"=== RUN   TestExactlyOnceProcessRequests/TransientErrorRetry\n"}
+{"Time":"2026-06-29T15:29:43.907759161Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/TransientErrorRetry","Output":"--- PASS: TestExactlyOnceProcessRequests/TransientErrorRetry (0.00s)\n"}
+{"Time":"2026-06-29T15:29:43.907779551Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/TransientErrorRetry","Elapsed":0}
+{"Time":"2026-06-29T15:29:43.907799821Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/UnknownError"}
+{"Time":"2026-06-29T15:29:43.907819021Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/UnknownError","Output":"=== RUN   TestExactlyOnceProcessRequests/UnknownError\n"}
+{"Time":"2026-06-29T15:29:43.90783994Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/UnknownError","Output":"--- PASS: TestExactlyOnceProcessRequests/UnknownError (0.00s)\n"}
+{"Time":"2026-06-29T15:29:43.90786745Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/UnknownError","Elapsed":0}
+{"Time":"2026-06-29T15:29:43.90788787Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/PermissionDenied"}
+{"Time":"2026-06-29T15:29:43.90790709Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/PermissionDenied","Output":"=== RUN   TestExactlyOnceProcessRequests/PermissionDenied\n"}
+{"Time":"2026-06-29T15:29:43.90793574Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/PermissionDenied","Output":"--- PASS: TestExactlyOnceProcessRequests/PermissionDenied (0.00s)\n"}
+{"Time":"2026-06-29T15:29:43.9079566Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/PermissionDenied","Elapsed":0}
+{"Time":"2026-06-29T15:29:43.90797682Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/FailedPrecondition"}
+{"Time":"2026-06-29T15:29:43.90799617Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/FailedPrecondition","Output":"=== RUN   TestExactlyOnceProcessRequests/FailedPrecondition\n"}
+{"Time":"2026-06-29T15:29:43.90801723Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/FailedPrecondition","Output":"--- PASS: TestExactlyOnceProcessRequests/FailedPrecondition (0.00s)\n"}
+{"Time":"2026-06-29T15:29:43.908048819Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/FailedPrecondition","Elapsed":0}
+{"Time":"2026-06-29T15:29:43.908069389Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/OtherErrorStatus"}
+{"Time":"2026-06-29T15:29:43.908088569Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/OtherErrorStatus","Output":"=== RUN   TestExactlyOnceProcessRequests/OtherErrorStatus\n"}
+{"Time":"2026-06-29T15:29:43.908109529Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/OtherErrorStatus","Output":"--- PASS: TestExactlyOnceProcessRequests/OtherErrorStatus (0.00s)\n"}
+{"Time":"2026-06-29T15:29:43.908136719Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/OtherErrorStatus","Elapsed":0}
+{"Time":"2026-06-29T15:29:43.908157089Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/MixedSuccessFailureAcks"}
+{"Time":"2026-06-29T15:29:43.908176419Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/MixedSuccessFailureAcks","Output":"=== RUN   TestExactlyOnceProcessRequests/MixedSuccessFailureAcks\n"}
+{"Time":"2026-06-29T15:29:45.907428498Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/MixedSuccessFailureAcks","Output":"--- PASS: TestExactlyOnceProcessRequests/MixedSuccessFailureAcks (2.00s)\n"}
+{"Time":"2026-06-29T15:29:45.907487057Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/MixedSuccessFailureAcks","Elapsed":2}
+{"Time":"2026-06-29T15:29:45.907511877Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/RetriableErrorStatusReturnsRequestForRetrying"}
+{"Time":"2026-06-29T15:29:45.907532467Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/RetriableErrorStatusReturnsRequestForRetrying","Output":"=== RUN   TestExactlyOnceProcessRequests/RetriableErrorStatusReturnsRequestForRetrying\n"}
+{"Time":"2026-06-29T15:29:45.907560977Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/RetriableErrorStatusReturnsRequestForRetrying","Output":"--- PASS: TestExactlyOnceProcessRequests/RetriableErrorStatusReturnsRequestForRetrying (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.907582427Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests/RetriableErrorStatusReturnsRequestForRetrying","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.907604067Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests","Output":"--- PASS: TestExactlyOnceProcessRequests (2.00s)\n"}
+{"Time":"2026-06-29T15:29:45.907624867Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceProcessRequests","Elapsed":2}
+{"Time":"2026-06-29T15:29:45.907645367Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestClient_ApplyClientConfig"}
+{"Time":"2026-06-29T15:29:45.907665137Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestClient_ApplyClientConfig","Output":"=== RUN   TestClient_ApplyClientConfig\n"}
+{"Time":"2026-06-29T15:29:45.926762105Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestClient_ApplyClientConfig","Output":"--- PASS: TestClient_ApplyClientConfig (0.02s)\n"}
+{"Time":"2026-06-29T15:29:45.926824154Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestClient_ApplyClientConfig","Elapsed":0.02}
+{"Time":"2026-06-29T15:29:45.926854114Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestClient_EmptyProjectID"}
+{"Time":"2026-06-29T15:29:45.926876734Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestClient_EmptyProjectID","Output":"=== RUN   TestClient_EmptyProjectID\n"}
+{"Time":"2026-06-29T15:29:45.926904634Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestClient_EmptyProjectID","Output":"--- PASS: TestClient_EmptyProjectID (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.926925064Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestClient_EmptyProjectID","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.926946924Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet"}
+{"Time":"2026-06-29T15:29:45.926967144Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet","Output":"=== RUN   TestPullStreamGet\n"}
+{"Time":"2026-06-29T15:29:45.927000433Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet","Output":"=== PAUSE TestPullStreamGet\n"}
+{"Time":"2026-06-29T15:29:45.927020743Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet"}
+{"Time":"2026-06-29T15:29:45.927042313Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet_ResourceUnavailable"}
+{"Time":"2026-06-29T15:29:45.927061693Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet_ResourceUnavailable","Output":"=== RUN   TestPullStreamGet_ResourceUnavailable\n"}
+{"Time":"2026-06-29T15:29:45.931353252Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet_ResourceUnavailable","Output":"--- PASS: TestPullStreamGet_ResourceUnavailable (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.931413792Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet_ResourceUnavailable","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.931437082Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaBasicCreateGetDelete"}
+{"Time":"2026-06-29T15:29:45.931456892Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaBasicCreateGetDelete","Output":"=== RUN   TestSchemaBasicCreateGetDelete\n"}
+{"Time":"2026-06-29T15:29:45.933411933Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaBasicCreateGetDelete","Output":"--- PASS: TestSchemaBasicCreateGetDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.933461232Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaBasicCreateGetDelete","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.933498242Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaListSchemas"}
+{"Time":"2026-06-29T15:29:45.933519262Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaListSchemas","Output":"=== RUN   TestSchemaListSchemas\n"}
+{"Time":"2026-06-29T15:29:45.934875995Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaListSchemas","Output":"--- PASS: TestSchemaListSchemas (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.934916395Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaListSchemas","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.934938405Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchema_SchemaRevisions"}
+{"Time":"2026-06-29T15:29:45.934970855Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchema_SchemaRevisions","Output":"=== RUN   TestSchema_SchemaRevisions\n"}
+{"Time":"2026-06-29T15:29:45.937194024Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchema_SchemaRevisions","Output":"--- PASS: TestSchema_SchemaRevisions (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.937228774Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchema_SchemaRevisions","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.937250574Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaRollbackSchema"}
+{"Time":"2026-06-29T15:29:45.937270194Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaRollbackSchema","Output":"=== RUN   TestSchemaRollbackSchema\n"}
+{"Time":"2026-06-29T15:29:45.937457503Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaRollbackSchema","Output":"--- PASS: TestSchemaRollbackSchema (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.937484333Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaRollbackSchema","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.937505753Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaDeleteSchemaRevision"}
+{"Time":"2026-06-29T15:29:45.937525323Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaDeleteSchemaRevision","Output":"=== RUN   TestSchemaDeleteSchemaRevision\n"}
+{"Time":"2026-06-29T15:29:45.937723242Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaDeleteSchemaRevision","Output":"--- PASS: TestSchemaDeleteSchemaRevision (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.937762012Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaDeleteSchemaRevision","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.937783101Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema"}
+{"Time":"2026-06-29T15:29:45.937802861Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema","Output":"=== RUN   TestSchemaValidateSchema\n"}
+{"Time":"2026-06-29T15:29:45.937826671Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/valid_avro_schema"}
+{"Time":"2026-06-29T15:29:45.937846111Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/valid_avro_schema","Output":"=== RUN   TestSchemaValidateSchema/valid_avro_schema\n"}
+{"Time":"2026-06-29T15:29:45.938431368Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/valid_avro_schema","Output":"--- PASS: TestSchemaValidateSchema/valid_avro_schema (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.938458738Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/valid_avro_schema","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.938480838Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/valid_proto_schema"}
+{"Time":"2026-06-29T15:29:45.938500768Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/valid_proto_schema","Output":"=== RUN   TestSchemaValidateSchema/valid_proto_schema\n"}
+{"Time":"2026-06-29T15:29:45.938733657Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/valid_proto_schema","Output":"--- PASS: TestSchemaValidateSchema/valid_proto_schema (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.938757847Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/valid_proto_schema","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.938783817Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/empty_invalid_schema"}
+{"Time":"2026-06-29T15:29:45.938804137Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/empty_invalid_schema","Output":"=== RUN   TestSchemaValidateSchema/empty_invalid_schema\n"}
+{"Time":"2026-06-29T15:29:45.939005046Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/empty_invalid_schema","Output":"--- PASS: TestSchemaValidateSchema/empty_invalid_schema (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.939043755Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema/empty_invalid_schema","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.939071625Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema","Output":"--- PASS: TestSchemaValidateSchema (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.939092255Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSchemaValidateSchema","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.939113465Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullBasic"}
+{"Time":"2026-06-29T15:29:45.939133785Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullBasic","Output":"=== RUN   TestStreamingPullBasic\n"}
+{"Time":"2026-06-29T15:29:45.941078886Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullBasic","Output":"--- PASS: TestStreamingPullBasic (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.941114925Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullBasic","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.941136665Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullMultipleFetches"}
+{"Time":"2026-06-29T15:29:45.941156115Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullMultipleFetches","Output":"=== RUN   TestStreamingPullMultipleFetches\n"}
+{"Time":"2026-06-29T15:29:45.942990266Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullMultipleFetches","Output":"--- PASS: TestStreamingPullMultipleFetches (0.00s)\n"}
+{"Time":"2026-06-29T15:29:45.943025526Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullMultipleFetches","Elapsed":0}
+{"Time":"2026-06-29T15:29:45.943049816Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullError"}
+{"Time":"2026-06-29T15:29:45.943070536Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullError","Output":"=== RUN   TestStreamingPullError\n"}
+{"Time":"2026-06-29T15:29:46.144343566Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullError","Output":"--- PASS: TestStreamingPullError (0.20s)\n"}
+{"Time":"2026-06-29T15:29:46.144402766Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullError","Elapsed":0.2}
+{"Time":"2026-06-29T15:29:46.144426996Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullCancel"}
+{"Time":"2026-06-29T15:29:46.144447016Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullCancel","Output":"=== RUN   TestStreamingPullCancel\n"}
+{"Time":"2026-06-29T15:29:46.146265157Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullCancel","Output":"--- PASS: TestStreamingPullCancel (0.00s)\n"}
+{"Time":"2026-06-29T15:29:46.146305217Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullCancel","Elapsed":0}
+{"Time":"2026-06-29T15:29:46.146327307Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullRetry"}
+{"Time":"2026-06-29T15:29:46.146347887Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullRetry","Output":"=== RUN   TestStreamingPullRetry\n"}
+{"Time":"2026-06-29T15:29:46.146373127Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullRetry","Output":"=== PAUSE TestStreamingPullRetry\n"}
+{"Time":"2026-06-29T15:29:46.146392167Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullRetry"}
+{"Time":"2026-06-29T15:29:46.146412846Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullOneActive"}
+{"Time":"2026-06-29T15:29:46.146432386Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullOneActive","Output":"=== RUN   TestStreamingPullOneActive\n"}
+{"Time":"2026-06-29T15:29:46.148065458Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullOneActive","Output":"--- PASS: TestStreamingPullOneActive (0.00s)\n"}
+{"Time":"2026-06-29T15:29:46.148143078Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullOneActive","Elapsed":0}
+{"Time":"2026-06-29T15:29:46.148166928Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullConcurrent"}
+{"Time":"2026-06-29T15:29:46.148187768Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullConcurrent","Output":"=== RUN   TestStreamingPullConcurrent\n"}
+{"Time":"2026-06-29T15:29:46.150863895Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullConcurrent","Output":"--- PASS: TestStreamingPullConcurrent (0.00s)\n"}
+{"Time":"2026-06-29T15:29:46.150918705Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullConcurrent","Elapsed":0}
+{"Time":"2026-06-29T15:29:46.150941805Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullFlowControl"}
+{"Time":"2026-06-29T15:29:46.150962285Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullFlowControl","Output":"=== RUN   TestStreamingPullFlowControl\n"}
+{"Time":"2026-06-29T15:29:46.352509394Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullFlowControl","Output":"--- PASS: TestStreamingPullFlowControl (0.20s)\n"}
+{"Time":"2026-06-29T15:29:46.352568243Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullFlowControl","Elapsed":0.2}
+{"Time":"2026-06-29T15:29:46.352592433Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_ClosedClient"}
+{"Time":"2026-06-29T15:29:46.352613503Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_ClosedClient","Output":"=== RUN   TestStreamingPull_ClosedClient\n"}
+{"Time":"2026-06-29T15:29:46.55464591Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_ClosedClient","Output":"--- PASS: TestStreamingPull_ClosedClient (0.20s)\n"}
+{"Time":"2026-06-29T15:29:46.55470466Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_ClosedClient","Elapsed":0.2}
+{"Time":"2026-06-29T15:29:46.5547279Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_RetriesAfterUnavailable"}
+{"Time":"2026-06-29T15:29:46.55474753Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_RetriesAfterUnavailable","Output":"=== RUN   TestStreamingPull_RetriesAfterUnavailable\n"}
+{"Time":"2026-06-29T15:29:46.556311292Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_RetriesAfterUnavailable","Output":"--- PASS: TestStreamingPull_RetriesAfterUnavailable (0.00s)\n"}
+{"Time":"2026-06-29T15:29:46.556371552Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_RetriesAfterUnavailable","Elapsed":0}
+{"Time":"2026-06-29T15:29:46.556395052Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_ReconnectsAfterServerDies"}
+{"Time":"2026-06-29T15:29:46.556415242Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_ReconnectsAfterServerDies","Output":"=== RUN   TestStreamingPull_ReconnectsAfterServerDies\n"}
+{"Time":"2026-06-29T15:29:46.628610324Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_ReconnectsAfterServerDies","Output":"--- PASS: TestStreamingPull_ReconnectsAfterServerDies (0.07s)\n"}
+{"Time":"2026-06-29T15:29:46.628691024Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPull_ReconnectsAfterServerDies","Elapsed":0.07}
+{"Time":"2026-06-29T15:29:46.628715934Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscriptionID"}
+{"Time":"2026-06-29T15:29:46.628737053Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscriptionID","Output":"=== RUN   TestSubscriptionID\n"}
+{"Time":"2026-06-29T15:29:46.628760043Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscriptionID","Output":"--- PASS: TestSubscriptionID (0.00s)\n"}
+{"Time":"2026-06-29T15:29:46.628781733Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscriptionID","Elapsed":0}
+{"Time":"2026-06-29T15:29:46.628803403Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListProjectSubscriptions"}
+{"Time":"2026-06-29T15:29:46.628823033Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListProjectSubscriptions","Output":"=== RUN   TestListProjectSubscriptions\n"}
+{"Time":"2026-06-29T15:29:46.631797919Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListProjectSubscriptions","Output":"--- PASS: TestListProjectSubscriptions (0.00s)\n"}
+{"Time":"2026-06-29T15:29:46.631868388Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListProjectSubscriptions","Elapsed":0}
+{"Time":"2026-06-29T15:29:46.631895668Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListTopicSubscriptions"}
+{"Time":"2026-06-29T15:29:46.631916768Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListTopicSubscriptions","Output":"=== RUN   TestListTopicSubscriptions\n"}
+{"Time":"2026-06-29T15:29:46.638060779Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListTopicSubscriptions","Output":"--- PASS: TestListTopicSubscriptions (0.01s)\n"}
+{"Time":"2026-06-29T15:29:46.638120318Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListTopicSubscriptions","Elapsed":0.01}
+{"Time":"2026-06-29T15:29:46.638146448Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscriptionConfig"}
+{"Time":"2026-06-29T15:29:46.638166608Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscriptionConfig","Output":"=== RUN   TestSubscriptionConfig\n"}
+{"Time":"2026-06-29T15:29:46.641446122Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscriptionConfig","Output":"--- PASS: TestSubscriptionConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:29:46.641488502Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscriptionConfig","Elapsed":0}
+{"Time":"2026-06-29T15:29:46.641510402Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive"}
+{"Time":"2026-06-29T15:29:46.641530622Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive","Output":"=== RUN   TestReceive\n"}
+{"Time":"2026-06-29T15:29:46.641555682Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:true,exactlyOnceDelivery:false"}
+{"Time":"2026-06-29T15:29:46.641575332Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:true,exactlyOnceDelivery:false","Output":"=== RUN   TestReceive/synchronous:true,exactlyOnceDelivery:false\n"}
+{"Time":"2026-06-29T15:29:46.647934431Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:true,exactlyOnceDelivery:false","Output":"--- PASS: TestReceive/synchronous:true,exactlyOnceDelivery:false (0.01s)\n"}
+{"Time":"2026-06-29T15:29:46.647993701Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:true,exactlyOnceDelivery:false","Elapsed":0.01}
+{"Time":"2026-06-29T15:29:46.648017621Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:false,exactlyOnceDelivery:false"}
+{"Time":"2026-06-29T15:29:46.648038421Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:false,exactlyOnceDelivery:false","Output":"=== RUN   TestReceive/synchronous:false,exactlyOnceDelivery:false\n"}
+{"Time":"2026-06-29T15:29:46.931010608Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:false,exactlyOnceDelivery:false","Output":"--- PASS: TestReceive/synchronous:false,exactlyOnceDelivery:false (0.28s)\n"}
+{"Time":"2026-06-29T15:29:46.931064377Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:false,exactlyOnceDelivery:false","Elapsed":0.28}
+{"Time":"2026-06-29T15:29:46.931087797Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:false,exactlyOnceDelivery:true"}
+{"Time":"2026-06-29T15:29:46.931107737Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:false,exactlyOnceDelivery:true","Output":"=== RUN   TestReceive/synchronous:false,exactlyOnceDelivery:true\n"}
+{"Time":"2026-06-29T15:29:47.234995584Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:false,exactlyOnceDelivery:true","Output":"--- PASS: TestReceive/synchronous:false,exactlyOnceDelivery:true (0.30s)\n"}
+{"Time":"2026-06-29T15:29:47.235060973Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive/synchronous:false,exactlyOnceDelivery:true","Elapsed":0.3}
+{"Time":"2026-06-29T15:29:47.235086863Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive","Output":"--- PASS: TestReceive (0.59s)\n"}
+{"Time":"2026-06-29T15:29:47.235108373Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestReceive","Elapsed":0.59}
+{"Time":"2026-06-29T15:29:47.235143703Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPushConfigAuthenticationMethod_toProto"}
+{"Time":"2026-06-29T15:29:47.235163823Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPushConfigAuthenticationMethod_toProto","Output":"=== RUN   TestPushConfigAuthenticationMethod_toProto\n"}
+{"Time":"2026-06-29T15:29:47.235190223Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPushConfigAuthenticationMethod_toProto","Output":"--- PASS: TestPushConfigAuthenticationMethod_toProto (0.00s)\n"}
+{"Time":"2026-06-29T15:29:47.235211723Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPushConfigAuthenticationMethod_toProto","Elapsed":0}
+{"Time":"2026-06-29T15:29:47.235233873Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDeadLettering_toProto"}
+{"Time":"2026-06-29T15:29:47.235253513Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDeadLettering_toProto","Output":"=== RUN   TestDeadLettering_toProto\n"}
+{"Time":"2026-06-29T15:29:47.235274612Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDeadLettering_toProto","Output":"--- PASS: TestDeadLettering_toProto (0.00s)\n"}
+{"Time":"2026-06-29T15:29:47.235296312Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDeadLettering_toProto","Elapsed":0}
+{"Time":"2026-06-29T15:29:47.235317102Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDeadLettering_toMessage"}
+{"Time":"2026-06-29T15:29:47.235336722Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDeadLettering_toMessage","Output":"=== RUN   TestDeadLettering_toMessage\n"}
+{"Time":"2026-06-29T15:29:47.235358252Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDeadLettering_toMessage","Output":"--- PASS: TestDeadLettering_toMessage (0.00s)\n"}
+{"Time":"2026-06-29T15:29:47.235379352Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDeadLettering_toMessage","Elapsed":0}
+{"Time":"2026-06-29T15:29:47.235406932Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestRetryPolicy_toProto"}
+{"Time":"2026-06-29T15:29:47.235426782Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestRetryPolicy_toProto","Output":"=== RUN   TestRetryPolicy_toProto\n"}
+{"Time":"2026-06-29T15:29:47.235451562Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestRetryPolicy_toProto","Output":"--- PASS: TestRetryPolicy_toProto (0.00s)\n"}
+{"Time":"2026-06-29T15:29:47.235471711Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestRetryPolicy_toProto","Elapsed":0}
+{"Time":"2026-06-29T15:29:47.235492261Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestOrdering_CreateSubscription"}
+{"Time":"2026-06-29T15:29:47.235511621Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestOrdering_CreateSubscription","Output":"=== RUN   TestOrdering_CreateSubscription\n"}
+{"Time":"2026-06-29T15:29:52.239701386Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestOrdering_CreateSubscription","Output":"--- PASS: TestOrdering_CreateSubscription (5.00s)\n"}
+{"Time":"2026-06-29T15:29:52.239759916Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestOrdering_CreateSubscription","Elapsed":5}
+{"Time":"2026-06-29T15:29:52.239787676Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestBigQuerySubscription"}
+{"Time":"2026-06-29T15:29:52.239807495Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestBigQuerySubscription","Output":"=== RUN   TestBigQuerySubscription\n"}
+{"Time":"2026-06-29T15:29:52.243348928Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestBigQuerySubscription","Output":"--- PASS: TestBigQuerySubscription (0.00s)\n"}
+{"Time":"2026-06-29T15:29:52.243403128Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestBigQuerySubscription","Elapsed":0}
+{"Time":"2026-06-29T15:29:52.243437378Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCloudStorageSubscription"}
+{"Time":"2026-06-29T15:29:52.243458098Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCloudStorageSubscription","Output":"=== RUN   TestCloudStorageSubscription\n"}
+{"Time":"2026-06-29T15:29:52.248070326Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCloudStorageSubscription","Output":"--- PASS: TestCloudStorageSubscription (0.00s)\n"}
+{"Time":"2026-06-29T15:29:52.248112216Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCloudStorageSubscription","Elapsed":0}
+{"Time":"2026-06-29T15:29:52.248134195Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckSuccess"}
+{"Time":"2026-06-29T15:29:52.248154015Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckSuccess","Output":"=== RUN   TestExactlyOnceDelivery_AckSuccess\n"}
+{"Time":"2026-06-29T15:29:52.248175415Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckSuccess","Output":"=== PAUSE TestExactlyOnceDelivery_AckSuccess\n"}
+{"Time":"2026-06-29T15:29:52.248195605Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckSuccess"}
+{"Time":"2026-06-29T15:29:52.248218225Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckFailureErrorPermissionDenied"}
+{"Time":"2026-06-29T15:29:52.248239475Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckFailureErrorPermissionDenied","Output":"=== RUN   TestExactlyOnceDelivery_AckFailureErrorPermissionDenied\n"}
+{"Time":"2026-06-29T15:29:52.248260625Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckFailureErrorPermissionDenied","Output":"=== PAUSE TestExactlyOnceDelivery_AckFailureErrorPermissionDenied\n"}
+{"Time":"2026-06-29T15:29:52.248281015Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckFailureErrorPermissionDenied"}
+{"Time":"2026-06-29T15:29:52.248302545Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckRetryDeadlineExceeded"}
+{"Time":"2026-06-29T15:29:52.248322425Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckRetryDeadlineExceeded","Output":"=== RUN   TestExactlyOnceDelivery_AckRetryDeadlineExceeded\n"}
+{"Time":"2026-06-29T15:29:52.270810437Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckRetryDeadlineExceeded","Output":"2026/06/29 15:29:52 received message: \u0026{m0 [101 120 97 99 116 108 121 45 111 110 99 101 45 109 101 115 115 97 103 101] map[] 2026-06-29 15:29:52.260432406 +0000 UTC \u003cnil\u003e  0xc000872b40}\n"}
+{"Time":"2026-06-29T15:30:05.513233712Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckRetryDeadlineExceeded","Output":"--- PASS: TestExactlyOnceDelivery_AckRetryDeadlineExceeded (13.26s)\n"}
+{"Time":"2026-06-29T15:30:05.513951018Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckRetryDeadlineExceeded","Elapsed":13.26}
+{"Time":"2026-06-29T15:30:05.513982828Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_NackSuccess"}
+{"Time":"2026-06-29T15:30:05.514004038Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_NackSuccess","Output":"=== RUN   TestExactlyOnceDelivery_NackSuccess\n"}
+{"Time":"2026-06-29T15:30:05.514025828Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_NackSuccess","Output":"=== PAUSE TestExactlyOnceDelivery_NackSuccess\n"}
+{"Time":"2026-06-29T15:30:05.514045678Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_NackSuccess"}
+{"Time":"2026-06-29T15:30:05.514090238Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_ReceiptModackError"}
+{"Time":"2026-06-29T15:30:05.514110908Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_ReceiptModackError","Output":"=== RUN   TestExactlyOnceDelivery_ReceiptModackError\n"}
+{"Time":"2026-06-29T15:30:25.531290392Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_ReceiptModackError","Output":"--- PASS: TestExactlyOnceDelivery_ReceiptModackError (20.02s)\n"}
+{"Time":"2026-06-29T15:30:25.531367782Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_ReceiptModackError","Elapsed":20.02}
+{"Time":"2026-06-29T15:30:25.531513931Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscribeMessageExpirationFlowControl"}
+{"Time":"2026-06-29T15:30:25.531537501Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscribeMessageExpirationFlowControl","Output":"=== RUN   TestSubscribeMessageExpirationFlowControl\n"}
+{"Time":"2026-06-29T15:30:25.531655211Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscribeMessageExpirationFlowControl","Output":"=== PAUSE TestSubscribeMessageExpirationFlowControl\n"}
+{"Time":"2026-06-29T15:30:25.53167604Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscribeMessageExpirationFlowControl"}
+{"Time":"2026-06-29T15:30:25.53169727Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamTimeout"}
+{"Time":"2026-06-29T15:30:25.53171964Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamTimeout","Output":"=== RUN   TestStreamTimeout\n"}
+{"Time":"2026-06-29T15:30:25.53174418Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamTimeout","Output":"=== PAUSE TestStreamTimeout\n"}
+{"Time":"2026-06-29T15:30:25.53176322Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamTimeout"}
+{"Time":"2026-06-29T15:30:25.53178384Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopicID"}
+{"Time":"2026-06-29T15:30:25.53180331Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopicID","Output":"=== RUN   TestTopicID\n"}
+{"Time":"2026-06-29T15:30:25.5359011Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopicID","Output":"--- PASS: TestTopicID (0.00s)\n"}
+{"Time":"2026-06-29T15:30:25.53596076Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopicID","Elapsed":0}
+{"Time":"2026-06-29T15:30:25.53598409Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCreateTopicWithConfig"}
+{"Time":"2026-06-29T15:30:25.53600385Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCreateTopicWithConfig","Output":"=== RUN   TestCreateTopicWithConfig\n"}
+{"Time":"2026-06-29T15:30:25.540953766Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCreateTopicWithConfig","Output":"--- PASS: TestCreateTopicWithConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:30:25.540987016Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCreateTopicWithConfig","Elapsed":0}
+{"Time":"2026-06-29T15:30:25.541009276Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopic_IngestionKinesis"}
+{"Time":"2026-06-29T15:30:25.541029735Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopic_IngestionKinesis","Output":"=== RUN   TestTopic_IngestionKinesis\n"}
+{"Time":"2026-06-29T15:30:25.544378979Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopic_IngestionKinesis","Output":"--- PASS: TestTopic_IngestionKinesis (0.00s)\n"}
+{"Time":"2026-06-29T15:30:25.544419979Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopic_IngestionKinesis","Elapsed":0}
+{"Time":"2026-06-29T15:30:25.544451379Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopic_IngestionCloudStorage"}
+{"Time":"2026-06-29T15:30:25.544483129Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopic_IngestionCloudStorage","Output":"=== RUN   TestTopic_IngestionCloudStorage\n"}
+{"Time":"2026-06-29T15:30:25.54829867Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopic_IngestionCloudStorage","Output":"--- PASS: TestTopic_IngestionCloudStorage (0.00s)\n"}
+{"Time":"2026-06-29T15:30:25.54833415Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTopic_IngestionCloudStorage","Elapsed":0}
+{"Time":"2026-06-29T15:30:25.54835647Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListTopics"}
+{"Time":"2026-06-29T15:30:25.5483771Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListTopics","Output":"=== RUN   TestListTopics\n"}
+{"Time":"2026-06-29T15:30:25.552836289Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListTopics","Output":"--- PASS: TestListTopics (0.00s)\n"}
+{"Time":"2026-06-29T15:30:25.552879468Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListTopics","Elapsed":0}
+{"Time":"2026-06-29T15:30:25.552905748Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListCompletelyEmptyTopics"}
+{"Time":"2026-06-29T15:30:25.552924938Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListCompletelyEmptyTopics","Output":"=== RUN   TestListCompletelyEmptyTopics\n"}
+{"Time":"2026-06-29T15:30:25.554460781Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListCompletelyEmptyTopics","Output":"--- PASS: TestListCompletelyEmptyTopics (0.00s)\n"}
+{"Time":"2026-06-29T15:30:25.554493321Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestListCompletelyEmptyTopics","Elapsed":0}
+{"Time":"2026-06-29T15:30:25.55451542Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStopPublishOrder"}
+{"Time":"2026-06-29T15:30:25.55453556Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStopPublishOrder","Output":"=== RUN   TestStopPublishOrder\n"}
+{"Time":"2026-06-29T15:30:25.55456102Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStopPublishOrder","Output":"--- PASS: TestStopPublishOrder (0.00s)\n"}
+{"Time":"2026-06-29T15:30:25.55458174Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStopPublishOrder","Elapsed":0}
+{"Time":"2026-06-29T15:30:25.55460893Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishTimeout"}
+{"Time":"2026-06-29T15:30:25.55462918Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishTimeout","Output":"=== RUN   TestPublishTimeout\n"}
+{"Time":"2026-06-29T15:30:28.566025158Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishTimeout","Output":"--- PASS: TestPublishTimeout (3.01s)\n"}
+{"Time":"2026-06-29T15:30:28.566083018Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishTimeout","Elapsed":3.01}
+{"Time":"2026-06-29T15:30:28.566106328Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishBufferedByteLimit"}
+{"Time":"2026-06-29T15:30:28.566125748Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishBufferedByteLimit","Output":"=== RUN   TestPublishBufferedByteLimit\n"}
+{"Time":"2026-06-29T15:30:28.568054878Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishBufferedByteLimit","Output":"--- PASS: TestPublishBufferedByteLimit (0.00s)\n"}
+{"Time":"2026-06-29T15:30:28.568118578Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishBufferedByteLimit","Elapsed":0}
+{"Time":"2026-06-29T15:30:28.568141738Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_Label"}
+{"Time":"2026-06-29T15:30:28.568162788Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_Label","Output":"=== RUN   TestUpdateTopic_Label\n"}
+{"Time":"2026-06-29T15:30:28.572499647Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_Label","Output":"--- PASS: TestUpdateTopic_Label (0.00s)\n"}
+{"Time":"2026-06-29T15:30:28.572557857Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_Label","Elapsed":0}
+{"Time":"2026-06-29T15:30:28.572580457Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_MessageStoragePolicy"}
+{"Time":"2026-06-29T15:30:28.572600487Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_MessageStoragePolicy","Output":"=== RUN   TestUpdateTopic_MessageStoragePolicy\n"}
+{"Time":"2026-06-29T15:30:28.574737506Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_MessageStoragePolicy","Output":"--- PASS: TestUpdateTopic_MessageStoragePolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:30:28.574772956Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_MessageStoragePolicy","Elapsed":0}
+{"Time":"2026-06-29T15:30:28.574794736Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_SchemaSettings"}
+{"Time":"2026-06-29T15:30:28.574814526Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_SchemaSettings","Output":"=== RUN   TestUpdateTopic_SchemaSettings\n"}
+{"Time":"2026-06-29T15:30:28.577132415Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_SchemaSettings","Output":"--- PASS: TestUpdateTopic_SchemaSettings (0.00s)\n"}
+{"Time":"2026-06-29T15:30:28.577163795Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestUpdateTopic_SchemaSettings","Elapsed":0}
+{"Time":"2026-06-29T15:30:28.577185824Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDetachSubscription"}
+{"Time":"2026-06-29T15:30:28.577206154Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDetachSubscription","Output":"=== RUN   TestDetachSubscription\n"}
+{"Time":"2026-06-29T15:30:28.581807022Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDetachSubscription","Output":"--- PASS: TestDetachSubscription (0.00s)\n"}
+{"Time":"2026-06-29T15:30:28.581855532Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestDetachSubscription","Elapsed":0}
+{"Time":"2026-06-29T15:30:28.581879672Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlushStopTopic"}
+{"Time":"2026-06-29T15:30:28.581899732Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlushStopTopic","Output":"=== RUN   TestFlushStopTopic\n"}
+{"Time":"2026-06-29T15:30:34.608082304Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlushStopTopic","Output":"--- PASS: TestFlushStopTopic (6.03s)\n"}
+{"Time":"2026-06-29T15:30:34.608140654Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlushStopTopic","Elapsed":6.03}
+{"Time":"2026-06-29T15:30:34.608164344Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_SignalError"}
+{"Time":"2026-06-29T15:30:34.608189214Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_SignalError","Output":"=== RUN   TestPublishFlowControl_SignalError\n"}
+{"Time":"2026-06-29T15:30:34.63395004Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_SignalError","Output":"--- PASS: TestPublishFlowControl_SignalError (0.03s)\n"}
+{"Time":"2026-06-29T15:30:34.634026269Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_SignalError","Elapsed":0.03}
+{"Time":"2026-06-29T15:30:34.634049479Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_SignalErrorOrderingKey"}
+{"Time":"2026-06-29T15:30:34.634069659Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_SignalErrorOrderingKey","Output":"=== RUN   TestPublishFlowControl_SignalErrorOrderingKey\n"}
+{"Time":"2026-06-29T15:30:34.635771341Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_SignalErrorOrderingKey","Output":"--- PASS: TestPublishFlowControl_SignalErrorOrderingKey (0.00s)\n"}
+{"Time":"2026-06-29T15:30:34.635827541Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_SignalErrorOrderingKey","Elapsed":0}
+{"Time":"2026-06-29T15:30:34.63585509Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_Block"}
+{"Time":"2026-06-29T15:30:34.635877Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_Block","Output":"=== RUN   TestPublishFlowControl_Block\n"}
+{"Time":"2026-06-29T15:30:34.637788451Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_Block","Output":"--- PASS: TestPublishFlowControl_Block (0.00s)\n"}
+{"Time":"2026-06-29T15:30:34.637824781Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishFlowControl_Block","Elapsed":0}
+{"Time":"2026-06-29T15:30:34.637846311Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestInvalidUTF8"}
+{"Time":"2026-06-29T15:30:34.637874171Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestInvalidUTF8","Output":"=== RUN   TestInvalidUTF8\n"}
+{"Time":"2026-06-29T15:30:34.651007958Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestInvalidUTF8","Output":"--- PASS: TestInvalidUTF8 (0.01s)\n"}
+{"Time":"2026-06-29T15:30:34.651045437Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestInvalidUTF8","Elapsed":0.01}
+{"Time":"2026-06-29T15:30:34.651067827Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishOrderingNotEnabled"}
+{"Time":"2026-06-29T15:30:34.651087497Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishOrderingNotEnabled","Output":"=== RUN   TestPublishOrderingNotEnabled\n"}
+{"Time":"2026-06-29T15:30:34.653066558Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishOrderingNotEnabled","Output":"--- PASS: TestPublishOrderingNotEnabled (0.00s)\n"}
+{"Time":"2026-06-29T15:30:34.653123097Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishOrderingNotEnabled","Elapsed":0}
+{"Time":"2026-06-29T15:30:34.653146107Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishCompression"}
+{"Time":"2026-06-29T15:30:34.653166317Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishCompression","Output":"=== RUN   TestPublishCompression\n"}
+{"Time":"2026-06-29T15:30:34.668793902Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishCompression","Output":"--- PASS: TestPublishCompression (0.02s)\n"}
+{"Time":"2026-06-29T15:30:34.668859602Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPublishCompression","Elapsed":0.02}
+{"Time":"2026-06-29T15:30:34.668885411Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_MessageCarrier"}
+{"Time":"2026-06-29T15:30:34.668905561Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_MessageCarrier","Output":"=== RUN   TestTrace_MessageCarrier\n"}
+{"Time":"2026-06-29T15:30:34.669972596Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_MessageCarrier","Output":"--- PASS: TestTrace_MessageCarrier (0.00s)\n"}
+{"Time":"2026-06-29T15:30:34.670016196Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_MessageCarrier","Elapsed":0}
+{"Time":"2026-06-29T15:30:34.670038496Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpan"}
+{"Time":"2026-06-29T15:30:34.670058276Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpan","Output":"=== RUN   TestTrace_PublishSpan\n"}
+{"Time":"2026-06-29T15:30:34.784300096Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpan","Output":"--- PASS: TestTrace_PublishSpan (0.11s)\n"}
+{"Time":"2026-06-29T15:30:34.785075762Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpan","Elapsed":0.11}
+{"Time":"2026-06-29T15:30:34.785106042Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError"}
+{"Time":"2026-06-29T15:30:34.785131382Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError","Output":"=== RUN   TestTrace_PublishSpanError\n"}
+{"Time":"2026-06-29T15:30:34.785832958Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/no_ordering_key"}
+{"Time":"2026-06-29T15:30:34.785867708Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/no_ordering_key","Output":"=== RUN   TestTrace_PublishSpanError/no_ordering_key\n"}
+{"Time":"2026-06-29T15:30:34.886934122Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/no_ordering_key","Output":"--- PASS: TestTrace_PublishSpanError/no_ordering_key (0.10s)\n"}
+{"Time":"2026-06-29T15:30:34.886996431Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/no_ordering_key","Elapsed":0.1}
+{"Time":"2026-06-29T15:30:34.887021011Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/stopped_topic"}
+{"Time":"2026-06-29T15:30:34.887041241Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/stopped_topic","Output":"=== RUN   TestTrace_PublishSpanError/stopped_topic\n"}
+{"Time":"2026-06-29T15:30:34.987659757Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/stopped_topic","Output":"--- PASS: TestTrace_PublishSpanError/stopped_topic (0.10s)\n"}
+{"Time":"2026-06-29T15:30:34.987717356Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/stopped_topic","Elapsed":0.1}
+{"Time":"2026-06-29T15:30:34.987744506Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/flow_control_error"}
+{"Time":"2026-06-29T15:30:34.987764556Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/flow_control_error","Output":"=== RUN   TestTrace_PublishSpanError/flow_control_error\n"}
+{"Time":"2026-06-29T15:30:35.089037199Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/flow_control_error","Output":"--- PASS: TestTrace_PublishSpanError/flow_control_error (0.10s)\n"}
+{"Time":"2026-06-29T15:30:35.089097068Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError/flow_control_error","Elapsed":0.1}
+{"Time":"2026-06-29T15:30:35.089498476Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError","Output":"--- PASS: TestTrace_PublishSpanError (0.31s)\n"}
+{"Time":"2026-06-29T15:30:35.089554276Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_PublishSpanError","Elapsed":0.31}
+{"Time":"2026-06-29T15:30:35.089578376Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_SubscribeSpans"}
+{"Time":"2026-06-29T15:30:35.089598356Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_SubscribeSpans","Output":"=== RUN   TestTrace_SubscribeSpans\n"}
+{"Time":"2026-06-29T15:30:36.215917423Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_SubscribeSpans","Output":"--- PASS: TestTrace_SubscribeSpans (1.13s)\n"}
+{"Time":"2026-06-29T15:30:36.215977012Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_SubscribeSpans","Elapsed":1.13}
+{"Time":"2026-06-29T15:30:36.216000792Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_TracingNotEnabled"}
+{"Time":"2026-06-29T15:30:36.216021702Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_TracingNotEnabled","Output":"=== RUN   TestTrace_TracingNotEnabled\n"}
+{"Time":"2026-06-29T15:30:36.340895152Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_TracingNotEnabled","Output":"--- PASS: TestTrace_TracingNotEnabled (0.13s)\n"}
+{"Time":"2026-06-29T15:30:36.340953882Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestTrace_TracingNotEnabled","Elapsed":0.13}
+{"Time":"2026-06-29T15:30:36.340977402Z","Action":"run","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPSTest"}
+{"Time":"2026-06-29T15:30:36.340997232Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPSTest","Output":"=== RUN   TestPSTest\n"}
+{"Time":"2026-06-29T15:30:36.341022982Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPSTest","Output":"=== PAUSE TestPSTest\n"}
+{"Time":"2026-06-29T15:30:36.341043152Z","Action":"pause","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPSTest"}
+{"Time":"2026-06-29T15:30:36.341071822Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerCancel"}
+{"Time":"2026-06-29T15:30:36.341091592Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerCancel","Output":"=== CONT  TestFlowControllerCancel\n"}
+{"Time":"2026-06-29T15:30:36.341113031Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_DeadLetterPolicy"}
+{"Time":"2026-06-29T15:30:36.341133131Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_DeadLetterPolicy","Output":"=== CONT  TestIntegration_CreateSubscription_DeadLetterPolicy\n"}
+{"Time":"2026-06-29T15:30:36.341154721Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_DeliveryAttempt"}
+{"Time":"2026-06-29T15:30:36.341174721Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_DeliveryAttempt","Output":"=== CONT  TestIntegration_DeadLetterPolicy_DeliveryAttempt\n"}
+{"Time":"2026-06-29T15:30:36.341195841Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_DeadLetterPolicy","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.341217501Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_DeliveryAttempt","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.341241901Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_BadEndpoint"}
+{"Time":"2026-06-29T15:30:36.341261571Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_BadEndpoint","Output":"=== CONT  TestIntegration_BadEndpoint\n"}
+{"Time":"2026-06-29T15:30:36.341283241Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_DeadLetterPolicy","Output":"--- SKIP: TestIntegration_CreateSubscription_DeadLetterPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.341305091Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_DeadLetterPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.34132592Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_BadEndpoint","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.34134764Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_DeliveryAttempt","Output":"--- SKIP: TestIntegration_DeadLetterPolicy_DeliveryAttempt (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.34136863Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_DeliveryAttempt","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.34140141Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_BadEndpoint","Output":"--- SKIP: TestIntegration_BadEndpoint (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.34142299Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_BadEndpoint","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.34144318Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_ClearDeadLetter"}
+{"Time":"2026-06-29T15:30:36.34146308Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_ClearDeadLetter","Output":"=== CONT  TestIntegration_DeadLetterPolicy_ClearDeadLetter\n"}
+{"Time":"2026-06-29T15:30:36.34148422Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamTimeout"}
+{"Time":"2026-06-29T15:30:36.3415044Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamTimeout","Output":"=== CONT  TestStreamTimeout\n"}
+{"Time":"2026-06-29T15:30:36.341525589Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_ClearDeadLetter","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.341547339Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_ClearDeadLetter","Output":"--- SKIP: TestIntegration_DeadLetterPolicy_ClearDeadLetter (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.341568349Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DeadLetterPolicy_ClearDeadLetter","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.341588539Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription"}
+{"Time":"2026-06-29T15:30:36.341608369Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription","Output":"=== CONT  TestIntegration_UpdateSubscription\n"}
+{"Time":"2026-06-29T15:30:36.341629049Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscribeMessageExpirationFlowControl"}
+{"Time":"2026-06-29T15:30:36.341648629Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscribeMessageExpirationFlowControl","Output":"=== CONT  TestSubscribeMessageExpirationFlowControl\n"}
+{"Time":"2026-06-29T15:30:36.341670049Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.341692069Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription","Output":"--- SKIP: TestIntegration_UpdateSubscription (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.341713679Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.341733668Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_NackSuccess"}
+{"Time":"2026-06-29T15:30:36.341753588Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_NackSuccess","Output":"=== CONT  TestExactlyOnceDelivery_NackSuccess\n"}
+{"Time":"2026-06-29T15:30:36.341774628Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_MessageStoragePolicy"}
+{"Time":"2026-06-29T15:30:36.341794608Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_MessageStoragePolicy","Output":"=== CONT  TestIntegration_CreateTopic_MessageStoragePolicy\n"}
+{"Time":"2026-06-29T15:30:36.341814618Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_MessageStoragePolicy","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.341836008Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_MessageStoragePolicy","Output":"--- SKIP: TestIntegration_CreateTopic_MessageStoragePolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.341870328Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_MessageStoragePolicy","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.341890858Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_KMS"}
+{"Time":"2026-06-29T15:30:36.341910598Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_KMS","Output":"=== CONT  TestIntegration_CreateTopic_KMS\n"}
+{"Time":"2026-06-29T15:30:36.341931028Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_KMS","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.341954527Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_KMS","Output":"--- SKIP: TestIntegration_CreateTopic_KMS (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.341976317Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateTopic_KMS","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.341996327Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_ProjectLevel"}
+{"Time":"2026-06-29T15:30:36.342016517Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_ProjectLevel","Output":"=== CONT  TestIntegration_MessageStoragePolicy_ProjectLevel\n"}
+{"Time":"2026-06-29T15:30:36.342042327Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckFailureErrorPermissionDenied"}
+{"Time":"2026-06-29T15:30:36.342061737Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckFailureErrorPermissionDenied","Output":"=== CONT  TestExactlyOnceDelivery_AckFailureErrorPermissionDenied\n"}
+{"Time":"2026-06-29T15:30:36.342098627Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckFailureErrorPermissionDenied","Output":"15:30:36.341316 No 'Application Default Credentials' found.\n"}
+{"Time":"2026-06-29T15:30:36.342120927Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_ProjectLevel","Output":"    integration_test.go:1000: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.342142776Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_ProjectLevel","Output":"--- SKIP: TestIntegration_MessageStoragePolicy_ProjectLevel (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.342163786Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_ProjectLevel","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.342183896Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_TopicLevel"}
+{"Time":"2026-06-29T15:30:36.342203906Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_TopicLevel","Output":"=== CONT  TestIntegration_MessageStoragePolicy_TopicLevel\n"}
+{"Time":"2026-06-29T15:30:36.342224246Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_TopicLevel","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.342245786Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_TopicLevel","Output":"--- SKIP: TestIntegration_MessageStoragePolicy_TopicLevel (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.342267406Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_MessageStoragePolicy_TopicLevel","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.342287256Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Errors"}
+{"Time":"2026-06-29T15:30:36.342315196Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Errors","Output":"=== CONT  TestIntegration_Errors\n"}
+{"Time":"2026-06-29T15:30:36.342335846Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Errors","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.342357585Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Errors","Output":"--- SKIP: TestIntegration_Errors (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.342378985Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Errors","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.342398935Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublicTopic"}
+{"Time":"2026-06-29T15:30:36.342419145Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublicTopic","Output":"=== CONT  TestIntegration_PublicTopic\n"}
+{"Time":"2026-06-29T15:30:36.342443945Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublicTopic","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.342465045Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckSuccess"}
+{"Time":"2026-06-29T15:30:36.342485045Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckSuccess","Output":"=== CONT  TestExactlyOnceDelivery_AckSuccess\n"}
+{"Time":"2026-06-29T15:30:36.342509965Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullRetry"}
+{"Time":"2026-06-29T15:30:36.342530345Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullRetry","Output":"=== CONT  TestStreamingPullRetry\n"}
+{"Time":"2026-06-29T15:30:36.342551725Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet"}
+{"Time":"2026-06-29T15:30:36.342571754Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet","Output":"=== CONT  TestPullStreamGet\n"}
+{"Time":"2026-06-29T15:30:36.342592684Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCalcFieldSize"}
+{"Time":"2026-06-29T15:30:36.342612804Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCalcFieldSize","Output":"=== CONT  TestCalcFieldSize\n"}
+{"Time":"2026-06-29T15:30:36.342633864Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription_ExpirationPolicy"}
+{"Time":"2026-06-29T15:30:36.342653694Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription_ExpirationPolicy","Output":"=== CONT  TestIntegration_UpdateSubscription_ExpirationPolicy\n"}
+{"Time":"2026-06-29T15:30:36.342674384Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription_ExpirationPolicy","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.342695444Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount2"}
+{"Time":"2026-06-29T15:30:36.342714934Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount2","Output":"=== CONT  TestFlowControllerUnboundedCount2\n"}
+{"Time":"2026-06-29T15:30:36.342735694Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMakeBatches"}
+{"Time":"2026-06-29T15:30:36.342759984Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMakeBatches","Output":"=== CONT  TestMakeBatches\n"}
+{"Time":"2026-06-29T15:30:36.342780443Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CancelReceive"}
+{"Time":"2026-06-29T15:30:36.342810213Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CancelReceive","Output":"=== CONT  TestIntegration_CancelReceive\n"}
+{"Time":"2026-06-29T15:30:36.342832783Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateMessage"}
+{"Time":"2026-06-29T15:30:36.342867033Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateMessage","Output":"=== CONT  TestIntegration_ValidateMessage\n"}
+{"Time":"2026-06-29T15:30:36.342891053Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CancelReceive","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.342911933Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Admin"}
+{"Time":"2026-06-29T15:30:36.342931253Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Admin","Output":"=== CONT  TestIntegration_Admin\n"}
+{"Time":"2026-06-29T15:30:36.342951113Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Admin","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.342971493Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedBytes"}
+{"Time":"2026-06-29T15:30:36.342991212Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedBytes","Output":"=== CONT  TestFlowControllerUnboundedBytes\n"}
+{"Time":"2026-06-29T15:30:36.343011972Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateMessage","Output":"    integration_test.go:112: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.343032592Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerSaturation"}
+{"Time":"2026-06-29T15:30:36.343053112Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerSaturation","Output":"=== CONT  TestFlowControllerSaturation\n"}
+{"Time":"2026-06-29T15:30:36.343073672Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount"}
+{"Time":"2026-06-29T15:30:36.343092932Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount","Output":"=== CONT  TestFlowControllerUnboundedCount\n"}
+{"Time":"2026-06-29T15:30:36.343113452Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerNoStarve"}
+{"Time":"2026-06-29T15:30:36.343132822Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerNoStarve","Output":"=== CONT  TestFlowControllerNoStarve\n"}
+{"Time":"2026-06-29T15:30:36.343153192Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_SchemaAdmin"}
+{"Time":"2026-06-29T15:30:36.343172472Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_SchemaAdmin","Output":"=== CONT  TestIntegration_SchemaAdmin\n"}
+{"Time":"2026-06-29T15:30:36.343192411Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_SchemaAdmin","Output":"    integration_test.go:112: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.343212921Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerLargeRequest"}
+{"Time":"2026-06-29T15:30:36.343232221Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerLargeRequest","Output":"=== CONT  TestFlowControllerLargeRequest\n"}
+{"Time":"2026-06-29T15:30:36.343252531Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetachSubscription"}
+{"Time":"2026-06-29T15:30:36.343272061Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetachSubscription","Output":"=== CONT  TestIntegration_DetachSubscription\n"}
+{"Time":"2026-06-29T15:30:36.343298751Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetachSubscription","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.343319261Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_RetryPolicy"}
+{"Time":"2026-06-29T15:30:36.343338721Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_RetryPolicy","Output":"=== CONT  TestIntegration_RetryPolicy\n"}
+{"Time":"2026-06-29T15:30:36.343358821Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_RetryPolicy","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.343379681Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPSTest"}
+{"Time":"2026-06-29T15:30:36.34339988Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPSTest","Output":"=== CONT  TestPSTest\n"}
+{"Time":"2026-06-29T15:30:36.34342112Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Filter_CreateSubscription"}
+{"Time":"2026-06-29T15:30:36.34344119Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Filter_CreateSubscription","Output":"=== CONT  TestIntegration_Filter_CreateSubscription\n"}
+{"Time":"2026-06-29T15:30:36.34346253Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateSchema"}
+{"Time":"2026-06-29T15:30:36.34348268Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateSchema","Output":"=== CONT  TestIntegration_ValidateSchema\n"}
+{"Time":"2026-06-29T15:30:36.34350335Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateSchema","Output":"    integration_test.go:112: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.34352464Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateTopicLabels"}
+{"Time":"2026-06-29T15:30:36.34354461Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateTopicLabels","Output":"=== CONT  TestIntegration_UpdateTopicLabels\n"}
+{"Time":"2026-06-29T15:30:36.34356514Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateTopicLabels","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.34358628Z","Action":"cont","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_NeverExpire"}
+{"Time":"2026-06-29T15:30:36.343606509Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_NeverExpire","Output":"=== CONT  TestIntegration_CreateSubscription_NeverExpire\n"}
+{"Time":"2026-06-29T15:30:36.343627789Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Filter_CreateSubscription","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.343653509Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_NeverExpire","Output":"    integration_test.go:92: Integration tests skipped. See CONTRIBUTING.md for details\n"}
+{"Time":"2026-06-29T15:30:36.343675039Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublicTopic","Output":"--- SKIP: TestIntegration_PublicTopic (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.343696429Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_PublicTopic","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.343716839Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCalcFieldSize","Output":"--- PASS: TestCalcFieldSize (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.343738159Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestCalcFieldSize","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.343763189Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription_ExpirationPolicy","Output":"--- SKIP: TestIntegration_UpdateSubscription_ExpirationPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.343784439Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateSubscription_ExpirationPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.343807128Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount2","Output":"--- PASS: TestFlowControllerUnboundedCount2 (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.343828908Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount2","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.343855348Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMakeBatches","Output":"--- PASS: TestMakeBatches (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.343879938Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestMakeBatches","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.343900958Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CancelReceive","Output":"--- SKIP: TestIntegration_CancelReceive (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.343923138Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CancelReceive","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.343943928Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Admin","Output":"--- SKIP: TestIntegration_Admin (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.343966268Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Admin","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.343986448Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedBytes","Output":"--- PASS: TestFlowControllerUnboundedBytes (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344008158Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedBytes","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344028657Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateMessage","Output":"--- SKIP: TestIntegration_ValidateMessage (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344050077Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateMessage","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344070787Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount","Output":"--- PASS: TestFlowControllerUnboundedCount (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344093057Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerUnboundedCount","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344114197Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_SchemaAdmin","Output":"--- SKIP: TestIntegration_SchemaAdmin (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344135797Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_SchemaAdmin","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344155917Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerLargeRequest","Output":"--- PASS: TestFlowControllerLargeRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344177917Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerLargeRequest","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344199887Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetachSubscription","Output":"--- SKIP: TestIntegration_DetachSubscription (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344221616Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_DetachSubscription","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344242016Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_RetryPolicy","Output":"--- SKIP: TestIntegration_RetryPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344270536Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_RetryPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344290356Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateSchema","Output":"--- SKIP: TestIntegration_ValidateSchema (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344311486Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_ValidateSchema","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344332346Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateTopicLabels","Output":"--- SKIP: TestIntegration_UpdateTopicLabels (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344353996Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_UpdateTopicLabels","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344374706Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Filter_CreateSubscription","Output":"--- SKIP: TestIntegration_Filter_CreateSubscription (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344396266Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_Filter_CreateSubscription","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344417206Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_NeverExpire","Output":"--- SKIP: TestIntegration_CreateSubscription_NeverExpire (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.344438945Z","Action":"skip","Package":"cloud.google.com/go/pubsub/v2","Test":"TestIntegration_CreateSubscription_NeverExpire","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.344460025Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerNoStarve","Output":"--- PASS: TestFlowControllerNoStarve (0.00s)\n"}
+{"Time":"2026-06-29T15:30:36.351212083Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerNoStarve","Elapsed":0}
+{"Time":"2026-06-29T15:30:36.351248893Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerCancel","Output":"--- PASS: TestFlowControllerCancel (0.01s)\n"}
+{"Time":"2026-06-29T15:30:36.359526743Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerCancel","Elapsed":0.01}
+{"Time":"2026-06-29T15:30:36.359587453Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPSTest","Output":"--- PASS: TestPSTest (0.02s)\n"}
+{"Time":"2026-06-29T15:30:36.458216817Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPSTest","Elapsed":0.02}
+{"Time":"2026-06-29T15:30:36.458277746Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckSuccess","Output":"--- PASS: TestExactlyOnceDelivery_AckSuccess (0.12s)\n"}
+{"Time":"2026-06-29T15:30:36.458483085Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckSuccess","Elapsed":0.12}
+{"Time":"2026-06-29T15:30:36.458512645Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_NackSuccess","Output":"--- PASS: TestExactlyOnceDelivery_NackSuccess (0.12s)\n"}
+{"Time":"2026-06-29T15:30:36.458727694Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_NackSuccess","Elapsed":0.12}
+{"Time":"2026-06-29T15:30:36.458785084Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckFailureErrorPermissionDenied","Output":"--- PASS: TestExactlyOnceDelivery_AckFailureErrorPermissionDenied (0.12s)\n"}
+{"Time":"2026-06-29T15:30:38.039825371Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestExactlyOnceDelivery_AckFailureErrorPermissionDenied","Elapsed":0.12}
+{"Time":"2026-06-29T15:30:38.03989332Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet","Output":"--- PASS: TestPullStreamGet (1.70s)\n"}
+{"Time":"2026-06-29T15:30:38.442937649Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestPullStreamGet","Elapsed":1.7}
+{"Time":"2026-06-29T15:30:38.442999249Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamTimeout","Output":"--- PASS: TestStreamTimeout (2.10s)\n"}
+{"Time":"2026-06-29T15:30:39.950915709Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamTimeout","Elapsed":2.1}
+{"Time":"2026-06-29T15:30:39.950976258Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerSaturation","Output":"--- PASS: TestFlowControllerSaturation (3.61s)\n"}
+{"Time":"2026-06-29T15:30:40.676465795Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestFlowControllerSaturation","Elapsed":3.61}
+{"Time":"2026-06-29T15:30:40.676520484Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullRetry","Output":"--- PASS: TestStreamingPullRetry (4.33s)\n"}
+{"Time":"2026-06-29T15:30:56.362629293Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestStreamingPullRetry","Elapsed":4.33}
+{"Time":"2026-06-29T15:30:56.362691923Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscribeMessageExpirationFlowControl","Output":"--- PASS: TestSubscribeMessageExpirationFlowControl (20.02s)\n"}
+{"Time":"2026-06-29T15:30:56.362718343Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Test":"TestSubscribeMessageExpirationFlowControl","Elapsed":20.02}
+{"Time":"2026-06-29T15:30:56.362738723Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Output":"PASS\n"}
+{"Time":"2026-06-29T15:30:56.365098352Z","Action":"output","Package":"cloud.google.com/go/pubsub/v2","Output":"ok  \tcloud.google.com/go/pubsub/v2\t82.509s\n"}
+{"Time":"2026-06-29T15:30:56.365161301Z","Action":"pass","Package":"cloud.google.com/go/pubsub/v2","Elapsed":82.509}
+reward=1 graded=109 found=109 failed=0 parsed=144 framework=go exit_code=0

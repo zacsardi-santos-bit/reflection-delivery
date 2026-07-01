@@ -1,0 +1,7 @@
+I'm working on graduating the storage extension in the OpenTelemetry Collector from its current "experimental" namespace to a stable home under the conventional cross-component naming pattern used by other packages in the project. The extension has been stable for a while and keeping it under "experimental" is misleading.
+
+As part of this move, I also want to clean up how storage operations are represented. Right now operations use a confusing pointer-type alias over an unexported struct, which makes it awkward for developers implementing custom storage backends. The cleaner approach is to make the operation type a plain exported concrete struct so that implementors can work with it naturally and the batch method can accept operations as straightforward pointer arguments.
+
+The new module needs to be wired into all the relevant module dependency manifests and builder configuration files across the repository so that everything builds correctly. The old experimental path should remain but be deprecated with forwarding aliases for backward compatibility.
+
+Could you help implement this migration? The key deliverables are: the new storage package at the correct stable path, the updated client interface with the simplified batch signature, the exported operation type as a concrete struct, and all the necessary module dependency and builder configuration updates throughout the repository.

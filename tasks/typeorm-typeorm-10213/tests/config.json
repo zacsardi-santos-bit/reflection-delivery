@@ -1,0 +1,15 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && npm run compile && npx mocha --file ./build/compiled/test/utils/test-setup.js --bail --timeout 90000 ./build/compiled/test/functional/query-builder/isolated-where/query-builder-isolated-where.js",
+  "test_files": [
+    "test/functional/query-builder/isolated-where/entity/User.ts",
+    "test/functional/query-builder/isolated-where/query-builder-isolated-where.ts",
+    "test/utils/test-utils.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/build/compiled/test/functional/query-builder/isolated-where/query-builder-isolated-where.js::query builder > isolated-where should correctly apply brackets when where statement isolation is enabled"
+  ],
+  "PASS_TO_PASS": []
+}

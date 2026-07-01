@@ -1,0 +1,791 @@
+patching file src/datanode/src/tests/instance_test.rs
+patching file src/frontend/src/tests.rs
+patching file tests-integration/tests/grpc.rs
+   Compiling proc-macro2 v1.0.47
+   Compiling quote v1.0.23
+   Compiling unicode-ident v1.0.6
+   Compiling libc v0.2.138
+   Compiling syn v1.0.107
+   Compiling cfg-if v1.0.0
+   Compiling autocfg v1.1.0
+   Compiling serde_derive v1.0.151
+   Compiling serde v1.0.151
+   Compiling memchr v2.5.0
+   Compiling version_check v0.9.4
+   Compiling once_cell v1.17.0
+   Compiling log v0.4.17
+   Compiling libm v0.2.6
+   Compiling smallvec v1.10.0
+   Compiling regex-syntax v0.6.28
+   Compiling scopeguard v1.1.0
+   Compiling parking_lot_core v0.9.5
+   Compiling pin-project-lite v0.2.9
+   Compiling lazy_static v1.4.0
+   Compiling futures-core v0.3.25
+   Compiling ppv-lite86 v0.2.17
+   Compiling either v1.8.0
+   Compiling thiserror v1.0.38
+   Compiling futures-io v0.3.25
+   Compiling ahash v0.7.6
+   Compiling itertools v0.10.5
+   Compiling num-traits v0.2.15
+   Compiling lock_api v0.4.9
+   Compiling indexmap v1.9.2
+   Compiling num-integer v0.1.45
+   Compiling bitflags v1.3.2
+   Compiling slab v0.4.7
+   Compiling futures-sink v0.3.25
+   Compiling futures-task v0.3.25
+   Compiling futures-channel v0.3.25
+   Compiling futures-util v0.3.25
+   Compiling aho-corasick v0.7.20
+   Compiling tokio v1.23.0
+   Compiling num-bigint v0.4.3
+   Compiling pin-utils v0.1.0
+   Compiling itoa v1.0.5
+   Compiling heck v0.4.0
+   Compiling tracing-core v0.1.30
+   Compiling static_assertions v1.1.0
+   Compiling crunchy v0.2.2
+   Compiling async-trait v0.1.60
+   Compiling tiny-keccak v2.0.2
+   Compiling pkg-config v0.3.26
+   Compiling regex v1.7.0
+   Compiling getrandom v0.2.8
+   Compiling jobserver v0.1.25
+   Compiling num_cpus v1.14.0
+   Compiling socket2 v0.4.7
+   Compiling cc v1.0.78
+   Compiling parking_lot v0.12.1
+   Compiling rand_core v0.6.4
+   Compiling hashbrown v0.12.3
+   Compiling signal-hook-registry v1.4.0
+   Compiling mio v0.8.5
+   Compiling rand_chacha v0.3.1
+   Compiling ryu v1.0.12
+   Compiling adler v1.0.2
+   Compiling lexical-util v0.8.5
+   Compiling percent-encoding v2.2.0
+   Compiling miniz_oxide v0.6.2
+   Compiling anyhow v1.0.68
+   Compiling rand v0.8.5
+   Compiling base64 v0.13.1
+   Compiling serde_json v1.0.91
+   Compiling byteorder v1.4.3
+   Compiling regex-automata v0.1.10
+   Compiling proc-macro-hack v0.5.19
+   Compiling num-rational v0.4.1
+   Compiling rustversion v1.0.11
+   Compiling time v0.1.43
+   Compiling iana-time-zone v0.1.53
+   Compiling typenum v1.16.0
+   Compiling tinyvec_macros v0.1.0
+   Compiling crc32fast v1.3.2
+   Compiling num-iter v0.1.43
+   Compiling tinyvec v1.6.0
+   Compiling lexical-parse-integer v0.8.6
+   Compiling fastrand v1.8.0
+   Compiling form_urlencoded v1.1.0
+   Compiling libz-sys v1.1.8
+   Compiling generic-array v0.14.6
+   Compiling ahash v0.8.2
+   Compiling lexical-parse-float v0.8.5
+   Compiling fixedbitset v0.4.2
+   Compiling half v2.1.0
+   Compiling unicode-bidi v0.3.8
+   Compiling unicode-normalization v0.1.22
+   Compiling fnv v1.0.7
+   Compiling remove_dir_all v0.5.3
+   Compiling alloc-no-stdlib v2.0.4
+   Compiling lexical-write-integer v0.8.5
+   Compiling twox-hash v1.6.3
+   Compiling tempfile v3.3.0
+   Compiling alloc-stdlib v0.2.2
+   Compiling backtrace v0.3.67
+   Compiling atomic v0.5.1
+   Compiling doc-comment v0.3.3
+   Compiling subtle v2.4.1
+   Compiling gimli v0.27.0
+   Compiling object v0.30.0
+   Compiling brotli-decompressor v2.3.2
+   Compiling lexical-write-float v0.8.5
+   Compiling rustc-demangle v0.1.21
+   Compiling glob v0.3.0
+   Compiling paste v1.0.11
+   Compiling crossbeam-utils v0.8.14
+   Compiling idna v0.3.0
+   Compiling which v4.3.0
+   Compiling lexical-core v0.8.5
+   Compiling radium v0.7.0
+   Compiling url v2.3.1
+   Compiling zstd-sys v2.0.4+zstd.1.5.2
+   Compiling unicode-width v0.1.10
+   Compiling const-random-macro v0.1.15
+   Compiling flate2 v1.0.25
+   Compiling brotli v3.3.4
+   Compiling cpufeatures v0.2.5
+   Compiling bzip2-sys v0.1.11+1.0.8
+   Compiling lz4-sys v1.9.4
+   Compiling lzma-sys v0.1.20
+   Compiling csv-core v0.1.10
+   Compiling zstd-safe v6.0.2+zstd.1.5.2
+   Compiling addr2line v0.19.0
+   Compiling multimap v0.8.3
+   Compiling block-buffer v0.10.3
+   Compiling crypto-common v0.1.6
+   Compiling itoa v0.4.8
+   Compiling snap v1.1.0
+   Compiling ordered-float v2.10.0
+   Compiling digest v0.10.6
+   Compiling same-file v1.0.6
+   Compiling time-core v0.1.0
+   Compiling prettyplease v0.1.22
+   Compiling sha2 v0.10.6
+   Compiling minimal-lexical v0.2.1
+   Compiling time-macros v0.2.6
+   Compiling walkdir v2.3.2
+   Compiling const-random v0.1.15
+   Compiling unicase v2.6.0
+   Compiling nom v7.1.1
+   Compiling hashbrown v0.13.1
+   Compiling unicode-segmentation v1.10.0
+   Compiling seq-macro v0.3.2
+   Compiling tower-service v0.3.2
+   Compiling sqlparser v0.28.0
+   Compiling httparse v1.8.0
+   Compiling siphasher v0.3.10
+   Compiling md-5 v0.10.5
+   Compiling try-lock v0.2.3
+   Compiling httpdate v1.0.2
+   Compiling ring v0.16.20
+   Compiling mime v0.3.16
+   Compiling want v0.3.0
+   Compiling tap v1.0.1
+   Compiling funty v2.0.0
+   Compiling thiserror-impl v1.0.38
+   Compiling futures-macro v0.3.25
+   Compiling tokio-macros v1.8.2
+   Compiling tracing-attributes v0.1.23
+   Compiling pin-project-internal v1.0.12
+   Compiling uuid-macro-internal v1.2.2
+   Compiling snafu-derive v0.7.3
+   Compiling strum_macros v0.24.3
+   Compiling prost-derive v0.11.2
+   Compiling multiversion-macros v0.6.1
+   Compiling xz2 v0.1.7
+   Compiling mime_guess v2.0.4
+   Compiling wyz v0.5.1
+   Compiling arrayvec v0.7.2
+   Compiling portable-atomic v0.3.18
+   Compiling bitvec v1.0.1
+   Compiling crossbeam-channel v0.5.6
+   Compiling memoffset v0.7.1
+   Compiling thread_local v1.1.4
+   Compiling untrusted v0.7.1
+   Compiling spin v0.5.2
+   Compiling metrics v0.20.1
+   Compiling metrics-macros v0.6.0
+   Compiling blake3 v1.3.3
+   Compiling crossbeam-epoch v0.9.13
+   Compiling tower-layer v0.3.2
+   Compiling overload v0.1.1
+   Compiling nu-ansi-term v0.46.0
+   Compiling blake2 v0.10.6
+   Compiling axum-core v0.3.0
+   Compiling matchers v0.1.0
+   Compiling hdrhistogram v7.5.2
+   Compiling tracing-log v0.1.3
+   Compiling raw-cpuid v10.6.0
+   Compiling sharded-slab v0.1.4
+   Compiling constant_time_eq v0.2.4
+   Compiling arrayref v0.3.6
+   Compiling iri-string v0.4.1
+   Compiling enum_dispatch v0.3.8
+   Compiling axum v0.6.1
+   Compiling pin-project v1.0.12
+   Compiling ordered-float v1.1.1
+   Compiling http-range-header v0.3.0
+   Compiling flatbuffers v22.9.29
+   Compiling quanta v0.10.1
+   Compiling approx v0.5.1
+   Compiling threadpool v1.8.1
+   Compiling gethostname v0.2.3
+   Compiling sync_wrapper v0.1.1
+   Compiling tracing v0.1.37
+   Compiling sketches-ddsketch v0.2.0
+   Compiling rawpointer v0.2.1
+   Compiling rustls v0.20.7
+   Compiling futures-executor v0.3.25
+   Compiling integer-encoding v3.0.4
+   Compiling strum v0.24.1
+   Compiling tracing-subscriber v0.3.16
+   Compiling matchit v0.7.0
+   Compiling multiversion v0.6.1
+   Compiling matrixmultiply v0.3.2
+   Compiling comfy-table v6.1.3
+   Compiling futures v0.3.25
+   Compiling nalgebra-macros v0.1.0
+   Compiling async-stream-impl v0.3.3
+   Compiling rand_distr v0.4.3
+   Compiling thrift v0.17.0
+   Compiling tracing-futures v0.2.5
+   Compiling thrift v0.15.0
+   Compiling dashmap v5.4.0
+   Compiling strsim v0.10.0
+   Compiling ident_case v1.0.1
+   Compiling unic-common v0.9.0
+   Compiling darling_core v0.14.2
+   Compiling unic-ucd-version v0.9.0
+   Compiling unic-char-range v0.9.0
+   Compiling rustls-pemfile v1.0.1
+   Compiling openssl-probe v0.1.5
+   Compiling unic-char-property v0.9.0
+   Compiling metrics-util v0.14.0
+   Compiling hex v0.4.3
+   Compiling rustls-native-certs v0.6.2
+   Compiling snafu v0.7.3
+   Compiling hmac v0.12.1
+   Compiling encoding_rs v0.8.31
+   Compiling phf_shared v0.10.0
+   Compiling sha1 v0.10.5
+   Compiling dirs-sys-next v0.1.2
+   Compiling uncased v0.9.7
+   Compiling dlv-list v0.3.0
+   Compiling event-listener v2.5.3
+   Compiling concurrent-queue v2.0.0
+   Compiling common-error v0.1.0 (/workspace/repo/src/common/error)
+   Compiling dirs-next v2.0.0
+   Compiling ordered-multimap v0.4.3
+   Compiling pem v1.1.0
+   Compiling dirs-sys v0.3.7
+   Compiling chunked_transfer v1.4.0
+   Compiling virtue v0.0.8
+   Compiling ipnet v2.7.0
+   Compiling rustc-hash v1.1.0
+   Compiling parquet-format-async-temp v0.2.0
+   Compiling rust-ini v0.18.0
+   Compiling dirs v4.0.0
+   Compiling arc-swap v1.5.1
+   Compiling base64 v0.20.0
+   Compiling term v0.7.0
+   Compiling lz4_flex v0.9.5
+   Compiling bit-vec v0.6.3
+   Compiling flagset v0.4.3
+   Compiling new_debug_unreachable v1.0.4
+   Compiling matches v0.1.9
+   Compiling phf_shared v0.11.1
+   Compiling precomputed-hash v0.1.1
+   Compiling ascii-canvas v3.0.0
+   Compiling bincode_derive v2.0.0-rc.2
+   Compiling unic-ucd-category v0.9.0
+   Compiling bit-set v0.5.3
+   Compiling string_cache v0.8.4
+   Compiling async-channel v1.8.0
+   Compiling phf_generator v0.10.0
+   Compiling lalrpop-util v0.19.8
+   Compiling atty v0.2.14
+   Compiling ena v0.14.0
+   Compiling hexf-parse v0.2.1
+   Compiling pico-args v0.4.2
+   Compiling diff v0.1.13
+   Compiling ascii v1.1.0
+   Compiling volatile v0.3.0
+   Compiling unicode-xid v0.2.4
+   Compiling array-init-cursor v0.2.0
+   Compiling phf_codegen v0.10.0
+   Compiling sluice v0.5.5
+   Compiling phf_generator v0.11.1
+   Compiling clang-sys v1.4.0
+   Compiling planus v0.2.0
+   Compiling memoffset v0.6.5
+   Compiling phf v0.11.1
+   Compiling syn-ext v0.4.0
+   Compiling parse-zoneinfo v0.3.0
+   Compiling instant v0.1.12
+   Compiling phf_codegen v0.11.1
+   Compiling frunk_core v0.4.1
+   Compiling io-lifetimes v1.0.3
+   Compiling semver v1.0.16
+   Compiling async-stream v0.3.3
+   Compiling phf v0.10.1
+   Compiling unic-emoji-char v0.9.0
+   Compiling unic-ucd-ident v0.9.0
+   Compiling prost-derive v0.9.0
+   Compiling chrono-tz-build v0.0.3
+   Compiling rand v0.4.6
+   Compiling libloading v0.7.4
+   Compiling darling_macro v0.14.2
+   Compiling bindgen v0.59.2
+   Compiling unicode_names2 v0.5.1
+   Compiling rustix v0.36.5
+   Compiling crc-catalog v2.1.0
+   Compiling bytes v1.3.0
+   Compiling num-complex v0.4.2
+   Compiling chrono v0.4.23
+   Compiling bstr v0.2.17
+   Compiling arrow-schema v29.0.0
+   Compiling uuid v1.2.2
+   Compiling time v0.3.17
+   Compiling petgraph v0.6.2
+   Compiling http v0.2.8
+   Compiling prost v0.11.3
+   Compiling serde_urlencoded v0.7.1
+   Compiling common-base v0.1.0 (/workspace/repo/src/common/base)
+   Compiling ordered-float v3.4.0
+   Compiling csv v1.1.6
+   Compiling serde_path_to_error v0.1.9
+   Compiling prost-types v0.11.2
+   Compiling simba v0.5.1
+   Compiling metrics-exporter-prometheus v0.11.0
+   Compiling http-body v0.4.5
+   Compiling common-time v0.1.0 (/workspace/repo/src/common/time)
+   Compiling tracing-bunyan-formatter v0.3.4
+   Compiling tracing-appender v0.2.2
+   Compiling num v0.4.0
+   Compiling simple_asn1 v0.6.2
+   Compiling quick-xml v0.26.0
+   Compiling arrow-buffer v29.0.0
+   Compiling bincode v2.0.0-rc.2
+   Compiling bincode v1.3.3
+   Compiling lalrpop v0.19.8
+   Compiling rustpython-common v0.0.0 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling prost-build v0.11.3
+   Compiling arrow-data v29.0.0
+   Compiling rustpython-compiler-core v0.1.2 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling frunk_proc_macro_helpers v0.1.1
+   Compiling toml v0.5.10
+   Compiling tonic-build v0.8.4
+   Compiling chrono-tz v0.6.3
+   Compiling arrow-array v29.0.0
+   Compiling tempdir v0.3.7
+   Compiling crc v3.0.0
+   Compiling cexpr v0.6.0
+   Compiling prost-build v0.9.0
+   Compiling pmutil v0.5.3
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling tokio-util v0.7.4
+   Compiling tokio-stream v0.1.11
+   Compiling object_store v0.5.2
+   Compiling tokio-io-timeout v1.2.0
+   Compiling darling v0.14.2
+   Compiling arrow-flight v29.0.0
+   Compiling api v0.1.0 (/workspace/repo/src/api)
+   Compiling backon v0.2.0
+   Compiling async-compat v0.2.1
+   Compiling arrow-select v29.0.0
+   Compiling h2 v0.3.15
+   Compiling opentelemetry v0.17.0
+   Compiling tower v0.4.13
+   Compiling derive_builder_core v0.11.2
+   Compiling storage v0.1.0 (/workspace/repo/src/storage)
+   Compiling etcd-client v0.10.2
+   Compiling rustpython-ast v0.1.0 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling arrow-cast v29.0.0
+   Compiling arrow-ord v29.0.0
+   Compiling arrow-string v29.0.0
+   Compiling opentelemetry-semantic-conventions v0.9.0
+   Compiling tracing-opentelemetry v0.17.4
+   Compiling nalgebra v0.27.1
+   Compiling opentelemetry-jaeger v0.16.0
+   Compiling derive_builder_macro v0.11.2
+   Compiling arrow-ipc v29.0.0
+   Compiling arrow-json v29.0.0
+   Compiling arrow-csv v29.0.0
+   Compiling hyper v0.14.23
+   Compiling common-telemetry v0.1.0 (/workspace/repo/src/common/telemetry)
+   Compiling backoff v0.4.0
+   Compiling rustpython-codegen v0.1.2 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling prost v0.9.0
+   Compiling proc-macro-crate v1.2.1
+   Compiling rustpython-doc v0.1.0 (https://github.com/RustPython/__doc__?branch=main#d927debd)
+   Compiling arrow v29.0.0
+   Compiling common-runtime v0.1.0 (/workspace/repo/src/common/runtime)
+   Compiling maplit v1.0.2
+   Compiling lazycell v1.3.0
+   Compiling peeking_take_while v0.1.2
+   Compiling ucd-trie v0.1.5
+   Compiling shlex v1.1.0
+   Compiling textwrap v0.15.2
+   Compiling linux-raw-sys v0.1.4
+   Compiling derive_builder v0.11.2
+   Compiling rustpython-derive-impl v0.0.0 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling pest v2.5.1
+   Compiling num_enum_derive v0.5.7
+   Compiling prost-types v0.9.0
+   Compiling hyper-timeout v0.4.1
+   Compiling frunk_proc_macros_impl v0.1.1
+   Compiling rustc_version v0.4.0
+   Compiling heck v0.3.3
+   Compiling caseless v0.2.1
+   Compiling cmake v0.1.49
+   Compiling statrs v0.15.0
+   Compiling subprocess v0.2.9
+   Compiling proc-macro-error v1.0.4
+   Compiling nibble_vec v0.1.0
+   Compiling endian-type v0.1.2
+   Compiling rust_decimal v1.27.0
+   Compiling rustpython-vm v0.1.2 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling fd-lock v3.0.8
+   Compiling radix_trie v0.2.1
+   Compiling pest_meta v2.5.1
+   Compiling result-like-derive v0.4.5
+   Compiling frunk_derives v0.4.1
+   Compiling nix v0.24.3
+   Compiling unic-ucd-hangul v0.9.0
+   Compiling common-function-macro v0.1.0 (/workspace/repo/src/common/function-macro)
+   Compiling stringprep v0.1.2
+   Compiling serde_derive_internals v0.26.0
+   Compiling optional v0.5.0
+   Compiling schemars v0.8.11
+   Compiling frunk_proc_macros v0.1.1
+   Compiling utf8parse v0.2.0
+   Compiling fallible-iterator v0.2.0
+   Compiling Inflector v0.11.4
+   Compiling num_enum v0.5.7
+   Compiling substrait v0.2.0
+   Compiling sre-engine v0.4.1
+   Compiling postgres-protocol v0.6.4
+   Compiling is-macro v0.2.1
+   Compiling pest_generator v2.5.1
+   Compiling unic-ucd-normal v0.9.0
+   Compiling schemars_derive v0.8.11
+   Compiling session v0.1.0 (/workspace/repo/src/session)
+   Compiling tonic-reflection v0.5.0
+   Compiling rustyline v10.0.0
+   Compiling nix v0.23.2
+   Compiling bigdecimal v0.3.0
+   Compiling unic-ucd-bidi v0.9.0
+   Compiling lexical v6.1.1
+   Compiling mysql_common v0.29.2
+   Compiling rustpython-pylib v0.1.0 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling frunk v0.4.1
+   Compiling uname v0.1.1
+   Compiling dyn-clone v1.0.10
+   Compiling rustpython-stdlib v0.1.2 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling half v1.8.2
+   Compiling adler32 v1.2.0
+   Compiling keccak v0.1.3
+   Compiling timsort v0.1.2
+   Compiling exitcode v1.1.2
+   Compiling saturating v0.1.0
+   Compiling unicode-casing v0.1.0
+   Compiling sha3 v0.10.6
+   Compiling pest_derive v2.5.1
+   Compiling unic-normal v0.9.0
+   Compiling getset v0.1.2
+   Compiling postgres-types v0.2.4
+   Compiling unic-ucd-age v0.9.0
+   Compiling derive-new v0.5.9
+   Compiling result-like v0.4.5
+   Compiling sha-1 v0.10.1
+   Compiling mt19937 v2.0.1
+   Compiling dns-lookup v1.0.8
+   Compiling page_size v0.4.2
+   Compiling memmap2 v0.5.8
+   Compiling terminal_size v0.1.17
+   Compiling termios v0.3.3
+   Compiling puruspe v0.1.5
+   Compiling xml-rs v0.8.4
+   Compiling auto_ops v0.3.0
+   Compiling humantime v2.1.0
+   Compiling md5 v0.7.0
+   Compiling console v0.15.2
+   Compiling influxdb_line_protocol v0.1.0 (https://github.com/evenyag/influxdb_iox?branch=feat/line-protocol#10ef0d0b)
+   Compiling mac_address v1.1.4
+   Compiling axum-macros v0.3.0
+   Compiling humantime-serde v1.1.1
+   Compiling polling v2.5.2
+   Compiling parking v2.0.0
+   Compiling waker-fn v1.1.0
+   Compiling async-io v1.12.0
+   Compiling futures-lite v1.12.0
+   Compiling moka v0.9.6
+   Compiling scheduled-thread-pool v0.2.6
+   Compiling rustpython-parser v0.1.2 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling triomphe v0.1.8
+   Compiling async-lock v2.6.0
+   Compiling tagptr v0.2.0
+   Compiling anymap v1.0.0-beta.2
+   Compiling dotenv v0.15.0
+   Compiling bzip2 v0.4.3
+   Compiling async-compression v0.3.15
+   Compiling webpki v0.22.0
+   Compiling sct v0.7.0
+   Compiling jsonwebtoken v8.2.0
+   Compiling openmetrics-parser v0.4.0
+   Compiling webpki-roots v0.22.6
+   Compiling tower-http v0.3.5
+   Compiling lz4 v1.24.0
+   Compiling tokio-rustls v0.23.4
+   Compiling ureq v2.5.0
+   Compiling hyper-rustls v0.23.2
+   Compiling pgwire v0.6.3
+   Compiling opensrv-mysql v0.3.0
+   Compiling reqsign v0.7.1
+   Compiling reqwest v0.11.13
+   Compiling zstd v0.12.1+zstd.1.5.2
+   Compiling parquet v29.0.0
+   Compiling opendal v0.22.5
+   Compiling tonic v0.8.3
+   Compiling aide v0.9.0
+   Compiling axum-test-helper v0.1.1 (https://github.com/sunng87/axum-test-helper.git?branch=patch-1#5aa7843c)
+   Compiling datafusion-common v15.0.0 (https://github.com/apache/arrow-datafusion.git?rev=4917235a398ae20145c87d20984e6367dc1a0c1e#4917235a)
+   Compiling datafusion-expr v15.0.0 (https://github.com/apache/arrow-datafusion.git?rev=4917235a398ae20145c87d20984e6367dc1a0c1e#4917235a)
+   Compiling datafusion-row v15.0.0 (https://github.com/apache/arrow-datafusion.git?rev=4917235a398ae20145c87d20984e6367dc1a0c1e#4917235a)
+   Compiling datatypes v0.1.0 (/workspace/repo/src/datatypes)
+   Compiling object-store v0.1.0 (/workspace/repo/src/object-store)
+   Compiling datafusion-physical-expr v15.0.0 (https://github.com/apache/arrow-datafusion.git?rev=4917235a398ae20145c87d20984e6367dc1a0c1e#4917235a)
+   Compiling datafusion-sql v15.0.0 (https://github.com/apache/arrow-datafusion.git?rev=4917235a398ae20145c87d20984e6367dc1a0c1e#4917235a)
+   Compiling common-catalog v0.1.0 (/workspace/repo/src/common/catalog)
+   Compiling datafusion-optimizer v15.0.0 (https://github.com/apache/arrow-datafusion.git?rev=4917235a398ae20145c87d20984e6367dc1a0c1e#4917235a)
+   Compiling datafusion v15.0.0 (https://github.com/apache/arrow-datafusion.git?rev=4917235a398ae20145c87d20984e6367dc1a0c1e#4917235a)
+   Compiling rustpython-compiler v0.1.2 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling common-recordbatch v0.1.0 (/workspace/repo/src/common/recordbatch)
+   Compiling rustpython-derive v0.1.2 (https://github.com/discord9/RustPython?rev=f89b1537#f89b1537)
+   Compiling common-query v0.1.0 (/workspace/repo/src/common/query)
+   Compiling store-api v0.1.0 (/workspace/repo/src/store-api)
+   Compiling common-grpc v0.1.0 (/workspace/repo/src/common/grpc)
+   Compiling common-function v0.1.0 (/workspace/repo/src/common/function)
+   Compiling table v0.1.0 (/workspace/repo/src/table)
+   Compiling log-store v0.1.0 (/workspace/repo/src/log-store)
+   Compiling meta-client v0.1.0 (/workspace/repo/src/meta-client)
+   Compiling common-grpc-expr v0.1.0 (/workspace/repo/src/common/grpc-expr)
+   Compiling client v0.1.0 (/workspace/repo/src/client)
+   Compiling catalog v0.1.0 (/workspace/repo/src/catalog)
+   Compiling mito v0.1.0 (/workspace/repo/src/mito)
+   Compiling sql v0.1.0 (/workspace/repo/src/sql)
+   Compiling meta-srv v0.1.0 (/workspace/repo/src/meta-srv)
+   Compiling substrait v0.1.0 (/workspace/repo/src/common/substrait)
+   Compiling query v0.1.0 (/workspace/repo/src/query)
+   Compiling servers v0.1.0 (/workspace/repo/src/servers)
+   Compiling script v0.1.0 (/workspace/repo/src/script)
+   Compiling datanode v0.1.0 (/workspace/repo/src/datanode)
+   Compiling frontend v0.1.0 (/workspace/repo/src/frontend)
+   Compiling tests-integration v0.1.0 (/workspace/repo/tests-integration)
+    Finished test [unoptimized + debuginfo] target(s) in 4m 27s
+────────────
+ Nextest run ID 7a7bb798-895c-49c7-8866-3faf0567974f with nextest profile: default
+    Starting 41 tests across 5 binaries
+        PASS [   0.295s] ( 1/41) datanode instance::sql::test::test_table_idents_to_full_name
+        PASS [   0.466s] ( 2/41) datanode instance::flight::stream::test::test_flight_record_batch_stream
+        PASS [   0.494s] ( 3/41) datanode server::grpc::tests::test_create_expr_to_request
+        PASS [   0.608s] ( 4/41) datanode sql::alter::tests::test_alter_to_request_with_renaming_table
+        PASS [   0.616s] ( 5/41) datanode sql::alter::tests::test_alter_to_request_with_adding_column
+        PASS [   0.619s] ( 6/41) datanode sql::create::tests::test_parse_create_sql
+        PASS [   0.625s] ( 7/41) datanode sql::create::tests::test_primary_key_not_specified
+        PASS [   0.629s] ( 8/41) datanode sql::create::tests::test_create_to_request
+        PASS [   0.617s] ( 9/41) datanode sql::tests::test_statement_to_request
+        PASS [   1.078s] (10/41) datanode instance::flight::test::test_handle_insert
+        PASS [   1.127s] (11/41) datanode instance::flight::test::test_handle_query
+        PASS [   1.123s] (12/41) datanode instance::flight::test::test_handle_ddl
+        FAIL [   0.870s] (13/41) datanode tests::instance_test::test_create_database_and_insert_query
+  stdout ───
+
+    running 1 test
+    test tests::instance_test::test_create_database_and_insert_query ... FAILED
+
+    failures:
+
+    failures:
+        tests::instance_test::test_create_database_and_insert_query
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.62s
+
+  stderr ───
+    thread 'tests::instance_test::test_create_database_and_insert_query' panicked at 'assertion failed: matches!(output, Output :: AffectedRows(0))', src/datanode/src/tests/instance_test.rs:44:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.893s] (14/41) datanode tests::instance_test::test_execute_create
+  stdout ───
+
+    running 1 test
+    test tests::instance_test::test_execute_create ... FAILED
+
+    failures:
+
+    failures:
+        tests::instance_test::test_execute_create
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.65s
+
+  stderr ───
+    thread 'tests::instance_test::test_execute_create' panicked at 'assertion failed: matches!(output, Output :: AffectedRows(0))', src/datanode/src/tests/instance_test.rs:354:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.892s] (15/41) datanode tests::instance_test::test_execute_show_databases_tables
+        PASS [   0.923s] (16/41) datanode tests::instance_test::test_execute_insert
+        PASS [   0.983s] (17/41) datanode tests::instance_test::test_execute_query
+        PASS [   1.157s] (18/41) datanode tests::instance_test::test_alter_table
+        PASS [   1.034s] (19/41) datanode tests::instance_test::test_execute_insert_query_with_i64_timestamp
+        FAIL [   0.842s] (20/41) datanode tests::instance_test::test_insert_with_default_value
+  stdout ───
+
+    running 1 test
+    test tests::instance_test::test_insert_with_default_value ... FAILED
+
+    failures:
+
+    failures:
+        tests::instance_test::test_insert_with_default_value
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.58s
+
+  stderr ───
+    thread 'tests::instance_test::test_insert_with_default_value' panicked at 'assertion failed: matches!(output, Output :: AffectedRows(0))', src/datanode/src/tests/instance_test.rs:461:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.287s] (21/41) tests-integration::main integration_grpc_s3_test::test_auto_create_table
+        PASS [   0.277s] (22/41) tests-integration::main integration_grpc_s3_test::test_insert_and_select
+        FAIL [   0.802s] (23/41) datanode tests::instance_test::test_issue477_same_table_name_in_different_databases
+  stdout ───
+
+    running 1 test
+    test tests::instance_test::test_issue477_same_table_name_in_different_databases ... FAILED
+
+    failures:
+
+    failures:
+        tests::instance_test::test_issue477_same_table_name_in_different_databases
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.56s
+
+  stderr ───
+    thread 'tests::instance_test::test_issue477_same_table_name_in_different_databases' panicked at 'assertion failed: matches!(output, Output :: AffectedRows(0))', src/datanode/src/tests/instance_test.rs:92:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.778s] (24/41) datanode tests::instance_test::test_use_database
+  stdout ───
+
+    running 1 test
+    test tests::instance_test::test_use_database ... FAILED
+
+    failures:
+
+    failures:
+        tests::instance_test::test_use_database
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.54s
+
+  stderr ───
+    thread 'tests::instance_test::test_use_database' panicked at 'assertion failed: matches!(output, Output :: AffectedRows(0))', src/datanode/src/tests/instance_test.rs:511:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.268s] (25/41) tests-integration::main integration_http_s3_test::test_health_api
+        PASS [   0.266s] (26/41) tests-integration::main integration_http_s3_test::test_metrics_api
+        PASS [   0.264s] (27/41) tests-integration::main integration_http_s3_test::test_scripts_api
+        PASS [   0.254s] (28/41) tests-integration::main integration_http_s3_test::test_sql_api
+        PASS [   2.075s] (29/41) tests-integration::main integration_grpc_file_test::test_auto_create_table
+        FAIL [   1.887s] (30/41) tests-integration::main integration_grpc_file_test::test_insert_and_select
+  stdout ───
+
+    running 1 test
+    2026-06-29T15:33:34.892357Z  INFO common_telemetry::logging: logs dir = /tmp/__unittest_logs
+    2026-06-29T15:33:34.927888Z  INFO common_runtime::global: Creating runtime, thread name: read-worker, work_threads: 8.
+    2026-06-29T15:33:34.939932Z  INFO common_runtime::global: Creating runtime, thread name: write-worker, work_threads: 8.
+    2026-06-29T15:33:34.951413Z  INFO common_runtime::global: Creating runtime, thread name: bg-worker, work_threads: 8.
+    2026-06-29T15:33:34.981530Z  INFO datanode::instance: The file storage directory is: /tmp/gt_data_insert_and_select.3wvn0o7ZFvei/
+    2026-06-29T15:33:34.983264Z DEBUG opendal::services::fs::backend: backend build started: Builder { root: Some("/tmp/gt_data_insert_and_select.3wvn0o7ZFvei/"), atomic_write_dir: Some("/tmp/gt_data_insert_and_select.3wvn0o7ZFvei//.tmp/") }    
+    2026-06-29T15:33:34.992380Z DEBUG opendal::services::fs::backend: backend build finished: Builder { root: None, atomic_write_dir: Some("/tmp/gt_data_insert_and_select.3wvn0o7ZFvei//.tmp/") }    
+    2026-06-29T15:33:34.998449Z  INFO datanode::instance: The WAL directory is: /tmp/gt_wal_insert_and_select.FRkvFaKpAhGL
+    2026-06-29T15:33:35.015283Z  INFO log_store::fs::file: Replay log 00000000000000000000.log finished, offset: 0 -> 0, last entry id: None
+    2026-06-29T15:33:35.016090Z  INFO log_store::fs::file: Log file /tmp/gt_wal_insert_and_select.FRkvFaKpAhGL/00000000000000000000.log replay finished, last offset: 0, file start entry id: 0, elapsed time: 4ms
+    2026-06-29T15:33:35.017155Z  INFO log_store::fs::log: Initialized log store directory: /tmp/gt_wal_insert_and_select.FRkvFaKpAhGL
+    2026-06-29T15:33:35.026376Z  INFO log_store::fs::log: Successfully loaded log store directory, files: {0: LogFile { name: Log(0), start_entry_id: 0, max_file_size: 1073741824, state: State { write_offset: 0, flush_offset: 0, last_entry_id: 0, sealed: false, stopped: false } }}
+    2026-06-29T15:33:35.027949Z  INFO log_store::fs::log: Log store active log file: 00000000000000000000.log
+    2026-06-29T15:33:35.030775Z  INFO log_store::fs::file: Flush task started: 00000000000000000000.log
+    2026-06-29T15:33:35.031085Z  INFO log_store::fs::log: Successfully started current active file: 00000000000000000000.log
+    2026-06-29T15:33:35.036570Z  INFO meta_client::client: MetaClient channel config: ChannelConfig { timeout: None, connect_timeout: None, concurrency_limit: None, rate_limit: None, initial_stream_window_size: None, initial_connection_window_size: None, http2_keep_alive_interval: None, http2_keep_alive_timeout: None, http2_keep_alive_while_idle: None, http2_adaptive_window: None, tcp_keepalive: None, tcp_nodelay: true }
+    2026-06-29T15:33:35.041449Z  INFO meta_client::client: Heartbeat client started
+    2026-06-29T15:33:35.043905Z  INFO meta_client::client: Router client started
+    2026-06-29T15:33:35.044219Z  INFO meta_client::client: Store client started
+    2026-06-29T15:33:35.195111Z  INFO catalog::remote::manager: Registered default schema
+    2026-06-29T15:33:35.198015Z  INFO catalog::remote::manager: Registered default catalog
+    2026-06-29T15:33:35.198223Z  INFO catalog::remote::manager: Default catalog and schema registered
+    2026-06-29T15:33:35.198402Z  INFO catalog::remote::manager: catalog_range_prefix: __c-
+    2026-06-29T15:33:35.209942Z  INFO catalog::remote::manager: Fetch catalog from metasrv: greptime
+    2026-06-29T15:33:35.212440Z  INFO catalog::remote::manager: Found schema: greptime.public
+    2026-06-29T15:33:35.215916Z  INFO catalog::remote::manager: Fetch schema from metasrv: greptime.public
+    2026-06-29T15:33:35.216052Z  INFO catalog::remote::manager: initializing tables in greptime.public
+    2026-06-29T15:33:35.217530Z  INFO catalog::remote::manager: initialized tables in greptime.public, total: 0
+    2026-06-29T15:33:35.217830Z  INFO catalog::remote::manager: Initialized catalogs: ["greptime"]
+    2026-06-29T15:33:35.218335Z  INFO catalog::remote::manager: Max table id allocated: 1023
+    2026-06-29T15:33:35.245299Z DEBUG storage::manifest::impl_: Save region metadata action: RegionMetaActionList { actions: [Protocol(ProtocolAction { min_reader_version: 0, min_writer_version: 0 }), Change(RegionChange { committed_sequence: 0, metadata: RawRegionMetadata { id: 4294967296, name: "1_0000000000", columns: RawColumnsMetadata { columns: [ColumnMetadata { cf_id: 0, desc: ColumnDescriptor { id: 5, name: "name", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 0, desc: ColumnDescriptor { id: 4, name: "timestamp", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: false, is_time_index: true, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 0, name: "script", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 1, name: "engine", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 2, name: "gmt_created", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 3, name: "gmt_modified", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 2147483649, name: "__sequence", data_type: UInt64(UInt64Type), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 2147483650, name: "__op_type", data_type: UInt8(UInt8Type), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }], row_key_end: 2, timestamp_key_index: 1, enable_version_column: false, user_column_end: 6 }, column_families: RawColumnFamiliesMetadata { column_families: [ColumnFamilyMetadata { name: "default", cf_id: 1, column_index_start: 2, column_index_end: 6 }] }, version: 0 } })], prev_version: 0 }, version: 0
+    2026-06-29T15:33:35.253570Z DEBUG write{path="public/1/1_0000000000/manifest/00000000000000000000.json" args=OpWrite { size: 1718, content_type: None }}: opendal::services: service=fs operation=write path=public/1/1_0000000000/manifest/00000000000000000000.json size=1718 -> started    
+    2026-06-29T15:33:35.258068Z DEBUG write{path="public/1/1_0000000000/manifest/00000000000000000000.json" args=OpWrite { size: 1718, content_type: None }}: opendal::services: service=fs operation=write path=public/1/1_0000000000/manifest/00000000000000000000.json has_read=1718 -> consumed reader fully    
+    2026-06-29T15:33:35.258579Z DEBUG write{path="public/1/1_0000000000/manifest/00000000000000000000.json" args=OpWrite { size: 1718, content_type: None }}: opendal::services: service=fs operation=write path=public/1/1_0000000000/manifest/00000000000000000000.json size=1718 -> written    
+    2026-06-29T15:33:35.260379Z  INFO storage::engine: Storage engine create region 4294967296
+    2026-06-29T15:33:35.264721Z DEBUG storage::manifest::impl_: Save region metadata action: TableMetaActionList { actions: [Protocol(ProtocolAction { min_reader_version: 0, min_writer_version: 0 }), Change(TableChange { table_info: RawTableInfo { ident: TableIdent { table_id: 1, version: 0 }, name: "scripts", desc: Some("Scripts table"), catalog_name: "greptime", schema_name: "public", meta: RawTableMeta { schema: RawSchema { column_schemas: [ColumnSchema { name: "name", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "script", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "engine", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "timestamp", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: false, is_time_index: true, default_constraint: None, metadata: {"greptime:time_index": "true"} }, ColumnSchema { name: "gmt_created", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "gmt_modified", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }], timestamp_index: Some(3), version: 0 }, primary_key_indices: [0], value_indices: [1, 2, 3, 4, 5], engine: "mito", next_column_id: 6, region_numbers: [0], engine_options: {}, options: {}, created_on: 2026-06-29T15:33:35.262321621Z }, table_type: Base } })], prev_version: 0 }, version: 0
+    2026-06-29T15:33:35.269095Z DEBUG write{path="public/1/manifest/00000000000000000000.json" args=OpWrite { size: 1376, content_type: None }}: opendal::services: service=fs operation=write path=public/1/manifest/00000000000000000000.json size=1376 -> started    
+    2026-06-29T15:33:35.270934Z DEBUG write{path="public/1/manifest/00000000000000000000.json" args=OpWrite { size: 1376, content_type: None }}: opendal::services: service=fs operation=write path=public/1/manifest/00000000000000000000.json has_read=1376 -> consumed reader fully    
+    2026-06-29T15:33:35.271167Z DEBUG write{path="public/1/manifest/00000000000000000000.json" args=OpWrite { size: 1376, content_type: None }}: opendal::services: service=fs operation=write path=public/1/manifest/00000000000000000000.json size=1376 -> written    
+    2026-06-29T15:33:35.271521Z  INFO mito::engine: Mito engine created table: TableInfo { ident: TableIdent { table_id: 1, version: 0 }, name: "scripts", desc: Some("Scripts table"), catalog_name: "greptime", schema_name: "public", meta: TableMeta { schema: Schema { column_schemas: [ColumnSchema { name: "name", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "script", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "engine", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "timestamp", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: false, is_time_index: true, default_constraint: None, metadata: {"greptime:time_index": "true"} }, ColumnSchema { name: "gmt_created", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "gmt_modified", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }], name_to_index: {"gmt_modified": 5, "gmt_created": 4, "timestamp": 3, "engine": 2, "name": 0, "script": 1}, arrow_schema: Schema { fields: [Field { name: "name", data_type: Utf8, nullable: false, dict_id: 0, dict_is_ordered: false, metadata: {} }, Field { name: "script", data_type: Utf8, nullable: false, dict_id: 0, dict_is_ordered: false, metadata: {} }, Field { name: "engine", data_type: Utf8, nullable: false, dict_id: 0, dict_is_ordered: false, metadata: {} }, Field { name: "timestamp", data_type: Timestamp(Millisecond, None), nullable: false, dict_id: 0, dict_is_ordered: false, metadata: {"greptime:time_index": "true"} }, Field { name: "gmt_created", data_type: Timestamp(Millisecond, None), nullable: false, dict_id: 0, dict_is_ordered: false, metadata: {} }, Field { name: "gmt_modified", data_type: Timestamp(Millisecond, None), nullable: false, dict_id: 0, dict_is_ordered: false, metadata: {} }], metadata: {"greptime:version": "0"} }, timestamp_index: Some(3), version: 0 }, primary_key_indices: [0], value_indices: [1, 2, 3, 4, 5], engine: "mito", region_numbers: [0], next_column_id: 6, engine_options: {}, options: {}, created_on: 2026-06-29T15:33:35.262321621Z }, table_type: Base }.
+    2026-06-29T15:33:35.278817Z DEBUG catalog::remote::manager: Successfully set catalog table entry, key: __tr-greptime-public-scripts-42, table value: TableRegionalValue { version: 0, regions_ids: [0] }
+    2026-06-29T15:33:35.279492Z  INFO catalog: Created and registered system table: scripts
+    2026-06-29T15:33:35.279798Z  INFO catalog::remote::manager: All system table opened
+    2026-06-29T15:33:35.285602Z DEBUG catalog::remote::manager: Successfully set catalog table entry, key: __tr-greptime-public-numbers-42, table value: TableRegionalValue { version: 0, regions_ids: [0] }
+    2026-06-29T15:33:35.292753Z  INFO meta_client::client::heartbeat: Success to create heartbeat stream to server: HeartbeatResponse {
+        header: Some(
+            ResponseHeader {
+                protocol_version: 1,
+                cluster_id: 1000,
+                error: None,
+            },
+        ),
+        payload: [],
+    }
+    2026-06-29T15:33:35.294220Z  INFO meta_srv::handler: Pusher register: 127.0.0.1:3001-42-0
+    2026-06-29T15:33:35.294848Z  INFO meta_srv::handler::datanode_lease: Receive a heartbeat: LeaseKey { cluster_id: 1000, node_id: 42 }, LeaseValue { timestamp_millis: 1782747215294, node_addr: "127.0.0.1:3001" }
+    2026-06-29T15:33:35.295924Z  INFO datanode::heartbeat: heartbeat response: HeartbeatResponse { header: Some(ResponseHeader { protocol_version: 1, cluster_id: 1000, error: None }), payload: [] }
+    2026-06-29T15:33:35.299050Z  INFO servers::grpc: GRPC server is bound to 127.0.0.1:3588
+    2026-06-29T15:33:36.333658Z  INFO datanode::server::grpc: Creating table ..demo with table id 1024 from Frontend
+    2026-06-29T15:33:36.343093Z DEBUG storage::manifest::impl_: Save region metadata action: RegionMetaActionList { actions: [Protocol(ProtocolAction { min_reader_version: 0, min_writer_version: 0 }), Change(RegionChange { committed_sequence: 0, metadata: RawRegionMetadata { id: 4398046511104, name: "1024_0000000000", columns: RawColumnsMetadata { columns: [ColumnMetadata { cf_id: 0, desc: ColumnDescriptor { id: 3, name: "host", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 0, desc: ColumnDescriptor { id: 2, name: "ts", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: true, is_time_index: true, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 0, name: "cpu", data_type: Float64(Float64Type), is_nullable: true, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 1, name: "memory", data_type: Float64(Float64Type), is_nullable: true, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 2147483649, name: "__sequence", data_type: UInt64(UInt64Type), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }, ColumnMetadata { cf_id: 1, desc: ColumnDescriptor { id: 2147483650, name: "__op_type", data_type: UInt8(UInt8Type), is_nullable: false, is_time_index: false, default_constraint: None, comment: "" } }], row_key_end: 2, timestamp_key_index: 1, enable_version_column: false, user_column_end: 4 }, column_families: RawColumnFamiliesMetadata { column_families: [ColumnFamilyMetadata { name: "default", cf_id: 1, column_index_start: 2, column_index_end: 4 }] }, version: 0 } })], prev_version: 0 }, version: 0
+    2026-06-29T15:33:36.343932Z DEBUG write{path="public/1024/1024_0000000000/manifest/00000000000000000000.json" args=OpWrite { size: 1354, content_type: None }}: opendal::services: service=fs operation=write path=public/1024/1024_0000000000/manifest/00000000000000000000.json size=1354 -> started    
+    2026-06-29T15:33:36.346903Z DEBUG write{path="public/1024/1024_0000000000/manifest/00000000000000000000.json" args=OpWrite { size: 1354, content_type: None }}: opendal::services: service=fs operation=write path=public/1024/1024_0000000000/manifest/00000000000000000000.json has_read=1354 -> consumed reader fully    
+    2026-06-29T15:33:36.347207Z DEBUG write{path="public/1024/1024_0000000000/manifest/00000000000000000000.json" args=OpWrite { size: 1354, content_type: None }}: opendal::services: service=fs operation=write path=public/1024/1024_0000000000/manifest/00000000000000000000.json size=1354 -> written    
+    2026-06-29T15:33:36.347468Z  INFO storage::engine: Storage engine create region 4398046511104
+    2026-06-29T15:33:36.347778Z DEBUG storage::manifest::impl_: Save region metadata action: TableMetaActionList { actions: [Protocol(ProtocolAction { min_reader_version: 0, min_writer_version: 0 }), Change(TableChange { table_info: RawTableInfo { ident: TableIdent { table_id: 1024, version: 0 }, name: "demo", desc: Some("blabla little magic fairy"), catalog_name: "greptime", schema_name: "public", meta: RawTableMeta { schema: RawSchema { column_schemas: [ColumnSchema { name: "host", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "cpu", data_type: Float64(Float64Type), is_nullable: true, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "memory", data_type: Float64(Float64Type), is_nullable: true, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "ts", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: true, is_time_index: true, default_constraint: None, metadata: {"greptime:time_index": "true"} }], timestamp_index: Some(3), version: 0 }, primary_key_indices: [0], value_indices: [1, 2, 3], engine: "mito", next_column_id: 4, region_numbers: [0], engine_options: {}, options: {}, created_on: 2026-06-29T15:33:36.347674709Z }, table_type: Base } })], prev_version: 0 }, version: 0
+    2026-06-29T15:33:36.348605Z DEBUG write{path="public/1024/manifest/00000000000000000000.json" args=OpWrite { size: 1064, content_type: None }}: opendal::services: service=fs operation=write path=public/1024/manifest/00000000000000000000.json size=1064 -> started    
+    2026-06-29T15:33:36.351407Z DEBUG write{path="public/1024/manifest/00000000000000000000.json" args=OpWrite { size: 1064, content_type: None }}: opendal::services: service=fs operation=write path=public/1024/manifest/00000000000000000000.json has_read=1064 -> consumed reader fully    
+    2026-06-29T15:33:36.351672Z DEBUG write{path="public/1024/manifest/00000000000000000000.json" args=OpWrite { size: 1064, content_type: None }}: opendal::services: service=fs operation=write path=public/1024/manifest/00000000000000000000.json size=1064 -> written    
+    2026-06-29T15:33:36.351962Z  INFO mito::engine: Mito engine created table: TableInfo { ident: TableIdent { table_id: 1024, version: 0 }, name: "demo", desc: Some("blabla little magic fairy"), catalog_name: "greptime", schema_name: "public", meta: TableMeta { schema: Schema { column_schemas: [ColumnSchema { name: "host", data_type: String(StringType), is_nullable: false, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "cpu", data_type: Float64(Float64Type), is_nullable: true, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "memory", data_type: Float64(Float64Type), is_nullable: true, is_time_index: false, default_constraint: None, metadata: {} }, ColumnSchema { name: "ts", data_type: Timestamp(Millisecond(TimestampMillisecondType)), is_nullable: true, is_time_index: true, default_constraint: None, metadata: {"greptime:time_index": "true"} }], name_to_index: {"cpu": 1, "ts": 3, "host": 0, "memory": 2}, arrow_schema: Schema { fields: [Field { name: "host", data_type: Utf8, nullable: false, dict_id: 0, dict_is_ordered: false, metadata: {} }, Field { name: "cpu", data_type: Float64, nullable: true, dict_id: 0, dict_is_ordered: false, metadata: {} }, Field { name: "memory", data_type: Float64, nullable: true, dict_id: 0, dict_is_ordered: false, metadata: {} }, Field { name: "ts", data_type: Timestamp(Millisecond, None), nullable: true, dict_id: 0, dict_is_ordered: false, metadata: {"greptime:time_index": "true"} }], metadata: {"greptime:version": "0"} }, timestamp_index: Some(3), version: 0 }, primary_key_indices: [0], value_indices: [1, 2, 3], engine: "mito", region_numbers: [0], next_column_id: 4, engine_options: {}, options: {}, created_on: 2026-06-29T15:33:36.347674709Z }, table_type: Base }.
+    2026-06-29T15:33:36.360099Z DEBUG catalog::remote::manager: Successfully set catalog table entry, key: __tr-greptime-public-demo-42, table value: TableRegionalValue { version: 0, regions_ids: [0] }
+    2026-06-29T15:33:36.360993Z  INFO datanode::sql::create: Successfully created table: "demo"
+    2026-06-29T15:33:36.386515Z DEBUG tonic::codec::decode: decoder inner stream error: Status { code: Unknown, message: "error reading a body from connection: broken pipe", source: Some(hyper::Error(Body, Error { kind: Io(Kind(BrokenPipe)) })) }
+    2026-06-29T15:33:36.386756Z DEBUG tonic::codec::decode: decoder inner stream error: Status { code: Unknown, message: "error reading a body from connection: broken pipe", source: Some(hyper::Error(Body, Error { kind: Io(Kind(BrokenPipe)) })) }
+    2026-06-29T15:33:36.387226Z ERROR meta_srv::service::heartbeat: Client disconnected: broken pipe
+    2026-06-29T15:33:36.387873Z  INFO meta_srv::service::heartbeat: Heartbeat stream broken: "127.0.0.1:3001-42-0"
+    2026-06-29T15:33:36.388057Z  INFO meta_srv::handler: Pusher unregister: 127.0.0.1:3001-42-0
+    test integration_grpc_file_test::test_insert_and_select ... FAILED
+
+    failures:
+
+    failures:
+        integration_grpc_file_test::test_insert_and_select
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 1.60s
+
+  stderr ───
+    thread 'integration_grpc_file_test::test_insert_and_select' panicked at 'assertion failed: matches!(result, RpcOutput :: AffectedRows(0))', tests-integration/tests/grpc.rs:139:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   1.973s] (31/41) tests-integration::main integration_http_file_test::test_health_api
+        PASS [   2.014s] (32/41) tests-integration::main integration_http_file_test::test_metrics_api
+        PASS [  11.796s] (33/41) datanode error::tests::test_error
+        PASS [  10.279s] (34/41) tests-integration::main integration_http_file_test::test_scripts_api
+        PASS [  12.010s] (35/41) datanode error::tests::test_parse_timestamp
+        PASS [  12.049s] (36/41) datanode server::grpc::tests::test_create_column_schema
+        PASS [  12.088s] (37/41) datanode server::grpc::tests::test_create_table_schema
+        PASS [  12.229s] (38/41) datanode sql::create::tests::test_time_index_not_specified
+        PASS [  12.232s] (39/41) datanode sql::create::tests::test_key_not_found
+        PASS [  12.240s] (40/41) datanode sql::create::tests::test_invalid_primary_key
+        PASS [  10.914s] (41/41) tests-integration::main integration_http_file_test::test_sql_api
+────────────
+     Summary [  12.571s] 41 tests run: 35 passed, 6 failed, 0 skipped
+        FAIL [   0.870s] (13/41) datanode tests::instance_test::test_create_database_and_insert_query
+        FAIL [   0.893s] (14/41) datanode tests::instance_test::test_execute_create
+        FAIL [   0.842s] (20/41) datanode tests::instance_test::test_insert_with_default_value
+        FAIL [   0.802s] (23/41) datanode tests::instance_test::test_issue477_same_table_name_in_different_databases
+        FAIL [   0.778s] (24/41) datanode tests::instance_test::test_use_database
+        FAIL [   1.887s] (30/41) tests-integration::main integration_grpc_file_test::test_insert_and_select
+error: test run failed
+reward=0 graded=41 found=17 failed=2 parsed=41 framework=cargo exit_code=100

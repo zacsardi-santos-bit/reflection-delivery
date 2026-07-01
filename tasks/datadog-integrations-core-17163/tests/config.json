@@ -1,0 +1,26 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/cockroachdb/tests/common.py /workspace/repo/cockroachdb/tests/test_unit.py -v",
+  "test_files": [
+    "cockroachdb/tests/common.py",
+    "cockroachdb/tests/fixtures/jobs_metrics.txt",
+    "cockroachdb/tests/test_unit.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_unit::test_metrics[changefeed]",
+    "tests.test_unit::test_metrics[jobs]"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_unit::test_fixture_metrics[security]",
+    "tests.test_unit::test_fixture_metrics[unstable]",
+    "tests.test_unit::test_metrics[admission]",
+    "tests.test_unit::test_metrics[distsender]",
+    "tests.test_unit::test_no_duplicate_metrics_in_maps",
+    "tests.test_unit::test_metrics_not_in_maps[build_timestamp-map0]",
+    "tests.test_unit::test_metrics_not_in_maps[build_timestamp-map1]",
+    "tests.test_unit::test_metrics_not_in_maps[distsender_rpc_err_errordetailtype-map0]",
+    "tests.test_unit::test_metrics_not_in_maps[distsender_rpc_err_errordetailtype-map1]"
+  ]
+}

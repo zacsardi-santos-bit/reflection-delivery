@@ -1,0 +1,7 @@
+I've noticed that variant inference in the Gleam compiler doesn't work for built-in types the way it does for user-defined types. When I have a value that's always constructed using a specific built-in constructor — like always being the successful variant of a result — the compiler still acts as though the value could be any variant. I end up getting exhaustiveness errors or needing extra wildcard branches even when the compiler should be able to tell the value can only ever be one thing.
+
+For example, when I match on a literal true boolean value, I'd expect the compiler to know only the true case is possible and not require a branch for false. But right now it either complains or requires me to add an unnecessary catch-all. Similarly, if a variable is always constructed as the successful result variant, the compiler should allow me to match only on the successful cases without adding an error branch.
+
+It seems the compiler already supports this kind of narrowing for custom types, but the built-in prelude types (booleans, results, etc.) are missing this support. The fix should make the built-in type constructors carry the same variant information that custom constructors already carry, so the compiler can correctly narrow pattern match requirements when a value is known to always be a specific built-in constructor.
+
+The "add missing patterns" code action in the language server should also work correctly on typed function parameters of built-in types, not just on let-bound literal values.

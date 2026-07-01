@@ -1,0 +1,197 @@
+patching file apps/admin-x-framework/src/api/stats.ts
+patching file apps/stats/src/views/Stats/Web.tsx
+patching file ghost/core/core/server/api/endpoints/stats.js
+patching file ghost/core/core/server/services/stats/StatsService.js
+patching file ghost/core/core/server/services/stats/TopContentStatsService.js
+patching file ghost/core/core/server/services/stats/service.js
+patching file ghost/core/core/server/services/stats/utils/tinybird.js
+patching file ghost/core/core/server/web/api/endpoints/admin/routes.js
+The next patch would create the file apps/admin-x-framework/src/api/stats.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file apps/stats/src/views/Stats/Web.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file apps/stats/src/views/Stats/Web.tsx.rej
+patching file ghost/core/core/server/api/endpoints/stats.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ghost/core/core/server/api/endpoints/stats.js.rej
+patching file ghost/core/core/server/services/stats/StatsService.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file ghost/core/core/server/services/stats/StatsService.js.rej
+The next patch would create the file ghost/core/core/server/services/stats/TopContentStatsService.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file ghost/core/core/server/services/stats/service.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ghost/core/core/server/services/stats/service.js.rej
+The next patch would create the file ghost/core/core/server/services/stats/utils/tinybird.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file ghost/core/core/server/web/api/endpoints/admin/routes.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ghost/core/core/server/web/api/endpoints/admin/routes.js.rej
+The next patch would create the file apps/admin-x-framework/src/api/stats.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file apps/stats/src/views/Stats/Web.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file apps/stats/src/views/Stats/Web.tsx.rej
+patching file ghost/core/core/server/api/endpoints/stats.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ghost/core/core/server/api/endpoints/stats.js.rej
+patching file ghost/core/core/server/services/stats/StatsService.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file ghost/core/core/server/services/stats/StatsService.js.rej
+The next patch would create the file ghost/core/core/server/services/stats/TopContentStatsService.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file ghost/core/core/server/services/stats/service.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ghost/core/core/server/services/stats/service.js.rej
+The next patch would create the file ghost/core/core/server/services/stats/utils/tinybird.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file ghost/core/core/server/web/api/endpoints/admin/routes.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ghost/core/core/server/web/api/endpoints/admin/routes.js.rej
+patching file b/apps/admin-x-framework/src/api/stats.ts
+can't find file to patch at input line 34
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/apps/stats/src/views/Stats/Web.tsx b/apps/stats/src/views/Stats/Web.tsx
+|index d661cc9aa8..9aa156b2a7 100644
+|--- a/apps/stats/src/views/Stats/Web.tsx
+|+++ b/apps/stats/src/views/Stats/Web.tsx
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 136
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/ghost/core/core/server/api/endpoints/stats.js b/ghost/core/core/server/api/endpoints/stats.js
+|index c73722948e..a4fae652b7 100644
+|--- a/ghost/core/core/server/api/endpoints/stats.js
+|+++ b/ghost/core/core/server/api/endpoints/stats.js
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 173
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/ghost/core/core/server/services/stats/StatsService.js b/ghost/core/core/server/services/stats/StatsService.js
+|index 12054feca3..6434d5127d 100644
+|--- a/ghost/core/core/server/services/stats/StatsService.js
+|+++ b/ghost/core/core/server/services/stats/StatsService.js
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+patching file b/ghost/core/core/server/services/stats/TopContentStatsService.js
+can't find file to patch at input line 449
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/ghost/core/core/server/services/stats/service.js b/ghost/core/core/server/services/stats/service.js
+|index 9a0db1df15..c0fc5d2735 100644
+|--- a/ghost/core/core/server/services/stats/service.js
+|+++ b/ghost/core/core/server/services/stats/service.js
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/ghost/core/core/server/services/stats/utils/tinybird.js
+can't find file to patch at input line 597
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/ghost/core/core/server/web/api/endpoints/admin/routes.js b/ghost/core/core/server/web/api/endpoints/admin/routes.js
+|index 6a9df77aeb..793a86da27 100644
+|--- a/ghost/core/core/server/web/api/endpoints/admin/routes.js
+|+++ b/ghost/core/core/server/web/api/endpoints/admin/routes.js
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file apps/admin-x-framework/src/api/stats.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file apps/stats/src/views/Stats/Web.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file apps/stats/src/views/Stats/Web.tsx.rej
+patching file ghost/core/core/server/api/endpoints/stats.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ghost/core/core/server/api/endpoints/stats.js.rej
+patching file ghost/core/core/server/services/stats/StatsService.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file ghost/core/core/server/services/stats/StatsService.js.rej
+The next patch would create the file ghost/core/core/server/services/stats/TopContentStatsService.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file ghost/core/core/server/services/stats/service.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ghost/core/core/server/services/stats/service.js.rej
+The next patch would create the file ghost/core/core/server/services/stats/utils/tinybird.js,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file ghost/core/core/server/web/api/endpoints/admin/routes.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file ghost/core/core/server/web/api/endpoints/admin/routes.js.rej
+ERROR: golden patch failed to apply by all strategies

@@ -1,0 +1,19 @@
+patching file .changeset/many-bears-clean.md
+patching file packages/inquirer-common/src/types.ts
+patching file packages/odata-service-inquirer/package.json
+patching file packages/odata-service-inquirer/src/index.ts
+patching file packages/odata-service-inquirer/src/prompts/connectionValidator.ts (renamed from packages/odata-service-inquirer/src/prompts/datasources/service-url/connectionValidator.ts)
+patching file packages/odata-service-inquirer/src/prompts/datasources/sap-system/abap-on-prem/questions.ts
+patching file packages/odata-service-inquirer/src/prompts/datasources/sap-system/abap-on-prem/service-helper.ts
+patching file packages/odata-service-inquirer/src/prompts/datasources/sap-system/new-system/questions.ts
+patching file packages/odata-service-inquirer/src/prompts/datasources/sap-system/prompt-helpers.ts
+patching file packages/odata-service-inquirer/src/prompts/datasources/sap-system/validators.ts
+patching file packages/odata-service-inquirer/src/prompts/datasources/service-url/questions.ts
+patching file packages/odata-service-inquirer/src/prompts/datasources/service-url/validators.ts
+patching file packages/odata-service-inquirer/src/prompts/logger-helper.ts
+patching file packages/odata-service-inquirer/src/prompts/prompts.ts
+patching file packages/odata-service-inquirer/src/translations/odata-service-inquirer.i18n.json
+patching file packages/odata-service-inquirer/src/types.ts
+patching file packages/odata-service-inquirer/tsconfig.json
+patching file packages/project-input-validator/src/translations/project-input-validator.i18n.json
+patching file pnpm-lock.yaml

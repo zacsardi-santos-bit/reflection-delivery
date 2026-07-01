@@ -1,0 +1,217 @@
+patching file packages/daemon/test/test-endo.js
+patching file packages/daemon/test/test-remote-control.js
+TAP version 13
+# endo › beforeEach hook for lifecycle
+ok 1 - remote-control › remote control connects from initial state and propagates cancellation
+ok 2 - remote-control › remote control accepts from initial state and propagates cancellation
+ok 3 - remote-control › remote control connect uses existing connection after accept
+ok 4 - remote-control › remote control reuses existing connection when reconnecting
+ok 5 - remote-control › remote control accept after accept
+ok 6 - remote-control › remote control connects first, ignores second, entagles cancellation of first peer incarnations
+ok 7 - remote-control › remote control connects first, ignores second, entagles cancellation of second peer incarnations
+ok 8 - remote-control › remote control connects first, ignores second and third, entagles cancellation of first peer incarnations
+ok 9 - remote-control › remote control drops outbound connect when accepting from lower id
+ok 10 - remote-control › remote control keeps outbound connect when accepting from higher id
+ok 11 - remote-control › remote control establishes new connection when reconnecting after disconnect
+# endo › beforeEach hook for spawn and evaluate
+# endo › beforeEach hook for anonymous spawn and evaluate
+# endo › beforeEach hook for anonymous spawn and evaluate with new worker
+# endo › beforeEach hook for spawning a worker does not overwrite existing non-worker name
+# endo › beforeEach hook for persist spawn and evaluation
+# endo › beforeEach hook for store without name
+# endo › beforeEach hook for store with name
+# endo › beforeEach hook for closure state lost by restart
+# endo › beforeEach hook for persist unconfined services and their requests
+# endo › beforeEach hook for persist confined services and their requests
+# endo › beforeEach hook for guest facet receives a message for host
+# endo › beforeEach hook for followNamehanges first publishes existing names
+# endo › beforeEach hook for followNameChanges publishes new names
+# endo › beforeEach hook for followNameChanges publishes removed names
+# endo › beforeEach hook for followNameChanges publishes renamed names
+# endo › beforeEach hook for followNameChanges publishes renamed names (existing mappings for both names)
+# endo › beforeEach hook for followNameChanges does not notify of redundant pet store writes
+# endo › beforeEach hook for followLocatorNameChanges first publishes existing pet name
+# endo › beforeEach hook for followLocatorNameChanges first publishes existing special name
+# endo › beforeEach hook for followLocatorNameChanges first publishes existing pet and special names
+# endo › beforeEach hook for followLocatorNameChanges publishes added names
+# endo › beforeEach hook for followLocatorNameChanges publishes removed names
+# endo › beforeEach hook for followLocatorNameChanges publishes renamed names
+# endo › beforeEach hook for followLocatorNameChanges publishes renamed names (existing mappings for both names)
+# endo › beforeEach hook for followLocatorNameChanges does not notify of redundant pet store writes
+# endo › beforeEach hook for direct cancellation
+# endo › beforeEach hook for indirect cancellation via worker
+# endo › beforeEach hook for indirect cancellation via caplet
+# endo › beforeEach hook for cancel because of requested capability
+# endo › beforeEach hook for unconfined service can respond to cancellation
+# endo › beforeEach hook for confined service can respond to cancellation
+# endo › beforeEach hook for make a host
+# endo › beforeEach hook for name and reuse inspector
+# endo › beforeEach hook for eval-mediated worker name
+# endo › beforeEach hook for lookup with single petname
+# endo › beforeEach hook for lookup with petname path (inspector)
+# endo › beforeEach hook for lookup with petname path (caplet with lookup method)
+# endo › beforeEach hook for lookup with petname path (value has no lookup method)
+# endo › beforeEach hook for evaluate name resolved by lookup path
+# endo › beforeEach hook for list special names
+# endo › beforeEach hook for guest cannot access host methods
+# endo › beforeEach hook for read unknown node id
+# endo › beforeEach hook for read remote value
+# endo › beforeEach hook for round-trip remotable identity
+# endo › beforeEach hook for hello from afar
+# endo › beforeEach hook for locate local value
+# endo › beforeEach hook for locate local persisted value
+# endo › beforeEach hook for locate remote value
+# endo › beforeEach hook for reverse locate local value
+# endo › beforeEach hook for reverse locate local persisted value
+# endo › beforeEach hook for reverse locate remote value
+ok 12 - endo › anonymous spawn and evaluate
+CapTP client exception: (RemoteError(error:captp:Endo#20001)#1)
+ok 13 - endo › spawning a worker does not overwrite existing non-worker name
+ok 14 - endo › followLocatorNameChanges first publishes existing special name
+RemoteError(error:captp:Endo#20001)#1: Cannot evaluate using non-worker
+  at decodeErrorCommon (packages/marshal/src/marshal.js:303:24)
+  at decodeErrorFromCapData (packages/marshal/src/marshal.js:331:14)
+  at decodeFromCapData (packages/marshal/src/encodeToCapData.js:384:27)
+  at fromCapData (packages/marshal/src/marshal.js:393:23)
+  at CTP_RETURN (packages/captp/src/captp.js:693:24)
+  at dispatch (packages/captp/src/captp.js:772:7)
+  at packages/daemon/src/connection.js:34:7
+
+ok 15 - endo › store without name
+ok 16 - endo › followLocatorNameChanges first publishes existing pet and special names
+# endo › afterEach.always hook for anonymous spawn and evaluate
+# endo › afterEach.always hook for spawning a worker does not overwrite existing non-worker name
+# endo › afterEach.always hook for followLocatorNameChanges first publishes existing special name
+ok 17 - endo › store with name
+ok 18 - endo › followNamehanges first publishes existing names
+# endo › afterEach.always hook for store without name
+ok 19 - endo › followNameChanges publishes new names
+ok 20 - endo › followLocatorNameChanges first publishes existing pet name
+# endo › afterEach.always hook for followLocatorNameChanges first publishes existing pet and special names
+ok 21 - endo › followNameChanges publishes removed names
+# endo › afterEach.always hook for store with name
+ok 22 - endo › list special names
+CapTP client exception: (RemoteError(error:captp:Endo#20001)#2)
+ok 23 - endo › read unknown node id
+ok 24 - endo › followNameChanges publishes renamed names
+# endo › afterEach.always hook for followNamehanges first publishes existing names
+RemoteError(error:captp:Endo#20001)#2: No peer found for node identifier "6003db84e0c578f195b1b059fe350d96bcc9d1ee3517d379e8fac7d5d16db329f8f5d81628cb8c34be4a885b7b32e716753ad66f4fac2c99ffd290487f664953".
+  at decodeErrorCommon (packages/marshal/src/marshal.js:303:24)
+  at decodeErrorFromCapData (packages/marshal/src/marshal.js:331:14)
+  at decodeFromCapData (packages/marshal/src/encodeToCapData.js:384:27)
+  at fromCapData (packages/marshal/src/marshal.js:393:23)
+  at CTP_RETURN (packages/captp/src/captp.js:693:24)
+  at dispatch (packages/captp/src/captp.js:772:7)
+  at packages/daemon/src/connection.js:34:7
+
+CapTP client exception: (RemoteTypeError(error:captp:Endo#20001)#3)
+RemoteTypeError(error:captp:Endo#20001)#3: target has no method "lookup", has ["__getInterfaceGuard__","__getMethodNames__","open","receive"]
+  at decodeErrorCommon (packages/marshal/src/marshal.js:303:24)
+  at decodeErrorFromCapData (packages/marshal/src/marshal.js:331:14)
+  at decodeFromCapData (packages/marshal/src/encodeToCapData.js:384:27)
+  at fromCapData (packages/marshal/src/marshal.js:393:23)
+  at CTP_RETURN (packages/captp/src/captp.js:693:24)
+  at dispatch (packages/captp/src/captp.js:772:7)
+  at packages/daemon/src/connection.js:34:7
+
+ok 25 - endo › followLocatorNameChanges publishes added names
+ok 26 - endo › guest cannot access host methods
+ok 27 - endo › followNameChanges does not notify of redundant pet store writes
+ok 28 - endo › followLocatorNameChanges publishes renamed names
+ok 29 - endo › followLocatorNameChanges publishes removed names
+ok 30 - endo › anonymous spawn and evaluate with new worker
+# endo › afterEach.always hook for followLocatorNameChanges first publishes existing pet name
+# endo › afterEach.always hook for followNameChanges publishes new names
+ok 31 - endo › followLocatorNameChanges does not notify of redundant pet store writes
+ok 32 - endo › followNameChanges publishes renamed names (existing mappings for both names)
+ok 33 - endo › spawn and evaluate
+# endo › afterEach.always hook for followNameChanges publishes removed names
+# endo › afterEach.always hook for list special names
+# endo › afterEach.always hook for read unknown node id
+# endo › afterEach.always hook for followLocatorNameChanges publishes added names
+# endo › afterEach.always hook for followNameChanges publishes renamed names
+CapTP client exception: (RemoteTypeError(error:captp:Endo#20001)#4)
+ok 34 - endo › lookup with petname path (value has no lookup method)
+# endo › afterEach.always hook for followNameChanges does not notify of redundant pet store writes
+# endo › afterEach.always hook for followLocatorNameChanges publishes renamed names
+# endo › afterEach.always hook for followLocatorNameChanges publishes removed names
+# endo › afterEach.always hook for anonymous spawn and evaluate with new worker
+# endo › afterEach.always hook for guest cannot access host methods
+RemoteTypeError(error:captp:Endo#20001)#4: target has no method "lookup", has []
+  at decodeErrorCommon (packages/marshal/src/marshal.js:303:24)
+  at decodeErrorFromCapData (packages/marshal/src/marshal.js:331:14)
+  at decodeFromCapData (packages/marshal/src/encodeToCapData.js:384:27)
+  at fromCapData (packages/marshal/src/marshal.js:393:23)
+  at CTP_RETURN (packages/captp/src/captp.js:693:24)
+  at dispatch (packages/captp/src/captp.js:772:7)
+  at packages/daemon/src/connection.js:34:7
+
+# endo › afterEach.always hook for followLocatorNameChanges does not notify of redundant pet store writes
+# endo › afterEach.always hook for followNameChanges publishes renamed names (existing mappings for both names)
+# endo › afterEach.always hook for spawn and evaluate
+ok 35 - endo › lookup with single petname
+ok 36 - endo › lookup with petname path (caplet with lookup method)
+ok 37 - endo › unconfined service can respond to cancellation
+ok 38 - endo › lookup with petname path (inspector)
+ok 39 - endo › locate local value
+ok 40 - endo › name and reuse inspector
+ok 41 - endo › evaluate name resolved by lookup path
+# endo › afterEach.always hook for lookup with petname path (value has no lookup method)
+# endo › afterEach.always hook for lookup with petname path (caplet with lookup method)
+# endo › afterEach.always hook for lookup with single petname
+# endo › afterEach.always hook for unconfined service can respond to cancellation
+# endo › afterEach.always hook for locate local value
+# endo › afterEach.always hook for lookup with petname path (inspector)
+ok 42 - endo › make a host
+# endo › afterEach.always hook for name and reuse inspector
+# endo › afterEach.always hook for evaluate name resolved by lookup path
+ok 43 - endo › guest facet receives a message for host
+ok 44 - endo › reverse locate local value
+ok 45 - endo › eval-mediated worker name
+ok 46 - endo › direct cancellation
+# endo › afterEach.always hook for make a host
+ok 47 - endo › followLocatorNameChanges publishes renamed names (existing mappings for both names)
+ok 48 - endo › reverse locate local persisted value
+# endo › afterEach.always hook for guest facet receives a message for host
+# endo › afterEach.always hook for reverse locate local value
+# endo › afterEach.always hook for eval-mediated worker name
+# endo › afterEach.always hook for direct cancellation
+ok 49 - endo › lifecycle
+# endo › afterEach.always hook for followLocatorNameChanges publishes renamed names (existing mappings for both names)
+# endo › afterEach.always hook for reverse locate local persisted value
+ok 50 - endo › cancel because of requested capability
+# endo › afterEach.always hook for lifecycle
+ok 51 - endo › indirect cancellation via worker
+ok 52 - endo › locate local persisted value
+# endo › afterEach.always hook for cancel because of requested capability
+# endo › afterEach.always hook for indirect cancellation via worker
+# endo › afterEach.always hook for locate local persisted value
+ok 53 - endo › indirect cancellation via caplet
+# endo › afterEach.always hook for indirect cancellation via caplet
+ok 54 - endo › read remote value
+# endo › afterEach.always hook for read remote value
+ok 55 - endo › round-trip remotable identity
+# endo › afterEach.always hook for round-trip remotable identity
+ok 56 - endo › persist spawn and evaluation
+# endo › afterEach.always hook for persist spawn and evaluation
+ok 57 - endo › closure state lost by restart
+# endo › afterEach.always hook for closure state lost by restart
+ok 58 - endo › locate remote value
+ok 59 - endo › reverse locate remote value
+# endo › afterEach.always hook for locate remote value
+# endo › afterEach.always hook for reverse locate remote value
+ok 60 - endo › hello from afar
+# endo › afterEach.always hook for hello from afar
+ok 61 - endo › persist unconfined services and their requests
+# endo › afterEach.always hook for persist unconfined services and their requests
+ok 62 - endo › confined service can respond to cancellation
+# endo › afterEach.always hook for confined service can respond to cancellation
+ok 63 - endo › persist confined services and their requests
+# endo › afterEach.always hook for persist confined services and their requests
+
+1..63
+# tests 63
+# pass 63
+# fail 0
+
+reward=1 graded=63 found=63 failed=0 parsed=63 framework=tap exit_code=0

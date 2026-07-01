@@ -1,0 +1,146 @@
+patching file tests/providers/amazon/aws/links/test_emr.py
+patching file tests/providers/amazon/aws/operators/test_emr_serverless.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: mock-3.15.1, icdiff-0.9, xdist-3.8.0, rerunfailures-16.1, asyncio-0.23.8, timeouts-1.2.1, requests-mock-1.12.1, cov-7.1.0, anyio-4.14.1, instafail-0.5.0, time-machine-3.2.0
+asyncio: mode=Mode.STRICT
+setup timeout: 0.0s, execution timeout: 0.0s, teardown timeout: 0.0s
+collecting ... collected 81 items
+
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [  1%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_empty_xcom <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [  2%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_suppress_error_on_xcom_pull <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [  3%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_extra_link PASSED [  4%]
+tests/providers/amazon/aws/links/test_emr.py::test_get_log_uri[no-log-uri] PASSED [  6%]
+tests/providers/amazon/aws/links/test_emr.py::test_get_log_uri[has-log-uri] PASSED [  7%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrLogsLink::test_link_serialize <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [  8%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrLogsLink::test_empty_xcom <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [  9%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrLogsLink::test_suppress_error_on_xcom_pull <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 11%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrLogsLink::test_extra_link PASSED [ 12%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrLogsLink::test_missing_log_url[no-log-uri] PASSED [ 13%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrLogsLink::test_missing_log_url[log-uri-none] PASSED [ 14%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrLogsLink::test_missing_log_url[log-uri-empty] PASSED [ 16%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessLogsLink::test_link_serialize <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 17%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessLogsLink::test_empty_xcom <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 18%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessLogsLink::test_suppress_error_on_xcom_pull <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 19%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessLogsLink::test_extra_link PASSED [ 20%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessDashboardLink::test_link_serialize <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 22%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessDashboardLink::test_empty_xcom <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 23%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessDashboardLink::test_suppress_error_on_xcom_pull <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 24%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessDashboardLink::test_extra_link PASSED [ 25%]
+tests/providers/amazon/aws/links/test_emr.py::test_get_serverless_dashboard_url_with_client[first-call] PASSED [ 27%]
+tests/providers/amazon/aws/links/test_emr.py::test_get_serverless_dashboard_url_with_client[second-call] PASSED [ 28%]
+tests/providers/amazon/aws/links/test_emr.py::test_get_serverless_dashboard_url_with_conn_id PASSED [ 29%]
+tests/providers/amazon/aws/links/test_emr.py::test_get_serverless_dashboard_url_parameters PASSED [ 30%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessS3LogsLink::test_link_serialize <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 32%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessS3LogsLink::test_empty_xcom <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 33%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessS3LogsLink::test_suppress_error_on_xcom_pull <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 34%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessS3LogsLink::test_extra_link PASSED [ 35%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessCloudWatchLogsLink::test_link_serialize <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 37%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessCloudWatchLogsLink::test_empty_xcom <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 38%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessCloudWatchLogsLink::test_suppress_error_on_xcom_pull <- tests/providers/amazon/aws/links/test_base_aws.py PASSED [ 39%]
+tests/providers/amazon/aws/links/test_emr.py::TestEmrServerlessCloudWatchLogsLink::test_extra_link PASSED [ 40%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_execute_successfully_with_wait_for_completion PASSED [ 41%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_execute_successfully_no_wait_for_completion PASSED [ 43%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_failed_create_application_request PASSED [ 44%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_failed_create_application PASSED [ 45%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_failed_start_application PASSED [ 46%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_no_client_request_token PASSED [ 48%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_application_in_failure_state PASSED [ 49%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_create_application_waiter_params[waiter_delay0-waiter_max_attempts0-waiter_countdown0-waiter_check_interval_seconds0-expected0] PASSED [ 50%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_create_application_waiter_params[30-10-waiter_countdown1-waiter_check_interval_seconds1-expected1] PASSED [ 51%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_create_application_waiter_params[waiter_delay2-waiter_max_attempts2-450-15-expected2] PASSED [ 53%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_create_application_waiter_params[10-20-30-40-expected3] PASSED [ 54%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessCreateApplicationOperator::test_create_application_deferrable PASSED [ 55%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_job_run_app_started PASSED [ 56%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_job_run_job_failed PASSED [ 58%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_job_run_app_not_started PASSED [ 59%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_job_run_app_not_started_app_failed PASSED [ 60%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_job_run_app_not_started_no_wait_for_completion PASSED [ 61%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_job_run_app_started_no_wait_for_completion PASSED [ 62%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_failed_start_job_run PASSED [ 64%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_start_job_run_fail_on_wait_for_completion PASSED [ 65%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_start_job_default_name PASSED [ 66%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_start_job_custom_name PASSED [ 67%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_cancel_job_run PASSED [ 69%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_start_job_waiter_params[waiter_delay0-waiter_max_attempts0-waiter_countdown0-waiter_check_interval_seconds0-expected0] PASSED [ 70%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_start_job_waiter_params[30-10-waiter_countdown1-waiter_check_interval_seconds1-expected1] PASSED [ 71%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_start_job_waiter_params[waiter_delay2-waiter_max_attempts2-450-15-expected2] PASSED [ 72%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_start_job_waiter_params[10-20-30-40-expected3] PASSED [ 74%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_start_job_deferrable PASSED [ 75%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_start_job_deferrable_app_not_started PASSED [ 76%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_links_start_job_default PASSED [ 77%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_links_s3_enabled PASSED [ 79%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_links_cloudwatch_enabled PASSED [ 80%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_links_applicationui_enabled PASSED [ 81%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_links_applicationui_with_spark_enabled PASSED [ 82%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStartJobOperator::test_links_spark_without_applicationui_enabled PASSED [ 83%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessDeleteOperator::test_delete_application_with_wait_for_completion_successfully PASSED [ 85%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessDeleteOperator::test_delete_application_without_wait_for_completion_successfully PASSED [ 86%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessDeleteOperator::test_delete_application_failed_deletion PASSED [ 87%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessDeleteOperator::test_delete_application_waiter_params[waiter_delay0-waiter_max_attempts0-waiter_countdown0-waiter_check_interval_seconds0-expected0] PASSED [ 88%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessDeleteOperator::test_delete_application_waiter_params[30-10-waiter_countdown1-waiter_check_interval_seconds1-expected1] PASSED [ 90%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessDeleteOperator::test_delete_application_waiter_params[waiter_delay2-waiter_max_attempts2-450-15-expected2] PASSED [ 91%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessDeleteOperator::test_delete_application_waiter_params[10-20-30-40-expected3] PASSED [ 92%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessDeleteOperator::test_delete_application_deferrable PASSED [ 93%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStopOperator::test_stop PASSED [ 95%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStopOperator::test_stop_no_wait PASSED [ 96%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStopOperator::test_force_stop PASSED [ 97%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStopOperator::test_stop_application_deferrable_with_force_stop PASSED [ 98%]
+tests/providers/amazon/aws/operators/test_emr_serverless.py::TestEmrServerlessStopOperator::test_stop_application_deferrable_without_force_stop PASSED [100%]
+
+=============================== warnings summary ===============================
+airflow/utils/timezone.py:32
+  /workspace/repo/airflow/utils/timezone.py:32: DeprecationWarning: The '__version__' attribute is deprecated and will be removed in Pendulum 3.4. Use 'importlib.metadata.version("pendulum")' instead.
+    _PENDULUM3 = pendulum.__version__.startswith("3")
+
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+  /usr/local/lib/python3.11/site-packages/flask_appbuilder/models/sqla/__init__.py:105: MovedIn20Warning: Deprecated API features detected! These feature(s) are not compatible with SQLAlchemy 2.0. To prevent incompatible upgrades prior to updating applications, ensure requirements files are pinned to "sqlalchemy<2.0". Set environment variable SQLALCHEMY_WARN_20=1 to show all deprecation warnings.  Set environment variable SQLALCHEMY_SILENCE_UBER_WARNING=1 to silence this message. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    @as_declarative(name="Model", metaclass=ModelDeclarativeMeta)
+
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+  /usr/local/lib/python3.11/site-packages/marshmallow_sqlalchemy/convert.py:17: DeprecationWarning: The '__version__' attribute is deprecated and will be removed in in a future version. Use feature detection or 'importlib.metadata.version("marshmallow")' instead.
+    _META_KWARGS_DEPRECATED = LooseVersion(ma.__version__) >= LooseVersion("3.10.0")
+
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+  /usr/local/lib/python3.11/site-packages/marshmallow_sqlalchemy/convert.py:17: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    _META_KWARGS_DEPRECATED = LooseVersion(ma.__version__) >= LooseVersion("3.10.0")
+
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+  /usr/local/lib/python3.11/site-packages/connexion/decorators/validation.py:16: DeprecationWarning: Accessing jsonschema.draft4_format_checker is deprecated and will be removed in a future release. Instead, use the FORMAT_CHECKER attribute on the corresponding Validator.
+    from jsonschema import Draft4Validator, ValidationError, draft4_format_checker
+
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+  /usr/local/lib/python3.11/site-packages/connexion/json_schema.py:16: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
+    from jsonschema import Draft4Validator, RefResolver
+
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+  /usr/local/lib/python3.11/site-packages/connexion/json_schema.py:17: DeprecationWarning: jsonschema.exceptions.RefResolutionError is deprecated as of version 4.18.0. If you wish to catch potential reference resolution errors, directly catch referencing.exceptions.Unresolvable.
+    from jsonschema.exceptions import RefResolutionError, ValidationError  # noqa
+
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+  /workspace/repo/airflow/models/dag.py:3275: SAWarning: implicitly coercing SELECT object to scalar subquery; please use the .scalar_subquery() method to produce a scalar subquery.
+    DagRun.dag_id == existing_dag_id, DagRun.execution_date == last_automated_runs_subq
+
+tests/providers/amazon/aws/links/test_emr.py::TestEmrClusterLink::test_link_serialize
+  /usr/local/lib/python3.11/site-packages/flask_limiter/extension.py:324: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+
+ ======================== Warning summary =============================
+
+   The tests generated 42 warnings.
+   After removing duplicates, 7  of them remained.
+   They are stored in /workspace/repo/warnings.txt file.
+
+ ======================================================================
+
+======================= 81 passed, 12 warnings in 9.67s ========================
+reward=1 graded=81 found=0 failed=0 parsed=44 framework=pytest exit_code=0

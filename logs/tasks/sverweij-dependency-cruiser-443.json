@@ -1,0 +1,23 @@
+{
+ "task": "sverweij-dependency-cruiser-443",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "11 mocha F2P in reachable/index.spec.js and index.reachable.spec.js exercise reachability annotation and capture-group expansion ('correctly processes capture groups', 'Respects capturing groups'); golden edits reachable/index.js and match-module-rule.js."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

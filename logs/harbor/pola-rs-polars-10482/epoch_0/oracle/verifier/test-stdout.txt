@@ -1,0 +1,67 @@
+patching file py-polars/tests/unit/operations/test_join_asof.py
+🍹 Building a mixed python/rust project
+🔗 Found pyo3 bindings with abi3 support for Python ≥ 3.8
+🐍 Not using a specific python interpreter
+Ignoring pyarrow: markers 'extra == "pyarrow"' don't match your environment
+Ignoring pyarrow: markers 'extra == "pandas"' don't match your environment
+Ignoring pandas: markers 'extra == "pandas"' don't match your environment
+Ignoring numpy: markers 'extra == "numpy"' don't match your environment
+Ignoring fsspec: markers 'extra == "fsspec"' don't match your environment
+Ignoring connectorx: markers 'extra == "connectorx"' don't match your environment
+Ignoring xlsx2csv: markers 'extra == "xlsx2csv"' don't match your environment
+Ignoring deltalake: markers 'extra == "deltalake"' don't match your environment
+Ignoring backports.zoneinfo: markers 'python_version < "3.9" and extra == "timezone"' don't match your environment
+Ignoring tzdata: markers 'platform_system == "Windows" and extra == "timezone"' don't match your environment
+Ignoring matplotlib: markers 'extra == "matplotlib"' don't match your environment
+Ignoring pydantic: markers 'extra == "pydantic"' don't match your environment
+Ignoring sqlalchemy: markers 'extra == "sqlalchemy"' don't match your environment
+Ignoring pandas: markers 'extra == "sqlalchemy"' don't match your environment
+Ignoring xlsxwriter: markers 'extra == "xlsxwriter"' don't match your environment
+Ignoring adbc_driver_sqlite: markers 'extra == "adbc"' don't match your environment
+Ignoring cloudpickle: markers 'extra == "cloudpickle"' don't match your environment
+Ignoring polars: markers 'extra == "all"' don't match your environment
+   Compiling polars-core v0.32.0 (/workspace/repo/crates/polars-core)
+   Compiling polars-ops v0.32.0 (/workspace/repo/crates/polars-ops)
+   Compiling polars-time v0.32.0 (/workspace/repo/crates/polars-time)
+   Compiling polars-io v0.32.0 (/workspace/repo/crates/polars-io)
+   Compiling polars-plan v0.32.0 (/workspace/repo/crates/polars-plan)
+   Compiling polars-pipe v0.32.0 (/workspace/repo/crates/polars-pipe)
+   Compiling polars-lazy v0.32.0 (/workspace/repo/crates/polars-lazy)
+   Compiling polars-sql v0.32.0 (/workspace/repo/crates/polars-sql)
+   Compiling polars-algo v0.32.0 (/workspace/repo/crates/polars-algo)
+   Compiling polars v0.32.0 (/workspace/repo/crates/polars)
+   Compiling py-polars v0.18.15 (/workspace/repo/py-polars)
+    Finished dev [unoptimized + debuginfo] target(s) in 2m 23s
+📦 Built wheel for abi3 Python ≥ 3.8 to /tmp/.tmpN4OWxY/polars-0.18.15-cp38-abi3-linux_x86_64.whl
+🛠 Installed polars-0.18.15
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.0, pluggy-1.6.0 -- /workspace/venv/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'default' -> database=DirectoryBasedExampleDatabase('/workspace/repo/py-polars/.hypothesis/examples')
+rootdir: /workspace/repo/py-polars
+configfile: pyproject.toml
+plugins: xdist-3.3.1, hypothesis-6.82.0, cov-4.1.0
+collecting ... collected 19 items
+
+tests/unit/operations/test_join_asof.py::test_asof_join_inline_cast_6438 PASSED [  5%]
+tests/unit/operations/test_join_asof.py::test_asof_join_projection_resolution_4606 PASSED [ 10%]
+tests/unit/operations/test_join_asof.py::test_asof_join_schema_5211 PASSED [ 15%]
+tests/unit/operations/test_join_asof.py::test_asof_join_schema_5684 PASSED [ 21%]
+tests/unit/operations/test_join_asof.py::test_join_asof_mismatched_dtypes PASSED [ 26%]
+tests/unit/operations/test_join_asof.py::test_join_asof_floats PASSED    [ 31%]
+tests/unit/operations/test_join_asof.py::test_join_asof_tolerance PASSED [ 36%]
+tests/unit/operations/test_join_asof.py::test_join_asof_tolerance_forward PASSED [ 42%]
+tests/unit/operations/test_join_asof.py::test_join_asof_projection PASSED [ 47%]
+tests/unit/operations/test_join_asof.py::test_asof_join_by_logical_types PASSED [ 52%]
+tests/unit/operations/test_join_asof.py::test_join_asof_projection_7481 PASSED [ 57%]
+tests/unit/operations/test_join_asof.py::test_asof_join_sorted_by_group PASSED [ 63%]
+tests/unit/operations/test_join_asof.py::test_asof_join_nearest PASSED   [ 68%]
+tests/unit/operations/test_join_asof.py::test_asof_join_nearest_with_tolerance PASSED [ 73%]
+tests/unit/operations/test_join_asof.py::test_asof_join_nearest_by PASSED [ 78%]
+tests/unit/operations/test_join_asof.py::test_asof_join_nearest_by_with_tolerance PASSED [ 84%]
+tests/unit/operations/test_join_asof.py::test_asof_join_nearest_by_date PASSED [ 89%]
+tests/unit/operations/test_join_asof.py::test_asof_join_string_err PASSED [ 94%]
+tests/unit/operations/test_join_asof.py::test_join_asof_by_argument_parsing PASSED [100%]
+
+============================== 19 passed in 0.79s ==============================
+reward=1 graded=19 found=0 failed=0 parsed=19 framework=pytest exit_code=0

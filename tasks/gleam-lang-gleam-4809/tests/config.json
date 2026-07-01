@@ -1,0 +1,34 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p gleam-core --no-fail-fast -E 'test(collapse_nested_case)'",
+  "test_files": [
+    "compiler-core/src/language_server/tests/action.rs",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_aliases_variable_if_it_is_used.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_combines_inner_and_outer_guards.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_combines_inner_and_outer_guards_and_adds_parentheses_when_needed.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_does_not_ignore_inner_guards.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_does_not_ignore_outer_guards.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_does_not_remove_labels.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_does_not_remove_labels_with_shorthand_syntax.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_works_with_alternative_patterns.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_works_with_blocks.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__collapse_nested_case_works_with_patterns_defining_multiple_variables.snap"
+  ],
+  "num_test_files": 12,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 9/11) gleam-core language_server::tests::action::collapse_nested_case_does_not_remove_labels",
+    "( 1/11) gleam-core language_server::tests::action::collapse_nested_case_works_with_patterns_defining_multiple_variables",
+    "( 2/11) gleam-core language_server::tests::action::collapse_nested_case_does_not_ignore_outer_guards",
+    "( 3/11) gleam-core language_server::tests::action::collapse_nested_case_does_not_remove_labels_with_shorthand_syntax",
+    "( 4/11) gleam-core language_server::tests::action::collapse_nested_case_works_with_alternative_patterns",
+    "( 5/11) gleam-core language_server::tests::action::collapse_nested_case_works_with_blocks",
+    "( 6/11) gleam-core language_server::tests::action::collapse_nested_case_combines_inner_and_outer_guards",
+    "( 7/11) gleam-core language_server::tests::action::collapse_nested_case_aliases_variable_if_it_is_used",
+    "( 8/11) gleam-core language_server::tests::action::collapse_nested_case_does_not_ignore_inner_guards",
+    "(10/11) gleam-core language_server::tests::action::collapse_nested_case",
+    "(11/11) gleam-core language_server::tests::action::collapse_nested_case_combines_inner_and_outer_guards_and_adds_parentheses_when_needed"
+  ],
+  "PASS_TO_PASS": []
+}

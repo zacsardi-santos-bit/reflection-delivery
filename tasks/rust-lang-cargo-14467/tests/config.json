@@ -1,0 +1,22 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p cargo --test testsuite --no-fail-fast -j 1 -E 'test(open_namespaces)'",
+  "test_files": [
+    "tests/testsuite/open_namespaces.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(7/9) cargo::testsuite open_namespaces::update_spec_accepts_namespaced_name",
+    "(8/9) cargo::testsuite open_namespaces::update_spec_accepts_namespaced_pkgid"
+  ],
+  "PASS_TO_PASS": [
+    "(1/9) cargo::testsuite open_namespaces::explicit_bin_within_namespace",
+    "(2/9) cargo::testsuite open_namespaces::generate_pkgid_with_namespace",
+    "(3/9) cargo::testsuite open_namespaces::implicit_bin_within_namespace",
+    "(4/9) cargo::testsuite open_namespaces::implicit_lib_within_namespace",
+    "(5/9) cargo::testsuite open_namespaces::namespaced_script_name",
+    "(6/9) cargo::testsuite open_namespaces::publish_namespaced",
+    "(9/9) cargo::testsuite open_namespaces::within_namespace_requires_feature"
+  ]
+}

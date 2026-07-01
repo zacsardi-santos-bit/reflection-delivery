@@ -1,0 +1,189 @@
+patching file crates/wast-util/src/lib.rs
+patching file winch/codegen/src/isa/aarch64/masm.rs
+patching file winch/codegen/src/isa/x64/asm.rs
+patching file winch/codegen/src/isa/x64/masm.rs
+patching file winch/codegen/src/masm.rs
+patching file winch/codegen/src/stack.rs
+patching file winch/codegen/src/visitor.rs
+patching file crates/wast-util/src/lib.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/wast-util/src/lib.rs.rej
+patching file winch/codegen/src/isa/aarch64/masm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file winch/codegen/src/isa/aarch64/masm.rs.rej
+patching file winch/codegen/src/isa/x64/asm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file winch/codegen/src/isa/x64/asm.rs.rej
+patching file winch/codegen/src/isa/x64/masm.rs
+Hunk #1 succeeded at 1316 (offset 30 lines).
+Hunk #2 succeeded at 1454 with fuzz 2 (offset 115 lines).
+patching file winch/codegen/src/masm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file winch/codegen/src/masm.rs.rej
+patching file winch/codegen/src/stack.rs
+Hunk #1 succeeded at 59 (offset 8 lines).
+patching file winch/codegen/src/visitor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file winch/codegen/src/visitor.rs.rej
+patching file crates/wast-util/src/lib.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/wast-util/src/lib.rs.rej
+patching file winch/codegen/src/isa/aarch64/masm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file winch/codegen/src/isa/aarch64/masm.rs.rej
+patching file winch/codegen/src/isa/x64/asm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file winch/codegen/src/isa/x64/asm.rs.rej
+patching file winch/codegen/src/isa/x64/masm.rs
+Hunk #1 succeeded at 1346 (offset 60 lines).
+Hunk #2 succeeded at 1402 with fuzz 3 (offset 63 lines).
+patching file winch/codegen/src/masm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file winch/codegen/src/masm.rs.rej
+patching file winch/codegen/src/stack.rs
+Hunk #1 succeeded at 67 (offset 16 lines).
+patching file winch/codegen/src/visitor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file winch/codegen/src/visitor.rs.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/wast-util/src/lib.rs b/crates/wast-util/src/lib.rs
+|index 432548eee1..3fba5bed10 100644
+|--- a/crates/wast-util/src/lib.rs
+|+++ b/crates/wast-util/src/lib.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 21
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/winch/codegen/src/isa/aarch64/masm.rs b/winch/codegen/src/isa/aarch64/masm.rs
+|index 653b03e122..a69786983d 100644
+|--- a/winch/codegen/src/isa/aarch64/masm.rs
+|+++ b/winch/codegen/src/isa/aarch64/masm.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 36
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/winch/codegen/src/isa/x64/asm.rs b/winch/codegen/src/isa/x64/asm.rs
+|index 36ab6f339b..669dd5c44a 100644
+|--- a/winch/codegen/src/isa/x64/asm.rs
+|+++ b/winch/codegen/src/isa/x64/asm.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 85
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/winch/codegen/src/isa/x64/masm.rs b/winch/codegen/src/isa/x64/masm.rs
+|index 6955674b5f..14b490c501 100644
+|--- a/winch/codegen/src/isa/x64/masm.rs
+|+++ b/winch/codegen/src/isa/x64/masm.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 134
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/winch/codegen/src/masm.rs b/winch/codegen/src/masm.rs
+|index e6334836de..9ef8e4459d 100644
+|--- a/winch/codegen/src/masm.rs
+|+++ b/winch/codegen/src/masm.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 149
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/winch/codegen/src/stack.rs b/winch/codegen/src/stack.rs
+|index e52a4a94a2..9a6bdd87b4 100644
+|--- a/winch/codegen/src/stack.rs
+|+++ b/winch/codegen/src/stack.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 168
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/winch/codegen/src/visitor.rs b/winch/codegen/src/visitor.rs
+|index c2eb4fb307..e8fdb66934 100644
+|--- a/winch/codegen/src/visitor.rs
+|+++ b/winch/codegen/src/visitor.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file crates/wast-util/src/lib.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/wast-util/src/lib.rs.rej
+patching file winch/codegen/src/isa/aarch64/masm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file winch/codegen/src/isa/aarch64/masm.rs.rej
+patching file winch/codegen/src/isa/x64/asm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file winch/codegen/src/isa/x64/asm.rs.rej
+patching file winch/codegen/src/isa/x64/masm.rs
+Hunk #1 succeeded at 1376 (offset 90 lines).
+Hunk #2 succeeded at 1440 with fuzz 3 (offset 101 lines).
+patching file winch/codegen/src/masm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file winch/codegen/src/masm.rs.rej
+patching file winch/codegen/src/stack.rs
+Hunk #1 succeeded at 75 (offset 24 lines).
+patching file winch/codegen/src/visitor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file winch/codegen/src/visitor.rs.rej
+ERROR: golden patch failed to apply by all strategies

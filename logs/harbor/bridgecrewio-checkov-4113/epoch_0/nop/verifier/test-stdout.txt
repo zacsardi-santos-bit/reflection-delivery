@@ -1,0 +1,471 @@
+patching file tests/terraform/graph/checks/resources/APIGatewayEndpointsUsesCertificateForAuthentication/expected.yaml
+patching file tests/terraform/graph/checks/resources/APIGatewayEndpointsUsesCertificateForAuthentication/main.tf
+patching file tests/terraform/graph/checks/resources/APIGatewayRequestParameterValidationEnabled/expected.yaml
+patching file tests/terraform/graph/checks/resources/APIGatewayRequestParameterValidationEnabled/main.tf
+patching file tests/terraform/graph/checks/resources/CloudFrontUsesSecureProtocolsForHTTPS/expected.yaml
+patching file tests/terraform/graph/checks/resources/CloudFrontUsesSecureProtocolsForHTTPS/main.tf
+patching file tests/terraform/graph/checks/resources/EMRClusterHasSecurityConfiguration/expected.yaml
+patching file tests/terraform/graph/checks/resources/EMRClusterHasSecurityConfiguration/main.tf
+patching file tests/terraform/graph/checks/resources/OpenSearchDomainHasFineGrainedControl/expected.yaml
+patching file tests/terraform/graph/checks/resources/OpenSearchDomainHasFineGrainedControl/main.tf
+patching file tests/terraform/graph/checks/test_yaml_policies.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: mock-3.15.1, xdist-3.8.0
+created: 2/2 workers
+2 workers [101 items]
+
+scheduling tests via LoadFileScheduling
+
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ADORepositoryHasMinTwoReviewers 
+[gw0] [  0%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ADORepositoryHasMinTwoReviewers 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ALBProtectedByWAF 
+[gw0] [  1%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ALBProtectedByWAF 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ALBRedirectsHTTPToHTTPS 
+[gw0] [  2%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ALBRedirectsHTTPToHTTPS 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AMRClustersNotOpenToInternet 
+[gw0] [  3%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AMRClustersNotOpenToInternet 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIGWLoggingLevelsDefinedProperly 
+[gw0] [  4%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIGWLoggingLevelsDefinedProperly 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIGatewayEndpointsUsesCertificateForAuthentication 
+[gw0] [  5%] FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIGatewayEndpointsUsesCertificateForAuthentication 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIGatewayRequestParameterValidationEnabled 
+[gw0] [  6%] FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIGatewayRequestParameterValidationEnabled 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIProtectedByWAF 
+[gw0] [  7%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIProtectedByWAF 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AWSConfigRecorderEnabled 
+[gw0] [  8%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AWSConfigRecorderEnabled 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AWSNATGatewaysshouldbeutilized 
+[gw0] [  9%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AWSNATGatewaysshouldbeutilized 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AWSSSMParameterShouldBeEncrypted 
+[gw0] [ 10%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AWSSSMParameterShouldBeEncrypted 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AccessControlGroupRuleDefine 
+[gw0] [ 11%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AccessControlGroupRuleDefine 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AccessToPostgreSQLFromAzureServicesIsDisabled 
+[gw0] [ 12%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AccessToPostgreSQLFromAzureServicesIsDisabled 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AdministratorUserNotAssociatedWithAPIKey 
+[gw0] [ 13%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AdministratorUserNotAssociatedWithAPIKey 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AppLoadBalancerTLS12 
+[gw0] [ 14%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AppLoadBalancerTLS12 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AppSyncProtectedByWAF 
+[gw0] [ 15%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AppSyncProtectedByWAF 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ApplicationGatewayEnablesWAF 
+[gw0] [ 16%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ApplicationGatewayEnablesWAF 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AutoScalingEnableOnDynamoDBTables 
+[gw0] [ 17%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AutoScalingEnableOnDynamoDBTables 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AutoScalingEnabledLB 
+[gw0] [ 18%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AutoScalingEnabledLB 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AutoScallingEnabledELB 
+[gw0] [ 19%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AutoScallingEnabledELB 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureActiveDirectoryAdminIsConfigured 
+[gw0] [ 20%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureActiveDirectoryAdminIsConfigured 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureAntimalwareIsConfiguredWithAutoUpdatesForVMs 
+[gw0] [ 21%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureAntimalwareIsConfiguredWithAutoUpdatesForVMs 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureDataFactoriesEncryptedWithCustomerManagedKey 
+[gw0] [ 22%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureDataFactoriesEncryptedWithCustomerManagedKey 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureMSSQLServerHasSecurityAlertPolicy 
+[gw0] [ 23%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureMSSQLServerHasSecurityAlertPolicy 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureNetworkInterfacePublicIPAddressId 
+[gw0] [ 24%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureNetworkInterfacePublicIPAddressId 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureStorageAccountsUseCustomerManagedKeyForEncryption 
+[gw0] [ 25%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureStorageAccountsUseCustomerManagedKeyForEncryption 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureSynapseWorkspacesHaveNoIPFirewallRulesAttached 
+[gw0] [ 26%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureSynapseWorkspacesHaveNoIPFirewallRulesAttached 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureUnattachedDisksAreEncrypted 
+[gw0] [ 27%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_AzureUnattachedDisksAreEncrypted 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CLoudFrontS3OriginConfigWithOAI 
+[gw0] [ 28%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CLoudFrontS3OriginConfigWithOAI 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFrontHasCustomSSLCertificate 
+[gw0] [ 29%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFrontHasCustomSSLCertificate 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFrontHasResponseHeadersPolicy 
+[gw0] [ 30%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFrontHasResponseHeadersPolicy 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFrontUsesSecureProtocolsForHTTPS 
+[gw0] [ 31%] FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFrontUsesSecureProtocolsForHTTPS 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFrontWebACLConfiguredWIthLog4jVulnerability 
+[gw0] [ 32%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFrontWebACLConfiguredWIthLog4jVulnerability 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFunctionSecureHTTPTrigger 
+[gw0] [ 33%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFunctionSecureHTTPTrigger 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudtrailHasCloudwatch 
+[gw0] [ 34%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudtrailHasCloudwatch 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CodecommitApprovalRulesAttached 
+[gw0] [ 35%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CodecommitApprovalRulesAttached 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ConfigRecorderRecordsAllGlobalResources 
+[gw0] [ 36%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ConfigRecorderRecordsAllGlobalResources 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_DMSEndpointHaveSSLConfigured 
+[gw0] [ 37%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_DMSEndpointHaveSSLConfigured 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_DataExplorerEncryptionUsesCustomKey 
+[gw0] [ 38%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_DataExplorerEncryptionUsesCustomKey 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_DisableAccessToSqlDBInstanceForRootUsersWithoutPassword 
+[gw0] [ 39%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_DisableAccessToSqlDBInstanceForRootUsersWithoutPassword 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EBSAddedBackup 
+[gw0] [ 40%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EBSAddedBackup 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EC2InstanceHasIAMRoleAttached 
+[gw0] [ 41%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EC2InstanceHasIAMRoleAttached 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EFSAddedBackup 
+[gw0] [ 42%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EFSAddedBackup 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EFSAddedBackupSuppress 
+[gw0] [ 43%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EFSAddedBackupSuppress 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EIPAllocatedToVPCAttachedEC2 
+[gw0] [ 44%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EIPAllocatedToVPCAttachedEC2 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EMRClusterHasSecurityConfiguration 
+[gw0] [ 45%] FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EMRClusterHasSecurityConfiguration 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ElastiCacheRedisConfiguredAutomaticFailOver 
+[gw0] [ 46%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ElastiCacheRedisConfiguredAutomaticFailOver 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EncryptedEBSVolumeOnlyConnectedToEC2s 
+[gw0] [ 47%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EncryptedEBSVolumeOnlyConnectedToEC2s 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPAuditLogsConfiguredForAllServicesAndUsers 
+[gw0] [ 48%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPAuditLogsConfiguredForAllServicesAndUsers 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPComputeFirewallOverlyPermissiveToAllTraffic 
+[gw0] [ 49%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPComputeFirewallOverlyPermissiveToAllTraffic 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPContainerRegistryReposAreNotPubliclyAccessible 
+[gw0] [ 50%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPContainerRegistryReposAreNotPubliclyAccessible 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPKMSCryptoKeysAreNotPubliclyAccessible 
+[gw0] [ 51%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPKMSCryptoKeysAreNotPubliclyAccessible 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPKMSKeyRingsAreNotPubliclyAccessible 
+[gw0] [ 52%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPKMSKeyRingsAreNotPubliclyAccessible 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPLogBucketsConfiguredUsingLock 
+[gw0] [ 53%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPLogBucketsConfiguredUsingLock 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPProjectHasNoLegacyNetworks 
+[gw0] [ 54%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCPProjectHasNoLegacyNetworks 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCRContainerVulnerabilityScanningEnabled 
+[gw0] [ 55%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GCRContainerVulnerabilityScanningEnabled 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GKEClustersAreNotUsingDefaultServiceAccount 
+[gw0] [ 56%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GKEClustersAreNotUsingDefaultServiceAccount 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GuardDutyIsEnabled 
+[gw0] [ 57%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_GuardDutyIsEnabled 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_HTTPNotSendingPasswords 
+[gw0] [ 58%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_HTTPNotSendingPasswords 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_IAMGroupHasAtLeastOneUser 
+[gw0] [ 59%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_IAMGroupHasAtLeastOneUser 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_IAMPolicyNotAllowFullIAMAccess 
+[gw0] [ 60%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_IAMPolicyNotAllowFullIAMAccess 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_IAMUserHasNoConsoleAccess 
+[gw0] [ 61%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_IAMUserHasNoConsoleAccess 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_IAMUsersAreMembersAtLeastOneGroup 
+[gw0] [ 62%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_IAMUsersAreMembersAtLeastOneGroup 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_MSQLenablesCustomerManagedKey 
+[gw0] [ 63%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_MSQLenablesCustomerManagedKey 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_OpenSearchDomainHasFineGrainedControl 
+[gw0] [ 64%] FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_OpenSearchDomainHasFineGrainedControl 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_PGSQLenablesCustomerManagedKey 
+[gw0] [ 65%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_PGSQLenablesCustomerManagedKey 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_PostgresDBHasQueryLoggingEnabled 
+[gw0] [ 66%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_PostgresDBHasQueryLoggingEnabled 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_PostgresRDSHasQueryLoggingEnabled 
+[gw0] [ 67%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_PostgresRDSHasQueryLoggingEnabled 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_RDSClusterHasBackupPlan 
+[gw0] [ 68%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_RDSClusterHasBackupPlan 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_RepositoryHasBranchProtection 
+[gw0] [ 69%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_RepositoryHasBranchProtection 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_Route53ARecordAttachedResource 
+[gw0] [ 70%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_Route53ARecordAttachedResource 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_RouteTablePublicSubnetConnection 
+[gw0] [ 71%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_RouteTablePublicSubnetConnection 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketEncryption 
+[gw0] [ 72%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketEncryption 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketHasPublicAccessBlock 
+[gw0] [ 73%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketHasPublicAccessBlock 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketLogging 
+[gw0] [ 74%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketLogging 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketReplicationConfiguration 
+[gw0] [ 75%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketReplicationConfiguration 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketVersioning 
+[gw0] [ 76%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3BucketVersioning 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3KMSEncryptedByDefault 
+[gw0] [ 77%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3KMSEncryptedByDefault 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3NotAllowAccessToAllAuthenticatedUsers 
+[gw0] [ 78%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3NotAllowAccessToAllAuthenticatedUsers 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3PublicACLRead 
+[gw0] [ 79%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3PublicACLRead 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3PublicACLWrite 
+[gw0] [ 80%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_S3PublicACLWrite 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_SGAttachedToResource 
+[gw0] [ 81%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_SGAttachedToResource 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_SQLServerAuditingEnabled 
+[gw0] [ 82%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_SQLServerAuditingEnabled 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_SQLServerAuditingRetention90Days 
+[gw0] [ 83%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_SQLServerAuditingRetention90Days 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ServiceAccountHasGCPmanagedKey 
+[gw0] [ 84%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_ServiceAccountHasGCPmanagedKey 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_StorageContainerActivityLogsNotPublic 
+[gw0] [ 85%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_StorageContainerActivityLogsNotPublic 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_StorageCriticalDataEncryptedCMK 
+[gw0] [ 86%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_StorageCriticalDataEncryptedCMK 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_StorageLoggingIsEnabledForBlobService 
+[gw0] [ 87%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_StorageLoggingIsEnabledForBlobService 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_StorageLoggingIsEnabledForTableService 
+[gw0] [ 88%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_StorageLoggingIsEnabledForTableService 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_SubnetHasACL 
+[gw0] [ 89%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_SubnetHasACL 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VAconfiguredToSendReports 
+[gw0] [ 90%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VAconfiguredToSendReports 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VAconfiguredToSendReportsToAdmins 
+[gw0] [ 91%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VAconfiguredToSendReportsToAdmins 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VAisEnabledInStorageAccount 
+[gw0] [ 92%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VAisEnabledInStorageAccount 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VAsetPeriodicScansOnSQL 
+[gw0] [ 93%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VAsetPeriodicScansOnSQL 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VMHasBackUpMachine 
+[gw0] [ 94%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VMHasBackUpMachine 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VPCHasFlowLog 
+[gw0] [ 95%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VPCHasFlowLog 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VPCHasRestrictedSG 
+[gw0] [ 96%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VPCHasRestrictedSG 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VPCPeeringRouteTableOverlyPermissive 
+[gw0] [ 97%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VPCPeeringRouteTableOverlyPermissive 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VirtualMachinesUtilizingManagedDisks 
+[gw0] [ 98%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_VirtualMachinesUtilizingManagedDisks 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_WAF2HasLogs 
+[gw0] [ 99%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_WAF2HasLogs 
+tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_registry_load 
+[gw0] [100%] PASSED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_registry_load 
+
+=================================== FAILURES ===================================
+__ TestYamlPolicies.test_APIGatewayEndpointsUsesCertificateForAuthentication ___
+[gw0] linux -- Python 3.11.15 /usr/local/bin/python3.11
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_APIGatewayEndpointsUsesCertificateForAuthentication>
+
+    def test_APIGatewayEndpointsUsesCertificateForAuthentication(self):
+>       self.go("APIGatewayEndpointsUsesCertificateForAuthentication")
+
+tests/terraform/graph/checks/test_yaml_policies.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_APIGatewayEndpointsUsesCertificateForAuthentication>
+dir_name = 'APIGatewayEndpointsUsesCertificateForAuthentication'
+check_name = 'APIGatewayEndpointsUsesCertificateForAuthentication'
+
+    def go(self, dir_name: str, check_name: str | None = None) -> None:
+        dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                f"resources/{dir_name}")
+        check_name = dir_name if check_name is None else check_name
+        assert os.path.exists(dir_path)
+        policy_dir_path = os.path.dirname(checks.__file__)
+        assert os.path.exists(policy_dir_path)
+        found = False
+        for root, d_names, f_names in os.walk(policy_dir_path):
+            for f_name in f_names:
+                if f_name == f"{check_name}.yaml":
+                    found = True
+                    policy = load_yaml_data(f_name, root)
+                    assert policy is not None
+                    expected = load_yaml_data("expected.yaml", dir_path)
+                    assert expected is not None
+                    report = get_policy_results(dir_path, policy)
+                    expected = load_yaml_data("expected.yaml", dir_path)
+    
+                    expected_to_fail = expected.get('fail', [])
+                    expected_to_pass = expected.get('pass', [])
+                    expected_to_skip = expected.get('skip', [])
+    
+                    self.assert_entities(expected_to_pass, report.passed_checks, True)
+                    self.assert_entities(expected_to_fail, report.failed_checks, False)
+                    self.assert_entities(expected_to_skip, report.skipped_checks, True)
+    
+>       assert found
+E       assert False
+
+tests/terraform/graph/checks/test_yaml_policies.py:359: AssertionError
+______ TestYamlPolicies.test_APIGatewayRequestParameterValidationEnabled _______
+[gw0] linux -- Python 3.11.15 /usr/local/bin/python3.11
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_APIGatewayRequestParameterValidationEnabled>
+
+    def test_APIGatewayRequestParameterValidationEnabled(self):
+>       self.go("APIGatewayRequestParameterValidationEnabled")
+
+tests/terraform/graph/checks/test_yaml_policies.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_APIGatewayRequestParameterValidationEnabled>
+dir_name = 'APIGatewayRequestParameterValidationEnabled'
+check_name = 'APIGatewayRequestParameterValidationEnabled'
+
+    def go(self, dir_name: str, check_name: str | None = None) -> None:
+        dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                f"resources/{dir_name}")
+        check_name = dir_name if check_name is None else check_name
+        assert os.path.exists(dir_path)
+        policy_dir_path = os.path.dirname(checks.__file__)
+        assert os.path.exists(policy_dir_path)
+        found = False
+        for root, d_names, f_names in os.walk(policy_dir_path):
+            for f_name in f_names:
+                if f_name == f"{check_name}.yaml":
+                    found = True
+                    policy = load_yaml_data(f_name, root)
+                    assert policy is not None
+                    expected = load_yaml_data("expected.yaml", dir_path)
+                    assert expected is not None
+                    report = get_policy_results(dir_path, policy)
+                    expected = load_yaml_data("expected.yaml", dir_path)
+    
+                    expected_to_fail = expected.get('fail', [])
+                    expected_to_pass = expected.get('pass', [])
+                    expected_to_skip = expected.get('skip', [])
+    
+                    self.assert_entities(expected_to_pass, report.passed_checks, True)
+                    self.assert_entities(expected_to_fail, report.failed_checks, False)
+                    self.assert_entities(expected_to_skip, report.skipped_checks, True)
+    
+>       assert found
+E       assert False
+
+tests/terraform/graph/checks/test_yaml_policies.py:359: AssertionError
+_________ TestYamlPolicies.test_CloudFrontUsesSecureProtocolsForHTTPS __________
+[gw0] linux -- Python 3.11.15 /usr/local/bin/python3.11
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_CloudFrontUsesSecureProtocolsForHTTPS>
+
+    def test_CloudFrontUsesSecureProtocolsForHTTPS(self):
+>       self.go("CloudFrontUsesSecureProtocolsForHTTPS")
+
+tests/terraform/graph/checks/test_yaml_policies.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_CloudFrontUsesSecureProtocolsForHTTPS>
+dir_name = 'CloudFrontUsesSecureProtocolsForHTTPS'
+check_name = 'CloudFrontUsesSecureProtocolsForHTTPS'
+
+    def go(self, dir_name: str, check_name: str | None = None) -> None:
+        dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                f"resources/{dir_name}")
+        check_name = dir_name if check_name is None else check_name
+        assert os.path.exists(dir_path)
+        policy_dir_path = os.path.dirname(checks.__file__)
+        assert os.path.exists(policy_dir_path)
+        found = False
+        for root, d_names, f_names in os.walk(policy_dir_path):
+            for f_name in f_names:
+                if f_name == f"{check_name}.yaml":
+                    found = True
+                    policy = load_yaml_data(f_name, root)
+                    assert policy is not None
+                    expected = load_yaml_data("expected.yaml", dir_path)
+                    assert expected is not None
+                    report = get_policy_results(dir_path, policy)
+                    expected = load_yaml_data("expected.yaml", dir_path)
+    
+                    expected_to_fail = expected.get('fail', [])
+                    expected_to_pass = expected.get('pass', [])
+                    expected_to_skip = expected.get('skip', [])
+    
+                    self.assert_entities(expected_to_pass, report.passed_checks, True)
+                    self.assert_entities(expected_to_fail, report.failed_checks, False)
+                    self.assert_entities(expected_to_skip, report.skipped_checks, True)
+    
+>       assert found
+E       assert False
+
+tests/terraform/graph/checks/test_yaml_policies.py:359: AssertionError
+___________ TestYamlPolicies.test_EMRClusterHasSecurityConfiguration ___________
+[gw0] linux -- Python 3.11.15 /usr/local/bin/python3.11
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_EMRClusterHasSecurityConfiguration>
+
+    def test_EMRClusterHasSecurityConfiguration(self):
+>       self.go("EMRClusterHasSecurityConfiguration")
+
+tests/terraform/graph/checks/test_yaml_policies.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_EMRClusterHasSecurityConfiguration>
+dir_name = 'EMRClusterHasSecurityConfiguration'
+check_name = 'EMRClusterHasSecurityConfiguration'
+
+    def go(self, dir_name: str, check_name: str | None = None) -> None:
+        dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                f"resources/{dir_name}")
+        check_name = dir_name if check_name is None else check_name
+        assert os.path.exists(dir_path)
+        policy_dir_path = os.path.dirname(checks.__file__)
+        assert os.path.exists(policy_dir_path)
+        found = False
+        for root, d_names, f_names in os.walk(policy_dir_path):
+            for f_name in f_names:
+                if f_name == f"{check_name}.yaml":
+                    found = True
+                    policy = load_yaml_data(f_name, root)
+                    assert policy is not None
+                    expected = load_yaml_data("expected.yaml", dir_path)
+                    assert expected is not None
+                    report = get_policy_results(dir_path, policy)
+                    expected = load_yaml_data("expected.yaml", dir_path)
+    
+                    expected_to_fail = expected.get('fail', [])
+                    expected_to_pass = expected.get('pass', [])
+                    expected_to_skip = expected.get('skip', [])
+    
+                    self.assert_entities(expected_to_pass, report.passed_checks, True)
+                    self.assert_entities(expected_to_fail, report.failed_checks, False)
+                    self.assert_entities(expected_to_skip, report.skipped_checks, True)
+    
+>       assert found
+E       assert False
+
+tests/terraform/graph/checks/test_yaml_policies.py:359: AssertionError
+_________ TestYamlPolicies.test_OpenSearchDomainHasFineGrainedControl __________
+[gw0] linux -- Python 3.11.15 /usr/local/bin/python3.11
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_OpenSearchDomainHasFineGrainedControl>
+
+    def test_OpenSearchDomainHasFineGrainedControl(self):
+>       self.go("OpenSearchDomainHasFineGrainedControl")
+
+tests/terraform/graph/checks/test_yaml_policies.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.terraform.graph.checks.test_yaml_policies.TestYamlPolicies testMethod=test_OpenSearchDomainHasFineGrainedControl>
+dir_name = 'OpenSearchDomainHasFineGrainedControl'
+check_name = 'OpenSearchDomainHasFineGrainedControl'
+
+    def go(self, dir_name: str, check_name: str | None = None) -> None:
+        dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                f"resources/{dir_name}")
+        check_name = dir_name if check_name is None else check_name
+        assert os.path.exists(dir_path)
+        policy_dir_path = os.path.dirname(checks.__file__)
+        assert os.path.exists(policy_dir_path)
+        found = False
+        for root, d_names, f_names in os.walk(policy_dir_path):
+            for f_name in f_names:
+                if f_name == f"{check_name}.yaml":
+                    found = True
+                    policy = load_yaml_data(f_name, root)
+                    assert policy is not None
+                    expected = load_yaml_data("expected.yaml", dir_path)
+                    assert expected is not None
+                    report = get_policy_results(dir_path, policy)
+                    expected = load_yaml_data("expected.yaml", dir_path)
+    
+                    expected_to_fail = expected.get('fail', [])
+                    expected_to_pass = expected.get('pass', [])
+                    expected_to_skip = expected.get('skip', [])
+    
+                    self.assert_entities(expected_to_pass, report.passed_checks, True)
+                    self.assert_entities(expected_to_fail, report.failed_checks, False)
+                    self.assert_entities(expected_to_skip, report.skipped_checks, True)
+    
+>       assert found
+E       assert False
+
+tests/terraform/graph/checks/test_yaml_policies.py:359: AssertionError
+=============================== warnings summary ===============================
+checkov/sca_package_2/output.py:9
+checkov/sca_package_2/output.py:9
+  /workspace/repo/checkov/sca_package_2/output.py:9: DeprecationWarning: the 'SINGLE_BORDER' constant is deprecated, use the 'TableStyle' enum instead
+    from prettytable import PrettyTable, SINGLE_BORDER
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIGatewayEndpointsUsesCertificateForAuthentication
+FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_APIGatewayRequestParameterValidationEnabled
+FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_CloudFrontUsesSecureProtocolsForHTTPS
+FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_EMRClusterHasSecurityConfiguration
+FAILED tests/terraform/graph/checks/test_yaml_policies.py::TestYamlPolicies::test_OpenSearchDomainHasFineGrainedControl
+================== 5 failed, 96 passed, 2 warnings in 36.76s ===================
+reward=0 graded=101 found=0 failed=0 parsed=96 framework=pytest exit_code=1

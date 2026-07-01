@@ -1,0 +1,5 @@
+patching file okhttp-tests/src/test/java/okhttp3/CacheTest.java
+patching file okhttp/src/main/java/okhttp3/Authenticator.java
+patching file okhttp/src/main/java/okhttp3/Cache.java
+patching file okhttp/src/main/java/okhttp3/internal/cache/CacheStrategy.java
+patching file okhttp/src/main/java/okhttp3/internal/connection/RealConnection.java

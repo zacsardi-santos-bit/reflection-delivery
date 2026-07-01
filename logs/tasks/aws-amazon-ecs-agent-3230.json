@@ -1,0 +1,23 @@
+{
+ "task": "aws-amazon-ecs-agent-3230",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds StatsRequest/DrainRequest to RuntimeConfig, wires them through manager_linux, adds ENVOY_ENABLE_IAM_AUTH_FOR_XDS=0 and unix:// relay prefix; 54 F2P go unit tests over ./api/appnet ./engine/service_connect ./stats"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 16,
+  "shallow": true
+ }
+}

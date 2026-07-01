@@ -1,0 +1,8 @@
+patching file internal/service/cloudformation/stack_set_instance_test.go
+patching file internal/service/cloudformation/stack_test.go
+# github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation_test [github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation.test]
+internal/service/cloudformation/stack_set_instance_test.go:466:35: undefined: tfcloudformation.FindStackByName
+internal/service/cloudformation/stack_test.go:511:35: undefined: tfcloudformation.FindStackByName
+internal/service/cloudformation/stack_test.go:532:31: undefined: tfcloudformation.FindStackByName
+FAIL	github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation [build failed]
+reward=0 graded=7 found=7 failed=7 parsed=1 framework=go exit_code=1

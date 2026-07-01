@@ -1,0 +1,292 @@
+diff --git a/apps/fluent-tester/src/FluentTester/TestComponents/TextExperimental/CustomizeUsage.tsx b/apps/fluent-tester/src/FluentTester/TestComponents/TextExperimental/CustomizeUsage.tsx
+index 1acda9c9e..42d54a859 100644
+--- a/apps/fluent-tester/src/FluentTester/TestComponents/TextExperimental/CustomizeUsage.tsx
++++ b/apps/fluent-tester/src/FluentTester/TestComponents/TextExperimental/CustomizeUsage.tsx
+@@ -50,7 +50,7 @@ export const CustomizeUsage: React.FunctionComponent = () => {
+   const BlockText = () => {
+     return (
+       <>
+-        <Text style={{ textTransform: 'uppercase' }} font="base" weight="medium">
++        <Text style={{ textTransform: 'uppercase' }} font="base" weight="medium" truncate>
+           I am going to be truncated since I am a very very very very very very very very very very very very very very very very very very
+           very very very very very very very very very very very very very very very very very very very very very very very very very very
+           very very very very very very very very very very very very very very very very long block text.
+diff --git a/apps/fluent-tester/src/FluentTester/TestComponents/TextExperimental/PressableUsage.tsx b/apps/fluent-tester/src/FluentTester/TestComponents/TextExperimental/PressableUsage.tsx
+index 52a094ee0..eb1db3c32 100644
+--- a/apps/fluent-tester/src/FluentTester/TestComponents/TextExperimental/PressableUsage.tsx
++++ b/apps/fluent-tester/src/FluentTester/TestComponents/TextExperimental/PressableUsage.tsx
+@@ -18,6 +18,10 @@ export const PressableUsage: React.FunctionComponent = () => {
+     Alert.alert('Alert', 'Success!');
+   };
+ 
++  const _onPress3 = (): void => {
++    Alert.alert('Alert', 'onAccessibilityTap invoked!');
++  };
++
+   const _onKeyDown2 = (ev: IKeyboardEvent) => {
+     if (ev.nativeEvent.key === 'Enter' || ev.nativeEvent.key == ' ') Alert.alert('Alert', 'Success!');
+   };
+@@ -29,7 +33,14 @@ export const PressableUsage: React.FunctionComponent = () => {
+       <Stack style={stackStyle} gap={5}>
+         <Text variant={'bodyStandard'}>
+           To learn more about microsoft, visit this{' '}
+-          <Text variant={'bodyStandard'} color="blue" keyDownEvents={handledNativeKeyboardEvents} onPress={_onPress} onKeyDown={_onKeyDown}>
++          <Text
++            focusable
++            variant={'bodyStandard'}
++            color="blue"
++            keyDownEvents={handledNativeKeyboardEvents}
++            onPress={_onPress}
++            onKeyDown={_onKeyDown}
++          >
+             webpage
+           </Text>{' '}
+           for more details.
+@@ -42,6 +53,7 @@ export const PressableUsage: React.FunctionComponent = () => {
+             keyDownEvents={handledNativeKeyboardEvents}
+             onPress={_onPress2}
+             onKeyDown={_onKeyDown2}
++            onAccessibilityTap={_onPress3}
+           >
+             here
+           </Text>{' '}
+diff --git a/change/@fluentui-react-native-badge-98676c98-c706-4413-b5b6-27c933231048.json b/change/@fluentui-react-native-badge-98676c98-c706-4413-b5b6-27c933231048.json
+new file mode 100644
+index 000000000..d993f81c2
+--- /dev/null
++++ b/change/@fluentui-react-native-badge-98676c98-c706-4413-b5b6-27c933231048.json
+@@ -0,0 +1,7 @@
++{
++  "type": "none",
++  "comment": "update snapshots",
++  "packageName": "@fluentui-react-native/badge",
++  "email": "email not defined",
++  "dependentChangeType": "none"
++}
+diff --git a/change/@fluentui-react-native-button-c7dcbfec-1714-4c4c-847c-4cf61a84f084.json b/change/@fluentui-react-native-button-c7dcbfec-1714-4c4c-847c-4cf61a84f084.json
+new file mode 100644
+index 000000000..04e06b480
+--- /dev/null
++++ b/change/@fluentui-react-native-button-c7dcbfec-1714-4c4c-847c-4cf61a84f084.json
+@@ -0,0 +1,7 @@
++{
++  "type": "patch",
++  "comment": "update all necessary snapshots",
++  "packageName": "@fluentui-react-native/button",
++  "email": "email not defined",
++  "dependentChangeType": "patch"
++}
+diff --git a/change/@fluentui-react-native-experimental-menu-button-f209bad2-c79b-4062-8f59-62489f9e7ada.json b/change/@fluentui-react-native-experimental-menu-button-f209bad2-c79b-4062-8f59-62489f9e7ada.json
+new file mode 100644
+index 000000000..83e9e96c0
+--- /dev/null
++++ b/change/@fluentui-react-native-experimental-menu-button-f209bad2-c79b-4062-8f59-62489f9e7ada.json
+@@ -0,0 +1,7 @@
++{
++  "type": "patch",
++  "comment": "update all necessary snapshots",
++  "packageName": "@fluentui-react-native/experimental-menu-button",
++  "email": "email not defined",
++  "dependentChangeType": "patch"
++}
+diff --git a/change/@fluentui-react-native-experimental-tabs-df2eeb5d-58ff-4042-a459-afa045276b17.json b/change/@fluentui-react-native-experimental-tabs-df2eeb5d-58ff-4042-a459-afa045276b17.json
+new file mode 100644
+index 000000000..c07a4d5bb
+--- /dev/null
++++ b/change/@fluentui-react-native-experimental-tabs-df2eeb5d-58ff-4042-a459-afa045276b17.json
+@@ -0,0 +1,7 @@
++{
++  "type": "none",
++  "comment": "update snapshots for Tabs",
++  "packageName": "@fluentui-react-native/experimental-tabs",
++  "email": "email not defined",
++  "dependentChangeType": "none"
++}
+diff --git a/change/@fluentui-react-native-experimental-text-8855c3a0-2e56-41d9-9310-6a5e49a4245a.json b/change/@fluentui-react-native-experimental-text-8855c3a0-2e56-41d9-9310-6a5e49a4245a.json
+new file mode 100644
+index 000000000..47f6d18b5
+--- /dev/null
++++ b/change/@fluentui-react-native-experimental-text-8855c3a0-2e56-41d9-9310-6a5e49a4245a.json
+@@ -0,0 +1,7 @@
++{
++  "type": "patch",
++  "comment": "add support for onAccessibilityTap on Text",
++  "packageName": "@fluentui-react-native/experimental-text",
++  "email": "email not defined",
++  "dependentChangeType": "patch"
++}
+diff --git a/change/@fluentui-react-native-menu-73a98a40-b1a6-4e1c-aae1-d9624a828b83.json b/change/@fluentui-react-native-menu-73a98a40-b1a6-4e1c-aae1-d9624a828b83.json
+new file mode 100644
+index 000000000..378ae16e2
+--- /dev/null
++++ b/change/@fluentui-react-native-menu-73a98a40-b1a6-4e1c-aae1-d9624a828b83.json
+@@ -0,0 +1,7 @@
++{
++  "type": "patch",
++  "comment": "update all necessary snapshots",
++  "packageName": "@fluentui-react-native/menu",
++  "email": "email not defined",
++  "dependentChangeType": "patch"
++}
+diff --git a/change/@fluentui-react-native-notification-5ee853d6-0cb3-4f68-b9eb-ffa3878e05f5.json b/change/@fluentui-react-native-notification-5ee853d6-0cb3-4f68-b9eb-ffa3878e05f5.json
+new file mode 100644
+index 000000000..f65b70587
+--- /dev/null
++++ b/change/@fluentui-react-native-notification-5ee853d6-0cb3-4f68-b9eb-ffa3878e05f5.json
+@@ -0,0 +1,7 @@
++{
++  "type": "patch",
++  "comment": "update all necessary snapshots",
++  "packageName": "@fluentui-react-native/notification",
++  "email": "email not defined",
++  "dependentChangeType": "patch"
++}
+diff --git a/change/@fluentui-react-native-tester-cb575e84-b9ad-4b95-8709-d6371b593541.json b/change/@fluentui-react-native-tester-cb575e84-b9ad-4b95-8709-d6371b593541.json
+new file mode 100644
+index 000000000..f08b61ade
+--- /dev/null
++++ b/change/@fluentui-react-native-tester-cb575e84-b9ad-4b95-8709-d6371b593541.json
+@@ -0,0 +1,7 @@
++{
++  "type": "minor",
++  "comment": "add support for onAccessibilityTap on Text",
++  "packageName": "@fluentui-react-native/tester",
++  "email": "email not defined",
++  "dependentChangeType": "patch"
++}
+diff --git a/packages/components/Button/src/CompoundButton/__snapshots__/CompoundButton.test.tsx.snap b/packages/components/Button/src/CompoundButton/__snapshots__/CompoundButton.test.tsx.snap
+index 44eedb2ec..e1977ec92 100644
+--- a/packages/components/Button/src/CompoundButton/__snapshots__/CompoundButton.test.tsx.snap
++++ b/packages/components/Button/src/CompoundButton/__snapshots__/CompoundButton.test.tsx.snap
+@@ -52,6 +52,7 @@ exports[`CompoundButton default 1`] = `
+     <Text
+       ellipsizeMode="tail"
+       numberOfLines={0}
++      onAccessibilityTap={[Function]}
+       style={
+         Object {
+           "color": "#323130",
+@@ -71,6 +72,7 @@ exports[`CompoundButton default 1`] = `
+     <Text
+       ellipsizeMode="tail"
+       numberOfLines={0}
++      onAccessibilityTap={[Function]}
+       style={
+         Object {
+           "fontFamily": "Segoe UI",
+diff --git a/packages/components/Button/src/ToggleButton/__snapshots__/ToggleButton.test.tsx.snap b/packages/components/Button/src/ToggleButton/__snapshots__/ToggleButton.test.tsx.snap
+index b8cd326e5..ec6382da6 100644
+--- a/packages/components/Button/src/ToggleButton/__snapshots__/ToggleButton.test.tsx.snap
++++ b/packages/components/Button/src/ToggleButton/__snapshots__/ToggleButton.test.tsx.snap
+@@ -53,6 +53,7 @@ exports[`ToggleButton default 1`] = `
+   <Text
+     ellipsizeMode="tail"
+     numberOfLines={0}
++    onAccessibilityTap={[Function]}
+     style={
+       Object {
+         "color": "#323130",
+diff --git a/packages/components/Button/src/__snapshots__/Button.test.tsx.snap b/packages/components/Button/src/__snapshots__/Button.test.tsx.snap
+index f7e7683e0..1fde03170 100644
+--- a/packages/components/Button/src/__snapshots__/Button.test.tsx.snap
++++ b/packages/components/Button/src/__snapshots__/Button.test.tsx.snap
+@@ -45,6 +45,7 @@ exports[`Button component tests Button circular 1`] = `
+   <Text
+     ellipsizeMode="tail"
+     numberOfLines={0}
++    onAccessibilityTap={[Function]}
+     style={
+       Object {
+         "color": "#323130",
+@@ -168,6 +169,7 @@ exports[`Button component tests Button customized 1`] = `
+   <Text
+     ellipsizeMode="tail"
+     numberOfLines={0}
++    onAccessibilityTap={[Function]}
+     style={
+       Object {
+         "color": "#323130",
+@@ -231,6 +233,7 @@ exports[`Button component tests Button default 1`] = `
+   <Text
+     ellipsizeMode="tail"
+     numberOfLines={0}
++    onAccessibilityTap={[Function]}
+     style={
+       Object {
+         "color": "#323130",
+@@ -295,6 +298,7 @@ exports[`Button component tests Button large 1`] = `
+   <Text
+     ellipsizeMode="tail"
+     numberOfLines={0}
++    onAccessibilityTap={[Function]}
+     style={
+       Object {
+         "color": "#323130",
+@@ -359,6 +363,7 @@ exports[`Button component tests Button primary 1`] = `
+   <Text
+     ellipsizeMode="tail"
+     numberOfLines={0}
++    onAccessibilityTap={[Function]}
+     style={
+       Object {
+         "color": "#ffffff",
+@@ -423,6 +428,7 @@ exports[`Button component tests Button small 1`] = `
+   <Text
+     ellipsizeMode="tail"
+     numberOfLines={0}
++    onAccessibilityTap={[Function]}
+     style={
+       Object {
+         "color": "#323130",
+@@ -487,6 +493,7 @@ exports[`Button component tests Button square 1`] = `
+   <Text
+     ellipsizeMode="tail"
+     numberOfLines={0}
++    onAccessibilityTap={[Function]}
+     style={
+       Object {
+         "color": "#323130",
+@@ -551,6 +558,7 @@ exports[`Button component tests Button subtle 1`] = `
+   <Text
+     ellipsizeMode="tail"
+     numberOfLines={0}
++    onAccessibilityTap={[Function]}
+     style={
+       Object {
+         "color": "#323130",
+diff --git a/packages/experimental/Text/src/Text.tsx b/packages/experimental/Text/src/Text.tsx
+index d1c6d3d1f..4a5da1487 100644
+--- a/packages/experimental/Text/src/Text.tsx
++++ b/packages/experimental/Text/src/Text.tsx
+@@ -23,6 +23,7 @@ export const Text = compressible<TextProps, TextTokens>((props: TextProps, useTo
+     color,
+     font,
+     italic,
++    onAccessibilityTap,
+     size,
+     strikethrough,
+     style,
+@@ -50,6 +51,15 @@ export const Text = compressible<TextProps, TextTokens>((props: TextProps, useTo
+     ? 'right'
+     : align;
+ 
++  const onAccTap =
++    onAccessibilityTap ??
++    React.useCallback(
++      (event?) => {
++        props.onPress(event);
++      },
++      [props.onPress],
++    );
++
+   // override tokens from props
+   [tokens, cache] = patchTokens(tokens, cache, {
+     color,
+@@ -82,6 +92,7 @@ export const Text = compressible<TextProps, TextTokens>((props: TextProps, useTo
+     const mergedProps = {
+       numberOfLines: truncate || !wrap ? 1 : 0,
+       onKeyDown: Platform.OS === (('win32' as any) || 'windows') ? onKeyDown : undefined,
++      onAccessibilityTap: onAccTap,
+       ...rest,
+       ...extra,
+       style: mergeStyles(tokenStyle, props.style, extra?.style),

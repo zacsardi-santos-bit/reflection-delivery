@@ -1,0 +1,76 @@
+patching file util/cache/redis_hook_test.go
+patching file util/cache/redis_test.go
+{"Time":"2026-06-29T15:19:29.580822661Z","Action":"start","Package":"github.com/argoproj/argo-cd/v2/util/cache"}
+{"Time":"2026-06-29T15:19:29.587896572Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestAddCacheFlagsToCmd"}
+{"Time":"2026-06-29T15:19:29.587951402Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestAddCacheFlagsToCmd","Output":"=== RUN   TestAddCacheFlagsToCmd\n"}
+{"Time":"2026-06-29T15:19:29.587997572Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestAddCacheFlagsToCmd","Output":"--- PASS: TestAddCacheFlagsToCmd (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.588023692Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestAddCacheFlagsToCmd","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.588067423Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient"}
+{"Time":"2026-06-29T15:19:29.588089713Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient","Output":"=== RUN   TestCacheClient\n"}
+{"Time":"2026-06-29T15:19:29.588112703Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/SetItem"}
+{"Time":"2026-06-29T15:19:29.588134563Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/SetItem","Output":"=== RUN   TestCacheClient/SetItem\n"}
+{"Time":"2026-06-29T15:19:29.588163153Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/SetItem","Output":"--- PASS: TestCacheClient/SetItem (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.588186063Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/SetItem","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.588209283Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/GetItem"}
+{"Time":"2026-06-29T15:19:29.588231063Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/GetItem","Output":"=== RUN   TestCacheClient/GetItem\n"}
+{"Time":"2026-06-29T15:19:29.588254913Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/GetItem","Output":"--- PASS: TestCacheClient/GetItem (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.588279253Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/GetItem","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.588304363Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/DeleteItem"}
+{"Time":"2026-06-29T15:19:29.588327033Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/DeleteItem","Output":"=== RUN   TestCacheClient/DeleteItem\n"}
+{"Time":"2026-06-29T15:19:29.588352233Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/DeleteItem","Output":"--- PASS: TestCacheClient/DeleteItem (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.588375854Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/DeleteItem","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.588399694Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/Check_for_nil_items"}
+{"Time":"2026-06-29T15:19:29.588421634Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/Check_for_nil_items","Output":"=== RUN   TestCacheClient/Check_for_nil_items\n"}
+{"Time":"2026-06-29T15:19:29.588452344Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/Check_for_nil_items","Output":"--- PASS: TestCacheClient/Check_for_nil_items (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.588476504Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient/Check_for_nil_items","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.588500794Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient","Output":"--- PASS: TestCacheClient (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.588531454Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCacheClient","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.588554264Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCache"}
+{"Time":"2026-06-29T15:19:29.588576114Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCache","Output":"=== RUN   TestCache\n"}
+{"Time":"2026-06-29T15:19:29.588599594Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCache","Output":"--- PASS: TestCache (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.588623164Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestCache","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.588645964Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestInMemoryCache"}
+{"Time":"2026-06-29T15:19:29.588667554Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestInMemoryCache","Output":"=== RUN   TestInMemoryCache\n"}
+{"Time":"2026-06-29T15:19:29.588690934Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestInMemoryCache","Output":"--- PASS: TestInMemoryCache (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.588719805Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestInMemoryCache","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.588745875Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"Test_ReconnectCallbackHookCalled"}
+{"Time":"2026-06-29T15:19:29.588768715Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"Test_ReconnectCallbackHookCalled","Output":"=== RUN   Test_ReconnectCallbackHookCalled\n"}
+{"Time":"2026-06-29T15:19:29.660426551Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"Test_ReconnectCallbackHookCalled","Output":"time=\"2026-06-29T15:19:29Z\" level=warning msg=\"Reconnect to redis because error: \\\"dial tcp: lookup invalidredishost.invalid on 8.8.8.8:53: dial udp 8.8.8.8:53: connect: network is unreachable\\\"\"\n"}
+{"Time":"2026-06-29T15:19:29.660498541Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"Test_ReconnectCallbackHookCalled","Output":"--- PASS: Test_ReconnectCallbackHookCalled (0.07s)\n"}
+{"Time":"2026-06-29T15:19:29.660522491Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"Test_ReconnectCallbackHookCalled","Elapsed":0.07}
+{"Time":"2026-06-29T15:19:29.660552951Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"Test_ReconnectCallbackHookNotCalled"}
+{"Time":"2026-06-29T15:19:29.660580001Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"Test_ReconnectCallbackHookNotCalled","Output":"=== RUN   Test_ReconnectCallbackHookNotCalled\n"}
+{"Time":"2026-06-29T15:19:29.662294797Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"Test_ReconnectCallbackHookNotCalled","Output":"--- PASS: Test_ReconnectCallbackHookNotCalled (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.662360917Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"Test_ReconnectCallbackHookNotCalled","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.662387407Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache"}
+{"Time":"2026-06-29T15:19:29.662410567Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache","Output":"=== RUN   TestRedisSetCache\n"}
+{"Time":"2026-06-29T15:19:29.662444167Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_set"}
+{"Time":"2026-06-29T15:19:29.662465967Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_set","Output":"=== RUN   TestRedisSetCache/Successful_set\n"}
+{"Time":"2026-06-29T15:19:29.66327785Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_set","Output":"--- PASS: TestRedisSetCache/Successful_set (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.66332902Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_set","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.66336625Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_get"}
+{"Time":"2026-06-29T15:19:29.66338926Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_get","Output":"=== RUN   TestRedisSetCache/Successful_get\n"}
+{"Time":"2026-06-29T15:19:29.664056372Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_get","Output":"--- PASS: TestRedisSetCache/Successful_get (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.664086612Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_get","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.664110572Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_delete"}
+{"Time":"2026-06-29T15:19:29.664132622Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_delete","Output":"=== RUN   TestRedisSetCache/Successful_delete\n"}
+{"Time":"2026-06-29T15:19:29.664820984Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_delete","Output":"--- PASS: TestRedisSetCache/Successful_delete (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.664852504Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Successful_delete","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.664876994Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Cache_miss"}
+{"Time":"2026-06-29T15:19:29.664899155Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Cache_miss","Output":"=== RUN   TestRedisSetCache/Cache_miss\n"}
+{"Time":"2026-06-29T15:19:29.665560507Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Cache_miss","Output":"--- PASS: TestRedisSetCache/Cache_miss (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.665589967Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache/Cache_miss","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.665683187Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache","Output":"--- PASS: TestRedisSetCache (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.665812737Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCache","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.665855127Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCacheCompressed"}
+{"Time":"2026-06-29T15:19:29.665884967Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCacheCompressed","Output":"=== RUN   TestRedisSetCacheCompressed\n"}
+{"Time":"2026-06-29T15:19:29.666979331Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCacheCompressed","Output":"--- PASS: TestRedisSetCacheCompressed (0.00s)\n"}
+{"Time":"2026-06-29T15:19:29.667047411Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisSetCacheCompressed","Elapsed":0}
+{"Time":"2026-06-29T15:19:29.667079081Z","Action":"run","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisMetrics"}
+{"Time":"2026-06-29T15:19:29.667102781Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisMetrics","Output":"=== RUN   TestRedisMetrics\n"}
+{"Time":"2026-06-29T15:19:29.747798885Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisMetrics","Output":"--- PASS: TestRedisMetrics (0.08s)\n"}
+{"Time":"2026-06-29T15:19:29.747871725Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Test":"TestRedisMetrics","Elapsed":0.08}
+{"Time":"2026-06-29T15:19:29.747897115Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Output":"PASS\n"}
+{"Time":"2026-06-29T15:19:29.748404897Z","Action":"output","Package":"github.com/argoproj/argo-cd/v2/util/cache","Output":"ok  \tgithub.com/argoproj/argo-cd/v2/util/cache\t0.167s\n"}
+{"Time":"2026-06-29T15:19:29.748439267Z","Action":"pass","Package":"github.com/argoproj/argo-cd/v2/util/cache","Elapsed":0.168}
+reward=1 graded=17 found=17 failed=0 parsed=17 framework=go exit_code=0

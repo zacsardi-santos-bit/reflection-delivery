@@ -1,0 +1,304 @@
+patching file compiler-core/src/language_server/tests/action.rs
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_available_for_internal_type_defined_in_current_module.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_multi_item_tuple.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_nicely_formats_code_when_used_on_function_with_empty_body.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_preserves_indentation_of_statement_following_inserted_let.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_single_item_tuple.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_single_unlabelled_field_is_not_numbered.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_uses_case_with_multiple_constructors.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_uses_label_shorthand_syntax_for_labelled_arguments.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_will_use_aliased_constructor_name.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_will_use_aliased_module_name.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_will_use_qualified_name.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_will_use_unqualified_name.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_with_multiple_constructors_is_nicely_formatted_in_function_with_empty_body.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_works_on_fn_arguments.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_argument_works_on_nested_fn_arguments.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_let_assignment.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__pattern_match_on_let_assignment_with_multiple_constructors.snap
+   Compiling proc-macro2 v1.0.79
+   Compiling unicode-ident v1.0.12
+   Compiling version_check v0.9.4
+   Compiling cfg-if v1.0.0
+   Compiling autocfg v1.3.0
+   Compiling typenum v1.17.0
+   Compiling libc v0.2.155
+   Compiling thiserror v1.0.63
+   Compiling stable_deref_trait v1.2.0
+   Compiling memchr v2.7.2
+   Compiling serde v1.0.204
+   Compiling cpufeatures v0.2.12
+   Compiling subtle v2.5.0
+   Compiling log v0.4.22
+   Compiling rustc-hash v1.1.0
+   Compiling smallvec v1.13.2
+   Compiling bitflags v2.5.0
+   Compiling once_cell v1.19.0
+   Compiling same-file v1.0.6
+   Compiling type-map v0.5.0
+   Compiling writeable v0.5.5
+   Compiling syn v1.0.109
+   Compiling parking_lot_core v0.9.10
+   Compiling walkdir v2.5.0
+   Compiling litemap v0.7.4
+   Compiling regex-syntax v0.8.3
+   Compiling generic-array v0.14.7
+   Compiling itoa v1.0.11
+   Compiling num-traits v0.2.19
+   Compiling lock_api v0.4.12
+   Compiling minimal-lexical v0.2.1
+   Compiling rustix v0.38.32
+   Compiling self_cell v1.0.4
+   Compiling self_cell v0.10.3
+   Compiling slab v0.4.9
+   Compiling nom v7.1.3
+   Compiling unicase v2.7.0
+   Compiling linux-raw-sys v0.4.13
+   Compiling icu_locid_transform_data v1.5.0
+   Compiling semver v1.0.23
+   Compiling lazy_static v1.4.0
+   Compiling scopeguard v1.2.0
+   Compiling indexmap v1.9.3
+   Compiling protobuf v3.4.0
+   Compiling icu_properties_data v1.5.0
+   Compiling futures-sink v0.3.31
+   Compiling anyhow v1.0.86
+   Compiling unicode-xid v0.2.4
+   Compiling powerfmt v0.2.0
+   Compiling num-conv v0.1.0
+   Compiling pin-project-lite v0.2.14
+   Compiling futures-core v0.3.31
+   Compiling time-core v0.1.2
+   Compiling deranged v0.3.11
+   Compiling quote v1.0.35
+   Compiling aho-corasick v1.1.3
+   Compiling getrandom v0.2.15
+   Compiling time-macros v0.2.18
+   Compiling futures-channel v0.3.31
+   Compiling syn v2.0.58
+   Compiling rand_core v0.6.4
+   Compiling icu_normalizer_data v1.5.0
+   Compiling either v1.10.0
+   Compiling hashbrown v0.12.3
+   Compiling fastrand v2.0.2
+   Compiling pin-utils v0.1.0
+   Compiling utf8_iter v1.0.4
+   Compiling home v0.5.9
+   Compiling futures-io v0.3.31
+   Compiling utf16_iter v1.0.5
+   Compiling write16 v1.0.0
+   Compiling futures-task v0.3.31
+   Compiling rusticata-macros v4.1.0
+   Compiling rustc_version v0.4.1
+   Compiling serde_json v1.0.134
+   Compiling cc v1.1.6
+   Compiling hashbrown v0.14.3
+   Compiling percent-encoding v2.3.1
+   Compiling crossbeam-utils v0.8.19
+   Compiling num-integer v0.1.46
+   Compiling mime_guess v2.0.4
+   Compiling curve25519-dalek v4.1.3
+   Compiling rustversion v1.0.14
+   Compiling regex-automata v0.4.6
+   Compiling crc32fast v1.4.0
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.4
+   Compiling inout v0.1.3
+   Compiling universal-hash v0.5.1
+   Compiling digest v0.10.7
+   Compiling opaque-debug v0.3.1
+   Compiling arc-swap v1.7.1
+   Compiling which v4.4.2
+   Compiling tempfile v3.12.0
+   Compiling ryu v1.0.17
+   Compiling sha2 v0.10.8
+   Compiling hmac v0.12.1
+   Compiling ppv-lite86 v0.2.17
+   Compiling oid-registry v0.6.1
+   Compiling libm v0.2.8
+   Compiling rust-embed-utils v8.5.0
+   Compiling ring v0.17.8
+   Compiling rand_chacha v0.3.1
+   Compiling poly1305 v0.8.0
+   Compiling aead v0.5.2
+   Compiling num-bigint v0.4.6
+   Compiling parking_lot v0.12.3
+   Compiling form_urlencoded v1.2.1
+   Compiling proc-macro-error-attr2 v2.0.0
+   Compiling adler v1.0.2
+   Compiling mime v0.3.17
+   Compiling camino v1.1.9
+   Compiling capnp v0.20.3
+   Compiling miniz_oxide v0.7.2
+   Compiling dashmap v6.1.0
+   Compiling time v0.3.36
+   Compiling synstructure v0.12.6
+   Compiling regex v1.10.5
+   Compiling askama_parser v0.2.1
+   Compiling rand v0.8.5
+   Compiling hkdf v0.12.4
+   Compiling pbkdf2 v0.12.2
+   Compiling bitmaps v2.1.0
+   Compiling synstructure v0.13.1
+   Compiling proc-macro-error2 v2.0.1
+   Compiling bstr v1.9.1
+   Compiling im v15.1.0
+   Compiling equivalent v1.0.1
+   Compiling bytes v1.8.0
+   Compiling capnpc v0.20.1
+   Compiling io_tee v0.1.1
+   Compiling base64 v0.13.1
+   Compiling fnv v1.0.7
+   Compiling heck v0.5.0
+   Compiling pulldown-cmark v0.12.2
+   Compiling untrusted v0.9.0
+   Compiling spin v0.9.8
+   Compiling data-encoding v2.5.0
+   Compiling strsim v0.11.1
+   Compiling base64 v0.21.7
+   Compiling http v1.1.0
+   Compiling http-auth-basic v0.3.3
+   Compiling sized-chunks v0.6.5
+   Compiling xattr v1.3.1
+   Compiling indexmap v2.2.6
+   Compiling asn1-rs-derive v0.4.0
+   Compiling asn1-rs-impl v0.1.0
+   Compiling humansize v2.1.3
+   Compiling flate2 v1.0.30
+   Compiling crossbeam-channel v0.5.12
+   Compiling rand_xoshiro v0.6.0
+   Compiling dirs-sys-next v0.1.2
+   Compiling filetime v0.2.23
+   Compiling tracing-core v0.1.32
+   Compiling pulldown-cmark-escape v0.11.0
+   Compiling askama_escape v0.10.3
+   Compiling base16 v0.2.1
+   Compiling bech32 v0.9.1
+   Compiling termcolor v1.4.1
+   Compiling displaydoc v0.2.4
+   Compiling serde_derive v1.0.204
+   Compiling zerofrom-derive v0.1.5
+   Compiling thiserror-impl v1.0.63
+   Compiling yoke-derive v0.7.5
+   Compiling zerovec-derive v0.10.3
+   Compiling zeroize_derive v1.4.2
+   Compiling icu_provider_macros v1.5.0
+   Compiling rust-embed-impl v8.5.0
+   Compiling futures-macro v0.3.31
+   Compiling curve25519-dalek-derive v0.1.1
+   Compiling pin-project-internal v1.1.5
+   Compiling tracing-attributes v0.1.27
+   Compiling strum_macros v0.26.4
+   Compiling serde_repr v0.1.18
+   Compiling fixedbitset v0.4.2
+   Compiling bitflags v1.3.2
+   Compiling unicode-width v0.1.11
+   Compiling codespan-reporting v0.11.1
+   Compiling petgraph v0.6.5
+   Compiling itertools v0.13.0
+   Compiling async-trait v0.1.83
+   Compiling tinystr v0.7.6
+   Compiling rust-embed v8.5.0
+   Compiling futures-util v0.3.31
+   Compiling zeroize v1.7.0
+   Compiling tar v0.4.43
+   Compiling dirs-next v2.0.0
+   Compiling cipher v0.4.4
+   Compiling secrecy v0.10.3
+   Compiling chacha20 v0.9.1
+   Compiling salsa20 v0.10.2
+   Compiling fluent-syntax v0.11.1
+   Compiling protobuf-support v3.4.0
+   Compiling asn1-rs v0.5.2
+   Compiling chacha20poly1305 v0.10.1
+   Compiling pin-project v1.1.5
+   Compiling scrypt v0.11.0
+   Compiling pubgrub v0.2.1
+   Compiling console v0.15.8
+   Compiling tracing v0.1.40
+   Compiling spdx v0.10.7
+   Compiling diff v0.1.13
+   Compiling yansi v1.0.1
+   Compiling vec1 v1.12.1
+   Compiling bimap v0.6.3
+   Compiling x25519-dalek v2.0.1
+   Compiling similar v2.5.0
+   Compiling xxhash-rust v0.8.12
+   Compiling unicode-segmentation v1.12.0
+   Compiling debug-ignore v1.0.5
+   Compiling strum v0.26.3
+   Compiling id-arena v2.2.1
+   Compiling linked-hash-map v0.5.6
+   Compiling pretty_assertions v1.4.1
+   Compiling zerofrom v0.1.5
+   Compiling yoke v0.7.5
+   Compiling der-parser v8.2.0
+   Compiling zerovec v0.10.4
+   Compiling gleam-core v1.7.0 (/workspace/repo/compiler-core)
+   Compiling x509-parser v0.15.1
+   Compiling icu_collections v1.5.0
+   Compiling futures-executor v0.3.30
+   Compiling futures v0.3.30
+   Compiling icu_locid v1.5.0
+   Compiling unic-langid-impl v0.9.5
+   Compiling cookie-factory v0.3.3
+   Compiling unic-langid v0.9.5
+   Compiling fluent-langneg v0.13.0
+   Compiling intl-memoizer v0.5.2
+   Compiling intl_pluralrules v7.0.2
+   Compiling age-core v0.11.0
+   Compiling protobuf-parse v3.4.0
+   Compiling icu_provider v1.5.0
+   Compiling fluent-bundle v0.15.3
+   Compiling icu_locid_transform v1.5.0
+   Compiling fluent v0.16.1
+   Compiling basic-toml v0.1.9
+   Compiling toml v0.5.11
+   Compiling globset v0.4.14
+   Compiling ecow v0.2.3
+   Compiling bincode v1.3.3
+   Compiling protobuf-codegen v3.4.0
+   Compiling icu_properties v1.5.1
+   Compiling i18n-config v0.4.7
+   Compiling pathdiff v0.2.3
+   Compiling insta v1.41.1
+   Compiling askama_derive v0.12.5
+   Compiling find-crate v0.6.3
+   Compiling lsp-server v0.7.6
+   Compiling i18n-embed-impl v0.8.4
+   Compiling hexpm v2.4.1
+   Compiling icu_normalizer v1.5.0
+   Compiling idna_adapter v1.2.0
+   Compiling i18n-embed v0.15.2
+   Compiling idna v1.0.3
+   Compiling url v2.5.4
+   Compiling i18n-embed-fl v0.9.2
+   Compiling askama v0.12.1
+   Compiling lsp-types v0.95.1
+   Compiling age v0.11.1
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 15s
+────────────
+ Nextest run ID bbfbdc5f-9789-4941-9329-1445f42b3ba7 with nextest profile: default
+    Starting 19 tests across 1 binary (3157 tests skipped)
+        PASS [   0.199s] ( 1/19) gleam-core language_server::tests::action::pattern_match_on_argument_empty_tuple
+        PASS [   0.229s] ( 2/19) gleam-core language_server::tests::action::pattern_match_on_argument_not_available_for_internal_type
+        PASS [   0.297s] ( 3/19) gleam-core language_server::tests::action::pattern_match_on_argument_preserves_indentation_of_statement_following_inserted_let
+        PASS [   0.317s] ( 4/19) gleam-core language_server::tests::action::pattern_match_on_let_assignment
+        PASS [   0.319s] ( 5/19) gleam-core language_server::tests::action::pattern_match_on_argument_uses_case_with_multiple_constructors
+        PASS [   0.323s] ( 6/19) gleam-core language_server::tests::action::pattern_match_on_argument_single_item_tuple
+        PASS [   0.332s] ( 7/19) gleam-core language_server::tests::action::pattern_match_on_argument_uses_label_shorthand_syntax_for_labelled_arguments
+        PASS [   0.334s] ( 8/19) gleam-core language_server::tests::action::pattern_match_on_argument_works_on_nested_fn_arguments
+        PASS [   0.336s] ( 9/19) gleam-core language_server::tests::action::pattern_match_on_argument_with_multiple_constructors_is_nicely_formatted_in_function_with_empty_body
+        PASS [   0.342s] (10/19) gleam-core language_server::tests::action::pattern_match_on_argument_available_for_internal_type_defined_in_current_module
+        PASS [   0.343s] (11/19) gleam-core language_server::tests::action::pattern_match_on_argument_will_use_aliased_module_name
+        PASS [   0.343s] (12/19) gleam-core language_server::tests::action::pattern_match_on_argument_works_on_fn_arguments
+        PASS [   0.345s] (13/19) gleam-core language_server::tests::action::pattern_match_on_argument_single_unlabelled_field_is_not_numbered
+        PASS [   0.349s] (14/19) gleam-core language_server::tests::action::pattern_match_on_argument_will_use_unqualified_name
+        PASS [   0.352s] (15/19) gleam-core language_server::tests::action::pattern_match_on_argument_will_use_qualified_name
+        PASS [   0.367s] (16/19) gleam-core language_server::tests::action::pattern_match_on_argument_multi_item_tuple
+        PASS [   0.367s] (17/19) gleam-core language_server::tests::action::pattern_match_on_argument_will_use_aliased_constructor_name
+        PASS [   0.401s] (18/19) gleam-core language_server::tests::action::pattern_match_on_argument_nicely_formats_code_when_used_on_function_with_empty_body
+        PASS [   0.226s] (19/19) gleam-core language_server::tests::action::pattern_match_on_let_assignment_with_multiple_constructors
+────────────
+     Summary [   0.433s] 19 tests run: 19 passed, 3157 skipped
+reward=1 graded=19 found=2 failed=0 parsed=19 framework=cargo exit_code=0

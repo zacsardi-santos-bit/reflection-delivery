@@ -1,0 +1,17 @@
+patching file src/negative_test/abc-supply-plan-4.0.0/abc-supply-plan-missing-schema-property.json
+patching file src/negative_test/abc-supply-plan-4.0.0/abc-suppply-plan-extraneous-property.json
+patching file src/negative_test/abc-supply-plan-4.0.0/abc-suppply-plan-invalid-fractional-lot-size.json
+patching file src/negative_test/abc-supply-plan-4.0.0/abc-suppply-plan-invalid-planDate.json
+patching file src/negative_test/abc-supply-plan-4.0.0/abc-suppply-plan-invalid-strings-as-numbers.json
+patching file src/test/abc-supply-plan-4.0.0/abc-supply-plan.json
+---
+>> Failed to find a schema file at "src/schemas/json/abc-supply-plan-4.0.0.json"
+---
+Error
+    at onTestDir (file:///workspace/repo/cli.js:794:29)
+    at async Promise.all (index 1)
+    at async assertFileSystemIsValid (file:///workspace/repo/cli.js:788:5)
+    at async Object.taskCheck (file:///workspace/repo/cli.js:583:3)
+    at async file:///workspace/repo/cli.js:1516:5
+<?xml version="1.0"?><testsuite name="schemastore" tests="1" failures="1"><testcase classname="abc-supply-plan-4.0.0" name="schema-check"><failure message="Schema check failed"/></testcase></testsuite>
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=junit exit_code=1

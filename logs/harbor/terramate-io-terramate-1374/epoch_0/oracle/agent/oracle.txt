@@ -1,0 +1,4 @@
+patching file CHANGELOG.md
+patching file generate/genfile/genfile.go
+patching file generate/genhcl/genhcl.go
+patching file hcl/hcl.go

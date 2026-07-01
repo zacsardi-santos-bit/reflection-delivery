@@ -1,0 +1,8 @@
+patching file docs/generated/templates.md
+patching file pkg/extract/sts_spec.go
+patching file pkg/lintcontext/mocks/context.go
+patching file pkg/objectkinds/pvc.go
+patching file pkg/templates/all/all.go
+patching file pkg/templates/volumeclaimtemplates/internal/params/gen-params.go
+patching file pkg/templates/volumeclaimtemplates/internal/params/params.go
+patching file pkg/templates/volumeclaimtemplates/template.go

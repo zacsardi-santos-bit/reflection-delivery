@@ -1,0 +1,29 @@
+patching file api/converter/converter_test.go
+patching file pkg/document/gc_test.go
+patching file pkg/document/size_test.go
+patching file pkg/document/yson/yson_test.go
+patching file pkg/index/tree_test.go
+patching file test/bench/deletion_concurrency_bench_test.go
+patching file test/bench/document_bench_test.go
+patching file test/complex/tree_concurrency_test.go
+patching file test/helper/helper.go
+patching file test/integration/gc_test.go
+patching file test/integration/object_test.go
+patching file test/integration/tree_test.go
+github.com/yorkie-team/yorkie/pkg/document/yson: no non-test Go files in /workspace/repo/pkg/document/yson
+# github.com/yorkie-team/yorkie/test/helper
+test/helper/helper.go:210:27: cannot use node (variable of type "github.com/yorkie-team/yorkie/pkg/document/json".TreeNode) as *"github.com/yorkie-team/yorkie/pkg/document/json".TreeNode value in argument to root.SetNewTree
+test/helper/helper.go:225:27: cannot use *node (variable of type "github.com/yorkie-team/yorkie/pkg/document/json".TreeNode) as *"github.com/yorkie-team/yorkie/pkg/document/json".TreeNode value in argument to root.SetNewTree
+{"Time":"2026-06-29T15:29:19.806463133Z","Action":"start","Package":"github.com/yorkie-team/yorkie/api/converter"}
+{"Time":"2026-06-29T15:29:19.806577962Z","Action":"output","Package":"github.com/yorkie-team/yorkie/api/converter","Output":"FAIL\tgithub.com/yorkie-team/yorkie/api/converter [build failed]\n"}
+{"Time":"2026-06-29T15:29:19.806632862Z","Action":"fail","Package":"github.com/yorkie-team/yorkie/api/converter","Elapsed":0}
+{"Time":"2026-06-29T15:29:19.806647842Z","Action":"start","Package":"github.com/yorkie-team/yorkie/pkg/document"}
+{"Time":"2026-06-29T15:29:19.80699512Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/document","Output":"FAIL\tgithub.com/yorkie-team/yorkie/pkg/document [build failed]\n"}
+{"Time":"2026-06-29T15:29:19.80707377Z","Action":"fail","Package":"github.com/yorkie-team/yorkie/pkg/document","Elapsed":0}
+{"Time":"2026-06-29T15:29:19.80703139Z","Action":"start","Package":"github.com/yorkie-team/yorkie/pkg/document/yson"}
+{"Time":"2026-06-29T15:29:19.80712718Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/document/yson","Output":"FAIL\tgithub.com/yorkie-team/yorkie/pkg/document/yson [build failed]\n"}
+{"Time":"2026-06-29T15:29:19.807152239Z","Action":"fail","Package":"github.com/yorkie-team/yorkie/pkg/document/yson","Elapsed":0}
+{"Time":"2026-06-29T15:29:19.807180429Z","Action":"start","Package":"github.com/yorkie-team/yorkie/pkg/index"}
+{"Time":"2026-06-29T15:29:19.807243569Z","Action":"output","Package":"github.com/yorkie-team/yorkie/pkg/index","Output":"FAIL\tgithub.com/yorkie-team/yorkie/pkg/index [build failed]\n"}
+{"Time":"2026-06-29T15:29:19.807274959Z","Action":"fail","Package":"github.com/yorkie-team/yorkie/pkg/index","Elapsed":0}
+reward=0 graded=87 found=0 failed=0 parsed=4 framework=go exit_code=1

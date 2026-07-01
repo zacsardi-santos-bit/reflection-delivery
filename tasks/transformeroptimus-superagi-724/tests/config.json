@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/unit_tests/helper/test_resource_helper.py /workspace/repo/tests/unit_tests/models/test_agent.py /workspace/repo/tests/unit_tests/models/test_agent_execution.py /workspace/repo/tests/unit_tests/tools/email/test_send_email_attachment.py /workspace/repo/tests/unit_tests/tools/file/test_read_file.py /workspace/repo/tests/unit_tests/tools/twitter/test_send_tweets.py -v",
+  "test_files": [
+    "tests/unit_tests/helper/test_resource_helper.py",
+    "tests/unit_tests/models/test_agent.py",
+    "tests/unit_tests/models/test_agent_execution.py",
+    "tests/unit_tests/tools/email/test_send_email_attachment.py",
+    "tests/unit_tests/tools/file/test_read_file.py",
+    "tests/unit_tests/tools/twitter/test_send_tweets.py"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit_tests.helper.test_resource_helper::test_make_written_file_resource",
+    "tests.unit_tests.helper.test_resource_helper::test_get_resource_path",
+    "tests.unit_tests.helper.test_resource_helper::test_get_agent_resource_path",
+    "tests.unit_tests.helper.test_resource_helper::test_get_formatted_agent_level_path",
+    "tests.unit_tests.helper.test_resource_helper::test_get_formatted_agent_execution_level_path",
+    "tests.unit_tests.models.test_agent::test_get_agent_from_id",
+    "tests.unit_tests.models.test_agent_execution::test_get_agent_execution_from_id",
+    "tests.unit_tests.tools.email.test_send_email_attachment.TestSendEmailAttachmentTool::test__execute",
+    "tests.unit_tests.tools.file.test_read_file::test_read_file_success",
+    "tests.unit_tests.tools.file.test_read_file::test_read_file_file_not_found",
+    "tests.unit_tests.tools.twitter.test_send_tweets.TestSendTweetsInput::test_fields",
+    "tests.unit_tests.tools.twitter.test_send_tweets.TestSendTweetsTool::test_execute"
+  ],
+  "PASS_TO_PASS": []
+}

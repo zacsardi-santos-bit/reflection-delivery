@@ -1,0 +1,503 @@
+diff --git a/doc/python/python_intro.rst b/doc/python/python_intro.rst
+index 0d26a5253..cc0e461e0 100644
+--- a/doc/python/python_intro.rst
++++ b/doc/python/python_intro.rst
+@@ -162,8 +162,6 @@ Support Matrix
+ +-------------------------+-----------+-------------------+-----------+-----------+--------------------+-------------+
+ | cupy.ndarray            | T         | T                 | T         | T         | T                  | T           |
+ +-------------------------+-----------+-------------------+-----------+-----------+--------------------+-------------+
+-| torch.Tensor            | T         | T                 | T         | T         | T                  | T           |
+-+-------------------------+-----------+-------------------+-----------+-----------+--------------------+-------------+
+ | dlpack                  | CPA       | CPA               |           | CPA       | FF                 | FF          |
+ +-------------------------+-----------+-------------------+-----------+-----------+--------------------+-------------+
+ | datatable.Frame         | T         | FF                |           | NPA       | FF                 |             |
+diff --git a/include/xgboost/tree_model.h b/include/xgboost/tree_model.h
+index 393dda59c..4c475da2e 100644
+--- a/include/xgboost/tree_model.h
++++ b/include/xgboost/tree_model.h
+@@ -398,8 +398,8 @@ class RegTree : public Model {
+       if (!func(nidx)) {
+         return;
+       }
+-      auto left = self[nidx].LeftChild();
+-      auto right = self[nidx].RightChild();
++      auto left = self.LeftChild(nidx);
++      auto right = self.RightChild(nidx);
+       if (left != RegTree::kInvalidNodeId) {
+         nodes.push(left);
+       }
+diff --git a/python-package/xgboost/compat.py b/python-package/xgboost/compat.py
+index 729750f1f..7c11495f7 100644
+--- a/python-package/xgboost/compat.py
++++ b/python-package/xgboost/compat.py
+@@ -138,9 +138,9 @@ def concat(value: Sequence[_T]) -> _T:  # pylint: disable=too-many-return-statem
+         from cudf import concat as CUDF_concat  # pylint: disable=import-error
+ 
+         return CUDF_concat(value, axis=0)
+-    from .data import _is_cupy_alike
++    from .data import _is_cupy_array
+ 
+-    if _is_cupy_alike(value[0]):
++    if _is_cupy_array(value[0]):
+         import cupy  # pylint: disable=import-error
+ 
+         # pylint: disable=c-extension-no-member,no-member
+diff --git a/python-package/xgboost/core.py b/python-package/xgboost/core.py
+index 36be766b1..4d093293d 100644
+--- a/python-package/xgboost/core.py
++++ b/python-package/xgboost/core.py
+@@ -357,13 +357,10 @@ def _numpy2ctypes_type(dtype: Type[np.number]) -> Type[CNumeric]:
+     return _NUMPY_TO_CTYPES_MAPPING[dtype]
+ 
+ 
+-def _array_hasobject(data: DataType) -> bool:
+-    return hasattr(data.dtype, "hasobject") and data.dtype.hasobject
+-
+-
+ def _cuda_array_interface(data: DataType) -> bytes:
+-    if _array_hasobject(data):
+-        raise ValueError("Input data contains `object` dtype.  Expecting numeric data.")
++    assert (
++        data.dtype.hasobject is False
++    ), "Input data contains `object` dtype.  Expecting numeric data."
+     interface = data.__cuda_array_interface__
+     if "mask" in interface:
+         interface["mask"] = interface["mask"].__cuda_array_interface__
+@@ -2105,7 +2102,7 @@ class Booster:
+             _array_interface,
+             _cuda_array_interface,
+             _ensure_np_dtype,
+-            _is_cupy_alike,
++            _is_cupy_array,
+         )
+ 
+         self._assign_dmatrix_features(dtrain)
+@@ -2119,7 +2116,7 @@ class Booster:
+                 "Expecting `np.ndarray` or `cupy.ndarray` for gradient and hessian."
+                 f" Got: {type(array)}"
+             )
+-            if not isinstance(array, np.ndarray) and not _is_cupy_alike(array):
++            if not isinstance(array, np.ndarray) and not _is_cupy_array(array):
+                 raise TypeError(msg)
+ 
+             n_samples = dtrain.num_row()
+@@ -2134,7 +2131,7 @@ class Booster:
+             if isinstance(array, np.ndarray):
+                 array, _ = _ensure_np_dtype(array, array.dtype)
+                 interface = _array_interface(array)
+-            elif _is_cupy_alike(array):
++            elif _is_cupy_array(array):
+                 interface = _cuda_array_interface(array)
+             else:
+                 raise TypeError(msg)
+@@ -2464,7 +2461,7 @@ class Booster:
+             _arrow_transform,
+             _is_arrow,
+             _is_cudf_df,
+-            _is_cupy_alike,
++            _is_cupy_array,
+             _is_list,
+             _is_np_array_like,
+             _is_pandas_df,
+@@ -2546,7 +2543,7 @@ class Booster:
+                 )
+             )
+             return _prediction_output(shape, dims, preds, False)
+-        if _is_cupy_alike(data):
++        if _is_cupy_array(data):
+             from .data import _transform_cupy_array
+ 
+             data = _transform_cupy_array(data)
+diff --git a/python-package/xgboost/dask/__init__.py b/python-package/xgboost/dask/__init__.py
+index 6b4ae5b07..046a2c982 100644
+--- a/python-package/xgboost/dask/__init__.py
++++ b/python-package/xgboost/dask/__init__.py
+@@ -75,7 +75,7 @@ from xgboost.core import (
+     _deprecate_positional_args,
+     _expect,
+ )
+-from xgboost.data import _is_cudf_ser, _is_cupy_alike
++from xgboost.data import _is_cudf_ser, _is_cupy_array
+ from xgboost.sklearn import (
+     XGBClassifier,
+     XGBClassifierBase,
+@@ -1909,7 +1909,7 @@ class DaskXGBClassifier(DaskScikitLearnBase, XGBClassifierBase):
+             self.classes_ = await self.client.compute(y.drop_duplicates())
+         if _is_cudf_ser(self.classes_):
+             self.classes_ = self.classes_.to_cupy()
+-        if _is_cupy_alike(self.classes_):
++        if _is_cupy_array(self.classes_):
+             self.classes_ = self.classes_.get()
+         self.classes_ = numpy.array(self.classes_)
+         self.n_classes_ = len(self.classes_)
+diff --git a/python-package/xgboost/data.py b/python-package/xgboost/data.py
+index 49a0f43b7..05337e788 100644
+--- a/python-package/xgboost/data.py
++++ b/python-package/xgboost/data.py
+@@ -26,7 +26,6 @@ from .core import (
+     DataIter,
+     DataSplitMode,
+     DMatrix,
+-    _array_hasobject,
+     _check_call,
+     _cuda_array_interface,
+     _ProxyDMatrix,
+@@ -78,8 +77,9 @@ def is_scipy_csr(data: DataType) -> bool:
+ 
+ 
+ def _array_interface_dict(data: np.ndarray) -> dict:
+-    if _array_hasobject(data):
+-        raise ValueError("Input data contains `object` dtype.  Expecting numeric data.")
++    assert (
++        data.dtype.hasobject is False
++    ), "Input data contains `object` dtype.  Expecting numeric data."
+     interface = data.__array_interface__
+     if "mask" in interface:
+         interface["mask"] = interface["mask"].__array_interface__
+@@ -219,7 +219,7 @@ def _is_np_array_like(data: DataType) -> bool:
+ def _ensure_np_dtype(
+     data: DataType, dtype: Optional[NumpyDType]
+ ) -> Tuple[np.ndarray, Optional[NumpyDType]]:
+-    if _array_hasobject(data) or data.dtype in [np.float16, np.bool_]:
++    if data.dtype.hasobject or data.dtype in [np.float16, np.bool_]:
+         dtype = np.float32
+         data = data.astype(dtype, copy=False)
+     if not data.flags.aligned:
+@@ -998,8 +998,11 @@ def _is_cudf_ser(data: DataType) -> bool:
+     return lazy_isinstance(data, "cudf.core.series", "Series")
+ 
+ 
+-def _is_cupy_alike(data: DataType) -> bool:
+-    return hasattr(data, "__cuda_array_interface__")
++def _is_cupy_array(data: DataType) -> bool:
++    return any(
++        lazy_isinstance(data, n, "ndarray")
++        for n in ("cupy.core.core", "cupy", "cupy._core.core")
++    )
+ 
+ 
+ def _transform_cupy_array(data: DataType) -> CupyT:
+@@ -1007,7 +1010,7 @@ def _transform_cupy_array(data: DataType) -> CupyT:
+ 
+     if not hasattr(data, "__cuda_array_interface__") and hasattr(data, "__array__"):
+         data = cupy.array(data, copy=False)
+-    if _array_hasobject(data) or data.dtype in [cupy.bool_]:
++    if data.dtype.hasobject or data.dtype in [cupy.bool_]:
+         data = data.astype(cupy.float32, copy=False)
+     return data
+ 
+@@ -1219,7 +1222,7 @@ def dispatch_data_backend(
+         return _from_cudf_df(
+             data, missing, threads, feature_names, feature_types, enable_categorical
+         )
+-    if _is_cupy_alike(data):
++    if _is_cupy_array(data):
+         return _from_cupy_array(data, missing, threads, feature_names, feature_types)
+     if _is_cupy_csr(data):
+         raise TypeError("cupyx CSR is not supported yet.")
+@@ -1351,7 +1354,7 @@ def dispatch_meta_backend(
+         data = _transform_dlpack(data)
+         _meta_from_cupy_array(data, name, handle)
+         return
+-    if _is_cupy_alike(data):
++    if _is_cupy_array(data):
+         _meta_from_cupy_array(data, name, handle)
+         return
+     if _is_cudf_ser(data):
+@@ -1416,7 +1419,7 @@ def _proxy_transform(
+         return _transform_cudf_df(
+             data, feature_names, feature_types, enable_categorical
+         )
+-    if _is_cupy_alike(data):
++    if _is_cupy_array(data):
+         data = _transform_cupy_array(data)
+         return data, None, feature_names, feature_types
+     if _is_dlpack(data):
+@@ -1467,7 +1470,7 @@ def dispatch_proxy_set_data(
+         # pylint: disable=W0212
+         proxy._set_data_from_cuda_columnar(data, cast(List, cat_codes))
+         return
+-    if _is_cupy_alike(data):
++    if _is_cupy_array(data):
+         proxy._set_data_from_cuda_interface(data)  # pylint: disable=W0212
+         return
+     if _is_dlpack(data):
+diff --git a/python-package/xgboost/sklearn.py b/python-package/xgboost/sklearn.py
+index 8c3a96784..3383ae0b7 100644
+--- a/python-package/xgboost/sklearn.py
++++ b/python-package/xgboost/sklearn.py
+@@ -39,7 +39,7 @@ from .core import (
+     _deprecate_positional_args,
+     _parse_eval_str,
+ )
+-from .data import _is_cudf_df, _is_cudf_ser, _is_cupy_alike, _is_pandas_df
++from .data import _is_cudf_df, _is_cudf_ser, _is_cupy_array, _is_pandas_df
+ from .training import train
+ 
+ 
+@@ -1177,7 +1177,7 @@ class XGBModel(XGBModelBase):
+                         base_margin=base_margin,
+                         validate_features=validate_features,
+                     )
+-                    if _is_cupy_alike(predts):
++                    if _is_cupy_array(predts):
+                         import cupy  # pylint: disable=import-error
+ 
+                         predts = cupy.asnumpy(predts)  # ensure numpy array is used.
+@@ -1458,7 +1458,7 @@ class XGBClassifier(XGBModel, XGBClassifierBase):
+                 classes = cp.unique(y.values)
+                 self.n_classes_ = len(classes)
+                 expected_classes = cp.array(self.classes_)
+-            elif _is_cupy_alike(y):
++            elif _is_cupy_array(y):
+                 import cupy as cp  # pylint: disable=E0401
+ 
+                 classes = cp.unique(y)
+diff --git a/src/learner.cc b/src/learner.cc
+index db72f7164..6b0fd7e4b 100644
+--- a/src/learner.cc
++++ b/src/learner.cc
+@@ -535,7 +535,8 @@ class LearnerConfiguration : public Learner {
+ 
+     tparam_.booster = get<String>(gradient_booster["name"]);
+     if (!gbm_) {
+-      gbm_.reset(GradientBooster::Create(tparam_.booster, &ctx_, &learner_model_param_));
++      gbm_.reset(GradientBooster::Create(tparam_.booster,
++                                         &ctx_, &learner_model_param_));
+     }
+     gbm_->LoadConfig(gradient_booster);
+ 
+@@ -1094,11 +1095,6 @@ class LearnerIO : public LearnerConfiguration {
+     std::vector<std::pair<std::string, std::string> > extra_attr;
+     mparam.contain_extra_attrs = 1;
+ 
+-    if (!this->feature_names_.empty() || !this->feature_types_.empty()) {
+-      LOG(WARNING) << "feature names and feature types are being disregarded, use JSON/UBJSON "
+-                      "format instead.";
+-    }
+-
+     {
+       // Similar to JSON model IO, we save the objective.
+       Json j_obj { Object() };
+diff --git a/src/tree/hist/evaluate_splits.h b/src/tree/hist/evaluate_splits.h
+index 680c50398..bc534d351 100644
+--- a/src/tree/hist/evaluate_splits.h
++++ b/src/tree/hist/evaluate_splits.h
+@@ -730,6 +730,9 @@ class HistMultiEvaluator {
+ 
+     std::size_t n_nodes = p_tree->Size();
+     gain_.resize(n_nodes);
++    // Re-calculate weight without learning rate.
++    CalcWeight(*param_, left_sum, left_weight);
++    CalcWeight(*param_, right_sum, right_weight);
+     gain_[left_child] = CalcGainGivenWeight(*param_, left_sum, left_weight);
+     gain_[right_child] = CalcGainGivenWeight(*param_, right_sum, right_weight);
+ 
+diff --git a/src/tree/multi_target_tree_model.cc b/src/tree/multi_target_tree_model.cc
+index bccc1967e..11ee1f6dd 100644
+--- a/src/tree/multi_target_tree_model.cc
++++ b/src/tree/multi_target_tree_model.cc
+@@ -195,8 +195,9 @@ void MultiTargetTree::Expand(bst_node_t nidx, bst_feature_t split_idx, float spl
+   split_index_.resize(n);
+   split_index_[nidx] = split_idx;
+ 
+-  split_conds_.resize(n);
++  split_conds_.resize(n, std::numeric_limits<float>::quiet_NaN());
+   split_conds_[nidx] = split_cond;
++
+   default_left_.resize(n);
+   default_left_[nidx] = static_cast<std::uint8_t>(default_left);
+ 
+diff --git a/src/tree/updater_quantile_hist.cc b/src/tree/updater_quantile_hist.cc
+index 7731f505e..c2aaedafa 100644
+--- a/src/tree/updater_quantile_hist.cc
++++ b/src/tree/updater_quantile_hist.cc
+@@ -149,6 +149,9 @@ class MultiTargetHistBuilder {
+   }
+ 
+   void InitData(DMatrix *p_fmat, RegTree const *p_tree) {
++    if (collective::IsDistributed()) {
++      LOG(FATAL) << "Distributed training for vector-leaf is not yet supported.";
++    }
+     monitor_->Start(__func__);
+ 
+     p_last_fmat_ = p_fmat;
+diff --git a/tests/python/test_basic_models.py b/tests/python/test_basic_models.py
+index 828c24862..ca35c4e91 100644
+--- a/tests/python/test_basic_models.py
++++ b/tests/python/test_basic_models.py
+@@ -1,4 +1,5 @@
+ import json
++import locale
+ import os
+ import tempfile
+ 
+@@ -109,39 +110,20 @@ class TestModels:
+         predt_2 = bst.predict(dtrain)
+         assert np.all(np.abs(predt_2 - predt_1) < 1e-6)
+ 
+-    def test_boost_from_existing_model(self) -> None:
++    def test_boost_from_existing_model(self):
+         X, _ = tm.load_agaricus(__file__)
+-        booster = xgb.train({"tree_method": "hist"}, X, num_boost_round=4)
++        booster = xgb.train({'tree_method': 'hist'}, X, num_boost_round=4)
+         assert booster.num_boosted_rounds() == 4
+-        booster.set_param({"tree_method": "approx"})
+-        assert booster.num_boosted_rounds() == 4
+-        booster = xgb.train(
+-            {"tree_method": "hist"}, X, num_boost_round=4, xgb_model=booster
+-        )
++        booster = xgb.train({'tree_method': 'hist'}, X, num_boost_round=4,
++                            xgb_model=booster)
+         assert booster.num_boosted_rounds() == 8
+-        with pytest.warns(UserWarning, match="`updater`"):
+-            booster = xgb.train(
+-                {"updater": "prune", "process_type": "update"},
+-                X,
+-                num_boost_round=4,
+-                xgb_model=booster,
+-            )
++        booster = xgb.train({'updater': 'prune', 'process_type': 'update'}, X,
++                            num_boost_round=4, xgb_model=booster)
+         # Trees are moved for update, the rounds is reduced.  This test is
+         # written for being compatible with current code (1.0.0).  If the
+         # behaviour is considered sub-optimal, feel free to change.
+         assert booster.num_boosted_rounds() == 4
+ 
+-        booster = xgb.train({"booster": "gblinear"}, X, num_boost_round=4)
+-        assert booster.num_boosted_rounds() == 4
+-        booster.set_param({"updater": "coord_descent"})
+-        assert booster.num_boosted_rounds() == 4
+-        booster.set_param({"updater": "shotgun"})
+-        assert booster.num_boosted_rounds() == 4
+-        booster = xgb.train(
+-            {"booster": "gblinear"}, X, num_boost_round=4, xgb_model=booster
+-        )
+-        assert booster.num_boosted_rounds() == 8
+-
+     def run_custom_objective(self, tree_method=None):
+         param = {
+             'max_depth': 2,
+@@ -325,6 +307,25 @@ class TestModels:
+         for d in text_dump:
+             assert d.find(r"feature \"2\"") != -1
+ 
++    @pytest.mark.skipif(**tm.no_sklearn())
++    def test_attributes(self):
++        from sklearn.datasets import load_iris
++
++        X, y = load_iris(return_X_y=True)
++        cls = xgb.XGBClassifier(n_estimators=2)
++        cls.fit(X, y, early_stopping_rounds=1, eval_set=[(X, y)])
++        assert cls.get_booster().best_iteration == cls.n_estimators - 1
++        assert cls.best_iteration == cls.get_booster().best_iteration
++
++        with tempfile.TemporaryDirectory() as tmpdir:
++            path = os.path.join(tmpdir, "cls.json")
++            cls.save_model(path)
++
++            cls = xgb.XGBClassifier(n_estimators=2)
++            cls.load_model(path)
++            assert cls.get_booster().best_iteration == cls.n_estimators - 1
++            assert cls.best_iteration == cls.get_booster().best_iteration
++
+     def run_slice(
+         self,
+         booster: xgb.Booster,
+@@ -492,23 +493,18 @@ class TestModels:
+         np.testing.assert_allclose(predt0, predt1, atol=1e-5)
+ 
+     @pytest.mark.skipif(**tm.no_pandas())
+-    @pytest.mark.parametrize("ext", ["json", "ubj"])
+-    def test_feature_info(self, ext: str) -> None:
++    def test_feature_info(self):
+         import pandas as pd
+ 
+-        # make data
+         rows = 100
+         cols = 10
+         X = rng.randn(rows, cols)
+         y = rng.randn(rows)
+-
+-        # Test with pandas, which has feature info.
+         feature_names = ["test_feature_" + str(i) for i in range(cols)]
+         X_pd = pd.DataFrame(X, columns=feature_names)
+         X_pd[f"test_feature_{3}"] = X_pd.iloc[:, 3].astype(np.int32)
+ 
+         Xy = xgb.DMatrix(X_pd, y)
+-        assert Xy.feature_types is not None
+         assert Xy.feature_types[3] == "int"
+         booster = xgb.train({}, dtrain=Xy, num_boost_round=1)
+ 
+@@ -517,32 +513,10 @@ class TestModels:
+         assert booster.feature_types == Xy.feature_types
+ 
+         with tempfile.TemporaryDirectory() as tmpdir:
+-            path = tmpdir + f"model.{ext}"
++            path = tmpdir + "model.json"
+             booster.save_model(path)
+             booster = xgb.Booster()
+             booster.load_model(path)
+ 
+             assert booster.feature_names == Xy.feature_names
+             assert booster.feature_types == Xy.feature_types
+-
+-        # Test with numpy, no feature info is set
+-        Xy = xgb.DMatrix(X, y)
+-        assert Xy.feature_names is None
+-        assert Xy.feature_types is None
+-
+-        booster = xgb.train({}, dtrain=Xy, num_boost_round=1)
+-        assert booster.feature_names is None
+-        assert booster.feature_types is None
+-
+-        # test explicitly set
+-        fns = [str(i) for i in range(cols)]
+-        booster.feature_names = fns
+-
+-        assert booster.feature_names == fns
+-
+-        with tempfile.TemporaryDirectory() as tmpdir:
+-            path = os.path.join(tmpdir, f"model.{ext}")
+-            booster.save_model(path)
+-
+-            booster = xgb.Booster(model_file=path)
+-            assert booster.feature_names == fns
+diff --git a/tests/python/test_model_io.py b/tests/python/test_model_io.py
+index df0fff22e..884bba08f 100644
+--- a/tests/python/test_model_io.py
++++ b/tests/python/test_model_io.py
+@@ -466,33 +466,3 @@ def test_with_sklearn_obj_metric() -> None:
+     assert not callable(reg_2.objective)
+     assert not callable(reg_2.eval_metric)
+     assert reg_2.eval_metric is None
+-
+-
+-@pytest.mark.skipif(**tm.no_sklearn())
+-def test_attributes() -> None:
+-    from sklearn.datasets import load_iris
+-
+-    X, y = load_iris(return_X_y=True)
+-    clf = xgb.XGBClassifier(n_estimators=2, early_stopping_rounds=1)
+-    clf.fit(X, y, eval_set=[(X, y)])
+-    best_iteration = clf.get_booster().best_iteration
+-    assert best_iteration is not None
+-    assert clf.n_estimators is not None
+-    assert best_iteration == clf.n_estimators - 1
+-
+-    best_iteration = clf.best_iteration
+-    assert best_iteration == clf.get_booster().best_iteration
+-
+-    clf.get_booster().set_attr(foo="bar")
+-
+-    with tempfile.TemporaryDirectory() as tmpdir:
+-        path = os.path.join(tmpdir, "clf.json")
+-        clf.save_model(path)
+-
+-        clf = xgb.XGBClassifier(n_estimators=2)
+-        clf.load_model(path)
+-        assert clf.n_estimators is not None
+-        assert clf.get_booster().best_iteration == clf.n_estimators - 1
+-        assert clf.best_iteration == clf.get_booster().best_iteration
+-
+-        assert clf.get_booster().attributes()["foo"] == "bar"

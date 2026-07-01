@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /go/src/github.com/cilium/cilium && go test -json -vet=off ./pkg/envoy/xds -count=1",
+  "test_files": [
+    "pkg/envoy/xds/ack_test.go",
+    "pkg/envoy/xds/node_test.go",
+    "pkg/envoy/xds/server_e2e_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cilium/cilium/pkg/envoy/xds::Test"
+  ],
+  "PASS_TO_PASS": []
+}

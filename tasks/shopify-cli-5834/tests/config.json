@@ -1,0 +1,45 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/theme && npx vitest run src/cli/utilities/theme-environment/hot-reload/server.test.ts src/cli/utilities/theme-environment/theme-environment.test.ts",
+  "test_files": [
+    "packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts",
+    "packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling serves compiled_assets/styles.css by aggregating liquid stylesheets in a fault tolerant way",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling serves compiled_assets/scripts.js by aggregating liquid javascript from section files",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: Hot Reload server events handles hot reload events with proper data and syncing",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: getUpdatedFileParts returns empty content and no changes for empty file",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: getUpdatedFileParts extracts special tag contents and detects changes",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: getUpdatedFileParts removes HTML and Liquid comments from other content",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: getUpdatedFileParts detects changes in tags when the file updates",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: getUpdatedFileParts detects changes in tags even when there are Liquid syntax errors"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer should upload the development theme to remote",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer should initialize theme editor sync if themeEditorSync flag is passed",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer should skip deletion of remote files if noDelete flag is passed",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling mocks known endpoints",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling serves proxied local assets",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling serves local assets from the root in a backward compatible way",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling gets the right content for assets with non-breaking spaces",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling serves compiled_assets/block-scripts.js by aggregating liquid javascript from block files",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling serves compiled_assets/snippet-scripts.js by aggregating liquid javascript from snippet files",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling forwards unknown compiled_assets requests to SFR",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling renders HTML",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling proxies other requests to SFR",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling proxies .css.liquid assets with injected CDN",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling proxies .js.liquid assets replacing the error query string",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling falls back to proxying if a rendering request fails with 4xx status",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling forwards rendering error after proxy failure",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling skips proxy for known rendering requests like Section Rendering API",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling renders error page on network errors with hot reload script injected",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts:: setupDevServer request handling renders error page on upload errors with hot reload script injected",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: Hot Reload handleHotReloadScriptInjection keeps the SFR injected script when hot reload is enabled",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: Hot Reload handleHotReloadScriptInjection removes the SFR injected script when hot reload is disabled",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: Hot Reload handleHotReloadScriptInjection injects the hot reload script if missing from SFR when hot reload is enabled",
+    "/workspace/repo/packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts:: Hot Reload handleHotReloadScriptInjection does not inject the hot reload script if missing from SFR when hot reload is disabled"
+  ]
+}

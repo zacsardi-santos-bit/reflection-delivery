@@ -1,0 +1,23 @@
+{
+ "task": "grpc-grpc-swift-1768",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds OneOrManyQueue (one/many backing) + GRPCMessageFramer emitting 1-byte compress flag + UInt32 length; tests assert readMessageHeader()==(false,128) and manyBacked transition"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

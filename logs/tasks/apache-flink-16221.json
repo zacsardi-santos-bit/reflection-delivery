@@ -1,0 +1,23 @@
+{
+ "task": "apache-flink-16221",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden CombinedWatermarkStatus: 'if (partialWatermarks.isEmpty()) { this.idle = combinedWatermark > Long.MIN_VALUE; return false; }' implements Problem 4; plus ChainingOutput/RecordWriterOutput/WatermarkAssignerOperator/AnnouncedStatus changes for Problems 1-3"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 40,
+  "shallow": true
+ }
+}

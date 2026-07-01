@@ -1,0 +1,5 @@
+patching file CHANGELOG.md
+patching file operations/helm/charts/grafana-agent/README.md
+patching file operations/helm/charts/grafana-agent/ci/sidecars-values.yaml
+patching file operations/helm/charts/grafana-agent/templates/controllers/_pod.yaml
+patching file operations/helm/charts/grafana-agent/values.yaml

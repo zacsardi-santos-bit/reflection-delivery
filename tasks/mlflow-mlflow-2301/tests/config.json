@@ -1,0 +1,26 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/tensorflow_autolog/test_tensorflow_autolog.py -v --large -k early_stop --forked",
+  "test_files": [
+    "tests/tensorflow_autolog/test_tensorflow2_autolog.py",
+    "tests/tensorflow_autolog/test_tensorflow_autolog.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_logs[True-0-early-True]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_logs[True-1-early-True]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_logs[True-5-early-True]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_logs[False-0-early-True]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_logs[False-1-early-True]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_logs[False-5-early-True]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_no_stop_does_not_log[True-11-early-True]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_no_stop_does_not_log[False-11-early-True]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_no_restore_doesnt_log[True-5-early-False]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_early_stop_no_restore_doesnt_log[False-5-early-False]"
+  ],
+  "PASS_TO_PASS": [
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_non_early_stop_callback_no_log[True-5-not-early-False]",
+    "tests.tensorflow_autolog.test_tensorflow_autolog::test_tf_keras_autolog_non_early_stop_callback_no_log[False-5-not-early-False]"
+  ]
+}

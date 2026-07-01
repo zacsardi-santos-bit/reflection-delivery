@@ -1,0 +1,1094 @@
+diff --git a/docs/hooks/fields.mdx b/docs/hooks/fields.mdx
+index aaebab5258..d305b09fd9 100644
+--- a/docs/hooks/fields.mdx
++++ b/docs/hooks/fields.mdx
+@@ -200,7 +200,7 @@ user-friendly.
+ The `beforeDuplicate` field hook is called on each locale (when using localization), when duplicating a document. It may be used when documents having the
+ exact same properties may cause issue. This gives you a way to avoid duplicate names on `unique`, `required` fields or when external systems expect non-repeating values on documents.
+ 
+-This hook gets called after `beforeChange` hooks are called and before the document is saved to the database.
++This hook gets called before the `beforeValidate` and `beforeChange` hooks are called.
+ 
+ By Default, unique and required text fields Payload will append "- Copy" to the original document value. The default is not added if your field has its own, you must return non-unique values from your beforeDuplicate hook to avoid errors or enable the `disableDuplicate` option on the collection.
+ Here is an example of a number field with a hook that increments the number to avoid unique constraint errors when duplicating a document:
+diff --git a/packages/db-sqlite/src/schema/traverseFields.ts b/packages/db-sqlite/src/schema/traverseFields.ts
+index 9ee227b6d5..45eff2a8c3 100644
+--- a/packages/db-sqlite/src/schema/traverseFields.ts
++++ b/packages/db-sqlite/src/schema/traverseFields.ts
+@@ -166,7 +166,8 @@ export const traverseFields = ({
+         if (field.hasMany) {
+           const isLocalized =
+             Boolean(field.localized && adapter.payload.config.localization) ||
+-            withinLocalizedArrayOrBlock
++            withinLocalizedArrayOrBlock ||
++            forceLocalized
+ 
+           if (isLocalized) {
+             hasLocalizedManyTextField = true
+@@ -199,7 +200,8 @@ export const traverseFields = ({
+         if (field.hasMany) {
+           const isLocalized =
+             Boolean(field.localized && adapter.payload.config.localization) ||
+-            withinLocalizedArrayOrBlock
++            withinLocalizedArrayOrBlock ||
++            forceLocalized
+ 
+           if (isLocalized) {
+             hasLocalizedManyNumberField = true
+@@ -279,7 +281,8 @@ export const traverseFields = ({
+ 
+           const isLocalized =
+             Boolean(field.localized && adapter.payload.config.localization) ||
+-            withinLocalizedArrayOrBlock
++            withinLocalizedArrayOrBlock ||
++            forceLocalized
+ 
+           if (isLocalized) {
+             baseColumns.locale = text('locale', { enum: locales }).notNull()
+@@ -365,7 +368,8 @@ export const traverseFields = ({
+ 
+         const isLocalized =
+           Boolean(field.localized && adapter.payload.config.localization) ||
+-          withinLocalizedArrayOrBlock
++          withinLocalizedArrayOrBlock ||
++          forceLocalized
+ 
+         if (isLocalized) {
+           baseColumns._locale = text('_locale', { enum: locales }).notNull()
+@@ -503,7 +507,8 @@ export const traverseFields = ({
+ 
+             const isLocalized =
+               Boolean(field.localized && adapter.payload.config.localization) ||
+-              withinLocalizedArrayOrBlock
++              withinLocalizedArrayOrBlock ||
++              forceLocalized
+ 
+             if (isLocalized) {
+               baseColumns._locale = text('_locale', { enum: locales }).notNull()
+diff --git a/packages/drizzle/src/postgres/schema/traverseFields.ts b/packages/drizzle/src/postgres/schema/traverseFields.ts
+index b4966f39b4..deadcfbac3 100644
+--- a/packages/drizzle/src/postgres/schema/traverseFields.ts
++++ b/packages/drizzle/src/postgres/schema/traverseFields.ts
+@@ -172,7 +172,8 @@ export const traverseFields = ({
+         if (field.hasMany) {
+           const isLocalized =
+             Boolean(field.localized && adapter.payload.config.localization) ||
+-            withinLocalizedArrayOrBlock
++            withinLocalizedArrayOrBlock ||
++            forceLocalized
+ 
+           if (isLocalized) {
+             hasLocalizedManyTextField = true
+@@ -205,7 +206,8 @@ export const traverseFields = ({
+         if (field.hasMany) {
+           const isLocalized =
+             Boolean(field.localized && adapter.payload.config.localization) ||
+-            withinLocalizedArrayOrBlock
++            withinLocalizedArrayOrBlock ||
++            forceLocalized
+ 
+           if (isLocalized) {
+             hasLocalizedManyNumberField = true
+@@ -300,7 +302,8 @@ export const traverseFields = ({
+ 
+           const isLocalized =
+             Boolean(field.localized && adapter.payload.config.localization) ||
+-            withinLocalizedArrayOrBlock
++            withinLocalizedArrayOrBlock ||
++            forceLocalized
+ 
+           if (isLocalized) {
+             baseColumns.locale = adapter.enums.enum__locales('locale').notNull()
+@@ -382,7 +385,8 @@ export const traverseFields = ({
+ 
+         const isLocalized =
+           Boolean(field.localized && adapter.payload.config.localization) ||
+-          withinLocalizedArrayOrBlock
++          withinLocalizedArrayOrBlock ||
++          forceLocalized
+ 
+         if (isLocalized) {
+           baseColumns._locale = adapter.enums.enum__locales('_locale').notNull()
+@@ -516,7 +520,8 @@ export const traverseFields = ({
+ 
+             const isLocalized =
+               Boolean(field.localized && adapter.payload.config.localization) ||
+-              withinLocalizedArrayOrBlock
++              withinLocalizedArrayOrBlock ||
++              forceLocalized
+ 
+             if (isLocalized) {
+               baseColumns._locale = adapter.enums.enum__locales('_locale').notNull()
+diff --git a/packages/drizzle/src/transform/read/traverseFields.ts b/packages/drizzle/src/transform/read/traverseFields.ts
+index f0da9821cf..4e94ffc07e 100644
+--- a/packages/drizzle/src/transform/read/traverseFields.ts
++++ b/packages/drizzle/src/transform/read/traverseFields.ts
+@@ -489,6 +489,7 @@ export const traverseFields = <T extends Record<string, unknown>>({
+           valuesToTransform.push({
+             ref: localizedFieldData,
+             table: {
++              ...table,
+               ...localeRow,
+             },
+           })
+@@ -526,7 +527,7 @@ export const traverseFields = <T extends Record<string, unknown>>({
+               relationships,
+               table,
+               texts,
+-              withinArrayOrBlockLocale,
++              withinArrayOrBlockLocale: locale || withinArrayOrBlockLocale,
+             })
+ 
+             if ('_order' in ref) {
+diff --git a/packages/next/src/views/Versions/index.tsx b/packages/next/src/views/Versions/index.tsx
+index db9e71370d..0698dad6b4 100644
+--- a/packages/next/src/views/Versions/index.tsx
++++ b/packages/next/src/views/Versions/index.tsx
+@@ -25,7 +25,6 @@ export const VersionsView: PayloadServerReactComponent<EditViewComponent> = asyn
+       i18n,
+       payload,
+       payload: { config },
+-      t,
+       user,
+     },
+   } = initPageResult
+@@ -142,19 +141,13 @@ export const VersionsView: PayloadServerReactComponent<EditViewComponent> = asyn
+     latestPublishedVersion: latestPublishedVersion?.id,
+   })
+ 
+-  const pluralLabel = collectionConfig?.labels?.plural
+-    ? typeof collectionConfig.labels.plural === 'function'
+-      ? collectionConfig.labels.plural({ t })
+-      : collectionConfig.labels.plural
+-    : globalConfig?.label
+-
+   return (
+     <React.Fragment>
+       <SetDocumentStepNav
+         collectionSlug={collectionConfig?.slug}
+         globalSlug={globalConfig?.slug}
+         id={id}
+-        pluralLabel={pluralLabel}
++        pluralLabel={collectionConfig?.labels?.plural || globalConfig?.label}
+         useAsTitle={collectionConfig?.admin?.useAsTitle || globalConfig?.slug}
+         view={i18n.t('version:versions')}
+       />
+diff --git a/packages/payload/src/collections/operations/duplicate.ts b/packages/payload/src/collections/operations/duplicate.ts
+index 4b1466e7ee..c1d0fac424 100644
+--- a/packages/payload/src/collections/operations/duplicate.ts
++++ b/packages/payload/src/collections/operations/duplicate.ts
+@@ -14,6 +14,7 @@ import { APIError, Forbidden, NotFound } from '../../errors/index.js'
+ import { afterChange } from '../../fields/hooks/afterChange/index.js'
+ import { afterRead } from '../../fields/hooks/afterRead/index.js'
+ import { beforeChange } from '../../fields/hooks/beforeChange/index.js'
++import { beforeDuplicate } from '../../fields/hooks/beforeDuplicate/index.js'
+ import { beforeValidate } from '../../fields/hooks/beforeValidate/index.js'
+ import { commitTransaction } from '../../utilities/commitTransaction.js'
+ import { initTransaction } from '../../utilities/initTransaction.js'
+@@ -93,7 +94,7 @@ export const duplicateOperation = async <TSlug extends CollectionSlug>(
+       where: combineQueries({ id: { equals: id } }, accessResults),
+     }
+ 
+-    const docWithLocales = await getLatestCollectionVersion({
++    let docWithLocales = await getLatestCollectionVersion({
+       id,
+       config: collectionConfig,
+       payload,
+@@ -112,6 +113,15 @@ export const duplicateOperation = async <TSlug extends CollectionSlug>(
+     delete docWithLocales.createdAt
+     delete docWithLocales.id
+ 
++    docWithLocales = await beforeDuplicate({
++      id,
++      collection: collectionConfig,
++      context: req.context,
++      doc: docWithLocales,
++      overrideAccess,
++      req,
++    })
++
+     // for version enabled collections, override the current status with draft, unless draft is explicitly set to false
+     if (shouldSaveDraft) {
+       docWithLocales._status = 'draft'
+@@ -205,7 +215,6 @@ export const duplicateOperation = async <TSlug extends CollectionSlug>(
+       data,
+       doc: originalDoc,
+       docWithLocales,
+-      duplicate: true,
+       global: null,
+       operation,
+       req,
+diff --git a/packages/payload/src/fields/baseFields/baseBeforeDuplicateArrays.ts b/packages/payload/src/fields/baseFields/baseBeforeDuplicateArrays.ts
+deleted file mode 100644
+index 0b1256443d..0000000000
+--- a/packages/payload/src/fields/baseFields/baseBeforeDuplicateArrays.ts
++++ /dev/null
+@@ -1,18 +0,0 @@
+-import ObjectIdImport from 'bson-objectid'
+-
+-import type { FieldHook } from '../config/types.js'
+-
+-const ObjectId = (ObjectIdImport.default ||
+-  ObjectIdImport) as unknown as typeof ObjectIdImport.default
+-/**
+- * Arrays and Blocks need to clear ids beforeDuplicate
+- */
+-export const baseBeforeDuplicateArrays: FieldHook = ({ value }) => {
+-  if (value) {
+-    value = value.map((item) => {
+-      item.id = new ObjectId().toHexString()
+-      return item
+-    })
+-    return value
+-  }
+-}
+diff --git a/packages/payload/src/fields/baseFields/baseIDField.ts b/packages/payload/src/fields/baseFields/baseIDField.ts
+index 377c7aa8f0..708ad8d44a 100644
+--- a/packages/payload/src/fields/baseFields/baseIDField.ts
++++ b/packages/payload/src/fields/baseFields/baseIDField.ts
+@@ -25,6 +25,11 @@ export const baseIDField: TextField = {
+         return value
+       },
+     ],
++    beforeDuplicate: [
++      () => {
++        return new ObjectId().toHexString()
++      },
++    ],
+   },
+   label: 'ID',
+ }
+diff --git a/packages/payload/src/fields/config/sanitize.ts b/packages/payload/src/fields/config/sanitize.ts
+index 4b87a82422..134efb68dc 100644
+--- a/packages/payload/src/fields/config/sanitize.ts
++++ b/packages/payload/src/fields/config/sanitize.ts
+@@ -12,7 +12,6 @@ import {
+ } from '../../errors/index.js'
+ import { MissingEditorProp } from '../../errors/MissingEditorProp.js'
+ import { formatLabels, toWords } from '../../utilities/formatLabels.js'
+-import { baseBeforeDuplicateArrays } from '../baseFields/baseBeforeDuplicateArrays.js'
+ import { baseBlockFields } from '../baseFields/baseBlockFields.js'
+ import { baseIDField } from '../baseFields/baseIDField.js'
+ import { setDefaultBeforeDuplicate } from '../setDefaultBeforeDuplicate.js'
+@@ -131,15 +130,6 @@ export const sanitizeFields = async ({
+ 
+     if (field.type === 'array' && field.fields) {
+       field.fields.push(baseIDField)
+-      if (field.localized) {
+-        if (!field.hooks) {
+-          field.hooks = {}
+-        }
+-        if (!field.hooks.beforeDuplicate) {
+-          field.hooks.beforeDuplicate = []
+-        }
+-        field.hooks.beforeDuplicate.push(baseBeforeDuplicateArrays)
+-      }
+     }
+ 
+     if ((field.type === 'blocks' || field.type === 'array') && field.label) {
+@@ -220,15 +210,6 @@ export const sanitizeFields = async ({
+     }
+ 
+     if (field.type === 'blocks' && field.blocks) {
+-      if (field.localized) {
+-        if (!field.hooks) {
+-          field.hooks = {}
+-        }
+-        if (!field.hooks.beforeDuplicate) {
+-          field.hooks.beforeDuplicate = []
+-        }
+-        field.hooks.beforeDuplicate.push(baseBeforeDuplicateArrays)
+-      }
+       for (const block of field.blocks) {
+         if (block._sanitized === true) {
+           continue
+diff --git a/packages/payload/src/fields/hooks/beforeChange/index.ts b/packages/payload/src/fields/hooks/beforeChange/index.ts
+index 9d369c8416..6bd587e58e 100644
+--- a/packages/payload/src/fields/hooks/beforeChange/index.ts
++++ b/packages/payload/src/fields/hooks/beforeChange/index.ts
+@@ -12,7 +12,6 @@ type Args<T extends JsonObject> = {
+   data: T
+   doc: T
+   docWithLocales: JsonObject
+-  duplicate?: boolean
+   global: null | SanitizedGlobalConfig
+   id?: number | string
+   operation: Operation
+@@ -26,7 +25,6 @@ type Args<T extends JsonObject> = {
+  * - Execute field hooks
+  * - Validate data
+  * - Transform data for storage
+- * - beforeDuplicate hooks (if duplicate)
+  * - Unflatten locales. The input `data` is the normal document for one locale. The output result will become the document with locales.
+  */
+ export const beforeChange = async <T extends JsonObject>({
+@@ -36,7 +34,6 @@ export const beforeChange = async <T extends JsonObject>({
+   data: incomingData,
+   doc,
+   docWithLocales,
+-  duplicate = false,
+   global,
+   operation,
+   req,
+@@ -53,7 +50,6 @@ export const beforeChange = async <T extends JsonObject>({
+     data,
+     doc,
+     docWithLocales,
+-    duplicate,
+     errors,
+     fields: collection?.fields || global?.fields,
+     global,
+diff --git a/packages/payload/src/fields/hooks/beforeChange/promise.ts b/packages/payload/src/fields/hooks/beforeChange/promise.ts
+index 7e30d2488c..b7e0619fe2 100644
+--- a/packages/payload/src/fields/hooks/beforeChange/promise.ts
++++ b/packages/payload/src/fields/hooks/beforeChange/promise.ts
+@@ -8,7 +8,6 @@ import { MissingEditorProp } from '../../../errors/index.js'
+ import { deepMergeWithSourceArrays } from '../../../utilities/deepMerge.js'
+ import { fieldAffectsData, tabHasName } from '../../config/types.js'
+ import { getFieldPaths } from '../../getFieldPaths.js'
+-import { beforeDuplicate } from './beforeDuplicate.js'
+ import { getExistingRowDoc } from './getExistingRowDoc.js'
+ import { traverseFields } from './traverseFields.js'
+ 
+@@ -18,7 +17,6 @@ type Args = {
+   data: JsonObject
+   doc: JsonObject
+   docWithLocales: JsonObject
+-  duplicate: boolean
+   errors: { field: string; message: string }[]
+   field: Field | TabAsField
+   global: null | SanitizedGlobalConfig
+@@ -55,7 +53,6 @@ export const promise = async ({
+   data,
+   doc,
+   docWithLocales,
+-  duplicate,
+   errors,
+   field,
+   global,
+@@ -176,16 +173,11 @@ export const promise = async ({
+         const localeData = await localization.localeCodes.reduce(
+           async (localizedValuesPromise: Promise<JsonObject>, locale) => {
+             const localizedValues = await localizedValuesPromise
+-            let fieldValue =
++            const fieldValue =
+               locale === req.locale
+                 ? siblingData[field.name]
+                 : siblingDocWithLocales?.[field.name]?.[locale]
+ 
+-            if (duplicate && field.hooks?.beforeDuplicate?.length) {
+-              beforeDuplicateArgs.value = fieldValue
+-              fieldValue = await beforeDuplicate(beforeDuplicateArgs)
+-            }
+-
+             // const result = await localizedValues
+             // update locale value if it's not undefined
+             if (typeof fieldValue !== 'undefined') {
+@@ -205,10 +197,6 @@ export const promise = async ({
+           siblingData[field.name] = localeData
+         }
+       })
+-    } else if (duplicate && field.hooks?.beforeDuplicate?.length) {
+-      mergeLocaleActions.push(async () => {
+-        siblingData[field.name] = await beforeDuplicate(beforeDuplicateArgs)
+-      })
+     }
+   }
+ 
+@@ -250,7 +238,6 @@ export const promise = async ({
+         data,
+         doc,
+         docWithLocales,
+-        duplicate,
+         errors,
+         fields: field.fields,
+         global,
+@@ -282,7 +269,6 @@ export const promise = async ({
+               data,
+               doc,
+               docWithLocales,
+-              duplicate,
+               errors,
+               fields: field.fields,
+               global,
+@@ -332,7 +318,6 @@ export const promise = async ({
+                 data,
+                 doc,
+                 docWithLocales,
+-                duplicate,
+                 errors,
+                 fields: block.fields,
+                 global,
+@@ -365,7 +350,6 @@ export const promise = async ({
+         data,
+         doc,
+         docWithLocales,
+-        duplicate,
+         errors,
+         fields: field.fields,
+         global,
+@@ -411,7 +395,6 @@ export const promise = async ({
+         data,
+         doc,
+         docWithLocales,
+-        duplicate,
+         errors,
+         fields: field.fields,
+         global,
+@@ -437,7 +420,6 @@ export const promise = async ({
+         data,
+         doc,
+         docWithLocales,
+-        duplicate,
+         errors,
+         fields: field.tabs.map((tab) => ({ ...tab, type: 'tab' })),
+         global,
+@@ -474,7 +456,6 @@ export const promise = async ({
+             context,
+             data,
+             docWithLocales,
+-            duplicate,
+             errors,
+             field,
+             global,
+diff --git a/packages/payload/src/fields/hooks/beforeChange/traverseFields.ts b/packages/payload/src/fields/hooks/beforeChange/traverseFields.ts
+index 0c687c872c..24b193cd67 100644
+--- a/packages/payload/src/fields/hooks/beforeChange/traverseFields.ts
++++ b/packages/payload/src/fields/hooks/beforeChange/traverseFields.ts
+@@ -17,7 +17,6 @@ type Args = {
+    * The original data with locales (not modified by any hooks)
+    */
+   docWithLocales: JsonObject
+-  duplicate: boolean
+   errors: { field: string; message: string }[]
+   fields: (Field | TabAsField)[]
+   global: null | SanitizedGlobalConfig
+@@ -54,7 +53,6 @@ export const traverseFields = async ({
+   data,
+   doc,
+   docWithLocales,
+-  duplicate,
+   errors,
+   fields,
+   global,
+@@ -79,7 +77,6 @@ export const traverseFields = async ({
+         data,
+         doc,
+         docWithLocales,
+-        duplicate,
+         errors,
+         field,
+         global,
+diff --git a/packages/payload/src/fields/hooks/beforeDuplicate/index.ts b/packages/payload/src/fields/hooks/beforeDuplicate/index.ts
+new file mode 100644
+index 0000000000..886885de0f
+--- /dev/null
++++ b/packages/payload/src/fields/hooks/beforeDuplicate/index.ts
+@@ -0,0 +1,46 @@
++import type { SanitizedCollectionConfig } from '../../../collections/config/types.js'
++import type { JsonObject, PayloadRequest, RequestContext } from '../../../types/index.js'
++
++import { deepCopyObjectSimple } from '../../../utilities/deepCopyObject.js'
++import { traverseFields } from './traverseFields.js'
++
++type Args<T extends JsonObject> = {
++  collection: null | SanitizedCollectionConfig
++  context: RequestContext
++  doc?: T
++  id?: number | string
++  overrideAccess: boolean
++  req: PayloadRequest
++}
++
++/**
++ * This function is responsible for running beforeDuplicate hooks
++ * against a document including all locale data.
++ * It will run each field's beforeDuplicate hook
++ * and return the resulting docWithLocales.
++ */
++export const beforeDuplicate = async <T extends JsonObject>({
++  id,
++  collection,
++  context,
++  doc,
++  overrideAccess,
++  req,
++}: Args<T>): Promise<T> => {
++  const newDoc = deepCopyObjectSimple(doc)
++
++  await traverseFields({
++    id,
++    collection,
++    context,
++    doc: newDoc,
++    fields: collection?.fields,
++    overrideAccess,
++    path: [],
++    req,
++    schemaPath: [],
++    siblingDoc: newDoc,
++  })
++
++  return newDoc
++}
+diff --git a/packages/payload/src/fields/hooks/beforeDuplicate/promise.ts b/packages/payload/src/fields/hooks/beforeDuplicate/promise.ts
+new file mode 100644
+index 0000000000..9a1b93f822
+--- /dev/null
++++ b/packages/payload/src/fields/hooks/beforeDuplicate/promise.ts
+@@ -0,0 +1,351 @@
++import type { SanitizedCollectionConfig } from '../../../collections/config/types.js'
++import type { JsonObject, PayloadRequest, RequestContext } from '../../../types/index.js'
++import type { Field, FieldHookArgs, TabAsField } from '../../config/types.js'
++
++import { fieldAffectsData, tabHasName } from '../../config/types.js'
++import { getFieldPaths } from '../../getFieldPaths.js'
++import { runBeforeDuplicateHooks } from './runHook.js'
++import { traverseFields } from './traverseFields.js'
++
++type Args<T> = {
++  collection: null | SanitizedCollectionConfig
++  context: RequestContext
++  doc: T
++  field: Field | TabAsField
++  id?: number | string
++  overrideAccess: boolean
++  parentPath: (number | string)[]
++  parentSchemaPath: string[]
++  req: PayloadRequest
++  siblingDoc: JsonObject
++}
++
++export const promise = async <T>({
++  id,
++  collection,
++  context,
++  doc,
++  field,
++  overrideAccess,
++  parentPath,
++  parentSchemaPath,
++  req,
++  siblingDoc,
++}: Args<T>): Promise<void> => {
++  const { localization } = req.payload.config
++
++  const { path: fieldPath, schemaPath: fieldSchemaPath } = getFieldPaths({
++    field,
++    parentPath,
++    parentSchemaPath,
++  })
++
++  if (fieldAffectsData(field)) {
++    let fieldData = siblingDoc?.[field.name]
++    const fieldIsLocalized = field.localized && localization
++
++    // Run field beforeDuplicate hooks
++    if (Array.isArray(field.hooks?.beforeDuplicate)) {
++      if (fieldIsLocalized) {
++        const localeData = await localization.localeCodes.reduce(
++          async (localizedValuesPromise: Promise<JsonObject>, locale) => {
++            const localizedValues = await localizedValuesPromise
++
++            const beforeDuplicateArgs: FieldHookArgs = {
++              collection,
++              context,
++              data: doc,
++              field,
++              global: undefined,
++              path: fieldPath,
++              previousSiblingDoc: siblingDoc,
++              previousValue: siblingDoc[field.name]?.[locale],
++              req,
++              schemaPath: parentSchemaPath,
++              siblingData: siblingDoc,
++              siblingDocWithLocales: siblingDoc,
++              value: siblingDoc[field.name]?.[locale],
++            }
++
++            const hookResult = await runBeforeDuplicateHooks(beforeDuplicateArgs)
++
++            if (typeof hookResult !== 'undefined') {
++              return {
++                ...localizedValues,
++                [locale]: hookResult,
++              }
++            }
++
++            return localizedValuesPromise
++          },
++          Promise.resolve({}),
++        )
++
++        siblingDoc[field.name] = localeData
++      } else {
++        const beforeDuplicateArgs: FieldHookArgs = {
++          collection,
++          context,
++          data: doc,
++          field,
++          global: undefined,
++          path: fieldPath,
++          previousSiblingDoc: siblingDoc,
++          previousValue: siblingDoc[field.name],
++          req,
++          schemaPath: parentSchemaPath,
++          siblingData: siblingDoc,
++          siblingDocWithLocales: siblingDoc,
++          value: siblingDoc[field.name],
++        }
++
++        const hookResult = await runBeforeDuplicateHooks(beforeDuplicateArgs)
++        if (typeof hookResult !== 'undefined') {
++          siblingDoc[field.name] = hookResult
++        }
++      }
++    }
++
++    // First, for any localized fields, we will loop over locales
++    // and if locale data is present, traverse the sub fields.
++    // There are only a few different fields where this is possible.
++    if (fieldIsLocalized) {
++      if (typeof fieldData !== 'object' || fieldData === null) {
++        siblingDoc[field.name] = {}
++        fieldData = siblingDoc[field.name]
++      }
++
++      const promises = []
++
++      localization.localeCodes.forEach((locale) => {
++        if (fieldData[locale]) {
++          switch (field.type) {
++            case 'tab':
++            case 'group': {
++              promises.push(
++                traverseFields({
++                  id,
++                  collection,
++                  context,
++                  doc,
++                  fields: field.fields,
++                  overrideAccess,
++                  path: fieldSchemaPath,
++                  req,
++                  schemaPath: fieldSchemaPath,
++                  siblingDoc: fieldData[locale],
++                }),
++              )
++
++              break
++            }
++
++            case 'array': {
++              const rows = fieldData[locale]
++
++              if (Array.isArray(rows)) {
++                const promises = []
++                rows.forEach((row, i) => {
++                  promises.push(
++                    traverseFields({
++                      id,
++                      collection,
++                      context,
++                      doc,
++                      fields: field.fields,
++                      overrideAccess,
++                      path: [...fieldPath, i],
++                      req,
++                      schemaPath: fieldSchemaPath,
++                      siblingDoc: row,
++                    }),
++                  )
++                })
++              }
++              break
++            }
++
++            case 'blocks': {
++              const rows = fieldData[locale]
++
++              if (Array.isArray(rows)) {
++                const promises = []
++                rows.forEach((row, i) => {
++                  const blockTypeToMatch = row.blockType
++
++                  const block = field.blocks.find(
++                    (blockType) => blockType.slug === blockTypeToMatch,
++                  )
++
++                  promises.push(
++                    traverseFields({
++                      id,
++                      collection,
++                      context,
++                      doc,
++                      fields: block.fields,
++                      overrideAccess,
++                      path: [...fieldPath, i],
++                      req,
++                      schemaPath: fieldSchemaPath,
++                      siblingDoc: row,
++                    }),
++                  )
++                })
++              }
++              break
++            }
++          }
++        }
++      })
++
++      await Promise.all(promises)
++    } else {
++      // If the field is not localized, but it affects data,
++      // we need to further traverse its children
++      // so the child fields can run beforeDuplicate hooks
++      switch (field.type) {
++        case 'tab':
++        case 'group': {
++          if (field.type === 'tab' && !tabHasName(field)) {
++            await traverseFields({
++              id,
++              collection,
++              context,
++              doc,
++              fields: field.fields,
++              overrideAccess,
++              path: fieldPath,
++              req,
++              schemaPath: fieldSchemaPath,
++              siblingDoc,
++            })
++          } else {
++            if (typeof siblingDoc[field.name] !== 'object') {
++              siblingDoc[field.name] = {}
++            }
++
++            const groupDoc = siblingDoc[field.name] as Record<string, unknown>
++
++            await traverseFields({
++              id,
++              collection,
++              context,
++              doc,
++              fields: field.fields,
++              overrideAccess,
++              path: fieldPath,
++              req,
++              schemaPath: fieldSchemaPath,
++              siblingDoc: groupDoc as JsonObject,
++            })
++          }
++
++          break
++        }
++
++        case 'array': {
++          const rows = siblingDoc[field.name]
++
++          if (Array.isArray(rows)) {
++            const promises = []
++            rows.forEach((row, i) => {
++              promises.push(
++                traverseFields({
++                  id,
++                  collection,
++                  context,
++                  doc,
++                  fields: field.fields,
++                  overrideAccess,
++                  path: [...fieldPath, i],
++                  req,
++                  schemaPath: fieldSchemaPath,
++                  siblingDoc: row,
++                }),
++              )
++            })
++            await Promise.all(promises)
++          }
++          break
++        }
++
++        case 'blocks': {
++          const rows = siblingDoc[field.name]
++
++          if (Array.isArray(rows)) {
++            const promises = []
++            rows.forEach((row, i) => {
++              const blockTypeToMatch = row.blockType
++              const block = field.blocks.find((blockType) => blockType.slug === blockTypeToMatch)
++
++              if (block) {
++                ;(row as JsonObject).blockType = blockTypeToMatch
++
++                promises.push(
++                  traverseFields({
++                    id,
++                    collection,
++                    context,
++                    doc,
++                    fields: block.fields,
++                    overrideAccess,
++                    path: [...fieldPath, i],
++                    req,
++                    schemaPath: fieldSchemaPath,
++                    siblingDoc: row,
++                  }),
++                )
++              }
++            })
++            await Promise.all(promises)
++          }
++
++          break
++        }
++      }
++    }
++  } else {
++    // Finally, we traverse fields which do not affect data here
++    switch (field.type) {
++      case 'row':
++      case 'collapsible': {
++        await traverseFields({
++          id,
++          collection,
++          context,
++          doc,
++          fields: field.fields,
++          overrideAccess,
++          path: fieldPath,
++          req,
++          schemaPath: fieldSchemaPath,
++          siblingDoc,
++        })
++
++        break
++      }
++
++      case 'tabs': {
++        await traverseFields({
++          id,
++          collection,
++          context,
++          doc,
++          fields: field.tabs.map((tab) => ({ ...tab, type: 'tab' })),
++          overrideAccess,
++          path: fieldPath,
++          req,
++          schemaPath: fieldSchemaPath,
++          siblingDoc,
++        })
++
++        break
++      }
++
++      default: {
++        break
++      }
++    }
++  }
++}
+diff --git a/packages/payload/src/fields/hooks/beforeChange/beforeDuplicate.ts b/packages/payload/src/fields/hooks/beforeDuplicate/runHook.ts
+similarity index 76%
+rename from packages/payload/src/fields/hooks/beforeChange/beforeDuplicate.ts
+rename to packages/payload/src/fields/hooks/beforeDuplicate/runHook.ts
+index 0d3afd1cfb..a4328277eb 100644
+--- a/packages/payload/src/fields/hooks/beforeChange/beforeDuplicate.ts
++++ b/packages/payload/src/fields/hooks/beforeDuplicate/runHook.ts
+@@ -1,6 +1,6 @@
+ import type { FieldHookArgs } from '../../config/types.js'
+ 
+-export const beforeDuplicate = async (args: FieldHookArgs) =>
++export const runBeforeDuplicateHooks = async (args: FieldHookArgs) =>
+   await args.field.hooks.beforeDuplicate.reduce(async (priorHook, currentHook) => {
+     await priorHook
+     return await currentHook(args)
+diff --git a/packages/payload/src/fields/hooks/beforeDuplicate/traverseFields.ts b/packages/payload/src/fields/hooks/beforeDuplicate/traverseFields.ts
+new file mode 100644
+index 0000000000..4b7f1f211f
+--- /dev/null
++++ b/packages/payload/src/fields/hooks/beforeDuplicate/traverseFields.ts
+@@ -0,0 +1,50 @@
++import type { SanitizedCollectionConfig } from '../../../collections/config/types.js'
++import type { JsonObject, PayloadRequest, RequestContext } from '../../../types/index.js'
++import type { Field, TabAsField } from '../../config/types.js'
++
++import { promise } from './promise.js'
++
++type Args<T> = {
++  collection: null | SanitizedCollectionConfig
++  context: RequestContext
++  doc: T
++  fields: (Field | TabAsField)[]
++  id?: number | string
++  overrideAccess: boolean
++  path: (number | string)[]
++  req: PayloadRequest
++  schemaPath: string[]
++  siblingDoc: JsonObject
++}
++
++export const traverseFields = async <T>({
++  id,
++  collection,
++  context,
++  doc,
++  fields,
++  overrideAccess,
++  path,
++  req,
++  schemaPath,
++  siblingDoc,
++}: Args<T>): Promise<void> => {
++  const promises = []
++  fields.forEach((field) => {
++    promises.push(
++      promise({
++        id,
++        collection,
++        context,
++        doc,
++        field,
++        overrideAccess,
++        parentPath: path,
++        parentSchemaPath: schemaPath,
++        req,
++        siblingDoc,
++      }),
++    )
++  })
++  await Promise.all(promises)
++}
+diff --git a/packages/richtext-lexical/src/cell/index.tsx b/packages/richtext-lexical/src/cell/index.tsx
+index d11362ef7d..4e4f894ce0 100644
+--- a/packages/richtext-lexical/src/cell/index.tsx
++++ b/packages/richtext-lexical/src/cell/index.tsx
+@@ -3,10 +3,8 @@ import type { EditorConfig as LexicalEditorConfig } from 'lexical'
+ import type { CellComponentProps, RichTextFieldClient } from 'payload'
+ 
+ import { createHeadlessEditor } from '@lexical/headless'
+-import { useConfig, useTableCell } from '@payloadcms/ui'
+-import { formatAdminURL } from '@payloadcms/ui/shared'
++import { useTableCell } from '@payloadcms/ui'
+ import { $getRoot } from 'lexical'
+-import LinkImport from 'next/link.js'
+ import React, { useEffect, useMemo } from 'react'
+ 
+ import type { FeatureProviderClient } from '../features/typesClient.js'
+@@ -18,8 +16,6 @@ import { loadClientFeatures } from '../lexical/config/client/loader.js'
+ import { sanitizeClientEditorConfig } from '../lexical/config/client/sanitize.js'
+ import { getEnabledNodes } from '../lexical/nodes/index.js'
+ 
+-const Link = (LinkImport.default || LinkImport) as unknown as typeof LinkImport.default
+-
+ export const RichTextCell: React.FC<
+   {
+     readonly admin?: LexicalFieldAdminProps
+@@ -34,35 +30,7 @@ export const RichTextCell: React.FC<
+ 
+   const [preview, setPreview] = React.useState('Loading...')
+ 
+-  const { cellData, cellProps, columnIndex, customCellContext, rowData } = useTableCell()
+-
+-  const {
+-    config: {
+-      routes: { admin: adminRoute },
+-    },
+-  } = useConfig()
+-
+-  const { link } = cellProps || {}
+-  let WrapElement: React.ComponentType<any> | string = 'span'
+-
+-  const wrapElementProps: {
+-    className?: string
+-    href?: string
+-    onClick?: () => void
+-    type?: 'button'
+-  } = {}
+-
+-  const isLink = link !== undefined ? link : columnIndex === 0
+-
+-  if (isLink) {
+-    WrapElement = Link
+-    wrapElementProps.href = customCellContext?.collectionSlug
+-      ? formatAdminURL({
+-          adminRoute,
+-          path: `/collections/${customCellContext?.collectionSlug}/${rowData.id}`,
+-        })
+-      : ''
+-  }
++  const { cellData } = useTableCell()
+ 
+   const finalSanitizedEditorConfig = useMemo<SanitizedClientEditorConfig>(() => {
+     const clientFeatures: GeneratedFeatureProviderComponent[] = richTextComponentMap.get(
+@@ -138,9 +106,5 @@ export const RichTextCell: React.FC<
+     setPreview(textContent)
+   }, [cellData, finalSanitizedEditorConfig])
+ 
+-  if (isLink) {
+-    return <WrapElement {...wrapElementProps}>{preview}</WrapElement>
+-  }
+-
+   return <span>{preview}</span>
+ }
+diff --git a/packages/richtext-lexical/src/features/typesServer.ts b/packages/richtext-lexical/src/features/typesServer.ts
+index c0d797cbbd..0bd70c7a0d 100644
+--- a/packages/richtext-lexical/src/features/typesServer.ts
++++ b/packages/richtext-lexical/src/features/typesServer.ts
+@@ -180,7 +180,6 @@ export type BeforeValidateNodeHookArgs<T extends SerializedLexicalNode> = {
+ }
+ 
+ export type BeforeChangeNodeHookArgs<T extends SerializedLexicalNode> = {
+-  duplicate: boolean
+   /**
+    * Only available in `beforeChange` hooks.
+    */
+diff --git a/packages/richtext-lexical/src/index.ts b/packages/richtext-lexical/src/index.ts
+index dab720a171..a44d884e53 100644
+--- a/packages/richtext-lexical/src/index.ts
++++ b/packages/richtext-lexical/src/index.ts
+@@ -414,7 +414,6 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
+             const {
+               collection,
+               context: _context,
+-              duplicate,
+               errors,
+               field,
+               global,
+@@ -494,7 +493,6 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
+                   }
+                   node = await hook({
+                     context,
+-                    duplicate,
+                     errors,
+                     mergeLocaleActions,
+                     node,
+@@ -532,7 +530,6 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
+                     data,
+                     doc: originalData,
+                     docWithLocales: originalDataWithLocales ?? {},
+-                    duplicate,
+                     errors,
+                     fields: subFields,
+                     global,
+@@ -635,7 +632,6 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
+              * - afterChange
+              * - beforeChange
+              * - beforeValidate
+-             * - beforeDuplicate
+              *
+              * Other hooks are handled by the flattenedNodes. All nodes in the nodeIDMap are part of flattenedNodes.
+              */
+diff --git a/packages/ui/src/elements/WhereBuilder/reduceClientFields.tsx b/packages/ui/src/elements/WhereBuilder/reduceClientFields.tsx
+index 1217347c10..bfe546e5e3 100644
+--- a/packages/ui/src/elements/WhereBuilder/reduceClientFields.tsx
++++ b/packages/ui/src/elements/WhereBuilder/reduceClientFields.tsx
+@@ -160,8 +160,6 @@ export const reduceClientFields = ({
+         field: {
+           ...field,
+           ...(field?.admin?.components?.Cell || {}),
+-          // Override the type with the field type, it can come back from the Cell component with type 'client' or 'server' which is an unintended assignment
+-          type: field.type,
+         },
+         operators,
+       }

@@ -1,0 +1,13 @@
+patching file cmd/cosign/cli/attest/attest.go
+patching file cmd/cosign/cli/attest/attest_blob.go
+patching file internal/key/svkeypair_test.go
+patching file test/e2e_test.go
+{"ImportPath":"github.com/sigstore/cosign/v2/internal/key [github.com/sigstore/cosign/v2/internal/key.test]","Action":"build-output","Output":"# github.com/sigstore/cosign/v2/internal/key [github.com/sigstore/cosign/v2/internal/key.test]\n"}
+{"ImportPath":"github.com/sigstore/cosign/v2/internal/key [github.com/sigstore/cosign/v2/internal/key.test]","Action":"build-output","Output":"internal/key/svkeypair_test.go:125:15: undefined: NewSignerVerifierKeypair\n"}
+{"ImportPath":"github.com/sigstore/cosign/v2/internal/key [github.com/sigstore/cosign/v2/internal/key.test]","Action":"build-output","Output":"internal/key/svkeypair_test.go:150:13: undefined: NewSignerVerifierKeypair\n"}
+{"ImportPath":"github.com/sigstore/cosign/v2/internal/key [github.com/sigstore/cosign/v2/internal/key.test]","Action":"build-output","Output":"internal/key/svkeypair_test.go:217:17: undefined: NewSignerVerifierKeypair\n"}
+{"ImportPath":"github.com/sigstore/cosign/v2/internal/key [github.com/sigstore/cosign/v2/internal/key.test]","Action":"build-fail"}
+{"Time":"2026-06-29T15:21:11.333953176Z","Action":"start","Package":"github.com/sigstore/cosign/v2/internal/key"}
+{"Time":"2026-06-29T15:21:11.334064959Z","Action":"output","Package":"github.com/sigstore/cosign/v2/internal/key","Output":"FAIL\tgithub.com/sigstore/cosign/v2/internal/key [build failed]\n"}
+{"Time":"2026-06-29T15:21:11.3341119Z","Action":"fail","Package":"github.com/sigstore/cosign/v2/internal/key","Elapsed":0,"FailedBuild":"github.com/sigstore/cosign/v2/internal/key [github.com/sigstore/cosign/v2/internal/key.test]"}
+reward=0 graded=13 found=0 failed=0 parsed=1 framework=go exit_code=1

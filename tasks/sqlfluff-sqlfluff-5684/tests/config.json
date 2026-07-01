@@ -1,0 +1,31 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest test/dialects/dialects_test.py -v -m 'parse_suite' -k 'snowflake and (alter_external_volume or create_external_volume or describe_statements or drop_statements or undrop)'",
+  "test_files": [
+    "test/fixtures/dialects/snowflake/alter_external_volume.sql",
+    "test/fixtures/dialects/snowflake/alter_external_volume.yml",
+    "test/fixtures/dialects/snowflake/create_external_volume.sql",
+    "test/fixtures/dialects/snowflake/create_external_volume.yml",
+    "test/fixtures/dialects/snowflake/describe_statements.sql",
+    "test/fixtures/dialects/snowflake/describe_statements.yml",
+    "test/fixtures/dialects/snowflake/drop_statements.sql",
+    "test/fixtures/dialects/snowflake/drop_statements.yml",
+    "test/fixtures/dialects/snowflake/undrop.sql",
+    "test/fixtures/dialects/snowflake/undrop.yml"
+  ],
+  "num_test_files": 10,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.dialects.dialects_test::test__dialect__base_file_parse[snowflake-alter_external_volume.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[snowflake-create_external_volume.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[snowflake-describe_statements.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[snowflake-drop_statements.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[snowflake-undrop.sql]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[snowflake-alter_external_volume.sql-True-alter_external_volume.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[snowflake-create_external_volume.sql-True-create_external_volume.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[snowflake-describe_statements.sql-True-describe_statements.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[snowflake-drop_statements.sql-True-drop_statements.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[snowflake-undrop.sql-True-undrop.yml]"
+  ],
+  "PASS_TO_PASS": []
+}

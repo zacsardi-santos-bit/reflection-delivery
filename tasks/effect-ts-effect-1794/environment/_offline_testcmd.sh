@@ -1,0 +1,1 @@
+cd /workspace/repo && pnpm vitest run packages/schema/test/Either/eitherFromUnion.test.ts --reporter=json --outputFile=/tmp/vitest-raw.json; python3 -c "import json; d=json.load(open('/tmp/vitest-raw.json')); open('/workspace/test-results/output.json','w').write(json.dumps(d,separators=(',',':')))"

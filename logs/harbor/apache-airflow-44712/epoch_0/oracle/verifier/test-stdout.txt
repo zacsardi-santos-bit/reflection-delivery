@@ -1,0 +1,26 @@
+patching file tests/models/test_deadline.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: requests-mock-1.12.1, asyncio-1.4.0, instafail-0.5.0, unordered-0.8.0, timeouts-1.2.1, custom-exit-code-0.3.0, mock-3.15.1, time-machine-3.2.0, icdiff-0.9, anyio-4.14.1, kgb-7.3, xdist-3.8.0, rerunfailures-16.3, cov-7.1.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+setup timeout: 0.0s, execution timeout: 0.0s, teardown timeout: 0.0s
+collecting ... collected 4 items
+
+tests/models/test_deadline.py::TestDeadline::test_add_deadline PASSED    [ 25%]
+tests/models/test_deadline.py::TestDeadline::test_orm PASSED             [ 50%]
+tests/models/test_deadline.py::TestDeadline::test_repr_with_callback_kwargs PASSED [ 75%]
+tests/models/test_deadline.py::TestDeadline::test_repr_without_callback_kwargs PASSED [100%]
+==================== Warning summary. Total: 23, Unique: 6 =====================
+airflow: total 6, unique 1
+  runtest: total 6, unique 1
+other: total 9, unique 3
+  runtest: total 9, unique 3
+tests: total 8, unique 2
+  runtest: total 8, unique 2
+Warnings saved into /workspace/repo/tests_common/warnings.txt file.
+
+======================== 4 passed, 1 warning in 10.50s =========================
+reward=1 graded=4 found=0 failed=0 parsed=4 framework=pytest exit_code=0

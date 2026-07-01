@@ -1,0 +1,13 @@
+patching file driver-scala/src/integration/scala/org/mongodb/scala/documentation/DocumentationTransactionsExampleSpec.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/AggregateObservable.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/ClientSessionImplicits.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/MapReduceObservable.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/MongoCollection.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/MongoDatabase.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/Observable.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/ObservableImplicits.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/Observer.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/SingleObservable.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/gridfs/GridFSBucket.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/gridfs/package.scala
+patching file driver-scala/src/main/scala/org/mongodb/scala/internal/UnitObservable.scala

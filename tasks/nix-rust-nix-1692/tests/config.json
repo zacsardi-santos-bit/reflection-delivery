@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -E \"binary(test) and test(test_v6dontfrag_opts)\"",
+  "test_files": [
+    "test/sys/test_sockopt.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) nix::test sys::test_sockopt::test_v6dontfrag_opts"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,25 @@
+patching file crates/uv/tests/it/init.rs
+   Compiling uv-build-backend v0.1.0 (/workspace/repo/crates/uv-build-backend)
+   Compiling uv-types v0.0.1 (/workspace/repo/crates/uv-types)
+   Compiling uv-distribution v0.0.1 (/workspace/repo/crates/uv-distribution)
+   Compiling uv-build v0.6.3 (/workspace/repo/crates/uv-build)
+   Compiling uv-resolver v0.0.1 (/workspace/repo/crates/uv-resolver)
+   Compiling uv-installer v0.0.1 (/workspace/repo/crates/uv-installer)
+   Compiling uv-build-frontend v0.0.1 (/workspace/repo/crates/uv-build-frontend)
+   Compiling uv-settings v0.0.1 (/workspace/repo/crates/uv-settings)
+   Compiling uv-dispatch v0.0.1 (/workspace/repo/crates/uv-dispatch)
+   Compiling uv-requirements v0.1.0 (/workspace/repo/crates/uv-requirements)
+   Compiling uv-cli v0.0.1 (/workspace/repo/crates/uv-cli)
+   Compiling uv-tool v0.0.1 (/workspace/repo/crates/uv-tool)
+   Compiling uv-scripts v0.0.1 (/workspace/repo/crates/uv-scripts)
+   Compiling uv-bench v0.0.0 (/workspace/repo/crates/uv-bench)
+   Compiling uv v0.6.4 (/workspace/repo/crates/uv)
+   Compiling uv-dev v0.0.1 (/workspace/repo/crates/uv-dev)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 08s
+────────────
+ Nextest run ID 94351e8c-870a-4681-bb12-9665ddc0c2c2 with nextest profile: default
+    Starting 1 test across 58 binaries (2360 tests skipped)
+        PASS [   1.843s] uv::it init::init_application_package_uv
+────────────
+     Summary [   1.853s] 1 test run: 1 passed, 2360 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

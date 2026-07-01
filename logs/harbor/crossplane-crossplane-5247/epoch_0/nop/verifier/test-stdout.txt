@@ -1,0 +1,30 @@
+patching file cmd/crank/beta/render/load_test.go
+patching file cmd/crank/beta/render/render_test.go
+patching file internal/controller/apiextensions/composite/composition_functions_test.go
+# github.com/crossplane/crossplane/cmd/crank/beta/render [github.com/crossplane/crossplane/cmd/crank/beta/render.test]
+cmd/crank/beta/render/load_test.go:385:14: undefined: LoadExtraResources
+cmd/crank/beta/render/render_test.go:369:11: unknown field Requirements in struct literal of type "github.com/crossplane/crossplane/apis/apiextensions/fn/proto/v1beta1".RunFunctionResponse
+cmd/crank/beta/render/render_test.go:369:36: undefined: fnv1beta1.Requirements
+cmd/crank/beta/render/render_test.go:370:50: undefined: fnv1beta1.ResourceSelector
+cmd/crank/beta/render/render_test.go:374:32: undefined: fnv1beta1.ResourceSelector_MatchName
+cmd/crank/beta/render/render_test.go:382:25: request.GetExtraResources undefined (type *"github.com/crossplane/crossplane/apis/apiextensions/fn/proto/v1beta1".RunFunctionRequest has no field or method GetExtraResources)
+cmd/crank/beta/render/render_test.go:385:25: request.GetExtraResources undefined (type *"github.com/crossplane/crossplane/apis/apiextensions/fn/proto/v1beta1".RunFunctionRequest has no field or method GetExtraResources)
+cmd/crank/beta/render/render_test.go:391:36: undefined: fnv1beta1.Requirements
+cmd/crank/beta/render/render_test.go:392:50: undefined: fnv1beta1.ResourceSelector
+cmd/crank/beta/render/render_test.go:450:6: unknown field ExtraResources in struct literal of type Inputs
+cmd/crank/beta/render/render_test.go:392:50: too many errors
+# github.com/crossplane/crossplane/internal/controller/apiextensions/composite [github.com/crossplane/crossplane/internal/controller/apiextensions/composite.test]
+internal/controller/apiextensions/composite/composition_functions_test.go:656:32: undefined: v1beta1.Requirements
+internal/controller/apiextensions/composite/composition_functions_test.go:657:44: undefined: v1beta1.ResourceSelector
+internal/controller/apiextensions/composite/composition_functions_test.go:661:26: undefined: v1beta1.ResourceSelector_MatchName
+internal/controller/apiextensions/composite/composition_functions_test.go:668:26: undefined: v1beta1.ResourceSelector_MatchName
+internal/controller/apiextensions/composite/composition_functions_test.go:717:8: unknown field Requirements in struct literal of type "github.com/crossplane/crossplane/apis/apiextensions/fn/proto/v1beta1".RunFunctionResponse
+internal/controller/apiextensions/composite/composition_functions_test.go:726:19: req.GetExtraResources undefined (type *"github.com/crossplane/crossplane/apis/apiextensions/fn/proto/v1beta1".RunFunctionRequest has no field or method GetExtraResources)
+internal/controller/apiextensions/composite/composition_functions_test.go:759:6: undefined: WithExtraResourcesFetcher
+internal/controller/apiextensions/composite/composition_functions_test.go:759:32: undefined: ExtraResourcesFetcherFn
+internal/controller/apiextensions/composite/composition_functions_test.go:759:94: undefined: v1beta1.ResourceSelector
+internal/controller/apiextensions/composite/composition_functions_test.go:759:122: undefined: v1beta1.Resources
+internal/controller/apiextensions/composite/composition_functions_test.go:726:19: too many errors
+FAIL	github.com/crossplane/crossplane/cmd/crank/beta/render [build failed]
+FAIL	github.com/crossplane/crossplane/internal/controller/apiextensions/composite [build failed]
+reward=0 graded=425 found=425 failed=425 parsed=2 framework=go exit_code=1

@@ -1,0 +1,34 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :server:test --tests \"*TypeSignatureParserTest\" --no-daemon --no-watch-fs -DuseSystemJdk && find /workspace/repo/server/build/test-results -name 'TEST-*.xml' -exec cat {} +",
+  "test_files": [
+    "server/src/test/java/io/crate/analyze/parser/TypeSignatureParserTest.java",
+    "server/src/test/java/io/crate/integrationtests/TransportSQLActionTest.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "io.crate.analyze.parser.TypeSignatureParserTest::testParsingOfObject",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_brackets",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_create_type_signature_from_text_type_with_length_limit",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_create_and_parse_object_type_containing_parameter_name_with_special_characters",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_numeric_type_signature_round_trip",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_record",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_text_type_signature_with_length_limit",
+    "io.crate.analyze.parser.TypeSignatureParserTest::testParsingOfArray",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_create_type_signature_from_nested_named_text_type_with_length_limit",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_record_with_named_data_types_that_contain_whitespaces",
+    "io.crate.analyze.parser.TypeSignatureParserTest::testParsingOfNestedArray",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_create_and_parse_object_type_containing_parameter_name_with_spaces_and_quotes",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_create_and_parse_object_type_containing_parameter_name_with_spaces",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_nested_named_text_type_signature_with_length_limit",
+    "io.crate.analyze.parser.TypeSignatureParserTest::testParsingOfPrimitiveDataTypes",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_record_with_nested_named_record_type",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_numeric_type_signature_with_precision_and_scale_round_trip",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_numeric_type_signature_with_precision_round_trip",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_create_and_parse_object_type_containing_parameter_name_with_bracket",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_array_with_nested_record_type",
+    "io.crate.analyze.parser.TypeSignatureParserTest::test_parse_record_with_named_data_type"
+  ],
+  "PASS_TO_PASS": []
+}

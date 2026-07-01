@@ -1,0 +1,269 @@
+patching file tests/cli/test_cmds_local_run.py
+patching file tests/cli/test_cmds_secret.py
+patching file tests/test_secret_tools.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-7.4.4, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+hypothesis profile 'default' -> database=DirectoryBasedExampleDatabase(PosixPath('/workspace/repo/.hypothesis/examples'))
+rootdir: /workspace/repo
+plugins: hypothesis-6.113.0, asyncio-0.23.8
+asyncio: mode=strict
+collecting ... collected 7 items / 2 errors
+
+==================================== ERRORS ====================================
+______________ ERROR collecting tests/cli/test_cmds_local_run.py _______________
+ImportError while importing test module '/workspace/repo/tests/cli/test_cmds_local_run.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.8/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/cli/test_cmds_local_run.py:25: in <module>
+    from paasta_tools.cli.cmds.local_run import decrypt_secret_environment_for_service
+E   ImportError: cannot import name 'decrypt_secret_environment_for_service' from 'paasta_tools.cli.cmds.local_run' (/workspace/repo/paasta_tools/cli/cmds/local_run.py)
+_________________ ERROR collecting tests/test_secret_tools.py __________________
+ImportError while importing test module '/workspace/repo/tests/test_secret_tools.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.8/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_secret_tools.py:23: in <module>
+    from paasta_tools.secret_tools import SHARED_SECRET_SERVICE
+E   ImportError: cannot import name 'SHARED_SECRET_SERVICE' from 'paasta_tools.secret_tools' (/workspace/repo/paasta_tools/secret_tools.py)
+=============================== warnings summary ===============================
+paasta_tools/utils.py:95
+  /workspace/repo/paasta_tools/utils.py:95: DeprecationWarning: invalid escape sequence \[
+    no_escape = re.compile('\x1B\[[0-9;]*[mK]')
+
+../../usr/local/lib/python3.8/site-packages/requests_cache/backends/storage/mongodict.py:10
+  /usr/local/lib/python3.8/site-packages/requests_cache/backends/storage/mongodict.py:10: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    from collections import MutableMapping
+
+paasta_tools/utils.py:108
+  /workspace/repo/paasta_tools/utils.py:108: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class TimeCacheEntry(TypedDict):
+
+paasta_tools/utils.py:166
+  /workspace/repo/paasta_tools/utils.py:166: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class VolumeWithMode(TypedDict):
+
+paasta_tools/utils.py:170
+  /workspace/repo/paasta_tools/utils.py:170: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class DockerVolume(VolumeWithMode):
+
+paasta_tools/utils.py:175
+  /workspace/repo/paasta_tools/utils.py:175: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class AwsEbsVolume(VolumeWithMode):
+
+paasta_tools/utils.py:182
+  /workspace/repo/paasta_tools/utils.py:182: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class PersistentVolume(VolumeWithMode):
+
+paasta_tools/utils.py:187
+  /workspace/repo/paasta_tools/utils.py:187: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class InstanceConfigDict(TypedDict, total=False):
+
+paasta_tools/utils.py:219
+  /workspace/repo/paasta_tools/utils.py:219: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class BranchDictV1(TypedDict, total=False):
+
+paasta_tools/utils.py:225
+  /workspace/repo/paasta_tools/utils.py:225: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class BranchDictV2(TypedDict):
+
+paasta_tools/utils.py:232
+  /workspace/repo/paasta_tools/utils.py:232: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class DockerParameter(TypedDict):
+
+paasta_tools/utils.py:1028
+  /workspace/repo/paasta_tools/utils.py:1028: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class LogWriterConfig(TypedDict):
+
+paasta_tools/utils.py:1033
+  /workspace/repo/paasta_tools/utils.py:1033: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class LogReaderConfig(TypedDict):
+
+paasta_tools/utils.py:1343
+  /workspace/repo/paasta_tools/utils.py:1343: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class ClusterAutoscalingResource(TypedDict):
+
+paasta_tools/utils.py:1355
+  /workspace/repo/paasta_tools/utils.py:1355: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class ResourcePoolSettings(TypedDict):
+
+paasta_tools/utils.py:1363
+  /workspace/repo/paasta_tools/utils.py:1363: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class ChronosConfig(TypedDict, total=False):
+
+paasta_tools/utils.py:1369
+  /workspace/repo/paasta_tools/utils.py:1369: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class MarathonConfigDict(TypedDict, total=False):
+
+paasta_tools/utils.py:1375
+  /workspace/repo/paasta_tools/utils.py:1375: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class LocalRunConfig(TypedDict, total=False):
+
+paasta_tools/utils.py:1379
+  /workspace/repo/paasta_tools/utils.py:1379: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class RemoteRunConfig(TypedDict, total=False):
+
+paasta_tools/utils.py:1383
+  /workspace/repo/paasta_tools/utils.py:1383: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class PaastaNativeConfig(TypedDict, total=False):
+
+paasta_tools/utils.py:1391
+  /workspace/repo/paasta_tools/utils.py:1391: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class SystemPaastaConfigDict(TypedDict, total=False):
+
+paasta_tools/utils.py:2433
+  /workspace/repo/paasta_tools/utils.py:2433: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class _DeploymentsJsonV2ControlsDict(TypedDict, total=False):
+
+paasta_tools/utils.py:2438
+  /workspace/repo/paasta_tools/utils.py:2438: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class _DeploymentsJsonV2DeploymentsDict(TypedDict):
+
+paasta_tools/utils.py:2443
+  /workspace/repo/paasta_tools/utils.py:2443: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class DeploymentsJsonV2Dict(TypedDict):
+
+paasta_tools/utils.py:2448
+  /workspace/repo/paasta_tools/utils.py:2448: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class DeploymentsJsonDict(TypedDict):
+
+paasta_tools/long_running_service_tools.py:34
+  /workspace/repo/paasta_tools/long_running_service_tools.py:34: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class LongRunningServiceConfigDict(InstanceConfigDict, total=False):
+
+paasta_tools/long_running_service_tools.py:55
+  /workspace/repo/paasta_tools/long_running_service_tools.py:55: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    BounceMethodConfigDict = TypedDict('BounceMethodConfigDict', {"instances": int})
+
+paasta_tools/chronos_tools.py:409
+  /workspace/repo/paasta_tools/chronos_tools.py:409: DeprecationWarning: invalid escape sequence \d
+    pattern = re.compile('^R\d*$')
+
+paasta_tools/mesos/master.py:177
+  /workspace/repo/paasta_tools/mesos/master.py:177: DeprecationWarning: invalid escape sequence \d
+    if re.search("\d+", x)]
+
+paasta_tools/mesos/task.py:30
+  /workspace/repo/paasta_tools/mesos/task.py:30: DeprecationWarning: invalid escape sequence \(
+    cmd_re = re.compile("\(Command: (.+)\)")
+
+paasta_tools/mesos/master.py:57
+  /workspace/repo/paasta_tools/mesos/master.py:57: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class MesosState(TypedDict):
+
+paasta_tools/mesos/master.py:63
+  /workspace/repo/paasta_tools/mesos/master.py:63: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    MesosMetrics = TypedDict(
+
+paasta_tools/mesos_tools.py:572
+  /workspace/repo/paasta_tools/mesos_tools.py:572: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class MesosTask(TypedDict):
+
+paasta_tools/secret_tools.py:23
+  /workspace/repo/paasta_tools/secret_tools.py:23: DeprecationWarning: invalid escape sequence \(
+    SECRET_REGEX = "^SECRET\([A-Za-z0-9_-]*\)$"
+
+paasta_tools/cli/cli.py:22
+  /workspace/repo/paasta_tools/cli/cli.py:22: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('paste')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('zope')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+paasta_tools/cli/utils.py:894
+  /workspace/repo/paasta_tools/cli/utils.py:894: SyntaxWarning: "is" with a literal. Did you mean "=="?
+    if len(args_deploy_groups) is 0:
+
+../../usr/local/lib/python3.8/site-packages/swagger_spec_validator/validator12.py:18
+../../usr/local/lib/python3.8/site-packages/swagger_spec_validator/validator12.py:18
+  /usr/local/lib/python3.8/site-packages/swagger_spec_validator/validator12.py:18: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
+    from jsonschema import RefResolver
+
+../../usr/local/lib/python3.8/site-packages/swagger_spec_validator/ref_validators.py:14
+  /usr/local/lib/python3.8/site-packages/swagger_spec_validator/ref_validators.py:14: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
+    from jsonschema.validators import RefResolver
+
+../../usr/local/lib/python3.8/site-packages/swagger_spec_validator/validator20.py:18
+  /usr/local/lib/python3.8/site-packages/swagger_spec_validator/validator20.py:18: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
+    from jsonschema.validators import RefResolver
+
+../../usr/local/lib/python3.8/site-packages/bravado_core/swagger20_validator.py:6
+../../usr/local/lib/python3.8/site-packages/bravado_core/swagger20_validator.py:6
+  /usr/local/lib/python3.8/site-packages/bravado_core/swagger20_validator.py:6: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
+    from jsonschema import RefResolver
+
+../../usr/local/lib/python3.8/site-packages/bravado_core/spec.py:14
+  /usr/local/lib/python3.8/site-packages/bravado_core/spec.py:14: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
+    from jsonschema.validators import RefResolver
+
+../../usr/local/lib/python3.8/site-packages/google/auth/__init__.py:52
+  /usr/local/lib/python3.8/site-packages/google/auth/__init__.py:52: FutureWarning: You are using a Python version 3.8 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+    warnings.warn(eol_message.format("3.8"), FutureWarning)
+
+../../usr/local/lib/python3.8/site-packages/google/oauth2/__init__.py:38
+  /usr/local/lib/python3.8/site-packages/google/oauth2/__init__.py:38: FutureWarning: You are using a Python version 3.8 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+    warnings.warn(eol_message.format("3.8"), FutureWarning)
+
+../../usr/local/lib/python3.8/site-packages/google/auth/crypt/es.py:21
+  /usr/local/lib/python3.8/site-packages/google/auth/crypt/es.py:21: CryptographyDeprecationWarning: Python 3.8 is no longer supported by the Python core team and support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.8.
+    import cryptography.exceptions
+
+paasta_tools/kubernetes_tools.py:131
+  /workspace/repo/paasta_tools/kubernetes_tools.py:131: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class KubernetesDeploymentConfigDict(LongRunningServiceConfigDict, total=False):
+
+paasta_tools/marathon_tools.py:196
+  /workspace/repo/paasta_tools/marathon_tools.py:196: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class AutoscalingParamsDict(TypedDict, total=False):
+
+paasta_tools/marathon_tools.py:202
+  /workspace/repo/paasta_tools/marathon_tools.py:202: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class MarathonServiceConfigDict(LongRunningServiceConfigDict, total=False):
+
+paasta_tools/marathon_tools.py:215
+  /workspace/repo/paasta_tools/marathon_tools.py:215: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class CommandDict(TypedDict):
+
+paasta_tools/marathon_tools.py:219
+  /workspace/repo/paasta_tools/marathon_tools.py:219: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class HealthcheckDict(TypedDict, total=False):
+
+paasta_tools/marathon_tools.py:232
+  /workspace/repo/paasta_tools/marathon_tools.py:232: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    MarathonDockerPortMapping = TypedDict(
+
+paasta_tools/marathon_tools.py:241
+  /workspace/repo/paasta_tools/marathon_tools.py:241: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    MarathonPortDefinition = TypedDict(
+
+paasta_tools/marathon_tools.py:249
+  /workspace/repo/paasta_tools/marathon_tools.py:249: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    MarathonDockerInfo = TypedDict(
+
+paasta_tools/marathon_tools.py:260
+  /workspace/repo/paasta_tools/marathon_tools.py:260: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    MarathonContainerInfo = TypedDict(
+
+paasta_tools/marathon_tools.py:270
+  /workspace/repo/paasta_tools/marathon_tools.py:270: DeprecationWarning: mypy_extensions.TypedDict is deprecated, and will be removed in a future version. Use typing.TypedDict or typing_extensions.TypedDict instead.
+    class FormattedMarathonAppDict(BounceMethodConfigDict, total=False):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/cli/test_cmds_local_run.py
+ERROR tests/test_secret_tools.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+======================== 60 warnings, 2 errors in 1.73s ========================
+reward=0 graded=77 found=0 failed=0 parsed=0 framework=pytest exit_code=2

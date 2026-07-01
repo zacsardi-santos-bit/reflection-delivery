@@ -1,0 +1,7 @@
+I'm using the DAO code generation tool with a project configuration file that has multiple entries, each targeting different database tables with different settings. Specifically, I need some tables' DAO wrapper files to be preserved as-is (because I've added custom code to them) while others should be regenerated fresh.
+
+There are two problems I'm running into. First, when I configure a table to not overwrite its existing DAO wrapper file, the file is correctly left alone, but the generated file count reported by the tool is wrong — it seems like the tool isn't counting files that already existed and were intentionally skipped. This mismatch between the actual files on disk and the reported file list is causing problems downstream.
+
+Second, the per-table overwrite setting in the configuration file doesn't seem to be respected properly when there are multiple entries — one configured to preserve the existing DAO file and another configured to regenerate it. I'd expect the tool to honor each entry's overwrite setting independently, so a table with overwriting disabled keeps its custom content, while a table with overwriting enabled gets a freshly generated file.
+
+Can you fix these two issues so that: (1) all managed file paths are always included in the reported output regardless of whether the file was actually written, and (2) per-table overwrite settings in the configuration are respected independently for each table?

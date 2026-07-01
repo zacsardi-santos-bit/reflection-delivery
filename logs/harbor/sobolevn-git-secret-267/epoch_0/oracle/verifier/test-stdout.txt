@@ -1,0 +1,43 @@
+patching file tests/_test_base.bash
+patching file tests/fixtures/gpg/attacker1@gitsecret.io/private.key (renamed from tests/fixtures/gpg/attacker1/private.key)
+patching file tests/fixtures/gpg/attacker1@gitsecret.io/public.key (renamed from tests/fixtures/gpg/attacker1/public.key)
+patching file tests/fixtures/gpg/user1@gitsecret.io/private.key (renamed from tests/fixtures/gpg/user1/private.key)
+patching file tests/fixtures/gpg/user1@gitsecret.io/public.key (renamed from tests/fixtures/gpg/user1/public.key)
+patching file tests/fixtures/gpg/user2@gitsecret.io/private.key (renamed from tests/fixtures/gpg/user2/private.key)
+patching file tests/fixtures/gpg/user2@gitsecret.io/public.key (renamed from tests/fixtures/gpg/user2/public.key)
+patching file tests/fixtures/gpg/user3@gitsecret.io/private.key (renamed from tests/fixtures/gpg/user3/private.key)
+patching file tests/fixtures/gpg/user3@gitsecret.io/public.key (renamed from tests/fixtures/gpg/user3/public.key)
+patching file tests/test_killperson.bats
+patching file tests/test_tell.bats
+patching file tests/test_whoknows.bats
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites time="10.251">
+<testsuite name="test_killperson.bats" tests="4" failures="0" errors="0" skipped="0" time="2.753" timestamp="2026-06-29T15:14:46" hostname="modal">
+    <testcase classname="test_killperson.bats" name="run '#39;killperson'#39; without arguments" time="0.586" />
+    <testcase classname="test_killperson.bats" name="run '#39;killperson'#39; with short name" time="0.702" />
+    <testcase classname="test_killperson.bats" name="run '#39;killperson'#39; with email" time="0.655" />
+    <testcase classname="test_killperson.bats" name="run '#39;killperson'#39; with multiple arguments" time="0.810" />
+
+</testsuite>
+<testsuite name="test_tell.bats" tests="11" failures="0" errors="0" skipped="0" time="5.165" timestamp="2026-06-29T15:14:51" hostname="modal">
+    <testcase classname="test_tell.bats" name="run '#39;tell'#39; on substring of emails" time="0.434" />
+    <testcase classname="test_tell.bats" name="fail on no users" time="0.313" />
+    <testcase classname="test_tell.bats" name="constantly fail on no users" time="0.598" />
+    <testcase classname="test_tell.bats" name="run '#39;tell'#39; with secret-key imported" time="0.349" />
+    <testcase classname="test_tell.bats" name="run '#39;tell'#39; without '#39;.gitsecret'#39;" time="0.377" />
+    <testcase classname="test_tell.bats" name="run '#39;tell'#39; without arguments" time="0.365" />
+    <testcase classname="test_tell.bats" name="run '#39;tell'#39; normally" time="0.607" />
+    <testcase classname="test_tell.bats" name="run '#39;tell'#39; with '#39;-m'#39;" time="0.498" />
+    <testcase classname="test_tell.bats" name="run '#39;tell'#39; with '#39;-m'#39; (empty email)" time="0.364" />
+    <testcase classname="test_tell.bats" name="run '#39;tell'#39; with multiple emails" time="0.640" />
+    <testcase classname="test_tell.bats" name="run '#39;tell'#39; in subfolder" time="0.620" />
+
+</testsuite>
+<testsuite name="test_whoknows.bats" tests="3" failures="0" errors="0" skipped="0" time="2.333" timestamp="2026-06-29T15:14:54" hostname="modal">
+    <testcase classname="test_whoknows.bats" name="run '#39;whoknows'#39; normally" time="0.747" />
+    <testcase classname="test_whoknows.bats" name="run '#39;whoknows'#39; in subfolder" time="0.763" />
+    <testcase classname="test_whoknows.bats" name="run '#39;whoknows'#39; without any users" time="0.823" />
+
+</testsuite>
+</testsuites>
+reward=1 graded=18 found=18 failed=0 parsed=18 framework=junit exit_code=0

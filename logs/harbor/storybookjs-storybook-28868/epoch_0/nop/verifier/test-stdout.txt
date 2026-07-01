@@ -1,0 +1,120 @@
+patching file code/addons/vitest/package.json
+patching file code/addons/vitest/src/plugin/index.ts
+patching file code/addons/vitest/src/plugin/setup-file.ts
+patching file code/addons/vitest/src/plugin/test-utils.ts
+patching file code/addons/vitest/src/plugin/transformer.test.ts
+patching file code/addons/vitest/src/plugin/transformer.ts
+patching file code/core/src/csf-tools/CsfFile.test.ts
+patching file code/core/src/csf-tools/vitest-plugin/transformer.test.ts
+
+ RUN  v2.0.5 /workspace/repo/code/core
+
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > filters out non-story exports
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > filters out non-story exports
+ × src/csf-tools/CsfFile.test.ts > CsfFile > basic > transforms inline default exports to constant declarations
+   → Snapshot `CsfFile > basic > transforms inline default exports to constant declarations 1` mismatched
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > exported const stories
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > underscores
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > exclude stories
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > include stories
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > storyName annotation
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > no title
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > custom component id
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > custom parameters.__id
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > typescript
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > typescript satisfies
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > typescript as
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > typescript meta var
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > typescript satisfies meta var
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > component object
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > template bind
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > meta variable
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > docs-only story
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > docs-only story with local vars
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > title variable
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > re-exported stories
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > named exports order
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > as default export
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > basic > support for parameter decorators
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > error handling > no meta
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > error handling > bad meta
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > error handling > no metadata
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > error handling > dynamic titles
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > error handling > storiesOf calls
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > error handling > function exports
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > indexed annotations > meta annotations
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > indexed annotations > story annotations
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > indexed annotations > v1-style story annotations
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > CSF3 > Object export with no-args render
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > CSF3 > Object export with args render
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > CSF3 > Object export with default render
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > CSF3 > Object export with name
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > CSF3 > Object export with storyName
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > import handling > imports
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > tags > csf2
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > tags > csf3
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > tags > variables
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > tags > array error
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > tags > array element handling
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > play functions > story csf2
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > play functions > story csf3
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > play functions > mount
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > play functions > mount renamed
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > play functions > mount meta
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > play functions > meta csf2
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > play functions > meta csf3
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > index inputs > generates index inputs
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > index inputs > supports custom parameters.__id
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > index inputs > removes duplicate tags
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > index inputs > throws if getting indexInputs without filename option
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > componenent paths > no component
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > componenent paths > local component
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > componenent paths > imported component from file
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > componenent paths > imported component from library
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > beforeEach > basic
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > globals > basic
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > module mocks > alias
+ ✓ src/csf-tools/CsfFile.test.ts > CsfFile > module mocks > relative
+ ✓ src/csf-tools/CsfFile.test.ts > isModuleMock > prefix
+ ✓ src/csf-tools/CsfFile.test.ts > isModuleMock > sufixes
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/csf-tools/vitest-plugin/transformer.test.ts [ src/csf-tools/vitest-plugin/transformer.test.ts ]
+Error: Failed to load url ./transformer (resolved id: ./transformer) in /workspace/repo/code/core/src/csf-tools/vitest-plugin/transformer.test.ts. Does the file exist?
+ ❯ loadAndTransform ../node_modules/vitest/node_modules/vite/dist/node/chunks/dep-G-px366b.js:53634:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/csf-tools/CsfFile.test.ts > CsfFile > basic > transforms inline default exports to constant declarations
+Error: Snapshot `CsfFile > basic > transforms inline default exports to constant declarations 1` mismatched
+
+- Expected
++ Received
+
+- "const _meta = {
++ "export default {
+    title: 'foo/bar'
+- };
+- export default _meta;"
++ };"
+
+ ❯ src/csf-tools/CsfFile.test.ts:59:9
+     57|           { transformInlineMeta: true }
+     58|         )
+     59|       ).toMatchInlineSnapshot(`
+       |         ^
+     60|         "const _meta = {
+     61|           title: 'foo/bar'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+  Snapshots  1 failed
+ Test Files  2 failed (2)
+      Tests  1 failed | 66 passed | 2 skipped (69)
+   Start at  15:17:11
+   Duration  2.31s (transform 467ms, setup 420ms, collect 773ms, tests 125ms, environment 0ms, prepare 201ms)
+
+reward=0 graded=75 found=0 failed=0 parsed=0 framework=vitest exit_code=1

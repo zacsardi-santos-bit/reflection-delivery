@@ -1,0 +1,15 @@
+patching file pkg/stdlib/objects/zip_test.go
+# github.com/MontFerret/ferret/pkg/stdlib/objects_test [github.com/MontFerret/ferret/pkg/stdlib/objects.test]
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:16:27: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:24:27: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:30:26: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:37:27: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:46:27: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:52:26: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:63:27: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:74:27: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:85:27: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:106:26: undefined: objects.Zip
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/objects/zip_test.go:106:26: too many errors
+FAIL	github.com/MontFerret/ferret/pkg/stdlib/objects [build failed]
+reward=0 graded=9 found=9 failed=9 parsed=1 framework=go exit_code=1

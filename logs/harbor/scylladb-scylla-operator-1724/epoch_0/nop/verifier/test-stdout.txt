@@ -1,0 +1,6 @@
+patching file pkg/controller/nodetune/tune_test.go
+# github.com/scylladb/scylla-operator/pkg/controller/nodetune
+pkg/controller/nodetune/tune_test.go:18:2: cannot find module providing package k8s.io/kubelet/pkg/apis/podresources/v1: import lookup disabled by -mod=vendor
+	(Go version in go.mod is at least 1.14 and vendor directory exists.)
+FAIL	github.com/scylladb/scylla-operator/pkg/controller/nodetune [setup failed]
+reward=0 graded=7 found=0 failed=0 parsed=0 framework=go exit_code=1

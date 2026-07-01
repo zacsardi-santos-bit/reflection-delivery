@@ -1,0 +1,8 @@
+patching file app/kuma-cp/cmd/run.go
+patching file docs/generated/raw/kuma-cp.yaml
+patching file pkg/config/app/kuma-cp/kuma-cp.defaults.yaml
+patching file pkg/config/multizone/multicluster.go
+patching file pkg/xds/ingress/dataplane.go
+patching file pkg/xds/sync/ingress_proxy_builder.go
+patching file pkg/zone/available_services.go
+patching file pkg/zone/components.go

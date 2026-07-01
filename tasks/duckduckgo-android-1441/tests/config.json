@@ -1,0 +1,17 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && rm -rf app/build/test-results && ./gradlew :app:testPlayDebugUnitTest --tests \"*BookmarkFoldersViewModelTest\" --no-daemon --no-watch-fs; find /workspace/repo/app/build/test-results -name 'TEST-*.xml' -exec cat {} \\;",
+  "test_files": [
+    "app/src/androidTest/java/com/duckduckgo/app/bookmarks/model/BookmarksDataRepositoryTest.kt",
+    "app/src/androidTest/java/com/duckduckgo/app/browser/BrowserTabViewModelTest.kt",
+    "app/src/test/java/com/duckduckgo/app/bookmarks/ui/bookmarkfolders/BookmarkFoldersViewModelTest.kt"
+  ],
+  "num_test_files": 3,
+  "language": "kotlin",
+  "FAIL_TO_PASS": [
+    "com.duckduckgo.app.bookmarks.ui.bookmarkfolders.BookmarkFoldersViewModelTest::whenFetchBookmarkFoldersThenCallRepoAndUpdateViewState",
+    "com.duckduckgo.app.bookmarks.ui.bookmarkfolders.BookmarkFoldersViewModelTest::newFolderAddedThenCallRepoAndUpdateViewState",
+    "com.duckduckgo.app.bookmarks.ui.bookmarkfolders.BookmarkFoldersViewModelTest::whenItemSelectedThenIssueSelectFolderCommand"
+  ],
+  "PASS_TO_PASS": []
+}

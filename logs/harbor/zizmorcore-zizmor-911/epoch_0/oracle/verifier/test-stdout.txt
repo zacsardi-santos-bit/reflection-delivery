@@ -1,0 +1,13 @@
+patching file crates/zizmor/tests/integration/snapshots/integration__e2e__gha_hazmat.snap
+patching file crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-5.snap
+patching file crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-7.snap
+   Compiling github-actions-expressions v0.0.6 (/workspace/repo/crates/github-actions-expressions)
+   Compiling zizmor v1.9.0 (/workspace/repo/crates/zizmor)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 21.07s
+────────────
+ Nextest run ID 148e717f-ceb9-49b2-8f4d-d4571e46b461 with nextest profile: default
+    Starting 1 test across 1 binary (42 tests skipped)
+        PASS [   7.596s] (1/1) zizmor::integration snapshot::template_injection
+────────────
+     Summary [   7.597s] 1 test run: 1 passed, 42 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

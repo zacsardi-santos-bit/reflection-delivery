@@ -1,0 +1,29 @@
+{
+  "test_framework": "junit",
+  "test_command": "bats --formatter junit /workspace/repo/test/t/01_basic.bats /workspace/repo/test/t/03_container_limits.bats /workspace/repo/test/t/04_proxy.bats",
+  "test_files": [
+    "test/t/01_basic.bats",
+    "test/t/03_container_limits.bats",
+    "test/t/04_proxy.bats",
+    "test/t/test_helper.bash"
+  ],
+  "num_test_files": 4,
+  "language": "shell",
+  "FAIL_TO_PASS": [
+    "04_proxy.bats::HTTP_PROXY setting",
+    "04_proxy.bats::HTTPS_PROXY setting",
+    "04_proxy.bats::NO_PROXY setting",
+    "04_proxy.bats::All proxy settings"
+  ],
+  "PASS_TO_PASS": [
+    "01_basic.bats::No JAR or main class found",
+    "01_basic.bats::More than 1 one main JAR found",
+    "01_basic.bats::Exact one JAR found",
+    "01_basic.bats::Exact one JAR found but without JAVA_MAIN_CLASS and manifest entry",
+    "01_basic.bats::Exact one JAR without manifest entry but JAVA_MAIN_CLASS",
+    "01_basic.bats::JAVA_APP_NAME set",
+    "03_container_limits.bats::CONTAINER_MAX_MEMORY set",
+    "03_container_limits.bats::CONTAINER_CORE_LIMIT set",
+    "04_proxy.bats::No proxy settings"
+  ]
+}

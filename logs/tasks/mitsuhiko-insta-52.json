@@ -1,0 +1,23 @@
+{
+ "task": "mitsuhiko-insta-52",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden replaces the '\u22ee'-prefixed denormalize_inline_snapshot with whitespace-based to_inline ('format!(\"\\n{:width$}{l}\", ...)') plus common-whitespace stripping on read; F2P suite of 22 cargo-nextest tests across test_inline/test_basic/test_settings exercises inline snapshot roundtrip incl. yaml/ron"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

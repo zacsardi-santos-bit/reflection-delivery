@@ -1,0 +1,41 @@
+patching file crates/biome_js_analyze/tests/specs/nursery/useConsistentCurlyBraces/invalid.jsx
+patching file crates/biome_js_analyze/tests/specs/nursery/useConsistentCurlyBraces/invalid.jsx.snap
+patching file crates/biome_js_analyze/tests/specs/nursery/useConsistentCurlyBraces/valid.jsx
+patching file crates/biome_js_analyze/tests/specs/nursery/useConsistentCurlyBraces/valid.jsx.snap
+   Compiling biome_diagnostics_categories v0.5.7 (/workspace/repo/crates/biome_diagnostics_categories)
+   Compiling biome_aria_metadata v0.5.7 (/workspace/repo/crates/biome_aria_metadata)
+   Compiling biome_aria v0.5.7 (/workspace/repo/crates/biome_aria)
+   Compiling biome_diagnostics v0.5.7 (/workspace/repo/crates/biome_diagnostics)
+   Compiling biome_parser v0.5.7 (/workspace/repo/crates/biome_parser)
+   Compiling biome_suppression v0.5.7 (/workspace/repo/crates/biome_suppression)
+   Compiling biome_fs v0.5.7 (/workspace/repo/crates/biome_fs)
+   Compiling biome_json_parser v0.5.7 (/workspace/repo/crates/biome_json_parser)
+   Compiling biome_grit_parser v0.1.0 (/workspace/repo/crates/biome_grit_parser)
+   Compiling biome_js_parser v0.5.7 (/workspace/repo/crates/biome_js_parser)
+   Compiling biome_graphql_parser v0.1.0 (/workspace/repo/crates/biome_graphql_parser)
+   Compiling biome_css_parser v0.5.7 (/workspace/repo/crates/biome_css_parser)
+   Compiling biome_deserialize v0.6.0 (/workspace/repo/crates/biome_deserialize)
+   Compiling biome_analyze v0.5.7 (/workspace/repo/crates/biome_analyze)
+   Compiling biome_formatter v0.5.7 (/workspace/repo/crates/biome_formatter)
+   Compiling biome_project v0.5.7 (/workspace/repo/crates/biome_project)
+   Compiling biome_grit_patterns v0.0.1 (/workspace/repo/crates/biome_grit_patterns)
+   Compiling biome_json_formatter v0.5.7 (/workspace/repo/crates/biome_json_formatter)
+   Compiling biome_js_formatter v0.5.7 (/workspace/repo/crates/biome_js_formatter)
+   Compiling biome_css_formatter v0.5.7 (/workspace/repo/crates/biome_css_formatter)
+   Compiling biome_graphql_formatter v0.1.0 (/workspace/repo/crates/biome_graphql_formatter)
+   Compiling biome_graphql_analyze v0.0.1 (/workspace/repo/crates/biome_graphql_analyze)
+   Compiling biome_css_analyze v0.5.7 (/workspace/repo/crates/biome_css_analyze)
+   Compiling biome_json_analyze v0.5.7 (/workspace/repo/crates/biome_json_analyze)
+   Compiling biome_js_analyze v0.5.7 (/workspace/repo/crates/biome_js_analyze)
+   Compiling biome_configuration v0.0.1 (/workspace/repo/crates/biome_configuration)
+   Compiling biome_service v0.0.0 (/workspace/repo/crates/biome_service)
+   Compiling biome_test_utils v0.0.0 (/workspace/repo/crates/biome_test_utils)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 00s
+────────────
+ Nextest run ID f6f805ca-8704-4c10-8607-ec3df7ceb575 with nextest profile: default
+    Starting 2 tests across 3 binaries (1077 tests skipped)
+        PASS [   0.398s] (1/2) biome_js_analyze::spec_tests specs::nursery::use_consistent_curly_braces::valid_jsx
+        PASS [   0.419s] (2/2) biome_js_analyze::spec_tests specs::nursery::use_consistent_curly_braces::invalid_jsx
+────────────
+     Summary [   0.435s] 2 tests run: 2 passed, 1077 skipped
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

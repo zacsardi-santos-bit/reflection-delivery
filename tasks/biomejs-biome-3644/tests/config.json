@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && set -o pipefail && cargo test -p biome_js_analyze --test spec_tests 2>/dev/null -- use_aria_props_supported_by_role | awk '/^test .* \\.\\.\\. ok$/{n=$0; sub(/^test /, \"\", n); sub(/ \\.\\.\\. ok$/, \"\", n); print \"PASS [   0.00s] \" n; next} /^test .* \\.\\.\\. FAILED$/{n=$0; sub(/^test /, \"\", n); sub(/ \\.\\.\\. FAILED$/, \"\", n); print \"FAIL [   0.00s] \" n; next} {print}'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/invalid.jsx",
+    "crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/invalid.jsx.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/valid.jsx",
+    "crates/biome_js_analyze/tests/specs/nursery/useAriaPropsSupportedByRole/valid.jsx.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "specs::nursery::use_aria_props_supported_by_role::valid_jsx",
+    "specs::nursery::use_aria_props_supported_by_role::invalid_jsx"
+  ],
+  "PASS_TO_PASS": []
+}

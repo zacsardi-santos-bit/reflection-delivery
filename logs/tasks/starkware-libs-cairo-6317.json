@@ -1,0 +1,23 @@
+{
+ "task": "starkware-libs-cairo-6317",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch adds inner comment '+  //! Adds 2 to an unsigned argument.' and expects hover doc '`add_two` documentation. Adds 2 to an unsigned argument.'; golden adds extract_item_inner_documentation + extract_item_outer_documentation + get_crate_root_module_documentation"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

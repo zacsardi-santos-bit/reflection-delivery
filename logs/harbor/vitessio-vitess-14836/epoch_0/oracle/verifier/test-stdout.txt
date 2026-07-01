@@ -1,0 +1,14 @@
+patching file go/vt/vttablet/tabletmanager/rpc_query_test.go
+patching file go/vt/vttablet/tabletmanager/rpc_replication_test.go
+patching file go/vt/vttablet/tabletmanager/tm_init_test.go
+patching file go/vt/vttablet/tabletserver/tabletserver_test.go
+{"Time":"2026-06-29T15:27:02.028944303Z","Action":"start","Package":"vitess.io/vitess/go/vt/vttablet/tabletmanager"}
+{"Time":"2026-06-29T15:27:02.066853138Z","Action":"output","Package":"vitess.io/vitess/go/vt/vttablet/tabletmanager","Output":"E0629 15:27:02.066297    7663 syslogger.go:151] can't connect to syslog\n"}
+{"Time":"2026-06-29T15:27:02.082521303Z","Action":"run","Package":"vitess.io/vitess/go/vt/vttablet/tabletmanager","Test":"TestWaitForGrantsToHaveApplied"}
+{"Time":"2026-06-29T15:27:02.082599634Z","Action":"output","Package":"vitess.io/vitess/go/vt/vttablet/tabletmanager","Test":"TestWaitForGrantsToHaveApplied","Output":"=== RUN   TestWaitForGrantsToHaveApplied\n"}
+{"Time":"2026-06-29T15:27:02.183026323Z","Action":"output","Package":"vitess.io/vitess/go/vt/vttablet/tabletmanager","Test":"TestWaitForGrantsToHaveApplied","Output":"--- PASS: TestWaitForGrantsToHaveApplied (0.10s)\n"}
+{"Time":"2026-06-29T15:27:02.183074547Z","Action":"pass","Package":"vitess.io/vitess/go/vt/vttablet/tabletmanager","Test":"TestWaitForGrantsToHaveApplied","Elapsed":0.1}
+{"Time":"2026-06-29T15:27:02.183121299Z","Action":"output","Package":"vitess.io/vitess/go/vt/vttablet/tabletmanager","Output":"PASS\n"}
+{"Time":"2026-06-29T15:27:02.1852706Z","Action":"output","Package":"vitess.io/vitess/go/vt/vttablet/tabletmanager","Output":"ok  \tvitess.io/vitess/go/vt/vttablet/tabletmanager\t0.156s\n"}
+{"Time":"2026-06-29T15:27:02.185306895Z","Action":"pass","Package":"vitess.io/vitess/go/vt/vttablet/tabletmanager","Elapsed":0.156}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

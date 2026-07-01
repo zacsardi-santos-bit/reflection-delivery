@@ -1,0 +1,40 @@
+patching file crates/glaredb/tests/drop_tables_test.rs
+   Compiling glaredb v0.8.1 (/workspace/repo/crates/glaredb)
+error[E0624]: method `execute` is private
+   --> crates/glaredb/tests/drop_tables_test.rs:50:10
+    |
+50  |         .execute("CREATE TABLE foo (a int, b int)")
+    |          ^^^^^^^ private method
+    |
+   ::: /workspace/repo/crates/glaredb/src/local.rs:200:5
+    |
+200 |     async fn execute(&mut self, text: &str) -> Result<()> {
+    |     ----------------------------------------------------- private method defined here
+
+error[E0624]: method `execute` is private
+   --> crates/glaredb/tests/drop_tables_test.rs:55:10
+    |
+55  |         .execute("INSERT INTO foo VALUES (1, 2)")
+    |          ^^^^^^^ private method
+    |
+   ::: /workspace/repo/crates/glaredb/src/local.rs:200:5
+    |
+200 |     async fn execute(&mut self, text: &str) -> Result<()> {
+    |     ----------------------------------------------------- private method defined here
+
+error[E0624]: method `execute` is private
+   --> crates/glaredb/tests/drop_tables_test.rs:59:21
+    |
+59  |     let _ = session.execute("DROP TABLE foo").await;
+    |                     ^^^^^^^ private method
+    |
+   ::: /workspace/repo/crates/glaredb/src/local.rs:200:5
+    |
+200 |     async fn execute(&mut self, text: &str) -> Result<()> {
+    |     ----------------------------------------------------- private method defined here
+
+For more information about this error, try `rustc --explain E0624`.
+error: could not compile `glaredb` (test "drop_tables_test") due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.75.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package glaredb --test drop_tables_test` exited with code 101
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=cargo exit_code=101

@@ -1,0 +1,23 @@
+{
+ "task": "posit-dev-py-shiny-745",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds extract_js_keys (recursive JSEval walk) and _update_options; tests assert real outputs e.g. 'assert extract_js_keys(options) == [...]' and '_update_options({}, remove_button=True, multiple=True) == {...}'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

@@ -1,0 +1,142 @@
+patching file util/types/src/core/tests/tx_pool.rs
+   Compiling proc-macro2 v1.0.92
+   Compiling unicode-ident v1.0.13
+   Compiling cfg-if v1.0.0
+   Compiling syn v1.0.109
+   Compiling libc v0.2.167
+   Compiling serde v1.0.210
+   Compiling getrandom v0.1.16
+   Compiling byteorder v1.5.0
+   Compiling thiserror v1.0.64
+   Compiling serde_json v1.0.128
+   Compiling memchr v2.7.4
+   Compiling ryu v1.0.18
+   Compiling itoa v1.0.11
+   Compiling heapsize v0.4.2
+   Compiling ckb_schemars v0.8.19
+   Compiling dyn-clone v1.0.17
+   Compiling faster-hex v0.6.1
+   Compiling shlex v1.3.0
+   Compiling unicode-xid v0.2.6
+   Compiling rustix v0.38.37
+   Compiling anyhow v1.0.94
+   Compiling crossbeam-utils v0.8.20
+   Compiling cc v1.1.30
+   Compiling autocfg v1.4.0
+   Compiling cty v0.2.2
+   Compiling libm v0.2.8
+   Compiling linux-raw-sys v0.4.14
+   Compiling bitflags v2.6.0
+   Compiling paste v1.0.15
+   Compiling bit-vec v0.6.3
+   Compiling num-traits v0.2.19
+   Compiling blake2b-ref v0.3.1
+   Compiling once_cell v1.20.2
+   Compiling fastrand v2.1.1
+   Compiling quick-error v1.2.3
+   Compiling siphasher v0.3.11
+   Compiling fnv v1.0.7
+   Compiling bit-set v0.5.3
+   Compiling merkle-cbt v0.3.2
+   Compiling ckb-merkle-mountain-range v0.5.2
+   Compiling lazy_static v1.5.0
+   Compiling golomb-coded-set v0.2.1
+   Compiling ckb-constant v0.121.0-pre (/workspace/repo/util/constant)
+   Compiling regex-syntax v0.8.5
+   Compiling unarray v0.1.4
+   Compiling blake2b-rs v0.2.0
+   Compiling quote v1.0.37
+   Compiling crossbeam-channel v0.5.13
+   Compiling getrandom v0.2.15
+   Compiling wait-timeout v0.2.0
+   Compiling syn v2.0.94
+   Compiling rand_core v0.5.1
+   Compiling rand_core v0.6.4
+   Compiling ckb-channel v0.121.0-pre (/workspace/repo/util/channel)
+   Compiling rand_xorshift v0.3.0
+   Compiling ckb-hash v0.121.0-pre (/workspace/repo/util/hash)
+   Compiling tempfile v3.13.0
+   Compiling rusty-fork v0.3.0
+   Compiling serde_derive_internals v0.26.0
+   Compiling numext-constructor v0.1.6
+   Compiling serde_derive v1.0.210
+   Compiling zerocopy-derive v0.7.35
+   Compiling thiserror-impl v1.0.64
+   Compiling derive_more-impl v1.0.0
+   Compiling ckb_schemars_derive v0.8.19
+   Compiling zerocopy v0.7.35
+   Compiling ppv-lite86 v0.2.20
+   Compiling derive_more v1.0.0
+   Compiling rand_chacha v0.2.2
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.7.3
+   Compiling rand v0.8.5
+   Compiling proptest v1.5.0
+   Compiling ckb-occupied-capacity-core v0.121.0-pre (/workspace/repo/util/occupied-capacity/core)
+   Compiling numext-fixed-uint-core v0.1.6
+   Compiling bytes v1.9.0
+   Compiling ckb-occupied-capacity-macros v0.121.0-pre (/workspace/repo/util/occupied-capacity/macros)
+   Compiling molecule v0.8.0
+   Compiling ckb-occupied-capacity v0.121.0-pre (/workspace/repo/util/occupied-capacity)
+   Compiling ckb-error v0.121.0-pre (/workspace/repo/error)
+   Compiling ckb-fixed-hash-core v0.121.0-pre (/workspace/repo/util/fixed-hash/core)
+   Compiling ckb-fixed-hash-macros v0.121.0-pre (/workspace/repo/util/fixed-hash/macros)
+   Compiling ckb-fixed-hash v0.121.0-pre (/workspace/repo/util/fixed-hash)
+   Compiling numext-fixed-uint-hack v0.1.6
+   Compiling numext-fixed-uint v0.1.6
+   Compiling ckb-rational v0.121.0-pre (/workspace/repo/util/rational)
+   Compiling ckb-gen-types v0.121.0-pre (/workspace/repo/util/gen-types)
+   Compiling ckb-types v0.121.0-pre (/workspace/repo/util/types)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.03s
+────────────
+ Nextest run ID 1574f259-f3b5-48bb-b01f-b09dfd72390f with nextest profile: default
+    Starting 27 tests across 1 binary
+        PASS [   0.087s] ( 1/27) ckb-types core::tests::blockchain::test_script_hash_type
+        PASS [   0.089s] ( 2/27) ckb-types core::tests::cell::cell_provider_trait_works
+        PASS [   0.090s] ( 3/27) ckb-types core::tests::views::test_block_view_convert_from_packed_block
+        PASS [   0.091s] ( 4/27) ckb-types core::tests::blockchain::test_dep_type
+        FAIL [   0.089s] ( 5/27) ckb-types core::tests::tx_pool::test_argv_too_long_error_is_malformed_tx
+  stdout ───
+
+    running 1 test
+    test core::tests::tx_pool::test_argv_too_long_error_is_malformed_tx ... FAILED
+
+    failures:
+
+    failures:
+        core::tests::tx_pool::test_argv_too_long_error_is_malformed_tx
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 26 filtered out; finished in 0.01s
+
+  stderr ───
+    thread 'core::tests::tx_pool::test_argv_too_long_error_is_malformed_tx' panicked at util/types/src/core/tests/tx_pool.rs:133:5:
+    assertion failed: reject.is_malformed_tx()
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.092s] ( 6/27) ckb-types core::tests::fee_rate::test_fee_rate_calculate
+        PASS [   0.093s] ( 7/27) ckb-types core::tests::transaction_meta::set_unset_dead_out_of_bounds
+        PASS [   0.092s] ( 8/27) ckb-types core::tests::transaction_meta::test_transaction_meta_constructors
+        PASS [   0.094s] ( 9/27) ckb-types core::tests::cell::resolve_transaction_test_header_deps_all_ok
+        PASS [   0.095s] (10/27) ckb-types core::tests::cell::resolve_transaction_resolve_dep_group_failed_because_invalid_data
+        PASS [   0.097s] (11/27) ckb-types core::tests::cell::resolve_transaction_should_resolve_dep_group
+        PASS [   0.096s] (12/27) ckb-types core::tests::tx_pool::test_if_is_malformed_tx
+        PASS [   0.096s] (13/27) ckb-types core::tests::cell::resolve_transaction_should_test_have_invalid_header_dep
+        PASS [   0.099s] (14/27) ckb-types core::tests::cell::resolve_transaction_resolve_dep_group_failed_because_unknown_sub_cell
+        PASS [   0.099s] (15/27) ckb-types core::tests::cell::resolve_transaction_should_allow_dep_cell_in_current_tx_input
+        PASS [   0.097s] (16/27) ckb-types core::tests::cell::resolve_transaction_should_reject_incorrect_order_txs
+        PASS [   0.100s] (17/27) ckb-types core::tests::views::test_extension_field_in_block_view
+        PASS [   0.102s] (18/27) ckb-types core::tests::cell::resolve_transaction_should_reject_dep_cell_consumed_by_previous_input
+        PASS [   0.067s] (19/27) ckb-types extension::test::empty_extra_hash
+        PASS [   0.069s] (20/27) ckb-types tests::test_panic_if_a_molecule_result_should_be_ok_but_not
+        PASS [   0.069s] (21/27) ckb-types tests::test_panic_if_an_option_should_be_some_but_not
+        PASS [   0.071s] (22/27) ckb-types tests::test_panic_if_molecule_from_slice_should_be_ok_but_not_1
+        PASS [   0.066s] (23/27) ckb-types utilities::tests::difficulty::test_extremes
+        PASS [   0.068s] (24/27) ckb-types utilities::tests::difficulty::test_compact_convert
+        PASS [   0.067s] (25/27) ckb-types utilities::tests::difficulty::test_compact_overflowing2
+        PASS [   0.070s] (26/27) ckb-types tests::test_panic_if_molecule_from_slice_should_be_ok_but_not_2
+        PASS [   0.160s] (27/27) ckb-types utilities::tests::difficulty::test_compact_overflowing1
+────────────
+     Summary [   0.256s] 27 tests run: 26 passed, 1 failed, 0 skipped
+        FAIL [   0.089s] ( 5/27) ckb-types core::tests::tx_pool::test_argv_too_long_error_is_malformed_tx
+error: test run failed
+reward=0 graded=27 found=4 failed=0 parsed=27 framework=cargo exit_code=100

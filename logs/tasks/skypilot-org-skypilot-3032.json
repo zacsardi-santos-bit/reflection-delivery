@@ -1,0 +1,23 @@
+{
+ "task": "skypilot-org-skypilot-3032",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds Azure validate_name in sky/data/storage.py enforcing '3 <= len(name) <= 63', regex '^[a-z0-9][-a-z0-9]*[a-z0-9]$', and \"'--' in name\"; F2P test_invalid_names[...AZURE] feeds AZURE_INVALID_NAMES and expects StorageNameError before network calls"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 13,
+  "shallow": true
+ }
+}

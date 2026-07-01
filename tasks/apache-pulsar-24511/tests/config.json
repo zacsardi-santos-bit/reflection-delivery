@@ -1,0 +1,17 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl managed-ledger test -Dtest=ManagedLedgerReplayTaskTest --no-transfer-progress",
+  "test_files": [
+    "managed-ledger/src/test/java/org/apache/bookkeeper/mledger/ManagedLedgerReplayTaskTest.java",
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/BrokerMessageDeduplicationTest.java",
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/service/persistent/TopicDuplicationTest.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Managed::test_1",
+    "Managed::test_2",
+    "Managed::test_3"
+  ],
+  "PASS_TO_PASS": []
+}

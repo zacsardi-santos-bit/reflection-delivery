@@ -1,0 +1,44 @@
+patching file server/test/utils/units.test.js
+
+
+  celsiusToFahrenheit
+    ✓ should convert celsius to fahrenheit
+
+  fahrenheitToCelsius
+    ✓ should convert fahrenheit to celsius
+
+  hslToRgb
+    ✓ should convert hsl to rgb
+
+  checkAndConvertUnit
+    ✓ converts kilometers to miles (US preference)
+    ✓ converts miles to kilometers (metric preference)
+    ✓ converts meters to feet (US preference)
+    ✓ converts feet to meters (metric preference)
+    ✓ converts mm to inches (US preference, <10)
+    ✓ converts inches to mm (metric preference)
+    ✓ converts cm to inches (US preference)
+    ✓ converts km/h to mph (US preference)
+    ✓ converts m/s to ft/s (US preference)
+    ✓ converts km/kWh to mi/kWh (US preference)
+    ✓ converts kWh/100km to kWh/100mi (US preference)
+    ✓ converts Wh/km to Wh/mi (US preference)
+    ✓ converts mph to km/h (metric preference)
+    ✓ converts ft/s to m/s (metric preference)
+    ✓ converts mi/kWh to km/kWh (metric preference)
+    ✓ converts kWh/100mi to kWh/100km (metric preference)
+    ✓ converts Wh/mi to Wh/km (metric preference)
+    ✓ returns the original value if null with converts (metric preference)
+    ✓ returns the original value if unknown user system preference
+    ✓ returns the original value if no unit conversion rules
+
+  smartRound
+    ✓ returns value as is for abs(value) < 1
+    ✓ rounds to 2 decimals for 1 <= abs(value) < 10
+    ✓ rounds to 1 decimal for 10 <= abs(value) < 1000
+    ✓ rounds to integer for abs(value) >= 1000
+
+
+  27 passing (8ms)
+
+reward=1 graded=27 found=27 failed=0 parsed=27 framework=mocha exit_code=0

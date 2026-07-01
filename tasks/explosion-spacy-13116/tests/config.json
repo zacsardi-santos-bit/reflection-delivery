@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/spacy/tests/conftest.py /workspace/repo/spacy/tests/lang/fo/__init__.py /workspace/repo/spacy/tests/lang/fo/test_tokenizer.py /workspace/repo/spacy/tests/lang/nn/__init__.py /workspace/repo/spacy/tests/lang/nn/test_tokenizer.py -v",
+  "test_files": [
+    "spacy/tests/conftest.py",
+    "spacy/tests/lang/fo/__init__.py",
+    "spacy/tests/lang/fo/test_tokenizer.py",
+    "spacy/tests/lang/nn/__init__.py",
+    "spacy/tests/lang/nn/test_tokenizer.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "spacy.tests.lang.fo.test_tokenizer::test_fo_tokenizer_handles_exception_cases[Eftir l\\xf8gtingsl\\xf3g um sams\\xfdning og eftirl\\xf8n landsst\\xfdrismanna v.m., skulu l\\xf8gma\\xf0ur og landsst\\xfdrismenn vanliga siga fr\\xe1 s\\xe6r st\\xf8rv \\xed almennari t\\xe6nastu ella privatum virkjum, samt\\xf8kum ella stovnum. -expected_tokens0]",
+    "spacy.tests.lang.fo.test_tokenizer::test_fo_tokenizer_handles_exception_cases[Sambandsflokkurin gongur aftur vi\\xf0 2,7 prosentum \\xed mun til vali\\xf0 \\xed 1994, t\\xe1 flokkurin fekk undirt\\xf8ku fr\\xe1 23,4 prosent av veljarunum.-expected_tokens1]",
+    "spacy.tests.lang.nn.test_tokenizer::test_nn_tokenizer_handles_exception_cases[M\\xe5let til direktoratet er at alle skal bli tilbydd jobb i politiet s\\xe5 raskt som mogleg i 2014.-expected_tokens0]",
+    "spacy.tests.lang.nn.test_tokenizer::test_nn_tokenizer_handles_exception_cases[Han \\xf8nskjer ikkje at staten skal vere med p\\xe5 \\xe5 finansiere slik undervisning, men dette er rektor p\\xe5 skulen ueinig i.-expected_tokens1]",
+    "spacy.tests.lang.nn.test_tokenizer::test_nn_tokenizer_handles_exception_cases[If\\xf8lgje China Daily vart det 8.848 meter h\\xf8ge fjellet flytta 3 centimeter s\\xf8rvestover under jordskjelvet, som vart m\\xe5lt til 7,8.-expected_tokens2]",
+    "spacy.tests.lang.nn.test_tokenizer::test_nn_tokenizer_handles_exception_cases[Brukssesongen er fr\\xe5 nov. til mai, med ein topp i mars.-expected_tokens3]"
+  ],
+  "PASS_TO_PASS": []
+}

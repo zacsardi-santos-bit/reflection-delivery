@@ -1,0 +1,7 @@
+patching file monai/networks/layers/convutils.py
+patching file monai/networks/layers/simplelayers.py
+patching file monai/transforms/intensity/array.py
+patching file monai/transforms/intensity/dictionary.py
+patching file monai/transforms/utility/array.py
+patching file monai/transforms/utility/dictionary.py
+patching file monai/utils/misc.py

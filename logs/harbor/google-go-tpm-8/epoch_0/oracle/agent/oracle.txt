@@ -1,0 +1,4 @@
+patching file tpm2/README.md
+patching file tpm2/constants.go
+patching file tpm2/structures.go
+patching file tpm2/tpm2.go

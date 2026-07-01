@@ -1,0 +1,27 @@
+patching file api/cloudcontroller/wrapper/trace_request_test.go
+patching file api/router/wrapper/trace_request_test.go
+patching file api/shared/trace_headers_test.go
+patching file api/uaa/wrapper/trace_request_test.go
+patching file util/trace/trace_suite_test.go
+patching file util/trace/trace_test.go
+code.cloudfoundry.org/cli/util/trace: no non-test Go files in /workspace/repo/util/trace
+# code.cloudfoundry.org/cli/api/uaa/wrapper_test [code.cloudfoundry.org/cli/api/uaa/wrapper.test]
+api/uaa/wrapper/trace_request_test.go:9:2: "code.cloudfoundry.org/cli/api/uaa/wrapper" imported and not used
+api/uaa/wrapper/trace_request_test.go:33:13: undefined: NewUAATraceHeaderRequest
+# code.cloudfoundry.org/cli/api/router/wrapper_test [code.cloudfoundry.org/cli/api/router/wrapper.test]
+api/router/wrapper/trace_request_test.go:9:2: "code.cloudfoundry.org/cli/api/router/wrapper" imported and not used
+api/router/wrapper/trace_request_test.go:32:13: undefined: NewRoutingTraceHeaderRequest
+# code.cloudfoundry.org/cli/api/shared_test [code.cloudfoundry.org/cli/api/shared.test]
+api/shared/trace_headers_test.go:6:2: "code.cloudfoundry.org/cli/api/shared" imported and not used
+api/shared/trace_headers_test.go:16:21: undefined: NewTraceHeaders
+api/shared/trace_headers_test.go:31:21: undefined: NewTraceHeaders
+# code.cloudfoundry.org/cli/api/cloudcontroller/wrapper_test [code.cloudfoundry.org/cli/api/cloudcontroller/wrapper.test]
+api/cloudcontroller/wrapper/trace_request_test.go:9:2: "code.cloudfoundry.org/cli/api/cloudcontroller/wrapper" imported and not used
+api/cloudcontroller/wrapper/trace_request_test.go:33:13: undefined: NewCCTraceHeaderRequest
+FAIL	code.cloudfoundry.org/cli/api/cloudcontroller/wrapper [build failed]
+FAIL	code.cloudfoundry.org/cli/api/shared [build failed]
+FAIL	code.cloudfoundry.org/cli/api/uaa/wrapper [build failed]
+FAIL	code.cloudfoundry.org/cli/api/router/wrapper [build failed]
+FAIL	code.cloudfoundry.org/cli/util/trace [build failed]
+FAIL
+reward=0 (grader error: Extra data: line 23 column 1 (char 852); fell back to exit_code=1)

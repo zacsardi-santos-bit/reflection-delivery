@@ -1,0 +1,26 @@
+patching file internal/api/discovery/cuetils/cuetils_test.go
+{"Time":"2026-06-29T15:26:31.299860788Z","Action":"start","Package":"github.com/perses/perses/internal/api/discovery/cuetils"}
+{"Time":"2026-06-29T15:26:31.33402473Z","Action":"run","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema"}
+{"Time":"2026-06-29T15:26:31.334064801Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema","Output":"=== RUN   TestNewFromSchema\n"}
+{"Time":"2026-06-29T15:26:31.348824842Z","Action":"run","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema/PrometheusDatasource"}
+{"Time":"2026-06-29T15:26:31.348921453Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema/PrometheusDatasource","Output":"=== RUN   TestNewFromSchema/PrometheusDatasource\n"}
+{"Time":"2026-06-29T15:26:31.380264103Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema/PrometheusDatasource","Output":"--- PASS: TestNewFromSchema/PrometheusDatasource (0.03s)\n"}
+{"Time":"2026-06-29T15:26:31.380300743Z","Action":"pass","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema/PrometheusDatasource","Elapsed":0.03}
+{"Time":"2026-06-29T15:26:31.380483496Z","Action":"run","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema/TempoDatasource"}
+{"Time":"2026-06-29T15:26:31.380532567Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema/TempoDatasource","Output":"=== RUN   TestNewFromSchema/TempoDatasource\n"}
+{"Time":"2026-06-29T15:26:31.391390829Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema/TempoDatasource","Output":"--- PASS: TestNewFromSchema/TempoDatasource (0.01s)\n"}
+{"Time":"2026-06-29T15:26:31.391502111Z","Action":"pass","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema/TempoDatasource","Elapsed":0.01}
+{"Time":"2026-06-29T15:26:31.391635663Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema","Output":"--- PASS: TestNewFromSchema (0.06s)\n"}
+{"Time":"2026-06-29T15:26:31.391739414Z","Action":"pass","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestNewFromSchema","Elapsed":0.06}
+{"Time":"2026-06-29T15:26:31.391786575Z","Action":"run","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestBuildPluginAndInjectProxy"}
+{"Time":"2026-06-29T15:26:31.391811755Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestBuildPluginAndInjectProxy","Output":"=== RUN   TestBuildPluginAndInjectProxy\n"}
+{"Time":"2026-06-29T15:26:31.400625238Z","Action":"run","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestBuildPluginAndInjectProxy/PrometheusDatasource"}
+{"Time":"2026-06-29T15:26:31.400659128Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestBuildPluginAndInjectProxy/PrometheusDatasource","Output":"=== RUN   TestBuildPluginAndInjectProxy/PrometheusDatasource\n"}
+{"Time":"2026-06-29T15:26:31.410378214Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestBuildPluginAndInjectProxy/PrometheusDatasource","Output":"--- PASS: TestBuildPluginAndInjectProxy/PrometheusDatasource (0.01s)\n"}
+{"Time":"2026-06-29T15:26:31.410451265Z","Action":"pass","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestBuildPluginAndInjectProxy/PrometheusDatasource","Elapsed":0.01}
+{"Time":"2026-06-29T15:26:31.410535166Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestBuildPluginAndInjectProxy","Output":"--- PASS: TestBuildPluginAndInjectProxy (0.02s)\n"}
+{"Time":"2026-06-29T15:26:31.410579187Z","Action":"pass","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Test":"TestBuildPluginAndInjectProxy","Elapsed":0.02}
+{"Time":"2026-06-29T15:26:31.410611567Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Output":"PASS\n"}
+{"Time":"2026-06-29T15:26:31.412177661Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Output":"ok  \tgithub.com/perses/perses/internal/api/discovery/cuetils\t0.112s\n"}
+{"Time":"2026-06-29T15:26:31.412238432Z","Action":"pass","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Elapsed":0.112}
+reward=1 graded=5 found=5 failed=0 parsed=5 framework=go exit_code=0

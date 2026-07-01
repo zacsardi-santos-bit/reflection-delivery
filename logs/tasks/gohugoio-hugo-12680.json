@@ -1,0 +1,23 @@
+{
+ "task": "gohugoio-hugo-12680",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds Acos/Asin/Atan/Atan2/Cos/Pi/Sin/Tan/ToDegrees/ToRadians methods to tpl/math/math.go (e.g. 'func (ns *Namespace) Asin(n any) (float64, error)') and registers them in init.go; tests call ns.Asin/Pi/etc and assert numeric results"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 20,
+  "shallow": true
+ }
+}

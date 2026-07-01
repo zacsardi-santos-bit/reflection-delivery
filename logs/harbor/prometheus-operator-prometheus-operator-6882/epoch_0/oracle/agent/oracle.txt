@@ -1,0 +1,15 @@
+patching file CHANGELOG.md
+patching file Documentation/operator.md
+patching file Documentation/rbac.md
+patching file Documentation/user-guides/prometheus-agent.md
+patching file bundle.yaml
+patching file cmd/operator/main.go
+patching file example/rbac/prometheus-operator/prometheus-operator-cluster-role.yaml
+patching file example/rbac/prometheus-operator/prometheus-operator-deployment.yaml
+patching file jsonnet/prometheus-operator/prometheus-operator.libsonnet
+patching file pkg/alertmanager/operator.go
+patching file pkg/k8sutil/k8sutil.go
+patching file pkg/kubelet/controller.go
+patching file pkg/prometheus/agent/operator.go
+patching file pkg/prometheus/server/operator.go
+patching file pkg/thanos/operator.go

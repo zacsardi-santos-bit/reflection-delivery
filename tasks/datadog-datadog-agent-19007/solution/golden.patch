@@ -1,0 +1,1482 @@
+diff --git a/pkg/config/config.go b/pkg/config/config.go
+index b6cb24e1f8..24d521eb7e 100644
+--- a/pkg/config/config.go
++++ b/pkg/config/config.go
+@@ -1215,7 +1215,6 @@ func InitConfig(config Config) {
+ 	config.BindEnvAndSetDefault("serverless.logs_enabled", true)
+ 	config.BindEnvAndSetDefault("enhanced_metrics", true)
+ 	config.BindEnvAndSetDefault("capture_lambda_payload", false)
+-	config.BindEnvAndSetDefault("capture_lambda_payload_max_depth", 10)
+ 	config.BindEnvAndSetDefault("serverless.trace_enabled", false, "DD_TRACE_ENABLED")
+ 	config.BindEnvAndSetDefault("serverless.trace_managed_services", true, "DD_TRACE_MANAGED_SERVICES")
+ 	config.BindEnvAndSetDefault("serverless.service_mapping", nil, "DD_SERVICE_MAPPING")
+diff --git a/pkg/serverless/invocationlifecycle/trace.go b/pkg/serverless/invocationlifecycle/trace.go
+index f3f2ac9819..8bd4d4568d 100644
+--- a/pkg/serverless/invocationlifecycle/trace.go
++++ b/pkg/serverless/invocationlifecycle/trace.go
+@@ -125,21 +125,8 @@ func endExecutionSpan(executionContext *ExecutionStartInfo, triggerTags map[stri
+ 	}
+ 	captureLambdaPayloadEnabled := config.Datadog.GetBool("capture_lambda_payload")
+ 	if captureLambdaPayloadEnabled {
+-		capturePayloadMaxDepth := config.Datadog.GetInt("capture_lambda_payload_max_depth")
+-		requestPayloadJSON := make(map[string]interface{})
+-		if err := json.Unmarshal(executionContext.requestPayload, &requestPayloadJSON); err != nil {
+-			log.Debugf("[lifecycle] Failed to parse request payload: %v", err)
+-			executionSpan.Meta["function.request"] = string(executionContext.requestPayload)
+-		} else {
+-			capturePayloadAsTags(requestPayloadJSON, executionSpan, "function.request", 0, capturePayloadMaxDepth)
+-		}
+-		responsePayloadJSON := make(map[string]interface{})
+-		if err := json.Unmarshal(endDetails.ResponseRawPayload, &responsePayloadJSON); err != nil {
+-			log.Debugf("[lifecycle] Failed to parse response payload: %v", err)
+-			executionSpan.Meta["function.response"] = string(endDetails.ResponseRawPayload)
+-		} else {
+-			capturePayloadAsTags(responsePayloadJSON, executionSpan, "function.response", 0, capturePayloadMaxDepth)
+-		}
++		executionSpan.Meta["function.request"] = string(executionContext.requestPayload)
++		executionSpan.Meta["function.response"] = string(endDetails.ResponseRawPayload)
+ 	}
+ 
+ 	if endDetails.IsError {
+@@ -230,66 +217,3 @@ func InjectSpanID(executionContext *ExecutionStartInfo, headers http.Header) {
+ 		executionContext.SpanID = value
+ 	}
+ }
+-
+-func capturePayloadAsTags(value interface{}, targetSpan *pb.Span, key string, depth int, maxDepth int) {
+-	if key == "" {
+-		return
+-	}
+-	if value == nil {
+-		targetSpan.Meta[key] = ""
+-		return
+-	}
+-	if depth >= maxDepth {
+-		switch value := value.(type) {
+-		case map[string]interface{}:
+-			targetSpan.Meta[key] = convertJSONToString(value)
+-		default:
+-			targetSpan.Meta[key] = fmt.Sprintf("%v", value)
+-		}
+-		return
+-	}
+-	switch value := value.(type) {
+-	case string:
+-		var innerPayloadJSON map[string]interface{}
+-		err := json.Unmarshal([]byte(value), &innerPayloadJSON)
+-		if err != nil {
+-			targetSpan.Meta[key] = fmt.Sprintf("%v", value)
+-		} else {
+-			capturePayloadAsTags(innerPayloadJSON, targetSpan, key, depth, maxDepth)
+-		}
+-	case []byte:
+-		var innerPayloadJSON map[string]interface{}
+-		err := json.Unmarshal(value, &innerPayloadJSON)
+-		if err != nil {
+-			targetSpan.Meta[key] = fmt.Sprintf("%v", value)
+-		} else {
+-			capturePayloadAsTags(innerPayloadJSON, targetSpan, key, depth, maxDepth)
+-		}
+-	case map[string]interface{}:
+-		if len(value) == 0 {
+-			targetSpan.Meta[key] = "{}"
+-			return
+-		}
+-		for innerKey, value := range value {
+-			capturePayloadAsTags(value, targetSpan, key+"."+innerKey, depth+1, maxDepth)
+-		}
+-	case []interface{}:
+-		if len(value) == 0 {
+-			targetSpan.Meta[key] = "[]"
+-			return
+-		}
+-		for i, innerValue := range value {
+-			capturePayloadAsTags(innerValue, targetSpan, key+"."+strconv.Itoa(i), depth+1, maxDepth)
+-		}
+-	default:
+-		targetSpan.Meta[key] = fmt.Sprintf("%v", value)
+-	}
+-}
+-
+-func convertJSONToString(payloadJSON interface{}) string {
+-	jsonData, err := json.Marshal(payloadJSON)
+-	if err != nil {
+-		return fmt.Sprintf("%v", payloadJSON)
+-	}
+-	return string(jsonData)
+-}
+diff --git a/pkg/serverless/invocationlifecycle/trace_test.go b/pkg/serverless/invocationlifecycle/trace_test.go
+index aad14e6630..ec1b4f17cc 100644
+--- a/pkg/serverless/invocationlifecycle/trace_test.go
++++ b/pkg/serverless/invocationlifecycle/trace_test.go
+@@ -199,105 +199,6 @@ func TestStartExecutionSpanWithHeadersAndInferredSpan(t *testing.T) {
+ 
+ 	assert.NotEqual(t, 0, currentExecutionInfo.SpanID)
+ }
+-
+-func TestEndExecutionSpanWithEmptyObjectRequestResponse(t *testing.T) {
+-	currentExecutionInfo := &ExecutionStartInfo{}
+-	t.Setenv(functionNameEnvVar, "TestFunction")
+-	t.Setenv("DD_CAPTURE_LAMBDA_PAYLOAD", "true")
+-	startTime := time.Now()
+-
+-	startDetails := &InvocationStartDetails{
+-		StartTime:          startTime,
+-		InvokeEventHeaders: LambdaInvokeEventHeaders{},
+-	}
+-	startExecutionSpan(currentExecutionInfo, nil, []byte("[]"), startDetails, false)
+-
+-	duration := 1 * time.Second
+-	endTime := startTime.Add(duration)
+-	var tracePayload *api.Payload
+-	mockProcessTrace := func(payload *api.Payload) {
+-		tracePayload = payload
+-	}
+-
+-	endDetails := &InvocationEndDetails{
+-		EndTime:            endTime,
+-		IsError:            false,
+-		RequestID:          "test-request-id",
+-		ResponseRawPayload: []byte("{}"),
+-		ColdStart:          true,
+-		ProactiveInit:      false,
+-		Runtime:            "dotnet6",
+-	}
+-
+-	endExecutionSpan(currentExecutionInfo, make(map[string]string), nil, mockProcessTrace, endDetails)
+-	executionSpan := tracePayload.TracerPayload.Chunks[0].Spans[0]
+-	expectingResultMetaMap := map[string]string{
+-		"request_id":        "test-request-id",
+-		"cold_start":        "true",
+-		"function.request":  "[]", // []byte("{}") => empty list in JSON => "[]"
+-		"function.response": "{}", // []byte("{}") => empty map in JSON => "{}"
+-		"language":          "dotnet",
+-	}
+-	assert.Equal(t, executionSpan.Meta, expectingResultMetaMap)
+-	assert.Equal(t, "aws.lambda", executionSpan.Name)
+-	assert.Equal(t, "aws.lambda", executionSpan.Service)
+-	assert.Equal(t, "TestFunction", executionSpan.Resource)
+-	assert.Equal(t, "serverless", executionSpan.Type)
+-	assert.Equal(t, currentExecutionInfo.TraceID, executionSpan.TraceID)
+-	assert.Equal(t, currentExecutionInfo.SpanID, executionSpan.SpanID)
+-	assert.Equal(t, startTime.UnixNano(), executionSpan.Start)
+-	assert.Equal(t, duration.Nanoseconds(), executionSpan.Duration)
+-}
+-
+-func TestEndExecutionSpanWithNullRequestResponse(t *testing.T) {
+-	currentExecutionInfo := &ExecutionStartInfo{}
+-	t.Setenv(functionNameEnvVar, "TestFunction")
+-	t.Setenv("DD_CAPTURE_LAMBDA_PAYLOAD", "true")
+-	startTime := time.Now()
+-
+-	startDetails := &InvocationStartDetails{
+-		StartTime:          startTime,
+-		InvokeEventHeaders: LambdaInvokeEventHeaders{},
+-	}
+-	startExecutionSpan(currentExecutionInfo, nil, nil, startDetails, false)
+-
+-	duration := 1 * time.Second
+-	endTime := startTime.Add(duration)
+-	var tracePayload *api.Payload
+-	mockProcessTrace := func(payload *api.Payload) {
+-		tracePayload = payload
+-	}
+-
+-	endDetails := &InvocationEndDetails{
+-		EndTime:            endTime,
+-		IsError:            false,
+-		RequestID:          "test-request-id",
+-		ResponseRawPayload: []byte(""),
+-		ColdStart:          true,
+-		ProactiveInit:      false,
+-		Runtime:            "dotnet6",
+-	}
+-
+-	endExecutionSpan(currentExecutionInfo, make(map[string]string), nil, mockProcessTrace, endDetails)
+-	executionSpan := tracePayload.TracerPayload.Chunks[0].Spans[0]
+-	expectingResultMetaMap := map[string]string{
+-		"request_id":        "test-request-id",
+-		"cold_start":        "true",
+-		"function.request":  "", // nil => null in JSON => ""
+-		"function.response": "", // []byte("") => null in JSON => ""
+-		"language":          "dotnet",
+-	}
+-	assert.Equal(t, executionSpan.Meta, expectingResultMetaMap)
+-	assert.Equal(t, "aws.lambda", executionSpan.Name)
+-	assert.Equal(t, "aws.lambda", executionSpan.Service)
+-	assert.Equal(t, "TestFunction", executionSpan.Resource)
+-	assert.Equal(t, "serverless", executionSpan.Type)
+-	assert.Equal(t, currentExecutionInfo.TraceID, executionSpan.TraceID)
+-	assert.Equal(t, currentExecutionInfo.SpanID, executionSpan.SpanID)
+-	assert.Equal(t, startTime.UnixNano(), executionSpan.Start)
+-	assert.Equal(t, duration.Nanoseconds(), executionSpan.Duration)
+-}
+-
+ func TestEndExecutionSpanWithNoError(t *testing.T) {
+ 	currentExecutionInfo := &ExecutionStartInfo{}
+ 	t.Setenv(functionNameEnvVar, "TestFunction")
+@@ -330,25 +231,16 @@ func TestEndExecutionSpanWithNoError(t *testing.T) {
+ 
+ 	endExecutionSpan(currentExecutionInfo, make(map[string]string), nil, mockProcessTrace, endDetails)
+ 	executionSpan := tracePayload.TracerPayload.Chunks[0].Spans[0]
+-	expectingResultMetaMap := map[string]string{
+-		"request_id":                "test-request-id",
+-		"cold_start":                "true",
+-		"function.request.resource": "/users/create",
+-		"function.request.path":     "/users/create",
+-		"function.request.headers.x-datadog-parent-id":         "1480558859903409531",
+-		"function.request.headers.x-datadog-trace-id":          "5736943178450432258",
+-		"function.request.headers.x-datadog-sampling-priority": "1",
+-		"function.request.httpMethod":                          "GET",
+-		"function.request.headers.Accept":                      "*/*",
+-		"function.request.headers.Accept-Encoding":             "gzip",
+-		"function.response.response":                           "test response payload",
+-		"language":                                             "dotnet",
+-	}
+-	assert.Equal(t, executionSpan.Meta, expectingResultMetaMap)
+ 	assert.Equal(t, "aws.lambda", executionSpan.Name)
+ 	assert.Equal(t, "aws.lambda", executionSpan.Service)
+ 	assert.Equal(t, "TestFunction", executionSpan.Resource)
+ 	assert.Equal(t, "serverless", executionSpan.Type)
++	assert.Equal(t, "test-request-id", executionSpan.Meta["request_id"])
++	assert.Equal(t, "true", executionSpan.Meta["cold_start"])
++	assert.Equal(t, "", executionSpan.Meta["proactive_initialization"])
++	assert.Equal(t, testString, executionSpan.Meta["function.request"])
++	assert.Equal(t, `{"response":"test response payload"}`, executionSpan.Meta["function.response"])
++	assert.Equal(t, "dotnet", executionSpan.Meta["language"])
+ 	assert.Equal(t, currentExecutionInfo.TraceID, executionSpan.TraceID)
+ 	assert.Equal(t, currentExecutionInfo.SpanID, executionSpan.SpanID)
+ 	assert.Equal(t, startTime.UnixNano(), executionSpan.Start)
+@@ -386,25 +278,15 @@ func TestEndExecutionSpanProactInit(t *testing.T) {
+ 
+ 	endExecutionSpan(currentExecutionInfo, make(map[string]string), nil, mockProcessTrace, endDetails)
+ 	executionSpan := tracePayload.TracerPayload.Chunks[0].Spans[0]
+-	expectingResultMetaMap := map[string]string{
+-		"request_id":                                           "test-request-id",
+-		"cold_start":                                           "false",
+-		"proactive_initialization":                             "true",
+-		"function.request.resource":                            "/users/create",
+-		"function.request.path":                                "/users/create",
+-		"function.request.headers.x-datadog-parent-id":         "1480558859903409531",
+-		"function.request.headers.x-datadog-trace-id":          "5736943178450432258",
+-		"function.request.headers.x-datadog-sampling-priority": "1",
+-		"function.request.httpMethod":                          "GET",
+-		"function.request.headers.Accept":                      "*/*",
+-		"function.request.headers.Accept-Encoding":             "gzip",
+-		"function.response.response":                           "test response payload",
+-	}
+-	assert.Equal(t, executionSpan.Meta, expectingResultMetaMap)
+ 	assert.Equal(t, "aws.lambda", executionSpan.Name)
+ 	assert.Equal(t, "aws.lambda", executionSpan.Service)
+ 	assert.Equal(t, "TestFunction", executionSpan.Resource)
+ 	assert.Equal(t, "serverless", executionSpan.Type)
++	assert.Equal(t, "test-request-id", executionSpan.Meta["request_id"])
++	assert.Equal(t, "false", executionSpan.Meta["cold_start"])
++	assert.Equal(t, "true", executionSpan.Meta["proactive_initialization"])
++	assert.Equal(t, testString, executionSpan.Meta["function.request"])
++	assert.Equal(t, `{"response":"test response payload"}`, executionSpan.Meta["function.response"])
+ 	assert.Equal(t, currentExecutionInfo.TraceID, executionSpan.TraceID)
+ 	assert.Equal(t, currentExecutionInfo.SpanID, executionSpan.SpanID)
+ 	assert.Equal(t, startTime.UnixNano(), executionSpan.Start)
+@@ -573,88 +455,3 @@ func TestLanguageTag(t *testing.T) {
+ 		assert.Equal(t, tc.expectedTag, executionSpan.Meta["language"]) // expected tag from runtime
+ 	}
+ }
+-
+-func TestCapturePayloadAsTags(t *testing.T) {
+-	nestedMap := map[string]interface{}{
+-		"key1": "value1",
+-		"key2": map[string]interface{}{
+-			"key3":    3,
+-			"key4":    true,
+-			"keylist": []interface{}{1, 2, 3, "four", 5.5, `{"keyInsideSlice":"val7","age":84}`},
+-		},
+-		"innerJSONString": `{"key5":"value5","age":42}`,
+-		"innerJSONBytes":  []byte(`{"key6":"value6","age":21}`),
+-	}
+-	expectingResultMap := map[string]string{
+-		"test.key1":                          "value1",
+-		"test.key2.key3":                     "3",
+-		"test.key2.key4":                     "true",
+-		"test.key2.keylist.0":                "1",
+-		"test.key2.keylist.1":                "2",
+-		"test.key2.keylist.2":                "3",
+-		"test.key2.keylist.3":                "four",
+-		"test.key2.keylist.4":                "5.5",
+-		"test.key2.keylist.5.keyInsideSlice": "val7",
+-		"test.key2.keylist.5.age":            "84",
+-		"test.innerJSONString.key5":          "value5",
+-		"test.innerJSONString.age":           "42",
+-		"test.innerJSONBytes.key6":           "value6",
+-		"test.innerJSONBytes.age":            "21",
+-	}
+-	metaMap := make(map[string]string)
+-	executionSpan := &pb.Span{
+-		Meta: metaMap,
+-	}
+-	capturePayloadAsTags(nestedMap, executionSpan, "test", 0, 10)
+-	assert.Equal(t, executionSpan.Meta, expectingResultMap)
+-}
+-
+-func TestCapturePayloadAsTagsMaxDepth(t *testing.T) {
+-	nestedMap := map[string]interface{}{
+-		"key1": "value1",
+-		"key2": map[string]interface{}{
+-			"key3": map[string]interface{}{
+-				"nestedKey": "nestedVal",
+-			},
+-			"key4": true,
+-		},
+-		"key5": "value5",
+-	}
+-	expectingResultMap := map[string]string{
+-		"test.key1":      "value1",
+-		"test.key2.key3": "{\"nestedKey\":\"nestedVal\"}",
+-		"test.key2.key4": "true",
+-		"test.key5":      "value5",
+-	}
+-	metaMap := make(map[string]string)
+-	executionSpan := &pb.Span{
+-		Meta: metaMap,
+-	}
+-	capturePayloadAsTags(nestedMap, executionSpan, "test", 0, 2)
+-	assert.Equal(t, executionSpan.Meta, expectingResultMap)
+-}
+-
+-func TestCapturePayloadAsTagsNilCases(t *testing.T) {
+-	testMap := map[string]interface{}{
+-		"key1": nil,
+-		"key2": map[string]interface{}{
+-			"key3": nil,
+-			"key4": true,
+-		},
+-		"emptyMap":  map[string]interface{}{},
+-		"emptyList": []interface{}{},
+-	}
+-	expectingResultMap := map[string]string{
+-		"test.key1":      "",
+-		"test.key2.key3": "",
+-		"test.key2.key4": "true",
+-		"test.emptyMap":  "{}",
+-		"test.emptyList": "[]",
+-	}
+-	metaMap := make(map[string]string)
+-	executionSpan := &pb.Span{
+-		Meta: metaMap,
+-	}
+-	capturePayloadAsTags(testMap, executionSpan, "test", 0, 10)
+-	assert.Equal(t, executionSpan.Meta, expectingResultMap)
+-}
+diff --git a/pkg/trace/api/api_test.go b/pkg/trace/api/api_test.go
+index 81260703ed..88068accca 100644
+--- a/pkg/trace/api/api_test.go
++++ b/pkg/trace/api/api_test.go
+@@ -89,35 +89,32 @@ func TestReceiverRequestBodyLength(t *testing.T) {
+ 
+ 	// Before going further, make sure receiver is started
+ 	// since it's running in another goroutine
+-	serverReady := false
+-	for i := 0; i < 100; i++ {
++	for i := 0; i < 10; i++ {
+ 		var client http.Client
+ 
+ 		body := bytes.NewBufferString("[]")
+ 		req, err := http.NewRequest("POST", url, body)
+-		assert.NoError(err)
++		assert.Nil(err)
+ 
+ 		resp, err := client.Do(req)
+ 		if err == nil {
+ 			resp.Body.Close()
+ 			if resp.StatusCode == http.StatusOK {
+-				serverReady = true
+ 				break
+ 			}
+ 		}
+ 		time.Sleep(10 * time.Millisecond)
+ 	}
+ 
+-	assert.True(serverReady)
+ 	testBody := func(expectedStatus int, bodyData string) {
+ 		var client http.Client
+ 
+ 		body := bytes.NewBufferString(bodyData)
+ 		req, err := http.NewRequest("POST", url, body)
+-		assert.NoError(err)
++		assert.Nil(err)
+ 
+ 		resp, err := client.Do(req)
+-		assert.NoError(err)
++		assert.Nil(err)
+ 		assert.Equal(expectedStatus, resp.StatusCode)
+ 		resp.Body.Close()
+ 	}
+diff --git a/pkg/workloadmeta/collectors/internal/kubeapiserver/deployments.go b/pkg/workloadmeta/collectors/internal/kubeapiserver/deployments.go
+new file mode 100644
+index 0000000000..9307f42505
+--- /dev/null
++++ b/pkg/workloadmeta/collectors/internal/kubeapiserver/deployments.go
+@@ -0,0 +1,118 @@
++// Unless explicitly stated otherwise all files in this repository are licensed
++// under the Apache License Version 2.0.
++// This product includes software developed at Datadog (https://www.datadoghq.com/).
++// Copyright 2016-present Datadog, Inc.
++
++//go:build kubeapiserver
++
++// Package kubeapiserver contains the collector that collects data metadata from the API server.
++package kubeapiserver
++
++import (
++	"context"
++	"regexp"
++	"strings"
++
++	appsv1 "k8s.io/api/apps/v1"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
++	"k8s.io/apimachinery/pkg/runtime"
++	"k8s.io/apimachinery/pkg/watch"
++	"k8s.io/client-go/kubernetes"
++	"k8s.io/client-go/tools/cache"
++
++	"github.com/DataDog/datadog-agent/pkg/languagedetection/languagemodels"
++	ddkube "github.com/DataDog/datadog-agent/pkg/util/kubernetes"
++	"github.com/DataDog/datadog-agent/pkg/workloadmeta"
++)
++
++var re = regexp.MustCompile(`apm\.datadoghq\.com\/(init)?\.?(.+?)\.languages`)
++
++// deploymentFilter filters out deployments that can't be used for unified service tagging or process language detection
++type deploymentFilter struct{}
++
++func (f *deploymentFilter) filteredOut(entity workloadmeta.Entity) bool {
++	deployment := entity.(*workloadmeta.KubernetesDeployment)
++	return deployment.Env == "" &&
++		deployment.Version == "" &&
++		deployment.Service == "" &&
++		len(deployment.InitContainerLanguages) == 0 &&
++		len(deployment.ContainerLanguages) == 0
++}
++
++func newDeploymentStore(ctx context.Context, wlm workloadmeta.Store, client kubernetes.Interface) (*cache.Reflector, *reflectorStore) {
++	deploymentListerWatcher := &cache.ListWatch{
++		ListFunc: func(options metav1.ListOptions) (runtime.Object, error) {
++			return client.AppsV1().Deployments(metav1.NamespaceAll).List(ctx, options)
++		},
++		WatchFunc: func(options metav1.ListOptions) (watch.Interface, error) {
++			return client.AppsV1().Deployments(metav1.NamespaceAll).Watch(ctx, options)
++		},
++	}
++
++	deploymentStore := newDeploymentReflectorStore(wlm)
++	deploymentReflector := cache.NewNamedReflector(
++		componentName,
++		deploymentListerWatcher,
++		&appsv1.Deployment{},
++		deploymentStore,
++		noResync,
++	)
++	return deploymentReflector, deploymentStore
++}
++
++func newDeploymentReflectorStore(wlmetaStore workloadmeta.Store) *reflectorStore {
++	store := &reflectorStore{
++		wlmetaStore: wlmetaStore,
++		seen:        make(map[string]workloadmeta.EntityID),
++		parser:      newdeploymentParser(),
++		filter:      &deploymentFilter{},
++	}
++
++	return store
++}
++
++type deploymentParser struct{}
++
++func newdeploymentParser() objectParser {
++	return deploymentParser{}
++}
++
++func updateContainerLanguageMap(m map[string][]languagemodels.Language, cName string, languages string) {
++	for _, lang := range strings.Split(languages, ",") {
++		m[cName] = append(m[cName], languagemodels.Language{
++			Name: languagemodels.LanguageName(strings.TrimSpace(lang)),
++		})
++	}
++}
++
++func (p deploymentParser) Parse(obj interface{}) workloadmeta.Entity {
++	deployment := obj.(*appsv1.Deployment)
++	initContainerLanguages := make(map[string][]languagemodels.Language)
++	containerLanguages := make(map[string][]languagemodels.Language)
++
++	for annotation, languages := range deployment.Annotations {
++		// find a match
++		matches := re.FindStringSubmatch(annotation)
++		if len(matches) != 3 {
++			continue
++		}
++		// matches[1] matches "init"
++		if matches[1] != "" {
++			updateContainerLanguageMap(initContainerLanguages, matches[2], languages)
++		} else {
++			updateContainerLanguageMap(containerLanguages, matches[2], languages)
++		}
++	}
++
++	return &workloadmeta.KubernetesDeployment{
++		EntityID: workloadmeta.EntityID{
++			Kind: workloadmeta.KindKubernetesDeployment,
++			ID:   deployment.Name, // not sure if we should use the UID or the name here
++		},
++		Env:                    deployment.Labels[ddkube.EnvTagLabelKey],
++		Service:                deployment.Labels[ddkube.ServiceTagLabelKey],
++		Version:                deployment.Labels[ddkube.VersionTagLabelKey],
++		ContainerLanguages:     containerLanguages,
++		InitContainerLanguages: initContainerLanguages,
++	}
++}
+diff --git a/pkg/workloadmeta/collectors/internal/kubeapiserver/kubeapiserver.go b/pkg/workloadmeta/collectors/internal/kubeapiserver/kubeapiserver.go
+index b4cff78c1b..09140b238c 100644
+--- a/pkg/workloadmeta/collectors/internal/kubeapiserver/kubeapiserver.go
++++ b/pkg/workloadmeta/collectors/internal/kubeapiserver/kubeapiserver.go
+@@ -40,6 +40,10 @@ func storeGenerators(cfg config.Config) []storeGenerator {
+ 		generators = append(generators, newPodStore)
+ 	}
+ 
++	if cfg.GetBool("language_detection.enabled") {
++		generators = append(generators, newDeploymentStore)
++	}
++
+ 	return generators
+ }
+ 
+diff --git a/pkg/workloadmeta/collectors/internal/kubeapiserver/reflector_store.go b/pkg/workloadmeta/collectors/internal/kubeapiserver/reflector_store.go
+index b3bb1bd207..16cc1dfb3e 100644
+--- a/pkg/workloadmeta/collectors/internal/kubeapiserver/reflector_store.go
++++ b/pkg/workloadmeta/collectors/internal/kubeapiserver/reflector_store.go
+@@ -8,8 +8,10 @@
+ package kubeapiserver
+ 
+ import (
++	"fmt"
+ 	"sync"
+ 
++	appsv1 "k8s.io/api/apps/v1"
+ 	corev1 "k8s.io/api/core/v1"
+ 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+ 	"k8s.io/apimachinery/pkg/types"
+@@ -32,12 +34,20 @@ type reflectorStore struct {
+ 	wlmetaStore workloadmeta.Store
+ 
+ 	mu     sync.Mutex
+-	seen   map[string]workloadmeta.EntityID
++	seen   map[string]workloadmeta.EntityID // needs to be updated only if the object is added
+ 	parser objectParser
+ 	// hasSynced logic is based on the logic see in FIFO queue (client-go/tools/cache/fifo.go)
+ 	// Normally `Replace` is called first and then `Add/Update/Delete`.
+ 	// If `Add/Update/Delete` is called first, triggers hasSynced
+ 	hasSynced bool
++
++	// filter to keep only resources that the Cluster-Agent needs
++	filter reflectorStoreFilter
++}
++
++// The filter is called in Replace/Add/Delete functions before the obj is parsed
++type reflectorStoreFilter interface {
++	filteredOut(workloadmeta.Entity) bool
+ }
+ 
+ // Add notifies the workloadmeta store with  an EventTypeSet for the given
+@@ -48,8 +58,12 @@ func (r *reflectorStore) Add(obj interface{}) error {
+ 
+ 	r.mu.Lock()
+ 	defer r.mu.Unlock()
+-
+ 	r.hasSynced = true
++	if r.filter != nil && r.filter.filteredOut(entity) {
++		// Don't store the object in memory if it is filtered out
++		return nil
++	}
++
+ 	r.seen[string(metaObj.GetUID())] = entity.GetID()
+ 	r.wlmetaStore.Notify([]workloadmeta.CollectorEvent{
+ 		{
+@@ -74,8 +88,11 @@ func (r *reflectorStore) Replace(list []interface{}, _ string) error {
+ 	entities := make([]entityUid, 0, len(list))
+ 
+ 	for _, obj := range list {
+-		metaObj := obj.(metav1.Object)
+-		entities = append(entities, entityUid{r.parser.Parse(obj), metaObj.GetUID()})
++		entity := r.parser.Parse(obj)
++		if r.filter != nil && r.filter.filteredOut(entity) {
++			continue
++		}
++		entities = append(entities, entityUid{entity, obj.(metav1.Object).GetUID()})
+ 	}
+ 
+ 	r.mu.Lock()
+@@ -126,17 +143,27 @@ func (r *reflectorStore) Delete(obj interface{}) error {
+ 
+ 	var kind workloadmeta.Kind
+ 	var uid types.UID
+-	if pod, ok := obj.(*corev1.Pod); ok {
++	switch v := obj.(type) {
++	case *corev1.Pod:
+ 		kind = workloadmeta.KindKubernetesPod
+-		uid = pod.UID
+-	} else if node, ok := obj.(*corev1.Node); ok {
++		uid = v.UID
++	case *corev1.Node:
+ 		kind = workloadmeta.KindKubernetesNode
+-		uid = node.UID
++		uid = v.UID
++	case *appsv1.Deployment:
++		kind = workloadmeta.KindKubernetesDeployment
++		uid = v.UID
++	default:
++		return fmt.Errorf("failed to identify Kind of object: %#v", obj)
+ 	}
+ 
+ 	r.hasSynced = true
+ 	delete(r.seen, string(uid))
+ 
++	if r.filter != nil && r.filter.filteredOut(obj.(workloadmeta.Entity)) {
++		return nil
++	}
++
+ 	r.wlmetaStore.Notify([]workloadmeta.CollectorEvent{
+ 		{
+ 			Type:   workloadmeta.EventTypeUnset,
+diff --git a/pkg/workloadmeta/collectors/internal/kubeapiserver/test_helpers.go b/pkg/workloadmeta/collectors/internal/kubeapiserver/test_helpers.go
+new file mode 100644
+index 0000000000..93907adc40
+--- /dev/null
++++ b/pkg/workloadmeta/collectors/internal/kubeapiserver/test_helpers.go
+@@ -0,0 +1,51 @@
++// Unless explicitly stated otherwise all files in this repository are licensed
++// under the Apache License Version 2.0.
++// This product includes software developed at Datadog (https://www.datadoghq.com/).
++// Copyright 2016-present Datadog, Inc.
++
++//go:build kubeapiserver && test
++
++package kubeapiserver
++
++import (
++	"context"
++	"testing"
++
++	"github.com/DataDog/datadog-agent/pkg/workloadmeta"
++	"github.com/stretchr/testify/assert"
++	"k8s.io/client-go/kubernetes/fake"
++)
++
++const dummySubscriber = "dummy-subscriber"
++
++func testFakeHelper(t *testing.T, createResource func(*fake.Clientset) error, newStore storeGenerator, expected []workloadmeta.EventBundle) {
++	// Create a fake client to mock API calls.
++	client := fake.NewSimpleClientset()
++
++	// Creating a fake deployment
++	err := createResource(client)
++	assert.NoError(t, err)
++
++	// Use the fake client in kubeapiserver context.
++	wlm := workloadmeta.NewMockStore()
++	ctx := context.TODO()
++	store, _ := newStore(ctx, wlm, client)
++	stopStore := make(chan struct{})
++	go store.Run(stopStore)
++
++	ch := wlm.Subscribe(dummySubscriber, workloadmeta.NormalPriority, nil)
++
++	actual := []workloadmeta.EventBundle{}
++	// When Subscribe is called, the first Bundle contains events about the items currently in the store.
++	// In that case, the first bundle is empty.
++	<-ch
++	bundle := <-ch
++	close(bundle.Ch)
++	// nil the bundle's Ch so we can
++	// deep-equal just the events later
++	bundle.Ch = nil
++	actual = append(actual, bundle)
++	close(stopStore)
++	wlm.Unsubscribe(ch)
++	assert.Equal(t, expected, actual)
++}
+diff --git a/pkg/workloadmeta/store.go b/pkg/workloadmeta/store.go
+index d348c72a30..f6c8b82d87 100644
+--- a/pkg/workloadmeta/store.go
++++ b/pkg/workloadmeta/store.go
+@@ -359,6 +359,16 @@ func (s *store) GetKubernetesNode(id string) (*KubernetesNode, error) {
+ 	return entity.(*KubernetesNode), nil
+ }
+ 
++// GetKubernetesDeployment implements Store#GetKubernetesDeployment
++func (s *store) GetKubernetesDeployment(id string) (*KubernetesDeployment, error) {
++	entity, err := s.getEntityByKind(KindKubernetesDeployment, id)
++	if err != nil {
++		return nil, err
++	}
++
++	return entity.(*KubernetesDeployment), nil
++}
++
+ // GetECSTask implements Store#GetECSTask
+ func (s *store) GetECSTask(id string) (*ECSTask, error) {
+ 	entity, err := s.getEntityByKind(KindECSTask, id)
+diff --git a/pkg/workloadmeta/testing/store.go b/pkg/workloadmeta/testing/store.go
+index 0554b9e076..a67bf6ced5 100644
+--- a/pkg/workloadmeta/testing/store.go
++++ b/pkg/workloadmeta/testing/store.go
+@@ -146,7 +146,7 @@ func (s *Store) GetKubernetesPodForContainer(containerID string) (*workloadmeta.
+ 
+ // GetKubernetesNode returns metadata about a Kubernetes node.
+ func (s *Store) GetKubernetesNode(id string) (*workloadmeta.KubernetesNode, error) {
+-	entity, err := s.getEntityByKind(workloadmeta.KindKubernetesPod, id)
++	entity, err := s.getEntityByKind(workloadmeta.KindKubernetesNode, id)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -154,6 +154,16 @@ func (s *Store) GetKubernetesNode(id string) (*workloadmeta.KubernetesNode, erro
+ 	return entity.(*workloadmeta.KubernetesNode), nil
+ }
+ 
++// GetKubernetesDeployment implements Store#GetKubernetesDeployment
++func (s *Store) GetKubernetesDeployment(id string) (*workloadmeta.KubernetesDeployment, error) {
++	entity, err := s.getEntityByKind(workloadmeta.KindKubernetesDeployment, id)
++	if err != nil {
++		return nil, err
++	}
++
++	return entity.(*workloadmeta.KubernetesDeployment), nil
++}
++
+ // GetECSTask returns metadata about an ECS task.
+ func (s *Store) GetECSTask(id string) (*workloadmeta.ECSTask, error) {
+ 	entity, err := s.getEntityByKind(workloadmeta.KindECSTask, id)
+diff --git a/pkg/workloadmeta/types.go b/pkg/workloadmeta/types.go
+index 9c64a15ffe..4ae59b9c7c 100644
+--- a/pkg/workloadmeta/types.go
++++ b/pkg/workloadmeta/types.go
+@@ -80,6 +80,10 @@ type Store interface {
+ 	// the entity with kind KindKubernetesNode and the given ID.
+ 	GetKubernetesNode(id string) (*KubernetesNode, error)
+ 
++	// GetKubernetesDeployment returns metadata about a Kubernetes deployment. It fetches
++	// the entity with kind KindKubernetesDeployment and the given ID.
++	GetKubernetesDeployment(id string) (*KubernetesDeployment, error)
++
+ 	// GetECSTask returns metadata about an ECS task.  It fetches the entity with
+ 	// kind KindECSTask and the given ID.
+ 	GetECSTask(id string) (*ECSTask, error)
+@@ -133,6 +137,7 @@ const (
+ 	KindContainer              Kind = "container"
+ 	KindKubernetesPod          Kind = "kubernetes_pod"
+ 	KindKubernetesNode         Kind = "kubernetes_node"
++	KindKubernetesDeployment   Kind = "kubernetes_deployment"
+ 	KindECSTask                Kind = "ecs_task"
+ 	KindContainerImageMetadata Kind = "container_image_metadata"
+ 	KindProcess                Kind = "process"
+@@ -698,6 +703,67 @@ func (n KubernetesNode) String(verbose bool) string {
+ 
+ var _ Entity = &KubernetesNode{}
+ 
++// KubernetesDeployment is an Entity representing a Kubernetes Deployment.
++type KubernetesDeployment struct {
++	EntityID
++	Env                    string
++	Service                string
++	Version                string
++	ContainerLanguages     map[string][]languagemodels.Language
++	InitContainerLanguages map[string][]languagemodels.Language
++}
++
++// GetID implements Entity#GetID.
++func (d *KubernetesDeployment) GetID() EntityID {
++	return d.EntityID
++}
++
++// Merge implements Entity#Merge.
++func (d *KubernetesDeployment) Merge(e Entity) error {
++	dd, ok := e.(*KubernetesDeployment)
++	if !ok {
++		return fmt.Errorf("cannot merge KubernetesDeployment with different kind %T", e)
++	}
++
++	return merge(d, dd)
++}
++
++// DeepCopy implements Entity#DeepCopy.
++func (d KubernetesDeployment) DeepCopy() Entity {
++	cd := deepcopy.Copy(d).(KubernetesDeployment)
++	return &cd
++}
++
++// String implements Entity#String
++func (d KubernetesDeployment) String(verbose bool) string {
++	var sb strings.Builder
++	_, _ = fmt.Fprintln(&sb, "----------- Entity ID -----------")
++	_, _ = fmt.Fprintln(&sb, d.EntityID.String(verbose))
++	_, _ = fmt.Fprintln(&sb, "----------- Unified Service Tagging -----------")
++	_, _ = fmt.Fprintln(&sb, "Env :", d.Env)
++	_, _ = fmt.Fprintln(&sb, "Service :", d.Service)
++	_, _ = fmt.Fprintln(&sb, "Version :", d.Version)
++	_, _ = fmt.Fprintln(&sb, "----------- Languages -----------")
++
++	langPrinter := func(m map[string][]languagemodels.Language, ctype string) {
++		for container, languages := range m {
++			var langSb strings.Builder
++			for i, lang := range languages {
++				if i != 0 {
++					_, _ = langSb.WriteString(",")
++				}
++				_, _ = langSb.WriteString(string(lang.Name))
++			}
++			_, _ = fmt.Fprintf(&sb, "%s %s=>[%s]", ctype, container, langSb.String())
++		}
++	}
++	langPrinter(d.InitContainerLanguages, "InitContainer")
++	langPrinter(d.ContainerLanguages, "Container")
++	return sb.String()
++}
++
++var _ Entity = &KubernetesDeployment{}
++
+ // ECSTask is an Entity representing an ECS Task.
+ type ECSTask struct {
+ 	EntityID
+diff --git a/pkg/workloadmeta/utils.go b/pkg/workloadmeta/utils.go
+index 3b00241ed4..228b89a6f8 100644
+--- a/pkg/workloadmeta/utils.go
++++ b/pkg/workloadmeta/utils.go
+@@ -10,6 +10,18 @@ import (
+ 	"strings"
+ )
+ 
++var kubeKindToWorkloadmetaKindMap = map[string]Kind{
++	"Pod":        KindKubernetesPod,
++	"Deployment": KindKubernetesDeployment,
++	"Node":       KindKubernetesNode,
++}
++
++// KubernetesKindToWorkloadMetaKind maps a Kubernetes Kind to a workloadmeta Kind.
++func KubernetesKindToWorkloadMetaKind(kind string) (Kind, bool) {
++	v, ok := kubeKindToWorkloadmetaKindMap[kind]
++	return v, ok
++}
++
+ func mapToString(m map[string]string) string {
+ 	var sb strings.Builder
+ 	for k, v := range m {
+diff --git a/test/integration/serverless/snapshots/trace-csharp b/test/integration/serverless/snapshots/trace-csharp
+index f9c6d4a313..3b7c13e334 100644
+--- a/test/integration/serverless/snapshots/trace-csharp
++++ b/test/integration/serverless/snapshots/trace-csharp
+@@ -29,9 +29,8 @@
+               "cold_start": "false",
+               "dd_extension_version": "123",
+               "env": "integration-tests-env",
+-              "function.request.body": "testing request payload",
+-              "function.response.body": "ok",
+-              "function.response.statusCode": "200",
++              "function.request": "{\"body\":\"testing request payload\"}",
++              "function.response": "{\"statusCode\":200,\"body\":\"ok\"}",
+               "function_arn": "arn:aws:lambda:eu-west-1:425362996713:function:integration-tests-extension-XXXXXX-trace-csharp",
+               "functionname": "integration-tests-extension-XXXXXX-trace-csharp",
+               "http.status_code": "200",
+@@ -93,9 +92,8 @@
+               "cold_start": "true",
+               "dd_extension_version": "123",
+               "env": "integration-tests-env",
+-              "function.request.body": "",
+-              "function.response.body": "ok",
+-              "function.response.statusCode": "200",
++              "function.request": "{\"body\":null}",
++              "function.response": "{\"statusCode\":200,\"body\":\"ok\"}",
+               "function_arn": "arn:aws:lambda:eu-west-1:425362996713:function:integration-tests-extension-XXXXXX-trace-csharp",
+               "functionname": "integration-tests-extension-XXXXXX-trace-csharp",
+               "http.status_code": "200",
+diff --git a/test/integration/serverless/snapshots/trace-java b/test/integration/serverless/snapshots/trace-java
+index fd4c3aad46..3b0dc59fa3 100644
+--- a/test/integration/serverless/snapshots/trace-java
++++ b/test/integration/serverless/snapshots/trace-java
+@@ -29,7 +29,7 @@
+               "cold_start": "false",
+               "dd_extension_version": "123",
+               "env": "integration-tests-env",
+-              "function.request.body": "testing request payload",
++              "function.request": "{\"body\":\"testing request payload\"}",
+               "function.response": "{}",
+               "function_arn": "arn:aws:lambda:eu-west-1:425362996713:function:integration-tests-extension-XXXXXX-trace-java",
+               "functionname": "integration-tests-extension-XXXXXX-trace-java",
+diff --git a/test/new-e2e/go.mod b/test/new-e2e/go.mod
+index df8ba301a5..3ef09043dc 100644
+--- a/test/new-e2e/go.mod
++++ b/test/new-e2e/go.mod
+@@ -36,10 +36,8 @@ require (
+ 
+ require (
+ 	github.com/DataDog/agent-payload/v5 v5.0.73
+-	github.com/DataDog/datadog-api-client-go v1.16.0
+ 	github.com/docker/cli v24.0.4+incompatible
+ 	github.com/docker/docker v24.0.4+incompatible
+-	github.com/google/uuid v1.3.0
+ 	github.com/pkg/sftp v1.13.6
+ 	k8s.io/api v0.27.3
+ 	k8s.io/apimachinery v0.27.3
+@@ -49,7 +47,7 @@ require (
+ require (
+ 	dario.cat/mergo v1.0.0 // indirect
+ 	github.com/DataDog/mmh3 v0.0.0-20200805151601-30884ca2197a // indirect
+-	github.com/DataDog/zstd v1.5.0 // indirect
++	github.com/DataDog/zstd v1.4.8 // indirect
+ 	github.com/DataDog/zstd_0 v0.0.0-20210310093942-586c1286621f // indirect
+ 	github.com/Masterminds/semver v1.5.0 // indirect
+ 	github.com/Microsoft/go-winio v0.6.1 // indirect
+@@ -95,6 +93,7 @@ require (
+ 	github.com/google/gnostic v0.5.7-v3refs // indirect
+ 	github.com/google/go-cmp v0.5.9 // indirect
+ 	github.com/google/gofuzz v1.2.0 // indirect
++	github.com/google/uuid v1.3.0 // indirect
+ 	github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645 // indirect
+ 	github.com/hashicorp/errwrap v1.1.0 // indirect
+ 	github.com/hashicorp/go-multierror v1.1.1 // indirect
+diff --git a/test/new-e2e/go.sum b/test/new-e2e/go.sum
+index 1073496510..ed9b5b1616 100644
+Binary files a/test/new-e2e/go.sum and b/test/new-e2e/go.sum differ
+diff --git a/test/new-e2e/pkg/utils/e2e/client/agent_cmd_runner.go b/test/new-e2e/pkg/utils/e2e/client/agent_cmd_runner.go
+index 1e1340f70c..918e138a64 100644
+--- a/test/new-e2e/pkg/utils/e2e/client/agent_cmd_runner.go
++++ b/test/new-e2e/pkg/utils/e2e/client/agent_cmd_runner.go
+@@ -7,7 +7,6 @@ package client
+ 
+ import (
+ 	"errors"
+-	"fmt"
+ 	"strings"
+ 	"testing"
+ 	"time"
+@@ -38,7 +37,7 @@ func newAgentCommandRunner(t *testing.T, executeAgentCmdWithError executeAgentCm
+ 
+ func (agent *AgentCommandRunner) executeCommand(command string, commandArgs ...AgentArgsOption) string {
+ 	if !agent.isReady {
+-		err := agent.WaitForReadyTimeout(1 * time.Minute)
++		err := agent.waitForReadyTimeout(1 * time.Minute)
+ 		require.NoErrorf(agent.t, err, "the agent is not ready")
+ 		agent.isReady = true
+ 	}
+@@ -110,10 +109,10 @@ func (agent *AgentCommandRunner) Status(commandArgs ...AgentArgsOption) *Status
+ 	return newStatus(agent.executeCommand("status", commandArgs...))
+ }
+ 
+-// WaitForReadyTimeout blocks up to timeout waiting for agent to be ready.
++// WaitForReady blocks up to timeout waiting for agent to be ready.
+ // Retries every 100 ms up to timeout.
+ // Returns error on failure.
+-func (agent *AgentCommandRunner) WaitForReadyTimeout(timeout time.Duration) error {
++func (agent *AgentCommandRunner) waitForReadyTimeout(timeout time.Duration) error {
+ 	interval := 100 * time.Millisecond
+ 	maxRetries := timeout.Milliseconds() / interval.Milliseconds()
+ 	err := backoff.Retry(func() error {
+@@ -125,22 +124,3 @@ func (agent *AgentCommandRunner) WaitForReadyTimeout(timeout time.Duration) erro
+ 	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(interval), uint64(maxRetries)))
+ 	return err
+ }
+-
+-// WaitAgentLogs waits for the agent log corresponding to the pattern
+-// agent-name can be: datadog-agent, system-probe, security-agent
+-// pattern: is the log that we are looking for
+-// Retries every 500 ms up to timeout.
+-// Returns error on failure.
+-func (a *Agent) WaitAgentLogs(agentName string, pattern string) error {
+-	err := backoff.Retry(func() error {
+-		output, err := a.vmClient.ExecuteWithError(fmt.Sprintf("cat /var/log/datadog/%s.log", agentName))
+-		if err != nil {
+-			return err
+-		}
+-		if strings.Contains(output, pattern) {
+-			return nil
+-		}
+-		return errors.New("no log found")
+-	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(500*time.Millisecond), 60))
+-	return err
+-}
+diff --git a/test/new-e2e/tests/cws/config/e2e-datadog.yaml b/test/new-e2e/tests/cws/config/e2e-datadog.yaml
+deleted file mode 100644
+index 548ee3105b..0000000000
+--- a/test/new-e2e/tests/cws/config/e2e-datadog.yaml
++++ /dev/null
+@@ -1,3 +0,0 @@
+-hostname: momar-e2e-test-host
+-log_level: DEBUG
+-logs_enabled: true
+\ No newline at end of file
+diff --git a/test/new-e2e/tests/cws/config/e2e-security-agent.yaml b/test/new-e2e/tests/cws/config/e2e-security-agent.yaml
+deleted file mode 100644
+index e4ee817bcf..0000000000
+--- a/test/new-e2e/tests/cws/config/e2e-security-agent.yaml
++++ /dev/null
+@@ -1,2 +0,0 @@
+-runtime_security_config:
+-  enabled: true
+\ No newline at end of file
+diff --git a/test/new-e2e/tests/cws/config/e2e-system-probe.yaml b/test/new-e2e/tests/cws/config/e2e-system-probe.yaml
+deleted file mode 100644
+index 1345b623f0..0000000000
+--- a/test/new-e2e/tests/cws/config/e2e-system-probe.yaml
++++ /dev/null
+@@ -1,7 +0,0 @@
+-system_probe_config:
+-  enabled: true
+-  log_level: trace
+-runtime_security_config:
+-  enabled: true
+-log_patterns:
+-  - module.APIServer.*"
+\ No newline at end of file
+diff --git a/test/new-e2e/tests/cws/e2e_cws_test.go b/test/new-e2e/tests/cws/e2e_cws_test.go
+deleted file mode 100644
+index 6f44e07a1e..0000000000
+--- a/test/new-e2e/tests/cws/e2e_cws_test.go
++++ /dev/null
+@@ -1,161 +0,0 @@
+-// Unless explicitly stated otherwise all files in this repository are licensed
+-// under the Apache License Version 2.0.
+-// This product includes software developed at Datadog (https://www.datadoghq.com/).
+-// Copyright 2016-present Datadog, Inc.
+-
+-package cws
+-
+-import (
+-	_ "embed"
+-	"fmt"
+-	"strconv"
+-	"strings"
+-	"testing"
+-	"time"
+-
+-	"github.com/google/uuid"
+-	"github.com/stretchr/testify/assert"
+-	"github.com/stretchr/testify/require"
+-
+-	"github.com/DataDog/datadog-agent/test/new-e2e/pkg/runner"
+-	"github.com/DataDog/datadog-agent/test/new-e2e/pkg/runner/parameters"
+-	"github.com/DataDog/datadog-agent/test/new-e2e/pkg/utils/e2e"
+-	cws "github.com/DataDog/datadog-agent/test/new-e2e/tests/cws/lib"
+-	"github.com/DataDog/test-infra-definitions/components/datadog/agentparams"
+-	"github.com/DataDog/test-infra-definitions/scenarios/aws/vm/ec2params"
+-)
+-
+-type agentSuite struct {
+-	e2e.Suite[e2e.AgentEnv]
+-	apiClient     cws.MyAPIClient
+-	signalRuleID  string
+-	agentRuleID   string
+-	dirname       string
+-	filename      string
+-	testID        string
+-	desc          string
+-	agentRuleName string
+-	policies      string
+-}
+-
+-//go:embed config/e2e-datadog.yaml
+-var agentConfig string
+-
+-//go:embed config/e2e-system-probe.yaml
+-var systemProbeConfig string
+-
+-//go:embed config/e2e-security-agent.yaml
+-var securityAgentConfig string
+-
+-func TestAgentSuite(t *testing.T) {
+-
+-	e2e.Run(t, &agentSuite{}, e2e.AgentStackDef(
+-		[]ec2params.Option{
+-			ec2params.WithName("cws-e2e-tests"),
+-		},
+-		agentparams.WithAgentConfig(agentConfig),
+-		agentparams.WithSecurityAgentConfig(securityAgentConfig),
+-		agentparams.WithSystemProbeConfig(systemProbeConfig),
+-	))
+-}
+-
+-func (a *agentSuite) SetupSuite() {
+-
+-	// Create temporary directory
+-	tempDir := a.Env().VM.Execute("mktemp -d")
+-	a.dirname = strings.TrimSuffix(tempDir, "\n")
+-	a.filename = fmt.Sprintf("%s/secret", a.dirname)
+-	a.testID = uuid.NewString()[:4]
+-	a.desc = fmt.Sprintf("e2e test rule %s", a.testID)
+-	a.agentRuleName = fmt.Sprintf("e2e_agent_rule_%s", a.testID)
+-	a.Suite.SetupSuite()
+-}
+-
+-func (a *agentSuite) TearDownSuite() {
+-
+-	if len(a.signalRuleID) != 0 {
+-		a.apiClient.DeleteSignalRule(a.signalRuleID)
+-	}
+-	if len(a.agentRuleID) != 0 {
+-		a.apiClient.DeleteAgentRule(a.agentRuleID)
+-	}
+-	a.Env().VM.Execute(fmt.Sprintf("rm -r %s", a.dirname))
+-	a.Suite.TearDownSuite()
+-}
+-
+-func (a *agentSuite) TestOpenSignal() {
+-	a.apiClient = cws.NewAPIClient()
+-
+-	// Create CWS Agent rule
+-	rule := fmt.Sprintf("open.file.path == \"%s\"", a.filename)
+-	res, err := a.apiClient.CreateCWSAgentRule(a.agentRuleName, a.desc, rule)
+-	require.NoError(a.T(), err, "Agent rule creation failed")
+-	a.agentRuleID = res.Data.GetId()
+-
+-	// Create Signal Rule (backend)
+-	res2, err := a.apiClient.CreateCwsSignalRule(a.desc, "signal rule for e2e testing", a.agentRuleName, []string{})
+-	require.NoError(a.T(), err, "Signal rule creation failed")
+-	a.signalRuleID = res2.GetId()
+-
+-	// Check if the agent has started
+-	err = a.Env().Agent.WaitForReadyTimeout(1 * time.Minute)
+-	require.NoError(a.T(), err)
+-
+-	isReady := a.Env().Agent.IsReady()
+-	assert.Equal(a.T(), isReady, true, "Agent should be ready")
+-
+-	// Check if system-probe has started
+-	err = a.Env().Agent.WaitAgentLogs("system-probe", cws.SystemProbeStartLog)
+-	require.NoError(a.T(), err, "system-probe could not start")
+-
+-	// Check if security-agent has started
+-	err = a.Env().Agent.WaitAgentLogs("security-agent", cws.SecurityStartLog)
+-	require.NoError(a.T(), err, "security-agent could not start")
+-
+-	// Download policies
+-	apiKey, err := runner.GetProfile().SecretStore().Get(parameters.APIKey)
+-	require.NoError(a.T(), err, "Could not get API KEY")
+-
+-	appKey, err := runner.GetProfile().SecretStore().Get(parameters.APPKey)
+-	require.NoError(a.T(), err, "Could not get APP KEY")
+-
+-	a.EventuallyWithT(func(c *assert.CollectT) {
+-		policies := a.Env().VM.Execute(fmt.Sprintf("DD_APP_KEY=%s DD_API_KEY=%s DD_SITE=datadoghq.com %s runtime policy download", appKey, apiKey, cws.SecurityAgentPath))
+-		assert.NotEmpty(c, policies, "should not be empty")
+-		a.policies = policies
+-	}, 5*time.Minute, 10*time.Second)
+-
+-	// Check that the newly created rule is in the policies
+-	assert.Contains(a.T(), a.policies, a.desc, "The policies should contain the created rule")
+-
+-	// Push policies
+-	a.Env().VM.Execute(fmt.Sprintf("echo -e %s > temp.txt\nsudo cp temp.txt %s", strconv.Quote(a.policies), cws.PoliciesPath))
+-	a.Env().VM.Execute("rm temp.txt")
+-	policiesFile := a.Env().VM.Execute(fmt.Sprintf("cat %s", cws.PoliciesPath))
+-	assert.Contains(a.T(), policiesFile, a.desc, "The policies file should contain the created rule")
+-
+-	// Reload policies
+-	a.Env().VM.Execute(fmt.Sprintf("sudo %s runtime policy reload", cws.SecurityAgentPath))
+-
+-	// Check `downloaded` ruleset_loaded
+-	result, err := cws.WaitAppLogs(a.apiClient, "rule_id:ruleset_loaded")
+-	require.NoError(a.T(), err, "could not get new ruleset")
+-
+-	agentContext := result.Attributes["agent"].(map[string]interface{})
+-	assert.EqualValues(a.T(), "ruleset_loaded", agentContext["rule_id"], "Ruleset should be loaded")
+-
+-	// Trigger agent event
+-	a.Env().VM.Execute(fmt.Sprintf("touch %s", a.filename))
+-
+-	// Check agent event
+-	err = a.Env().Agent.WaitAgentLogs("security-agent", "Successfully posted payload to")
+-	require.NoError(a.T(), err, "could not send payload")
+-
+-	// Check app signal
+-	signal, err := cws.WaitAppSignal(a.apiClient, fmt.Sprintf("rule_id:%s", a.agentRuleName))
+-	require.NoError(a.T(), err)
+-	assert.Contains(a.T(), signal.Tags, fmt.Sprintf("rule_id:%s", a.agentRuleName), "unable to find agent_rule_name tag")
+-	agentContext = signal.Attributes["agent"].(map[string]interface{})
+-	assert.Contains(a.T(), agentContext["rule_id"], a.agentRuleName, "unable to find tag")
+-
+-}
+diff --git a/test/new-e2e/tests/cws/lib/app.go b/test/new-e2e/tests/cws/lib/app.go
+deleted file mode 100644
+index 284cc17acf..0000000000
+--- a/test/new-e2e/tests/cws/lib/app.go
++++ /dev/null
+@@ -1,192 +0,0 @@
+-// Unless explicitly stated otherwise all files in this repository are licensed
+-// under the Apache License Version 2.0.
+-// This product includes software developed at Datadog (https://www.datadoghq.com/).
+-// Copyright 2016-present Datadog, Inc.
+-
+-// Package cws holds cws test related functions
+-package cws
+-
+-import (
+-	"context"
+-	"time"
+-
+-	"github.com/DataDog/datadog-agent/test/new-e2e/pkg/runner"
+-	"github.com/DataDog/datadog-agent/test/new-e2e/pkg/runner/parameters"
+-	"github.com/DataDog/datadog-api-client-go/api/v2/datadog"
+-)
+-
+-// MyAPIClient represents the datadog API context
+-type MyAPIClient struct {
+-	api *datadog.APIClient
+-	ctx context.Context
+-}
+-
+-// NewAPIClient initialise a client with the API and APP keys
+-func NewAPIClient() MyAPIClient {
+-	apiKey, _ := runner.GetProfile().SecretStore().Get(parameters.APIKey)
+-	appKey, _ := runner.GetProfile().SecretStore().Get(parameters.APPKey)
+-	ctx := context.WithValue(
+-		context.Background(),
+-		datadog.ContextAPIKeys,
+-		map[string]datadog.APIKey{
+-			"apiKeyAuth": {
+-				Key: apiKey,
+-			},
+-			"appKeyAuth": {
+-				Key: appKey,
+-			},
+-		},
+-	)
+-
+-	cfg := datadog.NewConfiguration()
+-
+-	apiClient := MyAPIClient{
+-		api: datadog.NewAPIClient(cfg),
+-		ctx: ctx,
+-	}
+-	return apiClient
+-}
+-
+-// GetAppLog returns the logs corresponding to the query
+-func (c MyAPIClient) GetAppLog(query string) (*datadog.LogsListResponse, error) {
+-	sort := datadog.LOGSSORT_TIMESTAMP_ASCENDING
+-
+-	body := datadog.LogsListRequest{
+-		Filter: &datadog.LogsQueryFilter{
+-			From:  datadog.PtrString("now-15m"),
+-			Query: &query,
+-			To:    datadog.PtrString("now"),
+-		},
+-		Page: &datadog.LogsListRequestPage{
+-			Limit: datadog.PtrInt32(25),
+-		},
+-		Sort: &sort,
+-	}
+-	request := datadog.ListLogsOptionalParameters{
+-		Body: &body,
+-	}
+-
+-	result, _, err := c.api.LogsApi.ListLogs(c.ctx, request)
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	return &result, nil
+-}
+-
+-// GetAppSignal returns the signal corresponding to the query
+-func (c MyAPIClient) GetAppSignal(query string) (*datadog.SecurityMonitoringSignalsListResponse, error) {
+-	now := time.Now().UTC()
+-	queryFrom := now.Add(-15 * time.Minute)
+-	sort := datadog.SECURITYMONITORINGSIGNALSSORT_TIMESTAMP_ASCENDING
+-
+-	body := datadog.SecurityMonitoringSignalListRequest{
+-		Filter: &datadog.SecurityMonitoringSignalListRequestFilter{
+-			From:  &queryFrom,
+-			Query: &query,
+-			To:    &now,
+-		},
+-		Page: &datadog.SecurityMonitoringSignalListRequestPage{
+-			Limit: datadog.PtrInt32(25),
+-		},
+-		Sort: &sort,
+-	}
+-
+-	request := datadog.SearchSecurityMonitoringSignalsOptionalParameters{
+-		Body: &body,
+-	}
+-
+-	result, _, err := c.api.SecurityMonitoringApi.SearchSecurityMonitoringSignals(c.ctx, request)
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	return &result, nil
+-}
+-
+-// CreateCwsSignalRule creates a cws signal rule
+-func (c MyAPIClient) CreateCwsSignalRule(name string, msg string, agentRuleID string, tags []string) (*datadog.SecurityMonitoringRuleResponse, error) {
+-	if tags == nil {
+-		tags = []string{}
+-	}
+-	var (
+-		detectionMethod    = datadog.SECURITYMONITORINGRULEDETECTIONMETHOD_THRESHOLD
+-		evaluationWindow   = datadog.SECURITYMONITORINGRULEEVALUATIONWINDOW_ZERO_MINUTES
+-		keepAlive          = datadog.SECURITYMONITORINGRULEKEEPALIVE_ZERO_MINUTES
+-		maxSignalDuration  = datadog.SECURITYMONITORINGRULEMAXSIGNALDURATION_ZERO_MINUTES
+-		aggregation        = datadog.SECURITYMONITORINGRULEQUERYAGGREGATION_COUNT
+-		monitoringRuleType = datadog.SECURITYMONITORINGRULETYPECREATE_WORKLOAD_SECURITY
+-	)
+-
+-	body := datadog.SecurityMonitoringRuleCreatePayload{
+-		Cases: []datadog.SecurityMonitoringRuleCaseCreate{
+-			{
+-				Condition: datadog.PtrString("a > 0"),
+-				Status:    datadog.SECURITYMONITORINGRULESEVERITY_INFO,
+-			},
+-		},
+-
+-		HasExtendedTitle: datadog.PtrBool(true),
+-		IsEnabled:        true,
+-		Name:             name,
+-		Message:          msg,
+-		Options: datadog.SecurityMonitoringRuleOptions{
+-			DetectionMethod:   &detectionMethod,
+-			EvaluationWindow:  &evaluationWindow,
+-			KeepAlive:         &keepAlive,
+-			MaxSignalDuration: &maxSignalDuration,
+-		},
+-
+-		Queries: []datadog.SecurityMonitoringRuleQueryCreate{
+-			{
+-				Aggregation: &aggregation,
+-				Query:       "@agent.rule_id:" + agentRuleID,
+-				Name:        datadog.PtrString("a"),
+-			},
+-		},
+-		Tags: tags,
+-		Type: &monitoringRuleType,
+-	}
+-
+-	response, _, err := c.api.SecurityMonitoringApi.CreateSecurityMonitoringRule(c.ctx, body)
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	return &response, nil
+-}
+-
+-// CreateCWSAgentRule creates a cws agent rule
+-func (c MyAPIClient) CreateCWSAgentRule(name string, msg string, secl string) (*datadog.CloudWorkloadSecurityAgentRuleResponse, error) {
+-
+-	body := datadog.CloudWorkloadSecurityAgentRuleCreateRequest{
+-		Data: datadog.CloudWorkloadSecurityAgentRuleCreateData{
+-			Attributes: datadog.CloudWorkloadSecurityAgentRuleCreateAttributes{
+-				Description: &msg,
+-				Enabled:     datadog.PtrBool(true),
+-				Expression:  secl,
+-				Name:        name,
+-			},
+-			Type: "agent_rule",
+-		},
+-	}
+-
+-	response, _, err := c.api.CloudWorkloadSecurityApi.CreateCloudWorkloadSecurityAgentRule(c.ctx, body)
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	return &response, nil
+-}
+-
+-// DeleteSignalRule deletes a signal rule
+-func (c MyAPIClient) DeleteSignalRule(ruleID string) error {
+-	_, err := c.api.SecurityMonitoringApi.DeleteSecurityMonitoringRule(c.ctx, ruleID)
+-	return err
+-}
+-
+-// DeleteAgentRule deletes an agent rule
+-func (c MyAPIClient) DeleteAgentRule(ruleID string) error {
+-	_, err := c.api.CloudWorkloadSecurityApi.DeleteCloudWorkloadSecurityAgentRule(c.ctx, ruleID)
+-	return err
+-}
+diff --git a/test/new-e2e/tests/cws/lib/const.go b/test/new-e2e/tests/cws/lib/const.go
+deleted file mode 100644
+index 8dba4b4819..0000000000
+--- a/test/new-e2e/tests/cws/lib/const.go
++++ /dev/null
+@@ -1,20 +0,0 @@
+-// Unless explicitly stated otherwise all files in this repository are licensed
+-// under the Apache License Version 2.0.
+-// This product includes software developed at Datadog (https://www.datadoghq.com/).
+-// Copyright 2016-present Datadog, Inc.
+-
+-package cws
+-
+-const (
+-	// SecurityStartLog is the log corresponding to a successful start of the security-agent
+-	SecurityStartLog = "Successfully connected to the runtime security module"
+-
+-	// SystemProbeStartLog is the log corresponding to a successful start of the system-probe
+-	SystemProbeStartLog = "runtime security started"
+-
+-	// SecurityAgentPath is the path of the security-agent binary
+-	SecurityAgentPath = "/opt/datadog-agent/embedded/bin/security-agent"
+-
+-	// PoliciesPath is the path of the default runtime security policies
+-	PoliciesPath = "/etc/datadog-agent/runtime-security.d/default.policy"
+-)
+diff --git a/test/new-e2e/tests/cws/lib/logs.go b/test/new-e2e/tests/cws/lib/logs.go
+deleted file mode 100644
+index 6a3d0ffce8..0000000000
+--- a/test/new-e2e/tests/cws/lib/logs.go
++++ /dev/null
+@@ -1,48 +0,0 @@
+-// Unless explicitly stated otherwise all files in this repository are licensed
+-// under the Apache License Version 2.0.
+-// This product includes software developed at Datadog (https://www.datadoghq.com/).
+-// Copyright 2016-present Datadog, Inc.
+-
+-package cws
+-
+-import (
+-	"errors"
+-	"time"
+-
+-	"github.com/DataDog/datadog-api-client-go/api/v2/datadog"
+-	"github.com/cenkalti/backoff"
+-)
+-
+-// WaitAppLogs waits for the app log corresponding to the query
+-func WaitAppLogs(apiClient MyAPIClient, query string) (*datadog.LogAttributes, error) {
+-	var resp *datadog.LogAttributes
+-	err := backoff.Retry(func() error {
+-		tmpResp, err := apiClient.GetAppLog(query)
+-		if err != nil {
+-			return err
+-		}
+-		if len(tmpResp.Data) > 0 {
+-			resp = tmpResp.Data[0].Attributes
+-			return nil
+-		}
+-		return errors.New("no log found")
+-	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(500*time.Millisecond), 60))
+-	return resp, err
+-}
+-
+-// WaitAppSignal waits for the signal corresponding to the query
+-func WaitAppSignal(apiClient MyAPIClient, query string) (*datadog.SecurityMonitoringSignalAttributes, error) {
+-	var resp *datadog.SecurityMonitoringSignalAttributes
+-	err := backoff.Retry(func() error {
+-		tmpResp, err := apiClient.GetAppSignal(query)
+-		if err != nil {
+-			return err
+-		}
+-		if len(tmpResp.Data) > 0 {
+-			resp = tmpResp.Data[0].Attributes
+-			return nil
+-		}
+-		return errors.New("no log found")
+-	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(500*time.Millisecond), 60))
+-	return resp, err
+-}

@@ -1,0 +1,27 @@
+patching file test/e2e/Dockerfile
+patching file test/e2e/Makefile
+patching file test/e2e/external_dns.go
+patching file test/e2e/go.mod
+patching file test/e2e/go.sum
+patching file test/e2e/gpu.go
+patching file test/e2e/node_test.go
+{"Time":"2026-06-29T15:20:02.911175303Z","Action":"start","Package":"cluster-config-test"}
+{"Time":"2026-06-29T15:20:02.925947886Z","Action":"run","Package":"cluster-config-test","Test":"TestCronJobTimeZoneFeatureGateRemoved"}
+{"Time":"2026-06-29T15:20:02.926074999Z","Action":"output","Package":"cluster-config-test","Test":"TestCronJobTimeZoneFeatureGateRemoved","Output":"=== RUN   TestCronJobTimeZoneFeatureGateRemoved\n"}
+{"Time":"2026-06-29T15:20:02.927005225Z","Action":"output","Package":"cluster-config-test","Test":"TestCronJobTimeZoneFeatureGateRemoved","Output":"    cluster_test.go:15: cronjob_time_zone_enabled should be removed from cluster/config-defaults.yaml as CronJobTimeZone feature gate is stable in k8s v1.29\n"}
+{"Time":"2026-06-29T15:20:02.927319313Z","Action":"output","Package":"cluster-config-test","Test":"TestCronJobTimeZoneFeatureGateRemoved","Output":"--- FAIL: TestCronJobTimeZoneFeatureGateRemoved (0.00s)\n"}
+{"Time":"2026-06-29T15:20:02.927443526Z","Action":"fail","Package":"cluster-config-test","Test":"TestCronJobTimeZoneFeatureGateRemoved","Elapsed":0}
+{"Time":"2026-06-29T15:20:02.927544899Z","Action":"run","Package":"cluster-config-test","Test":"TestKubernetesV129AMIConfigured"}
+{"Time":"2026-06-29T15:20:02.927610141Z","Action":"output","Package":"cluster-config-test","Test":"TestKubernetesV129AMIConfigured","Output":"=== RUN   TestKubernetesV129AMIConfigured\n"}
+{"Time":"2026-06-29T15:20:02.927837767Z","Action":"output","Package":"cluster-config-test","Test":"TestKubernetesV129AMIConfigured","Output":"    cluster_test.go:25: kuberuntu_image_v1_29 AMI entries should be present in cluster/config-defaults.yaml for k8s v1.29 upgrade\n"}
+{"Time":"2026-06-29T15:20:02.92792621Z","Action":"output","Package":"cluster-config-test","Test":"TestKubernetesV129AMIConfigured","Output":"--- FAIL: TestKubernetesV129AMIConfigured (0.00s)\n"}
+{"Time":"2026-06-29T15:20:02.9279387Z","Action":"fail","Package":"cluster-config-test","Test":"TestKubernetesV129AMIConfigured","Elapsed":0}
+{"Time":"2026-06-29T15:20:02.928049423Z","Action":"run","Package":"cluster-config-test","Test":"TestMasterNodePoolUsesV129"}
+{"Time":"2026-06-29T15:20:02.928103404Z","Action":"output","Package":"cluster-config-test","Test":"TestMasterNodePoolUsesV129","Output":"=== RUN   TestMasterNodePoolUsesV129\n"}
+{"Time":"2026-06-29T15:20:02.928845035Z","Action":"output","Package":"cluster-config-test","Test":"TestMasterNodePoolUsesV129","Output":"    cluster_test.go:35: master-default/stack.yaml should reference kuberuntu_image_v1_29 for k8s v1.29 upgrade\n"}
+{"Time":"2026-06-29T15:20:02.928872076Z","Action":"output","Package":"cluster-config-test","Test":"TestMasterNodePoolUsesV129","Output":"--- FAIL: TestMasterNodePoolUsesV129 (0.00s)\n"}
+{"Time":"2026-06-29T15:20:02.928973758Z","Action":"fail","Package":"cluster-config-test","Test":"TestMasterNodePoolUsesV129","Elapsed":0}
+{"Time":"2026-06-29T15:20:02.92902799Z","Action":"output","Package":"cluster-config-test","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:20:02.929553554Z","Action":"output","Package":"cluster-config-test","Output":"FAIL\tcluster-config-test\t0.018s\n"}
+{"Time":"2026-06-29T15:20:02.929903624Z","Action":"fail","Package":"cluster-config-test","Elapsed":0.019}
+reward=0 graded=3 found=3 failed=3 parsed=4 framework=go exit_code=1

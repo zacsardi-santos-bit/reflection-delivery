@@ -1,0 +1,23 @@
+{
+ "task": "moby-moby-46979",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden updates config.go import + vendor.mod/vendor.sum + relocates vendored tree github.com/imdario/mergo -> dario.cat/mergo + modules.txt; test.patch switches test imports to dario.cat/mergo so ./daemon and ./daemon/config only compile after the migration"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 19,
+  "shallow": true
+ }
+}

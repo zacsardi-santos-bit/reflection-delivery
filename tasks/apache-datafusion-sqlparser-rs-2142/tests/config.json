@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -E 'test(test_parse_alter_user)'",
+  "test_files": [
+    "tests/sqlparser_common.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) sqlparser::sqlparser_common test_parse_alter_user"
+  ],
+  "PASS_TO_PASS": []
+}

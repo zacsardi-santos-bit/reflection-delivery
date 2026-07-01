@@ -1,0 +1,23 @@
+{
+ "task": "stackrox-stackrox-2112",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden 'rename from central/image/datastore/internal/store/common/parts.go rename to central/image/datastore/store/common/parts.go'; test.patch relocates parts_test.go (TestSplitAndMergeImage) to matching new path"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 99,
+  "shallow": true
+ }
+}

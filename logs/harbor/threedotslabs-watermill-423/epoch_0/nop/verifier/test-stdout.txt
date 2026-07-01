@@ -1,0 +1,15 @@
+patching file message/router/middleware/deduplicator_test.go
+# github.com/ThreeDotsLabs/watermill/message/router/middleware_test [github.com/ThreeDotsLabs/watermill/message/router/middleware.test]
+message/router/middleware/deduplicator_test.go:19:19: undefined: middleware.Deduplicator
+message/router/middleware/deduplicator_test.go:20:26: undefined: middleware.NewMessageHasherAdler32
+message/router/middleware/deduplicator_test.go:63:19: undefined: middleware.Deduplicator
+message/router/middleware/deduplicator_test.go:64:26: undefined: middleware.NewMessageHasherAdler32
+message/router/middleware/deduplicator_test.go:103:22: undefined: middleware.NewMessageHasherAdler32
+message/router/middleware/deduplicator_test.go:104:21: undefined: middleware.NewMessageHasherAdler32
+message/router/middleware/deduplicator_test.go:104:56: undefined: middleware.MessageHasherReadLimitMinimum
+message/router/middleware/deduplicator_test.go:120:22: undefined: middleware.NewMessageHasherSHA256
+message/router/middleware/deduplicator_test.go:121:21: undefined: middleware.NewMessageHasherSHA256
+message/router/middleware/deduplicator_test.go:121:55: undefined: middleware.MessageHasherReadLimitMinimum
+message/router/middleware/deduplicator_test.go:121:55: too many errors
+FAIL	github.com/ThreeDotsLabs/watermill/message/router/middleware [build failed]
+reward=0 graded=42 found=42 failed=42 parsed=1 framework=go exit_code=1

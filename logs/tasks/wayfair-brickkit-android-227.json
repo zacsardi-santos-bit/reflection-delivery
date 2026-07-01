@@ -1,0 +1,23 @@
+{
+ "task": "wayfair-brickkit-android-227",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "2 F2P 'DataModelTest::testNotifyChange' and 'testIsReady'; test compiles DataModel.kt + DataModelTest.kt via kotlinc and runs via junit-console, asserts removed listener via fail()"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

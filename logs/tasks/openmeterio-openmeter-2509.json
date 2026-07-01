@@ -1,0 +1,23 @@
+{
+ "task": "openmeterio-openmeter-2509",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds IsEmpty() to Filter interface and each type; FilterBoolean.IsEmpty() returns 'f.Eq == nil' (false value still non-empty); 48 TestFilter*_IsEmpty subtests in F2P"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

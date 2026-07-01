@@ -1,0 +1,14 @@
+patching file Dockerfile
+patching file internal/compiler/resolve.go
+patching file internal/endtoend/testdata/params_in_nested_func/mysql/db/db.go
+patching file internal/endtoend/testdata/params_in_nested_func/mysql/db/models.go
+patching file internal/endtoend/testdata/params_in_nested_func/mysql/db/query.sql.go
+patching file internal/endtoend/testdata/params_in_nested_func/mysql/query.sql
+patching file internal/endtoend/testdata/params_in_nested_func/mysql/schema.sql
+patching file internal/endtoend/testdata/params_in_nested_func/mysql/sqlc.yaml
+patching file internal/endtoend/testdata/params_in_nested_func/postgresql/db/db.go
+patching file internal/endtoend/testdata/params_in_nested_func/postgresql/db/models.go
+patching file internal/endtoend/testdata/params_in_nested_func/postgresql/db/query.sql.go
+patching file internal/endtoend/testdata/params_in_nested_func/postgresql/query.sql
+patching file internal/endtoend/testdata/params_in_nested_func/postgresql/schema.sql
+patching file internal/endtoend/testdata/params_in_nested_func/postgresql/sqlc.yaml

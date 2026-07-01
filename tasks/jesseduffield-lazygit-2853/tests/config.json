@@ -1,0 +1,35 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -count=1 ./pkg/integration/components && go test -json -count=1 -run \"TestIntegration/sync/force_push\" ./pkg/integration/clients ./pkg/integration/tests ./pkg/integration/tests/demo",
+  "test_files": [
+    "pkg/integration/clients/go_test.go",
+    "pkg/integration/components/test_test.go",
+    "pkg/integration/tests/demo/bisect.go",
+    "pkg/integration/tests/demo/cherry_pick.go",
+    "pkg/integration/tests/demo/commit_and_push.go",
+    "pkg/integration/tests/demo/interactive_rebase.go",
+    "pkg/integration/tests/test_list.go",
+    "test/default_test_config/config.yml"
+  ],
+  "num_test_files": 8,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/jesseduffield/lazygit/pkg/integration/clients::TestIntegration/sync/force_push_multiple_upstream",
+    "github.com/jesseduffield/lazygit/pkg/integration/clients::TestIntegration/sync/force_push",
+    "github.com/jesseduffield/lazygit/pkg/integration/clients::TestIntegration/sync/force_push_multiple_matching",
+    "github.com/jesseduffield/lazygit/pkg/integration/clients::TestIntegration"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestManualFailure",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestSuccess",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestGitVersionRestriction/AtLeast,_current_is_newer",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestGitVersionRestriction/AtLeast,_current_is_same",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestGitVersionRestriction/AtLeast,_current_is_older",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestGitVersionRestriction/Before,_current_is_older",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestGitVersionRestriction/Before,_current_is_same",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestGitVersionRestriction/Before,_current_is_newer",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestGitVersionRestriction/Includes,_current_is_included",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestGitVersionRestriction/Includes,_current_is_not_included",
+    "github.com/jesseduffield/lazygit/pkg/integration/components::TestGitVersionRestriction"
+  ]
+}

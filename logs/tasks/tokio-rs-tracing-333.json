@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-tracing-333",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden rewrites Directive/StaticDirective partial_cmp into a total ordering with lexicographical tie-break so equal-weight directives no longer collapse ('Ordering::Equal must imply a == b'); removes '.rev()' in matches_iter; test.patch adds same_len_filters.rs (same_length_targets, same_num_fields_"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

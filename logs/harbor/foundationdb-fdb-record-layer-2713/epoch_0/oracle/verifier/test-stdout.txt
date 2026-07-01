@@ -1,0 +1,229 @@
+patching file fdb-record-layer-lucene/src/test/java/com/apple/foundationdb/record/lucene/LuceneAutoCompletedMatchesTest.java
+patching file fdb-record-layer-lucene/src/test/java/com/apple/foundationdb/record/lucene/LuceneIndexTest.java
+patching file fdb-record-layer-lucene/src/test/java/com/apple/foundationdb/record/lucene/LuceneIndexTestUtils.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. See https://docs.gradle.org/7.4.2/userguide/gradle_daemon.html#sec:disabling_the_daemon.
+Daemon will be stopped at the end of the build 
+
+> Configure project :fdb-record-layer-lucene
+Fixing seed for lucene tests
+Fixing seed for lucene tests
+Fixing seed for lucene tests
+
+> Task :fdb-extensions:compileJava UP-TO-DATE
+> Task :fdb-extensions:processResources NO-SOURCE
+> Task :fdb-extensions:classes UP-TO-DATE
+> Task :fdb-extensions:jar UP-TO-DATE
+> Task :fdb-extensions:compileTestJava UP-TO-DATE
+> Task :fdb-extensions:processTestResources NO-SOURCE
+> Task :fdb-extensions:testClasses UP-TO-DATE
+> Task :fdb-extensions:testJar UP-TO-DATE
+> Task :fdb-record-layer-core:extractIncludeProto UP-TO-DATE
+> Task :fdb-record-layer-core:extractProto UP-TO-DATE
+> Task :fdb-record-layer-core:generateProto UP-TO-DATE
+> Task :fdb-record-layer-core:compileJava
+> Task :fdb-record-layer-core:processResources UP-TO-DATE
+> Task :fdb-record-layer-core:classes
+> Task :fdb-record-layer-core:jar
+> Task :fdb-record-layer-core:extractIncludeTestProto UP-TO-DATE
+> Task :fdb-record-layer-core:extractTestProto UP-TO-DATE
+> Task :fdb-record-layer-core:generateTestProto UP-TO-DATE
+> Task :fdb-record-layer-core:compileTestJava
+> Task :fdb-record-layer-core:processTestResources UP-TO-DATE
+> Task :fdb-record-layer-core:testClasses
+> Task :fdb-record-layer-core:testJar
+> Task :fdb-record-layer-lucene:extractIncludeProto
+> Task :fdb-record-layer-lucene:extractProto UP-TO-DATE
+> Task :fdb-record-layer-lucene:generateProto UP-TO-DATE
+> Task :fdb-record-layer-lucene:compileJava
+> Task :fdb-record-layer-lucene:processResources UP-TO-DATE
+> Task :fdb-record-layer-lucene:classes
+> Task :fdb-record-layer-lucene:extractIncludeTestProto
+> Task :fdb-record-layer-lucene:extractTestProto UP-TO-DATE
+> Task :fdb-record-layer-lucene:generateTestProto NO-SOURCE
+> Task :fdb-record-layer-lucene:compileTestJava
+> Task :fdb-record-layer-lucene:processTestResources NO-SOURCE
+> Task :fdb-record-layer-lucene:testClasses
+
+> Task :fdb-record-layer-lucene:test
+2026-06-29T15:29:36.189693Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=Good morning!] STARTED
+2026-06-29T15:29:36.428872Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=Good morning!] SUCCESS (232ms)
+
+2026-06-29T15:29:36.430646Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=It is all for the good, and I'll see you on the morrow] STARTED
+2026-06-29T15:29:36.431057Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=It is all for the good, and I'll see you on the morrow] SUCCESS (1ms)
+
+2026-06-29T15:29:36.431430Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=The more good we do, the more good we see] STARTED
+2026-06-29T15:29:36.431763Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=The more good we do, the more good we see] SUCCESS (2ms)
+
+2026-06-29T15:29:36.432511Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=Good day!] STARTED
+2026-06-29T15:29:36.432681Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=Good day!] SUCCESS (1ms)
+
+2026-06-29T15:29:36.433131Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=Morning!] STARTED
+2026-06-29T15:29:36.433380Z LuceneAutoCompletedMatchesTest > searchForGoodMor[text=Morning!] SUCCESS (1ms)
+
+2026-06-29T15:29:36.434099Z LuceneAutoCompletedMatchesTest > searchForCjk[text=上无] STARTED
+2026-06-29T15:29:36.443067Z LuceneAutoCompletedMatchesTest > searchForCjk[text=上无] SUCCESS (12ms)
+
+2026-06-29T15:29:36.443983Z LuceneAutoCompletedMatchesTest > searchForCjk[text=上无 ] STARTED
+2026-06-29T15:29:36.446347Z LuceneAutoCompletedMatchesTest > searchForCjk[text=上无 ] SUCCESS (3ms)
+
+2026-06-29T15:29:36.447749Z LuceneAutoCompletedMatchesTest > searchForCjk[text=上无 eng] STARTED
+2026-06-29T15:29:36.448924Z LuceneAutoCompletedMatchesTest > searchForCjk[text=上无 eng] SUCCESS (1ms)
+
+2026-06-29T15:29:36.449852Z LuceneAutoCompletedMatchesTest > searchForCjk[text=の中に] STARTED
+2026-06-29T15:29:36.451965Z LuceneAutoCompletedMatchesTest > searchForCjk[text=の中に] SUCCESS (2ms)
+
+2026-06-29T15:29:36.452648Z LuceneAutoCompletedMatchesTest > searchForCjk[text=シイコ] STARTED
+2026-06-29T15:29:36.454120Z LuceneAutoCompletedMatchesTest > searchForCjk[text=シイコ] SUCCESS (1ms)
+
+2026-06-29T15:29:36.455040Z LuceneAutoCompletedMatchesTest > searchForCjk[text=シイ] STARTED
+2026-06-29T15:29:36.456225Z LuceneAutoCompletedMatchesTest > searchForCjk[text=シイ] SUCCESS (2ms)
+
+2026-06-29T15:29:36.457609Z LuceneAutoCompletedMatchesTest > searchForCjk[text=世] STARTED
+2026-06-29T15:29:36.458671Z LuceneAutoCompletedMatchesTest > searchForCjk[text=世] SUCCESS (2ms)
+
+2026-06-29T15:29:36.459884Z LuceneAutoCompletedMatchesTest > searchForCjk[text=english wor] STARTED
+2026-06-29T15:29:36.461302Z LuceneAutoCompletedMatchesTest > searchForCjk[text=english wor] SUCCESS (1ms)
+
+2026-06-29T15:29:36.462197Z LuceneAutoCompletedMatchesTest > searchForCjk[text=세상에english wor] STARTED
+2026-06-29T15:29:36.463713Z LuceneAutoCompletedMatchesTest > searchForCjk[text=세상에english wor] SUCCESS (2ms)
+
+2026-06-29T15:29:36.464333Z LuceneAutoCompletedMatchesTest > searchForCjk[text=에english wor] STARTED
+2026-06-29T15:29:36.466889Z LuceneAutoCompletedMatchesTest > searchForCjk[text=에english wor] SUCCESS (1ms)
+
+2026-06-29T15:29:36.467833Z LuceneAutoCompletedMatchesTest > searchForCjk[text=어려] STARTED
+2026-06-29T15:29:36.469614Z LuceneAutoCompletedMatchesTest > searchForCjk[text=어려] SUCCESS (1ms)
+
+2026-06-29T15:29:36.471648Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] STARTED
+2026-06-29T15:29:36.472805Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.473270Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] STARTED
+2026-06-29T15:29:36.474514Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.474981Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] STARTED
+2026-06-29T15:29:36.476155Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.476760Z LuceneAutoCompletedMatchesTest > searchForQua[text=1] STARTED
+2026-06-29T15:29:36.477590Z LuceneAutoCompletedMatchesTest > searchForQua[text=1] SUCCESS (1ms)
+
+2026-06-29T15:29:36.478121Z LuceneAutoCompletedMatchesTest > searchForQua[text=5] STARTED
+2026-06-29T15:29:36.478803Z LuceneAutoCompletedMatchesTest > searchForQua[text=5] SUCCESS (1ms)
+
+2026-06-29T15:29:36.479686Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] STARTED
+2026-06-29T15:29:36.480529Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.481080Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] STARTED
+2026-06-29T15:29:36.482239Z LuceneAutoCompletedMatchesTest > searchForQua[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.482876Z LuceneAutoCompletedMatchesTest > searchForQua[text=1] STARTED
+2026-06-29T15:29:36.483610Z LuceneAutoCompletedMatchesTest > searchForQua[text=1] SUCCESS (1ms)
+
+2026-06-29T15:29:36.483983Z LuceneAutoCompletedMatchesTest > autoCompleteMatchesWithStopWord() STARTED
+2026-06-29T15:29:36.485839Z LuceneAutoCompletedMatchesTest > autoCompleteMatchesWithStopWord() SUCCESS (2ms)
+
+2026-06-29T15:29:36.487067Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] STARTED
+2026-06-29T15:29:36.488466Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] SUCCESS (2ms)
+
+2026-06-29T15:29:36.488993Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] STARTED
+2026-06-29T15:29:36.489665Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.490084Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] STARTED
+2026-06-29T15:29:36.490693Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.491448Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] STARTED
+2026-06-29T15:29:36.492186Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] SUCCESS (0ms)
+
+2026-06-29T15:29:36.492752Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] STARTED
+2026-06-29T15:29:36.493627Z LuceneAutoCompletedMatchesTest > searchForGoodMorInPhrase[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.495136Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] STARTED
+2026-06-29T15:29:36.495916Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.496566Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] STARTED
+2026-06-29T15:29:36.497198Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] SUCCESS (0ms)
+
+2026-06-29T15:29:36.497682Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] STARTED
+2026-06-29T15:29:36.498581Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.499243Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] STARTED
+2026-06-29T15:29:36.500075Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] SUCCESS (0ms)
+
+2026-06-29T15:29:36.500516Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] STARTED
+2026-06-29T15:29:36.501192Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.501787Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] STARTED
+2026-06-29T15:29:36.502635Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.503206Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=1] STARTED
+2026-06-29T15:29:36.504005Z LuceneAutoCompletedMatchesTest > searchForHelloWorldInPhrase[text=1] SUCCESS (0ms)
+
+2026-06-29T15:29:36.505683Z LuceneAutoCompletedMatchesTest > searchForHelloWorld[text=0] STARTED
+2026-06-29T15:29:36.507553Z LuceneAutoCompletedMatchesTest > searchForHelloWorld[text=0] SUCCESS (2ms)
+
+2026-06-29T15:29:36.508188Z LuceneAutoCompletedMatchesTest > searchForHelloWorld[text=0] STARTED
+2026-06-29T15:29:36.509605Z LuceneAutoCompletedMatchesTest > searchForHelloWorld[text=0] SUCCESS (2ms)
+
+2026-06-29T15:29:36.510162Z LuceneAutoCompletedMatchesTest > searchForHelloWorld[text=0] STARTED
+2026-06-29T15:29:36.511246Z LuceneAutoCompletedMatchesTest > searchForHelloWorld[text=0] SUCCESS (1ms)
+
+2026-06-29T15:29:36.512189Z LuceneAutoCompletedMatchesTest > searchForHelloWorld[text=0] STARTED
+2026-06-29T15:29:36.513095Z LuceneAutoCompletedMatchesTest > searchForHelloWorld[text=0] SUCCESS (1ms)
+
+
+> Task :fdb-record-layer-lucene:jacocoTestReport
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.4.2/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 1m 3s
+26 actionable tasks: 10 executed, 16 up-to-date
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" tests="41" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:29:36" hostname="modal" time="0.329">
+  <properties/>
+  <testcase name="searchForGoodMor[text=Good morning!]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.232"/>
+  <testcase name="searchForGoodMor[text=It is all for the good, and I'll see you on the morrow]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForGoodMor[text=The more good we do, the more good we see]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.002"/>
+  <testcase name="searchForGoodMor[text=Good day!]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForGoodMor[text=Morning!]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForCjk[text=上无]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.012"/>
+  <testcase name="searchForCjk[text=上无 ]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.003"/>
+  <testcase name="searchForCjk[text=上无 eng]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForCjk[text=の中に]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.002"/>
+  <testcase name="searchForCjk[text=シイコ]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForCjk[text=シイ]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.002"/>
+  <testcase name="searchForCjk[text=世]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.002"/>
+  <testcase name="searchForCjk[text=english wor]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForCjk[text=세상에english wor]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.002"/>
+  <testcase name="searchForCjk[text=에english wor]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForCjk[text=어려]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForQua[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForQua[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForQua[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForQua[text=1]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForQua[text=5]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForQua[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForQua[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForQua[text=1]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="autoCompleteMatchesWithStopWord()" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.002"/>
+  <testcase name="searchForGoodMorInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.002"/>
+  <testcase name="searchForGoodMorInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForGoodMorInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForGoodMorInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.0"/>
+  <testcase name="searchForGoodMorInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForHelloWorldInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForHelloWorldInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.0"/>
+  <testcase name="searchForHelloWorldInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForHelloWorldInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.0"/>
+  <testcase name="searchForHelloWorldInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForHelloWorldInPhrase[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForHelloWorldInPhrase[text=1]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.0"/>
+  <testcase name="searchForHelloWorld[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.002"/>
+  <testcase name="searchForHelloWorld[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.002"/>
+  <testcase name="searchForHelloWorld[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <testcase name="searchForHelloWorld[text=0]" classname="com.apple.foundationdb.record.lucene.LuceneAutoCompletedMatchesTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=24 found=24 failed=0 parsed=24 framework=junit exit_code=0

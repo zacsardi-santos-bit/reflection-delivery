@@ -1,0 +1,12 @@
+patching file jest.config.js
+patching file packages/devtools/src/commands/closeWindow.ts
+patching file packages/devtools/src/commands/elementClear.ts
+patching file packages/devtools/src/commands/getElementAttribute.ts
+patching file packages/devtools/src/commands/getElementCSSValue.ts
+patching file packages/devtools/src/commands/getElementRect.ts
+patching file packages/devtools/src/commands/getElementTagName.ts
+patching file packages/devtools/src/commands/getElementText.ts
+patching file packages/devtools/src/devtoolsdriver.ts
+patching file packages/devtools/src/index.ts
+patching file packages/devtools/src/launcher.ts
+patching file packages/devtools/tsconfig.json

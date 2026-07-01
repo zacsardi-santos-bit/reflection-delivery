@@ -1,0 +1,23 @@
+{
+ "task": "kube-hpc-hkube-2094",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P: 'should update algorithm that cannot be scheduled due to failed job (when limits are lower than requests)'; golden refactors reconciler.js + warningCreator.js to capture job-creation failures"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 17,
+  "shallow": true
+ }
+}

@@ -1,0 +1,283 @@
+patching file src/js/components/Box/__tests__/Box-test.js
+patching file src/js/components/Box/__tests__/__snapshots__/Box-test.js.snap
+patching file src/js/components/Diagram/__tests__/__snapshots__/Diagram-test.js.snap
+patching file src/js/components/Select/__tests__/__snapshots__/Select-test.js.snap
+patching file src/js/components/__tests__/__snapshots__/README-test.js.snap
+ FAIL  src/js/components/__tests__/README-test.js
+  ● README is updated
+
+    expect(value).toMatchSnapshot()
+    
+    Received value does not match stored snapshot 1.
+    
+    - Snapshot
+    + Received
+    
+    @@ -299,22 +299,10 @@
+     true
+     false
+     grow
+     ```
+     
+    -**gap**
+    -
+    -The amount of spacing between child elements.
+    -
+    -```
+    -xsmall
+    -small
+    -medium
+    -large
+    -xlarge
+    -```
+    -
+     **gridArea**
+     
+     The name of the area to place this Box in inside a parent Grid.
+     
+     ```
+    @@ -906,13 +894,11 @@
+     string
+     ```
+     
+     **onChange**
+     
+    -Function that will be called when the user clicks the check box. It
+    -      will be passed a React event object. The current state can be accessed
+    -      via event.target.checked. Same as React <input onChange={} />.
+    +Same as React <input onChange={} />
+     
+     ```
+     function
+     ```
+     
+    @@ -1941,13 +1927,11 @@
+     string
+     ```
+     
+     **onChange**
+     
+    -Function that will be called when the user clicks the radio button. It
+    -      will be passed a React event object. The current state can be accessed
+    -      via event.target.checked. Same as React <input onChange={} />.
+    +Same as React <input onChange={} />
+     
+     ```
+     function
+     ```
+       ",
+    @@ -2239,11 +2223,11 @@
+     ```
+     
+     **guidingChild**
+     
+     Which child to guide layout from. All other children will be positioned
+    -      within that area. Defaults to 'first'. Defaults to `first`.
+    +      within that area. Defaults to `first`.
+     
+     ```
+     number
+     first
+     last
+      
+      at Object.<anonymous> (src/js/components/__tests__/README-test.js:19:25)
+          at new Promise (<anonymous>)
+      at node_modules/p-map/index.js:46:16
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+ PASS  src/js/components/Box/__tests__/Box-test.js
+  ● Console
+
+    console.error node_modules/fbjs/lib/warning.js:33
+      Warning: Each child in an array or iterator should have a unique "key" prop.
+      
+      Check the top-level render call using <Grommet>. See https://fb.me/react-warning-keys for more information.
+          in Box
+
+ FAIL  src/js/components/Diagram/__tests__/Diagram-test.js
+  ● Console
+
+    console.error node_modules/fbjs/lib/warning.js:33
+      Warning: React depends on requestAnimationFrame. Make sure that you load a polyfill in older browsers. http://fb.me/react-polyfills
+
+  ● Diagram renders
+
+    expect(value).toMatchSnapshot()
+    
+    Received value does not match stored snapshot 1.
+    
+    - Snapshot
+    + Received
+    
+    @@ -9,17 +9,17 @@
+           direction="row"
+           style="position: relative;"
+         >
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="1"
+             direction="column"
+    -        id="1"
+           />
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="2"
+             direction="column"
+    -        id="2"
+           />
+         </div>
+         <svg
+           class="StyledDiagram-fAdbMP bwxUiT"
+           viewBox="0 0 0 0"
+      
+      at src/js/components/Diagram/__tests__/Diagram-test.js:35:36
+      at Timeout.callback [as _onTimeout] (node_modules/jsdom/lib/jsdom/browser/Window.js:523:19)
+      at listOnTimeout (node:internal/timers:569:17)
+      at process.processTimers (node:internal/timers:512:7)
+
+  ● Diagram type renders
+
+    expect(value).toMatchSnapshot()
+    
+    Received value does not match stored snapshot 1.
+    
+    - Snapshot
+    + Received
+    
+    @@ -9,17 +9,17 @@
+           direction="row"
+           style="position: relative;"
+         >
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="1"
+             direction="column"
+    -        id="1"
+           />
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="2"
+             direction="column"
+    -        id="2"
+           />
+         </div>
+         <svg
+           class="StyledDiagram-fAdbMP bwxUiT"
+           viewBox="0 0 0 0"
+      
+      at Object.<anonymous> (src/js/components/Diagram/__tests__/Diagram-test.js:53:34)
+          at new Promise (<anonymous>)
+      at node_modules/p-map/index.js:46:16
+
+  ● Diagram color renders
+
+    expect(value).toMatchSnapshot()
+    
+    Received value does not match stored snapshot 1.
+    
+    - Snapshot
+    + Received
+    
+    @@ -9,17 +9,17 @@
+           direction="row"
+           style="position: relative;"
+         >
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="1"
+             direction="column"
+    -        id="1"
+           />
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="2"
+             direction="column"
+    -        id="2"
+           />
+         </div>
+         <svg
+           class="StyledDiagram-fAdbMP bwxUiT"
+           viewBox="0 0 0 0"
+      
+      at Object.<anonymous> (src/js/components/Diagram/__tests__/Diagram-test.js:66:34)
+          at new Promise (<anonymous>)
+      at node_modules/p-map/index.js:46:16
+
+  ● Diagram offset renders
+
+    expect(value).toMatchSnapshot()
+    
+    Received value does not match stored snapshot 1.
+    
+    - Snapshot
+    + Received
+    
+    @@ -9,17 +9,17 @@
+           direction="row"
+           style="position: relative;"
+         >
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="1"
+             direction="column"
+    -        id="1"
+           />
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="2"
+             direction="column"
+    -        id="2"
+           />
+         </div>
+         <svg
+           class="StyledDiagram-fAdbMP bwxUiT"
+           viewBox="0 0 0 0"
+      
+      at src/js/components/Diagram/__tests__/Diagram-test.js:83:36
+      at Timeout.callback [as _onTimeout] (node_modules/jsdom/lib/jsdom/browser/Window.js:523:19)
+      at listOnTimeout (node:internal/timers:569:17)
+      at process.processTimers (node:internal/timers:512:7)
+
+  ● Diagram thickness renders
+
+    expect(value).toMatchSnapshot()
+    
+    Received value does not match stored snapshot 1.
+    
+    - Snapshot
+    + Received
+    
+    @@ -9,17 +9,17 @@
+           direction="row"
+           style="position: relative;"
+         >
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="1"
+             direction="column"
+    -        id="1"
+           />
+           <div
+             class="StyledBox-bStriS jGLyaD"
+    +        id="2"
+             direction="column"
+    -        id="2"
+           />
+         </div>
+         <svg
+           class="StyledDiagram-fAdbMP bwxUiT"
+           viewBox="0 0 0 0"
+      
+      at Object.<anonymous> (src/js/components/Diagram/__tests__/Diagram-test.js:101:34)
+          at new Promise (<anonymous>)
+      at node_modules/p-map/index.js:46:16
+
+Snapshot Summary
+ › 6 snapshot tests failed in 2 test suites. Inspect your code changes or re-run with `-u` to update them.
+
+Test Suites: 2 failed, 1 passed, 3 total
+Tests:       6 failed, 22 passed, 28 total
+Snapshots:   6 failed, 22 passed, 28 total
+Time:        3.822s
+Ran all test suites matching /src/js/components/Box/__tests__/Box-test.js|src/js/components/Diagram/__tests__/Diagram-test.js|src/js/components/__tests__/README-test.js/.
+reward=0 graded=28 found=0 failed=0 parsed=0 framework=jest exit_code=1

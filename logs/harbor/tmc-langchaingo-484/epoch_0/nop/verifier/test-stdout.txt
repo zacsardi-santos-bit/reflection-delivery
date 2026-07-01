@@ -1,0 +1,15 @@
+patching file chains/chains_test.go
+# github.com/tmc/langchaingo/chains [github.com/tmc/langchaingo/chains.test]
+chains/chains_test.go:70:18: cannot use &testLanguageModel{} (value of type *testLanguageModel) as llms.LLM value in variable declaration: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/chains_test.go:84:19: cannot use &testLanguageModel{} (value of type *testLanguageModel) as llms.LLM value in argument to NewLLMChain: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/chains_test.go:99:19: cannot use &testLanguageModel{…} (value of type *testLanguageModel) as llms.LLM value in argument to NewLLMChain: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/llm_test.go:45:3: cannot use &testLanguageModel{} (value of type *testLanguageModel) as llms.LLM value in argument to NewLLMChain: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/map_reduce_test.go:17:4: cannot use &testLanguageModel{} (value of type *testLanguageModel) as llms.LLM value in argument to NewLLMChain: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/map_reduce_test.go:21:4: cannot use &testLanguageModel{} (value of type *testLanguageModel) as llms.LLM value in argument to NewLLMChain: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/map_reduce_test.go:39:4: cannot use &testLanguageModel{} (value of type *testLanguageModel) as llms.LLM value in argument to NewLLMChain: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/map_reduce_test.go:44:5: cannot use &testLanguageModel{} (value of type *testLanguageModel) as llms.LLM value in argument to NewLLMChain: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/map_rerank_documents_test.go:16:3: cannot use &testLanguageModel{} (value of type *testLanguageModel) as llms.LLM value in argument to NewLLMChain: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/map_rerank_documents_test.go:36:3: cannot use &testLanguageModel{} (value of type *testLanguageModel) as llms.LLM value in argument to NewLLMChain: *testLanguageModel does not implement llms.LLM (missing method GetNumTokens)
+chains/map_rerank_documents_test.go:36:3: too many errors
+FAIL	github.com/tmc/langchaingo/chains [build failed]
+reward=0 graded=26 found=26 failed=26 parsed=1 framework=go exit_code=1

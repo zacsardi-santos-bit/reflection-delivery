@@ -1,0 +1,23 @@
+{
+ "task": "greptimeteam-greptimedb-3709",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch: -assert_eq!(StatusCode::RegionReadonly, err.status_code()); +assert_eq!(StatusCode::RegionNotReady, err.status_code());"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

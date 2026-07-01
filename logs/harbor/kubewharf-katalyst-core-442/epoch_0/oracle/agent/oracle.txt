@@ -1,0 +1,13 @@
+patching file cmd/katalyst-agent/app/agent/orm.go
+patching file pkg/agent/orm/checkpoint.go (renamed from pkg/agent/resourcemanager/outofband/checkpoint.go)
+patching file pkg/agent/orm/checkpoint/checkpoint.go (renamed from pkg/agent/resourcemanager/outofband/checkpoint/checkpoint.go)
+patching file pkg/agent/orm/endpoint/consts.go (renamed from pkg/agent/resourcemanager/outofband/endpoint/consts.go)
+patching file pkg/agent/orm/endpoint/endpoint.go (renamed from pkg/agent/resourcemanager/outofband/endpoint/endpoint.go)
+patching file pkg/agent/orm/endpoint/resource_plugin_stub.go (renamed from pkg/agent/resourcemanager/outofband/endpoint/resource_plugin_stub.go)
+patching file pkg/agent/orm/executor/executor.go (renamed from pkg/agent/resourcemanager/outofband/executor/executor.go)
+patching file pkg/agent/orm/manager.go (renamed from pkg/agent/resourcemanager/outofband/manager.go)
+patching file pkg/agent/orm/metamanager/manager.go (renamed from pkg/agent/resourcemanager/outofband/metamanager/manager.go)
+patching file pkg/agent/orm/metamanager/types.go (renamed from pkg/agent/resourcemanager/outofband/metamanager/types.go)
+patching file pkg/agent/orm/pluginhandler.go (renamed from pkg/agent/resourcemanager/outofband/pluginhandler.go)
+patching file pkg/agent/orm/pod_resource.go (renamed from pkg/agent/resourcemanager/outofband/pod_resource.go)
+patching file pkg/agent/orm/types.go (renamed from pkg/agent/resourcemanager/outofband/types.go)

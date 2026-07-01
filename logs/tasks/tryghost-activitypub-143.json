@@ -1,0 +1,23 @@
+{
+ "task": "tryghost-activitypub-143",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds class GCloudPubSubMessageQueue with enqueue (skips on delay, throws on publish failure), listen (ack/nack), and initGCloudPubSubMessageQueue with topicExists/subscriptionExists checks that throw on missing"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

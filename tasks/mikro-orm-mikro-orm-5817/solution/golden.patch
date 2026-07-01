@@ -1,0 +1,14 @@
+diff --git a/packages/entity-generator/src/SourceFile.ts b/packages/entity-generator/src/SourceFile.ts
+index b82b102fc..521d6f035 100644
+--- a/packages/entity-generator/src/SourceFile.ts
++++ b/packages/entity-generator/src/SourceFile.ts
+@@ -557,8 +557,7 @@ export class SourceFile {
+ 
+     // For enum properties, we don't need a column type
+     // or the property length or other information in the decorator.
+-    // Non-persistent properties also don't need any of that additional information.
+-    if (prop.enum || !prop.persist) {
++    if (prop.enum) {
+       return;
+     }
+ 

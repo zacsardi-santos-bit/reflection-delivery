@@ -1,0 +1,60 @@
+patching file tests/capture/test_templates.py
+patching file tests/templates/test_subroutines/test_mod_exp.py
+patching file tests/templates/test_subroutines/test_out_adder.py
+In /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+In /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+In /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+In /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+In /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+In /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+In /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+In /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo/tests
+configfile: pytest.ini
+plugins: cov-7.1.0, forked-1.6.0, flaky-3.8.1, benchmark-5.2.3, xdist-3.8.0, mock-3.15.1
+collecting ... collected 28 items / 1 error
+
+==================================== ERRORS ====================================
+__________________ ERROR collecting capture/test_templates.py __________________
+tests/capture/test_templates.py:264: in <module>
+    qml.OutAdder,
+pennylane/__init__.py:192: in __getattr__
+    raise AttributeError(f"module 'pennylane' has no attribute '{name}'")
+E   AttributeError: module 'pennylane' has no attribute 'OutAdder'
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:64
+  /usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:85
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:85
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:85
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:85
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:85
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:85
+  /usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:89
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:89
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:89
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:89
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:89
+../../usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:89
+  /usr/local/lib/python3.9/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+../../usr/local/lib/python3.9/site-packages/matplotlib/_mathtext.py:45
+  /usr/local/lib/python3.9/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/capture/test_templates.py - AttributeError: module 'pennylane' ha...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+======================== 14 warnings, 1 error in 1.02s =========================
+reward=0 graded=152 found=0 failed=0 parsed=0 framework=pytest exit_code=2

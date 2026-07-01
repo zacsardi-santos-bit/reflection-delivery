@@ -1,0 +1,149 @@
+patching file tests/graphql/errors/test-expr-errors.graphql
+patching file tests/graphql/errors/test-expr-if-errors.graphql
+patching file tests/graphql/passed/test-expr-if.graphql
+patching file tests/graphql/test-expr-success.graphql
+patching file tests/graphql_spec.graphql
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /workspace/repo/cloudflare/Cargo.toml
+workspace: /workspace/repo/Cargo.toml
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /workspace/repo/cloudflare/Cargo.toml
+workspace: /workspace/repo/Cargo.toml
+    Finished test [unoptimized + debuginfo] target(s) in 3.94s
+------------
+ Nextest run ID 1dce9809-11ea-4fe4-98c5-4bd036687810 with nextest profile: default
+    Starting 5 tests across 1 binary
+        PASS [   0.168s] tailcall::graphql_spec test_execution
+        FAIL [   0.190s] tailcall::graphql_spec test_config_identity
+
+--- STDOUT:              tailcall::graphql_spec test_config_identity ---
+
+running 1 test
+test test_config_identity ... FAILED
+
+failures:
+
+failures:
+    test_config_identity
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.07s
+
+
+--- STDERR:              tailcall::graphql_spec test_config_identity ---
+thread 'test_config_identity' panicked at tests/graphql_spec.rs:251:7:
+assertion failed: `(left == right)`: ServerSDLIdentity: /workspace/repo/tests/graphql/test-expr-success.graphql
+
+Diff < left / right > :
+ schema @server(port: 8000) @upstream(baseURL: "http://localhost:50051", batch: {delay: 10, headers: [], maxSize: 1000}, httpCache: true) {
+   query: Query
+ }
+ 
+ input NewsInput {
+   body: String
+   id: Int
+   postImage: String
+   title: String
+ }
+ 
+ type News {
+   body: String
+   id: Int
+   postImage: String
+   title: String
+ }
+ 
+ type Post {
+<  content: String
+>  content: String @expr(body: {graphQL: {args: [{key: "id", value: "{{value.id}}"}], name: "postContent"}})
+   id: Int!
+ }
+ 
+ type Query {
+<  cond: Post
+<  greeting: String
+<  news(news: NewsInput!): News!
+<  post(id: Int!): Post
+>  cond: Post @expr(body: {if: {cond: {const: true}, else: {http: {path: "/posts/1"}}, then: {http: {path: "/posts/2"}}}})
+>  greeting: String @expr(body: {const: "hello from server"})
+>  news(news: NewsInput!): News! @expr(body: {grpc: {body: "{{args.news}}", groupBy: ["news", "id"], method: "GetMultipleNews", protoPath: "src/grpc/tests/news.proto", service: "NewsService"}})
+>  post(id: Int!): Post @expr(body: {http: {baseURL: "http://jsonplacheholder.typicode.com", path: "/posts/{{args.id}}"}})
+ }
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.175s] tailcall::graphql_spec test_merge_sdl
+        FAIL [   0.170s] tailcall::graphql_spec test_server_to_client_sdl
+
+--- STDOUT:              tailcall::graphql_spec test_server_to_client_sdl ---
+
+running 1 test
+test test_server_to_client_sdl ... FAILED
+
+failures:
+
+failures:
+    test_server_to_client_sdl
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.03s
+
+
+--- STDERR:              tailcall::graphql_spec test_server_to_client_sdl ---
+thread 'test_server_to_client_sdl' panicked at tests/graphql_spec.rs:271:75:
+called `Result::unwrap()` on an `Err` value: ValidationError([Cause { message: "No resolver has been found in the schema", description: None, trace: ["Query", "cond"] }, Cause { message: "No resolver has been found in the schema", description: None, trace: ["Query", "greeting"] }, Cause { message: "No resolver has been found in the schema", description: None, trace: ["Query", "news"] }, Cause { message: "No resolver has been found in the schema", description: None, trace: ["Query", "post"] }])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.197s] tailcall::graphql_spec test_failures_in_client_sdl
+
+--- STDOUT:              tailcall::graphql_spec test_failures_in_client_sdl ---
+
+running 1 test
+test test_failures_in_client_sdl ... FAILED
+
+failures:
+
+failures:
+    test_failures_in_client_sdl
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.07s
+
+
+--- STDERR:              tailcall::graphql_spec test_failures_in_client_sdl ---
+thread 'test_failures_in_client_sdl' panicked at tests/graphql_spec.rs:355:11:
+assertion failed: `(left == right)`: Server SDL failure mismatch: /workspace/repo/tests/graphql/errors/test-expr-errors.graphql
+
+Diff < left / right > :
+ [
+     SDLError {
+<        message: "No resolver has been found in the schema",
+>        message: "Parsing failed because of missing field `body`",
+         trace: [
+<            "Query",
+<            "bar",
+>            "@expr",
+         ],
+         description: None,
+     },
+     SDLError {
+<        message: "No resolver has been found in the schema",
+>        message: "Parsing failed because of unknown variant `unsupported`, expected one of `http`, `grpc`, `graphQL`, `const`, `if`",
+         trace: [
+<            "Query",
+<            "foo",
+>            "@expr",
+>            "body",
+         ],
+         description: None,
+     },
+ ]
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+------------
+     Summary [   0.214s] 5 tests run: 2 passed, 3 failed, 0 skipped
+        FAIL [   0.190s] tailcall::graphql_spec test_config_identity
+        FAIL [   0.197s] tailcall::graphql_spec test_failures_in_client_sdl
+        FAIL [   0.170s] tailcall::graphql_spec test_server_to_client_sdl
+error: test run failed
+reward=0 graded=5 found=5 failed=3 parsed=5 framework=cargo exit_code=100

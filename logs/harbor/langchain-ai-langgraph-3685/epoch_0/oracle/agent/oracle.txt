@@ -1,0 +1,7 @@
+patching file docs/_scripts/third_party_page/packages.yml
+patching file docs/docs/cloud/deployment/semantic_search.md
+patching file libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py
+patching file libs/langgraph/langgraph/pregel/__init__.py
+patching file libs/langgraph/langgraph/utils/pydantic.py
+patching file libs/langgraph/tests/test_pydantic.py
+patching file libs/sdk-py/langgraph_sdk/client.py

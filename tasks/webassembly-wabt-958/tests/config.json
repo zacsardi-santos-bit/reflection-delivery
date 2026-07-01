@@ -1,0 +1,37 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && sed -i 's/return std::move(result);/return result;/' src/lexer-source.cc && mkdir -p build && cd build && cmake .. -DBUILD_TESTS=OFF && make -j$(nproc) && cd .. && mkdir -p /workspace/test-results && python3 -m pytest /workspace/test_dump.py -v",
+  "test_files": [
+    "test/dump/atomic.txt",
+    "test/dump/bulk-memory.txt",
+    "test/dump/const.txt",
+    "test/dump/convert-sat.txt",
+    "test/dump/simd-basic.txt",
+    "test/dump/simd-binary.txt",
+    "test/dump/simd-bitselect.txt",
+    "test/dump/simd-compare.txt",
+    "test/dump/simd-lane.txt",
+    "test/dump/simd-load-store.txt",
+    "test/dump/simd-shift.txt",
+    "test/dump/simd-splat.txt",
+    "test/dump/simd-unary.txt"
+  ],
+  "num_test_files": 13,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_dump::test_dump[dump/atomic]",
+    "test_dump::test_dump[dump/bulk-memory]",
+    "test_dump::test_dump[dump/const]",
+    "test_dump::test_dump[dump/convert-sat]",
+    "test_dump::test_dump[dump/simd-basic]",
+    "test_dump::test_dump[dump/simd-binary]",
+    "test_dump::test_dump[dump/simd-bitselect]",
+    "test_dump::test_dump[dump/simd-compare]",
+    "test_dump::test_dump[dump/simd-lane]",
+    "test_dump::test_dump[dump/simd-load-store]",
+    "test_dump::test_dump[dump/simd-shift]",
+    "test_dump::test_dump[dump/simd-splat]",
+    "test_dump::test_dump[dump/simd-unary]"
+  ],
+  "PASS_TO_PASS": []
+}

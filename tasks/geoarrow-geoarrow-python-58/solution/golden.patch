@@ -1,0 +1,142 @@
+diff --git a/geoarrow-types/src/geoarrow/types/crs.py b/geoarrow-types/src/geoarrow/types/crs.py
+index 2377c68..4b945c9 100644
+--- a/geoarrow-types/src/geoarrow/types/crs.py
++++ b/geoarrow-types/src/geoarrow/types/crs.py
+@@ -102,6 +102,14 @@ class ProjJsonCrs(Crs):
+ 
+         return deepcopy(self._obj)
+ 
++    def to_wkt(self) -> str:
++        # This could in theory be written to not use pyproj; however, the
++        # main purpose of this method is to enable pyproj.CRS(self) so it
++        # may not matter.
++        import pyproj
++
++        return pyproj.CRS(self.to_json_dict()).to_wkt()
++
+     def __repr__(self) -> str:
+         try:
+             crs_dict = self.to_json_dict()
+@@ -116,6 +124,70 @@ class ProjJsonCrs(Crs):
+         return f"ProjJsonCrs({self.to_json()[:80]})"
+ 
+ 
++class StringCrs(Crs):
++    def __init__(self, crs: Union[str, bytes]):
++        if isinstance(crs, bytes):
++            self._crs = crs.decode()
++        else:
++            self._crs = str(crs)
++
++    def __geoarrow_crs_json_values__(self):
++        # Try to avoid escaping valid JSON into a JSON string
++        try:
++            return {"crs": json.loads(self._crs)}
++        except ValueError:
++            return {"crs": self._crs}
++
++    def __eq__(self, value):
++        if isinstance(value, UnspecifiedCrs):
++            return False
++        elif isinstance(value, StringCrs) and self._crs == value._crs:
++            return True
++        elif hasattr(value, "to_json_dict"):
++            return self.to_json_dict() == value.to_json_dict()
++        else:
++            return False
++
++    @classmethod
++    def from_json(cls, crs_json: str) -> "StringCrs":
++        return StringCrs(crs_json)
++
++    @classmethod
++    def from_json_dict(cls, crs_dict: Mapping) -> "Crs":
++        return StringCrs(json.dumps(crs_dict))
++
++    def to_json(self) -> str:
++        out = self._try_parse_json_object()
++        if out:
++            return self._crs
++
++        # Fall back on pyproj
++        import pyproj
++
++        return pyproj.CRS(self._crs).to_json()
++
++    def to_json_dict(self) -> Mapping:
++        return json.loads(self.to_json())
++
++    def to_wkt(self) -> str:
++        import pyproj
++
++        crs_repr = self.__geoarrow_crs_json_values__()["crs"]
++        return pyproj.CRS(crs_repr).to_wkt()
++
++    def __repr__(self) -> str:
++        crs_repr = self.__geoarrow_crs_json_values__()["crs"]
++        return f"StringCrs({crs_repr})"
++
++    def _try_parse_json_object(self) -> Optional[dict]:
++        try:
++            obj = json.loads(self._crs)
++            if isinstance(obj, dict):
++                return obj
++        except ValueError:
++            return None
++
++
+ _CRS_LONLAT_DICT = {
+     "$schema": "https://proj.org/schemas/v0.7/projjson.schema.json",
+     "type": "GeographicCRS",
+@@ -233,8 +305,12 @@ def create(obj) -> Optional[Crs]:
+         return None
+     elif hasattr(obj, "to_json_dict"):
+         return obj
+-    else:
++    elif isinstance(obj, dict):
+         return ProjJsonCrs(obj)
++    elif isinstance(obj, (str, bytes)):
++        return StringCrs(obj)
++    else:
++        raise ValueError(f"Can't create geoarrow.types.Crs from {obj}")
+ 
+ 
+ def _coalesce2(value, default):
+diff --git a/geoarrow-types/src/geoarrow/types/type_spec.py b/geoarrow-types/src/geoarrow/types/type_spec.py
+index b1a824c..b094687 100644
+--- a/geoarrow-types/src/geoarrow/types/type_spec.py
++++ b/geoarrow-types/src/geoarrow/types/type_spec.py
+@@ -80,8 +80,20 @@ class TypeSpec(NamedTuple):
+         if self.edge_type == EdgeType.SPHERICAL:
+             metadata["edges"] = "spherical"
+ 
+-        if self.crs is not None:
++        if self.crs is None:
++            pass
++        elif hasattr(self.crs, "__geoarrow_crs_json_values__"):
++            metadata.update(self.crs.__geoarrow_crs_json_values__())
++        elif hasattr(self.crs, "to_json_dict"):
+             metadata["crs"] = self.crs.to_json_dict()
++            metadata["crs_type"] = "projjson"
++        elif isinstance(self.crs, (str, bytes)):
++            string_crs = crs.StringCrs(self.crs)
++            metadata.update(string_crs.__geoarrow_crs_json_values__())
++        else:
++            raise ValueError(
++                f"Can't serialize crs object {self.crs} to extension metadata"
++            )
+ 
+         return json.dumps(metadata)
+ 
+@@ -262,7 +274,10 @@ class TypeSpec(NamedTuple):
+             out_edges = EdgeType.create(metadata["edges"])
+ 
+         if "crs" in metadata and metadata["crs"] is not None:
+-            out_crs = crs.ProjJsonCrs(metadata["crs"])
++            if "crs_type" in metadata and metadata["crs_type"] == "projjson":
++                out_crs = crs.ProjJsonCrs(metadata["crs"])
++            else:
++                out_crs = crs.StringCrs(metadata["crs"])
+ 
+         return TypeSpec(edge_type=out_edges, crs=out_crs)
+ 

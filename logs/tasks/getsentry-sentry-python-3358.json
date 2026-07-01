@@ -1,0 +1,23 @@
+{
+ "task": "getsentry-sentry-python-3358",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test asserts mechanism[type]=='litestar', origin=='auto.http.litestar', PII gate: 'user' in event only when send_default_pii=True; golden implements LitestarIntegration exception_handler + middleware spans"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

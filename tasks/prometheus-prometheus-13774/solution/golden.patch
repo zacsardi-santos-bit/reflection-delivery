@@ -1,0 +1,939 @@
+diff --git a/discovery/linode/linode.go b/discovery/linode/linode.go
+index 94f0a63bb..2a5475b85 100644
+--- a/discovery/linode/linode.go
++++ b/discovery/linode/linode.go
+@@ -59,17 +59,22 @@ const (
+ 	linodeLabelSpecsVCPUs         = linodeLabel + "specs_vcpus"
+ 	linodeLabelSpecsTransferBytes = linodeLabel + "specs_transfer_bytes"
+ 	linodeLabelExtraIPs           = linodeLabel + "extra_ips"
++	linodeLabelIPv6Ranges         = linodeLabel + "ipv6_ranges"
+ 
+ 	// This is our events filter; when polling for changes, we care only about
+ 	// events since our last refresh.
+-	// Docs: https://www.linode.com/docs/api/account/#events-list
++	// Docs: https://www.linode.com/docs/api/account/#events-list.
+ 	filterTemplate = `{"created": {"+gte": "%s"}}`
++
++	// Optional region filtering.
++	regionFilterTemplate = `{"region": "%s"}`
+ )
+ 
+ // DefaultSDConfig is the default Linode SD configuration.
+ var DefaultSDConfig = SDConfig{
+ 	TagSeparator:     ",",
+ 	Port:             80,
++	Region:           "",
+ 	RefreshInterval:  model.Duration(60 * time.Second),
+ 	HTTPClientConfig: config.DefaultHTTPClientConfig,
+ }
+@@ -85,6 +90,7 @@ type SDConfig struct {
+ 	RefreshInterval model.Duration `yaml:"refresh_interval"`
+ 	Port            int            `yaml:"port"`
+ 	TagSeparator    string         `yaml:"tag_separator,omitempty"`
++	Region          string         `yaml:"region,omitempty"`
+ }
+ 
+ // NewDiscovererMetrics implements discovery.Config.
+@@ -122,6 +128,7 @@ type Discovery struct {
+ 	*refresh.Discovery
+ 	client               *linodego.Client
+ 	port                 int
++	region               string
+ 	tagSeparator         string
+ 	lastRefreshTimestamp time.Time
+ 	pollCount            int
+@@ -139,6 +146,7 @@ func NewDiscovery(conf *SDConfig, logger log.Logger, metrics discovery.Discovere
+ 
+ 	d := &Discovery{
+ 		port:                 conf.Port,
++		region:               conf.Region,
+ 		tagSeparator:         conf.TagSeparator,
+ 		pollCount:            0,
+ 		lastRefreshTimestamp: time.Now().UTC(),
+@@ -224,16 +232,31 @@ func (d *Discovery) refreshData(ctx context.Context) ([]*targetgroup.Group, erro
+ 	tg := &targetgroup.Group{
+ 		Source: "Linode",
+ 	}
++	opts := linodego.ListOptions{
++		PageSize: 500,
++	}
++
++	// If region filter provided, use it to constrain results.
++	if d.region != "" {
++		opts.Filter = fmt.Sprintf(regionFilterTemplate, d.region)
++	}
+ 
+ 	// Gather all linode instances.
+-	instances, err := d.client.ListInstances(ctx, &linodego.ListOptions{PageSize: 500})
++	instances, err := d.client.ListInstances(ctx, &opts)
+ 	if err != nil {
+ 		d.metrics.failuresCount.Inc()
+ 		return nil, err
+ 	}
+ 
+ 	// Gather detailed IP address info for all IPs on all linode instances.
+-	detailedIPs, err := d.client.ListIPAddresses(ctx, &linodego.ListOptions{PageSize: 500})
++	detailedIPs, err := d.client.ListIPAddresses(ctx, &opts)
++	if err != nil {
++		d.metrics.failuresCount.Inc()
++		return nil, err
++	}
++
++	// Gather detailed IPv6 Range info for all linode instances.
++	ipv6RangeList, err := d.client.ListIPv6Ranges(ctx, &opts)
+ 	if err != nil {
+ 		d.metrics.failuresCount.Inc()
+ 		return nil, err
+@@ -248,7 +271,7 @@ func (d *Discovery) refreshData(ctx context.Context) ([]*targetgroup.Group, erro
+ 			privateIPv4, publicIPv4, publicIPv6             string
+ 			privateIPv4RDNS, publicIPv4RDNS, publicIPv6RDNS string
+ 			backupsStatus                                   string
+-			extraIPs                                        []string
++			extraIPs, ipv6Ranges                            []string
+ 		)
+ 
+ 		for _, ip := range instance.IPv4 {
+@@ -276,17 +299,23 @@ func (d *Discovery) refreshData(ctx context.Context) ([]*targetgroup.Group, erro
+ 		}
+ 
+ 		if instance.IPv6 != "" {
++			slaac := strings.Split(instance.IPv6, "/")[0]
+ 			for _, detailedIP := range detailedIPs {
+-				if detailedIP.Address != strings.Split(instance.IPv6, "/")[0] {
++				if detailedIP.Address != slaac {
+ 					continue
+ 				}
+-
+ 				publicIPv6 = detailedIP.Address
+ 
+ 				if detailedIP.RDNS != "" && detailedIP.RDNS != "null" {
+ 					publicIPv6RDNS = detailedIP.RDNS
+ 				}
+ 			}
++			for _, ipv6Range := range ipv6RangeList {
++				if ipv6Range.RouteTarget != slaac {
++					continue
++				}
++				ipv6Ranges = append(ipv6Ranges, fmt.Sprintf("%s/%d", ipv6Range.Range, ipv6Range.Prefix))
++			}
+ 		}
+ 
+ 		if instance.Backups.Enabled {
+@@ -330,12 +359,20 @@ func (d *Discovery) refreshData(ctx context.Context) ([]*targetgroup.Group, erro
+ 
+ 		if len(extraIPs) > 0 {
+ 			// This instance has more than one of at least one type of IP address (public, private,
+-			// IPv4, IPv6, etc. We provide those extra IPs found here just like we do for instance
++			// IPv4,etc. We provide those extra IPs found here just like we do for instance
+ 			// tags, we surround a separated list with the tagSeparator config.
+ 			ips := d.tagSeparator + strings.Join(extraIPs, d.tagSeparator) + d.tagSeparator
+ 			labels[linodeLabelExtraIPs] = model.LabelValue(ips)
+ 		}
+ 
++		if len(ipv6Ranges) > 0 {
++			// This instance has more than one IPv6 Ranges routed to it we provide these
++			// Ranges found here just like we do for instance tags, we surround a separated
++			// list with the tagSeparator config.
++			ips := d.tagSeparator + strings.Join(ipv6Ranges, d.tagSeparator) + d.tagSeparator
++			labels[linodeLabelIPv6Ranges] = model.LabelValue(ips)
++		}
++
+ 		tg.Targets = append(tg.Targets, labels)
+ 	}
+ 	return []*targetgroup.Group{tg}, nil
+diff --git a/discovery/linode/testdata/ca-central/v4/account/events.json b/discovery/linode/testdata/ca-central/v4/account/events.json
+new file mode 100644
+index 000000000..ca302e4fd
+--- /dev/null
++++ b/discovery/linode/testdata/ca-central/v4/account/events.json
+@@ -0,0 +1,6 @@
++{
++      "data": [],
++      "results": 0,
++      "pages": 1,
++      "page": 1
++}
+diff --git a/discovery/linode/testdata/ca-central/v4/linode/instances.json b/discovery/linode/testdata/ca-central/v4/linode/instances.json
+new file mode 100644
+index 000000000..dfc117247
+--- /dev/null
++++ b/discovery/linode/testdata/ca-central/v4/linode/instances.json
+@@ -0,0 +1,49 @@
++{
++  "data": [
++    {
++      "id": 26837938,
++      "label": "prometheus-linode-sd-exporter-3",
++      "group": "",
++      "status": "running",
++      "created": "2021-05-12T04:20:11",
++      "updated": "2021-05-12T04:20:11",
++      "type": "g6-standard-1",
++      "ipv4": [
++        "192.53.120.25"
++      ],
++      "ipv6": "2600:3c04::f03c:92ff:fe1a:fb68/128",
++      "image": "linode/ubuntu20.04",
++      "region": "ca-central",
++      "specs": {
++        "disk": 51200,
++        "memory": 2048,
++        "vcpus": 1,
++        "gpus": 0,
++        "transfer": 2000
++      },
++      "alerts": {
++        "cpu": 90,
++        "network_in": 10,
++        "network_out": 10,
++        "transfer_quota": 80,
++        "io": 10000
++      },
++      "backups": {
++        "enabled": false,
++        "schedule": {
++          "day": null,
++          "window": null
++        },
++        "last_successful": null
++      },
++      "hypervisor": "kvm",
++      "watchdog_enabled": true,
++      "tags": [
++        "monitoring"
++      ]
++    }
++  ],
++  "page": 1,
++  "pages": 1,
++  "results": 1
++}
+diff --git a/discovery/linode/testdata/ca-central/v4/networking/ips.json b/discovery/linode/testdata/ca-central/v4/networking/ips.json
+new file mode 100644
+index 000000000..23d974a88
+--- /dev/null
++++ b/discovery/linode/testdata/ca-central/v4/networking/ips.json
+@@ -0,0 +1,29 @@
++{
++  "page": 1,
++  "pages": 1,
++  "results": 2,
++  "data": [
++    {
++      "address": "192.53.120.25",
++      "gateway": "192.53.120.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li2216-25.members.linode.com",
++      "linode_id": 26837938,
++      "region": "ca-central"
++    },
++    {
++      "address": "2600:3c04::f03c:92ff:fe1a:fb68",
++      "gateway": "fe80::1",
++      "subnet_mask": "ffff:ffff:ffff:ffff::",
++      "prefix": 64,
++      "type": "ipv6",
++      "rdns": null,
++      "linode_id": 26837938,
++      "region": "ca-central",
++      "public": true
++    }
++  ]
++}
+diff --git a/discovery/linode/testdata/ca-central/v4/networking/ipv6/ranges.json b/discovery/linode/testdata/ca-central/v4/networking/ipv6/ranges.json
+new file mode 100644
+index 000000000..442615cbb
+--- /dev/null
++++ b/discovery/linode/testdata/ca-central/v4/networking/ipv6/ranges.json
+@@ -0,0 +1,13 @@
++{
++  "data": [
++    {
++      "range": "2600:3c04:e001:456::",
++      "prefix": 64,
++      "region": "ca-central",
++      "route_target": "2600:3c04::f03c:92ff:fe1a:fb68"
++    }
++  ],
++  "page": 1,
++  "pages": 1,
++  "results": 1
++}
+diff --git a/discovery/linode/testdata/no_region_filter/v4/account/events.json b/discovery/linode/testdata/no_region_filter/v4/account/events.json
+new file mode 100644
+index 000000000..ca302e4fd
+--- /dev/null
++++ b/discovery/linode/testdata/no_region_filter/v4/account/events.json
+@@ -0,0 +1,6 @@
++{
++      "data": [],
++      "results": 0,
++      "pages": 1,
++      "page": 1
++}
+diff --git a/discovery/linode/testdata/no_region_filter/v4/linode/instances.json b/discovery/linode/testdata/no_region_filter/v4/linode/instances.json
+new file mode 100644
+index 000000000..25d5271d9
+--- /dev/null
++++ b/discovery/linode/testdata/no_region_filter/v4/linode/instances.json
+@@ -0,0 +1,180 @@
++{
++  "data": [
++    {
++      "id": 26838044,
++      "label": "prometheus-linode-sd-exporter-1",
++      "group": "",
++      "status": "running",
++      "created": "2021-05-12T04:23:44",
++      "updated": "2021-05-12T04:23:44",
++      "type": "g6-standard-2",
++      "ipv4": [
++        "45.33.82.151",
++        "96.126.108.16",
++        "192.168.170.51",
++        "192.168.201.25"
++      ],
++      "ipv6": "2600:3c03::f03c:92ff:fe1a:1382/128",
++      "image": "linode/arch",
++      "region": "us-east",
++      "specs": {
++        "disk": 81920,
++        "memory": 4096,
++        "vcpus": 2,
++        "gpus": 0,
++        "transfer": 4000
++      },
++      "alerts": {
++        "cpu": 180,
++        "network_in": 10,
++        "network_out": 10,
++        "transfer_quota": 80,
++        "io": 10000
++      },
++      "backups": {
++        "enabled": false,
++        "schedule": {
++          "day": null,
++          "window": null
++        },
++        "last_successful": null
++      },
++      "hypervisor": "kvm",
++      "watchdog_enabled": true,
++      "tags": [
++        "monitoring"
++      ]
++    },
++    {
++      "id": 26848419,
++      "label": "prometheus-linode-sd-exporter-2",
++      "group": "",
++      "status": "running",
++      "created": "2021-05-12T12:41:49",
++      "updated": "2021-05-12T12:41:49",
++      "type": "g6-standard-2",
++      "ipv4": [
++        "139.162.196.43"
++      ],
++      "ipv6": "2a01:7e00::f03c:92ff:fe1a:9976/128",
++      "image": "linode/debian10",
++      "region": "eu-west",
++      "specs": {
++        "disk": 81920,
++        "memory": 4096,
++        "vcpus": 2,
++        "gpus": 0,
++        "transfer": 4000
++      },
++      "alerts": {
++        "cpu": 180,
++        "network_in": 10,
++        "network_out": 10,
++        "transfer_quota": 80,
++        "io": 10000
++      },
++      "backups": {
++        "enabled": false,
++        "schedule": {
++          "day": null,
++          "window": null
++        },
++        "last_successful": null
++      },
++      "hypervisor": "kvm",
++      "watchdog_enabled": true,
++      "tags": [
++        "monitoring"
++      ]
++    },
++    {
++      "id": 26837938,
++      "label": "prometheus-linode-sd-exporter-3",
++      "group": "",
++      "status": "running",
++      "created": "2021-05-12T04:20:11",
++      "updated": "2021-05-12T04:20:11",
++      "type": "g6-standard-1",
++      "ipv4": [
++        "192.53.120.25"
++      ],
++      "ipv6": "2600:3c04::f03c:92ff:fe1a:fb68/128",
++      "image": "linode/ubuntu20.04",
++      "region": "ca-central",
++      "specs": {
++        "disk": 51200,
++        "memory": 2048,
++        "vcpus": 1,
++        "gpus": 0,
++        "transfer": 2000
++      },
++      "alerts": {
++        "cpu": 90,
++        "network_in": 10,
++        "network_out": 10,
++        "transfer_quota": 80,
++        "io": 10000
++      },
++      "backups": {
++        "enabled": false,
++        "schedule": {
++          "day": null,
++          "window": null
++        },
++        "last_successful": null
++      },
++      "hypervisor": "kvm",
++      "watchdog_enabled": true,
++      "tags": [
++        "monitoring"
++      ]
++    },
++    {
++      "id": 26837992,
++      "label": "prometheus-linode-sd-exporter-4",
++      "group": "",
++      "status": "running",
++      "created": "2021-05-12T04:22:06",
++      "updated": "2021-05-12T04:22:06",
++      "type": "g6-nanode-1",
++      "ipv4": [
++        "66.228.47.103",
++        "172.104.18.104",
++        "192.168.148.94"
++      ],
++      "ipv6": "2600:3c03::f03c:92ff:fe1a:fb4c/128",
++      "image": "linode/ubuntu20.04",
++      "region": "us-east",
++      "specs": {
++        "disk": 25600,
++        "memory": 1024,
++        "vcpus": 1,
++        "gpus": 0,
++        "transfer": 1000
++      },
++      "alerts": {
++        "cpu": 90,
++        "network_in": 10,
++        "network_out": 10,
++        "transfer_quota": 80,
++        "io": 10000
++      },
++      "backups": {
++        "enabled": false,
++        "schedule": {
++          "day": null,
++          "window": null
++        },
++        "last_successful": null
++      },
++      "hypervisor": "kvm",
++      "watchdog_enabled": true,
++      "tags": [
++        "monitoring"
++      ]
++    }
++  ],
++  "page": 1,
++  "pages": 1,
++  "results": 4
++}
+diff --git a/discovery/linode/testdata/no_region_filter/v4/networking/ips.json b/discovery/linode/testdata/no_region_filter/v4/networking/ips.json
+new file mode 100644
+index 000000000..5173036f1
+--- /dev/null
++++ b/discovery/linode/testdata/no_region_filter/v4/networking/ips.json
+@@ -0,0 +1,150 @@
++{
++  "page": 1,
++  "pages": 1,
++  "results": 13,
++  "data": [
++    {
++      "address": "192.53.120.25",
++      "gateway": "192.53.120.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li2216-25.members.linode.com",
++      "linode_id": 26837938,
++      "region": "ca-central"
++    },
++    {
++      "address": "66.228.47.103",
++      "gateway": "66.228.47.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li328-103.members.linode.com",
++      "linode_id": 26837992,
++      "region": "us-east"
++    },
++    {
++      "address": "172.104.18.104",
++      "gateway": "172.104.18.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li1832-104.members.linode.com",
++      "linode_id": 26837992,
++      "region": "us-east"
++    },
++    {
++      "address": "192.168.148.94",
++      "gateway": null,
++      "subnet_mask": "255.255.128.0",
++      "prefix": 17,
++      "type": "ipv4",
++      "public": false,
++      "rdns": null,
++      "linode_id": 26837992,
++      "region": "us-east"
++    },
++    {
++      "address": "192.168.170.51",
++      "gateway": null,
++      "subnet_mask": "255.255.128.0",
++      "prefix": 17,
++      "type": "ipv4",
++      "public": false,
++      "rdns": null,
++      "linode_id": 26838044,
++      "region": "us-east"
++    },
++    {
++      "address": "96.126.108.16",
++      "gateway": "96.126.108.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li365-16.members.linode.com",
++      "linode_id": 26838044,
++      "region": "us-east"
++    },
++    {
++      "address": "45.33.82.151",
++      "gateway": "45.33.82.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li1028-151.members.linode.com",
++      "linode_id": 26838044,
++      "region": "us-east"
++    },
++    {
++      "address": "192.168.201.25",
++      "gateway": null,
++      "subnet_mask": "255.255.128.0",
++      "prefix": 17,
++      "type": "ipv4",
++      "public": false,
++      "rdns": null,
++      "linode_id": 26838044,
++      "region": "us-east"
++    },
++    {
++      "address": "139.162.196.43",
++      "gateway": "139.162.196.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li1359-43.members.linode.com",
++      "linode_id": 26848419,
++      "region": "eu-west"
++    },
++    {
++      "address": "2600:3c04::f03c:92ff:fe1a:fb68",
++      "gateway": "fe80::1",
++      "subnet_mask": "ffff:ffff:ffff:ffff::",
++      "prefix": 64,
++      "type": "ipv6",
++      "rdns": null,
++      "linode_id": 26837938,
++      "region": "ca-central",
++      "public": true
++    },
++    {
++      "address": "2600:3c03::f03c:92ff:fe1a:fb4c",
++      "gateway": "fe80::1",
++      "subnet_mask": "ffff:ffff:ffff:ffff::",
++      "prefix": 64,
++      "type": "ipv6",
++      "rdns": null,
++      "linode_id": 26837992,
++      "region": "us-east",
++      "public": true
++    },
++    {
++      "address": "2600:3c03::f03c:92ff:fe1a:1382",
++      "gateway": "fe80::1",
++      "subnet_mask": "ffff:ffff:ffff:ffff::",
++      "prefix": 64,
++      "type": "ipv6",
++      "rdns": null,
++      "linode_id": 26838044,
++      "region": "us-east",
++      "public": true
++    },
++    {
++      "address": "2a01:7e00::f03c:92ff:fe1a:9976",
++      "gateway": "fe80::1",
++      "subnet_mask": "ffff:ffff:ffff:ffff::",
++      "prefix": 64,
++      "type": "ipv6",
++      "rdns": null,
++      "linode_id": 26848419,
++      "region": "eu-west",
++      "public": true
++    }
++  ]
++}
+diff --git a/discovery/linode/testdata/no_region_filter/v4/networking/ipv6/ranges.json b/discovery/linode/testdata/no_region_filter/v4/networking/ipv6/ranges.json
+new file mode 100644
+index 000000000..511a4d9a8
+--- /dev/null
++++ b/discovery/linode/testdata/no_region_filter/v4/networking/ipv6/ranges.json
+@@ -0,0 +1,19 @@
++{
++  "data": [
++    {
++      "range": "2600:3c03:e000:123::",
++      "prefix": 64,
++      "region": "us-east",
++      "route_target": "2600:3c03::f03c:92ff:fe1a:fb4c"
++    },
++    {
++      "range": "2600:3c04:e001:456::",
++      "prefix": 64,
++      "region": "ca-central",
++      "route_target": "2600:3c04::f03c:92ff:fe1a:fb68"
++    }
++  ],
++  "page": 1,
++  "pages": 1,
++  "results": 2
++}
+diff --git a/discovery/linode/testdata/us-east/v4/account/events.json b/discovery/linode/testdata/us-east/v4/account/events.json
+new file mode 100644
+index 000000000..ca302e4fd
+--- /dev/null
++++ b/discovery/linode/testdata/us-east/v4/account/events.json
+@@ -0,0 +1,6 @@
++{
++      "data": [],
++      "results": 0,
++      "pages": 1,
++      "page": 1
++}
+diff --git a/discovery/linode/testdata/us-east/v4/linode/instances.json b/discovery/linode/testdata/us-east/v4/linode/instances.json
+new file mode 100644
+index 000000000..5e9a8f5ab
+--- /dev/null
++++ b/discovery/linode/testdata/us-east/v4/linode/instances.json
+@@ -0,0 +1,97 @@
++{
++  "data": [
++    {
++      "id": 26838044,
++      "label": "prometheus-linode-sd-exporter-1",
++      "group": "",
++      "status": "running",
++      "created": "2021-05-12T04:23:44",
++      "updated": "2021-05-12T04:23:44",
++      "type": "g6-standard-2",
++      "ipv4": [
++        "45.33.82.151",
++        "96.126.108.16",
++        "192.168.170.51",
++        "192.168.201.25"
++      ],
++      "ipv6": "2600:3c03::f03c:92ff:fe1a:1382/128",
++      "image": "linode/arch",
++      "region": "us-east",
++      "specs": {
++        "disk": 81920,
++        "memory": 4096,
++        "vcpus": 2,
++        "gpus": 0,
++        "transfer": 4000
++      },
++      "alerts": {
++        "cpu": 180,
++        "network_in": 10,
++        "network_out": 10,
++        "transfer_quota": 80,
++        "io": 10000
++      },
++      "backups": {
++        "enabled": false,
++        "schedule": {
++          "day": null,
++          "window": null
++        },
++        "last_successful": null
++      },
++      "hypervisor": "kvm",
++      "watchdog_enabled": true,
++      "tags": [
++        "monitoring"
++      ]
++    },
++    {
++      "id": 26837992,
++      "label": "prometheus-linode-sd-exporter-4",
++      "group": "",
++      "status": "running",
++      "created": "2021-05-12T04:22:06",
++      "updated": "2021-05-12T04:22:06",
++      "type": "g6-nanode-1",
++      "ipv4": [
++        "66.228.47.103",
++        "172.104.18.104",
++        "192.168.148.94"
++      ],
++      "ipv6": "2600:3c03::f03c:92ff:fe1a:fb4c/128",
++      "image": "linode/ubuntu20.04",
++      "region": "us-east",
++      "specs": {
++        "disk": 25600,
++        "memory": 1024,
++        "vcpus": 1,
++        "gpus": 0,
++        "transfer": 1000
++      },
++      "alerts": {
++        "cpu": 90,
++        "network_in": 10,
++        "network_out": 10,
++        "transfer_quota": 80,
++        "io": 10000
++      },
++      "backups": {
++        "enabled": false,
++        "schedule": {
++          "day": null,
++          "window": null
++        },
++        "last_successful": null
++      },
++      "hypervisor": "kvm",
++      "watchdog_enabled": true,
++      "tags": [
++        "monitoring"
++      ]
++    }
++  ],
++  "page": 1,
++  "pages": 1,
++  "results": 2
++}
++
+diff --git a/discovery/linode/testdata/us-east/v4/networking/ips.json b/discovery/linode/testdata/us-east/v4/networking/ips.json
+new file mode 100644
+index 000000000..388cf5965
+--- /dev/null
++++ b/discovery/linode/testdata/us-east/v4/networking/ips.json
+@@ -0,0 +1,106 @@
++{
++  "page": 1,
++  "pages": 1,
++  "results": 9,
++  "data": [
++    {
++      "address": "66.228.47.103",
++      "gateway": "66.228.47.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li328-103.members.linode.com",
++      "linode_id": 26837992,
++      "region": "us-east"
++    },
++    {
++      "address": "172.104.18.104",
++      "gateway": "172.104.18.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li1832-104.members.linode.com",
++      "linode_id": 26837992,
++      "region": "us-east"
++    },
++    {
++      "address": "192.168.148.94",
++      "gateway": null,
++      "subnet_mask": "255.255.128.0",
++      "prefix": 17,
++      "type": "ipv4",
++      "public": false,
++      "rdns": null,
++      "linode_id": 26837992,
++      "region": "us-east"
++    },
++    {
++      "address": "192.168.170.51",
++      "gateway": null,
++      "subnet_mask": "255.255.128.0",
++      "prefix": 17,
++      "type": "ipv4",
++      "public": false,
++      "rdns": null,
++      "linode_id": 26838044,
++      "region": "us-east"
++    },
++    {
++      "address": "96.126.108.16",
++      "gateway": "96.126.108.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li365-16.members.linode.com",
++      "linode_id": 26838044,
++      "region": "us-east"
++    },
++    {
++      "address": "45.33.82.151",
++      "gateway": "45.33.82.1",
++      "subnet_mask": "255.255.255.0",
++      "prefix": 24,
++      "type": "ipv4",
++      "public": true,
++      "rdns": "li1028-151.members.linode.com",
++      "linode_id": 26838044,
++      "region": "us-east"
++    },
++    {
++      "address": "192.168.201.25",
++      "gateway": null,
++      "subnet_mask": "255.255.128.0",
++      "prefix": 17,
++      "type": "ipv4",
++      "public": false,
++      "rdns": null,
++      "linode_id": 26838044,
++      "region": "us-east"
++    },
++    {
++      "address": "2600:3c03::f03c:92ff:fe1a:fb4c",
++      "gateway": "fe80::1",
++      "subnet_mask": "ffff:ffff:ffff:ffff::",
++      "prefix": 64,
++      "type": "ipv6",
++      "rdns": null,
++      "linode_id": 26837992,
++      "region": "us-east",
++      "public": true
++    },
++    {
++      "address": "2600:3c03::f03c:92ff:fe1a:1382",
++      "gateway": "fe80::1",
++      "subnet_mask": "ffff:ffff:ffff:ffff::",
++      "prefix": 64,
++      "type": "ipv6",
++      "rdns": null,
++      "linode_id": 26838044,
++      "region": "us-east",
++      "public": true
++    }
++  ]
++}
+diff --git a/discovery/linode/testdata/us-east/v4/networking/ipv6/ranges.json b/discovery/linode/testdata/us-east/v4/networking/ipv6/ranges.json
+new file mode 100644
+index 000000000..34b2ae1cd
+--- /dev/null
++++ b/discovery/linode/testdata/us-east/v4/networking/ipv6/ranges.json
+@@ -0,0 +1,13 @@
++{
++  "data": [
++    {
++      "range": "2600:3c03:e000:123::",
++      "prefix": 64,
++      "region": "us-east",
++      "route_target": "2600:3c03::f03c:92ff:fe1a:fb4c"
++    }
++  ],
++  "page": 1,
++  "pages": 1,
++  "results": 1
++}
+diff --git a/docs/configuration/configuration.md b/docs/configuration/configuration.md
+index e134ae02b..0d2d9c9b9 100644
+--- a/docs/configuration/configuration.md
++++ b/docs/configuration/configuration.md
+@@ -2447,11 +2447,15 @@ The following meta labels are available on targets during [relabeling](#relabel_
+ * `__meta_linode_private_ipv4`: the private IPv4 of the linode instance
+ * `__meta_linode_public_ipv4`: the public IPv4 of the linode instance
+ * `__meta_linode_public_ipv6`: the public IPv6 of the linode instance
++* `__meta_linode_private_ipv4_rdns`: the reverse DNS for the first private IPv4 of the linode instance
++* `__meta_linode_public_ipv4_rdns`: the reverse DNS for the first public IPv4 of the linode instance
++* `__meta_linode_public_ipv6_rdns`: the reverse DNS for the first public IPv6 of the linode instance
+ * `__meta_linode_region`: the region of the linode instance
+ * `__meta_linode_type`: the type of the linode instance
+ * `__meta_linode_status`: the status of the linode instance
+ * `__meta_linode_tags`: a list of tags of the linode instance joined by the tag separator
+ * `__meta_linode_group`: the display group a linode instance is a member of
++* `__meta_linode_gpus`: the number of GPU's of the linode instance 
+ * `__meta_linode_hypervisor`: the virtualization software powering the linode instance
+ * `__meta_linode_backups`: the backup service status of the linode instance
+ * `__meta_linode_specs_disk_bytes`: the amount of storage space the linode instance has access to
+@@ -2459,6 +2463,7 @@ The following meta labels are available on targets during [relabeling](#relabel_
+ * `__meta_linode_specs_vcpus`: the number of VCPUS this linode has access to
+ * `__meta_linode_specs_transfer_bytes`: the amount of network transfer the linode instance is allotted each month
+ * `__meta_linode_extra_ips`: a list of all extra IPv4 addresses assigned to the linode instance joined by the tag separator
++* `__meta_linode_ipv6_ranges`: a list of IPv6 ranges with mask assigned to the linode instance joined by the tag separator
+ 
+ ```yaml
+ # Authentication information used to authenticate to the API server.
+@@ -2489,6 +2494,9 @@ authorization:
+ oauth2:
+   [ <oauth2> ]
+ 
++# Optional region to filter on.
++[ region: <string> ]
++
+ # Optional proxy URL.
+ [ proxy_url: <string> ]
+ # Comma-separated string that can contain IPs, CIDR notation, domain names
+diff --git a/documentation/examples/prometheus-linode.yml b/documentation/examples/prometheus-linode.yml
+index 993b6a5c1..fe1a74002 100644
+--- a/documentation/examples/prometheus-linode.yml
++++ b/documentation/examples/prometheus-linode.yml
+@@ -12,6 +12,7 @@ scrape_configs:
+     linode_sd_configs:
+       - authorization:
+           credentials: "<replace with a Personal Access Token with linodes:read_only, ips:read_only, and events:read_only access>"
++        region: "us-east"
+     relabel_configs:
+       # Only scrape targets that have a tag 'monitoring'.
+       - source_labels: [__meta_linode_tags]

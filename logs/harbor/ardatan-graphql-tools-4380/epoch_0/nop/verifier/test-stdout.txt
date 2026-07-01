@@ -1,0 +1,62 @@
+patching file packages/utils/tests/prune.test.ts
+FAIL packages/utils/tests/prune.test.ts
+  pruneSchema
+    ✓ can handle recursive input types (11 ms)
+    ✓ removes unused enums (6 ms)
+    ✓ removes unused objects (3 ms)
+    ✓ does not remove unused objects when skipUnusedTypesPruning is true (3 ms)
+    ✓ removes unused custom scalar (3 ms)
+    ✓ does not remove unused custom scalar when skipUnusedTypesPruning set to true (5 ms)
+    ✓ removes unused input objects (2 ms)
+    ✓ does not remove unused input objects when skipUnusedTypesPruning is true (2 ms)
+    ✓ removes unused unions (2 ms)
+    ✓ does not remove unused unions when skipEmptyUnionPruning is true (1 ms)
+    ✓ removes unused interfaces (2 ms)
+    ✓ does not remove unused interfaces when skipUnimplementedInterfacesPruning is true (1 ms)
+    ✕ removes unused implementations of interfaces (2 ms)
+    ✓ removes top level objects with no fields (1 ms)
+    ✓ does not removes objects with no fields when skipEmptyCompositeTypePruning is true (1 ms)
+    ✓ removes unused interfaces when implementations are unused (2 ms)
+    ✓ removes unused unions when implementations are unused (1 ms)
+    ✓ does not throw on pruning unimplemented interfaces (1 ms)
+    ✓ does not prune types that match the filter (2 ms)
+    ✕ does not prune types or its leaves that match the filter (2 ms)
+
+  ● pruneSchema › removes unused implementations of interfaces
+
+    expect(received).toBeUndefined()
+
+    Received: "ShouldPrune"
+
+      196 |     const result = pruneSchema(schema);
+      197 |
+    > 198 |     expect(result.getType('ShouldPrune')).toBeUndefined();
+          |                                           ^
+      199 |   });
+      200 |
+      201 |   test('removes top level objects with no fields', () => {
+
+      at Object.<anonymous> (packages/utils/tests/prune.test.ts:198:43)
+
+  ● pruneSchema › does not prune types or its leaves that match the filter
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      328 |
+      329 |     expect(result.getType('CustomType')).toBeDefined();
+    > 330 |     expect(result.getType('SomeInterface')).toBeDefined();
+          |                                             ^
+      331 |   });
+      332 | });
+      333 |
+
+      at Object.<anonymous> (packages/utils/tests/prune.test.ts:330:45)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 18 passed, 20 total
+Snapshots:   0 total
+Time:        1.114 s
+Ran all test suites matching /packages\/utils\/tests\/prune.test.ts/i.
+{"numFailedTestSuites":1,"numFailedTests":2,"numPassedTestSuites":0,"numPassedTests":18,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":20,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746244365,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema can handle recursive input types","location":null,"status":"passed","title":"can handle recursive input types"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema removes unused enums","location":null,"status":"passed","title":"removes unused enums"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema removes unused objects","location":null,"status":"passed","title":"removes unused objects"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema does not remove unused objects when skipUnusedTypesPruning is true","location":null,"status":"passed","title":"does not remove unused objects when skipUnusedTypesPruning is true"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema removes unused custom scalar","location":null,"status":"passed","title":"removes unused custom scalar"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema does not remove unused custom scalar when skipUnusedTypesPruning set to true","location":null,"status":"passed","title":"does not remove unused custom scalar when skipUnusedTypesPruning set to true"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema removes unused input objects","location":null,"status":"passed","title":"removes unused input objects"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema does not remove unused input objects when skipUnusedTypesPruning is true","location":null,"status":"passed","title":"does not remove unused input objects when skipUnusedTypesPruning is true"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema removes unused unions","location":null,"status":"passed","title":"removes unused unions"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema does not remove unused unions when skipEmptyUnionPruning is true","location":null,"status":"passed","title":"does not remove unused unions when skipEmptyUnionPruning is true"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema removes unused interfaces","location":null,"status":"passed","title":"removes unused interfaces"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema does not remove unused interfaces when skipUnimplementedInterfacesPruning is true","location":null,"status":"passed","title":"does not remove unused interfaces when skipUnimplementedInterfacesPruning is true"},{"ancestorTitles":["pruneSchema"],"failureMessages":["Error: expect(received).toBeUndefined()\n\nReceived: \"ShouldPrune\"\n    at Object.<anonymous> (/workspace/repo/packages/utils/tests/prune.test.ts:198:43)\n    at Promise.then.completed (/workspace/repo/node_modules/jest-circus/build/utils.js:391:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/workspace/repo/node_modules/jest-circus/build/utils.js:316:10)\n    at _callCircusTest (/workspace/repo/node_modules/jest-circus/build/run.js:218:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _runTest (/workspace/repo/node_modules/jest-circus/build/run.js:155:3)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:66:9)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:60:9)\n    at run (/workspace/repo/node_modules/jest-circus/build/run.js:25:3)"],"fullName":"pruneSchema removes unused implementations of interfaces","location":null,"status":"failed","title":"removes unused implementations of interfaces"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema removes top level objects with no fields","location":null,"status":"passed","title":"removes top level objects with no fields"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema does not removes objects with no fields when skipEmptyCompositeTypePruning is true","location":null,"status":"passed","title":"does not removes objects with no fields when skipEmptyCompositeTypePruning is true"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema removes unused interfaces when implementations are unused","location":null,"status":"passed","title":"removes unused interfaces when implementations are unused"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema removes unused unions when implementations are unused","location":null,"status":"passed","title":"removes unused unions when implementations are unused"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema does not throw on pruning unimplemented interfaces","location":null,"status":"passed","title":"does not throw on pruning unimplemented interfaces"},{"ancestorTitles":["pruneSchema"],"failureMessages":[],"fullName":"pruneSchema does not prune types that match the filter","location":null,"status":"passed","title":"does not prune types that match the filter"},{"ancestorTitles":["pruneSchema"],"failureMessages":["Error: expect(received).toBeDefined()\n\nReceived: undefined\n    at Object.<anonymous> (/workspace/repo/packages/utils/tests/prune.test.ts:330:45)\n    at Promise.then.completed (/workspace/repo/node_modules/jest-circus/build/utils.js:391:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/workspace/repo/node_modules/jest-circus/build/utils.js:316:10)\n    at _callCircusTest (/workspace/repo/node_modules/jest-circus/build/run.js:218:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _runTest (/workspace/repo/node_modules/jest-circus/build/run.js:155:3)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:66:9)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:60:9)\n    at run (/workspace/repo/node_modules/jest-circus/build/run.js:25:3)"],"fullName":"pruneSchema does not prune types or its leaves that match the filter","location":null,"status":"failed","title":"does not prune types or its leaves that match the filter"}],"endTime":1782746245471,"message":"  ● pruneSchema › removes unused implementations of interfaces\n\n    expect(received).toBeUndefined()\n\n    Received: \"ShouldPrune\"\n\n      196 |     const result = pruneSchema(schema);\n      197 |\n    > 198 |     expect(result.getType('ShouldPrune')).toBeUndefined();\n          |                                           ^\n      199 |   });\n      200 |\n      201 |   test('removes top level objects with no fields', () => {\n\n      at Object.<anonymous> (packages/utils/tests/prune.test.ts:198:43)\n\n  ● pruneSchema › does not prune types or its leaves that match the filter\n\n    expect(received).toBeDefined()\n\n    Received: undefined\n\n      328 |\n      329 |     expect(result.getType('CustomType')).toBeDefined();\n    > 330 |     expect(result.getType('SomeInterface')).toBeDefined();\n          |                                             ^\n      331 |   });\n      332 | });\n      333 |\n\n      at Object.<anonymous> (packages/utils/tests/prune.test.ts:330:45)\n","name":"/workspace/repo/packages/utils/tests/prune.test.ts","startTime":1782746244419,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=20 found=20 failed=2 parsed=20 framework=jest exit_code=1

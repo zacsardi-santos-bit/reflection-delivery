@@ -1,0 +1,7 @@
+patching file addons/knobs/src/KnobManager.ts
+patching file addons/knobs/src/KnobStore.ts
+patching file app/riot/package.json
+patching file examples/official-storybook/stories/addon-knobs/with-knobs-decorators.stories.js
+patching file examples/official-storybook/stories/addon-knobs/with-knobs.stories.js
+patching file lib/addons/src/hooks.ts
+patching file yarn.lock

@@ -1,0 +1,35 @@
+patching file modules/fedimint-wallet-tests/tests/tests.rs
+   Compiling fedimint-wallet-common v0.6.0-rc.0 (/workspace/repo/modules/fedimint-wallet-common)
+warning: methods `gateways_from_peer`, `add_gateway`, and `remove_gateway` are never used
+  --> modules/fedimint-lnv2-client/src/api.rs:28:14
+   |
+19 | pub trait LightningFederationApi {
+   |           ---------------------- methods in this trait
+...
+28 |     async fn gateways_from_peer(&self, peer: PeerId) -> PeerResult<Vec<SafeUrl>>;
+   |              ^^^^^^^^^^^^^^^^^^
+29 |
+30 |     async fn add_gateway(&self, auth: ApiAuth, gateway: SafeUrl) -> FederationResult<bool>;
+   |              ^^^^^^^^^^^
+31 |
+32 |     async fn remove_gateway(&self, auth: ApiAuth, gateway: SafeUrl) -> FederationResult<bool>;
+   |              ^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `fedimint-lnv2-client` (lib) generated 1 warning
+   Compiling fedimint-wallet-client v0.6.0-rc.0 (/workspace/repo/modules/fedimint-wallet-client)
+   Compiling fedimint-wallet-server v0.6.0-rc.0 (/workspace/repo/modules/fedimint-wallet-server)
+   Compiling fedimintd v0.6.0-rc.0 (/workspace/repo/fedimintd)
+   Compiling fedimint-ln-gateway v0.6.0-rc.0 (/workspace/repo/gateway/ln-gateway)
+   Compiling fedimint-testing v0.6.0-rc.0 (/workspace/repo/fedimint-testing)
+   Compiling devimint v0.6.0-rc.0 (/workspace/repo/devimint)
+   Compiling fedimint-wallet-tests v0.6.0-rc.0 (/workspace/repo/modules/fedimint-wallet-tests)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 58s
+────────────
+ Nextest run ID 92c680fb-d771-4a83-9838-03025beef30a with nextest profile: ci
+    Starting 1 test across 4 binaries (12 tests skipped)
+        PASS [   0.708s] (1/1) fedimint-wallet-tests::fedimint_wallet_tests fedimint_migration_tests::test_client_db_migrations
+────────────
+     Summary [   0.815s] 1 test run: 1 passed, 12 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

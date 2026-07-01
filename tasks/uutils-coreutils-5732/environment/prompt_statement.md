@@ -1,0 +1,3 @@
+I'm working on the head utility and ran into two problems. First, when I use a negative count to print everything except the last N bytes or lines, the command fails on special Linux virtual filesystem files like those under `/proc`. These files don't support seeking because their content is generated dynamically by the kernel, and the current backward-reading logic breaks on them. I'd expect the command to succeed and produce non-empty output for files like `/proc/version` even when seeking isn't available.
+
+Second, the error message shown when a count value is too large to process only mentions bytes, but the same overflow can happen in lines mode too. The message should be updated to indicate that both modes can trigger the condition.

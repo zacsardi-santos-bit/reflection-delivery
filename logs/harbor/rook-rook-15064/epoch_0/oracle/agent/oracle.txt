@@ -1,0 +1,12 @@
+patching file Documentation/CRDs/Object-Storage/ceph-object-store-crd.md
+patching file Documentation/CRDs/specification.md
+patching file Documentation/Storage-Configuration/Object-Storage-RGW/object-storage.md
+patching file PendingReleaseNotes.md
+patching file deploy/charts/rook-ceph/templates/resources.yaml
+patching file deploy/examples/crds.yaml
+patching file deploy/examples/object-multi-instance-test.yaml
+patching file pkg/apis/ceph.rook.io/v1/types.go
+patching file pkg/apis/ceph.rook.io/v1/zz_generated.deepcopy.go
+patching file pkg/operator/ceph/object/config.go
+patching file pkg/operator/ceph/object/rgw-probe.sh
+patching file pkg/operator/ceph/object/spec.go

@@ -1,0 +1,290 @@
+patching file src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js
+patching file src/test/unit_tests/jest_tests/test_iam_utils.test.js
+  console.warn
+    Error accrued while getting the data from /etc/noobaa.conf.d/config_dir_redirect: Error: ENOENT: no such file or directory, open '/etc/noobaa.conf.d/config_dir_redirect'
+
+      1019 |         data = fs.readFileSync(file_name).toString();
+      1020 |     } catch (e) {
+    > 1021 |         console.warn(`Error accrued while getting the data from ${file_name}: ${e}`);
+           |                 ^
+      1022 |         return;
+      1023 |     }
+      1024 |     return data;
+
+      at warn (config.js:1021:17)
+      at _get_data_from_file (config.js:1034:22)
+      at _get_config_root (config.js:1078:39)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/iam/ops/iam_create_user.js:4:13)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:5:28)
+
+  console.warn
+    config.get_config_root - could not find custom config_root, will use the default config_root  /etc/noobaa.conf.d
+
+      1035 |         config_root = data.toString().trim();
+      1036 |     } catch (err) {
+    > 1037 |         console.warn('config.get_config_root - could not find custom config_root, will use the default config_root ', config_root);
+           |                 ^
+      1038 |     }
+      1039 |     return config_root;
+      1040 | }
+
+      at warn (config.js:1037:17)
+      at _get_config_root (config.js:1078:39)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/iam/ops/iam_create_user.js:4:13)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:5:28)
+
+  console.warn
+    load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR /etc/noobaa.conf.d
+
+      1077 |         if (!config.NSFS_NC_CONF_DIR) {
+      1078 |             config.NSFS_NC_CONF_DIR = _get_config_root();
+    > 1079 |             console.warn('load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR', config.NSFS_NC_CONF_DIR);
+           |                     ^
+      1080 |         }
+      1081 |         const config_path = path.join(config.NSFS_NC_CONF_DIR, 'config.json');
+      1082 |         const config_data = require(config_path);
+
+      at warn (config.js:1079:21)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/iam/ops/iam_create_user.js:4:13)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:5:28)
+
+  console.warn
+    Error accrued while getting the data from /etc/noobaa.conf.d/config_dir_redirect: Error: ENOENT: no such file or directory, open '/etc/noobaa.conf.d/config_dir_redirect'
+
+      1019 |         data = fs.readFileSync(file_name).toString();
+      1020 |     } catch (e) {
+    > 1021 |         console.warn(`Error accrued while getting the data from ${file_name}: ${e}`);
+           |                 ^
+      1022 |         return;
+      1023 |     }
+      1024 |     return data;
+
+      at warn (config.js:1021:17)
+      at _get_data_from_file (config.js:1034:22)
+      at _get_config_root (config.js:1078:39)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/s3/s3_utils.js:6:13)
+      at Object.require (src/endpoint/iam/iam_utils.js:5:18)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:4:19)
+
+  console.warn
+    config.load_nsfs_nc_config could not find config.json... skipping
+
+      1102 |     } catch (err) {
+      1103 |         if (err.code !== 'MODULE_NOT_FOUND' && err.code !== 'ENOENT') throw err;
+    > 1104 |         console.warn('config.load_nsfs_nc_config could not find config.json... skipping');
+           |                 ^
+      1105 |     }
+      1106 | }
+      1107 | /**
+
+      at warn (config.js:1104:17)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/iam/ops/iam_create_user.js:4:13)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:5:28)
+
+  console.warn
+    config.get_config_root - could not find custom config_root, will use the default config_root  /etc/noobaa.conf.d
+
+      1035 |         config_root = data.toString().trim();
+      1036 |     } catch (err) {
+    > 1037 |         console.warn('config.get_config_root - could not find custom config_root, will use the default config_root ', config_root);
+           |                 ^
+      1038 |     }
+      1039 |     return config_root;
+      1040 | }
+
+      at warn (config.js:1037:17)
+      at _get_config_root (config.js:1078:39)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/s3/s3_utils.js:6:13)
+      at Object.require (src/endpoint/iam/iam_utils.js:5:18)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:4:19)
+
+  console.warn
+    load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR /etc/noobaa.conf.d
+
+      1077 |         if (!config.NSFS_NC_CONF_DIR) {
+      1078 |             config.NSFS_NC_CONF_DIR = _get_config_root();
+    > 1079 |             console.warn('load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR', config.NSFS_NC_CONF_DIR);
+           |                     ^
+      1080 |         }
+      1081 |         const config_path = path.join(config.NSFS_NC_CONF_DIR, 'config.json');
+      1082 |         const config_data = require(config_path);
+
+      at warn (config.js:1079:21)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/s3/s3_utils.js:6:13)
+      at Object.require (src/endpoint/iam/iam_utils.js:5:18)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:4:19)
+
+  console.warn
+    config.load_nsfs_nc_config could not find config.json... skipping
+
+      1102 |     } catch (err) {
+      1103 |         if (err.code !== 'MODULE_NOT_FOUND' && err.code !== 'ENOENT') throw err;
+    > 1104 |         console.warn('config.load_nsfs_nc_config could not find config.json... skipping');
+           |                 ^
+      1105 |     }
+      1106 | }
+      1107 | /**
+
+      at warn (config.js:1104:17)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/s3/s3_utils.js:6:13)
+      at Object.require (src/endpoint/iam/iam_utils.js:5:18)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:4:19)
+
+PASS src/test/unit_tests/jest_tests/test_iam_utils.test.js
+  create_arn
+    ✓ create_arn without username should return basic structure (6 ms)
+    ✓ create_arn with username and no iam_path should return only username in arn
+    ✓ create_arn with username and AWS DEFAULT PATH should return only username in arn (1 ms)
+    ✓ create_arn with username and iam_path should return them in arn
+  get_action_message_title
+    ✓ create_user
+    ✓ get_user (1 ms)
+    ✓ update_user
+    ✓ delete_user
+    ✓ list_users
+    ✓ create_access_key
+    ✓ get_access_key_last_used
+    ✓ update_access_key
+    ✓ delete_access_key
+    ✓ list_access_keys
+  check_iam_path_was_set
+    ✓ iam_path is undefined should return false in boolean context
+    ✓ iam_path is IAM_DEFAULT_PATH should return false in boolean context (1 ms)
+    ✓ iam_path is set should return true
+  format_iam_xml_date
+    ✓ should not return milliseconds in date (1 ms)
+  validate_user_input_iam
+    validate_iam_path
+      ✓ should return true when path is undefined (1 ms)
+      ✓ should return true when path is AWS_DEFAULT_PATH
+      ✓ should return true when path is at the min or max length
+      ✓ should return true when path is within the length constraint (1 ms)
+      ✓ should return true when path is valid
+      ✓ should throw error when path is invalid - not begins with / (1 ms)
+      ✓ should throw error when path is invalid - not ends with / (1 ms)
+      ✓ should throw error when path is invalid - not begins with / and not ends with /
+      ✓ should throw error when path is too short
+      ✓ should throw error when path is too long
+      ✓ should throw error for invalid input types (null)
+      ✓ should throw error for invalid input types (number)
+      ✓ should throw error for invalid input types (object)
+      ✓ should throw error for invalid input types (boolean) (1 ms)
+    validate_username
+      ✓ should return true when username is undefined
+      ✓ should return true when username is at the min or max length
+      ✓ should return true when username is within the length constraint (1 ms)
+      ✓ should return true when username is valid
+      ✓ should throw error when username is invalid - contains invalid character
+      ✓ should throw error when username is invalid - internal limitation
+      ✓ should throw error when username is too short
+      ✓ should throw error when username is too long
+      ✓ should throw error for invalid input types (null)
+      ✓ should throw error for invalid input types (number) (1 ms)
+      ✓ should throw error for invalid input types (object)
+      ✓ should throw error for invalid input types (boolean)
+    validate_marker
+      ✓ should return true when marker is undefined
+      ✓ should return true when marker is at the min
+      ✓ should return true when marker is within the length constraint
+      ✓ should return true when marker is valid
+      ✓ should throw error when marker is invalid - contains invalid character (1 ms)
+      ✓ should throw error when marker is too short
+      ✓ should throw error for invalid input types (null)
+      ✓ should throw error for invalid input types (number)
+      ✓ should throw error for invalid input types (object)
+      ✓ should throw error for invalid input types (boolean)
+    validate_access_key_id
+      ✓ should return true when access_key is undefined
+      ✓ should return true when access_key is at the min or max length (1 ms)
+      ✓ should return true when access_key is within the length constraint
+      ✓ should return true when access_key is valid
+      ✓ should throw error when access_key is invalid - contains invalid character
+      ✓ should throw error when access_key is too short (1 ms)
+      ✓ should throw error when access_key is too long
+      ✓ should throw error for invalid input types (null)
+      ✓ should throw error for invalid input types (number)
+      ✓ should throw error for invalid input types (object) (4 ms)
+      ✓ should throw error for invalid input types (boolean) (1 ms)
+    validate_status
+      ✓ should return true when status is undefined
+      ✓ should return true when status is valid
+      ✓ should throw error when status is invalid - capital letters (1 ms)
+      ✓ should throw error when status is invalid - small letters
+
+(node:184) NOTE: The AWS SDK for JavaScript (v2) will enter maintenance mode
+on September 8, 2024 and reach end-of-support on September 8, 2025.
+
+Please migrate your code to use AWS SDK for JavaScript (v3).
+For more information, check blog post at https://a.co/cUPnyil
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32mJun-29 15:32:48.232[35m [/184] [33m [WARN][39m CONSOLE:: config.load_nsfs_nc_config could not find config.json... skipping
+PASS src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js
+  input validation flow in IAM ops - IAM USERS API
+    iam_create_user
+      ✓ iam_create_user without required parameters (username) should throw error (4 ms)
+      ✓ iam_create_user with invalid username (below min length) should throw error
+      ✓ iam_create_user with invalid path (without / at the beginning and the end) should throw error (1 ms)
+    iam_get_user
+      ✓ iam_get_user with invalid username (internal invalid name) should throw error (1 ms)
+    iam_update_user
+      ✓ iam_update_user without required parameters (username) should throw error (1 ms)
+      ✓ iam_update_user with invalid new username (less than min length) should throw error
+      ✓ iam_update_user with invalid new path (without / at the beginning and the end) should throw error (1 ms)
+    iam_delete_user
+      ✓ iam_delete_user without required parameters (username) should throw error (1 ms)
+      ✓ iam_delete_user with invalid username (more than max length) should throw error
+    iam_list_users_op
+      ✓ iam_list_users with invalid iam_path_prefix (without / at the beginning and the end) should throw error (1 ms)
+      ✓ iam_list_users with invalid max_items (less than min value) should throw error (1 ms)
+      ✓ iam_list_users with invalid marker (below min length) should throw error
+  input validation flow in IAM ops - IAM ACCESS KEY API
+    iam_create_access_key
+      ✓ iam_create_access_key with invalid username (below min length) should throw error (1 ms)
+    iam_get_access_key_last_used
+      ✓ iam_get_access_key_last_used without required parameters (access key id) should throw error
+      ✓ iam_get_access_key_last_used with invalid access key (below min length) should throw error (1 ms)
+    iam_update_access_key
+      ✓ iam_update_access_key without required parameters (access key id) should throw error (4 ms)
+      ✓ iam_update_access_key without required parameters (status) should throw error
+      ✓ iam_update_user with invalid status should throw error (1 ms)
+      ✓ iam_update_user with invalid access key (below min length) should throw error
+      ✓ iam_update_user with invalid username (less than min length) should throw error (1 ms)
+    iam_delete_access_key
+      ✓ iam_delete_access_key without required parameters (access key id) should throw error
+      ✓ iam_delete_access_key with invalid access key id (less than min length) should throw error
+      ✓ iam_delete_access_key with invalid username (less than min length) should throw error
+    iam_list_access_keys
+      ✓ iam_list_access_keys with invalid max_items (less than min value) should throw error
+      ✓ iam_list_access_keys with invalid marker (below min length) should throw error (1 ms)
+      ✓ iam_list_access_keys with invalid username (below min length) should throw error
+
+(node:185) NOTE: The AWS SDK for JavaScript (v2) will enter maintenance mode
+on September 8, 2024 and reach end-of-support on September 8, 2025.
+
+Please migrate your code to use AWS SDK for JavaScript (v3).
+For more information, check blog post at https://a.co/cUPnyil
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32mJun-29 15:32:48.260[35m [/185] [33m [WARN][39m CONSOLE:: config.load_nsfs_nc_config could not find config.json... skipping
+Test Suites: 2 passed, 2 total
+Tests:       95 passed, 95 total
+Snapshots:   0 total
+Time:        2.419 s
+Ran all test suites matching /src\/test\/unit_tests\/jest_tests\/test_iam_ops_input_validation.test.js|src\/test\/unit_tests\/jest_tests\/test_iam_utils.test.js/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":2,"numPassedTests":95,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":95,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782747165857,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["create_arn"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"create_arn create_arn without username should return basic structure","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"create_arn without username should return basic structure"},{"ancestorTitles":["create_arn"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"create_arn create_arn with username and no iam_path should return only username in arn","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"create_arn with username and no iam_path should return only username in arn"},{"ancestorTitles":["create_arn"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"create_arn create_arn with username and AWS DEFAULT PATH should return only username in arn","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"create_arn with username and AWS DEFAULT PATH should return only username in arn"},{"ancestorTitles":["create_arn"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"create_arn create_arn with username and iam_path should return them in arn","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"create_arn with username and iam_path should return them in arn"},{"ancestorTitles":["get_action_message_title"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title create_user","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"create_user"},{"ancestorTitles":["get_action_message_title"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title get_user","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"get_user"},{"ancestorTitles":["get_action_message_title"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title update_user","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"update_user"},{"ancestorTitles":["get_action_message_title"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title delete_user","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"delete_user"},{"ancestorTitles":["get_action_message_title"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title list_users","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"list_users"},{"ancestorTitles":["get_action_message_title"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title create_access_key","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"create_access_key"},{"ancestorTitles":["get_action_message_title"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title get_access_key_last_used","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"get_access_key_last_used"},{"ancestorTitles":["get_action_message_title"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title update_access_key","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"update_access_key"},{"ancestorTitles":["get_action_message_title"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title delete_access_key","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"delete_access_key"},{"ancestorTitles":["get_action_message_title"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"get_action_message_title list_access_keys","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"list_access_keys"},{"ancestorTitles":["check_iam_path_was_set"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"check_iam_path_was_set iam_path is undefined should return false in boolean context","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"iam_path is undefined should return false in boolean context"},{"ancestorTitles":["check_iam_path_was_set"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"check_iam_path_was_set iam_path is IAM_DEFAULT_PATH should return false in boolean context","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"iam_path is IAM_DEFAULT_PATH should return false in boolean context"},{"ancestorTitles":["check_iam_path_was_set"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"check_iam_path_was_set iam_path is set should return true","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"iam_path is set should return true"},{"ancestorTitles":["format_iam_xml_date"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"format_iam_xml_date should not return milliseconds in date","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should not return milliseconds in date"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should return true when path is undefined","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when path is undefined"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should return true when path is AWS_DEFAULT_PATH","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when path is AWS_DEFAULT_PATH"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should return true when path is at the min or max length","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return true when path is at the min or max length"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should return true when path is within the length constraint","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return true when path is within the length constraint"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should return true when path is valid","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when path is valid"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should throw error when path is invalid - not begins with /","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when path is invalid - not begins with /"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should throw error when path is invalid - not ends with /","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when path is invalid - not ends with /"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should throw error when path is invalid - not begins with / and not ends with /","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when path is invalid - not begins with / and not ends with /"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should throw error when path is too short","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when path is too short"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should throw error when path is too long","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when path is too long"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should throw error for invalid input types (null)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (null)"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should throw error for invalid input types (number)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (number)"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should throw error for invalid input types (object)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (object)"},{"ancestorTitles":["validate_user_input_iam","validate_iam_path"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_iam_path should throw error for invalid input types (boolean)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (boolean)"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should return true when username is undefined","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when username is undefined"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should return true when username is at the min or max length","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return true when username is at the min or max length"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should return true when username is within the length constraint","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return true when username is within the length constraint"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should return true when username is valid","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when username is valid"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should throw error when username is invalid - contains invalid character","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when username is invalid - contains invalid character"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should throw error when username is invalid - internal limitation","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when username is invalid - internal limitation"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should throw error when username is too short","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when username is too short"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should throw error when username is too long","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when username is too long"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should throw error for invalid input types (null)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (null)"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should throw error for invalid input types (number)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (number)"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should throw error for invalid input types (object)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (object)"},{"ancestorTitles":["validate_user_input_iam","validate_username"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_username should throw error for invalid input types (boolean)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (boolean)"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should return true when marker is undefined","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when marker is undefined"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should return true when marker is at the min","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when marker is at the min"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should return true when marker is within the length constraint","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when marker is within the length constraint"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should return true when marker is valid","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when marker is valid"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should throw error when marker is invalid - contains invalid character","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when marker is invalid - contains invalid character"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should throw error when marker is too short","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when marker is too short"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should throw error for invalid input types (null)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (null)"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should throw error for invalid input types (number)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (number)"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should throw error for invalid input types (object)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (object)"},{"ancestorTitles":["validate_user_input_iam","validate_marker"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_marker should throw error for invalid input types (boolean)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (boolean)"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should return true when access_key is undefined","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when access_key is undefined"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should return true when access_key is at the min or max length","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return true when access_key is at the min or max length"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should return true when access_key is within the length constraint","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return true when access_key is within the length constraint"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should return true when access_key is valid","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when access_key is valid"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should throw error when access_key is invalid - contains invalid character","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when access_key is invalid - contains invalid character"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should throw error when access_key is too short","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when access_key is too short"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should throw error when access_key is too long","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when access_key is too long"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should throw error for invalid input types (null)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (null)"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should throw error for invalid input types (number)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (number)"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should throw error for invalid input types (object)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (object)"},{"ancestorTitles":["validate_user_input_iam","validate_access_key_id"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_access_key_id should throw error for invalid input types (boolean)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error for invalid input types (boolean)"},{"ancestorTitles":["validate_user_input_iam","validate_status"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_status should return true when status is undefined","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return true when status is undefined"},{"ancestorTitles":["validate_user_input_iam","validate_status"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_status should return true when status is valid","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return true when status is valid"},{"ancestorTitles":["validate_user_input_iam","validate_status"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_status should throw error when status is invalid - capital letters","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when status is invalid - capital letters"},{"ancestorTitles":["validate_user_input_iam","validate_status"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"validate_user_input_iam validate_status should throw error when status is invalid - small letters","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should throw error when status is invalid - small letters"}],"endTime":1782747168228,"message":"","name":"/workspace/repo/src/test/unit_tests/jest_tests/test_iam_utils.test.js","startTime":1782747166055,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_create_user"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_create_user iam_create_user without required parameters (username) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_create_user without required parameters (username) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_create_user"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_create_user iam_create_user with invalid username (below min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_create_user with invalid username (below min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_create_user"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_create_user iam_create_user with invalid path (without / at the beginning and the end) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_create_user with invalid path (without / at the beginning and the end) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_get_user"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_get_user iam_get_user with invalid username (internal invalid name) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_get_user with invalid username (internal invalid name) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_update_user"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_update_user iam_update_user without required parameters (username) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_update_user without required parameters (username) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_update_user"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_update_user iam_update_user with invalid new username (less than min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_update_user with invalid new username (less than min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_update_user"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_update_user iam_update_user with invalid new path (without / at the beginning and the end) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_update_user with invalid new path (without / at the beginning and the end) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_delete_user"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_delete_user iam_delete_user without required parameters (username) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_delete_user without required parameters (username) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_delete_user"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_delete_user iam_delete_user with invalid username (more than max length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_delete_user with invalid username (more than max length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_list_users_op"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_list_users_op iam_list_users with invalid iam_path_prefix (without / at the beginning and the end) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_list_users with invalid iam_path_prefix (without / at the beginning and the end) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_list_users_op"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_list_users_op iam_list_users with invalid max_items (less than min value) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_list_users with invalid max_items (less than min value) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM USERS API","iam_list_users_op"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM USERS API iam_list_users_op iam_list_users with invalid marker (below min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_list_users with invalid marker (below min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_create_access_key"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_create_access_key iam_create_access_key with invalid username (below min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_create_access_key with invalid username (below min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_get_access_key_last_used"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_get_access_key_last_used iam_get_access_key_last_used without required parameters (access key id) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_get_access_key_last_used without required parameters (access key id) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_get_access_key_last_used"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_get_access_key_last_used iam_get_access_key_last_used with invalid access key (below min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_get_access_key_last_used with invalid access key (below min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_update_access_key"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_update_access_key iam_update_access_key without required parameters (access key id) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_update_access_key without required parameters (access key id) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_update_access_key"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_update_access_key iam_update_access_key without required parameters (status) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_update_access_key without required parameters (status) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_update_access_key"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_update_access_key iam_update_user with invalid status should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_update_user with invalid status should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_update_access_key"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_update_access_key iam_update_user with invalid access key (below min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_update_user with invalid access key (below min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_update_access_key"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_update_access_key iam_update_user with invalid username (less than min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_update_user with invalid username (less than min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_delete_access_key"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_delete_access_key iam_delete_access_key without required parameters (access key id) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_delete_access_key without required parameters (access key id) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_delete_access_key"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_delete_access_key iam_delete_access_key with invalid access key id (less than min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_delete_access_key with invalid access key id (less than min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_delete_access_key"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_delete_access_key iam_delete_access_key with invalid username (less than min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_delete_access_key with invalid username (less than min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_list_access_keys"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_list_access_keys iam_list_access_keys with invalid max_items (less than min value) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_list_access_keys with invalid max_items (less than min value) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_list_access_keys"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_list_access_keys iam_list_access_keys with invalid marker (below min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_list_access_keys with invalid marker (below min length) should throw error"},{"ancestorTitles":["input validation flow in IAM ops - IAM ACCESS KEY API","iam_list_access_keys"],"duration":0,"failureDetails":[],"failureMessages":[],"fullName":"input validation flow in IAM ops - IAM ACCESS KEY API iam_list_access_keys iam_list_access_keys with invalid username (below min length) should throw error","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"iam_list_access_keys with invalid username (below min length) should throw error"}],"endTime":1782747168255,"message":"","name":"/workspace/repo/src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js","startTime":1782747166055,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=95 found=95 failed=0 parsed=95 framework=jest exit_code=0

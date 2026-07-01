@@ -1,0 +1,5 @@
+I'm working on the Scala MongoDB driver and running into a usability issue with operations that complete without producing a meaningful result — like writing or uploading files to GridFS. These operations currently use a Java type that doesn't work well in Scala: subscribers receive an empty, meaningless value, and I can't chain these operations using idiomatic Scala for-comprehensions.
+
+I'd like an adapter that wraps these void-returning reactive publishers and makes them emit exactly one Scala unit value upon successful completion, even if the underlying publisher emits no items. If the underlying publisher signals an error, the adapter should propagate that error without emitting any items or signaling completion. The adapter also needs to support subscribers that explicitly request one item via backpressure demand. For GridFS uploads specifically, the adapter also needs to expose the file identifier accessors from the underlying publisher.
+
+The existing GridFS upload observable wrapper should also be updated to use this unit-emitting type instead of the existing Java-based void type, so that their method sets stay aligned.

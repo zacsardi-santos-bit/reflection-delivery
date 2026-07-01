@@ -1,0 +1,6 @@
+patching file pkg/cmd/installer/cmd_test.go
+# github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer [github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer.test]
+pkg/cmd/installer/cmd_test.go:28:10: undefined: InstallOptions
+pkg/cmd/installer/cmd_test.go:36:7: undefined: InstallOptions
+FAIL	github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer [build failed]
+reward=0 graded=2 found=2 failed=2 parsed=1 framework=go exit_code=1

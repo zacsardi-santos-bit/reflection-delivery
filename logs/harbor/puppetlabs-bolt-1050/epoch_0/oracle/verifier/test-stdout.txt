@@ -1,0 +1,329 @@
+patching file spec/bolt/inventory/group2_spec.rb
+patching file spec/bolt/inventory/inventory2_spec.rb
+patching file spec/bolt/plugin/prompt_spec.rb
+patching file spec/bolt/plugin/puppetdb_spec.rb
+patching file spec/bolt/plugin/terraform_spec.rb
+patching file spec/integration/inventory2_spec.rb
+warning: replacing registered class RubySMB::SMB2::BitField::DirectoryAccessMask with RubySMB::SMB1::BitField::DirectoryAccessMask
+warning: replacing registered class RubySMB::SMB2::BitField::FileAccessMask with RubySMB::SMB1::BitField::FileAccessMask
+warning: replacing registered class RubySMB::SMB2::Packet::NegotiateRequest with RubySMB::SMB1::Packet::NegotiateRequest
+warning: replacing registered class RubySMB::SMB1::DataBlock with RubySMB::SMB1::Packet::NegotiateRequest::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::NegotiateResponse with RubySMB::SMB1::Packet::NegotiateResponse
+warning: replacing registered class RubySMB::SMB1::ParameterBlock with RubySMB::SMB1::Packet::NegotiateResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NegotiateRequest::DataBlock with RubySMB::SMB1::Packet::NegotiateResponse::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NegotiateResponse::ParameterBlock with RubySMB::SMB1::Packet::NegotiateResponseExtended::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NegotiateResponse::DataBlock with RubySMB::SMB1::Packet::NegotiateResponseExtended::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::SessionSetupRequest with RubySMB::SMB1::Packet::SessionSetupRequest
+warning: replacing registered class RubySMB::SMB1::Packet::NegotiateResponseExtended::ParameterBlock with RubySMB::SMB1::Packet::SessionSetupRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NegotiateResponseExtended::DataBlock with RubySMB::SMB1::Packet::SessionSetupRequest::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::SessionSetupRequest::ParameterBlock with RubySMB::SMB1::Packet::SessionSetupLegacyRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::SessionSetupRequest::DataBlock with RubySMB::SMB1::Packet::SessionSetupLegacyRequest::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::SessionSetupResponse with RubySMB::SMB1::Packet::SessionSetupResponse
+warning: replacing registered class RubySMB::SMB1::Packet::SessionSetupLegacyRequest::ParameterBlock with RubySMB::SMB1::Packet::SessionSetupResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::SessionSetupLegacyRequest::DataBlock with RubySMB::SMB1::Packet::SessionSetupResponse::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::SessionSetupResponse::ParameterBlock with RubySMB::SMB1::Packet::SessionSetupLegacyResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::SessionSetupResponse::DataBlock with RubySMB::SMB1::Packet::SessionSetupLegacyResponse::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::TreeConnectRequest with RubySMB::SMB1::Packet::TreeConnectRequest
+warning: replacing registered class RubySMB::SMB1::Packet::SessionSetupLegacyResponse::ParameterBlock with RubySMB::SMB1::Packet::TreeConnectRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::SessionSetupLegacyResponse::DataBlock with RubySMB::SMB1::Packet::TreeConnectRequest::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::TreeConnectResponse with RubySMB::SMB1::Packet::TreeConnectResponse
+warning: replacing registered class RubySMB::SMB1::Packet::TreeConnectRequest::ParameterBlock with RubySMB::SMB1::Packet::TreeConnectResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::TreeConnectRequest::DataBlock with RubySMB::SMB1::Packet::TreeConnectResponse::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::TreeDisconnectRequest with RubySMB::SMB1::Packet::TreeDisconnectRequest
+warning: replacing registered class RubySMB::SMB1::Packet::TreeConnectResponse::ParameterBlock with RubySMB::SMB1::Packet::TreeDisconnectRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::TreeConnectResponse::DataBlock with RubySMB::SMB1::Packet::TreeDisconnectRequest::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::TreeDisconnectResponse with RubySMB::SMB1::Packet::TreeDisconnectResponse
+warning: replacing registered class RubySMB::SMB1::Packet::TreeDisconnectRequest::ParameterBlock with RubySMB::SMB1::Packet::TreeDisconnectResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::TreeDisconnectRequest::DataBlock with RubySMB::SMB1::Packet::TreeDisconnectResponse::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::LogoffRequest with RubySMB::SMB1::Packet::LogoffRequest
+warning: replacing registered class RubySMB::SMB1::Packet::TreeDisconnectResponse::ParameterBlock with RubySMB::SMB1::Packet::LogoffRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::TreeDisconnectResponse::DataBlock with RubySMB::SMB1::Packet::LogoffRequest::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::LogoffResponse with RubySMB::SMB1::Packet::LogoffResponse
+warning: replacing registered class RubySMB::SMB1::Packet::LogoffRequest::ParameterBlock with RubySMB::SMB1::Packet::LogoffResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::LogoffRequest::DataBlock with RubySMB::SMB1::Packet::LogoffResponse::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::EchoRequest with RubySMB::SMB1::Packet::EchoRequest
+warning: replacing registered class RubySMB::SMB1::Packet::LogoffResponse::ParameterBlock with RubySMB::SMB1::Packet::EchoRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::LogoffResponse::DataBlock with RubySMB::SMB1::Packet::EchoRequest::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::EchoResponse with RubySMB::SMB1::Packet::EchoResponse
+warning: replacing registered class RubySMB::SMB1::Packet::EchoRequest::ParameterBlock with RubySMB::SMB1::Packet::EchoResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::EchoRequest::DataBlock with RubySMB::SMB1::Packet::EchoResponse::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::EchoResponse::DataBlock with RubySMB::SMB1::Packet::Trans::DataBlock
+warning: replacing registered class RubySMB::Dcerpc::Request with RubySMB::SMB1::Packet::Trans::Request
+warning: replacing registered class RubySMB::SMB1::Packet::EchoResponse::ParameterBlock with RubySMB::SMB1::Packet::Trans::Request::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::DataBlock with RubySMB::SMB1::Packet::Trans::Request::DataBlock
+warning: replacing registered class RubySMB::Dcerpc::Response with RubySMB::SMB1::Packet::Trans::Response
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::Request::ParameterBlock with RubySMB::SMB1::Packet::Trans::Response::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::Request::DataBlock with RubySMB::SMB1::Packet::Trans::Response::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::Response::ParameterBlock with RubySMB::SMB1::Packet::Trans::TransactNmpipeRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::Response::DataBlock with RubySMB::SMB1::Packet::Trans::TransactNmpipeRequest::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::TransactNmpipeRequest::ParameterBlock with RubySMB::SMB1::Packet::Trans::TransactNmpipeResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::TransactNmpipeRequest::TransData with RubySMB::SMB1::Packet::Trans::TransactNmpipeResponse::TransData
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::TransactNmpipeRequest::DataBlock with RubySMB::SMB1::Packet::Trans::TransactNmpipeResponse::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::TransactNmpipeResponse::ParameterBlock with RubySMB::SMB1::Packet::Trans::PeekNmpipeResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::TransactNmpipeResponse::TransData with RubySMB::SMB1::Packet::Trans::PeekNmpipeResponse::TransData
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::TransactNmpipeResponse::DataBlock with RubySMB::SMB1::Packet::Trans::PeekNmpipeResponse::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::PeekNmpipeResponse::DataBlock with RubySMB::SMB1::Packet::Trans2::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::Request with RubySMB::SMB1::Packet::Trans2::Request
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::PeekNmpipeResponse::ParameterBlock with RubySMB::SMB1::Packet::Trans2::Request::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::DataBlock with RubySMB::SMB1::Packet::Trans2::Request::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Request::ParameterBlock with RubySMB::SMB1::Packet::Trans2::RequestSecondary::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Request::DataBlock with RubySMB::SMB1::Packet::Trans2::RequestSecondary::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans::Response with RubySMB::SMB1::Packet::Trans2::Response
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::RequestSecondary::ParameterBlock with RubySMB::SMB1::Packet::Trans2::Response::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::RequestSecondary::DataBlock with RubySMB::SMB1::Packet::Trans2::Response::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Response::ParameterBlock with RubySMB::SMB1::Packet::Trans2::Open2Request::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Response::DataBlock with RubySMB::SMB1::Packet::Trans2::Open2Request::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Open2Request::ParameterBlock with RubySMB::SMB1::Packet::Trans2::Open2Response::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Open2Request::Trans2Parameters with RubySMB::SMB1::Packet::Trans2::Open2Response::Trans2Parameters
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Open2Request::DataBlock with RubySMB::SMB1::Packet::Trans2::Open2Response::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Open2Response::ParameterBlock with RubySMB::SMB1::Packet::Trans2::FindFirst2Request::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Open2Response::Trans2Parameters with RubySMB::SMB1::Packet::Trans2::FindFirst2Request::Trans2Parameters
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Open2Request::Trans2Data with RubySMB::SMB1::Packet::Trans2::FindFirst2Request::Trans2Data
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Open2Response::DataBlock with RubySMB::SMB1::Packet::Trans2::FindFirst2Request::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindFirst2Request::ParameterBlock with RubySMB::SMB1::Packet::Trans2::FindFirst2Response::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindFirst2Request::Trans2Parameters with RubySMB::SMB1::Packet::Trans2::FindFirst2Response::Trans2Parameters
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindFirst2Request::Trans2Data with RubySMB::SMB1::Packet::Trans2::FindFirst2Response::Trans2Data
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindFirst2Request::DataBlock with RubySMB::SMB1::Packet::Trans2::FindFirst2Response::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindFirst2Response::ParameterBlock with RubySMB::SMB1::Packet::Trans2::FindNext2Request::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindFirst2Response::Trans2Parameters with RubySMB::SMB1::Packet::Trans2::FindNext2Request::Trans2Parameters
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindFirst2Response::Trans2Data with RubySMB::SMB1::Packet::Trans2::FindNext2Request::Trans2Data
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindFirst2Response::DataBlock with RubySMB::SMB1::Packet::Trans2::FindNext2Request::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindNext2Request::ParameterBlock with RubySMB::SMB1::Packet::Trans2::FindNext2Response::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindNext2Request::Trans2Parameters with RubySMB::SMB1::Packet::Trans2::FindNext2Response::Trans2Parameters
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindNext2Request::Trans2Data with RubySMB::SMB1::Packet::Trans2::FindNext2Response::Trans2Data
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindNext2Request::DataBlock with RubySMB::SMB1::Packet::Trans2::FindNext2Response::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindNext2Response::ParameterBlock with RubySMB::SMB1::Packet::Trans2::SetFileInformationRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindNext2Response::Trans2Parameters with RubySMB::SMB1::Packet::Trans2::SetFileInformationRequest::Trans2Parameters
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindNext2Response::Trans2Data with RubySMB::SMB1::Packet::Trans2::SetFileInformationRequest::Trans2Data
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::FindNext2Response::DataBlock with RubySMB::SMB1::Packet::Trans2::SetFileInformationRequest::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::SetFileInformationRequest::ParameterBlock with RubySMB::SMB1::Packet::Trans2::SetFileInformationResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::SetFileInformationRequest::Trans2Parameters with RubySMB::SMB1::Packet::Trans2::SetFileInformationResponse::Trans2Parameters
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::SetFileInformationRequest::Trans2Data with RubySMB::SMB1::Packet::Trans2::SetFileInformationResponse::Trans2Data
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::SetFileInformationRequest::DataBlock with RubySMB::SMB1::Packet::Trans2::SetFileInformationResponse::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Request with RubySMB::SMB1::Packet::NtTrans::Request
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::SetFileInformationResponse::ParameterBlock with RubySMB::SMB1::Packet::NtTrans::Request::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::SetFileInformationResponse::DataBlock with RubySMB::SMB1::Packet::NtTrans::Request::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::Response with RubySMB::SMB1::Packet::NtTrans::Response
+warning: replacing registered class RubySMB::SMB1::Packet::NtTrans::Request::ParameterBlock with RubySMB::SMB1::Packet::NtTrans::Response::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NtTrans::Request::DataBlock with RubySMB::SMB1::Packet::NtTrans::Response::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::CreateRequest with RubySMB::SMB1::Packet::NtTrans::CreateRequest
+warning: replacing registered class RubySMB::SMB1::Packet::NtTrans::Response::ParameterBlock with RubySMB::SMB1::Packet::NtTrans::CreateRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::SetFileInformationResponse::Trans2Parameters with RubySMB::SMB1::Packet::NtTrans::CreateRequest::Trans2Parameters
+warning: replacing registered class RubySMB::SMB1::Packet::Trans2::SetFileInformationResponse::Trans2Data with RubySMB::SMB1::Packet::NtTrans::CreateRequest::Trans2Data
+warning: replacing registered class RubySMB::SMB1::Packet::NtTrans::Response::DataBlock with RubySMB::SMB1::Packet::NtTrans::CreateRequest::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::CreateResponse with RubySMB::SMB1::Packet::NtTrans::CreateResponse
+warning: replacing registered class RubySMB::SMB1::Packet::NtTrans::CreateRequest::ParameterBlock with RubySMB::SMB1::Packet::NtTrans::CreateResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NtTrans::CreateRequest::Trans2Parameters with RubySMB::SMB1::Packet::NtTrans::CreateResponse::Trans2Parameters
+warning: replacing registered class RubySMB::SMB1::Packet::NtTrans::CreateRequest::DataBlock with RubySMB::SMB1::Packet::NtTrans::CreateResponse::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NtTrans::CreateResponse::ParameterBlock with RubySMB::SMB1::Packet::NtCreateAndxRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NtTrans::CreateResponse::DataBlock with RubySMB::SMB1::Packet::NtCreateAndxRequest::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NtCreateAndxRequest::ParameterBlock with RubySMB::SMB1::Packet::NtCreateAndxResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NtCreateAndxRequest::DataBlock with RubySMB::SMB1::Packet::NtCreateAndxResponse::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NtCreateAndxResponse::ParameterBlock with RubySMB::SMB1::Packet::ReadAndxRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::NtCreateAndxResponse::DataBlock with RubySMB::SMB1::Packet::ReadAndxRequest::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::ReadAndxRequest::ParameterBlock with RubySMB::SMB1::Packet::ReadAndxResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::ReadAndxRequest::DataBlock with RubySMB::SMB1::Packet::ReadAndxResponse::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::ReadAndxResponse::ParameterBlock with RubySMB::SMB1::Packet::WriteAndxRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::ReadAndxResponse::DataBlock with RubySMB::SMB1::Packet::WriteAndxRequest::DataBlock
+warning: replacing registered class RubySMB::SMB1::Packet::WriteAndxRequest::ParameterBlock with RubySMB::SMB1::Packet::WriteAndxResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::WriteAndxRequest::DataBlock with RubySMB::SMB1::Packet::WriteAndxResponse::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::CloseRequest with RubySMB::SMB1::Packet::CloseRequest
+warning: replacing registered class RubySMB::SMB1::Packet::WriteAndxResponse::ParameterBlock with RubySMB::SMB1::Packet::CloseRequest::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::WriteAndxResponse::DataBlock with RubySMB::SMB1::Packet::CloseRequest::DataBlock
+warning: replacing registered class RubySMB::SMB2::Packet::CloseResponse with RubySMB::SMB1::Packet::CloseResponse
+warning: replacing registered class RubySMB::SMB1::Packet::CloseRequest::ParameterBlock with RubySMB::SMB1::Packet::CloseResponse::ParameterBlock
+warning: replacing registered class RubySMB::SMB1::Packet::CloseRequest::DataBlock with RubySMB::SMB1::Packet::CloseResponse::DataBlock
+Run options: exclude {:sudo=>true, :windows=>true, :appveyor_agents=>true}
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="rspec" tests="186" skipped="0" failures="0" errors="0" time="0.169342" timestamp="2026-06-29T15:17:02+00:00" hostname="modal">
+<properties>
+<property name="seed" value="28824"/>
+</properties>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 returns nil" file="./spec/bolt/inventory/group2_spec.rb" time="0.001921"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with targets at the top level should initialize" file="./spec/bolt/inventory/group2_spec.rb" time="0.000119"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with targets at the top level should have three targets" file="./spec/bolt/inventory/group2_spec.rb" time="0.001087"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with targets at the top level should return empty data" file="./spec/bolt/inventory/group2_spec.rb" time="0.000131"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with targets at the top level should find three targets" file="./spec/bolt/inventory/group2_spec.rb" time="0.000155"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with targets at the top level should collect one group" file="./spec/bolt/inventory/group2_spec.rb" time="0.000123"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with targets at the top level should return a hash for a string target" file="./spec/bolt/inventory/group2_spec.rb" time="0.000107"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with targets at the top level should return a hash for hash defined targets" file="./spec/bolt/inventory/group2_spec.rb" time="0.000121"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with targets at the top level should return nil for an unknown target" file="./spec/bolt/inventory/group2_spec.rb" time="0.000084"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with data at all levels uses the childs target definition" file="./spec/bolt/inventory/group2_spec.rb" time="0.000130"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with data at all levels should find one target" file="./spec/bolt/inventory/group2_spec.rb" time="0.000121"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with data at all levels should collect 2 groups" file="./spec/bolt/inventory/group2_spec.rb" time="0.000106"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with data at all levels should find one target in the subgroup" file="./spec/bolt/inventory/group2_spec.rb" time="0.000093"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with target data in parent and group in the child uses the parents target definition" file="./spec/bolt/inventory/group2_spec.rb" time="0.000105"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with group data at all levels uses the childs group definition" file="./spec/bolt/inventory/group2_spec.rb" time="0.000119"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with two children which both set target uses the first childs target definition" file="./spec/bolt/inventory/group2_spec.rb" time="0.000140"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with two children where the second sets target uses the first childs target definition" file="./spec/bolt/inventory/group2_spec.rb" time="0.000162"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with two children where both set group uses the first childs group definition" file="./spec/bolt/inventory/group2_spec.rb" time="0.000139"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with two children where the second sets group uses the second childs group definition" file="./spec/bolt/inventory/group2_spec.rb" time="0.000133"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with IP-based targets in multiple group levels should find two targets" file="./spec/bolt/inventory/group2_spec.rb" time="0.000089"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with IP-based targets in multiple group levels should collect 2 groups" file="./spec/bolt/inventory/group2_spec.rb" time="0.000097"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with IP-based targets in multiple group levels should find one target in the subgroup" file="./spec/bolt/inventory/group2_spec.rb" time="0.000082"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with full target URIs should find two distinct targets" file="./spec/bolt/inventory/group2_spec.rb" time="0.000074"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with a duplicate target uses the first value" file="./spec/bolt/inventory/group2_spec.rb" time="0.000160"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 where a target uses an invalid name raises an error" file="./spec/bolt/inventory/group2_spec.rb" time="0.068114"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 where a group name conflicts with a prior target name raises an error" file="./spec/bolt/inventory/group2_spec.rb" time="0.000323"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 where a group name conflicts with a child target name raises an error" file="./spec/bolt/inventory/group2_spec.rb" time="0.000226"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 where a group name conflicts with a child target of another group raises an error" file="./spec/bolt/inventory/group2_spec.rb" time="0.000177"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 where a config value is not a hash raises an error" file="./spec/bolt/inventory/group2_spec.rb" time="0.000108"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with nested groups when one group contains a child group returns the target as a member of the parent group" file="./spec/bolt/inventory/group2_spec.rb" time="0.003030"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with nested groups when one group contains a child group overrides parent group data with child group data" file="./spec/bolt/inventory/group2_spec.rb" time="0.000409"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with nested groups when one group contains a child group combines parent group features with child group features" file="./spec/bolt/inventory/group2_spec.rb" time="0.001980"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with nested groups when one group contains a child group returns the whole ancestry as the list of groups for the target" file="./spec/bolt/inventory/group2_spec.rb" time="0.000220"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with nested groups when one group contains two child groups returns all child targets as members of the parent group" file="./spec/bolt/inventory/group2_spec.rb" time="0.000187"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with nested groups when one group contains two child groups overrides parent group data with child group data" file="./spec/bolt/inventory/group2_spec.rb" time="0.000200"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with nested groups when one group contains two child groups returns the whole ancestry as the list of groups for the target" file="./spec/bolt/inventory/group2_spec.rb" time="0.000218"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 when a group is duplicated in two parent groups fails because the group is duplicated" file="./spec/bolt/inventory/group2_spec.rb" time="0.000243"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 when a target is contained at multiple levels of the group hierarchy uses values from the first branch encountered, picking the most specific subgroup" file="./spec/bolt/inventory/group2_spec.rb" time="0.000293"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 when the input is structurally invalid fails if the targets list is not an array" file="./spec/bolt/inventory/group2_spec.rb" time="0.000148"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 when the input is structurally invalid fails if a target in the list is not a string or hash" file="./spec/bolt/inventory/group2_spec.rb" time="0.000099"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 when the input is structurally invalid fails if the groups list is not an array" file="./spec/bolt/inventory/group2_spec.rb" time="0.000087"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 when the input is structurally invalid fails if vars is not a hash" file="./spec/bolt/inventory/group2_spec.rb" time="0.000096"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 when the input is structurally invalid fails if facts is not a hash" file="./spec/bolt/inventory/group2_spec.rb" time="0.000080"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 when the input is structurally invalid fails if features is not an array" file="./spec/bolt/inventory/group2_spec.rb" time="0.000079"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 when the input is structurally invalid fails if config is not a hash" file="./spec/bolt/inventory/group2_spec.rb" time="0.000081"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases has an alias is expected to eq [&quot;target1&quot;]" file="./spec/bolt/inventory/group2_spec.rb" time="0.000217"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases has an alias is expected to eq {&quot;alias1&quot;=&gt;&quot;target1&quot;}" file="./spec/bolt/inventory/group2_spec.rb" time="0.000119"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases multiple aliases is expected to eq [&quot;target1&quot;, &quot;target2&quot;]" file="./spec/bolt/inventory/group2_spec.rb" time="0.000128"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases multiple aliases is expected to eq {&quot;alias1&quot;=&gt;&quot;target1&quot;, &quot;alias2&quot;=&gt;&quot;target1&quot;, &quot;alias3&quot;=&gt;&quot;target2&quot;}" file="./spec/bolt/inventory/group2_spec.rb" time="0.000142"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases redundant targets is expected to eq [&quot;target1&quot;]" file="./spec/bolt/inventory/group2_spec.rb" time="0.000094"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases redundant targets is expected to eq {&quot;alias1&quot;=&gt;&quot;target1&quot;}" file="./spec/bolt/inventory/group2_spec.rb" time="0.000108"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases alias to a target in parent group is expected to eq [&quot;target1&quot;]" file="./spec/bolt/inventory/group2_spec.rb" time="0.000130"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases alias to a target in parent group is expected to eq {&quot;alias1&quot;=&gt;&quot;target1&quot;}" file="./spec/bolt/inventory/group2_spec.rb" time="0.000112"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases alias to a target in sibling groups is expected to eq [&quot;target1&quot;]" file="./spec/bolt/inventory/group2_spec.rb" time="0.000121"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases alias to a target in sibling groups is expected to eq {&quot;alias1&quot;=&gt;&quot;target1&quot;}" file="./spec/bolt/inventory/group2_spec.rb" time="0.000123"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases non-string alias is expected to raise Exception with message matching /Alias entry on target1 must be a String or Array/" file="./spec/bolt/inventory/group2_spec.rb" time="0.000118"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases invalid alias name is expected to raise Exception with message matching /Invalid alias not a valid alias/" file="./spec/bolt/inventory/group2_spec.rb" time="0.000107"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names accepts &apos;alias1&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000114"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names accepts &apos;_alias1&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000075"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names accepts &apos;1alias&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000074"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names accepts &apos;1_alias_&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000089"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names accepts &apos;alias-1&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000069"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names accepts &apos;a&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000090"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names accepts &apos;1&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000070"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names rejects &apos;-alias1&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000110"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names rejects &apos;alias/1&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000118"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names rejects &apos;alias.1&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000105"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names rejects &apos;-&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000087"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names rejects &apos;Alias1&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000090"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases validating alias names rejects &apos;ALIAS_1&apos;" file="./spec/bolt/inventory/group2_spec.rb" time="0.000080"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases conflicting alias is expected to raise Exception with message matching /Alias alias1 refers to multiple targets: target1 and target2/" file="./spec/bolt/inventory/group2_spec.rb" time="0.000127"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases conflict with a prior uri only name is expected to raise Exception with message matching /Node name target1 conflicts with alias of the same name/" file="./spec/bolt/inventory/group2_spec.rb" time="0.000148"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases conflict with a later target name is expected to raise Exception with message matching /Node name target2 conflicts with alias of the same name/" file="./spec/bolt/inventory/group2_spec.rb" time="0.000254"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases conflict with its own target name raises an error" file="./spec/bolt/inventory/group2_spec.rb" time="0.000143"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases conflict with a later group name is expected to raise Exception with message matching /Group group1 conflicts with alias of the same name/" file="./spec/bolt/inventory/group2_spec.rb" time="0.000177"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases conflict with a prior group name is expected to raise Exception with message matching /Group group1 conflicts with alias of the same name/" file="./spec/bolt/inventory/group2_spec.rb" time="0.000186"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases conflict with its own group name is expected to raise Exception with message matching /Group root conflicts with alias of the same name/" file="./spec/bolt/inventory/group2_spec.rb" time="0.000132"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases conflicting alias across groups is expected to raise Exception with message matching /Alias alias1 refers to multiple targets: target1 and target2/" file="./spec/bolt/inventory/group2_spec.rb" time="0.000217"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases with unexpected keys does not log when no unexpected keys are present" file="./spec/bolt/inventory/group2_spec.rb" time="0.012030"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases with unexpected keys logs unexpected group keys" file="./spec/bolt/inventory/group2_spec.rb" time="0.000374"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases with unexpected keys logs unexpected group config keys" file="./spec/bolt/inventory/group2_spec.rb" time="0.000334"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases with unexpected keys logs unexpected target keys" file="./spec/bolt/inventory/group2_spec.rb" time="0.000329"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with aliases with unexpected keys logs unexpected target config keys" file="./spec/bolt/inventory/group2_spec.rb" time="0.000373"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if group name is a config plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000238"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if target-lookups is present" file="./spec/bolt/inventory/group2_spec.rb" time="0.000198"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if group groups is a config plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000207"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if group vars is a config plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000200"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if group facts is a config plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000185"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if group features is a config plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000191"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if target name is config plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000217"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if target alias is config plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000237"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if target uri is config plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000196"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails if an unknown plugin is requested" file="./spec/bolt/inventory/group2_spec.rb" time="0.000208"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails with an unsupported targets plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000215"></testcase>
+<testcase classname="spec.bolt.inventory.group2_spec" name="Bolt::Inventory::Group2 with config plugins when parsing/evaluating config _plugin fails with an unsupported config plugin" file="./spec/bolt/inventory/group2_spec.rb" time="0.000259"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 creates simple inventory" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.001440"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 gets a uri target from the inventory" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000729"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 gets a uri target not in inventory" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000674"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 with a uriless target does not have a uri" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000601"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 with a uriless target referred to by name does not have a uri" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000684"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 with a uriful target reffered to as an alias has the uri" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000745"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune validate accepts empty inventory" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000234"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune validate accepts non-empty inventory" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000469"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune validate fails with unnamed groups" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000233"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune validate fails with unamed targets" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000211"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune validate fails with duplicate groups" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000309"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune collect_groups finds the all group with an empty inventory" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000207"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune collect_groups finds the all group with a non-empty inventory" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.002413"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune collect_groups finds targets in a subgroup" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.004830"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune with an empty config should accept an empty file" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000295"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune with an empty config the all group should be empty" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000257"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune with an empty config should have the default protocol" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000459"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune with config should have use protocol" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000478"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune with config should not use ssl" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000483"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune with config should not use ssl-verify" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000453"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets empty inventory should parse a single target URI" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000528"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets empty inventory should parse an array of target URIs" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000950"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets empty inventory should parse a nested array of target URIs and Targets" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.001136"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets empty inventory should split a comma-separated list of target URIs" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000936"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets empty inventory should fail for unknown protocols" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000460"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets non-empty inventory should parse an array of target URI and group name" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.001504"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets non-empty inventory should split a comma-separated list of target URI and group name" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.001544"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets non-empty inventory should match wildcard selectors" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.002062"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets non-empty inventory should fail if wildcard selector matches nothing" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000419"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with data in the group should use value from lowest target definition" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000919"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with data in the group should use values from the lowest group" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000635"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with data in the group should include values from parents" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000565"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with data in the group should use values from the first group" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000608"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with data in the group should prefer values from a target over an earlier group" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000674"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with data in the group should use values from matching groups" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000557"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with data in the group should only return config for exact matches" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000576"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with targets at the top level should initialize" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000246"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with targets at the top level should return {} for a string target" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000522"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with targets at the top level should return {} for a hash target with no config" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000502"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with targets at the top level should return config for the target" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000504"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with targets at the top level should return the raw target for an unknown target" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000478"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with simple data in the group should return group config for string targets" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000504"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with simple data in the group should return group config for array targets" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000506"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with simple data in the group should merge config for from targets" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000507"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with config errors in data host-key-check fails validation" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000507"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with config errors in data connect-timeout fails validation" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000487"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with config errors in data ssl fails validation" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000473"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with config errors in data ssl-verify fails validation" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000477"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with config errors in data transport fails validation" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000451"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with aliases should return group config for an alias" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000520"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with aliases should merge config from targets" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000489"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with aliases should return multiple targets" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000897"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with aliases should resolve target labels" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000934"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with all options in the config should not modify existing config" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.002010"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with all options in the config uses the configured transport" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000648"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with all options in the config only uses configured options for ssh" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000589"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with all options in the config only uses configured options for winrm" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000618"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 legacy tests TODO: prune get_targets with all options in the config only uses configured options for pcp" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000588"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 with localhost with no additional config adds magic config options" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000541"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 with localhost with config does not override config options" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000556"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 with localhost with non-local transport does not set magic config" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000548"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 with lookup_targets plugins does not override a preceding definition" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000942"></testcase>
+<testcase classname="spec.bolt.inventory.inventory2_spec" name="Bolt::Inventory::Inventory2 with lookup_targets plugins does override a later defintion" file="./spec/bolt/inventory/inventory2_spec.rb" time="0.000782"></testcase>
+<testcase classname="spec.bolt.plugin.prompt_spec" name="Bolt::Plugin::Prompt has a hook for inventory_config" file="./spec/bolt/plugin/prompt_spec.rb" time="0.000324"></testcase>
+<testcase classname="spec.bolt.plugin.prompt_spec" name="Bolt::Plugin::Prompt raises a validation error when no prompt message is provided" file="./spec/bolt/plugin/prompt_spec.rb" time="0.000087"></testcase>
+<testcase classname="spec.bolt.plugin.prompt_spec" name="Bolt::Plugin::Prompt concurrent delay prompts for data when executed" file="./spec/bolt/plugin/prompt_spec.rb" time="0.000396"></testcase>
+<testcase classname="spec.bolt.plugin.puppetdb_spec" name="Bolt::Plugin::Puppetdb has a hook for inventory_targets" file="./spec/bolt/plugin/puppetdb_spec.rb" time="0.000528"></testcase>
+<testcase classname="spec.bolt.plugin.puppetdb_spec" name="Bolt::Plugin::Puppetdb#fact_path converts a valid dot-notation fact to an array" file="./spec/bolt/plugin/puppetdb_spec.rb" time="0.000114"></testcase>
+<testcase classname="spec.bolt.plugin.puppetdb_spec" name="Bolt::Plugin::Puppetdb#fact_path errors when fact is not prepended with &apos;facts&apos;" file="./spec/bolt/plugin/puppetdb_spec.rb" time="0.000123"></testcase>
+<testcase classname="spec.bolt.plugin.puppetdb_spec" name="Bolt::Plugin::Puppetdb#fact_path allows for &apos;certname&apos;" file="./spec/bolt/plugin/puppetdb_spec.rb" time="0.000097"></testcase>
+<testcase classname="spec.bolt.plugin.puppetdb_spec" name="Bolt::Plugin::Puppetdb#inventory_targets sets uri to certname if uri and name are not configured" file="./spec/bolt/plugin/puppetdb_spec.rb" time="0.000346"></testcase>
+<testcase classname="spec.bolt.plugin.puppetdb_spec" name="Bolt::Plugin::Puppetdb#inventory_targets with a name configured sets the uri to the specified name" file="./spec/bolt/plugin/puppetdb_spec.rb" time="0.000297"></testcase>
+<testcase classname="spec.bolt.plugin.puppetdb_spec" name="Bolt::Plugin::Puppetdb#resolve_facts with invalid fact values raises an error" file="./spec/bolt/plugin/puppetdb_spec.rb" time="0.000109"></testcase>
+<testcase classname="spec.bolt.plugin.puppetdb_spec" name="Bolt::Plugin::Puppetdb#resolve_facts with no fact_values returns an empty hash" file="./spec/bolt/plugin/puppetdb_spec.rb" time="0.000105"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform has a hook for inventory_targets" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000283"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform reads the terraform state file from the given directory" file="./spec/bolt/plugin/terraform_spec.rb" time="0.001036"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform accepts another name for the state file" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000474"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terrform version 3 state file matches resources that start with the given type" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000611"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terrform version 3 state file can filter resources by regex" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000321"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terrform version 3 state file maps inventory to name" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000394"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terrform version 3 state file sets only name if uri is not specified" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000293"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terrform version 3 state file builds a config map from the inventory" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000331"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terrform version 3 state file returns nothing if there are no matching resources" file="./spec/bolt/plugin/terraform_spec.rb" time="0.001677"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terrform version 3 state file fails if the state file does not exist" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000237"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terraform version 4 state file matches resources that start with the given type" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000305"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terraform version 4 state file can filter resources by regex" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000278"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terraform version 4 state file maps inventory to name" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000403"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terraform version 4 state file sets only name if uri is not specified" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000265"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terraform version 4 state file builds a config map from the inventory" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000402"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terraform version 4 state file returns nothing if there are no matching resources" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000315"></testcase>
+<testcase classname="spec.bolt.plugin.terraform_spec" name="Bolt::Plugin::Terraform using a terraform version 4 state file fails if the state file does not exist" file="./spec/bolt/plugin/terraform_spec.rb" time="0.000148"></testcase>
+</testsuite>
+reward=1 graded=186 found=186 failed=0 parsed=186 framework=junit exit_code=0

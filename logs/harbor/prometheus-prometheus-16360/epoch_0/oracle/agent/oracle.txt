@@ -1,0 +1,1896 @@
+patching file .github/workflows/ci.yml
+patching file .github/workflows/codeql-analysis.yml
+patching file .github/workflows/scorecards.yml
+patching file .golangci.yml
+patching file Makefile.common
+patching file RELEASE.md
+patching file cmd/prometheus/main.go
+patching file cmd/promtool/main.go
+patching file cmd/promtool/main_test.go
+patching file cmd/promtool/testdata/features.yml
+patching file config/config.go
+patching file config/config_test.go
+patching file config/reload.go
+patching file config/reload_test.go
+patching file config/testdata/global_convert_classic_hist_to_nhcb.good.yml
+patching file config/testdata/local_convert_classic_hist_to_nhcb.good.yml
+patching file config/testdata/local_disable_convert_classic_hist_to_nhcb.good.yml
+patching file discovery/kubernetes/endpointslice.go
+patching file discovery/kubernetes/endpointslice_adaptor.go
+patching file discovery/kubernetes/endpointslice_adaptor_test.go
+patching file discovery/kubernetes/ingress.go
+patching file discovery/kubernetes/ingress_adaptor.go
+patching file docs/command-line/promtool.md
+patching file docs/configuration/configuration.md
+patching file docs/configuration/recording_rules.md
+patching file docs/feature_flags.md
+patching file documentation/examples/remote_storage/go.mod
+patching file documentation/examples/remote_storage/go.sum
+Hunk #1 succeeded at 537 with fuzz 3 (offset 219 lines).
+Hunk #2 succeeded at 661 (offset 238 lines).
+Hunk #3 succeeded at 670 with fuzz 3 (offset 238 lines).
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 110 (offset 30 lines).
+Hunk #2 succeeded at 252 with fuzz 1 (offset 54 lines).
+Hunk #3 FAILED at 251.
+Hunk #4 succeeded at 347 (offset 69 lines).
+Hunk #5 FAILED at 369.
+Hunk #6 succeeded at 538 with fuzz 2 (offset 98 lines).
+Hunk #7 succeeded at 605 with fuzz 3 (offset 121 lines).
+Hunk #8 succeeded at 655 (offset 125 lines).
+Hunk #9 succeeded at 680 (offset 125 lines).
+Hunk #10 succeeded at 698 (offset 125 lines).
+Hunk #11 succeeded at 708 (offset 125 lines).
+Hunk #12 FAILED at 610.
+Hunk #13 succeeded at 756 (offset 127 lines).
+Hunk #14 succeeded at 773 with fuzz 3 (offset 132 lines).
+3 out of 14 hunks FAILED -- saving rejects to file go.sum.rej
+patching file internal/tools/go.mod
+patching file internal/tools/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 succeeded at 40 with fuzz 3 (offset 12 lines).
+Hunk #3 FAILED at 68.
+Hunk #4 succeeded at 249 with fuzz 3 (offset 65 lines).
+2 out of 4 hunks FAILED -- saving rejects to file internal/tools/go.sum.rej
+patching file notifier/alert.go
+patching file notifier/alertmanager.go
+patching file notifier/alertmanager_test.go
+patching file notifier/alertmanagerset.go
+patching file notifier/metric.go
+patching file notifier/notifier.go (renamed from notifier/manager.go)
+patching file notifier/notifier_test.go (renamed from notifier/manager_test.go)
+patching file notifier/util.go
+patching file notifier/util_test.go
+patching file prompb/io/prometheus/write/v2/codec.go
+patching file promql/engine.go
+patching file promql/parser/lex.go
+patching file promql/parser/lex_test.go
+patching file promql/parser/parse_test.go
+patching file promql/promqltest/README.md
+patching file promql/promqltest/test.go
+patching file promql/promqltest/test_test.go
+patching file promql/promqltest/testdata/native_histograms.test
+patching file promql/promqltest/testdata/subquery.test
+patching file scrape/manager.go
+patching file scrape/scrape.go
+patching file scrape/scrape_test.go
+patching file scripts/golangci-lint.yml
+patching file storage/remote/codec_test.go
+patching file storage/remote/otlptranslator/prometheusremotewrite/helper.go
+patching file storage/remote/otlptranslator/prometheusremotewrite/histograms.go
+patching file storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw.go
+patching file storage/remote/otlptranslator/prometheusremotewrite/otlp_to_openmetrics_metadata.go
+patching file storage/remote/write_handler.go
+patching file storage/remote/write_handler_test.go
+patching file tsdb/agent/db.go
+patching file tsdb/compact.go
+patching file tsdb/db_test.go
+patching file tsdb/head.go
+patching file tsdb/head_append.go
+patching file tsdb/head_bench_test.go
+patching file tsdb/head_read_test.go
+patching file tsdb/head_test.go
+patching file tsdb/head_wal.go
+patching file tsdb/ooo_head_read_test.go
+patching file web/api/v1/api.go
+patching file web/ui/README.md
+patching file web/ui/mantine-ui/package.json
+patching file web/ui/mantine-ui/src/Badge.module.css
+patching file web/ui/mantine-ui/src/pages/AlertsPage.tsx
+patching file web/ui/mantine-ui/src/pages/RulesPage.tsx
+patching file web/ui/mantine-ui/src/pages/query/MetricsExplorer/MetricsExplorer.tsx
+patching file web/ui/mantine-ui/src/state/localStorageMiddleware.ts
+patching file web/ui/package-lock.json
+patching file web/ui/package.json
+patching file web/ui/react-app/package-lock.json
+patching file web/web.go
+patching file .github/workflows/ci.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .github/workflows/ci.yml.rej
+patching file .github/workflows/codeql-analysis.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/codeql-analysis.yml.rej
+patching file .github/workflows/scorecards.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/scorecards.yml.rej
+patching file .golangci.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file .golangci.yml.rej
+patching file Makefile.common
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Makefile.common.rej
+patching file RELEASE.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file RELEASE.md.rej
+patching file cmd/prometheus/main.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/prometheus/main.go.rej
+patching file cmd/promtool/main.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/promtool/main.go.rej
+patching file cmd/promtool/main_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/promtool/main_test.go.rej
+The next patch would delete the file cmd/promtool/testdata/features.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file config/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file config/config.go.rej
+patching file config/config_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+39 out of 39 hunks ignored -- saving rejects to file config/config_test.go.rej
+patching file config/reload.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/reload.go.rej
+patching file config/reload_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file config/reload_test.go.rej
+The next patch would delete the file config/testdata/global_convert_classic_hist_to_nhcb.good.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file config/testdata/local_convert_classic_hist_to_nhcb.good.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file config/testdata/local_disable_convert_classic_hist_to_nhcb.good.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file discovery/kubernetes/endpointslice.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file discovery/kubernetes/endpointslice.go.rej
+The next patch would create the file discovery/kubernetes/endpointslice_adaptor.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file discovery/kubernetes/endpointslice_adaptor_test.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file discovery/kubernetes/ingress.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file discovery/kubernetes/ingress.go.rej
+The next patch would create the file discovery/kubernetes/ingress_adaptor.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file docs/command-line/promtool.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/command-line/promtool.md.rej
+patching file docs/configuration/configuration.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file docs/configuration/configuration.md.rej
+patching file docs/configuration/recording_rules.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/configuration/recording_rules.md.rej
+patching file docs/feature_flags.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/feature_flags.md.rej
+patching file documentation/examples/remote_storage/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file documentation/examples/remote_storage/go.mod.rej
+patching file documentation/examples/remote_storage/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file documentation/examples/remote_storage/go.sum.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file go.sum.rej
+patching file internal/tools/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file internal/tools/go.mod.rej
+patching file internal/tools/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 28.
+Hunk #3 FAILED at 68.
+Hunk #4 FAILED at 184.
+4 out of 4 hunks FAILED -- saving rejects to file internal/tools/go.sum.rej
+The next patch would delete the file notifier/alert.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/alertmanager.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/alertmanager_test.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/alertmanagerset.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/metric.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file notifier/notifier.go (already renamed from notifier/manager.go)
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file notifier/notifier.go.rej
+patching file notifier/notifier_test.go (already renamed from notifier/manager_test.go)
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file notifier/notifier_test.go.rej
+The next patch would delete the file notifier/util.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/util_test.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file prompb/io/prometheus/write/v2/codec.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file prompb/io/prometheus/write/v2/codec.go.rej
+patching file promql/engine.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/engine.go.rej
+patching file promql/parser/lex.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/parser/lex.go.rej
+patching file promql/parser/lex_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/parser/lex_test.go.rej
+patching file promql/parser/parse_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/parser/parse_test.go.rej
+patching file promql/promqltest/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file promql/promqltest/README.md.rej
+patching file promql/promqltest/test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+17 out of 17 hunks ignored -- saving rejects to file promql/promqltest/test.go.rej
+patching file promql/promqltest/test_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file promql/promqltest/test_test.go.rej
+patching file promql/promqltest/testdata/native_histograms.test
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/promqltest/testdata/native_histograms.test.rej
+patching file promql/promqltest/testdata/subquery.test
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/promqltest/testdata/subquery.test.rej
+patching file scrape/manager.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file scrape/manager.go.rej
+patching file scrape/scrape.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file scrape/scrape.go.rej
+patching file scrape/scrape_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file scrape/scrape_test.go.rej
+patching file scripts/golangci-lint.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file scripts/golangci-lint.yml.rej
+patching file storage/remote/codec_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file storage/remote/codec_test.go.rej
+patching file storage/remote/otlptranslator/prometheusremotewrite/helper.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file storage/remote/otlptranslator/prometheusremotewrite/helper.go.rej
+patching file storage/remote/otlptranslator/prometheusremotewrite/histograms.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file storage/remote/otlptranslator/prometheusremotewrite/histograms.go.rej
+patching file storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw.go.rej
+patching file storage/remote/otlptranslator/prometheusremotewrite/otlp_to_openmetrics_metadata.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file storage/remote/otlptranslator/prometheusremotewrite/otlp_to_openmetrics_metadata.go.rej
+patching file storage/remote/write_handler.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file storage/remote/write_handler.go.rej
+patching file storage/remote/write_handler_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file storage/remote/write_handler_test.go.rej
+patching file tsdb/agent/db.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tsdb/agent/db.go.rej
+patching file tsdb/compact.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tsdb/compact.go.rej
+patching file tsdb/db_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file tsdb/db_test.go.rej
+patching file tsdb/head.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tsdb/head.go.rej
+patching file tsdb/head_append.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tsdb/head_append.go.rej
+patching file tsdb/head_bench_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tsdb/head_bench_test.go.rej
+patching file tsdb/head_read_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tsdb/head_read_test.go.rej
+patching file tsdb/head_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+28 out of 28 hunks ignored -- saving rejects to file tsdb/head_test.go.rej
+patching file tsdb/head_wal.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tsdb/head_wal.go.rej
+patching file tsdb/ooo_head_read_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tsdb/ooo_head_read_test.go.rej
+patching file web/api/v1/api.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file web/api/v1/api.go.rej
+patching file web/ui/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file web/ui/README.md.rej
+patching file web/ui/mantine-ui/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/mantine-ui/package.json.rej
+patching file web/ui/mantine-ui/src/Badge.module.css
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/mantine-ui/src/Badge.module.css.rej
+patching file web/ui/mantine-ui/src/pages/AlertsPage.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file web/ui/mantine-ui/src/pages/AlertsPage.tsx.rej
+patching file web/ui/mantine-ui/src/pages/RulesPage.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file web/ui/mantine-ui/src/pages/RulesPage.tsx.rej
+patching file web/ui/mantine-ui/src/pages/query/MetricsExplorer/MetricsExplorer.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file web/ui/mantine-ui/src/pages/query/MetricsExplorer/MetricsExplorer.tsx.rej
+patching file web/ui/mantine-ui/src/state/localStorageMiddleware.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/mantine-ui/src/state/localStorageMiddleware.ts.rej
+patching file web/ui/package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file web/ui/package-lock.json.rej
+patching file web/ui/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/package.json.rej
+patching file web/ui/react-app/package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/react-app/package-lock.json.rej
+patching file web/web.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file web/web.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+|index d1f6f22e6..e5560ab4a 100644
+|--- a/.github/workflows/ci.yml
+|+++ b/.github/workflows/ci.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 59
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/codeql-analysis.yml b/.github/workflows/codeql-analysis.yml
+|index a67dea032..e8a5c1bab 100644
+|--- a/.github/workflows/codeql-analysis.yml
+|+++ b/.github/workflows/codeql-analysis.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 79
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/scorecards.yml b/.github/workflows/scorecards.yml
+|index 75db65efe..5c8e32772 100644
+|--- a/.github/workflows/scorecards.yml
+|+++ b/.github/workflows/scorecards.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 91
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.golangci.yml b/.golangci.yml
+|index dd87e3fed..fec430cf0 100644
+|--- a/.golangci.yml
+|+++ b/.golangci.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 429
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Makefile.common b/Makefile.common
+|index 81bad5f42..8cb383859 100644
+|--- a/Makefile.common
+|+++ b/Makefile.common
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 442
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/RELEASE.md b/RELEASE.md
+|index 28abb5be0..b481c89c3 100644
+|--- a/RELEASE.md
+|+++ b/RELEASE.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 513
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/prometheus/main.go b/cmd/prometheus/main.go
+|index e513926da..f1af64da1 100644
+|--- a/cmd/prometheus/main.go
+|+++ b/cmd/prometheus/main.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 541
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/promtool/main.go b/cmd/promtool/main.go
+|index 0304fa2d5..5fa4de44e 100644
+|--- a/cmd/promtool/main.go
+|+++ b/cmd/promtool/main.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 591
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/promtool/main_test.go b/cmd/promtool/main_test.go
+|index d1390f0d6..d3804da5e 100644
+|--- a/cmd/promtool/main_test.go
+|+++ b/cmd/promtool/main_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/cmd/promtool/testdata/features.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 624
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/config.go b/config/config.go
+|index 09c79b350..57768b50e 100644
+|--- a/config/config.go
+|+++ b/config/config.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 690
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/config_test.go b/config/config_test.go
+|index 6d59c7220..5725ec2f1 100644
+|--- a/config/config_test.go
+|+++ b/config/config_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+39 out of 39 hunks ignored
+can't find file to patch at input line 1957
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/reload.go b/config/reload.go
+|index cc0cc9715..8be1b28d8 100644
+|--- a/config/reload.go
+|+++ b/config/reload.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1982
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/reload_test.go b/config/reload_test.go
+|index 3e77260ab..f0f44f358 100644
+|--- a/config/reload_test.go
+|+++ b/config/reload_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+The next patch would delete the file a/config/testdata/global_convert_classic_hist_to_nhcb.good.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/config/testdata/local_convert_classic_hist_to_nhcb.good.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/config/testdata/local_disable_convert_classic_hist_to_nhcb.good.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2388
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/discovery/kubernetes/endpointslice.go b/discovery/kubernetes/endpointslice.go
+|index 100202512..45bc43eff 100644
+|--- a/discovery/kubernetes/endpointslice.go
+|+++ b/discovery/kubernetes/endpointslice.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+patching file b/discovery/kubernetes/endpointslice_adaptor.go
+patching file b/discovery/kubernetes/endpointslice_adaptor_test.go
+can't find file to patch at input line 2900
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/discovery/kubernetes/ingress.go b/discovery/kubernetes/ingress.go
+|index 0de574471..1b7847c5c 100644
+|--- a/discovery/kubernetes/ingress.go
+|+++ b/discovery/kubernetes/ingress.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+patching file b/discovery/kubernetes/ingress_adaptor.go
+can't find file to patch at input line 3104
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/command-line/promtool.md b/docs/command-line/promtool.md
+|index 1c4c0a18f..ab675e634 100644
+|--- a/docs/command-line/promtool.md
+|+++ b/docs/command-line/promtool.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3117
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/configuration/configuration.md b/docs/configuration/configuration.md
+|index aa92b40fd..8c18625e1 100644
+|--- a/docs/configuration/configuration.md
+|+++ b/docs/configuration/configuration.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 3165
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/configuration/recording_rules.md b/docs/configuration/recording_rules.md
+|index 45a263292..9a8e7a70c 100644
+|--- a/docs/configuration/recording_rules.md
+|+++ b/docs/configuration/recording_rules.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3180
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/feature_flags.md b/docs/feature_flags.md
+|index 6973d6d73..e2287cc72 100644
+|--- a/docs/feature_flags.md
+|+++ b/docs/feature_flags.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3226
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/documentation/examples/remote_storage/go.mod b/documentation/examples/remote_storage/go.mod
+|index b25afd1bb..c4e4d5e5f 100644
+|--- a/documentation/examples/remote_storage/go.mod
+|+++ b/documentation/examples/remote_storage/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3252
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/documentation/examples/remote_storage/go.sum b/documentation/examples/remote_storage/go.sum
+|index a0af883de..f52427a18 100644
+|--- a/documentation/examples/remote_storage/go.sum
+|+++ b/documentation/examples/remote_storage/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3293
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index eec3036b5..7c3ccb835 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+9 out of 9 hunks ignored
+can't find file to patch at input line 3430
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 3fa345c3c..7beae44f6 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+14 out of 14 hunks ignored
+can't find file to patch at input line 3695
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/tools/go.mod b/internal/tools/go.mod
+|index caf46a8e6..2cad9b4b7 100644
+|--- a/internal/tools/go.mod
+|+++ b/internal/tools/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3758
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/tools/go.sum b/internal/tools/go.sum
+|index 4c077c5ca..8bbbd0a32 100644
+|--- a/internal/tools/go.sum
+|+++ b/internal/tools/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+The next patch would delete the file a/notifier/alert.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/notifier/alertmanager.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/notifier/alertmanager_test.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/notifier/alertmanagerset.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/notifier/metric.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+Cannot rename file without two valid file names
+6 out of 6 hunks ignored
+Cannot rename file without two valid file names
+4 out of 4 hunks ignored
+The next patch would delete the file a/notifier/util.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/notifier/util_test.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4918
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/prompb/io/prometheus/write/v2/codec.go b/prompb/io/prometheus/write/v2/codec.go
+|index 4434c525f..25fa0d403 100644
+|--- a/prompb/io/prometheus/write/v2/codec.go
+|+++ b/prompb/io/prometheus/write/v2/codec.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4932
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/promql/engine.go b/promql/engine.go
+|index 1211c7383..8c37f12e4 100644
+|--- a/promql/engine.go
+|+++ b/promql/engine.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4948
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/promql/parser/lex.go b/promql/parser/lex.go
+|index 0b76911e3..52658f318 100644
+|--- a/promql/parser/lex.go
+|+++ b/promql/parser/lex.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4961
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/promql/parser/lex_test.go b/promql/parser/lex_test.go
+|index ffcfc8aac..c5475a8b9 100644
+|--- a/promql/parser/lex_test.go
+|+++ b/promql/parser/lex_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 5008
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/promql/parser/parse_test.go b/promql/parser/parse_test.go
+|index 06f41c3f7..64ce97304 100644
+|--- a/promql/parser/parse_test.go
+|+++ b/promql/parser/parse_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 5043
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/promql/promqltest/README.md b/promql/promqltest/README.md
+|index 8854e7472..25c2653ab 100644
+|--- a/promql/promqltest/README.md
+|+++ b/promql/promqltest/README.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 5175
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/promql/promqltest/test.go b/promql/promqltest/test.go
+|index cbdf14fcd..4321bf6b3 100644
+|--- a/promql/promqltest/test.go
+|+++ b/promql/promqltest/test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+17 out of 17 hunks ignored
+can't find file to patch at input line 5536
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/promql/promqltest/test_test.go b/promql/promqltest/test_test.go
+|index 184cfbee1..512281843 100644
+|--- a/promql/promqltest/test_test.go
+|+++ b/promql/promqltest/test_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 5865
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/promql/promqltest/testdata/native_histograms.test b/promql/promqltest/testdata/native_histograms.test
+|index 751039e02..dd119c061 100644
+|--- a/promql/promqltest/testdata/native_histograms.test
+|+++ b/promql/promqltest/testdata/native_histograms.test
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 5878
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/promql/promqltest/testdata/subquery.test b/promql/promqltest/testdata/subquery.test
+|index 8c7c178b8..377ee1e5c 100644
+|--- a/promql/promqltest/testdata/subquery.test
+|+++ b/promql/promqltest/testdata/subquery.test
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 5893
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/scrape/manager.go b/scrape/manager.go
+|index 8f6a7ac7a..5ef5dccb9 100644
+|--- a/scrape/manager.go
+|+++ b/scrape/manager.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 5906
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/scrape/scrape.go b/scrape/scrape.go
+|index 704726bf4..eb385510c 100644
+|--- a/scrape/scrape.go
+|+++ b/scrape/scrape.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 5928
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/scrape/scrape_test.go b/scrape/scrape_test.go
+|index 3ddb76735..6ac21ad46 100644
+|--- a/scrape/scrape_test.go
+|+++ b/scrape/scrape_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 5992
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/scripts/golangci-lint.yml b/scripts/golangci-lint.yml
+|index 3893ef86b..5342cbe08 100644
+|--- a/scripts/golangci-lint.yml
+|+++ b/scripts/golangci-lint.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 6006
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/storage/remote/codec_test.go b/storage/remote/codec_test.go
+|index c92f0f8cd..51cdd1e39 100644
+|--- a/storage/remote/codec_test.go
+|+++ b/storage/remote/codec_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 6139
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/storage/remote/otlptranslator/prometheusremotewrite/helper.go b/storage/remote/otlptranslator/prometheusremotewrite/helper.go
+|index 0660f8ee5..09be335a8 100644
+|--- a/storage/remote/otlptranslator/prometheusremotewrite/helper.go
+|+++ b/storage/remote/otlptranslator/prometheusremotewrite/helper.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 6171
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/storage/remote/otlptranslator/prometheusremotewrite/histograms.go b/storage/remote/otlptranslator/prometheusremotewrite/histograms.go
+|index db26b6292..6a405f104 100644
+|--- a/storage/remote/otlptranslator/prometheusremotewrite/histograms.go
+|+++ b/storage/remote/otlptranslator/prometheusremotewrite/histograms.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 6304
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw.go b/storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw.go
+|index d2e79e4b6..79d127bb8 100644
+|--- a/storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw.go
+|+++ b/storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 6353
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/storage/remote/otlptranslator/prometheusremotewrite/otlp_to_openmetrics_metadata.go b/storage/remote/otlptranslator/prometheusremotewrite/otlp_to_openmetrics_metadata.go
+|index 359fc5252..716a6cd6f 100644
+|--- a/storage/remote/otlptranslator/prometheusremotewrite/otlp_to_openmetrics_metadata.go
+|+++ b/storage/remote/otlptranslator/prometheusremotewrite/otlp_to_openmetrics_metadata.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 6385
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/storage/remote/write_handler.go b/storage/remote/write_handler.go
+|index cbd4225d0..c9f774ae4 100644
+|--- a/storage/remote/write_handler.go
+|+++ b/storage/remote/write_handler.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 6491
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/storage/remote/write_handler_test.go b/storage/remote/write_handler_test.go
+|index e3207bf27..e92d24f66 100644
+|--- a/storage/remote/write_handler_test.go
+|+++ b/storage/remote/write_handler_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 6552
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/agent/db.go b/tsdb/agent/db.go
+|index cd5f53187..99126d16f 100644
+|--- a/tsdb/agent/db.go
+|+++ b/tsdb/agent/db.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 6588
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/compact.go b/tsdb/compact.go
+|index b66f7eed8..0e2c0485d 100644
+|--- a/tsdb/compact.go
+|+++ b/tsdb/compact.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 6630
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/db_test.go b/tsdb/db_test.go
+|index 6270220be..931bc42dd 100644
+|--- a/tsdb/db_test.go
+|+++ b/tsdb/db_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+14 out of 14 hunks ignored
+can't find file to patch at input line 6760
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/head.go b/tsdb/head.go
+|index 7763d272b..3835970ca 100644
+|--- a/tsdb/head.go
+|+++ b/tsdb/head.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 6849
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/head_append.go b/tsdb/head_append.go
+|index 03800b245..322ff6502 100644
+|--- a/tsdb/head_append.go
+|+++ b/tsdb/head_append.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 6925
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/head_bench_test.go b/tsdb/head_bench_test.go
+|index ff9b22ec6..0ffc75aba 100644
+|--- a/tsdb/head_bench_test.go
+|+++ b/tsdb/head_bench_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 6956
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/head_read_test.go b/tsdb/head_read_test.go
+|index ae506c1d8..6dd4c0ff5 100644
+|--- a/tsdb/head_read_test.go
+|+++ b/tsdb/head_read_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 6969
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/head_test.go b/tsdb/head_test.go
+|index 0e9fac18b..8cd44db84 100644
+|--- a/tsdb/head_test.go
+|+++ b/tsdb/head_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+28 out of 28 hunks ignored
+can't find file to patch at input line 7309
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/head_wal.go b/tsdb/head_wal.go
+|index 926af8460..3450eb9b8 100644
+|--- a/tsdb/head_wal.go
+|+++ b/tsdb/head_wal.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 7331
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tsdb/ooo_head_read_test.go b/tsdb/ooo_head_read_test.go
+|index d49c7d8fc..d2c490f22 100644
+|--- a/tsdb/ooo_head_read_test.go
+|+++ b/tsdb/ooo_head_read_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 7344
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/api/v1/api.go b/web/api/v1/api.go
+|index 82aff1c94..c924c9092 100644
+|--- a/web/api/v1/api.go
+|+++ b/web/api/v1/api.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 7366
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/README.md b/web/ui/README.md
+|index 98a3d720e..49ec27d8b 100644
+|--- a/web/ui/README.md
+|+++ b/web/ui/README.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 7607
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/mantine-ui/package.json b/web/ui/mantine-ui/package.json
+|index 2a6b84855..07154e583 100644
+|--- a/web/ui/mantine-ui/package.json
+|+++ b/web/ui/mantine-ui/package.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 7620
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/mantine-ui/src/Badge.module.css b/web/ui/mantine-ui/src/Badge.module.css
+|index 1667651d9..326f15877 100644
+|--- a/web/ui/mantine-ui/src/Badge.module.css
+|+++ b/web/ui/mantine-ui/src/Badge.module.css
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 7632
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/mantine-ui/src/pages/AlertsPage.tsx b/web/ui/mantine-ui/src/pages/AlertsPage.tsx
+|index afe3d3db9..18325350b 100644
+|--- a/web/ui/mantine-ui/src/pages/AlertsPage.tsx
+|+++ b/web/ui/mantine-ui/src/pages/AlertsPage.tsx
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 7681
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/mantine-ui/src/pages/RulesPage.tsx b/web/ui/mantine-ui/src/pages/RulesPage.tsx
+|index ef1e1d624..0888fe473 100644
+|--- a/web/ui/mantine-ui/src/pages/RulesPage.tsx
+|+++ b/web/ui/mantine-ui/src/pages/RulesPage.tsx
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 7716
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/mantine-ui/src/pages/query/MetricsExplorer/MetricsExplorer.tsx b/web/ui/mantine-ui/src/pages/query/MetricsExplorer/MetricsExplorer.tsx
+|index 600dfbae0..f0f176c15 100644
+|--- a/web/ui/mantine-ui/src/pages/query/MetricsExplorer/MetricsExplorer.tsx
+|+++ b/web/ui/mantine-ui/src/pages/query/MetricsExplorer/MetricsExplorer.tsx
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 7778
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/mantine-ui/src/state/localStorageMiddleware.ts b/web/ui/mantine-ui/src/state/localStorageMiddleware.ts
+|index bf79fa63e..79baa5ac6 100644
+|--- a/web/ui/mantine-ui/src/state/localStorageMiddleware.ts
+|+++ b/web/ui/mantine-ui/src/state/localStorageMiddleware.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 7790
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/package-lock.json b/web/ui/package-lock.json
+|index 66bc43e8c..eff0c18b4 100644
+|--- a/web/ui/package-lock.json
+|+++ b/web/ui/package-lock.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 7825
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/package.json b/web/ui/package.json
+|index 650bb65f7..9747ae501 100644
+|--- a/web/ui/package.json
+|+++ b/web/ui/package.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 7837
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/ui/react-app/package-lock.json b/web/ui/react-app/package-lock.json
+|index 6b9b0b86e..eb72ebeac 100644
+|--- a/web/ui/react-app/package-lock.json
+|+++ b/web/ui/react-app/package-lock.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 7854
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/web/web.go b/web/web.go
+|index 21624141a..84c4a2a52 100644
+|--- a/web/web.go
+|+++ b/web/web.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file .github/workflows/ci.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file .github/workflows/ci.yml.rej
+patching file .github/workflows/codeql-analysis.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/codeql-analysis.yml.rej
+patching file .github/workflows/scorecards.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/scorecards.yml.rej
+patching file .golangci.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file .golangci.yml.rej
+patching file Makefile.common
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Makefile.common.rej
+patching file RELEASE.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file RELEASE.md.rej
+patching file cmd/prometheus/main.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/prometheus/main.go.rej
+patching file cmd/promtool/main.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/promtool/main.go.rej
+patching file cmd/promtool/main_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/promtool/main_test.go.rej
+The next patch would delete the file cmd/promtool/testdata/features.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file config/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file config/config.go.rej
+patching file config/config_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+39 out of 39 hunks ignored -- saving rejects to file config/config_test.go.rej
+patching file config/reload.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/reload.go.rej
+patching file config/reload_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file config/reload_test.go.rej
+The next patch would delete the file config/testdata/global_convert_classic_hist_to_nhcb.good.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file config/testdata/local_convert_classic_hist_to_nhcb.good.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file config/testdata/local_disable_convert_classic_hist_to_nhcb.good.yml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file discovery/kubernetes/endpointslice.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file discovery/kubernetes/endpointslice.go.rej
+The next patch would create the file discovery/kubernetes/endpointslice_adaptor.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file discovery/kubernetes/endpointslice_adaptor_test.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file discovery/kubernetes/ingress.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file discovery/kubernetes/ingress.go.rej
+The next patch would create the file discovery/kubernetes/ingress_adaptor.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file docs/command-line/promtool.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/command-line/promtool.md.rej
+patching file docs/configuration/configuration.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file docs/configuration/configuration.md.rej
+patching file docs/configuration/recording_rules.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/configuration/recording_rules.md.rej
+patching file docs/feature_flags.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/feature_flags.md.rej
+patching file documentation/examples/remote_storage/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file documentation/examples/remote_storage/go.mod.rej
+patching file documentation/examples/remote_storage/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file documentation/examples/remote_storage/go.sum.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file go.sum.rej
+patching file internal/tools/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file internal/tools/go.mod.rej
+patching file internal/tools/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 28.
+Hunk #3 FAILED at 68.
+Hunk #4 FAILED at 184.
+4 out of 4 hunks FAILED -- saving rejects to file internal/tools/go.sum.rej
+The next patch would delete the file notifier/alert.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/alertmanager.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/alertmanager_test.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/alertmanagerset.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/metric.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file notifier/notifier.go (already renamed from notifier/manager.go)
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file notifier/notifier.go.rej
+patching file notifier/notifier_test.go (already renamed from notifier/manager_test.go)
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file notifier/notifier_test.go.rej
+The next patch would delete the file notifier/util.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file notifier/util_test.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file prompb/io/prometheus/write/v2/codec.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file prompb/io/prometheus/write/v2/codec.go.rej
+patching file promql/engine.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/engine.go.rej
+patching file promql/parser/lex.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/parser/lex.go.rej
+patching file promql/parser/lex_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/parser/lex_test.go.rej
+patching file promql/parser/parse_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/parser/parse_test.go.rej
+patching file promql/promqltest/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file promql/promqltest/README.md.rej
+patching file promql/promqltest/test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+17 out of 17 hunks ignored -- saving rejects to file promql/promqltest/test.go.rej
+patching file promql/promqltest/test_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file promql/promqltest/test_test.go.rej
+patching file promql/promqltest/testdata/native_histograms.test
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/promqltest/testdata/native_histograms.test.rej
+patching file promql/promqltest/testdata/subquery.test
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file promql/promqltest/testdata/subquery.test.rej
+patching file scrape/manager.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file scrape/manager.go.rej
+patching file scrape/scrape.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file scrape/scrape.go.rej
+patching file scrape/scrape_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file scrape/scrape_test.go.rej
+patching file scripts/golangci-lint.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file scripts/golangci-lint.yml.rej
+patching file storage/remote/codec_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file storage/remote/codec_test.go.rej
+patching file storage/remote/otlptranslator/prometheusremotewrite/helper.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file storage/remote/otlptranslator/prometheusremotewrite/helper.go.rej
+patching file storage/remote/otlptranslator/prometheusremotewrite/histograms.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file storage/remote/otlptranslator/prometheusremotewrite/histograms.go.rej
+patching file storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw.go.rej
+patching file storage/remote/otlptranslator/prometheusremotewrite/otlp_to_openmetrics_metadata.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file storage/remote/otlptranslator/prometheusremotewrite/otlp_to_openmetrics_metadata.go.rej
+patching file storage/remote/write_handler.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file storage/remote/write_handler.go.rej
+patching file storage/remote/write_handler_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file storage/remote/write_handler_test.go.rej
+patching file tsdb/agent/db.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tsdb/agent/db.go.rej
+patching file tsdb/compact.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tsdb/compact.go.rej
+patching file tsdb/db_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file tsdb/db_test.go.rej
+patching file tsdb/head.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tsdb/head.go.rej
+patching file tsdb/head_append.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file tsdb/head_append.go.rej
+patching file tsdb/head_bench_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tsdb/head_bench_test.go.rej
+patching file tsdb/head_read_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tsdb/head_read_test.go.rej
+patching file tsdb/head_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+28 out of 28 hunks ignored -- saving rejects to file tsdb/head_test.go.rej
+patching file tsdb/head_wal.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tsdb/head_wal.go.rej
+patching file tsdb/ooo_head_read_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tsdb/ooo_head_read_test.go.rej
+patching file web/api/v1/api.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file web/api/v1/api.go.rej
+patching file web/ui/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file web/ui/README.md.rej
+patching file web/ui/mantine-ui/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/mantine-ui/package.json.rej
+patching file web/ui/mantine-ui/src/Badge.module.css
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/mantine-ui/src/Badge.module.css.rej
+patching file web/ui/mantine-ui/src/pages/AlertsPage.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file web/ui/mantine-ui/src/pages/AlertsPage.tsx.rej
+patching file web/ui/mantine-ui/src/pages/RulesPage.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file web/ui/mantine-ui/src/pages/RulesPage.tsx.rej
+patching file web/ui/mantine-ui/src/pages/query/MetricsExplorer/MetricsExplorer.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file web/ui/mantine-ui/src/pages/query/MetricsExplorer/MetricsExplorer.tsx.rej
+patching file web/ui/mantine-ui/src/state/localStorageMiddleware.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/mantine-ui/src/state/localStorageMiddleware.ts.rej
+patching file web/ui/package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file web/ui/package-lock.json.rej
+patching file web/ui/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/package.json.rej
+patching file web/ui/react-app/package-lock.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file web/ui/react-app/package-lock.json.rej
+patching file web/web.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file web/web.go.rej
+ERROR: golden patch failed to apply by all strategies

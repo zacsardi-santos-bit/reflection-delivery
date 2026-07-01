@@ -1,0 +1,165 @@
+patching file providers/dns/shellrent/internal/client_test.go
+patching file providers/dns/shellrent/shellrent_test.go
+{"Time":"2026-06-29T15:18:49.992137104Z","Action":"start","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent"}
+{"Time":"2026-06-29T15:18:49.995154843Z","Action":"start","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal"}
+{"Time":"2026-06-29T15:18:50.006350997Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider"}
+{"Time":"2026-06-29T15:18:50.006404939Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider","Output":"=== RUN   TestNewDNSProvider\n"}
+{"Time":"2026-06-29T15:18:50.0064773Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/success"}
+{"Time":"2026-06-29T15:18:50.00651004Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/success","Output":"=== RUN   TestNewDNSProvider/success\n"}
+{"Time":"2026-06-29T15:18:50.006700832Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/success","Output":"--- PASS: TestNewDNSProvider/success (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.006769016Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/success","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.006790299Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/missing_username"}
+{"Time":"2026-06-29T15:18:50.006816379Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/missing_username","Output":"=== RUN   TestNewDNSProvider/missing_username\n"}
+{"Time":"2026-06-29T15:18:50.006845453Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/missing_username","Output":"--- PASS: TestNewDNSProvider/missing_username (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.006878183Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/missing_username","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.006897152Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/missing_token"}
+{"Time":"2026-06-29T15:18:50.006904303Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/missing_token","Output":"=== RUN   TestNewDNSProvider/missing_token\n"}
+{"Time":"2026-06-29T15:18:50.006931044Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/missing_token","Output":"--- PASS: TestNewDNSProvider/missing_token (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.006999359Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider/missing_token","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.007096678Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider","Output":"--- PASS: TestNewDNSProvider (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.007142758Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProvider","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.007170961Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig"}
+{"Time":"2026-06-29T15:18:50.007178823Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig","Output":"=== RUN   TestNewDNSProviderConfig\n"}
+{"Time":"2026-06-29T15:18:50.007186185Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/success"}
+{"Time":"2026-06-29T15:18:50.007192665Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/success","Output":"=== RUN   TestNewDNSProviderConfig/success\n"}
+{"Time":"2026-06-29T15:18:50.007381253Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/success","Output":"--- PASS: TestNewDNSProviderConfig/success (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.007432301Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/success","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.007447565Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/missing_username"}
+{"Time":"2026-06-29T15:18:50.007462047Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/missing_username","Output":"=== RUN   TestNewDNSProviderConfig/missing_username\n"}
+{"Time":"2026-06-29T15:18:50.007499304Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/missing_username","Output":"--- PASS: TestNewDNSProviderConfig/missing_username (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.00752258Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/missing_username","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.00756188Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/missing_token"}
+{"Time":"2026-06-29T15:18:50.007616353Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/missing_token","Output":"=== RUN   TestNewDNSProviderConfig/missing_token\n"}
+{"Time":"2026-06-29T15:18:50.007663826Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/missing_token","Output":"--- PASS: TestNewDNSProviderConfig/missing_token (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.00777134Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig/missing_token","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.00781016Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig","Output":"--- PASS: TestNewDNSProviderConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.007831623Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestNewDNSProviderConfig","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.007842189Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLivePresent"}
+{"Time":"2026-06-29T15:18:50.007858854Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLivePresent","Output":"=== RUN   TestLivePresent\n"}
+{"Time":"2026-06-29T15:18:50.007881128Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLivePresent","Output":"    shellrent_test.go:116: skipping live test\n"}
+{"Time":"2026-06-29T15:18:50.00807163Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLivePresent","Output":"--- SKIP: TestLivePresent (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.008118982Z","Action":"skip","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLivePresent","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.008184182Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLiveCleanUp"}
+{"Time":"2026-06-29T15:18:50.008223723Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLiveCleanUp","Output":"=== RUN   TestLiveCleanUp\n"}
+{"Time":"2026-06-29T15:18:50.008259928Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLiveCleanUp","Output":"    shellrent_test.go:129: skipping live test\n"}
+{"Time":"2026-06-29T15:18:50.008334392Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLiveCleanUp","Output":"--- SKIP: TestLiveCleanUp (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.008416147Z","Action":"skip","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Test":"TestLiveCleanUp","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.008453915Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:50.008553768Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices"}
+{"Time":"2026-06-29T15:18:50.008601941Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices","Output":"=== RUN   TestClient_ListServices\n"}
+{"Time":"2026-06-29T15:18:50.008985118Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Output":"ok  \tgithub.com/go-acme/lego/v4/providers/dns/shellrent\t0.017s\n"}
+{"Time":"2026-06-29T15:18:50.009055405Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent","Elapsed":0.017}
+{"Time":"2026-06-29T15:18:50.02945887Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices","Output":"--- PASS: TestClient_ListServices (0.02s)\n"}
+{"Time":"2026-06-29T15:18:50.029488936Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices","Elapsed":0.02}
+{"Time":"2026-06-29T15:18:50.029516157Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices_error"}
+{"Time":"2026-06-29T15:18:50.029523148Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices_error","Output":"=== RUN   TestClient_ListServices_error\n"}
+{"Time":"2026-06-29T15:18:50.031035803Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices_error","Output":"--- PASS: TestClient_ListServices_error (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.03109932Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices_error","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.03111906Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices_error_status"}
+{"Time":"2026-06-29T15:18:50.03115155Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices_error_status","Output":"=== RUN   TestClient_ListServices_error_status\n"}
+{"Time":"2026-06-29T15:18:50.032300759Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices_error_status","Output":"--- PASS: TestClient_ListServices_error_status (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.032317915Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_ListServices_error_status","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.032345337Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails"}
+{"Time":"2026-06-29T15:18:50.032351917Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails","Output":"=== RUN   TestClient_GetServiceDetails\n"}
+{"Time":"2026-06-29T15:18:50.033558434Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails","Output":"--- PASS: TestClient_GetServiceDetails (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.033578945Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.03360197Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails_error"}
+{"Time":"2026-06-29T15:18:50.033608991Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails_error","Output":"=== RUN   TestClient_GetServiceDetails_error\n"}
+{"Time":"2026-06-29T15:18:50.034728073Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails_error","Output":"--- PASS: TestClient_GetServiceDetails_error (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.034750798Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails_error","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.034775075Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails_error_status"}
+{"Time":"2026-06-29T15:18:50.034781275Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails_error_status","Output":"=== RUN   TestClient_GetServiceDetails_error_status\n"}
+{"Time":"2026-06-29T15:18:50.035638226Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails_error_status","Output":"--- PASS: TestClient_GetServiceDetails_error_status (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.035655152Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetServiceDetails_error_status","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.035678448Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails"}
+{"Time":"2026-06-29T15:18:50.03569289Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails","Output":"=== RUN   TestClient_GetDomainDetails\n"}
+{"Time":"2026-06-29T15:18:50.03682346Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails","Output":"--- PASS: TestClient_GetDomainDetails (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.036852424Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.036870773Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails_error"}
+{"Time":"2026-06-29T15:18:50.036878354Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails_error","Output":"=== RUN   TestClient_GetDomainDetails_error\n"}
+{"Time":"2026-06-29T15:18:50.03779029Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails_error","Output":"--- PASS: TestClient_GetDomainDetails_error (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.037831603Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails_error","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.037851594Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails_error_status"}
+{"Time":"2026-06-29T15:18:50.037865224Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails_error_status","Output":"=== RUN   TestClient_GetDomainDetails_error_status\n"}
+{"Time":"2026-06-29T15:18:50.038867969Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails_error_status","Output":"--- PASS: TestClient_GetDomainDetails_error_status (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.038891315Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_GetDomainDetails_error_status","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.038900689Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord"}
+{"Time":"2026-06-29T15:18:50.03890789Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord","Output":"=== RUN   TestClient_CreateRecord\n"}
+{"Time":"2026-06-29T15:18:50.039895251Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord","Output":"--- PASS: TestClient_CreateRecord (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.03992058Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.039940801Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord_error"}
+{"Time":"2026-06-29T15:18:50.039948603Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord_error","Output":"=== RUN   TestClient_CreateRecord_error\n"}
+{"Time":"2026-06-29T15:18:50.040839897Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord_error","Output":"--- PASS: TestClient_CreateRecord_error (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.040862281Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord_error","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.040871325Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord_error_status"}
+{"Time":"2026-06-29T15:18:50.040884034Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord_error_status","Output":"=== RUN   TestClient_CreateRecord_error_status\n"}
+{"Time":"2026-06-29T15:18:50.041861871Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord_error_status","Output":"--- PASS: TestClient_CreateRecord_error_status (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.041883454Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_CreateRecord_error_status","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.041897926Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord"}
+{"Time":"2026-06-29T15:18:50.041909704Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord","Output":"=== RUN   TestClient_DeleteRecord\n"}
+{"Time":"2026-06-29T15:18:50.042781628Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord","Output":"--- PASS: TestClient_DeleteRecord (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.042799946Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.042823482Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord_error"}
+{"Time":"2026-06-29T15:18:50.042830944Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord_error","Output":"=== RUN   TestClient_DeleteRecord_error\n"}
+{"Time":"2026-06-29T15:18:50.04365173Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord_error","Output":"--- PASS: TestClient_DeleteRecord_error (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.043673353Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord_error","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.043685411Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord_error_status"}
+{"Time":"2026-06-29T15:18:50.043692112Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord_error_status","Output":"=== RUN   TestClient_DeleteRecord_error_status\n"}
+{"Time":"2026-06-29T15:18:50.0444881Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord_error_status","Output":"--- PASS: TestClient_DeleteRecord_error_status (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.044512387Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestClient_DeleteRecord_error_status","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.044539659Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder"}
+{"Time":"2026-06-29T15:18:50.044557256Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder","Output":"=== RUN   TestTTLRounder\n"}
+{"Time":"2026-06-29T15:18:50.044568613Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_3600"}
+{"Time":"2026-06-29T15:18:50.044577056Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_3600","Output":"=== RUN   TestTTLRounder/lower_than_3600\n"}
+{"Time":"2026-06-29T15:18:50.04459272Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_3600","Output":"=== PAUSE TestTTLRounder/lower_than_3600\n"}
+{"Time":"2026-06-29T15:18:50.044600722Z","Action":"pause","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_3600"}
+{"Time":"2026-06-29T15:18:50.044750882Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_14400"}
+{"Time":"2026-06-29T15:18:50.044763121Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_14400","Output":"=== RUN   TestTTLRounder/lower_than_14400\n"}
+{"Time":"2026-06-29T15:18:50.044771323Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_14400","Output":"=== PAUSE TestTTLRounder/lower_than_14400\n"}
+{"Time":"2026-06-29T15:18:50.044790222Z","Action":"pause","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_14400"}
+{"Time":"2026-06-29T15:18:50.044817694Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_28800"}
+{"Time":"2026-06-29T15:18:50.044830864Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_28800","Output":"=== RUN   TestTTLRounder/lower_than_28800\n"}
+{"Time":"2026-06-29T15:18:50.044840018Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_28800","Output":"=== PAUSE TestTTLRounder/lower_than_28800\n"}
+{"Time":"2026-06-29T15:18:50.044849132Z","Action":"pause","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_28800"}
+{"Time":"2026-06-29T15:18:50.044865327Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_57600"}
+{"Time":"2026-06-29T15:18:50.044873129Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_57600","Output":"=== RUN   TestTTLRounder/lower_than_57600\n"}
+{"Time":"2026-06-29T15:18:50.044884476Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_57600","Output":"=== PAUSE TestTTLRounder/lower_than_57600\n"}
+{"Time":"2026-06-29T15:18:50.044900321Z","Action":"pause","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_57600"}
+{"Time":"2026-06-29T15:18:50.044915344Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/rounded_to_86400"}
+{"Time":"2026-06-29T15:18:50.044937698Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/rounded_to_86400","Output":"=== RUN   TestTTLRounder/rounded_to_86400\n"}
+{"Time":"2026-06-29T15:18:50.044961053Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/rounded_to_86400","Output":"=== PAUSE TestTTLRounder/rounded_to_86400\n"}
+{"Time":"2026-06-29T15:18:50.04497183Z","Action":"pause","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/rounded_to_86400"}
+{"Time":"2026-06-29T15:18:50.04497843Z","Action":"run","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/default"}
+{"Time":"2026-06-29T15:18:50.044986793Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/default","Output":"=== RUN   TestTTLRounder/default\n"}
+{"Time":"2026-06-29T15:18:50.045003428Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/default","Output":"=== PAUSE TestTTLRounder/default\n"}
+{"Time":"2026-06-29T15:18:50.045018371Z","Action":"pause","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/default"}
+{"Time":"2026-06-29T15:18:50.045032072Z","Action":"cont","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_3600"}
+{"Time":"2026-06-29T15:18:50.045047796Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_3600","Output":"=== CONT  TestTTLRounder/lower_than_3600\n"}
+{"Time":"2026-06-29T15:18:50.045055368Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_3600","Output":"--- PASS: TestTTLRounder/lower_than_3600 (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.045071052Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_3600","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.045080046Z","Action":"cont","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_14400"}
+{"Time":"2026-06-29T15:18:50.045086546Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_14400","Output":"=== CONT  TestTTLRounder/lower_than_14400\n"}
+{"Time":"2026-06-29T15:18:50.045097242Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_14400","Output":"--- PASS: TestTTLRounder/lower_than_14400 (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.045110142Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_14400","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.045127829Z","Action":"cont","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_57600"}
+{"Time":"2026-06-29T15:18:50.045147379Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_57600","Output":"=== CONT  TestTTLRounder/lower_than_57600\n"}
+{"Time":"2026-06-29T15:18:50.045174971Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_57600","Output":"--- PASS: TestTTLRounder/lower_than_57600 (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.045186388Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_57600","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.045201712Z","Action":"cont","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/default"}
+{"Time":"2026-06-29T15:18:50.045221492Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/default","Output":"=== CONT  TestTTLRounder/default\n"}
+{"Time":"2026-06-29T15:18:50.045230736Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/default","Output":"--- PASS: TestTTLRounder/default (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.045274994Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/default","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.045283888Z","Action":"cont","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/rounded_to_86400"}
+{"Time":"2026-06-29T15:18:50.045291379Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/rounded_to_86400","Output":"=== CONT  TestTTLRounder/rounded_to_86400\n"}
+{"Time":"2026-06-29T15:18:50.04529844Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/rounded_to_86400","Output":"--- PASS: TestTTLRounder/rounded_to_86400 (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.045305521Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/rounded_to_86400","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.04531165Z","Action":"cont","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_28800"}
+{"Time":"2026-06-29T15:18:50.04531795Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_28800","Output":"=== CONT  TestTTLRounder/lower_than_28800\n"}
+{"Time":"2026-06-29T15:18:50.04532496Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_28800","Output":"--- PASS: TestTTLRounder/lower_than_28800 (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.0453379Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder/lower_than_28800","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.0453446Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder","Output":"--- PASS: TestTTLRounder (0.00s)\n"}
+{"Time":"2026-06-29T15:18:50.045351962Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Test":"TestTTLRounder","Elapsed":0}
+{"Time":"2026-06-29T15:18:50.045368757Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:50.046125646Z","Action":"output","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Output":"ok  \tgithub.com/go-acme/lego/v4/providers/dns/shellrent/internal\t0.051s\n"}
+{"Time":"2026-06-29T15:18:50.046160128Z","Action":"pass","Package":"github.com/go-acme/lego/v4/providers/dns/shellrent/internal","Elapsed":0.051}
+reward=1 graded=30 found=30 failed=0 parsed=32 framework=go exit_code=0

@@ -1,0 +1,23 @@
+{
+ "task": "ray-project-ray-1339",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'class FilterManager' with 'def synchronize(local_filters, remotes)', MeanStdFilter.apply_changes(other, with_buffer=)/clear_buffer/sync, RunningStat mean/var/std+update; tests assert numeric equality vs numpy and distributed sync (filt1.rs.n 10->20 via ray remote)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

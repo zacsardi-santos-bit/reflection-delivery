@@ -1,0 +1,5 @@
+patching file docs/v1/openapi.yaml
+patching file pkg/profile/api.go
+patching file pkg/restapi/v1/issuer/openapi.gen.go
+patching file pkg/service/wellknown/provider/testdata/profile.json
+patching file pkg/service/wellknown/provider/wellknown_service.go

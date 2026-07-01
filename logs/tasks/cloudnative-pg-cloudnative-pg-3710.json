@@ -1,0 +1,23 @@
+{
+ "task": "cloudnative-pg-cloudnative-pg-3710",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden cluster_types.go adds SynchronizeReplicasConfiguration with compileRegex/GetEnabled/IsExcludedByUser and cluster_webhook.go validates regexes ('Cannot configure synchronizeReplicas. Invalid regexes were found'); test.patch adds Ginkgo It blocks exercising these under F2P TestApi/TestReconcile"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 8,
+  "shallow": true
+ }
+}

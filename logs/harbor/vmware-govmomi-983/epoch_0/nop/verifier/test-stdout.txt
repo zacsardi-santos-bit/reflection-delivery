@@ -1,0 +1,20 @@
+patching file govc/test/vm.bats
+patching file simulator/folder_test.go
+patching file simulator/property_collector_test.go
+patching file simulator/session_manager_test.go
+patching file simulator/simulator_test.go
+# github.com/vmware/govmomi/simulator [github.com/vmware/govmomi/simulator.test]
+/go/src/github.com/vmware/govmomi/simulator/property_collector_test.go:338:23: undefined: internalContext
+/go/src/github.com/vmware/govmomi/simulator/property_collector_test.go:338:40: too many arguments in call to getObject
+	have (unknown type, types.ManagedObjectReference)
+	want (types.ManagedObjectReference)
+/go/src/github.com/vmware/govmomi/simulator/property_collector_test.go:358:20: undefined: internalContext
+/go/src/github.com/vmware/govmomi/simulator/property_collector_test.go:358:37: too many arguments in call to getObject
+	have (unknown type, types.ManagedObjectReference)
+	want (types.ManagedObjectReference)
+/go/src/github.com/vmware/govmomi/simulator/property_collector_test.go:483:23: undefined: internalContext
+/go/src/github.com/vmware/govmomi/simulator/property_collector_test.go:483:40: too many arguments in call to pc.collect
+	have (unknown type, *types.RetrievePropertiesEx)
+	want (*types.RetrievePropertiesEx)
+FAIL	github.com/vmware/govmomi/simulator [build failed]
+reward=0 graded=80 found=80 failed=80 parsed=1 framework=go exit_code=1

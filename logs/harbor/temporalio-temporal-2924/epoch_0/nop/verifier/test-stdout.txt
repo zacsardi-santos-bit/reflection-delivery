@@ -1,0 +1,25 @@
+patching file common/namespace/handler_GlobalNamespaceEnabled_MasterCluster_test.go
+patching file common/namespace/handler_test.go
+patching file common/namespace/replicationTaskExecutor_test.go
+patching file common/namespace/transmissionTaskHandler_test.go
+# go.temporal.io/server/common/namespace [go.temporal.io/server/common/namespace.test]
+common/namespace/transmissionTaskHandler_test.go:164:3: too many arguments in call to s.namespaceReplicator.HandleTransmissionTask
+	have (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, bool, int64, int64, bool)
+	want (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, int64, int64, bool)
+common/namespace/transmissionTaskHandler_test.go:218:3: too many arguments in call to s.namespaceReplicator.HandleTransmissionTask
+	have (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, bool, int64, int64, bool)
+	want (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, int64, int64, bool)
+common/namespace/transmissionTaskHandler_test.go:304:3: too many arguments in call to s.namespaceReplicator.HandleTransmissionTask
+	have (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, bool, int64, int64, bool)
+	want (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, int64, int64, bool)
+common/namespace/transmissionTaskHandler_test.go:357:3: too many arguments in call to s.namespaceReplicator.HandleTransmissionTask
+	have (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, bool, int64, int64, bool)
+	want (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, int64, int64, bool)
+common/namespace/transmissionTaskHandler_test.go:443:3: too many arguments in call to s.namespaceReplicator.HandleTransmissionTask
+	have (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, bool, int64, int64, bool)
+	want (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, int64, int64, bool)
+common/namespace/transmissionTaskHandler_test.go:456:3: too many arguments in call to s.namespaceReplicator.HandleTransmissionTask
+	have (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, bool, int64, int64, bool)
+	want (context.Context, "go.temporal.io/server/api/enums/v1".NamespaceOperation, *"go.temporal.io/server/api/persistence/v1".NamespaceInfo, *"go.temporal.io/server/api/persistence/v1".NamespaceConfig, *"go.temporal.io/server/api/persistence/v1".NamespaceReplicationConfig, int64, int64, bool)
+FAIL	go.temporal.io/server/common/namespace [build failed]
+reward=0 graded=39 found=39 failed=39 parsed=1 framework=go exit_code=1

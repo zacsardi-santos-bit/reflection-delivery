@@ -1,0 +1,2739 @@
+patching file packages/perseus/src/widgets/__tests__/__snapshots__/explanation.test.ts.snap
+patching file packages/perseus/src/widgets/__tests__/__snapshots__/graded-group.test.ts.snap
+patching file packages/perseus/src/widgets/__tests__/explanation.cypress.ts
+patching file packages/perseus/src/widgets/__tests__/explanation.test.ts
+patching file packages/perseus/src/widgets/__tests__/graded-group.test.ts
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ /workspace/repo/node_modules/.bin/jest packages/perseus/src/widgets/__tests__/explanation.test.ts packages/perseus/src/widgets/__tests__/graded-group.test.ts --coverage=false --watchAll=false --verbose
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+FAIL packages/perseus/src/widgets/__tests__/explanation.test.ts (9.022 s)
+  Explanation
+    ✕ should snapshot (38 ms)
+    ✕ should snapshot when expanded (79 ms)
+    ✕ can be expanded and collapsed with a mouse click (49 ms)
+    ✕ can be expanded and collapsed with the keyboard - Enter key (39 ms)
+    ✕ can be expanded and collapsed with the keyboard - Space bar (37 ms)
+    ✕ uses transitions when it is expanded/collapsed (36 ms)
+    ✕ does NOT use transitions when the user prefers reduced motion (37 ms)
+    ✓ communicates changes to its parent by using the provided 'onChange' callback (2 ms)
+    ✓ should return an empty object for getUserInput() (5 ms)
+    ✓ should return a zero score for simpleValidate() (4 ms)
+    static validate
+      ✓ should always return 0 points
+
+  ● Explanation › should snapshot
+
+    expect(received).toMatchSnapshot(hint)
+
+    Snapshot name: `Explanation should snapshot: initial render 1`
+
+    - Snapshot  - 40
+    + Received  +  9
+
+    @@ -12,56 +12,25 @@
+              Here's the explanation
+
+              <div
+                class="perseus-widget-container widget-nohighlight widget-inline"
+              >
+    -           <button
+    -             aria-controls="uid-explanation-widget-0-content"
+    -             aria-disabled="false"
+    -             aria-expanded="false"
+    -             class="button_vr44p2-o_O-shared_lwskrm-o_O-default_1hl5pu8-o_O-large_muhez5-o_O-inlineStyles_j8g9on"
+    -             role="button"
+    -             type="button"
+    -           >
+    -             <span
+    -               class="text_f1191h-o_O-LabelLarge_5s82ln-o_O-text_6kf3xs-o_O-largeText_m8xch7-o_O-textWithFocus_e296pg"
+    -             >
+    -               Explanation
+    -             </span>
+    -             <div
+    -               class="default_xu2jcg-o_O-iconWrapper_1nxzm3x-o_O-endIconWrapper_l32m71-o_O-endIconWrapperTertiary_10fyztj"
+    -             >
+    -               <span
+    -                 aria-hidden="true"
+    -                 class="svg_1q6jc65-o_O-icon_1521uiv-o_O-inlineStyles_urgnaq"
+    -               />
+    -             </div>
+    -           </button>
+                <div
+    -             aria-hidden="true"
+    -             class="default_xu2jcg-o_O-content_1pprw9s-o_O-contentCollapsed_j2403j"
+    -             data-test-id="content-container"
+    -             id="uid-explanation-widget-0-content"
+    +             class="container_167wsvl"
+                >
+    -             <div
+    -               class="default_xu2jcg-o_O-contentWrapper_y9ev9r"
+    +             <button
+    +               aria-disabled="false"
+    +               aria-expanded="false"
+    +               class="button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"
+    +               type="button"
+                  >
+                    <div
+    -                 class="perseus-renderer perseus-renderer-responsive"
+    +                 class="default_xu2jcg-o_O-explanationLink_7n4oib-o_O-exerciseLink_574wt1"
+                    >
+    -                 <div
+    -                   class="paragraph"
+    -                   data-perseus-paragraph-index="0"
+    -                 >
+    -                   <div
+    -                     class="paragraph"
+    -                   >
+    -                     This is an explanation
+    -                   </div>
+    -                 </div>
+    +                 [Explanation]
+                    </div>
+    -             </div>
+    +             </button>
+                </div>
+              </div>
+              
+      Did you get that?
+            </div>
+
+      77 |
+      78 |         // Assert
+    > 79 |         expect(container).toMatchSnapshot("initial render");
+         |                           ^
+      80 |     });
+      81 |
+      82 |     it("should snapshot when expanded", async () => {
+
+      at Object.toMatchSnapshot (packages/perseus/src/widgets/__tests__/explanation.test.ts:79:27)
+
+  ● Explanation › should snapshot when expanded
+
+    expect(received).toMatchSnapshot(hint)
+
+    Snapshot name: `Explanation should snapshot when expanded: expanded 1`
+
+    - Snapshot  - 27
+    + Received  + 14
+
+    @@ -12,40 +12,27 @@
+              Here's the explanation
+
+              <div
+                class="perseus-widget-container widget-nohighlight widget-inline"
+              >
+    -           <button
+    -             aria-controls="uid-explanation-widget-1-content"
+    -             aria-disabled="false"
+    -             aria-expanded="true"
+    -             class="button_vr44p2-o_O-shared_lwskrm-o_O-default_1hl5pu8-o_O-large_muhez5-o_O-inlineStyles_j8g9on"
+    -             role="button"
+    -             type="button"
+    -           >
+    -             <span
+    -               class="text_f1191h-o_O-LabelLarge_5s82ln-o_O-text_6kf3xs-o_O-largeText_m8xch7-o_O-textWithFocus_e296pg-o_O-hover_1nzvkun"
+    -             >
+    -               Hide explanation!
+    -             </span>
+    -             <div
+    -               class="default_xu2jcg-o_O-iconWrapper_1nxzm3x-o_O-endIconWrapper_l32m71-o_O-endIconWrapperTertiary_10fyztj-o_O-iconWrapperSecondaryHovered_1qh71iy"
+    -             >
+    -               <span
+    -                 aria-hidden="true"
+    -                 class="svg_1q6jc65-o_O-icon_1521uiv-o_O-inlineStyles_1troscl"
+    -               />
+    -             </div>
+    -           </button>
+                <div
+    -             aria-hidden="false"
+    -             class="default_xu2jcg-o_O-content_1pprw9s-o_O-contentExpanded_1ojyq0m"
+    -             data-test-id="content-container"
+    -             id="uid-explanation-widget-1-content"
+    +             class="container_167wsvl"
+                >
+    +             <button
+    +               aria-disabled="false"
+    +               aria-expanded="true"
+    +               class="button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"
+    +               type="button"
+    +             >
+    +               <div
+    +                 class="default_xu2jcg-o_O-explanationLink_7n4oib-o_O-exerciseLink_574wt1"
+    +               >
+    +                 [Hide explanation!]
+    +               </div>
+    +             </button>
+                  <div
+    -               class="default_xu2jcg-o_O-contentWrapper_y9ev9r"
+    +               class="content_z5b02x-o_O-contentExpanded_1c06cap"
+                  >
+                    <div
+                      class="perseus-renderer perseus-renderer-responsive"
+                    >
+                      <div
+
+      90 |         // The only real difference between expanded and not expanded is the
+      91 |         //     classes and aria that are applied.
+    > 92 |         expect(container).toMatchSnapshot("expanded");
+         |                           ^
+      93 |     });
+      94 |
+      95 |     it("can be expanded and collapsed with a mouse click", async function () {
+
+      at Object.toMatchSnapshot (packages/perseus/src/widgets/__tests__/explanation.test.ts:92:27)
+
+  ● Explanation › can be expanded and collapsed with a mouse click
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Explanation"
+
+    Here are the accessible roles:
+
+      button:
+
+      Name "[Explanation]":
+      [36m<button[39m
+        [33maria-disabled[39m=[32m"false"[39m
+        [33maria-expanded[39m=[32m"false"[39m
+        [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"paragraph"[39m
+            [36m>[39m
+              [0mHere's the explanation
+    [0m
+              [36m<div[39m
+                [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-inline"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"container_167wsvl"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-disabled[39m=[32m"false"[39m
+                    [33maria-expanded[39m=[32m"false"[39m
+                    [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"default_xu2jcg-o_O-explanationLink_7n4oib-o_O-exerciseLink_574wt1"[39m
+                    [36m>[39m
+                      [0m[Explanation][0m
+                    [36m</div>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [0m
+    Did you get that?[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      25 |     ) => {
+      26 |         // Widget Button state
+    > 27 |         const widgetButton = screen.getByRole("button", {name: buttonText});
+         |                                     ^
+      28 |         expect(widgetButton).toHaveAttribute(
+      29 |             "aria-expanded",
+      30 |             String(isExpanded),
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:111:19
+      at getByRole (packages/perseus/src/widgets/__tests__/explanation.test.ts:27:37)
+      at Object.verifyExpandCollapseState (packages/perseus/src/widgets/__tests__/explanation.test.ts:100:9)
+
+  ● Explanation › can be expanded and collapsed with the keyboard - Enter key
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Explanation"
+
+    Here are the accessible roles:
+
+      button:
+
+      Name "[Explanation]":
+      [36m<button[39m
+        [33maria-disabled[39m=[32m"false"[39m
+        [33maria-expanded[39m=[32m"false"[39m
+        [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"paragraph"[39m
+            [36m>[39m
+              [0mHere's the explanation
+    [0m
+              [36m<div[39m
+                [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-inline"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"container_167wsvl"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-disabled[39m=[32m"false"[39m
+                    [33maria-expanded[39m=[32m"false"[39m
+                    [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"default_xu2jcg-o_O-explanationLink_7n4oib-o_O-exerciseLink_574wt1"[39m
+                    [36m>[39m
+                      [0m[Explanation][0m
+                    [36m</div>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [0m
+    Did you get that?[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      25 |     ) => {
+      26 |         // Widget Button state
+    > 27 |         const widgetButton = screen.getByRole("button", {name: buttonText});
+         |                                     ^
+      28 |         expect(widgetButton).toHaveAttribute(
+      29 |             "aria-expanded",
+      30 |             String(isExpanded),
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:111:19
+      at getByRole (packages/perseus/src/widgets/__tests__/explanation.test.ts:27:37)
+      at Object.verifyExpandCollapseState (packages/perseus/src/widgets/__tests__/explanation.test.ts:124:9)
+
+  ● Explanation › can be expanded and collapsed with the keyboard - Space bar
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Explanation"
+
+    Here are the accessible roles:
+
+      button:
+
+      Name "[Explanation]":
+      [36m<button[39m
+        [33maria-disabled[39m=[32m"false"[39m
+        [33maria-expanded[39m=[32m"false"[39m
+        [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"paragraph"[39m
+            [36m>[39m
+              [0mHere's the explanation
+    [0m
+              [36m<div[39m
+                [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-inline"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"container_167wsvl"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-disabled[39m=[32m"false"[39m
+                    [33maria-expanded[39m=[32m"false"[39m
+                    [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"default_xu2jcg-o_O-explanationLink_7n4oib-o_O-exerciseLink_574wt1"[39m
+                    [36m>[39m
+                      [0m[Explanation][0m
+                    [36m</div>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [0m
+    Did you get that?[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      25 |     ) => {
+      26 |         // Widget Button state
+    > 27 |         const widgetButton = screen.getByRole("button", {name: buttonText});
+         |                                     ^
+      28 |         expect(widgetButton).toHaveAttribute(
+      29 |             "aria-expanded",
+      30 |             String(isExpanded),
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:111:19
+      at getByRole (packages/perseus/src/widgets/__tests__/explanation.test.ts:27:37)
+      at Object.verifyExpandCollapseState (packages/perseus/src/widgets/__tests__/explanation.test.ts:146:9)
+
+  ● Explanation › uses transitions when it is expanded/collapsed
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Explanation"
+
+    Here are the accessible roles:
+
+      button:
+
+      Name "[Explanation]":
+      [36m<button[39m
+        [33maria-disabled[39m=[32m"false"[39m
+        [33maria-expanded[39m=[32m"false"[39m
+        [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"paragraph"[39m
+            [36m>[39m
+              [0mHere's the explanation
+    [0m
+              [36m<div[39m
+                [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-inline"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"container_167wsvl"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-disabled[39m=[32m"false"[39m
+                    [33maria-expanded[39m=[32m"false"[39m
+                    [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"default_xu2jcg-o_O-explanationLink_7n4oib-o_O-exerciseLink_574wt1"[39m
+                    [36m>[39m
+                      [0m[Explanation][0m
+                    [36m</div>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [0m
+    Did you get that?[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      173 |         // Act - expand
+      174 |         await userEvent.click(
+    > 175 |             screen.getByRole("button", {name: "Explanation"}),
+          |                    ^
+      176 |         );
+      177 |
+      178 |         // Assert - transition when revealing
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:111:19
+      at Object.getByRole (packages/perseus/src/widgets/__tests__/explanation.test.ts:175:20)
+
+  ● Explanation › does NOT use transitions when the user prefers reduced motion
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Explanation"
+
+    Here are the accessible roles:
+
+      button:
+
+      Name "[Explanation]":
+      [36m<button[39m
+        [33maria-disabled[39m=[32m"false"[39m
+        [33maria-expanded[39m=[32m"false"[39m
+        [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"paragraph"[39m
+            [36m>[39m
+              [0mHere's the explanation
+    [0m
+              [36m<div[39m
+                [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-inline"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"container_167wsvl"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-disabled[39m=[32m"false"[39m
+                    [33maria-expanded[39m=[32m"false"[39m
+                    [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"default_xu2jcg-o_O-explanationLink_7n4oib-o_O-exerciseLink_574wt1"[39m
+                    [36m>[39m
+                      [0m[Explanation][0m
+                    [36m</div>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [0m
+    Did you get that?[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      204 |         // Act - expand
+      205 |         await userEvent.click(
+    > 206 |             screen.getByRole("button", {name: "Explanation"}),
+          |                    ^
+      207 |         );
+      208 |
+      209 |         // Assert - transition when revealing
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:111:19
+      at Object.getByRole (packages/perseus/src/widgets/__tests__/explanation.test.ts:206:20)
+
+ › 2 snapshots failed.
+FAIL packages/perseus/src/widgets/__tests__/graded-group.test.ts (17.119 s)
+  graded-group
+    ✕ should snapshot (61 ms)
+    ✕ should snapshot (32 ms)
+    on desktop
+      ✓ should be able to be answered correctly (570 ms)
+      ✓ should be able to be answered incorrectly (469 ms)
+      ✓ should display an error if not fully answered (159 ms)
+      ✕ should be able to reveal the hint (1515 ms)
+      ✕ should be able to hide the hint (1498 ms)
+    on mobile
+      ✓ should be able to be answered correctly (445 ms)
+      ✓ should be able to be answered incorrectly (426 ms)
+      ✓ should let the user retry when checked if not fully answered (359 ms)
+      ✕ should be able to reveal the hint (1466 ms)
+      ✕ should be able to hide the hint (1425 ms)
+
+  ● graded-group › should snapshot
+
+    expect(received).toMatchSnapshot(hint)
+
+    Snapshot name: `graded-group should snapshot: initial render (mobile: true) 1`
+
+    - Snapshot  -  6
+    + Received  + 24
+
+    @@ -303,20 +303,38 @@
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+    +                     <div
+    +                       class="paragraph"
+    +                     >
+    +                       <div
+    +                         class="perseus-widget-container widget-nohighlight widget-inline"
+    +                       >
+    +                         <div
+    +                           class="container_167wsvl"
+    +                         >
+    +                           <div
+    +                             class="linkContainer_36rlri"
+    +                           >
+    +                             <a
+    +                               aria-expanded="false"
+    +                               class="mobileExplanationLink_his27d"
+    +                               href="javascript:void(0)"
+    +                               role="button"
+    +                             >
+    +                               Hint
+    +                             </a>
+    +                           </div>
+    +                         </div>
+    +                       </div>
+    +                     </div>
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+    -             <button
+    -               class="showHintLink_oak3yy"
+    -               tabindex="0"
+    -             >
+    -               Explain
+    -             </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      48 |
+      49 |         // Assert
+    > 50 |         expect(container).toMatchSnapshot(
+         |                           ^
+      51 |             `initial render (mobile: ${isMobile.toString()})`,
+      52 |         );
+      53 |     });
+
+      at toMatchSnapshot (packages/perseus/src/widgets/__tests__/graded-group.test.ts:50:27)
+
+  ● graded-group › should snapshot
+
+    expect(received).toMatchSnapshot(hint)
+
+    Snapshot name: `graded-group should snapshot: initial render (mobile: false) 1`
+
+    - Snapshot  -  6
+    + Received  + 24
+
+    @@ -399,10 +399,34 @@
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+    +                     <div
+    +                       class="paragraph"
+    +                     >
+    +                       <div
+    +                         class="perseus-widget-container widget-nohighlight widget-inline"
+    +                       >
+    +                         <div
+    +                           class="container_167wsvl"
+    +                         >
+    +                           <button
+    +                             aria-disabled="false"
+    +                             aria-expanded="false"
+    +                             class="button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"
+    +                             type="button"
+    +                           >
+    +                             <div
+    +                               class="default_xu2jcg-o_O-explanationLink_7n4oib-o_O-exerciseLink_574wt1"
+    +                             >
+    +                               [Hint]
+    +                             </div>
+    +                           </button>
+    +                         </div>
+    +                       </div>
+    +                     </div>
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                  <p
+    @@ -418,16 +442,10 @@
+                    <span
+                      class="text_f1191h-o_O-LabelLarge_5s82ln-o_O-text_6kf3xs"
+                    >
+                      Check
+                    </span>
+    -             </button>
+    -             <button
+    -               class="showHintLink_oak3yy"
+    -               tabindex="0"
+    -             >
+    -               Explain
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      48 |
+      49 |         // Assert
+    > 50 |         expect(container).toMatchSnapshot(
+         |                           ^
+      51 |             `initial render (mobile: ${isMobile.toString()})`,
+      52 |         );
+      53 |     });
+
+      at toMatchSnapshot (packages/perseus/src/widgets/__tests__/graded-group.test.ts:50:27)
+
+  ● graded-group › on desktop › should be able to reveal the hint
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Explain"
+
+    Here are the accessible roles:
+
+      separator:
+
+      Name "":
+      [36m<hr />[39m
+
+      --------------------------------------------------
+      heading:
+
+      Name "Check your understanding!":
+      [36m<h2 />[39m
+
+      --------------------------------------------------
+      list:
+
+      Name "":
+      [36m<ol[39m
+        [33mstart[39m=[32m"1"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      listitem:
+
+      Name "":
+      [36m<li />[39m
+
+      --------------------------------------------------
+      table:
+
+      Name "":
+      [36m<table[39m
+        [33mclass[39m=[32m"categorizer-table mobileTable_1wmcwov"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      rowgroup:
+
+      Name "":
+      [36m<thead />[39m
+
+      Name "":
+      [36m<tbody />[39m
+
+      --------------------------------------------------
+      row:
+
+      Name "True False":
+      [36m<tr />[39m
+
+      Name "Some bacteria conduct photosynthesis and produce oxygen, much like plants.":
+      [36m<tr />[39m
+
+      Name "Bacteria are always autotrophic but they may get energy from either light or chemical sources.":
+      [36m<tr />[39m
+
+      Name "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).":
+      [36m<tr />[39m
+
+      Name "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.":
+      [36m<tr />[39m
+
+      --------------------------------------------------
+      cell:
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"emptyHeaderCell_1mttrgd"[39m
+      [36m/>[39m
+
+      Name "Some bacteria conduct photosynthesis and produce oxygen, much like plants.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Bacteria are always autotrophic but they may get energy from either light or chemical sources.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      columnheader:
+
+      Name "True":
+      [36m<th[39m
+        [33mclass[39m=[32m"header_whrfk4"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<th[39m
+        [33mclass[39m=[32m"header_whrfk4"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "[Hint]":
+      [36m<button[39m
+        [33maria-disabled[39m=[32m"false"[39m
+        [33maria-expanded[39m=[32m"false"[39m
+        [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "Check":
+      [36m<button[39m
+        [33maria-disabled[39m=[32m"false"[39m
+        [33mclass[39m=[32m"button_vr44p2-o_O-shared_lwskrm-o_O-default_1w5v67"[39m
+        [33mrole[39m=[32m"button"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      status:
+
+      Name "":
+      [36m<p[39m
+        [33maria-live[39m=[32m"polite"[39m
+        [33mrole[39m=[32m"status"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph perseus-paragraph-centered"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<hr />[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"1"[39m
+          [36m>[39m
+            [36m<h2>[39m
+              [0mCheck your understanding![0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"paragraph"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-block"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"perseus-graded-group"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"title_1lagzkb"[39m
+                  [36m>[39m
+                    [0mMetabolic strategies of bacteria[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"paragraph"[39m
+                      [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                    [36m>[39m
+                      [36m<ol[39m
+                        [33mstart[39m=[32m"1"[39m
+                      [36m>[39m
+                        [36m<li>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<strong>[39m
+                              [0mWhich of the following statements about metabolic strategies of bacteria are true?[0m
+                            [36m</strong>[39m
+                          [36m</div>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<div[39m
+                              [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-block"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"categorizer-container "[39m
+                              [36m>[39m
+                                [36m<table[39m
+                                  [33mclass[39m=[32m"categorizer-table mobileTable_1wmcwov"[39m
+                                [36m>[39m
+                                  [36m<thead>[39m
+                                    [36m<tr>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"emptyHeaderCell_1mttrgd"[39m
+                                      [36m/>[39m
+                                      [36m<th[39m
+                                        [33mclass[39m=[32m"header_whrfk4"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mTrue[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</th>[39m
+                                      [36m<th[39m
+                                        [33mclass[39m=[32m"header_whrfk4"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mFalse[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</th>[39m
+                                    [36m</tr>[39m
+                                  [36m</thead>[39m
+                                  [36m<tbody>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0m Some bacteria conduct photosynthesis and produce oxygen, much like plants.[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                ...
+
+      135 |             // Act
+      136 |             await userEvent.click(
+    > 137 |                 screen.getByRole("button", {name: "Explain"}),
+          |                        ^
+      138 |             );
+      139 |             jest.runOnlyPendingTimers();
+      140 |
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:111:19
+      at Object.getByRole (packages/perseus/src/widgets/__tests__/graded-group.test.ts:137:24)
+
+  ● graded-group › on desktop › should be able to hide the hint
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Explain"
+
+    Here are the accessible roles:
+
+      separator:
+
+      Name "":
+      [36m<hr />[39m
+
+      --------------------------------------------------
+      heading:
+
+      Name "Check your understanding!":
+      [36m<h2 />[39m
+
+      --------------------------------------------------
+      list:
+
+      Name "":
+      [36m<ol[39m
+        [33mstart[39m=[32m"1"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      listitem:
+
+      Name "":
+      [36m<li />[39m
+
+      --------------------------------------------------
+      table:
+
+      Name "":
+      [36m<table[39m
+        [33mclass[39m=[32m"categorizer-table mobileTable_1wmcwov"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      rowgroup:
+
+      Name "":
+      [36m<thead />[39m
+
+      Name "":
+      [36m<tbody />[39m
+
+      --------------------------------------------------
+      row:
+
+      Name "True False":
+      [36m<tr />[39m
+
+      Name "Some bacteria conduct photosynthesis and produce oxygen, much like plants.":
+      [36m<tr />[39m
+
+      Name "Bacteria are always autotrophic but they may get energy from either light or chemical sources.":
+      [36m<tr />[39m
+
+      Name "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).":
+      [36m<tr />[39m
+
+      Name "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.":
+      [36m<tr />[39m
+
+      --------------------------------------------------
+      cell:
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"emptyHeaderCell_1mttrgd"[39m
+      [36m/>[39m
+
+      Name "Some bacteria conduct photosynthesis and produce oxygen, much like plants.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Bacteria are always autotrophic but they may get energy from either light or chemical sources.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      columnheader:
+
+      Name "True":
+      [36m<th[39m
+        [33mclass[39m=[32m"header_whrfk4"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<th[39m
+        [33mclass[39m=[32m"header_whrfk4"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "[Hint]":
+      [36m<button[39m
+        [33maria-disabled[39m=[32m"false"[39m
+        [33maria-expanded[39m=[32m"false"[39m
+        [33mclass[39m=[32m"button_vr44p2-o_O-reset_152ygtm-o_O-link_13xlah4"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "Check":
+      [36m<button[39m
+        [33maria-disabled[39m=[32m"false"[39m
+        [33mclass[39m=[32m"button_vr44p2-o_O-shared_lwskrm-o_O-default_1w5v67"[39m
+        [33mrole[39m=[32m"button"[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      status:
+
+      Name "":
+      [36m<p[39m
+        [33maria-live[39m=[32m"polite"[39m
+        [33mrole[39m=[32m"status"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph perseus-paragraph-centered"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<hr />[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"1"[39m
+          [36m>[39m
+            [36m<h2>[39m
+              [0mCheck your understanding![0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"paragraph"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-block"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"perseus-graded-group"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"title_1lagzkb"[39m
+                  [36m>[39m
+                    [0mMetabolic strategies of bacteria[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"paragraph"[39m
+                      [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                    [36m>[39m
+                      [36m<ol[39m
+                        [33mstart[39m=[32m"1"[39m
+                      [36m>[39m
+                        [36m<li>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<strong>[39m
+                              [0mWhich of the following statements about metabolic strategies of bacteria are true?[0m
+                            [36m</strong>[39m
+                          [36m</div>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<div[39m
+                              [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-block"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"categorizer-container "[39m
+                              [36m>[39m
+                                [36m<table[39m
+                                  [33mclass[39m=[32m"categorizer-table mobileTable_1wmcwov"[39m
+                                [36m>[39m
+                                  [36m<thead>[39m
+                                    [36m<tr>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"emptyHeaderCell_1mttrgd"[39m
+                                      [36m/>[39m
+                                      [36m<th[39m
+                                        [33mclass[39m=[32m"header_whrfk4"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mTrue[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</th>[39m
+                                      [36m<th[39m
+                                        [33mclass[39m=[32m"header_whrfk4"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mFalse[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</th>[39m
+                                    [36m</tr>[39m
+                                  [36m</thead>[39m
+                                  [36m<tbody>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0m Some bacteria conduct photosynthesis and produce oxygen, much like plants.[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                ...
+
+      149 |             renderQuestion(question1);
+      150 |             await userEvent.click(
+    > 151 |                 screen.getByRole("button", {name: "Explain"}),
+          |                        ^
+      152 |             );
+      153 |             jest.runOnlyPendingTimers();
+      154 |
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:111:19
+      at Object.getByRole (packages/perseus/src/widgets/__tests__/graded-group.test.ts:151:24)
+
+  ● graded-group › on mobile › should be able to reveal the hint
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Explain"
+
+    Here are the accessible roles:
+
+      separator:
+
+      Name "":
+      [36m<hr />[39m
+
+      --------------------------------------------------
+      heading:
+
+      Name "Check your understanding!":
+      [36m<h2 />[39m
+
+      --------------------------------------------------
+      list:
+
+      Name "":
+      [36m<ol[39m
+        [33mstart[39m=[32m"1"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      listitem:
+
+      Name "":
+      [36m<li />[39m
+
+      --------------------------------------------------
+      table:
+
+      Name "":
+      [36m<table[39m
+        [33mclass[39m=[32m"categorizer-table mobileTable_1wmcwov"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      rowgroup:
+
+      Name "":
+      [36m<thead />[39m
+
+      Name "":
+      [36m<tbody />[39m
+
+      --------------------------------------------------
+      row:
+
+      Name "True False":
+      [36m<tr />[39m
+
+      Name "Some bacteria conduct photosynthesis and produce oxygen, much like plants.":
+      [36m<tr />[39m
+
+      Name "Bacteria are always autotrophic but they may get energy from either light or chemical sources.":
+      [36m<tr />[39m
+
+      Name "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).":
+      [36m<tr />[39m
+
+      Name "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.":
+      [36m<tr />[39m
+
+      --------------------------------------------------
+      cell:
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"emptyHeaderCell_1mttrgd"[39m
+      [36m/>[39m
+
+      Name "Some bacteria conduct photosynthesis and produce oxygen, much like plants.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Bacteria are always autotrophic but they may get energy from either light or chemical sources.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      columnheader:
+
+      Name "True":
+      [36m<th[39m
+        [33mclass[39m=[32m"header_whrfk4"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<th[39m
+        [33mclass[39m=[32m"header_whrfk4"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "Hint":
+      [36m<a[39m
+        [33maria-expanded[39m=[32m"false"[39m
+        [33mclass[39m=[32m"mobileExplanationLink_his27d"[39m
+        [33mhref[39m=[32m"javascript:void(0)"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      radio:
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_19_0"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_19_0"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_19_1"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_19_1"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_19_2"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_19_2"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_19_3"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_19_3"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph perseus-paragraph-centered"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<hr />[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"1"[39m
+          [36m>[39m
+            [36m<h2>[39m
+              [0mCheck your understanding![0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"paragraph"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-block"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"gradedGroup_14sgdtb perseus-graded-group"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"title_1lagzkb"[39m
+                  [36m>[39m
+                    [0mMetabolic strategies of bacteria[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"paragraph"[39m
+                      [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                    [36m>[39m
+                      [36m<ol[39m
+                        [33mstart[39m=[32m"1"[39m
+                      [36m>[39m
+                        [36m<li>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<strong>[39m
+                              [0mWhich of the following statements about metabolic strategies of bacteria are true?[0m
+                            [36m</strong>[39m
+                          [36m</div>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<div[39m
+                              [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-block"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"categorizer-container fullBleedContainer_8ybp6"[39m
+                              [36m>[39m
+                                [36m<table[39m
+                                  [33mclass[39m=[32m"categorizer-table mobileTable_1wmcwov"[39m
+                                [36m>[39m
+                                  [36m<thead>[39m
+                                    [36m<tr>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"emptyHeaderCell_1mttrgd"[39m
+                                      [36m/>[39m
+                                      [36m<th[39m
+                                        [33mclass[39m=[32m"header_whrfk4"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mTrue[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</th>[39m
+                                      [36m<th[39m
+                                        [33mclass[39m=[32m"header_whrfk4"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mFalse[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</th>[39m
+                                    [36m</tr>[39m
+                                  [36m</thead>[39m
+                                  [36m<tbody>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0m Some bacteria conduct photosynthesis and produce oxygen, much like plants.[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_19_0"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"False"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_19_0"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                    [36m</tr>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mBacteria are always autotrophic but they may get energy from either light or chemical sources.[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_19_1"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"False"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_19_1"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                    [36m</tr>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mSome chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_19_2"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"False"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_19_2"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                    [36m</tr>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mSome bacteria live symbiotically inside of host organisms and provide the host with nutrients.[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_19_3"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"False"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_19_3"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                    [36m</tr>[39m
+                                  [36m</tbody>[39m
+                                [36m</table>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                          [36m</div>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<div[39m
+                              [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-inline"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"container_167wsvl"[39m
+                              [36m>[39m
+                                [36m<div[39m
+                                  [33mclass[39m=[32m"linkContainer_36rlri"[39m
+                                [36m>[39m
+                                  [36m<a[39m
+                                    [33maria-expanded[39m=[32m"false"[39m
+                                    [33mclass[39m=[32m"mobileExplanationLink_his27d"[39m
+                                    [33mhref[39m=[32m"javascript:void(0)"[39m
+                                    [33mrole[39m=[32m"button"[39m
+                                  [36m>[39m
+                                    [0mHint[0m
+                                  [36m</a>[39m
+                                [36m</div>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                          [36m</div>[39m
+                        [36m</li>[39m
+                      [36m</ol>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      261 |             // Act
+      262 |             await userEvent.click(
+    > 263 |                 screen.getByRole("button", {name: "Explain"}),
+          |                        ^
+      264 |             );
+      265 |
+      266 |             // Assert
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:111:19
+      at Object.getByRole (packages/perseus/src/widgets/__tests__/graded-group.test.ts:263:24)
+
+  ● graded-group › on mobile › should be able to hide the hint
+
+    TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Explain"
+
+    Here are the accessible roles:
+
+      separator:
+
+      Name "":
+      [36m<hr />[39m
+
+      --------------------------------------------------
+      heading:
+
+      Name "Check your understanding!":
+      [36m<h2 />[39m
+
+      --------------------------------------------------
+      list:
+
+      Name "":
+      [36m<ol[39m
+        [33mstart[39m=[32m"1"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      listitem:
+
+      Name "":
+      [36m<li />[39m
+
+      --------------------------------------------------
+      table:
+
+      Name "":
+      [36m<table[39m
+        [33mclass[39m=[32m"categorizer-table mobileTable_1wmcwov"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      rowgroup:
+
+      Name "":
+      [36m<thead />[39m
+
+      Name "":
+      [36m<tbody />[39m
+
+      --------------------------------------------------
+      row:
+
+      Name "True False":
+      [36m<tr />[39m
+
+      Name "Some bacteria conduct photosynthesis and produce oxygen, much like plants.":
+      [36m<tr />[39m
+
+      Name "Bacteria are always autotrophic but they may get energy from either light or chemical sources.":
+      [36m<tr />[39m
+
+      Name "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).":
+      [36m<tr />[39m
+
+      Name "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.":
+      [36m<tr />[39m
+
+      --------------------------------------------------
+      cell:
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"emptyHeaderCell_1mttrgd"[39m
+      [36m/>[39m
+
+      Name "Some bacteria conduct photosynthesis and produce oxygen, much like plants.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Bacteria are always autotrophic but they may get energy from either light or chemical sources.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Some chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "Some bacteria live symbiotically inside of host organisms and provide the host with nutrients.":
+      [36m<td />[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<td[39m
+        [33mclass[39m=[32m"category cell_13aakpm"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      columnheader:
+
+      Name "True":
+      [36m<th[39m
+        [33mclass[39m=[32m"header_whrfk4"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<th[39m
+        [33mclass[39m=[32m"header_whrfk4"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      button:
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "True":
+      [36m<div[39m
+        [33maria-label[39m=[32m"True"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "False":
+      [36m<div[39m
+        [33maria-label[39m=[32m"False"[39m
+        [33mclass[39m=[32m"perseus-interactive"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      Name "Hint":
+      [36m<a[39m
+        [33maria-expanded[39m=[32m"false"[39m
+        [33mclass[39m=[32m"mobileExplanationLink_his27d"[39m
+        [33mhref[39m=[32m"javascript:void(0)"[39m
+        [33mrole[39m=[32m"button"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+      radio:
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_20_0"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_20_0"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_20_1"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_20_1"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_20_2"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_20_2"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_20_3"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      Name "":
+      [36m<input[39m
+        [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+        [33mname[39m=[32m"perseus_radio_20_3"[39m
+        [33mtype[39m=[32m"radio"[39m
+      [36m/>[39m
+
+      --------------------------------------------------
+
+    Ignored nodes: comments, <script />, <style />
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph perseus-paragraph-centered"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<hr />[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"1"[39m
+          [36m>[39m
+            [36m<h2>[39m
+              [0mCheck your understanding![0m
+            [36m</h2>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"paragraph"[39m
+            [33mdata-perseus-paragraph-index[39m=[32m"2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"paragraph"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-block"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"gradedGroup_14sgdtb perseus-graded-group"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"title_1lagzkb"[39m
+                  [36m>[39m
+                    [0mMetabolic strategies of bacteria[0m
+                  [36m</div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"paragraph"[39m
+                      [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                    [36m>[39m
+                      [36m<ol[39m
+                        [33mstart[39m=[32m"1"[39m
+                      [36m>[39m
+                        [36m<li>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<strong>[39m
+                              [0mWhich of the following statements about metabolic strategies of bacteria are true?[0m
+                            [36m</strong>[39m
+                          [36m</div>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<div[39m
+                              [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-block"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"categorizer-container fullBleedContainer_8ybp6"[39m
+                              [36m>[39m
+                                [36m<table[39m
+                                  [33mclass[39m=[32m"categorizer-table mobileTable_1wmcwov"[39m
+                                [36m>[39m
+                                  [36m<thead>[39m
+                                    [36m<tr>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"emptyHeaderCell_1mttrgd"[39m
+                                      [36m/>[39m
+                                      [36m<th[39m
+                                        [33mclass[39m=[32m"header_whrfk4"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mTrue[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</th>[39m
+                                      [36m<th[39m
+                                        [33mclass[39m=[32m"header_whrfk4"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mFalse[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</th>[39m
+                                    [36m</tr>[39m
+                                  [36m</thead>[39m
+                                  [36m<tbody>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0m Some bacteria conduct photosynthesis and produce oxygen, much like plants.[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_20_0"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"False"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_20_0"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                    [36m</tr>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mBacteria are always autotrophic but they may get energy from either light or chemical sources.[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_20_1"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"False"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_20_1"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                    [36m</tr>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mSome chemosynthetic bacteria introduce energy and fixed carbon into communities where photosynthesis is not possible (e.g., deep-sea vents).[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_20_2"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"False"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_20_2"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                    [36m</tr>[39m
+                                    [36m<tr>[39m
+                                      [36m<td>[39m
+                                        [36m<div[39m
+                                          [33mclass[39m=[32m"perseus-renderer perseus-renderer-responsive"[39m
+                                        [36m>[39m
+                                          [36m<div[39m
+                                            [33mclass[39m=[32m"paragraph"[39m
+                                            [33mdata-perseus-paragraph-index[39m=[32m"0"[39m
+                                          [36m>[39m
+                                            [36m<div[39m
+                                              [33mclass[39m=[32m"paragraph"[39m
+                                            [36m>[39m
+                                              [0mSome bacteria live symbiotically inside of host organisms and provide the host with nutrients.[0m
+                                            [36m</div>[39m
+                                          [36m</div>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"True"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_20_3"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                      [36m<td[39m
+                                        [33mclass[39m=[32m"category cell_13aakpm"[39m
+                                      [36m>[39m
+                                        [36m<div[39m
+                                          [33maria-label[39m=[32m"False"[39m
+                                          [33mclass[39m=[32m"perseus-interactive"[39m
+                                          [33mrole[39m=[32m"button"[39m
+                                        [36m>[39m
+                                          [36m<input[39m
+                                            [33mclass[39m=[32m"responsiveInput_1q2zj3l-o_O-responsiveRadioInput_17um91a"[39m
+                                            [33mname[39m=[32m"perseus_radio_20_3"[39m
+                                            [33mtype[39m=[32m"radio"[39m
+                                          [36m/>[39m
+                                        [36m</div>[39m
+                                      [36m</td>[39m
+                                    [36m</tr>[39m
+                                  [36m</tbody>[39m
+                                [36m</table>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                          [36m</div>[39m
+                          [36m<div[39m
+                            [33mclass[39m=[32m"paragraph"[39m
+                          [36m>[39m
+                            [36m<div[39m
+                              [33mclass[39m=[32m"perseus-widget-container widget-nohighlight widget-inline"[39m
+                            [36m>[39m
+                              [36m<div[39m
+                                [33mclass[39m=[32m"container_167wsvl"[39m
+                              [36m>[39m
+                                [36m<div[39m
+                                  [33mclass[39m=[32m"linkContainer_36rlri"[39m
+                                [36m>[39m
+                                  [36m<a[39m
+                                    [33maria-expanded[39m=[32m"false"[39m
+                                    [33mclass[39m=[32m"mobileExplanationLink_his27d"[39m
+                                    [33mhref[39m=[32m"javascript:void(0)"[39m
+                                    [33mrole[39m=[32m"button"[39m
+                                  [36m>[39m
+                                    [0mHint[0m
+                                  [36m</a>[39m
+                                [36m</div>[39m
+                              [36m</div>[39m
+                            [36m</div>[39m
+                          [36m</div>[39m
+                        [36m</li>[39m
+                      [36m</ol>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      274 |             renderQuestion(question1, apiOptions);
+      275 |             await userEvent.click(
+    > 276 |                 screen.getByRole("button", {name: "Explain"}),
+          |                        ^
+      277 |             );
+      278 |
+      279 |             // Act
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:38:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:90:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:62:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:111:19
+      at Object.getByRole (packages/perseus/src/widgets/__tests__/graded-group.test.ts:276:24)
+
+ › 2 snapshots failed.
+Snapshot Summary
+ › 4 snapshots failed from 2 test suites. Inspect your code changes or re-run jest with `-u` to update them.
+
+Test Suites: 2 failed, 2 total
+Tests:       13 failed, 10 passed, 23 total
+Snapshots:   4 failed, 3 passed, 7 total
+Time:        17.937 s
+Ran all test suites matching /packages\/perseus\/src\/widgets\/__tests__\/explanation.test.ts|packages\/perseus\/src\/widgets\/__tests__\/graded-group.test.ts/i.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+reward=0 graded=22 found=0 failed=0 parsed=0 framework=jest exit_code=1

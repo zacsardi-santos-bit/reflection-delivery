@@ -1,0 +1,9 @@
+patching file cli/azd/pkg/project/container_helper.go
+patching file cli/azd/pkg/project/framework_service.go
+patching file cli/azd/pkg/project/framework_service_docker.go
+patching file cli/azd/pkg/project/project.go
+patching file cli/azd/pkg/project/service_config.go
+patching file cli/azd/pkg/project/service_manager.go
+patching file cli/azd/pkg/tools/docker/container_image.go
+patching file cli/azd/pkg/tools/docker/docker.go
+patching file schemas/alpha/azure.yaml.json

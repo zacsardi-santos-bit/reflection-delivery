@@ -1,0 +1,23 @@
+{
+ "task": "modin-project-modin-1578",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden modin/__init__.py adds 'class Publisher' + 'execution_engine = Publisher(...)' and renames client->dask_client; F2P test_top_level_api_equality expects 'Publisher' and 'dask_client' in the module API"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

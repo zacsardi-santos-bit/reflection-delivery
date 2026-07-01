@@ -1,0 +1,48 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/.circleci/ci && npx jest src/pipelines/tests/pipeline-full-release.spec.ts src/pipelines/tests/pipeline-pull-requests.spec.ts src/pipelines/tests/pipeline-release-helm.spec.ts src/pipelines/tests/pipeline-release.spec.ts --no-coverage",
+  "test_files": [
+    ".circleci/ci/src/pipelines/tests/resources/full-release/release-4-2-0-alpha.yml",
+    ".circleci/ci/src/pipelines/tests/resources/full-release/release-4-2-0-dry-run.yml",
+    ".circleci/ci/src/pipelines/tests/resources/full-release/release-4-2-0-latest.yml",
+    ".circleci/ci/src/pipelines/tests/resources/full-release/release-4-2-0-no-dry-run.yml",
+    ".circleci/ci/src/pipelines/tests/resources/pull-requests/pull-requests-4-1-x.yml",
+    ".circleci/ci/src/pipelines/tests/resources/pull-requests/pull-requests-master.yml",
+    ".circleci/ci/src/pipelines/tests/resources/release-helm/release-helm-dry-run.yml",
+    ".circleci/ci/src/pipelines/tests/resources/release-helm/release-helm.yml",
+    ".circleci/ci/src/pipelines/tests/resources/release/release-4-2-0-alpha.yml",
+    ".circleci/ci/src/pipelines/tests/resources/release/release-4-2-0-dry-run.yml",
+    ".circleci/ci/src/pipelines/tests/resources/release/release-4-2-0-snapshot.yml"
+  ],
+  "num_test_files": 11,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-release-helm.spec.ts::Release helm charts tests should build release helm chart with dry run false",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-release-helm.spec.ts::Release helm charts tests should build release helm chart with dry run true",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-release.spec.ts::Release tests should build release config on 4.2.x with dry run true and graviteeio version 4.2.0",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-release.spec.ts::Release tests should build release config on 4.2.x with dry run false and graviteeio version 4.2.0",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-release.spec.ts::Release tests should build release config on 4.2.x with dry run false and graviteeio version 4.2.0-alpha.1",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-full-release.spec.ts::Full release tests should build full release config on 4.2.x with dry run true, is latest false and version graviteeioVersion",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-full-release.spec.ts::Full release tests should build full release config on 4.2.x with dry run false, is latest false and version graviteeioVersion",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-full-release.spec.ts::Full release tests should build full release config on 4.2.x with dry run false, is latest true and version graviteeioVersion",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch master with changedFiles [\"pom.xml\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch 4.1.x with changedFiles [\"pom.xml\"]"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-release.spec.ts::Release tests should throw error when branch is not a support branch",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-full-release.spec.ts::Full release tests should throw error when branch is not a support branch",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch mergify/bp/4.0.x/pr-1234 with changedFiles [\"pom.xml\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-run-e2e with changedFiles [\"pom.xml\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"pom.xml\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"helm\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"gravitee-apim-console-webui\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"gravitee-apim-portal-webui\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"gravitee-apim-definition\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"gravitee-apim-distribution\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"gravitee-apim-gateway\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"gravitee-apim-integration-tests\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"gravitee-apim-plugin\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"gravitee-apim-repository\"]",
+    "/workspace/repo/.circleci/ci/src/pipelines/tests/pipeline-pull-requests.spec.ts::Pull requests workflow tests should generate pull-requests config for branch APIM-1234-my-custom-branch with changedFiles [\"gravitee-apim-rest-api\"]"
+  ]
+}

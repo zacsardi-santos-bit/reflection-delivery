@@ -1,0 +1,258 @@
+patching file tokio-trace/test-log-support/tests/log_no_trace.rs
+patching file tokio-trace/tests/filter_caching_is_lexically_scoped.rs
+patching file tokio-trace/tests/filters_are_not_reevaluated_for_the_same_span.rs
+patching file tokio-trace/tests/filters_are_reevaluated_for_different_call_sites.rs
+patching file tokio-trace/tests/span.rs
+warning: /workspace/repo/tokio-trace/tokio-trace-core/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-trace/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+   Compiling tokio-trace v0.1.0 (/workspace/repo/tokio-trace)
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filters_are_not_reevaluated_for_the_same_span.rs:47:25
+   |
+47 |         let bob = alice.in_scope(|| {
+   |                   ------^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filter_caching_is_lexically_scoped.rs:23:38
+   |
+23 |         span!(Level::TRACE, "emily").in_scope(|| true)
+   |                                      ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filters_are_not_reevaluated_for_the_same_span.rs:49:17
+   |
+49 |             bob.in_scope(|| ());
+   |                 ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filter_caching_is_lexically_scoped.rs:27:38
+   |
+27 |         span!(Level::TRACE, "frank").in_scope(|| true)
+   |                                      ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filters_are_not_reevaluated_for_the_same_span.rs:57:15
+   |
+57 |         alice.in_scope(|| bob.in_scope(|| {}));
+   |               ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filters_are_reevaluated_for_different_call_sites.rs:50:28
+   |
+50 |         let dave = charlie.in_scope(|| {
+   |                    --------^^^^^^^^ method not found in `Span`
+
+error: trait `AssertSend` is never used
+   --> tokio-trace/src/span.rs:604:11
+    |
+604 |     trait AssertSend: Send {}
+    |           ^^^^^^^^^^
+    |
+note: the lint level is defined here
+   --> tokio-trace/src/lib.rs:3:24
+    |
+3   | #![cfg_attr(test, deny(warnings))]
+    |                        ^^^^^^^^
+    = note: `#[deny(dead_code)]` implied by `#[deny(warnings)]`
+
+error: trait `AssertSync` is never used
+   --> tokio-trace/src/span.rs:607:11
+    |
+607 |     trait AssertSync: Sync {}
+    |           ^^^^^^^^^^
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filters_are_reevaluated_for_different_call_sites.rs:52:18
+   |
+52 |             dave.in_scope(|| {});
+   |                  ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filters_are_reevaluated_for_different_call_sites.rs:60:17
+   |
+60 |         charlie.in_scope(|| dave.in_scope(|| {}));
+   |                 ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filters_are_reevaluated_for_different_call_sites.rs:70:17
+   |
+70 |         charlie.in_scope(|| {});
+   |                 ^^^^^^^^ method not found in `Span`
+
+For more information about this error, try `rustc --explain E0599`.
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filters_are_reevaluated_for_different_call_sites.rs:76:18
+   |
+76 |         charlie2.in_scope(|| span!(Level::TRACE, "dave").in_scope(|| {}));
+   |                  ^^^^^^^^ method not found in `Span`
+
+error: could not compile `tokio-trace` (lib test) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/filters_are_reevaluated_for_different_call_sites.rs:76:58
+   |
+76 |         charlie2.in_scope(|| span!(Level::TRACE, "dave").in_scope(|| {}));
+   |                                                          ^^^^^^^^ method not found in `Span`
+
+error: could not compile `tokio-trace` (test "filter_caching_is_lexically_scoped") due to 2 previous errors
+error: could not compile `tokio-trace` (test "filters_are_not_reevaluated_for_the_same_span") due to 3 previous errors
+error: could not compile `tokio-trace` (test "filters_are_reevaluated_for_different_call_sites") due to 6 previous errors
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/span.rs:70:13
+   |
+70 |         foo.in_scope(|| {});
+   |             ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/span.rs:75:43
+   |
+75 |     with_default(subscriber2, move || foo.in_scope(|| {}));
+   |                                           ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/span.rs:90:13
+   |
+90 |         foo.in_scope(|| {});
+   |             ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tokio-trace/tests/span.rs:98:17
+   |
+98 |             foo.in_scope(|| {});
+   |                 ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:115:14
+    |
+115 |         span.in_scope(|| {});
+    |              ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:132:36
+    |
+132 |         span!(Level::TRACE, "foo").in_scope(|| {
+    |         ---------------------------^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:153:36
+    |
+153 |         span!(Level::TRACE, "foo").in_scope(|| {
+    |         ---------------------------^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:156:36
+    |
+156 |         span!(Level::TRACE, "bar").in_scope(|| {});
+    |                                    ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:173:36
+    |
+173 |         span!(Level::TRACE, "foo").in_scope(|| {});
+    |                                    ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:223:13
+    |
+223 |         foo.in_scope(|| {});
+    |             ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:230:13
+    |
+230 |         foo.in_scope(|| {});
+    |             ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:249:13
+    |
+249 |         foo.in_scope(|| {});
+    |             ^^^^^^^^ method not found in `Span`
+
+error[E0061]: this method takes 1 argument but 0 arguments were supplied
+   --> tokio-trace/tests/span.rs:268:26
+    |
+268 |         let _enter = foo.enter();
+    |                          ^^^^^-- argument #1 is missing
+    |
+note: method defined here
+   --> /workspace/repo/tokio-trace/src/span.rs:265:12
+    |
+265 |     pub fn enter<F: FnOnce() -> T, T>(&self, f: F) -> T {
+    |            ^^^^^
+help: provide the argument
+    |
+268 |         let _enter = foo.enter(/* f */);
+    |                               ~~~~~~~~~
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:297:14
+    |
+297 |         span.in_scope(|| {});
+    |              ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:340:14
+    |
+340 |         span.in_scope(|| {
+    |         -----^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:387:13
+    |
+387 |         foo.in_scope(|| {});
+    |             ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:388:13
+    |
+388 |         bar.in_scope(|| {});
+    |             ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:415:14
+    |
+415 |         span.in_scope(|| {})
+    |              ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:443:14
+    |
+443 |         span.in_scope(|| {})
+    |              ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:493:36
+    |
+493 |         span!(Level::TRACE, "foo").in_scope(|| {
+    |         ---------------------------^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:530:36
+    |
+530 |         span!(Level::TRACE, "bar").in_scope(|| span!(Level::TRACE, parent: foo.id(), "baz"))
+    |                                    ^^^^^^^^ method not found in `Span`
+
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+   --> tokio-trace/tests/span.rs:565:36
+    |
+565 |         span!(Level::TRACE, "foo").in_scope(|| {
+    |         ---------------------------^^^^^^^^ method not found in `Span`
+
+Some errors have detailed explanations: E0061, E0599.
+For more information about an error, try `rustc --explain E0061`.
+error: could not compile `tokio-trace` (test "span") due to 22 previous errors
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --lib --tests` exited with code 101
+warning: /workspace/repo/tokio-trace/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-trace/test-log-support/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+   Compiling test_log_support v0.1.0 (/workspace/repo/tokio-trace/test-log-support)
+error[E0599]: no method named `in_scope` found for struct `Span` in the current scope
+  --> tests/log_no_trace.rs:47:9
+   |
+47 |     foo.in_scope(|| {
+   |     ----^^^^^^^^ method not found in `Span`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `test_log_support` (test "log_no_trace") due to 1 previous error
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics` exited with code 101
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=cargo exit_code=101

@@ -1,0 +1,23 @@
+{
+ "task": "zulip-zulip-28652",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden markdown.ts: 'export function render(raw_content: string): {content...}' returns new object; 'export function get_topic_links(topic: string): TopicLink[]' reads web_app_helpers.get_linkifier_map"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 40,
+  "shallow": true
+ }
+}

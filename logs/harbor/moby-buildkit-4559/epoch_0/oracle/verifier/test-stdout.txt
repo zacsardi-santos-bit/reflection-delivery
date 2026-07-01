@@ -1,0 +1,334 @@
+patching file solver/scheduler_test.go
+{"Time":"2026-06-29T15:27:24.142860742Z","Action":"start","Package":"github.com/moby/buildkit/solver"}
+{"Time":"2026-06-29T15:27:24.152005622Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCache"}
+{"Time":"2026-06-29T15:27:24.152063672Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCache","Output":"=== RUN   TestInMemoryCache\n"}
+{"Time":"2026-06-29T15:27:24.155027425Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCache","Output":"--- PASS: TestInMemoryCache (0.00s)\n"}
+{"Time":"2026-06-29T15:27:24.155064625Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCache","Elapsed":0}
+{"Time":"2026-06-29T15:27:24.155105055Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheSelector"}
+{"Time":"2026-06-29T15:27:24.155126595Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheSelector","Output":"=== RUN   TestInMemoryCacheSelector\n"}
+{"Time":"2026-06-29T15:27:24.155154585Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheSelector","Output":"--- PASS: TestInMemoryCacheSelector (0.00s)\n"}
+{"Time":"2026-06-29T15:27:24.155183905Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheSelector","Elapsed":0}
+{"Time":"2026-06-29T15:27:24.155208095Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheSelectorNested"}
+{"Time":"2026-06-29T15:27:24.155230425Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheSelectorNested","Output":"=== RUN   TestInMemoryCacheSelectorNested\n"}
+{"Time":"2026-06-29T15:27:24.155346625Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheSelectorNested","Output":"--- PASS: TestInMemoryCacheSelectorNested (0.00s)\n"}
+{"Time":"2026-06-29T15:27:24.155379765Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheSelectorNested","Elapsed":0}
+{"Time":"2026-06-29T15:27:24.155403075Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheReleaseParent"}
+{"Time":"2026-06-29T15:27:24.155424555Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheReleaseParent","Output":"=== RUN   TestInMemoryCacheReleaseParent\n"}
+{"Time":"2026-06-29T15:27:24.155486786Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheReleaseParent","Output":"--- PASS: TestInMemoryCacheReleaseParent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:24.155509946Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheReleaseParent","Elapsed":0}
+{"Time":"2026-06-29T15:27:24.155532476Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheRestoreOfflineDeletion"}
+{"Time":"2026-06-29T15:27:24.155555016Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheRestoreOfflineDeletion","Output":"=== RUN   TestInMemoryCacheRestoreOfflineDeletion\n"}
+{"Time":"2026-06-29T15:27:24.155584076Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheRestoreOfflineDeletion","Output":"--- PASS: TestInMemoryCacheRestoreOfflineDeletion (0.00s)\n"}
+{"Time":"2026-06-29T15:27:24.155610276Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestInMemoryCacheRestoreOfflineDeletion","Elapsed":0}
+{"Time":"2026-06-29T15:27:24.155633066Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCarryOverFromSublink"}
+{"Time":"2026-06-29T15:27:24.155654786Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCarryOverFromSublink","Output":"=== RUN   TestCarryOverFromSublink\n"}
+{"Time":"2026-06-29T15:27:24.155736166Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCarryOverFromSublink","Output":"--- PASS: TestCarryOverFromSublink (0.00s)\n"}
+{"Time":"2026-06-29T15:27:24.155787426Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCarryOverFromSublink","Elapsed":0}
+{"Time":"2026-06-29T15:27:24.155821336Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestIndexSimple"}
+{"Time":"2026-06-29T15:27:24.155843896Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIndexSimple","Output":"=== RUN   TestIndexSimple\n"}
+{"Time":"2026-06-29T15:27:24.155872606Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIndexSimple","Output":"--- PASS: TestIndexSimple (0.00s)\n"}
+{"Time":"2026-06-29T15:27:24.155895156Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestIndexSimple","Elapsed":0}
+{"Time":"2026-06-29T15:27:24.155919936Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestIndexMultiLevelSimple"}
+{"Time":"2026-06-29T15:27:24.155944336Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIndexMultiLevelSimple","Output":"=== RUN   TestIndexMultiLevelSimple\n"}
+{"Time":"2026-06-29T15:27:24.155972876Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIndexMultiLevelSimple","Output":"--- PASS: TestIndexMultiLevelSimple (0.00s)\n"}
+{"Time":"2026-06-29T15:27:24.155995086Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestIndexMultiLevelSimple","Elapsed":0}
+{"Time":"2026-06-29T15:27:24.156018156Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestIndexThreeLevels"}
+{"Time":"2026-06-29T15:27:24.156039686Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIndexThreeLevels","Output":"=== RUN   TestIndexThreeLevels\n"}
+{"Time":"2026-06-29T15:27:24.156067016Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIndexThreeLevels","Output":"--- PASS: TestIndexThreeLevels (0.00s)\n"}
+{"Time":"2026-06-29T15:27:24.156090726Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestIndexThreeLevels","Elapsed":0}
+{"Time":"2026-06-29T15:27:24.156119066Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelActiveGraph"}
+{"Time":"2026-06-29T15:27:24.156141206Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelActiveGraph","Output":"=== RUN   TestSingleLevelActiveGraph\n"}
+{"Time":"2026-06-29T15:27:24.156166436Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelActiveGraph","Output":"=== PAUSE TestSingleLevelActiveGraph\n"}
+{"Time":"2026-06-29T15:27:24.156188996Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelActiveGraph"}
+{"Time":"2026-06-29T15:27:24.156212546Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCache"}
+{"Time":"2026-06-29T15:27:24.156235516Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCache","Output":"=== RUN   TestSingleLevelCache\n"}
+{"Time":"2026-06-29T15:27:24.156264966Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCache","Output":"=== PAUSE TestSingleLevelCache\n"}
+{"Time":"2026-06-29T15:27:24.156287886Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCache"}
+{"Time":"2026-06-29T15:27:24.156311536Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCacheParallel"}
+{"Time":"2026-06-29T15:27:24.156333606Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCacheParallel","Output":"=== RUN   TestSingleLevelCacheParallel\n"}
+{"Time":"2026-06-29T15:27:24.156356777Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCacheParallel","Output":"=== PAUSE TestSingleLevelCacheParallel\n"}
+{"Time":"2026-06-29T15:27:24.156389757Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCacheParallel"}
+{"Time":"2026-06-29T15:27:24.156412827Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCacheParallel"}
+{"Time":"2026-06-29T15:27:24.156440857Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCacheParallel","Output":"=== RUN   TestMultiLevelCacheParallel\n"}
+{"Time":"2026-06-29T15:27:24.156466167Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCacheParallel","Output":"=== PAUSE TestMultiLevelCacheParallel\n"}
+{"Time":"2026-06-29T15:27:24.156488957Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCacheParallel"}
+{"Time":"2026-06-29T15:27:24.156513947Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache"}
+{"Time":"2026-06-29T15:27:24.156536497Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache","Output":"=== RUN   TestSingleCancelCache\n"}
+{"Time":"2026-06-29T15:27:24.156559717Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache","Output":"=== PAUSE TestSingleCancelCache\n"}
+{"Time":"2026-06-29T15:27:24.156582447Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache"}
+{"Time":"2026-06-29T15:27:24.156606107Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelExec"}
+{"Time":"2026-06-29T15:27:24.156628487Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelExec","Output":"=== RUN   TestSingleCancelExec\n"}
+{"Time":"2026-06-29T15:27:24.156651427Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelExec","Output":"=== PAUSE TestSingleCancelExec\n"}
+{"Time":"2026-06-29T15:27:24.156673447Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelExec"}
+{"Time":"2026-06-29T15:27:24.156696277Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelParallel"}
+{"Time":"2026-06-29T15:27:24.156719187Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelParallel","Output":"=== RUN   TestSingleCancelParallel\n"}
+{"Time":"2026-06-29T15:27:24.156742367Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelParallel","Output":"=== PAUSE TestSingleCancelParallel\n"}
+{"Time":"2026-06-29T15:27:24.156764567Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelParallel"}
+{"Time":"2026-06-29T15:27:24.156787407Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCalculation"}
+{"Time":"2026-06-29T15:27:24.156808787Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCalculation","Output":"=== RUN   TestMultiLevelCalculation\n"}
+{"Time":"2026-06-29T15:27:24.156831627Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCalculation","Output":"=== PAUSE TestMultiLevelCalculation\n"}
+{"Time":"2026-06-29T15:27:24.156853297Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCalculation"}
+{"Time":"2026-06-29T15:27:24.156875717Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestHugeGraph"}
+{"Time":"2026-06-29T15:27:24.156899087Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestHugeGraph","Output":"=== RUN   TestHugeGraph\n"}
+{"Time":"2026-06-29T15:27:24.156921827Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestHugeGraph","Output":"=== PAUSE TestHugeGraph\n"}
+{"Time":"2026-06-29T15:27:24.156943257Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestHugeGraph"}
+{"Time":"2026-06-29T15:27:24.156965537Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess"}
+{"Time":"2026-06-29T15:27:24.156987207Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess","Output":"=== RUN   TestOptimizedCacheAccess\n"}
+{"Time":"2026-06-29T15:27:24.157011147Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess","Output":"=== PAUSE TestOptimizedCacheAccess\n"}
+{"Time":"2026-06-29T15:27:24.157038407Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess"}
+{"Time":"2026-06-29T15:27:24.157060947Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess2"}
+{"Time":"2026-06-29T15:27:24.157082477Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess2","Output":"=== RUN   TestOptimizedCacheAccess2\n"}
+{"Time":"2026-06-29T15:27:24.157105207Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess2","Output":"=== PAUSE TestOptimizedCacheAccess2\n"}
+{"Time":"2026-06-29T15:27:24.157126717Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess2"}
+{"Time":"2026-06-29T15:27:24.157156047Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache"}
+{"Time":"2026-06-29T15:27:24.157177367Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache","Output":"=== RUN   TestSlowCache\n"}
+{"Time":"2026-06-29T15:27:24.157200377Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache","Output":"=== PAUSE TestSlowCache\n"}
+{"Time":"2026-06-29T15:27:24.157222037Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache"}
+{"Time":"2026-06-29T15:27:24.157244557Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestParallelInputs"}
+{"Time":"2026-06-29T15:27:24.157266477Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestParallelInputs","Output":"=== RUN   TestParallelInputs\n"}
+{"Time":"2026-06-29T15:27:24.157289088Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestParallelInputs","Output":"=== PAUSE TestParallelInputs\n"}
+{"Time":"2026-06-29T15:27:24.157310528Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestParallelInputs"}
+{"Time":"2026-06-29T15:27:24.157332958Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestErrorReturns"}
+{"Time":"2026-06-29T15:27:24.157354648Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestErrorReturns","Output":"=== RUN   TestErrorReturns\n"}
+{"Time":"2026-06-29T15:27:24.157387088Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestErrorReturns","Output":"=== PAUSE TestErrorReturns\n"}
+{"Time":"2026-06-29T15:27:24.157408728Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestErrorReturns"}
+{"Time":"2026-06-29T15:27:24.157431268Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestMultipleCacheSources"}
+{"Time":"2026-06-29T15:27:24.157453148Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultipleCacheSources","Output":"=== RUN   TestMultipleCacheSources\n"}
+{"Time":"2026-06-29T15:27:24.157476018Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultipleCacheSources","Output":"=== PAUSE TestMultipleCacheSources\n"}
+{"Time":"2026-06-29T15:27:24.157497358Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestMultipleCacheSources"}
+{"Time":"2026-06-29T15:27:24.157519768Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestRepeatBuildWithIgnoreCache"}
+{"Time":"2026-06-29T15:27:24.157541228Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestRepeatBuildWithIgnoreCache","Output":"=== RUN   TestRepeatBuildWithIgnoreCache\n"}
+{"Time":"2026-06-29T15:27:24.157564708Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestRepeatBuildWithIgnoreCache","Output":"=== PAUSE TestRepeatBuildWithIgnoreCache\n"}
+{"Time":"2026-06-29T15:27:24.157586748Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestRepeatBuildWithIgnoreCache"}
+{"Time":"2026-06-29T15:27:24.157609308Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestIgnoreCacheResumeFromSlowCache"}
+{"Time":"2026-06-29T15:27:24.157639088Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIgnoreCacheResumeFromSlowCache","Output":"=== RUN   TestIgnoreCacheResumeFromSlowCache\n"}
+{"Time":"2026-06-29T15:27:24.157662478Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIgnoreCacheResumeFromSlowCache","Output":"=== PAUSE TestIgnoreCacheResumeFromSlowCache\n"}
+{"Time":"2026-06-29T15:27:24.157684118Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestIgnoreCacheResumeFromSlowCache"}
+{"Time":"2026-06-29T15:27:24.157706618Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestParallelBuildsIgnoreCache"}
+{"Time":"2026-06-29T15:27:24.157728178Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestParallelBuildsIgnoreCache","Output":"=== RUN   TestParallelBuildsIgnoreCache\n"}
+{"Time":"2026-06-29T15:27:24.157750758Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestParallelBuildsIgnoreCache","Output":"=== PAUSE TestParallelBuildsIgnoreCache\n"}
+{"Time":"2026-06-29T15:27:24.157772398Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestParallelBuildsIgnoreCache"}
+{"Time":"2026-06-29T15:27:24.157794928Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSubbuild"}
+{"Time":"2026-06-29T15:27:24.157816238Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSubbuild","Output":"=== RUN   TestSubbuild\n"}
+{"Time":"2026-06-29T15:27:24.157838718Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSubbuild","Output":"=== PAUSE TestSubbuild\n"}
+{"Time":"2026-06-29T15:27:24.157860068Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSubbuild"}
+{"Time":"2026-06-29T15:27:24.157882508Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCacheWithSelector"}
+{"Time":"2026-06-29T15:27:24.157903828Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheWithSelector","Output":"=== RUN   TestCacheWithSelector\n"}
+{"Time":"2026-06-29T15:27:24.157926968Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheWithSelector","Output":"=== PAUSE TestCacheWithSelector\n"}
+{"Time":"2026-06-29T15:27:24.157948608Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestCacheWithSelector"}
+{"Time":"2026-06-29T15:27:24.157971118Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCacheSlowWithSelector"}
+{"Time":"2026-06-29T15:27:24.157992508Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheSlowWithSelector","Output":"=== RUN   TestCacheSlowWithSelector\n"}
+{"Time":"2026-06-29T15:27:24.158014938Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheSlowWithSelector","Output":"=== PAUSE TestCacheSlowWithSelector\n"}
+{"Time":"2026-06-29T15:27:24.158036408Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestCacheSlowWithSelector"}
+{"Time":"2026-06-29T15:27:24.158058808Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExporting"}
+{"Time":"2026-06-29T15:27:24.158080098Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExporting","Output":"=== RUN   TestCacheExporting\n"}
+{"Time":"2026-06-29T15:27:24.158102568Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExporting","Output":"=== PAUSE TestCacheExporting\n"}
+{"Time":"2026-06-29T15:27:24.158124078Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExporting"}
+{"Time":"2026-06-29T15:27:24.158148218Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingModeMin"}
+{"Time":"2026-06-29T15:27:24.158169628Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingModeMin","Output":"=== RUN   TestCacheExportingModeMin\n"}
+{"Time":"2026-06-29T15:27:24.158192198Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingModeMin","Output":"=== PAUSE TestCacheExportingModeMin\n"}
+{"Time":"2026-06-29T15:27:24.158219559Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingModeMin"}
+{"Time":"2026-06-29T15:27:24.158242149Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidAccess"}
+{"Time":"2026-06-29T15:27:24.158263359Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidAccess","Output":"=== RUN   TestSlowCacheAvoidAccess\n"}
+{"Time":"2026-06-29T15:27:24.158286669Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidAccess","Output":"=== PAUSE TestSlowCacheAvoidAccess\n"}
+{"Time":"2026-06-29T15:27:24.158308429Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidAccess"}
+{"Time":"2026-06-29T15:27:24.158331059Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidLoadOnCache"}
+{"Time":"2026-06-29T15:27:24.158352399Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidLoadOnCache","Output":"=== RUN   TestSlowCacheAvoidLoadOnCache\n"}
+{"Time":"2026-06-29T15:27:24.158385999Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidLoadOnCache","Output":"=== PAUSE TestSlowCacheAvoidLoadOnCache\n"}
+{"Time":"2026-06-29T15:27:24.158407719Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidLoadOnCache"}
+{"Time":"2026-06-29T15:27:24.158430229Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCacheMultipleMaps"}
+{"Time":"2026-06-29T15:27:24.158451449Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheMultipleMaps","Output":"=== RUN   TestCacheMultipleMaps\n"}
+{"Time":"2026-06-29T15:27:24.158474009Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheMultipleMaps","Output":"=== PAUSE TestCacheMultipleMaps\n"}
+{"Time":"2026-06-29T15:27:24.158496999Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestCacheMultipleMaps"}
+{"Time":"2026-06-29T15:27:24.158519939Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCacheInputMultipleMaps"}
+{"Time":"2026-06-29T15:27:24.158541509Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheInputMultipleMaps","Output":"=== RUN   TestCacheInputMultipleMaps\n"}
+{"Time":"2026-06-29T15:27:24.158564139Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheInputMultipleMaps","Output":"=== PAUSE TestCacheInputMultipleMaps\n"}
+{"Time":"2026-06-29T15:27:24.158585569Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestCacheInputMultipleMaps"}
+{"Time":"2026-06-29T15:27:24.158608159Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingPartialSelector"}
+{"Time":"2026-06-29T15:27:24.158630839Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingPartialSelector","Output":"=== RUN   TestCacheExportingPartialSelector\n"}
+{"Time":"2026-06-29T15:27:24.158653649Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingPartialSelector","Output":"=== PAUSE TestCacheExportingPartialSelector\n"}
+{"Time":"2026-06-29T15:27:24.158675229Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingPartialSelector"}
+{"Time":"2026-06-29T15:27:24.158697839Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingMergedKey"}
+{"Time":"2026-06-29T15:27:24.158719309Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingMergedKey","Output":"=== RUN   TestCacheExportingMergedKey\n"}
+{"Time":"2026-06-29T15:27:24.158741999Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingMergedKey","Output":"=== PAUSE TestCacheExportingMergedKey\n"}
+{"Time":"2026-06-29T15:27:24.158763569Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingMergedKey"}
+{"Time":"2026-06-29T15:27:24.158792169Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesLookup"}
+{"Time":"2026-06-29T15:27:24.158813439Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesLookup","Output":"=== RUN   TestMergedEdgesLookup\n"}
+{"Time":"2026-06-29T15:27:24.158835939Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesLookup","Output":"=== PAUSE TestMergedEdgesLookup\n"}
+{"Time":"2026-06-29T15:27:24.158874749Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesLookup"}
+{"Time":"2026-06-29T15:27:24.158898409Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycle"}
+{"Time":"2026-06-29T15:27:24.158919919Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycle","Output":"=== RUN   TestMergedEdgesCycle\n"}
+{"Time":"2026-06-29T15:27:24.158942719Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycle","Output":"=== PAUSE TestMergedEdgesCycle\n"}
+{"Time":"2026-06-29T15:27:24.158964429Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycle"}
+{"Time":"2026-06-29T15:27:24.158986839Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycleMultipleOwners"}
+{"Time":"2026-06-29T15:27:24.159008249Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycleMultipleOwners","Output":"=== RUN   TestMergedEdgesCycleMultipleOwners\n"}
+{"Time":"2026-06-29T15:27:24.159031889Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycleMultipleOwners","Output":"=== PAUSE TestMergedEdgesCycleMultipleOwners\n"}
+{"Time":"2026-06-29T15:27:24.159054619Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycleMultipleOwners"}
+{"Time":"2026-06-29T15:27:24.159077299Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestCacheLoadError"}
+{"Time":"2026-06-29T15:27:24.159098969Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheLoadError","Output":"=== RUN   TestCacheLoadError\n"}
+{"Time":"2026-06-29T15:27:24.159122389Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheLoadError","Output":"=== PAUSE TestCacheLoadError\n"}
+{"Time":"2026-06-29T15:27:24.15914401Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestCacheLoadError"}
+{"Time":"2026-06-29T15:27:24.15916712Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestInputRequestDeadlock"}
+{"Time":"2026-06-29T15:27:24.15918927Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInputRequestDeadlock","Output":"=== RUN   TestInputRequestDeadlock\n"}
+{"Time":"2026-06-29T15:27:24.15921201Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInputRequestDeadlock","Output":"=== PAUSE TestInputRequestDeadlock\n"}
+{"Time":"2026-06-29T15:27:24.15923352Z","Action":"pause","Package":"github.com/moby/buildkit/solver","Test":"TestInputRequestDeadlock"}
+{"Time":"2026-06-29T15:27:24.15925587Z","Action":"run","Package":"github.com/moby/buildkit/solver","Test":"TestUnknownBuildID"}
+{"Time":"2026-06-29T15:27:24.15927713Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestUnknownBuildID","Output":"=== RUN   TestUnknownBuildID\n"}
+{"Time":"2026-06-29T15:27:30.157756003Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestUnknownBuildID","Output":"--- PASS: TestUnknownBuildID (6.00s)\n"}
+{"Time":"2026-06-29T15:27:30.157820283Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestUnknownBuildID","Elapsed":6}
+{"Time":"2026-06-29T15:27:30.157846043Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelActiveGraph"}
+{"Time":"2026-06-29T15:27:30.157868024Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelActiveGraph","Output":"=== CONT  TestSingleLevelActiveGraph\n"}
+{"Time":"2026-06-29T15:27:30.157902974Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestParallelBuildsIgnoreCache"}
+{"Time":"2026-06-29T15:27:30.157931254Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestParallelBuildsIgnoreCache","Output":"=== CONT  TestParallelBuildsIgnoreCache\n"}
+{"Time":"2026-06-29T15:27:30.157960464Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestCacheMultipleMaps"}
+{"Time":"2026-06-29T15:27:30.157981964Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheMultipleMaps","Output":"=== CONT  TestCacheMultipleMaps\n"}
+{"Time":"2026-06-29T15:27:30.158005494Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidLoadOnCache"}
+{"Time":"2026-06-29T15:27:30.158027734Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidLoadOnCache","Output":"=== CONT  TestSlowCacheAvoidLoadOnCache\n"}
+{"Time":"2026-06-29T15:27:30.158051484Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestInputRequestDeadlock"}
+{"Time":"2026-06-29T15:27:30.158073234Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInputRequestDeadlock","Output":"=== CONT  TestInputRequestDeadlock\n"}
+{"Time":"2026-06-29T15:27:30.158096734Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestCacheWithSelector"}
+{"Time":"2026-06-29T15:27:30.158119004Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheWithSelector","Output":"=== CONT  TestCacheWithSelector\n"}
+{"Time":"2026-06-29T15:27:30.158142264Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestCacheLoadError"}
+{"Time":"2026-06-29T15:27:30.158163874Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheLoadError","Output":"=== CONT  TestCacheLoadError\n"}
+{"Time":"2026-06-29T15:27:30.158186654Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingModeMin"}
+{"Time":"2026-06-29T15:27:30.158208104Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingModeMin","Output":"=== CONT  TestCacheExportingModeMin\n"}
+{"Time":"2026-06-29T15:27:30.158234674Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycleMultipleOwners"}
+{"Time":"2026-06-29T15:27:30.158257184Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycleMultipleOwners","Output":"=== CONT  TestMergedEdgesCycleMultipleOwners\n"}
+{"Time":"2026-06-29T15:27:30.158281404Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSubbuild"}
+{"Time":"2026-06-29T15:27:30.158304134Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSubbuild","Output":"=== CONT  TestSubbuild\n"}
+{"Time":"2026-06-29T15:27:30.158339634Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExporting"}
+{"Time":"2026-06-29T15:27:30.158374614Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExporting","Output":"=== CONT  TestCacheExporting\n"}
+{"Time":"2026-06-29T15:27:30.158406064Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidAccess"}
+{"Time":"2026-06-29T15:27:30.158427974Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidAccess","Output":"=== CONT  TestSlowCacheAvoidAccess\n"}
+{"Time":"2026-06-29T15:27:30.158451144Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestIgnoreCacheResumeFromSlowCache"}
+{"Time":"2026-06-29T15:27:30.158473204Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIgnoreCacheResumeFromSlowCache","Output":"=== CONT  TestIgnoreCacheResumeFromSlowCache\n"}
+{"Time":"2026-06-29T15:27:30.158594364Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestRepeatBuildWithIgnoreCache"}
+{"Time":"2026-06-29T15:27:30.158661704Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestRepeatBuildWithIgnoreCache","Output":"=== CONT  TestRepeatBuildWithIgnoreCache\n"}
+{"Time":"2026-06-29T15:27:30.159540285Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycle"}
+{"Time":"2026-06-29T15:27:30.159575545Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycle","Output":"=== CONT  TestMergedEdgesCycle\n"}
+{"Time":"2026-06-29T15:27:30.160181376Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesLookup"}
+{"Time":"2026-06-29T15:27:30.160208936Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesLookup","Output":"=== CONT  TestMergedEdgesLookup\n"}
+{"Time":"2026-06-29T15:27:30.160505296Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingMergedKey"}
+{"Time":"2026-06-29T15:27:30.160569456Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingMergedKey","Output":"=== CONT  TestCacheExportingMergedKey\n"}
+{"Time":"2026-06-29T15:27:30.160595206Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingPartialSelector"}
+{"Time":"2026-06-29T15:27:30.160618096Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingPartialSelector","Output":"=== CONT  TestCacheExportingPartialSelector\n"}
+{"Time":"2026-06-29T15:27:30.163108509Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSubbuild","Output":"--- PASS: TestSubbuild (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.163149239Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSubbuild","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.163174929Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestCacheInputMultipleMaps"}
+{"Time":"2026-06-29T15:27:30.163199229Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheInputMultipleMaps","Output":"=== CONT  TestCacheInputMultipleMaps\n"}
+{"Time":"2026-06-29T15:27:30.16359781Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestInputRequestDeadlock","Output":"--- PASS: TestInputRequestDeadlock (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.16398638Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestInputRequestDeadlock","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.16401434Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestMultipleCacheSources"}
+{"Time":"2026-06-29T15:27:30.16403746Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultipleCacheSources","Output":"=== CONT  TestMultipleCacheSources\n"}
+{"Time":"2026-06-29T15:27:30.16406116Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultipleCacheSources","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference qoq66khgvqy4x67jzqxirtgng\"\n"}
+{"Time":"2026-06-29T15:27:30.16408602Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestRepeatBuildWithIgnoreCache","Output":"--- PASS: TestRepeatBuildWithIgnoreCache (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.1641146Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestRepeatBuildWithIgnoreCache","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.16413809Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestErrorReturns"}
+{"Time":"2026-06-29T15:27:30.16416194Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestErrorReturns","Output":"=== CONT  TestErrorReturns\n"}
+{"Time":"2026-06-29T15:27:30.1641853Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestErrorReturns","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference n9syr5hjdebn0nkga9sjp31qg\"\n"}
+{"Time":"2026-06-29T15:27:30.16421053Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExporting","Output":"--- PASS: TestCacheExporting (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.16424327Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExporting","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.16426577Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestParallelInputs"}
+{"Time":"2026-06-29T15:27:30.16428827Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestParallelInputs","Output":"=== CONT  TestParallelInputs\n"}
+{"Time":"2026-06-29T15:27:30.16431093Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestParallelInputs","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference 0pyl9xeje78w9cfa2ymsxgucw\"\n"}
+{"Time":"2026-06-29T15:27:30.16433582Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestParallelBuildsIgnoreCache","Output":"--- PASS: TestParallelBuildsIgnoreCache (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.16436647Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestParallelBuildsIgnoreCache","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.164392731Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache"}
+{"Time":"2026-06-29T15:27:30.164414951Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache","Output":"=== CONT  TestSlowCache\n"}
+{"Time":"2026-06-29T15:27:30.164437271Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference uljtji0k77z4n6i37ef8dpfrv\"\n"}
+{"Time":"2026-06-29T15:27:30.164467231Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference th6yvx18mwxbsu4nfrz781bs9\"\n"}
+{"Time":"2026-06-29T15:27:30.164490711Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheWithSelector","Output":"--- PASS: TestCacheWithSelector (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.164513741Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCacheWithSelector","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.164536111Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess2"}
+{"Time":"2026-06-29T15:27:30.164558761Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess2","Output":"=== CONT  TestOptimizedCacheAccess2\n"}
+{"Time":"2026-06-29T15:27:30.164587911Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestIgnoreCacheResumeFromSlowCache","Output":"--- PASS: TestIgnoreCacheResumeFromSlowCache (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.164611061Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestIgnoreCacheResumeFromSlowCache","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.164635871Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess"}
+{"Time":"2026-06-29T15:27:30.164658051Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess","Output":"=== CONT  TestOptimizedCacheAccess\n"}
+{"Time":"2026-06-29T15:27:30.164971021Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference th6yvx18mwxbsu4nfrz781bs9\"\n"}
+{"Time":"2026-06-29T15:27:30.165010781Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference j6wde0q01wid4bphkpcuv3p5i\"\n"}
+{"Time":"2026-06-29T15:27:30.165040741Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheInputMultipleMaps","Output":"--- PASS: TestCacheInputMultipleMaps (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.165063971Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCacheInputMultipleMaps","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.165096041Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestHugeGraph"}
+{"Time":"2026-06-29T15:27:30.165119921Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestHugeGraph","Output":"=== CONT  TestHugeGraph\n"}
+{"Time":"2026-06-29T15:27:30.166433183Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestHugeGraph","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference lsv36ppqlebiatir7xfmjtzr6\"\n"}
+{"Time":"2026-06-29T15:27:30.166503183Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheMultipleMaps","Output":"--- PASS: TestCacheMultipleMaps (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.166531113Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCacheMultipleMaps","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.166553833Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCalculation"}
+{"Time":"2026-06-29T15:27:30.166576863Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCalculation","Output":"=== CONT  TestMultiLevelCalculation\n"}
+{"Time":"2026-06-29T15:27:30.166701383Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestErrorReturns","Output":"--- PASS: TestErrorReturns (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.166725993Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestErrorReturns","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.166747983Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelParallel"}
+{"Time":"2026-06-29T15:27:30.166769733Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelParallel","Output":"=== CONT  TestSingleCancelParallel\n"}
+{"Time":"2026-06-29T15:27:30.166797253Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestParallelInputs","Output":"--- PASS: TestParallelInputs (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.166821823Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestParallelInputs","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.166844483Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelExec"}
+{"Time":"2026-06-29T15:27:30.166866133Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelExec","Output":"=== CONT  TestSingleCancelExec\n"}
+{"Time":"2026-06-29T15:27:30.167810874Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingMergedKey","Output":"--- PASS: TestCacheExportingMergedKey (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.167869824Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingMergedKey","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.167895874Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache"}
+{"Time":"2026-06-29T15:27:30.167919624Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache","Output":"=== CONT  TestSingleCancelCache\n"}
+{"Time":"2026-06-29T15:27:30.167943934Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference xy4n2xe1ig5zrlczjioqyblw2\"\n"}
+{"Time":"2026-06-29T15:27:30.168108164Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference th6yvx18mwxbsu4nfrz781bs9\"\n"}
+{"Time":"2026-06-29T15:27:30.168140675Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference luiixv8dzjybq98xfiby3cu00\"\n"}
+{"Time":"2026-06-29T15:27:30.168167545Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache","Output":"--- PASS: TestSingleCancelCache (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.168198445Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference th6yvx18mwxbsu4nfrz781bs9\"\n"}
+{"Time":"2026-06-29T15:27:30.168222275Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelCache","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.168245725Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelExec","Output":"--- PASS: TestSingleCancelExec (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.168268125Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelExec","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference emkexlv315yw39mmq9xu0acr9\"\n"}
+{"Time":"2026-06-29T15:27:30.168291245Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelExec","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.168313125Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCache"}
+{"Time":"2026-06-29T15:27:30.168336835Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCache","Output":"=== CONT  TestSingleLevelCache\n"}
+{"Time":"2026-06-29T15:27:30.168367445Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestCacheSlowWithSelector"}
+{"Time":"2026-06-29T15:27:30.168394145Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheSlowWithSelector","Output":"=== CONT  TestCacheSlowWithSelector\n"}
+{"Time":"2026-06-29T15:27:30.168423115Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCacheParallel"}
+{"Time":"2026-06-29T15:27:30.168445175Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCacheParallel","Output":"=== CONT  TestMultiLevelCacheParallel\n"}
+{"Time":"2026-06-29T15:27:30.168469195Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess","Output":"--- PASS: TestOptimizedCacheAccess (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.168493485Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.168516455Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingPartialSelector","Output":"--- PASS: TestCacheExportingPartialSelector (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.168541155Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingPartialSelector","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.168565145Z","Action":"cont","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCacheParallel"}
+{"Time":"2026-06-29T15:27:30.168587925Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCacheParallel","Output":"=== CONT  TestSingleLevelCacheParallel\n"}
+{"Time":"2026-06-29T15:27:30.168612465Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidLoadOnCache","Output":"--- PASS: TestSlowCacheAvoidLoadOnCache (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.169738356Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidLoadOnCache","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.169774356Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache","Output":"--- PASS: TestSlowCache (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.169994577Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference emkexlv315yw39mmq9xu0acr9\"\n"}
+{"Time":"2026-06-29T15:27:30.170030597Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference jvuxoswmk4ol1i7omv12v7p2u\"\n"}
+{"Time":"2026-06-29T15:27:30.170137337Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCache","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.170195237Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCache","Output":"--- PASS: TestSingleLevelCache (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.170227467Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCache","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.170250177Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCacheParallel","Output":"--- PASS: TestSingleLevelCacheParallel (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.170279967Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelCacheParallel","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.170303707Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultipleCacheSources","Output":"--- PASS: TestMultipleCacheSources (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.170595337Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestMultipleCacheSources","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.170629147Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingModeMin","Output":"--- PASS: TestCacheExportingModeMin (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.170654507Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCacheExportingModeMin","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.170678027Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheLoadError","Output":"--- PASS: TestCacheLoadError (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.171127048Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCacheLoadError","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.171159628Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCacheParallel","Output":"--- PASS: TestMultiLevelCacheParallel (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.171656538Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCacheParallel","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.171689798Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestCacheSlowWithSelector","Output":"--- PASS: TestCacheSlowWithSelector (0.00s)\n"}
+{"Time":"2026-06-29T15:27:30.171715128Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestCacheSlowWithSelector","Elapsed":0}
+{"Time":"2026-06-29T15:27:30.171738528Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess2","Output":"--- PASS: TestOptimizedCacheAccess2 (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.171769978Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess2","Output":"time=\"2026-06-29T15:27:30Z\" level=error msg=\"releasing already released reference kdhfbxgmm52uimpevzxgr2yw4\"\n"}
+{"Time":"2026-06-29T15:27:30.171875259Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestOptimizedCacheAccess2","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.171903139Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCalculation","Output":"--- PASS: TestMultiLevelCalculation (0.01s)\n"}
+{"Time":"2026-06-29T15:27:30.192634141Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestMultiLevelCalculation","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:30.192682121Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesLookup","Output":"--- PASS: TestMergedEdgesLookup (0.03s)\n"}
+{"Time":"2026-06-29T15:27:30.192971491Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesLookup","Elapsed":0.03}
+{"Time":"2026-06-29T15:27:30.193028291Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycle","Output":"--- PASS: TestMergedEdgesCycle (0.03s)\n"}
+{"Time":"2026-06-29T15:27:30.202964012Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycle","Elapsed":0.03}
+{"Time":"2026-06-29T15:27:30.203012442Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycleMultipleOwners","Output":"--- PASS: TestMergedEdgesCycleMultipleOwners (0.04s)\n"}
+{"Time":"2026-06-29T15:27:30.259697393Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestMergedEdgesCycleMultipleOwners","Elapsed":0.04}
+{"Time":"2026-06-29T15:27:30.259760153Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidAccess","Output":"--- PASS: TestSlowCacheAvoidAccess (0.10s)\n"}
+{"Time":"2026-06-29T15:27:30.261735665Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSlowCacheAvoidAccess","Elapsed":0.1}
+{"Time":"2026-06-29T15:27:30.261792685Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelActiveGraph","Output":"--- PASS: TestSingleLevelActiveGraph (0.10s)\n"}
+{"Time":"2026-06-29T15:27:30.291767157Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSingleLevelActiveGraph","Elapsed":0.1}
+{"Time":"2026-06-29T15:27:30.291812417Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestHugeGraph","Output":"--- PASS: TestHugeGraph (0.13s)\n"}
+{"Time":"2026-06-29T15:27:30.368118649Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestHugeGraph","Elapsed":0.13}
+{"Time":"2026-06-29T15:27:30.368185959Z","Action":"output","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelParallel","Output":"--- PASS: TestSingleCancelParallel (0.20s)\n"}
+{"Time":"2026-06-29T15:27:30.368211369Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Test":"TestSingleCancelParallel","Elapsed":0.2}
+{"Time":"2026-06-29T15:27:30.368234739Z","Action":"output","Package":"github.com/moby/buildkit/solver","Output":"PASS\n"}
+{"Time":"2026-06-29T15:27:30.36937746Z","Action":"output","Package":"github.com/moby/buildkit/solver","Output":"ok  \tgithub.com/moby/buildkit/solver\t6.226s\n"}
+{"Time":"2026-06-29T15:27:30.36945607Z","Action":"pass","Package":"github.com/moby/buildkit/solver","Elapsed":6.227}
+reward=1 graded=44 found=44 failed=0 parsed=44 framework=go exit_code=0

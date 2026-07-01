@@ -1,0 +1,12 @@
+patching file biome.json
+patching file src/activitypub/activity.ts
+patching file src/activitypub/actor.ts
+patching file src/activitypub/index.ts
+patching file src/activitypub/object.ts
+patching file src/activitypub/outbox.ts
+patching file src/activitypub/uri.ts
+patching file src/app.ts
+patching file src/http/api/webhooks.ts
+patching file src/publishing/__snapshots__/service/create.json
+patching file src/publishing/helpers.ts
+patching file src/publishing/service.ts

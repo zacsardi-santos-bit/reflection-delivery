@@ -1,0 +1,29 @@
+patching file examples/sample-cmd/main_test.go
+patching file pkg/gofr/cmd/terminal/output_test.go
+patching file pkg/gofr/cmd/terminal/printers_test.go
+patching file pkg/gofr/cmd/terminal/progress_test.go
+patching file pkg/gofr/cmd/terminal/spinner_test.go
+patching file pkg/gofr/cmd_test.go
+gofr.dev/pkg/gofr/cmd/terminal: no non-test Go files in /workspace/repo/pkg/gofr/cmd/terminal
+# gofr.dev/pkg/gofr/cmd/terminal [gofr.dev/pkg/gofr/cmd/terminal.test]
+pkg/gofr/cmd/terminal/output_test.go:14:7: undefined: New
+pkg/gofr/cmd/terminal/output_test.go:23:32: undefined: Out
+pkg/gofr/cmd/terminal/output_test.go:28:10: undefined: Out
+pkg/gofr/cmd/terminal/output_test.go:31:32: undefined: Out
+pkg/gofr/cmd/terminal/printers_test.go:13:12: undefined: Out
+pkg/gofr/cmd/terminal/printers_test.go:25:12: undefined: Out
+pkg/gofr/cmd/terminal/printers_test.go:35:12: undefined: Out
+pkg/gofr/cmd/terminal/progress_test.go:16:13: undefined: Out
+pkg/gofr/cmd/terminal/progress_test.go:16:17: undefined: terminal
+pkg/gofr/cmd/terminal/progress_test.go:17:9: undefined: ProgressBar
+pkg/gofr/cmd/terminal/progress_test.go:17:9: too many errors
+{"Time":"2026-06-29T15:20:06.199990603Z","Action":"start","Package":"gofr.dev/examples/sample-cmd"}
+{"Time":"2026-06-29T15:20:06.200105083Z","Action":"output","Package":"gofr.dev/examples/sample-cmd","Output":"FAIL\tgofr.dev/examples/sample-cmd [build failed]\n"}
+{"Time":"2026-06-29T15:20:06.200151953Z","Action":"fail","Package":"gofr.dev/examples/sample-cmd","Elapsed":0}
+{"Time":"2026-06-29T15:20:06.200159673Z","Action":"start","Package":"gofr.dev/pkg/gofr"}
+{"Time":"2026-06-29T15:20:06.200265543Z","Action":"output","Package":"gofr.dev/pkg/gofr","Output":"FAIL\tgofr.dev/pkg/gofr [build failed]\n"}
+{"Time":"2026-06-29T15:20:06.200299723Z","Action":"fail","Package":"gofr.dev/pkg/gofr","Elapsed":0}
+{"Time":"2026-06-29T15:20:06.200302833Z","Action":"start","Package":"gofr.dev/pkg/gofr/cmd/terminal"}
+{"Time":"2026-06-29T15:20:06.200521622Z","Action":"output","Package":"gofr.dev/pkg/gofr/cmd/terminal","Output":"FAIL\tgofr.dev/pkg/gofr/cmd/terminal [build failed]\n"}
+{"Time":"2026-06-29T15:20:06.200625592Z","Action":"fail","Package":"gofr.dev/pkg/gofr/cmd/terminal","Elapsed":0}
+reward=0 graded=242 found=0 failed=0 parsed=3 framework=go exit_code=1

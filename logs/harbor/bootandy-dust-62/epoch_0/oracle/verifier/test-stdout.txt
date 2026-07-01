@@ -1,0 +1,41 @@
+patching file src/tests.rs
+   Compiling du-dust v0.4.4 (/workspace/repo)
+warning: unnecessary parentheses around block return value
+  --> src/utils/mod.rs:43:5
+   |
+43 |     (path_child.starts_with(path_parent) && !path_parent.starts_with(path_child))
+   |     ^                                                                           ^
+   |
+   = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+   |
+43 -     (path_child.starts_with(path_parent) && !path_parent.starts_with(path_child))
+43 +     path_child.starts_with(path_parent) && !path_parent.starts_with(path_child)
+   |
+
+warning: `du-dust` (bin "dust" test) generated 1 warning (run `cargo fix --bin "dust" --tests` to apply 1 suggestion)
+    Finished test [unoptimized + debuginfo] target(s) in 2.12s
+────────────
+ Nextest run ID 8b9f492b-c765-40ef-85a8-827db71a710e with nextest profile: default
+    Starting 15 tests across 1 binary (6 tests skipped)
+        PASS [   0.103s] ( 1/15) du-dust::bin/dust utils::tests::test_is_a_parent_of_root
+        PASS [   0.106s] ( 2/15) du-dust::bin/dust utils::tests::test_simplify_dir_substring_names
+        PASS [   0.107s] ( 3/15) du-dust::bin/dust display::tests::test_human_readable_number
+        PASS [   0.107s] ( 4/15) du-dust::bin/dust utils::tests::test_is_a_parent_of
+        PASS [   0.109s] ( 5/15) du-dust::bin/dust utils::tests::test_simplify_dir_rm_subdir
+        PASS [   0.109s] ( 6/15) du-dust::bin/dust utils::tests::test_simplify_dir_duplicates
+        PASS [   0.110s] ( 7/15) du-dust::bin/dust utils::tests::test_simplify_dir
+        PASS [   0.111s] ( 8/15) du-dust::bin/dust utils::tests::test_simplify_dir_dots
+        PASS [   0.113s] ( 9/15) du-dust::bin/dust utils::tests::test_simplify_dir_rm_subdir_and_not_substrings
+        PASS [   1.868s] (10/15) du-dust::bin/dust tests::test_reverse_flag
+        PASS [   1.898s] (11/15) du-dust::bin/dust tests::test_soft_sym_link
+        PASS [   1.928s] (12/15) du-dust::bin/dust tests::test_d_flag_works
+        PASS [   1.989s] (13/15) du-dust::bin/dust tests::test_apparent_size
+        PASS [   2.016s] (14/15) du-dust::bin/dust tests::test_recursive_sym_link
+        PASS [   2.129s] (15/15) du-dust::bin/dust tests::test_hard_sym_link
+────────────
+     Summary [   2.131s] 15 tests run: 15 passed, 6 skipped
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

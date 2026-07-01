@@ -1,0 +1,253 @@
+patching file processing/src/test/java/org/apache/druid/collections/CircularListTest.java
+patching file server/src/test/java/org/apache/druid/server/coordinator/duty/KillUnusedSegmentsTest.java
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Druid                                                              [pom]
+[INFO] druid-processing                                                   [jar]
+[INFO] druid-aws-common                                                   [jar]
+[INFO] druid-gcp-common                                                   [jar]
+[INFO] druid-server                                                       [jar]
+[INFO] 
+[INFO] -----------------------< org.apache.druid:druid >-----------------------
+[INFO] Building Druid 31.0.0-SNAPSHOT                                     [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- checkstyle:3.0.0:check (validate) @ druid ---
+[INFO] Starting audit...
+Audit done.
+[INFO] 
+[INFO] >>> pmd:3.16.0:check (validate) > :pmd @ druid >>>
+[INFO] 
+[INFO] --- pmd:3.16.0:pmd (pmd) @ druid ---
+[INFO] 
+[INFO] <<< pmd:3.16.0:check (validate) < :pmd @ druid <<<
+[INFO] 
+[INFO] 
+[INFO] --- pmd:3.16.0:check (validate) @ druid ---
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (enforce-maven-version) @ druid ---
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (enforce-java-version) @ druid ---
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (default-cli) @ druid ---
+[INFO] 
+[INFO] --- git-commit-id:4.9.10:revision (default) @ druid ---
+[INFO] 
+[INFO] --- jacoco:0.8.7:prepare-agent (prepare-agent) @ druid ---
+[INFO] jacocoArgLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7-runtime.jar=destfile=/workspace/repo/target/jacoco.exec,excludes=org/apache/druid/cli/Cli*:org/apache/druid/cli/GuiceRunnable.class:org/apache/druid/cli/*JettyServerInitializer*:org/apache/druid/server/initialization/*Module*:org/apache/druid/server/initialization/jetty/*Module*:org/apache/druid/guice/http/*:org/apache/druid/cli/UpdateTables*:org/apache/druid/math/expr/antlr/Expr*:org/apache/druid/**/generated/*Benchmark*:org/apache/druid/data/input/influx/InfluxLineProtocol*:org/apache/druid/benchmark/**/*:org/apache/druid/**/*Benchmark*:org/apache/druid/testing/**/*:org/apache/druid/server/coordination/ServerManagerForQueryErrorTest.class:org/apache/druid/guice/SleepModule.class:org/apache/druid/guice/CustomNodeRoleClientModule.class:org/apache/druid/cli/CustomNodeRoleCommandCreator.class:org/apache/druid/cli/QueryRetryTestCommandCreator.class:org/apache/druid/query/TruncatedResponseContextException.class:org/apache/druid/common/aws/AWSCredentials*:com/fasterxml/jackson/databind/*
+[INFO] 
+[INFO] --- remote-resources:1.7.0:process (process-resource-bundles) @ druid ---
+[INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[INFO] Copying 3 resources from 1 bundle.
+[INFO] 
+[INFO] --- forbiddenapis:3.2:check (compile) @ druid ---
+[INFO] Skipping execution for packaging "pom"
+[INFO] 
+[INFO] --- forbiddenapis:3.2:testCheck (testCompile) @ druid ---
+[INFO] Skipping execution for packaging "pom"
+[INFO] 
+[INFO] --- animal-sniffer:1.23:check (check-java-api) @ druid ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] 
+[INFO] -----------------< org.apache.druid:druid-processing >------------------
+[INFO] Building druid-processing 31.0.0-SNAPSHOT                          [2/5]
+[INFO]   from processing/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- checkstyle:3.0.0:check (validate) @ druid-processing ---
+[INFO] Starting audit...
+Audit done.
+[INFO] 
+[INFO] >>> pmd:3.16.0:check (validate) > :pmd @ druid-processing >>>
+[INFO] 
+[INFO] --- pmd:3.16.0:pmd (pmd) @ druid-processing ---
+[INFO] PMD version: 6.42.0
+[WARNING] There are 1 PMD processing errors:
+[WARNING] /workspace/repo/processing/src/main/java/org/apache/druid/query/aggregation/JavaScriptAggregatorFactory.java: PMDException: Error while parsing /workspace/repo/processing/src/main/java/org/apache/druid/query/aggregation/JavaScriptAggregatorFactory.java
+[INFO] 
+[INFO] <<< pmd:3.16.0:check (validate) < :pmd @ druid-processing <<<
+[INFO] 
+[INFO] 
+[INFO] --- pmd:3.16.0:check (validate) @ druid-processing ---
+[INFO] PMD version: 6.42.0
+[INFO] 
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (enforce-maven-version) @ druid-processing ---
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (enforce-java-version) @ druid-processing ---
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (default-cli) @ druid-processing ---
+[INFO] 
+[INFO] --- git-commit-id:4.9.10:revision (default) @ druid-processing ---
+[INFO] 
+[INFO] --- jacoco:0.8.7:prepare-agent (prepare-agent) @ druid-processing ---
+[INFO] jacocoArgLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7-runtime.jar=destfile=/workspace/repo/processing/target/jacoco.exec,excludes=org/apache/druid/java/util/emitter/core/LoggingEmitter.class:org/apache/druid/java/util/common/logger/Logger.class
+[INFO] 
+[INFO] --- antlr4:4.5.3:antlr4 (default) @ druid-processing ---
+[INFO] No grammars to process
+[INFO] ANTLR 4: Processing source directory /workspace/repo/processing/src/main/antlr4
+[INFO] 
+[INFO] --- remote-resources:1.7.0:process (process-resource-bundles) @ druid-processing ---
+[INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[INFO] Copying 3 resources from 1 bundle.
+[INFO] 
+[INFO] --- dependency:3.1.1:unpack-dependencies (copy-sigar-lib-to-resources) @ druid-processing ---
+[INFO] org.hyperic:sigar-dist:zip:1.6.5.132 already exists in destination.
+[INFO] 
+[INFO] --- resources:3.2.0:resources (default-resources) @ druid-processing ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 23 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ druid-processing ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- forbiddenapis:3.2:check (compile) @ druid-processing ---
+[INFO] Scanning for classes to check...
+[INFO] Reading bundled API signatures: jdk-unsafe-1.8
+[INFO] Reading bundled API signatures: jdk-system-out
+[INFO] Reading API signatures: /workspace/repo/codestyle/joda-time-forbidden-apis.txt
+[INFO] Reading API signatures: /workspace/repo/codestyle/druid-forbidden-apis.txt
+[INFO] Loading classes to check...
+[INFO] Scanning classes for violations...
+[INFO] Scanned 4488 class file(s) for forbidden API invocations (in 4.04s), 0 error(s).
+[INFO] 
+[INFO] --- resources:3.2.0:testResources (default-testResources) @ druid-processing ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 68 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ druid-processing ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 1072 source files with javac [debug release 8] to target/test-classes
+[INFO] /workspace/repo/processing/src/test/java/org/apache/druid/segment/filter/AndFilterTest.java: Some input files use or override a deprecated API.
+[INFO] /workspace/repo/processing/src/test/java/org/apache/druid/segment/filter/AndFilterTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] /workspace/repo/processing/src/test/java/org/apache/druid/segment/data/BitmapCreationBenchmark.java: Some input files use unchecked or unsafe operations.
+[INFO] /workspace/repo/processing/src/test/java/org/apache/druid/segment/data/BitmapCreationBenchmark.java: Recompile with -Xlint:unchecked for details.
+[INFO] -------------------------------------------------------------
+[WARNING] COMPILATION WARNING : 
+[INFO] -------------------------------------------------------------
+[WARNING] /workspace/repo/processing/src/test/java/org/apache/druid/java/util/common/guava/SkippingSequenceTest.java:[113,17] 'yield' may become a restricted identifier in a future release
+  (to invoke a method called yield, qualify the yield with a receiver or type name)
+[WARNING] /workspace/repo/processing/src/test/java/org/apache/druid/common/guava/ComplexSequenceTest.java:[74,13] 'yield' may become a restricted identifier in a future release
+  (to invoke a method called yield, qualify the yield with a receiver or type name)
+[WARNING] /workspace/repo/processing/src/test/java/org/apache/druid/common/guava/CombiningSequenceTest.java:[297,15] 'yield' may become a restricted identifier in a future release
+  (to invoke a method called yield, qualify the yield with a receiver or type name)
+[WARNING] /workspace/repo/processing/src/test/java/org/apache/druid/java/util/common/guava/ConcatSequenceTest.java:[266,13] 'yield' may become a restricted identifier in a future release
+  (to invoke a method called yield, qualify the yield with a receiver or type name)
+[WARNING] /workspace/repo/processing/src/test/java/org/apache/druid/query/aggregation/AggregationTestHelper.java:[760,19] 'yield' may become a restricted identifier in a future release
+  (to invoke a method called yield, qualify the yield with a receiver or type name)
+[WARNING] /workspace/repo/processing/src/test/java/org/apache/druid/java/util/common/guava/LimitedSequenceTest.java:[107,17] 'yield' may become a restricted identifier in a future release
+  (to invoke a method called yield, qualify the yield with a receiver or type name)
+[WARNING] /workspace/repo/processing/src/test/java/org/apache/druid/java/util/common/guava/SequenceTestHelper.java:[68,15] 'yield' may become a restricted identifier in a future release
+  (to invoke a method called yield, qualify the yield with a receiver or type name)
+[INFO] 7 warnings 
+[INFO] -------------------------------------------------------------
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[40,11] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[40,51] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[56,11] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[56,52] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[73,11] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[73,51] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[102,11] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[102,51] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[112,11] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[112,51] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[129,11] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[129,51] cannot find symbol
+  symbol:   class CircularList
+  location: class org.apache.druid.collections.CircularListTest
+[INFO] 12 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Druid 31.0.0-SNAPSHOT:
+[INFO] 
+[INFO] Druid .............................................. SUCCESS [ 10.496 s]
+[INFO] druid-processing ................................... FAILURE [ 46.156 s]
+[INFO] druid-aws-common ................................... SKIPPED
+[INFO] druid-gcp-common ................................... SKIPPED
+[INFO] druid-server ....................................... SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  57.509 s
+[INFO] Finished at: 2026-06-29T15:33:49Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:testCompile (default-testCompile) on project druid-processing: Compilation failure: Compilation failure: 
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[40,11] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[40,51] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[56,11] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[56,52] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[73,11] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[73,51] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[102,11] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[102,51] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[112,11] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[112,51] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[129,11] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] /workspace/repo/processing/src/test/java/org/apache/druid/collections/CircularListTest.java:[129,51] cannot find symbol
+[ERROR]   symbol:   class CircularList
+[ERROR]   location: class org.apache.druid.collections.CircularListTest
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :druid-processing
+reward=0 graded=34 found=0 failed=0 parsed=10 framework=maven exit_code=1

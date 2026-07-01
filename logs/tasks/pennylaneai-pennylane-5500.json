@@ -1,0 +1,23 @@
+{
+ "task": "pennylaneai-pennylane-5500",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'class Qubitization(Operation)' in pennylane/templates/subroutines/qubitization.py with compute_decomposition returning [AmplitudeEmbedding, Select, adjoint(AmplitudeEmbedding), Reflection] and _positive_coeffs_hamiltonian; F2P=33 tests check positive-coeff hamiltonian, QPE operator defi"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 25,
+  "shallow": true
+ }
+}

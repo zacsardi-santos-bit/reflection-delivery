@@ -1,0 +1,13 @@
+patching file app/components/announcement_banner/expanded_announcement_banner.tsx
+patching file app/constants/license.ts
+patching file app/constants/screens.ts
+patching file app/constants/view.ts
+patching file app/products/calls/components/floating_call_container.tsx
+patching file app/screens/channel/channel.tsx
+patching file app/screens/channel/channel_feature_checks.ts
+patching file app/screens/channel/header/channel_banner/channel_banner.tsx
+patching file app/screens/channel/header/channel_banner/index.ts
+patching file app/screens/channel/header/header.tsx
+patching file app/screens/channel/index.tsx
+patching file app/utils/general/index.ts
+patching file assets/base/i18n/en.json

@@ -1,0 +1,10 @@
+patching file internal/codegen/golang/postgresql_type_test.go
+{"Time":"2026-06-29T15:14:50.734459672Z","Action":"start","Package":"github.com/sqlc-dev/sqlc/internal/codegen/golang"}
+{"Time":"2026-06-29T15:14:50.757345037Z","Action":"run","Package":"github.com/sqlc-dev/sqlc/internal/codegen/golang","Test":"TestPostgresTypeVarbitPGXV4"}
+{"Time":"2026-06-29T15:14:50.757495865Z","Action":"output","Package":"github.com/sqlc-dev/sqlc/internal/codegen/golang","Test":"TestPostgresTypeVarbitPGXV4","Output":"=== RUN   TestPostgresTypeVarbitPGXV4\n"}
+{"Time":"2026-06-29T15:14:50.757591801Z","Action":"output","Package":"github.com/sqlc-dev/sqlc/internal/codegen/golang","Test":"TestPostgresTypeVarbitPGXV4","Output":"--- PASS: TestPostgresTypeVarbitPGXV4 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:50.757626993Z","Action":"pass","Package":"github.com/sqlc-dev/sqlc/internal/codegen/golang","Test":"TestPostgresTypeVarbitPGXV4","Elapsed":0}
+{"Time":"2026-06-29T15:14:50.757664295Z","Action":"output","Package":"github.com/sqlc-dev/sqlc/internal/codegen/golang","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:50.758594877Z","Action":"output","Package":"github.com/sqlc-dev/sqlc/internal/codegen/golang","Output":"ok  \tgithub.com/sqlc-dev/sqlc/internal/codegen/golang\t0.024s\n"}
+{"Time":"2026-06-29T15:14:50.758698613Z","Action":"pass","Package":"github.com/sqlc-dev/sqlc/internal/codegen/golang","Elapsed":0.024}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

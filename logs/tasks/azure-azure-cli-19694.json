@@ -1,0 +1,23 @@
+{
+ "task": "azure-azure-cli-19694",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `def check_is_msi_cluster`, `get_detach_acr`, `get_client_id_from_identity_or_sp_profile`, `process_attach_detach_acr`; F2P=4 pytest tests assert real behavior incl. `ensure_acr.assert_has_calls([...])`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 49,
+  "shallow": true
+ }
+}

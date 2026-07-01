@@ -1,0 +1,91 @@
+patching file tokio-util/tests/future.rs
+   Compiling tokio-util v0.7.15 (/workspace/repo/tokio-util)
+error[E0432]: unresolved import `tokio_util::future`
+ --> tokio-util/tests/future.rs:9:18
+  |
+9 | use tokio_util::{future::FutureExt, sync::CancellationToken};
+  |                  ^^^^^^ could not find `future` in `tokio_util`
+
+error[E0599]: no method named `with_cancellation_token` found for struct `std::future::Ready` in the current scope
+  --> tokio-util/tests/future.rs:35:42
+   |
+35 |     let ready_with_token_fut = ready_fut.with_cancellation_token(&token);
+   |                                          ^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Ready<()>`
+
+error[E0599]: no method named `with_cancellation_token` found for struct `std::future::Pending` in the current scope
+  --> tokio-util/tests/future.rs:53:46
+   |
+53 |     let pending_with_token_fut = pending_fut.with_cancellation_token(&token);
+   |                                              ^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Pending<()>`
+
+error[E0599]: no method named `with_cancellation_token` found for struct `std::future::Ready` in the current scope
+  --> tokio-util/tests/future.rs:72:46
+   |
+72 |     let ready_fut_with_token_fut = ready_fut.with_cancellation_token(&token);
+   |                                              ^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Ready<()>`
+
+error[E0599]: no method named `with_cancellation_token` found for struct `std::future::Pending` in the current scope
+  --> tokio-util/tests/future.rs:91:46
+   |
+91 |     let pending_with_token_fut = pending_fut.with_cancellation_token(&token);
+   |                                              ^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Pending<()>`
+
+error[E0599]: no method named `with_cancellation_token` found for struct `std::future::Pending` in the current scope
+   --> tokio-util/tests/future.rs:110:46
+    |
+110 |     let pending_with_token_fut = pending_fut.with_cancellation_token(&token);
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Pending<()>`
+
+error[E0599]: no method named `with_cancellation_token` found for struct `ReadyOnTheSecondPollFuture` in the current scope
+   --> tokio-util/tests/future.rs:132:53
+    |
+12  | struct ReadyOnTheSecondPollFuture {
+    | --------------------------------- method `with_cancellation_token` not found for this struct
+...
+132 |     let fut = ReadyOnTheSecondPollFuture::default().with_cancellation_token(&token);
+    |                                                     ^^^^^^^^^^^^^^^^^^^^^^^ method not found in `ReadyOnTheSecondPollFuture`
+
+error[E0599]: no method named `with_cancellation_token_owned` found for struct `std::future::Ready` in the current scope
+   --> tokio-util/tests/future.rs:156:42
+    |
+156 |     let ready_with_token_fut = ready_fut.with_cancellation_token_owned(token);
+    |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Ready<()>`
+
+error[E0599]: no method named `with_cancellation_token_owned` found for struct `std::future::Pending` in the current scope
+   --> tokio-util/tests/future.rs:174:46
+    |
+174 |     let pending_with_token_fut = pending_fut.with_cancellation_token_owned(token);
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Pending<()>`
+
+error[E0599]: no method named `with_cancellation_token_owned` found for struct `std::future::Ready` in the current scope
+   --> tokio-util/tests/future.rs:193:46
+    |
+193 |     let ready_fut_with_token_fut = ready_fut.with_cancellation_token_owned(token);
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Ready<()>`
+
+error[E0599]: no method named `with_cancellation_token_owned` found for struct `std::future::Pending` in the current scope
+   --> tokio-util/tests/future.rs:212:46
+    |
+212 |     let pending_with_token_fut = pending_fut.with_cancellation_token_owned(token);
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Pending<()>`
+
+error[E0599]: no method named `with_cancellation_token_owned` found for struct `std::future::Pending` in the current scope
+   --> tokio-util/tests/future.rs:231:46
+    |
+231 |     let pending_with_token_fut = pending_fut.with_cancellation_token_owned(token.clone());
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Pending<()>`
+
+error[E0599]: no method named `with_cancellation_token` found for struct `ReadyOnTheSecondPollFuture` in the current scope
+   --> tokio-util/tests/future.rs:253:53
+    |
+12  | struct ReadyOnTheSecondPollFuture {
+    | --------------------------------- method `with_cancellation_token` not found for this struct
+...
+253 |     let fut = ReadyOnTheSecondPollFuture::default().with_cancellation_token(&token);
+    |                                                     ^^^^^^^^^^^^^^^^^^^^^^^ method not found in `ReadyOnTheSecondPollFuture`
+
+Some errors have detailed explanations: E0432, E0599.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `tokio-util` (test "future") due to 13 previous errors
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package tokio-util --test future` exited with code 101
+reward=0 graded=12 found=0 failed=0 parsed=0 framework=cargo exit_code=101

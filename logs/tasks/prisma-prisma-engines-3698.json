@@ -1,0 +1,23 @@
+{
+ "task": "prisma-prisma-engines-3698",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden lib.rs: 'pub enum TableProperties { IsPartition, HasSubclass }' replacing '-is_partition: bool +properties: BitFlags<TableProperties>'; test.patch updates sqlite describer expectations '-is_partition: false +properties: BitFlags<TableProperties>{ bits: 0b0 }'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

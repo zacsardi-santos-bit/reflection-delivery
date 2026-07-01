@@ -1,0 +1,21 @@
+{
+  "test_framework": "go",
+  "test_command": "(mongod --fork --logpath /var/log/mongod.log --dbpath /data/db > /dev/null 2>&1 || true) && sleep 2 && go test -json -tags integration ./test/integration -count=1 -run TestRESTAPI",
+  "test_files": [
+    "test/helper/helper.go",
+    "test/integration/restapi_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/yorkie-team/yorkie/test/integration::TestRESTAPI/document_api_access_control_test",
+    "github.com/yorkie-team/yorkie/test/integration::TestRESTAPI"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/yorkie-team/yorkie/test/integration::TestRESTAPI/document_retrieval_test",
+    "github.com/yorkie-team/yorkie/test/integration::TestRESTAPI/bulk_document_retrieval_test",
+    "github.com/yorkie-team/yorkie/test/integration::TestRESTAPI/list_documents_test",
+    "github.com/yorkie-team/yorkie/test/integration::TestRESTAPI/search_documents_test",
+    "github.com/yorkie-team/yorkie/test/integration::TestRESTAPI/concurrent_document_retrieval_test"
+  ]
+}

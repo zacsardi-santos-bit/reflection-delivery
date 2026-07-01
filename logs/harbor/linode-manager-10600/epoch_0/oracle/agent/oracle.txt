@@ -1,0 +1,8 @@
+patching file packages/manager/.changeset/pr-10600-upcoming-features-1728398610756.md
+patching file packages/manager/.eslintrc.cjs
+patching file packages/manager/src/layouts/OAuth.tsx
+patching file packages/manager/src/pkce.ts
+patching file packages/manager/src/session.ts
+patching file packages/manager/src/store/authentication/authentication.helpers.ts
+patching file packages/manager/src/store/authentication/authentication.reducer.ts
+patching file packages/manager/src/utilities/storage.ts

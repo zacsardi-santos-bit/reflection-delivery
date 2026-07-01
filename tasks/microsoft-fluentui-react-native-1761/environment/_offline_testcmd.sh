@@ -1,0 +1,1 @@
+cd /workspace/repo/packages/components/Notification && /workspace/repo/node_modules/.bin/jest --watchAll=false

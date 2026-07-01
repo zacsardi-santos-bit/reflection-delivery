@@ -1,0 +1,1676 @@
+patching file crates/hir-ty/src/consteval/tests.rs
+patching file crates/hir-ty/src/consteval/tests/intrinsics.rs
+patching file crates/hir-ty/src/mir/eval/tests.rs
+patching file crates/hir-ty/src/object_safety/tests.rs
+patching file crates/hir-ty/src/tests/regression.rs
+patching file crates/hir-ty/src/tests/traits.rs
+patching file crates/ide/src/hover/tests.rs
+warning: unexpected `cfg` condition name: `ignore_fragment`
+   --> crates/hir-def/src/item_tree.rs:526:40
+    |
+526 |                               #[cfg_attr(ignore_fragment, $generic_params)]
+    |                                          ^^^^^^^^^^^^^^^
+...
+605 | / mod_items! {
+606 | |     Use in uses -> ast::Use,
+607 | |     ExternCrate in extern_crates -> ast::ExternCrate,
+608 | |     ExternBlock in extern_blocks -> ast::ExternBlock,
+...   |
+622 | |     Macro2 in macro_defs -> ast::MacroDef,
+623 | | }
+    | |_- in this macro invocation
+    |
+    = help: expected names are: `docsrs`, `feature`, and `test` and 31 more
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(ignore_fragment)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(ignore_fragment)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+    = note: this warning originates in the macro `mod_items` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ignore_fragment`
+   --> crates/hir-def/src/item_tree.rs:539:40
+    |
+539 |                               #[cfg_attr(ignore_fragment, $generic_params)]
+    |                                          ^^^^^^^^^^^^^^^
+...
+605 | / mod_items! {
+606 | |     Use in uses -> ast::Use,
+607 | |     ExternCrate in extern_crates -> ast::ExternCrate,
+608 | |     ExternBlock in extern_blocks -> ast::ExternBlock,
+...   |
+622 | |     Macro2 in macro_defs -> ast::MacroDef,
+623 | | }
+    | |_- in this macro invocation
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(ignore_fragment)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(ignore_fragment)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: this warning originates in the macro `mod_items` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ignore_fragment`
+   --> crates/hir-def/src/item_tree.rs:560:28
+    |
+560 |                   #[cfg_attr(ignore_fragment, $generic_params)]
+    |                              ^^^^^^^^^^^^^^^
+...
+605 | / mod_items! {
+606 | |     Use in uses -> ast::Use,
+607 | |     ExternCrate in extern_crates -> ast::ExternCrate,
+608 | |     ExternBlock in extern_blocks -> ast::ExternBlock,
+...   |
+622 | |     Macro2 in macro_defs -> ast::MacroDef,
+623 | | }
+    | |_- in this macro invocation
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(ignore_fragment)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(ignore_fragment)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: this warning originates in the macro `mod_items` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ignore_fragment`
+   --> crates/hir-def/src/item_tree.rs:507:32
+    |
+507 |                       #[cfg_attr(ignore_fragment, $generic_params)]
+    |                                  ^^^^^^^^^^^^^^^
+...
+605 | / mod_items! {
+606 | |     Use in uses -> ast::Use,
+607 | |     ExternCrate in extern_crates -> ast::ExternCrate,
+608 | |     ExternBlock in extern_blocks -> ast::ExternBlock,
+...   |
+622 | |     Macro2 in macro_defs -> ast::MacroDef,
+623 | | }
+    | |_- in this macro invocation
+    |
+    = help: consider using a Cargo feature instead
+    = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+             [lints.rust]
+             unexpected_cfgs = { level = "warn", check-cfg = ['cfg(ignore_fragment)'] }
+    = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(ignore_fragment)");` to the top of the `build.rs`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: this warning originates in the macro `mod_items` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: eliding a lifetime that's named elsewhere is confusing
+   --> crates/hir-def/src/attr.rs:120:75
+    |
+120 |     pub fn by_key<'attrs>(&'attrs self, key: &'attrs Symbol) -> AttrQuery<'_> {
+    |                            ------             ------                      ^^ the same lifetime is elided here
+    |                            |                  |
+    |                            |                  the lifetime is named here
+    |                            the lifetime is named here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: consistently use `'attrs`
+    |
+120 -     pub fn by_key<'attrs>(&'attrs self, key: &'attrs Symbol) -> AttrQuery<'_> {
+120 +     pub fn by_key<'attrs>(&'attrs self, key: &'attrs Symbol) -> AttrQuery<'attrs> {
+    |
+
+warning: eliding a lifetime that's named elsewhere is confusing
+   --> crates/hir-def/src/attr.rs:597:72
+    |
+597 |     pub fn find_string_value_in_tt(self, key: &'attr Symbol) -> Option<&str> {
+    |                                                -----                   ^^^^ the same lifetime is elided here
+    |                                                |
+    |                                                the lifetime is named here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'attr`
+    |
+597 |     pub fn find_string_value_in_tt(self, key: &'attr Symbol) -> Option<&'attr str> {
+    |                                                                         +++++
+
+warning: eliding a lifetime that's named elsewhere is confusing
+   --> crates/hir-def/src/body.rs:200:57
+    |
+198 |         &'a self,
+    |          -- the lifetime is named here
+199 |         db: &'a dyn DefDatabase,
+    |              -- the lifetime is named here
+200 |     ) -> impl Iterator<Item = (BlockId, Arc<DefMap>)> + '_ {
+    |                                                         ^^ the same lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'a`
+    |
+200 -     ) -> impl Iterator<Item = (BlockId, Arc<DefMap>)> + '_ {
+200 +     ) -> impl Iterator<Item = (BlockId, Arc<DefMap>)> + 'a {
+    |
+
+warning: `hir-def` (lib) generated 7 warnings (run `cargo fix --lib -p hir-def` to apply 3 suggestions)
+warning: unused `ControlFlow` that must be used
+    --> crates/hir-ty/src/lib.rs:1027:5
+     |
+1027 |     value.visit_with(&mut collector, DebruijnIndex::INNERMOST);
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_must_use)]` (part of `#[warn(unused)]`) on by default
+help: use `let _ = ...` to ignore the resulting value
+     |
+1027 |     let _ = value.visit_with(&mut collector, DebruijnIndex::INNERMOST);
+     |     +++++++
+
+warning: unused `ControlFlow` that must be used
+   --> crates/hir-ty/src/chalk_db.rs:147:9
+    |
+147 | /         if fps.is_empty() {
+148 | |             debug!("Unrestricted search for {:?} impls...", trait_);
+149 | |             self.for_trait_impls(trait_, self_ty_fp, |impls| {
+150 | |                 result.extend(impls.for_trait(trait_).map(id_to_chalk));
+...   |
+161 | |             })
+162 | |         };
+    | |_________^
+    |
+help: use `let _ = ...` to ignore the resulting value
+    |
+147 |         let _ = if fps.is_empty() {
+    |         +++++++
+
+warning: unused `ControlFlow` that must be used
+    --> crates/hir-ty/src/infer.rs:1040:13
+     |
+1040 |             ty.visit_with(collector.as_dyn(), DebruijnIndex::INNERMOST);
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+help: use `let _ = ...` to ignore the resulting value
+     |
+1040 |             let _ = ty.visit_with(collector.as_dyn(), DebruijnIndex::INNERMOST);
+     |             +++++++
+
+warning: unused `ControlFlow` that must be used
+   --> crates/hir-ty/src/method_resolution.rs:592:5
+    |
+592 | /     iterate_method_candidates_dyn(
+593 | |         ty,
+594 | |         db,
+595 | |         env,
+...   |
+607 | |         },
+608 | |     );
+    | |_____^
+    |
+help: use `let _ = ...` to ignore the resulting value
+    |
+592 |     let _ = iterate_method_candidates_dyn(
+    |     +++++++
+
+warning: `hir-ty` (lib) generated 4 warnings
+warning: unused `ControlFlow` that must be used
+    --> crates/hir/src/lib.rs:4943:9
+     |
+4943 | /         method_resolution::iterate_method_candidates_dyn(
+4944 | |             &canonical,
+4945 | |             db,
+4946 | |             environment,
+...    |
+4951 | |             &mut |_adj, id, _| callback(id),
+4952 | |         );
+     | |_________^
+     |
+     = note: `#[warn(unused_must_use)]` (part of `#[warn(unused)]`) on by default
+help: use `let _ = ...` to ignore the resulting value
+     |
+4943 |         let _ = method_resolution::iterate_method_candidates_dyn(
+     |         +++++++
+
+warning: unused `ControlFlow` that must be used
+    --> crates/hir/src/lib.rs:5002:9
+     |
+5002 | /         method_resolution::iterate_path_candidates(
+5003 | |             &canonical,
+5004 | |             db,
+5005 | |             environment,
+...    |
+5009 | |             callback,
+5010 | |         );
+     | |_________^
+     |
+help: use `let _ = ...` to ignore the resulting value
+     |
+5002 |         let _ = method_resolution::iterate_path_candidates(
+     |         +++++++
+
+warning: unused `ControlFlow` that must be used
+   --> crates/hir/src/attrs.rs:254:5
+    |
+254 | /     method_resolution::iterate_path_candidates(
+255 | |         &canonical,
+256 | |         db,
+257 | |         environment,
+...   |
+272 | |         },
+273 | |     );
+    | |_____^
+    |
+help: use `let _ = ...` to ignore the resulting value
+    |
+254 |     let _ = method_resolution::iterate_path_candidates(
+    |     +++++++
+
+warning: `hir` (lib) generated 3 warnings
+warning: value assigned to `modified` is never read
+   --> crates/ide-db/src/imports/merge_imports.rs:386:29
+    |
+386 | /                             modified |=
+387 | |                                 recursive_normalize(&sub_sub_tree, NormalizationStyle::Default)
+388 | |                                     .is_some();
+    | |______________________________________________^ this value is reassigned later and never used
+...
+410 |                   modified = true;
+    |                   --------------- `modified` is overwritten here before the previous value is read
+    |
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+warning: `ide-db` (lib) generated 1 warning
+warning: unnecessary parentheses around closure body
+   --> crates/ide-completion/src/completions/fn_param.rs:198:28
+    |
+198 |     Some((move |label: &_| (format!("{leading}{label}{trailing}")), param.text_range()))
+    |                            ^                                     ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+198 -     Some((move |label: &_| (format!("{leading}{label}{trailing}")), param.text_range()))
+198 +     Some((move |label: &_| format!("{leading}{label}{trailing}"), param.text_range()))
+    |
+
+warning: `ide-completion` (lib) generated 1 warning (run `cargo fix --lib -p ide-completion` to apply 1 suggestion)
+   Compiling ide v0.0.0 (/workspace/repo/crates/ide)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.27s
+────────────
+ Nextest run ID 0f0cc728-e438-48ae-b0d0-f90ecb35cf3e with nextest profile: default
+    Starting 1046 tests across 1 binary
+        PASS [   0.081s] (   1/1046) ide analysis_is_send
+        PASS [   0.118s] (   2/1046) ide annotations::fn_references::tests::test_skip_tests
+        PASS [   0.120s] (   3/1046) ide annotations::fn_references::tests::test_find_trait_methods
+        PASS [   0.120s] (   4/1046) ide annotations::tests::test_no_annotations_outside_module_tree
+        PASS [   0.121s] (   5/1046) ide annotations::tests::test_no_annotations_macro_struct_def
+        PASS [   0.134s] (   6/1046) ide annotations::fn_references::tests::test_find_all_methods
+        PASS [   0.139s] (   7/1046) ide annotations::tests::runnable_annotation
+        PASS [   0.145s] (   8/1046) ide annotations::tests::test_annotations_appear_above_whole_item_when_configured_to_do_so
+        PASS [   0.152s] (   9/1046) ide annotations::tests::test_annotations
+        PASS [   0.155s] (  10/1046) ide call_hierarchy::tests::test_call_hierarchy_in_macros_outgoing
+        PASS [   0.157s] (  11/1046) ide call_hierarchy::tests::test_call_hierarchy_in_different_fn
+        PASS [   0.160s] (  12/1046) ide annotations::tests::const_annotations
+        PASS [   0.161s] (  13/1046) ide call_hierarchy::tests::test_call_hierarchy_in_macros_incoming
+        PASS [   0.161s] (  14/1046) ide annotations::tests::struct_references_annotations
+        PASS [   0.162s] (  15/1046) ide call_hierarchy::tests::test_call_hierarchy_in_different_files
+        PASS [   0.162s] (  16/1046) ide annotations::tests::method_annotations
+        PASS [   0.163s] (  17/1046) ide annotations::tests::struct_and_trait_impls_annotations
+        PASS [   0.173s] (  18/1046) ide call_hierarchy::tests::test_call_hierarchy_in_macros_incoming_different_files
+        PASS [   0.063s] (  19/1046) ide doc_links::intra_doc_links::tests::test_name
+        PASS [   0.143s] (  20/1046) ide call_hierarchy::tests::test_call_hierarchy_in_macros_outgoing_different_files
+        PASS [   0.142s] (  21/1046) ide call_hierarchy::tests::test_call_hierarchy_in_same_fn
+        PASS [   0.140s] (  22/1046) ide call_hierarchy::tests::test_call_hierarchy_in_tests_mod
+        PASS [   0.142s] (  23/1046) ide call_hierarchy::tests::test_call_hierarchy_incoming_outgoing
+        PASS [   0.142s] (  24/1046) ide call_hierarchy::tests::test_call_hierarchy_issue_5103
+        PASS [   0.132s] (  25/1046) ide call_hierarchy::tests::test_call_hierarchy_on_ref
+        PASS [   0.138s] (  26/1046) ide call_hierarchy::tests::test_call_hierarchy_on_def
+        PASS [   0.127s] (  27/1046) ide call_hierarchy::tests::test_call_hierarchy_outgoing_in_different_files
+        PASS [   0.135s] (  28/1046) ide call_hierarchy::tests::test_call_hierarchy_outgoing
+        PASS [   0.127s] (  29/1046) ide doc_links::tests::doc_links_field_via_self
+        PASS [   0.128s] (  30/1046) ide doc_links::tests::doc_links_items_simple
+        PASS [   0.128s] (  31/1046) ide doc_links::tests::doc_links_trait_items
+        PASS [   0.133s] (  32/1046) ide doc_links::tests::doc_links_field
+        PASS [   0.131s] (  33/1046) ide doc_links::tests::doc_links_inherent_impl_items
+        PASS [   0.140s] (  34/1046) ide call_hierarchy::tests::test_trait_method_call_hierarchy
+        PASS [   0.127s] (  35/1046) ide doc_links::tests::doc_links_tuple_field_via_self
+        PASS [   0.142s] (  36/1046) ide doc_links::tests::doc_links_trait_impl_items
+        PASS [   0.114s] (  37/1046) ide doc_links::tests::external_docs_doc_builtin_type
+        PASS [   0.111s] (  38/1046) ide doc_links::tests::external_docs_doc_url_crate
+        PASS [   0.113s] (  39/1046) ide doc_links::tests::external_docs_doc_url_fn
+        PASS [   0.109s] (  40/1046) ide doc_links::tests::external_docs_doc_url_std_crate
+        PASS [   0.111s] (  41/1046) ide doc_links::tests::external_docs_doc_url_struct_field
+        PASS [   0.114s] (  42/1046) ide doc_links::tests::external_docs_doc_url_struct
+        PASS [   0.129s] (  43/1046) ide doc_links::tests::external_docs_doc_url_impl_assoc
+        PASS [   0.108s] (  44/1046) ide doc_links::tests::external_docs_doc_url_windows_backslash_path
+        PASS [   0.113s] (  45/1046) ide doc_links::tests::external_docs_doc_url_trait_assoc
+        PASS [   0.132s] (  46/1046) ide doc_links::tests::external_docs_doc_url_impl_trait_assoc
+        PASS [   0.108s] (  47/1046) ide doc_links::tests::external_docs_doc_url_windows_slash_path
+        PASS [   0.108s] (  48/1046) ide doc_links::tests::external_docs_module
+        PASS [   0.108s] (  49/1046) ide doc_links::tests::external_docs_trait
+        PASS [   0.111s] (  50/1046) ide doc_links::tests::rewrite_html_root_url
+        PASS [   0.122s] (  51/1046) ide doc_links::tests::rewrite_intra_doc_link
+        PASS [   0.116s] (  52/1046) ide doc_links::tests::rewrite_on_field
+        PASS [   0.131s] (  53/1046) ide doc_links::tests::external_docs_reexport_order
+        PASS [   0.125s] (  54/1046) ide doc_links::tests::rewrite_intra_doc_link_with_anchor
+        PASS [   0.119s] (  55/1046) ide doc_links::tests::rewrite_struct
+        PASS [   0.103s] (  56/1046) ide expand_macro::tests::macro_expand_as_keyword
+        PASS [   0.109s] (  57/1046) ide expand_macro::tests::expand_allowed_builtin_macro
+        PASS [   0.101s] (  58/1046) ide expand_macro::tests::macro_expand_inner_macro_fail_to_expand
+        PASS [   0.100s] (  59/1046) ide expand_macro::tests::macro_expand_inner_macro_rules
+        PASS [   0.097s] (  60/1046) ide expand_macro::tests::macro_expand_multiple_lines
+        PASS [   0.095s] (  61/1046) ide expand_macro::tests::macro_expand_recursive_expansion
+        PASS [   0.113s] (  62/1046) ide expand_macro::tests::macro_expand_derive
+        PASS [   0.114s] (  63/1046) ide expand_macro::tests::macro_expand_derive2
+        PASS [   0.096s] (  64/1046) ide expand_macro::tests::macro_expand_underscore
+        PASS [   0.107s] (  65/1046) ide expand_macro::tests::macro_expand_match_ast
+        PASS [   0.106s] (  66/1046) ide expand_macro::tests::macro_expand_match_ast_inside_let_statement
+        PASS [   0.168s] (  67/1046) ide expand_macro::tests::do_not_expand_disallowed_macro
+        PASS [   0.093s] (  68/1046) ide expand_macro::tests::macro_expand_with_dollar_crate
+        PASS [   0.122s] (  69/1046) ide expand_macro::tests::macro_expand_derive_multi
+        PASS [   0.095s] (  70/1046) ide extend_selection::tests::extend_selection_inside_macros
+        PASS [   0.100s] (  71/1046) ide expand_macro::tests::macro_expand_with_dyn_absolute_path
+        PASS [   0.102s] (  72/1046) ide extend_selection::tests::extend_selection_inside_recur_macros
+        PASS [   0.104s] (  73/1046) ide extend_selection::tests::extend_selection_inside_str_with_wide_char
+        PASS [   0.097s] (  74/1046) ide extend_selection::tests::test_extend_selection_arith
+        PASS [   0.095s] (  75/1046) ide extend_selection::tests::test_extend_selection_comments
+        PASS [   0.069s] (  76/1046) ide file_structure::tests::test_negative_trait_bound
+        PASS [   0.105s] (  77/1046) ide extend_selection::tests::test_extend_selection_doc_comments
+        PASS [   0.069s] (  78/1046) ide folding_ranges::tests::fold_big_calls
+        PASS [   0.080s] (  79/1046) ide file_structure::tests::test_file_structure
+        PASS [   0.102s] (  80/1046) ide extend_selection::tests::test_extend_selection_on_tuple_in_rvalue
+        PASS [   0.104s] (  81/1046) ide extend_selection::tests::test_extend_selection_on_tuple_pat
+        PASS [   0.105s] (  82/1046) ide extend_selection::tests::test_extend_selection_on_tuple_in_type
+        PASS [   0.105s] (  83/1046) ide extend_selection::tests::test_extend_selection_prefer_idents
+        PASS [   0.107s] (  84/1046) ide extend_selection::tests::test_extend_selection_prefer_lifetimes
+        PASS [   0.113s] (  85/1046) ide extend_selection::tests::test_extend_selection_list
+        PASS [   0.104s] (  86/1046) ide extend_selection::tests::test_extend_selection_string
+        PASS [   0.106s] (  87/1046) ide extend_selection::tests::test_extend_selection_select_first_word
+        PASS [   0.108s] (  88/1046) ide extend_selection::tests::test_extend_selection_start_of_the_line
+        PASS [   0.109s] (  89/1046) ide extend_selection::tests::test_extend_trait_bounds_list_inline
+        PASS [   0.113s] (  90/1046) ide extend_selection::tests::test_extend_trait_bounds_list_in_where_clause
+        PASS [   0.073s] (  91/1046) ide folding_ranges::tests::fold_consecutive_const
+        PASS [   0.069s] (  92/1046) ide folding_ranges::tests::fold_consecutive_static
+        PASS [   0.076s] (  93/1046) ide folding_ranges::tests::fold_multiline_array
+        PASS [   0.073s] (  94/1046) ide folding_ranges::tests::fold_return_type
+        PASS [   0.077s] (  95/1046) ide folding_ranges::tests::fold_record_literals
+        PASS [   0.079s] (  96/1046) ide folding_ranges::tests::fold_region
+        PASS [   0.087s] (  97/1046) ide folding_ranges::tests::fold_multiline_params
+        PASS [   0.079s] (  98/1046) ide folding_ranges::tests::fold_where_clause
+        PASS [   0.080s] (  99/1046) ide folding_ranges::tests::test_fold_import_and_groups
+        PASS [   0.083s] ( 100/1046) ide folding_ranges::tests::test_fold_comments
+        PASS [   0.077s] ( 101/1046) ide folding_ranges::tests::test_fold_import_groups
+        PASS [   0.077s] ( 102/1046) ide folding_ranges::tests::test_fold_match_arms
+        PASS [   0.077s] ( 103/1046) ide folding_ranges::tests::test_fold_multiline_non_block_match_arm
+        PASS [   0.080s] ( 104/1046) ide folding_ranges::tests::test_fold_imports
+        PASS [   0.078s] ( 105/1046) ide folding_ranges::tests::test_folds_macros
+        PASS [   0.086s] ( 106/1046) ide folding_ranges::tests::test_fold_mods
+        PASS [   0.076s] ( 107/1046) ide folding_ranges::tests::test_folds_structs
+        PASS [   0.073s] ( 108/1046) ide folding_ranges::tests::test_folds_traits
+        PASS [   0.138s] ( 109/1046) ide goto_declaration::tests::goto_decl_assoc_item
+        PASS [   0.109s] ( 110/1046) ide goto_declaration::tests::goto_decl_for_renamed_extern_crate
+        PASS [   0.114s] ( 111/1046) ide goto_declaration::tests::goto_decl_for_extern_crate
+        PASS [   0.135s] ( 112/1046) ide goto_declaration::tests::goto_decl_constructor_shorthand
+        PASS [   0.111s] ( 113/1046) ide goto_declaration::tests::goto_decl_module_inline
+        PASS [   0.117s] ( 114/1046) ide goto_declaration::tests::goto_decl_goto_def_fallback
+        PASS [   0.116s] ( 115/1046) ide goto_declaration::tests::goto_decl_module_outline
+        PASS [   0.148s] ( 116/1046) ide goto_declaration::tests::goto_decl_assoc_item_no_impl_item
+        PASS [   0.131s] ( 117/1046) ide goto_declaration::tests::goto_decl_field_pat_shorthand
+        PASS [   0.127s] ( 118/1046) ide goto_definition::tests::goto_def_at_start_of_item
+        PASS [   0.130s] ( 119/1046) ide goto_definition::tests::goto_def_derive_input
+        PASS [   0.144s] ( 120/1046) ide goto_definition::tests::goto_bin_op
+        PASS [   0.137s] ( 121/1046) ide goto_definition::tests::goto_def_for_assoc_ty_in_path
+        PASS [   0.135s] ( 122/1046) ide goto_definition::tests::goto_def_for_assoc_ty_ufcs
+        PASS [   0.143s] ( 123/1046) ide goto_definition::tests::goto_def_for_assoc_ty_in_path_multiple
+        PASS [   0.159s] ( 124/1046) ide goto_definition::tests::goto_await_poll
+        PASS [   0.157s] ( 125/1046) ide goto_definition::tests::goto_bin_op_multiple_impl
+        PASS [   0.162s] ( 126/1046) ide goto_definition::tests::goto_await_into_future_poll
+        PASS [   0.088s] ( 127/1046) ide goto_definition::tests::goto_def_for_enum_variant_self_pattern_const
+        PASS [   0.101s] ( 128/1046) ide goto_definition::tests::goto_def_for_extern_crate
+        PASS [   0.130s] ( 129/1046) ide goto_definition::tests::goto_def_for_assoc_ty_ufcs_multiple
+        PASS [   0.117s] ( 130/1046) ide goto_definition::tests::goto_def_for_enum_variant_field
+        PASS [   0.117s] ( 131/1046) ide goto_definition::tests::goto_def_for_enum_variant_self_expr_const
+        PASS [   0.120s] ( 132/1046) ide goto_definition::tests::goto_def_for_enum_variant_self_expr_record
+        PASS [   0.124s] ( 133/1046) ide goto_definition::tests::goto_def_for_enum_variant_self_pattern_record
+        PASS [   0.109s] ( 134/1046) ide goto_definition::tests::goto_def_for_intra_doc_link_inner
+        PASS [   0.128s] ( 135/1046) ide goto_definition::tests::goto_def_for_field_init_shorthand
+        PASS [   0.128s] ( 136/1046) ide goto_definition::tests::goto_def_for_fields
+        PASS [   0.109s] ( 137/1046) ide goto_definition::tests::goto_def_for_macro_container
+        PASS [   0.127s] ( 138/1046) ide goto_definition::tests::goto_def_for_intra_doc_link_same_file
+        PASS [   0.108s] ( 139/1046) ide goto_definition::tests::goto_def_for_macros
+        PASS [   0.112s] ( 140/1046) ide goto_definition::tests::goto_def_for_macros_in_use_tree
+        PASS [   0.114s] ( 141/1046) ide goto_definition::tests::goto_def_for_macros_from_other_crates
+        PASS [   0.128s] ( 142/1046) ide goto_definition::tests::goto_def_for_macro_defined_fn_no_arg
+        PASS [   0.128s] ( 143/1046) ide goto_definition::tests::goto_def_for_macro_defined_fn_with_arg
+        PASS [   0.131s] ( 144/1046) ide goto_definition::tests::goto_def_for_methods
+        PASS [   0.117s] ( 145/1046) ide goto_definition::tests::goto_def_for_module_declaration
+        PASS [   0.114s] ( 146/1046) ide goto_definition::tests::goto_def_for_renamed_extern_crate
+        PASS [   0.129s] ( 147/1046) ide goto_definition::tests::goto_def_for_record_fields_macros
+        PASS [   0.133s] ( 148/1046) ide goto_definition::tests::goto_def_for_module_declaration_in_path_if_types_and_values_same_name
+        PASS [   0.133s] ( 149/1046) ide goto_definition::tests::goto_def_for_record_fields
+        PASS [   0.134s] ( 150/1046) ide goto_definition::tests::goto_def_for_record_pat_fields
+        PASS [   0.130s] ( 151/1046) ide goto_definition::tests::goto_def_for_type_alias_generic_parameter
+        PASS [   0.113s] ( 152/1046) ide goto_definition::tests::goto_def_for_use_alias
+        PASS [   0.116s] ( 153/1046) ide goto_definition::tests::goto_def_for_use_alias_foo_macro
+        PASS [   0.147s] ( 154/1046) ide goto_definition::tests::goto_def_for_super_assoc_ty_in_path
+        PASS [   0.141s] ( 155/1046) ide goto_definition::tests::goto_def_for_ufcs_inherent_methods
+        PASS [   0.139s] ( 156/1046) ide goto_definition::tests::goto_def_for_ufcs_trait_methods_through_traits
+        PASS [   0.151s] ( 157/1046) ide goto_definition::tests::goto_def_for_ufcs_trait_methods_through_self
+        PASS [   0.131s] ( 158/1046) ide goto_definition::tests::goto_def_if_items_same_name
+        PASS [   0.135s] ( 159/1046) ide goto_definition::tests::goto_def_in_included_file
+        PASS [   0.130s] ( 160/1046) ide goto_definition::tests::goto_def_in_items
+        PASS [   0.135s] ( 161/1046) ide goto_definition::tests::goto_def_in_included_file_nested
+        PASS [   0.132s] ( 162/1046) ide goto_definition::tests::goto_def_in_local_fn
+        PASS [   0.122s] ( 163/1046) ide goto_definition::tests::goto_def_in_local_macro
+        PASS [   0.116s] ( 164/1046) ide goto_definition::tests::goto_def_on_break_in_try
+        PASS [   0.131s] ( 165/1046) ide goto_definition::tests::goto_def_of_trait_impl_const
+        PASS [   0.142s] ( 166/1046) ide goto_definition::tests::goto_def_in_mac_call_in_attr_invoc
+        PASS [   0.131s] ( 167/1046) ide goto_definition::tests::goto_def_of_trait_impl_type_alias
+        PASS [   0.115s] ( 168/1046) ide goto_definition::tests::goto_def_on_break_kw
+        PASS [   0.111s] ( 169/1046) ide goto_definition::tests::goto_def_on_break_kw_for_block
+        PASS [   0.108s] ( 170/1046) ide goto_definition::tests::goto_def_on_continue_kw
+        PASS [   0.147s] ( 171/1046) ide goto_definition::tests::goto_def_in_macro_multi
+        PASS [   0.118s] ( 172/1046) ide goto_definition::tests::goto_def_on_break_with_label
+        PASS [   0.107s] ( 173/1046) ide goto_definition::tests::goto_def_on_for_kw
+        PASS [   0.110s] ( 174/1046) ide goto_definition::tests::goto_def_on_return_in_async_block
+        PASS [   0.132s] ( 175/1046) ide goto_definition::tests::goto_def_on_fn_kw
+        PASS [   0.110s] ( 176/1046) ide goto_definition::tests::goto_def_on_return_kw_in_closure
+        PASS [   0.117s] ( 177/1046) ide goto_definition::tests::goto_def_on_return_in_try
+        PASS [   0.119s] ( 178/1046) ide goto_definition::tests::goto_def_on_return_kw
+        PASS [   0.136s] ( 179/1046) ide goto_definition::tests::goto_def_when_used_on_definition_name_itself
+        PASS [   0.134s] ( 180/1046) ide goto_definition::tests::goto_definition_on_self
+        PASS [   0.129s] ( 181/1046) ide goto_definition::tests::goto_definition_on_self_in_trait_impl
+        PASS [   0.106s] ( 182/1046) ide goto_definition::tests::goto_definition_works_for_macro_inside_pattern
+        PASS [   0.118s] ( 183/1046) ide goto_definition::tests::goto_definition_works_for_macro_inside_match_arm_lhs
+        PASS [   0.132s] ( 184/1046) ide goto_definition::tests::goto_definition_resolves_correct_name
+        PASS [   0.117s] ( 185/1046) ide goto_definition::tests::goto_doc_include_str
+        PASS [   0.135s] ( 186/1046) ide goto_definition::tests::goto_definition_works_for_consts_inside_range_pattern
+        PASS [   0.120s] ( 187/1046) ide goto_definition::tests::goto_for_type_param
+        PASS [   0.140s] ( 188/1046) ide goto_definition::tests::goto_for_tuple_fields
+        PASS [   0.130s] ( 189/1046) ide goto_definition::tests::goto_impl_of_trait_fn::cursor_on_impl
+        PASS [   0.142s] ( 190/1046) ide goto_definition::tests::goto_from_macro
+        PASS [   0.141s] ( 191/1046) ide goto_definition::tests::goto_ident_from_pat_macro
+        PASS [   0.156s] ( 192/1046) ide goto_definition::tests::goto_deref_mut
+        PASS [   0.145s] ( 193/1046) ide goto_definition::tests::goto_impl_of_trait_fn::method_call
+        PASS [   0.151s] ( 194/1046) ide goto_definition::tests::goto_impl_of_trait_fn::method_call_inside_block
+        PASS [   0.146s] ( 195/1046) ide goto_definition::tests::goto_impl_of_trait_fn::method_call_on_generic
+        PASS [   0.155s] ( 196/1046) ide goto_definition::tests::goto_impl_of_trait_fn::method_call_defaulted
+        PASS [   0.136s] ( 197/1046) ide goto_definition::tests::goto_impl_of_trait_fn::path_call
+        PASS [   0.110s] ( 198/1046) ide goto_definition::tests::goto_include
+        PASS [   0.099s] ( 199/1046) ide goto_definition::tests::goto_include_has_eager_input
+        PASS [   0.154s] ( 200/1046) ide goto_definition::tests::goto_impl_of_trait_fn::wc_case_is_ok
+        PASS [   0.111s] ( 201/1046) ide goto_definition::tests::goto_incomplete_field
+        PASS [   0.142s] ( 202/1046) ide goto_definition::tests::goto_impl_of_trait_fn::where_clause_can_work
+        PASS [   0.115s] ( 203/1046) ide goto_definition::tests::goto_intra_doc_links
+        PASS [   0.100s] ( 204/1046) ide goto_definition::tests::goto_lifetime_hrtb_for_type
+        PASS [   0.110s] ( 205/1046) ide goto_definition::tests::goto_label
+        PASS [   0.102s] ( 206/1046) ide goto_definition::tests::goto_lifetime_param_decl
+        PASS [   0.108s] ( 207/1046) ide goto_definition::tests::goto_lifetime_hrtb
+        PASS [   0.143s] ( 208/1046) ide goto_definition::tests::goto_index_mut_op
+        PASS [   0.109s] ( 209/1046) ide goto_definition::tests::goto_lifetime_param_decl_nested
+        PASS [   0.142s] ( 210/1046) ide goto_definition::tests::goto_index_op
+        PASS [   0.108s] ( 211/1046) ide goto_definition::tests::goto_lifetime_param_on_decl
+        PASS [   0.108s] ( 212/1046) ide goto_definition::tests::goto_macro_def_from_macro_use
+        PASS [   0.108s] ( 213/1046) ide goto_definition::tests::goto_proc_macro
+        PASS [   0.106s] ( 214/1046) ide goto_definition::tests::goto_self_param_on_decl
+        PASS [   0.103s] ( 215/1046) ide goto_definition::tests::goto_shadow_include
+        PASS [   0.125s] ( 216/1046) ide goto_definition::tests::goto_self_param_ty_specified
+        PASS [   0.151s] ( 217/1046) ide goto_definition::tests::goto_prefix_op
+        PASS [   0.125s] ( 218/1046) ide goto_definition::tests::goto_shadowed_preludes_in_block_module
+        PASS [   0.137s] ( 219/1046) ide goto_definition::tests::goto_through_included_file
+        PASS [   0.124s] ( 220/1046) ide goto_definition::tests::goto_through_included_file_struct_with_doc_comment
+        PASS [   0.113s] ( 221/1046) ide goto_definition::tests::shadow_builtin_macro
+        PASS [   0.135s] ( 222/1046) ide goto_definition::tests::goto_within_macro
+        PASS [   0.137s] ( 223/1046) ide goto_definition::tests::implicit_format_args
+        PASS [   0.136s] ( 224/1046) ide goto_definition::tests::path_call_multiple_trait_impl
+        PASS [   0.137s] ( 225/1046) ide goto_definition::tests::query_impls_in_nearest_block
+        PASS [   0.131s] ( 226/1046) ide goto_definition::tests::unknown_assoc_ty
+        PASS [   0.151s] ( 227/1046) ide goto_definition::tests::goto_try_op
+        PASS [   0.128s] ( 228/1046) ide goto_implementation::tests::goto_adt_implementation_inside_block
+        PASS [   0.123s] ( 229/1046) ide goto_implementation::tests::goto_implementation_adt_generic
+        PASS [   0.122s] ( 230/1046) ide goto_implementation::tests::goto_implementation_all_impls
+        PASS [   0.107s] ( 231/1046) ide goto_implementation::tests::goto_implementation_for_trait
+        PASS [   0.126s] ( 232/1046) ide goto_implementation::tests::goto_implementation_builtin
+        PASS [   0.209s] ( 233/1046) ide goto_definition::tests::goto_through_format
+        PASS [   0.109s] ( 234/1046) ide goto_implementation::tests::goto_implementation_for_trait_multiple_files
+        PASS [   0.110s] ( 235/1046) ide goto_implementation::tests::goto_implementation_trait_assoc_const
+        PASS [   0.127s] ( 236/1046) ide goto_implementation::tests::goto_implementation_to_builtin_derive
+        PASS [   0.108s] ( 237/1046) ide goto_implementation::tests::goto_implementation_trait_functions
+        PASS [   0.108s] ( 238/1046) ide goto_implementation::tests::goto_implementation_type_alias
+        PASS [   0.108s] ( 239/1046) ide goto_implementation::tests::goto_implementation_works
+        PASS [   0.105s] ( 240/1046) ide goto_implementation::tests::goto_implementation_works_multiple_blocks
+        PASS [   0.108s] ( 241/1046) ide goto_implementation::tests::goto_implementation_works_multiple_files
+        PASS [   0.109s] ( 242/1046) ide goto_implementation::tests::goto_implementation_works_multiple_mods
+        PASS [   0.106s] ( 243/1046) ide goto_type_definition::tests::goto_def_considers_generics
+        PASS [   0.101s] ( 244/1046) ide goto_type_definition::tests::goto_def_for_struct_field
+        PASS [   0.112s] ( 245/1046) ide goto_type_definition::tests::goto_def_for_enum_struct_field
+        PASS [   0.124s] ( 246/1046) ide goto_implementation::tests::goto_trait_implementation_inside_block
+        PASS [   0.124s] ( 247/1046) ide goto_type_definition::tests::dont_collect_type_from_token_in_macro_call
+        PASS [   0.114s] ( 248/1046) ide goto_type_definition::tests::goto_def_for_self_param
+        PASS [   0.117s] ( 249/1046) ide goto_type_definition::tests::goto_def_for_type_fallback
+        PASS [   0.120s] ( 250/1046) ide goto_type_definition::tests::goto_type_definition_for_param
+        PASS [   0.120s] ( 251/1046) ide goto_type_definition::tests::goto_type_definition_for_tuple_field
+        PASS [   0.140s] ( 252/1046) ide goto_type_definition::tests::goto_type_definition_record_expr_field
+        PASS [   0.122s] ( 253/1046) ide goto_type_definition::tests::goto_type_definition_works_simple
+        PASS [   0.131s] ( 254/1046) ide goto_type_definition::tests::goto_type_definition_record_pat_field
+        PASS [   0.124s] ( 255/1046) ide goto_type_definition::tests::goto_type_definition_works_simple_ref
+        PASS [   0.123s] ( 256/1046) ide goto_type_definition::tests::goto_type_definition_works_through_macro
+        PASS [   0.109s] ( 257/1046) ide highlight_related::tests::break_in_try
+        PASS [   0.112s] ( 258/1046) ide highlight_related::tests::return_in_closure
+        PASS [   0.106s] ( 259/1046) ide highlight_related::tests::return_in_try
+        PASS [   0.121s] ( 260/1046) ide highlight_related::tests::return_in_macros
+        PASS [   0.101s] ( 261/1046) ide highlight_related::tests::test_hl_break_and_continue
+        PASS [   0.123s] ( 262/1046) ide highlight_related::tests::test_assoc_type_highlighting
+        PASS [   0.141s] ( 263/1046) ide highlight_related::tests::no_highlight_on_return_in_macro_call
+        PASS [   0.126s] ( 264/1046) ide highlight_related::tests::test_closure_capture_move
+        PASS [   0.106s] ( 265/1046) ide highlight_related::tests::test_hl_break_for
+        PASS [   0.128s] ( 266/1046) ide highlight_related::tests::test_closure_capture_pipe
+        PASS [   0.116s] ( 267/1046) ide highlight_related::tests::test_hl_break_for_but_not_continue
+        PASS [   0.096s] ( 268/1046) ide highlight_related::tests::test_hl_break_labeled_block
+        PASS [   0.092s] ( 269/1046) ide highlight_related::tests::test_hl_break_loop2
+        PASS [   0.098s] ( 270/1046) ide highlight_related::tests::test_hl_break_loop
+        PASS [   0.092s] ( 271/1046) ide highlight_related::tests::test_hl_break_unlabeled_loop
+        PASS [   0.108s] ( 272/1046) ide highlight_related::tests::test_hl_break_unlabeled_block_in_loop
+        PASS [   0.207s] ( 273/1046) ide highlight_related::tests::implicit_format_args
+        PASS [   0.110s] ( 274/1046) ide highlight_related::tests::test_hl_break_while
+        PASS [   0.240s] ( 275/1046) ide goto_type_definition::tests::implicit_format_args
+        PASS [   0.116s] ( 276/1046) ide highlight_related::tests::test_hl_continue_for_but_not_break
+        PASS [   0.112s] ( 277/1046) ide highlight_related::tests::test_hl_disabled_break
+        PASS [   0.103s] ( 278/1046) ide highlight_related::tests::test_hl_disabled_ref_local
+        PASS [   0.105s] ( 279/1046) ide highlight_related::tests::test_hl_disabled_exit
+        PASS [   0.100s] ( 280/1046) ide highlight_related::tests::test_hl_disabled_ref_local_preserved_break
+        PASS [   0.112s] ( 281/1046) ide highlight_related::tests::test_hl_disabled_ref_local_preserved_exit
+        PASS [   0.105s] ( 282/1046) ide highlight_related::tests::test_hl_disabled_yield
+        PASS [   0.108s] ( 283/1046) ide highlight_related::tests::test_hl_exit_points
+        PASS [   0.120s] ( 284/1046) ide highlight_related::tests::test_hl_disabled_ref_local_preserved_yield
+        PASS [   0.103s] ( 285/1046) ide highlight_related::tests::test_hl_exit_points3
+        PASS [   0.100s] ( 286/1046) ide highlight_related::tests::test_hl_inner_tail_exit_points
+        PASS [   0.118s] ( 287/1046) ide highlight_related::tests::test_hl_exit_points2
+        PASS [   0.123s] ( 288/1046) ide highlight_related::tests::test_hl_field_shorthand
+        PASS [   0.107s] ( 289/1046) ide highlight_related::tests::test_hl_inner_tail_exit_points_labeled_block
+        PASS [   0.110s] ( 290/1046) ide highlight_related::tests::test_hl_inner_tail_exit_points_loops
+        PASS [   0.109s] ( 291/1046) ide highlight_related::tests::test_hl_let_else_exit_points
+        PASS [   0.116s] ( 292/1046) ide highlight_related::tests::test_hl_let_else_yield_points
+        PASS [   0.113s] ( 293/1046) ide highlight_related::tests::test_hl_module
+        PASS [   0.129s] ( 294/1046) ide highlight_related::tests::test_hl_local
+        PASS [   0.112s] ( 295/1046) ide highlight_related::tests::test_hl_self_in_module
+        PASS [   0.112s] ( 296/1046) ide highlight_related::tests::test_hl_self_in_crate_root
+        PASS [   0.134s] ( 297/1046) ide highlight_related::tests::test_hl_local_in_attr
+        PASS [   0.130s] ( 298/1046) ide highlight_related::tests::test_hl_prefer_ref_over_tail_exit
+        PASS [   0.132s] ( 299/1046) ide highlight_related::tests::test_hl_multi_local
+        PASS [   0.131s] ( 300/1046) ide highlight_related::tests::test_hl_never_call_is_exit_point
+        PASS [   0.112s] ( 301/1046) ide highlight_related::tests::test_hl_yield_nested_fn
+        PASS [   0.116s] ( 302/1046) ide highlight_related::tests::test_hl_yield_nested_async_blocks
+        PASS [   0.129s] ( 303/1046) ide highlight_related::tests::test_hl_tuple_fields
+        PASS [   0.110s] ( 304/1046) ide highlight_related::tests::test_hl_yield_points
+        PASS [   0.105s] ( 305/1046) ide highlight_related::tests::test_hl_yield_points2
+        PASS [   0.158s] ( 306/1046) ide highlight_related::tests::test_hl_trait_impl_methods
+        PASS [   0.138s] ( 307/1046) ide highlight_related::tests::test_multi_macro_usage
+        PASS [   0.123s] ( 308/1046) ide hover::tests::array_repeat_exp
+        PASS [   0.141s] ( 309/1046) ide highlight_related::tests::test_trait_highlights_assoc_item_uses_use_tree
+        PASS [   0.154s] ( 310/1046) ide highlight_related::tests::test_trait_highlights_assoc_item_uses
+        PASS [   0.111s] ( 311/1046) ide hover::tests::byte_string_literal
+        PASS [   0.113s] ( 312/1046) ide hover::tests::byte_literal
+        PASS [   0.131s] ( 313/1046) ide hover::tests::assoc_fn_in_block_local_impl
+        PASS [   0.117s] ( 314/1046) ide hover::tests::char_literal
+        PASS [   0.118s] ( 315/1046) ide hover::tests::const_generic_default_value
+        PASS [   0.147s] ( 316/1046) ide hover::tests::assoc_const_in_block_local_impl
+        PASS [   0.126s] ( 317/1046) ide hover::tests::const_generic_char_literal
+        PASS [   0.129s] ( 318/1046) ide hover::tests::const_generic_bool_literal
+        PASS [   0.119s] ( 319/1046) ide hover::tests::const_generic_default_value_2
+        PASS [   0.116s] ( 320/1046) ide hover::tests::const_generic_positive_i8_literal
+        PASS [   0.122s] ( 321/1046) ide hover::tests::const_generic_order
+        PASS [   0.117s] ( 322/1046) ide hover::tests::const_generic_zero_i8_literal
+        PASS [   0.107s] ( 323/1046) ide hover::tests::cstring_literal
+        PASS [   0.133s] ( 324/1046) ide hover::tests::const_generic_negative_i8_literal
+        PASS [   0.115s] ( 325/1046) ide hover::tests::extern_items
+        PASS [   0.119s] ( 326/1046) ide hover::tests::field_as_method_call_fallback
+        PASS [   0.115s] ( 327/1046) ide hover::tests::float_literal
+        PASS [   0.103s] ( 328/1046) ide hover::tests::function_doesnt_shadow_crate_in_use_tree
+        PASS [   0.097s] ( 329/1046) ide hover::tests::hover_attr_path_qualifier
+        PASS [   0.107s] ( 330/1046) ide hover::tests::hover_attribute_in_macro
+        PASS [   0.120s] ( 331/1046) ide hover::tests::generic_params_disabled_by_cfg
+        PASS [   0.090s] ( 332/1046) ide hover::tests::hover_comments_dont_highlight_parent
+        PASS [   0.101s] ( 333/1046) ide hover::tests::hover_clippy_lint
+        PASS [   0.111s] ( 334/1046) ide hover::tests::hover_builtin
+        PASS [   0.112s] ( 335/1046) ide hover::tests::hover_call_parens
+        FAIL [   0.065s] ( 336/1046) ide hover::tests::hover_const_eval_dyn_trait
+  stdout ───
+
+    running 1 test
+    test hover::tests::hover_const_eval_dyn_trait ... FAILED
+
+    failures:
+
+    failures:
+        hover::tests::hover_const_eval_dyn_trait
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1045 filtered out; finished in 0.02s
+
+  stderr ───
+
+    thread 'hover::tests::hover_const_eval_dyn_trait' (1097) panicked at crates/test-utils/src/fixture.rs:399:18:
+    invalid flag: "dispatch_from_dyn", valid flags: ["add", "asm", "assert", "as_ref", "bool_impl", "builtin_impls", "cell", "clone", "coerce_unsized", "concat", "copy", "default", "deref_mut", "deref", "derive", "discriminant", "drop", "env", "eq", "error", "fmt", "fn", "from", "future", "coroutine", "hash", "include", "index", "infallible", "int_impl", "iterator", "iterators", "manually_drop", "non_null", "non_zero", "option", "ord", "panic", "phantom_data", "pin", "pointee", "range", "result", "send", "size_of", "sized", "slice", "str", "sync", "transmute", "try", "unpin", "unsize", "todo", "unimplemented", "column"]
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.179s] ( 337/1046) ide hover::tests::format_args_implicit2
+        PASS [   0.197s] ( 338/1046) ide hover::tests::format_args_arg
+        PASS [   0.188s] ( 339/1046) ide hover::tests::format_args_implicit
+        PASS [   0.187s] ( 340/1046) ide hover::tests::format_args_implicit_nested
+        PASS [   0.185s] ( 341/1046) ide hover::tests::format_args_implicit_raw
+        PASS [   0.122s] ( 342/1046) ide hover::tests::hover_const_eval_discriminant
+        PASS [   0.161s] ( 343/1046) ide hover::tests::hover_const_eval
+        PASS [   0.115s] ( 344/1046) ide hover::tests::hover_const_eval_in_generic_trait
+        PASS [   0.097s] ( 345/1046) ide hover::tests::hover_const_param
+        PASS [   0.099s] ( 346/1046) ide hover::tests::hover_const_generic_type_alias
+        PASS [   0.127s] ( 347/1046) ide hover::tests::hover_const_eval_floating_point
+        PASS [   0.201s] ( 348/1046) ide hover::tests::hover_closure
+        PASS [   0.112s] ( 349/1046) ide hover::tests::hover_const_eval_str
+        PASS [   0.112s] ( 350/1046) ide hover::tests::hover_const_pat
+        PASS [   0.108s] ( 351/1046) ide hover::tests::hover_const_static
+        PASS [   0.105s] ( 352/1046) ide hover::tests::hover_const_value
+        PASS [   0.104s] ( 353/1046) ide hover::tests::hover_default_generic_types
+        PASS [   0.093s] ( 354/1046) ide hover::tests::hover_derive_input
+        PASS [   0.208s] ( 355/1046) ide hover::tests::hover_const_eval_enum
+        PASS [   0.117s] ( 356/1046) ide hover::tests::hover_deref_expr
+        PASS [   0.125s] ( 357/1046) ide hover::tests::hover_deref
+        PASS [   0.109s] ( 358/1046) ide hover::tests::hover_descend_macros_avoids_duplicates
+        PASS [   0.092s] ( 359/1046) ide hover::tests::hover_doc_outer_inner_attribute
+        PASS [   0.122s] ( 360/1046) ide hover::tests::hover_displays_normalized_crate_names
+        PASS [   0.096s] ( 361/1046) ide hover::tests::hover_doc_outer_inner
+        PASS [   0.100s] ( 362/1046) ide hover::tests::hover_doc_block_style_indent_end
+        PASS [   0.152s] ( 363/1046) ide hover::tests::hover_deref_expr_with_coercion
+        PASS [   0.222s] ( 364/1046) ide hover::tests::hover_const_eval_slice
+        PASS [   0.099s] ( 365/1046) ide hover::tests::hover_feature
+        PASS [   0.125s] ( 366/1046) ide hover::tests::hover_dollar_crate
+        PASS [   0.124s] ( 367/1046) ide hover::tests::hover_eval_complex_constants
+        PASS [   0.131s] ( 368/1046) ide hover::tests::hover_enum_variant
+        PASS [   0.133s] ( 369/1046) ide hover::tests::hover_enum_limit
+        PASS [   0.123s] ( 370/1046) ide hover::tests::hover_field_offset
+        PASS [   0.135s] ( 371/1046) ide hover::tests::hover_field_pat_shorthand_ref_match_ergonomics
+        PASS [   0.138s] ( 372/1046) ide hover::tests::hover_fn_with_impl_trait_arg
+        PASS [   0.126s] ( 373/1046) ide hover::tests::hover_for_local_variable_pat
+        PASS [   0.134s] ( 374/1046) ide hover::tests::hover_for_local_variable
+        PASS [   0.132s] ( 375/1046) ide hover::tests::hover_for_param_edge
+        PASS [   0.102s] ( 376/1046) ide hover::tests::hover_inert_attr
+        PASS [   0.141s] ( 377/1046) ide hover::tests::hover_for_param_with_multiple_traits
+        PASS [   0.122s] ( 378/1046) ide hover::tests::hover_intra_doc_links
+        PASS [   0.122s] ( 379/1046) ide hover::tests::hover_intra_generics
+        PASS [   0.101s] ( 380/1046) ide hover::tests::hover_keyword
+        PASS [   0.130s] ( 381/1046) ide hover::tests::hover_impl_trait_arg_self
+        PASS [   0.123s] ( 382/1046) ide hover::tests::hover_intra_in_attr
+        PASS [   0.148s] ( 383/1046) ide hover::tests::hover_generic_assoc
+        PASS [   0.121s] ( 384/1046) ide hover::tests::hover_intra_in_macro
+        PASS [   0.104s] ( 385/1046) ide hover::tests::hover_keyword_as_primitive
+        PASS [   0.103s] ( 386/1046) ide hover::tests::hover_lifetime
+        PASS [   0.106s] ( 387/1046) ide hover::tests::hover_label
+        PASS [   0.108s] ( 388/1046) ide hover::tests::hover_keyword_doc
+        PASS [   0.101s] ( 389/1046) ide hover::tests::hover_lint
+        PASS [   0.130s] ( 390/1046) ide hover::tests::hover_lifetime_regression_16963
+        PASS [   0.110s] ( 391/1046) ide hover::tests::hover_mod_def
+        PASS [   0.136s] ( 392/1046) ide hover::tests::hover_local_var_edge
+        PASS [   0.135s] ( 393/1046) ide hover::tests::hover_macro_expanded_function
+        PASS [   0.104s] ( 394/1046) ide hover::tests::hover_range_shows_nothing_when_invalid
+        PASS [   0.136s] ( 395/1046) ide hover::tests::hover_omits_unnamed_where_preds
+        PASS [   0.132s] ( 396/1046) ide hover::tests::hover_range_arrays
+        PASS [   0.118s] ( 397/1046) ide hover::tests::hover_range_shows_coercions_if_applicable_expr
+        PASS [   0.124s] ( 398/1046) ide hover::tests::hover_range_math
+        PASS [   0.132s] ( 399/1046) ide hover::tests::hover_range_for_pat
+        PASS [   0.133s] ( 400/1046) ide hover::tests::hover_range_functions
+        PASS [   0.123s] ( 401/1046) ide hover::tests::hover_range_shows_type_actions
+        PASS [   0.116s] ( 402/1046) ide hover::tests::hover_record_struct
+        PASS [   0.127s] ( 403/1046) ide hover::tests::hover_range_shows_unit_for_statements
+        PASS [   0.125s] ( 404/1046) ide hover::tests::hover_ranged_macro_call
+        PASS [   0.130s] ( 405/1046) ide hover::tests::hover_record_struct_limit
+        PASS [   0.115s] ( 406/1046) ide hover::tests::hover_record_variant
+        PASS [   0.178s] ( 407/1046) ide hover::tests::hover_ranged_closure
+        PASS [   0.109s] ( 408/1046) ide hover::tests::hover_record_variant_limit
+        PASS [   0.115s] ( 409/1046) ide hover::tests::hover_record_variant_field
+        PASS [   0.103s] ( 410/1046) ide hover::tests::hover_rename
+        PASS [   0.093s] ( 411/1046) ide hover::tests::hover_self_in_use
+        PASS [   0.112s] ( 412/1046) ide hover::tests::hover_remove_markdown_if_configured
+        PASS [   0.114s] ( 413/1046) ide hover::tests::hover_rest_pat
+        PASS [   0.117s] ( 414/1046) ide hover::tests::hover_self_param_shows_type
+        PASS [   0.108s] ( 415/1046) ide hover::tests::hover_shows_fn_doc_attr_raw_string
+        PASS [   0.115s] ( 416/1046) ide hover::tests::hover_shows_fn_doc
+        PASS [   0.111s] ( 417/1046) ide hover::tests::hover_shows_fn_signature_on_fn_name
+        PASS [   0.124s] ( 418/1046) ide hover::tests::hover_self_param_shows_type_for_arbitrary_self_type
+        PASS [   0.118s] ( 419/1046) ide hover::tests::hover_shows_fn_signature
+        PASS [   0.115s] ( 420/1046) ide hover::tests::hover_shows_fn_signature_with_type_params
+        PASS [   0.135s] ( 421/1046) ide hover::tests::hover_shows_all_macro_descends
+        PASS [   0.111s] ( 422/1046) ide hover::tests::hover_shows_struct_field_info
+        PASS [   0.123s] ( 423/1046) ide hover::tests::hover_shows_long_type_of_an_expression
+        PASS [   0.126s] ( 424/1046) ide hover::tests::hover_shows_tuple_struct_field_info
+        FAIL [   0.105s] ( 425/1046) ide hover::tests::hover_trait_show_assoc_items
+  stdout ───
+
+    running 1 test
+
+
+    error: expect test failed
+       --> crates/ide/src/hover/tests.rs:7102:9
+
+    You can update all `expect!` tests by running:
+
+        env UPDATE_EXPECT=1 cargo test
+
+    To update a single test, place the cursor on `expect` token and use `run` feature of rust-analyzer.
+
+    Expect:
+    ----
+    *T*
+
+    ```rust
+    test
+    ```
+
+    ```rust
+    // Object Safety: Yes
+    trait T {}
+    ```
+
+    ----
+
+    Actual:
+    ----
+    *T*
+
+    ```rust
+    test
+    ```
+
+    ```rust
+    trait T {}
+    ```
+
+    ----
+
+    Diff:
+    ----
+    *T*
+
+    ```rust
+    test
+    ```
+
+    ```rust
+    // Object Safety: Yes
+    trait T {}
+    ```
+
+    ----
+
+    test hover::tests::hover_trait_show_assoc_items ... FAILED
+
+    failures:
+
+    failures:
+        hover::tests::hover_trait_show_assoc_items
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1045 filtered out; finished in 0.05s
+
+
+        PASS [   0.118s] ( 426/1046) ide hover::tests::hover_struct_default_arg_self
+        PASS [   0.114s] ( 427/1046) ide hover::tests::hover_trait_impl_assoc_item_def_doc_forwarding
+        PASS [   0.086s] ( 428/1046) ide hover::tests::hover_underscore_type
+        PASS [   0.147s] ( 429/1046) ide hover::tests::hover_some
+        PASS [   0.114s] ( 430/1046) ide hover::tests::hover_tuple_struct
+        PASS [   0.110s] ( 431/1046) ide hover::tests::hover_type_alias
+        PASS [   0.115s] ( 432/1046) ide hover::tests::hover_underscore_expr
+        PASS [   0.160s] ( 433/1046) ide hover::tests::hover_try_expr
+        PASS [   0.116s] ( 434/1046) ide hover::tests::hover_underscore_pat
+        PASS [   0.121s] ( 435/1046) ide hover::tests::hover_type_param_sized_bounds
+        PASS [   0.125s] ( 436/1046) ide hover::tests::hover_type_param
+        PASS [   0.115s] ( 437/1046) ide hover::tests::hover_union_limit
+        PASS [   0.110s] ( 438/1046) ide hover::tests::int_literal
+        PASS [   0.119s] ( 439/1046) ide hover::tests::hover_unit_struct
+        PASS [   0.187s] ( 440/1046) ide hover::tests::hover_try_expr_option
+        PASS [   0.106s] ( 441/1046) ide hover::tests::issue_17871
+        PASS [   0.189s] ( 442/1046) ide hover::tests::hover_try_expr_res
+        PASS [   0.106s] ( 443/1046) ide hover::tests::method_call_without_parens
+        PASS [   0.117s] ( 444/1046) ide hover::tests::notable_local
+        PASS [   0.110s] ( 445/1046) ide hover::tests::raw_keyword_different_editions
+        PASS [   0.109s] ( 446/1046) ide hover::tests::static_const_macro_expanded_body
+        PASS [   0.101s] ( 447/1046) ide hover::tests::string_literal
+        PASS [   0.160s] ( 448/1046) ide hover::tests::notable_foreign
+        PASS [   0.105s] ( 449/1046) ide hover::tests::test_hover_arg_impl_trait_has_goto_type_action
+        FAIL [   0.161s] ( 450/1046) ide hover::tests::notable_actions
+  stdout ───
+
+    running 1 test
+
+
+    error: expect test failed
+       --> crates/ide/src/hover/tests.rs:8464:9
+
+    You can update all `expect!` tests by running:
+
+        env UPDATE_EXPECT=1 cargo test
+
+    To update a single test, place the cursor on `expect` token and use `run` feature of rust-analyzer.
+
+    Expect:
+    ----
+    [
+        Implementation(
+            FilePositionWrapper {
+                file_id: FileId(
+                    0,
+                ),
+                offset: 7,
+            },
+        ),
+        GoToType(
+            [
+                HoverGotoTypeData {
+                    mod_path: "core::future::Future",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            1,
+                        ),
+                        full_range: 7801..8043,
+                        focus_range: 7866..7872,
+                        name: "Future",
+                        kind: Trait,
+                        container_name: "future",
+                        description: "pub trait Future",
+                    },
+                },
+                HoverGotoTypeData {
+                    mod_path: "core::iter::traits::iterator::Iterator",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            1,
+                        ),
+                        full_range: 8673..9172,
+                        focus_range: 8750..8758,
+                        name: "Iterator",
+                        kind: Trait,
+                        container_name: "iterator",
+                        description: "pub trait Iterator",
+                    },
+                },
+                HoverGotoTypeData {
+                    mod_path: "test::Notable",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            0,
+                        ),
+                        full_range: 21..59,
+                        focus_range: 49..56,
+                        name: "Notable",
+                        kind: Trait,
+                        description: "trait Notable",
+                    },
+                },
+                HoverGotoTypeData {
+                    mod_path: "test::S2",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            0,
+                        ),
+                        full_range: 10..20,
+                        focus_range: 17..19,
+                        name: "S2",
+                        kind: Struct,
+                        description: "struct S2",
+                    },
+                },
+            ],
+        ),
+    ]
+
+    ----
+
+    Actual:
+    ----
+    [
+        Implementation(
+            FilePositionWrapper {
+                file_id: FileId(
+                    0,
+                ),
+                offset: 7,
+            },
+        ),
+        GoToType(
+            [
+                HoverGotoTypeData {
+                    mod_path: "core::future::Future",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            1,
+                        ),
+                        full_range: 7800..8042,
+                        focus_range: 7865..7871,
+                        name: "Future",
+                        kind: Trait,
+                        container_name: "future",
+                        description: "pub trait Future",
+                    },
+                },
+                HoverGotoTypeData {
+                    mod_path: "core::iter::traits::iterator::Iterator",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            1,
+                        ),
+                        full_range: 8672..9171,
+                        focus_range: 8749..8757,
+                        name: "Iterator",
+                        kind: Trait,
+                        container_name: "iterator",
+                        description: "pub trait Iterator",
+                    },
+                },
+                HoverGotoTypeData {
+                    mod_path: "test::Notable",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            0,
+                        ),
+                        full_range: 21..59,
+                        focus_range: 49..56,
+                        name: "Notable",
+                        kind: Trait,
+                        description: "trait Notable",
+                    },
+                },
+                HoverGotoTypeData {
+                    mod_path: "test::S2",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            0,
+                        ),
+                        full_range: 10..20,
+                        focus_range: 17..19,
+                        name: "S2",
+                        kind: Struct,
+                        description: "struct S2",
+                    },
+                },
+            ],
+        ),
+    ]
+
+    ----
+
+    Diff:
+    ----
+    [
+        Implementation(
+            FilePositionWrapper {
+                file_id: FileId(
+                    0,
+                ),
+                offset: 7,
+            },
+        ),
+        GoToType(
+            [
+                HoverGotoTypeData {
+                    mod_path: "core::future::Future",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            1,
+                        ),
+                        full_range: 78010..80432,
+                        focus_range: 78665..78721,
+                        name: "Future",
+                        kind: Trait,
+                        container_name: "future",
+                        description: "pub trait Future",
+                    },
+                },
+                HoverGotoTypeData {
+                    mod_path: "core::iter::traits::iterator::Iterator",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            1,
+                        ),
+                        full_range: 86732..91721,
+                        focus_range: 875049..87587,
+                        name: "Iterator",
+                        kind: Trait,
+                        container_name: "iterator",
+                        description: "pub trait Iterator",
+                    },
+                },
+                HoverGotoTypeData {
+                    mod_path: "test::Notable",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            0,
+                        ),
+                        full_range: 21..59,
+                        focus_range: 49..56,
+                        name: "Notable",
+                        kind: Trait,
+                        description: "trait Notable",
+                    },
+                },
+                HoverGotoTypeData {
+                    mod_path: "test::S2",
+                    nav: NavigationTarget {
+                        file_id: FileId(
+                            0,
+                        ),
+                        full_range: 10..20,
+                        focus_range: 17..19,
+                        name: "S2",
+                        kind: Struct,
+                        description: "struct S2",
+                    },
+                },
+            ],
+        ),
+    ]
+
+    ----
+
+    test hover::tests::notable_actions ... FAILED
+
+    failures:
+
+    failures:
+        hover::tests::notable_actions
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1045 filtered out; finished in 0.12s
+
+
+        PASS [   0.109s] ( 451/1046) ide hover::tests::string_shadowed_with_inner_items
+        PASS [   0.114s] ( 452/1046) ide hover::tests::test_hover_arg_generic_impl_trait_has_goto_type_action
+        PASS [   0.113s] ( 453/1046) ide hover::tests::test_hover_arg_impl_traits_has_goto_type_action
+        PASS [   0.110s] ( 454/1046) ide hover::tests::test_hover_async_block_impl_trait_has_goto_type_action
+        PASS [   0.107s] ( 455/1046) ide hover::tests::test_hover_const_param_has_goto_type_action
+        PASS [   0.116s] ( 456/1046) ide hover::tests::test_hover_associated_type_has_goto_type_action
+        PASS [   0.087s] ( 457/1046) ide hover::tests::test_hover_extern_crate
+        PASS [   0.113s] ( 458/1046) ide hover::tests::test_hover_dyn_arg_has_goto_type_action
+        PASS [   0.097s] ( 459/1046) ide hover::tests::test_hover_enum_has_impl_action
+        PASS [   0.171s] ( 460/1046) ide hover::tests::notable_ranged
+        PASS [   0.112s] ( 461/1046) ide hover::tests::test_hover_dyn_return_has_goto_type_action
+        PASS [   0.108s] ( 462/1046) ide hover::tests::test_hover_external_url
+        PASS [   0.112s] ( 463/1046) ide hover::tests::test_hover_function_pointer_no_identifier
+        PASS [   0.116s] ( 464/1046) ide hover::tests::test_hover_function_pointer_show_identifiers
+        PASS [   0.133s] ( 465/1046) ide hover::tests::test_hover_function_associated_type_params
+        PASS [   0.110s] ( 466/1046) ide hover::tests::test_hover_function_show_types
+        PASS [   0.111s] ( 467/1046) ide hover::tests::test_hover_generic_excludes_sized_go_to_action
+        PASS [   0.118s] ( 468/1046) ide hover::tests::test_hover_function_show_qualifiers
+        PASS [   0.116s] ( 469/1046) ide hover::tests::test_hover_generic_struct_has_goto_type_actions
+        PASS [   0.117s] ( 470/1046) ide hover::tests::test_hover_generic_struct_has_flattened_goto_type_actions
+        PASS [   0.121s] ( 471/1046) ide hover::tests::test_hover_generic_dyn_arg_has_goto_type_action
+        PASS [   0.122s] ( 472/1046) ide hover::tests::test_hover_generic_return_impl_traits_has_goto_type_action
+        PASS [   0.123s] ( 473/1046) ide hover::tests::test_hover_generic_return_impl_trait_has_goto_type_action
+        PASS [   0.119s] ( 474/1046) ide hover::tests::test_hover_goto_type_action_links_order
+        PASS [   0.127s] ( 475/1046) ide hover::tests::test_hover_infer_associated_const_in_pattern
+        PASS [   0.121s] ( 476/1046) ide hover::tests::test_hover_infer_associated_method_exact
+        PASS [   0.120s] ( 477/1046) ide hover::tests::test_hover_layout_generic_unused
+        PASS [   0.121s] ( 478/1046) ide hover::tests::test_hover_infer_associated_method_result
+        PASS [   0.116s] ( 479/1046) ide hover::tests::test_hover_layout_of_enum
+        PASS [   0.114s] ( 480/1046) ide hover::tests::test_hover_layout_of_variant
+        PASS [   0.123s] ( 481/1046) ide hover::tests::test_hover_layout_of_variant_generic
+        PASS [   0.116s] ( 482/1046) ide hover::tests::test_hover_macro2_invocation
+        PASS [   0.099s] ( 483/1046) ide hover::tests::test_hover_mod_with_same_name_as_function
+        PASS [   0.117s] ( 484/1046) ide hover::tests::test_hover_macro_invocation
+        PASS [   0.123s] ( 485/1046) ide hover::tests::test_hover_macro_generated_struct_fn_doc_attr
+        PASS [   0.124s] ( 486/1046) ide hover::tests::test_hover_macro_generated_struct_fn_doc_comment
+        PASS [   0.117s] ( 487/1046) ide hover::tests::test_hover_no_links
+        PASS [   0.121s] ( 488/1046) ide hover::tests::test_hover_non_ascii_space_doc
+        PASS [   0.126s] ( 489/1046) ide hover::tests::test_hover_multiple_actions
+        PASS [   0.129s] ( 490/1046) ide hover::tests::test_hover_return_impl_trait_has_goto_type_action
+        PASS [   0.130s] ( 491/1046) ide hover::tests::test_hover_return_impl_traits_has_goto_type_action
+        PASS [   0.138s] ( 492/1046) ide hover::tests::test_hover_no_memory_layout
+        PASS [   0.125s] ( 493/1046) ide hover::tests::test_hover_self_has_impl_action
+        PASS [   0.125s] ( 494/1046) ide hover::tests::test_hover_shadowing_pat
+        PASS [   0.126s] ( 495/1046) ide hover::tests::test_hover_struct_doc_attr
+        PASS [   0.128s] ( 496/1046) ide hover::tests::test_hover_self_has_go_to_type
+        PASS [   0.143s] ( 497/1046) ide hover::tests::test_hover_self
+        PASS [   0.132s] ( 498/1046) ide hover::tests::test_hover_struct_doc_attr_multiple_and_mixed
+        PASS [   0.095s] ( 499/1046) ide hover::tests::test_hover_test_mod_has_action
+        PASS [   0.114s] ( 500/1046) ide hover::tests::test_hover_struct_has_impl_action
+        PASS [   0.120s] ( 501/1046) ide hover::tests::test_hover_struct_has_goto_type_action
+        PASS [   0.123s] ( 502/1046) ide hover::tests::test_hover_struct_doc_comment
+        PASS [   0.108s] ( 503/1046) ide hover::tests::test_hover_test_has_action
+        PASS [   0.119s] ( 504/1046) ide hover::tests::test_hover_through_assert_macro
+        PASS [   0.117s] ( 505/1046) ide hover::tests::test_hover_through_attr
+        PASS [   0.116s] ( 506/1046) ide hover::tests::test_hover_through_expr_in_macro
+        PASS [   0.114s] ( 507/1046) ide hover::tests::test_hover_through_expr_in_macro_recursive
+        PASS [   0.093s] ( 508/1046) ide hover::tests::test_hover_trait_has_impl_action
+        PASS [   0.116s] ( 509/1046) ide hover::tests::test_hover_through_func_in_macro_recursive
+        PASS [   0.096s] ( 510/1046) ide hover::tests::test_hover_trait_show_qualifiers
+        PASS [   0.114s] ( 511/1046) ide hover::tests::test_hover_trait_assoc_typealias
+        PASS [   0.115s] ( 512/1046) ide hover::tests::test_hover_through_macro
+        PASS [   0.103s] ( 513/1046) ide hover::tests::test_hover_tuple_field
+        PASS [   0.121s] ( 514/1046) ide hover::tests::test_hover_tuple_has_goto_type_actions
+        PASS [   0.125s] ( 515/1046) ide hover::tests::test_hover_type_param_has_goto_type_action
+        PASS [   0.109s] ( 516/1046) ide hover::tests::test_hover_union_has_impl_action
+        PASS [   0.110s] ( 517/1046) ide hover::tests::test_hover_unknown_target
+        PASS [   0.119s] ( 518/1046) ide hover::tests::test_hover_variadic_function
+        PASS [   0.118s] ( 519/1046) ide hover::tests::type_param_sized_bounds::multiple_explicit
+        PASS [   0.123s] ( 520/1046) ide hover::tests::type_param_sized_bounds::mixed2
+        PASS [   0.124s] ( 521/1046) ide hover::tests::type_param_sized_bounds::mixed
+        PASS [   0.108s] ( 522/1046) ide hover::tests::type_param_sized_bounds::multiple_implicit
+        PASS [   0.110s] ( 523/1046) ide hover::tests::type_param_sized_bounds::single_implicit
+        PASS [   0.119s] ( 524/1046) ide hover::tests::type_param_sized_bounds::multiple_relaxed
+        PASS [   0.117s] ( 525/1046) ide hover::tests::type_param_sized_bounds::single_explicit
+        PASS [   0.106s] ( 526/1046) ide inlay_hints::adjustment::tests::adjustment_hints_prefer_prefix
+        PASS [   0.122s] ( 527/1046) ide hover::tests::type_param_sized_bounds::single_relaxed
+        PASS [   0.113s] ( 528/1046) ide inlay_hints::adjustment::tests::adjustment_hints_prefer_postfix
+        PASS [   0.136s] ( 529/1046) ide inlay_hints::adjustment::tests::adjustment_hints_method_call_on_impl_trait_self
+        PASS [   0.118s] ( 530/1046) ide inlay_hints::adjustment::tests::adjustment_hints_unsafe_only
+        PASS [   0.105s] ( 531/1046) ide inlay_hints::adjustment::tests::adjustment_hints_unsafe_only_with_item
+        PASS [   0.099s] ( 532/1046) ide inlay_hints::adjustment::tests::let_stmt_explicit_ty
+        PASS [   0.106s] ( 533/1046) ide inlay_hints::adjustment::tests::never_to_never_is_never_shown
+        PASS [   0.174s] ( 534/1046) ide inlay_hints::adjustment::tests::adjustment_hints_postfix
+        PASS [   0.098s] ( 535/1046) ide inlay_hints::bind_pat::tests::const_pats_have_no_type_hints
+        PASS [   0.096s] ( 536/1046) ide inlay_hints::bind_pat::tests::default_generic_types_should_not_be_displayed
+        PASS [   0.118s] ( 537/1046) ide inlay_hints::bind_pat::tests::check_hint_range_limit
+        PASS [   0.098s] ( 538/1046) ide inlay_hints::bind_pat::tests::edit_for_closure_param
+        PASS [   0.208s] ( 539/1046) ide inlay_hints::adjustment::tests::adjustment_hints
+        PASS [   0.103s] ( 540/1046) ide inlay_hints::bind_pat::tests::edit_for_closure_ret
+        PASS [   0.103s] ( 541/1046) ide inlay_hints::bind_pat::tests::edit_prefixes_paths
+        PASS [   0.116s] ( 542/1046) ide inlay_hints::bind_pat::tests::edit_for_let_stmt
+        PASS [   0.147s] ( 543/1046) ide inlay_hints::bind_pat::tests::closure_style
+        PASS [   0.105s] ( 544/1046) ide inlay_hints::bind_pat::tests::hint_truncation
+        PASS [   0.122s] ( 545/1046) ide inlay_hints::bind_pat::tests::fn_hints_ptr_rpit_fn_parentheses
+        PASS [   0.128s] ( 546/1046) ide inlay_hints::bind_pat::tests::fn_hints
+        PASS [   0.107s] ( 547/1046) ide inlay_hints::bind_pat::tests::if_expr
+        PASS [   0.168s] ( 548/1046) ide inlay_hints::bind_pat::tests::complete_for_hint
+        PASS [   0.116s] ( 549/1046) ide inlay_hints::bind_pat::tests::infer_call_method_return_associated_types_with_generic
+        PASS [   0.100s] ( 550/1046) ide inlay_hints::bind_pat::tests::lt_hints
+        PASS [   0.112s] ( 551/1046) ide inlay_hints::bind_pat::tests::let_statement
+        PASS [   0.093s] ( 552/1046) ide inlay_hints::bind_pat::tests::no_edit_for_top_pat_where_type_annotation_is_invalid
+        PASS [   0.115s] ( 553/1046) ide inlay_hints::bind_pat::tests::multi_dyn_trait_bounds
+        PASS [   0.109s] ( 554/1046) ide inlay_hints::bind_pat::tests::no_edit_for_closure_return_without_body_block
+        PASS [   0.111s] ( 555/1046) ide inlay_hints::bind_pat::tests::no_edit_for_opaque_type
+        PASS [   0.146s] ( 556/1046) ide inlay_hints::bind_pat::tests::match_arm_list
+        PASS [   0.091s] ( 557/1046) ide inlay_hints::bind_pat::tests::type_hints_only
+        PASS [   0.125s] ( 558/1046) ide inlay_hints::bind_pat::tests::shows_constructor_type_hints_when_enabled
+        PASS [   0.105s] ( 559/1046) ide inlay_hints::bind_pat::tests::type_hints_async_block
+        PASS [   0.107s] ( 560/1046) ide inlay_hints::bind_pat::tests::type_hints_async_block_with_tail_return_exp
+        PASS [   0.096s] ( 561/1046) ide inlay_hints::bind_pat::tests::unit_structs_have_no_type_hints
+        PASS [   0.076s] ( 562/1046) ide inlay_hints::bind_pat::tests::works_in_included_file
+        PASS [   0.142s] ( 563/1046) ide inlay_hints::bind_pat::tests::skip_closure_type_hints
+        PASS [   0.177s] ( 564/1046) ide inlay_hints::bind_pat::tests::shorten_iterator_hints
+        PASS [   0.136s] ( 565/1046) ide inlay_hints::bind_pat::tests::type_hints_bindings_after_at
+        PASS [   0.090s] ( 566/1046) ide inlay_hints::binding_mode::tests::hints_binding_modes_complex_ident_pat
+        PASS [   0.081s] ( 567/1046) ide inlay_hints::chaining::tests::chaining_hints_without_newlines
+        PASS [   0.095s] ( 568/1046) ide inlay_hints::binding_mode::tests::hints_binding_modes
+        PASS [   0.180s] ( 569/1046) ide inlay_hints::bind_pat::tests::shorten_iterators_in_associated_params
+        PASS [   0.102s] ( 570/1046) ide inlay_hints::chaining::tests::chaining_hints_ignore_comments
+        PASS [   0.184s] ( 571/1046) ide inlay_hints::bind_pat::tests::skip_constructor_and_enum_type_hints
+        PASS [   0.145s] ( 572/1046) ide inlay_hints::bind_pat::tests::while_expr
+        PASS [   0.096s] ( 573/1046) ide inlay_hints::chaining::tests::disabled_location_links
+        PASS [   0.074s] ( 574/1046) ide inlay_hints::closing_brace::tests::hints_closing_brace_for_block_expr
+        PASS [   0.278s] ( 575/1046) ide inlay_hints::bind_pat::tests::iterator_hint_regression_issue_12674
+        PASS [   0.089s] ( 576/1046) ide inlay_hints::closing_brace::tests::hints_closing_brace
+        PASS [   0.104s] ( 577/1046) ide inlay_hints::chaining::tests::generic_chaining_hints
+        PASS [   0.106s] ( 578/1046) ide inlay_hints::chaining::tests::hints_in_attr_call
+        PASS [   0.078s] ( 579/1046) ide inlay_hints::discriminant::tests::datacarrying_mixed_fieldless_set
+        PASS [   0.125s] ( 580/1046) ide inlay_hints::chaining::tests::struct_access_chaining_hints
+        PASS [   0.096s] ( 581/1046) ide inlay_hints::closure_ret::tests::return_type_hints_for_closure_without_block
+        PASS [   0.095s] ( 582/1046) ide inlay_hints::discriminant::tests::fieldless
+        PASS [   0.105s] ( 583/1046) ide inlay_hints::discriminant::tests::datacarrying_mixed
+        PASS [   0.097s] ( 584/1046) ide inlay_hints::fn_lifetime_fn::tests::hints_lifetimes_named
+        PASS [   0.123s] ( 585/1046) ide inlay_hints::closure_captures::tests::move_token
+        PASS [   0.109s] ( 586/1046) ide inlay_hints::fn_lifetime_fn::tests::hints_lifetimes
+        PASS [   0.139s] ( 587/1046) ide inlay_hints::closure_captures::tests::all_capture_kinds
+        PASS [   0.101s] ( 588/1046) ide inlay_hints::fn_lifetime_fn::tests::hints_lifetimes_skip_fn_likes
+        PASS [   0.103s] ( 589/1046) ide inlay_hints::fn_lifetime_fn::tests::hints_lifetimes_trivial_skip
+        PASS [   0.105s] ( 590/1046) ide inlay_hints::generic_param::tests::assoc_type
+        PASS [   0.100s] ( 591/1046) ide inlay_hints::generic_param::tests::const_only
+        PASS [   0.098s] ( 592/1046) ide inlay_hints::generic_param::tests::const_only_config
+        PASS [   0.202s] ( 593/1046) ide inlay_hints::chaining::tests::shorten_iterator_chaining_hints
+        PASS [   0.082s] ( 594/1046) ide inlay_hints::generic_param::tests::mismatching_args
+        PASS [   0.096s] ( 595/1046) ide inlay_hints::generic_param::tests::lifetime_and_type_and_const
+        PASS [   0.097s] ( 596/1046) ide inlay_hints::generic_param::tests::lifetime_and_type
+        PASS [   0.106s] ( 597/1046) ide inlay_hints::generic_param::tests::hide_similar
+        PASS [   0.097s] ( 598/1046) ide inlay_hints::generic_param::tests::omit_lifetime
+        PASS [   0.094s] ( 599/1046) ide inlay_hints::generic_param::tests::type_only
+        PASS [   0.099s] ( 600/1046) ide inlay_hints::implicit_drop::tests::basic
+        PASS [   0.083s] ( 601/1046) ide inlay_hints::implicit_static::tests::hints_lifetimes_static
+        PASS [   0.098s] ( 602/1046) ide inlay_hints::implicit_drop::tests::if_let
+        PASS [   0.101s] ( 603/1046) ide inlay_hints::param_name::tests::never_hide_param_when_multiple_params
+        PASS [   0.100s] ( 604/1046) ide inlay_hints::param_name::tests::param_hints_look_through_as_ref_and_clone
+        PASS [   0.101s] ( 605/1046) ide inlay_hints::param_name::tests::param_hints_on_closure
+        PASS [   0.129s] ( 606/1046) ide inlay_hints::implicit_drop::tests::no_hint_for_copy_types_and_mutable_references
+        PASS [   0.103s] ( 607/1046) ide inlay_hints::param_name::tests::param_hints_only
+        PASS [   0.098s] ( 608/1046) ide inlay_hints::param_name::tests::param_name_hints_show_for_literals
+        PASS [   0.099s] ( 609/1046) ide inlay_hints::param_name::tests::param_name_similar_to_fn_name_still_hints
+        PASS [   0.074s] ( 610/1046) ide inlay_hints::range_exclusive::tests::range_exclusive_expression_unbounded_above_no_hints
+        PASS [   0.102s] ( 611/1046) ide inlay_hints::param_name::tests::param_name_similar_to_fn_name
+        PASS [   0.078s] ( 612/1046) ide inlay_hints::range_exclusive::tests::range_exclusive_expression_bounded_above_hints
+        PASS [   0.113s] ( 613/1046) ide inlay_hints::param_name::tests::param_name_same_as_fn_name
+        PASS [   0.102s] ( 614/1046) ide inlay_hints::param_name::tests::self_param_hints
+        PASS [   0.074s] ( 615/1046) ide inlay_hints::range_exclusive::tests::range_exclusive_pattern_unbounded_above_no_hints
+        PASS [   0.075s] ( 616/1046) ide inlay_hints::range_exclusive::tests::range_exclusive_pattern_bounded_above_hints
+        PASS [   0.071s] ( 617/1046) ide inlay_hints::range_exclusive::tests::range_inclusive_expression_no_hints
+        PASS [   0.117s] ( 618/1046) ide inlay_hints::param_name::tests::parameter_hint_heuristics
+        PASS [   0.162s] ( 619/1046) ide inlay_hints::param_name::tests::function_call_parameter_hint
+        PASS [   0.174s] ( 620/1046) ide inlay_hints::implicit_drop::tests::try_operator
+        PASS [   0.047s] ( 621/1046) ide join_lines::tests::join_last_line_empty
+        PASS [   0.051s] ( 622/1046) ide join_lines::tests::join_assignments
+        PASS [   0.047s] ( 623/1046) ide join_lines::tests::join_lines_adds_comma_for_block_in_match_arm
+        PASS [   0.049s] ( 624/1046) ide join_lines::tests::join_lines_keeps_comma_for_block_in_match_arm
+        PASS [   0.053s] ( 625/1046) ide join_lines::tests::join_lines_keeps_comma_with_single_arg_tuple
+        PASS [   0.053s] ( 626/1046) ide join_lines::tests::join_lines_mandatory_blocks_block
+        PASS [   0.053s] ( 627/1046) ide join_lines::tests::join_lines_multiline_in_block
+        PASS [   0.079s] ( 628/1046) ide inlay_hints::range_exclusive::tests::range_inclusive_pattern_no_hints
+        PASS [   0.058s] ( 629/1046) ide join_lines::tests::join_string_literal
+        PASS [   0.055s] ( 630/1046) ide join_lines::tests::test_join_lines_block
+        PASS [   0.056s] ( 631/1046) ide join_lines::tests::join_two_ifs
+        PASS [   0.090s] ( 632/1046) ide inlay_hints::tests::hints_disabled
+        PASS [   0.060s] ( 633/1046) ide join_lines::tests::join_two_ifs_with_existing_else
+        PASS [   0.060s] ( 634/1046) ide join_lines::tests::test_join_lines_comma
+        PASS [   0.060s] ( 635/1046) ide join_lines::tests::test_join_lines_commented_block
+        PASS [   0.060s] ( 636/1046) ide join_lines::tests::test_join_lines_diverging_block
+        PASS [   0.058s] ( 637/1046) ide join_lines::tests::test_join_lines_doc_comments
+        PASS [   0.058s] ( 638/1046) ide join_lines::tests::test_join_lines_lambda_block
+        PASS [   0.063s] ( 639/1046) ide join_lines::tests::test_join_lines_mod_comments
+        PASS [   0.063s] ( 640/1046) ide join_lines::tests::test_join_lines_multiline_comments_1
+        PASS [   0.062s] ( 641/1046) ide join_lines::tests::test_join_lines_multiline_comments_2
+        PASS [   0.061s] ( 642/1046) ide join_lines::tests::test_join_lines_normal_comments
+        PASS [   0.063s] ( 643/1046) ide join_lines::tests::test_join_lines_selection_fn_args
+        PASS [   0.065s] ( 644/1046) ide join_lines::tests::test_join_lines_selection_dot_chain
+        PASS [   0.066s] ( 645/1046) ide join_lines::tests::test_join_lines_selection_lambda_block_body
+        PASS [   0.065s] ( 646/1046) ide join_lines::tests::test_join_lines_selection_struct
+        PASS [   0.063s] ( 647/1046) ide join_lines::tests::test_join_lines_use_items_left
+        PASS [   0.057s] ( 648/1046) ide join_lines::tests::test_join_lines_use_tree
+        PASS [   0.059s] ( 649/1046) ide join_lines::tests::test_join_lines_use_items_right_comma
+        PASS [   0.056s] ( 650/1046) ide markdown_remove::tests::on_char_boundary
+        PASS [   0.062s] ( 651/1046) ide join_lines::tests::test_join_lines_use_items_right
+        PASS [   0.057s] ( 652/1046) ide matching_brace::tests::test_matching_brace
+        PASS [   0.057s] ( 653/1046) ide markdown_remove::tests::smoke_test
+        PASS [   0.101s] ( 654/1046) ide moniker::tests::moniker_for_trait
+        PASS [   0.103s] ( 655/1046) ide moniker::tests::moniker_for_trait_type
+        PASS [   0.104s] ( 656/1046) ide moniker::tests::moniker_for_trait_constant
+        PASS [   0.120s] ( 657/1046) ide moniker::tests::moniker_for_field
+        PASS [   0.126s] ( 658/1046) ide moniker::tests::basic
+        PASS [   0.094s] ( 659/1046) ide move_item::tests::handles_empty_file
+        PASS [   0.117s] ( 660/1046) ide moniker::tests::moniker_for_trait_impl_function
+        PASS [   0.116s] ( 661/1046) ide moniker::tests::no_moniker_for_local
+        PASS [   0.099s] ( 662/1046) ide move_item::tests::test_cursor_at_item_end
+        PASS [   0.100s] ( 663/1046) ide move_item::tests::test_cursor_at_item_start
+        PASS [   0.096s] ( 664/1046) ide move_item::tests::test_move_use_up
+        PASS [   0.103s] ( 665/1046) ide move_item::tests::test_move_impl_up
+        PASS [   0.096s] ( 666/1046) ide move_item::tests::test_moves_arg_up
+        PASS [   0.099s] ( 667/1046) ide move_item::tests::test_moves_arg_down
+        PASS [   0.103s] ( 668/1046) ide move_item::tests::test_move_item
+        PASS [   0.101s] ( 669/1046) ide move_item::tests::test_moves_expr_up
+        PASS [   0.100s] ( 670/1046) ide move_item::tests::test_moves_generic_param_up
+        PASS [   0.104s] ( 671/1046) ide move_item::tests::test_moves_generic_arg_up
+        PASS [   0.102s] ( 672/1046) ide move_item::tests::test_moves_let_stmt_up
+        PASS [   0.097s] ( 673/1046) ide move_item::tests::test_moves_match_arm_down
+        PASS [   0.098s] ( 674/1046) ide move_item::tests::test_moves_match_arm_up
+        PASS [   0.101s] ( 675/1046) ide move_item::tests::test_moves_match_expr_up
+        PASS [   0.099s] ( 676/1046) ide move_item::tests::test_moves_param
+        PASS [   0.096s] ( 677/1046) ide move_item::tests::test_moves_type_bound_up
+        PASS [   0.098s] ( 678/1046) ide move_item::tests::test_moves_variant_up
+        PASS [   0.098s] ( 679/1046) ide move_item::tests::test_nowhere_to_move
+        PASS [   0.101s] ( 680/1046) ide move_item::tests::test_nowhere_to_move_arg
+        PASS [   0.100s] ( 681/1046) ide move_item::tests::test_prioritizes_trait_items
+        PASS [   0.101s] ( 682/1046) ide move_item::tests::test_weird_nesting
+        PASS [   0.095s] ( 683/1046) ide parent_module::tests::test_resolve_crate_root
+        PASS [   0.106s] ( 684/1046) ide move_item::tests::test_nowhere_to_move_stmt
+        PASS [   0.099s] ( 685/1046) ide parent_module::tests::test_resolve_multi_parent_crate
+        PASS [   0.106s] ( 686/1046) ide parent_module::tests::test_resolve_multi_parent_module
+        PASS [   0.120s] ( 687/1046) ide navigation_target::tests::test_nav_for_symbol
+        PASS [   0.128s] ( 688/1046) ide navigation_target::tests::test_world_symbols_are_case_sensitive
+        PASS [   0.132s] ( 689/1046) ide navigation_target::tests::test_ensure_hidden_symbols_are_not_returned
+        PASS [   0.103s] ( 690/1046) ide parent_module::tests::test_resolve_parent_module
+        PASS [   0.099s] ( 691/1046) ide parent_module::tests::test_resolve_parent_module_for_inline
+        PASS [   0.100s] ( 692/1046) ide parent_module::tests::test_resolve_parent_module_on_module_decl
+        PASS [   0.094s] ( 693/1046) ide references::tests::goto_ref_exit_points
+        PASS [   0.116s] ( 694/1046) ide references::tests::attr
+        PASS [   0.115s] ( 695/1046) ide references::tests::derive
+        PASS [   0.127s] ( 696/1046) ide references::tests::attr_assoc_item
+        PASS [   0.121s] ( 697/1046) ide references::tests::attr_expanded
+        PASS [   0.099s] ( 698/1046) ide references::tests::goto_ref_on_break_in_try
+        PASS [   0.111s] ( 699/1046) ide references::tests::goto_ref_for_kw
+        PASS [   0.117s] ( 700/1046) ide references::tests::exclude_tests
+        PASS [   0.117s] ( 701/1046) ide references::tests::goto_ref_fn_kw
+        PASS [   0.101s] ( 702/1046) ide references::tests::goto_ref_on_break_kw
+        PASS [   0.148s] ( 703/1046) ide references::tests::assoc_items_trait_def
+        PASS [   0.150s] ( 704/1046) ide references::tests::assoc_items_ref
+        PASS [   0.096s] ( 705/1046) ide references::tests::goto_ref_on_break_with_label
+        PASS [   0.147s] ( 706/1046) ide references::tests::assoc_items_trait_impl_def
+        PASS [   0.103s] ( 707/1046) ide references::tests::goto_ref_on_break_kw_for_block
+        PASS [   0.097s] ( 708/1046) ide references::tests::goto_ref_on_return_in_async_block
+        PASS [   0.104s] ( 709/1046) ide references::tests::goto_ref_on_return_in_try
+        PASS [   0.132s] ( 710/1046) ide references::tests::goto_ref_on_return_in_macro_call
+        PASS [   0.094s] ( 711/1046) ide references::tests::macro_doesnt_reference_attribute_on_call
+        PASS [   0.119s] ( 712/1046) ide references::tests::goto_ref_on_short_associated_function_complicated_type_magic_can_confuse_our_logic
+        PASS [   0.126s] ( 713/1046) ide references::tests::goto_ref_on_short_associated_function
+        PASS [   0.111s] ( 714/1046) ide references::tests::goto_ref_on_short_associated_function_overlapping_self_ranges
+        PASS [   0.098s] ( 715/1046) ide references::tests::proc_macro
+        PASS [   0.119s] ( 716/1046) ide references::tests::goto_ref_on_short_associated_function_same_path_mention_alias_and_self
+        PASS [   0.124s] ( 717/1046) ide references::tests::goto_ref_on_short_associated_function_no_direct_self_but_path_contains_self
+        PASS [   0.115s] ( 718/1046) ide references::tests::multi_def
+        PASS [   0.125s] ( 719/1046) ide references::tests::goto_ref_on_short_associated_function_self_works
+        PASS [   0.111s] ( 720/1046) ide references::tests::search_filters_by_range
+        PASS [   0.113s] ( 721/1046) ide references::tests::raw_identifier
+        PASS [   0.130s] ( 722/1046) ide references::tests::goto_ref_on_short_associated_function_with_aliases
+        PASS [   0.114s] ( 723/1046) ide references::tests::test_access
+        PASS [   0.127s] ( 724/1046) ide references::tests::name_clashes
+        PASS [   0.109s] ( 725/1046) ide references::tests::test_attr_differs_from_fn_with_same_name
+        PASS [   0.110s] ( 726/1046) ide references::tests::test_basic_highlight_decl_no_write
+        PASS [   0.183s] ( 727/1046) ide references::tests::implicit_format_args
+        PASS [   0.106s] ( 728/1046) ide references::tests::test_basic_highlight_field_read_write
+        PASS [   0.091s] ( 729/1046) ide references::tests::test_decl_macro_references
+        PASS [   0.096s] ( 730/1046) ide references::tests::test_const_in_pattern
+        PASS [   0.105s] ( 731/1046) ide references::tests::test_basic_highlight_read_write
+        PASS [   0.085s] ( 732/1046) ide references::tests::test_find_all_refs_decl_module
+        PASS [   0.105s] ( 733/1046) ide references::tests::test_enum_before_space
+        PASS [   0.091s] ( 734/1046) ide references::tests::test_find_all_refs_decl_module_on_self_crate_root
+        PASS [   0.102s] ( 735/1046) ide references::tests::test_enum_for_tuple
+        PASS [   0.096s] ( 736/1046) ide references::tests::test_find_all_refs_enum_var_field
+        PASS [   0.112s] ( 737/1046) ide references::tests::test_enum_after_space
+        PASS [   0.090s] ( 738/1046) ide references::tests::test_find_all_refs_enum_var_name
+        PASS [   0.099s] ( 739/1046) ide references::tests::test_find_all_refs_decl_module_on_self
+        PASS [   0.110s] ( 740/1046) ide references::tests::test_enum_with_generic_type
+        PASS [   0.109s] ( 741/1046) ide references::tests::test_find_all_refs_enum_var_pat
+        PASS [   0.106s] ( 742/1046) ide references::tests::test_find_all_refs_enum_var_privacy
+        PASS [   0.109s] ( 743/1046) ide references::tests::test_find_all_refs_field_name
+        PASS [   0.117s] ( 744/1046) ide references::tests::test_find_all_refs_for_fn_param
+        PASS [   0.111s] ( 745/1046) ide references::tests::test_find_all_refs_for_param_inside
+        PASS [   0.124s] ( 746/1046) ide references::tests::test_find_all_refs_for_local
+        PASS [   0.117s] ( 747/1046) ide references::tests::test_find_all_refs_impl_item_name
+        PASS [   0.118s] ( 748/1046) ide references::tests::test_find_all_refs_macro_def
+        PASS [   0.101s] ( 749/1046) ide references::tests::test_find_labels
+        PASS [   0.101s] ( 750/1046) ide references::tests::test_find_lifetimes_trait_impl
+        PASS [   0.103s] ( 751/1046) ide references::tests::test_find_lifetimes_function
+        PASS [   0.121s] ( 752/1046) ide references::tests::test_find_all_refs_nested_module
+        PASS [   0.121s] ( 753/1046) ide references::tests::test_find_all_refs_struct_pat
+        PASS [   0.114s] ( 754/1046) ide references::tests::test_find_all_refs_two_modules
+        PASS [   0.101s] ( 755/1046) ide references::tests::test_find_lifetimes_type_alias
+        PASS [   0.120s] ( 756/1046) ide references::tests::test_find_all_refs_super_mod_vis
+        PASS [   0.122s] ( 757/1046) ide references::tests::test_find_const_param
+        PASS [   0.109s] ( 758/1046) ide references::tests::test_find_self_refs
+        PASS [   0.132s] ( 759/1046) ide references::tests::test_find_all_refs_with_scope
+        PASS [   0.119s] ( 760/1046) ide references::tests::test_find_self_refs_decl
+        PASS [   0.120s] ( 761/1046) ide references::tests::test_find_struct_function_refs_outside_module
+        PASS [   0.126s] ( 762/1046) ide references::tests::test_map_range_to_original
+        PASS [   0.102s] ( 763/1046) ide references::tests::test_ref_yield_points
+        PASS [   0.122s] ( 764/1046) ide references::tests::test_map_range_to_original_ref
+        PASS [   0.121s] ( 765/1046) ide references::tests::test_primitives
+        PASS [   0.117s] ( 766/1046) ide references::tests::test_self_inside_not_adt_impl
+        PASS [   0.117s] ( 767/1046) ide references::tests::test_self_ty
+        PASS [   0.122s] ( 768/1046) ide references::tests::test_self
+        PASS [   0.099s] ( 769/1046) ide references::tests::test_trait
+        PASS [   0.118s] ( 770/1046) ide references::tests::test_self_variant_with_payload
+        PASS [   0.116s] ( 771/1046) ide references::tests::test_struct_literal_after_space
+        PASS [   0.119s] ( 772/1046) ide references::tests::test_struct_literal_for_tuple
+        PASS [   0.117s] ( 773/1046) ide references::tests::test_struct_literal_with_generic_type
+        PASS [   0.124s] ( 774/1046) ide references::tests::test_struct_literal_before_space
+        PASS [   0.101s] ( 775/1046) ide references::tests::test_trait_alias_self
+        PASS [   0.126s] ( 776/1046) ide references::tests::test_struct_literal_for_union
+        PASS [   0.122s] ( 777/1046) ide references::tests::test_trait_alias
+        PASS [   0.122s] ( 778/1046) ide references::tests::test_trait_self
+        PASS [   0.122s] ( 779/1046) ide references::tests::test_transitive
+        PASS [   0.118s] ( 780/1046) ide references::tests::test_variant_tuple_before_paren
+        PASS [   0.092s] ( 781/1046) ide rename::tests::extern_crate_self_rename
+        PASS [   0.093s] ( 782/1046) ide rename::tests::extern_crate_self
+        PASS [   0.121s] ( 783/1046) ide references::tests::test_variant_record_after_space
+        PASS [   0.094s] ( 784/1046) ide rename::tests::extern_crate_rename
+        PASS [   0.114s] ( 785/1046) ide rename::tests::attributed_item
+        PASS [   0.099s] ( 786/1046) ide rename::tests::extern_crate
+        PASS [   0.093s] ( 787/1046) ide rename::tests::regression_13498
+        PASS [   0.107s] ( 788/1046) ide rename::tests::disallow_renaming_for_builtin_macros
+        PASS [   0.119s] ( 789/1046) ide rename::tests::defs_from_macros_arent_renamed
+        PASS [   0.110s] ( 790/1046) ide rename::tests::disallow_renaming_for_non_local_definition
+        PASS [   0.109s] ( 791/1046) ide rename::tests::in_macro_multi_mapping
+        PASS [   0.112s] ( 792/1046) ide rename::tests::rename_multi_local
+        PASS [   0.104s] ( 793/1046) ide rename::tests::rename_path_inside_use_tree_foreign
+        PASS [   0.119s] ( 794/1046) ide rename::tests::rename_path_inside_use_tree
+        PASS [   0.177s] ( 795/1046) ide rename::tests::implicit_format_args2
+        PASS [   0.094s] ( 796/1046) ide rename::tests::test_module_rename_in_path
+        PASS [   0.119s] ( 797/1046) ide rename::tests::rename_raw_identifier
+        PASS [   0.082s] ( 798/1046) ide rename::tests::test_prepare_rename_in_macro
+        PASS [   0.098s] ( 799/1046) ide rename::tests::test_field_shorthand_correct_struct
+        PASS [   0.099s] ( 800/1046) ide rename::tests::test_owned_self_to_parameter
+        PASS [   0.103s] ( 801/1046) ide rename::tests::test_enum_variant_from_module_2
+        PASS [   0.190s] ( 802/1046) ide rename::tests::implicit_format_args
+        PASS [   0.105s] ( 803/1046) ide rename::tests::test_enum_variant_from_module_1
+        PASS [   0.097s] ( 804/1046) ide rename::tests::test_parameter_to_self_error_not_first
+        PASS [   0.105s] ( 805/1046) ide rename::tests::test_parameter_to_self
+        PASS [   0.107s] ( 806/1046) ide rename::tests::test_parameter_to_self_error_no_impl
+        PASS [   0.103s] ( 807/1046) ide rename::tests::test_parameter_to_self_impl_ref
+        PASS [   0.101s] ( 808/1046) ide rename::tests::test_prepare_rename_builtin
+        PASS [   0.090s] ( 809/1046) ide rename::tests::test_prepare_rename_keyword
+        PASS [   0.107s] ( 810/1046) ide rename::tests::test_prepare_rename_namelikes
+        PASS [   0.105s] ( 811/1046) ide rename::tests::test_prepare_rename_self
+        PASS [   0.101s] ( 812/1046) ide rename::tests::test_prepare_rename_tuple_field
+        PASS [   0.094s] ( 813/1046) ide rename::tests::test_rename_accepts_lifetime_without_apostrophe
+        PASS [   0.089s] ( 814/1046) ide rename::tests::test_rename_fails_on_aliases
+        PASS [   0.107s] ( 815/1046) ide rename::tests::test_rename_binding_in_destructure_param_pat
+        PASS [   0.110s] ( 816/1046) ide rename::tests::test_rename_builtin
+        PASS [   0.115s] ( 817/1046) ide rename::tests::test_rename_bind_pat
+        PASS [   0.112s] ( 818/1046) ide rename::tests::test_rename_binding_in_destructure_pat
+        PASS [   0.111s] ( 819/1046) ide rename::tests::test_rename_field_in_field_shorthand
+        PASS [   0.110s] ( 820/1046) ide rename::tests::test_rename_field_put_init_shorthand
+        PASS [   0.108s] ( 821/1046) ide rename::tests::test_rename_for_local
+        PASS [   0.121s] ( 822/1046) ide rename::tests::test_rename_each_usage_gets_appropriate_rawness
+        PASS [   0.108s] ( 823/1046) ide rename::tests::test_rename_for_macro_define_fn
+        PASS [   0.113s] ( 824/1046) ide rename::tests::test_rename_for_macro_args
+        PASS [   0.121s] ( 825/1046) ide rename::tests::test_rename_field_in_pat_in_macro_doesnt_shorthand
+        PASS [   0.110s] ( 826/1046) ide rename::tests::test_rename_for_macro_define_fn_rev
+        PASS [   0.113s] ( 827/1046) ide rename::tests::test_rename_for_macro_args_rev
+        PASS [   0.086s] ( 828/1046) ide rename::tests::test_rename_ignores_self_ty
+        PASS [   0.127s] ( 829/1046) ide rename::tests::test_rename_for_mut_param
+        PASS [   0.111s] ( 830/1046) ide rename::tests::test_rename_for_param_inside
+        PASS [   0.100s] ( 831/1046) ide rename::tests::test_rename_label
+        PASS [   0.095s] ( 832/1046) ide rename::tests::test_rename_label_new_name_without_apostrophe
+        PASS [   0.102s] ( 833/1046) ide rename::tests::test_rename_lifetimes
+        PASS [   0.095s] ( 834/1046) ide rename::tests::test_rename_mod
+        PASS [   0.094s] ( 835/1046) ide rename::tests::test_rename_mod_for_crate_root
+        PASS [   0.095s] ( 836/1046) ide rename::tests::test_rename_mod_in_macro
+        PASS [   0.095s] ( 837/1046) ide rename::tests::test_rename_mod_in_dir
+        PASS [   0.094s] ( 838/1046) ide rename::tests::test_rename_mod_invalid
+        PASS [   0.115s] ( 839/1046) ide rename::tests::test_rename_local_simple
+        PASS [   0.118s] ( 840/1046) ide rename::tests::test_rename_local_put_init_shorthand
+        PASS [   0.122s] ( 841/1046) ide rename::tests::test_rename_local_in_field_shorthand
+        PASS [   0.112s] ( 842/1046) ide rename::tests::test_rename_mod_filename_and_path
+        PASS [   0.108s] ( 843/1046) ide rename::tests::test_rename_mod_in_use_tree
+        PASS [   0.120s] ( 844/1046) ide rename::tests::test_rename_macro_multiple_occurrences
+        PASS [   0.122s] ( 845/1046) ide rename::tests::test_rename_mod_from_raw_ident
+        PASS [   0.100s] ( 846/1046) ide rename::tests::test_rename_mod_invalid_raw_ident
+        PASS [   0.100s] ( 847/1046) ide rename::tests::test_rename_mod_recursive
+        PASS [   0.111s] ( 848/1046) ide rename::tests::test_rename_mod_ref_by_super
+        PASS [   0.111s] ( 849/1046) ide rename::tests::test_rename_refs_for_fn_param
+        PASS [   0.117s] ( 850/1046) ide rename::tests::test_rename_mod_to_raw_ident
+        PASS [   0.118s] ( 851/1046) ide rename::tests::test_rename_self
+        PASS [   0.109s] ( 852/1046) ide rename::tests::test_rename_to_invalid_identifier2
+        PASS [   0.105s] ( 853/1046) ide rename::tests::test_rename_to_invalid_identifier_lifetime2
+        PASS [   0.121s] ( 854/1046) ide rename::tests::test_rename_to_invalid_identifier1
+        PASS [   0.124s] ( 855/1046) ide rename::tests::test_rename_struct_field
+        PASS [   0.116s] ( 856/1046) ide rename::tests::test_rename_to_invalid_identifier_lifetime
+        PASS [   0.114s] ( 857/1046) ide rename::tests::test_rename_to_underscore_invalid
+        PASS [   0.127s] ( 858/1046) ide rename::tests::test_rename_to_invalid_identifier3
+        PASS [   0.110s] ( 859/1046) ide rename::tests::test_rename_trait_method_prefix_of_second
+        PASS [   0.128s] ( 860/1046) ide rename::tests::test_rename_to_underscore
+        PASS [   0.133s] ( 861/1046) ide rename::tests::test_rename_to_raw_identifier
+        PASS [   0.131s] ( 862/1046) ide rename::tests::test_rename_trait_const
+        PASS [   0.121s] ( 863/1046) ide rename::tests::test_rename_tuple_field
+        PASS [   0.115s] ( 864/1046) ide rename::tests::test_rename_unresolved_reference
+        PASS [   0.104s] ( 865/1046) ide rename::tests::test_rename_unusually_nested_mod
+        PASS [   0.158s] ( 866/1046) ide rename::tests::test_rename_trait_method
+        PASS [   0.117s] ( 867/1046) ide rename::tests::test_self_to_parameter
+        PASS [   0.127s] ( 868/1046) ide rename::tests::test_self_in_path_to_parameter
+        PASS [   0.103s] ( 869/1046) ide rename::tests::test_self_to_self
+        PASS [   0.103s] ( 870/1046) ide runnables::tests::attributed_module
+        PASS [   0.114s] ( 871/1046) ide rename::tests::test_struct_field_complex_ident_pat
+        PASS [   0.099s] ( 872/1046) ide runnables::tests::big_mac
+        PASS [   0.117s] ( 873/1046) ide rename::tests::test_shadow_local_for_struct_shorthand
+        PASS [   0.100s] ( 874/1046) ide runnables::tests::doc_test_macro_export_mbe
+        PASS [   0.098s] ( 875/1046) ide runnables::tests::dont_recurse_in_outline_submodules
+        PASS [   0.121s] ( 876/1046) ide rename::tests::test_struct_local_pat_into_shorthand
+        PASS [   0.125s] ( 877/1046) ide rename::tests::test_struct_field_pat_into_shorthand
+        PASS [   0.104s] ( 878/1046) ide runnables::tests::exported_main_is_test_in_cfg_test_mod
+        PASS [   0.120s] ( 879/1046) ide runnables::tests::doc_test_type_params
+        PASS [   0.111s] ( 880/1046) ide runnables::tests::find_direct_struct_test
+        PASS [   0.104s] ( 881/1046) ide runnables::tests::find_no_tests
+        PASS [   0.127s] ( 882/1046) ide runnables::tests::find_direct_fn_test
+        PASS [   0.111s] ( 883/1046) ide runnables::tests::only_modules_with_test_functions_or_more_than_one_test_submodule_have_runners
+        PASS [   0.124s] ( 884/1046) ide runnables::tests::find_indirect_fn_test
+        PASS [   0.102s] ( 885/1046) ide runnables::tests::outline_submodule1
+        PASS [   0.101s] ( 886/1046) ide runnables::tests::outline_submodule2
+        PASS [   0.100s] ( 887/1046) ide runnables::tests::test_runnables
+        PASS [   0.119s] ( 888/1046) ide runnables::tests::test_doc_runnables_impl_mod
+        PASS [   0.118s] ( 889/1046) ide runnables::tests::test_runnables_doc_test
+        PASS [   0.133s] ( 890/1046) ide runnables::tests::test_paths_with_raw_ident
+        PASS [   0.128s] ( 891/1046) ide runnables::tests::test_runnables_doc_test_in_impl
+        PASS [   0.128s] ( 892/1046) ide runnables::tests::test_runnables_doc_test_in_impl_with_const
+        PASS [   0.121s] ( 893/1046) ide runnables::tests::test_runnables_doc_test_in_impl_with_lifetime
+        PASS [   0.121s] ( 894/1046) ide runnables::tests::test_runnables_doc_test_in_impl_with_lifetime_types_and_const
+        PASS [   0.127s] ( 895/1046) ide runnables::tests::test_runnables_doc_test_in_impl_with_lifetime_type_const_value
+        PASS [   0.133s] ( 896/1046) ide runnables::tests::test_runnables_doc_test_in_impl_with_lifetime_and_types
+        PASS [   0.100s] ( 897/1046) ide runnables::tests::test_runnables_with_feature
+        PASS [   0.122s] ( 898/1046) ide runnables::tests::test_runnables_in_macro
+        PASS [   0.108s] ( 899/1046) ide runnables::tests::test_runnables_no_test_function_in_module
+        PASS [   0.119s] ( 900/1046) ide runnables::tests::test_runnables_module
+        PASS [   0.107s] ( 901/1046) ide runnables::tests::test_runnables_with_features
+        PASS [   0.114s] ( 902/1046) ide signature_help::tests::call_info_bad_offset
+        PASS [   0.137s] ( 903/1046) ide runnables::tests::tests_are_unique
+        PASS [   0.125s] ( 904/1046) ide signature_help::tests::call_info_for_fn_ptr
+        PASS [   0.158s] ( 905/1046) ide signature_help::tests::call_info_for_fn_def_over_reference
+        PASS [   0.123s] ( 906/1046) ide signature_help::tests::cant_call_enum_record
+        PASS [   0.125s] ( 907/1046) ide signature_help::tests::cant_call_struct_record
+        PASS [   0.123s] ( 908/1046) ide signature_help::tests::fn_signature_for_call_in_macro
+        PASS [   0.116s] ( 909/1046) ide signature_help::tests::fn_signature_for_method_call_defined_in_macro
+        PASS [   0.134s] ( 910/1046) ide signature_help::tests::call_info_for_unclosed_call
+        PASS [   0.110s] ( 911/1046) ide signature_help::tests::no_assoc_types_outside_type_bounds
+        PASS [   0.123s] ( 912/1046) ide signature_help::tests::fully_qualified_syntax
+        PASS [   0.151s] ( 913/1046) ide signature_help::tests::call_info_for_lambdas
+        PASS [   0.129s] ( 914/1046) ide signature_help::tests::generic_struct
+        PASS [   0.126s] ( 915/1046) ide signature_help::tests::impl_trait
+        PASS [   0.127s] ( 916/1046) ide signature_help::tests::record_literal
+        PASS [   0.196s] ( 917/1046) ide signature_help::tests::call_info_for_fn_impl
+        PASS [   0.146s] ( 918/1046) ide signature_help::tests::outside_of_arg_list
+        PASS [   0.161s] ( 919/1046) ide signature_help::tests::help_for_generic_call
+        PASS [   0.112s] ( 920/1046) ide signature_help::tests::record_literal_self
+        PASS [   0.124s] ( 921/1046) ide signature_help::tests::record_literal_nonexistent_field
+        PASS [   0.123s] ( 922/1046) ide signature_help::tests::record_pat
+        PASS [   0.120s] ( 923/1046) ide signature_help::tests::test_enum_in_nested_method_in_lambda
+        PASS [   0.132s] ( 924/1046) ide signature_help::tests::regression_13579
+        PASS [   0.122s] ( 925/1046) ide signature_help::tests::test_fn_signature_for_method_self
+        PASS [   0.118s] ( 926/1046) ide signature_help::tests::test_fn_signature_for_method_with_arg_as_assoc_fn
+        PASS [   0.127s] ( 927/1046) ide signature_help::tests::test_fn_signature_for_impl
+        PASS [   0.121s] ( 928/1046) ide signature_help::tests::test_fn_signature_no_params
+        PASS [   0.139s] ( 929/1046) ide signature_help::tests::test_fn_signature_for_generic_method
+        PASS [   0.140s] ( 930/1046) ide signature_help::tests::test_fn_signature_for_method_with_arg
+        PASS [   0.129s] ( 931/1046) ide signature_help::tests::test_fn_signature_two_args_empty
+        PASS [   0.135s] ( 932/1046) ide signature_help::tests::test_fn_signature_two_args_first_generics
+        PASS [   0.120s] ( 933/1046) ide signature_help::tests::test_fn_signature_with_docs
+        PASS [   0.148s] ( 934/1046) ide signature_help::tests::test_fn_signature_two_args
+        PASS [   0.136s] ( 935/1046) ide signature_help::tests::test_fn_signature_with_docs_impl
+        PASS [   0.146s] ( 936/1046) ide signature_help::tests::test_fn_signature_with_docs_from_actix
+        PASS [   0.136s] ( 937/1046) ide signature_help::tests::test_fn_signature_with_docs_simple
+        PASS [   0.139s] ( 938/1046) ide signature_help::tests::test_generic_kinds
+        PASS [   0.144s] ( 939/1046) ide signature_help::tests::test_generic_param_in_method_call
+        PASS [   0.131s] ( 940/1046) ide signature_help::tests::test_generics_in_method_call
+        PASS [   0.114s] ( 941/1046) ide signature_help::tests::test_generics_simple
+        PASS [   0.135s] ( 942/1046) ide signature_help::tests::test_generics_in_trait_ufcs
+        PASS [   0.142s] ( 943/1046) ide signature_help::tests::test_generics_on_variant
+        PASS [   0.128s] ( 944/1046) ide signature_help::tests::test_nested_method_in_lambda
+        PASS [   0.135s] ( 945/1046) ide signature_help::tests::test_lots_of_generics
+        PASS [   0.139s] ( 946/1046) ide signature_help::tests::test_supertrait_assoc
+        PASS [   0.132s] ( 947/1046) ide signature_help::tests::test_tuple_expr_expected
+        PASS [   0.165s] ( 948/1046) ide signature_help::tests::test_multiline_argument
+        PASS [   0.143s] ( 949/1046) ide signature_help::tests::test_tuple_expr_free
+        PASS [   0.153s] ( 950/1046) ide signature_help::tests::test_tuple_pat_expected
+        PASS [   0.136s] ( 951/1046) ide signature_help::tests::tuple_struct_pat
+        PASS [   0.088s] ( 952/1046) ide ssr::tests::not_applicable_comment_not_ssr
+        PASS [   0.185s] ( 953/1046) ide signature_help::tests::test_trait_assoc_types
+        PASS [   0.167s] ( 954/1046) ide signature_help::tests::test_tuple_pat_expected_inferred
+        PASS [   0.137s] ( 955/1046) ide signature_help::tests::works_for_enum_variants
+        PASS [   0.093s] ( 956/1046) ide ssr::tests::resolve_edits_false
+        PASS [   0.154s] ( 957/1046) ide signature_help::tests::tuple_variant_record_literal
+        PASS [   0.138s] ( 958/1046) ide signature_help::tests::works_for_tuple_structs
+        PASS [   0.181s] ( 959/1046) ide signature_help::tests::test_tuple_pat_free
+        PASS [   0.104s] ( 960/1046) ide ssr::tests::resolve_edits_true
+        PASS [   0.056s] ( 961/1046) ide syntax_highlighting::tests::benchmark_syntax_highlighting_long_struct
+        PASS [   0.184s] ( 962/1046) ide signature_help::tests::tuple_struct_pat_rest
+        PASS [   0.063s] ( 963/1046) ide syntax_highlighting::tests::benchmark_syntax_highlighting_parser
+        PASS [   0.135s] ( 964/1046) ide static_index::tests::derives
+        PASS [   0.053s] ( 965/1046) ide syntax_highlighting::tests::syntax_highlighting_not_quadratic
+        PASS [   0.138s] ( 966/1046) ide static_index::tests::multi_crate
+        PASS [   0.127s] ( 967/1046) ide static_index::tests::vendored_crate
+        PASS [   0.131s] ( 968/1046) ide static_index::tests::struct_and_enum
+        PASS [   0.126s] ( 969/1046) ide static_index::tests::vendored_crate_excluded
+        PASS [   0.095s] ( 970/1046) ide syntax_highlighting::tests::ranges_sorted
+        PASS [   0.143s] ( 971/1046) ide syntax_highlighting::tests::attributes
+        PASS [   0.134s] ( 972/1046) ide syntax_highlighting::tests::highlight_trait_with_lifetimes_regression_16958
+        PASS [   0.153s] ( 973/1046) ide syntax_highlighting::tests::highlight_callable_no_crash
+        PASS [   0.132s] ( 974/1046) ide syntax_highlighting::tests::test_associated_function
+        PASS [   0.113s] ( 975/1046) ide syntax_highlighting::tests::test_extern_crate
+        PASS [   0.138s] ( 976/1046) ide syntax_highlighting::tests::test_block_mod_items
+        PASS [   0.143s] ( 977/1046) ide syntax_highlighting::tests::test_const_highlighting
+        PASS [   0.125s] ( 978/1046) ide syntax_highlighting::tests::test_keyword_highlighting
+        PASS [   0.119s] ( 979/1046) ide syntax_highlighting::tests::test_lifetime_highlighting
+        PASS [   0.119s] ( 980/1046) ide syntax_highlighting::tests::test_mod_hl_injection
+        PASS [   0.139s] ( 981/1046) ide syntax_highlighting::tests::test_injection
+        PASS [   0.119s] ( 982/1046) ide syntax_highlighting::tests::test_operators
+        PASS [   0.098s] ( 983/1046) ide syntax_highlighting::tests::test_ranges
+        PASS [   0.210s] ( 984/1046) ide syntax_highlighting::tests::macros
+        PASS [   0.176s] ( 985/1046) ide syntax_highlighting::tests::test_highlight_doc_comment
+        PASS [   0.120s] ( 986/1046) ide syntax_highlighting::tests::test_rainbow_highlighting
+        PASS [   0.084s] ( 987/1046) ide syntax_tree::tests::test_syntax_tree_inside_string
+        PASS [   0.203s] ( 988/1046) ide syntax_highlighting::tests::test_crate_root
+        PASS [   0.068s] ( 989/1046) ide typing::on_enter::tests::continues_another_doc_comment
+        PASS [   0.093s] ( 990/1046) ide syntax_tree::tests::test_syntax_tree_with_range
+        PASS [   0.219s] ( 991/1046) ide syntax_highlighting::tests::test_default_library
+        PASS [   0.097s] ( 992/1046) ide syntax_tree::tests::test_syntax_tree_without_range
+        PASS [   0.075s] ( 993/1046) ide typing::on_enter::tests::continues_code_comment_in_the_middle_of_line
+        PASS [   0.067s] ( 994/1046) ide typing::on_enter::tests::does_not_continue_before_doc_comment
+        PASS [   0.076s] ( 995/1046) ide typing::on_enter::tests::continues_doc_comment
+        PASS [   0.081s] ( 996/1046) ide typing::on_enter::tests::continues_code_comment_in_the_middle_several_lines
+        PASS [   0.073s] ( 997/1046) ide typing::on_enter::tests::continues_end_of_line_comment_with_space
+        PASS [   0.079s] ( 998/1046) ide typing::on_enter::tests::does_not_continue_end_of_line_comment
+        PASS [   0.072s] ( 999/1046) ide typing::on_enter::tests::does_not_indent_multiline_block
+        PASS [   0.243s] (1000/1046) ide syntax_highlighting::tests::test_highlighting
+        PASS [   0.160s] (1001/1046) ide syntax_highlighting::tests::test_unsafe_highlighting
+        PASS [   0.094s] (1002/1046) ide typing::on_enter::tests::does_not_indent_block_with_too_much_content
+        PASS [   0.075s] (1003/1046) ide typing::on_enter::tests::does_not_indent_use_tree_list_when_not_at_curly_brace
+        PASS [   0.079s] (1004/1046) ide typing::on_enter::tests::does_not_indent_multiline_use_tree_list
+        PASS [   0.072s] (1005/1046) ide typing::on_enter::tests::does_not_indent_use_tree_list_without_curly_braces
+        PASS [   0.074s] (1006/1046) ide typing::on_enter::tests::indents_block_expr
+        PASS [   0.091s] (1007/1046) ide typing::on_enter::tests::does_not_indent_empty_block
+        PASS [   0.063s] (1008/1046) ide typing::tests::adds_closing_angle_bracket_for_generic_args
+        PASS [   0.087s] (1009/1046) ide typing::on_enter::tests::indents_block_with_statement
+        PASS [   0.073s] (1010/1046) ide typing::on_enter::tests::indents_nested_blocks
+        PASS [   0.078s] (1011/1046) ide typing::on_enter::tests::indents_match_arm
+        PASS [   0.058s] (1012/1046) ide typing::tests::adds_closing_angle_bracket_for_generic_params
+        PASS [   0.089s] (1013/1046) ide typing::on_enter::tests::indents_fn_body_block
+        PASS [   0.056s] (1014/1046) ide typing::tests::adds_closing_brace_for_expr
+        PASS [   0.087s] (1015/1046) ide typing::on_enter::tests::trims_all_trailing_whitespace
+        PASS [   0.090s] (1016/1046) ide typing::on_enter::tests::indents_use_tree_list
+        PASS [   0.055s] (1017/1046) ide typing::tests::adds_space_after_return_type
+        PASS [   0.063s] (1018/1046) ide typing::tests::adds_closing_brace_for_use_tree
+        PASS [   0.063s] (1019/1046) ide typing::tests::adds_closing_parenthesis_for_expr
+        PASS [   0.060s] (1020/1046) ide typing::tests::dont_add_closing_angle_bracket_for_comparison
+        PASS [   0.055s] (1021/1046) ide typing::tests::indents_continued_chain_call
+        PASS [   0.066s] (1022/1046) ide typing::tests::assign_to_eq
+        PASS [   0.057s] (1023/1046) ide typing::tests::dont_indent_freestanding_dot
+        PASS [   0.064s] (1024/1046) ide typing::tests::dont_add_closing_angle_bracket_if_it_is_already_there
+        PASS [   0.054s] (1025/1046) ide typing::tests::indents_new_chain_call_with_let
+        PASS [   0.058s] (1026/1046) ide typing::tests::indents_new_chain_call
+        PASS [   0.059s] (1027/1046) ide typing::tests::indents_new_chain_call_with_semi
+        PASS [   0.065s] (1028/1046) ide typing::tests::indents_middle_of_chain_call
+        PASS [   0.057s] (1029/1046) ide typing::tests::noop_in_item_position_with_macro
+        PASS [   0.053s] (1030/1046) ide typing::tests::noop_in_string_literal
+        PASS [   0.050s] (1031/1046) ide typing::tests::parenthesis_noop_in_item_position_with_macro
+        PASS [   0.053s] (1032/1046) ide typing::tests::regression_629
+        PASS [   0.058s] (1033/1046) ide typing::tests::parenthesis_noop_in_string_literal
+        PASS [   0.059s] (1034/1046) ide typing::tests::parenthesis_noop_in_use_tree
+        PASS [   0.057s] (1035/1046) ide typing::tests::test_semi_after_assign
+        PASS [   0.059s] (1036/1046) ide typing::tests::test_semi_after_let
+        PASS [   0.082s] (1037/1046) ide view_memory_layout::tests::view_memory_layout_none
+        PASS [   0.088s] (1038/1046) ide view_memory_layout::tests::view_memory_layout_constant
+        PASS [   0.094s] (1039/1046) ide view_memory_layout::tests::view_memory_layout_alias
+        PASS [   0.098s] (1040/1046) ide view_memory_layout::tests::view_memory_layout_c_struct
+        PASS [   0.096s] (1041/1046) ide view_memory_layout::tests::view_memory_layout_member
+        PASS [   0.081s] (1042/1046) ide view_memory_layout::tests::view_memory_layout_static
+        PASS [   0.088s] (1043/1046) ide view_memory_layout::tests::view_memory_layout_primitive
+        PASS [   0.083s] (1044/1046) ide view_memory_layout::tests::view_memory_layout_struct
+        PASS [   0.085s] (1045/1046) ide view_memory_layout::tests::view_memory_layout_tuple
+        PASS [   0.618s] (1046/1046) ide syntax_highlighting::tests::test_string_highlighting
+────────────
+     Summary [   7.010s] 1046 tests run: 1043 passed, 3 failed, 0 skipped
+        FAIL [   0.065s] ( 336/1046) ide hover::tests::hover_const_eval_dyn_trait
+        FAIL [   0.105s] ( 425/1046) ide hover::tests::hover_trait_show_assoc_items
+        FAIL [   0.161s] ( 450/1046) ide hover::tests::notable_actions
+error: test run failed
+reward=0 graded=1045 found=0 failed=0 parsed=1046 framework=cargo exit_code=100

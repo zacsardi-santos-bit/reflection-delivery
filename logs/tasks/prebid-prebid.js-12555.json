@@ -1,0 +1,23 @@
+{
+ "task": "prebid-prebid.js-12555",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds full r2b2AnalyticsAdapter.js (~634 LoC) with handlers handleAuctionInit/handleBidTimeout/handleBidResponse/etc.; spec has 24 chai 'it(' tests e.g. 'missing domain', 'auction end empty auction', 'no auction data error', matching F2P '24 tests completed'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

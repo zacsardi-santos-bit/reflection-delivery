@@ -1,0 +1,9 @@
+patching file package-lock.json
+patching file package.json
+patching file public/assets/img/svg/octicon-accessibility-inset.svg
+patching file public/assets/img/svg/octicon-ai-model.svg
+patching file public/assets/img/svg/octicon-bookmark-filled.svg
+patching file public/assets/img/svg/octicon-bookmark-slash-fill.svg
+patching file public/assets/img/svg/octicon-file-media.svg
+patching file public/assets/img/svg/octicon-home-fill.svg
+patching file public/assets/img/svg/octicon-tab.svg

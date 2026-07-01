@@ -1,0 +1,1649 @@
+diff --git a/.github/workflows/release-lambda-init-containers.yml b/.github/workflows/release-lambda-init-containers.yml
+deleted file mode 100644
+index 5dfaa0409..000000000
+--- a/.github/workflows/release-lambda-init-containers.yml
++++ /dev/null
+@@ -1,36 +0,0 @@
+-name: Agent Release Lambda Layers and K8s Init Containers
+-
+-on:
+-  workflow_run:
+-    workflows: ["Create Release"]
+-    types:
+-      - completed
+-
+-jobs:
+-  release-tags:
+-    runs-on: ubuntu-latest
+-    steps:
+-      - uses: actions/checkout@v4
+-        with:
+-          fetch-depth: 2
+-      - uses: actions/setup-node@v4
+-        with:
+-          node-version: 'lts/*'
+-      - run: npm install
+-      - run: |
+-          git config user.name ${GITHUB_ACTOR}
+-          git config user.email gh-actions-${GITHUB_ACTOR}@github.com
+-      - id: get_tag
+-        run: echo "latest_tag=$(cat package.json | jq .version)" >> $GITHUB_OUTPUT
+-      - name: Create release tags for Lambda and K8s Init Containers
+-        run: |
+-          RELEASE_TITLE="New Relic Node Agent v${{ steps.get_tag.outputs.latest_tag }}.0"
+-          RELEASE_TAG="v${{ steps.get_tag.outputs.latest_tag }}.0_nodejs"
+-          RELEASE_NOTES="Automated release for [Node Agent v${{ steps.get_tag.outputs.latest_tag }}](https://github.com/newrelic/node-newrelic/releases/tag/v${{ steps.get_tag.outputs.latest_tag }})"
+-          gh auth login --with-token <<< $GH_RELEASE_TOKEN
+-          echo "newrelic/newrelic-lambda-layers - Releasing \"${RELEASE_TITLE}\" with tag ${RELEASE_TAG}"
+-          gh release create "${RELEASE_TAG}" --title="${RELEASE_TITLE}" --repo=newrelic/newrelic-lambda-layers --notes="${RELEASE_NOTES}"
+-          echo "newrelic/newrelic-agent-init-container - Releasing \"${RELEASE_TITLE}\" with tag ${RELEASE_TAG}"
+-          gh release create "${RELEASE_TAG}" --title="${RELEASE_TITLE}" --repo=newrelic/newrelic-agent-init-container --notes="${RELEASE_NOTES}"
+-        env:
+-          GH_RELEASE_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
+diff --git a/THIRD_PARTY_NOTICES.md b/THIRD_PARTY_NOTICES.md
+index be225d80a..cc13d2804 100644
+--- a/THIRD_PARTY_NOTICES.md
++++ b/THIRD_PARTY_NOTICES.md
+@@ -18,6 +18,9 @@ code, the source code can be found at [https://github.com/newrelic/node-newrelic
+ * [@grpc/proto-loader](#grpcproto-loader)
+ * [@newrelic/security-agent](#newrelicsecurity-agent)
+ * [@opentelemetry/api](#opentelemetryapi)
++* [@opentelemetry/core](#opentelemetrycore)
++* [@opentelemetry/resources](#opentelemetryresources)
++* [@opentelemetry/sdk-trace-base](#opentelemetrysdk-trace-base)
+ * [@opentelemetry/semantic-conventions](#opentelemetrysemantic-conventions)
+ * [@tyriar/fibonacci-heap](#tyriarfibonacci-heap)
+ * [concat-stream](#concat-stream)
+@@ -41,7 +44,6 @@ code, the source code can be found at [https://github.com/newrelic/node-newrelic
+ * [@newrelic/newrelic-oss-cli](#newrelicnewrelic-oss-cli)
+ * [@newrelic/test-utilities](#newrelictest-utilities)
+ * [@octokit/rest](#octokitrest)
+-* [@opentelemetry/sdk-trace-base](#opentelemetrysdk-trace-base)
+ * [@slack/bolt](#slackbolt)
+ * [@smithy/eventstream-codec](#smithyeventstream-codec)
+ * [@smithy/util-utf8](#smithyutil-utf8)
+@@ -68,7 +70,6 @@ code, the source code can be found at [https://github.com/newrelic/node-newrelic
+ * [koa](#koa)
+ * [lint-staged](#lint-staged)
+ * [lockfile-lint](#lockfile-lint)
+-* [neostandard](#neostandard)
+ * [nock](#nock)
+ * [proxyquire](#proxyquire)
+ * [rimraf](#rimraf)
+@@ -92,7 +93,7 @@ code, the source code can be found at [https://github.com/newrelic/node-newrelic
+ 
+ ### @grpc/grpc-js
+ 
+-This product includes source derived from [@grpc/grpc-js](https://github.com/grpc/grpc-node/tree/master/packages/grpc-js) ([v1.12.4](https://github.com/grpc/grpc-node/tree/master/packages/grpc-js/tree/v1.12.4)), distributed under the [Apache-2.0 License](https://github.com/grpc/grpc-node/tree/master/packages/grpc-js/blob/v1.12.4/LICENSE):
++This product includes source derived from [@grpc/grpc-js](https://github.com/grpc/grpc-node/tree/master/packages/grpc-js) ([v1.12.5](https://github.com/grpc/grpc-node/tree/master/packages/grpc-js/tree/v1.12.5)), distributed under the [Apache-2.0 License](https://github.com/grpc/grpc-node/tree/master/packages/grpc-js/blob/v1.12.5/LICENSE):
+ 
+ ```
+                                  Apache License
+@@ -543,20 +544,647 @@ Any feedback provided to New Relic about the Software, including feedback provid
+ 
+ ### Termination
+ 
+-This license terminates when the Software stops being provided by New Relic or when described by the New Relic subscription agreement, whichever comes first. When this license terminates, you have a commercially reasonable time to either remove the Software from your systems.
++This license terminates when the Software stops being provided by New Relic or when described by the New Relic subscription agreement, whichever comes first. When this license terminates, you have a commercially reasonable time to either remove the Software from your systems.
++
++### Other Terms
++
++1. The Software is provided “AS IS.”  New Relic disclaims all warranties, whether express, implied, statutory or otherwise, including warranties of merchantability, fitness for a particular purpose, title, and noninfringement.
++2. To the full extent permitted by law, New Relic will have no liability arising from or related to the Software or from this license for any direct, indirect, special, incidental, or consequential damages of any kind, even if advised of their possibility in advance, and regardless of legal theory (whether contract, tort, negligence, strict liability or otherwise).
++3. The Software may contain third-party software, including open source software (“OSS”). The third party software is governed by its own license and subject to its own terms, disclosed in the provided licensing information associated with the third party components. If a source code disclosure is required under the terms of the license covering any OSS component, the source code can be requested of New Relic by emailing opensource@newrelic.com.   
++
++
++```
++
++### @opentelemetry/api
++
++This product includes source derived from [@opentelemetry/api](https://github.com/open-telemetry/opentelemetry-js) ([v1.9.0](https://github.com/open-telemetry/opentelemetry-js/tree/v1.9.0)), distributed under the [Apache-2.0 License](https://github.com/open-telemetry/opentelemetry-js/blob/v1.9.0/LICENSE):
++
++```
++                                 Apache License
++                           Version 2.0, January 2004
++                        http://www.apache.org/licenses/
++
++   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
++
++   1. Definitions.
++
++      "License" shall mean the terms and conditions for use, reproduction,
++      and distribution as defined by Sections 1 through 9 of this document.
++
++      "Licensor" shall mean the copyright owner or entity authorized by
++      the copyright owner that is granting the License.
++
++      "Legal Entity" shall mean the union of the acting entity and all
++      other entities that control, are controlled by, or are under common
++      control with that entity. For the purposes of this definition,
++      "control" means (i) the power, direct or indirect, to cause the
++      direction or management of such entity, whether by contract or
++      otherwise, or (ii) ownership of fifty percent (50%) or more of the
++      outstanding shares, or (iii) beneficial ownership of such entity.
++
++      "You" (or "Your") shall mean an individual or Legal Entity
++      exercising permissions granted by this License.
++
++      "Source" form shall mean the preferred form for making modifications,
++      including but not limited to software source code, documentation
++      source, and configuration files.
++
++      "Object" form shall mean any form resulting from mechanical
++      transformation or translation of a Source form, including but
++      not limited to compiled object code, generated documentation,
++      and conversions to other media types.
++
++      "Work" shall mean the work of authorship, whether in Source or
++      Object form, made available under the License, as indicated by a
++      copyright notice that is included in or attached to the work
++      (an example is provided in the Appendix below).
++
++      "Derivative Works" shall mean any work, whether in Source or Object
++      form, that is based on (or derived from) the Work and for which the
++      editorial revisions, annotations, elaborations, or other modifications
++      represent, as a whole, an original work of authorship. For the purposes
++      of this License, Derivative Works shall not include works that remain
++      separable from, or merely link (or bind by name) to the interfaces of,
++      the Work and Derivative Works thereof.
++
++      "Contribution" shall mean any work of authorship, including
++      the original version of the Work and any modifications or additions
++      to that Work or Derivative Works thereof, that is intentionally
++      submitted to Licensor for inclusion in the Work by the copyright owner
++      or by an individual or Legal Entity authorized to submit on behalf of
++      the copyright owner. For the purposes of this definition, "submitted"
++      means any form of electronic, verbal, or written communication sent
++      to the Licensor or its representatives, including but not limited to
++      communication on electronic mailing lists, source code control systems,
++      and issue tracking systems that are managed by, or on behalf of, the
++      Licensor for the purpose of discussing and improving the Work, but
++      excluding communication that is conspicuously marked or otherwise
++      designated in writing by the copyright owner as "Not a Contribution."
++
++      "Contributor" shall mean Licensor and any individual or Legal Entity
++      on behalf of whom a Contribution has been received by Licensor and
++      subsequently incorporated within the Work.
++
++   2. Grant of Copyright License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      copyright license to reproduce, prepare Derivative Works of,
++      publicly display, publicly perform, sublicense, and distribute the
++      Work and such Derivative Works in Source or Object form.
++
++   3. Grant of Patent License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      (except as stated in this section) patent license to make, have made,
++      use, offer to sell, sell, import, and otherwise transfer the Work,
++      where such license applies only to those patent claims licensable
++      by such Contributor that are necessarily infringed by their
++      Contribution(s) alone or by combination of their Contribution(s)
++      with the Work to which such Contribution(s) was submitted. If You
++      institute patent litigation against any entity (including a
++      cross-claim or counterclaim in a lawsuit) alleging that the Work
++      or a Contribution incorporated within the Work constitutes direct
++      or contributory patent infringement, then any patent licenses
++      granted to You under this License for that Work shall terminate
++      as of the date such litigation is filed.
++
++   4. Redistribution. You may reproduce and distribute copies of the
++      Work or Derivative Works thereof in any medium, with or without
++      modifications, and in Source or Object form, provided that You
++      meet the following conditions:
++
++      (a) You must give any other recipients of the Work or
++          Derivative Works a copy of this License; and
++
++      (b) You must cause any modified files to carry prominent notices
++          stating that You changed the files; and
++
++      (c) You must retain, in the Source form of any Derivative Works
++          that You distribute, all copyright, patent, trademark, and
++          attribution notices from the Source form of the Work,
++          excluding those notices that do not pertain to any part of
++          the Derivative Works; and
++
++      (d) If the Work includes a "NOTICE" text file as part of its
++          distribution, then any Derivative Works that You distribute must
++          include a readable copy of the attribution notices contained
++          within such NOTICE file, excluding those notices that do not
++          pertain to any part of the Derivative Works, in at least one
++          of the following places: within a NOTICE text file distributed
++          as part of the Derivative Works; within the Source form or
++          documentation, if provided along with the Derivative Works; or,
++          within a display generated by the Derivative Works, if and
++          wherever such third-party notices normally appear. The contents
++          of the NOTICE file are for informational purposes only and
++          do not modify the License. You may add Your own attribution
++          notices within Derivative Works that You distribute, alongside
++          or as an addendum to the NOTICE text from the Work, provided
++          that such additional attribution notices cannot be construed
++          as modifying the License.
++
++      You may add Your own copyright statement to Your modifications and
++      may provide additional or different license terms and conditions
++      for use, reproduction, or distribution of Your modifications, or
++      for any such Derivative Works as a whole, provided Your use,
++      reproduction, and distribution of the Work otherwise complies with
++      the conditions stated in this License.
++
++   5. Submission of Contributions. Unless You explicitly state otherwise,
++      any Contribution intentionally submitted for inclusion in the Work
++      by You to the Licensor shall be under the terms and conditions of
++      this License, without any additional terms or conditions.
++      Notwithstanding the above, nothing herein shall supersede or modify
++      the terms of any separate license agreement you may have executed
++      with Licensor regarding such Contributions.
++
++   6. Trademarks. This License does not grant permission to use the trade
++      names, trademarks, service marks, or product names of the Licensor,
++      except as required for reasonable and customary use in describing the
++      origin of the Work and reproducing the content of the NOTICE file.
++
++   7. Disclaimer of Warranty. Unless required by applicable law or
++      agreed to in writing, Licensor provides the Work (and each
++      Contributor provides its Contributions) on an "AS IS" BASIS,
++      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
++      implied, including, without limitation, any warranties or conditions
++      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
++      PARTICULAR PURPOSE. You are solely responsible for determining the
++      appropriateness of using or redistributing the Work and assume any
++      risks associated with Your exercise of permissions under this License.
++
++   8. Limitation of Liability. In no event and under no legal theory,
++      whether in tort (including negligence), contract, or otherwise,
++      unless required by applicable law (such as deliberate and grossly
++      negligent acts) or agreed to in writing, shall any Contributor be
++      liable to You for damages, including any direct, indirect, special,
++      incidental, or consequential damages of any character arising as a
++      result of this License or out of the use or inability to use the
++      Work (including but not limited to damages for loss of goodwill,
++      work stoppage, computer failure or malfunction, or any and all
++      other commercial damages or losses), even if such Contributor
++      has been advised of the possibility of such damages.
++
++   9. Accepting Warranty or Additional Liability. While redistributing
++      the Work or Derivative Works thereof, You may choose to offer,
++      and charge a fee for, acceptance of support, warranty, indemnity,
++      or other liability obligations and/or rights consistent with this
++      License. However, in accepting such obligations, You may act only
++      on Your own behalf and on Your sole responsibility, not on behalf
++      of any other Contributor, and only if You agree to indemnify,
++      defend, and hold each Contributor harmless for any liability
++      incurred by, or claims asserted against, such Contributor by reason
++      of your accepting any such warranty or additional liability.
++
++   END OF TERMS AND CONDITIONS
++
++   APPENDIX: How to apply the Apache License to your work.
++
++      To apply the Apache License to your work, attach the following
++      boilerplate notice, with the fields enclosed by brackets "[]"
++      replaced with your own identifying information. (Don't include
++      the brackets!)  The text should be enclosed in the appropriate
++      comment syntax for the file format. We also recommend that a
++      file or class name and description of purpose be included on the
++      same "printed page" as the copyright notice for easier
++      identification within third-party archives.
++
++   Copyright [yyyy] [name of copyright owner]
++
++   Licensed under the Apache License, Version 2.0 (the "License");
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an "AS IS" BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
++
++```
++
++### @opentelemetry/core
++
++This product includes source derived from [@opentelemetry/core](https://github.com/open-telemetry/opentelemetry-js) ([v1.30.1](https://github.com/open-telemetry/opentelemetry-js/tree/v1.30.1)), distributed under the [Apache-2.0 License](https://github.com/open-telemetry/opentelemetry-js/blob/v1.30.1/LICENSE):
++
++```
++                                 Apache License
++                           Version 2.0, January 2004
++                        http://www.apache.org/licenses/
++
++   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
++
++   1. Definitions.
++
++      "License" shall mean the terms and conditions for use, reproduction,
++      and distribution as defined by Sections 1 through 9 of this document.
++
++      "Licensor" shall mean the copyright owner or entity authorized by
++      the copyright owner that is granting the License.
++
++      "Legal Entity" shall mean the union of the acting entity and all
++      other entities that control, are controlled by, or are under common
++      control with that entity. For the purposes of this definition,
++      "control" means (i) the power, direct or indirect, to cause the
++      direction or management of such entity, whether by contract or
++      otherwise, or (ii) ownership of fifty percent (50%) or more of the
++      outstanding shares, or (iii) beneficial ownership of such entity.
++
++      "You" (or "Your") shall mean an individual or Legal Entity
++      exercising permissions granted by this License.
++
++      "Source" form shall mean the preferred form for making modifications,
++      including but not limited to software source code, documentation
++      source, and configuration files.
++
++      "Object" form shall mean any form resulting from mechanical
++      transformation or translation of a Source form, including but
++      not limited to compiled object code, generated documentation,
++      and conversions to other media types.
++
++      "Work" shall mean the work of authorship, whether in Source or
++      Object form, made available under the License, as indicated by a
++      copyright notice that is included in or attached to the work
++      (an example is provided in the Appendix below).
++
++      "Derivative Works" shall mean any work, whether in Source or Object
++      form, that is based on (or derived from) the Work and for which the
++      editorial revisions, annotations, elaborations, or other modifications
++      represent, as a whole, an original work of authorship. For the purposes
++      of this License, Derivative Works shall not include works that remain
++      separable from, or merely link (or bind by name) to the interfaces of,
++      the Work and Derivative Works thereof.
++
++      "Contribution" shall mean any work of authorship, including
++      the original version of the Work and any modifications or additions
++      to that Work or Derivative Works thereof, that is intentionally
++      submitted to Licensor for inclusion in the Work by the copyright owner
++      or by an individual or Legal Entity authorized to submit on behalf of
++      the copyright owner. For the purposes of this definition, "submitted"
++      means any form of electronic, verbal, or written communication sent
++      to the Licensor or its representatives, including but not limited to
++      communication on electronic mailing lists, source code control systems,
++      and issue tracking systems that are managed by, or on behalf of, the
++      Licensor for the purpose of discussing and improving the Work, but
++      excluding communication that is conspicuously marked or otherwise
++      designated in writing by the copyright owner as "Not a Contribution."
++
++      "Contributor" shall mean Licensor and any individual or Legal Entity
++      on behalf of whom a Contribution has been received by Licensor and
++      subsequently incorporated within the Work.
++
++   2. Grant of Copyright License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      copyright license to reproduce, prepare Derivative Works of,
++      publicly display, publicly perform, sublicense, and distribute the
++      Work and such Derivative Works in Source or Object form.
++
++   3. Grant of Patent License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      (except as stated in this section) patent license to make, have made,
++      use, offer to sell, sell, import, and otherwise transfer the Work,
++      where such license applies only to those patent claims licensable
++      by such Contributor that are necessarily infringed by their
++      Contribution(s) alone or by combination of their Contribution(s)
++      with the Work to which such Contribution(s) was submitted. If You
++      institute patent litigation against any entity (including a
++      cross-claim or counterclaim in a lawsuit) alleging that the Work
++      or a Contribution incorporated within the Work constitutes direct
++      or contributory patent infringement, then any patent licenses
++      granted to You under this License for that Work shall terminate
++      as of the date such litigation is filed.
++
++   4. Redistribution. You may reproduce and distribute copies of the
++      Work or Derivative Works thereof in any medium, with or without
++      modifications, and in Source or Object form, provided that You
++      meet the following conditions:
++
++      (a) You must give any other recipients of the Work or
++          Derivative Works a copy of this License; and
++
++      (b) You must cause any modified files to carry prominent notices
++          stating that You changed the files; and
++
++      (c) You must retain, in the Source form of any Derivative Works
++          that You distribute, all copyright, patent, trademark, and
++          attribution notices from the Source form of the Work,
++          excluding those notices that do not pertain to any part of
++          the Derivative Works; and
++
++      (d) If the Work includes a "NOTICE" text file as part of its
++          distribution, then any Derivative Works that You distribute must
++          include a readable copy of the attribution notices contained
++          within such NOTICE file, excluding those notices that do not
++          pertain to any part of the Derivative Works, in at least one
++          of the following places: within a NOTICE text file distributed
++          as part of the Derivative Works; within the Source form or
++          documentation, if provided along with the Derivative Works; or,
++          within a display generated by the Derivative Works, if and
++          wherever such third-party notices normally appear. The contents
++          of the NOTICE file are for informational purposes only and
++          do not modify the License. You may add Your own attribution
++          notices within Derivative Works that You distribute, alongside
++          or as an addendum to the NOTICE text from the Work, provided
++          that such additional attribution notices cannot be construed
++          as modifying the License.
++
++      You may add Your own copyright statement to Your modifications and
++      may provide additional or different license terms and conditions
++      for use, reproduction, or distribution of Your modifications, or
++      for any such Derivative Works as a whole, provided Your use,
++      reproduction, and distribution of the Work otherwise complies with
++      the conditions stated in this License.
++
++   5. Submission of Contributions. Unless You explicitly state otherwise,
++      any Contribution intentionally submitted for inclusion in the Work
++      by You to the Licensor shall be under the terms and conditions of
++      this License, without any additional terms or conditions.
++      Notwithstanding the above, nothing herein shall supersede or modify
++      the terms of any separate license agreement you may have executed
++      with Licensor regarding such Contributions.
++
++   6. Trademarks. This License does not grant permission to use the trade
++      names, trademarks, service marks, or product names of the Licensor,
++      except as required for reasonable and customary use in describing the
++      origin of the Work and reproducing the content of the NOTICE file.
++
++   7. Disclaimer of Warranty. Unless required by applicable law or
++      agreed to in writing, Licensor provides the Work (and each
++      Contributor provides its Contributions) on an "AS IS" BASIS,
++      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
++      implied, including, without limitation, any warranties or conditions
++      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
++      PARTICULAR PURPOSE. You are solely responsible for determining the
++      appropriateness of using or redistributing the Work and assume any
++      risks associated with Your exercise of permissions under this License.
++
++   8. Limitation of Liability. In no event and under no legal theory,
++      whether in tort (including negligence), contract, or otherwise,
++      unless required by applicable law (such as deliberate and grossly
++      negligent acts) or agreed to in writing, shall any Contributor be
++      liable to You for damages, including any direct, indirect, special,
++      incidental, or consequential damages of any character arising as a
++      result of this License or out of the use or inability to use the
++      Work (including but not limited to damages for loss of goodwill,
++      work stoppage, computer failure or malfunction, or any and all
++      other commercial damages or losses), even if such Contributor
++      has been advised of the possibility of such damages.
++
++   9. Accepting Warranty or Additional Liability. While redistributing
++      the Work or Derivative Works thereof, You may choose to offer,
++      and charge a fee for, acceptance of support, warranty, indemnity,
++      or other liability obligations and/or rights consistent with this
++      License. However, in accepting such obligations, You may act only
++      on Your own behalf and on Your sole responsibility, not on behalf
++      of any other Contributor, and only if You agree to indemnify,
++      defend, and hold each Contributor harmless for any liability
++      incurred by, or claims asserted against, such Contributor by reason
++      of your accepting any such warranty or additional liability.
++
++   END OF TERMS AND CONDITIONS
++
++   APPENDIX: How to apply the Apache License to your work.
++
++      To apply the Apache License to your work, attach the following
++      boilerplate notice, with the fields enclosed by brackets "[]"
++      replaced with your own identifying information. (Don't include
++      the brackets!)  The text should be enclosed in the appropriate
++      comment syntax for the file format. We also recommend that a
++      file or class name and description of purpose be included on the
++      same "printed page" as the copyright notice for easier
++      identification within third-party archives.
++
++   Copyright [yyyy] [name of copyright owner]
++
++   Licensed under the Apache License, Version 2.0 (the "License");
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an "AS IS" BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
++
++```
++
++### @opentelemetry/resources
++
++This product includes source derived from [@opentelemetry/resources](https://github.com/open-telemetry/opentelemetry-js) ([v1.30.1](https://github.com/open-telemetry/opentelemetry-js/tree/v1.30.1)), distributed under the [Apache-2.0 License](https://github.com/open-telemetry/opentelemetry-js/blob/v1.30.1/LICENSE):
++
++```
++                                 Apache License
++                           Version 2.0, January 2004
++                        http://www.apache.org/licenses/
++
++   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
++
++   1. Definitions.
++
++      "License" shall mean the terms and conditions for use, reproduction,
++      and distribution as defined by Sections 1 through 9 of this document.
++
++      "Licensor" shall mean the copyright owner or entity authorized by
++      the copyright owner that is granting the License.
++
++      "Legal Entity" shall mean the union of the acting entity and all
++      other entities that control, are controlled by, or are under common
++      control with that entity. For the purposes of this definition,
++      "control" means (i) the power, direct or indirect, to cause the
++      direction or management of such entity, whether by contract or
++      otherwise, or (ii) ownership of fifty percent (50%) or more of the
++      outstanding shares, or (iii) beneficial ownership of such entity.
++
++      "You" (or "Your") shall mean an individual or Legal Entity
++      exercising permissions granted by this License.
++
++      "Source" form shall mean the preferred form for making modifications,
++      including but not limited to software source code, documentation
++      source, and configuration files.
++
++      "Object" form shall mean any form resulting from mechanical
++      transformation or translation of a Source form, including but
++      not limited to compiled object code, generated documentation,
++      and conversions to other media types.
++
++      "Work" shall mean the work of authorship, whether in Source or
++      Object form, made available under the License, as indicated by a
++      copyright notice that is included in or attached to the work
++      (an example is provided in the Appendix below).
++
++      "Derivative Works" shall mean any work, whether in Source or Object
++      form, that is based on (or derived from) the Work and for which the
++      editorial revisions, annotations, elaborations, or other modifications
++      represent, as a whole, an original work of authorship. For the purposes
++      of this License, Derivative Works shall not include works that remain
++      separable from, or merely link (or bind by name) to the interfaces of,
++      the Work and Derivative Works thereof.
++
++      "Contribution" shall mean any work of authorship, including
++      the original version of the Work and any modifications or additions
++      to that Work or Derivative Works thereof, that is intentionally
++      submitted to Licensor for inclusion in the Work by the copyright owner
++      or by an individual or Legal Entity authorized to submit on behalf of
++      the copyright owner. For the purposes of this definition, "submitted"
++      means any form of electronic, verbal, or written communication sent
++      to the Licensor or its representatives, including but not limited to
++      communication on electronic mailing lists, source code control systems,
++      and issue tracking systems that are managed by, or on behalf of, the
++      Licensor for the purpose of discussing and improving the Work, but
++      excluding communication that is conspicuously marked or otherwise
++      designated in writing by the copyright owner as "Not a Contribution."
++
++      "Contributor" shall mean Licensor and any individual or Legal Entity
++      on behalf of whom a Contribution has been received by Licensor and
++      subsequently incorporated within the Work.
++
++   2. Grant of Copyright License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      copyright license to reproduce, prepare Derivative Works of,
++      publicly display, publicly perform, sublicense, and distribute the
++      Work and such Derivative Works in Source or Object form.
++
++   3. Grant of Patent License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      (except as stated in this section) patent license to make, have made,
++      use, offer to sell, sell, import, and otherwise transfer the Work,
++      where such license applies only to those patent claims licensable
++      by such Contributor that are necessarily infringed by their
++      Contribution(s) alone or by combination of their Contribution(s)
++      with the Work to which such Contribution(s) was submitted. If You
++      institute patent litigation against any entity (including a
++      cross-claim or counterclaim in a lawsuit) alleging that the Work
++      or a Contribution incorporated within the Work constitutes direct
++      or contributory patent infringement, then any patent licenses
++      granted to You under this License for that Work shall terminate
++      as of the date such litigation is filed.
++
++   4. Redistribution. You may reproduce and distribute copies of the
++      Work or Derivative Works thereof in any medium, with or without
++      modifications, and in Source or Object form, provided that You
++      meet the following conditions:
++
++      (a) You must give any other recipients of the Work or
++          Derivative Works a copy of this License; and
++
++      (b) You must cause any modified files to carry prominent notices
++          stating that You changed the files; and
++
++      (c) You must retain, in the Source form of any Derivative Works
++          that You distribute, all copyright, patent, trademark, and
++          attribution notices from the Source form of the Work,
++          excluding those notices that do not pertain to any part of
++          the Derivative Works; and
++
++      (d) If the Work includes a "NOTICE" text file as part of its
++          distribution, then any Derivative Works that You distribute must
++          include a readable copy of the attribution notices contained
++          within such NOTICE file, excluding those notices that do not
++          pertain to any part of the Derivative Works, in at least one
++          of the following places: within a NOTICE text file distributed
++          as part of the Derivative Works; within the Source form or
++          documentation, if provided along with the Derivative Works; or,
++          within a display generated by the Derivative Works, if and
++          wherever such third-party notices normally appear. The contents
++          of the NOTICE file are for informational purposes only and
++          do not modify the License. You may add Your own attribution
++          notices within Derivative Works that You distribute, alongside
++          or as an addendum to the NOTICE text from the Work, provided
++          that such additional attribution notices cannot be construed
++          as modifying the License.
++
++      You may add Your own copyright statement to Your modifications and
++      may provide additional or different license terms and conditions
++      for use, reproduction, or distribution of Your modifications, or
++      for any such Derivative Works as a whole, provided Your use,
++      reproduction, and distribution of the Work otherwise complies with
++      the conditions stated in this License.
++
++   5. Submission of Contributions. Unless You explicitly state otherwise,
++      any Contribution intentionally submitted for inclusion in the Work
++      by You to the Licensor shall be under the terms and conditions of
++      this License, without any additional terms or conditions.
++      Notwithstanding the above, nothing herein shall supersede or modify
++      the terms of any separate license agreement you may have executed
++      with Licensor regarding such Contributions.
++
++   6. Trademarks. This License does not grant permission to use the trade
++      names, trademarks, service marks, or product names of the Licensor,
++      except as required for reasonable and customary use in describing the
++      origin of the Work and reproducing the content of the NOTICE file.
++
++   7. Disclaimer of Warranty. Unless required by applicable law or
++      agreed to in writing, Licensor provides the Work (and each
++      Contributor provides its Contributions) on an "AS IS" BASIS,
++      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
++      implied, including, without limitation, any warranties or conditions
++      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
++      PARTICULAR PURPOSE. You are solely responsible for determining the
++      appropriateness of using or redistributing the Work and assume any
++      risks associated with Your exercise of permissions under this License.
++
++   8. Limitation of Liability. In no event and under no legal theory,
++      whether in tort (including negligence), contract, or otherwise,
++      unless required by applicable law (such as deliberate and grossly
++      negligent acts) or agreed to in writing, shall any Contributor be
++      liable to You for damages, including any direct, indirect, special,
++      incidental, or consequential damages of any character arising as a
++      result of this License or out of the use or inability to use the
++      Work (including but not limited to damages for loss of goodwill,
++      work stoppage, computer failure or malfunction, or any and all
++      other commercial damages or losses), even if such Contributor
++      has been advised of the possibility of such damages.
++
++   9. Accepting Warranty or Additional Liability. While redistributing
++      the Work or Derivative Works thereof, You may choose to offer,
++      and charge a fee for, acceptance of support, warranty, indemnity,
++      or other liability obligations and/or rights consistent with this
++      License. However, in accepting such obligations, You may act only
++      on Your own behalf and on Your sole responsibility, not on behalf
++      of any other Contributor, and only if You agree to indemnify,
++      defend, and hold each Contributor harmless for any liability
++      incurred by, or claims asserted against, such Contributor by reason
++      of your accepting any such warranty or additional liability.
++
++   END OF TERMS AND CONDITIONS
++
++   APPENDIX: How to apply the Apache License to your work.
++
++      To apply the Apache License to your work, attach the following
++      boilerplate notice, with the fields enclosed by brackets "[]"
++      replaced with your own identifying information. (Don't include
++      the brackets!)  The text should be enclosed in the appropriate
++      comment syntax for the file format. We also recommend that a
++      file or class name and description of purpose be included on the
++      same "printed page" as the copyright notice for easier
++      identification within third-party archives.
++
++   Copyright [yyyy] [name of copyright owner]
+ 
+-### Other Terms
++   Licensed under the Apache License, Version 2.0 (the "License");
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
+ 
+-1. The Software is provided “AS IS.”  New Relic disclaims all warranties, whether express, implied, statutory or otherwise, including warranties of merchantability, fitness for a particular purpose, title, and noninfringement.
+-2. To the full extent permitted by law, New Relic will have no liability arising from or related to the Software or from this license for any direct, indirect, special, incidental, or consequential damages of any kind, even if advised of their possibility in advance, and regardless of legal theory (whether contract, tort, negligence, strict liability or otherwise).
+-3. The Software may contain third-party software, including open source software (“OSS”). The third party software is governed by its own license and subject to its own terms, disclosed in the provided licensing information associated with the third party components. If a source code disclosure is required under the terms of the license covering any OSS component, the source code can be requested of New Relic by emailing opensource@newrelic.com.   
++       http://www.apache.org/licenses/LICENSE-2.0
+ 
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an "AS IS" BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
+ 
+ ```
+ 
+-### @opentelemetry/api
++### @opentelemetry/sdk-trace-base
+ 
+-This product includes source derived from [@opentelemetry/api](https://github.com/open-telemetry/opentelemetry-js) ([v1.9.0](https://github.com/open-telemetry/opentelemetry-js/tree/v1.9.0)), distributed under the [Apache-2.0 License](https://github.com/open-telemetry/opentelemetry-js/blob/v1.9.0/LICENSE):
++This product includes source derived from [@opentelemetry/sdk-trace-base](https://github.com/open-telemetry/opentelemetry-js) ([v1.30.1](https://github.com/open-telemetry/opentelemetry-js/tree/v1.30.1)), distributed under the [Apache-2.0 License](https://github.com/open-telemetry/opentelemetry-js/blob/v1.30.1/LICENSE):
+ 
+ ```
+                                  Apache License
+@@ -765,7 +1393,7 @@ This product includes source derived from [@opentelemetry/api](https://github.co
+ 
+ ### @opentelemetry/semantic-conventions
+ 
+-This product includes source derived from [@opentelemetry/semantic-conventions](https://github.com/open-telemetry/opentelemetry-js) ([v1.27.0](https://github.com/open-telemetry/opentelemetry-js/tree/v1.27.0)), distributed under the [Apache-2.0 License](https://github.com/open-telemetry/opentelemetry-js/blob/v1.27.0/LICENSE):
++This product includes source derived from [@opentelemetry/semantic-conventions](https://github.com/open-telemetry/opentelemetry-js) ([v1.28.0](https://github.com/open-telemetry/opentelemetry-js/tree/v1.28.0)), distributed under the [Apache-2.0 License](https://github.com/open-telemetry/opentelemetry-js/blob/v1.28.0/LICENSE):
+ 
+ ```
+                                  Apache License
+@@ -1437,7 +2065,7 @@ SOFTWARE.
+ 
+ ### semver
+ 
+-This product includes source derived from [semver](https://github.com/npm/node-semver) ([v7.6.2](https://github.com/npm/node-semver/tree/v7.6.2)), distributed under the [ISC License](https://github.com/npm/node-semver/blob/v7.6.2/LICENSE):
++This product includes source derived from [semver](https://github.com/npm/node-semver) ([v7.6.3](https://github.com/npm/node-semver/tree/v7.6.3)), distributed under the [ISC License](https://github.com/npm/node-semver/blob/v7.6.3/LICENSE):
+ 
+ ```
+ The ISC License
+@@ -1493,7 +2121,7 @@ SOFTWARE.
+ 
+ ### @aws-sdk/client-s3
+ 
+-This product includes source derived from [@aws-sdk/client-s3](https://github.com/aws/aws-sdk-js-v3) ([v3.714.0](https://github.com/aws/aws-sdk-js-v3/tree/v3.714.0)), distributed under the [Apache-2.0 License](https://github.com/aws/aws-sdk-js-v3/blob/v3.714.0/LICENSE):
++This product includes source derived from [@aws-sdk/client-s3](https://github.com/aws/aws-sdk-js-v3) ([v3.726.1](https://github.com/aws/aws-sdk-js-v3/tree/v3.726.1)), distributed under the [Apache-2.0 License](https://github.com/aws/aws-sdk-js-v3/blob/v3.726.1/LICENSE):
+ 
+ ```
+                                 Apache License
+@@ -1702,7 +2330,7 @@ This product includes source derived from [@aws-sdk/client-s3](https://github.co
+ 
+ ### @aws-sdk/s3-request-presigner
+ 
+-This product includes source derived from [@aws-sdk/s3-request-presigner](https://github.com/aws/aws-sdk-js-v3) ([v3.714.0](https://github.com/aws/aws-sdk-js-v3/tree/v3.714.0)), distributed under the [Apache-2.0 License](https://github.com/aws/aws-sdk-js-v3/blob/v3.714.0/LICENSE):
++This product includes source derived from [@aws-sdk/s3-request-presigner](https://github.com/aws/aws-sdk-js-v3) ([v3.726.1](https://github.com/aws/aws-sdk-js-v3/tree/v3.726.1)), distributed under the [Apache-2.0 License](https://github.com/aws/aws-sdk-js-v3/blob/v3.726.1/LICENSE):
+ 
+ ```
+                                 Apache License
+@@ -2623,215 +3251,6 @@ THE SOFTWARE.
+ 
+ ```
+ 
+-### @opentelemetry/sdk-trace-base
+-
+-This product includes source derived from [@opentelemetry/sdk-trace-base](https://github.com/open-telemetry/opentelemetry-js) ([v1.27.0](https://github.com/open-telemetry/opentelemetry-js/tree/v1.27.0)), distributed under the [Apache-2.0 License](https://github.com/open-telemetry/opentelemetry-js/blob/v1.27.0/LICENSE):
+-
+-```
+-                                 Apache License
+-                           Version 2.0, January 2004
+-                        http://www.apache.org/licenses/
+-
+-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+-
+-   1. Definitions.
+-
+-      "License" shall mean the terms and conditions for use, reproduction,
+-      and distribution as defined by Sections 1 through 9 of this document.
+-
+-      "Licensor" shall mean the copyright owner or entity authorized by
+-      the copyright owner that is granting the License.
+-
+-      "Legal Entity" shall mean the union of the acting entity and all
+-      other entities that control, are controlled by, or are under common
+-      control with that entity. For the purposes of this definition,
+-      "control" means (i) the power, direct or indirect, to cause the
+-      direction or management of such entity, whether by contract or
+-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+-      outstanding shares, or (iii) beneficial ownership of such entity.
+-
+-      "You" (or "Your") shall mean an individual or Legal Entity
+-      exercising permissions granted by this License.
+-
+-      "Source" form shall mean the preferred form for making modifications,
+-      including but not limited to software source code, documentation
+-      source, and configuration files.
+-
+-      "Object" form shall mean any form resulting from mechanical
+-      transformation or translation of a Source form, including but
+-      not limited to compiled object code, generated documentation,
+-      and conversions to other media types.
+-
+-      "Work" shall mean the work of authorship, whether in Source or
+-      Object form, made available under the License, as indicated by a
+-      copyright notice that is included in or attached to the work
+-      (an example is provided in the Appendix below).
+-
+-      "Derivative Works" shall mean any work, whether in Source or Object
+-      form, that is based on (or derived from) the Work and for which the
+-      editorial revisions, annotations, elaborations, or other modifications
+-      represent, as a whole, an original work of authorship. For the purposes
+-      of this License, Derivative Works shall not include works that remain
+-      separable from, or merely link (or bind by name) to the interfaces of,
+-      the Work and Derivative Works thereof.
+-
+-      "Contribution" shall mean any work of authorship, including
+-      the original version of the Work and any modifications or additions
+-      to that Work or Derivative Works thereof, that is intentionally
+-      submitted to Licensor for inclusion in the Work by the copyright owner
+-      or by an individual or Legal Entity authorized to submit on behalf of
+-      the copyright owner. For the purposes of this definition, "submitted"
+-      means any form of electronic, verbal, or written communication sent
+-      to the Licensor or its representatives, including but not limited to
+-      communication on electronic mailing lists, source code control systems,
+-      and issue tracking systems that are managed by, or on behalf of, the
+-      Licensor for the purpose of discussing and improving the Work, but
+-      excluding communication that is conspicuously marked or otherwise
+-      designated in writing by the copyright owner as "Not a Contribution."
+-
+-      "Contributor" shall mean Licensor and any individual or Legal Entity
+-      on behalf of whom a Contribution has been received by Licensor and
+-      subsequently incorporated within the Work.
+-
+-   2. Grant of Copyright License. Subject to the terms and conditions of
+-      this License, each Contributor hereby grants to You a perpetual,
+-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+-      copyright license to reproduce, prepare Derivative Works of,
+-      publicly display, publicly perform, sublicense, and distribute the
+-      Work and such Derivative Works in Source or Object form.
+-
+-   3. Grant of Patent License. Subject to the terms and conditions of
+-      this License, each Contributor hereby grants to You a perpetual,
+-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+-      (except as stated in this section) patent license to make, have made,
+-      use, offer to sell, sell, import, and otherwise transfer the Work,
+-      where such license applies only to those patent claims licensable
+-      by such Contributor that are necessarily infringed by their
+-      Contribution(s) alone or by combination of their Contribution(s)
+-      with the Work to which such Contribution(s) was submitted. If You
+-      institute patent litigation against any entity (including a
+-      cross-claim or counterclaim in a lawsuit) alleging that the Work
+-      or a Contribution incorporated within the Work constitutes direct
+-      or contributory patent infringement, then any patent licenses
+-      granted to You under this License for that Work shall terminate
+-      as of the date such litigation is filed.
+-
+-   4. Redistribution. You may reproduce and distribute copies of the
+-      Work or Derivative Works thereof in any medium, with or without
+-      modifications, and in Source or Object form, provided that You
+-      meet the following conditions:
+-
+-      (a) You must give any other recipients of the Work or
+-          Derivative Works a copy of this License; and
+-
+-      (b) You must cause any modified files to carry prominent notices
+-          stating that You changed the files; and
+-
+-      (c) You must retain, in the Source form of any Derivative Works
+-          that You distribute, all copyright, patent, trademark, and
+-          attribution notices from the Source form of the Work,
+-          excluding those notices that do not pertain to any part of
+-          the Derivative Works; and
+-
+-      (d) If the Work includes a "NOTICE" text file as part of its
+-          distribution, then any Derivative Works that You distribute must
+-          include a readable copy of the attribution notices contained
+-          within such NOTICE file, excluding those notices that do not
+-          pertain to any part of the Derivative Works, in at least one
+-          of the following places: within a NOTICE text file distributed
+-          as part of the Derivative Works; within the Source form or
+-          documentation, if provided along with the Derivative Works; or,
+-          within a display generated by the Derivative Works, if and
+-          wherever such third-party notices normally appear. The contents
+-          of the NOTICE file are for informational purposes only and
+-          do not modify the License. You may add Your own attribution
+-          notices within Derivative Works that You distribute, alongside
+-          or as an addendum to the NOTICE text from the Work, provided
+-          that such additional attribution notices cannot be construed
+-          as modifying the License.
+-
+-      You may add Your own copyright statement to Your modifications and
+-      may provide additional or different license terms and conditions
+-      for use, reproduction, or distribution of Your modifications, or
+-      for any such Derivative Works as a whole, provided Your use,
+-      reproduction, and distribution of the Work otherwise complies with
+-      the conditions stated in this License.
+-
+-   5. Submission of Contributions. Unless You explicitly state otherwise,
+-      any Contribution intentionally submitted for inclusion in the Work
+-      by You to the Licensor shall be under the terms and conditions of
+-      this License, without any additional terms or conditions.
+-      Notwithstanding the above, nothing herein shall supersede or modify
+-      the terms of any separate license agreement you may have executed
+-      with Licensor regarding such Contributions.
+-
+-   6. Trademarks. This License does not grant permission to use the trade
+-      names, trademarks, service marks, or product names of the Licensor,
+-      except as required for reasonable and customary use in describing the
+-      origin of the Work and reproducing the content of the NOTICE file.
+-
+-   7. Disclaimer of Warranty. Unless required by applicable law or
+-      agreed to in writing, Licensor provides the Work (and each
+-      Contributor provides its Contributions) on an "AS IS" BASIS,
+-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+-      implied, including, without limitation, any warranties or conditions
+-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+-      PARTICULAR PURPOSE. You are solely responsible for determining the
+-      appropriateness of using or redistributing the Work and assume any
+-      risks associated with Your exercise of permissions under this License.
+-
+-   8. Limitation of Liability. In no event and under no legal theory,
+-      whether in tort (including negligence), contract, or otherwise,
+-      unless required by applicable law (such as deliberate and grossly
+-      negligent acts) or agreed to in writing, shall any Contributor be
+-      liable to You for damages, including any direct, indirect, special,
+-      incidental, or consequential damages of any character arising as a
+-      result of this License or out of the use or inability to use the
+-      Work (including but not limited to damages for loss of goodwill,
+-      work stoppage, computer failure or malfunction, or any and all
+-      other commercial damages or losses), even if such Contributor
+-      has been advised of the possibility of such damages.
+-
+-   9. Accepting Warranty or Additional Liability. While redistributing
+-      the Work or Derivative Works thereof, You may choose to offer,
+-      and charge a fee for, acceptance of support, warranty, indemnity,
+-      or other liability obligations and/or rights consistent with this
+-      License. However, in accepting such obligations, You may act only
+-      on Your own behalf and on Your sole responsibility, not on behalf
+-      of any other Contributor, and only if You agree to indemnify,
+-      defend, and hold each Contributor harmless for any liability
+-      incurred by, or claims asserted against, such Contributor by reason
+-      of your accepting any such warranty or additional liability.
+-
+-   END OF TERMS AND CONDITIONS
+-
+-   APPENDIX: How to apply the Apache License to your work.
+-
+-      To apply the Apache License to your work, attach the following
+-      boilerplate notice, with the fields enclosed by brackets "[]"
+-      replaced with your own identifying information. (Don't include
+-      the brackets!)  The text should be enclosed in the appropriate
+-      comment syntax for the file format. We also recommend that a
+-      file or class name and description of purpose be included on the
+-      same "printed page" as the copyright notice for easier
+-      identification within third-party archives.
+-
+-   Copyright [yyyy] [name of copyright owner]
+-
+-   Licensed under the Apache License, Version 2.0 (the "License");
+-   you may not use this file except in compliance with the License.
+-   You may obtain a copy of the License at
+-
+-       http://www.apache.org/licenses/LICENSE-2.0
+-
+-   Unless required by applicable law or agreed to in writing, software
+-   distributed under the License is distributed on an "AS IS" BASIS,
+-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-   See the License for the specific language governing permissions and
+-   limitations under the License.
+-
+-```
+-
+ ### @slack/bolt
+ 
+ This product includes source derived from [@slack/bolt](https://github.com/slackapi/bolt) ([v3.22.0](https://github.com/slackapi/bolt/tree/v3.22.0)), distributed under the [MIT License](https://github.com/slackapi/bolt/blob/v3.22.0/LICENSE):
+@@ -3771,7 +4190,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ ### eslint
+ 
+-This product includes source derived from [eslint](https://github.com/eslint/eslint) ([v9.17.0](https://github.com/eslint/eslint/tree/v9.17.0)), distributed under the [MIT License](https://github.com/eslint/eslint/blob/v9.17.0/LICENSE):
++This product includes source derived from [eslint](https://github.com/eslint/eslint) ([v9.18.0](https://github.com/eslint/eslint/tree/v9.18.0)), distributed under the [MIT License](https://github.com/eslint/eslint/blob/v9.18.0/LICENSE):
+ 
+ ```
+ Copyright OpenJS Foundation and other contributors, <www.openjsf.org>
+@@ -4344,35 +4763,6 @@ This product includes source derived from [lockfile-lint](https://github.com/lir
+    limitations under the License.
+ ```
+ 
+-### neostandard
+-
+-This product includes source derived from [neostandard](https://github.com/neostandard/neostandard) ([v0.12.0](https://github.com/neostandard/neostandard/tree/v0.12.0)), distributed under the [MIT License](https://github.com/neostandard/neostandard/blob/v0.12.0/LICENSE):
+-
+-```
+-The MIT License (MIT)
+-
+-Copyright (c) 2024 neostandard contributors
+-
+-Permission is hereby granted, free of charge, to any person obtaining a copy
+-of this software and associated documentation files (the "Software"), to deal
+-in the Software without restriction, including without limitation the rights
+-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+-copies of the Software, and to permit persons to whom the Software is
+-furnished to do so, subject to the following conditions:
+-
+-The above copyright notice and this permission notice shall be included in all
+-copies or substantial portions of the Software.
+-
+-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+-SOFTWARE.
+-
+-```
+-
+ ### nock
+ 
+ This product includes source derived from [nock](https://github.com/nock/nock) ([v11.8.0](https://github.com/nock/nock/tree/v11.8.0)), distributed under the [MIT License](https://github.com/nock/nock/blob/v11.8.0/LICENSE):
+diff --git a/documentation/feature-flags.md b/documentation/feature-flags.md
+index 464b69111..ef6d2e70d 100644
+--- a/documentation/feature-flags.md
++++ b/documentation/feature-flags.md
+@@ -32,3 +32,10 @@ Any prerelease flags can be enabled or disabled in your agent config by adding a
+ * Configuration: `{ feature_flag: { kafkajs_instrumentation: true|false }}`
+ * Environment Variable: `NEW_RELIC_FEATURE_FLAG_KAFKAJS_INSTRUMENTATION`
+ * Description: Enables instrumentation of `kafkajs`. 
++
++#### otel_instrumentation
++* Enabled by default: `false`
++* Configuration: `{ feature_flag: { otel_instrumentation: true|false }}`
++* Environment Variable: `NEW_RELIC_FEATURE_FLAG_OTEL_INSTRUMENTATION`
++* Description: Enables the creation of Transaction Trace segments and time slices metrics from opentelemetry spans. This will help drive New Relic UI experience for opentelemetry spans. 
++* **WARNING**: This is not feature complete and is not intended to be enabled yet.
+diff --git a/lib/context-manager/context.js b/lib/context-manager/context.js
+index eef668a75..0d1d5284c 100644
+--- a/lib/context-manager/context.js
++++ b/lib/context-manager/context.js
+@@ -4,11 +4,13 @@
+  */
+ 
+ 'use strict'
++const { otelSynthesis } = require('../symbols')
+ 
+ module.exports = class Context {
+-  constructor(transaction, segment) {
++  constructor(transaction, segment, parentContext) {
+     this._transaction = transaction
+     this._segment = segment
++    this._otelCtx = parentContext ? new Map(parentContext) : new Map()
+   }
+ 
+   get segment() {
+@@ -19,11 +21,58 @@ module.exports = class Context {
+     return this._transaction
+   }
+ 
+-  enterSegment({ segment, transaction = this.transaction }) {
++  enterSegment({ segment, transaction = this._transaction }) {
+     return new this.constructor(transaction, segment)
+   }
+ 
+   enterTransaction(transaction) {
+     return new this.constructor(transaction, transaction.trace.root)
+   }
++
++  /**
++   * Required for bridging OTEL data into the agent.
++   *
++   * @param {string} key Stored entity name to retrieve.
++   *
++   * @returns {*} The stored value.
++   */
++  getValue(key) {
++    return this._otelCtx.get(key)
++  }
++
++  /**
++   * Required for bridging OTEL data into the agent.
++   *
++   * @param {string} key Name for stored value.
++   * @param {*} value Value to store.
++   *
++   * @returns {object} The context manager object.
++   */
++  setValue(key, value) {
++    let ctx
++
++    if (value[otelSynthesis] && value[otelSynthesis].segment && value[otelSynthesis].transaction) {
++      const { segment, transaction } = value[otelSynthesis]
++      segment.start()
++      ctx = new this.constructor(transaction, segment, this._otelCtx)
++    } else {
++      ctx = new this.constructor(this._transaction, this._segment, this._otelCtx)
++    }
++
++    ctx._otelCtx.set(key, value)
++    return ctx
++  }
++
++  /**
++   * Required for bridging OTEL data into the agent.
++   *
++   * @param {string} key Named value to remove from the store.
++   *
++   * @returns {object} The context manager object.
++   */
++  deleteValue(key) {
++    const ctx = new this.constructor(this._transaction, this._segment, this._otelCtx)
++    ctx._otelCtx.delete(key)
++    return ctx
++  }
+ }
+diff --git a/lib/db/utils.js b/lib/db/utils.js
+index 96563ff1d..af722bb18 100644
+--- a/lib/db/utils.js
++++ b/lib/db/utils.js
+@@ -11,9 +11,9 @@ function extractDatabaseChangeFromUse(sql) {
+   // The character ranges for this were pulled from
+   // http://dev.mysql.com/doc/refman/5.7/en/identifiers.html
+ 
+-  // The lint rule being suppressed here has been evaluated, and it has been
+-  // determined that the regular expression is sufficient for our use case.
+-  // eslint-disable-next-line sonarjs/slow-regex
+-  const match = /^\s*use[^\w`]+([\w$\u0080-\uFFFF]+|`[^`]+`)[\s;]*$/i.exec(sql)
++  // Suppressing a warning on this regex because it is not obvious what this
++  // regex does, and we don't want to break anything.
++  // eslint-disable-next-line sonarjs/slow-regex, sonarjs/duplicates-in-character-class
++  const match = /^\s*use[^\w`]+([\w$_\u0080-\uFFFF]+|`[^`]+`)[\s;]*$/i.exec(sql)
+   return (match && match[1]) || null
+ }
+diff --git a/lib/feature_flags.js b/lib/feature_flags.js
+index e153c8712..6698e4c35 100644
+--- a/lib/feature_flags.js
++++ b/lib/feature_flags.js
+@@ -10,7 +10,7 @@ exports.prerelease = {
+   // internal_test_only is used for testing our feature flag implementation.
+   // It is not used to gate any features.
+   internal_test_only: false,
+-
++  opentelemetry_bridge: false,
+   promise_segments: false,
+   reverse_naming_rules: false,
+   unresolved_promise_cleanup: true,
+diff --git a/lib/otel/context-manager.js b/lib/otel/context-manager.js
+new file mode 100644
+index 000000000..6725ae6a6
+--- /dev/null
++++ b/lib/otel/context-manager.js
+@@ -0,0 +1,52 @@
++/*
++ * Copyright 2024 New Relic Corporation. All rights reserved.
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++'use strict'
++
++/**
++ * @see https://open-telemetry.github.io/opentelemetry-js/interfaces/_opentelemetry_api.ContextManager.html
++ */
++class ContextManager {
++  #ctxMgr
++
++  constructor(agent) {
++    this.#ctxMgr = agent.tracer._contextManager
++  }
++
++  active() {
++    return this.#ctxMgr.getContext()
++  }
++
++  bind(context, target) {
++    return boundContext.bind(this)
++
++    function boundContext(...args) {
++      return this.with(context, target, this, ...args)
++    }
++  }
++
++  /**
++   * Runs the callback within the provided context, optionally
++   * bound with a provided `this`.
++   *
++   * @param context
++   * @param callback
++   * @param thisRef
++   * @param args
++   */
++  with(context, callback, thisRef, ...args) {
++    return this.#ctxMgr.runInContext(context, callback, thisRef, args)
++  }
++
++  enable() {
++    return this
++  }
++
++  disable() {
++    return this
++  }
++}
++
++module.exports = ContextManager
+diff --git a/lib/otel/logger.js b/lib/otel/logger.js
+new file mode 100644
+index 000000000..7a57b5fff
+--- /dev/null
++++ b/lib/otel/logger.js
+@@ -0,0 +1,25 @@
++/*
++ * Copyright 2025 New Relic Corporation. All rights reserved.
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++'use strict'
++const { diag, DiagLogLevel } = require('@opentelemetry/api')
++
++// Map New Relic log levels to OTel log levels
++const logLevels = {
++  trace: 'VERBOSE',
++  debug: 'DEBUG',
++  info: 'INFO',
++  warn: 'WARN',
++  error: 'ERROR',
++  fatal: 'ERROR'
++}
++
++module.exports = function createOtelLogger(logger, config) {
++  // enable exporter logging
++  // OTel API calls "verbose" what we call "trace".
++  logger.verbose = logger.trace
++  const logLevel = DiagLogLevel[logLevels[config.logging.level]]
++  diag.setLogger(logger, logLevel)
++}
+diff --git a/lib/otel/segments/http-external.js b/lib/otel/segments/http-external.js
+index 226c97c6f..7b408f154 100644
+--- a/lib/otel/segments/http-external.js
++++ b/lib/otel/segments/http-external.js
+@@ -6,6 +6,7 @@
+ 'use strict'
+ const NAMES = require('../../metrics/names')
+ const { SEMATTRS_HTTP_HOST } = require('@opentelemetry/semantic-conventions')
++const recordExternal = require('../../metrics/recorders/http_external')
+ 
+ module.exports = function createHttpExternalSegment(agent, otelSpan) {
+   const context = agent.tracer.getContext()
+@@ -13,6 +14,7 @@ module.exports = function createHttpExternalSegment(agent, otelSpan) {
+   const name = NAMES.EXTERNAL.PREFIX + host
+   const segment = agent.tracer.createSegment({
+     name,
++    recorder: recordExternal(host, 'http'),
+     parent: context.segment,
+     transaction: context.transaction
+   })
+diff --git a/lib/otel/segments/internal.js b/lib/otel/segments/internal.js
+index 827ac8288..e558db4f7 100644
+--- a/lib/otel/segments/internal.js
++++ b/lib/otel/segments/internal.js
+@@ -4,13 +4,15 @@
+  */
+ 
+ 'use strict'
++const customRecorder = require('../../metrics/recorders/custom')
+ 
+ module.exports = function createInternalSegment(agent, otelSpan) {
+   const context = agent.tracer.getContext()
+-  const name = `Custom/${otelSpan.name}`
++  const name = otelSpan.name
+   const segment = agent.tracer.createSegment({
+     name,
+     parent: context.segment,
++    recorder: customRecorder,
+     transaction: context.transaction
+   })
+   return { segment, transaction: context.transaction }
+diff --git a/lib/otel/setup.js b/lib/otel/setup.js
+new file mode 100644
+index 000000000..9231ebaae
+--- /dev/null
++++ b/lib/otel/setup.js
+@@ -0,0 +1,45 @@
++/*
++ * Copyright 2025 New Relic Corporation. All rights reserved.
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++'use strict'
++const { BasicTracerProvider } = require('@opentelemetry/sdk-trace-base')
++const { Resource } = require('@opentelemetry/resources')
++const { SEMRESATTRS_SERVICE_NAME } = require('@opentelemetry/semantic-conventions')
++const NrSpanProcessor = require('./span-processor')
++const ContextManager = require('./context-manager')
++const defaultLogger = require('../logger').child({ component: 'opentelemetry-bridge' })
++const createOtelLogger = require('./logger')
++
++module.exports = function setupOtel(agent, logger = defaultLogger) {
++  if (agent.config.feature_flag.opentelemetry_bridge !== true) {
++    logger.warn(
++      '`feature_flag.opentelemetry_bridge` is not enabled, skipping setup of opentelemetry-bridge'
++    )
++    return
++  }
++
++  createOtelLogger(logger, agent.config)
++
++  const provider = new BasicTracerProvider({
++    spanProcessors: [new NrSpanProcessor(agent)],
++    resource: new Resource({
++      [SEMRESATTRS_SERVICE_NAME]: agent.config.applications()[0]
++    }),
++    generalLimits: {
++      attributeValueLengthLimit: 4095
++    }
++
++  })
++  provider.register({
++    contextManager: new ContextManager(agent)
++    // propagator: // todo: https://github.com/newrelic/node-newrelic/issues/2662
++  })
++
++  agent.metrics
++    .getOrCreateMetric('Supportability/Nodejs/OpenTelemetryBridge/Setup')
++    .incrementCallCount()
++
++  return provider
++}
+diff --git a/lib/otel/span-processor.js b/lib/otel/span-processor.js
+new file mode 100644
+index 000000000..384c2bd28
+--- /dev/null
++++ b/lib/otel/span-processor.js
+@@ -0,0 +1,47 @@
++/*
++ * Copyright 2025 New Relic Corporation. All rights reserved.
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++'use strict'
++const SegmentSynthesizer = require('./segment-synthesis')
++const { otelSynthesis } = require('../symbols')
++const { hrTimeToMilliseconds } = require('@opentelemetry/core')
++
++module.exports = class NrSpanProcessor {
++  constructor(agent) {
++    this.agent = agent
++    this.synthesizer = new SegmentSynthesizer(agent)
++    this.tracer = agent.tracer
++  }
++
++  /**
++   * Synthesize segment at start of span and assign to a symbol
++   * that will be removed in `onEnd` once the correspondig
++   * segment is read.
++   * @param span
++   */
++  onStart(span) {
++    span[otelSynthesis] = this.synthesizer.synthesize(span)
++  }
++
++  /**
++   * Update the segment duration from span and reconcile
++   * any attributes that were added after the start
++   * @param span
++   */
++  onEnd(span) {
++    this.updateDuration(span)
++    // TODO: add attributes from span that did not exist at start
++  }
++
++  updateDuration(span) {
++    if (span[otelSynthesis] && span[otelSynthesis].segment) {
++      const { segment } = span[otelSynthesis]
++      segment.touch()
++      const duration = hrTimeToMilliseconds(span.duration)
++      segment.overwriteDurationInMillis(duration)
++      delete span[otelSynthesis]
++    }
++  }
++}
+diff --git a/lib/shimmer.js b/lib/shimmer.js
+index ac425ea60..ec2ee4cc2 100644
+--- a/lib/shimmer.js
++++ b/lib/shimmer.js
+@@ -22,6 +22,7 @@ let pkgsToHook = []
+ const NAMES = require('./metrics/names')
+ const symbols = require('./symbols')
+ const { unsubscribe } = require('./instrumentation/undici')
++const setupOtel = require('./otel/setup')
+ 
+ const CORE_INSTRUMENTATION = {
+   child_process: {
+@@ -393,6 +394,7 @@ const shimmer = (module.exports = {
+   bootstrapInstrumentation: function bootstrapInstrumentation(agent) {
+     shimmer.registerCoreInstrumentation(agent)
+     shimmer.registerThirdPartyInstrumentation(agent)
++    setupOtel(agent)
+   },
+ 
+   registerInstrumentation: function registerInstrumentation(opts) {
+diff --git a/lib/symbols.js b/lib/symbols.js
+index 6d65082d6..ef0eae282 100644
+--- a/lib/symbols.js
++++ b/lib/symbols.js
+@@ -26,6 +26,7 @@ module.exports = {
+   openAiApiKey: Symbol('openAiApiKey'),
+   parentSegment: Symbol('parentSegment'),
+   langchainRunId: Symbol('runId'),
++  otelSynthesis: Symbol('otelSynthesis'),
+   prismaConnection: Symbol('prismaConnection'),
+   prismaModelCall: Symbol('modelCall'),
+   redisClientOpts: Symbol('clientOptions'),
+diff --git a/package.json b/package.json
+index 50c0cc4ee..b4e159493 100644
+--- a/package.json
++++ b/package.json
+@@ -199,6 +199,9 @@
+     "@grpc/proto-loader": "^0.7.5",
+     "@newrelic/security-agent": "^2.2.0",
+     "@opentelemetry/api": "^1.9.0",
++    "@opentelemetry/core": "^1.30.0",
++    "@opentelemetry/resources": "^1.30.1",
++    "@opentelemetry/sdk-trace-base": "^1.30.0",
+     "@opentelemetry/semantic-conventions": "^1.27.0",
+     "@tyriar/fibonacci-heap": "^2.0.7",
+     "concat-stream": "^2.0.0",
+@@ -226,7 +229,6 @@
+     "@newrelic/newrelic-oss-cli": "^0.1.2",
+     "@newrelic/test-utilities": "^9.1.0",
+     "@octokit/rest": "^18.0.15",
+-    "@opentelemetry/sdk-trace-base": "^1.27.0",
+     "@slack/bolt": "^3.7.0",
+     "@smithy/eventstream-codec": "^2.2.0",
+     "@smithy/util-utf8": "^2.3.0",
+diff --git a/third_party_manifest.json b/third_party_manifest.json
+index 56433241d..4d3f9d949 100644
+--- a/third_party_manifest.json
++++ b/third_party_manifest.json
+@@ -1,5 +1,5 @@
+ {
+-  "lastUpdated": "Wed Jan 08 2025 12:42:52 GMT-0500 (Eastern Standard Time)",
++  "lastUpdated": "Fri Jan 24 2025 16:28:36 GMT-0500 (Eastern Standard Time)",
+   "projectName": "New Relic Node Agent",
+   "projectUrl": "https://github.com/newrelic/node-newrelic",
+   "includeOptDeps": true,
+@@ -44,15 +44,15 @@
+   },
+   "includeDev": true,
+   "dependencies": {
+-    "@grpc/grpc-js@1.12.4": {
++    "@grpc/grpc-js@1.12.5": {
+       "name": "@grpc/grpc-js",
+-      "version": "1.12.4",
++      "version": "1.12.5",
+       "range": "^1.12.2",
+       "licenses": "Apache-2.0",
+       "repoUrl": "https://github.com/grpc/grpc-node/tree/master/packages/grpc-js",
+-      "versionedRepoUrl": "https://github.com/grpc/grpc-node/tree/master/packages/grpc-js/tree/v1.12.4",
++      "versionedRepoUrl": "https://github.com/grpc/grpc-node/tree/master/packages/grpc-js/tree/v1.12.5",
+       "licenseFile": "node_modules/@grpc/grpc-js/LICENSE",
+-      "licenseUrl": "https://github.com/grpc/grpc-node/tree/master/packages/grpc-js/blob/v1.12.4/LICENSE",
++      "licenseUrl": "https://github.com/grpc/grpc-node/tree/master/packages/grpc-js/blob/v1.12.5/LICENSE",
+       "licenseTextSource": "file",
+       "publisher": "Google Inc."
+     },
+@@ -92,15 +92,51 @@
+       "licenseTextSource": "file",
+       "publisher": "OpenTelemetry Authors"
+     },
+-    "@opentelemetry/semantic-conventions@1.27.0": {
++    "@opentelemetry/core@1.30.1": {
++      "name": "@opentelemetry/core",
++      "version": "1.30.1",
++      "range": "^1.30.0",
++      "licenses": "Apache-2.0",
++      "repoUrl": "https://github.com/open-telemetry/opentelemetry-js",
++      "versionedRepoUrl": "https://github.com/open-telemetry/opentelemetry-js/tree/v1.30.1",
++      "licenseFile": "node_modules/@opentelemetry/core/LICENSE",
++      "licenseUrl": "https://github.com/open-telemetry/opentelemetry-js/blob/v1.30.1/LICENSE",
++      "licenseTextSource": "file",
++      "publisher": "OpenTelemetry Authors"
++    },
++    "@opentelemetry/resources@1.30.1": {
++      "name": "@opentelemetry/resources",
++      "version": "1.30.1",
++      "range": "^1.30.1",
++      "licenses": "Apache-2.0",
++      "repoUrl": "https://github.com/open-telemetry/opentelemetry-js",
++      "versionedRepoUrl": "https://github.com/open-telemetry/opentelemetry-js/tree/v1.30.1",
++      "licenseFile": "node_modules/@opentelemetry/resources/LICENSE",
++      "licenseUrl": "https://github.com/open-telemetry/opentelemetry-js/blob/v1.30.1/LICENSE",
++      "licenseTextSource": "file",
++      "publisher": "OpenTelemetry Authors"
++    },
++    "@opentelemetry/sdk-trace-base@1.30.1": {
++      "name": "@opentelemetry/sdk-trace-base",
++      "version": "1.30.1",
++      "range": "^1.30.0",
++      "licenses": "Apache-2.0",
++      "repoUrl": "https://github.com/open-telemetry/opentelemetry-js",
++      "versionedRepoUrl": "https://github.com/open-telemetry/opentelemetry-js/tree/v1.30.1",
++      "licenseFile": "node_modules/@opentelemetry/sdk-trace-base/LICENSE",
++      "licenseUrl": "https://github.com/open-telemetry/opentelemetry-js/blob/v1.30.1/LICENSE",
++      "licenseTextSource": "file",
++      "publisher": "OpenTelemetry Authors"
++    },
++    "@opentelemetry/semantic-conventions@1.28.0": {
+       "name": "@opentelemetry/semantic-conventions",
+-      "version": "1.27.0",
++      "version": "1.28.0",
+       "range": "^1.27.0",
+       "licenses": "Apache-2.0",
+       "repoUrl": "https://github.com/open-telemetry/opentelemetry-js",
+-      "versionedRepoUrl": "https://github.com/open-telemetry/opentelemetry-js/tree/v1.27.0",
++      "versionedRepoUrl": "https://github.com/open-telemetry/opentelemetry-js/tree/v1.28.0",
+       "licenseFile": "node_modules/@opentelemetry/semantic-conventions/LICENSE",
+-      "licenseUrl": "https://github.com/open-telemetry/opentelemetry-js/blob/v1.27.0/LICENSE",
++      "licenseUrl": "https://github.com/open-telemetry/opentelemetry-js/blob/v1.28.0/LICENSE",
+       "licenseTextSource": "file",
+       "publisher": "OpenTelemetry Authors"
+     },
+@@ -223,15 +259,15 @@
+       "email": "w@tson.dk",
+       "url": "https://twitter.com/wa7son"
+     },
+-    "semver@7.6.2": {
++    "semver@7.6.3": {
+       "name": "semver",
+-      "version": "7.6.2",
++      "version": "7.6.3",
+       "range": "^7.5.2",
+       "licenses": "ISC",
+       "repoUrl": "https://github.com/npm/node-semver",
+-      "versionedRepoUrl": "https://github.com/npm/node-semver/tree/v7.6.2",
++      "versionedRepoUrl": "https://github.com/npm/node-semver/tree/v7.6.3",
+       "licenseFile": "node_modules/semver/LICENSE",
+-      "licenseUrl": "https://github.com/npm/node-semver/blob/v7.6.2/LICENSE",
++      "licenseUrl": "https://github.com/npm/node-semver/blob/v7.6.3/LICENSE",
+       "licenseTextSource": "file",
+       "publisher": "GitHub Inc."
+     },
+@@ -250,28 +286,28 @@
+     }
+   },
+   "devDependencies": {
+-    "@aws-sdk/client-s3@3.714.0": {
++    "@aws-sdk/client-s3@3.726.1": {
+       "name": "@aws-sdk/client-s3",
+-      "version": "3.714.0",
++      "version": "3.726.1",
+       "range": "^3.556.0",
+       "licenses": "Apache-2.0",
+       "repoUrl": "https://github.com/aws/aws-sdk-js-v3",
+-      "versionedRepoUrl": "https://github.com/aws/aws-sdk-js-v3/tree/v3.714.0",
++      "versionedRepoUrl": "https://github.com/aws/aws-sdk-js-v3/tree/v3.726.1",
+       "licenseFile": "node_modules/@aws-sdk/client-s3/LICENSE",
+-      "licenseUrl": "https://github.com/aws/aws-sdk-js-v3/blob/v3.714.0/LICENSE",
++      "licenseUrl": "https://github.com/aws/aws-sdk-js-v3/blob/v3.726.1/LICENSE",
+       "licenseTextSource": "file",
+       "publisher": "AWS SDK for JavaScript Team",
+       "url": "https://aws.amazon.com/javascript/"
+     },
+-    "@aws-sdk/s3-request-presigner@3.714.0": {
++    "@aws-sdk/s3-request-presigner@3.726.1": {
+       "name": "@aws-sdk/s3-request-presigner",
+-      "version": "3.714.0",
++      "version": "3.726.1",
+       "range": "^3.556.0",
+       "licenses": "Apache-2.0",
+       "repoUrl": "https://github.com/aws/aws-sdk-js-v3",
+-      "versionedRepoUrl": "https://github.com/aws/aws-sdk-js-v3/tree/v3.714.0",
++      "versionedRepoUrl": "https://github.com/aws/aws-sdk-js-v3/tree/v3.726.1",
+       "licenseFile": "node_modules/@aws-sdk/s3-request-presigner/LICENSE",
+-      "licenseUrl": "https://github.com/aws/aws-sdk-js-v3/blob/v3.714.0/LICENSE",
++      "licenseUrl": "https://github.com/aws/aws-sdk-js-v3/blob/v3.726.1/LICENSE",
+       "licenseTextSource": "file",
+       "publisher": "AWS SDK for JavaScript Team",
+       "url": "https://aws.amazon.com/javascript/"
+@@ -351,19 +387,7 @@
+       "licenseUrl": "https://github.com/octokit/rest.js/blob/v18.12.0/LICENSE",
+       "licenseTextSource": "file"
+     },
+-    "@opentelemetry/sdk-trace-base@1.27.0": {
+-      "name": "@opentelemetry/sdk-trace-base",
+-      "version": "1.27.0",
+-      "range": "^1.27.0",
+-      "licenses": "Apache-2.0",
+-      "repoUrl": "https://github.com/open-telemetry/opentelemetry-js",
+-      "versionedRepoUrl": "https://github.com/open-telemetry/opentelemetry-js/tree/v1.27.0",
+-      "licenseFile": "node_modules/@opentelemetry/sdk-trace-base/LICENSE",
+-      "licenseUrl": "https://github.com/open-telemetry/opentelemetry-js/blob/v1.27.0/LICENSE",
+-      "licenseTextSource": "file",
+-      "publisher": "OpenTelemetry Authors"
+-    },
+-    "@slack/bolt@3.19.0": {
++    "@slack/bolt@3.22.0": {
+       "name": "@slack/bolt",
+       "version": "3.22.0",
+       "range": "^3.7.0",
+@@ -543,15 +567,15 @@
+       "email": "gajus@gajus.com",
+       "url": "http://gajus.com"
+     },
+-    "eslint@9.17.0": {
++    "eslint@9.18.0": {
+       "name": "eslint",
+-      "version": "9.17.0",
++      "version": "9.18.0",
+       "range": "^9.17.0",
+       "licenses": "MIT",
+       "repoUrl": "https://github.com/eslint/eslint",
+-      "versionedRepoUrl": "https://github.com/eslint/eslint/tree/v9.17.0",
++      "versionedRepoUrl": "https://github.com/eslint/eslint/tree/v9.18.0",
+       "licenseFile": "node_modules/eslint/LICENSE",
+-      "licenseUrl": "https://github.com/eslint/eslint/blob/v9.17.0/LICENSE",
++      "licenseUrl": "https://github.com/eslint/eslint/blob/v9.18.0/LICENSE",
+       "licenseTextSource": "file",
+       "publisher": "Nicholas C. Zakas",
+       "email": "nicholas+npm@nczconsulting.com"
+@@ -696,17 +720,6 @@
+       "email": "liran.tal@gmail.com",
+       "url": "https://github.com/lirantal"
+     },
+-    "neostandard@0.12.0": {
+-      "name": "neostandard",
+-      "version": "0.12.0",
+-      "range": "^0.12.0",
+-      "licenses": "MIT",
+-      "repoUrl": "https://github.com/neostandard/neostandard",
+-      "versionedRepoUrl": "https://github.com/neostandard/neostandard/tree/v0.12.0",
+-      "licenseFile": "node_modules/neostandard/LICENSE",
+-      "licenseUrl": "https://github.com/neostandard/neostandard/blob/v0.12.0/LICENSE",
+-      "licenseTextSource": "file"
+-    },
+     "nock@11.8.0": {
+       "name": "nock",
+       "version": "11.8.0",

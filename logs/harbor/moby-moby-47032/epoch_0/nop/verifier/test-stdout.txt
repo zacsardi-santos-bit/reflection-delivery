@@ -1,0 +1,9 @@
+patching file client/tracing_vendor_test.go
+?   	github.com/docker/docker/client/buildkit	[no test files]
+=== RUN   TestOtelHTTPTraceVersion
+    tracing_vendor_test.go:13: otelhttptrace.Version() = "0.40.0"; want "0.45.0"
+--- FAIL: TestOtelHTTPTraceVersion (0.00s)
+FAIL
+FAIL	github.com/docker/docker/client	0.009s
+FAIL
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=1

@@ -1,0 +1,43 @@
+patching file datanode/bootstrap_manager_test.go
+patching file datanode/peer_source_test.go
+patching file memstore/bootstrap_test.go
+{"Time":"2026-06-29T15:14:51.393597003Z","Action":"start","Package":"github.com/uber/aresdb/datanode"}
+{"Time":"2026-06-29T15:14:51.406562592Z","Action":"run","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode"}
+{"Time":"2026-06-29T15:14:51.406610453Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"=== RUN   TestDataNode\n"}
+{"Time":"2026-06-29T15:14:51.406655223Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"Running Suite: Ares Datanode Suite\n"}
+{"Time":"2026-06-29T15:14:51.406677993Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"==================================\n"}
+{"Time":"2026-06-29T15:14:51.406700643Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"Random Seed: \u001b[1m1782746091\u001b[0m\n"}
+{"Time":"2026-06-29T15:14:51.406724453Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"Will run \u001b[1m4\u001b[0m of \u001b[1m4\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:14:51.406748724Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"\n"}
+{"Time":"2026-06-29T15:14:51.406921045Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"error\",\"msg\":\"Invalid deviceMemoryUtilization config, setting to default\",\"deviceMemoryUtilization\":0}\n"}
+{"Time":"2026-06-29T15:14:51.406979445Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"error\",\"msg\":\"Invalid timeout config, setting to default\",\"timeout\":0}\n"}
+{"Time":"2026-06-29T15:14:51.407005736Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"Initialized device manager\",\"utilization\":1,\"timeout\":10}\n"}
+{"Time":"2026-06-29T15:14:51.407038226Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"DeviceInfo[0]={DeviceID:0 QueryCount:0 TotalMemory:25576865792 TotalAvailableMemory:25576865792 FreeMemory:25576865792 QueryMemoryUsageMap:map[]}\\n\"}\n"}
+{"Time":"2026-06-29T15:14:51.407072756Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"Bootstrapping device\"}\n"}
+{"Time":"2026-06-29T15:14:51.407102656Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"Finish bootstrapping device\"}\n"}
+{"Time":"2026-06-29T15:14:51.407982333Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m{\"level\":\"warn\",\"msg\":\"failed to borrow connection from peer\",\"peer\":\"instance0\",\"error\":\"unhealthy peer id: instance0, status: NOT_SERVING\"}\n"}
+{"Time":"2026-06-29T15:14:51.408032433Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"borrowed connection\"}\n"}
+{"Time":"2026-06-29T15:14:51.408062764Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"debug\",\"msg\":\"successfully borrowed connection from peer\",\"peer\":\"instance1\"}\n"}
+{"Time":"2026-06-29T15:14:51.408125784Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"warn\",\"msg\":\"failed to borrow connection from peer\",\"peer\":\"instance0\",\"error\":\"unhealthy peer id: instance0, status: NOT_SERVING\"}\n"}
+{"Time":"2026-06-29T15:14:51.408150754Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"warn\",\"msg\":\"failed to borrow connection from peer\",\"peer\":\"instance3\",\"error\":\"peer does not exist\"}\n"}
+{"Time":"2026-06-29T15:14:51.408245745Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"\u001b[32m•\u001b[0m{\"level\":\"info\",\"msg\":\"bootstrap enqueued, datanode is in bootstrapping state\"}\n"}
+{"Time":"2026-06-29T15:14:51.408472307Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap enqueued, datanode is in bootstrapping state\"}\n"}
+{"Time":"2026-06-29T15:14:51.408503257Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap enqueued, datanode is in bootstrapping state\"}\n"}
+{"Time":"2026-06-29T15:14:51.408528747Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap enqueued, datanode is in bootstrapping state\"}\n"}
+{"Time":"2026-06-29T15:14:51.408553147Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap enqueued, datanode is in bootstrapping state\"}\n"}
+{"Time":"2026-06-29T15:14:51.408576498Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap enqueued, datanode is in bootstrapping state\"}\n"}
+{"Time":"2026-06-29T15:14:51.408599078Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap enqueued, datanode is in bootstrapping state\"}\n"}
+{"Time":"2026-06-29T15:14:51.408621838Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap enqueued, datanode is in bootstrapping state\"}\n"}
+{"Time":"2026-06-29T15:14:51.408644438Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap enqueued, datanode is in bootstrapping state\"}\n"}
+{"Time":"2026-06-29T15:14:51.408667218Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap finished\",\"datanode\":\"host1\",\"duration\":\"0s\"}\n"}
+{"Time":"2026-06-29T15:14:51.408694539Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap finished\",\"datanode\":\"host1\",\"duration\":\"0s\"}\n"}
+{"Time":"2026-06-29T15:14:51.408717089Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"{\"level\":\"info\",\"msg\":\"bootstrap finished with err\",\"datanode\":\"host1\",\"duration\":\"0s\",\"error\":\"failed to run bootstrap\"}\n"}
+{"Time":"2026-06-29T15:14:51.40888075Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"\u001b[32m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:14:51.40890665Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"\u001b[1m\u001b[32mRan 4 of 4 Specs in 0.002 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:14:51.40893067Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"\u001b[1m\u001b[32mSUCCESS!\u001b[0m -- \u001b[32m\u001b[1m4 Passed\u001b[0m | \u001b[91m\u001b[1m0 Failed\u001b[0m | \u001b[33m\u001b[1m0 Pending\u001b[0m | \u001b[36m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:14:51.408966031Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Output":"--- PASS: TestDataNode (0.00s)\n"}
+{"Time":"2026-06-29T15:14:51.408990081Z","Action":"pass","Package":"github.com/uber/aresdb/datanode","Test":"TestDataNode","Elapsed":0}
+{"Time":"2026-06-29T15:14:51.409023791Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:51.409528235Z","Action":"output","Package":"github.com/uber/aresdb/datanode","Output":"ok  \tgithub.com/uber/aresdb/datanode\t0.015s\n"}
+{"Time":"2026-06-29T15:14:51.409593855Z","Action":"pass","Package":"github.com/uber/aresdb/datanode","Elapsed":0.016}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

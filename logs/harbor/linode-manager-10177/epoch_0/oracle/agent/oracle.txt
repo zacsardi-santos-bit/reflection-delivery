@@ -1,0 +1,14 @@
+patching file packages/manager/.changeset/pr-10153-fixed-1707249479775.md
+patching file packages/manager/.changeset/pr-10157-fixed-1707328749030.md
+patching file packages/manager/.changeset/pr-10161-fixed-1707341493849.md
+patching file packages/manager/.changeset/pr-10166-fixed-1707414781493.md
+patching file packages/manager/cypress/support/constants/dc-specific-pricing.ts
+patching file packages/manager/src/factories/index.ts
+patching file packages/manager/src/features/Backups/BackupDrawer.tsx
+patching file packages/manager/src/features/Backups/BackupLinodeRow.tsx
+patching file packages/manager/src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/AddNodePoolDrawer.tsx
+patching file packages/manager/src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/ResizeNodePoolDrawer.tsx
+patching file packages/manager/src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/utils.ts
+patching file packages/manager/src/features/Linodes/LinodesDetail/LinodeBackup/EnableBackupsDialog.tsx
+patching file packages/manager/src/features/Linodes/MigrateLinode/MigrationPricing.tsx
+patching file packages/manager/src/utilities/pricing/backups.ts

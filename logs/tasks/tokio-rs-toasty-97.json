@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-toasty-97",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds \"pub select_for_update: bool\" to CapabilitySql + select_for_update() accessor; F2P is 69 real sqlite CRUD tests e.g. \"crud_user_todos\", \"batch_create_many\", \"ensure_types_sync_send\""
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

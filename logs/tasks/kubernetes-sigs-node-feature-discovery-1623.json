@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-sigs-node-feature-discovery-1623",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `pkg/utils/featuregate/featuregate.go` + `pkg/features/features.go`; F2P includes `TestFeatureGateSetFromMap/...`, `TestFeatureGateOverrideDefault/...` run via `go test -json`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,248 @@
+patching file tests/testenv/mod.rs
+patching file tests/tests.rs
+   Compiling nix v0.29.0
+   Compiling fd-find v10.1.0 (/workspace/repo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.75s
+────────────
+ Nextest run ID c3f46ce6-4a28-4349-bd73-c2b1f0e2c93d with nextest profile: default
+    Starting 237 tests across 2 binaries
+        PASS [   0.693s] (  1/237) fd-find::tests test_and_empty_pattern
+        PASS [   0.766s] (  2/237) fd-find::tests test_and_plus_ignore_case
+        PASS [   0.765s] (  3/237) fd-find::tests test_and_plus_case_sensitive
+        PASS [   0.776s] (  4/237) fd-find::tests test_custom_ignore_files
+        PASS [   0.868s] (  5/237) fd-find::tests test_case_sensitive_glob_searches
+        PASS [   0.930s] (  6/237) fd-find::tests test_and_plus_glob
+        PASS [   1.280s] (  7/237) fd-find::tests test_absolute_path
+        PASS [   1.345s] (  8/237) fd-find::tests test_and_plus_full_path
+        PASS [   1.369s] (  9/237) fd-find::tests test_and_plus_extension
+        PASS [   1.371s] ( 10/237) fd-find::tests test_case_insensitive
+        PASS [   1.406s] ( 11/237) fd-find::tests test_and_plus_type
+        PASS [   0.697s] ( 12/237) fd-find::tests test_exact_depth
+        PASS [   0.815s] ( 13/237) fd-find::tests test_custom_path_separator
+        PASS [   1.713s] ( 14/237) fd-find::tests test_and_plus_fixed_strings
+        PASS [   1.715s] ( 15/237) fd-find::tests test_and_pattern_starts_with_dash
+        PASS [   1.731s] ( 16/237) fd-find::tests test_and_bad_pattern
+        PASS [   1.747s] ( 17/237) fd-find::tests test_case_sensitive
+        PASS [   0.292s] ( 18/237) fd-find::tests test_file_system_boundaries
+        PASS [   2.189s] ( 19/237) fd-find::tests test_base_directory
+        PASS [   0.888s] ( 20/237) fd-find::tests test_exec_batch_with_limit
+        PASS [   1.670s] ( 21/237) fd-find::tests test_custom_ignore_precedence
+        PASS [   1.613s] ( 22/237) fd-find::tests test_empty_pattern
+        PASS [   2.776s] ( 23/237) fd-find::tests test_and_basic
+        PASS [   2.784s] ( 24/237) fd-find::tests format
+        PASS [   0.769s] ( 25/237) fd-find::tests test_follow
+        PASS [   1.684s] ( 26/237) fd-find::tests test_exec_batch_multi
+        PASS [   1.205s] ( 27/237) fd-find::tests test_full_path
+        PASS [   2.744s] ( 28/237) fd-find::tests test_error_if_hidden_not_set_and_pattern_starts_with_dot
+        PASS [   3.164s] ( 29/237) fd-find::tests test_excludes
+        PASS [   1.059s] ( 30/237) fd-find::tests test_glob_searches_with_extension
+        PASS [   2.570s] ( 31/237) fd-find::tests test_explicit_root_path
+        PASS [   2.781s] ( 32/237) fd-find::tests test_exec_multi
+        PASS [   1.602s] ( 33/237) fd-find::tests test_gitignore_parent
+        PASS [   0.931s] ( 34/237) fd-find::tests test_global_ignore
+        PASS [   0.901s] ( 35/237) fd-find::tests test_hidden
+        PASS [   2.152s] ( 36/237) fd-find::tests test_full_path_glob_searches
+        PASS [   1.970s] ( 37/237) fd-find::tests test_gitignore_and_fdignore
+        PASS [   3.109s] ( 38/237) fd-find::tests test_fixed_strings
+        PASS [   0.761s] ( 39/237) fd-find::tests test_hyperlink
+        PASS [   2.083s] ( 40/237) fd-find::tests test_glob_searches
+        PASS [   0.766s] ( 41/237) fd-find::tests test_implicit_absolute_path
+        PASS [   0.632s] ( 42/237) fd-find::tests test_invalid_cwd
+        PASS [   3.512s] ( 43/237) fd-find::tests test_exec_invalid_utf8
+        PASS [   2.553s] ( 44/237) fd-find::tests test_git_dir
+        PASS [   0.722s] ( 45/237) fd-find::tests test_list_details
+        PASS [   2.957s] ( 46/237) fd-find::tests test_follow_broken_symlink
+        PASS [   0.915s] ( 47/237) fd-find::tests test_min_depth
+        PASS [   0.520s] ( 48/237) fd-find::tests test_no_global_ignore::no_ignore
+        PASS [   0.544s] ( 49/237) fd-find::tests test_no_global_ignore::no_global_ignore_file
+        PASS [   0.531s] ( 50/237) fd-find::tests test_no_global_ignore::unrestricted
+        PASS [   1.265s] ( 51/237) fd-find::tests test_invalid_utf8
+        PASS [   0.877s] ( 52/237) fd-find::tests test_modified_absolute
+        PASS [   0.509s] ( 53/237) fd-find::tests test_no_ignore_aliases
+        PASS [   1.273s] ( 54/237) fd-find::tests test_max_depth
+        PASS [   0.883s] ( 55/237) fd-find::tests test_no_extension
+        PASS [   4.227s] ( 56/237) fd-find::tests test_exec_with_separator
+        PASS [   0.745s] ( 57/237) fd-find::tests test_no_ignore
+        PASS [   4.523s] ( 58/237) fd-find::tests test_exec_batch
+        PASS [   4.667s] ( 59/237) fd-find::tests test_exec
+        PASS [   0.486s] ( 60/237) fd-find::tests test_no_ignore_vcs_child_dir
+        PASS [   0.501s] ( 61/237) fd-find::tests test_no_ignore_vcs
+        PASS [   1.136s] ( 62/237) fd-find::tests test_modified_relative
+        PASS [   0.444s] ( 63/237) fd-find::tests test_normalized_absolute_path
+        PASS [   0.684s] ( 64/237) fd-find::tests test_no_ignore_parent
+        PASS [   0.702s] ( 65/237) fd-find::tests test_no_ignore_parent_inner_git
+        PASS [   1.336s] ( 66/237) fd-find::tests test_multi_file
+        PASS [   0.111s] ( 67/237) fd-find::tests test_owner_root
+        PASS [   0.594s] ( 68/237) fd-find::tests test_opposing::follow
+        PASS [   0.610s] ( 69/237) fd-find::tests test_opposing::absolute_path
+        PASS [   1.899s] ( 70/237) fd-find::tests test_max_results
+        PASS [   0.594s] ( 71/237) fd-find::tests test_opposing::hidden
+        PASS [   0.568s] ( 72/237) fd-find::tests test_opposing::no_ignore
+        PASS [   0.556s] ( 73/237) fd-find::tests test_opposing::no_ignore_vcs
+        PASS [   0.565s] ( 74/237) fd-find::tests test_opposing::no_require_git
+        PASS [   0.523s] ( 75/237) fd-find::tests test_opposing::u
+        PASS [   4.760s] ( 76/237) fd-find::tests test_extension
+        PASS [   0.334s] ( 77/237) fd-find::tests test_print0
+        PASS [   0.536s] ( 78/237) fd-find::tests test_opposing::uu
+        PASS [   1.613s] ( 79/237) fd-find::tests test_multi_file_with_missing
+        PASS [   0.573s] ( 80/237) fd-find::tests test_owner_current_group
+        PASS [   0.557s] ( 81/237) fd-find::tests test_owner_current_user
+        PASS [   0.324s] ( 82/237) fd-find::tests test_regex_overrides_glob
+        PASS [   0.554s] ( 83/237) fd-find::tests test_owner_ignore_all
+        PASS [   0.507s] ( 84/237) fd-find::tests test_prune
+        PASS [   0.308s] ( 85/237) fd-find::tests test_symlink_and_absolute_path
+        PASS [   0.313s] ( 86/237) fd-find::tests test_strip_cwd_prefix
+        PASS [   0.543s] ( 87/237) fd-find::tests test_regex_searches
+        PASS [   0.328s] ( 88/237) fd-find::tests test_symlink_and_full_path
+        PASS [   0.113s] ( 89/237) fd-find::tests test_type_executable
+        PASS [   0.348s] ( 90/237) fd-find::tests test_symlink_and_full_path_abs_path
+        PASS [   1.218s] ( 91/237) fd-find::tests test_number_parsing_errors
+        PASS [   0.326s] ( 92/237) fd-find::tests test_symlink_as_absolute_root
+        PASS [   0.314s] ( 93/237) fd-find::tests test_symlink_as_root
+        PASS [   0.502s] ( 94/237) fd-find::tests test_single_and_multithreaded_execution
+        PASS [   0.145s] ( 95/237) fd-find::bin/fd exec::tests::generate_custom_path_separator
+        PASS [   0.168s] ( 96/237) fd-find::bin/fd exec::tests::command_set_no_args
+        PASS [   0.153s] ( 97/237) fd-find::bin/fd exec::tests::template_no_args
+        PASS [   0.161s] ( 98/237) fd-find::bin/fd exec::tests::tokens_multiple
+        PASS [   0.163s] ( 99/237) fd-find::bin/fd exec::tests::tokens_multiple_batch
+        PASS [   0.517s] (100/237) fd-find::tests test_smart_case_glob_searches
+        PASS [   0.160s] (101/237) fd-find::bin/fd exec::tests::tokens_single_batch
+        PASS [   0.161s] (102/237) fd-find::bin/fd exec::tests::tokens_with_basename
+        PASS [   0.151s] (103/237) fd-find::bin/fd exec::tests::tokens_with_literal_braces
+        PASS [   0.153s] (104/237) fd-find::bin/fd exec::tests::tokens_with_basename_no_extension
+        PASS [   0.162s] (105/237) fd-find::bin/fd exec::tests::tokens_with_literal_braces_and_placeholder
+        PASS [   0.154s] (106/237) fd-find::bin/fd exec::tests::tokens_with_no_extension
+        PASS [   0.865s] (107/237) fd-find::tests test_quiet
+        PASS [   0.160s] (108/237) fd-find::bin/fd exec::tests::tokens_with_parent
+        PASS [   0.137s] (109/237) fd-find::bin/fd exit_codes::tests::general_error_if_at_least_one_error
+        PASS [   0.137s] (110/237) fd-find::bin/fd exit_codes::tests::success_if_no_error
+        PASS [   0.161s] (111/237) fd-find::bin/fd exec::tests::tokens_with_placeholder
+        PASS [   0.136s] (112/237) fd-find::bin/fd exit_codes::tests::success_when_no_results
+        PASS [   0.132s] (113/237) fd-find::bin/fd filesystem::tests::strip_current_dir_basic
+        PASS [   0.135s] (114/237) fd-find::bin/fd filter::owner::owner_parsing::both_negate
+        PASS [   0.132s] (115/237) fd-find::bin/fd filter::owner::owner_parsing::colon_only
+        PASS [   0.134s] (116/237) fd-find::bin/fd filter::owner::owner_parsing::empty
+        PASS [   0.127s] (117/237) fd-find::bin/fd filter::owner::owner_parsing::gid_only
+        PASS [   0.882s] (118/237) fd-find::tests test_respect_ignore_files
+        PASS [   0.127s] (119/237) fd-find::bin/fd filter::owner::owner_parsing::more_colons
+        PASS [   0.120s] (120/237) fd-find::bin/fd filter::owner::owner_parsing::only_colons
+        PASS [   0.136s] (121/237) fd-find::bin/fd filter::owner::owner_parsing::trailing
+        PASS [   0.137s] (122/237) fd-find::bin/fd filter::owner::owner_parsing::uid_gid
+        PASS [   0.893s] (123/237) fd-find::tests test_simple
+        PASS [   0.127s] (124/237) fd-find::bin/fd filter::owner::owner_parsing::uid_only
+        PASS [   0.134s] (125/237) fd-find::bin/fd filter::owner::owner_parsing::uid_negate
+        PASS [   0.130s] (126/237) fd-find::bin/fd filter::owner::owner_parsing::uid_not_gid
+        PASS [   0.158s] (127/237) fd-find::bin/fd filter::size::tests::byte_minus
+        PASS [   0.162s] (128/237) fd-find::bin/fd filter::size::tests::byte_plus
+        PASS [   0.159s] (129/237) fd-find::bin/fd filter::size::tests::byte_plus_multiplier
+        PASS [   0.157s] (130/237) fd-find::bin/fd filter::size::tests::ensure_bad_format_returns_none_1
+        PASS [   0.160s] (131/237) fd-find::bin/fd filter::size::tests::ensure_bad_format_returns_none_2
+        PASS [   0.160s] (132/237) fd-find::bin/fd filter::size::tests::ensure_bad_format_returns_none_3
+        PASS [   0.154s] (133/237) fd-find::bin/fd filter::size::tests::ensure_bb_format_returns_none
+        PASS [   0.160s] (134/237) fd-find::bin/fd filter::size::tests::ensure_bib_format_returns_none
+        PASS [   0.146s] (135/237) fd-find::bin/fd filter::size::tests::ensure_invalid_unit_returns_none_2
+        PASS [   0.149s] (136/237) fd-find::bin/fd filter::size::tests::ensure_invalid_unit_returns_none_3
+        PASS [   0.150s] (137/237) fd-find::bin/fd filter::size::tests::ensure_invalid_unit_returns_none_1
+        PASS [   0.151s] (138/237) fd-find::bin/fd filter::size::tests::ensure_missing_number_returns_none
+        PASS [   0.154s] (139/237) fd-find::bin/fd filter::size::tests::gibi_minus
+        PASS [   0.157s] (140/237) fd-find::bin/fd filter::size::tests::ensure_missing_unit_returns_none
+        PASS [   0.150s] (141/237) fd-find::bin/fd filter::size::tests::gibi_minus_suffix
+        PASS [   0.149s] (142/237) fd-find::bin/fd filter::size::tests::gibi_plus
+        PASS [   0.155s] (143/237) fd-find::bin/fd filter::size::tests::gibi_minus_upper
+        PASS [   0.159s] (144/237) fd-find::bin/fd filter::size::tests::gibi_minus_suffix_upper
+        PASS [   0.152s] (145/237) fd-find::bin/fd filter::size::tests::gibi_plus_suffix
+        PASS [   0.883s] (146/237) fd-find::tests test_type_empty
+        PASS [   1.086s] (147/237) fd-find::tests test_smart_case
+        PASS [   0.158s] (148/237) fd-find::bin/fd filter::size::tests::gibi_plus_upper
+        PASS [   0.162s] (149/237) fd-find::bin/fd filter::size::tests::gibi_plus_suffix_upper
+        PASS [   0.163s] (150/237) fd-find::bin/fd filter::size::tests::giga_minus
+        PASS [   0.159s] (151/237) fd-find::bin/fd filter::size::tests::giga_minus_suffix_upper
+        PASS [   0.158s] (152/237) fd-find::bin/fd filter::size::tests::giga_plus
+        PASS [   0.169s] (153/237) fd-find::bin/fd filter::size::tests::giga_minus_suffix
+        PASS [   0.160s] (154/237) fd-find::bin/fd filter::size::tests::giga_plus_suffix_upper
+        PASS [   0.172s] (155/237) fd-find::bin/fd filter::size::tests::giga_minus_upper
+        PASS [   0.165s] (156/237) fd-find::bin/fd filter::size::tests::giga_plus_suffix
+        PASS [   0.159s] (157/237) fd-find::bin/fd filter::size::tests::giga_plus_upper
+        PASS [   0.145s] (158/237) fd-find::bin/fd filter::size::tests::is_within_greater_than_equal
+        PASS [   0.159s] (159/237) fd-find::bin/fd filter::size::tests::is_within_greater_than
+        PASS [   0.159s] (160/237) fd-find::bin/fd filter::size::tests::is_within_less_than
+        PASS [   1.048s] (161/237) fd-find::tests test_type
+        PASS [   0.161s] (162/237) fd-find::bin/fd filter::size::tests::is_within_less_than_equal
+        PASS [   0.153s] (163/237) fd-find::bin/fd filter::size::tests::kibi_minus
+        PASS [   0.148s] (164/237) fd-find::bin/fd filter::size::tests::kibi_minus_multiplier
+        PASS [   0.162s] (165/237) fd-find::bin/fd filter::size::tests::kibi_minus_suffix
+        PASS [   0.157s] (166/237) fd-find::bin/fd filter::size::tests::kibi_minus_suffix_upper
+        PASS [   0.151s] (167/237) fd-find::bin/fd filter::size::tests::kibi_minus_upper
+        PASS [   0.154s] (168/237) fd-find::bin/fd filter::size::tests::kibi_plus
+        PASS [   0.154s] (169/237) fd-find::bin/fd filter::size::tests::kibi_plus_multiplier
+        PASS [   0.157s] (170/237) fd-find::bin/fd filter::size::tests::kibi_plus_suffix
+        PASS [   0.154s] (171/237) fd-find::bin/fd filter::size::tests::kibi_plus_suffix_upper
+        PASS [   0.153s] (172/237) fd-find::bin/fd filter::size::tests::kilo_minus
+        PASS [   0.158s] (173/237) fd-find::bin/fd filter::size::tests::kibi_plus_upper
+        PASS [   0.152s] (174/237) fd-find::bin/fd filter::size::tests::kilo_minus_multiplier
+        PASS [   0.150s] (175/237) fd-find::bin/fd filter::size::tests::kilo_minus_suffix
+        PASS [   0.154s] (176/237) fd-find::bin/fd filter::size::tests::kilo_minus_suffix_upper
+        PASS [   0.146s] (177/237) fd-find::bin/fd filter::size::tests::kilo_minus_upper
+        PASS [   0.152s] (178/237) fd-find::bin/fd filter::size::tests::kilo_plus
+        PASS [   0.158s] (179/237) fd-find::bin/fd filter::size::tests::kilo_plus_suffix
+        PASS [   0.150s] (180/237) fd-find::bin/fd filter::size::tests::kilo_plus_suffix_upper
+        PASS [   0.151s] (181/237) fd-find::bin/fd filter::size::tests::kilo_plus_upper
+        PASS [   0.157s] (182/237) fd-find::bin/fd filter::size::tests::mebi_minus
+        PASS [   0.161s] (183/237) fd-find::bin/fd filter::size::tests::mebi_minus_suffix
+        PASS [   0.160s] (184/237) fd-find::bin/fd filter::size::tests::mebi_minus_suffix_upper
+        PASS [   0.154s] (185/237) fd-find::bin/fd filter::size::tests::mebi_plus
+        PASS [   0.157s] (186/237) fd-find::bin/fd filter::size::tests::mebi_minus_upper
+        PASS [   0.155s] (187/237) fd-find::bin/fd filter::size::tests::mebi_plus_suffix_upper
+        PASS [   0.156s] (188/237) fd-find::bin/fd filter::size::tests::mebi_plus_upper
+        PASS [   0.163s] (189/237) fd-find::bin/fd filter::size::tests::mebi_plus_suffix
+        PASS [   0.157s] (190/237) fd-find::bin/fd filter::size::tests::mega_minus
+        PASS [   0.153s] (191/237) fd-find::bin/fd filter::size::tests::mega_minus_suffix
+        PASS [   0.158s] (192/237) fd-find::bin/fd filter::size::tests::mega_minus_suffix_upper
+        PASS [   0.157s] (193/237) fd-find::bin/fd filter::size::tests::mega_minus_upper
+        PASS [   0.157s] (194/237) fd-find::bin/fd filter::size::tests::mega_plus
+        PASS [   0.157s] (195/237) fd-find::bin/fd filter::size::tests::mega_plus_suffix
+        PASS [   0.162s] (196/237) fd-find::bin/fd filter::size::tests::mega_plus_suffix_upper
+        PASS [   0.164s] (197/237) fd-find::bin/fd filter::size::tests::mega_plus_upper
+        PASS [   0.160s] (198/237) fd-find::bin/fd filter::size::tests::tebi_minus
+        PASS [   0.155s] (199/237) fd-find::bin/fd filter::size::tests::tebi_minus_upper
+        PASS [   0.161s] (200/237) fd-find::bin/fd filter::size::tests::tebi_minus_suffix
+        PASS [   0.164s] (201/237) fd-find::bin/fd filter::size::tests::tebi_minus_suffix_upper
+        PASS [   0.154s] (202/237) fd-find::bin/fd filter::size::tests::tebi_plus
+        PASS [   0.154s] (203/237) fd-find::bin/fd filter::size::tests::tebi_plus_suffix
+        PASS [   0.154s] (204/237) fd-find::bin/fd filter::size::tests::tebi_plus_suffix_upper
+        PASS [   0.153s] (205/237) fd-find::bin/fd filter::size::tests::tera_minus
+        PASS [   0.157s] (206/237) fd-find::bin/fd filter::size::tests::tebi_plus_upper
+        PASS [   0.153s] (207/237) fd-find::bin/fd filter::size::tests::tera_minus_suffix
+        PASS [   0.147s] (208/237) fd-find::bin/fd filter::size::tests::tera_minus_suffix_upper
+        PASS [   0.149s] (209/237) fd-find::bin/fd filter::size::tests::tera_minus_upper
+        PASS [   0.157s] (210/237) fd-find::bin/fd filter::size::tests::tera_plus
+        PASS [   0.156s] (211/237) fd-find::bin/fd filter::size::tests::tera_plus_suffix
+        PASS [   0.131s] (212/237) fd-find::bin/fd filter::time::tests::is_time_filter_applicable
+        PASS [   0.148s] (213/237) fd-find::bin/fd filter::size::tests::tera_plus_suffix_upper
+        PASS [   0.147s] (214/237) fd-find::bin/fd filter::size::tests::tera_plus_upper
+        PASS [   0.139s] (215/237) fd-find::bin/fd fmt::fmt_tests::all_placeholders
+        PASS [   0.127s] (216/237) fd-find::bin/fd fmt::input::path_tests::basename_dir
+        PASS [   0.140s] (217/237) fd-find::bin/fd fmt::fmt_tests::parse_no_placeholders
+        PASS [   0.141s] (218/237) fd-find::bin/fd fmt::fmt_tests::parse_only_brace_escapes
+        PASS [   0.127s] (219/237) fd-find::bin/fd fmt::input::path_tests::basename_empty
+        PASS [   0.131s] (220/237) fd-find::bin/fd fmt::input::path_tests::basename_simple
+        PASS [   0.130s] (221/237) fd-find::bin/fd fmt::input::path_tests::basename_utf8_0
+        PASS [   0.123s] (222/237) fd-find::bin/fd fmt::input::path_tests::basename_utf8_1
+        PASS [   0.123s] (223/237) fd-find::bin/fd fmt::input::path_tests::dirname_dir
+        PASS [   0.124s] (224/237) fd-find::bin/fd fmt::input::path_tests::dirname_root
+        PASS [   0.120s] (225/237) fd-find::bin/fd fmt::input::path_tests::dirname_simple
+        PASS [   0.125s] (226/237) fd-find::bin/fd fmt::input::path_tests::dirname_utf8_0
+        PASS [   0.123s] (227/237) fd-find::bin/fd fmt::input::path_tests::hidden
+        PASS [   0.128s] (228/237) fd-find::bin/fd fmt::input::path_tests::dirname_utf8_1
+        PASS [   0.119s] (229/237) fd-find::bin/fd fmt::input::path_tests::remove_ext_dir
+        PASS [   0.120s] (230/237) fd-find::bin/fd fmt::input::path_tests::remove_ext_empty
+        PASS [   0.118s] (231/237) fd-find::bin/fd fmt::input::path_tests::remove_ext_simple
+        PASS [   0.119s] (232/237) fd-find::bin/fd fmt::input::path_tests::remove_ext_utf8
+        PASS [   0.110s] (233/237) fd-find::bin/fd hyperlink::test::test_unicode_encoding
+        PASS [   0.107s] (234/237) fd-find::bin/fd regex_helper::matches_strings_with_leading_dot_simple
+        PASS [   0.107s] (235/237) fd-find::bin/fd regex_helper::pattern_has_uppercase_char_advanced
+        PASS [   0.107s] (236/237) fd-find::bin/fd regex_helper::pattern_has_uppercase_char_simple
+        PASS [   2.408s] (237/237) fd-find::tests test_size
+────────────
+     Summary [   8.824s] 237 tests run: 237 passed, 0 skipped
+reward=1 graded=237 found=69 failed=0 parsed=237 framework=cargo exit_code=0

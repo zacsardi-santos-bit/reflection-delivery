@@ -1,0 +1,8 @@
+patching file lib/bolt/inventory/group2.rb
+patching file lib/bolt/inventory/inventory2.rb
+patching file lib/bolt/plugin/prompt.rb
+patching file lib/bolt/plugin/puppetdb.rb
+patching file lib/bolt/plugin/terraform.rb
+patching file lib/bolt/secret/base.rb
+patching file lib/bolt/util.rb
+patching file pre-docs/inventory_version2.md

@@ -1,0 +1,23 @@
+{
+ "task": "nrwl-nx-21448",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds add-project-to-config.ts migration; test asserts expect(content).toContain('projects: [') and snapshot; grade.py parses jest --json for F2P"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 47,
+  "shallow": true
+ }
+}

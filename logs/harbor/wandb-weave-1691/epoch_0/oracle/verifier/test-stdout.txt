@@ -1,0 +1,23 @@
+patching file weave/tests/test_client_trace.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini (WARNING: ignoring pytest config in pyproject.toml!)
+plugins: timeout-2.4.0, anyio-4.14.1, typeguard-4.5.2
+collecting ... collected 1 item
+
+weave/tests/test_client_trace.py::test_trace_call_filter PASSED          [100%]
+
+=============================== warnings summary ===============================
+weave/tests/test_client_trace.py:24
+  /workspace/repo/weave/tests/test_client_trace.py:24: PytestUnknownMarkWarning: Unknown pytest.mark.trace - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    pytestmark = pytest.mark.trace
+
+weave/tests/test_client_trace.py:1287
+  /workspace/repo/weave/tests/test_client_trace.py:1287: PytestUnknownMarkWarning: Unknown pytest.mark.skip_clickhouse_client - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.skip_clickhouse_client
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 2 warnings in 1.21s =========================
+reward=1 graded=1 found=0 failed=0 parsed=1 framework=pytest exit_code=0

@@ -1,0 +1,911 @@
+diff --git a/Makefile b/Makefile
+index dfd3dd9a0..67da9f5a3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -13,15 +13,15 @@ MAKEFLAGS+=--no-builtin-rules
+ # Project settings
+ 
+ INSTANCE_PORT=8080
+-DOCKER_IMAGE=plone/server-dev:6.0.8
+-DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:6.0.8
++DOCKER_IMAGE=plone/server-dev:6.0.9
++DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:6.0.9
+ KGS=
+ NODEBIN = ./node_modules/.bin
+ SCRIPTSPACKAGE = ./packages/scripts
+ 
+ # Plone 5 legacy
+ DOCKER_IMAGE5=plone/plone-backend:5.2.12
+-KGS5=plone.restapi==8.43.3 plone.volto==4.1.0 plone.rest==3.0.1
++KGS5=plone.restapi==9.2.0 plone.volto==4.1.0 plone.rest==3.0.1
+ TESTING_ADDONS=plone.app.robotframework==2.0.0 plone.app.testing==7.0.0
+ 
+ # Sphinx variables
+diff --git a/api/buildout.cfg b/api/buildout.cfg
+index 6b63ef467..5cfd590ad 100644
+--- a/api/buildout.cfg
++++ b/api/buildout.cfg
+@@ -1,7 +1,7 @@
+ [buildout]
+ index = https://pypi.org/simple/
+ extends =
+-    http://dist.plone.org/release/6.0.8/versions.cfg
++    http://dist.plone.org/release/6.0.9/versions.cfg
+     version-constraints.cfg
+     versions.cfg
+ parts = instance plonesite site-packages test robot-server
+diff --git a/docs/source/blocks/block-style-wrapper.md b/docs/source/blocks/block-style-wrapper.md
+index e3e825207..b4cc1ece4 100644
+--- a/docs/source/blocks/block-style-wrapper.md
++++ b/docs/source/blocks/block-style-wrapper.md
+@@ -11,6 +11,9 @@ myst:
+ 
+ # Block style wrapper
+ 
++```{versionadded} 16.0.0
++```
++
+ The block style wrapper is part of a block anatomy.
+ It allows you to inject styles from the block schema into the block wrapper in the form of class names.
+ It wraps the block edit and the view components.
+@@ -109,7 +112,7 @@ config.blocks.blocksConfig.listing.schemaEnhancer = composeSchema(
+ 
+ The `styles` field is mapped to an `objectWidget`.
+ The following is an example of a possible set of styles.
+-The style wrapper will read the styles and inject them into the edit and view components as shown in the next sections.
++The style wrapper will read the styles and inject the resultant class names into the edit and view components as shown in the next sections.
+ 
+ ```json
+ {
+@@ -127,7 +130,7 @@ The style wrapper will read the styles and inject them into the edit and view co
+ ## Using the injected class names in your block
+ 
+ The resultant class names are injected as a `className` prop into the wrapped block.
+-Thus you can use it in the root component of your block view and edit components as follows:
++Thus you can use it in the root component of your block view component as follows:
+ 
+ ```jsx
+ const BlockView = (props)=> (
+@@ -149,6 +152,8 @@ The resultant HTML would be the following:
+ ```
+ Then it's at your discretion how you define the CSS class names in your theme.
+ 
++## Customize the injected class names
++
+ If you need other style of classnames generated, you can use the classname
+ converters defined in `config.settings.styleClassNameConverters`, by
+ registering fieldnames suffixed with the converter name. For example, a style
+@@ -165,6 +170,72 @@ data like:
+ 
+ will generate classnames `primary inverted`
+ 
++## Inject custom CSS properties
++
++```{versionadded} 17.8.0
++```
++
++The style wrapper also allows to inject custom CSS properties.
++This is useful where the property that you want to inject is customizable per project.
++For example, imagine you have an existing global CSS custom property `--image-aspect-ratio` that you use for all images in all blocks.
++Then in your customized theme, you could set CSS attributes for this property, changing it in runtime.
++The key feature of custom CSS properties is that they can be applied also using the cascade.
++This means that they can be placed anywhere in either CSS definitions or HTML structure, and they will be applied only in the context where they are defined.
++
++As an example, first define the style of a teaser block image as follows.
++
++```css
++.block.teaser img {
++  aspect-ratio: var(--image-aspect-ratio, 16 / 9);
++}
++```
++
++Next, you can enhance a block's schema by injecting the custom CSS property as follows.
++
++```js
++  schema.properties.styles.schema.fieldsets[0].fields = [
++    ...schema.properties.styles.schema.fieldsets[0].fields,
++    '--image-aspect-ratio',
++  ];
++
++  // We use a select widget and set a default
++  schema.properties.styles.schema.properties['--image-aspect-ratio'] = {
++    widget: 'select',
++    title: 'Aspect Ratio',
++    choices: [
++      ['1', '1:1'],
++      ['16 / 9', '16/9'],
++    ],
++    default: '1',
++  };
++```
++
++Finally, assuming that you select the default value for the {guilabel}`Aspect Ratio` for the custom CSS property, then the markup of the block will contain the custom property as shown.
++
++```html
++<div class="block teaser" style="--image-aspect-ratio: 1">
++<img src="example.png">
++</div>
++```
++
++The custom CSS property definition will only apply within the div that it's defined.
++As you can see, the custom CSS property applies only within the `div` in which it is defined.
++
++If you want to use it in your custom components, you need to apply it in the root of your block's view component as follows:
++
++```jsx
++const BlockView = (props)=> (
++  <div style={props.style}>
++    // Block's view component code
++  </div>
++)
++```
++
++```{note}
++You need to manually add the above code in your view component block code to benefit from the style injection.
++The styles in the block edit component are injected automatically into the blocks engine editor wrappers, so you don't have to take any action.
++```
++
+ ## Align class injection
+ 
+ There is an automatic class name injection happening at the same time the style wrapper class names injection.
+diff --git a/news/5353.bugfix b/news/5353.bugfix
+new file mode 100644
+index 000000000..63a6c4f5b
+--- /dev/null
++++ b/news/5353.bugfix
+@@ -0,0 +1 @@
++The hamburger icon to open the mobile/tablet navigation is now hidden if there are no navigation items. @Aarav238
+\ No newline at end of file
+diff --git a/news/5379.bugfix b/news/5379.bugfix
+new file mode 100644
+index 000000000..79ccb8a25
+--- /dev/null
++++ b/news/5379.bugfix
+@@ -0,0 +1 @@
++Fix preview image component @steffenri
+\ No newline at end of file
+diff --git a/news/5432.bugfix b/news/5432.bugfix
+new file mode 100644
+index 000000000..001fe199d
+--- /dev/null
++++ b/news/5432.bugfix
+@@ -0,0 +1 @@
++Fix autopopulated value of facet when settings the value for another one. @iFlameing
+\ No newline at end of file
+diff --git a/news/5501.bugfix b/news/5501.bugfix
+new file mode 100644
+index 000000000..e9c310fd0
+--- /dev/null
++++ b/news/5501.bugfix
+@@ -0,0 +1,2 @@
++Fix sitemap for multilingual sites
++[erral]
+diff --git a/news/5536.bugfix b/news/5536.bugfix
+new file mode 100644
+index 000000000..26203fcf6
+--- /dev/null
++++ b/news/5536.bugfix
+@@ -0,0 +1 @@
++Fixed edge case error in Unauthorised page and Login route behavior @sneridagh
+diff --git a/news/5562.internal b/news/5562.internal
+new file mode 100644
+index 000000000..ac6667620
+--- /dev/null
++++ b/news/5562.internal
+@@ -0,0 +1 @@
++Update Plone to 6.0.9 @sneridagh
+diff --git a/news/5581.feature b/news/5581.feature
+new file mode 100644
+index 000000000..8e900f8d8
+--- /dev/null
++++ b/news/5581.feature
+@@ -0,0 +1 @@
++Added support for custom CSS properties in the `StyleWrapper`. @sneridagh
+diff --git a/src/components/manage/Blocks/Block/EditBlockWrapper.jsx b/src/components/manage/Blocks/Block/EditBlockWrapper.jsx
+index aca72c13e..0e9e0de37 100644
+--- a/src/components/manage/Blocks/Block/EditBlockWrapper.jsx
++++ b/src/components/manage/Blocks/Block/EditBlockWrapper.jsx
+@@ -3,6 +3,7 @@ import { Icon } from '@plone/volto/components';
+ import {
+   blockHasValue,
+   buildStyleClassNamesFromData,
++  buildStyleObjectFromData,
+ } from '@plone/volto/helpers';
+ import dragSVG from '@plone/volto/icons/drag.svg';
+ import { Button } from 'semantic-ui-react';
+@@ -57,7 +58,8 @@ const EditBlockWrapper = (props) => {
+     ? data.required
+     : includes(config.blocks.requiredBlocks, type);
+ 
+-  const styles = buildStyleClassNamesFromData(data.styles);
++  const classNames = buildStyleClassNamesFromData(data.styles);
++  const style = buildStyleObjectFromData(data.styles);
+ 
+   return (
+     <div
+@@ -66,9 +68,10 @@ const EditBlockWrapper = (props) => {
+       // Right now, we can have the alignment information in the styles property or in the
+       // block data root, we inject the classname here for having control over the whole
+       // Block Edit wrapper
+-      className={cx(`block-editor-${data['@type']}`, styles, {
++      className={cx(`block-editor-${data['@type']}`, classNames, {
+         [data.align]: data.align,
+       })}
++      style={style}
+     >
+       <div style={{ position: 'relative' }}>
+         <div
+diff --git a/src/components/manage/Blocks/Block/StyleWrapper.jsx b/src/components/manage/Blocks/Block/StyleWrapper.jsx
+index 7b10d712b..45c06d6fb 100644
+--- a/src/components/manage/Blocks/Block/StyleWrapper.jsx
++++ b/src/components/manage/Blocks/Block/StyleWrapper.jsx
+@@ -3,10 +3,12 @@ import cx from 'classnames';
+ import {
+   buildStyleClassNamesFromData,
+   buildStyleClassNamesExtenders,
++  buildStyleObjectFromData,
+ } from '@plone/volto/helpers';
+ 
+ const StyleWrapper = (props) => {
+-  let classNames = [];
++  let classNames,
++    style = [];
+   const { children, content, data = {}, block } = props;
+   classNames = buildStyleClassNamesFromData(data.styles);
+ 
+@@ -16,11 +18,15 @@ const StyleWrapper = (props) => {
+     data,
+     classNames,
+   });
++
++  style = buildStyleObjectFromData(data.styles);
++
+   const rewrittenChildren = React.Children.map(children, (child) => {
+     if (React.isValidElement(child)) {
+       const childProps = {
+         ...props,
+         className: cx([child.props.className, ...classNames]),
++        style: { ...child.props.style, ...style },
+       };
+       return React.cloneElement(child, childProps);
+     }
+diff --git a/src/components/manage/Blocks/Grid/View.jsx b/src/components/manage/Blocks/Grid/View.jsx
+index 504b5ccd7..b97676f36 100644
+--- a/src/components/manage/Blocks/Grid/View.jsx
++++ b/src/components/manage/Blocks/Grid/View.jsx
+@@ -5,7 +5,7 @@ import { withBlockExtensions } from '@plone/volto/helpers';
+ import config from '@plone/volto/registry';
+ 
+ const GridBlockView = (props) => {
+-  const { data, path, className } = props;
++  const { data, path, className, style } = props;
+   const metadata = props.metadata || props.properties;
+   const columns = data.blocks_layout.items;
+   const blocksConfig =
+@@ -22,6 +22,7 @@ const GridBlockView = (props) => {
+         three: columns?.length === 3,
+         four: columns?.length === 4,
+       })}
++      style={style}
+     >
+       {data.headline && <h2 className="headline">{data.headline}</h2>}
+ 
+diff --git a/src/components/manage/Blocks/Image/View.jsx b/src/components/manage/Blocks/Image/View.jsx
+index cfb694e39..6d0964ca9 100644
+--- a/src/components/manage/Blocks/Image/View.jsx
++++ b/src/components/manage/Blocks/Image/View.jsx
+@@ -9,7 +9,7 @@ import {
+ } from '@plone/volto/helpers';
+ import config from '@plone/volto/registry';
+ 
+-export const View = ({ className, data, detached, properties }) => {
++export const View = ({ className, data, detached, properties, style }) => {
+   const href = data?.href?.[0]?.['@id'] || '';
+ 
+   const Image = config.getComponent({ name: 'Image' }).component;
+@@ -25,6 +25,7 @@ export const View = ({ className, data, detached, properties }) => {
+         data.align,
+         className,
+       )}
++      style={style}
+     >
+       {data.url && (
+         <>
+diff --git a/src/components/manage/Blocks/Listing/View.jsx b/src/components/manage/Blocks/Listing/View.jsx
+index b70adfdf0..dc31dc16e 100644
+--- a/src/components/manage/Blocks/Listing/View.jsx
++++ b/src/components/manage/Blocks/Listing/View.jsx
+@@ -6,11 +6,12 @@ import { withBlockExtensions } from '@plone/volto/helpers';
+ import { ListingBlockBody as ListingBody } from '@plone/volto/components';
+ 
+ const View = (props) => {
+-  const { data, path, pathname, className } = props;
++  const { data, path, pathname, className, style } = props;
+ 
+   return (
+     <div
+       className={cx('block listing', data.variation || 'default', className)}
++      style={style}
+     >
+       <ListingBody {...props} path={path ?? pathname} />
+     </div>
+diff --git a/src/components/manage/Blocks/Search/hocs/withSearch.jsx b/src/components/manage/Blocks/Search/hocs/withSearch.jsx
+index 02f41484d..d06c5bc7b 100644
+--- a/src/components/manage/Blocks/Search/hocs/withSearch.jsx
++++ b/src/components/manage/Blocks/Search/hocs/withSearch.jsx
+@@ -96,9 +96,21 @@ function normalizeState({
+   const { types: facetWidgetTypes } =
+     config.blocks.blocksConfig.search.extensions.facetWidgets;
+ 
++  // Here, we are removing the QueryString of the Listing ones, which is present in the Facet
++  // because we already initialize the facet with those values.
++  const configuredFacets = facetSettings
++    ? facetSettings.map((facet) => facet?.field?.value)
++    : [];
++
++  let copyOfQuery = query.query ? [...query.query] : [];
++
++  const queryWithoutFacet = copyOfQuery.filter((query) => {
++    return !configuredFacets.includes(query.i);
++  });
++
+   const params = {
+     query: [
+-      ...(query.query || []),
++      ...(queryWithoutFacet || []),
+       ...(facetSettings || []).map((facet) => {
+         if (!facet?.field) return null;
+ 
+@@ -261,14 +273,34 @@ const withSearch = (options) => (WrappedComponent) => {
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+     const configuredFacets =
+       data.facets?.map((facet) => facet?.field?.value) || [];
++
++    // Here we are getting the initial value of the facet if Listing Query contains the same criteria as
++    // facet.
++    const queryData = data?.query?.query
++      ? deserializeQuery(JSON.stringify(data?.query?.query))
++      : [];
++
++    let intializeFacetWithQueryValue = [];
++
++    for (let value of configuredFacets) {
++      const queryString = queryData.find((item) => item.i === value);
++      if (queryString) {
++        intializeFacetWithQueryValue = [
++          ...intializeFacetWithQueryValue,
++          { [queryString.i]: queryString.v },
++        ];
++      }
++    }
++
+     const multiFacets = data.facets
+       ?.filter((facet) => facet?.multiple)
+       .map((facet) => facet?.field?.value);
+     const [facets, setFacets] = React.useState(
+       Object.assign(
+         {},
+-        ...urlQuery.map(({ i, v }) => ({ [i]: v })), // TODO: the 'o' should be kept. This would be a major refactoring of the facets
+-
++        ...urlQuery.map(({ i, v }) => ({ [i]: v })),
++        // TODO: the 'o' should be kept. This would be a major refactoring of the facets
++        ...intializeFacetWithQueryValue,
+         // support for simple filters like ?Subject=something
+         // TODO: since the move to hash params this is no longer working.
+         // We'd have to treat the location.search and manage it just like the
+@@ -288,8 +320,17 @@ const withSearch = (options) => (WrappedComponent) => {
+     );
+     const previousUrlQuery = usePrevious(urlQuery);
+ 
++    // During first render the previousUrlQuery is undefined and urlQuery
++    // is empty so it ressetting the facet when you are navigating but during reload we have urlQuery and we need
++    // to set the facet at first render.
++    const preventOverrideOfFacetState =
++      previousUrlQuery === undefined && urlQuery.length === 0;
++
+     React.useEffect(() => {
+-      if (!isEqual(urlQuery, previousUrlQuery)) {
++      if (
++        !isEqual(urlQuery, previousUrlQuery) &&
++        !preventOverrideOfFacetState
++      ) {
+         setFacets(
+           Object.assign(
+             {},
+@@ -319,6 +360,7 @@ const withSearch = (options) => (WrappedComponent) => {
+       locationSearchData,
+       multiFacets,
+       previousUrlQuery,
++      preventOverrideOfFacetState,
+     ]);
+ 
+     const [sortOn, setSortOn] = React.useState(data?.query?.sort_on);
+diff --git a/src/components/manage/Blocks/Teaser/DefaultBody.jsx b/src/components/manage/Blocks/Teaser/DefaultBody.jsx
+index 48862e2c3..e6d87f223 100644
+--- a/src/components/manage/Blocks/Teaser/DefaultBody.jsx
++++ b/src/components/manage/Blocks/Teaser/DefaultBody.jsx
+@@ -18,7 +18,7 @@ const messages = defineMessages({
+ });
+ 
+ const TeaserDefaultTemplate = (props) => {
+-  const { className, data, isEditMode } = props;
++  const { className, data, isEditMode, style } = props;
+   const intl = useIntl();
+   const href = data.href?.[0];
+   const image = data.preview_image?.[0];
+@@ -27,7 +27,7 @@ const TeaserDefaultTemplate = (props) => {
+   const { openExternalLinkInNewTab } = config.settings;
+ 
+   return (
+-    <div className={cx('block teaser', className)}>
++    <div className={cx('block teaser', className)} style={style}>
+       <>
+         {!href && isEditMode && (
+           <Message>
+diff --git a/src/components/theme/Login/Login.jsx b/src/components/theme/Login/Login.jsx
+index 8b6bb9d95..a624a0430 100644
+--- a/src/components/theme/Login/Login.jsx
++++ b/src/components/theme/Login/Login.jsx
+@@ -77,8 +77,9 @@ const Login = (props) => {
+     qs.parse(props.location?.search ?? location.search).return_url ||
+     location.pathname.replace(/\/login\/?$/, '').replace(/\/logout\/?$/, '') ||
+     '/';
++
+   useEffect(() => {
+-    if (token && !props.isLogout) {
++    if (token && !(props.isLogout || location?.state?.isLogout)) {
+       history.push(returnUrl || '/');
+       if (toast.isActive('loggedOut')) {
+         toast.dismiss('loggedOut');
+@@ -108,7 +109,16 @@ const Login = (props) => {
+         dispatch(resetLoginRequest());
+       }
+     };
+-  }, [dispatch, token, error, intl, history, returnUrl, props.isLogout]);
++  }, [
++    dispatch,
++    token,
++    error,
++    intl,
++    history,
++    returnUrl,
++    props.isLogout,
++    location?.state?.isLogout,
++  ]);
+ 
+   const onLogin = (event) => {
+     dispatch(
+diff --git a/src/components/theme/Navigation/Navigation.jsx b/src/components/theme/Navigation/Navigation.jsx
+index c69e4cabc..d60bad4bf 100644
+--- a/src/components/theme/Navigation/Navigation.jsx
++++ b/src/components/theme/Navigation/Navigation.jsx
+@@ -48,40 +48,42 @@ const Navigation = (props) => {
+     }
+     setisMobileMenuOpen(false);
+   };
+-
+   return (
+     <nav className="navigation" id="navigation" aria-label="Site">
+-      <div className="hamburger-wrapper mobile tablet only">
+-        <button
+-          className={cx('hamburger hamburger--spin', {
+-            'is-active': isMobileMenuOpen,
+-          })}
+-          aria-label={
+-            isMobileMenuOpen
+-              ? intl.formatMessage(messages.closeMobileMenu, {
+-                  type: type,
+-                })
+-              : intl.formatMessage(messages.openMobileMenu, {
+-                  type: type,
+-                })
+-          }
+-          title={
+-            isMobileMenuOpen
+-              ? intl.formatMessage(messages.closeMobileMenu, {
+-                  type: type,
+-                })
+-              : intl.formatMessage(messages.openMobileMenu, {
+-                  type: type,
+-                })
+-          }
+-          type="button"
+-          onClick={toggleMobileMenu}
+-        >
+-          <span className="hamburger-box">
+-            <span className="hamburger-inner" />
+-          </span>
+-        </button>
+-      </div>
++      {items?.length ? (
++        <div className="hamburger-wrapper mobile tablet only">
++          <button
++            className={cx('hamburger hamburger--spin', {
++              'is-active': isMobileMenuOpen,
++            })}
++            aria-label={
++              isMobileMenuOpen
++                ? intl.formatMessage(messages.closeMobileMenu, {
++                    type: type,
++                  })
++                : intl.formatMessage(messages.openMobileMenu, {
++                    type: type,
++                  })
++            }
++            title={
++              isMobileMenuOpen
++                ? intl.formatMessage(messages.closeMobileMenu, {
++                    type: type,
++                  })
++                : intl.formatMessage(messages.openMobileMenu, {
++                    type: type,
++                  })
++            }
++            type="button"
++            onClick={toggleMobileMenu}
++          >
++            <span className="hamburger-box">
++              <span className="hamburger-inner" />
++            </span>
++          </button>
++        </div>
++      ) : null}
++
+       <Menu
+         stackable
+         pointing
+diff --git a/src/components/theme/PreviewImage/PreviewImage.jsx b/src/components/theme/PreviewImage/PreviewImage.jsx
+index 666da45b0..2a5a135cd 100644
+--- a/src/components/theme/PreviewImage/PreviewImage.jsx
++++ b/src/components/theme/PreviewImage/PreviewImage.jsx
+@@ -11,12 +11,17 @@ function PreviewImage({ item, alt, image_field, showDefault = true, ...rest }) {
+   const Image = config.getComponent({ name: 'Image' }).component;
+ 
+   const image = (
+-    <Image item={item} image_field={image_field} alt={alt} {...rest} />
++    <Image
++      item={item}
++      image_field={image_field || item.image_field}
++      alt={alt}
++      {...rest}
++    />
+   );
+ 
+   if (!image && !showDefault) return null;
+ 
+-  if (image) {
++  if (image_field || item?.image_field) {
+     return image;
+   } else {
+     return (
+diff --git a/src/components/theme/PreviewImage/__snapshots__/PreviewImage.test.js.snap b/src/components/theme/PreviewImage/__snapshots__/PreviewImage.test.js.snap
+index 00ef44661..1d393b367 100644
+--- a/src/components/theme/PreviewImage/__snapshots__/PreviewImage.test.js.snap
++++ b/src/components/theme/PreviewImage/__snapshots__/PreviewImage.test.js.snap
+@@ -4,24 +4,18 @@ exports[`PreviewImage not renders a fallback image if showDefault prop is false
+ <img
+   alt="Item title"
+   className="extra"
+-  item={
+-    Object {
+-      "@id": "http://localhost:3000/something",
+-      "title": "Item title",
+-    }
+-  }
++  height="300"
++  src="default-image.svg"
++  width="400"
+ />
+ `;
+ 
+ exports[`PreviewImage renders a fallback image 1`] = `
+ <img
+   alt="Item title"
+-  item={
+-    Object {
+-      "@id": "http://localhost:3000/something",
+-      "title": "Item title",
+-    }
+-  }
++  height="300"
++  src="default-image.svg"
++  width="400"
+ />
+ `;
+ 
+@@ -29,12 +23,9 @@ exports[`PreviewImage renders a fallback image with alt prop 1`] = `
+ <img
+   alt="Alt prop"
+   className="extra"
+-  item={
+-    Object {
+-      "@id": "http://localhost:3000/something",
+-      "title": "Item title",
+-    }
+-  }
++  height="300"
++  src="default-image.svg"
++  width="400"
+ />
+ `;
+ 
+@@ -42,12 +33,9 @@ exports[`PreviewImage renders a fallback image with alt prop empty 1`] = `
+ <img
+   alt=""
+   className="extra"
+-  item={
+-    Object {
+-      "@id": "http://localhost:3000/something",
+-      "title": "Item title",
+-    }
+-  }
++  height="300"
++  src="default-image.svg"
++  width="400"
+ />
+ `;
+ 
+@@ -55,18 +43,16 @@ exports[`PreviewImage renders a fallback image with extra props 1`] = `
+ <img
+   alt="Item title"
+   className="extra"
+-  item={
+-    Object {
+-      "@id": "http://localhost:3000/something",
+-      "title": "Item title",
+-    }
+-  }
++  height="300"
++  src="default-image.svg"
++  width="400"
+ />
+ `;
+ 
+ exports[`PreviewImage renders a preview image 1`] = `
+ <img
+   alt="Item title"
++  image_field="image"
+   item={
+     Object {
+       "@id": "http://localhost:3000/something",
+@@ -97,6 +83,7 @@ exports[`PreviewImage renders a preview image with extra props 1`] = `
+ <img
+   alt="Item title"
+   className="extra"
++  image_field="image"
+   item={
+     Object {
+       "@id": "http://localhost:3000/something",
+diff --git a/src/components/theme/Sitemap/Sitemap.jsx b/src/components/theme/Sitemap/Sitemap.jsx
+index 71e556283..021deffc1 100644
+--- a/src/components/theme/Sitemap/Sitemap.jsx
++++ b/src/components/theme/Sitemap/Sitemap.jsx
+@@ -33,16 +33,16 @@ export function getSitemapPath(pathname = '', lang) {
+ function Sitemap(props) {
+   const {
+     location: { pathname },
+-    language,
++    lang,
+     getNavigation,
+   } = props;
+ 
+   useEffect(() => {
+     const { settings } = config;
+-    const lang = settings.isMultilingual ? `${toBackendLang(language)}` : null;
+-    const path = getSitemapPath(pathname, lang);
++    const language = settings.isMultilingual ? `${toBackendLang(lang)}` : null;
++    const path = getSitemapPath(pathname, language);
+     getNavigation(path, 4);
+-  }, [pathname, language, getNavigation]);
++  }, [pathname, lang, getNavigation]);
+ 
+   const renderItems = (items) => {
+     return (
+diff --git a/src/components/theme/Sitemap/__snapshots__/Sitemap.test.jsx.snap b/src/components/theme/Sitemap/__snapshots__/Sitemap.test.jsx.snap
+index b50a04972..b948508f7 100644
+--- a/src/components/theme/Sitemap/__snapshots__/Sitemap.test.jsx.snap
++++ b/src/components/theme/Sitemap/__snapshots__/Sitemap.test.jsx.snap
+@@ -1,5 +1,64 @@
+ // Jest Snapshot v1, https://goo.gl/fbAQLP
+ 
++exports[`Sitemap in a multilingual site renders a sitemap component 1`] = `
++<div
++  id="page-sitemap"
++>
++  <div
++    className="ui container view-wrapper"
++  >
++    <h1>
++      Sitemap
++       
++    </h1>
++    <ul>
++      <li
++        className="with-children"
++      >
++        <a
++          href="/http://localhost:8080/Plone/en/page-1"
++          onClick={[Function]}
++        >
++          Page 1-3
++        </a>
++        <ul>
++          <li
++            className=""
++          >
++            <a
++              href="/http://localhost:8080/Plone/en/page-1/page-1-2"
++              onClick={[Function]}
++            >
++              Page 1-2
++            </a>
++          </li>
++          <li
++            className=""
++          >
++            <a
++              href="/http://localhost:8080/Plone/en/page-1/page-1-3"
++              onClick={[Function]}
++            >
++              Page 1-3
++            </a>
++          </li>
++        </ul>
++      </li>
++      <li
++        className=""
++      >
++        <a
++          href="/http://localhost:8080/Plone/en/page-2"
++          onClick={[Function]}
++        >
++          Page 2
++        </a>
++      </li>
++    </ul>
++  </div>
++</div>
++`;
++
+ exports[`Sitemap renders a sitemap component 1`] = `
+ <div
+   id="page-sitemap"
+diff --git a/src/components/theme/Unauthorized/Unauthorized.jsx b/src/components/theme/Unauthorized/Unauthorized.jsx
+index f86236c25..9e8728531 100644
+--- a/src/components/theme/Unauthorized/Unauthorized.jsx
++++ b/src/components/theme/Unauthorized/Unauthorized.jsx
+@@ -1,8 +1,3 @@
+-/**
+- * @module components/theme/Unauthorized/Unauthorized
+- */
+-
+-import React from 'react';
+ import { FormattedMessage } from 'react-intl';
+ import { Link } from 'react-router-dom';
+ import { Container } from 'semantic-ui-react';
+@@ -11,11 +6,6 @@ import { useLocation } from 'react-router-dom';
+ import { withServerErrorCode } from '@plone/volto/helpers/Utils/Utils';
+ import { getBaseUrl } from '@plone/volto/helpers';
+ 
+-/**
+- * unauthorized function.
+- * @function Unauthorized
+- * @returns {string} Markup of the unauthorized page.
+- */
+ const Unauthorized = () => {
+   const error_message = useSelector((state) => state.apierror?.message);
+   let location = useLocation();
+@@ -32,7 +22,18 @@ const Unauthorized = () => {
+           defaultMessage="You are trying to access a protected resource, please {login} first."
+           values={{
+             login: (
+-              <Link to={`${getBaseUrl(location.pathname)}/login`}>
++              <Link
++                to={{
++                  pathname: `${getBaseUrl(location.pathname)}/login`,
++                  state: {
++                    // This is needed to cover the use case of being logged in in
++                    // another backend (eg. in development), having a token for
++                    // localhost and try to use it, the login route has to know that
++                    // it's the same as it comes from a logout
++                    isLogout: true,
++                  },
++                }}
++              >
+                 <FormattedMessage id="log in" defaultMessage="log in" />
+               </Link>
+             ),
+diff --git a/src/helpers/Blocks/Blocks.js b/src/helpers/Blocks/Blocks.js
+index c11552830..043ab952c 100644
+--- a/src/helpers/Blocks/Blocks.js
++++ b/src/helpers/Blocks/Blocks.js
+@@ -563,7 +563,7 @@ export const styleToClassName = (key, value, prefix = '') => {
+ };
+ 
+ export const buildStyleClassNamesFromData = (obj = {}, prefix = '') => {
+-  // styles has the form:
++  // style wrapper object has the form:
+   // const styles = {
+   //   color: 'red',
+   //   backgroundColor: '#AABBCC',
+@@ -571,6 +571,7 @@ export const buildStyleClassNamesFromData = (obj = {}, prefix = '') => {
+   // Returns: ['has--color--red', 'has--backgroundColor--AABBCC']
+ 
+   return Object.entries(obj)
++    .filter(([k, v]) => !k.startsWith('--'))
+     .reduce(
+       (acc, [k, v]) => [
+         ...acc,
+@@ -602,6 +603,60 @@ export const buildStyleClassNamesExtenders = ({
+   );
+ };
+ 
++/**
++ * Converts a name+value style pair (ex: color/red) to a pair of [k, v],
++ * such as ["color", "red"] so it can be converted back to an object.
++ * For now, only covering the 'CSSProperty' use case.
++ */
++export const styleDataToStyleObject = (key, value, prefix = '') => {
++  if (prefix) {
++    return [`--${prefix}${key.replace('--', '')}`, value];
++  } else {
++    return [key, value];
++  }
++};
++
++/**
++ * Generate styles object from data
++ *
++ * @function buildStyleObjectFromData
++ * @param {Object} obj A style wrapper object data
++ * @param {string} prefix The prefix (could be dragged from a recursive call, initially empty)
++ * @return {Object} The style object ready to be passed as prop
++ */
++export const buildStyleObjectFromData = (obj = {}, prefix = '') => {
++  // style wrapper object has the form:
++  // const styles = {
++  //   color: 'red',
++  //   '--background-color': '#AABBCC',
++  // }
++  // Returns: {'--background-color: '#AABBCC'}
++
++  return Object.fromEntries(
++    Object.entries(obj)
++      .filter(([k, v]) => k.startsWith('--') || isObject(v))
++      .reduce(
++        (acc, [k, v]) => [
++          ...acc,
++          // Kept for easy debugging
++          // ...(() => {
++          //   if (isObject(v)) {
++          //     return Object.entries(
++          //       buildStyleObjectFromData(v, `${prefix}${k}--`),
++          //     );
++          //   }
++          //   return [styleDataToStyleObject(k, v, prefix)];
++          // })(),
++          ...(isObject(v)
++            ? Object.entries(buildStyleObjectFromData(v, `${prefix}${k}--`))
++            : [styleDataToStyleObject(k, v, prefix)]),
++        ],
++        [],
++      )
++      .filter((v) => !!v),
++  );
++};
++
+ /**
+  * Return previous/next blocks given the content object and the current block id
+  *
+diff --git a/src/helpers/index.js b/src/helpers/index.js
+index 742e24dab..9e9f7c91d 100644
+--- a/src/helpers/index.js
++++ b/src/helpers/index.js
+@@ -58,6 +58,7 @@ export {
+   blocksFormGenerator,
+   buildStyleClassNamesFromData,
+   buildStyleClassNamesExtenders,
++  buildStyleObjectFromData,
+   getPreviousNextBlock,
+   findBlocks,
+ } from '@plone/volto/helpers/Blocks/Blocks';

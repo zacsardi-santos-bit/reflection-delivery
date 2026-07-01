@@ -1,0 +1,23 @@
+{
+ "task": "authzed-spicedb-2389",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds MaximumPrimaryHedgingDelay field + extracts cancellable primarySleeper; new primarysleeper_test.go + cluster_test TestLRSecondaryDispatch/TestDispatchTimeout in F2P (55)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

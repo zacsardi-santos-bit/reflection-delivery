@@ -1,0 +1,32 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest packages/wonder-blocks-popover/src/components/__tests__/focus-manager.test.tsx packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx --coverage=false --watchAll=false --reporters=default --json",
+  "test_files": [
+    "packages/wonder-blocks-popover/src/components/__tests__/focus-manager.test.tsx",
+    "packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/focus-manager.test.tsx::FocusManager should allow flowing the focus correctly",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/focus-manager.test.tsx::FocusManager should disallow focusability on internal elements if the user focus out of the focus manager",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover keyboard navigation should allow circular navigation when the popover is open"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/focus-manager.test.tsx::FocusManager should focus on the first focusable element inside the popover",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/focus-manager.test.tsx::FocusManager should focus on the last focusable element inside the popover",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover should set the anchor as the popover ref",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover should hide the popover dialog by default",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover should render the popover content after clicking the trigger",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover should close the popover from inside the content",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover should close the Popover using the default close button",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover should close the Popover if dismissEnabled is set",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover should shift-tab back to the anchor after popover is closed",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover should close the popover when pressing Enter on the close button",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover a11y should announce a popover correctly by reading the title contents",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover a11y should announce a custom popover correctly by reading the title contents",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover keyboard navigation should move focus to the first focusable element after popover is open",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover keyboard navigation should allow flowing focus correctly even if the popover remains open",
+    "/workspace/repo/packages/wonder-blocks-popover/src/components/__tests__/popover.test.tsx::Popover keyboard navigation should allow navigating backwards when the popover is open"
+  ]
+}

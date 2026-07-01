@@ -1,0 +1,6 @@
+patching file kv/kv_test.go
+patching file kv/lookup_service_test.go
+# github.com/influxdata/influxdb/kv_test [github.com/influxdata/influxdb/kv.test]
+kv/lookup_service_test.go:256:20: svc.Name undefined (type *kv.Service has no field or method Name)
+FAIL	github.com/influxdata/influxdb/kv [build failed]
+reward=0 graded=646 found=646 failed=646 parsed=1 framework=go exit_code=1

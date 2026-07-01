@@ -1,0 +1,6 @@
+patching file docs/release-notes/release-notes-0.20.0.md
+patching file lnwire/dyn_ack.go
+patching file lnwire/dyn_commit.go
+patching file lnwire/dyn_propose.go
+patching file lnwire/extra_bytes.go
+patching file lnwire/test_message.go

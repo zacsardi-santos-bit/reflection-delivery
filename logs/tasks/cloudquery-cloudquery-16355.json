@@ -1,0 +1,23 @@
+{
+ "task": "cloudquery-cloudquery-16355",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden spec.go adds jsonschema:'required,minLength=1' tags + '//go:embed schema.json / var JSONSchema string' and a complete schema.json with required/minItems/minLength constraints, wired via plugin.WithJSONSchema; test.patch's TestSpecValidate/TestJSONSchema (19 F2P subtests) exercise validation a"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 31,
+  "shallow": true
+ }
+}

@@ -1,0 +1,195 @@
+patching file tests/auth_oidc_refresh_test.go
+patching file tests/context.go
+patching file tests/identity_api_session_activity_test.go
+patching file tests/sdk_auth_test.go
+patching file tests/sdk_event_test.go
+patching file zititest/go.mod
+patching file zititest/go.sum
+Hunk #1 succeeded at 397 (offset 185 lines).
+Hunk #2 FAILED at 220.
+Hunk #3 FAILED at 247.
+Hunk #4 succeeded at 561 (offset 224 lines).
+Hunk #5 succeeded at 941 (offset 341 lines).
+Hunk #6 succeeded at 1087 (offset 388 lines).
+Hunk #7 FAILED at 793.
+Hunk #8 succeeded at 1378 (offset 475 lines).
+Hunk #9 succeeded at 1415 (offset 477 lines).
+Hunk #10 succeeded at 1676 (offset 478 lines).
+Hunk #11 succeeded at 1720 (offset 482 lines).
+3 out of 11 hunks FAILED -- saving rejects to file zititest/go.sum.rej
+The next patch would create the file tests/auth_oidc_refresh_test.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file tests/context.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/context.go.rej
+patching file tests/identity_api_session_activity_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/identity_api_session_activity_test.go.rej
+patching file tests/sdk_auth_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+10 out of 10 hunks ignored -- saving rejects to file tests/sdk_auth_test.go.rej
+patching file tests/sdk_event_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file tests/sdk_event_test.go.rej
+patching file zititest/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file zititest/go.mod.rej
+patching file zititest/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+11 out of 11 hunks ignored -- saving rejects to file zititest/go.sum.rej
+patching file b/tests/auth_oidc_refresh_test.go
+can't find file to patch at input line 127
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/context.go b/tests/context.go
+|index 11394d7ce..049e4ea4e 100644
+|--- a/tests/context.go
+|+++ b/tests/context.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 147
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/identity_api_session_activity_test.go b/tests/identity_api_session_activity_test.go
+|index 4119a264f..025d0c93f 100644
+|--- a/tests/identity_api_session_activity_test.go
+|+++ b/tests/identity_api_session_activity_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 171
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/sdk_auth_test.go b/tests/sdk_auth_test.go
+|index 43c3cef7e..fddb62a85 100644
+|--- a/tests/sdk_auth_test.go
+|+++ b/tests/sdk_auth_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+10 out of 10 hunks ignored
+can't find file to patch at input line 364
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/sdk_event_test.go b/tests/sdk_event_test.go
+|index 899cf5f9a..cb9ae69b1 100644
+|--- a/tests/sdk_event_test.go
+|+++ b/tests/sdk_event_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+9 out of 9 hunks ignored
+can't find file to patch at input line 461
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/zititest/go.mod b/zititest/go.mod
+|index c8ade82c7..ecac925d0 100644
+|--- a/zititest/go.mod
+|+++ b/zititest/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 546
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/zititest/go.sum b/zititest/go.sum
+|index 2f6a31678..90d1dcec4 100644
+|--- a/zititest/go.sum
+|+++ b/zititest/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+11 out of 11 hunks ignored
+The next patch would create the file tests/auth_oidc_refresh_test.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file tests/context.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/context.go.rej
+patching file tests/identity_api_session_activity_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/identity_api_session_activity_test.go.rej
+patching file tests/sdk_auth_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+10 out of 10 hunks ignored -- saving rejects to file tests/sdk_auth_test.go.rej
+patching file tests/sdk_event_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file tests/sdk_event_test.go.rej
+patching file zititest/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file zititest/go.mod.rej
+patching file zititest/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+11 out of 11 hunks ignored -- saving rejects to file zititest/go.sum.rej
+WARN: test.patch did not apply cleanly
+# github.com/openziti/ziti/tests [github.com/openziti/ziti/tests.test]
+tests/identity_api_session_activity_test.go:45:78: too many arguments in call to edge_apis.NewManagementApiClient
+	have (*url.URL, *x509.CertPool, nil)
+	want (*url.URL, *x509.CertPool)
+tests/sdk_auth_test.go:35:98: too many arguments in call to edge_apis.NewManagementApiClient
+	have (*url.URL, *x509.CertPool, nil)
+	want (*url.URL, *x509.CertPool)
+tests/sdk_auth_test.go:44:29: apiSession.GetToken undefined (type *"github.com/openziti/edge-api/rest_model".CurrentAPISessionDetail has no field or method GetToken)
+tests/sdk_auth_test.go:51:86: too many arguments in call to edge_apis.NewClientApiClient
+	have (*url.URL, *x509.CertPool, nil)
+	want (*url.URL, *x509.CertPool)
+tests/sdk_auth_test.go:57:29: apiSession.GetToken undefined (type *"github.com/openziti/edge-api/rest_model".CurrentAPISessionDetail has no field or method GetToken)
+tests/sdk_auth_test.go:66:61: too many arguments in call to edge_apis.NewClientApiClient
+	have (*url.URL, nil, nil)
+	want (*url.URL, *x509.CertPool)
+tests/sdk_auth_test.go:72:29: apiSession.GetToken undefined (type *"github.com/openziti/edge-api/rest_model".CurrentAPISessionDetail has no field or method GetToken)
+tests/sdk_auth_test.go:79:94: too many arguments in call to edge_apis.NewManagementApiClient
+	have (*url.URL, *x509.CertPool, nil)
+	want (*url.URL, *x509.CertPool)
+tests/sdk_auth_test.go:85:29: apiSession.GetToken undefined (type *"github.com/openziti/edge-api/rest_model".CurrentAPISessionDetail has no field or method GetToken)
+tests/sdk_auth_test.go:94:69: too many arguments in call to edge_apis.NewManagementApiClient
+	have (*url.URL, nil, nil)
+	want (*url.URL, *x509.CertPool)
+tests/sdk_auth_test.go:94:69: too many errors
+FAIL	github.com/openziti/ziti/tests [build failed]
+reward=0 graded=129 found=129 failed=129 parsed=1 framework=go exit_code=1

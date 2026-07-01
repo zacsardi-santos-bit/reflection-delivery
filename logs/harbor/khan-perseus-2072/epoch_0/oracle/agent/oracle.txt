@@ -1,0 +1,17 @@
+patching file .changeset/lucky-poets-deny.md
+patching file packages/perseus-core/src/data-schema.ts
+patching file packages/perseus-editor/src/__stories__/editor.stories.tsx
+patching file packages/perseus-editor/src/__testdata__/input-number.testdata.ts
+patching file packages/perseus-editor/src/__testdata__/numeric-input.testdata.ts
+patching file packages/perseus-editor/src/editor.tsx
+patching file packages/perseus/src/__stories__/server-item-renderer.stories.tsx
+patching file packages/perseus/src/__testdata__/renderer.testdata.ts
+patching file packages/perseus/src/__testdata__/server-item-renderer.testdata.ts
+patching file packages/perseus/src/util/test-utils.testdata.ts
+patching file packages/perseus/src/validation.types.ts
+patching file packages/perseus/src/widget-ai-utils/mock-widget/prompt-utils.ts
+patching file packages/perseus/src/widget-ai-utils/prompt-types.ts
+patching file packages/perseus/src/widgets/mock-widgets/index.ts
+patching file packages/perseus/src/widgets/mock-widgets/mock-asset-loading-widget.tsx (renamed from packages/perseus/src/__tests__/mock-asset-loading-widget.tsx)
+patching file packages/perseus/src/widgets/mock-widgets/mock-widget.tsx
+patching file packages/perseus/src/widgets/mock-widgets/score-mock-widget.ts

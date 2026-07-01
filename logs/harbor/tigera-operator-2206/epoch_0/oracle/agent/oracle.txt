@@ -1,0 +1,3 @@
+patching file pkg/crds/enterprise/crd.projectcalico.org_felixconfigurations.yaml
+patching file pkg/crds/enterprise/crd.projectcalico.org_ippools.yaml
+patching file pkg/render/dex.go

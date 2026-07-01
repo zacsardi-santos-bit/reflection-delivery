@@ -1,0 +1,30 @@
+{
+  "test_framework": "bun",
+  "test_command": "(test -f /workspace/repo/packages/trampoline/package.json || echo '{\"type\":\"module\"}' > /workspace/repo/packages/trampoline/package.json) && mkdir -p /workspace/repo/packages/trampoline/src && (test -f /workspace/repo/packages/trampoline/src/trampoline.js || echo 'export const syncTrampoline=()=>{throw 1};export const asyncTrampoline=async()=>{throw 1};' > /workspace/repo/packages/trampoline/src/trampoline.js) && cd /workspace/repo/packages/trampoline && /workspace/repo/node_modules/.bin/ava test/trampoline-example.test.js test/trampoline.test.js 2>&1 | sed 's/\u2714/\u2713/g; s/\u2718/\u2717/g'",
+  "test_files": [
+    "packages/trampoline/test/fixture/a.txt",
+    "packages/trampoline/test/fixture/b.txt",
+    "packages/trampoline/test/fixture/c.txt",
+    "packages/trampoline/test/fixture/d.txt",
+    "packages/trampoline/test/fixture/initial.txt",
+    "packages/trampoline/test/trampoline-example.test.js",
+    "packages/trampoline/test/trampoline.test-d.ts",
+    "packages/trampoline/test/trampoline.test.js"
+  ],
+  "num_test_files": 8,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "trampoline \u203a synchronous execution - recursion",
+    "trampoline \u203a synchronous execution",
+    "trampoline \u203a sync error handling",
+    "trampoline \u203a asynchronous execution w/ sync thunk",
+    "trampoline \u203a asynchronous execution",
+    "trampoline \u203a async error handling",
+    "trampoline \u203a asynchronous execution w/ sync thunk - recursion",
+    "trampoline-example \u203a synchronous execution - example code",
+    "trampoline-example \u203a asynchronous execution - example code",
+    "trampoline-example \u203a asynchronous execution w/ sync thunk - example code",
+    "trampoline \u203a asynchronous execution - recursion"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,11 @@
+patching file crates/net/network/src/manager.rs
+   Compiling reth-network v0.1.0-alpha.16 (/workspace/repo/crates/net/network)
+    Finished test [unoptimized + debuginfo] target(s) in 35.37s
+────────────
+ Nextest run ID d0184098-f580-4bc0-ab5a-2d8f740208e5 with nextest profile: default
+    Starting 0 tests across 2 binaries (86 tests skipped)
+────────────
+     Summary [   0.000s] 0 tests run: 0 passed, 86 skipped
+error: no tests to run
+(hint: use `--no-tests` to customize)
+reward=0 graded=7 found=0 failed=0 parsed=0 framework=cargo exit_code=4

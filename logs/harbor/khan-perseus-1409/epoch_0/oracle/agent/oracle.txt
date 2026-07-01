@@ -1,0 +1,5 @@
+patching file .changeset/modern-berries-join.md
+patching file packages/perseus/src/widgets/__stories__/interactive-graph-regression.stories.tsx
+patching file packages/perseus/src/widgets/__stories__/interactive-graph.stories.tsx
+patching file packages/perseus/src/widgets/__testdata__/interactive-graph.testdata.ts
+patching file packages/perseus/src/widgets/interactive-graphs/interactive-graph-question-builder.ts

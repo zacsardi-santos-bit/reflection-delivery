@@ -1,0 +1,23 @@
+{
+ "task": "tree-sitter-tree-sitter-4122",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds ts_parser__balance_subtree with ts_parser__check_progress and canceled_balancing/goto balance; test asserts tree.is_none() && in_balancing then resume unwrap child_count==function_count"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

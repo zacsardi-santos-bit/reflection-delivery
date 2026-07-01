@@ -1,0 +1,543 @@
+patching file tests/store/test_abstract_store.py
+patching file tests/store/test_rest_store.py
+patching file tests/store/test_sqlalchemy_store.py
+patching file tests/tracking/test_client.py
+============================= test session starts ==============================
+platform linux -- Python 3.7.17, pytest-7.4.4, pluggy-1.2.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 191 items / 58 deselected / 133 selected
+
+tests/store/test_abstract_store.py::test_get_experiment_by_name PASSED   [  0%]
+tests/store/test_abstract_store.py::test_get_experiment_by_name_missing PASSED [  1%]
+tests/store/test_abstract_store.py::test_log_metric PASSED               [  2%]
+tests/store/test_abstract_store.py::test_log_param PASSED                [  3%]
+tests/store/test_abstract_store.py::test_set_tag PASSED                  [  3%]
+tests/store/test_abstract_store.py::test_list_run_infos PASSED           [  4%]
+tests/store/test_abstract_store.py::test_search_runs FAILED              [  5%]
+tests/store/test_rest_store.py::TestRestStore::test_failed_http_request PASSED [  6%]
+tests/store/test_rest_store.py::TestRestStore::test_failed_http_request_custom_handler PASSED [  6%]
+tests/store/test_rest_store.py::TestRestStore::test_requestor FAILED     [  7%]
+tests/store/test_rest_store.py::TestRestStore::test_response_with_unknown_fields PASSED [  8%]
+tests/store/test_rest_store.py::TestRestStore::test_successful_http_request PASSED [  9%]
+tests/store/test_sqlalchemy_store.py::TestParseDbUri::test_correct_db_type_from_uri PASSED [  9%]
+tests/store/test_sqlalchemy_store.py::TestParseDbUri::test_fail_on_multiple_drivers PASSED [ 10%]
+tests/store/test_sqlalchemy_store.py::TestParseDbUri::test_fail_on_unsupported_db_type PASSED [ 11%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_create_experiments PASSED [ 12%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_create_run_with_tags PASSED [ 12%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_default_experiment PASSED [ 13%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_default_experiment_lifecycle PASSED [ 14%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_delete_experiment PASSED [ 15%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_delete_restore_run PASSED [ 15%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_delete_run PASSED [ 16%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_error_logging_to_deleted_run PASSED [ 17%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_get_experiment PASSED [ 18%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_get_metric_history PASSED [ 18%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_list_experiments PASSED [ 19%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_list_run_infos PASSED [ 20%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch PASSED [ 21%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_accepts_empty_payload PASSED [ 21%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_allows_tag_overwrite PASSED [ 22%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_allows_tag_overwrite_single_req PASSED [ 23%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_internal_error PASSED [ 24%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_limits PASSED [ 24%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_nonexistent_run PASSED [ 25%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_param_overwrite_disallowed PASSED [ 26%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_param_overwrite_disallowed_single_req PASSED [ 27%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_params_idempotency PASSED [ 27%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_same_metric_repeated_multiple_reqs PASSED [ 28%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_same_metric_repeated_single_req PASSED [ 29%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_batch_tags_idempotency PASSED [ 30%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_empty_str PASSED [ 30%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_metric PASSED [ 31%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_metric_allows_multiple_values_at_same_ts_and_run_data_uses_max_ts_value PASSED [ 32%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_null_metric PASSED [ 33%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_null_param PASSED [ 33%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_param PASSED [ 34%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_log_param_uniqueness PASSED [ 35%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_metric_model PASSED [ 36%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_param_model PASSED [ 36%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_raise_duplicate_experiments PASSED [ 37%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_raise_experiment_dont_exist PASSED [ 38%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_rename_experiment PASSED [ 39%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_restore_experiment PASSED [ 39%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_run_data_model PASSED [ 40%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_run_info PASSED [ 41%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_run_needs_uuid PASSED [ 42%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_run_tag_model PASSED [ 42%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_search_attrs PASSED [ 43%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_search_metrics PASSED [ 44%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_search_params PASSED [ 45%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_search_runs_pagination_not_implemented FAILED [ 45%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_search_tags PASSED [ 46%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_search_vanilla PASSED [ 47%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_search_with_deterministic_max_results PASSED [ 48%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_search_with_max_results PASSED [ 48%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_set_tag PASSED [ 49%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_to_mlflow_entity_and_proto PASSED [ 50%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_update_run_info PASSED [ 51%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_upgrade_cli_idempotence PASSED [ 51%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_create_experiments PASSED [ 52%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_create_run_with_tags PASSED [ 53%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_default_experiment PASSED [ 54%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_default_experiment_lifecycle PASSED [ 54%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_delete_experiment PASSED [ 55%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_delete_restore_run PASSED [ 56%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_delete_run PASSED [ 57%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_error_logging_to_deleted_run PASSED [ 57%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_get_experiment PASSED [ 58%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_get_metric_history PASSED [ 59%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_list_experiments PASSED [ 60%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_list_run_infos PASSED [ 60%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch PASSED [ 61%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_accepts_empty_payload PASSED [ 62%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_allows_tag_overwrite PASSED [ 63%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_allows_tag_overwrite_single_req PASSED [ 63%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_internal_error PASSED [ 64%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_limits PASSED [ 65%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_nonexistent_run PASSED [ 66%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_param_overwrite_disallowed PASSED [ 66%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_param_overwrite_disallowed_single_req PASSED [ 67%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_params_idempotency PASSED [ 68%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_same_metric_repeated_multiple_reqs PASSED [ 69%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_same_metric_repeated_single_req PASSED [ 69%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_batch_tags_idempotency PASSED [ 70%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_empty_str PASSED [ 71%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_metric PASSED [ 72%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_metric_allows_multiple_values_at_same_ts_and_run_data_uses_max_ts_value PASSED [ 72%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_null_metric PASSED [ 73%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_null_param PASSED [ 74%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_param PASSED [ 75%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_log_param_uniqueness PASSED [ 75%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_metric_model PASSED [ 76%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_param_model PASSED [ 77%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_raise_duplicate_experiments PASSED [ 78%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_raise_experiment_dont_exist PASSED [ 78%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_rename_experiment PASSED [ 79%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_restore_experiment PASSED [ 80%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_run_data_model PASSED [ 81%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_run_info PASSED [ 81%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_run_needs_uuid PASSED [ 82%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_run_tag_model PASSED [ 83%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_search_attrs PASSED [ 84%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_search_metrics PASSED [ 84%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_search_params PASSED [ 85%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_search_runs_pagination_not_implemented FAILED [ 86%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_search_tags PASSED [ 87%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_search_vanilla PASSED [ 87%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_search_with_deterministic_max_results PASSED [ 88%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_search_with_max_results PASSED [ 89%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_set_tag PASSED [ 90%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_to_mlflow_entity_and_proto PASSED [ 90%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_update_run_info PASSED [ 91%]
+tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_upgrade_cli_idempotence PASSED [ 92%]
+tests/tracking/test_client.py::test_client_create_run PASSED             [ 93%]
+tests/tracking/test_client.py::test_client_create_run_overrides PASSED   [ 93%]
+tests/tracking/test_client.py::test_client_search_runs_defaults FAILED   [ 94%]
+tests/tracking/test_client.py::test_client_search_runs_filter FAILED     [ 95%]
+tests/tracking/test_client.py::test_client_search_runs_view_type FAILED  [ 96%]
+tests/tracking/test_client.py::test_client_search_runs_max_results FAILED [ 96%]
+tests/tracking/test_client.py::test_client_search_runs_int_experiment_id FAILED [ 97%]
+tests/tracking/test_client.py::test_client_search_runs_string_experiment_id FAILED [ 98%]
+tests/tracking/test_client.py::test_client_search_runs_order_by FAILED   [ 99%]
+tests/tracking/test_client.py::test_client_search_runs_page_token FAILED [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_search_runs _______________________________
+
+    def test_search_runs():
+        experiment_id = mock.Mock()
+        view_type = mock.Mock()
+        runs = [mock.Mock(), mock.Mock()]
+        token = "adfoiweroh12334kj129318934u"
+    
+        with mock.patch.object(AbstractStoreTestImpl, "_search_runs", return_value=(runs, token)):
+            store = AbstractStoreTestImpl()
+            result = store.search_runs([experiment_id], None, view_type)
+>           for i in range(len(result)):
+E           TypeError: object of type 'NoneType' has no len()
+
+tests/store/test_abstract_store.py:128: TypeError
+_________________________ TestRestStore.test_requestor _________________________
+
+self = <tests.store.test_rest_store.TestRestStore testMethod=test_requestor>
+request = <MagicMock name='request' id='47374269067664'>
+
+    @mock.patch('requests.request')
+    def test_requestor(self, request):
+        response = mock.MagicMock
+        response.status_code = 200
+        response.text = '{}'
+        request.return_value = response
+    
+        creds = MlflowHostCreds('https://hello')
+        store = RestStore(lambda: creds)
+    
+        user_name = "mock user"
+        source_name = "rest test"
+    
+        source_name_patch = mock.patch(
+            "mlflow.tracking.context._get_source_name", return_value=source_name
+        )
+        source_type_patch = mock.patch(
+            "mlflow.tracking.context._get_source_type", return_value=SourceType.LOCAL
+        )
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http, \
+                mock.patch('mlflow.tracking.utils._get_store', return_value=store), \
+                mock.patch('mlflow.tracking.context._get_user', return_value=user_name), \
+                mock.patch('time.time', return_value=13579), \
+                source_name_patch, source_type_patch:
+            with mlflow.start_run(experiment_id="43"):
+                cr_body = message_to_json(CreateRun(experiment_id="43",
+                                                    user_id=user_name, start_time=13579000,
+                                                    tags=[ProtoRunTag(key='mlflow.source.name',
+                                                                      value=source_name),
+                                                          ProtoRunTag(key='mlflow.source.type',
+                                                                      value='LOCAL'),
+                                                          ProtoRunTag(key='mlflow.user',
+                                                                      value=user_name)]))
+                expected_kwargs = self._args(creds, "runs/create", "POST", cr_body)
+    
+                assert mock_http.call_count == 1
+                actual_kwargs = mock_http.call_args[1]
+    
+                # Test the passed tag values separately from the rest of the request
+                # Tag order is inconsistent on Python 2 and 3, but the order does not matter
+                expected_tags = expected_kwargs['json'].pop('tags')
+                actual_tags = actual_kwargs['json'].pop('tags')
+                assert (
+                    sorted(expected_tags, key=lambda t: t['key']) ==
+                    sorted(actual_tags, key=lambda t: t['key'])
+                )
+                assert expected_kwargs == actual_kwargs
+    
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http:
+            store.log_param("some_uuid", Param("k1", "v1"))
+            body = message_to_json(LogParam(
+                run_uuid="some_uuid", run_id="some_uuid", key="k1", value="v1"))
+            self._verify_requests(mock_http, creds,
+                                  "runs/log-parameter", "POST", body)
+    
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http:
+            store.set_tag("some_uuid", RunTag("t1", "abcd"*1000))
+            body = message_to_json(SetTag(
+                run_uuid="some_uuid", run_id="some_uuid", key="t1", value="abcd"*1000))
+            self._verify_requests(mock_http, creds,
+                                  "runs/set-tag", "POST", body)
+    
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http:
+            store.log_metric("u2", Metric("m1", 0.87, 12345, 3))
+            body = message_to_json(LogMetric(
+                run_uuid="u2", run_id="u2", key="m1", value=0.87, timestamp=12345, step=3))
+            self._verify_requests(mock_http, creds,
+                                  "runs/log-metric", "POST", body)
+    
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http:
+            metrics = [Metric("m1", 0.87, 12345, 0), Metric("m2", 0.49, 12345, -1),
+                       Metric("m3", 0.58, 12345, 2)]
+            params = [Param("p1", "p1val"), Param("p2", "p2val")]
+            tags = [RunTag("t1", "t1val"), RunTag("t2", "t2val")]
+            store.log_batch(run_id="u2", metrics=metrics, params=params, tags=tags)
+            metric_protos = [metric.to_proto() for metric in metrics]
+            param_protos = [param.to_proto() for param in params]
+            tag_protos = [tag.to_proto() for tag in tags]
+            body = message_to_json(LogBatch(run_id="u2", metrics=metric_protos,
+                                            params=param_protos, tags=tag_protos))
+            self._verify_requests(mock_http, creds,
+                                  "runs/log-batch", "POST", body)
+    
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http:
+            store.delete_run("u25")
+            self._verify_requests(mock_http, creds,
+                                  "runs/delete", "POST",
+                                  message_to_json(DeleteRun(run_id="u25")))
+    
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http:
+            store.restore_run("u76")
+            self._verify_requests(mock_http, creds,
+                                  "runs/restore", "POST",
+                                  message_to_json(RestoreRun(run_id="u76")))
+    
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http:
+            store.delete_experiment("0")
+            self._verify_requests(mock_http, creds,
+                                  "experiments/delete", "POST",
+                                  message_to_json(DeleteExperiment(experiment_id="0")))
+    
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http:
+            store.restore_experiment("0")
+            self._verify_requests(mock_http, creds,
+                                  "experiments/restore", "POST",
+                                  message_to_json(RestoreExperiment(experiment_id="0")))
+    
+        with mock.patch('mlflow.store.rest_store.http_request') as mock_http:
+            response = mock.MagicMock
+            response.text = '{"runs": ["1a", "2b", "3c"], "next_page_token": "67890fghij"}'
+            mock_http.return_value = response
+            result = store.search_runs(["0", "1"], "params.p1 = 'a'", ViewType.ACTIVE_ONLY,
+>                                      max_results=10, order_by=["a"], page_token="12345abcde")
+E           TypeError: search_runs() got an unexpected keyword argument 'page_token'
+
+tests/store/test_rest_store.py:217: TypeError
+____ TestSqlAlchemyStoreSqlite.test_search_runs_pagination_not_implemented _____
+
+self = <tests.store.test_sqlalchemy_store.TestSqlAlchemyStoreSqlite testMethod=test_search_runs_pagination_not_implemented>
+
+    def test_search_runs_pagination_not_implemented(self):
+        # Note: It's not too important which type of db we test this with
+        exp = self._experiment_factory('test_search_runs_pagination_not_implemented')
+        # test returned token behavior
+        result = self.store.search_runs([exp], None, ViewType.ALL)
+>       assert result.token is None
+E       AttributeError: 'list' object has no attribute 'token'
+
+tests/store/test_sqlalchemy_store.py:993: AttributeError
+----------------------------- Captured stderr call -----------------------------
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step
+INFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+_ TestSqlAlchemyStoreSqliteMigratedDB.test_search_runs_pagination_not_implemented _
+
+self = <tests.store.test_sqlalchemy_store.TestSqlAlchemyStoreSqliteMigratedDB testMethod=test_search_runs_pagination_not_implemented>
+
+    def test_search_runs_pagination_not_implemented(self):
+        # Note: It's not too important which type of db we test this with
+        exp = self._experiment_factory('test_search_runs_pagination_not_implemented')
+        # test returned token behavior
+        result = self.store.search_runs([exp], None, ViewType.ALL)
+>       assert result.token is None
+E       AttributeError: 'list' object has no attribute 'token'
+
+tests/store/test_sqlalchemy_store.py:993: AttributeError
+------------------------------ Captured log call -------------------------------
+INFO     alembic.runtime.migration:migration.py:213 Context impl SQLiteImpl.
+INFO     alembic.runtime.migration:migration.py:220 Will assume non-transactional DDL.
+_______________________ test_client_search_runs_defaults _______________________
+
+mock_store = <MagicMock name='_get_store()' id='47374280925968'>
+
+    def test_client_search_runs_defaults(mock_store):
+        MlflowClient().search_runs([1, 2, 3])
+        mock_store.search_runs.assert_called_once_with(experiment_ids=[1, 2, 3],
+                                                       filter_string="",
+                                                       run_view_type=ViewType.ACTIVE_ONLY,
+                                                       max_results=SEARCH_MAX_RESULTS_DEFAULT,
+                                                       order_by=None,
+>                                                      page_token=None)
+
+tests/tracking/test_client.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.7/site-packages/mock/mock.py:948: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+/usr/local/lib/python3.7/site-packages/mock/mock.py:937: in assert_called_with
+    six.raise_from(AssertionError(_error_message(cause)), cause)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None, from_value = None
+
+>   ???
+E   AssertionError: Expected call: search_runs(experiment_ids=[1, 2, 3], filter_string='', max_results=1000, order_by=None, page_token=None, run_view_type=1)
+E   Actual call: search_runs(experiment_ids=[1, 2, 3], filter_string='', max_results=1000, order_by=None, run_view_type=1)
+
+<string>:3: AssertionError
+________________________ test_client_search_runs_filter ________________________
+
+mock_store = <MagicMock name='_get_store()' id='47374272135632'>
+
+    def test_client_search_runs_filter(mock_store):
+        MlflowClient().search_runs(["a", "b", "c"], "my filter")
+        mock_store.search_runs.assert_called_once_with(experiment_ids=["a", "b", "c"],
+                                                       filter_string="my filter",
+                                                       run_view_type=ViewType.ACTIVE_ONLY,
+                                                       max_results=SEARCH_MAX_RESULTS_DEFAULT,
+                                                       order_by=None,
+>                                                      page_token=None)
+
+tests/tracking/test_client.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.7/site-packages/mock/mock.py:948: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+/usr/local/lib/python3.7/site-packages/mock/mock.py:937: in assert_called_with
+    six.raise_from(AssertionError(_error_message(cause)), cause)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None, from_value = None
+
+>   ???
+E   AssertionError: Expected call: search_runs(experiment_ids=['a', 'b', 'c'], filter_string='my filter', max_results=1000, order_by=None, page_token=None, run_view_type=1)
+E   Actual call: search_runs(experiment_ids=['a', 'b', 'c'], filter_string='my filter', max_results=1000, order_by=None, run_view_type=1)
+
+<string>:3: AssertionError
+______________________ test_client_search_runs_view_type _______________________
+
+mock_store = <MagicMock name='_get_store()' id='47374274866512'>
+
+    def test_client_search_runs_view_type(mock_store):
+        MlflowClient().search_runs(["a", "b", "c"], "my filter", ViewType.DELETED_ONLY)
+        mock_store.search_runs.assert_called_once_with(experiment_ids=["a", "b", "c"],
+                                                       filter_string="my filter",
+                                                       run_view_type=ViewType.DELETED_ONLY,
+                                                       max_results=SEARCH_MAX_RESULTS_DEFAULT,
+                                                       order_by=None,
+>                                                      page_token=None)
+
+tests/tracking/test_client.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.7/site-packages/mock/mock.py:948: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+/usr/local/lib/python3.7/site-packages/mock/mock.py:937: in assert_called_with
+    six.raise_from(AssertionError(_error_message(cause)), cause)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None, from_value = None
+
+>   ???
+E   AssertionError: Expected call: search_runs(experiment_ids=['a', 'b', 'c'], filter_string='my filter', max_results=1000, order_by=None, page_token=None, run_view_type=2)
+E   Actual call: search_runs(experiment_ids=['a', 'b', 'c'], filter_string='my filter', max_results=1000, order_by=None, run_view_type=2)
+
+<string>:3: AssertionError
+_____________________ test_client_search_runs_max_results ______________________
+
+mock_store = <MagicMock name='_get_store()' id='47374280544080'>
+
+    def test_client_search_runs_max_results(mock_store):
+        MlflowClient().search_runs([5], "my filter", ViewType.ALL, 2876)
+        mock_store.search_runs.assert_called_once_with(experiment_ids=[5],
+                                                       filter_string="my filter",
+                                                       run_view_type=ViewType.ALL,
+                                                       max_results=2876,
+                                                       order_by=None,
+>                                                      page_token=None)
+
+tests/tracking/test_client.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.7/site-packages/mock/mock.py:948: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+/usr/local/lib/python3.7/site-packages/mock/mock.py:937: in assert_called_with
+    six.raise_from(AssertionError(_error_message(cause)), cause)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None, from_value = None
+
+>   ???
+E   AssertionError: Expected call: search_runs(experiment_ids=[5], filter_string='my filter', max_results=2876, order_by=None, page_token=None, run_view_type=3)
+E   Actual call: search_runs(experiment_ids=[5], filter_string='my filter', max_results=2876, order_by=None, run_view_type=3)
+
+<string>:3: AssertionError
+__________________ test_client_search_runs_int_experiment_id ___________________
+
+mock_store = <MagicMock name='_get_store()' id='47374277479504'>
+
+    def test_client_search_runs_int_experiment_id(mock_store):
+        MlflowClient().search_runs(123)
+        mock_store.search_runs.assert_called_once_with(experiment_ids=[123],
+                                                       filter_string="",
+                                                       run_view_type=ViewType.ACTIVE_ONLY,
+                                                       max_results=SEARCH_MAX_RESULTS_DEFAULT,
+                                                       order_by=None,
+>                                                      page_token=None)
+
+tests/tracking/test_client.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.7/site-packages/mock/mock.py:948: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+/usr/local/lib/python3.7/site-packages/mock/mock.py:937: in assert_called_with
+    six.raise_from(AssertionError(_error_message(cause)), cause)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None, from_value = None
+
+>   ???
+E   AssertionError: Expected call: search_runs(experiment_ids=[123], filter_string='', max_results=1000, order_by=None, page_token=None, run_view_type=1)
+E   Actual call: search_runs(experiment_ids=[123], filter_string='', max_results=1000, order_by=None, run_view_type=1)
+
+<string>:3: AssertionError
+_________________ test_client_search_runs_string_experiment_id _________________
+
+mock_store = <MagicMock name='_get_store()' id='47374278668944'>
+
+    def test_client_search_runs_string_experiment_id(mock_store):
+        MlflowClient().search_runs("abc")
+        mock_store.search_runs.assert_called_once_with(experiment_ids=["abc"],
+                                                       filter_string="",
+                                                       run_view_type=ViewType.ACTIVE_ONLY,
+                                                       max_results=SEARCH_MAX_RESULTS_DEFAULT,
+                                                       order_by=None,
+>                                                      page_token=None)
+
+tests/tracking/test_client.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.7/site-packages/mock/mock.py:948: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+/usr/local/lib/python3.7/site-packages/mock/mock.py:937: in assert_called_with
+    six.raise_from(AssertionError(_error_message(cause)), cause)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None, from_value = None
+
+>   ???
+E   AssertionError: Expected call: search_runs(experiment_ids=['abc'], filter_string='', max_results=1000, order_by=None, page_token=None, run_view_type=1)
+E   Actual call: search_runs(experiment_ids=['abc'], filter_string='', max_results=1000, order_by=None, run_view_type=1)
+
+<string>:3: AssertionError
+_______________________ test_client_search_runs_order_by _______________________
+
+mock_store = <MagicMock name='_get_store()' id='47374283643216'>
+
+    def test_client_search_runs_order_by(mock_store):
+        MlflowClient().search_runs([5], order_by=["a", "b"])
+        mock_store.search_runs.assert_called_once_with(experiment_ids=[5],
+                                                       filter_string="",
+                                                       run_view_type=ViewType.ACTIVE_ONLY,
+                                                       max_results=SEARCH_MAX_RESULTS_DEFAULT,
+                                                       order_by=["a", "b"],
+>                                                      page_token=None)
+
+tests/tracking/test_client.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.7/site-packages/mock/mock.py:948: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+/usr/local/lib/python3.7/site-packages/mock/mock.py:937: in assert_called_with
+    six.raise_from(AssertionError(_error_message(cause)), cause)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None, from_value = None
+
+>   ???
+E   AssertionError: Expected call: search_runs(experiment_ids=[5], filter_string='', max_results=1000, order_by=['a', 'b'], page_token=None, run_view_type=1)
+E   Actual call: search_runs(experiment_ids=[5], filter_string='', max_results=1000, order_by=['a', 'b'], run_view_type=1)
+
+<string>:3: AssertionError
+______________________ test_client_search_runs_page_token ______________________
+
+mock_store = <MagicMock name='_get_store()' id='47374282577424'>
+
+    def test_client_search_runs_page_token(mock_store):
+>       MlflowClient().search_runs([5], page_token="blah")
+E       TypeError: search_runs() got an unexpected keyword argument 'page_token'
+
+tests/tracking/test_client.py:143: TypeError
+=============================== warnings summary ===============================
+tests/store/test_sqlalchemy_store.py:1172
+  /workspace/repo/tests/store/test_sqlalchemy_store.py:1172: PytestUnknownMarkWarning: Unknown pytest.mark.release - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.release
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/store/test_abstract_store.py::test_search_runs - TypeError: obje...
+FAILED tests/store/test_rest_store.py::TestRestStore::test_requestor - TypeEr...
+FAILED tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqlite::test_search_runs_pagination_not_implemented
+FAILED tests/store/test_sqlalchemy_store.py::TestSqlAlchemyStoreSqliteMigratedDB::test_search_runs_pagination_not_implemented
+FAILED tests/tracking/test_client.py::test_client_search_runs_defaults - Asse...
+FAILED tests/tracking/test_client.py::test_client_search_runs_filter - Assert...
+FAILED tests/tracking/test_client.py::test_client_search_runs_view_type - Ass...
+FAILED tests/tracking/test_client.py::test_client_search_runs_max_results - A...
+FAILED tests/tracking/test_client.py::test_client_search_runs_int_experiment_id
+FAILED tests/tracking/test_client.py::test_client_search_runs_string_experiment_id
+FAILED tests/tracking/test_client.py::test_client_search_runs_order_by - Asse...
+FAILED tests/tracking/test_client.py::test_client_search_runs_page_token - Ty...
+========== 12 failed, 121 passed, 58 deselected, 1 warning in 39.95s ===========
+reward=0 graded=133 found=0 failed=0 parsed=133 framework=pytest exit_code=1

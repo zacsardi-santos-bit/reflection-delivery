@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tools/benchcomp/test/test_regression.py -v -k 'not test_kani_perf_fail'",
+  "test_files": [
+    "tools/benchcomp/test/test_regression.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tools.benchcomp.test.test_regression.RegressionTests::test_markdown_results_table"
+  ],
+  "PASS_TO_PASS": [
+    "tools.benchcomp.test.test_regression.RegressionTests::test_bad_filters",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_command_parser",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_env",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_env_expansion",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_error_on_regression_two_benchmarks_one_failed",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_error_on_regression_two_benchmarks_previously_failed",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_error_on_regression_visualization_ratio_no_regressed",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_error_on_regression_visualization_ratio_regressed",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_error_on_regression_visualization_success_no_regressed",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_error_on_regression_visualization_success_regressed",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_ignore_dump_yaml",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_kani_perf_success",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_only_dump_yaml",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_return_0",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_return_0_on_fail",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_run_command_visualization",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_run_failing_command_visualization",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_two_filters",
+    "tools.benchcomp.test.test_regression.RegressionTests::test_unknown_metric_in_benchmark"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+ "task": "paradigmxyz-reth-10004",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden renames crates/trie/trie/src/trie_cursor/database_cursors.rs -> crates/trie/db/src/trie_cursor.rs; test.patch imports use reth_trie_db::{DatabaseStateRoot, DatabaseTrieCursorFactory}"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

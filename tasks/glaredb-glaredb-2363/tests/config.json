@@ -1,0 +1,33 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && (if cargo build --bin slt 2>&1; then rc=0; for t in sqllogictests/csv sqllogictests/infer sqllogictests/glob sqllogictests/create_table; do ./target/debug/slt \"$t\" 2>/dev/null && echo \"PASS [0.000s] testing $t\" || { echo \"FAIL [0.000s] testing $t\"; rc=1; }; done; exit $rc; else for t in sqllogictests/csv sqllogictests/infer sqllogictests/glob sqllogictests/create_table; do echo \"FAIL [0.000s] testing $t\"; done; exit 1; fi)",
+  "test_files": [
+    "crates/testing/src/slt/tests.rs",
+    "testdata/sqllogictests/create_table.slt",
+    "testdata/sqllogictests/csv.slt",
+    "testdata/sqllogictests/external_table.slt",
+    "testdata/sqllogictests/functions/csv_scan.slt",
+    "testdata/sqllogictests/functions/delta_scan.slt",
+    "testdata/sqllogictests/functions/json_scan.slt",
+    "testdata/sqllogictests/functions/lance_scan.slt",
+    "testdata/sqllogictests/functions/parquet_scan.slt",
+    "testdata/sqllogictests/functions/read_csv.slt",
+    "testdata/sqllogictests/functions/read_json.slt",
+    "testdata/sqllogictests/functions/read_parquet.slt",
+    "testdata/sqllogictests/glob.slt",
+    "testdata/sqllogictests/infer.slt",
+    "testdata/sqllogictests/prql.slt",
+    "testdata/sqllogictests/rpc.slt",
+    "testdata/sqllogictests/tunnels.slt",
+    "testdata/sqllogictests/views.slt"
+  ],
+  "num_test_files": 18,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "testing sqllogictests/csv",
+    "testing sqllogictests/infer",
+    "testing sqllogictests/glob",
+    "testing sqllogictests/create_table"
+  ],
+  "PASS_TO_PASS": []
+}

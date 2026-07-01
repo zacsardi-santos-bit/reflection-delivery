@@ -1,0 +1,14 @@
+patching file sdk/nodejs/tests/automation/localWorkspace.spec.ts
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ /workspace/repo/sdk/nodejs/node_modules/.bin/mocha --timeout 120000 tests/automation/localWorkspace.spec.ts --grep 'correctly sets config on multiple stacks concurrently'
+
+
+  LocalWorkspace
+    ✔ correctly sets config on multiple stacks concurrently (11165ms)
+
+
+  1 passing (11s)
+
+Done in 14.69s.
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=mocha exit_code=0

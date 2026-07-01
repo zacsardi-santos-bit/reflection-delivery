@@ -1,0 +1,11 @@
+{
+  "test_framework": "go",
+  "test_command": "cp vendor.mod go.mod && GO111MODULE=on go test -mod=vendor -modfile=vendor.mod -v -count=1 -run TestOtelHTTPTraceVersion ./client/...",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/docker/docker/client::TestOtelHTTPTraceVersion"
+  ],
+  "PASS_TO_PASS": []
+}

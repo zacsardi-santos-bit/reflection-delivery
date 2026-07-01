@@ -1,0 +1,23 @@
+{
+ "task": "quantumlib-cirq-3602",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds list_jobs to _IonQClient and Service with status/limit/batch_size/pagination; 9 F2P incl test_ionq_client_list_jobs_batches, _unauthorized, _retry, _limit, plus PASS_TO_PASS regression"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

@@ -1,0 +1,67 @@
+patching file tests/storages_tests/rdb_tests/test_models.py
+patching file tests/storages_tests/rdb_tests/test_storage.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+collecting ... collected 50 items / 1 deselected / 49 selected
+
+tests/storages_tests/rdb_tests/test_models.py::TestStudyDirectionModel::test_find_by_study_and_objective PASSED [  2%]
+tests/storages_tests/rdb_tests/test_models.py::TestStudyDirectionModel::test_where_study PASSED [  4%]
+tests/storages_tests/rdb_tests/test_models.py::TestStudyDirectionModel::test_cascade_delete_on_study PASSED [  6%]
+tests/storages_tests/rdb_tests/test_models.py::TestStudySystemAttributeModel::test_find_by_study_and_key PASSED [  8%]
+tests/storages_tests/rdb_tests/test_models.py::TestStudySystemAttributeModel::test_where_study_id PASSED [ 10%]
+tests/storages_tests/rdb_tests/test_models.py::TestStudySystemAttributeModel::test_cascade_delete_on_study PASSED [ 12%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialModel::test_default_datetime PASSED [ 14%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialModel::test_count PASSED [ 16%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialModel::test_count_past_trials PASSED [ 18%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialModel::test_cascade_delete_on_study PASSED [ 20%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialUserAttributeModel::test_find_by_trial_and_key PASSED [ 22%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialUserAttributeModel::test_where_study PASSED [ 24%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialUserAttributeModel::test_where_trial PASSED [ 26%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialUserAttributeModel::test_all PASSED [ 28%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialUserAttributeModel::test_cascade_delete_on_trial PASSED [ 30%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialSystemAttributeModel::test_find_by_trial_and_key PASSED [ 32%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialSystemAttributeModel::test_where_study PASSED [ 34%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialSystemAttributeModel::test_where_trial PASSED [ 36%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialSystemAttributeModel::test_all PASSED [ 38%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialSystemAttributeModel::test_cascade_delete_on_trial PASSED [ 40%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialValueModel::test_find_by_trial_and_objective PASSED [ 42%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialValueModel::test_where_trial_id PASSED [ 44%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialValueModel::test_cascade_delete_on_trial PASSED [ 46%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialIntermediateValueModel::test_find_by_trial_and_step PASSED [ 48%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialIntermediateValueModel::test_where_trial_id PASSED [ 51%]
+tests/storages_tests/rdb_tests/test_models.py::TestTrialIntermediateValueModel::test_cascade_delete_on_trial PASSED [ 53%]
+tests/storages_tests/rdb_tests/test_models.py::TestVersionInfoModel::test_version_info_id_constraint PASSED [ 55%]
+tests/storages_tests/rdb_tests/test_storage.py::test_init PASSED         [ 57%]
+tests/storages_tests/rdb_tests/test_storage.py::test_init_url_template PASSED [ 59%]
+tests/storages_tests/rdb_tests/test_storage.py::test_init_url_that_contains_percent_character PASSED [ 61%]
+tests/storages_tests/rdb_tests/test_storage.py::test_init_db_module_import_error PASSED [ 63%]
+tests/storages_tests/rdb_tests/test_storage.py::test_engine_kwargs PASSED [ 65%]
+tests/storages_tests/rdb_tests/test_storage.py::test_set_default_engine_kwargs_for_mysql[mysql://localhost-engine_kwargs0-False] PASSED [ 67%]
+tests/storages_tests/rdb_tests/test_storage.py::test_set_default_engine_kwargs_for_mysql[mysql://localhost-engine_kwargs1-True] PASSED [ 69%]
+tests/storages_tests/rdb_tests/test_storage.py::test_set_default_engine_kwargs_for_mysql[mysql://localhost-engine_kwargs2-True] PASSED [ 71%]
+tests/storages_tests/rdb_tests/test_storage.py::test_set_default_engine_kwargs_for_mysql[mysql+pymysql://localhost-engine_kwargs3-True] PASSED [ 73%]
+tests/storages_tests/rdb_tests/test_storage.py::test_set_default_engine_kwargs_for_mysql[mysql://localhost-engine_kwargs4-True] PASSED [ 75%]
+tests/storages_tests/rdb_tests/test_storage.py::test_set_default_engine_kwargs_for_mysql_with_other_rdb PASSED [ 77%]
+tests/storages_tests/rdb_tests/test_storage.py::test_check_table_schema_compatibility PASSED [ 79%]
+tests/storages_tests/rdb_tests/test_storage.py::test_pickle_storage PASSED [ 81%]
+tests/storages_tests/rdb_tests/test_storage.py::test_create_scoped_session PASSED [ 83%]
+tests/storages_tests/rdb_tests/test_storage.py::test_update_trial[fields_to_modify0-kwargs0] PASSED [ 85%]
+tests/storages_tests/rdb_tests/test_storage.py::test_update_trial[fields_to_modify1-kwargs1] PASSED [ 87%]
+tests/storages_tests/rdb_tests/test_storage.py::test_update_trial[fields_to_modify2-kwargs2] PASSED [ 89%]
+tests/storages_tests/rdb_tests/test_storage.py::test_update_trial[fields_to_modify3-kwargs3] PASSED [ 91%]
+tests/storages_tests/rdb_tests/test_storage.py::test_update_trial[fields_to_modify4-kwargs4] PASSED [ 93%]
+tests/storages_tests/rdb_tests/test_storage.py::test_update_trial[fields_to_modify5-kwargs5] PASSED [ 95%]
+tests/storages_tests/rdb_tests/test_storage.py::test_update_trial_second_write PASSED [ 97%]
+tests/storages_tests/rdb_tests/test_storage.py::test_get_trials_excluded_trial_ids PASSED [100%]
+
+=============================== warnings summary ===============================
+optuna/storages/_rdb/models.py:36
+  /workspace/repo/optuna/storages/_rdb/models.py:36: MovedIn20Warning: Deprecated API features detected! These feature(s) are not compatible with SQLAlchemy 2.0. To prevent incompatible upgrades prior to updating applications, ensure requirements files are pinned to "sqlalchemy<2.0". Set environment variable SQLALCHEMY_WARN_20=1 to show all deprecation warnings.  Set environment variable SQLALCHEMY_SILENCE_UBER_WARNING=1 to silence this message. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    BaseModel: Any = declarative_base()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================= 49 passed, 1 deselected, 1 warning in 2.76s ==================
+reward=1 graded=49 found=0 failed=0 parsed=38 framework=pytest exit_code=0

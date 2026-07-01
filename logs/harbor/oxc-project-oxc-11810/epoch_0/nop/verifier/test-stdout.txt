@@ -1,0 +1,192 @@
+patching file crates/oxc_minifier/tests/ecmascript/may_have_side_effects.rs
+patching file crates/oxc_minifier/tests/ecmascript/to_boolean.rs
+patching file crates/oxc_minifier/tests/ecmascript/to_number.rs
+patching file crates/oxc_minifier/tests/ecmascript/to_string.rs
+patching file crates/oxc_minifier/tests/ecmascript/value_type.rs
+   Compiling oxc_traverse v0.73.2 (/workspace/repo/crates/oxc_traverse)
+   Compiling oxc_minifier v0.73.2 (/workspace/repo/crates/oxc_minifier)
+error[E0107]: trait takes 0 lifetime arguments but 1 lifetime argument was supplied
+  --> crates/oxc_minifier/tests/ecmascript/may_have_side_effects.rs:28:10
+   |
+28 | impl<'a> IsGlobalReference<'a> for Ctx {
+   |          ^^^^^^^^^^^^^^^^^---- help: remove the unnecessary generics
+   |          |
+   |          expected 0 lifetime arguments
+   |
+note: trait defined here, with 0 lifetime parameters
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:3:11
+   |
+3  | pub trait IsGlobalReference: Sized {
+   |           ^^^^^^^^^^^^^^^^^
+
+error[E0107]: trait takes 0 lifetime arguments but 1 lifetime argument was supplied
+  --> crates/oxc_minifier/tests/ecmascript/to_boolean.rs:10:10
+   |
+10 | impl<'a> IsGlobalReference<'a> for GlobalReferenceInformation {
+   |          ^^^^^^^^^^^^^^^^^---- help: remove the unnecessary generics
+   |          |
+   |          expected 0 lifetime arguments
+   |
+note: trait defined here, with 0 lifetime parameters
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:3:11
+   |
+3  | pub trait IsGlobalReference: Sized {
+   |           ^^^^^^^^^^^^^^^^^
+
+error[E0107]: trait takes 0 lifetime arguments but 1 lifetime argument was supplied
+  --> crates/oxc_minifier/tests/ecmascript/to_number.rs:13:10
+   |
+13 | impl<'a> IsGlobalReference<'a> for GlobalReferenceInformation {
+   |          ^^^^^^^^^^^^^^^^^---- help: remove the unnecessary generics
+   |          |
+   |          expected 0 lifetime arguments
+   |
+note: trait defined here, with 0 lifetime parameters
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:3:11
+   |
+3  | pub trait IsGlobalReference: Sized {
+   |           ^^^^^^^^^^^^^^^^^
+
+error[E0107]: trait takes 0 lifetime arguments but 1 lifetime argument was supplied
+  --> crates/oxc_minifier/tests/ecmascript/to_string.rs:13:10
+   |
+13 | impl<'a> IsGlobalReference<'a> for GlobalReferenceInformation {
+   |          ^^^^^^^^^^^^^^^^^---- help: remove the unnecessary generics
+   |          |
+   |          expected 0 lifetime arguments
+   |
+note: trait defined here, with 0 lifetime parameters
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:3:11
+   |
+3  | pub trait IsGlobalReference: Sized {
+   |           ^^^^^^^^^^^^^^^^^
+
+error[E0107]: trait takes 0 lifetime arguments but 1 lifetime argument was supplied
+  --> crates/oxc_minifier/tests/ecmascript/value_type.rs:14:10
+   |
+14 | impl<'a> IsGlobalReference<'a> for GlobalReferenceChecker {
+   |          ^^^^^^^^^^^^^^^^^---- help: remove the unnecessary generics
+   |          |
+   |          expected 0 lifetime arguments
+   |
+note: trait defined here, with 0 lifetime parameters
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:3:11
+   |
+3  | pub trait IsGlobalReference: Sized {
+   |           ^^^^^^^^^^^^^^^^^
+
+error[E0308]: method not compatible with trait
+  --> crates/oxc_minifier/tests/ecmascript/may_have_side_effects.rs:29:5
+   |
+29 |     fn is_global_reference(&self, ident: &IdentifierReference<'a>) -> Option<bool> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ lifetime mismatch
+   |
+   = note: expected signature `fn(&Ctx, &oxc_ast::ast::IdentifierReference<'_>) -> Option<_>`
+              found signature `fn(&Ctx, &oxc_ast::ast::IdentifierReference<'a>) -> Option<_>`
+note: the anonymous lifetime as defined here...
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:9:67
+   |
+9  |     fn is_global_reference(&self, reference: &IdentifierReference<'_>) -> Option<bool>;
+   |                                                                   ^^
+note: ...does not necessarily outlive the lifetime `'a` as defined here
+  --> crates/oxc_minifier/tests/ecmascript/may_have_side_effects.rs:28:6
+   |
+28 | impl<'a> IsGlobalReference<'a> for Ctx {
+   |      ^^
+
+error[E0107]: trait takes 0 lifetime arguments but 1 lifetime argument was supplied
+  --> crates/oxc_minifier/tests/ecmascript/may_have_side_effects.rs:33:6
+   |
+33 | impl MayHaveSideEffectsContext<'_> for Ctx {
+   |      ^^^^^^^^^^^^^^^^^^^^^^^^^---- help: remove the unnecessary generics
+   |      |
+   |      expected 0 lifetime arguments
+   |
+note: trait defined here, with 0 lifetime parameters
+  --> /workspace/repo/crates/oxc_ecmascript/src/side_effects/context.rs:17:11
+   |
+17 | pub trait MayHaveSideEffectsContext: IsGlobalReference {
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0308]: method not compatible with trait
+  --> crates/oxc_minifier/tests/ecmascript/to_boolean.rs:11:5
+   |
+11 |     fn is_global_reference(&self, ident: &IdentifierReference<'a>) -> Option<bool> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ lifetime mismatch
+   |
+   = note: expected signature `fn(&to_boolean::GlobalReferenceInformation, &oxc_ast::ast::IdentifierReference<'_>) -> Option<_>`
+              found signature `fn(&to_boolean::GlobalReferenceInformation, &oxc_ast::ast::IdentifierReference<'a>) -> Option<_>`
+note: the anonymous lifetime as defined here...
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:9:67
+   |
+9  |     fn is_global_reference(&self, reference: &IdentifierReference<'_>) -> Option<bool>;
+   |                                                                   ^^
+note: ...does not necessarily outlive the lifetime `'a` as defined here
+  --> crates/oxc_minifier/tests/ecmascript/to_boolean.rs:10:6
+   |
+10 | impl<'a> IsGlobalReference<'a> for GlobalReferenceInformation {
+   |      ^^
+
+error[E0308]: method not compatible with trait
+  --> crates/oxc_minifier/tests/ecmascript/to_number.rs:14:5
+   |
+14 |     fn is_global_reference(&self, ident: &IdentifierReference<'a>) -> Option<bool> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ lifetime mismatch
+   |
+   = note: expected signature `fn(&to_number::GlobalReferenceInformation, &oxc_ast::ast::IdentifierReference<'_>) -> Option<_>`
+              found signature `fn(&to_number::GlobalReferenceInformation, &oxc_ast::ast::IdentifierReference<'a>) -> Option<_>`
+note: the anonymous lifetime as defined here...
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:9:67
+   |
+9  |     fn is_global_reference(&self, reference: &IdentifierReference<'_>) -> Option<bool>;
+   |                                                                   ^^
+note: ...does not necessarily outlive the lifetime `'a` as defined here
+  --> crates/oxc_minifier/tests/ecmascript/to_number.rs:13:6
+   |
+13 | impl<'a> IsGlobalReference<'a> for GlobalReferenceInformation {
+   |      ^^
+
+error[E0308]: method not compatible with trait
+  --> crates/oxc_minifier/tests/ecmascript/to_string.rs:14:5
+   |
+14 |     fn is_global_reference(&self, ident: &IdentifierReference<'a>) -> Option<bool> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ lifetime mismatch
+   |
+   = note: expected signature `fn(&to_string::GlobalReferenceInformation, &oxc_ast::ast::IdentifierReference<'_>) -> Option<_>`
+              found signature `fn(&to_string::GlobalReferenceInformation, &oxc_ast::ast::IdentifierReference<'a>) -> Option<_>`
+note: the anonymous lifetime as defined here...
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:9:67
+   |
+9  |     fn is_global_reference(&self, reference: &IdentifierReference<'_>) -> Option<bool>;
+   |                                                                   ^^
+note: ...does not necessarily outlive the lifetime `'a` as defined here
+  --> crates/oxc_minifier/tests/ecmascript/to_string.rs:13:6
+   |
+13 | impl<'a> IsGlobalReference<'a> for GlobalReferenceInformation {
+   |      ^^
+
+error[E0308]: method not compatible with trait
+  --> crates/oxc_minifier/tests/ecmascript/value_type.rs:15:5
+   |
+15 |     fn is_global_reference(&self, ident: &IdentifierReference<'a>) -> Option<bool> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ lifetime mismatch
+   |
+   = note: expected signature `fn(&GlobalReferenceChecker, &oxc_ast::ast::IdentifierReference<'_>) -> Option<_>`
+              found signature `fn(&GlobalReferenceChecker, &oxc_ast::ast::IdentifierReference<'a>) -> Option<_>`
+note: the anonymous lifetime as defined here...
+  --> /workspace/repo/crates/oxc_ecmascript/src/is_global_reference.rs:9:67
+   |
+9  |     fn is_global_reference(&self, reference: &IdentifierReference<'_>) -> Option<bool>;
+   |                                                                   ^^
+note: ...does not necessarily outlive the lifetime `'a` as defined here
+  --> crates/oxc_minifier/tests/ecmascript/value_type.rs:14:6
+   |
+14 | impl<'a> IsGlobalReference<'a> for GlobalReferenceChecker {
+   |      ^^
+
+Some errors have detailed explanations: E0107, E0308.
+For more information about an error, try `rustc --explain E0107`.
+error: could not compile `oxc_minifier` (test "mod") due to 11 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.87.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package oxc_minifier` exited with code 101
+reward=0 graded=328 found=0 failed=0 parsed=0 framework=cargo exit_code=101

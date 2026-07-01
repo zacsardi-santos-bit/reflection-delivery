@@ -1,0 +1,26 @@
+patching file internal/update/update_test.go
+patching file pkg/cmd/extension/manager_test.go
+patching file pkg/cmd/root/extension_test.go
+# github.com/cli/cli/v2/internal/update [github.com/cli/cli/v2/internal/update.test]
+internal/update/update_test.go:308:5: unknown field UpdateDirFunc in struct literal of type extensions.ExtensionManagerMock
+internal/update/update_test.go:347:38: em.UpdateDir undefined (type *extensions.ExtensionManagerMock has no field or method UpdateDir)
+internal/update/update_test.go:352:19: undefined: CheckForExtensionUpdate
+internal/update/update_test.go:422:14: undefined: ShouldCheckForUpdate
+internal/update/update_test.go:479:14: undefined: ShouldCheckForExtensionUpdate
+{"Time":"2026-06-29T15:28:43.435187561Z","Action":"start","Package":"github.com/cli/cli/v2/internal/update"}
+{"Time":"2026-06-29T15:28:43.435275233Z","Action":"output","Package":"github.com/cli/cli/v2/internal/update","Output":"FAIL\tgithub.com/cli/cli/v2/internal/update [build failed]\n"}
+{"Time":"2026-06-29T15:28:43.435304963Z","Action":"fail","Package":"github.com/cli/cli/v2/internal/update","Elapsed":0}
+# github.com/cli/cli/v2/pkg/cmd/extension [github.com/cli/cli/v2/pkg/cmd/extension.test]
+pkg/cmd/extension/manager_test.go:44:3: unknown field updateDir in struct literal of type Manager
+pkg/cmd/extension/manager_test.go:1390:34: undefined: normalizeExtension
+{"Time":"2026-06-29T15:28:43.473738733Z","Action":"start","Package":"github.com/cli/cli/v2/pkg/cmd/extension"}
+{"Time":"2026-06-29T15:28:43.473774964Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/extension","Output":"FAIL\tgithub.com/cli/cli/v2/pkg/cmd/extension [build failed]\n"}
+{"Time":"2026-06-29T15:28:43.473798794Z","Action":"fail","Package":"github.com/cli/cli/v2/pkg/cmd/extension","Elapsed":0}
+# github.com/cli/cli/v2/pkg/cmd/root_test [github.com/cli/cli/v2/pkg/cmd/root.test]
+pkg/cmd/root/extension_test.go:160:45: too many arguments in call to root.NewCmdExtension
+	have (*iostreams.IOStreams, *extensions.ExtensionManagerMock, *extensions.ExtensionMock, func(em extensions.ExtensionManager, ext extensions.Extension) (*update.ReleaseInfo, error))
+	want (*iostreams.IOStreams, extensions.ExtensionManager, extensions.Extension)
+{"Time":"2026-06-29T15:28:43.850580681Z","Action":"start","Package":"github.com/cli/cli/v2/pkg/cmd/root"}
+{"Time":"2026-06-29T15:28:43.850617311Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/root","Output":"FAIL\tgithub.com/cli/cli/v2/pkg/cmd/root [build failed]\n"}
+{"Time":"2026-06-29T15:28:43.850641452Z","Action":"fail","Package":"github.com/cli/cli/v2/pkg/cmd/root","Elapsed":0}
+reward=0 graded=150 found=0 failed=0 parsed=3 framework=go exit_code=1

@@ -1,0 +1,23 @@
+{
+ "task": "openai-codex-1528",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden apply_command.rs: `pub async fn apply_diff_from_task(task_response: GetTaskResponse)` + `git apply --3way`; test creates temp git repo, applies fixture diff, asserts `scripts/fibonacci.js` exists with `function fibonacci(n)` and asserts merge-conflict markers on conflict"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 20,
+  "shallow": true
+ }
+}

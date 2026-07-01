@@ -1,0 +1,13 @@
+patching file hack/test/patches/openebs-cp.yaml
+patching file hack/test/patches/openebs.yaml
+?   	github.com/siderolabs/talos/internal/integration/api	[no test files]
+?   	github.com/siderolabs/talos/internal/integration/base	[no test files]
+?   	github.com/siderolabs/talos/internal/integration/cli	[no test files]
+?   	github.com/siderolabs/talos/internal/integration/k8s	[no test files]
+?   	github.com/siderolabs/talos/internal/integration/provision	[no test files]
+--- FAIL: TestUserDisksReturnType (0.00s)
+    userdisks_check_test.go:18: expected UserDisks to return 1 value ([]string), got 2
+FAIL
+FAIL	github.com/siderolabs/talos/internal/integration	0.027s
+FAIL
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=1

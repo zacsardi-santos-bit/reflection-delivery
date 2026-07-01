@@ -1,0 +1,23 @@
+{
+ "task": "godot-rust-gdext-953",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'pub struct DynGd<T, D>', DynGdRef/DynGdMut guards, 'pub fn attribute_godot_dyn', prelude 'godot_dyn'; test.patch new dyn_gd_test.rs uses 'dyn_gd.dyn_bind_mut()' / '#[godot_dyn]'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

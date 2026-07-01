@@ -1,0 +1,7 @@
+I'm working on a database that supports storing vectors as binary-encoded data, and I need to add a few missing SQL functions for vector arithmetic. Right now the system has element-wise multiplication and some conversion helpers, but there's no way to subtract two vectors, sum all the elements of a vector into a scalar, or aggregate a whole column of vectors by summing them row-by-row into a single output vector.
+
+I'd like to add three new SQL functions: one that subtracts corresponding elements of two vectors and returns the result as a vector, one that returns the sum of all elements within a single vector as a floating-point number, and one aggregate function that sums a column of vectors element-wise across all rows — returning null if any row contains a null vector.
+
+On top of that, some internal vector conversion utilities are currently scoped to only be usable within the function library itself. I need those utilities to be accessible from other crates in the workspace so I can write tests in the query engine that construct binary-encoded test vectors and verify that the new aggregate function produces the correct element-wise sum. The test setup involves creating an in-memory table of randomly generated three-dimensional vectors and running the aggregation query against it.
+
+I also need the linear algebra library already used inside the function module to be declared as a shared workspace dependency so it can be used in the query crate's test code without version conflicts.

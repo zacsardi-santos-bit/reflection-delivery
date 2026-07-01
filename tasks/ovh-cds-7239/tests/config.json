@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "service postgresql start && service redis-server start && sleep 3 && mkdir -p /root/.cds && echo '{\"dbDriver\":\"postgres\",\"dbUser\":\"cds\",\"dbPassword\":\"cds\",\"dbName\":\"cds\",\"dbSchema\":\"public\",\"dbHost\":\"localhost\",\"dbPort\":\"5432\",\"sslMode\":\"disable\",\"redisHost\":\"localhost:6379\",\"redisPassword\":\"\",\"redisDbIndex\":\"0\"}' > /root/.cds/api.tests.cfg.json && cd /workspace/repo && go test -json ./engine/api -count=1 -run TestComputeJobFrom -timeout 600s",
+  "test_files": [
+    "engine/api/v2_workflow_run_craft_test.go",
+    "tests/08_v2_workflow_job_template.yml"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/ovh/cds/engine/api::TestComputeJobFromTemplate",
+    "github.com/ovh/cds/engine/api::TestComputeJobFromMultiTemplate",
+    "github.com/ovh/cds/engine/api::TestComputeJobFromTemplate_DuplicateJob"
+  ],
+  "PASS_TO_PASS": []
+}

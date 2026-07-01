@@ -1,0 +1,23 @@
+{
+ "task": "cloud-custodian-cloud-custodian-6376",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `@resources.register('rest-client-certificate')` + `@RestStage.filter_registry.register('client-certificate')`; F2P test_rest_stage_client_certificate_filter asserts `assertIn('expirationDate', resources[0]['c7n:matched-client-certificate'])`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 17,
+  "shallow": true
+ }
+}

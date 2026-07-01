@@ -1,0 +1,15 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl pulsar-broker test -Dtest=\"PersistentTopicE2ETest#testGCWillDeleteSchema,NonPersistentTopicE2ETest#testGCWillDeleteSchema\" -DfailIfNoTests=false -Dlicense.skip=true -Dcheckstyle.skip=true",
+  "test_files": [
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/service/NonPersistentTopicE2ETest.java",
+    "pulsar-broker/src/test/java/org/apache/pulsar/broker/service/PersistentTopicE2ETest.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pulsar::test_1",
+    "Pulsar::test_2"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,23 @@
+{
+ "task": "oxc-project-oxc-9223",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'mod test_unused_directives' (no_unused_enable/no_unused_disable/unused_disable_all...) in disable_directives.rs and inline_config_options field/logic; F2P set of 814 tests via cargo nextest -p oxc_linter -p oxlint"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

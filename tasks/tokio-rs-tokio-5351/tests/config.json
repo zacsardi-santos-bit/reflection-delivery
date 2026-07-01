@@ -1,0 +1,30 @@
+{
+  "test_framework": "cargo",
+  "test_command": "RUSTFLAGS='-A warnings' cargo nextest run -p tokio --features full -E 'test(fifo) | test(from_file) | test(open_detects) | test(try_read)' --no-fail-fast",
+  "test_files": [
+    "tokio/tests/async_send_sync.rs",
+    "tokio/tests/net_unix_pipe.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/17) tokio::net_unix_pipe fifo_simple_send_sender_first",
+    "( 2/17) tokio::net_unix_pipe from_file_detects_not_a_fifo",
+    "( 3/17) tokio::net_unix_pipe fifo_resilient_reader",
+    "( 4/17) tokio::net_unix_pipe from_file",
+    "( 5/17) tokio::net_unix_pipe try_read_buf",
+    "( 6/17) tokio::net_unix_pipe try_read_write_vectored",
+    "( 7/17) tokio::net_unix_pipe fifo_multiple_writes",
+    "( 8/17) tokio::net_unix_pipe fifo_simple_send",
+    "( 9/17) tokio::net_unix_pipe from_file_sets_nonblock",
+    "(10/17) tokio::net_unix_pipe open_detects_not_a_fifo",
+    "(11/17) tokio::net_unix_pipe from_file_detects_wrong_access_mode",
+    "(12/17) tokio::net_unix_pipe try_read_write",
+    "(13/17) tokio::sync_rwlock try_read_try_write",
+    "(14/17) tokio::uds_stream try_read_buf",
+    "(15/17) tokio::tcp_stream try_read_buf",
+    "(16/17) tokio::uds_stream try_read_write",
+    "(17/17) tokio::tcp_stream try_read_write"
+  ],
+  "PASS_TO_PASS": []
+}

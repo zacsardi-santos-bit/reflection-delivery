@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/gopath/src/github.com/sorintlab/stolon && go test -json ./tests/integration -count=1 -run TestProxyListening",
+  "test_files": [
+    "tests/integration/ha_test.go",
+    "tests/integration/proxy_test.go",
+    "tests/integration/utils.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/sorintlab/stolon/tests/integration::TestProxyListening"
+  ],
+  "PASS_TO_PASS": []
+}

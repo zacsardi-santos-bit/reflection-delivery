@@ -1,0 +1,90 @@
+patching file physical/optimizer/scenarios_test.go
+{"Time":"2026-06-29T15:14:25.132210179Z","Action":"start","Package":"github.com/cube2222/octosql/physical/optimizer"}
+{"Time":"2026-06-29T15:14:25.144747175Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers"}
+{"Time":"2026-06-29T15:14:25.144804166Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers","Output":"=== RUN   TestMergeRequalifiers\n"}
+{"Time":"2026-06-29T15:14:25.144911329Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/simple_single_merge"}
+{"Time":"2026-06-29T15:14:25.144935749Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/simple_single_merge","Output":"=== RUN   TestMergeRequalifiers/simple_single_merge\n"}
+{"Time":"2026-06-29T15:14:25.14495579Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/simple_single_merge","Output":"--- PASS: TestMergeRequalifiers/simple_single_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.1449813Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/simple_single_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.145003991Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/multi_merge"}
+{"Time":"2026-06-29T15:14:25.145015241Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/multi_merge","Output":"=== RUN   TestMergeRequalifiers/multi_merge\n"}
+{"Time":"2026-06-29T15:14:25.145055542Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/multi_merge","Output":"--- PASS: TestMergeRequalifiers/multi_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.145070542Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/multi_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.145212686Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/deeper_merge"}
+{"Time":"2026-06-29T15:14:25.145255787Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/deeper_merge","Output":"=== RUN   TestMergeRequalifiers/deeper_merge\n"}
+{"Time":"2026-06-29T15:14:25.145289078Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/deeper_merge","Output":"--- PASS: TestMergeRequalifiers/deeper_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.145304348Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers/deeper_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.145320078Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers","Output":"--- PASS: TestMergeRequalifiers (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.145330068Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeRequalifiers","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.145354529Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters"}
+{"Time":"2026-06-29T15:14:25.145369089Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters","Output":"=== RUN   TestMergeFilters\n"}
+{"Time":"2026-06-29T15:14:25.145418721Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/simple_single_merge"}
+{"Time":"2026-06-29T15:14:25.145435421Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/simple_single_merge","Output":"=== RUN   TestMergeFilters/simple_single_merge\n"}
+{"Time":"2026-06-29T15:14:25.145480922Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/simple_single_merge","Output":"--- PASS: TestMergeFilters/simple_single_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.145505692Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/simple_single_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.145520303Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/multi_merge"}
+{"Time":"2026-06-29T15:14:25.145529203Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/multi_merge","Output":"=== RUN   TestMergeFilters/multi_merge\n"}
+{"Time":"2026-06-29T15:14:25.145548533Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/multi_merge","Output":"--- PASS: TestMergeFilters/multi_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.145568984Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/multi_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.145578204Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/deeper_merge"}
+{"Time":"2026-06-29T15:14:25.145586694Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/deeper_merge","Output":"=== RUN   TestMergeFilters/deeper_merge\n"}
+{"Time":"2026-06-29T15:14:25.145622095Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/deeper_merge","Output":"--- PASS: TestMergeFilters/deeper_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.145636246Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters/deeper_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.145651966Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters","Output":"--- PASS: TestMergeFilters (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.145668396Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeFilters","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.145685527Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier"}
+{"Time":"2026-06-29T15:14:25.145699567Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier","Output":"=== RUN   TestMergeDataSourceWithRequalifier\n"}
+{"Time":"2026-06-29T15:14:25.145717408Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/simple_single_merge"}
+{"Time":"2026-06-29T15:14:25.145726698Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/simple_single_merge","Output":"=== RUN   TestMergeDataSourceWithRequalifier/simple_single_merge\n"}
+{"Time":"2026-06-29T15:14:25.146060036Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/simple_single_merge","Output":"--- PASS: TestMergeDataSourceWithRequalifier/simple_single_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.146096126Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/simple_single_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.146130017Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/multi_merge"}
+{"Time":"2026-06-29T15:14:25.146148528Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/multi_merge","Output":"=== RUN   TestMergeDataSourceWithRequalifier/multi_merge\n"}
+{"Time":"2026-06-29T15:14:25.146181808Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/multi_merge","Output":"--- PASS: TestMergeDataSourceWithRequalifier/multi_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.146193539Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/multi_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.14624055Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/simple_single_merge#01"}
+{"Time":"2026-06-29T15:14:25.14625307Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/simple_single_merge#01","Output":"=== RUN   TestMergeDataSourceWithRequalifier/simple_single_merge#01\n"}
+{"Time":"2026-06-29T15:14:25.146303111Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/simple_single_merge#01","Output":"--- PASS: TestMergeDataSourceWithRequalifier/simple_single_merge#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.146412714Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier/simple_single_merge#01","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.146480595Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier","Output":"--- PASS: TestMergeDataSourceWithRequalifier (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.146506946Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithRequalifier","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.146519287Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter"}
+{"Time":"2026-06-29T15:14:25.146529627Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter","Output":"=== RUN   TestMergeDataSourceWithFilter\n"}
+{"Time":"2026-06-29T15:14:25.146550727Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_single_merge"}
+{"Time":"2026-06-29T15:14:25.146560808Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_single_merge","Output":"=== RUN   TestMergeDataSourceWithFilter/simple_single_merge\n"}
+{"Time":"2026-06-29T15:14:25.146768892Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_single_merge","Output":"--- PASS: TestMergeDataSourceWithFilter/simple_single_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.146859624Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_single_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.146911636Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/not_mergable"}
+{"Time":"2026-06-29T15:14:25.146930896Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/not_mergable","Output":"=== RUN   TestMergeDataSourceWithFilter/not_mergable\n"}
+{"Time":"2026-06-29T15:14:25.147040129Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/not_mergable","Output":"--- PASS: TestMergeDataSourceWithFilter/not_mergable (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.147063539Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/not_mergable","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.14708049Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/not_mergable#01"}
+{"Time":"2026-06-29T15:14:25.14710253Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/not_mergable#01","Output":"=== RUN   TestMergeDataSourceWithFilter/not_mergable#01\n"}
+{"Time":"2026-06-29T15:14:25.147129521Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/not_mergable#01","Output":"--- PASS: TestMergeDataSourceWithFilter/not_mergable#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.147146001Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/not_mergable#01","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.147157931Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/mergable"}
+{"Time":"2026-06-29T15:14:25.147167722Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/mergable","Output":"=== RUN   TestMergeDataSourceWithFilter/mergable\n"}
+{"Time":"2026-06-29T15:14:25.147183922Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/mergable","Output":"--- PASS: TestMergeDataSourceWithFilter/mergable (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.147216003Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/mergable","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.147235953Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_partial_merge"}
+{"Time":"2026-06-29T15:14:25.147248274Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_partial_merge","Output":"=== RUN   TestMergeDataSourceWithFilter/simple_partial_merge\n"}
+{"Time":"2026-06-29T15:14:25.147265844Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_partial_merge","Output":"--- PASS: TestMergeDataSourceWithFilter/simple_partial_merge (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.147302775Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_partial_merge","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.147314965Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_partial_merge#01"}
+{"Time":"2026-06-29T15:14:25.147458949Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_partial_merge#01","Output":"=== RUN   TestMergeDataSourceWithFilter/simple_partial_merge#01\n"}
+{"Time":"2026-06-29T15:14:25.147632083Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_partial_merge#01","Output":"--- PASS: TestMergeDataSourceWithFilter/simple_partial_merge#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.147658223Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter/simple_partial_merge#01","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.147682864Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter","Output":"--- PASS: TestMergeDataSourceWithFilter (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.147705615Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMergeDataSourceWithFilter","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.147734305Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMultiOptimization"}
+{"Time":"2026-06-29T15:14:25.147745515Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMultiOptimization","Output":"=== RUN   TestMultiOptimization\n"}
+{"Time":"2026-06-29T15:14:25.147785346Z","Action":"run","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMultiOptimization/multiple_optimizations"}
+{"Time":"2026-06-29T15:14:25.147804187Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMultiOptimization/multiple_optimizations","Output":"=== RUN   TestMultiOptimization/multiple_optimizations\n"}
+{"Time":"2026-06-29T15:14:25.147900429Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMultiOptimization/multiple_optimizations","Output":"--- PASS: TestMultiOptimization/multiple_optimizations (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.14795868Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMultiOptimization/multiple_optimizations","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.147972641Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMultiOptimization","Output":"--- PASS: TestMultiOptimization (0.00s)\n"}
+{"Time":"2026-06-29T15:14:25.148081793Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Test":"TestMultiOptimization","Elapsed":0}
+{"Time":"2026-06-29T15:14:25.148165435Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:25.148417251Z","Action":"output","Package":"github.com/cube2222/octosql/physical/optimizer","Output":"ok  \tgithub.com/cube2222/octosql/physical/optimizer\t0.016s\n"}
+{"Time":"2026-06-29T15:14:25.148452212Z","Action":"pass","Package":"github.com/cube2222/octosql/physical/optimizer","Elapsed":0.016}
+reward=1 graded=21 found=21 failed=0 parsed=21 framework=go exit_code=0

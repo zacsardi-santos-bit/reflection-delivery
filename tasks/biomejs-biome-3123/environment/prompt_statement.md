@@ -1,0 +1,7 @@
+I'd like to add a new lint rule to the Biome JavaScript analyzer's nursery group that enforces the use of the modern, standardized string trimming methods over the older deprecated aliases. The deprecated aliases were browser-vendor additions that predate the ECMAScript specification's standardized equivalents, which use direction-independent naming.
+
+The rule should trigger on method calls using the deprecated names when called with no arguments on any receiver — whether through dot notation or bracket notation (with single-quoted, double-quoted, or template literal string keys). It should provide a diagnostic message explaining that the deprecated name is an alias for the standard one, and offer a safe automated fix that renames the method while preserving the rest of the code exactly as written, including any inline comments between the property access and the argument list.
+
+The rule should correctly avoid flagging cases where the deprecated name appears in positions other than as a zero-argument method call: as a standalone function without a receiver, as the object part of a method chain rather than the method being called, as an argument passed to another function, inside a constructor expression, in a computed bracket expression using a variable identifier rather than a string literal, or in calls that include extra arguments.
+
+The rule should also handle bracket notation with already-correct standardized names without flagging them. Both deprecated names need to be covered, each mapping to its respective standardized equivalent.

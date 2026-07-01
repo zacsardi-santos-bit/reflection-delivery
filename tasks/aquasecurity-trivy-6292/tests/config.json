@@ -1,0 +1,21 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/iac/scanners/terraformplan/tfjson ./pkg/iac/scanners/terraformplan/tfjson/test -count=1",
+  "test_files": [
+    "pkg/iac/scanners/terraformplan/tfjson/scanner_test.go",
+    "pkg/iac/scanners/terraformplan/tfjson/test/parser_test.go",
+    "pkg/iac/scanners/terraformplan/tfjson/test/testdata/plan_with_template.json"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson::Test_TerraformScanner/with_templated_plan_json",
+    "github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson::Test_TerraformScanner"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test::Test_Parse_Plan_File",
+    "github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson::Test_TerraformScanner/old_rego_metadata",
+    "github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson::Test_TerraformScanner/with_user_namespace",
+    "github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test::Test_Scanning_Plan"
+  ]
+}

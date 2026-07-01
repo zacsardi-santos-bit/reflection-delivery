@@ -1,0 +1,141 @@
+diff --git a/.changeset/gold-days-fly.md b/.changeset/gold-days-fly.md
+new file mode 100644
+index 000000000..bce971af2
+--- /dev/null
++++ b/.changeset/gold-days-fly.md
+@@ -0,0 +1,5 @@
++---
++"@neo4j/graphql": patch
++---
++
++`@default` directive fixed to work as expected on fields of temporal type, and `BigInt` fields
+diff --git a/packages/graphql/src/schema/get-obj-field-meta.ts b/packages/graphql/src/schema/get-obj-field-meta.ts
+index 9fb89eb69..53431221e 100644
+--- a/packages/graphql/src/schema/get-obj-field-meta.ts
++++ b/packages/graphql/src/schema/get-obj-field-meta.ts
+@@ -432,15 +432,21 @@ function getObjFieldMeta({
+                                 }
+                                 primitiveField.defaultValue = parseInt(value.value, 10);
+                                 break;
++                            case "BigInt":
++                                if (value?.kind !== Kind.INT && value?.kind !== Kind.STRING) {
++                                    throw new Error(typeError);
++                                }
++                                primitiveField.defaultValue = parseInt(value.value, 10);
++                                break;
+                             case "Float":
+-                                if (value?.kind !== Kind.FLOAT) {
++                                if (value?.kind !== Kind.FLOAT && value?.kind !== Kind.INT) {
+                                     throw new Error(typeError);
+                                 }
+                                 primitiveField.defaultValue = parseFloat(value.value);
+                                 break;
+                             default:
+                                 throw new Error(
+-                                    "@default directive can only be used on types: Int | Float | String | Boolean | ID | DateTime | Enum"
++                                    "@default directive can only be used on fields of type Int, Float, String, Boolean, ID, BigInt, DateTime, Date, Time, LocalDateTime or LocalTime."
+                                 );
+                         }
+                     }
+diff --git a/packages/graphql/src/schema/validation/custom-rules/directives/default.ts b/packages/graphql/src/schema/validation/custom-rules/directives/default.ts
+index 9fb7f6d20..68781386c 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/directives/default.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/directives/default.ts
+@@ -16,13 +16,16 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type { DirectiveNode, FieldDefinitionNode, EnumTypeDefinitionNode, StringValueNode } from "graphql";
++import type { DirectiveNode, EnumTypeDefinitionNode, FieldDefinitionNode, StringValueNode } from "graphql";
+ import { Kind } from "graphql";
+-import { assertArgumentHasSameTypeAsField } from "../utils/same-type-argument-as-field";
+-import { getInnerTypeName, isArrayType } from "../utils/utils";
++import { GRAPHQL_BUILTIN_SCALAR_TYPES } from "../../../../constants";
++import { GraphQLDate, GraphQLDateTime, GraphQLLocalDateTime } from "../../../../graphql/scalars";
++import { GraphQLLocalTime, parseLocalTime } from "../../../../graphql/scalars/LocalTime";
++import { GraphQLTime, parseTime } from "../../../../graphql/scalars/Time";
+ import { DocumentValidationError } from "../utils/document-validation-error";
+-import { GRAPHQL_BUILTIN_SCALAR_TYPES, isSpatial, isTemporal } from "../../../../constants";
+ import type { ObjectOrInterfaceWithExtensions } from "../utils/path-parser";
++import { assertArgumentHasSameTypeAsField } from "../utils/same-type-argument-as-field";
++import { getInnerTypeName, isArrayType } from "../utils/utils";
+ 
+ // TODO: schema-generation: save enums as map
+ 
+@@ -48,21 +51,38 @@ export function verifyDefault(enums: EnumTypeDefinitionNode[]) {
+         }
+ 
+         if (!isArrayType(traversedDef)) {
+-            if (isSpatial(expectedType)) {
+-                throw new DocumentValidationError(`@default is not supported by Spatial types.`, ["value"]);
+-            } else if (isTemporal(expectedType)) {
++            if ([GraphQLDateTime.name, GraphQLLocalDateTime.name, GraphQLDate.name].includes(expectedType)) {
+                 if (Number.isNaN(Date.parse((defaultArg?.value as StringValueNode).value))) {
+                     throw new DocumentValidationError(
+                         `@default.${defaultArg.name.value} is not a valid ${expectedType}`,
+                         ["value"]
+                     );
+                 }
++            } else if (expectedType === GraphQLTime.name) {
++                try {
++                    parseTime((defaultArg?.value as StringValueNode).value);
++                } catch {
++                    throw new DocumentValidationError(
++                        `@default.${defaultArg.name.value} is not a valid ${expectedType}`,
++                        ["value"]
++                    );
++                }
++            } else if (expectedType === GraphQLLocalTime.name) {
++                try {
++                    parseLocalTime((defaultArg?.value as StringValueNode).value);
++                } catch {
++                    throw new DocumentValidationError(
++                        `@default.${defaultArg.name.value} is not a valid ${expectedType}`,
++                        ["value"]
++                    );
++                }
+             } else if (
+                 !GRAPHQL_BUILTIN_SCALAR_TYPES.includes(expectedType) &&
+-                !enums.some((x) => x.name.value === expectedType)
++                !enums.some((x) => x.name.value === expectedType) &&
++                expectedType !== "BigInt"
+             ) {
+                 throw new DocumentValidationError(
+-                    `@default directive can only be used on Temporal types and types: Int | Float | String | Boolean | ID | Enum`,
++                    `@default directive can only be used on fields of type Int, Float, String, Boolean, ID, BigInt, DateTime, Date, Time, LocalDateTime or LocalTime.`,
+                     []
+                 );
+             }
+diff --git a/packages/graphql/src/schema/validation/custom-rules/utils/same-type-argument-as-field.ts b/packages/graphql/src/schema/validation/custom-rules/utils/same-type-argument-as-field.ts
+index 97d547da0..8cdf5e82e 100644
+--- a/packages/graphql/src/schema/validation/custom-rules/utils/same-type-argument-as-field.ts
++++ b/packages/graphql/src/schema/validation/custom-rules/utils/same-type-argument-as-field.ts
+@@ -16,11 +16,11 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-import type { EnumTypeDefinitionNode, ArgumentNode, FieldDefinitionNode, ValueNode } from "graphql";
++import type { ArgumentNode, EnumTypeDefinitionNode, FieldDefinitionNode, ValueNode } from "graphql";
+ import { Kind } from "graphql";
+-import { fromValueKind, getInnerTypeName, isArrayType } from "./utils";
+ import { isSpatial, isTemporal } from "../../../../constants";
+ import { DocumentValidationError } from "./document-validation-error";
++import { fromValueKind, getInnerTypeName, isArrayType } from "./utils";
+ 
+ export function assertArgumentHasSameTypeAsField({
+     directiveName,
+@@ -73,5 +73,14 @@ function doTypesMatch(expectedType: string, argumentValueType: ValueNode, enums:
+     if (expectedType.toLowerCase() === "id") {
+         return !!(fromValueKind(argumentValueType, enums, expectedType)?.toLowerCase() === "string");
+     }
++    if (expectedType.toLowerCase() === "bigint") {
++        const kind = fromValueKind(argumentValueType, enums, expectedType)?.toLowerCase();
++        return !!(kind == "int" || kind == "string");
++    }
++
++    if (expectedType.toLowerCase() === "float") {
++        const kind = fromValueKind(argumentValueType, enums, expectedType)?.toLowerCase();
++        return !!(kind == "int" || kind == "float");
++    }
+     return fromValueKind(argumentValueType, enums, expectedType)?.toLowerCase() === expectedType.toLowerCase();
+ }

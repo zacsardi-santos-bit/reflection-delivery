@@ -1,0 +1,50 @@
+patching file packages/data-point/lib/entity-types/entity-hash/factory.test.js
+patching file packages/data-point/lib/entity-types/validate-modifiers/validate-modifiers.test.js
+patching file packages/data-point/lib/helpers/helpers.test.js
+PASS lib/entity-types/validate-modifiers/validate-modifiers.test.js
+  validateProperties
+    ✓ It should throw error if keys dont match (3ms)
+    ✓ It should do nothing if using all valid keys (1ms)
+  validateModifiers
+    ✓ It should include base modifiers
+
+ › 3 snapshots written.
+PASS lib/helpers/helpers.test.js
+  ✓ Helpers API (3ms)
+  helpers.reducify
+    ✓ pass simple (1ms)
+    ✓ pass error
+  helpers.reducifyAll
+    ✓ reducify all keys (1ms)
+    ✓ reducify specific keys (1ms)
+  helpers.mockReducer
+    ✓ test reducerTest (1ms)
+  helpers.createAccumulator
+    ✓ It should assign value (1ms)
+    ✓ It should accept options to merge with value
+  helpers.createReducerResolver
+    ✓ It should partially apply dataPoint to method
+
+PASS lib/entity-types/entity-hash/factory.test.js
+  ✓ factory#create default (3ms)
+  factory#parse loose modifiers
+    ✓ factory#mapKeys (1ms)
+    ✓ factory#addKeys (1ms)
+    ✓ factory#omitKeys
+    ✓ factory#pickKeys (1ms)
+  factory#parse composed modifiers
+    ✓ throw error if compose non array (1ms)
+    ✓ throw error if compose and loose modifiers are mixed (1ms)
+    ✓ throw error if modifier is invalid
+    ✓ factory#one modifier
+    ✓ factory#multiple modifiers
+
+Snapshot Summary
+ › 3 snapshots written in 1 test suite.
+
+Test Suites: 3 passed, 3 total
+Tests:       22 passed, 22 total
+Snapshots:   3 added, 4 passed, 7 total
+Time:        1.91s
+Ran all test suites matching /lib\/entity-types\/entity-hash\/factory.test.js|lib\/entity-types\/validate-modifiers\/validate-modifiers.test.js|lib\/helpers\/helpers.test.js/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":3,"numPassedTests":22,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTotalTestSuites":3,"numTotalTests":22,"snapshot":{"added":3,"didUpdate":false,"failure":false,"filesAdded":1,"filesRemoved":0,"filesUnmatched":0,"filesUpdated":0,"matched":4,"total":7,"unchecked":0,"unmatched":0,"updated":0},"startTime":1782746216158,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["validateProperties"],"failureMessages":[],"fullName":"validateProperties It should throw error if keys dont match","status":"passed","title":"It should throw error if keys dont match"},{"ancestorTitles":["validateProperties"],"failureMessages":[],"fullName":"validateProperties It should do nothing if using all valid keys","status":"passed","title":"It should do nothing if using all valid keys"},{"ancestorTitles":["validateModifiers"],"failureMessages":[],"fullName":"validateModifiers It should include base modifiers","status":"passed","title":"It should include base modifiers"}],"endTime":1782746217626,"message":"","name":"/workspace/repo/packages/data-point/lib/entity-types/validate-modifiers/validate-modifiers.test.js","startTime":1782746216931,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":[],"failureMessages":[],"fullName":"Helpers API","status":"passed","title":"Helpers API"},{"ancestorTitles":["helpers.reducify"],"failureMessages":[],"fullName":"helpers.reducify pass simple","status":"passed","title":"pass simple"},{"ancestorTitles":["helpers.reducify"],"failureMessages":[],"fullName":"helpers.reducify pass error","status":"passed","title":"pass error"},{"ancestorTitles":["helpers.reducifyAll"],"failureMessages":[],"fullName":"helpers.reducifyAll reducify all keys","status":"passed","title":"reducify all keys"},{"ancestorTitles":["helpers.reducifyAll"],"failureMessages":[],"fullName":"helpers.reducifyAll reducify specific keys","status":"passed","title":"reducify specific keys"},{"ancestorTitles":["helpers.mockReducer"],"failureMessages":[],"fullName":"helpers.mockReducer test reducerTest","status":"passed","title":"test reducerTest"},{"ancestorTitles":["helpers.createAccumulator"],"failureMessages":[],"fullName":"helpers.createAccumulator It should assign value","status":"passed","title":"It should assign value"},{"ancestorTitles":["helpers.createAccumulator"],"failureMessages":[],"fullName":"helpers.createAccumulator It should accept options to merge with value","status":"passed","title":"It should accept options to merge with value"},{"ancestorTitles":["helpers.createReducerResolver"],"failureMessages":[],"fullName":"helpers.createReducerResolver It should partially apply dataPoint to method","status":"passed","title":"It should partially apply dataPoint to method"}],"endTime":1782746218002,"message":"","name":"/workspace/repo/packages/data-point/lib/helpers/helpers.test.js","startTime":1782746216930,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":[],"failureMessages":[],"fullName":"factory#create default","status":"passed","title":"factory#create default"},{"ancestorTitles":["factory#parse loose modifiers"],"failureMessages":[],"fullName":"factory#parse loose modifiers factory#mapKeys","status":"passed","title":"factory#mapKeys"},{"ancestorTitles":["factory#parse loose modifiers"],"failureMessages":[],"fullName":"factory#parse loose modifiers factory#addKeys","status":"passed","title":"factory#addKeys"},{"ancestorTitles":["factory#parse loose modifiers"],"failureMessages":[],"fullName":"factory#parse loose modifiers factory#omitKeys","status":"passed","title":"factory#omitKeys"},{"ancestorTitles":["factory#parse loose modifiers"],"failureMessages":[],"fullName":"factory#parse loose modifiers factory#pickKeys","status":"passed","title":"factory#pickKeys"},{"ancestorTitles":["factory#parse composed modifiers"],"failureMessages":[],"fullName":"factory#parse composed modifiers throw error if compose non array","status":"passed","title":"throw error if compose non array"},{"ancestorTitles":["factory#parse composed modifiers"],"failureMessages":[],"fullName":"factory#parse composed modifiers throw error if compose and loose modifiers are mixed","status":"passed","title":"throw error if compose and loose modifiers are mixed"},{"ancestorTitles":["factory#parse composed modifiers"],"failureMessages":[],"fullName":"factory#parse composed modifiers throw error if modifier is invalid","status":"passed","title":"throw error if modifier is invalid"},{"ancestorTitles":["factory#parse composed modifiers"],"failureMessages":[],"fullName":"factory#parse composed modifiers factory#one modifier","status":"passed","title":"factory#one modifier"},{"ancestorTitles":["factory#parse composed modifiers"],"failureMessages":[],"fullName":"factory#parse composed modifiers factory#multiple modifiers","status":"passed","title":"factory#multiple modifiers"}],"endTime":1782746218012,"message":"","name":"/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js","startTime":1782746216930,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=22 found=22 failed=0 parsed=22 framework=jest exit_code=0

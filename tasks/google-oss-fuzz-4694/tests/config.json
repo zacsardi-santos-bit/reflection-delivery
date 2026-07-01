@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/infra/base-images/base-sanitizer-libs-builder/compiler_wrapper_test.py -v",
+  "test_files": [
+    "infra/base-images/base-sanitizer-libs-builder/compiler_wrapper_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "infra.base-images.base-sanitizer-libs-builder.compiler_wrapper_test.CompilerWrapperTest::test_filter_z_defs"
+  ],
+  "PASS_TO_PASS": []
+}

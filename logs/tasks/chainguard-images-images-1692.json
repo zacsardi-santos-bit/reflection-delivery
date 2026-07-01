@@ -1,0 +1,23 @@
+{
+ "task": "chainguard-images-images-1692",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'module \"caddy\" { source = \"./images/caddy\" ...}' to root main.tf plus images/caddy config/apko/main.tf; F2P TestLinter_Rules/paths-permissions.yaml fails pre-patch because caddy tests/ dir exists unregistered"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

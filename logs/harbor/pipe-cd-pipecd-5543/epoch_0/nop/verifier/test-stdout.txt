@@ -1,0 +1,18 @@
+patching file pkg/datastore/datastoretest/datastore.mock.go
+# github.com/pipe-cd/pipecd/pkg/app/server/grpcapi [github.com/pipe-cd/pipecd/pkg/app/server/grpcapi.test]
+pkg/app/server/grpcapi/piped_api_test.go:87:12: cannot use s (variable of type *datastoretest.MockApplicationStore) as datastore.ApplicationStore value in return statement: *datastoretest.MockApplicationStore does not implement datastore.ApplicationStore (wrong type for method UpdateDeployTargets)
+		have UpdateDeployTargets("context".Context, string, map[string]*"google.golang.org/protobuf/types/known/structpb".ListValue) error
+		want UpdateDeployTargets("context".Context, string, []string) error
+pkg/app/server/grpcapi/piped_api_test.go:107:12: cannot use s (variable of type *datastoretest.MockApplicationStore) as datastore.ApplicationStore value in return statement: *datastoretest.MockApplicationStore does not implement datastore.ApplicationStore (wrong type for method UpdateDeployTargets)
+		have UpdateDeployTargets("context".Context, string, map[string]*"google.golang.org/protobuf/types/known/structpb".ListValue) error
+		want UpdateDeployTargets("context".Context, string, []string) error
+pkg/app/server/grpcapi/web_api_test.go:87:12: cannot use s (variable of type *datastoretest.MockApplicationStore) as datastore.ApplicationStore value in return statement: *datastoretest.MockApplicationStore does not implement datastore.ApplicationStore (wrong type for method UpdateDeployTargets)
+		have UpdateDeployTargets("context".Context, string, map[string]*"google.golang.org/protobuf/types/known/structpb".ListValue) error
+		want UpdateDeployTargets("context".Context, string, []string) error
+pkg/app/server/grpcapi/web_api_test.go:107:12: cannot use s (variable of type *datastoretest.MockApplicationStore) as datastore.ApplicationStore value in return statement: *datastoretest.MockApplicationStore does not implement datastore.ApplicationStore (wrong type for method UpdateDeployTargets)
+		have UpdateDeployTargets("context".Context, string, map[string]*"google.golang.org/protobuf/types/known/structpb".ListValue) error
+		want UpdateDeployTargets("context".Context, string, []string) error
+FAIL	github.com/pipe-cd/pipecd/pkg/app/server/grpcapi [build failed]
+?   	github.com/pipe-cd/pipecd/pkg/app/server/grpcapi/grpcapimetrics	[no test files]
+FAIL
+reward=0 graded=46 found=46 failed=46 parsed=1 framework=go exit_code=1

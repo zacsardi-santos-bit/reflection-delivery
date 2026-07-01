@@ -1,0 +1,12 @@
+patching file Cargo.lock
+patching file Cargo.toml
+patching file crates/nu-command/Cargo.toml
+patching file crates/nu-command/src/default_context.rs
+patching file crates/nu-command/src/formats/from/mod.rs
+patching file crates/nu-command/src/formats/from/msgpack.rs
+patching file crates/nu-command/src/formats/from/msgpackz.rs
+patching file crates/nu-command/src/formats/to/mod.rs
+patching file crates/nu-command/src/formats/to/msgpack.rs
+patching file crates/nu-command/src/formats/to/msgpackz.rs
+patching file crates/nu-protocol/Cargo.toml
+patching file crates/nu-test-support/src/macros.rs

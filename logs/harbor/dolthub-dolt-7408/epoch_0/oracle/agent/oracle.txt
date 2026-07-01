@@ -1,0 +1,6 @@
+patching file go/cmd/dolt/cli/arg_parser_helpers.go
+patching file go/cmd/dolt/cli/flags.go
+patching file go/cmd/dolt/commands/diff.go
+patching file go/cmd/dolt/commands/log.go
+patching file go/cmd/dolt/commands/merge.go
+patching file go/cmd/dolt/commands/utils.go

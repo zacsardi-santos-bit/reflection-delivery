@@ -1,0 +1,37 @@
+patching file tests/actions/ReportFieldsTest.ts
+This is not a desktop build, adding babel-plugin-annotate-react
+babel.config.js
+  - api.version: 7.24.5
+  - api.env: test
+  - process.env.NODE_ENV: test
+  - process.env.BABEL_ENV: undefined
+  - running in:  babel-jest
+  console.log
+    DEBUG [info] [SequentialQueue] Unable to flush. No requests to process. - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+FAIL tests/actions/ReportFieldsTest.ts
+  ● Test suite failed to run
+
+    Cannot find module '../../src/libs/WorkspaceReportFieldsUtils' from 'tests/actions/ReportFieldsTest.ts'
+
+    [0m [90m 2 |[39m [36mimport[39m [33mOnyx[39m [36mfrom[39m [32m'react-native-onyx'[39m[33m;[39m
+     [90m 3 |[39m [36mimport[39m [33mDateUtils[39m [36mfrom[39m [32m'@libs/DateUtils'[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m {generateFieldID} [36mfrom[39m [32m'@libs/WorkspaceReportFieldsUtils'[39m[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 5 |[39m [36mimport[39m [33mCONST[39m [36mfrom[39m [32m'@src/CONST'[39m[33m;[39m
+     [90m 6 |[39m [36mimport[39m [33mOnyxUpdateManager[39m [36mfrom[39m [32m'@src/libs/actions/OnyxUpdateManager'[39m[33m;[39m
+     [90m 7 |[39m [36mimport[39m [33m*[39m [36mas[39m [33mPolicy[39m [36mfrom[39m [32m'@src/libs/actions/Policy/Policy'[39m[33m;[39m[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/actions/ReportFieldsTest.ts:4:1)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        14.396 s
+Ran all test suites matching /tests\/actions\/ReportFieldsTest.ts/i.
+reward=0 graded=3 found=0 failed=0 parsed=0 framework=jest exit_code=1

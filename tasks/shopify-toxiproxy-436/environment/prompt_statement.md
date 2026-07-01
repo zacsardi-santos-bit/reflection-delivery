@@ -1,0 +1,5 @@
+I'm running into a deadlock issue with toxiproxy when trying to remove a toxic from a connection that's actively sending data. When I add bandwidth-limiting toxics to a proxy and then remove them while data is flowing through the connection, the proxy sometimes hangs indefinitely. It seems like the toxic removal process tries to flush buffered data by writing to an output channel, but if nothing is reading from that channel at the right moment, the write blocks forever and the whole thing freezes.
+
+I'd like the proxy to handle this gracefully — instead of blocking forever when it can't forward data during toxic removal, it should attempt the write with a timeout and return an error if the write can't complete in time. The error message should clearly indicate that the write timed out and state how many seconds the timeout was. When the write does succeed within the timeout, it should complete normally without an error.
+
+This affects real scenarios where toxics are dynamically added and removed on live connections, and right now it makes that workflow unreliable.

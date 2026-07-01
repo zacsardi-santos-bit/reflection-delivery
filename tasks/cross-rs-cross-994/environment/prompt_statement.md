@@ -1,0 +1,5 @@
+I'm working on the cross-compilation toolchain and I need to rename the function that sets up the directory layout for Docker-based cross-compilation builds. The current name is too generic and doesn't clearly communicate that this step is about assembling all the directory paths needed for the container environment.
+
+Beyond the rename, I also want to update the function's signature: instead of borrowing the project metadata and returning only the directory structure, it should take ownership of the metadata and return both the assembled directories and the updated metadata together. This way, any changes made to the metadata during directory assembly — like updating the target directory to its container-mounted path — are passed back to the caller, fixing an issue where the wrong target path was used when pre-building inside a container-in-container setup.
+
+All the places in the codebase that currently call the old function name will need to be updated to use the new name and handle the new return type correctly.

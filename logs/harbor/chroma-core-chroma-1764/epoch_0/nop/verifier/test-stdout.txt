@@ -1,0 +1,15 @@
+patching file go/coordinator/internal/logservice/grpc/record_log_service_test.go
+patching file go/coordinator/internal/metastore/db/dao/record_log_test.go
+Starting PostgreSQL 15 database server: main.
+# github.com/chroma/chroma-coordinator/internal/logservice/grpc [github.com/chroma/chroma-coordinator/internal/logservice/grpc.test]
+internal/logservice/grpc/record_log_service_test.go:140:30: undefined: logservicepb.PullLogsRequest
+internal/logservice/grpc/record_log_service_test.go:145:31: suite.s.PullLogs undefined (type *Server has no field or method PullLogs)
+internal/logservice/grpc/record_log_service_test.go:176:30: undefined: logservicepb.PullLogsRequest
+internal/logservice/grpc/record_log_service_test.go:181:31: suite.s.PullLogs undefined (type *Server has no field or method PullLogs)
+FAIL	github.com/chroma/chroma-coordinator/internal/logservice/grpc [build failed]
+# github.com/chroma/chroma-coordinator/internal/metastore/db/dao [github.com/chroma/chroma-coordinator/internal/metastore/db/dao.test]
+internal/metastore/db/dao/record_log_test.go:93:29: suite.Db.PullLogs undefined (type *recordLogDb has no field or method PullLogs)
+internal/metastore/db/dao/record_log_test.go:102:29: suite.Db.PullLogs undefined (type *recordLogDb has no field or method PullLogs)
+internal/metastore/db/dao/record_log_test.go:112:29: suite.Db.PullLogs undefined (type *recordLogDb has no field or method PullLogs)
+FAIL	github.com/chroma/chroma-coordinator/internal/metastore/db/dao [build failed]
+reward=0 graded=9 found=9 failed=9 parsed=2 framework=go exit_code=1

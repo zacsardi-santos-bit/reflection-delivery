@@ -1,0 +1,5 @@
+I've been using a linter that automatically suggests upgrading old-style type alias declarations to a newer, more concise syntax. The automatic fix is handy, but I noticed it silently deletes inline comments from my code. For instance, if I have a comment on the same line as the type alias declaration or within the declaration body, that comment just disappears after the fix is applied — with no warning that anything was lost.
+
+I'd expect one of two behaviors: either the tool should recognize that it's about to delete a comment and mark the fix as requiring manual confirmation (unsafe), or it should preserve the comment in the output when the comment falls in a part of the code being carried over verbatim. Right now it does neither — it just drops the comment silently and marks the fix as safe.
+
+Specifically, it seems like comments that appear inside the type value expression could be preserved since the value is included in the output, while comments outside the value but within the overall declaration would need to make the fix unsafe. Trailing comments that come after the end of the statement should also remain untouched.

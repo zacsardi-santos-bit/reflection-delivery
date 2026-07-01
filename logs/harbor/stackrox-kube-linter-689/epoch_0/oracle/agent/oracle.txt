@@ -1,0 +1,15 @@
+patching file docs/generated/checks.md
+patching file docs/generated/templates.md
+patching file internal/defaultchecks/default_checks.go
+patching file pkg/builtinchecks/yamls/liveness-port.yaml
+patching file pkg/builtinchecks/yamls/readiness-port.yaml
+patching file pkg/builtinchecks/yamls/startup-port.yaml
+patching file pkg/templates/all/all.go
+patching file pkg/templates/livenessport/template.go
+patching file pkg/templates/readinessport/internal/params/gen-params.go
+patching file pkg/templates/readinessport/internal/params/params.go
+patching file pkg/templates/readinessport/template.go
+patching file pkg/templates/startupport/internal/params/gen-params.go
+patching file pkg/templates/startupport/internal/params/params.go
+patching file pkg/templates/startupport/template.go
+patching file pkg/templates/util/check_probe_port.go

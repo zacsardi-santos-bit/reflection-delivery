@@ -1,0 +1,23 @@
+{
+ "task": "kopia-kopia-3678",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden metrics_timeseries.go implements CreateTimeSeries with proportional bucket attribution; F2P asserts e.g. 'single_counter_spanning_3_time_periods' -> {hour12,25},{hour13,100},{hour14,75}"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

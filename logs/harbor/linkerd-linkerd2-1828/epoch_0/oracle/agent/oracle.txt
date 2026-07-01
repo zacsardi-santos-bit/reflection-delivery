@@ -1,0 +1,10 @@
+patching file cli/profile/template.go
+patching file controller/gen/apis/serviceprofile/v1alpha1/types.go
+patching file controller/gen/apis/serviceprofile/v1alpha1/zz_generated.deepcopy.go
+patching file pkg/healthcheck/healthcheck.go
+patching file pkg/profiles/profiles.go
+patching file web/app/js/components/BaseTable.jsx
+patching file web/app/js/components/ErrorModal.jsx
+patching file web/app/js/components/ExpandableTable.jsx
+patching file web/app/js/components/MetricsTable.jsx
+patching file web/app/js/components/TopEventTable.jsx

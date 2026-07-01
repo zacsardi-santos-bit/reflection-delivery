@@ -1,0 +1,23 @@
+{
+ "task": "weaviate-weaviate-4342",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'func DotAVX512(...)' and 'func L2AVX512(...)'; test.patch calls asm.DotAVX512/asm.L2AVX512 so package won't compile pre-patch"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

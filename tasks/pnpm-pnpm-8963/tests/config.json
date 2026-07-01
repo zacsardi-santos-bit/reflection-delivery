@@ -1,0 +1,19 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && pnpm install --frozen-lockfile --ignore-scripts && cd /workspace/repo/exec/build-commands && npx tsc --build && npx jest test/ignoredBuilds.test.ts --coverage=false --verbose --json",
+  "test_files": [
+    "exec/build-commands/test/__snapshots__/ignoredBuilds.test.ts.snap",
+    "exec/build-commands/test/approveBuilds.test.ts",
+    "exec/build-commands/test/ignoredBuilds.test.ts",
+    "exec/build-commands/test/tsconfig.json"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/exec/build-commands/test/ignoredBuilds.test.ts::ignoredBuilds lists automatically ignored dependencies",
+    "/workspace/repo/exec/build-commands/test/ignoredBuilds.test.ts::ignoredBuilds lists explicitly ignored dependencies",
+    "/workspace/repo/exec/build-commands/test/ignoredBuilds.test.ts::ignoredBuilds lists both automatically and explicitly ignored dependencies",
+    "/workspace/repo/exec/build-commands/test/ignoredBuilds.test.ts::ignoredBuilds prints an info message when there is no node_modules"
+  ],
+  "PASS_TO_PASS": []
+}

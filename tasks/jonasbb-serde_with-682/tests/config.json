@@ -1,0 +1,39 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast --package serde_with --features schemars_0_8 --test schemars_0_8",
+  "test_files": [
+    "serde_with/tests/schemars_0_8.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "serde_with::schemars_0_8 array::test_oob_item",
+    "serde_with::schemars_0_8 array::test_serialized_is_valid",
+    "serde_with::schemars_0_8 array::test_too_long",
+    "serde_with::schemars_0_8 array::test_too_short",
+    "serde_with::schemars_0_8 array::test_valid_json",
+    "serde_with::schemars_0_8 schemars_basic",
+    "serde_with::schemars_0_8 derive::test_enabled_has_correct_schema",
+    "serde_with::schemars_0_8 snapshots::bytes",
+    "serde_with::schemars_0_8 snapshots::from_into",
+    "serde_with::schemars_0_8 snapshots::default_on_null",
+    "serde_with::schemars_0_8 array::test_wrong_item_type",
+    "serde_with::schemars_0_8 snapshots::map",
+    "serde_with::schemars_0_8 snapshots::map_fixed",
+    "serde_with::schemars_0_8 schemars_custom_with",
+    "serde_with::schemars_0_8 snapshots::set_last_value_wins",
+    "serde_with::schemars_0_8 snapshots::string_with_separator",
+    "serde_with::schemars_0_8 snapshots::set_prevent_duplicates",
+    "serde_with::schemars_0_8 test_borrow_cow",
+    "serde_with::schemars_0_8 test_std::option",
+    "serde_with::schemars_0_8 test_std::map",
+    "serde_with::schemars_0_8 test_std::tuples",
+    "serde_with::schemars_0_8 test_std::set",
+    "serde_with::schemars_0_8 test_set_last_value_wins_with_duplicates",
+    "serde_with::schemars_0_8 test_std::vec",
+    "serde_with::schemars_0_8 test_std::vec_deque",
+    "serde_with::schemars_0_8 test_set_prevent_duplicates_with_duplicates",
+    "serde_with::schemars_0_8 test_map"
+  ],
+  "PASS_TO_PASS": []
+}

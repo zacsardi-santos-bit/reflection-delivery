@@ -1,0 +1,20 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl flink-runtime test -Dtest=\"DeclarativeSlotManagerTest#testReclaimInactiveSlotsOnEmptyRequirements,DefaultSlotTrackerTest#testGetTaskExecutorsWithAllocatedSlotsForJob,TaskExecutorTest#testReleaseInactiveSlots\" -DfailIfNoTests=false",
+  "test_files": [
+    "flink-runtime/src/test/java/org/apache/flink/runtime/resourcemanager/slotmanager/DeclarativeSlotManagerTest.java",
+    "flink-runtime/src/test/java/org/apache/flink/runtime/resourcemanager/slotmanager/DefaultSlotTrackerTest.java",
+    "flink-runtime/src/test/java/org/apache/flink/runtime/resourcemanager/utils/TestingResourceManagerGateway.java",
+    "flink-runtime/src/test/java/org/apache/flink/runtime/taskexecutor/TaskExecutorTest.java",
+    "flink-runtime/src/test/java/org/apache/flink/runtime/taskexecutor/TestingTaskExecutorGateway.java",
+    "flink-runtime/src/test/java/org/apache/flink/runtime/taskexecutor/TestingTaskExecutorGatewayBuilder.java"
+  ],
+  "num_test_files": 6,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Flink::test_1",
+    "Flink::test_2",
+    "Flink::test_3"
+  ],
+  "PASS_TO_PASS": []
+}

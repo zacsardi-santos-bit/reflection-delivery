@@ -1,0 +1,23 @@
+{
+ "task": "paradigmxyz-reth-5733",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden changes filename(&block_range) dropping tx_range and parse_filename(&str)->Option<(Self,RangeInclusive)>; test_filename asserts \"snapshot_headers_2_30\" and parse_filename(\"snapshot_headers_\")==None"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "jaegertracing-jaeger-2657",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds connect_metrics.go with `Status metrics.Gauge` + `Reconnects metrics.Counter`; F2P `TestConnectMetrics` and `TestBuilderWithCollectors/with_collector_connection_status_ready`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

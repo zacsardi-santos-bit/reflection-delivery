@@ -1,0 +1,10 @@
+patching file contrib/test/ci/integration.yml
+patching file contrib/test/ci/vars.yml
+patching file internal/config/seccomp/seccomp_test.go
+patching file internal/config/seccomp/seccompociartifact/seccompociartifact_test.go
+patching file internal/config/seccomp/seccompociartifact/suite_test.go
+patching file test/mocks/ociartifact/ociartifact.go
+patching file test/seccomp_oci_artifacts.bats
+test/mocks/ociartifact/ociartifact.go:12:2: cannot find module providing package github.com/cri-o/cri-o/internal/config/ociartifact: import lookup disabled by -mod=vendor
+	(Go version in go.mod is at least 1.14 and vendor directory exists.)
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=go exit_code=1

@@ -1,0 +1,5 @@
+patching file src/main/java/graphql/execution/ExecutionContext.java
+patching file src/main/java/graphql/introspection/GoodFaithIntrospection.java
+patching file src/main/java/graphql/introspection/Introspection.java
+patching file src/main/java/graphql/normalized/ExecutableNormalizedOperation.java
+patching file src/main/java/graphql/normalized/ExecutableNormalizedOperationFactory.java

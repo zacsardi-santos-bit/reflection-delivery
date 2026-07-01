@@ -1,0 +1,23 @@
+{
+ "task": "prefecthq-prefect-10938",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "value = get_from_dict(value, value_keypath, default=NotSet) ... raise ValueError('...Could not resolve the keypath...')"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 24,
+  "shallow": true
+ }
+}

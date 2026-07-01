@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p prqlc -E 'test(test_snowflake_row_number)'",
+  "test_files": [
+    "prqlc/prqlc/tests/integration/sql.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) prqlc::integration sql::test_snowflake_row_number_requires_order_by",
+    "(2/2) prqlc::integration sql::test_snowflake_row_number_with_explicit_sort"
+  ],
+  "PASS_TO_PASS": []
+}

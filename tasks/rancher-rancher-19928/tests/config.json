@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /go/src/github.com/rancher/rancher && go test -json ./pkg/api/store/cluster -count=1",
+  "test_files": [
+    "pkg/api/store/cluster/cluster_store_test.go",
+    "tests/integration/test_password_store.py"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/rancher/rancher/pkg/api/store/cluster::TestAzureCloudProviderPasswordFieldsUpdate",
+    "github.com/rancher/rancher/pkg/api/store/cluster::TestVSphereCloudProviderGlobalPasswordFieldsUpdate",
+    "github.com/rancher/rancher/pkg/api/store/cluster::TestVSphereVCenterPasswordFieldsUpdate",
+    "github.com/rancher/rancher/pkg/api/store/cluster::TestOpenStackCloudProviderGlobalPasswordFieldUpdate"
+  ],
+  "PASS_TO_PASS": []
+}

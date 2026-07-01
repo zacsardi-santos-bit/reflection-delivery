@@ -1,0 +1,77 @@
+patching file kmip/tests/unit/core/messages/contents/test_authentication.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+collecting ... collected 16 items
+
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_equal_on_equal PASSED [  6%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_equal_on_not_equal_credentials PASSED [ 12%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_equal_on_type_mismatch PASSED [ 18%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_init PASSED [ 25%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_init_with_args PASSED [ 31%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_invalid_credentials PASSED [ 37%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_invalid_credentials_list PASSED [ 43%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_not_equal_on_equal PASSED [ 50%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_not_equal_on_not_equal_credentials PASSED [ 56%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_not_equal_on_type_mismatch PASSED [ 62%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_read PASSED [ 68%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_read_missing_credentials PASSED [ 75%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_repr PASSED [ 81%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_str PASSED [ 87%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_write PASSED [ 93%]
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_write_missing_credentials PASSED [100%]
+
+=============================== warnings summary ===============================
+kmip/core/primitives.py:218
+  /workspace/repo/kmip/core/primitives.py:218: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+    if pad is not 0:
+
+kmip/core/primitives.py:598
+  /workspace/repo/kmip/core/primitives.py:598: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+    if pad is not 0:
+
+kmip/core/primitives.py:826
+  /workspace/repo/kmip/core/primitives.py:826: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+    if pad is not 0:
+
+kmip/core/primitives.py:921
+  /workspace/repo/kmip/core/primitives.py:921: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+    if pad is not 0:
+
+kmip/core/primitives.py:1061
+  /workspace/repo/kmip/core/primitives.py:1061: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+    if pad is not 0:
+
+kmip/pie/sqltypes.py:24
+  /workspace/repo/kmip/pie/sqltypes.py:24: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base()
+
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_invalid_credentials
+  /workspace/repo/kmip/tests/unit/core/messages/contents/test_authentication.py:178: DeprecationWarning: Please use assertRaisesRegex instead.
+    self.assertRaisesRegexp(
+
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_invalid_credentials
+  /workspace/repo/kmip/tests/unit/core/messages/contents/test_authentication.py:187: DeprecationWarning: Please use assertRaisesRegex instead.
+    self.assertRaisesRegexp(
+
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_invalid_credentials_list
+  /workspace/repo/kmip/tests/unit/core/messages/contents/test_authentication.py:211: DeprecationWarning: Please use assertRaisesRegex instead.
+    self.assertRaisesRegexp(
+
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_invalid_credentials_list
+  /workspace/repo/kmip/tests/unit/core/messages/contents/test_authentication.py:234: DeprecationWarning: Please use assertRaisesRegex instead.
+    self.assertRaisesRegexp(
+
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_read_missing_credentials
+  /workspace/repo/kmip/tests/unit/core/messages/contents/test_authentication.py:331: DeprecationWarning: Please use assertRaisesRegex instead.
+    self.assertRaisesRegexp(
+
+kmip/tests/unit/core/messages/contents/test_authentication.py::TestAuthentication::test_write_missing_credentials
+  /workspace/repo/kmip/tests/unit/core/messages/contents/test_authentication.py:423: DeprecationWarning: Please use assertRaisesRegex instead.
+    self.assertRaisesRegexp(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 16 passed, 12 warnings in 1.37s ========================
+reward=1 graded=16 found=0 failed=0 parsed=16 framework=pytest exit_code=0

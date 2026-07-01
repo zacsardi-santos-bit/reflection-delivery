@@ -1,0 +1,23 @@
+{
+ "task": "cert-manager-cert-manager-6678",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "FIXABLE",
+  "reason_code": "FORMAT_BRITTLE",
+  "evidence": "test.sh gate: \"grep -q 'golang.org/x/crypto v0.17.0' ../../go.mod && ... go test -run '^TestRFC2136'\""
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

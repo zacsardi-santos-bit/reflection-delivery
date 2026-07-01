@@ -1,0 +1,400 @@
+patching file tests/apicallcaptor.py
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_3.json
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json
+patching file tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json
+patching file tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json
+patching file tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json
+patching file tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json
+patching file tests/data/placebo/test_appmesh_virtualgateway_event/appmesh.DescribeVirtualGateway_2.json
+patching file tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json
+patching file tests/test_appmesh.py
+Hunk #1 FAILED at 1 (different line endings).
+Hunk #2 FAILED at 16 (different line endings).
+Hunk #3 FAILED at 52 (different line endings).
+Hunk #4 FAILED at 83 (different line endings).
+Hunk #5 FAILED at 90 (different line endings).
+Hunk #6 FAILED at 119 (different line endings).
+6 out of 6 hunks FAILED -- saving rejects to file tests/test_appmesh.py.rej
+The next patch would create the file tests/apicallcaptor.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json.rej
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json.rej
+The next patch would create the file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_3.json,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json
+Hunk #1 succeeded at 28 (offset 9 lines).
+patching file tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json.rej
+patching file tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json.rej
+patching file tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json.rej
+patching file tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json.rej
+patching file tests/data/placebo/test_appmesh_virtualgateway_event/appmesh.DescribeVirtualGateway_2.json
+patching file tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json.rej
+patching file tests/test_appmesh.py
+Hunk #1 FAILED at 1 (different line endings).
+Hunk #2 FAILED at 16 (different line endings).
+Hunk #3 FAILED at 52 (different line endings).
+Hunk #4 succeeded at 83 with fuzz 3.
+Hunk #5 FAILED at 91 (different line endings).
+Hunk #6 FAILED at 120 (different line endings).
+5 out of 6 hunks FAILED -- saving rejects to file tests/test_appmesh.py.rej
+patching file b/tests/apicallcaptor.py
+can't find file to patch at input line 191
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json b/tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json
+|index 969f2ac83..c18788446 100644
+|--- a/tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json
+|+++ b/tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 212
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json b/tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json
+|index 38931eb5f..53e5fc27d 100644
+|--- a/tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json
+|+++ b/tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_3.json
+can't find file to patch at input line 272
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json b/tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json
+|index 9fa9917ac..fa77d85de 100644
+|--- a/tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json
+|+++ b/tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 292
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json b/tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json
+|index 549380279..8c23313e4 100644
+|--- a/tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json
+|+++ b/tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 334
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json b/tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json
+|index 969f2ac83..c18788446 100644
+|--- a/tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json
+|+++ b/tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 355
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json b/tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json
+|index 549380279..b9cd85982 100644
+|--- a/tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json
+|+++ b/tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 396
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json b/tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json
+|index 549380279..05d8d9037 100644
+|--- a/tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json
+|+++ b/tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/tests/data/placebo/test_appmesh_virtualgateway_event/appmesh.DescribeVirtualGateway_2.json,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 451
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json b/tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json
+|index 549380279..05d8d9037 100644
+|--- a/tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json
+|+++ b/tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 493
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/test_appmesh.py b/tests/test_appmesh.py
+|index 33125251a..e927b7e75 100644
+|--- a/tests/test_appmesh.py
+|+++ b/tests/test_appmesh.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+The next patch would create the file tests/apicallcaptor.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json.rej
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json.rej
+The next patch would create the file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_3.json,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json
+Hunk #1 succeeded at 37 (offset 18 lines).
+patching file tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json.rej
+patching file tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json.rej
+patching file tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json.rej
+patching file tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json.rej
+patching file tests/data/placebo/test_appmesh_virtualgateway_event/appmesh.DescribeVirtualGateway_2.json
+patching file tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json.rej
+patching file tests/test_appmesh.py
+Hunk #4 succeeded at 244 with fuzz 3.
+Hunk #5 succeeded at 253 (offset 1 line).
+Hunk #6 succeeded at 344 (offset 1 line).
+WARN: test.patch did not apply cleanly
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: xdist-3.8.0, recording-0.13.4, sugar-1.1.1, cov-7.1.0
+collecting ... collected 6 items
+
+tests/test_appmesh.py::TestAppmeshMesh::test_appmesh FAILED              [ 16%]
+tests/test_appmesh.py::TestAppmeshMesh::test_appmesh_event FAILED        [ 33%]
+tests/test_appmesh.py::TestAppmeshMesh::test_reporting FAILED            [ 50%]
+tests/test_appmesh.py::TestAppmeshVirtualGateway::test_appmesh_virtualgateway PASSED [ 66%]
+tests/test_appmesh.py::TestAppmeshVirtualGateway::test_appmesh_virtualgateway_event PASSED [ 83%]
+tests/test_appmesh.py::TestAppmeshVirtualGateway::test_reporting FAILED  [100%]
+
+=================================== FAILURES ===================================
+_________________________ TestAppmeshMesh.test_appmesh _________________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/usr/local/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/repo/tests/test_appmesh.py", line 53, in test_appmesh
+    self.assertEqual(
+  File "/usr/local/lib/python3.11/unittest/case.py", line 873, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 1079, in assertListEqual
+    self.assertSequenceEqual(list1, list2, msg, seq_type=list)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 1061, in assertSequenceEqual
+    self.fail(msg)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 703, in fail
+    raise self.failureException(msg)
+AssertionError: Lists differ: [{'Tags': [{'Key': 'MyTagName', 'Value': '[754 chars]: 1}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'Tags': [{'Key': 'MyTagName', 'Value': 'm2'}], 'arn': 'arn:aws:appmesh:eu-west-2:123456789012:mesh/m2', 'c7n:MatchedFilters': ['tag:MyTagName', 'spec.egressFilter.type'], 'createdAt': '2023-11-03T02:36:27.877000+00:00', 'lastUpdatedAt': '2023-11-03T02:36:27.877000+00:00', 'meshName': 'm2', 'meshOwner': '123456789012', 'metadata': {'arn': 'arn:aws:appmesh:eu-west-2:123456789012:mesh/m2', 'createdAt': '2023-11-03T02:36:27.877000+00:00', 'lastUpdatedAt': '2023-11-03T02:36:27.877000+00:00', 'meshOwner': '123456789012', 'resourceOwner': '123456789012', 'uid': '1013368a-8d58-4b30-b08e-67347af88525', 'version': 1}, 'resourceOwner': '123456789012', 'spec': {'egressFilter': {'type': 'DROP_ALL'}, 'serviceDiscovery': {'ipPreference': 'IPv6_PREFERRED'}}, 'status': {'status': 'ACTIVE'}, 'version': 1}
+
+Diff is 968 characters long. Set self.maxDiff to None to see it.
+------------------------------ Captured log call -------------------------------
+DEBUG    placebo.pill:pill.py:139 attaching to session: Session(region_name='us-east-1')
+DEBUG    placebo.pill:pill.py:140 datapath: /workspace/repo/tests/data/placebo/test_appmesh_mesh
+DEBUG    placebo.pill:pill.py:132 _create_client
+DEBUG    placebo.pill:pill.py:298 _make_request: appmesh.ListMeshes
+DEBUG    placebo.pill:pill.py:281 load_response: appmesh.ListMeshes
+DEBUG    placebo.pill:pill.py:241 get_next_file_path: appmesh.ListMeshes
+DEBUG    placebo.pill:pill.py:284 load_responses: /workspace/repo/tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json
+DEBUG    placebo.pill:pill.py:132 _create_client
+DEBUG    placebo.pill:pill.py:298 _make_request: tagging.GetResources
+DEBUG    placebo.pill:pill.py:281 load_response: tagging.GetResources
+DEBUG    placebo.pill:pill.py:241 get_next_file_path: tagging.GetResources
+DEBUG    placebo.pill:pill.py:284 load_responses: /workspace/repo/tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json
+DEBUG    placebo.pill:pill.py:175 stopping, mode=playback
+______________________ TestAppmeshMesh.test_appmesh_event ______________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/usr/local/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/repo/tests/test_appmesh.py", line 148, in test_appmesh_event
+    self.assertEqual(
+  File "/usr/local/lib/python3.11/unittest/case.py", line 873, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 1079, in assertListEqual
+    self.assertSequenceEqual(list1, list2, msg, seq_type=list)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 1061, in assertSequenceEqual
+    self.fail(msg)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 703, in fail
+    raise self.failureException(msg)
+AssertionError: Lists differ: [{'Tags': [{'Key': 'MyTagName', 'Value': 'm1[630 chars]: 1}] != [{'arn': 'arn:aws:appmesh:eu-west-2:12345678[253 chars]'}]}]
+
+First differing element 0:
+{'Tags': [{'Key': 'MyTagName', 'Value': 'm1[629 chars]': 1}
+{'arn': 'arn:aws:appmesh:eu-west-2:12345678[252 chars]1'}]}
+
+Diff is 824 characters long. Set self.maxDiff to None to see it.
+------------------------------ Captured log call -------------------------------
+DEBUG    placebo.pill:pill.py:139 attaching to session: Session(region_name='us-east-1')
+DEBUG    placebo.pill:pill.py:140 datapath: /workspace/repo/tests/data/placebo/test_appmesh_mesh_event
+DEBUG    placebo.pill:pill.py:132 _create_client
+DEBUG    placebo.pill:pill.py:298 _make_request: appmesh.ListMeshes
+DEBUG    placebo.pill:pill.py:281 load_response: appmesh.ListMeshes
+DEBUG    placebo.pill:pill.py:241 get_next_file_path: appmesh.ListMeshes
+DEBUG    placebo.pill:pill.py:284 load_responses: /workspace/repo/tests/data/placebo/test_appmesh_mesh_event/appmesh.ListMeshes_1.json
+DEBUG    placebo.pill:pill.py:132 _create_client
+DEBUG    placebo.pill:pill.py:298 _make_request: tagging.GetResources
+DEBUG    placebo.pill:pill.py:281 load_response: tagging.GetResources
+DEBUG    placebo.pill:pill.py:241 get_next_file_path: tagging.GetResources
+DEBUG    placebo.pill:pill.py:284 load_responses: /workspace/repo/tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json
+DEBUG    placebo.pill:pill.py:175 stopping, mode=playback
+________________________ TestAppmeshMesh.test_reporting ________________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/usr/local/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/repo/tests/test_appmesh.py", line 230, in test_reporting
+    self.assertEqual([["m1", "9999-11-03T02:36:27.877000+00:00"]], report)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 873, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 1079, in assertListEqual
+    self.assertSequenceEqual(list1, list2, msg, seq_type=list)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 1061, in assertSequenceEqual
+    self.fail(msg)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 703, in fail
+    raise self.failureException(msg)
+AssertionError: Lists differ: [['m1', '9999-11-03T02:36:27.877000+00:00']] != [['m1']]
+
+First differing element 0:
+['m1', '9999-11-03T02:36:27.877000+00:00']
+['m1']
+
+- [['m1', '9999-11-03T02:36:27.877000+00:00']]
++ [['m1']]
+___________________ TestAppmeshVirtualGateway.test_reporting ___________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/usr/local/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/repo/tests/test_appmesh.py", line 429, in test_reporting
+    report = f.to_csv(
+             ^^^^^^^^^
+  File "/workspace/repo/c7n/reports/csvout.py", line 216, in to_csv
+    records.sort(
+  File "/workspace/repo/c7n/reports/csvout.py", line 217, in <lambda>
+    key=lambda r: r[date_sort], reverse=reverse)
+                  ~^^^^^^^^^^^
+KeyError: 'createdAt'
+=========================== short test summary info ============================
+FAILED tests/test_appmesh.py::TestAppmeshMesh::test_appmesh - AssertionError:...
+FAILED tests/test_appmesh.py::TestAppmeshMesh::test_appmesh_event - Assertion...
+FAILED tests/test_appmesh.py::TestAppmeshMesh::test_reporting - AssertionErro...
+FAILED tests/test_appmesh.py::TestAppmeshVirtualGateway::test_reporting - Key...
+========================= 4 failed, 2 passed in 0.85s ==========================
+reward=0 graded=6 found=0 failed=0 parsed=6 framework=pytest exit_code=1

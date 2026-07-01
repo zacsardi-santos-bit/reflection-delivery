@@ -1,0 +1,2 @@
+patching file geoarrow-types/src/geoarrow/types/crs.py
+patching file geoarrow-types/src/geoarrow/types/type_spec.py

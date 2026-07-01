@@ -1,0 +1,12 @@
+patching file controller/api_test.go
+patching file merge_test.go
+patching file test/run_test.sh
+patching file test/test_utils.sh
+patching file test/tests/test_env_vars.sh
+# github.com/fission/fission [github.com/fission/fission.test]
+./merge_test.go:86:12: undefined: MergeContainerSpecs
+./merge_test.go:94:19: undefined: MergeContainerSpecs
+./merge_test.go:112:12: undefined: MergeContainerSpecs
+./merge_test.go:118:12: undefined: MergeContainerSpecs
+FAIL	github.com/fission/fission [build failed]
+reward=0 graded=3 found=3 failed=3 parsed=1 framework=go exit_code=1

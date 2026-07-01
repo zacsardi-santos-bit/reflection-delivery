@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/server && pytest tests/steps/test_ifthenelse.py -v",
+  "test_files": [
+    "server/tests/steps/test_ifthenelse.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.steps.test_ifthenelse::test_ifthenelsestep_with_variables_in_relative_date",
+    "tests.steps.test_ifthenelse::test_render_ifthenelsestep_step_with_variables"
+  ],
+  "PASS_TO_PASS": [
+    "tests.steps.test_ifthenelse::test_simple_condition",
+    "tests.steps.test_ifthenelse::test_simple_condition_strings",
+    "tests.steps.test_ifthenelse::test_then_should_support_formulas",
+    "tests.steps.test_ifthenelse::test_then_should_support_nested_else",
+    "tests.steps.test_ifthenelse::test_isnull",
+    "tests.steps.test_ifthenelse::test_benchmark_ifthenelse",
+    "tests.steps.test_ifthenelse::test_ifthenelse_match_with_na"
+  ]
+}

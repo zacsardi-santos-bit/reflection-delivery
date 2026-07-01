@@ -1,0 +1,23 @@
+{
+ "task": "grafbase-grafbase-2521",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P 'schema_file_hot_reload' starts gateway, introspects, writes tiny_modified.graphql, sleeps, re-introspects and asserts the User type lost the username field"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

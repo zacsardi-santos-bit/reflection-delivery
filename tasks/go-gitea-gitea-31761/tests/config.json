@@ -1,0 +1,40 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./modules/packages/conda ./modules/packages/debian -count=1",
+  "test_files": [
+    "modules/packages/conda/metadata_test.go",
+    "modules/packages/debian/metadata_test.go",
+    "modules/zstd/zstd_test.go",
+    "tests/integration/api_packages_conda_test.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "code.gitea.io/gitea/modules/packages/conda::TestParsePackage/MissingIndexFile",
+    "code.gitea.io/gitea/modules/packages/conda::TestParsePackage/MissingAboutFile",
+    "code.gitea.io/gitea/modules/packages/conda::TestParsePackage/InvalidName",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/MissingControlFile",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression/Unsupported",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression/#00/TrailingSlash",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression/#00",
+    "code.gitea.io/gitea/modules/packages/conda::TestParsePackage/InvalidVersion",
+    "code.gitea.io/gitea/modules/packages/conda::TestParsePackage/Valid",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression/.gz/TrailingSlash",
+    "code.gitea.io/gitea/modules/packages/conda::TestParsePackage/.tar.bz2",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression/.gz",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression/.xz/TrailingSlash",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression/.xz",
+    "code.gitea.io/gitea/modules/packages/conda::TestParsePackage/.conda",
+    "code.gitea.io/gitea/modules/packages/conda::TestParsePackage",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression/.zst/TrailingSlash",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression/.zst",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage/Compression",
+    "code.gitea.io/gitea/modules/packages/debian::TestParsePackage",
+    "code.gitea.io/gitea/modules/packages/debian::TestParseControlFile/InvalidName",
+    "code.gitea.io/gitea/modules/packages/debian::TestParseControlFile/InvalidVersion",
+    "code.gitea.io/gitea/modules/packages/debian::TestParseControlFile/InvalidArchitecture",
+    "code.gitea.io/gitea/modules/packages/debian::TestParseControlFile/Valid",
+    "code.gitea.io/gitea/modules/packages/debian::TestParseControlFile"
+  ],
+  "PASS_TO_PASS": []
+}

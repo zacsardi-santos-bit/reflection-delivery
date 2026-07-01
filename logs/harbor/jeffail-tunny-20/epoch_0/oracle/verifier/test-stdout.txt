@@ -1,0 +1,38 @@
+patching file tunny_test.go
+{"Time":"2026-06-29T15:16:42.596554521Z","Action":"start","Package":"_/workspace/repo"}
+{"Time":"2026-06-29T15:16:42.599574111Z","Action":"run","Package":"_/workspace/repo","Test":"TestPoolSizeAdjustment"}
+{"Time":"2026-06-29T15:16:42.599632471Z","Action":"output","Package":"_/workspace/repo","Test":"TestPoolSizeAdjustment","Output":"=== RUN   TestPoolSizeAdjustment\n"}
+{"Time":"2026-06-29T15:16:42.599861511Z","Action":"output","Package":"_/workspace/repo","Test":"TestPoolSizeAdjustment","Output":"--- PASS: TestPoolSizeAdjustment (0.00s)\n"}
+{"Time":"2026-06-29T15:16:42.59991143Z","Action":"pass","Package":"_/workspace/repo","Test":"TestPoolSizeAdjustment","Elapsed":0}
+{"Time":"2026-06-29T15:16:42.59995429Z","Action":"run","Package":"_/workspace/repo","Test":"TestFuncJob"}
+{"Time":"2026-06-29T15:16:42.59997756Z","Action":"output","Package":"_/workspace/repo","Test":"TestFuncJob","Output":"=== RUN   TestFuncJob\n"}
+{"Time":"2026-06-29T15:16:42.600229069Z","Action":"output","Package":"_/workspace/repo","Test":"TestFuncJob","Output":"--- PASS: TestFuncJob (0.00s)\n"}
+{"Time":"2026-06-29T15:16:42.600259339Z","Action":"pass","Package":"_/workspace/repo","Test":"TestFuncJob","Elapsed":0}
+{"Time":"2026-06-29T15:16:42.600286769Z","Action":"run","Package":"_/workspace/repo","Test":"TestFuncJobTimed"}
+{"Time":"2026-06-29T15:16:42.600309489Z","Action":"output","Package":"_/workspace/repo","Test":"TestFuncJobTimed","Output":"=== RUN   TestFuncJobTimed\n"}
+{"Time":"2026-06-29T15:16:42.600539599Z","Action":"output","Package":"_/workspace/repo","Test":"TestFuncJobTimed","Output":"--- PASS: TestFuncJobTimed (0.00s)\n"}
+{"Time":"2026-06-29T15:16:42.600608888Z","Action":"pass","Package":"_/workspace/repo","Test":"TestFuncJobTimed","Elapsed":0}
+{"Time":"2026-06-29T15:16:42.600634388Z","Action":"run","Package":"_/workspace/repo","Test":"TestCallbackJob"}
+{"Time":"2026-06-29T15:16:42.600660348Z","Action":"output","Package":"_/workspace/repo","Test":"TestCallbackJob","Output":"=== RUN   TestCallbackJob\n"}
+{"Time":"2026-06-29T15:16:42.600689298Z","Action":"output","Package":"_/workspace/repo","Test":"TestCallbackJob","Output":"--- PASS: TestCallbackJob (0.00s)\n"}
+{"Time":"2026-06-29T15:16:42.600717958Z","Action":"pass","Package":"_/workspace/repo","Test":"TestCallbackJob","Elapsed":0}
+{"Time":"2026-06-29T15:16:42.600741598Z","Action":"run","Package":"_/workspace/repo","Test":"TestTimeout"}
+{"Time":"2026-06-29T15:16:42.600764658Z","Action":"output","Package":"_/workspace/repo","Test":"TestTimeout","Output":"=== RUN   TestTimeout\n"}
+{"Time":"2026-06-29T15:16:42.600793978Z","Action":"output","Package":"_/workspace/repo","Test":"TestTimeout","Output":"--- PASS: TestTimeout (0.00s)\n"}
+{"Time":"2026-06-29T15:16:42.600816918Z","Action":"pass","Package":"_/workspace/repo","Test":"TestTimeout","Elapsed":0}
+{"Time":"2026-06-29T15:16:42.600844718Z","Action":"run","Package":"_/workspace/repo","Test":"TestJobsAfterClose"}
+{"Time":"2026-06-29T15:16:42.600866758Z","Action":"output","Package":"_/workspace/repo","Test":"TestJobsAfterClose","Output":"=== RUN   TestJobsAfterClose\n"}
+{"Time":"2026-06-29T15:16:42.600891457Z","Action":"output","Package":"_/workspace/repo","Test":"TestJobsAfterClose","Output":"--- PASS: TestJobsAfterClose (0.00s)\n"}
+{"Time":"2026-06-29T15:16:42.600914857Z","Action":"pass","Package":"_/workspace/repo","Test":"TestJobsAfterClose","Elapsed":0}
+{"Time":"2026-06-29T15:16:42.600941917Z","Action":"run","Package":"_/workspace/repo","Test":"TestParallelJobs"}
+{"Time":"2026-06-29T15:16:42.600963917Z","Action":"output","Package":"_/workspace/repo","Test":"TestParallelJobs","Output":"=== RUN   TestParallelJobs\n"}
+{"Time":"2026-06-29T15:16:42.600991637Z","Action":"output","Package":"_/workspace/repo","Test":"TestParallelJobs","Output":"--- PASS: TestParallelJobs (0.00s)\n"}
+{"Time":"2026-06-29T15:16:42.601013977Z","Action":"pass","Package":"_/workspace/repo","Test":"TestParallelJobs","Elapsed":0}
+{"Time":"2026-06-29T15:16:42.601037287Z","Action":"run","Package":"_/workspace/repo","Test":"TestCustomWorker"}
+{"Time":"2026-06-29T15:16:42.601060417Z","Action":"output","Package":"_/workspace/repo","Test":"TestCustomWorker","Output":"=== RUN   TestCustomWorker\n"}
+{"Time":"2026-06-29T15:16:42.603939048Z","Action":"output","Package":"_/workspace/repo","Test":"TestCustomWorker","Output":"--- PASS: TestCustomWorker (0.00s)\n"}
+{"Time":"2026-06-29T15:16:42.603973898Z","Action":"pass","Package":"_/workspace/repo","Test":"TestCustomWorker","Elapsed":0}
+{"Time":"2026-06-29T15:16:42.604002068Z","Action":"output","Package":"_/workspace/repo","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:42.604194837Z","Action":"output","Package":"_/workspace/repo","Output":"ok  \t_/workspace/repo\t0.007s\n"}
+{"Time":"2026-06-29T15:16:42.604228787Z","Action":"pass","Package":"_/workspace/repo","Elapsed":0.008}
+reward=1 graded=8 found=8 failed=0 parsed=8 framework=go exit_code=0

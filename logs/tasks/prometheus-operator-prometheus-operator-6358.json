@@ -1,0 +1,23 @@
+{
+ "task": "prometheus-operator-prometheus-operator-6358",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P includes TestValidateWebTlsConfig/caFile,_certFile_and_keyFile and webconfig TLS_config_with_client_CA,_cert_and_key_files; golden adds KeyFile/CertFile/ClientCAFile + mutual-exclusion validation"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

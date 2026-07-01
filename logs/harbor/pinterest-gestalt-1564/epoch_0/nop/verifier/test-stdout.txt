@@ -1,0 +1,114 @@
+patching file packages/gestalt-codemods/24.0.0/__tests__/button-replace-inline-fullWidth.test.js
+patching file packages/gestalt/src/Button.test.js
+patching file packages/gestalt/src/InternalLink.test.js
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+FAIL node packages/gestalt-codemods/24.0.0/__tests__/button-replace-inline-fullWidth.test.js
+  ● Test suite failed to run
+
+    Cannot find module '../button-replace-inline-fullWidth' from 'packages/gestalt-codemods/24.0.0/__tests__/button-replace-inline-fullWidth.test.js'
+
+      1 | import { defineTest } from 'jscodeshift/dist/testUtils.js';
+      2 |
+    > 3 | jest.mock('../button-replace-inline-fullWidth', () => {
+        |      ^
+      4 |   return Object.assign(jest.requireActual('../button-replace-inline-fullWidth'), {
+      5 |     parser: 'flow',
+      6 |   });
+
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:306:11)
+      at Object.<anonymous> (packages/gestalt-codemods/24.0.0/__tests__/button-replace-inline-fullWidth.test.js:3:6)
+
+PASS node packages/gestalt/src/InternalLink.test.js (5.666 s)
+  ✓ renders IconButton (14 ms)
+  ✓ renders TapArea (2 ms)
+  ✓ renders inline Button (1 ms)
+  ✓ renders full-width Button (2 ms)
+  ✓ renders Button & target null (1 ms)
+  ✓ renders Button & target self (1 ms)
+  ✓ renders Button & target blank (1 ms)
+  ✓ renders Button with nofollow (1 ms)
+  ✓ renders Button with onClick (3 ms)
+
+ › 2 snapshots written.
+ › 2 snapshots obsolete.
+   • renders Button 1
+   • renders Button with inline 1
+PASS node packages/gestalt/src/Button.test.js (5.709 s)
+  <Button />
+    ✓ Custom color (10 ms)
+    ✓ Disabled state (3 ms)
+    ✓ iconEnd (6 ms)
+    ✓ Custom white text color on transparent background (1 ms)
+    ✓ Default darkGray text color on transparent background (1 ms)
+    ✓ accessibilityControls (1 ms)
+    ✓ accessibilityExpanded (2 ms)
+    ✓ accessibilityHaspopup (1 ms)
+    ✓ accessibilityLabel (2 ms)
+
+PASS jsdom packages/gestalt/src/InternalLink.test.js
+  ✓ renders IconButton (18 ms)
+  ✓ renders TapArea (3 ms)
+  ✓ renders inline Button (4 ms)
+  ✓ renders full-width Button (3 ms)
+  ✓ renders Button & target null (3 ms)
+  ✓ renders Button & target self (2 ms)
+  ✓ renders Button & target blank (1 ms)
+  ✓ renders Button with nofollow (2 ms)
+  ✓ renders Button with onClick (4 ms)
+
+ › 2 snapshots written.
+ › 2 snapshots obsolete.
+   • renders Button 1
+   • renders Button with inline 1
+PASS jsdom packages/gestalt/src/Button.test.js
+  <Button />
+    ✓ Custom color (13 ms)
+    ✓ Disabled state (2 ms)
+    ✓ iconEnd (4 ms)
+    ✓ Custom white text color on transparent background (2 ms)
+    ✓ Default darkGray text color on transparent background (2 ms)
+    ✓ accessibilityControls (1 ms)
+    ✓ accessibilityExpanded (1 ms)
+    ✓ accessibilityHaspopup (1 ms)
+    ✓ accessibilityLabel (1 ms)
+
+Snapshot Summary
+ › 4 snapshots written from 2 test suites.
+ › 4 snapshots obsolete from 2 test suites. To remove them all, run `npm run npx -- -u`.
+   ↳ packages/gestalt/src/InternalLink.test.js
+       • renders Button 1
+       • renders Button with inline 1
+   ↳ packages/gestalt/src/InternalLink.test.js
+       • renders Button 1
+       • renders Button with inline 1
+
+Test Suites: 1 failed, 4 passed, 5 total
+Tests:       36 passed, 36 total
+Snapshots:   4 obsolete, 4 written, 14 passed, 18 total
+Time:        7.406 s
+Ran all test suites matching /packages\/gestalt-codemods\/24.0.0\/__tests__\/button-replace-inline-fullWidth.test.js|packages\/gestalt\/src\/Button.test.js|packages\/gestalt\/src\/InternalLink.test.js/i in 2 projects.
+reward=0 graded=19 found=0 failed=0 parsed=0 framework=jest exit_code=1

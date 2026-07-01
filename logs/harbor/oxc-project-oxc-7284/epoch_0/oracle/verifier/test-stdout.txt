@@ -1,0 +1,10 @@
+patching file crates/oxc_transformer/tests/integrations/es_target.rs
+   Compiling oxc_transformer v0.36.0 (/workspace/repo/crates/oxc_transformer)
+    Finished `test` profile [unoptimized] target(s) in 7.69s
+────────────
+ Nextest run ID adbbb373-27fc-4c90-8447-b39c953fe75e with nextest profile: default
+    Starting 1 test across 2 binaries (47 tests skipped)
+        PASS [   0.012s] (1/1) oxc_transformer::integrations es_target::target_list_pass
+────────────
+     Summary [   0.013s] 1 test run: 1 passed, 47 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

@@ -1,0 +1,5 @@
+patching file .travis.yml
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 18 with fuzz 3.
+patching file server/reload.go

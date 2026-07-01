@@ -1,0 +1,138 @@
+patching file crates/parser/test_data/parser/err/0065_let_else_right_curly_brace_struct.rs
+patching file crates/parser/test_data/parser/err/0065_let_else_right_curly_brace_struct.rast
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.12
+   Compiling once_cell v1.19.0
+   Compiling crossbeam-utils v0.8.20
+   Compiling libc v0.2.155
+   Compiling pin-project-lite v0.2.14
+   Compiling either v1.13.0
+   Compiling jod-thread v0.1.2
+   Compiling dissimilar v1.0.9
+   Compiling unicode-xid v0.2.4
+   Compiling unicode-properties v0.1.1
+   Compiling drop_bomb v0.1.5
+   Compiling limit v0.0.0 (/workspace/repo/crates/limit)
+   Compiling edition v0.0.0 (/workspace/repo/crates/edition)
+   Compiling ra-ap-rustc_lexer v0.87.0
+   Compiling tracing-core v0.1.32
+   Compiling itertools v0.12.1
+   Compiling expect-test v1.5.0
+   Compiling crossbeam-channel v0.5.13
+   Compiling quote v1.0.36
+   Compiling syn v2.0.87
+   Compiling tracing-attributes v0.1.27
+   Compiling tracing v0.1.40
+   Compiling always-assert v0.2.0
+   Compiling stdx v0.0.0 (/workspace/repo/crates/stdx)
+   Compiling parser v0.0.0 (/workspace/repo/crates/parser)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.65s
+────────────
+ Nextest run ID d9f39932-38e5-4878-83cd-4da9ebe8a545 with nextest profile: default
+    Starting 1 test across 1 binary (274 tests skipped)
+        FAIL [   0.039s] (1/1) parser tests::parse_err
+  stdout ───
+
+    running 1 test
+    test tests::parse_err ... FAILED
+
+    failures:
+
+    failures:
+        tests::parse_err
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 274 filtered out; finished in 0.03s
+
+  stderr ───
+    Panic context:
+    > "/workspace/repo/crates/parser/test_data/parser/err/0065_let_else_right_curly_brace_struct.rs"
+
+    thread 'tests::parse_err' panicked at crates/parser/src/tests.rs:75:9:
+    no errors in an ERR file /workspace/repo/crates/parser/test_data/parser/err/0065_let_else_right_curly_brace_struct.rs:
+    SOURCE_FILE
+      STRUCT
+        STRUCT_KW "struct"
+        WHITESPACE " "
+        NAME
+          IDENT "X"
+        WHITESPACE " "
+        RECORD_FIELD_LIST
+          L_CURLY "{"
+          RECORD_FIELD
+            NAME
+              IDENT "a"
+            COLON ":"
+            WHITESPACE " "
+            PATH_TYPE
+              PATH
+                PATH_SEGMENT
+                  NAME_REF
+                    IDENT "i32"
+          R_CURLY "}"
+      WHITESPACE "\n"
+      FN
+        FN_KW "fn"
+        WHITESPACE " "
+        NAME
+          IDENT "f"
+        PARAM_LIST
+          L_PAREN "("
+          R_PAREN ")"
+        WHITESPACE " "
+        BLOCK_EXPR
+          STMT_LIST
+            L_CURLY "{"
+            WHITESPACE "\n    "
+            LET_STMT
+              LET_KW "let"
+              WHITESPACE " "
+              IDENT_PAT
+                NAME
+                  IDENT "foo"
+              WHITESPACE " "
+              EQ "="
+              WHITESPACE " "
+              RECORD_EXPR
+                PATH
+                  PATH_SEGMENT
+                    NAME_REF
+                      IDENT "X"
+                WHITESPACE " "
+                RECORD_EXPR_FIELD_LIST
+                  L_CURLY "{"
+                  WHITESPACE "\n        "
+                  RECORD_EXPR_FIELD
+                    NAME_REF
+                      IDENT "a"
+                    COLON ":"
+                    WHITESPACE " "
+                    LITERAL
+                      INT_NUMBER "1"
+                  WHITESPACE "\n    "
+                  R_CURLY "}"
+              WHITESPACE " "
+              LET_ELSE
+                ELSE_KW "else"
+                WHITESPACE " "
+                BLOCK_EXPR
+                  STMT_LIST
+                    L_CURLY "{"
+                    WHITESPACE "\n        "
+                    EXPR_STMT
+                      RETURN_EXPR
+                        RETURN_KW "return"
+                      SEMICOLON ";"
+                    WHITESPACE "\n    "
+                    R_CURLY "}"
+              SEMICOLON ";"
+            WHITESPACE "\n"
+            R_CURLY "}"
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   0.041s] 1 test run: 0 passed, 1 failed, 274 skipped
+        FAIL [   0.039s] (1/1) parser tests::parse_err
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

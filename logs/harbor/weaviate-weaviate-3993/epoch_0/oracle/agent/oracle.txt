@@ -1,0 +1,10 @@
+patching file cloud/cloud.go
+patching file cloud/store/db.go
+patching file cloud/store/raft.go
+patching file cloud/store/schema.go
+patching file cloud/store/service.go
+patching file cloud/store/snapshot.go
+patching file cloud/store/store.go
+patching file cloud/transport/cluster.go
+patching file usecases/schema/parser.go
+patching file usecases/sharding/config/config.go

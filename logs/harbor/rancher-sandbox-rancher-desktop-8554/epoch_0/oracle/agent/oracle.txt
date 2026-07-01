@@ -1,0 +1,7 @@
+patching file pkg/rancher-desktop/assets/specs/command-api.yaml
+patching file pkg/rancher-desktop/backend/lima.ts
+patching file pkg/rancher-desktop/components/Preferences/VirtualMachineEmulation.vue
+patching file pkg/rancher-desktop/config/settings.ts
+patching file pkg/rancher-desktop/config/settingsImpl.ts
+patching file pkg/rancher-desktop/main/commandServer/settingsValidator.ts
+patching file pkg/rancher-desktop/window/constants.ts

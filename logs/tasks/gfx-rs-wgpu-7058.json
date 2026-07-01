@@ -1,0 +1,23 @@
+{
+ "task": "gfx-rs-wgpu-7058",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden valid/expression.rs accepts 'Sk::Sint | Sk::Uint' for mip level; test.patch image.wgsl: 'let value1_2 = textureLoad(image_mipmapped_src, itc, u32(local_id.z));'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

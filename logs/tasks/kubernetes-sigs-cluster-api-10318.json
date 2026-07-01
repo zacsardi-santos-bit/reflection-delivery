@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-sigs-cluster-api-10318",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds webhook block \"there are MachineDeployments still completing a previous upgrade\", override annotation \"unsafe.topology.cluster.x-k8s.io/disable-update-version-check\" with warning, and shared check package (IsMachineDeploymentUpgrading/IsMachinePoolUpgrading); F2P=477 real Go tests."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

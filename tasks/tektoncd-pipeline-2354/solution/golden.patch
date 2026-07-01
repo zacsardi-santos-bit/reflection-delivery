@@ -1,0 +1,308 @@
+diff --git a/DEVELOPMENT.md b/DEVELOPMENT.md
+index 96194da4a..3fc368483 100644
+--- a/DEVELOPMENT.md
++++ b/DEVELOPMENT.md
+@@ -108,7 +108,7 @@ preferences. 1. Switch the proper `kubectl` config context: `bash kubectl config
+ get-contexts # You should see docker-for-desktop in the previous command output
+ kubectl config use-context docker-for-desktop` To setup a cluster with GKE:
+ 
+-1.  [Install required tools and setup GCP project](https://knative.dev/v0.12-docs/install/knative-with-gke/)
++1.  [Install required tools and setup GCP project](https://github.com/knative/docs/blob/master/docs/install/Knative-with-GKE.md#before-you-begin)
+     (You may find it useful to save the ID of the project in an environment
+     variable (e.g. `PROJECT_ID`).
+ 
+diff --git a/docs/README.md b/docs/README.md
+index 95171be44..8ece3c10f 100644
+--- a/docs/README.md
++++ b/docs/README.md
+@@ -58,9 +58,8 @@ See the following topics to learn how to use Tekton Pipelines in your project:
+ - [Creating a Task](tasks.md)
+ - [Running a standalone Task](taskruns.md)
+ - [Creating a Pipeline](pipelines.md)
+-- [Running a Pipeline](pipelineruns.md)
+-- [Defining Workspaces](workspaces.md)
+ - [Creating PipelineResources](resources.md)
++- [Running a Pipeline](pipelineruns.md)
+ - [Configuring authentication](auth.md)
+ - [Using labels](labels.md)
+ - [Viewing logs](logs.md)
+diff --git a/docs/developers/README.md b/docs/developers/README.md
+index 6655a6141..40e400f0f 100644
+--- a/docs/developers/README.md
++++ b/docs/developers/README.md
+@@ -59,8 +59,8 @@ expected in directory path `/workspace/output/resource_name`.
+     name: get-gcs-task
+     namespace: default
+   spec:
+-    resources:
+-      outputs:
++    outputs:
++      resources:
+         - name: gcs-workspace
+           type: storage
+   ```
+@@ -76,8 +76,8 @@ expected in directory path `/workspace/output/resource_name`.
+     name: get-gcs-task
+     namespace: default
+   spec:
+-    resources:
+-      outputs:
++    outputs:
++      resources:
+         - name: gcs-workspace
+           type: storage
+           targetPath: /workspace/outputstuff
+@@ -95,12 +95,13 @@ expected in directory path `/workspace/output/resource_name`.
+     name: get-gcs-task
+     namespace: default
+   spec:
+-    resources:
+-      inputs:
++    inputs:
++      resources:
+         - name: gcs-workspace
+           type: storage
+           targetPath: random-space
+-      outputs:
++    outputs:
++      resources:
+         - name: gcs-workspace
+           type: storage
+   ```
+@@ -116,11 +117,12 @@ expected in directory path `/workspace/output/resource_name`.
+     name: get-gcs-task
+     namespace: default
+   spec:
+-    resources:
+-      inputs:
++    inputs:
++      resources:
+         - name: gcs-workspace
+           type: storage
+-      outputs:
++    outputs:
++      resources:
+         - name: gcs-workspace
+           type: storage
+   ```
+diff --git a/examples/v1beta1/pipelineruns/pipeline-result-conditions.yaml b/examples/v1beta1/pipelineruns/pipeline-result-conditions.yaml
+new file mode 100644
+index 000000000..f065964b4
+--- /dev/null
++++ b/examples/v1beta1/pipelineruns/pipeline-result-conditions.yaml
+@@ -0,0 +1,110 @@
++apiVersion: tekton.dev/v1alpha1
++kind: Condition
++metadata:
++  name: condition-1
++spec:
++  check:
++    args:
++    - EXITCODE=$(python -c "import sys; input1=str.rstrip(sys.argv[1]); input2=str.rstrip(sys.argv[2]); print(0) if (input1 == 'heads') else
++      print(1)" '$(params.flip-coin)' 'heads'); exit $EXITCODE
++    command:
++    - sh
++    - -c
++    image: python:alpine3.6
++  params:
++  - name: flip-coin
++---
++apiVersion: tekton.dev/v1beta1
++kind: Task
++metadata:
++  name: flip-coin
++spec:
++  results:
++  - description: /tmp/output
++    name: output
++  steps:
++  - args:
++    - python -c "import random; result = 'heads' if random.randint(0,1) == 0 else
++      'tails'; result='heads'; print(result)" | tee $(results.output.path)
++    command:
++    - sh
++    - -c
++    image: python:alpine3.6
++    name: flip-coin
++---
++apiVersion: tekton.dev/v1alpha1
++kind: Task
++metadata:
++  name: condition-check
++spec:
++  params:
++  - name: flip-coin
++  results:
++  - description: /tmp/output
++    name: output
++  steps:
++  - args:
++    - EXITCODE=$(python -c "import sys; input1=str.rstrip(sys.argv[1]); input2=str.rstrip(sys.argv[2]); print(input1) if (input1 == 'heads') else
++      print(input1)" '$(params.flip-coin)' 'heads'); echo $EXITCODE | tee $(results.output.path)
++    command:
++    - sh
++    - -c
++    image: python:alpine3.6
++---
++apiVersion: tekton.dev/v1beta1
++kind: Task
++metadata:
++  name: generate-random-number
++spec:
++  results:
++  - description: /tmp/output
++    name: output
++  steps:
++  - args:
++    - python -c "import random; print(random.randint($0, $1))" | tee $2
++    - '0'
++    - '9'
++    - $(results.output.path)
++    command:
++    - sh
++    - -c
++    image: python:alpine3.6
++    name: generate-random-number
++---
++apiVersion: tekton.dev/v1beta1
++kind: Pipeline
++metadata:
++  annotations:
++    pipelines.kubeflow.org/pipeline_spec: '{"description": "Shows how to use dsl.Condition().",
++      "name": "Conditional execution pipeline"}'
++  name: flip-cond-gen-pipeline
++spec:
++  params: []
++  tasks:
++  - name: flip-coin
++    params: []
++    taskRef:
++      name: flip-coin
++  - name: condition-check
++    params:
++      - name: flip-coin
++        value: $(tasks.flip-coin.results.output)
++    taskRef:
++      name: condition-check
++  - conditions:
++    - conditionRef: condition-1
++      params:
++      - name: flip-coin
++        value: $(tasks.flip-coin.results.output)
++    name: generate-random-number
++    params: []
++    taskRef:
++      name: generate-random-number
++---
++apiVersion: tekton.dev/v1beta1
++kind: PipelineRun
++metadata:
++  name: flip-cond-gen-pipeline-run
++spec:
++  pipelineRef:
++    name: flip-cond-gen-pipeline
+\ No newline at end of file
+diff --git a/pkg/apis/pipeline/v1alpha1/pipeline_types.go b/pkg/apis/pipeline/v1alpha1/pipeline_types.go
+index 6f12c135a..e3d9f882f 100644
+--- a/pkg/apis/pipeline/v1alpha1/pipeline_types.go
++++ b/pkg/apis/pipeline/v1alpha1/pipeline_types.go
+@@ -167,6 +167,16 @@ func (pt PipelineTask) Deps() []string {
+ 		for _, rd := range cond.Resources {
+ 			deps = append(deps, rd.From...)
+ 		}
++		for _, param := range cond.Params {
++			expressions, ok := v1beta1.GetVarSubstitutionExpressionsForParam(param)
++			if ok {
++				if resultRefs, err := v1beta1.NewResultRefs(expressions); err == nil {
++					for _, resultRef := range resultRefs {
++						deps = append(deps, resultRef.PipelineTask)
++					}
++				}
++			}
++		}
+ 	}
+ 	// Add any dependents from task results
+ 	for _, param := range pt.Params {
+@@ -179,6 +189,7 @@ func (pt PipelineTask) Deps() []string {
+ 			}
+ 		}
+ 	}
++
+ 	return deps
+ }
+ 
+diff --git a/pkg/reconciler/pipelinerun/resources/apply.go b/pkg/reconciler/pipelinerun/resources/apply.go
+index 3b7a6a2a2..2c37a26c8 100644
+--- a/pkg/reconciler/pipelinerun/resources/apply.go
++++ b/pkg/reconciler/pipelinerun/resources/apply.go
+@@ -64,9 +64,17 @@ func ApplyTaskResults(targets PipelineRunState, resolvedResultRefs ResolvedResul
+ 	}
+ 
+ 	for _, resolvedPipelineRunTask := range targets {
+-		pipelineTask := resolvedPipelineRunTask.PipelineTask.DeepCopy()
+-		pipelineTask.Params = replaceParamValues(pipelineTask.Params, stringReplacements, nil)
+-		resolvedPipelineRunTask.PipelineTask = pipelineTask
++		// also make substitution for resolved condition checks
++		for _, resolvedConditionCheck := range resolvedPipelineRunTask.ResolvedConditionChecks {
++			pipelineTaskCondition := resolvedConditionCheck.PipelineTaskCondition.DeepCopy()
++			pipelineTaskCondition.Params = replaceParamValues(pipelineTaskCondition.Params, stringReplacements, nil)
++			resolvedConditionCheck.PipelineTaskCondition = pipelineTaskCondition
++		}
++		if resolvedPipelineRunTask.PipelineTask != nil {
++			pipelineTask := resolvedPipelineRunTask.PipelineTask.DeepCopy()
++			pipelineTask.Params = replaceParamValues(pipelineTask.Params, stringReplacements, nil)
++			resolvedPipelineRunTask.PipelineTask = pipelineTask
++		}
+ 	}
+ }
+ 
+diff --git a/pkg/reconciler/pipelinerun/resources/resultrefresolution.go b/pkg/reconciler/pipelinerun/resources/resultrefresolution.go
+index 4c84f1122..9cfada4b5 100644
+--- a/pkg/reconciler/pipelinerun/resources/resultrefresolution.go
++++ b/pkg/reconciler/pipelinerun/resources/resultrefresolution.go
+@@ -124,10 +124,29 @@ func removeDup(refs ResolvedResultRefs) ResolvedResultRefs {
+ // convertParamsToResultRefs converts all params of the resolved pipeline run task
+ func convertParamsToResultRefs(pipelineRunState PipelineRunState, target *ResolvedPipelineRunTask) (ResolvedResultRefs, error) {
+ 	var resolvedParams ResolvedResultRefs
+-	for _, param := range target.PipelineTask.Params {
++	for _, condition := range target.PipelineTask.Conditions {
++		condRefs, err := convertParams(condition.Params, pipelineRunState, condition.ConditionRef)
++		if err != nil {
++			return nil, err
++		}
++		resolvedParams = append(resolvedParams, condRefs...)
++	}
++
++	taskParamsRefs, err := convertParams(target.PipelineTask.Params, pipelineRunState, target.PipelineTask.Name)
++	if err != nil {
++		return nil, err
++	}
++	resolvedParams = append(resolvedParams, taskParamsRefs...)
++
++	return resolvedParams, nil
++}
++
++func convertParams(params []v1beta1.Param, pipelineRunState PipelineRunState, name string) (ResolvedResultRefs, error) {
++	var resolvedParams ResolvedResultRefs
++	for _, param := range params {
+ 		resolvedResultRefs, err := extractResultRefsForParam(pipelineRunState, param)
+ 		if err != nil {
+-			return nil, fmt.Errorf("unable to find result referenced by param %q in pipeline task %q: %w", param.Name, target.PipelineTask.Name, err)
++			return nil, fmt.Errorf("unable to find result referenced by param %q in %q: %w", param.Name, name, err)
+ 		}
+ 		if resolvedResultRefs != nil {
+ 			resolvedParams = append(resolvedParams, resolvedResultRefs...)
+diff --git a/pkg/reconciler/taskrun/resources/apply.go b/pkg/reconciler/taskrun/resources/apply.go
+index 8bfc6fc51..cc6c1f740 100644
+--- a/pkg/reconciler/taskrun/resources/apply.go
++++ b/pkg/reconciler/taskrun/resources/apply.go
+@@ -62,9 +62,6 @@ func ApplyParameters(spec *v1alpha1.TaskSpec, tr *v1alpha1.TaskRun, defaults ...
+ 			arrayReplacements[fmt.Sprintf("inputs.params.%s", p.Name)] = p.Value.ArrayVal
+ 		}
+ 	}
+-
+-	fmt.Println("stringReplacements", stringReplacements)
+-	fmt.Println("arrayReplacements", arrayReplacements)
+ 	return ApplyReplacements(spec, stringReplacements, arrayReplacements)
+ }
+ 

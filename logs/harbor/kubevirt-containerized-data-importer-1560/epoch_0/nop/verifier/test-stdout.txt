@@ -1,0 +1,27 @@
+patching file pkg/controller/import-controller_test.go
+patching file tests/datavolume_test.go
+patching file tests/utils/datavolume.go
+# kubevirt.io/containerized-data-importer/pkg/controller [kubevirt.io/containerized-data-importer/pkg/controller.test]
+pkg/controller/import-controller_test.go:80:105: too many arguments in call to shouldReconcilePVC
+	have (*"k8s.io/api/core/v1".PersistentVolumeClaim, bool, *FakeFeatureGates, logr.Logger)
+	want (*"k8s.io/api/core/v1".PersistentVolumeClaim, featuregates.FeatureGates, logr.Logger)
+pkg/controller/import-controller_test.go:85:105: too many arguments in call to shouldReconcilePVC
+	have (*"k8s.io/api/core/v1".PersistentVolumeClaim, bool, *FakeFeatureGates, logr.Logger)
+	want (*"k8s.io/api/core/v1".PersistentVolumeClaim, featuregates.FeatureGates, logr.Logger)
+pkg/controller/import-controller_test.go:90:105: too many arguments in call to shouldReconcilePVC
+	have (*"k8s.io/api/core/v1".PersistentVolumeClaim, bool, *FakeFeatureGates, logr.Logger)
+	want (*"k8s.io/api/core/v1".PersistentVolumeClaim, featuregates.FeatureGates, logr.Logger)
+pkg/controller/import-controller_test.go:95:105: too many arguments in call to shouldReconcilePVC
+	have (*"k8s.io/api/core/v1".PersistentVolumeClaim, bool, *FakeFeatureGates, logr.Logger)
+	want (*"k8s.io/api/core/v1".PersistentVolumeClaim, featuregates.FeatureGates, logr.Logger)
+pkg/controller/import-controller_test.go:100:104: too many arguments in call to shouldReconcilePVC
+	have (*"k8s.io/api/core/v1".PersistentVolumeClaim, bool, *FakeFeatureGates, logr.Logger)
+	want (*"k8s.io/api/core/v1".PersistentVolumeClaim, featuregates.FeatureGates, logr.Logger)
+pkg/controller/import-controller_test.go:105:103: too many arguments in call to shouldReconcilePVC
+	have (*"k8s.io/api/core/v1".PersistentVolumeClaim, bool, *FakeFeatureGates, logr.Logger)
+	want (*"k8s.io/api/core/v1".PersistentVolumeClaim, featuregates.FeatureGates, logr.Logger)
+pkg/controller/import-controller_test.go:109:104: too many arguments in call to shouldReconcilePVC
+	have (*"k8s.io/api/core/v1".PersistentVolumeClaim, bool, *FakeFeatureGates, logr.Logger)
+	want (*"k8s.io/api/core/v1".PersistentVolumeClaim, featuregates.FeatureGates, logr.Logger)
+FAIL	kubevirt.io/containerized-data-importer/pkg/controller [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

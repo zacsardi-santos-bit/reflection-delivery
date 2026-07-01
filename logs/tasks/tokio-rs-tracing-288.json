@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-tracing-288",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits tracing/src/macros.rs (macro arm definitions) + tracing-core lib to accept fields before a format-string message without braces; F2P=54 incl 'message_without_delims','both_shorthands','display_shorthand' via 'cargo nextest run -p tracing --test event --test macros'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

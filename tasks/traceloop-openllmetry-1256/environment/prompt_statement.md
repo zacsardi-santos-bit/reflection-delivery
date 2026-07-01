@@ -1,0 +1,5 @@
+I'm using an OpenTelemetry instrumentation package to trace my OpenAI assistant interactions. When I create a run manually and poll the status myself, I get proper trace spans with all the right attributes — the model, the system instructions, and the response messages all show up correctly. But when I use the convenience method that creates the run and waits for it to finish automatically, I get nothing — no spans at all.
+
+It seems like the instrumentation only handles the manual create approach and completely misses the automatic polling variant, even though the end result is the same: a completed assistant run. I'd expect both approaches to produce identical telemetry — a single span with the model information, the prompts (both the assistant's base instructions and any run-level overrides), and the completion messages from the thread. The polling requests themselves shouldn't generate extra spans, just the one span for the overall operation.
+
+Can you add support for the automatic polling approach so it generates the same telemetry as the manual approach?

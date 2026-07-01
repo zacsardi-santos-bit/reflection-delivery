@@ -1,0 +1,194 @@
+patching file packages/cli/src/config/config.test.ts
+patching file packages/core/src/telemetry/config.test.ts
+
+> @google/gemini-cli-core@0.7.0-nightly.20250918.2722473a build
+> node ../../scripts/build_package.js
+
+Successfully copied files.
+
+ RUN  v3.2.4 /workspace/repo/packages/cli
+      Coverage enabled with v8
+
+ ✓ src/config/config.test.ts > parseArguments > should throw an error when both --prompt and --prompt-interactive are used together 22ms
+ ✓ src/config/config.test.ts > parseArguments > should throw an error when using short flags -p and -i together 5ms
+ ✓ src/config/config.test.ts > parseArguments > should allow --prompt without --prompt-interactive 2ms
+ ✓ src/config/config.test.ts > parseArguments > should allow --prompt-interactive without --prompt 2ms
+ ✓ src/config/config.test.ts > parseArguments > should allow -i flag as alias for --prompt-interactive 2ms
+ ✓ src/config/config.test.ts > parseArguments > should throw an error when both --yolo and --approval-mode are used together 9ms
+ ✓ src/config/config.test.ts > parseArguments > should throw an error when using short flags -y and --approval-mode together 5ms
+ ✓ src/config/config.test.ts > parseArguments > should allow --approval-mode without --yolo 2ms
+ ✓ src/config/config.test.ts > parseArguments > should allow --yolo without --approval-mode 2ms
+ ✓ src/config/config.test.ts > parseArguments > should reject invalid --approval-mode values 5ms
+ ✓ src/config/config.test.ts > parseArguments > should support comma-separated values for --allowed-tools 3ms
+ ✓ src/config/config.test.ts > parseArguments > should support comma-separated values for --allowed-mcp-server-names 2ms
+ ✓ src/config/config.test.ts > parseArguments > should support comma-separated values for --extensions 2ms
+ ✓ src/config/config.test.ts > loadCliConfig > should set showMemoryUsage to true when --show-memory-usage flag is present 4ms
+ ✓ src/config/config.test.ts > loadCliConfig > should set showMemoryUsage to false when --memory flag is not present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig > should set showMemoryUsage to false by default from settings if CLI flag is not present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig > should prioritize CLI flag over settings for showMemoryUsage (CLI true, settings false) 4ms
+ ✓ src/config/config.test.ts > loadCliConfig > Proxy configuration > should leave proxy to empty by default 2ms
+ ✓ src/config/config.test.ts > loadCliConfig > Proxy configuration > should set proxy to http://localhost:7890 according to environment variable [https_proxy] 3ms
+ ✓ src/config/config.test.ts > loadCliConfig > Proxy configuration > should set proxy to http://localhost:7890 according to environment variable [http_proxy] 2ms
+ ✓ src/config/config.test.ts > loadCliConfig > Proxy configuration > should set proxy to http://localhost:7890 according to environment variable [HTTPS_PROXY] 2ms
+ ✓ src/config/config.test.ts > loadCliConfig > Proxy configuration > should set proxy to http://localhost:7890 according to environment variable [HTTP_PROXY] 2ms
+ ✓ src/config/config.test.ts > loadCliConfig > Proxy configuration > should set proxy when --proxy flag is present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig > Proxy configuration > should prioritize CLI flag over environment variable for proxy (CLI http://localhost:7890, environment variable http://localhost:7891) 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should set telemetry to false by default when no flag or setting is present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should set telemetry to true when --telemetry flag is present 11ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should set telemetry to false when --no-telemetry flag is present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use telemetry value from settings if CLI flag is not present (settings true) 3ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use telemetry value from settings if CLI flag is not present (settings false) 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should prioritize --telemetry CLI flag (true) over settings (false) 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should prioritize --no-telemetry CLI flag (false) over settings (true) 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use telemetry OTLP endpoint from settings if CLI flag is not present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should prioritize --telemetry-otlp-endpoint CLI flag over settings 4ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use default endpoint if no OTLP endpoint is provided via CLI or settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use telemetry target from settings if CLI flag is not present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should prioritize --telemetry-target CLI flag over settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use default target if no target is provided via CLI or settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use telemetry log prompts from settings if CLI flag is not present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should prioritize --telemetry-log-prompts CLI flag (true) over settings (false) 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should prioritize --no-telemetry-log-prompts CLI flag (false) over settings (true) 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use default log prompts (true) if no value is provided via CLI or settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use telemetry OTLP protocol from settings if CLI flag is not present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should prioritize --telemetry-otlp-protocol CLI flag over settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should use default protocol if no OTLP protocol is provided via CLI or settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig telemetry > should reject invalid --telemetry-otlp-protocol values 4ms
+ ✓ src/config/config.test.ts > Hierarchical Memory Loading (config.ts) - Placeholder Suite > should pass extension context file paths to loadServerHierarchicalMemory 2ms
+ ↓ src/config/config.test.ts > Hierarchical Memory Loading (config.ts) - Placeholder Suite > should correctly use mocked homedir for global path
+ ✓ src/config/config.test.ts > mergeMcpServers > should not modify the original settings object 2ms
+ ✓ src/config/config.test.ts > mergeExcludeTools > should merge excludeTools from settings and extensions 4ms
+ ✓ src/config/config.test.ts > mergeExcludeTools > should handle overlapping excludeTools between settings and extensions 2ms
+ ✓ src/config/config.test.ts > mergeExcludeTools > should handle overlapping excludeTools between extensions 2ms
+ ✓ src/config/config.test.ts > mergeExcludeTools > should return an empty array when no excludeTools are specified and it is interactive 2ms
+ ✓ src/config/config.test.ts > mergeExcludeTools > should return default excludes when no excludeTools are specified and it is not interactive 2ms
+ ✓ src/config/config.test.ts > mergeExcludeTools > should handle settings with excludeTools but no extensions 2ms
+ ✓ src/config/config.test.ts > mergeExcludeTools > should handle extensions with excludeTools but no settings 2ms
+ ✓ src/config/config.test.ts > mergeExcludeTools > should not modify the original settings object 2ms
+ ✓ src/config/config.test.ts > Approval mode tool exclusion logic > should exclude all interactive tools in non-interactive mode with default approval mode 2ms
+ ✓ src/config/config.test.ts > Approval mode tool exclusion logic > should exclude all interactive tools in non-interactive mode with explicit default approval mode 2ms
+ ✓ src/config/config.test.ts > Approval mode tool exclusion logic > should exclude only shell tools in non-interactive mode with auto_edit approval mode 2ms
+ ✓ src/config/config.test.ts > Approval mode tool exclusion logic > should exclude no interactive tools in non-interactive mode with yolo approval mode 2ms
+ ✓ src/config/config.test.ts > Approval mode tool exclusion logic > should exclude no interactive tools in non-interactive mode with legacy yolo flag 2ms
+ ✓ src/config/config.test.ts > Approval mode tool exclusion logic > should not exclude interactive tools in interactive mode regardless of approval mode 10ms
+ ✓ src/config/config.test.ts > Approval mode tool exclusion logic > should merge approval mode exclusions with settings exclusions in auto_edit mode 2ms
+ ✓ src/config/config.test.ts > Approval mode tool exclusion logic > should throw an error for invalid approval mode values in loadCliConfig 0ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should allow all MCP servers if the flag is not provided 2ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should allow only the specified MCP server 2ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should allow multiple specified MCP servers 2ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should handle server names that do not exist 2ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should allow no MCP servers if the flag is provided but empty 2ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should read allowMCPServers from settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should read excludeMCPServers from settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should override allowMCPServers with excludeMCPServers if overlapping 2ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should prioritize mcp server flag if set 2ms
+ ✓ src/config/config.test.ts > loadCliConfig with allowed-mcp-server-names > should prioritize CLI flag over both allowed and excluded settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig extensions > should not filter extensions if --extensions flag is not used 2ms
+ ✓ src/config/config.test.ts > loadCliConfig extensions > should filter extensions if --extensions flag is used 2ms
+ ✓ src/config/config.test.ts > loadCliConfig model selection > selects a model from settings.json if provided 2ms
+ ✓ src/config/config.test.ts > loadCliConfig model selection > uses the default gemini model if nothing is set 1ms
+ ✓ src/config/config.test.ts > loadCliConfig model selection > always prefers model from argvs 3ms
+ ✓ src/config/config.test.ts > loadCliConfig model selection > selects the model from argvs if provided 1ms
+ ✓ src/config/config.test.ts > loadCliConfig model selection with model router > should use auto model when useModelRouter is true and no model is provided 1ms
+ ✓ src/config/config.test.ts > loadCliConfig model selection with model router > should use default model when useModelRouter is false and no model is provided 1ms
+ ✓ src/config/config.test.ts > loadCliConfig model selection with model router > should prioritize argv over useModelRouter 1ms
+ ✓ src/config/config.test.ts > loadCliConfig model selection with model router > should prioritize settings over useModelRouter 1ms
+ ✓ src/config/config.test.ts > loadCliConfig model selection with model router > should prioritize environment variable over useModelRouter 1ms
+ ✓ src/config/config.test.ts > loadCliConfig folderTrust > should be false when folderTrust is false 2ms
+ ✓ src/config/config.test.ts > loadCliConfig folderTrust > should be true when folderTrust is true 2ms
+ ✓ src/config/config.test.ts > loadCliConfig folderTrust > should be false by default 1ms
+ ✓ src/config/config.test.ts > loadCliConfig with includeDirectories > should combine and resolve paths from settings and CLI arguments 2ms
+ ✓ src/config/config.test.ts > loadCliConfig chatCompression > should pass chatCompression settings to the core config 2ms
+ ✓ src/config/config.test.ts > loadCliConfig chatCompression > should have undefined chatCompression if not in settings 1ms
+ ✓ src/config/config.test.ts > loadCliConfig useRipgrep > should be true by default when useRipgrep is not set in settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig useRipgrep > should be false when useRipgrep is set to false in settings 1ms
+ ✓ src/config/config.test.ts > loadCliConfig useRipgrep > should be true when useRipgrep is explicitly set to true in settings 1ms
+ ✓ src/config/config.test.ts > loadCliConfig useRipgrep > loadCliConfig useModelRouter > should be false by default when useModelRouter is not set in settings 3ms
+ ✓ src/config/config.test.ts > loadCliConfig useRipgrep > loadCliConfig useModelRouter > should be true when useModelRouter is set to true in settings 2ms
+ ✓ src/config/config.test.ts > loadCliConfig useRipgrep > loadCliConfig useModelRouter > should be false when useModelRouter is explicitly set to false in settings 2ms
+ ✓ src/config/config.test.ts > screenReader configuration > should use screenReader value from settings if CLI flag is not present (settings true) 2ms
+ ✓ src/config/config.test.ts > screenReader configuration > should use screenReader value from settings if CLI flag is not present (settings false) 1ms
+ ✓ src/config/config.test.ts > screenReader configuration > should prioritize --screen-reader CLI flag (true) over settings (false) 2ms
+ ✓ src/config/config.test.ts > screenReader configuration > should be false by default when no flag or setting is present 2ms
+ ✓ src/config/config.test.ts > loadCliConfig tool exclusions > should not exclude interactive tools in interactive mode without YOLO 2ms
+ ✓ src/config/config.test.ts > loadCliConfig tool exclusions > should not exclude interactive tools in interactive mode with YOLO 2ms
+ ✓ src/config/config.test.ts > loadCliConfig tool exclusions > should exclude interactive tools in non-interactive mode without YOLO 2ms
+ ✓ src/config/config.test.ts > loadCliConfig tool exclusions > should not exclude interactive tools in non-interactive mode with YOLO 2ms
+ ✓ src/config/config.test.ts > loadCliConfig interactive > should be interactive if isTTY and no prompt 2ms
+ ✓ src/config/config.test.ts > loadCliConfig interactive > should be interactive if prompt-interactive is set 2ms
+ ✓ src/config/config.test.ts > loadCliConfig interactive > should not be interactive if not isTTY and no prompt 1ms
+ ✓ src/config/config.test.ts > loadCliConfig interactive > should not be interactive if prompt is set 2ms
+ ✓ src/config/config.test.ts > loadCliConfig interactive > should not be interactive if positional prompt words are provided with other flags 2ms
+ ✓ src/config/config.test.ts > loadCliConfig interactive > should not be interactive if positional prompt words are provided with multiple flags 15ms
+ ✓ src/config/config.test.ts > loadCliConfig interactive > should be interactive if no positional prompt words are provided with flags 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > should default to DEFAULT approval mode when no flags are set 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > should set YOLO approval mode when --yolo flag is used 1ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > should set YOLO approval mode when -y flag is used 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > should set DEFAULT approval mode when --approval-mode=default 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > should set AUTO_EDIT approval mode when --approval-mode=auto_edit 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > should set YOLO approval mode when --approval-mode=yolo 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > should prioritize --approval-mode over --yolo when both would be valid (but validation prevents this) 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > should fall back to --yolo behavior when --approval-mode is not set 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > when folder is NOT trusted > should override --approval-mode=yolo to DEFAULT 3ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > when folder is NOT trusted > should override --approval-mode=auto_edit to DEFAULT 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > when folder is NOT trusted > should override --yolo flag to DEFAULT 2ms
+ ✓ src/config/config.test.ts > loadCliConfig approval mode > when folder is NOT trusted > should remain DEFAULT when --approval-mode=default 2ms
+ ✓ src/config/config.test.ts > loadCliConfig fileFiltering > should pass 'disableFuzzySearch' from settings to config when true 2ms
+ ✓ src/config/config.test.ts > loadCliConfig fileFiltering > should pass 'disableFuzzySearch' from settings to config when false 1ms
+ ✓ src/config/config.test.ts > loadCliConfig fileFiltering > should pass 'respectGitIgnore' from settings to config when true 3ms
+ ✓ src/config/config.test.ts > loadCliConfig fileFiltering > should pass 'respectGitIgnore' from settings to config when false 3ms
+ ✓ src/config/config.test.ts > loadCliConfig fileFiltering > should pass 'respectGeminiIgnore' from settings to config when true 1ms
+ ✓ src/config/config.test.ts > loadCliConfig fileFiltering > should pass 'respectGeminiIgnore' from settings to config when false 2ms
+ ✓ src/config/config.test.ts > loadCliConfig fileFiltering > should pass 'enableRecursiveFileSearch' from settings to config when true 1ms
+ ✓ src/config/config.test.ts > loadCliConfig fileFiltering > should pass 'enableRecursiveFileSearch' from settings to config when false 1ms
+ ✓ src/config/config.test.ts > Output format > should default to TEXT 1ms
+ ✓ src/config/config.test.ts > Output format > should use the format from settings 1ms
+ ✓ src/config/config.test.ts > Output format > should prioritize the format from argv 2ms
+ ✓ src/config/config.test.ts > Output format > should error on invalid --output-format argument 4ms
+ ✓ src/config/config.test.ts > parseArguments with positional prompt > should throw an error when both a positional prompt and the --prompt flag are used 4ms
+ ✓ src/config/config.test.ts > parseArguments with positional prompt > should correctly parse a positional prompt 2ms
+ ✓ src/config/config.test.ts > parseArguments with positional prompt > should correctly parse a prompt from the --prompt flag 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should prioritize GEMINI_TELEMETRY_ENABLED over settings 2ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should prioritize GEMINI_TELEMETRY_TARGET over settings 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should throw when GEMINI_TELEMETRY_TARGET is invalid 3ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should prioritize GEMINI_TELEMETRY_OTLP_ENDPOINT over settings and default env var 2ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should prioritize GEMINI_TELEMETRY_OTLP_PROTOCOL over settings 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should prioritize GEMINI_TELEMETRY_LOG_PROMPTS over settings 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should prioritize GEMINI_TELEMETRY_OUTFILE over settings 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should prioritize GEMINI_TELEMETRY_USE_COLLECTOR over settings 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should use settings value when GEMINI_TELEMETRY_ENABLED is not set 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should use settings value when GEMINI_TELEMETRY_TARGET is not set 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should treat GEMINI_TELEMETRY_ENABLED='1' as true 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should treat GEMINI_TELEMETRY_ENABLED='0' as false 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should treat GEMINI_TELEMETRY_LOG_PROMPTS='1' as true 1ms
+ ✓ src/config/config.test.ts > Telemetry configuration via environment variables > should treat GEMINI_TELEMETRY_LOG_PROMPTS='false' as false 1ms
+
+ Test Files  1 passed (1)
+      Tests  152 passed | 1 skipped (153)
+   Start at  15:18:23
+   Duration  6.62s (transform 1.09s, setup 33ms, collect 2.94s, tests 354ms, environment 512ms, prepare 156ms)
+
+ % Coverage report from v8
+
+ RUN  v3.2.4 /workspace/repo/packages/core
+      Coverage enabled with v8
+
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > parseBooleanEnvFlag > returns undefined for undefined 1ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > parseBooleanEnvFlag > parses true values 0ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > parseBooleanEnvFlag > parses false/other values as false 0ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > parseTelemetryTargetValue > parses string values 0ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > parseTelemetryTargetValue > accepts enum values 0ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > parseTelemetryTargetValue > returns undefined for unknown 0ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > resolveTelemetrySettings > falls back to settings when no argv/env provided 1ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > resolveTelemetrySettings > uses env over settings and argv over env 0ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > resolveTelemetrySettings > falls back to OTEL_EXPORTER_OTLP_ENDPOINT when GEMINI var is missing 0ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > resolveTelemetrySettings > throws on unknown protocol values 1ms
+ ✓ src/telemetry/config.test.ts > telemetry/config helpers > resolveTelemetrySettings > throws on unknown target values 0ms
+
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  15:18:31
+   Duration  2.31s (transform 303ms, setup 28ms, collect 993ms, tests 6ms, environment 0ms, prepare 149ms)
+
+ % Coverage report from v8
+reward=1 graded=11 found=0 failed=0 parsed=0 framework=vitest exit_code=0

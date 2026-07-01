@@ -1,0 +1,23 @@
+{
+ "task": "tortoise-tortoise-orm-1825",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `self._pool_init_lock = asyncio.Lock()` and double-checked `async with self._pool_init_lock:` around `create_connection`; F2P `test_concurrent_transactions` runs `asyncio.gather(*[transaction() for _ in range(100)])`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

@@ -1,0 +1,225 @@
+patching file itest/rust/src/object_tests/dyn_gd_test.rs
+patching file itest/rust/src/object_tests/mod.rs
+   Compiling godot-bindings v0.2.0 (/workspace/repo/godot-bindings)
+   Compiling gdextension-api v0.2.2 (https://github.com/godot-rust/godot4-prebuilt?branch=releases#09432b4c)
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling regex-syntax v0.8.11
+   Compiling nanoserde-derive v0.1.22
+   Compiling heck v0.5.0
+   Compiling libc v0.2.186
+   Compiling paste v1.0.15
+   Compiling godot-cell v0.2.0 (/workspace/repo/godot-cell)
+   Compiling glam v0.28.0
+   Compiling zerocopy v0.8.52
+   Compiling cfg-if v1.0.4
+   Compiling repo-tweak v0.1.0 (/workspace/repo/itest/repo-tweak)
+   Compiling serde_core v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde_json v1.0.150
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.2
+   Compiling regex-automata v0.4.14
+   Compiling nanoserde v0.1.37
+   Compiling venial v0.6.1
+   Compiling getrandom v0.2.17
+   Compiling rand_core v0.6.4
+   Compiling godot-codegen v0.2.0 (/workspace/repo/godot-codegen)
+   Compiling godot-macros v0.2.0 (/workspace/repo/godot-macros)
+   Compiling itest v0.0.0 (/workspace/repo/itest/rust)
+   Compiling regex v1.12.4
+warning: elided lifetime has a name
+  --> godot-macros/src/derive/derive_godot_convert.rs:57:31
+   |
+52 |     pub fn map_ord_exprs<'ords: 'cache, 'cache>(
+   |                                         ------ lifetime `'cache` declared here
+...
+57 |     ) -> impl Iterator<Item = &TokenStream> + 'cache {
+   |                               ^ this elided lifetime gets resolved as `'cache`
+   |
+   = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: elided lifetime has a name
+   --> godot-codegen/src/context.rs:277:76
+    |
+33  | impl<'a> Context<'a> {
+    |      -- lifetime `'a` declared here
+...
+277 |     pub fn notification_constants(&'a self, class_name: &TyName) -> Option<&Vec<(Ident, i32)>> {
+    |                                                                            ^ this elided lifetime gets resolved as `'a`
+    |
+    = note: `#[warn(elided_named_lifetimes)]` on by default
+
+   Compiling ppv-lite86 v0.2.21
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.6
+warning: `godot-macros` (lib) generated 1 warning
+warning: `godot-codegen` (lib) generated 1 warning
+   Compiling godot-ffi v0.2.0 (/workspace/repo/godot-ffi)
+   Compiling godot-core v0.2.0 (/workspace/repo/godot-core)
+warning: `godot-codegen` (lib) generated 1 warning (1 duplicate)
+warning: `godot-codegen` (lib test) generated 1 warning (1 duplicate)
+warning: elided lifetime has a name
+  --> godot-core/src/builder/mod.rs:25:93
+   |
+25 |     pub fn virtual_method<'cb, F>(&'cb mut self, name: &'cb str, method: F) -> MethodBuilder<C, F> {
+   |                           --- lifetime `'cb` declared here                                  ^ this elided lifetime gets resolved as `'cb`
+   |
+   = note: `#[warn(elided_named_lifetimes)]` on by default
+
+   Compiling godot v0.2.0 (/workspace/repo/godot)
+warning: `godot-core` (lib) generated 1 warning
+warning: `godot-macros` (lib test) generated 1 warning (1 duplicate)
+warning: `godot-core` (lib) generated 1 warning (1 duplicate)
+   Compiling hot-reload v0.1.0 (/workspace/repo/examples/hot-reload/rust)
+   Compiling dodge-the-creeps v0.1.0 (/workspace/repo/examples/dodge-the-creeps/rust)
+warning: `godot-core` (lib test) generated 1 warning (1 duplicate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 12s
+────────────
+ Nextest run ID ddbf5f3c-3099-4228-a4d3-c4142c8b4c83 with nextest profile: default
+    Starting 141 tests across 13 binaries
+        PASS [   0.018s] (  1/141) godot-cell cell::test::allow_shared_shared
+        PASS [   0.023s] (  2/141) godot-cell::mock panicking::calls_parallel
+        PASS [   0.024s] (  3/141) godot-cell cell::test::different_inaccessible
+        PASS [   0.025s] (  4/141) godot-cell cell::test::allow_inaccessible_mut_mut
+        PASS [   0.025s] (  5/141) godot-cell cell::test::prevent_shared_mut
+        PASS [   0.032s] (  6/141) godot-cell borrow_state::test::poisoned_unset_shared_ref
+        PASS [   0.031s] (  7/141) godot-cell::mock blocking::calls_parallel
+        PASS [   0.032s] (  8/141) godot-cell cell::test::prevent_mut_mut
+        PASS [   0.034s] (  9/141) godot-cell::mock panicking::all_calls_work
+        PASS [   0.033s] ( 10/141) godot-cell cell::test::prevent_mut_shared
+        PASS [   0.034s] ( 11/141) godot-cell::mock panicking::calls_different_thread
+        PASS [   0.034s] ( 12/141) godot-cell::mock panicking::call_works
+        PASS [   0.035s] ( 13/141) godot-cell::mock blocking::non_blocking_reborrow
+        PASS [   0.022s] ( 14/141) godot-codegen tests::test_parse_native_structures_format
+        PASS [   0.023s] ( 15/141) godot-codegen tests::test_pascal_conversion
+        PASS [   0.025s] ( 16/141) godot-codegen conv::type_conversions::gdscript_to_rust_expr
+        PASS [   0.019s] ( 17/141) godot-codegen tests::test_snake_conversion
+        PASS [   0.019s] ( 18/141) godot-core builtin::aabb::test::test_axes_functions
+        PASS [   0.051s] ( 19/141) godot-cell::mock blocking::calls_parallel_many_parallel
+        PASS [   0.020s] ( 20/141) godot-core builtin::aabb::test::test_aabb_intersects_segment
+        PASS [   0.021s] ( 21/141) godot-core builtin::basis::test::basic_rotation_correct
+        PASS [   0.056s] ( 22/141) godot-bindings godot_version::test_godot_versions
+        PASS [   0.022s] ( 23/141) godot-core builtin::aabb::test::test_intersects
+        PASS [   0.033s] ( 24/141) godot-codegen generator::extension_interface::test_parse_function_pointers
+        PASS [   0.022s] ( 25/141) godot-core builtin::aabb::test::test_intersects_plane
+        PASS [   0.025s] ( 26/141) godot-core builtin::aabb::test::test_intersects_ray
+        PASS [   0.025s] ( 27/141) godot-core builtin::aabb::test::test_intersection
+        PASS [   0.065s] ( 28/141) godot-cell::mock blocking::calls_parallel_many_serial
+        PASS [   0.066s] ( 29/141) godot-cell::mock panicking::calls_parallel_many_parallel
+        PASS [   0.048s] ( 30/141) godot-cell::mock panicking::calls_parallel_many_serial
+        PASS [   0.021s] ( 31/141) godot-core builtin::basis::test::consts_behavior_correct
+        PASS [   0.020s] ( 32/141) godot-core builtin::math::float::test::angle_equal_approx_f64
+        PASS [   0.023s] ( 33/141) godot-core builtin::math::float::test::angle_equal_approx_f32
+        PASS [   0.025s] ( 34/141) godot-core builtin::basis::test::basis_finite_number_test
+        PASS [   0.026s] ( 35/141) godot-core builtin::basis::test::basis_euler_conversions
+        PASS [   0.022s] ( 36/141) godot-core builtin::math::float::test::eq_approx_fail_with_message
+        PASS [   0.020s] ( 37/141) godot-core builtin::plane::test::construction_succeeds
+        PASS [   0.020s] ( 38/141) godot-core builtin::plane::test::from_points_colinear_panics
+        PASS [   0.025s] ( 39/141) godot-core builtin::math::float::test::lerp_angle_test_f32
+        PASS [   0.022s] ( 40/141) godot-core builtin::math::test::equal_approx
+        PASS [   0.023s] ( 41/141) godot-core builtin::math::float::test::lerp_angle_test_f64
+        PASS [   0.021s] ( 42/141) godot-core builtin::plane::test::test_finite
+        PASS [   0.025s] ( 43/141) godot-core builtin::plane::test::new_unnormalized_panics
+        PASS [   0.024s] ( 44/141) godot-core builtin::plane::test::test_equal
+        PASS [   0.018s] ( 45/141) godot-core builtin::plane::test::test_normalization
+        PASS [   0.022s] ( 46/141) godot-core builtin::plane::test::test_projection
+        PASS [   0.022s] ( 47/141) godot-core builtin::plane::test::test_ray_intersections
+        PASS [   0.022s] ( 48/141) godot-core builtin::plane::test::test_segment_intersections
+        PASS [   0.020s] ( 49/141) godot-core builtin::plane::test::test_three_planes_intersections
+        PASS [   0.023s] ( 50/141) godot-core builtin::plane::test::test_spatial_relations
+        PASS [   0.021s] ( 51/141) godot-core builtin::projection::test::test_frustum_aspect
+        PASS [   0.023s] ( 52/141) godot-core builtin::projection::test::test_diagonals
+        PASS [   0.022s] ( 53/141) godot-core builtin::projection::test::test_orthogonal_aspect
+        PASS [   0.024s] ( 54/141) godot-core builtin::projection::test::test_orthogonal
+        PASS [   0.027s] ( 55/141) godot-core builtin::projection::test::test_frustum
+        PASS [   0.019s] ( 56/141) godot-core builtin::rect2i::test::center
+        PASS [   0.024s] ( 57/141) godot-core builtin::rect2i::test::abs
+        PASS [   0.022s] ( 58/141) godot-core builtin::rect2i::test::area_and_has_area
+        PASS [   0.026s] ( 59/141) godot-core builtin::projection::test::test_perspective
+        PASS [   0.021s] ( 60/141) godot-core builtin::rect2i::test::construction_tests
+        PASS [   0.021s] ( 61/141) godot-core builtin::rect2i::test::contains_point_self_negative_panics
+        PASS [   0.020s] ( 62/141) godot-core builtin::rect2i::test::encloses
+        PASS [   0.020s] ( 63/141) godot-core builtin::rect2i::test::encloses_other_negative_panics
+        PASS [   0.022s] ( 64/141) godot-core builtin::rect2i::test::encloses_self_negative_panics
+        PASS [   0.020s] ( 65/141) godot-core builtin::rect2i::test::expand_and_contains_point
+        PASS [   0.022s] ( 66/141) godot-core builtin::rect2i::test::end
+        PASS [   0.021s] ( 67/141) godot-core builtin::rect2i::test::expand_self_negative_panics
+        PASS [   0.018s] ( 68/141) godot-core builtin::rect2i::test::grow_individual_and_side
+        PASS [   0.022s] ( 69/141) godot-core builtin::rect2i::test::grow
+        PASS [   0.018s] ( 70/141) godot-core builtin::rect2i::test::merge
+        PASS [   0.022s] ( 71/141) godot-core builtin::rect2i::test::intersects_and_intersection
+        PASS [   0.022s] ( 72/141) godot-core builtin::rect2i::test::intersects_other_negative_panics
+        PASS [   0.024s] ( 73/141) godot-core builtin::rect2i::test::intersects_self_negative_panics
+        PASS [   0.018s] ( 74/141) godot-core builtin::transform2d::test::interpolation
+        PASS [   0.021s] ( 75/141) godot-core builtin::rect2i::test::set_end
+        PASS [   0.022s] ( 76/141) godot-core builtin::transform2d::test::finite_number_checks
+        PASS [   0.022s] ( 77/141) godot-core builtin::rect2i::test::merge_self_negative_panics
+        PASS [   0.023s] ( 78/141) godot-core builtin::rect2i::test::merge_other_negative_panics
+        PASS [   0.127s] ( 79/141) godot-cell::mock blocking::no_mut_panic_on_main
+        PASS [   0.018s] ( 80/141) godot-core builtin::transform2d::test::rotation
+        PASS [   0.018s] ( 81/141) godot-core builtin::transform2d::test::translation
+        PASS [   0.022s] ( 82/141) godot-core builtin::transform2d::test::scaling
+        PASS [   0.020s] ( 83/141) godot-core builtin::transform3d::test::finite_number_checks
+        PASS [   0.020s] ( 84/141) godot-core builtin::transform3d::test::rotation
+        PASS [   0.024s] ( 85/141) godot-core builtin::transform2d::test::transform2d_constructors_correct
+        PASS [   0.019s] ( 86/141) godot-core builtin::transform3d::test::translation
+        PASS [   0.022s] ( 87/141) godot-core builtin::transform3d::test::scaling
+        PASS [   0.018s] ( 88/141) godot-core builtin::vectors::vector2::test::sign
+        PASS [   0.023s] ( 89/141) godot-core builtin::vectors::vector2::test::coord_min_max
+        PASS [   0.020s] ( 90/141) godot-core builtin::vectors::vector3::test::sign
+        PASS [   0.022s] ( 91/141) godot-core builtin::vectors::vector2i::test::sign
+        PASS [   0.024s] ( 92/141) godot-core builtin::vectors::vector2i::test::coord_min_max
+        PASS [   0.024s] ( 93/141) godot-core builtin::vectors::vector3::test::coord_min_max
+        PASS [   0.024s] ( 94/141) godot-core builtin::vectors::vector2i::test::axis_min_max
+        PASS [   0.024s] ( 95/141) godot-core builtin::vectors::vector3::test::iter_sum
+        PASS [   0.025s] ( 96/141) godot-core builtin::vectors::vector3::test::test_slerp
+        PASS [   0.020s] ( 97/141) godot-core builtin::vectors::vector3i::test::axis_min_max
+        PASS [   0.028s] ( 98/141) godot-core builtin::vectors::vector3::test::rotation
+        PASS [   0.019s] ( 99/141) godot-core builtin::vectors::vector3i::test::coord_min_max
+        PASS [   0.022s] (100/141) godot-core builtin::vectors::vector3i::test::sign
+        PASS [   0.021s] (101/141) godot-core builtin::vectors::vector4::test::coord_min_max
+        PASS [   0.020s] (102/141) godot-core builtin::vectors::vector4i::test::coord_min_max
+        PASS [   0.022s] (103/141) godot-core builtin::vectors::vector4::test::sign
+        PASS [   0.022s] (104/141) godot-core builtin::vectors::vector4i::test::sign
+        PASS [   0.024s] (105/141) godot-core builtin::vectors::vector4i::test::axis_min_max
+        PASS [   0.018s] (106/141) godot-core builtin::vectors::vector4i::test::test_iter_elementwise_prod
+        PASS [   0.019s] (107/141) godot-core private::tests::test_call_errors
+        PASS [   0.022s] (108/141) godot-core builtin::vectors::vector_swizzle::test::test_vector_swizzle
+        PASS [   0.020s] (109/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionCallError
+        PASS [   0.020s] (110/141) godot-ffi conv::test::u32_into_usize_test
+        PASS [   0.023s] (111/141) godot-ffi conv::test::sys_bool
+        PASS [   0.023s] (112/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionCallableCustomInfo
+        PASS [   0.019s] (113/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionClassCreationInfo2
+        PASS [   0.022s] (114/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionCallableCustomInfo2
+        PASS [   0.020s] (115/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionClassCreationInfo3
+        PASS [   0.017s] (116/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionClassVirtualMethodInfo
+        PASS [   0.019s] (117/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionClassMethodInfo
+        PASS [   0.024s] (118/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionClassCreationInfo
+        PASS [   0.021s] (119/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionInitialization
+        PASS [   0.021s] (120/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionGodotVersion
+        PASS [   0.019s] (121/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionInstanceBindingCallbacks
+        PASS [   0.021s] (122/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionPropertyInfo
+        PASS [   0.024s] (123/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionMethodInfo
+        PASS [   0.023s] (124/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionScriptInstanceInfo
+        PASS [   0.020s] (125/141) godot-ffi gen::gdextension_interface::bindgen_test_layout___fsid_t
+        PASS [   0.021s] (126/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionScriptInstanceInfo3
+        PASS [   0.023s] (127/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_GDExtensionScriptInstanceInfo2
+        PASS [   0.019s] (128/141) godot-ffi global::tests::test_global_map
+        PASS [   0.019s] (129/141) godot-ffi global::tests::test_global_poison
+        PASS [   0.021s] (130/141) godot-ffi global::tests::test_global_init_failed
+        PASS [   0.019s] (131/141) godot-ffi global::tests::test_global_would_block
+        PASS [   0.024s] (132/141) godot-ffi gen::gdextension_interface::bindgen_test_layout_max_align_t
+        PASS [   0.022s] (133/141) godot-ffi global::tests::test_global_vec
+        PASS [   0.021s] (134/141) godot-ffi plugins::tests::plugin_registry
+        PASS [   0.019s] (135/141) godot-macros util::kv_parser::tests::test_parse_kv_first_last_expr
+        PASS [   0.020s] (136/141) godot-macros util::kv_parser::tests::test_parse_kv_first_last_alone
+        PASS [   0.022s] (137/141) godot-macros util::kv_parser::tests::test_parse_kv_exprs
+        PASS [   0.019s] (138/141) godot-macros util::kv_parser::tests::test_parse_kv_ident
+        PASS [   0.016s] (139/141) godot-macros util::kv_parser::tests::test_parse_kv_just_key
+        PASS [   0.015s] (140/141) godot-macros util::kv_parser::tests::test_parse_kv_trailing_comma
+        PASS [   1.509s] (141/141) godot-core builtin::projection::test::test_is_orthogonal
+────────────
+     Summary [   1.587s] 141 tests run: 141 passed, 0 skipped
+reward=1 graded=141 found=22 failed=0 parsed=141 framework=cargo exit_code=0

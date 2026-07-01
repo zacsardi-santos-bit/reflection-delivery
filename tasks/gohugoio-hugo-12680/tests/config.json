@@ -1,0 +1,36 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./tpl/math -count=1",
+  "test_files": [
+    "tpl/math/math_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/gohugoio/hugo/tpl/math::TestMod",
+    "github.com/gohugoio/hugo/tpl/math::TestBasicNSArithmetic",
+    "github.com/gohugoio/hugo/tpl/math::TestSum",
+    "github.com/gohugoio/hugo/tpl/math::TestModBool",
+    "github.com/gohugoio/hugo/tpl/math::TestAsin",
+    "github.com/gohugoio/hugo/tpl/math::TestAcos",
+    "github.com/gohugoio/hugo/tpl/math::TestAtan",
+    "github.com/gohugoio/hugo/tpl/math::TestSin",
+    "github.com/gohugoio/hugo/tpl/math::TestMax",
+    "github.com/gohugoio/hugo/tpl/math::TestMin",
+    "github.com/gohugoio/hugo/tpl/math::TestTan",
+    "github.com/gohugoio/hugo/tpl/math::TestCos",
+    "github.com/gohugoio/hugo/tpl/math::TestFloor",
+    "github.com/gohugoio/hugo/tpl/math::TestLog",
+    "github.com/gohugoio/hugo/tpl/math::TestCeil",
+    "github.com/gohugoio/hugo/tpl/math::TestPi",
+    "github.com/gohugoio/hugo/tpl/math::TestSqrt",
+    "github.com/gohugoio/hugo/tpl/math::TestRound",
+    "github.com/gohugoio/hugo/tpl/math::TestAbs",
+    "github.com/gohugoio/hugo/tpl/math::TestProduct",
+    "github.com/gohugoio/hugo/tpl/math::TestPow",
+    "github.com/gohugoio/hugo/tpl/math::TestToDegrees",
+    "github.com/gohugoio/hugo/tpl/math::TestAtan2",
+    "github.com/gohugoio/hugo/tpl/math::TestToRadians"
+  ],
+  "PASS_TO_PASS": []
+}

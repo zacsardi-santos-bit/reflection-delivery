@@ -1,0 +1,699 @@
+patching file cli/test/fixtures/schema-with-nullable-list-items.graphql
+patching file cli/test/fixtures/schema-with-validation-errors.graphql
+patching file cli/test/fixtures/schema-with-warnings-and-errors.graphql
+patching file cli/test/grpc-service.test.ts
+patching file protographic/tests/sdl-validation/01-basic-validation.test.ts
+
+> @wundergraph/protographic@0.7.2 build /workspace/repo/protographic
+> tsc
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v3.1.4 /workspace/repo
+
+- Generating protobuf schema...
+[●] Generated protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should generate proto and mapping files
+ │
+ ├────────── name: testservice
+ ├───────── state: success
+ ├──── input file: /workspace/repo/cli/test/fixtures/full-schema.graphql
+ ├──── output dir: /tmp/grpc-test-1782746092388
+ ├── service name: TestserviceService
+ └───── generated: mapping.json, service.proto, service.proto.lock.json
+
+- Generating protobuf schema...
+(node:123) [DEP0147] DeprecationWarning: In future versions of Node.js, fs.rmdir(path, { recursive: true }) will be removed. Use fs.rm(path, { recursive: true }) instead
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[●] Generated protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should create output directory if it does not exist
+ │
+ ├────────── name: testservice
+ ├───────── state: success
+ ├──── input file: /workspace/repo/cli/test/fixtures/full-schema.graphql
+ ├──── output dir: /tmp/grpc-test-non-existent-1782746092426
+ ├── service name: TestserviceService
+ └───── generated: mapping.json, service.proto, service.proto.lock.json
+
+- Generating protobuf schema...
+Input file /tmp/non-existent-schema.graphql does not exist
+[●] Failed to generate protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should fail when input file does not exist
+ │
+ ├────────── name: testservice
+ ├───────── state: failed
+ └───────── error: process.exit unexpectedly called with "1"
+
+- Generating protobuf schema...
+Output directory /tmp/grpc-test-1782746092449/output.txt is not a directory
+[●] Failed to generate protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should fail when output path is a file
+ │
+ ├────────── name: testservice
+ ├───────── state: failed
+ └───────── error: process.exit unexpectedly called with "1"
+
+- Generating protobuf schema...
+[●] Generated protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should generate all files with warnings
+ │
+ ├────────── name: testservice
+ ├───────── state: success
+ ├──── input file: /workspace/repo/cli/test/fixtures/schema-with-nullable-list-items.graphql
+ ├──── output dir: /tmp/grpc-test-1782746092453
+ ├── service name: TestserviceService
+ └───── generated: mapping.json, service.proto, service.proto.lock.json
+
+- Generating protobuf schema...
+[●] Generated protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should fail when schema has validation errors
+ │
+ ├────────── name: testservice
+ ├───────── state: success
+ ├──── input file: /workspace/repo/cli/test/fixtures/schema-with-validation-errors.graphql
+ ├──── output dir: /tmp/grpc-test-1782746092461
+ ├── service name: TestserviceService
+ └───── generated: mapping.json, service.proto, service.proto.lock.json
+
+- Generating protobuf schema...
+[●] Generated protobuf schema
+stdout | test/grpc-service.test.ts > gRPC Generate Command > should display warnings and stop on errors
+ │
+ ├────────── name: testservice
+ ├───────── state: success
+ ├──── input file: /workspace/repo/cli/test/fixtures/schema-with-warnings-and-errors.graphql
+ ├──── output dir: /tmp/grpc-test-1782746092486
+ ├── service name: TestserviceService
+ └───── generated: mapping.json, service.proto, service.proto.lock.json
+
+ ❯ |wgc| test/grpc-service.test.ts (7 tests | 2 failed) 117ms
+   ✓ gRPC Generate Command > should generate proto and mapping files 42ms
+   ✓ gRPC Generate Command > should create output directory if it does not exist 19ms
+   ✓ gRPC Generate Command > should fail when input file does not exist 6ms
+   ✓ gRPC Generate Command > should fail when output path is a file 5ms
+   ✓ gRPC Generate Command > should generate all files with warnings 8ms
+   × gRPC Generate Command > should fail when schema has validation errors 24ms
+     → promise resolved "Command{ _events: {}, …(45), …(2) }" instead of rejecting
+   × gRPC Generate Command > should display warnings and stop on errors 12ms
+     → promise resolved "Command{ _events: {}, …(45), …(2) }" instead of rejecting
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |@wundergraph/protographic| tests/sdl-validation/01-basic-validation.test.ts [ protographic/tests/sdl-validation/01-basic-validation.test.ts ]
+Error: Cannot find module '../../src/sdl-validation-visitor' imported from '/workspace/repo/protographic/tests/sdl-validation/01-basic-validation.test.ts'
+ ❯ tests/sdl-validation/01-basic-validation.test.ts:2:31
+      1| import { buildSchema } from 'graphql';
+      2| import { describe, expect, test } from 'vitest';
+       |                               ^
+      3| import { SDLValidationVisitor } from '../../src/sdl-validation-visitor…
+      4| 
+
+Caused by: Error: Failed to load url ../../src/sdl-validation-visitor (resolved id: ../../src/sdl-validation-visitor) in /workspace/repo/protographic/tests/sdl-validation/01-basic-validation.test.ts. Does the file exist?
+ ❯ loadAndTransform ../node_modules/.pnpm/vite@5.4.19_@types+node@22.5.0_terser@5.39.0/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:51968:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |wgc| test/grpc-service.test.ts > gRPC Generate Command > should fail when schema has validation errors
+AssertionError: promise resolved "Command{ _events: {}, …(45), …(2) }" instead of rejecting
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- Error {[39m
+[32m-   "message": "rejected promise",[39m
+[31m+ Command {[39m
+[31m+   "_actionHandler": null,[39m
+[31m+   "_addImplicitHelpCommand": undefined,[39m
+[31m+   "_aliases": [],[39m
+[31m+   "_allowExcessArguments": true,[39m
+[31m+   "_allowUnknownOption": false,[39m
+[31m+   "_args": [],[39m
+[31m+   "_argsDescription": undefined,[39m
+[31m+   "_combineFlagAndOptionalValue": true,[39m
+[31m+   "_defaultCommandName": null,[39m
+[31m+   "_description": "",[39m
+[31m+   "_enablePositionalOptions": false,[39m
+[31m+   "_events": {},[39m
+[31m+   "_eventsCount": 0,[39m
+[31m+   "_executableDir": null,[39m
+[31m+   "_executableFile": null,[39m
+[31m+   "_executableHandler": false,[39m
+[31m+   "_exitCallback": null,[39m
+[31m+   "_hasHelpOption": true,[39m
+[31m+   "_helpCommandDescription": "display help for command",[39m
+[31m+   "_helpCommandName": "help",[39m
+[31m+   "_helpCommandnameAndArgs": "help [command]",[39m
+[31m+   "_helpConfiguration": {},[39m
+[31m+   "_helpDescription": "display help for command",[39m
+[31m+   "_helpFlags": "-h, --help",[39m
+[31m+   "_helpLongFlag": "--help",[39m
+[31m+   "_helpShortFlag": "-h",[39m
+[31m+   "_hidden": false,[39m
+[31m+   "_lifeCycleHooks": {},[39m
+[31m+   "_maxListeners": undefined,[39m
+[31m+   "_name": "program",[39m
+[31m+   "_optionValueSources": {},[39m
+[31m+   "_optionValues": {},[39m
+[31m+   "_outputConfiguration": {[39m
+[31m+     "getErrHelpWidth": [Function getErrHelpWidth],[39m
+[31m+     "getOutHelpWidth": [Function getOutHelpWidth],[39m
+[31m+     "outputError": [Function outputError],[39m
+[31m+     "writeErr": [Function writeErr],[39m
+[31m+     "writeOut": [Function writeOut],[39m
+[31m+   },[39m
+[31m+   "_passThroughOptions": false,[39m
+[31m+   "_scriptPath": null,[39m
+[31m+   "_showHelpAfterError": false,[39m
+[31m+   "_showSuggestionAfterError": true,[39m
+[31m+   "_storeOptionsAsProperties": false,[39m
+[31m+   "_summary": "",[39m
+[31m+   "args": [[39m
+[31m+     "generate",[39m
+[31m+     "testservice",[39m
+[31m+     "-i",[39m
+[31m+     "/workspace/repo/cli/test/fixtures/schema-with-validation-errors.graphql",[39m
+[31m+     "-o",[39m
+[31m+     "/tmp/grpc-test-1782746092461",[39m
+[31m+   ],[39m
+[31m+   "commands": [[39m
+[31m+     Command {[39m
+[31m+       "_actionHandler": [Function listener],[39m
+[31m+       "_addImplicitHelpCommand": undefined,[39m
+[31m+       "_aliases": [],[39m
+[31m+       "_allowExcessArguments": true,[39m
+[31m+       "_allowUnknownOption": false,[39m
+[31m+       "_args": [[39m
+[31m+         Argument {[39m
+[31m+           "_name": "name",[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The name of the proto service.",[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "required": false,[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+       ],[39m
+[31m+       "_argsDescription": undefined,[39m
+[31m+       "_combineFlagAndOptionalValue": true,[39m
+[31m+       "_defaultCommandName": null,[39m
+[31m+       "_description": "Generate a protobuf schema for a remote gRPC service.",[39m
+[31m+       "_enablePositionalOptions": false,[39m
+[31m+       "_events": {[39m
+[31m+         "option:go-package": [Function anonymous],[39m
+[31m+         "option:input": [Function anonymous],[39m
+[31m+         "option:output": [Function anonymous],[39m
+[31m+         "option:package-name": [Function anonymous],[39m
+[31m+         "option:proto-lock": [Function anonymous],[39m
+[31m+       },[39m
+[31m+       "_eventsCount": 5,[39m
+[31m+       "_executableDir": null,[39m
+[31m+       "_executableFile": null,[39m
+[31m+       "_executableHandler": false,[39m
+[31m+       "_exitCallback": null,[39m
+[31m+       "_hasHelpOption": true,[39m
+[31m+       "_helpCommandDescription": "display help for command",[39m
+[31m+       "_helpCommandName": "help",[39m
+[31m+       "_helpCommandnameAndArgs": "help [command]",[39m
+[31m+       "_helpConfiguration": {},[39m
+[31m+       "_helpDescription": "display help for command",[39m
+[31m+       "_helpFlags": "-h, --help",[39m
+[31m+       "_helpLongFlag": "--help",[39m
+[31m+       "_helpShortFlag": "-h",[39m
+[31m+       "_hidden": false,[39m
+[31m+       "_lifeCycleHooks": {},[39m
+[31m+       "_maxListeners": undefined,[39m
+[31m+       "_name": "generate",[39m
+[31m+       "_optionValueSources": {[39m
+[31m+         "input": "cli",[39m
+[31m+         "output": "cli",[39m
+[31m+         "packageName": "default",[39m
+[31m+       },[39m
+[31m+       "_optionValues": {[39m
+[31m+         "input": "/workspace/repo/cli/test/fixtures/schema-with-validation-errors.graphql",[39m
+[31m+         "output": "/tmp/grpc-test-1782746092461",[39m
+[31m+         "packageName": "service.v1",[39m
+[31m+       },[39m
+[31m+       "_outputConfiguration": {[39m
+[31m+         "getErrHelpWidth": [Function getErrHelpWidth],[39m
+[31m+         "getOutHelpWidth": [Function getOutHelpWidth],[39m
+[31m+         "outputError": [Function outputError],[39m
+[31m+         "writeErr": [Function writeErr],[39m
+[31m+         "writeOut": [Function writeOut],[39m
+[31m+       },[39m
+[31m+       "_passThroughOptions": false,[39m
+[31m+       "_scriptPath": null,[39m
+[31m+       "_showHelpAfterError": false,[39m
+[31m+       "_showSuggestionAfterError": true,[39m
+[31m+       "_storeOptionsAsProperties": false,[39m
+[31m+       "_summary": "",[39m
+[31m+       "args": [[39m
+[31m+         "testservice",[39m
+[31m+       ],[39m
+[31m+       "commands": [],[39m
+[31m+       "options": [[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The GraphQL schema file to generate a protobuf schema from.",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-i, --input <path-to-input>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--input",[39m
+[31m+           "mandatory": true,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-i",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": ".",[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The output directory for the protobuf schema. (default \".\").",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-o, --output <path-to-output>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--output",[39m
+[31m+           "mandatory": false,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-o",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": "service.v1",[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The name of the proto package. (default \"service.v1\")",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-p, --package-name <name>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--package-name",[39m
+[31m+           "mandatory": false,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-p",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "Adds an `option go_package` to the proto file.",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-g, --go-package <name>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--go-package",[39m
+[31m+           "mandatory": false,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-g",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The path to the existing proto lock file to use as the starting point for the updated proto lock file. Default is to use and overwrite the output file \"<outdir>/service.proto.lock.json\".",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-l, --proto-lock <path-to-proto-lock>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--proto-lock",[39m
+[31m+           "mandatory": false,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-l",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+       ],[39m
+[31m+       "parent": [Circular],[39m
+[31m+       "processedArgs": [[39m
+[31m+         "testservice",[39m
+[31m+       ],[39m
+[31m+       "rawArgs": [],[39m
+[31m+       "registeredArguments": [[39m
+[31m+         Argument {[39m
+[31m+           "_name": "name",[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The name of the proto service.",[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "required": false,[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+       ],[39m
+[31m+       Symbol(shapeMode): false,[39m
+[31m+       Symbol(kCapture): false,[39m
+[31m+     },[39m
+[31m+   ],[39m
+[31m+   "options": [],[39m
+[31m+   "parent": null,[39m
+[31m+   "processedArgs": [],[39m
+[31m+   "rawArgs": [[39m
+[31m+     "generate",[39m
+[31m+     "testservice",[39m
+[31m+     "-i",[39m
+[31m+     "/workspace/repo/cli/test/fixtures/schema-with-validation-errors.graphql",[39m
+[31m+     "-o",[39m
+[31m+     "/tmp/grpc-test-1782746092461",[39m
+[31m+   ],[39m
+[31m+   "registeredArguments": [],[39m
+[31m+   Symbol(shapeMode): false,[39m
+[31m+   Symbol(kCapture): false,[39m
+[2m  }[22m
+
+ ❯ test/grpc-service.test.ts:244:5
+    242|         }
+    243|       )
+    244|     ).rejects.toThrow('Schema validation failed');
+       |     ^
+    245| 
+    246|     // Verify no output files were created (generation should stop on …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  |wgc| test/grpc-service.test.ts > gRPC Generate Command > should display warnings and stop on errors
+AssertionError: promise resolved "Command{ _events: {}, …(45), …(2) }" instead of rejecting
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- Error {[39m
+[32m-   "message": "rejected promise",[39m
+[31m+ Command {[39m
+[31m+   "_actionHandler": null,[39m
+[31m+   "_addImplicitHelpCommand": undefined,[39m
+[31m+   "_aliases": [],[39m
+[31m+   "_allowExcessArguments": true,[39m
+[31m+   "_allowUnknownOption": false,[39m
+[31m+   "_args": [],[39m
+[31m+   "_argsDescription": undefined,[39m
+[31m+   "_combineFlagAndOptionalValue": true,[39m
+[31m+   "_defaultCommandName": null,[39m
+[31m+   "_description": "",[39m
+[31m+   "_enablePositionalOptions": false,[39m
+[31m+   "_events": {},[39m
+[31m+   "_eventsCount": 0,[39m
+[31m+   "_executableDir": null,[39m
+[31m+   "_executableFile": null,[39m
+[31m+   "_executableHandler": false,[39m
+[31m+   "_exitCallback": null,[39m
+[31m+   "_hasHelpOption": true,[39m
+[31m+   "_helpCommandDescription": "display help for command",[39m
+[31m+   "_helpCommandName": "help",[39m
+[31m+   "_helpCommandnameAndArgs": "help [command]",[39m
+[31m+   "_helpConfiguration": {},[39m
+[31m+   "_helpDescription": "display help for command",[39m
+[31m+   "_helpFlags": "-h, --help",[39m
+[31m+   "_helpLongFlag": "--help",[39m
+[31m+   "_helpShortFlag": "-h",[39m
+[31m+   "_hidden": false,[39m
+[31m+   "_lifeCycleHooks": {},[39m
+[31m+   "_maxListeners": undefined,[39m
+[31m+   "_name": "program",[39m
+[31m+   "_optionValueSources": {},[39m
+[31m+   "_optionValues": {},[39m
+[31m+   "_outputConfiguration": {[39m
+[31m+     "getErrHelpWidth": [Function getErrHelpWidth],[39m
+[31m+     "getOutHelpWidth": [Function getOutHelpWidth],[39m
+[31m+     "outputError": [Function outputError],[39m
+[31m+     "writeErr": [Function writeErr],[39m
+[31m+     "writeOut": [Function writeOut],[39m
+[31m+   },[39m
+[31m+   "_passThroughOptions": false,[39m
+[31m+   "_scriptPath": null,[39m
+[31m+   "_showHelpAfterError": false,[39m
+[31m+   "_showSuggestionAfterError": true,[39m
+[31m+   "_storeOptionsAsProperties": false,[39m
+[31m+   "_summary": "",[39m
+[31m+   "args": [[39m
+[31m+     "generate",[39m
+[31m+     "testservice",[39m
+[31m+     "-i",[39m
+[31m+     "/workspace/repo/cli/test/fixtures/schema-with-warnings-and-errors.graphql",[39m
+[31m+     "-o",[39m
+[31m+     "/tmp/grpc-test-1782746092486",[39m
+[31m+   ],[39m
+[31m+   "commands": [[39m
+[31m+     Command {[39m
+[31m+       "_actionHandler": [Function listener],[39m
+[31m+       "_addImplicitHelpCommand": undefined,[39m
+[31m+       "_aliases": [],[39m
+[31m+       "_allowExcessArguments": true,[39m
+[31m+       "_allowUnknownOption": false,[39m
+[31m+       "_args": [[39m
+[31m+         Argument {[39m
+[31m+           "_name": "name",[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The name of the proto service.",[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "required": false,[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+       ],[39m
+[31m+       "_argsDescription": undefined,[39m
+[31m+       "_combineFlagAndOptionalValue": true,[39m
+[31m+       "_defaultCommandName": null,[39m
+[31m+       "_description": "Generate a protobuf schema for a remote gRPC service.",[39m
+[31m+       "_enablePositionalOptions": false,[39m
+[31m+       "_events": {[39m
+[31m+         "option:go-package": [Function anonymous],[39m
+[31m+         "option:input": [Function anonymous],[39m
+[31m+         "option:output": [Function anonymous],[39m
+[31m+         "option:package-name": [Function anonymous],[39m
+[31m+         "option:proto-lock": [Function anonymous],[39m
+[31m+       },[39m
+[31m+       "_eventsCount": 5,[39m
+[31m+       "_executableDir": null,[39m
+[31m+       "_executableFile": null,[39m
+[31m+       "_executableHandler": false,[39m
+[31m+       "_exitCallback": null,[39m
+[31m+       "_hasHelpOption": true,[39m
+[31m+       "_helpCommandDescription": "display help for command",[39m
+[31m+       "_helpCommandName": "help",[39m
+[31m+       "_helpCommandnameAndArgs": "help [command]",[39m
+[31m+       "_helpConfiguration": {},[39m
+[31m+       "_helpDescription": "display help for command",[39m
+[31m+       "_helpFlags": "-h, --help",[39m
+[31m+       "_helpLongFlag": "--help",[39m
+[31m+       "_helpShortFlag": "-h",[39m
+[31m+       "_hidden": false,[39m
+[31m+       "_lifeCycleHooks": {},[39m
+[31m+       "_maxListeners": undefined,[39m
+[31m+       "_name": "generate",[39m
+[31m+       "_optionValueSources": {[39m
+[31m+         "input": "cli",[39m
+[31m+         "output": "cli",[39m
+[31m+         "packageName": "default",[39m
+[31m+       },[39m
+[31m+       "_optionValues": {[39m
+[31m+         "input": "/workspace/repo/cli/test/fixtures/schema-with-warnings-and-errors.graphql",[39m
+[31m+         "output": "/tmp/grpc-test-1782746092486",[39m
+[31m+         "packageName": "service.v1",[39m
+[31m+       },[39m
+[31m+       "_outputConfiguration": {[39m
+[31m+         "getErrHelpWidth": [Function getErrHelpWidth],[39m
+[31m+         "getOutHelpWidth": [Function getOutHelpWidth],[39m
+[31m+         "outputError": [Function outputError],[39m
+[31m+         "writeErr": [Function writeErr],[39m
+[31m+         "writeOut": [Function writeOut],[39m
+[31m+       },[39m
+[31m+       "_passThroughOptions": false,[39m
+[31m+       "_scriptPath": null,[39m
+[31m+       "_showHelpAfterError": false,[39m
+[31m+       "_showSuggestionAfterError": true,[39m
+[31m+       "_storeOptionsAsProperties": false,[39m
+[31m+       "_summary": "",[39m
+[31m+       "args": [[39m
+[31m+         "testservice",[39m
+[31m+       ],[39m
+[31m+       "commands": [],[39m
+[31m+       "options": [[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The GraphQL schema file to generate a protobuf schema from.",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-i, --input <path-to-input>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--input",[39m
+[31m+           "mandatory": true,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-i",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": ".",[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The output directory for the protobuf schema. (default \".\").",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-o, --output <path-to-output>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--output",[39m
+[31m+           "mandatory": false,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-o",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": "service.v1",[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The name of the proto package. (default \"service.v1\")",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-p, --package-name <name>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--package-name",[39m
+[31m+           "mandatory": false,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-p",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "Adds an `option go_package` to the proto file.",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-g, --go-package <name>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--go-package",[39m
+[31m+           "mandatory": false,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-g",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+         Option {[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "conflictsWith": [],[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The path to the existing proto lock file to use as the starting point for the updated proto lock file. Default is to use and overwrite the output file \"<outdir>/service.proto.lock.json\".",[39m
+[31m+           "envVar": undefined,[39m
+[31m+           "flags": "-l, --proto-lock <path-to-proto-lock>",[39m
+[31m+           "hidden": false,[39m
+[31m+           "implied": undefined,[39m
+[31m+           "long": "--proto-lock",[39m
+[31m+           "mandatory": false,[39m
+[31m+           "negate": false,[39m
+[31m+           "optional": false,[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "presetArg": undefined,[39m
+[31m+           "required": true,[39m
+[31m+           "short": "-l",[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+       ],[39m
+[31m+       "parent": [Circular],[39m
+[31m+       "processedArgs": [[39m
+[31m+         "testservice",[39m
+[31m+       ],[39m
+[31m+       "rawArgs": [],[39m
+[31m+       "registeredArguments": [[39m
+[31m+         Argument {[39m
+[31m+           "_name": "name",[39m
+[31m+           "argChoices": undefined,[39m
+[31m+           "defaultValue": undefined,[39m
+[31m+           "defaultValueDescription": undefined,[39m
+[31m+           "description": "The name of the proto service.",[39m
+[31m+           "parseArg": undefined,[39m
+[31m+           "required": false,[39m
+[31m+           "variadic": false,[39m
+[31m+         },[39m
+[31m+       ],[39m
+[31m+       Symbol(shapeMode): false,[39m
+[31m+       Symbol(kCapture): false,[39m
+[31m+     },[39m
+[31m+   ],[39m
+[31m+   "options": [],[39m
+[31m+   "parent": null,[39m
+[31m+   "processedArgs": [],[39m
+[31m+   "rawArgs": [[39m
+[31m+     "generate",[39m
+[31m+     "testservice",[39m
+[31m+     "-i",[39m
+[31m+     "/workspace/repo/cli/test/fixtures/schema-with-warnings-and-errors.graphql",[39m
+[31m+     "-o",[39m
+[31m+     "/tmp/grpc-test-1782746092486",[39m
+[31m+   ],[39m
+[31m+   "registeredArguments": [],[39m
+[31m+   Symbol(shapeMode): false,[39m
+[31m+   Symbol(kCapture): false,[39m
+[2m  }[22m
+
+ ❯ test/grpc-service.test.ts:284:5
+    282|         }
+    283|       )
+    284|     ).rejects.toThrow('Schema validation failed');
+       |     ^
+    285| 
+    286|     // Verify no output files were created (generation should stop on …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 5 passed (7)
+   Start at  15:14:49
+   Duration  3.12s (transform 652ms, setup 0ms, collect 1.89s, tests 117ms, environment 1ms, prepare 877ms)
+
+reward=0 graded=13 found=0 failed=0 parsed=0 framework=vitest exit_code=1

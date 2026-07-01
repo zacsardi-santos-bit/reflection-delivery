@@ -1,0 +1,384 @@
+diff --git a/.gitignore b/.gitignore
+index 0e45139..80c4014 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,5 +1,7 @@
+ *.out
+-.tmp
++.tmp/
++tmp/
++repo/
+ build/
+ vendor/libgit2/build/
+ vendor/libgit2/install/
+diff --git a/README.md b/README.md
+index 826c665..9256a29 100644
+--- a/README.md
++++ b/README.md
+@@ -61,6 +61,12 @@ mbt build branch
+ # Build the current branch
+ mbt build head
+ 
++# Build only the changes in your local workdir without commiting
++mbt build local
++
++# Build everything in the current workdir
++mbt build local --all
++
+ # Build a specific branch
+ mbt build branch feature
+ 
+diff --git a/cmd/build.go b/cmd/build.go
+index 90f2870..3b8b11a 100644
+--- a/cmd/build.go
++++ b/cmd/build.go
+@@ -17,10 +17,13 @@ func init() {
+ 	buildDiff.Flags().StringVar(&from, "from", "", "from commit")
+ 	buildDiff.Flags().StringVar(&to, "to", "", "to commit")
+ 
++	buildLocal.Flags().BoolVarP(&all, "all", "a", false, "all modules")
++
+ 	buildCommand.AddCommand(buildBranch)
+ 	buildCommand.AddCommand(buildPr)
+ 	buildCommand.AddCommand(buildDiff)
+ 	buildCommand.AddCommand(buildHead)
++	buildCommand.AddCommand(buildLocal)
+ 	RootCmd.AddCommand(buildCommand)
+ }
+ 
+@@ -123,6 +126,27 @@ Commit SHA must be the complete 40 character SHA1 string.
+ 	},
+ }
+ 
++var buildLocal = &cobra.Command{
++	Use:   "local [--all]",
++	Short: "Builds the diff between the work dir and the last commit",
++	Long: `Builds the diff between the work dir and the last commit
++
++Works out the merge base between the local working directory and the last 
++commit on this branch. Then it will try to build only the modules have changed
++during the last commit and the current build.
++
++Specify the --all flag to everything local branch. 
++	`,
++	RunE: func(cmd *cobra.Command, args []string) error {
++		m, err := lib.ManifestByLocalDir(in, all)
++		if err != nil {
++			return handle(err)
++		}
++
++		return buildDir(m)
++	},
++}
++
+ func build(m *lib.Manifest) error {
+ 	return lib.Build(m, os.Stdin, os.Stdout, os.Stderr, func(a *lib.Module, s lib.BuildStage) {
+ 		switch s {
+@@ -134,6 +158,17 @@ func build(m *lib.Manifest) error {
+ 	})
+ }
+ 
++func buildDir(m *lib.Manifest) error {
++	return lib.BuildDir(m, os.Stdin, os.Stdout, os.Stderr, func(a *lib.Module, s lib.BuildStage) {
++		switch s {
++		case lib.BuildStageBeforeBuild:
++			logrus.Infof("BUILD %s in %s for %s", a.Name(), a.Path(), a.Version())
++		case lib.BuildStageSkipBuild:
++			logrus.Infof("SKIP %s in %s for %s", a.Name(), a.Path(), a.Version())
++		}
++	})
++}
++
+ var buildCommand = &cobra.Command{
+ 	Use:   "build",
+ 	Short: "Main command for building the repository",
+diff --git a/cmd/describe.go b/cmd/describe.go
+index 49b2c69..378839b 100644
+--- a/cmd/describe.go
++++ b/cmd/describe.go
+@@ -25,11 +25,13 @@ func init() {
+ 
+ 	describeDiffCmd.Flags().StringVar(&from, "from", "", "from commit")
+ 	describeDiffCmd.Flags().StringVar(&to, "to", "", "to commit")
++	describeLocalCmd.Flags().BoolVarP(&all, "all", "a", false, "build all")
+ 
+ 	describeCmd.PersistentFlags().BoolVar(&formatAsJson, "json", false, "format output as json")
+ 	describeCmd.AddCommand(describeCommitCmd)
+ 	describeCmd.AddCommand(describeBranchCmd)
+ 	describeCmd.AddCommand(describeHeadCmd)
++	describeCmd.AddCommand(describeLocalCmd)
+ 	describeCmd.AddCommand(describePrCmd)
+ 	describeCmd.AddCommand(describeIntersectionCmd)
+ 	describeCmd.AddCommand(describeDiffCmd)
+@@ -87,6 +89,23 @@ Displays all modules as of the tip of the branch pointed at head.
+ 	},
+ }
+ 
++var describeLocalCmd = &cobra.Command{
++	Use:   "local",
++	Short: "Describes the manifest for the local branch",
++	Long: `Describes the manifest for the local branch
++	
++Displays all modules in the local working directory even if they have not been committed.
++`,
++	RunE: func(cmd *cobra.Command, args []string) error {
++		m, err := lib.ManifestByLocalDir(in, all)
++		if err != nil {
++			return handle(err)
++		}
++
++		return handle(output(m.Modules))
++	},
++}
++
+ var describePrCmd = &cobra.Command{
+ 	Use:   "pr --src <branch> --dst <branch>",
+ 	Short: "Describes the manifest for diff between src and dst branches",
+diff --git a/cmd/root.go b/cmd/root.go
+index 1701fb0..ecfb1b9 100644
+--- a/cmd/root.go
++++ b/cmd/root.go
+@@ -16,6 +16,7 @@ var (
+ 	first  string
+ 	second string
+ 	kind   string
++	all    bool
+ )
+ 
+ func init() {
+diff --git a/lib/build.go b/lib/build.go
+index 48730b3..530a3e8 100644
+--- a/lib/build.go
++++ b/lib/build.go
+@@ -82,6 +82,25 @@ func Build(m *Manifest, stdin io.Reader, stdout, stderr io.Writer, buildStageCal
+ 	return nil
+ }
+ 
++// BuildDir runs the build for the modules in the specified directory.
++func BuildDir(m *Manifest, stdin io.Reader, stdout, stderr io.Writer, buildStageCallback func(mod *Module, s BuildStage)) error {
++	for _, a := range m.Modules {
++		if !canBuildHere(a) {
++			buildStageCallback(a, BuildStageSkipBuild)
++			continue
++		}
++
++		buildStageCallback(a, BuildStageBeforeBuild)
++		err := buildOne(m, a, stdin, stdout, stderr)
++		if err != nil {
++			return wrap(err)
++		}
++		buildStageCallback(a, BuildStageAfterBuild)
++	}
++
++	return nil
++}
++
+ func setupModBuildEnvironment(manifest *Manifest, mod *Module) []string {
+ 	r := []string{
+ 		fmt.Sprintf("MBT_BUILD_COMMIT=%s", manifest.Sha),
+diff --git a/lib/discover.go b/lib/discover.go
+index 6d93a91..62cd401 100644
+--- a/lib/discover.go
++++ b/lib/discover.go
+@@ -6,6 +6,9 @@ import (
+ 	"encoding/hex"
+ 	"fmt"
+ 	"io"
++	"io/ioutil"
++	"os"
++	"path/filepath"
+ 	"strings"
+ 
+ 	"github.com/buddyspike/graph"
+@@ -224,3 +227,47 @@ func discoverMetadata(repo *git.Repository, commit *git.Commit) (a moduleMetadat
+ 
+ 	return metadataSet, nil
+ }
++
++func discoverMetadataByDir(repo *git.Repository, dir string) (a moduleMetadataSet, outErr error) {
++	// Setup the panic handler to trap potential panics while walking the tree
++	defer handlePanic(&outErr)
++
++	metadataSet := moduleMetadataSet{}
++	currentDir, err := filepath.Abs(dir)
++	if err != nil {
++		failf(err, "error whilst loading current directory")
++	}
++
++	walkfunc := func(path string, info os.FileInfo, err error) error {
++		if info.Name() == ".mbt.yml" && info.IsDir() == false {
++			contents, err := ioutil.ReadFile(path)
++			if err != nil {
++				failf(err, "error whilst reading file contents at path %s", path)
++			}
++
++			spec, err := newSpec(contents)
++			if err != nil {
++				failf(err, "error whilst parsing spec at %s", path)
++			}
++
++			// reduce the path down to be only relative for the module
++			relPath, err := filepath.Rel(currentDir, filepath.Dir(path))
++			if err != nil {
++				failf(err, "error whilst reading relative path %s", path)
++			}
++			dir := strings.TrimRight(relPath, "/")
++
++			hash := "local"
++			metadataSet = append(metadataSet, newModuleMetadata(dir, hash, spec))
++		}
++
++		return nil
++	}
++
++	err = filepath.Walk(dir, walkfunc)
++	if err != nil {
++		failf(err, "failed to walk the directory at path %s", dir)
++	}
++
++	return metadataSet, err
++}
+diff --git a/lib/git_utils.go b/lib/git_utils.go
+index 84bfb99..1e320d6 100644
+--- a/lib/git_utils.go
++++ b/lib/git_utils.go
+@@ -1,6 +1,8 @@
+ package lib
+ 
+-import git "github.com/libgit2/git2go"
++import (
++	git "github.com/libgit2/git2go"
++)
+ 
+ func statusCount(repo *git.Repository) (int, error) {
+ 	status, err := repo.StatusList(&git.StatusOptions{
+@@ -78,6 +80,20 @@ func getDiffFromMergeBase(repo *git.Repository, srcC, dstC *git.Commit) (*git.Di
+ 	return diff, err
+ }
+ 
++func getDiffFromIndex(repo *git.Repository) (*git.Diff, error) {
++	index, err := repo.Index()
++	if err != nil {
++		return nil, wrap(err)
++	}
++
++	diff, err := repo.DiffIndexToWorkdir(index, &git.DiffOptions{Flags: git.DiffIncludeUntracked})
++	if err != nil {
++		return nil, wrap(err)
++	}
++
++	return diff, err
++}
++
+ func getCommit(repo *git.Repository, commitSha string) (*git.Commit, error) {
+ 	commitOid, err := git.NewOid(commitSha)
+ 	if err != nil {
+diff --git a/lib/manifest.go b/lib/manifest.go
+index 28659c1..12b47e8 100644
+--- a/lib/manifest.go
++++ b/lib/manifest.go
+@@ -94,6 +94,13 @@ func ManifestByDiff(dir, from, to string) (*Manifest, error) {
+ 	})
+ }
+ 
++// ManifestByLocalDir returns the manifest of the diff between the local branch and the working directory
++func ManifestByLocalDir(dir string, all bool) (*Manifest, error) {
++	return buildManifest(dir, func(repo *git.Repository) (*Manifest, error) {
++		return fromDirectory(repo, dir, "local", all)
++	})
++}
++
+ // ManifestByHead returns the manifest for head of the current branch.
+ func ManifestByHead(dir string) (*Manifest, error) {
+ 	return buildManifest(dir, func(repo *git.Repository) (*Manifest, error) {
+@@ -115,6 +122,15 @@ func (m *Manifest) indexByPath() map[string]*Module {
+ 	return m.Modules.indexByPath()
+ }
+ 
++func fromBranch(repo *git.Repository, dir string, branch string) (*Manifest, error) {
++	commit, err := getBranchCommit(repo, branch)
++	if err != nil {
++		return nil, err
++	}
++
++	return fromCommit(repo, dir, commit)
++}
++
+ func fromCommit(repo *git.Repository, dir string, commit *git.Commit) (*Manifest, error) {
+ 	metadataSet, err := discoverMetadata(repo, commit)
+ 	if err != nil {
+@@ -129,17 +145,24 @@ func fromCommit(repo *git.Repository, dir string, commit *git.Commit) (*Manifest
+ 	return &Manifest{dir, commit.Id().String(), vmods}, nil
+ }
+ 
+-func newEmptyManifest(dir string) *Manifest {
+-	return &Manifest{Modules: []*Module{}, Dir: dir, Sha: ""}
+-}
++func fromDirectory(repo *git.Repository, dir, sha string, all bool) (*Manifest, error) {
++	var vmods Modules
++	var err error
++	if all == false {
++		vmods, err = modulesInDirectoryDiff(repo, dir)
++	} else {
++		vmods, err = modulesInDirectory(repo, dir)
++	}
+ 
+-func fromBranch(repo *git.Repository, dir string, branch string) (*Manifest, error) {
+-	commit, err := getBranchCommit(repo, branch)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 
+-	return fromCommit(repo, dir, commit)
++	return &Manifest{Modules: vmods, Dir: dir, Sha: sha}, nil
++}
++
++func newEmptyManifest(dir string) *Manifest {
++	return &Manifest{Modules: []*Module{}, Dir: dir, Sha: ""}
+ }
+ 
+ type manifestBuilder func(*git.Repository) (*Manifest, error)
+diff --git a/lib/module.go b/lib/module.go
+index 97e8037..1908dc1 100644
+--- a/lib/module.go
++++ b/lib/module.go
+@@ -242,6 +242,39 @@ func modulesInDiffWithDependencies(repo *git.Repository, to, from *git.Commit) (
+ 	return modulesInDiffWithDepGraph(repo, to, from, false)
+ }
+ 
++func modulesInDirectoryDiff(repo *git.Repository, dir string) (Modules, error) {
++	modules, err := modulesInDirectory(repo, dir)
++	if err != nil {
++		return nil, err
++	}
++
++	diff, err := getDiffFromIndex(repo)
++	if err != nil {
++		return nil, err
++	}
++
++	m, err := reduceToDiff(modules, diff)
++	if err != nil {
++		return nil, err
++	}
++
++	return m, nil
++}
++
++func modulesInDirectory(repo *git.Repository, dir string) (Modules, error) {
++	metadata, err := discoverMetadataByDir(repo, dir)
++	if err != nil {
++		return nil, err
++	}
++
++	modules, err := metadata.toModules()
++	if err != nil {
++		return nil, err
++	}
++
++	return modules, nil
++}
++
+ func reduceToDiff(modules Modules, diff *git.Diff) (Modules, error) {
+ 	q := modules.indexByPath()
+ 	filtered := make(map[string]*Module)

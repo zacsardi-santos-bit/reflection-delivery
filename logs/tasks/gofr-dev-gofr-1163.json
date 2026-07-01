@@ -1,0 +1,23 @@
+{
+ "task": "gofr-dev-gofr-1163",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds pkg/gofr/cmd/terminal/{output,progress,spinner}.go; test asserts exact ANSI output 'expectedOut := \"\\r[\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2591 ...] 20.000%\"' and spinner ticker stops on ctx cancel"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

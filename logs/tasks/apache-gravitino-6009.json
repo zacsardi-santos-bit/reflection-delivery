@@ -1,0 +1,23 @@
+{
+ "task": "apache-gravitino-6009",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'if catalog.type() == Catalog.Type.MODEL', 'class GenericModelCatalog(BaseSchemaCatalog)' with register_model/get_model/delete_model/link_model_version + moves catalog modules to gravitino/client/; F2P=38 pytest"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 24,
+  "shallow": true
+ }
+}

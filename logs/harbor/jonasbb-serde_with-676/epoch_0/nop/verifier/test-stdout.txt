@@ -1,0 +1,448 @@
+patching file serde_with/tests/schemars_0_8.rs
+patching file serde_with/tests/schemars_0_8/schemars_basic.json
+patching file serde_with/tests/schemars_0_8/snapshots/bytes.json
+patching file serde_with/tests/schemars_0_8/snapshots/default_on_null.json
+patching file serde_with/tests/schemars_0_8/snapshots/from_into.json
+patching file serde_with/tests/schemars_0_8/snapshots/map.json
+patching file serde_with/tests/schemars_0_8/snapshots/map_fixed.json
+patching file serde_with/tests/schemars_0_8/snapshots/set_last_value_wins.json
+patching file serde_with/tests/schemars_0_8/snapshots/set_prevent_duplicates.json
+patching file serde_with/tests/schemars_0_8/snapshots/string_with_separator.json
+patching file serde_with/tests/schemars_0_8/test_std/map.json
+patching file serde_with/tests/schemars_0_8/test_std/option.json
+patching file serde_with/tests/schemars_0_8/test_std/set.json
+patching file serde_with/tests/schemars_0_8/test_std/tuples.json
+patching file serde_with/tests/schemars_0_8/test_std/vec.json
+patching file serde_with/tests/schemars_0_8/test_std/vec_deque.json
+   Compiling proc-macro2 v1.0.70
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.1.0
+   Compiling serde v1.0.193
+   Compiling version_check v0.9.4
+   Compiling memchr v2.6.4
+   Compiling libc v0.2.151
+   Compiling syn v1.0.109
+   Compiling tinyvec_macros v0.1.1
+   Compiling hashbrown v0.14.3
+   Compiling equivalent v1.0.1
+   Compiling ryu v1.0.16
+   Compiling itoa v1.0.10
+   Compiling serde_json v1.0.108
+   Compiling regex-syntax v0.7.5
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.10.0
+   Compiling fnv v1.0.7
+   Compiling tinyvec v1.6.0
+   Compiling cfg-if v1.0.0
+   Compiling unicode-bidi v0.3.14
+   Compiling parking_lot_core v0.9.9
+   Compiling percent-encoding v2.3.1
+   Compiling paste v1.0.14
+   Compiling anyhow v1.0.75
+   Compiling schemars v0.8.16
+   Compiling num-traits v0.2.17
+   Compiling num-integer v0.1.45
+   Compiling num-bigint v0.4.4
+   Compiling aho-corasick v1.1.2
+   Compiling indexmap v2.1.0
+   Compiling num-rational v0.4.1
+   Compiling num-iter v0.1.43
+   Compiling unicase v2.7.0
+   Compiling lock_api v0.4.11
+   Compiling unicode-normalization v0.1.22
+   Compiling ahash v0.8.6
+   Compiling form_urlencoded v1.2.1
+   Compiling thiserror v1.0.51
+   Compiling time-core v0.1.0
+   Compiling bit-vec v0.6.3
+   Compiling once_cell v1.19.0
+   Compiling bitflags v1.3.2
+   Compiling scopeguard v1.2.0
+   Compiling quote v1.0.33
+   Compiling pulldown-cmark v0.8.0
+   Compiling idna v0.5.0
+   Compiling minimal-lexical v0.2.1
+   Compiling smallvec v1.11.2
+   Compiling semver v1.0.20
+   Compiling syn v2.0.41
+   Compiling regex-automata v0.3.9
+   Compiling nom v7.1.3
+   Compiling url v2.5.0
+   Compiling getrandom v0.2.11
+   Compiling bit-set v0.5.3
+   Compiling time-macros v0.2.8
+   Compiling lazy_static v1.4.0
+   Compiling byteorder v1.5.0
+   Compiling dyn-clone v1.0.16
+   Compiling rustversion v1.0.14
+   Compiling zerocopy v0.7.31
+   Compiling parking_lot v0.12.1
+   Compiling yansi v0.5.1
+   Compiling xml-rs v0.8.14
+   Compiling bytecount v0.6.7
+   Compiling dissimilar v1.0.7
+   Compiling num-cmp v0.1.0
+   Compiling num-complex v0.4.4
+   Compiling log v0.4.20
+   Compiling base64 v0.13.1
+   Compiling base64 v0.21.5
+   Compiling diff v0.1.13
+   Compiling unsafe-libyaml v0.2.10
+   Compiling rmp v0.8.12
+   Compiling iso8601 v0.6.1
+   Compiling uuid v1.6.1
+   Compiling pretty_assertions v1.4.0
+   Compiling expect-test v1.4.1
+   Compiling mime v0.3.17
+   Compiling glob v0.3.1
+   Compiling regex v1.9.6
+   Compiling darling_core v0.20.3
+   Compiling fancy-regex v0.11.0
+   Compiling serde_derive_internals v0.26.0
+   Compiling num v0.4.1
+   Compiling fraction v0.13.1
+   Compiling time v0.3.20
+   Compiling schemars_derive v0.8.16
+   Compiling serde_derive v1.0.193
+   Compiling thiserror-impl v1.0.51
+   Compiling darling_macro v0.20.3
+   Compiling darling v0.20.3
+   Compiling serde_with_macros v3.4.0 (/workspace/repo/serde_with_macros)
+   Compiling toml v0.5.11
+   Compiling serde-xml-rs v0.6.0
+   Compiling serde_yaml v0.9.27
+   Compiling rmp-serde v1.1.2
+   Compiling ron v0.8.0
+   Compiling serde_test v1.0.176
+   Compiling jsonschema v0.17.1
+   Compiling version-sync v0.9.4
+   Compiling serde_with v3.4.0 (/workspace/repo/serde_with)
+error[E0277]: the trait bound `serde_with::Schema<std::vec::Vec<u8>, serde_with::Bytes>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:36:13
+    |
+36  |               #[serde_with::serde_as]
+    |               ^^^^^^^^^^^^^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<std::vec::Vec<u8>, serde_with::Bytes>`
+...
+161 | /     declare_snapshot_test! {
+162 | |         bytes {
+163 | |             struct Test {
+164 | |                 #[serde_as(as = "Bytes")]
+...   |
+216 | |         }
+217 | |     }
+    | |_____- in this macro invocation
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_with::serde_as` which comes from the expansion of the macro `declare_snapshot_test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<std::string::String, serde_with::DefaultOnNull>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:36:13
+    |
+36  |               #[serde_with::serde_as]
+    |               ^^^^^^^^^^^^^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<std::string::String, serde_with::DefaultOnNull>`
+...
+161 | /     declare_snapshot_test! {
+162 | |         bytes {
+163 | |             struct Test {
+164 | |                 #[serde_as(as = "Bytes")]
+...   |
+216 | |         }
+217 | |     }
+    | |_____- in this macro invocation
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_with::serde_as` which comes from the expansion of the macro `declare_snapshot_test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<std::vec::Vec<std::string::String>, serde_with::StringWithSeparator<CommaSeparator, std::string::String>>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:36:13
+    |
+36  |               #[serde_with::serde_as]
+    |               ^^^^^^^^^^^^^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<std::vec::Vec<std::string::String>, serde_with::StringWithSeparator<CommaSeparator, std::string::String>>`
+...
+161 | /     declare_snapshot_test! {
+162 | |         bytes {
+163 | |             struct Test {
+164 | |                 #[serde_as(as = "Bytes")]
+...   |
+216 | |         }
+217 | |     }
+    | |_____- in this macro invocation
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_with::serde_as` which comes from the expansion of the macro `declare_snapshot_test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<u32, serde_with::FromInto<u64>>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:36:13
+    |
+36  |               #[serde_with::serde_as]
+    |               ^^^^^^^^^^^^^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<u32, serde_with::FromInto<u64>>`
+...
+161 | /     declare_snapshot_test! {
+162 | |         bytes {
+163 | |             struct Test {
+164 | |                 #[serde_as(as = "Bytes")]
+...   |
+216 | |         }
+217 | |     }
+    | |_____- in this macro invocation
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_with::serde_as` which comes from the expansion of the macro `declare_snapshot_test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<std::vec::Vec<(std::string::String, u32)>, serde_with::Map<serde_with::Same, serde_with::Same>>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:36:13
+    |
+36  |               #[serde_with::serde_as]
+    |               ^^^^^^^^^^^^^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<std::vec::Vec<(std::string::String, u32)>, serde_with::Map<serde_with::Same, serde_with::Same>>`
+...
+161 | /     declare_snapshot_test! {
+162 | |         bytes {
+163 | |             struct Test {
+164 | |                 #[serde_as(as = "Bytes")]
+...   |
+216 | |         }
+217 | |     }
+    | |_____- in this macro invocation
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_with::serde_as` which comes from the expansion of the macro `declare_snapshot_test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<[(std::string::String, u32); 4], serde_with::Map<serde_with::Same, serde_with::Same>>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:36:13
+    |
+36  |               #[serde_with::serde_as]
+    |               ^^^^^^^^^^^^^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<[(std::string::String, u32); 4], serde_with::Map<serde_with::Same, serde_with::Same>>`
+...
+161 | /     declare_snapshot_test! {
+162 | |         bytes {
+163 | |             struct Test {
+164 | |                 #[serde_as(as = "Bytes")]
+...   |
+216 | |         }
+217 | |     }
+    | |_____- in this macro invocation
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_with::serde_as` which comes from the expansion of the macro `declare_snapshot_test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<BTreeSet<u32>, serde_with::SetLastValueWins<serde_with::Same>>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:36:13
+    |
+36  |               #[serde_with::serde_as]
+    |               ^^^^^^^^^^^^^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<BTreeSet<u32>, serde_with::SetLastValueWins<serde_with::Same>>`
+...
+161 | /     declare_snapshot_test! {
+162 | |         bytes {
+163 | |             struct Test {
+164 | |                 #[serde_as(as = "Bytes")]
+...   |
+216 | |         }
+217 | |     }
+    | |_____- in this macro invocation
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_with::serde_as` which comes from the expansion of the macro `declare_snapshot_test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<BTreeSet<u32>, serde_with::SetPreventDuplicates<serde_with::Same>>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:36:13
+    |
+36  |               #[serde_with::serde_as]
+    |               ^^^^^^^^^^^^^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<BTreeSet<u32>, serde_with::SetPreventDuplicates<serde_with::Same>>`
+...
+161 | /     declare_snapshot_test! {
+162 | |         bytes {
+163 | |             struct Test {
+164 | |                 #[serde_as(as = "Bytes")]
+...   |
+216 | |         }
+217 | |     }
+    | |_____- in this macro invocation
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_with::serde_as` which comes from the expansion of the macro `declare_snapshot_test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<Cow<'a, str>, serde_with::BorrowCow>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:307:5
+    |
+307 |     #[serde_as]
+    |     ^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<Cow<'a, str>, serde_with::BorrowCow>`
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_as` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<BTreeSet<u32>, serde_with::SetLastValueWins<serde_with::Same>>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:334:5
+    |
+334 |     #[serde_as]
+    |     ^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<BTreeSet<u32>, serde_with::SetLastValueWins<serde_with::Same>>`
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_as` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `serde_with::Schema<BTreeSet<u32>, serde_with::SetPreventDuplicates<serde_with::Same>>: schemars::JsonSchema` is not satisfied
+   --> serde_with/tests/schemars_0_8.rs:349:5
+    |
+349 |     #[serde_as]
+    |     ^^^^^^^^^^^ the trait `schemars::JsonSchema` is not implemented for `serde_with::Schema<BTreeSet<u32>, serde_with::SetPreventDuplicates<serde_with::Same>>`
+    |
+    = help: the following other types implement trait `schemars::JsonSchema`:
+              serde_with::Schema<Box<T>, Box<TA>>
+              serde_with::Schema<HashMap<K, V, S>, HashMap<KA, VA, S>>
+              serde_with::Schema<BTreeMap<K, V>, BTreeMap<KA, VA>>
+              serde_with::Schema<HashSet<T, H>, HashSet<TA, H>>
+              serde_with::Schema<BTreeSet<T>, BTreeSet<TA>>
+              serde_with::Schema<VecDeque<T>, VecDeque<TA>>
+              serde_with::Schema<Rc<T>, Rc<TA>>
+              serde_with::Schema<Arc<T>, Arc<TA>>
+            and 24 others
+note: required by a bound in `SchemaGenerator::subschema_for`
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/schemars-0.8.16/src/gen.rs:221:38
+    |
+221 |     pub fn subschema_for<T: ?Sized + JsonSchema>(&mut self) -> Schema {
+    |                                      ^^^^^^^^^^ required by this bound in `SchemaGenerator::subschema_for`
+    = note: this error originates in the attribute macro `serde_as` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `serde_with` (test "schemars_0_8") due to 11 previous errors
+error: command `/usr/local/rustup/toolchains/1.75.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --test schemars_0_8 --features schemars_0_8` exited with code 101
+reward=0 graded=26 found=0 failed=0 parsed=0 framework=cargo exit_code=101

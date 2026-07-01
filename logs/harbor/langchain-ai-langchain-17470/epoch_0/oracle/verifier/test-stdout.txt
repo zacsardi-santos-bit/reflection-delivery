@@ -1,0 +1,38 @@
+patching file libs/partners/mongodb/tests/integration_tests/test_cache.py
+patching file libs/partners/mongodb/tests/unit_tests/test_cache.py
+patching file libs/partners/mongodb/tests/unit_tests/test_vectorstores.py
+patching file libs/partners/mongodb/tests/utils.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/libs/partners/mongodb
+configfile: pyproject.toml
+plugins: mock-3.15.1, anyio-4.14.1, syrupy-5.3.4, asyncio-1.4.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 17 items
+
+tests/unit_tests/test_cache.py::test_mongodb_cache[PatchedMongoDBCache-plain_cache] PASSED [  5%]
+tests/unit_tests/test_cache.py::test_mongodb_cache[PatchedMongoDBCache-cache_with_llm] PASSED [ 11%]
+tests/unit_tests/test_cache.py::test_mongodb_cache[PatchedMongoDBCache-cache_with_chat] PASSED [ 17%]
+tests/unit_tests/test_cache.py::test_mongodb_cache[PatchedMongoDBAtlasSemanticCache-plain_cache] PASSED [ 23%]
+tests/unit_tests/test_cache.py::test_mongodb_cache[PatchedMongoDBAtlasSemanticCache-cache_with_llm] PASSED [ 29%]
+tests/unit_tests/test_cache.py::test_mongodb_cache[PatchedMongoDBAtlasSemanticCache-cache_with_chat] PASSED [ 35%]
+tests/unit_tests/test_cache.py::test_mongodb_atlas_cache_matrix[single_prompt_single_generation] PASSED [ 41%]
+tests/unit_tests/test_cache.py::test_mongodb_atlas_cache_matrix[single_prompt_two_generations] PASSED [ 47%]
+tests/unit_tests/test_cache.py::test_mongodb_atlas_cache_matrix[single_prompt_three_generations] PASSED [ 52%]
+tests/unit_tests/test_cache.py::test_mongodb_atlas_cache_matrix[multiple_prompts_multiple_generations] PASSED [ 58%]
+tests/unit_tests/test_vectorstores.py::test_initialization PASSED        [ 64%]
+tests/unit_tests/test_vectorstores.py::test_init_from_texts PASSED       [ 70%]
+tests/unit_tests/test_vectorstores.py::TestMongoDBAtlasVectorSearch::test_from_documents PASSED [ 76%]
+tests/unit_tests/test_vectorstores.py::TestMongoDBAtlasVectorSearch::test_from_texts PASSED [ 82%]
+tests/unit_tests/test_vectorstores.py::TestMongoDBAtlasVectorSearch::test_from_texts_with_metadatas PASSED [ 88%]
+tests/unit_tests/test_vectorstores.py::TestMongoDBAtlasVectorSearch::test_from_texts_with_metadatas_and_pre_filter PASSED [ 94%]
+tests/unit_tests/test_vectorstores.py::TestMongoDBAtlasVectorSearch::test_mmr PASSED [100%]
+
+============================= slowest 5 durations ==============================
+0.04s call     tests/unit_tests/test_cache.py::test_mongodb_cache[PatchedMongoDBCache-cache_with_llm]
+0.01s call     tests/unit_tests/test_cache.py::test_mongodb_cache[PatchedMongoDBCache-cache_with_chat]
+
+(3 durations < 0.005s hidden.  Use -vv to show these durations.)
+============================== 17 passed in 0.98s ==============================
+reward=1 graded=17 found=0 failed=0 parsed=7 framework=pytest exit_code=0

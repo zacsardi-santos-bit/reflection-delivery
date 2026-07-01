@@ -1,0 +1,7 @@
+I'm working on the Platformatic code generators and I need to add support for updating existing projects. Right now, every time someone runs the generator on an existing project directory — say to add a new plugin — it regenerates every file from scratch. Routes, custom plugins, and any other files the developer has written all get overwritten. I need the generator to support an "update mode" where it only writes back the project configuration file and skips generating everything else.
+
+I also need a way to load existing project data from a directory on disk. Given a service name and a runtime directory, it should read the service's existing configuration, figure out the template type, and reconstruct the plugin option data from the current environment variable values.
+
+On the utility side, I need three new helper functions: one that parses an environment variable file string into a plain key-value object (skipping comments and empty lines), one that flattens a nested options object into a flat structure using dot-notation paths, and one that extracts the framework template name from a schema URL. I also need to fix the existing environment variable string serializer to use the OS-native line ending instead of a hardcoded newline, so it works correctly on all platforms.
+
+The update mode configuration option should default to disabled (false) and should be part of the generator's standard configuration object alongside the existing config fields.

@@ -1,0 +1,23 @@
+{
+ "task": "hpcaitech-colossalai-5367",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds new class 'class BatchBucket' (449 lines) plus KV cache allocate_context/allocate_tokens/free ops; F2P tests exercise real behavior e.g. 'bb.append_batch_tokens(torch.tensor([99, 99]))' and 'assert cache_block.available_space == block_size'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

@@ -1,0 +1,4 @@
+patching file google/services/compute/resource_compute_instance_group_manager_internal_test.go
+patching file google/services/compute/resource_compute_region_instance_group_manager_test.go
+ok  	github.com/hashicorp/terraform-provider-google/google/services/compute	0.070s
+reward=1 graded=8 found=0 failed=0 parsed=0 framework=go exit_code=0

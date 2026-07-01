@@ -1,0 +1,23 @@
+{
+ "task": "braintree-braintree_android-620",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits BraintreeSharedPreferences.java/ConfigurationCache.java/ConfigurationLoader.java/VenmoClient.java + adds BraintreeSharedPreferencesException.java; F2P e.g. ConfigurationCacheUnitTest::getConfiguration_whenSharedPreferencesFails_forwardsException (117 F2P JUnit tests)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 26,
+  "shallow": true
+ }
+}

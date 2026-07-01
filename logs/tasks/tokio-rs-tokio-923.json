@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-tokio-923",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden tokio-trace-core/src/span.rs adds 'enum Parent { Root, Current, Explicit(Id) }' + Attributes::new_root/child_of/is_root/is_contextual/parent(); test.patch adds span_root, span_with_parent tests; F2P=47 via 'cargo nextest run -p tokio-trace'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

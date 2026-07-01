@@ -1,0 +1,37 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/service/securitylake -count=1",
+  "test_files": [
+    "internal/service/securitylake/aws_log_source_test.go",
+    "internal/service/securitylake/custom_log_source_test.go",
+    "internal/service/securitylake/data_lake_test.go",
+    "internal/service/securitylake/exports_test.go",
+    "internal/service/securitylake/securitylake_test.go"
+  ],
+  "num_test_files": 5,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/no_config",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/package_name_endpoint_config_overrides_base_config_file",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/service_aws_envvar_overrides_base_envvar",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/base_endpoint_envvar_overrides_base_config_file",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/service_config_file",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/service_config_file_overrides_base_config_file",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/base_endpoint_config_file",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/package_name_endpoint_config",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/package_name_endpoint_config_overrides_aws_service_envvar",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/service_aws_envvar_overrides_service_config_file",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/package_name_endpoint_config_overrides_base_envvar",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/service_aws_envvar",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/base_endpoint_envvar",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/package_name_endpoint_config_overrides_service_config_file",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/service_aws_envvar_overrides_base_config_file",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration/base_endpoint_envvar_overrides_service_config_file",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestEndpointConfiguration",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestAccSecurityLake_serial/AWSLogSource",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestAccSecurityLake_serial/CustomLogSource",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestAccSecurityLake_serial/DataLake",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/securitylake::TestAccSecurityLake_serial"
+  ],
+  "PASS_TO_PASS": []
+}

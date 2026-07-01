@@ -1,0 +1,23 @@
+{
+ "task": "determined-ai-determined-8729",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden fixes ProfileImage join 'ON u.id = img.id' -> 'ON u.id = img.user_id', changes GetUserSetting to return []*model.UserWebSetting + adds UserWebSetting.Proto(), and makes ug optional via 'if ug != nil { ... }'; test.patch's pkg/model/user_test.go references in.Proto() so whole pkg/model test bi"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 37,
+  "shallow": true
+ }
+}

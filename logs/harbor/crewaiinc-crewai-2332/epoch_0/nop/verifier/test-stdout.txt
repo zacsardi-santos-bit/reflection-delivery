@@ -1,0 +1,85 @@
+patching file tests/security/__init__.py
+patching file tests/security/test_deterministic_fingerprints.py
+patching file tests/security/test_examples.py
+patching file tests/security/test_fingerprint.py
+patching file tests/security/test_integration.py
+patching file tests/security/test_security_config.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: vcr-1.0.2, subprocess-1.6.0, asyncio-1.4.0, anyio-4.14.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 0 items / 5 errors
+
+==================================== ERRORS ====================================
+______ ERROR collecting tests/security/test_deterministic_fingerprints.py ______
+ImportError while importing test module '/workspace/repo/tests/security/test_deterministic_fingerprints.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/security/test_deterministic_fingerprints.py:8: in <module>
+    from crewai.security import Fingerprint, SecurityConfig
+E   ModuleNotFoundError: No module named 'crewai.security'
+_______________ ERROR collecting tests/security/test_examples.py _______________
+ImportError while importing test module '/workspace/repo/tests/security/test_examples.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/security/test_examples.py:6: in <module>
+    from crewai.security import Fingerprint, SecurityConfig
+E   ModuleNotFoundError: No module named 'crewai.security'
+_____________ ERROR collecting tests/security/test_fingerprint.py ______________
+ImportError while importing test module '/workspace/repo/tests/security/test_fingerprint.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/security/test_fingerprint.py:10: in <module>
+    from crewai.security import Fingerprint
+E   ModuleNotFoundError: No module named 'crewai.security'
+_____________ ERROR collecting tests/security/test_integration.py ______________
+ImportError while importing test module '/workspace/repo/tests/security/test_integration.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/security/test_integration.py:6: in <module>
+    from crewai.security import Fingerprint, SecurityConfig
+E   ModuleNotFoundError: No module named 'crewai.security'
+___________ ERROR collecting tests/security/test_security_config.py ____________
+ImportError while importing test module '/workspace/repo/tests/security/test_security_config.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/security/test_security_config.py:6: in <module>
+    from crewai.security import Fingerprint, SecurityConfig
+E   ModuleNotFoundError: No module named 'crewai.security'
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/litellm/litellm_core_utils/get_model_cost_map.py:41
+  /usr/local/lib/python3.11/site-packages/litellm/litellm_core_utils/get_model_cost_map.py:41: DeprecationWarning: open_text is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+    with importlib.resources.open_text(
+
+../../usr/local/lib/python3.11/site-packages/litellm/utils.py:162
+  /usr/local/lib/python3.11/site-packages/litellm/utils.py:162: DeprecationWarning: open_text is deprecated. Use files() instead. Refer to https://importlib-resources.readthedocs.io/en/latest/using.html#migrating-from-legacy for migration advice.
+    with resources.open_text(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/security/test_deterministic_fingerprints.py
+ERROR tests/security/test_examples.py
+ERROR tests/security/test_fingerprint.py
+ERROR tests/security/test_integration.py
+ERROR tests/security/test_security_config.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 5 errors during collection !!!!!!!!!!!!!!!!!!!!
+======================== 2 warnings, 5 errors in 4.91s =========================
+reward=0 graded=44 found=0 failed=0 parsed=0 framework=pytest exit_code=2

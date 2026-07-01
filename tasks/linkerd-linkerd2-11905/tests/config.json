@@ -1,0 +1,27 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./controller/api/destination/external-workload -count=1",
+  "test_files": [
+    "controller/api/destination/external-workload/endpoints_controller_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged/no_change",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged/updated_workload_adds_an_IP_address",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged/updated_workload_removes_an_IP_address",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged/updated_workload_changes_an_IP_address",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged/updated_workload_adds_new_port",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged/updated_workload_removes_port",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged/updated_workload_changes_port_number",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged/updated_workload_changes_port_name",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged/updated_workload_removes_port_name",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadSpecChanged",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadServicesToUpdate/no_change",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadServicesToUpdate/labels_and_spec_have_changed",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadServicesToUpdate/spec_has_changed",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadServicesToUpdate/labels_have_changed",
+    "github.com/linkerd/linkerd2/controller/api/destination/external-workload::TestWorkloadServicesToUpdate"
+  ],
+  "PASS_TO_PASS": []
+}

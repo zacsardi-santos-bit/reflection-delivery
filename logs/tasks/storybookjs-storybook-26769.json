@@ -1,0 +1,23 @@
+{
+ "task": "storybookjs-storybook-26769",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden `posix = (localPath, sep) => localPath.split(sep).filter(Boolean).join(path.posix.sep)` and getComponentVariableName pascalCase; F2P asserts posix('src\\\\components\\\\Page.tsx','\\\\')==='src/components/Page.tsx' and inline-snapshot JS/TS templates"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 79,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "open-telemetry-opentelemetry-operator-2774",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden bumps 'github.com/open-telemetry/opamp-go v0.12.0' -> 'v0.14.0'; test patch adds 'var _ client.OpAMPClient = &mockOpampClient{}' + SetCustomCapabilities/SendCustomMessage stubs requiring the new interface"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "rancher-rancher-18863",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "TestIsSignedBy exercises real x509 parsing: {'cert self signed', selfSignedCert, selfSignedCA, true},{'signed by let's encript',...,true},{'miss match',...,false}; test.sh runs 'go test -json ./pkg/controllers/user/logging/utils'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 15,
+  "shallow": true
+ }
+}

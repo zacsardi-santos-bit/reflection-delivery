@@ -1,0 +1,7 @@
+I'm working on an EVM emulator and I need to add proper gas cost calculations for memory and storage operations. Right now the emulator doesn't compute gas costs for memory expansion or storage slot accesses, which means the overall gas accounting is incomplete.
+
+For memory, I need a way to calculate the current gas cost of the allocated memory (which grows quadratically with the number of 32-byte words), and separately a way to calculate the incremental cost of expanding memory to cover a new region given a starting offset and size. If no expansion is actually needed, the expansion cost should be zero.
+
+For storage, Ethereum distinguishes between "cold" and "warm" slot accesses within a transaction — the first time you touch a storage slot it costs significantly more than subsequent accesses. I need the storage component to track which slots have been accessed (via either reads or writes) so it can report the correct access cost. I also need a method that computes the full cost of writing to a storage slot, taking into account both whether the value being written is zero or non-zero (these have different base costs) and whether the slot is cold or warm.
+
+The specific expected costs are: a cold slot access costs 2100, a warm slot access costs 100. Writing a non-zero value to a cold slot costs 22100, writing zero to a cold slot costs 5000, writing a non-zero value to a warm slot costs 20100, and writing zero to a warm slot costs 3000.

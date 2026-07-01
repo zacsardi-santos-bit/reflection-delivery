@@ -1,0 +1,569 @@
+patching file sdk/nodejs/tests/runtime/langhost/cases/047.exported_function/index.js
+patching file sdk/nodejs/tests/runtime/langhost/cases/048.exported_promise_function/index.js
+patching file sdk/nodejs/tests/runtime/langhost/cases/049.exported_async_function/index.js
+patching file sdk/nodejs/tests/runtime/langhost/cases/050.resource_creation_in_function/index.js
+patching file sdk/nodejs/tests/runtime/langhost/cases/051.resource_creation_in_function_with_result/index.js
+patching file sdk/nodejs/tests/runtime/langhost/cases/052.resource_creation_in_async_function_with_result/index.js
+patching file sdk/nodejs/tests/runtime/langhost/run.spec.ts
+
+
+  rpc
+langhost.stdout: Nada
+langhost.stdout: Nada
+    ✓ run test: empty (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/000.empty) (923ms)
+langhost.stdout: Nada
+langhost.stdout: Nada
+    ✓ run test: empty.pwd (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/000.empty,prog=./) (848ms)
+langhost.stdout: Nada
+langhost.stdout: Nada
+    ✓ run test: empty.pwd.index.js (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/000.empty,prog=./index.js) (823ms)
+    ✓ run test: one_resource (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/001.one_resource) (809ms)
+    ✓ run test: ten_resources (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/002.ten_resources) (901ms)
+langhost.stdout: URN: test:index:MyResource::testResource1
+langhost.stdout: ID: testResource1
+langhost.stdout: OutProp1: output properties ftw
+OutProp2: 998.6
+langhost.stdout: URN: test:index:MyResource::testResource1
+langhost.stdout: ID: testResource1
+langhost.stdout: OutProp1: output properties ftw
+langhost.stdout: OutProp2: 998.6
+OutProp3: undefined
+    ✓ run test: one_complex_resource (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/003.one_complex_resource) (820ms)
+langhost.stdout: testResource0.URN: test:index:MyResource::testResource0
+testResource0.ID: testResource0
+testResource0.OutProp1: output properties ftw
+testResource0.OutProp2: 998.6
+langhost.stdout: testResource2.URN: test:index:MyResource::testResource2
+testResource2.ID: testResource2
+testResource2.OutProp1: output properties ftw
+testResource2.OutProp2: 998.6
+testResource2.Seq: 2
+langhost.stdout: testResource8.URN: test:index:MyResource::testResource8
+testResource8.ID: testResource8
+testResource8.OutProp1: output properties ftw
+testResource8.OutProp2: 998.6
+testResource8.Seq: 8
+langhost.stdout: testResource5.URN: test:index:MyResource::testResource5
+langhost.stdout: testResource5.ID: testResource5
+testResource5.OutProp1: output properties ftw
+testResource5.OutProp2: 998.6
+testResource5.Seq: 5
+langhost.stdout: testResource6.URN: test:index:MyResource::testResource6
+langhost.stdout: testResource6.ID: testResource6
+testResource6.OutProp1: output properties ftw
+testResource6.OutProp2: 998.6
+testResource6.Seq: 6
+langhost.stdout: testResource4.URN: test:index:MyResource::testResource4
+langhost.stdout: testResource4.ID: testResource4
+testResource4.OutProp1: output properties ftw
+testResource4.OutProp2: 998.6
+testResource4.Seq: 4
+langhost.stdout: testResource9.URN: test:index:MyResource::testResource9
+langhost.stdout: testResource9.ID: testResource9
+testResource9.OutProp1: output properties ftw
+testResource9.OutProp2: 998.6
+testResource9.Seq: 9
+langhost.stdout: testResource1.URN: test:index:MyResource::testResource1
+testResource1.ID: testResource1
+langhost.stdout: testResource1.OutProp1: output properties ftw
+testResource1.OutProp2: 998.6
+testResource1.Seq: 1
+langhost.stdout: testResource7.URN: test:index:MyResource::testResource7
+langhost.stdout: testResource7.ID: testResource7
+testResource7.OutProp1: output properties ftw
+testResource7.OutProp2: 998.6
+testResource7.Seq: 7
+langhost.stdout: testResource3.URN: test:index:MyResource::testResource3
+langhost.stdout: testResource3.ID: testResource3
+testResource3.OutProp1: output properties ftw
+testResource3.OutProp2: 998.6
+testResource3.Seq: 3
+langhost.stdout: testResource9.URN: test:index:MyResource::testResource9
+testResource9.ID: testResource9
+testResource9.OutProp1: output properties ftw
+testResource9.OutProp2: 998.6
+testResource9.Seq: 9
+langhost.stdout: testResource6.URN: test:index:MyResource::testResource6
+testResource6.ID: testResource6
+testResource6.OutProp1: output properties ftw
+testResource6.OutProp2: 998.6
+testResource6.Seq: 6
+langhost.stdout: testResource0.URN: test:index:MyResource::testResource0
+langhost.stdout: testResource0.ID: testResource0
+langhost.stdout: testResource0.OutProp1: output properties ftw
+langhost.stdout: testResource0.OutProp2: 998.6
+testResource3.URN: test:index:MyResource::testResource3
+testResource3.ID: testResource3
+testResource3.OutProp1: output properties ftw
+testResource3.OutProp2: 998.6
+testResource3.Seq: 3
+testResource2.URN: test:index:MyResource::testResource2
+testResource2.ID: testResource2
+testResource2.OutProp1: output properties ftw
+testResource2.OutProp2: 998.6
+testResource2.Seq: 2
+testResource1.URN: test:index:MyResource::testResource1
+testResource1.ID: testResource1
+testResource1.OutProp1: output properties ftw
+testResource1.OutProp2: 998.6
+testResource1.Seq: 1
+testResource7.URN: test:index:MyResource::testResource7
+testResource7.ID: testResource7
+testResource7.OutProp1: output properties ftw
+testResource7.OutProp2: 998.6
+testResource7.Seq: 7
+testResource4.URN: test:index:MyResource::testResource4
+testResource4.ID: testResource4
+testResource4.OutProp1: output properties ftw
+testResource4.OutProp2: 998.6
+testResource4.Seq: 4
+testResource5.URN: test:index:MyResource::testResource5
+testResource5.ID: testResource5
+testResource5.OutProp1: output properties ftw
+testResource5.OutProp2: 998.6
+testResource5.Seq: 5
+testResource8.URN: test:index:MyResource::testResource8
+testResource8.ID: testResource8
+testResource8.OutProp1: output properties ftw
+testResource8.OutProp2: 998.6
+testResource8.Seq: 8
+    ✓ run test: ten_complex_resources (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/004.ten_complex_resources) (974ms)
+langhost.stdout: A.URN: test:index:ResourceA::resourceA
+langhost.stdout: B.URN: test:index:ResourceB::resourceB
+langhost.stdout: A.URN: test:index:ResourceA::resourceA
+langhost.stdout: A.ID: resourceA
+langhost.stdout: A.OutProp: output yeah
+A.InProp: 777
+langhost.stdout: B.URN: test:index:ResourceB::resourceB
+langhost.stdout: B.ID: resourceB
+langhost.stdout: B.OtherIn: 777
+langhost.stdout: B.OtherOut: output yeah
+    ✓ run test: resource_thens (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/005.resource_thens) (839ms)
+    ✓ run test: input_output (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/006.asset,prog=undefined) (815ms)
+    ✓ run test: promises_io (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/007.promises_io,prog=undefined) (803ms)
+    ✓ run test: ten_depends_on_resources (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/008.ten_depends_on_resources) (1831ms)
+    ✓ run test: invoke (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/009.invoke) (833ms)
+    ✓ run test: runtimeSettings (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/010.runtime_settings) (784ms)
+log: Running program '/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/011.unhandled_error' failed with an unhandled exception:
+Error: 💥 goes the dynamite
+    at Object.<anonymous> (/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/011.unhandled_error/index.js:1:7)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at /workspace/repo/sdk/nodejs/bin/cmd/run/run.js:197:20
+    at Stack.<anonymous> (/workspace/repo/sdk/nodejs/bin/runtime/stack.js:85:41)
+    at Generator.next (<anonymous>)
+log: Running program '/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/011.unhandled_error' failed with an unhandled exception:
+Error: 💥 goes the dynamite
+    at Object.<anonymous> (/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/011.unhandled_error/index.js:1:7)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at /workspace/repo/sdk/nodejs/bin/cmd/run/run.js:197:20
+    at Stack.<anonymous> (/workspace/repo/sdk/nodejs/bin/runtime/stack.js:85:41)
+    at Generator.next (<anonymous>)
+    ✓ run test: unhandled_error (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/011.unhandled_error) (855ms)
+    ✓ run test: assets_archive (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/012.assets_archive) (817ms)
+langhost.stderr: Error: 💥 goes the dynamite (as promised)
+    at /workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection/index.js:2:9
+    at new Promise (<anonymous>)
+    at Object.<anonymous> (/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection/index.js:1:1)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at /workspace/repo/sdk/nodejs/bin/cmd/run/run.js:197:20
+log: Running program '/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection' failed with an unhandled exception:
+Error: 💥 goes the dynamite (as promised)
+    at /workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection/index.js:2:9
+    at new Promise (<anonymous>)
+    at Object.<anonymous> (/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection/index.js:1:1)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at /workspace/repo/sdk/nodejs/bin/cmd/run/run.js:197:20
+langhost.stderr: Error: 💥 goes the dynamite (as promised)
+    at /workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection/index.js:2:9
+    at new Promise (<anonymous>)
+    at Object.<anonymous> (/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection/index.js:1:1)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at /workspace/repo/sdk/nodejs/bin/cmd/run/run.js:197:20
+log: Running program '/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection' failed with an unhandled exception:
+Error: 💥 goes the dynamite (as promised)
+    at /workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection/index.js:2:9
+    at new Promise (<anonymous>)
+    at Object.<anonymous> (/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection/index.js:1:1)
+    at Module._compile (internal/modules/cjs/loader.js:999:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
+    at Module.load (internal/modules/cjs/loader.js:863:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:708:14)
+    at Module.require (internal/modules/cjs/loader.js:887:19)
+    at require (internal/modules/cjs/helpers.js:74:18)
+    at /workspace/repo/sdk/nodejs/bin/cmd/run/run.js:197:20
+    ✓ run test: unhandled_promise_rejection (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/013.unhandled_promise_rejection) (817ms)
+    ✓ run test: read_resource (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/014.read_resource) (821ms)
+    ✓ run test: runtime_sxs (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/015.runtime_sxs) (857ms)
+langhost.stderr: The Pulumi runtime detected that 1 promise was still active
+langhost.stderr: at the time that the process exited. There are a few ways that this can occur:
+  * Not using `await` or `.then` on a Promise returned from a Pulumi API
+  * Introducing a cyclic dependency between two Pulumi Resources
+  * A bug in the Pulumi Runtime
+
+Leaving promises active is probably not what you want. If you are unsure about
+why you are seeing this message, re-run your program with the `PULUMI_DEBUG_PROMISE_LEAKS`
+environment variable. The Pulumi runtime will then print out additional
+debug information about the leaked promises.
+langhost.stderr: The Pulumi runtime detected that 1 promise was still active
+langhost.stderr: at the time that the process exited. There are a few ways that this can occur:
+  * Not using `await` or `.then` on a Promise returned from a Pulumi API
+  * Introducing a cyclic dependency between two Pulumi Resources
+  * A bug in the Pulumi Runtime
+
+Leaving promises active is probably not what you want. If you are unsure about
+why you are seeing this message, re-run your program with the `PULUMI_DEBUG_PROMISE_LEAKS`
+langhost.stderr: environment variable. The Pulumi runtime will then print out additional
+langhost.stderr: debug information about the leaked promises.
+    ✓ run test: promise_leak (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/016.promise_leak) (818ms)
+    ✓ run test: parent_defaults (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/017.parent_defaults) (2045ms)
+log: error message
+log: error message
+    ✓ run test: logging (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/018.logging) (878ms)
+    ✓ run test: stack_exports (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/019.stack_exports) (872ms)
+    ✓ run test: root_resource (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/001.one_resource) (857ms)
+Method handler getRootResource for /pulumirpc.Engine/GetRootResource expected but not provided
+Method handler setRootResource for /pulumirpc.Engine/SetRootResource expected but not provided
+Method handler getRootResource for /pulumirpc.Engine/GetRootResource expected but not provided
+Method handler setRootResource for /pulumirpc.Engine/SetRootResource expected but not provided
+    ✓ run test: backcompat_root_resource (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/001.one_resource) (879ms)
+    ✓ run test: property_dependencies (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/020.property_dependencies) (952ms)
+    ✓ run test: parent_child_dependencies (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/021.parent_child_dependencies,prog=./index.js) (879ms)
+    ✓ run test: parent_child_dependencies_2 (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/022.parent_child_dependencies_2,prog=./index.js) (888ms)
+langhost.stderr: The Pulumi runtime detected that 14 promises were still active
+langhost.stderr: at the time that the process exited. There are a few ways that this can occur:
+  * Not using `await` or `.then` on a Promise returned from a Pulumi API
+  * Introducing a cyclic dependency between two Pulumi Resources
+  * A bug in the Pulumi Runtime
+
+Leaving promises active is probably not what you want. If you are unsure about
+why you are seeing this message, re-run your program with the `PULUMI_DEBUG_PROMISE_LEAKS`
+environment variable. The Pulumi runtime will then print out additional
+debug information about the leaked promises.
+langhost.stderr: The Pulumi runtime detected that 14 promises were still active
+langhost.stderr: at the time that the process exited. There are a few ways that this can occur:
+  * Not using `await` or `.then` on a Promise returned from a Pulumi API
+  * Introducing a cyclic dependency between two Pulumi Resources
+  * A bug in the Pulumi Runtime
+
+Leaving promises active is probably not what you want. If you are unsure about
+why you are seeing this message, re-run your program with the `PULUMI_DEBUG_PROMISE_LEAKS`
+environment variable. The Pulumi runtime will then print out additional
+langhost.stderr: debug information about the leaked promises.
+    ✓ run test: parent_child_dependencies_3 (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/023.parent_child_dependencies_3,prog=./index.js) (863ms)
+    ✓ run test: parent_child_dependencies_4 (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/024.parent_child_dependencies_4,prog=./index.js) (915ms)
+    ✓ run test: parent_child_dependencies_5 (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/025.parent_child_dependencies_5,prog=./index.js) (927ms)
+    ✓ run test: parent_child_dependencies_6 (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/026.parent_child_dependencies_6,prog=./index.js) (926ms)
+    ✓ run test: parent_child_dependencies_7 (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/027.parent_child_dependencies_7,prog=./index.js) (950ms)
+    ✓ run test: parent_child_dependencies_8 (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/028.parent_child_dependencies_8,prog=./index.js) (907ms)
+    ✓ run test: parent_child_dependencies_9 (pwd=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/029.parent_child_dependencies_9,prog=./index.js) (861ms)
+log: 💥 goes the dynamite
+log: 💥 goes the dynamite
+    ✓ run test: run_error (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/040.run_error) (857ms)
+    ✓ run test: component_opt_single_provider (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/041.component_opt_single_provider) (2153ms)
+    ✓ run test: component_opt_providers_array (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/042.component_opt_providers_array) (2083ms)
+langhost.stderr: Error: 'dependsOn' was passed a value that was not a Resource.
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:360:27
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+    at __awaiter (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:17:12)
+    at gatherExplicitDependencies (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:339:12)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:344:40
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+langhost.stderr: Error: 'dependsOn' was passed a value that was not a Resource.
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:360:27
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+    at __awaiter (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:17:12)
+    at gatherExplicitDependencies (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:339:12)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:344:40
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+langhost.stderr: Error: 'dependsOn' was passed a value that was not a Resource.
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:360:27
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+    at __awaiter (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:17:12)
+    at gatherExplicitDependencies (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:339:12)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:344:40
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+log: Running program '/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/043.depends_on_non_resource' failed with an unhandled exception:
+Error: 'dependsOn' was passed a value that was not a Resource.
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:360:27
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+    at __awaiter (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:17:12)
+    at gatherExplicitDependencies (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:339:12)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:344:40
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+langhost.stderr: Error: 'dependsOn' was passed a value that was not a Resource.
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:360:27
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+    at __awaiter (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:17:12)
+    at gatherExplicitDependencies (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:339:12)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:344:40
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+langhost.stderr: Error: 'dependsOn' was passed a value that was not a Resource.
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:360:27
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+    at __awaiter (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:17:12)
+    at gatherExplicitDependencies (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:339:12)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:344:40
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+langhost.stderr: Error: 'dependsOn' was passed a value that was not a Resource.
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:360:27
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+    at __awaiter (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:17:12)
+    at gatherExplicitDependencies (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:339:12)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:344:40
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+log: Running program '/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/043.depends_on_non_resource' failed with an unhandled exception:
+Error: 'dependsOn' was passed a value that was not a Resource.
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:360:27
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+    at __awaiter (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:17:12)
+    at gatherExplicitDependencies (/workspace/repo/sdk/nodejs/bin/runtime/resource.js:339:12)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:344:40
+    at Generator.next (<anonymous>)
+    at /workspace/repo/sdk/nodejs/bin/runtime/resource.js:21:71
+    at new Promise (<anonymous>)
+    ✓ run test: depends_on_non_resource (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/043.depends_on_non_resource) (870ms)
+    ✓ run test: ignore_changes (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/045.ignore_changes) (864ms)
+    ✓ run test: versions (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/044.versions) (952ms)
+    ✓ run test: import_resource (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/030.import_resource) (877ms)
+    ✓ run test: recursive_stack_exports (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/046.recursive_stack_exports) (881ms)
+    1) run test: exported_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/047.exported_function)
+    2) run test: exported_promise_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/048.exported_promise_function)
+    3) run test: exported_async_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/049.exported_async_function)
+    4) run test: resource_creation_in_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/050.resource_creation_in_function)
+    5) run test: resource_creation_in_function_with_result (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/051.resource_creation_in_function_with_result)
+    6) run test: resource_creation_in_async_function_with_result (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/052.resource_creation_in_async_function_with_result)
+    ✓ run test: providerref_invokes (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/062.providerref_invokes) (878ms)
+    ✓ run test: providerref_in_parent_invokes (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/063.providerref_in_parent_invokes) (898ms)
+
+
+  44 passing (45s)
+  6 failing
+
+  1) rpc run test: exported_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/047.exported_function):
+
+      Uncaught AssertionError [ERR_ASSERTION] [ERR_ASSERTION]: Expected values to be loosely deep-equal:
+
+{}
+
+should loosely deep-equal
+
+{
+  a: {
+    x: 99,
+    y: 'z'
+  },
+  b: 42,
+  c: {
+    d: 'a',
+    e: false
+  }
+}
+      + expected - actual
+
+      -{}
+      +{
+      +  "a": {
+      +    "x": 99
+      +    "y": "z"
+      +  }
+      +  "b": 42
+      +  "c": {
+      +    "d": "a"
+      +    "e": false
+      +  }
+      +}
+      
+      at Object.registerResourceOutputs (bin/tests/runtime/langhost/run.spec.js:938:24)
+      at Object.req [as registerResourceOutputs] (bin/tests/runtime/langhost/run.spec.js:1225:34)
+      at node_modules/grpc/src/server.js:593:13
+
+  2) rpc run test: exported_promise_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/048.exported_promise_function):
+
+      Uncaught AssertionError [ERR_ASSERTION] [ERR_ASSERTION]: Expected values to be loosely deep-equal:
+
+{}
+
+should loosely deep-equal
+
+{
+  a: {
+    x: 99,
+    y: 'z'
+  },
+  b: 42,
+  c: {
+    d: 'a',
+    e: false
+  }
+}
+      + expected - actual
+
+      -{}
+      +{
+      +  "a": {
+      +    "x": 99
+      +    "y": "z"
+      +  }
+      +  "b": 42
+      +  "c": {
+      +    "d": "a"
+      +    "e": false
+      +  }
+      +}
+      
+      at Object.registerResourceOutputs (bin/tests/runtime/langhost/run.spec.js:964:24)
+      at Object.req [as registerResourceOutputs] (bin/tests/runtime/langhost/run.spec.js:1225:34)
+      at node_modules/grpc/src/server.js:593:13
+
+  3) rpc run test: exported_async_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/049.exported_async_function):
+
+      Uncaught AssertionError [ERR_ASSERTION] [ERR_ASSERTION]: Expected values to be loosely deep-equal:
+
+{}
+
+should loosely deep-equal
+
+{
+  a: {
+    x: 99,
+    y: 'z'
+  },
+  b: 42,
+  c: {
+    d: 'a',
+    e: false
+  }
+}
+      + expected - actual
+
+      -{}
+      +{
+      +  "a": {
+      +    "x": 99
+      +    "y": "z"
+      +  }
+      +  "b": 42
+      +  "c": {
+      +    "d": "a"
+      +    "e": false
+      +  }
+      +}
+      
+      at Object.registerResourceOutputs (bin/tests/runtime/langhost/run.spec.js:990:24)
+      at Object.req [as registerResourceOutputs] (bin/tests/runtime/langhost/run.spec.js:1225:34)
+      at node_modules/grpc/src/server.js:593:13
+
+  4) rpc run test: resource_creation_in_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/050.resource_creation_in_function):
+
+      AssertionError [ERR_ASSERTION] [ERR_ASSERTION]: Expected exactly 2 resource registrations; got 1
+      + expected - actual
+
+      -1
+      +2
+      
+      at bin/tests/runtime/langhost/run.spec.js:1304:24
+      at Generator.next (<anonymous>)
+      at fulfilled (bin/tests/runtime/langhost/run.spec.js:18:58)
+
+  5) rpc run test: resource_creation_in_function_with_result (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/051.resource_creation_in_function_with_result):
+
+      Uncaught AssertionError [ERR_ASSERTION] [ERR_ASSERTION]: Expected values to be loosely deep-equal:
+
+{}
+
+should loosely deep-equal
+
+{
+  a: 1
+}
+      + expected - actual
+
+      -{}
+      +{
+      +  "a": 1
+      +}
+      
+      at Object.registerResourceOutputs (bin/tests/runtime/langhost/run.spec.js:1036:24)
+      at Object.req [as registerResourceOutputs] (bin/tests/runtime/langhost/run.spec.js:1225:34)
+      at node_modules/grpc/src/server.js:593:13
+
+  6) rpc run test: resource_creation_in_async_function_with_result (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/052.resource_creation_in_async_function_with_result):
+
+      Uncaught AssertionError [ERR_ASSERTION] [ERR_ASSERTION]: Expected values to be loosely deep-equal:
+
+{}
+
+should loosely deep-equal
+
+{
+  a: 1
+}
+      + expected - actual
+
+      -{}
+      +{
+      +  "a": 1
+      +}
+      
+      at Object.registerResourceOutputs (bin/tests/runtime/langhost/run.spec.js:1054:24)
+      at Object.req [as registerResourceOutputs] (bin/tests/runtime/langhost/run.spec.js:1225:34)
+      at node_modules/grpc/src/server.js:593:13
+
+
+
+reward=0 graded=50 found=50 failed=6 parsed=56 framework=mocha exit_code=6

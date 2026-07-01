@@ -1,0 +1,76 @@
+patching file sentry/tests/test_tracing.rs
+   Compiling cc v1.2.19
+   Compiling tokio v1.44.2
+   Compiling time v0.3.41
+   Compiling futures-util v0.3.31
+   Compiling uuid v1.16.0
+   Compiling regex-syntax v0.8.5
+   Compiling getrandom v0.2.15
+   Compiling miniz_oxide v0.8.8
+   Compiling hashbrown v0.15.2
+   Compiling equivalent v1.0.2
+   Compiling actix-router v0.5.3
+   Compiling opentelemetry v0.29.1
+   Compiling backtrace v0.3.74
+   Compiling debugid v0.8.0
+   Compiling indexmap v2.9.0
+   Compiling anyhow v1.0.98
+   Compiling openssl-sys v0.9.107
+   Compiling ring v0.17.14
+   Compiling libz-sys v1.1.22
+   Compiling curl-sys v0.4.80+curl-8.12.1
+   Compiling findshlibs v0.10.2
+   Compiling toml_edit v0.22.24
+   Compiling regex-automata v0.4.9
+   Compiling sentry-types v0.39.0 (/workspace/repo/sentry-types)
+   Compiling openssl v0.10.72
+   Compiling native-tls v0.2.12
+   Compiling curl v0.4.47
+   Compiling proc-macro-crate v3.3.0
+   Compiling futures-executor v0.3.31
+   Compiling opentelemetry_sdk v0.29.0
+   Compiling num_enum_derive v0.7.3
+   Compiling regex v1.11.1
+   Compiling tokio-util v0.7.14
+   Compiling actix-rt v2.10.0
+   Compiling hyper v1.6.0
+   Compiling tower v0.5.2
+   Compiling env_logger v0.10.2
+   Compiling axum v0.8.3
+   Compiling actix-server v2.5.1
+   Compiling actix-codec v0.5.2
+   Compiling pretty_env_logger v0.5.0
+   Compiling actix-http v3.10.0
+   Compiling hyper-util v0.1.11
+   Compiling actix-web v4.10.2
+   Compiling rustls v0.23.26
+   Compiling tokio-native-tls v0.3.1
+   Compiling hyper-tls v0.6.0
+   Compiling num_enum v0.7.3
+   Compiling rustls-webpki v0.103.1
+   Compiling embedded-svc v0.28.1
+   Compiling sentry-core v0.39.0 (/workspace/repo/sentry-core)
+   Compiling sentry-backtrace v0.39.0 (/workspace/repo/sentry-backtrace)
+   Compiling sentry-log v0.39.0 (/workspace/repo/sentry-log)
+   Compiling sentry-actix v0.39.0 (/workspace/repo/sentry-actix)
+   Compiling sentry-opentelemetry v0.39.0 (/workspace/repo/sentry-opentelemetry)
+   Compiling sentry-debug-images v0.39.0 (/workspace/repo/sentry-debug-images)
+   Compiling sentry-tower v0.39.0 (/workspace/repo/sentry-tower)
+   Compiling sentry-slog v0.39.0 (/workspace/repo/sentry-slog)
+   Compiling sentry-contexts v0.39.0 (/workspace/repo/sentry-contexts)
+   Compiling sentry-tracing v0.39.0 (/workspace/repo/sentry-tracing)
+   Compiling sentry-panic v0.39.0 (/workspace/repo/sentry-panic)
+   Compiling sentry-anyhow v0.39.0 (/workspace/repo/sentry-anyhow)
+   Compiling tokio-rustls v0.26.2
+   Compiling ureq v3.0.11
+   Compiling hyper-rustls v0.27.5
+   Compiling reqwest v0.12.15
+   Compiling sentry v0.39.0 (/workspace/repo/sentry)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 36.60s
+────────────
+ Nextest run ID 099c6b3a-cec4-4419-b4bc-5dd408a3ec60 with nextest profile: default
+    Starting 1 test across 8 binaries (30 tests skipped)
+        PASS [   0.070s] sentry::test_tracing test_tracing
+────────────
+     Summary [   0.071s] 1 test run: 1 passed, 30 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

@@ -1,0 +1,8 @@
+patching file gossip/comm/comm_test.go
+# github.com/hyperledger/fabric/gossip/comm
+gossip/comm/comm_test.go:33:2: cannot find package "github.com/hyperledger/fabric/gossip/comm/mocks" in any of:
+	/go/src/github.com/hyperledger/fabric/vendor/github.com/hyperledger/fabric/gossip/comm/mocks (vendor tree)
+	/usr/local/go/src/github.com/hyperledger/fabric/gossip/comm/mocks (from $GOROOT)
+	/go/src/github.com/hyperledger/fabric/gossip/comm/mocks (from $GOPATH)
+FAIL	github.com/hyperledger/fabric/gossip/comm [setup failed]
+reward=0 graded=25 found=0 failed=0 parsed=0 framework=go exit_code=1

@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && (helm template --namespace default --kube-version 1.26 grafana-agent operations/helm/charts/grafana-agent -f operations/helm/charts/grafana-agent/ci/sidecars-values.yaml --output-dir /tmp/helm-sidecars --set '$chart_tests=true' 2>/dev/null && diff -r operations/helm/tests/sidecars/grafana-agent/templates/ /tmp/helm-sidecars/grafana-agent/templates/ 2>/dev/null && printf 'PASS\\n' > /tmp/helm_result) || printf 'FAIL\\n' > /tmp/helm_result; cd /workspace/helmtest && go test -run TestHelmSidecarsValues -count=1 ./...",
+  "test_files": [
+    "operations/helm/tests/sidecars/grafana-agent/templates/configmap.yaml",
+    "operations/helm/tests/sidecars/grafana-agent/templates/controllers/daemonset.yaml",
+    "operations/helm/tests/sidecars/grafana-agent/templates/rbac.yaml",
+    "operations/helm/tests/sidecars/grafana-agent/templates/service.yaml",
+    "operations/helm/tests/sidecars/grafana-agent/templates/serviceaccount.yaml"
+  ],
+  "num_test_files": 5,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "helmtest::TestHelmSidecarsValues"
+  ],
+  "PASS_TO_PASS": []
+}

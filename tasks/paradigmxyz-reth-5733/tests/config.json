@@ -1,0 +1,12 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p reth-primitives --no-fail-fast -E 'test(snapshot::segment)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) reth-primitives snapshot::segment::tests::test_new_filename_api",
+    "(2/2) reth-primitives snapshot::segment::tests::test_filename"
+  ],
+  "PASS_TO_PASS": []
+}

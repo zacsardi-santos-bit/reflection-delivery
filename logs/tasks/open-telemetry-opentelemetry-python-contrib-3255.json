@@ -1,0 +1,23 @@
+{
+ "task": "open-telemetry-opentelemetry-python-contrib-3255",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds tool_event()/ChoiceToolCall/_extract_tool_calls and 'if len(function_responses) == len(content.parts): continue' to suppress duplicate user event; tests assert user_log/assistant_log/tool_log1/tool_log2/choice_log bodies via VCR cassettes"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

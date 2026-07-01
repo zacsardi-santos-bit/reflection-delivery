@@ -1,0 +1,227 @@
+patching file harper-core/src/linting/phrase_corrections.rs
+warning: /workspace/repo/harper-wasm/Cargo.toml: unused manifest key: package.private
+warning: /workspace/repo/harper-cli/Cargo.toml: unused manifest key: package.private
+   Compiling proc-macro2 v1.0.93
+   Compiling unicode-ident v1.0.15
+   Compiling serde v1.0.217
+   Compiling memchr v2.7.4
+   Compiling libc v0.2.169
+   Compiling cfg-if v1.0.0
+   Compiling autocfg v1.4.0
+   Compiling serde_json v1.0.138
+   Compiling byteorder v1.5.0
+   Compiling regex-syntax v0.8.5
+   Compiling either v1.13.0
+   Compiling itoa v1.0.14
+   Compiling ryu v1.0.18
+   Compiling fst v0.4.7
+   Compiling clap_lex v0.7.4
+   Compiling thiserror v2.0.11
+   Compiling ciborium-io v0.2.2
+   Compiling anstyle v1.0.10
+   Compiling half v2.4.1
+   Compiling unicode-width v0.1.14
+   Compiling pulldown-cmark v0.12.2
+   Compiling syn v1.0.109
+   Compiling paste v1.0.15
+   Compiling allocator-api2 v0.2.21
+   Compiling itertools v0.10.5
+   Compiling clap_builder v4.5.27
+   Compiling bitflags v2.8.0
+   Compiling getopts v0.2.21
+   Compiling ciborium-ll v0.2.2
+   Compiling pulldown-cmark-escape v0.11.0
+   Compiling heck v0.5.0
+   Compiling same-file v1.0.6
+   Compiling num-traits v0.2.19
+   Compiling aho-corasick v1.1.3
+   Compiling equivalent v1.0.1
+   Compiling cast v0.3.0
+   Compiling unicase v2.8.1
+   Compiling log v0.4.25
+   Compiling foldhash v0.1.4
+   Compiling walkdir v2.5.0
+   Compiling itertools v0.14.0
+   Compiling anes v0.1.6
+   Compiling oorandom v11.1.4
+   Compiling lazy_static v1.5.0
+   Compiling once_cell v1.20.3
+   Compiling unicode-script v0.5.7
+   Compiling unicode-width v0.2.0
+   Compiling unicode-blocks v0.1.9
+   Compiling quote v1.0.38
+   Compiling levenshtein_automata v0.2.1
+   Compiling syn v2.0.96
+   Compiling getrandom v0.2.15
+   Compiling is-terminal v0.4.15
+   Compiling criterion-plot v0.5.0
+   Compiling rand_core v0.6.4
+   Compiling regex-automata v0.4.9
+   Compiling clap v4.5.28
+   Compiling regex v1.11.1
+   Compiling quickcheck_macros v1.0.0
+   Compiling env_logger v0.8.4
+   Compiling serde_derive v1.0.217
+   Compiling zerocopy-derive v0.7.35
+   Compiling thiserror-impl v2.0.11
+   Compiling blanket v0.4.0
+   Compiling is-macro v0.3.7
+   Compiling zerocopy v0.7.35
+   Compiling ppv-lite86 v0.2.20
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.5
+   Compiling quickcheck v1.0.3
+   Compiling hashbrown v0.15.2
+   Compiling smallvec v1.13.2
+   Compiling ordered-float v4.6.0
+   Compiling ciborium v0.2.2
+   Compiling tinytemplate v1.2.1
+   Compiling harper-core v0.20.0 (/workspace/repo/harper-core)
+   Compiling criterion v0.5.1
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/mod.rs:32:35
+   |
+32 | fn order_suggestions(matches: Vec<FuzzyMatchResult>) -> Vec<&[char]> {
+   |                                   ^^^^^^^^^^^^^^^^          ^^^^^^^ the same lifetime is elided here
+   |                                   |
+   |                                   the lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+32 | fn order_suggestions(matches: Vec<FuzzyMatchResult<'_>>) -> Vec<&[char]> {
+   |                                                   ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/dictionary.rs:17:9
+   |
+17 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+21 |     ) -> Vec<FuzzyMatchResult>;
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+21 |     ) -> Vec<FuzzyMatchResult<'_>>;
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/dictionary.rs:24:9
+   |
+24 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+28 |     ) -> Vec<FuzzyMatchResult>;
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+28 |     ) -> Vec<FuzzyMatchResult<'_>>;
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/fst_dictionary.rs:148:9
+    |
+148 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+152 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+152 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/fst_dictionary.rs:196:9
+    |
+196 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+200 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+200 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/merged_dictionary.rs:81:9
+   |
+81 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+85 |     ) -> Vec<FuzzyMatchResult> {
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+85 |     ) -> Vec<FuzzyMatchResult<'_>> {
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/merged_dictionary.rs:95:9
+   |
+95 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+99 |     ) -> Vec<FuzzyMatchResult> {
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+99 |     ) -> Vec<FuzzyMatchResult<'_>> {
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/mutable_dictionary.rs:179:9
+    |
+179 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+183 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+183 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/mutable_dictionary.rs:234:9
+    |
+234 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+238 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+238 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+error[E0432]: unresolved import `super::MutePoint`
+  --> harper-core/src/linting/phrase_corrections.rs:99:86
+   |
+99 |         BadRap, BatedBreath, ChangeTack, EnMasse, HungerPang, LetAlone, LoAndBehold, MutePoint,
+   |                                                                                      ^^^^^^^^^ no `MutePoint` in `linting::phrase_corrections`
+
+warning: `harper-core` (lib) generated 11 warnings (2 duplicates) (run `cargo fix --lib -p harper-core` to apply 9 suggestions)
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `harper-core` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package harper-core` exited with code 101
+reward=0 graded=449 found=0 failed=0 parsed=0 framework=cargo exit_code=101

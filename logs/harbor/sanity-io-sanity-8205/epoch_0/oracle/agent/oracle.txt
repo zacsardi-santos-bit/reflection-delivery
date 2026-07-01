@@ -1,0 +1,4 @@
+patching file packages/sanity/src/core/releases/tool/components/ReleaseMenuButton/ReleaseMenu.tsx
+patching file packages/sanity/src/core/releases/tool/components/ReleaseMenuButton/ReleaseMenuButton.tsx
+patching file packages/sanity/src/core/releases/tool/components/ReleaseMenuButton/releaseActions.ts
+patching file packages/sanity/src/core/releases/tool/detail/ReleaseDashboardFooter.tsx

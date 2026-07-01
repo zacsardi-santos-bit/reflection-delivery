@@ -1,0 +1,23 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && NODE_OPTIONS=--experimental-vm-modules ./node_modules/.bin/jest tests/format/js/comments/format.test.js --json --coverage=false 2>/dev/null | python3 -c \"import json,sys; d=json.load(sys.stdin); ar=[t for r in d.get('testResults',[]) for t in r.get('assertionResults',[]) if any('15661' in a for a in t.get('ancestorTitles',[]))]; p=sum(1 for t in ar if t['status']=='passed'); f=sum(1 for t in ar if t['status']=='failed'); fp=(d.get('testResults') or [{}])[0].get('testFilePath','/workspace/repo/tests/format/js/comments/format.test.js'); print(json.dumps({'numFailedTests':f,'numPassedTests':p,'numPendingTests':0,'numTotalTests':p+f,'success':f==0,'testResults':[{'testFilePath':fp,'assertionResults':ar}]}))\"",
+  "test_files": [
+    "tests/format/js/comments/15661.js",
+    "tests/format/js/comments/__snapshots__/format.test.js.snap"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "::format"
+  ],
+  "PASS_TO_PASS": [
+    "::[flow] format",
+    "::[typescript] format",
+    "::[acorn] format",
+    "::[espree] format",
+    "::[meriyah] format",
+    "::[babel-ts] format",
+    "::[babel-flow] format",
+    "::[__babel_estree] format"
+  ]
+}

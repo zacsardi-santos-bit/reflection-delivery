@@ -1,0 +1,31 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && bash -c 'set -o pipefail && cargo test -p ruff_linter -- flake8_use_pathlib --test-threads=1 2>&1 | python3 /workspace/parse_tests.py'",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/flake8_use_pathlib/PTH210.py",
+    "crates/ruff_linter/resources/test/fixtures/flake8_use_pathlib/PTH210_1.py"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_invalidpathlibwithsuffix_path_new_pth210_1_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_invalidpathlibwithsuffix_path_new_pth210_py_expects"
+  ],
+  "PASS_TO_PASS": [
+    "rules::flake8_use_pathlib::tests::rules::path_new_full_name_py_expects",
+    "rules::flake8_use_pathlib::tests::rules::path_new_import_as_py_expects",
+    "rules::flake8_use_pathlib::tests::rules::path_new_import_from_as_py_expects",
+    "rules::flake8_use_pathlib::tests::rules::path_new_import_from_py_expects",
+    "rules::flake8_use_pathlib::tests::rules::path_new_use_pathlib_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_glob_path_new_pth207_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_oslistdir_path_new_pth208_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetatime_path_new_pth203_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetctime_path_new_pth205_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetmtime_path_new_pth204_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetsize_path_new_pth202_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_ossepsplit_path_new_pth206_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_pathconstructorcurrentdirectory_path_new_pth201_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_pypath_path_new_py_path_1_py_expects",
+    "rules::flake8_use_pathlib::tests::rules_pypath::rule_pypath_path_new_py_path_2_py_expects"
+  ]
+}

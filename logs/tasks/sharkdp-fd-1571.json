@@ -1,0 +1,23 @@
+{
+ "task": "sharkdp-fd-1571",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test_hyperlink asserts \"\\x1b]8;;file://{}{}/a.foo\\x1b\\\\a.foo\\x1b]8;;\\x1b\\\\\" real escape output; golden adds src/hyperlink.rs + --hyperlink CLI enum"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

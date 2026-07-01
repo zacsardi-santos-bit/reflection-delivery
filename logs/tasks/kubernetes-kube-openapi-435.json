@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-kube-openapi-435",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds ParseCommentTags(), CommentTags.Validate(), CommentTags.ValidateType(t) and parseMarkers() in pkg/generators/markers.go, wired into openapi.go; F2P include TestParseCommentTags, TestCommentTags_Validate (min>max, invalid pattern, multipleOf=0, type mismatches), TestMarkerComments."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

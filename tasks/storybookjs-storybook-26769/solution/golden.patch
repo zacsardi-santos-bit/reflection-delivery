@@ -1,0 +1,4661 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index ef1c0ad4edb..61ad5d1f5e1 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,14 +1,3 @@
+-## 8.0.8
+-
+-- Automigration: Fix name of VTA addon - [#26816](https://github.com/storybookjs/storybook/pull/26816), thanks @valentinpalkovic!
+-
+-## 8.0.7
+-
+-- CLI: Add Visual Tests addon install auto-migration when upgrading to 8.0.x - [#26766](https://github.com/storybookjs/storybook/pull/26766), thanks @ndelangen!
+-- Next.js: Move sharp into optional deps - [#26787](https://github.com/storybookjs/storybook/pull/26787), thanks @shuta13!
+-- Vue: Disable controls for events, slots, and expose - [#26751](https://github.com/storybookjs/storybook/pull/26751), thanks @shilman!
+-- Webpack: Bump webpack-dev-middleware to patch high security issue - [#26655](https://github.com/storybookjs/storybook/pull/26655), thanks @jwilliams-met!
+-
+ ## 8.0.6
+ 
+ - CLI: Add --config-dir flag to migrate command - [#26721](https://github.com/storybookjs/storybook/pull/26721), thanks @yannbf!
+diff --git a/CHANGELOG.prerelease.md b/CHANGELOG.prerelease.md
+index 5d6baeac213..ada76261b3c 100644
+--- a/CHANGELOG.prerelease.md
++++ b/CHANGELOG.prerelease.md
+@@ -1,12 +1,3 @@
+-## 8.1.0-alpha.7
+-
+-- CLI: Add --config-dir flag to add command - [#26771](https://github.com/storybookjs/storybook/pull/26771), thanks @eric-blue!
+-- CLI: Add Visual Tests addon install auto-migration when upgrading to 8.0.x - [#26766](https://github.com/storybookjs/storybook/pull/26766), thanks @ndelangen!
+-- Controls: Add Channels API to search for files in the project root - [#26726](https://github.com/storybookjs/storybook/pull/26726), thanks @valentinpalkovic!
+-- Test: Make spies reactive so that they can be logged by addon-actions - [#26740](https://github.com/storybookjs/storybook/pull/26740), thanks @kasperpeulen!
+-- Vue: Disable controls for events, slots, and expose - [#26751](https://github.com/storybookjs/storybook/pull/26751), thanks @shilman!
+-- Webpack: Bump webpack-dev-middleware to patch high security issue - [#26655](https://github.com/storybookjs/storybook/pull/26655), thanks @jwilliams-met!
+-
+ ## 8.1.0-alpha.6
+ 
+ - CLI: Add --config-dir flag to migrate command - [#26721](https://github.com/storybookjs/storybook/pull/26721), thanks @yannbf!
+diff --git a/MIGRATION.md b/MIGRATION.md
+index eecaf94950a..345f0ff2baf 100644
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -5477,7 +5477,7 @@ Currently there is no recommended way of accessing the component options of a st
+ 
+ ## From version 4.0.x to 4.1.x
+ 
+-There are a few migrations you should be aware of in 4.1, including one unintentionally breaking change for advanced addon usage.
++There are are a few migrations you should be aware of in 4.1, including one unintentionally breaking change for advanced addon usage.
+ 
+ ### Private addon config
+ 
+diff --git a/code/addons/a11y/package.json b/code/addons/a11y/package.json
+index b4ead074313..496558d8250 100644
+--- a/code/addons/a11y/package.json
++++ b/code/addons/a11y/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-a11y",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Test component compliance with web accessibility standards",
+   "keywords": [
+     "a11y",
+diff --git a/code/addons/actions/package.json b/code/addons/actions/package.json
+index ece8a2ec4e3..723ad8083ac 100644
+--- a/code/addons/actions/package.json
++++ b/code/addons/actions/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-actions",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Get UI feedback when an action is performed on an interactive element",
+   "keywords": [
+     "storybook",
+diff --git a/code/addons/actions/src/loaders.ts b/code/addons/actions/src/loaders.ts
+index d49a048da23..3acfa9795ee 100644
+--- a/code/addons/actions/src/loaders.ts
++++ b/code/addons/actions/src/loaders.ts
+@@ -1,26 +1,36 @@
+ /* eslint-disable no-underscore-dangle */
+ import type { LoaderFunction } from '@storybook/types';
+-import { global } from '@storybook/global';
+-import type { onMockCall as onMockCallType } from '@storybook/test';
+ import { action } from './runtime';
+ 
+-let subscribed = false;
++export const tinySpyInternalState = Symbol.for('tinyspy:spy');
+ 
+-const logActionsWhenMockCalled: LoaderFunction = (context) => {
++const attachActionsToFunctionMocks: LoaderFunction = (context) => {
+   const {
++    args,
+     parameters: { actions },
+   } = context;
+   if (actions?.disable) return;
+ 
+-  if (
+-    !subscribed &&
+-    '__STORYBOOK_TEST_ON_MOCK_CALL__' in global &&
+-    typeof global.__STORYBOOK_TEST_ON_MOCK_CALL__ === 'function'
+-  ) {
+-    const onMockCall = global.__STORYBOOK_TEST_ON_MOCK_CALL__ as typeof onMockCallType;
+-    onMockCall((mock, args) => action(mock.getMockName())(args));
+-    subscribed = true;
+-  }
++  Object.entries(args)
++    .filter(
++      ([, value]) =>
++        typeof value === 'function' && '_isMockFunction' in value && value._isMockFunction
++    )
++    .forEach(([key, value]) => {
++      // See this discussion for context:
++      // https://github.com/vitest-dev/vitest/pull/5352
++      const previous =
++        value.getMockImplementation() ??
++        (tinySpyInternalState in value ? value[tinySpyInternalState]?.getOriginal() : undefined);
++      if (previous?._actionAttached !== true && previous?.isAction !== true) {
++        const implementation = (...params: unknown[]) => {
++          action(key)(...params);
++          return previous?.(...params);
++        };
++        implementation._actionAttached = true;
++        value.mockImplementation(implementation);
++      }
++    });
+ };
+ 
+-export const loaders: LoaderFunction[] = [logActionsWhenMockCalled];
++export const loaders: LoaderFunction[] = [attachActionsToFunctionMocks];
+diff --git a/code/addons/actions/template/stories/spies.stories.ts b/code/addons/actions/template/stories/spies.stories.ts
+deleted file mode 100644
+index 824494bda1c..00000000000
+--- a/code/addons/actions/template/stories/spies.stories.ts
++++ /dev/null
+@@ -1,24 +0,0 @@
+-import { global as globalThis } from '@storybook/global';
+-import { spyOn } from '@storybook/test';
+-
+-export default {
+-  component: globalThis.Components.Button,
+-  loaders() {
+-    spyOn(console, 'log').mockName('console.log');
+-  },
+-  args: {
+-    label: 'Button',
+-  },
+-  parameters: {
+-    chromatic: { disable: true },
+-  },
+-};
+-
+-export const ShowSpyOnInActions = {
+-  args: {
+-    onClick: () => {
+-      console.log('first');
+-      console.log('second');
+-    },
+-  },
+-};
+diff --git a/code/addons/backgrounds/package.json b/code/addons/backgrounds/package.json
+index 6a28feca716..7bb6d2ccf55 100644
+--- a/code/addons/backgrounds/package.json
++++ b/code/addons/backgrounds/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-backgrounds",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Switch backgrounds to view components in different settings",
+   "keywords": [
+     "addon",
+diff --git a/code/addons/controls/package.json b/code/addons/controls/package.json
+index 2a4619bcdf8..d13ea656084 100644
+--- a/code/addons/controls/package.json
++++ b/code/addons/controls/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-controls",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Interact with component inputs dynamically in the Storybook UI",
+   "keywords": [
+     "addon",
+diff --git a/code/addons/controls/src/ControlsPanel.tsx b/code/addons/controls/src/ControlsPanel.tsx
+index 1f1a90cce00..09d3bc45e44 100644
+--- a/code/addons/controls/src/ControlsPanel.tsx
++++ b/code/addons/controls/src/ControlsPanel.tsx
+@@ -35,10 +35,8 @@ export const ControlsPanel: FC = () => {
+   const hasControls = Object.values(rows).some((arg) => arg?.control);
+ 
+   const withPresetColors = Object.entries(rows).reduce((acc, [key, arg]) => {
+-    const control = arg?.control;
+-    if (typeof control !== 'object' || control?.type !== 'color' || control?.presetColors)
+-      acc[key] = arg;
+-    else acc[key] = { ...arg, control: { ...control, presetColors } };
++    if (arg?.control?.type !== 'color' || arg?.control?.presetColors) acc[key] = arg;
++    else acc[key] = { ...arg, control: { ...arg.control, presetColors } };
+     return acc;
+   }, {} as ArgTypes);
+ 
+diff --git a/code/addons/docs/package.json b/code/addons/docs/package.json
+index 77ccd00d086..2e8cc475788 100644
+--- a/code/addons/docs/package.json
++++ b/code/addons/docs/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-docs",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Document component usage and properties in Markdown",
+   "keywords": [
+     "addon",
+diff --git a/code/addons/essentials/package.json b/code/addons/essentials/package.json
+index 33112d9708d..2d22b284ac3 100644
+--- a/code/addons/essentials/package.json
++++ b/code/addons/essentials/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-essentials",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Curated addons to bring out the best of Storybook",
+   "keywords": [
+     "addon",
+diff --git a/code/addons/gfm/package.json b/code/addons/gfm/package.json
+index 5d2b909e149..03672376439 100644
+--- a/code/addons/gfm/package.json
++++ b/code/addons/gfm/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-mdx-gfm",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "GitHub Flavored Markdown in Storybook",
+   "keywords": [
+     "addon",
+diff --git a/code/addons/highlight/package.json b/code/addons/highlight/package.json
+index 261aaaf561f..c49692070e0 100644
+--- a/code/addons/highlight/package.json
++++ b/code/addons/highlight/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-highlight",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Highlight DOM nodes within your stories",
+   "keywords": [
+     "storybook-addons",
+diff --git a/code/addons/interactions/package.json b/code/addons/interactions/package.json
+index 467cac882d2..a4b2c834c00 100644
+--- a/code/addons/interactions/package.json
++++ b/code/addons/interactions/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-interactions",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Automate, test and debug user interactions",
+   "keywords": [
+     "storybook-addons",
+diff --git a/code/addons/interactions/src/preview.test.ts b/code/addons/interactions/src/preview.test.ts
+new file mode 100644
+index 00000000000..5cfec9d19d0
+--- /dev/null
++++ b/code/addons/interactions/src/preview.test.ts
+@@ -0,0 +1,42 @@
++import { describe, expect, test } from 'vitest';
++import { fn, isMockFunction } from '@storybook/test';
++import { action } from '@storybook/addon-actions';
++
++import { traverseArgs } from './preview';
++
++describe('traverseArgs', () => {
++  const args = {
++    deep: {
++      deeper: {
++        fnKey: fn(),
++        actionKey: action('name'),
++      },
++    },
++    arg2: Object.freeze({ frozen: true }),
++  };
++
++  expect(args.deep.deeper.fnKey.getMockName()).toEqual('spy');
++
++  const traversed = traverseArgs(args) as typeof args;
++
++  test('The same structure is maintained', () =>
++    expect(traversed).toEqual({
++      deep: {
++        deeper: {
++          fnKey: args.deep.deeper.fnKey,
++          actionKey: args.deep.deeper.actionKey,
++        },
++      },
++      // We don't mutate frozen objects, but we do insert them back in the tree
++      arg2: args.arg2,
++    }));
++
++  test('The mock name is mutated to be the arg key', () =>
++    expect(traversed.deep.deeper.fnKey.getMockName()).toEqual('fnKey'));
++
++  const actionFn = traversed.deep.deeper.actionKey;
++
++  test('Actions are wrapped in a spy', () => expect(isMockFunction(actionFn)).toBeTruthy());
++  test('The spy of the action is also matching the arg key ', () =>
++    expect(isMockFunction(actionFn) && actionFn.getMockName()).toEqual('actionKey'));
++});
+diff --git a/code/addons/interactions/src/preview.ts b/code/addons/interactions/src/preview.ts
+index 5ef2520b6b7..6e70166629a 100644
+--- a/code/addons/interactions/src/preview.ts
++++ b/code/addons/interactions/src/preview.ts
+@@ -1,4 +1,11 @@
+-import type { PlayFunction, PlayFunctionContext, StepLabel } from '@storybook/types';
++import type {
++  ArgsEnhancer,
++  PlayFunction,
++  PlayFunctionContext,
++  Renderer,
++  StepLabel,
++} from '@storybook/types';
++import { fn, isMockFunction } from '@storybook/test';
+ import { instrument } from '@storybook/instrumenter';
+ 
+ export const { step: runStep } = instrument(
+@@ -9,6 +16,50 @@ export const { step: runStep } = instrument(
+   { intercept: true }
+ );
+ 
++export const traverseArgs = (value: unknown, depth = 0, key?: string): unknown => {
++  // Make sure to not get in infinite loops with self referencing args
++  if (depth > 5) return value;
++  if (value == null) return value;
++  if (isMockFunction(value)) {
++    // Makes sure we get the arg name in the interactions panel
++    if (key) value.mockName(key);
++    return value;
++  }
++
++  // wrap explicit actions in a spy
++  if (
++    typeof value === 'function' &&
++    'isAction' in value &&
++    value.isAction &&
++    !('implicit' in value && value.implicit)
++  ) {
++    const mock = fn(value as any);
++    if (key) mock.mockName(key);
++    return mock;
++  }
++
++  if (Array.isArray(value)) {
++    depth++;
++    return value.map((item) => traverseArgs(item, depth));
++  }
++
++  if (typeof value === 'object' && value.constructor === Object) {
++    depth++;
++    for (const [k, v] of Object.entries(value)) {
++      if (Object.getOwnPropertyDescriptor(value, k).writable) {
++        // We have to mutate the original object for this to survive HMR.
++        (value as Record<string, unknown>)[k] = traverseArgs(v, depth, k);
++      }
++    }
++    return value;
++  }
++  return value;
++};
++
++const wrapActionsInSpyFns: ArgsEnhancer<Renderer> = ({ initialArgs }) => traverseArgs(initialArgs);
++
++export const argsEnhancers = [wrapActionsInSpyFns];
++
+ export const parameters = {
+   throwPlayFunctionExceptions: false,
+ };
+diff --git a/code/addons/jest/package.json b/code/addons/jest/package.json
+index 02d3455461a..29a9e24fd4a 100644
+--- a/code/addons/jest/package.json
++++ b/code/addons/jest/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-jest",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "React storybook addon that show component jest report",
+   "keywords": [
+     "addon",
+diff --git a/code/addons/links/package.json b/code/addons/links/package.json
+index cbe50306d3f..c9ae4616934 100644
+--- a/code/addons/links/package.json
++++ b/code/addons/links/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-links",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Link stories together to build demos and prototypes with your UI components",
+   "keywords": [
+     "addon",
+@@ -67,7 +67,7 @@
+     "prep": "node --loader ../../../scripts/node_modules/esbuild-register/loader.js -r ../../../scripts/node_modules/esbuild-register/register.js ../../../scripts/prepare/addon-bundle.ts"
+   },
+   "dependencies": {
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/global": "^5.0.0",
+     "ts-dedent": "^2.0.0"
+   },
+diff --git a/code/addons/measure/package.json b/code/addons/measure/package.json
+index f5146ede862..a194e99010c 100644
+--- a/code/addons/measure/package.json
++++ b/code/addons/measure/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-measure",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Inspect layouts by visualizing the box model",
+   "keywords": [
+     "storybook-addons",
+diff --git a/code/addons/onboarding/package.json b/code/addons/onboarding/package.json
+index 8919cabdb5b..122a335e744 100644
+--- a/code/addons/onboarding/package.json
++++ b/code/addons/onboarding/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-onboarding",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook Addon Onboarding - Introduces a new onboarding experience",
+   "keywords": [
+     "storybook-addons",
+diff --git a/code/addons/outline/package.json b/code/addons/outline/package.json
+index 1a40a4d6c6c..4a9edc79677 100644
+--- a/code/addons/outline/package.json
++++ b/code/addons/outline/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-outline",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Outline all elements with CSS to help with layout placement and alignment",
+   "keywords": [
+     "storybook-addons",
+diff --git a/code/addons/storysource/package.json b/code/addons/storysource/package.json
+index e116bf93a52..cb04afaea3f 100644
+--- a/code/addons/storysource/package.json
++++ b/code/addons/storysource/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-storysource",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "View a story’s source code to see how it works and paste into your app",
+   "keywords": [
+     "addon",
+diff --git a/code/addons/themes/package.json b/code/addons/themes/package.json
+index 1203272b30d..34a98c77b33 100644
+--- a/code/addons/themes/package.json
++++ b/code/addons/themes/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-themes",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Switch between multiple themes for you components in Storybook",
+   "keywords": [
+     "css",
+diff --git a/code/addons/toolbars/package.json b/code/addons/toolbars/package.json
+index 003fe05a760..7e95a9f16d8 100644
+--- a/code/addons/toolbars/package.json
++++ b/code/addons/toolbars/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-toolbars",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Create your own toolbar items that control story rendering",
+   "keywords": [
+     "addon",
+diff --git a/code/addons/viewport/README.md b/code/addons/viewport/README.md
+index 7975688745f..3766d555f8b 100644
+--- a/code/addons/viewport/README.md
++++ b/code/addons/viewport/README.md
+@@ -22,7 +22,7 @@ export default {
+ };
+ ```
+ 
+-You should now be able to see the viewport addon icon in the toolbar at the top of the screen.
++You should now be able to see the viewport addon icon in the the toolbar at the top of the screen.
+ 
+ ## Usage
+ 
+diff --git a/code/addons/viewport/package.json b/code/addons/viewport/package.json
+index b1478832b2e..f22e8be1d7c 100644
+--- a/code/addons/viewport/package.json
++++ b/code/addons/viewport/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/addon-viewport",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Build responsive components by adjusting Storybook’s viewport size and orientation",
+   "keywords": [
+     "addon",
+diff --git a/code/builders/builder-manager/package.json b/code/builders/builder-manager/package.json
+index 432ee9cf335..578714b83ae 100644
+--- a/code/builders/builder-manager/package.json
++++ b/code/builders/builder-manager/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/builder-manager",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook manager builder",
+   "keywords": [
+     "storybook"
+diff --git a/code/builders/builder-vite/package.json b/code/builders/builder-vite/package.json
+index 6422f5c7279..19e1b9e51b2 100644
+--- a/code/builders/builder-vite/package.json
++++ b/code/builders/builder-vite/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/builder-vite",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "A plugin to run and build Storybooks with Vite",
+   "homepage": "https://github.com/storybookjs/storybook/tree/next/code/builders/builder-vite/#readme",
+   "bugs": {
+diff --git a/code/builders/builder-webpack5/package.json b/code/builders/builder-webpack5/package.json
+index 4e0d3caf9cf..22678cfd37e 100644
+--- a/code/builders/builder-webpack5/package.json
++++ b/code/builders/builder-webpack5/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/builder-webpack5",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook framework-agnostic API",
+   "keywords": [
+     "storybook"
+@@ -94,7 +94,7 @@
+     "util": "^0.12.4",
+     "util-deprecate": "^1.0.2",
+     "webpack": "5",
+-    "webpack-dev-middleware": "^6.1.2",
++    "webpack-dev-middleware": "^6.1.1",
+     "webpack-hot-middleware": "^2.25.1",
+     "webpack-virtual-modules": "^0.5.0"
+   },
+diff --git a/code/e2e-tests/addon-actions.spec.ts b/code/e2e-tests/addon-actions.spec.ts
+index a67aa8599ce..3b93599e81a 100644
+--- a/code/e2e-tests/addon-actions.spec.ts
++++ b/code/e2e-tests/addon-actions.spec.ts
+@@ -26,26 +26,4 @@ test.describe('addon-actions', () => {
+     });
+     await expect(logItem).toBeVisible();
+   });
+-
+-  test('should show spies', async ({ page }) => {
+-    test.skip(
+-      templateName.includes('svelte') && templateName.includes('prerelease'),
+-      'Svelte 5 prerelase does not support automatic actions with our current example components yet'
+-    );
+-    await page.goto(storybookUrl);
+-    const sbPage = new SbPage(page);
+-    sbPage.waitUntilLoaded();
+-
+-    await sbPage.navigateToStory('addons/actions/spies', 'show-spy-on-in-actions');
+-
+-    const root = sbPage.previewRoot();
+-    const button = root.locator('button', { hasText: 'Button' });
+-    await button.click();
+-
+-    await sbPage.viewAddonPanel('Actions');
+-    const logItem = await page.locator('#storybook-panel-root #panel-tab-content', {
+-      hasText: 'console.log',
+-    });
+-    await expect(logItem).toBeVisible();
+-  });
+ });
+diff --git a/code/frameworks/angular/package.json b/code/frameworks/angular/package.json
+index 6e631703795..343562c86f3 100644
+--- a/code/frameworks/angular/package.json
++++ b/code/frameworks/angular/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/angular",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Angular: Develop Angular components in isolation with hot reloading.",
+   "keywords": [
+     "storybook",
+diff --git a/code/frameworks/angular/src/client/docs/compodoc.ts b/code/frameworks/angular/src/client/docs/compodoc.ts
+index cc6425c6e54..9785842648d 100644
+--- a/code/frameworks/angular/src/client/docs/compodoc.ts
++++ b/code/frameworks/angular/src/client/docs/compodoc.ts
+@@ -200,7 +200,7 @@ const extractDefaultValueFromComments = (property: Property, value: any) => {
+ 
+ const extractDefaultValue = (property: Property) => {
+   try {
+-    let value: string = property.defaultValue?.replace(/^'(.*)'$/, '$1');
++    let value: string | boolean = property.defaultValue?.replace(/^'(.*)'$/, '$1');
+     value = castDefaultValue(property, value);
+ 
+     if (value == null && property.jsdoctags?.length > 0) {
+diff --git a/code/frameworks/ember/package.json b/code/frameworks/ember/package.json
+index d1f6b92bfa4..787a93e9bea 100644
+--- a/code/frameworks/ember/package.json
++++ b/code/frameworks/ember/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/ember",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Ember: Develop Ember Component in isolation with Hot Reloading.",
+   "homepage": "https://github.com/storybookjs/storybook/tree/next/code/frameworks/ember",
+   "bugs": {
+diff --git a/code/frameworks/html-vite/package.json b/code/frameworks/html-vite/package.json
+index 6fd46099d12..626332c9a48 100644
+--- a/code/frameworks/html-vite/package.json
++++ b/code/frameworks/html-vite/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/html-vite",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for HTML and Vite: Develop HTML in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/html-webpack5/package.json b/code/frameworks/html-webpack5/package.json
+index 6582c99aac3..194dbad864d 100644
+--- a/code/frameworks/html-webpack5/package.json
++++ b/code/frameworks/html-webpack5/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/html-webpack5",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for HTML: View HTML snippets in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/nextjs/package.json b/code/frameworks/nextjs/package.json
+index 608df58e0d3..b918ba86c2a 100644
+--- a/code/frameworks/nextjs/package.json
++++ b/code/frameworks/nextjs/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/nextjs",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Next.js",
+   "keywords": [
+     "storybook",
+@@ -114,6 +114,7 @@
+     "resolve-url-loader": "^5.0.0",
+     "sass-loader": "^12.4.0",
+     "semver": "^7.3.5",
++    "sharp": "^0.32.6",
+     "style-loader": "^3.3.1",
+     "styled-jsx": "5.1.1",
+     "ts-dedent": "^2.0.0",
+@@ -131,9 +132,6 @@
+     "typescript": "^5.3.2",
+     "webpack": "^5.65.0"
+   },
+-  "optionalDependencies": {
+-    "sharp": "^0.33.3"
+-  },
+   "peerDependencies": {
+     "next": "^13.5.0 || ^14.0.0",
+     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+diff --git a/code/frameworks/nextjs/src/next-image-loader-stub.ts b/code/frameworks/nextjs/src/next-image-loader-stub.ts
+index dbc65b8fde6..6f69e8e274d 100644
+--- a/code/frameworks/nextjs/src/next-image-loader-stub.ts
++++ b/code/frameworks/nextjs/src/next-image-loader-stub.ts
+@@ -2,27 +2,18 @@ import { interpolateName } from 'loader-utils';
+ import imageSizeOf from 'image-size';
+ import type { RawLoaderDefinition } from 'webpack';
+ import type { NextConfig } from 'next';
++import sharp from 'sharp';
+ import { cpus } from 'os';
+-import { NextJsSharpError } from '@storybook/core-events/preview-errors';
+ 
+ interface LoaderOptions {
+   filename: string;
+   nextConfig: NextConfig;
+ }
+ 
+-let sharp: typeof import('sharp') | undefined;
+-
+-try {
+-  sharp = require('sharp');
+-  if (sharp && sharp.concurrency() > 1) {
+-    // Reducing concurrency reduces the memory usage too.
+-    const divisor = process.env.NODE_ENV === 'development' ? 4 : 2;
+-    sharp.concurrency(Math.floor(Math.max(cpus().length / divisor, 1)));
+-  }
+-} catch (e) {
+-  console.warn(
+-    'You have to install sharp in order to use image optimization features in Next.js. AVIF support is also disabled.'
+-  );
++if (sharp.concurrency() > 1) {
++  // Reducing concurrency reduces the memory usage too.
++  const divisor = process.env.NODE_ENV === 'development' ? 4 : 2;
++  sharp.concurrency(Math.floor(Math.max(cpus().length / divisor, 1)));
+ }
+ 
+ const nextImageLoaderStub: RawLoaderDefinition<LoaderOptions> = async function NextImageLoader(
+@@ -46,14 +37,10 @@ const nextImageLoaderStub: RawLoaderDefinition<LoaderOptions> = async function N
+   let height;
+ 
+   if (extension === 'avif') {
+-    if (sharp) {
+-      const transformer = sharp(content);
+-      const result = await transformer.metadata();
+-      width = result.width;
+-      height = result.height;
+-    } else {
+-      throw new NextJsSharpError();
+-    }
++    const transformer = sharp(content);
++    const result = await transformer.metadata();
++    width = result.width;
++    height = result.height;
+   } else {
+     const result = imageSizeOf(this.resourcePath);
+     width = result.width;
+diff --git a/code/frameworks/preact-vite/package.json b/code/frameworks/preact-vite/package.json
+index 8f9dae80033..ff1cf661260 100644
+--- a/code/frameworks/preact-vite/package.json
++++ b/code/frameworks/preact-vite/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preact-vite",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Preact and Vite: Develop Preact components in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/preact-webpack5/package.json b/code/frameworks/preact-webpack5/package.json
+index dccfa9aa93d..f139882e2c8 100644
+--- a/code/frameworks/preact-webpack5/package.json
++++ b/code/frameworks/preact-webpack5/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preact-webpack5",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Preact: Develop Preact Component in isolation.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/react-vite/package.json b/code/frameworks/react-vite/package.json
+index 02a50462eac..c8428d3ebf1 100644
+--- a/code/frameworks/react-vite/package.json
++++ b/code/frameworks/react-vite/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/react-vite",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for React and Vite: Develop React components in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/react-webpack5/package.json b/code/frameworks/react-webpack5/package.json
+index 4ef8b479e4f..3c121d8c36c 100644
+--- a/code/frameworks/react-webpack5/package.json
++++ b/code/frameworks/react-webpack5/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/react-webpack5",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/server-webpack5/package.json b/code/frameworks/server-webpack5/package.json
+index c8966b299cb..d6b096958d9 100644
+--- a/code/frameworks/server-webpack5/package.json
++++ b/code/frameworks/server-webpack5/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/server-webpack5",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Server: View HTML snippets from a server in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/svelte-vite/package.json b/code/frameworks/svelte-vite/package.json
+index 173162058c0..8f7455abc1d 100644
+--- a/code/frameworks/svelte-vite/package.json
++++ b/code/frameworks/svelte-vite/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/svelte-vite",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Svelte and Vite: Develop Svelte components in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/svelte-webpack5/package.json b/code/frameworks/svelte-webpack5/package.json
+index 362fd576e7d..4d39fdd9d4c 100644
+--- a/code/frameworks/svelte-webpack5/package.json
++++ b/code/frameworks/svelte-webpack5/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/svelte-webpack5",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Svelte: Develop Svelte Component in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/sveltekit/package.json b/code/frameworks/sveltekit/package.json
+index 3a9f86ae03d..35a8659be34 100644
+--- a/code/frameworks/sveltekit/package.json
++++ b/code/frameworks/sveltekit/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/sveltekit",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for SvelteKit",
+   "keywords": [
+     "storybook",
+diff --git a/code/frameworks/vue3-vite/package.json b/code/frameworks/vue3-vite/package.json
+index a6d9e80ce04..bc3bbd4e614 100644
+--- a/code/frameworks/vue3-vite/package.json
++++ b/code/frameworks/vue3-vite/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/vue3-vite",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Vue3 and Vite: Develop Vue3 components in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/vue3-webpack5/package.json b/code/frameworks/vue3-webpack5/package.json
+index 6df4545ccb8..e534562b57a 100644
+--- a/code/frameworks/vue3-webpack5/package.json
++++ b/code/frameworks/vue3-webpack5/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/vue3-webpack5",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Vue 3: Develop Vue 3 Components in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/web-components-vite/package.json b/code/frameworks/web-components-vite/package.json
+index bca9dda246e..620572741ca 100644
+--- a/code/frameworks/web-components-vite/package.json
++++ b/code/frameworks/web-components-vite/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/web-components-vite",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for web-components and Vite: Develop Web Components in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/frameworks/web-components-webpack5/package.json b/code/frameworks/web-components-webpack5/package.json
+index 2d0642ecbdd..0b9f3d94100 100644
+--- a/code/frameworks/web-components-webpack5/package.json
++++ b/code/frameworks/web-components-webpack5/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/web-components-webpack5",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for web-components: View web components snippets in isolation with Hot Reloading.",
+   "keywords": [
+     "lit",
+diff --git a/code/lib/channels/package.json b/code/lib/channels/package.json
+index 57a8c53ab2e..2d839f6d467 100644
+--- a/code/lib/channels/package.json
++++ b/code/lib/channels/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/channels",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/cli-sb/package.json b/code/lib/cli-sb/package.json
+index 9b652778930..fbfa837b7aa 100644
+--- a/code/lib/cli-sb/package.json
++++ b/code/lib/cli-sb/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "sb",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook CLI",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/cli-storybook/package.json b/code/lib/cli-storybook/package.json
+index 36355076102..68f16db3a67 100644
+--- a/code/lib/cli-storybook/package.json
++++ b/code/lib/cli-storybook/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "storybook",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook CLI",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/cli/package.json b/code/lib/cli/package.json
+index 200eae0d10e..c59d373bdc2 100644
+--- a/code/lib/cli/package.json
++++ b/code/lib/cli/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/cli",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook's CLI - install, dev, build, upgrade, and more",
+   "keywords": [
+     "cli",
+diff --git a/code/lib/cli/src/add.ts b/code/lib/cli/src/add.ts
+index c0bb071dda5..19a4b552fcc 100644
+--- a/code/lib/cli/src/add.ts
++++ b/code/lib/cli/src/add.ts
+@@ -48,12 +48,6 @@ const checkInstalled = (addonName: string, main: any) => {
+ 
+ const isCoreAddon = (addonName: string) => Object.hasOwn(versions, addonName);
+ 
+-type CLIOptions = {
+-  packageManager?: PackageManagerName;
+-  configDir?: string;
+-  skipPostinstall: boolean;
+-};
+-
+ /**
+  * Install the given addon package and add it to main.js
+  *
+@@ -67,18 +61,15 @@ type CLIOptions = {
+  */
+ export async function add(
+   addon: string,
+-  { packageManager: pkgMgr, skipPostinstall, configDir: userSpecifiedConfigDir }: CLIOptions,
++  options: { packageManager: PackageManagerName; skipPostinstall: boolean },
+   logger = console
+ ) {
++  const { packageManager: pkgMgr } = options;
+   const [addonName, inputVersion] = getVersionSpecifier(addon);
+ 
+   const packageManager = JsPackageManagerFactory.getPackageManager({ force: pkgMgr });
+   const packageJson = await packageManager.retrievePackageJson();
+-  const { mainConfig, configDir: inferredConfigDir } = getStorybookInfo(
+-    packageJson,
+-    userSpecifiedConfigDir
+-  );
+-  const configDir = userSpecifiedConfigDir || inferredConfigDir || '.storybook';
++  const { mainConfig, configDir } = getStorybookInfo(packageJson);
+ 
+   if (typeof configDir === 'undefined') {
+     throw new Error(dedent`
+@@ -128,7 +119,7 @@ export async function add(
+   main.appendValueToArray(['addons'], addonName);
+   await writeConfig(main);
+ 
+-  if (!skipPostinstall && isCoreAddon(addonName)) {
++  if (!options.skipPostinstall && isCoreAddon(addonName)) {
+     await postinstallAddon(addonName, { packageManager: packageManager.type });
+   }
+ }
+diff --git a/code/lib/cli/src/automigrate/fixes/index.ts b/code/lib/cli/src/automigrate/fixes/index.ts
+index 72f3eb9a605..022074fa830 100644
+--- a/code/lib/cli/src/automigrate/fixes/index.ts
++++ b/code/lib/cli/src/automigrate/fixes/index.ts
+@@ -26,7 +26,6 @@ import { removeJestTestingLibrary } from './remove-jest-testing-library';
+ import { addonsAPI } from './addons-api';
+ import { mdx1to3 } from './mdx-1-to-3';
+ import { addonPostCSS } from './addon-postcss';
+-import { vta } from './vta';
+ import { upgradeStorybookRelatedDependencies } from './upgrade-storybook-related-dependencies';
+ 
+ export * from '../types';
+@@ -59,7 +58,6 @@ export const allFixes: Fix[] = [
+   webpack5CompilerSetup,
+   mdx1to3,
+   upgradeStorybookRelatedDependencies,
+-  vta,
+ ];
+ 
+ export const initFixes: Fix[] = [eslintPlugin];
+diff --git a/code/lib/cli/src/automigrate/fixes/vta.test.ts b/code/lib/cli/src/automigrate/fixes/vta.test.ts
+deleted file mode 100644
+index ff1cc210947..00000000000
+--- a/code/lib/cli/src/automigrate/fixes/vta.test.ts
++++ /dev/null
+@@ -1,61 +0,0 @@
+-import { describe, expect, it } from 'vitest';
+-import type { StorybookConfig } from '@storybook/types';
+-import { vta } from './vta';
+-
+-const check = async ({
+-  packageManager,
+-  main: mainConfig,
+-  storybookVersion = '7.0.0',
+-}: {
+-  packageManager: any;
+-  main: Partial<StorybookConfig> & Record<string, unknown>;
+-  storybookVersion?: string;
+-}) => {
+-  return vta.check({
+-    packageManager,
+-    configDir: '',
+-    mainConfig: mainConfig as any,
+-    storybookVersion,
+-  });
+-};
+-
+-describe('no-ops', () => {
+-  it('with addon setup', async () => {
+-    await expect(
+-      check({
+-        packageManager: {},
+-        main: {
+-          addons: ['@chromatic-com/storybook'],
+-        },
+-      })
+-    ).resolves.toBeFalsy();
+-  });
+-  it('with addon setup with options', async () => {
+-    await expect(
+-      check({
+-        packageManager: {},
+-        main: {
+-          addons: [
+-            {
+-              name: '@chromatic-com/storybook',
+-              options: {},
+-            },
+-          ],
+-        },
+-      })
+-    ).resolves.toBeFalsy();
+-  });
+-});
+-
+-describe('continue', () => {
+-  it('no addons', async () => {
+-    await expect(
+-      check({
+-        packageManager: {},
+-        main: {
+-          stories: ['**/*.stories.mdx'],
+-        },
+-      })
+-    ).resolves.toBeTruthy();
+-  });
+-});
+diff --git a/code/lib/cli/src/automigrate/fixes/vta.ts b/code/lib/cli/src/automigrate/fixes/vta.ts
+deleted file mode 100644
+index ef4dd78d0bb..00000000000
+--- a/code/lib/cli/src/automigrate/fixes/vta.ts
++++ /dev/null
+@@ -1,55 +0,0 @@
+-import { dedent } from 'ts-dedent';
+-import chalk from 'chalk';
+-import { getAddonNames, updateMainConfig } from '../helpers/mainConfigFile';
+-import type { Fix } from '../types';
+-
+-const logger = console;
+-
+-interface Options {}
+-
+-/**
+- */
+-export const vta: Fix<Options> = {
+-  id: 'visual-tests-addon',
+-
+-  versionRange: ['<8.0.7', '>=8.0.7'],
+-
+-  async check({ mainConfig }) {
+-    const hadAddonInstalled = getAddonNames(mainConfig).some((addon) =>
+-      addon.includes('@chromatic-com/storybook')
+-    );
+-
+-    const skip = hadAddonInstalled;
+-
+-    if (skip) {
+-      return null;
+-    }
+-
+-    return {};
+-  },
+-
+-  prompt() {
+-    return dedent`
+-      New to Storybook 8: Storybook's Visual Tests addon helps you catch unintentional changes/bugs in your stories. The addon is powered by Chromatic, a cloud-based testing tool developed by Storybook's core team.
+-
+-      Learn more: ${chalk.yellow('storybook.js.org/docs/writing-tests/visual-testing')}
+-      
+-      Install Visual Tests addon in your project?
+-    `;
+-  },
+-
+-  async run({ packageManager, dryRun, mainConfigPath, skipInstall }) {
+-    if (!dryRun) {
+-      const packageJson = await packageManager.retrievePackageJson();
+-      await packageManager.addDependencies(
+-        { installAsDevDependencies: true, skipInstall, packageJson },
+-        [`@chromatic-com/storybook@^1`]
+-      );
+-
+-      await updateMainConfig({ mainConfigPath, dryRun: !!dryRun }, async (main) => {
+-        logger.info(`✅ Adding "@chromatic-com/storybook" addon`);
+-        main.appendValueToArray(['addons'], '@chromatic-com/storybook');
+-      });
+-    }
+-  },
+-};
+diff --git a/code/lib/cli/src/generate.ts b/code/lib/cli/src/generate.ts
+index b5aa64f7f77..36de347730a 100644
+--- a/code/lib/cli/src/generate.ts
++++ b/code/lib/cli/src/generate.ts
+@@ -68,7 +68,6 @@ command('add <addon>')
+     '--package-manager <npm|pnpm|yarn1|yarn2>',
+     'Force package manager for installing dependencies'
+   )
+-  .option('-c, --config-dir <dir-name>', 'Directory where to load Storybook configurations from')
+   .option('-s --skip-postinstall', 'Skip package specific postinstall config modifications')
+   .action((addonName: string, options: any) => add(addonName, options));
+ 
+diff --git a/code/lib/client-logger/package.json b/code/lib/client-logger/package.json
+index 80545b22643..5820afd99ea 100644
+--- a/code/lib/client-logger/package.json
++++ b/code/lib/client-logger/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/client-logger",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/codemod/package.json b/code/lib/codemod/package.json
+index 46f9ad028a5..56bf38c752f 100644
+--- a/code/lib/codemod/package.json
++++ b/code/lib/codemod/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/codemod",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "A collection of codemod scripts written with JSCodeshift",
+   "keywords": [
+     "storybook"
+@@ -57,7 +57,7 @@
+     "@babel/core": "^7.23.2",
+     "@babel/preset-env": "^7.23.2",
+     "@babel/types": "^7.23.0",
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/csf-tools": "workspace:*",
+     "@storybook/node-logger": "workspace:*",
+     "@storybook/types": "workspace:*",
+diff --git a/code/lib/core-common/package.json b/code/lib/core-common/package.json
+index b40d3bba403..c64ce6092e3 100644
+--- a/code/lib/core-common/package.json
++++ b/code/lib/core-common/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/core-common",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook framework-agnostic API",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/core-common/src/versions.ts b/code/lib/core-common/src/versions.ts
+index 3748c421b11..13842212755 100644
+--- a/code/lib/core-common/src/versions.ts
++++ b/code/lib/core-common/src/versions.ts
+@@ -1,83 +1,83 @@
+ // auto generated file, do not edit
+ export default {
+-  '@storybook/addon-a11y': '8.1.0-alpha.7',
+-  '@storybook/addon-actions': '8.1.0-alpha.7',
+-  '@storybook/addon-backgrounds': '8.1.0-alpha.7',
+-  '@storybook/addon-controls': '8.1.0-alpha.7',
+-  '@storybook/addon-docs': '8.1.0-alpha.7',
+-  '@storybook/addon-essentials': '8.1.0-alpha.7',
+-  '@storybook/addon-highlight': '8.1.0-alpha.7',
+-  '@storybook/addon-interactions': '8.1.0-alpha.7',
+-  '@storybook/addon-jest': '8.1.0-alpha.7',
+-  '@storybook/addon-links': '8.1.0-alpha.7',
+-  '@storybook/addon-mdx-gfm': '8.1.0-alpha.7',
+-  '@storybook/addon-measure': '8.1.0-alpha.7',
+-  '@storybook/addon-onboarding': '8.1.0-alpha.7',
+-  '@storybook/addon-outline': '8.1.0-alpha.7',
+-  '@storybook/addon-storysource': '8.1.0-alpha.7',
+-  '@storybook/addon-themes': '8.1.0-alpha.7',
+-  '@storybook/addon-toolbars': '8.1.0-alpha.7',
+-  '@storybook/addon-viewport': '8.1.0-alpha.7',
+-  '@storybook/angular': '8.1.0-alpha.7',
+-  '@storybook/blocks': '8.1.0-alpha.7',
+-  '@storybook/builder-manager': '8.1.0-alpha.7',
+-  '@storybook/builder-vite': '8.1.0-alpha.7',
+-  '@storybook/builder-webpack5': '8.1.0-alpha.7',
+-  '@storybook/channels': '8.1.0-alpha.7',
+-  '@storybook/cli': '8.1.0-alpha.7',
+-  '@storybook/client-logger': '8.1.0-alpha.7',
+-  '@storybook/codemod': '8.1.0-alpha.7',
+-  '@storybook/components': '8.1.0-alpha.7',
+-  '@storybook/core-common': '8.1.0-alpha.7',
+-  '@storybook/core-events': '8.1.0-alpha.7',
+-  '@storybook/core-server': '8.1.0-alpha.7',
+-  '@storybook/core-webpack': '8.1.0-alpha.7',
+-  '@storybook/csf-plugin': '8.1.0-alpha.7',
+-  '@storybook/csf-tools': '8.1.0-alpha.7',
+-  '@storybook/docs-tools': '8.1.0-alpha.7',
+-  '@storybook/ember': '8.1.0-alpha.7',
+-  '@storybook/html': '8.1.0-alpha.7',
+-  '@storybook/html-vite': '8.1.0-alpha.7',
+-  '@storybook/html-webpack5': '8.1.0-alpha.7',
+-  '@storybook/instrumenter': '8.1.0-alpha.7',
+-  '@storybook/manager': '8.1.0-alpha.7',
+-  '@storybook/manager-api': '8.1.0-alpha.7',
+-  '@storybook/nextjs': '8.1.0-alpha.7',
+-  '@storybook/node-logger': '8.1.0-alpha.7',
+-  '@storybook/preact': '8.1.0-alpha.7',
+-  '@storybook/preact-vite': '8.1.0-alpha.7',
+-  '@storybook/preact-webpack5': '8.1.0-alpha.7',
+-  '@storybook/preset-create-react-app': '8.1.0-alpha.7',
+-  '@storybook/preset-html-webpack': '8.1.0-alpha.7',
+-  '@storybook/preset-preact-webpack': '8.1.0-alpha.7',
+-  '@storybook/preset-react-webpack': '8.1.0-alpha.7',
+-  '@storybook/preset-server-webpack': '8.1.0-alpha.7',
+-  '@storybook/preset-svelte-webpack': '8.1.0-alpha.7',
+-  '@storybook/preset-vue3-webpack': '8.1.0-alpha.7',
+-  '@storybook/preview': '8.1.0-alpha.7',
+-  '@storybook/preview-api': '8.1.0-alpha.7',
+-  '@storybook/react': '8.1.0-alpha.7',
+-  '@storybook/react-dom-shim': '8.1.0-alpha.7',
+-  '@storybook/react-vite': '8.1.0-alpha.7',
+-  '@storybook/react-webpack5': '8.1.0-alpha.7',
+-  '@storybook/router': '8.1.0-alpha.7',
+-  '@storybook/server': '8.1.0-alpha.7',
+-  '@storybook/server-webpack5': '8.1.0-alpha.7',
+-  '@storybook/source-loader': '8.1.0-alpha.7',
+-  '@storybook/svelte': '8.1.0-alpha.7',
+-  '@storybook/svelte-vite': '8.1.0-alpha.7',
+-  '@storybook/svelte-webpack5': '8.1.0-alpha.7',
+-  '@storybook/sveltekit': '8.1.0-alpha.7',
+-  '@storybook/telemetry': '8.1.0-alpha.7',
+-  '@storybook/test': '8.1.0-alpha.7',
+-  '@storybook/theming': '8.1.0-alpha.7',
+-  '@storybook/types': '8.1.0-alpha.7',
+-  '@storybook/vue3': '8.1.0-alpha.7',
+-  '@storybook/vue3-vite': '8.1.0-alpha.7',
+-  '@storybook/vue3-webpack5': '8.1.0-alpha.7',
+-  '@storybook/web-components': '8.1.0-alpha.7',
+-  '@storybook/web-components-vite': '8.1.0-alpha.7',
+-  '@storybook/web-components-webpack5': '8.1.0-alpha.7',
+-  sb: '8.1.0-alpha.7',
+-  storybook: '8.1.0-alpha.7',
++  '@storybook/addon-a11y': '8.1.0-alpha.6',
++  '@storybook/addon-actions': '8.1.0-alpha.6',
++  '@storybook/addon-backgrounds': '8.1.0-alpha.6',
++  '@storybook/addon-controls': '8.1.0-alpha.6',
++  '@storybook/addon-docs': '8.1.0-alpha.6',
++  '@storybook/addon-essentials': '8.1.0-alpha.6',
++  '@storybook/addon-highlight': '8.1.0-alpha.6',
++  '@storybook/addon-interactions': '8.1.0-alpha.6',
++  '@storybook/addon-jest': '8.1.0-alpha.6',
++  '@storybook/addon-links': '8.1.0-alpha.6',
++  '@storybook/addon-mdx-gfm': '8.1.0-alpha.6',
++  '@storybook/addon-measure': '8.1.0-alpha.6',
++  '@storybook/addon-onboarding': '8.1.0-alpha.6',
++  '@storybook/addon-outline': '8.1.0-alpha.6',
++  '@storybook/addon-storysource': '8.1.0-alpha.6',
++  '@storybook/addon-themes': '8.1.0-alpha.6',
++  '@storybook/addon-toolbars': '8.1.0-alpha.6',
++  '@storybook/addon-viewport': '8.1.0-alpha.6',
++  '@storybook/angular': '8.1.0-alpha.6',
++  '@storybook/blocks': '8.1.0-alpha.6',
++  '@storybook/builder-manager': '8.1.0-alpha.6',
++  '@storybook/builder-vite': '8.1.0-alpha.6',
++  '@storybook/builder-webpack5': '8.1.0-alpha.6',
++  '@storybook/channels': '8.1.0-alpha.6',
++  '@storybook/cli': '8.1.0-alpha.6',
++  '@storybook/client-logger': '8.1.0-alpha.6',
++  '@storybook/codemod': '8.1.0-alpha.6',
++  '@storybook/components': '8.1.0-alpha.6',
++  '@storybook/core-common': '8.1.0-alpha.6',
++  '@storybook/core-events': '8.1.0-alpha.6',
++  '@storybook/core-server': '8.1.0-alpha.6',
++  '@storybook/core-webpack': '8.1.0-alpha.6',
++  '@storybook/csf-plugin': '8.1.0-alpha.6',
++  '@storybook/csf-tools': '8.1.0-alpha.6',
++  '@storybook/docs-tools': '8.1.0-alpha.6',
++  '@storybook/ember': '8.1.0-alpha.6',
++  '@storybook/html': '8.1.0-alpha.6',
++  '@storybook/html-vite': '8.1.0-alpha.6',
++  '@storybook/html-webpack5': '8.1.0-alpha.6',
++  '@storybook/instrumenter': '8.1.0-alpha.6',
++  '@storybook/manager': '8.1.0-alpha.6',
++  '@storybook/manager-api': '8.1.0-alpha.6',
++  '@storybook/nextjs': '8.1.0-alpha.6',
++  '@storybook/node-logger': '8.1.0-alpha.6',
++  '@storybook/preact': '8.1.0-alpha.6',
++  '@storybook/preact-vite': '8.1.0-alpha.6',
++  '@storybook/preact-webpack5': '8.1.0-alpha.6',
++  '@storybook/preset-create-react-app': '8.1.0-alpha.6',
++  '@storybook/preset-html-webpack': '8.1.0-alpha.6',
++  '@storybook/preset-preact-webpack': '8.1.0-alpha.6',
++  '@storybook/preset-react-webpack': '8.1.0-alpha.6',
++  '@storybook/preset-server-webpack': '8.1.0-alpha.6',
++  '@storybook/preset-svelte-webpack': '8.1.0-alpha.6',
++  '@storybook/preset-vue3-webpack': '8.1.0-alpha.6',
++  '@storybook/preview': '8.1.0-alpha.6',
++  '@storybook/preview-api': '8.1.0-alpha.6',
++  '@storybook/react': '8.1.0-alpha.6',
++  '@storybook/react-dom-shim': '8.1.0-alpha.6',
++  '@storybook/react-vite': '8.1.0-alpha.6',
++  '@storybook/react-webpack5': '8.1.0-alpha.6',
++  '@storybook/router': '8.1.0-alpha.6',
++  '@storybook/server': '8.1.0-alpha.6',
++  '@storybook/server-webpack5': '8.1.0-alpha.6',
++  '@storybook/source-loader': '8.1.0-alpha.6',
++  '@storybook/svelte': '8.1.0-alpha.6',
++  '@storybook/svelte-vite': '8.1.0-alpha.6',
++  '@storybook/svelte-webpack5': '8.1.0-alpha.6',
++  '@storybook/sveltekit': '8.1.0-alpha.6',
++  '@storybook/telemetry': '8.1.0-alpha.6',
++  '@storybook/test': '8.1.0-alpha.6',
++  '@storybook/theming': '8.1.0-alpha.6',
++  '@storybook/types': '8.1.0-alpha.6',
++  '@storybook/vue3': '8.1.0-alpha.6',
++  '@storybook/vue3-vite': '8.1.0-alpha.6',
++  '@storybook/vue3-webpack5': '8.1.0-alpha.6',
++  '@storybook/web-components': '8.1.0-alpha.6',
++  '@storybook/web-components-vite': '8.1.0-alpha.6',
++  '@storybook/web-components-webpack5': '8.1.0-alpha.6',
++  sb: '8.1.0-alpha.6',
++  storybook: '8.1.0-alpha.6',
+ };
+diff --git a/code/lib/core-events/package.json b/code/lib/core-events/package.json
+index 699640debd0..3b64fb0c966 100644
+--- a/code/lib/core-events/package.json
++++ b/code/lib/core-events/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/core-events",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Event names used in storybook core",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/core-events/src/errors/preview-errors.ts b/code/lib/core-events/src/errors/preview-errors.ts
+index 218db70ef82..fb33c42688b 100644
+--- a/code/lib/core-events/src/errors/preview-errors.ts
++++ b/code/lib/core-events/src/errors/preview-errors.ts
+@@ -27,7 +27,6 @@ export enum Category {
+   RENDERER_VUE = 'RENDERER_VUE',
+   RENDERER_VUE3 = 'RENDERER_VUE3',
+   RENDERER_WEB_COMPONENTS = 'RENDERER_WEB-COMPONENTS',
+-  FRAMEWORK_NEXTJS = 'FRAMEWORK_NEXTJS',
+ }
+ 
+ export class MissingStoryAfterHmrError extends StorybookError {
+@@ -236,19 +235,3 @@ export class StoryStoreAccessedBeforeInitializationError extends StorybookError
+     remove access to the store entirely`;
+   }
+ }
+-
+-export class NextJsSharpError extends StorybookError {
+-  readonly category = Category.FRAMEWORK_NEXTJS;
+-
+-  readonly code = 1;
+-
+-  readonly documentation = 'https://storybook.js.org/docs/get-started/nextjs#faq';
+-
+-  template() {
+-    return dedent`
+-    You are importing avif images, but you don't have sharp installed.
+-
+-    You have to install sharp in order to use image optimization features in Next.js.
+-    `;
+-  }
+-}
+diff --git a/code/lib/core-events/src/index.ts b/code/lib/core-events/src/index.ts
+index 82978a994d0..ec6bd134be3 100644
+--- a/code/lib/core-events/src/index.ts
++++ b/code/lib/core-events/src/index.ts
+@@ -75,6 +75,8 @@ enum events {
+   TELEMETRY_ERROR = 'telemetryError',
+   FILE_COMPONENT_SEARCH = 'fileComponentSearch',
+   FILE_COMPONENT_SEARCH_RESULT = 'fileComponentSearchResult',
++  CREATE_NEW_STORYFILE = 'createNewStoryfile',
++  CREATE_NEW_STORYFILE_RESULT = 'createNewStoryfileResult',
+ }
+ 
+ // Enables: `import Events from ...`
+@@ -86,6 +88,8 @@ export const {
+   CHANNEL_WS_DISCONNECT,
+   CHANNEL_CREATED,
+   CONFIG_ERROR,
++  CREATE_NEW_STORYFILE,
++  CREATE_NEW_STORYFILE_RESULT,
+   CURRENT_STORY_WAS_SET,
+   DOCS_PREPARED,
+   DOCS_RENDERED,
+diff --git a/code/lib/core-server/package.json b/code/lib/core-server/package.json
+index 391bfbda11f..f166d421ccd 100644
+--- a/code/lib/core-server/package.json
++++ b/code/lib/core-server/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/core-server",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook framework-agnostic API",
+   "keywords": [
+     "storybook"
+@@ -62,7 +62,7 @@
+     "@storybook/channels": "workspace:*",
+     "@storybook/core-common": "workspace:*",
+     "@storybook/core-events": "workspace:*",
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/csf-tools": "workspace:*",
+     "@storybook/docs-mdx": "3.0.0",
+     "@storybook/global": "^5.0.0",
+@@ -108,6 +108,7 @@
+     "@types/node-fetch": "^2.5.7",
+     "@types/ws": "^8",
+     "boxen": "^7.1.1",
++    "camelcase": "^8.0.0",
+     "node-fetch": "^3.3.1",
+     "slash": "^5.0.0",
+     "typescript": "^5.3.2"
+diff --git a/code/lib/core-server/src/presets/common-preset.ts b/code/lib/core-server/src/presets/common-preset.ts
+index fbc39465aad..f06e050f958 100644
+--- a/code/lib/core-server/src/presets/common-preset.ts
++++ b/code/lib/core-server/src/presets/common-preset.ts
+@@ -35,6 +35,7 @@ import { parseStaticDir } from '../utils/server-statics';
+ import { defaultStaticDirs } from '../utils/constants';
+ import { sendTelemetryError } from '../withTelemetry';
+ import { initFileSearchChannel } from '../server-channel/file-search-channel';
++import { initCreateNewStoryChannel } from '../server-channel/create-new-story-channel';
+ 
+ const interpolate = (string: string, data: Record<string, string> = {}) =>
+   Object.entries(data).reduce((acc, [k, v]) => acc.replace(new RegExp(`%${k}%`, 'g'), v), string);
+@@ -342,6 +343,7 @@ export const experimental_serverChannel = async (
+   });
+ 
+   initFileSearchChannel(channel, options);
++  initCreateNewStoryChannel(channel, options);
+ 
+   return channel;
+ };
+diff --git a/code/lib/core-server/src/server-channel/create-new-story-channel.ts b/code/lib/core-server/src/server-channel/create-new-story-channel.ts
+new file mode 100644
+index 00000000000..7546c5910a7
+--- /dev/null
++++ b/code/lib/core-server/src/server-channel/create-new-story-channel.ts
+@@ -0,0 +1,51 @@
++import type { Options } from '@storybook/types';
++import type { Channel } from '@storybook/channels';
++import { CREATE_NEW_STORYFILE, CREATE_NEW_STORYFILE_RESULT } from '@storybook/core-events';
++import fs from 'node:fs/promises';
++import type { NewStoryData } from '../utils/get-new-story-file';
++import { getNewStoryFile } from '../utils/get-new-story-file';
++import { getStoryId } from '../utils/get-story-id';
++
++interface CreateNewStoryPayload extends NewStoryData {}
++
++interface Result {
++  success: true | false;
++  result: null | {
++    storyId: string;
++  };
++  error: null | string;
++}
++
++export function initCreateNewStoryChannel(channel: Channel, options: Options) {
++  /**
++   * Listens for events to create a new storyfile
++   */
++  channel.on(CREATE_NEW_STORYFILE, async (data: CreateNewStoryPayload) => {
++    try {
++      const { storyFilePath, exportedStoryName, storyFileContent } = await getNewStoryFile(
++        data,
++        options
++      );
++
++      await fs.writeFile(storyFilePath, storyFileContent, 'utf-8');
++
++      const storyId = await getStoryId({ storyFilePath, exportedStoryName }, options);
++
++      channel.emit(CREATE_NEW_STORYFILE_RESULT, {
++        success: true,
++        result: {
++          storyId,
++        },
++        error: null,
++      } satisfies Result);
++    } catch (e: any) {
++      channel.emit(CREATE_NEW_STORYFILE_RESULT, {
++        success: false,
++        result: null,
++        error: `An error occurred while creating a new story:\n${e?.message}`,
++      } satisfies Result);
++    }
++  });
++
++  return channel;
++}
+diff --git a/code/lib/core-server/src/utils/StoryIndexGenerator.ts b/code/lib/core-server/src/utils/StoryIndexGenerator.ts
+index 9f2c147c9a1..09a5c95fff0 100644
+--- a/code/lib/core-server/src/utils/StoryIndexGenerator.ts
++++ b/code/lib/core-server/src/utils/StoryIndexGenerator.ts
+@@ -509,7 +509,7 @@ export class StoryIndexGenerator {
+       // Otherwise the existing entry is created by `autodocs=true` which allowed to be overridden.
+     } else {
+       // If both entries are templates (e.g. you have two CSF files with the same title), then
+-      //   we need to merge the entries. We'll use the first one's name and importPath,
++      //   we need to merge the entries. We'll use the the first one's name and importPath,
+       //   but ensure we include both as storiesImports so they are both loaded before rendering
+       //   the story (for the <Stories> block & friends)
+       return {
+diff --git a/code/lib/core-server/src/utils/get-component-variable-name.ts b/code/lib/core-server/src/utils/get-component-variable-name.ts
+new file mode 100644
+index 00000000000..bc29ff9e51d
+--- /dev/null
++++ b/code/lib/core-server/src/utils/get-component-variable-name.ts
+@@ -0,0 +1,12 @@
++/**
++ * Get a valid variable name for a component.
++ *
++ * @param name The name of the component.
++ * @returns A valid variable name.
++ */
++export const getComponentVariableName = async (name: string) => {
++  const camelCase = await import('camelcase');
++  const camelCased = camelCase.default(name.replace(/^[^a-zA-Z_$]*/, ''), { pascalCase: true });
++  const sanitized = camelCased.replace(/[^a-zA-Z_$]+/, '');
++  return sanitized;
++};
+diff --git a/code/lib/core-server/src/utils/get-new-story-file.ts b/code/lib/core-server/src/utils/get-new-story-file.ts
+new file mode 100644
+index 00000000000..cfec1dd5215
+--- /dev/null
++++ b/code/lib/core-server/src/utils/get-new-story-file.ts
+@@ -0,0 +1,59 @@
++import type { Options } from '@storybook/types';
++import { getFrameworkName, getProjectRoot } from '@storybook/core-common';
++import path from 'node:path';
++import fs from 'node:fs';
++import { getTypeScriptTemplateForNewStoryFile } from './new-story-templates/typescript';
++import { getJavaScriptTemplateForNewStoryFile } from './new-story-templates/javascript';
++
++export interface NewStoryData {
++  // The filepath of the component for which the Story should be generated for (relative to the project root)
++  componentFilePath: string;
++  // The name of the exported component
++  componentExportName: string;
++  // is default export
++  componentIsDefaultExport: boolean;
++}
++
++export async function getNewStoryFile(
++  { componentFilePath, componentExportName, componentIsDefaultExport }: NewStoryData,
++  options: Options
++) {
++  const isTypescript = /\.(ts|tsx|mts|cts)$/.test(componentFilePath);
++  const cwd = getProjectRoot();
++
++  const frameworkPackageName = await getFrameworkName(options);
++
++  const basename = path.basename(componentFilePath);
++  const extension = path.extname(componentFilePath);
++  const basenameWithoutExtension = basename.replace(extension, '');
++  const dirname = path.dirname(componentFilePath);
++
++  const storyFileExtension = isTypescript ? 'tsx' : 'jsx';
++  const storyFileName = `${basenameWithoutExtension}.stories.${storyFileExtension}`;
++  const alternativeStoryFileName = `${basenameWithoutExtension}.${componentExportName}.stories.${storyFileExtension}`;
++
++  const exportedStoryName = 'Default';
++
++  const storyFileContent = isTypescript
++    ? await getTypeScriptTemplateForNewStoryFile({
++        basenameWithoutExtension,
++        componentExportName,
++        componentIsDefaultExport,
++        frameworkPackageName,
++        exportedStoryName,
++      })
++    : await getJavaScriptTemplateForNewStoryFile({
++        basenameWithoutExtension,
++        componentExportName,
++        componentIsDefaultExport,
++        exportedStoryName,
++      });
++
++  const doesStoryFileExist = fs.existsSync(path.join(cwd, componentFilePath));
++
++  const storyFilePath = doesStoryFileExist
++    ? path.join(cwd, dirname, alternativeStoryFileName)
++    : path.join(cwd, dirname, storyFileName);
++
++  return { storyFilePath, exportedStoryName, storyFileContent };
++}
+diff --git a/code/lib/core-server/src/utils/get-story-id.ts b/code/lib/core-server/src/utils/get-story-id.ts
+new file mode 100644
+index 00000000000..acfbce99085
+--- /dev/null
++++ b/code/lib/core-server/src/utils/get-story-id.ts
+@@ -0,0 +1,44 @@
++import type { Options } from '@storybook/types';
++import dedent from 'ts-dedent';
++import { normalizeStories, normalizeStoryPath } from '@storybook/core-common';
++import path from 'path';
++import { storyNameFromExport, toId } from '@storybook/csf';
++import { userOrAutoTitleFromSpecifier } from '@storybook/preview-api';
++import { posix } from './posix';
++
++interface StoryIdData {
++  storyFilePath: string;
++  exportedStoryName: string;
++}
++
++export async function getStoryId(data: StoryIdData, options: Options) {
++  const stories = await options.presets.apply('stories', [], options);
++
++  const workingDir = process.cwd();
++
++  const normalizedStories = normalizeStories(stories, {
++    configDir: options.configDir,
++    workingDir,
++  });
++
++  const relativePath = path.relative(workingDir, data.storyFilePath);
++  const importPath = posix(normalizeStoryPath(relativePath));
++
++  const autoTitle = normalizedStories
++    .map((normalizeStory) => userOrAutoTitleFromSpecifier(importPath, normalizeStory))
++    .filter(Boolean)[0];
++
++  if (autoTitle === undefined) {
++    // eslint-disable-next-line local-rules/no-uncategorized-errors
++    throw new Error(dedent`
++      The generation of your new Story file was successful but it seems that we are unable to index it.
++      Please make sure that the new Story file is matched by the 'stories' glob pattern in your Storybook configuration.
++      The location of the new Story file is: ${relativePath}
++    `);
++  }
++
++  const storyName = storyNameFromExport(data.exportedStoryName);
++  const storyId = toId(autoTitle as string, storyName);
++
++  return storyId;
++}
+diff --git a/code/lib/core-server/src/utils/new-story-templates/javascript.ts b/code/lib/core-server/src/utils/new-story-templates/javascript.ts
+new file mode 100644
+index 00000000000..e80e4d4b5a5
+--- /dev/null
++++ b/code/lib/core-server/src/utils/new-story-templates/javascript.ts
+@@ -0,0 +1,32 @@
++import dedent from 'ts-dedent';
++import { getComponentVariableName } from '../get-component-variable-name';
++
++interface JavaScriptTemplateData {
++  /** The components file name without the extension */
++  basenameWithoutExtension: string;
++  componentExportName: string;
++  componentIsDefaultExport: boolean;
++  /** The exported name of the default story */
++  exportedStoryName: string;
++}
++
++export async function getJavaScriptTemplateForNewStoryFile(data: JavaScriptTemplateData) {
++  const importName = data.componentIsDefaultExport
++    ? await getComponentVariableName(data.basenameWithoutExtension)
++    : data.componentExportName;
++  const importStatement = data.componentIsDefaultExport
++    ? `import ${importName} from './${data.basenameWithoutExtension}';`
++    : `import { ${importName} } from './${data.basenameWithoutExtension}';`;
++
++  return dedent`
++  ${importStatement}
++
++  const meta = {
++    component: ${importName},
++  };
++  
++  export default meta;
++  
++  export const ${data.exportedStoryName} = {};
++  `;
++}
+diff --git a/code/lib/core-server/src/utils/new-story-templates/typescript.ts b/code/lib/core-server/src/utils/new-story-templates/typescript.ts
+new file mode 100644
+index 00000000000..cb44dfdfc9c
+--- /dev/null
++++ b/code/lib/core-server/src/utils/new-story-templates/typescript.ts
+@@ -0,0 +1,38 @@
++import dedent from 'ts-dedent';
++import { getComponentVariableName } from '../get-component-variable-name';
++
++interface TypeScriptTemplateData {
++  /** The components file name without the extension */
++  basenameWithoutExtension: string;
++  componentExportName: string;
++  componentIsDefaultExport: boolean;
++  /** The framework package name, e.g. @storybook/nextjs */
++  frameworkPackageName: string;
++  /** The exported name of the default story */
++  exportedStoryName: string;
++}
++
++export async function getTypeScriptTemplateForNewStoryFile(data: TypeScriptTemplateData) {
++  const importName = data.componentIsDefaultExport
++    ? await getComponentVariableName(data.basenameWithoutExtension)
++    : data.componentExportName;
++  const importStatement = data.componentIsDefaultExport
++    ? `import ${importName} from './${data.basenameWithoutExtension}'`
++    : `import { ${importName} } from './${data.basenameWithoutExtension}'`;
++
++  return dedent`
++  import type { Meta, StoryObj } from '${data.frameworkPackageName}';
++
++  ${importStatement};
++
++  const meta = {
++    component: ${importName},
++  } satisfies Meta<typeof ${importName}>;
++
++  export default meta;
++
++  type Story = StoryObj<typeof meta>;
++
++  export const ${data.exportedStoryName}: Story = {};
++  `;
++}
+diff --git a/code/lib/core-server/src/utils/posix.ts b/code/lib/core-server/src/utils/posix.ts
+new file mode 100644
+index 00000000000..d9b8224cdde
+--- /dev/null
++++ b/code/lib/core-server/src/utils/posix.ts
+@@ -0,0 +1,7 @@
++import path from 'node:path';
++
++/**
++ * Replaces the path separator with forward slashes
++ */
++export const posix = (localPath: string, sep: string = path.sep) =>
++  localPath.split(sep).filter(Boolean).join(path.posix.sep);
+diff --git a/code/lib/core-webpack/package.json b/code/lib/core-webpack/package.json
+index 48b4c79c4d4..014f67638e2 100644
+--- a/code/lib/core-webpack/package.json
++++ b/code/lib/core-webpack/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/core-webpack",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook framework-agnostic API",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/csf-plugin/package.json b/code/lib/csf-plugin/package.json
+index 2635decf0e3..eef290d037f 100644
+--- a/code/lib/csf-plugin/package.json
++++ b/code/lib/csf-plugin/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/csf-plugin",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Enrich CSF files via static analysis",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/csf-tools/package.json b/code/lib/csf-tools/package.json
+index 430b347c245..dfdb9038c9a 100644
+--- a/code/lib/csf-tools/package.json
++++ b/code/lib/csf-tools/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/csf-tools",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Parse and manipulate CSF and Storybook config files",
+   "keywords": [
+     "storybook"
+@@ -46,7 +46,7 @@
+     "@babel/parser": "^7.23.0",
+     "@babel/traverse": "^7.23.2",
+     "@babel/types": "^7.23.0",
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/types": "workspace:*",
+     "fs-extra": "^11.1.0",
+     "recast": "^0.23.5",
+diff --git a/code/lib/docs-tools/package.json b/code/lib/docs-tools/package.json
+index 730a861c26e..d368c58150c 100644
+--- a/code/lib/docs-tools/package.json
++++ b/code/lib/docs-tools/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/docs-tools",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Shared utility functions for frameworks to implement docs",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/instrumenter/package.json b/code/lib/instrumenter/package.json
+index 48fc836d9fd..164e7301be8 100644
+--- a/code/lib/instrumenter/package.json
++++ b/code/lib/instrumenter/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/instrumenter",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/manager-api/package.json b/code/lib/manager-api/package.json
+index 28893f10f5c..89a26f252b8 100644
+--- a/code/lib/manager-api/package.json
++++ b/code/lib/manager-api/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/manager-api",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Core Storybook Manager API & Context",
+   "keywords": [
+     "storybook"
+@@ -47,7 +47,7 @@
+     "@storybook/channels": "workspace:*",
+     "@storybook/client-logger": "workspace:*",
+     "@storybook/core-events": "workspace:*",
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/global": "^5.0.0",
+     "@storybook/icons": "^1.2.5",
+     "@storybook/router": "workspace:*",
+diff --git a/code/lib/manager-api/src/version.ts b/code/lib/manager-api/src/version.ts
+index d7314740b1b..6b08678ee92 100644
+--- a/code/lib/manager-api/src/version.ts
++++ b/code/lib/manager-api/src/version.ts
+@@ -1 +1 @@
+-export const version = '8.1.0-alpha.7';
++export const version = '8.1.0-alpha.6';
+diff --git a/code/lib/node-logger/package.json b/code/lib/node-logger/package.json
+index edded56bf9c..756d55e4d0d 100644
+--- a/code/lib/node-logger/package.json
++++ b/code/lib/node-logger/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/node-logger",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/preview-api/package.json b/code/lib/preview-api/package.json
+index 48bb90cfb6b..891b2b6a20c 100644
+--- a/code/lib/preview-api/package.json
++++ b/code/lib/preview-api/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preview-api",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "",
+   "keywords": [
+     "storybook"
+@@ -47,7 +47,7 @@
+     "@storybook/channels": "workspace:*",
+     "@storybook/client-logger": "workspace:*",
+     "@storybook/core-events": "workspace:*",
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/global": "^5.0.0",
+     "@storybook/types": "workspace:*",
+     "@types/qs": "^6.9.5",
+diff --git a/code/lib/preview-api/src/modules/preview-web/PreviewWeb.test.ts b/code/lib/preview-api/src/modules/preview-web/PreviewWeb.test.ts
+index 024e4f6bbda..e20af13752a 100644
+--- a/code/lib/preview-api/src/modules/preview-web/PreviewWeb.test.ts
++++ b/code/lib/preview-api/src/modules/preview-web/PreviewWeb.test.ts
+@@ -208,19 +208,15 @@ describe('PreviewWeb', () => {
+         one: 1,
+       });
+     });
+-
+-    it('prepares story with args from the URL', async () => {
++    it('updates args from the URL', async () => {
+       document.location.search = '?id=component-one--a&args=foo:url';
+ 
+       await createAndRenderPreview();
+ 
+-      expect(mockChannel.emit).toHaveBeenCalledWith(
+-        STORY_PREPARED,
+-        expect.objectContaining({
+-          id: 'component-one--a',
+-          args: { foo: 'url', one: 1 },
+-        })
+-      );
++      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_ARGS_UPDATED, {
++        storyId: 'component-one--a',
++        args: { foo: 'url', one: 1 },
++      });
+     });
+ 
+     it('allows async getProjectAnnotations', async () => {
+@@ -2802,6 +2798,20 @@ describe('PreviewWeb', () => {
+         });
+       });
+ 
++      it('emits STORY_ARGS_UPDATED with new args', async () => {
++        document.location.search = '?id=component-one--a';
++        const preview = await createAndRenderPreview();
++        mockChannel.emit.mockClear();
++
++        preview.onStoriesChanged({ importFn: newImportFn });
++        await waitForRender();
++
++        expect(mockChannel.emit).toHaveBeenCalledWith(STORY_ARGS_UPDATED, {
++          storyId: 'component-one--a',
++          args: { foo: 'edited', one: 1 },
++        });
++      });
++
+       it('applies loaders with story context', async () => {
+         document.location.search = '?id=component-one--a';
+         const preview = await createAndRenderPreview();
+@@ -3392,7 +3402,7 @@ describe('PreviewWeb', () => {
+       });
+     });
+ 
+-    it('emits SET_PREPARED with new args', async () => {
++    it('emits SET_STORY_ARGS with new values', async () => {
+       document.location.search = '?id=component-one--a';
+       const preview = await createAndRenderPreview();
+ 
+@@ -3400,13 +3410,10 @@ describe('PreviewWeb', () => {
+       preview.onGetProjectAnnotationsChanged({ getProjectAnnotations: newGetProjectAnnotations });
+       await waitForRender();
+ 
+-      expect(mockChannel.emit).toHaveBeenCalledWith(
+-        STORY_PREPARED,
+-        expect.objectContaining({
+-          id: 'component-one--a',
+-          args: { foo: 'a', one: 1, global: 'added' },
+-        })
+-      );
++      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_ARGS_UPDATED, {
++        storyId: 'component-one--a',
++        args: { foo: 'a', one: 1, global: 'added' },
++      });
+     });
+ 
+     it('calls renderToCanvas teardown', async () => {
+diff --git a/code/lib/preview-api/src/modules/preview-web/PreviewWithSelection.tsx b/code/lib/preview-api/src/modules/preview-web/PreviewWithSelection.tsx
+index b183a7488ba..1095ebe1462 100644
+--- a/code/lib/preview-api/src/modules/preview-web/PreviewWithSelection.tsx
++++ b/code/lib/preview-api/src/modules/preview-web/PreviewWithSelection.tsx
+@@ -5,6 +5,7 @@ import {
+   PRELOAD_ENTRIES,
+   PREVIEW_KEYDOWN,
+   SET_CURRENT_STORY,
++  STORY_ARGS_UPDATED,
+   STORY_CHANGED,
+   STORY_ERRORED,
+   STORY_MISSING,
+@@ -403,6 +404,13 @@ export class PreviewWithSelection<TRenderer extends Renderer> extends Preview<TR
+         argTypes,
+         args: unmappedArgs,
+       });
++
++      // For v6 mode / compatibility
++      // If the implementation changed, or args were persisted, the args may have changed,
++      // and the STORY_PREPARED event above may not be respected.
++      if (implementationChanged || persistedArgs) {
++        this.channel.emit(STORY_ARGS_UPDATED, { storyId, args: unmappedArgs });
++      }
+     } else {
+       // Default to the project parameters for MDX docs
+       let { parameters } = this.storyStoreValue.projectAnnotations;
+diff --git a/code/lib/preview-api/src/modules/store/args.test.ts b/code/lib/preview-api/src/modules/store/args.test.ts
+index ed8ed42c483..0d39874c766 100644
+--- a/code/lib/preview-api/src/modules/store/args.test.ts
++++ b/code/lib/preview-api/src/modules/store/args.test.ts
+@@ -243,7 +243,6 @@ describe('validateOptions', () => {
+   });
+ 
+   it('ignores options and logs an error if options is not an array', () => {
+-    // @ts-expect-error This should give TS error indeed (finally!)
+     expect(validateOptions({ a: 1 }, { a: { options: { 2: 'two' } } })).toStrictEqual({ a: 1 });
+     expect(once.error).toHaveBeenCalledWith(
+       expect.stringContaining("Invalid argType: 'a.options' should be an array")
+diff --git a/code/lib/preview-api/src/modules/store/csf/prepareStory.ts b/code/lib/preview-api/src/modules/store/csf/prepareStory.ts
+index d4613db8eb7..0e5ea37500c 100644
+--- a/code/lib/preview-api/src/modules/store/csf/prepareStory.ts
++++ b/code/lib/preview-api/src/modules/store/csf/prepareStory.ts
+@@ -250,10 +250,10 @@ export function prepareContext<
+       return acc;
+     }
+ 
+-    const mappingFn = (originalValue: any) => {
+-      const mapping = targetedContext.argTypes[key].mapping;
+-      return mapping && originalValue in mapping ? mapping[originalValue] : originalValue;
+-    };
++    const mappingFn = (originalValue: any) =>
++      originalValue in targetedContext.argTypes[key].mapping
++        ? targetedContext.argTypes[key].mapping[originalValue]
++        : originalValue;
+ 
+     acc[key] = Array.isArray(val) ? val.map(mappingFn) : mappingFn(val);
+ 
+diff --git a/code/lib/preview-api/src/modules/store/inferControls.test.ts b/code/lib/preview-api/src/modules/store/inferControls.test.ts
+index 9293bf771e6..8d754372439 100644
+--- a/code/lib/preview-api/src/modules/store/inferControls.test.ts
++++ b/code/lib/preview-api/src/modules/store/inferControls.test.ts
+@@ -58,8 +58,7 @@ describe('inferControls', () => {
+         })
+       );
+ 
+-      const control = inferredControls.background.control;
+-      expect(typeof control === 'object' && control.type).toEqual('color');
++      expect(inferredControls.background.control.type).toEqual('color');
+     });
+ 
+     it('should return inferred type when using color matcher but arg passed is not a string', () => {
+@@ -98,8 +97,7 @@ describe('inferControls', () => {
+         );
+ 
+         expect(warnSpy).toHaveBeenCalled();
+-        const control = inferredControls.background.control;
+-        expect(typeof control === 'object' && control.type).toEqual(type.name);
++        expect(inferredControls.background.control.type).toEqual(type.name);
+       });
+     });
+   });
+diff --git a/code/lib/preview/package.json b/code/lib/preview/package.json
+index aaaff869359..72fef466fdb 100644
+--- a/code/lib/preview/package.json
++++ b/code/lib/preview/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preview",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/react-dom-shim/package.json b/code/lib/react-dom-shim/package.json
+index 35b3bd868d2..d54db0558a1 100644
+--- a/code/lib/react-dom-shim/package.json
++++ b/code/lib/react-dom-shim/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/react-dom-shim",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/router/package.json b/code/lib/router/package.json
+index 58d83e52977..7baf0bdf0b6 100644
+--- a/code/lib/router/package.json
++++ b/code/lib/router/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/router",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Core Storybook Router",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/source-loader/package.json b/code/lib/source-loader/package.json
+index 1b480d450fe..8f3acc5d0d7 100644
+--- a/code/lib/source-loader/package.json
++++ b/code/lib/source-loader/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/source-loader",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Source loader",
+   "keywords": [
+     "lib",
+@@ -45,7 +45,7 @@
+     "prep": "node --loader ../../../scripts/node_modules/esbuild-register/loader.js -r ../../../scripts/node_modules/esbuild-register/register.js ../../../scripts/prepare/bundle.ts"
+   },
+   "dependencies": {
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/types": "workspace:*",
+     "estraverse": "^5.2.0",
+     "lodash": "^4.17.21",
+diff --git a/code/lib/telemetry/package.json b/code/lib/telemetry/package.json
+index bad5ecca34c..49ee940b1a3 100644
+--- a/code/lib/telemetry/package.json
++++ b/code/lib/telemetry/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/telemetry",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Telemetry logging for crash reports and usage statistics",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/test/package.json b/code/lib/test/package.json
+index e9b34ccb209..50728901ed5 100644
+--- a/code/lib/test/package.json
++++ b/code/lib/test/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/test",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "",
+   "keywords": [
+     "storybook"
+@@ -56,7 +56,6 @@
+     "util": "^0.12.4"
+   },
+   "devDependencies": {
+-    "tinyspy": "^2.2.0",
+     "ts-dedent": "^2.2.0",
+     "type-fest": "~2.19",
+     "typescript": "^5.3.2"
+diff --git a/code/lib/test/src/index.test.ts b/code/lib/test/src/index.test.ts
+index 87f5b220641..bed58592c1d 100644
+--- a/code/lib/test/src/index.test.ts
++++ b/code/lib/test/src/index.test.ts
+@@ -1,46 +1,8 @@
+-import { describe, it, test } from 'vitest';
+-import { expect, fn, isMockFunction, traverseArgs } from '@storybook/test';
+-import { action } from '@storybook/addon-actions';
++import { it } from 'vitest';
++import { expect, fn } from '@storybook/test';
+ 
+ it('storybook expect and fn can be used in vitest test', () => {
+   const spy = fn();
+   spy(1);
+   expect(spy).toHaveBeenCalledWith(1);
+ });
+-
+-describe('traverseArgs', () => {
+-  const args = {
+-    deep: {
+-      deeper: {
+-        fnKey: fn(),
+-        actionKey: action('name'),
+-      },
+-    },
+-    arg2: Object.freeze({ frozen: true }),
+-  };
+-
+-  expect(args.deep.deeper.fnKey.getMockName()).toEqual('spy');
+-
+-  const traversed = traverseArgs(args) as typeof args;
+-
+-  test('The same structure is maintained', () =>
+-    expect(traversed).toEqual({
+-      deep: {
+-        deeper: {
+-          fnKey: args.deep.deeper.fnKey,
+-          actionKey: args.deep.deeper.actionKey,
+-        },
+-      },
+-      // We don't mutate frozen objects, but we do insert them back in the tree
+-      arg2: args.arg2,
+-    }));
+-
+-  test('The mock name is mutated to be the arg key', () =>
+-    expect(traversed.deep.deeper.fnKey.getMockName()).toEqual('fnKey'));
+-
+-  const actionFn = traversed.deep.deeper.actionKey;
+-
+-  test('Actions are wrapped in a spy', () => expect(isMockFunction(actionFn)).toBeTruthy());
+-  test('The spy of the action is also matching the arg key ', () =>
+-    expect(isMockFunction(actionFn) && actionFn.getMockName()).toEqual('actionKey'));
+-});
+diff --git a/code/lib/test/src/index.ts b/code/lib/test/src/index.ts
+index 1dcd78c457b..7bd72666f34 100644
+--- a/code/lib/test/src/index.ts
++++ b/code/lib/test/src/index.ts
+@@ -3,15 +3,7 @@ import { type LoaderFunction } from '@storybook/csf';
+ import chai from 'chai';
+ import { global } from '@storybook/global';
+ import { expect as rawExpect } from './expect';
+-import {
+-  clearAllMocks,
+-  fn,
+-  isMockFunction,
+-  onMockCall,
+-  resetAllMocks,
+-  restoreAllMocks,
+-} from './spy';
+-import type { Renderer } from '@storybook/types';
++import { clearAllMocks, resetAllMocks, restoreAllMocks } from './spy';
+ 
+ export * from './spy';
+ 
+@@ -44,52 +36,6 @@ const resetAllMocksLoader: LoaderFunction = ({ parameters }) => {
+   }
+ };
+ 
+-export const traverseArgs = (value: unknown, depth = 0, key?: string): unknown => {
+-  // Make sure to not get in infinite loops with self referencing args
+-  if (depth > 5) return value;
+-  if (value == null) return value;
+-  if (isMockFunction(value)) {
+-    // Makes sure we get the arg name in the interactions panel
+-    if (key) value.mockName(key);
+-    return value;
+-  }
+-
+-  // wrap explicit actions in a spy
+-  if (
+-    typeof value === 'function' &&
+-    'isAction' in value &&
+-    value.isAction &&
+-    !('implicit' in value && value.implicit)
+-  ) {
+-    const mock = fn(value as any);
+-    if (key) mock.mockName(key);
+-    return mock;
+-  }
+-
+-  if (Array.isArray(value)) {
+-    depth++;
+-    return value.map((item) => traverseArgs(item, depth));
+-  }
+-
+-  if (typeof value === 'object' && value.constructor === Object) {
+-    depth++;
+-    for (const [k, v] of Object.entries(value)) {
+-      if (Object.getOwnPropertyDescriptor(value, k)?.writable) {
+-        // We have to mutate the original object for this to survive HMR.
+-        (value as Record<string, unknown>)[k] = traverseArgs(v, depth, k);
+-      }
+-    }
+-    return value;
+-  }
+-  return value;
+-};
+-
+-const nameSpiesAndWrapActionsInSpies: LoaderFunction<Renderer> = ({ initialArgs }) => {
+-  traverseArgs(initialArgs);
+-};
+-
+ // We are using this as a default Storybook loader, when the test package is used. This avoids the need for optional peer dependency workarounds.
+ // eslint-disable-next-line no-underscore-dangle
+-(global as any).__STORYBOOK_TEST_LOADERS__ = [resetAllMocksLoader, nameSpiesAndWrapActionsInSpies];
+-// eslint-disable-next-line no-underscore-dangle
+-(global as any).__STORYBOOK_TEST_ON_MOCK_CALL__ = onMockCall;
++(global as any).__STORYBOOK_TEST_LOADERS__ = [resetAllMocksLoader];
+diff --git a/code/lib/test/src/spy.test.ts b/code/lib/test/src/spy.test.ts
+deleted file mode 100644
+index 5c3dcf13d92..00000000000
+--- a/code/lib/test/src/spy.test.ts
++++ /dev/null
+@@ -1,15 +0,0 @@
+-import { it, vi, expect, beforeEach } from 'vitest';
+-import { fn, onMockCall } from './spy';
+-
+-const vitestSpy = vi.fn();
+-
+-beforeEach(() => {
+-  const unsubscribe = onMockCall(vitestSpy);
+-  return () => unsubscribe();
+-});
+-
+-it('mocks are reactive', () => {
+-  const storybookSpy = fn();
+-  storybookSpy(1);
+-  expect(vitestSpy).toHaveBeenCalledWith(storybookSpy, [1]);
+-});
+diff --git a/code/lib/test/src/spy.ts b/code/lib/test/src/spy.ts
+index 6a97a19c390..3208df77ae7 100644
+--- a/code/lib/test/src/spy.ts
++++ b/code/lib/test/src/spy.ts
+@@ -1,58 +1,17 @@
+-/* eslint-disable @typescript-eslint/no-shadow */
+-import type { MockInstance } from '@vitest/spy';
+ import {
+-  spyOn as vitestSpyOn,
++  spyOn,
+   isMockFunction,
+-  fn as vitestFn,
++  fn,
+   mocks,
+   type MaybeMocked,
+   type MaybeMockedDeep,
+   type MaybePartiallyMocked,
+   type MaybePartiallyMockedDeep,
+ } from '@vitest/spy';
+-import type { SpyInternalImpl } from 'tinyspy';
+-import * as tinyspy from 'tinyspy';
+ 
+ export type * from '@vitest/spy';
+ 
+-export { isMockFunction, mocks };
+-
+-type Listener = (mock: MockInstance, args: unknown[]) => void;
+-const listeners = new Set<Listener>();
+-
+-export function onMockCall(callback: Listener): () => void {
+-  listeners.add(callback);
+-  return () => void listeners.delete(callback);
+-}
+-
+-// @ts-expect-error Make sure we export the exact same type as @vitest/spy
+-export const spyOn: typeof vitestSpyOn = (...args) => {
+-  const mock = vitestSpyOn(...(args as Parameters<typeof vitestSpyOn>));
+-  return reactiveMock(mock);
+-};
+-
+-// @ts-expect-error Make sure we export the exact same type as @vitest/spy
+-export const fn: typeof vitestFn = (implementation) => {
+-  const mock = implementation ? vitestFn(implementation) : vitestFn();
+-  return reactiveMock(mock);
+-};
+-
+-function reactiveMock(mock: MockInstance) {
+-  const reactive = listenWhenCalled(mock);
+-  const originalMockImplementation = reactive.mockImplementation.bind(null);
+-  reactive.mockImplementation = (fn) => listenWhenCalled(originalMockImplementation(fn));
+-  return reactive;
+-}
+-
+-function listenWhenCalled(mock: MockInstance) {
+-  const state = tinyspy.getInternalState(mock as unknown as SpyInternalImpl);
+-  const impl = state.impl?.bind(null);
+-  state.willCall((...args) => {
+-    listeners.forEach((listener) => listener(mock, args));
+-    return impl?.(...args);
+-  });
+-  return mock;
+-}
++export { spyOn, isMockFunction, fn, mocks };
+ 
+ /**
+  * Calls [`.mockClear()`](https://vitest.dev/api/mock#mockclear) on every mocked function. This will only empty `.mock` state, it will not reset implementation.
+diff --git a/code/lib/theming/package.json b/code/lib/theming/package.json
+index d0b87b51c0c..3af30d494a0 100644
+--- a/code/lib/theming/package.json
++++ b/code/lib/theming/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/theming",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Core Storybook Components",
+   "keywords": [
+     "storybook"
+diff --git a/code/lib/types/package.json b/code/lib/types/package.json
+index bbac0e65beb..6d15f4c0d48 100644
+--- a/code/lib/types/package.json
++++ b/code/lib/types/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/types",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Core Storybook TS Types",
+   "keywords": [
+     "storybook"
+@@ -49,7 +49,7 @@
+     "file-system-cache": "2.3.0"
+   },
+   "devDependencies": {
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@types/fs-extra": "^11.0.1",
+     "@types/node": "^18.0.0",
+     "typescript": "^5.3.2"
+diff --git a/code/package.json b/code/package.json
+index 29dc543f11e..adca4665bd7 100644
+--- a/code/package.json
++++ b/code/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/root",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "private": true,
+   "description": "Storybook root",
+   "homepage": "https://storybook.js.org/",
+@@ -127,7 +127,7 @@
+     "@storybook/core-events": "workspace:*",
+     "@storybook/core-server": "workspace:*",
+     "@storybook/core-webpack": "workspace:*",
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/csf-plugin": "workspace:*",
+     "@storybook/csf-tools": "workspace:*",
+     "@storybook/docs-tools": "workspace:*",
+diff --git a/code/presets/create-react-app/package.json b/code/presets/create-react-app/package.json
+index 3f7e9992867..4cb10db1277 100644
+--- a/code/presets/create-react-app/package.json
++++ b/code/presets/create-react-app/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preset-create-react-app",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Create React App preset",
+   "keywords": [
+     "storybook"
+diff --git a/code/presets/html-webpack/package.json b/code/presets/html-webpack/package.json
+index 5209a5cabfb..6e9dc9ad930 100644
+--- a/code/presets/html-webpack/package.json
++++ b/code/presets/html-webpack/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preset-html-webpack",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for HTML: View HTML snippets in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/presets/preact-webpack/package.json b/code/presets/preact-webpack/package.json
+index 71d1cad823e..f85aff3fad1 100644
+--- a/code/presets/preact-webpack/package.json
++++ b/code/presets/preact-webpack/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preset-preact-webpack",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Preact: Develop Preact Component in isolation.",
+   "keywords": [
+     "storybook"
+diff --git a/code/presets/react-webpack/package.json b/code/presets/react-webpack/package.json
+index 33e1c1abc27..7be3dd470be 100644
+--- a/code/presets/react-webpack/package.json
++++ b/code/presets/react-webpack/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preset-react-webpack",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading",
+   "keywords": [
+     "storybook"
+diff --git a/code/presets/server-webpack/package.json b/code/presets/server-webpack/package.json
+index 79d58fccb7c..4a3693fe29e 100644
+--- a/code/presets/server-webpack/package.json
++++ b/code/presets/server-webpack/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preset-server-webpack",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Server: View HTML snippets from a server in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/presets/svelte-webpack/package.json b/code/presets/svelte-webpack/package.json
+index 7631ae956d4..dcbece766fa 100644
+--- a/code/presets/svelte-webpack/package.json
++++ b/code/presets/svelte-webpack/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preset-svelte-webpack",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Svelte: Develop Svelte Component in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/presets/vue3-webpack/package.json b/code/presets/vue3-webpack/package.json
+index 500f80f54b1..29e5627ef0f 100644
+--- a/code/presets/vue3-webpack/package.json
++++ b/code/presets/vue3-webpack/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preset-vue3-webpack",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook for Vue 3: Develop Vue 3 Components in isolation with Hot Reloading.",
+   "keywords": [
+     "storybook"
+diff --git a/code/renderers/html/package.json b/code/renderers/html/package.json
+index def5200f675..a64b2b6a6c4 100644
+--- a/code/renderers/html/package.json
++++ b/code/renderers/html/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/html",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook HTML renderer",
+   "keywords": [
+     "storybook"
+diff --git a/code/renderers/preact/package.json b/code/renderers/preact/package.json
+index 09fc253432d..8b3453caa34 100644
+--- a/code/renderers/preact/package.json
++++ b/code/renderers/preact/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/preact",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook Preact renderer",
+   "keywords": [
+     "storybook"
+diff --git a/code/renderers/react/package.json b/code/renderers/react/package.json
+index c71f8628de5..6ee3ef51a28 100644
+--- a/code/renderers/react/package.json
++++ b/code/renderers/react/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/react",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook React renderer",
+   "keywords": [
+     "storybook"
+diff --git a/code/renderers/react/src/__test__/portable-stories.test.tsx b/code/renderers/react/src/__test__/portable-stories.test.tsx
+index aab2585743d..6c3c3805506 100644
+--- a/code/renderers/react/src/__test__/portable-stories.test.tsx
++++ b/code/renderers/react/src/__test__/portable-stories.test.tsx
+@@ -4,6 +4,8 @@ import { vi, it, expect, afterEach, describe } from 'vitest';
+ import { render, screen, cleanup } from '@testing-library/react';
+ import { addons } from '@storybook/preview-api';
+ 
++import * as addonInteractionsPreview from '@storybook/addon-interactions/preview';
++
+ import * as addonActionsPreview from '@storybook/addon-actions/preview';
+ import type { Meta } from '@storybook/react';
+ import { expectTypeOf } from 'expect-type';
+@@ -88,9 +90,9 @@ describe('projectAnnotations', () => {
+     expect(buttonElement).not.toBeNull();
+   });
+ 
+-  it('explicit action are spies when the test loader is loaded', async () => {
+-    const Story = composeStory(stories.WithActionArg, stories.default);
+-    await Story.load();
++  it('has spies when addon-interactions annotations are added', async () => {
++    //@ts-expect-error TODO investigate
++    const Story = composeStory(stories.WithActionArg, stories.default, addonInteractionsPreview);
+     expect(vi.mocked(Story.args.someActionArg!).mock).toBeDefined();
+ 
+     const { container } = render(<Story />);
+diff --git a/code/renderers/react/src/docs/extractArgTypes.ts b/code/renderers/react/src/docs/extractArgTypes.ts
+index 7c4c5591125..2da2e2724e7 100644
+--- a/code/renderers/react/src/docs/extractArgTypes.ts
++++ b/code/renderers/react/src/docs/extractArgTypes.ts
+@@ -22,9 +22,9 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
+           description,
+           type: { required, ...sbType },
+           table: {
+-            type: type ?? undefined,
++            type,
+             jsDocTags,
+-            defaultValue: defaultSummary ?? undefined,
++            defaultValue: defaultSummary,
+           },
+         };
+         return acc;
+diff --git a/code/renderers/react/template/stories/docgen-components/10017-ts-union/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/10017-ts-union/argTypes.snapshot
+index 0b533788e83..a8f47897431 100644
+--- a/code/renderers/react/template/stories/docgen-components/10017-ts-union/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/10017-ts-union/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "specify icon="search" or icon={IconComponent}",
+     "name": "icon",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/10278-ts-multiple-components/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/10278-ts-multiple-components/argTypes.snapshot
+index 82355abfb51..78a50d36f3c 100644
+--- a/code/renderers/react/template/stories/docgen-components/10278-ts-multiple-components/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/10278-ts-multiple-components/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "aProperty",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/8140-js-prop-types-oneof/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/8140-js-prop-types-oneof/argTypes.snapshot
+index af4ea9528f4..7b21f298a2b 100644
+--- a/code/renderers/react/template/stories/docgen-components/8140-js-prop-types-oneof/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/8140-js-prop-types-oneof/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "No background or border if static alert",
+     "name": "blank",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -25,7 +25,7 @@
+     "description": "Allows icon override, accepts material icon name",
+     "name": "icon",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -44,7 +44,7 @@
+     "description": "",
+     "name": "message",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/8143-ts-imported-types/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/8143-ts-imported-types/argTypes.snapshot
+index ac64197be1b..f95af2d02b9 100644
+--- a/code/renderers/react/template/stories/docgen-components/8143-ts-imported-types/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/8143-ts-imported-types/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "bar",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/8428-js-static-prop-types/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/8428-js-static-prop-types/argTypes.snapshot
+index 70cdd2d5301..4e6031c3333 100644
+--- a/code/renderers/react/template/stories/docgen-components/8428-js-static-prop-types/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/8428-js-static-prop-types/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "Please work...",
+     "name": "test",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/9023-js-hoc/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9023-js-hoc/argTypes.snapshot
+index 32718313fe4..a243641da87 100644
+--- a/code/renderers/react/template/stories/docgen-components/9023-js-hoc/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9023-js-hoc/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "classes",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -47,7 +47,7 @@
+     "description": "",
+     "name": "icon",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/9399-js-proptypes-shape/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9399-js-proptypes-shape/argTypes.snapshot
+index 08e3d4d50f6..61955295669 100644
+--- a/code/renderers/react/template/stories/docgen-components/9399-js-proptypes-shape/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9399-js-proptypes-shape/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "areas",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": "[object]",
+diff --git a/code/renderers/react/template/stories/docgen-components/9493-ts-display-name/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9493-ts-display-name/argTypes.snapshot
+index 5b86db7699a..1937e2f0b92 100644
+--- a/code/renderers/react/template/stories/docgen-components/9493-ts-display-name/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9493-ts-display-name/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "A message alerting about Empire activities.",
+     "name": "message",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/9586-js-react-memo/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9586-js-react-memo/argTypes.snapshot
+index 927cda14fc9..08c5a1cadec 100644
+--- a/code/renderers/react/template/stories/docgen-components/9586-js-react-memo/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9586-js-react-memo/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "label",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -22,7 +22,7 @@
+     "description": "",
+     "name": "onClick",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/9591-ts-import-types/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9591-ts-import-types/argTypes.snapshot
+index 83d91924fb0..d6450dd81aa 100644
+--- a/code/renderers/react/template/stories/docgen-components/9591-ts-import-types/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9591-ts-import-types/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "other",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/9668-js-proptypes-no-jsdoc/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9668-js-proptypes-no-jsdoc/argTypes.snapshot
+index 590f3741b90..42a58cd6754 100644
+--- a/code/renderers/react/template/stories/docgen-components/9668-js-proptypes-no-jsdoc/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9668-js-proptypes-no-jsdoc/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "heads",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -23,7 +23,7 @@
+     "description": "",
+     "name": "onAddClick",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/9721-ts-deprecated-jsdoc/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9721-ts-deprecated-jsdoc/argTypes.snapshot
+index e58f2727aef..fbce2579769 100644
+--- a/code/renderers/react/template/stories/docgen-components/9721-ts-deprecated-jsdoc/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9721-ts-deprecated-jsdoc/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "The size (replaces width)",
+     "name": "size",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/9764-ts-extend-props/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9764-ts-extend-props/argTypes.snapshot
+index 5c8758c8de3..61caa309227 100644
+--- a/code/renderers/react/template/stories/docgen-components/9764-ts-extend-props/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9764-ts-extend-props/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "checked",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -25,7 +25,7 @@
+     "description": "",
+     "name": "defaultChecked",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -44,7 +44,7 @@
+     "description": "The input content value",
+     "name": "value",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/9827-ts-default-values/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9827-ts-default-values/argTypes.snapshot
+index 84a578fb287..78780fc4990 100644
+--- a/code/renderers/react/template/stories/docgen-components/9827-ts-default-values/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9827-ts-default-values/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "bar",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -31,7 +31,7 @@
+     "description": "",
+     "name": "foo",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/9922-ts-component-props/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/9922-ts-component-props/argTypes.snapshot
+index 2d1174767e7..222aace445d 100644
+--- a/code/renderers/react/template/stories/docgen-components/9922-ts-component-props/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/9922-ts-component-props/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "",
+     "name": "spacing",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/react/template/stories/docgen-components/jsdoc/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/jsdoc/argTypes.snapshot
+index 492640c6e1b..c37916b5574 100644
+--- a/code/renderers/react/template/stories/docgen-components/jsdoc/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/jsdoc/argTypes.snapshot
+@@ -6,7 +6,7 @@
+     "description": "simple description.",
+     "name": "case1",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -22,7 +22,7 @@
+     "description": "param with name",
+     "name": "case10",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -48,7 +48,7 @@
+     "description": "param with name & type",
+     "name": "case11",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -74,7 +74,7 @@
+     "description": "param with name, type & description",
+     "name": "case12",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -100,7 +100,7 @@
+     "description": "param with type",
+     "name": "case13",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -126,7 +126,7 @@
+     "description": "param with type & description",
+     "name": "case14",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -142,7 +142,7 @@
+     "description": "param with name & description",
+     "name": "case15",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -168,7 +168,7 @@
+     "description": "autofix event-",
+     "name": "case16",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -194,7 +194,7 @@
+     "description": "autofix event.",
+     "name": "case17",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -227,7 +227,7 @@
+     "description": "with an empty param.",
+     "name": "case18",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -243,7 +243,7 @@
+     "description": "with multiple empty params.",
+     "name": "case19",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -264,7 +264,7 @@ lines
+ description",
+     "name": "case2",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -280,7 +280,7 @@ description",
+     "description": "with arg alias.",
+     "name": "case20",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -306,7 +306,7 @@ description",
+     "description": "with argument alias.",
+     "name": "case21",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -332,7 +332,7 @@ description",
+     "description": "with multiple params.",
+     "name": "case22",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -366,7 +366,7 @@ description",
+     "description": "with an empty returns",
+     "name": "case23",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -382,7 +382,7 @@ description",
+     "description": "with a returns with a type",
+     "name": "case24",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -410,7 +410,7 @@ description",
+     "description": "with a returns with a type & description",
+     "name": "case25",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -438,7 +438,7 @@ description",
+     "description": "single param and a returns",
+     "name": "case26",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -471,7 +471,7 @@ description",
+     "description": "multiple params and a returns",
+     "name": "case27",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -508,7 +508,7 @@ description",
+     "description": "multiple returns",
+     "name": "case28",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -536,7 +536,7 @@ description",
+     "description": "param with unsupported JSDoc tags",
+     "name": "case29",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -565,7 +565,7 @@ description",
+     "description": "*description* **with** `formatting`",
+     "name": "case3",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -581,7 +581,7 @@ description",
+     "description": "param record type",
+     "name": "case30",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -607,7 +607,7 @@ description",
+     "description": "param array type",
+     "name": "case31",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -633,7 +633,7 @@ description",
+     "description": "param union type",
+     "name": "case32",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -659,7 +659,7 @@ description",
+     "description": "param any type",
+     "name": "case33",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -685,7 +685,7 @@ description",
+     "description": "param repeatable type",
+     "name": "case34",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -711,7 +711,7 @@ description",
+     "description": "optional param",
+     "name": "case35",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -737,7 +737,7 @@ description",
+     "description": "optional param",
+     "name": "case36",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -763,7 +763,7 @@ description",
+     "description": "dot in param name",
+     "name": "case37",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -789,7 +789,7 @@ description",
+     "description": "returns record type",
+     "name": "case38",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -834,7 +834,7 @@ description",
+     "description": "returns array type",
+     "name": "case39",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -874,7 +874,7 @@ description",
+     "description": "simple description and dummy JSDoc tag.",
+     "name": "case4",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -900,7 +900,7 @@ description",
+     "description": "returns union type",
+     "name": "case40",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -937,7 +937,7 @@ description",
+     "description": "returns any type",
+     "name": "case41",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -964,7 +964,7 @@ description",
+     "description": "returns primitive",
+     "name": "case42",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -992,7 +992,7 @@ description",
+     "description": "returns void",
+     "name": "case43",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -1023,7 +1023,7 @@ description",
+     "description": "",
+     "name": "case5",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+@@ -1052,7 +1052,7 @@ description",
+     "description": "simple description with a @.",
+     "name": "case6",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -1068,7 +1068,7 @@ description",
+     "description": "",
+     "name": "case7",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -1084,7 +1084,7 @@ description",
+     "description": "func with a simple description.",
+     "name": "case8",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+@@ -1100,7 +1100,7 @@ description",
+     "description": "",
+     "name": "case9",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": {
+         "deprecated": null,
+         "ignore": false,
+diff --git a/code/renderers/react/template/stories/docgen-components/ts-types/argTypes.snapshot b/code/renderers/react/template/stories/docgen-components/ts-types/argTypes.snapshot
+index 21ff1cd3a80..73094699e17 100644
+--- a/code/renderers/react/template/stories/docgen-components/ts-types/argTypes.snapshot
++++ b/code/renderers/react/template/stories/docgen-components/ts-types/argTypes.snapshot
+@@ -365,7 +365,7 @@
+     "description": undefined,
+     "name": "nullableComplexTypeUndefinedDefaultValue",
+     "table": {
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "detail": undefined,
+diff --git a/code/renderers/server/package.json b/code/renderers/server/package.json
+index f7c4cfa88ef..b41cf05c416 100644
+--- a/code/renderers/server/package.json
++++ b/code/renderers/server/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/server",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook Server renderer",
+   "keywords": [
+     "storybook"
+@@ -46,7 +46,7 @@
+     "prep": "node --loader ../../../scripts/node_modules/esbuild-register/loader.js -r ../../../scripts/node_modules/esbuild-register/register.js ../../../scripts/prepare/bundle.ts"
+   },
+   "dependencies": {
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/csf-tools": "workspace:*",
+     "@storybook/global": "^5.0.0",
+     "@storybook/preview-api": "workspace:*",
+diff --git a/code/renderers/server/src/render.ts b/code/renderers/server/src/render.ts
+index 0c910f7ba70..0a768647d74 100644
+--- a/code/renderers/server/src/render.ts
++++ b/code/renderers/server/src/render.ts
+@@ -22,8 +22,7 @@ const buildStoryArgs = (args: Args, argTypes: ArgTypes) => {
+   Object.keys(argTypes).forEach((key: string) => {
+     const argType = argTypes[key];
+     const { control } = argType;
+-    const controlType =
+-      control && typeof control === 'object' && 'type' in control && control.type?.toLowerCase();
++    const controlType = control && control.type.toLowerCase();
+     const argValue = storyArgs[key];
+     switch (controlType) {
+       case 'date':
+diff --git a/code/renderers/svelte/package.json b/code/renderers/svelte/package.json
+index 8240c18f435..04d13981993 100644
+--- a/code/renderers/svelte/package.json
++++ b/code/renderers/svelte/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/svelte",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook Svelte renderer",
+   "keywords": [
+     "storybook"
+diff --git a/code/renderers/vue3/package.json b/code/renderers/vue3/package.json
+index b50d57c870c..b8ec79e8296 100644
+--- a/code/renderers/vue3/package.json
++++ b/code/renderers/vue3/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/vue3",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook Vue 3 renderer",
+   "keywords": [
+     "storybook"
+diff --git a/code/renderers/vue3/src/docs/__snapshots__/extractArgTypes.test.ts.snap b/code/renderers/vue3/src/docs/__snapshots__/extractArgTypes.test.ts.snap
+index cbe74a47b7d..164f338725e 100644
+--- a/code/renderers/vue3/src/docs/__snapshots__/extractArgTypes.test.ts.snap
++++ b/code/renderers/vue3/src/docs/__snapshots__/extractArgTypes.test.ts.snap
+@@ -66,7 +66,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract events for component
+     "name": "bar",
+     "table": {
+       "category": "events",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "{ year: number; title?: any }",
+@@ -86,7 +86,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract events for component
+     "name": "baz",
+     "table": {
+       "category": "events",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": undefined,
+     },
+@@ -109,7 +109,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract expose for component
+     "name": "count",
+     "table": {
+       "category": "expose",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": undefined,
+     },
+@@ -126,7 +126,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract expose for component
+     "name": "label",
+     "table": {
+       "category": "expose",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": undefined,
+     },
+@@ -510,7 +510,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "array",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "MyNestedProps[]",
+@@ -527,7 +527,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "arrayOptional",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "MyNestedProps[]",
+@@ -562,7 +562,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "baz",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "boolean",
+@@ -578,7 +578,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "enumValue",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "MyEnum",
+@@ -595,7 +595,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "foo",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "string",
+@@ -611,7 +611,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "inlined",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "{ foo: string }",
+@@ -628,7 +628,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "literalFromContext",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "MyCategories",
+@@ -645,7 +645,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "nested",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "MyNestedProps",
+@@ -662,7 +662,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "nestedIntersection",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "MyNestedProps & {
+@@ -684,7 +684,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "nestedOptional",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "MyNestedProps | MyIgnoredNestedProps",
+@@ -710,7 +710,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "recursive",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "MyNestedRecursiveProps",
+@@ -746,7 +746,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "union",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "string | number",
+@@ -770,7 +770,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract props for component 2
+     "name": "unionOptional",
+     "table": {
+       "category": "props",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "string | number | boolean",
+@@ -802,7 +802,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract slots for component 1
+     "name": "default",
+     "table": {
+       "category": "slots",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "{ num: unknown }",
+@@ -819,7 +819,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract slots for component 1
+     "name": "named",
+     "table": {
+       "category": "slots",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "{ str: unknown }",
+@@ -836,7 +836,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract slots for component 1
+     "name": "no-bind",
+     "table": {
+       "category": "slots",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": undefined,
+     },
+@@ -851,7 +851,7 @@ exports[`extractArgTypes (vue-docgen-api) > should extract slots for component 1
+     "name": "vbind",
+     "table": {
+       "category": "slots",
+-      "defaultValue": undefined,
++      "defaultValue": null,
+       "jsDocTags": undefined,
+       "type": {
+         "summary": "{ num: unknown; str: unknown }",
+diff --git a/code/renderers/vue3/src/docs/extractArgTypes.ts b/code/renderers/vue3/src/docs/extractArgTypes.ts
+index 66bc7efcf7d..d466cea2e1c 100644
+--- a/code/renderers/vue3/src/docs/extractArgTypes.ts
++++ b/code/renderers/vue3/src/docs/extractArgTypes.ts
+@@ -127,7 +127,7 @@ export const extractFromVueDocgenApi = (
+     type: sbType ? { ...sbType, required } : { name: 'other', value: type ?? '' },
+     table: {
+       type: type ? { summary: type } : undefined,
+-      defaultValue: extractedProp?.propDef.defaultValue ?? undefined,
++      defaultValue: extractedProp?.propDef.defaultValue,
+       jsDocTags: extractedProp?.propDef.jsDocTags,
+       category: section,
+     },
+diff --git a/code/renderers/web-components/package.json b/code/renderers/web-components/package.json
+index 0b14130edba..c98295a7095 100644
+--- a/code/renderers/web-components/package.json
++++ b/code/renderers/web-components/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/web-components",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook web-components renderer",
+   "keywords": [
+     "lit",
+diff --git a/code/ui/blocks/package.json b/code/ui/blocks/package.json
+index edae82e2f19..3984834d2a1 100644
+--- a/code/ui/blocks/package.json
++++ b/code/ui/blocks/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/blocks",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Storybook Doc Blocks",
+   "keywords": [
+     "storybook"
+@@ -48,7 +48,7 @@
+     "@storybook/client-logger": "workspace:*",
+     "@storybook/components": "workspace:*",
+     "@storybook/core-events": "workspace:*",
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/docs-tools": "workspace:*",
+     "@storybook/global": "^5.0.0",
+     "@storybook/icons": "^1.2.5",
+diff --git a/code/ui/blocks/src/components/ArgsTable/types.ts b/code/ui/blocks/src/components/ArgsTable/types.ts
+index 7efb484fe6a..653bf236acd 100644
+--- a/code/ui/blocks/src/components/ArgsTable/types.ts
++++ b/code/ui/blocks/src/components/ArgsTable/types.ts
+@@ -46,11 +46,11 @@ export interface ArgType {
+     disable?: boolean;
+     subcategory?: string;
+     defaultValue?: {
+-      summary?: string;
++      summary: string;
+       detail?: string;
+     };
+     type?: {
+-      summary?: string;
++      summary: string;
+       detail?: string;
+     };
+     readonly?: boolean;
+diff --git a/code/ui/blocks/src/controls/options/SelectOptions.stories.tsx b/code/ui/blocks/src/controls/options/SelectOptions.stories.tsx
+index 6d52b80f625..d417c24bd31 100644
+--- a/code/ui/blocks/src/controls/options/SelectOptions.stories.tsx
++++ b/code/ui/blocks/src/controls/options/SelectOptions.stories.tsx
+@@ -20,7 +20,7 @@ const argTypeMultiSelect = {
+       options: arrayOptions,
+     },
+   },
+-} as const;
++};
+ 
+ const meta = {
+   title: 'Controls/Options/Select',
+diff --git a/code/ui/components/package.json b/code/ui/components/package.json
+index 200b81381b8..7fecbf93625 100644
+--- a/code/ui/components/package.json
++++ b/code/ui/components/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/components",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Core Storybook Components",
+   "keywords": [
+     "storybook"
+@@ -61,7 +61,7 @@
+   "dependencies": {
+     "@radix-ui/react-slot": "^1.0.2",
+     "@storybook/client-logger": "workspace:*",
+-    "@storybook/csf": "^0.1.4",
++    "@storybook/csf": "^0.1.2",
+     "@storybook/global": "^5.0.0",
+     "@storybook/icons": "^1.2.5",
+     "@storybook/theming": "workspace:*",
+diff --git a/code/ui/manager/package.json b/code/ui/manager/package.json
+index a5ccc976a20..d67d082c574 100644
+--- a/code/ui/manager/package.json
++++ b/code/ui/manager/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@storybook/manager",
+-  "version": "8.1.0-alpha.7",
++  "version": "8.1.0-alpha.6",
+   "description": "Core Storybook UI",
+   "keywords": [
+     "storybook"
+diff --git a/code/ui/manager/src/globals/exports.ts b/code/ui/manager/src/globals/exports.ts
+index 794741a69e8..d3da898e844 100644
+--- a/code/ui/manager/src/globals/exports.ts
++++ b/code/ui/manager/src/globals/exports.ts
+@@ -133,6 +133,8 @@ export default {
+     'CHANNEL_CREATED',
+     'CHANNEL_WS_DISCONNECT',
+     'CONFIG_ERROR',
++    'CREATE_NEW_STORYFILE',
++    'CREATE_NEW_STORYFILE_RESULT',
+     'CURRENT_STORY_WAS_SET',
+     'DOCS_PREPARED',
+     'DOCS_RENDERED',
+diff --git a/code/yarn.lock b/code/yarn.lock
+index 665cf7ea235..6914dd48885 100644
+--- a/code/yarn.lock
++++ b/code/yarn.lock
+@@ -2213,15 +2213,6 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"@emnapi/runtime@npm:^1.1.0":
+-  version: 1.1.1
+-  resolution: "@emnapi/runtime@npm:1.1.1"
+-  dependencies:
+-    tslib: "npm:^2.4.0"
+-  checksum: 10c0/c11ee57abf0ec643e64ccdace4b4fcc0b0c7b1117a191f969e84ae3669841aa90d2c17fa35b73f5a66fc0c843c8caca7bf11187faaeaa526bcfb7dbfb9b85de9
+-  languageName: node
+-  linkType: hard
+-
+ "@emotion/babel-plugin@npm:^11.11.0":
+   version: 11.11.0
+   resolution: "@emotion/babel-plugin@npm:11.11.0"
+@@ -3152,181 +3143,6 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"@img/sharp-darwin-arm64@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-darwin-arm64@npm:0.33.3"
+-  dependencies:
+-    "@img/sharp-libvips-darwin-arm64": "npm:1.0.2"
+-  dependenciesMeta:
+-    "@img/sharp-libvips-darwin-arm64":
+-      optional: true
+-  conditions: os=darwin & cpu=arm64
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-darwin-x64@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-darwin-x64@npm:0.33.3"
+-  dependencies:
+-    "@img/sharp-libvips-darwin-x64": "npm:1.0.2"
+-  dependenciesMeta:
+-    "@img/sharp-libvips-darwin-x64":
+-      optional: true
+-  conditions: os=darwin & cpu=x64
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-libvips-darwin-arm64@npm:1.0.2":
+-  version: 1.0.2
+-  resolution: "@img/sharp-libvips-darwin-arm64@npm:1.0.2"
+-  conditions: os=darwin & cpu=arm64
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-libvips-darwin-x64@npm:1.0.2":
+-  version: 1.0.2
+-  resolution: "@img/sharp-libvips-darwin-x64@npm:1.0.2"
+-  conditions: os=darwin & cpu=x64
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-libvips-linux-arm64@npm:1.0.2":
+-  version: 1.0.2
+-  resolution: "@img/sharp-libvips-linux-arm64@npm:1.0.2"
+-  conditions: os=linux & cpu=arm64 & libc=glibc
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-libvips-linux-arm@npm:1.0.2":
+-  version: 1.0.2
+-  resolution: "@img/sharp-libvips-linux-arm@npm:1.0.2"
+-  conditions: os=linux & cpu=arm & libc=glibc
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-libvips-linux-s390x@npm:1.0.2":
+-  version: 1.0.2
+-  resolution: "@img/sharp-libvips-linux-s390x@npm:1.0.2"
+-  conditions: os=linux & cpu=s390x & libc=glibc
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-libvips-linux-x64@npm:1.0.2":
+-  version: 1.0.2
+-  resolution: "@img/sharp-libvips-linux-x64@npm:1.0.2"
+-  conditions: os=linux & cpu=x64 & libc=glibc
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-libvips-linuxmusl-arm64@npm:1.0.2":
+-  version: 1.0.2
+-  resolution: "@img/sharp-libvips-linuxmusl-arm64@npm:1.0.2"
+-  conditions: os=linux & cpu=arm64 & libc=musl
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-libvips-linuxmusl-x64@npm:1.0.2":
+-  version: 1.0.2
+-  resolution: "@img/sharp-libvips-linuxmusl-x64@npm:1.0.2"
+-  conditions: os=linux & cpu=x64 & libc=musl
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-linux-arm64@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-linux-arm64@npm:0.33.3"
+-  dependencies:
+-    "@img/sharp-libvips-linux-arm64": "npm:1.0.2"
+-  dependenciesMeta:
+-    "@img/sharp-libvips-linux-arm64":
+-      optional: true
+-  conditions: os=linux & cpu=arm64 & libc=glibc
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-linux-arm@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-linux-arm@npm:0.33.3"
+-  dependencies:
+-    "@img/sharp-libvips-linux-arm": "npm:1.0.2"
+-  dependenciesMeta:
+-    "@img/sharp-libvips-linux-arm":
+-      optional: true
+-  conditions: os=linux & cpu=arm & libc=glibc
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-linux-s390x@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-linux-s390x@npm:0.33.3"
+-  dependencies:
+-    "@img/sharp-libvips-linux-s390x": "npm:1.0.2"
+-  dependenciesMeta:
+-    "@img/sharp-libvips-linux-s390x":
+-      optional: true
+-  conditions: os=linux & cpu=s390x & libc=glibc
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-linux-x64@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-linux-x64@npm:0.33.3"
+-  dependencies:
+-    "@img/sharp-libvips-linux-x64": "npm:1.0.2"
+-  dependenciesMeta:
+-    "@img/sharp-libvips-linux-x64":
+-      optional: true
+-  conditions: os=linux & cpu=x64 & libc=glibc
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-linuxmusl-arm64@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-linuxmusl-arm64@npm:0.33.3"
+-  dependencies:
+-    "@img/sharp-libvips-linuxmusl-arm64": "npm:1.0.2"
+-  dependenciesMeta:
+-    "@img/sharp-libvips-linuxmusl-arm64":
+-      optional: true
+-  conditions: os=linux & cpu=arm64 & libc=musl
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-linuxmusl-x64@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-linuxmusl-x64@npm:0.33.3"
+-  dependencies:
+-    "@img/sharp-libvips-linuxmusl-x64": "npm:1.0.2"
+-  dependenciesMeta:
+-    "@img/sharp-libvips-linuxmusl-x64":
+-      optional: true
+-  conditions: os=linux & cpu=x64 & libc=musl
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-wasm32@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-wasm32@npm:0.33.3"
+-  dependencies:
+-    "@emnapi/runtime": "npm:^1.1.0"
+-  conditions: cpu=wasm32
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-win32-ia32@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-win32-ia32@npm:0.33.3"
+-  conditions: os=win32 & cpu=ia32
+-  languageName: node
+-  linkType: hard
+-
+-"@img/sharp-win32-x64@npm:0.33.3":
+-  version: 0.33.3
+-  resolution: "@img/sharp-win32-x64@npm:0.33.3"
+-  conditions: os=win32 & cpu=x64
+-  languageName: node
+-  linkType: hard
+-
+ "@isaacs/cliui@npm:^8.0.2":
+   version: 8.0.2
+   resolution: "@isaacs/cliui@npm:8.0.2"
+@@ -5131,7 +4947,7 @@ __metadata:
+   dependencies:
+     "@storybook/client-logger": "workspace:*"
+     "@storybook/core-events": "workspace:*"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/global": "npm:^5.0.0"
+     "@storybook/manager-api": "workspace:*"
+     "@storybook/preview-api": "workspace:*"
+@@ -5399,7 +5215,7 @@ __metadata:
+     "@storybook/client-logger": "workspace:*"
+     "@storybook/components": "workspace:*"
+     "@storybook/core-events": "workspace:*"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/docs-tools": "workspace:*"
+     "@storybook/global": "npm:^5.0.0"
+     "@storybook/icons": "npm:^1.2.5"
+@@ -5539,7 +5355,7 @@ __metadata:
+     util: "npm:^0.12.4"
+     util-deprecate: "npm:^1.0.2"
+     webpack: "npm:5"
+-    webpack-dev-middleware: "npm:^6.1.2"
++    webpack-dev-middleware: "npm:^6.1.1"
+     webpack-hot-middleware: "npm:^2.25.1"
+     webpack-virtual-modules: "npm:^0.5.0"
+   peerDependenciesMeta:
+@@ -5630,7 +5446,7 @@ __metadata:
+     "@babel/core": "npm:^7.23.2"
+     "@babel/preset-env": "npm:^7.23.2"
+     "@babel/types": "npm:^7.23.0"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/csf-tools": "workspace:*"
+     "@storybook/node-logger": "workspace:*"
+     "@storybook/types": "workspace:*"
+@@ -5666,7 +5482,7 @@ __metadata:
+     "@radix-ui/react-scroll-area": "npm:^1.0.5"
+     "@radix-ui/react-slot": "npm:^1.0.2"
+     "@storybook/client-logger": "workspace:*"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/global": "npm:^5.0.0"
+     "@storybook/icons": "npm:^1.2.5"
+     "@storybook/test": "workspace:*"
+@@ -5759,7 +5575,7 @@ __metadata:
+     "@storybook/channels": "workspace:*"
+     "@storybook/core-common": "workspace:*"
+     "@storybook/core-events": "workspace:*"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/csf-tools": "workspace:*"
+     "@storybook/docs-mdx": "npm:3.0.0"
+     "@storybook/global": "npm:^5.0.0"
+@@ -5779,6 +5595,7 @@ __metadata:
+     "@types/ws": "npm:^8"
+     better-opn: "npm:^3.0.2"
+     boxen: "npm:^7.1.1"
++    camelcase: "npm:^8.0.0"
+     chalk: "npm:^4.1.0"
+     cjs-module-lexer: "npm:^1.2.3"
+     cli-table3: "npm:^0.6.1"
+@@ -5841,7 +5658,7 @@ __metadata:
+     "@babel/parser": "npm:^7.23.0"
+     "@babel/traverse": "npm:^7.23.2"
+     "@babel/types": "npm:^7.23.0"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/types": "workspace:*"
+     "@types/fs-extra": "npm:^11.0.1"
+     "@types/js-yaml": "npm:^4.0.5"
+@@ -5862,12 +5679,12 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"@storybook/csf@npm:^0.1.4":
+-  version: 0.1.4
+-  resolution: "@storybook/csf@npm:0.1.4"
++"@storybook/csf@npm:^0.1.2":
++  version: 0.1.2
++  resolution: "@storybook/csf@npm:0.1.2"
+   dependencies:
+     type-fest: "npm:^2.19.0"
+-  checksum: 10c0/a988e37d5dd3e6fcd44c16b08f4778b1bf1f4b46491d1331afac9366852208b64214425331f1496c3666fd284ad42c14ef8b5f678ade94fe82534d1e631c4ae8
++  checksum: 10c0/b51a55292e5d2af8b1d135a28ecaa94f8860ddfedcb393adfa2cca1ee23853156066f737d8be1cb5412f572781aa525dc0b2f6e4a6f6ce805489f0149efe837c
+   languageName: node
+   linkType: hard
+ 
+@@ -6038,7 +5855,7 @@ __metadata:
+     "@storybook/channels": "workspace:*"
+     "@storybook/client-logger": "workspace:*"
+     "@storybook/core-events": "workspace:*"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/global": "npm:^5.0.0"
+     "@storybook/icons": "npm:^1.2.5"
+     "@storybook/router": "workspace:*"
+@@ -6155,7 +5972,7 @@ __metadata:
+     resolve-url-loader: "npm:^5.0.0"
+     sass-loader: "npm:^12.4.0"
+     semver: "npm:^7.3.5"
+-    sharp: "npm:^0.33.3"
++    sharp: "npm:^0.32.6"
+     style-loader: "npm:^3.3.1"
+     styled-jsx: "npm:5.1.1"
+     ts-dedent: "npm:^2.0.0"
+@@ -6168,9 +5985,6 @@ __metadata:
+     react: ^16.8.0 || ^17.0.0 || ^18.0.0
+     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+     webpack: ^5.0.0
+-  dependenciesMeta:
+-    sharp:
+-      optional: true
+   peerDependenciesMeta:
+     typescript:
+       optional: true
+@@ -6374,7 +6188,7 @@ __metadata:
+     "@storybook/client-logger": "workspace:*"
+     "@storybook/core-common": "workspace:*"
+     "@storybook/core-events": "workspace:*"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/global": "npm:^5.0.0"
+     "@storybook/types": "workspace:*"
+     "@types/qs": "npm:^6.9.5"
+@@ -6559,7 +6373,7 @@ __metadata:
+     "@storybook/core-events": "workspace:*"
+     "@storybook/core-server": "workspace:*"
+     "@storybook/core-webpack": "workspace:*"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/csf-plugin": "workspace:*"
+     "@storybook/csf-tools": "workspace:*"
+     "@storybook/docs-tools": "workspace:*"
+@@ -6714,7 +6528,7 @@ __metadata:
+   version: 0.0.0-use.local
+   resolution: "@storybook/server@workspace:renderers/server"
+   dependencies:
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/csf-tools": "workspace:*"
+     "@storybook/global": "npm:^5.0.0"
+     "@storybook/preview-api": "workspace:*"
+@@ -6731,7 +6545,7 @@ __metadata:
+   version: 0.0.0-use.local
+   resolution: "@storybook/source-loader@workspace:lib/source-loader"
+   dependencies:
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@storybook/types": "workspace:*"
+     estraverse: "npm:^5.2.0"
+     lodash: "npm:^4.17.21"
+@@ -6856,7 +6670,6 @@ __metadata:
+     "@vitest/expect": "npm:1.3.1"
+     "@vitest/spy": "npm:^1.3.1"
+     chai: "npm:^4.4.1"
+-    tinyspy: "npm:^2.2.0"
+     ts-dedent: "npm:^2.2.0"
+     type-fest: "npm:~2.19"
+     typescript: "npm:^5.3.2"
+@@ -6910,7 +6723,7 @@ __metadata:
+   resolution: "@storybook/types@workspace:lib/types"
+   dependencies:
+     "@storybook/channels": "workspace:*"
+-    "@storybook/csf": "npm:^0.1.4"
++    "@storybook/csf": "npm:^0.1.2"
+     "@types/express": "npm:^4.7.0"
+     "@types/fs-extra": "npm:^11.0.1"
+     "@types/node": "npm:^18.0.0"
+@@ -10188,6 +10001,13 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"b4a@npm:^1.6.4":
++  version: 1.6.4
++  resolution: "b4a@npm:1.6.4"
++  checksum: 10c0/a0af707430c3643fd8d9418c732849d3626f1c9281489e021fcad969fb4808fb9f67b224de36b59c9c3b5a13d853482fee0c0eb53f7aec12d540fa67f63648b6
++  languageName: node
++  linkType: hard
++
+ "babel-core@npm:^7.0.0-bridge.0":
+   version: 7.0.0-bridge.0
+   resolution: "babel-core@npm:7.0.0-bridge.0"
+@@ -11242,6 +11062,13 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"camelcase@npm:^8.0.0":
++  version: 8.0.0
++  resolution: "camelcase@npm:8.0.0"
++  checksum: 10c0/56c5fe072f0523c9908cdaac21d4a3b3fb0f608fb2e9ba90a60e792b95dd3bb3d1f3523873ab17d86d146e94171305f73ef619e2f538bd759675bc4a14b4bff3
++  languageName: node
++  linkType: hard
++
+ "can-symlink@npm:^1.0.0":
+   version: 1.0.0
+   resolution: "can-symlink@npm:1.0.0"
+@@ -12703,6 +12530,13 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"deep-extend@npm:^0.6.0":
++  version: 0.6.0
++  resolution: "deep-extend@npm:0.6.0"
++  checksum: 10c0/1c6b0abcdb901e13a44c7d699116d3d4279fdb261983122a3783e7273844d5f2537dc2e1c454a23fcf645917f93fbf8d07101c1d03c015a87faa662755212566
++  languageName: node
++  linkType: hard
++
+ "deep-is@npm:^0.1.3":
+   version: 0.1.4
+   resolution: "deep-is@npm:0.1.4"
+@@ -12919,10 +12753,10 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"detect-libc@npm:^2.0.3":
+-  version: 2.0.3
+-  resolution: "detect-libc@npm:2.0.3"
+-  checksum: 10c0/88095bda8f90220c95f162bf92cad70bd0e424913e655c20578600e35b91edc261af27531cf160a331e185c0ced93944bc7e09939143225f56312d7fd800fdb7
++"detect-libc@npm:^2.0.0, detect-libc@npm:^2.0.2":
++  version: 2.0.2
++  resolution: "detect-libc@npm:2.0.2"
++  checksum: 10c0/a9f4ffcd2701525c589617d98afe5a5d0676c8ea82bcc4ed6f3747241b79f781d36437c59a5e855254c864d36a3e9f8276568b6b531c28d6e53b093a15703f11
+   languageName: node
+   linkType: hard
+ 
+@@ -14745,6 +14579,13 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"expand-template@npm:^2.0.3":
++  version: 2.0.3
++  resolution: "expand-template@npm:2.0.3"
++  checksum: 10c0/1c9e7afe9acadf9d373301d27f6a47b34e89b3391b1ef38b7471d381812537ef2457e620ae7f819d2642ce9c43b189b3583813ec395e2938319abe356a9b2f51
++  languageName: node
++  linkType: hard
++
+ "expand-tilde@npm:^2.0.2":
+   version: 2.0.2
+   resolution: "expand-tilde@npm:2.0.2"
+@@ -14874,6 +14715,13 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"fast-fifo@npm:^1.1.0, fast-fifo@npm:^1.2.0":
++  version: 1.3.2
++  resolution: "fast-fifo@npm:1.3.2"
++  checksum: 10c0/d53f6f786875e8b0529f784b59b4b05d4b5c31c651710496440006a398389a579c8dbcd2081311478b5bf77f4b0b21de69109c5a4eabea9d8e8783d1eb864e4c
++  languageName: node
++  linkType: hard
++
+ "fast-glob@npm:3.2.7":
+   version: 3.2.7
+   resolution: "fast-glob@npm:3.2.7"
+@@ -15924,6 +15772,13 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"github-from-package@npm:0.0.0":
++  version: 0.0.0
++  resolution: "github-from-package@npm:0.0.0"
++  checksum: 10c0/737ee3f52d0a27e26332cde85b533c21fcdc0b09fb716c3f8e522cfaa9c600d4a631dec9fcde179ec9d47cca89017b7848ed4d6ae6b6b78f936c06825b1fcc12
++  languageName: node
++  linkType: hard
++
+ "github-release-from-changelog@npm:^2.1.1":
+   version: 2.1.1
+   resolution: "github-release-from-changelog@npm:2.1.1"
+@@ -17164,7 +17019,7 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"ini@npm:^1.3.4, ini@npm:^1.3.5":
++"ini@npm:^1.3.4, ini@npm:^1.3.5, ini@npm:~1.3.0":
+   version: 1.3.8
+   resolution: "ini@npm:1.3.8"
+   checksum: 10c0/ec93838d2328b619532e4f1ff05df7909760b6f66d9c9e2ded11e5c1897d6f2f9980c54dd638f88654b00919ce31e827040631eab0a3969e4d1abefa0719516a
+@@ -20708,7 +20563,7 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"minimist@npm:^1.0.0, minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6, minimist@npm:^1.2.8":
++"minimist@npm:^1.0.0, minimist@npm:^1.2.0, minimist@npm:^1.2.3, minimist@npm:^1.2.5, minimist@npm:^1.2.6, minimist@npm:^1.2.8":
+   version: 1.2.8
+   resolution: "minimist@npm:1.2.8"
+   checksum: 10c0/19d3fcdca050087b84c2029841a093691a91259a47def2f18222f41e7645a0b7c44ef4b40e88a1e58a40c84d2ef0ee6047c55594d298146d0eb3f6b737c20ce6
+@@ -20843,7 +20698,7 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"mkdirp-classic@npm:^0.5.2":
++"mkdirp-classic@npm:^0.5.2, mkdirp-classic@npm:^0.5.3":
+   version: 0.5.3
+   resolution: "mkdirp-classic@npm:0.5.3"
+   checksum: 10c0/95371d831d196960ddc3833cc6907e6b8f67ac5501a6582f47dfae5eb0f092e9f8ce88e0d83afcae95d6e2b61a01741ba03714eeafb6f7a6e9dcc158ac85b168
+@@ -21024,6 +20879,13 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"napi-build-utils@npm:^1.0.1":
++  version: 1.0.2
++  resolution: "napi-build-utils@npm:1.0.2"
++  checksum: 10c0/37fd2cd0ff2ad20073ce78d83fd718a740d568b225924e753ae51cb69d68f330c80544d487e5e5bd18e28702ed2ca469c2424ad948becd1862c1b0209542b2e9
++  languageName: node
++  linkType: hard
++
+ "natural-compare@npm:^1.4.0":
+   version: 1.4.0
+   resolution: "natural-compare@npm:1.4.0"
+@@ -21141,6 +21003,15 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"node-abi@npm:^3.3.0":
++  version: 3.51.0
++  resolution: "node-abi@npm:3.51.0"
++  dependencies:
++    semver: "npm:^7.3.5"
++  checksum: 10c0/2f0a56a9923bd21ff13650b6e8d2caebda211795761b40ae0ec3ea08e6687f6722535302cde87c928d6959a6afec196db3c54f8ae2db0bbaa401459dcf0f073c
++  languageName: node
++  linkType: hard
++
+ "node-abort-controller@npm:^3.0.1":
+   version: 3.1.1
+   resolution: "node-abort-controller@npm:3.1.1"
+@@ -21157,6 +21028,15 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"node-addon-api@npm:^6.1.0":
++  version: 6.1.0
++  resolution: "node-addon-api@npm:6.1.0"
++  dependencies:
++    node-gyp: "npm:latest"
++  checksum: 10c0/d2699c4ad15740fd31482a3b6fca789af7723ab9d393adc6ac45250faaee72edad8f0b10b2b9d087df0de93f1bdc16d97afdd179b26b9ebc9ed68b569faa4bac
++  languageName: node
++  linkType: hard
++
+ "node-cleanup@npm:^2.1.2":
+   version: 2.1.2
+   resolution: "node-cleanup@npm:2.1.2"
+@@ -22987,6 +22867,28 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"prebuild-install@npm:^7.1.1":
++  version: 7.1.1
++  resolution: "prebuild-install@npm:7.1.1"
++  dependencies:
++    detect-libc: "npm:^2.0.0"
++    expand-template: "npm:^2.0.3"
++    github-from-package: "npm:0.0.0"
++    minimist: "npm:^1.2.3"
++    mkdirp-classic: "npm:^0.5.3"
++    napi-build-utils: "npm:^1.0.1"
++    node-abi: "npm:^3.3.0"
++    pump: "npm:^3.0.0"
++    rc: "npm:^1.2.7"
++    simple-get: "npm:^4.0.0"
++    tar-fs: "npm:^2.0.0"
++    tunnel-agent: "npm:^0.6.0"
++  bin:
++    prebuild-install: bin.js
++  checksum: 10c0/6dc70f36b0f4adcb2fe0ed38d874ab28b571fb1a9725d769e8ba3f64a15831e58462de09f3e6e64569bcc4a3e03b9328b56faa0d45fe10ae1574478814536c76
++  languageName: node
++  linkType: hard
++
+ "prelude-ls@npm:^1.2.1":
+   version: 1.2.1
+   resolution: "prelude-ls@npm:1.2.1"
+@@ -23492,6 +23394,13 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"queue-tick@npm:^1.0.1":
++  version: 1.0.1
++  resolution: "queue-tick@npm:1.0.1"
++  checksum: 10c0/0db998e2c9b15215317dbcf801e9b23e6bcde4044e115155dae34f8e7454b9a783f737c9a725528d677b7a66c775eb7a955cf144fe0b87f62b575ce5bfd515a9
++  languageName: node
++  linkType: hard
++
+ "queue@npm:6.0.2":
+   version: 6.0.2
+   resolution: "queue@npm:6.0.2"
+@@ -23573,6 +23482,20 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"rc@npm:^1.2.7":
++  version: 1.2.8
++  resolution: "rc@npm:1.2.8"
++  dependencies:
++    deep-extend: "npm:^0.6.0"
++    ini: "npm:~1.3.0"
++    minimist: "npm:^1.2.0"
++    strip-json-comments: "npm:~2.0.1"
++  bin:
++    rc: ./cli.js
++  checksum: 10c0/24a07653150f0d9ac7168e52943cc3cb4b7a22c0e43c7dff3219977c2fdca5a2760a304a029c20811a0e79d351f57d46c9bde216193a0f73978496afc2b85b15
++  languageName: node
++  linkType: hard
++
+ "react-colorful@npm:^5.1.2":
+   version: 5.6.1
+   resolution: "react-colorful@npm:5.6.1"
+@@ -25391,7 +25314,7 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"semver@npm:7.6.0, semver@npm:^7.0.0, semver@npm:^7.1.1, semver@npm:^7.2.1, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4, semver@npm:^7.6.0":
++"semver@npm:7.6.0, semver@npm:^7.0.0, semver@npm:^7.1.1, semver@npm:^7.2.1, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:^7.5.3, semver@npm:^7.5.4":
+   version: 7.6.0
+   resolution: "semver@npm:7.6.0"
+   dependencies:
+@@ -25562,72 +25485,20 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"sharp@npm:^0.33.3":
+-  version: 0.33.3
+-  resolution: "sharp@npm:0.33.3"
+-  dependencies:
+-    "@img/sharp-darwin-arm64": "npm:0.33.3"
+-    "@img/sharp-darwin-x64": "npm:0.33.3"
+-    "@img/sharp-libvips-darwin-arm64": "npm:1.0.2"
+-    "@img/sharp-libvips-darwin-x64": "npm:1.0.2"
+-    "@img/sharp-libvips-linux-arm": "npm:1.0.2"
+-    "@img/sharp-libvips-linux-arm64": "npm:1.0.2"
+-    "@img/sharp-libvips-linux-s390x": "npm:1.0.2"
+-    "@img/sharp-libvips-linux-x64": "npm:1.0.2"
+-    "@img/sharp-libvips-linuxmusl-arm64": "npm:1.0.2"
+-    "@img/sharp-libvips-linuxmusl-x64": "npm:1.0.2"
+-    "@img/sharp-linux-arm": "npm:0.33.3"
+-    "@img/sharp-linux-arm64": "npm:0.33.3"
+-    "@img/sharp-linux-s390x": "npm:0.33.3"
+-    "@img/sharp-linux-x64": "npm:0.33.3"
+-    "@img/sharp-linuxmusl-arm64": "npm:0.33.3"
+-    "@img/sharp-linuxmusl-x64": "npm:0.33.3"
+-    "@img/sharp-wasm32": "npm:0.33.3"
+-    "@img/sharp-win32-ia32": "npm:0.33.3"
+-    "@img/sharp-win32-x64": "npm:0.33.3"
++"sharp@npm:^0.32.6":
++  version: 0.32.6
++  resolution: "sharp@npm:0.32.6"
++  dependencies:
+     color: "npm:^4.2.3"
+-    detect-libc: "npm:^2.0.3"
+-    semver: "npm:^7.6.0"
+-  dependenciesMeta:
+-    "@img/sharp-darwin-arm64":
+-      optional: true
+-    "@img/sharp-darwin-x64":
+-      optional: true
+-    "@img/sharp-libvips-darwin-arm64":
+-      optional: true
+-    "@img/sharp-libvips-darwin-x64":
+-      optional: true
+-    "@img/sharp-libvips-linux-arm":
+-      optional: true
+-    "@img/sharp-libvips-linux-arm64":
+-      optional: true
+-    "@img/sharp-libvips-linux-s390x":
+-      optional: true
+-    "@img/sharp-libvips-linux-x64":
+-      optional: true
+-    "@img/sharp-libvips-linuxmusl-arm64":
+-      optional: true
+-    "@img/sharp-libvips-linuxmusl-x64":
+-      optional: true
+-    "@img/sharp-linux-arm":
+-      optional: true
+-    "@img/sharp-linux-arm64":
+-      optional: true
+-    "@img/sharp-linux-s390x":
+-      optional: true
+-    "@img/sharp-linux-x64":
+-      optional: true
+-    "@img/sharp-linuxmusl-arm64":
+-      optional: true
+-    "@img/sharp-linuxmusl-x64":
+-      optional: true
+-    "@img/sharp-wasm32":
+-      optional: true
+-    "@img/sharp-win32-ia32":
+-      optional: true
+-    "@img/sharp-win32-x64":
+-      optional: true
+-  checksum: 10c0/12f5203426595b4e64c807162a6d52358b591d25fbb414a51fe38861584759fba38485be951ed98d15be3dfe21f2def5336f78ca35bf8bbd22d88cc78ca03f2a
++    detect-libc: "npm:^2.0.2"
++    node-addon-api: "npm:^6.1.0"
++    node-gyp: "npm:latest"
++    prebuild-install: "npm:^7.1.1"
++    semver: "npm:^7.5.4"
++    simple-get: "npm:^4.0.1"
++    tar-fs: "npm:^3.0.4"
++    tunnel-agent: "npm:^0.6.0"
++  checksum: 10c0/f6a756fec5051ef2f9341e0543cde1da4e822982dd5398010baad92e2262bd177e08b753eb19b2fbee30f2fcb0e8756f24088fafc48293a364e9a8f8dc65a300
+   languageName: node
+   linkType: hard
+ 
+@@ -25725,6 +25596,24 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"simple-concat@npm:^1.0.0":
++  version: 1.0.1
++  resolution: "simple-concat@npm:1.0.1"
++  checksum: 10c0/62f7508e674414008910b5397c1811941d457dfa0db4fd5aa7fa0409eb02c3609608dfcd7508cace75b3a0bf67a2a77990711e32cd213d2c76f4fd12ee86d776
++  languageName: node
++  linkType: hard
++
++"simple-get@npm:^4.0.0, simple-get@npm:^4.0.1":
++  version: 4.0.1
++  resolution: "simple-get@npm:4.0.1"
++  dependencies:
++    decompress-response: "npm:^6.0.0"
++    once: "npm:^1.3.1"
++    simple-concat: "npm:^1.0.0"
++  checksum: 10c0/b0649a581dbca741babb960423248899203165769747142033479a7dc5e77d7b0fced0253c731cd57cf21e31e4d77c9157c3069f4448d558ebc96cf9e1eebcf0
++  languageName: node
++  linkType: hard
++
+ "simple-swizzle@npm:^0.2.2":
+   version: 0.2.2
+   resolution: "simple-swizzle@npm:0.2.2"
+@@ -26276,6 +26165,16 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"streamx@npm:^2.15.0":
++  version: 2.15.1
++  resolution: "streamx@npm:2.15.1"
++  dependencies:
++    fast-fifo: "npm:^1.1.0"
++    queue-tick: "npm:^1.0.1"
++  checksum: 10c0/e3b0e997726a2a499e1069efea7d720e54fc262011dfcb32e6704f90b5a31bb55b8f48964649d787be03d8718dcf9aa413d24ce48823d92fcbad06a3c337ec61
++  languageName: node
++  linkType: hard
++
+ "strict-uri-encode@npm:^2.0.0":
+   version: 2.0.0
+   resolution: "strict-uri-encode@npm:2.0.0"
+@@ -26506,6 +26405,13 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"strip-json-comments@npm:~2.0.1":
++  version: 2.0.1
++  resolution: "strip-json-comments@npm:2.0.1"
++  checksum: 10c0/b509231cbdee45064ff4f9fd73609e2bcc4e84a4d508e9dd0f31f70356473fde18abfb5838c17d56fb236f5a06b102ef115438de0600b749e818a35fbbc48c43
++  languageName: node
++  linkType: hard
++
+ "strip-literal@npm:^1.3.0":
+   version: 1.3.0
+   resolution: "strip-literal@npm:1.3.0"
+@@ -26853,7 +26759,7 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"tar-fs@npm:^2.1.1":
++"tar-fs@npm:^2.0.0, tar-fs@npm:^2.1.1":
+   version: 2.1.1
+   resolution: "tar-fs@npm:2.1.1"
+   dependencies:
+@@ -26865,6 +26771,17 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"tar-fs@npm:^3.0.4":
++  version: 3.0.4
++  resolution: "tar-fs@npm:3.0.4"
++  dependencies:
++    mkdirp-classic: "npm:^0.5.2"
++    pump: "npm:^3.0.0"
++    tar-stream: "npm:^3.1.5"
++  checksum: 10c0/120f026d891e5b4f7147a5ae5816e3a9b7f2c5b4ca61714dab3fe1244961607dccca40c11cafc584e625838c57d1308da5bb28b13d70b85ab566bc4c9f1c88b1
++  languageName: node
++  linkType: hard
++
+ "tar-stream@npm:^2.1.4, tar-stream@npm:~2.2.0":
+   version: 2.2.0
+   resolution: "tar-stream@npm:2.2.0"
+@@ -26878,6 +26795,17 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"tar-stream@npm:^3.1.5":
++  version: 3.1.6
++  resolution: "tar-stream@npm:3.1.6"
++  dependencies:
++    b4a: "npm:^1.6.4"
++    fast-fifo: "npm:^1.2.0"
++    streamx: "npm:^2.15.0"
++  checksum: 10c0/7d52d1a56eb25b8434c9544becb737eb6c4f0ed19d205e739fdd2537ad8d1d623a6c93f7f8e58d9028cb0cdf86c0d8b67164e070cd1702cc78b8ab7cba0f3702
++  languageName: node
++  linkType: hard
++
+ "tar@npm:^6.1.11, tar@npm:^6.1.2, tar@npm:^6.2.0":
+   version: 6.2.0
+   resolution: "tar@npm:6.2.0"
+@@ -27490,6 +27418,15 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
++"tunnel-agent@npm:^0.6.0":
++  version: 0.6.0
++  resolution: "tunnel-agent@npm:0.6.0"
++  dependencies:
++    safe-buffer: "npm:^5.0.1"
++  checksum: 10c0/4c7a1b813e7beae66fdbf567a65ec6d46313643753d0beefb3c7973d66fcec3a1e7f39759f0a0b4465883499c6dc8b0750ab8b287399af2e583823e40410a17a
++  languageName: node
++  linkType: hard
++
+ "tween-functions@npm:^1.2.0":
+   version: 1.2.0
+   resolution: "tween-functions@npm:1.2.0"
+@@ -29023,7 +28960,7 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"webpack-dev-middleware@npm:6.1.1":
++"webpack-dev-middleware@npm:6.1.1, webpack-dev-middleware@npm:^6.1.1":
+   version: 6.1.1
+   resolution: "webpack-dev-middleware@npm:6.1.1"
+   dependencies:
+@@ -29056,24 +28993,6 @@ __metadata:
+   languageName: node
+   linkType: hard
+ 
+-"webpack-dev-middleware@npm:^6.1.2":
+-  version: 6.1.3
+-  resolution: "webpack-dev-middleware@npm:6.1.3"
+-  dependencies:
+-    colorette: "npm:^2.0.10"
+-    memfs: "npm:^3.4.12"
+-    mime-types: "npm:^2.1.31"
+-    range-parser: "npm:^1.2.1"
+-    schema-utils: "npm:^4.0.0"
+-  peerDependencies:
+-    webpack: ^5.0.0
+-  peerDependenciesMeta:
+-    webpack:
+-      optional: true
+-  checksum: 10c0/0f31670835f3c0f588392235a6183facf314c0dca312467254a56458142be6fee746f7f6b304f281c740364fd36f256c597ab37d87e5971633cee2f70a8cd5e7
+-  languageName: node
+-  linkType: hard
+-
+ "webpack-dev-server@npm:4.15.1":
+   version: 4.15.1
+   resolution: "webpack-dev-server@npm:4.15.1"
+diff --git a/docs/api/cli-options.md b/docs/api/cli-options.md
+index a1f8c4369ff..24c0c5d8b00 100644
+--- a/docs/api/cli-options.md
++++ b/docs/api/cli-options.md
+@@ -132,7 +132,6 @@ Options include:
+ | Option                     | Description                                                                                                                                                                     |
+ | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ | `-h`, `--help`             | Output usage information <br/>`storybook add --help`                                                                                                                            |
+-| `-c`, `--config-dir`       | Directory where to load Storybook configurations from<br/>`storybook migrate --config-dir .storybook`                                                                           |
+ | `--package-manager`        | Sets the package manager to use when installing the addon.<br/> Available package managers include `npm`, `yarn`, and `pnpm`<br/>`storybook add [addon] --package-manager pnpm` |
+ | `-s`, `--skip-postinstall` | Skips post-install configuration. Used only when you need to configure the addon yourself<br/>`storybook add [addon] --skip-postinstall`                                        |
+ | `--debug`                  | Outputs more logs in the CLI to assist debugging<br/>`storybook add --debug`                                                                                                    |
+diff --git a/docs/faq.md b/docs/faq.md
+index 49783da06df..aa597d0f4f5 100644
+--- a/docs/faq.md
++++ b/docs/faq.md
+@@ -347,17 +347,15 @@ Vue 2 entered [End of Life](https://v2.vuejs.org/lts/) (EOL) on December 31, 202
+ 
+ <!-- prettier-ignore-end -->
+ 
+-## Why aren't my code blocks highlighted with Storybook MDX?
++## Why aren't my code blocks highlighted with Storybook MDX
+ 
+-Out of the box, Storybook provides syntax highlighting for a set of languages (e.g., Javascript, Markdown, CSS, HTML, Typescript, GraphQL) you can use with your code blocks. Currently, there's a known limitation when you try to register a custom language to get syntax highlighting. We're working on a fix for this and will update this section once it's available.
++Out of the box, Storybook provides syntax highlighting for a set of languages (e.g., Javascript, Markdown, CSS, HTML, Typescript, GraphQL) you can use with your code blocks. Currently, there's a known limitation when you try and register a custom language to get syntax highlighting. We're working on a fix for this And will update this section once it's available.
+ 
+-## Why aren't my MDX styles working in Storybook?
++## Why aren't my MDX stories working in Storybook?
+ 
+-Writing documentation with MDX can be troublesome, especially regarding how your code is formatted when using line breaks with code blocks. For example, this will break:
++MDX can be picky about how your code is formatted with line breaks. This is especially true with code blocks. For example, this will break:
+ 
+-<!-- prettier-ignore-start -->
+-
+-```mdx
++```
+ <style>{`
+   .class1 {
+     ...
+@@ -367,15 +365,12 @@ Writing documentation with MDX can be troublesome, especially regarding how your
+     ...
+   }
+ `}</style>
+-```
+ 
+-<!-- prettier-ignore-end -->
++```
+ 
+ But this will work:
+ 
+-<!-- prettier-ignore-start -->
+-
+-```mdx
++```
+ <style>
+   {`
+     .class1 {
+@@ -389,8 +384,6 @@ But this will work:
+ </style>
+ ```
+ 
+-<!-- prettier-ignore-end -->
+-
+ See the following [issue](https://github.com/mdx-js/mdx/issues/1945) for more information.
+ 
+ ## Why are my mocked GraphQL queries failing with Storybook's MSW addon?
+diff --git a/docs/get-started/nextjs.md b/docs/get-started/nextjs.md
+index b17cf19661b..6cbd4ac9117 100644
+--- a/docs/get-started/nextjs.md
++++ b/docs/get-started/nextjs.md
+@@ -865,24 +865,6 @@ You might get this if you're using Yarn v2 or v3. See [Notes for Yarn v2 and v3
+ 
+ The `@storybook/nextjs` package abstracts the Webpack 5 builder and provides all the necessary Webpack configuration needed (and used internally) by Next.js. Webpack is currently the official builder in Next.js, and Next.js does not support Vite, therefore it is not possible to use Vite with `@storybook/nextjs`. You can use `@storybook/react-vite` framework instead, but at the cost of having a degraded experience, and we won't be able to provide you official support.
+ 
+-### Error: You are importing avif images, but you don't have sharp installed. You have to install sharp in order to use image optimization features in Next.js.
+-
+-`sharp` is a dependency of Next.js's image optimization feature. If you see this error, you need to install `sharp` in your project.
+-
+-```bash
+-npm install sharp
+-```
+-
+-```bash
+-yarn add sharp
+-```
+-
+-```bash
+-pnpm add sharp
+-```
+-
+-You can refer to the [Install `sharp` to Use Built-In Image Optimization](https://nextjs.org/docs/messages/install-sharp) in the Next.js documentation for more information.
+-
+ ## API
+ 
+ ### Parameters
+diff --git a/docs/snippets/common/storybook-automigration-mdx-legacy.npm.mdx b/docs/snippets/common/storybook-automigration-mdx-legacy.npm.mdx
+new file mode 100644
+index 00000000000..b5457702601
+--- /dev/null
++++ b/docs/snippets/common/storybook-automigration-mdx-legacy.npm.mdx
+@@ -0,0 +1,3 @@
++```shell
++npx storybook@latest automigrate mdx1to2
++```
+diff --git a/docs/snippets/common/storybook-automigration-mdx-legacy.pnpm.mdx b/docs/snippets/common/storybook-automigration-mdx-legacy.pnpm.mdx
+new file mode 100644
+index 00000000000..4c17825bf1a
+--- /dev/null
++++ b/docs/snippets/common/storybook-automigration-mdx-legacy.pnpm.mdx
+@@ -0,0 +1,3 @@
++```shell
++pnpm dlx storybook@latest automigrate mdx1to2
++```
+diff --git a/docs/snippets/common/storybook-automigration-mdx-legacy.yarn.mdx b/docs/snippets/common/storybook-automigration-mdx-legacy.yarn.mdx
+new file mode 100644
+index 00000000000..277d34f7346
+--- /dev/null
++++ b/docs/snippets/common/storybook-automigration-mdx-legacy.yarn.mdx
+@@ -0,0 +1,3 @@
++```shell
++yarn dlx storybook@latest automigrate mdx1to2
++```
+diff --git a/docs/versions/next.json b/docs/versions/next.json
+index 2f8990d2096..a2ba413b8e5 100644
+--- a/docs/versions/next.json
++++ b/docs/versions/next.json
+@@ -1 +1 @@
+-{"version":"8.1.0-alpha.7","info":{"plain":"- CLI: Add --config-dir flag to add command - [#26771](https://github.com/storybookjs/storybook/pull/26771), thanks @eric-blue!\n- CLI: Add Visual Tests addon install auto-migration when upgrading to 8.0.x - [#26766](https://github.com/storybookjs/storybook/pull/26766), thanks @ndelangen!\n- Controls: Add Channels API to search for files in the project root - [#26726](https://github.com/storybookjs/storybook/pull/26726), thanks @valentinpalkovic!\n- Test: Make spies reactive so that they can be logged by addon-actions - [#26740](https://github.com/storybookjs/storybook/pull/26740), thanks @kasperpeulen!\n- Vue: Disable controls for events, slots, and expose - [#26751](https://github.com/storybookjs/storybook/pull/26751), thanks @shilman!\n- Webpack: Bump webpack-dev-middleware to patch high security issue - [#26655](https://github.com/storybookjs/storybook/pull/26655), thanks @jwilliams-met!"}}
++{"version":"8.1.0-alpha.6","info":{"plain":"- CLI: Add --config-dir flag to migrate command - [#26721](https://github.com/storybookjs/storybook/pull/26721), thanks @yannbf!\n- Core: Add `duration` and `onClick` support to Notification API and improve Notification UI - [#26696](https://github.com/storybookjs/storybook/pull/26696), thanks @ghengeveld!\n- Dependency: Bump es-module-lexer - [#26737](https://github.com/storybookjs/storybook/pull/26737), thanks @valentinpalkovic!\n- Dependency: Update globby dependency - [#26733](https://github.com/storybookjs/storybook/pull/26733), thanks @valentinpalkovic!\n- Dependency: Update postcss-loader in Next.js framework - [#26707](https://github.com/storybookjs/storybook/pull/26707), thanks @valentinpalkovic!\n- Next.js: Fix next/font usage on Windows machines - [#26700](https://github.com/storybookjs/storybook/pull/26700), thanks @valentinpalkovic!\n- Webpack: Fix sourcemap generation in webpack react-docgen-loader - [#26676](https://github.com/storybookjs/storybook/pull/26676), thanks @valentinpalkovic!"}}
+diff --git a/docs/writing-docs/mdx.md b/docs/writing-docs/mdx.md
+index 2dd8058f370..d40ae287025 100644
+--- a/docs/writing-docs/mdx.md
++++ b/docs/writing-docs/mdx.md
+@@ -121,7 +121,7 @@ The `Meta` block defines where the document will be placed in the sidebar. In th
+ 
+ <!-- prettier-ignore-end -->
+ 
+-MDX supports standard markdown (["commonmark"](https://commonmark.org/)) by default and can be extended to support [GitHub Flavored Markdown (GFM)](https://github.github.com/gfm/) and other extensions (see the [Troubleshooting section](#troubleshooting) to learn more about some of the current limitations).
++MDX supports standard markdown ([”commonmark”](https://commonmark.org/)) by default and can be extended to support [GitHub-flavored markdown (GFM)](https://github.github.com/gfm) and other extensions (see [Breaking changes](#breaking-changes), below).
+ 
+ <!-- prettier-ignore-start -->
+ 
+@@ -325,7 +325,11 @@ By applying this pattern with the Controls addon, all anchors will be ignored in
+ 
+ ### Markdown tables aren't rendering correctly
+ 
+-If you're extending your documentation to include specific features (e.g., tables, footnotes), you may run into some issues rendering them correctly using the current MDX version supported by Storybook. We recommend enabling the [`remark-gfm`](https://github.com/remarkjs/remark-gfm) plugin in your configuration file (i.e., [`.storybook/main.js|ts`](../configure/index.md)) to render them correctly.
++As of MDX 2, GFM is no longer included by default:
++
++“We turned off GFM features in MDX by default. GFM extends CommonMark to add autolink literals, footnotes, strikethrough, tables, and task lists. If you do want these features, you can use a plugin. How to do so is described in [our guide on GFM](https://mdxjs.com/guides/gfm/).”
++
++In Storybook, you can apply MDX options, including plugins, in the main configuration file:
+ 
+ <!-- prettier-ignore-start -->
+ 
+@@ -340,7 +344,7 @@ paths={[
+ 
+ <Callout variant="info" icon="💡">
+ 
+-The [`remark-gfm`](https://github.com/remarkjs/remark-gfm) package is not included by default with Storybook and must be installed separately as a development dependency. To learn more about how to use it and the other breaking changes introduced by MDX, refer to the [GFM guide](https://mdxjs.com/guides/gfm/) and the [migration guide](https://mdxjs.com/migrating/v2/) provided by the MDX team for more information.
++The [`remark-gfm`](https://github.com/remarkjs/remark-gfm) package isn't provided by default during migration. We recommend installing it as a development dependency if you use its features.
+ 
+ </Callout>
+ 
+@@ -350,11 +354,11 @@ As Storybook relies on [MDX 3](https://mdxjs.com/) to render documentation, some
+ 
+ #### Storybook doesn't create documentation for my component stories
+ 
+-If you run into a situation where Storybook is not able to detect and render the documentation for your component stories, it may be due to a misconfiguration in your Storybook. Check your configuration file (i.e., `.storybook/main.js|ts`) and ensure the `stories` configuration element provides the correct path to your stories location (e.g., `../src/**/*.stories.@(js|jsx|mjs|ts|tsx)`).
++If you run into a situation where Storybook is not able to detect and render the documentation for your component stories, it may be due to a misconfiguration in your Storybook. Check your configuration file (i.e., `.storybook/main.js|ts`) and ensure the `stories` configuration element provides the correct path to your stories location(e.g., `../src/**/*.stories.@(js|jsx|mjs|ts|tsx)`).
+ 
+ ### The migration seems flaky and keeps failing
+ 
+-By default, running the [migration](../configure/upgrading.md) command will prompt you to update the existing MDX files in your project according to the MDX version supported by Storybook. However, this might be a disruptive process, specifically if you're upgrading from a previous version of Storybook where you were using the legacy MDX format. To help you troubleshoot those issues, we've prepared some recommendations that might help you.
++By default, running the [migration command](#automigration) will try and migrate all existing MDX files in your project according to the MDX 2 specification. However, this might not always be possible, and you might run into issues during the migration. To help you troubleshoot those issues, we've prepared some recommendations that might help you.
+ 
+ Start by running the following command inside your project directory:
+ 
+diff --git a/docs/writing-tests/test-runner.md b/docs/writing-tests/test-runner.md
+index 6a39b2362ad..40b50980517 100644
+--- a/docs/writing-tests/test-runner.md
++++ b/docs/writing-tests/test-runner.md
+@@ -202,12 +202,12 @@ The test-runner renders a story and executes its [play function](../writing-stor
+ The test-runner exports test hooks that can be overridden globally to enable use cases like visual or DOM snapshots. These hooks give you access to the test lifecycle _before_ and _after_ the story is rendered.
+ Listed below are the available hooks and an overview of how to use them.
+ 
+-| Hook        | Description                                                                                                  |
+-| ----------- | ------------------------------------------------------------------------------------------------------------ |
+-| `prepare`   | Prepares the browser for tests<br/>`async prepare({ page, browserContext, testRunnerConfig }) {}`            |
+-| `setup`     | Executes once before all the tests run<br/>`setup() {}`                                                      |
++| Hook        | Description                                                                                                     |
++| ----------- | --------------------------------------------------------------------------------------------------------------- |
++| `prepare`   | Prepares the browser for tests<br/>`async prepare({ page, browserContext, testRunnerConfig }) {}`               |
++| `setup`     | Executes once before all the tests run<br/>`setup() {}`                                                         |
+ | `preVisit`  | Executes before a story is initially visited and rendered in the browser<br/>`async preVisit(page, context) {}` |
+-| `postVisit` | Executes after the story is visited and fully rendered<br/>`async postVisit(page, context) {}`               |
++| `postVisit` | Executes after the story is is visited and fully rendered<br/>`async postVisit(page, context) {}`               |
+ 
+ <Callout variant="info" icon="💡">
+ 

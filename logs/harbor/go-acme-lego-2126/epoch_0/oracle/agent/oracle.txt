@@ -1,0 +1,15 @@
+patching file README.md
+patching file cmd/zz_gen_cmd_dnshelp.go
+patching file docs/content/dns/zz_gen_shellrent.md
+patching file docs/data/zz_cli_help.toml
+patching file providers/dns/dns_providers.go
+patching file providers/dns/shellrent/internal/client.go
+patching file providers/dns/shellrent/internal/fixtures/dns_record-remove.json
+patching file providers/dns/shellrent/internal/fixtures/dns_record-store.json
+patching file providers/dns/shellrent/internal/fixtures/domain-details.json
+patching file providers/dns/shellrent/internal/fixtures/error.json
+patching file providers/dns/shellrent/internal/fixtures/purchase-details.json
+patching file providers/dns/shellrent/internal/fixtures/purchase.json
+patching file providers/dns/shellrent/internal/types.go
+patching file providers/dns/shellrent/shellrent.go
+patching file providers/dns/shellrent/shellrent.toml

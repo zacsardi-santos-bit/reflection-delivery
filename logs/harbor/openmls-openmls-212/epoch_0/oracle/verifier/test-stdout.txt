@@ -1,0 +1,284 @@
+patching file tests/test_encoding.rs
+patching file tests/utils/mod.rs
+   Compiling evercrypt-sys v0.0.3
+   Compiling evercrypt v0.0.3 (https://github.com/franziskuskiefer/evercrypt-rust.git?tag=v0.0.3#60ea9efc)
+   Compiling hpke-rs v0.0.2 (https://github.com/franziskuskiefer/hpke-rs.git?tag=v0.0.2#d63a6630)
+   Compiling openmls v0.2.0 (/workspace/repo)
+warning: unused import: `crate::ciphersuite::*`
+ --> src/group/managed_group/mod.rs:1:5
+  |
+1 | use crate::ciphersuite::*;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `codec::*`
+  --> src/group/mod.rs:17:9
+   |
+17 | pub use codec::*;
+   |         ^^^^^^^^
+
+warning: unused variable: `credential_bundle`
+  --> src/group/managed_group/mod.rs:43:9
+   |
+43 |         credential_bundle: &CredentialBundle,
+   |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `credential_bundle`
+  --> src/group/managed_group/mod.rs:65:9
+   |
+65 |         credential_bundle: &CredentialBundle,
+   |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `credential_bundle`
+  --> src/group/managed_group/mod.rs:85:9
+   |
+85 |         credential_bundle: &CredentialBundle,
+   |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `aad`
+  --> src/group/managed_group/mod.rs:86:9
+   |
+86 |         aad: &[u8],
+   |         ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `key_packages`
+  --> src/group/managed_group/mod.rs:87:9
+   |
+87 |         key_packages: Vec<KeyPackage>,
+   |         ^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_key_packages`
+
+warning: unused variable: `credential_bundle`
+  --> src/group/managed_group/mod.rs:95:9
+   |
+95 |         credential_bundle: &CredentialBundle,
+   |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `aad`
+  --> src/group/managed_group/mod.rs:96:9
+   |
+96 |         aad: &[u8],
+   |         ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `members`
+  --> src/group/managed_group/mod.rs:97:9
+   |
+97 |         members: &[usize],
+   |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_members`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:105:9
+    |
+105 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `aad`
+   --> src/group/managed_group/mod.rs:106:9
+    |
+106 |         aad: &[u8],
+    |         ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `key_packages`
+   --> src/group/managed_group/mod.rs:107:9
+    |
+107 |         key_packages: Vec<KeyPackage>,
+    |         ^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_key_packages`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:115:9
+    |
+115 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `aad`
+   --> src/group/managed_group/mod.rs:116:9
+    |
+116 |         aad: &[u8],
+    |         ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `members`
+   --> src/group/managed_group/mod.rs:117:9
+    |
+117 |         members: &[usize],
+    |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_members`
+
+warning: unused variable: `message`
+   --> src/group/managed_group/mod.rs:131:39
+    |
+131 |     pub fn process_message(&mut self, message: MLSMessage) -> Vec<u8> {
+    |                                       ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_message`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:140:9
+    |
+140 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `message`
+   --> src/group/managed_group/mod.rs:141:9
+    |
+141 |         message: &[u8],
+    |         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_message`
+
+warning: unused variable: `managed_group_config`
+   --> src/group/managed_group/mod.rs:161:41
+    |
+161 |     pub fn set_configuration(&mut self, managed_group_config: &ManagedGroupConfig) {
+    |                                         ^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_managed_group_config`
+
+warning: unused variable: `aad`
+   --> src/group/managed_group/mod.rs:171:31
+    |
+171 |     pub fn set_aad(&mut self, aad: &[u8]) {
+    |                               ^^^ help: if this is intentional, prefix it with an underscore: `_aad`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:180:9
+    |
+180 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `credential_bundle`
+   --> src/group/managed_group/mod.rs:188:9
+    |
+188 |         credential_bundle: &CredentialBundle,
+    |         ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_credential_bundle`
+
+warning: unused variable: `reader`
+   --> src/group/managed_group/mod.rs:201:17
+    |
+201 |     pub fn load(reader: Box<dyn Read>, managed_group_config: &ManagedGroupConfig) -> ManagedGroup {
+    |                 ^^^^^^ help: if this is intentional, prefix it with an underscore: `_reader`
+
+warning: unused variable: `managed_group_config`
+   --> src/group/managed_group/mod.rs:201:40
+    |
+201 |     pub fn load(reader: Box<dyn Read>, managed_group_config: &ManagedGroupConfig) -> ManagedGroup {
+    |                                        ^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_managed_group_config`
+
+warning: unused variable: `writer`
+   --> src/group/managed_group/mod.rs:206:24
+    |
+206 |     pub fn save(&self, writer: Box<dyn Write>) {}
+    |                        ^^^^^^ help: if this is intentional, prefix it with an underscore: `_writer`
+
+warning: field `ciphersuite` is never read
+   --> src/ciphersuite/mod.rs:158:5
+    |
+157 | pub struct SignatureKeypair {
+    |            ---------------- field in this struct
+158 |     ciphersuite: &'static Ciphersuite,
+    |     ^^^^^^^^^^^
+    |
+    = note: `SignatureKeypair` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `verify` is never used
+  --> src/ciphersuite/signable.rs:20:8
+   |
+6  | pub trait Signable: Sized {
+   |           -------- method in this trait
+...
+20 |     fn verify(&self, credential: &Credential, signature: &Signature) -> bool {
+   |        ^^^^^^
+
+warning: field `0` is never read
+  --> src/group/mod.rs:23:11
+   |
+23 |     Codec(CodecError),
+   |     ----- ^^^^^^^^^^
+   |     |
+   |     field in this variant
+   |
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+23 |     Codec(()),
+   |           ~~
+
+warning: fields `managed_group_config`, `group`, `proposal_queue`, and `own_kpbs` are never read
+  --> src/group/managed_group/mod.rs:32:5
+   |
+31 | pub struct ManagedGroup {
+   |            ------------ fields in this struct
+32 |     managed_group_config: ManagedGroupConfig,
+   |     ^^^^^^^^^^^^^^^^^^^^
+33 |     group: MlsGroup,
+   |     ^^^^^
+34 |     proposal_queue: ProposalQueue,
+   |     ^^^^^^^^^^^^^^
+35 |     own_kpbs: Vec<KeyPackageBundle>,
+   |     ^^^^^^^^
+
+warning: fields `encrypt_hs_messages`, `update_policy`, and `callbacks` are never read
+   --> src/group/managed_group/mod.rs:212:5
+    |
+210 | pub struct ManagedGroupConfig {
+    |            ------------------ fields in this struct
+211 |     /// Defines whether handshake messages should be encrypted
+212 |     encrypt_hs_messages: bool,
+    |     ^^^^^^^^^^^^^^^^^^^
+213 |     /// Defines the update policy
+214 |     update_policy: UpdatePolicy,
+    |     ^^^^^^^^^^^^^
+215 |     /// Callbacks
+216 |     callbacks: ManagedGroupCallbacks,
+    |     ^^^^^^^^^
+    |
+    = note: `ManagedGroupConfig` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: fields `maximum_time`, `maximum_sent_messages`, and `maximum_received_messages` are never read
+   --> src/group/managed_group/mod.rs:223:5
+    |
+221 | pub struct UpdatePolicy {
+    |            ------------ fields in this struct
+222 |     /// Maximum time before an update in seconds
+223 |     maximum_time: u32,
+    |     ^^^^^^^^^^^^
+224 |     /// Maximum messages that are sent before an update in seconds
+225 |     maximum_sent_messages: u32,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+226 |     /// Maximum messages that are received before an update in seconds
+227 |     maximum_received_messages: u32,
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `UpdatePolicy` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: fields `validate_add`, `validate_remove`, `member_added`, `member_removed`, `member_updated`, and `app_message_received` are never read
+   --> src/group/managed_group/mod.rs:261:5
+    |
+259 | pub struct ManagedGroupCallbacks {
+    |            --------------------- fields in this struct
+260 |     // Validator functions
+261 |     validate_add: Option<ValidateAdd>,
+    |     ^^^^^^^^^^^^
+262 |     validate_remove: Option<ValidateRemove>,
+    |     ^^^^^^^^^^^^^^^
+263 |     // Event listeners
+264 |     member_added: Option<MemberAdded>,
+    |     ^^^^^^^^^^^^
+265 |     member_removed: Option<MemberRemoved>,
+    |     ^^^^^^^^^^^^^^
+266 |     member_updated: Option<MemberUpdated>,
+    |     ^^^^^^^^^^^^^^
+267 |     app_message_received: Option<AppMessageReceived>,
+    |     ^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `ManagedGroupCallbacks` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `openmls` (lib) generated 33 warnings (run `cargo fix --lib -p openmls` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.79s
+────────────
+ Nextest run ID 5af59ba4-e441-48c5-a11a-131c2ba97ee4 with nextest profile: default
+    Starting 7 tests across 1 binary
+        PASS [   0.031s] openmls::test_encoding utils::test_setup
+        PASS [   0.087s] openmls::test_encoding test_remove_proposal_encoding
+        PASS [   0.091s] openmls::test_encoding test_add_proposal_encoding
+        PASS [   0.092s] openmls::test_encoding test_update_proposal_encoding
+        PASS [   0.101s] openmls::test_encoding test_commit_encoding
+        PASS [   0.115s] openmls::test_encoding test_welcome_message_encoding
+        PASS [   0.229s] openmls::test_encoding test_application_message_encoding
+────────────
+     Summary [   0.230s] 7 tests run: 7 passed, 0 skipped
+reward=1 graded=7 found=7 failed=0 parsed=7 framework=cargo exit_code=0

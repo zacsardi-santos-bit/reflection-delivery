@@ -1,0 +1,23 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p naga --all-features -E 'test(spirv_capabilities) | test(unconsumed_vertex_outputs_hlsl_out)'",
+  "test_files": [
+    "naga/tests/snapshots.rs",
+    "naga/tests/spirv_capabilities.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/10) naga::naga-test spirv_capabilities::int64",
+    "( 2/10) naga::naga-test spirv_capabilities::storage1d",
+    "( 3/10) naga::naga-test spirv_capabilities::sampler1d",
+    "( 4/10) naga::naga-test spirv_capabilities::image_queries",
+    "( 5/10) naga::naga-test spirv_capabilities::float64",
+    "( 6/10) naga::naga-test spirv_capabilities::storage_image_formats",
+    "( 7/10) naga::naga-test spirv_capabilities::sample_rate_shading",
+    "( 8/10) naga::naga-test spirv_capabilities::cube_array",
+    "( 9/10) naga::naga-test spirv_capabilities::geometry",
+    "(10/10) naga::naga-test snapshots::unconsumed_vertex_outputs_hlsl_out"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,6 @@
+patching file Cargo.lock
+patching file crates/store/re_types_core/Cargo.toml
+patching file crates/store/re_types_core/src/as_components.rs
+patching file crates/store/re_types_core/src/lib.rs
+patching file crates/top/re_sdk/src/recording_stream.rs
+patching file docs/snippets/all/archetypes/mesh3d_partial_updates.rs

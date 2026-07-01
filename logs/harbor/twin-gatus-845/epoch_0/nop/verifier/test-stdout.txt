@@ -1,0 +1,17 @@
+patching file alerting/provider/zulip/zulip_test.go
+# github.com/TwiN/gatus/v5/alerting/provider/zulip [github.com/TwiN/gatus/v5/alerting/provider/zulip.test]
+alerting/provider/zulip/zulip_test.go:18:17: undefined: AlertProvider
+alerting/provider/zulip/zulip_test.go:23:19: undefined: AlertProvider
+alerting/provider/zulip/zulip_test.go:28:19: undefined: AlertProvider
+alerting/provider/zulip/zulip_test.go:29:13: undefined: Config
+alerting/provider/zulip/zulip_test.go:39:19: undefined: AlertProvider
+alerting/provider/zulip/zulip_test.go:40:13: undefined: Config
+alerting/provider/zulip/zulip_test.go:50:19: undefined: AlertProvider
+alerting/provider/zulip/zulip_test.go:51:13: undefined: Config
+alerting/provider/zulip/zulip_test.go:61:19: undefined: AlertProvider
+alerting/provider/zulip/zulip_test.go:62:13: undefined: Config
+alerting/provider/zulip/zulip_test.go:62:13: too many errors
+{"Time":"2026-06-29T15:29:03.918841959Z","Action":"start","Package":"github.com/TwiN/gatus/v5/alerting/provider/zulip"}
+{"Time":"2026-06-29T15:29:03.919142147Z","Action":"output","Package":"github.com/TwiN/gatus/v5/alerting/provider/zulip","Output":"FAIL\tgithub.com/TwiN/gatus/v5/alerting/provider/zulip [build failed]\n"}
+{"Time":"2026-06-29T15:29:03.919199548Z","Action":"fail","Package":"github.com/TwiN/gatus/v5/alerting/provider/zulip","Elapsed":0}
+reward=0 graded=27 found=0 failed=0 parsed=1 framework=go exit_code=1

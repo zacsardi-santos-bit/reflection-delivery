@@ -1,0 +1,7 @@
+patching file endpoints/setuid_test.go
+# github.com/prebid/prebid-server/endpoints [github.com/prebid/prebid-server/endpoints.test]
+endpoints/setuid_test.go:561:94: too many arguments in call to NewSetUIDEndpoint
+	have (*"github.com/prebid/prebid-server/config".Configuration, map[string]usersync.Syncer, *mockPermsSetUID, analytics.PBSAnalyticsModule, FakeAccountsFetcher, "github.com/prebid/prebid-server/metrics".MetricsEngine)
+	want ("github.com/prebid/prebid-server/config".HostCookie, map[string]usersync.Syncer, "github.com/prebid/prebid-server/gdpr".Permissions, analytics.PBSAnalyticsModule, "github.com/prebid/prebid-server/metrics".MetricsEngine)
+FAIL	github.com/prebid/prebid-server/endpoints [build failed]
+reward=0 graded=29 found=29 failed=29 parsed=1 framework=go exit_code=1

@@ -1,0 +1,68 @@
+patching file transforms/mutate/label_test.go
+{"Time":"2026-06-29T15:28:38.820879957Z","Action":"start","Package":"github.com/qiniu/logkit/transforms/mutate"}
+{"Time":"2026-06-29T15:28:38.825714733Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpand"}
+{"Time":"2026-06-29T15:28:38.825749842Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpand","Output":"=== RUN   TestArrayExpand\n"}
+{"Time":"2026-06-29T15:28:38.825809172Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpand","Output":"--- PASS: TestArrayExpand (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.825836152Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpand","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.825873242Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandError"}
+{"Time":"2026-06-29T15:28:38.825896232Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandError","Output":"=== RUN   TestArrayExpandError\n"}
+{"Time":"2026-06-29T15:28:38.825920612Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandError","Output":"--- PASS: TestArrayExpandError (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.825945811Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandError","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.825968861Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandIgnore"}
+{"Time":"2026-06-29T15:28:38.825991781Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandIgnore","Output":"=== RUN   TestArrayExpandIgnore\n"}
+{"Time":"2026-06-29T15:28:38.826020101Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandIgnore","Output":"2026/06/29 15:28:38 [WARN][github.com/qiniu/logkit/transforms/mutate] arrayexpand.go:154: keys myword0 -- myword0_5 already exist, the key myword0 will be ignored\n"}
+{"Time":"2026-06-29T15:28:38.826048031Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandIgnore","Output":"--- PASS: TestArrayExpandIgnore (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.826072231Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandIgnore","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.826095051Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandEveryType"}
+{"Time":"2026-06-29T15:28:38.826118331Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandEveryType","Output":"=== RUN   TestArrayExpandEveryType\n"}
+{"Time":"2026-06-29T15:28:38.82614751Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandEveryType","Output":"--- PASS: TestArrayExpandEveryType (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.82617234Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandEveryType","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.82620067Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandMultiKey"}
+{"Time":"2026-06-29T15:28:38.82622272Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandMultiKey","Output":"=== RUN   TestArrayExpandMultiKey\n"}
+{"Time":"2026-06-29T15:28:38.82624813Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandMultiKey","Output":"--- PASS: TestArrayExpandMultiKey (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.82627442Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestArrayExpandMultiKey","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.82629729Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestConvertTransformer"}
+{"Time":"2026-06-29T15:28:38.82631924Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestConvertTransformer","Output":"=== RUN   TestConvertTransformer\n"}
+{"Time":"2026-06-29T15:28:38.826349479Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestConvertTransformer","Output":"--- PASS: TestConvertTransformer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.826377049Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestConvertTransformer","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.826399859Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestDiscardTransformer"}
+{"Time":"2026-06-29T15:28:38.826422589Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestDiscardTransformer","Output":"=== RUN   TestDiscardTransformer\n"}
+{"Time":"2026-06-29T15:28:38.826446199Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestDiscardTransformer","Output":"--- PASS: TestDiscardTransformer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.826470109Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestDiscardTransformer","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.826492799Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestLabelTransformer"}
+{"Time":"2026-06-29T15:28:38.826514619Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestLabelTransformer","Output":"=== RUN   TestLabelTransformer\n"}
+{"Time":"2026-06-29T15:28:38.826538448Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestLabelTransformer","Output":"--- PASS: TestLabelTransformer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.826566398Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestLabelTransformer","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.826588928Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestRenameTransformer"}
+{"Time":"2026-06-29T15:28:38.826611458Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestRenameTransformer","Output":"=== RUN   TestRenameTransformer\n"}
+{"Time":"2026-06-29T15:28:38.826635328Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestRenameTransformer","Output":"--- PASS: TestRenameTransformer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.826658098Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestRenameTransformer","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.826681308Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestReplaceTransformer"}
+{"Time":"2026-06-29T15:28:38.826703948Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestReplaceTransformer","Output":"=== RUN   TestReplaceTransformer\n"}
+{"Time":"2026-06-29T15:28:38.826727647Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestReplaceTransformer","Output":"--- PASS: TestReplaceTransformer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.826750597Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestReplaceTransformer","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.826773777Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestSplitTransformer"}
+{"Time":"2026-06-29T15:28:38.826806717Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestSplitTransformer","Output":"=== RUN   TestSplitTransformer\n"}
+{"Time":"2026-06-29T15:28:38.826830957Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestSplitTransformer","Output":"--- PASS: TestSplitTransformer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.826859507Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestSplitTransformer","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.826882217Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformer"}
+{"Time":"2026-06-29T15:28:38.826904307Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformer","Output":"=== RUN   TestParamTransformer\n"}
+{"Time":"2026-06-29T15:28:38.826933606Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformer","Output":"--- PASS: TestParamTransformer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.826956216Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformer","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.826979596Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerError"}
+{"Time":"2026-06-29T15:28:38.827001326Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerError","Output":"=== RUN   TestParamTransformerError\n"}
+{"Time":"2026-06-29T15:28:38.827024736Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerError","Output":"--- PASS: TestParamTransformerError (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.827047636Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerError","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.827070416Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerKeyRepeat"}
+{"Time":"2026-06-29T15:28:38.827095906Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerKeyRepeat","Output":"=== RUN   TestParamTransformerKeyRepeat\n"}
+{"Time":"2026-06-29T15:28:38.827123885Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerKeyRepeat","Output":"2026/06/29 15:28:38 [WARN][github.com/qiniu/logkit/transforms/mutate] urlparam.go:71: keys myword_a -- myword_a5 already exist, the item myword_a will be ignored\n"}
+{"Time":"2026-06-29T15:28:38.827150795Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerKeyRepeat","Output":"--- PASS: TestParamTransformerKeyRepeat (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.827181155Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerKeyRepeat","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.827205015Z","Action":"run","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerMultiKey"}
+{"Time":"2026-06-29T15:28:38.827236865Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerMultiKey","Output":"=== RUN   TestParamTransformerMultiKey\n"}
+{"Time":"2026-06-29T15:28:38.827265305Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerMultiKey","Output":"--- PASS: TestParamTransformerMultiKey (0.00s)\n"}
+{"Time":"2026-06-29T15:28:38.827295125Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Test":"TestParamTransformerMultiKey","Elapsed":0}
+{"Time":"2026-06-29T15:28:38.827318014Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Output":"PASS\n"}
+{"Time":"2026-06-29T15:28:38.827383214Z","Action":"output","Package":"github.com/qiniu/logkit/transforms/mutate","Output":"ok  \tgithub.com/qiniu/logkit/transforms/mutate\t0.006s\n"}
+{"Time":"2026-06-29T15:28:38.827410034Z","Action":"pass","Package":"github.com/qiniu/logkit/transforms/mutate","Elapsed":0.007}
+reward=1 graded=15 found=15 failed=0 parsed=15 framework=go exit_code=0

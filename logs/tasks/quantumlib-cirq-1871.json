@@ -1,0 +1,23 @@
+{
+ "task": "quantumlib-cirq-1871",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden refactors Engine to take project_id, adds _user_project_header_request_builder, discovery_url/version mutual exclusion, env project_id; 18 F2P incl test_request_builder, test_not_both_version_and_discovery, plus PASS_TO_PASS"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./plugin/builtin/namespacetransformer -count=1",
+  "test_files": [
+    "plugin/builtin/namespacetransformer/NamespaceTransformer_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer::TestNamespaceTransformer1",
+    "sigs.k8s.io/kustomize/plugin/builtin/namespacetransformer::TestNamespaceTransformerClusterLevelKinds"
+  ],
+  "PASS_TO_PASS": []
+}

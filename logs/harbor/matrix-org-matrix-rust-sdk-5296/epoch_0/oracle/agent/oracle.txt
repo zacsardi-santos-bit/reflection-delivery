@@ -1,0 +1,13 @@
+patching file bindings/matrix-sdk-ffi/src/tracing.rs
+patching file crates/matrix-sdk-ui/src/timeline/controller/mod.rs
+patching file crates/matrix-sdk-ui/src/timeline/controller/state_transaction.rs
+patching file crates/matrix-sdk-ui/src/timeline/error.rs
+patching file crates/matrix-sdk-ui/src/timeline/mod.rs
+patching file crates/matrix-sdk-ui/src/timeline/pinned_events_loader.rs
+patching file crates/matrix-sdk-ui/src/timeline/traits.rs
+patching file crates/matrix-sdk/src/event_cache/mod.rs
+patching file crates/matrix-sdk/src/event_cache/pagination.rs
+patching file crates/matrix-sdk/src/lib.rs
+patching file crates/matrix-sdk/src/paginators/mod.rs
+patching file crates/matrix-sdk/src/paginators/room.rs (renamed from crates/matrix-sdk/src/event_cache/paginator.rs)
+patching file crates/matrix-sdk/src/paginators/thread.rs (renamed from crates/matrix-sdk-ui/src/timeline/threaded_events_loader.rs)

@@ -1,0 +1,7 @@
+patching file backends/batch/replays_test.go
+patching file backends/batch/schemas_test.go
+# github.com/batchcorp/plumber/backends/batch [github.com/batchcorp/plumber/backends/batch.test]
+backends/batch/replays_test.go:51:21: output[0].Source undefined (type ReplayOutput has no field or method Source)
+backends/batch/replays_test.go:76:21: output[0].Source undefined (type ReplayOutput has no field or method Source)
+FAIL	github.com/batchcorp/plumber/backends/batch [build failed]
+reward=0 graded=4 found=4 failed=4 parsed=1 framework=go exit_code=1

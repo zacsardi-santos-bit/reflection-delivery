@@ -1,0 +1,40 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_graphql_semantic --no-fail-fast",
+  "test_files": [
+    "crates/biome_graphql_semantic/src/tests/directive.rs",
+    "crates/biome_graphql_semantic/src/tests/enum.rs",
+    "crates/biome_graphql_semantic/src/tests/fragment.rs",
+    "crates/biome_graphql_semantic/src/tests/interface.rs",
+    "crates/biome_graphql_semantic/src/tests/mod.rs",
+    "crates/biome_graphql_semantic/src/tests/object.rs",
+    "crates/biome_graphql_semantic/src/tests/operation.rs",
+    "crates/biome_graphql_semantic/src/tests/scalar.rs",
+    "crates/biome_graphql_semantic/src/tests/union.rs"
+  ],
+  "num_test_files": 9,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "biome_graphql_semantic tests::directive::ok_builtin_directive",
+    "biome_graphql_semantic tests::directive::ok_directive_reference",
+    "biome_graphql_semantic tests::fragment::ok_fragment_spread",
+    "biome_graphql_semantic tests::fragment::undefined_variable_reference_in_fragment",
+    "biome_graphql_semantic tests::interface::ok_implements_interface",
+    "biome_graphql_semantic tests::interface::ok_interface_extension",
+    "biome_graphql_semantic tests::interface::ok_interface_type",
+    "biome_graphql_semantic tests::object::ok_object_type",
+    "biome_graphql_semantic tests::operation::ok_variable",
+    "biome_graphql_semantic tests::operation::ok_variable_in_fragment",
+    "biome_graphql_semantic tests::operation::ok_variable_in_multiple_operations",
+    "biome_graphql_semantic tests::operation::ok_variable_in_nested_fragment",
+    "biome_graphql_semantic tests::operation::undefined_variable_in_operations",
+    "biome_graphql_semantic tests::r#enum::ok_enum_extension",
+    "biome_graphql_semantic tests::r#enum::ok_enum_type",
+    "biome_graphql_semantic tests::scalar::ok_builtin_scalar",
+    "biome_graphql_semantic tests::scalar::ok_scalar_extension",
+    "biome_graphql_semantic tests::union::ok_union_extension",
+    "biome_graphql_semantic tests::union::ok_union_of_objects",
+    "biome_graphql_semantic tests::union::ok_union_type"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,20 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -v -count=1 -vet=off -run 'TestCommitMarshalJSONObject|TestStructureMarshalJSONObject|TestTransformMarshalJSONObject|TestVisConfigMarshalJSONObject|TestTransformMarshalJSON' .",
+  "test_files": [
+    "commit_test.go",
+    "structure_test.go",
+    "transform_test.go",
+    "vis_config_test.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/qri-io/dataset::TestCommitMarshalJSONObject",
+    "github.com/qri-io/dataset::TestStructureMarshalJSONObject",
+    "github.com/qri-io/dataset::TestTransformMarshalJSONObject",
+    "github.com/qri-io/dataset::TestTransformMarshalJSON",
+    "github.com/qri-io/dataset::TestVisConfigMarshalJSONObject"
+  ],
+  "PASS_TO_PASS": []
+}

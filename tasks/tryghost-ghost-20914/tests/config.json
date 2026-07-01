@@ -1,0 +1,23 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/ghost/email-analytics-service && NODE_ENV=testing node_modules/.bin/mocha --reporter spec './test/**/*.test.js' && cd /workspace/repo/ghost/email-analytics-provider-mailgun && NODE_ENV=testing node_modules/.bin/mocha --reporter spec './test/**/*.test.js'",
+  "test_files": [
+    "ghost/core/test/e2e-api/admin/__snapshots__/emails.test.js.snap",
+    "ghost/core/test/integration/services/email-service/email-event-storage.test.js",
+    "ghost/core/test/integration/services/mailgun-email-suppression-list.test.js",
+    "ghost/core/test/utils/fixtures/data-generator.js",
+    "ghost/email-analytics-provider-mailgun/test/provider-mailgun.test.js",
+    "ghost/email-analytics-service/test/email-analytics-service.test.js"
+  ],
+  "num_test_files": 6,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/ghost/email-analytics-provider-mailgun/test/provider-mailgun.test.js::EmailAnalyticsProviderMailgun fetchLatest() passes the correct parameters to mailgun-client",
+    "/workspace/repo/ghost/email-analytics-provider-mailgun/test/provider-mailgun.test.js::EmailAnalyticsProviderMailgun fetchLatest() can use end timestamp",
+    "/workspace/repo/ghost/email-analytics-provider-mailgun/test/provider-mailgun.test.js::EmailAnalyticsProviderMailgun fetchLatest() can use end without begin",
+    "/workspace/repo/ghost/email-analytics-provider-mailgun/test/provider-mailgun.test.js::EmailAnalyticsProviderMailgun fetchLatest() can use max events",
+    "/workspace/repo/ghost/email-analytics-provider-mailgun/test/provider-mailgun.test.js::EmailAnalyticsProviderMailgun fetchLatest() uses custom tags when supplied",
+    "/workspace/repo/ghost/email-analytics-provider-mailgun/test/provider-mailgun.test.js::EmailAnalyticsProviderMailgun fetchLatest() uses provided events when supplied"
+  ],
+  "PASS_TO_PASS": []
+}

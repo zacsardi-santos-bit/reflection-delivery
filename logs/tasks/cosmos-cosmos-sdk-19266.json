@@ -1,0 +1,23 @@
+{
+ "task": "cosmos-cosmos-sdk-19266",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden grpc_query.go DenomOwners returns `status.Error(codes.Unimplemented, ...)`; test.patch changes expPass:false + `Require().Error(err)`/`Require().Nil(resp)`; F2P=5"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 26,
+  "shallow": true
+ }
+}

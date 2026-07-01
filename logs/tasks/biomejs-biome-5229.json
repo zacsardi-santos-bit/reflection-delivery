@@ -1,0 +1,23 @@
+{
+ "task": "biomejs-biome-5229",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds no_useless_escape_in_string.rs (~210 LoC) + lowers regex-rule severity; PASS_TO_PASS no_useless_escape_in_regex::valid_js present; F2P snapshot spec tests run analyzer + autofix"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

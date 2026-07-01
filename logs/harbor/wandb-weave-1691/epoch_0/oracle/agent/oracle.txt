@@ -1,0 +1,6 @@
+patching file weave/trace_server/clickhouse_trace_server_batched.py
+patching file weave/trace_server/interface/__init__.py
+patching file weave/trace_server/interface/query.py
+patching file weave/trace_server/remote_http_trace_server.py
+patching file weave/trace_server/sqlite_trace_server.py
+patching file weave/trace_server/trace_server_interface.py

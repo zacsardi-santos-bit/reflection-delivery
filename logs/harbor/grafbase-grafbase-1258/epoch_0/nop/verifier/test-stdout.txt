@@ -1,0 +1,59 @@
+patching file engine/crates/integration-tests/tests/federation/basic/mutation.rs
+   Compiling integration-tests v0.1.0 (/workspace/repo/engine/crates/integration-tests)
+    Finished test [unoptimized + debuginfo] target(s) in 1m 10s
+────────────
+ Nextest run ID c16a148b-c7f6-47b8-980e-a391ca7afad3 with nextest profile: default
+    Starting 4 tests across 2 binaries (560 tests skipped)
+        PASS [   0.235s] (1/4) integration-tests::integration_tests federation::basic::streaming::can_run_a_mutation_via_execute_stream
+        PASS [   0.235s] (2/4) integration-tests::integration_tests federation::basic::caching::test_no_caching_on_mutation
+        PASS [   0.253s] (3/4) integration-tests::integration_tests federation::basic::mutation::mutations_should_be_executed_sequentially
+        FAIL [   1.093s] (4/4) integration-tests::integration_tests federation::basic::mutation::mutation_failure_should_stop_later_executions_if_required
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot: mutation_failure_should_stop_later_executions_if_required-4
+    Source: engine/crates/integration-tests/tests/federation/basic/mutation.rs:146
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: response
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        0     0 │ {
+        1     1 │   "data": null,
+        2     2 │   "errors": [
+        3     3 │     {
+              4 │+      "message": "Upstream response error: Missing required field named 'fail'",
+              5 │+      "path": [
+              6 │+        "fail"
+              7 │+      ]
+              8 │+    },
+              9 │+    {
+        4    10 │       "message": "Upstream error: This mutation always fails",
+        5    11 │       "path": [
+        6    12 │         "fail"
+        7    13 │       ],
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test federation::basic::mutation::mutation_failure_should_stop_later_executions_if_required ... FAILED
+
+    failures:
+
+    failures:
+        federation::basic::mutation::mutation_failure_should_stop_later_executions_if_required
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 563 filtered out; finished in 1.06s
+
+  stderr ───
+    thread 'federation::basic::mutation::mutation_failure_should_stop_later_executions_if_required' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.34.0/src/runtime.rs:563:9:
+    snapshot assertion for 'mutation_failure_should_stop_later_executions_if_required-4' failed in line 146
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   1.097s] 4 tests run: 3 passed, 1 failed, 560 skipped
+        FAIL [   1.093s] (4/4) integration-tests::integration_tests federation::basic::mutation::mutation_failure_should_stop_later_executions_if_required
+error: test run failed
+reward=0 graded=4 found=2 failed=1 parsed=4 framework=cargo exit_code=100

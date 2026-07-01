@@ -1,0 +1,7 @@
+I'm working on improving the Button component's API in our design system. Right now the button has a prop that controls whether it's inline or full-width, but the naming is backwards and confusing — the prop describes the inline state, but the default (no prop) actually gives you a full-width button. We want to replace it with a full-width prop so that the API is explicit: no prop means inline, and you add the full-width prop when you want the button to expand to fill its container.
+
+Since this inverts the default behavior, existing code needs to be migrated carefully: any button that currently renders without the old prop (and is therefore full-width) needs to get the full-width prop added, and any button that explicitly used the old inline prop can have it removed.
+
+I need a codemod (automated code transformation) in a versioned codemods directory that handles these cases for the Button component imported from gestalt. Specifically the codemod must handle three cases: a button with no width-related prop should gain the full-width prop, a button with the old inline-as-true shorthand should have that prop removed (since inline is now the default), and a button with the old prop explicitly set to false should get the full-width prop instead.
+
+The Button component itself needs updating to accept the full-width prop instead of the old prop. The internal link wrapper component also needs the same prop change — replace the old inline prop with the full-width prop there too, with correspondingly inverted layout logic.

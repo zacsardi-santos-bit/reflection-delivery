@@ -1,0 +1,4 @@
+patching file lib/ner/ner-duckling.js
+patching file lib/ner/ner-manager.js
+patching file lib/ner/ner-recognizer.js
+patching file lib/nlp/nlp-manager.js

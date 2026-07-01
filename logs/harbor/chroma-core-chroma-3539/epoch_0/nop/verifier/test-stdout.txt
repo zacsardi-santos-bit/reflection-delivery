@@ -1,0 +1,17 @@
+patching file go/pkg/sysdb/coordinator/table_catalog_test.go
+Generating gRPC code for Golang...
+Done
+# github.com/chroma-core/chroma/go/pkg/sysdb/coordinator [github.com/chroma-core/chroma/go/pkg/sysdb/coordinator.test]
+pkg/sysdb/coordinator/table_catalog_test.go:342:24: undefined: coordinatorpb.DeleteCollectionVersionRequest
+pkg/sysdb/coordinator/table_catalog_test.go:343:30: undefined: coordinatorpb.VersionListForCollection
+pkg/sysdb/coordinator/table_catalog_test.go:353:23: catalog.DeleteCollectionVersion undefined (type *Catalog has no field or method DeleteCollectionVersion)
+pkg/sysdb/coordinator/table_catalog_test.go:360:41: catalog.GetVersionFileNamesForCollection undefined (type *Catalog has no field or method GetVersionFileNamesForCollection)
+pkg/sysdb/coordinator/table_catalog_test.go:398:24: undefined: coordinatorpb.DeleteCollectionVersionRequest
+pkg/sysdb/coordinator/table_catalog_test.go:399:30: undefined: coordinatorpb.VersionListForCollection
+pkg/sysdb/coordinator/table_catalog_test.go:409:23: catalog.DeleteCollectionVersion undefined (type *Catalog has no field or method DeleteCollectionVersion)
+pkg/sysdb/coordinator/table_catalog_test.go:467:24: undefined: coordinatorpb.MarkVersionForDeletionRequest
+pkg/sysdb/coordinator/table_catalog_test.go:468:30: undefined: coordinatorpb.VersionListForCollection
+pkg/sysdb/coordinator/table_catalog_test.go:478:23: catalog.MarkVersionForDeletion undefined (type *Catalog has no field or method MarkVersionForDeletion)
+pkg/sysdb/coordinator/table_catalog_test.go:478:23: too many errors
+FAIL	github.com/chroma-core/chroma/go/pkg/sysdb/coordinator [build failed]
+reward=0 graded=15 found=15 failed=15 parsed=1 framework=go exit_code=1

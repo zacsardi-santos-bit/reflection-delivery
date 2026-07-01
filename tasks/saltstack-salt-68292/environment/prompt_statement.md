@@ -1,0 +1,7 @@
+I'm trying to improve how a salt minion restarts itself. Right now the restart function just kills the process directly, which doesn't work properly on systems that use a service manager to control the minion — on those systems the restart silently fails because the service manager doesn't know a restart was requested.
+
+I'd like the function to be smart about the platform: it should detect whether the system uses a recognized service management layer and, if so, delegate the restart through that layer rather than doing a raw process kill. On systems without a service manager, the existing kill-and-relaunch behavior should stay as-is.
+
+I'd also like to add an optional "schedule retry" capability. Sometimes a service restart doesn't immediately bring the minion back, so it would be useful to schedule a deferred start attempt that fires after a configurable delay. This should be a parameter on the restart function, defaulting to off. The retry scheduling should be skipped on non-service-managed systems. If the scheduling step itself fails, the error should be captured in the return value and the actual service restart should not be attempted. If the service restart fails after the retry was scheduled successfully, both the scheduling info and the error should appear in the result.
+
+The function should return a structured result that includes a return code, a human-readable comment, and details about the service restart and scheduled retry when applicable.

@@ -1,0 +1,14 @@
+patching file core/api-server/api/rest-api/swagger.json
+patching file core/api-server/api/task-logs/es.js
+patching file core/datasources-service/api/rest-api/swagger.json
+patching file core/gc-service/api/rest-api/swagger.json
+patching file core/pipeline-driver-queue/api/rest-api/swagger.json
+patching file core/pipeline-driver/lib/tasks/task-runner.js
+patching file core/pipeline-driver/package-lock.json
+patching file core/pipeline-driver/package.json
+patching file core/task-executor/lib/helpers/kubernetes.js
+patching file core/task-executor/lib/reconcile/reconciler.js
+patching file core/task-executor/lib/reconcile/resources.js
+patching file core/task-executor/lib/utils/warningCreator.js
+patching file core/task-executor/package-lock.json
+patching file core/task-executor/package.json

@@ -1,0 +1,124 @@
+patching file tests/by-util/test_ls.rs
+   Compiling coreutils v0.0.8 (/workspace/repo)
+warning: 8th rule of macro `libc_enum` is never used
+   --> vendor/nix-v0.23.1-patched/src/macros.rs:246:5
+    |
+246 | /     (@accumulate_entries
+247 | |         name: $BitFlags:ident,
+248 | |         $prefix:tt,
+249 | |         [$($entries:tt)*],
+...   |
+252 | |         $($tail:tt)*
+253 | |     ) => {
+    | |_____^
+    |
+note: the lint level is defined here
+   --> vendor/nix-v0.23.1-patched/src/lib.rs:10:9
+    |
+10  | #![deny(unused)]
+    |         ^^^^^^
+    = note: `#[warn(unused_macro_rules)]` implied by `#[warn(unused)]`
+
+warning: 5th rule of macro `sockopt_impl` is never used
+   --> vendor/nix-v0.23.1-patched/src/sys/socket/sockopt.rs:152:5
+    |
+152 |     ($(#[$attr:meta])* $name:ident, SetOnly, $level:expr, $flag:path, u8) => {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: 2nd rule of macro `sockopt_impl` is never used
+   --> vendor/nix-v0.23.1-patched/src/sys/socket/sockopt.rs:137:5
+    |
+137 |     ($(#[$attr:meta])* $name:ident, GetOnly, $level:expr, $flag:path, u8) => {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: 3rd rule of macro `sockopt_impl` is never used
+   --> vendor/nix-v0.23.1-patched/src/sys/socket/sockopt.rs:141:5
+    |
+141 |     ($(#[$attr:meta])* $name:ident, GetOnly, $level:expr, $flag:path, usize) =>
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: 4th rule of macro `sockopt_impl` is never used
+   --> vendor/nix-v0.23.1-patched/src/sys/socket/sockopt.rs:147:5
+    |
+147 |     ($(#[$attr:meta])* $name:ident, SetOnly, $level:expr, $flag:path, bool) => {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `nix` (lib) generated 5 warnings
+warning: getting the inner pointer of a temporary `CString`
+   --> src/uucore/src/lib/features/entries.rs:314:67
+    |
+314 |                         let data = $fnam(CString::new(k).unwrap().as_ptr());
+    |                                          ------------------------ ^^^^^^ this pointer will be invalid
+    |                                          |
+    |                                          this `CString` is deallocated at the end of the statement, bind it to a variable to extend its lifetime
+...
+330 | f!(getpwnam, getpwuid, uid_t, Passwd);
+    | ------------------------------------- in this macro invocation
+    |
+    = note: pointers do not have a lifetime; when calling `as_ptr` the `CString` will be deallocated at the end of the statement because nothing is referencing it as far as the type system is concerned
+    = help: for more information, see https://doc.rust-lang.org/reference/destructors.html
+    = note: `#[warn(temporary_cstring_as_ptr)]` on by default
+    = note: this warning originates in the macro `f` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: getting the inner pointer of a temporary `CString`
+   --> src/uucore/src/lib/features/entries.rs:314:67
+    |
+314 |                         let data = $fnam(CString::new(k).unwrap().as_ptr());
+    |                                          ------------------------ ^^^^^^ this pointer will be invalid
+    |                                          |
+    |                                          this `CString` is deallocated at the end of the statement, bind it to a variable to extend its lifetime
+...
+332 | f!(getgrnam, getgrgid, gid_t, Group);
+    | ------------------------------------ in this macro invocation
+    |
+    = note: pointers do not have a lifetime; when calling `as_ptr` the `CString` will be deallocated at the end of the statement because nothing is referencing it as far as the type system is concerned
+    = help: for more information, see https://doc.rust-lang.org/reference/destructors.html
+    = note: this warning originates in the macro `f` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `uucore` (lib) generated 2 warnings
+    Finished test [unoptimized + debuginfo] target(s) in 4.38s
+------------
+ Nextest run ID c3023086-53e6-4d89-ba3b-1f8b8137ec63 with nextest profile: default
+    Starting 2 tests across 3 binaries (99 tests skipped)
+        PASS [   0.031s] coreutils::tests test_ls::test_ls_dangling_symlinks
+        FAIL [   0.035s] coreutils::tests test_ls::test_ls_io_errors
+
+--- STDOUT:              coreutils::tests test_ls::test_ls_io_errors ---
+
+running 1 test
+current_directory_resolved: 
+mkdir: /tmp/.tmpIywIZ6/some-dir1
+mkdir: /tmp/.tmpIywIZ6/some-dir2
+symlink: /tmp/.tmpIywIZ6/does_not_exist,/tmp/.tmpIywIZ6/some-dir2/dangle
+mkdir: /tmp/.tmpIywIZ6/some-dir3
+mkdir: /tmp/.tmpIywIZ6/some-dir3/some-dir4
+mkdir: /tmp/.tmpIywIZ6/some-dir3/some-dir5
+mkdir: /tmp/.tmpIywIZ6/some-dir3/some-dir6
+mkdir: /tmp/.tmpIywIZ6/some-dir3/some-dir7
+mkdir: /tmp/.tmpIywIZ6/some-dir3/some-dir8
+run: /workspace/repo/target/debug/coreutils chmod 000 some-dir1
+run: /workspace/repo/target/debug/coreutils ls -1 some-dir1
+run: /workspace/repo/target/debug/coreutils ls -Li some-dir2
+run: /workspace/repo/target/debug/coreutils chmod 000 some-dir3/some-dir4
+run: /workspace/repo/target/debug/coreutils ls -laR some-dir3
+run: /workspace/repo/target/debug/coreutils ls -iRL some-dir2
+test test_ls::test_ls_io_errors ... FAILED
+
+failures:
+
+failures:
+    test_ls::test_ls_io_errors
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 77 filtered out; finished in 0.03s
+
+
+--- STDERR:              coreutils::tests test_ls::test_ls_io_errors ---
+thread 'test_ls::test_ls_io_errors' panicked at tests/common/util.rs:416:9:
+assertion failed: !self.stderr_str().contains(cmp.as_ref())
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+------------
+     Summary [   0.037s] 2 tests run: 1 passed, 1 failed, 99 skipped
+        FAIL [   0.035s] coreutils::tests test_ls::test_ls_io_errors
+error: test run failed
+reward=0 graded=2 found=2 failed=1 parsed=2 framework=cargo exit_code=100

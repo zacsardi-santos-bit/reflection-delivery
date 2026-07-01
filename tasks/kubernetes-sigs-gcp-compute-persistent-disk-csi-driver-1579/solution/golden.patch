@@ -1,0 +1,4327 @@
+diff --git a/Dockerfile b/Dockerfile
+index e32d092c..d093446f 100644
+--- a/Dockerfile
++++ b/Dockerfile
+@@ -12,7 +12,7 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-FROM --platform=$BUILDPLATFORM golang:1.21.6 as builder
++FROM --platform=$BUILDPLATFORM golang:1.21.5 as builder
+ 
+ ARG STAGINGVERSION
+ ARG TARGETPLATFORM
+diff --git a/Dockerfile.Windows b/Dockerfile.Windows
+index 2c439219..47136405 100644
+--- a/Dockerfile.Windows
++++ b/Dockerfile.Windows
+@@ -13,7 +13,7 @@
+ # limitations under the License.
+ 
+ ARG BASE_IMAGE
+-FROM --platform=$BUILDPLATFORM golang:1.21.6 AS builder
++FROM --platform=$BUILDPLATFORM golang:1.21.5 AS builder
+ 
+ ARG TARGETPLATFORM
+ ARG STAGINGVERSION
+diff --git a/Dockerfile.debug b/Dockerfile.debug
+index 1ef330b2..5a9f87b9 100644
+--- a/Dockerfile.debug
++++ b/Dockerfile.debug
+@@ -12,7 +12,7 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-FROM golang:1.21.6 as builder
++FROM golang:1.21.5 as builder
+ WORKDIR /go/src/sigs.k8s.io/gcp-compute-persistent-disk-csi-driver
+ ADD . .
+ 
+diff --git a/go.mod b/go.mod
+index 5e9a3fd8..2ef988f8 100644
+--- a/go.mod
++++ b/go.mod
+@@ -11,8 +11,8 @@ require (
+ 	github.com/google/uuid v1.5.0
+ 	github.com/kubernetes-csi/csi-proxy/client v1.1.3
+ 	github.com/kubernetes-csi/csi-test/v4 v4.4.0
+-	github.com/onsi/ginkgo/v2 v2.15.0
+-	github.com/onsi/gomega v1.31.1
++	github.com/onsi/ginkgo/v2 v2.14.0
++	github.com/onsi/gomega v1.30.0
+ 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.46.1
+ 	go.opentelemetry.io/otel v1.21.0
+ 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.21.0
+@@ -20,8 +20,8 @@ require (
+ 	go.opentelemetry.io/otel/sdk v1.21.0
+ 	golang.org/x/oauth2 v0.16.0
+ 	golang.org/x/sys v0.16.0
+-	google.golang.org/api v0.157.0
+-	google.golang.org/genproto v0.0.0-20240102182953-50ed04b92917
++	google.golang.org/api v0.156.0
++	google.golang.org/genproto v0.0.0-20231212172506-995d672761c0
+ 	google.golang.org/grpc v1.60.1
+ 	google.golang.org/protobuf v1.32.0
+ 	gopkg.in/gcfg.v1 v1.2.3
+@@ -30,7 +30,7 @@ require (
+ 	k8s.io/client-go v11.0.1-0.20190805182717-6502b5e7b1b5+incompatible
+ 	k8s.io/cloud-provider v0.24.1
+ 	k8s.io/component-base v0.24.1
+-	k8s.io/klog/v2 v2.100.1
++	k8s.io/klog/v2 v2.120.1
+ 	k8s.io/mount-utils v0.29.0-alpha.2
+ 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b
+ 	sigs.k8s.io/boskos v0.0.0-20220711194915-6cb8a6fb2dd1
+@@ -50,7 +50,7 @@ require (
+ 	github.com/emicklei/go-restful v2.9.5+incompatible // indirect
+ 	github.com/felixge/httpsnoop v1.0.4 // indirect
+ 	github.com/fsnotify/fsnotify v1.5.4 // indirect
+-	github.com/go-logr/logr v1.3.0 // indirect
++	github.com/go-logr/logr v1.4.1 // indirect
+ 	github.com/go-logr/stdr v1.2.2 // indirect
+ 	github.com/go-openapi/jsonpointer v0.20.0 // indirect
+ 	github.com/go-openapi/jsonreference v0.19.6 // indirect
+@@ -100,10 +100,10 @@ require (
+ 	golang.org/x/term v0.16.0 // indirect
+ 	golang.org/x/text v0.14.0 // indirect
+ 	golang.org/x/time v0.5.0 // indirect
+-	golang.org/x/tools v0.17.0 // indirect
++	golang.org/x/tools v0.16.1 // indirect
+ 	google.golang.org/appengine v1.6.8 // indirect
+-	google.golang.org/genproto/googleapis/api v0.0.0-20240102182953-50ed04b92917 // indirect
+-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240116215550-a9fa1716bcac // indirect
++	google.golang.org/genproto/googleapis/api v0.0.0-20231212172506-995d672761c0 // indirect
++	google.golang.org/genproto/googleapis/rpc v0.0.0-20240102182953-50ed04b92917 // indirect
+ 	gopkg.in/inf.v0 v0.9.1 // indirect
+ 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
+ 	gopkg.in/warnings.v0 v0.1.2 // indirect
+diff --git a/go.sum b/go.sum
+index c4391efb..e105953a 100644
+--- a/go.sum
++++ b/go.sum
+@@ -1065,8 +1065,8 @@ github.com/go-logr/logr v0.2.0/go.mod h1:z6/tIYblkpsD+a4lm/fGIIU9mZ+XfAiaFtq7xTg
+ github.com/go-logr/logr v0.4.0/go.mod h1:z6/tIYblkpsD+a4lm/fGIIU9mZ+XfAiaFtq7xTgseGU=
+ github.com/go-logr/logr v1.2.0/go.mod h1:jdQByPbusPIv2/zmleS9BjJVeZ6kBagPoEUsqbVz/1A=
+ github.com/go-logr/logr v1.2.2/go.mod h1:jdQByPbusPIv2/zmleS9BjJVeZ6kBagPoEUsqbVz/1A=
+-github.com/go-logr/logr v1.3.0 h1:2y3SDp0ZXuc6/cjLSZ+Q3ir+QB9T/iG5yYRXqsagWSY=
+-github.com/go-logr/logr v1.3.0/go.mod h1:9T104GzyrTigFIr8wt5mBrctHMim0Nb2HLGrmQ40KvY=
++github.com/go-logr/logr v1.4.1 h1:pKouT5E8xu9zeFC39JXRDukb6JFQPXM5p5I91188VAQ=
++github.com/go-logr/logr v1.4.1/go.mod h1:9T104GzyrTigFIr8wt5mBrctHMim0Nb2HLGrmQ40KvY=
+ github.com/go-logr/stdr v1.2.2 h1:hSWxHoqTgW2S2qGc0LTAI563KZ5YKYRhT3MFKZMbjag=
+ github.com/go-logr/stdr v1.2.2/go.mod h1:mMo/vtBO5dYbehREoey6XUKy/eSumjCCveDpRre4VKE=
+ github.com/go-logr/zapr v0.1.0/go.mod h1:tabnROwaDl0UNxkVeFRbY8bwB37GwRv0P8lg6aAiEnk=
+@@ -1811,8 +1811,8 @@ github.com/onsi/ginkgo v1.16.4/go.mod h1:dX+/inL/fNMqNlz0e9LfyB9TswhZpCVdJM/Z6Vv
+ github.com/onsi/ginkgo v1.16.5 h1:8xi0RTUf59SOSfEtZMvwTvXYMzG4gV23XVHOZiXNtnE=
+ github.com/onsi/ginkgo v1.16.5/go.mod h1:+E8gABHa3K6zRBolWtd+ROzc/U5bkGt0FwiG042wbpU=
+ github.com/onsi/ginkgo/v2 v2.1.3/go.mod h1:vw5CSIxN1JObi/U8gcbwft7ZxR2dgaR70JSE3/PpL4c=
+-github.com/onsi/ginkgo/v2 v2.15.0 h1:79HwNRBAZHOEwrczrgSOPy+eFTTlIGELKy5as+ClttY=
+-github.com/onsi/ginkgo/v2 v2.15.0/go.mod h1:HlxMHtYF57y6Dpf+mc5529KKmSq9h2FpCF+/ZkwUxKM=
++github.com/onsi/ginkgo/v2 v2.14.0 h1:vSmGj2Z5YPb9JwCWT6z6ihcUvDhuXLc3sJiqd3jMKAY=
++github.com/onsi/ginkgo/v2 v2.14.0/go.mod h1:JkUdW7JkN0V6rFvsHcJ478egV3XH9NxpD27Hal/PhZw=
+ github.com/onsi/gomega v0.0.0-20170829124025-dcabb60a477c/go.mod h1:C1qb7wdrVGGVU+Z6iS04AVkA3Q65CEZX59MT0QO5uiA=
+ github.com/onsi/gomega v0.0.0-20190113212917-5533ce8a0da3/go.mod h1:ex+gbHU/CVuBBDIJjb2X0qEXbFg53c61hWP/1CpauHY=
+ github.com/onsi/gomega v1.4.2/go.mod h1:ex+gbHU/CVuBBDIJjb2X0qEXbFg53c61hWP/1CpauHY=
+@@ -1828,8 +1828,8 @@ github.com/onsi/gomega v1.10.5/go.mod h1:gza4q3jKQJijlu05nKWRCW/GavJumGt8aNRxWg7
+ github.com/onsi/gomega v1.13.0/go.mod h1:lRk9szgn8TxENtWd0Tp4c3wjlRfMTMH27I+3Je41yGY=
+ github.com/onsi/gomega v1.17.0/go.mod h1:HnhC7FXeEQY45zxNK3PPoIUhzk/80Xly9PcubAlGdZY=
+ github.com/onsi/gomega v1.19.0/go.mod h1:LY+I3pBVzYsTBU1AnDwOSxaYi9WoWiqgwooUqq9yPro=
+-github.com/onsi/gomega v1.31.1 h1:KYppCUK+bUgAZwHOu7EXVBKyQA6ILvOESHkn/tgoqvo=
+-github.com/onsi/gomega v1.31.1/go.mod h1:y40C95dwAD1Nz36SsEnxvfFe8FFfNxzI5eJ0EYGyAy0=
++github.com/onsi/gomega v1.30.0 h1:hvMK7xYz4D3HapigLTeGdId/NcfQx1VHMJc60ew99+8=
++github.com/onsi/gomega v1.30.0/go.mod h1:9sxs+SwGrKI0+PWe4Fxa9tFQQBG5xSsSbMXOI8PPpoQ=
+ github.com/op/go-logging v0.0.0-20160315200505-970db520ece7/go.mod h1:HzydrMdWErDVzsI23lYNej1Htcns9BCg93Dk0bBINWk=
+ github.com/opencontainers/go-digest v0.0.0-20170106003457-a6d0ee40d420/go.mod h1:cMLVZDEM3+U2I4VmLI6N8jQYUd2OVphdqWwCJHrFt2s=
+ github.com/opencontainers/go-digest v0.0.0-20180430190053-c9281466c8b2/go.mod h1:cMLVZDEM3+U2I4VmLI6N8jQYUd2OVphdqWwCJHrFt2s=
+@@ -2794,8 +2794,8 @@ golang.org/x/tools v0.1.10-0.20220218145154-897bd77cd717/go.mod h1:Uh6Zz+xoGYZom
+ golang.org/x/tools v0.1.12/go.mod h1:hNGJHUnrk76NpqgfD5Aqm5Crs+Hm0VOH/i9J2+nxYbc=
+ golang.org/x/tools v0.3.0/go.mod h1:/rWhSS2+zyEVwoJf8YAX6L2f0ntZ7Kn/mGgAWcipA5k=
+ golang.org/x/tools v0.6.0/go.mod h1:Xwgl3UAJ/d3gWutnCtw505GrjyAbvKui8lOU390QaIU=
+-golang.org/x/tools v0.17.0 h1:FvmRgNOcs3kOa+T20R1uhfP9F6HgG2mfxDv1vrx1Htc=
+-golang.org/x/tools v0.17.0/go.mod h1:xsh6VxdV005rRVaS6SSAf9oiAqljS7UZUacMZ8Bnsps=
++golang.org/x/tools v0.16.1 h1:TLyB3WofjdOEepBHAU20JdNC1Zbg87elYofWYAY5oZA=
++golang.org/x/tools v0.16.1/go.mod h1:kYVVN6I1mBNoB1OX+noeBjbRk4IUEPa7JJ+TJMEooJ0=
+ golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+ golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+ golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+@@ -2889,8 +2889,8 @@ google.golang.org/api v0.108.0/go.mod h1:2Ts0XTHNVWxypznxWOYUeI4g3WdP9Pk2Qk58+a/
+ google.golang.org/api v0.110.0/go.mod h1:7FC4Vvx1Mooxh8C5HWjzZHcavuS2f6pmJpZx60ca7iI=
+ google.golang.org/api v0.111.0/go.mod h1:qtFHvU9mhgTJegR31csQ+rwxyUTHOKFqCKWp1J0fdw0=
+ google.golang.org/api v0.114.0/go.mod h1:ifYI2ZsFK6/uGddGfAD5BMxlnkBqCmqHSDUVi45N5Yg=
+-google.golang.org/api v0.157.0 h1:ORAeqmbrrozeyw5NjnMxh7peHO0UzV4wWYSwZeCUb20=
+-google.golang.org/api v0.157.0/go.mod h1:+z4v4ufbZ1WEpld6yMGHyggs+PmAHiaLNj5ytP3N01g=
++google.golang.org/api v0.156.0 h1:yloYcGbBtVYjLKQe4enCunxvwn3s2w/XPrrhVf6MsvQ=
++google.golang.org/api v0.156.0/go.mod h1:bUSmn4KFO0Q+69zo9CNIDp4Psi6BqM0np0CbzKRSiSY=
+ google.golang.org/appengine v1.1.0/go.mod h1:EbEs0AVv82hx2wNQdGPgUI5lhzA/G0D9YwlJXL52JkM=
+ google.golang.org/appengine v1.2.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
+ google.golang.org/appengine v1.3.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
+@@ -3064,16 +3064,16 @@ google.golang.org/genproto v0.0.0-20230330154414-c0448cd141ea/go.mod h1:UUQDJDOl
+ google.golang.org/genproto v0.0.0-20230331144136-dcfb400f0633/go.mod h1:UUQDJDOlWu4KYeJZffbWgBkS1YFobzKbLVfK69pe0Ak=
+ google.golang.org/genproto v0.0.0-20230525234025-438c736192d0/go.mod h1:9ExIQyXL5hZrHzQceCwuSYwZZ5QZBazOcprJ5rgs3lY=
+ google.golang.org/genproto v0.0.0-20230526161137-0005af68ea54/go.mod h1:zqTuNwFlFRsw5zIts5VnzLQxSRqh+CGOTVMlYbY0Eyk=
+-google.golang.org/genproto v0.0.0-20240102182953-50ed04b92917 h1:nz5NESFLZbJGPFxDT/HCn+V1mZ8JGNoY4nUpmW/Y2eg=
+-google.golang.org/genproto v0.0.0-20240102182953-50ed04b92917/go.mod h1:pZqR+glSb11aJ+JQcczCvgf47+duRuzNSKqE8YAQnV0=
++google.golang.org/genproto v0.0.0-20231212172506-995d672761c0 h1:YJ5pD9rF8o9Qtta0Cmy9rdBwkSjrTCT6XTiUQVOtIos=
++google.golang.org/genproto v0.0.0-20231212172506-995d672761c0/go.mod h1:l/k7rMz0vFTBPy+tFSGvXEd3z+BcoG1k7EHbqm+YBsY=
+ google.golang.org/genproto/googleapis/api v0.0.0-20230525234020-1aefcd67740a/go.mod h1:ts19tUU+Z0ZShN1y3aPyq2+O3d5FUNNgT6FtOzmrNn8=
+ google.golang.org/genproto/googleapis/api v0.0.0-20230525234035-dd9d682886f9/go.mod h1:vHYtlOoi6TsQ3Uk2yxR7NI5z8uoV+3pZtR4jmHIkRig=
+-google.golang.org/genproto/googleapis/api v0.0.0-20240102182953-50ed04b92917 h1:rcS6EyEaoCO52hQDupoSfrxI3R6C2Tq741is7X8OvnM=
+-google.golang.org/genproto/googleapis/api v0.0.0-20240102182953-50ed04b92917/go.mod h1:CmlNWB9lSezaYELKS5Ym1r44VrrbPUa7JTvw+6MbpJ0=
++google.golang.org/genproto/googleapis/api v0.0.0-20231212172506-995d672761c0 h1:s1w3X6gQxwrLEpxnLd/qXTVLgQE2yXwaOaoa6IlY/+o=
++google.golang.org/genproto/googleapis/api v0.0.0-20231212172506-995d672761c0/go.mod h1:CAny0tYF+0/9rmDB9fahA9YLzX3+AEVl1qXbv5hhj6c=
+ google.golang.org/genproto/googleapis/rpc v0.0.0-20230525234015-3fc162c6f38a/go.mod h1:xURIpW9ES5+/GZhnV6beoEtxQrnkRGIfP5VQG2tCBLc=
+ google.golang.org/genproto/googleapis/rpc v0.0.0-20230525234030-28d5490b6b19/go.mod h1:66JfowdXAEgad5O9NnYcsNPLCPZJD++2L9X0PCMODrA=
+-google.golang.org/genproto/googleapis/rpc v0.0.0-20240116215550-a9fa1716bcac h1:nUQEQmH/csSvFECKYRv6HWEyypysidKl2I6Qpsglq/0=
+-google.golang.org/genproto/googleapis/rpc v0.0.0-20240116215550-a9fa1716bcac/go.mod h1:daQN87bsDqDoe316QbbvX60nMoJQa4r6Ds0ZuoAe5yA=
++google.golang.org/genproto/googleapis/rpc v0.0.0-20240102182953-50ed04b92917 h1:6G8oQ016D88m1xAKljMlBOOGWDZkes4kMhgGFlf8WcQ=
++google.golang.org/genproto/googleapis/rpc v0.0.0-20240102182953-50ed04b92917/go.mod h1:xtjpI3tXFPP051KaWnhvxkiubL/6dJ18vLVf7q2pTOU=
+ google.golang.org/grpc v0.0.0-20160317175043-d3ddb4469d5a/go.mod h1:yo6s7OP7yaDglbqo1J04qKzAhqBH6lvTonzMVmEdcZw=
+ google.golang.org/grpc v1.13.0/go.mod h1:yo6s7OP7yaDglbqo1J04qKzAhqBH6lvTonzMVmEdcZw=
+ google.golang.org/grpc v1.14.0/go.mod h1:yo6s7OP7yaDglbqo1J04qKzAhqBH6lvTonzMVmEdcZw=
+@@ -3321,8 +3321,8 @@ k8s.io/klog/v2 v2.0.0/go.mod h1:PBfzABfn139FHAV07az/IF9Wp1bkk3vpT2XSJ76fSDE=
+ k8s.io/klog/v2 v2.2.0/go.mod h1:Od+F08eJP+W3HUb4pSrPpgp9DGU4GzlpG/TmITuYh/Y=
+ k8s.io/klog/v2 v2.8.0/go.mod h1:hy9LJ/NvuK+iVyP4Ehqva4HxZG/oXyIS3n3Jmire4Ec=
+ k8s.io/klog/v2 v2.60.1/go.mod h1:y1WjHnz7Dj687irZUWR/WLkLc5N1YHtjLdmgWjndZn0=
+-k8s.io/klog/v2 v2.100.1 h1:7WCHKK6K8fNhTqfBhISHQ97KrnJNFZMcQvKp7gP/tmg=
+-k8s.io/klog/v2 v2.100.1/go.mod h1:y1WjHnz7Dj687irZUWR/WLkLc5N1YHtjLdmgWjndZn0=
++k8s.io/klog/v2 v2.120.1 h1:QXU6cPEOIslTGvZaXvFWiP9VKyeet3sawzTOvdXb4Vw=
++k8s.io/klog/v2 v2.120.1/go.mod h1:3Jpz1GvMt720eyJH1ckRHK1EDfpxISzJ7I9OYgaDtPE=
+ k8s.io/kube-openapi v0.0.0-20180731170545-e3762e86a74c/go.mod h1:BXM9ceUBTj2QnfH2MK1odQs778ajze1RxcmP6S8RVVc=
+ k8s.io/kube-openapi v0.0.0-20190228160746-b3a7cee44a30/go.mod h1:BXM9ceUBTj2QnfH2MK1odQs778ajze1RxcmP6S8RVVc=
+ k8s.io/kube-openapi v0.0.0-20190816220812-743ec37842bf/go.mod h1:1TqjTSzOxsLGIKfj0lK8EeCP7K1iUG65v09OM0/WG5E=
+diff --git a/pkg/gce-pd-csi-driver/node.go b/pkg/gce-pd-csi-driver/node.go
+index 21988b6e..e099ef7d 100644
+--- a/pkg/gce-pd-csi-driver/node.go
++++ b/pkg/gce-pd-csi-driver/node.go
+@@ -397,9 +397,9 @@ func (ns *GCENodeServer) NodeUnstageVolume(ctx context.Context, req *csi.NodeUns
+ 		klog.Errorf("Failed to find device path for volume %s. Device may not be detached cleanly (error is ignored and unstaging is continuing): %v", volumeID, err.Error())
+ 	} else {
+ 		if devFsPath, err := filepath.EvalSymlinks(devicePath); err != nil {
+-			klog.Warningf("filepath.EvalSymlinks(%q) failed when trying to disable device: %w (ignored, unstaging continues)", devicePath, err)
++			klog.Warningf("filepath.EvalSymlinks(%q) failed when trying to disable device: %v (ignored, unstaging continues)", devicePath, err)
+ 		} else if err := ns.DeviceUtils.DisableDevice(devFsPath); err != nil {
+-			klog.Warningf("Failed to disabled device %s (aka %s) for volume %s. Device may not be detached cleanly (ignored, unstaging continues): %w", devicePath, devFsPath, volumeID, err)
++			klog.Warningf("Failed to disabled device %s (aka %s) for volume %s. Device may not be detached cleanly (ignored, unstaging continues): %v", devicePath, devFsPath, volumeID, err)
+ 		}
+ 	}
+ 
+diff --git a/vendor/github.com/go-logr/logr/README.md b/vendor/github.com/go-logr/logr/README.md
+index a8c29bfb..8969526a 100644
+--- a/vendor/github.com/go-logr/logr/README.md
++++ b/vendor/github.com/go-logr/logr/README.md
+@@ -91,11 +91,12 @@ logr design but also left out some parts and changed others:
+ | Adding a name to a logger | `WithName` | no API |
+ | Modify verbosity of log entries in a call chain | `V` | no API |
+ | Grouping of key/value pairs | not supported | `WithGroup`, `GroupValue` |
++| Pass context for extracting additional values | no API | API variants like `InfoCtx` |
+ 
+ The high-level slog API is explicitly meant to be one of many different APIs
+ that can be layered on top of a shared `slog.Handler`. logr is one such
+-alternative API, with [interoperability](#slog-interoperability) provided by the [`slogr`](slogr)
+-package.
++alternative API, with [interoperability](#slog-interoperability) provided by
++some conversion functions.
+ 
+ ### Inspiration
+ 
+@@ -145,24 +146,24 @@ There are implementations for the following logging libraries:
+ ## slog interoperability
+ 
+ Interoperability goes both ways, using the `logr.Logger` API with a `slog.Handler`
+-and using the `slog.Logger` API with a `logr.LogSink`. [slogr](./slogr) provides `NewLogr` and
+-`NewSlogHandler` API calls to convert between a `logr.Logger` and a `slog.Handler`.
++and using the `slog.Logger` API with a `logr.LogSink`. `FromSlogHandler` and
++`ToSlogHandler` convert between a `logr.Logger` and a `slog.Handler`.
+ As usual, `slog.New` can be used to wrap such a `slog.Handler` in the high-level
+-slog API. `slogr` itself leaves that to the caller.
++slog API.
+ 
+-## Using a `logr.Sink` as backend for slog
++### Using a `logr.LogSink` as backend for slog
+ 
+ Ideally, a logr sink implementation should support both logr and slog by
+-implementing both the normal logr interface(s) and `slogr.SlogSink`.  Because
++implementing both the normal logr interface(s) and `SlogSink`.  Because
+ of a conflict in the parameters of the common `Enabled` method, it is [not
+ possible to implement both slog.Handler and logr.Sink in the same
+ type](https://github.com/golang/go/issues/59110).
+ 
+ If both are supported, log calls can go from the high-level APIs to the backend
+-without the need to convert parameters. `NewLogr` and `NewSlogHandler` can
++without the need to convert parameters. `FromSlogHandler` and `ToSlogHandler` can
+ convert back and forth without adding additional wrappers, with one exception:
+ when `Logger.V` was used to adjust the verbosity for a `slog.Handler`, then
+-`NewSlogHandler` has to use a wrapper which adjusts the verbosity for future
++`ToSlogHandler` has to use a wrapper which adjusts the verbosity for future
+ log calls.
+ 
+ Such an implementation should also support values that implement specific
+@@ -187,13 +188,13 @@ Not supporting slog has several drawbacks:
+ These drawbacks are severe enough that applications using a mixture of slog and
+ logr should switch to a different backend.
+ 
+-## Using a `slog.Handler` as backend for logr
++### Using a `slog.Handler` as backend for logr
+ 
+ Using a plain `slog.Handler` without support for logr works better than the
+ other direction:
+ - All logr verbosity levels can be mapped 1:1 to their corresponding slog level
+   by negating them.
+-- Stack unwinding is done by the `slogr.SlogSink` and the resulting program
++- Stack unwinding is done by the `SlogSink` and the resulting program
+   counter is passed to the `slog.Handler`.
+ - Names added via `Logger.WithName` are gathered and recorded in an additional
+   attribute with `logger` as key and the names separated by slash as value.
+@@ -205,27 +206,39 @@ ideally support both `logr.Marshaler` and `slog.Valuer`. If compatibility
+ with logr implementations without slog support is not important, then
+ `slog.Valuer` is sufficient.
+ 
+-## Context support for slog
++### Context support for slog
+ 
+ Storing a logger in a `context.Context` is not supported by
+-slog. `logr.NewContext` and `logr.FromContext` can be used with slog like this
+-to fill this gap:
+-
+-    func HandlerFromContext(ctx context.Context) slog.Handler {
+-        logger, err := logr.FromContext(ctx)
+-        if err == nil {
+-            return slogr.NewSlogHandler(logger)
+-        }
+-        return slog.Default().Handler()
+-    }
+-
+-    func ContextWithHandler(ctx context.Context, handler slog.Handler) context.Context {
+-        return logr.NewContext(ctx, slogr.NewLogr(handler))
+-    }
+-
+-The downside is that storing and retrieving a `slog.Handler` needs more
+-allocations compared to using a `logr.Logger`. Therefore the recommendation is
+-to use the `logr.Logger` API in code which uses contextual logging.
++slog. `NewContextWithSlogLogger` and `FromContextAsSlogLogger` can be
++used to fill this gap. They store and retrieve a `slog.Logger` pointer
++under the same context key that is also used by `NewContext` and
++`FromContext` for `logr.Logger` value.
++
++When `NewContextWithSlogLogger` is followed by `FromContext`, the latter will
++automatically convert the `slog.Logger` to a
++`logr.Logger`. `FromContextAsSlogLogger` does the same for the other direction.
++
++With this approach, binaries which use either slog or logr are as efficient as
++possible with no unnecessary allocations. This is also why the API stores a
++`slog.Logger` pointer: when storing a `slog.Handler`, creating a `slog.Logger`
++on retrieval would need to allocate one.
++
++The downside is that switching back and forth needs more allocations. Because
++logr is the API that is already in use by different packages, in particular
++Kubernetes, the recommendation is to use the `logr.Logger` API in code which
++uses contextual logging.
++
++An alternative to adding values to a logger and storing that logger in the
++context is to store the values in the context and to configure a logging
++backend to extract those values when emitting log entries. This only works when
++log calls are passed the context, which is not supported by the logr API.
++
++With the slog API, it is possible, but not
++required. https://github.com/veqryn/slog-context is a package for slog which
++provides additional support code for this approach. It also contains wrappers
++for the context functions in logr, so developers who prefer to not use the logr
++APIs directly can use those instead and the resulting code will still be
++interoperable with logr.
+ 
+ ## FAQ
+ 
+diff --git a/vendor/github.com/go-logr/logr/context.go b/vendor/github.com/go-logr/logr/context.go
+new file mode 100644
+index 00000000..de8bcc3a
+--- /dev/null
++++ b/vendor/github.com/go-logr/logr/context.go
+@@ -0,0 +1,33 @@
++/*
++Copyright 2023 The logr Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package logr
++
++// contextKey is how we find Loggers in a context.Context. With Go < 1.21,
++// the value is always a Logger value. With Go >= 1.21, the value can be a
++// Logger value or a slog.Logger pointer.
++type contextKey struct{}
++
++// notFoundError exists to carry an IsNotFound method.
++type notFoundError struct{}
++
++func (notFoundError) Error() string {
++	return "no logr.Logger was present"
++}
++
++func (notFoundError) IsNotFound() bool {
++	return true
++}
+diff --git a/vendor/github.com/go-logr/logr/context_noslog.go b/vendor/github.com/go-logr/logr/context_noslog.go
+new file mode 100644
+index 00000000..f012f9a1
+--- /dev/null
++++ b/vendor/github.com/go-logr/logr/context_noslog.go
+@@ -0,0 +1,49 @@
++//go:build !go1.21
++// +build !go1.21
++
++/*
++Copyright 2019 The logr Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package logr
++
++import (
++	"context"
++)
++
++// FromContext returns a Logger from ctx or an error if no Logger is found.
++func FromContext(ctx context.Context) (Logger, error) {
++	if v, ok := ctx.Value(contextKey{}).(Logger); ok {
++		return v, nil
++	}
++
++	return Logger{}, notFoundError{}
++}
++
++// FromContextOrDiscard returns a Logger from ctx.  If no Logger is found, this
++// returns a Logger that discards all log messages.
++func FromContextOrDiscard(ctx context.Context) Logger {
++	if v, ok := ctx.Value(contextKey{}).(Logger); ok {
++		return v
++	}
++
++	return Discard()
++}
++
++// NewContext returns a new Context, derived from ctx, which carries the
++// provided Logger.
++func NewContext(ctx context.Context, logger Logger) context.Context {
++	return context.WithValue(ctx, contextKey{}, logger)
++}
+diff --git a/vendor/github.com/go-logr/logr/context_slog.go b/vendor/github.com/go-logr/logr/context_slog.go
+new file mode 100644
+index 00000000..065ef0b8
+--- /dev/null
++++ b/vendor/github.com/go-logr/logr/context_slog.go
+@@ -0,0 +1,83 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2019 The logr Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package logr
++
++import (
++	"context"
++	"fmt"
++	"log/slog"
++)
++
++// FromContext returns a Logger from ctx or an error if no Logger is found.
++func FromContext(ctx context.Context) (Logger, error) {
++	v := ctx.Value(contextKey{})
++	if v == nil {
++		return Logger{}, notFoundError{}
++	}
++
++	switch v := v.(type) {
++	case Logger:
++		return v, nil
++	case *slog.Logger:
++		return FromSlogHandler(v.Handler()), nil
++	default:
++		// Not reached.
++		panic(fmt.Sprintf("unexpected value type for logr context key: %T", v))
++	}
++}
++
++// FromContextAsSlogLogger returns a slog.Logger from ctx or nil if no such Logger is found.
++func FromContextAsSlogLogger(ctx context.Context) *slog.Logger {
++	v := ctx.Value(contextKey{})
++	if v == nil {
++		return nil
++	}
++
++	switch v := v.(type) {
++	case Logger:
++		return slog.New(ToSlogHandler(v))
++	case *slog.Logger:
++		return v
++	default:
++		// Not reached.
++		panic(fmt.Sprintf("unexpected value type for logr context key: %T", v))
++	}
++}
++
++// FromContextOrDiscard returns a Logger from ctx.  If no Logger is found, this
++// returns a Logger that discards all log messages.
++func FromContextOrDiscard(ctx context.Context) Logger {
++	if logger, err := FromContext(ctx); err == nil {
++		return logger
++	}
++	return Discard()
++}
++
++// NewContext returns a new Context, derived from ctx, which carries the
++// provided Logger.
++func NewContext(ctx context.Context, logger Logger) context.Context {
++	return context.WithValue(ctx, contextKey{}, logger)
++}
++
++// NewContextWithSlogLogger returns a new Context, derived from ctx, which carries the
++// provided slog.Logger.
++func NewContextWithSlogLogger(ctx context.Context, logger *slog.Logger) context.Context {
++	return context.WithValue(ctx, contextKey{}, logger)
++}
+diff --git a/vendor/github.com/go-logr/logr/funcr/funcr.go b/vendor/github.com/go-logr/logr/funcr/funcr.go
+index 12e5807c..fb2f866f 100644
+--- a/vendor/github.com/go-logr/logr/funcr/funcr.go
++++ b/vendor/github.com/go-logr/logr/funcr/funcr.go
+@@ -100,6 +100,11 @@ type Options struct {
+ 	// details, see docs for Go's time.Layout.
+ 	TimestampFormat string
+ 
++	// LogInfoLevel tells funcr what key to use to log the info level.
++	// If not specified, the info level will be logged as "level".
++	// If this is set to "", the info level will not be logged at all.
++	LogInfoLevel *string
++
+ 	// Verbosity tells funcr which V logs to produce.  Higher values enable
+ 	// more logs.  Info logs at or below this level will be written, while logs
+ 	// above this level will be discarded.
+@@ -213,6 +218,10 @@ func newFormatter(opts Options, outfmt outputFormat) Formatter {
+ 	if opts.MaxLogDepth == 0 {
+ 		opts.MaxLogDepth = defaultMaxLogDepth
+ 	}
++	if opts.LogInfoLevel == nil {
++		opts.LogInfoLevel = new(string)
++		*opts.LogInfoLevel = "level"
++	}
+ 	f := Formatter{
+ 		outputFormat: outfmt,
+ 		prefix:       "",
+@@ -227,12 +236,15 @@ func newFormatter(opts Options, outfmt outputFormat) Formatter {
+ // implementation. It should be constructed with NewFormatter. Some of
+ // its methods directly implement logr.LogSink.
+ type Formatter struct {
+-	outputFormat outputFormat
+-	prefix       string
+-	values       []any
+-	valuesStr    string
+-	depth        int
+-	opts         *Options
++	outputFormat    outputFormat
++	prefix          string
++	values          []any
++	valuesStr       string
++	parentValuesStr string
++	depth           int
++	opts            *Options
++	group           string // for slog groups
++	groupDepth      int
+ }
+ 
+ // outputFormat indicates which outputFormat to use.
+@@ -253,33 +265,62 @@ func (f Formatter) render(builtins, args []any) string {
+ 	// Empirically bytes.Buffer is faster than strings.Builder for this.
+ 	buf := bytes.NewBuffer(make([]byte, 0, 1024))
+ 	if f.outputFormat == outputJSON {
+-		buf.WriteByte('{')
++		buf.WriteByte('{') // for the whole line
+ 	}
++
+ 	vals := builtins
+ 	if hook := f.opts.RenderBuiltinsHook; hook != nil {
+ 		vals = hook(f.sanitize(vals))
+ 	}
+ 	f.flatten(buf, vals, false, false) // keys are ours, no need to escape
+ 	continuing := len(builtins) > 0
+-	if len(f.valuesStr) > 0 {
++
++	if f.parentValuesStr != "" {
+ 		if continuing {
+-			if f.outputFormat == outputJSON {
+-				buf.WriteByte(',')
+-			} else {
+-				buf.WriteByte(' ')
+-			}
++			buf.WriteByte(f.comma())
+ 		}
++		buf.WriteString(f.parentValuesStr)
+ 		continuing = true
++	}
++
++	groupDepth := f.groupDepth
++	if f.group != "" {
++		if f.valuesStr != "" || len(args) != 0 {
++			if continuing {
++				buf.WriteByte(f.comma())
++			}
++			buf.WriteString(f.quoted(f.group, true)) // escape user-provided keys
++			buf.WriteByte(f.colon())
++			buf.WriteByte('{') // for the group
++			continuing = false
++		} else {
++			// The group was empty
++			groupDepth--
++		}
++	}
++
++	if f.valuesStr != "" {
++		if continuing {
++			buf.WriteByte(f.comma())
++		}
+ 		buf.WriteString(f.valuesStr)
++		continuing = true
+ 	}
++
+ 	vals = args
+ 	if hook := f.opts.RenderArgsHook; hook != nil {
+ 		vals = hook(f.sanitize(vals))
+ 	}
+ 	f.flatten(buf, vals, continuing, true) // escape user-provided keys
++
++	for i := 0; i < groupDepth; i++ {
++		buf.WriteByte('}') // for the groups
++	}
++
+ 	if f.outputFormat == outputJSON {
+-		buf.WriteByte('}')
++		buf.WriteByte('}') // for the whole line
+ 	}
++
+ 	return buf.String()
+ }
+ 
+@@ -298,9 +339,16 @@ func (f Formatter) flatten(buf *bytes.Buffer, kvList []any, continuing bool, esc
+ 	if len(kvList)%2 != 0 {
+ 		kvList = append(kvList, noValue)
+ 	}
++	copied := false
+ 	for i := 0; i < len(kvList); i += 2 {
+ 		k, ok := kvList[i].(string)
+ 		if !ok {
++			if !copied {
++				newList := make([]any, len(kvList))
++				copy(newList, kvList)
++				kvList = newList
++				copied = true
++			}
+ 			k = f.nonStringKey(kvList[i])
+ 			kvList[i] = k
+ 		}
+@@ -308,7 +356,7 @@ func (f Formatter) flatten(buf *bytes.Buffer, kvList []any, continuing bool, esc
+ 
+ 		if i > 0 || continuing {
+ 			if f.outputFormat == outputJSON {
+-				buf.WriteByte(',')
++				buf.WriteByte(f.comma())
+ 			} else {
+ 				// In theory the format could be something we don't understand.  In
+ 				// practice, we control it, so it won't be.
+@@ -316,24 +364,35 @@ func (f Formatter) flatten(buf *bytes.Buffer, kvList []any, continuing bool, esc
+ 			}
+ 		}
+ 
+-		if escapeKeys {
+-			buf.WriteString(prettyString(k))
+-		} else {
+-			// this is faster
+-			buf.WriteByte('"')
+-			buf.WriteString(k)
+-			buf.WriteByte('"')
+-		}
+-		if f.outputFormat == outputJSON {
+-			buf.WriteByte(':')
+-		} else {
+-			buf.WriteByte('=')
+-		}
++		buf.WriteString(f.quoted(k, escapeKeys))
++		buf.WriteByte(f.colon())
+ 		buf.WriteString(f.pretty(v))
+ 	}
+ 	return kvList
+ }
+ 
++func (f Formatter) quoted(str string, escape bool) string {
++	if escape {
++		return prettyString(str)
++	}
++	// this is faster
++	return `"` + str + `"`
++}
++
++func (f Formatter) comma() byte {
++	if f.outputFormat == outputJSON {
++		return ','
++	}
++	return ' '
++}
++
++func (f Formatter) colon() byte {
++	if f.outputFormat == outputJSON {
++		return ':'
++	}
++	return '='
++}
++
+ func (f Formatter) pretty(value any) string {
+ 	return f.prettyWithFlags(value, 0, 0)
+ }
+@@ -407,12 +466,12 @@ func (f Formatter) prettyWithFlags(value any, flags uint32, depth int) string {
+ 		}
+ 		for i := 0; i < len(v); i += 2 {
+ 			if i > 0 {
+-				buf.WriteByte(',')
++				buf.WriteByte(f.comma())
+ 			}
+ 			k, _ := v[i].(string) // sanitize() above means no need to check success
+ 			// arbitrary keys might need escaping
+ 			buf.WriteString(prettyString(k))
+-			buf.WriteByte(':')
++			buf.WriteByte(f.colon())
+ 			buf.WriteString(f.prettyWithFlags(v[i+1], 0, depth+1))
+ 		}
+ 		if flags&flagRawStruct == 0 {
+@@ -481,7 +540,7 @@ func (f Formatter) prettyWithFlags(value any, flags uint32, depth int) string {
+ 				continue
+ 			}
+ 			if printComma {
+-				buf.WriteByte(',')
++				buf.WriteByte(f.comma())
+ 			}
+ 			printComma = true // if we got here, we are rendering a field
+ 			if fld.Anonymous && fld.Type.Kind() == reflect.Struct && name == "" {
+@@ -492,10 +551,8 @@ func (f Formatter) prettyWithFlags(value any, flags uint32, depth int) string {
+ 				name = fld.Name
+ 			}
+ 			// field names can't contain characters which need escaping
+-			buf.WriteByte('"')
+-			buf.WriteString(name)
+-			buf.WriteByte('"')
+-			buf.WriteByte(':')
++			buf.WriteString(f.quoted(name, false))
++			buf.WriteByte(f.colon())
+ 			buf.WriteString(f.prettyWithFlags(v.Field(i).Interface(), 0, depth+1))
+ 		}
+ 		if flags&flagRawStruct == 0 {
+@@ -520,7 +577,7 @@ func (f Formatter) prettyWithFlags(value any, flags uint32, depth int) string {
+ 		buf.WriteByte('[')
+ 		for i := 0; i < v.Len(); i++ {
+ 			if i > 0 {
+-				buf.WriteByte(',')
++				buf.WriteByte(f.comma())
+ 			}
+ 			e := v.Index(i)
+ 			buf.WriteString(f.prettyWithFlags(e.Interface(), 0, depth+1))
+@@ -534,7 +591,7 @@ func (f Formatter) prettyWithFlags(value any, flags uint32, depth int) string {
+ 		i := 0
+ 		for it.Next() {
+ 			if i > 0 {
+-				buf.WriteByte(',')
++				buf.WriteByte(f.comma())
+ 			}
+ 			// If a map key supports TextMarshaler, use it.
+ 			keystr := ""
+@@ -556,7 +613,7 @@ func (f Formatter) prettyWithFlags(value any, flags uint32, depth int) string {
+ 				}
+ 			}
+ 			buf.WriteString(keystr)
+-			buf.WriteByte(':')
++			buf.WriteByte(f.colon())
+ 			buf.WriteString(f.prettyWithFlags(it.Value().Interface(), 0, depth+1))
+ 			i++
+ 		}
+@@ -706,6 +763,53 @@ func (f Formatter) sanitize(kvList []any) []any {
+ 	return kvList
+ }
+ 
++// startGroup opens a new group scope (basically a sub-struct), which locks all
++// the current saved values and starts them anew.  This is needed to satisfy
++// slog.
++func (f *Formatter) startGroup(group string) {
++	// Unnamed groups are just inlined.
++	if group == "" {
++		return
++	}
++
++	// Any saved values can no longer be changed.
++	buf := bytes.NewBuffer(make([]byte, 0, 1024))
++	continuing := false
++
++	if f.parentValuesStr != "" {
++		buf.WriteString(f.parentValuesStr)
++		continuing = true
++	}
++
++	if f.group != "" && f.valuesStr != "" {
++		if continuing {
++			buf.WriteByte(f.comma())
++		}
++		buf.WriteString(f.quoted(f.group, true)) // escape user-provided keys
++		buf.WriteByte(f.colon())
++		buf.WriteByte('{') // for the group
++		continuing = false
++	}
++
++	if f.valuesStr != "" {
++		if continuing {
++			buf.WriteByte(f.comma())
++		}
++		buf.WriteString(f.valuesStr)
++	}
++
++	// NOTE: We don't close the scope here - that's done later, when a log line
++	// is actually rendered (because we have N scopes to close).
++
++	f.parentValuesStr = buf.String()
++
++	// Start collecting new values.
++	f.group = group
++	f.groupDepth++
++	f.valuesStr = ""
++	f.values = nil
++}
++
+ // Init configures this Formatter from runtime info, such as the call depth
+ // imposed by logr itself.
+ // Note that this receiver is a pointer, so depth can be saved.
+@@ -740,7 +844,10 @@ func (f Formatter) FormatInfo(level int, msg string, kvList []any) (prefix, args
+ 	if policy := f.opts.LogCaller; policy == All || policy == Info {
+ 		args = append(args, "caller", f.caller())
+ 	}
+-	args = append(args, "level", level, "msg", msg)
++	if key := *f.opts.LogInfoLevel; key != "" {
++		args = append(args, key, level)
++	}
++	args = append(args, "msg", msg)
+ 	return prefix, f.render(args, kvList)
+ }
+ 
+diff --git a/vendor/github.com/go-logr/logr/funcr/slogsink.go b/vendor/github.com/go-logr/logr/funcr/slogsink.go
+new file mode 100644
+index 00000000..7bd84761
+--- /dev/null
++++ b/vendor/github.com/go-logr/logr/funcr/slogsink.go
+@@ -0,0 +1,105 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2023 The logr Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package funcr
++
++import (
++	"context"
++	"log/slog"
++
++	"github.com/go-logr/logr"
++)
++
++var _ logr.SlogSink = &fnlogger{}
++
++const extraSlogSinkDepth = 3 // 2 for slog, 1 for SlogSink
++
++func (l fnlogger) Handle(_ context.Context, record slog.Record) error {
++	kvList := make([]any, 0, 2*record.NumAttrs())
++	record.Attrs(func(attr slog.Attr) bool {
++		kvList = attrToKVs(attr, kvList)
++		return true
++	})
++
++	if record.Level >= slog.LevelError {
++		l.WithCallDepth(extraSlogSinkDepth).Error(nil, record.Message, kvList...)
++	} else {
++		level := l.levelFromSlog(record.Level)
++		l.WithCallDepth(extraSlogSinkDepth).Info(level, record.Message, kvList...)
++	}
++	return nil
++}
++
++func (l fnlogger) WithAttrs(attrs []slog.Attr) logr.SlogSink {
++	kvList := make([]any, 0, 2*len(attrs))
++	for _, attr := range attrs {
++		kvList = attrToKVs(attr, kvList)
++	}
++	l.AddValues(kvList)
++	return &l
++}
++
++func (l fnlogger) WithGroup(name string) logr.SlogSink {
++	l.startGroup(name)
++	return &l
++}
++
++// attrToKVs appends a slog.Attr to a logr-style kvList.  It handle slog Groups
++// and other details of slog.
++func attrToKVs(attr slog.Attr, kvList []any) []any {
++	attrVal := attr.Value.Resolve()
++	if attrVal.Kind() == slog.KindGroup {
++		groupVal := attrVal.Group()
++		grpKVs := make([]any, 0, 2*len(groupVal))
++		for _, attr := range groupVal {
++			grpKVs = attrToKVs(attr, grpKVs)
++		}
++		if attr.Key == "" {
++			// slog says we have to inline these
++			kvList = append(kvList, grpKVs...)
++		} else {
++			kvList = append(kvList, attr.Key, PseudoStruct(grpKVs))
++		}
++	} else if attr.Key != "" {
++		kvList = append(kvList, attr.Key, attrVal.Any())
++	}
++
++	return kvList
++}
++
++// levelFromSlog adjusts the level by the logger's verbosity and negates it.
++// It ensures that the result is >= 0. This is necessary because the result is
++// passed to a LogSink and that API did not historically document whether
++// levels could be negative or what that meant.
++//
++// Some example usage:
++//
++//	logrV0 := getMyLogger()
++//	logrV2 := logrV0.V(2)
++//	slogV2 := slog.New(logr.ToSlogHandler(logrV2))
++//	slogV2.Debug("msg") // =~ logrV2.V(4) =~ logrV0.V(6)
++//	slogV2.Info("msg")  // =~  logrV2.V(0) =~ logrV0.V(2)
++//	slogv2.Warn("msg")  // =~ logrV2.V(-4) =~ logrV0.V(0)
++func (l fnlogger) levelFromSlog(level slog.Level) int {
++	result := -level
++	if result < 0 {
++		result = 0 // because LogSink doesn't expect negative V levels
++	}
++	return int(result)
++}
+diff --git a/vendor/github.com/go-logr/logr/logr.go b/vendor/github.com/go-logr/logr/logr.go
+index 2a5075a1..b4428e10 100644
+--- a/vendor/github.com/go-logr/logr/logr.go
++++ b/vendor/github.com/go-logr/logr/logr.go
+@@ -207,10 +207,6 @@ limitations under the License.
+ // those.
+ package logr
+ 
+-import (
+-	"context"
+-)
+-
+ // New returns a new Logger instance.  This is primarily used by libraries
+ // implementing LogSink, rather than end users.  Passing a nil sink will create
+ // a Logger which discards all log lines.
+@@ -410,45 +406,6 @@ func (l Logger) IsZero() bool {
+ 	return l.sink == nil
+ }
+ 
+-// contextKey is how we find Loggers in a context.Context.
+-type contextKey struct{}
+-
+-// FromContext returns a Logger from ctx or an error if no Logger is found.
+-func FromContext(ctx context.Context) (Logger, error) {
+-	if v, ok := ctx.Value(contextKey{}).(Logger); ok {
+-		return v, nil
+-	}
+-
+-	return Logger{}, notFoundError{}
+-}
+-
+-// notFoundError exists to carry an IsNotFound method.
+-type notFoundError struct{}
+-
+-func (notFoundError) Error() string {
+-	return "no logr.Logger was present"
+-}
+-
+-func (notFoundError) IsNotFound() bool {
+-	return true
+-}
+-
+-// FromContextOrDiscard returns a Logger from ctx.  If no Logger is found, this
+-// returns a Logger that discards all log messages.
+-func FromContextOrDiscard(ctx context.Context) Logger {
+-	if v, ok := ctx.Value(contextKey{}).(Logger); ok {
+-		return v
+-	}
+-
+-	return Discard()
+-}
+-
+-// NewContext returns a new Context, derived from ctx, which carries the
+-// provided Logger.
+-func NewContext(ctx context.Context, logger Logger) context.Context {
+-	return context.WithValue(ctx, contextKey{}, logger)
+-}
+-
+ // RuntimeInfo holds information that the logr "core" library knows which
+ // LogSinks might want to know.
+ type RuntimeInfo struct {
+diff --git a/vendor/github.com/go-logr/logr/sloghandler.go b/vendor/github.com/go-logr/logr/sloghandler.go
+new file mode 100644
+index 00000000..82d1ba49
+--- /dev/null
++++ b/vendor/github.com/go-logr/logr/sloghandler.go
+@@ -0,0 +1,192 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2023 The logr Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package logr
++
++import (
++	"context"
++	"log/slog"
++)
++
++type slogHandler struct {
++	// May be nil, in which case all logs get discarded.
++	sink LogSink
++	// Non-nil if sink is non-nil and implements SlogSink.
++	slogSink SlogSink
++
++	// groupPrefix collects values from WithGroup calls. It gets added as
++	// prefix to value keys when handling a log record.
++	groupPrefix string
++
++	// levelBias can be set when constructing the handler to influence the
++	// slog.Level of log records. A positive levelBias reduces the
++	// slog.Level value. slog has no API to influence this value after the
++	// handler got created, so it can only be set indirectly through
++	// Logger.V.
++	levelBias slog.Level
++}
++
++var _ slog.Handler = &slogHandler{}
++
++// groupSeparator is used to concatenate WithGroup names and attribute keys.
++const groupSeparator = "."
++
++// GetLevel is used for black box unit testing.
++func (l *slogHandler) GetLevel() slog.Level {
++	return l.levelBias
++}
++
++func (l *slogHandler) Enabled(_ context.Context, level slog.Level) bool {
++	return l.sink != nil && (level >= slog.LevelError || l.sink.Enabled(l.levelFromSlog(level)))
++}
++
++func (l *slogHandler) Handle(ctx context.Context, record slog.Record) error {
++	if l.slogSink != nil {
++		// Only adjust verbosity level of log entries < slog.LevelError.
++		if record.Level < slog.LevelError {
++			record.Level -= l.levelBias
++		}
++		return l.slogSink.Handle(ctx, record)
++	}
++
++	// No need to check for nil sink here because Handle will only be called
++	// when Enabled returned true.
++
++	kvList := make([]any, 0, 2*record.NumAttrs())
++	record.Attrs(func(attr slog.Attr) bool {
++		kvList = attrToKVs(attr, l.groupPrefix, kvList)
++		return true
++	})
++	if record.Level >= slog.LevelError {
++		l.sinkWithCallDepth().Error(nil, record.Message, kvList...)
++	} else {
++		level := l.levelFromSlog(record.Level)
++		l.sinkWithCallDepth().Info(level, record.Message, kvList...)
++	}
++	return nil
++}
++
++// sinkWithCallDepth adjusts the stack unwinding so that when Error or Info
++// are called by Handle, code in slog gets skipped.
++//
++// This offset currently (Go 1.21.0) works for calls through
++// slog.New(ToSlogHandler(...)).  There's no guarantee that the call
++// chain won't change. Wrapping the handler will also break unwinding. It's
++// still better than not adjusting at all....
++//
++// This cannot be done when constructing the handler because FromSlogHandler needs
++// access to the original sink without this adjustment. A second copy would
++// work, but then WithAttrs would have to be called for both of them.
++func (l *slogHandler) sinkWithCallDepth() LogSink {
++	if sink, ok := l.sink.(CallDepthLogSink); ok {
++		return sink.WithCallDepth(2)
++	}
++	return l.sink
++}
++
++func (l *slogHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
++	if l.sink == nil || len(attrs) == 0 {
++		return l
++	}
++
++	clone := *l
++	if l.slogSink != nil {
++		clone.slogSink = l.slogSink.WithAttrs(attrs)
++		clone.sink = clone.slogSink
++	} else {
++		kvList := make([]any, 0, 2*len(attrs))
++		for _, attr := range attrs {
++			kvList = attrToKVs(attr, l.groupPrefix, kvList)
++		}
++		clone.sink = l.sink.WithValues(kvList...)
++	}
++	return &clone
++}
++
++func (l *slogHandler) WithGroup(name string) slog.Handler {
++	if l.sink == nil {
++		return l
++	}
++	if name == "" {
++		// slog says to inline empty groups
++		return l
++	}
++	clone := *l
++	if l.slogSink != nil {
++		clone.slogSink = l.slogSink.WithGroup(name)
++		clone.sink = clone.slogSink
++	} else {
++		clone.groupPrefix = addPrefix(clone.groupPrefix, name)
++	}
++	return &clone
++}
++
++// attrToKVs appends a slog.Attr to a logr-style kvList.  It handle slog Groups
++// and other details of slog.
++func attrToKVs(attr slog.Attr, groupPrefix string, kvList []any) []any {
++	attrVal := attr.Value.Resolve()
++	if attrVal.Kind() == slog.KindGroup {
++		groupVal := attrVal.Group()
++		grpKVs := make([]any, 0, 2*len(groupVal))
++		prefix := groupPrefix
++		if attr.Key != "" {
++			prefix = addPrefix(groupPrefix, attr.Key)
++		}
++		for _, attr := range groupVal {
++			grpKVs = attrToKVs(attr, prefix, grpKVs)
++		}
++		kvList = append(kvList, grpKVs...)
++	} else if attr.Key != "" {
++		kvList = append(kvList, addPrefix(groupPrefix, attr.Key), attrVal.Any())
++	}
++
++	return kvList
++}
++
++func addPrefix(prefix, name string) string {
++	if prefix == "" {
++		return name
++	}
++	if name == "" {
++		return prefix
++	}
++	return prefix + groupSeparator + name
++}
++
++// levelFromSlog adjusts the level by the logger's verbosity and negates it.
++// It ensures that the result is >= 0. This is necessary because the result is
++// passed to a LogSink and that API did not historically document whether
++// levels could be negative or what that meant.
++//
++// Some example usage:
++//
++//	logrV0 := getMyLogger()
++//	logrV2 := logrV0.V(2)
++//	slogV2 := slog.New(logr.ToSlogHandler(logrV2))
++//	slogV2.Debug("msg") // =~ logrV2.V(4) =~ logrV0.V(6)
++//	slogV2.Info("msg")  // =~  logrV2.V(0) =~ logrV0.V(2)
++//	slogv2.Warn("msg")  // =~ logrV2.V(-4) =~ logrV0.V(0)
++func (l *slogHandler) levelFromSlog(level slog.Level) int {
++	result := -level
++	result += l.levelBias // in case the original Logger had a V level
++	if result < 0 {
++		result = 0 // because LogSink doesn't expect negative V levels
++	}
++	return int(result)
++}
+diff --git a/vendor/github.com/go-logr/logr/slogr.go b/vendor/github.com/go-logr/logr/slogr.go
+new file mode 100644
+index 00000000..28a83d02
+--- /dev/null
++++ b/vendor/github.com/go-logr/logr/slogr.go
+@@ -0,0 +1,100 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2023 The logr Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package logr
++
++import (
++	"context"
++	"log/slog"
++)
++
++// FromSlogHandler returns a Logger which writes to the slog.Handler.
++//
++// The logr verbosity level is mapped to slog levels such that V(0) becomes
++// slog.LevelInfo and V(4) becomes slog.LevelDebug.
++func FromSlogHandler(handler slog.Handler) Logger {
++	if handler, ok := handler.(*slogHandler); ok {
++		if handler.sink == nil {
++			return Discard()
++		}
++		return New(handler.sink).V(int(handler.levelBias))
++	}
++	return New(&slogSink{handler: handler})
++}
++
++// ToSlogHandler returns a slog.Handler which writes to the same sink as the Logger.
++//
++// The returned logger writes all records with level >= slog.LevelError as
++// error log entries with LogSink.Error, regardless of the verbosity level of
++// the Logger:
++//
++//	logger := <some Logger with 0 as verbosity level>
++//	slog.New(ToSlogHandler(logger.V(10))).Error(...) -> logSink.Error(...)
++//
++// The level of all other records gets reduced by the verbosity
++// level of the Logger and the result is negated. If it happens
++// to be negative, then it gets replaced by zero because a LogSink
++// is not expected to handled negative levels:
++//
++//	slog.New(ToSlogHandler(logger)).Debug(...) -> logger.GetSink().Info(level=4, ...)
++//	slog.New(ToSlogHandler(logger)).Warning(...) -> logger.GetSink().Info(level=0, ...)
++//	slog.New(ToSlogHandler(logger)).Info(...) -> logger.GetSink().Info(level=0, ...)
++//	slog.New(ToSlogHandler(logger.V(4))).Info(...) -> logger.GetSink().Info(level=4, ...)
++func ToSlogHandler(logger Logger) slog.Handler {
++	if sink, ok := logger.GetSink().(*slogSink); ok && logger.GetV() == 0 {
++		return sink.handler
++	}
++
++	handler := &slogHandler{sink: logger.GetSink(), levelBias: slog.Level(logger.GetV())}
++	if slogSink, ok := handler.sink.(SlogSink); ok {
++		handler.slogSink = slogSink
++	}
++	return handler
++}
++
++// SlogSink is an optional interface that a LogSink can implement to support
++// logging through the slog.Logger or slog.Handler APIs better. It then should
++// also support special slog values like slog.Group. When used as a
++// slog.Handler, the advantages are:
++//
++//   - stack unwinding gets avoided in favor of logging the pre-recorded PC,
++//     as intended by slog
++//   - proper grouping of key/value pairs via WithGroup
++//   - verbosity levels > slog.LevelInfo can be recorded
++//   - less overhead
++//
++// Both APIs (Logger and slog.Logger/Handler) then are supported equally
++// well. Developers can pick whatever API suits them better and/or mix
++// packages which use either API in the same binary with a common logging
++// implementation.
++//
++// This interface is necessary because the type implementing the LogSink
++// interface cannot also implement the slog.Handler interface due to the
++// different prototype of the common Enabled method.
++//
++// An implementation could support both interfaces in two different types, but then
++// additional interfaces would be needed to convert between those types in FromSlogHandler
++// and ToSlogHandler.
++type SlogSink interface {
++	LogSink
++
++	Handle(ctx context.Context, record slog.Record) error
++	WithAttrs(attrs []slog.Attr) SlogSink
++	WithGroup(name string) SlogSink
++}
+diff --git a/vendor/github.com/go-logr/logr/slogsink.go b/vendor/github.com/go-logr/logr/slogsink.go
+new file mode 100644
+index 00000000..4060fcbc
+--- /dev/null
++++ b/vendor/github.com/go-logr/logr/slogsink.go
+@@ -0,0 +1,120 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2023 The logr Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package logr
++
++import (
++	"context"
++	"log/slog"
++	"runtime"
++	"time"
++)
++
++var (
++	_ LogSink          = &slogSink{}
++	_ CallDepthLogSink = &slogSink{}
++	_ Underlier        = &slogSink{}
++)
++
++// Underlier is implemented by the LogSink returned by NewFromLogHandler.
++type Underlier interface {
++	// GetUnderlying returns the Handler used by the LogSink.
++	GetUnderlying() slog.Handler
++}
++
++const (
++	// nameKey is used to log the `WithName` values as an additional attribute.
++	nameKey = "logger"
++
++	// errKey is used to log the error parameter of Error as an additional attribute.
++	errKey = "err"
++)
++
++type slogSink struct {
++	callDepth int
++	name      string
++	handler   slog.Handler
++}
++
++func (l *slogSink) Init(info RuntimeInfo) {
++	l.callDepth = info.CallDepth
++}
++
++func (l *slogSink) GetUnderlying() slog.Handler {
++	return l.handler
++}
++
++func (l *slogSink) WithCallDepth(depth int) LogSink {
++	newLogger := *l
++	newLogger.callDepth += depth
++	return &newLogger
++}
++
++func (l *slogSink) Enabled(level int) bool {
++	return l.handler.Enabled(context.Background(), slog.Level(-level))
++}
++
++func (l *slogSink) Info(level int, msg string, kvList ...interface{}) {
++	l.log(nil, msg, slog.Level(-level), kvList...)
++}
++
++func (l *slogSink) Error(err error, msg string, kvList ...interface{}) {
++	l.log(err, msg, slog.LevelError, kvList...)
++}
++
++func (l *slogSink) log(err error, msg string, level slog.Level, kvList ...interface{}) {
++	var pcs [1]uintptr
++	// skip runtime.Callers, this function, Info/Error, and all helper functions above that.
++	runtime.Callers(3+l.callDepth, pcs[:])
++
++	record := slog.NewRecord(time.Now(), level, msg, pcs[0])
++	if l.name != "" {
++		record.AddAttrs(slog.String(nameKey, l.name))
++	}
++	if err != nil {
++		record.AddAttrs(slog.Any(errKey, err))
++	}
++	record.Add(kvList...)
++	_ = l.handler.Handle(context.Background(), record)
++}
++
++func (l slogSink) WithName(name string) LogSink {
++	if l.name != "" {
++		l.name += "/"
++	}
++	l.name += name
++	return &l
++}
++
++func (l slogSink) WithValues(kvList ...interface{}) LogSink {
++	l.handler = l.handler.WithAttrs(kvListToAttrs(kvList...))
++	return &l
++}
++
++func kvListToAttrs(kvList ...interface{}) []slog.Attr {
++	// We don't need the record itself, only its Add method.
++	record := slog.NewRecord(time.Time{}, 0, "", 0)
++	record.Add(kvList...)
++	attrs := make([]slog.Attr, 0, record.NumAttrs())
++	record.Attrs(func(attr slog.Attr) bool {
++		attrs = append(attrs, attr)
++		return true
++	})
++	return attrs
++}
+diff --git a/vendor/github.com/onsi/ginkgo/v2/CHANGELOG.md b/vendor/github.com/onsi/ginkgo/v2/CHANGELOG.md
+index 9a65dd10..fbe51563 100644
+--- a/vendor/github.com/onsi/ginkgo/v2/CHANGELOG.md
++++ b/vendor/github.com/onsi/ginkgo/v2/CHANGELOG.md
+@@ -1,21 +1,3 @@
+-## 2.15.0
+-
+-### Features
+-
+-- JUnit reports now interpret Label(owner:X) and set owner to X. [8f3bd70]
+-- include cancellation reason when cancelling spec context [96e915c]
+-
+-### Fixes
+-
+-- emit output of failed go tool cover invocation so users can try to debug things for themselves [c245d09]
+-- fix outline when using nodot in ginkgo v2 [dca77c8]
+-- Document areas where GinkgoT() behaves differently from testing.T [dbaf18f]
+-- bugfix(docs): use Unsetenv instead of Clearenv (#1337) [6f67a14]
+-
+-### Maintenance
+-
+-- Bump to go 1.20 [4fcd0b3]
+-
+ ## 2.14.0
+ 
+ ### Features
+diff --git a/vendor/github.com/onsi/ginkgo/v2/ginkgo/internal/profiles_and_reports.go b/vendor/github.com/onsi/ginkgo/v2/ginkgo/internal/profiles_and_reports.go
+index 26de28b5..bd3c6d02 100644
+--- a/vendor/github.com/onsi/ginkgo/v2/ginkgo/internal/profiles_and_reports.go
++++ b/vendor/github.com/onsi/ginkgo/v2/ginkgo/internal/profiles_and_reports.go
+@@ -144,7 +144,7 @@ func FinalizeProfilesAndReportsForSuites(suites TestSuites, cliConfig types.CLIC
+ 	return messages, nil
+ }
+ 
+-// loads each profile, combines them, deletes them, stores them in destination
++//loads each profile, combines them, deletes them, stores them in destination
+ func MergeAndCleanupCoverProfiles(profiles []string, destination string) error {
+ 	combined := &bytes.Buffer{}
+ 	modeRegex := regexp.MustCompile(`^mode: .*\n`)
+@@ -184,7 +184,7 @@ func GetCoverageFromCoverProfile(profile string) (float64, error) {
+ 	cmd := exec.Command("go", "tool", "cover", "-func", profile)
+ 	output, err := cmd.CombinedOutput()
+ 	if err != nil {
+-		return 0, fmt.Errorf("Could not process Coverprofile %s: %s - %s", profile, err.Error(), string(output))
++		return 0, fmt.Errorf("Could not process Coverprofile %s: %s", profile, err.Error())
+ 	}
+ 	re := regexp.MustCompile(`total:\s*\(statements\)\s*(\d*\.\d*)\%`)
+ 	matches := re.FindStringSubmatch(string(output))
+diff --git a/vendor/github.com/onsi/ginkgo/v2/ginkgo/outline/ginkgo.go b/vendor/github.com/onsi/ginkgo/v2/ginkgo/outline/ginkgo.go
+index 5d8d00bb..958daccb 100644
+--- a/vendor/github.com/onsi/ginkgo/v2/ginkgo/outline/ginkgo.go
++++ b/vendor/github.com/onsi/ginkgo/v2/ginkgo/outline/ginkgo.go
+@@ -1,11 +1,10 @@
+ package outline
+ 
+ import (
++	"github.com/onsi/ginkgo/v2/types"
+ 	"go/ast"
+ 	"go/token"
+ 	"strconv"
+-
+-	"github.com/onsi/ginkgo/v2/types"
+ )
+ 
+ const (
+diff --git a/vendor/github.com/onsi/ginkgo/v2/ginkgo/outline/import.go b/vendor/github.com/onsi/ginkgo/v2/ginkgo/outline/import.go
+index f0a6b5d2..67ec5ab7 100644
+--- a/vendor/github.com/onsi/ginkgo/v2/ginkgo/outline/import.go
++++ b/vendor/github.com/onsi/ginkgo/v2/ginkgo/outline/import.go
+@@ -28,7 +28,14 @@ func packageNameForImport(f *ast.File, path string) *string {
+ 	}
+ 	name := spec.Name.String()
+ 	if name == "<nil>" {
+-		name = "ginkgo"
++		// If the package name is not explicitly specified,
++		// make an educated guess. This is not guaranteed to be correct.
++		lastSlash := strings.LastIndex(path, "/")
++		if lastSlash == -1 {
++			name = path
++		} else {
++			name = path[lastSlash+1:]
++		}
+ 	}
+ 	if name == "." {
+ 		name = ""
+diff --git a/vendor/github.com/onsi/ginkgo/v2/ginkgo_t_dsl.go b/vendor/github.com/onsi/ginkgo/v2/ginkgo_t_dsl.go
+index 02c6739e..639541a1 100644
+--- a/vendor/github.com/onsi/ginkgo/v2/ginkgo_t_dsl.go
++++ b/vendor/github.com/onsi/ginkgo/v2/ginkgo_t_dsl.go
+@@ -15,11 +15,6 @@ GinkgoT() is analogous to *testing.T and implements the majority of *testing.T's
+ GinkgoT() takes an optional offset argument that can be used to get the
+ correct line number associated with the failure - though you do not need to use this if you call GinkgoHelper() or GinkgoT().Helper() appropriately
+ 
+-GinkgoT() attempts to mimic the behavior of `testing.T` with the exception of the following:
+-
+-- Error/Errorf: failures in Ginkgo always immediately stop execution and there is no mechanism to log a failure without aborting the test.  As such Error/Errorf are equivalent to Fatal/Fatalf.
+-- Parallel() is a no-op as Ginkgo's multi-process parallelism model is substantially different from go test's in-process model.
+-
+ You can learn more here: https://onsi.github.io/ginkgo/#using-third-party-libraries
+ */
+ func GinkgoT(optionalOffset ...int) FullGinkgoTInterface {
+diff --git a/vendor/github.com/onsi/ginkgo/v2/internal/spec_context.go b/vendor/github.com/onsi/ginkgo/v2/internal/spec_context.go
+index 2d2ea2fc..2515b84a 100644
+--- a/vendor/github.com/onsi/ginkgo/v2/internal/spec_context.go
++++ b/vendor/github.com/onsi/ginkgo/v2/internal/spec_context.go
+@@ -17,7 +17,7 @@ type specContext struct {
+ 	context.Context
+ 	*ProgressReporterManager
+ 
+-	cancel context.CancelCauseFunc
++	cancel context.CancelFunc
+ 
+ 	suite *Suite
+ }
+@@ -30,7 +30,7 @@ Note that while SpecContext is used to enforce deadlines by Ginkgo it is not con
+ This is because Ginkgo needs finer control over when the context is canceled.  Specifically, Ginkgo needs to generate a ProgressReport before it cancels the context to ensure progress is captured where the spec is currently running.  The only way to avoid a race here is to manually control the cancellation.
+ */
+ func NewSpecContext(suite *Suite) *specContext {
+-	ctx, cancel := context.WithCancelCause(context.Background())
++	ctx, cancel := context.WithCancel(context.Background())
+ 	sc := &specContext{
+ 		cancel:                  cancel,
+ 		suite:                   suite,
+diff --git a/vendor/github.com/onsi/ginkgo/v2/internal/suite.go b/vendor/github.com/onsi/ginkgo/v2/internal/suite.go
+index 2b4db48a..6746152e 100644
+--- a/vendor/github.com/onsi/ginkgo/v2/internal/suite.go
++++ b/vendor/github.com/onsi/ginkgo/v2/internal/suite.go
+@@ -858,7 +858,7 @@ func (suite *Suite) runNode(node Node, specDeadline time.Time, text string) (typ
+ 	}
+ 
+ 	sc := NewSpecContext(suite)
+-	defer sc.cancel(fmt.Errorf("spec has finished"))
++	defer sc.cancel()
+ 
+ 	suite.selectiveLock.Lock()
+ 	suite.currentSpecContext = sc
+@@ -958,7 +958,7 @@ func (suite *Suite) runNode(node Node, specDeadline time.Time, text string) (typ
+ 
+ 			// tell the spec to stop.  it's important we generate the progress report first to make sure we capture where
+ 			// the spec is actually stuck
+-			sc.cancel(fmt.Errorf("%s timeout occurred", timeoutInPlay))
++			sc.cancel()
+ 			//and now we wait for the grace period
+ 			gracePeriodChannel = time.After(gracePeriod)
+ 		case <-interruptStatus.Channel:
+@@ -985,7 +985,7 @@ func (suite *Suite) runNode(node Node, specDeadline time.Time, text string) (typ
+ 			}
+ 
+ 			progressReport = progressReport.WithoutOtherGoroutines()
+-			sc.cancel(fmt.Errorf(interruptStatus.Message()))
++			sc.cancel()
+ 
+ 			if interruptStatus.Level == interrupt_handler.InterruptLevelBailOut {
+ 				if interruptStatus.ShouldIncludeProgressReport() {
+diff --git a/vendor/github.com/onsi/ginkgo/v2/reporters/junit_report.go b/vendor/github.com/onsi/ginkgo/v2/reporters/junit_report.go
+index 43244a9b..81604220 100644
+--- a/vendor/github.com/onsi/ginkgo/v2/reporters/junit_report.go
++++ b/vendor/github.com/onsi/ginkgo/v2/reporters/junit_report.go
+@@ -15,7 +15,6 @@ import (
+ 	"fmt"
+ 	"os"
+ 	"path"
+-	"regexp"
+ 	"strings"
+ 
+ 	"github.com/onsi/ginkgo/v2/config"
+@@ -105,8 +104,6 @@ type JUnitProperty struct {
+ 	Value string `xml:"value,attr"`
+ }
+ 
+-var ownerRE = regexp.MustCompile(`(?i)^owner:(.*)$`)
+-
+ type JUnitTestCase struct {
+ 	// Name maps onto the full text of the spec - equivalent to "[SpecReport.LeafNodeType] SpecReport.FullText()"
+ 	Name string `xml:"name,attr"`
+@@ -116,8 +113,6 @@ type JUnitTestCase struct {
+ 	Status string `xml:"status,attr"`
+ 	// Time is the time in seconds to execute the spec - maps onto SpecReport.RunTime
+ 	Time float64 `xml:"time,attr"`
+-	// Owner is the owner the spec - is set if a label matching Label("owner:X") is provided.  The last matching label is used as the owner, thereby allowing specs to override owners specified in container nodes.
+-	Owner string `xml:"owner,attr,omitempty"`
+ 	//Skipped is populated with a message if the test was skipped or pending
+ 	Skipped *JUnitSkipped `xml:"skipped,omitempty"`
+ 	//Error is populated if the test panicked or was interrupted
+@@ -200,12 +195,6 @@ func GenerateJUnitReportWithConfig(report types.Report, dst string, config Junit
+ 		if len(labels) > 0 && !config.OmitSpecLabels {
+ 			name = name + " [" + strings.Join(labels, ", ") + "]"
+ 		}
+-		owner := ""
+-		for _, label := range labels {
+-			if matches := ownerRE.FindStringSubmatch(label); len(matches) == 2 {
+-				owner = matches[1]
+-			}
+-		}
+ 		name = strings.TrimSpace(name)
+ 
+ 		test := JUnitTestCase{
+@@ -213,7 +202,6 @@ func GenerateJUnitReportWithConfig(report types.Report, dst string, config Junit
+ 			Classname: report.SuiteDescription,
+ 			Status:    spec.State.String(),
+ 			Time:      spec.RunTime.Seconds(),
+-			Owner:     owner,
+ 		}
+ 		if !spec.State.Is(config.OmitTimelinesForSpecState) {
+ 			test.SystemErr = systemErrForUnstructuredReporters(spec)
+diff --git a/vendor/github.com/onsi/ginkgo/v2/types/version.go b/vendor/github.com/onsi/ginkgo/v2/types/version.go
+index ed934647..7015be12 100644
+--- a/vendor/github.com/onsi/ginkgo/v2/types/version.go
++++ b/vendor/github.com/onsi/ginkgo/v2/types/version.go
+@@ -1,3 +1,3 @@
+ package types
+ 
+-const VERSION = "2.15.0"
++const VERSION = "2.14.0"
+diff --git a/vendor/github.com/onsi/gomega/CHANGELOG.md b/vendor/github.com/onsi/gomega/CHANGELOG.md
+index 9a14b815..fe72a7b1 100644
+--- a/vendor/github.com/onsi/gomega/CHANGELOG.md
++++ b/vendor/github.com/onsi/gomega/CHANGELOG.md
+@@ -1,28 +1,3 @@
+-## 1.31.1
+-
+-### Fixes
+-- Inverted arguments order of FailureMessage of BeComparableToMatcher [e0dd999]
+-- Update test in case keeping msg is desired [ad1a367]
+-
+-### Maintenance
+-- Show how to import the format sub package [24e958d]
+-- tidy up go.sum [26661b8]
+-- bump dependencies [bde8f7a]
+-
+-## 1.31.0
+-
+-### Features
+-- Async assertions include context cancellation cause if present [121c37f]
+-
+-### Maintenance
+-- Bump minimum go version [dee1e3c]
+-- docs: fix typo in example usage "occured" -> "occurred" [49005fe]
+-- Bump actions/setup-go from 4 to 5 (#714) [f1c8757]
+-- Bump github/codeql-action from 2 to 3 (#715) [9836e76]
+-- Bump github.com/onsi/ginkgo/v2 from 2.13.0 to 2.13.2 (#713) [54726f0]
+-- Bump golang.org/x/net from 0.17.0 to 0.19.0 (#711) [df97ecc]
+-- docs: fix `HaveExactElement` typo (#712) [a672c86]
+-
+ ## 1.30.0
+ 
+ ### Features
+diff --git a/vendor/github.com/onsi/gomega/gomega_dsl.go b/vendor/github.com/onsi/gomega/gomega_dsl.go
+index 5b46a165..c271a366 100644
+--- a/vendor/github.com/onsi/gomega/gomega_dsl.go
++++ b/vendor/github.com/onsi/gomega/gomega_dsl.go
+@@ -22,7 +22,7 @@ import (
+ 	"github.com/onsi/gomega/types"
+ )
+ 
+-const GOMEGA_VERSION = "1.31.1"
++const GOMEGA_VERSION = "1.30.0"
+ 
+ const nilGomegaPanic = `You are trying to make an assertion, but haven't registered Gomega's fail handler.
+ If you're using Ginkgo then you probably forgot to put your assertion in an It().
+diff --git a/vendor/github.com/onsi/gomega/internal/async_assertion.go b/vendor/github.com/onsi/gomega/internal/async_assertion.go
+index cde9e2ec..1188b0bc 100644
+--- a/vendor/github.com/onsi/gomega/internal/async_assertion.go
++++ b/vendor/github.com/onsi/gomega/internal/async_assertion.go
+@@ -553,12 +553,7 @@ func (assertion *AsyncAssertion) match(matcher types.GomegaMatcher, desiredMatch
+ 				lock.Unlock()
+ 			}
+ 		case <-contextDone:
+-			err := context.Cause(assertion.ctx)
+-			if err != nil && err != context.Canceled {
+-				fail(fmt.Sprintf("Context was cancelled (cause: %s)", err))
+-			} else {
+-				fail("Context was cancelled")
+-			}
++			fail("Context was cancelled")
+ 			return false
+ 		case <-timeout:
+ 			if assertion.asyncType == AsyncAssertionTypeEventually {
+diff --git a/vendor/github.com/onsi/gomega/matchers.go b/vendor/github.com/onsi/gomega/matchers.go
+index 8860d677..43f99437 100644
+--- a/vendor/github.com/onsi/gomega/matchers.go
++++ b/vendor/github.com/onsi/gomega/matchers.go
+@@ -394,7 +394,7 @@ func ConsistOf(elements ...interface{}) types.GomegaMatcher {
+ 	}
+ }
+ 
+-// HaveExactElements succeeds if actual contains elements that precisely match the elemets passed into the matcher. The ordering of the elements does matter.
++// HaveExactElemets succeeds if actual contains elements that precisely match the elemets passed into the matcher. The ordering of the elements does matter.
+ // By default HaveExactElements() uses Equal() to match the elements, however custom matchers can be passed in instead.  Here are some examples:
+ //
+ //	Expect([]string{"Foo", "FooBar"}).Should(HaveExactElements("Foo", "FooBar"))
+diff --git a/vendor/github.com/onsi/gomega/matchers/be_comparable_to_matcher.go b/vendor/github.com/onsi/gomega/matchers/be_comparable_to_matcher.go
+index 4e389785..8ab4bb91 100644
+--- a/vendor/github.com/onsi/gomega/matchers/be_comparable_to_matcher.go
++++ b/vendor/github.com/onsi/gomega/matchers/be_comparable_to_matcher.go
+@@ -41,9 +41,9 @@ func (matcher *BeComparableToMatcher) Match(actual interface{}) (success bool, m
+ }
+ 
+ func (matcher *BeComparableToMatcher) FailureMessage(actual interface{}) (message string) {
+-	return fmt.Sprint("Expected object to be comparable, diff: ", cmp.Diff(actual, matcher.Expected, matcher.Options...))
++	return cmp.Diff(matcher.Expected, actual, matcher.Options)
+ }
+ 
+ func (matcher *BeComparableToMatcher) NegatedFailureMessage(actual interface{}) (message string) {
+-	return format.Message(actual, "not to be comparable to", matcher.Expected)
++	return format.Message(actual, "not to equal", matcher.Expected)
+ }
+diff --git a/vendor/golang.org/x/tools/internal/versions/versions.go b/vendor/golang.org/x/tools/internal/versions/versions_go121.go
+similarity index 80%
+rename from vendor/golang.org/x/tools/internal/versions/versions.go
+rename to vendor/golang.org/x/tools/internal/versions/versions_go121.go
+index e16f6c33..cf4a7d03 100644
+--- a/vendor/golang.org/x/tools/internal/versions/versions.go
++++ b/vendor/golang.org/x/tools/internal/versions/versions_go121.go
+@@ -2,13 +2,10 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-package versions
++//go:build !go1.22
++// +build !go1.22
+ 
+-// Note: If we use build tags to use go/versions when go >=1.22,
+-// we run into go.dev/issue/53737. Under some operations users would see an
+-// import of "go/versions" even if they would not compile the file.
+-// For example, during `go get -u ./...` (go.dev/issue/64490) we do not try to include
+-// For this reason, this library just a clone of go/versions for the moment.
++package versions
+ 
+ // Lang returns the Go language version for version x.
+ // If x is not a valid version, Lang returns the empty string.
+diff --git a/vendor/golang.org/x/tools/internal/versions/versions_go122.go b/vendor/golang.org/x/tools/internal/versions/versions_go122.go
+new file mode 100644
+index 00000000..c1c1814b
+--- /dev/null
++++ b/vendor/golang.org/x/tools/internal/versions/versions_go122.go
+@@ -0,0 +1,38 @@
++// Copyright 2023 The Go Authors. All rights reserved.
++// Use of this source code is governed by a BSD-style
++// license that can be found in the LICENSE file.
++
++//go:build go1.22
++// +build go1.22
++
++package versions
++
++import (
++	"go/version"
++)
++
++// Lang returns the Go language version for version x.
++// If x is not a valid version, Lang returns the empty string.
++// For example:
++//
++//	Lang("go1.21rc2") = "go1.21"
++//	Lang("go1.21.2") = "go1.21"
++//	Lang("go1.21") = "go1.21"
++//	Lang("go1") = "go1"
++//	Lang("bad") = ""
++//	Lang("1.21") = ""
++func Lang(x string) string { return version.Lang(x) }
++
++// Compare returns -1, 0, or +1 depending on whether
++// x < y, x == y, or x > y, interpreted as Go versions.
++// The versions x and y must begin with a "go" prefix: "go1.21" not "1.21".
++// Invalid versions, including the empty string, compare less than
++// valid versions and equal to each other.
++// The language version "go1.21" compares less than the
++// release candidate and eventual releases "go1.21rc1" and "go1.21.0".
++// Custom toolchain suffixes are ignored during comparison:
++// "go1.21.0" and "go1.21.0-bigcorp" are equal.
++func Compare(x, y string) int { return version.Compare(x, y) }
++
++// IsValid reports whether the version x is valid.
++func IsValid(x string) bool { return version.IsValid(x) }
+diff --git a/vendor/google.golang.org/api/cloudresourcemanager/v1/cloudresourcemanager-api.json b/vendor/google.golang.org/api/cloudresourcemanager/v1/cloudresourcemanager-api.json
+index 7dd2b85f..b4b4c615 100644
+--- a/vendor/google.golang.org/api/cloudresourcemanager/v1/cloudresourcemanager-api.json
++++ b/vendor/google.golang.org/api/cloudresourcemanager/v1/cloudresourcemanager-api.json
+@@ -1171,7 +1171,7 @@
+       }
+     }
+   },
+-  "revision": "20240109",
++  "revision": "20231022",
+   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
+   "schemas": {
+     "Ancestor": {
+@@ -1242,7 +1242,7 @@
+           "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
+         },
+         "members": {
+-          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workforce identity pool. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}`: All workforce identities in a group. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All workforce identities with a specific attribute value. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*`: All identities in a workforce identity pool. * `principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workload identity pool. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool group. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All identities in a workload identity pool with a certain attribute. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*`: All identities in a workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: Deleted single identity in a workforce identity pool. For example, `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.",
++          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding.",
+           "items": {
+             "type": "string"
+           },
+diff --git a/vendor/google.golang.org/api/cloudresourcemanager/v1/cloudresourcemanager-gen.go b/vendor/google.golang.org/api/cloudresourcemanager/v1/cloudresourcemanager-gen.go
+index 6495a544..52d7f0ef 100644
+--- a/vendor/google.golang.org/api/cloudresourcemanager/v1/cloudresourcemanager-gen.go
++++ b/vendor/google.golang.org/api/cloudresourcemanager/v1/cloudresourcemanager-gen.go
+@@ -379,34 +379,11 @@ type Binding struct {
+ 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+ 	// domain (primary) that represents all the users of that domain. For
+ 	// example, `google.com` or `example.com`. *
+-	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+-	// id}/subject/{subject_attribute_value}`: A single identity in a
+-	// workforce identity pool. *
+-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+-	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+-	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+-	// identities with a specific attribute value. *
+-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+-	// ol_id}/*`: All identities in a workforce identity pool. *
+-	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+-	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+-	// `: A single identity in a workload identity pool. *
+-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+-	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+-	// identity pool group. *
+-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+-	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+-	// tribute_value}`: All identities in a workload identity pool with a
+-	// certain attribute. *
+-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+-	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+-	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+-	// email address (plus unique identifier) representing a user that has
+-	// been recently deleted. For example,
+-	// `alice@example.com?uid=123456789012345678901`. If the user is
+-	// recovered, this value reverts to `user:{emailid}` and the recovered
+-	// user retains the role in the binding. *
++	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
++	// unique identifier) representing a user that has been recently
++	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
++	// If the user is recovered, this value reverts to `user:{emailid}` and
++	// the recovered user retains the role in the binding. *
+ 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+ 	// (plus unique identifier) representing a service account that has been
+ 	// recently deleted. For example,
+@@ -418,12 +395,7 @@ type Binding struct {
+ 	// that has been recently deleted. For example,
+ 	// `admins@example.com?uid=123456789012345678901`. If the group is
+ 	// recovered, this value reverts to `group:{emailid}` and the recovered
+-	// group retains the role in the binding. *
+-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+-	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+-	// identity in a workforce identity pool. For example,
+-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+-	// s/my-pool-id/subject/my-subject-attribute-value`.
++	// group retains the role in the binding.
+ 	Members []string `json:"members,omitempty"`
+ 
+ 	// Role: Role that is assigned to the list of `members`, or principals.
+diff --git a/vendor/google.golang.org/api/compute/v0.alpha/compute-api.json b/vendor/google.golang.org/api/compute/v0.alpha/compute-api.json
+index 73c0ada7..98be6514 100644
+--- a/vendor/google.golang.org/api/compute/v0.alpha/compute-api.json
++++ b/vendor/google.golang.org/api/compute/v0.alpha/compute-api.json
+@@ -14040,6 +14040,56 @@
+             "https://www.googleapis.com/auth/compute"
+           ]
+         },
++        "export": {
++          "description": "Export the changed blocks between two instant snapshots to a customer's bucket in the user specified format.",
++          "flatPath": "projects/{project}/zones/{zone}/instantSnapshots/{instantSnapshot}/export",
++          "httpMethod": "POST",
++          "id": "compute.instantSnapshots.export",
++          "parameterOrder": [
++            "project",
++            "zone",
++            "instantSnapshot"
++          ],
++          "parameters": {
++            "instantSnapshot": {
++              "description": "Name of the instant snapshot to export.",
++              "location": "path",
++              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
++              "required": true,
++              "type": "string"
++            },
++            "project": {
++              "description": "Project ID for this request.",
++              "location": "path",
++              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
++              "required": true,
++              "type": "string"
++            },
++            "requestId": {
++              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported ( 00000000-0000-0000-0000-000000000000).",
++              "location": "query",
++              "type": "string"
++            },
++            "zone": {
++              "description": "The name of the zone for this request.",
++              "location": "path",
++              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
++              "required": true,
++              "type": "string"
++            }
++          },
++          "path": "projects/{project}/zones/{zone}/instantSnapshots/{instantSnapshot}/export",
++          "request": {
++            "$ref": "InstantSnapshotsExportRequest"
++          },
++          "response": {
++            "$ref": "Operation"
++          },
++          "scopes": [
++            "https://www.googleapis.com/auth/cloud-platform",
++            "https://www.googleapis.com/auth/compute"
++          ]
++        },
+         "get": {
+           "description": "Returns the specified InstantSnapshot resource in the specified zone.",
+           "flatPath": "projects/{project}/zones/{zone}/instantSnapshots/{instantSnapshot}",
+@@ -27675,6 +27725,56 @@
+             "https://www.googleapis.com/auth/compute"
+           ]
+         },
++        "export": {
++          "description": "Export the changed blocks between two instant snapshots to a customer's bucket in the user specified format.",
++          "flatPath": "projects/{project}/regions/{region}/instantSnapshots/{instantSnapshot}/export",
++          "httpMethod": "POST",
++          "id": "compute.regionInstantSnapshots.export",
++          "parameterOrder": [
++            "project",
++            "region",
++            "instantSnapshot"
++          ],
++          "parameters": {
++            "instantSnapshot": {
++              "description": "Name of the instant snapshot to export.",
++              "location": "path",
++              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
++              "required": true,
++              "type": "string"
++            },
++            "project": {
++              "description": "Project ID for this request.",
++              "location": "path",
++              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
++              "required": true,
++              "type": "string"
++            },
++            "region": {
++              "description": "The name of the zone for this request.",
++              "location": "path",
++              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
++              "required": true,
++              "type": "string"
++            },
++            "requestId": {
++              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported ( 00000000-0000-0000-0000-000000000000).",
++              "location": "query",
++              "type": "string"
++            }
++          },
++          "path": "projects/{project}/regions/{region}/instantSnapshots/{instantSnapshot}/export",
++          "request": {
++            "$ref": "RegionInstantSnapshotsExportRequest"
++          },
++          "response": {
++            "$ref": "Operation"
++          },
++          "scopes": [
++            "https://www.googleapis.com/auth/cloud-platform",
++            "https://www.googleapis.com/auth/compute"
++          ]
++        },
+         "get": {
+           "description": "Returns the specified InstantSnapshot resource in the specified region.",
+           "flatPath": "projects/{project}/regions/{region}/instantSnapshots/{instantSnapshot}",
+@@ -43588,7 +43688,7 @@
+       }
+     }
+   },
+-  "revision": "20240109",
++  "revision": "20231231",
+   "rootUrl": "https://compute.googleapis.com/",
+   "schemas": {
+     "AWSV4Signature": {
+@@ -52818,7 +52918,7 @@
+           "type": "boolean"
+         },
+         "allowGlobalAccess": {
+-          "description": "If set to true, clients can access the internal passthrough Network Load Balancers, the regional internal Application Load Balancer, and the regional internal proxy Network Load Balancer from all regions. If false, only allows access from the local region the load balancer is located at. Note that for INTERNAL_MANAGED forwarding rules, this field cannot be changed after the forwarding rule is created.",
++          "description": "This field is used along with the backend_service field for internal load balancing or with the target field for internal TargetInstance. If set to true, clients can access the internal passthrough Network Load Balancers, the regional internal Application Load Balancer, and the regional internal proxy Network Load Balancer from all regions. If false, only allows access from the local region the load balancer is located at. Note that for INTERNAL_MANAGED forwarding rules, this field cannot be changed after the forwarding rule is created.",
+           "type": "boolean"
+         },
+         "allowPscGlobalAccess": {
+@@ -54490,7 +54590,7 @@
+       "id": "GuestOsFeature",
+       "properties": {
+         "type": {
+-          "description": "The ID of a supported feature. To add multiple values, use commas to separate values. Set to one or more of the following values: - VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET - UEFI_COMPATIBLE - GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE - SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - TDX_CAPABLE - IDPF For more information, see Enabling guest operating system features.",
++          "description": "The ID of a supported feature. To add multiple values, use commas to separate values. Set to one or more of the following values: - VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET - UEFI_COMPATIBLE - GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE - SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - IDPF For more information, see Enabling guest operating system features.",
+           "enum": [
+             "BARE_METAL_LINUX_COMPATIBLE",
+             "FEATURE_TYPE_UNSPECIFIED",
+@@ -62309,6 +62409,42 @@
+       },
+       "type": "object"
+     },
++    "InstantSnapshotExportParams": {
++      "id": "InstantSnapshotExportParams",
++      "properties": {
++        "baseInstantSnapshot": {
++          "description": "An optional base instant snapshot that this resource is compared against. If not specified, all blocks of this resource are exported. The base instant snapshot and this resource must be created from the same disk. The base instant snapshot must be created earlier in time than this resource.",
++          "type": "string"
++        },
++        "bucketName": {
++          "description": "The name of an existing bucket in Cloud Storage where the changed blocks will be stored. The Google Service Account must have read and write access to this bucket. The bucket has to be in the same region as this resource.",
++          "type": "string"
++        },
++        "encryptionKey": {
++          "$ref": "CustomerEncryptionKey",
++          "description": "Encryption key used to encrypt the instant snapshot."
++        },
++        "objectName": {
++          "description": "Name of the output Bigstore object storing the changed blocks. Object name must be less than 1024 bytes in length.",
++          "type": "string"
++        },
++        "outputType": {
++          "description": "The format of the output file.",
++          "enum": [
++            "INVALID",
++            "METADATA_AND_DATA",
++            "METADATA_ONLY"
++          ],
++          "enumDescriptions": [
++            "",
++            "",
++            ""
++          ],
++          "type": "string"
++        }
++      },
++      "type": "object"
++    },
+     "InstantSnapshotList": {
+       "description": "Contains a list of InstantSnapshot resources.",
+       "id": "InstantSnapshotList",
+@@ -62472,6 +62608,16 @@
+       },
+       "type": "object"
+     },
++    "InstantSnapshotsExportRequest": {
++      "id": "InstantSnapshotsExportRequest",
++      "properties": {
++        "exportParams": {
++          "$ref": "InstantSnapshotExportParams",
++          "description": "Parameters to export the changed blocks."
++        }
++      },
++      "type": "object"
++    },
+     "InstantSnapshotsScopedList": {
+       "id": "InstantSnapshotsScopedList",
+       "properties": {
+@@ -68182,7 +68328,7 @@
+           "type": "string"
+         },
+         "instance": {
+-          "description": "The name or a URL of a specific VM instance that the IP address belongs to. This is required for network endpoints of type GCE_VM_IP_PORT. The instance must be in the same zone of network endpoint group (for zonal NEGs) or in the zone within the region of the NEG (for regional NEGs). The name must be 1-63 characters long, and comply with RFC1035 or be a valid URL pointing to an existing instance.",
++          "description": "The name for a specific VM instance that the IP address belongs to. This is required for network endpoints of type GCE_VM_IP_PORT. The instance must be in the same zone of network endpoint group. The name must be 1-63 characters long, and comply with RFC1035.",
+           "type": "string"
+         },
+         "ipAddress": {
+@@ -77890,6 +78036,16 @@
+       },
+       "type": "object"
+     },
++    "RegionInstantSnapshotsExportRequest": {
++      "id": "RegionInstantSnapshotsExportRequest",
++      "properties": {
++        "exportParams": {
++          "$ref": "InstantSnapshotExportParams",
++          "description": "Parameters to export the changed blocks."
++        }
++      },
++      "type": "object"
++    },
+     "RegionList": {
+       "description": "Contains a list of region resources.",
+       "id": "RegionList",
+@@ -88579,38 +88735,33 @@
+           "description": "[Output Only] Type of the resource. Always compute#storagePoolType for storage pool types.",
+           "type": "string"
+         },
+-        "maxPoolProvisionedCapacityGb": {
+-          "description": "[Output Only] Maximum storage pool size in GB.",
+-          "format": "int64",
+-          "type": "string"
+-        },
+-        "maxPoolProvisionedIops": {
++        "maxProvisionedIops": {
+           "description": "[Output Only] Maximum provisioned IOPS.",
+           "format": "int64",
+           "type": "string"
+         },
+-        "maxPoolProvisionedThroughput": {
++        "maxProvisionedThroughput": {
+           "description": "[Output Only] Maximum provisioned throughput.",
+           "format": "int64",
+           "type": "string"
+         },
+-        "minPoolProvisionedCapacityGb": {
+-          "description": "[Output Only] Minimum storage pool size in GB.",
++        "maxSizeGb": {
++          "description": "[Output Only] Maximum storage pool size in GB.",
+           "format": "int64",
+           "type": "string"
+         },
+-        "minPoolProvisionedIops": {
++        "minProvisionedIops": {
+           "description": "[Output Only] Minimum provisioned IOPS.",
+           "format": "int64",
+           "type": "string"
+         },
+-        "minPoolProvisionedThroughput": {
++        "minProvisionedThroughput": {
+           "description": "[Output Only] Minimum provisioned throughput.",
+           "format": "int64",
+           "type": "string"
+         },
+         "minSizeGb": {
+-          "description": "[Deprecated] This field is deprecated. Use minPoolProvisionedCapacityGb instead.",
++          "description": "[Output Only] Minimum storage pool size in GB.",
+           "format": "int64",
+           "type": "string"
+         },
+diff --git a/vendor/google.golang.org/api/compute/v0.alpha/compute-gen.go b/vendor/google.golang.org/api/compute/v0.alpha/compute-gen.go
+index 3f84ff56..73e43879 100644
+--- a/vendor/google.golang.org/api/compute/v0.alpha/compute-gen.go
++++ b/vendor/google.golang.org/api/compute/v0.alpha/compute-gen.go
+@@ -14992,13 +14992,15 @@ type ForwardingRule struct {
+ 	// protocol requires allPorts be set to true.
+ 	AllPorts bool `json:"allPorts,omitempty"`
+ 
+-	// AllowGlobalAccess: If set to true, clients can access the internal
+-	// passthrough Network Load Balancers, the regional internal Application
+-	// Load Balancer, and the regional internal proxy Network Load Balancer
+-	// from all regions. If false, only allows access from the local region
+-	// the load balancer is located at. Note that for INTERNAL_MANAGED
+-	// forwarding rules, this field cannot be changed after the forwarding
+-	// rule is created.
++	// AllowGlobalAccess: This field is used along with the backend_service
++	// field for internal load balancing or with the target field for
++	// internal TargetInstance. If set to true, clients can access the
++	// internal passthrough Network Load Balancers, the regional internal
++	// Application Load Balancer, and the regional internal proxy Network
++	// Load Balancer from all regions. If false, only allows access from the
++	// local region the load balancer is located at. Note that for
++	// INTERNAL_MANAGED forwarding rules, this field cannot be changed after
++	// the forwarding rule is created.
+ 	AllowGlobalAccess bool `json:"allowGlobalAccess,omitempty"`
+ 
+ 	// AllowPscGlobalAccess: This is used in PSC consumer ForwardingRule to
+@@ -17407,8 +17409,8 @@ type GuestOsFeature struct {
+ 	// commas to separate values. Set to one or more of the following
+ 	// values: - VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET -
+ 	// UEFI_COMPATIBLE - GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE -
+-	// SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - TDX_CAPABLE - IDPF For more
+-	// information, see Enabling guest operating system features.
++	// SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - IDPF For more information,
++	// see Enabling guest operating system features.
+ 	//
+ 	// Possible values:
+ 	//   "BARE_METAL_LINUX_COMPATIBLE"
+@@ -28714,6 +28716,59 @@ func (s *InstantSnapshotAggregatedListWarningData) MarshalJSON() ([]byte, error)
+ 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+ }
+ 
++type InstantSnapshotExportParams struct {
++	// BaseInstantSnapshot: An optional base instant snapshot that this
++	// resource is compared against. If not specified, all blocks of this
++	// resource are exported. The base instant snapshot and this resource
++	// must be created from the same disk. The base instant snapshot must be
++	// created earlier in time than this resource.
++	BaseInstantSnapshot string `json:"baseInstantSnapshot,omitempty"`
++
++	// BucketName: The name of an existing bucket in Cloud Storage where the
++	// changed blocks will be stored. The Google Service Account must have
++	// read and write access to this bucket. The bucket has to be in the
++	// same region as this resource.
++	BucketName string `json:"bucketName,omitempty"`
++
++	// EncryptionKey: Encryption key used to encrypt the instant snapshot.
++	EncryptionKey *CustomerEncryptionKey `json:"encryptionKey,omitempty"`
++
++	// ObjectName: Name of the output Bigstore object storing the changed
++	// blocks. Object name must be less than 1024 bytes in length.
++	ObjectName string `json:"objectName,omitempty"`
++
++	// OutputType: The format of the output file.
++	//
++	// Possible values:
++	//   "INVALID"
++	//   "METADATA_AND_DATA"
++	//   "METADATA_ONLY"
++	OutputType string `json:"outputType,omitempty"`
++
++	// ForceSendFields is a list of field names (e.g. "BaseInstantSnapshot")
++	// to unconditionally include in API requests. By default, fields with
++	// empty or default values are omitted from API requests. However, any
++	// non-pointer, non-interface field appearing in ForceSendFields will be
++	// sent to the server regardless of whether the field is empty or not.
++	// This may be used to include empty fields in Patch requests.
++	ForceSendFields []string `json:"-"`
++
++	// NullFields is a list of field names (e.g. "BaseInstantSnapshot") to
++	// include in API requests with the JSON null value. By default, fields
++	// with empty values are omitted from API requests. However, any field
++	// with an empty value appearing in NullFields will be sent to the
++	// server as null. It is an error if a field in this list has a
++	// non-empty value. This may be used to include null fields in Patch
++	// requests.
++	NullFields []string `json:"-"`
++}
++
++func (s *InstantSnapshotExportParams) MarshalJSON() ([]byte, error) {
++	type NoMethod InstantSnapshotExportParams
++	raw := NoMethod(*s)
++	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
++}
++
+ // InstantSnapshotList: Contains a list of InstantSnapshot resources.
+ type InstantSnapshotList struct {
+ 	// Id: [Output Only] Unique identifier for the resource; defined by the
+@@ -28935,6 +28990,33 @@ func (s *InstantSnapshotResourceStatus) MarshalJSON() ([]byte, error) {
+ 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+ }
+ 
++type InstantSnapshotsExportRequest struct {
++	// ExportParams: Parameters to export the changed blocks.
++	ExportParams *InstantSnapshotExportParams `json:"exportParams,omitempty"`
++
++	// ForceSendFields is a list of field names (e.g. "ExportParams") to
++	// unconditionally include in API requests. By default, fields with
++	// empty or default values are omitted from API requests. However, any
++	// non-pointer, non-interface field appearing in ForceSendFields will be
++	// sent to the server regardless of whether the field is empty or not.
++	// This may be used to include empty fields in Patch requests.
++	ForceSendFields []string `json:"-"`
++
++	// NullFields is a list of field names (e.g. "ExportParams") to include
++	// in API requests with the JSON null value. By default, fields with
++	// empty values are omitted from API requests. However, any field with
++	// an empty value appearing in NullFields will be sent to the server as
++	// null. It is an error if a field in this list has a non-empty value.
++	// This may be used to include null fields in Patch requests.
++	NullFields []string `json:"-"`
++}
++
++func (s *InstantSnapshotsExportRequest) MarshalJSON() ([]byte, error) {
++	type NoMethod InstantSnapshotsExportRequest
++	raw := NoMethod(*s)
++	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
++}
++
+ type InstantSnapshotsScopedList struct {
+ 	// InstantSnapshots: [Output Only] A list of instantSnapshots contained
+ 	// in this scope.
+@@ -36824,13 +36906,11 @@ type NetworkEndpoint struct {
+ 	// is NON_GCP_FQDN_PORT.
+ 	Fqdn string `json:"fqdn,omitempty"`
+ 
+-	// Instance: The name or a URL of a specific VM instance that the IP
+-	// address belongs to. This is required for network endpoints of type
++	// Instance: The name for a specific VM instance that the IP address
++	// belongs to. This is required for network endpoints of type
+ 	// GCE_VM_IP_PORT. The instance must be in the same zone of network
+-	// endpoint group (for zonal NEGs) or in the zone within the region of
+-	// the NEG (for regional NEGs). The name must be 1-63 characters long,
+-	// and comply with RFC1035 or be a valid URL pointing to an existing
+-	// instance.
++	// endpoint group. The name must be 1-63 characters long, and comply
++	// with RFC1035.
+ 	Instance string `json:"instance,omitempty"`
+ 
+ 	// IpAddress: Optional IPv4 address of network endpoint. The IP address
+@@ -50056,6 +50136,33 @@ func (s *RegionInstanceGroupsSetNamedPortsRequest) MarshalJSON() ([]byte, error)
+ 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+ }
+ 
++type RegionInstantSnapshotsExportRequest struct {
++	// ExportParams: Parameters to export the changed blocks.
++	ExportParams *InstantSnapshotExportParams `json:"exportParams,omitempty"`
++
++	// ForceSendFields is a list of field names (e.g. "ExportParams") to
++	// unconditionally include in API requests. By default, fields with
++	// empty or default values are omitted from API requests. However, any
++	// non-pointer, non-interface field appearing in ForceSendFields will be
++	// sent to the server regardless of whether the field is empty or not.
++	// This may be used to include empty fields in Patch requests.
++	ForceSendFields []string `json:"-"`
++
++	// NullFields is a list of field names (e.g. "ExportParams") to include
++	// in API requests with the JSON null value. By default, fields with
++	// empty values are omitted from API requests. However, any field with
++	// an empty value appearing in NullFields will be sent to the server as
++	// null. It is an error if a field in this list has a non-empty value.
++	// This may be used to include null fields in Patch requests.
++	NullFields []string `json:"-"`
++}
++
++func (s *RegionInstantSnapshotsExportRequest) MarshalJSON() ([]byte, error) {
++	type NoMethod RegionInstantSnapshotsExportRequest
++	raw := NoMethod(*s)
++	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
++}
++
+ // RegionList: Contains a list of region resources.
+ type RegionList struct {
+ 	// Id: [Output Only] Unique identifier for the resource; defined by the
+@@ -64557,30 +64664,24 @@ type StoragePoolType struct {
+ 	// compute#storagePoolType for storage pool types.
+ 	Kind string `json:"kind,omitempty"`
+ 
+-	// MaxPoolProvisionedCapacityGb: [Output Only] Maximum storage pool size
+-	// in GB.
+-	MaxPoolProvisionedCapacityGb int64 `json:"maxPoolProvisionedCapacityGb,omitempty,string"`
+-
+-	// MaxPoolProvisionedIops: [Output Only] Maximum provisioned IOPS.
+-	MaxPoolProvisionedIops int64 `json:"maxPoolProvisionedIops,omitempty,string"`
++	// MaxProvisionedIops: [Output Only] Maximum provisioned IOPS.
++	MaxProvisionedIops int64 `json:"maxProvisionedIops,omitempty,string"`
+ 
+-	// MaxPoolProvisionedThroughput: [Output Only] Maximum provisioned
++	// MaxProvisionedThroughput: [Output Only] Maximum provisioned
+ 	// throughput.
+-	MaxPoolProvisionedThroughput int64 `json:"maxPoolProvisionedThroughput,omitempty,string"`
++	MaxProvisionedThroughput int64 `json:"maxProvisionedThroughput,omitempty,string"`
+ 
+-	// MinPoolProvisionedCapacityGb: [Output Only] Minimum storage pool size
+-	// in GB.
+-	MinPoolProvisionedCapacityGb int64 `json:"minPoolProvisionedCapacityGb,omitempty,string"`
++	// MaxSizeGb: [Output Only] Maximum storage pool size in GB.
++	MaxSizeGb int64 `json:"maxSizeGb,omitempty,string"`
+ 
+-	// MinPoolProvisionedIops: [Output Only] Minimum provisioned IOPS.
+-	MinPoolProvisionedIops int64 `json:"minPoolProvisionedIops,omitempty,string"`
++	// MinProvisionedIops: [Output Only] Minimum provisioned IOPS.
++	MinProvisionedIops int64 `json:"minProvisionedIops,omitempty,string"`
+ 
+-	// MinPoolProvisionedThroughput: [Output Only] Minimum provisioned
++	// MinProvisionedThroughput: [Output Only] Minimum provisioned
+ 	// throughput.
+-	MinPoolProvisionedThroughput int64 `json:"minPoolProvisionedThroughput,omitempty,string"`
++	MinProvisionedThroughput int64 `json:"minProvisionedThroughput,omitempty,string"`
+ 
+-	// MinSizeGb: [Deprecated] This field is deprecated. Use
+-	// minPoolProvisionedCapacityGb instead.
++	// MinSizeGb: [Output Only] Minimum storage pool size in GB.
+ 	MinSizeGb int64 `json:"minSizeGb,omitempty,string"`
+ 
+ 	// Name: [Output Only] Name of the resource.
+@@ -134747,6 +134848,195 @@ func (c *InstantSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Operatio
+ 
+ }
+ 
++// method id "compute.instantSnapshots.export":
++
++type InstantSnapshotsExportCall struct {
++	s                             *Service
++	project                       string
++	zone                          string
++	instantSnapshot               string
++	instantsnapshotsexportrequest *InstantSnapshotsExportRequest
++	urlParams_                    gensupport.URLParams
++	ctx_                          context.Context
++	header_                       http.Header
++}
++
++// Export: Export the changed blocks between two instant snapshots to a
++// customer's bucket in the user specified format.
++//
++// - instantSnapshot: Name of the instant snapshot to export.
++// - project: Project ID for this request.
++// - zone: The name of the zone for this request.
++func (r *InstantSnapshotsService) Export(project string, zone string, instantSnapshot string, instantsnapshotsexportrequest *InstantSnapshotsExportRequest) *InstantSnapshotsExportCall {
++	c := &InstantSnapshotsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
++	c.project = project
++	c.zone = zone
++	c.instantSnapshot = instantSnapshot
++	c.instantsnapshotsexportrequest = instantsnapshotsexportrequest
++	return c
++}
++
++// RequestId sets the optional parameter "requestId": An optional
++// request ID to identify requests. Specify a unique request ID so that
++// if you must retry your request, the server will know to ignore the
++// request if it has already been completed. For example, consider a
++// situation where you make an initial request and the request times
++// out. If you make the request again with the same request ID, the
++// server can check if original operation with the same request ID was
++// received, and if so, will ignore the second request. This prevents
++// clients from accidentally creating duplicate commitments. The request
++// ID must be a valid UUID with the exception that zero UUID is not
++// supported ( 00000000-0000-0000-0000-000000000000).
++func (c *InstantSnapshotsExportCall) RequestId(requestId string) *InstantSnapshotsExportCall {
++	c.urlParams_.Set("requestId", requestId)
++	return c
++}
++
++// Fields allows partial responses to be retrieved. See
++// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
++// for more information.
++func (c *InstantSnapshotsExportCall) Fields(s ...googleapi.Field) *InstantSnapshotsExportCall {
++	c.urlParams_.Set("fields", googleapi.CombineFields(s))
++	return c
++}
++
++// Context sets the context to be used in this call's Do method. Any
++// pending HTTP request will be aborted if the provided context is
++// canceled.
++func (c *InstantSnapshotsExportCall) Context(ctx context.Context) *InstantSnapshotsExportCall {
++	c.ctx_ = ctx
++	return c
++}
++
++// Header returns an http.Header that can be modified by the caller to
++// add HTTP headers to the request.
++func (c *InstantSnapshotsExportCall) Header() http.Header {
++	if c.header_ == nil {
++		c.header_ = make(http.Header)
++	}
++	return c.header_
++}
++
++func (c *InstantSnapshotsExportCall) doRequest(alt string) (*http.Response, error) {
++	reqHeaders := make(http.Header)
++	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
++	for k, v := range c.header_ {
++		reqHeaders[k] = v
++	}
++	reqHeaders.Set("User-Agent", c.s.userAgent())
++	var body io.Reader = nil
++	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instantsnapshotsexportrequest)
++	if err != nil {
++		return nil, err
++	}
++	reqHeaders.Set("Content-Type", "application/json")
++	c.urlParams_.Set("alt", alt)
++	c.urlParams_.Set("prettyPrint", "false")
++	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/instantSnapshots/{instantSnapshot}/export")
++	urls += "?" + c.urlParams_.Encode()
++	req, err := http.NewRequest("POST", urls, body)
++	if err != nil {
++		return nil, err
++	}
++	req.Header = reqHeaders
++	googleapi.Expand(req.URL, map[string]string{
++		"project":         c.project,
++		"zone":            c.zone,
++		"instantSnapshot": c.instantSnapshot,
++	})
++	return gensupport.SendRequest(c.ctx_, c.s.client, req)
++}
++
++// Do executes the "compute.instantSnapshots.export" call.
++// Exactly one of *Operation or error will be non-nil. Any non-2xx
++// status code is an error. Response headers are in either
++// *Operation.ServerResponse.Header or (if a response was returned at
++// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
++// to check whether the returned error was because
++// http.StatusNotModified was returned.
++func (c *InstantSnapshotsExportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
++	gensupport.SetOptions(c.urlParams_, opts...)
++	res, err := c.doRequest("json")
++	if res != nil && res.StatusCode == http.StatusNotModified {
++		if res.Body != nil {
++			res.Body.Close()
++		}
++		return nil, gensupport.WrapError(&googleapi.Error{
++			Code:   res.StatusCode,
++			Header: res.Header,
++		})
++	}
++	if err != nil {
++		return nil, err
++	}
++	defer googleapi.CloseBody(res)
++	if err := googleapi.CheckResponse(res); err != nil {
++		return nil, gensupport.WrapError(err)
++	}
++	ret := &Operation{
++		ServerResponse: googleapi.ServerResponse{
++			Header:         res.Header,
++			HTTPStatusCode: res.StatusCode,
++		},
++	}
++	target := &ret
++	if err := gensupport.DecodeResponse(target, res); err != nil {
++		return nil, err
++	}
++	return ret, nil
++	// {
++	//   "description": "Export the changed blocks between two instant snapshots to a customer's bucket in the user specified format.",
++	//   "flatPath": "projects/{project}/zones/{zone}/instantSnapshots/{instantSnapshot}/export",
++	//   "httpMethod": "POST",
++	//   "id": "compute.instantSnapshots.export",
++	//   "parameterOrder": [
++	//     "project",
++	//     "zone",
++	//     "instantSnapshot"
++	//   ],
++	//   "parameters": {
++	//     "instantSnapshot": {
++	//       "description": "Name of the instant snapshot to export.",
++	//       "location": "path",
++	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
++	//       "required": true,
++	//       "type": "string"
++	//     },
++	//     "project": {
++	//       "description": "Project ID for this request.",
++	//       "location": "path",
++	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
++	//       "required": true,
++	//       "type": "string"
++	//     },
++	//     "requestId": {
++	//       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported ( 00000000-0000-0000-0000-000000000000).",
++	//       "location": "query",
++	//       "type": "string"
++	//     },
++	//     "zone": {
++	//       "description": "The name of the zone for this request.",
++	//       "location": "path",
++	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
++	//       "required": true,
++	//       "type": "string"
++	//     }
++	//   },
++	//   "path": "projects/{project}/zones/{zone}/instantSnapshots/{instantSnapshot}/export",
++	//   "request": {
++	//     "$ref": "InstantSnapshotsExportRequest"
++	//   },
++	//   "response": {
++	//     "$ref": "Operation"
++	//   },
++	//   "scopes": [
++	//     "https://www.googleapis.com/auth/cloud-platform",
++	//     "https://www.googleapis.com/auth/compute"
++	//   ]
++	// }
++
++}
++
+ // method id "compute.instantSnapshots.get":
+ 
+ type InstantSnapshotsGetCall struct {
+@@ -191864,6 +192154,195 @@ func (c *RegionInstantSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Op
+ 
+ }
+ 
++// method id "compute.regionInstantSnapshots.export":
++
++type RegionInstantSnapshotsExportCall struct {
++	s                                   *Service
++	project                             string
++	region                              string
++	instantSnapshot                     string
++	regioninstantsnapshotsexportrequest *RegionInstantSnapshotsExportRequest
++	urlParams_                          gensupport.URLParams
++	ctx_                                context.Context
++	header_                             http.Header
++}
++
++// Export: Export the changed blocks between two instant snapshots to a
++// customer's bucket in the user specified format.
++//
++// - instantSnapshot: Name of the instant snapshot to export.
++// - project: Project ID for this request.
++// - region: The name of the zone for this request.
++func (r *RegionInstantSnapshotsService) Export(project string, region string, instantSnapshot string, regioninstantsnapshotsexportrequest *RegionInstantSnapshotsExportRequest) *RegionInstantSnapshotsExportCall {
++	c := &RegionInstantSnapshotsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
++	c.project = project
++	c.region = region
++	c.instantSnapshot = instantSnapshot
++	c.regioninstantsnapshotsexportrequest = regioninstantsnapshotsexportrequest
++	return c
++}
++
++// RequestId sets the optional parameter "requestId": An optional
++// request ID to identify requests. Specify a unique request ID so that
++// if you must retry your request, the server will know to ignore the
++// request if it has already been completed. For example, consider a
++// situation where you make an initial request and the request times
++// out. If you make the request again with the same request ID, the
++// server can check if original operation with the same request ID was
++// received, and if so, will ignore the second request. This prevents
++// clients from accidentally creating duplicate commitments. The request
++// ID must be a valid UUID with the exception that zero UUID is not
++// supported ( 00000000-0000-0000-0000-000000000000).
++func (c *RegionInstantSnapshotsExportCall) RequestId(requestId string) *RegionInstantSnapshotsExportCall {
++	c.urlParams_.Set("requestId", requestId)
++	return c
++}
++
++// Fields allows partial responses to be retrieved. See
++// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
++// for more information.
++func (c *RegionInstantSnapshotsExportCall) Fields(s ...googleapi.Field) *RegionInstantSnapshotsExportCall {
++	c.urlParams_.Set("fields", googleapi.CombineFields(s))
++	return c
++}
++
++// Context sets the context to be used in this call's Do method. Any
++// pending HTTP request will be aborted if the provided context is
++// canceled.
++func (c *RegionInstantSnapshotsExportCall) Context(ctx context.Context) *RegionInstantSnapshotsExportCall {
++	c.ctx_ = ctx
++	return c
++}
++
++// Header returns an http.Header that can be modified by the caller to
++// add HTTP headers to the request.
++func (c *RegionInstantSnapshotsExportCall) Header() http.Header {
++	if c.header_ == nil {
++		c.header_ = make(http.Header)
++	}
++	return c.header_
++}
++
++func (c *RegionInstantSnapshotsExportCall) doRequest(alt string) (*http.Response, error) {
++	reqHeaders := make(http.Header)
++	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
++	for k, v := range c.header_ {
++		reqHeaders[k] = v
++	}
++	reqHeaders.Set("User-Agent", c.s.userAgent())
++	var body io.Reader = nil
++	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regioninstantsnapshotsexportrequest)
++	if err != nil {
++		return nil, err
++	}
++	reqHeaders.Set("Content-Type", "application/json")
++	c.urlParams_.Set("alt", alt)
++	c.urlParams_.Set("prettyPrint", "false")
++	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/instantSnapshots/{instantSnapshot}/export")
++	urls += "?" + c.urlParams_.Encode()
++	req, err := http.NewRequest("POST", urls, body)
++	if err != nil {
++		return nil, err
++	}
++	req.Header = reqHeaders
++	googleapi.Expand(req.URL, map[string]string{
++		"project":         c.project,
++		"region":          c.region,
++		"instantSnapshot": c.instantSnapshot,
++	})
++	return gensupport.SendRequest(c.ctx_, c.s.client, req)
++}
++
++// Do executes the "compute.regionInstantSnapshots.export" call.
++// Exactly one of *Operation or error will be non-nil. Any non-2xx
++// status code is an error. Response headers are in either
++// *Operation.ServerResponse.Header or (if a response was returned at
++// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
++// to check whether the returned error was because
++// http.StatusNotModified was returned.
++func (c *RegionInstantSnapshotsExportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
++	gensupport.SetOptions(c.urlParams_, opts...)
++	res, err := c.doRequest("json")
++	if res != nil && res.StatusCode == http.StatusNotModified {
++		if res.Body != nil {
++			res.Body.Close()
++		}
++		return nil, gensupport.WrapError(&googleapi.Error{
++			Code:   res.StatusCode,
++			Header: res.Header,
++		})
++	}
++	if err != nil {
++		return nil, err
++	}
++	defer googleapi.CloseBody(res)
++	if err := googleapi.CheckResponse(res); err != nil {
++		return nil, gensupport.WrapError(err)
++	}
++	ret := &Operation{
++		ServerResponse: googleapi.ServerResponse{
++			Header:         res.Header,
++			HTTPStatusCode: res.StatusCode,
++		},
++	}
++	target := &ret
++	if err := gensupport.DecodeResponse(target, res); err != nil {
++		return nil, err
++	}
++	return ret, nil
++	// {
++	//   "description": "Export the changed blocks between two instant snapshots to a customer's bucket in the user specified format.",
++	//   "flatPath": "projects/{project}/regions/{region}/instantSnapshots/{instantSnapshot}/export",
++	//   "httpMethod": "POST",
++	//   "id": "compute.regionInstantSnapshots.export",
++	//   "parameterOrder": [
++	//     "project",
++	//     "region",
++	//     "instantSnapshot"
++	//   ],
++	//   "parameters": {
++	//     "instantSnapshot": {
++	//       "description": "Name of the instant snapshot to export.",
++	//       "location": "path",
++	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
++	//       "required": true,
++	//       "type": "string"
++	//     },
++	//     "project": {
++	//       "description": "Project ID for this request.",
++	//       "location": "path",
++	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
++	//       "required": true,
++	//       "type": "string"
++	//     },
++	//     "region": {
++	//       "description": "The name of the zone for this request.",
++	//       "location": "path",
++	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
++	//       "required": true,
++	//       "type": "string"
++	//     },
++	//     "requestId": {
++	//       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported ( 00000000-0000-0000-0000-000000000000).",
++	//       "location": "query",
++	//       "type": "string"
++	//     }
++	//   },
++	//   "path": "projects/{project}/regions/{region}/instantSnapshots/{instantSnapshot}/export",
++	//   "request": {
++	//     "$ref": "RegionInstantSnapshotsExportRequest"
++	//   },
++	//   "response": {
++	//     "$ref": "Operation"
++	//   },
++	//   "scopes": [
++	//     "https://www.googleapis.com/auth/cloud-platform",
++	//     "https://www.googleapis.com/auth/compute"
++	//   ]
++	// }
++
++}
++
+ // method id "compute.regionInstantSnapshots.get":
+ 
+ type RegionInstantSnapshotsGetCall struct {
+diff --git a/vendor/google.golang.org/api/compute/v0.beta/compute-api.json b/vendor/google.golang.org/api/compute/v0.beta/compute-api.json
+index 626b535e..e826c7ec 100644
+--- a/vendor/google.golang.org/api/compute/v0.beta/compute-api.json
++++ b/vendor/google.golang.org/api/compute/v0.beta/compute-api.json
+@@ -40267,7 +40267,7 @@
+       }
+     }
+   },
+-  "revision": "20240109",
++  "revision": "20231231",
+   "rootUrl": "https://compute.googleapis.com/",
+   "schemas": {
+     "AWSV4Signature": {
+@@ -45759,14 +45759,12 @@
+           "enum": [
+             "CONFIDENTIAL_INSTANCE_TYPE_UNSPECIFIED",
+             "SEV",
+-            "SEV_SNP",
+-            "TDX"
++            "SEV_SNP"
+           ],
+           "enumDescriptions": [
+             "No type specified. Do not use this value.",
+             "AMD Secure Encrypted Virtualization.",
+-            "AMD Secure Encrypted Virtualization - Secure Nested Paging.",
+-            "Intel Trust Domain eXtension."
++            "AMD Secure Encrypted Virtualization - Secure Nested Paging."
+           ],
+           "type": "string"
+         },
+@@ -48915,7 +48913,7 @@
+           "type": "boolean"
+         },
+         "allowGlobalAccess": {
+-          "description": "If set to true, clients can access the internal passthrough Network Load Balancers, the regional internal Application Load Balancer, and the regional internal proxy Network Load Balancer from all regions. If false, only allows access from the local region the load balancer is located at. Note that for INTERNAL_MANAGED forwarding rules, this field cannot be changed after the forwarding rule is created.",
++          "description": "This field is used along with the backend_service field for internal load balancing or with the target field for internal TargetInstance. If set to true, clients can access the internal passthrough Network Load Balancers, the regional internal Application Load Balancer, and the regional internal proxy Network Load Balancer from all regions. If false, only allows access from the local region the load balancer is located at. Note that for INTERNAL_MANAGED forwarding rules, this field cannot be changed after the forwarding rule is created.",
+           "type": "boolean"
+         },
+         "allowPscGlobalAccess": {
+@@ -50548,7 +50546,7 @@
+       "id": "GuestOsFeature",
+       "properties": {
+         "type": {
+-          "description": "The ID of a supported feature. To add multiple values, use commas to separate values. Set to one or more of the following values: - VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET - UEFI_COMPATIBLE - GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE - SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - TDX_CAPABLE - IDPF For more information, see Enabling guest operating system features.",
++          "description": "The ID of a supported feature. To add multiple values, use commas to separate values. Set to one or more of the following values: - VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET - UEFI_COMPATIBLE - GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE - SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - IDPF For more information, see Enabling guest operating system features.",
+           "enum": [
+             "FEATURE_TYPE_UNSPECIFIED",
+             "GVNIC",
+@@ -50559,7 +50557,6 @@
+             "SEV_LIVE_MIGRATABLE",
+             "SEV_LIVE_MIGRATABLE_V2",
+             "SEV_SNP_CAPABLE",
+-            "TDX_CAPABLE",
+             "UEFI_COMPATIBLE",
+             "VIRTIO_SCSI_MULTIQUEUE",
+             "WINDOWS"
+@@ -50576,7 +50573,6 @@
+             "",
+             "",
+             "",
+-            "",
+             ""
+           ],
+           "type": "string"
+@@ -63090,7 +63086,7 @@
+           "type": "string"
+         },
+         "instance": {
+-          "description": "The name or a URL of a specific VM instance that the IP address belongs to. This is required for network endpoints of type GCE_VM_IP_PORT. The instance must be in the same zone of network endpoint group (for zonal NEGs) or in the zone within the region of the NEG (for regional NEGs). The name must be 1-63 characters long, and comply with RFC1035 or be a valid URL pointing to an existing instance.",
++          "description": "The name for a specific VM instance that the IP address belongs to. This is required for network endpoints of type GCE_VM_IP_PORT. The instance must be in the same zone of network endpoint group. The name must be 1-63 characters long, and comply with RFC1035.",
+           "type": "string"
+         },
+         "ipAddress": {
+diff --git a/vendor/google.golang.org/api/compute/v0.beta/compute-gen.go b/vendor/google.golang.org/api/compute/v0.beta/compute-gen.go
+index 7df460d5..de85ef9e 100644
+--- a/vendor/google.golang.org/api/compute/v0.beta/compute-gen.go
++++ b/vendor/google.golang.org/api/compute/v0.beta/compute-gen.go
+@@ -9367,7 +9367,6 @@ type ConfidentialInstanceConfig struct {
+ 	//   "SEV" - AMD Secure Encrypted Virtualization.
+ 	//   "SEV_SNP" - AMD Secure Encrypted Virtualization - Secure Nested
+ 	// Paging.
+-	//   "TDX" - Intel Trust Domain eXtension.
+ 	ConfidentialInstanceType string `json:"confidentialInstanceType,omitempty"`
+ 
+ 	// EnableConfidentialCompute: Defines whether the instance should have
+@@ -14058,13 +14057,15 @@ type ForwardingRule struct {
+ 	// protocol requires allPorts be set to true.
+ 	AllPorts bool `json:"allPorts,omitempty"`
+ 
+-	// AllowGlobalAccess: If set to true, clients can access the internal
+-	// passthrough Network Load Balancers, the regional internal Application
+-	// Load Balancer, and the regional internal proxy Network Load Balancer
+-	// from all regions. If false, only allows access from the local region
+-	// the load balancer is located at. Note that for INTERNAL_MANAGED
+-	// forwarding rules, this field cannot be changed after the forwarding
+-	// rule is created.
++	// AllowGlobalAccess: This field is used along with the backend_service
++	// field for internal load balancing or with the target field for
++	// internal TargetInstance. If set to true, clients can access the
++	// internal passthrough Network Load Balancers, the regional internal
++	// Application Load Balancer, and the regional internal proxy Network
++	// Load Balancer from all regions. If false, only allows access from the
++	// local region the load balancer is located at. Note that for
++	// INTERNAL_MANAGED forwarding rules, this field cannot be changed after
++	// the forwarding rule is created.
+ 	AllowGlobalAccess bool `json:"allowGlobalAccess,omitempty"`
+ 
+ 	// AllowPscGlobalAccess: This is used in PSC consumer ForwardingRule to
+@@ -16390,8 +16391,8 @@ type GuestOsFeature struct {
+ 	// commas to separate values. Set to one or more of the following
+ 	// values: - VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET -
+ 	// UEFI_COMPATIBLE - GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE -
+-	// SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - TDX_CAPABLE - IDPF For more
+-	// information, see Enabling guest operating system features.
++	// SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - IDPF For more information,
++	// see Enabling guest operating system features.
+ 	//
+ 	// Possible values:
+ 	//   "FEATURE_TYPE_UNSPECIFIED"
+@@ -16403,7 +16404,6 @@ type GuestOsFeature struct {
+ 	//   "SEV_LIVE_MIGRATABLE"
+ 	//   "SEV_LIVE_MIGRATABLE_V2"
+ 	//   "SEV_SNP_CAPABLE"
+-	//   "TDX_CAPABLE"
+ 	//   "UEFI_COMPATIBLE"
+ 	//   "VIRTIO_SCSI_MULTIQUEUE"
+ 	//   "WINDOWS"
+@@ -34332,13 +34332,11 @@ type NetworkEndpoint struct {
+ 	// is NON_GCP_FQDN_PORT.
+ 	Fqdn string `json:"fqdn,omitempty"`
+ 
+-	// Instance: The name or a URL of a specific VM instance that the IP
+-	// address belongs to. This is required for network endpoints of type
++	// Instance: The name for a specific VM instance that the IP address
++	// belongs to. This is required for network endpoints of type
+ 	// GCE_VM_IP_PORT. The instance must be in the same zone of network
+-	// endpoint group (for zonal NEGs) or in the zone within the region of
+-	// the NEG (for regional NEGs). The name must be 1-63 characters long,
+-	// and comply with RFC1035 or be a valid URL pointing to an existing
+-	// instance.
++	// endpoint group. The name must be 1-63 characters long, and comply
++	// with RFC1035.
+ 	Instance string `json:"instance,omitempty"`
+ 
+ 	// IpAddress: Optional IPv4 address of network endpoint. The IP address
+diff --git a/vendor/google.golang.org/api/compute/v1/compute-api.json b/vendor/google.golang.org/api/compute/v1/compute-api.json
+index 92948da6..60b8fc39 100644
+--- a/vendor/google.golang.org/api/compute/v1/compute-api.json
++++ b/vendor/google.golang.org/api/compute/v1/compute-api.json
+@@ -35386,7 +35386,7 @@
+       }
+     }
+   },
+-  "revision": "20240109",
++  "revision": "20231231",
+   "rootUrl": "https://compute.googleapis.com/",
+   "schemas": {
+     "AWSV4Signature": {
+@@ -43782,7 +43782,7 @@
+           "type": "boolean"
+         },
+         "allowGlobalAccess": {
+-          "description": "If set to true, clients can access the internal passthrough Network Load Balancers, the regional internal Application Load Balancer, and the regional internal proxy Network Load Balancer from all regions. If false, only allows access from the local region the load balancer is located at. Note that for INTERNAL_MANAGED forwarding rules, this field cannot be changed after the forwarding rule is created.",
++          "description": "This field is used along with the backend_service field for internal load balancing or with the target field for internal TargetInstance. If set to true, clients can access the internal passthrough Network Load Balancers, the regional internal Application Load Balancer, and the regional internal proxy Network Load Balancer from all regions. If false, only allows access from the local region the load balancer is located at. Note that for INTERNAL_MANAGED forwarding rules, this field cannot be changed after the forwarding rule is created.",
+           "type": "boolean"
+         },
+         "allowPscGlobalAccess": {
+@@ -44660,7 +44660,7 @@
+       "id": "GuestOsFeature",
+       "properties": {
+         "type": {
+-          "description": "The ID of a supported feature. To add multiple values, use commas to separate values. Set to one or more of the following values: - VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET - UEFI_COMPATIBLE - GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE - SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - TDX_CAPABLE - IDPF For more information, see Enabling guest operating system features.",
++          "description": "The ID of a supported feature. To add multiple values, use commas to separate values. Set to one or more of the following values: - VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET - UEFI_COMPATIBLE - GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE - SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - IDPF For more information, see Enabling guest operating system features.",
+           "enum": [
+             "FEATURE_TYPE_UNSPECIFIED",
+             "GVNIC",
+@@ -55804,7 +55804,7 @@
+           "type": "string"
+         },
+         "instance": {
+-          "description": "The name or a URL of a specific VM instance that the IP address belongs to. This is required for network endpoints of type GCE_VM_IP_PORT. The instance must be in the same zone of network endpoint group (for zonal NEGs) or in the zone within the region of the NEG (for regional NEGs). The name must be 1-63 characters long, and comply with RFC1035 or be a valid URL pointing to an existing instance.",
++          "description": "The name for a specific VM instance that the IP address belongs to. This is required for network endpoints of type GCE_VM_IP_PORT. The instance must be in the same zone of network endpoint group. The name must be 1-63 characters long, and comply with RFC1035.",
+           "type": "string"
+         },
+         "ipAddress": {
+diff --git a/vendor/google.golang.org/api/compute/v1/compute-gen.go b/vendor/google.golang.org/api/compute/v1/compute-gen.go
+index 071ce572..954688cd 100644
+--- a/vendor/google.golang.org/api/compute/v1/compute-gen.go
++++ b/vendor/google.golang.org/api/compute/v1/compute-gen.go
+@@ -13565,13 +13565,15 @@ type ForwardingRule struct {
+ 	// protocol requires allPorts be set to true.
+ 	AllPorts bool `json:"allPorts,omitempty"`
+ 
+-	// AllowGlobalAccess: If set to true, clients can access the internal
+-	// passthrough Network Load Balancers, the regional internal Application
+-	// Load Balancer, and the regional internal proxy Network Load Balancer
+-	// from all regions. If false, only allows access from the local region
+-	// the load balancer is located at. Note that for INTERNAL_MANAGED
+-	// forwarding rules, this field cannot be changed after the forwarding
+-	// rule is created.
++	// AllowGlobalAccess: This field is used along with the backend_service
++	// field for internal load balancing or with the target field for
++	// internal TargetInstance. If set to true, clients can access the
++	// internal passthrough Network Load Balancers, the regional internal
++	// Application Load Balancer, and the regional internal proxy Network
++	// Load Balancer from all regions. If false, only allows access from the
++	// local region the load balancer is located at. Note that for
++	// INTERNAL_MANAGED forwarding rules, this field cannot be changed after
++	// the forwarding rule is created.
+ 	AllowGlobalAccess bool `json:"allowGlobalAccess,omitempty"`
+ 
+ 	// AllowPscGlobalAccess: This is used in PSC consumer ForwardingRule to
+@@ -14898,8 +14900,8 @@ type GuestOsFeature struct {
+ 	// commas to separate values. Set to one or more of the following
+ 	// values: - VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET -
+ 	// UEFI_COMPATIBLE - GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE -
+-	// SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - TDX_CAPABLE - IDPF For more
+-	// information, see Enabling guest operating system features.
++	// SEV_LIVE_MIGRATABLE - SEV_SNP_CAPABLE - IDPF For more information,
++	// see Enabling guest operating system features.
+ 	//
+ 	// Possible values:
+ 	//   "FEATURE_TYPE_UNSPECIFIED"
+@@ -30741,13 +30743,11 @@ type NetworkEndpoint struct {
+ 	// is NON_GCP_FQDN_PORT.
+ 	Fqdn string `json:"fqdn,omitempty"`
+ 
+-	// Instance: The name or a URL of a specific VM instance that the IP
+-	// address belongs to. This is required for network endpoints of type
++	// Instance: The name for a specific VM instance that the IP address
++	// belongs to. This is required for network endpoints of type
+ 	// GCE_VM_IP_PORT. The instance must be in the same zone of network
+-	// endpoint group (for zonal NEGs) or in the zone within the region of
+-	// the NEG (for regional NEGs). The name must be 1-63 characters long,
+-	// and comply with RFC1035 or be a valid URL pointing to an existing
+-	// instance.
++	// endpoint group. The name must be 1-63 characters long, and comply
++	// with RFC1035.
+ 	Instance string `json:"instance,omitempty"`
+ 
+ 	// IpAddress: Optional IPv4 address of network endpoint. The IP address
+diff --git a/vendor/google.golang.org/api/internal/version.go b/vendor/google.golang.org/api/internal/version.go
+index 88c15fa9..8ecad354 100644
+--- a/vendor/google.golang.org/api/internal/version.go
++++ b/vendor/google.golang.org/api/internal/version.go
+@@ -5,4 +5,4 @@
+ package internal
+ 
+ // Version is the current tagged release of the library.
+-const Version = "0.157.0"
++const Version = "0.156.0"
+diff --git a/vendor/google.golang.org/api/option/internaloption/internaloption.go b/vendor/google.golang.org/api/option/internaloption/internaloption.go
+index e6b5c102..c15be9fa 100644
+--- a/vendor/google.golang.org/api/option/internaloption/internaloption.go
++++ b/vendor/google.golang.org/api/option/internaloption/internaloption.go
+@@ -38,10 +38,7 @@ func (o defaultEndpointTemplateOption) Apply(settings *internal.DialSettings) {
+ 
+ // WithDefaultEndpointTemplate provides a template for creating the endpoint
+ // using a universe domain. See also WithDefaultUniverseDomain and
+-// option.WithUniverseDomain. The placeholder UNIVERSE_DOMAIN should be used
+-// instead of a concrete universe domain such as "googleapis.com".
+-//
+-// Example: WithDefaultEndpointTemplate("https://logging.UNIVERSE_DOMAIN/")
++// option.WithUniverseDomain.
+ //
+ // It should only be used internally by generated clients.
+ func WithDefaultEndpointTemplate(url string) option.ClientOption {
+@@ -166,11 +163,6 @@ func (w withDefaultUniverseDomain) Apply(o *internal.DialSettings) {
+ 
+ // EnableJwtWithScope returns a ClientOption that specifies if scope can be used
+ // with self-signed JWT.
+-//
+-// EnableJwtWithScope is ignored when option.WithUniverseDomain is set
+-// to a value other than the Google Default Universe (GDU) of "googleapis.com".
+-// For non-GDU domains, token exchange is impossible and services must
+-// support self-signed JWTs with scopes.
+ func EnableJwtWithScope() option.ClientOption {
+ 	return enableJwtWithScope(true)
+ }
+diff --git a/vendor/k8s.io/klog/v2/.golangci.yaml b/vendor/k8s.io/klog/v2/.golangci.yaml
+new file mode 100644
+index 00000000..0d77d65f
+--- /dev/null
++++ b/vendor/k8s.io/klog/v2/.golangci.yaml
+@@ -0,0 +1,6 @@
++linters:
++  disable-all: true
++  enable: # sorted alphabetical
++    - gofmt
++    - misspell
++    - revive
+diff --git a/vendor/k8s.io/klog/v2/OWNERS b/vendor/k8s.io/klog/v2/OWNERS
+index a2fe8f35..7500475a 100644
+--- a/vendor/k8s.io/klog/v2/OWNERS
++++ b/vendor/k8s.io/klog/v2/OWNERS
+@@ -1,14 +1,16 @@
+ # See the OWNERS docs at https://go.k8s.io/owners
+ reviewers:
+   - harshanarayana
++  - mengjiao-liu
+   - pohly
+ approvers:
+   - dims
++  - pohly
+   - thockin
+-  - serathius
+ emeritus_approvers:
+   - brancz
+   - justinsb
+   - lavalamp
+   - piosz
++  - serathius
+   - tallclair
+diff --git a/vendor/k8s.io/klog/v2/contextual_slog.go b/vendor/k8s.io/klog/v2/contextual_slog.go
+new file mode 100644
+index 00000000..d3b56252
+--- /dev/null
++++ b/vendor/k8s.io/klog/v2/contextual_slog.go
+@@ -0,0 +1,31 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2021 The Kubernetes Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package klog
++
++import (
++	"log/slog"
++
++	"github.com/go-logr/logr"
++)
++
++// SetSlogLogger reconfigures klog to log through the slog logger. The logger must not be nil.
++func SetSlogLogger(logger *slog.Logger) {
++	SetLoggerWithOptions(logr.FromSlogHandler(logger.Handler()), ContextualLogger(true))
++}
+diff --git a/vendor/k8s.io/klog/v2/internal/buffer/buffer.go b/vendor/k8s.io/klog/v2/internal/buffer/buffer.go
+index f325ded5..46de00fb 100644
+--- a/vendor/k8s.io/klog/v2/internal/buffer/buffer.go
++++ b/vendor/k8s.io/klog/v2/internal/buffer/buffer.go
+@@ -30,14 +30,16 @@ import (
+ var (
+ 	// Pid is inserted into log headers. Can be overridden for tests.
+ 	Pid = os.Getpid()
++
++	// Time, if set, will be used instead of the actual current time.
++	Time *time.Time
+ )
+ 
+ // Buffer holds a single byte.Buffer for reuse. The zero value is ready for
+ // use. It also provides some helper methods for output formatting.
+ type Buffer struct {
+ 	bytes.Buffer
+-	Tmp  [64]byte // temporary byte array for creating headers.
+-	next *Buffer
++	Tmp [64]byte // temporary byte array for creating headers.
+ }
+ 
+ var buffers = sync.Pool{
+@@ -122,6 +124,9 @@ func (buf *Buffer) FormatHeader(s severity.Severity, file string, line int, now
+ 
+ 	// Avoid Fprintf, for speed. The format is so simple that we can do it quickly by hand.
+ 	// It's worth about 3X. Fprintf is hard.
++	if Time != nil {
++		now = *Time
++	}
+ 	_, month, day := now.Date()
+ 	hour, minute, second := now.Clock()
+ 	// Lmmdd hh:mm:ss.uuuuuu threadid file:line]
+@@ -157,6 +162,9 @@ func (buf *Buffer) SprintHeader(s severity.Severity, now time.Time) string {
+ 
+ 	// Avoid Fprintf, for speed. The format is so simple that we can do it quickly by hand.
+ 	// It's worth about 3X. Fprintf is hard.
++	if Time != nil {
++		now = *Time
++	}
+ 	_, month, day := now.Date()
+ 	hour, minute, second := now.Clock()
+ 	// Lmmdd hh:mm:ss.uuuuuu threadid file:line]
+diff --git a/vendor/k8s.io/klog/v2/internal/clock/clock.go b/vendor/k8s.io/klog/v2/internal/clock/clock.go
+index b8b6af5c..cc11bb48 100644
+--- a/vendor/k8s.io/klog/v2/internal/clock/clock.go
++++ b/vendor/k8s.io/klog/v2/internal/clock/clock.go
+@@ -39,16 +39,6 @@ type Clock interface {
+ 	// Sleep sleeps for the provided duration d.
+ 	// Consider making the sleep interruptible by using 'select' on a context channel and a timer channel.
+ 	Sleep(d time.Duration)
+-	// Tick returns the channel of a new Ticker.
+-	// This method does not allow to free/GC the backing ticker. Use
+-	// NewTicker from WithTicker instead.
+-	Tick(d time.Duration) <-chan time.Time
+-}
+-
+-// WithTicker allows for injecting fake or real clocks into code that
+-// needs to do arbitrary things based on time.
+-type WithTicker interface {
+-	Clock
+ 	// NewTicker returns a new Ticker.
+ 	NewTicker(time.Duration) Ticker
+ }
+@@ -66,7 +56,7 @@ type WithDelayedExecution interface {
+ // WithTickerAndDelayedExecution allows for injecting fake or real clocks
+ // into code that needs Ticker and AfterFunc functionality
+ type WithTickerAndDelayedExecution interface {
+-	WithTicker
++	Clock
+ 	// AfterFunc executes f in its own goroutine after waiting
+ 	// for d duration and returns a Timer whose channel can be
+ 	// closed by calling Stop() on the Timer.
+@@ -79,7 +69,7 @@ type Ticker interface {
+ 	Stop()
+ }
+ 
+-var _ = WithTicker(RealClock{})
++var _ Clock = RealClock{}
+ 
+ // RealClock really calls time.Now()
+ type RealClock struct{}
+@@ -115,13 +105,6 @@ func (RealClock) AfterFunc(d time.Duration, f func()) Timer {
+ 	}
+ }
+ 
+-// Tick is the same as time.Tick(d)
+-// This method does not allow to free/GC the backing ticker. Use
+-// NewTicker instead.
+-func (RealClock) Tick(d time.Duration) <-chan time.Time {
+-	return time.Tick(d)
+-}
+-
+ // NewTicker returns a new Ticker.
+ func (RealClock) NewTicker(d time.Duration) Ticker {
+ 	return &realTicker{
+diff --git a/vendor/k8s.io/klog/v2/internal/serialize/keyvalues.go b/vendor/k8s.io/klog/v2/internal/serialize/keyvalues.go
+index bcdf5f8e..d1a4751c 100644
+--- a/vendor/k8s.io/klog/v2/internal/serialize/keyvalues.go
++++ b/vendor/k8s.io/klog/v2/internal/serialize/keyvalues.go
+@@ -172,73 +172,6 @@ func KVListFormat(b *bytes.Buffer, keysAndValues ...interface{}) {
+ 	Formatter{}.KVListFormat(b, keysAndValues...)
+ }
+ 
+-// KVFormat serializes one key/value pair into the provided buffer.
+-// A space gets inserted before the pair.
+-func (f Formatter) KVFormat(b *bytes.Buffer, k, v interface{}) {
+-	b.WriteByte(' ')
+-	// Keys are assumed to be well-formed according to
+-	// https://github.com/kubernetes/community/blob/master/contributors/devel/sig-instrumentation/migration-to-structured-logging.md#name-arguments
+-	// for the sake of performance. Keys with spaces,
+-	// special characters, etc. will break parsing.
+-	if sK, ok := k.(string); ok {
+-		// Avoid one allocation when the key is a string, which
+-		// normally it should be.
+-		b.WriteString(sK)
+-	} else {
+-		b.WriteString(fmt.Sprintf("%s", k))
+-	}
+-
+-	// The type checks are sorted so that more frequently used ones
+-	// come first because that is then faster in the common
+-	// cases. In Kubernetes, ObjectRef (a Stringer) is more common
+-	// than plain strings
+-	// (https://github.com/kubernetes/kubernetes/pull/106594#issuecomment-975526235).
+-	switch v := v.(type) {
+-	case textWriter:
+-		writeTextWriterValue(b, v)
+-	case fmt.Stringer:
+-		writeStringValue(b, StringerToString(v))
+-	case string:
+-		writeStringValue(b, v)
+-	case error:
+-		writeStringValue(b, ErrorToString(v))
+-	case logr.Marshaler:
+-		value := MarshalerToValue(v)
+-		// A marshaler that returns a string is useful for
+-		// delayed formatting of complex values. We treat this
+-		// case like a normal string. This is useful for
+-		// multi-line support.
+-		//
+-		// We could do this by recursively formatting a value,
+-		// but that comes with the risk of infinite recursion
+-		// if a marshaler returns itself. Instead we call it
+-		// only once and rely on it returning the intended
+-		// value directly.
+-		switch value := value.(type) {
+-		case string:
+-			writeStringValue(b, value)
+-		default:
+-			f.formatAny(b, value)
+-		}
+-	case []byte:
+-		// In https://github.com/kubernetes/klog/pull/237 it was decided
+-		// to format byte slices with "%+q". The advantages of that are:
+-		// - readable output if the bytes happen to be printable
+-		// - non-printable bytes get represented as unicode escape
+-		//   sequences (\uxxxx)
+-		//
+-		// The downsides are that we cannot use the faster
+-		// strconv.Quote here and that multi-line output is not
+-		// supported. If developers know that a byte array is
+-		// printable and they want multi-line output, they can
+-		// convert the value to string before logging it.
+-		b.WriteByte('=')
+-		b.WriteString(fmt.Sprintf("%+q", v))
+-	default:
+-		f.formatAny(b, v)
+-	}
+-}
+-
+ func KVFormat(b *bytes.Buffer, k, v interface{}) {
+ 	Formatter{}.KVFormat(b, k, v)
+ }
+@@ -251,6 +184,10 @@ func (f Formatter) formatAny(b *bytes.Buffer, v interface{}) {
+ 		b.WriteString(f.AnyToStringHook(v))
+ 		return
+ 	}
++	formatAsJSON(b, v)
++}
++
++func formatAsJSON(b *bytes.Buffer, v interface{}) {
+ 	encoder := json.NewEncoder(b)
+ 	l := b.Len()
+ 	if err := encoder.Encode(v); err != nil {
+diff --git a/vendor/k8s.io/klog/v2/internal/serialize/keyvalues_no_slog.go b/vendor/k8s.io/klog/v2/internal/serialize/keyvalues_no_slog.go
+new file mode 100644
+index 00000000..d9c7d154
+--- /dev/null
++++ b/vendor/k8s.io/klog/v2/internal/serialize/keyvalues_no_slog.go
+@@ -0,0 +1,97 @@
++//go:build !go1.21
++// +build !go1.21
++
++/*
++Copyright 2023 The Kubernetes Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package serialize
++
++import (
++	"bytes"
++	"fmt"
++
++	"github.com/go-logr/logr"
++)
++
++// KVFormat serializes one key/value pair into the provided buffer.
++// A space gets inserted before the pair.
++func (f Formatter) KVFormat(b *bytes.Buffer, k, v interface{}) {
++	// This is the version without slog support. Must be kept in sync with
++	// the version in keyvalues_slog.go.
++
++	b.WriteByte(' ')
++	// Keys are assumed to be well-formed according to
++	// https://github.com/kubernetes/community/blob/master/contributors/devel/sig-instrumentation/migration-to-structured-logging.md#name-arguments
++	// for the sake of performance. Keys with spaces,
++	// special characters, etc. will break parsing.
++	if sK, ok := k.(string); ok {
++		// Avoid one allocation when the key is a string, which
++		// normally it should be.
++		b.WriteString(sK)
++	} else {
++		b.WriteString(fmt.Sprintf("%s", k))
++	}
++
++	// The type checks are sorted so that more frequently used ones
++	// come first because that is then faster in the common
++	// cases. In Kubernetes, ObjectRef (a Stringer) is more common
++	// than plain strings
++	// (https://github.com/kubernetes/kubernetes/pull/106594#issuecomment-975526235).
++	switch v := v.(type) {
++	case textWriter:
++		writeTextWriterValue(b, v)
++	case fmt.Stringer:
++		writeStringValue(b, StringerToString(v))
++	case string:
++		writeStringValue(b, v)
++	case error:
++		writeStringValue(b, ErrorToString(v))
++	case logr.Marshaler:
++		value := MarshalerToValue(v)
++		// A marshaler that returns a string is useful for
++		// delayed formatting of complex values. We treat this
++		// case like a normal string. This is useful for
++		// multi-line support.
++		//
++		// We could do this by recursively formatting a value,
++		// but that comes with the risk of infinite recursion
++		// if a marshaler returns itself. Instead we call it
++		// only once and rely on it returning the intended
++		// value directly.
++		switch value := value.(type) {
++		case string:
++			writeStringValue(b, value)
++		default:
++			f.formatAny(b, value)
++		}
++	case []byte:
++		// In https://github.com/kubernetes/klog/pull/237 it was decided
++		// to format byte slices with "%+q". The advantages of that are:
++		// - readable output if the bytes happen to be printable
++		// - non-printable bytes get represented as unicode escape
++		//   sequences (\uxxxx)
++		//
++		// The downsides are that we cannot use the faster
++		// strconv.Quote here and that multi-line output is not
++		// supported. If developers know that a byte array is
++		// printable and they want multi-line output, they can
++		// convert the value to string before logging it.
++		b.WriteByte('=')
++		b.WriteString(fmt.Sprintf("%+q", v))
++	default:
++		f.formatAny(b, v)
++	}
++}
+diff --git a/vendor/k8s.io/klog/v2/internal/serialize/keyvalues_slog.go b/vendor/k8s.io/klog/v2/internal/serialize/keyvalues_slog.go
+new file mode 100644
+index 00000000..89acf977
+--- /dev/null
++++ b/vendor/k8s.io/klog/v2/internal/serialize/keyvalues_slog.go
+@@ -0,0 +1,155 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2023 The Kubernetes Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package serialize
++
++import (
++	"bytes"
++	"fmt"
++	"log/slog"
++	"strconv"
++
++	"github.com/go-logr/logr"
++)
++
++// KVFormat serializes one key/value pair into the provided buffer.
++// A space gets inserted before the pair.
++func (f Formatter) KVFormat(b *bytes.Buffer, k, v interface{}) {
++	// This is the version without slog support. Must be kept in sync with
++	// the version in keyvalues_slog.go.
++
++	b.WriteByte(' ')
++	// Keys are assumed to be well-formed according to
++	// https://github.com/kubernetes/community/blob/master/contributors/devel/sig-instrumentation/migration-to-structured-logging.md#name-arguments
++	// for the sake of performance. Keys with spaces,
++	// special characters, etc. will break parsing.
++	if sK, ok := k.(string); ok {
++		// Avoid one allocation when the key is a string, which
++		// normally it should be.
++		b.WriteString(sK)
++	} else {
++		b.WriteString(fmt.Sprintf("%s", k))
++	}
++
++	// The type checks are sorted so that more frequently used ones
++	// come first because that is then faster in the common
++	// cases. In Kubernetes, ObjectRef (a Stringer) is more common
++	// than plain strings
++	// (https://github.com/kubernetes/kubernetes/pull/106594#issuecomment-975526235).
++	//
++	// slog.LogValuer does not need to be handled here because the handler will
++	// already have resolved such special values to the final value for logging.
++	switch v := v.(type) {
++	case textWriter:
++		writeTextWriterValue(b, v)
++	case slog.Value:
++		// This must come before fmt.Stringer because slog.Value implements
++		// fmt.Stringer, but does not produce the output that we want.
++		b.WriteByte('=')
++		generateJSON(b, v)
++	case fmt.Stringer:
++		writeStringValue(b, StringerToString(v))
++	case string:
++		writeStringValue(b, v)
++	case error:
++		writeStringValue(b, ErrorToString(v))
++	case logr.Marshaler:
++		value := MarshalerToValue(v)
++		// A marshaler that returns a string is useful for
++		// delayed formatting of complex values. We treat this
++		// case like a normal string. This is useful for
++		// multi-line support.
++		//
++		// We could do this by recursively formatting a value,
++		// but that comes with the risk of infinite recursion
++		// if a marshaler returns itself. Instead we call it
++		// only once and rely on it returning the intended
++		// value directly.
++		switch value := value.(type) {
++		case string:
++			writeStringValue(b, value)
++		default:
++			f.formatAny(b, value)
++		}
++	case slog.LogValuer:
++		value := slog.AnyValue(v).Resolve()
++		if value.Kind() == slog.KindString {
++			writeStringValue(b, value.String())
++		} else {
++			b.WriteByte('=')
++			generateJSON(b, value)
++		}
++	case []byte:
++		// In https://github.com/kubernetes/klog/pull/237 it was decided
++		// to format byte slices with "%+q". The advantages of that are:
++		// - readable output if the bytes happen to be printable
++		// - non-printable bytes get represented as unicode escape
++		//   sequences (\uxxxx)
++		//
++		// The downsides are that we cannot use the faster
++		// strconv.Quote here and that multi-line output is not
++		// supported. If developers know that a byte array is
++		// printable and they want multi-line output, they can
++		// convert the value to string before logging it.
++		b.WriteByte('=')
++		b.WriteString(fmt.Sprintf("%+q", v))
++	default:
++		f.formatAny(b, v)
++	}
++}
++
++// generateJSON has the same preference for plain strings as KVFormat.
++// In contrast to KVFormat it always produces valid JSON with no line breaks.
++func generateJSON(b *bytes.Buffer, v interface{}) {
++	switch v := v.(type) {
++	case slog.Value:
++		switch v.Kind() {
++		case slog.KindGroup:
++			// Format as a JSON group. We must not involve f.AnyToStringHook (if there is any),
++			// because there is no guarantee that it produces valid JSON.
++			b.WriteByte('{')
++			for i, attr := range v.Group() {
++				if i > 0 {
++					b.WriteByte(',')
++				}
++				b.WriteString(strconv.Quote(attr.Key))
++				b.WriteByte(':')
++				generateJSON(b, attr.Value)
++			}
++			b.WriteByte('}')
++		case slog.KindLogValuer:
++			generateJSON(b, v.Resolve())
++		default:
++			// Peel off the slog.Value wrapper and format the actual value.
++			generateJSON(b, v.Any())
++		}
++	case fmt.Stringer:
++		b.WriteString(strconv.Quote(StringerToString(v)))
++	case logr.Marshaler:
++		generateJSON(b, MarshalerToValue(v))
++	case slog.LogValuer:
++		generateJSON(b, slog.AnyValue(v).Resolve().Any())
++	case string:
++		b.WriteString(strconv.Quote(v))
++	case error:
++		b.WriteString(strconv.Quote(v.Error()))
++	default:
++		formatAsJSON(b, v)
++	}
++}
+diff --git a/vendor/k8s.io/klog/v2/internal/sloghandler/sloghandler_slog.go b/vendor/k8s.io/klog/v2/internal/sloghandler/sloghandler_slog.go
+new file mode 100644
+index 00000000..21f1697d
+--- /dev/null
++++ b/vendor/k8s.io/klog/v2/internal/sloghandler/sloghandler_slog.go
+@@ -0,0 +1,96 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2023 The Kubernetes Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package sloghandler
++
++import (
++	"context"
++	"log/slog"
++	"runtime"
++	"strings"
++	"time"
++
++	"k8s.io/klog/v2/internal/severity"
++)
++
++func Handle(_ context.Context, record slog.Record, groups string, printWithInfos func(file string, line int, now time.Time, err error, s severity.Severity, msg string, kvList []interface{})) error {
++	now := record.Time
++	if now.IsZero() {
++		// This format doesn't support printing entries without a time.
++		now = time.Now()
++	}
++
++	// slog has numeric severity levels, with 0 as default "info", negative for debugging, and
++	// positive with some pre-defined levels for more important. Those ranges get mapped to
++	// the corresponding klog levels where possible, with "info" the default that is used
++	// also for negative debug levels.
++	level := record.Level
++	s := severity.InfoLog
++	switch {
++	case level >= slog.LevelError:
++		s = severity.ErrorLog
++	case level >= slog.LevelWarn:
++		s = severity.WarningLog
++	}
++
++	var file string
++	var line int
++	if record.PC != 0 {
++		// Same as https://cs.opensource.google/go/x/exp/+/642cacee:slog/record.go;drc=642cacee5cc05231f45555a333d07f1005ffc287;l=70
++		fs := runtime.CallersFrames([]uintptr{record.PC})
++		f, _ := fs.Next()
++		if f.File != "" {
++			file = f.File
++			if slash := strings.LastIndex(file, "/"); slash >= 0 {
++				file = file[slash+1:]
++			}
++			line = f.Line
++		}
++	} else {
++		file = "???"
++		line = 1
++	}
++
++	kvList := make([]interface{}, 0, 2*record.NumAttrs())
++	record.Attrs(func(attr slog.Attr) bool {
++		kvList = appendAttr(groups, kvList, attr)
++		return true
++	})
++
++	printWithInfos(file, line, now, nil, s, record.Message, kvList)
++	return nil
++}
++
++func Attrs2KVList(groups string, attrs []slog.Attr) []interface{} {
++	kvList := make([]interface{}, 0, 2*len(attrs))
++	for _, attr := range attrs {
++		kvList = appendAttr(groups, kvList, attr)
++	}
++	return kvList
++}
++
++func appendAttr(groups string, kvList []interface{}, attr slog.Attr) []interface{} {
++	var key string
++	if groups != "" {
++		key = groups + "." + attr.Key
++	} else {
++		key = attr.Key
++	}
++	return append(kvList, key, attr.Value)
++}
+diff --git a/vendor/k8s.io/klog/v2/k8s_references_slog.go b/vendor/k8s.io/klog/v2/k8s_references_slog.go
+new file mode 100644
+index 00000000..5522c84c
+--- /dev/null
++++ b/vendor/k8s.io/klog/v2/k8s_references_slog.go
+@@ -0,0 +1,39 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2021 The Kubernetes Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package klog
++
++import (
++	"log/slog"
++)
++
++func (ref ObjectRef) LogValue() slog.Value {
++	if ref.Namespace != "" {
++		return slog.GroupValue(slog.String("name", ref.Name), slog.String("namespace", ref.Namespace))
++	}
++	return slog.GroupValue(slog.String("name", ref.Name))
++}
++
++var _ slog.LogValuer = ObjectRef{}
++
++func (ks kobjSlice) LogValue() slog.Value {
++	return slog.AnyValue(ks.MarshalLog())
++}
++
++var _ slog.LogValuer = kobjSlice{}
+diff --git a/vendor/k8s.io/klog/v2/klog.go b/vendor/k8s.io/klog/v2/klog.go
+index 152f8a6b..026be9e3 100644
+--- a/vendor/k8s.io/klog/v2/klog.go
++++ b/vendor/k8s.io/klog/v2/klog.go
+@@ -14,9 +14,26 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-// Package klog implements logging analogous to the Google-internal C++ INFO/ERROR/V setup.
+-// It provides functions Info, Warning, Error, Fatal, plus formatting variants such as
+-// Infof. It also provides V-style logging controlled by the -v and -vmodule=file=2 flags.
++// Package klog contains the following functionality:
++//
++//   - output routing as defined via command line flags ([InitFlags])
++//   - log formatting as text, either with a single, unstructured string ([Info], [Infof], etc.)
++//     or as a structured log entry with message and key/value pairs ([InfoS], etc.)
++//   - management of a go-logr [Logger] ([SetLogger], [Background], [TODO])
++//   - helper functions for logging values ([Format]) and managing the state of klog ([CaptureState], [State.Restore])
++//   - wrappers for [logr] APIs for contextual logging where the wrappers can
++//     be turned into no-ops ([EnableContextualLogging], [NewContext], [FromContext],
++//     [LoggerWithValues], [LoggerWithName]); if the ability to turn off
++//     contextual logging is not needed, then go-logr can also be used directly
++//   - type aliases for go-logr types to simplify imports in code which uses both (e.g. [Logger])
++//   - [k8s.io/klog/v2/textlogger]: a logger which uses the same formatting as klog log with
++//     simpler output routing; beware that it comes with its own command line flags
++//     and does not use the ones from klog
++//   - [k8s.io/klog/v2/ktesting]: per-test output in Go unit tests
++//   - [k8s.io/klog/v2/klogr]: a deprecated, standalone [logr.Logger] on top of the main klog package;
++//     use [Background] instead if klog output routing is needed, [k8s.io/klog/v2/textlogger] if not
++//   - [k8s.io/klog/v2/examples]: demos of this functionality
++//   - [k8s.io/klog/v2/test]: reusable tests for [logr.Logger] implementations
+ //
+ // Basic examples:
+ //
+@@ -415,7 +432,7 @@ func init() {
+ 	logging.stderrThreshold = severityValue{
+ 		Severity: severity.ErrorLog, // Default stderrThreshold is ERROR.
+ 	}
+-	commandLine.Var(&logging.stderrThreshold, "stderrthreshold", "logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false)")
++	commandLine.Var(&logging.stderrThreshold, "stderrthreshold", "logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true)")
+ 	commandLine.Var(&logging.vmodule, "vmodule", "comma-separated list of pattern=N settings for file-filtered logging")
+ 	commandLine.Var(&logging.traceLocation, "log_backtrace_at", "when logging hits line file:N, emit a stack trace")
+ 
+@@ -518,9 +535,7 @@ type settings struct {
+ func (s settings) deepCopy() settings {
+ 	// vmodule is a slice and would be shared, so we have copy it.
+ 	filter := make([]modulePat, len(s.vmodule.filter))
+-	for i := range s.vmodule.filter {
+-		filter[i] = s.vmodule.filter[i]
+-	}
++	copy(filter, s.vmodule.filter)
+ 	s.vmodule.filter = filter
+ 
+ 	if s.logger != nil {
+@@ -657,16 +672,15 @@ func (l *loggingT) header(s severity.Severity, depth int) (*buffer.Buffer, strin
+ 			}
+ 		}
+ 	}
+-	return l.formatHeader(s, file, line), file, line
++	return l.formatHeader(s, file, line, timeNow()), file, line
+ }
+ 
+ // formatHeader formats a log header using the provided file name and line number.
+-func (l *loggingT) formatHeader(s severity.Severity, file string, line int) *buffer.Buffer {
++func (l *loggingT) formatHeader(s severity.Severity, file string, line int, now time.Time) *buffer.Buffer {
+ 	buf := buffer.GetBuffer()
+ 	if l.skipHeaders {
+ 		return buf
+ 	}
+-	now := timeNow()
+ 	buf.FormatHeader(s, file, line, now)
+ 	return buf
+ }
+@@ -676,6 +690,10 @@ func (l *loggingT) println(s severity.Severity, logger *logWriter, filter LogFil
+ }
+ 
+ func (l *loggingT) printlnDepth(s severity.Severity, logger *logWriter, filter LogFilter, depth int, args ...interface{}) {
++	if false {
++		_ = fmt.Sprintln(args...) // cause vet to treat this function like fmt.Println
++	}
++
+ 	buf, file, line := l.header(s, depth)
+ 	// If a logger is set and doesn't support writing a formatted buffer,
+ 	// we clear the generated header as we rely on the backing
+@@ -696,7 +714,15 @@ func (l *loggingT) print(s severity.Severity, logger *logWriter, filter LogFilte
+ }
+ 
+ func (l *loggingT) printDepth(s severity.Severity, logger *logWriter, filter LogFilter, depth int, args ...interface{}) {
++	if false {
++		_ = fmt.Sprint(args...) //  // cause vet to treat this function like fmt.Print
++	}
++
+ 	buf, file, line := l.header(s, depth)
++	l.printWithInfos(buf, file, line, s, logger, filter, depth+1, args...)
++}
++
++func (l *loggingT) printWithInfos(buf *buffer.Buffer, file string, line int, s severity.Severity, logger *logWriter, filter LogFilter, depth int, args ...interface{}) {
+ 	// If a logger is set and doesn't support writing a formatted buffer,
+ 	// we clear the generated header as we rely on the backing
+ 	// logger implementation to print headers.
+@@ -719,6 +745,10 @@ func (l *loggingT) printf(s severity.Severity, logger *logWriter, filter LogFilt
+ }
+ 
+ func (l *loggingT) printfDepth(s severity.Severity, logger *logWriter, filter LogFilter, depth int, format string, args ...interface{}) {
++	if false {
++		_ = fmt.Sprintf(format, args...) // cause vet to treat this function like fmt.Printf
++	}
++
+ 	buf, file, line := l.header(s, depth)
+ 	// If a logger is set and doesn't support writing a formatted buffer,
+ 	// we clear the generated header as we rely on the backing
+@@ -741,7 +771,7 @@ func (l *loggingT) printfDepth(s severity.Severity, logger *logWriter, filter Lo
+ // alsoLogToStderr is true, the log message always appears on standard error; it
+ // will also appear in the log file unless --logtostderr is set.
+ func (l *loggingT) printWithFileLine(s severity.Severity, logger *logWriter, filter LogFilter, file string, line int, alsoToStderr bool, args ...interface{}) {
+-	buf := l.formatHeader(s, file, line)
++	buf := l.formatHeader(s, file, line, timeNow())
+ 	// If a logger is set and doesn't support writing a formatted buffer,
+ 	// we clear the generated header as we rely on the backing
+ 	// logger implementation to print headers.
+@@ -759,7 +789,7 @@ func (l *loggingT) printWithFileLine(s severity.Severity, logger *logWriter, fil
+ 	l.output(s, logger, buf, 2 /* depth */, file, line, alsoToStderr)
+ }
+ 
+-// if loggr is specified, will call loggr.Error, otherwise output with logging module.
++// if logger is specified, will call logger.Error, otherwise output with logging module.
+ func (l *loggingT) errorS(err error, logger *logWriter, filter LogFilter, depth int, msg string, keysAndValues ...interface{}) {
+ 	if filter != nil {
+ 		msg, keysAndValues = filter.FilterS(msg, keysAndValues)
+@@ -771,7 +801,7 @@ func (l *loggingT) errorS(err error, logger *logWriter, filter LogFilter, depth
+ 	l.printS(err, severity.ErrorLog, depth+1, msg, keysAndValues...)
+ }
+ 
+-// if loggr is specified, will call loggr.Info, otherwise output with logging module.
++// if logger is specified, will call logger.Info, otherwise output with logging module.
+ func (l *loggingT) infoS(logger *logWriter, filter LogFilter, depth int, msg string, keysAndValues ...interface{}) {
+ 	if filter != nil {
+ 		msg, keysAndValues = filter.FilterS(msg, keysAndValues)
+@@ -783,7 +813,7 @@ func (l *loggingT) infoS(logger *logWriter, filter LogFilter, depth int, msg str
+ 	l.printS(nil, severity.InfoLog, depth+1, msg, keysAndValues...)
+ }
+ 
+-// printS is called from infoS and errorS if loggr is not specified.
++// printS is called from infoS and errorS if logger is not specified.
+ // set log severity by s
+ func (l *loggingT) printS(err error, s severity.Severity, depth int, msg string, keysAndValues ...interface{}) {
+ 	// Only create a new buffer if we don't have one cached.
+@@ -796,7 +826,7 @@ func (l *loggingT) printS(err error, s severity.Severity, depth int, msg string,
+ 		serialize.KVListFormat(&b.Buffer, "err", err)
+ 	}
+ 	serialize.KVListFormat(&b.Buffer, keysAndValues...)
+-	l.printDepth(s, logging.logger, nil, depth+1, &b.Buffer)
++	l.printDepth(s, nil, nil, depth+1, &b.Buffer)
+ 	// Make the buffer available for reuse.
+ 	buffer.PutBuffer(b)
+ }
+@@ -873,6 +903,9 @@ func (l *loggingT) output(s severity.Severity, logger *logWriter, buf *buffer.Bu
+ 		if logger.writeKlogBuffer != nil {
+ 			logger.writeKlogBuffer(data)
+ 		} else {
++			if len(data) > 0 && data[len(data)-1] == '\n' {
++				data = data[:len(data)-1]
++			}
+ 			// TODO: set 'severity' and caller information as structured log info
+ 			// keysAndValues := []interface{}{"severity", severityName[s], "file", file, "line", line}
+ 			if s == severity.ErrorLog {
+@@ -897,7 +930,7 @@ func (l *loggingT) output(s severity.Severity, logger *logWriter, buf *buffer.Bu
+ 					l.exit(err)
+ 				}
+ 			}
+-			l.file[severity.InfoLog].Write(data)
++			_, _ = l.file[severity.InfoLog].Write(data)
+ 		} else {
+ 			if l.file[s] == nil {
+ 				if err := l.createFiles(s); err != nil {
+@@ -907,20 +940,20 @@ func (l *loggingT) output(s severity.Severity, logger *logWriter, buf *buffer.Bu
+ 			}
+ 
+ 			if l.oneOutput {
+-				l.file[s].Write(data)
++				_, _ = l.file[s].Write(data)
+ 			} else {
+ 				switch s {
+ 				case severity.FatalLog:
+-					l.file[severity.FatalLog].Write(data)
++					_, _ = l.file[severity.FatalLog].Write(data)
+ 					fallthrough
+ 				case severity.ErrorLog:
+-					l.file[severity.ErrorLog].Write(data)
++					_, _ = l.file[severity.ErrorLog].Write(data)
+ 					fallthrough
+ 				case severity.WarningLog:
+-					l.file[severity.WarningLog].Write(data)
++					_, _ = l.file[severity.WarningLog].Write(data)
+ 					fallthrough
+ 				case severity.InfoLog:
+-					l.file[severity.InfoLog].Write(data)
++					_, _ = l.file[severity.InfoLog].Write(data)
+ 				}
+ 			}
+ 		}
+@@ -946,7 +979,7 @@ func (l *loggingT) output(s severity.Severity, logger *logWriter, buf *buffer.Bu
+ 		logExitFunc = func(error) {} // If we get a write error, we'll still exit below.
+ 		for log := severity.FatalLog; log >= severity.InfoLog; log-- {
+ 			if f := l.file[log]; f != nil { // Can be nil if -logtostderr is set.
+-				f.Write(trace)
++				_, _ = f.Write(trace)
+ 			}
+ 		}
+ 		l.mu.Unlock()
+@@ -1102,7 +1135,7 @@ const flushInterval = 5 * time.Second
+ // flushDaemon periodically flushes the log file buffers.
+ type flushDaemon struct {
+ 	mu       sync.Mutex
+-	clock    clock.WithTicker
++	clock    clock.Clock
+ 	flush    func()
+ 	stopC    chan struct{}
+ 	stopDone chan struct{}
+@@ -1110,7 +1143,7 @@ type flushDaemon struct {
+ 
+ // newFlushDaemon returns a new flushDaemon. If the passed clock is nil, a
+ // clock.RealClock is used.
+-func newFlushDaemon(flush func(), tickClock clock.WithTicker) *flushDaemon {
++func newFlushDaemon(flush func(), tickClock clock.Clock) *flushDaemon {
+ 	if tickClock == nil {
+ 		tickClock = clock.RealClock{}
+ 	}
+@@ -1201,8 +1234,8 @@ func (l *loggingT) flushAll() {
+ 	for s := severity.FatalLog; s >= severity.InfoLog; s-- {
+ 		file := l.file[s]
+ 		if file != nil {
+-			file.Flush() // ignore error
+-			file.Sync()  // ignore error
++			_ = file.Flush() // ignore error
++			_ = file.Sync()  // ignore error
+ 		}
+ 	}
+ 	if logging.loggerOptions.flush != nil {
+@@ -1281,9 +1314,7 @@ func (l *loggingT) setV(pc uintptr) Level {
+ 	fn := runtime.FuncForPC(pc)
+ 	file, _ := fn.FileLine(pc)
+ 	// The file is something like /a/b/c/d.go. We want just the d.
+-	if strings.HasSuffix(file, ".go") {
+-		file = file[:len(file)-3]
+-	}
++	file = strings.TrimSuffix(file, ".go")
+ 	if slash := strings.LastIndex(file, "/"); slash >= 0 {
+ 		file = file[slash+1:]
+ 	}
+diff --git a/vendor/k8s.io/klog/v2/klog_file.go b/vendor/k8s.io/klog/v2/klog_file.go
+index 1025d644..8bee1620 100644
+--- a/vendor/k8s.io/klog/v2/klog_file.go
++++ b/vendor/k8s.io/klog/v2/klog_file.go
+@@ -109,8 +109,8 @@ func create(tag string, t time.Time, startup bool) (f *os.File, filename string,
+ 		f, err := openOrCreate(fname, startup)
+ 		if err == nil {
+ 			symlink := filepath.Join(dir, link)
+-			os.Remove(symlink)        // ignore err
+-			os.Symlink(name, symlink) // ignore err
++			_ = os.Remove(symlink)        // ignore err
++			_ = os.Symlink(name, symlink) // ignore err
+ 			return f, fname, nil
+ 		}
+ 		lastErr = err
+diff --git a/vendor/k8s.io/klog/v2/klogr.go b/vendor/k8s.io/klog/v2/klogr.go
+index 15de00e2..efec96fd 100644
+--- a/vendor/k8s.io/klog/v2/klogr.go
++++ b/vendor/k8s.io/klog/v2/klogr.go
+@@ -22,6 +22,11 @@ import (
+ 	"k8s.io/klog/v2/internal/serialize"
+ )
+ 
++const (
++	// nameKey is used to log the `WithName` values as an additional attribute.
++	nameKey = "logger"
++)
++
+ // NewKlogr returns a logger that is functionally identical to
+ // klogr.NewWithOptions(klogr.FormatKlog), i.e. it passes through to klog. The
+ // difference is that it uses a simpler implementation.
+@@ -32,10 +37,15 @@ func NewKlogr() Logger {
+ // klogger is a subset of klogr/klogr.go. It had to be copied to break an
+ // import cycle (klogr wants to use klog, and klog wants to use klogr).
+ type klogger struct {
+-	level     int
+ 	callDepth int
+-	prefix    string
+-	values    []interface{}
++
++	// hasPrefix is true if the first entry in values is the special
++	// nameKey key/value. Such an entry gets added and later updated in
++	// WithName.
++	hasPrefix bool
++
++	values []interface{}
++	groups string
+ }
+ 
+ func (l *klogger) Init(info logr.RuntimeInfo) {
+@@ -44,34 +54,40 @@ func (l *klogger) Init(info logr.RuntimeInfo) {
+ 
+ func (l *klogger) Info(level int, msg string, kvList ...interface{}) {
+ 	merged := serialize.MergeKVs(l.values, kvList)
+-	if l.prefix != "" {
+-		msg = l.prefix + ": " + msg
+-	}
+ 	// Skip this function.
+ 	VDepth(l.callDepth+1, Level(level)).InfoSDepth(l.callDepth+1, msg, merged...)
+ }
+ 
+ func (l *klogger) Enabled(level int) bool {
+-	// Skip this function and logr.Logger.Info where Enabled is called.
+-	return VDepth(l.callDepth+2, Level(level)).Enabled()
++	return VDepth(l.callDepth+1, Level(level)).Enabled()
+ }
+ 
+ func (l *klogger) Error(err error, msg string, kvList ...interface{}) {
+ 	merged := serialize.MergeKVs(l.values, kvList)
+-	if l.prefix != "" {
+-		msg = l.prefix + ": " + msg
+-	}
+ 	ErrorSDepth(l.callDepth+1, err, msg, merged...)
+ }
+ 
+ // WithName returns a new logr.Logger with the specified name appended.  klogr
+-// uses '/' characters to separate name elements.  Callers should not pass '/'
++// uses '.' characters to separate name elements.  Callers should not pass '.'
+ // in the provided name string, but this library does not actually enforce that.
+ func (l klogger) WithName(name string) logr.LogSink {
+-	if len(l.prefix) > 0 {
+-		l.prefix = l.prefix + "/"
++	if l.hasPrefix {
++		// Copy slice and modify value. No length checks and type
++		// assertions are needed because hasPrefix is only true if the
++		// first two elements exist and are key/value strings.
++		v := make([]interface{}, 0, len(l.values))
++		v = append(v, l.values...)
++		prefix, _ := v[1].(string)
++		v[1] = prefix + "." + name
++		l.values = v
++	} else {
++		// Preprend new key/value pair.
++		v := make([]interface{}, 0, 2+len(l.values))
++		v = append(v, nameKey, name)
++		v = append(v, l.values...)
++		l.values = v
++		l.hasPrefix = true
+ 	}
+-	l.prefix += name
+ 	return &l
+ }
+ 
+diff --git a/vendor/k8s.io/klog/v2/klogr_slog.go b/vendor/k8s.io/klog/v2/klogr_slog.go
+new file mode 100644
+index 00000000..c77d7baa
+--- /dev/null
++++ b/vendor/k8s.io/klog/v2/klogr_slog.go
+@@ -0,0 +1,96 @@
++//go:build go1.21
++// +build go1.21
++
++/*
++Copyright 2023 The Kubernetes Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package klog
++
++import (
++	"context"
++	"log/slog"
++	"strconv"
++	"time"
++
++	"github.com/go-logr/logr"
++
++	"k8s.io/klog/v2/internal/buffer"
++	"k8s.io/klog/v2/internal/serialize"
++	"k8s.io/klog/v2/internal/severity"
++	"k8s.io/klog/v2/internal/sloghandler"
++)
++
++func (l *klogger) Handle(ctx context.Context, record slog.Record) error {
++	if logging.logger != nil {
++		if slogSink, ok := logging.logger.GetSink().(logr.SlogSink); ok {
++			// Let that logger do the work.
++			return slogSink.Handle(ctx, record)
++		}
++	}
++
++	return sloghandler.Handle(ctx, record, l.groups, slogOutput)
++}
++
++// slogOutput corresponds to several different functions in klog.go.
++// It goes through some of the same checks and formatting steps before
++// it ultimately converges by calling logging.printWithInfos.
++func slogOutput(file string, line int, now time.Time, err error, s severity.Severity, msg string, kvList []interface{}) {
++	// See infoS.
++	if logging.logger != nil {
++		// Taking this path happens when klog has a logger installed
++		// as backend which doesn't support slog. Not good, we have to
++		// guess about the call depth and drop the actual location.
++		logger := logging.logger.WithCallDepth(2)
++		if s > severity.ErrorLog {
++			logger.Error(err, msg, kvList...)
++		} else {
++			logger.Info(msg, kvList...)
++		}
++		return
++	}
++
++	// See printS.
++	b := buffer.GetBuffer()
++	b.WriteString(strconv.Quote(msg))
++	if err != nil {
++		serialize.KVListFormat(&b.Buffer, "err", err)
++	}
++	serialize.KVListFormat(&b.Buffer, kvList...)
++
++	// See print + header.
++	buf := logging.formatHeader(s, file, line, now)
++	logging.printWithInfos(buf, file, line, s, nil, nil, 0, &b.Buffer)
++
++	buffer.PutBuffer(b)
++}
++
++func (l *klogger) WithAttrs(attrs []slog.Attr) logr.SlogSink {
++	clone := *l
++	clone.values = serialize.WithValues(l.values, sloghandler.Attrs2KVList(l.groups, attrs))
++	return &clone
++}
++
++func (l *klogger) WithGroup(name string) logr.SlogSink {
++	clone := *l
++	if clone.groups != "" {
++		clone.groups += "." + name
++	} else {
++		clone.groups = name
++	}
++	return &clone
++}
++
++var _ logr.SlogSink = &klogger{}
+diff --git a/vendor/k8s.io/klog/v2/safeptr.go b/vendor/k8s.io/klog/v2/safeptr.go
+new file mode 100644
+index 00000000..bbe24c2e
+--- /dev/null
++++ b/vendor/k8s.io/klog/v2/safeptr.go
+@@ -0,0 +1,34 @@
++//go:build go1.18
++// +build go1.18
++
++/*
++Copyright 2023 The Kubernetes Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package klog
++
++// SafePtr is a function that takes a pointer of any type (T) as an argument.
++// If the provided pointer is not nil, it returns the same pointer. If it is nil, it returns nil instead.
++//
++// This function is particularly useful to prevent nil pointer dereferencing when:
++//
++//   - The type implements interfaces that are called by the logger, such as `fmt.Stringer`.
++//   - And these interface implementations do not perform nil checks themselves.
++func SafePtr[T any](p *T) any {
++	if p == nil {
++		return nil
++	}
++	return p
++}
+diff --git a/vendor/modules.txt b/vendor/modules.txt
+index 1d5ba648..f70518d6 100644
+--- a/vendor/modules.txt
++++ b/vendor/modules.txt
+@@ -57,7 +57,7 @@ github.com/felixge/httpsnoop
+ # github.com/fsnotify/fsnotify v1.5.4
+ ## explicit; go 1.16
+ github.com/fsnotify/fsnotify
+-# github.com/go-logr/logr v1.3.0
++# github.com/go-logr/logr v1.4.1
+ ## explicit; go 1.18
+ github.com/go-logr/logr
+ github.com/go-logr/logr/funcr
+@@ -246,8 +246,8 @@ github.com/onsi/ginkgo/reporters/stenographer
+ github.com/onsi/ginkgo/reporters/stenographer/support/go-colorable
+ github.com/onsi/ginkgo/reporters/stenographer/support/go-isatty
+ github.com/onsi/ginkgo/types
+-# github.com/onsi/ginkgo/v2 v2.15.0
+-## explicit; go 1.20
++# github.com/onsi/ginkgo/v2 v2.14.0
++## explicit; go 1.18
+ github.com/onsi/ginkgo/v2
+ github.com/onsi/ginkgo/v2/config
+ github.com/onsi/ginkgo/v2/formatter
+@@ -268,8 +268,8 @@ github.com/onsi/ginkgo/v2/internal/parallel_support
+ github.com/onsi/ginkgo/v2/internal/testingtproxy
+ github.com/onsi/ginkgo/v2/reporters
+ github.com/onsi/ginkgo/v2/types
+-# github.com/onsi/gomega v1.31.1
+-## explicit; go 1.20
++# github.com/onsi/gomega v1.30.0
++## explicit; go 1.18
+ github.com/onsi/gomega
+ github.com/onsi/gomega/format
+ github.com/onsi/gomega/internal
+@@ -458,7 +458,7 @@ golang.org/x/text/width
+ # golang.org/x/time v0.5.0
+ ## explicit; go 1.18
+ golang.org/x/time/rate
+-# golang.org/x/tools v0.17.0
++# golang.org/x/tools v0.16.1
+ ## explicit; go 1.18
+ golang.org/x/tools/cmd/stringer
+ golang.org/x/tools/go/ast/inspector
+@@ -479,7 +479,7 @@ golang.org/x/tools/internal/tokeninternal
+ golang.org/x/tools/internal/typeparams
+ golang.org/x/tools/internal/typesinternal
+ golang.org/x/tools/internal/versions
+-# google.golang.org/api v0.157.0
++# google.golang.org/api v0.156.0
+ ## explicit; go 1.19
+ google.golang.org/api/cloudresourcemanager/v1
+ google.golang.org/api/compute/v0.alpha
+@@ -510,19 +510,19 @@ google.golang.org/appengine/internal/modules
+ google.golang.org/appengine/internal/remote_api
+ google.golang.org/appengine/internal/urlfetch
+ google.golang.org/appengine/urlfetch
+-# google.golang.org/genproto v0.0.0-20240102182953-50ed04b92917
++# google.golang.org/genproto v0.0.0-20231212172506-995d672761c0
+ ## explicit; go 1.19
+ google.golang.org/genproto/googleapis/cloud/kms/v1
+ google.golang.org/genproto/googleapis/cloud/location
+ google.golang.org/genproto/googleapis/type/expr
+ google.golang.org/genproto/internal
+ google.golang.org/genproto/protobuf/field_mask
+-# google.golang.org/genproto/googleapis/api v0.0.0-20240102182953-50ed04b92917
++# google.golang.org/genproto/googleapis/api v0.0.0-20231212172506-995d672761c0
+ ## explicit; go 1.19
+ google.golang.org/genproto/googleapis/api
+ google.golang.org/genproto/googleapis/api/annotations
+ google.golang.org/genproto/googleapis/api/httpbody
+-# google.golang.org/genproto/googleapis/rpc v0.0.0-20240116215550-a9fa1716bcac
++# google.golang.org/genproto/googleapis/rpc v0.0.0-20240102182953-50ed04b92917
+ ## explicit; go 1.19
+ google.golang.org/genproto/googleapis/rpc/code
+ google.golang.org/genproto/googleapis/rpc/errdetails
+@@ -867,14 +867,15 @@ k8s.io/cloud-provider/volume/helpers
+ ## explicit; go 1.16
+ k8s.io/component-base/metrics
+ k8s.io/component-base/version
+-# k8s.io/klog/v2 v2.100.1
+-## explicit; go 1.13
++# k8s.io/klog/v2 v2.120.1
++## explicit; go 1.18
+ k8s.io/klog/v2
+ k8s.io/klog/v2/internal/buffer
+ k8s.io/klog/v2/internal/clock
+ k8s.io/klog/v2/internal/dbg
+ k8s.io/klog/v2/internal/serialize
+ k8s.io/klog/v2/internal/severity
++k8s.io/klog/v2/internal/sloghandler
+ # k8s.io/kube-openapi v0.0.0-20220328201542-3ee0da9b0b42
+ ## explicit; go 1.16
+ k8s.io/kube-openapi/pkg/builder3/util

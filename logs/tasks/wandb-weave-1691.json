@@ -1,0 +1,23 @@
+{
+ "task": "wandb-weave-1691",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P test_trace_call_filter runs ~24 expr query cases: 'inner_res = get_client_trace_server(client).calls_query(...)' and asserts len(inner_res.calls) == count"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 66,
+  "shallow": true
+ }
+}

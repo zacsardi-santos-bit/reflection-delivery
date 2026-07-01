@@ -1,0 +1,226 @@
+patching file pkg/beyla/config_test.go
+{"Time":"2026-06-29T15:29:51.870374175Z","Action":"start","Package":"github.com/grafana/beyla/pkg/beyla"}
+{"Time":"2026-06-29T15:29:51.949934423Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_Overrides"}
+{"Time":"2026-06-29T15:29:51.950076676Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_Overrides","Output":"=== RUN   TestConfig_Overrides\n"}
+{"Time":"2026-06-29T15:29:51.953662156Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_Overrides","Output":"--- PASS: TestConfig_Overrides (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.953698797Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_Overrides","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.953722288Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ServiceName"}
+{"Time":"2026-06-29T15:29:51.953736418Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ServiceName","Output":"=== RUN   TestConfig_ServiceName\n"}
+{"Time":"2026-06-29T15:29:51.954173108Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ServiceName","Output":"--- PASS: TestConfig_ServiceName (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.95425448Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ServiceName","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.95426962Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate"}
+{"Time":"2026-06-29T15:29:51.95429039Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate","Output":"=== RUN   TestConfigValidate\n"}
+{"Time":"2026-06-29T15:29:51.954342062Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case0"}
+{"Time":"2026-06-29T15:29:51.954366932Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case0","Output":"=== RUN   TestConfigValidate/case0\n"}
+{"Time":"2026-06-29T15:29:51.955011937Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case0","Output":"--- PASS: TestConfigValidate/case0 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.955041447Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case0","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.955074918Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case1"}
+{"Time":"2026-06-29T15:29:51.955112189Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case1","Output":"=== RUN   TestConfigValidate/case1\n"}
+{"Time":"2026-06-29T15:29:51.955948838Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case1","Output":"--- PASS: TestConfigValidate/case1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.955977818Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case1","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.955991099Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case2"}
+{"Time":"2026-06-29T15:29:51.956000749Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case2","Output":"=== RUN   TestConfigValidate/case2\n"}
+{"Time":"2026-06-29T15:29:51.956770436Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case2","Output":"--- PASS: TestConfigValidate/case2 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.956809567Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case2","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.956845418Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case3"}
+{"Time":"2026-06-29T15:29:51.956856878Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case3","Output":"=== RUN   TestConfigValidate/case3\n"}
+{"Time":"2026-06-29T15:29:51.957884861Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case3","Output":"2026/06/29 15:29:51 WARN 'print_traces' configuration option has been deprecated and will be removed in the future - use 'trace_printer' instead\n"}
+{"Time":"2026-06-29T15:29:51.957947222Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case3","Output":"--- PASS: TestConfigValidate/case3 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.957967723Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case3","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.958004073Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case4"}
+{"Time":"2026-06-29T15:29:51.958018054Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case4","Output":"=== RUN   TestConfigValidate/case4\n"}
+{"Time":"2026-06-29T15:29:51.958860613Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case4","Output":"2026/06/29 15:29:51 WARN 'print_traces' configuration option has been deprecated and will be removed in the future - use 'trace_printer' instead\n"}
+{"Time":"2026-06-29T15:29:51.958914304Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case4","Output":"--- PASS: TestConfigValidate/case4 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.958928454Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case4","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.958979575Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case5"}
+{"Time":"2026-06-29T15:29:51.958993716Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case5","Output":"=== RUN   TestConfigValidate/case5\n"}
+{"Time":"2026-06-29T15:29:51.959594359Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case5","Output":"2026/06/29 15:29:51 WARN 'print_traces' configuration option has been deprecated and will be removed in the future - use 'trace_printer' instead\n"}
+{"Time":"2026-06-29T15:29:51.95963117Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case5","Output":"--- PASS: TestConfigValidate/case5 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.95965024Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case5","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.959661551Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case6"}
+{"Time":"2026-06-29T15:29:51.959689081Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case6","Output":"=== RUN   TestConfigValidate/case6\n"}
+{"Time":"2026-06-29T15:29:51.960237023Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case6","Output":"--- PASS: TestConfigValidate/case6 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.960269174Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case6","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.960284504Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case7"}
+{"Time":"2026-06-29T15:29:51.960311095Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case7","Output":"=== RUN   TestConfigValidate/case7\n"}
+{"Time":"2026-06-29T15:29:51.960804986Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case7","Output":"--- PASS: TestConfigValidate/case7 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.960830837Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case7","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.960842677Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case8"}
+{"Time":"2026-06-29T15:29:51.960852267Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case8","Output":"=== RUN   TestConfigValidate/case8\n"}
+{"Time":"2026-06-29T15:29:51.961463691Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case8","Output":"--- PASS: TestConfigValidate/case8 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.961491691Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case8","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.961510242Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case9"}
+{"Time":"2026-06-29T15:29:51.961530682Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case9","Output":"=== RUN   TestConfigValidate/case9\n"}
+{"Time":"2026-06-29T15:29:51.962020493Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case9","Output":"--- PASS: TestConfigValidate/case9 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.962067454Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case9","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.962094895Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case10"}
+{"Time":"2026-06-29T15:29:51.962115045Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case10","Output":"=== RUN   TestConfigValidate/case10\n"}
+{"Time":"2026-06-29T15:29:51.962575426Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case10","Output":"--- PASS: TestConfigValidate/case10 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.962605586Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case10","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.962625867Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case11"}
+{"Time":"2026-06-29T15:29:51.962659468Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case11","Output":"=== RUN   TestConfigValidate/case11\n"}
+{"Time":"2026-06-29T15:29:51.965033241Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case11","Output":"--- PASS: TestConfigValidate/case11 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.965069842Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case11","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.965092832Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case12"}
+{"Time":"2026-06-29T15:29:51.965115232Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case12","Output":"=== RUN   TestConfigValidate/case12\n"}
+{"Time":"2026-06-29T15:29:51.965696676Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case12","Output":"--- PASS: TestConfigValidate/case12 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.965726096Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate/case12","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.965745237Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate","Output":"--- PASS: TestConfigValidate (0.01s)\n"}
+{"Time":"2026-06-29T15:29:51.965769687Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate","Elapsed":0.01}
+{"Time":"2026-06-29T15:29:51.965799468Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error"}
+{"Time":"2026-06-29T15:29:51.965815488Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error","Output":"=== RUN   TestConfigValidate_error\n"}
+{"Time":"2026-06-29T15:29:51.965827668Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case0"}
+{"Time":"2026-06-29T15:29:51.965838219Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case0","Output":"=== RUN   TestConfigValidate_error/case0\n"}
+{"Time":"2026-06-29T15:29:51.9659085Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case0","Output":"--- PASS: TestConfigValidate_error/case0 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.965922441Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case0","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.965958391Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case1"}
+{"Time":"2026-06-29T15:29:51.965969471Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case1","Output":"=== RUN   TestConfigValidate_error/case1\n"}
+{"Time":"2026-06-29T15:29:51.966598806Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case1","Output":"--- PASS: TestConfigValidate_error/case1 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.966629936Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case1","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.966643497Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case2"}
+{"Time":"2026-06-29T15:29:51.966654187Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case2","Output":"=== RUN   TestConfigValidate_error/case2\n"}
+{"Time":"2026-06-29T15:29:51.967165878Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case2","Output":"--- PASS: TestConfigValidate_error/case2 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.96723957Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case2","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.96725334Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case3"}
+{"Time":"2026-06-29T15:29:51.967265131Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case3","Output":"=== RUN   TestConfigValidate_error/case3\n"}
+{"Time":"2026-06-29T15:29:51.967831883Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case3","Output":"--- PASS: TestConfigValidate_error/case3 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.967861664Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case3","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.967890914Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case4"}
+{"Time":"2026-06-29T15:29:51.967904305Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case4","Output":"=== RUN   TestConfigValidate_error/case4\n"}
+{"Time":"2026-06-29T15:29:51.968396336Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case4","Output":"--- PASS: TestConfigValidate_error/case4 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.968425466Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case4","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.968446797Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case5"}
+{"Time":"2026-06-29T15:29:51.968458177Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case5","Output":"=== RUN   TestConfigValidate_error/case5\n"}
+{"Time":"2026-06-29T15:29:51.968903087Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case5","Output":"--- PASS: TestConfigValidate_error/case5 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.968928218Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error/case5","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.968949048Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error","Output":"--- PASS: TestConfigValidate_error (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.968974579Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_error","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.968985819Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery"}
+{"Time":"2026-06-29T15:29:51.969006719Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery","Output":"=== RUN   TestConfigValidateDiscovery\n"}
+{"Time":"2026-06-29T15:29:51.969581642Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery","Output":"--- PASS: TestConfigValidateDiscovery (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.969616993Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.969630964Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors"}
+{"Time":"2026-06-29T15:29:51.969651014Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors","Output":"=== RUN   TestConfigValidateDiscovery_Errors\n"}
+{"Time":"2026-06-29T15:29:51.969687045Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors/missing-attributes"}
+{"Time":"2026-06-29T15:29:51.969702445Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors/missing-attributes","Output":"=== RUN   TestConfigValidateDiscovery_Errors/missing-attributes\n"}
+{"Time":"2026-06-29T15:29:51.969873459Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors/missing-attributes","Output":"--- PASS: TestConfigValidateDiscovery_Errors/missing-attributes (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.96990407Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors/missing-attributes","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.96993418Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors/invalid-attribute"}
+{"Time":"2026-06-29T15:29:51.969954461Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors/invalid-attribute","Output":"=== RUN   TestConfigValidateDiscovery_Errors/invalid-attribute\n"}
+{"Time":"2026-06-29T15:29:51.970060983Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors/invalid-attribute","Output":"--- PASS: TestConfigValidateDiscovery_Errors/invalid-attribute (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.970085603Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors/invalid-attribute","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.970099764Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors","Output":"--- PASS: TestConfigValidateDiscovery_Errors (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.970119794Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateDiscovery_Errors","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.970162415Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_Network_Kube"}
+{"Time":"2026-06-29T15:29:51.970197126Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_Network_Kube","Output":"=== RUN   TestConfigValidate_Network_Kube\n"}
+{"Time":"2026-06-29T15:29:51.970776609Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_Network_Kube","Output":"--- PASS: TestConfigValidate_Network_Kube (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.97083736Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_Network_Kube","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.970873231Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_TracePrinter"}
+{"Time":"2026-06-29T15:29:51.970896462Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_TracePrinter","Output":"=== RUN   TestConfigValidate_TracePrinter\n"}
+{"Time":"2026-06-29T15:29:51.972434526Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_TracePrinter","Output":"--- PASS: TestConfigValidate_TracePrinter (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.972472747Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_TracePrinter","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.972488877Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_TracePrinterFallback"}
+{"Time":"2026-06-29T15:29:51.972498528Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_TracePrinterFallback","Output":"=== RUN   TestConfigValidate_TracePrinterFallback\n"}
+{"Time":"2026-06-29T15:29:51.973655513Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_TracePrinterFallback","Output":"2026/06/29 15:29:51 WARN 'print_traces' configuration option has been deprecated and will be removed in the future - use 'trace_printer' instead\n"}
+{"Time":"2026-06-29T15:29:51.973695184Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_TracePrinterFallback","Output":"--- PASS: TestConfigValidate_TracePrinterFallback (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.973712715Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidate_TracePrinterFallback","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.973735615Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes"}
+{"Time":"2026-06-29T15:29:51.973750056Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes","Output":"=== RUN   TestConfigValidateRoutes\n"}
+{"Time":"2026-06-29T15:29:51.974357209Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes","Output":"--- PASS: TestConfigValidateRoutes (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.97438832Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.974431701Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors"}
+{"Time":"2026-06-29T15:29:51.974458711Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors","Output":"=== RUN   TestConfigValidateRoutes_Errors\n"}
+{"Time":"2026-06-29T15:29:51.974472562Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors/\"##\""}
+{"Time":"2026-06-29T15:29:51.974484492Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors/\"##\"","Output":"=== RUN   TestConfigValidateRoutes_Errors/\"##\"\n"}
+{"Time":"2026-06-29T15:29:51.975097726Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors/\"##\"","Output":"--- PASS: TestConfigValidateRoutes_Errors/\"##\" (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.975146097Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors/\"##\"","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.975172887Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors/\"random\""}
+{"Time":"2026-06-29T15:29:51.975205938Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors/\"random\"","Output":"=== RUN   TestConfigValidateRoutes_Errors/\"random\"\n"}
+{"Time":"2026-06-29T15:29:51.975827292Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors/\"random\"","Output":"--- PASS: TestConfigValidateRoutes_Errors/\"random\" (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.975863703Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors/\"random\"","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.975882913Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors","Output":"--- PASS: TestConfigValidateRoutes_Errors (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.975906974Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfigValidateRoutes_Errors","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.975925814Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_OtelGoAutoEnv"}
+{"Time":"2026-06-29T15:29:51.975966955Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_OtelGoAutoEnv","Output":"=== RUN   TestConfig_OtelGoAutoEnv\n"}
+{"Time":"2026-06-29T15:29:51.976004086Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_OtelGoAutoEnv","Output":"--- PASS: TestConfig_OtelGoAutoEnv (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.976018976Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_OtelGoAutoEnv","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.976040927Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_NetworkImplicit"}
+{"Time":"2026-06-29T15:29:51.976051117Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_NetworkImplicit","Output":"=== RUN   TestConfig_NetworkImplicit\n"}
+{"Time":"2026-06-29T15:29:51.97617615Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_NetworkImplicit","Output":"--- PASS: TestConfig_NetworkImplicit (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.976247171Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_NetworkImplicit","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.976260561Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_NetworkImplicitProm"}
+{"Time":"2026-06-29T15:29:51.976282322Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_NetworkImplicitProm","Output":"=== RUN   TestConfig_NetworkImplicitProm\n"}
+{"Time":"2026-06-29T15:29:51.976310013Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_NetworkImplicitProm","Output":"--- PASS: TestConfig_NetworkImplicitProm (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.976329253Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_NetworkImplicitProm","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.976357314Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger"}
+{"Time":"2026-06-29T15:29:51.976442166Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger","Output":"=== RUN   TestConfig_ExternalLogger\n"}
+{"Time":"2026-06-29T15:29:51.976675901Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/default_info_log"}
+{"Time":"2026-06-29T15:29:51.976700622Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/default_info_log","Output":"=== RUN   TestConfig_ExternalLogger/default_info_log\n"}
+{"Time":"2026-06-29T15:29:51.976793104Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/default_info_log","Output":"--- PASS: TestConfig_ExternalLogger/default_info_log (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.976814344Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/default_info_log","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.976834194Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/default_debug_log"}
+{"Time":"2026-06-29T15:29:51.976857455Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/default_debug_log","Output":"=== RUN   TestConfig_ExternalLogger/default_debug_log\n"}
+{"Time":"2026-06-29T15:29:51.976960047Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/default_debug_log","Output":"--- PASS: TestConfig_ExternalLogger/default_debug_log (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.976985638Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/default_debug_log","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.977001828Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/debug_log_with_network_flows"}
+{"Time":"2026-06-29T15:29:51.977013398Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/debug_log_with_network_flows","Output":"=== RUN   TestConfig_ExternalLogger/debug_log_with_network_flows\n"}
+{"Time":"2026-06-29T15:29:51.977054969Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/debug_log_with_network_flows","Output":"--- PASS: TestConfig_ExternalLogger/debug_log_with_network_flows (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.977066379Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger/debug_log_with_network_flows","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.97708322Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger","Output":"--- PASS: TestConfig_ExternalLogger (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.97709297Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestConfig_ExternalLogger","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.97710273Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestDefaultExclusionFilter"}
+{"Time":"2026-06-29T15:29:51.977120761Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestDefaultExclusionFilter","Output":"=== RUN   TestDefaultExclusionFilter\n"}
+{"Time":"2026-06-29T15:29:51.977200113Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestDefaultExclusionFilter","Output":"--- PASS: TestDefaultExclusionFilter (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.977238634Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestDefaultExclusionFilter","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.977269904Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported"}
+{"Time":"2026-06-29T15:29:51.977298055Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported","Output":"=== RUN   TestCheckOSSupport_Supported\n"}
+{"Time":"2026-06-29T15:29:51.977332836Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/5.8"}
+{"Time":"2026-06-29T15:29:51.977351086Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/5.8","Output":"=== RUN   TestCheckOSSupport_Supported/5.8\n"}
+{"Time":"2026-06-29T15:29:51.977366286Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/5.8","Output":"--- PASS: TestCheckOSSupport_Supported/5.8 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.977386867Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/5.8","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.977403527Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/6.0"}
+{"Time":"2026-06-29T15:29:51.977415947Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/6.0","Output":"=== RUN   TestCheckOSSupport_Supported/6.0\n"}
+{"Time":"2026-06-29T15:29:51.977426468Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/6.0","Output":"--- PASS: TestCheckOSSupport_Supported/6.0 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.977436178Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/6.0","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.977466028Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/7.15"}
+{"Time":"2026-06-29T15:29:51.977474989Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/7.15","Output":"=== RUN   TestCheckOSSupport_Supported/7.15\n"}
+{"Time":"2026-06-29T15:29:51.97751154Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/7.15","Output":"--- PASS: TestCheckOSSupport_Supported/7.15 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.97752417Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported/7.15","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.97754452Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported","Output":"--- PASS: TestCheckOSSupport_Supported (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.977557641Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Supported","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.977568651Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported"}
+{"Time":"2026-06-29T15:29:51.977587451Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported","Output":"=== RUN   TestCheckOSSupport_Unsupported\n"}
+{"Time":"2026-06-29T15:29:51.977602751Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/0.0"}
+{"Time":"2026-06-29T15:29:51.977611722Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/0.0","Output":"=== RUN   TestCheckOSSupport_Unsupported/0.0\n"}
+{"Time":"2026-06-29T15:29:51.977636682Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/0.0","Output":"--- PASS: TestCheckOSSupport_Unsupported/0.0 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.977647072Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/0.0","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.977692133Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/3.11"}
+{"Time":"2026-06-29T15:29:51.977711594Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/3.11","Output":"=== RUN   TestCheckOSSupport_Unsupported/3.11\n"}
+{"Time":"2026-06-29T15:29:51.977723424Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/3.11","Output":"--- PASS: TestCheckOSSupport_Unsupported/3.11 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.977741495Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/3.11","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.977769945Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/4.0"}
+{"Time":"2026-06-29T15:29:51.977849847Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/4.0","Output":"=== RUN   TestCheckOSSupport_Unsupported/4.0\n"}
+{"Time":"2026-06-29T15:29:51.977894138Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/4.0","Output":"--- PASS: TestCheckOSSupport_Unsupported/4.0 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.977913589Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/4.0","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.977934639Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/4.17"}
+{"Time":"2026-06-29T15:29:51.977947659Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/4.17","Output":"=== RUN   TestCheckOSSupport_Unsupported/4.17\n"}
+{"Time":"2026-06-29T15:29:51.9779748Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/4.17","Output":"--- PASS: TestCheckOSSupport_Unsupported/4.17 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.97799643Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported/4.17","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.978016741Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported","Output":"--- PASS: TestCheckOSSupport_Unsupported (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.978028401Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestCheckOSSupport_Unsupported","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.978038831Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_Empty"}
+{"Time":"2026-06-29T15:29:51.978059602Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_Empty","Output":"=== RUN   TestOSCapabilitiesError_Empty\n"}
+{"Time":"2026-06-29T15:29:51.978079062Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_Empty","Output":"--- PASS: TestOSCapabilitiesError_Empty (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.978089542Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_Empty","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.978101653Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_Set"}
+{"Time":"2026-06-29T15:29:51.978112183Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_Set","Output":"=== RUN   TestOSCapabilitiesError_Set\n"}
+{"Time":"2026-06-29T15:29:51.978122753Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_Set","Output":"--- PASS: TestOSCapabilitiesError_Set (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.978132883Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_Set","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.978143294Z","Action":"run","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_ErrorString"}
+{"Time":"2026-06-29T15:29:51.978153024Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_ErrorString","Output":"=== RUN   TestOSCapabilitiesError_ErrorString\n"}
+{"Time":"2026-06-29T15:29:51.978164644Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_ErrorString","Output":"--- PASS: TestOSCapabilitiesError_ErrorString (0.00s)\n"}
+{"Time":"2026-06-29T15:29:51.978174914Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Test":"TestOSCapabilitiesError_ErrorString","Elapsed":0}
+{"Time":"2026-06-29T15:29:51.978217455Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Output":"PASS\n"}
+{"Time":"2026-06-29T15:29:51.979815291Z","Action":"output","Package":"github.com/grafana/beyla/pkg/beyla","Output":"ok  \tgithub.com/grafana/beyla/pkg/beyla\t0.109s\n"}
+{"Time":"2026-06-29T15:29:51.979853262Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/beyla","Elapsed":0.109}
+reward=1 graded=54 found=54 failed=0 parsed=54 framework=go exit_code=0

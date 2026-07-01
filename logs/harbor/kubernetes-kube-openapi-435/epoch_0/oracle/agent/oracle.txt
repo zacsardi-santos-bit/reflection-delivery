@@ -1,0 +1,4 @@
+patching file go.mod
+patching file go.sum
+patching file pkg/generators/markers.go
+patching file pkg/generators/openapi.go

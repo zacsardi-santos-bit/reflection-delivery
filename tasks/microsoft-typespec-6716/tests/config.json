@@ -1,0 +1,23 @@
+{
+  "test_framework": "junit",
+  "test_command": "mkdir -p /workspace/test-results && cd /workspace/repo/packages/http-client-csharp/generator && dotnet build Microsoft.TypeSpec.Generator.ClientModel/test/Microsoft.TypeSpec.Generator.ClientModel.Tests.csproj -c Debug --no-restore && dotnet test Microsoft.TypeSpec.Generator.ClientModel/test/Microsoft.TypeSpec.Generator.ClientModel.Tests.csproj --no-build --filter \"FullyQualifiedName~ScmMethodProviderCollectionTests\" -v normal --logger \"junit;LogFilePath=/workspace/test-results/output.xml\"; cat /workspace/test-results/output.xml 2>/dev/null || true",
+  "test_files": [
+    "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/ScmMethodProviderCollectionTests.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/Unbranded-TypeSpec.tsp",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/Models/PageThing.Serialization.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/Models/PageThing.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecClient.RestClient.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecClient.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecModelFactory.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/tspCodeModel.json"
+  ],
+  "num_test_files": 8,
+  "language": "csharp",
+  "FAIL_TO_PASS": [
+    "Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests::ListMethodWithNoPaging"
+  ],
+  "PASS_TO_PASS": [
+    "Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests::ConvenienceMethodsHaveOptionalCancellationToken(Microsoft.TypeSpec.Generator.Input.InputOperation)",
+    "Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests::TestDefaultCSharpMethodCollection(Microsoft.TypeSpec.Generator.Input.InputOperation)"
+  ]
+}

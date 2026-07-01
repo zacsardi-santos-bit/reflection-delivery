@@ -1,0 +1,23 @@
+{
+ "task": "aws-eks-anywhere-7295",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'EtcdURL string' to KubeDistro, 'func GetExternalEtcdReleaseURL(clusterVersion string, versionBundle *cluster.VersionsBundle) (string, error)' gated on v1alpha1.MinEksAVersionWithEtcdURL + DevBuildVersion, and reworks SetUbuntuConfigInEtcdCluster to take versionsBundle+eksaVersion; F2P i"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 57,
+  "shallow": true
+ }
+}

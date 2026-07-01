@@ -1,0 +1,9 @@
+patching file engine/crates/graph-entities/src/response/mod.rs
+patching file engine/crates/partial-caching/src/execution/defer.rs
+patching file engine/crates/partial-caching/src/output/cache_merging.rs
+patching file engine/crates/partial-caching/src/output/response_merging.rs
+patching file engine/crates/partial-caching/src/output/shapes/mod.rs
+patching file engine/crates/partial-caching/src/output/store.rs
+patching file engine/crates/partial-caching/src/planning/defers.rs
+patching file engine/crates/partial-caching/src/query_subset/display.rs
+patching file engine/crates/partial-caching/src/query_subset/mod.rs

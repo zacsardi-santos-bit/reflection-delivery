@@ -1,0 +1,5 @@
+patching file libs/core/langchain_core/prompts/base.py
+patching file libs/core/langchain_core/prompts/chat.py
+patching file libs/core/langchain_core/prompts/few_shot.py
+patching file libs/core/langchain_core/prompts/few_shot_with_templates.py
+patching file libs/core/langchain_core/prompts/prompt.py

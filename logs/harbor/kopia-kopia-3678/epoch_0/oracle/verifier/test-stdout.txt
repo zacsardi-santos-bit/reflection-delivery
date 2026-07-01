@@ -1,0 +1,135 @@
+patching file internal/metrics/metrics_timeseries_test.go
+patching file internal/metrics/metrics_timeseries_timeres_test.go
+{"Time":"2026-06-29T15:32:22.74209042Z","Action":"start","Package":"github.com/kopia/kopia/internal/metrics"}
+{"Time":"2026-06-29T15:32:22.748495466Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestBucketForThresholds"}
+{"Time":"2026-06-29T15:32:22.748548325Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestBucketForThresholds","Output":"=== RUN   TestBucketForThresholds\n"}
+{"Time":"2026-06-29T15:32:22.748606545Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestBucketForThresholds","Output":"--- PASS: TestBucketForThresholds (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.748633105Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestBucketForThresholds","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.748669495Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregation"}
+{"Time":"2026-06-29T15:32:22.748691595Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregation","Output":"=== RUN   TestAggregation\n"}
+{"Time":"2026-06-29T15:32:22.748721754Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregation","Output":"--- PASS: TestAggregation (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.748744794Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregation","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.748767714Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_Nil"}
+{"Time":"2026-06-29T15:32:22.748789954Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_Nil","Output":"=== RUN   TestCounter_Nil\n"}
+{"Time":"2026-06-29T15:32:22.748813984Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_Nil","Output":"--- PASS: TestCounter_Nil (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.748841344Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_Nil","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.748866174Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_NoLabels"}
+{"Time":"2026-06-29T15:32:22.748888254Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_NoLabels","Output":"=== RUN   TestCounter_NoLabels\n"}
+{"Time":"2026-06-29T15:32:22.750883743Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_NoLabels","Output":"--- PASS: TestCounter_NoLabels (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.750924653Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_NoLabels","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.750957192Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_WithLabels"}
+{"Time":"2026-06-29T15:32:22.750980392Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_WithLabels","Output":"=== RUN   TestCounter_WithLabels\n"}
+{"Time":"2026-06-29T15:32:22.753692678Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_WithLabels","Output":"--- PASS: TestCounter_WithLabels (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.753747217Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounter_WithLabels","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.753776307Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_Nil"}
+{"Time":"2026-06-29T15:32:22.753797447Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_Nil","Output":"=== RUN   TestDurationDistribution_Nil\n"}
+{"Time":"2026-06-29T15:32:22.753824257Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_Nil","Output":"--- PASS: TestDurationDistribution_Nil (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.753852697Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_Nil","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.753883947Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestSizeDistribution_Nil"}
+{"Time":"2026-06-29T15:32:22.753907036Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestSizeDistribution_Nil","Output":"=== RUN   TestSizeDistribution_Nil\n"}
+{"Time":"2026-06-29T15:32:22.753930766Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestSizeDistribution_Nil","Output":"--- PASS: TestSizeDistribution_Nil (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.753958546Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestSizeDistribution_Nil","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.753987106Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_NoLabels"}
+{"Time":"2026-06-29T15:32:22.754008906Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_NoLabels","Output":"=== RUN   TestDurationDistribution_NoLabels\n"}
+{"Time":"2026-06-29T15:32:22.754961711Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_NoLabels","Output":"--- PASS: TestDurationDistribution_NoLabels (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.75500198Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_NoLabels","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.75502714Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_WithLabels"}
+{"Time":"2026-06-29T15:32:22.75505037Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_WithLabels","Output":"=== RUN   TestDurationDistribution_WithLabels\n"}
+{"Time":"2026-06-29T15:32:22.758952849Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_WithLabels","Output":"--- PASS: TestDurationDistribution_WithLabels (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.758990079Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestDurationDistribution_WithLabels","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.759015709Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestSizeDistribution_WithLabels"}
+{"Time":"2026-06-29T15:32:22.759038049Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestSizeDistribution_WithLabels","Output":"=== RUN   TestSizeDistribution_WithLabels\n"}
+{"Time":"2026-06-29T15:32:22.76072611Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestSizeDistribution_WithLabels","Output":"--- PASS: TestSizeDistribution_WithLabels (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.760763269Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestSizeDistribution_WithLabels","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.760789259Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestMetricEmitter_Nil"}
+{"Time":"2026-06-29T15:32:22.760813609Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestMetricEmitter_Nil","Output":"=== RUN   TestMetricEmitter_Nil\n"}
+{"Time":"2026-06-29T15:32:22.760843949Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestMetricEmitter_Nil","Output":"--- PASS: TestMetricEmitter_Nil (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.760867249Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestMetricEmitter_Nil","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.760891489Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestMetricEmitter_NotNil"}
+{"Time":"2026-06-29T15:32:22.760913368Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestMetricEmitter_NotNil","Output":"=== RUN   TestMetricEmitter_NotNil\n"}
+{"Time":"2026-06-29T15:32:22.760942168Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestMetricEmitter_NotNil","Output":"--- PASS: TestMetricEmitter_NotNil (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.760973028Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestMetricEmitter_NotNil","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.760995748Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestThroughput_Nil"}
+{"Time":"2026-06-29T15:32:22.761017928Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestThroughput_Nil","Output":"=== RUN   TestThroughput_Nil\n"}
+{"Time":"2026-06-29T15:32:22.761042488Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestThroughput_Nil","Output":"--- PASS: TestThroughput_Nil (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.761071718Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestThroughput_Nil","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.761095068Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestThroughput_NotNil"}
+{"Time":"2026-06-29T15:32:22.761117247Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestThroughput_NotNil","Output":"=== RUN   TestThroughput_NotNil\n"}
+{"Time":"2026-06-29T15:32:22.762710799Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestThroughput_NotNil","Output":"--- PASS: TestThroughput_NotNil (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.762740309Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestThroughput_NotNil","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.762763898Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries"}
+{"Time":"2026-06-29T15:32:22.762786918Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries","Output":"=== RUN   TestCounterTimeSeries\n"}
+{"Time":"2026-06-29T15:32:22.762814258Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_value_within_one_time_period"}
+{"Time":"2026-06-29T15:32:22.762835658Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_value_within_one_time_period","Output":"=== RUN   TestCounterTimeSeries/single_counter_value_within_one_time_period\n"}
+{"Time":"2026-06-29T15:32:22.762862958Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_value_within_one_time_period","Output":"--- PASS: TestCounterTimeSeries/single_counter_value_within_one_time_period (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.762886908Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_value_within_one_time_period","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.762910838Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_one_time_period_(12:05..12:55)"}
+{"Time":"2026-06-29T15:32:22.762932808Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_one_time_period_(12:05..12:55)","Output":"=== RUN   TestCounterTimeSeries/3_independent_counter_value_within_one_time_period_(12:05..12:55)\n"}
+{"Time":"2026-06-29T15:32:22.762963297Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_one_time_period_(12:05..12:55)","Output":"--- PASS: TestCounterTimeSeries/3_independent_counter_value_within_one_time_period_(12:05..12:55) (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.762987427Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_one_time_period_(12:05..12:55)","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763010687Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period"}
+{"Time":"2026-06-29T15:32:22.763040297Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period","Output":"=== RUN   TestCounterTimeSeries/3_independent_counter_value_within_different_time_period\n"}
+{"Time":"2026-06-29T15:32:22.763064177Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period","Output":"--- PASS: TestCounterTimeSeries/3_independent_counter_value_within_different_time_period (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763087077Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763110407Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_by_host"}
+{"Time":"2026-06-29T15:32:22.763133886Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_by_host","Output":"=== RUN   TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_by_host\n"}
+{"Time":"2026-06-29T15:32:22.763157826Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_by_host","Output":"--- PASS: TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_by_host (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763180976Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_by_host","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763206436Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_together"}
+{"Time":"2026-06-29T15:32:22.763228386Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_together","Output":"=== RUN   TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_together\n"}
+{"Time":"2026-06-29T15:32:22.763252596Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_together","Output":"--- PASS: TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_together (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763275956Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/3_independent_counter_value_within_different_time_period,_aggregated_together","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763300346Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_spanning_3_time_periods"}
+{"Time":"2026-06-29T15:32:22.763322575Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_spanning_3_time_periods","Output":"=== RUN   TestCounterTimeSeries/single_counter_spanning_3_time_periods\n"}
+{"Time":"2026-06-29T15:32:22.763346825Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_spanning_3_time_periods","Output":"--- PASS: TestCounterTimeSeries/single_counter_spanning_3_time_periods (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763369815Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_spanning_3_time_periods","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763393195Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_spanning_4_time_periods"}
+{"Time":"2026-06-29T15:32:22.763428395Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_spanning_4_time_periods","Output":"=== RUN   TestCounterTimeSeries/single_counter_spanning_4_time_periods\n"}
+{"Time":"2026-06-29T15:32:22.763455555Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_spanning_4_time_periods","Output":"--- PASS: TestCounterTimeSeries/single_counter_spanning_4_time_periods (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763478615Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/single_counter_spanning_4_time_periods","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763502195Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/time_resolution_by_month"}
+{"Time":"2026-06-29T15:32:22.763525334Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/time_resolution_by_month","Output":"=== RUN   TestCounterTimeSeries/time_resolution_by_month\n"}
+{"Time":"2026-06-29T15:32:22.763554454Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/time_resolution_by_month","Output":"--- PASS: TestCounterTimeSeries/time_resolution_by_month (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763577494Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/time_resolution_by_month","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763600184Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/default_time_resolution_by_day"}
+{"Time":"2026-06-29T15:32:22.763621934Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/default_time_resolution_by_day","Output":"=== RUN   TestCounterTimeSeries/default_time_resolution_by_day\n"}
+{"Time":"2026-06-29T15:32:22.763645444Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/default_time_resolution_by_day","Output":"--- PASS: TestCounterTimeSeries/default_time_resolution_by_day (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763668644Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries/default_time_resolution_by_day","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763692323Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries","Output":"--- PASS: TestCounterTimeSeries (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763715163Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestCounterTimeSeries","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763738253Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregateDurationDistributions"}
+{"Time":"2026-06-29T15:32:22.763760523Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregateDurationDistributions","Output":"=== RUN   TestAggregateDurationDistributions\n"}
+{"Time":"2026-06-29T15:32:22.763784573Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregateDurationDistributions","Output":"--- PASS: TestAggregateDurationDistributions (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763807463Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregateDurationDistributions","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763830003Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregateSizeDistributions"}
+{"Time":"2026-06-29T15:32:22.763851513Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregateSizeDistributions","Output":"=== RUN   TestAggregateSizeDistributions\n"}
+{"Time":"2026-06-29T15:32:22.763881542Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregateSizeDistributions","Output":"--- PASS: TestAggregateSizeDistributions (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.763918922Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestAggregateSizeDistributions","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.763946902Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions"}
+{"Time":"2026-06-29T15:32:22.763969072Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions","Output":"=== RUN   TestTimeResolutions\n"}
+{"Time":"2026-06-29T15:32:22.763991692Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/day_resolution"}
+{"Time":"2026-06-29T15:32:22.764013262Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/day_resolution","Output":"=== RUN   TestTimeResolutions/day_resolution\n"}
+{"Time":"2026-06-29T15:32:22.764038022Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/day_resolution","Output":"--- PASS: TestTimeResolutions/day_resolution (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.764060731Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/day_resolution","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.764083391Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/week_(Sunday-based)_resolution"}
+{"Time":"2026-06-29T15:32:22.764104831Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/week_(Sunday-based)_resolution","Output":"=== RUN   TestTimeResolutions/week_(Sunday-based)_resolution\n"}
+{"Time":"2026-06-29T15:32:22.764128261Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/week_(Sunday-based)_resolution","Output":"--- PASS: TestTimeResolutions/week_(Sunday-based)_resolution (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.764150971Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/week_(Sunday-based)_resolution","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.764174701Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/week_(Monday-based)_resolution"}
+{"Time":"2026-06-29T15:32:22.764200011Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/week_(Monday-based)_resolution","Output":"=== RUN   TestTimeResolutions/week_(Monday-based)_resolution\n"}
+{"Time":"2026-06-29T15:32:22.764223831Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/week_(Monday-based)_resolution","Output":"--- PASS: TestTimeResolutions/week_(Monday-based)_resolution (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.76424682Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/week_(Monday-based)_resolution","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.76428051Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/quarterly_resolution"}
+{"Time":"2026-06-29T15:32:22.76430647Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/quarterly_resolution","Output":"=== RUN   TestTimeResolutions/quarterly_resolution\n"}
+{"Time":"2026-06-29T15:32:22.76433295Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/quarterly_resolution","Output":"--- PASS: TestTimeResolutions/quarterly_resolution (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.76435644Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/quarterly_resolution","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.76437982Z","Action":"run","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/yearly_resolution"}
+{"Time":"2026-06-29T15:32:22.76440161Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/yearly_resolution","Output":"=== RUN   TestTimeResolutions/yearly_resolution\n"}
+{"Time":"2026-06-29T15:32:22.764438959Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/yearly_resolution","Output":"--- PASS: TestTimeResolutions/yearly_resolution (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.764462239Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions/yearly_resolution","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.764486469Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions","Output":"--- PASS: TestTimeResolutions (0.00s)\n"}
+{"Time":"2026-06-29T15:32:22.764509189Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Test":"TestTimeResolutions","Elapsed":0}
+{"Time":"2026-06-29T15:32:22.764531999Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:22.764609959Z","Action":"output","Package":"github.com/kopia/kopia/internal/metrics","Output":"ok  \tgithub.com/kopia/kopia/internal/metrics\t0.022s\n"}
+{"Time":"2026-06-29T15:32:22.764639018Z","Action":"pass","Package":"github.com/kopia/kopia/internal/metrics","Elapsed":0.023}
+reward=1 graded=32 found=32 failed=0 parsed=32 framework=go exit_code=0

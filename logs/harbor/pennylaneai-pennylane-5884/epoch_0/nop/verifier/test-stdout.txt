@@ -1,0 +1,38 @@
+patching file tests/interfaces/test_tensorflow_autograph_qnode_shot_vector.py
+patching file tests/transforms/test_split_non_commuting.py
+patching file tests/transforms/test_split_to_single_terms.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo/tests
+configfile: pytest.ini
+plugins: xdist-3.8.0, flaky-3.8.1, benchmark-5.2.3, mock-3.15.1
+collecting ... collected 231 items / 1 error / 1 skipped
+
+==================================== ERRORS ====================================
+__________ ERROR collecting transforms/test_split_to_single_terms.py ___________
+ImportError while importing test module '/workspace/repo/tests/transforms/test_split_to_single_terms.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/transforms/test_split_to_single_terms.py:25: in <module>
+    from pennylane.transforms import split_to_single_terms
+E   ImportError: cannot import name 'split_to_single_terms' from 'pennylane.transforms' (/workspace/repo/pennylane/transforms/__init__.py)
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/_pytest/python.py:124
+../../usr/local/lib/python3.11/site-packages/_pytest/python.py:124
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:124: PytestRemovedIn10Warning: Passing a non-Collection iterable to parametrize is deprecated.
+  Test: transforms/test_split_non_commuting.py::TestUnits::test_mix_measurement_types, argvalues type: combinations
+  Please convert to a list or tuple.
+  See https://docs.pytest.org/en/stable/deprecations.html#parametrize-iterators
+    metafunc.parametrize(*marker.args, **marker.kwargs, _param_mark=marker)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/transforms/test_split_to_single_terms.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=================== 1 skipped, 2 warnings, 1 error in 0.44s ====================
+reward=0 graded=239 found=0 failed=0 parsed=0 framework=pytest exit_code=2

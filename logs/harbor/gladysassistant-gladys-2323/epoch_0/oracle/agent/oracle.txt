@@ -1,0 +1,7 @@
+patching file front/src/components/boxs/chart/Chart.jsx
+patching file front/src/components/boxs/device-in-room/device-features/sensor-value/DistanceSensorDeviceValue.jsx
+patching file front/src/components/boxs/device-in-room/device-features/sensor-value/SensorDeviceFeature.jsx
+patching file front/src/components/boxs/gauge/GaugeBox.jsx
+patching file server/utils/constants.js
+patching file server/utils/unit-conversions.js
+patching file server/utils/units.js

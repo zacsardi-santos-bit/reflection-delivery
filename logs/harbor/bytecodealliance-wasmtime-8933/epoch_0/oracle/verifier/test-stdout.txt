@@ -1,0 +1,55 @@
+patching file tests/all/main.rs
+patching file tests/all/structs.rs
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+   Compiling wasmtime v24.0.0 (/workspace/repo/crates/wasmtime)
+   Compiling wiggle v24.0.0 (/workspace/repo/crates/wiggle)
+   Compiling wasmtime-explorer v24.0.0 (/workspace/repo/crates/explorer)
+   Compiling wasmtime-cli-flags v24.0.0 (/workspace/repo/crates/cli-flags)
+   Compiling wasmtime-wast v24.0.0 (/workspace/repo/crates/wast)
+   Compiling component-test-util v0.0.0 (/workspace/repo/crates/misc/component-test-util)
+   Compiling test-programs-artifacts v0.0.0 (/workspace/repo/crates/test-programs/artifacts)
+   Compiling wasmtime-wasi v24.0.0 (/workspace/repo/crates/wasi)
+   Compiling wasi-common v24.0.0 (/workspace/repo/crates/wasi-common)
+   Compiling wasmtime-wasi-nn v24.0.0 (/workspace/repo/crates/wasi-nn)
+   Compiling wasmtime-wasi-threads v24.0.0 (/workspace/repo/crates/wasi-threads)
+   Compiling wasmtime-wasi-http v24.0.0 (/workspace/repo/crates/wasi-http)
+   Compiling wasmtime-cli v24.0.0 (/workspace/repo)
+    Finished test [unoptimized + debuginfo] target(s) in 2m 07s
+------------
+ Nextest run ID 233063f0-9c7d-4019-a3c8-d833802ddf8c with nextest profile: default
+    Starting 28 tests across 9 binaries (3720 tests skipped)
+        PASS [   0.041s] wasmtime-cli::all structs::anyref_as_struct
+        PASS [   0.068s] wasmtime-cli::all structs::struct_field_out_of_bounds
+        PASS [   0.077s] wasmtime-cli::all structs::instantiate_with_struct_global
+        PASS [   0.068s] wasmtime-cli::all structs::struct_field_simple
+        PASS [   0.066s] wasmtime-cli::all structs::struct_fields_non_empty
+        PASS [   0.071s] wasmtime-cli::all structs::struct_fields_empty
+        PASS [   0.092s] wasmtime-cli::all structs::host_sets_struct_global
+        PASS [   0.084s] wasmtime-cli::all structs::struct_field_on_unrooted
+        PASS [   0.071s] wasmtime-cli::all structs::struct_fields_unrooted
+        PASS [   0.066s] wasmtime-cli::all structs::struct_new_cross_store_pre
+        PASS [   0.068s] wasmtime-cli::all structs::struct_new_cross_store_field
+        PASS [   0.065s] wasmtime-cli::all structs::struct_new_empty
+        PASS [   0.107s] wasmtime-cli::all structs::passing_structs_through_wasm_with_typed_calls
+        PASS [   0.110s] wasmtime-cli::all structs::host_sets_struct_in_table
+        PASS [   0.081s] wasmtime-cli::all structs::struct_new_unrooted_field
+        PASS [   0.079s] wasmtime-cli::all structs::struct_new_with_fields
+        PASS [   0.076s] wasmtime-cli::all structs::struct_set_field_cross_store_value
+        PASS [   0.073s] wasmtime-cli::all structs::struct_set_field_immutable
+        PASS [   0.107s] wasmtime-cli::all structs::passing_structs_through_wasm_with_untyped_calls
+        PASS [   0.050s] wasmtime-cli::all structs::struct_set_field_out_of_bounds
+        PASS [   0.049s] wasmtime-cli::all structs::struct_set_field_simple
+        PASS [   0.052s] wasmtime-cli::all structs::struct_set_field_on_unrooted
+        PASS [   0.048s] wasmtime-cli::all structs::struct_set_field_with_unrooted
+        PASS [   0.047s] wasmtime-cli::all structs::struct_set_field_wrong_type
+        PASS [   0.042s] wasmtime-cli::all structs::struct_ty
+        PASS [   0.041s] wasmtime-cli::all structs::struct_ty_unrooted
+        PASS [   0.060s] wasmtime-cli::all structs::wasm_sets_struct_global
+        PASS [   0.059s] wasmtime-cli::all structs::wasm_sets_struct_in_table
+------------
+     Summary [   0.161s] 28 tests run: 28 passed, 3720 skipped
+reward=1 graded=28 found=28 failed=0 parsed=28 framework=cargo exit_code=0

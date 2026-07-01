@@ -1,0 +1,7 @@
+patching file operator/pkg/central/extensions/reconcile_admin_password.go
+patching file operator/pkg/central/extensions/reconcile_central_db_password.go
+patching file operator/pkg/central/extensions/reconcile_tls.go
+patching file operator/pkg/common/extensions/reconcile_scanner_db_password.go
+patching file operator/pkg/common/extensions/reconcile_scanner_v4_db_password.go
+patching file operator/pkg/common/extensions/secret_reconciliator.go
+patching file operator/pkg/common/labels/labels.go

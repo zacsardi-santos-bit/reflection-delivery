@@ -1,0 +1,226 @@
+patching file api/openapispec/docs.go
+patching file api/openapispec/swagger.json
+patching file api/openapispec/swagger.yaml
+patching file pkg/cmd/release/list_test.go
+patching file pkg/cmd/workspace/update/options_test.go
+patching file pkg/server/handler/workspace/handler_test.go
+patching file pkg/server/manager/workspace/workspace_manager_test.go
+patching file pkg/workspace/storages/google_test.go
+patching file pkg/workspace/storages/local_test.go
+patching file pkg/workspace/storages/oss_test.go
+patching file pkg/workspace/storages/s3_test.go
+{"Time":"2026-06-29T15:14:23.624800836Z","Action":"start","Package":"kusionstack.io/kusion/api/openapispec"}
+{"Time":"2026-06-29T15:14:23.624880965Z","Action":"output","Package":"kusionstack.io/kusion/api/openapispec","Output":"?   \tkusionstack.io/kusion/api/openapispec\t[no test files]\n"}
+{"Time":"2026-06-29T15:14:23.624928195Z","Action":"skip","Package":"kusionstack.io/kusion/api/openapispec","Elapsed":0}
+# kusionstack.io/kusion/pkg/workspace/storages [kusionstack.io/kusion/pkg/workspace/storages.test]
+pkg/workspace/storages/google_test.go:260:20: storage.RenameWorkspace undefined (type *GoogleStorage has no field or method RenameWorkspace)
+pkg/workspace/storages/local_test.go:391:12: s.RenameWorkspace undefined (type *LocalStorage has no field or method RenameWorkspace)
+pkg/workspace/storages/oss_test.go:248:53: mockOssStorage(mockWorkspacesMetaData()).RenameWorkspace undefined (type *OssStorage has no field or method RenameWorkspace)
+pkg/workspace/storages/s3_test.go:250:52: mockS3Storage(mockWorkspacesMetaData()).RenameWorkspace undefined (type *S3Storage has no field or method RenameWorkspace)
+# kusionstack.io/kusion/pkg/cmd/workspace/update [kusionstack.io/kusion/pkg/cmd/workspace/update.test]
+pkg/cmd/workspace/update/options_test.go:59:5: unknown field NewName in struct literal of type Options
+pkg/cmd/workspace/update/options_test.go:67:5: unknown field NewName in struct literal of type Options
+{"Time":"2026-06-29T15:14:28.590646845Z","Action":"start","Package":"kusionstack.io/kusion/pkg/cmd/release"}
+{"Time":"2026-06-29T15:14:28.590850315Z","Action":"start","Package":"kusionstack.io/kusion/pkg/cmd/workspace/update"}
+{"Time":"2026-06-29T15:14:28.590910564Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/workspace/update","Output":"FAIL\tkusionstack.io/kusion/pkg/cmd/workspace/update [build failed]\n"}
+{"Time":"2026-06-29T15:14:28.590943294Z","Action":"fail","Package":"kusionstack.io/kusion/pkg/cmd/workspace/update","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.618220996Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run"}
+{"Time":"2026-06-29T15:14:28.618280366Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run","Output":"=== RUN   TestListOptions_Run\n"}
+{"Time":"2026-06-29T15:14:28.618363715Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run/No_Releases_Found"}
+{"Time":"2026-06-29T15:14:28.618387515Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run/No_Releases_Found","Output":"=== RUN   TestListOptions_Run/No_Releases_Found\n"}
+{"Time":"2026-06-29T15:14:28.618938763Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run/No_Releases_Found","Output":"No releases found for project: mock-project, workspace: mock-workspace\n"}
+{"Time":"2026-06-29T15:14:28.618979263Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run/No_Releases_Found","Output":"\n"}
+{"Time":"2026-06-29T15:14:28.619005483Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run/No_Releases_Found","Output":"0 total assertions\n"}
+{"Time":"2026-06-29T15:14:28.619027883Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run/No_Releases_Found","Output":"\n"}
+{"Time":"2026-06-29T15:14:28.619066403Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run/No_Releases_Found","Output":"--- PASS: TestListOptions_Run/No_Releases_Found (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.619090073Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run/No_Releases_Found","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.619115593Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run","Output":"--- PASS: TestListOptions_Run (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.619139622Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestListOptions_Run","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.619177292Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestNewCmdRel"}
+{"Time":"2026-06-29T15:14:28.619199762Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestNewCmdRel","Output":"=== RUN   TestNewCmdRel\n"}
+{"Time":"2026-06-29T15:14:28.619227952Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestNewCmdRel/successfully_get_release_help"}
+{"Time":"2026-06-29T15:14:28.619249622Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestNewCmdRel/successfully_get_release_help","Output":"=== RUN   TestNewCmdRel/successfully_get_release_help\n"}
+{"Time":"2026-06-29T15:14:28.619430781Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestNewCmdRel/successfully_get_release_help","Output":"--- PASS: TestNewCmdRel/successfully_get_release_help (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.619481711Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestNewCmdRel/successfully_get_release_help","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.619508721Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestNewCmdRel","Output":"--- PASS: TestNewCmdRel (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.619533981Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestNewCmdRel","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.619562631Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions"}
+{"Time":"2026-06-29T15:14:28.619584121Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions","Output":"=== RUN   TestShowFlags_ToOptions\n"}
+{"Time":"2026-06-29T15:14:28.619607711Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Successful_Option_Creation"}
+{"Time":"2026-06-29T15:14:28.61962996Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Successful_Option_Creation","Output":"=== RUN   TestShowFlags_ToOptions/Successful_Option_Creation\n"}
+{"Time":"2026-06-29T15:14:28.620407087Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Successful_Option_Creation","Output":"\n"}
+{"Time":"2026-06-29T15:14:28.620438287Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Successful_Option_Creation","Output":"0 total assertions\n"}
+{"Time":"2026-06-29T15:14:28.620463207Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Successful_Option_Creation","Output":"\n"}
+{"Time":"2026-06-29T15:14:28.620536597Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Successful_Option_Creation","Output":"--- PASS: TestShowFlags_ToOptions/Successful_Option_Creation (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.620567027Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Successful_Option_Creation","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.620591907Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend"}
+{"Time":"2026-06-29T15:14:28.620614027Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend","Output":"=== RUN   TestShowFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend\n"}
+{"Time":"2026-06-29T15:14:28.620901305Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend","Output":"--- PASS: TestShowFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.620947025Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.620984505Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions","Output":"--- PASS: TestShowFlags_ToOptions (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.621008265Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowFlags_ToOptions","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.621035775Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate"}
+{"Time":"2026-06-29T15:14:28.621057505Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate","Output":"=== RUN   TestShowOptions_Validate\n"}
+{"Time":"2026-06-29T15:14:28.621088415Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate/Valid_Args"}
+{"Time":"2026-06-29T15:14:28.621110065Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate/Valid_Args","Output":"=== RUN   TestShowOptions_Validate/Valid_Args\n"}
+{"Time":"2026-06-29T15:14:28.621135405Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate/Valid_Args","Output":"--- PASS: TestShowOptions_Validate/Valid_Args (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.621162844Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate/Valid_Args","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.621189514Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate/Invalid_Args"}
+{"Time":"2026-06-29T15:14:28.621211504Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate/Invalid_Args","Output":"=== RUN   TestShowOptions_Validate/Invalid_Args\n"}
+{"Time":"2026-06-29T15:14:28.621239644Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate/Invalid_Args","Output":"--- PASS: TestShowOptions_Validate/Invalid_Args (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.621267084Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate/Invalid_Args","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.621291484Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate","Output":"--- PASS: TestShowOptions_Validate (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.621315384Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestShowOptions_Validate","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.621342574Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions"}
+{"Time":"2026-06-29T15:14:28.621371554Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions","Output":"=== RUN   TestUnlockFlags_ToOptions\n"}
+{"Time":"2026-06-29T15:14:28.621398683Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Successful_Option_Creation"}
+{"Time":"2026-06-29T15:14:28.621420123Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Successful_Option_Creation","Output":"=== RUN   TestUnlockFlags_ToOptions/Successful_Option_Creation\n"}
+{"Time":"2026-06-29T15:14:28.622416909Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Successful_Option_Creation","Output":"\n"}
+{"Time":"2026-06-29T15:14:28.622467799Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Successful_Option_Creation","Output":"0 total assertions\n"}
+{"Time":"2026-06-29T15:14:28.622493269Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Successful_Option_Creation","Output":"\n"}
+{"Time":"2026-06-29T15:14:28.622521639Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Successful_Option_Creation","Output":"--- PASS: TestUnlockFlags_ToOptions/Successful_Option_Creation (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.622559109Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Successful_Option_Creation","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.622591529Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend"}
+{"Time":"2026-06-29T15:14:28.622614619Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend","Output":"=== RUN   TestUnlockFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend\n"}
+{"Time":"2026-06-29T15:14:28.622649179Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend","Output":"--- PASS: TestUnlockFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.622683598Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions/Failed_Option_Creation_Due_to_Invalid_Backend","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.622716538Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions","Output":"--- PASS: TestUnlockFlags_ToOptions (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.622739798Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockFlags_ToOptions","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.622767578Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate"}
+{"Time":"2026-06-29T15:14:28.622789928Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate","Output":"=== RUN   TestUnlockOptions_Validate\n"}
+{"Time":"2026-06-29T15:14:28.622973137Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate/Valid_Args"}
+{"Time":"2026-06-29T15:14:28.623004717Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate/Valid_Args","Output":"=== RUN   TestUnlockOptions_Validate/Valid_Args\n"}
+{"Time":"2026-06-29T15:14:28.623035537Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate/Valid_Args","Output":"--- PASS: TestUnlockOptions_Validate/Valid_Args (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.623059977Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate/Valid_Args","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.623089947Z","Action":"run","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate/Invalid_Args"}
+{"Time":"2026-06-29T15:14:28.623111707Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate/Invalid_Args","Output":"=== RUN   TestUnlockOptions_Validate/Invalid_Args\n"}
+{"Time":"2026-06-29T15:14:28.623141557Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate/Invalid_Args","Output":"--- PASS: TestUnlockOptions_Validate/Invalid_Args (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.623164716Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate/Invalid_Args","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.623188426Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate","Output":"--- PASS: TestUnlockOptions_Validate (0.00s)\n"}
+{"Time":"2026-06-29T15:14:28.623212416Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Test":"TestUnlockOptions_Validate","Elapsed":0}
+{"Time":"2026-06-29T15:14:28.623239206Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:28.623857914Z","Action":"output","Package":"kusionstack.io/kusion/pkg/cmd/release","Output":"ok  \tkusionstack.io/kusion/pkg/cmd/release\t0.033s\n"}
+{"Time":"2026-06-29T15:14:28.623913104Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/cmd/release","Elapsed":0.033}
+{"Time":"2026-06-29T15:14:29.926782791Z","Action":"start","Package":"kusionstack.io/kusion/pkg/server/handler/workspace"}
+{"Time":"2026-06-29T15:14:29.946168944Z","Action":"start","Package":"kusionstack.io/kusion/pkg/server/manager/workspace"}
+{"Time":"2026-06-29T15:14:29.946350464Z","Action":"start","Package":"kusionstack.io/kusion/pkg/workspace/storages"}
+{"Time":"2026-06-29T15:14:29.946484173Z","Action":"output","Package":"kusionstack.io/kusion/pkg/workspace/storages","Output":"FAIL\tkusionstack.io/kusion/pkg/workspace/storages [build failed]\n"}
+{"Time":"2026-06-29T15:14:29.946511303Z","Action":"fail","Package":"kusionstack.io/kusion/pkg/workspace/storages","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.973811015Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler"}
+{"Time":"2026-06-29T15:14:29.973881215Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler","Output":"=== RUN   TestWorkspaceHandler\n"}
+{"Time":"2026-06-29T15:14:29.973943314Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/ListWorkspaces"}
+{"Time":"2026-06-29T15:14:29.973965854Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/ListWorkspaces","Output":"=== RUN   TestWorkspaceHandler/ListWorkspaces\n"}
+{"Time":"2026-06-29T15:14:29.974493222Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/ListWorkspaces","Output":"2026-06-29T15:14:29.974352593Z INFO Listing workspace... service: \"DefaultLogger\" \n"}
+{"Time":"2026-06-29T15:14:29.974556622Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/ListWorkspaces","Output":"2026-06-29T15:14:29.974396933Z INFO Building workspace filter... service: \"DefaultLogger\" \n"}
+{"Time":"2026-06-29T15:14:29.975603638Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/ListWorkspaces","Output":"--- PASS: TestWorkspaceHandler/ListWorkspaces (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.975667428Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/ListWorkspaces","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.975708737Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/GetWorkspace"}
+{"Time":"2026-06-29T15:14:29.975732717Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/GetWorkspace","Output":"=== RUN   TestWorkspaceHandler/GetWorkspace\n"}
+{"Time":"2026-06-29T15:14:29.975762997Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/GetWorkspace","Output":"2026-06-29T15:14:29.975696278Z INFO Getting workspace... service: \"DefaultLogger\" workspaceID: 1 \n"}
+{"Time":"2026-06-29T15:14:29.976220505Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/GetWorkspace","Output":"--- PASS: TestWorkspaceHandler/GetWorkspace (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.976251815Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/GetWorkspace","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.976289005Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/CreateWorkspace"}
+{"Time":"2026-06-29T15:14:29.976311745Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/CreateWorkspace","Output":"=== RUN   TestWorkspaceHandler/CreateWorkspace\n"}
+{"Time":"2026-06-29T15:14:29.976770573Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/CreateWorkspace","Output":"2026-06-29T15:14:29.976708613Z INFO Creating workspace... service: \"DefaultLogger\" \n"}
+{"Time":"2026-06-29T15:14:29.97771156Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/CreateWorkspace","Output":"\n"}
+{"Time":"2026-06-29T15:14:29.977770359Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/CreateWorkspace","Output":"0 total assertions\n"}
+{"Time":"2026-06-29T15:14:29.977795919Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/CreateWorkspace","Output":"\n"}
+{"Time":"2026-06-29T15:14:29.977824709Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/CreateWorkspace","Output":"--- PASS: TestWorkspaceHandler/CreateWorkspace (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.977850029Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/CreateWorkspace","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.977874339Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/UpdateExistingWorkspace"}
+{"Time":"2026-06-29T15:14:29.977898339Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/UpdateExistingWorkspace","Output":"=== RUN   TestWorkspaceHandler/UpdateExistingWorkspace\n"}
+{"Time":"2026-06-29T15:14:29.977926449Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/UpdateExistingWorkspace","Output":"2026-06-29T15:14:29.977844299Z INFO Updating workspace... service: \"DefaultLogger\" workspaceID: 1 \n"}
+{"Time":"2026-06-29T15:14:29.978548476Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/UpdateExistingWorkspace","Output":"--- PASS: TestWorkspaceHandler/UpdateExistingWorkspace (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.978576406Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/UpdateExistingWorkspace","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.978607646Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace"}
+{"Time":"2026-06-29T15:14:29.978631216Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"=== RUN   TestWorkspaceHandler/Delete_Existing_Workspace\n"}
+{"Time":"2026-06-29T15:14:29.978823325Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"2026-06-29T15:14:29.978741735Z INFO Deleting source... service: \"DefaultLogger\" workspaceID: 1 \n"}
+{"Time":"2026-06-29T15:14:29.978897005Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"    handler_test.go:238: \n"}
+{"Time":"2026-06-29T15:14:29.978921275Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \tError Trace:\t/workspace/repo/pkg/server/handler/workspace/handler_test.go:238\n"}
+{"Time":"2026-06-29T15:14:29.978945765Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \tError:      \tNot equal: \n"}
+{"Time":"2026-06-29T15:14:29.978969555Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \t            \texpected: string(\"Deletion Success\")\n"}
+{"Time":"2026-06-29T15:14:29.978996844Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \t            \tactual  : \u003cnil\u003e(\u003cnil\u003e)\n"}
+{"Time":"2026-06-29T15:14:29.979035444Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \tTest:       \tTestWorkspaceHandler/Delete_Existing_Workspace\n"}
+{"Time":"2026-06-29T15:14:29.979063154Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"    util.go:90: \n"}
+{"Time":"2026-06-29T15:14:29.979090374Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \tError Trace:\t/workspace/repo/pkg/infra/persistence/util.go:90\n"}
+{"Time":"2026-06-29T15:14:29.979113844Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \t            \t\t\t\t/workspace/repo/pkg/server/handler/workspace/handler_test.go:239\n"}
+{"Time":"2026-06-29T15:14:29.979137644Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \tError:      \tReceived unexpected error:\n"}
+{"Time":"2026-06-29T15:14:29.979160884Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \t            \tcall to database Close, was not expected, next expectation is: ExpectedQuery =\u003e expecting Query, QueryContext or QueryRow which:\n"}
+{"Time":"2026-06-29T15:14:29.979185044Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \t            \t  - matches sql: 'SELECT'\n"}
+{"Time":"2026-06-29T15:14:29.979208334Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \t            \t  - is without arguments\n"}
+{"Time":"2026-06-29T15:14:29.979233213Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \t            \t  - should return rows:\n"}
+{"Time":"2026-06-29T15:14:29.979256103Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \t            \t    row 0 - [1 test-ws 1]\n"}
+{"Time":"2026-06-29T15:14:29.979279273Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"        \tTest:       \tTestWorkspaceHandler/Delete_Existing_Workspace\n"}
+{"Time":"2026-06-29T15:14:29.979307563Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Output":"--- FAIL: TestWorkspaceHandler/Delete_Existing_Workspace (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.979334443Z","Action":"fail","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Existing_Workspace","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.979360043Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace"}
+{"Time":"2026-06-29T15:14:29.979384383Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"=== RUN   TestWorkspaceHandler/Delete_Nonexisting_Workspace\n"}
+{"Time":"2026-06-29T15:14:29.979412873Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"2026-06-29T15:14:29.979125144Z INFO Deleting source... service: \"DefaultLogger\" workspaceID: 1 \n"}
+{"Time":"2026-06-29T15:14:29.979446313Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"    handler_test.go:268: \n"}
+{"Time":"2026-06-29T15:14:29.979469893Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \tError Trace:\t/workspace/repo/pkg/server/handler/workspace/handler_test.go:268\n"}
+{"Time":"2026-06-29T15:14:29.979497702Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \tError:      \tNot equal: \n"}
+{"Time":"2026-06-29T15:14:29.979521282Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \texpected: \"the workspace does not exist\"\n"}
+{"Time":"2026-06-29T15:14:29.979545562Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \tactual  : \"call to database transaction Begin, was not expected, next expectation is: ExpectedQuery =\u003e expecting Query, QueryContext or QueryRow which:\\n  - matches sql: 'SELECT'\\n  - is without arguments\\n  - with empty rows\"\n"}
+{"Time":"2026-06-29T15:14:29.979570722Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t\n"}
+{"Time":"2026-06-29T15:14:29.979595102Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \tDiff:\n"}
+{"Time":"2026-06-29T15:14:29.979618472Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t--- Expected\n"}
+{"Time":"2026-06-29T15:14:29.979642502Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t+++ Actual\n"}
+{"Time":"2026-06-29T15:14:29.979665142Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t@@ -1 +1,4 @@\n"}
+{"Time":"2026-06-29T15:14:29.979701862Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t-the workspace does not exist\n"}
+{"Time":"2026-06-29T15:14:29.979725632Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t+call to database transaction Begin, was not expected, next expectation is: ExpectedQuery =\u003e expecting Query, QueryContext or QueryRow which:\n"}
+{"Time":"2026-06-29T15:14:29.979750441Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t+  - matches sql: 'SELECT'\n"}
+{"Time":"2026-06-29T15:14:29.979773411Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t+  - is without arguments\n"}
+{"Time":"2026-06-29T15:14:29.979796291Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t+  - with empty rows\n"}
+{"Time":"2026-06-29T15:14:29.979827961Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \tTest:       \tTestWorkspaceHandler/Delete_Nonexisting_Workspace\n"}
+{"Time":"2026-06-29T15:14:29.979850891Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"    util.go:90: \n"}
+{"Time":"2026-06-29T15:14:29.979873731Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \tError Trace:\t/workspace/repo/pkg/infra/persistence/util.go:90\n"}
+{"Time":"2026-06-29T15:14:29.979896611Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t\t\t\t/workspace/repo/pkg/server/handler/workspace/handler_test.go:269\n"}
+{"Time":"2026-06-29T15:14:29.979919761Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \tError:      \tReceived unexpected error:\n"}
+{"Time":"2026-06-29T15:14:29.979942621Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \tcall to database Close, was not expected, next expectation is: ExpectedQuery =\u003e expecting Query, QueryContext or QueryRow which:\n"}
+{"Time":"2026-06-29T15:14:29.979965961Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t  - matches sql: 'SELECT'\n"}
+{"Time":"2026-06-29T15:14:29.979988711Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t  - is without arguments\n"}
+{"Time":"2026-06-29T15:14:29.98001123Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \t            \t  - with empty rows\n"}
+{"Time":"2026-06-29T15:14:29.98003515Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"        \tTest:       \tTestWorkspaceHandler/Delete_Nonexisting_Workspace\n"}
+{"Time":"2026-06-29T15:14:29.98006173Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Output":"--- FAIL: TestWorkspaceHandler/Delete_Nonexisting_Workspace (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.9800923Z","Action":"fail","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Delete_Nonexisting_Workspace","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.98011554Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Update_Nonexisting_Workspace"}
+{"Time":"2026-06-29T15:14:29.98013808Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Update_Nonexisting_Workspace","Output":"=== RUN   TestWorkspaceHandler/Update_Nonexisting_Workspace\n"}
+{"Time":"2026-06-29T15:14:29.98016093Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Update_Nonexisting_Workspace","Output":"2026-06-29T15:14:29.979645642Z INFO Updating workspace... service: \"DefaultLogger\" workspaceID: 1 \n"}
+{"Time":"2026-06-29T15:14:29.980289659Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Update_Nonexisting_Workspace","Output":"\r\n"}
+{"Time":"2026-06-29T15:14:29.980322809Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Update_Nonexisting_Workspace","Output":"2026/06/29 15:14:29 \u001b[31;1m/workspace/repo/pkg/infra/persistence/workspace.go:91 \u001b[35;1mrecord not found\n"}
+{"Time":"2026-06-29T15:14:29.980358819Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Update_Nonexisting_Workspace","Output":"\u001b[0m\u001b[33m[0.496ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `workspace` WHERE `workspace`.`id` = 1 AND `workspace`.`deleted_at` IS NULL ORDER BY `workspace`.`id` LIMIT 1\n"}
+{"Time":"2026-06-29T15:14:29.980385409Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Update_Nonexisting_Workspace","Output":"--- PASS: TestWorkspaceHandler/Update_Nonexisting_Workspace (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.980415039Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler/Update_Nonexisting_Workspace","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.980441789Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler","Output":"--- FAIL: TestWorkspaceHandler (0.01s)\n"}
+{"Time":"2026-06-29T15:14:29.980466659Z","Action":"fail","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Test":"TestWorkspaceHandler","Elapsed":0.01}
+{"Time":"2026-06-29T15:14:29.980491019Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:14:29.980736118Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestInvalidNewBackendFromEntity"}
+{"Time":"2026-06-29T15:14:29.980858067Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestInvalidNewBackendFromEntity","Output":"=== RUN   TestInvalidNewBackendFromEntity\n"}
+{"Time":"2026-06-29T15:14:29.980935037Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestInvalidNewBackendFromEntity/Invalid_backend_type"}
+{"Time":"2026-06-29T15:14:29.980958587Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestInvalidNewBackendFromEntity/Invalid_backend_type","Output":"=== RUN   TestInvalidNewBackendFromEntity/Invalid_backend_type\n"}
+{"Time":"2026-06-29T15:14:29.981097426Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestInvalidNewBackendFromEntity/Invalid_backend_type","Output":"--- PASS: TestInvalidNewBackendFromEntity/Invalid_backend_type (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.981138826Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestInvalidNewBackendFromEntity/Invalid_backend_type","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.981172606Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestInvalidNewBackendFromEntity","Output":"--- PASS: TestInvalidNewBackendFromEntity (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.981210846Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestInvalidNewBackendFromEntity","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.981262005Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_ListWorkspaces"}
+{"Time":"2026-06-29T15:14:29.981286645Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_ListWorkspaces","Output":"=== RUN   TestWorkspaceManager_ListWorkspaces\n"}
+{"Time":"2026-06-29T15:14:29.981176936Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Output":"FAIL\tkusionstack.io/kusion/pkg/server/handler/workspace\t0.054s\n"}
+{"Time":"2026-06-29T15:14:29.981344315Z","Action":"fail","Package":"kusionstack.io/kusion/pkg/server/handler/workspace","Elapsed":0.055}
+{"Time":"2026-06-29T15:14:29.981440745Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_ListWorkspaces","Output":"--- PASS: TestWorkspaceManager_ListWorkspaces (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.981486095Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_ListWorkspaces","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.981517304Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_GetWorkspaceByID"}
+{"Time":"2026-06-29T15:14:29.981540764Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_GetWorkspaceByID","Output":"=== RUN   TestWorkspaceManager_GetWorkspaceByID\n"}
+{"Time":"2026-06-29T15:14:29.981582784Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_GetWorkspaceByID","Output":"--- PASS: TestWorkspaceManager_GetWorkspaceByID (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.004032855Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_GetWorkspaceByID","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.011882984Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_DeleteWorkspaceByID"}
+{"Time":"2026-06-29T15:14:30.031437867Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_DeleteWorkspaceByID","Output":"=== RUN   TestWorkspaceManager_DeleteWorkspaceByID\n"}
+{"Time":"2026-06-29T15:14:30.031494787Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_DeleteWorkspaceByID","Output":"--- PASS: TestWorkspaceManager_DeleteWorkspaceByID (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.031788875Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_DeleteWorkspaceByID","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.031990975Z","Action":"run","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_UpdateWorkspaceByID"}
+{"Time":"2026-06-29T15:14:30.032057924Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_UpdateWorkspaceByID","Output":"=== RUN   TestWorkspaceManager_UpdateWorkspaceByID\n"}
+{"Time":"2026-06-29T15:14:30.032122704Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_UpdateWorkspaceByID","Output":"--- PASS: TestWorkspaceManager_UpdateWorkspaceByID (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.032177964Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Test":"TestWorkspaceManager_UpdateWorkspaceByID","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.032220454Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:30.032378033Z","Action":"output","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Output":"ok  \tkusionstack.io/kusion/pkg/server/manager/workspace\t0.086s\n"}
+{"Time":"2026-06-29T15:14:30.032499653Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/server/manager/workspace","Elapsed":0.086}
+reward=0 graded=134 found=30 failed=3 parsed=33 framework=go exit_code=1

@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/plugins/flytekit-inference/tests/test_nim.py -v",
+  "test_files": [
+    "plugins/flytekit-inference/tests/test_nim.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "plugins.flytekit-inference.tests.test_nim::test_nim_init_raises_value_error",
+    "plugins.flytekit-inference.tests.test_nim::test_nim_secrets",
+    "plugins.flytekit-inference.tests.test_nim::test_nim_init_valid_params",
+    "plugins.flytekit-inference.tests.test_nim::test_nim_default_params",
+    "plugins.flytekit-inference.tests.test_nim::test_nim_lora"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,44 @@
+patching file test/mjolnir/CMakeLists.txt
+patching file test/mjolnir/test_harmonic_restraint_potential.cpp
+patching file test/mjolnir/test_position_restraint_interaction.cpp
+patching file test/mjolnir/test_read_harmonic_restraint_potential.cpp
+patching file test/mjolnir/test_read_position_restraint_interaction.cpp
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test MJOLNIR_COMPILER_HAS_WALL
+-- Performing Test MJOLNIR_COMPILER_HAS_WALL - Success
+-- Performing Test MJOLNIR_COMPILER_HAS_WEXTRA
+-- Performing Test MJOLNIR_COMPILER_HAS_WEXTRA - Success
+-- Performing Test MJOLNIR_COMPILER_HAS_WPEDANTIC
+-- Performing Test MJOLNIR_COMPILER_HAS_WPEDANTIC - Success
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found suitable version "1.74.0", minimum required is "1.67.0") found components: unit_test_framework 
+-- boost_unit_test_framework precompiled library found -> Boost::unit_test_framework
+-- Configuring done
+-- Generating done
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    BUILD_TESTING
+
+
+-- Build files have been written to: /workspace/repo/build
+[ 50%] Building CXX object test/mjolnir/CMakeFiles/test_harmonic_restraint_potential.dir/test_harmonic_restraint_potential.cpp.o
+/workspace/repo/test/mjolnir/test_harmonic_restraint_potential.cpp:9:10: fatal error: mjolnir/potential/external/HarmonicRestraintPotential.hpp: No such file or directory
+    9 | #include <mjolnir/potential/external/HarmonicRestraintPotential.hpp>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[3]: *** [test/mjolnir/CMakeFiles/test_harmonic_restraint_potential.dir/build.make:76: test/mjolnir/CMakeFiles/test_harmonic_restraint_potential.dir/test_harmonic_restraint_potential.cpp.o] Error 1
+make[2]: *** [CMakeFiles/Makefile2:817: test/mjolnir/CMakeFiles/test_harmonic_restraint_potential.dir/all] Error 2
+make[1]: *** [CMakeFiles/Makefile2:824: test/mjolnir/CMakeFiles/test_harmonic_restraint_potential.dir/rule] Error 2
+make: *** [Makefile:420: test_harmonic_restraint_potential] Error 2
+reward=0 graded=4 found=0 failed=0 parsed=0 framework=ctest exit_code=2

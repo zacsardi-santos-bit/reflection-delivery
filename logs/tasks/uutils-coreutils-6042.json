@@ -1,0 +1,23 @@
+{
+ "task": "uutils-coreutils-6042",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds is_root() in perms.rs: literal '/' -> \"...on '/'\"; indirect path -> `show_error!(\"it is dangerous to operate recursively on {} (same as '/')\", path_buf.quote())`; F2P test_preserve_root asserts exact stderr per path d"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

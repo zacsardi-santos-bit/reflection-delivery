@@ -1,0 +1,10 @@
+patching file broker/broker_schema_mutator_test.go
+patching file broker/query_compiler_test.go
+patching file broker/query_plan_agg_test.go
+patching file broker/query_plan_non_agg_test.go
+# github.com/uber/aresdb/broker [github.com/uber/aresdb/broker.test]
+broker/query_compiler_test.go:86:9: qc.GetRewrittenQuery undefined (type *QueryContext has no field or method GetRewrittenQuery)
+broker/query_compiler_test.go:150:9: qc.GetRewrittenQuery undefined (type *QueryContext has no field or method GetRewrittenQuery)
+broker/query_compiler_test.go:766:38: qc.GetRewrittenQuery undefined (type *QueryContext has no field or method GetRewrittenQuery)
+FAIL	github.com/uber/aresdb/broker [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

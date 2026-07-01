@@ -1,0 +1,23 @@
+{
+ "task": "exonum-exonum-553",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden lib.rs adds enum Error { SenderNotFound=1, ReceiverNotFound=2, InsufficientCurrencyAmount=3 } and returns them via ExecutionError; tests assert_tx_status with json!({\"type\":\"error\",\"code\":1/2/3}); F2P=13 via 'cargo nextest run -p exonum-cryptocurrency'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

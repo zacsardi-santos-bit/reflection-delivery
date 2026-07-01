@@ -1,0 +1,23 @@
+{
+ "task": "sigp-lighthouse-5401",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden creates new crate 'beacon_node/lighthouse_network/gossipsub/Cargo.toml' + 'gossipsub/src/lib.rs', updates network/Cargo.toml to depend on it, and replaces async-runtime net type with 'use std::net::IpAddr'; test runs 'cargo nextest run -p gossipsub' which only resolves if the new package exis"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 31,
+  "shallow": true
+ }
+}

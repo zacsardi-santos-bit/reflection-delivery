@@ -1,0 +1,183 @@
+patching file desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx
+patching file desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx
+  console.error
+    Warning: An update to ForwardRef(StickyScrollBar) inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+        at StickyScrollBar (/workspace/repo/node_modules/rc-table/lib/stickyScrollBar.js:39:28)
+        at div
+        at /workspace/repo/node_modules/rc-table/lib/Table.js:126:23
+        at div
+        at Table (/workspace/repo/node_modules/rc-table/lib/Table.js:141:25)
+        at div
+        at div
+        at Spin (/workspace/repo/node_modules/antd/lib/spin/index.js:65:25)
+        at SpinFC (/workspace/repo/node_modules/antd/lib/spin/index.js:126:34)
+        at div
+        at InternalTable (/workspace/repo/node_modules/antd/lib/table/Table.js:40:34)
+        at className (/workspace/repo/node_modules/cuix/dist/components/Table/Table.js:40:24)
+        at title (/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.tsx:52:3)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom.development.js:27589:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom.development.js:25508:5)
+      at dispatchSetState (node_modules/react-dom/cjs/react-dom.development.js:17527:7)
+      at node_modules/rc-table/lib/hooks/useFrame.js:43:11
+
+  console.error
+    Warning: An update to ForwardRef(StickyScrollBar) inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+        at StickyScrollBar (/workspace/repo/node_modules/rc-table/lib/stickyScrollBar.js:39:28)
+        at div
+        at /workspace/repo/node_modules/rc-table/lib/Table.js:126:23
+        at div
+        at Table (/workspace/repo/node_modules/rc-table/lib/Table.js:141:25)
+        at div
+        at div
+        at Spin (/workspace/repo/node_modules/antd/lib/spin/index.js:65:25)
+        at SpinFC (/workspace/repo/node_modules/antd/lib/spin/index.js:126:34)
+        at div
+        at InternalTable (/workspace/repo/node_modules/antd/lib/table/Table.js:40:34)
+        at className (/workspace/repo/node_modules/cuix/dist/components/Table/Table.js:40:24)
+        at title (/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.tsx:52:3)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom.development.js:27589:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom.development.js:25508:5)
+      at dispatchSetState (node_modules/react-dom/cjs/react-dom.development.js:17527:7)
+      at node_modules/rc-table/lib/hooks/useFrame.js:43:11
+
+  console.error
+    Warning: An update to ForwardRef(StickyScrollBar) inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+        at StickyScrollBar (/workspace/repo/node_modules/rc-table/lib/stickyScrollBar.js:39:28)
+        at div
+        at /workspace/repo/node_modules/rc-table/lib/Table.js:126:23
+        at div
+        at Table (/workspace/repo/node_modules/rc-table/lib/Table.js:141:25)
+        at div
+        at div
+        at Spin (/workspace/repo/node_modules/antd/lib/spin/index.js:65:25)
+        at SpinFC (/workspace/repo/node_modules/antd/lib/spin/index.js:126:34)
+        at div
+        at InternalTable (/workspace/repo/node_modules/antd/lib/table/Table.js:40:34)
+        at className (/workspace/repo/node_modules/cuix/dist/components/Table/Table.js:40:24)
+        at title (/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.tsx:52:3)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom.development.js:27589:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom.development.js:25508:5)
+      at dispatchSetState (node_modules/react-dom/cjs/react-dom.development.js:17527:7)
+      at node_modules/rc-table/lib/hooks/useFrame.js:43:11
+
+  console.error
+    Warning: An update to ForwardRef(StickyScrollBar) inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+        at StickyScrollBar (/workspace/repo/node_modules/rc-table/lib/stickyScrollBar.js:39:28)
+        at div
+        at /workspace/repo/node_modules/rc-table/lib/Table.js:126:23
+        at div
+        at Table (/workspace/repo/node_modules/rc-table/lib/Table.js:141:25)
+        at div
+        at div
+        at Spin (/workspace/repo/node_modules/antd/lib/spin/index.js:65:25)
+        at SpinFC (/workspace/repo/node_modules/antd/lib/spin/index.js:126:34)
+        at div
+        at InternalTable (/workspace/repo/node_modules/antd/lib/table/Table.js:40:34)
+        at className (/workspace/repo/node_modules/cuix/dist/components/Table/Table.js:40:24)
+        at title (/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.tsx:52:3)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom.development.js:27589:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom.development.js:25508:5)
+      at dispatchSetState (node_modules/react-dom/cjs/react-dom.development.js:17527:7)
+      at node_modules/rc-table/lib/hooks/useFrame.js:43:11
+
+  console.error
+    Warning: An update to ForwardRef(StickyScrollBar) inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+        at StickyScrollBar (/workspace/repo/node_modules/rc-table/lib/stickyScrollBar.js:39:28)
+        at div
+        at /workspace/repo/node_modules/rc-table/lib/Table.js:126:23
+        at div
+        at Table (/workspace/repo/node_modules/rc-table/lib/Table.js:141:25)
+        at div
+        at div
+        at Spin (/workspace/repo/node_modules/antd/lib/spin/index.js:65:25)
+        at SpinFC (/workspace/repo/node_modules/antd/lib/spin/index.js:126:34)
+        at div
+        at InternalTable (/workspace/repo/node_modules/antd/lib/table/Table.js:40:34)
+        at className (/workspace/repo/node_modules/cuix/dist/components/Table/Table.js:40:24)
+        at title (/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.tsx:52:3)
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-dom/cjs/react-dom.development.js:27589:9)
+      at scheduleUpdateOnFiber (node_modules/react-dom/cjs/react-dom.development.js:25508:5)
+      at dispatchSetState (node_modules/react-dom/cjs/react-dom.development.js:17527:7)
+      at node_modules/rc-table/lib/hooks/useFrame.js:43:11
+
+PASS desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx (7.98 s)
+  Table
+    ✓ renders table with data (160 ms)
+    ✓ handles row selection (39 ms)
+    ✓ handles row click (25 ms)
+    ✓ renders pagination when provided with valid stats (31 ms)
+    ✓ does not render pagination when totalPages is 0 (19 ms)
+
+PASS desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx (9.734 s)
+  Metrics
+    ✓ should filter metrics based on name column value (216 ms)
+    ✓ should select a specific metric from the dropdown filters the data using click events (161 ms)
+    ✓ should ensure metrics starting with auth, multiprocessing and python.gc are not displayed (124 ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        11.232 s
+Ran all test suites matching /desktop\/core\/src\/desktop\/js\/apps\/admin\/Metrics\/MetricsTab.test.tsx|desktop\/core\/src\/desktop\/js\/reactComponents\/PaginatedTable\/PaginatedTable.test.tsx/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":2,"numPassedTests":8,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":8,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746301761,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["Table"],"duration":160,"failureDetails":[],"failureMessages":[],"fullName":"Table renders table with data","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"renders table with data"},{"ancestorTitles":["Table"],"duration":39,"failureDetails":[],"failureMessages":[],"fullName":"Table handles row selection","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"handles row selection"},{"ancestorTitles":["Table"],"duration":25,"failureDetails":[],"failureMessages":[],"fullName":"Table handles row click","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"handles row click"},{"ancestorTitles":["Table"],"duration":31,"failureDetails":[],"failureMessages":[],"fullName":"Table renders pagination when provided with valid stats","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"renders pagination when provided with valid stats"},{"ancestorTitles":["Table"],"duration":19,"failureDetails":[],"failureMessages":[],"fullName":"Table does not render pagination when totalPages is 0","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render pagination when totalPages is 0"}],"endTime":1782746311135,"message":"","name":"/workspace/repo/desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.test.tsx","startTime":1782746303155,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Metrics"],"duration":216,"failureDetails":[],"failureMessages":[],"fullName":"Metrics should filter metrics based on name column value","invocations":1,"location":null,"numPassingAsserts":9,"retryReasons":[],"status":"passed","title":"should filter metrics based on name column value"},{"ancestorTitles":["Metrics"],"duration":161,"failureDetails":[],"failureMessages":[],"fullName":"Metrics should select a specific metric from the dropdown filters the data using click events","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should select a specific metric from the dropdown filters the data using click events"},{"ancestorTitles":["Metrics"],"duration":124,"failureDetails":[],"failureMessages":[],"fullName":"Metrics should ensure metrics starting with auth, multiprocessing and python.gc are not displayed","invocations":1,"location":null,"numPassingAsserts":7,"retryReasons":[],"status":"passed","title":"should ensure metrics starting with auth, multiprocessing and python.gc are not displayed"}],"endTime":1782746312889,"message":"","name":"/workspace/repo/desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.test.tsx","startTime":1782746303155,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=8 found=8 failed=0 parsed=8 framework=jest exit_code=0

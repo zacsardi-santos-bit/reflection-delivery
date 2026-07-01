@@ -1,0 +1,33 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p tokio-codec --test-threads=1 --no-fail-fast",
+  "test_files": [
+    "tokio-codec/tests/codecs.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/21) tokio-codec::codecs bytes_decoder",
+    "( 2/21) tokio-codec::codecs bytes_encoder",
+    "( 3/21) tokio-codec::codecs lines_decoder",
+    "( 4/21) tokio-codec::codecs lines_decoder_max_length",
+    "( 5/21) tokio-codec::codecs lines_decoder_max_length_underrun",
+    "( 6/21) tokio-codec::codecs lines_encoder",
+    "( 7/21) tokio-codec::framed can_read_from_existing_buf",
+    "( 8/21) tokio-codec::framed external_buf_does_not_shrink",
+    "( 9/21) tokio-codec::framed external_buf_grows_to_init",
+    "(10/21) tokio-codec::framed_read data_remaining_is_error",
+    "(11/21) tokio-codec::framed_read huge_size",
+    "(12/21) tokio-codec::framed_read multi_frames_on_eof",
+    "(13/21) tokio-codec::framed_read read_err",
+    "(14/21) tokio-codec::framed_read read_multi_frame_across_packets",
+    "(15/21) tokio-codec::framed_read read_multi_frame_in_packet",
+    "(16/21) tokio-codec::framed_read read_not_ready",
+    "(17/21) tokio-codec::framed_read read_partial_then_err",
+    "(18/21) tokio-codec::framed_read read_partial_then_not_ready",
+    "(19/21) tokio-codec::framed_read read_partial_would_block_then_err",
+    "(20/21) tokio-codec::framed_write write_hits_backpressure",
+    "(21/21) tokio-codec::framed_write write_multi_frame_in_packet"
+  ],
+  "PASS_TO_PASS": []
+}

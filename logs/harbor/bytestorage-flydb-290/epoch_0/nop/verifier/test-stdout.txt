@@ -1,0 +1,37 @@
+patching file db/column/column_test.go
+patching file db/memory/db_test.go
+patching file db/memory/memory_test.go
+patching file lib/bloom/bloom_test.go
+patching file lib/wal/wal_test.go
+# github.com/ByteStorage/FlyDB/lib/bloom [github.com/ByteStorage/FlyDB/lib/bloom.test]
+lib/bloom/bloom_test.go:9:12: undefined: NewBloomFilter
+lib/bloom/bloom_test.go:14:12: undefined: NewBloomFilter
+lib/bloom/bloom_test.go:21:12: undefined: NewBloomFilter
+# github.com/ByteStorage/FlyDB/db/column [github.com/ByteStorage/FlyDB/db/column.test]
+db/column/column_test.go:11:35: undefined: config.ColumnOptions
+db/column/column_test.go:12:26: undefined: config.DbMemoryOptions
+db/column/column_test.go:25:18: undefined: wal.Options
+db/column/column_test.go:44:17: undefined: NewColumn
+db/column/column_test.go:74:17: undefined: NewColumn
+db/column/column_test.go:108:17: undefined: NewColumn
+db/column/column_test.go:133:17: undefined: NewColumn
+db/column/column_test.go:170:17: undefined: NewColumn
+db/column/column_test.go:214:17: undefined: NewColumn
+db/column/column_test.go:242:17: undefined: NewColumn
+db/column/column_test.go:242:17: too many errors
+# github.com/ByteStorage/FlyDB/lib/wal [github.com/ByteStorage/FlyDB/lib/wal.test]
+lib/wal/wal_test.go:11:9: undefined: Options
+lib/wal/wal_test.go:17:14: undefined: NewWal
+FAIL	github.com/ByteStorage/FlyDB/db/column [build failed]
+# github.com/ByteStorage/FlyDB/db/memory [github.com/ByteStorage/FlyDB/db/memory.test]
+db/memory/db_test.go:15:19: undefined: config.DefaultDbMemoryOptions
+db/memory/db_test.go:21:13: undefined: NewDB
+db/memory/db_test.go:44:19: undefined: config.DefaultDbMemoryOptions
+db/memory/db_test.go:50:13: undefined: NewDB
+db/memory/memory_test.go:9:11: undefined: NewMemTable
+db/memory/memory_test.go:14:11: undefined: NewMemTable
+db/memory/memory_test.go:24:11: undefined: NewMemTable
+FAIL	github.com/ByteStorage/FlyDB/db/memory [build failed]
+FAIL	github.com/ByteStorage/FlyDB/lib/bloom [build failed]
+FAIL	github.com/ByteStorage/FlyDB/lib/wal [build failed]
+reward=0 graded=16 found=16 failed=16 parsed=4 framework=go exit_code=1

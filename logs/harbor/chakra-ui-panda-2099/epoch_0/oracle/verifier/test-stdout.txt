@@ -1,0 +1,266 @@
+patching file packages/core/__tests__/sort-mq.test.ts
+patching file packages/generator/__tests__/generate-pattern.test.ts
+patching file packages/generator/__tests__/generate-prop-types.test.ts
+patching file packages/generator/__tests__/setup-artifacts.test.ts
+patching file packages/parser/__tests__/fixture.ts
+patching file packages/parser/__tests__/output.test.ts
+patching file packages/parser/__tests__/preset-patterns.test.ts
+
+> panda@0.0.1 build-fast /workspace/repo
+> pnpm -r --parallel --filter=./packages/** build-fast
+
+Scope: 33 of 53 workspace projects
+packages/config build-fast$ tsup --no-dts
+packages/core build-fast$ tsup --no-dts
+packages/logger build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/generator build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/extractor build-fast$ tsup src/index.ts --format=cjs,esm --shims --no-dts
+packages/postcss build-fast$ tsup src/index.ts --format=cjs,esm --shims --no-dts
+packages/node build-fast$ tsup --tsconfig tsconfig.build.json src/index.ts --format=cjs,esm --shims --no-dts
+packages/parser build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/is-valid-prop build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/preset-base build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/preset-atlaskit build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/preset-panda build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/astro-plugin-studio build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/cli build-fast$ tsup src --format=esm,cjs --no-dts --no-splitting --shims
+packages/preset-open-props build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/studio build-fast$ tsup scripts --format=esm,cjs --no-dts --no-splitting --shims
+packages/token-dictionary build-fast$ tsup src/index.ts --format=esm,cjs --no-dts
+packages/shared build-fast$ tsup --no-dts
+packages/logger build-fast: CLI Building entry: src/index.ts
+packages/logger build-fast: CLI Using tsconfig: tsconfig.json
+packages/logger build-fast: CLI tsup v8.0.1
+packages/logger build-fast: CLI Target: esnext
+packages/logger build-fast: ESM Build start
+packages/logger build-fast: CJS Build start
+packages/is-valid-prop build-fast: CLI Building entry: src/index.ts
+packages/is-valid-prop build-fast: CLI Using tsconfig: tsconfig.json
+packages/is-valid-prop build-fast: CLI tsup v8.0.1
+packages/is-valid-prop build-fast: CLI Target: esnext
+packages/is-valid-prop build-fast: ESM Build start
+packages/is-valid-prop build-fast: CJS Build start
+packages/preset-base build-fast: CLI Building entry: src/index.ts
+packages/preset-base build-fast: CLI Using tsconfig: tsconfig.json
+packages/preset-base build-fast: CLI tsup v8.0.1
+packages/preset-base build-fast: CLI Target: esnext
+packages/preset-base build-fast: ESM Build start
+packages/preset-base build-fast: CJS Build start
+packages/parser build-fast: CLI Building entry: src/index.ts
+packages/parser build-fast: CLI Using tsconfig: tsconfig.json
+packages/parser build-fast: CLI tsup v8.0.1
+packages/generator build-fast: CLI Building entry: src/index.ts
+packages/generator build-fast: CLI Using tsconfig: tsconfig.json
+packages/generator build-fast: CLI tsup v8.0.1
+packages/parser build-fast: CLI Target: esnext
+packages/parser build-fast: ESM Build start
+packages/parser build-fast: CJS Build start
+packages/generator build-fast: CLI Target: esnext
+packages/generator build-fast: ESM Build start
+packages/generator build-fast: CJS Build start
+packages/astro-plugin-studio build-fast: CLI Building entry: src/index.ts
+packages/astro-plugin-studio build-fast: CLI Using tsconfig: tsconfig.json
+packages/astro-plugin-studio build-fast: CLI tsup v8.0.1
+packages/preset-base build-fast: ✘ [ERROR] The symbol "cq" has already been declared
+packages/preset-base build-fast:     src/patterns.ts:465:6:
+packages/preset-base build-fast:       465 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast:   The symbol "cq" was originally declared here:
+packages/preset-base build-fast:     src/patterns.ts:447:6:
+packages/preset-base build-fast:       447 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast: ✘ [ERROR] The symbol "cq" has already been declared
+packages/preset-base build-fast:     src/patterns.ts:483:6:
+packages/preset-base build-fast:       483 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast:   The symbol "cq" was originally declared here:
+packages/preset-base build-fast:     src/patterns.ts:447:6:
+packages/preset-base build-fast:       447 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast: ✘ [ERROR] The symbol "cq" has already been declared
+packages/preset-base build-fast:     src/patterns.ts:501:6:
+packages/preset-base build-fast:       501 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast:   The symbol "cq" was originally declared here:
+packages/preset-base build-fast:     src/patterns.ts:447:6:
+packages/preset-base build-fast:       447 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/is-valid-prop build-fast: ESM dist/index.mjs 7.65 KB
+packages/is-valid-prop build-fast: ESM ⚡️ Build success in 87ms
+packages/is-valid-prop build-fast: CJS dist/index.js 8.68 KB
+packages/is-valid-prop build-fast: CJS ⚡️ Build success in 87ms
+packages/astro-plugin-studio build-fast: CLI Target: esnext
+packages/astro-plugin-studio build-fast: ESM Build start
+packages/astro-plugin-studio build-fast: CJS Build start
+packages/preset-base build-fast: ✘ [ERROR] The symbol "cq" has already been declared
+packages/preset-base build-fast:     src/patterns.ts:465:6:
+packages/preset-base build-fast:       465 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast:   The symbol "cq" was originally declared here:
+packages/preset-base build-fast:     src/patterns.ts:447:6:
+packages/preset-base build-fast:       447 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast: ✘ [ERROR] The symbol "cq" has already been declared
+packages/preset-base build-fast:     src/patterns.ts:483:6:
+packages/preset-base build-fast:       483 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast:   The symbol "cq" was originally declared here:
+packages/preset-base build-fast:     src/patterns.ts:447:6:
+packages/preset-base build-fast:       447 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast: ✘ [ERROR] The symbol "cq" has already been declared
+packages/preset-base build-fast:     src/patterns.ts:501:6:
+packages/preset-base build-fast:       501 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/preset-base build-fast:   The symbol "cq" was originally declared here:
+packages/preset-base build-fast:     src/patterns.ts:447:6:
+packages/preset-base build-fast:       447 │ const cq = definePattern({
+packages/preset-base build-fast:           ╵       ~~
+packages/is-valid-prop build-fast: Done
+packages/preset-atlaskit build-fast: CLI Building entry: src/index.ts
+packages/preset-panda build-fast: CLI Building entry: src/index.ts
+packages/preset-panda build-fast: CLI Using tsconfig: tsconfig.json
+packages/preset-panda build-fast: CLI tsup v8.0.1
+packages/preset-atlaskit build-fast: CLI Using tsconfig: tsconfig.json
+packages/preset-atlaskit build-fast: CLI tsup v8.0.1
+packages/preset-atlaskit build-fast: CLI Target: esnext
+packages/preset-panda build-fast: CLI Target: esnext
+packages/preset-panda build-fast: ESM Build start
+packages/preset-panda build-fast: CJS Build start
+packages/preset-atlaskit build-fast: ESM Build start
+packages/preset-atlaskit build-fast: CJS Build start
+packages/extractor build-fast: CLI Building entry: src/index.ts
+packages/node build-fast: CLI Building entry: src/index.ts
+packages/parser build-fast: CJS dist/index.js 21.11 KB
+packages/parser build-fast: CJS ⚡️ Build success in 128ms
+packages/cli build-fast: CLI Building entry: src/cli-default.ts, src/cli-main.ts, src/errors.ts, src/index.ts, src/interactive.ts, src/presets.ts, src/types.ts
+packages/node build-fast: CLI Using tsconfig: tsconfig.build.json
+packages/node build-fast: CLI tsup v8.0.1
+packages/extractor build-fast: CLI Using tsconfig: tsconfig.json
+packages/extractor build-fast: CLI tsup v8.0.1
+packages/parser build-fast: ESM dist/index.mjs 18.64 KB
+packages/parser build-fast: ESM ⚡️ Build success in 131ms
+packages/cli build-fast: CLI Using tsconfig: tsconfig.json
+packages/cli build-fast: CLI tsup v8.0.1
+packages/extractor build-fast: CLI Target: esnext
+packages/node build-fast: CLI Target: esnext
+packages/extractor build-fast: CJS Build start
+packages/extractor build-fast: ESM Build start
+packages/node build-fast: CJS Build start
+packages/node build-fast: ESM Build start
+packages/cli build-fast: CLI Target: esnext
+packages/preset-open-props build-fast: CLI Building entry: src/index.ts
+packages/cli build-fast: ESM Build start
+packages/cli build-fast: CJS Build start
+packages/preset-open-props build-fast: CLI Using tsconfig: tsconfig.json
+packages/preset-open-props build-fast: CLI tsup v8.0.1
+packages/postcss build-fast: CLI Building entry: src/index.ts
+packages/config build-fast: CLI Building entry: src/index.ts, src/merge-config.ts, src/diff-config.ts, src/resolve-ts-path-pattern.ts
+packages/config build-fast: CLI Using tsconfig: tsconfig.json
+packages/config build-fast: CLI tsup v8.0.1
+packages/config build-fast: CLI Using tsup config: /workspace/repo/packages/config/tsup.config.ts
+packages/preset-base build-fast: CJS Build failed
+packages/preset-base build-fast: Error: Build failed with 3 errors:
+packages/preset-base build-fast: src/patterns.ts:465:6: ERROR: The symbol "cq" has already been declared
+packages/preset-base build-fast: src/patterns.ts:483:6: ERROR: The symbol "cq" has already been declared
+packages/preset-base build-fast: src/patterns.ts:501:6: ERROR: The symbol "cq" has already been declared
+packages/preset-base build-fast:     at failureErrorWithLog (/workspace/repo/node_modules/.pnpm/esbuild@0.19.8/node_modules/esbuild/lib/main.js:1650:15)
+packages/preset-base build-fast:     at /workspace/repo/node_modules/.pnpm/esbuild@0.19.8/node_modules/esbuild/lib/main.js:1058:25
+packages/preset-base build-fast:     at runOnEndCallbacks (/workspace/repo/node_modules/.pnpm/esbuild@0.19.8/node_modules/esbuild/lib/main.js:1485:45)
+packages/preset-base build-fast:     at buildResponseToResult (/workspace/repo/node_modules/.pnpm/esbuild@0.19.8/node_modules/esbuild/lib/main.js:1056:7)
+packages/preset-base build-fast:     at /workspace/repo/node_modules/.pnpm/esbuild@0.19.8/node_modules/esbuild/lib/main.js:1085:16
+packages/preset-base build-fast:     at responseCallbacks.<computed> (/workspace/repo/node_modules/.pnpm/esbuild@0.19.8/node_modules/esbuild/lib/main.js:703:9)
+packages/preset-base build-fast:     at handleIncomingPacket (/workspace/repo/node_modules/.pnpm/esbuild@0.19.8/node_modules/esbuild/lib/main.js:763:9)
+packages/preset-base build-fast:     at Socket.readFromStdout (/workspace/repo/node_modules/.pnpm/esbuild@0.19.8/node_modules/esbuild/lib/main.js:679:7)
+packages/preset-base build-fast:     at Socket.emit (node:events:517:28)
+packages/preset-base build-fast:     at addChunk (node:internal/streams/readable:368:12)
+packages/parser build-fast: Done
+packages/config build-fast: CLI Target: esnext
+packages/config build-fast: CJS Build start
+packages/config build-fast: ESM Build start
+packages/preset-base build-fast: ESM Build failed
+packages/preset-open-props build-fast: CLI Target: esnext
+packages/preset-open-props build-fast: ESM Build start
+packages/preset-open-props build-fast: CJS Build start
+packages/postcss build-fast: CLI Using tsconfig: tsconfig.json
+packages/postcss build-fast: CLI tsup v8.0.1
+packages/logger build-fast: CJS dist/index.js 8.71 KB
+packages/logger build-fast: CJS ⚡️ Build success in 178ms
+packages/logger build-fast: ESM dist/index.mjs 6.69 KB
+packages/logger build-fast: ESM ⚡️ Build success in 179ms
+packages/core build-fast: CLI Building entry: src/index.ts
+packages/core build-fast: CLI Using tsconfig: tsconfig.json
+packages/core build-fast: CLI tsup v8.0.1
+packages/core build-fast: CLI Using tsup config: /workspace/repo/packages/core/tsup.config.ts
+packages/postcss build-fast: CLI Target: esnext
+packages/postcss build-fast: CJS Build start
+packages/postcss build-fast: ESM Build start
+packages/core build-fast: CLI Target: esnext
+packages/logger build-fast: Done
+packages/core build-fast: CJS Build start
+packages/core build-fast: ESM Build start
+packages/preset-base build-fast: Failed
+/workspace/repo/packages/preset-base:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @pandacss/preset-base@0.28.0 build-fast: `tsup src/index.ts --format=esm,cjs --no-dts`
+Exit status 1
+packages/astro-plugin-studio build-fast: CJS dist/index.js 2.37 KB
+packages/astro-plugin-studio build-fast: CJS ⚡️ Build success in 104ms
+packages/astro-plugin-studio build-fast: ESM dist/index.mjs 1.45 KB
+packages/astro-plugin-studio build-fast: ESM ⚡️ Build success in 105ms
+packages/token-dictionary build-fast: CLI Building entry: src/index.ts
+packages/token-dictionary build-fast: CLI Using tsconfig: tsconfig.json
+packages/token-dictionary build-fast: CLI tsup v8.0.1
+packages/astro-plugin-studio build-fast: Done
+packages/token-dictionary build-fast: CLI Target: esnext
+packages/preset-panda build-fast: CJS dist/index.js 16.46 KB
+packages/preset-panda build-fast: CJS ⚡️ Build success in 66ms
+packages/preset-panda build-fast: ESM dist/index.mjs 15.46 KB
+packages/preset-panda build-fast: ESM ⚡️ Build success in 66ms
+packages/token-dictionary build-fast: ESM Build start
+packages/token-dictionary build-fast: CJS Build start
+packages/preset-panda build-fast: Done
+packages/studio build-fast: CLI Building entry: scripts/studio.ts, scripts/studio.ts.rej
+packages/preset-atlaskit build-fast: CJS dist/index.js 24.64 KB
+packages/preset-atlaskit build-fast: CJS ⚡️ Build success in 80ms
+packages/preset-atlaskit build-fast: ESM dist/index.mjs 23.64 KB
+packages/preset-atlaskit build-fast: ESM ⚡️ Build success in 81ms
+packages/preset-atlaskit build-fast: Done
+packages/preset-open-props build-fast: ESM dist/index.mjs 6.51 KB
+packages/preset-open-props build-fast: ESM ⚡️ Build success in 76ms
+packages/preset-open-props build-fast: CJS dist/index.js 8.63 KB
+packages/preset-open-props build-fast: CJS ⚡️ Build success in 83ms
+packages/postcss build-fast: ESM dist/index.mjs 1.89 KB
+packages/postcss build-fast: ESM ⚡️ Build success in 73ms
+packages/postcss build-fast: CJS dist/index.js 3.25 KB
+packages/postcss build-fast: CJS ⚡️ Build success in 80ms
+packages/preset-open-props build-fast: Done
+packages/postcss build-fast: Done
+packages/studio build-fast: CLI Using tsconfig: tsconfig.json
+packages/studio build-fast: CLI tsup v8.0.1
+packages/studio build-fast: CLI Target: esnext
+packages/extractor build-fast: ESM dist/index.mjs 56.10 KB
+packages/extractor build-fast: ESM ⚡️ Build success in 114ms
+packages/studio build-fast: ESM Build start
+packages/studio build-fast: CJS Build start
+packages/extractor build-fast: CJS dist/index.js 60.16 KB
+packages/extractor build-fast: CJS ⚡️ Build success in 120ms
+packages/config build-fast: ESM dist/index.mjs                   15.03 KB
+packages/config build-fast: ESM dist/chunk-WJAK5RTK.mjs          3.41 KB
+packages/config build-fast: ESM dist/resolve-ts-path-pattern.mjs 98.00 B
+packages/config build-fast: ESM dist/diff-config.mjs             80.00 B
+packages/config build-fast: ESM dist/merge-config.mjs            82.00 B
+packages/config build-fast: ESM dist/chunk-RPIVZP2I.mjs          614.00 B
+packages/config build-fast: ESM dist/chunk-PROY5XLZ.mjs          2.65 KB
+packages/config build-fast: ESM ⚡️ Build success in 116ms
+packages/extractor build-fast: Done
+packages/core build-fast: CJS dist/index.js 103.86 KB
+packages/core build-fast: CJS ⚡️ Build success in 106ms
+packages/core build-fast: ESM dist/index.mjs 99.66 KB
+packages/core build-fast: ESM ⚡️ Build success in 107ms
+packages/config build-fast: CJS dist/index.js                   24.05 KB
+packages/config build-fast: CJS dist/diff-config.js             5.08 KB
+packages/config build-fast: CJS dist/resolve-ts-path-pattern.js 1.68 KB
+packages/config build-fast: CJS dist/merge-config.js            3.69 KB
+packages/config build-fast: CJS ⚡️ Build success in 129ms
+ ELIFECYCLE  Command failed with exit code 1.
+reward=0 graded=87 found=0 failed=0 parsed=0 framework=vitest exit_code=1

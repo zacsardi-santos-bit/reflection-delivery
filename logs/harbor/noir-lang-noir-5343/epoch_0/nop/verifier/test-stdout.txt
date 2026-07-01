@@ -1,0 +1,108 @@
+patching file compiler/noirc_frontend/src/tests.rs
+   Compiling noirc_frontend v0.32.0 (/workspace/repo/compiler/noirc_frontend)
+warning: elided lifetime has a name
+    --> compiler/noirc_frontend/src/elaborator/mod.rs:1754:10
+     |
+1751 |     fn setup_interpreter<'a>(
+     |                          -- lifetime `'a` declared here
+...
+1754 |     ) -> Interpreter {
+     |          ^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+     |
+     = note: `#[warn(elided_named_lifetimes)]` on by default
+
+error[E0599]: no variant named `ImplIsStricterThanTrait` found for enum `def_collector::errors::DefCollectorErrorKind`
+    --> compiler/noirc_frontend/src/tests.rs:2004:66
+     |
+2004 |         CompilationError::DefinitionError(DefCollectorErrorKind::ImplIsStricterThanTrait { .. })
+     |                                                                  ^^^^^^^^^^^^^^^^^^^^^^^ variant not found in `def_collector::errors::DefCollectorErrorKind`
+     |
+    ::: compiler/noirc_frontend/src/hir/def_collector/errors.rs:26:1
+     |
+26   | pub enum DefCollectorErrorKind {
+     | ------------------------------ variant `ImplIsStricterThanTrait` not found here
+
+error[E0599]: no variant named `ImplIsStricterThanTrait` found for enum `def_collector::errors::DefCollectorErrorKind`
+    --> compiler/noirc_frontend/src/tests.rs:2029:69
+     |
+2029 |     if let CompilationError::DefinitionError(DefCollectorErrorKind::ImplIsStricterThanTrait {
+     |                                                                     ^^^^^^^^^^^^^^^^^^^^^^^ variant not found in `def_collector::errors::DefCollectorErrorKind`
+     |
+    ::: compiler/noirc_frontend/src/hir/def_collector/errors.rs:26:1
+     |
+26   | pub enum DefCollectorErrorKind {
+     | ------------------------------ variant `ImplIsStricterThanTrait` not found here
+
+error[E0599]: no variant named `ImplIsStricterThanTrait` found for enum `def_collector::errors::DefCollectorErrorKind`
+    --> compiler/noirc_frontend/src/tests.rs:2092:69
+     |
+2092 |     if let CompilationError::DefinitionError(DefCollectorErrorKind::ImplIsStricterThanTrait {
+     |                                                                     ^^^^^^^^^^^^^^^^^^^^^^^ variant not found in `def_collector::errors::DefCollectorErrorKind`
+     |
+    ::: compiler/noirc_frontend/src/hir/def_collector/errors.rs:26:1
+     |
+26   | pub enum DefCollectorErrorKind {
+     | ------------------------------ variant `ImplIsStricterThanTrait` not found here
+
+error[E0599]: no variant named `ImplIsStricterThanTrait` found for enum `def_collector::errors::DefCollectorErrorKind`
+    --> compiler/noirc_frontend/src/tests.rs:2104:69
+     |
+2104 |     if let CompilationError::DefinitionError(DefCollectorErrorKind::ImplIsStricterThanTrait {
+     |                                                                     ^^^^^^^^^^^^^^^^^^^^^^^ variant not found in `def_collector::errors::DefCollectorErrorKind`
+     |
+    ::: compiler/noirc_frontend/src/hir/def_collector/errors.rs:26:1
+     |
+26   | pub enum DefCollectorErrorKind {
+     | ------------------------------ variant `ImplIsStricterThanTrait` not found here
+
+error[E0599]: no variant named `ImplIsStricterThanTrait` found for enum `def_collector::errors::DefCollectorErrorKind`
+    --> compiler/noirc_frontend/src/tests.rs:2116:69
+     |
+2116 |     if let CompilationError::DefinitionError(DefCollectorErrorKind::ImplIsStricterThanTrait {
+     |                                                                     ^^^^^^^^^^^^^^^^^^^^^^^ variant not found in `def_collector::errors::DefCollectorErrorKind`
+     |
+    ::: compiler/noirc_frontend/src/hir/def_collector/errors.rs:26:1
+     |
+26   | pub enum DefCollectorErrorKind {
+     | ------------------------------ variant `ImplIsStricterThanTrait` not found here
+
+error[E0599]: no variant named `ImplIsStricterThanTrait` found for enum `def_collector::errors::DefCollectorErrorKind`
+    --> compiler/noirc_frontend/src/tests.rs:2153:69
+     |
+2153 |     if let CompilationError::DefinitionError(DefCollectorErrorKind::ImplIsStricterThanTrait {
+     |                                                                     ^^^^^^^^^^^^^^^^^^^^^^^ variant not found in `def_collector::errors::DefCollectorErrorKind`
+     |
+    ::: compiler/noirc_frontend/src/hir/def_collector/errors.rs:26:1
+     |
+26   | pub enum DefCollectorErrorKind {
+     | ------------------------------ variant `ImplIsStricterThanTrait` not found here
+
+error[E0599]: no variant named `ImplIsStricterThanTrait` found for enum `def_collector::errors::DefCollectorErrorKind`
+    --> compiler/noirc_frontend/src/tests.rs:2190:69
+     |
+2190 |     if let CompilationError::DefinitionError(DefCollectorErrorKind::ImplIsStricterThanTrait {
+     |                                                                     ^^^^^^^^^^^^^^^^^^^^^^^ variant not found in `def_collector::errors::DefCollectorErrorKind`
+     |
+    ::: compiler/noirc_frontend/src/hir/def_collector/errors.rs:26:1
+     |
+26   | pub enum DefCollectorErrorKind {
+     | ------------------------------ variant `ImplIsStricterThanTrait` not found here
+
+error[E0599]: no variant named `ImplIsStricterThanTrait` found for enum `def_collector::errors::DefCollectorErrorKind`
+    --> compiler/noirc_frontend/src/tests.rs:2220:69
+     |
+2220 |     if let CompilationError::DefinitionError(DefCollectorErrorKind::ImplIsStricterThanTrait {
+     |                                                                     ^^^^^^^^^^^^^^^^^^^^^^^ variant not found in `def_collector::errors::DefCollectorErrorKind`
+     |
+    ::: compiler/noirc_frontend/src/hir/def_collector/errors.rs:26:1
+     |
+26   | pub enum DefCollectorErrorKind {
+     | ------------------------------ variant `ImplIsStricterThanTrait` not found here
+
+For more information about this error, try `rustc --explain E0599`.
+warning: `noirc_frontend` (lib test) generated 1 warning (1 duplicate)
+error: could not compile `noirc_frontend` (lib test) due to 8 previous errors; 1 warning emitted
+warning: build failed, waiting for other jobs to finish...
+warning: `noirc_frontend` (lib) generated 1 warning
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package noirc_frontend` exited with code 101
+reward=0 graded=7 found=0 failed=0 parsed=0 framework=cargo exit_code=101

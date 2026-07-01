@@ -1,0 +1,23 @@
+{
+ "task": "brave-intl-bat-go-2749",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden migrates rate_limiter.go/coingecko/client.go/ratios to 'github.com/redis/go-redis/v9'; F2P TestRateLimiterRedisMiddleware et al run via go test -json ./middleware (package previously failed to compile)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

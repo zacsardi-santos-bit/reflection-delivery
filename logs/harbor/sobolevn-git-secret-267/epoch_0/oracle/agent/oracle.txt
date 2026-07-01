@@ -1,0 +1,4 @@
+patching file src/_utils/_git_secret_tools.sh
+patching file src/commands/git_secret_killperson.sh
+patching file src/commands/git_secret_tell.sh
+patching file src/commands/git_secret_whoknows.sh

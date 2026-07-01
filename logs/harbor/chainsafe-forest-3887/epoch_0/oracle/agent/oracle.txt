@@ -1,0 +1,8 @@
+patching file Cargo.lock
+patching file Cargo.toml
+patching file src/beacon/beacon_entries.rs
+patching file src/beacon/drand.rs
+patching file src/beacon/mod.rs
+patching file src/beacon/signatures/mod.rs
+patching file src/beacon/signatures/public_key_impls.rs
+patching file src/beacon/signatures/signature_impls.rs

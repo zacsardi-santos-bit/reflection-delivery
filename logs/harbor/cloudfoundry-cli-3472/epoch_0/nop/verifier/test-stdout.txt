@@ -1,0 +1,36 @@
+patching file api/cloudcontroller/wrapper/trace_request_test.go
+patching file api/router/wrapper/trace_request_test.go
+patching file api/shared/trace_headers_test.go
+patching file api/uaa/wrapper/trace_request_test.go
+patching file util/trace/trace_suite_test.go
+patching file util/trace/trace_test.go
+code.cloudfoundry.org/cli/util/trace: no non-test Go files in /workspace/repo/util/trace
+# code.cloudfoundry.org/cli/api/uaa/wrapper_test [code.cloudfoundry.org/cli/api/uaa/wrapper.test]
+api/uaa/wrapper/trace_request_test.go:9:2: "code.cloudfoundry.org/cli/api/uaa/wrapper" imported and not used
+api/uaa/wrapper/trace_request_test.go:33:13: undefined: NewUAATraceHeaderRequest
+# code.cloudfoundry.org/cli/api/router/wrapper_test [code.cloudfoundry.org/cli/api/router/wrapper.test]
+api/router/wrapper/trace_request_test.go:9:2: "code.cloudfoundry.org/cli/api/router/wrapper" imported and not used
+api/router/wrapper/trace_request_test.go:32:13: undefined: NewRoutingTraceHeaderRequest
+# code.cloudfoundry.org/cli/api/shared_test [code.cloudfoundry.org/cli/api/shared.test]
+api/shared/trace_headers_test.go:6:2: "code.cloudfoundry.org/cli/api/shared" imported and not used
+api/shared/trace_headers_test.go:16:21: undefined: NewTraceHeaders
+api/shared/trace_headers_test.go:31:21: undefined: NewTraceHeaders
+# code.cloudfoundry.org/cli/api/cloudcontroller/wrapper_test [code.cloudfoundry.org/cli/api/cloudcontroller/wrapper.test]
+api/cloudcontroller/wrapper/trace_request_test.go:9:2: "code.cloudfoundry.org/cli/api/cloudcontroller/wrapper" imported and not used
+api/cloudcontroller/wrapper/trace_request_test.go:33:13: undefined: NewCCTraceHeaderRequest
+{"Time":"2026-06-29T15:29:38.660324067Z","Action":"start","Package":"code.cloudfoundry.org/cli/api/cloudcontroller/wrapper"}
+{"Time":"2026-06-29T15:29:38.660401969Z","Action":"output","Package":"code.cloudfoundry.org/cli/api/cloudcontroller/wrapper","Output":"FAIL\tcode.cloudfoundry.org/cli/api/cloudcontroller/wrapper [build failed]\n"}
+{"Time":"2026-06-29T15:29:38.660416486Z","Action":"fail","Package":"code.cloudfoundry.org/cli/api/cloudcontroller/wrapper","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.660429748Z","Action":"start","Package":"code.cloudfoundry.org/cli/api/router/wrapper"}
+{"Time":"2026-06-29T15:29:38.660517131Z","Action":"output","Package":"code.cloudfoundry.org/cli/api/router/wrapper","Output":"FAIL\tcode.cloudfoundry.org/cli/api/router/wrapper [build failed]\n"}
+{"Time":"2026-06-29T15:29:38.660548456Z","Action":"fail","Package":"code.cloudfoundry.org/cli/api/router/wrapper","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.660555758Z","Action":"start","Package":"code.cloudfoundry.org/cli/api/shared"}
+{"Time":"2026-06-29T15:29:38.660589142Z","Action":"output","Package":"code.cloudfoundry.org/cli/api/shared","Output":"FAIL\tcode.cloudfoundry.org/cli/api/shared [build failed]\n"}
+{"Time":"2026-06-29T15:29:38.66062136Z","Action":"start","Package":"code.cloudfoundry.org/cli/api/uaa/wrapper"}
+{"Time":"2026-06-29T15:29:38.660645496Z","Action":"output","Package":"code.cloudfoundry.org/cli/api/uaa/wrapper","Output":"FAIL\tcode.cloudfoundry.org/cli/api/uaa/wrapper [build failed]\n"}
+{"Time":"2026-06-29T15:29:38.660663734Z","Action":"start","Package":"code.cloudfoundry.org/cli/util/trace"}
+{"Time":"2026-06-29T15:29:38.660667568Z","Action":"fail","Package":"code.cloudfoundry.org/cli/api/uaa/wrapper","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.660628831Z","Action":"fail","Package":"code.cloudfoundry.org/cli/api/shared","Elapsed":0}
+{"Time":"2026-06-29T15:29:38.660679735Z","Action":"output","Package":"code.cloudfoundry.org/cli/util/trace","Output":"FAIL\tcode.cloudfoundry.org/cli/util/trace [build failed]\n"}
+{"Time":"2026-06-29T15:29:38.661134655Z","Action":"fail","Package":"code.cloudfoundry.org/cli/util/trace","Elapsed":0}
+reward=0 graded=5 found=0 failed=0 parsed=5 framework=go exit_code=1

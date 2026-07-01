@@ -1,0 +1,2 @@
+patching file pkg/resourceapply/core.go
+patching file pkg/resourceapply/discovery.go

@@ -1,0 +1,1207 @@
+patching file packages/manager/cypress/e2e/core/kubernetes/lke-update.spec.ts
+patching file packages/manager/cypress/e2e/core/linodes/backup-linode.spec.ts
+patching file packages/manager/src/features/Backups/BackupDrawer.test.tsx
+patching file packages/manager/src/features/Backups/BackupLinodeRow.test.tsx
+patching file packages/manager/src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/ResizeNodePoolDrawer.test.tsx
+patching file packages/manager/src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/utils.test.ts
+patching file packages/manager/src/features/Linodes/LinodesDetail/LinodeBackup/EnableBackupsDialog.test.tsx
+patching file packages/manager/src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx
+patching file packages/manager/src/utilities/pricing/backups.test.tsx
+
+ RUN  v1.2.0 /workspace/repo/packages/manager
+
+ ❯ src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/utils.test.ts  (0 test)
+ ❯ src/utilities/pricing/backups.test.tsx  (5 tests | 1 failed) 55ms
+   ❯ src/utilities/pricing/backups.test.tsx > getTotalBackupsPrice > correctly calculates the total price with $0 DC-specific pricing for Linode backups
+     → expected undefined to be 5 // Object.is equality
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ❯ src/features/Backups/BackupDrawer.test.tsx  (4 tests | 4 failed) 18ms
+   ❯ src/features/Backups/BackupDrawer.test.tsx > BackupDrawer > Total price display > displays total backup price
+     → Cannot read properties of undefined (reading 'build')
+   ❯ src/features/Backups/BackupDrawer.test.tsx > BackupDrawer > Total price display > displays total backup price when total is $0
+     → Cannot read properties of undefined (reading 'build')
+   ❯ src/features/Backups/BackupDrawer.test.tsx > BackupDrawer > Total price display > displays placeholder when total backup price cannot be determined
+     → Cannot read properties of undefined (reading 'build')
+   ❯ src/features/Backups/BackupDrawer.test.tsx > BackupDrawer > Linode list > Only lists Linodes that do not have backups enabled
+     → Cannot read properties of undefined (reading 'build')
+ ❯ src/features/Backups/BackupLinodeRow.test.tsx  (4 tests | 1 failed) 739ms
+   ❯ src/features/Backups/BackupLinodeRow.test.tsx > BackupLinodeRow > should not render error indicator for $0 price
+     → expected <button …(8)>…(2)</button> to be null
+stderr | src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/ResizeNodePoolDrawer.test.tsx > ResizeNodePoolDrawer > should render the pool's type and size
+Using kebab-case for css properties in objects is not supported. Did you mean WebkitAppearance?
+Using kebab-case for css properties in objects is not supported. Did you mean MozAppearance?
+
+ ✓ src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/ResizeNodePoolDrawer.test.tsx  (3 tests) 747ms
+ ❯ src/features/Linodes/LinodesDetail/LinodeBackup/EnableBackupsDialog.test.tsx  (3 tests | 1 failed) 1545ms
+   ❯ src/features/Linodes/LinodesDetail/LinodeBackup/EnableBackupsDialog.test.tsx > EnableBackupsDialog component > Displays the monthly backup price when the price is $0
+     → Unable to find an element with the text: /Are you sure you want to enable backups on this Linode\?.*/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+[36m<body[39m
+  [33mstyle[39m=[32m"padding-right: 1024px; overflow: hidden;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33maria-hidden[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"MuiDialog-root css-lg2wbr-root MuiModal-root css-zw3mfo-MuiModal-root-MuiDialog-root"[39m
+    [33mdata-qa-dialog[39m=[32m"true"[39m
+    [33mdata-qa-drawer[39m=[32m"true"[39m
+    [33mdata-testid[39m=[32m"drawer"[39m
+    [33mrole[39m=[32m"dialog"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"MuiBackdrop-root MuiModal-backdrop css-rmx4qb-MuiBackdrop-root-MuiDialog-backdrop"[39m
+      [33mstyle[39m=[32m"opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"sentinelStart"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiDialog-container MuiDialog-scrollPaper css-1sep8xo-MuiDialog-container"[39m
+      [33mrole[39m=[32m"presentation"[39m
+      [33mstyle[39m=[32m"opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-labelledby[39m=[32m"mui-2"[39m
+        [33mclass[39m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1mtnvqi-MuiPaper-root-MuiDialog-paper"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1mkwkvs-MuiTypography-root-MuiDialogTitle-root"[39m
+          [33mdata-qa-dialog-title[39m=[32m"Enable backups?"[39m
+          [33mid[39m=[32m"mui-2"[39m
+          [33mtitle[39m=[32m"Enable backups?"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"MuiBox-root css-1y8wdwb"[39m
+            [33mdata-qa-dialog-title[39m=[32m"Enable backups?"[39m
+            [33mdata-qa-drawer-title[39m=[32m"Enable backups?"[39m
+          [36m>[39m
+            [0mEnable backups?[0m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Close"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeLarge css-1bihgaz-MuiButtonBase-root-MuiIconButton-root"[39m
+              [33mdata-qa-close-drawer[39m=[32m"true"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"[39m
+                [33mdata-testid[39m=[32m"CloseIcon"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</h2>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"MuiDialogContent-root css-iuengk-dialogContent css-q9espd-MuiDialogContent-root"[39m
+          [33mdata-qa-dialog-content[39m=[32m"true"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"MuiGrid2-root MuiGrid2-direction-xs-row css-1-error-ref error-for-scroll notice css-1nytflw-error-errorList-root css-16x47ru-MuiGrid2-root"[39m
+            [33mdata-qa-error[39m=[32m"true"[39m
+            [33mdata-qa-notice[39m=[32m"true"[39m
+            [33mdata-testid[39m=[32m"notice-error"[39m
+            [33mrole[39m=[32m"alert"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"css-1rzyf5b-inner"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"MuiTypography-root MuiTypography-body1 css-153jlhh-noticeText css-1-noticeText-ref noticeText css-vn8t73-MuiTypography-root"[39m
+              [36m>[39m
+                [0mThere was an error retrieving prices. Please reload and try again.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"MuiDialogActions-root MuiDialogActions-spacing css-q6bkzi-actions css-w8fhww-MuiDialogActions-root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actionPanel MuiBox-root css-1c959l8"[39m
+            [33mdata-qa-buttons[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"padding: 0px;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-15buaq7-MuiButtonBase-root-MuiButton-root"[39m
+              [33mdata-qa-cancel[39m=[32m"true"[39m
+              [33mdata-qa-cancel-cance[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"cancel-cance"[39m
+              [33mlabel[39m=[32m"Close"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"css-fn767b"[39m
+                [33mdata-testid[39m=[32m"loadingIcon"[39m
+              [36m>[39m
+                [0mClose[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-disabled[39m=[32m"true"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-1ri28vg-MuiButtonBase-root-MuiButton-root"[39m
+              [33mdata-qa-confirm-enable-backups[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"confirm-enable-backups"[39m
+              [33mlabel[39m=[32m"Enable Backups"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"css-fn767b"[39m
+                [33mdata-testid[39m=[32m"loadingIcon"[39m
+              [36m>[39m
+                [0mEnable Backups[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"sentinelEnd"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+[36m<body[39m
+  [33mstyle[39m=[32m"padding-right: 1024px; overflow: hidden;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33maria-hidden[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"MuiDialog-root css-lg2wbr-root MuiModal-root css-zw3mfo-MuiModal-root-MuiDialog-root"[39m
+    [33mdata-qa-dialog[39m=[32m"true"[39m
+    [33mdata-qa-drawer[39m=[32m"true"[39m
+    [33mdata-testid[39m=[32m"drawer"[39m
+    [33mrole[39m=[32m"dialog"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"MuiBackdrop-root MuiModal-backdrop css-rmx4qb-MuiBackdrop-root-MuiDialog-backdrop"[39m
+      [33mstyle[39m=[32m"opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"sentinelStart"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiDialog-container MuiDialog-scrollPaper css-1sep8xo-MuiDialog-container"[39m
+      [33mrole[39m=[32m"presentation"[39m
+      [33mstyle[39m=[32m"opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-labelledby[39m=[32m"mui-2"[39m
+        [33mclass[39m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1mtnvqi-MuiPaper-root-MuiDialog-paper"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1mkwkvs-MuiTypography-root-MuiDialogTitle-root"[39m
+          [33mdata-qa-dialog-title[39m=[32m"Enable backups?"[39m
+          [33mid[39m=[32m"mui-2"[39m
+          [33mtitle[39m=[32m"Enable backups?"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"MuiBox-root css-1y8wdwb"[39m
+            [33mdata-qa-dialog-title[39m=[32m"Enable backups?"[39m
+            [33mdata-qa-drawer-title[39m=[32m"Enable backups?"[39m
+          [36m>[39m
+            [0mEnable backups?[0m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Close"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeLarge css-1bihgaz-MuiButtonBase-root-MuiIconButton-root"[39m
+              [33mdata-qa-close-drawer[39m=[32m"true"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"[39m
+                [33mdata-testid[39m=[32m"CloseIcon"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</h2>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"MuiDialogContent-root css-iuengk-dialogContent css-q9espd-MuiDialogContent-root"[39m
+          [33mdata-qa-dialog-content[39m=[32m"true"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"MuiGrid2-root MuiGrid2-direction-xs-row css-1-error-ref error-for-scroll notice css-1nytflw-error-errorList-root css-16x47ru-MuiGrid2-root"[39m
+            [33mdata-qa-error[39m=[32m"true"[39m
+            [33mdata-qa-notice[39m=[32m"true"[39m
+            [33mdata-testid[39m=[32m"notice-error"[39m
+            [33mrole[39m=[32m"alert"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"css-1rzyf5b-inner"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"MuiTypography-root MuiTypography-body1 css-153jlhh-noticeText css-1-noticeText-ref noticeText css-vn8t73-MuiTypography-root"[39m
+              [36m>[39m
+                [0mThere was an error retrieving prices. Please reload and try again.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"MuiDialogActions-root MuiDialogActions-spacing css-q6bkzi-actions css-w8fhww-MuiDialogActions-root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actionPanel MuiBox-root css-1c959l8"[39m
+            [33mdata-qa-buttons[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"padding: 0px;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-15buaq7-MuiButtonBase-root-MuiButton-root"[39m
+              [33mdata-qa-cancel[39m=[32m"true"[39m
+              [33mdata-qa-cancel-cance[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"cancel-cance"[39m
+              [33mlabel[39m=[32m"Close"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"css-fn767b"[39m
+                [33mdata-testid[39m=[32m"loadingIcon"[39m
+              [36m>[39m
+                [0mClose[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-disabled[39m=[32m"true"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-1ri28vg-MuiButtonBase-root-MuiButton-root"[39m
+              [33mdata-qa-confirm-enable-backups[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"confirm-enable-backups"[39m
+              [33mlabel[39m=[32m"Enable Backups"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"css-fn767b"[39m
+                [33mdata-testid[39m=[32m"loadingIcon"[39m
+              [36m>[39m
+                [0mEnable Backups[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"sentinelEnd"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx  (10 tests | 4 failed) 4272ms
+   ❯ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx > MigrationPricing component > render condition > renders when prices are specified
+     → Unable to find an element by: [data-testid="migration-pricing"]
+
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiBox-root css-13cliet-MigrationPricingContainer"[39m
+    [36m>[39m
+      [36m<span[39m
+        [33mclass[39m=[32m"css-17cqlfu-StyledSpan"[39m
+      [36m>[39m
+        [0mCurrent[0m
+        [0m Price[0m
+      [36m</span>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"MuiBox-root css-12xxze9"[39m
+        [33mdata-testid[39m=[32m"current-price-panel"[39m
+      [36m>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$2.50[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mmonth[0m
+        [36m</h3>[39m
+        [0m, [0m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$0.004[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mhour[0m
+        [36m</h3>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiBox-root css-13cliet-MigrationPricingContainer"[39m
+    [36m>[39m
+      [36m<span[39m
+        [33mclass[39m=[32m"css-17cqlfu-StyledSpan"[39m
+      [36m>[39m
+        [0mCurrent[0m
+        [0m Price[0m
+      [36m</span>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"MuiBox-root css-12xxze9"[39m
+        [33mdata-testid[39m=[32m"current-price-panel"[39m
+      [36m>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$2.50[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mmonth[0m
+        [36m</h3>[39m
+        [0m, [0m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$0.004[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mhour[0m
+        [36m</h3>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   ❯ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx > MigrationPricing component > render condition > renders when $0 prices are specified
+     → Unable to find an element by: [data-testid="migration-pricing"]
+
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+   ❯ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx > MigrationPricing component > price display > displays $0 prices
+     → Unable to find an element with the text: $0.000. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+   ❯ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx > MigrationPricing component > backup price display > shows $0 backup prices
+     → Unable to find an element with the text: | Backups. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiBox-root css-13cliet-MigrationPricingContainer"[39m
+    [36m>[39m
+      [36m<span[39m
+        [33mclass[39m=[32m"css-17cqlfu-StyledSpan"[39m
+      [36m>[39m
+        [0mCurrent[0m
+        [0m Price[0m
+      [36m</span>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"MuiBox-root css-12xxze9"[39m
+        [33mdata-testid[39m=[32m"current-price-panel"[39m
+      [36m>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$1.50[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mmonth[0m
+        [36m</h3>[39m
+        [0m, [0m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$0.001[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mhour[0m
+        [36m</h3>[39m
+        [0m0[0m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiBox-root css-13cliet-MigrationPricingContainer"[39m
+    [36m>[39m
+      [36m<span[39m
+        [33mclass[39m=[32m"css-17cqlfu-StyledSpan"[39m
+      [36m>[39m
+        [0mCurrent[0m
+        [0m Price[0m
+      [36m</span>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"MuiBox-root css-12xxze9"[39m
+        [33mdata-testid[39m=[32m"current-price-panel"[39m
+      [36m>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$1.50[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mmonth[0m
+        [36m</h3>[39m
+        [0m, [0m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$0.001[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mhour[0m
+        [36m</h3>[39m
+        [0m0[0m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/utils.test.ts [ src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/utils.test.ts ]
+Error: Failed to resolve import "./utils" from "src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/utils.test.ts". Does the file exist?
+ ❯ formatError ../../node_modules/vite/dist/node/chunks/dep-9A4-l-43.js:63768:46
+ ❯ TransformContext.error ../../node_modules/vite/dist/node/chunks/dep-9A4-l-43.js:63762:19
+ ❯ normalizeUrl ../../node_modules/vite/dist/node/chunks/dep-9A4-l-43.js:62037:33
+ ❯ async file:/workspace/repo/node_modules/vite/dist/node/chunks/dep-9A4-l-43.js:62191:47
+ ❯ TransformContext.transform ../../node_modules/vite/dist/node/chunks/dep-9A4-l-43.js:62112:13
+ ❯ Object.transform ../../node_modules/vite/dist/node/chunks/dep-9A4-l-43.js:64063:30
+ ❯ loadAndTransform ../../node_modules/vite/dist/node/chunks/dep-9A4-l-43.js:49741:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/Backups/BackupDrawer.test.tsx > BackupDrawer > Total price display > displays total backup price
+ FAIL  src/features/Backups/BackupDrawer.test.tsx > BackupDrawer > Total price display > displays total backup price when total is $0
+ FAIL  src/features/Backups/BackupDrawer.test.tsx > BackupDrawer > Total price display > displays placeholder when total backup price cannot be determined
+ FAIL  src/features/Backups/BackupDrawer.test.tsx > BackupDrawer > Linode list > Only lists Linodes that do not have backups enabled
+TypeError: Cannot read properties of undefined (reading 'build')
+ ❯ src/features/Backups/BackupDrawer.test.tsx:53:34
+     51| describe('BackupDrawer', () => {
+     52|   beforeEach(() => {
+     53|     const mockType = typeFactory.build({
+       |                                  ^
+     54|       id: 'mock-linode-type',
+     55|       label: 'Mock Linode Type',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL  src/features/Backups/BackupLinodeRow.test.tsx > BackupLinodeRow > should not render error indicator for $0 price
+AssertionError: expected <button …(8)>…(2)</button> to be null
+ ❯ src/features/Backups/BackupLinodeRow.test.tsx:146:7
+    144|     expect(
+    145|       queryByLabelText('There was an error loading the price.')
+    146|     ).toBeNull();
+       |       ^
+    147|   });
+    148| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL  src/utilities/pricing/backups.test.tsx > getTotalBackupsPrice > correctly calculates the total price with $0 DC-specific pricing for Linode backups
+AssertionError: expected undefined to be 5 // Object.is equality
+
+- Expected: 
+5
+
++ Received: 
+undefined
+
+ ❯ src/utilities/pricing/backups.test.tsx:134:7
+    132|         types,
+    133|       })
+    134|     ).toBe(5);
+       |       ^
+    135|   });
+    136| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL  src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx > MigrationPricing component > render condition > renders when prices are specified
+TestingLibraryElementError: Unable to find an element by: [data-testid="migration-pricing"]
+
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiBox-root css-13cliet-MigrationPricingContainer"[39m
+    [36m>[39m
+      [36m<span[39m
+        [33mclass[39m=[32m"css-17cqlfu-StyledSpan"[39m
+      [36m>[39m
+        [0mCurrent[0m
+        [0m Price[0m
+      [36m</span>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"MuiBox-root css-12xxze9"[39m
+        [33mdata-testid[39m=[32m"current-price-panel"[39m
+      [36m>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$2.50[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mmonth[0m
+        [36m</h3>[39m
+        [0m, [0m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$0.004[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mhour[0m
+        [36m</h3>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiBox-root css-13cliet-MigrationPricingContainer"[39m
+    [36m>[39m
+      [36m<span[39m
+        [33mclass[39m=[32m"css-17cqlfu-StyledSpan"[39m
+      [36m>[39m
+        [0mCurrent[0m
+        [0m Price[0m
+      [36m</span>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"MuiBox-root css-12xxze9"[39m
+        [33mdata-testid[39m=[32m"current-price-panel"[39m
+      [36m>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$2.50[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mmonth[0m
+        [36m</h3>[39m
+        [0m, [0m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$0.004[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mhour[0m
+        [36m</h3>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ waitForWrapper ../../node_modules/@testing-library/dom/dist/wait-for.js:173:27
+ ❯ findByTestId ../../node_modules/@testing-library/dom/dist/query-helpers.js:101:33
+ ❯ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx:54:20
+     52|         <MigrationPricing panelType="current" {...props} />
+     53|       );
+     54|       expect(await findByTestId('migration-pricing')).not.toBeNull();
+       |                    ^
+     55|     });
+     56| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL  src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx > MigrationPricing component > render condition > renders when $0 prices are specified
+TestingLibraryElementError: Unable to find an element by: [data-testid="migration-pricing"]
+
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+ ❯ waitForWrapper ../../node_modules/@testing-library/dom/dist/wait-for.js:173:27
+ ❯ findByTestId ../../node_modules/@testing-library/dom/dist/query-helpers.js:101:33
+ ❯ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx:67:20
+     65|         <MigrationPricing panelType="current" {...props} />
+     66|       );
+     67|       expect(await findByTestId('migration-pricing')).not.toBeNull();
+       |                    ^
+     68|     });
+     69|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL  src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx > MigrationPricing component > price display > displays $0 prices
+TestingLibraryElementError: Unable to find an element with the text: $0.000. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+
+[36m<body>[39m
+  [36m<div />[39m
+[36m</body>[39m
+ ❯ waitForWrapper ../../node_modules/@testing-library/dom/dist/wait-for.js:173:27
+ ❯ findByText ../../node_modules/@testing-library/dom/dist/query-helpers.js:101:33
+ ❯ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx:96:20
+     94|         <MigrationPricing panelType="current" {...props} />
+     95|       );
+     96|       expect(await findByText('$0.000')).toBeVisible();
+       |                    ^
+     97|       expect(await findByText('$0.00')).toBeVisible();
+     98|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL  src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx > MigrationPricing component > backup price display > shows $0 backup prices
+TestingLibraryElementError: Unable to find an element with the text: | Backups. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiBox-root css-13cliet-MigrationPricingContainer"[39m
+    [36m>[39m
+      [36m<span[39m
+        [33mclass[39m=[32m"css-17cqlfu-StyledSpan"[39m
+      [36m>[39m
+        [0mCurrent[0m
+        [0m Price[0m
+      [36m</span>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"MuiBox-root css-12xxze9"[39m
+        [33mdata-testid[39m=[32m"current-price-panel"[39m
+      [36m>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$1.50[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mmonth[0m
+        [36m</h3>[39m
+        [0m, [0m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$0.001[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mhour[0m
+        [36m</h3>[39m
+        [0m0[0m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiBox-root css-13cliet-MigrationPricingContainer"[39m
+    [36m>[39m
+      [36m<span[39m
+        [33mclass[39m=[32m"css-17cqlfu-StyledSpan"[39m
+      [36m>[39m
+        [0mCurrent[0m
+        [0m Price[0m
+      [36m</span>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"MuiBox-root css-12xxze9"[39m
+        [33mdata-testid[39m=[32m"current-price-panel"[39m
+      [36m>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$1.50[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mmonth[0m
+        [36m</h3>[39m
+        [0m, [0m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"notranslate"[39m
+          [36m>[39m
+            [0m$0.001[0m
+          [36m</span>[39m
+        [36m</h3>[39m
+        [36m<h3[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h3 css-1m8eyas-MuiTypography-root"[39m
+        [36m>[39m
+          [0m/[0m
+          [0mhour[0m
+        [36m</h3>[39m
+        [0m0[0m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ waitForWrapper ../../node_modules/@testing-library/dom/dist/wait-for.js:173:27
+ ❯ findByText ../../node_modules/@testing-library/dom/dist/query-helpers.js:101:33
+ ❯ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx:126:20
+    124|         <MigrationPricing panelType="current" {...props} />
+    125|       );
+    126|       expect(await findByText('| Backups', { exact: false })).toBeVisi…
+       |                    ^
+    127|       expect(await findByText('$0.00')).toBeVisible();
+    128|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL  src/features/Linodes/LinodesDetail/LinodeBackup/EnableBackupsDialog.test.tsx > EnableBackupsDialog component > Displays the monthly backup price when the price is $0
+TestingLibraryElementError: Unable to find an element with the text: /Are you sure you want to enable backups on this Linode\?.*/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+[36m<body[39m
+  [33mstyle[39m=[32m"padding-right: 1024px; overflow: hidden;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33maria-hidden[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"MuiDialog-root css-lg2wbr-root MuiModal-root css-zw3mfo-MuiModal-root-MuiDialog-root"[39m
+    [33mdata-qa-dialog[39m=[32m"true"[39m
+    [33mdata-qa-drawer[39m=[32m"true"[39m
+    [33mdata-testid[39m=[32m"drawer"[39m
+    [33mrole[39m=[32m"dialog"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"MuiBackdrop-root MuiModal-backdrop css-rmx4qb-MuiBackdrop-root-MuiDialog-backdrop"[39m
+      [33mstyle[39m=[32m"opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"sentinelStart"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiDialog-container MuiDialog-scrollPaper css-1sep8xo-MuiDialog-container"[39m
+      [33mrole[39m=[32m"presentation"[39m
+      [33mstyle[39m=[32m"opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-labelledby[39m=[32m"mui-2"[39m
+        [33mclass[39m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1mtnvqi-MuiPaper-root-MuiDialog-paper"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1mkwkvs-MuiTypography-root-MuiDialogTitle-root"[39m
+          [33mdata-qa-dialog-title[39m=[32m"Enable backups?"[39m
+          [33mid[39m=[32m"mui-2"[39m
+          [33mtitle[39m=[32m"Enable backups?"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"MuiBox-root css-1y8wdwb"[39m
+            [33mdata-qa-dialog-title[39m=[32m"Enable backups?"[39m
+            [33mdata-qa-drawer-title[39m=[32m"Enable backups?"[39m
+          [36m>[39m
+            [0mEnable backups?[0m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Close"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeLarge css-1bihgaz-MuiButtonBase-root-MuiIconButton-root"[39m
+              [33mdata-qa-close-drawer[39m=[32m"true"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"[39m
+                [33mdata-testid[39m=[32m"CloseIcon"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</h2>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"MuiDialogContent-root css-iuengk-dialogContent css-q9espd-MuiDialogContent-root"[39m
+          [33mdata-qa-dialog-content[39m=[32m"true"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"MuiGrid2-root MuiGrid2-direction-xs-row css-1-error-ref error-for-scroll notice css-1nytflw-error-errorList-root css-16x47ru-MuiGrid2-root"[39m
+            [33mdata-qa-error[39m=[32m"true"[39m
+            [33mdata-qa-notice[39m=[32m"true"[39m
+            [33mdata-testid[39m=[32m"notice-error"[39m
+            [33mrole[39m=[32m"alert"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"css-1rzyf5b-inner"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"MuiTypography-root MuiTypography-body1 css-153jlhh-noticeText css-1-noticeText-ref noticeText css-vn8t73-MuiTypography-root"[39m
+              [36m>[39m
+                [0mThere was an error retrieving prices. Please reload and try again.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"MuiDialogActions-root MuiDialogActions-spacing css-q6bkzi-actions css-w8fhww-MuiDialogActions-root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actionPanel MuiBox-root css-1c959l8"[39m
+            [33mdata-qa-buttons[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"padding: 0px;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-15buaq7-MuiButtonBase-root-MuiButton-root"[39m
+              [33mdata-qa-cancel[39m=[32m"true"[39m
+              [33mdata-qa-cancel-cance[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"cancel-cance"[39m
+              [33mlabel[39m=[32m"Close"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"css-fn767b"[39m
+                [33mdata-testid[39m=[32m"loadingIcon"[39m
+              [36m>[39m
+                [0mClose[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-disabled[39m=[32m"true"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-1ri28vg-MuiButtonBase-root-MuiButton-root"[39m
+              [33mdata-qa-confirm-enable-backups[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"confirm-enable-backups"[39m
+              [33mlabel[39m=[32m"Enable Backups"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"css-fn767b"[39m
+                [33mdata-testid[39m=[32m"loadingIcon"[39m
+              [36m>[39m
+                [0mEnable Backups[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"sentinelEnd"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+[36m<body[39m
+  [33mstyle[39m=[32m"padding-right: 1024px; overflow: hidden;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33maria-hidden[39m=[32m"true"[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mclass[39m=[32m"MuiDialog-root css-lg2wbr-root MuiModal-root css-zw3mfo-MuiModal-root-MuiDialog-root"[39m
+    [33mdata-qa-dialog[39m=[32m"true"[39m
+    [33mdata-qa-drawer[39m=[32m"true"[39m
+    [33mdata-testid[39m=[32m"drawer"[39m
+    [33mrole[39m=[32m"dialog"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"MuiBackdrop-root MuiModal-backdrop css-rmx4qb-MuiBackdrop-root-MuiDialog-backdrop"[39m
+      [33mstyle[39m=[32m"opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"sentinelStart"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiDialog-container MuiDialog-scrollPaper css-1sep8xo-MuiDialog-container"[39m
+      [33mrole[39m=[32m"presentation"[39m
+      [33mstyle[39m=[32m"opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-labelledby[39m=[32m"mui-2"[39m
+        [33mclass[39m=[32m"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1mtnvqi-MuiPaper-root-MuiDialog-paper"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1mkwkvs-MuiTypography-root-MuiDialogTitle-root"[39m
+          [33mdata-qa-dialog-title[39m=[32m"Enable backups?"[39m
+          [33mid[39m=[32m"mui-2"[39m
+          [33mtitle[39m=[32m"Enable backups?"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"MuiBox-root css-1y8wdwb"[39m
+            [33mdata-qa-dialog-title[39m=[32m"Enable backups?"[39m
+            [33mdata-qa-drawer-title[39m=[32m"Enable backups?"[39m
+          [36m>[39m
+            [0mEnable backups?[0m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Close"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeLarge css-1bihgaz-MuiButtonBase-root-MuiIconButton-root"[39m
+              [33mdata-qa-close-drawer[39m=[32m"true"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6yqi1c-MuiSvgIcon-root"[39m
+                [33mdata-testid[39m=[32m"CloseIcon"[39m
+                [33mfocusable[39m=[32m"false"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</h2>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"MuiDialogContent-root css-iuengk-dialogContent css-q9espd-MuiDialogContent-root"[39m
+          [33mdata-qa-dialog-content[39m=[32m"true"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"MuiGrid2-root MuiGrid2-direction-xs-row css-1-error-ref error-for-scroll notice css-1nytflw-error-errorList-root css-16x47ru-MuiGrid2-root"[39m
+            [33mdata-qa-error[39m=[32m"true"[39m
+            [33mdata-qa-notice[39m=[32m"true"[39m
+            [33mdata-testid[39m=[32m"notice-error"[39m
+            [33mrole[39m=[32m"alert"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"css-1rzyf5b-inner"[39m
+            [36m>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"MuiTypography-root MuiTypography-body1 css-153jlhh-noticeText css-1-noticeText-ref noticeText css-vn8t73-MuiTypography-root"[39m
+              [36m>[39m
+                [0mThere was an error retrieving prices. Please reload and try again.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"MuiDialogActions-root MuiDialogActions-spacing css-q6bkzi-actions css-w8fhww-MuiDialogActions-root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"actionPanel MuiBox-root css-1c959l8"[39m
+            [33mdata-qa-buttons[39m=[32m"true"[39m
+            [33mstyle[39m=[32m"padding: 0px;"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-15buaq7-MuiButtonBase-root-MuiButton-root"[39m
+              [33mdata-qa-cancel[39m=[32m"true"[39m
+              [33mdata-qa-cancel-cance[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"cancel-cance"[39m
+              [33mlabel[39m=[32m"Close"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"css-fn767b"[39m
+                [33mdata-testid[39m=[32m"loadingIcon"[39m
+              [36m>[39m
+                [0mClose[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-disabled[39m=[32m"true"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-1ri28vg-MuiButtonBase-root-MuiButton-root"[39m
+              [33mdata-qa-confirm-enable-backups[39m=[32m"true"[39m
+              [33mdata-testid[39m=[32m"confirm-enable-backups"[39m
+              [33mlabel[39m=[32m"Enable Backups"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"css-fn767b"[39m
+                [33mdata-testid[39m=[32m"loadingIcon"[39m
+              [36m>[39m
+                [0mEnable Backups[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+    [36m<div[39m
+      [33mdata-testid[39m=[32m"sentinelEnd"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ waitForWrapper ../../node_modules/@testing-library/dom/dist/wait-for.js:173:27
+ ❯ findByText ../../node_modules/@testing-library/dom/dist/query-helpers.js:101:33
+ ❯ src/features/Linodes/LinodesDetail/LinodeBackup/EnableBackupsDialog.test.tsx:99:13
+     97|     // is shown.
+     98|     expect(
+     99|       await findByText(
+       |             ^
+    100|         /Are you sure you want to enable backups on this Linode\?.*/
+    101|       )
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ Test Files  6 failed | 1 passed (7)
+      Tests  11 failed | 18 passed (29)
+   Start at  15:17:09
+   Duration  13.91s (transform 4.81s, setup 16.75s, collect 25.24s, tests 7.38s, environment 6.24s, prepare 2.56s)
+
+reward=0 graded=32 found=0 failed=0 parsed=0 framework=vitest exit_code=1

@@ -1,0 +1,47 @@
+patching file tests/misc_testsuite/winch/memory_fill.wast
+patching file tests/misc_testsuite/winch/memory_grow.wast
+patching file tests/misc_testsuite/winch/memory_init.wast
+patching file tests/misc_testsuite/winch/memory_size.wast
+   Compiling cranelift-codegen v0.104.0 (/workspace/repo/cranelift/codegen)
+   Compiling wasmtime-component-macro v17.0.0 (/workspace/repo/crates/component-macro)
+   Compiling wasmtime-wasi v17.0.0 (/workspace/repo/crates/wasi)
+   Compiling wasmtime-cli v17.0.0 (/workspace/repo)
+   Compiling test-programs-artifacts v0.0.0 (/workspace/repo/crates/test-programs/artifacts)
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+   Compiling cranelift-native v0.104.0 (/workspace/repo/cranelift/native)
+   Compiling cranelift-frontend v0.104.0 (/workspace/repo/cranelift/frontend)
+   Compiling winch-codegen v0.15.0 (/workspace/repo/winch/codegen)
+   Compiling wasmtime-cranelift-shared v17.0.0 (/workspace/repo/crates/cranelift-shared)
+   Compiling cranelift-wasm v0.104.0 (/workspace/repo/cranelift/wasm)
+   Compiling wasmtime-cranelift v17.0.0 (/workspace/repo/crates/cranelift)
+   Compiling wasmtime-winch v17.0.0 (/workspace/repo/crates/winch)
+   Compiling wasmtime v17.0.0 (/workspace/repo/crates/wasmtime)
+   Compiling wiggle v17.0.0 (/workspace/repo/crates/wiggle)
+   Compiling wasmtime-wast v17.0.0 (/workspace/repo/crates/wast)
+   Compiling wasmtime-cli-flags v17.0.0 (/workspace/repo/crates/cli-flags)
+   Compiling wasmtime-explorer v17.0.0 (/workspace/repo/crates/explorer)
+   Compiling component-test-util v0.0.0 (/workspace/repo/crates/misc/component-test-util)
+   Compiling wasi-common v17.0.0 (/workspace/repo/crates/wasi-common)
+   Compiling wasmtime-wasi-nn v17.0.0 (/workspace/repo/crates/wasi-nn)
+   Compiling wasi-cap-std-sync v17.0.0 (/workspace/repo/crates/wasi-common/cap-std-sync)
+   Compiling wasmtime-wasi-threads v17.0.0 (/workspace/repo/crates/wasi-threads)
+   Compiling wasmtime-wasi-http v17.0.0 (/workspace/repo/crates/wasi-http)
+    Finished test [unoptimized + debuginfo] target(s) in 1m 50s
+────────────
+ Nextest run ID 31b8791f-35bd-4303-8c6e-41b90be29a05 with nextest profile: default
+    Starting 8 tests across 1 binary (1873 tests skipped)
+        PASS [   0.370s] (1/8) wasmtime-cli::all wast::Winch::misc::winch::memory_size
+        PASS [   0.370s] (2/8) wasmtime-cli::all wast::Winch::misc::winch::memory_fill
+        PASS [   0.373s] (3/8) wasmtime-cli::all wast::Winch::misc::winch::memory_grow
+        PASS [   0.465s] (4/8) wasmtime-cli::all wast::Winch::misc::winch::memory_fill_pooling
+        PASS [   0.468s] (5/8) wasmtime-cli::all wast::Winch::misc::winch::memory_size_pooling
+        PASS [   0.477s] (6/8) wasmtime-cli::all wast::Winch::misc::winch::memory_grow_pooling
+        PASS [   0.489s] (7/8) wasmtime-cli::all wast::Winch::misc::winch::memory_init
+        PASS [   0.558s] (8/8) wasmtime-cli::all wast::Winch::misc::winch::memory_init_pooling
+────────────
+     Summary [   0.565s] 8 tests run: 8 passed, 1873 skipped
+reward=1 graded=8 found=4 failed=0 parsed=8 framework=cargo exit_code=0

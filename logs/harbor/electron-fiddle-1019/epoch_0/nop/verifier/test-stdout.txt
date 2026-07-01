@@ -1,0 +1,34 @@
+patching file tests/renderer/components/settings-electron-spec.tsx
+patching file tests/renderer/components/version-select-spec.tsx
+patching file tests/utils.ts
+patching file tests/utils/disable-download-spec.ts
+FAIL tests/utils/disable-download-spec.ts
+  ● Test suite failed to run
+
+    [96mtests/utils/disable-download-spec.ts[0m:[93m1[0m:[93m33[0m - [91merror[0m[90m TS2307: [0mCannot find module '../../src/utils/disable-download' or its corresponding type declarations.
+
+    [7m1[0m import { disableDownload } from '../../src/utils/disable-download';
+    [7m [0m [91m                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL tests/renderer/components/version-select-spec.tsx
+  ● Test suite failed to run
+
+    [96mtests/renderer/components/version-select-spec.tsx[0m:[93m17[0m:[93m33[0m - [91merror[0m[90m TS2307: [0mCannot find module '../../../src/utils/disable-download' or its corresponding type declarations.
+
+    [7m17[0m import { disableDownload } from '../../../src/utils/disable-download';
+    [7m  [0m [91m                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL tests/renderer/components/settings-electron-spec.tsx
+  ● Test suite failed to run
+
+    [96mtests/renderer/components/settings-electron-spec.tsx[0m:[93m13[0m:[93m33[0m - [91merror[0m[90m TS2307: [0mCannot find module '../../../src/utils/disable-download' or its corresponding type declarations.
+
+    [7m13[0m import { disableDownload } from '../../../src/utils/disable-download';
+    [7m  [0m [91m                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+Test Suites: 3 failed, 3 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        6.823 s
+Ran all test suites matching /tests\/renderer\/components\/settings-electron-spec.tsx|tests\/renderer\/components\/version-select-spec.tsx|tests\/utils\/disable-download-spec.ts/i.
+{"numFailedTestSuites":3,"numFailedTests":0,"numPassedTestSuites":0,"numPassedTests":0,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":3,"numTodoTests":0,"numTotalTestSuites":3,"numTotalTests":0,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746891506,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782746898330,"message":"  ● Test suite failed to run\n\n    \u001b[96mtests/utils/disable-download-spec.ts\u001b[0m:\u001b[93m1\u001b[0m:\u001b[93m33\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '../../src/utils/disable-download' or its corresponding type declarations.\n\n    \u001b[7m1\u001b[0m import { disableDownload } from '../../src/utils/disable-download';\n    \u001b[7m \u001b[0m \u001b[91m                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/tests/utils/disable-download-spec.ts","startTime":1782746898330,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746898331,"message":"  ● Test suite failed to run\n\n    \u001b[96mtests/renderer/components/version-select-spec.tsx\u001b[0m:\u001b[93m17\u001b[0m:\u001b[93m33\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '../../../src/utils/disable-download' or its corresponding type declarations.\n\n    \u001b[7m17\u001b[0m import { disableDownload } from '../../../src/utils/disable-download';\n    \u001b[7m  \u001b[0m \u001b[91m                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/tests/renderer/components/version-select-spec.tsx","startTime":1782746898331,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746898331,"message":"  ● Test suite failed to run\n\n    \u001b[96mtests/renderer/components/settings-electron-spec.tsx\u001b[0m:\u001b[93m13\u001b[0m:\u001b[93m33\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '../../../src/utils/disable-download' or its corresponding type declarations.\n\n    \u001b[7m13\u001b[0m import { disableDownload } from '../../../src/utils/disable-download';\n    \u001b[7m  \u001b[0m \u001b[91m                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/tests/renderer/components/settings-electron-spec.tsx","startTime":1782746898331,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 (grader error: Extra data: line 44 column 1 (char 4674); fell back to exit_code=1)

@@ -1,0 +1,5 @@
+I'd like to add a topological sort command to the u-root project under cmds/exp/tsort. This is a standard Unix utility that reads pairs of items from standard input (or a file), where each pair means "the first item must come before the second item", and outputs a valid ordering of all items that respects those constraints.
+
+The tool should handle input flexibly — any combination of whitespace (spaces, tabs, newlines, and other whitespace characters) should work as delimiters between tokens. If the number of tokens is odd (i.e., an incomplete pair), it should return an appropriate error. If the input graph contains cycles, the tool should still produce output for all nodes while also reporting each detected cycle to standard error with a "tsort:" prefix. Non-existent file arguments should produce an error that identifies the missing file.
+
+The underlying data structures used to represent the graph and support the algorithm should each have clearly defined, safe behaviors, including appropriate error propagation when operations are attempted on missing or invalid elements.

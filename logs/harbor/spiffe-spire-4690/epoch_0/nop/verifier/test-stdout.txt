@@ -1,0 +1,50 @@
+patching file pkg/common/telemetry/server/datastore/wrapper_test.go
+patching file pkg/server/api/localauthority/v1/service_test.go
+patching file pkg/server/ca/manager/journal_test.go
+patching file pkg/server/ca/manager/manager_test.go
+patching file pkg/server/ca/manager/slot_test.go
+patching file pkg/server/ca/rotator/rotator_test.go
+patching file pkg/server/datastore/sqlstore/sqlstore_test.go
+patching file test/fakes/fakedatastore/fakedatastore.go
+# github.com/spiffe/spire/pkg/common/telemetry/server/datastore [github.com/spiffe/spire/pkg/common/telemetry/server/datastore.test]
+pkg/common/telemetry/server/datastore/wrapper_test.go:497:67: undefined: datastore.CAJournal
+pkg/common/telemetry/server/datastore/wrapper_test.go:498:20: undefined: datastore.CAJournal
+pkg/common/telemetry/server/datastore/wrapper_test.go:501:78: undefined: datastore.CAJournal
+pkg/common/telemetry/server/datastore/wrapper_test.go:502:20: undefined: datastore.CAJournal
+pkg/common/telemetry/server/datastore/wrapper_test.go:505:82: undefined: datastore.CAJournal
+pkg/common/telemetry/server/datastore/wrapper_test.go:506:22: undefined: datastore.CAJournal
+# github.com/spiffe/spire/test/fakes/fakedatastore
+test/fakes/fakedatastore/fakedatastore.go:386:99: undefined: datastore.CAJournal
+test/fakes/fakedatastore/fakedatastore.go:390:14: s.ds.FetchCAJournal undefined (type datastore.DataStore has no field or method FetchCAJournal)
+test/fakes/fakedatastore/fakedatastore.go:393:81: undefined: datastore.CAJournal
+test/fakes/fakedatastore/fakedatastore.go:397:14: s.ds.ListCAJournalsForTesting undefined (type datastore.DataStore has no field or method ListCAJournalsForTesting)
+test/fakes/fakedatastore/fakedatastore.go:400:76: undefined: datastore.CAJournal
+test/fakes/fakedatastore/fakedatastore.go:404:14: s.ds.SetCAJournal undefined (type datastore.DataStore has no field or method SetCAJournal)
+test/fakes/fakedatastore/fakedatastore.go:411:14: s.ds.PruneCAJournals undefined (type datastore.DataStore has no field or method PruneCAJournals)
+FAIL	github.com/spiffe/spire/pkg/common/telemetry/server/datastore [build failed]
+# github.com/spiffe/spire/pkg/server/ca/rotator [github.com/spiffe/spire/pkg/server/ca/rotator.test]
+pkg/server/ca/rotator/rotator_test.go:22:18: cannot use &fakeCAManager{} (value of type *fakeCAManager) as CAManager value in struct literal: *fakeCAManager does not implement CAManager (wrong type for method ActivateJWTKey)
+		have ActivateJWTKey("context".Context)
+		want ActivateJWTKey()
+pkg/server/ca/rotator/rotator_test.go:317:17: undefined: pruneBundleInterval
+pkg/server/ca/rotator/rotator_test.go:337:17: undefined: pruneCAJournalsInterval
+pkg/server/ca/rotator/rotator_test.go:372:18: cannot use fManager (variable of type *fakeCAManager) as CAManager value in struct literal: *fakeCAManager does not implement CAManager (wrong type for method ActivateJWTKey)
+		have ActivateJWTKey("context".Context)
+		want ActivateJWTKey()
+# github.com/spiffe/spire/pkg/server/datastore/sqlstore [github.com/spiffe/spire/pkg/server/datastore/sqlstore.test]
+pkg/server/datastore/sqlstore/sqlstore_test.go:4885:24: undefined: datastore.CAJournal
+pkg/server/datastore/sqlstore/sqlstore_test.go:4889:26: undefined: datastore.CAJournal
+pkg/server/datastore/sqlstore/sqlstore_test.go:4903:26: undefined: datastore.CAJournal
+pkg/server/datastore/sqlstore/sqlstore_test.go:4913:27: s.ds.SetCAJournal undefined (type *Plugin has no field or method SetCAJournal)
+pkg/server/datastore/sqlstore/sqlstore_test.go:4931:36: undefined: datastore.CAJournal
+pkg/server/datastore/sqlstore/sqlstore_test.go:4936:33: undefined: datastore.CAJournal
+pkg/server/datastore/sqlstore/sqlstore_test.go:4937:28: s.ds.SetCAJournal undefined (type *Plugin has no field or method SetCAJournal)
+pkg/server/datastore/sqlstore/sqlstore_test.go:4937:57: undefined: datastore.CAJournal
+pkg/server/datastore/sqlstore/sqlstore_test.go:4958:27: s.ds.FetchCAJournal undefined (type *Plugin has no field or method FetchCAJournal)
+pkg/server/datastore/sqlstore/sqlstore_test.go:5329:59: undefined: datastore.CAJournal
+pkg/server/datastore/sqlstore/sqlstore_test.go:4958:27: too many errors
+FAIL	github.com/spiffe/spire/pkg/server/api/localauthority/v1 [build failed]
+FAIL	github.com/spiffe/spire/pkg/server/ca/manager [build failed]
+FAIL	github.com/spiffe/spire/pkg/server/ca/rotator [build failed]
+FAIL	github.com/spiffe/spire/pkg/server/datastore/sqlstore [build failed]
+reward=0 graded=817 found=817 failed=817 parsed=5 framework=go exit_code=1

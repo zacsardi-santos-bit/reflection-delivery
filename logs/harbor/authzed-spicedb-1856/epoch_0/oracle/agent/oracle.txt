@@ -1,0 +1,8 @@
+patching file internal/lsp/handlers.go
+patching file internal/lsp/lsp.go
+patching file internal/lsp/lspdefs.go
+patching file pkg/cmd/lsp.go
+patching file pkg/development/resolver.go
+patching file pkg/schemadsl/compiler/development.go
+patching file pkg/schemadsl/generator/generator.go
+patching file pkg/schemadsl/parser/parser_impl.go

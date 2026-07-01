@@ -1,0 +1,17 @@
+patching file pkg/vm/engine/disttae/util_test.go
+# github.com/matrixorigin/matrixone/pkg/vm/engine/disttae [github.com/matrixorigin/matrixone/pkg/vm/engine/disttae.test]
+pkg/vm/engine/disttae/util_test.go:540:26: assignment mismatch: 4 variables but getPkValueByExpr returns 3 values
+pkg/vm/engine/disttae/util_test.go:540:83: too many arguments in call to getPkValueByExpr
+	have (*"github.com/matrixorigin/matrixone/pkg/pb/plan".Expr, string, "github.com/matrixorigin/matrixone/pkg/container/types".T, bool, nil)
+	want (*"github.com/matrixorigin/matrixone/pkg/pb/plan".Expr, string, "github.com/matrixorigin/matrixone/pkg/container/types".T, *"github.com/matrixorigin/matrixone/pkg/vm/process".Process)
+pkg/vm/engine/disttae/util_test.go:599:39: cannot use func(blk *objectio.BlockInfo, _ objectio.BlockObject) bool {…} (value of type func(blk *objectio.BlockInfo, _ objectio.BlockObject) bool) as func(blk *objectio.BlockInfo) bool value in argument to ForeachBlkInObjStatsList
+pkg/vm/engine/disttae/util_test.go:607:38: cannot use func(blk *objectio.BlockInfo, _ objectio.BlockObject) bool {…} (value of type func(blk *objectio.BlockInfo, _ objectio.BlockObject) bool) as func(blk *objectio.BlockInfo) bool value in argument to ForeachBlkInObjStatsList
+pkg/vm/engine/disttae/util_test.go:615:38: cannot use func(blk *objectio.BlockInfo, _ objectio.BlockObject) bool {…} (value of type func(blk *objectio.BlockInfo, _ objectio.BlockObject) bool) as func(blk *objectio.BlockInfo) bool value in argument to ForeachBlkInObjStatsList
+pkg/vm/engine/disttae/util_test.go:628:39: cannot use func(blk *objectio.BlockInfo, _ objectio.BlockObject) bool {…} (value of type func(blk *objectio.BlockInfo, _ objectio.BlockObject) bool) as func(blk *objectio.BlockInfo) bool value in argument to ForeachBlkInObjStatsList
+pkg/vm/engine/disttae/util_test.go:804:40: cannot use m (variable of type *mpool.MPool) as int64 value in argument to plan2.MakePlan2Int64VecExprWithType
+pkg/vm/engine/disttae/util_test.go:826:44: cannot use m (variable of type *mpool.MPool) as int64 value in argument to plan2.MakePlan2Int64VecExprWithType
+pkg/vm/engine/disttae/util_test.go:916:41: cannot use m (variable of type *mpool.MPool) as int64 value in argument to plan2.MakePlan2Int64VecExprWithType
+pkg/vm/engine/disttae/util_test.go:938:43: cannot use m (variable of type *mpool.MPool) as int64 value in argument to plan2.MakePlan2Int64VecExprWithType
+pkg/vm/engine/disttae/util_test.go:938:43: too many errors
+FAIL	github.com/matrixorigin/matrixone/pkg/vm/engine/disttae [build failed]
+reward=0 graded=14 found=14 failed=14 parsed=1 framework=go exit_code=1

@@ -1,0 +1,23 @@
+{
+ "task": "pass-culture-pass-culture-main-11174",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P=35; test.sh runs 'pytest tests/routes/backoffice/offer_price_limitation_rules_test.py -v -m backoffice'; golden adds models.py/blueprint.py/forms.py/templates + alembic migration for OfferPriceLimitationRule CRUD"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 25,
+  "shallow": true
+ }
+}

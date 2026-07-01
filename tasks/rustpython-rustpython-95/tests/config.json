@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/tests && pytest test_snippets.py -v -k test_rustpython_extra_bool_eval",
+  "test_files": [
+    "tests/snippets/extra_bool_eval.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_snippets.SampleTestCase::test_rustpython_extra_bool_eval"
+  ],
+  "PASS_TO_PASS": []
+}

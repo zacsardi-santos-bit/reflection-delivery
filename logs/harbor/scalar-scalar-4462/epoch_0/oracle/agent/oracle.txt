@@ -1,0 +1,16 @@
+patching file .changeset/new-tomatoes-joke.md
+patching file packages/api-reference/src/components/ApiReferenceLayout.vue
+patching file packages/api-reference/src/components/Content/Lazy/Loading.vue
+patching file packages/api-reference/src/components/Content/Models/Models.vue
+patching file packages/api-reference/src/components/Content/Models/ModelsAccordion.vue
+patching file packages/api-reference/src/features/DownloadLink/DownloadLink.vue
+patching file packages/api-reference/src/features/Operation/Webhooks.vue
+patching file packages/api-reference/src/features/Operation/layouts/ClassicLayout.vue
+patching file packages/api-reference/src/features/Search/useSearchIndex.ts
+patching file packages/api-reference/src/features/TestRequestButton/TestRequestButton.vue
+patching file packages/api-reference/src/helpers/index.ts
+patching file packages/api-reference/src/helpers/provideSymbols.ts
+patching file packages/api-reference/src/hooks/useConfig.ts
+patching file packages/api-reference/src/hooks/useNavState.ts
+patching file packages/api-reference/src/hooks/useSidebar.ts
+patching file packages/types/src/legacy/reference-config.ts

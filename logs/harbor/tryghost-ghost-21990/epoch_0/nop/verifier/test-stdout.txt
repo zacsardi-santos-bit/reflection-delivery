@@ -1,0 +1,30 @@
+patching file ghost/captcha-service/test/.eslintrc.js
+patching file ghost/captcha-service/test/CaptchaService.test.js
+
+ Exception during run: Error: Cannot find module '../index'
+Require stack:
+- /workspace/repo/ghost/captcha-service/test/CaptchaService.test.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+    at Module._load (node:internal/modules/cjs/loader:1038:27)
+    at Module.require (node:internal/modules/cjs/loader:1289:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/workspace/repo/ghost/captcha-service/test/CaptchaService.test.js:3:24)
+    at Module._compile (node:internal/modules/cjs/loader:1521:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Module._load (node:internal/modules/cjs/loader:1091:12)
+    at cjsLoader (node:internal/modules/esm/translators:298:15)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:240:7)
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async formattedImport (/workspace/deps/node_modules/mocha/lib/nodejs/esm-utils.js:9:14)
+    at async exports.requireOrImport (/workspace/deps/node_modules/mocha/lib/nodejs/esm-utils.js:42:28)
+    at async exports.loadFilesAsync (/workspace/deps/node_modules/mocha/lib/nodejs/esm-utils.js:100:20)
+    at async singleRun (/workspace/deps/node_modules/mocha/lib/cli/run-helpers.js:162:3)
+    at async exports.handler (/workspace/deps/node_modules/mocha/lib/cli/run.js:375:5) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/workspace/repo/ghost/captcha-service/test/CaptchaService.test.js'
+  ]
+}
+reward=0 (grader error: Extra data: line 20 column 1 (char 1957); fell back to exit_code=1)

@@ -1,0 +1,93 @@
+patching file python/paddle/fluid/contrib/tests/test_fp16_utils.py
+patching file python/paddle/fluid/tests/unittests/CMakeLists.txt
+patching file python/paddle/fluid/tests/unittests/test_collective_optimizer.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace
+collecting ... collected 6 items
+
+../tests/test_fp16_utils.py::AMPTest::test_find_op_index PASSED          [ 16%]
+../tests/test_fp16_utils.py::AMPTest::test_find_true_post_op PASSED      [ 33%]
+../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy PASSED [ 50%]
+../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_ds_as_None PASSED [ 66%]
+../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_recompute_checkpoints PASSED [ 83%]
+../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_recompute_strategy PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/framework.py:19
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/framework.py:19: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    from collections import Iterable
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/layers/utils.py:25
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/layers/utils.py:25: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    def convert_to_list(value, n, name, dtype=np.int):
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/dygraph/dygraph_to_static/utils.py:22
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/dygraph/dygraph_to_static/utils.py:22: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:838
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:838: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:932
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:932: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1480
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1480: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1594
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1594: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1710
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1710: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1976
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1976: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2243
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2243: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2353
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2353: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2660
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2660: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2819
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2819: DeprecationWarning: invalid escape sequence \|
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:4134
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:4134: DeprecationWarning: invalid escape sequence \_
+    """
+
+tests/test_fp16_utils.py::AMPTest::test_find_true_post_op
+tests/test_fp16_utils.py::AMPTest::test_find_true_post_op
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/framework.py:2138: DeprecationWarning: an integer is required (got type paddle.fluid.core_avx.op_proto_and_checker_maker.OpRole).  Implicit conversion to integers using __int__ is deprecated, and may be removed in a future version of Python.
+    self.desc._set_attr(name, val)
+
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/framework.py:2138: DeprecationWarning: an integer is required (got type paddle.fluid.core_avx.VarType).  Implicit conversion to integers using __int__ is deprecated, and may be removed in a future version of Python.
+    self.desc._set_attr(name, val)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 6 passed, 24 warnings in 2.55s ========================
+reward=1 graded=6 found=0 failed=0 parsed=6 framework=pytest exit_code=0

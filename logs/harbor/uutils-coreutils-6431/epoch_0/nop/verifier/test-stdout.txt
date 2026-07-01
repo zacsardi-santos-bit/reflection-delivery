@@ -1,0 +1,483 @@
+patching file tests/by-util/test_cksum.rs
+patching file tests/by-util/test_hashsum.rs
+   Compiling autocfg v1.1.0
+   Compiling bitflags v2.5.0
+   Compiling futures-core v0.3.28
+   Compiling semver v1.0.14
+   Compiling getrandom v0.2.9
+   Compiling nix v0.28.0
+   Compiling futures-channel v0.3.28
+   Compiling futures-task v0.3.28
+   Compiling syn v2.0.60
+   Compiling ahash v0.8.11
+   Compiling memchr v2.7.2
+   Compiling rustix v0.38.31
+   Compiling hashbrown v0.14.3
+   Compiling equivalent v1.0.1
+   Compiling futures-sink v0.3.28
+   Compiling ppv-lite86 v0.2.17
+   Compiling rand_core v0.6.4
+   Compiling futures-util v0.3.28
+   Compiling pin-utils v0.1.0
+   Compiling winnow v0.5.40
+   Compiling zerocopy v0.7.33
+   Compiling pin-project-lite v0.2.9
+   Compiling toml_datetime v0.6.6
+   Compiling num-traits v0.2.19
+   Compiling slab v0.4.7
+   Compiling futures-io v0.3.28
+   Compiling rand_chacha v0.3.1
+   Compiling aho-corasick v1.0.4
+   Compiling indexmap v2.2.6
+   Compiling radium v0.7.0
+   Compiling linux-raw-sys v0.4.12
+   Compiling rand v0.8.5
+   Compiling tap v1.0.1
+   Compiling allocator-api2 v0.2.18
+   Compiling wyz v0.5.1
+   Compiling rlimit v0.10.1
+   Compiling relative-path v1.8.0
+   Compiling powerfmt v0.2.0
+   Compiling rustc_version v0.4.0
+   Compiling procfs v0.16.0
+   Compiling regex-automata v0.4.4
+   Compiling funty v2.0.0
+   Compiling deranged v0.3.11
+   Compiling coreutils v0.0.26 (/workspace/repo)
+   Compiling procfs-core v0.16.0
+   Compiling num_threads v0.1.6
+   Compiling rstest_macros v0.21.0
+   Compiling iana-time-zone v0.1.53
+   Compiling time-core v0.1.2
+   Compiling yansi v0.5.1
+   Compiling futures-timer v3.0.2
+   Compiling toml_edit v0.21.1
+   Compiling bitvec v1.0.1
+   Compiling lazy_static v1.4.0
+   Compiling diff v0.1.13
+   Compiling lru v0.12.3
+   Compiling fastrand v2.0.1
+   Compiling either v1.8.0
+   Compiling num-conv v0.1.0
+   Compiling same-file v1.0.6
+   Compiling time v0.3.36
+   Compiling pretty_assertions v1.4.0
+   Compiling num-integer v0.1.46
+   Compiling walkdir v2.5.0
+   Compiling chrono v0.4.38
+   Compiling rand_pcg v0.3.1
+   Compiling filetime v0.2.23
+   Compiling hex-literal v0.4.1
+   Compiling unindent v0.2.3
+   Compiling num-bigint v0.4.5
+   Compiling proc-macro-crate v3.1.0
+   Compiling regex v1.10.4
+   Compiling thiserror-impl v1.0.61
+   Compiling futures-macro v0.3.28
+   Compiling num-modular v0.5.1
+   Compiling xattr v1.3.1
+   Compiling tempfile v3.10.1
+   Compiling num-prime v0.4.4
+   Compiling thiserror v1.0.61
+   Compiling uucore v0.0.26 (/workspace/repo/src/uucore)
+   Compiling uu_cksum v0.0.26 (/workspace/repo/src/uu/cksum)
+   Compiling uu_hashsum v0.0.26 (/workspace/repo/src/uu/hashsum)
+   Compiling futures-executor v0.3.28
+   Compiling futures v0.3.28
+   Compiling rstest v0.21.0
+    Finished test [unoptimized + debuginfo] target(s) in 19.16s
+────────────
+ Nextest run ID 75f99817-4e2f-4a7c-b8c8-dfa7eb8ae1f6 with nextest profile: default
+    Starting 226 tests across 3 binaries (3 tests skipped)
+        PASS [   0.126s] (  1/226) coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_when_length_is_zero
+        PASS [   0.128s] (  2/226) coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_when_num_delimiter_is_greater_than_length
+        PASS [   0.135s] (  3/226) coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_should_not_end_with_delimiter
+        PASS [   0.136s] (  4/226) coreutils::test_util_name common::random::tests::test_random_string_generate
+        PASS [   0.141s] (  5/226) coreutils::test_util_name common::random::tests::test_generate_with_delimiter_with_greater_length
+        PASS [   0.144s] (  6/226) coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_should_end_with_delimiter
+        PASS [   0.171s] (  7/226) coreutils::test_util_name common::random::tests::test_generate_random_strings_when_length_is_around_critical_buffer_sizes
+        PASS [   0.175s] (  8/226) coreutils::test_util_name common::util::tests::test_command_result_when_no_output_with_exit_0
+        PASS [   0.174s] (  9/226) coreutils::test_util_name common::util::tests::test_command_result_when_no_output_with_exit_32
+        PASS [   0.174s] ( 10/226) coreutils::test_util_name common::util::tests::test_command_result_when_stdout_with_exit_0
+        PASS [   0.178s] ( 11/226) coreutils::test_util_name common::util::tests::test_command_result_when_exit_0_then_silent_failure_panics
+        PASS [   0.178s] ( 12/226) coreutils::test_util_name common::util::tests::test_application_of_process_resource_limits_unlimited_file_size
+        PASS [   0.177s] ( 13/226) coreutils::test_util_name common::util::tests::test_command_result_when_exit_32_then_success_panic
+        PASS [   0.181s] ( 14/226) coreutils::test_util_name common::util::tests::test_command_result_when_stderr_with_exit_0
+        PASS [   0.180s] ( 15/226) coreutils::test_util_name common::util::tests::test_command_result_when_exit_0_then_failure_panics
+        PASS [   0.178s] ( 16/226) coreutils::test_util_name common::util::tests::test_application_of_process_resource_limits_limited_file_size
+        PASS [   0.182s] ( 17/226) coreutils::test_util_name common::util::tests::test_altering_umask
+        PASS [   0.208s] ( 18/226) coreutils::test_util_name common::util::tests::test_check_coreutil_version
+        PASS [   0.119s] ( 19/226) coreutils::test_util_name common::util::tests::test_compare_xattrs
+        PASS [   0.117s] ( 20/226) coreutils::test_util_name common::util::tests::test_host_name_for
+        PASS [   0.118s] ( 21/226) coreutils::test_util_name common::util::tests::test_parse_coreutil_version
+        PASS [   0.161s] ( 22/226) coreutils::test_util_name common::util::tests::test_std_does_not_contain
+        PASS [   0.167s] ( 23/226) coreutils::test_util_name common::util::tests::test_stderr_does_not_contain_fail
+        PASS [   0.133s] ( 24/226) coreutils::tests common::random::tests::test_generate_with_delimiter_with_greater_length
+        PASS [   0.133s] ( 25/226) coreutils::tests common::random::tests::test_random_string_generate
+        PASS [   0.133s] ( 26/226) coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_should_end_with_delimiter
+        PASS [   0.159s] ( 27/226) coreutils::test_util_name common::util::tests::test_stdout_does_not_contain_fail
+        PASS [   0.165s] ( 28/226) coreutils::tests common::random::tests::test_generate_random_strings_when_length_is_around_critical_buffer_sizes
+        PASS [   0.135s] ( 29/226) coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_should_not_end_with_delimiter
+        PASS [   0.120s] ( 30/226) coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_when_length_is_zero
+        PASS [   0.237s] ( 31/226) coreutils::test_util_name common::util::tests::test_expected_result
+        PASS [   0.194s] ( 32/226) coreutils::test_util_name common::util::tests::test_stdout_matches
+        PASS [   0.120s] ( 33/226) coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_when_num_delimiter_is_greater_than_length
+        PASS [   0.193s] ( 34/226) coreutils::test_util_name util_invalid_name_invalid_command
+        PASS [   0.197s] ( 35/226) coreutils::test_util_name common::util::tests::test_stdout_matches_fail
+        PASS [   0.197s] ( 36/226) coreutils::test_util_name common::util::tests::test_stdout_not_matches_fail
+        PASS [   0.207s] ( 37/226) coreutils::test_util_name util_non_utf8_name_help
+        PASS [   0.210s] ( 38/226) coreutils::test_util_name util_invalid_name_help
+        PASS [   0.182s] ( 39/226) coreutils::tests common::util::tests::test_altering_umask
+        PASS [   0.169s] ( 40/226) coreutils::tests common::util::tests::test_application_of_process_resource_limits_unlimited_file_size
+        PASS [   0.176s] ( 41/226) coreutils::tests common::util::tests::test_application_of_process_resource_limits_limited_file_size
+        PASS [   0.180s] ( 42/226) coreutils::tests common::util::tests::test_command_result_when_exit_0_then_failure_panics
+        PASS [   0.127s] ( 43/226) coreutils::tests common::util::tests::test_host_name_for
+        PASS [   0.185s] ( 44/226) coreutils::tests common::util::tests::test_command_result_when_exit_0_then_silent_failure_panics
+        PASS [   0.142s] ( 45/226) coreutils::tests common::util::tests::test_compare_xattrs
+        PASS [   0.139s] ( 46/226) coreutils::tests common::util::tests::test_parse_coreutil_version
+        PASS [   0.201s] ( 47/226) coreutils::tests common::util::tests::test_check_coreutil_version
+        PASS [   0.193s] ( 48/226) coreutils::tests common::util::tests::test_command_result_when_exit_32_then_success_panic
+        PASS [   0.179s] ( 49/226) coreutils::tests common::util::tests::test_command_result_when_no_output_with_exit_32
+        PASS [   0.182s] ( 50/226) coreutils::tests common::util::tests::test_command_result_when_no_output_with_exit_0
+        PASS [   0.180s] ( 51/226) coreutils::tests common::util::tests::test_command_result_when_stdout_with_exit_0
+        PASS [   0.184s] ( 52/226) coreutils::tests common::util::tests::test_command_result_when_stderr_with_exit_0
+        PASS [   0.183s] ( 53/226) coreutils::tests common::util::tests::test_std_does_not_contain
+        PASS [   0.187s] ( 54/226) coreutils::tests common::util::tests::test_stderr_does_not_contain_fail
+        PASS [   0.189s] ( 55/226) coreutils::tests common::util::tests::test_stdout_does_not_contain_fail
+        PASS [   0.261s] ( 56/226) coreutils::tests common::util::tests::test_expected_result
+        PASS [   0.228s] ( 57/226) coreutils::tests common::util::tests::test_stdout_matches
+        PASS [   0.221s] ( 58/226) coreutils::tests common::util::tests::test_stdout_not_matches_fail
+        PASS [   0.230s] ( 59/226) coreutils::tests common::util::tests::test_stdout_matches_fail
+        PASS [   0.412s] ( 60/226) coreutils::tests test_cksum::test_arg_overrides_stdin
+        PASS [   0.413s] ( 61/226) coreutils::tests test_cksum::test_base64_multiple_files
+        PASS [   0.446s] ( 62/226) coreutils::tests test_cksum::test_base64_raw_conflicts
+        PASS [   0.466s] ( 63/226) coreutils::tests test_cksum::test_blake2b_bits
+        PASS [   0.472s] ( 64/226) coreutils::tests test_cksum::test_check_algo_err
+        FAIL [   0.505s] ( 65/226) coreutils::tests test_cksum::test_check_directory_error
+  stdout ───
+
+    running 1 test
+    mkdir: /tmp/.tmpVbOgbG/d
+    write(default): /tmp/.tmpVbOgbG/f
+    run: /workspace/repo/target/debug/coreutils cksum --check /tmp/.tmpVbOgbG/f
+    test test_cksum::test_check_directory_error ... FAILED
+
+    failures:
+
+    failures:
+        test_cksum::test_check_directory_error
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 197 filtered out; finished in 0.38s
+
+  stderr ───
+    thread 'test_cksum::test_check_directory_error' panicked at tests/by-util/test_cksum.rs:1202:10:
+    'thread 'main' panicked at /workspace/repo/src/uu/cksum/src/cksum.rs:558:68:
+    called `Result::unwrap()` on an `Err` value: Os { code: 21, kind: IsADirectory, message: "Is a directory" }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+    ' does not contain 'cksum: d: Is a directory
+    '
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.476s] ( 66/226) coreutils::tests test_cksum::test_check_error_incorrect_format
+        PASS [   0.462s] ( 67/226) coreutils::tests test_cksum::test_check_pipe
+        PASS [   0.619s] ( 68/226) coreutils::tests test_cksum::test_bsd_case
+        FAIL [   0.691s] ( 69/226) coreutils::tests test_cksum::test_blake2b_512
+  stdout ───
+
+    running 1 test
+    touch: /tmp/.tmpQxscK3/f
+    run: /workspace/repo/target/debug/coreutils cksum -a blake2b -l512 f
+    write(default): /tmp/.tmpQxscK3/checksum
+    run: /workspace/repo/target/debug/coreutils cksum --check checksum
+    run: /workspace/repo/target/debug/coreutils cksum --status --check checksum
+    test test_cksum::test_blake2b_512 ... FAILED
+
+    failures:
+
+    failures:
+        test_cksum::test_blake2b_512
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 197 filtered out; finished in 0.57s
+
+  stderr ───
+    thread 'test_cksum::test_blake2b_512' panicked at tests/by-util/test_cksum.rs:563:10:
+    Command was expected to succeed. code: 1
+    stdout = 
+     stderr = error: unexpected argument '--status' found
+
+      tip: to pass '--status' as a value, use '-- --status'
+
+    Usage: /workspace/repo/target/debug/coreutils cksum [OPTIONS] [FILE]...
+
+    For more information, try '--help'.
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.622s] ( 70/226) coreutils::tests test_cksum::test_check_md5_format
+        PASS [   0.499s] ( 71/226) coreutils::tests test_cksum::test_cksum_check_case
+        PASS [   0.522s] ( 72/226) coreutils::tests test_cksum::test_cksum_check_empty_line
+        PASS [   0.927s] ( 73/226) coreutils::tests test_cksum::test_check_algo
+        PASS [   0.455s] ( 74/226) coreutils::tests test_cksum::test_cksum_check_space
+        PASS [   0.461s] ( 75/226) coreutils::tests test_cksum::test_cksum_check_leading_info
+        PASS [   0.437s] ( 76/226) coreutils::tests test_cksum::test_conflicting_options
+        PASS [   0.435s] ( 77/226) coreutils::tests test_cksum::test_crc_for_bigger_than_32_bytes
+        PASS [   0.625s] ( 78/226) coreutils::tests test_cksum::test_cksum_garbage
+        PASS [   0.759s] ( 79/226) coreutils::tests test_cksum::test_cksum_check_invalid
+        PASS [   0.414s] ( 80/226) coreutils::tests test_cksum::test_dev_null
+        PASS [   1.377s] ( 81/226) coreutils::tests test_cksum::test_all_algorithms_fail_on_folder
+        PASS [   0.985s] ( 82/226) coreutils::tests test_cksum::test_cksum_check
+        PASS [   0.430s] ( 83/226) coreutils::tests test_cksum::test_empty_file
+        PASS [   0.427s] ( 84/226) coreutils::tests test_cksum::test_fail_on_folder
+        PASS [   0.421s] ( 85/226) coreutils::tests test_cksum::test_invalid_arg
+        PASS [   0.856s] ( 86/226) coreutils::tests test_cksum::test_cksum_mixed
+        PASS [   0.432s] ( 87/226) coreutils::tests test_cksum::test_folder_and_file
+        PASS [   1.068s] ( 88/226) coreutils::tests test_cksum::test_cksum_check_failed
+        PASS [   0.414s] ( 89/226) coreutils::tests test_cksum::test_length
+        PASS [   0.449s] ( 90/226) coreutils::tests test_cksum::test_length_greater_than_512
+        PASS [   0.445s] ( 91/226) coreutils::tests test_cksum::test_length_is_zero
+        PASS [   0.448s] ( 92/226) coreutils::tests test_cksum::test_length_not_supported
+        PASS [   0.464s] ( 93/226) coreutils::tests test_cksum::test_length_repeated
+        PASS [   0.395s] ( 94/226) coreutils::tests test_cksum::test_multiple_files
+        PASS [   0.412s] ( 95/226) coreutils::tests test_cksum::test_nonexisting_file
+        PASS [   0.454s] ( 96/226) coreutils::tests test_cksum::test_nonexisting_file_out
+        PASS [   0.432s] ( 97/226) coreutils::tests test_cksum::test_one_nonexisting_file
+        PASS [   0.433s] ( 98/226) coreutils::tests test_cksum::test_raw_multiple_files
+        PASS [   0.454s] ( 99/226) coreutils::tests test_cksum::test_reset_binary
+        PASS [   0.463s] (100/226) coreutils::tests test_cksum::test_repeated_flags
+        PASS [   2.043s] (101/226) coreutils::tests test_cksum::test_binary_file
+        PASS [   0.693s] (102/226) coreutils::tests test_cksum::test_length_with_wrong_algorithm
+        PASS [   0.407s] (103/226) coreutils::tests test_cksum::test_single_file
+        PASS [   0.391s] (104/226) coreutils::tests test_cksum::test_stdin
+        PASS [   0.391s] (105/226) coreutils::tests test_cksum::test_stdin_larger_than_128_bytes
+        PASS [   0.422s] (106/226) coreutils::tests test_cksum::test_tag_short
+        PASS [   0.425s] (107/226) coreutils::tests test_cksum::test_tag_after_untagged
+        PASS [   0.446s] (108/226) coreutils::tests test_cksum::test_text_tag
+        PASS [   0.178s] (109/226) coreutils::tests test_hashsum::b2sum::test_nonames
+        PASS [   0.417s] (110/226) coreutils::tests test_cksum::test_untagged_algorithm_after_tag
+        PASS [   0.497s] (111/226) coreutils::tests test_cksum::test_unknown_sha
+        PASS [   0.376s] (112/226) coreutils::tests test_cksum::test_untagged_multiple_files
+        PASS [   0.406s] (113/226) coreutils::tests test_cksum::test_untagged_single_file
+        PASS [   0.353s] (114/226) coreutils::tests test_hashsum::b2sum::test_check
+        PASS [   0.293s] (115/226) coreutils::tests test_hashsum::b2sum::test_stdin
+        PASS [   0.296s] (116/226) coreutils::tests test_hashsum::b2sum::test_single_file
+        PASS [   0.422s] (117/226) coreutils::tests test_cksum::test_untagged_stdin
+        PASS [   0.294s] (118/226) coreutils::tests test_hashsum::b2sum::test_zero
+        PASS [   0.296s] (119/226) coreutils::tests test_hashsum::b3sum::test_single_file
+        PASS [   0.298s] (120/226) coreutils::tests test_hashsum::b3sum::test_nonames
+        PASS [   0.341s] (121/226) coreutils::tests test_hashsum::b3sum::test_check
+        PASS [   0.195s] (122/226) coreutils::tests test_hashsum::md5::test_nonames
+        PASS [   0.285s] (123/226) coreutils::tests test_hashsum::b3sum::test_stdin
+        PASS [   0.299s] (124/226) coreutils::tests test_hashsum::b3sum::test_zero
+        PASS [   0.292s] (125/226) coreutils::tests test_hashsum::md5::test_single_file
+        PASS [   0.301s] (126/226) coreutils::tests test_hashsum::md5::test_stdin
+        PASS [   0.358s] (127/226) coreutils::tests test_hashsum::md5::test_check
+        PASS [   0.173s] (128/226) coreutils::tests test_hashsum::sha1::test_nonames
+        PASS [   0.297s] (129/226) coreutils::tests test_hashsum::md5::test_zero
+        PASS [   0.287s] (130/226) coreutils::tests test_hashsum::sha1::test_single_file
+        PASS [   0.172s] (131/226) coreutils::tests test_hashsum::sha224::test_nonames
+        PASS [   0.294s] (132/226) coreutils::tests test_hashsum::sha1::test_stdin
+        PASS [   0.347s] (133/226) coreutils::tests test_hashsum::sha1::test_check
+        PASS [   0.311s] (134/226) coreutils::tests test_hashsum::sha1::test_zero
+        PASS [   0.276s] (135/226) coreutils::tests test_hashsum::sha224::test_single_file
+        PASS [   0.279s] (136/226) coreutils::tests test_hashsum::sha224::test_stdin
+        PASS [   0.280s] (137/226) coreutils::tests test_hashsum::sha224::test_zero
+        PASS [   0.361s] (138/226) coreutils::tests test_hashsum::sha224::test_check
+        PASS [   0.190s] (139/226) coreutils::tests test_hashsum::sha256::test_nonames
+        PASS [   3.167s] (140/226) coreutils::tests test_cksum::test_base64_single_file
+        PASS [   0.359s] (141/226) coreutils::tests test_hashsum::sha256::test_check
+        PASS [   0.302s] (142/226) coreutils::tests test_hashsum::sha256::test_single_file
+        PASS [   0.177s] (143/226) coreutils::tests test_hashsum::sha384::test_nonames
+        PASS [   0.326s] (144/226) coreutils::tests test_hashsum::sha256::test_stdin
+        PASS [   0.330s] (145/226) coreutils::tests test_hashsum::sha256::test_zero
+        PASS [   0.178s] (146/226) coreutils::tests test_hashsum::sha3_224::test_nonames
+        PASS [   0.288s] (147/226) coreutils::tests test_hashsum::sha384::test_single_file
+        PASS [   0.379s] (148/226) coreutils::tests test_hashsum::sha384::test_check
+        PASS [   0.293s] (149/226) coreutils::tests test_hashsum::sha384::test_stdin
+        PASS [   0.295s] (150/226) coreutils::tests test_hashsum::sha384::test_zero
+        PASS [   0.297s] (151/226) coreutils::tests test_hashsum::sha3_224::test_single_file
+        PASS [   0.365s] (152/226) coreutils::tests test_hashsum::sha3_224::test_check
+        PASS [   0.187s] (153/226) coreutils::tests test_hashsum::sha3_256::test_nonames
+        PASS [   0.304s] (154/226) coreutils::tests test_hashsum::sha3_224::test_zero
+        PASS [   0.309s] (155/226) coreutils::tests test_hashsum::sha3_224::test_stdin
+        PASS [   0.181s] (156/226) coreutils::tests test_hashsum::sha3_384::test_nonames
+        PASS [   0.290s] (157/226) coreutils::tests test_hashsum::sha3_256::test_single_file
+        PASS [   0.283s] (158/226) coreutils::tests test_hashsum::sha3_256::test_stdin
+        PASS [   0.288s] (159/226) coreutils::tests test_hashsum::sha3_256::test_zero
+        PASS [   0.361s] (160/226) coreutils::tests test_hashsum::sha3_256::test_check
+        PASS [   0.376s] (161/226) coreutils::tests test_hashsum::sha3_384::test_check
+        PASS [   0.298s] (162/226) coreutils::tests test_hashsum::sha3_384::test_single_file
+        PASS [   0.294s] (163/226) coreutils::tests test_hashsum::sha3_384::test_stdin
+        PASS [   0.236s] (164/226) coreutils::tests test_hashsum::sha3_512::test_nonames
+        PASS [   0.307s] (165/226) coreutils::tests test_hashsum::sha3_384::test_zero
+        PASS [   0.184s] (166/226) coreutils::tests test_hashsum::sha512::test_nonames
+        PASS [   0.321s] (167/226) coreutils::tests test_hashsum::sha3_512::test_single_file
+        PASS [   0.304s] (168/226) coreutils::tests test_hashsum::sha3_512::test_stdin
+        PASS [   0.379s] (169/226) coreutils::tests test_hashsum::sha3_512::test_check
+        PASS [   0.298s] (170/226) coreutils::tests test_hashsum::sha3_512::test_zero
+        PASS [   0.185s] (171/226) coreutils::tests test_hashsum::shake128_256::test_nonames
+        PASS [   0.355s] (172/226) coreutils::tests test_hashsum::sha512::test_check
+        PASS [   0.297s] (173/226) coreutils::tests test_hashsum::sha512::test_single_file
+        PASS [   0.289s] (174/226) coreutils::tests test_hashsum::sha512::test_stdin
+        PASS [   0.288s] (175/226) coreutils::tests test_hashsum::sha512::test_zero
+        PASS [   0.174s] (176/226) coreutils::tests test_hashsum::shake256_512::test_nonames
+        PASS [   0.337s] (177/226) coreutils::tests test_hashsum::shake128_256::test_check
+        PASS [   0.309s] (178/226) coreutils::tests test_hashsum::shake128_256::test_single_file
+        PASS [   0.298s] (179/226) coreutils::tests test_hashsum::shake128_256::test_stdin
+        PASS [   0.301s] (180/226) coreutils::tests test_hashsum::shake128_256::test_zero
+        PASS [   0.294s] (181/226) coreutils::tests test_hashsum::shake256_512::test_single_file
+        PASS [   0.373s] (182/226) coreutils::tests test_hashsum::shake256_512::test_check
+        PASS [   0.313s] (183/226) coreutils::tests test_hashsum::shake256_512::test_stdin
+        PASS [   0.301s] (184/226) coreutils::tests test_hashsum::shake256_512::test_zero
+        PASS [   0.302s] (185/226) coreutils::tests test_hashsum::test_check_b2sum_length_duplicate
+        PASS [   0.361s] (186/226) coreutils::tests test_hashsum::test_check_b2sum_length_option_0
+        PASS [   0.370s] (187/226) coreutils::tests test_hashsum::test_check_b2sum_length_option_8
+        PASS [   0.358s] (188/226) coreutils::tests test_hashsum::test_check_check_ignore_no_file
+        PASS [   0.401s] (189/226) coreutils::tests test_hashsum::test_check_b2sum_verify
+        PASS [   0.426s] (190/226) coreutils::tests test_hashsum::test_check_b2sum_tag_output
+        FAIL [   0.367s] (191/226) coreutils::tests test_hashsum::test_check_directory_error
+  stdout ───
+
+    running 1 test
+    mkdir: /tmp/.tmpFmhq9V/d
+    write(default): /tmp/.tmpFmhq9V/in.md5
+    run: /workspace/repo/target/debug/coreutils md5sum --check /tmp/.tmpFmhq9V/in.md5
+    test test_hashsum::test_check_directory_error ... FAILED
+
+    failures:
+
+    failures:
+        test_hashsum::test_check_directory_error
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 197 filtered out; finished in 0.24s
+
+  stderr ───
+    thread 'test_hashsum::test_check_directory_error' panicked at tests/by-util/test_hashsum.rs:849:10:
+    'md5sum: failed to read input: Is a directory
+    ' does not contain 'md5sum: d: Is a directory
+    '
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.352s] (192/226) coreutils::tests test_hashsum::test_check_empty_line
+        FAIL [   0.346s] (193/226) coreutils::tests test_hashsum::test_check_file_not_found_warning
+  stdout ───
+
+    running 1 test
+    write(default): /tmp/.tmpXu3xps/testf
+    write(default): /tmp/.tmpXu3xps/testf.sha1
+    remove: "/tmp/.tmpXu3xps/testf"
+    run: /workspace/repo/target/debug/coreutils sha1sum -c /tmp/.tmpXu3xps/testf.sha1
+    test test_hashsum::test_check_file_not_found_warning ... FAILED
+
+    failures:
+
+    failures:
+        test_hashsum::test_check_file_not_found_warning
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 197 filtered out; finished in 0.24s
+
+  stderr ───
+    thread 'test_hashsum::test_check_file_not_found_warning' panicked at tests/by-util/test_hashsum.rs:313:10:
+    assertion failed: `(left == right)`
+
+    Diff < left / right > :
+    <sha1sum: testf: No such file or directory
+     testf: FAILED open or read
+     
+
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.346s] (194/226) coreutils::tests test_hashsum::test_check_md5sum_mixed_format
+        PASS [   0.357s] (195/226) coreutils::tests test_hashsum::test_check_md5sum
+        PASS [   3.306s] (196/226) coreutils::tests test_cksum::test_raw_single_file
+        PASS [   0.363s] (197/226) coreutils::tests test_hashsum::test_check_md5sum_only_one_space
+        PASS [   0.357s] (198/226) coreutils::tests test_hashsum::test_check_md5sum_reverse_bsd
+        PASS [   0.358s] (199/226) coreutils::tests test_hashsum::test_check_no_backslash_no_space
+        PASS [   0.589s] (200/226) coreutils::tests test_hashsum::test_check_md5_ignore_missing
+        PASS [   0.356s] (201/226) coreutils::tests test_hashsum::test_check_sha1
+        FAIL [   0.374s] (202/226) coreutils::tests test_hashsum::test_check_space_star_or_not
+  stdout ───
+
+    running 1 test
+    touch: /tmp/.tmpbRFDco/a
+    touch: /tmp/.tmpbRFDco/*c
+    write(default): /tmp/.tmpbRFDco/in.md5
+    run: /workspace/repo/target/debug/coreutils md5sum --check /tmp/.tmpbRFDco/in.md5
+    test test_hashsum::test_check_space_star_or_not ... FAILED
+
+    failures:
+
+    failures:
+        test_hashsum::test_check_space_star_or_not
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 197 filtered out; finished in 0.25s
+
+  stderr ───
+    thread 'test_hashsum::test_check_space_star_or_not' panicked at tests/by-util/test_hashsum.rs:752:10:
+    'md5sum: /tmp/.tmpbRFDco/in.md5: no properly formatted checksum lines found
+    ' does not contain 'WARNING: 1 line is improperly formatted'
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.480s] (203/226) coreutils::tests test_hashsum::test_check_status
+        FAIL [   0.633s] (204/226) coreutils::tests test_hashsum::test_check_one_two_space_star
+  stdout ───
+
+    running 1 test
+    touch: /tmp/.tmpf2ok6g/empty
+    write(default): /tmp/.tmpf2ok6g/in.md5
+    run: /workspace/repo/target/debug/coreutils md5sum --check /tmp/.tmpf2ok6g/in.md5
+    write(default): /tmp/.tmpf2ok6g/in.md5
+    run: /workspace/repo/target/debug/coreutils md5sum --check /tmp/.tmpf2ok6g/in.md5
+    test test_hashsum::test_check_one_two_space_star ... FAILED
+
+    failures:
+
+    failures:
+        test_hashsum::test_check_one_two_space_star
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 197 filtered out; finished in 0.53s
+
+  stderr ───
+    thread 'test_hashsum::test_check_one_two_space_star' panicked at tests/by-util/test_hashsum.rs:716:10:
+    assertion failed: `(left == right)`
+
+    Diff < left / right > :
+    <md5sum: *empty: No such file or directory
+     *empty: FAILED open or read
+     
+
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.482s] (205/226) coreutils::tests test_hashsum::test_check_status_code
+        PASS [   0.645s] (206/226) coreutils::tests test_hashsum::test_check_quiet
+        PASS [   3.211s] (207/226) coreutils::tests test_cksum::test_untagged_algorithm_stdin
+        PASS [   3.216s] (208/226) coreutils::tests test_cksum::test_untagged_algorithm_single_file
+        PASS [   3.300s] (209/226) coreutils::tests test_cksum::test_untagged_algorithm_multiple_files
+        PASS [   0.486s] (210/226) coreutils::tests test_hashsum::test_check_strict_error
+        PASS [   0.537s] (211/226) coreutils::tests test_hashsum::test_check_with_escape_filename
+        PASS [   0.424s] (212/226) coreutils::tests test_hashsum::test_invalid_arg
+        PASS [   0.401s] (213/226) coreutils::tests test_hashsum::test_invalid_b2sum_length_option_not_multiple_of_8
+        PASS [   0.543s] (214/226) coreutils::tests test_hashsum::test_conflicting_arg
+        PASS [   0.484s] (215/226) coreutils::tests test_hashsum::test_incomplete_format
+        PASS [   0.619s] (216/226) coreutils::tests test_hashsum::test_check_warn
+        PASS [   0.298s] (217/226) coreutils::tests test_hashsum::test_invalid_b2sum_length_option_too_large
+        PASS [   0.410s] (218/226) coreutils::tests test_hashsum::test_sha1_with_md5sum_should_fail
+        PASS [   0.348s] (219/226) coreutils::tests test_hashsum::test_tag
+        PASS [   0.350s] (220/226) coreutils::tests test_hashsum::test_with_escape_filename
+        PASS [   0.344s] (221/226) coreutils::tests test_hashsum::test_with_escape_filename_zero_text
+        PASS [   0.382s] (222/226) coreutils::tests test_hashsum::test_star_to_start
+        PASS [   0.387s] (223/226) coreutils::tests test_hashsum::test_start_error
+        PASS [   5.932s] (224/226) coreutils::tests test_cksum::test_algorithm_single_file
+        PASS [   5.940s] (225/226) coreutils::tests test_cksum::test_algorithm_stdin
+        PASS [   5.961s] (226/226) coreutils::tests test_cksum::test_algorithm_multiple_files
+────────────
+     Summary [   6.459s] 226 tests run: 220 passed, 6 failed, 3 skipped
+        FAIL [   0.505s] ( 65/226) coreutils::tests test_cksum::test_check_directory_error
+        FAIL [   0.691s] ( 69/226) coreutils::tests test_cksum::test_blake2b_512
+        FAIL [   0.367s] (191/226) coreutils::tests test_hashsum::test_check_directory_error
+        FAIL [   0.346s] (193/226) coreutils::tests test_hashsum::test_check_file_not_found_warning
+        FAIL [   0.374s] (202/226) coreutils::tests test_hashsum::test_check_space_star_or_not
+        FAIL [   0.633s] (204/226) coreutils::tests test_hashsum::test_check_one_two_space_star
+error: test run failed
+reward=0 graded=226 found=40 failed=0 parsed=226 framework=cargo exit_code=100

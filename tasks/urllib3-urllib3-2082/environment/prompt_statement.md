@@ -1,0 +1,5 @@
+I'm working on improving how the library handles TLS cipher selection. Right now, every time an SSL context is created, it unconditionally overrides the cipher list with a hardcoded set of defaults — even on systems where the underlying SSL library already provides strong, up-to-date defaults. This makes it impossible to manage cipher policy at the OS or SSL library level, because the library always wins.
+
+I'd like to add a flag that controls this behavior: when the underlying SSL library is modern enough to have trustworthy built-in cipher defaults, the library should skip applying its own cipher override and let the platform configuration take effect. When a caller explicitly requests specific ciphers, those should always be honored. When the SSL library is older and its defaults can't be trusted, the existing behavior of applying our own default cipher list should remain.
+
+I'd also like to reorganize the existing SSL unit tests into a class so that the same test suite can easily be reused when running against alternative SSL backend implementations.

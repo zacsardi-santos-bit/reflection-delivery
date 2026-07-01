@@ -1,0 +1,23 @@
+patching file plugins/flytekit-inference/tests/test_nim.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.14.1
+collecting ... collected 5 items
+
+plugins/flytekit-inference/tests/test_nim.py::test_nim_init_raises_value_error PASSED [ 20%]
+plugins/flytekit-inference/tests/test_nim.py::test_nim_secrets PASSED    [ 40%]
+plugins/flytekit-inference/tests/test_nim.py::test_nim_init_valid_params PASSED [ 60%]
+plugins/flytekit-inference/tests/test_nim.py::test_nim_default_params PASSED [ 80%]
+plugins/flytekit-inference/tests/test_nim.py::test_nim_lora PASSED       [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/pythonjsonlogger/jsonlogger.py:11
+  /usr/local/lib/python3.11/site-packages/pythonjsonlogger/jsonlogger.py:11: DeprecationWarning: pythonjsonlogger.jsonlogger has been moved to pythonjsonlogger.json
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========================= 5 passed, 1 warning in 3.26s =========================
+reward=1 graded=5 found=0 failed=0 parsed=5 framework=pytest exit_code=0

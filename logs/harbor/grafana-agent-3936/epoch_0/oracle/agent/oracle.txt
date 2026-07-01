@@ -1,0 +1,12 @@
+patching file CHANGELOG.md
+patching file component/all/all.go
+patching file component/loki/rules/kubernetes/debug.go
+patching file component/loki/rules/kubernetes/diff.go
+patching file component/loki/rules/kubernetes/events.go
+patching file component/loki/rules/kubernetes/health.go
+patching file component/loki/rules/kubernetes/rules.go
+patching file component/loki/rules/kubernetes/types.go
+patching file docs/sources/flow/reference/components/loki.rules.kubernetes.md
+patching file pkg/loki/client/client.go
+patching file pkg/loki/client/internal/client.go
+patching file pkg/loki/client/rules.go

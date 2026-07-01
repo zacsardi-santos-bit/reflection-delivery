@@ -1,0 +1,7 @@
+patching file CHANGELOG.md
+patching file examples/messenger-multi-pages/index.js
+patching file package.json
+patching file src/bot/MessengerConnector.js
+patching file src/bot/TelegramConnector.js
+patching file src/bot/__tests__/MessengerConnector.spec.js
+patching file src/context/TelegramContext.js

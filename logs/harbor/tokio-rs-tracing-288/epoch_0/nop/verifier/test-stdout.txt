@@ -1,0 +1,225 @@
+patching file tracing/tests/event.rs
+patching file tracing/tests/macros.rs
+warning: /workspace/repo/tracing/Cargo.toml: `default_features` is deprecated in favor of `default-features` and will not work in the 2024 edition
+(in the `criterion` dependency)
+warning: /workspace/repo/tracing/Cargo.toml: Found `feature = ...` in `target.'cfg(...)'.dependencies`. This key is not supported for selecting dependencies and will not work as expected. Use the [features] section instead: https://doc.rust-lang.org/cargo/reference/features.html
+warning: /workspace/repo/tracing-core/Cargo.toml: Found `feature = ...` in `target.'cfg(...)'.dependencies`. This key is not supported for selecting dependencies and will not work as expected. Use the [features] section instead: https://doc.rust-lang.org/cargo/reference/features.html
+   Compiling tracing v0.1.5 (/workspace/repo/tracing)
+error: no rules expected the token `"hello from {where}! tricky? {:?}!"`
+  --> tracing/tests/event.rs:86:39
+   |
+86 |         debug!(answer = 42, question, "hello from {where}! tricky? {:?}!", true, where = "my event");
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+   |
+   = note: while trying to match sequence start
+
+error: no rules expected the token `"hello from my event"`
+   --> tracing/tests/event.rs:113:39
+    |
+113 |         debug!(answer = 42, question, "hello from my event");
+    |                                       ^^^^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: recursion limit reached while expanding `$crate::fieldset!`
+   --> tracing/tests/event.rs:113:9
+    |
+113 |         debug!(answer = 42, question, "hello from my event");
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: consider increasing the recursion limit by adding a `#![recursion_limit = "256"]` attribute to your crate (`event`)
+    = note: this error originates in the macro `$crate::fieldset` which comes from the expansion of the macro `debug` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: could not compile `tracing` (test "event") due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:272:63
+    |
+272 |     event!(Level::INFO, foo = ?3, bar.baz = %2, quux = false, "hello world {:?}", 42);
+    |                                                               ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:278:9
+    |
+278 |         "hello world {:?}",
+    |         ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:281:47
+    |
+281 |     event!(Level::INFO, foo = 3, bar.baz = 3, "hello world {:?}", 42,);
+    |                                               ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"Received error"`
+   --> tracing/tests/macros.rs:305:34
+    |
+305 |     event!(Level::ERROR, %error, "Received error");
+    |                                  ^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: expected expression, found `?`
+   --> tracing/tests/macros.rs:310:9
+    |
+310 |         ?data,
+    |         ^ expected expression
+
+error: expected expression, found `?`
+   --> tracing/tests/macros.rs:325:9
+    |
+325 |         ?data,
+    |         ^ expected expression
+
+error: expected expression, found `?`
+   --> tracing/tests/macros.rs:331:9
+    |
+331 |         ?data,
+    |         ^ expected expression
+
+error: expected expression, found `?`
+   --> tracing/tests/macros.rs:338:9
+    |
+338 |         ?data,
+    |         ^ expected expression
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:351:50
+    |
+351 |     trace!(foo = ?3, bar.baz = %2, quux = false, "hello world {:?}", 42);
+    |                                                  ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:352:48
+    |
+352 |     trace!(foo = 3, bar.baz = 2, quux = false, "hello world {:?}", 42);
+    |                                                ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:353:34
+    |
+353 |     trace!(foo = 3, bar.baz = 3, "hello world {:?}", 42,);
+    |                                  ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:380:50
+    |
+380 |     debug!(foo = ?3, bar.baz = %2, quux = false, "hello world {:?}", 42);
+    |                                                  ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:381:48
+    |
+381 |     debug!(foo = 3, bar.baz = 2, quux = false, "hello world {:?}", 42);
+    |                                                ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:382:34
+    |
+382 |     debug!(foo = 3, bar.baz = 3, "hello world {:?}", 42,);
+    |                                  ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:409:49
+    |
+409 |     info!(foo = ?3, bar.baz = %2, quux = false, "hello world {:?}", 42);
+    |                                                 ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:410:47
+    |
+410 |     info!(foo = 3, bar.baz = 2, quux = false, "hello world {:?}", 42);
+    |                                               ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:411:33
+    |
+411 |     info!(foo = 3, bar.baz = 3, "hello world {:?}", 42,);
+    |                                 ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:438:49
+    |
+438 |     warn!(foo = ?3, bar.baz = %2, quux = false, "hello world {:?}", 42);
+    |                                                 ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:439:47
+    |
+439 |     warn!(foo = 3, bar.baz = 2, quux = false, "hello world {:?}", 42);
+    |                                               ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:440:33
+    |
+440 |     warn!(foo = 3, bar.baz = 3, "hello world {:?}", 42,);
+    |                                 ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:467:50
+    |
+467 |     error!(foo = ?3, bar.baz = %2, quux = false, "hello world {:?}", 42);
+    |                                                  ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:468:48
+    |
+468 |     error!(foo = 3, bar.baz = 2, quux = false, "hello world {:?}", 42);
+    |                                                ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: no rules expected the token `"hello world {:?}"`
+   --> tracing/tests/macros.rs:469:34
+    |
+469 |     error!(foo = 3, bar.baz = 3, "hello world {:?}", 42,);
+    |                                  ^^^^^^^^^^^^^^^^^^ no rules expected this token in macro call
+    |
+    = note: while trying to match sequence start
+
+error: recursion limit reached while expanding `$crate::fieldset!`
+   --> tracing/tests/macros.rs:469:5
+    |
+469 |     error!(foo = 3, bar.baz = 3, "hello world {:?}", 42,);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: consider increasing the recursion limit by adding a `#![recursion_limit = "256"]` attribute to your crate (`macros`)
+    = note: this error originates in the macro `$crate::fieldset` which comes from the expansion of the macro `error` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: could not compile `tracing` (test "macros") due to 24 previous errors
+error: command `/usr/local/rustup/toolchains/1.82.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package tracing --test event --test macros` exited with code 101
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

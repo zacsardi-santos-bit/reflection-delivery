@@ -1,0 +1,13 @@
+patching file README.md
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: setup.cfg
+collecting ... ERROR: not found: /workspace/repo/run_unittests.py::AllPlatformTests::test_summary
+(no match in any of [<UnitTestCase AllPlatformTests>])
+
+collected 0 items
+
+============================ no tests ran in 0.98s =============================
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=pytest exit_code=4

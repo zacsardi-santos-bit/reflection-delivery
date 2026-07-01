@@ -1,0 +1,23 @@
+{
+ "task": "sveltejs-svelte-15599",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "10 '(functional)' vitest snapshot F2P compile samples in client-functional mode and compare compiled JS to _expected/client-functional/*.js; golden rewrites template_to_functions to emit {e,is,p,c} descriptors and adds runtime structure_to_fragment interpreter."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

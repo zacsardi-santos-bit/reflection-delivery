@@ -1,0 +1,6 @@
+patching file graphql-dgs-reactive/src/main/kotlin/com/netflix/graphql/dgs/reactive/internal/DefaultDgsReactiveQueryExecutor.kt
+patching file graphql-dgs-spring-webflux-autoconfigure/src/main/kotlin/com/netflix/graphql/dgs/webflux/handlers/DefaultDgsWebfluxHttpHandler.kt
+patching file graphql-dgs-spring-webmvc/src/main/kotlin/com/netflix/graphql/dgs/mvc/DgsRestController.kt
+patching file graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/context/DgsContext.kt
+patching file graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/internal/BaseDgsQueryExecutor.kt
+patching file graphql-dgs/src/main/kotlin/com/netflix/graphql/dgs/internal/DefaultDgsQueryExecutor.kt

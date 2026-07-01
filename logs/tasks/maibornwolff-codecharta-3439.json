@@ -1,0 +1,23 @@
+{
+ "task": "maibornwolff-codecharta-3439",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "isAreaValid returns node.deltas?.[areaMetric] < 0 || node.attributes?.[areaMetric] > 0; resolveHeightValue uses minimalHeight = data.deltas?.[heightMetric] ? 0 : MIN_BUILDING_HEIGHT; F2P covers each behavior"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 18,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "use-ink-ink-2655",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden rewrites sol/encodable.rs & encoder.rs adding write-to-buffer encode; test.patch asserts 'encode_to' byte count == alloc variant e.g. sol::tests::tuple_works/params_works/dynamic_array_works"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

@@ -1,0 +1,29 @@
+patching file crates/oxc_transformer/tests/integrations/es_target.rs
+   Compiling oxc_transformer v0.36.0 (/workspace/repo/crates/oxc_transformer)
+    Finished `test` profile [unoptimized] target(s) in 4.60s
+────────────
+ Nextest run ID 2dd49987-8b41-40de-9903-bc55b7dcd673 with nextest profile: default
+    Starting 1 test across 2 binaries (47 tests skipped)
+        FAIL [   0.024s] (1/1) oxc_transformer::integrations es_target::target_list_pass
+  stdout ───
+
+    running 1 test
+    test es_target::target_list_pass ... FAILED
+
+    failures:
+
+    failures:
+        es_target::target_list_pass
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.00s
+
+  stderr ───
+    thread 'es_target::target_list_pass' panicked at crates/oxc_transformer/tests/integrations/es_target.rs:59:5:
+    assertion failed: result.env.es2021.logical_assignment_operators
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.025s] 1 test run: 0 passed, 1 failed, 47 skipped
+        FAIL [   0.024s] (1/1) oxc_transformer::integrations es_target::target_list_pass
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

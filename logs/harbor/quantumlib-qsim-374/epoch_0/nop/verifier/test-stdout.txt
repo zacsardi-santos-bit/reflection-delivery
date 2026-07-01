@@ -1,0 +1,35 @@
+patching file tests/mps_statespace_test.cc
+[==========] Running 8 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 8 tests from MPSStateSpaceTest
+[ RUN      ] MPSStateSpaceTest.Create
+[       OK ] MPSStateSpaceTest.Create (0 ms)
+[ RUN      ] MPSStateSpaceTest.BlockOffset
+[       OK ] MPSStateSpaceTest.BlockOffset (0 ms)
+[ RUN      ] MPSStateSpaceTest.SetZero
+[       OK ] MPSStateSpaceTest.SetZero (0 ms)
+[ RUN      ] MPSStateSpaceTest.Copy
+[       OK ] MPSStateSpaceTest.Copy (0 ms)
+[ RUN      ] MPSStateSpaceTest.ToWaveFunctionZero
+[       OK ] MPSStateSpaceTest.ToWaveFunctionZero (0 ms)
+[ RUN      ] MPSStateSpaceTest.ToWaveFunction3
+[       OK ] MPSStateSpaceTest.ToWaveFunction3 (0 ms)
+[ RUN      ] MPSStateSpaceTest.ToWaveFunction5
+[       OK ] MPSStateSpaceTest.ToWaveFunction5 (0 ms)
+[ RUN      ] MPSStateSpaceTest.InnerProduct4
+tests/mps_statespace_test.cc:381: Failure
+The difference between r.real() and 999.0f is 999, which exceeds 1e-4f, where
+r.real() evaluates to 0,
+999.0f evaluates to 999, and
+1e-4f evaluates to 9.9999997473787516e-05.
+[  FAILED  ] MPSStateSpaceTest.InnerProduct4 (1 ms)
+[----------] 8 tests from MPSStateSpaceTest (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 8 tests from 1 test suite ran. (3 ms total)
+[  PASSED  ] 7 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] MPSStateSpaceTest.InnerProduct4
+
+ 1 FAILED TEST
+reward=0 graded=8 found=8 failed=1 parsed=8 framework=gtest exit_code=0

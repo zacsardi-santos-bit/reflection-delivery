@@ -1,0 +1,585 @@
+patching file spacy/tests/conftest.py
+patching file spacy/tests/lang/fo/__init__.py
+patching file spacy/tests/lang/fo/test_tokenizer.py
+patching file spacy/tests/lang/nn/__init__.py
+patching file spacy/tests/lang/nn/test_tokenizer.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+hypothesis profile 'no_deadlines' -> deadline=timedelta(milliseconds=120000)
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: timeout-1.4.2, hypothesis-6.155.7
+collecting ... collected 6 items
+
+spacy/tests/lang/fo/test_tokenizer.py::test_fo_tokenizer_handles_exception_cases[Eftir l\xf8gtingsl\xf3g um sams\xfdning og eftirl\xf8n landsst\xfdrismanna v.m., skulu l\xf8gma\xf0ur og landsst\xfdrismenn vanliga siga fr\xe1 s\xe6r st\xf8rv \xed almennari t\xe6nastu ella privatum virkjum, samt\xf8kum ella stovnum. -expected_tokens0] ERROR [ 16%]
+spacy/tests/lang/fo/test_tokenizer.py::test_fo_tokenizer_handles_exception_cases[Sambandsflokkurin gongur aftur vi\xf0 2,7 prosentum \xed mun til vali\xf0 \xed 1994, t\xe1 flokkurin fekk undirt\xf8ku fr\xe1 23,4 prosent av veljarunum.-expected_tokens1] ERROR [ 33%]
+spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[M\xe5let til direktoratet er at alle skal bli tilbydd jobb i politiet s\xe5 raskt som mogleg i 2014.-expected_tokens0] ERROR [ 50%]
+spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[Han \xf8nskjer ikkje at staten skal vere med p\xe5 \xe5 finansiere slik undervisning, men dette er rektor p\xe5 skulen ueinig i.-expected_tokens1] ERROR [ 66%]
+spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[If\xf8lgje China Daily vart det 8.848 meter h\xf8ge fjellet flytta 3 centimeter s\xf8rvestover under jordskjelvet, som vart m\xe5lt til 7,8.-expected_tokens2] ERROR [ 83%]
+spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[Brukssesongen er fr\xe5 nov. til mai, med ein topp i mars.-expected_tokens3] ERROR [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of test_fo_tokenizer_handles_exception_cases[Eftir l\xf8gtingsl\xf3g um sams\xfdning og eftirl\xf8n landsst\xfdrismanna v.m., skulu l\xf8gma\xf0ur og landsst\xfdrismenn vanliga siga fr\xe1 s\xe6r st\xf8rv \xed almennari t\xe6nastu ella privatum virkjum, samt\xf8kum ella stovnum. -expected_tokens0] _
+
+lang = 'fo'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+>               module = importlib.import_module(f".lang.{lang}", "spacy")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+spacy/util.py:361: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '.lang.fo', package = 'spacy'
+
+    def import_module(name, package=None):
+        """Import a module.
+    
+        The 'package' argument is required when performing a relative import. It
+        specifies the package to use as the anchor point from which to resolve the
+        relative import to an absolute import.
+    
+        """
+        level = 0
+        if name.startswith('.'):
+            if not package:
+                msg = ("the 'package' argument is required to perform a relative "
+                       "import for {!r}")
+                raise TypeError(msg.format(name))
+            for character in name:
+                if character != '.':
+                    break
+                level += 1
+>       return _bootstrap._gcd_import(name[level:], package, level)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ModuleNotFoundError: No module named 'spacy.lang.fo'
+
+/usr/local/lib/python3.11/importlib/__init__.py:126: ModuleNotFoundError
+
+The above exception was the direct cause of the following exception:
+
+    @pytest.fixture(scope="session")
+    def fo_tokenizer():
+>       return get_lang_class("fo")().tokenizer
+               ^^^^^^^^^^^^^^^^^^^^
+
+spacy/tests/conftest.py:167: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+lang = 'fo'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+                module = importlib.import_module(f".lang.{lang}", "spacy")
+            except ImportError as err:
+                # Find a matching language. For example, if the language 'no' is
+                # requested, we can use language-matching to load `spacy.lang.nb`.
+                try:
+                    match = find_matching_language(lang)
+                except langcodes.tag_parser.LanguageTagError:
+                    # proceed to raising an import error
+                    match = None
+    
+                if match:
+                    lang = match
+                    module = importlib.import_module(f".lang.{lang}", "spacy")
+                else:
+>                   raise ImportError(Errors.E048.format(lang=lang, err=err)) from err
+E                   ImportError: [E048] Can't import language fo or any matching language from spacy.lang: No module named 'spacy.lang.fo'
+
+spacy/util.py:375: ImportError
+_ ERROR at setup of test_fo_tokenizer_handles_exception_cases[Sambandsflokkurin gongur aftur vi\xf0 2,7 prosentum \xed mun til vali\xf0 \xed 1994, t\xe1 flokkurin fekk undirt\xf8ku fr\xe1 23,4 prosent av veljarunum.-expected_tokens1] _
+
+lang = 'fo'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+>               module = importlib.import_module(f".lang.{lang}", "spacy")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+spacy/util.py:361: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '.lang.fo', package = 'spacy'
+
+    def import_module(name, package=None):
+        """Import a module.
+    
+        The 'package' argument is required when performing a relative import. It
+        specifies the package to use as the anchor point from which to resolve the
+        relative import to an absolute import.
+    
+        """
+        level = 0
+        if name.startswith('.'):
+            if not package:
+                msg = ("the 'package' argument is required to perform a relative "
+                       "import for {!r}")
+                raise TypeError(msg.format(name))
+            for character in name:
+                if character != '.':
+                    break
+                level += 1
+>       return _bootstrap._gcd_import(name[level:], package, level)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ModuleNotFoundError: No module named 'spacy.lang.fo'
+
+/usr/local/lib/python3.11/importlib/__init__.py:126: ModuleNotFoundError
+
+The above exception was the direct cause of the following exception:
+
+    @pytest.fixture(scope="session")
+    def fo_tokenizer():
+>       return get_lang_class("fo")().tokenizer
+               ^^^^^^^^^^^^^^^^^^^^
+
+spacy/tests/conftest.py:167: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+lang = 'fo'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+                module = importlib.import_module(f".lang.{lang}", "spacy")
+            except ImportError as err:
+                # Find a matching language. For example, if the language 'no' is
+                # requested, we can use language-matching to load `spacy.lang.nb`.
+                try:
+                    match = find_matching_language(lang)
+                except langcodes.tag_parser.LanguageTagError:
+                    # proceed to raising an import error
+                    match = None
+    
+                if match:
+                    lang = match
+                    module = importlib.import_module(f".lang.{lang}", "spacy")
+                else:
+>                   raise ImportError(Errors.E048.format(lang=lang, err=err)) from err
+E                   ImportError: [E048] Can't import language fo or any matching language from spacy.lang: No module named 'spacy.lang.fo'
+
+spacy/util.py:375: ImportError
+_ ERROR at setup of test_nn_tokenizer_handles_exception_cases[M\xe5let til direktoratet er at alle skal bli tilbydd jobb i politiet s\xe5 raskt som mogleg i 2014.-expected_tokens0] _
+
+lang = 'nn'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+>               module = importlib.import_module(f".lang.{lang}", "spacy")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+spacy/util.py:361: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '.lang.nn', package = 'spacy'
+
+    def import_module(name, package=None):
+        """Import a module.
+    
+        The 'package' argument is required when performing a relative import. It
+        specifies the package to use as the anchor point from which to resolve the
+        relative import to an absolute import.
+    
+        """
+        level = 0
+        if name.startswith('.'):
+            if not package:
+                msg = ("the 'package' argument is required to perform a relative "
+                       "import for {!r}")
+                raise TypeError(msg.format(name))
+            for character in name:
+                if character != '.':
+                    break
+                level += 1
+>       return _bootstrap._gcd_import(name[level:], package, level)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ModuleNotFoundError: No module named 'spacy.lang.nn'
+
+/usr/local/lib/python3.11/importlib/__init__.py:126: ModuleNotFoundError
+
+The above exception was the direct cause of the following exception:
+
+    @pytest.fixture(scope="session")
+    def nn_tokenizer():
+>       return get_lang_class("nn")().tokenizer
+               ^^^^^^^^^^^^^^^^^^^^
+
+spacy/tests/conftest.py:327: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+lang = 'nn'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+                module = importlib.import_module(f".lang.{lang}", "spacy")
+            except ImportError as err:
+                # Find a matching language. For example, if the language 'no' is
+                # requested, we can use language-matching to load `spacy.lang.nb`.
+                try:
+                    match = find_matching_language(lang)
+                except langcodes.tag_parser.LanguageTagError:
+                    # proceed to raising an import error
+                    match = None
+    
+                if match:
+                    lang = match
+                    module = importlib.import_module(f".lang.{lang}", "spacy")
+                else:
+>                   raise ImportError(Errors.E048.format(lang=lang, err=err)) from err
+E                   ImportError: [E048] Can't import language nn or any matching language from spacy.lang: No module named 'spacy.lang.nn'
+
+spacy/util.py:375: ImportError
+_ ERROR at setup of test_nn_tokenizer_handles_exception_cases[Han \xf8nskjer ikkje at staten skal vere med p\xe5 \xe5 finansiere slik undervisning, men dette er rektor p\xe5 skulen ueinig i.-expected_tokens1] _
+
+lang = 'nn'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+>               module = importlib.import_module(f".lang.{lang}", "spacy")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+spacy/util.py:361: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '.lang.nn', package = 'spacy'
+
+    def import_module(name, package=None):
+        """Import a module.
+    
+        The 'package' argument is required when performing a relative import. It
+        specifies the package to use as the anchor point from which to resolve the
+        relative import to an absolute import.
+    
+        """
+        level = 0
+        if name.startswith('.'):
+            if not package:
+                msg = ("the 'package' argument is required to perform a relative "
+                       "import for {!r}")
+                raise TypeError(msg.format(name))
+            for character in name:
+                if character != '.':
+                    break
+                level += 1
+>       return _bootstrap._gcd_import(name[level:], package, level)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ModuleNotFoundError: No module named 'spacy.lang.nn'
+
+/usr/local/lib/python3.11/importlib/__init__.py:126: ModuleNotFoundError
+
+The above exception was the direct cause of the following exception:
+
+    @pytest.fixture(scope="session")
+    def nn_tokenizer():
+>       return get_lang_class("nn")().tokenizer
+               ^^^^^^^^^^^^^^^^^^^^
+
+spacy/tests/conftest.py:327: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+lang = 'nn'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+                module = importlib.import_module(f".lang.{lang}", "spacy")
+            except ImportError as err:
+                # Find a matching language. For example, if the language 'no' is
+                # requested, we can use language-matching to load `spacy.lang.nb`.
+                try:
+                    match = find_matching_language(lang)
+                except langcodes.tag_parser.LanguageTagError:
+                    # proceed to raising an import error
+                    match = None
+    
+                if match:
+                    lang = match
+                    module = importlib.import_module(f".lang.{lang}", "spacy")
+                else:
+>                   raise ImportError(Errors.E048.format(lang=lang, err=err)) from err
+E                   ImportError: [E048] Can't import language nn or any matching language from spacy.lang: No module named 'spacy.lang.nn'
+
+spacy/util.py:375: ImportError
+_ ERROR at setup of test_nn_tokenizer_handles_exception_cases[If\xf8lgje China Daily vart det 8.848 meter h\xf8ge fjellet flytta 3 centimeter s\xf8rvestover under jordskjelvet, som vart m\xe5lt til 7,8.-expected_tokens2] _
+
+lang = 'nn'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+>               module = importlib.import_module(f".lang.{lang}", "spacy")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+spacy/util.py:361: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '.lang.nn', package = 'spacy'
+
+    def import_module(name, package=None):
+        """Import a module.
+    
+        The 'package' argument is required when performing a relative import. It
+        specifies the package to use as the anchor point from which to resolve the
+        relative import to an absolute import.
+    
+        """
+        level = 0
+        if name.startswith('.'):
+            if not package:
+                msg = ("the 'package' argument is required to perform a relative "
+                       "import for {!r}")
+                raise TypeError(msg.format(name))
+            for character in name:
+                if character != '.':
+                    break
+                level += 1
+>       return _bootstrap._gcd_import(name[level:], package, level)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ModuleNotFoundError: No module named 'spacy.lang.nn'
+
+/usr/local/lib/python3.11/importlib/__init__.py:126: ModuleNotFoundError
+
+The above exception was the direct cause of the following exception:
+
+    @pytest.fixture(scope="session")
+    def nn_tokenizer():
+>       return get_lang_class("nn")().tokenizer
+               ^^^^^^^^^^^^^^^^^^^^
+
+spacy/tests/conftest.py:327: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+lang = 'nn'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+                module = importlib.import_module(f".lang.{lang}", "spacy")
+            except ImportError as err:
+                # Find a matching language. For example, if the language 'no' is
+                # requested, we can use language-matching to load `spacy.lang.nb`.
+                try:
+                    match = find_matching_language(lang)
+                except langcodes.tag_parser.LanguageTagError:
+                    # proceed to raising an import error
+                    match = None
+    
+                if match:
+                    lang = match
+                    module = importlib.import_module(f".lang.{lang}", "spacy")
+                else:
+>                   raise ImportError(Errors.E048.format(lang=lang, err=err)) from err
+E                   ImportError: [E048] Can't import language nn or any matching language from spacy.lang: No module named 'spacy.lang.nn'
+
+spacy/util.py:375: ImportError
+_ ERROR at setup of test_nn_tokenizer_handles_exception_cases[Brukssesongen er fr\xe5 nov. til mai, med ein topp i mars.-expected_tokens3] _
+
+lang = 'nn'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+>               module = importlib.import_module(f".lang.{lang}", "spacy")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+spacy/util.py:361: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = '.lang.nn', package = 'spacy'
+
+    def import_module(name, package=None):
+        """Import a module.
+    
+        The 'package' argument is required when performing a relative import. It
+        specifies the package to use as the anchor point from which to resolve the
+        relative import to an absolute import.
+    
+        """
+        level = 0
+        if name.startswith('.'):
+            if not package:
+                msg = ("the 'package' argument is required to perform a relative "
+                       "import for {!r}")
+                raise TypeError(msg.format(name))
+            for character in name:
+                if character != '.':
+                    break
+                level += 1
+>       return _bootstrap._gcd_import(name[level:], package, level)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ModuleNotFoundError: No module named 'spacy.lang.nn'
+
+/usr/local/lib/python3.11/importlib/__init__.py:126: ModuleNotFoundError
+
+The above exception was the direct cause of the following exception:
+
+    @pytest.fixture(scope="session")
+    def nn_tokenizer():
+>       return get_lang_class("nn")().tokenizer
+               ^^^^^^^^^^^^^^^^^^^^
+
+spacy/tests/conftest.py:327: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+lang = 'nn'
+
+    def get_lang_class(lang: str) -> Type["Language"]:
+        """Import and load a Language class.
+    
+        lang (str): IETF language code, such as 'en'.
+        RETURNS (Language): Language class.
+        """
+        # Check if language is registered / entry point is available
+        if lang in registry.languages:
+            return registry.languages.get(lang)
+        else:
+            # Find the language in the spacy.lang subpackage
+            try:
+                module = importlib.import_module(f".lang.{lang}", "spacy")
+            except ImportError as err:
+                # Find a matching language. For example, if the language 'no' is
+                # requested, we can use language-matching to load `spacy.lang.nb`.
+                try:
+                    match = find_matching_language(lang)
+                except langcodes.tag_parser.LanguageTagError:
+                    # proceed to raising an import error
+                    match = None
+    
+                if match:
+                    lang = match
+                    module = importlib.import_module(f".lang.{lang}", "spacy")
+                else:
+>                   raise ImportError(Errors.E048.format(lang=lang, err=err)) from err
+E                   ImportError: [E048] Can't import language nn or any matching language from spacy.lang: No module named 'spacy.lang.nn'
+
+spacy/util.py:375: ImportError
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/typer/completion.py:122
+  /usr/local/lib/python3.11/site-packages/typer/completion.py:122: DeprecationWarning: 'BaseCommand' is deprecated and will be removed in Click 9.0. Use 'Command' instead.
+    cli: click.BaseCommand,
+
+spacy/cli/_util.py:23
+  /workspace/repo/spacy/cli/_util.py:23: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.
+    from click.parser import split_arg_string
+
+../../usr/local/lib/python3.11/site-packages/weasel/util/config.py:8
+  /usr/local/lib/python3.11/site-packages/weasel/util/config.py:8: DeprecationWarning: Importing 'parser.split_arg_string' is deprecated, it will only be available in 'shell_completion' in Click 9.0.
+    from click.parser import split_arg_string
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR spacy/tests/lang/fo/test_tokenizer.py::test_fo_tokenizer_handles_exception_cases[Eftir l\xf8gtingsl\xf3g um sams\xfdning og eftirl\xf8n landsst\xfdrismanna v.m., skulu l\xf8gma\xf0ur og landsst\xfdrismenn vanliga siga fr\xe1 s\xe6r st\xf8rv \xed almennari t\xe6nastu ella privatum virkjum, samt\xf8kum ella stovnum. -expected_tokens0]
+ERROR spacy/tests/lang/fo/test_tokenizer.py::test_fo_tokenizer_handles_exception_cases[Sambandsflokkurin gongur aftur vi\xf0 2,7 prosentum \xed mun til vali\xf0 \xed 1994, t\xe1 flokkurin fekk undirt\xf8ku fr\xe1 23,4 prosent av veljarunum.-expected_tokens1]
+ERROR spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[M\xe5let til direktoratet er at alle skal bli tilbydd jobb i politiet s\xe5 raskt som mogleg i 2014.-expected_tokens0]
+ERROR spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[Han \xf8nskjer ikkje at staten skal vere med p\xe5 \xe5 finansiere slik undervisning, men dette er rektor p\xe5 skulen ueinig i.-expected_tokens1]
+ERROR spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[If\xf8lgje China Daily vart det 8.848 meter h\xf8ge fjellet flytta 3 centimeter s\xf8rvestover under jordskjelvet, som vart m\xe5lt til 7,8.-expected_tokens2]
+ERROR spacy/tests/lang/nn/test_tokenizer.py::test_nn_tokenizer_handles_exception_cases[Brukssesongen er fr\xe5 nov. til mai, med ein topp i mars.-expected_tokens3]
+======================== 3 warnings, 6 errors in 0.41s =========================
+reward=0 graded=6 found=0 failed=0 parsed=0 framework=pytest exit_code=1

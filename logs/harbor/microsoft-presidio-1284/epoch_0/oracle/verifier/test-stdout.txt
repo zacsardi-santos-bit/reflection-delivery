@@ -1,0 +1,69 @@
+patching file presidio-anonymizer/tests/conftest.py
+patching file presidio-anonymizer/tests/integration/test_anonymize_engine.py
+patching file presidio-anonymizer/tests/integration/test_deanonymize_engine.py
+patching file presidio-anonymizer/tests/mock_operators.py
+patching file presidio-anonymizer/tests/operators/test_operators_factory.py
+patching file presidio-anonymizer/tests/test_anonymizer_engine.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/presidio-anonymizer
+collecting ... collected 54 items
+
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_url_at_the_end_then_we_redact_is_successfully PASSED [  1%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_operator_decrypt_then_we_fail PASSED [  3%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_name_and_phone_number_then_we_anonymize_correctly PASSED [  5%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_name_and_phone_number_without_anonymizers_then_we_use_default PASSED [  7%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_redact_and_replace_then_we_anonymize_successfully PASSED [  9%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_intersecting_entities_then_we_anonymize_correctly PASSED [ 11%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_intersecting_the_same_entities_then_we_anonymize_correctly PASSED [ 12%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_hash_then_we_anonymize_correctly[md5-{"text": "hello world, my name is 1c272047233576d77a9b9a1acfdf741c. My number is: e7706047f07bf68a5dd73e8c47db3a30", "items": [{"start": 72, "end": 104, "entity_type": "PHONE_NUMBER", "text": "e7706047f07bf68a5dd73e8c47db3a30", "operator": "hash"}, {"start": 24, "end": 56, "entity_type": "NAME", "text": "1c272047233576d77a9b9a1acfdf741c", "operator": "hash"}]}] PASSED [ 14%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_hash_then_we_anonymize_correctly[sha256-{"text": "hello world, my name is 01332c876518a793b7c1b8dfaf6d4b404ff5db09b21c6627ca59710cc24f696a. My number is: 230451ebc7df208f1d5227aceaebf6d8e936f17d74330a5a5c5cbbd4e41d0d57", "items": [{"start": 104, "end": 168, "entity_type": "PHONE_NUMBER", "text": "230451ebc7df208f1d5227aceaebf6d8e936f17d74330a5a5c5cbbd4e41d0d57", "operator": "hash"}, {"start": 24, "end": 88, "entity_type": "NAME", "text": "01332c876518a793b7c1b8dfaf6d4b404ff5db09b21c6627ca59710cc24f696a", "operator": "hash"}]}] PASSED [ 16%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_hash_then_we_anonymize_correctly[sha512-{"text": "hello world, my name is 508789e7c17beebf2f17e611b43920792b692ad9ae53f9be3a947b04fbf820f40d57f42864a20e7121180e9467fda3fa2480e50c0da15244b6153abe2509362c. My number is: 8ea244bbf71264237db23324b3ff83f6ef6601c9da08af42122f992ec45d757c3efd953185b2590e4542aa1ca3637fa8935ebff2b43af0ea1245e7c843fbebdc", "items": [{"start": 168, "end": 296, "entity_type": "PHONE_NUMBER", "text": "8ea244bbf71264237db23324b3ff83f6ef6601c9da08af42122f992ec45d757c3efd953185b2590e4542aa1ca3637fa8935ebff2b43af0ea1245e7c843fbebdc", "operator": "hash"}, {"start": 24, "end": 152, "entity_type": "NAME", "text": "508789e7c17beebf2f17e611b43920792b692ad9ae53f9be3a947b04fbf820f40d57f42864a20e7121180e9467fda3fa2480e50c0da15244b6153abe2509362c", "operator": "hash"}]}] PASSED [ 18%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_hash_then_we_anonymize_correctly[-{"text": "hello world, my name is 01332c876518a793b7c1b8dfaf6d4b404ff5db09b21c6627ca59710cc24f696a. My number is: 230451ebc7df208f1d5227aceaebf6d8e936f17d74330a5a5c5cbbd4e41d0d57", "items": [{"start": 104, "end": 168, "entity_type": "PHONE_NUMBER", "text": "230451ebc7df208f1d5227aceaebf6d8e936f17d74330a5a5c5cbbd4e41d0d57", "operator": "hash"}, {"start": 24, "end": 88, "entity_type": "NAME", "text": "01332c876518a793b7c1b8dfaf6d4b404ff5db09b21c6627ca59710cc24f696a", "operator": "hash"}]}] PASSED [ 20%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_anonymize_called_with_error_scenarios_then_expected_errors_returned PASSED [ 22%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_given_anonymize_with_encrypt_then_text_returned_with_encrypted_content PASSED [ 24%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_empty_text_returns_correct_results PASSED [ 25%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_add_anonymizer_returns_updated_list PASSED [ 27%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_anonymizer_engine_uses_custom_operator PASSED [ 29%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_remove_anonymizer_removes_anonymizer PASSED [ 31%]
+presidio-anonymizer/tests/integration/test_anonymize_engine.py::test_operator_metadata_returns_updated_results PASSED [ 33%]
+presidio-anonymizer/tests/integration/test_deanonymize_engine.py::test_given_operator_decrypt_with_valid_params_then_decrypt_text_successfully PASSED [ 35%]
+presidio-anonymizer/tests/integration/test_deanonymize_engine.py::test_empty_text_returns_empty_text PASSED [ 37%]
+presidio-anonymizer/tests/integration/test_deanonymize_engine.py::test_given_short_key_then_we_fail PASSED [ 38%]
+presidio-anonymizer/tests/integration/test_deanonymize_engine.py::test_given_anonymize_with_encrypt_then_text_returned_with_encrypted_content PASSED [ 40%]
+presidio-anonymizer/tests/integration/test_deanonymize_engine.py::test_given_request_deanonymizers_return_list PASSED [ 42%]
+presidio-anonymizer/tests/integration/test_deanonymize_engine.py::test_add_deanonymizer_returns_updated_list PASSED [ 44%]
+presidio-anonymizer/tests/integration/test_deanonymize_engine.py::test_e2e_custom_operator_returns_original PASSED [ 46%]
+presidio-anonymizer/tests/integration/test_deanonymize_engine.py::test_remove_deanonymizer_removes_anonymizer PASSED [ 48%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_given_anonymizers_list_then_all_classes_are_there PASSED [ 50%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_given_decryptors_list_then_all_classes_are_there PASSED [ 51%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_given_anonymize_operators_class_then_we_get_the_correct_class PASSED [ 53%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_given_decrypt_operator_class_then_we_get_the_correct_class PASSED [ 55%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_given_wrong_name_class_then_we_fail PASSED [ 57%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_given_wrong_name_for_anonymizer_class_then_we_fail PASSED [ 59%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_given_wrong_operator_then_we_fail PASSED [ 61%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_given_custom_anonymizer_list_gets_updated PASSED [ 62%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_given_custom_deanonymizer_list_gets_updated PASSED [ 64%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_remove_anonymizer_removes_operator PASSED [ 66%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_remove_missing_anonymizer_raises_exception PASSED [ 68%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_remove_deanonymizer_removes_operator PASSED [ 70%]
+presidio-anonymizer/tests/operators/test_operators_factory.py::test_remove_missing_deanonymizer_raises_exception PASSED [ 72%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_request_anonymizers_return_list PASSED [ 74%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_empty_analyzers_list_then_we_get_same_text_back PASSED [ 75%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_empty_anonymziers_list_then_we_fall_to_default PASSED [ 77%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_custom_anonymizer_then_we_manage_to_anonymize_successfully PASSED [ 79%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_none_as_anonymziers_list_then_we_fall_to_default PASSED [ 81%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_default_anonymizer_then_we_use_it PASSED [ 83%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_specific_anonymizer_then_we_use_it PASSED [ 85%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_analyzer_result_with_an_incorrect_text_positions_then_we_fail[hello world-5-12] PASSED [ 87%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_analyzer_result_with_an_incorrect_text_positions_then_we_fail[hello world-12-16] PASSED [ 88%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_invalid_json_for_anonymizers_then_we_fail[anonymizers0-Invalid operator class 'fake'.] PASSED [ 90%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_several_results_then_we_filter_them_and_get_correct_mocked_result PASSED [ 92%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_sorted_analyzer_results_merge_entities_separated_by_white_space[My name is David Jones-analyzer_results0-expected0] PASSED [ 94%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_sorted_analyzer_results_merge_entities_separated_by_white_space[My name is David   Jones-analyzer_results1-expected1] PASSED [ 96%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_sorted_analyzer_results_merge_entities_separated_by_white_space[My name is Jones, David-analyzer_results2-expected2] PASSED [ 98%]
+presidio-anonymizer/tests/test_anonymizer_engine.py::test_given_sorted_analyzer_results_merge_entities_separated_by_white_space[The phone book said: Jones 212-555-5555-analyzer_results3-expected3] PASSED [100%]
+
+============================== 54 passed in 0.10s ==============================
+reward=1 (grader error: Extra data: line 73 column 1 (char 8838); fell back to exit_code=0)

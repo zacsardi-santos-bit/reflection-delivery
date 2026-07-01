@@ -1,0 +1,527 @@
+patching file src/utils_for_test.rs
+patching file tests/md_cases/output_format.toml
+patching file tests/md_cases/select_tables.toml
+   Compiling proc-macro2 v1.0.93
+   Compiling unicode-ident v1.0.14
+   Compiling serde v1.0.217
+   Compiling memchr v2.7.4
+   Compiling thiserror v2.0.12
+   Compiling equivalent v1.0.1
+   Compiling hashbrown v0.15.2
+   Compiling winnow v0.6.24
+   Compiling utf8parse v0.2.2
+   Compiling ucd-trie v0.1.7
+   Compiling anstyle-query v1.1.2
+   Compiling colorchoice v1.0.3
+   Compiling once_cell v1.20.2
+   Compiling is_terminal_polyfill v1.70.1
+   Compiling anstyle v1.0.10
+   Compiling regex-syntax v0.8.5
+   Compiling clap_lex v0.7.4
+   Compiling serde_json v1.0.136
+   Compiling anstyle-parse v0.2.6
+   Compiling indoc v2.0.5
+   Compiling paste v1.0.15
+   Compiling heck v0.5.0
+   Compiling strsim v0.11.1
+   Compiling itoa v1.0.14
+   Compiling ryu v1.0.18
+   Compiling unicode-id v0.3.5
+   Compiling anstream v0.6.18
+   Compiling yansi v1.0.1
+   Compiling diff v0.1.13
+   Compiling markdown v1.0.0-alpha.21
+   Compiling lazy_static v1.5.0
+   Compiling indexmap v2.7.0
+   Compiling aho-corasick v1.1.3
+   Compiling clap_builder v4.5.26
+   Compiling pretty_assertions v1.4.1
+   Compiling quote v1.0.38
+   Compiling regex-automata v0.4.9
+   Compiling syn v2.0.96
+   Compiling regex v1.11.1
+   Compiling serde_derive v1.0.217
+   Compiling thiserror-impl v2.0.12
+   Compiling clap_derive v4.5.24
+   Compiling pest v2.7.15
+   Compiling clap v4.5.26
+   Compiling pest_meta v2.7.15
+   Compiling pest_generator v2.7.15
+   Compiling pest_derive v2.7.15
+   Compiling serde_spanned v0.6.8
+   Compiling toml_datetime v0.6.8
+   Compiling toml_edit v0.22.22
+   Compiling toml v0.8.19
+   Compiling mdq v0.3.2-dev (/workspace/repo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.33s
+────────────
+ Nextest run ID ab3d68ed-0eb6-4280-9700-9f774abb0919 with nextest profile: default
+    Starting 428 tests across 3 binaries (7 tests skipped)
+        PASS [   0.135s] (  1/428) mdq fmt_md::tests::annotation_and_footnote_layouts::both_in_sections
+        PASS [   0.139s] (  2/428) mdq fmt_md::tests::code_block::code_with_lang
+        PASS [   0.141s] (  3/428) mdq cli::tests::verify_cli
+        PASS [   0.141s] (  4/428) mdq fmt_md::tests::code_block::code_no_lang
+        PASS [   0.141s] (  5/428) mdq fmt_md::tests::block_quote::single_level
+        PASS [   0.142s] (  6/428) mdq cli::tests::both_list_and_std_selectors
+        PASS [   0.143s] (  7/428) mdq fmt_md::tests::annotation_and_footnote_layouts::no_sections_but_writing_to_sections
+        PASS [   0.143s] (  8/428) mdq cli::tests::standard_selectors
+        PASS [   0.144s] (  9/428) mdq fmt_md::tests::block_quote::two_levels
+        PASS [   0.145s] ( 10/428) mdq cli::tests::two_standard_selectors
+        PASS [   0.144s] ( 11/428) mdq fmt_md::tests::code_block::code_with_lang_and_title
+        PASS [   0.145s] ( 12/428) mdq fmt_md::tests::annotation_and_footnote_layouts::link_and_footnote
+        PASS [   0.146s] ( 13/428) mdq cli::tests::start_with_list_selectors
+        PASS [   0.148s] ( 14/428) mdq cli::tests::start_with_list_selectors_twice
+        PASS [   0.148s] ( 15/428) mdq fmt_md::tests::annotation_and_footnote_layouts::only_footnote_in_section
+        PASS [   0.149s] ( 16/428) mdq fmt_md::tests::annotation_and_footnote_layouts::both_bottom_of_doc
+        PASS [   0.149s] ( 17/428) mdq fmt_md::tests::annotation_and_footnote_layouts::ordering
+        PASS [   0.152s] ( 18/428) mdq fmt_md::tests::annotation_and_footnote_layouts::only_link_in_section
+        PASS [   0.116s] ( 19/428) mdq fmt_md::tests::empty
+        PASS [   0.132s] ( 20/428) mdq fmt_md::tests::code_block::math_no_metadata
+        PASS [   0.131s] ( 21/428) mdq fmt_md::tests::code_block::math_with_metadata
+        PASS [   0.132s] ( 22/428) mdq fmt_md::tests::code_block::yaml
+        PASS [   0.132s] ( 23/428) mdq fmt_md::tests::code_block::nested_block
+        PASS [   0.130s] ( 24/428) mdq fmt_md::tests::header::only_title
+        PASS [   0.132s] ( 25/428) mdq fmt_md::tests::header::only_body
+        PASS [   0.136s] ( 26/428) mdq fmt_md::tests::code_block::toml
+        PASS [   0.134s] ( 27/428) mdq fmt_md::tests::footnote::footnote_no_transform_smoke_test
+        PASS [   0.136s] ( 28/428) mdq fmt_md::tests::header::title_and_body
+        PASS [   0.138s] ( 29/428) mdq fmt_md::tests::footnote::two_lines
+        PASS [   0.137s] ( 30/428) mdq fmt_md::tests::header::totally_empty
+        PASS [   0.141s] ( 31/428) mdq fmt_md::tests::footnote::footnote_transform_smoke_test
+        PASS [   0.141s] ( 32/428) mdq fmt_md::tests::footnote::single_line
+        PASS [   0.137s] ( 33/428) mdq fmt_md::tests::html::block_multi_line
+        PASS [   0.133s] ( 34/428) mdq fmt_md::tests::image::reference_transform_smoke_test
+        PASS [   0.139s] ( 35/428) mdq fmt_md::tests::html::block_single_line
+        PASS [   0.139s] ( 36/428) mdq fmt_md::tests::html::inline
+        PASS [   0.146s] ( 37/428) mdq fmt_md::tests::image::single_image
+        PASS [   0.141s] ( 38/428) mdq fmt_md::tests::image::two_images
+        PASS [   0.140s] ( 39/428) mdq fmt_md::tests::inline::image::collapsed_no_title
+        PASS [   0.140s] ( 40/428) mdq fmt_md::tests::inline::image::collapsed_with_title
+        PASS [   0.137s] ( 41/428) mdq fmt_md::tests::inline::image::inline_with_title
+        PASS [   0.142s] ( 42/428) mdq fmt_md::tests::inline::image::full_no_title
+        PASS [   0.138s] ( 43/428) mdq fmt_md::tests::inline::image::inline_no_title
+        PASS [   0.141s] ( 44/428) mdq fmt_md::tests::inline::image::shortcut_no_title
+        PASS [   0.143s] ( 45/428) mdq fmt_md::tests::inline::image::full_with_title
+        PASS [   0.141s] ( 46/428) mdq fmt_md::tests::inline::image::shortcut_with_title
+        PASS [   0.141s] ( 47/428) mdq fmt_md::tests::inline::link::collapsed_no_title
+        PASS [   0.138s] ( 48/428) mdq fmt_md::tests::inline::link::inline_with_title
+        PASS [   0.138s] ( 49/428) mdq fmt_md::tests::inline::link::full_with_title
+        PASS [   0.138s] ( 50/428) mdq fmt_md::tests::inline::link::shortcut_no_title
+        PASS [   0.138s] ( 51/428) mdq fmt_md::tests::inline::link::shortcut_with_title
+        PASS [   0.141s] ( 52/428) mdq fmt_md::tests::inline::link::collapsed_with_title
+        PASS [   0.141s] ( 53/428) mdq fmt_md::tests::inline::link::inline_no_title
+        PASS [   0.144s] ( 54/428) mdq fmt_md::tests::inline::link::full_no_title
+        PASS [   0.132s] ( 55/428) mdq fmt_md::tests::inline::span::delete
+        PASS [   0.130s] ( 56/428) mdq fmt_md::tests::inline::span::mixed
+        PASS [   0.135s] ( 57/428) mdq fmt_md::tests::inline::span::emphasis
+        PASS [   0.131s] ( 58/428) mdq fmt_md::tests::inline::span::strong
+        PASS [   0.133s] ( 59/428) mdq fmt_md::tests::inline::text::html
+        PASS [   0.133s] ( 60/428) mdq fmt_md::tests::inline::text::code
+        PASS [   0.134s] ( 61/428) mdq fmt_md::tests::inline::text::math
+        PASS [   0.131s] ( 62/428) mdq fmt_md::tests::inline::text::text
+        PASS [   0.130s] ( 63/428) mdq fmt_md::tests::list::block_alignments
+        PASS [   0.136s] ( 64/428) mdq fmt_md::tests::link::reference_transform_smoke_test
+        PASS [   0.131s] ( 65/428) mdq fmt_md::tests::list::ordered
+        PASS [   0.130s] ( 66/428) mdq fmt_md::tests::list_item::ordered_checked
+        PASS [   0.131s] ( 67/428) mdq fmt_md::tests::list::unordered
+        PASS [   0.133s] ( 68/428) mdq fmt_md::tests::link::two_links
+        PASS [   0.134s] ( 69/428) mdq fmt_md::tests::link::single_link
+        PASS [   0.131s] ( 70/428) mdq fmt_md::tests::list_item::ordered_no_checkbox
+        PASS [   0.134s] ( 71/428) mdq fmt_md::tests::link::two_links_inline
+        PASS [   0.132s] ( 72/428) mdq fmt_md::tests::list_item::ordered_unchecked
+        PASS [   0.134s] ( 73/428) mdq fmt_md::tests::list_item::unordered_checked
+        PASS [   0.135s] ( 74/428) mdq fmt_md::tests::list_item::unordered_no_checkbox
+        PASS [   0.134s] ( 75/428) mdq fmt_md::tests::list_item::unordered_unchecked
+        PASS [   0.133s] ( 76/428) mdq fmt_md::tests::paragraph::simple
+        PASS [   0.131s] ( 77/428) mdq fmt_md::tests::root::one_paragraph
+        PASS [   0.132s] ( 78/428) mdq fmt_md::tests::root::two_paragraphs_in_one_doc
+        PASS [   0.133s] ( 79/428) mdq fmt_md::tests::root::two_paragraphs
+        PASS [   0.126s] ( 80/428) mdq fmt_md_inlines::tests::img_alt::matched_brackets
+        PASS [   0.128s] ( 81/428) mdq fmt_md_inlines::tests::img_alt::simple
+        PASS [   0.132s] ( 82/428) mdq fmt_md_inlines::tests::img_alt::matched_and_unmatched_brackets
+        PASS [   0.141s] ( 83/428) mdq fmt_md::tests::table::empty_cells
+        PASS [   0.131s] ( 84/428) mdq fmt_md_inlines::tests::img_alt::unmatched_closing_brackets
+        PASS [   0.138s] ( 85/428) mdq fmt_md::tests::table::row_counts_inconsistent
+        PASS [   0.138s] ( 86/428) mdq fmt_md::tests::thematic_break::with_paragraphs
+        PASS [   0.139s] ( 87/428) mdq fmt_md::tests::thematic_break::by_itself
+        PASS [   0.140s] ( 88/428) mdq fmt_md::tests::table::single_char_cells
+        PASS [   0.141s] ( 89/428) mdq fmt_md::tests::table::slice
+        PASS [   0.145s] ( 90/428) mdq fmt_md::tests::table::simple
+        PASS [   0.130s] ( 91/428) mdq fmt_md_inlines::tests::img_alt::unmatched_opening_brackets
+        PASS [   0.135s] ( 92/428) mdq fmt_md_inlines::tests::inline_code::round_trip_one_backtick
+        PASS [   0.137s] ( 93/428) mdq fmt_md_inlines::tests::inline_code::round_trip_backtick_and_surrounding_whitespace
+        PASS [   0.136s] ( 94/428) mdq fmt_md_inlines::tests::inline_code::round_trip_one_backtick_at_start
+        PASS [   0.137s] ( 95/428) mdq fmt_md_inlines::tests::inline_code::round_trip_surrounding_whitespace
+        PASS [   0.140s] ( 96/428) mdq fmt_md_inlines::tests::inline_code::round_trip_one_backtick_at_end
+        PASS [   0.125s] ( 97/428) mdq fmt_md_inlines::tests::link_description::unmatched_closing_brackets
+        PASS [   0.143s] ( 98/428) mdq fmt_md_inlines::tests::inline_code::round_trip_no_backticks
+        PASS [   0.128s] ( 99/428) mdq fmt_md_inlines::tests::link_description::simple
+        PASS [   0.129s] (100/428) mdq fmt_md_inlines::tests::link_description::matched_brackets
+        PASS [   0.138s] (101/428) mdq fmt_md_inlines::tests::inline_code::round_trip_three_backticks
+        PASS [   0.126s] (102/428) mdq fmt_md_inlines::tests::link_description::unmatched_opening_brackets
+        PASS [   0.126s] (103/428) mdq fmt_md_inlines::tests::links::link_text_is_long
+        PASS [   0.132s] (104/428) mdq fmt_md_inlines::tests::link_description::matched_and_unmatched_brackets
+        PASS [   0.128s] (105/428) mdq fmt_md_inlines::tests::title_quoting::has_all_delimiters
+        PASS [   0.142s] (106/428) mdq fmt_md_inlines::tests::inline_code::round_trip_three_backticks_at_end
+        PASS [   0.131s] (107/428) mdq fmt_md_inlines::tests::title_quoting::bareword_uses_double
+        PASS [   0.141s] (108/428) mdq fmt_md_inlines::tests::inline_code::round_trip_three_backticks_at_start
+        PASS [   0.130s] (109/428) mdq fmt_md_inlines::tests::title_quoting::has_double_quotes
+        PASS [   0.112s] (110/428) mdq footnote_transform::test::inactive
+        PASS [   0.127s] (111/428) mdq fmt_md_inlines::tests::title_quoting::has_only_single_quotes
+        PASS [   0.129s] (112/428) mdq fmt_md_inlines::tests::title_quoting::has_double_quotes_and_singles
+        PASS [   0.123s] (113/428) mdq footnote_transform::test::active_with_ten_footnotes
+        PASS [   0.125s] (114/428) mdq footnote_transform::test::active
+        PASS [   0.126s] (115/428) mdq link_transform::tests::inline::full
+        PASS [   0.129s] (116/428) mdq fmt_str::tests::inline_html
+        PASS [   0.123s] (117/428) mdq link_transform::tests::inline::inline
+        PASS [   0.130s] (118/428) mdq link_transform::tests::inline::collapsed
+        PASS [   0.126s] (119/428) mdq link_transform::tests::keep::collapsed
+        PASS [   0.126s] (120/428) mdq link_transform::tests::inline::shortcut
+        PASS [   0.136s] (121/428) mdq fmt_str::tests::images
+        PASS [   0.139s] (122/428) mdq fmt_str::tests::footnote
+        PASS [   0.127s] (123/428) mdq link_transform::tests::keep::full
+        PASS [   0.137s] (124/428) mdq fmt_str::tests::spans
+        PASS [   0.138s] (125/428) mdq fmt_str::tests::texts
+        PASS [   0.140s] (126/428) mdq fmt_str::tests::links
+        PASS [   0.130s] (127/428) mdq link_transform::tests::keep::shortcut
+        PASS [   0.134s] (128/428) mdq link_transform::tests::keep::inline
+        PASS [   0.130s] (129/428) mdq link_transform::tests::reference::collapsed_label_is_number
+        PASS [   0.132s] (130/428) mdq link_transform::tests::reference::collapsed_label_not_number
+        PASS [   0.124s] (131/428) mdq link_transform::tests::reference::full_ref_id_not_number
+        PASS [   0.130s] (132/428) mdq link_transform::tests::reference::full_ref_id_is_huge_number
+        PASS [   0.126s] (133/428) mdq link_transform::tests::reference::full_ref_id_is_number
+        PASS [   0.127s] (134/428) mdq link_transform::tests::reference::inline
+        PASS [   0.130s] (135/428) mdq link_transform::tests::reference::shortcut_label_inlines_are_emphasized_number
+        PASS [   0.130s] (136/428) mdq link_transform::tests::smoke_test_multi
+        PASS [   0.131s] (137/428) mdq link_transform::tests::reference::shortcut_label_not_number
+        PASS [   0.133s] (138/428) mdq link_transform::tests::reference::shortcut_label_inlines_not_number_like
+        PASS [   0.134s] (139/428) mdq link_transform::tests::reference::shortcut_label_is_number
+        PASS [   0.145s] (140/428) mdq matcher::test::bareword_anchor_start
+        PASS [   0.150s] (141/428) mdq matcher::test::bareword_anchor_end
+        PASS [   0.153s] (142/428) mdq matcher::test::anchor_whitespace
+        PASS [   0.156s] (143/428) mdq matcher::test::any
+        PASS [   0.161s] (144/428) mdq matcher::test::bareword
+        PASS [   0.124s] (145/428) mdq matcher::test::quote_errs
+        PASS [   0.101s] (146/428) mdq output::tests::indent_block
+        PASS [   0.138s] (147/428) mdq matcher::test::double_quoted_string
+        PASS [   0.106s] (148/428) mdq output::tests::indent_block_suppresses_opening_newline_in_first_block
+        PASS [   0.107s] (149/428) mdq output::tests::indent_block_used_like_list_item
+        PASS [   0.142s] (150/428) mdq matcher::test::only_both_anchors
+        PASS [   0.144s] (151/428) mdq matcher::test::only_ending_anchor
+        PASS [   0.155s] (152/428) mdq matcher::test::bareword_case_sensitivity
+        PASS [   0.145s] (153/428) mdq matcher::test::only_starting_anchor
+        PASS [   0.155s] (154/428) mdq matcher::test::bareword_end_delimiters
+        PASS [   0.133s] (155/428) mdq matcher::test::single_quoted_string
+        PASS [   0.138s] (156/428) mdq matcher::test::quoted_anchor_start
+        PASS [   0.136s] (157/428) mdq matcher::test::quoted_case_sensitivity
+        PASS [   0.110s] (158/428) mdq output::tests::indent_plain_then_pre
+        PASS [   0.154s] (159/428) mdq matcher::test::bareword_regex_char
+        PASS [   0.144s] (160/428) mdq matcher::test::quoted_anchor_end
+        PASS [   0.111s] (161/428) mdq output::tests::indents_without_inner_writes
+        PASS [   0.147s] (162/428) mdq matcher::test::regex
+        PASS [   0.119s] (163/428) mdq output::tests::nested_blocks
+        PASS [   0.115s] (164/428) mdq output::tests::nested_blocks_jump_a_few
+        PASS [   0.114s] (165/428) mdq output::tests::nested_indents
+        PASS [   0.113s] (166/428) mdq output::tests::plain_block_with_multiple_newlines
+        PASS [   0.113s] (167/428) mdq output::tests::pop_block_when_there_is_none
+        PASS [   0.117s] (168/428) mdq output::tests::plain_block
+        PASS [   0.118s] (169/428) mdq output::tests::pre_block
+        PASS [   0.122s] (170/428) mdq output::tests::pre_block_ends_with_newline
+        PASS [   0.118s] (171/428) mdq output::tests::quote_block
+        PASS [   0.120s] (172/428) mdq output::tests::pre_block_with_small_writes
+        PASS [   0.122s] (173/428) mdq output::tests::pre_block_ends_with_three_newlines
+        PASS [   0.119s] (174/428) mdq output::tests::simple_string
+        PASS [   0.118s] (175/428) mdq output::tests::wrapping::disable_wrapping_after_nonempty_line
+        PASS [   0.118s] (176/428) mdq output::tests::wrapping::incremental_wrap
+        PASS [   0.120s] (177/428) mdq output::tests::wrapping::disable_wrapping_at_start_of_line
+        PASS [   0.121s] (178/428) mdq output::tests::quote_block_one_char_at_a_time_as_initial_output
+        PASS [   0.120s] (179/428) mdq output::tests::wrapping::simple_wrap
+        PASS [   0.119s] (180/428) mdq output::tests::wrapping::word_is_longer_than_wrap
+        PASS [   0.119s] (181/428) mdq output::tests::wrapping::wrapping_ignores_pre
+        PASS [   0.118s] (182/428) mdq output::tests::wrapping::wrapping_respects_indentation_blocks
+        PASS [   0.122s] (183/428) mdq output::tests::wrapping::wrapping_respects_quote_blocks
+        PASS [   0.132s] (184/428) mdq query::selectors::tests::block_quote::block_quote_no_matcher
+        PASS [   0.123s] (185/428) mdq query::selectors::tests::chaining::only_multiple_pipes
+        PASS [   0.124s] (186/428) mdq query::selectors::tests::chaining::only_spaces
+        PASS [   0.134s] (187/428) mdq query::selectors::tests::block_quote::block_quote_with_text
+        PASS [   0.137s] (188/428) mdq query::selectors::tests::block_quote::block_quote_with_anchored_text
+        PASS [   0.126s] (189/428) mdq query::selectors::tests::chaining::only_one_pipe
+        PASS [   0.125s] (190/428) mdq query::selectors::tests::chaining::totally_empty
+        PASS [   0.128s] (191/428) mdq query::selectors::tests::chaining::suffix_chaining
+        PASS [   0.130s] (192/428) mdq query::selectors::tests::chaining::prefix_chaining
+        PASS [   0.135s] (193/428) mdq query::selectors::tests::chaining::empty_intermediate_chains
+        PASS [   0.128s] (194/428) mdq query::selectors::tests::code_block::code_block_no_matchers
+        PASS [   0.128s] (195/428) mdq query::selectors::tests::chaining::useful_chaining
+        PASS [   0.131s] (196/428) mdq query::selectors::tests::code_block::code_block_with_both
+        PASS [   0.131s] (197/428) mdq query::selectors::tests::code_block::code_block_with_only_content
+        PASS [   0.132s] (198/428) mdq query::selectors::tests::code_block::code_block_with_only_language
+        PASS [   0.135s] (199/428) mdq query::selectors::tests::html::html_no_matcher
+        PASS [   0.140s] (200/428) mdq query::selectors::tests::code_block::code_block_with_only_language_and_trailing_space
+        PASS [   0.124s] (201/428) mdq query::selectors::tests::link::link_no_matchers
+        PASS [   0.129s] (202/428) mdq query::selectors::tests::html::html_with_unquoted_text
+        PASS [   0.126s] (203/428) mdq query::selectors::tests::link::image_no_matchers
+        PASS [   0.127s] (204/428) mdq query::selectors::tests::invalid::just_a_string
+        PASS [   0.135s] (205/428) mdq query::selectors::tests::html::html_with_text
+        PASS [   0.130s] (206/428) mdq query::selectors::tests::link::link_with_both
+        PASS [   0.127s] (207/428) mdq query::selectors::tests::list_item::ordered_list_item_no_matcher
+        PASS [   0.134s] (208/428) mdq query::selectors::tests::link::image_with_alt
+        PASS [   0.132s] (209/428) mdq query::selectors::tests::link::link_with_display
+        PASS [   0.132s] (210/428) mdq query::selectors::tests::list_item::ordered_list_item_with_matcher
+        PASS [   0.156s] (211/428) mdq query::selectors::tests::html::html_with_regex
+        PASS [   0.134s] (212/428) mdq query::selectors::tests::link::link_with_url
+        PASS [   0.134s] (213/428) mdq query::selectors::tests::list_item::ordered_task
+        PASS [   0.137s] (214/428) mdq query::selectors::tests::list_item::ordered_list_item_with_matcher_anchored
+        PASS [   0.129s] (215/428) mdq query::selectors::tests::list_item::task_cannot_have_extra_spaces
+        PASS [   0.129s] (216/428) mdq query::selectors::tests::list_item::unordered_checked_task
+        PASS [   0.133s] (217/428) mdq query::selectors::tests::list_item::unordered_list_item_no_matcher
+        PASS [   0.139s] (218/428) mdq query::selectors::tests::list_item::unordered_either_task
+        PASS [   0.129s] (219/428) mdq query::selectors::tests::list_item::unordered_task_with_matcher
+        PASS [   0.131s] (220/428) mdq query::selectors::tests::list_item::unordered_list_item_with_matcher_no_space
+        PASS [   0.129s] (221/428) mdq query::selectors::tests::paragraph::paragraph_no_matcher
+        PASS [   0.132s] (222/428) mdq query::selectors::tests::list_item::unordered_unchecked_task
+        PASS [   0.133s] (223/428) mdq query::selectors::tests::list_item::unordered_list_item_with_matcher
+        PASS [   0.131s] (224/428) mdq query::selectors::tests::section::section_no_matcher
+        PASS [   0.133s] (225/428) mdq query::selectors::tests::paragraph::paragraph_with_anchored_text
+        PASS [   0.133s] (226/428) mdq query::selectors::tests::paragraph::paragraph_with_text
+        PASS [   0.128s] (227/428) mdq query::selectors::tests::table::table_no_spaces_at_all
+        PASS [   0.134s] (228/428) mdq query::selectors::tests::section::section_with_matcher
+        PASS [   0.131s] (229/428) mdq query::selectors::tests::table::table_asterisk_column
+        PASS [   0.131s] (230/428) mdq query::selectors::tests::table::table_no_header_matcher
+        PASS [   0.132s] (231/428) mdq query::selectors::tests::table::table_with_row
+        PASS [   0.128s] (232/428) mdq query::strings::tests::regexes::normal_regex
+        PASS [   0.133s] (233/428) mdq query::selectors::tests::table::table_with_column
+        PASS [   0.137s] (234/428) mdq query::selectors::tests::table::table_with_both
+        PASS [   0.132s] (235/428) mdq query::strings::tests::strings::anchors_double_quoted_no_space
+        PASS [   0.134s] (236/428) mdq query::strings::tests::regexes::regex_with_escaped_slash
+        PASS [   0.124s] (237/428) mdq query::strings::tests::strings::asterisk
+        PASS [   0.132s] (238/428) mdq query::strings::tests::strings::anchors_single_quoted_with_space
+        PASS [   0.131s] (239/428) mdq query::strings::tests::strings::anchors_unquoted_to_pipe_with_space
+        PASS [   0.134s] (240/428) mdq query::strings::tests::strings::anchors_unquoted_to_pipe_no_space
+        PASS [   0.133s] (241/428) mdq query::strings::tests::strings::double_quoted_string
+        PASS [   0.128s] (242/428) mdq query::strings::tests::strings::quoted_string_snowman
+        PASS [   0.131s] (243/428) mdq query::strings::tests::strings::quoted_string_newline
+        PASS [   0.129s] (244/428) mdq query::strings::tests::strings::single_quoted_string
+        PASS [   0.127s] (245/428) mdq query::strings::tests::strings::unquoted_no_end_colon
+        PASS [   0.127s] (246/428) mdq query::strings::tests::strings::unquoted_no_end_paren
+        PASS [   0.133s] (247/428) mdq query::strings::tests::strings::unquoted_no_end_bracket
+        PASS [   0.132s] (248/428) mdq query::strings::tests::strings::unquoted_no_end_pipe
+        PASS [   0.130s] (249/428) mdq query::strings::tests::strings::unquoted_string_to_colon
+        PASS [   0.131s] (250/428) mdq query::strings::tests::strings::unquoted_string_to_bracket
+        PASS [   0.134s] (251/428) mdq query::strings::tests::strings::unquoted_no_end_space
+        PASS [   0.131s] (252/428) mdq query::strings::tests::strings::unquoted_string_to_paren
+        PASS [   0.117s] (253/428) mdq select::api::test::find_children_smoke::link_direct
+        PASS [   0.115s] (254/428) mdq str_utils::test::center_pad_uneven
+        PASS [   0.122s] (255/428) mdq select::api::test::find_children_smoke::link_via_inlines
+        PASS [   0.115s] (256/428) mdq str_utils::test::left_pad
+        PASS [   0.117s] (257/428) mdq str_utils::test::center_pad_even
+        PASS [   0.132s] (258/428) mdq query::strings::tests::strings::unquoted_string_to_pipe_unicode
+        PASS [   0.135s] (259/428) mdq query::strings::tests::strings::unquoted_string_to_pipe
+        PASS [   0.113s] (260/428) mdq str_utils::test::string_already_right_size
+        PASS [   0.117s] (261/428) mdq str_utils::test::right_pad
+        PASS [   0.134s] (262/428) mdq query::strings::tests::strings::unquoted_string_to_space
+        PASS [   0.112s] (263/428) mdq str_utils::test::string_already_too_big
+        PASS [   0.146s] (264/428) mdq select::sel_table::tests::jagged_table
+        PASS [   0.148s] (265/428) mdq select::sel_table::tests::select_all_on_normalized_table
+        PASS [   0.137s] (266/428) mdq tree::tests::all_nodes::autolinks
+        PASS [   0.151s] (267/428) mdq select::sel_table::tests::select_columns_on_normalized_table
+        PASS [   0.137s] (268/428) mdq tree::tests::all_nodes::block_html
+        PASS [   0.152s] (269/428) mdq select::sel_table::tests::select_rows_on_normalized_table
+        PASS [   0.138s] (270/428) mdq tree::tests::all_nodes::block_quote
+        PASS [   0.146s] (271/428) mdq tree::tests::all_nodes::code_block
+        PASS [   0.144s] (272/428) mdq tree::tests::all_nodes::footnote
+        PASS [   0.142s] (273/428) mdq tree::tests::all_nodes::image
+        PASS [   0.144s] (274/428) mdq tree::tests::all_nodes::header_and_root
+        PASS [   0.142s] (275/428) mdq tree::tests::all_nodes::image_ref
+        PASS [   0.142s] (276/428) mdq tree::tests::all_nodes::inline_delete
+        PASS [   0.139s] (277/428) mdq tree::tests::all_nodes::inline_math
+        PASS [   0.143s] (278/428) mdq tree::tests::all_nodes::inline_code
+        PASS [   0.148s] (279/428) mdq tree::tests::all_nodes::footnote_cycle
+        PASS [   0.144s] (280/428) mdq tree::tests::all_nodes::inline_html
+        PASS [   0.150s] (281/428) mdq tree::tests::all_nodes::inline_emphasis
+        PASS [   0.121s] (282/428) mdq tree::tests::all_nodes::root
+        PASS [   0.140s] (283/428) mdq tree::tests::all_nodes::inline_strong
+        PASS [   0.140s] (284/428) mdq tree::tests::all_nodes::jagged_table
+        PASS [   0.137s] (285/428) mdq tree::tests::all_nodes::link_ref
+        PASS [   0.138s] (286/428) mdq tree::tests::all_nodes::lists_and_items
+        PASS [   0.138s] (287/428) mdq tree::tests::all_nodes::math_block
+        PASS [   0.143s] (288/428) mdq tree::tests::all_nodes::link_node
+        PASS [   0.125s] (289/428) mdq tree::tests::lookups::footnote_missing_definition
+        PASS [   0.129s] (290/428) mdq tree::tests::link_descriptions::escaped_text_brackets
+        PASS [   0.128s] (291/428) mdq tree::tests::lookups::good_link_ref
+        PASS [   0.133s] (292/428) mdq tree::tests::link_descriptions::matched_text_brackets
+        PASS [   0.133s] (293/428) mdq tree::tests::link_descriptions::simple
+        PASS [   0.137s] (294/428) mdq tree::tests::all_nodes::yaml_block
+        PASS [   0.138s] (295/428) mdq tree::tests::all_nodes::text_and_break
+        PASS [   0.138s] (296/428) mdq tree::tests::all_nodes::toml_block
+        PASS [   0.126s] (297/428) mdq tree::tests::lookups::link_has_same_definition_twice
+        PASS [   0.139s] (298/428) mdq tree::tests::all_nodes::thematic_break
+        PASS [   0.118s] (299/428) mdq tree::tests::lookups::link_missing_link_definition
+        PASS [   0.144s] (300/428) mdq tree::tests::all_nodes::table
+        PASS [   0.131s] (301/428) mdq tree::tests::lookups::link_has_conflicting_definition
+        PASS [   0.117s] (302/428) mdq tree::tests::nesting::h1_with_two_paragraphs
+        PASS [   0.117s] (303/428) mdq tree::tests::nesting::header_skips
+        PASS [   0.116s] (304/428) mdq tree::tests::nesting::no_headers
+        PASS [   0.121s] (305/428) mdq tree::tests::nesting::backwards_order
+        PASS [   0.127s] (306/428) mdq tree::tests::lookups::link_ref_looks_like_footnote
+        PASS [   0.117s] (307/428) mdq tree::tests::nesting::paragraph_before_and_after_header
+        PASS [   0.122s] (308/428) mdq tree::tests::nesting::only_headers
+        PASS [   0.121s] (309/428) mdq tree::tests::nesting::simple_nesting
+        PASS [   0.123s] (310/428) mdq tree_ref::tests::tables::retain_row
+        PASS [   0.123s] (311/428) mdq tree_ref::tests::tables::table_slice_from_table
+        PASS [   0.129s] (312/428) mdq tree_ref::tests::tables::retain_col
+        PASS [   0.127s] (313/428) mdq tree_ref::tests::tables::retain_rows_on_jagged_normalized_table
+        PASS [   0.132s] (314/428) mdq tree_ref::tests::tables::retain_all_columns_on_jagged_normalized_table
+        PASS [   0.126s] (315/428) mdq tree_ref::tests::tables::table_slice_from_table_jagged
+        PASS [   0.132s] (316/428) mdq tree_ref_serde::tests::code_block_full
+        PASS [   0.135s] (317/428) mdq tree_ref_serde::tests::block_html
+        PASS [   0.133s] (318/428) mdq tree_ref_serde::tests::code_block_simple
+        PASS [   0.136s] (319/428) mdq tree_ref_serde::tests::block_quote
+        PASS [   0.136s] (320/428) mdq tree_ref_serde::tests::doc::doc
+        PASS [   0.136s] (321/428) mdq tree_ref_serde::tests::link_ref_with_reference
+        PASS [   0.137s] (322/428) mdq tree_ref_serde::tests::image
+        PASS [   0.137s] (323/428) mdq tree_ref_serde::tests::image_ref
+        PASS [   0.139s] (324/428) mdq tree_ref_serde::tests::link_with_reference
+        PASS [   0.115s] (325/428) mdq vec_utils::tests::keep_head
+        PASS [   0.110s] (326/428) mdq words_buffer::tests::boundary_is_never::never_whitespace_and_no_limit
+        PASS [   0.120s] (327/428) mdq vec_utils::tests::empty_remover
+        PASS [   0.115s] (328/428) mdq vec_utils::tests::keep_tail
+        PASS [   0.119s] (329/428) mdq vec_utils::tests::keep_middle
+        PASS [   0.108s] (330/428) mdq words_buffer::tests::crs_and_tabs_are_whitespace
+        PASS [   0.117s] (331/428) mdq vec_utils::tests::remover_has_bigger_indexes_than_items
+        PASS [   0.142s] (332/428) mdq tree_ref_serde::tests::list_item
+        PASS [   0.139s] (333/428) mdq tree_ref_serde::tests::paragraph
+        PASS [   0.145s] (334/428) mdq tree_ref_serde::tests::list
+        PASS [   0.112s] (335/428) mdq words_buffer::tests::leading_spaces_get_trimmed
+        PASS [   0.114s] (336/428) mdq words_buffer::tests::boundary_is_never::whitespace_is_preserved
+        PASS [   0.115s] (337/428) mdq words_buffer::tests::boundary_is_never::whitespace_counts_as_word
+        PASS [   0.141s] (338/428) mdq tree_ref_serde::tests::section
+        PASS [   0.139s] (339/428) mdq tree_ref_serde::tests::table
+        PASS [   0.139s] (340/428) mdq tree_ref_serde::tests::thematic_break
+        PASS [   0.140s] (341/428) mdq tree_ref_serde::tests::table_slice
+        PASS [   0.116s] (342/428) mdq words_buffer::tests::multiple_spaces_get_consolidated
+        PASS [   0.116s] (343/428) mdq words_buffer::tests::newlines_always_reset_wrapping
+        PASS [   0.115s] (344/428) mdq words_buffer::tests::trailing_spaces_get_trimmed
+        PASS [   0.115s] (345/428) mdq words_buffer::tests::wrap_to_zero
+        PASS [   0.118s] (346/428) mdq words_buffer::tests::word_is_longer_than_line_length
+        PASS [   0.115s] (347/428) mdq words_buffer::tests::wrapping_applies_after_first_space
+        PASS [   0.115s] (348/428) mdq words_buffer::tests::wrapping_does_not_apply
+        PASS [   0.117s] (349/428) mdq words_buffer::tests::wrapping_applies_at_start_of_second_word
+        PASS [   0.117s] (350/428) mdq words_buffer::tests::wrapping_applies_within_each_word
+        PASS [   0.124s] (351/428) mdq words_buffer::tests::wrapping_applies_after_first_word
+        PASS [   0.180s] (352/428) mdq::integ_test footnote_renumbering::without_renumbering
+        PASS [   0.184s] (353/428) mdq::integ_test footnote_renumbering::default
+        PASS [   0.174s] (354/428) mdq::integ_test link_placement::links_at_bottom_of_doc
+        PASS [   0.209s] (355/428) mdq::integ_test footnotes_in_footnotes::just_footnote_contains_link
+        PASS [   0.217s] (356/428) mdq::integ_test footnotes_in_footnotes::just_footnote_contains_footnote
+        PASS [   0.222s] (357/428) mdq::integ_test footnotes_in_footnotes::cyclic_reference_doesnt_cause_infinite_loop
+        PASS [   0.215s] (358/428) mdq::integ_test footnotes_in_footnotes::look_for_elements_within_a_footnote
+        PASS [   0.220s] (359/428) mdq::integ_test footnotes_in_footnotes::just_footnote_contains_link_json
+        PASS [   0.223s] (360/428) mdq::integ_test footnotes_in_footnotes::just_footnote_contains_footnote_json
+        PASS [   0.181s] (361/428) mdq::integ_test link_placement::standard_link_placement
+        PASS [   0.182s] (362/428) mdq::integ_test links_references::default
+        PASS [   0.181s] (363/428) mdq::integ_test links_references::keep_original
+        PASS [   0.188s] (364/428) mdq::integ_test links_references::inline_all
+        PASS [   0.211s] (365/428) mdq::integ_test link_placement::separate_links_positioned_by_doc
+        PASS [   0.212s] (366/428) mdq::integ_test link_placement::separate_links_positioned_by_section
+        PASS [   0.218s] (367/428) mdq::integ_test matchers::bareword
+        PASS [   0.221s] (368/428) mdq::integ_test matchers::bareword_is_caseinsensitive
+        PASS [   0.220s] (369/428) mdq::integ_test matchers::bareword_with_end_anchor
+        PASS [   0.203s] (370/428) mdq::integ_test matchers::quoted
+        PASS [   0.202s] (371/428) mdq::integ_test matchers::quoted_is_casesensitive
+        PASS [   0.212s] (372/428) mdq::integ_test matchers::bareword_with_start_anchor
+        PASS [   0.178s] (373/428) mdq::integ_test output_format::default
+        PASS [   0.182s] (374/428) mdq::integ_test output_format::json
+        PASS [   0.184s] (375/428) mdq::integ_test output_format::markdown
+        PASS [   0.197s] (376/428) mdq::integ_test matchers::regex_is_casesensitive
+        PASS [   0.207s] (377/428) mdq::integ_test matchers::quoted_with_anchor
+        PASS [   0.205s] (378/428) mdq::integ_test matchers::regex
+        FAIL [   0.147s] (379/428) mdq::integ_test output_format::plain
+  stdout ───
+
+    running 1 test
+    test output_format::plain ... FAILED
+
+    failures:
+
+    failures:
+        output_format::plain
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 77 filtered out; finished in 0.05s
+
+  stderr ───
+    thread 'output_format::plain' panicked at tests/integ_test.rs:15:63:
+    called `Result::unwrap()` on an `Err` value: ErrorInner { kind: InvalidValue, context: FlatMap { keys: [InvalidArg, InvalidValue, ValidValue], values: [String("--output <OUTPUT>"), String("plain"), Strings(["markdown", "md", "json"])] }, message: None, source: None, help_flag: Some("--help"), styles: Styles { header: Style { fg: None, bg: None, underline: None, effects: Effects(BOLD | UNDERLINE) }, error: Style { fg: Some(Ansi(Red)), bg: None, underline: None, effects: Effects(BOLD) }, usage: Style { fg: None, bg: None, underline: None, effects: Effects(BOLD | UNDERLINE) }, literal: Style { fg: None, bg: None, underline: None, effects: Effects(BOLD) }, placeholder: Style { fg: None, bg: None, underline: None, effects: Effects() }, valid: Style { fg: Some(Ansi(Green)), bg: None, underline: None, effects: Effects() }, invalid: Style { fg: Some(Ansi(Yellow)), bg: None, underline: None, effects: Effects() } }, color_when: Auto, color_help_when: Auto, backtrace: None }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.172s] (380/428) mdq::integ_test output_format::md
+        PASS [   0.171s] (381/428) mdq::integ_test paragraph_spans::echo
+        PASS [   0.200s] (382/428) mdq::integ_test paragraph_spans::paragraphs
+        PASS [   0.203s] (383/428) mdq::integ_test select_block_quote::select_all_block_quotes
+        PASS [   0.206s] (384/428) mdq::integ_test select_block_quote::chained
+        PASS [   0.205s] (385/428) mdq::integ_test select_block_quote::select_block_quote_then_list
+        PASS [   0.210s] (386/428) mdq::integ_test select_block_quote::select_block_quote_with_text
+        PASS [   0.207s] (387/428) mdq::integ_test select_exit_code::match_and_output
+        PASS [   0.170s] (388/428) mdq::integ_test select_html::unquoted_tag
+        PASS [   0.211s] (389/428) mdq::integ_test select_exit_code::match_quiet
+        PASS [   0.216s] (390/428) mdq::integ_test select_exit_code::no_match
+        PASS [   0.216s] (391/428) mdq::integ_test select_html::block_with_matcher
+        PASS [   0.199s] (392/428) mdq::integ_test select_html::inline_with_matcher_tag
+        PASS [   0.214s] (393/428) mdq::integ_test select_html::chained
+        PASS [   0.203s] (394/428) mdq::integ_test select_html::select_all
+        PASS [   0.216s] (395/428) mdq::integ_test select_html::inline_with_matcher
+        PASS [   0.218s] (396/428) mdq::integ_test select_link::chained
+        PASS [   0.204s] (397/428) mdq::integ_test select_link::select_all
+        PASS [   0.212s] (398/428) mdq::integ_test select_link::select_image
+        PASS [   0.222s] (399/428) mdq::integ_test select_link::select_link_by_text
+        PASS [   0.207s] (400/428) mdq::integ_test select_link::select_link_by_url
+        PASS [   0.203s] (401/428) mdq::integ_test select_lists::select_all_ordered_tasks
+        PASS [   0.212s] (402/428) mdq::integ_test select_lists::chained
+        PASS [   0.206s] (403/428) mdq::integ_test select_lists::select_completed_ordered_tasks
+        PASS [   0.200s] (404/428) mdq::integ_test select_lists::select_incomplete_ordered_tasks
+        PASS [   0.204s] (405/428) mdq::integ_test select_lists::select_ordered
+        PASS [   0.165s] (406/428) mdq::integ_test select_paragraphs::no_colon_after_p
+        PASS [   0.203s] (407/428) mdq::integ_test select_lists::select_unordered
+        PASS [   0.211s] (408/428) mdq::integ_test select_lists::select_ordered_task_by_text
+        PASS [   0.203s] (409/428) mdq::integ_test select_lists::select_unordered_tasks
+        PASS [   0.199s] (410/428) mdq::integ_test select_paragraphs::all
+        PASS [   0.198s] (411/428) mdq::integ_test select_paragraphs::all_but_with_explicit_allmatcher
+        PASS [   0.208s] (412/428) mdq::integ_test select_paragraphs::chained
+        PASS [   0.180s] (413/428) mdq::integ_test select_paragraphs::space_before_colon
+        PASS [   0.210s] (414/428) mdq::integ_test select_paragraphs::matcher_ignores_inline_formatting
+        PASS [   0.209s] (415/428) mdq::integ_test select_paragraphs::select_within_a_block_quote
+        PASS [   0.211s] (416/428) mdq::integ_test select_sections::chained
+        PASS [   0.202s] (417/428) mdq::integ_test select_sections::select_all_sections
+        FAIL [   0.149s] (418/428) mdq::integ_test select_tables::output_plain
+  stdout ───
+
+    running 1 test
+    test select_tables::output_plain ... FAILED
+
+    failures:
+
+    failures:
+        select_tables::output_plain
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 77 filtered out; finished in 0.05s
+
+  stderr ───
+    thread 'select_tables::output_plain' panicked at tests/integ_test.rs:15:63:
+    called `Result::unwrap()` on an `Err` value: ErrorInner { kind: InvalidValue, context: FlatMap { keys: [InvalidArg, InvalidValue, ValidValue], values: [String("--output <OUTPUT>"), String("plain"), Strings(["markdown", "md", "json"])] }, message: None, source: None, help_flag: Some("--help"), styles: Styles { header: Style { fg: None, bg: None, underline: None, effects: Effects(BOLD | UNDERLINE) }, error: Style { fg: Some(Ansi(Red)), bg: None, underline: None, effects: Effects(BOLD) }, usage: Style { fg: None, bg: None, underline: None, effects: Effects(BOLD | UNDERLINE) }, literal: Style { fg: None, bg: None, underline: None, effects: Effects(BOLD) }, placeholder: Style { fg: None, bg: None, underline: None, effects: Effects() }, valid: Style { fg: Some(Ansi(Green)), bg: None, underline: None, effects: Effects() }, invalid: Style { fg: Some(Ansi(Yellow)), bg: None, underline: None, effects: Effects() } }, color_when: Auto, color_help_when: Auto, backtrace: None }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.207s] (419/428) mdq::integ_test select_sections::select_subsection
+        PASS [   0.200s] (420/428) mdq::integ_test select_sections::select_toplevel_section
+        PASS [   0.204s] (421/428) mdq::integ_test select_tables::chained
+        PASS [   0.195s] (422/428) mdq::integ_test select_tables::select_all_table_cells_normalizes
+        PASS [   0.204s] (423/428) mdq::integ_test select_tables::select_only_description
+        PASS [   0.162s] (424/428) mdq::integ_test select_tables::table_not_normalized_by_default
+        PASS [   0.162s] (425/428) mdq::integ_test wrapping::wrapping_at_50
+        PASS [   0.189s] (426/428) mdq::integ_test select_tables::select_only_description_by_regex
+        PASS [   0.183s] (427/428) mdq::integ_test select_tables::select_only_name
+        PASS [   0.182s] (428/428) mdq::integ_test select_tables::select_only_the_big_red_row
+────────────
+     Summary [   3.516s] 428 tests run: 426 passed, 2 failed, 7 skipped
+        FAIL [   0.147s] (379/428) mdq::integ_test output_format::plain
+        FAIL [   0.149s] (418/428) mdq::integ_test select_tables::output_plain
+error: test run failed
+reward=0 graded=457 found=0 failed=0 parsed=428 framework=cargo exit_code=100

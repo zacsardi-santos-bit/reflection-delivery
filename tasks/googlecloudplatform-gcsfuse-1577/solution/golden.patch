@@ -1,0 +1,667 @@
+diff --git a/docs/semantics.md b/docs/semantics.md
+index f87d58c8c..550e2aa08 100644
+--- a/docs/semantics.md
++++ b/docs/semantics.md
+@@ -96,15 +96,19 @@ The negative result for ```foo/``` will be cached, but that only helps with the
+ To alleviate this, Cloud Storage FUSE supports a "type cache" on directory inodes. When type cache is enabled, each directory inode will maintain a mapping from the name of its children to whether those children are known to be files or directories or both. When a child is looked up, if the parent's cache says that the child is a file but not a directory, only one Cloud Storage object will need to be stated. Similarly if the child is a directory but not a file.
+ 
+ The behavior of type cache is controlled by the following flags/config parameters:
+-1.  Type-cache TTL: It controls the duration for which Cloud Storage FUSE allows the kernel to inode type attributes. It can be set in one of the following two ways.
+-    * ```metadata-cache: ttl-secs``` in the config-file. This is set as an integer, which sets the TTL in seconds. If this is -1, TTL is taken as infinite i.e. no-TTL based expirations of entries. If this is 0, that disables the type-cache. If this is <-1, then an error is thrown on mount.
+-    * ```--type-cache-ttl``` commandline flag, which can be set to a value like ```10s``` or ```1.5h```. The default is one minute. This will be deprecated in a future version and is currently only available for backward compatibility. If ```metadata-cache: ttl-secs``` is set, ```--type-cache-ttl``` is ignored.
+ 
+-Warning: Using type caching breaks the consistency guarantees discussed in this document. It is safe only in the following situations:
++**Type-cache TTL**: It controls the duration for which Cloud Storage FUSE caches an inode's type attribute. It can be set in one of the following two ways.
++* ```metadata-cache: ttl-secs``` in the config-file. This is set as an integer, which sets the TTL in seconds. If this is -1, TTL is taken as infinite i.e. no-TTL based expirations of entries. If this is 0, that disables the type-cache. If this is <-1, then an error is thrown on mount.
++* ```--type-cache-ttl``` commandline flag, which can be set to a value like ```10s``` or ```1.5h```. The default is one minute. This will be deprecated in a future version and is currently only available for backward compatibility. If ```metadata-cache: ttl-secs``` is set, ```--type-cache-ttl``` is ignored.
++
++**Warning**: Using type caching breaks the consistency guarantees discussed in this document. It is safe only in the following situations:
+ - The mounted bucket is never modified.
+ - The type (file or directory) for any given path never changes.
+ 
+-**Note**: ```--stat-cache-ttl``` and ```--type-cache-ttl``` will be deprecated in the future and only ```metadata-cache: ttl-secs``` in the gcsfuse config-file will be supported. So, it is recommended to switch from these two to ```metadata-cache: ttl-secs```. For now, for backward compatibility, the minimum of ```stat-cache-ttl``` and ```type-cache-ttl```, rounded to the next higher multiple of a second, is used as TTL for both stat-cache and type-cache, when ```metadata-cache: ttl-secs``` is not set.
++**Note**: 
++1. ```--stat-cache-ttl``` and ```--type-cache-ttl``` will be deprecated in the future and only ```metadata-cache: ttl-secs``` in the gcsfuse config-file will be supported. So, it is recommended to switch from these two to ```metadata-cache: ttl-secs```.
++For now, for backward compatibility, both are accepted, and the minimum of the two, rounded to the next higher multiple of a second, is used as TTL for both stat-cache and type-cache, when ```metadata-cache: ttl-secs``` is not set.
++1. Both stat-cache and type-cache internally use the same TTL.
+ 
+ # Files and Directories
+ 
+diff --git a/internal/cache/metadata/type_cache.go b/internal/cache/metadata/type_cache.go
+new file mode 100644
+index 000000000..6a384a50a
+--- /dev/null
++++ b/internal/cache/metadata/type_cache.go
+@@ -0,0 +1,157 @@
++// Copyright 2015 Google Inc. All Rights Reserved.
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//     http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++package metadata
++
++import (
++	"fmt"
++	"math"
++	"time"
++
++	"github.com/googlecloudplatform/gcsfuse/internal/cache/lru"
++)
++
++type Type int
++
++const (
++	UnknownType     Type = 0
++	SymlinkType     Type = 1
++	RegularFileType Type = 2
++	ExplicitDirType Type = 3
++	ImplicitDirType Type = 4
++	NonexistentType Type = 5
++)
++
++// TypeCache is a (name -> Type) map.
++// It maintains TTL for each entry for supporting
++// TTL-based expiration.
++// Sample usage:
++//
++//	tc := NewTypeCache(maxEntries, ttl)
++//	tc.Insert(time.Now(), "file", RegularFileType)
++//	tc.Insert(time.Now(), "dir", ExplicitDirType)
++//	tc.Get(time.Now(),"file") -> RegularFileType
++//	tc.Get(time.Now(),"dir") -> ExplicitDirType
++//	tc.Get(time.Now()+ttl+1ns, "file") -> internally tc.Erase("file") -> UnknownType
++//	tc.Erase("dir")
++//	tc.Get(time.Now(),"dir") -> UnknownType
++type TypeCache interface {
++	// Insert inserts the given entry (name -> type)
++	// with the entry-expiration at now+ttl.
++	Insert(now time.Time, name string, it Type)
++	// Erase removes the entry with the given name.
++	Erase(name string)
++	// Get returns the entry with given name, and also
++	// records this entry as latest accessed in the cache.
++	// If now > expiration, then entry is removed from cache, and
++	// UnknownType is returned.
++	// If entry doesn't exist in the cache, then
++	// UnknownType is returned.
++	Get(now time.Time, name string) Type
++}
++
++type cacheEntry struct {
++	expiry    time.Time
++	inodeType Type
++}
++
++// Size returns the size of cacheEntry.
++// It is currently set to dummy value 1 to avoid
++// the unnecessary  actual size calculation.
++func (ce cacheEntry) Size() uint64 {
++	return 1
++}
++
++// A cache that maps from a name to information about the type of the object
++// with that name. Each name N is in one of the following states:
++//
++//   - Nothing is known about N.
++//   - We have recorded that N is a file.
++//   - We have recorded that N is a directory.
++//   - We have recorded that N is both a file and a directory.
++//
++// Must be created with NewTypeCache. May be contained in a larger struct.
++// External synchronization is required.
++type typeCache struct {
++	/////////////////////////
++	// Constant data
++	/////////////////////////
++
++	ttl time.Duration
++
++	/////////////////////////
++	// Mutable state
++	/////////////////////////
++
++	// A cache mapping names to the cache entry.
++	// INVARIANT: entries.CheckInvariants() does not panic
++	// INVARIANT: Each value is of type cacheEntry
++	entries *lru.Cache
++}
++
++// NewTypeCache creates an LRU-policy-based cache with given max-entries and TTL.
++// Any entry whose TTL has expired, is removed from the cache on next access (Get).
++// When insertion of next entry would cause #entries of cache > maxEntries,
++// older entries are evicted according to the LRU-policy.
++// If either of TTL or maxEntries is zero, nothing is ever cached.
++func NewTypeCache(maxEntries int, ttl time.Duration) TypeCache {
++	if ttl > 0 && maxEntries != 0 {
++		var lruMaxEntries uint64 = math.MaxUint64 // default for when maxEntries = -1
++		if maxEntries > 0 {
++			lruMaxEntries = uint64(maxEntries)
++		}
++		return &typeCache{
++			ttl:     ttl,
++			entries: lru.NewCache(lruMaxEntries),
++		}
++	}
++	return &typeCache{}
++}
++
++func (tc *typeCache) Insert(now time.Time, name string, it Type) {
++	if tc.entries != nil { // only if caching is enabled
++		_, err := tc.entries.Insert(name, cacheEntry{
++			expiry:    now.Add(tc.ttl),
++			inodeType: it,
++		})
++		if err != nil {
++			panic(fmt.Errorf("failed to insert entry in typeCache: %v", err))
++		}
++	}
++}
++
++func (tc *typeCache) Erase(name string) {
++	if tc.entries != nil { // only if caching is enabled
++		tc.entries.Erase(name)
++	}
++}
++
++func (tc *typeCache) Get(now time.Time, name string) Type {
++	if tc.entries == nil { // if caching is not enabled
++		return UnknownType
++	}
++
++	val := tc.entries.LookUp(name)
++	if val == nil {
++		return UnknownType
++	}
++
++	entry := val.(cacheEntry)
++	// Has the entry expired?
++	if entry.expiry.Before(now) {
++		tc.entries.Erase(name)
++		return UnknownType
++	}
++	return entry.inodeType
++}
+diff --git a/internal/config/mount_config.go b/internal/config/mount_config.go
+index 139cd333c..32e2f7117 100644
+--- a/internal/config/mount_config.go
++++ b/internal/config/mount_config.go
+@@ -34,6 +34,10 @@ const (
+ 
+ 	// The maximum multiple of seconds representable by time.Duration.
+ 	MaxSupportedTtlInSeconds int64 = int64(math.MaxInt64 / int64(time.Second))
++
++	// DefaultTypeCacheMaxEntries is the default vlaue of type-cache-max-entries.
++	// The value is set high at 1,048,476 (2^20) as it is not supposed to be set by users.
++	DefaultTypeCacheMaxEntries int = 2 << 20
+ )
+ 
+ type WriteConfig struct {
+@@ -61,6 +65,10 @@ type MetadataCacheConfig struct {
+ 	// no cache and > 0 for ttl-controlled metadata-cache.
+ 	// Any value set below -1 will throw an error.
+ 	TtlInSeconds int64 `yaml:"ttl-secs,omitempty"`
++	// TypeCacheMaxEntries is the upper limit
++	// on the maximum number of type-cache entries,
++	// which are maintained at per-directory level.
++	TypeCacheMaxEntries int `yaml:"type-cache-max-entries,omitempty"`
+ }
+ 
+ type MountConfig struct {
+@@ -106,7 +114,8 @@ func NewMountConfig() *MountConfig {
+ 		MaxSizeInMB: 0,
+ 	}
+ 	mountConfig.MetadataCacheConfig = MetadataCacheConfig{
+-		TtlInSeconds: TtlInSecsUnsetSentinel,
++		TtlInSeconds:        TtlInSecsUnsetSentinel,
++		TypeCacheMaxEntries: DefaultTypeCacheMaxEntries,
+ 	}
+ 	return mountConfig
+ }
+diff --git a/internal/config/testdata/metadata_cache_config_invalid_type-cache-max-entries.yaml b/internal/config/testdata/metadata_cache_config_invalid_type-cache-max-entries.yaml
+new file mode 100644
+index 000000000..508045c4c
+--- /dev/null
++++ b/internal/config/testdata/metadata_cache_config_invalid_type-cache-max-entries.yaml
+@@ -0,0 +1,2 @@
++metadata-cache:
++  type-cache-max-entries: -2
+diff --git a/internal/config/testdata/metadata_cache_config_type-cache-max-entries_unset.yaml b/internal/config/testdata/metadata_cache_config_type-cache-max-entries_unset.yaml
+new file mode 100644
+index 000000000..80142e2af
+--- /dev/null
++++ b/internal/config/testdata/metadata_cache_config_type-cache-max-entries_unset.yaml
+@@ -0,0 +1,2 @@
++metadata-cache:
++
+diff --git a/internal/config/testdata/valid_config.yaml b/internal/config/testdata/valid_config.yaml
+index edcba2f07..560669f55 100644
+--- a/internal/config/testdata/valid_config.yaml
++++ b/internal/config/testdata/valid_config.yaml
+@@ -14,3 +14,4 @@ file-cache:
+   cache-file-for-range-read: true
+ metadata-cache:
+   ttl-secs: 5
++  type-cache-max-entries: 1
+diff --git a/internal/config/yaml_parser.go b/internal/config/yaml_parser.go
+index 7b5f1a30a..71a99d471 100644
+--- a/internal/config/yaml_parser.go
++++ b/internal/config/yaml_parser.go
+@@ -36,7 +36,8 @@ const (
+ 
+ 	parseConfigFileErrMsgFormat           = "error parsing config file: %v"
+ 	MetadataCacheTtlSecsInvalidValueError = "the value of ttl-secs for metadata-cache can't be less than -1"
+-	MetadataCacheTtlSecsTooHighError      = "the value of ttl-secs in metadata-cache is too high to be supported. Max is 9223372036."
++	MetadataCacheTtlSecsTooHighError      = "the value of ttl-secs in metadata-cache is too high to be supported. Max is 9223372036"
++	TypeCacheMaxEntriesInvalidValueError  = "the value of type-cache-max-entries for metadata-cache can't be less than -1"
+ )
+ 
+ func IsValidLogSeverity(severity LogSeverity) bool {
+@@ -79,6 +80,9 @@ func (metadataCacheConfig *MetadataCacheConfig) validate() error {
+ 			return fmt.Errorf(MetadataCacheTtlSecsTooHighError)
+ 		}
+ 	}
++	if metadataCacheConfig.TypeCacheMaxEntries < -1 {
++		return fmt.Errorf(TypeCacheMaxEntriesInvalidValueError)
++	}
+ 	return nil
+ }
+ 
+diff --git a/internal/fs/fs.go b/internal/fs/fs.go
+index 142ccef12..8322ccfb1 100644
+--- a/internal/fs/fs.go
++++ b/internal/fs/fs.go
+@@ -280,6 +280,7 @@ func makeRootForBucket(
+ 		&syncerBucket,
+ 		fs.mtimeClock,
+ 		fs.cacheClock,
++		fs.mountConfig.MetadataCacheConfig.TypeCacheMaxEntries,
+ 	)
+ }
+ 
+@@ -701,7 +702,8 @@ func (fs *fileSystem) mintInode(ic inode.Core) (in inode.Inode) {
+ 			fs.dirTypeCacheTTL,
+ 			ic.Bucket,
+ 			fs.mtimeClock,
+-			fs.cacheClock)
++			fs.cacheClock,
++			fs.mountConfig.MetadataCacheConfig.TypeCacheMaxEntries)
+ 
+ 		// Implicit directories
+ 	case ic.FullName.IsDir():
+@@ -723,7 +725,8 @@ func (fs *fileSystem) mintInode(ic inode.Core) (in inode.Inode) {
+ 			fs.dirTypeCacheTTL,
+ 			ic.Bucket,
+ 			fs.mtimeClock,
+-			fs.cacheClock)
++			fs.cacheClock,
++			fs.mountConfig.MetadataCacheConfig.TypeCacheMaxEntries)
+ 
+ 	case inode.IsSymlink(ic.Object):
+ 		in = inode.NewSymlinkInode(
+diff --git a/internal/fs/inode/core.go b/internal/fs/inode/core.go
+index 6e0f3a760..837dc59cc 100644
+--- a/internal/fs/inode/core.go
++++ b/internal/fs/inode/core.go
+@@ -17,21 +17,11 @@ package inode
+ import (
+ 	"fmt"
+ 
++	"github.com/googlecloudplatform/gcsfuse/internal/cache/metadata"
+ 	"github.com/googlecloudplatform/gcsfuse/internal/gcsx"
+ 	"github.com/googlecloudplatform/gcsfuse/internal/storage/gcs"
+ )
+ 
+-type Type int
+-
+-var (
+-	UnknownType     Type = 0
+-	SymlinkType     Type = 1
+-	RegularFileType Type = 2
+-	ExplicitDirType Type = 3
+-	ImplicitDirType Type = 4
+-	NonexistentType Type = 5
+-)
+-
+ // Core contains critical information about an inode before its creation.
+ type Core struct {
+ 	// The full name of the file or directory. Required for all inodes.
+@@ -54,18 +44,18 @@ func (c *Core) Exists() bool {
+ 	return c != nil
+ }
+ 
+-func (c *Core) Type() Type {
++func (c *Core) Type() metadata.Type {
+ 	switch {
+ 	case c == nil:
+-		return UnknownType
++		return metadata.UnknownType
+ 	case c.Object == nil && !c.Local:
+-		return ImplicitDirType
++		return metadata.ImplicitDirType
+ 	case c.FullName.IsDir():
+-		return ExplicitDirType
++		return metadata.ExplicitDirType
+ 	case IsSymlink(c.Object):
+-		return SymlinkType
++		return metadata.SymlinkType
+ 	default:
+-		return RegularFileType
++		return metadata.RegularFileType
+ 	}
+ }
+ 
+diff --git a/internal/fs/inode/dir.go b/internal/fs/inode/dir.go
+index 772aa2ef0..b312e5433 100644
+--- a/internal/fs/inode/dir.go
++++ b/internal/fs/inode/dir.go
+@@ -21,6 +21,7 @@ import (
+ 	"strings"
+ 	"time"
+ 
++	"github.com/googlecloudplatform/gcsfuse/internal/cache/metadata"
+ 	"github.com/googlecloudplatform/gcsfuse/internal/gcsx"
+ 	"github.com/googlecloudplatform/gcsfuse/internal/locker"
+ 	"github.com/googlecloudplatform/gcsfuse/internal/storage/gcs"
+@@ -175,7 +176,7 @@ type dirInode struct {
+ 	// cache.CheckInvariants() does not panic.
+ 	//
+ 	// GUARDED_BY(mu)
+-	cache typeCache
++	cache metadata.TypeCache
+ }
+ 
+ var _ DirInode = &dirInode{}
+@@ -208,16 +209,13 @@ func NewDirInode(
+ 	typeCacheTTL time.Duration,
+ 	bucket *gcsx.SyncerBucket,
+ 	mtimeClock timeutil.Clock,
+-	cacheClock timeutil.Clock) (d DirInode) {
++	cacheClock timeutil.Clock,
++	typeCacheMaxEntries int) (d DirInode) {
+ 
+ 	if !name.IsDir() {
+ 		panic(fmt.Sprintf("Unexpected name: %s", name))
+ 	}
+ 
+-	// Set up the struct.
+-	// Temporarily changing the typeCacheCapacity for read_cache_release branch.
+-	// TODO (raj-prince): remove this once we will make it configurable.
+-	const typeCacheCapacity = 1 << 22
+ 	typed := &dirInode{
+ 		bucket:                     bucket,
+ 		mtimeClock:                 mtimeClock,
+@@ -227,7 +225,7 @@ func NewDirInode(
+ 		enableNonexistentTypeCache: enableNonexistentTypeCache,
+ 		name:                       name,
+ 		attrs:                      attrs,
+-		cache:                      newTypeCache(typeCacheCapacity/2, typeCacheTTL),
++		cache:                      metadata.NewTypeCache(typeCacheMaxEntries, typeCacheTTL),
+ 	}
+ 
+ 	typed.lc.Init(id)
+@@ -248,9 +246,6 @@ func (d *dirInode) checkInvariants() {
+ 	if !d.name.IsDir() {
+ 		panic(fmt.Sprintf("Unexpected name: %s", d.name))
+ 	}
+-
+-	// cache.CheckInvariants() does not panic.
+-	d.cache.CheckInvariants()
+ }
+ 
+ func (d *dirInode) lookUpChildFile(ctx context.Context, name string) (*Core, error) {
+@@ -460,19 +455,19 @@ func (d *dirInode) LookUpChild(ctx context.Context, name string) (*Core, error)
+ 
+ 	cachedType := d.cache.Get(d.cacheClock.Now(), name)
+ 	switch cachedType {
+-	case ImplicitDirType:
++	case metadata.ImplicitDirType:
+ 		dirResult = &Core{
+ 			Bucket:   d.Bucket(),
+ 			FullName: NewDirName(d.Name(), name),
+ 			Object:   nil,
+ 		}
+-	case ExplicitDirType:
++	case metadata.ExplicitDirType:
+ 		b.Add(lookUpExplicitDir)
+-	case RegularFileType, SymlinkType:
++	case metadata.RegularFileType, metadata.SymlinkType:
+ 		b.Add(lookUpFile)
+-	case NonexistentType:
++	case metadata.NonexistentType:
+ 		return nil, nil
+-	case UnknownType:
++	case metadata.UnknownType:
+ 		b.Add(lookUpFile)
+ 		if d.implicitDirs {
+ 			b.Add(lookUpImplicitOrExplicitDir)
+@@ -494,8 +489,8 @@ func (d *dirInode) LookUpChild(ctx context.Context, name string) (*Core, error)
+ 
+ 	if result != nil {
+ 		d.cache.Insert(d.cacheClock.Now(), name, result.Type())
+-	} else if d.enableNonexistentTypeCache && cachedType == UnknownType {
+-		d.cache.Insert(d.cacheClock.Now(), name, NonexistentType)
++	} else if d.enableNonexistentTypeCache && cachedType == metadata.UnknownType {
++		d.cache.Insert(d.cacheClock.Now(), name, metadata.NonexistentType)
+ 	}
+ 
+ 	return result, nil
+@@ -611,7 +606,7 @@ func (d *dirInode) readObjects(
+ 	for _, p := range listing.CollapsedRuns {
+ 		pathBase := path.Base(p)
+ 		dirName := NewDirName(d.Name(), pathBase)
+-		if c, ok := cores[dirName]; ok && c.Type() == ExplicitDirType {
++		if c, ok := cores[dirName]; ok && c.Type() == metadata.ExplicitDirType {
+ 			continue
+ 		}
+ 
+@@ -641,11 +636,11 @@ func (d *dirInode) ReadEntries(
+ 			Type: fuseutil.DT_Unknown,
+ 		}
+ 		switch core.Type() {
+-		case SymlinkType:
++		case metadata.SymlinkType:
+ 			entry.Type = fuseutil.DT_Link
+-		case RegularFileType:
++		case metadata.RegularFileType:
+ 			entry.Type = fuseutil.DT_File
+-		case ImplicitDirType, ExplicitDirType:
++		case metadata.ImplicitDirType, metadata.ExplicitDirType:
+ 			entry.Type = fuseutil.DT_Directory
+ 		}
+ 		entries = append(entries, entry)
+@@ -655,17 +650,17 @@ func (d *dirInode) ReadEntries(
+ 
+ // LOCKS_REQUIRED(d)
+ func (d *dirInode) CreateChildFile(ctx context.Context, name string) (*Core, error) {
+-	metadata := map[string]string{
++	childMetadata := map[string]string{
+ 		FileMtimeMetadataKey: d.mtimeClock.Now().UTC().Format(time.RFC3339Nano),
+ 	}
+ 	fullName := NewFileName(d.Name(), name)
+ 
+-	o, err := d.createNewObject(ctx, fullName, metadata)
++	o, err := d.createNewObject(ctx, fullName, childMetadata)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 
+-	d.cache.Insert(d.cacheClock.Now(), name, RegularFileType)
++	d.cache.Insert(d.cacheClock.Now(), name, metadata.RegularFileType)
+ 	return &Core{
+ 		Bucket:   d.Bucket(),
+ 		FullName: fullName,
+@@ -715,16 +710,16 @@ func (d *dirInode) CloneToChildFile(ctx context.Context, name string, src *gcs.O
+ // LOCKS_REQUIRED(d)
+ func (d *dirInode) CreateChildSymlink(ctx context.Context, name string, target string) (*Core, error) {
+ 	fullName := NewFileName(d.Name(), name)
+-	metadata := map[string]string{
++	childMetadata := map[string]string{
+ 		SymlinkMetadataKey: target,
+ 	}
+ 
+-	o, err := d.createNewObject(ctx, fullName, metadata)
++	o, err := d.createNewObject(ctx, fullName, childMetadata)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 
+-	d.cache.Insert(d.cacheClock.Now(), name, SymlinkType)
++	d.cache.Insert(d.cacheClock.Now(), name, metadata.SymlinkType)
+ 
+ 	return &Core{
+ 		Bucket:   d.Bucket(),
+@@ -741,7 +736,7 @@ func (d *dirInode) CreateChildDir(ctx context.Context, name string) (*Core, erro
+ 		return nil, err
+ 	}
+ 
+-	d.cache.Insert(d.cacheClock.Now(), name, ExplicitDirType)
++	d.cache.Insert(d.cacheClock.Now(), name, metadata.ExplicitDirType)
+ 
+ 	return &Core{
+ 		Bucket:   d.Bucket(),
+diff --git a/internal/fs/inode/explicit_dir.go b/internal/fs/inode/explicit_dir.go
+index e96d889d2..2a1f86cd3 100644
+--- a/internal/fs/inode/explicit_dir.go
++++ b/internal/fs/inode/explicit_dir.go
+@@ -42,7 +42,8 @@ func NewExplicitDirInode(
+ 	typeCacheTTL time.Duration,
+ 	bucket *gcsx.SyncerBucket,
+ 	mtimeClock timeutil.Clock,
+-	cacheClock timeutil.Clock) (d ExplicitDirInode) {
++	cacheClock timeutil.Clock,
++	typeCacheMaxEntries int) (d ExplicitDirInode) {
+ 	wrapped := NewDirInode(
+ 		id,
+ 		name,
+@@ -52,7 +53,8 @@ func NewExplicitDirInode(
+ 		typeCacheTTL,
+ 		bucket,
+ 		mtimeClock,
+-		cacheClock)
++		cacheClock,
++		typeCacheMaxEntries)
+ 
+ 	d = &explicitDirInode{
+ 		dirInode: wrapped.(*dirInode),
+diff --git a/internal/fs/inode/type_cache.go b/internal/fs/inode/type_cache.go
+deleted file mode 100644
+index 537328d1e..000000000
+--- a/internal/fs/inode/type_cache.go
++++ /dev/null
+@@ -1,107 +0,0 @@
+-// Copyright 2015 Google Inc. All Rights Reserved.
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//     http://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
+-
+-package inode
+-
+-import (
+-	"time"
+-
+-	"github.com/jacobsa/util/lrucache"
+-)
+-
+-type cacheEntry struct {
+-	expiry    time.Time
+-	inodeType Type
+-}
+-
+-// A cache that maps from a name to information about the type of the object
+-// with that name. Each name N is in one of the following states:
+-//
+-//   - Nothing is known about N.
+-//   - We have recorded that N is a file.
+-//   - We have recorded that N is a directory.
+-//   - We have recorded that N is both a file and a directory.
+-//
+-// Must be created with newTypeCache. May be contained in a larger struct.
+-// External synchronization is required.
+-type typeCache struct {
+-	/////////////////////////
+-	// Constant data
+-	/////////////////////////
+-
+-	ttl time.Duration
+-
+-	/////////////////////////
+-	// Mutable state
+-	/////////////////////////
+-
+-	// A cache mapping names to the cache entry.
+-	//
+-	// INVARIANT: entries.CheckInvariants() does not panic
+-	// INVARIANT: Each value is of type cacheEntry
+-	entries lrucache.Cache
+-}
+-
+-// Create a cache whose information expires with the supplied TTL. If the TTL
+-// is zero, nothing will ever be cached.
+-func newTypeCache(perTypeCapacity int, ttl time.Duration) typeCache {
+-	return typeCache{
+-		ttl:     ttl,
+-		entries: lrucache.New(perTypeCapacity),
+-	}
+-}
+-
+-////////////////////////////////////////////////////////////////////////
+-// Public interface
+-////////////////////////////////////////////////////////////////////////
+-
+-// Panic if any internal invariants have been violated. The careful user can
+-// arrange to call this at crucial moments.
+-func (tc *typeCache) CheckInvariants() {
+-	tc.entries.CheckInvariants()
+-}
+-
+-// Insert inserts a record to the cache.
+-func (tc *typeCache) Insert(now time.Time, name string, it Type) {
+-	// Are we disabled?
+-	if tc.ttl == 0 {
+-		return
+-	}
+-	tc.entries.Insert(name, cacheEntry{
+-		expiry:    now.Add(tc.ttl),
+-		inodeType: it,
+-	})
+-}
+-
+-// Erase erases all information about the supplied name.
+-func (tc *typeCache) Erase(name string) {
+-	tc.entries.Erase(name)
+-}
+-
+-// Get gets the record for the given name.
+-func (tc *typeCache) Get(now time.Time, name string) Type {
+-	val := tc.entries.LookUp(name)
+-	if val == nil {
+-		return UnknownType
+-	}
+-
+-	entry := val.(cacheEntry)
+-
+-	// Has the entry expired?
+-	if entry.expiry.Before(now) {
+-		tc.entries.Erase(name)
+-		return UnknownType
+-	}
+-	return entry.inodeType
+-}

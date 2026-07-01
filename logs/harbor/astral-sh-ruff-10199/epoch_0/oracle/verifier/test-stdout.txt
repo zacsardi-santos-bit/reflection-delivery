@@ -1,0 +1,57 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/docstring_doubles_mixed_quotes_class_var_1.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/docstring_doubles_mixed_quotes_class_var_2.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/docstring_doubles_mixed_quotes_module_singleline_var_1.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/docstring_doubles_mixed_quotes_module_singleline_var_2.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/docstring_singles_mixed_quotes_class_var_1.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/docstring_singles_mixed_quotes_class_var_2.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/docstring_singles_mixed_quotes_module_singleline_var_1.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/docstring_singles_mixed_quotes_module_singleline_var_2.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/doubles_would_be_triple_quotes.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_quotes/singles_would_be_triple_quotes.py
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_doubles_class_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_doubles_function_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_doubles_module_multiline_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_doubles_module_singleline_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_doubles_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_singles_class_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_singles_function_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_singles_mixed_quotes_class_var_1_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_singles_mixed_quotes_class_var_2_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_singles_mixed_quotes_module_singleline_var_1_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_singles_mixed_quotes_module_singleline_var_2_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_singles_module_multiline_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_singles_module_singleline_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_doubles::path_new_docstring_singles_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_doubles_class_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_doubles_function_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_doubles_mixed_quotes_class_var_1_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_doubles_mixed_quotes_class_var_2_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_doubles_mixed_quotes_module_singleline_var_1_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_doubles_mixed_quotes_module_singleline_var_2_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_doubles_module_multiline_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_doubles_module_singleline_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_doubles_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_singles_class_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_singles_function_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_singles_module_multiline_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_singles_module_singleline_py_expects PASSED
+rules::flake8_quotes::tests::require_docstring_singles::path_new_docstring_singles_py_expects PASSED
+rules::flake8_quotes::tests::require_doubles::path_new_singles_escaped_py_expects PASSED
+rules::flake8_quotes::tests::require_doubles::path_new_singles_escaped_unnecessary_py_expects PASSED
+rules::flake8_quotes::tests::require_doubles::path_new_singles_implicit_py_expects PASSED
+rules::flake8_quotes::tests::require_doubles::path_new_singles_multiline_string_py_expects PASSED
+rules::flake8_quotes::tests::require_doubles::path_new_singles_noqa_py_expects PASSED
+rules::flake8_quotes::tests::require_doubles::path_new_singles_py_expects PASSED
+rules::flake8_quotes::tests::require_doubles::path_new_singles_would_be_triple_quotes_py_expects PASSED
+rules::flake8_quotes::tests::require_doubles::path_new_singles_wrapped_py_expects PASSED
+rules::flake8_quotes::tests::require_doubles_over_singles_escaped_py311 PASSED
+rules::flake8_quotes::tests::require_singles::path_new_doubles_escaped_py_expects PASSED
+rules::flake8_quotes::tests::require_singles::path_new_doubles_escaped_unnecessary_py_expects PASSED
+rules::flake8_quotes::tests::require_singles::path_new_doubles_implicit_py_expects PASSED
+rules::flake8_quotes::tests::require_singles::path_new_doubles_multiline_string_py_expects PASSED
+rules::flake8_quotes::tests::require_singles::path_new_doubles_noqa_py_expects PASSED
+rules::flake8_quotes::tests::require_singles::path_new_doubles_py_expects PASSED
+rules::flake8_quotes::tests::require_singles::path_new_doubles_would_be_triple_quotes_py_expects PASSED
+rules::flake8_quotes::tests::require_singles::path_new_doubles_wrapped_py_expects PASSED
+rules::flake8_quotes::tests::require_singles_over_doubles_escaped_py311 PASSED
+reward=1 graded=46 found=46 failed=0 parsed=46 framework=pytest exit_code=0

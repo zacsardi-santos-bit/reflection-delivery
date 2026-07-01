@@ -1,0 +1,21 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p nu-derive-value --no-fail-fast",
+  "test_files": [
+    "crates/nu-derive-value/src/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/9) nu-derive-value tests::unsupported_unions",
+    "(2/9) nu-derive-value tests::unexpected_attribute_on_struct_field",
+    "(3/9) nu-derive-value tests::invalid_attribute_value",
+    "(4/9) nu-derive-value tests::unexpected_attribute_on_enum_variant",
+    "(5/9) nu-derive-value tests::non_unique_struct_keys",
+    "(6/9) nu-derive-value tests::invalid_attribute_position_in_tuple_struct",
+    "(7/9) nu-derive-value tests::unsupported_enums",
+    "(8/9) nu-derive-value tests::non_unique_enum_variants",
+    "(9/9) nu-derive-value tests::unexpected_attribute"
+  ],
+  "PASS_TO_PASS": []
+}

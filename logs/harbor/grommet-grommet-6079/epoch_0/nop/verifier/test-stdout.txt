@@ -1,0 +1,1028 @@
+patching file src/js/components/TextInput/__tests__/__snapshots__/TextInput-test.tsx.snap
+FAIL src/js/components/TextInput/__tests__/TextInput-test.tsx (6.031 s)
+  TextInput
+    ✓ should not have accessibility violations (117 ms)
+    ✓ basic (10 ms)
+    ✓ a11yTitle or aria-label (16 ms)
+    ✓ disabled (8 ms)
+    ✓ icon (16 ms)
+    ✓ icon reverse (9 ms)
+    ✕ suggestions (139 ms)
+    ✕ complex suggestions (87 ms)
+    ✕ close suggestion drop (133 ms)
+    ✓ let escape events propagage if there are no suggestions (57 ms)
+    ✕ calls onSuggestionsOpen (78 ms)
+    ✕ calls onSuggestionsClose (134 ms)
+    ✕ select suggestion (86 ms)
+    ✕ select a suggestion with onSelect (32 ms)
+    ✓ auto-select 2nd suggestion with defaultSuggestion (25 ms)
+    ✓ auto-select 1st suggestion via typing with defaultSuggestion (28 ms)
+    ✓ do not select any suggestion without defaultSuggestion (35 ms)
+    ✕ select a suggestion with onSuggestionSelect (31 ms)
+    ✕ select with onSuggestionSelect when onSelect is present (31 ms)
+    ✓ handles next and previous without suggestion (7 ms)
+    ✕ small drop height (74 ms)
+    ✕ medium drop height (77 ms)
+    ✕ large drop height (75 ms)
+    ✓ should return focus to input on select (24 ms)
+    ✓ should return focus to ref on select (19 ms)
+    ✓ should not have padding when plain="full" (6 ms)
+    ✓ should have padding when plain (5 ms)
+    ✓ should show non-string placeholder (8 ms)
+    ✓ should hide non-string placeholder when having a value (6 ms)
+    ✓ should only show default placeholder when placeholder is a
+  string (7 ms)
+    ✓ textAlign end (7 ms)
+    ✓ custom theme input font size (6 ms)
+    ✓ renders size (128 ms)
+
+  ● TextInput › suggestions
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput suggestions 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -67,16 +67,13 @@
+
+      <div
+        class="c0"
+      >
+        <input
+    -     aria-autocomplete="list"
+    -     aria-expanded="false"
+          autocomplete="off"
+          class="c1"
+          data-testid="test-input"
+          id="item"
+          name="item"
+    -     role="combobox"
+          value=""
+        />
+      </div>
+
+      77 |       />,
+      78 |     );
+    > 79 |     expect(container.firstChild).toMatchSnapshot();
+         |                                  ^
+      80 |
+      81 |     fireEvent.focus(getByTestId('test-input'));
+      82 |     fireEvent.change(getByTestId('test-input'), { target: { value: ' ' } });
+
+      at Object.<anonymous> (src/js/components/TextInput/__tests__/TextInput-test.tsx:79:34)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● TextInput › suggestions
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput suggestions 2`
+
+    - Snapshot  - 8
+    + Received  + 0
+
+    @@ -175,22 +175,17 @@
+        style="left: 0px; width: 0.1px; top: 0px; max-height: 768px;"
+        tabindex="-1"
+      >
+        <div
+          class="c2 c3"
+    -     id="listbox__item"
+    -     role="listbox"
+        >
+          <ol
+            class="c4"
+          >
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-0__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+    @@ -198,14 +193,11 @@
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-1__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+
+      34 |         }
+      35 |       });
+    > 36 |       expect(document.getElementById(portalId)).toMatchSnapshot();
+         |                                                 ^
+      37 |       expect(
+      38 |         prettier
+      39 |           .format(styles.toString(), {
+
+      at Object.toMatchSnapshot (src/js/utils/portal.js:36:49)
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:85:45
+
+  ● TextInput › complex suggestions
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput complex suggestions 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -80,17 +80,14 @@
+      >
+        <div
+          class="c1"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="c2"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      107 |       </Grommet>,
+      108 |     );
+    > 109 |     expect(container.firstChild).toMatchSnapshot();
+          |                                  ^
+      110 |
+      111 |     fireEvent.focus(getByTestId('test-input'));
+      112 |     fireEvent.change(getByTestId('test-input'), { target: { value: ' ' } });
+
+      at Object.<anonymous> (src/js/components/TextInput/__tests__/TextInput-test.tsx:109:34)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● TextInput › complex suggestions
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput complex suggestions 2`
+
+    - Snapshot  - 8
+    + Received  + 0
+
+    @@ -175,22 +175,17 @@
+        style="left: 0px; width: 0.1px; top: 0px; max-height: 768px;"
+        tabindex="-1"
+      >
+        <div
+          class="c2 c3"
+    -     id="listbox__item"
+    -     role="listbox"
+        >
+          <ol
+            class="c4"
+          >
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-0__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+    @@ -198,14 +193,11 @@
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-1__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+
+      34 |         }
+      35 |       });
+    > 36 |       expect(document.getElementById(portalId)).toMatchSnapshot();
+         |                                                 ^
+      37 |       expect(
+      38 |         prettier
+      39 |           .format(styles.toString(), {
+
+      at Object.toMatchSnapshot (src/js/utils/portal.js:36:49)
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:115:45
+
+  ● TextInput › close suggestion drop
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput close suggestion drop 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -80,17 +80,14 @@
+      >
+        <div
+          class="c1"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="c2"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      135 |       </Grommet>,
+      136 |     );
+    > 137 |     expect(container.firstChild).toMatchSnapshot();
+          |                                  ^
+      138 |
+      139 |     fireEvent.focus(getByTestId('test-input'));
+      140 |     fireEvent.change(getByTestId('test-input'), { target: { value: ' ' } });
+
+      at Object.<anonymous> (src/js/components/TextInput/__tests__/TextInput-test.tsx:137:34)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● TextInput › close suggestion drop
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput close suggestion drop 2`
+
+    - Snapshot  - 8
+    + Received  + 0
+
+    @@ -175,22 +175,17 @@
+        style="left: 0px; width: 0.1px; top: 0px; max-height: 768px;"
+        tabindex="-1"
+      >
+        <div
+          class="c2 c3"
+    -     id="listbox__item"
+    -     role="listbox"
+        >
+          <ol
+            class="c4"
+          >
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-0__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+    @@ -198,14 +193,11 @@
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-1__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+
+      34 |         }
+      35 |       });
+    > 36 |       expect(document.getElementById(portalId)).toMatchSnapshot();
+         |                                                 ^
+      37 |       expect(
+      38 |         prettier
+      39 |           .format(styles.toString(), {
+
+      at Object.toMatchSnapshot (src/js/utils/portal.js:36:49)
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:142:45
+
+  ● TextInput › close suggestion drop
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput close suggestion drop 4`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -3,17 +3,14 @@
+      >
+        <div
+          class="StyledTextInput__StyledTextInputContainer-sc-1x30a0s-1 kZzThM"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="StyledTextInput-sc-1x30a0s-0 doZMBU"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      149 |       setTimeout(() => {
+      150 |         expect(document.getElementById('text-input-drop__item')).toBeNull();
+    > 151 |         expect(container.firstChild).toMatchSnapshot();
+          |                                      ^
+      152 |         done();
+      153 |       }, 50);
+      154 |     }, 50);
+
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:151:38
+
+  ● TextInput › calls onSuggestionsOpen
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput calls onSuggestionsOpen 1`
+
+    - Snapshot  - 8
+    + Received  + 0
+
+    @@ -175,22 +175,17 @@
+        style="left: 0px; width: 0.1px; top: 0px; max-height: 768px;"
+        tabindex="-1"
+      >
+        <div
+          class="c2 c3"
+    -     id="listbox__item"
+    -     role="listbox"
+        >
+          <ol
+            class="c4"
+          >
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-0__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+    @@ -198,14 +193,11 @@
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-1__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+
+      34 |         }
+      35 |       });
+    > 36 |       expect(document.getElementById(portalId)).toMatchSnapshot();
+         |                                                 ^
+      37 |       expect(
+      38 |         prettier
+      39 |           .format(styles.toString(), {
+
+      at Object.toMatchSnapshot (src/js/utils/portal.js:36:49)
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:195:45
+
+  ● TextInput › calls onSuggestionsClose
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput calls onSuggestionsClose 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -80,17 +80,14 @@
+      >
+        <div
+          class="c1"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="c2"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      212 |       </Grommet>,
+      213 |     );
+    > 214 |     expect(container.firstChild).toMatchSnapshot();
+          |                                  ^
+      215 |
+      216 |     fireEvent.focus(getByTestId('test-input'));
+      217 |     setTimeout(() => {
+
+      at Object.<anonymous> (src/js/components/TextInput/__tests__/TextInput-test.tsx:214:34)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● TextInput › calls onSuggestionsClose
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput calls onSuggestionsClose 2`
+
+    - Snapshot  - 8
+    + Received  + 0
+
+    @@ -175,22 +175,17 @@
+        style="left: 0px; width: 0.1px; top: 0px; max-height: 768px;"
+        tabindex="-1"
+      >
+        <div
+          class="c2 c3"
+    -     id="listbox__item"
+    -     role="listbox"
+        >
+          <ol
+            class="c4"
+          >
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-0__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+    @@ -198,14 +193,11 @@
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-1__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+
+      34 |         }
+      35 |       });
+    > 36 |       expect(document.getElementById(portalId)).toMatchSnapshot();
+         |                                                 ^
+      37 |       expect(
+      38 |         prettier
+      39 |           .format(styles.toString(), {
+
+      at Object.toMatchSnapshot (src/js/utils/portal.js:36:49)
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:218:45
+
+  ● TextInput › calls onSuggestionsClose
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput calls onSuggestionsClose 4`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -3,17 +3,14 @@
+      >
+        <div
+          class="StyledTextInput__StyledTextInputContainer-sc-1x30a0s-1 kZzThM"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="StyledTextInput-sc-1x30a0s-0 doZMBU"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      226 |         expect(document.getElementById('text-input-drop__item')).toBeNull();
+      227 |         expect(onSuggestionsClose).toBeCalled();
+    > 228 |         expect(container.firstChild).toMatchSnapshot();
+          |                                      ^
+      229 |         done();
+      230 |       }, 50);
+      231 |     }, 50);
+
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:228:38
+
+  ● TextInput › select suggestion
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput select suggestion 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -84,17 +84,14 @@
+      >
+        <div
+          class="c1"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="c2"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      247 |       </Grommet>,
+      248 |     );
+    > 249 |     expect(container.firstChild).toMatchSnapshot();
+          |                                  ^
+      250 |
+      251 |     fireEvent.focus(getByTestId('test-input'));
+      252 |     fireEvent.change(getByTestId('test-input'), { target: { value: ' ' } });
+
+      at Object.<anonymous> (src/js/components/TextInput/__tests__/TextInput-test.tsx:249:34)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● TextInput › select suggestion
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput select suggestion 2`
+
+    - Snapshot  - 8
+    + Received  + 0
+
+    @@ -175,22 +175,17 @@
+        style="left: 0px; width: 0.1px; top: 0px; max-height: 768px;"
+        tabindex="-1"
+      >
+        <div
+          class="c2 c3"
+    -     id="listbox__item"
+    -     role="listbox"
+        >
+          <ol
+            class="c4"
+          >
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-0__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+    @@ -198,14 +193,11 @@
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-1__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+
+      34 |         }
+      35 |       });
+    > 36 |       expect(document.getElementById(portalId)).toMatchSnapshot();
+         |                                                 ^
+      37 |       expect(
+      38 |         prettier
+      39 |           .format(styles.toString(), {
+
+      at Object.toMatchSnapshot (src/js/utils/portal.js:36:49)
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:254:45
+
+  ● TextInput › select suggestion
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput select suggestion 4`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -3,17 +3,14 @@
+      >
+        <div
+          class="StyledTextInput__StyledTextInputContainer-sc-1x30a0s-1 kZzThM"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="StyledTextInput-sc-1x30a0s-0 gexBpp"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      256 |       // Casting a custom to a primitive by erasing type with unknown.
+      257 |       fireEvent.click(getByText(document as unknown as HTMLElement, 'test1'));
+    > 258 |       expect(container.firstChild).toMatchSnapshot();
+          |                                    ^
+      259 |       expect(document.getElementById('text-input-drop__item')).toBeNull();
+      260 |       expect(onSelect).toBeCalledWith(
+      261 |         expect.objectContaining({ suggestion: 'test1' }),
+
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:258:36
+
+  ● TextInput › select a suggestion with onSelect
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput select a suggestion with onSelect 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -80,17 +80,14 @@
+      >
+        <div
+          class="c1"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="c2"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      278 |       </Grommet>,
+      279 |     );
+    > 280 |     expect(container.firstChild).toMatchSnapshot();
+          |                                  ^
+      281 |
+      282 |     const input = getByTestId('test-input');
+      283 |     // pressing enter here nothing will happen
+
+      at Object.<anonymous> (src/js/components/TextInput/__tests__/TextInput-test.tsx:280:34)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● TextInput › select a suggestion with onSuggestionSelect
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput select a suggestion with onSuggestionSelect 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -80,17 +80,14 @@
+      >
+        <div
+          class="c1"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="c2"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      407 |       </Grommet>,
+      408 |     );
+    > 409 |     expect(container.firstChild).toMatchSnapshot();
+          |                                  ^
+      410 |
+      411 |     const input = getByTestId('test-input');
+      412 |     // pressing enter here nothing will happen
+
+      at Object.<anonymous> (src/js/components/TextInput/__tests__/TextInput-test.tsx:409:34)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● TextInput › select with onSuggestionSelect when onSelect is present
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput select with onSuggestionSelect when onSelect is present 1`
+
+    - Snapshot  - 3
+    + Received  + 0
+
+    @@ -80,17 +80,14 @@
+      >
+        <div
+          class="c1"
+        >
+          <input
+    -       aria-autocomplete="list"
+    -       aria-expanded="false"
+            autocomplete="off"
+            class="c2"
+            data-testid="test-input"
+            id="item"
+            name="item"
+    -       role="combobox"
+            value=""
+          />
+        </div>
+      </div>
+
+      438 |       </Grommet>,
+      439 |     );
+    > 440 |     expect(container.firstChild).toMatchSnapshot();
+          |                                  ^
+      441 |
+      442 |     const input = getByTestId('test-input');
+      443 |     // pressing enter here nothing will happen
+
+      at Object.<anonymous> (src/js/components/TextInput/__tests__/TextInput-test.tsx:440:34)
+      at TestScheduler.scheduleTests (node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (node_modules/@jest/core/build/runJest.js:404:19)
+      at _run10000 (node_modules/@jest/core/build/cli/index.js:320:7)
+      at runCLI (node_modules/@jest/core/build/cli/index.js:173:3)
+
+  ● TextInput › small drop height
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput small drop height 1`
+
+    - Snapshot  - 8
+    + Received  + 0
+
+    @@ -175,22 +175,17 @@
+        style="left: 0px; width: 0.1px; top: 0px; max-height: 768px;"
+        tabindex="-1"
+      >
+        <div
+          class="c2 c3"
+    -     id="listbox__item"
+    -     role="listbox"
+        >
+          <ol
+            class="c4"
+          >
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-0__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+    @@ -198,14 +193,11 @@
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-1__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+
+      34 |         }
+      35 |       });
+    > 36 |       expect(document.getElementById(portalId)).toMatchSnapshot();
+         |                                                 ^
+      37 |       expect(
+      38 |         prettier
+      39 |           .format(styles.toString(), {
+
+      at Object.toMatchSnapshot (src/js/utils/portal.js:36:49)
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:493:47
+
+  ● TextInput › medium drop height
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput medium drop height 1`
+
+    - Snapshot  - 8
+    + Received  + 0
+
+    @@ -175,22 +175,17 @@
+        style="left: 0px; width: 0.1px; top: 0px; max-height: 768px;"
+        tabindex="-1"
+      >
+        <div
+          class="c2 c3"
+    -     id="listbox__item"
+    -     role="listbox"
+        >
+          <ol
+            class="c4"
+          >
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-0__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+    @@ -198,14 +193,11 @@
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-1__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+
+      34 |         }
+      35 |       });
+    > 36 |       expect(document.getElementById(portalId)).toMatchSnapshot();
+         |                                                 ^
+      37 |       expect(
+      38 |         prettier
+      39 |           .format(styles.toString(), {
+
+      at Object.toMatchSnapshot (src/js/utils/portal.js:36:49)
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:493:47
+
+  ● TextInput › large drop height
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `TextInput large drop height 1`
+
+    - Snapshot  - 8
+    + Received  + 0
+
+    @@ -175,22 +175,17 @@
+        style="left: 0px; width: 0.1px; top: 0px; max-height: 768px;"
+        tabindex="-1"
+      >
+        <div
+          class="c2 c3"
+    -     id="listbox__item"
+    -     role="listbox"
+        >
+          <ol
+            class="c4"
+          >
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-0__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+    @@ -198,14 +193,11 @@
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+    -           aria-selected="false"
+                class="c5"
+    -           id="listbox-option-1__item"
+    -           role="option"
+                type="button"
+              >
+                <div
+                  class="c6"
+                >
+
+      34 |         }
+      35 |       });
+    > 36 |       expect(document.getElementById(portalId)).toMatchSnapshot();
+         |                                                 ^
+      37 |       expect(
+      38 |         prettier
+      39 |           .format(styles.toString(), {
+
+      at Object.toMatchSnapshot (src/js/utils/portal.js:36:49)
+      at src/js/components/TextInput/__tests__/TextInput-test.tsx:493:47
+
+ › 20 snapshots failed.
+Snapshot Summary
+ › 20 snapshots failed from 1 test suite. Inspect your code changes or run `npm run npx -- -u` to update them.
+
+Test Suites: 1 failed, 1 total
+Tests:       12 failed, 21 passed, 33 total
+Snapshots:   20 failed, 26 passed, 46 total
+Time:        6.652 s
+Ran all test suites matching /src\/js\/components\/TextInput\/__tests__\/TextInput-test.tsx/i.
+reward=0 graded=33 found=0 failed=0 parsed=0 framework=jest exit_code=1

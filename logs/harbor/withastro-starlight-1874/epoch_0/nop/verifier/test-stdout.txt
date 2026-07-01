@@ -1,0 +1,27 @@
+patching file packages/starlight/__tests__/basics/config-errors.test.ts
+patching file packages/starlight/__tests__/i18n-sidebar/i18n-sidebar-fallback-slug.test.ts
+patching file packages/starlight/__tests__/i18n-sidebar/i18n-sidebar.test.ts
+patching file packages/starlight/__tests__/i18n-sidebar/sidebar-internal-link-error.test.ts
+patching file packages/starlight/__tests__/i18n-sidebar/vitest.config.ts
+patching file packages/starlight/__tests__/sidebar-slug-error/sidebar-slug-error.test.ts
+patching file packages/starlight/__tests__/sidebar-slug-error/vitest.config.ts
+15:24:43 [types] Added src/env.d.ts type declarations
+15:24:43 [WARN] Missing pages directory: src/pages
+15:24:43 [types] Added src/env.d.ts type declarations
+15:24:43 [WARN] Missing pages directory: src/pages
+15:24:43 [ERROR] [vite] WebSocket server error: Port is already in use
+15:24:43 [types] Added src/env.d.ts type declarations
+15:24:43 [WARN] Missing pages directory: src/pages
+15:24:43 [ERROR] [vite] WebSocket server error: Port is already in use
+15:24:44 [types] Added src/env.d.ts type declarations
+15:24:44 [WARN] Missing pages directory: src/pages
+15:24:44 [ERROR] [vite] WebSocket server error: Port is already in use
+15:24:44 [types] Added src/env.d.ts type declarations
+15:24:44 [WARN] Missing pages directory: src/pages
+15:24:44 [ERROR] [vite] WebSocket server error: Port is already in use
+15:24:44 [types] Added src/env.d.ts type declarations
+15:24:44 [WARN] Missing pages directory: src/pages
+15:24:44 [ERROR] [vite] WebSocket server error: Port is already in use
+failed to load config from /workspace/repo/packages/starlight/__tests__/i18n-sidebar/vitest.config.ts
+AstroUserError: Invalid config passed to starlight integration
+reward=0 graded=383 found=0 failed=0 parsed=0 framework=vitest exit_code=1

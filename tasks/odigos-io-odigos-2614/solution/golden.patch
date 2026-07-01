@@ -1,0 +1,589 @@
+diff --git a/collector/Makefile b/collector/Makefile
+index 0f0172802..f1f3f63e6 100644
+--- a/collector/Makefile
++++ b/collector/Makefile
+@@ -18,6 +18,9 @@ BUILDER_URL = https://github.com/open-telemetry/opentelemetry-collector-releases
+ GOCMD?= go
+ MDATAGENCMD?= mdatagen
+ 
++PROCESSOR_DIR := processors/odigossamplingprocessor
++
++
+ .PHONY: download_builder
+ download_builder:
+ 	mkdir -p $(TOOLS_BIN_DIR)
+@@ -30,8 +33,13 @@ download_builder:
+ genodigoscol: download_builder
+ 	$(BUILDER) --config builder-config.yaml
+ 
++.PHONY: test-odigossamplingprocessor
++test-odigossamplingprocessor:
++	@echo "Running tests for odigossamplingprocessor at $(PROCESSOR_DIR)"
++	cd $(PROCESSOR_DIR) && GOOS=$(HOST_GOOS) GOARCH=$(HOST_GOARCH) $(GOCMD) test ./...
++
+ .PHONY: build-odigoscol
+-build-odigoscol: download_builder
++build-odigoscol: download_builder test-odigossamplingprocessor
+ 	$(BUILDER) --config builder-config.yaml --skip-generate --skip-get-modules
+ 
+ .PHONY: install-tools
+diff --git a/collector/processors/odigossamplingprocessor/config.go b/collector/processors/odigossamplingprocessor/config.go
+index 7b9e92346..190f6a743 100644
+--- a/collector/processors/odigossamplingprocessor/config.go
++++ b/collector/processors/odigossamplingprocessor/config.go
+@@ -6,7 +6,6 @@ import (
+ 
+ 	"github.com/mitchellh/mapstructure"
+ 	"github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling"
+-	"go.opentelemetry.io/collector/component"
+ )
+ 
+ type Config struct {
+@@ -15,12 +14,12 @@ type Config struct {
+ 	EndpointRules []Rule `mapstructure:"endpoint_rules,omitempty"`
+ }
+ 
+-var _ component.Config = (*Config)(nil)
+-
+ func (cfg *Config) Validate() error {
+-	for _, rule := range cfg.EndpointRules { // TODO, validate all rules [Global/Service]
+-		if err := rule.Validate(); err != nil {
+-			return err
++	for _, rules := range [][]Rule{cfg.EndpointRules, cfg.ServiceRules, cfg.GlobalRules} {
++		for _, rule := range rules {
++			if err := rule.Validate(); err != nil {
++				return err
++			}
+ 		}
+ 	}
+ 	return nil
+@@ -65,6 +64,5 @@ func (r *Rule) Validate() error {
+ 	default:
+ 		return fmt.Errorf("unknown rule type: %s", r.Type)
+ 	}
+-
+ 	return nil
+ }
+diff --git a/collector/processors/odigossamplingprocessor/factory.go b/collector/processors/odigossamplingprocessor/factory.go
+index a475510dd..3c5570607 100644
+--- a/collector/processors/odigossamplingprocessor/factory.go
++++ b/collector/processors/odigossamplingprocessor/factory.go
+@@ -32,7 +32,7 @@ func createTracesProcessor(
+ 	cfg component.Config,
+ 	nextConsumer consumer.Traces) (processor.Traces, error) {
+ 
+-	proc := &samplingProcessor{logger: set.Logger, config: cfg.(*Config)}
++	proc := newSamplingProcessor(set.Logger, cfg.(*Config))
+ 
+ 	return processorhelper.NewTraces(
+ 		ctx,
+diff --git a/collector/processors/odigossamplingprocessor/internal/sampling/error.go b/collector/processors/odigossamplingprocessor/internal/sampling/error.go
+index 30a9393f3..796796878 100644
+--- a/collector/processors/odigossamplingprocessor/internal/sampling/error.go
++++ b/collector/processors/odigossamplingprocessor/internal/sampling/error.go
+@@ -1,6 +1,8 @@
+ package sampling
+ 
+ import (
++	"errors"
++
+ 	"go.opentelemetry.io/collector/pdata/ptrace"
+ )
+ 
+@@ -8,32 +10,32 @@ type ErrorRule struct {
+ 	FallbackSamplingRatio float64 `mapstructure:"fallback_sampling_ratio"`
+ }
+ 
+-func (tlr *ErrorRule) Validate() error {
++var _ SamplingDecision = (*ErrorRule)(nil)
++
++// Validate ensures the rule's configuration is correct.
++func (r *ErrorRule) Validate() error {
++	if r.FallbackSamplingRatio < 0 || r.FallbackSamplingRatio > 100 {
++		return errors.New("fallback_sampling_ratio must be between 0 and 100")
++	}
+ 	return nil
+ }
+ 
+-func (tlr *ErrorRule) KeepTraceDecision(td ptrace.Traces) (conditionMatch bool) {
+-
+-	resources := td.ResourceSpans()
+-
+-	// Iterate over resources
+-	for r := 0; r < resources.Len(); r++ {
+-		scoreSpan := resources.At(r).ScopeSpans()
+-
+-		// Iterate over scopes
+-		for j := 0; j < scoreSpan.Len(); j++ {
+-			ils := scoreSpan.At(j)
+-
+-			// iterate over spans
+-			for k := 0; k < ils.Spans().Len(); k++ {
+-				span := ils.Spans().At(k)
+-
+-				statusCode := span.Status().Code().String()
+-				if statusCode == ptrace.StatusCodeError.String() {
+-					return true
++// Evaluate checks if the trace contains any spans with errors.
++// - matched is always true because the error rule is global (or service-level, if configured).
++// - satisfied is true if an error span is found (always sample).
++// - fallbackRatio used if no error span is found (probabilistic sampling).
++func (r *ErrorRule) Evaluate(td ptrace.Traces) (bool, bool, float64) {
++	rs := td.ResourceSpans()
++	for i := 0; i < rs.Len(); i++ {
++		scopeSpans := rs.At(i).ScopeSpans()
++		for j := 0; j < scopeSpans.Len(); j++ {
++			spans := scopeSpans.At(j).Spans()
++			for k := 0; k < spans.Len(); k++ {
++				if spans.At(k).Status().Code() == ptrace.StatusCodeError {
++					return true, true, 0.0 // Immediate sample if an error is found
+ 				}
+ 			}
+ 		}
+ 	}
+-	return false
++	return true, false, r.FallbackSamplingRatio // Probabilistic fallback if no errors found
+ }
+diff --git a/collector/processors/odigossamplingprocessor/internal/sampling/latency.go b/collector/processors/odigossamplingprocessor/internal/sampling/latency.go
+index 9656b562c..d015d134d 100644
+--- a/collector/processors/odigossamplingprocessor/internal/sampling/latency.go
++++ b/collector/processors/odigossamplingprocessor/internal/sampling/latency.go
+@@ -16,67 +16,50 @@ type HttpRouteLatencyRule struct {
+ 	FallbackSamplingRatio float64 `mapstructure:"fallback_sampling_ratio"`
+ }
+ 
+-func (tlr *HttpRouteLatencyRule) Validate() error {
++var _ SamplingDecision = (*HttpRouteLatencyRule)(nil)
++
++func (r *HttpRouteLatencyRule) Validate() error {
+ 	switch {
+-	case tlr.Threshold <= 0:
++	case r.Threshold <= 0:
+ 		return errors.New("threshold must be a positive integer")
+-	case tlr.ServiceName == "":
+-		return errors.New("service cannot be empty")
+-	case tlr.HttpRoute == "":
+-		return errors.New("endpoint cannot be empty")
+-	case !strings.HasPrefix(tlr.HttpRoute, "/"):
+-		return errors.New("endpoint must start with '/'")
++	case r.ServiceName == "":
++		return errors.New("service_name cannot be empty")
++	case r.HttpRoute == "":
++		return errors.New("http_route cannot be empty")
++	case !strings.HasPrefix(r.HttpRoute, "/"):
++		return errors.New("http_route must start with '/'")
++	case r.FallbackSamplingRatio < 0 || r.FallbackSamplingRatio > 100:
++		return errors.New("fallback_sampling_ratio must be between 0 and 100")
+ 	}
+ 	return nil
+ }
+ 
+-func (tlr *HttpRouteLatencyRule) KeepTraceDecision(td ptrace.Traces) (filterMatch bool, conditionMatch bool) {
+-	var (
+-		serviceFound  = false
+-		endpointFound = false
+-	)
+-
++func (r *HttpRouteLatencyRule) Evaluate(td ptrace.Traces) (matched bool, satisfied bool, fallbackRatio float64) {
+ 	resources := td.ResourceSpans()
+-
+-	// Check if the service matches
+-	for r := 0; r < resources.Len(); r++ {
+-		serviceAttr, _ := resources.At(r).Resource().Attributes().Get(string(semconv.ServiceNameKey))
+-		if serviceAttr.AsString() == tlr.ServiceName {
+-			serviceFound = true
++	var serviceFound, endpointFound bool
++	var minStart, maxEnd pcommon.Timestamp
++
++	for i := 0; i < resources.Len(); i++ {
++		resourceAttrs := resources.At(i).Resource().Attributes()
++		serviceAttr, found := resourceAttrs.Get(string(semconv.ServiceNameKey))
++		if !found || serviceAttr.AsString() != r.ServiceName {
++			continue
+ 		}
+-	}
+-	if !serviceFound {
+-		return false, true
+-	}
+-
+-	var minStart pcommon.Timestamp
+-	var maxEnd pcommon.Timestamp
+-
+-	// Iterate over resources
+-	for r := 0; r < resources.Len(); r++ {
+-		scoreSpan := resources.At(r).ScopeSpans()
+-
+-		// Iterate over scopes
+-		for j := 0; j < scoreSpan.Len(); j++ {
+-			ils := scoreSpan.At(j)
++		serviceFound = true
+ 
+-			// iterate over spans
+-			for k := 0; k < ils.Spans().Len(); k++ {
+-				span := ils.Spans().At(k)
++		scopeSpans := resources.At(i).ScopeSpans()
++		for j := 0; j < scopeSpans.Len(); j++ {
++			spans := scopeSpans.At(j).Spans()
++			for k := 0; k < spans.Len(); k++ {
++				span := spans.At(k)
+ 
+-				endpoint, found := span.Attributes().Get("http.route")
+-				if found {
+-					serviceName, _ := resources.At(r).Resource().Attributes().Get(string(semconv.ServiceNameKey))
+-					isEndpointFoundOnService := serviceName.AsString() == tlr.ServiceName
+-
+-					if tlr.matchEndpoint(endpoint.AsString(), tlr.HttpRoute) && isEndpointFoundOnService {
++				if endpointAttr, ok := span.Attributes().Get("http.route"); ok {
++					if r.matchEndpoint(endpointAttr.AsString(), r.HttpRoute) {
+ 						endpointFound = true
+ 					}
+ 				}
+ 
+-				start := span.StartTimestamp()
+-				end := span.EndTimestamp()
+-
++				start, end := span.StartTimestamp(), span.EndTimestamp()
+ 				if minStart == 0 || start < minStart {
+ 					minStart = start
+ 				}
+@@ -86,10 +69,20 @@ func (tlr *HttpRouteLatencyRule) KeepTraceDecision(td ptrace.Traces) (filterMatc
+ 			}
+ 		}
+ 	}
+-	duration := maxEnd.AsTime().Sub(minStart.AsTime())
+-	return endpointFound, duration.Milliseconds() > int64(tlr.Threshold)
++
++	if !serviceFound || !endpointFound {
++		return false, false, 0
++	}
++
++	duration := maxEnd.AsTime().Sub(minStart.AsTime()).Milliseconds()
++
++	if duration > int64(r.Threshold) {
++		return true, true, 0 // Always sample
++	}
++
++	return true, false, r.FallbackSamplingRatio // Probabilistic fallback
+ }
+ 
+-func (tlr *HttpRouteLatencyRule) matchEndpoint(rootSpanEndpoint string, samplerEndpoint string) bool {
+-	return strings.HasPrefix(rootSpanEndpoint, samplerEndpoint)
++func (r *HttpRouteLatencyRule) matchEndpoint(spanEndpoint string, ruleEndpoint string) bool {
++	return strings.HasPrefix(spanEndpoint, ruleEndpoint)
+ }
+diff --git a/collector/processors/odigossamplingprocessor/internal/sampling/sampling.go b/collector/processors/odigossamplingprocessor/internal/sampling/sampling.go
+new file mode 100644
+index 000000000..a5fa59255
+--- /dev/null
++++ b/collector/processors/odigossamplingprocessor/internal/sampling/sampling.go
+@@ -0,0 +1,33 @@
++package sampling
++
++import "go.opentelemetry.io/collector/pdata/ptrace"
++
++// SamplingDecision defines the interface for implementing tail-based sampling rules
++// that operate on entire traces. Each implementation can decide whether to keep
++// or drop a trace based on its spans, attributes, timing, or other conditions.
++type SamplingDecision interface {
++	// Evaluate inspects the given trace and determines whether the rule matches it.
++	//
++	// It returns three values:
++	//
++	// - matched (bool):
++	//     Indicates whether the trace matches the *scope or filter* of the rule.
++	//     For example, a rule might only apply to traces from a specific service or with a specific span attribute.
++	//     If false, the rule is skipped and does not affect the sampling decision.
++	//
++	// - satisfied (bool):
++	//     Indicates whether the rule's *condition* was met.
++	//     If true, the trace should be sampled (kept).
++	//     If false, the rule suggests the trace may be dropped — but it might still be kept based on fallback sampling.
++	//
++	// - fallbackRatio (float64):
++	//     Specifies the probability (in percent, 0.0 to 100.0) to sample the trace
++	//     *if the rule matched but the condition was not satisfied*.
++	//
++	// The fallback ratio is ignored if the condition was satisfied or if the trace did not match the rule at all.
++	Evaluate(td ptrace.Traces) (matched bool, satisfied bool, fallbackRatio float64)
++
++	// Validate ensures the rule is correctly configured (e.g. required fields are set).
++	// It returns an error if the rule is invalid and should not be used.
++	Validate() error
++}
+diff --git a/collector/processors/odigossamplingprocessor/internal/sampling/testutil/tracefactory.go b/collector/processors/odigossamplingprocessor/internal/sampling/testutil/tracefactory.go
+new file mode 100644
+index 000000000..3cf304915
+--- /dev/null
++++ b/collector/processors/odigossamplingprocessor/internal/sampling/testutil/tracefactory.go
+@@ -0,0 +1,75 @@
++package testutil
++
++import (
++	"time"
++
++	"go.opentelemetry.io/collector/pdata/pcommon"
++	"go.opentelemetry.io/collector/pdata/ptrace"
++)
++
++type TraceBuilder struct {
++	traces ptrace.Traces
++}
++
++func NewTrace() *TraceBuilder {
++	return &TraceBuilder{
++		traces: ptrace.NewTraces(),
++	}
++}
++
++func (tb *TraceBuilder) AddResource(serviceName string) *ResourceBuilder {
++	rs := tb.traces.ResourceSpans().AppendEmpty()
++	rs.Resource().Attributes().PutStr("service.name", serviceName)
++	return &ResourceBuilder{tb, rs}
++}
++
++func (tb *TraceBuilder) Build() ptrace.Traces {
++	return tb.traces
++}
++
++type ResourceBuilder struct {
++	tb *TraceBuilder
++	rs ptrace.ResourceSpans
++}
++
++func (rb *ResourceBuilder) AddSpan(name string, opts ...SpanOption) *ResourceBuilder {
++	ss := rb.rs.ScopeSpans().AppendEmpty()
++	span := ss.Spans().AppendEmpty()
++	span.SetName(name)
++	start := time.Now()
++	end := start.Add(10 * time.Millisecond)
++	span.SetStartTimestamp(pcommon.NewTimestampFromTime(start))
++	span.SetEndTimestamp(pcommon.NewTimestampFromTime(end))
++
++	for _, opt := range opts {
++		opt(span)
++	}
++
++	return rb
++}
++
++func (rb *ResourceBuilder) Done() *TraceBuilder {
++	return rb.tb
++}
++
++type SpanOption func(span ptrace.Span)
++
++func WithStatus(code ptrace.StatusCode) SpanOption {
++	return func(span ptrace.Span) {
++		span.Status().SetCode(code)
++	}
++}
++
++func WithAttribute(key, value string) SpanOption {
++	return func(span ptrace.Span) {
++		span.Attributes().PutStr(key, value)
++	}
++}
++
++func WithLatency(d time.Duration) SpanOption {
++	return func(span ptrace.Span) {
++		start := time.Now()
++		span.SetStartTimestamp(pcommon.NewTimestampFromTime(start))
++		span.SetEndTimestamp(pcommon.NewTimestampFromTime(start.Add(d)))
++	}
++}
+diff --git a/collector/processors/odigossamplingprocessor/processor.go b/collector/processors/odigossamplingprocessor/processor.go
+index c82d82332..79c863802 100644
+--- a/collector/processors/odigossamplingprocessor/processor.go
++++ b/collector/processors/odigossamplingprocessor/processor.go
+@@ -2,9 +2,7 @@ package odigossamplingprocessor
+ 
+ import (
+ 	"context"
+-	"math/rand"
+ 
+-	"github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling"
+ 	"go.opentelemetry.io/collector/pdata/ptrace"
+ 	"go.uber.org/zap"
+ )
+@@ -12,86 +10,24 @@ import (
+ type samplingProcessor struct {
+ 	logger *zap.Logger
+ 	config *Config
++	engine *RuleEngine
+ }
+ 
+ func (sp *samplingProcessor) processTraces(ctx context.Context, td ptrace.Traces) (ptrace.Traces, error) {
+-	globalUnsatisfiedRatioSet := false
+-	globalUnsatisfiedRatio := 0.0
+-
+-	serviceUnsatisfiedRatioSet := false
+-	serviceUnsatisfiedRatio := 0.0
+-
+-	EndpointUnsatisfiedRatioSet := false
+-	EndpointUnsatisfiedRatio := 0.0
+-
+-	// Evaluate global rules first
+-	for _, rule := range sp.config.GlobalRules {
+-		switch r := rule.RuleDetails.(type) {
+-		case *sampling.ErrorRule: //
+-			if r.KeepTraceDecision(td) {
+-				return td, nil
+-			} else {
+-				globalUnsatisfiedRatio = max(globalUnsatisfiedRatio, r.FallbackSamplingRatio)
+-				globalUnsatisfiedRatioSet = true
+-			}
+-		default:
+-			sp.logger.Error("Unknown global rule details type", zap.String("rule", rule.Name))
+-		}
++	if !sp.engine.ShouldSample(td) {
++		sp.removeAllSpans(&td)
+ 	}
+-
+-	// Placeholder for service rules
+-
+-	// Evaluate endpoint rules
+-	for _, rule := range sp.config.EndpointRules {
+-		switch r := rule.RuleDetails.(type) {
+-		case *sampling.HttpRouteLatencyRule:
+-			filterMatch, conditionMatch := r.KeepTraceDecision(td)
+-			if filterMatch {
+-				if conditionMatch {
+-					return td, nil
+-				} else {
+-					EndpointUnsatisfiedRatio = max(EndpointUnsatisfiedRatio, r.FallbackSamplingRatio)
+-					EndpointUnsatisfiedRatioSet = true
+-				}
+-			}
+-		default:
+-			sp.logger.Error("Unknown endpoint rule details type", zap.String("rule", rule.Name))
+-		}
+-	}
+-
+-	var finalUnsatisfiedRatio float64
+-	// Evaluate against the most specific unsatisfied ratio
+-	if EndpointUnsatisfiedRatioSet {
+-		finalUnsatisfiedRatio = EndpointUnsatisfiedRatio
+-	} else {
+-		if serviceUnsatisfiedRatioSet {
+-			finalUnsatisfiedRatio = serviceUnsatisfiedRatio
+-		} else {
+-			if globalUnsatisfiedRatioSet {
+-				finalUnsatisfiedRatio = globalUnsatisfiedRatio
+-			} else {
+-				// None of the rules matched, trace is sampled by default
+-				return td, nil
+-			}
+-		}
+-	}
+-
+-	// Sample the trace based on the final unsatisfied ratio
+-	if finalUnsatisfiedRatio > 0.0 && (rand.Float64()*100) < finalUnsatisfiedRatio {
+-		return td, nil
+-	}
+-
+-	sp.removeAllSpans(&td)
+ 	return td, nil
+ }
+ 
+-func max(a, b float64) float64 {
+-	if a > b {
+-		return a
+-	}
+-	return b
+-}
+-
+ func (sp *samplingProcessor) removeAllSpans(td *ptrace.Traces) {
+ 	td.ResourceSpans().RemoveIf(func(rs ptrace.ResourceSpans) bool { return true })
+ }
++
++func newSamplingProcessor(logger *zap.Logger, cfg *Config) *samplingProcessor {
++	return &samplingProcessor{
++		logger: logger,
++		config: cfg,
++		engine: NewRuleEngine(cfg, logger),
++	}
++}
+diff --git a/collector/processors/odigossamplingprocessor/rule_engine.go b/collector/processors/odigossamplingprocessor/rule_engine.go
+new file mode 100644
+index 000000000..38eddcc6a
+--- /dev/null
++++ b/collector/processors/odigossamplingprocessor/rule_engine.go
+@@ -0,0 +1,78 @@
++package odigossamplingprocessor
++
++import (
++	"math/rand"
++
++	"github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling"
++	"go.opentelemetry.io/collector/pdata/ptrace"
++	"go.uber.org/zap"
++)
++
++type RuleEngine struct {
++	logger *zap.Logger
++	rules  RuleSet
++}
++
++type RuleSet struct {
++	EndpointRules []sampling.SamplingDecision
++	ServiceRules  []sampling.SamplingDecision
++	GlobalRules   []sampling.SamplingDecision
++}
++
++func NewRuleEngine(cfg *Config, logger *zap.Logger) *RuleEngine {
++	return &RuleEngine{
++		logger: logger,
++		rules: RuleSet{
++			EndpointRules: extractDecisions(cfg.EndpointRules),
++			ServiceRules:  extractDecisions(cfg.ServiceRules),
++			GlobalRules:   extractDecisions(cfg.GlobalRules),
++		},
++	}
++}
++
++func extractDecisions(rules []Rule) []sampling.SamplingDecision {
++	var decisions []sampling.SamplingDecision
++	for _, r := range rules {
++		decisions = append(decisions, r.RuleDetails.(sampling.SamplingDecision))
++	}
++	return decisions
++}
++
++func (re *RuleEngine) ShouldSample(td ptrace.Traces) bool {
++	levels := [][]sampling.SamplingDecision{
++		re.rules.EndpointRules,
++		re.rules.ServiceRules,
++		re.rules.GlobalRules,
++	}
++
++	for _, rules := range levels {
++		matched, decision := evaluateLevel(td, rules)
++		if matched {
++			return decision
++		}
++	}
++	return true
++}
++
++func evaluateLevel(td ptrace.Traces, rules []sampling.SamplingDecision) (matched bool, decision bool) {
++	var fallbackSet bool
++	var maxFallbackRatio float64
++
++	for _, rule := range rules {
++		isMatched, isSatisfied, fallback := rule.Evaluate(td)
++		if isMatched {
++			if isSatisfied {
++				return true, true // sample immediately
++			}
++			fallbackSet = true
++			if fallback > maxFallbackRatio {
++				maxFallbackRatio = fallback
++			}
++		}
++	}
++
++	if fallbackSet {
++		return true, (rand.Float64() * 100) < maxFallbackRatio
++	}
++	return false, false
++}

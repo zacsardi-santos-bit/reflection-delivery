@@ -1,0 +1,23 @@
+{
+ "task": "mlflow-mlflow-708",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden h2o.py adds conda_env param (shutil.copyfile / DEFAULT_CONDA_ENV) + backward-compat 'flavor_conf.get(\"data\", \"model.h2o\")'; test saves real model then asserts saved_conda_env_text==h2o_custom_env_text and conda_env==mlflow.h2o.DEFAULT_CONDA_ENV and reloads after deleting data key"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

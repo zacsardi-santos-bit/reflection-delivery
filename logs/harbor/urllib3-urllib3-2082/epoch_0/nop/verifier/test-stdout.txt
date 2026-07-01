@@ -1,0 +1,30 @@
+patching file test/contrib/test_pyopenssl.py
+patching file test/test_ssl.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-6.1.2, py-1.11.0, pluggy-0.13.1 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+rootdir: /workspace/repo, configfile: setup.cfg
+plugins: freezegun-0.4.2, timeout-1.4.2, flaky-3.7.0
+collecting ... collected 36 items / 1 error / 35 selected
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting test/contrib/test_pyopenssl.py ________________
+ImportError while importing test module '/workspace/repo/test/contrib/test_pyopenssl.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+test/contrib/test_pyopenssl.py:35: in <module>
+    from ..with_dummyserver.test_https import (  # noqa: E402, F401
+E   ImportError: cannot import name 'TestHTTPS_IPv6Addr' from 'test.with_dummyserver.test_https' (/workspace/repo/test/with_dummyserver/test_https.py)
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.9/site-packages/pytest_freezegun.py:17: 72 warnings
+  /usr/local/lib/python3.9/site-packages/pytest_freezegun.py:17: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    if LooseVersion(pytest.__version__) < LooseVersion('3.6.0'):
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+=========================== short test summary info ============================
+ERROR test/contrib/test_pyopenssl.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+======================== 72 warnings, 1 error in 0.16s =========================
+reward=0 graded=36 found=0 failed=0 parsed=0 framework=pytest exit_code=2

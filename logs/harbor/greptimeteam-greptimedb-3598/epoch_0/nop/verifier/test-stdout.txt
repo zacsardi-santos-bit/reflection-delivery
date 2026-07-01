@@ -1,0 +1,706 @@
+patching file src/mito2/src/engine/append_mode_test.rs
+patching file src/mito2/src/engine/basic_test.rs
+patching file src/mito2/src/engine/flush_test.rs
+patching file src/mito2/src/engine/open_test.rs
+   Compiling proc-macro2 v1.0.71
+   Compiling unicode-ident v1.0.12
+   Compiling cfg-if v1.0.0
+   Compiling autocfg v1.1.0
+   Compiling libc v0.2.153
+   Compiling serde v1.0.193
+   Compiling memchr v2.6.4
+   Compiling version_check v0.9.4
+   Compiling once_cell v1.19.0
+   Compiling libm v0.2.8
+   Compiling pin-project-lite v0.2.13
+   Compiling zerocopy v0.7.32
+   Compiling regex-syntax v0.8.2
+   Compiling allocator-api2 v0.2.16
+   Compiling futures-core v0.3.30
+   Compiling syn v1.0.109
+   Compiling parking_lot_core v0.9.9
+   Compiling scopeguard v1.2.0
+   Compiling equivalent v1.0.1
+   Compiling futures-sink v0.3.30
+   Compiling itoa v1.0.10
+   Compiling futures-io v0.3.30
+   Compiling pin-utils v0.1.0
+   Compiling rustversion v1.0.14
+   Compiling log v0.4.20
+   Compiling ahash v0.8.6
+   Compiling num-traits v0.2.17
+   Compiling aho-corasick v1.1.2
+   Compiling lock_api v0.4.11
+   Compiling slab v0.4.9
+   Compiling futures-channel v0.3.30
+   Compiling futures-task v0.3.30
+   Compiling heck v0.4.1
+   Compiling num-integer v0.1.45
+   Compiling bitflags v1.3.2
+   Compiling tracing-core v0.1.32
+   Compiling num-bigint v0.4.4
+   Compiling fnv v1.0.7
+   Compiling ppv-lite86 v0.2.17
+   Compiling spin v0.5.2
+   Compiling num-iter v0.1.43
+   Compiling async-trait v0.1.75
+   Compiling regex-automata v0.4.3
+   Compiling lazy_static v1.4.0
+   Compiling pkg-config v0.3.28
+   Compiling iana-time-zone v0.1.58
+   Compiling typenum v1.17.0
+   Compiling quote v1.0.33
+   Compiling percent-encoding v2.3.1
+   Compiling syn v2.0.43
+   Compiling jobserver v0.1.27
+   Compiling siphasher v0.3.11
+   Compiling ryu v1.0.16
+   Compiling either v1.9.0
+   Compiling anyhow v1.0.76
+   Compiling num-rational v0.4.1
+   Compiling cc v1.0.83
+   Compiling getrandom v0.2.11
+   Compiling num_cpus v1.16.0
+   Compiling mio v0.8.11
+   Compiling signal-hook-registry v1.4.1
+   Compiling socket2 v0.5.5
+   Compiling rand_core v0.6.4
+   Compiling hashbrown v0.14.3
+   Compiling rand_chacha v0.3.1
+   Compiling phf_shared v0.11.2
+   Compiling generic-array v0.14.7
+   Compiling base64 v0.21.5
+   Compiling serde_json v1.0.108
+   Compiling crossbeam-utils v0.8.18
+   Compiling regex v1.10.2
+   Compiling rand v0.8.5
+   Compiling indexmap v2.1.0
+   Compiling num-complex v0.4.4
+   Compiling doc-comment v0.3.3
+   Compiling phf v0.11.2
+   Compiling thiserror v1.0.51
+   Compiling phf_generator v0.11.2
+   Compiling parse-zoneinfo v0.3.0
+   Compiling zstd-sys v2.0.9+zstd.1.5.5
+   Compiling half v2.3.1
+   Compiling byteorder v1.5.0
+   Compiling phf_codegen v0.11.2
+   Compiling semver v1.0.20
+   Compiling static_assertions v1.1.0
+   Compiling ring v0.17.7
+   Compiling tower-service v0.3.2
+   Compiling chrono-tz-build v0.2.1
+   Compiling adler v1.0.2
+   Compiling paste v1.0.14
+   Compiling httparse v1.8.0
+   Compiling miniz_oxide v0.7.1
+   Compiling lexical-util v0.8.5
+   Compiling try-lock v0.2.5
+   Compiling const-oid v0.9.6
+   Compiling rustix v0.38.28
+   Compiling bitflags v2.4.1
+   Compiling bytes v1.5.0
+   Compiling want v0.3.1
+   Compiling chrono-tz v0.8.4
+   Compiling itertools v0.11.0
+   Compiling num v0.4.1
+   Compiling untrusted v0.9.0
+   Compiling httpdate v1.0.3
+   Compiling fixedbitset v0.4.2
+   Compiling crypto-common v0.1.6
+   Compiling rustc_version v0.4.0
+   Compiling spin v0.9.8
+   Compiling linux-raw-sys v0.4.12
+   Compiling block-buffer v0.10.4
+   Compiling indexmap v1.9.3
+   Compiling tinyvec_macros v0.1.1
+   Compiling subtle v2.5.0
+   Compiling lexical-write-integer v0.8.5
+   Compiling tinyvec v1.6.0
+   Compiling lexical-parse-integer v0.8.6
+   Compiling digest v0.10.7
+   Compiling hashbrown v0.12.3
+   Compiling mime v0.3.17
+   Compiling fastrand v2.0.1
+   Compiling serde_derive v1.0.193
+   Compiling tokio-macros v2.2.0
+   Compiling futures-macro v0.3.30
+   Compiling tracing-attributes v0.1.27
+   Compiling strum_macros v0.25.3
+   Compiling thiserror-impl v1.0.51
+   Compiling snafu-derive v0.7.5
+   Compiling prost-derive v0.12.3
+   Compiling pin-project-internal v1.1.3
+   Compiling unicode-normalization v0.1.22
+   Compiling lexical-parse-float v0.8.5
+   Compiling lexical-write-float v0.8.5
+   Compiling form_urlencoded v1.2.1
+   Compiling unicode-bidi v0.3.14
+   Compiling crc32fast v1.3.2
+   Compiling unicode-width v0.1.11
+   Compiling home v0.5.9
+   Compiling tempfile v3.8.1
+   Compiling rustls v0.21.10
+   Compiling lexical-core v0.8.5
+   Compiling idna v0.5.0
+   Compiling axum-core v0.3.4
+   Compiling tower-layer v0.3.2
+   Compiling prettyplease v0.2.15
+   Compiling hex v0.4.3
+   Compiling url v2.5.0
+   Compiling flatbuffers v23.5.26
+   Compiling axum v0.6.20
+   Compiling which v4.4.2
+   Compiling crossbeam-channel v0.5.10
+   Compiling petgraph v0.6.4
+   Compiling lz4-sys v1.9.4
+   Compiling rustls-pemfile v1.0.4
+   Compiling sync_wrapper v0.1.2
+   Compiling matchit v0.7.3
+   Compiling zstd-safe v6.0.6
+   Compiling cpufeatures v0.2.11
+   Compiling multimap v0.8.3
+   Compiling futures-util v0.3.30
+   Compiling flate2 v1.0.28
+   Compiling itertools v0.10.5
+   Compiling powerfmt v0.2.0
+   Compiling time-core v0.1.2
+   Compiling humantime v2.1.0
+   Compiling io-lifetimes v1.0.11
+   Compiling time-macros v0.2.16
+   Compiling deranged v0.3.10
+   Compiling csv-core v0.1.11
+   Compiling rustix v0.36.17
+   Compiling urlencoding v2.1.3
+   Compiling snap v1.1.1
+   Compiling sha2 v0.10.8
+   Compiling opentelemetry v0.21.0
+   Compiling async-stream-impl v0.3.5
+   Compiling pin-project v1.1.3
+   Compiling alloc-no-stdlib v2.0.4
+   Compiling regex-syntax v0.6.29
+   Compiling linux-raw-sys v0.1.4
+   Compiling prost-derive v0.11.9
+   Compiling tracing v0.1.40
+   Compiling protobuf v2.28.0
+   Compiling regex-syntax v0.7.5
+   Compiling strum v0.25.0
+   Compiling glob v0.3.1
+   Compiling procfs v0.14.2
+   Compiling same-file v1.0.6
+   Compiling comfy-table v7.1.0
+   Compiling prost v0.12.3
+   Compiling walkdir v2.4.0
+   Compiling snafu v0.7.5
+   Compiling futures-executor v0.3.30
+   Compiling prost-types v0.12.3
+   Compiling alloc-stdlib v0.2.2
+   Compiling common-macro v0.7.1 (/workspace/repo/src/common/macro)
+   Compiling ordered-float v4.2.0
+   Compiling common-error v0.7.1 (/workspace/repo/src/common/error)
+   Compiling futures v0.3.30
+   Compiling regex-automata v0.1.10
+   Compiling prometheus v0.13.3
+   Compiling overload v0.1.1
+   Compiling brotli-decompressor v2.5.1
+   Compiling sqlparser_derive v0.1.1
+   Compiling nu-ansi-term v0.46.0
+   Compiling ordered-float v2.10.1
+   Compiling sharded-slab v0.1.7
+   Compiling prost-build v0.12.3
+   Compiling tracing-log v0.2.0
+   Compiling matchers v0.1.0
+   Compiling thread_local v1.1.7
+   Compiling integer-encoding v3.0.4
+   Compiling brotli v3.4.0
+   Compiling thrift v0.17.0
+   Compiling block-padding v0.3.3
+   Compiling async-stream v0.3.5
+   Compiling twox-hash v1.6.3
+   Compiling tonic-build v0.10.2
+   Compiling backtrace v0.3.69
+   Compiling seq-macro v0.3.5
+   Compiling gimli v0.28.1
+   Compiling inout v0.1.3
+   Compiling opentelemetry-semantic-conventions v0.13.0
+   Compiling atty v0.2.14
+   Compiling object v0.32.2
+   Compiling rustc-demangle v0.1.23
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.10.0
+   Compiling smallvec v1.11.2
+   Compiling chrono v0.4.33
+   Compiling arrow-schema v47.0.0
+   Compiling csv v1.3.0
+   Compiling arrow-buffer v47.0.0
+   Compiling http v0.2.11
+   Compiling time v0.3.31
+   Compiling parking_lot v0.12.1
+   Compiling arrow-data v47.0.0
+   Compiling tokio v1.35.1
+   Compiling http-body v0.4.6
+   Compiling greptime-proto v0.1.0 (https://github.com/GreptimeTeam/greptime-proto.git?rev=06f6297ff3cab578a1589741b504342fbad70453#06f6297f)
+   Compiling sqlparser v0.38.0
+   Compiling tracing-subscriber v0.3.18
+   Compiling addr2line v0.21.0
+   Compiling uuid v1.6.1
+   Compiling cipher v0.4.4
+   Compiling tracing-log v0.1.4
+   Compiling crunchy v0.2.2
+   Compiling arrayvec v0.7.4
+   Compiling radium v0.7.0
+   Compiling md-5 v0.10.6
+   Compiling crossbeam-epoch v0.9.17
+   Compiling tiny-keccak v2.0.2
+   Compiling tap v1.0.1
+   Compiling prost v0.11.9
+   Compiling zeroize v1.7.0
+   Compiling base64ct v1.6.0
+   Compiling tracing-appender v0.2.3
+   Compiling wyz v0.5.1
+   Compiling pem-rfc7468 v0.7.0
+   Compiling hmac v0.12.1
+   Compiling funty v2.0.0
+   Compiling salsa20 v0.10.2
+   Compiling pbkdf2 v0.12.2
+   Compiling der v0.7.8
+   Compiling blake3 v1.5.0
+   Compiling arrow-array v47.0.0
+   Compiling bzip2-sys v0.1.11+1.0.8
+   Compiling lzma-sys v0.1.20
+   Compiling bitvec v1.0.1
+   Compiling anymap v1.0.0-beta.2
+   Compiling scrypt v0.11.0
+   Compiling aes v0.8.4
+   Compiling cbc v0.1.2
+   Compiling const-random-macro v0.1.16
+   Compiling bigdecimal v0.4.2
+   Compiling spki v0.7.3
+   Compiling zstd-safe v7.0.0
+   Compiling arrayref v0.3.7
+   Compiling tokio-util v0.7.10
+   Compiling tokio-stream v0.1.14
+   Compiling tokio-io-timeout v1.2.0
+   Compiling object_store v0.7.1
+   Compiling rust_decimal v1.33.1
+   Compiling arrow-select v47.0.0
+   Compiling arrow-row v47.0.0
+   Compiling h2 v0.3.24
+   Compiling tower v0.4.13
+   Compiling arrow-arith v47.0.0
+   Compiling opentelemetry_sdk v0.21.1
+   Compiling constant_time_eq v0.3.0
+   Compiling const-random v0.1.17
+   Compiling arrow-cast v47.0.0
+   Compiling arrow-ord v47.0.0
+   Compiling arrow-string v47.0.0
+   Compiling common-base v0.7.1 (/workspace/repo/src/common/base)
+   Compiling pkcs5 v0.7.1
+   Compiling blake2 v0.10.6
+   Compiling tracing-opentelemetry v0.22.0
+   Compiling arrow-ipc v47.0.0
+   Compiling arrow-csv v47.0.0
+   Compiling arrow-json v47.0.0
+   Compiling unicode-segmentation v1.10.1
+   Compiling num-bigint-dig v0.8.4
+   Compiling pkcs8 v0.10.2
+   Compiling hyper v0.14.28
+   Compiling arrow v47.0.0
+   Compiling xz2 v0.1.7
+   Compiling dlv-list v0.5.2
+   Compiling dashmap v5.5.3
+   Compiling darling_core v0.14.4
+   Compiling bytemuck v1.14.0
+   Compiling openssl-probe v0.1.5
+   Compiling ordered-multimap v0.7.1
+   Compiling common-time v0.7.1 (/workspace/repo/src/common/time)
+   Compiling common-decimal v0.7.1 (/workspace/repo/src/common/decimal)
+   Compiling rustls-native-certs v0.6.3
+   Compiling pkcs1 v0.7.5
+   Compiling simple_asn1 v0.6.2
+   Compiling ordered-float v3.9.2
+   Compiling serde_urlencoded v0.7.1
+   Compiling enum_dispatch v0.3.12
+   Compiling signature v2.2.0
+   Compiling pem v3.0.3
+   Compiling encoding_rs v0.8.33
+   Compiling ipnet v2.9.0
+   Compiling event-listener v2.5.3
+   Compiling rust-ini v0.20.0
+   Compiling safe_arch v0.7.1
+   Compiling tokio-metrics v0.3.1
+   Compiling darling_core v0.20.3
+   Compiling rsa v0.9.6
+   Compiling quick-xml v0.31.0
+   Compiling sha1 v0.10.6
+   Compiling raw-cpuid v10.7.0
+   Compiling matrixmultiply v0.3.8
+   Compiling fastrand v1.9.0
+   Compiling moka v0.12.1
+   Compiling tokio-metrics-collector v0.2.1
+   Compiling wide v0.7.13
+   Compiling backon v0.4.1
+   Compiling darling_macro v0.14.4
+   Compiling async-lock v2.8.0
+   Compiling quanta v0.11.1
+   Compiling hyper-timeout v0.4.1
+   Compiling crc32c v0.6.4
+   Compiling approx v0.5.1
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling flagset v0.4.4
+   Compiling tagptr v0.2.0
+   Compiling zstd-safe v5.0.2+zstd.1.5.2
+   Compiling triomphe v0.1.11
+   Compiling rawpointer v0.2.1
+   Compiling arc-swap v1.6.0
+   Compiling simba v0.6.0
+   Compiling humantime-serde v1.1.1
+   Compiling nalgebra-macros v0.1.0
+   Compiling rand_distr v0.4.3
+   Compiling darling_macro v0.20.3
+   Compiling proc-macro-error v1.0.4
+   Compiling md5 v0.7.0
+   Compiling sqlparser_derive v0.1.1 (https://github.com/GreptimeTeam/sqlparser-rs.git?rev=6a93567ae38d42be5c8d08b13c8ff4dde26502ef#6a93567a)
+   Compiling include_dir_macros v0.7.3
+   Compiling integer-encoding v4.0.0
+   Compiling crossbeam-deque v0.8.4
+   Compiling zigzag v0.1.0
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling rayon-core v1.12.0
+   Compiling common-catalog v0.7.1 (/workspace/repo/src/common/catalog)
+   Compiling autotools v0.2.6
+   Compiling etcd-client v0.12.3
+   Compiling erased-serde v0.4.1
+   Compiling protobuf-src v1.1.0+21.5
+   Compiling typetag-impl v0.2.14
+   Compiling memoffset v0.7.1
+   Compiling predicates-core v1.0.6
+   Compiling tonic v0.9.2
+   Compiling inventory v0.3.14
+   Compiling include_dir v0.7.3
+   Compiling async-recursion v1.0.5
+   Compiling float-cmp v0.9.0
+   Compiling rayon v1.8.0
+   Compiling fst v0.4.7
+   Compiling termtree v0.4.1
+   Compiling aquamarine v0.3.3
+   Compiling normalize-line-endings v0.3.0
+   Compiling difflib v0.4.0
+   Compiling predicates-tree v1.0.9
+   Compiling mockall_derive v0.11.4
+   Compiling predicates v2.1.5
+   Compiling nalgebra v0.29.0
+   Compiling crossbeam-queue v0.3.10
+   Compiling fragile v2.0.0
+   Compiling downcast v0.11.0
+   Compiling plotters-backend v0.3.5
+   Compiling ciborium-io v0.2.1
+   Compiling sqlparser v0.38.0 (https://github.com/GreptimeTeam/sqlparser-rs.git?rev=6a93567ae38d42be5c8d08b13c8ff4dde26502ef#6a93567a)
+   Compiling os_str_bytes v6.6.1
+   Compiling half v1.8.2
+   Compiling sysinfo v0.30.5
+   Compiling plotters-svg v0.3.5
+   Compiling opentelemetry-proto v0.4.0
+   Compiling protobuf-codegen v2.28.0
+   Compiling ciborium-ll v0.2.1
+   Compiling clap_lex v0.2.4
+   Compiling prometheus-static-metric v0.5.1
+   Compiling darling v0.14.4
+   Compiling crossbeam v0.8.3
+   Compiling derive_builder_core v0.12.0
+   Compiling nix v0.26.4
+   Compiling darling v0.20.3
+   Compiling typetag v0.2.14
+   Compiling opentelemetry-otlp v0.14.0
+   Compiling serde_with_macros v3.4.0
+   Compiling asynchronous-codec v0.7.0
+   Compiling serde_spanned v0.6.5
+   Compiling toml_datetime v0.6.5
+   Compiling derive_builder_macro v0.12.0
+   Compiling serde_repr v0.1.17
+   Compiling num-derive v0.4.1
+   Compiling concurrent-queue v2.4.0
+   Compiling fail v0.5.1
+   Compiling fs2 v0.4.3
+   Compiling if_chain v1.0.2
+   Compiling cast v0.3.0
+   Compiling textwrap v0.16.0
+   Compiling winnow v0.5.30
+   Compiling criterion-plot v0.5.0
+   Compiling clap v3.2.25
+   Compiling async-channel v1.9.0
+   Compiling common-config v0.7.1 (/workspace/repo/src/common/config)
+   Compiling ciborium v0.2.1
+   Compiling plotters v0.3.5
+   Compiling tinytemplate v1.2.1
+   Compiling memcomparable v0.2.0
+   Compiling toml_edit v0.21.0
+   Compiling oorandom v11.1.3
+   Compiling anes v0.1.6
+   Compiling lz4 v1.24.0
+   Compiling criterion v0.4.0
+   Compiling statrs v0.16.0
+   Compiling toml v0.8.8
+   Compiling raft-engine v0.4.1
+   Compiling derive_builder v0.12.0
+   Compiling mockall v0.11.4
+   Compiling puffin v0.7.1 (/workspace/repo/src/puffin)
+   Compiling serde_with v3.4.0
+   Compiling bzip2 v0.4.4
+   Compiling sct v0.7.1
+   Compiling rustls-webpki v0.101.7
+   Compiling jsonwebtoken v9.2.0
+   Compiling zstd v0.13.0
+   Compiling zstd v0.12.4
+   Compiling zstd v0.11.2+zstd.1.5.2
+   Compiling async-compression v0.4.5
+   Compiling parquet v47.0.0
+   Compiling rskafka v0.5.0
+   Compiling async-compression v0.3.15
+   Compiling orc-rust v0.2.43
+   Compiling tokio-rustls v0.24.1
+   Compiling tonic v0.10.2
+   Compiling hyper-rustls v0.24.2
+   Compiling reqwest v0.11.23
+   Compiling reqsign v0.14.9
+   Compiling datafusion-common v32.0.0 (https://github.com/apache/arrow-datafusion.git?rev=26e43acac3a96cec8dd4c8365f22dfb1a84306e9#26e43aca)
+   Compiling arrow-flight v47.0.0
+   Compiling opendal v0.45.1
+   Compiling datafusion-expr v32.0.0 (https://github.com/apache/arrow-datafusion.git?rev=26e43acac3a96cec8dd4c8365f22dfb1a84306e9#26e43aca)
+   Compiling common-telemetry v0.7.1 (/workspace/repo/src/common/telemetry)
+   Compiling datatypes v0.7.1 (/workspace/repo/src/datatypes)
+   Compiling common-runtime v0.7.1 (/workspace/repo/src/common/runtime)
+   Compiling common-wal v0.7.1 (/workspace/repo/src/common/wal)
+   Compiling index v0.7.1 (/workspace/repo/src/index)
+   Compiling datafusion-physical-expr v32.0.0 (https://github.com/apache/arrow-datafusion.git?rev=26e43acac3a96cec8dd4c8365f22dfb1a84306e9#26e43aca)
+   Compiling datafusion-execution v32.0.0 (https://github.com/apache/arrow-datafusion.git?rev=26e43acac3a96cec8dd4c8365f22dfb1a84306e9#26e43aca)
+   Compiling datafusion-sql v32.0.0 (https://github.com/apache/arrow-datafusion.git?rev=26e43acac3a96cec8dd4c8365f22dfb1a84306e9#26e43aca)
+   Compiling api v0.7.1 (/workspace/repo/src/api)
+   Compiling object-store v0.7.1 (/workspace/repo/src/object-store)
+   Compiling common-procedure v0.7.1 (/workspace/repo/src/common/procedure)
+   Compiling datafusion-optimizer v32.0.0 (https://github.com/apache/arrow-datafusion.git?rev=26e43acac3a96cec8dd4c8365f22dfb1a84306e9#26e43aca)
+   Compiling datafusion-physical-plan v32.0.0 (https://github.com/apache/arrow-datafusion.git?rev=26e43acac3a96cec8dd4c8365f22dfb1a84306e9#26e43aca)
+   Compiling common-procedure-test v0.7.1 (/workspace/repo/src/common/procedure-test)
+   Compiling datafusion v32.0.0 (https://github.com/apache/arrow-datafusion.git?rev=26e43acac3a96cec8dd4c8365f22dfb1a84306e9#26e43aca)
+   Compiling common-recordbatch v0.7.1 (/workspace/repo/src/common/recordbatch)
+   Compiling common-query v0.7.1 (/workspace/repo/src/common/query)
+   Compiling common-datasource v0.7.1 (/workspace/repo/src/common/datasource)
+   Compiling common-grpc v0.7.1 (/workspace/repo/src/common/grpc)
+   Compiling store-api v0.7.1 (/workspace/repo/src/store-api)
+   Compiling table v0.7.1 (/workspace/repo/src/table)
+   Compiling common-grpc-expr v0.7.1 (/workspace/repo/src/common/grpc-expr)
+   Compiling mito2 v0.7.1 (/workspace/repo/src/mito2)
+   Compiling common-meta v0.7.1 (/workspace/repo/src/common/meta)
+   Compiling client v0.7.1 (/workspace/repo/src/client)
+   Compiling common-test-util v0.7.1 (/workspace/repo/src/common/test-util)
+   Compiling protobuf-build v0.15.1
+   Compiling log-store v0.7.1 (/workspace/repo/src/log-store)
+error[E0432]: unresolved import `object_store::services::Memory`
+   --> src/mito2/src/sst/index/applier/builder.rs:208:9
+    |
+208 |     use object_store::services::Memory;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `Memory` in `services`
+    |
+note: found an item that was configured out
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/opendal-0.45.1/src/services/mod.rs:138:17
+    |
+138 | pub use memory::Memory;
+    |                 ^^^^^^
+    = note: the item is gated behind the `services-memory` feature
+
+error[E0432]: unresolved import `object_store::services::Memory`
+   --> src/mito2/src/sst/index/applier.rs:180:9
+    |
+180 |     use object_store::services::Memory;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `Memory` in `services`
+    |
+note: found an item that was configured out
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/opendal-0.45.1/src/services/mod.rs:138:17
+    |
+138 | pub use memory::Memory;
+    |                 ^^^^^^
+    = note: the item is gated behind the `services-memory` feature
+
+error[E0432]: unresolved import `object_store::services::Memory`
+   --> src/mito2/src/sst/index/creator.rs:327:9
+    |
+327 |     use object_store::services::Memory;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `Memory` in `services`
+    |
+note: found an item that was configured out
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/opendal-0.45.1/src/services/mod.rs:138:17
+    |
+138 | pub use memory::Memory;
+    |                 ^^^^^^
+    = note: the item is gated behind the `services-memory` feature
+
+error[E0432]: unresolved import `object_store::services::Memory`
+   --> src/mito2/src/sst/index/store.rs:252:9
+    |
+252 |     use object_store::services::Memory;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `Memory` in `services`
+    |
+note: found an item that was configured out
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/opendal-0.45.1/src/services/mod.rs:138:17
+    |
+138 | pub use memory::Memory;
+    |                 ^^^^^^
+    = note: the item is gated behind the `services-memory` feature
+
+error[E0432]: unresolved import `object_store::services::Memory`
+   --> src/mito2/src/sst/index.rs:227:9
+    |
+227 |     use object_store::services::Memory;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `Memory` in `services`
+    |
+note: found an item that was configured out
+   --> /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/opendal-0.45.1/src/services/mod.rs:138:17
+    |
+138 | pub use memory::Memory;
+    |                 ^^^^^^
+    = note: the item is gated behind the `services-memory` feature
+
+error[E0599]: no method named `scan_region` found for struct `MitoEngine` in the current scope
+  --> src/mito2/src/engine/append_mode_test.rs:84:10
+   |
+83 |       let scan = engine
+   |  ________________-
+84 | |         .scan_region(region_id, ScanRequest::default())
+   | |         -^^^^^^^^^^^ method not found in `MitoEngine`
+   | |_________|
+   | 
+   |
+  ::: src/mito2/src/engine.rs:80:1
+   |
+80 |   pub struct MitoEngine {
+   |   --------------------- method `scan_region` not found for this struct
+
+error[E0061]: this function takes 4 arguments but 5 arguments were supplied
+   --> src/mito2/src/engine/append_mode_test.rs:186:5
+    |
+186 |     reopen_region(&engine, region_id, region_dir, false, region_opts).await;
+    |     ^^^^^^^^^^^^^                                      -------------
+    |                                                        | |
+    |                                                        | unexpected argument of type `std::collections::HashMap<std::string::String, std::string::String>`
+    |                                                        help: remove the extra argument
+    |
+note: function defined here
+   --> src/mito2/src/test_util.rs:784:14
+    |
+784 | pub async fn reopen_region(
+    |              ^^^^^^^^^^^^^
+785 |     engine: &MitoEngine,
+    |     -------------------
+786 |     region_id: RegionId,
+    |     -------------------
+787 |     region_dir: String,
+    |     ------------------
+788 |     writable: bool,
+    |     --------------
+
+error[E0061]: this function takes 4 arguments but 5 arguments were supplied
+   --> src/mito2/src/engine/basic_test.rs:397:5
+    |
+397 |     reopen_region(&engine, region_id, region_dir, false, HashMap::new()).await;
+    |     ^^^^^^^^^^^^^                                      ----------------
+    |                                                        | |
+    |                                                        | unexpected argument of type `std::collections::HashMap<_, _>`
+    |                                                        help: remove the extra argument
+    |
+note: function defined here
+   --> src/mito2/src/test_util.rs:784:14
+    |
+784 | pub async fn reopen_region(
+    |              ^^^^^^^^^^^^^
+785 |     engine: &MitoEngine,
+    |     -------------------
+786 |     region_id: RegionId,
+    |     -------------------
+787 |     region_dir: String,
+    |     ------------------
+788 |     writable: bool,
+    |     --------------
+
+error[E0061]: this function takes 4 arguments but 5 arguments were supplied
+   --> src/mito2/src/engine/flush_test.rs:266:5
+    |
+266 |     reopen_region(&engine, region_id, region_dir, true, Default::default()).await;
+    |     ^^^^^^^^^^^^^                                     --------------------
+    |                                                       | |
+    |                                                       | unexpected argument
+    |                                                       help: remove the extra argument
+    |
+note: function defined here
+   --> src/mito2/src/test_util.rs:784:14
+    |
+784 | pub async fn reopen_region(
+    |              ^^^^^^^^^^^^^
+785 |     engine: &MitoEngine,
+    |     -------------------
+786 |     region_id: RegionId,
+    |     -------------------
+787 |     region_dir: String,
+    |     ------------------
+788 |     writable: bool,
+    |     --------------
+
+error[E0061]: this function takes 4 arguments but 5 arguments were supplied
+   --> src/mito2/src/engine/open_test.rs:98:5
+    |
+98  |     reopen_region(&engine, region_id, region_dir, false, Default::default()).await;
+    |     ^^^^^^^^^^^^^                                      --------------------
+    |                                                        | |
+    |                                                        | unexpected argument
+    |                                                        help: remove the extra argument
+    |
+note: function defined here
+   --> src/mito2/src/test_util.rs:784:14
+    |
+784 | pub async fn reopen_region(
+    |              ^^^^^^^^^^^^^
+785 |     engine: &MitoEngine,
+    |     -------------------
+786 |     region_id: RegionId,
+    |     -------------------
+787 |     region_dir: String,
+    |     ------------------
+788 |     writable: bool,
+    |     --------------
+
+error[E0061]: this function takes 4 arguments but 5 arguments were supplied
+   --> src/mito2/src/engine/open_test.rs:116:5
+    |
+116 |     reopen_region(&engine, region_id, region_dir, false, Default::default()).await;
+    |     ^^^^^^^^^^^^^                                      --------------------
+    |                                                        | |
+    |                                                        | unexpected argument
+    |                                                        help: remove the extra argument
+    |
+note: function defined here
+   --> src/mito2/src/test_util.rs:784:14
+    |
+784 | pub async fn reopen_region(
+    |              ^^^^^^^^^^^^^
+785 |     engine: &MitoEngine,
+    |     -------------------
+786 |     region_id: RegionId,
+    |     -------------------
+787 |     region_dir: String,
+    |     ------------------
+788 |     writable: bool,
+    |     --------------
+
+warning: unused import: `PuffinAsyncWriter`
+   --> src/mito2/src/sst/index/applier.rs:181:45
+    |
+181 |     use puffin::file_format::writer::{Blob, PuffinAsyncWriter, PuffinFileWriter};
+    |                                             ^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(unused_imports)]` on by default
+
+Some errors have detailed explanations: E0061, E0432, E0599.
+For more information about an error, try `rustc --explain E0061`.
+warning: `mito2` (lib test) generated 1 warning
+error: could not compile `mito2` (lib test) due to 11 previous errors; 1 warning emitted
+error: command `/usr/local/rustup/toolchains/nightly-2023-12-19-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package mito2` exited with code 101
+reward=0 graded=302 found=0 failed=0 parsed=0 framework=cargo exit_code=101

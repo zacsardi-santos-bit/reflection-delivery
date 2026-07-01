@@ -1,0 +1,7 @@
+I'm working on automating the process of publishing Airflow documentation packages to cloud object storage, and I need a new utility class to handle this. The utility should be able to discover all documentation packages in a local archive directory and list them. If the directory doesn't exist, it should exit with an error rather than crashing with an unhandled exception.
+
+I also need the ability to exclude certain packages by specifying a comma-separated list of names or partial names. The exclusion matching should work as a substring match, and dots in exclusion patterns should be treated the same as hyphens in package names. If, after filtering, there are no eligible packages to publish, the tool should also exit with an error.
+
+There are two publishing modes I need. The first is a versioned stable publishing mode, where each eligible package is published to both a version-specific path and a "stable" alias path at the destination — the version is read from a file in the package's source directory. The second is a bulk mode where each package's entire directory is mirrored to the corresponding path at the destination. In both modes, the utility should track which source-to-destination path pairs were actually processed, so callers can inspect what was done.
+
+Finally, there should be an overwrite flag. If a package already exists at the destination and overwrite is disabled, that package should be silently skipped (not re-published). If overwrite is enabled, it should always be published regardless of whether it exists.

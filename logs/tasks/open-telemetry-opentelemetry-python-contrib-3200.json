@@ -1,0 +1,23 @@
+{
+ "task": "open-telemetry-opentelemetry-python-contrib-3200",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'InvokeModel' to _HANDLED_OPERATIONS and _extract_titan/nova/claude_attributes + _invoke_model_on_success (re-wraps result['body']=StreamingBody); tests test_invoke_model_with_content[amazon.nova/titan/claude] assert span attrs via VCR cassettes"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

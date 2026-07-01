@@ -1,0 +1,23 @@
+{
+ "task": "okteto-okteto-4624",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "upstream PR title 'Add integration tests for validate and generate-schema'; golden adds integration/commands/{validate,generate_schema}.go, manifest fixtures, and schema_test typo fix 'tacoshop'->'tacopshop'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

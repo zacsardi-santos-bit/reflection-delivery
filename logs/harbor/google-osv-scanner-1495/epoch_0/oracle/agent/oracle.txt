@@ -1,0 +1,7 @@
+patching file internal/resolution/datasource/__snapshots__/maven_settings_test.snap
+patching file internal/resolution/datasource/fixtures/maven_settings/settings.xml
+patching file internal/resolution/datasource/http_auth.go
+patching file internal/resolution/datasource/maven_registry.go
+patching file internal/resolution/datasource/maven_settings.go
+patching file internal/resolution/datasource/npm_registry.go
+patching file internal/resolution/datasource/npmrc.go

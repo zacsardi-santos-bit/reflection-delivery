@@ -1,0 +1,5 @@
+patching file cmd/clusterctl/client/repository/components_test.go
+# sigs.k8s.io/cluster-api/cmd/clusterctl/client/repository [sigs.k8s.io/cluster-api/cmd/clusterctl/client/repository.test]
+cmd/clusterctl/client/repository/components_test.go:343:13: assignment mismatch: 2 variables but fixTargetNamespace returns 1 value
+FAIL	sigs.k8s.io/cluster-api/cmd/clusterctl/client/repository [build failed]
+reward=0 graded=111 found=111 failed=111 parsed=1 framework=go exit_code=2

@@ -1,0 +1,2 @@
+patching file debian/build.go
+patching file debian/xenial/kubeadm/debian/control

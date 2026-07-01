@@ -1,0 +1,7 @@
+I've noticed that pomerium sends a response header that tells browsers to only use HTTPS for a very long time, even on connections that aren't actually using TLS. This is a problem because that header should only go out when the server has a valid certificate for the domain and the connection is genuinely secured. On plain HTTP connections, sending that header can cause browsers to refuse to connect over plain HTTP when that's actually what you want.
+
+I'd like the proxy to be smarter about which security headers it adds to responses — specifically, it should include the full set of default security headers (including the long-term HTTPS enforcement header) only when the connection is TLS-secured (i.e., the server has a certificate for the relevant domain). For plain HTTP connections, the other default security headers are still fine, but the HTTPS enforcement header should be left out.
+
+I also want a way to completely turn off all the default security headers when needed — for example, when I'm running another component in front of pomerium that handles those headers itself. There should be a way to signal in the configuration that pomerium should not add any default security response headers at all.
+
+Finally, the default configuration should reflect this new behavior: rather than baking the security headers into the static defaults, the decision about which headers to send should happen dynamically at request time based on whether the connection is TLS-secured.

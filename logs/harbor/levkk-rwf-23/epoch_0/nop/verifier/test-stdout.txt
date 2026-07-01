@@ -1,0 +1,161 @@
+patching file rwf/src/http/request.rs
+   Compiling libc v0.2.161
+   Compiling proc-macro2 v1.0.89
+   Compiling unicode-ident v1.0.13
+   Compiling cfg-if v1.0.0
+   Compiling typenum v1.17.0
+   Compiling version_check v0.9.5
+   Compiling subtle v2.6.1
+   Compiling serde v1.0.214
+   Compiling autocfg v1.4.0
+   Compiling cpufeatures v0.2.14
+   Compiling memchr v2.7.4
+   Compiling regex-syntax v0.8.5
+   Compiling byteorder v1.5.0
+   Compiling log v0.4.22
+   Compiling parking_lot_core v0.9.10
+   Compiling smallvec v1.13.2
+   Compiling pin-project-lite v0.2.15
+   Compiling tinyvec_macros v0.1.1
+   Compiling scopeguard v1.2.0
+   Compiling bytes v1.8.0
+   Compiling lazy_static v1.5.0
+   Compiling once_cell v1.20.2
+   Compiling tinyvec v1.8.0
+   Compiling unicode-properties v0.1.3
+   Compiling itoa v1.0.11
+   Compiling futures-sink v0.3.31
+   Compiling futures-core v0.3.31
+   Compiling unicode-bidi v0.3.17
+   Compiling generic-array v0.14.7
+   Compiling powerfmt v0.2.0
+   Compiling serde_json v1.0.132
+   Compiling tracing-core v0.1.32
+   Compiling regex-syntax v0.6.29
+   Compiling fallible-iterator v0.2.0
+   Compiling lock_api v0.4.12
+   Compiling slab v0.4.9
+   Compiling aho-corasick v1.1.3
+   Compiling base64 v0.22.1
+   Compiling equivalent v1.0.1
+   Compiling unicode-normalization v0.1.24
+   Compiling num-conv v0.1.0
+   Compiling ryu v1.0.18
+   Compiling siphasher v0.3.11
+   Compiling time-core v0.1.2
+   Compiling hashbrown v0.15.0
+   Compiling instant v0.1.13
+   Compiling pin-utils v0.1.0
+   Compiling overload v0.1.1
+   Compiling phf_shared v0.11.2
+   Compiling opaque-debug v0.3.1
+   Compiling winnow v0.6.20
+   Compiling same-file v1.0.6
+   Compiling thiserror v1.0.65
+   Compiling bitflags v1.3.2
+   Compiling quote v1.0.37
+   Compiling futures-task v0.3.31
+   Compiling walkdir v2.5.0
+   Compiling stringprep v0.1.5
+   Compiling phf v0.11.2
+   Compiling syn v2.0.85
+   Compiling getrandom v0.2.15
+   Compiling mio v1.0.2
+   Compiling socket2 v0.5.7
+   Compiling signal-hook-registry v1.4.2
+   Compiling regex-automata v0.4.8
+   Compiling indexmap v2.6.0
+   Compiling rand_core v0.6.4
+   Compiling parking_lot v0.12.3
+   Compiling regex-automata v0.1.10
+   Compiling uuid v1.11.0
+   Compiling inotify-sys v0.1.5
+   Compiling inotify v0.10.2
+   Compiling filetime v0.2.25
+   Compiling rand v0.4.6
+   Compiling nu-ansi-term v0.46.0
+   Compiling notify-types v1.0.0
+   Compiling tracing-log v0.2.0
+   Compiling futures-channel v0.3.31
+   Compiling thread_local v1.1.8
+   Compiling sharded-slab v0.1.7
+   Compiling zeroize v1.8.1
+   Compiling whoami v1.5.2
+   Compiling remove_dir_all v0.5.3
+   Compiling matchers v0.1.0
+   Compiling percent-encoding v2.3.1
+   Compiling notify v7.0.0
+   Compiling colored v2.1.0
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.4
+   Compiling inout v0.1.3
+   Compiling tempdir v0.3.7
+   Compiling digest v0.10.7
+   Compiling cipher v0.4.4
+   Compiling universal-hash v0.5.1
+   Compiling aead v0.5.2
+   Compiling polyval v0.6.2
+   Compiling sha2 v0.10.8
+   Compiling md-5 v0.10.6
+   Compiling hmac v0.12.1
+   Compiling ctr v0.9.2
+   Compiling aes v0.8.4
+   Compiling sha1 v0.10.6
+   Compiling aes-gcm-siv v0.11.1
+   Compiling regex v1.11.1
+   Compiling pluralizer v0.4.0
+   Compiling serde_derive v1.0.214
+   Compiling zerocopy-derive v0.7.35
+   Compiling tokio-macros v2.4.0
+   Compiling futures-macro v0.3.31
+   Compiling tracing-attributes v0.1.27
+   Compiling thiserror-impl v1.0.65
+   Compiling async-trait v0.1.83
+   Compiling rwf-macros v0.1.6 (/workspace/repo/rwf-macros)
+   Compiling tokio v1.41.0
+   Compiling futures-util v0.3.31
+   Compiling zerocopy v0.7.35
+   Compiling tracing v0.1.40
+   Compiling ppv-lite86 v0.2.20
+   Compiling tracing-subscriber v0.3.18
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.5
+   Compiling postgres-protocol v0.6.7
+   Compiling deranged v0.3.11
+   Compiling serde_spanned v0.6.8
+   Compiling toml_datetime v0.6.8
+   Compiling tokio-util v0.7.12
+   Compiling toml_edit v0.22.22
+   Compiling time v0.3.36
+   Compiling toml v0.8.19
+   Compiling postgres-types v0.2.8
+   Compiling tokio-postgres v0.7.12
+   Compiling rwf v0.1.6 (/workspace/repo/rwf)
+    Finished test [unoptimized + debuginfo] target(s) in 21.75s
+────────────
+ Nextest run ID cd0d6f8c-bbb2-47c9-a8ac-7340488ad12a with nextest profile: default
+    Starting 1 test across 1 binary (58 tests skipped)
+        FAIL [   0.025s] (1/1) rwf http::request::test::test_form_data_multipart
+  stdout ───
+
+    running 1 test
+    test http::request::test::test_form_data_multipart ... FAILED
+
+    failures:
+
+    failures:
+        http::request::test::test_form_data_multipart
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 58 filtered out; finished in 0.01s
+
+  stderr ───
+    thread 'http::request::test::test_form_data_multipart' panicked at rwf/src/http/request.rs:311:40:
+    called `Result::unwrap()` on an `Err` value: MalformedRequest("only www-url-encoded form is currently supported")
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   0.026s] 1 test run: 0 passed, 1 failed, 58 skipped
+        FAIL [   0.025s] (1/1) rwf http::request::test::test_form_data_multipart
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

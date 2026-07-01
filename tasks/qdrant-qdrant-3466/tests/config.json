@@ -1,0 +1,21 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p segment --lib -E 'test(min_should)'",
+  "test_files": [
+    "lib/collection/tests/integration/collection_test.rs",
+    "lib/segment/tests/integration/nested_filtering_test.rs",
+    "lib/segment/tests/integration/segment_tests.rs",
+    "openapi/tests/openapi_integration/helpers/collection_setup.py",
+    "openapi/tests/openapi_integration/test_filter_min_should.py"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) segment types::tests::test_min_should_query_parse",
+    "(2/5) segment index::query_estimator::tests::min_should_with_min_count_same_as_condition_count_is_equivalent_to_must",
+    "(3/5) segment types::tests::test_min_should_nested_parse",
+    "(4/5) segment index::query_estimator::tests::another_min_should_estimation_query_test",
+    "(5/5) segment index::query_estimator::tests::min_should_estimation_query_test"
+  ],
+  "PASS_TO_PASS": []
+}

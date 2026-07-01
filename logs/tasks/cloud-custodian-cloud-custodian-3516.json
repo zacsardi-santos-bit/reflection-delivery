@@ -1,0 +1,23 @@
+{
+ "task": "cloud-custodian-cloud-custodian-3516",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test asserts waiter called once for cloudtrail CreateTable, not again for config source (len(mock_waiter.mock_calls)==1), config SSEDescription normalized to {'KMSMasterKeyArn','SSEType','Status'}, and assertEqual(describe_table, config_table)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 15,
+  "shallow": true
+ }
+}

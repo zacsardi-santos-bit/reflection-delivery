@@ -1,0 +1,22 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/e2e/playwright && tsc-jest-runner",
+  "test_files": [
+    "e2e/playwright/regression/@embedded-airgapped-install/test.spec.ts",
+    "e2e/playwright/regression/@embedded-online-install/test.spec.ts",
+    "e2e/playwright/regression/@existing-airgapped-install-admin/test.spec.ts",
+    "e2e/playwright/regression/@existing-airgapped-install-minimal/test.spec.ts",
+    "e2e/playwright/regression/@existing-airgapped-upgrade-admin/test.spec.ts",
+    "e2e/playwright/regression/@existing-airgapped-upgrade-minimal/test.spec.ts",
+    "e2e/playwright/regression/@existing-online-install-admin/test.spec.ts",
+    "e2e/playwright/regression/@existing-online-install-minimal/test.spec.ts",
+    "e2e/playwright/regression/@existing-online-upgrade-admin/test.spec.ts",
+    "e2e/playwright/regression/@existing-online-upgrade-minimal/test.spec.ts"
+  ],
+  "num_test_files": 10,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "::typescript type check"
+  ],
+  "PASS_TO_PASS": []
+}

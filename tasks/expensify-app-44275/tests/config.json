@@ -1,0 +1,15 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && TZ=utc NODE_OPTIONS=--experimental-vm-modules npx jest tests/actions/ReportFieldsTest.ts --coverage=false --watchAll=false",
+  "test_files": [
+    "tests/actions/ReportFieldsTest.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tests/actions/ReportFieldsTest.ts::actions/ReportFields createReportField creates a new text report field of a workspace",
+    "/workspace/repo/tests/actions/ReportFieldsTest.ts::actions/ReportFields createReportField creates a new date report field of a workspace",
+    "/workspace/repo/tests/actions/ReportFieldsTest.ts::actions/ReportFields createReportField creates a new list report field of a workspace"
+  ],
+  "PASS_TO_PASS": []
+}

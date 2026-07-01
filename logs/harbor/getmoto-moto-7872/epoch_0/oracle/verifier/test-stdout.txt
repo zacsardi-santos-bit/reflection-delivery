@@ -1,0 +1,43 @@
+patching file tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py
+patching file tests/test_sagemaker/test_sagemaker_automljobs.py
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml (WARNING: ignoring pytest config in setup.cfg!)
+plugins: cov-7.1.0
+[1mcollecting ... [0mcollected 33 items / 3 deselected / 30 selected
+
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_cloudformation [32mPASSED[0m[32m [  3%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_acm [32mPASSED[0m[32m [  6%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_backup [32mPASSED[0m[32m [ 10%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ecs [32mPASSED[0m[32m [ 13%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ec2 [32mPASSED[0m[32m [ 16%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ec2_vpc [32mPASSED[0m[32m [ 20%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_tag_keys_ec2 [32mPASSED[0m[32m [ 23%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_tag_values_ec2 [32mPASSED[0m[32m [ 26%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_many_resources [32mPASSED[0m[32m [ 30%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_target_group [32mPASSED[0m[32m [ 33%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_s3[s3] [32mPASSED[0m[32m [ 36%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_s3[s3:bucket] [32mPASSED[0m[32m [ 40%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_multiple_tag_filters [32mPASSED[0m[32m [ 43%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_lambda [32mPASSED[0m[32m [ 46%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sqs [32mPASSED[0m[32m [ 50%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sns [32mPASSED[0m[32m [ 53%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ssm [32mPASSED[0m[32m [ 56%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_tag_resources_for_unknown_service [32mPASSED[0m[32m [ 60%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_elb [32mPASSED[0m[32m [ 63%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sagemaker_cluster [32mPASSED[0m[32m [ 66%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sagemaker_automljob [32mPASSED[0m[32m [ 70%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_tag_resources_sagemaker [32mPASSED[0m[32m [ 73%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_efs [32mPASSED[0m[32m [ 76%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_create_auto_ml_job_v2 [32mPASSED[0m[32m [ 80%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_describe_auto_ml_job_v2 [32mPASSED[0m[32m [ 83%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_describe_auto_ml_job_v2_defaults [32mPASSED[0m[32m [ 86%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_list_auto_ml_jobs [32mPASSED[0m[32m [ 90%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_list_auto_ml_jobs_filters [32mPASSED[0m[32m [ 93%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_stop_auto_ml_job [32mPASSED[0m[32m [ 96%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_tag_auto_ml_job [32mPASSED[0m[32m [100%][0m
+
+[32m======================= [32m[1m30 passed[0m, [33m3 deselected[0m[32m in 4.49s[0m[32m =======================[0m
+reward=1 graded=30 found=0 failed=0 parsed=30 framework=pytest exit_code=0

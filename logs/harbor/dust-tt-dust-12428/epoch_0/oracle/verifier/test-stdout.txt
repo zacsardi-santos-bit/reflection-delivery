@@ -1,0 +1,43 @@
+patching file 'front/pages/api/v1/w/[wId]/files/fileId.test.ts'
+patching file 'front/pages/api/w/[wId]/files/[fileId]/index.test.ts'
+ * Starting PostgreSQL 16 database server
+   ...done.
+Starting redis-server: redis-server.
+
+ RUN  v3.0.8 /workspace/repo/front
+
+stderr | pages/api/w/[wId]/files/[fileId]/index.test.ts
+Warning: forwardRef render functions accept exactly two parameters: props and ref. Did you forget to use the ref parameter?
+
+stderr | pages/api/v1/w/[wId]/files/fileId.test.ts
+Warning: forwardRef render functions accept exactly two parameters: props and ref. Did you forget to use the ref parameter?
+
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > GET /api/w/[wId]/files/[fileId] > should return 404 for non-existent file
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > GET /api/v1/w/[wId]/files/[fileId] > should return 404 for non-existent file
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > GET /api/v1/w/[wId]/files/[fileId] > should allow API key to view file for GET request
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should return error for non-supported use cases for non-system keys
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > GET /api/w/[wId]/files/[fileId] > should allow any role to view file for GET request
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should return 403 without builder permissions on non-conversation files
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should return 403 when user is not a builder for non-conversation files
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should allow non-builder to modify conversation files
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > POST /api/v1/w/[wId]/files/[fileId] > should allow system API key to modify any file
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should allow regular user to modify conversation files
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should return error for non-supported use cases for non-system keys
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should allow admin to modify any file
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should return 403 when using system key without builder permissions
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > POST /api/w/[wId]/files/[fileId] > should allow builder to modify any file
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should allow non-builder to delete conversation files
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should return 403 when user is not a builder for non-conversation files
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > DELETE /api/v1/w/[wId]/files/[fileId] > should allow system API key to delete any file
+ ✓ pages/api/v1/w/[wId]/files/fileId.test.ts > Method Support /api/v1/w/[wId]/files/[fileId] > should return 405 for unsupported methods
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should allow regular user to delete conversation files
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should allow admin to delete any file
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > DELETE /api/w/[wId]/files/[fileId] > should allow builder to delete any file
+ ✓ pages/api/w/[wId]/files/[fileId]/index.test.ts > Method Support /api/w/[wId]/files/[fileId] > should return 405 for unsupported methods
+
+ Test Files  2 passed (2)
+      Tests  22 passed (22)
+   Start at  15:33:26
+   Duration  9.23s (transform 1.78s, setup 742ms, collect 13.60s, tests 555ms, environment 1.60s, prepare 284ms)
+
+reward=1 graded=22 found=0 failed=0 parsed=0 framework=vitest exit_code=0

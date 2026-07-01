@@ -1,0 +1,19 @@
+patching file discovery/syncer_atomic_test.go
+patching file discovery/syncer_queue_test.go
+patching file discovery/syncer_test.go
+# github.com/lightningnetwork/lnd/discovery [github.com/lightningnetwork/lnd/discovery.test]
+discovery/syncer_atomic_test.go:102:13: syncer.isSendingBacklog undefined (type *GossipSyncer has no field or method isSendingBacklog)
+discovery/syncer_atomic_test.go:120:25: syncer.isSendingBacklog undefined (type *GossipSyncer has no field or method isSendingBacklog)
+discovery/syncer_atomic_test.go:163:13: syncer.isSendingBacklog undefined (type *GossipSyncer has no field or method isSendingBacklog)
+discovery/syncer_queue_test.go:47:19: syncer.QueueTimestampRange undefined (type *GossipSyncer has no field or method QueueTimestampRange)
+discovery/syncer_queue_test.go:83:20: syncer.QueueTimestampRange undefined (type *GossipSyncer has no field or method QueueTimestampRange)
+discovery/syncer_queue_test.go:93:19: syncer.QueueTimestampRange undefined (type *GossipSyncer has no field or method QueueTimestampRange)
+discovery/syncer_queue_test.go:137:15: syncer.QueueTimestampRange undefined (type *GossipSyncer has no field or method QueueTimestampRange)
+discovery/syncer_queue_test.go:152:20: undefined: defaultTimestampQueueSize
+discovery/syncer_queue_test.go:154:3: undefined: defaultTimestampQueueSize
+discovery/syncer_queue_test.go:197:19: syncer.QueueTimestampRange undefined (type *GossipSyncer has no field or method QueueTimestampRange)
+discovery/syncer_queue_test.go:197:19: too many errors
+{"Time":"2026-06-29T15:15:06.094436047Z","Action":"start","Package":"github.com/lightningnetwork/lnd/discovery"}
+{"Time":"2026-06-29T15:15:06.094518787Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Output":"FAIL\tgithub.com/lightningnetwork/lnd/discovery [build failed]\n"}
+{"Time":"2026-06-29T15:15:06.094564708Z","Action":"fail","Package":"github.com/lightningnetwork/lnd/discovery","Elapsed":0}
+reward=0 graded=84 found=0 failed=0 parsed=1 framework=go exit_code=1

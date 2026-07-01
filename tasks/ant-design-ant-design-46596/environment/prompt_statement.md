@@ -1,0 +1,5 @@
+I'm working on an application that uses a design system with custom class prefixes and RTL layout direction. When I use component-based rendering, my custom theme and direction settings apply correctly because the component tree inherits from my global provider. But when I use the static programmatic APIs for toasts, notifications, and confirm dialogs, those settings don't apply — they always render with the default class prefix and ignore my RTL or locale configuration.
+
+I'd like the global configuration API to support a way to wrap the internal container of these static feedback elements so they can inherit the same theming, icon prefix, reading direction, locale, and component-level constraints that my application already uses. Ideally there should be a clear priority order so that component-level config still wins over the wrapper, and the wrapper wins over the global provider config.
+
+This should work consistently for the static toast message API, the notification API, and the confirm dialog API. It would also be useful to be able to reset the holder state between usages so that config changes can be tested cleanly.

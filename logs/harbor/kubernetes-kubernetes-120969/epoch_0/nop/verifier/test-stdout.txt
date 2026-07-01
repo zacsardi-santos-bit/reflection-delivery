@@ -1,0 +1,24 @@
+patching file pkg/kubelet/apis/podresources/server_v1_test.go
+patching file pkg/kubelet/apis/podresources/server_v1alpha1_test.go
+patching file pkg/kubelet/cm/container_manager_linux_test.go
+patching file pkg/kubelet/eviction/eviction_manager_test.go
+patching file pkg/kubelet/eviction/memory_threshold_notifier_test.go
+patching file pkg/kubelet/eviction/mock_threshold_notifier_test.go
+patching file pkg/kubelet/images/image_gc_manager_test.go
+patching file pkg/kubelet/kubelet_test.go
+patching file pkg/kubelet/kuberuntime/kuberuntime_gc_test.go
+patching file pkg/kubelet/metrics/collectors/resource_metrics_test.go
+patching file pkg/kubelet/metrics/collectors/volume_stats_test.go
+patching file pkg/kubelet/pleg/generic_test.go
+patching file pkg/kubelet/runonce_test.go
+patching file pkg/kubelet/server/stats/summary_test.go
+patching file pkg/kubelet/server/stats/summary_windows_test.go
+patching file pkg/kubelet/server/stats/volume_stat_calculator_test.go
+patching file pkg/kubelet/stats/cadvisor_stats_provider_test.go
+patching file pkg/kubelet/stats/cri_stats_provider_test.go
+patching file pkg/kubelet/stats/provider_test.go
+patching file test/e2e/storage/drivers/csi-test/driver/driver.mock.go
+patching file test/utils/oidc/handlers.mock.go
+patching file test/utils/oidc/testserver.go
+test/e2e/storage/drivers/csi-test/driver/driver.mock.go:33:2: cannot find module providing package go.uber.org/mock/gomock: import lookup disabled by -mod=vendor
+reward=0 graded=955 found=0 failed=0 parsed=0 framework=go exit_code=1

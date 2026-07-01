@@ -1,0 +1,98 @@
+{
+    "id": "67ccf599-40a8-46b4-a678-785e3b16ab06",
+    "task_name": "offline/zalando-incubator-kubernetes-on-aws-7406",
+    "trial_name": "zalando-incubator-kubernetes-on__EM5Krwu",
+    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/zalando-incubator-kubernetes-on__EM5Krwu",
+    "task_id": {
+        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/zalando-incubator-kubernetes-on-aws-7406"
+    },
+    "source": "harbor",
+    "task_checksum": "8027d55ab9b21a0eeb428da4f2b864e884e59fc71d73f9ff423fd402756a904a",
+    "config": {
+        "task": {
+            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/zalando-incubator-kubernetes-on-aws-7406",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "harbor"
+        },
+        "trial_name": "zalando-incubator-kubernetes-on__EM5Krwu",
+        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "modal",
+            "import_path": null,
+            "force_build": false,
+            "delete": false,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-06-29T15:21:20.436337Z",
+    "finished_at": "2026-06-29T15:22:25.836542Z",
+    "environment_setup": {
+        "started_at": "2026-06-29T15:21:20.437759Z",
+        "finished_at": "2026-06-29T15:21:31.714165Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-06-29T15:21:31.714171Z",
+        "finished_at": "2026-06-29T15:21:31.714187Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-06-29T15:21:31.714205Z",
+        "finished_at": "2026-06-29T15:21:31.714217Z"
+    },
+    "verifier": {
+        "started_at": "2026-06-29T15:21:39.897465Z",
+        "finished_at": "2026-06-29T15:22:21.440414Z"
+    }
+}

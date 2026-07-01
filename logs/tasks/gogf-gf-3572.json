@@ -1,0 +1,23 @@
+{
+ "task": "gogf-gf-3572",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden changes Iterator to 'for k, v := range m.Map()' (dropping the RLock held during callback) across 7 gmap + 3 gset types; new Test_*_Iterator_Deadlock tests iterate+Remove and assert final map/set contents under -timeout 60s"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

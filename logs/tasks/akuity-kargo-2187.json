@@ -1,0 +1,23 @@
+{
+ "task": "akuity-kargo-2187",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden adds FreightHistory (Current() keyed by warehouse) in stage_types/stage_helpers, updates verification.go to operate on specific freight items and indexer.go to scan all history items; deprecates CurrentFreight. Matches issue's structured multi-warehouse history. 294 F2P via 'go test -json ./a"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 31,
+  "shallow": true
+ }
+}

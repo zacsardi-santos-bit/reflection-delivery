@@ -1,0 +1,33 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -Dtest=PulsepointBidderTest -DfailIfNoTests=false",
+  "test_files": [
+    "src/test/java/org/prebid/server/bidder/pulsepoint/PulsepointBidderTest.java",
+    "src/test/resources/org/prebid/server/it/openrtb2/pulsepoint/test-auction-pulsepoint-request.json",
+    "src/test/resources/org/prebid/server/it/openrtb2/pulsepoint/test-pulsepoint-bid-request-1.json"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "prebid-server::test_1",
+    "prebid-server::test_2",
+    "prebid-server::test_3",
+    "prebid-server::test_4",
+    "prebid-server::test_5",
+    "prebid-server::test_6",
+    "prebid-server::test_7",
+    "prebid-server::test_8",
+    "prebid-server::test_9",
+    "prebid-server::test_10",
+    "prebid-server::test_11",
+    "prebid-server::test_12",
+    "prebid-server::test_13",
+    "prebid-server::test_14",
+    "prebid-server::test_15",
+    "prebid-server::test_16",
+    "prebid-server::test_17",
+    "prebid-server::test_18",
+    "prebid-server::test_19"
+  ],
+  "PASS_TO_PASS": []
+}

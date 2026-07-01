@@ -1,0 +1,10 @@
+patching file examples/persistent-caching/README.md
+patching file examples/persistent-caching/example.js
+patching file examples/persistent-caching/template.md
+patching file lib/Compilation.js
+patching file lib/ModuleStoreError.js
+patching file lib/optimize/ConcatenatedModule.js
+patching file lib/optimize/ModuleConcatenationPlugin.js
+patching file lib/util/internalSerializables.js
+patching file package.json
+patching file yarn.lock

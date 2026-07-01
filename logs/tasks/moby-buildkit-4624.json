@@ -1,0 +1,23 @@
+{
+ "task": "moby-buildkit-4624",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds MountContentCache (Default/On/Off) in client/llb/exec.go + solver/llbsolver/ops/exec.go + proto; F2P includes new TestExecOpContentCache subtests exercising cacheByDefault/cacheIsSafe via CacheMap()"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

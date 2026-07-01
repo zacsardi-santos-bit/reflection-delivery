@@ -1,0 +1,23 @@
+{
+ "task": "greptimeteam-greptimedb-977",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden instance/sql.rs adds: pub async fn execute_promql_statement(&self, promql, start, end, interval, lookback, query_ctx); test.patch adds aggregators_simple_sum/avg/count/without calling it"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

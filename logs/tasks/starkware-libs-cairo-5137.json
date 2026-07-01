@@ -1,0 +1,23 @@
+{
+ "task": "starkware-libs-cairo-5137",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds '+    pub fn with_minimal_movable_functions(self) -> Self {' and wires it into SierraGenDatabaseForTesting; 18 snapshot test_data files updated"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

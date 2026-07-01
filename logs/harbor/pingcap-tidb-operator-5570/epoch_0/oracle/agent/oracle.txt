@@ -1,0 +1,9 @@
+patching file docs/api-references/docs.md
+patching file manifests/crd.yaml
+patching file manifests/crd/v1/pingcap.com_tidbclusters.yaml
+patching file pkg/apis/pingcap/v1alpha1/openapi_generated.go
+patching file pkg/apis/pingcap/v1alpha1/tidbcluster.go
+patching file pkg/apis/pingcap/v1alpha1/types.go
+patching file pkg/apis/pingcap/v1alpha1/validation/validation.go
+patching file pkg/apis/pingcap/v1alpha1/zz_generated.deepcopy.go
+patching file pkg/manager/member/tidb_scaler.go

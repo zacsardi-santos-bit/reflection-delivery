@@ -1,0 +1,40 @@
+patching file pkg/reduce/data_forward_test.go
+patching file pkg/reduce/pbq/pbq_test.go
+patching file pkg/reduce/pbq/pbqmanager_test.go
+patching file pkg/reduce/pbq/store/aligned/fs/manager_test.go (renamed from pkg/reduce/pbq/store/aligned/wal/stores_test.go)
+patching file pkg/reduce/pbq/store/aligned/fs/wal_segment_test.go (renamed from pkg/reduce/pbq/store/aligned/wal/segment_test.go)
+patching file pkg/reduce/pbq/store/aligned/memory/manager_test.go (renamed from pkg/reduce/pbq/store/aligned/memory/stores_test.go)
+patching file pkg/reduce/pbq/store/aligned/memory/wal_test.go (renamed from pkg/reduce/pbq/store/aligned/memory/store_test.go)
+# github.com/numaproj/numaflow/pkg/reduce
+pkg/reduce/data_forward_test.go:37:2: no required module provides package github.com/numaproj/numaflow/pkg/reduce/pbq/store; to add it:
+	go get github.com/numaproj/numaflow/pkg/reduce/pbq/store
+FAIL	github.com/numaproj/numaflow/pkg/reduce [setup failed]
+# github.com/numaproj/numaflow/pkg/reduce/pbq/store/aligned/fs
+pkg/reduce/data_forward_test.go:37:2: no required module provides package github.com/numaproj/numaflow/pkg/reduce/pbq/store; to add it:
+	go get github.com/numaproj/numaflow/pkg/reduce/pbq/store
+FAIL	github.com/numaproj/numaflow/pkg/reduce/pbq/store/aligned/fs [setup failed]
+# github.com/numaproj/numaflow/pkg/reduce/pbq/store/aligned/memory
+pkg/reduce/data_forward_test.go:37:2: no required module provides package github.com/numaproj/numaflow/pkg/reduce/pbq/store; to add it:
+	go get github.com/numaproj/numaflow/pkg/reduce/pbq/store
+FAIL	github.com/numaproj/numaflow/pkg/reduce/pbq/store/aligned/memory [setup failed]
+# github.com/numaproj/numaflow/pkg/reduce/pbq [github.com/numaproj/numaflow/pkg/reduce/pbq.test]
+pkg/reduce/pbq/pbq_test.go:84:30: too many arguments in call to pq.Write
+	have (context.Context, *window.TimedWindowRequest, bool)
+	want (context.Context, *window.TimedWindowRequest)
+pkg/reduce/pbq/pbq_test.go:151:30: too many arguments in call to pq.Write
+	have (context.Context, *window.TimedWindowRequest, bool)
+	want (context.Context, *window.TimedWindowRequest)
+pkg/reduce/pbq/pbq_test.go:192:29: too many arguments in call to pq.Write
+	have (context.Context, *window.TimedWindowRequest, bool)
+	want (context.Context, *window.TimedWindowRequest)
+pkg/reduce/pbq/pbqmanager_test.go:142:30: too many arguments in call to pq.Write
+	have (context.Context, *window.TimedWindowRequest, bool)
+	want (context.Context, *window.TimedWindowRequest)
+pkg/reduce/pbq/pbqmanager_test.go:199:30: too many arguments in call to pq.Write
+	have (context.Context, *window.TimedWindowRequest, bool)
+	want (context.Context, *window.TimedWindowRequest)
+FAIL	github.com/numaproj/numaflow/pkg/reduce/pbq [build failed]
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

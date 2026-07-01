@@ -1,0 +1,32 @@
+patching file test/functional/query-builder/isolated-where/entity/User.ts
+patching file test/functional/query-builder/isolated-where/query-builder-isolated-where.ts
+patching file test/utils/test-utils.ts
+
+> typeorm@0.3.17 compile
+> rimraf ./build && tsc
+
+
+
+  query builder > isolated-where
+    1) should correctly apply brackets when where statement isolation is enabled
+
+
+  0 passing (216ms)
+  1 failing
+
+  1) query builder > isolated-where
+       should correctly apply brackets when where statement isolation is enabled:
+
+      AssertionError: expected 'SELECT user.id AS user_id, user.first…' to equal 'SELECT user.id AS user_id, user.first…'
+      + expected - actual
+
+      -SELECT user.id AS user_id, user.firstName AS user_firstName, user.lastName AS user_lastName, user.isAdmin AS user_isAdmin FROM user user WHERE user.id = ? AND user.firstName = ? OR user.lastName = ?
+      +SELECT user.id AS user_id, user.firstName AS user_firstName, user.lastName AS user_lastName, user.isAdmin AS user_isAdmin FROM user user WHERE user.id = ? AND (user.firstName = ? OR user.lastName = ?)
+      
+      at /workspace/repo/test/functional/query-builder/isolated-where/query-builder-isolated-where.ts:39:35
+      at Array.map (<anonymous>)
+      at Context.<anonymous> (test/functional/query-builder/isolated-where/query-builder-isolated-where.ts:26:25)
+
+
+
+reward=0 graded=1 found=1 failed=1 parsed=2 framework=mocha exit_code=1

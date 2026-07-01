@@ -1,0 +1,48 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx --coverage=false --verbose --json",
+  "test_files": [
+    "desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx",
+    "desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx",
+    "desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx::DragAndDrop should render the initial message when not dragging and children not present",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx::DragAndDrop should display the dragging message when dragging files",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Rename option renders rename modal when rename option is clicked",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx::CreateAndUploadAction should render the dropdown with actions",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx::CreateAndUploadAction should open the folder creation modal when \"New Folder\" is clicked",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx::CreateAndUploadAction should open the file creation modal when \"New File\" is clicked",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx::CreateAndUploadAction should open the upload file modal when \"New Upload\" is clicked",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx::CreateAndUploadAction should call the correct API for creating a folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx::CreateAndUploadAction should call the correct API for creating a file"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx::DragAndDrop should render children when provided and not dragging",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx::DragAndDrop should not display the default message when children are passed",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx::DragAndDrop should call onDrop when files are dropped",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Summary option does not render view summary option when there are multiple records selected",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Summary option renders view summary option when record is a hdfs file",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Summary option renders view summary option when record is a ofs file",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Summary option does not render view summary option when record is a hdfs folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Summary option does not render view summary option when record is a an abfs file",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Summary option renders summary modal when view summary option is clicked",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Rename option does not render rename option when there are multiple records selected",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Rename option does not render rename option when selected record is a abfs root folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Rename option does not render rename option when selected record is a gs root folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Rename option does not render rename option when selected record is a s3 root folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Rename option does not render rename option when selected record is a ofs root folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Rename option does not render rename option when selected record is a ofs service ID folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Rename option does not render rename option when selected record is a ofs volume folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Rename option renders rename option when selected record is a file or a folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Set replication option does not render set replication option when there are multiple records selected",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Set replication option renders set replication option when selected record is a hdfs file",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Set replication option does not render set replication option when selected record is a hdfs folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Set replication option does not render set replication option when selected record is a gs file/folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Set replication option does not render set replication option when selected record is a s3 file/folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Set replication option does not render set replication option when selected record is a ofs file/folder",
+    "/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx::StorageBrowserRowActions Set replication option renders set replication modal when set replication option is clicked"
+  ]
+}

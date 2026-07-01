@@ -1,0 +1,3 @@
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 1728 with fuzz 3.

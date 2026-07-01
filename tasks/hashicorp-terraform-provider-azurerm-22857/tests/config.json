@@ -1,0 +1,20 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/services/automanage/parse ./internal/services/automanage/validate ./internal/services/azurestackhci -count=1",
+  "test_files": [
+    "internal/services/automanage/parse/automanage_configuration_hci_assignment_test.go",
+    "internal/services/automanage/validate/automanage_configuration_hci_assignment_id_test.go",
+    "internal/services/azurestackhci/stack_hci_cluster_resource_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/automanage/parse::TestAutomanageConfigurationHCIAssignmentIDFormatter",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/automanage/parse::TestAutomanageConfigurationHCIAssignmentID",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/automanage/parse::TestAutomanageConfigurationIDFormatter",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/automanage/parse::TestAutomanageConfigurationID",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/automanage/validate::TestAutomanageConfigurationHCIAssignmentID",
+    "github.com/hashicorp/terraform-provider-azurerm/internal/services/automanage/validate::TestAutomanageConfigurationID"
+  ],
+  "PASS_TO_PASS": []
+}

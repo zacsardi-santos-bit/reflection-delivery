@@ -1,0 +1,23 @@
+{
+ "task": "cloud-custodian-cloud-custodian-9390",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `@resources.register('sagemaker-cluster')` with list_clusters/describe_cluster enum+detail spec, subnet/security-group/network-location filters, and ClusterDelete action; F2P=test_cluster_subnet/test_cluster_security_group/test_delete_cluster/test_tag_cluster"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 20,
+  "shallow": true
+ }
+}

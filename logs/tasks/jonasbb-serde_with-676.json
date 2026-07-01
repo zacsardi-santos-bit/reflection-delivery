@@ -1,0 +1,23 @@
+{
+ "task": "jonasbb-serde_with-676",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P includes behavioral tests beyond snapshots: '#[should_panic] fn test_set_prevent_duplicates_with_duplicates' and 'test_set_last_value_wins_with_duplicates'; golden implements JsonSchema for wrappers in schemars_0_8.rs"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

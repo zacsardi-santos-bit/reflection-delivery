@@ -1,0 +1,107 @@
+patching file ghost/core/test/unit/server/services/stats/posts.test.js
+patching file ghost/core/test/unit/server/services/stats/utils/tinybird.test.js
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+warning ghost@5.121.0: The engine "cli" appears to be invalid.
+$ mocha --reporter dot --require tsx --require=./test/utils/overrides.js --exit --trace-warnings --recursive --extension=test.js,test.ts --reporter spec ./test/unit/server/services/stats/posts.test.js ./test/unit/server/services/stats/utils/tinybird.test.js --timeout=10000
+
+
+  PostsStatsService
+    ✔ exists
+    getTopPosts
+      ✔ returns all posts with zero stats when no events exist
+      ✔ correctly ranks posts by free_members
+      ✔ correctly ranks posts by paid_members
+      ✔ correctly ranks posts by mrr
+      ✔ properly filters by date range
+      ✔ respects the limit parameter
+    getReferrersForPost
+      ✔ returns empty array when no events exist
+      ✔ returns referrers for a post
+      ✔ correctly ranks referrers by free_members
+      ✔ correctly ranks referrers by paid_members
+      ✔ correctly ranks referrers by mrr
+      ✔ properly filters by date range
+      ✔ respects the limit parameter
+    getGrowthStatsForPost
+      ✔ returns growth stats for a post
+    getLatestPostStats
+      ✔ returns null when no published posts exist
+      ✔ returns latest published post with zero stats when no events exist
+      ✔ returns latest published post with email stats
+      ✔ returns latest published post with member stats
+      ✔ returns latest published post with all stats
+      ✔ ignores draft posts when finding latest post
+      ✔ returns latest post by published_at date
+    getTopPostsViews
+      ✔ returns empty array when no Tinybird client exists
+      ✔ returns empty array when no views data exists
+      ✔ returns empty array when views exist but no matching posts found
+      ✔ returns correct stats when views and posts exist
+[2026-06-29 15:31:42] [31mERROR[39m Error fetching top posts views: Tinybird error
+[31m
+[31mTinybird error[39m
+
+[90m----------------------------------------[39m
+
+[90mError: Tinybird error
+    at Object.fetch (/workspace/repo/ghost/core/test/unit/server/services/stats/posts.test.js:835:45)
+    at PostsStatsService.getTopPostsViews (/workspace/repo/ghost/core/core/server/services/stats/PostsStatsService.js:699:57)
+    at Context.<anonymous> (/workspace/repo/ghost/core/test/unit/server/services/stats/posts.test.js:839:42)
+    at callFn (/workspace/repo/node_modules/mocha/lib/runnable.js:364:21)
+    at Runnable.run (/workspace/repo/node_modules/mocha/lib/runnable.js:352:5)
+    at Runner.runTest (/workspace/repo/node_modules/mocha/lib/runner.js:677:10)
+    at /workspace/repo/node_modules/mocha/lib/runner.js:800:12
+    at next (/workspace/repo/node_modules/mocha/lib/runner.js:592:14)
+    at /workspace/repo/node_modules/mocha/lib/runner.js:602:7
+    at next (/workspace/repo/node_modules/mocha/lib/runner.js:485:14)
+    at Immediate.<anonymous> (/workspace/repo/node_modules/mocha/lib/runner.js:570:5)
+    at process.processImmediate (node:internal/timers:483:21)[39m
+[39m
+      ✔ handles errors gracefully
+      ✔ passes correct parameters to Tinybird client
+
+  Tinybird Client
+    buildRequest
+      ✔ builds correct request with default options
+      ✔ uses tbVersion if provided
+      ✔ overrides defaults with provided options
+      ✔ uses local endpoint and token when local is enabled
+      ✔ ignores tbVersion when local is enabled
+    parseResponse
+      ✔ handles JSON string in response.body
+      ✔ handles JSON object in response.body
+      ✔ handles direct JSON string response
+      ✔ handles direct object response
+      ✔ returns empty array for empty data
+[2026-06-29 15:31:42] [31mERROR[39m Error parsing response body: Unexpected token 'o', "not json" is not valid JSON
+      ✔ returns null for invalid JSON
+    fetch
+      ✔ successfully fetches and parses data
+[2026-06-29 15:31:42] [31mERROR[39m Error in Tinybird API request to https://api.tinybird.co/v0/pipes/test_pipe.json?site_uuid=site-id: Network error
+[31m
+[31mNetwork error[39m
+
+[90m----------------------------------------[39m
+
+[90mError: Network error
+    at Context.<anonymous> (/workspace/repo/ghost/core/test/unit/server/services/stats/utils/tinybird.test.js:231:37)
+    at callFn (/workspace/repo/node_modules/mocha/lib/runnable.js:364:21)
+    at Runnable.run (/workspace/repo/node_modules/mocha/lib/runnable.js:352:5)
+    at Runner.runTest (/workspace/repo/node_modules/mocha/lib/runner.js:677:10)
+    at /workspace/repo/node_modules/mocha/lib/runner.js:800:12
+    at next (/workspace/repo/node_modules/mocha/lib/runner.js:592:14)
+    at /workspace/repo/node_modules/mocha/lib/runner.js:602:7
+    at next (/workspace/repo/node_modules/mocha/lib/runner.js:485:14)
+    at Immediate.<anonymous> (/workspace/repo/node_modules/mocha/lib/runner.js:570:5)
+    at process.processImmediate (node:internal/timers:483:21)[39m
+[39m
+      ✔ returns null when request fails
+[2026-06-29 15:31:42] [31mERROR[39m Error parsing response body: Unexpected token 'i', "invalid json" is not valid JSON
+      ✔ returns null when response parsing fails
+
+
+  42 passing (342ms)
+
+Done in 2.42s.
+reward=1 graded=42 found=42 failed=0 parsed=40 framework=mocha exit_code=0

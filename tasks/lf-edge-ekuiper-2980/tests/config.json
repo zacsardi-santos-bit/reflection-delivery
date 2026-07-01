@@ -1,0 +1,21 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/io/http/httpserver ./internal/io/websocket -count=1",
+  "test_files": [
+    "internal/io/http/httpserver/websocketConn_test.go",
+    "internal/io/http/httpserver/websocket_server_test.go",
+    "internal/io/websocket/websocket_source_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/lf-edge/ekuiper/v2/internal/io/http/httpserver::TestEndpoints",
+    "github.com/lf-edge/ekuiper/v2/internal/io/websocket::TestWebsocketSource",
+    "github.com/lf-edge/ekuiper/v2/internal/io/http/httpserver::TestHttpConn",
+    "github.com/lf-edge/ekuiper/v2/internal/io/http/httpserver::TestWebsocketConn",
+    "github.com/lf-edge/ekuiper/v2/internal/io/http/httpserver::TestWebsocketServerRecvData",
+    "github.com/lf-edge/ekuiper/v2/internal/io/http/httpserver::TestWebsocketServerRecvDataCancel",
+    "github.com/lf-edge/ekuiper/v2/internal/io/http/httpserver::TestWebsocketServerRecvDataOther"
+  ],
+  "PASS_TO_PASS": []
+}

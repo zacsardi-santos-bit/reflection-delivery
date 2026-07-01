@@ -1,0 +1,74 @@
+patching file diesel_derives/tests/as_changeset.rs
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.11.1
+   Compiling fnv v1.0.7
+   Compiling libc v0.2.186
+   Compiling pkg-config v0.3.33
+   Compiling vcpkg v0.2.15
+   Compiling rustix v1.1.4
+   Compiling getrandom v0.4.3
+   Compiling cfg-if v1.0.4
+   Compiling diesel_derives v2.3.2 (/workspace/repo/diesel_derives)
+   Compiling either v1.16.0
+   Compiling heck v0.5.0
+   Compiling linux-raw-sys v0.12.1
+   Compiling bitflags v2.13.0
+   Compiling once_cell v1.21.4
+   Compiling fastrand v2.4.1
+   Compiling prettyplease v0.2.37
+   Compiling downcast-rs v2.0.2
+   Compiling similar v2.7.0
+   Compiling dotenvy v0.15.7
+   Compiling libsqlite3-sys v0.35.0
+   Compiling syn v2.0.118
+   Compiling console v0.16.3
+   Compiling tempfile v3.27.0
+   Compiling insta v1.48.0
+   Compiling darling_core v0.21.3
+   Compiling diesel_table_macro_syntax v0.3.0 (/workspace/repo/diesel_table_macro_syntax)
+   Compiling darling_macro v0.21.3
+   Compiling darling v0.21.3
+   Compiling dsl_auto_type v0.2.0 (/workspace/repo/dsl_auto_type)
+   Compiling diesel v2.3.1 (/workspace/repo/diesel)
+error[E0277]: the trait bound `&Option<UserAttributes<'a>>: AsChangeset` is not satisfied
+   --> diesel_derives/tests/as_changeset.rs:941:14
+    |
+941 |     #[derive(AsChangeset)]
+    |              ^^^^^^^^^^^ the trait `diesel::AsChangeset` is not implemented for `&'update Option<as_changeset::optional_embedded_struct::UserAttributes<'a>>`
+    |
+    = help: the trait `diesel::AsChangeset` is implemented for `Option<T>`
+    = note: required for `(Grouped<Eq<name, Bound<Text, &&str>>>, &Option<UserAttributes<'a>>)` to implement `diesel::AsChangeset`
+    = note: the full name for the type has been written to '/workspace/repo/target/debug/deps/tests-29b0ab9681775b75.long-type-16520385767294100804.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+    = note: this error originates in the derive macro `AsChangeset` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `&Option<as_changeset::optional_embedded_struct::UserAttributes<'_>>: diesel::AsChangeset` is not satisfied
+   --> diesel_derives/tests/as_changeset.rs:952:10
+    |
+952 |         .set(&UserForm {
+    |          ^^^ the trait `diesel::AsChangeset` is not implemented for `&Option<as_changeset::optional_embedded_struct::UserAttributes<'_>>`
+    |
+    = help: the trait `diesel::AsChangeset` is implemented for `Option<T>`
+    = note: required for `(Grouped<Eq<name, Bound<Text, &&str>>>, &Option<UserAttributes<'_>>)` to implement `diesel::AsChangeset`
+    = note: the full name for the type has been written to '/workspace/repo/target/debug/deps/tests-29b0ab9681775b75.long-type-8207359054196006279.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: the trait bound `&Option<as_changeset::optional_embedded_struct::UserAttributes<'_>>: diesel::AsChangeset` is not satisfied
+   --> diesel_derives/tests/as_changeset.rs:980:10
+    |
+980 |         .set(&UserForm {
+    |          ^^^ the trait `diesel::AsChangeset` is not implemented for `&Option<as_changeset::optional_embedded_struct::UserAttributes<'_>>`
+    |
+    = help: the trait `diesel::AsChangeset` is implemented for `Option<T>`
+    = note: required for `(Grouped<Eq<name, Bound<Text, &&str>>>, &Option<UserAttributes<'_>>)` to implement `diesel::AsChangeset`
+    = note: the full name for the type has been written to '/workspace/repo/target/debug/deps/tests-29b0ab9681775b75.long-type-1433070531902178676.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `diesel_derives` (test "tests") due to 4 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.91.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package diesel_derives --features diesel/sqlite --features diesel_derives/sqlite --no-default-features` exited with code 101
+reward=0 graded=111 found=0 failed=0 parsed=0 framework=cargo exit_code=101

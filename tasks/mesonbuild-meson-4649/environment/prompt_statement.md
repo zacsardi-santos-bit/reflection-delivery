@@ -1,0 +1,7 @@
+I'd like to add a new built-in function to the meson build system that lets project authors print a structured configuration summary at the end of the setup phase. Right now there's no good way to present a clean overview of build options — you have to use individual message calls scattered around the build script, which results in hard-to-read output.
+
+The function should accept key-value pairs either as individual arguments or as a dictionary, and optionally group them under a named section. It should support being called multiple times so that configuration information can be registered progressively throughout the build file. There should also be a keyword option to display boolean values as YES or NO rather than raw boolean output.
+
+The formatted summary should appear at the very end of the configuration output. If the project has subprojects, their summaries should appear first (sorted alphabetically), each with the subproject's name and version as a header, followed by the main project's summary. Keys within each group should be right-aligned based on the longest key in that group. List values should show the first item on the same line as the key, with additional items aligned below.
+
+A subproject that errors out before registering any summary data should contribute nothing to the output. The function should also be recognized by the AST interpreter (so that static analysis tooling doesn't reject it).

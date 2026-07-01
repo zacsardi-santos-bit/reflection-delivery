@@ -1,0 +1,121 @@
+diff --git a/ChangeLog b/ChangeLog
+index 496290d8..dd9e81bd 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,8 +1,3 @@
+-Version 17.4.2
+---------------
+-    * Fix error message when depending on a target in a non-existant subrepo (#3007)
+-    * Handle `.out` temporary suffixes in remote execution properly (#3008)
+-
+ Version 17.4.1
+ --------------
+     * Fix occasional 'too many open files' errors (#2998)
+diff --git a/VERSION b/VERSION
+index d68ad08b..ae704d6d 100644
+--- a/VERSION
++++ b/VERSION
+@@ -1 +1 @@
+-17.4.2
++17.4.1
+diff --git a/src/parse/asp/lexer.go b/src/parse/asp/lexer.go
+index 21e6f46e..2e302bc0 100644
+--- a/src/parse/asp/lexer.go
++++ b/src/parse/asp/lexer.go
+@@ -224,7 +224,14 @@ func (l *lex) nextToken() Token {
+ 			return Token{Type: EOL, Pos: pos}
+ 		}
+ 		return l.nextToken()
+-	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
++	case '0':
++		if l.bytes[l.pos] == 'o' {
++			l.pos++
++			l.col++
++			return l.consumeInteger(next, pos)
++		}
++		fallthrough
++	case '1', '2', '3', '4', '5', '6', '7', '8', '9':
+ 		return l.consumeInteger(next, pos)
+ 	case '"', '\'':
+ 		// String literal, consume to end.
+diff --git a/src/remote/action.go b/src/remote/action.go
+index 8e9eb341..5b30d941 100644
+--- a/src/remote/action.go
++++ b/src/remote/action.go
+@@ -395,7 +395,7 @@ func (c *Client) buildMetadata(target *core.BuildTarget, ar *pb.ActionResult, ne
+ 		}
+ 		metadata.Stderr = b
+ 	}
+-	outputs, err := c.outputTree(target, ar)
++	outputs, err := c.outputTree(ar)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -527,7 +527,7 @@ func (c *Client) uploadLocalTarget(target *core.BuildTarget) error {
+ 	if err := c.uploadIfMissing(context.Background(), entries); err != nil {
+ 		return err
+ 	}
+-	outs, err := c.outputTree(target, ar)
++	outs, err := c.outputTree(ar)
+ 	if err != nil {
+ 		return err
+ 	}
+diff --git a/src/remote/utils.go b/src/remote/utils.go
+index 2e823429..3a786a30 100644
+--- a/src/remote/utils.go
++++ b/src/remote/utils.go
+@@ -68,9 +68,8 @@ func (c *Client) targetOutputs(label core.BuildLabel) *pb.Directory {
+ 	return c.outputs[label]
+ }
+ 
+-// setOutputs sets the outputs for the target, so we can refer to them later by build label from dependent rules. We
+-// also save the full Tree proto for subrepos, so we can parse and build subrepo targets without downloading the
+-// sources.
++// setOutputs sets the outputs for the target so we can refer to them later by build label from dependent rules. We also
++// save the full Tree proto for subrepos so we can parse and build subrepo targets without downloading the sources.
+ func (c *Client) setOutputs(target *core.BuildTarget, arTree *pb.Tree) error {
+ 	c.outputMutex.Lock()
+ 	defer c.outputMutex.Unlock()
+@@ -132,7 +131,7 @@ func (c *Client) setOutputsFromMetadata(target *core.BuildTarget, md *core.Build
+ }
+ 
+ // outputTree returns a tree representing the outputs of an action result
+-func (c *Client) outputTree(target *core.BuildTarget, ar *pb.ActionResult) (*pb.Tree, error) {
++func (c *Client) outputTree(ar *pb.ActionResult) (*pb.Tree, error) {
+ 	o := &pb.Tree{
+ 		Root: &pb.Directory{
+ 			Files:       make([]*pb.FileNode, len(ar.OutputFiles)),
+@@ -147,7 +146,7 @@ func (c *Client) outputTree(target *core.BuildTarget, ar *pb.ActionResult) (*pb.
+ 	//      uploadInputDir.
+ 	for i, f := range ar.OutputFiles {
+ 		o.Root.Files[i] = &pb.FileNode{
+-			Name:         target.GetRealOutput(f.Path),
++			Name:         f.Path,
+ 			Digest:       f.Digest,
+ 			IsExecutable: f.IsExecutable,
+ 		}
+@@ -160,13 +159,13 @@ func (c *Client) outputTree(target *core.BuildTarget, ar *pb.ActionResult) (*pb.
+ 		}
+ 		o.Children = append(o.Children, append(tree.Children, tree.Root)...)
+ 		o.Root.Directories = append(o.Root.Directories, &pb.DirectoryNode{
+-			Name:   target.GetRealOutput(d.Path),
++			Name:   d.Path,
+ 			Digest: c.digestMessage(tree.Root),
+ 		})
+ 	}
+ 	for i, s := range append(ar.OutputFileSymlinks, ar.OutputDirectorySymlinks...) {
+ 		o.Root.Symlinks[i] = &pb.SymlinkNode{
+-			Name:   target.GetRealOutput(s.Path),
++			Name:   s.Path,
+ 			Target: s.Target,
+ 		}
+ 	}
+@@ -444,7 +443,7 @@ func (b *dirBuilder) dir(dir, child string) *pb.Directory {
+ 	return d
+ }
+ 
+-// Build "builds" the directory. It calculates the digests of all the items in the directory tree, and returns the root
++// Build "builds" the directory. It calculate the digests of all the items in the directory tree, and returns the root
+ // directory. If ch is non-nil, it will upload the directory protos to ch. Build doesn't upload any of the actual files
+ // in the directory tree, just the protos.
+ func (b *dirBuilder) Build(ch chan<- *uploadinfo.Entry) *pb.Directory {

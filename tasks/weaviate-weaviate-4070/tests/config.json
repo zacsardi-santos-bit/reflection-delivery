@@ -1,0 +1,32 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./cloud/store ./cloud/transport ./cloud/utils -count=1",
+  "test_files": [
+    "cloud/store/store_test.go",
+    "cloud/transport/service_test.go",
+    "cloud/utils/utils_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/weaviate/weaviate/cloud/utils::TestFreeTcpPort",
+    "github.com/weaviate/weaviate/cloud/transport::TestService/Notify",
+    "github.com/weaviate/weaviate/cloud/transport::TestService/Join",
+    "github.com/weaviate/weaviate/cloud/transport::TestService/Remove",
+    "github.com/weaviate/weaviate/cloud/transport::TestService/Apply",
+    "github.com/weaviate/weaviate/cloud/transport::TestService",
+    "github.com/weaviate/weaviate/cloud/transport::TestPCResolver",
+    "github.com/weaviate/weaviate/cloud/transport::TestClient/Resolve",
+    "github.com/weaviate/weaviate/cloud/transport::TestClient/Dial",
+    "github.com/weaviate/weaviate/cloud/transport::TestClient",
+    "github.com/weaviate/weaviate/cloud/store::TestBootStrapper",
+    "github.com/weaviate/weaviate/cloud/store::TestSchemaReaderShardReplicas",
+    "github.com/weaviate/weaviate/cloud/store::TestSchemaReaderClass",
+    "github.com/weaviate/weaviate/cloud/store::TestSchemaSnapshot",
+    "github.com/weaviate/weaviate/cloud/store::TestServiceEndpoints",
+    "github.com/weaviate/weaviate/cloud/store::TestServiceStoreInit",
+    "github.com/weaviate/weaviate/cloud/store::TestServicePanics",
+    "github.com/weaviate/weaviate/cloud/store::TestStoreApply"
+  ],
+  "PASS_TO_PASS": []
+}

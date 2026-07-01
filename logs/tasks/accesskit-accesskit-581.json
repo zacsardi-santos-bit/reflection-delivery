@@ -1,0 +1,23 @@
+{
+ "task": "accesskit-accesskit-581",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Upstream PR #581 is a tests-only PR ('add tests for filters'); problem_statement explicitly frames the task as writing these tests. golden adds #[cfg(test)] mod tests to consumer/src/filters.rs exercising real common_filter/common_filter_with_root_exception on real Tree nodes (functional). test.patc"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

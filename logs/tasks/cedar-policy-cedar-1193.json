@@ -1,0 +1,23 @@
+{
+ "task": "cedar-policy-cedar-1193",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds does_restricted_expr_implement_schematype + num_of_policies/num_of_templates; F2P includes new tests issue_1176_should_fail1/3, should_pass_set_set_rec_one_req_one_opt"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

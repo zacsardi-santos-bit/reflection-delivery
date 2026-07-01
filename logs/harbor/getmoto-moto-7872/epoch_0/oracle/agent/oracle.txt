@@ -1,0 +1,3 @@
+patching file moto/resourcegroupstaggingapi/models.py
+patching file moto/sagemaker/models.py
+patching file moto/sagemaker/responses.py

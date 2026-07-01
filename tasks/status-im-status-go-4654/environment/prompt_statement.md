@@ -1,0 +1,7 @@
+I'm working on improving how the wallet activity feed handles new incoming transactions in an active session. Right now, when a new pending transaction arrives, the session update event tries to push the full entry data to the client, which is messy and doesn't work well when the client wants to refresh and see the full updated list with highlights.
+
+I'd like to change the design so that the session update event only signals that new entries are available (a lightweight boolean flag), and clients can then explicitly request a reset of their session to receive the full updated activity page. When they do that reset, each activity entry in the response should be marked as either "new" (arrived since the last acknowledged state) or not new, so the UI can highlight the fresh entries.
+
+I also need a helper function that compares a known list of entry identities against a freshly fetched list of entries and returns which entries are new (along with their positions in the new list) and which have been removed. This should handle cases like an empty starting state, no changes, adding entries on top, and entries falling out of a fixed-size window.
+
+Additionally, the test helper that generates pending transactions needs to support a configurable start offset so that generated transactions can begin at an index other than zero — this is needed to avoid collisions when transactions are generated in multiple batches with different timestamps and addresses.

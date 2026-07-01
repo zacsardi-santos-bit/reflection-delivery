@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test ./internal/endtoend -run TestReplay/base/params_in_nested_func -count=1 -timeout 300s",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/sqlc-dev/sqlc/internal/endtoend::TestReplay/base/params_in_nested_func_isolated/mysql",
+    "github.com/sqlc-dev/sqlc/internal/endtoend::TestReplay",
+    "github.com/sqlc-dev/sqlc/internal/endtoend::TestReplay/base/params_in_nested_func/mysql",
+    "github.com/sqlc-dev/sqlc/internal/endtoend::TestReplay/base/params_in_nested_func/postgresql"
+  ],
+  "PASS_TO_PASS": []
+}

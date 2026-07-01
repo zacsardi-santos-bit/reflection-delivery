@@ -1,0 +1,1742 @@
+diff --git a/.github/workflows/manual-rpm-build-and-install-test.yaml b/.github/workflows/manual-rpm-build-and-install-test.yaml
+new file mode 100644
+index 000000000..8292160c4
+--- /dev/null
++++ b/.github/workflows/manual-rpm-build-and-install-test.yaml
+@@ -0,0 +1,22 @@
++name: Manual RPM Build and Install Test Dispatch
++on: 
++  workflow_dispatch:
++    inputs:
++      branch:
++        description: 'Branch to RPM Build and Install From'
++        required: true
++      centos_ver:
++        type: choice
++        description: 'Centos Base image (options: 8/9) - Optional, default is 9'
++        default: '9'
++        options: 
++          - '8'
++          - '9'
++
++# Currently the only supported arch is linux/amd64 (x86_64)
++jobs:
++  manual-build-rpm-and-install:
++    uses: ./.github/workflows/rpm-build-and-install-test-base.yaml
++    with:
++      branch: ${{ github.event.inputs.branch }}
++      centos_ver: ${{ github.event.inputs.centos_ver }}
+diff --git a/.github/workflows/nightly-rpm-build-and-install-test.yaml b/.github/workflows/nightly-rpm-build-and-install-test.yaml
+new file mode 100644
+index 000000000..8628a4886
+--- /dev/null
++++ b/.github/workflows/nightly-rpm-build-and-install-test.yaml
+@@ -0,0 +1,20 @@
++name: Nightly RPM Build and Install Test
++on: 
++  schedule:
++    - cron: '0 0 * * *'
++      
++# Currently the only supported arch is linux/amd64 (x86_64)
++jobs:
++  call-master-rpm-build-and-install-test-centos9:
++    uses: ./.github/workflows/rpm-build-and-install-test-base.yaml
++    secrets: inherit
++    with:
++      branch: 'master'
++      centos_ver: '9'
++  
++  # call-master-rpm-build-and-install-test-centos8:
++  #   uses: ./.github/workflows/rpm-build-and-install-test-base.yaml
++  #   secrets: inherit
++  #   with:
++  #     branch: 'master'
++  #     centos_ver: '8'
+diff --git a/.github/workflows/rpm-build-and-install-test-base.yaml b/.github/workflows/rpm-build-and-install-test-base.yaml
+new file mode 100644
+index 000000000..abc5b7f52
+--- /dev/null
++++ b/.github/workflows/rpm-build-and-install-test-base.yaml
+@@ -0,0 +1,27 @@
++name: RPM Build and Install Test Workflow
++on: 
++  workflow_call:
++    inputs:
++      branch:
++        type: string
++        description: 'Branch to Build RPM From'
++        required: true
++      centos_ver:
++        type: string
++        description: 'Centos Base image (options: 8/9) - Optional, default is 9'
++        default: '9'
++  
++jobs:
++  rpm-build-and-and-install-test-base:
++    runs-on: ubuntu-latest
++    timeout-minutes: 90
++    steps:
++      - name: Checkout
++        uses: actions/checkout@v4
++        with:
++          ref: ${{ inputs.branch }}
++     
++      - name: Run Non Containerized RPM Build And Install Test
++        run: |
++            make rpm-build-and-install-test BUILD_S3SELECT=0 CENTOS_VER=${{ inputs.centos_ver }} CONTAINER_PLATFORM=linux/amd64
++
+diff --git a/Makefile b/Makefile
+index 052761e39..aab584e82 100644
+--- a/Makefile
++++ b/Makefile
+@@ -84,6 +84,18 @@ endif
+ BUILD_S3SELECT?=1
+ BUILD_S3SELECT_PARQUET?=0
+ 
++## RPM VARIABLES 
++DATE := $(shell date +'%Y%m%d')
++NOOBAA_PKG_VERSION := $(shell jq -r '.version' < ./package.json)
++RPM_BASE_VERSION := noobaa-core-$(NOOBAA_PKG_VERSION)-${DATE}
++ifeq ($(CONTAINER_PLATFORM), linux/amd64)
++  ARCH_SUFFIX := x86_64
++else ifeq ($(CONTAINER_PLATFORM), linux/ppc64le)
++  ARCH_SUFFIX := ppc64le
++endif
++RPM_FULL_PATH := $(RPM_BASE_VERSION).el${CENTOS_VER}.$(ARCH_SUFFIX).rpm
++install_rpm_and_deps_command := dnf install -y make && rpm -i $(RPM_FULL_PATH) && systemctl enable noobaa --now && systemctl status noobaa && systemctl stop noobaa
++
+ ###############
+ # BUILD LOCAL #
+ ###############
+@@ -178,6 +190,22 @@ rpm: builder
+ 	echo "\033[1;32mRPM for platform \"$(NOOBAA_RPM_TAG)\" is ready in build/rpm.\033[0m";
+ .PHONY: rpm
+ 
++assert-rpm-build-and-install-test-platform:
++	@ if [ "${CONTAINER_PLATFORM}" != "linux/amd64" ]; then \
++		echo "\n  Error: Running rpm-build-and-install-test linux/amd64 is currently the only supported container platform\n"; \
++		exit 1; \
++	fi
++.PHONY: assert-rpm-build-and-install-test-platform
++
++rpm-build-and-install-test: assert-rpm-build-and-install-test-platform rpm
++	@echo "Running RHEL linux/amd64 (currently only supported) container..."
++	$(CONTAINER_ENGINE) run --name noobaa-rpm-build-and-install-test --privileged --user root -dit --platform=linux/amd64 redhat/ubi$(CENTOS_VER)-init
++	@echo "Copying rpm_full_path=$(RPM_FULL_PATH) to the container..."
++	$(CONTAINER_ENGINE) cp ./build/rpm/$(RPM_FULL_PATH) noobaa-rpm-build-and-install-test:$(RPM_FULL_PATH)
++	@echo "Installing RPM and dependencies in the container... $(install_rpm_and_deps_command)"
++	$(CONTAINER_ENGINE) exec noobaa-rpm-build-and-install-test bash -c "$(install_rpm_and_deps_command)"
++.PHONY: rpm-build-and-install-test
++
+ ###############
+ # TEST IMAGES #
+ ###############
+diff --git a/config.js b/config.js
+index 8350cbc76..d121ff9e8 100644
+--- a/config.js
++++ b/config.js
+@@ -594,6 +594,7 @@ config.WS_METRICS_SERVER_PORT = 7001;
+ config.BG_METRICS_SERVER_PORT = 7002;
+ config.HA_METRICS_SERVER_PORT = 7003;
+ config.EP_METRICS_SERVER_PORT = 7004;
++config.EP_METRICS_SERVER_SSL_PORT = 9443;
+ 
+ //////////////////////////////
+ // OAUTH RELATES            //
+@@ -635,16 +636,24 @@ config.REMOTE_NOOAA_NAMESPACE = `remote-${config.KUBE_APP_LABEL}`;
+ ///////////////////////////////
+ config.INLINE_MAX_SIZE = 4096;
+ 
++///////////////////////////////
++// CACHE (ACCOUNT, BUCKET)   //
++///////////////////////////////
++
+ // Object SDK bucket cache expiration time
+ config.OBJECT_SDK_BUCKET_CACHE_EXPIRY_MS = 60000;
+ // Object SDK account cache expiration time
+ config.OBJECT_SDK_ACCOUNT_CACHE_EXPIRY_MS = Number(process.env.ACCOUNTS_CACHE_EXPIRY) || 10 * 60 * 1000; // TODO: Decide on a time that we want to invalidate
++// Accountspace_fs account id cache expiration time
++config.ACCOUNTS_ID_CACHE_EXPIRY = 3 * 60 * 1000; // TODO: Decide on a time that we want to invalidate
+ 
+ 
+ // Object SDK bucket_namespace_cache allow stat of the config file
+ config.NC_ENABLE_BUCKET_NS_CACHE_STAT_VALIDATION = true;
+ // Object SDK account_cache allow stat of the config file
+ config.NC_ENABLE_ACCOUNT_CACHE_STAT_VALIDATION = true;
++// accountspace_fs allow stat of the config file
++config.NC_ENABLE_ACCOUNT_ID_CACHE_STAT_VALIDATION = true;
+ 
+ //////////////////////////////
+ // OPERATOR RELATED         //
+@@ -908,6 +917,8 @@ config.ENDPOINT_SSL_PORT = Number(process.env.ENDPOINT_SSL_PORT) || 6443;
+ config.ENDPOINT_SSL_STS_PORT = Number(process.env.ENDPOINT_SSL_STS_PORT) || (process.env.NC_NSFS_NO_DB_ENV === 'true' ? -1 : 7443);
+ config.ENDPOINT_SSL_IAM_PORT = Number(process.env.ENDPOINT_SSL_IAM_PORT) || -1;
+ config.ALLOW_HTTP = false;
++config.ALLOW_HTTP_METRICS = true;
++config.ALLOW_HTTPS_METRICS = true;
+ // config files should allow access to the owner of the files
+ config.BASE_MODE_CONFIG_FILE = 0o600;
+ config.BASE_MODE_CONFIG_DIR = 0o700;
+@@ -933,7 +944,6 @@ config.NC_DISABLE_HEALTH_ACCESS_CHECK = false;
+ config.NC_DISABLE_POSIX_MODE_ACCESS_CHECK = true;
+ config.NC_DISABLE_SCHEMA_CHECK = false;
+ 
+-config.ACCOUNTS_ID_CACHE_EXPIRY = 3 * 60 * 1000;
+ ////////// GPFS //////////
+ config.GPFS_DOWN_DELAY = 1000;
+ 
+diff --git a/docs/NooBaaNonContainerized/CI&Tests.md b/docs/NooBaaNonContainerized/CI&Tests.md
+index 51c0bea0a..511bc92a9 100644
+--- a/docs/NooBaaNonContainerized/CI&Tests.md
++++ b/docs/NooBaaNonContainerized/CI&Tests.md
+@@ -91,6 +91,7 @@ The following is a list of `NC mocha test` files -
+ 2. `test_nc_health` - Tests NooBaa Health CLI.  
+ 3. `test_nsfs_glacier_backend.js` - Tests NooBaa Glacier Backend.  
+ 4. `test_nc_with_a_couple_of_forks.js` - Tests the `bucket_namespace_cache` when running with a couple of forks. Please notice that it uses `nc_coretest` with setup that includes a couple of forks.
++5. `test_nc_online_upgrade_s3_integrations.js` - Tests S3 operations during mocked config directory upgrade.
+ 
+ #### NC Jest test files
+ The following is a list of `NC jest tests` files -   
+@@ -112,6 +113,7 @@ The following is a list of `NC jest tests` files -
+ 16. `test_config_fs_backward_compatibility.test.js` - Tests of the backwards compatibility of configFS functions.
+ 17. `test_nc_upgrade_manager.test.js` - Tests of the NC upgrade manager.
+ 18. `test_cli_upgrade.test.js` - Tests of the upgrade CLI commands.
++19. `test_nc_online_upgrade_cli_integrations.test.js` - Tests CLI commands during mocked config directory upgrade.
+ 
+ #### nc_index.js File
+ * The `nc_index.js` is a file that runs several NC and NSFS mocha related tests.  
+diff --git a/docs/NooBaaNonContainerized/ConfigFileCustomizations.md b/docs/NooBaaNonContainerized/ConfigFileCustomizations.md
+index 1a40dda54..d7dba2427 100644
+--- a/docs/NooBaaNonContainerized/ConfigFileCustomizations.md
++++ b/docs/NooBaaNonContainerized/ConfigFileCustomizations.md
+@@ -450,6 +450,34 @@ Warning: After setting this configuration, NooBaa will skip schema validations a
+     3. systemctl restart noobaa
+     ```
+ 
++### 31. Prometheus HTTP enable flag -
++* <u>Key</u>: `ALLOW_HTTP_METRICS`  
++* <u>Type</u>: Boolean  
++* <u>Default</u>: true  
++* <u>Description</u>: This flag will decide whether to enable HTTP service for Prometheus metrics.
++* <u>Steps</u>:  
++    ```
++    1. Open /path/to/config_dir/config.json file.
++    2. Set the config key -
++    Example:
++    "ALLOW_HTTP_METRICS": true
++    3. systemctl restart noobaa
++    ```
++
++### 32. Prometheus HTTPS enable flag -
++* <u>Key</u>: `ALLOW_HTTPS_METRICS`  
++* <u>Type</u>: Boolean  
++* <u>Default</u>: true  
++* <u>Description</u>: This flag will decide whether to enable HTTPS service for Prometheus metrics.
++* <u>Steps</u>:  
++    ```
++    1. Open /path/to/config_dir/config.json file.
++    2. Set the config key -
++    Example:
++    "ALLOW_HTTPS_METRICS": true
++    3. systemctl restart noobaa
++    ```
++
+ ## Config.json File Examples
+ The following is an example of a config.json file - 
+ 
+diff --git a/docs/NooBaaNonContainerized/Monitoring.md b/docs/NooBaaNonContainerized/Monitoring.md
+index 1936980f7..1af0ce49f 100644
+--- a/docs/NooBaaNonContainerized/Monitoring.md
++++ b/docs/NooBaaNonContainerized/Monitoring.md
+@@ -16,12 +16,27 @@ Read more about NSFS metrics at - [NSFS metrics design](./../design/NSFSMetrics.
+ 
+ This section provides details about the metrics URL and port configuration necessary for accessing and monitoring system metrics.
+ 
+-#### Prometheus Metrics URL - </br>
+-- NooBaa exports the system statistics via the following URL - </br> `http://{host}:{metrics_port}/metrics/nsfs_stats`
++#### Prometheus Metrics HTTP URL - </br>
++- NooBaa exports the system statistics via the following URL - </br> `http://{host}:{http_metrics_port}/metrics/nsfs_stats`
+ 
+ - Default port - 7004
+ 
+ - Prometheus metrics port configuration -  </br> Changing Prometheus metrics port can be done by changing EP_METRICS_SERVER_PORT in config.json.  </br>
++
++- Prometheus metrics HTTP service can be enabled/disabled by changing `ALLOW_HTTP_METRICS` in config.json for Non Containerized Noobaa, for containerized deployments HTTP is always enabled.
++
++#### Prometheus Metrics HTTPS URL - </br>
++
++- NooBaa exports the system statistics via the following SSL URL - </br> `https://{host}:{https_metrics_port}/metrics/nsfs_stats`
++
++- Default port - 9443
++
++- Prometheus metrics port configuration -  </br> Changing Prometheus metrics HTTPS port can be done by changing EP_METRICS_SERVER_SSL_PORT in config.json.  </br>
++
++- Prometheus metrics HTTP service can be enabled/disabled by changing `ALLOW_HTTPS_METRICS` in config.json
++
++- Secure Prometheus metrics will reuse the existing S3 certificates from cert path S3_SERVICE_CERT_PATH (`/etc/s3-secret`) for containerized deployments and  `{nsfs_config_root}/certificates/` for non-containerized NSFS deployments. </br> Prometheus metrics SSL cert dir path can be changed by updating S3_SERVICE_CERT_PATH in config.json. for containerized deployments </br>
++
+ For more details about configuring metrics port see - [Non Containerized NooBaa Developer Customization](./ConfigFileCustomizations.md)
+ 
+ 
+diff --git a/docs/NooBaaNonContainerized/NooBaaCLI.md b/docs/NooBaaNonContainerized/NooBaaCLI.md
+index 9014a142e..442df6016 100644
+--- a/docs/NooBaaNonContainerized/NooBaaCLI.md
++++ b/docs/NooBaaNonContainerized/NooBaaCLI.md
+@@ -21,8 +21,12 @@
+     1. [Health](#health)
+     2. [Metrics](#metrics)
+     3. [Gather Logs](#gather-logs)
+-9. [Global Options](#global-options)
+-10. [Examples](#examples)
++9. [Upgrade](#upgrade)
++    1. [Upgrade Start](#upgrade-start)
++    2. [Upgrade Status](#upgrade-status)
++    3. [Upgrade History](#upgrade-history)
++10. [Global Options](#global-options)
++11. [Examples](#examples)
+     1. [Bucket Commands Examples](#bucket-commands-examples)
+     2. [Account Commands Examples](#account-commands-examples)
+     3. [White List Server IP Command Example](#white-list-server-ip-command-example)
+@@ -458,8 +462,70 @@ noobaa-cli diagnose metrics
+ The `gather-logs` command is used for extract NooBaa non containerized logs.
+ Not implemented yet, running this command will fail with not implemented error.
+ 
++## Upgrade
+ 
+-## Global Flags
++The `upgrade` command is being used for running config directory upgrade operations.
++- **[Start](#upgrade-start)**: Initiate config directory upgrade.
++- **[Status](#upgrade-status)**: Retrieve the in progress config directory upgrade status.
++- **[History](#upgrade-history)**: Retrieve the history information of past config directory upgrades.
++
++For more information about the config directory upgrade, See - [Upgrade](./Upgrade.md#online-upgrade-version--5180)
++
++### Upgrade Start
++
++The `upgrade start` command is used to start a config directory upgrade run.
++
++#### Usage
++```sh
++noobaa-cli upgrade start --expected_version <expected-version> --expected_hosts <expected-hosts> [--skip-verification] [--custom_upgrade_scripts_dir]
++```
++
++#### Flags -
++- `expected_version` (Required)
++    - Type: String
++    - Description: Specifies the upgrade's expected target version.
++    - Example - `--expected_version 5.18.0`
++
++- `expected_hosts` (Required)
++    - Type: String
++    - Description: Specifies the upgrade's expected hosts. String of hostnames separated by comma (,). 
++    - Example - `--expected_hosts hostname1,hostname2,hostname3`
++
++- `skip_verification`
++    - Type: Boolean
++    - Description: Specifies if NooBaa should skip upgrade verification. </br>
++      The upgrade verification process contains the following checks - </br>
++        * The expected_hosts appear in system.json.
++        * The expected_version is the version that runs in the host that is running the upgrade.
++        * The source code (RPM) in all the expected_hosts is upgraded to the expected_version.
++    - **WARNING:** Can cause corrupted config directory files created by hosts running old code. This should generally not be used and is intended exclusively for NooBaa team support. 
++
++- `custom_upgrade_scripts_dir`
++    - Type: String
++    - Description: Specifies a custom upgrade scripts directory. Used for running custom config directory upgrade scripts.
++    - **WARNING:** Can cause corrupted config directory, specifying a custom upgrade scripts directory will initiate a non NooBaa official config directory upgrade. This should generally not be used and is intended exclusively for NooBaa team support. Requires a special code fix provided by NooBaa dev team and stored in the custom_upgrade_scripts_dir.
++
++### Upgrade Status
++
++The `upgrade status` command is used for displaying the status of an ongoing upgrade run. </br>
++The available status information is upgrade start timestamp, from_version, to_version, config_dir_from_version, config_dir_to_version, running_host etc.
++
++#### Usage
++```sh
++noobaa-cli upgrade status
++```
++
++### Upgrade History
++
++The `upgrade history` command is used for displaying the history information of past config directory upgrades. </br> 
++The available history information is an array of upgrade information - upgrade start timestamp, from_version, to_version, config_dir_from_version,config_dir_to_version, running_host etc.
++
++#### Usage
++```sh
++noobaa-cli upgrade history
++```
++
++## Global Options
+ 
+ Global options used by the CLI to define the config directory settings. 
+ 
+diff --git a/docs/NooBaaNonContainerized/Upgrade.md b/docs/NooBaaNonContainerized/Upgrade.md
+index 8abbf7877..0065f4875 100644
+--- a/docs/NooBaaNonContainerized/Upgrade.md
++++ b/docs/NooBaaNonContainerized/Upgrade.md
+@@ -6,7 +6,11 @@
+ 4. [Offline Upgrade (Version < 5.18.0)](#offline-upgrade-version--5180)
+     1. [Offline Upgrade steps](#offline-upgrade-steps)
+ 5. [Online Upgrade (Version >= 5.18.0)](#online-upgrade-version--5180)
+-
++    1. [Online Upgrade Goals](#online-upgrade-goals)
++    2. [Online Upgrade Algorithm](#online-upgrade-algorithm)
++    3. [Additional Upgrade Properties of `system.json`](#additional-upgrade-properties-of-systemjson)
++    4. [Upgrade Helpers](#upgrade-helpers)
++    5. [Config Directory Upgrade - 5.18.0](#config-directory-upgrade---5180)
+ 
+ ## Introduction
+ This document provides step-by-step instructions to help you successfully upgrade your current Upstream NooBaa RPM version to a newer version.
+@@ -101,7 +105,7 @@ Online Upgrade Algorithm commands examples -
+ 4. Restart NooBaa service - `systemctl restart noobaa`
+ 5. `noobaa-cli upgrade start --expected_version=5.18.0 --expected_hosts=hostname1,hostname2,hostname3` 
+ 
+-### Additional Upgrade Properties of `system.json`-
++### Additional Upgrade Properties of `system.json`
+ 
+ 1. New per host property -   
+     - config_dir_version
+@@ -229,3 +233,34 @@ Online Upgrade Algorithm commands examples -
+ 1. NooBaa Health CLI - will report on the config directory status, upgrade failures and hosts that are blocked for config directory updates.
+ 2. NooBaa CLI upgrade status - will print the upgrade status per the information written in system.json.
+ 
++## Config Directory Upgrade - 5.18.0
++During the upgrade to NooBaa NC 5.18.0, NooBaa will execute an upgrade script that will convert NooBaa's config directory structure to have identities directory for storing accounts config files. The motivation for this change is to transition from an account name-based structure to an ID-based structure, which allows for greater scalability and the inclusion of additional identity types in the future. </br>
++For more details about the new config directory structure and components, See - 
++1. [Config Directory Structure](./Configuration.md#configuration-directory-structure).
++2. [Config Directory Components](./Configuration.md#configuration-directory-components).
++
++### Config Directory Upgrade Steps
++**1. Creation of `identities/` Directory - </br>**
++The identities/ directory will serve as the primary storage location for account configuration files. Each account will have a dedicated subdirectory named after its unique identifier and identity.json file that will contain the account's configuration content.
++
++**2. Creation of `accounts_by_name/` directory - </br>**
++On some S3/CLI flows, NooBaa will search for an account by name, therefore, the accounts_by_name/ directory will be created. It will contain symbolic links that map each account name to the corresponding identity.json file under the ID-based subdirectory within identities/.
++
++**3. Upgrade configuration files of all the existing accounts - </br>**
++Each account config file in the old `accounts/` directory will be migrated to the new structure:
++
++- **Identity creation - </br>**
++An ID-based subdirectory will be created under `identities/`, and an `identity.json` file will contain the original account config file content. The ID is the original account's id taken from the account's config file. </br>
++Example of identity path - `/etc/noobaa.conf.d/identities/123456789/identity.json`
++
++- **Account name symlink creation - </br>**
++A symbolic link will be created in the `accounts_by_name/` directory, mapping the account name to the newly created `identity.json` file under the ID-based subdirectory. </br>
++Example of the new account name symlink path - `/etc/noobaa.conf.d/accounts_by_name/alice.symlink -> ../../identities/123456789/identity.json`
++
++- **Account access Key symlink update - </br>**
++Any symbolic links related to access keys will be updated to point to the new ID-based `identity.json` file. </br>
++Example of old (NooBaa 5.17.z or lower) access_key symlink path - `/etc/noobaa.conf.d/access_keys/AKIAIOSFODNN7EXAMPLE.symlink -> ../accounts/alice.json`. </br>
++Example of new (NooBaa 5.18 and higher) access_key symlink path - `/etc/noobaa.conf.d/access_keys/AKIAIOSFODNN7EXAMPLE.symlink -> ../../identities/123456789/identity.json`.
++
++**4. Backup and deletion of `accounts/` directory - </br>**
++Once all account configurations have been migrated and verified, the `accounts/` directory will be backed-up and removed to finalize the upgrade process. A backup of the old account config files can be found under `.backup_accounts_dir_${from_version}/` while from_version is the version upgraded from.
+diff --git a/docs/bucket-replication.md b/docs/bucket-replication.md
+new file mode 100644
+index 000000000..8ef74a409
+--- /dev/null
++++ b/docs/bucket-replication.md
+@@ -0,0 +1,93 @@
++[NooBaa Core](../README.md) /
++
++# Bucket Replication
++Bucket replication is a NooBaa feature that allows a user to set a replication policy for all or some objects. The goal of replication policies is simple - to define a target bucket for objects to be copied to.
++
++To utilize bucket replication, we need to first decide what will be our source bucket and what will be our target bucket. The source bucket is the bucket that contains the objects that we want to replicate, and the target bucket is the bucket that will contain the replicated objects. The replication policy is set on the source bucket, and it defines the target bucket(s) and the rules for replication.
++
++In general, a replication policy is a JSON-compliant string which defines an array containing at least one rule  -
++  - Each rule is an object containing a `rule_id`, a `destination_bucket`, and an optional `filter` key that contains a `prefix` field.
++  - When a filter with prefix is provided - only objects keys that match the prefix will be replicated
++
++Behind the scenes, bucket replication esstentialy works by comparing object lists. NooBaa lists all objects on the source and target buckets, and checks which objects are missing on the target bucket. It then copies the missing objects from the source to the target bucket (while adhering to any provided rules).
++
++It is possible to accelerate replication by utilizing logs - at the time of writing this document, AWS S3 server access logging or Azure Monitor. This mechanism allows NooBaa to copy only objects that have been created or modified since the feature was turned on, while the rest replicate in the background. This allows users to get up to speed with recent objects, while the classic replication mechanism catches up with the rest.
++
++## Bucket Class Replication
++Bucket replication policies can also be applied to a bucketclasses. In those cases, the policy will automatically be 'inherited' by all bucket claims that utilize the bucketclass in the future.
++
++## Replication Policy Parameters
++As stated above, a replication policy is a JSON-compliant array of rules (examples are provided at the bottom of this section)
++  - Each rule is an object that contains the following keys:
++    - `rule_id` - a unique ID which is used to identify the rule. The rule should utilize classic alphanumeric characters (a-zA-Z0-9) and is chosen by the user. Note that is not possible to create several rules with the same ID.
++    - `destination_bucket` - which dictates the target NooBaa buckets that the objects will be copied to
++    - (Optional) `{"filter": {"prefix": <>}}` - if the user wishes to filter the objects that are replicated, the value of this field can be set to a prefix string
++    - (Optional, AWS-only, log-based optimization) `sync_deletions` - can be set to a boolean value to indicate whether deletions should be replicated (i.e. objects that were deleted on the source bucket should be deleted on the target bucket)
++    - (Optional, AWS-only, log-based optimization) `sync_versions` - can be set to a boolean value to indicate whether object versions should be replicated (i.e. if the source bucket has versioning enabled, the target bucket will also have versioning enabled, and all object versions will be synced)
++
++In addition, when the bucketclass is backed by namespacestores, each policy can be set to optimize replication by utilizing logs (configured and supplied by the user, currently only supports AWS S3 and Azure Blob):
++  - (Optional, only supported on namespace buckets) `log_replication_info` - an object that contains data related to log-based replication optimization -
++    - (Necessary on Azure) `endpoint_type` - this field can be set to an appropriate endpoint type (currently, only AZURE is supported)
++    - (Necessary on AWS) `{"logs_location": {"logs_bucket": <>}}` - this field should be set to the location of the AWS S3 server access logs
++
++## Design
++The design document can be found [here](design/BucketReplication.md)
++
++## Examples
++There are two ways to apply a bucket/bucketclass replication policy:
++
++The first is with the NooBaa CLI (requires the policies to be saved as a separate JSON file and passed to the CLI) - for example:
++#### Namespace bucketclass creation via the NooBaa CLI with replication to first.bucket:
++```shell
++noobaa -n app-namespace bucketclass create namespace-bucketclass single bc --resource azure-blob-ns --replication-policy=/path/to/json-file.json
++```
++/path/to/json-file.json is the path to a JSON file which defines the replication policy, e.g. -
++```json
++{"rules":[{ "rule_id": "rule-1", "destination_bucket": "first.bucket", "filter": {"prefix": "d"}} ]}
++```
++
++The second is by applying a YAML file containing the policy.
++It's also possible to apply a replication policy to OBCs even after their creation (although the same thing is not possible with bucketclasses).
++For OBCs, the policy needs to be provided under the `spec.additionalConfig.replicationPolicy` property. For example:
++
++#### ObjectBucketClaim creation via YAML file with replication to first.bucket:
++```yaml
++apiVersion: objectbucket.io/v1alpha1
++kind: ObjectBucketClaim
++metadata:
++  name: my-bucket-claim
++  namespace: appnamespace
++spec:
++  generateBucketName: my-bucket
++  storageClassName: noobaa.noobaa.io
++  additionalConfig:
++    replicationPolicy: '[{ "rule_id": "rule-2", "destination_bucket": "first.bucket", "filter": {"prefix": "bc"}}]'
++```
++
++For bucketclasses, the policy should be provided under `spec.replicationPolicy`- for example:
++#### Bucketclass creation via YAML file with replication to first.bucket:
++```yaml
++apiVersion: noobaa.io/v1alpha1
++kind: BucketClass
++metadata:
++  name: bc
++  namespace: app-namespace
++spec:
++  namespacePolicy:
++    type: Single
++    single: 
++      resource: azure-blob-ns
++  replicationPolicy: '[{ "rule_id": "rule-1", "destination_bucket": "first.bucket", "filter": {"prefix": "ba"}}]'
++```
++
++A few more rules for example:
++
++#### AWS replication policy with a prefix filter:
++`'{"rules":[{"rule_id":"aws-rule-1", "destination_bucket":"first.bucket", "filter": {"prefix": "a."}}]}'`
++
++#### AWS replication policy with log optimization, deletion and version sync:
++`'{"rules":[{"rule_id":"aws-rule-1", "sync_deletions": true, "sync_versions": true, "destination_bucket":"first.bucket"}], "log_replication_info": {"logs_location": {"logs_bucket": "logsarehere"}}}'`
++
++
++#### Azure replication policy with log optimization:
++`'{"rules":[{"rule_id":"azure-rule-1", "destination_bucket":"first.bucket"}], "log_replication_info": {"endpoint_type": "AZURE"}}'`
+diff --git a/docs/bucket-types.md b/docs/bucket-types.md
+new file mode 100644
+index 000000000..3effed3d5
+--- /dev/null
++++ b/docs/bucket-types.md
+@@ -0,0 +1,45 @@
++[NooBaa Core](../README.md) /
++
++# Bucket Types in NooBaa
++NooBaa supports two types of buckets - most commonly referred to as `namespace` and `data`. While all NooBaa buckets are accessible via the S3 API and appear the same to the user, they have different uses and implementations under the hood.
++This document will explain the meaning of each, as well as the differences between the two.
++
++## Data Buckets
++Data buckets are the 'classic' type of bucket in NooBaa. In a classic NooBaa deployment, the product creates several resources by default - a backingstore (`noobaa-default-backing-store`), a bucketclass (`noobaa-default-bucket-class`) and a bucket (`first.bucket`) as part of the product's initialization process. When data is written to data buckets, it is first processed by NooBaa - the data is compressed, deduplicated, encrypted, and split into chunks. These chunks are then stored in the backingstore that the bucket is connected to.
++The only way to access the objects on data buckets is through NooBaa - the chunks cannot be used or deciphered without the system.
++
++## Namespace Buckets
++Namespace buckets work differently than data buckets, since they try¹ to not apply any processing on the objects that are uploaded to them, and act as more of a 'passthrough'. In cases where a non-S3 storage provider API is used, NooBaa takes care of bridging potential gaps between S3 and the provider's API - no user action is required. This also means that as long as NooBaa supports a certain provider's API, users can use the S3 API to manage it (while NooBaa takes care of the 'translation').
++
++The objects can be accessed both from within NooBaa, as well as from whatever storage providers hosts them.
++Namespace buckets also support having multiple 'read' sources - for example, a single namespace bucket can show the objects from several Azure Blob containers, AWS S3 buckets, Google Cloud Platform buckets, all at the same time.
++Another feature of namespace buckets is cache, which can be configured to keep frequently-accessed objects in the system's memory, effectively reducing access time as well as egress and access costs.
++
++_1. In some cases, object metadata (such as tags) might have to be modified in order to comply with a cloud provider's limits_
++
++## Supported Storage Providers by Bucket Type
++| Service                                           | Data Buckets | Namespace Buckets |
++|---------------------------------------------------|     :---:    |        :---:      |
++| Amazon Web Services S3 (AWS)                      | ✅          | ✅
++| S3 Compatible Services                            | ✅          | ✅
++| IBM Cloud Object Storage (COS)                    | ✅          | ✅
++| Azure Blob Storage                                | ✅          | ✅
++| Google Cloud Platform Object Storage (GCP)        | ✅          | ❌
++| Filesystem (NSFS)                                 | ❌          | ✅
++| Persistent Volume Pool (PV)                       | ✅          | ❌
++
++For specific API calls (including non-S3 calls, such as IAM), you can check [AWS API Compatibility](design/AWS_API_Compatibility.md)
++
++_Please note that the table above might be out of date, or have additional support that is not present in older versions - the best way to check if a storage provider is supported is to run the NooBaa CLI tool (that fits the NooBaa version installed on the cluster) with a command such as `noobaa namespacestore create` or `noobaa backingstore create` and see which providers are listed in the help message._
++
++## Buckets in Relation to Bucketclasses and Stores
++In order to connect NooBaa to a storage provider (regardless of whether it's a cloud provider or an on-premises storage system), a store must be created - either a [backingstore](https://github.com/noobaa/noobaa-operator/blob/master/doc/backing-store-crd.md), or a [namespacestore](https://github.com/noobaa/noobaa-operator/blob/master/doc/namespace-store-crd.md). A store signifies a connection to a storage provider - it requires credentials, and sometimes additional configuartion such as a custom endpoint (when utilizing S3 compatible services that use the S3 API but aren't AWS. For example, Google's S3-compatible Cloud Storage URI is https://storage.googleapis.com).
++The type of store chosen determines what type of buckets will be created on top of it -
++- Namespacestores are used to create namespace buckets
++- Backingstores are used to create data buckets
++
++Once a store is created, it's necessary to create a [bucketclass](https://github.com/noobaa/noobaa-operator/blob/master/doc/bucket-class-crd.md) resource in order to utilize it. Bucketclasses allow users to define bucket policies relating to data placement and replication, and are used as a middle layer between buckets and stores.
++
++After the bucketclass has been created, it's now finally possible to create an [object bucket claim](https://github.com/noobaa/noobaa-operator/blob/master/doc/obc-provisioner.md), which is then reconciled by NooBaa and creates a bucket in the system. The created bucket can then be interacted with via the S3 API. 
++
++For further reading on S3 API compatibility, see the [S3 Compatibility](s3-compatibility.md) document.
+\ No newline at end of file
+diff --git a/docs/design/AWS_API_Compatibility.md b/docs/design/AWS_API_Compatibility.md
+index 073a481e1..5dcc59a2c 100644
+--- a/docs/design/AWS_API_Compatibility.md
++++ b/docs/design/AWS_API_Compatibility.md
+@@ -1,4 +1,4 @@
+-[NooBaa Operator](../README.md) /
++[NooBaa Core](../../README.md) /
+ 
+ # AWS APIs Compatibility Table
+ The chart below strives to provide an up-to-date overview of which AWS API calls are supported by NooBaa, and to what extent.
+diff --git a/docs/s3-compatibility.md b/docs/s3-compatibility.md
+new file mode 100644
+index 000000000..d460e9874
+--- /dev/null
++++ b/docs/s3-compatibility.md
+@@ -0,0 +1,12 @@
++[NooBaa Core](../README.md) /
++
++# S3 Compatibility in NooBaa
++S3 (also known as Simple Storage Service) is an object storage service provided by Amazon. However, S3 is often colloquially used to refer to the S3 API - the RESTful interface for interaction with AWS S3. Over time, the S3 API has reached a point where many consider it the de facto standard API for object storage, and is supported by many cloud providers and storage vendors - even ones like Microsoft Azure and Google Cloud Platform, which also offer their own APIs alongside S3 compatibility.
++
++## API Compatibility
++Due to the wide adoption of the S3 API, NooBaa has been designed to be S3 compatible and adherent. NooBaa buckets and objects can be managed with most S3 clients without a need for proprietary tools or workarounds. All a user needs in order to interact with NooBaa through an S3 client is the S3 endpoint of the NooBaa system, and a set of fitting credentials.
++The endpoint can be found by checking the `routes` and `services` on a cluster, and the default admin credentials can be found in the same namespace that NooBaa was installed in, inside the `noobaa-admin` secret. 
++For further reference of supported API calls in NooBaa, you can check out [AWS API Compatibility](design/AWS_API_Compatibility.md)
++
++## Utilization of S3 Compatible Storage Services
++NooBaa can also be used as a gateway to other storage services that are S3 compatible. This means that NooBaa can be used to store and manage data in certain storage services (as long as they provide an S3 compatible API), even if they are not natively supported by the product. This is done by creating a [backingstore](https://github.com/noobaa/noobaa-operator/blob/master/doc/backing-store-crd.md) or [namespacestore](https://github.com/noobaa/noobaa-operator/blob/master/doc/namespace-store-crd.md) of type `s3-compatible` and providing the the appropriate endpoint.
+\ No newline at end of file
+diff --git a/src/cmd/nsfs.js b/src/cmd/nsfs.js
+index 80f09e74a..0ebcef882 100644
+--- a/src/cmd/nsfs.js
++++ b/src/cmd/nsfs.js
+@@ -71,13 +71,14 @@ Arguments:
+ const OPTIONS = `
+ Options:
+ 
+-    --http_port <port>         (default 6001)   Set the S3 endpoint listening HTTP port to serve.
+-    --https_port <port>        (default 6443)   Set the S3 endpoint listening HTTPS port to serve.
+-    --https_port_sts <port>    (default -1)     Set the S3 endpoint listening HTTPS port for STS.
+-    --https_port_iam <port>    (default -1)     Set the endpoint listening HTTPS port for IAM.
+-    --metrics_port <port>      (default -1)     Set the metrics listening port for prometheus.
+-    --forks <n>                (default none)   Forks spread incoming requests (config.ENDPOINT_FORKS used if flag is not provided).
+-    --debug <level>            (default 0)      Increase debug level.
++    --http_port <port>          (default 6001)      Set the S3 endpoint listening HTTP port to serve.
++    --https_port <port>         (default 6443)      Set the S3 endpoint listening HTTPS port to serve.
++    --https_port_sts <port>     (default -1)        Set the S3 endpoint listening HTTPS port for STS.
++    --https_port_iam <port>     (default -1)        Set the endpoint listening HTTPS port for IAM.
++    --http_metrics_port <port>      (default 7004)    Set the metrics listening HTTP port for prometheus.
++    --https_metrics_port <port>     (default 9443)    Set the metrics listening HTTPS port for prometheus.
++    --forks <n>                     (default none)  Forks spread incoming requests (config.ENDPOINT_FORKS used if flag is not provided).
++    --debug <level>                 (default 0)     Increase debug level.
+ 
+     ## single user mode
+ 
+@@ -265,7 +266,8 @@ async function main(argv = minimist(process.argv.slice(2))) {
+         const https_port = Number(argv.https_port) || config.ENDPOINT_SSL_PORT;
+         const https_port_sts = Number(argv.https_port_sts) || config.ENDPOINT_SSL_STS_PORT;
+         const https_port_iam = Number(argv.https_port_iam) || config.ENDPOINT_SSL_IAM_PORT;
+-        const metrics_port = Number(argv.metrics_port) || config.EP_METRICS_SERVER_PORT;
++        const http_metrics_port = Number(argv.http_metrics_port) || config.EP_METRICS_SERVER_PORT;
++        const https_metrics_port = Number(argv.https_metrics_port) || config.EP_METRICS_SERVER_SSL_PORT;
+         const forks = Number(argv.forks) || config.ENDPOINT_FORKS;
+         if (forks > 0) process.env.ENDPOINT_FORKS = forks.toString(); // used for argv.forks to take effect
+         const uid = Number(argv.uid) || process.getuid();
+@@ -311,7 +313,8 @@ async function main(argv = minimist(process.argv.slice(2))) {
+             https_port,
+             https_port_sts,
+             https_port_iam,
+-            metrics_port,
++            http_metrics_port,
++            https_metrics_port,
+             backend,
+             forks,
+             access_key,
+@@ -340,7 +343,8 @@ async function main(argv = minimist(process.argv.slice(2))) {
+             https_port,
+             https_port_sts,
+             https_port_iam,
+-            metrics_port,
++            http_metrics_port,
++            https_metrics_port,
+             forks,
+             nsfs_config_root,
+             init_request_sdk: (req, res) => {
+diff --git a/src/endpoint/endpoint.js b/src/endpoint/endpoint.js
+index c4f452a80..284fded52 100755
+--- a/src/endpoint/endpoint.js
++++ b/src/endpoint/endpoint.js
+@@ -11,8 +11,6 @@ const dbg = require('../util/debug_module')(__filename);
+ if (!dbg.get_process_name()) dbg.set_process_name('Endpoint');
+ 
+ const util = require('util');
+-const http = require('http');
+-const https = require('https');
+ const os = require('os');
+ 
+ const P = require('../util/promise');
+@@ -28,7 +26,7 @@ const StsSDK = require('../sdk/sts_sdk');
+ const ObjectIO = require('../sdk/object_io');
+ const ObjectSDK = require('../sdk/object_sdk');
+ const xml_utils = require('../util/xml_utils');
+-const ssl_utils = require('../util/ssl_utils');
++const http_utils = require('../util/http_utils');
+ const net_utils = require('../util/net_utils');
+ const addr_utils = require('../util/addr_utils');
+ const fork_utils = require('../util/fork_utils');
+@@ -57,7 +55,8 @@ if (process.env.NOOBAA_LOG_LEVEL) {
+ const SERVICES_TYPES_ENUM = Object.freeze({
+     S3: 'S3',
+     STS: 'STS',
+-    IAM: 'IAM'
++    IAM: 'IAM',
++    METRICS: 'METRICS'
+ });
+ 
+ const new_umask = process.env.NOOBAA_ENDPOINT_UMASK || 0o000;
+@@ -66,7 +65,7 @@ let fork_count;
+ dbg.log0('endpoint: replacing old umask: ', old_umask.toString(8), 'with new umask: ', new_umask.toString(8));
+ 
+ /**
+- * @typedef {http.IncomingMessage & {
++ * @typedef {import('http').IncomingMessage & {
+  *  object_sdk?: ObjectSDK;
+  *  func_sdk?: FuncSDK;
+  *  sts_sdk?: StsSDK;
+@@ -79,7 +78,7 @@ dbg.log0('endpoint: replacing old umask: ', old_umask.toString(8), 'with new uma
+ /**
+  * @typedef {(
+  *  req: EndpointRequest,
+- *  res: http.ServerResponse
++ *  res: import('http').ServerResponse
+  * ) => void | Promise<void>} EndpointHandler 
+  */
+ 
+@@ -89,18 +88,14 @@ dbg.log0('endpoint: replacing old umask: ', old_umask.toString(8), 'with new uma
+  *  https_port?: number;
+  *  https_port_sts?: number;
+  *  https_port_iam?: number;
+- *  metrics_port?: number;
++ *  http_metrics_port?: number;
++ *  https_metrics_port?: number;
+  *  nsfs_config_root?: string;
+  *  init_request_sdk?: EndpointHandler;
+  *  forks?: number;
+  * }} EndpointOptions
+  */
+ 
+-// An internal function to prevent code duplication
+-async function create_https_server(ssl_cert_info, honorCipherOrder, endpoint_handler) {
+-    const ssl_options = {...ssl_cert_info.cert, honorCipherOrder: honorCipherOrder};
+-    return https.createServer(ssl_options, endpoint_handler);
+-}
+ 
+ /**
+  * @param {EndpointOptions} options
+@@ -117,7 +112,8 @@ async function main(options = {}) {
+ 
+         // the primary just forks and returns, workers will continue to serve
+         fork_count = options.forks ?? config.ENDPOINT_FORKS;
+-        const metrics_port = options.metrics_port || config.EP_METRICS_SERVER_PORT;
++        const http_metrics_port = options.http_metrics_port || config.EP_METRICS_SERVER_PORT;
++        const https_metrics_port = options.https_metrics_port || config.EP_METRICS_SERVER_SSL_PORT;
+         /**
+         * Please notice that we can run the main in 2 states:
+         * 1. Only the primary process runs the main (fork is 0 or undefined) - everything that 
+@@ -127,7 +123,8 @@ async function main(options = {}) {
+         *    fork_utils.start_workers because the primary process returns after start_workers 
+         *    and the forks will continue executing the code lines in this function
+         *  */
+-        const is_workers_started_from_primary = await fork_utils.start_workers(metrics_port, fork_count);
++        const is_workers_started_from_primary = await fork_utils.start_workers(http_metrics_port, https_metrics_port,
++                                                    options.nsfs_config_root, fork_count);
+         if (is_workers_started_from_primary) return;
+ 
+         const endpoint_group_id = process.env.ENDPOINT_GROUP_ID || 'default-endpoint-group';
+@@ -200,17 +197,15 @@ async function main(options = {}) {
+         const https_port_sts = options.https_port_sts || config.ENDPOINT_SSL_STS_PORT;
+         const https_port_iam = options.https_port_iam || config.ENDPOINT_SSL_IAM_PORT;
+ 
+-        await start_server_and_cert(SERVICES_TYPES_ENUM.S3, init_request_sdk,
++        await start_endpoint_server_and_cert(SERVICES_TYPES_ENUM.S3, init_request_sdk,
+             { ...options, https_port: https_port_s3, http_port: http_port_s3, virtual_hosts, bucket_logger, notification_logger });
+-        await start_server_and_cert(SERVICES_TYPES_ENUM.STS, init_request_sdk, { https_port: https_port_sts, virtual_hosts });
+-        await start_server_and_cert(SERVICES_TYPES_ENUM.IAM, init_request_sdk, { https_port: https_port_iam });
++        await start_endpoint_server_and_cert(SERVICES_TYPES_ENUM.STS, init_request_sdk, { https_port: https_port_sts, virtual_hosts });
++        await start_endpoint_server_and_cert(SERVICES_TYPES_ENUM.IAM, init_request_sdk, { https_port: https_port_iam });
+ 
+ 
+         // START METRICS SERVER
+-        if (metrics_port > 0 && cluster.isPrimary) {
+-            dbg.log0('Starting metrics server', metrics_port);
+-            await prom_reporting.start_server(metrics_port, false);
+-            dbg.log0('Started metrics server successfully');
++        if ((http_metrics_port > 0 || https_metrics_port > 0) && cluster.isPrimary) {
++            await prom_reporting.start_server(http_metrics_port, https_metrics_port, false, options.nsfs_config_root);
+         }
+ 
+         // TODO: currently NC NSFS deployments don't have internal_rpc_client nor db, 
+@@ -249,14 +244,14 @@ async function main(options = {}) {
+ }
+ 
+ /**
+- * start_server_and_cert starts the server by type and options and creates a certificate if required
++ * start_endpoint_server_and_cert starts the server by type and options and creates a certificate if required
+  * @param {('S3'|'IAM'|'STS')} server_type 
+  * @param {EndpointHandler} init_request_sdk 
+  * @param {{ http_port?: number, https_port?: number, virtual_hosts?: readonly string[], 
+  * bucket_logger?: PersistentLogger, notification_logger?: PersistentLogger, 
+  * nsfs_config_root?: string}} options 
+  */
+-async function start_server_and_cert(server_type, init_request_sdk, options = {}) {
++async function start_endpoint_server_and_cert(server_type, init_request_sdk, options = {}) {
+     const { http_port, https_port, nsfs_config_root } = options;
+     const endpoint_request_handler = create_endpoint_handler(server_type, init_request_sdk, options);
+ 
+@@ -264,25 +259,11 @@ async function start_server_and_cert(server_type, init_request_sdk, options = {}
+         if (nsfs_config_root && !config.ALLOW_HTTP) {
+             dbg.warn('HTTP is not allowed for NC NSFS.');
+         } else {
+-            const http_server = http.createServer(endpoint_request_handler);
+-            if (http_port > 0) {
+-                dbg.log0(`Starting ${server_type} HTTP - ${http_port}`);
+-                await listen_http(http_port, http_server);
+-                dbg.log0(`Started ${server_type} HTTP successfully`);
+-            }
++            await http_utils.start_http_server(http_port, server_type, endpoint_request_handler);
+         }
+     }
+     if (https_port > 0) {
+-        const ssl_cert_info = await ssl_utils.get_ssl_cert_info(server_type, nsfs_config_root);
+-        const https_server = await create_https_server(ssl_cert_info, true, endpoint_request_handler);
+-        ssl_cert_info.on('update', updated_ssl_cert_info => {
+-            dbg.log0(`Setting updated ${server_type} ssl certs for endpoint.`);
+-            const updated_ssl_options = { ...updated_ssl_cert_info.cert, honorCipherOrder: true };
+-            https_server.setSecureContext(updated_ssl_options);
+-        });
+-        dbg.log0(`Starting ${server_type} HTTPS - ${https_port}`);
+-        await listen_http(https_port, https_server);
+-        dbg.log0(`Started ${server_type} HTTPS successfully`);
++        await http_utils.start_https_server(https_port, server_type, endpoint_request_handler, nsfs_config_root);
+     }
+ }
+ 
+@@ -506,68 +487,6 @@ function unavailable_handler(req, res) {
+     res.end(reply);
+ }
+ 
+-function listen_http(port, server) {
+-    return new Promise((resolve, reject) => {
+-        setup_http_server(server);
+-        server.listen(port, err => {
+-            if (err) {
+-                dbg.error('ENDPOINT FAILED to listen', err);
+-                reject(err);
+-            } else {
+-                resolve();
+-            }
+-        });
+-    });
+-}
+-
+-function setup_http_server(server) {
+-    // Handle 'Expect' header different than 100-continue to conform with AWS.
+-    // Consider any expect value as if the client is expecting 100-continue.
+-    // See https://github.com/ceph/s3-tests/blob/master/s3tests/functional/test_headers.py:
+-    // - test_object_create_bad_expect_mismatch()
+-    // - test_object_create_bad_expect_empty()
+-    // - test_object_create_bad_expect_none()
+-    // - test_object_create_bad_expect_unreadable()
+-    // See https://nodejs.org/api/http.html#http_event_checkexpectation
+-    server.on('checkExpectation', function on_s3_check_expectation(req, res) {
+-        res.writeContinue();
+-        server.emit('request', req, res);
+-    });
+-
+-    // See https://nodejs.org/api/http.html#http_event_clienterror
+-    server.on('clientError', function on_s3_client_error(err, socket) {
+-
+-        // On parsing errors we reply 400 Bad Request to conform with AWS
+-        // These errors come from the nodejs native http parser.
+-        if (typeof err.code === 'string' &&
+-            err.code.startsWith('HPE_INVALID_') &&
+-            err.bytesParsed > 0) {
+-            console.error('ENDPOINT CLIENT ERROR - REPLY WITH BAD REQUEST', err);
+-            socket.write('HTTP/1.1 400 Bad Request\r\n');
+-            socket.write(`Date: ${new Date().toUTCString()}\r\n`);
+-            socket.write('Connection: close\r\n');
+-            socket.write('Content-Length: 0\r\n');
+-            socket.end('\r\n');
+-        }
+-
+-        // in any case we destroy the socket
+-        socket.destroy();
+-    });
+-
+-    server.keepAliveTimeout = config.ENDPOINT_HTTP_SERVER_KEEPALIVE_TIMEOUT;
+-    server.requestTimeout = config.ENDPOINT_HTTP_SERVER_REQUEST_TIMEOUT;
+-    server.maxRequestsPerSocket = config.ENDPOINT_HTTP_MAX_REQUESTS_PER_SOCKET;
+-
+-    server.on('error', handle_server_error);
+-
+-    // This was an attempt to read from the socket in large chunks,
+-    // but it seems like it has no effect and we still get small chunks
+-    // server.on('connection', function on_s3_connection(socket) {
+-    // socket._readableState.highWaterMark = 1024 * 1024;
+-    // socket.setNoDelay(true);
+-    // });
+-}
+-
+ exports.main = main;
+ exports.create_endpoint_handler = create_endpoint_handler;
+ exports.create_init_request_sdk = create_init_request_sdk;
+diff --git a/src/endpoint/s3/ops/s3_put_bucket_lifecycle.js b/src/endpoint/s3/ops/s3_put_bucket_lifecycle.js
+index 6e77135df..2e22d1cf8 100644
+--- a/src/endpoint/s3/ops/s3_put_bucket_lifecycle.js
++++ b/src/endpoint/s3/ops/s3_put_bucket_lifecycle.js
+@@ -108,9 +108,10 @@ async function put_bucket_lifecycle(req) {
+         }
+         id_set.add(current_rule.id);
+ 
+-        if (rule.Status?.length !== 1) {
+-            dbg.error('Rule should have status', rule);
+-            throw new S3Error(S3Error.InvalidArgument);
++        if (!rule.Status || rule.Status.length !== 1 ||
++            (rule.Status[0] !== s3_const.LIFECYCLE_STATUS.STAT_ENABLED && rule.Status[0] !== s3_const.LIFECYCLE_STATUS.STAT_DISABLED)) {
++            dbg.error(`Rule should have a status value of "${s3_const.LIFECYCLE_STATUS.STAT_ENABLED}" or "${s3_const.LIFECYCLE_STATUS.STAT_DISABLED}".`, rule);
++            throw new S3Error(S3Error.MalformedXML);
+         }
+         current_rule.status = rule.Status[0];
+ 
+diff --git a/src/endpoint/s3/s3_constants.js b/src/endpoint/s3/s3_constants.js
+index 7399f6039..60b3b5c9b 100644
+--- a/src/endpoint/s3/s3_constants.js
++++ b/src/endpoint/s3/s3_constants.js
+@@ -10,3 +10,7 @@ const s3_const = exports;
+ ///////////////
+ 
+ s3_const.MAX_RULE_ID_LENGTH = 255;
++s3_const.LIFECYCLE_STATUS = Object.freeze({
++    STAT_ENABLED: 'Enabled',
++    STAT_DISABLED: 'Disabled'
++});
+diff --git a/src/endpoint/s3/s3_errors.js b/src/endpoint/s3/s3_errors.js
+index 13965c139..7ab7cc522 100644
+--- a/src/endpoint/s3/s3_errors.js
++++ b/src/endpoint/s3/s3_errors.js
+@@ -164,6 +164,11 @@ S3Error.InvalidBucketState = Object.freeze({
+     message: 'The request is not valid with the current state of the bucket.',
+     http_code: 409,
+ });
++S3Error.ObjectQuotaExceeded = Object.freeze({
++    code: 'ObjectQuotaExceeded',
++    message: 'Object quota exceeded for the bucket.',
++    http_code: 409,
++});
+ S3Error.InvalidDigest = Object.freeze({
+     code: 'InvalidDigest',
+     message: 'The Content-MD5 you specified is not valid.',
+@@ -266,7 +271,8 @@ S3Error.MalformedPOSTRequest = Object.freeze({
+ });
+ S3Error.MalformedXML = Object.freeze({
+     code: 'MalformedXML',
+-    message: 'This happens when the user sends malformed xml (xml that doesn\'t conform to the published xsd) for the configuration. The error message is, "The XML you provided was not well-formed or did not validate against our published schema."',
++    // This happens when the user sends malformed xml (xml that doesn't conform to the published xsd) for the configuration.
++    message: 'The XML you provided was not well-formed or did not validate against our published schema.',
+     http_code: 400,
+ });
+ S3Error.InvalidTag = Object.freeze({
+@@ -613,6 +619,7 @@ S3Error.RPC_ERRORS_TO_S3 = Object.freeze({
+     INVALID_PORT_ORDER: S3Error.InvalidPartOrder,
+     INVALID_BUCKET_STATE: S3Error.InvalidBucketState,
+     NOT_ENOUGH_SPACE: S3Error.InvalidBucketState,
++    OBJECT_QUOTA_EXCEEDED: S3Error.ObjectQuotaExceeded,
+     MALFORMED_POLICY: S3Error.MalformedPolicy,
+     NO_SUCH_OBJECT_LOCK_CONFIGURATION: S3Error.NoSuchObjectLockConfiguration,
+     OBJECT_LOCK_CONFIGURATION_NOT_FOUND_ERROR: S3Error.ObjectLockConfigurationNotFoundError,
+diff --git a/src/endpoint/s3/s3_rest.js b/src/endpoint/s3/s3_rest.js
+index 7301abef5..971f96d47 100755
+--- a/src/endpoint/s3/s3_rest.js
++++ b/src/endpoint/s3/s3_rest.js
+@@ -277,23 +277,27 @@ async function authorize_request_policy(req) {
+         if (is_owner || is_iam_account_and_same_root_account_owner) return;
+         throw new S3Error(S3Error.AccessDenied);
+     }
+-    let permission;
++    // in case we have bucket policy
++    let permission_by_id;
++    let permission_by_name;
+     // In NC, we allow principal to be:
+     // 1. account name (for backwards compatibility)
+     // 2. account id
+     // we start the permission check on account identifier intentionally
+     if (account_identifier_id) {
+-        permission = await s3_bucket_policy_utils.has_bucket_policy_permission(
++        permission_by_id = await s3_bucket_policy_utils.has_bucket_policy_permission(
+             s3_policy, account_identifier_id, method, arn_path, req);
++        dbg.log3('authorize_request_policy: permission_by_id', permission_by_id);
+     }
++    if (permission_by_id === "DENY") throw new S3Error(S3Error.AccessDenied);
+ 
+-    if ((!account_identifier_id || permission === "IMPLICIT_DENY") && account.owner === undefined) {
+-        permission = await s3_bucket_policy_utils.has_bucket_policy_permission(
++    if ((!account_identifier_id || permission_by_id !== "DENY") && account.owner === undefined) {
++        permission_by_name = await s3_bucket_policy_utils.has_bucket_policy_permission(
+             s3_policy, account_identifier_name, method, arn_path, req);
++        dbg.log3('authorize_request_policy: permission_by_name', permission_by_name);
+     }
+-
+-    if (permission === "DENY") throw new S3Error(S3Error.AccessDenied);
+-    if (permission === "ALLOW" || is_owner) return;
++    if (permission_by_name === "DENY") throw new S3Error(S3Error.AccessDenied);
++    if ((permission_by_id === "ALLOW" || permission_by_name === "ALLOW") || is_owner) return;
+ 
+     throw new S3Error(S3Error.AccessDenied);
+ }
+diff --git a/src/manage_nsfs/manage_nsfs_help_utils.js b/src/manage_nsfs/manage_nsfs_help_utils.js
+index 13e88e0bf..edaae0306 100644
+--- a/src/manage_nsfs/manage_nsfs_help_utils.js
++++ b/src/manage_nsfs/manage_nsfs_help_utils.js
+@@ -417,11 +417,17 @@ Usage:
+ 
+ Flags:
+ 
+-    --expected_version                             <string>                             The expected target version of the upgrade
+-    --expected_hosts                               <string>                             The expected hosts running NooBaa NC, a string of hosts separated by ,
+-    --skip_verification                            <boolean>        (optional)          skip verification of the hosts package version
+-                                                                                        WARNING: can cause corrupted config dir files created by hosts running old code
+-    --custom_upgrade_scripts_dir                   <string>         (optional)          custom upgrade scripts dir, use for running custom config dir upgrade scripts
++    --expected_version              <string>                            The expected target version of the upgrade
++    --expected_hosts                <string>                            The expected hosts running NooBaa NC, a string of hosts separated by ,
++    --skip_verification             <boolean>        (optional)         skip upgrade verification
++                                                                        WARNING: can cause corrupted config dir files created by hosts running old code.
++                                                                        this should generally not be used and is intended exclusively for NooBaa team support. 
++    --custom_upgrade_scripts_dir    <string>         (optional)         a custom upgrade scripts dir, use for running custom config dir upgrade scripts.
++                                                                        WARNING: can cause corrupted config directory. specifying a custom upgrade scripts directory
++                                                                        will initiate a non NooBaa official config directory upgrade.
++                                                                        this should generally not be used and is intended exclusively for NooBaa team support.
++                                                                        requires a special code fix provided by NooBaa dev team and stored in the
++                                                                        custom_upgrade_scripts_dir directory.
+ 
+ `;
+ 
+@@ -429,7 +435,7 @@ const UPGRADE_STATUS_OPTIONS = `
+ Help:
+ 
+     'upgrade status' is a noobaa-cli command that will return the status of an ongoing upgrade run,
+-    the available status information is upgrade start timestmp, from_version, to_version, config_dir_from_version,
++    the available status information is upgrade start timestamp, from_version, to_version, config_dir_from_version,
+     config_dir_to_version, running_host etc.
+ 
+ Usage:
+@@ -442,7 +448,7 @@ const UPGRADE_HISTORY_OPTIONS = `
+ Help:
+ 
+     'upgrade history' is a noobaa-cli command that will return the history of past upgrades,
+-    the available history information is an array of upgrade information - upgrade start timestmp, from_version, to_version, config_dir_from_version,
++    the available history information is an array of upgrade information - upgrade start timestamp, from_version, to_version, config_dir_from_version,
+     config_dir_to_version, running_host etc.
+ 
+ Usage:
+diff --git a/src/sdk/accountspace_fs.js b/src/sdk/accountspace_fs.js
+index 8d5b92c91..969d6a2de 100644
+--- a/src/sdk/accountspace_fs.js
++++ b/src/sdk/accountspace_fs.js
+@@ -28,22 +28,61 @@ const dummy_service_name = 's3';
+ 
+ const account_id_cache = new LRUCache({
+     name: 'AccountIDCache',
+-    // TODO: Decide on a time that we want to invalidate
+-    expiry_ms: Number(config.ACCOUNTS_ID_CACHE_EXPIRY),
++    expiry_ms: config.ACCOUNTS_ID_CACHE_EXPIRY,
+     make_key: ({ _id }) => _id,
+     /**
+      * Accounts are added to the cache based on id, Default value for show_secrets and decrypt_secret_key will be true, 
+      * and show_secrets and decrypt_secret_key `false` only when we load cache from the health script, 
+      * health script doesn't need to fetch or decrypt the secret.
+-     * @param {{ _id: string, 
+-     * show_secrets?: boolean,
+-     * decrypt_secret_key?: boolean, 
+-     * config_fs: import('./config_fs').ConfigFS }} params
++     * @param {{
++        * _id: string,
++        * show_secrets?: boolean,
++        * decrypt_secret_key?: boolean,
++        * config_fs: ConfigFS
++     * }} params
+     */
+-    load: async ({ _id, show_secrets = true, decrypt_secret_key = true, config_fs}) =>
+-        config_fs.get_identity_by_id(_id, CONFIG_TYPES.ACCOUNT, { show_secrets: show_secrets, decrypt_secret_key: decrypt_secret_key }),
++    load: async ({ _id, show_secrets = true, decrypt_secret_key = true, config_fs }) =>
++        config_fs.get_identity_by_id_and_stat_file(
++            _id, CONFIG_TYPES.ACCOUNT, { show_secrets: show_secrets, decrypt_secret_key: decrypt_secret_key }),
++    validate: (params, data) => _validate_account_id(params, data),
+ });
+ 
++/** _validate_account_id is an additional layer (to expiry_ms)
++ * to checks the stat of the config file
++ * @param {object} data
++ * @param {object} params
++ * @returns Promise<{boolean>}
++ */
++async function _validate_account_id(params, data) {
++    if (config.NC_ENABLE_ACCOUNT_ID_CACHE_STAT_VALIDATION) {
++        const same_stat = await check_same_stat_account(params._id, params.name, params.stat, data.config_fs);
++        if (!same_stat) { // config file of account was changed
++            return false;
++        }
++    }
++    return true;
++}
++
++    /**
++     * check_same_stat_account will return true the config file was not changed
++     * in case we had any issue (for example error during stat) the returned value will be undefined
++     * @param {string} id
++     * @param {string} account_name
++     * @param {nb.NativeFSStats} account_stat
++     * @param {ConfigFS} config_fs
++     * @returns Promise<{boolean|undefined>}
++     */
++    async function check_same_stat_account(id, account_name, account_stat, config_fs) {
++        if (!config_fs) return;
++        try {
++            const current_stat = await config_fs.stat_account_config_file_by_identity(id, account_name);
++            if (current_stat) {
++                return current_stat.ino === account_stat.ino && current_stat.mtimeNsBigint === account_stat.mtimeNsBigint;
++            }
++        } catch (err) {
++            dbg.warn('check_same_stat_account: current_stat got an error', err, 'ignoring...');
++        }
++    }
+ 
+ /**
+  * @param {Object} requested_account
+diff --git a/src/sdk/bucketspace_fs.js b/src/sdk/bucketspace_fs.js
+index b41cf681e..9d9047a74 100644
+--- a/src/sdk/bucketspace_fs.js
++++ b/src/sdk/bucketspace_fs.js
+@@ -805,18 +805,19 @@ class BucketSpaceFS extends BucketSpaceSimpleFS {
+             throw new Error('has_bucket_action_permission: action is required');
+         }
+ 
+-        let permission;
+-        permission = await bucket_policy_utils.has_bucket_policy_permission(
++        let permission_by_name;
++        const permission_by_id = await bucket_policy_utils.has_bucket_policy_permission(
+             bucket_policy,
+             account._id,
+             action,
+             `arn:aws:s3:::${bucket.name.unwrap()}${bucket_path}`,
+             undefined
+         );
++        if (permission_by_id === "DENY") return false;
+         // we (currently) allow account identified to be both id and name,
+         // so if by-id failed, try also name
+-        if (account.owner === undefined && permission === 'IMPLICIT_DENY') {
+-            permission = await bucket_policy_utils.has_bucket_policy_permission(
++        if (account.owner === undefined) {
++            permission_by_name = await bucket_policy_utils.has_bucket_policy_permission(
+                 bucket_policy,
+                 account.name.unwrap(),
+                 action,
+@@ -824,9 +825,8 @@ class BucketSpaceFS extends BucketSpaceSimpleFS {
+                 undefined
+             );
+         }
+-
+-        if (permission === 'DENY') return false;
+-        return is_owner || permission === 'ALLOW';
++        if (permission_by_name === 'DENY') return false;
++        return is_owner || (permission_by_id === 'ALLOW' || permission_by_name === 'ALLOW');
+     }
+ 
+     async validate_fs_bucket_access(bucket, object_sdk) {
+diff --git a/src/sdk/config_fs.js b/src/sdk/config_fs.js
+index 914c790ed..1ed9c7165 100644
+--- a/src/sdk/config_fs.js
++++ b/src/sdk/config_fs.js
+@@ -378,6 +378,29 @@ class ConfigFS {
+         return identity;
+     }
+ 
++    /**
++     * get_identity_by_id_and_stat_file returns the full account/user data and stat the file:
++     * @param {string} id
++     * @param {string} [type]
++     * @param {{show_secrets?: boolean, decrypt_secret_key?: boolean, silent_if_missing?: boolean}} [options]
++     * @returns {Promise<Object>} 
++    */
++    async get_identity_by_id_and_stat_file(id, type, options = {}) {
++        let identity;
++        try {
++            identity = await this.get_identity_by_id(id, type, options);
++            if (!identity && options.silent_if_missing) {
++                return undefined; // we don't have the identity, so we can't add the property of stat to it
++            }
++            const stat = await this.stat_account_config_file_by_identity(id, identity.name);
++            identity.stat = stat;
++            return identity; // this identity object should have also a stat property
++        } catch (err) {
++            dbg.error('get_identity_by_id_and_stat_file: got an error', err);
++            throw err;
++        }
++    }
++
+     /**
+      * search_accounts_by_id searches old accounts directory and finds an account that its _id matches the given id param
+      * @param {string} id
+@@ -450,7 +473,7 @@ class ConfigFS {
+     }
+ 
+     /**
+-     * stat_account_config_file will return the stat output on account config file
++     * stat_account_config_file will return the stat output on account config file by access key
+      * please notice that stat might throw an error - you should wrap it with try-catch and handle the error
+      * Note: access_key type of anonymous_access_key is a symbol, otherwise it is a string (not SensitiveString)
+      * @param {Symbol|string} access_key
+@@ -468,6 +491,38 @@ class ConfigFS {
+         return nb_native().fs.stat(this.fs_context, path_for_account_or_user_config_file);
+     }
+ 
++    /**
++     * stat_account_config_file_by_identity will return the stat output on account config file by id or by account name
++     * 1. try by identity path
++     * 2. if not found - try by account name with new accounts path
++     * 3. if not found - try by account name with old accounts path
++     * 4. else throw an error
++     * @param {string} id
++     * @param {string} account_name
++     * @returns {Promise<nb.NativeFSStats>}
++     */
++    async stat_account_config_file_by_identity(id, account_name) {
++        const options = { silent_if_missing: true };
++
++        const identity_path = this.get_identity_path_by_id(id);
++        dbg.log2('stat_account_config_file_by_identity: will try to stat by identity (identities path)');
++        let stat = await this.stat_config_file_general_use(identity_path, options);
++        if (stat) return stat;
++
++        dbg.log2('stat_account_config_file_by_identity: will try to stat by account name (new accounts path)');
++        const account_name_new_path = this.get_account_path_by_name(account_name);
++        stat = await this.stat_config_file_general_use(account_name_new_path, options);
++        if (stat) return stat;
++
++        dbg.log2('stat_account_config_file_by_identity: will try to stat by account name (old accounts path)');
++        const account_name_old_path = this._get_old_account_path_by_name(account_name);
++        stat = await this.stat_config_file_general_use(account_name_old_path, options);
++        if (stat) return stat;
++
++        dbg.error(`stat_account_config_file_by_identity: could not stat identity by id ${id} or by account name ${account_name} (new and old accounts path)`);
++        throw new Error('Could not stat account (identities path, new accounts path and old accounts path)');
++    }
++
+     /**
+      * is_account_exists_by_name returns true if account config path exists in config dir
+      * if account does not exist and it's a regular account (not an IAM user) 
+@@ -1255,6 +1310,24 @@ class ConfigFS {
+     get_hosts_data(system_data) {
+         return _.omit(system_data, 'config_directory');
+     }
++
++    /** stat_config_file_general_use will stat a file by a path
++     * if the file is not found:
++     * - using the options with silent_if_missing true on ENOENT it would return undefined
++     * - else it would throw an error
++     * @param {string} path_to_stat
++     * @param {{ silent_if_missing: any; }} options
++     */
++    async stat_config_file_general_use(path_to_stat, options) {
++        try {
++            const stat_by_identity_path = await nb_native().fs.stat(this.fs_context, path_to_stat);
++            return stat_by_identity_path;
++        } catch (err) {
++            if (err.code === 'ENOENT' && options.silent_if_missing) return;
++            dbg.error('stat_account_config_file_by_identity: could not stat by identity ID, got an error', err);
++            throw err;
++        }
++    }
+ }
+ 
+ // EXPORTS
+diff --git a/src/sdk/object_sdk.js b/src/sdk/object_sdk.js
+index 031ec858e..ae10d267c 100644
+--- a/src/sdk/object_sdk.js
++++ b/src/sdk/object_sdk.js
+@@ -27,6 +27,7 @@ const BucketSpaceNB = require('./bucketspace_nb');
+ const { RpcError } = require('../rpc');
+ 
+ const anonymous_access_key = Symbol('anonymous_access_key');
++
+ const bucket_namespace_cache = new LRUCache({
+     name: 'ObjectSDK-Bucket-Namespace-Cache',
+     // This is intentional. Cache entry expiration is handled by _validate_bucket_namespace().
+@@ -93,7 +94,7 @@ async function _validate_account(data, params) {
+     const bs_allow_stat_account = Boolean(bs.check_same_stat_account);
+     if (bs_allow_stat_account && config.NC_ENABLE_ACCOUNT_CACHE_STAT_VALIDATION) {
+         const same_stat = await bs.check_same_stat_account(params.access_key, data.stat);
+-        if (!same_stat) { // config file of bucket was changed
++        if (!same_stat) { // config file of account was changed
+             return false;
+         }
+     }
+diff --git a/src/server/analytic_services/prometheus_reporting.js b/src/server/analytic_services/prometheus_reporting.js
+index caee6bf86..7d2e5a7e2 100644
+--- a/src/server/analytic_services/prometheus_reporting.js
++++ b/src/server/analytic_services/prometheus_reporting.js
+@@ -3,7 +3,6 @@
+ 
+ const P = require('../../util/promise');
+ const dbg = require('../../util/debug_module')(__filename);
+-const http = require('http');
+ const config = require('../../../config');
+ 
+ // Import the reports.
+@@ -13,6 +12,7 @@ const { NooBaaEndpointReport } = require('./prometheus_reports/noobaa_endpoint_r
+ const stats_aggregator = require('../system_services/stats_aggregator');
+ const AggregatorRegistry = require('prom-client').AggregatorRegistry;
+ const aggregatorRegistry = new AggregatorRegistry();
++const http_utils = require('../../util/http_utils');
+ 
+ // Currenty supported reprots
+ const reports = Object.seal({
+@@ -48,17 +48,27 @@ async function export_all_metrics() {
+     return all_metrics.join('\n\n');
+ }
+ 
++/**
++ * Start Noobaa metrics server for http and https server
++ * 
++ * @param {number?} port prometheus metris port.
++ * @param {number?} ssl_port prometheus metris https port.
++ * @param {boolean?} fork_enabled request from frok or not.
++ * @param {string?} nsfs_config_root nsfs configuration path
++ */
+ async function start_server(
+     port,
+-    fork_enabled,
++    ssl_port = 0,
++    fork_enabled = false,
++    nsfs_config_root = '',
+     retry_count = config.PROMETHEUS_SERVER_RETRY_COUNT,
++    retry_https_count = config.PROMETHEUS_SERVER_RETRY_COUNT,
+     delay = config.PROMETHEUS_SERVER_RETRY_DELAY
+ ) {
+     if (!config.PROMETHEUS_ENABLED) {
+         return;
+     }
+-
+-    const server = http.createServer(async (req, res) => {
++    const metrics_request_handler = async (req, res) => {
+         // Serve all metrics on the root path for system that do have one or more fork running.
+         if (fork_enabled) {
+             // we would like this part to be first as clusterMetrics might fail.
+@@ -121,16 +131,18 @@ async function start_server(
+ 
+         res.writeHead(404, { 'Content-Type': 'text/plain' });
+         res.end();
+-    });
++    };
+ 
+     // Try to open the port for listening, will retry then exist.
+-    dbg.log0('Starting prometheus metrics server on HTTP port', port);
+     while (retry_count) {
+         try {
+-            await new Promise((resolve, reject) => {
+-                server.listen(port, err => (err ? reject(err) : resolve()));
+-            });
+-
++            if (nsfs_config_root && !config.ALLOW_HTTP_METRICS) {
++                dbg.warn('HTTP is not allowed for NC NSFS metrics server.');
++            } else if (port > 0) {
++                await http_utils.start_http_server(port, 'METRICS', metrics_request_handler);
++            } else {
++                dbg.warn('Port is not configured for metrics server');
++            }
+             // Set retry_count to 0 to exit the loop
+             retry_count = 0;
+ 
+@@ -144,6 +156,27 @@ async function start_server(
+             }
+         }
+     }
++
++    while (retry_https_count) {
++        try {
++            if (ssl_port > 0 && config.ALLOW_HTTPS_METRICS) {
++                await http_utils.start_https_server(ssl_port, 'METRICS', metrics_request_handler, nsfs_config_root);
++            } else {
++                dbg.warn('HTTPS is not allowed or ssl port missing for Noobaa metrics server. ssl_port: ', ssl_port);
++            }
++            // Set retry_https_count to 0 to exit the loop
++            retry_https_count = 0;
++
++        } catch (err) {
++            if (retry_https_count) {
++                dbg.error(`Metrics server failed to listen on ${ssl_port} (retries left: ${retry_https_count}), got`, err);
++                await P.delay_unblocking(delay);
++            } else {
++                dbg.error(`Metrics server failed to listen on ${ssl_port} too many times, existing the process`);
++                process.exit();
++            }
++        }
++    }
+ }
+ 
+ async function metrics_nsfs_stats_handler() {
+diff --git a/src/server/object_services/object_server.js b/src/server/object_services/object_server.js
+index 53432f590..8fb40ba88 100644
+--- a/src/server/object_services/object_server.js
++++ b/src/server/object_services/object_server.js
+@@ -1700,7 +1700,7 @@ function check_quota(bucket) {
+     if (major_messages.length > 0) {
+         const message = major_messages.join();
+         dbg.error(message);
+-        throw new RpcError('INVALID_BUCKET_STATE', message);
++        throw new RpcError('OBJECT_QUOTA_EXCEEDED', message);
+     }
+ }
+ 
+diff --git a/src/upgrade/nc_upgrade_manager.js b/src/upgrade/nc_upgrade_manager.js
+index d8a648367..86f7eefc0 100644
+--- a/src/upgrade/nc_upgrade_manager.js
++++ b/src/upgrade/nc_upgrade_manager.js
+@@ -148,12 +148,12 @@ class NCUpgradeManager {
+ 
+     /**
+      * _verify_config_dir_upgrade verifies that - 
+-     * 1. All hosts appearing in system.json were RPM upgraded to the same version the host running the upgrade
++     * 1. All hosts appearing in expected_hosts were RPM upgraded to the same version the host running the upgrade
+      * 2. The user's expected_version is the host's package version - 
+      *    expected_version is the expected source code version that the user asks to upgrade to, it's an optional verification, 
+      *    if expected_version was not provided we assume that the source code on this host is 
+      * 3. The user's expected_hosts exist in system.json
+-     * 4. If there are hosts in system.json that ere not provided in the expected_hosts we will print a warning but won't fail
++     * 4. If there are hosts in system.json thatwere not provided in the expected_hosts we will print a warning but won't fail
+      * we do that because of hostname can be renamed, hosts that are on maintainance and we don't want to block the upgrade becuase it might take a lot of time,
+      * or because of hosts that used to be a part of the cluster and they were removed from the cluster, we don't get the updated info of the hosts on system.json 
+      * therefore we can not treat the system.json as the source of truth of the hosts information
+diff --git a/src/upgrade/nc_upgrade_scripts/1.0.0/config_dir_restructure.js b/src/upgrade/nc_upgrade_scripts/1.0.0/config_dir_restructure.js
+index a20e80138..709a97452 100644
+--- a/src/upgrade/nc_upgrade_scripts/1.0.0/config_dir_restructure.js
++++ b/src/upgrade/nc_upgrade_scripts/1.0.0/config_dir_restructure.js
+@@ -51,7 +51,7 @@ async function run({ dbg, from_version }) {
+ 
+ /**
+  * upgrade_accounts_config_files list all old accounts and upgrade their config files by doing the following - 
+- * 1. Iterate all accounts under accounts/ (old dire
++ * 1. Iterate all accounts under accounts/ (old directory)
+  * 2. upgrade account config file with 3 retries
+  * @param {import('../../../sdk/config_fs').ConfigFS} config_fs 
+  * @param {String[]} old_account_names 
+@@ -96,7 +96,6 @@ async function upgrade_accounts_config_files(config_fs, old_account_names, from_
+  * 1.1. identity creation
+  * 1.2. account name symlink creation
+  * 1.3. account access key symlink update
+- * 1.4. delete account old path
+  * @param {import('../../../sdk/config_fs').ConfigFS} config_fs 
+  * @param {String} account_name 
+  * @param {String} backup_access_keys_path
+diff --git a/src/upgrade/upgrade_utils.js b/src/upgrade/upgrade_utils.js
+index e5607a95d..1d6134593 100644
+--- a/src/upgrade/upgrade_utils.js
++++ b/src/upgrade/upgrade_utils.js
+@@ -35,39 +35,39 @@ function version_compare(ver1, ver2) {
+ }
+ 
+ /**
+- * @param {string} server_version
+- * @param {string} container_version
++ * @param {string} current_version
++ * @param {string} new_version
+  */
+-function should_upgrade(server_version, container_version) {
+-    if (!server_version) {
++function should_upgrade(current_version, new_version) {
++    if (!current_version) {
+         dbg.log('system does not exist. no need for an upgrade');
+         return false;
+     }
+-    const ver_comparison = version_compare(container_version, server_version);
++    const ver_comparison = version_compare(new_version, current_version);
+     if (ver_comparison === 0) {
+-        if (server_version !== container_version) {
+-            dbg.warn(`the container and server appear to be the same version but different builds. (container: ${container_version}), (server: ${server_version})`);
++        if (current_version !== new_version) {
++            dbg.warn(`the new_version and current_version (server) appear to be the same version but different builds. (new_version: ${new_version}), (current_version: ${current_version})`);
+             dbg.warn(`upgrade is not supported for different builds of the same version!!`);
+         }
+-        dbg.log0('the versions of the container and the server match. no need to upgrade');
++        dbg.log0('the versions of the new_version and the current_version match. no need to upgrade');
+         return false;
+     } else if (ver_comparison < 0) {
+-        // container version is older than the server version - can't downgrade
+-        dbg.error(`the container version (${container_version}) appear to be older than the current server version (${server_version}). cannot downgrade`);
+-        throw new Error('attempt to run old container version with newer server version');
++        // new_version is older than the current server version - can't downgrade
++        dbg.error(`the new_version (${new_version}) appears to be older than the current_version (server)  (${current_version}). cannot downgrade`);
++        throw new Error('attempt to upgrade to an older version while server\'s version is newer');
+     } else {
+-        dbg.log0(`container version is ${container_version} and server version is ${server_version}. will upgrade`);
++        dbg.log0(`new_version is ${new_version} and current server version is ${current_version}. will upgrade`);
+         return true;
+     }
+ }
+ 
+ /**
+  * load_required_scripts loads all scripts that should be run according to the given versions
+- * @param {string} server_version
+- * @param {string} container_version
++ * @param {string} current_version
++ * @param {string} new_version
+  * @param {string} upgrade_scripts_dir
+  */
+-async function load_required_scripts(server_version, container_version, upgrade_scripts_dir) {
++async function load_required_scripts(current_version, new_version, upgrade_scripts_dir) {
+     // expecting scripts directories to be in a semver format. e.g. ./upgrade_scripts/5.0.1
+     let upgrade_dir_content = [];
+     try {
+@@ -79,12 +79,12 @@ async function load_required_scripts(server_version, container_version, upgrade_
+             throw err;
+         }
+     }
+-    // get all dirs for versions newer than server_version
++    // get all dirs for versions newer than current_version
+     const newer_versions = upgrade_dir_content.filter(ver =>
+-            version_compare(ver, server_version) > 0 &&
+-            version_compare(ver, container_version) <= 0)
++            version_compare(ver, current_version) > 0 &&
++            version_compare(ver, new_version) <= 0)
+         .sort(version_compare);
+-    dbg.log0(`found the following versions with upgrade scripts which are newer than server version (${server_version}):`, newer_versions);
++    dbg.log0(`found the following versions with upgrade scripts which are newer than server version (${current_version}):`, newer_versions);
+     // get all scripts under new_versions
+     const upgrade_scripts = _.flatMap(newer_versions, ver => {
+         const full_path = path.join(upgrade_scripts_dir, ver);
+diff --git a/src/util/fork_utils.js b/src/util/fork_utils.js
+index 52c00d7b6..ef06a9aaa 100644
+--- a/src/util/fork_utils.js
++++ b/src/util/fork_utils.js
+@@ -28,11 +28,13 @@ const fs_workers_stats = {};
+  * In case of any worker exit, also the entire process group will exit.
+  * @see https://nodejs.org/api/cluster.html
+  * 
+- * @param {number?} count number of workers to start.
+- * @param {number?} metrics_port prometheus metris port.
++ * @param {number} [metrics_port]
++ * @param {number} [https_metrics_port]
++ * @param {string} [nsfs_config_root] nsfs configuration path
++ * @param {number} [count] number of workers to start.
+  * @returns {Promise<boolean>} true if workers were started.
+  */
+-async function start_workers(metrics_port, count = 0) {
++async function start_workers(metrics_port, https_metrics_port, nsfs_config_root, count = 0) {
+     const exit_events = [];
+     if (cluster.isPrimary && count > 0) {
+         for (let i = 0; i < count; ++i) {
+@@ -71,9 +73,9 @@ async function start_workers(metrics_port, count = 0) {
+                 cluster.workers[id].on('message', nsfs_io_stats_handler);
+             }
+         }
+-        if (metrics_port > 0) {
++        if (metrics_port > 0 || https_metrics_port > 0) {
+             dbg.log0('Starting metrics server', metrics_port);
+-            await prom_reporting.start_server(metrics_port, true);
++            await prom_reporting.start_server(metrics_port, https_metrics_port, true, nsfs_config_root);
+             dbg.log0('Started metrics server successfully');
+         }
+         return true;
+diff --git a/src/util/http_utils.js b/src/util/http_utils.js
+index a08fcdc41..809282d02 100644
+--- a/src/util/http_utils.js
++++ b/src/util/http_utils.js
+@@ -20,6 +20,7 @@ const xml_utils = require('./xml_utils');
+ const jwt_utils = require('./jwt_utils');
+ const time_utils = require('./time_utils');
+ const cloud_utils = require('./cloud_utils');
++const ssl_utils = require('../util/ssl_utils');
+ 
+ const UNSIGNED_PAYLOAD = 'UNSIGNED-PAYLOAD';
+ const STREAMING_PAYLOAD = 'STREAMING-AWS4-HMAC-SHA256-PAYLOAD';
+@@ -760,7 +761,118 @@ function http_get(uri, options) {
+         client.get(uri, options, resolve).on('error', reject);
+     });
+ }
++/**
++ * start_https_server starts the secure https server by type and options and creates a certificate if required
++ * @param {number} https_port
++ * @param {('S3'|'IAM'|'STS'|'METRICS')} server_type 
++ * @param {Object} request_handler 
++*/
++async function start_https_server(https_port, server_type, request_handler, nsfs_config_root) {
++    const ssl_cert_info = await ssl_utils.get_ssl_cert_info(server_type, nsfs_config_root);
++    const https_server = await ssl_utils.create_https_server(ssl_cert_info, true, request_handler);
++    ssl_cert_info.on('update', updated_ssl_cert_info => {
++        dbg.log0(`Setting updated ${server_type} ssl certs for endpoint.`);
++        const updated_ssl_options = { ...updated_ssl_cert_info.cert, honorCipherOrder: true };
++        https_server.setSecureContext(updated_ssl_options);
++    });
++    dbg.log0(`Starting ${server_type} server on HTTPS port ${https_port}`);
++    await listen_port(https_port, https_server, server_type);
++    dbg.log0(`Started ${server_type} HTTPS server successfully`);
++}
++
++/**
++ * start_http_server starts the non-secure http server by type
++ * @param {number} http_port
++ * @param {('S3'|'IAM'|'STS'|'METRICS')} server_type 
++ * @param {Object} request_handler 
++*/
++async function start_http_server(http_port, server_type, request_handler) {
++    const http_server = http.createServer(request_handler);
++    if (http_port > 0) {
++        dbg.log0(`Starting ${server_type} server on HTTP port ${http_port}`);
++        await listen_port(http_port, http_server, server_type);
++        dbg.log0(`Started ${server_type} HTTP server successfully`);
++    }
++}
++
++/**
++ * Listen server for http/https ports
++ * @param {number} port
++ * @param {http.Server} server
++ * @param {('S3'|'IAM'|'STS'|'METRICS')} server_type 
++*/
++function listen_port(port, server, server_type) {
++    return new Promise((resolve, reject) => {
++        if (server_type !== 'METRICS') {
++            setup_endpoint_server(server);
++        }
++        server.listen(port, err => {
++            if (err) {
++                dbg.error('ENDPOINT FAILED to listen', err);
++                reject(err);
++            } else {
++                resolve();
++            }
++        });
++    });
++}
++
++/**
++ * Setup endpoint socket and server, Setup is not used for non-endpoint servers.
++ * @param {http.Server} server
++*/
++function setup_endpoint_server(server) {
++    // Handle 'Expect' header different than 100-continue to conform with AWS.
++    // Consider any expect value as if the client is expecting 100-continue.
++    // See https://github.com/ceph/s3-tests/blob/master/s3tests/functional/test_headers.py:
++    // - test_object_create_bad_expect_mismatch()
++    // - test_object_create_bad_expect_empty()
++    // - test_object_create_bad_expect_none()
++    // - test_object_create_bad_expect_unreadable()
++    // See https://nodejs.org/api/http.html#http_event_checkexpectation
++    server.on('checkExpectation', function on_s3_check_expectation(req, res) {
++        res.writeContinue();
++        server.emit('request', req, res);
++    });
++
++    // See https://nodejs.org/api/http.html#http_event_clienterror
++    server.on('clientError', function on_s3_client_error(err, socket) {
++
++        // On parsing errors we reply 400 Bad Request to conform with AWS
++        // These errors come from the nodejs native http parser.
++        if (typeof err.code === 'string' &&
++            err.code.startsWith('HPE_INVALID_') &&
++            err.bytesParsed > 0) {
++            console.error('ENDPOINT CLIENT ERROR - REPLY WITH BAD REQUEST', err);
++            socket.write('HTTP/1.1 400 Bad Request\r\n');
++            socket.write(`Date: ${new Date().toUTCString()}\r\n`);
++            socket.write('Connection: close\r\n');
++            socket.write('Content-Length: 0\r\n');
++            socket.end('\r\n');
++        }
+ 
++        // in any case we destroy the socket
++        socket.destroy();
++    });
++
++    server.keepAliveTimeout = config.ENDPOINT_HTTP_SERVER_KEEPALIVE_TIMEOUT;
++    server.requestTimeout = config.ENDPOINT_HTTP_SERVER_REQUEST_TIMEOUT;
++    server.maxRequestsPerSocket = config.ENDPOINT_HTTP_MAX_REQUESTS_PER_SOCKET;
++
++    server.on('error', handle_server_error);
++
++    // This was an attempt to read from the socket in large chunks,
++    // but it seems like it has no effect and we still get small chunks
++    // server.on('connection', function on_s3_connection(socket) {
++    // socket._readableState.highWaterMark = 1024 * 1024;
++    // socket.setNoDelay(true);
++    // });
++}
++
++function handle_server_error(err) {
++    dbg.error('ENDPOINT FAILED TO START on error:', err.code, err.message, err.stack || err);
++    process.exit(1);
++}
+ 
+ exports.parse_url_query = parse_url_query;
+ exports.parse_client_ip = parse_client_ip;
+@@ -790,6 +902,8 @@ exports.authorize_session_token = authorize_session_token;
+ exports.get_agent_by_endpoint = get_agent_by_endpoint;
+ exports.validate_server_ip_whitelist = validate_server_ip_whitelist;
+ exports.http_get = http_get;
++exports.start_http_server = start_http_server;
++exports.start_https_server = start_https_server;
+ exports.CONTENT_TYPE_TEXT_PLAIN = CONTENT_TYPE_TEXT_PLAIN;
+ exports.CONTENT_TYPE_APP_OCTET_STREAM = CONTENT_TYPE_APP_OCTET_STREAM;
+ exports.CONTENT_TYPE_APP_JSON = CONTENT_TYPE_APP_JSON;
+diff --git a/src/util/ssl_utils.js b/src/util/ssl_utils.js
+index 28af277e9..4aeabb872 100644
+--- a/src/util/ssl_utils.js
++++ b/src/util/ssl_utils.js
+@@ -46,7 +46,8 @@ const certs = {
+     S3: new CertInfo(config.S3_SERVICE_CERT_PATH),
+     EXTERNAL_DB: new CertInfo(config.EXTERNAL_DB_SERVICE_CERT_PATH),
+     STS: new CertInfo(config.STS_SERVICE_CERT_PATH),
+-    IAM: new CertInfo(config.IAM_SERVICE_CERT_PATH)
++    IAM: new CertInfo(config.IAM_SERVICE_CERT_PATH),
++    METRICS: new CertInfo(config.S3_SERVICE_CERT_PATH) // metric server will use the S3 cert.
+ };
+ 
+ function generate_ssl_certificate() {
+@@ -65,7 +66,7 @@ function verify_ssl_certificate(certificate) {
+ // Get SSL certificate (load once then serve from cache)
+ async function get_ssl_cert_info(service, nsfs_config_root) {
+     let cert_info;
+-    if (service === 'S3' && nsfs_config_root) {
++    if ((service === 'S3' || service === 'METRICS') && nsfs_config_root) {
+         const nsfs_ssl_cert_dir = path.join(nsfs_config_root, 'certificates/');
+         cert_info = new CertInfo(nsfs_ssl_cert_dir);
+     } else {
+@@ -91,7 +92,7 @@ async function get_ssl_cert_info(service, nsfs_config_root) {
+ 
+         } catch (err) {
+             if (err.code === 'ENOENT') {
+-                dbg.log0(`SSL certificate not found in dir ${cert_info.dir}`);
++                dbg.log0(`SSL certificate not found in dir ${cert_info.dir} for service ${service}`);
+             } else {
+                 dbg.error(`SSL certificate failed to load from dir ${cert_info.dir}:`, err.message);
+             }
+@@ -165,10 +166,17 @@ function run_https_test_server() {
+     server.listen();
+ }
+ 
++// An internal function to prevent code duplication
++async function create_https_server(ssl_cert_info, honorCipherOrder, endpoint_handler) {
++    const ssl_options = {...ssl_cert_info.cert, honorCipherOrder: honorCipherOrder};
++    return https.createServer(ssl_options, endpoint_handler);
++}
++
+ exports.generate_ssl_certificate = generate_ssl_certificate;
+ exports.verify_ssl_certificate = verify_ssl_certificate;
+ exports.get_ssl_cert_info = get_ssl_cert_info;
+ exports.is_using_generated_certs = is_using_generated_certs;
+ exports.get_cert_dir = get_cert_dir;
++exports.create_https_server = create_https_server;
+ 
+ if (require.main === module) run_https_test_server();

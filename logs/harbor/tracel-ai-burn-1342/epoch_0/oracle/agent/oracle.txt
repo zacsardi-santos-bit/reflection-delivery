@@ -1,0 +1,173 @@
+patching file Cargo.lock
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file Cargo.lock.rej
+patching file burn-book/src/building-blocks/tensor.md
+patching file crates/burn-core/src/nn/rnn/lstm.rs
+patching file crates/burn-tensor/src/tensor/api/base.rs
+patching file crates/burn-tensor/src/tensor/ops/bool_tensor.rs
+patching file crates/burn-tensor/src/tensor/ops/int_tensor.rs
+patching file crates/burn-tensor/src/tensor/ops/tensor.rs
+patching file Cargo.lock
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file Cargo.lock.rej
+patching file burn-book/src/building-blocks/tensor.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file burn-book/src/building-blocks/tensor.md.rej
+patching file crates/burn-core/src/nn/rnn/lstm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/burn-core/src/nn/rnn/lstm.rs.rej
+patching file crates/burn-tensor/src/tensor/api/base.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file crates/burn-tensor/src/tensor/api/base.rs.rej
+patching file crates/burn-tensor/src/tensor/ops/bool_tensor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file crates/burn-tensor/src/tensor/ops/bool_tensor.rs.rej
+patching file crates/burn-tensor/src/tensor/ops/int_tensor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/burn-tensor/src/tensor/ops/int_tensor.rs.rej
+patching file crates/burn-tensor/src/tensor/ops/tensor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file crates/burn-tensor/src/tensor/ops/tensor.rs.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Cargo.lock b/Cargo.lock
+|index 2b18caa9d..151e6b4ac 100644
+|--- a/Cargo.lock
+|+++ b/Cargo.lock
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 62
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/burn-book/src/building-blocks/tensor.md b/burn-book/src/building-blocks/tensor.md
+|index 9a134b1d2..899f12abb 100644
+|--- a/burn-book/src/building-blocks/tensor.md
+|+++ b/burn-book/src/building-blocks/tensor.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 77
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/burn-core/src/nn/rnn/lstm.rs b/crates/burn-core/src/nn/rnn/lstm.rs
+|index ba32d698c..bbf864720 100644
+|--- a/crates/burn-core/src/nn/rnn/lstm.rs
+|+++ b/crates/burn-core/src/nn/rnn/lstm.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 91
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/burn-tensor/src/tensor/api/base.rs b/crates/burn-tensor/src/tensor/api/base.rs
+|index a9ba31d2b..f0bf392f8 100644
+|--- a/crates/burn-tensor/src/tensor/api/base.rs
+|+++ b/crates/burn-tensor/src/tensor/api/base.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 317
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/burn-tensor/src/tensor/ops/bool_tensor.rs b/crates/burn-tensor/src/tensor/ops/bool_tensor.rs
+|index 354801738..62b22d248 100644
+|--- a/crates/burn-tensor/src/tensor/ops/bool_tensor.rs
+|+++ b/crates/burn-tensor/src/tensor/ops/bool_tensor.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 400
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/burn-tensor/src/tensor/ops/int_tensor.rs b/crates/burn-tensor/src/tensor/ops/int_tensor.rs
+|index 9c447699a..5af6f41c4 100644
+|--- a/crates/burn-tensor/src/tensor/ops/int_tensor.rs
+|+++ b/crates/burn-tensor/src/tensor/ops/int_tensor.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 485
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/burn-tensor/src/tensor/ops/tensor.rs b/crates/burn-tensor/src/tensor/ops/tensor.rs
+|index aebf6ffc2..55edc942d 100644
+|--- a/crates/burn-tensor/src/tensor/ops/tensor.rs
+|+++ b/crates/burn-tensor/src/tensor/ops/tensor.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file Cargo.lock
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file Cargo.lock.rej
+patching file burn-book/src/building-blocks/tensor.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file burn-book/src/building-blocks/tensor.md.rej
+patching file crates/burn-core/src/nn/rnn/lstm.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/burn-core/src/nn/rnn/lstm.rs.rej
+patching file crates/burn-tensor/src/tensor/api/base.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file crates/burn-tensor/src/tensor/api/base.rs.rej
+patching file crates/burn-tensor/src/tensor/ops/bool_tensor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file crates/burn-tensor/src/tensor/ops/bool_tensor.rs.rej
+patching file crates/burn-tensor/src/tensor/ops/int_tensor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/burn-tensor/src/tensor/ops/int_tensor.rs.rej
+patching file crates/burn-tensor/src/tensor/ops/tensor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file crates/burn-tensor/src/tensor/ops/tensor.rs.rej
+ERROR: golden patch failed to apply by all strategies

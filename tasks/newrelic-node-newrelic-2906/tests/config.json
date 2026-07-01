@@ -1,0 +1,50 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && sh -c 'node --test --test-reporter=/workspace/go-reporter.mjs test/unit/feature_flag.test.js test/unit/lib/otel/context.test.js test/unit/lib/otel/segment-synthesizer.test.js test/unit/lib/otel/setup.test.js test/versioned/otel-bridge/span.test.js'",
+  "test_files": [
+    "test/unit/feature_flag.test.js",
+    "test/unit/lib/otel/context.test.js",
+    "test/unit/lib/otel/segment-synthesizer.test.js",
+    "test/unit/lib/otel/setup.test.js",
+    "test/versioned/otel-bridge/newrelic.js",
+    "test/versioned/otel-bridge/package.json",
+    "test/versioned/otel-bridge/span.test.js"
+  ],
+  "num_test_files": 7,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "should account for all *used* keys",
+    "should give root context",
+    "should get proper context",
+    "should remove otelSynthesis symbol when it exists on value",
+    "should create internal custom segment",
+    "Otel internal and NR span tests",
+    "Otel http external span test",
+    "should create consumer segment from otel span",
+    "should create supportability metric on successful setup of opentelemetry bridge",
+    "should not create provider when `feature_flag.opentelemetry_bridge` is false"
+  ],
+  "PASS_TO_PASS": [
+    "should declare every prerelease feature in the *used* variable",
+    "should declare every release feature in the *used* variable",
+    "should declare every unreleased feature in the *used* variable",
+    "should not re-declare a flag in prerelease from released",
+    "should not re-declare a flag in prerelease from unreleased",
+    "should warn if released flags are still in config",
+    "should warn if unreleased flags are still in config",
+    "should delete value from context",
+    "should create http external segment from otel http client span",
+    "should create db segment",
+    "should create db segment and get operation and table from db.statement",
+    "should create db segment and get collection from db.mongodb.collection",
+    "should create db segment and get operation from db.statement when system is redis",
+    "should create db segment and get operation from db.operation when system is memcached",
+    "should log table and operation as unknown when the db.system, db.sql.table and db.operation to not exist as span attributes",
+    "should create rpc segment",
+    "should create http server segment",
+    "should create base http server segment",
+    "should create topic producer segment",
+    "should create queue producer segment",
+    "should log warning span does not match a rule"
+  ]
+}

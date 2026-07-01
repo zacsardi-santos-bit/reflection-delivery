@@ -1,0 +1,18 @@
+patching file packages/experimental/Avatar/src/__tests__/__snapshots__/JSAvatar.test.jsx.snap
+patching file packages/experimental/Badge/src/__tests__/__snapshots__/Badge.test.tsx.snap
+PASS src/utils/getInitials.test.ts
+PASS src/__tests__/JSAvatar.test.jsx (9.394 s)
+
+Test Suites: 2 passed, 2 total
+Tests:       36 passed, 36 total
+Snapshots:   1 passed, 1 total
+Time:        10.142 s
+Ran all test suites.
+PASS src/__tests__/Badge.test.tsx (5.813 s)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   3 passed, 3 total
+Time:        5.873 s
+Ran all test suites.
+reward=1 graded=5 found=0 failed=0 parsed=0 framework=jest exit_code=0

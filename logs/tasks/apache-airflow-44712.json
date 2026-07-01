@@ -1,0 +1,23 @@
+{
+ "task": "apache-airflow-44712",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds airflow/models/deadline.py Deadline model with add_deadline + __repr__ '[DagRun Deadline] Dag: ... needed by ... or run: callback(kwargs)'; F2P=4 exercises real ORM persist+repr"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 37,
+  "shallow": true
+ }
+}

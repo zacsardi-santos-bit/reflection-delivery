@@ -1,0 +1,14 @@
+patching file .prettierrc
+patching file examples/.tailcallrc.graphql
+patching file examples/expressions.graphql
+patching file src/blueprint/from_config/definitions.rs
+patching file src/blueprint/from_config/operators/const_field.rs
+patching file src/blueprint/from_config/operators/expr.rs
+patching file src/blueprint/from_config/operators/graphql.rs
+patching file src/blueprint/from_config/operators/grpc.rs
+patching file src/blueprint/from_config/operators/http.rs
+patching file src/blueprint/from_config/operators/mod.rs
+patching file src/config/config.rs
+patching file src/config/from_document.rs
+patching file src/config/into_document.rs
+patching file src/lambda/expression.rs

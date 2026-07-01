@@ -1,0 +1,23 @@
+{
+ "task": "tjaeschke-ods-core-21",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'GitURI string' to Event, changes 'Forward(e *Event, triggerSecret string) ([]byte, error)' to return raw response, and uses html/template with pipeline.template.json; F2P TestForward compares forwarded bytes, TestGetBuildConfig diffs against test/golden/pipeline.json"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 44,
+  "shallow": true
+ }
+}

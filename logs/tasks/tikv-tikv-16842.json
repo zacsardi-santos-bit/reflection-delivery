@@ -1,0 +1,23 @@
+{
+ "task": "tikv-tikv-16842",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden renames RAFT_DISABLE_UNPERSISTED_APPLY_GAUGE -> RAFT_ENABLE_UNPERSISTED_APPLY_GAUGE and swaps .dec()/.inc(); test.patch asserts 'assert_eq!(RAFT_ENABLE_UNPERSISTED_APPLY_GAUGE.get(), 1)' after run and merge"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

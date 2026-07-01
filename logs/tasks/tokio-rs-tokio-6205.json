@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-tokio-6205",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds reserve_many/try_reserve_many across 5 sync files; F2P=49 incl 'reserve_many_and_send','try_reserve_many_full','drop_permit_iterator_releases_permits' run via 'cargo nextest run --features full --test sync_mpsc'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

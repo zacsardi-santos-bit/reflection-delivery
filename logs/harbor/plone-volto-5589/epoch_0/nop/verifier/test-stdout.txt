@@ -1,0 +1,398 @@
+patching file cypress/tests/core/blocks/blocks-search.js
+patching file cypress/tests/core/blocks/listing/blocks-listing-templates.js
+patching file packages/volto/__tests__/fixtures/test-volto-project/src/customizations/TSComponent.jsx
+patching file packages/volto/__tests__/fixtures/test-volto-project/src/customizations/routes.tsx
+patching file src/components/theme/Sitemap/Sitemap.test.jsx
+patching file src/helpers/Blocks/Blocks.test.js
+jest-haste-map: Haste module naming collision: test-addon
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/__tests__/fixtures/test-volto-project/addons/test-addon/package.json
+    * <rootDir>/__tests__/fixtures/test-volto-project/addons/my-volto-config-addon/package.json
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+FAIL src/helpers/Blocks/Blocks.test.js (9.636 s)
+  ● Console
+
+    console.warn
+      You should pass intl to any applySchemaDefaults call. By failing to pass
+            the intl object, your ObjectWidget fields will not get default values
+            extracted from their schema.
+
+      468 |     // Old code that doesn't pass intl doesn't get ObjectWidget defaults
+      469 |     // eslint-disable-next-line no-console
+    > 470 |     console.warn(
+          |             ^
+      471 |       `You should pass intl to any applySchemaDefaults call. By failing to pass
+      472 |       the intl object, your ObjectWidget fields will not get default values
+      473 |       extracted from their schema.`,
+
+      at applySchemaDefaults (src/helpers/Blocks/Blocks.js:470:13)
+      at Object.<anonymous> (src/helpers/Blocks/Blocks.test.js:729:33)
+
+  ● Blocks › buildStyleClassNamesFromData › It does not output any className for style converter values
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        "has--color--red",
+    +   "has----background-color--FFF",
+      ]
+
+      1074 |         '--background-color': '#FFF',
+      1075 |       };
+    > 1076 |       expect(buildStyleClassNamesFromData(styles)).toEqual(['has--color--red']);
+           |                                                    ^
+      1077 |     });
+      1078 |
+      1079 |     it.skip('It does not output any className for unknown converter values', () => {
+
+      at Object.<anonymous> (src/helpers/Blocks/Blocks.test.js:1076:52)
+
+  ● Blocks › buildStyleObjectFromData › Understands style converter for style values, no styles found
+
+    TypeError: (0 , _Blocks.buildStyleObjectFromData) is not a function
+
+      1092 |         backgroundColor: '#FFF',
+      1093 |       };
+    > 1094 |       expect(buildStyleObjectFromData(styles)).toEqual({});
+           |                                      ^
+      1095 |     });
+      1096 |
+      1097 |     it('Understands style converter for style values', () => {
+
+      at Object.<anonymous> (src/helpers/Blocks/Blocks.test.js:1094:38)
+
+  ● Blocks › buildStyleObjectFromData › Understands style converter for style values
+
+    TypeError: (0 , _Blocks.buildStyleObjectFromData) is not a function
+
+      1100 |         '--background-color': '#FFF',
+      1101 |       };
+    > 1102 |       expect(buildStyleObjectFromData(styles)).toEqual({
+           |                                      ^
+      1103 |         '--background-color': '#FFF',
+      1104 |       });
+      1105 |     });
+
+      at Object.<anonymous> (src/helpers/Blocks/Blocks.test.js:1102:38)
+
+  ● Blocks › buildStyleObjectFromData › Supports multiple nested levels
+
+    TypeError: (0 , _Blocks.buildStyleObjectFromData) is not a function
+
+      1118 |         },
+      1119 |       };
+    > 1120 |       expect(buildStyleObjectFromData(styles)).toEqual({
+           |                                      ^
+      1121 |         '--color': 'red',
+      1122 |         '--nested--foo': 'white',
+      1123 |         '--nested--level2--foo': '#fff',
+
+      at Object.<anonymous> (src/helpers/Blocks/Blocks.test.js:1120:38)
+
+FAIL src/components/theme/Sitemap/Sitemap.test.jsx (10.487 s)
+  ● Console
+
+    console.error
+      Error: Uncaught [TypeError: Cannot read properties of undefined (reading 'includes')]
+          at reportException (/workspace/repo/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+          at innerInvokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:341:9)
+          at invokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)
+          at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)
+          at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)
+          at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)
+          at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)
+          at invokeGuardedCallback (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)
+          at flushPassiveEffectsImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14591:9)
+          at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)
+          at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+          at flushPassiveEffects (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14464:14)
+          at performSyncWorkOnRoot (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13380:3)
+          at /workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26
+          at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)
+          at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+          at flushSyncCallbackQueueImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)
+          at flushSyncCallbackQueue (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)
+          at scheduleUpdateOnFiber (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)
+          at updateContainer (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)
+          at Object.create (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)
+          at Object.<anonymous> (/workspace/repo/src/components/theme/Sitemap/Sitemap.test.jsx:98:32)
+          at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)
+          at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12
+          at new Promise (<anonymous>)
+          at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)
+          at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41
+          at processTicksAndRejections (node:internal/process/task_queues:95:5) TypeError: Cannot read properties of undefined (reading 'includes')
+          at toReactIntlLang (/workspace/repo/src/helpers/Utils/Utils.js:202:16)
+          at toBackendLang (/workspace/repo/src/helpers/Utils/Utils.js:219:10)
+          at /workspace/repo/src/components/theme/Sitemap/Sitemap.jsx:42:60
+          at invokePassiveEffectCreate (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14504:20)
+          at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11391:14)
+          at HTMLUnknownElement.callTheUserObjectsOperation (/workspace/repo/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+          at innerInvokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:338:25)
+          at invokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)
+          at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)
+          at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)
+          at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)
+          at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)
+          at invokeGuardedCallback (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)
+          at flushPassiveEffectsImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14591:9)
+          at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)
+          at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+          at flushPassiveEffects (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14464:14)
+          at performSyncWorkOnRoot (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13380:3)
+          at /workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26
+          at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)
+          at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+          at flushSyncCallbackQueueImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)
+          at flushSyncCallbackQueue (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)
+          at scheduleUpdateOnFiber (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)
+          at updateContainer (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)
+          at Object.create (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)
+          at Object.<anonymous> (/workspace/repo/src/components/theme/Sitemap/Sitemap.test.jsx:98:32)
+          at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)
+          at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12
+          at new Promise (<anonymous>)
+          at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)
+          at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+       96 |       },
+       97 |     });
+    >  98 |     const component = renderer.create(
+          |                                ^
+       99 |       <Provider store={store}>
+      100 |         <MemoryRouter>
+      101 |           <Sitemap location={{ pathname: '/en/' }} />
+
+      at VirtualConsole.<anonymous> (node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+      at reportException (node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28)
+      at innerInvokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:341:9)
+      at invokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)
+      at HTMLUnknownElementImpl._dispatch (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)
+      at HTMLUnknownElementImpl.dispatchEvent (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)
+      at HTMLUnknownElement.dispatchEvent (node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)
+      at Object.invokeGuardedCallbackDev (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)
+      at invokeGuardedCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)
+      at flushPassiveEffectsImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14591:9)
+      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)
+      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+      at flushPassiveEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14464:14)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13380:3)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26
+      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)
+      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+      at flushSyncCallbackQueueImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)
+      at flushSyncCallbackQueue (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)
+      at Object.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)
+      at Object.<anonymous> (src/components/theme/Sitemap/Sitemap.test.jsx:98:32)
+
+    console.error
+      Error: Uncaught [TypeError: Cannot read properties of undefined (reading 'includes')]
+          at reportException (/workspace/repo/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+          at innerInvokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:341:9)
+          at invokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)
+          at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)
+          at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)
+          at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)
+          at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)
+          at invokeGuardedCallback (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)
+          at flushPassiveEffectsImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14591:9)
+          at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)
+          at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+          at flushPassiveEffects (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14464:14)
+          at performSyncWorkOnRoot (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13380:3)
+          at /workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26
+          at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)
+          at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+          at flushSyncCallbackQueueImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)
+          at flushSyncCallbackQueue (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)
+          at scheduleUpdateOnFiber (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)
+          at updateContainer (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)
+          at Object.create (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)
+          at Object.<anonymous> (/workspace/repo/src/components/theme/Sitemap/Sitemap.test.jsx:98:32)
+          at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)
+          at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12
+          at new Promise (<anonymous>)
+          at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)
+          at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41
+          at processTicksAndRejections (node:internal/process/task_queues:95:5) TypeError: Cannot read properties of undefined (reading 'includes')
+          at toReactIntlLang (/workspace/repo/src/helpers/Utils/Utils.js:202:16)
+          at toBackendLang (/workspace/repo/src/helpers/Utils/Utils.js:219:10)
+          at /workspace/repo/src/components/theme/Sitemap/Sitemap.jsx:42:60
+          at invokePassiveEffectCreate (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14504:20)
+          at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11391:14)
+          at HTMLUnknownElement.callTheUserObjectsOperation (/workspace/repo/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+          at innerInvokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:338:25)
+          at invokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)
+          at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)
+          at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)
+          at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)
+          at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)
+          at invokeGuardedCallback (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)
+          at flushPassiveEffectsImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14591:9)
+          at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)
+          at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+          at flushPassiveEffects (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14464:14)
+          at performSyncWorkOnRoot (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13380:3)
+          at /workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26
+          at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)
+          at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+          at flushSyncCallbackQueueImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)
+          at flushSyncCallbackQueue (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)
+          at scheduleUpdateOnFiber (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)
+          at updateContainer (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)
+          at Object.create (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)
+          at Object.<anonymous> (/workspace/repo/src/components/theme/Sitemap/Sitemap.test.jsx:98:32)
+          at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)
+          at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12
+          at new Promise (<anonymous>)
+          at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)
+          at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41
+          at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+       96 |       },
+       97 |     });
+    >  98 |     const component = renderer.create(
+          |                                ^
+       99 |       <Provider store={store}>
+      100 |         <MemoryRouter>
+      101 |           <Sitemap location={{ pathname: '/en/' }} />
+
+      at VirtualConsole.<anonymous> (node_modules/jsdom/lib/jsdom/virtual-console.js:29:45)
+      at reportException (node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:70:28)
+      at innerInvokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:341:9)
+      at invokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)
+      at HTMLUnknownElementImpl._dispatch (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)
+      at HTMLUnknownElementImpl.dispatchEvent (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)
+      at HTMLUnknownElement.dispatchEvent (node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)
+      at Object.invokeGuardedCallbackDev (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)
+      at invokeGuardedCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)
+      at flushPassiveEffectsImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14591:9)
+      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)
+      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+      at flushPassiveEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14464:14)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13380:3)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26
+      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)
+      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+      at flushSyncCallbackQueueImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)
+      at flushSyncCallbackQueue (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)
+      at Object.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)
+      at Object.<anonymous> (src/components/theme/Sitemap/Sitemap.test.jsx:98:32)
+
+    console.error
+      The above error occurred in the <Sitemap> component:
+      
+          at Sitemap (/workspace/repo/src/components/theme/Sitemap/Sitemap.jsx:38:7)
+          at ConnectFunction (/workspace/repo/node_modules/react-redux/lib/components/connectAdvanced.js:233:41)
+          at injectIntl(Connect(Sitemap))
+          at Router (/workspace/repo/node_modules/react-router/cjs/react-router.js:99:30)
+          at MemoryRouter (/workspace/repo/node_modules/react-router/cjs/react-router.js:187:35)
+          at IntlProvider (/workspace/repo/node_modules/react-intl/dist/components/provider.js:84:47)
+          at ConnectFunction (/workspace/repo/node_modules/react-redux/lib/components/connectAdvanced.js:233:41)
+          at Provider (/workspace/repo/node_modules/react-redux/lib/components/Provider.js:21:20)
+          at Provider (/workspace/repo/node_modules/react-intl-redux/lib/components/Provider.js:19:20)
+      
+      Consider adding an error boundary to your tree to customize error handling behavior.
+      Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+       96 |       },
+       97 |     });
+    >  98 |     const component = renderer.create(
+          |                                ^
+       99 |       <Provider store={store}>
+      100 |         <MemoryRouter>
+      101 |           <Sitemap location={{ pathname: '/en/' }} />
+
+      at logCapturedError (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10989:23)
+      at update.callback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11022:5)
+      at callCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3662:12)
+      at commitUpdateQueue (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:3683:9)
+      at commitLifeCycles (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11855:11)
+      at commitLayoutEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14443:7)
+      at HTMLUnknownElement.callCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11391:14)
+      at HTMLUnknownElement.callTheUserObjectsOperation (node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+      at innerInvokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:338:25)
+      at invokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)
+      at HTMLUnknownElementImpl._dispatch (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)
+      at HTMLUnknownElementImpl.dispatchEvent (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)
+      at HTMLUnknownElement.dispatchEvent (node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)
+      at Object.invokeGuardedCallbackDev (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)
+      at invokeGuardedCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)
+      at commitRootImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14172:9)
+      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)
+      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+      at commitRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14011:3)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13440:3)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26
+      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)
+      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+      at flushSyncCallbackQueueImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)
+      at flushSyncCallbackQueue (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)
+      at Object.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)
+      at Object.<anonymous> (src/components/theme/Sitemap/Sitemap.test.jsx:98:32)
+
+  ● Sitemap in a multilingual site › renders a sitemap component
+
+    TypeError: Cannot read properties of undefined (reading 'includes')
+
+      200 |  */
+      201 | export const toReactIntlLang = (language) => {
+    > 202 |   if (language.includes('_') || language.includes('-')) {
+          |                ^
+      203 |     let langCode = language.split(/[-_]/);
+      204 |     langCode = `${langCode[0]}-${langCode[1].toUpperCase()}`;
+      205 |     return langCode;
+
+      at toReactIntlLang (src/helpers/Utils/Utils.js:202:16)
+      at toBackendLang (src/helpers/Utils/Utils.js:219:10)
+      at src/components/theme/Sitemap/Sitemap.jsx:42:60
+      at invokePassiveEffectCreate (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14504:20)
+      at HTMLUnknownElement.callCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11391:14)
+      at HTMLUnknownElement.callTheUserObjectsOperation (node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+      at innerInvokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:338:25)
+      at invokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)
+      at HTMLUnknownElementImpl._dispatch (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)
+      at HTMLUnknownElementImpl.dispatchEvent (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)
+      at HTMLUnknownElement.dispatchEvent (node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)
+      at Object.invokeGuardedCallbackDev (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)
+      at invokeGuardedCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)
+      at flushPassiveEffectsImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14591:9)
+      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)
+      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+      at flushPassiveEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14464:14)
+      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13380:3)
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26
+      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)
+      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)
+      at flushSyncCallbackQueueImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)
+      at flushSyncCallbackQueue (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)
+      at Object.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)
+      at Object.<anonymous> (src/components/theme/Sitemap/Sitemap.test.jsx:98:32)
+
+Test Suites: 2 failed, 2 total
+Tests:       5 failed, 1 skipped, 65 passed, 71 total
+Snapshots:   1 passed, 1 total
+Time:        12.347 s
+Ran all test suites matching /src\/helpers\/Blocks\/Blocks.test.js|src\/components\/theme\/Sitemap\/Sitemap.test.jsx/i.
+{"numFailedTestSuites":2,"numFailedTests":5,"numPassedTestSuites":0,"numPassedTests":65,"numPendingTestSuites":0,"numPendingTests":1,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":71,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":1,"total":1,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746019141,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":["Blocks","getBlocksFieldname"],"failureMessages":[],"fullName":"Blocks getBlocksFieldname can get the blocks field name from formdata","location":null,"status":"passed","title":"can get the blocks field name from formdata"},{"ancestorTitles":["Blocks","getBlocksFieldname"],"failureMessages":[],"fullName":"Blocks getBlocksFieldname returns null if no blocks field name from formdata is present","location":null,"status":"passed","title":"returns null if no blocks field name from formdata is present"},{"ancestorTitles":["Blocks","getBlocksFieldname"],"failureMessages":[],"fullName":"Blocks getBlocksFieldname can get the blocks field name from formdata of a nested schema","location":null,"status":"passed","title":"can get the blocks field name from formdata of a nested schema"},{"ancestorTitles":["Blocks","getBlocksLayoutFieldname"],"failureMessages":[],"fullName":"Blocks getBlocksLayoutFieldname can get the blocks layout field name from formdata","location":null,"status":"passed","title":"can get the blocks layout field name from formdata"},{"ancestorTitles":["Blocks","getBlocksLayoutFieldname"],"failureMessages":[],"fullName":"Blocks getBlocksLayoutFieldname returns null if no layout field name from formdata is present","location":null,"status":"passed","title":"returns null if no layout field name from formdata is present"},{"ancestorTitles":["Blocks","getBlocksLayoutFieldname"],"failureMessages":[],"fullName":"Blocks getBlocksLayoutFieldname can get the blocks layout field name from formdata of a nested schema","location":null,"status":"passed","title":"can get the blocks layout field name from formdata of a nested schema"},{"ancestorTitles":["Blocks","hasBlocksData"],"failureMessages":[],"fullName":"Blocks hasBlocksData checks blocks data when there is none","location":null,"status":"passed","title":"checks blocks data when there is none"},{"ancestorTitles":["Blocks","hasBlocksData"],"failureMessages":[],"fullName":"Blocks hasBlocksData checks blocks data in the root","location":null,"status":"passed","title":"checks blocks data in the root"},{"ancestorTitles":["Blocks","hasBlocksData"],"failureMessages":[],"fullName":"Blocks hasBlocksData checks blocks data in a nested schema","location":null,"status":"passed","title":"checks blocks data in a nested schema"},{"ancestorTitles":["Blocks","hasBlocksData","blockHasValue"],"failureMessages":[],"fullName":"Blocks hasBlocksData blockHasValue returns true when block checker is not defined","location":null,"status":"passed","title":"returns true when block checker is not defined"},{"ancestorTitles":["Blocks","hasBlocksData","blockHasValue"],"failureMessages":[],"fullName":"Blocks hasBlocksData blockHasValue returns true for text blocks with valid text","location":null,"status":"passed","title":"returns true for text blocks with valid text"},{"ancestorTitles":["Blocks","hasBlocksData","blockHasValue"],"failureMessages":[],"fullName":"Blocks hasBlocksData blockHasValue returns false for text blocks with empty text","location":null,"status":"passed","title":"returns false for text blocks with empty text"},{"ancestorTitles":["Blocks","getBlocks"],"failureMessages":[],"fullName":"Blocks getBlocks returns empty when there is no block content and no items in layout","location":null,"status":"passed","title":"returns empty when there is no block content and no items in layout"},{"ancestorTitles":["Blocks","getBlocks"],"failureMessages":[],"fullName":"Blocks getBlocks returns empty when there is no block content","location":null,"status":"passed","title":"returns empty when there is no block content"},{"ancestorTitles":["Blocks","getBlocks"],"failureMessages":[],"fullName":"Blocks getBlocks returns ordered pairs","location":null,"status":"passed","title":"returns ordered pairs"},{"ancestorTitles":["Blocks","addBlock"],"failureMessages":[],"fullName":"Blocks addBlock add new block within formdata","location":null,"status":"passed","title":"add new block within formdata"},{"ancestorTitles":["Blocks","addBlock"],"failureMessages":[],"fullName":"Blocks addBlock initializes data for new block with initialValue","location":null,"status":"passed","title":"initializes data for new block with initialValue"},{"ancestorTitles":["Blocks","addBlock"],"failureMessages":[],"fullName":"Blocks addBlock initializes data for new block based on schema defaults","location":null,"status":"passed","title":"initializes data for new block based on schema defaults"},{"ancestorTitles":["Blocks","addBlock"],"failureMessages":[],"fullName":"Blocks addBlock initializes data for new block based on schema defaults and initialValue","location":null,"status":"passed","title":"initializes data for new block based on schema defaults and initialValue"},{"ancestorTitles":["Blocks","moveBlock"],"failureMessages":[],"fullName":"Blocks moveBlock Move block within formdata","location":null,"status":"passed","title":"Move block within formdata"},{"ancestorTitles":["Blocks","changeBlock"],"failureMessages":[],"fullName":"Blocks changeBlock change block within formdata","location":null,"status":"passed","title":"change block within formdata"},{"ancestorTitles":["Blocks","mutateBlock"],"failureMessages":[],"fullName":"Blocks mutateBlock mutate block within formdata and add new one after","location":null,"status":"passed","title":"mutate block within formdata and add new one after"},{"ancestorTitles":["Blocks","insertBlock"],"failureMessages":[],"fullName":"Blocks insertBlock insert new block within formdata before given block id","location":null,"status":"passed","title":"insert new block within formdata before given block id"},{"ancestorTitles":["Blocks","deleteBlock"],"failureMessages":[],"fullName":"Blocks deleteBlock delete block by id","location":null,"status":"passed","title":"delete block by id"},{"ancestorTitles":["Blocks","emptyBlocksForm"],"failureMessages":[],"fullName":"Blocks emptyBlocksForm generates new empty blocks form with one block","location":null,"status":"passed","title":"generates new empty blocks form with one block"},{"ancestorTitles":["Blocks","previousBlockId"],"failureMessages":[],"fullName":"Blocks previousBlockId get previous block id","location":null,"status":"passed","title":"get previous block id"},{"ancestorTitles":["Blocks","nextBlockId"],"failureMessages":[],"fullName":"Blocks nextBlockId get next block id","location":null,"status":"passed","title":"get next block id"},{"ancestorTitles":["Blocks","visitBlocks"],"failureMessages":[],"fullName":"Blocks visitBlocks visit blocks","location":null,"status":"passed","title":"visit blocks"},{"ancestorTitles":["Blocks","applySchemaDefaults"],"failureMessages":[],"fullName":"Blocks applySchemaDefaults Sets data according to schema default values","location":null,"status":"passed","title":"Sets data according to schema default values"},{"ancestorTitles":["Blocks","applySchemaDefaults"],"failureMessages":[],"fullName":"Blocks applySchemaDefaults Sets data according to schema default values, top level and styling wrapper object field","location":null,"status":"passed","title":"Sets data according to schema default values, top level and styling wrapper object field"},{"ancestorTitles":["Blocks","applySchemaDefaults"],"failureMessages":[],"fullName":"Blocks applySchemaDefaults Sets data according to schema default values, keeps existing data","location":null,"status":"passed","title":"Sets data according to schema default values, keeps existing data"},{"ancestorTitles":["Blocks","applySchemaDefaults"],"failureMessages":[],"fullName":"Blocks applySchemaDefaults Sets data according to schema default values, keeps existing data","location":null,"status":"passed","title":"Sets data according to schema default values, keeps existing data"},{"ancestorTitles":["Blocks","applyBlockDefaults"],"failureMessages":[],"fullName":"Blocks applyBlockDefaults Sets data according to schema default values","location":null,"status":"passed","title":"Sets data according to schema default values"},{"ancestorTitles":["Blocks","applyBlockDefaults"],"failureMessages":[],"fullName":"Blocks applyBlockDefaults Does not do anything if there is no schema for block","location":null,"status":"passed","title":"Does not do anything if there is no schema for block"},{"ancestorTitles":["Blocks","applyBlockDefaults"],"failureMessages":[],"fullName":"Blocks applyBlockDefaults Supports block schema enhancers","location":null,"status":"passed","title":"Supports block schema enhancers"},{"ancestorTitles":["Blocks","applyBlockDefaults"],"failureMessages":[],"fullName":"Blocks applyBlockDefaults Supports block schema enhancers coming from variations","location":null,"status":"passed","title":"Supports block schema enhancers coming from variations"},{"ancestorTitles":["Blocks","applyBlockDefaults"],"failureMessages":[],"fullName":"Blocks applyBlockDefaults Block schema enhancers override variations","location":null,"status":"passed","title":"Block schema enhancers override variations"},{"ancestorTitles":["Blocks","applyBlockDefaults"],"failureMessages":[],"fullName":"Blocks applyBlockDefaults Tolerates a missing (invalid) block","location":null,"status":"passed","title":"Tolerates a missing (invalid) block"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData Sets styles classname array according to style values","location":null,"status":"passed","title":"Sets styles classname array according to style values"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData Sets styles classname array according to style values with nested","location":null,"status":"passed","title":"Sets styles classname array according to style values with nested"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData Sets styles classname array according to style values with nested and colors","location":null,"status":"passed","title":"Sets styles classname array according to style values with nested and colors"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData Supports multiple nested level","location":null,"status":"passed","title":"Supports multiple nested level"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData Sets styles classname array according to style values with int values","location":null,"status":"passed","title":"Sets styles classname array according to style values with int values"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData Understands noprefix converter for style values","location":null,"status":"passed","title":"Understands noprefix converter for style values"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData Understands bool converter for trueish value","location":null,"status":"passed","title":"Understands bool converter for trueish value"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData Understands bool converter for false value","location":null,"status":"passed","title":"Understands bool converter for false value"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData Ugly edge cases","location":null,"status":"passed","title":"Ugly edge cases"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":["Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 0\n+ Received  + 1\n\n  Array [\n    \"has--color--red\",\n+   \"has----background-color--FFF\",\n  ]\n    at Object.<anonymous> (/workspace/repo/src/helpers/Blocks/Blocks.test.js:1076:52)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"Blocks buildStyleClassNamesFromData It does not output any className for style converter values","location":null,"status":"failed","title":"It does not output any className for style converter values"},{"ancestorTitles":["Blocks","buildStyleClassNamesFromData"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesFromData It does not output any className for unknown converter values","location":null,"status":"pending","title":"It does not output any className for unknown converter values"},{"ancestorTitles":["Blocks","buildStyleObjectFromData"],"failureMessages":["TypeError: (0 , _Blocks.buildStyleObjectFromData) is not a function\n    at Object.<anonymous> (/workspace/repo/src/helpers/Blocks/Blocks.test.js:1094:38)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"Blocks buildStyleObjectFromData Understands style converter for style values, no styles found","location":null,"status":"failed","title":"Understands style converter for style values, no styles found"},{"ancestorTitles":["Blocks","buildStyleObjectFromData"],"failureMessages":["TypeError: (0 , _Blocks.buildStyleObjectFromData) is not a function\n    at Object.<anonymous> (/workspace/repo/src/helpers/Blocks/Blocks.test.js:1102:38)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"Blocks buildStyleObjectFromData Understands style converter for style values","location":null,"status":"failed","title":"Understands style converter for style values"},{"ancestorTitles":["Blocks","buildStyleObjectFromData"],"failureMessages":["TypeError: (0 , _Blocks.buildStyleObjectFromData) is not a function\n    at Object.<anonymous> (/workspace/repo/src/helpers/Blocks/Blocks.test.js:1120:38)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"Blocks buildStyleObjectFromData Supports multiple nested levels","location":null,"status":"failed","title":"Supports multiple nested levels"},{"ancestorTitles":["Blocks","getPreviousNextBlock"],"failureMessages":[],"fullName":"Blocks getPreviousNextBlock basic functionality","location":null,"status":"passed","title":"basic functionality"},{"ancestorTitles":["Blocks","buildStyleClassNamesExtenders"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesExtenders slate grey + slate + slate grey ","location":null,"status":"passed","title":"slate grey + slate + slate grey "},{"ancestorTitles":["Blocks","buildStyleClassNamesExtenders"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesExtenders slate grey + slate grey + slate grey ","location":null,"status":"passed","title":"slate grey + slate grey + slate grey "},{"ancestorTitles":["Blocks","buildStyleClassNamesExtenders"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesExtenders grid + slate grey + slate grey ","location":null,"status":"passed","title":"grid + slate grey + slate grey "},{"ancestorTitles":["Blocks","buildStyleClassNamesExtenders"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesExtenders grid + grid + slate grey ","location":null,"status":"passed","title":"grid + grid + slate grey "},{"ancestorTitles":["Blocks","buildStyleClassNamesExtenders"],"failureMessages":[],"fullName":"Blocks buildStyleClassNamesExtenders grid + grid + slate grey - with existing classNames list","location":null,"status":"passed","title":"grid + grid + slate grey - with existing classNames list"},{"ancestorTitles":["Blocks","blocksFormGenerator"],"failureMessages":[],"fullName":"Blocks blocksFormGenerator Returns an empty blocks/blocks_layout pair","location":null,"status":"passed","title":"Returns an empty blocks/blocks_layout pair"},{"ancestorTitles":["Blocks","blocksFormGenerator"],"failureMessages":[],"fullName":"Blocks blocksFormGenerator Returns a filled blocks/blocks_layout pair with type block","location":null,"status":"passed","title":"Returns a filled blocks/blocks_layout pair with type block"},{"ancestorTitles":["findBlocks"],"failureMessages":[],"fullName":"findBlocks Get all blocks in the first level (main block container)","location":null,"status":"passed","title":"Get all blocks in the first level (main block container)"},{"ancestorTitles":["findBlocks"],"failureMessages":[],"fullName":"findBlocks Get all blocks in the first level (main block container) given a list","location":null,"status":"passed","title":"Get all blocks in the first level (main block container) given a list"},{"ancestorTitles":["findBlocks"],"failureMessages":[],"fullName":"findBlocks Get all blocks in the first level (main block container) given a list","location":null,"status":"passed","title":"Get all blocks in the first level (main block container) given a list"},{"ancestorTitles":["findBlocks"],"failureMessages":[],"fullName":"findBlocks Get all blocks, including containers, given a list","location":null,"status":"passed","title":"Get all blocks, including containers, given a list"}],"endTime":1782746030387,"message":"  ● Blocks › buildStyleClassNamesFromData › It does not output any className for style converter values\n\n    expect(received).toEqual(expected) // deep equality\n\n    - Expected  - 0\n    + Received  + 1\n\n      Array [\n        \"has--color--red\",\n    +   \"has----background-color--FFF\",\n      ]\n\n      1074 |         '--background-color': '#FFF',\n      1075 |       };\n    > 1076 |       expect(buildStyleClassNamesFromData(styles)).toEqual(['has--color--red']);\n           |                                                    ^\n      1077 |     });\n      1078 |\n      1079 |     it.skip('It does not output any className for unknown converter values', () => {\n\n      at Object.<anonymous> (src/helpers/Blocks/Blocks.test.js:1076:52)\n\n  ● Blocks › buildStyleObjectFromData › Understands style converter for style values, no styles found\n\n    TypeError: (0 , _Blocks.buildStyleObjectFromData) is not a function\n\n      1092 |         backgroundColor: '#FFF',\n      1093 |       };\n    > 1094 |       expect(buildStyleObjectFromData(styles)).toEqual({});\n           |                                      ^\n      1095 |     });\n      1096 |\n      1097 |     it('Understands style converter for style values', () => {\n\n      at Object.<anonymous> (src/helpers/Blocks/Blocks.test.js:1094:38)\n\n  ● Blocks › buildStyleObjectFromData › Understands style converter for style values\n\n    TypeError: (0 , _Blocks.buildStyleObjectFromData) is not a function\n\n      1100 |         '--background-color': '#FFF',\n      1101 |       };\n    > 1102 |       expect(buildStyleObjectFromData(styles)).toEqual({\n           |                                      ^\n      1103 |         '--background-color': '#FFF',\n      1104 |       });\n      1105 |     });\n\n      at Object.<anonymous> (src/helpers/Blocks/Blocks.test.js:1102:38)\n\n  ● Blocks › buildStyleObjectFromData › Supports multiple nested levels\n\n    TypeError: (0 , _Blocks.buildStyleObjectFromData) is not a function\n\n      1118 |         },\n      1119 |       };\n    > 1120 |       expect(buildStyleObjectFromData(styles)).toEqual({\n           |                                      ^\n      1121 |         '--color': 'red',\n      1122 |         '--nested--foo': 'white',\n      1123 |         '--nested--level2--foo': '#fff',\n\n      at Object.<anonymous> (src/helpers/Blocks/Blocks.test.js:1120:38)\n","name":"/workspace/repo/src/helpers/Blocks/Blocks.test.js","startTime":1782746020751,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":["Sitemap"],"failureMessages":[],"fullName":"Sitemap renders a sitemap component","location":null,"status":"passed","title":"renders a sitemap component"},{"ancestorTitles":["Sitemap in a multilingual site"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'includes')\n    at toReactIntlLang (/workspace/repo/src/helpers/Utils/Utils.js:202:16)\n    at toBackendLang (/workspace/repo/src/helpers/Utils/Utils.js:219:10)\n    at /workspace/repo/src/components/theme/Sitemap/Sitemap.jsx:42:60\n    at invokePassiveEffectCreate (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14504:20)\n    at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11391:14)\n    at HTMLUnknownElement.callTheUserObjectsOperation (/workspace/repo/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)\n    at innerInvokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:338:25)\n    at invokeEventListeners (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)\n    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)\n    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)\n    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)\n    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)\n    at invokeGuardedCallback (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)\n    at flushPassiveEffectsImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14591:9)\n    at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)\n    at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)\n    at flushPassiveEffects (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14464:14)\n    at performSyncWorkOnRoot (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13380:3)\n    at /workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26\n    at unstable_runWithPriority (/workspace/repo/node_modules/scheduler/cjs/scheduler.development.js:468:12)\n    at runWithPriority (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)\n    at flushSyncCallbackQueueImpl (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)\n    at flushSyncCallbackQueue (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)\n    at scheduleUpdateOnFiber (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)\n    at updateContainer (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)\n    at Object.create (/workspace/repo/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)\n    at Object.<anonymous> (/workspace/repo/src/components/theme/Sitemap/Sitemap.test.jsx:98:32)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"Sitemap in a multilingual site renders a sitemap component","location":null,"status":"failed","title":"renders a sitemap component"},{"ancestorTitles":["getSitemapPath"],"failureMessages":[],"fullName":"getSitemapPath accepts empty path","location":null,"status":"passed","title":"accepts empty path"},{"ancestorTitles":["getSitemapPath"],"failureMessages":[],"fullName":"getSitemapPath accepts a path","location":null,"status":"passed","title":"accepts a path"},{"ancestorTitles":["getSitemapPath"],"failureMessages":[],"fullName":"getSitemapPath accepts a path","location":null,"status":"passed","title":"accepts a path"},{"ancestorTitles":["getSitemapPath"],"failureMessages":[],"fullName":"getSitemapPath uses a language as default root","location":null,"status":"passed","title":"uses a language as default root"},{"ancestorTitles":["getSitemapPath"],"failureMessages":[],"fullName":"getSitemapPath accepts language-rooted paths","location":null,"status":"passed","title":"accepts language-rooted paths"}],"endTime":1782746031238,"message":"  ● Sitemap in a multilingual site › renders a sitemap component\n\n    TypeError: Cannot read properties of undefined (reading 'includes')\n\n      200 |  */\n      201 | export const toReactIntlLang = (language) => {\n    > 202 |   if (language.includes('_') || language.includes('-')) {\n          |                ^\n      203 |     let langCode = language.split(/[-_]/);\n      204 |     langCode = `${langCode[0]}-${langCode[1].toUpperCase()}`;\n      205 |     return langCode;\n\n      at toReactIntlLang (src/helpers/Utils/Utils.js:202:16)\n      at toBackendLang (src/helpers/Utils/Utils.js:219:10)\n      at src/components/theme/Sitemap/Sitemap.jsx:42:60\n      at invokePassiveEffectCreate (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14504:20)\n      at HTMLUnknownElement.callCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11391:14)\n      at HTMLUnknownElement.callTheUserObjectsOperation (node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)\n      at innerInvokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:338:25)\n      at invokeEventListeners (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:274:3)\n      at HTMLUnknownElementImpl._dispatch (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:221:9)\n      at HTMLUnknownElementImpl.dispatchEvent (node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:94:17)\n      at HTMLUnknownElement.dispatchEvent (node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:231:34)\n      at Object.invokeGuardedCallbackDev (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11440:16)\n      at invokeGuardedCallback (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11499:31)\n      at flushPassiveEffectsImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14591:9)\n      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)\n      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)\n      at flushPassiveEffects (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14464:14)\n      at performSyncWorkOnRoot (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13380:3)\n      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2537:26\n      at unstable_runWithPriority (node_modules/scheduler/cjs/scheduler.development.js:468:12)\n      at runWithPriority (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2486:10)\n      at flushSyncCallbackQueueImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2532:9)\n      at flushSyncCallbackQueue (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2519:3)\n      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:13004:9)\n      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:16454:3)\n      at Object.create (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17149:3)\n      at Object.<anonymous> (src/components/theme/Sitemap/Sitemap.test.jsx:98:32)\n","name":"/workspace/repo/src/components/theme/Sitemap/Sitemap.test.jsx","startTime":1782746020751,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=67 found=67 failed=5 parsed=68 framework=jest exit_code=1

@@ -1,0 +1,48 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -E 'binary(tests) and test(test_head::) and not test(/proc_fs_modules|sys_kernel_profiling/)'",
+  "test_files": [
+    "tests/by-util/test_head.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/35) coreutils::tests test_head::test_bad_utf8",
+    "( 2/35) coreutils::tests test_head::test_byte_syntax",
+    "( 3/35) coreutils::tests test_head::test_read_backwards_bytes_proc_fs_version",
+    "( 4/35) coreutils::tests test_head::test_obsolete_extras",
+    "( 5/35) coreutils::tests test_head::test_multiple_files",
+    "( 6/35) coreutils::tests test_head::test_lines_leading_zeros",
+    "( 7/35) coreutils::tests test_head::test_no_such_file_or_directory",
+    "( 8/35) coreutils::tests test_head::test_presume_input_pipe_default",
+    "( 9/35) coreutils::tests test_head::test_multiple_nonexistent_files",
+    "(10/35) coreutils::tests test_head::test_invalid_arg",
+    "(11/35) coreutils::tests test_head::test_negative_byte_syntax",
+    "(12/35) coreutils::tests test_head::test_line_syntax",
+    "(13/35) coreutils::tests test_head::test_multiple_files_with_stdin",
+    "(15/35) coreutils::tests test_head::test_bad_utf8_lines",
+    "(16/35) coreutils::tests test_head::test_file_backwards",
+    "(17/35) coreutils::tests test_head::test_negative_zero_bytes",
+    "(20/35) coreutils::tests test_head::test_stdin_1_line",
+    "(21/35) coreutils::tests test_head::test_single_5_chars",
+    "(22/35) coreutils::tests test_head::test_single_1_line",
+    "(23/35) coreutils::tests test_head::test_single_default",
+    "(24/35) coreutils::tests test_head::test_sequence_fixture",
+    "(25/35) coreutils::tests test_head::test_single_1_line_obsolete",
+    "(26/35) coreutils::tests test_head::test_stdin_1_line_obsolete",
+    "(27/35) coreutils::tests test_head::test_stdin_default",
+    "(28/35) coreutils::tests test_head::test_verbose",
+    "(29/35) coreutils::tests test_head::test_stdin_5_chars",
+    "(30/35) coreutils::tests test_head::test_zero_terminated_syntax",
+    "(31/35) coreutils::tests test_head::test_stdin_negative_23_line",
+    "(32/35) coreutils::tests test_head::test_zero_terminated_syntax_2",
+    "(33/35) coreutils::tests test_head::test_zero_terminated_negative_lines",
+    "(34/35) coreutils::tests test_head::test_zero_terminated",
+    "(35/35) coreutils::tests test_head::test_head_invalid_num"
+  ],
+  "PASS_TO_PASS": [
+    "(14/35) coreutils::tests test_head::test_presume_input_pipe_5_chars",
+    "(18/35) coreutils::tests test_head::test_negative_zero_lines",
+    "(19/35) coreutils::tests test_head::test_head_num_with_undocumented_sign_bytes"
+  ]
+}

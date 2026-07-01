@@ -1,0 +1,23 @@
+{
+ "task": "go-gitea-gitea-28662",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds models/db/collation.go (CheckCollations/preprocessDatabaseCollation) + ConvertDatabaseTable; F2P TestAPICreateBranch/* incl test-\ud83d\udc40 run as new t.Run subtests via sqlite integration tests; oracle=1/nop=0 confirmed deterministically"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

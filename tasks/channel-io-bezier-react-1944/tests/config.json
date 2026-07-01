@@ -1,0 +1,37 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/bezier-react && npx jest src/components/LegacyStack/LegacyHStack/LegacyHStack.test.tsx src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx src/components/LegacyStack/LegacyVStack/LegacyVStack.test.tsx --coverage=false --verbose --json",
+  "test_files": [
+    "packages/bezier-react/src/components/LegacyStack/HStack/HStack.test.tsx",
+    "packages/bezier-react/src/components/LegacyStack/LegacyHStack/LegacyHStack.test.tsx",
+    "packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx",
+    "packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx",
+    "packages/bezier-react/src/components/LegacyStack/LegacyVStack/LegacyVStack.test.tsx",
+    "packages/bezier-react/src/components/LegacyStack/Stack/Stack.test.tsx",
+    "packages/bezier-react/src/components/LegacyStack/StackItem/StackItem.test.tsx",
+    "packages/bezier-react/src/components/LegacyStack/VStack/VStack.test.tsx"
+  ],
+  "num_test_files": 8,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyVStack/LegacyVStack.test.tsx::VStack creates a vertical flexbox",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyHStack/LegacyHStack.test.tsx::HStack creates a horizontal flexbox",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx::Stack Flex layout creates a flexbox",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx::Stack Flex layout creates a horizontal flexbox when given direction=\"horizontal\"",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx::Stack Flex layout creates a vertical flexbox when given direction=\"vertical\"",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx::Stack Supports BezierComponentProps interface supports as prop",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx::Stack Supports BezierComponentProps interface supports style prop",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx::Stack Supports BezierComponentProps interface supports className prop",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx::Stack gives marginBefore attribute to second stackItem if it is given some spacing",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.test.tsx::Stack does not give marginBefore attribute to first stackItem if first node is not a valid ReactNode",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx::StackItem Supports BezierComponentProps interface supports as prop",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx::StackItem Supports BezierComponentProps interface supports style prop",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx::StackItem Supports BezierComponentProps interface supports className prop",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx::StackItem inherits main axis alignment of parent stack-item component",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx::StackItem can override main axis alignment of parent stack component",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx::StackItem inherits cross axis alignment of parent stack component",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx::StackItem can override cross axis alignment of parent stack component",
+    "/workspace/repo/packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.test.tsx::StackItem dimensions should set all of customizable css variables"
+  ],
+  "PASS_TO_PASS": []
+}

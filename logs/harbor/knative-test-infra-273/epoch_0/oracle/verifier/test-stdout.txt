@@ -1,0 +1,20 @@
+patching file test/library_test.go (renamed from test/simple_test.go)
+patching file test/presubmit-tests.sh
+patching file test/unit/library-tests.sh
+patching file tools/testgrid/testgrid_test.go
+{"Time":"2026-06-29T15:23:02.097672867Z","Action":"start","Package":"github.com/knative/test-infra/tools/testgrid"}
+{"Time":"2026-06-29T15:23:02.100149592Z","Action":"run","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestGetArtifacts"}
+{"Time":"2026-06-29T15:23:02.100183522Z","Action":"output","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestGetArtifacts","Output":"=== RUN   TestGetArtifacts\n"}
+{"Time":"2026-06-29T15:23:02.100214551Z","Action":"output","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestGetArtifacts","Output":"2026/06/29 15:23:02 Env variable ARTIFACTS not set. Using './artifacts' instead.\n"}
+{"Time":"2026-06-29T15:23:02.100249701Z","Action":"output","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestGetArtifacts","Output":"--- PASS: TestGetArtifacts (0.00s)\n"}
+{"Time":"2026-06-29T15:23:02.100435901Z","Action":"pass","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestGetArtifacts","Elapsed":0}
+{"Time":"2026-06-29T15:23:02.100502591Z","Action":"run","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestXMLOutput"}
+{"Time":"2026-06-29T15:23:02.100525951Z","Action":"output","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestXMLOutput","Output":"=== RUN   TestXMLOutput\n"}
+{"Time":"2026-06-29T15:23:02.1007008Z","Action":"output","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestXMLOutput","Output":"2026/06/29 15:23:02 Storing output in ./junit_knative.xml\n"}
+{"Time":"2026-06-29T15:23:02.10073749Z","Action":"output","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestXMLOutput","Output":"2026/06/29 15:23:02 Storing output in ./junit_knative.xml\n"}
+{"Time":"2026-06-29T15:23:02.10076344Z","Action":"output","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestXMLOutput","Output":"--- PASS: TestXMLOutput (0.00s)\n"}
+{"Time":"2026-06-29T15:23:02.10078775Z","Action":"pass","Package":"github.com/knative/test-infra/tools/testgrid","Test":"TestXMLOutput","Elapsed":0}
+{"Time":"2026-06-29T15:23:02.10081231Z","Action":"output","Package":"github.com/knative/test-infra/tools/testgrid","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:02.10087787Z","Action":"output","Package":"github.com/knative/test-infra/tools/testgrid","Output":"ok  \tgithub.com/knative/test-infra/tools/testgrid\t0.003s\n"}
+{"Time":"2026-06-29T15:23:02.10097288Z","Action":"pass","Package":"github.com/knative/test-infra/tools/testgrid","Elapsed":0.003}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

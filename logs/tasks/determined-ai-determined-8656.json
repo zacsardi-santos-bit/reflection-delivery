@@ -1,0 +1,23 @@
+{
+ "task": "determined-ai-determined-8656",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden exports VisibleGPUsFromEnvironment() + Rocr/CudaVisibleDevices consts into options package, adds DefaultOptions(), adds Log logger.Config field, renames TLS fields to json:\"tls_cert\"/\"tls_key\", and adds viper MergeConfigMap-based layered merge; tests TestUnmarshalOptions/Test_visibleGPUsFromE"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 37,
+  "shallow": true
+ }
+}

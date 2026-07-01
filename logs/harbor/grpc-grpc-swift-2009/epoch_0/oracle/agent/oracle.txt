@@ -1,0 +1,10 @@
+patching file Sources/Examples/v2/Echo/Generated/echo.grpc.swift
+patching file Sources/Examples/v2/Echo/Subcommands/Collect.swift
+patching file Sources/Examples/v2/Echo/Subcommands/Expand.swift
+patching file Sources/Examples/v2/Echo/Subcommands/Get.swift
+patching file Sources/Examples/v2/Echo/Subcommands/Update.swift
+patching file Sources/GRPCCodeGen/Internal/Renderer/TextBasedRenderer.swift
+patching file Sources/GRPCCodeGen/Internal/StructuredSwiftRepresentation.swift
+patching file Sources/GRPCCodeGen/Internal/Translator/ClientCodeTranslator.swift
+patching file Sources/Services/Health/Generated/health.grpc.swift
+patching file Sources/performance-worker/Generated/grpc_testing_benchmark_service.grpc.swift

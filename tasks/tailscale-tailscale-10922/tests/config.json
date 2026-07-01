@@ -1,0 +1,43 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./net/portmapper -count=1",
+  "test_files": [
+    "net/portmapper/upnp_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "tailscale.com/net/portmapper::TestGetUPnPPortMapping_NoValidServices",
+    "tailscale.com/net/portmapper::TestGetUPnPPortMappingNoResponses/ErrorContactingUPnP",
+    "tailscale.com/net/portmapper::TestGetUPnPPortMappingNoResponses",
+    "tailscale.com/net/portmapper::TestProcessUPnPResponses/single",
+    "tailscale.com/net/portmapper::TestProcessUPnPResponses/multiple_with_same_location",
+    "tailscale.com/net/portmapper::TestProcessUPnPResponses/multiple_with_different_location",
+    "tailscale.com/net/portmapper::TestProcessUPnPResponses"
+  ],
+  "PASS_TO_PASS": [
+    "tailscale.com/net/portmapper::TestParsePCPMapResponse",
+    "tailscale.com/net/portmapper::TestProbeIntegration",
+    "tailscale.com/net/portmapper::TestPCPIntegration",
+    "tailscale.com/net/portmapper::TestGetUPnPErrorsMetric",
+    "tailscale.com/net/portmapper::TestSelectBestService/single_device",
+    "tailscale.com/net/portmapper::TestSelectBestService/first_device_disconnected",
+    "tailscale.com/net/portmapper::TestSelectBestService/prefer_public_external_IP",
+    "tailscale.com/net/portmapper::TestSelectBestService/all_private_external_IPs",
+    "tailscale.com/net/portmapper::TestSelectBestService/nothing_connected",
+    "tailscale.com/net/portmapper::TestSelectBestService/GetStatusInfo_errors",
+    "tailscale.com/net/portmapper::TestSelectBestService/GetExternalIPAddress_bad_ip",
+    "tailscale.com/net/portmapper::TestSelectBestService",
+    "tailscale.com/net/portmapper::TestParseUPnPDiscoResponse/google",
+    "tailscale.com/net/portmapper::TestParseUPnPDiscoResponse/pfsense",
+    "tailscale.com/net/portmapper::TestParseUPnPDiscoResponse/sagemcom",
+    "tailscale.com/net/portmapper::TestParseUPnPDiscoResponse/huawei",
+    "tailscale.com/net/portmapper::TestParseUPnPDiscoResponse",
+    "tailscale.com/net/portmapper::TestGetUPnPClient/google",
+    "tailscale.com/net/portmapper::TestGetUPnPClient/pfsense",
+    "tailscale.com/net/portmapper::TestGetUPnPClient/mikrotik",
+    "tailscale.com/net/portmapper::TestGetUPnPClient/huawei",
+    "tailscale.com/net/portmapper::TestGetUPnPClient",
+    "tailscale.com/net/portmapper::TestGetUPnPPortMapping"
+  ]
+}

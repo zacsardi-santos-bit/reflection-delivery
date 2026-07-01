@@ -1,0 +1,29 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --all-features -p polars-sql --test statements",
+  "test_files": [
+    "crates/polars-sql/tests/statements.rs",
+    "py-polars/tests/unit/sql/test_sql.py"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/16) polars-sql::statements test_drop_table",
+    "( 2/16) polars-sql::statements test_compound_invalid_1",
+    "( 3/16) polars-sql::statements test_compound_invalid_3",
+    "( 4/16) polars-sql::statements test_compound_invalid_2",
+    "( 5/16) polars-sql::statements trailing_commas_allowed",
+    "( 6/16) polars-sql::statements tbl_alias",
+    "( 7/16) polars-sql::statements select_exclude_multi",
+    "( 8/16) polars-sql::statements select_exclude_single",
+    "( 9/16) polars-sql::statements test_union_all",
+    "(10/16) polars-sql::statements iss_9560_join_as",
+    "(11/16) polars-sql::statements test_compound_join_basic",
+    "(12/16) polars-sql::statements select_qualified_wildcard",
+    "(13/16) polars-sql::statements test_compound_join_different_column_names",
+    "(14/16) polars-sql::statements test_compound_join_nested_and",
+    "(15/16) polars-sql::statements select_qualified_column",
+    "(16/16) polars-sql::statements test_compound_join_three_tables"
+  ],
+  "PASS_TO_PASS": []
+}

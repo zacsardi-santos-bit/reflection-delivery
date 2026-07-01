@@ -1,0 +1,203 @@
+patching file pkg/object/object_storage_test.go
+# github.com/mattn/go-sqlite3
+sqlite3-binding.c: In function 'sqlite3SelectNew':
+sqlite3-binding.c:125801:10: warning: function may return address of local variable [-Wreturn-local-addr]
+125801 |   return pNew;
+       |          ^~~~
+sqlite3-binding.c:125761:10: note: declared here
+125761 |   Select standin;
+       |          ^~~~~~~
+{"Time":"2026-06-29T15:15:21.941895819Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestChecksum"}
+{"Time":"2026-06-29T15:15:21.942293248Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestChecksum","Output":"=== RUN   TestChecksum\n"}
+{"Time":"2026-06-29T15:15:21.942348438Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestChecksum","Output":"--- PASS: TestChecksum (0.00s)\n"}
+{"Time":"2026-06-29T15:15:21.942373518Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestChecksum","Elapsed":0}
+{"Time":"2026-06-29T15:15:21.942409088Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestRSA"}
+{"Time":"2026-06-29T15:15:21.942431848Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestRSA","Output":"=== RUN   TestRSA\n"}
+{"Time":"2026-06-29T15:15:22.17607886Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestRSA","Output":"--- PASS: TestRSA (0.23s)\n"}
+{"Time":"2026-06-29T15:15:22.17614277Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestRSA","Elapsed":0.23}
+{"Time":"2026-06-29T15:15:22.17618302Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestAESGCM"}
+{"Time":"2026-06-29T15:15:22.17620583Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestAESGCM","Output":"=== RUN   TestAESGCM\n"}
+{"Time":"2026-06-29T15:15:22.177517928Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestAESGCM","Output":"--- PASS: TestAESGCM (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.177554308Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestAESGCM","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.177578028Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEncryptedStore"}
+{"Time":"2026-06-29T15:15:22.177600858Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEncryptedStore","Output":"=== RUN   TestEncryptedStore\n"}
+{"Time":"2026-06-29T15:15:22.180381724Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEncryptedStore","Output":"--- PASS: TestEncryptedStore (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.180412684Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEncryptedStore","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.180437144Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestDisk2"}
+{"Time":"2026-06-29T15:15:22.180460184Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestDisk2","Output":"=== RUN   TestDisk2\n"}
+{"Time":"2026-06-29T15:15:22.182607471Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestDisk2","Output":"--- PASS: TestDisk2 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.182664071Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestDisk2","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.18268885Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSftp2"}
+{"Time":"2026-06-29T15:15:22.18271228Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSftp2","Output":"=== RUN   TestSftp2\n"}
+{"Time":"2026-06-29T15:15:22.18273696Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSftp2","Output":"--- SKIP: TestSftp2 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.18276075Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSftp2","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.18278336Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestHDFS2"}
+{"Time":"2026-06-29T15:15:22.18281611Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestHDFS2","Output":"=== RUN   TestHDFS2\n"}
+{"Time":"2026-06-29T15:15:22.18283984Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestHDFS2","Output":"    filesystem_test.go:61: \n"}
+{"Time":"2026-06-29T15:15:22.18287608Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestHDFS2","Output":"--- SKIP: TestHDFS2 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.18289964Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestHDFS2","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.18292291Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMem"}
+{"Time":"2026-06-29T15:15:22.18294526Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMem","Output":"=== RUN   TestMem\n"}
+{"Time":"2026-06-29T15:15:22.18297276Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMem","Output":"    object_storage_test.go:240: mem:///unit-test/ does not support multipart upload: not supported\n"}
+{"Time":"2026-06-29T15:15:22.18317118Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMem","Output":"--- PASS: TestMem (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.18319706Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMem","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.18322018Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestDisk"}
+{"Time":"2026-06-29T15:15:22.18324341Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestDisk","Output":"=== RUN   TestDisk\n"}
+{"Time":"2026-06-29T15:15:22.185457397Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestDisk","Output":"    object_storage_test.go:240: file:///tmp/abc/unit-test/ does not support multipart upload: not supported\n"}
+{"Time":"2026-06-29T15:15:22.185635736Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestDisk","Output":"--- PASS: TestDisk (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.185717446Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestDisk","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.185741016Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestQingStor"}
+{"Time":"2026-06-29T15:15:22.185764266Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestQingStor","Output":"=== RUN   TestQingStor\n"}
+{"Time":"2026-06-29T15:15:22.185789226Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestQingStor","Output":"--- SKIP: TestQingStor (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.185812686Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestQingStor","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.185835316Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestS3"}
+{"Time":"2026-06-29T15:15:22.185858266Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestS3","Output":"=== RUN   TestS3\n"}
+{"Time":"2026-06-29T15:15:22.185886826Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestS3","Output":"--- SKIP: TestS3 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.185909786Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestS3","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.185932356Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOSS"}
+{"Time":"2026-06-29T15:15:22.185954866Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOSS","Output":"=== RUN   TestOSS\n"}
+{"Time":"2026-06-29T15:15:22.185979806Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOSS","Output":"--- SKIP: TestOSS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186004166Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOSS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186035536Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestUFile"}
+{"Time":"2026-06-29T15:15:22.186058506Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestUFile","Output":"=== RUN   TestUFile\n"}
+{"Time":"2026-06-29T15:15:22.186083836Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestUFile","Output":"--- SKIP: TestUFile (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186107696Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestUFile","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186130576Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestGS"}
+{"Time":"2026-06-29T15:15:22.186152966Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestGS","Output":"=== RUN   TestGS\n"}
+{"Time":"2026-06-29T15:15:22.186177066Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestGS","Output":"--- SKIP: TestGS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186200166Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestGS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186222696Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestQiniu"}
+{"Time":"2026-06-29T15:15:22.186245225Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestQiniu","Output":"=== RUN   TestQiniu\n"}
+{"Time":"2026-06-29T15:15:22.186269075Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestQiniu","Output":"--- SKIP: TestQiniu (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186292545Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestQiniu","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186315465Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestKS3"}
+{"Time":"2026-06-29T15:15:22.186337835Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestKS3","Output":"=== RUN   TestKS3\n"}
+{"Time":"2026-06-29T15:15:22.186361785Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestKS3","Output":"--- SKIP: TestKS3 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186384965Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestKS3","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186407695Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestCOS"}
+{"Time":"2026-06-29T15:15:22.186430125Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestCOS","Output":"=== RUN   TestCOS\n"}
+{"Time":"2026-06-29T15:15:22.186453975Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestCOS","Output":"--- SKIP: TestCOS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186487375Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestCOS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186510405Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestAzure"}
+{"Time":"2026-06-29T15:15:22.186532695Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestAzure","Output":"=== RUN   TestAzure\n"}
+{"Time":"2026-06-29T15:15:22.186556545Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestAzure","Output":"--- SKIP: TestAzure (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186579975Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestAzure","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186603315Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestNOS"}
+{"Time":"2026-06-29T15:15:22.186626355Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestNOS","Output":"=== RUN   TestNOS\n"}
+{"Time":"2026-06-29T15:15:22.186650335Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestNOS","Output":"--- SKIP: TestNOS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186682075Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestNOS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186704455Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestJSS"}
+{"Time":"2026-06-29T15:15:22.186727095Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestJSS","Output":"=== RUN   TestJSS\n"}
+{"Time":"2026-06-29T15:15:22.186751105Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestJSS","Output":"--- SKIP: TestJSS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186774385Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestJSS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186796865Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSpeedy"}
+{"Time":"2026-06-29T15:15:22.186819475Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSpeedy","Output":"=== RUN   TestSpeedy\n"}
+{"Time":"2026-06-29T15:15:22.186843425Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSpeedy","Output":"--- SKIP: TestSpeedy (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186866565Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSpeedy","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186889045Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestB2"}
+{"Time":"2026-06-29T15:15:22.186911395Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestB2","Output":"=== RUN   TestB2\n"}
+{"Time":"2026-06-29T15:15:22.186935245Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestB2","Output":"--- SKIP: TestB2 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.186958384Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestB2","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.186980724Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSpace"}
+{"Time":"2026-06-29T15:15:22.187003144Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSpace","Output":"=== RUN   TestSpace\n"}
+{"Time":"2026-06-29T15:15:22.187033734Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSpace","Output":"--- SKIP: TestSpace (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187056634Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSpace","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187079164Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestBOS"}
+{"Time":"2026-06-29T15:15:22.187101394Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestBOS","Output":"=== RUN   TestBOS\n"}
+{"Time":"2026-06-29T15:15:22.187125284Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestBOS","Output":"--- SKIP: TestBOS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187148484Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestBOS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187170974Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSftp"}
+{"Time":"2026-06-29T15:15:22.187193264Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSftp","Output":"=== RUN   TestSftp\n"}
+{"Time":"2026-06-29T15:15:22.187217134Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSftp","Output":"--- SKIP: TestSftp (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187240344Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSftp","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187262954Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOBS"}
+{"Time":"2026-06-29T15:15:22.187285234Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOBS","Output":"=== RUN   TestOBS\n"}
+{"Time":"2026-06-29T15:15:22.187309094Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOBS","Output":"--- SKIP: TestOBS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187339584Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOBS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187362424Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestHDFS"}
+{"Time":"2026-06-29T15:15:22.187390144Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestHDFS","Output":"=== RUN   TestHDFS\n"}
+{"Time":"2026-06-29T15:15:22.187414114Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestHDFS","Output":"--- SKIP: TestHDFS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187437264Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestHDFS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187459704Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOOS"}
+{"Time":"2026-06-29T15:15:22.187491724Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOOS","Output":"=== RUN   TestOOS\n"}
+{"Time":"2026-06-29T15:15:22.187516234Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOOS","Output":"--- SKIP: TestOOS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187539584Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestOOS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187562254Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestScw"}
+{"Time":"2026-06-29T15:15:22.187584484Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestScw","Output":"=== RUN   TestScw\n"}
+{"Time":"2026-06-29T15:15:22.187608404Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestScw","Output":"--- SKIP: TestScw (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187633164Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestScw","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187655693Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMinIO"}
+{"Time":"2026-06-29T15:15:22.187677963Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMinIO","Output":"=== RUN   TestMinIO\n"}
+{"Time":"2026-06-29T15:15:22.187702903Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMinIO","Output":"--- SKIP: TestMinIO (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187726183Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMinIO","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187748793Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestTiKV"}
+{"Time":"2026-06-29T15:15:22.187771023Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestTiKV","Output":"=== RUN   TestTiKV\n"}
+{"Time":"2026-06-29T15:15:22.187795013Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestTiKV","Output":"--- SKIP: TestTiKV (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187818263Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestTiKV","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187841213Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestRedis"}
+{"Time":"2026-06-29T15:15:22.187863603Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestRedis","Output":"=== RUN   TestRedis\n"}
+{"Time":"2026-06-29T15:15:22.187887833Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestRedis","Output":"--- SKIP: TestRedis (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.187911073Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestRedis","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.187933503Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSwift"}
+{"Time":"2026-06-29T15:15:22.187955953Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSwift","Output":"=== RUN   TestSwift\n"}
+{"Time":"2026-06-29T15:15:22.187987433Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSwift","Output":"--- SKIP: TestSwift (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.188010783Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSwift","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.188033253Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestWebDAV"}
+{"Time":"2026-06-29T15:15:22.188055633Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestWebDAV","Output":"=== RUN   TestWebDAV\n"}
+{"Time":"2026-06-29T15:15:22.188079643Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestWebDAV","Output":"--- SKIP: TestWebDAV (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.188102983Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestWebDAV","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.188125413Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEncrypted"}
+{"Time":"2026-06-29T15:15:22.188147853Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEncrypted","Output":"=== RUN   TestEncrypted\n"}
+{"Time":"2026-06-29T15:15:22.323043033Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEncrypted","Output":"    object_storage_test.go:240: mem:///(encrypted)unit-test/ does not support multipart upload: not supported\n"}
+{"Time":"2026-06-29T15:15:22.323128753Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEncrypted","Output":"--- PASS: TestEncrypted (0.14s)\n"}
+{"Time":"2026-06-29T15:15:22.323279673Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEncrypted","Elapsed":0.14}
+{"Time":"2026-06-29T15:15:22.323304993Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMarsharl"}
+{"Time":"2026-06-29T15:15:22.323327813Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMarsharl","Output":"=== RUN   TestMarsharl\n"}
+{"Time":"2026-06-29T15:15:22.323353403Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMarsharl","Output":"--- SKIP: TestMarsharl (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.323377003Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMarsharl","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.323400213Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSharding"}
+{"Time":"2026-06-29T15:15:22.323422573Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSharding","Output":"=== RUN   TestSharding\n"}
+{"Time":"2026-06-29T15:15:22.32529938Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSharding","Output":"    object_storage_test.go:240: shard10://mem://0/unit-test/ does not support multipart upload: not supported\n"}
+{"Time":"2026-06-29T15:15:22.32547086Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSharding","Output":"--- PASS: TestSharding (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.32550398Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSharding","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.32552914Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSQLite"}
+{"Time":"2026-06-29T15:15:22.32555348Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSQLite","Output":"=== RUN   TestSQLite\n"}
+{"Time":"2026-06-29T15:15:22.330761163Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSQLite","Output":"    object_storage_test.go:240: sqlite3:///tmp/teststore.db/unit-test/ does not support multipart upload: not supported\n"}
+{"Time":"2026-06-29T15:15:22.33284654Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSQLite","Output":"--- PASS: TestSQLite (0.01s)\n"}
+{"Time":"2026-06-29T15:15:22.33293651Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSQLite","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:22.332975399Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestPG"}
+{"Time":"2026-06-29T15:15:22.332999099Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestPG","Output":"=== RUN   TestPG\n"}
+{"Time":"2026-06-29T15:15:22.333038139Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestPG","Output":"--- SKIP: TestPG (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.333061789Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestPG","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.333084709Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMySQL"}
+{"Time":"2026-06-29T15:15:22.333107189Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMySQL","Output":"=== RUN   TestMySQL\n"}
+{"Time":"2026-06-29T15:15:22.333131689Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMySQL","Output":"--- SKIP: TestMySQL (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.333155749Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestMySQL","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.333178549Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestNameString"}
+{"Time":"2026-06-29T15:15:22.333202489Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestNameString","Output":"=== RUN   TestNameString\n"}
+{"Time":"2026-06-29T15:15:22.333226949Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestNameString","Output":"--- PASS: TestNameString (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.333250449Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestNameString","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.333273919Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEtcd"}
+{"Time":"2026-06-29T15:15:22.333297469Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEtcd","Output":"=== RUN   TestEtcd\n"}
+{"Time":"2026-06-29T15:15:22.333323489Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEtcd","Output":"--- SKIP: TestEtcd (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.333347049Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEtcd","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.333369709Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEOS"}
+{"Time":"2026-06-29T15:15:22.333392079Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEOS","Output":"=== RUN   TestEOS\n"}
+{"Time":"2026-06-29T15:15:22.333416119Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEOS","Output":"--- SKIP: TestEOS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.333440599Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestEOS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.333473399Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestWASABI"}
+{"Time":"2026-06-29T15:15:22.333499999Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestWASABI","Output":"=== RUN   TestWASABI\n"}
+{"Time":"2026-06-29T15:15:22.333524349Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestWASABI","Output":"--- SKIP: TestWASABI (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.333547979Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestWASABI","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.333570449Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSCS"}
+{"Time":"2026-06-29T15:15:22.333592709Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSCS","Output":"=== RUN   TestSCS\n"}
+{"Time":"2026-06-29T15:15:22.333620439Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSCS","Output":"--- SKIP: TestSCS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.333653699Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestSCS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.333676618Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestIBMCOS"}
+{"Time":"2026-06-29T15:15:22.333699018Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestIBMCOS","Output":"=== RUN   TestIBMCOS\n"}
+{"Time":"2026-06-29T15:15:22.333726968Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestIBMCOS","Output":"--- SKIP: TestIBMCOS (0.00s)\n"}
+{"Time":"2026-06-29T15:15:22.333751568Z","Action":"skip","Package":"github.com/juicedata/juicefs/pkg/object","Test":"TestIBMCOS","Elapsed":0}
+{"Time":"2026-06-29T15:15:22.333774688Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Output":"PASS\n"}
+{"Time":"2026-06-29T15:15:22.333996288Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/object","Output":"ok  \tgithub.com/juicedata/juicefs/pkg/object\t0.512s\n"}
+{"Time":"2026-06-29T15:15:22.334038378Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/object","Elapsed":0.512}
+reward=1 graded=11 found=11 failed=0 parsed=46 framework=go exit_code=0

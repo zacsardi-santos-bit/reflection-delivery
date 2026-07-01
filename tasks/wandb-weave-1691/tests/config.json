@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/weave/tests/test_client_trace.py::test_trace_call_filter -v",
+  "test_files": [
+    "weave/tests/test_client_trace.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "weave.tests.test_client_trace::test_trace_call_filter"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,9 @@
+patching file pkg/util/services/services_test.go
+# github.com/k3s-io/k3s/pkg/util/services [github.com/k3s-io/k3s/pkg/util/services.test]
+pkg/util/services/services_test.go:26:15: undefined: All
+pkg/util/services/services_test.go:96:15: undefined: Server
+pkg/util/services/services_test.go:146:15: undefined: Agent
+pkg/util/services/services_test.go:182:24: undefined: CertificateAuthority
+pkg/util/services/services_test.go:229:16: undefined: FilesForServices
+FAIL	github.com/k3s-io/k3s/pkg/util/services [build failed]
+reward=0 graded=6 found=6 failed=6 parsed=1 framework=go exit_code=1

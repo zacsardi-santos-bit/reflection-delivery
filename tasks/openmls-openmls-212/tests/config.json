@@ -1,0 +1,21 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --test test_encoding --no-fail-fast",
+  "test_files": [
+    "tests/test_encoding.rs",
+    "tests/utils/mod.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "openmls::test_encoding test_welcome_message_encoding",
+    "openmls::test_encoding test_commit_encoding",
+    "openmls::test_encoding test_update_proposal_encoding",
+    "openmls::test_encoding test_add_proposal_encoding",
+    "openmls::test_encoding test_remove_proposal_encoding",
+    "openmls::test_encoding test_application_message_encoding"
+  ],
+  "PASS_TO_PASS": [
+    "openmls::test_encoding utils::test_setup"
+  ]
+}

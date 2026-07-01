@@ -1,0 +1,32 @@
+patching file cmd/contrastExecuteScan_generated_test.go
+patching file cmd/contrastExecuteScan_test.go
+patching file pkg/contrast/contrast_test.go
+patching file pkg/contrast/reporting_test.go
+patching file test/groovy/CommonStepsTest.groovy
+# github.com/SAP/jenkins-library/pkg/contrast [github.com/SAP/jenkins-library/pkg/contrast.test]
+pkg/contrast/contrast_test.go:17:21: undefined: ApplicationResponse
+pkg/contrast/contrast_test.go:24:23: undefined: VulnerabilitiesResponse
+pkg/contrast/contrast_test.go:34:29: undefined: Vulnerability
+pkg/contrast/contrast_test.go:43:23: undefined: VulnerabilitiesResponse
+pkg/contrast/contrast_test.go:57:58: undefined: Vulnerability
+pkg/contrast/contrast_test.go:58:58: undefined: Vulnerability
+pkg/contrast/contrast_test.go:59:58: undefined: Vulnerability
+pkg/contrast/contrast_test.go:60:58: undefined: Vulnerability
+pkg/contrast/contrast_test.go:61:58: undefined: Vulnerability
+pkg/contrast/contrast_test.go:65:23: undefined: VulnerabilitiesResponse
+pkg/contrast/contrast_test.go:65:23: too many errors
+# github.com/SAP/jenkins-library/cmd [github.com/SAP/jenkins-library/cmd.test]
+cmd/contrastExecuteScan_test.go:26:14: undefined: contrastExecuteScanOptions
+cmd/contrastExecuteScan_test.go:31:17: undefined: getAuth
+cmd/contrastExecuteScan_test.go:41:14: undefined: contrastExecuteScanOptions
+cmd/contrastExecuteScan_test.go:46:21: undefined: getApplicationUrls
+cmd/contrastExecuteScan_test.go:54:17: undefined: contrastExecuteScanOptions
+cmd/contrastExecuteScan_test.go:65:10: undefined: validateConfigs
+cmd/contrastExecuteScan_test.go:72:10: undefined: validateConfigs
+cmd/contrastExecuteScan_test.go:78:13: undefined: contrastExecuteScanOptions
+cmd/contrastExecuteScan_test.go:80:10: undefined: validateConfigs
+cmd/contrastExecuteScan_test.go:88:10: undefined: validateConfigs
+cmd/contrastExecuteScan_test.go:88:10: too many errors
+FAIL	github.com/SAP/jenkins-library/cmd [build failed]
+FAIL	github.com/SAP/jenkins-library/pkg/contrast [build failed]
+reward=0 graded=131 found=131 failed=131 parsed=2 framework=go exit_code=1

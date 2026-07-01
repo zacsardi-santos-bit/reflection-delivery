@@ -1,0 +1,90 @@
+patching file snips_nlu/tests/test_crf_slot_filler.py
+patching file snips_nlu/tests/test_deterministic_intent_parser.py
+patching file snips_nlu/tests/test_log_reg_intent_classifier.py
+patching file snips_nlu/tests/test_nlu_engine.py
+patching file snips_nlu/tests/test_probabilistic_intent_parser.py
+patching file snips_nlu/tests/utils.py
+============================= test session starts ==============================
+platform linux -- Python 3.6.15, pytest-7.0.1, pluggy-1.0.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 0 items / 6 errors
+
+==================================== ERRORS ====================================
+___________ ERROR collecting snips_nlu/tests/test_crf_slot_filler.py ___________
+ImportError while importing test module '/workspace/repo/snips_nlu/tests/test_crf_slot_filler.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.6/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+snips_nlu/tests/test_crf_slot_filler.py:23: in <module>
+    from snips_nlu.tests.utils import (
+snips_nlu/tests/utils.py:15: in <module>
+    from snips_nlu.utils import json_string, unicode_string
+E   ImportError: cannot import name 'unicode_string'
+_____ ERROR collecting snips_nlu/tests/test_deterministic_intent_parser.py _____
+ImportError while importing test module '/workspace/repo/snips_nlu/tests/test_deterministic_intent_parser.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.6/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+snips_nlu/tests/test_deterministic_intent_parser.py:18: in <module>
+    from snips_nlu.tests.utils import FixtureTest, SAMPLE_DATASET, TEST_PATH, \
+snips_nlu/tests/utils.py:15: in <module>
+    from snips_nlu.utils import json_string, unicode_string
+E   ImportError: cannot import name 'unicode_string'
+______ ERROR collecting snips_nlu/tests/test_log_reg_intent_classifier.py ______
+ImportError while importing test module '/workspace/repo/snips_nlu/tests/test_log_reg_intent_classifier.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.6/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+snips_nlu/tests/test_log_reg_intent_classifier.py:21: in <module>
+    from snips_nlu.tests.utils import (
+snips_nlu/tests/utils.py:15: in <module>
+    from snips_nlu.utils import json_string, unicode_string
+E   ImportError: cannot import name 'unicode_string'
+_____________ ERROR collecting snips_nlu/tests/test_nlu_engine.py ______________
+ImportError while importing test module '/workspace/repo/snips_nlu/tests/test_nlu_engine.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.6/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+snips_nlu/tests/test_nlu_engine.py:25: in <module>
+    from snips_nlu.tests.utils import (
+snips_nlu/tests/utils.py:15: in <module>
+    from snips_nlu.utils import json_string, unicode_string
+E   ImportError: cannot import name 'unicode_string'
+_____ ERROR collecting snips_nlu/tests/test_probabilistic_intent_parser.py _____
+ImportError while importing test module '/workspace/repo/snips_nlu/tests/test_probabilistic_intent_parser.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.6/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+snips_nlu/tests/test_probabilistic_intent_parser.py:18: in <module>
+    from snips_nlu.tests.utils import BEVERAGE_DATASET, FixtureTest
+snips_nlu/tests/utils.py:15: in <module>
+    from snips_nlu.utils import json_string, unicode_string
+E   ImportError: cannot import name 'unicode_string'
+__________________ ERROR collecting snips_nlu/tests/utils.py ___________________
+ImportError while importing test module '/workspace/repo/snips_nlu/tests/utils.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.6/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+snips_nlu/tests/utils.py:15: in <module>
+    from snips_nlu.utils import json_string, unicode_string
+E   ImportError: cannot import name 'unicode_string'
+=========================== short test summary info ============================
+ERROR snips_nlu/tests/test_crf_slot_filler.py
+ERROR snips_nlu/tests/test_deterministic_intent_parser.py
+ERROR snips_nlu/tests/test_log_reg_intent_classifier.py
+ERROR snips_nlu/tests/test_nlu_engine.py
+ERROR snips_nlu/tests/test_probabilistic_intent_parser.py
+ERROR snips_nlu/tests/utils.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 6 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 6 errors in 1.43s ===============================
+  File "/tests/grade.py", line 1
+    from __future__ import annotations
+    ^
+SyntaxError: future feature annotations is not defined

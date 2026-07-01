@@ -1,0 +1,5 @@
+I'm working with a Rust database ORM library that supports multiple database backends. When I write code that matches on the current backend type, I need a way to handle backends that aren't one of the three standard supported ones. Right now, if I encounter an unexpected backend in a match statement, my only options are to use a wildcard arm that panics — there's no dedicated error variant I can return instead.
+
+I'd like a structured error variant that I can return from a match catch-all arm when an operation is not supported for the current backend. Ideally, the error would carry the backend's name (as a string) and some context about which operation was being attempted. Additionally, the backend type should have a method to get its name as a string, so I can embed it in error values without hardcoding the name.
+
+This would let migration code, schema setup, and other database utilities return proper recoverable errors instead of panicking when they encounter a backend they don't know how to handle.

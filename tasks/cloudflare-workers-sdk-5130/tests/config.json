@@ -1,0 +1,20 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run --reporter=verbose --config vitest.shared.ts tools/deployments/__tests__/deploy-non-npm-packages.test.ts",
+  "test_files": [
+    "tools/deployments/__tests__/deploy-non-npm-packages.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tools/deployments/__tests__/deploy-non-npm-packages.test.ts:: getUpdatedPackages() should default to an empty array",
+    "/workspace/repo/tools/deployments/__tests__/deploy-non-npm-packages.test.ts:: getUpdatedPackages() should parse JSON from the PUBLISHED_PACKAGES env var",
+    "/workspace/repo/tools/deployments/__tests__/deploy-non-npm-packages.test.ts:: getUpdatedPackages() should validate the shape of the PUBLISHED_PACKAGES JSON",
+    "/workspace/repo/tools/deployments/__tests__/deploy-non-npm-packages.test.ts:: findDeployablePackageNames() should return all the private packages which contain deploy scripts",
+    "/workspace/repo/tools/deployments/__tests__/deploy-non-npm-packages.test.ts:: deployPackage should run `pnpm deploy` for the given package via `execSync`",
+    "/workspace/repo/tools/deployments/__tests__/deploy-non-npm-packages.test.ts:: deployPackage should ignore failures in `execSync`",
+    "/workspace/repo/tools/deployments/__tests__/deploy-non-npm-packages.test.ts:: deployNonNpmPackages() should run `pnpm deploy` on each deployable updated package",
+    "/workspace/repo/tools/deployments/__tests__/deploy-non-npm-packages.test.ts:: deployNonNpmPackages() should run display an informative message if no packages to deploy"
+  ],
+  "PASS_TO_PASS": []
+}

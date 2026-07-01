@@ -1,0 +1,3 @@
+patching file docs/data-source-options.md
+patching file src/data-source/BaseDataSourceOptions.ts
+patching file src/query-builder/QueryBuilder.ts

@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --package fedimint-wallet-tests -E 'test(test_client_db_migrations)' --profile ci --no-fail-fast",
+  "test_files": [
+    "modules/fedimint-wallet-tests/tests/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) fedimint-wallet-tests::fedimint_wallet_tests fedimint_migration_tests::test_client_db_migrations"
+  ],
+  "PASS_TO_PASS": []
+}

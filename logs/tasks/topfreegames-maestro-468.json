@@ -1,0 +1,23 @@
+{
+ "task": "topfreegames-maestro-468",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden replaces `<-w.ctx.Done()` with `workerWaitGroup.Wait()` so goroutines exit on closed resultChan; F2P includes `when_resultChan_is_closed,_worker_stops_without_error`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

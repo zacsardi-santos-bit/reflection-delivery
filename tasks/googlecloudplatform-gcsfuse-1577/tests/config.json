@@ -1,0 +1,30 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/cache/metadata ./internal/config ./internal/fs/handle ./internal/fs/inode -count=1",
+  "test_files": [
+    "internal/cache/metadata/type_cache_test.go",
+    "internal/config/yaml_parser_test.go",
+    "internal/fs/handle/dir_handle_test.go",
+    "internal/fs/inode/base_dir_test.go",
+    "internal/fs/inode/core_test.go",
+    "internal/fs/inode/dir_test.go",
+    "main_test.go"
+  ],
+  "num_test_files": 7,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/googlecloudplatform/gcsfuse/internal/config::TestConfig",
+    "github.com/googlecloudplatform/gcsfuse/internal/config::TestYamlParser",
+    "github.com/googlecloudplatform/gcsfuse/internal/cache/metadata::TestTypeCache",
+    "github.com/googlecloudplatform/gcsfuse/internal/cache/metadata::TestStatCache",
+    "github.com/googlecloudplatform/gcsfuse/internal/fs/handle::TestDirHandle",
+    "github.com/googlecloudplatform/gcsfuse/internal/fs/inode::TestBaseDir",
+    "github.com/googlecloudplatform/gcsfuse/internal/fs/inode::TestDir",
+    "github.com/googlecloudplatform/gcsfuse/internal/fs/inode::TestFile",
+    "github.com/googlecloudplatform/gcsfuse/internal/fs/inode::TestCore",
+    "github.com/googlecloudplatform/gcsfuse/internal/fs/inode::TestName",
+    "github.com/googlecloudplatform/gcsfuse/internal/fs/inode::TestNameAsMapKey",
+    "github.com/googlecloudplatform/gcsfuse/internal/fs/inode::TestSymlink"
+  ],
+  "PASS_TO_PASS": []
+}

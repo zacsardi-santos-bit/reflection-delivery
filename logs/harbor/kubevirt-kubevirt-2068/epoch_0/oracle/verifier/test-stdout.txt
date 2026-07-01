@@ -1,0 +1,18 @@
+patching file pkg/virt-handler/device-manager/device_controller_test.go
+patching file pkg/virt-handler/device-manager/generic_device_test.go
+patching file tests/BUILD.bazel
+patching file tests/utils.go
+patching file tests/vmi_lifecycle_test.go
+=== RUN   TestDeviceManager
+Running Suite: DeviceManager Suite
+==================================
+Random Seed: [1m1782746822[0m
+Will run [1m7[0m of [1m7[0m specs
+
+[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m[32m•[0m
+[1m[32mRan 7 of 7 Specs in 3.552 seconds[0m
+[1m[32mSUCCESS![0m -- [32m[1m7 Passed[0m | [91m[1m0 Failed[0m | [33m[1m0 Pending[0m | [36m[1m0 Skipped[0m
+--- PASS: TestDeviceManager (3.55s)
+PASS
+ok  	kubevirt.io/kubevirt/pkg/virt-handler/device-manager	3.578s
+reward=1 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=0

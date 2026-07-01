@@ -1,0 +1,15 @@
+patching file api/v1beta2/network_types_test.go
+patching file pkg/cloud/services/network/carriergateways_test.go
+patching file pkg/cloud/services/network/natgateways_test.go
+patching file pkg/cloud/services/network/routetables_test.go
+patching file pkg/cloud/services/network/subnets_test.go
+# sigs.k8s.io/cluster-api-provider-aws/v2/pkg/cloud/services/network [sigs.k8s.io/cluster-api-provider-aws/v2/pkg/cloud/services/network.test]
+pkg/cloud/services/network/carriergateways_test.go:145:16: s.reconcileCarrierGateway undefined (type *Service has no field or method reconcileCarrierGateway)
+pkg/cloud/services/network/carriergateways_test.go:249:12: s.deleteCarrierGateway undefined (type *Service has no field or method deleteCarrierGateway)
+pkg/cloud/services/network/natgateways_test.go:882:29: cannot infer T (/go/pkg/mod/k8s.io/utils@v0.0.0-20240102154912-e7106e64919e/ptr/ptr.go:50:9)
+pkg/cloud/services/network/natgateways_test.go:882:38: undefined: infrav1.ZoneTypeWavelengthZone
+pkg/cloud/services/network/routetables_test.go:969:4: unknown field CarrierGatewayID in struct literal of type "sigs.k8s.io/cluster-api-provider-aws/v2/api/v1beta2".VPCSpec
+pkg/cloud/services/network/routetables_test.go:1102:13: net.VPC.CarrierGatewayID undefined (type "sigs.k8s.io/cluster-api-provider-aws/v2/api/v1beta2".VPCSpec has no field or method CarrierGatewayID)
+pkg/cloud/services/network/routetables_test.go:1292:13: net.VPC.CarrierGatewayID undefined (type "sigs.k8s.io/cluster-api-provider-aws/v2/api/v1beta2".VPCSpec has no field or method CarrierGatewayID)
+FAIL	sigs.k8s.io/cluster-api-provider-aws/v2/pkg/cloud/services/network [build failed]
+reward=0 graded=174 found=174 failed=174 parsed=1 framework=go exit_code=1

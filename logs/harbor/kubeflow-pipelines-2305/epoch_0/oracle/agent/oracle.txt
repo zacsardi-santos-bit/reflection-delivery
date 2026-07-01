@@ -1,0 +1,20 @@
+patching file components/kubeflow/kfserving/Dockerfile
+patching file components/kubeflow/kfserving/OWNERS
+patching file components/kubeflow/kfserving/component.yaml
+patching file components/kubeflow/kfserving/sample-pipeline.py
+patching file components/kubeflow/kfserving/src/app.py
+patching file components/kubeflow/kfserving/src/kfservingdeployer.py
+patching file frontend/README.md
+patching file frontend/package.json
+patching file frontend/src/components/DetailsTable.tsx
+patching file frontend/src/components/MinioArtifactLink.tsx
+patching file frontend/src/components/__snapshots__/DetailsTable.test.tsx.snap
+patching file frontend/src/components/__snapshots__/MinioArtifactLink.test.tsx.snap
+patching file frontend/src/lib/StaticGraphParser.ts
+patching file frontend/src/lib/WorkflowParser.ts
+patching file frontend/src/pages/RecurringRunDetails.tsx
+patching file frontend/src/pages/RunDetails.tsx
+patching file frontend/src/pages/__snapshots__/RunDetails.test.tsx.snap
+patching file frontend/start-proxies.sh (renamed from frontend/start-proxy-standalone-and-server.sh)
+patching file frontend/start-proxy-standalone.sh
+patching file frontend/third_party/argo-ui/kubernetes.ts

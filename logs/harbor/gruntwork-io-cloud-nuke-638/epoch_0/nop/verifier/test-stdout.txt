@@ -1,0 +1,22 @@
+patching file aws/resources/ses_configuration_set_test.go
+patching file aws/resources/ses_email_receiving_test.go
+patching file aws/resources/ses_email_templates_test.go
+patching file aws/resources/ses_identity_test.go
+patching file config/config_test.go
+# github.com/gruntwork-io/cloud-nuke/config [github.com/gruntwork-io/cloud-nuke/config.test]
+config/config_test.go:86:3: too many values in struct literal of type Config
+# github.com/gruntwork-io/cloud-nuke/aws/resources [github.com/gruntwork-io/cloud-nuke/aws/resources.test]
+aws/resources/ses_configuration_set_test.go:44:14: undefined: SesConfigurationSet
+aws/resources/ses_configuration_set_test.go:76:5: unknown field SESConfigurationSet in struct literal of type config.Config
+aws/resources/ses_configuration_set_test.go:87:14: undefined: SesConfigurationSet
+aws/resources/ses_email_receiving_test.go:45:13: undefined: SesReceiptRule
+aws/resources/ses_email_receiving_test.go:84:5: unknown field SESReceiptRuleSet in struct literal of type config.Config
+aws/resources/ses_email_receiving_test.go:95:13: undefined: SesReceiptRule
+aws/resources/ses_email_receiving_test.go:131:13: undefined: SesReceiptFilter
+aws/resources/ses_email_receiving_test.go:162:5: unknown field SESReceiptFilter in struct literal of type config.Config
+aws/resources/ses_email_receiving_test.go:172:13: undefined: SesReceiptFilter
+aws/resources/ses_email_templates_test.go:45:18: undefined: SesEmailTemplates
+aws/resources/ses_email_templates_test.go:45:18: too many errors
+FAIL	github.com/gruntwork-io/cloud-nuke/aws/resources [build failed]
+FAIL	github.com/gruntwork-io/cloud-nuke/config [build failed]
+reward=0 graded=349 found=349 failed=349 parsed=2 framework=go exit_code=1

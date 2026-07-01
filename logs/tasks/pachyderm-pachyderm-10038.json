@@ -1,0 +1,23 @@
+{
+ "task": "pachyderm-pachyderm-10038",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "FIXABLE",
+  "reason_code": "FIXABLE_METADATA",
+  "evidence": "config F2P = only clusterstate::Test_v2_7_0_ClusterState + Test_v2_8_0_ClusterState; the sole dedup test 'TestPipelineVersionsDeduplication' begins 'if testing.Short() { t.Skip(...) }' and test_command uses '-short', so the described dedup migration is never actually graded"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 22,
+  "shallow": true
+ }
+}

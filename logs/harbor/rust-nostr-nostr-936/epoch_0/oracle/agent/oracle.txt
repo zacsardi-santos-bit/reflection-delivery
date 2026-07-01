@@ -1,0 +1,10 @@
+patching file CHANGELOG.md
+patching file crates/nostr-sdk/Cargo.toml
+patching file crates/nostr-sdk/README.md
+patching file crates/nostr/Cargo.toml
+patching file crates/nostr/README.md
+patching file crates/nostr/examples/nip05.rs
+patching file crates/nostr/src/nips/mod.rs
+patching file crates/nostr/src/nips/nip05.rs
+patching file crates/nostr/src/nips/nip19.rs
+patching file crates/nostr/src/prelude.rs

@@ -1,0 +1,1058 @@
+patching file packages/react-router/tests/link.test.tsx
+patching file packages/react-router/tests/useNavigate.test.tsx
+
+ RUN  v1.6.0 /workspace/repo/packages/react-router
+
+stderr | tests/link.test.tsx > Link > when the current route is the root with beforeLoad that throws
+Error: Uncaught [Error: Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:140:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40
+    at /workspace/repo/packages/react-router/src/router.ts:2060:9
+    at new Promise (<anonymous>)
+    at Router.loadMatches (/workspace/repo/packages/react-router/src/router.ts:1676:13)
+    at /workspace/repo/packages/react-router/src/router.ts:1484:20
+    at startTransition (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:16513:5)
+    at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+    at tryLoad (/workspace/repo/packages/react-router/src/Transitioner.tsx:65:22)
+    at /workspace/repo/packages/react-router/src/Transitioner.tsx:71:5 {
+  routerCode: 'BEFORE_LOAD'
+}
+Error: Uncaught [Error: Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:140:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40
+    at /workspace/repo/packages/react-router/src/router.ts:2060:9
+    at new Promise (<anonymous>)
+    at Router.loadMatches (/workspace/repo/packages/react-router/src/router.ts:1676:13)
+    at /workspace/repo/packages/react-router/src/router.ts:1484:20
+    at startTransition (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:16513:5)
+    at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+    at tryLoad (/workspace/repo/packages/react-router/src/Transitioner.tsx:65:22)
+    at /workspace/repo/packages/react-router/src/Transitioner.tsx:71:5 {
+  routerCode: 'BEFORE_LOAD'
+}
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: __root__
+
+stderr | tests/link.test.tsx > Link > when navigating to /posts with invalid search
+Error: Uncaught [Error: Not a number!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) SearchParamError: Not a number!
+    at /workspace/repo/packages/react-router/src/router.ts:960:36
+    at /workspace/repo/packages/react-router/src/router.ts:970:7
+    ... 6 lines matching cause stack trace ...
+    at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+    at /workspace/repo/packages/history/src/index.ts:75:41 {
+  routerCode: 'VALIDATE_SEARCH',
+  [cause]: Error: Not a number!
+      at validateSearch (/workspace/repo/packages/react-router/tests/link.test.tsx:405:32)
+      at /workspace/repo/packages/react-router/src/router.ts:950:26
+      at /workspace/repo/packages/react-router/src/router.ts:970:7
+      at Array.forEach (<anonymous>)
+      at Router.matchRoutes (/workspace/repo/packages/react-router/src/router.ts:930:19)
+      at /workspace/repo/packages/react-router/src/router.ts:1452:33
+      at Store.batch (file:///workspace/repo/node_modules/.pnpm/@tanstack+store@0.1.3/node_modules/@tanstack/store/src/index.ts:88:5)
+      at /workspace/repo/packages/react-router/src/router.ts:1446:22
+      at startTransition (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:16513:5)
+      at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+}
+Error: Uncaught [Error: Not a number!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) SearchParamError: Not a number!
+    at /workspace/repo/packages/react-router/src/router.ts:960:36
+    at /workspace/repo/packages/react-router/src/router.ts:970:7
+    ... 6 lines matching cause stack trace ...
+    at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+    at /workspace/repo/packages/history/src/index.ts:75:41 {
+  routerCode: 'VALIDATE_SEARCH',
+  [cause]: Error: Not a number!
+      at validateSearch (/workspace/repo/packages/react-router/tests/link.test.tsx:405:32)
+      at /workspace/repo/packages/react-router/src/router.ts:950:26
+      at /workspace/repo/packages/react-router/src/router.ts:970:7
+      at Array.forEach (<anonymous>)
+      at Router.matchRoutes (/workspace/repo/packages/react-router/src/router.ts:930:19)
+      at /workspace/repo/packages/react-router/src/router.ts:1452:33
+      at Store.batch (file:///workspace/repo/node_modules/.pnpm/@tanstack+store@0.1.3/node_modules/@tanstack/store/src/index.ts:88:5)
+      at /workspace/repo/packages/react-router/src/router.ts:1446:22
+      at startTransition (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:16513:5)
+      at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+}
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: /posts
+Error: Uncaught [Error: Not a number!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) SearchParamError: Not a number!
+    at /workspace/repo/packages/react-router/src/router.ts:960:36
+    at /workspace/repo/packages/react-router/src/router.ts:970:7
+    ... 6 lines matching cause stack trace ...
+    at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+    at /workspace/repo/packages/history/src/index.ts:75:41 {
+  routerCode: 'VALIDATE_SEARCH',
+  [cause]: Error: Not a number!
+      at validateSearch (/workspace/repo/packages/react-router/tests/link.test.tsx:405:32)
+      at /workspace/repo/packages/react-router/src/router.ts:950:26
+      at /workspace/repo/packages/react-router/src/router.ts:970:7
+      at Array.forEach (<anonymous>)
+      at Router.matchRoutes (/workspace/repo/packages/react-router/src/router.ts:930:19)
+      at /workspace/repo/packages/react-router/src/router.ts:1452:33
+      at Store.batch (file:///workspace/repo/node_modules/.pnpm/@tanstack+store@0.1.3/node_modules/@tanstack/store/src/index.ts:88:5)
+      at /workspace/repo/packages/react-router/src/router.ts:1446:22
+      at startTransition (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:16513:5)
+      at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+}
+Error: Uncaught [Error: Not a number!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) SearchParamError: Not a number!
+    at /workspace/repo/packages/react-router/src/router.ts:960:36
+    at /workspace/repo/packages/react-router/src/router.ts:970:7
+    ... 6 lines matching cause stack trace ...
+    at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+    at /workspace/repo/packages/history/src/index.ts:75:41 {
+  routerCode: 'VALIDATE_SEARCH',
+  [cause]: Error: Not a number!
+      at validateSearch (/workspace/repo/packages/react-router/tests/link.test.tsx:405:32)
+      at /workspace/repo/packages/react-router/src/router.ts:950:26
+      at /workspace/repo/packages/react-router/src/router.ts:970:7
+      at Array.forEach (<anonymous>)
+      at Router.matchRoutes (/workspace/repo/packages/react-router/src/router.ts:930:19)
+      at /workspace/repo/packages/react-router/src/router.ts:1452:33
+      at Store.batch (file:///workspace/repo/node_modules/.pnpm/@tanstack+store@0.1.3/node_modules/@tanstack/store/src/index.ts:88:5)
+      at /workspace/repo/packages/react-router/src/router.ts:1446:22
+      at startTransition (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:16513:5)
+      at Router.load (/workspace/repo/packages/react-router/src/router.ts:1435:10)
+}
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: /posts
+
+ ✓ |react-router| tests/useNavigate.test.tsx  (7 tests) 3752ms
+stderr | tests/link.test.tsx > Link > when navigating to /posts with a loader that errors
+Error: Uncaught [Error: ]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: 
+    at Object.loader (/workspace/repo/packages/react-router/tests/link.test.tsx:530:15)
+    at fetch (/workspace/repo/packages/react-router/src/router.ts:1920:53)
+    at fetchWithRedirectAndNotFound (/workspace/repo/packages/react-router/src/router.ts:2022:21)
+    at createValidateResolvedMatchPromise (/workspace/repo/packages/react-router/src/router.ts:2043:19)
+    at async Promise.all (index 1)
+    at /workspace/repo/packages/react-router/src/router.ts:2052:13
+Error: Uncaught [Error: ]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: 
+    at Object.loader (/workspace/repo/packages/react-router/tests/link.test.tsx:530:15)
+    at fetch (/workspace/repo/packages/react-router/src/router.ts:1920:53)
+    at fetchWithRedirectAndNotFound (/workspace/repo/packages/react-router/src/router.ts:2022:21)
+    at createValidateResolvedMatchPromise (/workspace/repo/packages/react-router/src/router.ts:2043:19)
+    at async Promise.all (index 1)
+    at /workspace/repo/packages/react-router/src/router.ts:2052:13
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: /posts{"page":{"page":2}}
+Error: Uncaught [Error: ]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: 
+    at Object.loader (/workspace/repo/packages/react-router/tests/link.test.tsx:530:15)
+    at fetch (/workspace/repo/packages/react-router/src/router.ts:1920:53)
+    at fetchWithRedirectAndNotFound (/workspace/repo/packages/react-router/src/router.ts:2022:21)
+    at createValidateResolvedMatchPromise (/workspace/repo/packages/react-router/src/router.ts:2043:19)
+    at async Promise.all (index 1)
+    at /workspace/repo/packages/react-router/src/router.ts:2052:13
+Error: Uncaught [Error: ]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: 
+    at Object.loader (/workspace/repo/packages/react-router/tests/link.test.tsx:530:15)
+    at fetch (/workspace/repo/packages/react-router/src/router.ts:1920:53)
+    at fetchWithRedirectAndNotFound (/workspace/repo/packages/react-router/src/router.ts:2022:21)
+    at createValidateResolvedMatchPromise (/workspace/repo/packages/react-router/src/router.ts:2043:19)
+    at async Promise.all (index 1)
+    at /workspace/repo/packages/react-router/src/router.ts:2052:13
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: /posts{"page":{"page":2}}
+
+stderr | tests/link.test.tsx > Link > when navigating to /posts with a beforeLoad that throws an error
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:699:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:699:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: /posts
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:699:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:699:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: /posts
+
+stderr | tests/link.test.tsx > Link > when navigating to /posts with a beforeLoad that throws an error bubbles to the root
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:754:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:754:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: __root__
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:754:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:754:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: __root__
+
+stderr | tests/link.test.tsx > Link > when navigating to /posts with a beforeLoad that throws an error bubbles to the nearest parent
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:815:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:815:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at PostsComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: /posts
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:815:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+Error: Uncaught [Error: Oops. Something went wrong!]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Oops. Something went wrong!
+    at Object.beforeLoad (/workspace/repo/packages/react-router/tests/link.test.tsx:815:15)
+    at /workspace/repo/packages/react-router/src/router.ts:1782:40 {
+  routerCode: 'BEFORE_LOAD'
+}
+The above error occurred in the <MatchInner> component:
+
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at PostsComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: Error in route match: /posts
+
+stderr | tests/link.test.tsx > Link > when navigating from /posts to ./$postId
+Error: Uncaught [Error: Invariant failed: Could not find match for from: /posts/]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Invariant failed: Could not find match for from: /posts/
+    at Proxy.invariant (file:///workspace/repo/node_modules/.pnpm/tiny-invariant@1.3.1/node_modules/tiny-invariant/dist/esm/tiny-invariant.js:12:11)
+    at build (/workspace/repo/packages/react-router/src/router.ts:1121:7)
+    at buildWithMatches (/workspace/repo/packages/react-router/src/router.ts:1254:20)
+    at Router.buildLocation (/workspace/repo/packages/react-router/src/router.ts:1309:12)
+    at useLinkProps (/workspace/repo/packages/react-router/src/link.tsx:598:23)
+    at /workspace/repo/packages/react-router/src/link.tsx:878:34
+    at renderWithHooks (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at updateForwardRef (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:19245:20)
+    at beginWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21675:16)
+    at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [Error: Invariant failed: Could not find match for from: /posts/]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Invariant failed: Could not find match for from: /posts/
+    at Proxy.invariant (file:///workspace/repo/node_modules/.pnpm/tiny-invariant@1.3.1/node_modules/tiny-invariant/dist/esm/tiny-invariant.js:12:11)
+    at build (/workspace/repo/packages/react-router/src/router.ts:1121:7)
+    at buildWithMatches (/workspace/repo/packages/react-router/src/router.ts:1254:20)
+    at Router.buildLocation (/workspace/repo/packages/react-router/src/router.ts:1309:12)
+    at useLinkProps (/workspace/repo/packages/react-router/src/link.tsx:598:23)
+    at /workspace/repo/packages/react-router/src/link.tsx:878:34
+    at renderWithHooks (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at updateForwardRef (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:19245:20)
+    at beginWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21675:16)
+    at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <ForwardRef> component:
+
+    at /workspace/repo/packages/react-router/src/link.tsx:205:11
+    at PostsIndexComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at PostsComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: Invariant failed: Could not find match for from: /posts/
+
+stderr | tests/link.test.tsx > Link > when navigating from /posts to ../posts/$postId
+Error: Uncaught [Error: Invariant failed: Could not find match for from: /posts/]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Invariant failed: Could not find match for from: /posts/
+    at Proxy.invariant (file:///workspace/repo/node_modules/.pnpm/tiny-invariant@1.3.1/node_modules/tiny-invariant/dist/esm/tiny-invariant.js:12:11)
+    at build (/workspace/repo/packages/react-router/src/router.ts:1121:7)
+    at buildWithMatches (/workspace/repo/packages/react-router/src/router.ts:1254:20)
+    at Router.buildLocation (/workspace/repo/packages/react-router/src/router.ts:1309:12)
+    at useLinkProps (/workspace/repo/packages/react-router/src/link.tsx:598:23)
+    at /workspace/repo/packages/react-router/src/link.tsx:878:34
+    at renderWithHooks (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at updateForwardRef (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:19245:20)
+    at beginWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21675:16)
+    at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [Error: Invariant failed: Could not find match for from: /posts/]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Invariant failed: Could not find match for from: /posts/
+    at Proxy.invariant (file:///workspace/repo/node_modules/.pnpm/tiny-invariant@1.3.1/node_modules/tiny-invariant/dist/esm/tiny-invariant.js:12:11)
+    at build (/workspace/repo/packages/react-router/src/router.ts:1121:7)
+    at buildWithMatches (/workspace/repo/packages/react-router/src/router.ts:1254:20)
+    at Router.buildLocation (/workspace/repo/packages/react-router/src/router.ts:1309:12)
+    at useLinkProps (/workspace/repo/packages/react-router/src/link.tsx:598:23)
+    at /workspace/repo/packages/react-router/src/link.tsx:878:34
+    at renderWithHooks (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at updateForwardRef (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:19245:20)
+    at beginWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21675:16)
+    at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <ForwardRef> component:
+
+    at /workspace/repo/packages/react-router/src/link.tsx:205:11
+    at PostsIndexComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at PostsComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: Invariant failed: Could not find match for from: /posts/
+
+stderr | tests/link.test.tsx > Link > when navigating from /invoices to ./invoiceId and the current route is /posts/$postId/details
+Error: Uncaught [Error: Invariant failed: Could not find match for from: /invoices]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Invariant failed: Could not find match for from: /invoices
+    at Proxy.invariant (file:///workspace/repo/node_modules/.pnpm/tiny-invariant@1.3.1/node_modules/tiny-invariant/dist/esm/tiny-invariant.js:12:11)
+    at build (/workspace/repo/packages/react-router/src/router.ts:1121:7)
+    at buildWithMatches (/workspace/repo/packages/react-router/src/router.ts:1254:20)
+    at Router.buildLocation (/workspace/repo/packages/react-router/src/router.ts:1309:12)
+    at useLinkProps (/workspace/repo/packages/react-router/src/link.tsx:598:23)
+    at /workspace/repo/packages/react-router/src/link.tsx:878:34
+    at renderWithHooks (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at updateForwardRef (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:19245:20)
+    at beginWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21675:16)
+    at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [Error: Invariant failed: Could not find match for from: /invoices]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Invariant failed: Could not find match for from: /invoices
+    at Proxy.invariant (file:///workspace/repo/node_modules/.pnpm/tiny-invariant@1.3.1/node_modules/tiny-invariant/dist/esm/tiny-invariant.js:12:11)
+    at build (/workspace/repo/packages/react-router/src/router.ts:1121:7)
+    at buildWithMatches (/workspace/repo/packages/react-router/src/router.ts:1254:20)
+    at Router.buildLocation (/workspace/repo/packages/react-router/src/router.ts:1309:12)
+    at useLinkProps (/workspace/repo/packages/react-router/src/link.tsx:598:23)
+    at /workspace/repo/packages/react-router/src/link.tsx:878:34
+    at renderWithHooks (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at updateForwardRef (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:19245:20)
+    at beginWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21675:16)
+    at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <ForwardRef> component:
+
+    at /workspace/repo/packages/react-router/src/link.tsx:205:11
+    at DetailsComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at PostComponent (/workspace/repo/packages/react-router/tests/link.test.tsx:1955:44)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at PostsComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at component
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: Invariant failed: Could not find match for from: /invoices
+Error: Uncaught [Error: Invariant failed: Could not find match for from: /invoices]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Invariant failed: Could not find match for from: /invoices
+    at Proxy.invariant (file:///workspace/repo/node_modules/.pnpm/tiny-invariant@1.3.1/node_modules/tiny-invariant/dist/esm/tiny-invariant.js:12:11)
+    at build (/workspace/repo/packages/react-router/src/router.ts:1121:7)
+    at buildWithMatches (/workspace/repo/packages/react-router/src/router.ts:1254:20)
+    at Router.buildLocation (/workspace/repo/packages/react-router/src/router.ts:1309:12)
+    at useLinkProps (/workspace/repo/packages/react-router/src/link.tsx:598:23)
+    at /workspace/repo/packages/react-router/src/link.tsx:878:34
+    at renderWithHooks (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at updateForwardRef (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:19245:20)
+    at beginWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21675:16)
+    at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+Error: Uncaught [Error: Invariant failed: Could not find match for from: /invoices]
+    at reportException (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/workspace/repo/node_modules/.pnpm/jsdom@24.0.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Invariant failed: Could not find match for from: /invoices
+    at Proxy.invariant (file:///workspace/repo/node_modules/.pnpm/tiny-invariant@1.3.1/node_modules/tiny-invariant/dist/esm/tiny-invariant.js:12:11)
+    at build (/workspace/repo/packages/react-router/src/router.ts:1121:7)
+    at buildWithMatches (/workspace/repo/packages/react-router/src/router.ts:1254:20)
+    at Router.buildLocation (/workspace/repo/packages/react-router/src/router.ts:1309:12)
+    at useLinkProps (/workspace/repo/packages/react-router/src/link.tsx:598:23)
+    at /workspace/repo/packages/react-router/src/link.tsx:878:34
+    at renderWithHooks (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at updateForwardRef (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:19245:20)
+    at beginWork (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21675:16)
+    at HTMLUnknownElement.callCallback (/workspace/repo/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+The above error occurred in the <ForwardRef> component:
+
+    at /workspace/repo/packages/react-router/src/link.tsx:205:11
+    at DetailsComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at PostComponent (/workspace/repo/packages/react-router/tests/link.test.tsx:1955:44)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at PostsComponent
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at component
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at Suspense
+    at Outlet2 (/workspace/repo/packages/react-router/src/Matches.tsx:300:40)
+    at MatchInner (/workspace/repo/packages/react-router/src/Matches.tsx:191:23)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at SafeFragment (/workspace/repo/packages/react-router/src/Matches.tsx:100:105)
+    at Match (/workspace/repo/packages/react-router/src/Matches.tsx:106:18)
+    at CatchBoundaryImpl (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:35:5)
+    at CatchBoundary (/workspace/repo/packages/react-router/src/CatchBoundary.tsx:6:32)
+    at MatchesInner (/workspace/repo/packages/react-router/src/Matches.tsx:59:41)
+    at Suspense
+    at Matches (/workspace/repo/packages/react-router/src/Matches.tsx:28:40)
+    at RouterContextProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:8:3)
+    at RouterProvider (/workspace/repo/packages/react-router/src/RouterProvider.tsx:36:27)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: Invariant failed: Could not find match for from: /invoices
+
+ ✓ |react-router| tests/link.test.tsx  (23 tests) 11548ms
+
+ Test Files  2 passed (2)
+      Tests  30 passed (30)
+   Start at  15:20:08
+   Duration  14.31s (transform 441ms, setup 0ms, collect 1.52s, tests 15.30s, environment 1.35s, prepare 293ms)
+
+reward=1 graded=30 found=0 failed=0 parsed=0 framework=vitest exit_code=0

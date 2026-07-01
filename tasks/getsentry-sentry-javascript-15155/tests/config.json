@@ -1,0 +1,26 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/core && npx jest test/lib/integrations/zoderrrors.test.ts --no-coverage --watchAll=false",
+  "test_files": [
+    "packages/core/test/lib/integrations/zoderrrors.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::applyZodErrorsToEvent() should not do anything if exception is not a ZodError",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::applyZodErrorsToEvent() should add ZodError issues to extra and format message",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::applyZodErrorsToEvent() should add all ZodError issues as attachment",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::flattenIssue() flattens path field",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::flattenIssue() flattens keys field to string",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::flattenIssuePath() returns single path",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::flattenIssuePath() flattens nested string paths",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::flattenIssuePath() uses placeholder for path index within array",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::formatIssueMessage() adds invalid keys to message",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::formatIssueMessage() adds expected type if root variable is invalid object",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::formatIssueMessage() adds expected type if root variable is invalid number",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::formatIssueMessage() adds expected type if root variable is invalid string",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::formatIssueMessage() adds expected type if root variable is invalid array",
+    "/workspace/repo/packages/core/test/lib/integrations/zoderrrors.test.ts::formatIssueMessage() adds expected type if root variable is invalid wrong type in array"
+  ],
+  "PASS_TO_PASS": []
+}

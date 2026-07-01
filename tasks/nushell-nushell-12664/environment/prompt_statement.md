@@ -1,0 +1,7 @@
+I'd like nushell to support reading and writing MessagePack, a compact binary serialization format used by many databases, messaging systems, and network protocols. Right now there's no built-in way to open a MessagePack file in nushell or convert nushell values to MessagePack binary. I'd like commands that can convert binary MessagePack data into nushell values and back, so that the data survives a full roundtrip without loss. Opening a file with the appropriate extension should also automatically decode it.
+
+The conversion should handle all common MessagePack types — nulls, booleans, integers of various sizes, floats, strings, binary data, lists, maps, and timestamps. A streaming mode would also be useful, where a source containing multiple consecutive top-level values can be parsed into a list rather than just reading the first one.
+
+I'd also like a compressed variant supported alongside the plain format, with its own pair of encode/decode commands and full roundtrip capability.
+
+On the error side, I expect clear messages when input is malformed: if the data is too deeply nested, contains strings with invalid character encoding, is truncated or empty, has trailing data after the message ends, uses reserved or unknown byte markers, contains integers too large to represent, uses non-string map keys, or has extension types with wrong sizes or unknown identifiers — all of these should fail with a descriptive error rather than silently producing wrong output.

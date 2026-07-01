@@ -1,0 +1,9 @@
+patching file site/content/en/latest/api/extension_types.md
+2026-06-29T15:20:18.662Z	[34mINFO[0m	crd-ref-docs	Loading configuration	{"path": "tools/crd-ref-docs/config.yaml"}
+2026-06-29T15:20:18.663Z	[34mINFO[0m	crd-ref-docs	Processing source directory	{"directory": "api/v1alpha1", "depth": 10}
+2026-06-29T15:20:22.237Z	[34mINFO[0m	crd-ref-docs	Rendering output	{"path": "/tmp/generated_docs.md"}
+2026-06-29T15:20:22.285Z	[34mINFO[0m	crd-ref-docs	CRD reference documentation generated
+2026-06-29T15:20:22.285Z	[34mINFO[0m	crd-ref-docs	Execution time: 3.621145891s
+{"Time":"2026-06-29T15:20:22Z","Action":"run","Test":"TestDocumentationIsUpToDate"}
+{"Time":"2026-06-29T15:20:22Z","Action":"pass","Test":"TestDocumentationIsUpToDate","Elapsed":1.0}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

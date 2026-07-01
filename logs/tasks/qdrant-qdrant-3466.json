@@ -1,0 +1,23 @@
+{
+ "task": "qdrant-qdrant-3466",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'pub struct MinShould', 'combine_min_should_estimations', proto/grpc conversions and query_checker; F2P test 'min_should_with_min_count_same_as_condition_count_is_equivalent_to_must' asserts estimation equals a must query"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,3 @@
+patching file src/cartesian/Scatter.tsx
+patching file src/state/selectors/scatterSelectors.ts
+patching file storybook/stories/Examples/ScatterChart.stories.tsx

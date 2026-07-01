@@ -1,0 +1,98 @@
+{
+    "id": "426b5b21-b376-4a75-91bb-86018688170d",
+    "task_name": "offline/wso2-product-microgateway-2071",
+    "trial_name": "wso2-product-microgateway-2071__7dK6c7t",
+    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04/wso2-product-microgateway-2071__7dK6c7t",
+    "task_id": {
+        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/wso2-product-microgateway-2071"
+    },
+    "source": "harbor",
+    "task_checksum": "4dfad4ec1593f44a4ce533aea71b35db4eca66d9f8b7fc7ef2103a8a67db9777",
+    "config": {
+        "task": {
+            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/wso2-product-microgateway-2071",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "harbor"
+        },
+        "trial_name": "wso2-product-microgateway-2071__7dK6c7t",
+        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "oracle",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "modal",
+            "import_path": null,
+            "force_build": false,
+            "delete": false,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "8d8c11e2-61bb-4d33-b502-02a799419317"
+    },
+    "agent_info": {
+        "name": "oracle",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-06-29T15:14:28.247529Z",
+    "finished_at": "2026-06-29T15:17:16.183504Z",
+    "environment_setup": {
+        "started_at": "2026-06-29T15:14:28.251906Z",
+        "finished_at": "2026-06-29T15:14:42.166003Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-06-29T15:14:42.166009Z",
+        "finished_at": "2026-06-29T15:14:42.166026Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-06-29T15:14:42.166044Z",
+        "finished_at": "2026-06-29T15:14:58.396683Z"
+    },
+    "verifier": {
+        "started_at": "2026-06-29T15:16:32.302875Z",
+        "finished_at": "2026-06-29T15:17:11.996112Z"
+    }
+}

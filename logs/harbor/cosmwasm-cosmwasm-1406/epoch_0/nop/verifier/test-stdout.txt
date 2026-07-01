@@ -1,0 +1,258 @@
+patching file packages/vm/src/cache.rs
+   Compiling proc-macro2 v1.0.37
+   Compiling unicode-xid v0.2.3
+   Compiling syn v1.0.92
+   Compiling cfg-if v1.0.0
+   Compiling version_check v0.9.4
+   Compiling libc v0.2.125
+   Compiling autocfg v1.1.0
+   Compiling serde_derive v1.0.137
+   Compiling serde v1.0.137
+   Compiling once_cell v1.10.0
+   Compiling memchr v2.5.0
+   Compiling typenum v1.15.0
+   Compiling lazy_static v1.4.0
+   Compiling stable_deref_trait v1.2.0
+   Compiling fallible-iterator v0.2.0
+   Compiling bytecheck v0.6.8
+   Compiling ident_case v1.0.1
+   Compiling crc32fast v1.3.2
+   Compiling fnv v1.0.7
+   Compiling subtle v2.4.1
+   Compiling rustversion v1.0.6
+   Compiling cc v1.0.73
+   Compiling target-lexicon v0.12.3
+   Compiling rend v0.3.6
+   Compiling adler v1.0.2
+   Compiling smallvec v1.8.0
+   Compiling rkyv v0.7.38
+   Compiling scopeguard v1.1.0
+   Compiling rustc-demangle v0.1.21
+   Compiling seahash v4.1.0
+   Compiling more-asserts v0.2.2
+   Compiling zeroize v1.5.5
+   Compiling crossbeam-utils v0.8.8
+   Compiling wasmparser v0.83.0
+   Compiling bitflags v1.3.2
+   Compiling either v1.6.1
+   Compiling log v0.4.17
+   Compiling const-oid v0.9.0
+   Compiling rayon-core v1.9.2
+   Compiling byteorder v1.4.3
+   Compiling cranelift-codegen-shared v0.82.3
+   Compiling base64ct v1.5.0
+   Compiling semver v1.0.9
+   Compiling getrandom v0.1.16
+   Compiling leb128 v0.2.5
+   Compiling rustc-hash v1.1.0
+   Compiling base16ct v0.1.1
+   Compiling serde_json v1.0.81
+   Compiling cpufeatures v0.2.2
+   Compiling ryu v1.0.9
+   Compiling cranelift-entity v0.82.3
+   Compiling pin-project-lite v0.2.9
+   Compiling itoa v1.0.1
+   Compiling wasmer-compiler-cranelift v2.3.0
+   Compiling unicode-width v0.1.9
+   Compiling hex v0.4.3
+   Compiling fastrand v1.7.0
+   Compiling opaque-debug v0.3.0
+   Compiling remove_dir_all v0.5.3
+   Compiling crunchy v0.2.2
+   Compiling schemars v0.8.8
+   Compiling static_assertions v1.1.0
+   Compiling dyn-clone v1.0.5
+   Compiling plotters-backend v0.3.2
+   Compiling regex-automata v0.1.10
+   Compiling half v1.8.2
+   Compiling ppv-lite86 v0.2.16
+   Compiling same-file v1.0.6
+   Compiling regex-syntax v0.6.25
+   Compiling strsim v0.8.0
+   Compiling vec_map v0.8.2
+   Compiling ansi_term v0.12.1
+   Compiling base64 v0.13.0
+   Compiling forward_ref v1.0.0
+   Compiling itoa v0.4.8
+   Compiling oorandom v11.1.3
+   Compiling parity-wasm v0.42.2
+   Compiling clru v0.4.0
+   Compiling hex-literal v0.3.4
+   Compiling libloading v0.7.3
+   Compiling tracing-core v0.1.26
+   Compiling miniz_oxide v0.5.1
+   Compiling ahash v0.7.6
+   Compiling generic-array v0.14.5
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling indexmap v1.8.1
+   Compiling memoffset v0.6.5
+   Compiling crossbeam-epoch v0.9.8
+   Compiling corosensei v0.1.3
+   Compiling rayon v1.5.2
+   Compiling num-traits v0.2.15
+   Compiling itertools v0.10.3
+   Compiling cranelift-codegen-meta v0.82.3
+   Compiling der v0.6.0
+   Compiling cranelift-bforest v0.82.3
+   Compiling textwrap v0.11.0
+   Compiling walkdir v2.3.2
+   Compiling plotters-svg v0.3.1
+   Compiling backtrace v0.3.65
+   Compiling regex v1.5.5
+   Compiling csv-core v0.1.10
+   Compiling wast v40.0.0
+   Compiling spki v0.6.0
+   Compiling getrandom v0.2.6
+   Compiling num_cpus v1.13.1
+   Compiling memmap2 v0.5.3
+   Compiling region v3.0.0
+   Compiling which v4.2.5
+   Compiling tempfile v3.3.0
+   Compiling atty v0.2.14
+   Compiling quote v1.0.18
+   Compiling regalloc v0.0.34
+   Compiling crossbeam-channel v0.5.4
+   Compiling uint v0.9.3
+   Compiling rustc_version v0.4.0
+   Compiling pkcs8 v0.9.0
+   Compiling rand_core v0.6.3
+   Compiling rand_core v0.5.1
+   Compiling clap v2.34.0
+   Compiling crossbeam-deque v0.8.1
+   Compiling hashbrown v0.11.2
+   Compiling hashbrown v0.12.1
+   Compiling ff v0.12.0
+   Compiling rand_chacha v0.3.1
+   Compiling cast v0.2.7
+   Compiling group v0.12.0
+   Compiling rand v0.8.5
+   Compiling plotters v0.3.1
+   Compiling cranelift-codegen v0.82.3
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.2
+   Compiling crypto-bigint v0.4.8
+   Compiling sec1 v0.3.0
+   Compiling digest v0.9.0
+   Compiling block-buffer v0.9.0
+   Compiling digest v0.10.3
+   Compiling curve25519-dalek v3.2.0
+   Compiling sha2 v0.9.9
+   Compiling hmac v0.12.1
+   Compiling signature v1.5.0
+   Compiling sha2 v0.10.3
+   Compiling criterion-plot v0.4.4
+   Compiling rfc6979 v0.3.0
+   Compiling elliptic-curve v0.12.2
+   Compiling wat v1.0.42
+   Compiling ecdsa v0.14.3
+   Compiling k256 v0.11.3
+   Compiling darling_core v0.13.4
+   Compiling serde_derive_internals v0.25.0
+   Compiling ptr_meta_derive v0.1.4
+   Compiling thiserror-impl v1.0.31
+   Compiling bytecheck_derive v0.6.8
+   Compiling enum-iterator-derive v0.7.0
+   Compiling rkyv_derive v0.7.38
+   Compiling loupe-derive v0.1.3
+   Compiling tracing-attributes v0.1.21
+   Compiling dynasm v1.2.3
+   Compiling wasmer-derive v2.3.0
+   Compiling schemars_derive v0.8.8
+   Compiling cosmwasm-derive v1.1.6 (/workspace/repo/packages/derive)
+   Compiling derivative v2.2.0
+   Compiling darling_macro v0.13.4
+   Compiling ptr_meta v0.1.4
+   Compiling enum-iterator v0.7.0
+   Compiling thiserror v1.0.31
+   Compiling darling v0.13.4
+   Compiling tracing v0.1.34
+   Compiling enumset_derive v0.6.0
+   Compiling enumset v1.0.11
+   Compiling dynasmrt v1.2.3
+   Compiling serde_bytes v0.11.6
+   Compiling ed25519-zebra v3.0.0
+   Compiling bstr v0.2.17
+   Compiling serde-json-wasm v0.4.1
+   Compiling serde_cbor v0.11.2
+   Compiling cosmwasm-crypto v1.1.6 (/workspace/repo/packages/crypto)
+   Compiling gimli v0.26.1
+   Compiling object v0.28.3
+   Compiling loupe v0.1.3
+   Compiling csv v1.1.6
+   Compiling tinytemplate v1.2.1
+   Compiling criterion v0.3.5
+   Compiling cosmwasm-std v1.1.6 (/workspace/repo/packages/std)
+   Compiling addr2line v0.17.0
+   Compiling wasmer-types v2.3.0
+   Compiling wasmer-compiler v2.3.0
+   Compiling wasmer-artifact v2.3.0
+   Compiling wasmer-object v2.3.0
+   Compiling wasmer-compiler-singlepass v2.3.0
+   Compiling wasmer-vm v2.3.0
+   Compiling wasmer-engine-universal-artifact v2.3.0
+   Compiling wasmer-engine v2.3.0
+   Compiling wasmer-engine-dylib v2.3.0
+   Compiling wasmer-engine-universal v2.3.0
+   Compiling cranelift-frontend v0.82.3
+   Compiling wasmer v2.3.0
+   Compiling wasmer-middlewares v2.3.0
+   Compiling cosmwasm-vm v1.1.6 (/workspace/repo/packages/vm)
+    Finished test [unoptimized + debuginfo] target(s) in 48.84s
+────────────
+ Nextest run ID 4dfd99db-402d-430a-9339-833245083263 with nextest profile: default
+    Starting 261 tests across 1 binary
+        PASS [   0.029s] (  1/261) cosmwasm-vm backend::tests::gas_info_with_cost_works
+        PASS [   0.029s] (  2/261) cosmwasm-vm backend::tests::gas_info_with_externally_used_works
+        PASS [   0.033s] (  3/261) cosmwasm-vm backend::tests::backend_err_out_of_gas
+        PASS [   0.034s] (  4/261) cosmwasm-vm backend::tests::gas_info_implements_add_assign
+        PASS [   0.034s] (  5/261) cosmwasm-vm backend::tests::backend_err_bad_argument
+        PASS [   0.035s] (  6/261) cosmwasm-vm backend::tests::iterator_does_not_exist_works
+        PASS [   0.038s] (  7/261) cosmwasm-vm backend::tests::convert_from_fromutf8error
+        PASS [   0.041s] (  8/261) cosmwasm-vm backend::tests::backend_err_unknown
+        PASS [   0.042s] (  9/261) cosmwasm-vm backend::tests::backend_err_foreign_panic
+        PASS [   0.044s] ( 10/261) cosmwasm-vm backend::tests::backend_err_user_err
+        PASS [   0.045s] ( 11/261) cosmwasm-vm backend::tests::gas_info_free_works
+        FAIL [   0.053s] ( 12/261) cosmwasm-vm cache::tests::load_wasm_error_is_os_independent
+  stdout ───
+
+    running 1 test
+    test cache::tests::load_wasm_error_is_os_independent ... FAILED
+
+    failures:
+
+    failures:
+        cache::tests::load_wasm_error_is_os_independent
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 260 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'cache::tests::load_wasm_error_is_os_independent' panicked at 'assertion failed: `(left == right)`
+      left: `"Error opening Wasm file for reading: No such file or directory (os error 2)"`,
+     right: `"Error opening Wasm file for reading"`', packages/vm/src/cache.rs:544:17
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 17 tests still running
+        PASS [   0.029s] ( 13/261) cosmwasm-vm cache::tests::load_wasm_from_disk_works
+        PASS [   0.027s] ( 14/261) cosmwasm-vm cache::tests::load_wasm_from_disk_works_in_subfolder
+        PASS [   0.042s] ( 15/261) cosmwasm-vm cache::tests::load_wasm_errors_for_non_existent_id
+        PASS [   0.034s] ( 16/261) cosmwasm-vm cache::tests::save_wasm_rejects_invalid_contract
+        PASS [   1.552s] ( 17/261) cosmwasm-vm cache::tests::load_wasm_works
+        PASS [   1.815s] ( 18/261) cosmwasm-vm cache::tests::recovers_from_out_of_gas
+        PASS [   1.871s] ( 19/261) cosmwasm-vm cache::tests::pin_unpin_works
+        PASS [   2.069s] ( 20/261) cosmwasm-vm cache::tests::load_wasm_errors_for_corrupted_wasm
+        PASS [   2.107s] ( 21/261) cosmwasm-vm cache::tests::load_wasm_works_across_multiple_cache_instances
+        PASS [   2.248s] ( 22/261) cosmwasm-vm cache::tests::resets_gas_when_reusing_instance
+        PASS [   2.310s] ( 23/261) cosmwasm-vm cache::tests::get_instance_finds_cached_modules_and_stores_to_memory
+        PASS [   2.322s] ( 24/261) cosmwasm-vm cache::tests::get_instance_finds_cached_module
+        PASS [   2.327s] ( 25/261) cosmwasm-vm cache::tests::call_instantiate_on_cached_contract
+        PASS [   2.373s] ( 26/261) cosmwasm-vm cache::tests::call_execute_on_cached_contract
+        PASS [   2.350s] ( 27/261) cosmwasm-vm cache::tests::save_wasm_fills_file_system_but_not_memory_cache
+        PASS [   2.572s] ( 28/261) cosmwasm-vm cache::tests::save_wasm_allows_saving_multiple_times
+        PASS [   2.964s] ( 29/261) cosmwasm-vm cache::tests::analyze_works
+────────────
+     Summary [   2.966s] 29/261 tests run: 28 passed, 1 failed, 0 skipped
+        FAIL [   0.053s] ( 12/261) cosmwasm-vm cache::tests::load_wasm_error_is_os_independent
+warning: 232/261 tests were not run due to test failure (run with --no-fail-fast to run all tests, or run with --max-fail)
+error: test run failed
+reward=0 graded=262 found=0 failed=0 parsed=29 framework=cargo exit_code=100

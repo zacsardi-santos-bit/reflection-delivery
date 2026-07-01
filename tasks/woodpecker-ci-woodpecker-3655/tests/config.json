@@ -1,0 +1,37 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pipeline/backend/kubernetes -count=1",
+  "test_files": [
+    "pipeline/backend/kubernetes/backend_options_test.go",
+    "pipeline/backend/kubernetes/pod_test.go",
+    "pipeline/backend/kubernetes/secrets_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::Test_parseBackendOptions",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestGettingConfig",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestPodName",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestStepToPodName",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestStepLabel",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestTinyPod",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestFullPod",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestPodPrivilege",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestScratchPod",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestSecrets",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestNativeSecretsEnabled",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestNativeSecretsDisabled",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestSimpleSecret",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestSecretWithKey",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestSecretWithKeyMapping",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestFileSecret",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestServiceName",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestService",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestDNSName",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestToDnsName",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestPvcName",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestPvcMount",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/kubernetes::TestPersistentVolumeClaim"
+  ],
+  "PASS_TO_PASS": []
+}

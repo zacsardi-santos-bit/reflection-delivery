@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -run 'TestToxicStub_WriteOutput|TestRemoveToxicWithBrokenConnection' -count=1 ./toxics/... ./...",
+  "test_files": [
+    "link_test.go",
+    "toxics/toxic_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/Shopify/toxiproxy/v2/toxics::TestToxicStub_WriteOutput/when_no_read_in_1_second",
+    "github.com/Shopify/toxiproxy/v2/toxics::TestToxicStub_WriteOutput/when_read_is_available",
+    "github.com/Shopify/toxiproxy/v2/toxics::TestToxicStub_WriteOutput",
+    "github.com/Shopify/toxiproxy/v2::TestRemoveToxicWithBrokenConnection"
+  ],
+  "PASS_TO_PASS": []
+}

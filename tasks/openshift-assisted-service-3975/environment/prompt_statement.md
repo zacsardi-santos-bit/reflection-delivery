@@ -1,0 +1,5 @@
+I'm working on the bare metal host controller in the assisted installer service. When the converged deployment flow is enabled, the controller is supposed to set a custom deployment method on bare metal hosts that are being managed. However, there's a bug: the controller is unconditionally applying the custom deployment method to all hosts in the converged flow, even hosts that have been explicitly detached from management and hosts that have no link to an infrastructure environment.
+
+Detached hosts should remain unchanged — their detach annotation should be preserved and their custom deployment method should not be overwritten. Similarly, hosts that aren't associated with any infrastructure environment should not have the custom deployment method applied, and they shouldn't get any new annotations either.
+
+The fix should ensure that the custom deployment configuration in converged flow mode is gated on the host being both associated with an infrastructure environment and not in a detached state. Hosts that are detached or unassociated should be skipped for this particular configuration step.

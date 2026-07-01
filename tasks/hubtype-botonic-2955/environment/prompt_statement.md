@@ -1,0 +1,7 @@
+I'm working on a chatbot framework and need to add support for several WhatsApp-specific commerce message types. Right now there's no way for bot developers to compose single product messages, product lists, product carousels, or media carousels through the component model.
+
+I need new components for each of these message types. The single-product component should accept basic product display info. The product list component should accept header, footer, body text, and a list of sections where each section has a title and a list of products. The product carousel and media carousel components should accept template information, body parameters, and a list of cards — where each card can have an explicit position index, or the index should be automatically assigned based on its order in the list when not provided (or when zero is given).
+
+Additionally, for the carousel and list components, the data structures need to be serialized with snake_case key names (rather than the camelCase property names used in the component interface) since that's what the WhatsApp API expects. A general-purpose utility function for deep camelCase-to-snake_case key conversion should be introduced to support this, handling nested objects, arrays, numeric suffixes in key names, and returning undefined gracefully when given undefined as input.
+
+All of these new components should be available for import from the main components module of the package.

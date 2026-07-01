@@ -1,0 +1,27 @@
+{
+  "test_framework": "ctest",
+  "test_command": "mkdir -p /workspace/test-results && cd /workspace/repo/build && cmake --build . --target CoreTests -j$(nproc) 2>&1 | tail -20 && cd test && UNITTEST_FILTER=\"Mixed_EmbeddedLstMixedRecursiveDelete Mixed_SingleLinkRecursiveDelete Mixed_ContainerOfLinksFromLargeCluster* Mixed_RemoveRecursiveSingleLink*\" UNITTEST_XML=/workspace/test-results/output.xml ./realm-tests",
+  "test_files": [
+    "test/test_mixed_null_assertions.cpp"
+  ],
+  "num_test_files": 1,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "Mixed_EmbeddedLstMixedRecursiveDelete::Mixed_EmbeddedLstMixedRecursiveDelete",
+    "Mixed_SingleLinkRecursiveDelete::Mixed_SingleLinkRecursiveDelete",
+    "Mixed_ContainerOfLinksFromLargeCluster<ListOfMixedLinks>::Mixed_ContainerOfLinksFromLargeCluster<ListOfMixedLinks>",
+    "Mixed_ContainerOfLinksFromLargeCluster<DictionaryOfMixedLinks>::Mixed_ContainerOfLinksFromLargeCluster<DictionaryOfMixedLinks>",
+    "Mixed_ContainerOfLinksFromLargeCluster<NestedDictionary>::Mixed_ContainerOfLinksFromLargeCluster<NestedDictionary>",
+    "Mixed_ContainerOfLinksFromLargeCluster<NestedList>::Mixed_ContainerOfLinksFromLargeCluster<NestedList>",
+    "Mixed_ContainerOfLinksFromLargeCluster<NestedListOfLists>::Mixed_ContainerOfLinksFromLargeCluster<NestedListOfLists>",
+    "Mixed_ContainerOfLinksFromLargeCluster<NestedDictOfDicts>::Mixed_ContainerOfLinksFromLargeCluster<NestedDictOfDicts>",
+    "Mixed_RemoveRecursiveSingleLink<SingleLink>::Mixed_RemoveRecursiveSingleLink<SingleLink>",
+    "Mixed_RemoveRecursiveSingleLink<ListOfMixedLinks>::Mixed_RemoveRecursiveSingleLink<ListOfMixedLinks>",
+    "Mixed_RemoveRecursiveSingleLink<DictionaryOfMixedLinks>::Mixed_RemoveRecursiveSingleLink<DictionaryOfMixedLinks>",
+    "Mixed_RemoveRecursiveSingleLink<NestedDictionary>::Mixed_RemoveRecursiveSingleLink<NestedDictionary>",
+    "Mixed_RemoveRecursiveSingleLink<NestedList>::Mixed_RemoveRecursiveSingleLink<NestedList>",
+    "Mixed_RemoveRecursiveSingleLink<NestedListOfLists>::Mixed_RemoveRecursiveSingleLink<NestedListOfLists>",
+    "Mixed_RemoveRecursiveSingleLink<NestedDictOfDicts>::Mixed_RemoveRecursiveSingleLink<NestedDictOfDicts>"
+  ],
+  "PASS_TO_PASS": []
+}

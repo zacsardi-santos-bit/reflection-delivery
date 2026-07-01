@@ -1,0 +1,31 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/sdk && go test -json ./go/auto -count=1 -run 'TestFixupPath$|TestFixupPathExistingPath$|TestOptionDefaults$|TestClIWithoutRemoteSupport$|TestByPassesRemoteCheck$|TestMinimumVersion$'",
+  "test_files": [
+    "sdk/go/auto/cmd_test.go",
+    "sdk/go/auto/local_workspace_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestOptionDefaults",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestFixupPathExistingPath",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestFixupPath",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestByPassesRemoteCheck",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestClIWithoutRemoteSupport",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/higher_major",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/opt_out_unparsable_version",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/equal_minor_equal_patch",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/equal_minor_lower_patch",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/equal_minor_equal_patch_prerelease",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/unparsable_version",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/opt_out_of_check_would_succeed_otherwise",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/equal_minor_higher_patch",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/lower_minor",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/higher_minor",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/opt_out_of_check_would_fail_otherwise",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion/lower_major",
+    "github.com/pulumi/pulumi/sdk/v3/go/auto::TestMinimumVersion"
+  ],
+  "PASS_TO_PASS": []
+}

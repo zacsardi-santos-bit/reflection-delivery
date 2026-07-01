@@ -1,0 +1,478 @@
+patching file crates/ide/src/syntax_highlighting/tests.rs
+   Compiling autocfg v1.1.0
+   Compiling proc-macro2 v1.0.69
+   Compiling quote v1.0.28
+   Compiling unicode-ident v1.0.9
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.150
+   Compiling smallvec v1.10.0
+   Compiling once_cell v1.18.0
+   Compiling scopeguard v1.1.0
+   Compiling unicode-xid v0.2.4
+   Compiling hashbrown v0.14.3
+   Compiling crossbeam-utils v0.8.16
+   Compiling parking_lot_core v0.9.9
+   Compiling rustc-hash v1.1.0
+   Compiling either v1.9.0
+   Compiling log v0.4.19
+   Compiling equivalent v1.0.0
+   Compiling pin-project-lite v0.2.9
+   Compiling bitflags v1.3.2
+   Compiling arrayvec v0.7.4
+   Compiling text-size v1.1.1
+   Compiling unicode-properties v0.1.0
+   Compiling jod-thread v0.1.2
+   Compiling fst v0.4.7
+   Compiling tracing-core v0.1.32
+   Compiling always-assert v0.1.3
+   Compiling la-arena v0.3.1
+   Compiling itertools v0.12.0
+   Compiling limit v0.0.0 (/workspace/repo/crates/limit)
+   Compiling ra-ap-rustc_lexer v0.21.0
+   Compiling triomphe v0.1.10
+   Compiling nohash-hasher v0.2.0
+   Compiling drop_bomb v0.1.5
+   Compiling heck v0.4.1
+   Compiling smol_str v0.2.0
+   Compiling paths v0.0.0 (/workspace/repo/crates/paths)
+   Compiling cov-mark v2.0.0-pre.1
+   Compiling oorandom v11.1.3
+   Compiling semver v1.0.17
+   Compiling lock_api v0.4.10
+   Compiling memoffset v0.9.0
+   Compiling bitflags v2.4.1
+   Compiling crossbeam-epoch v0.9.15
+   Compiling fixedbitset v0.4.2
+   Compiling lazy_static v1.4.0
+   Compiling ena v0.14.2
+   Compiling indexmap v2.1.0
+   Compiling rayon-core v1.12.0
+   Compiling scoped-tls v1.0.1
+   Compiling typed-arena v2.0.2
+   Compiling memchr v2.6.4
+   Compiling line-index v0.1.1
+   Compiling version_check v0.9.4
+   Compiling serde v1.0.193
+   Compiling tinyvec_macros v0.1.1
+   Compiling serde_json v1.0.108
+   Compiling pulldown-cmark v0.9.3
+   Compiling tinyvec v1.6.0
+   Compiling crossbeam-channel v0.5.8
+   Compiling unicase v2.6.0
+   Compiling petgraph v0.6.4
+   Compiling dissimilar v1.0.7
+   Compiling itoa v1.0.6
+   Compiling percent-encoding v2.3.0
+   Compiling ryu v1.0.13
+   Compiling unicode-bidi v0.3.13
+   Compiling home v0.5.5
+   Compiling syn v2.0.39
+   Compiling perf-event-open-sys v1.0.1
+   Compiling form_urlencoded v1.2.0
+   Compiling toolchain v0.0.0 (/workspace/repo/crates/toolchain)
+   Compiling expect-test v1.4.1
+   Compiling crossbeam-deque v0.8.3
+   Compiling dot v0.1.4
+   Compiling dashmap v5.5.3
+   Compiling perf-event v0.4.7
+   Compiling parking_lot v0.12.1
+   Compiling stdx v0.0.0 (/workspace/repo/crates/stdx)
+   Compiling text-edit v0.0.0 (/workspace/repo/crates/text-edit)
+   Compiling unicode-normalization v0.1.22
+   Compiling countme v3.0.1
+   Compiling intern v0.0.0 (/workspace/repo/crates/intern)
+   Compiling vfs v0.0.0 (/workspace/repo/crates/vfs)
+   Compiling profile v0.0.0 (/workspace/repo/crates/profile)
+   Compiling rowan v0.15.15
+   Compiling rayon v1.8.0
+   Compiling idna v0.4.0
+   Compiling test-utils v0.0.0 (/workspace/repo/crates/test-utils)
+   Compiling url v2.4.0
+   Compiling pulldown-cmark-to-cmark v10.0.4
+   Compiling synstructure v0.13.0
+   Compiling tracing-attributes v0.1.27
+   Compiling ra-ap-rustc_index_macros v0.21.0
+   Compiling rust-analyzer-salsa-macros v0.17.0-pre.4
+   Compiling chalk-derive v0.95.0
+   Compiling ra-ap-rustc_index v0.21.0
+   Compiling ra-ap-rustc_parse_format v0.21.0
+   Compiling chalk-ir v0.95.0
+   Compiling rust-analyzer-salsa v0.17.0-pre.4
+   Compiling tracing v0.1.40
+   Compiling ra-ap-rustc_abi v0.21.0
+   Compiling rustc-dependencies v0.0.0 (/workspace/repo/crates/rustc-dependencies)
+   Compiling parser v0.0.0 (/workspace/repo/crates/parser)
+   Compiling chalk-solve v0.95.0
+   Compiling syntax v0.0.0 (/workspace/repo/crates/syntax)
+   Compiling chalk-recursive v0.95.0
+   Compiling span v0.0.0 (/workspace/repo/crates/span)
+   Compiling tt v0.0.0 (/workspace/repo/crates/tt)
+   Compiling cfg v0.0.0 (/workspace/repo/crates/cfg)
+   Compiling mbe v0.0.0 (/workspace/repo/crates/mbe)
+   Compiling base-db v0.0.0 (/workspace/repo/crates/base-db)
+   Compiling hir-expand v0.0.0 (/workspace/repo/crates/hir-expand)
+   Compiling hir-def v0.0.0 (/workspace/repo/crates/hir-def)
+   Compiling test-fixture v0.0.0 (/workspace/repo/crates/test-fixture)
+   Compiling hir-ty v0.0.0 (/workspace/repo/crates/hir-ty)
+   Compiling hir v0.0.0 (/workspace/repo/crates/hir)
+   Compiling ide-db v0.0.0 (/workspace/repo/crates/ide-db)
+   Compiling ide-diagnostics v0.0.0 (/workspace/repo/crates/ide-diagnostics)
+   Compiling ide-completion v0.0.0 (/workspace/repo/crates/ide-completion)
+   Compiling ide-assists v0.0.0 (/workspace/repo/crates/ide-assists)
+   Compiling ide-ssr v0.0.0 (/workspace/repo/crates/ide-ssr)
+   Compiling ide v0.0.0 (/workspace/repo/crates/ide)
+    Finished test [unoptimized] target(s) in 45.90s
+────────────
+ Nextest run ID 64f7ac11-f80f-4e73-96fa-1779fe5e7a4a with nextest profile: default
+    Starting 1 test across 1 binary (925 tests skipped)
+        FAIL [   0.060s] (1/1) ide syntax_highlighting::tests::macros
+  stdout ───
+
+    running 1 test
+
+
+    error: expect test failed
+       --> ./test_data/highlight_macros.html
+
+    You can update all `expect!` tests by running:
+
+        env UPDATE_EXPECT=1 cargo test
+
+    To update a single test, place the cursor on `expect` token and use `run` feature of rust-analyzer.
+
+    Expect:
+    ----
+
+    <style>
+    body                { margin: 0; }
+    pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padding: 0.4em; }
+
+    .lifetime           { color: #DFAF8F; font-style: italic; }
+    .label              { color: #DFAF8F; font-style: italic; }
+    .comment            { color: #7F9F7F; }
+    .documentation      { color: #629755; }
+    .intra_doc_link     { font-style: italic; }
+    .injected           { opacity: 0.65 ; }
+    .struct, .enum      { color: #7CB8BB; }
+    .enum_variant       { color: #BDE0F3; }
+    .string_literal     { color: #CC9393; }
+    .field              { color: #94BFF3; }
+    .function           { color: #93E0E3; }
+    .function.unsafe    { color: #BC8383; }
+    .trait.unsafe       { color: #BC8383; }
+    .operator.unsafe    { color: #BC8383; }
+    .mutable.unsafe     { color: #BC8383; text-decoration: underline; }
+    .keyword.unsafe     { color: #BC8383; font-weight: bold; }
+    .macro.unsafe       { color: #BC8383; }
+    .parameter          { color: #94BFF3; }
+    .text               { color: #DCDCCC; }
+    .type               { color: #7CB8BB; }
+    .builtin_type       { color: #8CD0D3; }
+    .type_param         { color: #DFAF8F; }
+    .attribute          { color: #94BFF3; }
+    .numeric_literal    { color: #BFEBBF; }
+    .bool_literal       { color: #BFE6EB; }
+    .macro              { color: #94BFF3; }
+    .derive             { color: #94BFF3; font-style: italic; }
+    .module             { color: #AFD8AF; }
+    .value_param        { color: #DCDCCC; }
+    .variable           { color: #DCDCCC; }
+    .format_specifier   { color: #CC696B; }
+    .mutable            { text-decoration: underline; }
+    .escape_sequence    { color: #94BFF3; }
+    .keyword            { color: #F0DFAF; font-weight: bold; }
+    .control            { font-style: italic; }
+    .reference          { font-style: italic; font-weight: bold; }
+
+    .invalid_escape_sequence { color: #FC5555; text-decoration: wavy underline; }
+    .unresolved_reference    { color: #FC5555; text-decoration: wavy underline; }
+    </style>
+    <pre><code><span class="keyword">use</span> <span class="module crate_root library">proc_macros</span><span class="operator">::</span><span class="brace">{</span><span class="function library">mirror</span><span class="comma">,</span> <span class="function library">identity</span><span class="comma">,</span> <span class="derive library">DeriveIdentity</span><span class="brace">}</span><span class="semicolon">;</span>
+
+    <span class="macro library">mirror</span><span class="macro_bang">!</span> <span class="brace macro">{</span>
+        <span class="brace macro">{</span>
+            <span class="comma macro">,</span><span class="builtin_type macro">i32</span> <span class="colon macro">:</span><span class="field declaration macro public">x</span> <span class="keyword macro">pub</span>
+            <span class="comma macro">,</span><span class="builtin_type macro">i32</span> <span class="colon macro">:</span><span class="field declaration macro public">y</span> <span class="keyword macro">pub</span>
+        <span class="brace macro">}</span> <span class="struct declaration macro">Foo</span> <span class="keyword macro">struct</span>
+    <span class="brace macro">}</span>
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">def_fn</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span><span class="parenthesis">(</span><span class="punctuation">$</span>tt<span class="colon">:</span>tt<span class="parenthesis">)</span><span class="punctuation">*</span><span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span><span class="punctuation">$</span><span class="parenthesis">(</span><span class="punctuation">$</span>tt<span class="parenthesis">)</span><span class="punctuation">*</span><span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="macro">def_fn</span><span class="macro_bang">!</span> <span class="brace macro">{</span>
+        <span class="keyword macro">fn</span> <span class="function declaration macro">bar</span><span class="parenthesis macro">(</span><span class="parenthesis macro">)</span> <span class="operator macro">-</span><span class="operator macro">&gt;</span> <span class="builtin_type macro">u32</span> <span class="brace macro">{</span>
+            <span class="numeric_literal macro">100</span>
+        <span class="brace macro">}</span>
+    <span class="brace macro">}</span>
+
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">dont_color_me_braces</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span><span class="numeric_literal">0</span><span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">noop</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>expr<span class="colon">:</span>expr<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span>
+            <span class="punctuation">$</span>expr
+        <span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="comment documentation">/// textually shadow previous definition</span>
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">noop</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>expr<span class="colon">:</span>expr<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span>
+            <span class="punctuation">$</span>expr
+        <span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">keyword_frag</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>type<span class="colon">:</span>ty<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="parenthesis">(</span><span class="punctuation">$</span>type<span class="parenthesis">)</span>
+    <span class="brace">}</span>
+
+    <span class="keyword">macro</span> <span class="macro declaration">with_args</span><span class="parenthesis">(</span><span class="punctuation">$</span>i<span class="colon">:</span>ident<span class="parenthesis">)</span> <span class="brace">{</span>
+        <span class="punctuation">$</span>i
+    <span class="brace">}</span>
+
+    <span class="keyword">macro</span> <span class="macro declaration">without_args</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>i<span class="colon">:</span>ident<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span>
+            <span class="punctuation">$</span>i
+        <span class="brace">}</span>
+    <span class="brace">}</span>
+
+
+    <span class="macro default_library library">include</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="none macro">concat</span><span class="punctuation macro">!</span><span class="parenthesis macro">(</span><span class="string_literal macro">"foo/"</span><span class="comma macro">,</span> <span class="string_literal macro">"foo.rs"</span><span class="parenthesis macro">)</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+
+    <span class="keyword">fn</span> <span class="function declaration">main</span><span class="parenthesis">(</span><span class="parenthesis">)</span> <span class="brace">{</span>
+        <span class="macro default_library library">format_args</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="string_literal macro">"Hello, </span><span class="format_specifier">{</span><span class="format_specifier">}</span><span class="string_literal macro">!"</span><span class="comma macro">,</span> <span class="numeric_literal macro">92</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+        <span class="macro">dont_color_me_braces</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+        <span class="macro">noop</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="macro macro">noop</span><span class="macro_bang macro">!</span><span class="parenthesis macro">(</span><span class="numeric_literal macro">1</span><span class="parenthesis macro">)</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+    <span class="brace">}</span>
+    </code></pre>
+    ----
+
+    Actual:
+    ----
+
+    <style>
+    body                { margin: 0; }
+    pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padding: 0.4em; }
+
+    .lifetime           { color: #DFAF8F; font-style: italic; }
+    .label              { color: #DFAF8F; font-style: italic; }
+    .comment            { color: #7F9F7F; }
+    .documentation      { color: #629755; }
+    .intra_doc_link     { font-style: italic; }
+    .injected           { opacity: 0.65 ; }
+    .struct, .enum      { color: #7CB8BB; }
+    .enum_variant       { color: #BDE0F3; }
+    .string_literal     { color: #CC9393; }
+    .field              { color: #94BFF3; }
+    .function           { color: #93E0E3; }
+    .function.unsafe    { color: #BC8383; }
+    .trait.unsafe       { color: #BC8383; }
+    .operator.unsafe    { color: #BC8383; }
+    .mutable.unsafe     { color: #BC8383; text-decoration: underline; }
+    .keyword.unsafe     { color: #BC8383; font-weight: bold; }
+    .macro.unsafe       { color: #BC8383; }
+    .parameter          { color: #94BFF3; }
+    .text               { color: #DCDCCC; }
+    .type               { color: #7CB8BB; }
+    .builtin_type       { color: #8CD0D3; }
+    .type_param         { color: #DFAF8F; }
+    .attribute          { color: #94BFF3; }
+    .numeric_literal    { color: #BFEBBF; }
+    .bool_literal       { color: #BFE6EB; }
+    .macro              { color: #94BFF3; }
+    .derive             { color: #94BFF3; font-style: italic; }
+    .module             { color: #AFD8AF; }
+    .value_param        { color: #DCDCCC; }
+    .variable           { color: #DCDCCC; }
+    .format_specifier   { color: #CC696B; }
+    .mutable            { text-decoration: underline; }
+    .escape_sequence    { color: #94BFF3; }
+    .keyword            { color: #F0DFAF; font-weight: bold; }
+    .control            { font-style: italic; }
+    .reference          { font-style: italic; font-weight: bold; }
+
+    .invalid_escape_sequence { color: #FC5555; text-decoration: wavy underline; }
+    .unresolved_reference    { color: #FC5555; text-decoration: wavy underline; }
+    </style>
+    <pre><code><span class="keyword">use</span> <span class="module crate_root library">proc_macros</span><span class="operator">::</span><span class="brace">{</span><span class="function library">mirror</span><span class="comma">,</span> <span class="function library">identity</span><span class="comma">,</span> <span class="derive library">DeriveIdentity</span><span class="brace">}</span><span class="semicolon">;</span>
+
+    <span class="macro library">mirror</span><span class="macro_bang">!</span> <span class="brace macro">{</span>
+        <span class="brace macro">{</span>
+            <span class="comma macro">,</span><span class="builtin_type macro">i32</span> <span class="colon macro">:</span><span class="field declaration macro public">x</span> <span class="keyword macro">pub</span>
+            <span class="comma macro">,</span><span class="builtin_type macro">i32</span> <span class="colon macro">:</span><span class="field declaration macro public">y</span> <span class="keyword macro">pub</span>
+        <span class="brace macro">}</span> <span class="struct declaration macro">Foo</span> <span class="keyword macro">struct</span>
+    <span class="brace macro">}</span>
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">def_fn</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span><span class="parenthesis">(</span><span class="punctuation">$</span>tt<span class="colon">:</span>tt<span class="parenthesis">)</span><span class="punctuation">*</span><span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span><span class="punctuation">$</span><span class="parenthesis">(</span><span class="punctuation">$</span>tt<span class="parenthesis">)</span><span class="punctuation">*</span><span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="macro">def_fn</span><span class="macro_bang">!</span> <span class="brace macro">{</span>
+        <span class="keyword macro">fn</span> <span class="function declaration macro">bar</span><span class="parenthesis macro">(</span><span class="parenthesis macro">)</span> <span class="operator macro">-</span><span class="operator macro">&gt;</span> <span class="builtin_type macro">u32</span> <span class="brace macro">{</span>
+            <span class="numeric_literal macro">100</span>
+        <span class="brace macro">}</span>
+    <span class="brace macro">}</span>
+
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">dont_color_me_braces</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span><span class="numeric_literal">0</span><span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">noop</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>expr<span class="colon">:</span>expr<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span>
+            <span class="punctuation">$</span>expr
+        <span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="comment documentation">/// textually shadow previous definition</span>
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">noop</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>expr<span class="colon">:</span>expr<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span>
+            <span class="punctuation">$</span>expr
+        <span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">keyword_frag</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>type<span class="colon">:</span>ty<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="parenthesis">(</span><span class="punctuation">$</span>type<span class="parenthesis">)</span>
+    <span class="brace">}</span>
+
+    <span class="keyword">macro</span> <span class="macro declaration">with_args</span><span class="parenthesis">(</span><span class="punctuation">$</span>i<span class="colon">:</span>ident<span class="parenthesis">)</span> <span class="brace">{</span>
+        <span class="punctuation">$</span>i
+    <span class="brace">}</span>
+
+    <span class="keyword">macro</span> <span class="macro declaration">without_args</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>i<span class="colon">:</span>ident<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span>
+            <span class="punctuation">$</span>i
+        <span class="brace">}</span>
+    <span class="brace">}</span>
+
+
+    <span class="macro default_library library">include</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="none macro">concat</span><span class="punctuation macro">!</span><span class="parenthesis macro">(</span><span class="string_literal macro">"foo/"</span><span class="comma macro">,</span> <span class="string_literal macro">"foo.rs"</span><span class="parenthesis macro">)</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+
+    <span class="keyword">fn</span> <span class="function declaration">main</span><span class="parenthesis">(</span><span class="parenthesis">)</span> <span class="brace">{</span>
+        <span class="macro default_library library">format_args</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="string_literal macro">"Hello, </span><span class="format_specifier">{</span><span class="format_specifier">}</span><span class="string_literal macro">!"</span><span class="comma macro">,</span> <span class="parenthesis macro">(</span><span class="numeric_literal macro">92</span><span class="comma macro">,</span><span class="parenthesis macro">)</span><span class="operator macro">.</span><span class="unresolved_reference macro">0</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+        <span class="macro">dont_color_me_braces</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+        <span class="macro">noop</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="macro macro">noop</span><span class="macro_bang macro">!</span><span class="parenthesis macro">(</span><span class="numeric_literal macro">1</span><span class="parenthesis macro">)</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+    <span class="brace">}</span>
+    </code></pre>
+    ----
+
+    Diff:
+    ----
+
+    <style>
+    body                { margin: 0; }
+    pre                 { color: #DCDCCC; background: #3F3F3F; font-size: 22px; padding: 0.4em; }
+
+    .lifetime           { color: #DFAF8F; font-style: italic; }
+    .label              { color: #DFAF8F; font-style: italic; }
+    .comment            { color: #7F9F7F; }
+    .documentation      { color: #629755; }
+    .intra_doc_link     { font-style: italic; }
+    .injected           { opacity: 0.65 ; }
+    .struct, .enum      { color: #7CB8BB; }
+    .enum_variant       { color: #BDE0F3; }
+    .string_literal     { color: #CC9393; }
+    .field              { color: #94BFF3; }
+    .function           { color: #93E0E3; }
+    .function.unsafe    { color: #BC8383; }
+    .trait.unsafe       { color: #BC8383; }
+    .operator.unsafe    { color: #BC8383; }
+    .mutable.unsafe     { color: #BC8383; text-decoration: underline; }
+    .keyword.unsafe     { color: #BC8383; font-weight: bold; }
+    .macro.unsafe       { color: #BC8383; }
+    .parameter          { color: #94BFF3; }
+    .text               { color: #DCDCCC; }
+    .type               { color: #7CB8BB; }
+    .builtin_type       { color: #8CD0D3; }
+    .type_param         { color: #DFAF8F; }
+    .attribute          { color: #94BFF3; }
+    .numeric_literal    { color: #BFEBBF; }
+    .bool_literal       { color: #BFE6EB; }
+    .macro              { color: #94BFF3; }
+    .derive             { color: #94BFF3; font-style: italic; }
+    .module             { color: #AFD8AF; }
+    .value_param        { color: #DCDCCC; }
+    .variable           { color: #DCDCCC; }
+    .format_specifier   { color: #CC696B; }
+    .mutable            { text-decoration: underline; }
+    .escape_sequence    { color: #94BFF3; }
+    .keyword            { color: #F0DFAF; font-weight: bold; }
+    .control            { font-style: italic; }
+    .reference          { font-style: italic; font-weight: bold; }
+
+    .invalid_escape_sequence { color: #FC5555; text-decoration: wavy underline; }
+    .unresolved_reference    { color: #FC5555; text-decoration: wavy underline; }
+    </style>
+    <pre><code><span class="keyword">use</span> <span class="module crate_root library">proc_macros</span><span class="operator">::</span><span class="brace">{</span><span class="function library">mirror</span><span class="comma">,</span> <span class="function library">identity</span><span class="comma">,</span> <span class="derive library">DeriveIdentity</span><span class="brace">}</span><span class="semicolon">;</span>
+
+    <span class="macro library">mirror</span><span class="macro_bang">!</span> <span class="brace macro">{</span>
+        <span class="brace macro">{</span>
+            <span class="comma macro">,</span><span class="builtin_type macro">i32</span> <span class="colon macro">:</span><span class="field declaration macro public">x</span> <span class="keyword macro">pub</span>
+            <span class="comma macro">,</span><span class="builtin_type macro">i32</span> <span class="colon macro">:</span><span class="field declaration macro public">y</span> <span class="keyword macro">pub</span>
+        <span class="brace macro">}</span> <span class="struct declaration macro">Foo</span> <span class="keyword macro">struct</span>
+    <span class="brace macro">}</span>
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">def_fn</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span><span class="parenthesis">(</span><span class="punctuation">$</span>tt<span class="colon">:</span>tt<span class="parenthesis">)</span><span class="punctuation">*</span><span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span><span class="punctuation">$</span><span class="parenthesis">(</span><span class="punctuation">$</span>tt<span class="parenthesis">)</span><span class="punctuation">*</span><span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="macro">def_fn</span><span class="macro_bang">!</span> <span class="brace macro">{</span>
+        <span class="keyword macro">fn</span> <span class="function declaration macro">bar</span><span class="parenthesis macro">(</span><span class="parenthesis macro">)</span> <span class="operator macro">-</span><span class="operator macro">&gt;</span> <span class="builtin_type macro">u32</span> <span class="brace macro">{</span>
+            <span class="numeric_literal macro">100</span>
+        <span class="brace macro">}</span>
+    <span class="brace macro">}</span>
+
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">dont_color_me_braces</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span><span class="numeric_literal">0</span><span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">noop</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>expr<span class="colon">:</span>expr<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span>
+            <span class="punctuation">$</span>expr
+        <span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="comment documentation">/// textually shadow previous definition</span>
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">noop</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>expr<span class="colon">:</span>expr<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span>
+            <span class="punctuation">$</span>expr
+        <span class="brace">}</span>
+    <span class="brace">}</span>
+
+    <span class="keyword">macro_rules</span><span class="macro_bang">!</span> <span class="macro declaration">keyword_frag</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>type<span class="colon">:</span>ty<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="parenthesis">(</span><span class="punctuation">$</span>type<span class="parenthesis">)</span>
+    <span class="brace">}</span>
+
+    <span class="keyword">macro</span> <span class="macro declaration">with_args</span><span class="parenthesis">(</span><span class="punctuation">$</span>i<span class="colon">:</span>ident<span class="parenthesis">)</span> <span class="brace">{</span>
+        <span class="punctuation">$</span>i
+    <span class="brace">}</span>
+
+    <span class="keyword">macro</span> <span class="macro declaration">without_args</span> <span class="brace">{</span>
+        <span class="parenthesis">(</span><span class="punctuation">$</span>i<span class="colon">:</span>ident<span class="parenthesis">)</span> <span class="operator">=</span><span class="angle">&gt;</span> <span class="brace">{</span>
+            <span class="punctuation">$</span>i
+        <span class="brace">}</span>
+    <span class="brace">}</span>
+
+
+    <span class="macro default_library library">include</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="none macro">concat</span><span class="punctuation macro">!</span><span class="parenthesis macro">(</span><span class="string_literal macro">"foo/"</span><span class="comma macro">,</span> <span class="string_literal macro">"foo.rs"</span><span class="parenthesis macro">)</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+
+    <span class="keyword">fn</span> <span class="function declaration">main</span><span class="parenthesis">(</span><span class="parenthesis">)</span> <span class="brace">{</span>
+        <span class="macro default_library library">format_args</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="string_literal macro">"Hello, </span><span class="format_specifier">{</span><span class="format_specifier">}</span><span class="string_literal macro">!"</span><span class="comma macro">,</span> <span class="numeric_literal macro">92parenthesis macro">(</span><span class="numeric_literal macro">92</span><span class="comma macro">,</span><span class="parenthesis macro">)</span><span class="operator macro">.</span><span class="unresolved_reference macro">0</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+        <span class="macro">dont_color_me_braces</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+        <span class="macro">noop</span><span class="macro_bang">!</span><span class="parenthesis macro">(</span><span class="macro macro">noop</span><span class="macro_bang macro">!</span><span class="parenthesis macro">(</span><span class="numeric_literal macro">1</span><span class="parenthesis macro">)</span><span class="parenthesis macro">)</span><span class="semicolon">;</span>
+    <span class="brace">}</span>
+    </code></pre>
+    ----
+
+    test syntax_highlighting::tests::macros ... FAILED
+
+    failures:
+
+    failures:
+        syntax_highlighting::tests::macros
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 925 filtered out; finished in 0.05s
+
+
+────────────
+     Summary [   0.064s] 1 test run: 0 passed, 1 failed, 925 skipped
+        FAIL [   0.060s] (1/1) ide syntax_highlighting::tests::macros
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

@@ -1,0 +1,8 @@
+patching file tests/integrations/go.mod
+patching file tests/integrations/go.sum
+patching file tools/pd-ctl/tests/helper.go
+# github.com/tikv/pd/tools/pd-ctl/tests
+pd-ctl/tests/helper.go:34:10: undefined: command.SetNewPDClient
+pd-ctl/tests/helper.go:35:16: undefined: command.PDCli
+FAIL	github.com/tikv/pd/tools/pd-ctl/tests/cluster [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

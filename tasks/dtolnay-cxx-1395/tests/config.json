@@ -1,0 +1,36 @@
+{
+  "test_framework": "cargo",
+  "test_command": "RUSTFLAGS='--cfg deny_warnings -Dwarnings' cargo nextest run --no-fail-fast",
+  "test_files": [
+    "tests/ffi/lib.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/24) cxx::cxx_string test_debug",
+    "( 2/24) cxx::cxx_string test_fmt_write",
+    "( 3/24) cxx::cxx_string test_async_cxx_string",
+    "( 4/24) cxx::cxx_vector test_cxx_vector_new",
+    "( 5/24) cxx::cxx_string test_io_write",
+    "( 6/24) cxx::cxx_string test_display",
+    "( 7/24) cxx::test test_enum_representations",
+    "( 8/24) cxx::test test_extern_opaque",
+    "( 9/24) cxx::test test_extern_trivial",
+    "(10/24) cxx::test test_debug",
+    "(11/24) cxx::test test_raw_ptr",
+    "(12/24) cxx::test test_c_callback",
+    "(13/24) cxx::test test_c_method_calls",
+    "(14/24) cxx::test test_c_take",
+    "(15/24) cxx::test test_c_call_r",
+    "(16/24) cxx::test test_c_ns_method_calls",
+    "(17/24) cxx::test test_c_return",
+    "(18/24) cxx::test test_c_try_return",
+    "(19/24) cxx::cxx_gen test_impl_annotation",
+    "(20/24) cxx::cxx_gen test_extern_c_function",
+    "(21/24) cxx::unique_ptr test_deref_null",
+    "(22/24) cxx::test test_unwind_safe",
+    "(23/24) cxx::test test_rust_name_attribute",
+    "(24/24) cxx::test test_shared_ptr_weak_ptr"
+  ],
+  "PASS_TO_PASS": []
+}

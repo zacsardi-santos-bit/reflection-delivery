@@ -1,0 +1,649 @@
+patching file packages/experimental/Shadow/src/__tests__/Shadow.test.tsx
+patching file packages/experimental/Shadow/src/__tests__/__snapshots__/Shadow.test.tsx.snap
+FAIL src/__tests__/Shadow.test.tsx
+  ● Shadow component tests › Shadow (depth=2)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Shadow (depth=2) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.12,
+    -       "shadowRadius": 2,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 1,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.14,
+    -         "shadowRadius": 2,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Shadow (depth=2) 
+          </Text>
+        </View>
+      </View>
+
+      14 |       )
+      15 |       .toJSON();
+    > 16 |     expect(tree).toMatchSnapshot();
+         |                  ^
+      17 |   });
+      18 |
+      19 |   it('Shadow (depth=4)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:16:18)
+
+  ● Shadow component tests › Shadow (depth=4)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Shadow (depth=4) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.12,
+    -       "shadowRadius": 2,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 2,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.14,
+    -         "shadowRadius": 4,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Shadow (depth=4)
+          </Text>
+        </View>
+      </View>
+
+      25 |       )
+      26 |       .toJSON();
+    > 27 |     expect(tree).toMatchSnapshot();
+         |                  ^
+      28 |   });
+      29 |
+      30 |   it('Shadow (depth=8)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:27:18)
+
+  ● Shadow component tests › Shadow (depth=8)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Shadow (depth=8) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.12,
+    -       "shadowRadius": 2,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 4,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.14,
+    -         "shadowRadius": 8,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Shadow (depth=8) 
+          </Text>
+        </View>
+      </View>
+
+      36 |       )
+      37 |       .toJSON();
+    > 38 |     expect(tree).toMatchSnapshot();
+         |                  ^
+      39 |   });
+      40 |
+      41 |   it('Shadow (depth=16)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:38:18)
+
+  ● Shadow component tests › Shadow (depth=16)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Shadow (depth=16) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.12,
+    -       "shadowRadius": 2,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 8,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.14,
+    -         "shadowRadius": 16,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Shadow (depth=16)
+          </Text>
+        </View>
+      </View>
+
+      47 |       )
+      48 |       .toJSON();
+    > 49 |     expect(tree).toMatchSnapshot();
+         |                  ^
+      50 |   });
+      51 |
+      52 |   it('Shadow (depth=28)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:49:18)
+
+  ● Shadow component tests › Shadow (depth=28)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Shadow (depth=28) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.2,
+    -       "shadowRadius": 8,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 14,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.24,
+    -         "shadowRadius": 28,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Shadow (depth=28) 
+          </Text>
+        </View>
+      </View>
+
+      58 |       )
+      59 |       .toJSON();
+    > 60 |     expect(tree).toMatchSnapshot();
+         |                  ^
+      61 |   });
+      62 |
+      63 |   it('Shadow (depth=64)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:60:18)
+
+  ● Shadow component tests › Shadow (depth=64)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Shadow (depth=64) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.2,
+    -       "shadowRadius": 8,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 32,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.24,
+    -         "shadowRadius": 64,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Shadow (depth=64)
+          </Text>
+        </View>
+      </View>
+
+      69 |       )
+      70 |       .toJSON();
+    > 71 |     expect(tree).toMatchSnapshot();
+         |                  ^
+      72 |   });
+      73 |
+      74 |   it('Brand shadow (depth=2)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:71:18)
+
+  ● Shadow component tests › Brand shadow (depth=2)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Brand shadow (depth=2) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.3,
+    -       "shadowRadius": 2,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 1,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.25,
+    -         "shadowRadius": 2,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Brand shadow (depth=2)
+          </Text>
+        </View>
+      </View>
+
+      80 |       )
+      81 |       .toJSON();
+    > 82 |     expect(tree).toMatchSnapshot();
+         |                  ^
+      83 |   });
+      84 |
+      85 |   it('Brand shadow (depth=4)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:82:18)
+
+  ● Shadow component tests › Brand shadow (depth=4)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Brand shadow (depth=4) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.3,
+    -       "shadowRadius": 2,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 2,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.25,
+    -         "shadowRadius": 4,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Brand shadow (depth=4)
+          </Text>
+        </View>
+      </View>
+
+      91 |       )
+      92 |       .toJSON();
+    > 93 |     expect(tree).toMatchSnapshot();
+         |                  ^
+      94 |   });
+      95 |
+      96 |   it('Brand shadow (depth=8)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:93:18)
+
+  ● Shadow component tests › Brand shadow (depth=8)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Brand shadow (depth=8) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.3,
+    -       "shadowRadius": 2,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 4,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.25,
+    -         "shadowRadius": 8,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Brand shadow (depth=8)
+          </Text>
+        </View>
+      </View>
+
+      102 |       )
+      103 |       .toJSON();
+    > 104 |     expect(tree).toMatchSnapshot();
+          |                  ^
+      105 |   });
+      106 |
+      107 |   it('Brand shadow (depth=16)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:104:18)
+
+  ● Shadow component tests › Brand shadow (depth=16)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Brand shadow (depth=16) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.3,
+    -       "shadowRadius": 2,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 8,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.25,
+    -         "shadowRadius": 16,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Brand shadow (depth=16)
+          </Text>
+        </View>
+      </View>
+
+      113 |       )
+      114 |       .toJSON();
+    > 115 |     expect(tree).toMatchSnapshot();
+          |                  ^
+      116 |   });
+      117 |
+      118 |   it('Brand shadow (depth=28)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:115:18)
+
+  ● Shadow component tests › Brand shadow (depth=28)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Brand shadow (depth=28) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.3,
+    -       "shadowRadius": 8,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 14,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.25,
+    -         "shadowRadius": 28,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Brand shadow (depth=28)
+          </Text>
+        </View>
+      </View>
+
+      124 |       )
+      125 |       .toJSON();
+    > 126 |     expect(tree).toMatchSnapshot();
+          |                  ^
+      127 |   });
+      128 |
+      129 |   it('Brand shadow (depth=64)', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:126:18)
+
+  ● Shadow component tests › Brand shadow (depth=64)
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Shadow component tests Brand shadow (depth=64) 1`
+
+    - Snapshot  - 26
+    + Received  +  2
+
+    - <View
+    -   style={
+    -     Object {
+    -       "shadowColor": "#000000",
+    -       "shadowOffset": Object {
+    -         "height": 0,
+    -         "width": 0,
+    -       },
+    -       "shadowOpacity": 0.3,
+    -       "shadowRadius": 8,
+    -     }
+    -   }
+    - >
+    -   <View
+    -     style={
+    -       Object {
+    -         "shadowColor": "#000000",
+    -         "shadowOffset": Object {
+    -           "height": 32,
+    -           "width": 0,
+    -         },
+    -         "shadowOpacity": 0.25,
+    -         "shadowRadius": 64,
+    -       }
+    -     }
+    -   >
+    + <View>
+    +   <View>
+          <Text>
+            Brand shadow (depth=64)
+          </Text>
+        </View>
+      </View>
+
+      135 |       )
+      136 |       .toJSON();
+    > 137 |     expect(tree).toMatchSnapshot();
+          |                  ^
+      138 |   });
+      139 |
+      140 |   it('Shadow simple rendering does not invalidate styling', () => {
+
+      at Object.<anonymous> (src/__tests__/Shadow.test.tsx:137:18)
+
+ › 12 snapshots failed.
+Snapshot Summary
+ › 12 snapshots failed from 1 test suite. Inspect your code changes or run `npm run npx -- -u` to update them.
+
+Test Suites: 1 failed, 1 total
+Tests:       12 failed, 3 passed, 15 total
+Snapshots:   12 failed, 12 total
+Time:        3.432 s
+Ran all test suites.
+reward=0 graded=14 found=0 failed=0 parsed=0 framework=jest exit_code=1

@@ -1,0 +1,23 @@
+{
+ "task": "prettier-prettier-16593",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "function handleLastBinaryOperatorOperand({...}) { if (!followingNode && enclosingNode?.type === 'UnaryExpression' && (precedingNode?.type === 'LogicalExpression' || ...)) { ... addTrailingComment(precedingNode.right, comment); return true; } }"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

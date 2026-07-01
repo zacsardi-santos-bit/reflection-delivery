@@ -1,0 +1,134 @@
+patching file pkg/common/helper_test.go
+{"Time":"2026-06-29T15:19:57.333688825Z","Action":"start","Package":"github.com/nuclio/nuclio/pkg/common"}
+{"Time":"2026-06-29T15:19:57.340966258Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite"}
+{"Time":"2026-06-29T15:19:57.341028468Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite","Output":"=== RUN   TestHelperTestSuite\n"}
+{"Time":"2026-06-29T15:19:57.342231715Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestDurationTime"}
+{"Time":"2026-06-29T15:19:57.342283906Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestDurationTime","Output":"=== RUN   TestHelperTestSuite/TestDurationTime\n"}
+{"Time":"2026-06-29T15:19:58.349811133Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestDurationTime","Output":"--- PASS: TestHelperTestSuite/TestDurationTime (1.01s)\n"}
+{"Time":"2026-06-29T15:19:58.349879584Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestDurationTime","Elapsed":1.01}
+{"Time":"2026-06-29T15:19:58.349920495Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegative"}
+{"Time":"2026-06-29T15:19:58.349946115Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegative","Output":"=== RUN   TestHelperTestSuite/TestNegative\n"}
+{"Time":"2026-06-29T15:19:58.401873269Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegative","Output":"--- PASS: TestHelperTestSuite/TestNegative (0.05s)\n"}
+{"Time":"2026-06-29T15:19:58.40192377Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegative","Elapsed":0.05}
+{"Time":"2026-06-29T15:19:58.40195329Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNumberOfCalls"}
+{"Time":"2026-06-29T15:19:58.401975051Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNumberOfCalls","Output":"=== RUN   TestHelperTestSuite/TestNumberOfCalls\n"}
+{"Time":"2026-06-29T15:19:59.408732244Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNumberOfCalls","Output":"--- PASS: TestHelperTestSuite/TestNumberOfCalls (1.01s)\n"}
+{"Time":"2026-06-29T15:19:59.408799255Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNumberOfCalls","Elapsed":1.01}
+{"Time":"2026-06-29T15:19:59.408824796Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive"}
+{"Time":"2026-06-29T15:19:59.408846786Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive","Output":"=== RUN   TestHelperTestSuite/TestPositive\n"}
+{"Time":"2026-06-29T15:19:59.408870976Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive","Output":"--- PASS: TestHelperTestSuite/TestPositive (0.00s)\n"}
+{"Time":"2026-06-29T15:19:59.408893997Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive","Elapsed":0}
+{"Time":"2026-06-29T15:19:59.408917017Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestTimeBetweenIntervals"}
+{"Time":"2026-06-29T15:19:59.408938867Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestTimeBetweenIntervals","Output":"=== RUN   TestHelperTestSuite/TestTimeBetweenIntervals\n"}
+{"Time":"2026-06-29T15:20:00.414906101Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestTimeBetweenIntervals","Output":"--- PASS: TestHelperTestSuite/TestTimeBetweenIntervals (1.01s)\n"}
+{"Time":"2026-06-29T15:20:00.415762723Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestTimeBetweenIntervals","Elapsed":1.01}
+{"Time":"2026-06-29T15:20:00.415811044Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestSucceedIfErrorMessageIsEmpty"}
+{"Time":"2026-06-29T15:20:00.415833424Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestSucceedIfErrorMessageIsEmpty","Output":"=== RUN   TestHelperTestSuite/TestSucceedIfErrorMessageIsEmpty\n"}
+{"Time":"2026-06-29T15:20:00.488121997Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestSucceedIfErrorMessageIsEmpty","Output":"--- PASS: TestHelperTestSuite/TestSucceedIfErrorMessageIsEmpty (0.07s)\n"}
+{"Time":"2026-06-29T15:20:00.488188558Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestSucceedIfErrorMessageIsEmpty","Elapsed":0.07}
+{"Time":"2026-06-29T15:20:00.488598363Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegativeData"}
+{"Time":"2026-06-29T15:20:00.488627564Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegativeData","Output":"=== RUN   TestHelperTestSuite/TestNegativeData\n"}
+{"Time":"2026-06-29T15:20:00.488656184Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegativeData","Output":"--- PASS: TestHelperTestSuite/TestNegativeData (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.488679554Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegativeData","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.488703215Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#01"}
+{"Time":"2026-06-29T15:20:00.488725055Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#01","Output":"=== RUN   TestHelperTestSuite/TestPositive#01\n"}
+{"Time":"2026-06-29T15:20:00.488754046Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#01","Output":"--- PASS: TestHelperTestSuite/TestPositive#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.488776986Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#01","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.489243332Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsNotAFile"}
+{"Time":"2026-06-29T15:20:00.489268273Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsNotAFile","Output":"=== RUN   TestHelperTestSuite/TestFileIsNotAFile\n"}
+{"Time":"2026-06-29T15:20:00.489296283Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsNotAFile","Output":"--- PASS: TestHelperTestSuite/TestFileIsNotAFile (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.489319474Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsNotAFile","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.489342844Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileNotExist"}
+{"Time":"2026-06-29T15:20:00.489364934Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileNotExist","Output":"=== RUN   TestHelperTestSuite/TestFileNotExist\n"}
+{"Time":"2026-06-29T15:20:00.489394535Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileNotExist","Output":"--- PASS: TestHelperTestSuite/TestFileNotExist (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.489425305Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileNotExist","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.489451875Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#02"}
+{"Time":"2026-06-29T15:20:00.489484286Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#02","Output":"=== RUN   TestHelperTestSuite/TestPositive#02\n"}
+{"Time":"2026-06-29T15:20:00.489510006Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#02","Output":"--- PASS: TestHelperTestSuite/TestPositive#02 (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.489533267Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#02","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.489892772Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegative#01"}
+{"Time":"2026-06-29T15:20:00.489916642Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegative#01","Output":"=== RUN   TestHelperTestSuite/TestNegative#01\n"}
+{"Time":"2026-06-29T15:20:00.489945812Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegative#01","Output":"--- PASS: TestHelperTestSuite/TestNegative#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.489972713Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestNegative#01","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.489995203Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#03"}
+{"Time":"2026-06-29T15:20:00.490018543Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#03","Output":"=== RUN   TestHelperTestSuite/TestPositive#03\n"}
+{"Time":"2026-06-29T15:20:00.490047264Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#03","Output":"--- PASS: TestHelperTestSuite/TestPositive#03 (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.490070924Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#03","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.490677873Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsADirectory"}
+{"Time":"2026-06-29T15:20:00.490704163Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsADirectory","Output":"=== RUN   TestHelperTestSuite/TestFileIsADirectory\n"}
+{"Time":"2026-06-29T15:20:00.490787354Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsADirectory","Output":"--- PASS: TestHelperTestSuite/TestFileIsADirectory (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.490843575Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsADirectory","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.490868825Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsNotExist"}
+{"Time":"2026-06-29T15:20:00.490891676Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsNotExist","Output":"=== RUN   TestHelperTestSuite/TestFileIsNotExist\n"}
+{"Time":"2026-06-29T15:20:00.490920976Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsNotExist","Output":"--- PASS: TestHelperTestSuite/TestFileIsNotExist (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.490944106Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestFileIsNotExist","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.490967977Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#04"}
+{"Time":"2026-06-29T15:20:00.490989797Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#04","Output":"=== RUN   TestHelperTestSuite/TestPositive#04\n"}
+{"Time":"2026-06-29T15:20:00.491013237Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#04","Output":"--- PASS: TestHelperTestSuite/TestPositive#04 (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.491051188Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#04","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.491445274Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#05"}
+{"Time":"2026-06-29T15:20:00.491478224Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#05","Output":"=== RUN   TestHelperTestSuite/TestPositive#05\n"}
+{"Time":"2026-06-29T15:20:00.491507334Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#05","Output":"--- PASS: TestHelperTestSuite/TestPositive#05 (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.491530875Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPositive#05","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.49188889Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test"}
+{"Time":"2026-06-29T15:20:00.49191312Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test","Output":"=== RUN   TestHelperTestSuite/Test\n"}
+{"Time":"2026-06-29T15:20:00.491940571Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/Sanity"}
+{"Time":"2026-06-29T15:20:00.491962761Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/Sanity","Output":"=== RUN   TestHelperTestSuite/Test/Sanity\n"}
+{"Time":"2026-06-29T15:20:00.492046762Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/Sanity","Output":"--- PASS: TestHelperTestSuite/Test/Sanity (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.492071042Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/Sanity","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.492094363Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EmptyLabelSelectorsMatchAll"}
+{"Time":"2026-06-29T15:20:00.492116413Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EmptyLabelSelectorsMatchAll","Output":"=== RUN   TestHelperTestSuite/Test/EmptyLabelSelectorsMatchAll\n"}
+{"Time":"2026-06-29T15:20:00.492145203Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EmptyLabelSelectorsMatchAll","Output":"--- PASS: TestHelperTestSuite/Test/EmptyLabelSelectorsMatchAll (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.492168004Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EmptyLabelSelectorsMatchAll","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.492191184Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/NillableLabelMaps"}
+{"Time":"2026-06-29T15:20:00.492213074Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/NillableLabelMaps","Output":"=== RUN   TestHelperTestSuite/Test/NillableLabelMaps\n"}
+{"Time":"2026-06-29T15:20:00.492236435Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/NillableLabelMaps","Output":"--- PASS: TestHelperTestSuite/Test/NillableLabelMaps (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.492261885Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/NillableLabelMaps","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.492285045Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EncodedLabelSelectorsNotInLabels"}
+{"Time":"2026-06-29T15:20:00.492307366Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EncodedLabelSelectorsNotInLabels","Output":"=== RUN   TestHelperTestSuite/Test/EncodedLabelSelectorsNotInLabels\n"}
+{"Time":"2026-06-29T15:20:00.492339476Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EncodedLabelSelectorsNotInLabels","Output":"--- PASS: TestHelperTestSuite/Test/EncodedLabelSelectorsNotInLabels (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.492363497Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EncodedLabelSelectorsNotInLabels","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.492386797Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EncodedLabelSelectorsNilLabels"}
+{"Time":"2026-06-29T15:20:00.492408777Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EncodedLabelSelectorsNilLabels","Output":"=== RUN   TestHelperTestSuite/Test/EncodedLabelSelectorsNilLabels\n"}
+{"Time":"2026-06-29T15:20:00.492444878Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EncodedLabelSelectorsNilLabels","Output":"--- PASS: TestHelperTestSuite/Test/EncodedLabelSelectorsNilLabels (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.492467728Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/EncodedLabelSelectorsNilLabels","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.492490988Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/InvalidEncodedLabelSelector"}
+{"Time":"2026-06-29T15:20:00.492512779Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/InvalidEncodedLabelSelector","Output":"=== RUN   TestHelperTestSuite/Test/InvalidEncodedLabelSelector\n"}
+{"Time":"2026-06-29T15:20:00.492536929Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/InvalidEncodedLabelSelector","Output":"--- PASS: TestHelperTestSuite/Test/InvalidEncodedLabelSelector (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.492560229Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test/InvalidEncodedLabelSelector","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.49258493Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test","Output":"--- PASS: TestHelperTestSuite/Test (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.49260965Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/Test","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.493948109Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues"}
+{"Time":"2026-06-29T15:20:00.493979969Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues","Output":"=== RUN   TestHelperTestSuite/TestPopulateFieldsFromValues\n"}
+{"Time":"2026-06-29T15:20:00.494140572Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/StringEmptyFields"}
+{"Time":"2026-06-29T15:20:00.494164722Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/StringEmptyFields","Output":"=== RUN   TestHelperTestSuite/TestPopulateFieldsFromValues/StringEmptyFields\n"}
+{"Time":"2026-06-29T15:20:00.494189962Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/StringEmptyFields","Output":"--- PASS: TestHelperTestSuite/TestPopulateFieldsFromValues/StringEmptyFields (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.494214453Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/StringEmptyFields","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.494238073Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/StringNonEmptyFields"}
+{"Time":"2026-06-29T15:20:00.494260043Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/StringNonEmptyFields","Output":"=== RUN   TestHelperTestSuite/TestPopulateFieldsFromValues/StringNonEmptyFields\n"}
+{"Time":"2026-06-29T15:20:00.494291424Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/StringNonEmptyFields","Output":"--- PASS: TestHelperTestSuite/TestPopulateFieldsFromValues/StringNonEmptyFields (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.494314694Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/StringNonEmptyFields","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.494337614Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/IntEmptyFields"}
+{"Time":"2026-06-29T15:20:00.494359365Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/IntEmptyFields","Output":"=== RUN   TestHelperTestSuite/TestPopulateFieldsFromValues/IntEmptyFields\n"}
+{"Time":"2026-06-29T15:20:00.494387695Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/IntEmptyFields","Output":"--- PASS: TestHelperTestSuite/TestPopulateFieldsFromValues/IntEmptyFields (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.494410326Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/IntEmptyFields","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.494441906Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/IntNonEmptyFields"}
+{"Time":"2026-06-29T15:20:00.494464986Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/IntNonEmptyFields","Output":"=== RUN   TestHelperTestSuite/TestPopulateFieldsFromValues/IntNonEmptyFields\n"}
+{"Time":"2026-06-29T15:20:00.494490877Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/IntNonEmptyFields","Output":"--- PASS: TestHelperTestSuite/TestPopulateFieldsFromValues/IntNonEmptyFields (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.494514507Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/IntNonEmptyFields","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.494537847Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/BoolEmptyFields"}
+{"Time":"2026-06-29T15:20:00.494559628Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/BoolEmptyFields","Output":"=== RUN   TestHelperTestSuite/TestPopulateFieldsFromValues/BoolEmptyFields\n"}
+{"Time":"2026-06-29T15:20:00.494583278Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/BoolEmptyFields","Output":"--- PASS: TestHelperTestSuite/TestPopulateFieldsFromValues/BoolEmptyFields (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.494606138Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/BoolEmptyFields","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.494628979Z","Action":"run","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/BoolNonEmptyFields"}
+{"Time":"2026-06-29T15:20:00.494651719Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/BoolNonEmptyFields","Output":"=== RUN   TestHelperTestSuite/TestPopulateFieldsFromValues/BoolNonEmptyFields\n"}
+{"Time":"2026-06-29T15:20:00.494675959Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/BoolNonEmptyFields","Output":"--- PASS: TestHelperTestSuite/TestPopulateFieldsFromValues/BoolNonEmptyFields (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.49470535Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues/BoolNonEmptyFields","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.49473049Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues","Output":"--- PASS: TestHelperTestSuite/TestPopulateFieldsFromValues (0.00s)\n"}
+{"Time":"2026-06-29T15:20:00.49475369Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite/TestPopulateFieldsFromValues","Elapsed":0}
+{"Time":"2026-06-29T15:20:00.494778831Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite","Output":"--- PASS: TestHelperTestSuite (3.15s)\n"}
+{"Time":"2026-06-29T15:20:00.494802791Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Test":"TestHelperTestSuite","Elapsed":3.15}
+{"Time":"2026-06-29T15:20:00.494827981Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Output":"PASS\n"}
+{"Time":"2026-06-29T15:20:00.494926713Z","Action":"output","Package":"github.com/nuclio/nuclio/pkg/common","Output":"ok  \tgithub.com/nuclio/nuclio/pkg/common\t3.161s\n"}
+{"Time":"2026-06-29T15:20:00.494955653Z","Action":"pass","Package":"github.com/nuclio/nuclio/pkg/common","Elapsed":3.161}
+reward=1 graded=32 found=32 failed=0 parsed=32 framework=go exit_code=0

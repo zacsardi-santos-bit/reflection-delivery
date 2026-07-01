@@ -1,0 +1,23 @@
+{
+ "task": "starkware-libs-cairo-1313",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden changes Display for Hint: '-        write!(f, \"%{{ \")?;' -> '+        write!(f, \"%{{\")?;' plus per-hint single-space padding; test string-matches compiled dict output"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

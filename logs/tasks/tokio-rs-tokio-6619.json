@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-tokio-6619",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch changes rt_metrics.rs cfg from 'tokio_unstable' gated to '#![cfg(all(feature = \"full\", not(target_os = \"wasi\"), target_has_atomic = \"64\"))]'; num_workers/num_alive_tasks only compile+run on stable if golden un-gates them; golden moves metrics across runtime.rs, scheduler mods, task/list.r"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

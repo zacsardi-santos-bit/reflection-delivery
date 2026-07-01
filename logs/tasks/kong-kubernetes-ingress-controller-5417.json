@@ -1,0 +1,23 @@
+{
+ "task": "kong-kubernetes-ingress-controller-5417",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds httpRouteHasUpstreamPolicyConflictedBackendRefsWithService in kongupstreampolicy_utils.go: 'checks if there's any HTTPRoute's rule that uses multiple backendRefs AND they're not all using the same KongUpstreamPolicy' \u2014 per-rule conflict; F2P TestHttpRouteHasUpstreamPolicyConflictedBacken"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

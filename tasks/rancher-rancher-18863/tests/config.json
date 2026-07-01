@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/controllers/user/logging/utils -count=1",
+  "test_files": [
+    "pkg/controllers/user/logging/utils/testwrap_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/rancher/rancher/pkg/controllers/user/logging/utils::TestIsSignedBy"
+  ],
+  "PASS_TO_PASS": []
+}

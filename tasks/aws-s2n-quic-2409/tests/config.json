@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p s2n-quic-dc --no-fail-fast -E 'test(tcp::manager::tests::)'",
+  "test_files": [
+    "dc/s2n-quic-dc/src/stream/server/tokio/tcp/manager/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/4) s2n-quic-dc stream::server::tokio::tcp::manager::tests::wake_test",
+    "(2/4) s2n-quic-dc stream::server::tokio::tcp::manager::tests::ready_test",
+    "(3/4) s2n-quic-dc stream::server::tokio::tcp::manager::tests::replace_test",
+    "(4/4) s2n-quic-dc stream::server::tokio::tcp::manager::tests::invariants_test"
+  ],
+  "PASS_TO_PASS": []
+}

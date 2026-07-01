@@ -1,0 +1,23 @@
+{
+ "task": "prql-prql-5635",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden guards `self.sort_undone = true` with `if !matches!(by.kind, ExprKind::Tuple(ref fields) if fields.is_empty())` so empty group preserves inner sort; F2P asserts `ORDER BY a` + `LIMIT 1`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

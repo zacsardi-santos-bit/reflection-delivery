@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/evaluate/test_evaluation.py::test_is_model_deployment_endpoint_uri /workspace/repo/tests/evaluate/test_evaluation.py::test_evaluate_on_model_endpoint_invalid_input_data -v --noconftest --override-ini=filterwarnings=",
+  "test_files": [
+    "tests/evaluate/test_evaluation.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.evaluate.test_evaluation::test_is_model_deployment_endpoint_uri[endpoints:/test-True]",
+    "tests.evaluate.test_evaluation::test_is_model_deployment_endpoint_uri[endpoints:///my-chat-True]",
+    "tests.evaluate.test_evaluation::test_is_model_deployment_endpoint_uri[models:/test-False]",
+    "tests.evaluate.test_evaluation::test_is_model_deployment_endpoint_uri[None-False]",
+    "tests.evaluate.test_evaluation::test_evaluate_on_model_endpoint_invalid_input_data[input_data0-The number of input columns must be 1]",
+    "tests.evaluate.test_evaluation::test_evaluate_on_model_endpoint_invalid_input_data[input_data1-The number of input columns must be 1]",
+    "tests.evaluate.test_evaluation::test_evaluate_on_model_endpoint_invalid_input_data[input_data2-Invalid input column type]"
+  ],
+  "PASS_TO_PASS": []
+}

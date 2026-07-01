@@ -1,0 +1,21 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_sagemaker/test_sagemaker_model_cards.py -v",
+  "test_files": [
+    "tests/test_sagemaker/test_sagemaker_model_cards.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_sagemaker.test_sagemaker_model_cards::test_create_model_card",
+    "tests.test_sagemaker.test_sagemaker_model_cards::test_update_model_card",
+    "tests.test_sagemaker.test_sagemaker_model_cards::test_model_card_tags",
+    "tests.test_sagemaker.test_sagemaker_model_cards::test_list_model_cards_basic",
+    "tests.test_sagemaker.test_sagemaker_model_cards::test_list_model_cards_advanced",
+    "tests.test_sagemaker.test_sagemaker_model_cards::test_list_model_card_versions_basic",
+    "tests.test_sagemaker.test_sagemaker_model_cards::test_list_model_card_versions_advanced",
+    "tests.test_sagemaker.test_sagemaker_model_cards::test_describe_model_card",
+    "tests.test_sagemaker.test_sagemaker_model_cards::test_delete_model_card"
+  ],
+  "PASS_TO_PASS": []
+}

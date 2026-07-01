@@ -1,0 +1,30 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/cli && npx jest test/unit/commands/build.test.ts --env node --runInBand --forceExit --coverage=false --verbose",
+  "test_files": [
+    "packages/cli/test/fixtures/unit/commands/build/.gitignore",
+    "packages/cli/test/fixtures/unit/commands/build/node/.vercel/project.json",
+    "packages/cli/test/fixtures/unit/commands/build/node/api/es6.js",
+    "packages/cli/test/fixtures/unit/commands/build/node/api/index.js",
+    "packages/cli/test/fixtures/unit/commands/build/node/api/mjs.mjs",
+    "packages/cli/test/fixtures/unit/commands/build/node/api/typescript.ts",
+    "packages/cli/test/fixtures/unit/commands/build/static/.vercel/project.json",
+    "packages/cli/test/fixtures/unit/commands/build/static/index.html",
+    "packages/cli/test/fixtures/unit/commands/build/third-party-builder/.vercel/builders/.gitignore",
+    "packages/cli/test/fixtures/unit/commands/build/third-party-builder/.vercel/builders/node_modules/txt-builder/index.js",
+    "packages/cli/test/fixtures/unit/commands/build/third-party-builder/.vercel/builders/node_modules/txt-builder/package.json",
+    "packages/cli/test/fixtures/unit/commands/build/third-party-builder/.vercel/project.json",
+    "packages/cli/test/fixtures/unit/commands/build/third-party-builder/api/foo.txt",
+    "packages/cli/test/fixtures/unit/commands/build/third-party-builder/vercel.json",
+    "packages/cli/test/unit/commands/build.test.ts"
+  ],
+  "num_test_files": 15,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/test/unit/commands/build.test.ts::build should build with `@vercel/node`",
+    "/workspace/repo/packages/cli/test/unit/commands/build.test.ts::build should build with 3rd party Builder"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/test/unit/commands/build.test.ts::build should build with `@vercel/static`"
+  ]
+}

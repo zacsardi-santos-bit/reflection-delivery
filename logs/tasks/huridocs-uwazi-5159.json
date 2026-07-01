@@ -1,0 +1,23 @@
+{
+ "task": "huridocs-uwazi-5159",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds markdown rendering in Translate.js ('const parseMarkdownItalicMarker' + split('\\n') -> <br/>) and migration 113 index.js; migration test runs 'await migration.up(testingDB.mongodb)' and asserts transformed translations across en/es/pt; Translate test asserts exact HTML '...this<br/>     "
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 36,
+  "shallow": true
+ }
+}

@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/go && go test -json ./store/prolly/tree -count=1 -run TestIndexedJsonDocument_CreateLargeStringValues",
+  "test_files": [
+    "go/libraries/doltcore/sqle/enginetest/dolt_queries.go",
+    "go/store/prolly/tree/json_indexed_document_test.go",
+    "integration-tests/bats/json.bats"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/dolthub/dolt/go/store/prolly/tree::TestIndexedJsonDocument_CreateLargeStringValues"
+  ],
+  "PASS_TO_PASS": []
+}

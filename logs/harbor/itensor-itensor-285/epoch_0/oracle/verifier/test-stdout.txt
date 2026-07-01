@@ -1,0 +1,127 @@
+patching file unittest/decomp_test.cc
+patching file unittest/matrix_test.cc
+
+Configure: Writing current dir to this_dir.mk
+
+Building ITensor library
+
+make[1]: Entering directory '/workspace/repo/itensor'
+Compiling itensor/tensor/lapack_wrap.cc with optimizations
+Compiling itensor/tensor/vec.cc with optimizations
+Compiling itensor/tensor/mat.cc with optimizations
+Compiling itensor/tensor/gemm.cc with optimizations
+Compiling itensor/tensor/algs.cc with optimizations
+Compiling itensor/tensor/contract.cc with optimizations
+Compiling itensor/itdata/dense.cc with optimizations
+Compiling itensor/itdata/combiner.cc with optimizations
+Compiling itensor/itdata/diag.cc with optimizations
+Compiling itensor/itdata/qdense.cc with optimizations
+In file included from /workspace/repo/itensor/tensor/types.h:21,
+                 from /workspace/repo/itensor/tensor/rangeiter.h:20,
+                 from /workspace/repo/itensor/tensor/teniter.h:19,
+                 from /workspace/repo/itensor/tensor/ten.h:20,
+                 from /workspace/repo/itensor/tensor/sliceten.h:20,
+                 from itdata/qdense.cc:20:
+/workspace/repo/itensor/util/infarray.h: In member function 'std::tuple<const T*, itensor::InfArray<long int, 11>, long int> itensor::QDense<T>::getEltBlockOffset(const itensor::IndexSet&, const Indexable&) const [with Indexable = itensor::InfArray<long int, 11>; T = double]':
+/workspace/repo/itensor/util/infarray.h:131:31: warning: '*((void*)&<anonymous> +16)' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  131 |         vec_(std::move(o.vec_))
+      |                               ^
+/workspace/repo/itensor/util/infarray.h: In member function 'std::tuple<const T*, itensor::InfArray<long int, 11>, long int> itensor::QDense<T>::getEltBlockOffset(const itensor::IndexSet&, const Indexable&) const [with Indexable = itensor::InfArray<long int, 11>; T = std::complex<double>]':
+/workspace/repo/itensor/util/infarray.h:131:31: warning: '*((void*)&<anonymous> +16)' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  131 |         vec_(std::move(o.vec_))
+      |                               ^
+Compiling itensor/itdata/qcombiner.cc with optimizations
+Compiling itensor/itdata/qdiag.cc with optimizations
+Compiling itensor/itdata/scalar.cc with optimizations
+Compiling itensor/qn.cc with optimizations
+Compiling itensor/itensor.cc with optimizations
+Compiling itensor/spectrum.cc with optimizations
+Compiling itensor/decomp.cc with optimizations
+Compiling itensor/hermitian.cc with optimizations
+Compiling itensor/svd.cc with optimizations
+Compiling itensor/mps/mps.cc with optimizations
+Compiling itensor/mps/mpsalgs.cc with optimizations
+Compiling itensor/mps/mpo.cc with optimizations
+Compiling itensor/mps/mpoalgs.cc with optimizations
+Compiling itensor/mps/autompo.cc with optimizations
+Building static library /workspace/repo/lib/libitensor.a
+Compiling itensor/tensor/lapack_wrap.cc in debug mode
+Compiling itensor/tensor/vec.cc in debug mode
+tensor/vec.cc: In function 'void itensor::call_daxpy(itensor::VectorRef&, const VectorRefc&, itensor::Real)':
+tensor/vec.cc:155:17: warning: comparison of integer expressions of different signedness: 'itensor::TenRefc<itensor::VecRangeT<0>, double>::size_type' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+  155 |     if(A.size() > std::numeric_limits<LAPACK_INT>::max())
+      |        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tensor/vec.cc: In function 'itensor::Real itensor::operator*(itensor::VectorRefc, itensor::VectorRefc)':
+tensor/vec.cc:219:17: warning: comparison of integer expressions of different signedness: 'itensor::TenRefc<itensor::VecRangeT<0>, double>::size_type' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+  219 |     if(a.size() > std::numeric_limits<LAPACK_INT>::max())
+      |        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tensor/vec.cc: In function 'itensor::Cplx itensor::operator*(itensor::CVectorRefc, itensor::CVectorRefc)':
+tensor/vec.cc:230:17: warning: comparison of integer expressions of different signedness: 'itensor::TenRefc<itensor::VecRangeT<0>, std::complex<double> >::size_type' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+  230 |     if(a.size() > std::numeric_limits<LAPACK_INT>::max())
+      |        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tensor/vec.cc: In instantiation of 'void itensor::multReal(itensor::VecRef<T>&, itensor::Real) [with V = double; itensor::VecRef<T> = itensor::TenRef<itensor::VecRangeT<0>, double>; itensor::Real = double]':
+tensor/vec.cc:96:19:   required from here
+tensor/vec.cc:81:21: warning: comparison of integer expressions of different signedness: 'itensor::TenRefc<itensor::VecRangeT<0>, double>::size_type' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+   81 |         if(v.size() > std::numeric_limits<LAPACK_INT>::max())
+tensor/vec.cc: In instantiation of 'void itensor::multReal(itensor::VecRef<T>&, itensor::Real) [with V = std::complex<double>; itensor::VecRef<T> = itensor::TenRef<itensor::VecRangeT<0>, std::complex<double> >; itensor::Real = double]':
+tensor/vec.cc:103:19:   required from here
+tensor/vec.cc:81:21: warning: comparison of integer expressions of different signedness: 'itensor::TenRefc<itensor::VecRangeT<0>, std::complex<double> >::size_type' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+Compiling itensor/tensor/mat.cc in debug mode
+tensor/mat.cc: In instantiation of 'void itensor::multReal(itensor::MatRef<T>&, itensor::Real) [with V = double; itensor::MatRef<T> = itensor::TenRef<itensor::MatRangeT<0>, double>; itensor::Real = double]':
+tensor/mat.cc:122:19:   required from here
+tensor/mat.cc:101:21: warning: comparison of integer expressions of different signedness: 'itensor::TenRefc<itensor::MatRangeT<0>, double>::size_type' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+  101 |         if(M.size() > std::numeric_limits<LAPACK_INT>::max())
+tensor/mat.cc: In instantiation of 'void itensor::multReal(itensor::MatRef<T>&, itensor::Real) [with V = std::complex<double>; itensor::MatRef<T> = itensor::TenRef<itensor::MatRangeT<0>, std::complex<double> >; itensor::Real = double]':
+tensor/mat.cc:127:19:   required from here
+tensor/mat.cc:101:21: warning: comparison of integer expressions of different signedness: 'itensor::TenRefc<itensor::MatRangeT<0>, std::complex<double> >::size_type' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+tensor/mat.cc: In instantiation of 'void itensor::call_daxpy(MatT1&, const MatT2&, itensor::Real) [with MatT1 = const itensor::TenRef<itensor::MatRangeT<0>, double>; MatT2 = itensor::TenRefc<itensor::MatRangeT<0>, double>; itensor::Real = double]':
+tensor/mat.cc:193:19:   required from 'void itensor::add(itensor::MatRef<T>&, itensor::MatRefc<VA>&) [with V = double; itensor::MatRef<T> = itensor::TenRef<itensor::MatRangeT<0>, double>; itensor::MatRefc<VA> = itensor::TenRefc<itensor::MatRangeT<0>, double>]'
+tensor/mat.cc:204:12:   required from here
+tensor/mat.cc:177:18: warning: comparison of integer expressions of different signedness: 'size_t' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+  177 |     if(Ad.size() > std::numeric_limits<LAPACK_INT>::max())
+tensor/mat.cc: In instantiation of 'void itensor::call_daxpy(MatT1&, const MatT2&, itensor::Real) [with MatT1 = const itensor::TenRef<itensor::MatRangeT<0>, std::complex<double> >; MatT2 = itensor::TenRefc<itensor::MatRangeT<0>, std::complex<double> >; itensor::Real = double]':
+tensor/mat.cc:193:19:   required from 'void itensor::add(itensor::MatRef<T>&, itensor::MatRefc<VA>&) [with V = std::complex<double>; itensor::MatRef<T> = itensor::TenRef<itensor::MatRangeT<0>, std::complex<double> >; itensor::MatRefc<VA> = itensor::TenRefc<itensor::MatRangeT<0>, std::complex<double> >]'
+tensor/mat.cc:214:12:   required from here
+tensor/mat.cc:177:18: warning: comparison of integer expressions of different signedness: 'size_t' {aka 'long unsigned int'} and 'int' [-Wsign-compare]
+Compiling itensor/tensor/gemm.cc in debug mode
+Compiling itensor/tensor/algs.cc in debug mode
+Compiling itensor/tensor/contract.cc in debug mode
+Compiling itensor/itdata/dense.cc in debug mode
+Compiling itensor/itdata/combiner.cc in debug mode
+Compiling itensor/itdata/diag.cc in debug mode
+Compiling itensor/itdata/qdense.cc in debug mode
+Compiling itensor/itdata/qcombiner.cc in debug mode
+Compiling itensor/itdata/qdiag.cc in debug mode
+Compiling itensor/itdata/scalar.cc in debug mode
+Compiling itensor/qn.cc in debug mode
+Compiling itensor/itensor.cc in debug mode
+Compiling itensor/spectrum.cc in debug mode
+Compiling itensor/decomp.cc in debug mode
+Compiling itensor/hermitian.cc in debug mode
+Compiling itensor/svd.cc in debug mode
+Compiling itensor/mps/mps.cc in debug mode
+Compiling itensor/mps/mpsalgs.cc in debug mode
+Compiling itensor/mps/mpo.cc in debug mode
+Compiling itensor/mps/mpoalgs.cc in debug mode
+Compiling itensor/mps/autompo.cc in debug mode
+Building static library /workspace/repo/lib/libitensor-g.a
+make[1]: Leaving directory '/workspace/repo/itensor'
+Compiling test.cc in debug mode
+Compiling decomp_test.cc in debug mode
+
+Running all tests...
+
+Warning: QR for ncol > nrow may require pivoting to be numerically stable.
+===============================================================================
+All tests passed (995 assertions in 1 test case)
+
+Compiling matrix_test.cc in debug mode
+
+Running all tests...
+
+Warning: QR for ncol > nrow may require pivoting to be numerically stable.
+Warning: QR for ncol > nrow may require pivoting to be numerically stable.
+===============================================================================
+All tests passed (2846 assertions in 5 test cases)
+
+reward=1 graded=130 found=130 failed=0 parsed=130 framework=ctest exit_code=0

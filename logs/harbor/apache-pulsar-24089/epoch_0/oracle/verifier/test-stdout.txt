@@ -1,0 +1,133 @@
+patching file managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/EntryCountEstimatorTest.java
+patching file managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java
+patching file managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ReadOnlyCursorTest.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] Detecting the operating system and CPU architecture
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] os.detected.name: linux
+[[1;34mINFO[m] os.detected.arch: x86_64
+[[1;34mINFO[m] os.detected.bitness: 64
+[[1;34mINFO[m] os.detected.version: 4.19
+[[1;34mINFO[m] os.detected.version.major: 4
+[[1;34mINFO[m] os.detected.version.minor: 19
+[[1;34mINFO[m] os.detected.release: ubuntu
+[[1;34mINFO[m] os.detected.release.version: 24.04
+[[1;34mINFO[m] os.detected.release.like.ubuntu: true
+[[1;34mINFO[m] os.detected.release.like.debian: true
+[[1;34mINFO[m] os.detected.classifier: linux-x86_64
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.apache.pulsar:managed-ledger[0;1m >------------------[m
+[[1;34mINFO[m] [1mBuilding Managed Ledger 4.1.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven-version)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-java-version)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[[1;34mINFO[m] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:1.0:directory-of[m [1m(directories)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.pulsar:pulsar set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mgit-commit-id-plugin:4.9.10:revision[m [1m(git-info)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mproperties-maven-plugin:1.1.0:set-system-properties[m [1m(default)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Set 2 system properties
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.6.1:compile[m [1m(default)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Skipping compilation because target directory newer than sources.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.7.0:process[m [1m(process-resource-bundles)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache:apache-jar-resource-bundle:1.4
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:resources[m [1m(default-resources)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/managed-ledger/src/main/resources
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Compiling 3 source files with javac [debug deprecation release 17] to target/classes
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/main/java/org/apache/bookkeeper/mledger/impl/ManagedCursorImpl.java:[2780,17] setLastActive(long) in org.apache.bookkeeper.mledger.proto.MLDataFormats.ManagedCursorInfo.Builder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/main/java/org/apache/bookkeeper/mledger/impl/ManagedCursorImpl.java:[2906,40] redundant cast to org.apache.bookkeeper.mledger.Position
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:testResources[m [1m(default-testResources)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/managed-ledger/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Compiling 3 source files with javac [debug deprecation release 17] to target/test-classes
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[691,38] redundant cast to int
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[934,51] found raw type: java.util.ArrayList
+  missing type arguments for generic class java.util.ArrayList<E>
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[934,47] unchecked conversion
+  required: java.util.List<java.util.concurrent.Future<java.util.concurrent.atomic.AtomicBoolean>>
+  found:    java.util.ArrayList
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[1384,40] found raw type: java.util.ArrayList
+  missing type arguments for generic class java.util.ArrayList<E>
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[1384,36] unchecked conversion
+  required: java.util.List<org.apache.bookkeeper.mledger.Position>
+  found:    java.util.ArrayList
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[2056,42] found raw type: java.util.ArrayList
+  missing type arguments for generic class java.util.ArrayList<E>
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[2056,38] unchecked conversion
+  required: java.util.List<java.util.concurrent.Future<java.lang.Void>>
+  found:    java.util.ArrayList
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[2799,39] found raw type: java.util.HashSet
+  missing type arguments for generic class java.util.HashSet<E>
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[2799,35] unchecked conversion
+  required: java.util.Set<org.apache.bookkeeper.mledger.Position>
+  found:    java.util.HashSet
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[3490,25] setLastActive(long) in org.apache.bookkeeper.mledger.proto.MLDataFormats.ManagedCursorInfo.Builder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[3493,40] unchecked cast
+  required: org.apache.bookkeeper.mledger.impl.MetaStore.MetaStoreCallback<org.apache.bookkeeper.mledger.proto.MLDataFormats.ManagedCursorInfo>
+  found:    java.lang.Object
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[3497,50] unchecked method invocation: method asyncGetCursorInfo in interface org.apache.bookkeeper.mledger.impl.MetaStore is applied to given types
+  required: java.lang.String,java.lang.String,org.apache.bookkeeper.mledger.impl.MetaStore.MetaStoreCallback<org.apache.bookkeeper.mledger.proto.MLDataFormats.ManagedCursorInfo>
+  found:    java.lang.String,java.lang.String,org.apache.bookkeeper.mledger.impl.MetaStore.MetaStoreCallback
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[3497,82] unchecked conversion
+  required: org.apache.bookkeeper.mledger.impl.MetaStore.MetaStoreCallback<org.apache.bookkeeper.mledger.proto.MLDataFormats.ManagedCursorInfo>
+  found:    org.apache.bookkeeper.mledger.impl.MetaStore.MetaStoreCallback
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[3553,17] setLastActive(long) in org.apache.bookkeeper.mledger.proto.MLDataFormats.ManagedCursorInfo.Builder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[3620,17] setLastActive(long) in org.apache.bookkeeper.mledger.proto.MLDataFormats.ManagedCursorInfo.Builder has been deprecated
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[4254,93] unchecked cast
+  required: java.util.concurrent.ConcurrentSkipListMap<java.lang.Long,org.apache.bookkeeper.mledger.proto.MLDataFormats.ManagedLedgerInfo.LedgerInfo>
+  found:    java.lang.Object
+[[1;33mWARNING[m] /workspace/repo/managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java:[5303,5] auto-closeable resource org.apache.bookkeeper.mledger.impl.ManagedCursorTest.TestPulsarMockBookKeeper has a member method close() that could throw InterruptedException
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.0:test[m [1m(default-test)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Using configured provider org.apache.maven.surefire.testng.TestNGProvider
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running org.apache.bookkeeper.mledger.impl.[1mReadOnlyCursorTest[m
+[[1;34mINFO[m] Running org.apache.bookkeeper.mledger.impl.[1mManagedCursorTest[m
+[[1;34mINFO[m] Running org.apache.bookkeeper.mledger.impl.[1mEntryCountEstimatorTest[m
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m14[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.416 s - in org.apache.bookkeeper.mledger.impl.[1mEntryCountEstimatorTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.219 s - in org.apache.bookkeeper.mledger.impl.[1mReadOnlyCursorTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.892 s - in org.apache.bookkeeper.mledger.impl.[1mManagedCursorTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 16, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;33mWARNING[m] Corrupted channel by directly writing to native stream in forked JVM 1. See FAQ web page and the dump file /workspace/repo/managed-ledger/target/surefire-reports/2026-06-29T15-26-53_792-jvmRun1.dumpstream
+[[1;33mWARNING[m] Corrupted channel by directly writing to native stream in forked JVM 2. See FAQ web page and the dump file /workspace/repo/managed-ledger/target/surefire-reports/2026-06-29T15-26-53_792-jvmRun2.dumpstream
+[[1;33mWARNING[m] Corrupted channel by directly writing to native stream in forked JVM 3. See FAQ web page and the dump file /workspace/repo/managed-ledger/target/surefire-reports/2026-06-29T15-26-53_792-jvmRun3.dumpstream
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  15.789 s
+[[1;34mINFO[m] Finished at: 2026-06-29T15:26:59Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] 0 goals, 0 executed
+reward=1 graded=16 found=16 failed=0 parsed=16 framework=maven exit_code=0

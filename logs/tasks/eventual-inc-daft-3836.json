@@ -1,0 +1,23 @@
+{
+ "task": "eventual-inc-daft-3836",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden adds SQL schema support across src/daft-sql (new schema.rs 'try_parse_schema', functions.rs, planner.rs, read_csv/json.rs); F2P test_sql_read_with_schema / _csv_with_schema rebuild via maturin develop and compare to Python read_json/read_csv"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

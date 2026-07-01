@@ -1,0 +1,310 @@
+patching file metricproviders/prometheus/mock_test.go
+patching file metricproviders/prometheus/prometheus_test.go
+patching file utils/evaluate/evaluate_test.go
+{"Time":"2026-06-29T15:14:29.613409256Z","Action":"start","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus"}
+{"Time":"2026-06-29T15:14:29.613624115Z","Action":"start","Package":"github.com/argoproj/argo-rollouts/utils/evaluate"}
+{"Time":"2026-06-29T15:14:29.635509466Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithSuccess"}
+{"Time":"2026-06-29T15:14:29.635583069Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithSuccess","Output":"=== RUN   TestEvaluateResultWithSuccess\n"}
+{"Time":"2026-06-29T15:14:29.636289861Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithSuccess","Output":"--- PASS: TestEvaluateResultWithSuccess (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.636332686Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithSuccess","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.636369351Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithFailure"}
+{"Time":"2026-06-29T15:14:29.636378175Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithFailure","Output":"=== RUN   TestEvaluateResultWithFailure\n"}
+{"Time":"2026-06-29T15:14:29.636482709Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithFailure","Output":"--- PASS: TestEvaluateResultWithFailure (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.636518403Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithFailure","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.636552004Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultInconclusive"}
+{"Time":"2026-06-29T15:14:29.636587487Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultInconclusive","Output":"=== RUN   TestEvaluateResultInconclusive\n"}
+{"Time":"2026-06-29T15:14:29.636630366Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultInconclusive","Output":"--- PASS: TestEvaluateResultInconclusive (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.636650786Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultInconclusive","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.636683035Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoSuccessConditionAndNotFailing"}
+{"Time":"2026-06-29T15:14:29.636693297Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoSuccessConditionAndNotFailing","Output":"=== RUN   TestEvaluateResultNoSuccessConditionAndNotFailing\n"}
+{"Time":"2026-06-29T15:14:29.636726359Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoSuccessConditionAndNotFailing","Output":"--- PASS: TestEvaluateResultNoSuccessConditionAndNotFailing (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.636748723Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoSuccessConditionAndNotFailing","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.636819989Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoFailureConditionAndNotSuccessful"}
+{"Time":"2026-06-29T15:14:29.636872275Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoFailureConditionAndNotSuccessful","Output":"=== RUN   TestEvaluateResultNoFailureConditionAndNotSuccessful\n"}
+{"Time":"2026-06-29T15:14:29.636995846Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoFailureConditionAndNotSuccessful","Output":"--- PASS: TestEvaluateResultNoFailureConditionAndNotSuccessful (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.637028835Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoFailureConditionAndNotSuccessful","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.637055502Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoFailureConditionAndNoSuccessCondition"}
+{"Time":"2026-06-29T15:14:29.637063437Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoFailureConditionAndNoSuccessCondition","Output":"=== RUN   TestEvaluateResultNoFailureConditionAndNoSuccessCondition\n"}
+{"Time":"2026-06-29T15:14:29.637101178Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoFailureConditionAndNoSuccessCondition","Output":"--- PASS: TestEvaluateResultNoFailureConditionAndNoSuccessCondition (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.637137891Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultNoFailureConditionAndNoSuccessCondition","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.637159221Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithErrorOnSuccessCondition"}
+{"Time":"2026-06-29T15:14:29.63716823Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithErrorOnSuccessCondition","Output":"=== RUN   TestEvaluateResultWithErrorOnSuccessCondition\n"}
+{"Time":"2026-06-29T15:14:29.6371811Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithErrorOnSuccessCondition","Output":"--- PASS: TestEvaluateResultWithErrorOnSuccessCondition (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.637214159Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithErrorOnSuccessCondition","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.637242766Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithErrorOnFailureCondition"}
+{"Time":"2026-06-29T15:14:29.637251208Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithErrorOnFailureCondition","Output":"=== RUN   TestEvaluateResultWithErrorOnFailureCondition\n"}
+{"Time":"2026-06-29T15:14:29.637259384Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithErrorOnFailureCondition","Output":"--- PASS: TestEvaluateResultWithErrorOnFailureCondition (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.637296247Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateResultWithErrorOnFailureCondition","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.637305276Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateConditionWithSuccess"}
+{"Time":"2026-06-29T15:14:29.637345644Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateConditionWithSuccess","Output":"=== RUN   TestEvaluateConditionWithSuccess\n"}
+{"Time":"2026-06-29T15:14:29.637423639Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateConditionWithSuccess","Output":"--- PASS: TestEvaluateConditionWithSuccess (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.637460871Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateConditionWithSuccess","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.637485409Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateConditionWithFailure"}
+{"Time":"2026-06-29T15:14:29.637499543Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateConditionWithFailure","Output":"=== RUN   TestEvaluateConditionWithFailure\n"}
+{"Time":"2026-06-29T15:14:29.637549394Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateConditionWithFailure","Output":"--- PASS: TestEvaluateConditionWithFailure (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.637567968Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateConditionWithFailure","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.637604888Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestErrorWithNonBoolReturn"}
+{"Time":"2026-06-29T15:14:29.637613731Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestErrorWithNonBoolReturn","Output":"=== RUN   TestErrorWithNonBoolReturn\n"}
+{"Time":"2026-06-29T15:14:29.637632433Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestErrorWithNonBoolReturn","Output":"--- PASS: TestErrorWithNonBoolReturn (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.637643735Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestErrorWithNonBoolReturn","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.637692535Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestErrorWithInvalidReference"}
+{"Time":"2026-06-29T15:14:29.637721015Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestErrorWithInvalidReference","Output":"=== RUN   TestErrorWithInvalidReference\n"}
+{"Time":"2026-06-29T15:14:29.637737066Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestErrorWithInvalidReference","Output":"--- PASS: TestErrorWithInvalidReference (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.637766394Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestErrorWithInvalidReference","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.637795368Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateArray"}
+{"Time":"2026-06-29T15:14:29.637807676Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateArray","Output":"=== RUN   TestEvaluateArray\n"}
+{"Time":"2026-06-29T15:14:29.638055104Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateArray","Output":"--- PASS: TestEvaluateArray (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.638073137Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateArray","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.638089884Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateInOperator"}
+{"Time":"2026-06-29T15:14:29.638097436Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateInOperator","Output":"=== RUN   TestEvaluateInOperator\n"}
+{"Time":"2026-06-29T15:14:29.638210044Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateInOperator","Output":"--- PASS: TestEvaluateInOperator (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.638241191Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateInOperator","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.638277917Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateFloat64"}
+{"Time":"2026-06-29T15:14:29.638288688Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateFloat64","Output":"=== RUN   TestEvaluateFloat64\n"}
+{"Time":"2026-06-29T15:14:29.638505258Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateFloat64","Output":"--- PASS: TestEvaluateFloat64 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.638527393Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateFloat64","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.638542582Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateInvalidStruct"}
+{"Time":"2026-06-29T15:14:29.63856064Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateInvalidStruct","Output":"=== RUN   TestEvaluateInvalidStruct\n"}
+{"Time":"2026-06-29T15:14:29.638817457Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateInvalidStruct","Output":"--- PASS: TestEvaluateInvalidStruct (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.638857533Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateInvalidStruct","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.63887328Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsIntPanic"}
+{"Time":"2026-06-29T15:14:29.638893986Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsIntPanic","Output":"=== RUN   TestEvaluateAsIntPanic\n"}
+{"Time":"2026-06-29T15:14:29.63914926Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsIntPanic","Output":"--- PASS: TestEvaluateAsIntPanic (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.639174029Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsIntPanic","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.639189362Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsInt"}
+{"Time":"2026-06-29T15:14:29.639203086Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsInt","Output":"=== RUN   TestEvaluateAsInt\n"}
+{"Time":"2026-06-29T15:14:29.639305954Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsInt","Output":"--- PASS: TestEvaluateAsInt (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.639319076Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsInt","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.639329464Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsFloatError"}
+{"Time":"2026-06-29T15:14:29.639338377Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsFloatError","Output":"=== RUN   TestEvaluateAsFloatError\n"}
+{"Time":"2026-06-29T15:14:29.639531982Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsFloatError","Output":"--- PASS: TestEvaluateAsFloatError (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.63954669Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsFloatError","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.639556759Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsFloat"}
+{"Time":"2026-06-29T15:14:29.639565785Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsFloat","Output":"=== RUN   TestEvaluateAsFloat\n"}
+{"Time":"2026-06-29T15:14:29.639774947Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsFloat","Output":"--- PASS: TestEvaluateAsFloat (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.639833814Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvaluateAsFloat","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.639853547Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestAsInt"}
+{"Time":"2026-06-29T15:14:29.639864104Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestAsInt","Output":"=== RUN   TestAsInt\n"}
+{"Time":"2026-06-29T15:14:29.640120297Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestAsInt","Output":"--- PASS: TestAsInt (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.64014017Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestAsInt","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640155648Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestAsFloat"}
+{"Time":"2026-06-29T15:14:29.640176241Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestAsFloat","Output":"=== RUN   TestAsFloat\n"}
+{"Time":"2026-06-29T15:14:29.640202619Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestAsFloat","Output":"--- PASS: TestAsFloat (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640213118Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestAsFloat","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640221416Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsInf"}
+{"Time":"2026-06-29T15:14:29.64023155Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsInf","Output":"=== RUN   TestIsInf\n"}
+{"Time":"2026-06-29T15:14:29.640245688Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsInf","Output":"--- PASS: TestIsInf (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640254371Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsInf","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640270556Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEqual"}
+{"Time":"2026-06-29T15:14:29.640277771Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEqual","Output":"=== RUN   TestEqual\n"}
+{"Time":"2026-06-29T15:14:29.640306335Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEqual","Output":"--- PASS: TestEqual (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640320012Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEqual","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640327366Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestDefaultFunc"}
+{"Time":"2026-06-29T15:14:29.640334144Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestDefaultFunc","Output":"=== RUN   TestDefaultFunc\n"}
+{"Time":"2026-06-29T15:14:29.640344832Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestDefaultFunc","Output":"--- PASS: TestDefaultFunc (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640369742Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestDefaultFunc","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640379134Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsNilFunc"}
+{"Time":"2026-06-29T15:14:29.640388483Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsNilFunc","Output":"=== RUN   TestIsNilFunc\n"}
+{"Time":"2026-06-29T15:14:29.640399778Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsNilFunc","Output":"--- PASS: TestIsNilFunc (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640413847Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsNilFunc","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640423976Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsNil"}
+{"Time":"2026-06-29T15:14:29.640430819Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsNil","Output":"=== RUN   TestIsNil\n"}
+{"Time":"2026-06-29T15:14:29.640448777Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsNil","Output":"--- PASS: TestIsNil (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640498593Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestIsNil","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640515903Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestValueFromPointer"}
+{"Time":"2026-06-29T15:14:29.640527354Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestValueFromPointer","Output":"=== RUN   TestValueFromPointer\n"}
+{"Time":"2026-06-29T15:14:29.640550438Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestValueFromPointer","Output":"--- PASS: TestValueFromPointer (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640561792Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestValueFromPointer","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640570655Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithSuccessExpr"}
+{"Time":"2026-06-29T15:14:29.64057782Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithSuccessExpr","Output":"=== RUN   TestEvalTimeWithSuccessExpr\n"}
+{"Time":"2026-06-29T15:14:29.640585999Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithSuccessExpr","Output":"--- PASS: TestEvalTimeWithSuccessExpr (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640593787Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithSuccessExpr","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640613271Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithNotTimeResult"}
+{"Time":"2026-06-29T15:14:29.640624683Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithNotTimeResult","Output":"=== RUN   TestEvalTimeWithNotTimeResult\n"}
+{"Time":"2026-06-29T15:14:29.640632641Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithNotTimeResult","Output":"--- PASS: TestEvalTimeWithNotTimeResult (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640641118Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithNotTimeResult","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640653435Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithInvalidExpression"}
+{"Time":"2026-06-29T15:14:29.640661085Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithInvalidExpression","Output":"=== RUN   TestEvalTimeWithInvalidExpression\n"}
+{"Time":"2026-06-29T15:14:29.640686861Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithInvalidExpression","Output":"--- PASS: TestEvalTimeWithInvalidExpression (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.640694912Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Test":"TestEvalTimeWithInvalidExpression","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.640756203Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:29.641805156Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Output":"ok  \tgithub.com/argoproj/argo-rollouts/utils/evaluate\t0.028s\n"}
+{"Time":"2026-06-29T15:14:29.641841195Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/utils/evaluate","Elapsed":0.028}
+{"Time":"2026-06-29T15:14:29.657281713Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip"}
+{"Time":"2026-06-29T15:14:29.657321366Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip","Output":"=== RUN   Test_httpHeadersRoundTripper_RoundTrip\n"}
+{"Time":"2026-06-29T15:14:29.657407991Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/have_header_and_append_header"}
+{"Time":"2026-06-29T15:14:29.657425323Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/have_header_and_append_header","Output":"=== RUN   Test_httpHeadersRoundTripper_RoundTrip/have_header_and_append_header\n"}
+{"Time":"2026-06-29T15:14:29.657939016Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/have_header_and_append_header","Output":"--- PASS: Test_httpHeadersRoundTripper_RoundTrip/have_header_and_append_header (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.65798436Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/have_header_and_append_header","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.658007615Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/only_append_header"}
+{"Time":"2026-06-29T15:14:29.658019572Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/only_append_header","Output":"=== RUN   Test_httpHeadersRoundTripper_RoundTrip/only_append_header\n"}
+{"Time":"2026-06-29T15:14:29.658040607Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/only_append_header","Output":"--- PASS: Test_httpHeadersRoundTripper_RoundTrip/only_append_header (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.658051072Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/only_append_header","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.658060349Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/have_header_and_not_append_header"}
+{"Time":"2026-06-29T15:14:29.658067804Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/have_header_and_not_append_header","Output":"=== RUN   Test_httpHeadersRoundTripper_RoundTrip/have_header_and_not_append_header\n"}
+{"Time":"2026-06-29T15:14:29.658085871Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/have_header_and_not_append_header","Output":"--- PASS: Test_httpHeadersRoundTripper_RoundTrip/have_header_and_not_append_header (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.658105442Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/have_header_and_not_append_header","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.658118627Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/empty_headers"}
+{"Time":"2026-06-29T15:14:29.658126326Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/empty_headers","Output":"=== RUN   Test_httpHeadersRoundTripper_RoundTrip/empty_headers\n"}
+{"Time":"2026-06-29T15:14:29.658145807Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/empty_headers","Output":"--- PASS: Test_httpHeadersRoundTripper_RoundTrip/empty_headers (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.658155209Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/empty_headers","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.658164699Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/append_multiple_headers"}
+{"Time":"2026-06-29T15:14:29.658178338Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/append_multiple_headers","Output":"=== RUN   Test_httpHeadersRoundTripper_RoundTrip/append_multiple_headers\n"}
+{"Time":"2026-06-29T15:14:29.65820252Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/append_multiple_headers","Output":"--- PASS: Test_httpHeadersRoundTripper_RoundTrip/append_multiple_headers (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.658210863Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/append_multiple_headers","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.658218289Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/overwrite_header"}
+{"Time":"2026-06-29T15:14:29.658227596Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/overwrite_header","Output":"=== RUN   Test_httpHeadersRoundTripper_RoundTrip/overwrite_header\n"}
+{"Time":"2026-06-29T15:14:29.658244165Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/overwrite_header","Output":"--- PASS: Test_httpHeadersRoundTripper_RoundTrip/overwrite_header (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.658253661Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip/overwrite_header","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.658263897Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip","Output":"--- PASS: Test_httpHeadersRoundTripper_RoundTrip (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.658287644Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"Test_httpHeadersRoundTripper_RoundTrip","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.658301839Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestType"}
+{"Time":"2026-06-29T15:14:29.658315729Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestType","Output":"=== RUN   TestType\n"}
+{"Time":"2026-06-29T15:14:29.658325249Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestType","Output":"--- PASS: TestType (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.658351842Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestType","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.658360427Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfully"}
+{"Time":"2026-06-29T15:14:29.658367669Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfully","Output":"=== RUN   TestRunSuccessfully\n"}
+{"Time":"2026-06-29T15:14:29.658641986Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfully","Output":"--- PASS: TestRunSuccessfully (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.658658593Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfully","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.658708642Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithRangeQuery"}
+{"Time":"2026-06-29T15:14:29.658728701Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithRangeQuery","Output":"=== RUN   TestRunSuccessfullyWithRangeQuery\n"}
+{"Time":"2026-06-29T15:14:29.659072177Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithRangeQuery","Output":"--- PASS: TestRunSuccessfullyWithRangeQuery (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.659116647Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithRangeQuery","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.659138768Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableStartTime"}
+{"Time":"2026-06-29T15:14:29.659155092Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableStartTime","Output":"=== RUN   TestRunUnparsableStartTime\n"}
+{"Time":"2026-06-29T15:14:29.659175923Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableStartTime","Output":"--- PASS: TestRunUnparsableStartTime (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.659197752Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableStartTime","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.659207443Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableEndTime"}
+{"Time":"2026-06-29T15:14:29.659217297Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableEndTime","Output":"=== RUN   TestRunUnparsableEndTime\n"}
+{"Time":"2026-06-29T15:14:29.659321049Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableEndTime","Output":"--- PASS: TestRunUnparsableEndTime (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.659341488Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableEndTime","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.659358699Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableStep"}
+{"Time":"2026-06-29T15:14:29.65936848Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableStep","Output":"=== RUN   TestRunUnparsableStep\n"}
+{"Time":"2026-06-29T15:14:29.659405832Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableStep","Output":"--- PASS: TestRunUnparsableStep (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.659416482Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunUnparsableStep","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.659432494Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithEnv"}
+{"Time":"2026-06-29T15:14:29.659441354Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithEnv","Output":"=== RUN   TestRunSuccessfullyWithEnv\n"}
+{"Time":"2026-06-29T15:14:29.659566524Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithEnv","Output":"--- PASS: TestRunSuccessfullyWithEnv (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.659577696Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithEnv","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.659604334Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarning"}
+{"Time":"2026-06-29T15:14:29.659613523Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarning","Output":"=== RUN   TestRunSuccessfullyWithWarning\n"}
+{"Time":"2026-06-29T15:14:29.659948659Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarning","Output":"time=\"2026-06-29T15:14:29Z\" level=warning msg=\"Prometheus returned the following warnings: \\\"warning\\\", \\\"warning2\\\"\"\n"}
+{"Time":"2026-06-29T15:14:29.65996489Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarning","Output":"--- PASS: TestRunSuccessfullyWithWarning (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.660009589Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarning","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.660019689Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarningWithEnv"}
+{"Time":"2026-06-29T15:14:29.660028833Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarningWithEnv","Output":"=== RUN   TestRunSuccessfullyWithWarningWithEnv\n"}
+{"Time":"2026-06-29T15:14:29.660088064Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarningWithEnv","Output":"time=\"2026-06-29T15:14:29Z\" level=warning msg=\"Prometheus returned the following warnings: \\\"warning\\\", \\\"warning2\\\"\"\n"}
+{"Time":"2026-06-29T15:14:29.660108345Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarningWithEnv","Output":"--- PASS: TestRunSuccessfullyWithWarningWithEnv (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.660116533Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfullyWithWarningWithEnv","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.660125031Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithQueryError"}
+{"Time":"2026-06-29T15:14:29.660133025Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithQueryError","Output":"=== RUN   TestRunWithQueryError\n"}
+{"Time":"2026-06-29T15:14:29.660154066Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithQueryError","Output":"--- PASS: TestRunWithQueryError (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.660164703Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithQueryError","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.660173243Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithResolveArgsError"}
+{"Time":"2026-06-29T15:14:29.660181908Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithResolveArgsError","Output":"=== RUN   TestRunWithResolveArgsError\n"}
+{"Time":"2026-06-29T15:14:29.660194701Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithResolveArgsError","Output":"--- PASS: TestRunWithResolveArgsError (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.660202094Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithResolveArgsError","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.660235925Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestGetStatusReturnsResolvedQuery"}
+{"Time":"2026-06-29T15:14:29.660243281Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestGetStatusReturnsResolvedQuery","Output":"=== RUN   TestGetStatusReturnsResolvedQuery\n"}
+{"Time":"2026-06-29T15:14:29.660256228Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestGetStatusReturnsResolvedQuery","Output":"--- PASS: TestGetStatusReturnsResolvedQuery (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.66026925Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestGetStatusReturnsResolvedQuery","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.660281056Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithEvaluationError"}
+{"Time":"2026-06-29T15:14:29.660291463Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithEvaluationError","Output":"=== RUN   TestRunWithEvaluationError\n"}
+{"Time":"2026-06-29T15:14:29.660332179Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithEvaluationError","Output":"--- PASS: TestRunWithEvaluationError (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.660351755Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunWithEvaluationError","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.660360258Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestResume"}
+{"Time":"2026-06-29T15:14:29.660370319Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestResume","Output":"=== RUN   TestResume\n"}
+{"Time":"2026-06-29T15:14:29.660391446Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestResume","Output":"time=\"2026-06-29T15:14:29Z\" level=warning msg=\"Prometheus provider should not execute the Resume method\" =\n"}
+{"Time":"2026-06-29T15:14:29.66041461Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestResume","Output":"--- PASS: TestResume (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.660428079Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestResume","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.66043692Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestTerminate"}
+{"Time":"2026-06-29T15:14:29.660444134Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestTerminate","Output":"=== RUN   TestTerminate\n"}
+{"Time":"2026-06-29T15:14:29.660455855Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestTerminate","Output":"time=\"2026-06-29T15:14:29Z\" level=warning msg=\"Prometheus provider should not execute the Terminate method\"\n"}
+{"Time":"2026-06-29T15:14:29.66047881Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestTerminate","Output":"--- PASS: TestTerminate (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.660486691Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestTerminate","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.660499137Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestGarbageCollect"}
+{"Time":"2026-06-29T15:14:29.660506206Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestGarbageCollect","Output":"=== RUN   TestGarbageCollect\n"}
+{"Time":"2026-06-29T15:14:29.660519748Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestGarbageCollect","Output":"--- PASS: TestGarbageCollect (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.66052939Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestGarbageCollect","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.660543382Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessScalarResponse"}
+{"Time":"2026-06-29T15:14:29.660552806Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessScalarResponse","Output":"=== RUN   TestProcessScalarResponse\n"}
+{"Time":"2026-06-29T15:14:29.660703171Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessScalarResponse","Output":"--- PASS: TestProcessScalarResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.660730614Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessScalarResponse","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.660742412Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse"}
+{"Time":"2026-06-29T15:14:29.660762161Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse","Output":"=== RUN   TestProcessNaNResponse\n"}
+{"Time":"2026-06-29T15:14:29.660829861Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/inconclusive"}
+{"Time":"2026-06-29T15:14:29.660840274Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/inconclusive","Output":"=== RUN   TestProcessNaNResponse/inconclusive\n"}
+{"Time":"2026-06-29T15:14:29.660959093Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/inconclusive","Output":"--- PASS: TestProcessNaNResponse/inconclusive (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.660983779Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/inconclusive","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661015717Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/success"}
+{"Time":"2026-06-29T15:14:29.661036468Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/success","Output":"=== RUN   TestProcessNaNResponse/success\n"}
+{"Time":"2026-06-29T15:14:29.661055851Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/success","Output":"--- PASS: TestProcessNaNResponse/success (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661071584Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/success","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661080545Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/failure"}
+{"Time":"2026-06-29T15:14:29.661117383Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/failure","Output":"=== RUN   TestProcessNaNResponse/failure\n"}
+{"Time":"2026-06-29T15:14:29.661146422Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/failure","Output":"--- PASS: TestProcessNaNResponse/failure (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661161514Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse/failure","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661183176Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse","Output":"--- PASS: TestProcessNaNResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661197009Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessNaNResponse","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661206972Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse"}
+{"Time":"2026-06-29T15:14:29.661215653Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse","Output":"=== RUN   TestProcessInfResponse\n"}
+{"Time":"2026-06-29T15:14:29.661233108Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse/success"}
+{"Time":"2026-06-29T15:14:29.661243273Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse/success","Output":"=== RUN   TestProcessInfResponse/success\n"}
+{"Time":"2026-06-29T15:14:29.661258325Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse/success","Output":"--- PASS: TestProcessInfResponse/success (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661274355Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse/success","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661283366Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse/failure"}
+{"Time":"2026-06-29T15:14:29.661291275Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse/failure","Output":"=== RUN   TestProcessInfResponse/failure\n"}
+{"Time":"2026-06-29T15:14:29.661306716Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse/failure","Output":"--- PASS: TestProcessInfResponse/failure (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661328039Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse/failure","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661339734Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse","Output":"--- PASS: TestProcessInfResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661358186Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInfResponse","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661368631Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessVectorResponse"}
+{"Time":"2026-06-29T15:14:29.661376881Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessVectorResponse","Output":"=== RUN   TestProcessVectorResponse\n"}
+{"Time":"2026-06-29T15:14:29.661454752Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessVectorResponse","Output":"--- PASS: TestProcessVectorResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661473388Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessVectorResponse","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661493091Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInvalidResponse"}
+{"Time":"2026-06-29T15:14:29.661501133Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInvalidResponse","Output":"=== RUN   TestProcessInvalidResponse\n"}
+{"Time":"2026-06-29T15:14:29.661511963Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInvalidResponse","Output":"--- PASS: TestProcessInvalidResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661576503Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestProcessInvalidResponse","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661590364Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPI"}
+{"Time":"2026-06-29T15:14:29.66159836Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPI","Output":"=== RUN   TestNewPrometheusAPI\n"}
+{"Time":"2026-06-29T15:14:29.661616013Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPI","Output":"time=\"2026-06-29T15:14:29Z\" level=error msg=\"Error in parsing url: parse \\\":invalid::url\\\": missing protocol scheme\"\n"}
+{"Time":"2026-06-29T15:14:29.66162428Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPI","Output":"time=\"2026-06-29T15:14:29Z\" level=info msg=\"api:\u003cnil\u003e\"\n"}
+{"Time":"2026-06-29T15:14:29.661644607Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPI","Output":"--- PASS: TestNewPrometheusAPI (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661661048Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPI","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.66168374Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPIWithEnv"}
+{"Time":"2026-06-29T15:14:29.661691007Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPIWithEnv","Output":"=== RUN   TestNewPrometheusAPIWithEnv\n"}
+{"Time":"2026-06-29T15:14:29.661704148Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPIWithEnv","Output":"time=\"2026-06-29T15:14:29Z\" level=error msg=\"Error in parsing url: parse \\\":invalid::url\\\": missing protocol scheme\"\n"}
+{"Time":"2026-06-29T15:14:29.66171651Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPIWithEnv","Output":"time=\"2026-06-29T15:14:29Z\" level=info msg=\"api:\u003cnil\u003e\"\n"}
+{"Time":"2026-06-29T15:14:29.661729262Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPIWithEnv","Output":"--- PASS: TestNewPrometheusAPIWithEnv (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661736948Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAPIWithEnv","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661760083Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAddressNotConfigured"}
+{"Time":"2026-06-29T15:14:29.661776541Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAddressNotConfigured","Output":"=== RUN   TestNewPrometheusAddressNotConfigured\n"}
+{"Time":"2026-06-29T15:14:29.66179063Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAddressNotConfigured","Output":"time=\"2026-06-29T15:14:29Z\" level=info msg=\"api:\u003cnil\u003e\"\n"}
+{"Time":"2026-06-29T15:14:29.66180873Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAddressNotConfigured","Output":"--- PASS: TestNewPrometheusAddressNotConfigured (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661815996Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusAddressNotConfigured","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661824154Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusNegativeTimeout"}
+{"Time":"2026-06-29T15:14:29.661831606Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusNegativeTimeout","Output":"=== RUN   TestNewPrometheusNegativeTimeout\n"}
+{"Time":"2026-06-29T15:14:29.661847042Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusNegativeTimeout","Output":"--- PASS: TestNewPrometheusNegativeTimeout (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.661855904Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPrometheusNegativeTimeout","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.661944093Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfulWithOAuth"}
+{"Time":"2026-06-29T15:14:29.661974785Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfulWithOAuth","Output":"=== RUN   TestRunSuccessfulWithOAuth\n"}
+{"Time":"2026-06-29T15:14:29.664039228Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfulWithOAuth","Output":"time=\"2026-06-29T15:14:29Z\" level=info msg=\"Received oauth query\"\n"}
+{"Time":"2026-06-29T15:14:29.664919303Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfulWithOAuth","Output":"time=\"2026-06-29T15:14:29Z\" level=info msg=\"Received prom query\"\n"}
+{"Time":"2026-06-29T15:14:29.664964161Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfulWithOAuth","Output":"time=\"2026-06-29T15:14:29Z\" level=info msg=\"Authorization header as expected, continuing\"\n"}
+{"Time":"2026-06-29T15:14:29.665963864Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfulWithOAuth","Output":"--- PASS: TestRunSuccessfulWithOAuth (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.665986714Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunSuccessfulWithOAuth","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.666001109Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPromApiErrorWithIncompleteOAuthParams"}
+{"Time":"2026-06-29T15:14:29.666019843Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPromApiErrorWithIncompleteOAuthParams","Output":"=== RUN   TestNewPromApiErrorWithIncompleteOAuthParams\n"}
+{"Time":"2026-06-29T15:14:29.666039192Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPromApiErrorWithIncompleteOAuthParams","Output":"--- PASS: TestNewPromApiErrorWithIncompleteOAuthParams (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.666061525Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestNewPromApiErrorWithIncompleteOAuthParams","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.666074465Z","Action":"run","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunErrorOAuthFailure"}
+{"Time":"2026-06-29T15:14:29.66608337Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunErrorOAuthFailure","Output":"=== RUN   TestRunErrorOAuthFailure\n"}
+{"Time":"2026-06-29T15:14:29.666806011Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunErrorOAuthFailure","Output":"time=\"2026-06-29T15:14:29Z\" level=info msg=\"Received oauth query\"\n"}
+{"Time":"2026-06-29T15:14:29.66712581Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunErrorOAuthFailure","Output":"time=\"2026-06-29T15:14:29Z\" level=info msg=\"Received oauth query\"\n"}
+{"Time":"2026-06-29T15:14:29.667359648Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunErrorOAuthFailure","Output":"--- PASS: TestRunErrorOAuthFailure (0.00s)\n"}
+{"Time":"2026-06-29T15:14:29.667414158Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Test":"TestRunErrorOAuthFailure","Elapsed":0}
+{"Time":"2026-06-29T15:14:29.667435047Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:29.66875183Z","Action":"output","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Output":"ok  \tgithub.com/argoproj/argo-rollouts/metricproviders/prometheus\t0.055s\n"}
+{"Time":"2026-06-29T15:14:29.668785846Z","Action":"pass","Package":"github.com/argoproj/argo-rollouts/metricproviders/prometheus","Elapsed":0.055}
+reward=1 graded=71 found=71 failed=0 parsed=71 framework=go exit_code=0

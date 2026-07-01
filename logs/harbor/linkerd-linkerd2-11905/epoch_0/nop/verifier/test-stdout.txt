@@ -1,0 +1,6 @@
+patching file controller/api/destination/external-workload/endpoints_controller_test.go
+# github.com/linkerd/linkerd2/controller/api/destination/external-workload [github.com/linkerd/linkerd2/controller/api/destination/external-workload.test]
+controller/api/destination/external-workload/endpoints_controller_test.go:183:15: undefined: specChanged
+controller/api/destination/external-workload/endpoints_controller_test.go:329:15: undefined: NewEndpointsController
+FAIL	github.com/linkerd/linkerd2/controller/api/destination/external-workload [build failed]
+reward=0 graded=15 found=15 failed=15 parsed=1 framework=go exit_code=1

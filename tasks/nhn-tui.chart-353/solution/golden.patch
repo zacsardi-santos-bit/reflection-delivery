@@ -1,0 +1,248 @@
+diff --git a/src/component/areaSeries.ts b/src/component/areaSeries.ts
+index 77f903559..6400f3eb0 100644
+--- a/src/component/areaSeries.ts
++++ b/src/component/areaSeries.ts
+@@ -28,6 +28,7 @@ import { getActiveSeriesMap } from '@src/helpers/legend';
+ interface AreaSeriesDrawModels {
+   rect: ClipRectAreaModel[];
+   series: AreaPointsModel[];
++  dot: CircleModel[];
+ }
+ 
+ interface RenderOptions {
+@@ -47,7 +48,7 @@ const seriesOpacity = {
+ };
+ 
+ export default class AreaSeries extends Component {
+-  models: AreaSeriesDrawModels = { rect: [], series: [] };
++  models: AreaSeriesDrawModels = { rect: [], series: [], dot: [] };
+ 
+   drawModels!: AreaSeriesModels;
+ 
+@@ -142,17 +143,20 @@ export default class AreaSeries extends Component {
+ 
+     const areaSeriesModel = this.renderAreaPointsModel();
+     const seriesCircleModel = this.renderCircleModel();
++    const circleDotModel = this.renderDotSeriesModel(seriesCircleModel, renderOptions);
+     const tooltipDataArr = this.makeTooltipData(areaData, categories);
+ 
+     this.models = {
+       rect: [this.renderClipRectAreaModel()],
+       series: areaSeriesModel,
++      dot: circleDotModel,
+     };
+ 
+     if (!this.drawModels) {
+       this.drawModels = {
+         rect: [this.renderClipRectAreaModel(true)],
+         series: deepCopyArray(areaSeriesModel),
++        dot: deepCopyArray(circleDotModel),
+       };
+     }
+ 
+@@ -181,6 +185,19 @@ export default class AreaSeries extends Component {
+       : this.makeDefaultResponderModel(seriesCircleModel, tooltipDataArr);
+   }
+ 
++  renderDotSeriesModel(
++    seriesCircleModel: CircleModel[],
++    { options }: RenderOptions
++  ): CircleModel[] {
++    return options?.showDot
++      ? seriesCircleModel.map((m) => ({
++          ...m,
++          radius: 6,
++          style: ['default'],
++        }))
++      : [];
++  }
++
+   makeDefaultResponderModel(
+     seriesCircleModel: CircleModel[],
+     tooltipDataArr: TooltipData[]
+@@ -280,7 +297,7 @@ export default class AreaSeries extends Component {
+ 
+     return {
+       type: 'linePoints',
+-      lineWidth: 6,
++      lineWidth: 3,
+       color,
+       points,
+       seriesIndex,
+@@ -362,7 +379,7 @@ export default class AreaSeries extends Component {
+   }
+ 
+   renderCircleModel(): CircleModel[] {
+-    return this.linePointsModel.flatMap(({ points, color, seriesIndex }) =>
++    return this.linePointsModel.flatMap(({ points, color, seriesIndex, name }) =>
+       points.map(({ x, y }, index) => ({
+         type: 'circle',
+         x,
+@@ -372,19 +389,30 @@ export default class AreaSeries extends Component {
+         style: ['default', 'hover'],
+         seriesIndex,
+         index,
++        name,
+       }))
+     );
+   }
+ 
++  private isAvailableApplyOpacity(opacity: number, name: string) {
++    return (
++      (opacity === seriesOpacity.ACTIVE && this.activeSeriesMap![name]) ||
++      opacity === seriesOpacity.INACTIVE
++    );
++  }
++
+   applyAreaOpacity(opacity: number) {
+     this.drawModels.series.forEach((model) => {
+-      if (
+-        (model.name && opacity === seriesOpacity.ACTIVE && this.activeSeriesMap![model.name]) ||
+-        opacity === seriesOpacity.INACTIVE
+-      ) {
++      if (this.isAvailableApplyOpacity(opacity, model.name!)) {
+         model.fillColor = getRGBA(model.fillColor, opacity);
+       }
+     });
++
++    this.drawModels.dot.forEach((model) => {
++      if (this.isAvailableApplyOpacity(opacity, model.name!)) {
++        model.color = getRGBA(model.color, opacity);
++      }
++    });
+   }
+ 
+   renderGuideLineModel(circleModels: CircleResponderModel[]): LineModel[] {
+diff --git a/src/component/lineSeries.ts b/src/component/lineSeries.ts
+index c0469da8d..56f90bf2c 100644
+--- a/src/component/lineSeries.ts
++++ b/src/component/lineSeries.ts
+@@ -25,7 +25,7 @@ interface RenderOptions {
+ type DatumType = CoordinateDataType | number;
+ 
+ export default class LineSeries extends Component {
+-  models: LineSeriesModels = { rect: [], series: [] };
++  models: LineSeriesModels = { rect: [], series: [], dot: [] };
+ 
+   drawModels!: LineSeriesModels;
+ 
+@@ -98,12 +98,19 @@ export default class LineSeries extends Component {
+       return tooltipData;
+     });
+ 
+-    this.models = { rect: [this.renderClipRectAreaModel()], series: lineSeriesModel };
++    const dotSeriesModel = this.renderDotSeriesModel(seriesCircleModel, renderLineOptions);
++
++    this.models = {
++      rect: [this.renderClipRectAreaModel()],
++      series: lineSeriesModel,
++      dot: dotSeriesModel,
++    };
+ 
+     if (!this.drawModels) {
+       this.drawModels = {
+         rect: [this.renderClipRectAreaModel(true)],
+         series: deepCopyArray(lineSeriesModel),
++        dot: deepCopyArray(dotSeriesModel),
+       };
+     }
+ 
+@@ -117,6 +124,19 @@ export default class LineSeries extends Component {
+     }));
+   }
+ 
++  renderDotSeriesModel(
++    seriesCircleModel: CircleModel[],
++    { options }: RenderOptions
++  ): CircleModel[] {
++    return options?.showDot
++      ? seriesCircleModel.map((m) => ({
++          ...m,
++          radius: 6,
++          style: ['default'],
++        }))
++      : [];
++  }
++
+   renderClipRectAreaModel(isDrawModel?: boolean): ClipRectAreaModel {
+     return {
+       type: 'clipRectArea',
+@@ -158,7 +178,7 @@ export default class LineSeries extends Component {
+ 
+       return {
+         type: 'linePoints',
+-        lineWidth: 6,
++        lineWidth: 3,
+         color,
+         points,
+         seriesIndex,
+diff --git a/stories/area.stories.ts b/stories/area.stories.ts
+index 8d6ee6e3d..dc8b00a98 100644
+--- a/stories/area.stories.ts
++++ b/stories/area.stories.ts
+@@ -47,6 +47,17 @@ export const basic = () => {
+   return el;
+ };
+ 
++export const basicWithShowDot = () => {
++  const { el } = createChart(avgTemperatureData, {
++    chart: { title: 'Average Temperature' } as BaseChartOptions,
++    xAxis: { pointOnColumn: boolean('pointOnColumn', false), title: { text: 'Month' } },
++    yAxis: { title: 'Temperature (Celsius)' },
++    series: { spline: boolean('spline', false), showDot: true },
++  });
++
++  return el;
++};
++
+ export const dataLabels = () => {
+   const { el } = createChart(avgTemperatureData, {
+     series: {
+diff --git a/stories/line.stories.ts b/stories/line.stories.ts
+index 5c5448ce8..8a6767d94 100644
+--- a/stories/line.stories.ts
++++ b/stories/line.stories.ts
+@@ -51,6 +51,15 @@ export const basic = () => {
+   return el;
+ };
+ 
++export const basicWithShowDot = () => {
++  const { el } = createChart(temperatureData, {
++    xAxis: { pointOnColumn: true },
++    series: { showDot: true },
++  });
++
++  return el;
++};
++
+ export const spline = () => {
+   const { el } = createChart(temperatureData2, {
+     series: { spline: boolean('spline', true) },
+diff --git a/types/components/series.d.ts b/types/components/series.d.ts
+index 229a87519..1e715a349 100644
+--- a/types/components/series.d.ts
++++ b/types/components/series.d.ts
+@@ -26,6 +26,7 @@ export type CircleModel = {
+     start: number;
+     end: number;
+   };
++  name?: string;
+ } & Point;
+ 
+ type BoundResponderModelData = { name?: string; value?: string };
+@@ -85,6 +86,7 @@ export type RectModel = {
+ export type AreaSeriesModels = {
+   rect: ClipRectAreaModel[];
+   series: AreaPointsModel[];
++  dot: CircleModel[];
+ };
+ 
+ export type BoxSeriesModels = {
+@@ -101,6 +103,7 @@ export type CircleSeriesModels = {
+ export type LineSeriesModels = {
+   rect: ClipRectAreaModel[];
+   series: LinePointsModel[];
++  dot: CircleModel[];
+ };
+ 
+ export type StackTotalModel = Omit<RectModel, 'type' | 'color'> & {

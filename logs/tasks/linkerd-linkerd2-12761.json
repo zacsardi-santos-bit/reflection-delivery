@@ -1,0 +1,23 @@
+{
+ "task": "linkerd-linkerd2-12761",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch adds 'mod grpc;' + new grpc.rs test referencing '.grpc_routes' field added only by golden (core/src/outbound.rs); key F2P 'outbound::tests::routes::grpc::backend_service'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

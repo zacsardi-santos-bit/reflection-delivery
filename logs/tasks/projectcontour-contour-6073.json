@@ -1,0 +1,23 @@
+{
+ "task": "projectcontour-contour-6073",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden model.go adds 'WatchNamespaces []string' + WatchAllNamespaces(), deployment.go passes '--watch-namespaces=', names.go adds NamespaceScopedResourceRole/RoleBinding; F2P includes TestNamespacesToStrings, TestDesiredDeploymentWhenSettingWatchNamespaces, TestDesiredRoleForContourInNamespace, Test"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 10,
+  "shallow": true
+ }
+}

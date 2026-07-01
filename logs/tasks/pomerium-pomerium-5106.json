@@ -1,0 +1,23 @@
+{
+ "task": "pomerium-pomerium-5106",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds pkg/envoy/resource_monitor_linux.go (772 lines) with CgroupDriver v1/v2, memory saturation + envoy overloadActions; F2P has TestCgroupV1/V2Driver MemoryUsage/Limit/Validate cases, TestFindMountpoint, TestComputeScaledTickInterval, TestSharedResourceMonitor"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

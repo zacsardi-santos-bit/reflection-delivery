@@ -1,0 +1,23 @@
+{
+ "task": "hashicorp-terraform-provider-google-16910",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'func flattenStatefulPolicyStatefulIps(d *schema.ResourceData, ipfieldName string, ips ...)' that reorders IPs to config order and appends extras alphabetically; test 'TestFlattenStatefulPolicyStatefulIps' builds ResourceData + out-of-order API map and asserts 'reflect.DeepEqual(tc.Expec"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 7,
+  "shallow": true
+ }
+}

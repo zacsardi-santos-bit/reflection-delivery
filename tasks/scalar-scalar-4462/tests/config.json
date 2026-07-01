@@ -1,0 +1,26 @@
+{
+  "test_framework": "vitest",
+  "test_command": "[ -f /workspace/repo/packages/api-reference/src/hooks/useConfig.ts ] || echo 'export const useConfig = () => undefined' > /workspace/repo/packages/api-reference/src/hooks/useConfig.ts && cd /workspace/repo/packages/api-reference && npx vitest run src/hooks/useNavState.test.ts",
+  "test_files": [
+    "packages/api-reference/src/hooks/useNavState.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState ID generation should generate model ID",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState ID generation should generate webhook ID",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState custom slug generation should use custom heading slug generator",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState custom slug generation should use custom model slug generator",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState custom slug generation should use custom tag slug generator"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState hash management should update hash correctly",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState hash management should set hash prefix",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState hash management should get reference hash without prefix",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState ID generation should generate heading ID",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState ID generation should generate tag ID",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState ID generation should generate operation ID",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState path routing should handle path routing ID extraction",
+    "/workspace/repo/packages/api-reference/src/hooks/useNavState.test.ts:: useNavState path routing should get section ID from hash"
+  ]
+}

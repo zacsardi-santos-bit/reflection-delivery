@@ -1,0 +1,27 @@
+patching file packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts
+patching file scripts/vitest/setupFiles/customMatchers.ts
+patching file types/vitest/index.d.ts
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ /workspace/repo/node_modules/.bin/vitest run --project unit packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts
+
+ RUN  v3.0.6 /workspace/repo
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts [ packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts ]
+Error: Failed to load url ../../../../../src/chain/archiveStore/errors.js (resolved id: ../../../../../src/chain/archiveStore/errors.js) in /workspace/repo/packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-DAc1iKf4.js:42197:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  15:28:38
+   Duration  1.91s (transform 823ms, setup 297ms, collect 0ms, tests 0ms, environment 0ms, prepare 123ms)
+
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+reward=0 graded=35 found=0 failed=0 parsed=0 framework=vitest exit_code=1

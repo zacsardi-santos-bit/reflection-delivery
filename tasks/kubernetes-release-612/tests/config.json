@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./debian -count=1",
+  "test_files": [
+    "debian/build_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "_/workspace/repo/debian::TestGetKubeadmConfig",
+    "_/workspace/repo/debian::TestGetKubeadmDependencies/simple_test",
+    "_/workspace/repo/debian::TestGetKubeadmDependencies/newer_than_1.11",
+    "_/workspace/repo/debian::TestGetKubeadmDependencies"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,1683 @@
+patching file .github/workflows/release.yaml
+patching file .gitignore
+patching file Makefile
+patching file cliff.toml
+patching file cmd/processor/app/processor.go
+patching file cmd/processor/app/processor_test.go
+patching file docs/assets/images/internal-processor-abstractions.png
+Not deleting file docs/assets/images/internal-processor-abstractions.png as content differs from patch
+patching file docs/concepts/architecture.md
+patching file docs/reference/triggers/kafka.md
+patching file hack/scripts/ci/add-remove-labels.js
+patching file hack/scripts/releaser/releaser.go
+patching file pkg/containerimagebuilderpusher/kaniko.go
+patching file pkg/containerimagebuilderpusher/types.go
+patching file pkg/platform/kube/platform.go
+patching file pkg/platform/kube/platform_test.go
+patching file pkg/processor/build/builder.go
+patching file pkg/processor/build/builder_test.go
+patching file pkg/processor/eventprocessor/pool.go
+patching file pkg/processor/eventprocessor/singleton.go
+patching file pkg/processor/eventprocessor/statistics.go
+patching file pkg/processor/eventprocessor/sync.go
+patching file pkg/processor/eventprocessor/types.go
+patching file pkg/processor/metricsink/appinsights/worker.go
+patching file pkg/processor/metricsink/prometheus/trigger.go
+patching file pkg/processor/metricsink/prometheus/worker.go
+patching file pkg/processor/runtime/rpc/abstract.go
+patching file pkg/processor/runtime/rpc/connection/abstract.go
+patching file pkg/processor/runtime/rpc/connection/connectionallocator.go
+patching file pkg/processor/runtime/rpc/connection/socketallocator.go
+patching file pkg/processor/runtime/rpc/connection/types.go
+patching file pkg/processor/statistics/worker.go
+patching file pkg/processor/timeout/timeout.go
+patching file pkg/processor/timeout/timeout_test.go
+patching file pkg/processor/trigger/cron/factory.go
+patching file pkg/processor/trigger/cron/trigger.go
+patching file pkg/processor/trigger/factory.go
+patching file pkg/processor/trigger/http/factory.go
+patching file pkg/processor/trigger/http/trigger.go
+patching file pkg/processor/trigger/kafka/factory.go
+patching file pkg/processor/trigger/kafka/trigger.go
+patching file pkg/processor/trigger/kickstart/factory.go
+patching file pkg/processor/trigger/kickstart/trigger.go
+patching file pkg/processor/trigger/kinesis/factory.go
+patching file pkg/processor/trigger/kinesis/shard.go
+patching file pkg/processor/trigger/kinesis/trigger.go
+patching file pkg/processor/trigger/mqtt/basic/factory.go
+patching file pkg/processor/trigger/mqtt/basic/trigger.go
+patching file pkg/processor/trigger/mqtt/iotcore/factory.go
+patching file pkg/processor/trigger/mqtt/iotcore/trigger.go
+patching file pkg/processor/trigger/mqtt/trigger.go
+patching file pkg/processor/trigger/nats/factory.go
+patching file pkg/processor/trigger/nats/trigger.go
+patching file pkg/processor/trigger/partitioned/eventhub/factory.go
+patching file pkg/processor/trigger/partitioned/eventhub/trigger.go
+patching file pkg/processor/trigger/partitioned/partition.go
+patching file pkg/processor/trigger/partitioned/trigger.go
+patching file pkg/processor/trigger/poller/trigger.go
+patching file pkg/processor/trigger/poller/v3ioitempoller/factory.go
+patching file pkg/processor/trigger/poller/v3ioitempoller/trigger.go
+patching file pkg/processor/trigger/pubsub/factory.go
+patching file pkg/processor/trigger/pubsub/trigger.go
+patching file pkg/processor/trigger/rabbitmq/factory.go
+patching file pkg/processor/trigger/rabbitmq/trigger.go
+patching file pkg/processor/trigger/registry.go
+patching file pkg/processor/trigger/trigger.go
+patching file pkg/processor/trigger/types.go
+patching file pkg/processor/trigger/v3iostream/factory.go
+patching file pkg/processor/trigger/v3iostream/trigger.go
+patching file pkg/processor/util/partitionworker/allocator.go
+patching file pkg/processor/util/partitionworker/allocator_test.go
+patching file pkg/processor/worker/allocator.go
+patching file pkg/processor/worker/allocator_test.go
+patching file pkg/processor/worker/factory.go
+patching file pkg/processor/worker/sync.go
+patching file pkg/processor/worker/types.go
+patching file pkg/processor/worker/worker.go
+patching file .github/workflows/release.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .github/workflows/release.yaml.rej
+patching file .gitignore
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .gitignore.rej
+patching file Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file Makefile.rej
+The next patch would create the file cliff.toml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file cmd/processor/app/processor.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file cmd/processor/app/processor.go.rej
+patching file cmd/processor/app/processor_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file cmd/processor/app/processor_test.go.rej
+patching file docs/assets/images/internal-processor-abstractions.png
+Not deleting file docs/assets/images/internal-processor-abstractions.png as content differs from patch
+patching file docs/concepts/architecture.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/concepts/architecture.md.rej
+patching file docs/reference/triggers/kafka.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/reference/triggers/kafka.md.rej
+patching file hack/scripts/ci/add-remove-labels.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file hack/scripts/ci/add-remove-labels.js.rej
+patching file hack/scripts/releaser/releaser.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file hack/scripts/releaser/releaser.go.rej
+patching file pkg/containerimagebuilderpusher/kaniko.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/containerimagebuilderpusher/kaniko.go.rej
+patching file pkg/containerimagebuilderpusher/types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/containerimagebuilderpusher/types.go.rej
+patching file pkg/platform/kube/platform.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/platform/kube/platform.go.rej
+patching file pkg/platform/kube/platform_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/platform/kube/platform_test.go.rej
+patching file pkg/processor/build/builder.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/build/builder.go.rej
+patching file pkg/processor/build/builder_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/build/builder_test.go.rej
+patching file pkg/processor/eventprocessor/pool.go
+patching file pkg/processor/eventprocessor/singleton.go
+patching file pkg/processor/eventprocessor/statistics.go
+patching file pkg/processor/eventprocessor/sync.go
+patching file pkg/processor/eventprocessor/types.go
+patching file pkg/processor/metricsink/appinsights/worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/processor/metricsink/appinsights/worker.go.rej
+patching file pkg/processor/metricsink/prometheus/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/processor/metricsink/prometheus/trigger.go.rej
+patching file pkg/processor/metricsink/prometheus/worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/metricsink/prometheus/worker.go.rej
+patching file pkg/processor/runtime/rpc/abstract.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/abstract.go.rej
+patching file pkg/processor/runtime/rpc/connection/abstract.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/connection/abstract.go.rej
+patching file pkg/processor/runtime/rpc/connection/connectionallocator.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/connection/connectionallocator.go.rej
+patching file pkg/processor/runtime/rpc/connection/socketallocator.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/connection/socketallocator.go.rej
+patching file pkg/processor/runtime/rpc/connection/types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/connection/types.go.rej
+patching file pkg/processor/statistics/worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/statistics/worker.go.rej
+patching file pkg/processor/timeout/timeout.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file pkg/processor/timeout/timeout.go.rej
+patching file pkg/processor/timeout/timeout_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/timeout/timeout_test.go.rej
+patching file pkg/processor/trigger/cron/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/cron/factory.go.rej
+patching file pkg/processor/trigger/cron/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/cron/trigger.go.rej
+patching file pkg/processor/trigger/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/processor/trigger/factory.go.rej
+patching file pkg/processor/trigger/http/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/http/factory.go.rej
+patching file pkg/processor/trigger/http/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file pkg/processor/trigger/http/trigger.go.rej
+patching file pkg/processor/trigger/kafka/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/kafka/factory.go.rej
+patching file pkg/processor/trigger/kafka/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file pkg/processor/trigger/kafka/trigger.go.rej
+patching file pkg/processor/trigger/kickstart/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/kickstart/factory.go.rej
+patching file pkg/processor/trigger/kickstart/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/kickstart/trigger.go.rej
+patching file pkg/processor/trigger/kinesis/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/kinesis/factory.go.rej
+patching file pkg/processor/trigger/kinesis/shard.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/kinesis/shard.go.rej
+patching file pkg/processor/trigger/kinesis/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/kinesis/trigger.go.rej
+patching file pkg/processor/trigger/mqtt/basic/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/basic/factory.go.rej
+patching file pkg/processor/trigger/mqtt/basic/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/basic/trigger.go.rej
+patching file pkg/processor/trigger/mqtt/iotcore/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/iotcore/factory.go.rej
+patching file pkg/processor/trigger/mqtt/iotcore/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/iotcore/trigger.go.rej
+patching file pkg/processor/trigger/mqtt/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/trigger.go.rej
+patching file pkg/processor/trigger/nats/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/nats/factory.go.rej
+patching file pkg/processor/trigger/nats/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/nats/trigger.go.rej
+patching file pkg/processor/trigger/partitioned/eventhub/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/partitioned/eventhub/factory.go.rej
+patching file pkg/processor/trigger/partitioned/eventhub/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/partitioned/eventhub/trigger.go.rej
+patching file pkg/processor/trigger/partitioned/partition.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/partitioned/partition.go.rej
+patching file pkg/processor/trigger/partitioned/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/partitioned/trigger.go.rej
+patching file pkg/processor/trigger/poller/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/poller/trigger.go.rej
+patching file pkg/processor/trigger/poller/v3ioitempoller/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/poller/v3ioitempoller/factory.go.rej
+patching file pkg/processor/trigger/poller/v3ioitempoller/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/poller/v3ioitempoller/trigger.go.rej
+patching file pkg/processor/trigger/pubsub/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/pubsub/factory.go.rej
+patching file pkg/processor/trigger/pubsub/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/pubsub/trigger.go.rej
+patching file pkg/processor/trigger/rabbitmq/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/rabbitmq/factory.go.rej
+patching file pkg/processor/trigger/rabbitmq/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/rabbitmq/trigger.go.rej
+patching file pkg/processor/trigger/registry.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/registry.go.rej
+patching file pkg/processor/trigger/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+18 out of 18 hunks ignored -- saving rejects to file pkg/processor/trigger/trigger.go.rej
+patching file pkg/processor/trigger/types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/types.go.rej
+patching file pkg/processor/trigger/v3iostream/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/v3iostream/factory.go.rej
+patching file pkg/processor/trigger/v3iostream/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/processor/trigger/v3iostream/trigger.go.rej
+patching file pkg/processor/util/partitionworker/allocator.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file pkg/processor/util/partitionworker/allocator.go.rej
+patching file pkg/processor/util/partitionworker/allocator_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file pkg/processor/util/partitionworker/allocator_test.go.rej
+The next patch would create the file pkg/processor/worker/allocator.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file pkg/processor/worker/allocator_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/worker/allocator_test.go.rej
+patching file pkg/processor/worker/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file pkg/processor/worker/factory.go.rej
+The next patch would create the file pkg/processor/worker/sync.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file pkg/processor/worker/types.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file pkg/processor/worker/worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/processor/worker/worker.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/release.yaml b/.github/workflows/release.yaml
+|index bd023cf0b..25bbd1675 100644
+|--- a/.github/workflows/release.yaml
+|+++ b/.github/workflows/release.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 573
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.gitignore b/.gitignore
+|index aeb62c76a..3aaa59655 100644
+|--- a/.gitignore
+|+++ b/.gitignore
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 582
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Makefile b/Makefile
+|index 9fca4fb49..b2e83d91a 100644
+|--- a/Makefile
+|+++ b/Makefile
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+patching file b/cliff.toml
+can't find file to patch at input line 742
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/processor/app/processor.go b/cmd/processor/app/processor.go
+|index 3f08a345a..208ae7fe6 100644
+|--- a/cmd/processor/app/processor.go
+|+++ b/cmd/processor/app/processor.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 791
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/processor/app/processor_test.go b/cmd/processor/app/processor_test.go
+|index 78d794808..5fd7e08b5 100644
+|--- a/cmd/processor/app/processor_test.go
+|+++ b/cmd/processor/app/processor_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+The next patch would delete the file b/docs/assets/images/internal-processor-abstractions.png,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+can't find file to patch at input line 859
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/concepts/architecture.md b/docs/concepts/architecture.md
+|index 33d83f747..4d0b2439b 100644
+|--- a/docs/concepts/architecture.md
+|+++ b/docs/concepts/architecture.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 912
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/reference/triggers/kafka.md b/docs/reference/triggers/kafka.md
+|index 295a874ec..1a5451ec8 100644
+|--- a/docs/reference/triggers/kafka.md
+|+++ b/docs/reference/triggers/kafka.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 928
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/hack/scripts/ci/add-remove-labels.js b/hack/scripts/ci/add-remove-labels.js
+|index 59bcb65a0..77723ca8a 100644
+|--- a/hack/scripts/ci/add-remove-labels.js
+|+++ b/hack/scripts/ci/add-remove-labels.js
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 950
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/hack/scripts/releaser/releaser.go b/hack/scripts/releaser/releaser.go
+|index 4b70b5b95..3b6f167a6 100644
+|--- a/hack/scripts/releaser/releaser.go
+|+++ b/hack/scripts/releaser/releaser.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+14 out of 14 hunks ignored
+can't find file to patch at input line 1584
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/containerimagebuilderpusher/kaniko.go b/pkg/containerimagebuilderpusher/kaniko.go
+|index aa5b633c1..27f1247d3 100644
+|--- a/pkg/containerimagebuilderpusher/kaniko.go
+|+++ b/pkg/containerimagebuilderpusher/kaniko.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1612
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/containerimagebuilderpusher/types.go b/pkg/containerimagebuilderpusher/types.go
+|index 7f1bd2032..906b20303 100644
+|--- a/pkg/containerimagebuilderpusher/types.go
+|+++ b/pkg/containerimagebuilderpusher/types.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1624
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/platform/kube/platform.go b/pkg/platform/kube/platform.go
+|index 18383c636..a441b5de5 100644
+|--- a/pkg/platform/kube/platform.go
+|+++ b/pkg/platform/kube/platform.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1657
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/platform/kube/platform_test.go b/pkg/platform/kube/platform_test.go
+|index 190430117..883864b3a 100644
+|--- a/pkg/platform/kube/platform_test.go
+|+++ b/pkg/platform/kube/platform_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1821
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/build/builder.go b/pkg/processor/build/builder.go
+|index deaa954bf..cc135df4c 100644
+|--- a/pkg/processor/build/builder.go
+|+++ b/pkg/processor/build/builder.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1862
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/build/builder_test.go b/pkg/processor/build/builder_test.go
+|index 03289e5f4..690229923 100644
+|--- a/pkg/processor/build/builder_test.go
+|+++ b/pkg/processor/build/builder_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+The next patch would delete the file a/pkg/processor/eventprocessor/pool.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/pkg/processor/eventprocessor/singleton.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/pkg/processor/eventprocessor/statistics.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/pkg/processor/eventprocessor/sync.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/pkg/processor/eventprocessor/types.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2546
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/metricsink/appinsights/worker.go b/pkg/processor/metricsink/appinsights/worker.go
+|index a76d79631..83fdadeec 100644
+|--- a/pkg/processor/metricsink/appinsights/worker.go
+|+++ b/pkg/processor/metricsink/appinsights/worker.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2575
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/metricsink/prometheus/trigger.go b/pkg/processor/metricsink/prometheus/trigger.go
+|index e99ade5bf..11a072a1e 100644
+|--- a/pkg/processor/metricsink/prometheus/trigger.go
+|+++ b/pkg/processor/metricsink/prometheus/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2609
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/metricsink/prometheus/worker.go b/pkg/processor/metricsink/prometheus/worker.go
+|index 66ed8cf77..0d929b5b3 100644
+|--- a/pkg/processor/metricsink/prometheus/worker.go
+|+++ b/pkg/processor/metricsink/prometheus/worker.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 2642
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/runtime/rpc/abstract.go b/pkg/processor/runtime/rpc/abstract.go
+|index 659c0d79e..336d67925 100644
+|--- a/pkg/processor/runtime/rpc/abstract.go
+|+++ b/pkg/processor/runtime/rpc/abstract.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 2742
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/runtime/rpc/connection/abstract.go b/pkg/processor/runtime/rpc/connection/abstract.go
+|index 520f76085..cb2a6fadc 100644
+|--- a/pkg/processor/runtime/rpc/connection/abstract.go
+|+++ b/pkg/processor/runtime/rpc/connection/abstract.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 2922
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/runtime/rpc/connection/connectionallocator.go b/pkg/processor/runtime/rpc/connection/connectionallocator.go
+|index c76053c64..de3929dcd 100644
+|--- a/pkg/processor/runtime/rpc/connection/connectionallocator.go
+|+++ b/pkg/processor/runtime/rpc/connection/connectionallocator.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 3017
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/runtime/rpc/connection/socketallocator.go b/pkg/processor/runtime/rpc/connection/socketallocator.go
+|index 4a5759430..356a21eb9 100644
+|--- a/pkg/processor/runtime/rpc/connection/socketallocator.go
+|+++ b/pkg/processor/runtime/rpc/connection/socketallocator.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 3146
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/runtime/rpc/connection/types.go b/pkg/processor/runtime/rpc/connection/types.go
+|index 69e2a3a7c..fff105d54 100644
+|--- a/pkg/processor/runtime/rpc/connection/types.go
+|+++ b/pkg/processor/runtime/rpc/connection/types.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3171
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/statistics/worker.go b/pkg/processor/statistics/worker.go
+|index 7107dfd24..097da628b 100644
+|--- a/pkg/processor/statistics/worker.go
+|+++ b/pkg/processor/statistics/worker.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3203
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/timeout/timeout.go b/pkg/processor/timeout/timeout.go
+|index 31b8a0f09..a8b196eae 100644
+|--- a/pkg/processor/timeout/timeout.go
+|+++ b/pkg/processor/timeout/timeout.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 3246
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/timeout/timeout_test.go b/pkg/processor/timeout/timeout_test.go
+|index 2f816d8df..0529ba37c 100644
+|--- a/pkg/processor/timeout/timeout_test.go
+|+++ b/pkg/processor/timeout/timeout_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3283
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/cron/factory.go b/pkg/processor/trigger/cron/factory.go
+|index 0650091ad..66bbd87e5 100644
+|--- a/pkg/processor/trigger/cron/factory.go
+|+++ b/pkg/processor/trigger/cron/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3313
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/cron/trigger.go b/pkg/processor/trigger/cron/trigger.go
+|index d73c93d66..460e0b35b 100644
+|--- a/pkg/processor/trigger/cron/trigger.go
+|+++ b/pkg/processor/trigger/cron/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3336
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/factory.go b/pkg/processor/trigger/factory.go
+|index 388594dd7..b15c91d4e 100644
+|--- a/pkg/processor/trigger/factory.go
+|+++ b/pkg/processor/trigger/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3358
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/http/factory.go b/pkg/processor/trigger/http/factory.go
+|index 2beda80c5..e107d28c2 100644
+|--- a/pkg/processor/trigger/http/factory.go
+|+++ b/pkg/processor/trigger/http/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3388
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/http/trigger.go b/pkg/processor/trigger/http/trigger.go
+|index cb194f70b..b7ee4e29d 100644
+|--- a/pkg/processor/trigger/http/trigger.go
+|+++ b/pkg/processor/trigger/http/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 3473
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/kafka/factory.go b/pkg/processor/trigger/kafka/factory.go
+|index 7b8664664..0794faad9 100644
+|--- a/pkg/processor/trigger/kafka/factory.go
+|+++ b/pkg/processor/trigger/kafka/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3503
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/kafka/trigger.go b/pkg/processor/trigger/kafka/trigger.go
+|index de6566ab3..262d3898a 100644
+|--- a/pkg/processor/trigger/kafka/trigger.go
+|+++ b/pkg/processor/trigger/kafka/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 3583
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/kickstart/factory.go b/pkg/processor/trigger/kickstart/factory.go
+|index 63e04c804..5450c0029 100644
+|--- a/pkg/processor/trigger/kickstart/factory.go
+|+++ b/pkg/processor/trigger/kickstart/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3613
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/kickstart/trigger.go b/pkg/processor/trigger/kickstart/trigger.go
+|index 49ff37667..2e50393bd 100644
+|--- a/pkg/processor/trigger/kickstart/trigger.go
+|+++ b/pkg/processor/trigger/kickstart/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3636
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/kinesis/factory.go b/pkg/processor/trigger/kinesis/factory.go
+|index 0809c4a99..4a6f833be 100644
+|--- a/pkg/processor/trigger/kinesis/factory.go
+|+++ b/pkg/processor/trigger/kinesis/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3666
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/kinesis/shard.go b/pkg/processor/trigger/kinesis/shard.go
+|index 1cbfbe3b0..b3d3b37c3 100644
+|--- a/pkg/processor/trigger/kinesis/shard.go
+|+++ b/pkg/processor/trigger/kinesis/shard.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3688
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/kinesis/trigger.go b/pkg/processor/trigger/kinesis/trigger.go
+|index 5e304bd63..d8d6123e9 100644
+|--- a/pkg/processor/trigger/kinesis/trigger.go
+|+++ b/pkg/processor/trigger/kinesis/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3711
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/mqtt/basic/factory.go b/pkg/processor/trigger/mqtt/basic/factory.go
+|index abf712168..5a804d74a 100644
+|--- a/pkg/processor/trigger/mqtt/basic/factory.go
+|+++ b/pkg/processor/trigger/mqtt/basic/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3741
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/mqtt/basic/trigger.go b/pkg/processor/trigger/mqtt/basic/trigger.go
+|index ca40a1034..60d20810b 100644
+|--- a/pkg/processor/trigger/mqtt/basic/trigger.go
+|+++ b/pkg/processor/trigger/mqtt/basic/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3765
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/mqtt/iotcore/factory.go b/pkg/processor/trigger/mqtt/iotcore/factory.go
+|index 62ac0d8c0..660a9b29a 100644
+|--- a/pkg/processor/trigger/mqtt/iotcore/factory.go
+|+++ b/pkg/processor/trigger/mqtt/iotcore/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3795
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/mqtt/iotcore/trigger.go b/pkg/processor/trigger/mqtt/iotcore/trigger.go
+|index e4d97b2f1..b5f037e9d 100644
+|--- a/pkg/processor/trigger/mqtt/iotcore/trigger.go
+|+++ b/pkg/processor/trigger/mqtt/iotcore/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3819
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/mqtt/trigger.go b/pkg/processor/trigger/mqtt/trigger.go
+|index df96adc32..6012613fa 100644
+|--- a/pkg/processor/trigger/mqtt/trigger.go
+|+++ b/pkg/processor/trigger/mqtt/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3858
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/nats/factory.go b/pkg/processor/trigger/nats/factory.go
+|index ddd484024..2a9fe3233 100644
+|--- a/pkg/processor/trigger/nats/factory.go
+|+++ b/pkg/processor/trigger/nats/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3888
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/nats/trigger.go b/pkg/processor/trigger/nats/trigger.go
+|index f50843bd8..f4ffc5ed3 100644
+|--- a/pkg/processor/trigger/nats/trigger.go
+|+++ b/pkg/processor/trigger/nats/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3911
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/partitioned/eventhub/factory.go b/pkg/processor/trigger/partitioned/eventhub/factory.go
+|index 029ac2252..2aede7a42 100644
+|--- a/pkg/processor/trigger/partitioned/eventhub/factory.go
+|+++ b/pkg/processor/trigger/partitioned/eventhub/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3932
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/partitioned/eventhub/trigger.go b/pkg/processor/trigger/partitioned/eventhub/trigger.go
+|index 6cf893cf1..2636e3677 100644
+|--- a/pkg/processor/trigger/partitioned/eventhub/trigger.go
+|+++ b/pkg/processor/trigger/partitioned/eventhub/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3957
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/partitioned/partition.go b/pkg/processor/trigger/partitioned/partition.go
+|index 7cf19fb53..36347ed1c 100644
+|--- a/pkg/processor/trigger/partitioned/partition.go
+|+++ b/pkg/processor/trigger/partitioned/partition.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3979
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/partitioned/trigger.go b/pkg/processor/trigger/partitioned/trigger.go
+|index c19d0aba9..82d006339 100644
+|--- a/pkg/processor/trigger/partitioned/trigger.go
+|+++ b/pkg/processor/trigger/partitioned/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 4007
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/poller/trigger.go b/pkg/processor/trigger/poller/trigger.go
+|index ab765b774..6576ad48e 100644
+|--- a/pkg/processor/trigger/poller/trigger.go
+|+++ b/pkg/processor/trigger/poller/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 4030
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/poller/v3ioitempoller/factory.go b/pkg/processor/trigger/poller/v3ioitempoller/factory.go
+|index 355089b6f..443d375a3 100644
+|--- a/pkg/processor/trigger/poller/v3ioitempoller/factory.go
+|+++ b/pkg/processor/trigger/poller/v3ioitempoller/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 4051
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/poller/v3ioitempoller/trigger.go b/pkg/processor/trigger/poller/v3ioitempoller/trigger.go
+|index 9f68a6420..979a7f148 100644
+|--- a/pkg/processor/trigger/poller/v3ioitempoller/trigger.go
+|+++ b/pkg/processor/trigger/poller/v3ioitempoller/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 4075
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/pubsub/factory.go b/pkg/processor/trigger/pubsub/factory.go
+|index cf813dda8..401b8b735 100644
+|--- a/pkg/processor/trigger/pubsub/factory.go
+|+++ b/pkg/processor/trigger/pubsub/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 4105
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/pubsub/trigger.go b/pkg/processor/trigger/pubsub/trigger.go
+|index 6cb4ec773..03ef02e3e 100644
+|--- a/pkg/processor/trigger/pubsub/trigger.go
+|+++ b/pkg/processor/trigger/pubsub/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 4128
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/rabbitmq/factory.go b/pkg/processor/trigger/rabbitmq/factory.go
+|index 97c6e2654..6ecdd7ce1 100644
+|--- a/pkg/processor/trigger/rabbitmq/factory.go
+|+++ b/pkg/processor/trigger/rabbitmq/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 4158
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/rabbitmq/trigger.go b/pkg/processor/trigger/rabbitmq/trigger.go
+|index 3528b8ca4..723ce6db1 100644
+|--- a/pkg/processor/trigger/rabbitmq/trigger.go
+|+++ b/pkg/processor/trigger/rabbitmq/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 4181
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/registry.go b/pkg/processor/trigger/registry.go
+|index 68eba88fc..148640b80 100644
+|--- a/pkg/processor/trigger/registry.go
+|+++ b/pkg/processor/trigger/registry.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 4213
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/trigger.go b/pkg/processor/trigger/trigger.go
+|index 465e2256a..6dbd3b59e 100644
+|--- a/pkg/processor/trigger/trigger.go
+|+++ b/pkg/processor/trigger/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+18 out of 18 hunks ignored
+can't find file to patch at input line 4396
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/types.go b/pkg/processor/trigger/types.go
+|index e21394ab0..fd3c1d272 100644
+|--- a/pkg/processor/trigger/types.go
+|+++ b/pkg/processor/trigger/types.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 4420
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/v3iostream/factory.go b/pkg/processor/trigger/v3iostream/factory.go
+|index aef31c3ba..fb9942713 100644
+|--- a/pkg/processor/trigger/v3iostream/factory.go
+|+++ b/pkg/processor/trigger/v3iostream/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 4450
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/trigger/v3iostream/trigger.go b/pkg/processor/trigger/v3iostream/trigger.go
+|index 42ee868f8..bec6bd4b7 100644
+|--- a/pkg/processor/trigger/v3iostream/trigger.go
+|+++ b/pkg/processor/trigger/v3iostream/trigger.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 4501
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/util/partitionworker/allocator.go b/pkg/processor/util/partitionworker/allocator.go
+|index bd6dbd3d6..0b700e7c0 100644
+|--- a/pkg/processor/util/partitionworker/allocator.go
+|+++ b/pkg/processor/util/partitionworker/allocator.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+13 out of 13 hunks ignored
+can't find file to patch at input line 4670
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/util/partitionworker/allocator_test.go b/pkg/processor/util/partitionworker/allocator_test.go
+|index e2e5f66d6..44934c313 100644
+|--- a/pkg/processor/util/partitionworker/allocator_test.go
+|+++ b/pkg/processor/util/partitionworker/allocator_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+patching file b/pkg/processor/worker/allocator.go
+can't find file to patch at input line 5049
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/worker/allocator_test.go b/pkg/processor/worker/allocator_test.go
+|index d35ffe3b6..131e2da7c 100644
+|--- a/pkg/processor/worker/allocator_test.go
+|+++ b/pkg/processor/worker/allocator_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 5087
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/worker/factory.go b/pkg/processor/worker/factory.go
+|index 5c92c5883..4b7de2fc9 100644
+|--- a/pkg/processor/worker/factory.go
+|+++ b/pkg/processor/worker/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+patching file b/pkg/processor/worker/sync.go
+patching file b/pkg/processor/worker/types.go
+can't find file to patch at input line 5329
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/processor/worker/worker.go b/pkg/processor/worker/worker.go
+|index 2c9447038..e907e7079 100644
+|--- a/pkg/processor/worker/worker.go
+|+++ b/pkg/processor/worker/worker.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+patching file .github/workflows/release.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file .github/workflows/release.yaml.rej
+patching file .gitignore
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .gitignore.rej
+patching file Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file Makefile.rej
+The next patch would create the file cliff.toml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file cmd/processor/app/processor.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file cmd/processor/app/processor.go.rej
+patching file cmd/processor/app/processor_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file cmd/processor/app/processor_test.go.rej
+patching file docs/assets/images/internal-processor-abstractions.png
+Not deleting file docs/assets/images/internal-processor-abstractions.png as content differs from patch
+patching file docs/concepts/architecture.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/concepts/architecture.md.rej
+patching file docs/reference/triggers/kafka.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/reference/triggers/kafka.md.rej
+patching file hack/scripts/ci/add-remove-labels.js
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file hack/scripts/ci/add-remove-labels.js.rej
+patching file hack/scripts/releaser/releaser.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file hack/scripts/releaser/releaser.go.rej
+patching file pkg/containerimagebuilderpusher/kaniko.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/containerimagebuilderpusher/kaniko.go.rej
+patching file pkg/containerimagebuilderpusher/types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/containerimagebuilderpusher/types.go.rej
+patching file pkg/platform/kube/platform.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/platform/kube/platform.go.rej
+patching file pkg/platform/kube/platform_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/platform/kube/platform_test.go.rej
+patching file pkg/processor/build/builder.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/build/builder.go.rej
+patching file pkg/processor/build/builder_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/build/builder_test.go.rej
+patching file pkg/processor/eventprocessor/pool.go
+patching file pkg/processor/eventprocessor/singleton.go
+patching file pkg/processor/eventprocessor/statistics.go
+patching file pkg/processor/eventprocessor/sync.go
+patching file pkg/processor/eventprocessor/types.go
+patching file pkg/processor/metricsink/appinsights/worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/processor/metricsink/appinsights/worker.go.rej
+patching file pkg/processor/metricsink/prometheus/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/processor/metricsink/prometheus/trigger.go.rej
+patching file pkg/processor/metricsink/prometheus/worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/metricsink/prometheus/worker.go.rej
+patching file pkg/processor/runtime/rpc/abstract.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/abstract.go.rej
+patching file pkg/processor/runtime/rpc/connection/abstract.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/connection/abstract.go.rej
+patching file pkg/processor/runtime/rpc/connection/connectionallocator.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/connection/connectionallocator.go.rej
+patching file pkg/processor/runtime/rpc/connection/socketallocator.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/connection/socketallocator.go.rej
+patching file pkg/processor/runtime/rpc/connection/types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/runtime/rpc/connection/types.go.rej
+patching file pkg/processor/statistics/worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/statistics/worker.go.rej
+patching file pkg/processor/timeout/timeout.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file pkg/processor/timeout/timeout.go.rej
+patching file pkg/processor/timeout/timeout_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/timeout/timeout_test.go.rej
+patching file pkg/processor/trigger/cron/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/cron/factory.go.rej
+patching file pkg/processor/trigger/cron/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/cron/trigger.go.rej
+patching file pkg/processor/trigger/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/processor/trigger/factory.go.rej
+patching file pkg/processor/trigger/http/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/http/factory.go.rej
+patching file pkg/processor/trigger/http/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file pkg/processor/trigger/http/trigger.go.rej
+patching file pkg/processor/trigger/kafka/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/kafka/factory.go.rej
+patching file pkg/processor/trigger/kafka/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file pkg/processor/trigger/kafka/trigger.go.rej
+patching file pkg/processor/trigger/kickstart/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/kickstart/factory.go.rej
+patching file pkg/processor/trigger/kickstart/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/kickstart/trigger.go.rej
+patching file pkg/processor/trigger/kinesis/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/kinesis/factory.go.rej
+patching file pkg/processor/trigger/kinesis/shard.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/kinesis/shard.go.rej
+patching file pkg/processor/trigger/kinesis/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/kinesis/trigger.go.rej
+patching file pkg/processor/trigger/mqtt/basic/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/basic/factory.go.rej
+patching file pkg/processor/trigger/mqtt/basic/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/basic/trigger.go.rej
+patching file pkg/processor/trigger/mqtt/iotcore/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/iotcore/factory.go.rej
+patching file pkg/processor/trigger/mqtt/iotcore/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/iotcore/trigger.go.rej
+patching file pkg/processor/trigger/mqtt/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/mqtt/trigger.go.rej
+patching file pkg/processor/trigger/nats/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/nats/factory.go.rej
+patching file pkg/processor/trigger/nats/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/nats/trigger.go.rej
+patching file pkg/processor/trigger/partitioned/eventhub/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/partitioned/eventhub/factory.go.rej
+patching file pkg/processor/trigger/partitioned/eventhub/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/partitioned/eventhub/trigger.go.rej
+patching file pkg/processor/trigger/partitioned/partition.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/partitioned/partition.go.rej
+patching file pkg/processor/trigger/partitioned/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/partitioned/trigger.go.rej
+patching file pkg/processor/trigger/poller/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/poller/trigger.go.rej
+patching file pkg/processor/trigger/poller/v3ioitempoller/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/poller/v3ioitempoller/factory.go.rej
+patching file pkg/processor/trigger/poller/v3ioitempoller/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/poller/v3ioitempoller/trigger.go.rej
+patching file pkg/processor/trigger/pubsub/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/pubsub/factory.go.rej
+patching file pkg/processor/trigger/pubsub/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/pubsub/trigger.go.rej
+patching file pkg/processor/trigger/rabbitmq/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/rabbitmq/factory.go.rej
+patching file pkg/processor/trigger/rabbitmq/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/rabbitmq/trigger.go.rej
+patching file pkg/processor/trigger/registry.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/registry.go.rej
+patching file pkg/processor/trigger/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+18 out of 18 hunks ignored -- saving rejects to file pkg/processor/trigger/trigger.go.rej
+patching file pkg/processor/trigger/types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/processor/trigger/types.go.rej
+patching file pkg/processor/trigger/v3iostream/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/trigger/v3iostream/factory.go.rej
+patching file pkg/processor/trigger/v3iostream/trigger.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/processor/trigger/v3iostream/trigger.go.rej
+patching file pkg/processor/util/partitionworker/allocator.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file pkg/processor/util/partitionworker/allocator.go.rej
+patching file pkg/processor/util/partitionworker/allocator_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file pkg/processor/util/partitionworker/allocator_test.go.rej
+The next patch would create the file pkg/processor/worker/allocator.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file pkg/processor/worker/allocator_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/processor/worker/allocator_test.go.rej
+patching file pkg/processor/worker/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file pkg/processor/worker/factory.go.rej
+The next patch would create the file pkg/processor/worker/sync.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file pkg/processor/worker/types.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file pkg/processor/worker/worker.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/processor/worker/worker.go.rej
+ERROR: golden patch failed to apply by all strategies

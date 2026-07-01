@@ -1,0 +1,23 @@
+{
+ "task": "ovh-cds-1855",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds canBeRun() in dao_run.go: checks ancestors terminal, returns false on Building/empty; TestCanBeRun asserts {Building:false, '':false, Success:true} on ancestor status"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 19,
+  "shallow": true
+ }
+}

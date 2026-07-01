@@ -1,0 +1,31 @@
+patching file plugin/storage/badger/spanstore/cache_test.go
+patching file plugin/storage/badger/spanstore/read_write_test.go
+patching file plugin/storage/badger/spanstore/rw_internal_test.go
+# github.com/jaegertracing/jaeger/plugin/storage/badger/spanstore [github.com/jaegertracing/jaeger/plugin/storage/badger/spanstore.test]
+plugin/storage/badger/spanstore/cache_test.go:40:35: too many arguments in call to cache.Update
+	have (string, string, uint64)
+	want (string, string)
+plugin/storage/badger/spanstore/cache_test.go:41:35: too many arguments in call to cache.Update
+	have (string, string, uint64)
+	want (string, string)
+plugin/storage/badger/spanstore/cache_test.go:49:35: too many arguments in call to cache.Update
+	have (string, string, uint64)
+	want (string, string)
+plugin/storage/badger/spanstore/cache_test.go:50:35: too many arguments in call to cache.Update
+	have (string, string, uint64)
+	want (string, string)
+plugin/storage/badger/spanstore/cache_test.go:58:35: too many arguments in call to cache.Update
+	have (string, string, uint64)
+	want (string, string)
+plugin/storage/badger/spanstore/cache_test.go:59:35: too many arguments in call to cache.Update
+	have (string, string, uint64)
+	want (string, string)
+plugin/storage/badger/spanstore/cache_test.go:61:32: cannot use uint64(time.Now().Unix() + 1e10) (value of type uint64) as int64 value in assignment
+plugin/storage/badger/spanstore/cache_test.go:72:68: cannot use timeNow (variable of type uint64) as time.Time value in argument to createIndexKey
+plugin/storage/badger/spanstore/cache_test.go:73:82: cannot use timeNow (variable of type uint64) as time.Time value in argument to createIndexKey
+plugin/storage/badger/spanstore/cache_test.go:96:42: too many arguments in call to cache.Update
+	have (string, string, uint64)
+	want (string, string)
+plugin/storage/badger/spanstore/cache_test.go:96:42: too many errors
+FAIL	github.com/jaegertracing/jaeger/plugin/storage/badger/spanstore [build failed]
+reward=0 graded=14 found=14 failed=14 parsed=1 framework=go exit_code=1

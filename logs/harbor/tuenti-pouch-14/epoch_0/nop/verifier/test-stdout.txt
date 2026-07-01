@@ -1,0 +1,16 @@
+patching file pouchfile_test.go
+patching file state_test.go
+# github.com/tuenti/pouch [github.com/tuenti/pouch.test]
+/go/src/github.com/tuenti/pouch/state_test.go:29:19: undefined: PriorityFileSortedList
+/go/src/github.com/tuenti/pouch/state_test.go:30:19: undefined: PriorityFileSortedList
+/go/src/github.com/tuenti/pouch/state_test.go:44:29: undefined: PriorityFileSortedList
+/go/src/github.com/tuenti/pouch/state_test.go:45:2: undefined: PriorityFile
+/go/src/github.com/tuenti/pouch/state_test.go:46:2: undefined: PriorityFile
+/go/src/github.com/tuenti/pouch/state_test.go:47:2: undefined: PriorityFile
+/go/src/github.com/tuenti/pouch/state_test.go:48:2: undefined: PriorityFile
+/go/src/github.com/tuenti/pouch/state_test.go:49:2: undefined: PriorityFile
+/go/src/github.com/tuenti/pouch/state_test.go:52:35: undefined: PriorityFileSortedList
+/go/src/github.com/tuenti/pouch/state_test.go:62:14: undefined: PriorityFileSortedList
+/go/src/github.com/tuenti/pouch/state_test.go:52:35: too many errors
+FAIL	github.com/tuenti/pouch [build failed]
+reward=0 graded=8 found=8 failed=8 parsed=1 framework=go exit_code=1

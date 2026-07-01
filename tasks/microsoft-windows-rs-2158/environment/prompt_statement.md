@@ -1,0 +1,1 @@
+I'm working on the windows-rs library and need to bump the version of the platform-specific target crate for 64-bit Windows builds using the GNU toolchain. The crate currently declares the old release version and needs to be updated so it matches the rest of the release. Could you update the package version for this crate to match the current release?

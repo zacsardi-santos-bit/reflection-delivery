@@ -1,0 +1,19 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p re_types_core --lib -E 'test(as_components)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/9) re_types_core as_components::tests::single_componentbatch_wrapped_many",
+    "(2/9) re_types_core as_components::tests::single_ascomponents_howto",
+    "(3/9) re_types_core as_components::tests::many_componentbatch",
+    "(4/9) re_types_core as_components::tests::many_ascomponents_wrapped_howto",
+    "(5/9) re_types_core as_components::tests::single_componentbatch",
+    "(6/9) re_types_core as_components::tests::single_ascomponents_wrapped_howto",
+    "(7/9) re_types_core as_components::tests::many_ascomponents_wrapped_many_howto",
+    "(8/9) re_types_core as_components::tests::single_componentbatch_wrapped",
+    "(9/9) re_types_core as_components::tests::single_ascomponents_wrapped_many_howto"
+  ],
+  "PASS_TO_PASS": []
+}

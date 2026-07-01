@@ -1,0 +1,12 @@
+patching file bpf/flow.h
+patching file bpf/flows.c
+patching file pkg/beyla/network_cfg.go
+patching file pkg/internal/netolly/agent/pipeline.go
+patching file pkg/internal/netolly/ebpf/net_bpfel_arm64.go
+patching file pkg/internal/netolly/ebpf/net_bpfel_arm64.o
+patching file pkg/internal/netolly/ebpf/net_bpfel_x86.go
+patching file pkg/internal/netolly/ebpf/net_bpfel_x86.o
+patching file pkg/internal/netolly/ebpf/record.go
+patching file pkg/internal/netolly/ebpf/tracer_common.go
+patching file pkg/internal/netolly/export/metrics.go
+patching file pkg/internal/netolly/flow/deduper.go

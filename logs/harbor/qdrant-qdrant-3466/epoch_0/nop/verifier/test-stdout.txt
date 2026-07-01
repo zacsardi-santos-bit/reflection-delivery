@@ -1,0 +1,14 @@
+patching file lib/collection/tests/integration/collection_test.rs
+patching file lib/segment/tests/integration/nested_filtering_test.rs
+patching file lib/segment/tests/integration/segment_tests.rs
+patching file openapi/tests/openapi_integration/helpers/collection_setup.py
+patching file openapi/tests/openapi_integration/test_filter_min_should.py
+    Finished test [unoptimized + debuginfo] target(s) in 1.45s
+────────────
+ Nextest run ID 4e28d0e7-3c77-4c30-96cf-f321f736ff22 with nextest profile: default
+    Starting 0 tests across 1 binary (272 tests skipped)
+────────────
+     Summary [   0.001s] 0 tests run: 0 passed, 272 skipped
+error: no tests to run
+(hint: use `--no-tests` to customize)
+reward=0 graded=5 found=0 failed=0 parsed=0 framework=cargo exit_code=4

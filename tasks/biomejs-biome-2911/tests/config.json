@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_css_analyze --test spec_tests -E 'test(~no_invalid_direction_in_linear_gradient)'",
+  "test_files": [
+    "crates/biome_css_analyze/tests/specs/nursery/noInvalidDirectionInLinearGradient/invalid.css",
+    "crates/biome_css_analyze/tests/specs/nursery/noInvalidDirectionInLinearGradient/invalid.css.snap",
+    "crates/biome_css_analyze/tests/specs/nursery/noInvalidDirectionInLinearGradient/valid.css",
+    "crates/biome_css_analyze/tests/specs/nursery/noInvalidDirectionInLinearGradient/valid.css.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_css_analyze::spec_tests specs::nursery::no_invalid_direction_in_linear_gradient::valid_css",
+    "(2/2) biome_css_analyze::spec_tests specs::nursery::no_invalid_direction_in_linear_gradient::invalid_css"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,23 @@
+{
+ "task": "openshift-origin-18216",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden extracts convertDesiredReplicasWithRules(); F2P includes TestConvertDesiredReplicasWithRules plus 69 HPA controller tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 97,
+  "shallow": true
+ }
+}

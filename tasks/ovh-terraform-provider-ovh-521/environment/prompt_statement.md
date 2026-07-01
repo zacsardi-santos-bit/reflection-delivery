@@ -1,0 +1,5 @@
+I'm working on extending a Terraform provider for a cloud platform, and I need to add support for IAM permissions groups. Right now the provider can manage IAM policies, but there's no way to manage permissions groups — these are reusable sets of cloud API actions that can be allowed, excepted, or denied, and that teams want to share across multiple policies.
+
+I need three new things added to the provider: a managed resource so users can create and update permissions groups (with name, description, and the three action sets), a data source to look up a single group by its unique identifier, and a data source to list all available groups. The resource should also support being imported by its unique identifier so existing groups can be brought under Terraform management.
+
+All three need to be properly registered with the provider. The provider's existing internal validation tests are currently failing because the new test files reference a type that doesn't exist yet, so getting the package to compile correctly is part of the fix.

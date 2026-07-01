@@ -1,0 +1,92 @@
+patching file src/test/debugger/extension/adapter/activator.unit.test.ts
+patching file src/test/debugger/extension/adapter/logging.unit.test.ts
+
+
+  Debugging - Adapter Factory and logger Registration
+    1) Register Adapter Factory if inside the DA experiment
+    2) Register a disposable item if inside the DA experiment
+    3) Send experiment group telemetry if inside the DA experiment
+    4) Don't register the Adapter Factory if not inside the DA experiment
+    5) Don't register a disposable item if not inside the DA experiment
+    6) Send control group telemetry if inside the DA experiment control group
+    7) Don't send any telemetry if not inside the DA experiment nor control group
+
+  Debugging - Session Logging
+    8) Create logger using session without logToFile
+    9) Create logger using session with logToFile set to false
+    10) Create logger using session with logToFile set to true
+
+
+  0 passing (429ms)
+  10 failing
+
+  1) Debugging - Adapter Factory and logger Registration
+       Register Adapter Factory if inside the DA experiment:
+     TypeError: this.experimentsManager.inExperiment is not a function
+      at DebugAdapterActivator.activate (src/client/debugger/extension/adapter/activator.ts:23:37)
+      at Context.<anonymous> (src/test/debugger/extension/adapter/activator.unit.test.ts:104:25)
+      at processImmediate (internal/timers.js:464:21)
+
+  2) Debugging - Adapter Factory and logger Registration
+       Register a disposable item if inside the DA experiment:
+     TypeError: this.experimentsManager.inExperiment is not a function
+      at DebugAdapterActivator.activate (src/client/debugger/extension/adapter/activator.ts:23:37)
+      at Context.<anonymous> (src/test/debugger/extension/adapter/activator.unit.test.ts:116:25)
+      at processImmediate (internal/timers.js:464:21)
+
+  3) Debugging - Adapter Factory and logger Registration
+       Send experiment group telemetry if inside the DA experiment:
+     TypeError: this.experimentsManager.inExperiment is not a function
+      at DebugAdapterActivator.activate (src/client/debugger/extension/adapter/activator.ts:23:37)
+      at Context.<anonymous> (src/test/debugger/extension/adapter/activator.unit.test.ts:124:25)
+      at processImmediate (internal/timers.js:464:21)
+
+  4) Debugging - Adapter Factory and logger Registration
+       Don't register the Adapter Factory if not inside the DA experiment:
+     TypeError: this.experimentsManager.inExperiment is not a function
+      at DebugAdapterActivator.activate (src/client/debugger/extension/adapter/activator.ts:23:37)
+      at Context.<anonymous> (src/test/debugger/extension/adapter/activator.unit.test.ts:133:25)
+      at processImmediate (internal/timers.js:464:21)
+
+  5) Debugging - Adapter Factory and logger Registration
+       Don't register a disposable item if not inside the DA experiment:
+     TypeError: this.experimentsManager.inExperiment is not a function
+      at DebugAdapterActivator.activate (src/client/debugger/extension/adapter/activator.ts:23:37)
+      at Context.<anonymous> (src/test/debugger/extension/adapter/activator.unit.test.ts:142:25)
+      at processImmediate (internal/timers.js:464:21)
+
+  6) Debugging - Adapter Factory and logger Registration
+       Send control group telemetry if inside the DA experiment control group:
+     TypeError: this.experimentsManager.inExperiment is not a function
+      at DebugAdapterActivator.activate (src/client/debugger/extension/adapter/activator.ts:23:37)
+      at Context.<anonymous> (src/test/debugger/extension/adapter/activator.unit.test.ts:150:25)
+      at processImmediate (internal/timers.js:464:21)
+
+  7) Debugging - Adapter Factory and logger Registration
+       Don't send any telemetry if not inside the DA experiment nor control group:
+     TypeError: this.experimentsManager.inExperiment is not a function
+      at DebugAdapterActivator.activate (src/client/debugger/extension/adapter/activator.ts:23:37)
+      at Context.<anonymous> (src/test/debugger/extension/adapter/activator.unit.test.ts:159:25)
+      at processImmediate (internal/timers.js:464:21)
+
+  8) Debugging - Session Logging
+       Create logger using session without logToFile:
+     TypeError: loggerFactory.createDebugAdapterTracker is not a function
+      at Context.<anonymous> (src/test/debugger/extension/adapter/logging.unit.test.ts:83:29)
+      at processImmediate (internal/timers.js:464:21)
+
+  9) Debugging - Session Logging
+       Create logger using session with logToFile set to false:
+     TypeError: loggerFactory.createDebugAdapterTracker is not a function
+      at Context.<anonymous> (src/test/debugger/extension/adapter/logging.unit.test.ts:94:44)
+      at processImmediate (internal/timers.js:464:21)
+
+  10) Debugging - Session Logging
+       Create logger using session with logToFile set to true:
+     TypeError: loggerFactory.createDebugAdapterTracker is not a function
+      at Context.<anonymous> (src/test/debugger/extension/adapter/logging.unit.test.ts:112:44)
+      at processImmediate (internal/timers.js:464:21)
+
+
+
+reward=0 graded=10 found=10 failed=10 parsed=12 framework=mocha exit_code=10

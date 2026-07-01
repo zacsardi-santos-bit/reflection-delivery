@@ -1,0 +1,301 @@
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_function_call_choice.yaml
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_function_call_choice_no_content.yaml
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_tool_events.yaml
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_tool_events_no_content.yaml
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: asyncio-0.21.0, vcr-1.0.2
+asyncio: mode=Mode.STRICT
+collecting ... collected 4 items
+
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py::test_function_call_choice FAILED [ 25%]
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py::test_function_call_choice_no_content FAILED [ 50%]
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py::test_tool_events FAILED [ 75%]
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py::test_tool_events_no_content FAILED [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_function_call_choice ___________________________
+
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2abc087d4d90>
+log_exporter = <opentelemetry.sdk._logs._internal.export.in_memory_log_exporter.InMemoryLogExporter object at 0x2abc087d4c90>
+instrument_with_content = <opentelemetry.instrumentation.vertexai.VertexAIInstrumentor object at 0x2abc086db290>
+
+    @pytest.mark.vcr
+    def test_function_call_choice(
+        span_exporter: InMemorySpanExporter,
+        log_exporter: InMemoryLogExporter,
+        instrument_with_content: VertexAIInstrumentor,
+    ):
+        ask_about_weather()
+    
+        # Emits span
+        spans = span_exporter.get_finished_spans()
+        assert len(spans) == 1
+        assert spans[0].name == "chat gemini-1.5-flash-002"
+        assert dict(spans[0].attributes) == {
+            "gen_ai.operation.name": "chat",
+            "gen_ai.request.model": "gemini-1.5-flash-002",
+            "gen_ai.response.finish_reasons": ("stop",),
+            "gen_ai.response.model": "gemini-1.5-flash-002",
+            "gen_ai.system": "vertex_ai",
+            "gen_ai.usage.input_tokens": 72,
+            "gen_ai.usage.output_tokens": 16,
+            "server.address": "us-central1-aiplatform.googleapis.com",
+            "server.port": 443,
+        }
+    
+        # Emits user and choice events
+        logs = log_exporter.get_finished_logs()
+        assert len(logs) == 2
+        user_log, choice_log = [log_data.log_record for log_data in logs]
+        assert user_log.attributes == {
+            "gen_ai.system": "vertex_ai",
+            "event.name": "gen_ai.user.message",
+        }
+        assert user_log.body == {
+            "content": [
+                {"text": "Get weather details in New Delhi and San Francisco?"}
+            ],
+            "role": "user",
+        }
+    
+        assert choice_log.attributes == {
+            "gen_ai.system": "vertex_ai",
+            "event.name": "gen_ai.choice",
+        }
+>       assert choice_log.body == {
+            "finish_reason": "stop",
+            "index": 0,
+            "message": {
+                "content": [
+                    {
+                        "function_call": {
+                            "args": {"location": "New Delhi"},
+                            "name": "get_current_weather",
+                        }
+                    },
+                    {
+                        "function_call": {
+                            "args": {"location": "San Francisco"},
+                            "name": "get_current_weather",
+                        }
+                    },
+                ],
+                "role": "model",
+            },
+            "tool_calls": [
+                {
+                    "function": {
+                        "arguments": {"location": "New Delhi"},
+                        "name": "get_current_weather",
+                    },
+                    "id": "get_current_weather_0",
+                    "type": "function",
+                },
+                {
+                    "function": {
+                        "arguments": {"location": "San Francisco"},
+                        "name": "get_current_weather",
+                    },
+                    "id": "get_current_weather_1",
+                    "type": "function",
+                },
+            ],
+        }
+E       AssertionError: assert {'finish_reason': 'stop', 'index': 0, 'message': {'content': [{'function_call': {'name': 'get_current_weather', 'args': {'location': 'New Delhi'}}}, {'function_call': {'name': 'get_current_weather', 'args': {'location': 'San Francisco'}}}], 'role': 'model'}} == {'finish_reason': 'stop', 'index': 0, 'message': {'content': [{'function_call': {'args': {'location': 'New Delhi'}, 'name': 'get_current_weather'}}, {'function_call': {'args': {'location': 'San Francisco'}, 'name': 'get_current_weather'}}], 'role': 'model'}, 'tool_calls': [{'function': {'arguments': {'location': 'New Delhi'}, 'name': 'get_current_weather'}, 'id': 'get_current_weather_0', 'type': 'function'}, {'function': {'arguments': {'location': 'San Francisco'}, 'name': 'get_current_weather'}, 'id': 'get_current_weather_1', 'type': 'function'}]}
+E         Common items:
+E         {'finish_reason': 'stop',
+E          'index': 0,
+E          'message': {'content': [{'function_call': {'args': {'location': 'New Delhi'},
+E                                                     'name': 'get_current_weather'}},
+E                                  {'function_call': {'args': {'location': 'San '
+E                                                                          'Francisco'},
+E                                                     'name': 'get_current_weather'}}],
+E                      'role': 'model'}}
+E         Right contains 1 more item:
+E         {'tool_calls': [{'function': {'arguments': {'location': 'New Delhi'},
+E                                       'name': 'get_current_weather'},
+E                          'id': 'get_current_weather_0',
+E                          'type': 'function'},
+E                         {'function': {'arguments': {'location': 'San Francisco'},
+E                                       'name': 'get_current_weather'},
+E                          'id': 'get_current_weather_1',
+E                          'type': 'function'}]}
+E         Full diff:
+E           {
+E            'finish_reason': 'stop',
+E            'index': 0,
+E            'message': {'content': [{'function_call': {'args': {'location': 'New Delhi'},
+E                                                       'name': 'get_current_weather'}},
+E                                    {'function_call': {'args': {'location': 'San '
+E                                                                            'Francisco'},
+E                                                       'name': 'get_current_weather'}}],
+E                        'role': 'model'},
+E         -  'tool_calls': [{'function': {'arguments': {'location': 'New Delhi'},
+E         -                               'name': 'get_current_weather'},
+E         -                  'id': 'get_current_weather_0',
+E         -                  'type': 'function'},
+E         -                 {'function': {'arguments': {'location': 'San Francisco'},
+E         -                               'name': 'get_current_weather'},
+E         -                  'id': 'get_current_weather_1',
+E         -                  'type': 'function'}],
+E           }
+
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py:62: AssertionError
+_____________________ test_function_call_choice_no_content _____________________
+
+log_exporter = <opentelemetry.sdk._logs._internal.export.in_memory_log_exporter.InMemoryLogExporter object at 0x2abc08158650>
+instrument_no_content = <opentelemetry.instrumentation.vertexai.VertexAIInstrumentor object at 0x2abc086db290>
+
+    @pytest.mark.vcr
+    def test_function_call_choice_no_content(
+        log_exporter: InMemoryLogExporter,
+        instrument_no_content: VertexAIInstrumentor,
+    ):
+        ask_about_weather()
+    
+        # Emits user and choice events
+        logs = log_exporter.get_finished_logs()
+        assert len(logs) == 2
+        user_log, choice_log = [log_data.log_record for log_data in logs]
+        assert user_log.attributes == {
+            "gen_ai.system": "vertex_ai",
+            "event.name": "gen_ai.user.message",
+        }
+        assert user_log.body == {
+            "role": "user",
+        }
+    
+        assert choice_log.attributes == {
+            "gen_ai.system": "vertex_ai",
+            "event.name": "gen_ai.choice",
+        }
+>       assert choice_log.body == {
+            "finish_reason": "stop",
+            "index": 0,
+            "message": {"role": "model"},
+            "tool_calls": [
+                {
+                    "function": {"name": "get_current_weather"},
+                    "id": "get_current_weather_0",
+                    "type": "function",
+                },
+                {
+                    "function": {"name": "get_current_weather"},
+                    "id": "get_current_weather_1",
+                    "type": "function",
+                },
+            ],
+        }
+E       AssertionError: assert {'finish_reason': 'stop', 'index': 0, 'message': {'role': 'model'}} == {'finish_reason': 'stop', 'index': 0, 'message': {'role': 'model'}, 'tool_calls': [{'function': {'name': 'get_current_weather'}, 'id': 'get_current_weather_0', 'type': 'function'}, {'function': {'name': 'get_current_weather'}, 'id': 'get_current_weather_1', 'type': 'function'}]}
+E         Common items:
+E         {'finish_reason': 'stop', 'index': 0, 'message': {'role': 'model'}}
+E         Right contains 1 more item:
+E         {'tool_calls': [{'function': {'name': 'get_current_weather'},
+E                          'id': 'get_current_weather_0',
+E                          'type': 'function'},
+E                         {'function': {'name': 'get_current_weather'},
+E                          'id': 'get_current_weather_1',
+E                          'type': 'function'}]}
+E         Full diff:
+E           {
+E            'finish_reason': 'stop',
+E            'index': 0,
+E            'message': {'role': 'model'},
+E         -  'tool_calls': [{'function': {'name': 'get_current_weather'},
+E         -                  'id': 'get_current_weather_0',
+E         -                  'type': 'function'},
+E         -                 {'function': {'name': 'get_current_weather'},
+E         -                  'id': 'get_current_weather_1',
+E         -                  'type': 'function'}],
+E           }
+
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py:126: AssertionError
+_______________________________ test_tool_events _______________________________
+
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2abc08713d50>
+log_exporter = <opentelemetry.sdk._logs._internal.export.in_memory_log_exporter.InMemoryLogExporter object at 0x2abc08755d50>
+instrument_with_content = <opentelemetry.instrumentation.vertexai.VertexAIInstrumentor object at 0x2abc086db290>
+
+    @pytest.mark.vcr
+    def test_tool_events(
+        span_exporter: InMemorySpanExporter,
+        log_exporter: InMemoryLogExporter,
+        instrument_with_content: VertexAIInstrumentor,
+    ):
+        ask_about_weather_function_response()
+    
+        # Emits span
+        spans = span_exporter.get_finished_spans()
+        assert len(spans) == 1
+        assert spans[0].name == "chat gemini-1.5-flash-002"
+        assert dict(spans[0].attributes) == {
+            "gen_ai.operation.name": "chat",
+            "gen_ai.request.model": "gemini-1.5-flash-002",
+            "gen_ai.response.finish_reasons": ("stop",),
+            "gen_ai.response.model": "gemini-1.5-flash-002",
+            "gen_ai.system": "vertex_ai",
+            "gen_ai.usage.input_tokens": 126,
+            "gen_ai.usage.output_tokens": 24,
+            "server.address": "us-central1-aiplatform.googleapis.com",
+            "server.port": 443,
+        }
+    
+        # Emits user, assistant, two tool, and choice events
+        logs = log_exporter.get_finished_logs()
+>       assert len(logs) == 5
+E       assert 4 == 5
+E        +  where 4 = len((<opentelemetry.sdk._logs._internal.LogData object at 0x2abc0870d210>, <opentelemetry.sdk._logs._internal.LogData object at 0x2abc0870ea90>, <opentelemetry.sdk._logs._internal.LogData object at 0x2abc0870d910>, <opentelemetry.sdk._logs._internal.LogData object at 0x2abc0870e010>))
+
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py:171: AssertionError
+_________________________ test_tool_events_no_content __________________________
+
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2abc08784090>
+log_exporter = <opentelemetry.sdk._logs._internal.export.in_memory_log_exporter.InMemoryLogExporter object at 0x2abc08785550>
+instrument_no_content = <opentelemetry.instrumentation.vertexai.VertexAIInstrumentor object at 0x2abc086db290>
+
+    @pytest.mark.vcr
+    def test_tool_events_no_content(
+        span_exporter: InMemorySpanExporter,
+        log_exporter: InMemoryLogExporter,
+        instrument_no_content: VertexAIInstrumentor,
+    ):
+        ask_about_weather_function_response()
+    
+        # Emits span
+        spans = span_exporter.get_finished_spans()
+        assert len(spans) == 1
+        assert spans[0].name == "chat gemini-1.5-flash-002"
+        assert dict(spans[0].attributes) == {
+            "gen_ai.operation.name": "chat",
+            "gen_ai.request.model": "gemini-1.5-flash-002",
+            "gen_ai.response.finish_reasons": ("stop",),
+            "gen_ai.response.model": "gemini-1.5-flash-002",
+            "gen_ai.system": "vertex_ai",
+            "gen_ai.usage.input_tokens": 126,
+            "gen_ai.usage.output_tokens": 24,
+            "server.address": "us-central1-aiplatform.googleapis.com",
+            "server.port": 443,
+        }
+    
+        # Emits user, assistant, two tool, and choice events
+        logs = log_exporter.get_finished_logs()
+>       assert len(logs) == 5
+E       assert 4 == 5
+E        +  where 4 = len((<opentelemetry.sdk._logs._internal.LogData object at 0x2abc0875efd0>, <opentelemetry.sdk._logs._internal.LogData object at 0x2abc0875f410>, <opentelemetry.sdk._logs._internal.LogData object at 0x2abc0875f890>, <opentelemetry.sdk._logs._internal.LogData object at 0x2abc0875f050>))
+
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py:273: AssertionError
+=============================== warnings summary ===============================
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py: 30 warnings
+  /usr/local/lib/python3.11/site-packages/proto/message.py:389: DeprecationWarning: The argument `including_default_value_fields` has been removed from
+                  Protobuf 5.x. Please use `always_print_fields_with_no_presence` instead.
+                  
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 4 failed, 30 warnings in 0.42s ========================
+reward=0 graded=4 found=0 failed=0 parsed=0 framework=pytest exit_code=1

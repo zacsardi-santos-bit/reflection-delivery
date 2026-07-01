@@ -1,0 +1,546 @@
+diff --git a/api/src/backend/api/specs/v1.yaml b/api/src/backend/api/specs/v1.yaml
+index fdc83418a..047d1920e 100644
+--- a/api/src/backend/api/specs/v1.yaml
++++ b/api/src/backend/api/specs/v1.yaml
+@@ -751,6 +751,430 @@ paths:
+               schema:
+                 $ref: '#/components/schemas/FindingResponse'
+           description: ''
++  /api/v1/findings/findings_services_regions:
++    get:
++      operationId: findings_findings_services_regions_retrieve
++      description: Fetch services and regions affected in findings by date.
++      summary: Retrieve the services and regions that are impacted by findings in
++        a specific date
++      parameters:
++      - in: query
++        name: fields[finding-dynamic-filters]
++        schema:
++          type: array
++          items:
++            type: string
++            enum:
++            - services
++            - regions
++        description: endpoint return only specific fields in the response on a per-type
++          basis by including a fields[TYPE] query parameter.
++        explode: false
++      - in: query
++        name: filter[check_id]
++        schema:
++          type: string
++      - in: query
++        name: filter[check_id__icontains]
++        schema:
++          type: string
++      - in: query
++        name: filter[check_id__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[delta]
++        schema:
++          type: string
++          nullable: true
++          enum:
++          - changed
++          - new
++        description: |-
++          * `new` - New
++          * `changed` - Changed
++      - in: query
++        name: filter[delta__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[id]
++        schema:
++          type: string
++          format: uuid
++      - in: query
++        name: filter[id__in]
++        schema:
++          type: array
++          items:
++            type: string
++            format: uuid
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[impact]
++        schema:
++          type: string
++          enum:
++          - critical
++          - high
++          - informational
++          - low
++          - medium
++        description: |-
++          * `critical` - Critical
++          * `high` - High
++          * `medium` - Medium
++          * `low` - Low
++          * `informational` - Informational
++      - in: query
++        name: filter[impact__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[inserted_at]
++        schema:
++          type: string
++          format: date
++      - in: query
++        name: filter[inserted_at__date]
++        schema:
++          type: string
++          format: date
++      - in: query
++        name: filter[inserted_at__gte]
++        schema:
++          type: string
++          format: date
++      - in: query
++        name: filter[inserted_at__lte]
++        schema:
++          type: string
++          format: date
++      - in: query
++        name: filter[provider]
++        schema:
++          type: string
++          format: uuid
++      - in: query
++        name: filter[provider__in]
++        schema:
++          type: array
++          items:
++            type: string
++            format: uuid
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[provider_alias]
++        schema:
++          type: string
++      - in: query
++        name: filter[provider_alias__icontains]
++        schema:
++          type: string
++      - in: query
++        name: filter[provider_alias__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[provider_type]
++        schema:
++          type: string
++          enum:
++          - aws
++          - azure
++          - gcp
++          - kubernetes
++        description: |-
++          * `aws` - AWS
++          * `azure` - Azure
++          * `gcp` - GCP
++          * `kubernetes` - Kubernetes
++      - in: query
++        name: filter[provider_type__in]
++        schema:
++          type: array
++          items:
++            type: string
++            enum:
++            - aws
++            - azure
++            - gcp
++            - kubernetes
++        description: |-
++          Multiple values may be separated by commas.
++
++          * `aws` - AWS
++          * `azure` - Azure
++          * `gcp` - GCP
++          * `kubernetes` - Kubernetes
++        explode: false
++        style: form
++      - in: query
++        name: filter[provider_uid]
++        schema:
++          type: string
++      - in: query
++        name: filter[provider_uid__icontains]
++        schema:
++          type: string
++      - in: query
++        name: filter[provider_uid__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[region]
++        schema:
++          type: string
++      - in: query
++        name: filter[region__icontains]
++        schema:
++          type: string
++      - in: query
++        name: filter[region__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[resource_name]
++        schema:
++          type: string
++      - in: query
++        name: filter[resource_name__icontains]
++        schema:
++          type: string
++      - in: query
++        name: filter[resource_name__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[resource_type]
++        schema:
++          type: string
++      - in: query
++        name: filter[resource_type__icontains]
++        schema:
++          type: string
++      - in: query
++        name: filter[resource_type__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[resource_uid]
++        schema:
++          type: string
++      - in: query
++        name: filter[resource_uid__icontains]
++        schema:
++          type: string
++      - in: query
++        name: filter[resource_uid__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[resources]
++        schema:
++          type: array
++          items:
++            type: string
++            format: uuid
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[scan]
++        schema:
++          type: string
++          format: uuid
++      - in: query
++        name: filter[scan__in]
++        schema:
++          type: array
++          items:
++            type: string
++            format: uuid
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - name: filter[search]
++        required: false
++        in: query
++        description: A search term.
++        schema:
++          type: string
++      - in: query
++        name: filter[service]
++        schema:
++          type: string
++      - in: query
++        name: filter[service__icontains]
++        schema:
++          type: string
++      - in: query
++        name: filter[service__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[severity]
++        schema:
++          type: string
++          enum:
++          - critical
++          - high
++          - informational
++          - low
++          - medium
++        description: |-
++          * `critical` - Critical
++          * `high` - High
++          * `medium` - Medium
++          * `low` - Low
++          * `informational` - Informational
++      - in: query
++        name: filter[severity__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[status]
++        schema:
++          type: string
++          enum:
++          - FAIL
++          - MANUAL
++          - MUTED
++          - PASS
++        description: |-
++          * `FAIL` - Fail
++          * `PASS` - Pass
++          * `MANUAL` - Manual
++          * `MUTED` - Muted
++      - in: query
++        name: filter[status__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[uid]
++        schema:
++          type: string
++      - in: query
++        name: filter[uid__in]
++        schema:
++          type: array
++          items:
++            type: string
++        description: Multiple values may be separated by commas.
++        explode: false
++        style: form
++      - in: query
++        name: filter[updated_at]
++        schema:
++          type: string
++          format: date
++      - in: query
++        name: filter[updated_at__gte]
++        schema:
++          type: string
++          format: date-time
++      - in: query
++        name: filter[updated_at__lte]
++        schema:
++          type: string
++          format: date-time
++      - name: sort
++        required: false
++        in: query
++        description: '[list of fields to sort by](https://jsonapi.org/format/#fetching-sorting)'
++        schema:
++          type: array
++          items:
++            type: string
++            enum:
++            - id
++            - -id
++            - status
++            - -status
++            - severity
++            - -severity
++            - check_id
++            - -check_id
++            - inserted_at
++            - -inserted_at
++            - updated_at
++            - -updated_at
++        explode: false
++      tags:
++      - Finding
++      security:
++      - jwtAuth: []
++      responses:
++        '201':
++          content:
++            application/vnd.api+json:
++              schema:
++                $ref: '#/components/schemas/OpenApiResponseResponse'
++          description: ''
+   /api/v1/invitations/accept:
+     post:
+       operationId: invitations_accept_create
+@@ -4620,6 +5044,7 @@ components:
+       type: object
+       required:
+       - type
++      - id
+       additionalProperties: false
+       properties:
+         type:
+@@ -4628,6 +5053,9 @@ components:
+           description: The [type](https://jsonapi.org/format/#document-resource-object-identification)
+             member is used to describe resource objects that share common attributes
+             and relationships.
++        id:
++          type: string
++          format: uuid
+         attributes:
+           type: object
+           properties:
+diff --git a/api/src/backend/api/v1/serializers.py b/api/src/backend/api/v1/serializers.py
+index 9cc28bf00..5c1422129 100644
+--- a/api/src/backend/api/v1/serializers.py
++++ b/api/src/backend/api/v1/serializers.py
+@@ -707,6 +707,14 @@ class FindingSerializer(RLSSerializer):
+     }
+ 
+ 
++class FindingDynamicFilterSerializer(serializers.Serializer):
++    services = serializers.ListField(child=serializers.CharField(), allow_empty=True)
++    regions = serializers.ListField(child=serializers.CharField(), allow_empty=True)
++
++    class Meta:
++        resource_name = "finding-dynamic-filters"
++
++
+ # Provider secrets
+ class BaseWriteProviderSecretSerializer(BaseWriteSerializer):
+     @staticmethod
+diff --git a/api/src/backend/api/v1/views.py b/api/src/backend/api/v1/views.py
+index 65f41cfea..a72f617d1 100644
+--- a/api/src/backend/api/v1/views.py
++++ b/api/src/backend/api/v1/views.py
+@@ -1,5 +1,6 @@
+ from celery.result import AsyncResult
+ from django.conf import settings as django_settings
++from django.contrib.postgres.aggregates import ArrayAgg
+ from django.contrib.postgres.search import SearchQuery
+ from django.db import transaction
+ from django.db.models import Count, F, OuterRef, Prefetch, Q, Subquery, Sum
+@@ -76,6 +77,7 @@ from api.v1.serializers import (
+     ComplianceOverviewFullSerializer,
+     ComplianceOverviewSerializer,
+     FindingSerializer,
++    FindingDynamicFilterSerializer,
+     InvitationAcceptSerializer,
+     InvitationCreateSerializer,
+     InvitationSerializer,
+@@ -978,6 +980,13 @@ class ResourceViewSet(BaseRLSViewSet):
+         summary="Retrieve data from a specific finding",
+         description="Fetch detailed information about a specific finding by its ID.",
+     ),
++    findings_services_regions=extend_schema(
++        tags=["Finding"],
++        summary="Retrieve the services and regions that are impacted by findings",
++        description="Fetch services and regions affected in findings.",
++        responses={201: OpenApiResponse(response=MembershipSerializer)},
++        filters=True,
++    ),
+ )
+ @method_decorator(CACHE_DECORATOR, name="list")
+ @method_decorator(CACHE_DECORATOR, name="retrieve")
+@@ -1008,6 +1017,12 @@ class FindingViewSet(BaseRLSViewSet):
+             return None
+         return datetime_to_uuid7(inserted_at)
+ 
++    def get_serializer_class(self):
++        if self.action == "findings_services_regions":
++            return FindingDynamicFilterSerializer
++
++        return super().get_serializer_class()
++
+     def get_queryset(self):
+         queryset = Finding.objects.all()
+         search_value = self.request.query_params.get("filter[search]", None)
+@@ -1039,6 +1054,27 @@ class FindingViewSet(BaseRLSViewSet):
+ 
+         return queryset
+ 
++    @action(detail=False, methods=["get"], url_name="findings_services_regions")
++    def findings_services_regions(self, request):
++        queryset = self.get_queryset()
++        filtered_queryset = self.filter_queryset(queryset)
++
++        result = filtered_queryset.aggregate(
++            services=ArrayAgg("resources__service", flat=True, distinct=True),
++            regions=ArrayAgg("resources__region", flat=True, distinct=True),
++        )
++        if result["services"] is None:
++            result["services"] = []
++        if result["regions"] is None:
++            result["regions"] = []
++
++        serializer = self.get_serializer(
++            data=result,
++        )
++        serializer.is_valid(raise_exception=True)
++
++        return Response(data=serializer.data, status=status.HTTP_200_OK)
++
+ 
+ @extend_schema_view(
+     list=extend_schema(

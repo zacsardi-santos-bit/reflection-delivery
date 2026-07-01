@@ -1,0 +1,3 @@
+patching file cmd/keeper/cmd/keeper.go
+patching file doc/postgres_parameters.md
+patching file pkg/postgresql/utils.go

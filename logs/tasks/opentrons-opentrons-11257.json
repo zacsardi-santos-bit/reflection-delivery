@@ -1,0 +1,23 @@
+{
+ "task": "opentrons-opentrons-11257",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden creates app/src/redux/protocol-analysis/actions.ts with 'protocol-analysis:OPEN_PYTHON_DIRECTORY'/'CHANGE_PYTHON_PATH_OVERRIDE' and app-shell registerProtocolAnalysis dialog handling; F2P tests those exact actions"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 76,
+  "shallow": true
+ }
+}

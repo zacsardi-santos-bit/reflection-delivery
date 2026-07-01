@@ -1,0 +1,23 @@
+{
+ "task": "uutils-coreutils-3270",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: `-Column::Avail => write!(... self.row.bytes_free) +Column::Avail => write!(... self.row.bytes_avail)` and `-bytes_free: blocksize * bfree +bytes_avail: blocksize * bavail`; F2P #31 test_row_from_filesystem_avail asserts output contains 600 (bavail) not 750 (bfree)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

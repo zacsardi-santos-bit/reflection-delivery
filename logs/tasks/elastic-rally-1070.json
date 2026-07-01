@@ -1,0 +1,23 @@
+{
+ "task": "elastic-rally-1070",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds _transport_request_params forwarding request_timeout/headers/x-opaque-id only when non-None; test asserts perform_request.assert_called_once_with(... headers={...'x-opaque-id':'test-id1'}, params={'request_timeout':3.0})"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,201 @@
+patching file src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js
+patching file src/test/unit_tests/jest_tests/test_iam_utils.test.js
+  console.warn
+    Error accrued while getting the data from /etc/noobaa.conf.d/config_dir_redirect: Error: ENOENT: no such file or directory, open '/etc/noobaa.conf.d/config_dir_redirect'
+
+      1019 |         data = fs.readFileSync(file_name).toString();
+      1020 |     } catch (e) {
+    > 1021 |         console.warn(`Error accrued while getting the data from ${file_name}: ${e}`);
+           |                 ^
+      1022 |         return;
+      1023 |     }
+      1024 |     return data;
+
+      at warn (config.js:1021:17)
+      at _get_data_from_file (config.js:1034:22)
+      at _get_config_root (config.js:1078:39)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/iam/ops/iam_create_user.js:4:13)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:5:28)
+
+  console.warn
+    config.get_config_root - could not find custom config_root, will use the default config_root  /etc/noobaa.conf.d
+
+      1035 |         config_root = data.toString().trim();
+      1036 |     } catch (err) {
+    > 1037 |         console.warn('config.get_config_root - could not find custom config_root, will use the default config_root ', config_root);
+           |                 ^
+      1038 |     }
+      1039 |     return config_root;
+      1040 | }
+
+      at warn (config.js:1037:17)
+      at _get_config_root (config.js:1078:39)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/iam/ops/iam_create_user.js:4:13)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:5:28)
+
+  console.warn
+    load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR /etc/noobaa.conf.d
+
+      1077 |         if (!config.NSFS_NC_CONF_DIR) {
+      1078 |             config.NSFS_NC_CONF_DIR = _get_config_root();
+    > 1079 |             console.warn('load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR', config.NSFS_NC_CONF_DIR);
+           |                     ^
+      1080 |         }
+      1081 |         const config_path = path.join(config.NSFS_NC_CONF_DIR, 'config.json');
+      1082 |         const config_data = require(config_path);
+
+      at warn (config.js:1079:21)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/iam/ops/iam_create_user.js:4:13)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:5:28)
+
+  console.warn
+    Error accrued while getting the data from /etc/noobaa.conf.d/config_dir_redirect: Error: ENOENT: no such file or directory, open '/etc/noobaa.conf.d/config_dir_redirect'
+
+      1019 |         data = fs.readFileSync(file_name).toString();
+      1020 |     } catch (e) {
+    > 1021 |         console.warn(`Error accrued while getting the data from ${file_name}: ${e}`);
+           |                 ^
+      1022 |         return;
+      1023 |     }
+      1024 |     return data;
+
+      at warn (config.js:1021:17)
+      at _get_data_from_file (config.js:1034:22)
+      at _get_config_root (config.js:1078:39)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/s3/s3_utils.js:6:13)
+      at Object.require (src/endpoint/iam/iam_utils.js:5:18)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:4:19)
+
+  console.warn
+    config.load_nsfs_nc_config could not find config.json... skipping
+
+      1102 |     } catch (err) {
+      1103 |         if (err.code !== 'MODULE_NOT_FOUND' && err.code !== 'ENOENT') throw err;
+    > 1104 |         console.warn('config.load_nsfs_nc_config could not find config.json... skipping');
+           |                 ^
+      1105 |     }
+      1106 | }
+      1107 | /**
+
+      at warn (config.js:1104:17)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/iam/ops/iam_create_user.js:4:13)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:5:28)
+
+  console.warn
+    config.get_config_root - could not find custom config_root, will use the default config_root  /etc/noobaa.conf.d
+
+      1035 |         config_root = data.toString().trim();
+      1036 |     } catch (err) {
+    > 1037 |         console.warn('config.get_config_root - could not find custom config_root, will use the default config_root ', config_root);
+           |                 ^
+      1038 |     }
+      1039 |     return config_root;
+      1040 | }
+
+      at warn (config.js:1037:17)
+      at _get_config_root (config.js:1078:39)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/s3/s3_utils.js:6:13)
+      at Object.require (src/endpoint/iam/iam_utils.js:5:18)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:4:19)
+
+  console.warn
+    load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR /etc/noobaa.conf.d
+
+      1077 |         if (!config.NSFS_NC_CONF_DIR) {
+      1078 |             config.NSFS_NC_CONF_DIR = _get_config_root();
+    > 1079 |             console.warn('load_nsfs_nc_config.setting config.NSFS_NC_CONF_DIR', config.NSFS_NC_CONF_DIR);
+           |                     ^
+      1080 |         }
+      1081 |         const config_path = path.join(config.NSFS_NC_CONF_DIR, 'config.json');
+      1082 |         const config_data = require(config_path);
+
+      at warn (config.js:1079:21)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/s3/s3_utils.js:6:13)
+      at Object.require (src/endpoint/iam/iam_utils.js:5:18)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:4:19)
+
+  console.warn
+    config.load_nsfs_nc_config could not find config.json... skipping
+
+      1102 |     } catch (err) {
+      1103 |         if (err.code !== 'MODULE_NOT_FOUND' && err.code !== 'ENOENT') throw err;
+    > 1104 |         console.warn('config.load_nsfs_nc_config could not find config.json... skipping');
+           |                 ^
+      1105 |     }
+      1106 | }
+      1107 | /**
+
+      at warn (config.js:1104:17)
+      at Object.load_nsfs_nc_config (config.js:1154:1)
+      at Object.require (src/util/debug_module.js:24:16)
+      at Object.require (src/endpoint/s3/s3_utils.js:6:13)
+      at Object.require (src/endpoint/iam/iam_utils.js:5:18)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:4:19)
+
+FAIL src/test/unit_tests/jest_tests/test_iam_utils.test.js
+  ● Test suite failed to run
+
+    Cannot find module '../../../endpoint/iam/iam_constants' from 'src/test/unit_tests/jest_tests/test_iam_utils.test.js'
+
+      3 | 'use strict';
+      4 | const iam_utils = require('../../../endpoint/iam/iam_utils');
+    > 5 | const iam_constants = require('../../../endpoint/iam/iam_constants');
+        |                       ^
+      6 | const { IamError } = require('../../../endpoint/iam/iam_errors');
+      7 |
+      8 | class NoErrorThrownError extends Error {}
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:5:23)
+
+(node:176) NOTE: The AWS SDK for JavaScript (v2) will enter maintenance mode
+on September 8, 2024 and reach end-of-support on September 8, 2025.
+
+Please migrate your code to use AWS SDK for JavaScript (v3).
+For more information, check blog post at https://a.co/cUPnyil
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32mJun-29 15:26:41.893[35m [/176] [33m [WARN][39m CONSOLE:: config.load_nsfs_nc_config could not find config.json... skipping
+FAIL src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js
+  ● Test suite failed to run
+
+    Cannot find module '../../../endpoint/iam/ops/iam_get_access_key_last_used' from 'src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js'
+
+       9 | const iam_list_users_op = require('../../../endpoint/iam/ops/iam_list_users');
+      10 | const iam_create_access_key_op = require('../../../endpoint/iam/ops/iam_create_access_key');
+    > 11 | const iam_get_access_key_last_used_op = require('../../../endpoint/iam/ops/iam_get_access_key_last_used');
+         |                                         ^
+      12 | const iam_update_access_key_op = require('../../../endpoint/iam/ops/iam_update_access_key');
+      13 | const iam_delete_access_key_op = require('../../../endpoint/iam/ops/iam_delete_access_key');
+      14 | const iam_list_access_keys_op = require('../../../endpoint/iam/ops/iam_list_access_keys');
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:11:41)
+
+(node:177) NOTE: The AWS SDK for JavaScript (v2) will enter maintenance mode
+on September 8, 2024 and reach end-of-support on September 8, 2025.
+
+Please migrate your code to use AWS SDK for JavaScript (v3).
+For more information, check blog post at https://a.co/cUPnyil
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32mJun-29 15:26:41.928[35m [/177] [33m [WARN][39m CONSOLE:: config.load_nsfs_nc_config could not find config.json... skipping
+Test Suites: 2 failed, 2 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        2.027 s
+Ran all test suites matching /src\/test\/unit_tests\/jest_tests\/test_iam_ops_input_validation.test.js|src\/test\/unit_tests\/jest_tests\/test_iam_utils.test.js/i.
+{"numFailedTestSuites":2,"numFailedTests":0,"numPassedTestSuites":0,"numPassedTests":0,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":2,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":0,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746799952,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782746801980,"message":"  ● Test suite failed to run\n\n    Cannot find module '../../../endpoint/iam/iam_constants' from 'src/test/unit_tests/jest_tests/test_iam_utils.test.js'\n\n      3 | 'use strict';\n      4 | const iam_utils = require('../../../endpoint/iam/iam_utils');\n    > 5 | const iam_constants = require('../../../endpoint/iam/iam_constants');\n        |                       ^\n      6 | const { IamError } = require('../../../endpoint/iam/iam_errors');\n      7 |\n      8 | class NoErrorThrownError extends Error {}\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)\n      at Object.require (src/test/unit_tests/jest_tests/test_iam_utils.test.js:5:23)\n","name":"/workspace/repo/src/test/unit_tests/jest_tests/test_iam_utils.test.js","startTime":1782746801980,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746801980,"message":"  ● Test suite failed to run\n\n    Cannot find module '../../../endpoint/iam/ops/iam_get_access_key_last_used' from 'src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js'\n\n       9 | const iam_list_users_op = require('../../../endpoint/iam/ops/iam_list_users');\n      10 | const iam_create_access_key_op = require('../../../endpoint/iam/ops/iam_create_access_key');\n    > 11 | const iam_get_access_key_last_used_op = require('../../../endpoint/iam/ops/iam_get_access_key_last_used');\n         |                                         ^\n      12 | const iam_update_access_key_op = require('../../../endpoint/iam/ops/iam_update_access_key');\n      13 | const iam_delete_access_key_op = require('../../../endpoint/iam/ops/iam_delete_access_key');\n      14 | const iam_list_access_keys_op = require('../../../endpoint/iam/ops/iam_list_access_keys');\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)\n      at Object.require (src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js:11:41)\n","name":"/workspace/repo/src/test/unit_tests/jest_tests/test_iam_ops_input_validation.test.js","startTime":1782746801980,"status":"failed","summary":""}],"wasInterrupted":false}
+reward=0 graded=95 found=0 failed=0 parsed=2 framework=jest exit_code=1

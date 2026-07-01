@@ -1,0 +1,5 @@
+patching file cluster-autoscaler/cloudprovider/gce/autoscaling_gce_client.go
+patching file cluster-autoscaler/cloudprovider/gce/cache.go
+patching file cluster-autoscaler/cloudprovider/gce/gce_cloud_provider.go
+patching file cluster-autoscaler/cloudprovider/gce/gce_manager.go
+patching file cluster-autoscaler/cloudprovider/gke/gke_manager.go

@@ -1,0 +1,21 @@
+patching file crates/db_connection_pool/src/dbconnection/snowflakeconn.rs
+Hunk #1 succeeded at 825 (offset 59 lines).
+   Compiling db_connection_pool v1.4.0-unstable (/workspace/repo/crates/db_connection_pool)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 20.31s
+────────────
+ Nextest run ID 481666d7-2bef-442e-9edf-7858194f47a6 with nextest profile: default
+    Starting 11 tests across 1 binary
+        PASS [   0.114s] ( 1/11) db_connection_pool dbconnection::snowflakeconn::tests::test_sf_ts_ntz_int64_to_arrow_timestamp
+        PASS [   0.114s] ( 2/11) db_connection_pool dbconnection::snowflakeconn::tests::test_parse_snowflake_data_type_errors
+        PASS [   0.115s] ( 3/11) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_ntz_to_arrow_timestamp_invalid_input
+        PASS [   0.116s] ( 4/11) db_connection_pool dbconnection::snowflakeconn::tests::test_sf_ts_tz_int64_to_arrow_timestamp
+        PASS [   0.117s] ( 5/11) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_ntz_to_arrow_timestamp
+        PASS [   0.118s] ( 6/11) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_fixed_point_number_to_decimal_i64
+        PASS [   0.117s] ( 7/11) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_fixed_point_number_to_decimal_i32
+        PASS [   0.121s] ( 8/11) db_connection_pool dbconnection::snowflakeconn::tests::test_parse_snowflake_data_type
+        PASS [   0.124s] ( 9/11) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_tz_to_arrow_timestamp
+        PASS [   0.123s] (10/11) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_tz_seconds_precision_to_arrow_timestamp
+        PASS [   0.125s] (11/11) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_ntz_seconds_precision_to_arrow_timestamp
+────────────
+     Summary [   0.126s] 11 tests run: 11 passed, 0 skipped
+reward=1 graded=11 found=0 failed=0 parsed=11 framework=cargo exit_code=0

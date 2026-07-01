@@ -1,0 +1,179 @@
+patching file pkg/ans/ans_test.go
+patching file pkg/ans/event_test.go
+{"Time":"2026-06-29T15:23:16.938608568Z","Action":"start","Package":"github.com/SAP/jenkins-library/pkg/ans"}
+{"Time":"2026-06-29T15:23:16.946063971Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send"}
+{"Time":"2026-06-29T15:23:16.946100981Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send","Output":"=== RUN   TestANS_Send\n"}
+{"Time":"2026-06-29T15:23:16.946126541Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good"}
+{"Time":"2026-06-29T15:23:16.946148951Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good","Output":"=== RUN   TestANS_Send/good\n"}
+{"Time":"2026-06-29T15:23:16.946177931Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/pass_request_attributes"}
+{"Time":"2026-06-29T15:23:16.946201591Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/pass_request_attributes","Output":"=== RUN   TestANS_Send/good/pass_request_attributes\n"}
+{"Time":"2026-06-29T15:23:16.948148496Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/pass_request_attributes","Output":"--- PASS: TestANS_Send/good/pass_request_attributes (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.948183326Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/pass_request_attributes","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.948222646Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/pass_request_attribute_event"}
+{"Time":"2026-06-29T15:23:16.948244096Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/pass_request_attribute_event","Output":"=== RUN   TestANS_Send/good/pass_request_attribute_event\n"}
+{"Time":"2026-06-29T15:23:16.950161482Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/pass_request_attribute_event","Output":"--- PASS: TestANS_Send/good/pass_request_attribute_event (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.950218562Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/pass_request_attribute_event","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.950246662Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/on_status_202"}
+{"Time":"2026-06-29T15:23:16.950272622Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/on_status_202","Output":"=== RUN   TestANS_Send/good/on_status_202\n"}
+{"Time":"2026-06-29T15:23:16.951669128Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/on_status_202","Output":"--- PASS: TestANS_Send/good/on_status_202 (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.951704038Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good/on_status_202","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.951729338Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good","Output":"--- PASS: TestANS_Send/good (0.01s)\n"}
+{"Time":"2026-06-29T15:23:16.951754758Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/good","Elapsed":0.01}
+{"Time":"2026-06-29T15:23:16.951790168Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/bad"}
+{"Time":"2026-06-29T15:23:16.951812498Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/bad","Output":"=== RUN   TestANS_Send/bad\n"}
+{"Time":"2026-06-29T15:23:16.951835968Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/bad/on_status_400"}
+{"Time":"2026-06-29T15:23:16.951858368Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/bad/on_status_400","Output":"=== RUN   TestANS_Send/bad/on_status_400\n"}
+{"Time":"2026-06-29T15:23:16.952018878Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/bad/on_status_400","Output":"--- PASS: TestANS_Send/bad/on_status_400 (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.952056688Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/bad/on_status_400","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.952083548Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/bad","Output":"--- PASS: TestANS_Send/bad (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.952107138Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send/bad","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.952135147Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send","Output":"--- PASS: TestANS_Send (0.01s)\n"}
+{"Time":"2026-06-29T15:23:16.952158197Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_Send","Elapsed":0.01}
+{"Time":"2026-06-29T15:23:16.952187457Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup"}
+{"Time":"2026-06-29T15:23:16.952209477Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup","Output":"=== RUN   TestANS_CheckCorrectSetup\n"}
+{"Time":"2026-06-29T15:23:16.952232497Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good"}
+{"Time":"2026-06-29T15:23:16.952255487Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good","Output":"=== RUN   TestANS_CheckCorrectSetup/good\n"}
+{"Time":"2026-06-29T15:23:16.952278617Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good/pass_request_attributes"}
+{"Time":"2026-06-29T15:23:16.952300977Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good/pass_request_attributes","Output":"=== RUN   TestANS_CheckCorrectSetup/good/pass_request_attributes\n"}
+{"Time":"2026-06-29T15:23:16.952960346Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good/pass_request_attributes","Output":"--- PASS: TestANS_CheckCorrectSetup/good/pass_request_attributes (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.953020755Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good/pass_request_attributes","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.953052015Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good/on_status_200"}
+{"Time":"2026-06-29T15:23:16.953074695Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good/on_status_200","Output":"=== RUN   TestANS_CheckCorrectSetup/good/on_status_200\n"}
+{"Time":"2026-06-29T15:23:16.953111175Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good/on_status_200","Output":"--- PASS: TestANS_CheckCorrectSetup/good/on_status_200 (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.953136585Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good/on_status_200","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.953160345Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good","Output":"--- PASS: TestANS_CheckCorrectSetup/good (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.953184445Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/good","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.953210805Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/bad"}
+{"Time":"2026-06-29T15:23:16.953233325Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/bad","Output":"=== RUN   TestANS_CheckCorrectSetup/bad\n"}
+{"Time":"2026-06-29T15:23:16.953265545Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/bad/on_status_400"}
+{"Time":"2026-06-29T15:23:16.953287635Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/bad/on_status_400","Output":"=== RUN   TestANS_CheckCorrectSetup/bad/on_status_400\n"}
+{"Time":"2026-06-29T15:23:16.953422145Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/bad/on_status_400","Output":"--- PASS: TestANS_CheckCorrectSetup/bad/on_status_400 (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.953452995Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/bad/on_status_400","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.953477514Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/bad","Output":"--- PASS: TestANS_CheckCorrectSetup/bad (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.953501814Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup/bad","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.953531444Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup","Output":"--- PASS: TestANS_CheckCorrectSetup (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.953554574Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_CheckCorrectSetup","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.953577674Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey"}
+{"Time":"2026-06-29T15:23:16.953601024Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey","Output":"=== RUN   TestANS_UnmarshallServiceKey\n"}
+{"Time":"2026-06-29T15:23:16.953624414Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey","Output":"=== PAUSE TestANS_UnmarshallServiceKey\n"}
+{"Time":"2026-06-29T15:23:16.953646574Z","Action":"pause","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey"}
+{"Time":"2026-06-29T15:23:16.953670464Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody"}
+{"Time":"2026-06-29T15:23:16.953692184Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody","Output":"=== RUN   TestANS_readResponseBody\n"}
+{"Time":"2026-06-29T15:23:16.953717014Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody/Straight_forward"}
+{"Time":"2026-06-29T15:23:16.953739554Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody/Straight_forward","Output":"=== RUN   TestANS_readResponseBody/Straight_forward\n"}
+{"Time":"2026-06-29T15:23:16.953764644Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody/Straight_forward","Output":"--- PASS: TestANS_readResponseBody/Straight_forward (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.953793094Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody/Straight_forward","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.953815874Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody/No_response_error"}
+{"Time":"2026-06-29T15:23:16.953838044Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody/No_response_error","Output":"=== RUN   TestANS_readResponseBody/No_response_error\n"}
+{"Time":"2026-06-29T15:23:16.953862904Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody/No_response_error","Output":"--- PASS: TestANS_readResponseBody/No_response_error (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.953886344Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody/No_response_error","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.953917273Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody","Output":"--- PASS: TestANS_readResponseBody (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.953941723Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_readResponseBody","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.953965223Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_SetServiceKey"}
+{"Time":"2026-06-29T15:23:16.953987113Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_SetServiceKey","Output":"=== RUN   TestANS_SetServiceKey\n"}
+{"Time":"2026-06-29T15:23:16.954010393Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_SetServiceKey/ServiceKey_sets_ANS_fields"}
+{"Time":"2026-06-29T15:23:16.954042563Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_SetServiceKey/ServiceKey_sets_ANS_fields","Output":"=== RUN   TestANS_SetServiceKey/ServiceKey_sets_ANS_fields\n"}
+{"Time":"2026-06-29T15:23:16.954067863Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_SetServiceKey/ServiceKey_sets_ANS_fields","Output":"--- PASS: TestANS_SetServiceKey/ServiceKey_sets_ANS_fields (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954091403Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_SetServiceKey/ServiceKey_sets_ANS_fields","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954115083Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_SetServiceKey","Output":"--- PASS: TestANS_SetServiceKey (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954137883Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_SetServiceKey","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954160533Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON"}
+{"Time":"2026-06-29T15:23:16.954183573Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON","Output":"=== RUN   TestEvent_MergeWithJSON\n"}
+{"Time":"2026-06-29T15:23:16.954208563Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Proper_event_JSON_yields_correct_event"}
+{"Time":"2026-06-29T15:23:16.954230653Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Proper_event_JSON_yields_correct_event","Output":"=== RUN   TestEvent_MergeWithJSON/Proper_event_JSON_yields_correct_event\n"}
+{"Time":"2026-06-29T15:23:16.954255813Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Proper_event_JSON_yields_correct_event","Output":"--- PASS: TestEvent_MergeWithJSON/Proper_event_JSON_yields_correct_event (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954278963Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Proper_event_JSON_yields_correct_event","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954301833Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Merging_events_includes_all_parts"}
+{"Time":"2026-06-29T15:23:16.954323503Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Merging_events_includes_all_parts","Output":"=== RUN   TestEvent_MergeWithJSON/Merging_events_includes_all_parts\n"}
+{"Time":"2026-06-29T15:23:16.954349363Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Merging_events_includes_all_parts","Output":"--- PASS: TestEvent_MergeWithJSON/Merging_events_includes_all_parts (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954372432Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Merging_events_includes_all_parts","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954395262Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Faulty_JSON_yields_error"}
+{"Time":"2026-06-29T15:23:16.954423282Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Faulty_JSON_yields_error","Output":"=== RUN   TestEvent_MergeWithJSON/Faulty_JSON_yields_error\n"}
+{"Time":"2026-06-29T15:23:16.954447102Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Faulty_JSON_yields_error","Output":"--- PASS: TestEvent_MergeWithJSON/Faulty_JSON_yields_error (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954470602Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Faulty_JSON_yields_error","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954493962Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Non-existent_field_yields_error"}
+{"Time":"2026-06-29T15:23:16.954515742Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Non-existent_field_yields_error","Output":"=== RUN   TestEvent_MergeWithJSON/Non-existent_field_yields_error\n"}
+{"Time":"2026-06-29T15:23:16.954539512Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Non-existent_field_yields_error","Output":"--- PASS: TestEvent_MergeWithJSON/Non-existent_field_yields_error (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954562472Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON/Non-existent_field_yields_error","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954586102Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON","Output":"--- PASS: TestEvent_MergeWithJSON (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954609052Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_MergeWithJSON","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954631662Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel"}
+{"Time":"2026-06-29T15:23:16.954653182Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel","Output":"=== RUN   TestEvent_SetLogLevel\n"}
+{"Time":"2026-06-29T15:23:16.954677752Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/InfoLevel_yields_INFO_and_NOTIFICATION"}
+{"Time":"2026-06-29T15:23:16.954700482Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/InfoLevel_yields_INFO_and_NOTIFICATION","Output":"=== RUN   TestEvent_SetLogLevel/InfoLevel_yields_INFO_and_NOTIFICATION\n"}
+{"Time":"2026-06-29T15:23:16.954724482Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/InfoLevel_yields_INFO_and_NOTIFICATION","Output":"--- PASS: TestEvent_SetLogLevel/InfoLevel_yields_INFO_and_NOTIFICATION (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954747712Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/InfoLevel_yields_INFO_and_NOTIFICATION","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954770612Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/DebugLevel_yields_INFO_and_NOTIFICATION"}
+{"Time":"2026-06-29T15:23:16.954793202Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/DebugLevel_yields_INFO_and_NOTIFICATION","Output":"=== RUN   TestEvent_SetLogLevel/DebugLevel_yields_INFO_and_NOTIFICATION\n"}
+{"Time":"2026-06-29T15:23:16.954823571Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/DebugLevel_yields_INFO_and_NOTIFICATION","Output":"--- PASS: TestEvent_SetLogLevel/DebugLevel_yields_INFO_and_NOTIFICATION (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954846391Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/DebugLevel_yields_INFO_and_NOTIFICATION","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954875041Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/WarnLevel_yields_WARNING_and_ALERT"}
+{"Time":"2026-06-29T15:23:16.954897391Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/WarnLevel_yields_WARNING_and_ALERT","Output":"=== RUN   TestEvent_SetLogLevel/WarnLevel_yields_WARNING_and_ALERT\n"}
+{"Time":"2026-06-29T15:23:16.954921801Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/WarnLevel_yields_WARNING_and_ALERT","Output":"--- PASS: TestEvent_SetLogLevel/WarnLevel_yields_WARNING_and_ALERT (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.954945021Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/WarnLevel_yields_WARNING_and_ALERT","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.954967841Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/ErrorLevel_yields_ERROR_and_EXCEPTION"}
+{"Time":"2026-06-29T15:23:16.954989841Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/ErrorLevel_yields_ERROR_and_EXCEPTION","Output":"=== RUN   TestEvent_SetLogLevel/ErrorLevel_yields_ERROR_and_EXCEPTION\n"}
+{"Time":"2026-06-29T15:23:16.955020051Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/ErrorLevel_yields_ERROR_and_EXCEPTION","Output":"--- PASS: TestEvent_SetLogLevel/ErrorLevel_yields_ERROR_and_EXCEPTION (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.955045931Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/ErrorLevel_yields_ERROR_and_EXCEPTION","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.955068971Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/FatalLevel_yields_FATAL_and_EXCEPTION"}
+{"Time":"2026-06-29T15:23:16.955090831Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/FatalLevel_yields_FATAL_and_EXCEPTION","Output":"=== RUN   TestEvent_SetLogLevel/FatalLevel_yields_FATAL_and_EXCEPTION\n"}
+{"Time":"2026-06-29T15:23:16.955115161Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/FatalLevel_yields_FATAL_and_EXCEPTION","Output":"--- PASS: TestEvent_SetLogLevel/FatalLevel_yields_FATAL_and_EXCEPTION (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.955139151Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/FatalLevel_yields_FATAL_and_EXCEPTION","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.955162041Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/PanicLevel_yields_FATAL_and_EXCEPTION"}
+{"Time":"2026-06-29T15:23:16.955184191Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/PanicLevel_yields_FATAL_and_EXCEPTION","Output":"=== RUN   TestEvent_SetLogLevel/PanicLevel_yields_FATAL_and_EXCEPTION\n"}
+{"Time":"2026-06-29T15:23:16.955207951Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/PanicLevel_yields_FATAL_and_EXCEPTION","Output":"--- PASS: TestEvent_SetLogLevel/PanicLevel_yields_FATAL_and_EXCEPTION (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.955232641Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel/PanicLevel_yields_FATAL_and_EXCEPTION","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.95525705Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel","Output":"--- PASS: TestEvent_SetLogLevel (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.95528106Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_SetLogLevel","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.95530416Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate"}
+{"Time":"2026-06-29T15:23:16.95534755Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate","Output":"=== RUN   TestEvent_Validate\n"}
+{"Time":"2026-06-29T15:23:16.95537104Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate","Output":"=== PAUSE TestEvent_Validate\n"}
+{"Time":"2026-06-29T15:23:16.95539308Z","Action":"pause","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate"}
+{"Time":"2026-06-29T15:23:16.95541597Z","Action":"cont","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey"}
+{"Time":"2026-06-29T15:23:16.95543781Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey","Output":"=== CONT  TestANS_UnmarshallServiceKey\n"}
+{"Time":"2026-06-29T15:23:16.95546097Z","Action":"cont","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate"}
+{"Time":"2026-06-29T15:23:16.95548394Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate","Output":"=== CONT  TestEvent_Validate\n"}
+{"Time":"2026-06-29T15:23:16.95550867Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/good"}
+{"Time":"2026-06-29T15:23:16.95553209Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/good","Output":"=== RUN   TestANS_UnmarshallServiceKey/good\n"}
+{"Time":"2026-06-29T15:23:16.95555785Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/good/Proper_event_JSON_yields_correct_event"}
+{"Time":"2026-06-29T15:23:16.95557981Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/good/Proper_event_JSON_yields_correct_event","Output":"=== RUN   TestANS_UnmarshallServiceKey/good/Proper_event_JSON_yields_correct_event\n"}
+{"Time":"2026-06-29T15:23:16.95560564Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Category_must_be_one_of_[EXCEPTION_ALERT_NOTIFICATION]"}
+{"Time":"2026-06-29T15:23:16.95563235Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Category_must_be_one_of_[EXCEPTION_ALERT_NOTIFICATION]","Output":"=== RUN   TestEvent_Validate/Category_must_be_one_of_[EXCEPTION_ALERT_NOTIFICATION]\n"}
+{"Time":"2026-06-29T15:23:16.9556669Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/good/Proper_event_JSON_yields_correct_event","Output":"--- PASS: TestANS_UnmarshallServiceKey/good/Proper_event_JSON_yields_correct_event (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.95569176Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/good/Proper_event_JSON_yields_correct_event","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.955717089Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/good","Output":"--- PASS: TestANS_UnmarshallServiceKey/good (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.955740439Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/good","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.955763779Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/bad"}
+{"Time":"2026-06-29T15:23:16.955785479Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/bad","Output":"=== RUN   TestANS_UnmarshallServiceKey/bad\n"}
+{"Time":"2026-06-29T15:23:16.955810529Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/bad/JSON_key_data_is_an_invalid_string"}
+{"Time":"2026-06-29T15:23:16.955832459Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/bad/JSON_key_data_is_an_invalid_string","Output":"=== RUN   TestANS_UnmarshallServiceKey/bad/JSON_key_data_is_an_invalid_string\n"}
+{"Time":"2026-06-29T15:23:16.955862869Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/bad/JSON_key_data_is_an_invalid_string","Output":"--- PASS: TestANS_UnmarshallServiceKey/bad/JSON_key_data_is_an_invalid_string (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.955898689Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/bad/JSON_key_data_is_an_invalid_string","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.955931339Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/bad","Output":"--- PASS: TestANS_UnmarshallServiceKey/bad (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.955962069Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey/bad","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.955988009Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey","Output":"--- PASS: TestANS_UnmarshallServiceKey (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.956011799Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestANS_UnmarshallServiceKey","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.956050929Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Category_must_be_one_of_[EXCEPTION_ALERT_NOTIFICATION]","Output":"--- PASS: TestEvent_Validate/Category_must_be_one_of_[EXCEPTION_ALERT_NOTIFICATION] (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.956075039Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Category_must_be_one_of_[EXCEPTION_ALERT_NOTIFICATION]","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.956101279Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Severity_must_be_one_of_[INFO_NOTICE_WARNING_ERROR_FATAL]"}
+{"Time":"2026-06-29T15:23:16.956126439Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Severity_must_be_one_of_[INFO_NOTICE_WARNING_ERROR_FATAL]","Output":"=== RUN   TestEvent_Validate/Severity_must_be_one_of_[INFO_NOTICE_WARNING_ERROR_FATAL]\n"}
+{"Time":"2026-06-29T15:23:16.956150638Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Severity_must_be_one_of_[INFO_NOTICE_WARNING_ERROR_FATAL]","Output":"--- PASS: TestEvent_Validate/Severity_must_be_one_of_[INFO_NOTICE_WARNING_ERROR_FATAL] (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.956174268Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Severity_must_be_one_of_[INFO_NOTICE_WARNING_ERROR_FATAL]","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.956197548Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Priority_must_be_1,000_or_less"}
+{"Time":"2026-06-29T15:23:16.956219388Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Priority_must_be_1,000_or_less","Output":"=== RUN   TestEvent_Validate/Priority_must_be_1,000_or_less\n"}
+{"Time":"2026-06-29T15:23:16.956243268Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Priority_must_be_1,000_or_less","Output":"--- PASS: TestEvent_Validate/Priority_must_be_1,000_or_less (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.956266078Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Priority_must_be_1,000_or_less","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.956288798Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Priority_must_be_1_or_greater"}
+{"Time":"2026-06-29T15:23:16.956311178Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Priority_must_be_1_or_greater","Output":"=== RUN   TestEvent_Validate/Priority_must_be_1_or_greater\n"}
+{"Time":"2026-06-29T15:23:16.956368118Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Priority_must_be_1_or_greater","Output":"--- PASS: TestEvent_Validate/Priority_must_be_1_or_greater (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.956393368Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/Priority_must_be_1_or_greater","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.956417178Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/EventTimestamp_must_be_0_or_greater"}
+{"Time":"2026-06-29T15:23:16.956440068Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/EventTimestamp_must_be_0_or_greater","Output":"=== RUN   TestEvent_Validate/EventTimestamp_must_be_0_or_greater\n"}
+{"Time":"2026-06-29T15:23:16.956464658Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/EventTimestamp_must_be_0_or_greater","Output":"--- PASS: TestEvent_Validate/EventTimestamp_must_be_0_or_greater (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.956489118Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate/EventTimestamp_must_be_0_or_greater","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.956512838Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate","Output":"--- PASS: TestEvent_Validate (0.00s)\n"}
+{"Time":"2026-06-29T15:23:16.956535248Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Test":"TestEvent_Validate","Elapsed":0}
+{"Time":"2026-06-29T15:23:16.956557368Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Output":"PASS\n"}
+{"Time":"2026-06-29T15:23:16.956633877Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/ans","Output":"ok  \tgithub.com/SAP/jenkins-library/pkg/ans\t0.018s\n"}
+{"Time":"2026-06-29T15:23:16.956663187Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/ans","Elapsed":0.018}
+reward=1 graded=41 found=41 failed=0 parsed=41 framework=go exit_code=0

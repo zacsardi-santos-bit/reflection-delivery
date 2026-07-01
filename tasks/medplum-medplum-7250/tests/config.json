@@ -1,0 +1,37 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/app && npx jest src/admin/SuperAdminPage.test.tsx --coverage=false --verbose --json",
+  "test_files": [
+    "packages/app/src/admin/SuperAdminPage.test.tsx",
+    "packages/server/src/fhir/operations/explain.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage ExplainSearchForm Explain search with valid data",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage ExplainSearchForm Explain search with analyze checkbox",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage ExplainSearchForm Explain search validation - missing query",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage ExplainSearchForm Explain search with direct ProjectMembership entry",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage ExplainSearchForm Explain search via project and practitioner",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage ExplainSearchForm Explain search error handling"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Rebuild StructureDefinitions",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Rebuild SearchParameters",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Rebuild ValueSets",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Start data migration",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Reindex resource type",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Purge resources",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Remove Bot ID Jobs from Queue",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Force set password",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Invalid indexes",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Database Stats",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Database Stats - Specified table names",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Get Database Schema Drift",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Reconcile Database Schema Drift - Success",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Reconcile Database Schema Drift - Forbidden",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Reload cron resources",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage Access denied",
+    "/workspace/repo/packages/app/src/admin/SuperAdminPage.test.tsx::SuperAdminPage ExplainSearchForm ExplainSearchForm access denied for non-super admin"
+  ]
+}

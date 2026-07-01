@@ -1,0 +1,5 @@
+I'm working with the Kong Kubernetes Ingress Controller and I've run into a problem with how upstream policy conflicts are detected for services referenced by HTTP routes.
+
+The issue is that if I have an HTTP route with two separate rules — rule 1 pointing to service A (which has upstream policy X) and rule 2 pointing to service B (which has a different upstream policy Y) — the controller incorrectly marks policy X as conflicted. But since the two services are in completely different routing rules, there shouldn't be any conflict. Each rule independently routes traffic to a single service, so there's no situation where Kong would need to apply two different upstream policies to the same upstream.
+
+The conflict detection should only trigger when multiple backends within the same rule use different upstream policies. Services in different rules using different policies should be perfectly fine and their policies should be marked as accepted. I'd like the logic to be updated so it checks for conflicts at the rule level rather than across all rules of an HTTP route.

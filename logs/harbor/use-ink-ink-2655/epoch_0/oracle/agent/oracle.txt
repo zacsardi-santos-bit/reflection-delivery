@@ -1,0 +1,9 @@
+patching file CHANGELOG.md
+patching file crates/env/src/call/execution.rs
+patching file crates/primitives/src/abi.rs
+patching file crates/primitives/src/sol.rs
+patching file crates/primitives/src/sol/bytes.rs
+patching file crates/primitives/src/sol/encodable.rs
+patching file crates/primitives/src/sol/encoder.rs
+patching file crates/primitives/src/sol/params.rs
+patching file crates/primitives/src/sol/types.rs

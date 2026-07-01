@@ -1,0 +1,646 @@
+diff --git a/protocol/communities/community.go b/protocol/communities/community.go
+index 1a96078cd..f0ef2dfb6 100644
+--- a/protocol/communities/community.go
++++ b/protocol/communities/community.go
+@@ -1018,6 +1018,14 @@ func (o *Community) UpdateCommunityDescription(description *protobuf.CommunityDe
+ 	o.mutex.Lock()
+ 	defer o.mutex.Unlock()
+ 
++	// This is done in case tags are updated and a client sends unknown tags
++	description.Tags = requests.RemoveUnknownAndDeduplicateTags(description.Tags)
++
++	err := ValidateCommunityDescription(description)
++	if err != nil {
++		return nil, err
++	}
++
+ 	response := o.emptyCommunityChanges()
+ 
+ 	// allowEqualClock == true only if this was a description from the handling request to join sent by an admin
+@@ -1029,9 +1037,10 @@ func (o *Community) UpdateCommunityDescription(description *protobuf.CommunityDe
+ 		return response, nil
+ 	}
+ 
+-	response, err := o.collectCommunityChanges(description)
+-	if err != nil {
+-		return nil, err
++	// We only calculate changes if we joined/spectated the community or we requested access, otherwise not interested
++	if o.config.Joined || o.config.Spectated || o.config.RequestedToJoinAt > 0 {
++		response = EvaluateCommunityChanges(o.config.CommunityDescription, description)
++		response.Community = o
+ 	}
+ 
+ 	o.config.CommunityDescription = description
+@@ -1384,14 +1393,18 @@ func (o *Community) HasTokenPermissions() bool {
+ 	return len(o.config.CommunityDescription.TokenPermissions) > 0
+ }
+ 
+-func (o *Community) TokenPermissionsByType(permissionType protobuf.CommunityTokenPermission_Type) []*protobuf.CommunityTokenPermission {
+-	permissions := make([]*protobuf.CommunityTokenPermission, 0)
+-	for _, tokenPermission := range o.TokenPermissions() {
++func TokenPermissionsByType(permissions map[string]*protobuf.CommunityTokenPermission, permissionType protobuf.CommunityTokenPermission_Type) []*protobuf.CommunityTokenPermission {
++	result := make([]*protobuf.CommunityTokenPermission, 0)
++	for _, tokenPermission := range permissions {
+ 		if tokenPermission.Type == permissionType {
+-			permissions = append(permissions, tokenPermission)
++			result = append(result, tokenPermission)
+ 		}
+ 	}
+-	return permissions
++	return result
++}
++
++func (o *Community) TokenPermissionsByType(permissionType protobuf.CommunityTokenPermission_Type) []*protobuf.CommunityTokenPermission {
++	return TokenPermissionsByType(o.TokenPermissions(), permissionType)
+ }
+ 
+ func (o *Community) ChannelTokenPermissionsByType(channelID string, permissionType protobuf.CommunityTokenPermission_Type) []*protobuf.CommunityTokenPermission {
+@@ -1809,6 +1822,38 @@ func (o *Community) AddMember(publicKey *ecdsa.PublicKey, roles []protobuf.Commu
+ 	return changes, nil
+ }
+ 
++func (o *Community) AddMemberToChat(chatID string, publicKey *ecdsa.PublicKey, roles []protobuf.CommunityMember_Roles) (*CommunityChanges, error) {
++	o.mutex.Lock()
++	defer o.mutex.Unlock()
++
++	if !o.IsOwnerOrAdmin() {
++		return nil, ErrNotAuthorized
++	}
++
++	memberKey := common.PubkeyToHex(publicKey)
++	changes := o.emptyCommunityChanges()
++
++	chat, ok := o.config.CommunityDescription.Chats[chatID]
++	if !ok {
++		return nil, ErrChatNotFound
++	}
++
++	if chat.Members == nil {
++		chat.Members = make(map[string]*protobuf.CommunityMember)
++	}
++	chat.Members[memberKey] = &protobuf.CommunityMember{
++		Roles: roles,
++	}
++	changes.ChatsModified[chatID] = &CommunityChatChanges{
++		ChatModified: chat,
++		MembersAdded: map[string]*protobuf.CommunityMember{
++			memberKey: chat.Members[memberKey],
++		},
++	}
++
++	return changes, nil
++}
++
+ func (o *Community) ChatIDs() (chatIDs []string) {
+ 	for id := range o.config.CommunityDescription.Chats {
+ 		chatIDs = append(chatIDs, o.IDString()+id)
+@@ -2044,189 +2089,6 @@ func (o *Community) addCommunityMember(pk *ecdsa.PublicKey, member *protobuf.Com
+ 	o.config.CommunityDescription.Members[memberKey] = member
+ }
+ 
+-func (o *Community) collectCommunityChanges(description *protobuf.CommunityDescription) (*CommunityChanges, error) {
+-	// This is done in case tags are updated and a client sends unknown tags
+-	description.Tags = requests.RemoveUnknownAndDeduplicateTags(description.Tags)
+-
+-	err := ValidateCommunityDescription(description)
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	response := o.emptyCommunityChanges()
+-
+-	// We only calculate changes if we joined/spectated the community or we requested access, otherwise not interested
+-	if o.config.Joined || o.config.Spectated || o.config.RequestedToJoinAt > 0 {
+-		// Check for new members at the org level
+-		for pk, member := range description.Members {
+-			if _, ok := o.config.CommunityDescription.Members[pk]; !ok {
+-				if response.MembersAdded == nil {
+-					response.MembersAdded = make(map[string]*protobuf.CommunityMember)
+-				}
+-				response.MembersAdded[pk] = member
+-			}
+-		}
+-
+-		// Check for removed members at the org level
+-		for pk, member := range o.config.CommunityDescription.Members {
+-			if _, ok := description.Members[pk]; !ok {
+-				if response.MembersRemoved == nil {
+-					response.MembersRemoved = make(map[string]*protobuf.CommunityMember)
+-				}
+-				response.MembersRemoved[pk] = member
+-			}
+-		}
+-
+-		// check for removed chats
+-		for chatID, chat := range o.config.CommunityDescription.Chats {
+-			if description.Chats == nil {
+-				description.Chats = make(map[string]*protobuf.CommunityChat)
+-			}
+-			if _, ok := description.Chats[chatID]; !ok {
+-				if response.ChatsRemoved == nil {
+-					response.ChatsRemoved = make(map[string]*protobuf.CommunityChat)
+-				}
+-
+-				response.ChatsRemoved[chatID] = chat
+-			}
+-		}
+-
+-		for chatID, chat := range description.Chats {
+-			if o.config.CommunityDescription.Chats == nil {
+-				o.config.CommunityDescription.Chats = make(map[string]*protobuf.CommunityChat)
+-			}
+-
+-			if _, ok := o.config.CommunityDescription.Chats[chatID]; !ok {
+-				if response.ChatsAdded == nil {
+-					response.ChatsAdded = make(map[string]*protobuf.CommunityChat)
+-				}
+-
+-				response.ChatsAdded[chatID] = chat
+-			} else {
+-				// Check for members added
+-				for pk, member := range description.Chats[chatID].Members {
+-					if _, ok := o.config.CommunityDescription.Chats[chatID].Members[pk]; !ok {
+-						if response.ChatsModified[chatID] == nil {
+-							response.ChatsModified[chatID] = &CommunityChatChanges{
+-								MembersAdded:   make(map[string]*protobuf.CommunityMember),
+-								MembersRemoved: make(map[string]*protobuf.CommunityMember),
+-							}
+-						}
+-
+-						response.ChatsModified[chatID].MembersAdded[pk] = member
+-					}
+-				}
+-
+-				// check for members removed
+-				for pk, member := range o.config.CommunityDescription.Chats[chatID].Members {
+-					if _, ok := description.Chats[chatID].Members[pk]; !ok {
+-						if response.ChatsModified[chatID] == nil {
+-							response.ChatsModified[chatID] = &CommunityChatChanges{
+-								MembersAdded:   make(map[string]*protobuf.CommunityMember),
+-								MembersRemoved: make(map[string]*protobuf.CommunityMember),
+-							}
+-						}
+-
+-						response.ChatsModified[chatID].MembersRemoved[pk] = member
+-					}
+-				}
+-
+-				// check if first message timestamp was modified
+-				if o.config.CommunityDescription.Chats[chatID].Identity.FirstMessageTimestamp !=
+-					description.Chats[chatID].Identity.FirstMessageTimestamp {
+-					if response.ChatsModified[chatID] == nil {
+-						response.ChatsModified[chatID] = &CommunityChatChanges{
+-							MembersAdded:   make(map[string]*protobuf.CommunityMember),
+-							MembersRemoved: make(map[string]*protobuf.CommunityMember),
+-						}
+-					}
+-					response.ChatsModified[chatID].FirstMessageTimestampModified = description.Chats[chatID].Identity.FirstMessageTimestamp
+-				}
+-			}
+-		}
+-
+-		// Check for categories that were removed
+-		for categoryID := range o.config.CommunityDescription.Categories {
+-			if description.Categories == nil {
+-				description.Categories = make(map[string]*protobuf.CommunityCategory)
+-			}
+-
+-			if description.Chats == nil {
+-				description.Chats = make(map[string]*protobuf.CommunityChat)
+-			}
+-
+-			if _, ok := description.Categories[categoryID]; !ok {
+-				response.CategoriesRemoved = append(response.CategoriesRemoved, categoryID)
+-			}
+-
+-			if o.config.CommunityDescription.Chats == nil {
+-				o.config.CommunityDescription.Chats = make(map[string]*protobuf.CommunityChat)
+-			}
+-		}
+-
+-		// Check for categories that were added
+-		for categoryID, category := range description.Categories {
+-			if o.config.CommunityDescription.Categories == nil {
+-				o.config.CommunityDescription.Categories = make(map[string]*protobuf.CommunityCategory)
+-			}
+-			if _, ok := o.config.CommunityDescription.Categories[categoryID]; !ok {
+-				if response.CategoriesAdded == nil {
+-					response.CategoriesAdded = make(map[string]*protobuf.CommunityCategory)
+-				}
+-
+-				response.CategoriesAdded[categoryID] = category
+-			} else {
+-				if o.config.CommunityDescription.Categories[categoryID].Name != category.Name || o.config.CommunityDescription.Categories[categoryID].Position != category.Position {
+-					response.CategoriesModified[categoryID] = category
+-				}
+-			}
+-		}
+-
+-		// Check for chat categories that were modified
+-		for chatID, chat := range description.Chats {
+-			if o.config.CommunityDescription.Chats == nil {
+-				o.config.CommunityDescription.Chats = make(map[string]*protobuf.CommunityChat)
+-			}
+-
+-			if _, ok := o.config.CommunityDescription.Chats[chatID]; !ok {
+-				continue // It's a new chat
+-			}
+-
+-			if o.config.CommunityDescription.Chats[chatID].CategoryId != chat.CategoryId {
+-				if response.ChatsModified[chatID] == nil {
+-					response.ChatsModified[chatID] = &CommunityChatChanges{
+-						MembersAdded:   make(map[string]*protobuf.CommunityMember),
+-						MembersRemoved: make(map[string]*protobuf.CommunityMember),
+-					}
+-				}
+-
+-				response.ChatsModified[chatID].CategoryModified = chat.CategoryId
+-			}
+-		}
+-
+-		// Check for removed token permissions
+-		for id := range o.config.CommunityDescription.TokenPermissions {
+-			if _, ok := description.TokenPermissions[id]; !ok {
+-				if response.TokenPermissionsRemoved == nil {
+-					response.TokenPermissionsRemoved = make([]string, 0)
+-				}
+-				response.TokenPermissionsRemoved = append(response.TokenPermissionsRemoved, id)
+-			}
+-		}
+-
+-		for id, permission := range description.TokenPermissions {
+-			if _, ok := o.config.CommunityDescription.TokenPermissions[id]; !ok {
+-				if response.TokenPermissionsAdded == nil {
+-					response.TokenPermissionsAdded = make(map[string]*protobuf.CommunityTokenPermission)
+-				}
+-				response.TokenPermissionsAdded[id] = permission
+-			}
+-		}
+-	}
+-
+-	return response, nil
+-}
+-
+ func (o *Community) addTokenPermission(permission *protobuf.CommunityTokenPermission) (*CommunityChanges, error) {
+ 	if o.config.CommunityDescription.TokenPermissions == nil {
+ 		o.config.CommunityDescription.TokenPermissions = make(map[string]*protobuf.CommunityTokenPermission)
+@@ -2268,10 +2130,15 @@ func (o *Community) updateTokenPermission(permission *protobuf.CommunityTokenPer
+ }
+ 
+ func (o *Community) deleteTokenPermission(permissionID string) (*CommunityChanges, error) {
++	permission, exists := o.config.CommunityDescription.TokenPermissions[permissionID]
++	if !exists {
++		return nil, ErrTokenPermissionNotFound
++	}
++
+ 	delete(o.config.CommunityDescription.TokenPermissions, permissionID)
+ 
+ 	changes := o.emptyCommunityChanges()
+-	changes.TokenPermissionsRemoved = append(changes.TokenPermissionsRemoved, permissionID)
++	changes.TokenPermissionsRemoved[permissionID] = permission
+ 	return changes, nil
+ }
+ 
+diff --git a/protocol/communities/community_changes.go b/protocol/communities/community_changes.go
+index 133b8c4d6..f3f8dbbf7 100644
+--- a/protocol/communities/community_changes.go
++++ b/protocol/communities/community_changes.go
+@@ -12,13 +12,14 @@ type CommunityChatChanges struct {
+ }
+ 
+ type CommunityChanges struct {
+-	Community      *Community                           `json:"community"`
++	Community *Community `json:"community"`
++
+ 	MembersAdded   map[string]*protobuf.CommunityMember `json:"membersAdded"`
+ 	MembersRemoved map[string]*protobuf.CommunityMember `json:"membersRemoved"`
+ 
+ 	TokenPermissionsAdded    map[string]*protobuf.CommunityTokenPermission `json:"tokenPermissionsAdded"`
+ 	TokenPermissionsModified map[string]*protobuf.CommunityTokenPermission `json:"tokenPermissionsModified"`
+-	TokenPermissionsRemoved  []string                                      `json:"tokenPermissionsRemoved"`
++	TokenPermissionsRemoved  map[string]*protobuf.CommunityTokenPermission `json:"tokenPermissionsRemoved"`
+ 
+ 	ChatsRemoved  map[string]*protobuf.CommunityChat `json:"chatsRemoved"`
+ 	ChatsAdded    map[string]*protobuf.CommunityChat `json:"chatsAdded"`
+@@ -45,6 +46,10 @@ func EmptyCommunityChanges() *CommunityChanges {
+ 		MembersAdded:   make(map[string]*protobuf.CommunityMember),
+ 		MembersRemoved: make(map[string]*protobuf.CommunityMember),
+ 
++		TokenPermissionsAdded:    make(map[string]*protobuf.CommunityTokenPermission),
++		TokenPermissionsModified: make(map[string]*protobuf.CommunityTokenPermission),
++		TokenPermissionsRemoved:  make(map[string]*protobuf.CommunityTokenPermission),
++
+ 		ChatsRemoved:  make(map[string]*protobuf.CommunityChat),
+ 		ChatsAdded:    make(map[string]*protobuf.CommunityChat),
+ 		ChatsModified: make(map[string]*CommunityChatChanges),
+@@ -73,3 +78,170 @@ func (c *CommunityChanges) HasMemberLeft(identity string) bool {
+ 	_, ok := c.MembersRemoved[identity]
+ 	return ok
+ }
++
++func EvaluateCommunityChanges(origin, modified *protobuf.CommunityDescription) *CommunityChanges {
++	changes := EmptyCommunityChanges()
++
++	// Check for new members at the org level
++	for pk, member := range modified.Members {
++		if _, ok := origin.Members[pk]; !ok {
++			if changes.MembersAdded == nil {
++				changes.MembersAdded = make(map[string]*protobuf.CommunityMember)
++			}
++			changes.MembersAdded[pk] = member
++		}
++	}
++
++	// Check for removed members at the org level
++	for pk, member := range origin.Members {
++		if _, ok := modified.Members[pk]; !ok {
++			if changes.MembersRemoved == nil {
++				changes.MembersRemoved = make(map[string]*protobuf.CommunityMember)
++			}
++			changes.MembersRemoved[pk] = member
++		}
++	}
++
++	// check for removed chats
++	for chatID, chat := range origin.Chats {
++		if modified.Chats == nil {
++			modified.Chats = make(map[string]*protobuf.CommunityChat)
++		}
++		if _, ok := modified.Chats[chatID]; !ok {
++			if changes.ChatsRemoved == nil {
++				changes.ChatsRemoved = make(map[string]*protobuf.CommunityChat)
++			}
++
++			changes.ChatsRemoved[chatID] = chat
++		}
++	}
++
++	for chatID, chat := range modified.Chats {
++		if origin.Chats == nil {
++			origin.Chats = make(map[string]*protobuf.CommunityChat)
++		}
++
++		if _, ok := origin.Chats[chatID]; !ok {
++			if changes.ChatsAdded == nil {
++				changes.ChatsAdded = make(map[string]*protobuf.CommunityChat)
++			}
++
++			changes.ChatsAdded[chatID] = chat
++		} else {
++			// Check for members added
++			for pk, member := range modified.Chats[chatID].Members {
++				if _, ok := origin.Chats[chatID].Members[pk]; !ok {
++					if changes.ChatsModified[chatID] == nil {
++						changes.ChatsModified[chatID] = &CommunityChatChanges{
++							MembersAdded:   make(map[string]*protobuf.CommunityMember),
++							MembersRemoved: make(map[string]*protobuf.CommunityMember),
++						}
++					}
++
++					changes.ChatsModified[chatID].MembersAdded[pk] = member
++				}
++			}
++
++			// check for members removed
++			for pk, member := range origin.Chats[chatID].Members {
++				if _, ok := modified.Chats[chatID].Members[pk]; !ok {
++					if changes.ChatsModified[chatID] == nil {
++						changes.ChatsModified[chatID] = &CommunityChatChanges{
++							MembersAdded:   make(map[string]*protobuf.CommunityMember),
++							MembersRemoved: make(map[string]*protobuf.CommunityMember),
++						}
++					}
++
++					changes.ChatsModified[chatID].MembersRemoved[pk] = member
++				}
++			}
++
++			// check if first message timestamp was modified
++			if origin.Chats[chatID].Identity.FirstMessageTimestamp !=
++				modified.Chats[chatID].Identity.FirstMessageTimestamp {
++				if changes.ChatsModified[chatID] == nil {
++					changes.ChatsModified[chatID] = &CommunityChatChanges{
++						MembersAdded:   make(map[string]*protobuf.CommunityMember),
++						MembersRemoved: make(map[string]*protobuf.CommunityMember),
++					}
++				}
++				changes.ChatsModified[chatID].FirstMessageTimestampModified = modified.Chats[chatID].Identity.FirstMessageTimestamp
++			}
++		}
++	}
++
++	// Check for categories that were removed
++	for categoryID := range origin.Categories {
++		if modified.Categories == nil {
++			modified.Categories = make(map[string]*protobuf.CommunityCategory)
++		}
++
++		if modified.Chats == nil {
++			modified.Chats = make(map[string]*protobuf.CommunityChat)
++		}
++
++		if _, ok := modified.Categories[categoryID]; !ok {
++			changes.CategoriesRemoved = append(changes.CategoriesRemoved, categoryID)
++		}
++
++		if origin.Chats == nil {
++			origin.Chats = make(map[string]*protobuf.CommunityChat)
++		}
++	}
++
++	// Check for categories that were added
++	for categoryID, category := range modified.Categories {
++		if origin.Categories == nil {
++			origin.Categories = make(map[string]*protobuf.CommunityCategory)
++		}
++		if _, ok := origin.Categories[categoryID]; !ok {
++			if changes.CategoriesAdded == nil {
++				changes.CategoriesAdded = make(map[string]*protobuf.CommunityCategory)
++			}
++
++			changes.CategoriesAdded[categoryID] = category
++		} else {
++			if origin.Categories[categoryID].Name != category.Name || origin.Categories[categoryID].Position != category.Position {
++				changes.CategoriesModified[categoryID] = category
++			}
++		}
++	}
++
++	// Check for chat categories that were modified
++	for chatID, chat := range modified.Chats {
++		if origin.Chats == nil {
++			origin.Chats = make(map[string]*protobuf.CommunityChat)
++		}
++
++		if _, ok := origin.Chats[chatID]; !ok {
++			continue // It's a new chat
++		}
++
++		if origin.Chats[chatID].CategoryId != chat.CategoryId {
++			if changes.ChatsModified[chatID] == nil {
++				changes.ChatsModified[chatID] = &CommunityChatChanges{
++					MembersAdded:   make(map[string]*protobuf.CommunityMember),
++					MembersRemoved: make(map[string]*protobuf.CommunityMember),
++				}
++			}
++
++			changes.ChatsModified[chatID].CategoryModified = chat.CategoryId
++		}
++	}
++
++	// Check for removed token permissions
++	for id, permission := range origin.TokenPermissions {
++		if _, ok := modified.TokenPermissions[id]; !ok {
++			changes.TokenPermissionsRemoved[id] = permission
++		}
++	}
++
++	// Check for added token permissions
++	for id, permission := range modified.TokenPermissions {
++		if _, ok := origin.TokenPermissions[id]; !ok {
++			changes.TokenPermissionsAdded[id] = permission
++		}
++	}
++
++	return changes
++}
+diff --git a/protocol/communities/community_encryption_key_action.go b/protocol/communities/community_encryption_key_action.go
+new file mode 100644
+index 000000000..dd65c60d7
+--- /dev/null
++++ b/protocol/communities/community_encryption_key_action.go
+@@ -0,0 +1,114 @@
++package communities
++
++import "github.com/status-im/status-go/protocol/protobuf"
++
++type EncryptionKeyActionType int
++
++const (
++	EncryptionKeyNone EncryptionKeyActionType = iota
++	EncryptionKeyAdd
++	EncryptionKeyRemove
++	EncryptionKeyRekey
++	EncryptionKeySendToMembers
++)
++
++type EncryptionKeyAction struct {
++	ActionType EncryptionKeyActionType
++	Members    map[string]*protobuf.CommunityMember
++}
++
++type EncryptionKeyActions struct {
++	// community-level encryption key action
++	CommunityKeyAction EncryptionKeyAction
++
++	// channel-level encryption key actions
++	ChannelKeysActions map[string]EncryptionKeyAction // key is: chatID
++}
++
++func EvaluateCommunityEncryptionKeyActions(origin, modified *Community) *EncryptionKeyActions {
++	changes := EvaluateCommunityChanges(origin.Description(), modified.Description())
++
++	result := &EncryptionKeyActions{
++		CommunityKeyAction: *evaluateCommunityLevelEncryptionKeyAction(origin, modified, changes),
++		ChannelKeysActions: *evaluateChannelLevelEncryptionKeyActions(origin, modified, changes),
++	}
++	return result
++}
++
++func evaluateCommunityLevelEncryptionKeyAction(origin, modified *Community, changes *CommunityChanges) *EncryptionKeyAction {
++	originBecomeMemberPermissions := origin.TokenPermissionsByType(protobuf.CommunityTokenPermission_BECOME_MEMBER)
++	modifiedBecomeMemberPermissions := modified.TokenPermissionsByType(protobuf.CommunityTokenPermission_BECOME_MEMBER)
++
++	return evaluateEncryptionKeyAction(originBecomeMemberPermissions, modifiedBecomeMemberPermissions, modified.config.CommunityDescription.Members, changes.MembersAdded, changes.MembersRemoved)
++}
++
++func evaluateChannelLevelEncryptionKeyActions(origin, modified *Community, changes *CommunityChanges) *map[string]EncryptionKeyAction {
++	result := make(map[string]EncryptionKeyAction)
++
++	for chatID := range modified.config.CommunityDescription.Chats {
++		originChannelViewOnlyPermissions := origin.ChannelTokenPermissionsByType(chatID, protobuf.CommunityTokenPermission_CAN_VIEW_CHANNEL)
++		originChannelViewAndPostPermissions := origin.ChannelTokenPermissionsByType(chatID, protobuf.CommunityTokenPermission_CAN_VIEW_AND_POST_CHANNEL)
++		originChannelPermissions := append(originChannelViewOnlyPermissions, originChannelViewAndPostPermissions...)
++
++		modifiedChannelViewOnlyPermissions := modified.ChannelTokenPermissionsByType(chatID, protobuf.CommunityTokenPermission_CAN_VIEW_CHANNEL)
++		modifiedChannelViewAndPostPermissions := modified.ChannelTokenPermissionsByType(chatID, protobuf.CommunityTokenPermission_CAN_VIEW_AND_POST_CHANNEL)
++		modifiedChannelPermissions := append(modifiedChannelViewOnlyPermissions, modifiedChannelViewAndPostPermissions...)
++
++		membersAdded := make(map[string]*protobuf.CommunityMember)
++		membersRemoved := make(map[string]*protobuf.CommunityMember)
++
++		chatChanges, ok := changes.ChatsModified[chatID]
++		if ok {
++			membersAdded = chatChanges.MembersAdded
++			membersRemoved = chatChanges.MembersRemoved
++		}
++
++		result[chatID] = *evaluateEncryptionKeyAction(originChannelPermissions, modifiedChannelPermissions, modified.config.CommunityDescription.Members, membersAdded, membersRemoved)
++	}
++
++	return &result
++}
++
++func evaluateEncryptionKeyAction(originPermissions, modifiedPermissions []*protobuf.CommunityTokenPermission, allMembers, membersAdded, membersRemoved map[string]*protobuf.CommunityMember) *EncryptionKeyAction {
++	result := &EncryptionKeyAction{
++		ActionType: EncryptionKeyNone,
++		Members:    map[string]*protobuf.CommunityMember{},
++	}
++
++	copyMap := func(source map[string]*protobuf.CommunityMember) map[string]*protobuf.CommunityMember {
++		to := make(map[string]*protobuf.CommunityMember)
++		for pubKey, member := range source {
++			to[pubKey] = member
++		}
++		return to
++	}
++
++	// permission was just added
++	if len(modifiedPermissions) > 0 && len(originPermissions) == 0 {
++		result.ActionType = EncryptionKeyAdd
++		result.Members = copyMap(allMembers)
++		return result
++	}
++
++	// permission was just removed
++	if len(modifiedPermissions) == 0 && len(originPermissions) > 0 {
++		result.ActionType = EncryptionKeyRemove
++		result.Members = copyMap(allMembers)
++		return result
++	}
++
++	// open community/channel does not require any actions
++	if len(modifiedPermissions) == 0 {
++		return result
++	}
++
++	if len(membersRemoved) > 0 {
++		result.ActionType = EncryptionKeyRekey
++		result.Members = copyMap(allMembers)
++	} else if len(membersAdded) > 0 {
++		result.ActionType = EncryptionKeySendToMembers
++		result.Members = copyMap(membersAdded)
++	}
++
++	return result
++}
+diff --git a/protocol/communities/community_event.go b/protocol/communities/community_event.go
+index c2bb7fc95..7fe9fb451 100644
+--- a/protocol/communities/community_event.go
++++ b/protocol/communities/community_event.go
+@@ -199,12 +199,9 @@ func (o *Community) UpdateCommunityByEvents(communityEventMessage *CommunityEven
+ 		return nil, err
+ 	}
+ 
+-	// Collect `CommunityChanges` data by searching a difference between `CommunityDescrption`
+-	// from the DB and `CommunityDescrption` patched by community events
+-	changes, err := o.collectCommunityChanges(copy.config.CommunityDescription)
+-	if err != nil {
+-		return nil, err
+-	}
++	// Evaluate `CommunityChanges` data by searching a difference between `CommunityDescription`
++	// from the DB and `CommunityDescription` patched by community events
++	changes := EvaluateCommunityChanges(o.config.CommunityDescription, copy.config.CommunityDescription)
+ 
+ 	// TODO: need to figure out is it ok to save marshaledCommunityDescription without the signature
+ 	marshaledCommDescr, err := proto.Marshal(copy.config.CommunityDescription)

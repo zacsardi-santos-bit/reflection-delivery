@@ -1,0 +1,37 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/agent/orm ./pkg/agent/orm/checkpoint ./pkg/agent/orm/endpoint ./pkg/agent/orm/executor ./pkg/agent/orm/metamanager -count=1 -skip 'TestReconcile|TestProcess|TestRun'",
+  "test_files": [
+    "pkg/agent/orm/checkpoint/checkpoint_test.go",
+    "pkg/agent/orm/checkpoint_test.go",
+    "pkg/agent/orm/endpoint/endpoint_test.go",
+    "pkg/agent/orm/executor/executor_test.go",
+    "pkg/agent/orm/manager_test.go",
+    "pkg/agent/orm/metamanager/manager_test.go",
+    "pkg/agent/orm/pod_resource_test.go"
+  ],
+  "num_test_files": 7,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm/checkpoint::TestData_UnmarshalCheckpoint",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint::TestNewStoppedEndpointImpl",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint::TestNewEndpoint",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint::TestClient",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint::TestRemovePod",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint::TestGetResourceAllocation",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm/endpoint::TestAllocate",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm/executor::TestCommitCPUSet",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm/executor::TestImpl_UpdateContainerResources",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestGetMappedResourceName/cpu",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestGetMappedResourceName/not_found",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestIsSkippedContainer/mainContainer",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestGetMappedResourceName/repetition",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestGetMappedResourceName",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestIsSkippedContainer/initContainer",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestPodResources",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestIsSkippedContainer/fail",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestIsSkippedContainer",
+    "github.com/kubewharf/katalyst-core/pkg/agent/orm::TestCheckpoint"
+  ],
+  "PASS_TO_PASS": []
+}

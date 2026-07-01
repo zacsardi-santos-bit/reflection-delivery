@@ -1,0 +1,119 @@
+patching file packages/api-reference/src/hooks/useNavState.test.ts
+
+ RUN  v1.6.0 /workspace/repo/packages/api-reference
+
+ ❯ src/hooks/useNavState.test.ts  (13 tests | 5 failed) 61ms
+   ❯ src/hooks/useNavState.test.ts > useNavState > ID generation > should generate model ID
+     → expected 'model/' to be 'model/test-model' // Object.is equality
+   ❯ src/hooks/useNavState.test.ts > useNavState > ID generation > should generate webhook ID
+     → expected 'webhook/undefined/' to be 'webhook/POST/test-webhook' // Object.is equality
+   ❯ src/hooks/useNavState.test.ts > useNavState > custom slug generation > should use custom heading slug generator
+     → expected 'description/test-heading' to be 'custom-heading' // Object.is equality
+   ❯ src/hooks/useNavState.test.ts > useNavState > custom slug generation > should use custom model slug generator
+     → expected 'model/' to be 'model/custom-model' // Object.is equality
+   ❯ src/hooks/useNavState.test.ts > useNavState > custom slug generation > should use custom tag slug generator
+     → expected 'tag/test-tag' to be 'tag/custom-tag' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/hooks/useNavState.test.ts > useNavState > ID generation > should generate model ID
+AssertionError: expected 'model/' to be 'model/test-model' // Object.is equality
+
+- Expected
++ Received
+
+- model/test-model
++ model/
+
+ ❯ src/hooks/useNavState.test.ts:51:59
+     49| 
+     50|     it('should generate model ID', () => {
+     51|       expect(navState.getModelId({ name: 'Test Model' })).toBe(
+       |                                                           ^
+     52|         'model/test-model',
+     53|       )
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/hooks/useNavState.test.ts > useNavState > ID generation > should generate webhook ID
+AssertionError: expected 'webhook/undefined/' to be 'webhook/POST/test-webhook' // Object.is equality
+
+- Expected
++ Received
+
+- webhook/POST/test-webhook
++ webhook/undefined/
+
+ ❯ src/hooks/useNavState.test.ts:83:9
+     81|       expect(
+     82|         navState.getWebhookId({ name: 'Test Webhook', method: 'POST' }…
+     83|       ).toBe('webhook/POST/test-webhook')
+       |         ^
+     84|     })
+     85|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/hooks/useNavState.test.ts > useNavState > custom slug generation > should use custom heading slug generator
+AssertionError: expected 'description/test-heading' to be 'custom-heading' // Object.is equality
+
+- Expected
++ Received
+
+- custom-heading
++ description/test-heading
+
+ ❯ src/hooks/useNavState.test.ts:106:46
+    104|         slug: 'test-heading',
+    105|       } satisfies Heading
+    106|       expect(navState.getHeadingId(heading)).toBe('custom-heading')
+       |                                              ^
+    107|     })
+    108| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/hooks/useNavState.test.ts > useNavState > custom slug generation > should use custom model slug generator
+AssertionError: expected 'model/' to be 'model/custom-model' // Object.is equality
+
+- Expected
++ Received
+
+- model/custom-model
++ model/
+
+ ❯ src/hooks/useNavState.test.ts:110:59
+    108| 
+    109|     it('should use custom model slug generator', () => {
+    110|       expect(navState.getModelId({ name: 'Test Model' })).toBe(
+       |                                                           ^
+    111|         'model/custom-model',
+    112|       )
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/hooks/useNavState.test.ts > useNavState > custom slug generation > should use custom tag slug generator
+AssertionError: expected 'tag/test-tag' to be 'tag/custom-tag' // Object.is equality
+
+- Expected
++ Received
+
+- tag/custom-tag
++ tag/test-tag
+
+ ❯ src/hooks/useNavState.test.ts:121:38
+    119|         operations: [],
+    120|       } satisfies Tag
+    121|       expect(navState.getTagId(tag)).toBe('tag/custom-tag')
+       |                                      ^
+    122|     })
+    123|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 8 passed (13)
+   Start at  15:13:29
+   Duration  10.79s (transform 1.59s, setup 0ms, collect 5.93s, tests 61ms, environment 844ms, prepare 510ms)
+
+reward=0 graded=13 found=0 failed=0 parsed=0 framework=vitest exit_code=1

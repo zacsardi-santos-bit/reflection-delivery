@@ -1,0 +1,12 @@
+patching file config/crd/serving.kserve.io_inferencegraphs.yaml
+patching file go.sum
+patching file pkg/apis/serving/v1alpha1/inference_graph.go
+patching file pkg/apis/serving/v1alpha1/zz_generated.deepcopy.go
+patching file pkg/apis/serving/v1beta1/openapi_generated.go
+patching file pkg/apis/serving/v1beta1/swagger.json
+patching file pkg/controller/v1alpha1/inferencegraph/controller.go
+patching file pkg/controller/v1alpha1/inferencegraph/raw_ig.go
+patching file pkg/controller/v1beta1/inferenceservice/reconcilers/service/service_reconciler.go
+patching file python/kserve/docs/V1alpha1InferenceGraphSpec.md
+patching file python/kserve/kserve/api/kserve_client.py
+patching file python/kserve/kserve/models/v1alpha1_inference_graph_spec.py

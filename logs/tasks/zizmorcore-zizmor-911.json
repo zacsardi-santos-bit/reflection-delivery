@@ -1,0 +1,23 @@
+{
+ "task": "zizmorcore-zizmor-911",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "insta snapshot runs real scanner; snapshot changes '-122 findings (27 suppressed)... +123 findings (28 suppressed)' and template-injection '-9 findings (6 suppressed) +12 findings (9 suppressed)' reflecting corrected static-env suppression"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

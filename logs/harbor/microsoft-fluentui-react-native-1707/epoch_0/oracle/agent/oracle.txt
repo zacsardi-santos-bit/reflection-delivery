@@ -1,0 +1,8 @@
+patching file apps/fluent-tester/src/FluentTester/TestComponents/Avatar/BasicAvatar.tsx
+patching file change/@fluentui-react-native-badge-08477f79-b6dd-4339-b1ba-fd98511a41c6.json
+patching file change/@fluentui-react-native-experimental-avatar-97b0a810-55be-4a2f-accf-75a4ca0199ec.json
+patching file change/@fluentui-react-native-icon-f410f59a-ce3d-4b85-8e68-bbb2b3b70b57.json
+patching file change/@fluentui-react-native-tester-1051472d-4c56-4d37-901c-4cae06368072.json
+patching file packages/experimental/Avatar/src/JSAvatar.tsx
+patching file packages/experimental/Avatar/src/useAvatar.ts
+patching file packages/experimental/Icon/src/Icon.tsx

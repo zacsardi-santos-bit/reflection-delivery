@@ -1,0 +1,23 @@
+{
+ "task": "ruma-ruma-1829",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "6 F2P tests (serialize/deserialize_legacy, memberships_do_expire, deserialize_member_event, notify_event_serialization/deserialization) over the new CallMemberEventContent enum in call/member.rs."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

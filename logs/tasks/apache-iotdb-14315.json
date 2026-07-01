@@ -1,0 +1,23 @@
+{
+ "task": "apache-iotdb-14315",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden adds dbName to RelationalDeleteDataNode.java + batch write/compaction to ModificationFile.java; test.patch adds RelationalDeleteDataNodeTest/ModificationFileTest/DeletionRecoverTest exercising serde, batch write, compaction and legacy upgrade"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

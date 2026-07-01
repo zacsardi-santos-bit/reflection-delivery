@@ -1,0 +1,29 @@
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_function_call_choice.yaml
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_function_call_choice_no_content.yaml
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_tool_events.yaml
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_tool_events_no_content.yaml
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: vcr-1.0.2, asyncio-0.21.0
+asyncio: mode=Mode.STRICT
+collecting ... collected 4 items
+
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py::test_function_call_choice PASSED [ 25%]
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py::test_function_call_choice_no_content PASSED [ 50%]
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py::test_tool_events PASSED [ 75%]
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py::test_tool_events_no_content PASSED [100%]
+
+=============================== warnings summary ===============================
+instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py: 22 warnings
+  /usr/local/lib/python3.11/site-packages/proto/message.py:389: DeprecationWarning: The argument `including_default_value_fields` has been removed from
+                  Protobuf 5.x. Please use `always_print_fields_with_no_presence` instead.
+                  
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 4 passed, 22 warnings in 0.13s ========================
+reward=1 graded=4 found=0 failed=0 parsed=4 framework=pytest exit_code=0

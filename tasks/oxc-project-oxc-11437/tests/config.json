@@ -1,0 +1,11 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p oxc_linter -E 'test(rules::eslint::no_loss_of_precision::test)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) oxc_linter rules::eslint::no_loss_of_precision::test"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,1945 @@
+patching file tests/common/util.rs
+patching file tests/test_chgrp.rs
+patching file tests/test_du.rs
+patching file tests/test_stat.rs
+   Compiling libc v0.2.62
+   Compiling autocfg v0.1.2
+   Compiling cc v1.0.36
+   Compiling lazy_static v1.3.0
+   Compiling proc-macro2 v0.4.30
+   Compiling cfg-if v0.1.7
+   Compiling unicode-xid v0.1.0
+   Compiling syn v0.15.34
+   Compiling unicode-width v0.1.5
+   Compiling bitflags v1.0.4
+   Compiling winapi v0.3.7
+   Compiling failure_derive v0.1.5
+   Compiling rustc-demangle v0.1.14
+   Compiling nix v0.13.0
+   Compiling void v1.0.2
+   Compiling data-encoding v2.1.2
+   Compiling wild v2.0.1
+   Compiling memchr v2.2.0
+   Compiling getopts v0.2.19
+   Compiling rand_core v0.4.0
+   Compiling unicode-xid v0.0.4
+   Compiling quote v0.3.15
+   Compiling winapi-build v0.1.1
+   Compiling byteorder v1.3.2
+   Compiling textwrap v0.11.0
+   Compiling cpp_synom v0.12.0
+   Compiling rand_core v0.3.1
+   Compiling backtrace v0.3.15
+   Compiling cpp_syn v0.12.0
+   Compiling ansi_term v0.11.0
+   Compiling typenum v1.10.0
+   Compiling strsim v0.8.0
+   Compiling vec_map v0.8.1
+   Compiling num-traits v0.2.6
+   Compiling nodrop v0.1.13
+   Compiling ucd-util v0.1.3
+   Compiling same-file v1.0.4
+   Compiling winapi v0.2.8
+   Compiling pkg-config v0.3.14
+   Compiling regex v1.1.6
+   Compiling walkdir v2.2.8
+   Compiling regex-syntax v0.6.7
+   Compiling kernel32-sys v0.2.2
+   Compiling thread_local v0.3.6
+   Compiling num-integer v0.1.39
+   Compiling byte-tools v0.2.0
+   Compiling utf8-ranges v1.0.2
+   Compiling advapi32-sys v0.2.0
+   Compiling backtrace-sys v0.1.28
+   Compiling aho-corasick v0.6.10
+   Compiling aho-corasick v0.7.3
+   Compiling quote v0.6.12
+   Compiling time v0.1.42
+   Compiling platform-info v0.0.1
+   Compiling atty v0.2.13
+   Compiling memchr v1.0.2
+   Compiling clap v2.33.0
+   Compiling rand v0.4.6
+   Compiling onig_sys v69.1.0
+   Compiling rand v0.5.6
+   Compiling filetime v0.2.5
+   Compiling remove_dir_all v0.5.1
+   Compiling either v1.5.2
+   Compiling rand_pcg v0.1.2
+   Compiling rand_chacha v0.1.1
+   Compiling itertools v0.8.0
+   Compiling cp v0.0.1 (/workspace/repo/src/cp)
+   Compiling nproc v0.0.1 (/workspace/repo/src/nproc)
+   Compiling printenv v0.0.1 (/workspace/repo/src/printenv)
+   Compiling uniq v0.0.1 (/workspace/repo/src/uniq)
+   Compiling cpp_common v0.4.0
+   Compiling cpp_synmap v0.3.0
+   Compiling rand v0.3.23
+   Compiling cpp_build v0.4.0
+   Compiling sum v0.0.1 (/workspace/repo/src/sum)
+   Compiling fold v0.0.1 (/workspace/repo/src/fold)
+   Compiling base32 v0.0.1 (/workspace/repo/src/base32)
+   Compiling factor v0.0.1 (/workspace/repo/src/factor)
+   Compiling env v0.0.1 (/workspace/repo/src/env)
+   Compiling ptx v0.0.1 (/workspace/repo/src/ptx)
+   Compiling sort v0.0.1 (/workspace/repo/src/sort)
+   Compiling bit-vec v0.5.1
+   Compiling generic-array v0.8.3
+   Compiling users v0.0.1 (/workspace/repo/src/users)
+   Compiling cpp_macros v0.4.0
+   Compiling synstructure v0.10.1
+   Compiling digest v0.6.2
+   Compiling block-buffer v0.2.0
+   Compiling wc v0.0.1 (/workspace/repo/src/wc)
+   Compiling base64 v0.0.1 (/workspace/repo/src/base64)
+   Compiling date v0.0.1 (/workspace/repo/src/date)
+   Compiling readlink v0.0.1 (/workspace/repo/src/readlink)
+   Compiling tac v0.0.1 (/workspace/repo/src/tac)
+   Compiling libstdbuf v0.0.1 (/workspace/repo/src/stdbuf/libstdbuf)
+   Compiling test v0.0.1 (/workspace/repo/src/test)
+   Compiling nl v0.0.1 (/workspace/repo/src/nl)
+   Compiling nohup v0.0.1 (/workspace/repo/src/nohup)
+   Compiling install v0.0.1 (/workspace/repo/src/install)
+   Compiling tail v0.0.1 (/workspace/repo/src/tail)
+   Compiling pwd v0.0.1 (/workspace/repo/src/pwd)
+   Compiling tr v0.0.1 (/workspace/repo/src/tr)
+   Compiling cut v0.0.1 (/workspace/repo/src/cut)
+   Compiling chgrp v0.0.1 (/workspace/repo/src/chgrp)
+   Compiling hostname v0.0.1 (/workspace/repo/src/hostname)
+   Compiling mkdir v0.0.1 (/workspace/repo/src/mkdir)
+   Compiling groups v0.0.1 (/workspace/repo/src/groups)
+   Compiling pinky v0.0.1 (/workspace/repo/src/pinky)
+   Compiling tty v0.0.1 (/workspace/repo/src/tty)
+   Compiling unexpand v0.0.1 (/workspace/repo/src/unexpand)
+   Compiling arch v0.0.1 (/workspace/repo/src/arch)
+   Compiling cpp v0.4.0
+   Compiling chroot v0.0.1 (/workspace/repo/src/chroot)
+   Compiling hostid v0.0.1 (/workspace/repo/src/hostid)
+   Compiling sync v0.0.1 (/workspace/repo/src/sync)
+   Compiling bitflags v0.7.0
+   Compiling glob v0.3.0
+   Compiling ln v0.0.1 (/workspace/repo/src/ln)
+   Compiling uname v0.0.1 (/workspace/repo/src/uname)
+   Compiling logname v0.0.1 (/workspace/repo/src/logname)
+   Compiling paste v0.0.1 (/workspace/repo/src/paste)
+   Compiling cksum v0.0.1 (/workspace/repo/src/cksum)
+   Compiling mknod v0.0.1 (/workspace/repo/src/mknod)
+   Compiling shred v0.0.1 (/workspace/repo/src/shred)
+   Compiling rm v0.0.1 (/workspace/repo/src/rm)
+   Compiling touch v0.0.1 (/workspace/repo/src/touch)
+   Compiling du v0.0.1 (/workspace/repo/src/du)
+   Compiling who v0.0.1 (/workspace/repo/src/who)
+   Compiling od v0.0.1 (/workspace/repo/src/od)
+   Compiling split v0.0.1 (/workspace/repo/src/split)
+   Compiling failure v0.1.5
+   Compiling printf v0.0.1 (/workspace/repo/src/printf)
+   Compiling uucore v0.0.1
+   Compiling shuf v0.0.1 (/workspace/repo/src/shuf)
+   Compiling quick-error v1.2.2
+   Compiling semver-parser v0.7.0
+   Compiling join v0.0.1 (/workspace/repo/src/join)
+   Compiling hashsum v0.0.1 (/workspace/repo/src/hashsum)
+   Compiling rmdir v0.0.1 (/workspace/repo/src/rmdir)
+   Compiling fake-simd v0.1.2
+   Compiling whoami v0.0.1 (/workspace/repo/src/whoami)
+   Compiling true v0.0.1 (/workspace/repo/src/true)
+   Compiling false v0.0.1 (/workspace/repo/src/false)
+   Compiling yes v0.0.1 (/workspace/repo/src/yes)
+   Compiling truncate v0.0.1 (/workspace/repo/src/truncate)
+   Compiling fmt v0.0.1 (/workspace/repo/src/fmt)
+   Compiling stat v0.0.1 (/workspace/repo/src/stat)
+   Compiling timeout v0.0.1 (/workspace/repo/src/timeout)
+   Compiling chown v0.0.1 (/workspace/repo/src/chown)
+   Compiling id v0.0.1 (/workspace/repo/src/id)
+   Compiling mkfifo v0.0.1 (/workspace/repo/src/mkfifo)
+   Compiling expr v0.0.1 (/workspace/repo/src/expr)
+   Compiling pathchk v0.0.1 (/workspace/repo/src/pathchk)
+   Compiling uptime v0.0.1 (/workspace/repo/src/uptime)
+   Compiling realpath v0.0.1 (/workspace/repo/src/realpath)
+   Compiling cat v0.0.1 (/workspace/repo/src/cat)
+   Compiling echo v0.0.1 (/workspace/repo/src/echo)
+   Compiling dirname v0.0.1 (/workspace/repo/src/dirname)
+   Compiling unlink v0.0.1 (/workspace/repo/src/unlink)
+   Compiling nice v0.0.1 (/workspace/repo/src/nice)
+   Compiling tsort v0.0.1 (/workspace/repo/src/tsort)
+   Compiling kill v0.0.1 (/workspace/repo/src/kill)
+   Compiling mktemp v0.0.1 (/workspace/repo/src/mktemp)
+   Compiling basename v0.0.1 (/workspace/repo/src/basename)
+   Compiling more v0.0.1 (/workspace/repo/src/more)
+   Compiling comm v0.0.1 (/workspace/repo/src/comm)
+   Compiling sleep v0.0.1 (/workspace/repo/src/sleep)
+   Compiling expand v0.0.1 (/workspace/repo/src/expand)
+   Compiling seq v0.0.1 (/workspace/repo/src/seq)
+   Compiling stdbuf v0.0.1 (/workspace/repo/src/stdbuf)
+   Compiling relpath v0.0.1 (/workspace/repo/src/relpath)
+   Compiling chmod v0.0.1 (/workspace/repo/src/chmod)
+   Compiling link v0.0.1 (/workspace/repo/src/link)
+   Compiling ls v0.0.1 (/workspace/repo/src/ls)
+   Compiling dircolors v0.0.1 (/workspace/repo/src/dircolors)
+   Compiling mv v0.0.1 (/workspace/repo/src/mv)
+   Compiling head v0.0.1 (/workspace/repo/src/head)
+   Compiling tee v0.0.1 (/workspace/repo/src/tee)
+   Compiling numfmt v0.0.1 (/workspace/repo/src/numfmt)
+   Compiling onig v4.3.2
+   Compiling sha2 v0.6.0
+   Compiling semver v0.9.0
+   Compiling nix v0.8.1
+   Compiling sha3 v0.6.0
+   Compiling bit-set v0.5.1
+   Compiling chrono v0.4.6
+   Compiling tempfile v2.2.0
+   Compiling number_prefix v0.2.8
+   Compiling tempdir v0.3.7
+   Compiling termsize v0.1.6
+   Compiling num_cpus v1.10.1
+   Compiling isatty v0.1.9
+   Compiling unix_socket v0.5.0
+   Compiling xattr v0.2.2
+   Compiling rand v0.6.5
+   Compiling term_grid v0.1.7
+   Compiling md5 v0.3.8
+   Compiling ioctl-sys v0.5.2
+   Compiling hex v0.2.0
+   Compiling sha1 v0.6.0
+   Compiling fnv v1.0.6
+   Compiling half v1.3.0
+   Compiling rust-ini v0.13.0
+   Compiling uutils v0.0.1 (/workspace/repo)
+   Compiling walker v1.0.1
+warning: anonymous parameters are deprecated and will be removed in the next edition
+ --> src/od/parse_inputs.rs:8:28
+  |
+8 |     fn opts_present(&self, &[&str]) -> bool;
+  |                            ^^^^^^^ help: try naming the parameter or explicitly ignoring it: `_: &[&str]`
+  |
+  = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2018!
+  = note: for more information, see issue #41686 <https://github.com/rust-lang/rust/issues/41686>
+  = note: `#[warn(anonymous_parameters)]` on by default
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> src/cp/cp.rs:61:1
+    |
+61  | / quick_error! {
+62  | |     #[derive(Debug)]
+63  | |     pub enum Error {
+64  | |         /// Simple io::Error wrapper
+...   |
+101 | |     }
+102 | | }
+    | |_^
+    |
+    = note: `#[warn(deprecated)]` on by default
+    = note: this warning originates in the macro `quick_error` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> src/cp/cp.rs:61:1
+    |
+61  | / quick_error! {
+62  | |     #[derive(Debug)]
+63  | |     pub enum Error {
+64  | |         /// Simple io::Error wrapper
+...   |
+101 | |     }
+102 | | }
+    | |_^
+    |
+    = note: this warning originates in the macro `quick_error` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: call to `.clone()` on a reference in this situation does nothing
+    --> src/cp/cp.rs:1075:55
+     |
+1075 |                 let src_metadata = fs::metadata(source.clone())?;
+     |                                                       ^^^^^^^^ help: remove this redundant call
+     |
+     = note: the type `Path` does not implement `Clone`, so calling `clone` on `&Path` copies the reference, which does not do anything and can be removed
+     = note: `#[warn(noop_method_call)]` on by default
+
+warning: call to `.clone()` on a reference in this situation does nothing
+    --> src/cp/cp.rs:1076:54
+     |
+1076 |                 let dest_metadata = fs::metadata(dest.clone())?;
+     |                                                      ^^^^^^^^ help: remove this redundant call
+     |
+     = note: the type `Path` does not implement `Clone`, so calling `clone` on `&Path` copies the reference, which does not do anything and can be removed
+
+warning: unnecessary parentheses around match arm expression
+   --> src/mktemp/mktemp.rs:182:30
+    |
+182 |                 v @ 0..=9 => (v + '0' as u8),
+    |                              ^             ^
+    |
+    = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+    |
+182 -                 v @ 0..=9 => (v + '0' as u8),
+182 +                 v @ 0..=9 => v + '0' as u8,
+    |
+
+warning: unnecessary parentheses around match arm expression
+   --> src/mktemp/mktemp.rs:183:32
+    |
+183 |                 v @ 10..=35 => (v - 10 + 'a' as u8),
+    |                                ^                  ^
+    |
+help: remove these parentheses
+    |
+183 -                 v @ 10..=35 => (v - 10 + 'a' as u8),
+183 +                 v @ 10..=35 => v - 10 + 'a' as u8,
+    |
+
+warning: unnecessary parentheses around match arm expression
+   --> src/mktemp/mktemp.rs:184:32
+    |
+184 |                 v @ 36..=61 => (v - 36 + 'A' as u8),
+    |                                ^                  ^
+    |
+help: remove these parentheses
+    |
+184 -                 v @ 36..=61 => (v - 36 + 'A' as u8),
+184 +                 v @ 36..=61 => v - 36 + 'A' as u8,
+    |
+
+warning: `mktemp` (lib) generated 3 warnings (run `cargo fix --lib -p mktemp` to apply 3 suggestions)
+warning: calls to `std::mem::drop` with a value that implements `Copy` does nothing
+   --> src/tac/tac.rs:129:9
+    |
+129 |         drop(i);
+    |         ^^^^^-^
+    |              |
+    |              argument has type `usize`
+    |
+    = note: use `let _ = ...` to ignore the expression or result
+    = note: `#[warn(dropping_copy_types)]` on by default
+
+warning: unnecessary trailing semicolon
+  --> src/install/install.rs:79:10
+   |
+79 |         };
+   |          ^ help: remove this semicolon
+   |
+   = note: `#[warn(redundant_semicolons)]` on by default
+
+warning: `od` (lib) generated 1 warning (run `cargo fix --lib -p od` to apply 1 suggestion)
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> src/tail/tail.rs:252:32
+    |
+252 |         write!(f, "{}", Error::description(self))
+    |                                ^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: unnecessary trailing semicolon
+   --> src/cut/buffer.rs:111:10
+    |
+111 |         };
+    |          ^ help: remove this semicolon
+    |
+    = note: `#[warn(redundant_semicolons)]` on by default
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> src/tail/tail.rs:155:41
+    |
+155 |                     show_error!("{}", e.description());
+    |                                         ^^^^^^^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> src/tail/tail.rs:170:45
+    |
+170 |                         show_error!("{}", e.description());
+    |                                             ^^^^^^^^^^^
+
+warning: panic message is not a string literal
+   --> src/tail/tail.rs:389:40
+    |
+389 |                     Err(err) => panic!(err),
+    |                                        ^^^
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: `#[warn(non_fmt_panics)]` on by default
+help: add a "{}" format string to `Display` the message
+    |
+389 |                     Err(err) => panic!("{}", err),
+    |                                        +++++
+help: or use std::panic::panic_any instead
+    |
+389 |                     Err(err) => std::panic::panic_any(err),
+    |                                 ~~~~~~~~~~~~~~~~~~~~~
+
+warning: panic message is not a string literal
+   --> src/tail/tail.rs:516:40
+    |
+516 |                     Err(err) => panic!(err),
+    |                                        ^^^
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+help: add a "{}" format string to `Display` the message
+    |
+516 |                     Err(err) => panic!("{}", err),
+    |                                        +++++
+help: or use std::panic::panic_any instead
+    |
+516 |                     Err(err) => std::panic::panic_any(err),
+    |                                 ~~~~~~~~~~~~~~~~~~~~~
+
+warning: panic message is not a string literal
+   --> src/tail/tail.rs:547:40
+    |
+547 |                     Err(err) => panic!(err),
+    |                                        ^^^
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+help: add a "{}" format string to `Display` the message
+    |
+547 |                     Err(err) => panic!("{}", err),
+    |                                        +++++
+help: or use std::panic::panic_any instead
+    |
+547 |                     Err(err) => std::panic::panic_any(err),
+    |                                 ~~~~~~~~~~~~~~~~~~~~~
+
+warning: `cp` (lib) generated 4 warnings (run `cargo fix --lib -p cp` to apply 2 suggestions)
+warning: `tac` (lib) generated 1 warning
+warning: `install` (lib) generated 1 warning
+warning: use of deprecated function `std::mem::uninitialized`: use `mem::MaybeUninit` instead
+  --> src/cksum/cksum.rs:49:19
+   |
+49 |     unsafe { mem::uninitialized() }
+   |                   ^^^^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: the type `[u8; 1048576]` does not permit being left uninitialized
+  --> src/cksum/cksum.rs:49:14
+   |
+49 |     unsafe { mem::uninitialized() }
+   |              ^^^^^^^^^^^^^^^^^^^^
+   |              |
+   |              this code causes undefined behavior when executed
+   |              help: use `MaybeUninit<T>` instead, and only call `assume_init` after initialization is done
+   |
+   = note: integers must be initialized
+   = note: `#[warn(invalid_value)]` on by default
+
+warning: unnecessary parentheses around block return value
+  --> src/printf/tokenize/num_format/formatters/float_common.rs:26:13
+   |
+26 |             ((string_position - 1) - starting_position >= limit)
+   |             ^                                                  ^
+   |
+   = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+   |
+26 -             ((string_position - 1) - starting_position >= limit)
+26 +             (string_position - 1) - starting_position >= limit
+   |
+
+warning: unnecessary parentheses around block return value
+  --> src/printf/tokenize/num_format/formatters/float_common.rs:32:13
+   |
+32 |             ((((string_position - 1) - starting_position) * 9) / 8 >= limit)
+   |             ^                                                              ^
+   |
+help: remove these parentheses
+   |
+32 -             ((((string_position - 1) - starting_position) * 9) / 8 >= limit)
+32 +             (((string_position - 1) - starting_position) * 9) / 8 >= limit
+   |
+
+warning: unnecessary parentheses around block return value
+  --> src/printf/tokenize/num_format/formatters/float_common.rs:34:13
+   |
+34 |             ((string_position - 1) - starting_position >= limit)
+   |             ^                                                  ^
+   |
+help: remove these parentheses
+   |
+34 -             ((string_position - 1) - starting_position >= limit)
+34 +             (string_position - 1) - starting_position >= limit
+   |
+
+warning: `cut` (lib) generated 1 warning
+warning: `tail` (lib) generated 6 warnings (run `cargo fix --lib -p tail` to apply 3 suggestions)
+warning: anonymous parameters are deprecated and will be removed in the next edition
+   --> src/split/split.rs:153:27
+    |
+153 |     fn consume(&mut self, &mut SplitControl) -> String;
+    |                           ^^^^^^^^^^^^^^^^^ help: try naming the parameter or explicitly ignoring it: `_: &mut SplitControl`
+    |
+    = warning: this is accepted in the current edition (Rust 2015) but is a hard error in Rust 2018!
+    = note: for more information, see issue #41686 <https://github.com/rust-lang/rust/issues/41686>
+    = note: `#[warn(anonymous_parameters)]` on by default
+
+warning: calls to `std::mem::drop` with a value that implements `Copy` does nothing
+   --> src/shuf/shuf.rs:231:5
+    |
+231 |     drop(len);
+    |     ^^^^^---^
+    |          |
+    |          argument has type `usize`
+    |
+    = note: use `let _ = ...` to ignore the expression or result
+    = note: `#[warn(dropping_copy_types)]` on by default
+
+warning: `cksum` (lib) generated 2 warnings
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> src/stat/fsext.rs:268:25
+    |
+268 |         Err(e) => Err(e.description().to_owned()),
+    |                         ^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: unnecessary parentheses around block return value
+   --> src/uptime/uptime.rs:176:17
+    |
+176 |                 ((now - boottime) * 100)
+    |                 ^                      ^
+    |
+    = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+    |
+176 -                 ((now - boottime) * 100)
+176 +                 (now - boottime) * 100
+    |
+
+warning: getting the inner pointer of a temporary `CString`
+  --> src/mkfifo/mkfifo.rs:80:53
+   |
+80 |                 CString::new(f.as_bytes()).unwrap().as_ptr(),
+   |                 ----------------------------------- ^^^^^^ this pointer will be invalid
+   |                 |
+   |                 this `CString` is deallocated at the end of the statement, bind it to a variable to extend its lifetime
+   |
+   = note: pointers do not have a lifetime; when calling `as_ptr` the `CString` will be deallocated at the end of the statement because nothing is referencing it as far as the type system is concerned
+   = help: for more information, see https://doc.rust-lang.org/reference/destructors.html
+   = note: `#[warn(temporary_cstring_as_ptr)]` on by default
+
+warning: `mkfifo` (lib) generated 1 warning
+warning: `split` (lib) generated 1 warning (run `cargo fix --lib -p split` to apply 1 suggestion)
+warning: use of deprecated function `std::mem::uninitialized`: use `mem::MaybeUninit` instead
+  --> src/unlink/unlink.rs:24:15
+   |
+24 | use std::mem::uninitialized;
+   |               ^^^^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `std::mem::uninitialized`: use `mem::MaybeUninit` instead
+  --> src/unlink/unlink.rs:74:38
+   |
+74 |         let mut buf: stat = unsafe { uninitialized() };
+   |                                      ^^^^^^^^^^^^^
+
+warning: the type `libc::stat` does not permit being left uninitialized
+  --> src/unlink/unlink.rs:74:38
+   |
+74 |         let mut buf: stat = unsafe { uninitialized() };
+   |                                      ^^^^^^^^^^^^^^^
+   |                                      |
+   |                                      this code causes undefined behavior when executed
+   |                                      help: use `MaybeUninit<T>` instead, and only call `assume_init` after initialization is done
+   |
+   = note: integers must be initialized
+   = note: `#[warn(invalid_value)]` on by default
+
+warning: `shuf` (lib) generated 1 warning
+   Compiling rand_os v0.1.3
+   Compiling rand_isaac v0.1.1
+warning: `uptime` (lib) generated 1 warning (run `cargo fix --lib -p uptime` to apply 1 suggestion)
+   Compiling rand_hc v0.1.0
+   Compiling rand_xorshift v0.1.1
+warning: `printf` (lib) generated 3 warnings (run `cargo fix --lib -p printf` to apply 3 suggestions)
+   Compiling rand_jitter v0.1.4
+   Compiling rust-users v0.6.0 (https://github.com/uutils/rust-users#e64253f2)
+   Compiling unindent v0.1.3
+warning: `unlink` (lib) generated 3 warnings
+warning: `stat` (lib) generated 1 warning
+warning: unused import: `self::uu_chown::*`
+ --> tests/test_chown.rs:4:9
+  |
+4 | pub use self::uu_chown::*;
+  |         ^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: panic message is not a string literal
+   --> tests/common/util.rs:514:20
+    |
+514 |             panic!(ALREADY_RUN);
+    |                    ^^^^^^^^^^^
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: `#[warn(non_fmt_panics)]` on by default
+help: add a "{}" format string to `Display` the message
+    |
+514 |             panic!("{}", ALREADY_RUN);
+    |                    +++++
+
+warning: panic message is not a string literal
+   --> tests/common/util.rs:530:20
+    |
+530 |             panic!(MULTIPLE_STDIN_MEANINGLESS);
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+help: add a "{}" format string to `Display` the message
+    |
+530 |             panic!("{}", MULTIPLE_STDIN_MEANINGLESS);
+    |                    +++++
+
+warning: panic message is not a string literal
+   --> tests/common/util.rs:544:20
+    |
+544 |             panic!(MULTIPLE_STDIN_MEANINGLESS);
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+help: add a "{}" format string to `Display` the message
+    |
+544 |             panic!("{}", MULTIPLE_STDIN_MEANINGLESS);
+    |                    +++++
+
+warning: panic message is not a string literal
+   --> tests/common/util.rs:562:20
+    |
+562 |             panic!(ALREADY_RUN);
+    |                    ^^^^^^^^^^^
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+help: add a "{}" format string to `Display` the message
+    |
+562 |             panic!("{}", ALREADY_RUN);
+    |                    +++++
+
+warning: panic message is not a string literal
+   --> tests/common/util.rs:572:20
+    |
+572 |             panic!(ALREADY_RUN);
+    |                    ^^^^^^^^^^^
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+help: add a "{}" format string to `Display` the message
+    |
+572 |             panic!("{}", ALREADY_RUN);
+    |                    +++++
+
+warning: panic message is not a string literal
+  --> tests/test_chmod.rs:34:20
+   |
+34 | ...ic!(format!("{}: expected: {:o} got: {:o}", "setting permissions on test files before actual test run failed", test.after, perms));
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+   = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+help: remove the `format!(..)` macro call
+   |
+34 -             panic!(format!("{}: expected: {:o} got: {:o}", "setting permissions on test files before actual test run failed", test.after, perms));
+34 +             panic!("{}: expected: {:o} got: {:o}", "setting permissions on test files before actual test run failed", test.after, perms);
+   |
+
+warning: panic message is not a string literal
+  --> tests/test_chmod.rs:43:20
+   |
+43 |             panic!(format!("{:?}: failed", ucmd.raw));
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+   = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+help: remove the `format!(..)` macro call
+   |
+43 -             panic!(format!("{:?}: failed", ucmd.raw));
+43 +             panic!("{:?}: failed", ucmd.raw);
+   |
+
+warning: panic message is not a string literal
+  --> tests/test_chmod.rs:48:20
+   |
+48 |             panic!(format!("{:?}: expected: {:o} got: {:o}", ucmd.raw, test.after, perms));
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+   = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+help: remove the `format!(..)` macro call
+   |
+48 -             panic!(format!("{:?}: expected: {:o} got: {:o}", ucmd.raw, test.after, perms));
+48 +             panic!("{:?}: expected: {:o} got: {:o}", ucmd.raw, test.after, perms);
+   |
+
+warning: panic message is not a string literal
+  --> tests/common/macros.rs:5:20
+   |
+5  |             panic!(format!("stderr: {}", $cond.stderr))
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+  ::: tests/test_od.rs:39:5
+   |
+39 |     assert_empty_stderr!(result);
+   |     ---------------------------- in this macro invocation
+   |
+   = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+   = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+   = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+   |
+5  -             panic!(format!("stderr: {}", $cond.stderr))
+5  +             panic!("stderr: {}", $cond.stderr)
+   |
+
+warning: panic message is not a string literal
+  --> tests/common/macros.rs:5:20
+   |
+5  |             panic!(format!("stderr: {}", $cond.stderr))
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+  ::: tests/test_od.rs:67:5
+   |
+67 |     assert_empty_stderr!(result);
+   |     ---------------------------- in this macro invocation
+   |
+   = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+   = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+   = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+   |
+5  -             panic!(format!("stderr: {}", $cond.stderr))
+5  +             panic!("stderr: {}", $cond.stderr)
+   |
+
+warning: panic message is not a string literal
+  --> tests/common/macros.rs:5:20
+   |
+5  |             panic!(format!("stderr: {}", $cond.stderr))
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+  ::: tests/test_od.rs:93:5
+   |
+93 |     assert_empty_stderr!(result);
+   |     ---------------------------- in this macro invocation
+   |
+   = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+   = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+   = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+   |
+5  -             panic!(format!("stderr: {}", $cond.stderr))
+5  +             panic!("stderr: {}", $cond.stderr)
+   |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:116:5
+    |
+116 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:126:5
+    |
+126 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:153:5
+    |
+153 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:168:5
+    |
+168 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:183:5
+    |
+183 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:205:5
+    |
+205 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:227:5
+    |
+227 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:248:5
+    |
+248 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:257:5
+    |
+257 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:278:5
+    |
+278 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:326:5
+    |
+326 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:361:5
+    |
+361 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:381:5
+    |
+381 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:402:5
+    |
+402 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:422:5
+    |
+422 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:444:5
+    |
+444 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:462:5
+    |
+462 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:480:5
+    |
+480 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:493:5
+    |
+493 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:510:5
+    |
+510 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:531:5
+    |
+531 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:543:5
+    |
+543 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:563:5
+    |
+563 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:577:5
+    |
+577 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:589:5
+    |
+589 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:603:5
+    |
+603 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:618:5
+    |
+618 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:632:5
+    |
+632 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: panic message is not a string literal
+   --> tests/common/macros.rs:5:20
+    |
+5   |             panic!(format!("stderr: {}", $cond.stderr))
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: tests/test_od.rs:653:5
+    |
+653 |     assert_empty_stderr!(result);
+    |     ---------------------------- in this macro invocation
+    |
+    = note: this usage of `panic!()` is deprecated; it will be a hard error in Rust 2021
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/panic-macro-consistency.html>
+    = note: the `panic!()` macro supports formatting, so there's no need for the `format!()` macro here
+    = note: this warning originates in the macro `assert_empty_stderr` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove the `format!(..)` macro call
+    |
+5   -             panic!(format!("stderr: {}", $cond.stderr))
+5   +             panic!("stderr: {}", $cond.stderr)
+    |
+
+warning: `uutils` (test "tests") generated 41 warnings (run `cargo fix --test "tests"` to apply 41 suggestions)
+    Finished test [unoptimized + debuginfo] target(s) in 18.78s
+────────────
+ Nextest run ID ab64bbf9-c836-40da-958b-bcc82847706b with nextest profile: default
+    Starting 586 tests across 2 binaries (24 tests skipped)
+        PASS [   0.039s] (  1/586) uutils::tests test_basename::test_directory
+        PASS [   0.043s] (  2/586) uutils::tests test_base32::test_encode
+        PASS [   0.046s] (  3/586) uutils::tests test_base64::test_encode
+        PASS [   0.046s] (  4/586) uutils::tests test_basename::test_invalid_option
+        PASS [   0.048s] (  5/586) uutils::tests test_base32::test_wrap
+        PASS [   0.050s] (  6/586) uutils::tests test_basename::test_file
+        PASS [   0.051s] (  7/586) uutils::tests test_base32::test_wrap_no_arg
+        PASS [   0.050s] (  8/586) uutils::tests test_base32::test_garbage
+        PASS [   0.051s] (  9/586) uutils::tests test_base64::test_garbage
+        PASS [   0.054s] ( 10/586) uutils::tests test_base32::test_decode
+        PASS [   0.053s] ( 11/586) uutils::tests test_basename::test_dont_remove_suffix
+        PASS [   0.054s] ( 12/586) uutils::tests test_base64::test_wrap
+        PASS [   0.058s] ( 13/586) uutils::tests test_base64::test_wrap_no_arg
+        PASS [   0.061s] ( 14/586) uutils::tests test_base64::test_wrap_bad_arg
+        PASS [   0.063s] ( 15/586) uutils::tests test_base32::test_wrap_bad_arg
+        PASS [   0.064s] ( 16/586) uutils::tests test_base32::test_ignore_garbage
+        PASS [   0.064s] ( 17/586) uutils::tests test_base64::test_ignore_garbage
+        PASS [   0.064s] ( 18/586) uutils::tests test_base64::test_decode
+        PASS [   0.033s] ( 19/586) uutils::tests test_basename::test_no_args
+        PASS [   0.042s] ( 20/586) uutils::tests test_basename::test_multiple_param
+        PASS [   0.039s] ( 21/586) uutils::tests test_basename::test_remove_suffix
+        PASS [   0.039s] ( 22/586) uutils::tests test_basename::test_too_many_args
+        PASS [   0.050s] ( 23/586) uutils::tests test_cat::test_numbered_lines_no_trailing_newline
+        PASS [   0.052s] ( 24/586) uutils::tests test_cat::test_output_multi_files_print_all_chars
+        PASS [   0.049s] ( 25/586) uutils::tests test_cat::test_stdin_nonprinting_and_tabs
+        PASS [   0.053s] ( 26/586) uutils::tests test_cat::test_stdin_nonprinting_and_endofline
+        PASS [   0.058s] ( 27/586) uutils::tests test_basename::test_zero_param
+        PASS [   0.064s] ( 28/586) uutils::tests test_basename::test_suffix_param
+        PASS [   0.064s] ( 29/586) uutils::tests test_cat::test_non_blank_overrides_number
+        PASS [   0.039s] ( 30/586) uutils::tests test_chgrp::test_1
+        PASS [   0.064s] ( 31/586) uutils::tests test_cat::test_squeeze_blank_before_numbering
+        PASS [   0.031s] ( 32/586) uutils::tests test_chgrp::test_fail_silently
+        PASS [   0.064s] ( 33/586) uutils::tests test_cat::test_stdin_number_non_blank
+        PASS [   0.042s] ( 34/586) uutils::tests test_chgrp::test_big_h
+        PASS [   0.062s] ( 35/586) uutils::tests test_cat::test_stdin_show_tabs
+        PASS [   0.065s] ( 36/586) uutils::tests test_cat::test_stdin_show_all
+        PASS [   0.065s] ( 37/586) uutils::tests test_cat::test_stdin_show_ends
+        PASS [   0.065s] ( 38/586) uutils::tests test_cat::test_stdin_show_nonprinting
+        PASS [   0.065s] ( 39/586) uutils::tests test_cat::test_stdin_squeeze_blank
+        PASS [   0.044s] ( 40/586) uutils::tests test_chgrp::test_big_p
+        PASS [   0.031s] ( 41/586) uutils::tests test_chgrp::test_reference
+        PASS [   0.044s] ( 42/586) uutils::tests test_chgrp::test_invalid_option
+        PASS [   0.047s] ( 43/586) uutils::tests test_chgrp::test_invalid_group
+        PASS [   0.033s] ( 44/586) uutils::tests test_chown::test_passgrp::test_grp2gid
+        PASS [   0.038s] ( 45/586) uutils::tests test_chown::test_invalid_option
+        PASS [   0.044s] ( 46/586) uutils::tests test_chmod::test_chmod_reference_file
+        PASS [   0.050s] ( 47/586) uutils::tests test_chmod::test_chmod_many_options
+        PASS [   0.037s] ( 48/586) uutils::tests test_chown::test_passgrp::test_gid2grp
+        PASS [   0.035s] ( 49/586) uutils::tests test_chown::test_passgrp::test_uid2usr
+        PASS [   0.035s] ( 50/586) uutils::tests test_chown::test_passgrp::test_usr2uid
+        PASS [   0.083s] ( 51/586) uutils::tests test_chgrp::test_preserve_root
+        PASS [   0.062s] ( 52/586) uutils::tests test_cksum::test_stdin
+        PASS [   0.065s] ( 53/586) uutils::tests test_cksum::test_single_file
+        PASS [   0.067s] ( 54/586) uutils::tests test_cksum::test_multiple_files
+        PASS [   0.101s] ( 55/586) uutils::tests test_chmod::test_chmod_ugo_copy
+        PASS [   0.113s] ( 56/586) uutils::tests test_chgrp::test_preserve_root_symlink
+        PASS [   0.075s] ( 57/586) uutils::tests test_comm::ab_dash_three
+        PASS [   0.062s] ( 58/586) uutils::tests test_cp::test_cp_arg_backup
+        PASS [   0.064s] ( 59/586) uutils::tests test_cp::test_cp_arg_force
+        PASS [   0.086s] ( 60/586) uutils::tests test_comm::ab_dash_one
+        PASS [   0.078s] ( 61/586) uutils::tests test_comm::ab_dash_two
+        PASS [   0.069s] ( 62/586) uutils::tests test_comm::emptyempty
+        PASS [   0.072s] ( 63/586) uutils::tests test_comm::ab_no_args
+        PASS [   0.076s] ( 64/586) uutils::tests test_comm::defaultcheck_order_identical_bad_order_files
+        PASS [   0.074s] ( 65/586) uutils::tests test_cp::test_cp_arg_interactive
+        PASS [   0.079s] ( 66/586) uutils::tests test_comm::aempty
+        PASS [   0.072s] ( 67/586) uutils::tests test_cp::test_cp_arg_no_clobber
+        PASS [   0.072s] ( 68/586) uutils::tests test_cp::test_cp_arg_no_target_directory
+        PASS [   0.070s] ( 69/586) uutils::tests test_cp::test_cp_arg_remove_destination
+        PASS [   0.075s] ( 70/586) uutils::tests test_cp::test_cp_arg_suffix
+        PASS [   0.157s] ( 71/586) uutils::tests test_chmod::test_chmod_octal
+        PASS [   0.052s] ( 72/586) uutils::tests test_cp::test_cp_directory_not_recursive
+        PASS [   0.055s] ( 73/586) uutils::tests test_cp::test_cp_arg_target_directory
+        PASS [   0.057s] ( 74/586) uutils::tests test_cp::test_cp_arg_symlink
+        PASS [   0.054s] ( 75/586) uutils::tests test_cp::test_cp_cp
+        PASS [   0.054s] ( 76/586) uutils::tests test_cp::test_cp_existing_target
+        PASS [   0.059s] ( 77/586) uutils::tests test_cp::test_cp_multiple_files_target_is_file
+        PASS [   0.062s] ( 78/586) uutils::tests test_cp::test_cp_multiple_files
+        PASS [   0.058s] ( 79/586) uutils::tests test_cp::test_cp_recurse
+        PASS [   0.070s] ( 80/586) uutils::tests test_cp::test_cp_duplicate_files
+        PASS [   0.064s] ( 81/586) uutils::tests test_cp::test_cp_with_dirs
+        PASS [   0.070s] ( 82/586) uutils::tests test_cp::test_cp_with_dirs_t
+        PASS [   0.053s] ( 83/586) uutils::tests test_dircolors::test_bash_default
+        PASS [   0.067s] ( 84/586) uutils::tests test_cut::test_zero_terminated_only_delimited
+        PASS [   0.057s] ( 85/586) uutils::tests test_dircolors::test_csh_default
+        PASS [   0.055s] ( 86/586) uutils::tests test_dircolors::test_internal_db
+        PASS [   0.083s] ( 87/586) uutils::tests test_cut::test_complement
+        PASS [   0.045s] ( 88/586) uutils::tests test_dircolors::test_shell_syntax
+        PASS [   0.078s] ( 89/586) uutils::tests test_cut::test_zero_terminated
+        PASS [   0.237s] ( 90/586) uutils::tests test_chmod::test_chmod_ugoa
+        PASS [   0.067s] ( 91/586) uutils::tests test_dircolors::test_exclusive_option
+        PASS [   0.062s] ( 92/586) uutils::tests test_dircolors::test_no_env
+        PASS [   0.029s] ( 93/586) uutils::tests test_dircolors::test_strutils
+        PASS [   0.091s] ( 94/586) uutils::tests test_cut::test_output_delimiter
+        PASS [   0.088s] ( 95/586) uutils::tests test_dircolors::test1
+        PASS [   0.095s] ( 96/586) uutils::tests test_cut::test_only_delimited
+        PASS [   0.103s] ( 97/586) uutils::tests test_cut::test_specify_delimiter
+        PASS [   0.045s] ( 98/586) uutils::tests test_dirname::test_empty
+        PASS [   0.048s] ( 99/586) uutils::tests test_dirname::test_path_without_trailing_slashes
+        PASS [   0.050s] (100/586) uutils::tests test_dirname::test_path_with_trailing_slashes
+        PASS [   0.047s] (101/586) uutils::tests test_dirname::test_pwd
+        PASS [   0.043s] (102/586) uutils::tests test_echo::test_default
+        PASS [   0.105s] (103/586) uutils::tests test_dircolors::test_keywords
+        PASS [   0.044s] (104/586) uutils::tests test_echo::test_escape_backslash
+        PASS [   0.047s] (105/586) uutils::tests test_echo::test_escape_alert
+        PASS [   0.057s] (106/586) uutils::tests test_du::test_du_basics_bad_name
+        PASS [   0.053s] (107/586) uutils::tests test_echo::test_disable_escapes
+        PASS [   0.064s] (108/586) uutils::tests test_dirname::test_root
+        PASS [   0.053s] (109/586) uutils::tests test_echo::test_escape_carriage_return
+        PASS [   0.043s] (110/586) uutils::tests test_echo::test_escape_escape
+        PASS [   0.068s] (111/586) uutils::tests test_du::test_du_basics
+        PASS [   0.060s] (112/586) uutils::tests test_echo::test_escape_backspace
+        PASS [   0.037s] (113/586) uutils::tests test_echo::test_escape_no_octal
+        PASS [   0.053s] (114/586) uutils::tests test_echo::test_escape_form_feed
+        PASS [   0.048s] (115/586) uutils::tests test_echo::test_escape_hex
+        PASS [   0.048s] (116/586) uutils::tests test_echo::test_escape_no_further_output
+        PASS [   0.039s] (117/586) uutils::tests test_echo::test_escape_octal
+        PASS [   0.054s] (118/586) uutils::tests test_echo::test_escape_newline
+        PASS [   0.050s] (119/586) uutils::tests test_echo::test_escape_no_hex
+        PASS [   0.049s] (120/586) uutils::tests test_echo::test_escape_one_slash
+        PASS [   0.037s] (121/586) uutils::tests test_echo::test_escape_vertical_tab
+        PASS [   0.040s] (122/586) uutils::tests test_echo::test_escape_tab
+        PASS [   0.046s] (123/586) uutils::tests test_echo::test_escape_short_octal
+        PASS [   0.048s] (124/586) uutils::tests test_echo::test_escape_short_hex
+        PASS [   0.055s] (125/586) uutils::tests test_echo::test_escape_one_slash_multi
+        PASS [   0.049s] (126/586) uutils::tests test_echo::test_no_trailing_newline
+        PASS [   0.048s] (127/586) uutils::tests test_env::test_combined_file_set
+        PASS [   0.046s] (128/586) uutils::tests test_env::test_echo
+        PASS [   0.045s] (129/586) uutils::tests test_env::test_env_help
+        PASS [   0.049s] (130/586) uutils::tests test_env::test_env_version
+        PASS [   0.053s] (131/586) uutils::tests test_env::test_combined_file_set_unset
+        PASS [   0.048s] (132/586) uutils::tests test_env::test_file_option
+        PASS [   0.050s] (133/586) uutils::tests test_env::test_fail_null_with_program
+        PASS [   0.043s] (134/586) uutils::tests test_env::test_multiple_name_value_pairs
+        PASS [   0.055s] (135/586) uutils::tests test_env::test_ignore_environment
+        PASS [   0.054s] (136/586) uutils::tests test_env::test_single_name_value_pair
+        PASS [   0.052s] (137/586) uutils::tests test_env::test_unset_variable
+        PASS [   0.056s] (138/586) uutils::tests test_env::test_null_delimiter
+        PASS [   0.042s] (139/586) uutils::tests test_expr::test_parenthesis
+        PASS [   0.054s] (140/586) uutils::tests test_expr::test_and
+        PASS [   0.055s] (141/586) uutils::tests test_expr::test_complex_arithmetic
+        PASS [   0.057s] (142/586) uutils::tests test_expr::test_or
+        PASS [   0.040s] (143/586) uutils::tests test_fold::test_40_column_word_boundary
+        PASS [   0.046s] (144/586) uutils::tests test_false::test_exit_code
+        PASS [   0.046s] (145/586) uutils::tests test_fold::test_40_column_hard_cutoff
+        PASS [   0.045s] (146/586) uutils::tests test_fold::test_default_80_column_wrap
+        PASS [   0.076s] (147/586) uutils::tests test_expr::test_simple_arithmetic
+        PASS [   0.050s] (148/586) uutils::tests test_hashsum::sha1::test_single_file
+        PASS [   0.052s] (149/586) uutils::tests test_hashsum::sha1::test_stdin
+        PASS [   0.051s] (150/586) uutils::tests test_hashsum::sha224::test_single_file
+        PASS [   0.063s] (151/586) uutils::tests test_hashsum::md5::test_single_file
+        PASS [   0.068s] (152/586) uutils::tests test_hashsum::md5::test_stdin
+        PASS [   0.067s] (153/586) uutils::tests test_hashsum::sha224::test_stdin
+        PASS [   0.099s] (154/586) uutils::tests test_factor::test_random
+        PASS [   0.068s] (155/586) uutils::tests test_hashsum::sha256::test_single_file
+        PASS [   0.056s] (156/586) uutils::tests test_hashsum::sha3_224::test_single_file
+        PASS [   0.062s] (157/586) uutils::tests test_hashsum::sha384::test_stdin
+        PASS [   0.064s] (158/586) uutils::tests test_hashsum::sha384::test_single_file
+        PASS [   0.128s] (159/586) uutils::tests test_factor::test_big_primes
+        PASS [   0.075s] (160/586) uutils::tests test_hashsum::sha256::test_stdin
+        PASS [   0.052s] (161/586) uutils::tests test_hashsum::sha3_256::test_stdin
+        PASS [   0.063s] (162/586) uutils::tests test_hashsum::sha3_256::test_single_file
+        PASS [   0.068s] (163/586) uutils::tests test_hashsum::sha3_224::test_stdin
+        PASS [   0.371s] (164/586) uutils::tests test_cut::test_char_sequence
+        PASS [   0.072s] (165/586) uutils::tests test_hashsum::sha3_384::test_single_file
+        PASS [   0.066s] (166/586) uutils::tests test_hashsum::sha3_384::test_stdin
+        PASS [   0.384s] (167/586) uutils::tests test_cut::test_field_sequence
+        PASS [   0.072s] (168/586) uutils::tests test_hashsum::sha3_512::test_single_file
+        PASS [   0.067s] (169/586) uutils::tests test_hashsum::sha3_512::test_stdin
+        PASS [   0.053s] (170/586) uutils::tests test_hashsum::shake128_256::test_single_file
+        PASS [   0.056s] (171/586) uutils::tests test_hashsum::shake128_256::test_stdin
+        PASS [   0.069s] (172/586) uutils::tests test_hashsum::sha512::test_stdin
+        PASS [   0.428s] (173/586) uutils::tests test_cut::test_byte_sequence
+        PASS [   0.061s] (174/586) uutils::tests test_hashsum::shake256_512::test_single_file
+        PASS [   0.080s] (175/586) uutils::tests test_hashsum::sha512::test_single_file
+        PASS [   0.045s] (176/586) uutils::tests test_head::test_stdin_1_line
+        PASS [   0.058s] (177/586) uutils::tests test_head::test_single_1_line_obsolete
+        PASS [   0.064s] (178/586) uutils::tests test_head::test_single_1_line
+        PASS [   0.063s] (179/586) uutils::tests test_head::test_single_default
+        PASS [   0.079s] (180/586) uutils::tests test_hashsum::shake256_512::test_stdin
+        PASS [   0.066s] (181/586) uutils::tests test_head::test_single_5_chars
+        PASS [   0.052s] (182/586) uutils::tests test_head::test_stdin_5_chars
+        PASS [   0.060s] (183/586) uutils::tests test_head::test_stdin_1_line_obsolete
+        PASS [   0.050s] (184/586) uutils::tests test_head::test_verbose
+        PASS [   0.057s] (185/586) uutils::tests test_head::test_stdin_default
+        PASS [   0.041s] (186/586) uutils::tests test_install::test_install_failing_not_dir
+        PASS [   0.040s] (187/586) uutils::tests test_install::test_install_mode_directories
+        PASS [   0.051s] (188/586) uutils::tests test_install::test_install_component_directories
+        PASS [   0.053s] (189/586) uutils::tests test_install::test_install_component_directories_failing
+        PASS [   0.059s] (190/586) uutils::tests test_install::test_install_basic
+        PASS [   0.053s] (191/586) uutils::tests test_install::test_install_help
+        PASS [   0.046s] (192/586) uutils::tests test_install::test_install_mode_failing
+        PASS [   0.049s] (193/586) uutils::tests test_install::test_install_mode_numeric
+        PASS [   0.076s] (194/586) uutils::tests test_hostname::test_hostname
+        PASS [   0.053s] (195/586) uutils::tests test_install::test_install_mode_symbolic
+        PASS [   0.042s] (196/586) uutils::tests test_install::test_install_target_new_file
+        PASS [   0.044s] (197/586) uutils::tests test_install::test_install_target_new_file_failing_nonexistent_parent
+        PASS [   0.046s] (198/586) uutils::tests test_install::test_install_unimplemented_arg
+        PASS [   0.058s] (199/586) uutils::tests test_install::test_install_target_file
+        PASS [   0.075s] (200/586) uutils::tests test_join::default_arguments
+        PASS [   0.077s] (201/586) uutils::tests test_join::case_insensitive
+        PASS [   0.068s] (202/586) uutils::tests test_join::empty_key
+        PASS [   0.073s] (203/586) uutils::tests test_join::empty_format
+        PASS [   0.081s] (204/586) uutils::tests test_join::different_field
+        PASS [   0.073s] (205/586) uutils::tests test_join::missing_format_fields
+        PASS [   0.083s] (206/586) uutils::tests test_join::headers
+        PASS [   0.089s] (207/586) uutils::tests test_join::empty_intersection
+        PASS [   0.075s] (208/586) uutils::tests test_join::multitab_character
+        PASS [   0.080s] (209/586) uutils::tests test_join::new_line_separated
+        PASS [   0.120s] (210/586) uutils::tests test_join::autoformat
+        PASS [   0.119s] (211/586) uutils::tests test_join::default_format
+        PASS [   0.088s] (212/586) uutils::tests test_join::semicolon_separated
+        PASS [   0.117s] (213/586) uutils::tests test_join::different_fields
+        PASS [   0.098s] (214/586) uutils::tests test_join::headers_autoformat
+        PASS [   0.039s] (215/586) uutils::tests test_link::test_link_nonexistent_file
+        PASS [   0.040s] (216/586) uutils::tests test_ln::test_symlink_circular
+        PASS [   0.046s] (217/586) uutils::tests test_link::test_link_no_circular
+        PASS [   0.141s] (218/586) uutils::tests test_join::empty_files
+        PASS [   0.070s] (219/586) uutils::tests test_link::test_link_existing_file
+        PASS [   0.043s] (220/586) uutils::tests test_ln::test_symlink_dangling_directory
+        PASS [   0.084s] (221/586) uutils::tests test_join::suppress_joined
+        PASS [   0.049s] (222/586) uutils::tests test_ln::test_symlink_custom_backup_suffix
+        PASS [   0.080s] (223/586) uutils::tests test_join::wrong_line_order
+        PASS [   0.061s] (224/586) uutils::tests test_ln::test_symlink_backup_numbering
+        PASS [   0.050s] (225/586) uutils::tests test_ln::test_symlink_dangling_file
+        PASS [   0.128s] (226/586) uutils::tests test_join::single_file_with_header
+        PASS [   0.050s] (227/586) uutils::tests test_ln::test_symlink_dont_overwrite
+        PASS [   0.091s] (228/586) uutils::tests test_join::unpaired_lines_format
+        PASS [   0.056s] (229/586) uutils::tests test_ln::test_symlink_errors
+        PASS [   0.060s] (230/586) uutils::tests test_ln::test_symlink_existing_backup
+        PASS [   0.047s] (231/586) uutils::tests test_ln::test_symlink_existing_directory
+        PASS [   0.046s] (232/586) uutils::tests test_ln::test_symlink_implicit_target_dir
+        PASS [   0.118s] (233/586) uutils::tests test_join::unpaired_lines
+        PASS [   0.053s] (234/586) uutils::tests test_ln::test_symlink_existing_file
+        PASS [   0.042s] (235/586) uutils::tests test_ln::test_symlink_missing_destination
+        PASS [   0.045s] (236/586) uutils::tests test_ln::test_symlink_overwrite_dir_fail
+        PASS [   0.049s] (237/586) uutils::tests test_ln::test_symlink_overwrite_force
+        PASS [   0.038s] (238/586) uutils::tests test_ln::test_symlink_target_only
+        PASS [   0.050s] (239/586) uutils::tests test_ln::test_symlink_target_dir
+        PASS [   0.063s] (240/586) uutils::tests test_ln::test_symlink_interactive
+        PASS [   0.053s] (241/586) uutils::tests test_ln::test_symlink_simple_backup
+        PASS [   0.059s] (242/586) uutils::tests test_ln::test_symlink_target_dir_from_dir
+        PASS [   0.049s] (243/586) uutils::tests test_ls::test_ls_ls
+        PASS [   0.054s] (244/586) uutils::tests test_ln::test_symlink_to_dir_2args
+        PASS [   0.058s] (245/586) uutils::tests test_ln::test_symlink_verbose
+        PASS [   0.037s] (246/586) uutils::tests test_mkdir::test_mkdir_mkdir
+        PASS [   0.039s] (247/586) uutils::tests test_mkdir::test_mkdir_mode
+        PASS [   0.053s] (248/586) uutils::tests test_ls::test_ls_ls_i
+        PASS [   0.050s] (249/586) uutils::tests test_mkdir::test_mkdir_dup_dir
+        PASS [   0.067s] (250/586) uutils::tests test_ls::test_ls_ls_color
+        PASS [   0.045s] (251/586) uutils::tests test_mkdir::test_mkdir_no_parent
+        PASS [   0.059s] (252/586) uutils::tests test_mkdir::test_mkdir_dup_file
+        PASS [   0.064s] (253/586) uutils::tests test_mkdir::test_mkdir_dup_dir_parent
+        PASS [   0.058s] (254/586) uutils::tests test_mkdir::test_mkdir_parent
+        PASS [   0.052s] (255/586) uutils::tests test_mktemp::test_mktemp_quiet
+        PASS [   0.049s] (256/586) uutils::tests test_mv::test_mv_backup_dir
+        PASS [   0.044s] (257/586) uutils::tests test_mv::test_mv_custom_backup_suffix
+        PASS [   0.051s] (258/586) uutils::tests test_mv::test_mv_backup_numbering
+        PASS [   0.050s] (259/586) uutils::tests test_mv::test_mv_existing_backup
+        PASS [   0.045s] (260/586) uutils::tests test_mv::test_mv_force_replace_file
+        PASS [   0.055s] (261/586) uutils::tests test_mv::test_mv_custom_backup_suffix_via_env
+        PASS [   0.045s] (262/586) uutils::tests test_mv::test_mv_move_file_into_dir
+        PASS [   0.052s] (263/586) uutils::tests test_mv::test_mv_move_file_between_dirs
+        PASS [   0.058s] (264/586) uutils::tests test_mv::test_mv_interactive
+        PASS [   0.039s] (265/586) uutils::tests test_mv::test_mv_no_clobber
+        PASS [   0.051s] (266/586) uutils::tests test_mv::test_mv_multiple_files
+        PASS [   0.079s] (267/586) uutils::tests test_mv::test_mv_errors
+        PASS [   0.052s] (268/586) uutils::tests test_mv::test_mv_multiple_folders
+        PASS [   0.044s] (269/586) uutils::tests test_mv::test_mv_overwrite_dir
+        PASS [   0.115s] (270/586) uutils::tests test_mktemp::test_mktemp_dry_run
+        PASS [   0.040s] (271/586) uutils::tests test_mv::test_mv_rename_dir
+        PASS [   0.119s] (272/586) uutils::tests test_mktemp::test_mktemp_mktemp
+        PASS [   0.052s] (273/586) uutils::tests test_mv::test_mv_overwrite_nonempty_dir
+        PASS [   0.045s] (274/586) uutils::tests test_mv::test_mv_replace_file
+        PASS [   0.047s] (275/586) uutils::tests test_mv::test_mv_rename_file
+        PASS [   0.116s] (276/586) uutils::tests test_mktemp::test_mktemp_suffix
+        PASS [   0.128s] (277/586) uutils::tests test_mktemp::test_mktemp_make_temp_dir
+        PASS [   0.122s] (278/586) uutils::tests test_mktemp::test_mktemp_tmpdir
+        PASS [   0.044s] (279/586) uutils::tests test_mv::test_mv_simple_backup
+        PASS [   0.052s] (280/586) uutils::tests test_mv::test_mv_target_dir
+        PASS [   0.057s] (281/586) uutils::tests test_mv::test_mv_strip_slashes
+        PASS [   0.045s] (282/586) uutils::tests test_nl::test_padding_without_overflow
+        PASS [   0.045s] (283/586) uutils::tests test_nl::test_stdin_newline
+        PASS [   0.037s] (284/586) uutils::tests test_numfmt::test_from_iec
+        PASS [   0.055s] (285/586) uutils::tests test_nl::test_padding_with_overflow
+        PASS [   0.059s] (286/586) uutils::tests test_mv::test_mv_update_option
+        PASS [   0.046s] (287/586) uutils::tests test_nl::test_stdin_nonewline
+        PASS [   0.041s] (288/586) uutils::tests test_numfmt::test_from_iec_i
+        PASS [   0.042s] (289/586) uutils::tests test_numfmt::test_from_si
+        PASS [   0.048s] (290/586) uutils::tests test_numfmt::test_from_auto
+        PASS [   0.044s] (291/586) uutils::tests test_numfmt::test_header
+        PASS [   0.067s] (292/586) uutils::tests test_mv::test_mv_verbose
+        PASS [   0.048s] (293/586) uutils::tests test_numfmt::test_header_default
+        PASS [   0.068s] (294/586) uutils::tests test_nl::test_sections_and_styles
+        PASS [   0.047s] (295/586) uutils::tests test_numfmt::test_input_from_free_arguments
+        PASS [   0.038s] (296/586) uutils::tests test_numfmt::test_no_op
+        PASS [   0.054s] (297/586) uutils::tests test_numfmt::test_negative
+        PASS [   0.043s] (298/586) uutils::tests test_numfmt::test_negative_padding
+        PASS [   0.038s] (299/586) uutils::tests test_numfmt::test_to_iec
+        PASS [   0.041s] (300/586) uutils::tests test_numfmt::test_padding
+        PASS [   0.049s] (301/586) uutils::tests test_numfmt::test_normalize
+        PASS [   0.041s] (302/586) uutils::tests test_numfmt::test_to_iec_i
+        PASS [   0.041s] (303/586) uutils::tests test_numfmt::test_to_si
+        PASS [   0.049s] (304/586) uutils::tests test_numfmt::test_si_to_iec
+        PASS [   0.043s] (305/586) uutils::tests test_od::test_alignment_Fx
+        PASS [   0.045s] (306/586) uutils::tests test_od::test_alignment_Xxa
+        PASS [   0.050s] (307/586) uutils::tests test_od::test_2files
+        PASS [   0.046s] (308/586) uutils::tests test_od::test_ascii_dump
+        PASS [   0.042s] (309/586) uutils::tests test_od::test_dec
+        PASS [   0.044s] (310/586) uutils::tests test_od::test_dec_offset
+        PASS [   0.053s] (311/586) uutils::tests test_od::test_big_endian
+        PASS [   0.043s] (312/586) uutils::tests test_od::test_file
+        PASS [   0.056s] (313/586) uutils::tests test_od::test_f16
+        PASS [   0.049s] (314/586) uutils::tests test_od::test_f64
+        PASS [   0.052s] (315/586) uutils::tests test_od::test_f32
+        PASS [   0.045s] (316/586) uutils::tests test_od::test_filename_parsing
+        PASS [   0.048s] (317/586) uutils::tests test_od::test_file_offset
+        PASS [   0.050s] (318/586) uutils::tests test_od::test_from_mixed
+        PASS [   0.044s] (319/586) uutils::tests test_od::test_hex32
+        PASS [   0.048s] (320/586) uutils::tests test_od::test_hex16
+        PASS [   0.053s] (321/586) uutils::tests test_od::test_from_stdin
+        PASS [   0.046s] (322/586) uutils::tests test_od::test_hex_offset
+        PASS [   0.042s] (323/586) uutils::tests test_od::test_invalid_width
+        PASS [   0.049s] (324/586) uutils::tests test_od::test_invalid_offset
+        PASS [   0.044s] (325/586) uutils::tests test_od::test_multibyte
+        PASS [   0.051s] (326/586) uutils::tests test_od::test_maxuint
+        PASS [   0.046s] (327/586) uutils::tests test_od::test_no_file
+        PASS [   0.053s] (328/586) uutils::tests test_od::test_multiple_formats
+        PASS [   0.038s] (329/586) uutils::tests test_od::test_suppress_duplicates
+        PASS [   0.051s] (330/586) uutils::tests test_od::test_no_offset
+        PASS [   0.053s] (331/586) uutils::tests test_od::test_read_bytes
+        PASS [   0.051s] (332/586) uutils::tests test_od::test_skip_bytes_error
+        PASS [   0.044s] (333/586) uutils::tests test_od::test_traditional_error
+        PASS [   0.040s] (334/586) uutils::tests test_od::test_width
+        PASS [   0.050s] (335/586) uutils::tests test_od::test_traditional_only_label
+        PASS [   0.051s] (336/586) uutils::tests test_od::test_traditional
+        PASS [   0.049s] (337/586) uutils::tests test_od::test_traditional_with_skip_bytes_non_override
+        PASS [   0.067s] (338/586) uutils::tests test_od::test_skip_bytes
+        PASS [   0.064s] (339/586) uutils::tests test_od::test_stdin_offset
+        PASS [   0.049s] (340/586) uutils::tests test_od::test_traditional_with_skip_bytes_override
+        PASS [   0.047s] (341/586) uutils::tests test_od::test_zero_width
+        PASS [   0.052s] (342/586) uutils::tests test_od::test_width_without_value
+        PASS [   0.042s] (343/586) uutils::tests test_pinky::test_capitalize
+        PASS [   0.052s] (344/586) uutils::tests test_paste::test_combine_pairs_of_lines
+        PASS [   0.058s] (345/586) uutils::tests test_pathchk::test_default_mode
+        PASS [   0.046s] (346/586) uutils::tests test_printf::basic_literal
+        PASS [   0.043s] (347/586) uutils::tests test_printf::escaped_hex
+        PASS [   0.046s] (348/586) uutils::tests test_printf::escaped_newline
+        PASS [   0.035s] (349/586) uutils::tests test_printf::escaped_unicode_eightdigit
+        PASS [   0.043s] (350/586) uutils::tests test_printf::escaped_octal
+        PASS [   0.040s] (351/586) uutils::tests test_printf::escaped_tab
+        PASS [   0.042s] (352/586) uutils::tests test_printf::escaped_slash
+        PASS [   0.064s] (353/586) uutils::tests test_pinky::test_long_format
+        PASS [   0.044s] (354/586) uutils::tests test_printf::escaped_unicode_fourdigit
+        PASS [   0.050s] (355/586) uutils::tests test_printf::escaped_percent_sign
+        PASS [   0.039s] (356/586) uutils::tests test_printf::sub_any_asterisk_firstparam
+        PASS [   0.044s] (357/586) uutils::tests test_printf::sub_any_asterisk_both_params
+        PASS [   0.046s] (358/586) uutils::tests test_printf::escaped_unrecognized
+        PASS [   0.038s] (359/586) uutils::tests test_printf::sub_any_asterisk_octal_arg
+        PASS [   0.039s] (360/586) uutils::tests test_printf::sub_any_asterisk_second_param
+        PASS [   0.036s] (361/586) uutils::tests test_printf::sub_any_specifiers_after_period
+        PASS [   0.051s] (362/586) uutils::tests test_printf::sub_any_asterisk_hex_arg
+        PASS [   0.045s] (363/586) uutils::tests test_printf::sub_any_specifiers_after_second_param
+        PASS [   0.041s] (364/586) uutils::tests test_printf::sub_any_specifiers_no_params
+        PASS [   0.040s] (365/586) uutils::tests test_printf::sub_bstring_handle_escapes
+        PASS [   0.054s] (366/586) uutils::tests test_printf::sub_any_specifiers_after_first_param
+        PASS [   0.039s] (367/586) uutils::tests test_printf::sub_float_dec_places
+        PASS [   0.046s] (368/586) uutils::tests test_printf::sub_bstring_ignore_subs
+        PASS [   0.040s] (369/586) uutils::tests test_printf::sub_int_decimal
+        PASS [   0.039s] (370/586) uutils::tests test_printf::sub_int_leading_zeroes_prio
+        PASS [   0.048s] (371/586) uutils::tests test_printf::sub_char
+        PASS [   0.042s] (372/586) uutils::tests test_printf::sub_float_no_octal_in
+        PASS [   0.050s] (373/586) uutils::tests test_printf::sub_float_hex_in
+        PASS [   0.042s] (374/586) uutils::tests test_printf::sub_multifield
+        PASS [   0.044s] (375/586) uutils::tests test_printf::sub_minwidth_negative
+        PASS [   0.050s] (376/586) uutils::tests test_printf::sub_int_leading_zeroes
+        PASS [   0.047s] (377/586) uutils::tests test_printf::sub_minwidth
+        PASS [   0.040s] (378/586) uutils::tests test_printf::sub_num_float
+        PASS [   0.044s] (379/586) uutils::tests test_printf::sub_num_dec_trunc
+        PASS [   0.038s] (380/586) uutils::tests test_printf::sub_num_hex_upper
+        PASS [   0.041s] (381/586) uutils::tests test_printf::sub_num_float_round
+        PASS [   0.042s] (382/586) uutils::tests test_printf::sub_num_hex_lower
+        PASS [   0.042s] (383/586) uutils::tests test_printf::sub_num_int_charconst_in
+        PASS [   0.044s] (384/586) uutils::tests test_printf::sub_num_int
+        PASS [   0.042s] (385/586) uutils::tests test_printf::sub_num_int_hex_in
+        PASS [   0.041s] (386/586) uutils::tests test_printf::sub_num_int_hex_in_neg
+        PASS [   0.041s] (387/586) uutils::tests test_printf::sub_num_int_oct_in
+        PASS [   0.044s] (388/586) uutils::tests test_printf::sub_num_int_minwidth
+        PASS [   0.040s] (389/586) uutils::tests test_printf::sub_num_sci_upper
+        PASS [   0.042s] (390/586) uutils::tests test_printf::sub_num_octal
+        PASS [   0.041s] (391/586) uutils::tests test_printf::sub_num_sci_trunc
+        PASS [   0.046s] (392/586) uutils::tests test_printf::sub_num_int_oct_in_neg
+        PASS [   0.053s] (393/586) uutils::tests test_printf::sub_num_int_neg
+        PASS [   0.041s] (394/586) uutils::tests test_printf::sub_num_uint
+        PASS [   0.050s] (395/586) uutils::tests test_printf::sub_num_sci_lower
+        PASS [   0.044s] (396/586) uutils::tests test_printf::sub_repeat_formatstr
+        PASS [   0.041s] (397/586) uutils::tests test_printf::sub_string
+        PASS [   0.042s] (398/586) uutils::tests test_printf::sub_string_ignore_escapes
+        PASS [   0.045s] (399/586) uutils::tests test_printf::sub_str_max_chars_input
+        PASS [   0.058s] (400/586) uutils::tests test_ptx::gnu_ext_disabled_roff_auto_ref
+        PASS [   0.042s] (401/586) uutils::tests test_readlink::test_canonicalize_existing
+        PASS [   0.060s] (402/586) uutils::tests test_ptx::gnu_ext_disabled_ignore_and_only_file
+        PASS [   0.056s] (403/586) uutils::tests test_ptx::gnu_ext_disabled_roff_no_ref
+        PASS [   0.050s] (404/586) uutils::tests test_readlink::test_canonicalize
+        PASS [   0.051s] (405/586) uutils::tests test_pwd::test_default
+        PASS [   0.059s] (406/586) uutils::tests test_ptx::gnu_ext_disabled_tex_auto_ref
+        PASS [   0.045s] (407/586) uutils::tests test_readlink::test_long_redirection_to_current_dir
+        PASS [   0.040s] (408/586) uutils::tests test_realpath::test_current_directory
+        PASS [   0.051s] (409/586) uutils::tests test_readlink::test_canonicalize_missing
+        PASS [   0.061s] (410/586) uutils::tests test_ptx::gnu_ext_disabled_tex_input_ref
+        PASS [   0.069s] (411/586) uutils::tests test_ptx::gnu_ext_disabled_roff_input_ref
+        PASS [   0.058s] (412/586) uutils::tests test_ptx::gnu_ext_disabled_tex_no_ref
+        PASS [   0.048s] (413/586) uutils::tests test_readlink::test_long_redirection_to_root
+        PASS [   0.041s] (414/586) uutils::tests test_realpath::test_long_redirection_to_current_dir
+        PASS [   0.039s] (415/586) uutils::tests test_realpath::test_long_redirection_to_root
+        PASS [   0.039s] (416/586) uutils::tests test_rm::test_rm_dir_symlink
+        PASS [   0.035s] (417/586) uutils::tests test_rm::test_rm_force_no_operand
+        PASS [   0.037s] (418/586) uutils::tests test_rm::test_rm_errors
+        PASS [   0.039s] (419/586) uutils::tests test_rm::test_rm_force
+        PASS [   0.045s] (420/586) uutils::tests test_rm::test_rm_empty_directory
+        PASS [   0.040s] (421/586) uutils::tests test_rm::test_rm_no_operand
+        PASS [   0.041s] (422/586) uutils::tests test_rm::test_rm_multiple_files
+        PASS [   0.042s] (423/586) uutils::tests test_rm::test_rm_invalid_symlink
+        PASS [   0.036s] (424/586) uutils::tests test_rmdir::test_rmdir_empty_directory_with_parents
+        PASS [   0.042s] (425/586) uutils::tests test_rm::test_rm_verbose
+        PASS [   0.045s] (426/586) uutils::tests test_rmdir::test_rmdir_empty_directory_no_parents
+        PASS [   0.046s] (427/586) uutils::tests test_rmdir::test_rmdir_ignore_nonempty_directory_no_parents
+        PASS [   0.045s] (428/586) uutils::tests test_rmdir::test_rmdir_nonempty_directory_no_parents
+        PASS [   0.054s] (429/586) uutils::tests test_rm::test_rm_one_file
+        PASS [   0.056s] (430/586) uutils::tests test_rm::test_rm_interactive
+        PASS [   0.048s] (431/586) uutils::tests test_rmdir::test_rmdir_ignore_nonempty_directory_with_parents
+        PASS [   0.048s] (432/586) uutils::tests test_rmdir::test_rmdir_nonempty_directory_with_parents
+        PASS [   0.057s] (433/586) uutils::tests test_rm::test_rm_recursive
+        PASS [   0.031s] (434/586) uutils::tests test_seq::test_separator_and_terminator
+        PASS [   0.043s] (435/586) uutils::tests test_seq::test_count_down
+        PASS [   0.043s] (436/586) uutils::tests test_seq::test_count_up
+        PASS [   0.047s] (437/586) uutils::tests test_seq::test_equalize_widths
+        PASS [   0.071s] (438/586) uutils::tests test_sort::test_multiple_files
+        PASS [   0.090s] (439/586) uutils::tests test_sort::test_default_unsorted_ints
+        PASS [   0.093s] (440/586) uutils::tests test_sort::test_ignore_case
+        PASS [   0.095s] (441/586) uutils::tests test_sort::test_human_block_sizes
+        PASS [   0.090s] (442/586) uutils::tests test_sort::test_merge_reversed
+        PASS [   0.086s] (443/586) uutils::tests test_sort::test_month_stable
+        PASS [   0.101s] (444/586) uutils::tests test_sort::test_merge_interleaved
+        PASS [   0.093s] (445/586) uutils::tests test_sort::test_month_default
+        PASS [   0.096s] (446/586) uutils::tests test_sort::test_merge_unique
+        PASS [   0.097s] (447/586) uutils::tests test_sort::test_numeric_fixed_floats
+        PASS [   0.099s] (448/586) uutils::tests test_sort::test_numeric_floats_and_ints
+        PASS [   0.112s] (449/586) uutils::tests test_sort::test_numeric_floats
+        PASS [   0.102s] (450/586) uutils::tests test_sort::test_numeric_floats_with_nan
+        PASS [   0.107s] (451/586) uutils::tests test_sort::test_numeric_unfixed_floats
+        PASS [   0.151s] (452/586) uutils::tests test_sort::test_check
+        PASS [   0.119s] (453/586) uutils::tests test_sort::test_numeric_unique_ints
+        PASS [   0.059s] (454/586) uutils::tests test_split::test_split_str_prefixed_chunks_by_bytes
+        PASS [   0.053s] (455/586) uutils::tests test_stat::test_format_created_seconds
+        PASS [   0.031s] (456/586) uutils::tests test_stat::test_fsext::test_file_type
+        PASS [   0.030s] (457/586) uutils::tests test_stat::test_fsext::test_fs_type
+        PASS [   0.043s] (458/586) uutils::tests test_stat::test_fsext::test_access
+        PASS [   0.055s] (459/586) uutils::tests test_stat::test_format_created_time
+        PASS [   0.080s] (460/586) uutils::tests test_sort::test_version
+        PASS [   0.063s] (461/586) uutils::tests test_stat::test_follow_symlink
+        PASS [   0.075s] (462/586) uutils::tests test_split::test_split_num_prefixed_chunks_by_bytes
+        PASS [   0.031s] (463/586) uutils::tests test_stat::test_generate_tokens::normal_format
+        PASS [   0.132s] (464/586) uutils::tests test_sort::test_numeric_unsorted_ints
+        PASS [   0.029s] (465/586) uutils::tests test_stat::test_generate_tokens::printf_format
+        PASS [   0.031s] (466/586) uutils::tests test_stat::test_groupnum
+        PASS [   0.028s] (467/586) uutils::tests test_stat::test_scanutil
+        PASS [   0.077s] (468/586) uutils::tests test_stat::test_fs_format
+        PASS [   0.042s] (469/586) uutils::tests test_stat::test_invalid_option
+        PASS [   0.049s] (470/586) uutils::tests test_stdbuf::test_stdbuf_unbuffered_stdout
+        PASS [   0.051s] (471/586) uutils::tests test_stat::test_symlink
+        PASS [   0.051s] (472/586) uutils::tests test_sum::test_bsd_stdin
+        PASS [   0.049s] (473/586) uutils::tests test_sum::test_sysv_multiple_files
+        PASS [   0.058s] (474/586) uutils::tests test_sum::test_bsd_multiple_files
+        PASS [   0.051s] (475/586) uutils::tests test_sum::test_sysv_single_file
+        PASS [   0.059s] (476/586) uutils::tests test_sum::test_bsd_single_file
+        PASS [   0.054s] (477/586) uutils::tests test_tac::test_single_default
+        PASS [   0.049s] (478/586) uutils::tests test_tac::test_single_non_newline_separator
+        PASS [   0.059s] (479/586) uutils::tests test_sum::test_sysv_stdin
+        PASS [   0.048s] (480/586) uutils::tests test_tac::test_single_non_newline_separator_before
+        PASS [   0.042s] (481/586) uutils::tests test_tac::test_stdin_non_newline_separator
+        PASS [   0.045s] (482/586) uutils::tests test_tac::test_stdin_default
+        PASS [   0.040s] (483/586) uutils::tests test_tac::test_stdin_non_newline_separator_before
+        PASS [   0.057s] (484/586) uutils::tests test_tail::test_bytes_single
+        PASS [   0.053s] (485/586) uutils::tests test_tail::test_bytes_stdin
+        PASS [   0.049s] (486/586) uutils::tests test_tail::test_follow_stdin
+        PASS [   0.035s] (487/586) uutils::tests test_tail::test_parse_size
+        PASS [   0.048s] (488/586) uutils::tests test_tail::test_multiple_input_files_with_suppressed_headers
+        PASS [   0.052s] (489/586) uutils::tests test_tail::test_multiple_input_quiet_flag_overrides_verbose_flag_for_suppressing_headers
+        PASS [   0.055s] (490/586) uutils::tests test_tail::test_multiple_input_files
+        PASS [   0.193s] (491/586) uutils::tests test_split::test_split_default
+        PASS [   0.054s] (492/586) uutils::tests test_tail::test_n_greater_than_number_of_lines
+        PASS [   0.057s] (493/586) uutils::tests test_tail::test_null_default
+        PASS [   0.035s] (494/586) uutils::tests test_tail::test_single_default
+        PASS [   0.041s] (495/586) uutils::tests test_tail::test_stdin_default
+        PASS [   0.039s] (496/586) uutils::tests test_test::test_op_prec_and_or_1
+        PASS [   0.037s] (497/586) uutils::tests test_test::test_op_prec_and_or_2
+        PASS [   0.033s] (498/586) uutils::tests test_touch::test_touch_default
+        PASS [   0.034s] (499/586) uutils::tests test_touch::test_touch_no_create_file_absent
+        PASS [   0.035s] (500/586) uutils::tests test_touch::test_touch_no_create_file_exists
+        PASS [   0.034s] (501/586) uutils::tests test_touch::test_touch_no_dereference
+        PASS [   0.042s] (502/586) uutils::tests test_test::test_or_as_filename
+        PASS [   0.032s] (503/586) uutils::tests test_touch::test_touch_set_both
+        PASS [   0.039s] (504/586) uutils::tests test_touch::test_touch_reference
+        PASS [   0.029s] (505/586) uutils::tests test_touch::test_touch_set_cymdhms_time
+        PASS [   0.030s] (506/586) uutils::tests test_touch::test_touch_set_date
+        PASS [   0.034s] (507/586) uutils::tests test_touch::test_touch_set_cymdhm_time
+        PASS [   0.034s] (508/586) uutils::tests test_touch::test_touch_set_mdhm_time
+        PASS [   0.030s] (509/586) uutils::tests test_touch::test_touch_set_only_atime
+        PASS [   0.029s] (510/586) uutils::tests test_touch::test_touch_set_only_mtime
+        PASS [   0.034s] (511/586) uutils::tests test_touch::test_touch_set_mdhms_time
+        PASS [   0.034s] (512/586) uutils::tests test_touch::test_touch_set_ymdhms_time
+        PASS [   0.039s] (513/586) uutils::tests test_touch::test_touch_set_ymdhm_time
+        PASS [   0.034s] (514/586) uutils::tests test_tr::test_delete_and_squeeze_complement
+        PASS [   0.038s] (515/586) uutils::tests test_tr::test_delete
+        PASS [   0.035s] (516/586) uutils::tests test_tr::test_delete_and_squeeze
+        PASS [   0.030s] (517/586) uutils::tests test_tr::test_set1_shorter_than_set2
+        PASS [   0.034s] (518/586) uutils::tests test_tr::test_set1_longer_than_set2
+        PASS [   0.034s] (519/586) uutils::tests test_tr::test_small_set2
+        PASS [   0.035s] (520/586) uutils::tests test_tr::test_delete_complement
+        PASS [   0.029s] (521/586) uutils::tests test_tr::test_squeeze
+        PASS [   0.032s] (522/586) uutils::tests test_tr::test_unicode
+        PASS [   0.033s] (523/586) uutils::tests test_tr::test_truncate_with_set1_shorter_than_set2
+        PASS [   0.035s] (524/586) uutils::tests test_tr::test_toupper
+        PASS [   0.035s] (525/586) uutils::tests test_tr::test_squeeze_complement
+        PASS [   0.035s] (526/586) uutils::tests test_tr::test_truncate
+        PASS [   0.032s] (527/586) uutils::tests test_truncate::test_decrease_file_size
+        PASS [   0.032s] (528/586) uutils::tests test_true::test_exit_code
+        PASS [   0.032s] (529/586) uutils::tests test_truncate::test_increase_file_size
+        PASS [   0.032s] (530/586) uutils::tests test_tsort::test_sort_call_graph
+        PASS [   0.027s] (531/586) uutils::tests test_unexpand::unexpand_aflag_0
+        PASS [   0.030s] (532/586) uutils::tests test_tsort::test_sort_self_loop
+        PASS [   0.032s] (533/586) uutils::tests test_unexpand::unexpand_aflag_2
+        PASS [   0.029s] (534/586) uutils::tests test_unexpand::unexpand_init_1
+        PASS [   0.031s] (535/586) uutils::tests test_unexpand::unexpand_first_only_1
+        PASS [   0.033s] (536/586) uutils::tests test_unexpand::unexpand_aflag_1
+        PASS [   0.032s] (537/586) uutils::tests test_unexpand::unexpand_init_0
+        PASS [   0.035s] (538/586) uutils::tests test_unexpand::unexpand_first_only_0
+        PASS [   0.031s] (539/586) uutils::tests test_unexpand::unexpand_init_list_0
+        PASS [   0.029s] (540/586) uutils::tests test_unexpand::unexpand_spaces_after_fields
+        PASS [   0.032s] (541/586) uutils::tests test_unexpand::unexpand_init_list_1
+        PASS [   0.032s] (542/586) uutils::tests test_unexpand::unexpand_spaces_follow_tabs_0
+        PASS [   0.032s] (543/586) uutils::tests test_unexpand::unexpand_trailing_space_1
+        PASS [   0.034s] (544/586) uutils::tests test_unexpand::unexpand_spaces_follow_tabs_1
+        PASS [   0.035s] (545/586) uutils::tests test_unexpand::unexpand_trailing_space_0
+        PASS [   0.044s] (546/586) uutils::tests test_uniq::test_stdin_all_repeated
+        PASS [   0.045s] (547/586) uutils::tests test_uniq::test_single_default
+        PASS [   0.046s] (548/586) uutils::tests test_uniq::test_stdin_all_repeated_prepend
+        PASS [   0.041s] (549/586) uutils::tests test_uniq::test_stdin_all_repeated_separate
+        PASS [   0.043s] (550/586) uutils::tests test_uniq::test_stdin_counts
+        PASS [   0.040s] (551/586) uutils::tests test_uniq::test_stdin_repeated_only
+        PASS [   0.041s] (552/586) uutils::tests test_uniq::test_stdin_skip_1_char
+        PASS [   0.048s] (553/586) uutils::tests test_uniq::test_stdin_ignore_case
+        PASS [   0.052s] (554/586) uutils::tests test_uniq::test_stdin_default
+        PASS [   0.053s] (555/586) uutils::tests test_uniq::test_stdin_skip_1_field
+        PASS [   0.057s] (556/586) uutils::tests test_uniq::test_stdin_skip_5_chars
+        PASS [   0.037s] (557/586) uutils::tests test_uniq::test_stdin_zero_terminated
+        PASS [   0.044s] (558/586) uutils::tests test_uniq::test_stdin_unique_only
+        PASS [   0.047s] (559/586) uutils::tests test_uniq::test_stdin_skip_and_check_2_chars
+        PASS [   0.042s] (560/586) uutils::tests test_unlink::test_unlink_directory
+        PASS [   0.032s] (561/586) uutils::tests test_unlink::test_unlink_nonexistent
+        PASS [   0.042s] (562/586) uutils::tests test_unlink::test_unlink_file
+        PASS [   0.039s] (563/586) uutils::tests test_unlink::test_unlink_multiple_files
+        PASS [   0.034s] (564/586) uutils::tests test_wc::test_multiple_default
+        PASS [   0.033s] (565/586) uutils::tests test_wc::test_single_all_counts
+        PASS [   0.035s] (566/586) uutils::tests test_wc::test_single_default
+        PASS [   0.034s] (567/586) uutils::tests test_wc::test_single_only_lines
+        PASS [   0.039s] (568/586) uutils::tests test_wc::test_stdin_all_counts
+        PASS [   0.037s] (569/586) uutils::tests test_wc::test_stdin_only_bytes
+        PASS [   0.040s] (570/586) uutils::tests test_wc::test_stdin_default
+        PASS [   0.052s] (571/586) uutils::tests test_who::test_boot
+        PASS [   0.060s] (572/586) uutils::tests test_who::test_all
+        PASS [   0.036s] (573/586) uutils::tests test_who::test_m
+        PASS [   0.051s] (574/586) uutils::tests test_who::test_count
+        PASS [   0.049s] (575/586) uutils::tests test_who::test_login
+        PASS [   0.055s] (576/586) uutils::tests test_who::test_dead
+        PASS [   0.043s] (577/586) uutils::tests test_who::test_short
+        PASS [   0.421s] (578/586) uutils::tests test_tail::test_lines_with_size_suffix
+        PASS [   0.619s] (579/586) uutils::tests test_split::test_split_str_prefixed_chunks_by_lines
+        PASS [   0.633s] (580/586) uutils::tests test_split::test_split_num_prefixed_chunks_by_lines
+        PASS [   3.081s] (581/586) uutils::tests test_factor::test_random_big
+        PASS [   2.048s] (582/586) uutils::tests test_tail::test_follow
+        PASS [   3.043s] (583/586) uutils::tests test_tail::test_follow_multiple
+        PASS [   5.053s] (584/586) uutils::tests test_tail::test_follow_with_pid
+        PASS [  20.740s] (585/586) uutils::tests test_tail::test_bytes_big
+        SLOW [> 60.000s] (───────) uutils::tests test_tail::test_single_big_args
+        PASS [  60.117s] (586/586) uutils::tests test_tail::test_single_big_args
+────────────
+     Summary [  61.842s] 586 tests run: 586 passed (1 slow), 24 skipped
+reward=1 graded=586 found=92 failed=0 parsed=586 framework=cargo exit_code=0

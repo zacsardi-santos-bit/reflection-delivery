@@ -1,0 +1,10 @@
+patching file engine/api/workflow/dao_run_test.go
+{"Time":"2026-06-29T15:14:35.088593021Z","Action":"start","Package":"github.com/ovh/cds/engine/api/workflow"}
+{"Time":"2026-06-29T15:14:35.114629577Z","Action":"run","Package":"github.com/ovh/cds/engine/api/workflow","Test":"TestCanBeRun"}
+{"Time":"2026-06-29T15:14:35.11474676Z","Action":"output","Package":"github.com/ovh/cds/engine/api/workflow","Test":"TestCanBeRun","Output":"=== RUN   TestCanBeRun\n"}
+{"Time":"2026-06-29T15:14:35.115278587Z","Action":"output","Package":"github.com/ovh/cds/engine/api/workflow","Test":"TestCanBeRun","Output":"--- PASS: TestCanBeRun (0.00s)\n"}
+{"Time":"2026-06-29T15:14:35.115458113Z","Action":"pass","Package":"github.com/ovh/cds/engine/api/workflow","Test":"TestCanBeRun","Elapsed":0}
+{"Time":"2026-06-29T15:14:35.115570546Z","Action":"output","Package":"github.com/ovh/cds/engine/api/workflow","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:35.116435004Z","Action":"output","Package":"github.com/ovh/cds/engine/api/workflow","Output":"ok  \tgithub.com/ovh/cds/engine/api/workflow\t0.027s\n"}
+{"Time":"2026-06-29T15:14:35.116525796Z","Action":"pass","Package":"github.com/ovh/cds/engine/api/workflow","Elapsed":0.028}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

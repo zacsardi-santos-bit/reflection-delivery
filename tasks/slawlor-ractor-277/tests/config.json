@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p ractor --no-fail-fast -E 'test(runtime_message_typing) | test(stopping_children_and_wait_during_parent_shutdown) | test(stopping_children_will_shutdown_parent_too) | test(draining_children_and_wait_during_parent_shutdown) | test(draining_children_will_shutdown_parent_too)'",
+  "test_files": [
+    "ractor/src/actor/tests/mod.rs",
+    "ractor/src/actor/tests/supervisor.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) ractor actor::tests::supervisor::stopping_children_and_wait_during_parent_shutdown",
+    "(2/5) ractor actor::tests::supervisor::draining_children_will_shutdown_parent_too",
+    "(3/5) ractor actor::tests::runtime_message_typing",
+    "(4/5) ractor actor::tests::supervisor::draining_children_and_wait_during_parent_shutdown",
+    "(5/5) ractor actor::tests::supervisor::stopping_children_will_shutdown_parent_too"
+  ],
+  "PASS_TO_PASS": []
+}

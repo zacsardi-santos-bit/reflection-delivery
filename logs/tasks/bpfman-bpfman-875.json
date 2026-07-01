@@ -1,0 +1,23 @@
+{
+ "task": "bpfman-bpfman-875",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: 'func getPods(ctx, clientset, containerSelector, nodeName) (*v1.PodList, error)'; 'Targets []string' -> 'Target string'; ContainerPid omitted via hasContainerPid guard. F2P TestGetPods: 'podList, err := getPods(...); require.Len(t, podList.Items, 1)'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 8,
+  "shallow": true
+ }
+}

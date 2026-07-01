@@ -1,0 +1,19 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/router && go test -json ./pkg/controlplane -count=1",
+  "test_files": [
+    "router/pkg/controlplane/poll_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/wundergraph/cosmo/router/pkg/controlplane::Test_Poller/creating_with_invalid_parameters_should_panic",
+    "github.com/wundergraph/cosmo/router/pkg/controlplane::Test_Poller/stopping_should_work_correctly",
+    "github.com/wundergraph/cosmo/router/pkg/controlplane::Test_Poller",
+    "github.com/wundergraph/cosmo/router/pkg/controlplane::Test_RandomDuration/should_return_durations_within_acceptable_range",
+    "github.com/wundergraph/cosmo/router/pkg/controlplane::Test_RandomDuration/should_return_0_when_max_is_0",
+    "github.com/wundergraph/cosmo/router/pkg/controlplane::Test_RandomDuration/should_panic_when_max_is_less_than_zero",
+    "github.com/wundergraph/cosmo/router/pkg/controlplane::Test_RandomDuration"
+  ],
+  "PASS_TO_PASS": []
+}

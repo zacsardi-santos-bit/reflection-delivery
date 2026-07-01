@@ -1,0 +1,960 @@
+diff --git a/crates/github-actions-expressions/src/context.rs b/crates/github-actions-expressions/src/context.rs
+index 504be4f..680b214 100644
+--- a/crates/github-actions-expressions/src/context.rs
++++ b/crates/github-actions-expressions/src/context.rs
+@@ -43,14 +43,6 @@ impl<'src> Context<'src> {
+         parent.parent_of(self)
+     }
+ 
+-    /// Returns the tail of the context if the head matches the given string.
+-    pub fn pop_if(&self, head: &str) -> Option<&str> {
+-        match self.parts.first()? {
+-            Expr::Identifier(ident) if ident == head => Some(self.raw.split_once('.')?.1),
+-            _ => None,
+-        }
+-    }
+-
+     /// Returns the "pattern equivalent" of this context.
+     ///
+     /// This is a string that can be used to efficiently match the context,
+@@ -138,37 +130,76 @@ impl<'src> TryFrom<&'src str> for ContextPattern<'src> {
+     type Error = anyhow::Error;
+ 
+     fn try_from(val: &'src str) -> anyhow::Result<Self> {
+-        Self::new(val).ok_or_else(|| anyhow::anyhow!("invalid context pattern"))
++        Self::try_new(val).ok_or_else(|| anyhow::anyhow!("invalid context pattern"))
+     }
+ }
+ 
+ impl<'src> ContextPattern<'src> {
+-    /// Creates a new `ContextPattern` from the given string.
++    /// Creates a new [`ContextPattern`] from the given string.
++    ///
++    /// Panics if the pattern is invalid.
++    pub const fn new(pattern: &'src str) -> Self {
++        Self::try_new(pattern).expect("invalid context pattern; use try_new to handle errors")
++    }
++
++    /// Creates a new [`ContextPattern`] from the given string.
+     ///
+     /// Returns `None` if the pattern is invalid.
+-    pub fn new(pattern: &'src str) -> Option<Self> {
+-        let parts = pattern.split('.');
+-        let mut count = 0;
+-        for part in parts {
+-            if part.is_empty() {
+-                return None;
+-            }
++    pub const fn try_new(pattern: &'src str) -> Option<Self> {
++        let raw_pattern = pattern.as_bytes();
++        if raw_pattern.is_empty() {
++            return None;
++        }
+ 
+-            match part {
+-                "*" => {}
+-                // TODO: `bytes()` is probably a little faster.
+-                _ if part
+-                    .chars()
+-                    .all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_') => {}
+-                _ => return None,
++        let len = raw_pattern.len();
++
++        // State machine:
++        // - accept_reg: whether the next character can be a regular identifier character
++        // - accept_dot: whether the next character can be a dot
++        // - accept_star: whether the next character can be a star
++        let mut accept_reg = true;
++        let mut accept_dot = false;
++        let mut accept_star = false;
++
++        let mut idx = 0;
++        while idx < len {
++            accept_dot = accept_dot && idx != len - 1;
++
++            match raw_pattern[idx] {
++                b'.' => {
++                    if !accept_dot {
++                        return None;
++                    }
++
++                    accept_reg = true;
++                    accept_dot = false;
++                    accept_star = true;
++                }
++                b'*' => {
++                    if !accept_star {
++                        return None;
++                    }
++
++                    accept_reg = false;
++                    accept_star = false;
++                    accept_dot = true;
++                }
++                c if c.is_ascii_alphanumeric() || c == b'-' || c == b'_' => {
++                    if !accept_reg {
++                        return None;
++                    }
++
++                    accept_reg = true;
++                    accept_dot = true;
++                    accept_star = false;
++                }
++                _ => return None, // invalid character
+             }
+-            count += 1;
+-        }
+ 
+-        match count {
+-            0 => None,
+-            _ => Some(Self(pattern)),
++            idx += 1;
+         }
++
++        Some(Self(pattern))
+     }
+ 
+     fn compare_part(pattern: &str, part: &Expr<'src>) -> bool {
+@@ -284,21 +315,6 @@ mod tests {
+         }
+     }
+ 
+-    #[test]
+-    fn test_context_pop_if() {
+-        let ctx = Context::try_from("foo.bar.baz").unwrap();
+-
+-        for (case, expected) in &[
+-            ("foo", Some("bar.baz")),
+-            ("Foo", Some("bar.baz")),
+-            ("FOO", Some("bar.baz")),
+-            ("foo.", None),
+-            ("bar", None),
+-        ] {
+-            assert_eq!(ctx.pop_if(case), *expected);
+-        }
+-    }
+-
+     #[test]
+     fn test_context_as_pattern() {
+         for (case, expected) in &[
+@@ -353,7 +369,12 @@ mod tests {
+             ("foo.*.*", Some("foo.*.*")),
+             // Invalid patterns.
+             ("", None),
++            ("*", None),
++            ("**", None),
++            (".**", None),
++            (".foo", None),
+             ("foo.", None),
++            (".foo.", None),
+             ("foo.**", None),
+             (".", None),
+             ("foo.bar.", None),
+@@ -365,7 +386,7 @@ mod tests {
+             ("❤", None),
+             ("❤.*", None),
+         ] {
+-            assert_eq!(ContextPattern::new(case).map(|p| p.0), *expected);
++            assert_eq!(ContextPattern::try_new(case).map(|p| p.0), *expected);
+         }
+     }
+ 
+@@ -391,7 +412,7 @@ mod tests {
+                 false,
+             ),
+         ] {
+-            let pattern = ContextPattern::new(pattern).unwrap();
++            let pattern = ContextPattern::try_new(pattern).unwrap();
+             let ctx = Context::try_from(*ctx).unwrap();
+             assert_eq!(pattern.parent_of(&ctx), *expected);
+         }
+@@ -402,7 +423,6 @@ mod tests {
+         for (pattern, ctx, expected) in &[
+             // Normal matches.
+             ("foo", "foo", true),
+-            ("*", "foo", true),
+             ("foo.bar", "foo.bar", true),
+             ("foo.bar.baz", "foo.bar.baz", true),
+             ("foo.*", "foo.bar", true),
+@@ -442,7 +462,8 @@ mod tests {
+             ("foo.*.*", "foo.bar.baz.qux", false),     // pattern too short
+             ("foo.1", "foo[1]", false),                // .1 means a string key, not an index
+         ] {
+-            let pattern = ContextPattern::new(pattern).unwrap();
++            let pattern =
++                ContextPattern::try_new(pattern).expect(&format!("invalid pattern: {pattern}"));
+             let ctx = Context::try_from(*ctx).unwrap();
+             assert_eq!(pattern.matches(&ctx), *expected);
+         }
+diff --git a/crates/zizmor/src/audit/bot_conditions.rs b/crates/zizmor/src/audit/bot_conditions.rs
+index fb16a91..5b80f98 100644
+--- a/crates/zizmor/src/audit/bot_conditions.rs
++++ b/crates/zizmor/src/audit/bot_conditions.rs
+@@ -18,16 +18,16 @@ audit_meta!(BotConditions, "bot-conditions", "spoofable bot actor check");
+ 
+ static SPOOFABLE_ACTOR_NAME_CONTEXTS: LazyLock<Vec<ContextPattern>> = LazyLock::new(|| {
+     vec![
+-        ContextPattern::new("github.actor").unwrap(),
+-        ContextPattern::new("github.triggering_actor").unwrap(),
+-        ContextPattern::new("github.event.pull_request.sender.login").unwrap(),
++        ContextPattern::try_new("github.actor").unwrap(),
++        ContextPattern::try_new("github.triggering_actor").unwrap(),
++        ContextPattern::try_new("github.event.pull_request.sender.login").unwrap(),
+     ]
+ });
+ 
+ static SPOOFABLE_ACTOR_ID_CONTEXTS: LazyLock<Vec<ContextPattern>> = LazyLock::new(|| {
+     vec![
+-        ContextPattern::new("github.actor_id").unwrap(),
+-        ContextPattern::new("github.event.pull_request.sender.id").unwrap(),
++        ContextPattern::try_new("github.actor_id").unwrap(),
++        ContextPattern::try_new("github.event.pull_request.sender.id").unwrap(),
+     ]
+ });
+ 
+diff --git a/crates/zizmor/src/audit/template_injection.rs b/crates/zizmor/src/audit/template_injection.rs
+index de61107..1445207 100644
+--- a/crates/zizmor/src/audit/template_injection.rs
++++ b/crates/zizmor/src/audit/template_injection.rs
+@@ -26,6 +26,7 @@ use github_actions_models::{
+     },
+     workflow::job::Strategy,
+ };
++use itertools::Itertools as _;
+ 
+ use super::{Audit, AuditLoadError, audit_meta};
+ use crate::{
+@@ -35,7 +36,7 @@ use crate::{
+     },
+     models::{self, CompositeStep, Step, StepCommon, uses::RepositoryUsesPattern},
+     state::AuditState,
+-    utils::extract_expressions,
++    utils::{DEFAULT_ENVIRONMENT_VARIABLES, extract_expressions},
+     yaml_patch::{Op, Patch},
+ };
+ 
+@@ -146,10 +147,25 @@ impl TemplateInjection {
+         //   `foo.bar[*]` becomes `FOO_ANY_BAR`, as does `foo.bar.*`.
+         let mut env_parts = vec![];
+ 
++        let mut ctx_parts = ctx.parts.iter();
++
++        // `env` contexts don't include the `env` prefix in the variable name,
++        // both because they're already environment variables and so that
++        // we can check against the runner's default environment variables.
++        // TODO: We could probably go a step further here and avoid the
++        // loop below entirely, since we expect `env` contexts to only
++        // have a single part, i.e. `foo.bar` and never `foo.bar.baz`.
++        if ctx.child_of("env") {
++            ctx_parts.next();
++        }
++
+         // TODO: Pop off `matrix` and `secrets` heads, since these don't
+-        // add any extra information to the variable name.
++        // add any extra information to the variable name?
++        // Doing this will require us to do a bit of deconflicting, since
++        // we don't want to accidentally produce a default environment
++        // variable, e.g. `secrets.GITHUB_JOB` should not become `GITHUB_JOB`.
+ 
+-        for part in &ctx.parts {
++        for part in ctx_parts {
+             match part {
+                 // We don't support turning call-led contexts into variable names.
+                 Expr::Call { .. } => return None,
+@@ -234,31 +250,41 @@ impl TemplateInjection {
+         // index. In those kinds of cases, we don't produce a fix.
+         let env_var = Self::context_to_env_var(ctx)?;
+ 
++        let mut patches = vec![];
++        patches.push(Patch {
++            route: step.route().with_keys(&["run".into()]),
++            operation: Op::RewriteFragment {
++                from: raw.as_raw().to_string().into(),
++                to: format!("${{{env_var}}}").into(),
++                after: None,
++            },
++        });
++
++        // We only need to add the environment variable if it doesn't
++        // match one of the runner's default environment variables.
++        if !DEFAULT_ENVIRONMENT_VARIABLES
++            .iter()
++            .map(|t| t.0)
++            .contains(&env_var.as_str())
++        {
++            patches.push(Patch {
++                route: step.route(),
++                operation: Op::MergeInto {
++                    key: "env".to_string(),
++                    value: serde_yaml::to_value(HashMap::from([(
++                        env_var.as_str(),
++                        raw.as_curly(),
++                    )]))
++                    .unwrap(),
++                },
++            });
++        }
++
+         Some(Fix {
+             title: "replace expression with environment variable".into(),
+             description: "todo".into(),
+             _key: step.location().key,
+-            patches: vec![
+-                Patch {
+-                    route: step.route().with_keys(&["run".into()]),
+-                    operation: Op::RewriteFragment {
+-                        from: raw.as_raw().to_string().into(),
+-                        to: format!("${{{env_var}}}").into(),
+-                        after: None,
+-                    },
+-                },
+-                Patch {
+-                    route: step.route(),
+-                    operation: Op::MergeInto {
+-                        key: "env".to_string(),
+-                        value: serde_yaml::to_value(HashMap::from([(
+-                            env_var.as_str(),
+-                            raw.as_curly(),
+-                        )]))
+-                        .unwrap(),
+-                    },
+-                },
+-            ],
++            patches,
+         })
+     }
+ 
+@@ -334,8 +360,8 @@ impl TemplateInjection {
+                                         Confidence::Low,
+                                         Persona::default(),
+                                     ));
+-                                } else if let Some(env) = context.pop_if("env") {
+-                                    let env_is_static = step.env_is_static(env);
++                                } else if context.child_of("env") {
++                                    let env_is_static = step.env_is_static(context);
+ 
+                                     if !env_is_static {
+                                         bad_expressions.push((
+@@ -345,6 +371,16 @@ impl TemplateInjection {
+                                             Confidence::High,
+                                             Persona::default(),
+                                         ));
++                                    } else {
++                                        // Emit a pedantic finding even if we think the env context
++                                        // expansion is probably static.
++                                        bad_expressions.push((
++                                            context.as_str().into(),
++                                            self.attempt_fix(&expr, &parsed, step),
++                                            Severity::Unknown,
++                                            Confidence::High,
++                                            Persona::Pedantic,
++                                        ));
+                                     }
+                                 } else if context.child_of("github") {
+                                     // TODO: Filter these more finely; not everything in the event
+@@ -559,8 +595,6 @@ jobs:
+                         steps:
+                           - name: Vulnerable step
+                             run: echo "Branch is ${GITHUB_REF_NAME}"
+-                            env:
+-                              GITHUB_REF_NAME: ${{ github.ref_name }}
+                     "#);
+                 }
+             }
+@@ -614,8 +648,6 @@ jobs:
+                             run: |
+                               echo "Hello ${GITHUB_ACTOR}"
+                               echo "Processing user input"
+-                            env:
+-                              GITHUB_ACTOR: ${{ github.actor }}
+                     "#);
+                 }
+             }
+@@ -781,8 +813,6 @@ jobs:
+                           echo "Ref: ${GITHUB_REF_NAME}"
+                           echo "Commit: ${GITHUB_EVENT_HEAD_COMMIT_MESSAGE}"
+                         env:
+-                          GITHUB_ACTOR: ${{ github.actor }}
+-                          GITHUB_REF_NAME: ${{ github.ref_name }}
+                           GITHUB_EVENT_HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+                 "#);
+             }
+@@ -836,21 +866,79 @@ jobs:
+                 }
+ 
+                 insta::assert_snapshot!(current_content, @r#"
+-                    name: Test Duplicate Template Injections
+-                    on: push
+-                    jobs:
+-                      test:
+-                        runs-on: ubuntu-latest
+-                        steps:
+-                          - name: Duplicate vulnerable expressions
+-                            run: |
+-                              echo "User: ${GITHUB_ACTOR}"
+-                              echo "User again: ${GITHUB_ACTOR}"
+-                              echo "Ref: ${GITHUB_REF_NAME}"
+-                            env:
+-                              GITHUB_ACTOR: ${{ github.actor }}
+-                              GITHUB_REF_NAME: ${{ github.ref_name }}
+-                    "#);
++                name: Test Duplicate Template Injections
++                on: push
++                jobs:
++                  test:
++                    runs-on: ubuntu-latest
++                    steps:
++                      - name: Duplicate vulnerable expressions
++                        run: |
++                          echo "User: ${GITHUB_ACTOR}"
++                          echo "User again: ${GITHUB_ACTOR}"
++                          echo "Ref: ${GITHUB_REF_NAME}"
++                "#);
++            }
++        );
++    }
++
++    #[test]
++    fn test_template_injection_fix_equivalent_expressions() {
++        let workflow_content = r#"
++        name: Test Duplicate Template Injections
++        on: push
++        jobs:
++          test:
++            runs-on: ubuntu-latest
++            steps:
++              - name: Equivalent vulnerable expressions
++                run: |
++                  echo "User: ${{ github.actor }}"
++                  echo "User: ${{ env.GITHUB_ACTOR }}"
++                  echo "User: ${{ env['GITHUB_ACTOR'] }}"
++                  echo "User: ${{ env['github_actor'] }}"
++        "#;
++
++        test_workflow_audit!(
++            TemplateInjection,
++            "test_template_injection_fix_equivalent_expressions.yml",
++            workflow_content,
++            |findings: Vec<crate::finding::Finding>| {
++                // Should find template injection
++                assert!(!findings.is_empty());
++
++                // Should have at least one finding with a fix
++                let findings_with_fixes: Vec<_> =
++                    findings.iter().filter(|f| !f.fixes.is_empty()).collect();
++
++                // Apply each fix in sequence
++                let mut current_content = workflow_content.to_string();
++                for finding in findings_with_fixes {
++                    if let Some(fix) = finding
++                        .fixes
++                        .iter()
++                        .find(|f| f.title == "replace expression with environment variable")
++                    {
++                        if let Ok(Some(new_content)) = fix.apply_to_content(&current_content) {
++                            current_content = new_content;
++                        }
++                    }
++                }
++
++                insta::assert_snapshot!(current_content, @r#"
++                name: Test Duplicate Template Injections
++                on: push
++                jobs:
++                  test:
++                    runs-on: ubuntu-latest
++                    steps:
++                      - name: Equivalent vulnerable expressions
++                        run: |
++                          echo "User: ${GITHUB_ACTOR}"
++                          echo "User: ${GITHUB_ACTOR}"
++                          echo "User: ${GITHUB_ACTOR}"
++                          echo "User: ${GITHUB_ACTOR}"
++                "#);
+             }
+         );
+     }
+@@ -902,6 +990,12 @@ jobs:
+             // Computed indices not supported
+             ("foo.bar[computed]", None),
+             ("foo.bar[abc && def]", None),
++            // env contexts should have the env prefix removed
++            ("env.FOO_BAR", Some("FOO_BAR")),
++            ("env.foo_bar", Some("FOO_BAR")),
++            ("ENV.foo_bar", Some("FOO_BAR")),
++            ("ENV['foo_bar']", Some("FOO_BAR")),
++            ("env.GITHUB_ACTOR", Some("GITHUB_ACTOR")),
+             // FIXME: soundness hole
+             (
+                 "foo.bar['oops all spaces']",
+diff --git a/crates/zizmor/src/models.rs b/crates/zizmor/src/models.rs
+index 8093369..be05c18 100644
+--- a/crates/zizmor/src/models.rs
++++ b/crates/zizmor/src/models.rs
+@@ -6,6 +6,7 @@ use std::fmt::Debug;
+ use std::{iter::Enumerate, ops::Deref};
+ 
+ use anyhow::{Context, bail};
++use github_actions_expressions::context;
+ use github_actions_models::common::Env;
+ use github_actions_models::common::expr::LoE;
+ use github_actions_models::workflow::event::{BareEvent, OptionalBody};
+@@ -50,7 +51,7 @@ pub(crate) trait StepCommon<'doc>: Locatable<'doc> {
+ 
+     /// Returns whether the given `env.name` environment access is "static,"
+     /// i.e. is not influenced by another expression.
+-    fn env_is_static(&self, name: &str) -> bool;
++    fn env_is_static(&self, ctx: &context::Context) -> bool;
+ 
+     /// Returns a [`common::Uses`] for this step, if it has one.
+     fn uses(&self) -> Option<&common::Uses>;
+@@ -589,8 +590,8 @@ impl<'doc> StepCommon<'doc> for Step<'doc> {
+         self.index
+     }
+ 
+-    fn env_is_static(&self, name: &str) -> bool {
+-        utils::env_is_static(name, &[&self.env, &self.job().env, &self.workflow().env])
++    fn env_is_static(&self, ctx: &context::Context) -> bool {
++        utils::env_is_static(ctx, &[&self.env, &self.job().env, &self.workflow().env])
+     }
+ 
+     fn uses(&self) -> Option<&common::Uses> {
+@@ -861,8 +862,8 @@ impl<'doc> StepCommon<'doc> for CompositeStep<'doc> {
+         self.index
+     }
+ 
+-    fn env_is_static(&self, name: &str) -> bool {
+-        utils::env_is_static(name, &[&self.env])
++    fn env_is_static(&self, ctx: &context::Context) -> bool {
++        utils::env_is_static(ctx, &[&self.env])
+     }
+ 
+     fn uses(&self) -> Option<&common::Uses> {
+diff --git a/crates/zizmor/src/models/coordinate.rs b/crates/zizmor/src/models/coordinate.rs
+index 954e2e0..9626056 100644
+--- a/crates/zizmor/src/models/coordinate.rs
++++ b/crates/zizmor/src/models/coordinate.rs
+@@ -324,6 +324,7 @@ pub(crate) enum Usage {
+ mod tests {
+     use std::str::FromStr;
+ 
++    use github_actions_expressions::context;
+     use github_actions_models::workflow::job::Step;
+ 
+     use super::{ActionCoordinate, StepCommon};
+@@ -351,7 +352,7 @@ mod tests {
+             unreachable!()
+         }
+ 
+-        fn env_is_static(&self, _name: &str) -> bool {
++        fn env_is_static(&self, _ctx: &context::Context) -> bool {
+             unreachable!()
+         }
+ 
+diff --git a/crates/zizmor/src/utils.rs b/crates/zizmor/src/utils.rs
+index 2799378..06a3dc8 100644
+--- a/crates/zizmor/src/utils.rs
++++ b/crates/zizmor/src/utils.rs
+@@ -2,6 +2,10 @@
+ 
+ use anyhow::{Context as _, Error, anyhow};
+ use camino::Utf8Path;
++use github_actions_expressions::{
++    Expr, Literal,
++    context::{Context, ContextPattern},
++};
+ use github_actions_models::common::{
+     Env,
+     expr::{ExplicitExpr, LoE},
+@@ -27,6 +31,266 @@ pub(crate) static WORKFLOW_VALIDATOR: LazyLock<Validator> = LazyLock::new(|| {
+         .unwrap()
+ });
+ 
++macro_rules! pat {
++    ($pat:expr) => {
++        ContextPattern::new($pat)
++    };
++}
++
++/// Default environment variables that are always present in GitHub Actions.
++/// These variables are provided by the runner itself and are presumed
++/// static *except* for `CI`, which can be overridden by the user.
++///
++/// This is stored as a four-tuple of the environment variable name,
++/// its environment context equivalent, its "real" context equivalent,
++/// if any, and a boolean indicating whether the variable is presumed static.
++///
++/// See: <https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables>
++pub(crate) static DEFAULT_ENVIRONMENT_VARIABLES: &[(
++    &str,
++    ContextPattern,
++    Option<ContextPattern>,
++    bool,
++)] = &[
++    ("CI", pat!("env.CI"), None, false),
++    (
++        "GITHUB_ACTION",
++        pat!("env.GITHUB_ACTION"),
++        Some(pat!("github.action")),
++        true,
++    ),
++    (
++        "GITHUB_ACTION_PATH",
++        pat!("env.GITHUB_ACTION_PATH"),
++        Some(pat!("github.action_path")),
++        true,
++    ),
++    (
++        "GITHUB_ACTION_REPOSITORY",
++        pat!("env.GITHUB_ACTION_REPOSITORY"),
++        Some(pat!("github.action_repository")),
++        true,
++    ),
++    ("GITHUB_ACTIONS", pat!("env.GITHUB_ACTIONS"), None, true),
++    (
++        "GITHUB_ACTOR",
++        pat!("env.GITHUB_ACTOR"),
++        Some(pat!("github.actor")),
++        true,
++    ),
++    (
++        "GITHUB_ACTOR_ID",
++        pat!("env.GITHUB_ACTOR_ID"),
++        Some(pat!("github.actor_id")),
++        true,
++    ),
++    (
++        "GITHUB_API_URL",
++        pat!("env.GITHUB_API_URL"),
++        Some(pat!("github.api_url")),
++        true,
++    ),
++    (
++        "GITHUB_BASE_REF",
++        pat!("env.GITHUB_BASE_REF"),
++        Some(pat!("github.base_ref")),
++        true,
++    ),
++    (
++        "GITHUB_ENV",
++        pat!("env.GITHUB_ENV"),
++        Some(pat!("github.env")),
++        true,
++    ),
++    (
++        "GITHUB_EVENT_NAME",
++        pat!("env.GITHUB_EVENT_NAME"),
++        Some(pat!("github.event_name")),
++        true,
++    ),
++    (
++        "GITHUB_EVENT_PATH",
++        pat!("env.GITHUB_EVENT_PATH"),
++        Some(pat!("github.event_path")),
++        true,
++    ),
++    (
++        "GITHUB_GRAPHQL_URL",
++        pat!("env.GITHUB_GRAPHQL_URL"),
++        Some(pat!("github.graphql_url")),
++        true,
++    ),
++    (
++        "GITHUB_HEAD_REF",
++        pat!("env.GITHUB_HEAD_REF"),
++        Some(pat!("github.head_ref")),
++        true,
++    ),
++    (
++        "GITHUB_JOB",
++        pat!("env.GITHUB_JOB"),
++        Some(pat!("github.job")),
++        true,
++    ),
++    ("GITHUB_OUTPUT", pat!("env.GITHUB_OUTPUT"), None, true),
++    (
++        "GITHUB_PATH",
++        pat!("env.GITHUB_PATH"),
++        Some(pat!("github.path")),
++        true,
++    ),
++    (
++        "GITHUB_REF",
++        pat!("env.GITHUB_REF"),
++        Some(pat!("github.ref")),
++        true,
++    ),
++    (
++        "GITHUB_REF_NAME",
++        pat!("env.GITHUB_REF_NAME"),
++        Some(pat!("github.ref_name")),
++        true,
++    ),
++    (
++        "GITHUB_REF_PROTECTED",
++        pat!("env.GITHUB_REF_PROTECTED"),
++        Some(pat!("github.ref_protected")),
++        true,
++    ),
++    (
++        "GITHUB_REF_TYPE",
++        pat!("env.GITHUB_REF_TYPE"),
++        Some(pat!("github.ref_type")),
++        true,
++    ),
++    (
++        "GITHUB_REPOSITORY",
++        pat!("env.GITHUB_REPOSITORY"),
++        Some(pat!("github.repository")),
++        true,
++    ),
++    (
++        "GITHUB_REPOSITORY_ID",
++        pat!("env.GITHUB_REPOSITORY_ID"),
++        Some(pat!("github.repository_id")),
++        true,
++    ),
++    (
++        "GITHUB_REPOSITORY_OWNER",
++        pat!("env.GITHUB_REPOSITORY_OWNER"),
++        Some(pat!("github.repository_owner")),
++        true,
++    ),
++    (
++        "GITHUB_REPOSITORY_OWNER_ID",
++        pat!("env.GITHUB_REPOSITORY_OWNER_ID"),
++        Some(pat!("github.repository_owner_id")),
++        true,
++    ),
++    (
++        "GITHUB_RUN_ATTEMPT",
++        pat!("env.GITHUB_RUN_ATTEMPT"),
++        Some(pat!("github.run_attempt")),
++        true,
++    ),
++    (
++        "GITHUB_RUN_ID",
++        pat!("env.GITHUB_RUN_ID"),
++        Some(pat!("github.run_id")),
++        true,
++    ),
++    (
++        "GITHUB_RUN_NUMBER",
++        pat!("env.GITHUB_RUN_NUMBER"),
++        Some(pat!("github.run_number")),
++        true,
++    ),
++    (
++        "GITHUB_SERVER_URL",
++        pat!("env.GITHUB_SERVER_URL"),
++        Some(pat!("github.server_url")),
++        true,
++    ),
++    (
++        "GITHUB_SHA",
++        pat!("env.GITHUB_SHA"),
++        Some(pat!("github.sha")),
++        true,
++    ),
++    (
++        "GITHUB_TRIGGERING_ACTOR",
++        pat!("env.GITHUB_TRIGGERING_ACTOR"),
++        Some(pat!("github.triggering_actor")),
++        true,
++    ),
++    (
++        "GITHUB_WORKFLOW",
++        pat!("env.GITHUB_WORKFLOW"),
++        Some(pat!("github.workflow")),
++        true,
++    ),
++    (
++        "GITHUB_WORKFLOW_REF",
++        pat!("env.GITHUB_WORKFLOW_REF"),
++        Some(pat!("github.workflow_ref")),
++        true,
++    ),
++    (
++        "GITHUB_WORKFLOW_SHA",
++        pat!("env.GITHUB_WORKFLOW_SHA"),
++        Some(pat!("github.workflow_sha")),
++        true,
++    ),
++    (
++        "GITHUB_WORKSPACE",
++        pat!("env.GITHUB_WORKSPACE"),
++        Some(pat!("github.workspace")),
++        true,
++    ),
++    (
++        "RUNNER_ARCH",
++        pat!("env.RUNNER_ARCH"),
++        Some(pat!("runner.arch")),
++        true,
++    ),
++    (
++        "RUNNER_DEBUG",
++        pat!("env.RUNNER_DEBUG"),
++        Some(pat!("runner.debug")),
++        true,
++    ),
++    (
++        "RUNNER_ENVIRONMENT",
++        pat!("env.RUNNER_ENVIRONMENT"),
++        Some(pat!("runner.environment")),
++        true,
++    ),
++    (
++        "RUNNER_NAME",
++        pat!("env.RUNNER_NAME"),
++        Some(pat!("runner.name")),
++        true,
++    ),
++    (
++        "RUNNER_OS",
++        pat!("env.RUNNER_OS"),
++        Some(pat!("runner.os")),
++        true,
++    ),
++    (
++        "RUNNER_TEMP",
++        pat!("env.RUNNER_TEMP"),
++        Some(pat!("runner.temp")),
++        true,
++    ),
++    (
++        "RUNNER_TOOL_CACHE",
++        pat!("env.RUNNER_TOOL_CACHE"),
++        Some(pat!("runner.tool_cache")),
++        true,
++    ),
++];
++
+ fn parse_validation_errors(errors: VecDeque<OutputUnit<ErrorDescription>>) -> Error {
+     let mut message = String::new();
+ 
+@@ -225,13 +489,48 @@ pub(crate) fn parse_expressions_from_input(
+ 
+ /// Returns whether the given `env.name` environment access is "static,"
+ /// i.e. is not influenced by another expression.
+-pub(crate) fn env_is_static(name: &str, envs: &[&LoE<Env>]) -> bool {
++///
++/// NOTE: This function assumes that you pass it an `env`-prefixed
++/// context, e.g. `env.FOOBAR` or `env['FOOBAR']`. Passing it any other
++/// context does not have well-defined behavior.
++pub(crate) fn env_is_static(env_ctx: &Context, envs: &[&LoE<Env>]) -> bool {
++    // First, see if this environment context matches any of the default
++    // non-static environment variables.
++    for (_, env_ctx_pat, _, is_static) in DEFAULT_ENVIRONMENT_VARIABLES {
++        if env_ctx_pat.matches(env_ctx) {
++            return *is_static;
++        }
++    }
++
++    // Turn env.FOOBAR into FOOBAR.
++    // This is slightly annoying because we need to handle both
++    // `env.FOOBAR` and `env['FOOBAR']` syntaxes.
++    if env_ctx.parts.len() != 2 {
++        // We expect exactly `env.name` or `env['name']`.
++        // Something like `env.foo.bar` is syntactically valid but semantically
++        // nonsense, so we assume it's non-static.
++        return false;
++    }
++
++    let env_name = match &env_ctx.parts[1] {
++        Expr::Identifier(ident) => ident.as_str(),
++        Expr::Index(idx) => match idx.as_ref() {
++            Expr::Literal(Literal::String(s)) => s,
++            // Anything besides a string literal index is either not
++            // static (e.g. a computed index) or is semantically
++            // invalid (e.g. `env[1]`).
++            _ => return false,
++        },
++        _ => return false,
++    };
++
+     for env in envs {
+         match env {
+             // Any `env:` that is wholly an expression cannot be static.
+             LoE::Expr(_) => return false,
+             LoE::Literal(env) => {
+-                let Some(value) = env.get(name) else {
++                // TODO: We probably need to do a case-insensitive lookup here.
++                let Some(value) = env.get(env_name) else {
+                     continue;
+                 };
+ 
+@@ -244,9 +543,12 @@ pub(crate) fn env_is_static(name: &str, envs: &[&LoE<Env>]) -> bool {
+         }
+     }
+ 
+-    // No `env:` blocks explicitly contain this name, so it's trivially static.
+-    // In practice this is probably an invalid workflow.
+-    true
++    // If we don't have an explicit `env:` block containing this variable
++    // and it isn't a default variable, then we assume it's not static.
++    // This is probably slightly over sensitive, but assuming the opposite
++    // would leave open `GITHUB_ENV` interactions that we can't otherwise
++    // reason about.
++    false
+ }
+ 
+ /// Returns the name within the given `shell:` stanza.
+@@ -262,12 +564,14 @@ pub(crate) fn normalize_shell(shell: &str) -> &str {
+ #[cfg(test)]
+ mod tests {
+     use anyhow::Result;
++    use github_actions_expressions::Expr;
+ 
+     use crate::{
+         models::{Action, Workflow},
+         registry::InputKey,
+         utils::{
+-            extract_expression, extract_expressions, normalize_shell, parse_expressions_from_input,
++            env_is_static, extract_expression, extract_expressions, normalize_shell,
++            parse_expressions_from_input,
+         },
+     };
+ 
+@@ -421,4 +725,28 @@ jobs:
+             assert_eq!(normalize_shell(actual), *expected)
+         }
+     }
++
++    #[test]
++    fn test_env_is_static_default() {
++        for (env_ctx, is_static) in &[
++            // CI is not static
++            ("env.CI", false),
++            // all other default environment contexts are static
++            ("env.GITHUB_ACTION", true),
++            ("env['GITHUB_ACTION']", true),
++            ("env.GITHUB_ACTIONS", true),
++            ("env.RUNNER_OS", true),
++            ("env.runner_os", true),
++            ("env['runner_os']", true),
++            // anything else not known by default is not static
++            ("env.UNKNOWN", false),
++            ("env['UNKNOWN']", false),
++        ] {
++            let Expr::Context(ctx) = Expr::parse(env_ctx).unwrap() else {
++                panic!("expected a context expression for {env_ctx}");
++            };
++
++            assert_eq!(env_is_static(&ctx, &[]), *is_static, "for {env_ctx}");
++        }
++    }
+ }
+diff --git a/docs/release-notes.md b/docs/release-notes.md
+index 11e01e3..bfc8753 100644
+--- a/docs/release-notes.md
++++ b/docs/release-notes.md
+@@ -17,6 +17,8 @@ of `zizmor`.
+   action definitions, rather than just workflow definitions (#899)
+ * The [bot-conditions] audit now detects more spoofable actor checks,
+   including checks against well-known user IDs for bot accounts (#905)
++* The [template-injection] and other audits now produce more precise
++  results when analyzing `env` context accesses for static-ness (#911)
+ 
+ ### Bug Fixes 🐛
+ 

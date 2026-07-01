@@ -1,0 +1,2408 @@
+diff --git a/package.json b/package.json
+index 8e0d30c17..caf7b40e4 100644
+--- a/package.json
++++ b/package.json
+@@ -111,5 +111,6 @@
+       "packages/**"
+     ]
+   },
+-  "dependencies": {}
++  "dependencies": {},
++  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+ }
+diff --git a/packages/react-core/src/components/MenuToggle/MenuToggle.tsx b/packages/react-core/src/components/MenuToggle/MenuToggle.tsx
+index 9e8fef7a7..05c7b4a1b 100644
+--- a/packages/react-core/src/components/MenuToggle/MenuToggle.tsx
++++ b/packages/react-core/src/components/MenuToggle/MenuToggle.tsx
+@@ -129,6 +129,7 @@ class MenuToggleBase extends React.Component<MenuToggleProps> {
+             aria-expanded={isExpanded}
+             onClick={onClick}
+             aria-label={ariaLabel || 'Menu toggle'}
++            tabIndex={-1}
+           >
+             {toggleControls}
+           </button>
+diff --git a/packages/react-core/src/components/Select/Select.tsx b/packages/react-core/src/components/Select/Select.tsx
+index 4a46ab93b..82bcda7bf 100644
+--- a/packages/react-core/src/components/Select/Select.tsx
++++ b/packages/react-core/src/components/Select/Select.tsx
+@@ -53,6 +53,8 @@ export interface SelectProps extends MenuProps, OUIAProps {
+   toggle: SelectToggleProps | ((toggleRef: React.RefObject<any>) => React.ReactNode);
+   /** Flag indicating the toggle should be focused after a selection. If this use case is too restrictive, the optional toggleRef property with a node toggle may be used to control focus. */
+   shouldFocusToggleOnSelect?: boolean;
++  /** @beta Flag indicating the first menu item should be focused after opening the menu. */
++  shouldFocusFirstItemOnOpen?: boolean;
+   /** Function callback when user selects an option. */
+   onSelect?: (event?: React.MouseEvent<Element, MouseEvent>, value?: string | number) => void;
+   /** Callback to allow the select component to change the open state of the menu.
+@@ -86,6 +88,7 @@ const SelectBase: React.FunctionComponent<SelectProps & OUIAProps> = ({
+   selected,
+   toggle,
+   shouldFocusToggleOnSelect = false,
++  shouldFocusFirstItemOnOpen = true,
+   onOpenChange,
+   onOpenChangeKeys = ['Escape', 'Tab'],
+   isPlain,
+@@ -125,7 +128,7 @@ const SelectBase: React.FunctionComponent<SelectProps & OUIAProps> = ({
+ 
+     const handleClick = (event: MouseEvent) => {
+       // toggle was opened, focus on first menu item
+-      if (isOpen && toggleRef.current?.contains(event.target as Node)) {
++      if (isOpen && shouldFocusFirstItemOnOpen && toggleRef.current?.contains(event.target as Node)) {
+         setTimeout(() => {
+           const firstElement = menuRef?.current?.querySelector('li button:not(:disabled),li input:not(:disabled)');
+           firstElement && (firstElement as HTMLElement).focus();
+diff --git a/packages/react-core/src/components/Select/examples/SelectMultiTypeahead.tsx b/packages/react-core/src/components/Select/examples/SelectMultiTypeahead.tsx
+index 9df0c8978..57f2b4d27 100644
+--- a/packages/react-core/src/components/Select/examples/SelectMultiTypeahead.tsx
++++ b/packages/react-core/src/components/Select/examples/SelectMultiTypeahead.tsx
+@@ -30,9 +30,11 @@ export const SelectMultiTypeahead: React.FunctionComponent = () => {
+   const [selected, setSelected] = React.useState<string[]>([]);
+   const [selectOptions, setSelectOptions] = React.useState<SelectOptionProps[]>(initialSelectOptions);
+   const [focusedItemIndex, setFocusedItemIndex] = React.useState<number | null>(null);
+-  const [activeItem, setActiveItem] = React.useState<string | null>(null);
++  const [activeItemId, setActiveItemId] = React.useState<string | null>(null);
+   const textInputRef = React.useRef<HTMLInputElement>();
+ 
++  const NO_RESULTS = 'no results';
++
+   React.useEffect(() => {
+     let newSelectOptions: SelectOptionProps[] = initialSelectOptions;
+ 
+@@ -45,7 +47,7 @@ export const SelectMultiTypeahead: React.FunctionComponent = () => {
+       // When no options are found after filtering, display 'No results found'
+       if (!newSelectOptions.length) {
+         newSelectOptions = [
+-          { isDisabled: false, children: `No results found for "${inputValue}"`, value: 'no results' }
++          { isAriaDisabled: true, children: `No results found for "${inputValue}"`, value: NO_RESULTS }
+         ];
+       }
+ 
+@@ -56,56 +58,113 @@ export const SelectMultiTypeahead: React.FunctionComponent = () => {
+     }
+ 
+     setSelectOptions(newSelectOptions);
+-    setFocusedItemIndex(null);
+-    setActiveItem(null);
+   }, [inputValue]);
+ 
++  const createItemId = (value: any) => `select-multi-typeahead-${value.replace(' ', '-')}`;
++
++  const setActiveAndFocusedItem = (itemIndex: number) => {
++    setFocusedItemIndex(itemIndex);
++    const focusedItem = selectOptions[itemIndex];
++    setActiveItemId(createItemId(focusedItem.value));
++  };
++
++  const resetActiveAndFocusedItem = () => {
++    setFocusedItemIndex(null);
++    setActiveItemId(null);
++  };
++
++  const closeMenu = () => {
++    setIsOpen(false);
++    resetActiveAndFocusedItem();
++  };
++
++  const onInputClick = () => {
++    if (!isOpen) {
++      setIsOpen(true);
++    } else if (!inputValue) {
++      closeMenu();
++    }
++  };
++
++  const onSelect = (value: string) => {
++    if (value && value !== NO_RESULTS) {
++      // eslint-disable-next-line no-console
++      console.log('selected', value);
++
++      setSelected(
++        selected.includes(value) ? selected.filter((selection) => selection !== value) : [...selected, value]
++      );
++    }
++
++    textInputRef.current?.focus();
++  };
++
++  const onTextInputChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
++    setInputValue(value);
++    resetActiveAndFocusedItem();
++  };
++
+   const handleMenuArrowKeys = (key: string) => {
+-    let indexToFocus;
++    let indexToFocus = 0;
+ 
+-    if (isOpen) {
+-      if (key === 'ArrowUp') {
+-        // When no index is set or at the first index, focus to the last, otherwise decrement focus index
+-        if (focusedItemIndex === null || focusedItemIndex === 0) {
++    if (!isOpen) {
++      setIsOpen(true);
++    }
++
++    if (selectOptions.every((option) => option.isDisabled)) {
++      return;
++    }
++
++    if (key === 'ArrowUp') {
++      // When no index is set or at the first index, focus to the last, otherwise decrement focus index
++      if (focusedItemIndex === null || focusedItemIndex === 0) {
++        indexToFocus = selectOptions.length - 1;
++      } else {
++        indexToFocus = focusedItemIndex - 1;
++      }
++
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus--;
++        if (indexToFocus === -1) {
+           indexToFocus = selectOptions.length - 1;
+-        } else {
+-          indexToFocus = focusedItemIndex - 1;
+         }
+       }
++    }
+ 
+-      if (key === 'ArrowDown') {
+-        // When no index is set or at the last index, focus to the first, otherwise increment focus index
+-        if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++    if (key === 'ArrowDown') {
++      // When no index is set or at the last index, focus to the first, otherwise increment focus index
++      if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++        indexToFocus = 0;
++      } else {
++        indexToFocus = focusedItemIndex + 1;
++      }
++
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus++;
++        if (indexToFocus === selectOptions.length) {
+           indexToFocus = 0;
+-        } else {
+-          indexToFocus = focusedItemIndex + 1;
+         }
+       }
+-
+-      setFocusedItemIndex(indexToFocus);
+-      const focusedItem = selectOptions.filter((option) => !option.isDisabled)[indexToFocus];
+-      setActiveItem(`select-multi-typeahead-${focusedItem.value.replace(' ', '-')}`);
+     }
++
++    setActiveAndFocusedItem(indexToFocus);
+   };
+ 
+   const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+-    const enabledMenuItems = selectOptions.filter((menuItem) => !menuItem.isDisabled);
+-    const [firstMenuItem] = enabledMenuItems;
+-    const focusedItem = focusedItemIndex ? enabledMenuItems[focusedItemIndex] : firstMenuItem;
++    const focusedItem = focusedItemIndex !== null ? selectOptions[focusedItemIndex] : null;
+ 
+     switch (event.key) {
+-      // Select the first available option
+       case 'Enter':
++        if (isOpen && focusedItem && focusedItem.value !== NO_RESULTS && !focusedItem.isAriaDisabled) {
++          onSelect(focusedItem.value);
++        }
++
+         if (!isOpen) {
+-          setIsOpen((prevIsOpen) => !prevIsOpen);
+-        } else if (isOpen && focusedItem.value !== 'no results') {
+-          onSelect(focusedItem.value as string);
++          setIsOpen(true);
+         }
+-        break;
+-      case 'Tab':
+-      case 'Escape':
+-        setIsOpen(false);
+-        setActiveItem(null);
++
+         break;
+       case 'ArrowUp':
+       case 'ArrowDown':
+@@ -117,24 +176,17 @@ export const SelectMultiTypeahead: React.FunctionComponent = () => {
+ 
+   const onToggleClick = () => {
+     setIsOpen(!isOpen);
++    textInputRef?.current?.focus();
+   };
+ 
+-  const onTextInputChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
+-    setInputValue(value);
++  const onClearButtonClick = () => {
++    setSelected([]);
++    setInputValue('');
++    resetActiveAndFocusedItem();
++    textInputRef?.current?.focus();
+   };
+ 
+-  const onSelect = (value: string) => {
+-    // eslint-disable-next-line no-console
+-    console.log('selected', value);
+-
+-    if (value && value !== 'no results') {
+-      setSelected(
+-        selected.includes(value) ? selected.filter((selection) => selection !== value) : [...selected, value]
+-      );
+-    }
+-
+-    textInputRef.current?.focus();
+-  };
++  const getChildren = (value: string) => initialSelectOptions.find((option) => option.value === value)?.children;
+ 
+   const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
+     <MenuToggle
+@@ -148,14 +200,14 @@ export const SelectMultiTypeahead: React.FunctionComponent = () => {
+       <TextInputGroup isPlain>
+         <TextInputGroupMain
+           value={inputValue}
+-          onClick={onToggleClick}
++          onClick={onInputClick}
+           onChange={onTextInputChange}
+           onKeyDown={onInputKeyDown}
+           id="multi-typeahead-select-input"
+           autoComplete="off"
+           innerRef={textInputRef}
+           placeholder="Select a state"
+-          {...(activeItem && { 'aria-activedescendant': activeItem })}
++          {...(activeItemId && { 'aria-activedescendant': activeItemId })}
+           role="combobox"
+           isExpanded={isOpen}
+           aria-controls="select-multi-typeahead-listbox"
+@@ -169,25 +221,15 @@ export const SelectMultiTypeahead: React.FunctionComponent = () => {
+                   onSelect(selection);
+                 }}
+               >
+-                {selection}
++                {getChildren(selection)}
+               </Chip>
+             ))}
+           </ChipGroup>
+         </TextInputGroupMain>
+-        <TextInputGroupUtilities>
+-          {selected.length > 0 && (
+-            <Button
+-              variant="plain"
+-              onClick={() => {
+-                setInputValue('');
+-                setSelected([]);
+-                textInputRef?.current?.focus();
+-              }}
+-              aria-label="Clear input value"
+-            >
+-              <TimesIcon aria-hidden />
+-            </Button>
+-          )}
++        <TextInputGroupUtilities {...(selected.length === 0 ? { style: { display: 'none' } } : {})}>
++          <Button variant="plain" onClick={onClearButtonClick} aria-label="Clear input value">
++            <TimesIcon aria-hidden />
++          </Button>
+         </TextInputGroupUtilities>
+       </TextInputGroup>
+     </MenuToggle>
+@@ -198,9 +240,12 @@ export const SelectMultiTypeahead: React.FunctionComponent = () => {
+       id="multi-typeahead-select"
+       isOpen={isOpen}
+       selected={selected}
+-      onSelect={(ev, selection) => onSelect(selection as string)}
+-      onOpenChange={() => setIsOpen(false)}
++      onSelect={(_event, selection) => onSelect(selection as string)}
++      onOpenChange={(isOpen) => {
++        !isOpen && closeMenu();
++      }}
+       toggle={toggle}
++      shouldFocusFirstItemOnOpen={false}
+     >
+       <SelectList isAriaMultiselectable id="select-multi-typeahead-listbox">
+         {selectOptions.map((option, index) => (
+@@ -208,7 +253,7 @@ export const SelectMultiTypeahead: React.FunctionComponent = () => {
+             key={option.value || option.children}
+             isFocused={focusedItemIndex === index}
+             className={option.className}
+-            id={`select-multi-typeahead-${option.value.replace(' ', '-')}`}
++            id={createItemId(option.value)}
+             {...option}
+             ref={null}
+           />
+diff --git a/packages/react-core/src/components/Select/examples/SelectMultiTypeaheadCheckbox.tsx b/packages/react-core/src/components/Select/examples/SelectMultiTypeaheadCheckbox.tsx
+index 7a88b6f0a..da38e0930 100644
+--- a/packages/react-core/src/components/Select/examples/SelectMultiTypeaheadCheckbox.tsx
++++ b/packages/react-core/src/components/Select/examples/SelectMultiTypeaheadCheckbox.tsx
+@@ -28,10 +28,12 @@ export const SelectMultiTypeaheadCheckbox: React.FunctionComponent = () => {
+   const [selected, setSelected] = React.useState<string[]>([]);
+   const [selectOptions, setSelectOptions] = React.useState<SelectOptionProps[]>(initialSelectOptions);
+   const [focusedItemIndex, setFocusedItemIndex] = React.useState<number | null>(null);
+-  const [activeItem, setActiveItem] = React.useState<string | null>(null);
++  const [activeItemId, setActiveItemId] = React.useState<string | null>(null);
+   const [placeholder, setPlaceholder] = React.useState('0 items selected');
+   const textInputRef = React.useRef<HTMLInputElement>();
+ 
++  const NO_RESULTS = 'no results';
++
+   React.useEffect(() => {
+     let newSelectOptions: SelectOptionProps[] = initialSelectOptions;
+ 
+@@ -45,9 +47,9 @@ export const SelectMultiTypeaheadCheckbox: React.FunctionComponent = () => {
+       if (!newSelectOptions.length) {
+         newSelectOptions = [
+           {
+-            isDisabled: false,
++            isAriaDisabled: true,
+             children: `No results found for "${inputValue}"`,
+-            value: 'no results',
++            value: NO_RESULTS,
+             hasCheckbox: false
+           }
+         ];
+@@ -60,56 +62,99 @@ export const SelectMultiTypeaheadCheckbox: React.FunctionComponent = () => {
+     }
+ 
+     setSelectOptions(newSelectOptions);
+-    setFocusedItemIndex(null);
+-    setActiveItem(null);
+   }, [inputValue]);
+ 
++  React.useEffect(() => {
++    setPlaceholder(`${selected.length} item${selected.length !== 1 ? 's' : ''} selected`);
++  }, [selected]);
++
++  const createItemId = (value: any) => `select-multi-typeahead-${value.replace(' ', '-')}`;
++
++  const setActiveAndFocusedItem = (itemIndex: number) => {
++    setFocusedItemIndex(itemIndex);
++    const focusedItem = selectOptions[itemIndex];
++    setActiveItemId(createItemId(focusedItem.value));
++  };
++
++  const resetActiveAndFocusedItem = () => {
++    setFocusedItemIndex(null);
++    setActiveItemId(null);
++  };
++
++  const closeMenu = () => {
++    setIsOpen(false);
++    resetActiveAndFocusedItem();
++  };
++
++  const onInputClick = () => {
++    if (!isOpen) {
++      setIsOpen(true);
++    } else if (!inputValue) {
++      closeMenu();
++    }
++  };
++
+   const handleMenuArrowKeys = (key: string) => {
+-    let indexToFocus;
++    let indexToFocus = 0;
++
++    if (!isOpen) {
++      setIsOpen(true);
++    }
++
++    if (selectOptions.every((option) => option.isDisabled)) {
++      return;
++    }
++
++    if (key === 'ArrowUp') {
++      // When no index is set or at the first index, focus to the last, otherwise decrement focus index
++      if (focusedItemIndex === null || focusedItemIndex === 0) {
++        indexToFocus = selectOptions.length - 1;
++      } else {
++        indexToFocus = focusedItemIndex - 1;
++      }
+ 
+-    if (isOpen) {
+-      if (key === 'ArrowUp') {
+-        // When no index is set or at the first index, focus to the last, otherwise decrement focus index
+-        if (focusedItemIndex === null || focusedItemIndex === 0) {
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus--;
++        if (indexToFocus === -1) {
+           indexToFocus = selectOptions.length - 1;
+-        } else {
+-          indexToFocus = focusedItemIndex - 1;
+         }
+       }
++    }
++
++    if (key === 'ArrowDown') {
++      // When no index is set or at the last index, focus to the first, otherwise increment focus index
++      if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++        indexToFocus = 0;
++      } else {
++        indexToFocus = focusedItemIndex + 1;
++      }
+ 
+-      if (key === 'ArrowDown') {
+-        // When no index is set or at the last index, focus to the first, otherwise increment focus index
+-        if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus++;
++        if (indexToFocus === selectOptions.length) {
+           indexToFocus = 0;
+-        } else {
+-          indexToFocus = focusedItemIndex + 1;
+         }
+       }
+-
+-      setFocusedItemIndex(indexToFocus);
+-      const focusedItem = selectOptions.filter((option) => !option.isDisabled)[indexToFocus];
+-      setActiveItem(`select-multi-typeahead-checkbox-${focusedItem.value.replace(' ', '-')}`);
+     }
++
++    setActiveAndFocusedItem(indexToFocus);
+   };
+ 
+   const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+-    const enabledMenuItems = selectOptions.filter((menuItem) => !menuItem.isDisabled);
+-    const [firstMenuItem] = enabledMenuItems;
+-    const focusedItem = focusedItemIndex ? enabledMenuItems[focusedItemIndex] : firstMenuItem;
++    const focusedItem = focusedItemIndex !== null ? selectOptions[focusedItemIndex] : null;
+ 
+     switch (event.key) {
+-      // Select the first available option
+       case 'Enter':
++        if (isOpen && focusedItem && focusedItem.value !== NO_RESULTS && !focusedItem.isAriaDisabled) {
++          onSelect(focusedItem.value);
++        }
++
+         if (!isOpen) {
+-          setIsOpen((prevIsOpen) => !prevIsOpen);
+-        } else if (isOpen && focusedItem.value !== 'no results') {
+-          onSelect(focusedItem.value as string);
++          setIsOpen(true);
+         }
+-        break;
+-      case 'Tab':
+-      case 'Escape':
+-        setIsOpen(false);
+-        setActiveItem(null);
++
+         break;
+       case 'ArrowUp':
+       case 'ArrowDown':
+@@ -121,17 +166,19 @@ export const SelectMultiTypeaheadCheckbox: React.FunctionComponent = () => {
+ 
+   const onToggleClick = () => {
+     setIsOpen(!isOpen);
++    textInputRef?.current?.focus();
+   };
+ 
+   const onTextInputChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
+     setInputValue(value);
++    resetActiveAndFocusedItem();
+   };
+ 
+   const onSelect = (value: string) => {
+-    // eslint-disable-next-line no-console
+-    console.log('selected', value);
++    if (value && value !== NO_RESULTS) {
++      // eslint-disable-next-line no-console
++      console.log('selected', value);
+ 
+-    if (value && value !== 'no results') {
+       setSelected(
+         selected.includes(value) ? selected.filter((selection) => selection !== value) : [...selected, value]
+       );
+@@ -140,9 +187,12 @@ export const SelectMultiTypeaheadCheckbox: React.FunctionComponent = () => {
+     textInputRef.current?.focus();
+   };
+ 
+-  React.useEffect(() => {
+-    setPlaceholder(`${selected.length} items selected`);
+-  }, [selected]);
++  const onClearButtonClick = () => {
++    setSelected([]);
++    setInputValue('');
++    resetActiveAndFocusedItem();
++    textInputRef?.current?.focus();
++  };
+ 
+   const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
+     <MenuToggle
+@@ -156,32 +206,22 @@ export const SelectMultiTypeaheadCheckbox: React.FunctionComponent = () => {
+       <TextInputGroup isPlain>
+         <TextInputGroupMain
+           value={inputValue}
+-          onClick={onToggleClick}
++          onClick={onInputClick}
+           onChange={onTextInputChange}
+           onKeyDown={onInputKeyDown}
+           id="multi-typeahead-select-checkbox-input"
+           autoComplete="off"
+           innerRef={textInputRef}
+           placeholder={placeholder}
+-          {...(activeItem && { 'aria-activedescendant': activeItem })}
++          {...(activeItemId && { 'aria-activedescendant': activeItemId })}
+           role="combobox"
+           isExpanded={isOpen}
+           aria-controls="select-multi-typeahead-checkbox-listbox"
+         />
+-        <TextInputGroupUtilities>
+-          {selected.length > 0 && (
+-            <Button
+-              variant="plain"
+-              onClick={() => {
+-                setInputValue('');
+-                setSelected([]);
+-                textInputRef?.current?.focus();
+-              }}
+-              aria-label="Clear input value"
+-            >
+-              <TimesIcon aria-hidden />
+-            </Button>
+-          )}
++        <TextInputGroupUtilities {...(selected.length === 0 ? { style: { display: 'none' } } : {})}>
++          <Button variant="plain" onClick={onClearButtonClick} aria-label="Clear input value">
++            <TimesIcon aria-hidden />
++          </Button>
+         </TextInputGroupUtilities>
+       </TextInputGroup>
+     </MenuToggle>
+@@ -193,19 +233,22 @@ export const SelectMultiTypeaheadCheckbox: React.FunctionComponent = () => {
+       id="multi-typeahead-checkbox-select"
+       isOpen={isOpen}
+       selected={selected}
+-      onSelect={(ev, selection) => onSelect(selection as string)}
+-      onOpenChange={() => setIsOpen(false)}
++      onSelect={(_event, selection) => onSelect(selection as string)}
++      onOpenChange={(isOpen) => {
++        !isOpen && closeMenu();
++      }}
+       toggle={toggle}
++      shouldFocusFirstItemOnOpen={false}
+     >
+-      <SelectList id="select-multi-typeahead-checkbox-listbox">
++      <SelectList isAriaMultiselectable id="select-multi-typeahead-checkbox-listbox">
+         {selectOptions.map((option, index) => (
+           <SelectOption
+-            {...(!option.isDisabled && { hasCheckbox: true })}
++            {...(!option.isDisabled && !option.isAriaDisabled && { hasCheckbox: true })}
+             isSelected={selected.includes(option.value)}
+             key={option.value || option.children}
+             isFocused={focusedItemIndex === index}
+             className={option.className}
+-            id={`select-multi-typeahead-${option.value.replace(' ', '-')}`}
++            id={createItemId(option.value)}
+             {...option}
+             ref={null}
+           />
+diff --git a/packages/react-core/src/components/Select/examples/SelectMultiTypeaheadCreatable.tsx b/packages/react-core/src/components/Select/examples/SelectMultiTypeaheadCreatable.tsx
+index 9be7a6d61..16f3afb2c 100644
+--- a/packages/react-core/src/components/Select/examples/SelectMultiTypeaheadCreatable.tsx
++++ b/packages/react-core/src/components/Select/examples/SelectMultiTypeaheadCreatable.tsx
+@@ -30,10 +30,12 @@ export const SelectMultiTypeaheadCreatable: React.FunctionComponent = () => {
+   const [selected, setSelected] = React.useState<string[]>([]);
+   const [selectOptions, setSelectOptions] = React.useState<SelectOptionProps[]>(initialSelectOptions);
+   const [focusedItemIndex, setFocusedItemIndex] = React.useState<number | null>(null);
+-  const [activeItem, setActiveItem] = React.useState<string | null>(null);
++  const [activeItemId, setActiveItemId] = React.useState<string | null>(null);
+   const [onCreation, setOnCreation] = React.useState<boolean>(false); // Boolean to refresh filter state after new option is created
+   const textInputRef = React.useRef<HTMLInputElement>();
+ 
++  const CREATE_NEW = 'create';
++
+   React.useEffect(() => {
+     let newSelectOptions: SelectOptionProps[] = initialSelectOptions;
+ 
+@@ -43,9 +45,9 @@ export const SelectMultiTypeaheadCreatable: React.FunctionComponent = () => {
+         String(menuItem.children).toLowerCase().includes(inputValue.toLowerCase())
+       );
+ 
+-      // When no options are found after filtering, display creation option
+-      if (!newSelectOptions.length) {
+-        newSelectOptions = [{ isDisabled: false, children: `Create new option "${inputValue}"`, value: 'create' }];
++      // If no option matches the filter exactly, display creation option
++      if (!initialSelectOptions.some((option) => option.value === inputValue)) {
++        newSelectOptions = [...newSelectOptions, { children: `Create new option "${inputValue}"`, value: CREATE_NEW }];
+       }
+ 
+       // Open the menu when the input value changes and the new value is not empty
+@@ -55,56 +57,125 @@ export const SelectMultiTypeaheadCreatable: React.FunctionComponent = () => {
+     }
+ 
+     setSelectOptions(newSelectOptions);
+-    setFocusedItemIndex(null);
+-    setActiveItem(null);
+   }, [inputValue, onCreation]);
+ 
++  const createItemId = (value: any) => `select-multi-create-typeahead-${value.replace(' ', '-')}`;
++
++  const setActiveAndFocusedItem = (itemIndex: number) => {
++    setFocusedItemIndex(itemIndex);
++    const focusedItem = selectOptions[itemIndex];
++    setActiveItemId(createItemId(focusedItem.value));
++  };
++
++  const resetActiveAndFocusedItem = () => {
++    setFocusedItemIndex(null);
++    setActiveItemId(null);
++  };
++
++  const closeMenu = () => {
++    setIsOpen(false);
++    resetActiveAndFocusedItem();
++  };
++
++  const onInputClick = () => {
++    if (!isOpen) {
++      setIsOpen(true);
++    } else if (!inputValue) {
++      closeMenu();
++    }
++  };
++
++  const onSelect = (value: string) => {
++    if (value) {
++      if (value === CREATE_NEW) {
++        if (!initialSelectOptions.some((item) => item.value === inputValue)) {
++          initialSelectOptions = [...initialSelectOptions, { value: inputValue, children: inputValue }];
++        }
++        setSelected(
++          selected.includes(inputValue)
++            ? selected.filter((selection) => selection !== inputValue)
++            : [...selected, inputValue]
++        );
++        setOnCreation(!onCreation);
++        resetActiveAndFocusedItem();
++      } else {
++        // eslint-disable-next-line no-console
++        console.log('selected', value);
++        setSelected(
++          selected.includes(value) ? selected.filter((selection) => selection !== value) : [...selected, value]
++        );
++      }
++    }
++
++    textInputRef.current?.focus();
++  };
++
++  const onTextInputChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
++    setInputValue(value);
++    resetActiveAndFocusedItem();
++  };
++
+   const handleMenuArrowKeys = (key: string) => {
+-    let indexToFocus;
++    let indexToFocus = 0;
++
++    if (!isOpen) {
++      setIsOpen(true);
++    }
+ 
+-    if (isOpen) {
+-      if (key === 'ArrowUp') {
+-        // When no index is set or at the first index, focus to the last, otherwise decrement focus index
+-        if (focusedItemIndex === null || focusedItemIndex === 0) {
++    if (selectOptions.every((option) => option.isDisabled)) {
++      return;
++    }
++
++    if (key === 'ArrowUp') {
++      // When no index is set or at the first index, focus to the last, otherwise decrement focus index
++      if (focusedItemIndex === null || focusedItemIndex === 0) {
++        indexToFocus = selectOptions.length - 1;
++      } else {
++        indexToFocus = focusedItemIndex - 1;
++      }
++
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus--;
++        if (indexToFocus === -1) {
+           indexToFocus = selectOptions.length - 1;
+-        } else {
+-          indexToFocus = focusedItemIndex - 1;
+         }
+       }
++    }
+ 
+-      if (key === 'ArrowDown') {
+-        // When no index is set or at the last index, focus to the first, otherwise increment focus index
+-        if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++    if (key === 'ArrowDown') {
++      // When no index is set or at the last index, focus to the first, otherwise increment focus index
++      if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++        indexToFocus = 0;
++      } else {
++        indexToFocus = focusedItemIndex + 1;
++      }
++
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus++;
++        if (indexToFocus === selectOptions.length) {
+           indexToFocus = 0;
+-        } else {
+-          indexToFocus = focusedItemIndex + 1;
+         }
+       }
+-
+-      setFocusedItemIndex(indexToFocus);
+-      const focusedItem = selectOptions.filter((option) => !option.isDisabled)[indexToFocus];
+-      setActiveItem(`select-multi-create-typeahead-${focusedItem.value.replace(' ', '-')}`);
+     }
++
++    setActiveAndFocusedItem(indexToFocus);
+   };
+ 
+   const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+-    const enabledMenuItems = selectOptions.filter((menuItem) => !menuItem.isDisabled);
+-    const [firstMenuItem] = enabledMenuItems;
+-    const focusedItem = focusedItemIndex ? enabledMenuItems[focusedItemIndex] : firstMenuItem;
++    const focusedItem = focusedItemIndex !== null ? selectOptions[focusedItemIndex] : null;
+ 
+     switch (event.key) {
+-      // Select the first available option
+       case 'Enter':
+-        if (!isOpen) {
+-          setIsOpen((prevIsOpen) => !prevIsOpen);
+-        } else if (isOpen && focusedItem.value !== 'no results') {
++        if (isOpen && focusedItem && !focusedItem.isAriaDisabled) {
+           onSelect(focusedItem.value as string);
+         }
+-        break;
+-      case 'Tab':
+-      case 'Escape':
+-        setIsOpen(false);
+-        setActiveItem(null);
++
++        if (!isOpen) {
++          setIsOpen(true);
++        }
++
+         break;
+       case 'ArrowUp':
+       case 'ArrowDown':
+@@ -116,35 +187,17 @@ export const SelectMultiTypeaheadCreatable: React.FunctionComponent = () => {
+ 
+   const onToggleClick = () => {
+     setIsOpen(!isOpen);
++    textInputRef?.current?.focus();
+   };
+ 
+-  const onTextInputChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
+-    setInputValue(value);
++  const onClearButtonClick = () => {
++    setSelected([]);
++    setInputValue('');
++    resetActiveAndFocusedItem();
++    textInputRef?.current?.focus();
+   };
+ 
+-  const onSelect = (value: string) => {
+-    if (value) {
+-      if (value === 'create') {
+-        if (!initialSelectOptions.some((item) => item.value === inputValue)) {
+-          initialSelectOptions = [...initialSelectOptions, { value: inputValue, children: inputValue }];
+-        }
+-        setSelected(
+-          selected.includes(inputValue)
+-            ? selected.filter((selection) => selection !== inputValue)
+-            : [...selected, inputValue]
+-        );
+-        setOnCreation(!onCreation);
+-      } else {
+-        // eslint-disable-next-line no-console
+-        console.log('selected', value);
+-        setSelected(
+-          selected.includes(value) ? selected.filter((selection) => selection !== value) : [...selected, value]
+-        );
+-      }
+-    }
+-
+-    textInputRef.current?.focus();
+-  };
++  const getChildren = (value: string) => initialSelectOptions.find((option) => option.value === value)?.children;
+ 
+   const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
+     <MenuToggle
+@@ -158,14 +211,14 @@ export const SelectMultiTypeaheadCreatable: React.FunctionComponent = () => {
+       <TextInputGroup isPlain>
+         <TextInputGroupMain
+           value={inputValue}
+-          onClick={onToggleClick}
++          onClick={onInputClick}
+           onChange={onTextInputChange}
+           onKeyDown={onInputKeyDown}
+           id="multi-create-typeahead-select-input"
+           autoComplete="off"
+           innerRef={textInputRef}
+           placeholder="Select a state"
+-          {...(activeItem && { 'aria-activedescendant': activeItem })}
++          {...(activeItemId && { 'aria-activedescendant': activeItemId })}
+           role="combobox"
+           isExpanded={isOpen}
+           aria-controls="select-multi-create-typeahead-listbox"
+@@ -179,25 +232,15 @@ export const SelectMultiTypeaheadCreatable: React.FunctionComponent = () => {
+                   onSelect(selection);
+                 }}
+               >
+-                {selection}
++                {getChildren(selection)}
+               </Chip>
+             ))}
+           </ChipGroup>
+         </TextInputGroupMain>
+-        <TextInputGroupUtilities>
+-          {selected.length > 0 && (
+-            <Button
+-              variant="plain"
+-              onClick={() => {
+-                setInputValue('');
+-                setSelected([]);
+-                textInputRef?.current?.focus();
+-              }}
+-              aria-label="Clear input value"
+-            >
+-              <TimesIcon aria-hidden />
+-            </Button>
+-          )}
++        <TextInputGroupUtilities {...(selected.length === 0 ? { style: { display: 'none' } } : {})}>
++          <Button variant="plain" onClick={onClearButtonClick} aria-label="Clear input value">
++            <TimesIcon aria-hidden />
++          </Button>
+         </TextInputGroupUtilities>
+       </TextInputGroup>
+     </MenuToggle>
+@@ -208,9 +251,12 @@ export const SelectMultiTypeaheadCreatable: React.FunctionComponent = () => {
+       id="multi-create-typeahead-select"
+       isOpen={isOpen}
+       selected={selected}
+-      onSelect={(ev, selection) => onSelect(selection as string)}
+-      onOpenChange={() => setIsOpen(false)}
++      onSelect={(_event, selection) => onSelect(selection as string)}
++      onOpenChange={(isOpen) => {
++        !isOpen && closeMenu();
++      }}
+       toggle={toggle}
++      shouldFocusFirstItemOnOpen={false}
+     >
+       <SelectList isAriaMultiselectable id="select-multi-create-typeahead-listbox">
+         {selectOptions.map((option, index) => (
+@@ -218,7 +264,7 @@ export const SelectMultiTypeaheadCreatable: React.FunctionComponent = () => {
+             key={option.value || option.children}
+             isFocused={focusedItemIndex === index}
+             className={option.className}
+-            id={`select-multi-create-typeahead-${option.value.replace(' ', '-')}`}
++            id={createItemId(option.value)}
+             {...option}
+             ref={null}
+           />
+diff --git a/packages/react-core/src/components/Select/examples/SelectTypeahead.tsx b/packages/react-core/src/components/Select/examples/SelectTypeahead.tsx
+index 8d2154121..2c6767411 100644
+--- a/packages/react-core/src/components/Select/examples/SelectTypeahead.tsx
++++ b/packages/react-core/src/components/Select/examples/SelectTypeahead.tsx
+@@ -22,16 +22,18 @@ const initialSelectOptions: SelectOptionProps[] = [
+   { value: 'North Carolina', children: 'North Carolina' }
+ ];
+ 
+-export const SelectBasic: React.FunctionComponent = () => {
++export const SelectTypeahead: React.FunctionComponent = () => {
+   const [isOpen, setIsOpen] = React.useState(false);
+   const [selected, setSelected] = React.useState<string>('');
+   const [inputValue, setInputValue] = React.useState<string>('');
+   const [filterValue, setFilterValue] = React.useState<string>('');
+   const [selectOptions, setSelectOptions] = React.useState<SelectOptionProps[]>(initialSelectOptions);
+   const [focusedItemIndex, setFocusedItemIndex] = React.useState<number | null>(null);
+-  const [activeItem, setActiveItem] = React.useState<string | null>(null);
++  const [activeItemId, setActiveItemId] = React.useState<string | null>(null);
+   const textInputRef = React.useRef<HTMLInputElement>();
+ 
++  const NO_RESULTS = 'no results';
++
+   React.useEffect(() => {
+     let newSelectOptions: SelectOptionProps[] = initialSelectOptions;
+ 
+@@ -44,7 +46,7 @@ export const SelectBasic: React.FunctionComponent = () => {
+       // When no options are found after filtering, display 'No results found'
+       if (!newSelectOptions.length) {
+         newSelectOptions = [
+-          { isDisabled: false, children: `No results found for "${filterValue}"`, value: 'no results' }
++          { isAriaDisabled: true, children: `No results found for "${filterValue}"`, value: NO_RESULTS }
+         ];
+       }
+ 
+@@ -55,84 +57,124 @@ export const SelectBasic: React.FunctionComponent = () => {
+     }
+ 
+     setSelectOptions(newSelectOptions);
+-    setActiveItem(null);
+-    setFocusedItemIndex(null);
+   }, [filterValue]);
+ 
+-  const onToggleClick = () => {
+-    setIsOpen(!isOpen);
++  const createItemId = (value: any) => `select-typeahead-${value.replace(' ', '-')}`;
++
++  const setActiveAndFocusedItem = (itemIndex: number) => {
++    setFocusedItemIndex(itemIndex);
++    const focusedItem = selectOptions[itemIndex];
++    setActiveItemId(createItemId(focusedItem.value));
+   };
+ 
+-  const onSelect = (_event: React.MouseEvent<Element, MouseEvent> | undefined, value: string | number | undefined) => {
++  const resetActiveAndFocusedItem = () => {
++    setFocusedItemIndex(null);
++    setActiveItemId(null);
++  };
++
++  const closeMenu = () => {
++    setIsOpen(false);
++    resetActiveAndFocusedItem();
++  };
++
++  const onInputClick = () => {
++    if (!isOpen) {
++      setIsOpen(true);
++    } else if (!inputValue) {
++      closeMenu();
++    }
++  };
++
++  const selectOption = (value: string | number, content: string | number) => {
+     // eslint-disable-next-line no-console
+-    console.log('selected', value);
++    console.log('selected', content);
++
++    setInputValue(String(content));
++    setFilterValue('');
++    setSelected(String(value));
+ 
+-    if (value && value !== 'no results') {
+-      setInputValue(value as string);
+-      setFilterValue('');
+-      setSelected(value as string);
++    closeMenu();
++  };
++
++  const onSelect = (_event: React.MouseEvent<Element, MouseEvent> | undefined, value: string | number | undefined) => {
++    if (value && value !== NO_RESULTS) {
++      const optionText = selectOptions.find((option) => option.value === value)?.children;
++      selectOption(value, optionText as string);
+     }
+-    setIsOpen(false);
+-    setFocusedItemIndex(null);
+-    setActiveItem(null);
+   };
+ 
+   const onTextInputChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
+     setInputValue(value);
+     setFilterValue(value);
++
++    resetActiveAndFocusedItem();
++
++    if (value !== selected) {
++      setSelected('');
++    }
+   };
+ 
+   const handleMenuArrowKeys = (key: string) => {
+-    let indexToFocus;
++    let indexToFocus = 0;
++
++    if (!isOpen) {
++      setIsOpen(true);
++    }
++
++    if (selectOptions.every((option) => option.isDisabled)) {
++      return;
++    }
+ 
+-    if (isOpen) {
+-      if (key === 'ArrowUp') {
+-        // When no index is set or at the first index, focus to the last, otherwise decrement focus index
+-        if (focusedItemIndex === null || focusedItemIndex === 0) {
++    if (key === 'ArrowUp') {
++      // When no index is set or at the first index, focus to the last, otherwise decrement focus index
++      if (focusedItemIndex === null || focusedItemIndex === 0) {
++        indexToFocus = selectOptions.length - 1;
++      } else {
++        indexToFocus = focusedItemIndex - 1;
++      }
++
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus--;
++        if (indexToFocus === -1) {
+           indexToFocus = selectOptions.length - 1;
+-        } else {
+-          indexToFocus = focusedItemIndex - 1;
+         }
+       }
++    }
++
++    if (key === 'ArrowDown') {
++      // When no index is set or at the last index, focus to the first, otherwise increment focus index
++      if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++        indexToFocus = 0;
++      } else {
++        indexToFocus = focusedItemIndex + 1;
++      }
+ 
+-      if (key === 'ArrowDown') {
+-        // When no index is set or at the last index, focus to the first, otherwise increment focus index
+-        if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus++;
++        if (indexToFocus === selectOptions.length) {
+           indexToFocus = 0;
+-        } else {
+-          indexToFocus = focusedItemIndex + 1;
+         }
+       }
+-
+-      setFocusedItemIndex(indexToFocus);
+-      const focusedItem = selectOptions.filter((option) => !option.isDisabled)[indexToFocus];
+-      setActiveItem(`select-typeahead-${focusedItem.value.replace(' ', '-')}`);
+     }
++
++    setActiveAndFocusedItem(indexToFocus);
+   };
+ 
+   const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+-    const enabledMenuItems = selectOptions.filter((option) => !option.isDisabled);
+-    const [firstMenuItem] = enabledMenuItems;
+-    const focusedItem = focusedItemIndex ? enabledMenuItems[focusedItemIndex] : firstMenuItem;
++    const focusedItem = focusedItemIndex !== null ? selectOptions[focusedItemIndex] : null;
+ 
+     switch (event.key) {
+-      // Select the first available option
+       case 'Enter':
+-        if (isOpen && focusedItem.value !== 'no results') {
+-          setInputValue(String(focusedItem.children));
+-          setFilterValue('');
+-          setSelected(String(focusedItem.children));
++        if (isOpen && focusedItem && focusedItem.value !== NO_RESULTS && !focusedItem.isAriaDisabled) {
++          selectOption(focusedItem.value, focusedItem.children as string);
+         }
+ 
+-        setIsOpen((prevIsOpen) => !prevIsOpen);
+-        setFocusedItemIndex(null);
+-        setActiveItem(null);
++        if (!isOpen) {
++          setIsOpen(true);
++        }
+ 
+-        break;
+-      case 'Tab':
+-      case 'Escape':
+-        setIsOpen(false);
+-        setActiveItem(null);
+         break;
+       case 'ArrowUp':
+       case 'ArrowDown':
+@@ -142,6 +184,19 @@ export const SelectBasic: React.FunctionComponent = () => {
+     }
+   };
+ 
++  const onToggleClick = () => {
++    setIsOpen(!isOpen);
++    textInputRef?.current?.focus();
++  };
++
++  const onClearButtonClick = () => {
++    setSelected('');
++    setInputValue('');
++    setFilterValue('');
++    resetActiveAndFocusedItem();
++    textInputRef?.current?.focus();
++  };
++
+   const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
+     <MenuToggle
+       ref={toggleRef}
+@@ -154,34 +209,23 @@ export const SelectBasic: React.FunctionComponent = () => {
+       <TextInputGroup isPlain>
+         <TextInputGroupMain
+           value={inputValue}
+-          onClick={onToggleClick}
++          onClick={onInputClick}
+           onChange={onTextInputChange}
+           onKeyDown={onInputKeyDown}
+           id="typeahead-select-input"
+           autoComplete="off"
+           innerRef={textInputRef}
+           placeholder="Select a state"
+-          {...(activeItem && { 'aria-activedescendant': activeItem })}
++          {...(activeItemId && { 'aria-activedescendant': activeItemId })}
+           role="combobox"
+           isExpanded={isOpen}
+           aria-controls="select-typeahead-listbox"
+         />
+ 
+-        <TextInputGroupUtilities>
+-          {!!inputValue && (
+-            <Button
+-              variant="plain"
+-              onClick={() => {
+-                setSelected('');
+-                setInputValue('');
+-                setFilterValue('');
+-                textInputRef?.current?.focus();
+-              }}
+-              aria-label="Clear input value"
+-            >
+-              <TimesIcon aria-hidden />
+-            </Button>
+-          )}
++        <TextInputGroupUtilities {...(!inputValue ? { style: { display: 'none' } } : {})}>
++          <Button variant="plain" onClick={onClearButtonClick} aria-label="Clear input value">
++            <TimesIcon aria-hidden />
++          </Button>
+         </TextInputGroupUtilities>
+       </TextInputGroup>
+     </MenuToggle>
+@@ -193,10 +237,11 @@ export const SelectBasic: React.FunctionComponent = () => {
+       isOpen={isOpen}
+       selected={selected}
+       onSelect={onSelect}
+-      onOpenChange={() => {
+-        setIsOpen(false);
++      onOpenChange={(isOpen) => {
++        !isOpen && closeMenu();
+       }}
+       toggle={toggle}
++      shouldFocusFirstItemOnOpen={false}
+     >
+       <SelectList id="select-typeahead-listbox">
+         {selectOptions.map((option, index) => (
+@@ -204,8 +249,7 @@ export const SelectBasic: React.FunctionComponent = () => {
+             key={option.value || option.children}
+             isFocused={focusedItemIndex === index}
+             className={option.className}
+-            onClick={() => setSelected(option.value)}
+-            id={`select-typeahead-${option.value.replace(' ', '-')}`}
++            id={createItemId(option.value)}
+             {...option}
+             ref={null}
+           />
+diff --git a/packages/react-core/src/components/Select/examples/SelectTypeaheadCreatable.tsx b/packages/react-core/src/components/Select/examples/SelectTypeaheadCreatable.tsx
+index b079b1fb5..7b0d9df19 100644
+--- a/packages/react-core/src/components/Select/examples/SelectTypeaheadCreatable.tsx
++++ b/packages/react-core/src/components/Select/examples/SelectTypeaheadCreatable.tsx
+@@ -29,10 +29,11 @@ export const SelectTypeaheadCreatable: React.FunctionComponent = () => {
+   const [filterValue, setFilterValue] = React.useState<string>('');
+   const [selectOptions, setSelectOptions] = React.useState<SelectOptionProps[]>(initialSelectOptions);
+   const [focusedItemIndex, setFocusedItemIndex] = React.useState<number | null>(null);
+-  const [activeItem, setActiveItem] = React.useState<string | null>(null);
+-  const [onCreation, setOnCreation] = React.useState<boolean>(false); // Boolean to refresh filter state after new option is created
++  const [activeItemId, setActiveItemId] = React.useState<string | null>(null);
+   const textInputRef = React.useRef<HTMLInputElement>();
+ 
++  const CREATE_NEW = 'create';
++
+   React.useEffect(() => {
+     let newSelectOptions: SelectOptionProps[] = initialSelectOptions;
+ 
+@@ -42,9 +43,9 @@ export const SelectTypeaheadCreatable: React.FunctionComponent = () => {
+         String(menuItem.children).toLowerCase().includes(filterValue.toLowerCase())
+       );
+ 
+-      // When no options are found after filtering, display creation option
+-      if (!newSelectOptions.length) {
+-        newSelectOptions = [{ isDisabled: false, children: `Create new option "${filterValue}"`, value: 'create' }];
++      // If no option matches the filter exactly, display creation option
++      if (!initialSelectOptions.some((option) => option.value === filterValue)) {
++        newSelectOptions = [...newSelectOptions, { children: `Create new option "${filterValue}"`, value: CREATE_NEW }];
+       }
+ 
+       // Open the menu when the input value changes and the new value is not empty
+@@ -54,96 +55,133 @@ export const SelectTypeaheadCreatable: React.FunctionComponent = () => {
+     }
+ 
+     setSelectOptions(newSelectOptions);
+-    setActiveItem(null);
++  }, [filterValue]);
++
++  const createItemId = (value: any) => `select-typeahead-${value.replace(' ', '-')}`;
++
++  const setActiveAndFocusedItem = (itemIndex: number) => {
++    setFocusedItemIndex(itemIndex);
++    const focusedItem = selectOptions[itemIndex];
++    setActiveItemId(createItemId(focusedItem.value));
++  };
++
++  const resetActiveAndFocusedItem = () => {
+     setFocusedItemIndex(null);
+-  }, [filterValue, onCreation]);
++    setActiveItemId(null);
++  };
+ 
+-  const onToggleClick = () => {
+-    setIsOpen(!isOpen);
++  const closeMenu = () => {
++    setIsOpen(false);
++    resetActiveAndFocusedItem();
+   };
+ 
+-  const onSelect = (_event: React.MouseEvent<Element, MouseEvent> | undefined, value: string | number | undefined) => {
++  const onInputClick = () => {
++    if (!isOpen) {
++      setIsOpen(true);
++    } else if (!inputValue) {
++      closeMenu();
++    }
++  };
++
++  const selectOption = (value: string | number, content: string | number) => {
+     // eslint-disable-next-line no-console
++    console.log('selected', content);
++
++    setInputValue(String(content));
++    setFilterValue('');
++    setSelected(String(value));
++
++    closeMenu();
++  };
+ 
++  const onSelect = (_event: React.MouseEvent<Element, MouseEvent> | undefined, value: string | number | undefined) => {
+     if (value) {
+-      if (value === 'create') {
+-        if (!initialSelectOptions.some((item) => item.value === filterValue)) {
++      if (value === CREATE_NEW) {
++        if (!initialSelectOptions.some((item) => item.children === filterValue)) {
+           initialSelectOptions = [...initialSelectOptions, { value: filterValue, children: filterValue }];
+         }
+         setSelected(filterValue);
+-        setOnCreation(!onCreation);
+         setFilterValue('');
++        closeMenu();
+       } else {
+-        // eslint-disable-next-line no-console
+-        console.log('selected', value);
+-        setInputValue(value as string);
+-        setFilterValue('');
+-        setSelected(value as string);
++        const optionText = selectOptions.find((option) => option.value === value)?.children;
++        selectOption(value, optionText as string);
+       }
+     }
+-
+-    setIsOpen(false);
+-    setFocusedItemIndex(null);
+-    setActiveItem(null);
+   };
+ 
+   const onTextInputChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
+     setInputValue(value);
+     setFilterValue(value);
++
++    resetActiveAndFocusedItem();
++
++    if (value !== selected) {
++      setSelected('');
++    }
+   };
+ 
+   const handleMenuArrowKeys = (key: string) => {
+-    let indexToFocus;
++    let indexToFocus = 0;
++
++    if (!isOpen) {
++      setIsOpen(true);
++    }
+ 
+-    if (isOpen) {
+-      if (key === 'ArrowUp') {
+-        // When no index is set or at the first index, focus to the last, otherwise decrement focus index
+-        if (focusedItemIndex === null || focusedItemIndex === 0) {
++    if (selectOptions.every((option) => option.isDisabled)) {
++      return;
++    }
++
++    if (key === 'ArrowUp') {
++      // When no index is set or at the first index, focus to the last, otherwise decrement focus index
++      if (focusedItemIndex === null || focusedItemIndex === 0) {
++        indexToFocus = selectOptions.length - 1;
++      } else {
++        indexToFocus = focusedItemIndex - 1;
++      }
++
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus--;
++        if (indexToFocus === -1) {
+           indexToFocus = selectOptions.length - 1;
+-        } else {
+-          indexToFocus = focusedItemIndex - 1;
+         }
+       }
++    }
++
++    if (key === 'ArrowDown') {
++      // When no index is set or at the last index, focus to the first, otherwise increment focus index
++      if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++        indexToFocus = 0;
++      } else {
++        indexToFocus = focusedItemIndex + 1;
++      }
+ 
+-      if (key === 'ArrowDown') {
+-        // When no index is set or at the last index, focus to the first, otherwise increment focus index
+-        if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus++;
++        if (indexToFocus === selectOptions.length) {
+           indexToFocus = 0;
+-        } else {
+-          indexToFocus = focusedItemIndex + 1;
+         }
+       }
+-
+-      setFocusedItemIndex(indexToFocus);
+-      const focusedItem = selectOptions.filter((option) => !option.isDisabled)[indexToFocus];
+-      setActiveItem(`select-create-typeahead-${focusedItem.value.replace(' ', '-')}`);
+     }
++
++    setActiveAndFocusedItem(indexToFocus);
+   };
+ 
+   const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+-    const enabledMenuItems = selectOptions.filter((option) => !option.isDisabled);
+-    const [firstMenuItem] = enabledMenuItems;
+-    const focusedItem = focusedItemIndex ? enabledMenuItems[focusedItemIndex] : firstMenuItem;
++    const focusedItem = focusedItemIndex !== null ? selectOptions[focusedItemIndex] : null;
+ 
+     switch (event.key) {
+-      // Select the first available option
+       case 'Enter':
+-        if (isOpen) {
++        if (isOpen && focusedItem && !focusedItem.isAriaDisabled) {
+           onSelect(undefined, focusedItem.value as string);
+-          setIsOpen((prevIsOpen) => !prevIsOpen);
+-          setFocusedItemIndex(null);
+-          setActiveItem(null);
+         }
+ 
+-        setIsOpen((prevIsOpen) => !prevIsOpen);
+-        setFocusedItemIndex(null);
+-        setActiveItem(null);
++        if (!isOpen) {
++          setIsOpen(true);
++        }
+ 
+-        break;
+-      case 'Tab':
+-      case 'Escape':
+-        setIsOpen(false);
+-        setActiveItem(null);
+         break;
+       case 'ArrowUp':
+       case 'ArrowDown':
+@@ -153,6 +191,19 @@ export const SelectTypeaheadCreatable: React.FunctionComponent = () => {
+     }
+   };
+ 
++  const onToggleClick = () => {
++    setIsOpen(!isOpen);
++    textInputRef?.current?.focus();
++  };
++
++  const onClearButtonClick = () => {
++    setSelected('');
++    setInputValue('');
++    setFilterValue('');
++    resetActiveAndFocusedItem();
++    textInputRef?.current?.focus();
++  };
++
+   const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
+     <MenuToggle
+       ref={toggleRef}
+@@ -165,34 +216,23 @@ export const SelectTypeaheadCreatable: React.FunctionComponent = () => {
+       <TextInputGroup isPlain>
+         <TextInputGroupMain
+           value={inputValue}
+-          onClick={onToggleClick}
++          onClick={onInputClick}
+           onChange={onTextInputChange}
+           onKeyDown={onInputKeyDown}
+           id="create-typeahead-select-input"
+           autoComplete="off"
+           innerRef={textInputRef}
+           placeholder="Select a state"
+-          {...(activeItem && { 'aria-activedescendant': activeItem })}
++          {...(activeItemId && { 'aria-activedescendant': activeItemId })}
+           role="combobox"
+           isExpanded={isOpen}
+           aria-controls="select-create-typeahead-listbox"
+         />
+ 
+-        <TextInputGroupUtilities>
+-          {!!inputValue && (
+-            <Button
+-              variant="plain"
+-              onClick={() => {
+-                setSelected('');
+-                setInputValue('');
+-                setFilterValue('');
+-                textInputRef?.current?.focus();
+-              }}
+-              aria-label="Clear input value"
+-            >
+-              <TimesIcon aria-hidden />
+-            </Button>
+-          )}
++        <TextInputGroupUtilities {...(!inputValue ? { style: { display: 'none' } } : {})}>
++          <Button variant="plain" onClick={onClearButtonClick} aria-label="Clear input value">
++            <TimesIcon aria-hidden />
++          </Button>
+         </TextInputGroupUtilities>
+       </TextInputGroup>
+     </MenuToggle>
+@@ -204,10 +244,11 @@ export const SelectTypeaheadCreatable: React.FunctionComponent = () => {
+       isOpen={isOpen}
+       selected={selected}
+       onSelect={onSelect}
+-      onOpenChange={() => {
+-        setIsOpen(false);
++      onOpenChange={(isOpen) => {
++        !isOpen && closeMenu();
+       }}
+       toggle={toggle}
++      shouldFocusFirstItemOnOpen={false}
+     >
+       <SelectList id="select-create-typeahead-listbox">
+         {selectOptions.map((option, index) => (
+@@ -215,8 +256,7 @@ export const SelectTypeaheadCreatable: React.FunctionComponent = () => {
+             key={option.value || option.children}
+             isFocused={focusedItemIndex === index}
+             className={option.className}
+-            onClick={() => setSelected(option.value)}
+-            id={`select-typeahead-${option.value.replace(' ', '-')}`}
++            id={createItemId(option.value)}
+             {...option}
+             ref={null}
+           />
+diff --git a/packages/react-integration/demo-app-ts/package.json b/packages/react-integration/demo-app-ts/package.json
+index f403a0c96..3b6add51d 100644
+--- a/packages/react-integration/demo-app-ts/package.json
++++ b/packages/react-integration/demo-app-ts/package.json
+@@ -9,7 +9,7 @@
+     "serve:demo-app": "node scripts/serve"
+   },
+   "dependencies": {
+-    "@patternfly/react-core": "^5.3.2",
++    "@patternfly/react-core": "^5.3.3",
+     "react": "^18",
+     "react-dom": "^18",
+     "react-router": "^5.3.3",
+diff --git a/packages/react-templates/src/components/Dropdown/SimpleDropdown.tsx b/packages/react-templates/src/components/Dropdown/SimpleDropdown.tsx
+new file mode 100644
+index 000000000..31e770ea1
+--- /dev/null
++++ b/packages/react-templates/src/components/Dropdown/SimpleDropdown.tsx
+@@ -0,0 +1,139 @@
++import React from 'react';
++import {
++  Dropdown,
++  DropdownItem,
++  DropdownList,
++  DropdownItemProps,
++  DropdownProps
++} from '@patternfly/react-core/dist/esm/components/Dropdown';
++import { MenuToggle, MenuToggleElement, MenuToggleProps } from '@patternfly/react-core/dist/esm/components/MenuToggle';
++import { Divider } from '@patternfly/react-core/dist/esm/components/Divider';
++import { OUIAProps } from '@patternfly/react-core/dist/esm/helpers';
++
++export interface SimpleDropdownItem extends Omit<DropdownItemProps, 'content'> {
++  /** Content of the dropdown item. If the isDivider prop is true, this prop will be ignored. */
++  content?: React.ReactNode;
++  /** Unique identifier for the dropdown item, which is used in the dropdown onSelect callback */
++  value: string | number;
++  /** Callback for when the dropdown item is clicked. */
++  onClick?: (event?: any) => void;
++  /** URL to redirect to when the dropdown item is clicked. */
++  to?: string;
++  /** Flag indicating whether the dropdown item should render as a divider. If true, the item will be rendered without
++   * the dropdown item wrapper.
++   */
++  isDivider?: boolean;
++}
++
++export interface SimpleDropdownProps extends Omit<DropdownProps, 'toggle'>, OUIAProps {
++  /** Initial items of the dropdown. */
++  initialItems?: SimpleDropdownItem[];
++  /** @hide Forwarded ref */
++  innerRef?: React.Ref<any>;
++  /** Flag indicating the dropdown should be disabled. */
++  isDisabled?: boolean;
++  /** Flag indicated whether the dropdown toggle should take up the full width of its parent. */
++  isToggleFullWidth?: boolean;
++  /** Callback triggered when any dropdown item is clicked. */
++  onSelect?: (event?: React.MouseEvent<Element, MouseEvent>, value?: string | number) => void;
++  /** Callback triggered when the dropdown toggle opens or closes. */
++  onToggle?: (nextIsOpen: boolean) => void;
++  /** Flag indicating the dropdown toggle should be focused after a dropdown item is clicked. */
++  shouldFocusToggleOnSelect?: boolean;
++  /** Adds an accessible name to the dropdown toggle. Required when the dropdown toggle does not
++   * have any text content.
++   */
++  toggleAriaLabel?: string;
++  /** Content of the toggle. */
++  toggleContent: React.ReactNode;
++  /** Variant style of the dropdown toggle. */
++  toggleVariant?: 'default' | 'plain' | 'plainText';
++  /** Width of the toggle. */
++  toggleWidth?: string;
++  /** Additional props passed to the toggle. */
++  toggleProps?: MenuToggleProps;
++}
++
++const SimpleDropdownBase: React.FunctionComponent<SimpleDropdownProps> = ({
++  innerRef,
++  initialItems,
++  onSelect: onSelectProp,
++  onToggle: onToggleProp,
++  isDisabled,
++  toggleAriaLabel,
++  toggleContent,
++  isToggleFullWidth,
++  toggleVariant = 'default',
++  toggleWidth,
++  toggleProps,
++  shouldFocusToggleOnSelect,
++  ...props
++}: SimpleDropdownProps) => {
++  const [isOpen, setIsOpen] = React.useState(false);
++
++  const onSelect = (event: React.MouseEvent<Element, MouseEvent>, value: string | number) => {
++    onSelectProp && onSelectProp(event, value);
++    onToggleProp && onToggleProp(false);
++    setIsOpen(false);
++  };
++
++  const onToggle = () => {
++    onToggleProp && onToggleProp(!isOpen);
++    setIsOpen(!isOpen);
++  };
++
++  const dropdownToggle = (toggleRef: React.Ref<MenuToggleElement>) => (
++    <MenuToggle
++      ref={toggleRef}
++      onClick={onToggle}
++      isExpanded={isOpen}
++      isDisabled={isDisabled}
++      variant={toggleVariant}
++      aria-label={toggleAriaLabel}
++      isFullWidth={isToggleFullWidth}
++      style={
++        {
++          width: toggleWidth
++        } as React.CSSProperties
++      }
++      {...toggleProps}
++    >
++      {toggleContent}
++    </MenuToggle>
++  );
++
++  const dropdownSimpleItems = initialItems?.map((item) => {
++    const { content, onClick, to, value, isDivider, ...itemProps } = item;
++
++    return isDivider ? (
++      <Divider component="li" key={value} />
++    ) : (
++      <DropdownItem onClick={onClick} to={to} key={value} value={value} {...itemProps}>
++        {content}
++      </DropdownItem>
++    );
++  });
++
++  return (
++    <Dropdown
++      toggle={dropdownToggle}
++      isOpen={isOpen}
++      onSelect={onSelect}
++      shouldFocusToggleOnSelect={shouldFocusToggleOnSelect}
++      onOpenChange={(isOpen) => {
++        onToggleProp && onToggleProp(isOpen);
++        setIsOpen(isOpen);
++      }}
++      ref={innerRef}
++      {...props}
++    >
++      <DropdownList>{dropdownSimpleItems}</DropdownList>
++    </Dropdown>
++  );
++};
++
++export const SimpleDropdown = React.forwardRef((props: SimpleDropdownProps, ref: React.Ref<any>) => (
++  <SimpleDropdownBase {...props} innerRef={ref} />
++));
++
++SimpleDropdown.displayName = 'SimpleDropdown';
+diff --git a/packages/react-templates/src/components/Dropdown/examples/DropdownTemplates.md b/packages/react-templates/src/components/Dropdown/examples/DropdownTemplates.md
+new file mode 100644
+index 000000000..92382f1b1
+--- /dev/null
++++ b/packages/react-templates/src/components/Dropdown/examples/DropdownTemplates.md
+@@ -0,0 +1,24 @@
++---
++id: Dropdown
++section: components
++subsection: menus
++template: true
++beta: true
++propComponents: ['SimpleDropdown', 'SimpleDropdownItem']
++---
++
++Note: Templates live in their own package at [@patternfly/react-templates](https://www.npmjs.com/package/@patternfly/react-templates)!
++
++For custom use cases, please see the dropdown component suite from [@patternfly/react-core](https://www.npmjs.com/package/@patternfly/react-core).
++
++import { Checkbox, Flex, FlexItem } from '@patternfly/react-core';
++import { SimpleDropdown } from '@patternfly/react-templates';
++import EllipsisVIcon from '@patternfly/react-icons/dist/esm/icons/ellipsis-v-icon';
++
++## Examples
++
++### Simple
++
++```ts file="./SimpleDropdownExample.tsx"
++
++```
+diff --git a/packages/react-templates/src/components/Dropdown/examples/SimpleDropdownExample.tsx b/packages/react-templates/src/components/Dropdown/examples/SimpleDropdownExample.tsx
+new file mode 100644
+index 000000000..449cd238a
+--- /dev/null
++++ b/packages/react-templates/src/components/Dropdown/examples/SimpleDropdownExample.tsx
+@@ -0,0 +1,53 @@
++import React from 'react';
++import { Checkbox, Flex, FlexItem } from '@patternfly/react-core';
++import { SimpleDropdown, SimpleDropdownItem } from '@patternfly/react-templates';
++import EllipsisVIcon from '@patternfly/react-icons/dist/esm/icons/ellipsis-v-icon';
++
++export const SimpleDropdownExample: React.FunctionComponent = () => {
++  const [isDisabled, setIsDisabled] = React.useState(false);
++
++  const items: SimpleDropdownItem[] = [
++    // eslint-disable-next-line no-console
++    { content: 'Action', value: 1, onClick: () => console.log('Action clicked') },
++    // Prevent default click behavior on link for example purposes
++    { content: 'Link', value: 2, to: '#', onClick: (event: any) => event.preventDefault() },
++    { content: 'Disabled Action', value: 3, isDisabled: true },
++    { value: 'separator', isDivider: true },
++    // eslint-disable-next-line no-console
++    { content: 'Second action', value: 4, onClick: () => console.log('Second action clicked') }
++  ];
++
++  return (
++    <React.Fragment>
++      <Checkbox
++        id="simple-example-disabled-toggle"
++        label="Disable simple dropdown toggles"
++        isChecked={isDisabled}
++        onChange={(_event: React.FormEvent<HTMLInputElement>, checked: boolean) => setIsDisabled(checked)}
++        style={{ marginBottom: 20 }}
++      />
++      <Flex gap={{ default: 'gapLg' }}>
++        <FlexItem>
++          <SimpleDropdown initialItems={items} isDisabled={isDisabled} toggleContent="Dropdown" />
++        </FlexItem>
++        <FlexItem>
++          <SimpleDropdown
++            toggleVariant="plainText"
++            initialItems={items}
++            isDisabled={isDisabled}
++            toggleContent="Dropdown with plainText styling"
++          />
++        </FlexItem>
++        <FlexItem>
++          <SimpleDropdown
++            toggleVariant="plain"
++            initialItems={items}
++            isDisabled={isDisabled}
++            toggleContent={<EllipsisVIcon aria-hidden="true" />}
++            toggleAriaLabel="Plain dropdown toggle"
++          />
++        </FlexItem>
++      </Flex>
++    </React.Fragment>
++  );
++};
+diff --git a/packages/react-templates/src/components/Dropdown/index.ts b/packages/react-templates/src/components/Dropdown/index.ts
+new file mode 100644
+index 000000000..8eff180db
+--- /dev/null
++++ b/packages/react-templates/src/components/Dropdown/index.ts
+@@ -0,0 +1 @@
++export * from './SimpleDropdown';
+diff --git a/packages/react-templates/src/components/Select/CheckboxSelect.tsx b/packages/react-templates/src/components/Select/CheckboxSelect.tsx
+index df6201767..c71006ac5 100644
+--- a/packages/react-templates/src/components/Select/CheckboxSelect.tsx
++++ b/packages/react-templates/src/components/Select/CheckboxSelect.tsx
+@@ -3,10 +3,12 @@ import {
+   Badge,
+   MenuToggle,
+   MenuToggleElement,
++  MenuToggleProps,
+   Select,
+   SelectList,
+   SelectOption,
+-  SelectOptionProps
++  SelectOptionProps,
++  SelectProps
+ } from '@patternfly/react-core';
+ 
+ export interface CheckboxSelectOption extends Omit<SelectOptionProps, 'content'> {
+@@ -16,7 +18,7 @@ export interface CheckboxSelectOption extends Omit<SelectOptionProps, 'content'>
+   value: string | number;
+ }
+ 
+-export interface CheckboxSelectProps {
++export interface CheckboxSelectProps extends Omit<SelectProps, 'toggle'> {
+   /** @hide Forwarded ref */
+   innerRef?: React.Ref<any>;
+   /** Initial options of the select. */
+@@ -27,8 +29,12 @@ export interface CheckboxSelectProps {
+   onToggle?: (nextIsOpen: boolean) => void;
+   /** Flag indicating the select should be disabled. */
+   isDisabled?: boolean;
+-  /** Content of the toggle. Defaults to the selected option. */
++  /** Content of the toggle. Defaults to a string with badge count of selected options. */
+   toggleContent?: React.ReactNode;
++  /** Width of the toggle. */
++  toggleWidth?: string;
++  /** Additional props passed to the toggle. */
++  toggleProps?: MenuToggleProps;
+ }
+ 
+ const CheckboxSelectBase: React.FunctionComponent<CheckboxSelectProps> = ({
+@@ -38,6 +44,8 @@ const CheckboxSelectBase: React.FunctionComponent<CheckboxSelectProps> = ({
+   onSelect: passedOnSelect,
+   onToggle,
+   toggleContent,
++  toggleWidth = '200px',
++  toggleProps,
+   ...props
+ }: CheckboxSelectProps) => {
+   const [isOpen, setIsOpen] = React.useState(false);
+@@ -47,7 +55,7 @@ const CheckboxSelectBase: React.FunctionComponent<CheckboxSelectProps> = ({
+     const { content, value, ...props } = option;
+     const isSelected = selected.includes(`${value}`);
+     return (
+-      <SelectOption {...props} value={value} key={value} hasCheckbox isSelected={isSelected}>
++      <SelectOption value={value} key={value} hasCheckbox isSelected={isSelected} {...props}>
+         {content}
+       </SelectOption>
+     );
+@@ -83,9 +91,10 @@ const CheckboxSelectBase: React.FunctionComponent<CheckboxSelectProps> = ({
+       isDisabled={isDisabled}
+       style={
+         {
+-          width: '200px'
++          width: toggleWidth
+         } as React.CSSProperties
+       }
++      {...toggleProps}
+     >
+       {toggleContent || defaultToggleContent}
+     </MenuToggle>
+@@ -93,11 +102,13 @@ const CheckboxSelectBase: React.FunctionComponent<CheckboxSelectProps> = ({
+ 
+   return (
+     <Select
+-      id="checkbox-select"
+       isOpen={isOpen}
+       selected={selected}
+       onSelect={onSelect}
+-      onOpenChange={(isOpen) => setIsOpen(isOpen)}
++      onOpenChange={(isOpen) => {
++        onToggle && onToggle(isOpen);
++        setIsOpen(isOpen);
++      }}
+       toggle={toggle}
+       ref={innerRef}
+       role="menu"
+diff --git a/packages/react-templates/src/components/Select/SelectSimple.tsx b/packages/react-templates/src/components/Select/SimpleSelect.tsx
+similarity index 66%
+rename from packages/react-templates/src/components/Select/SelectSimple.tsx
+rename to packages/react-templates/src/components/Select/SimpleSelect.tsx
+index 2a5770f78..b473ce7dd 100644
+--- a/packages/react-templates/src/components/Select/SelectSimple.tsx
++++ b/packages/react-templates/src/components/Select/SimpleSelect.tsx
+@@ -1,19 +1,25 @@
+ import React from 'react';
+-import { Select, SelectList, SelectOption, SelectOptionProps } from '@patternfly/react-core/dist/esm/components/Select';
+-import { MenuToggle, MenuToggleElement } from '@patternfly/react-core/dist/esm/components/MenuToggle';
++import {
++  Select,
++  SelectList,
++  SelectOption,
++  SelectOptionProps,
++  SelectProps
++} from '@patternfly/react-core/dist/esm/components/Select';
++import { MenuToggle, MenuToggleElement, MenuToggleProps } from '@patternfly/react-core/dist/esm/components/MenuToggle';
+ 
+-export interface SelectSimpleOption extends Omit<SelectOptionProps, 'content'> {
++export interface SimpleSelectOption extends Omit<SelectOptionProps, 'content'> {
+   /** Content of the select option. */
+   content: React.ReactNode;
+   /** Value of the select option. */
+   value: string | number;
+ }
+ 
+-export interface SelectSimpleProps {
++export interface SimpleSelectProps extends Omit<SelectProps, 'toggle'> {
+   /** @hide Forwarded ref */
+   innerRef?: React.Ref<any>;
+   /** Initial options of the select. */
+-  initialOptions?: SelectSimpleOption[];
++  initialOptions?: SimpleSelectOption[];
+   /** Callback triggered on selection. */
+   onSelect?: (_event: React.MouseEvent<Element, MouseEvent>, selection: string | number) => void;
+   /** Callback triggered when the select opens or closes. */
+@@ -22,11 +28,13 @@ export interface SelectSimpleProps {
+   isDisabled?: boolean;
+   /** Content of the toggle. Defaults to the selected option. */
+   toggleContent?: React.ReactNode;
+-  /** Width of the toggle */
++  /** Width of the toggle. */
+   toggleWidth?: string;
++  /** Additional props passed to the toggle. */
++  toggleProps?: MenuToggleProps;
+ }
+ 
+-const SelectSimpleBase: React.FunctionComponent<SelectSimpleProps> = ({
++const SimpleSelectBase: React.FunctionComponent<SimpleSelectProps> = ({
+   innerRef,
+   initialOptions,
+   isDisabled,
+@@ -34,8 +42,9 @@ const SelectSimpleBase: React.FunctionComponent<SelectSimpleProps> = ({
+   onToggle,
+   toggleContent,
+   toggleWidth = '200px',
++  toggleProps,
+   ...props
+-}: SelectSimpleProps) => {
++}: SimpleSelectProps) => {
+   const [isOpen, setIsOpen] = React.useState(false);
+   const [selected, setSelected] = React.useState<string>('Select a value');
+ 
+@@ -43,7 +52,7 @@ const SelectSimpleBase: React.FunctionComponent<SelectSimpleProps> = ({
+     const { content, value, ...props } = option;
+     const isSelected = selected.includes(`${value}`);
+     return (
+-      <SelectOption {...props} value={value} key={value} isSelected={isSelected}>
++      <SelectOption value={value} key={value} isSelected={isSelected} {...props}>
+         {content}
+       </SelectOption>
+     );
+@@ -57,6 +66,7 @@ const SelectSimpleBase: React.FunctionComponent<SelectSimpleProps> = ({
+   const _onSelect = (_event: React.MouseEvent<Element, MouseEvent> | undefined, value: string | number | undefined) => {
+     onSelect && onSelect(_event, value);
+     setSelected(value as string);
++    onToggle && onToggle(!false);
+     setIsOpen(false);
+   };
+ 
+@@ -71,6 +81,7 @@ const SelectSimpleBase: React.FunctionComponent<SelectSimpleProps> = ({
+           width: toggleWidth
+         } as React.CSSProperties
+       }
++      {...toggleProps}
+     >
+       {toggleContent ? toggleContent : selected}
+     </MenuToggle>
+@@ -78,11 +89,13 @@ const SelectSimpleBase: React.FunctionComponent<SelectSimpleProps> = ({
+ 
+   return (
+     <Select
+-      id="single-select"
+       isOpen={isOpen}
+       selected={selected}
+       onSelect={_onSelect}
+-      onOpenChange={(isOpen) => setIsOpen(isOpen)}
++      onOpenChange={(isOpen) => {
++        onToggle && onToggle(isOpen);
++        setIsOpen(isOpen);
++      }}
+       toggle={toggle}
+       shouldFocusToggleOnSelect
+       ref={innerRef}
+@@ -93,8 +106,8 @@ const SelectSimpleBase: React.FunctionComponent<SelectSimpleProps> = ({
+   );
+ };
+ 
+-export const SelectSimple = React.forwardRef((props: SelectSimpleProps, ref: React.Ref<any>) => (
+-  <SelectSimpleBase {...props} innerRef={ref} />
++export const SimpleSelect = React.forwardRef((props: SimpleSelectProps, ref: React.Ref<any>) => (
++  <SimpleSelectBase {...props} innerRef={ref} />
+ ));
+ 
+-SelectSimple.displayName = 'SelectSimple';
++SimpleSelect.displayName = 'SimpleSelect';
+diff --git a/packages/react-templates/src/components/Select/TypeaheadSelect.tsx b/packages/react-templates/src/components/Select/TypeaheadSelect.tsx
+new file mode 100644
+index 000000000..eeb9bf37a
+--- /dev/null
++++ b/packages/react-templates/src/components/Select/TypeaheadSelect.tsx
+@@ -0,0 +1,326 @@
++import React from 'react';
++import {
++  Select,
++  SelectOption,
++  SelectList,
++  SelectOptionProps,
++  MenuToggle,
++  MenuToggleElement,
++  TextInputGroup,
++  TextInputGroupMain,
++  TextInputGroupUtilities,
++  Button,
++  MenuToggleProps,
++  SelectProps
++} from '@patternfly/react-core';
++import TimesIcon from '@patternfly/react-icons/dist/esm/icons/times-icon';
++
++export interface TypeaheadSelectOption extends Omit<SelectOptionProps, 'content'> {
++  /** Content of the select option. */
++  content: string | number;
++  /** Value of the select option. */
++  value: string | number;
++}
++
++export interface TypeaheadSelectProps extends Omit<SelectProps, 'toggle'> {
++  /** @hide Forwarded ref */
++  innerRef?: React.Ref<any>;
++  /** Initial options of the select. */
++  initialOptions: TypeaheadSelectOption[];
++  /** Callback triggered on selection. */
++  onSelect?: (
++    _event: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<HTMLInputElement>,
++    selection: string | number
++  ) => void;
++  /** Callback triggered when the select opens or closes. */
++  onToggle?: (nextIsOpen: boolean) => void;
++  /** Callback triggered when the text in the input field changes. */
++  onInputChange?: (newValue: string) => void;
++  /** Placeholder text for the select input. */
++  placeholder?: string;
++  /** Message to display when no options match the filter. */
++  noOptionsFoundMessage?: string | ((filter: string) => string);
++  /** Flag indicating the select should be disabled. */
++  isDisabled?: boolean;
++  /** Width of the toggle. */
++  toggleWidth?: string;
++  /** Additional props passed to the toggle. */
++  toggleProps?: MenuToggleProps;
++}
++
++export const TypeaheadSelectBase: React.FunctionComponent<TypeaheadSelectProps> = ({
++  innerRef,
++  initialOptions,
++  onSelect,
++  onToggle,
++  onInputChange,
++  placeholder = 'Select an option',
++  noOptionsFoundMessage = (filter) => `No results found for "${filter}"`,
++  isDisabled,
++  toggleWidth,
++  toggleProps,
++  ...props
++}: TypeaheadSelectProps) => {
++  const [isOpen, setIsOpen] = React.useState(false);
++  const [selected, setSelected] = React.useState<string>('');
++  const [inputValue, setInputValue] = React.useState<string>('');
++  const [filterValue, setFilterValue] = React.useState<string>('');
++  const [selectOptions, setSelectOptions] = React.useState<TypeaheadSelectOption[]>(initialOptions);
++  const [focusedItemIndex, setFocusedItemIndex] = React.useState<number | null>(null);
++  const [activeItemId, setActiveItemId] = React.useState<string | null>(null);
++  const textInputRef = React.useRef<HTMLInputElement>();
++
++  const NO_RESULTS = 'no results';
++
++  React.useEffect(() => {
++    let newSelectOptions: TypeaheadSelectOption[] = initialOptions;
++
++    // Filter menu items based on the text input value when one exists
++    if (filterValue) {
++      newSelectOptions = initialOptions.filter((option) =>
++        String(option.content).toLowerCase().includes(filterValue.toLowerCase())
++      );
++
++      // When no options are found after filtering, display 'No results found'
++      if (!newSelectOptions.length) {
++        newSelectOptions = [
++          {
++            isAriaDisabled: true,
++            content:
++              typeof noOptionsFoundMessage === 'string' ? noOptionsFoundMessage : noOptionsFoundMessage(filterValue),
++            value: NO_RESULTS
++          }
++        ];
++      }
++
++      // Open the menu when the input value changes and the new value is not empty
++      if (!isOpen) {
++        openMenu();
++      }
++    }
++
++    setSelectOptions(newSelectOptions);
++  }, [filterValue, initialOptions]);
++
++  const setActiveAndFocusedItem = (itemIndex: number) => {
++    setFocusedItemIndex(itemIndex);
++    const focusedItem = selectOptions[itemIndex];
++    setActiveItemId(focusedItem.value as string);
++  };
++
++  const resetActiveAndFocusedItem = () => {
++    setFocusedItemIndex(null);
++    setActiveItemId(null);
++  };
++
++  const openMenu = () => {
++    onToggle && onToggle(true);
++    setIsOpen(true);
++  };
++
++  const closeMenu = () => {
++    onToggle && onToggle(false);
++    setIsOpen(false);
++    resetActiveAndFocusedItem();
++  };
++
++  const onInputClick = () => {
++    if (!isOpen) {
++      openMenu();
++    } else if (!inputValue) {
++      closeMenu();
++    }
++  };
++
++  const selectOption = (
++    _event: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<HTMLInputElement> | undefined,
++    option: TypeaheadSelectOption
++  ) => {
++    onSelect && onSelect(_event, option.value);
++
++    setInputValue(String(option.content));
++    setFilterValue('');
++    setSelected(String(option.value));
++
++    closeMenu();
++  };
++
++  const _onSelect = (_event: React.MouseEvent<Element, MouseEvent> | undefined, value: string | number | undefined) => {
++    if (value && value !== NO_RESULTS) {
++      const optionToSelect = selectOptions.find((option) => option.value === value);
++      selectOption(_event, optionToSelect);
++    }
++  };
++
++  const onTextInputChange = (_event: React.FormEvent<HTMLInputElement>, value: string) => {
++    setInputValue(value);
++    onInputChange && onInputChange(value);
++    setFilterValue(value);
++
++    resetActiveAndFocusedItem();
++
++    if (value !== selected) {
++      setSelected('');
++    }
++  };
++
++  const handleMenuArrowKeys = (key: string) => {
++    let indexToFocus = 0;
++
++    if (!isOpen) {
++      openMenu();
++    }
++
++    if (selectOptions.every((option) => option.isDisabled)) {
++      return;
++    }
++
++    if (key === 'ArrowUp') {
++      // When no index is set or at the first index, focus to the last, otherwise decrement focus index
++      if (focusedItemIndex === null || focusedItemIndex === 0) {
++        indexToFocus = selectOptions.length - 1;
++      } else {
++        indexToFocus = focusedItemIndex - 1;
++      }
++
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus--;
++        if (indexToFocus === -1) {
++          indexToFocus = selectOptions.length - 1;
++        }
++      }
++    }
++
++    if (key === 'ArrowDown') {
++      // When no index is set or at the last index, focus to the first, otherwise increment focus index
++      if (focusedItemIndex === null || focusedItemIndex === selectOptions.length - 1) {
++        indexToFocus = 0;
++      } else {
++        indexToFocus = focusedItemIndex + 1;
++      }
++
++      // Skip disabled options
++      while (selectOptions[indexToFocus].isDisabled) {
++        indexToFocus++;
++        if (indexToFocus === selectOptions.length) {
++          indexToFocus = 0;
++        }
++      }
++    }
++
++    setActiveAndFocusedItem(indexToFocus);
++  };
++
++  const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
++    const focusedItem = focusedItemIndex !== null ? selectOptions[focusedItemIndex] : null;
++
++    switch (event.key) {
++      case 'Enter':
++        if (isOpen && focusedItem && focusedItem.value !== NO_RESULTS && !focusedItem.isAriaDisabled) {
++          selectOption(event, focusedItem);
++        }
++
++        if (!isOpen) {
++          onToggle && onToggle(true);
++          setIsOpen(true);
++        }
++
++        break;
++      case 'ArrowUp':
++      case 'ArrowDown':
++        event.preventDefault();
++        handleMenuArrowKeys(event.key);
++        break;
++    }
++  };
++
++  const onToggleClick = () => {
++    onToggle && onToggle(!isOpen);
++    setIsOpen(!isOpen);
++    textInputRef?.current?.focus();
++  };
++
++  const onClearButtonClick = () => {
++    setSelected('');
++    setInputValue('');
++    onInputChange && onInputChange('');
++    setFilterValue('');
++    resetActiveAndFocusedItem();
++    textInputRef?.current?.focus();
++  };
++
++  const toggle = (toggleRef: React.Ref<MenuToggleElement>) => (
++    <MenuToggle
++      ref={toggleRef}
++      variant="typeahead"
++      aria-label="Typeahead menu toggle"
++      onClick={onToggleClick}
++      isExpanded={isOpen}
++      isDisabled={isDisabled}
++      isFullWidth
++      style={
++        {
++          width: toggleWidth
++        } as React.CSSProperties
++      }
++      {...toggleProps}
++    >
++      <TextInputGroup isPlain>
++        <TextInputGroupMain
++          value={inputValue}
++          onClick={onInputClick}
++          onChange={onTextInputChange}
++          onKeyDown={onInputKeyDown}
++          autoComplete="off"
++          innerRef={textInputRef}
++          placeholder={placeholder}
++          {...(activeItemId && { 'aria-activedescendant': activeItemId })}
++          role="combobox"
++          isExpanded={isOpen}
++          aria-controls="select-typeahead-listbox"
++        />
++
++        <TextInputGroupUtilities {...(!inputValue ? { style: { display: 'none' } } : {})}>
++          <Button variant="plain" onClick={onClearButtonClick} aria-label="Clear input value">
++            <TimesIcon aria-hidden />
++          </Button>
++        </TextInputGroupUtilities>
++      </TextInputGroup>
++    </MenuToggle>
++  );
++
++  return (
++    <Select
++      isOpen={isOpen}
++      selected={selected}
++      onSelect={_onSelect}
++      onOpenChange={(isOpen) => {
++        !isOpen && closeMenu();
++      }}
++      toggle={toggle}
++      shouldFocusFirstItemOnOpen={false}
++      ref={innerRef}
++      {...props}
++    >
++      <SelectList>
++        {selectOptions.map((option, index) => {
++          const { content, value, ...props } = option;
++
++          return (
++            <SelectOption key={value} value={value} isFocused={focusedItemIndex === index} {...props}>
++              {content}
++            </SelectOption>
++          );
++        })}
++      </SelectList>
++    </Select>
++  );
++};
++TypeaheadSelectBase.displayName = 'TypeaheadSelectBase';
++
++export const TypeaheadSelect = React.forwardRef((props: TypeaheadSelectProps, ref: React.Ref<any>) => (
++  <TypeaheadSelectBase {...props} innerRef={ref} />
++));
++
++TypeaheadSelect.displayName = 'TypeaheadSelect';
+diff --git a/packages/react-templates/src/components/Select/examples/CheckboxSelectDemo.tsx b/packages/react-templates/src/components/Select/examples/CheckboxSelectDemo.tsx
+index 676bd9228..f096f1887 100644
+--- a/packages/react-templates/src/components/Select/examples/CheckboxSelectDemo.tsx
++++ b/packages/react-templates/src/components/Select/examples/CheckboxSelectDemo.tsx
+@@ -4,7 +4,7 @@ import { CheckboxSelect, CheckboxSelectOption } from '@patternfly/react-template
+ export const SelectBasic: React.FunctionComponent = () => {
+   const initialOptions: CheckboxSelectOption[] = [
+     { content: 'Option 1', value: 'option-1' },
+-    { content: 'Option 2', value: 'option-2' },
++    { content: 'Option 2', value: 'option-2', description: 'Option with description' },
+     { content: 'Option 3', value: 'option-3', isDisabled: true },
+     { content: 'Option 4', value: 'option-4' }
+   ];
+diff --git a/packages/react-templates/src/components/Select/examples/SelectTemplates.md b/packages/react-templates/src/components/Select/examples/SelectTemplates.md
+index db7af312d..237d67df5 100644
+--- a/packages/react-templates/src/components/Select/examples/SelectTemplates.md
++++ b/packages/react-templates/src/components/Select/examples/SelectTemplates.md
+@@ -4,25 +4,32 @@ section: components
+ subsection: menus
+ template: true
+ beta: true
+-propComponents: ['SelectSimple', 'CheckboxSelect']
++propComponents: ['SimpleSelect', 'CheckboxSelect', 'TypeaheadSelect']
+ ---
+ 
+ Note: Templates live in their own package at [@patternfly/react-templates](https://www.npmjs.com/package/@patternfly/react-templates)!
+ 
+ For custom use cases, please see the select component suite from [@patternfly/react-core](https://www.npmjs.com/package/@patternfly/react-core).
+ 
+-import { SelectOption, Checkbox } from '@patternfly/react-core';
+-import { SelectSimple, CheckboxSelect } from '@patternfly/react-templates';
++import { Checkbox } from '@patternfly/react-core';
++import { SimpleSelect, CheckboxSelect, TypeaheadSelect } from '@patternfly/react-templates';
+ 
+ ## Select template examples
+ 
+ ### Simple
+ 
+-```ts file="SelectSimpleDemo.tsx"
++```ts file="SimpleSelectDemo.tsx"
+ 
+ ```
+ 
+ ### Checkbox
+ 
+ ```ts file="CheckboxSelectDemo.tsx"
++
++```
++
++### Typeahead
++
++```ts file="TypeaheadSelectDemo.tsx"
++
+ ```
+diff --git a/packages/react-templates/src/components/Select/examples/SelectSimpleDemo.tsx b/packages/react-templates/src/components/Select/examples/SimpleSelectDemo.tsx
+similarity index 59%
+rename from packages/react-templates/src/components/Select/examples/SelectSimpleDemo.tsx
+rename to packages/react-templates/src/components/Select/examples/SimpleSelectDemo.tsx
+index da98bbcfc..3a2d67f27 100644
+--- a/packages/react-templates/src/components/Select/examples/SelectSimpleDemo.tsx
++++ b/packages/react-templates/src/components/Select/examples/SimpleSelectDemo.tsx
+@@ -1,14 +1,14 @@
+ import React from 'react';
+ import { Checkbox } from '@patternfly/react-core';
+-import { SelectSimple, SelectSimpleOption } from '@patternfly/react-templates';
++import { SimpleSelect, SimpleSelectOption } from '@patternfly/react-templates';
+ 
+ export const SelectSimpleDemo: React.FunctionComponent = () => {
+   const [isDisabled, setIsDisabled] = React.useState<boolean>(false);
+ 
+-  const initialOptions: SelectSimpleOption[] = [
+-    { content: 'Option 1', value: 'option1' },
+-    { content: 'Option 2', value: 'option2' },
+-    { content: 'Option 3', value: 'option3' }
++  const initialOptions: SimpleSelectOption[] = [
++    { content: 'Option 1', value: 'Option 1' },
++    { content: 'Option 2', value: 'Option 2', description: 'Option with description' },
++    { content: 'Option 3', value: 'Option 3' }
+   ];
+ 
+   return (
+@@ -20,7 +20,7 @@ export const SelectSimpleDemo: React.FunctionComponent = () => {
+         onChange={(_event, checked) => setIsDisabled(checked)}
+         style={{ marginBottom: 20 }}
+       />
+-      <SelectSimple initialOptions={initialOptions} isDisabled={isDisabled} />
++      <SimpleSelect initialOptions={initialOptions} isDisabled={isDisabled} />
+     </React.Fragment>
+   );
+ };
+diff --git a/packages/react-templates/src/components/Select/examples/TypeaheadSelectDemo.tsx b/packages/react-templates/src/components/Select/examples/TypeaheadSelectDemo.tsx
+new file mode 100644
+index 000000000..765fda790
+--- /dev/null
++++ b/packages/react-templates/src/components/Select/examples/TypeaheadSelectDemo.tsx
+@@ -0,0 +1,21 @@
++import React from 'react';
++import { TypeaheadSelect, TypeaheadSelectOption } from '@patternfly/react-templates';
++
++export const SelectTypeaheadDemo: React.FunctionComponent = () => {
++  const initialOptions: TypeaheadSelectOption[] = [
++    { content: 'Alabama', value: 'option1' },
++    { content: 'Florida', value: 'option2' },
++    { content: 'New Jersey', value: 'option3' },
++    { content: 'New Mexico', value: 'option4' },
++    { content: 'New York', value: 'option5' },
++    { content: 'North Carolina', value: 'option6' }
++  ];
++
++  return (
++    <TypeaheadSelect
++      initialOptions={initialOptions}
++      placeholder="Select a state"
++      noOptionsFoundMessage={(filter) => `No state was found for "${filter}"`}
++    />
++  );
++};
+diff --git a/packages/react-templates/src/components/Select/index.ts b/packages/react-templates/src/components/Select/index.ts
+index c8752c8fa..b5a5cb344 100644
+--- a/packages/react-templates/src/components/Select/index.ts
++++ b/packages/react-templates/src/components/Select/index.ts
+@@ -1,2 +1,3 @@
+-export * from './SelectSimple';
++export * from './SimpleSelect';
+ export * from './CheckboxSelect';
++export * from './TypeaheadSelect';
+diff --git a/packages/react-templates/src/components/index.ts b/packages/react-templates/src/components/index.ts
+index 7868ecbae..938364392 100644
+--- a/packages/react-templates/src/components/index.ts
++++ b/packages/react-templates/src/components/index.ts
+@@ -1 +1,2 @@
++export * from './Dropdown';
+ export * from './Select';

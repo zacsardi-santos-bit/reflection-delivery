@@ -1,0 +1,19 @@
+patching file crates/ide-diagnostics/src/tests.rs
+   Compiling ide-diagnostics v0.0.0 (/workspace/repo/crates/ide-diagnostics)
+warning: function `check_fix_with_disabled` is never used
+  --> crates/ide-diagnostics/src/tests.rs:43:15
+   |
+43 | pub(crate) fn check_fix_with_disabled(
+   |               ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ide-diagnostics` (lib test) generated 1 warning
+    Finished test [unoptimized] target(s) in 14.94s
+------------
+ Nextest run ID 78b69562-81ec-41a7-a8db-0f335bb69ddc with nextest profile: default
+    Starting 0 tests across 1 binary (358 tests skipped)
+------------
+     Summary [   0.002s] 0 tests run: 0 passed, 358 skipped
+error: no tests to run
+reward=0 graded=16 found=0 failed=0 parsed=0 framework=cargo exit_code=4

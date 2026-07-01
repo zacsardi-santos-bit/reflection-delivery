@@ -1,0 +1,296 @@
+patching file crates/ty_server/tests/e2e/main.rs
+patching file crates/ty_server/tests/e2e/pull_diagnostics.rs
+   Compiling ty_vendored v0.0.0 (/workspace/repo/crates/ty_vendored)
+   Compiling ty_project v0.0.0 (/workspace/repo/crates/ty_project)
+   Compiling ty_ide v0.0.0 (/workspace/repo/crates/ty_ide)
+   Compiling ty_server v0.0.0 (/workspace/repo/crates/ty_server)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 38.26s
+────────────
+ Nextest run ID 277c6929-31cb-4599-9898-b741a7dde95d with nextest profile: ci
+    Starting 16 tests across 2 binaries
+        PASS [   0.142s] ( 1/16) ty_server document::text_document::tests::redo_edit
+        PASS [   0.158s] ( 2/16) ty_server document::notebook::tests::swap_cells
+        PASS [   0.794s] ( 3/16) ty_server::e2e initialize::single_workspace_folder
+        PASS [   0.806s] ( 4/16) ty_server::e2e initialize::empty_workspace_folders
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_responds_on_change
+        SLOW [>  1.000s] (─────) ty_server::e2e publish_diagnostics::on_did_open
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::on_did_open
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_caching_unchanged_with_colon_in_path
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_caching
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::document_diagnostic_caching_unchanged
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_streaming_with_caching
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::document_diagnostic_caching_changed
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_suspend_change_suspend_cycle
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_responds_on_cancellation
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_streaming
+        SLOW [>  1.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_responds_on_shutdown
+        PASS [   1.424s] ( 5/16) ty_server::e2e pull_diagnostics::document_diagnostic_caching_changed
+        PASS [   1.434s] ( 6/16) ty_server::e2e pull_diagnostics::document_diagnostic_caching_unchanged
+        FAIL [   1.486s] ( 7/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_streaming_with_caching
+  stdout ───
+
+    running 1 test
+    test pull_diagnostics::workspace_diagnostic_streaming_with_caching ... FAILED
+
+    failures:
+
+    failures:
+        pull_diagnostics::workspace_diagnostic_streaming_with_caching
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 13 filtered out; finished in 1.30s
+
+  stderr ───
+    2026-06-29 15:30:14.361700316 DEBUG Architecture: x86_64, OS: linux, case-sensitive: case-sensitive
+    2026-06-29 15:30:14.441984006 DEBUG Received server response for request 1
+    2026-06-29 15:30:14.459711636 DEBUG Version: Unknown
+    2026-06-29 15:30:14.468761346 DEBUG Requesting workspace configuration for workspaces
+    2026-06-29 15:30:14.474820106 DEBUG Received server request workspace/configuration
+    2026-06-29 15:30:14.474950506  WARN The client does not support file system watching.
+    2026-06-29 15:30:14.474989766  INFO Retrying to receive `workspace/configuration` request
+    2026-06-29 15:30:14.484037866 DEBUG client_response{id=0 method="workspace/configuration"}: Received workspace configurations, initializing workspaces
+    2026-06-29 15:30:14.485656415 DEBUG Deferring `textDocument/didOpen` notification until all workspaces are initialized
+    2026-06-29 15:30:14.485778106 DEBUG Initializing workspace `file:///tmp/.tmpE1A150/src`
+    2026-06-29 15:30:14.487769326 DEBUG Searching for a project in '/tmp/.tmpE1A150/src'
+    2026-06-29 15:30:14.491025666 DEBUG The ancestor directories contain no `pyproject.toml`. Falling back to a virtual project.
+    2026-06-29 15:30:14.493007315 DEBUG Searching for a user-level configuration at `/root/.config/ty/ty.toml`
+    2026-06-29 15:30:14.570985225  INFO Defaulting to python-platform `linux`
+    2026-06-29 15:30:14.573120555 DEBUG Discovering virtual environment in `/tmp/.tmpE1A150/src`
+    2026-06-29 15:30:14.576085875 DEBUG No virtual environment found
+    2026-06-29 15:30:14.578059335 DEBUG Including `.` in `environment.root`
+    2026-06-29 15:30:14.581557095 DEBUG Adding first-party search path `/tmp/.tmpE1A150/src`
+    2026-06-29 15:30:14.582861915 DEBUG Using vendored stdlib
+    2026-06-29 15:30:14.600329725  INFO Python version: Python 3.13, platform: linux
+    2026-06-29 15:30:14.630061505 DEBUG Updating project to check all files
+    2026-06-29 15:30:14.638304874 DEBUG Processing deferred notification `textDocument/didOpen`
+    2026-06-29 15:30:14.689769914 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_0.py` to project `src`
+    2026-06-29 15:30:14.690172114 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_3.py` to project `src`
+    2026-06-29 15:30:14.690635834 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_2.py` to project `src`
+    2026-06-29 15:30:14.690951934 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_1.py` to project `src`
+    2026-06-29 15:30:14.691244774 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_5.py` to project `src`
+    2026-06-29 15:30:14.691596384 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_4.py` to project `src`
+    2026-06-29 15:30:14.691792854 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_6.py` to project `src`
+    2026-06-29 15:30:14.692194214 DEBUG notification{method="textDocument/didOpen"}: Opening file `/tmp/.tmpE1A150/src/error_0.py`
+    2026-06-29 15:30:14.692375914 DEBUG notification{method="textDocument/didOpen"}: Take open project files
+    2026-06-29 15:30:14.694139764 DEBUG notification{method="textDocument/didOpen"}:set_open_files{open_files={file(Id(c00))}}: Set open project files (count: 1)
+    2026-06-29 15:30:14.694997884 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Updating the revision of `/tmp/.tmpE1A150/src/error_1.py`
+    2026-06-29 15:30:14.695366404 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Updating the permissions of `/tmp/.tmpE1A150/src/error_1.py`
+    2026-06-29 15:30:14.696070714 DEBUG notification{method="textDocument/didOpen"}: Opening file `/tmp/.tmpE1A150/src/error_1.py`
+    2026-06-29 15:30:14.696220824 DEBUG notification{method="textDocument/didOpen"}: Take open project files
+    2026-06-29 15:30:14.696646444 DEBUG notification{method="textDocument/didOpen"}:set_open_files{open_files={file(Id(c03)), file(Id(c00))}}: Set open project files (count: 2)
+    2026-06-29 15:30:14.697059034 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Updating the revision of `/tmp/.tmpE1A150/src/error_2.py`
+    2026-06-29 15:30:14.697271744 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Updating the permissions of `/tmp/.tmpE1A150/src/error_2.py`
+    2026-06-29 15:30:14.697517984 DEBUG notification{method="textDocument/didOpen"}: Opening file `/tmp/.tmpE1A150/src/error_2.py`
+    2026-06-29 15:30:14.697599924 DEBUG notification{method="textDocument/didOpen"}: Take open project files
+    2026-06-29 15:30:14.697967834 DEBUG notification{method="textDocument/didOpen"}:set_open_files{open_files={file(Id(c02)), file(Id(c03)), file(Id(c00))}}: Set open project files (count: 3)
+    2026-06-29 15:30:14.701840524 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check: Checking all files in project 'src'
+    2026-06-29 15:30:14.728225534  INFO request{id=2 method="workspace/diagnostic"}:Project::check:Project::index_files{project=src}: Indexed 7 file(s) in 0.024s
+    2026-06-29 15:30:14.779721693 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c04))}: Checking file '/tmp/.tmpE1A150/src/error_5.py'
+    2026-06-29 15:30:14.779833653 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c02))}: Checking file '/tmp/.tmpE1A150/src/error_2.py'
+    2026-06-29 15:30:14.780203473 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c05))}: Checking file '/tmp/.tmpE1A150/src/error_4.py'
+    2026-06-29 15:30:14.779753583 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c00))}: Checking file '/tmp/.tmpE1A150/src/error_0.py'
+    2026-06-29 15:30:14.779983833 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c06))}: Checking file '/tmp/.tmpE1A150/src/error_6.py'
+    2026-06-29 15:30:14.780489413 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c03))}: Checking file '/tmp/.tmpE1A150/src/error_1.py'
+    2026-06-29 15:30:14.779977343 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c01))}: Checking file '/tmp/.tmpE1A150/src/error_3.py'
+    2026-06-29 15:30:15.491363604 DEBUG request{id=3 method="shutdown"}: Received shutdown request, waiting for exit notification
+    2026-06-29 15:30:15.492012914 DEBUG Received server response for request 3
+    2026-06-29 15:30:15.492699784 DEBUG Received exit notification, exiting
+    2026-06-29 15:30:15.530285833 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check: Checking all files took 0.800s
+    Error: Failed to receive message from server: timed out waiting on receive operation
+
+        FAIL [   1.486s] ( 8/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_streaming
+  stdout ───
+
+    running 1 test
+    test pull_diagnostics::workspace_diagnostic_streaming ... FAILED
+
+    failures:
+
+    failures:
+        pull_diagnostics::workspace_diagnostic_streaming
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 13 filtered out; finished in 1.31s
+
+  stderr ───
+    2026-06-29 15:30:14.361541716 DEBUG Architecture: x86_64, OS: linux, case-sensitive: case-sensitive
+    2026-06-29 15:30:14.442015086 DEBUG Received server response for request 1
+    2026-06-29 15:30:14.459168906 DEBUG Version: Unknown
+    2026-06-29 15:30:14.468256546 DEBUG Requesting workspace configuration for workspaces
+    2026-06-29 15:30:14.473200106 DEBUG Received server request workspace/configuration
+    2026-06-29 15:30:14.473380275  INFO Retrying to receive `workspace/configuration` request
+    2026-06-29 15:30:14.473429455  WARN The client does not support file system watching.
+    2026-06-29 15:30:14.483656926 DEBUG client_response{id=0 method="workspace/configuration"}: Received workspace configurations, initializing workspaces
+    2026-06-29 15:30:14.485087855 DEBUG Deferring `workspace/diagnostic` request until all workspaces are initialized
+    2026-06-29 15:30:14.485331586 DEBUG Initializing workspace `file:///tmp/.tmphOygIn/src`
+    2026-06-29 15:30:14.488025406 DEBUG Searching for a project in '/tmp/.tmphOygIn/src'
+    2026-06-29 15:30:14.491488415 DEBUG The ancestor directories contain no `pyproject.toml`. Falling back to a virtual project.
+    2026-06-29 15:30:14.493944475 DEBUG Searching for a user-level configuration at `/root/.config/ty/ty.toml`
+    2026-06-29 15:30:14.570984315  INFO Defaulting to python-platform `linux`
+    2026-06-29 15:30:14.573002985 DEBUG Discovering virtual environment in `/tmp/.tmphOygIn/src`
+    2026-06-29 15:30:14.577194695 DEBUG No virtual environment found
+    2026-06-29 15:30:14.580457335 DEBUG Including `.` in `environment.root`
+    2026-06-29 15:30:14.583248755 DEBUG Adding first-party search path `/tmp/.tmphOygIn/src`
+    2026-06-29 15:30:14.584254935 DEBUG Using vendored stdlib
+    2026-06-29 15:30:14.601101985  INFO Python version: Python 3.13, platform: linux
+    2026-06-29 15:30:14.630515385 DEBUG Updating project to check all files
+    2026-06-29 15:30:14.638360214 DEBUG Processing deferred request `workspace/diagnostic`
+    2026-06-29 15:30:14.643753354 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check: Checking all files in project 'src'
+    2026-06-29 15:30:14.678594574  INFO request{id=2 method="workspace/diagnostic"}:Project::check:Project::index_files{project=src}: Indexed 5 file(s) in 0.034s
+    2026-06-29 15:30:14.732213594 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c04))}: Checking file '/tmp/.tmphOygIn/src/file_003.py'
+    2026-06-29 15:30:14.732425354 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c00))}: Checking file '/tmp/.tmphOygIn/src/file_000.py'
+    2026-06-29 15:30:14.732307964 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c02))}: Checking file '/tmp/.tmphOygIn/src/file_001.py'
+    2026-06-29 15:30:14.732292914 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c01))}: Checking file '/tmp/.tmphOygIn/src/file_002.py'
+    2026-06-29 15:30:14.732141744 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c03))}: Checking file '/tmp/.tmphOygIn/src/file_004.py'
+    2026-06-29 15:30:15.489614864 DEBUG request{id=3 method="shutdown"}: Received shutdown request, waiting for exit notification
+    2026-06-29 15:30:15.490322064 DEBUG Received server response for request 3
+    2026-06-29 15:30:15.490635924 DEBUG Received exit notification, exiting
+    2026-06-29 15:30:15.532532553 ERROR request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c03))}: Failed to send notification `$/progress` because the client sender is closed: sending on a disconnected channel
+    2026-06-29 15:30:15.534227823 ERROR request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c01))}: Failed to send notification `$/progress` because the client sender is closed: sending on a disconnected channel
+    2026-06-29 15:30:15.535041423 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check: Checking all files took 0.854s
+    Error: Failed to receive message from server: timed out waiting on receive operation
+
+        PASS [   1.627s] ( 9/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_responds_on_shutdown
+        PASS [   1.660s] (10/16) ty_server::e2e pull_diagnostics::on_did_open
+        PASS [   1.665s] (11/16) ty_server::e2e publish_diagnostics::on_did_open
+        PASS [   1.691s] (12/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_responds_on_cancellation
+        PASS [   1.713s] (13/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_responds_on_change
+        PASS [   1.740s] (14/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_caching
+        SLOW [>  2.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_caching_unchanged_with_colon_in_path
+        SLOW [>  2.000s] (─────) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_suspend_change_suspend_cycle
+        PASS [   2.562s] (15/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_caching_unchanged_with_colon_in_path
+        PASS [   2.637s] (16/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_suspend_change_suspend_cycle
+────────────
+     Summary [   2.643s] 16 tests run: 14 passed (10 slow), 2 failed, 0 skipped
+        SLOW [   1.424s] ( 5/16) ty_server::e2e pull_diagnostics::document_diagnostic_caching_changed
+        SLOW [   1.434s] ( 6/16) ty_server::e2e pull_diagnostics::document_diagnostic_caching_unchanged
+        SLOW [   1.627s] ( 9/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_responds_on_shutdown
+        SLOW [   1.660s] (10/16) ty_server::e2e pull_diagnostics::on_did_open
+        SLOW [   1.665s] (11/16) ty_server::e2e publish_diagnostics::on_did_open
+        SLOW [   1.691s] (12/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_responds_on_cancellation
+        SLOW [   1.713s] (13/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_responds_on_change
+        SLOW [   1.740s] (14/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_caching
+        SLOW [   2.562s] (15/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_caching_unchanged_with_colon_in_path
+        SLOW [   2.637s] (16/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_long_polling_suspend_change_suspend_cycle
+        FAIL [   1.486s] ( 7/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_streaming_with_caching
+  stdout ───
+
+    running 1 test
+    test pull_diagnostics::workspace_diagnostic_streaming_with_caching ... FAILED
+
+    failures:
+
+    failures:
+        pull_diagnostics::workspace_diagnostic_streaming_with_caching
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 13 filtered out; finished in 1.30s
+
+  stderr ───
+    2026-06-29 15:30:14.361700316 DEBUG Architecture: x86_64, OS: linux, case-sensitive: case-sensitive
+    2026-06-29 15:30:14.441984006 DEBUG Received server response for request 1
+    2026-06-29 15:30:14.459711636 DEBUG Version: Unknown
+    2026-06-29 15:30:14.468761346 DEBUG Requesting workspace configuration for workspaces
+    2026-06-29 15:30:14.474820106 DEBUG Received server request workspace/configuration
+    2026-06-29 15:30:14.474950506  WARN The client does not support file system watching.
+    2026-06-29 15:30:14.474989766  INFO Retrying to receive `workspace/configuration` request
+    2026-06-29 15:30:14.484037866 DEBUG client_response{id=0 method="workspace/configuration"}: Received workspace configurations, initializing workspaces
+    2026-06-29 15:30:14.485656415 DEBUG Deferring `textDocument/didOpen` notification until all workspaces are initialized
+    2026-06-29 15:30:14.485778106 DEBUG Initializing workspace `file:///tmp/.tmpE1A150/src`
+    2026-06-29 15:30:14.487769326 DEBUG Searching for a project in '/tmp/.tmpE1A150/src'
+    2026-06-29 15:30:14.491025666 DEBUG The ancestor directories contain no `pyproject.toml`. Falling back to a virtual project.
+    2026-06-29 15:30:14.493007315 DEBUG Searching for a user-level configuration at `/root/.config/ty/ty.toml`
+    2026-06-29 15:30:14.570985225  INFO Defaulting to python-platform `linux`
+    2026-06-29 15:30:14.573120555 DEBUG Discovering virtual environment in `/tmp/.tmpE1A150/src`
+    2026-06-29 15:30:14.576085875 DEBUG No virtual environment found
+    2026-06-29 15:30:14.578059335 DEBUG Including `.` in `environment.root`
+    2026-06-29 15:30:14.581557095 DEBUG Adding first-party search path `/tmp/.tmpE1A150/src`
+    2026-06-29 15:30:14.582861915 DEBUG Using vendored stdlib
+    2026-06-29 15:30:14.600329725  INFO Python version: Python 3.13, platform: linux
+    2026-06-29 15:30:14.630061505 DEBUG Updating project to check all files
+    2026-06-29 15:30:14.638304874 DEBUG Processing deferred notification `textDocument/didOpen`
+    2026-06-29 15:30:14.689769914 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_0.py` to project `src`
+    2026-06-29 15:30:14.690172114 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_3.py` to project `src`
+    2026-06-29 15:30:14.690635834 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_2.py` to project `src`
+    2026-06-29 15:30:14.690951934 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_1.py` to project `src`
+    2026-06-29 15:30:14.691244774 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_5.py` to project `src`
+    2026-06-29 15:30:14.691596384 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_4.py` to project `src`
+    2026-06-29 15:30:14.691792854 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Adding file `/tmp/.tmpE1A150/src/error_6.py` to project `src`
+    2026-06-29 15:30:14.692194214 DEBUG notification{method="textDocument/didOpen"}: Opening file `/tmp/.tmpE1A150/src/error_0.py`
+    2026-06-29 15:30:14.692375914 DEBUG notification{method="textDocument/didOpen"}: Take open project files
+    2026-06-29 15:30:14.694139764 DEBUG notification{method="textDocument/didOpen"}:set_open_files{open_files={file(Id(c00))}}: Set open project files (count: 1)
+    2026-06-29 15:30:14.694997884 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Updating the revision of `/tmp/.tmpE1A150/src/error_1.py`
+    2026-06-29 15:30:14.695366404 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Updating the permissions of `/tmp/.tmpE1A150/src/error_1.py`
+    2026-06-29 15:30:14.696070714 DEBUG notification{method="textDocument/didOpen"}: Opening file `/tmp/.tmpE1A150/src/error_1.py`
+    2026-06-29 15:30:14.696220824 DEBUG notification{method="textDocument/didOpen"}: Take open project files
+    2026-06-29 15:30:14.696646444 DEBUG notification{method="textDocument/didOpen"}:set_open_files{open_files={file(Id(c03)), file(Id(c00))}}: Set open project files (count: 2)
+    2026-06-29 15:30:14.697059034 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Updating the revision of `/tmp/.tmpE1A150/src/error_2.py`
+    2026-06-29 15:30:14.697271744 DEBUG notification{method="textDocument/didOpen"}:apply_changes: Updating the permissions of `/tmp/.tmpE1A150/src/error_2.py`
+    2026-06-29 15:30:14.697517984 DEBUG notification{method="textDocument/didOpen"}: Opening file `/tmp/.tmpE1A150/src/error_2.py`
+    2026-06-29 15:30:14.697599924 DEBUG notification{method="textDocument/didOpen"}: Take open project files
+    2026-06-29 15:30:14.697967834 DEBUG notification{method="textDocument/didOpen"}:set_open_files{open_files={file(Id(c02)), file(Id(c03)), file(Id(c00))}}: Set open project files (count: 3)
+    2026-06-29 15:30:14.701840524 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check: Checking all files in project 'src'
+    2026-06-29 15:30:14.728225534  INFO request{id=2 method="workspace/diagnostic"}:Project::check:Project::index_files{project=src}: Indexed 7 file(s) in 0.024s
+    2026-06-29 15:30:14.779721693 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c04))}: Checking file '/tmp/.tmpE1A150/src/error_5.py'
+    2026-06-29 15:30:14.779833653 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c02))}: Checking file '/tmp/.tmpE1A150/src/error_2.py'
+    2026-06-29 15:30:14.780203473 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c05))}: Checking file '/tmp/.tmpE1A150/src/error_4.py'
+    2026-06-29 15:30:14.779753583 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c00))}: Checking file '/tmp/.tmpE1A150/src/error_0.py'
+    2026-06-29 15:30:14.779983833 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c06))}: Checking file '/tmp/.tmpE1A150/src/error_6.py'
+    2026-06-29 15:30:14.780489413 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c03))}: Checking file '/tmp/.tmpE1A150/src/error_1.py'
+    2026-06-29 15:30:14.779977343 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c01))}: Checking file '/tmp/.tmpE1A150/src/error_3.py'
+    2026-06-29 15:30:15.491363604 DEBUG request{id=3 method="shutdown"}: Received shutdown request, waiting for exit notification
+    2026-06-29 15:30:15.492012914 DEBUG Received server response for request 3
+    2026-06-29 15:30:15.492699784 DEBUG Received exit notification, exiting
+    2026-06-29 15:30:15.530285833 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check: Checking all files took 0.800s
+    Error: Failed to receive message from server: timed out waiting on receive operation
+
+        FAIL [   1.486s] ( 8/16) ty_server::e2e pull_diagnostics::workspace_diagnostic_streaming
+  stdout ───
+
+    running 1 test
+    test pull_diagnostics::workspace_diagnostic_streaming ... FAILED
+
+    failures:
+
+    failures:
+        pull_diagnostics::workspace_diagnostic_streaming
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 13 filtered out; finished in 1.31s
+
+  stderr ───
+    2026-06-29 15:30:14.361541716 DEBUG Architecture: x86_64, OS: linux, case-sensitive: case-sensitive
+    2026-06-29 15:30:14.442015086 DEBUG Received server response for request 1
+    2026-06-29 15:30:14.459168906 DEBUG Version: Unknown
+    2026-06-29 15:30:14.468256546 DEBUG Requesting workspace configuration for workspaces
+    2026-06-29 15:30:14.473200106 DEBUG Received server request workspace/configuration
+    2026-06-29 15:30:14.473380275  INFO Retrying to receive `workspace/configuration` request
+    2026-06-29 15:30:14.473429455  WARN The client does not support file system watching.
+    2026-06-29 15:30:14.483656926 DEBUG client_response{id=0 method="workspace/configuration"}: Received workspace configurations, initializing workspaces
+    2026-06-29 15:30:14.485087855 DEBUG Deferring `workspace/diagnostic` request until all workspaces are initialized
+    2026-06-29 15:30:14.485331586 DEBUG Initializing workspace `file:///tmp/.tmphOygIn/src`
+    2026-06-29 15:30:14.488025406 DEBUG Searching for a project in '/tmp/.tmphOygIn/src'
+    2026-06-29 15:30:14.491488415 DEBUG The ancestor directories contain no `pyproject.toml`. Falling back to a virtual project.
+    2026-06-29 15:30:14.493944475 DEBUG Searching for a user-level configuration at `/root/.config/ty/ty.toml`
+    2026-06-29 15:30:14.570984315  INFO Defaulting to python-platform `linux`
+    2026-06-29 15:30:14.573002985 DEBUG Discovering virtual environment in `/tmp/.tmphOygIn/src`
+    2026-06-29 15:30:14.577194695 DEBUG No virtual environment found
+    2026-06-29 15:30:14.580457335 DEBUG Including `.` in `environment.root`
+    2026-06-29 15:30:14.583248755 DEBUG Adding first-party search path `/tmp/.tmphOygIn/src`
+    2026-06-29 15:30:14.584254935 DEBUG Using vendored stdlib
+    2026-06-29 15:30:14.601101985  INFO Python version: Python 3.13, platform: linux
+    2026-06-29 15:30:14.630515385 DEBUG Updating project to check all files
+    2026-06-29 15:30:14.638360214 DEBUG Processing deferred request `workspace/diagnostic`
+    2026-06-29 15:30:14.643753354 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check: Checking all files in project 'src'
+    2026-06-29 15:30:14.678594574  INFO request{id=2 method="workspace/diagnostic"}:Project::check:Project::index_files{project=src}: Indexed 5 file(s) in 0.034s
+    2026-06-29 15:30:14.732213594 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c04))}: Checking file '/tmp/.tmphOygIn/src/file_003.py'
+    2026-06-29 15:30:14.732425354 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c00))}: Checking file '/tmp/.tmphOygIn/src/file_000.py'
+    2026-06-29 15:30:14.732307964 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c02))}: Checking file '/tmp/.tmphOygIn/src/file_001.py'
+    2026-06-29 15:30:14.732292914 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c01))}: Checking file '/tmp/.tmphOygIn/src/file_002.py'
+    2026-06-29 15:30:14.732141744 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c03))}: Checking file '/tmp/.tmphOygIn/src/file_004.py'
+    2026-06-29 15:30:15.489614864 DEBUG request{id=3 method="shutdown"}: Received shutdown request, waiting for exit notification
+    2026-06-29 15:30:15.490322064 DEBUG Received server response for request 3
+    2026-06-29 15:30:15.490635924 DEBUG Received exit notification, exiting
+    2026-06-29 15:30:15.532532553 ERROR request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c03))}: Failed to send notification `$/progress` because the client sender is closed: sending on a disconnected channel
+    2026-06-29 15:30:15.534227823 ERROR request{id=2 method="workspace/diagnostic"}:Project::check:check_file{file=file(Id(c01))}: Failed to send notification `$/progress` because the client sender is closed: sending on a disconnected channel
+    2026-06-29 15:30:15.535041423 DEBUG request{id=2 method="workspace/diagnostic"}:Project::check: Checking all files took 0.854s
+    Error: Failed to receive message from server: timed out waiting on receive operation
+
+error: test run failed
+reward=0 graded=16 found=6 failed=1 parsed=16 framework=cargo exit_code=100

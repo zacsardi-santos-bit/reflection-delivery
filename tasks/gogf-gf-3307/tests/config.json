@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "service mariadb start && cd /workspace/repo/cmd/gf && go test ./internal/cmd -count=1 -run Test_Gen_Dao_Issue2616 -v",
+  "test_files": [
+    "cmd/gf/internal/cmd/cmd_z_unit_gen_dao_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/gogf/gf/cmd/gf/v2/internal/cmd::Test_Gen_Dao_Issue2616"
+  ],
+  "PASS_TO_PASS": []
+}

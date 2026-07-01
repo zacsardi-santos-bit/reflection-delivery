@@ -1,0 +1,17 @@
+patching file .rubocop.yml
+patching file NEWS.md
+patching file app/controllers/doorkeeper/applications_controller.rb
+patching file app/controllers/doorkeeper/tokens_controller.rb
+patching file app/views/doorkeeper/applications/_form.html.erb
+patching file app/views/doorkeeper/applications/index.html.erb
+patching file app/views/doorkeeper/applications/show.html.erb
+patching file config/locales/en.yml
+patching file doorkeeper.gemspec
+patching file lib/doorkeeper/models/application_mixin.rb
+patching file lib/doorkeeper/oauth/client/credentials.rb
+patching file lib/doorkeeper/orm/active_record/application.rb
+patching file lib/doorkeeper/request/password.rb
+patching file lib/doorkeeper/version.rb
+patching file lib/generators/doorkeeper/add_client_confidentiality_generator.rb
+patching file lib/generators/doorkeeper/templates/add_confidential_to_application_migration.rb.erb
+patching file lib/generators/doorkeeper/templates/migration.rb.erb

@@ -1,0 +1,31 @@
+patching file 'clients/apps/web/src/app/(topbar)/checkout/success/page.tsx' (renamed from clients/apps/web/src/app/(topbar)/subscribe/success/page.tsx)
+patching file 'clients/apps/web/src/app/[organization]/(sidebar)/donate/status/ClientPage.tsx'
+patching file 'clients/apps/web/src/app/[organization]/(sidebar)/subscriptions/ClientPage.tsx'
+patching file 'clients/apps/web/src/app/[organization]/subscribe/ClientPage.tsx'
+patching file clients/apps/web/src/app/api/checkout/route.ts (renamed from clients/apps/web/src/app/api/subscribe/route.ts)
+patching file clients/apps/web/src/components/Checkout/CheckoutCelebration.tsx (renamed from clients/apps/web/src/components/Subscriptions/SubscriptionTierCelebration.tsx)
+patching file clients/apps/web/src/components/Checkout/CheckoutSuccess.tsx (renamed from clients/apps/web/src/components/Subscriptions/SubscriptionSuccess.tsx)
+patching file clients/apps/web/src/components/Organization/FreeTierSubscribe.tsx
+patching file clients/apps/web/src/components/Profile/HighlightedTiersEditor/HighlightedTiersEditor.tsx
+patching file clients/apps/web/src/components/Profile/SubscriptionTierEditor/DraggableSubscriptionTierCard.tsx
+patching file clients/apps/web/src/components/Subscriptions/SubscribeNowWithModal.tsx
+patching file clients/apps/web/src/components/Subscriptions/SubscriptionTierSubscribeButton.tsx
+patching file clients/apps/web/src/stories/CheckoutSuccess.stories.tsx (renamed from clients/apps/web/src/stories/SubscriptionSuccess.stories.tsx)
+patching file clients/packages/sdk/src/client/.openapi-generator/FILES
+patching file clients/packages/sdk/src/client/PolarAPI.ts
+patching file clients/packages/sdk/src/client/apis/CheckoutsApi.ts
+patching file clients/packages/sdk/src/client/apis/SubscriptionsApi.ts
+patching file clients/packages/sdk/src/client/apis/index.ts
+patching file clients/packages/sdk/src/client/models/index.ts
+patching file server/polar/api.py
+patching file server/polar/checkout/__init__.py
+patching file server/polar/checkout/auth.py
+patching file server/polar/checkout/endpoints.py
+patching file server/polar/checkout/schemas.py
+patching file server/polar/checkout/service.py
+patching file server/polar/integrations/stripe/service.py
+patching file server/polar/models/product_price.py
+patching file server/polar/product/service/product_price.py
+patching file server/polar/subscription/endpoints.py
+patching file server/polar/subscription/schemas.py
+patching file server/polar/subscription/service/subscribe_session.py

@@ -1,0 +1,43 @@
+patching file packages/manager/src/components/MaskableText/MaskableText.test.tsx
+patching file packages/manager/src/components/OrderBy.test.tsx
+patching file packages/manager/src/features/Profile/Settings/MaskSensitiveData.test.tsx
+patching file packages/manager/src/features/Profile/Settings/Notifications.test.tsx
+patching file packages/manager/src/features/Profile/Settings/Theme.test.tsx
+patching file packages/manager/src/features/Profile/Settings/TypeToConfirm.test.tsx
+
+ RUN  v2.1.1 /workspace/repo/packages/manager
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+stderr | src/features/Profile/Settings/TypeToConfirm.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/components/OrderBy.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/features/Profile/Settings/MaskSensitiveData.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/components/MaskableText/MaskableText.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/features/Profile/Settings/Theme.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/features/Profile/Settings/Notifications.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+ ✓ src/components/MaskableText/MaskableText.test.tsx  (4 tests) 148ms
+ ✓ src/components/OrderBy.test.tsx  (9 tests) 111ms
+ ✓ src/features/Profile/Settings/Notifications.test.tsx  (3 tests) 222ms
+ ✓ src/features/Profile/Settings/TypeToConfirm.test.tsx  (4 tests) 342ms
+ ✓ src/features/Profile/Settings/MaskSensitiveData.test.tsx  (4 tests) 370ms
+ ✓ src/features/Profile/Settings/Theme.test.tsx  (5 tests) 412ms
+
+ Test Files  6 passed (6)
+      Tests  29 passed (29)
+   Start at  15:28:26
+   Duration  14.73s (transform 3.72s, setup 17.51s, collect 57.81s, tests 1.60s, environment 6.06s, prepare 1.45s)
+
+reward=1 graded=29 found=0 failed=0 parsed=0 framework=vitest exit_code=0

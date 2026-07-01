@@ -1,0 +1,23 @@
+{
+ "task": "chainguard-images-images-2276",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'module \"grafana-agent-operator\" { source = \"./images/grafana-agent-operator\" ...}' to main.tf plus full image dir; F2P TestMatrix, TestReadme/render_readme, TestScaffoldSortModules/sort_modules_in_main.tf, TestLinter_Rules"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

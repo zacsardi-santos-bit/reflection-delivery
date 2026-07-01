@@ -1,0 +1,23 @@
+{
+ "task": "zcashfoundation-zebra-8293",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'pub const MAX_KEYS_PER_REQUEST: usize = 10;' plus empty/max validation to all four scanner ops; test asserts 'tonic::Code::InvalidArgument' for empty and 11-key requests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

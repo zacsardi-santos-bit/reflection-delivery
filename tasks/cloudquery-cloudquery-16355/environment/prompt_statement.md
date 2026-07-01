@@ -1,0 +1,5 @@
+I'm working on the AliCloud source plugin and I need to add proper validation to the plugin's configuration specification. Right now, the spec is just a data structure with no validation logic — if someone provides an empty account list, or forgets to include an access key or region, the plugin doesn't complain at configuration time and only fails later in an unhelpful way.
+
+I'd like to add a method that validates the spec and returns an error if anything required is missing or empty. The validation should check that there is at least one account configured, and for each account it should verify that the account name, regions list, access key, and secret key are all non-empty. An empty or null accounts list should also be an error.
+
+In addition, I'd like a machine-readable schema for the plugin's configuration to be embedded and exposed, so that tools can validate configurations against the defined structure. The schema should enforce the same constraints as the validation logic — required fields must be present and non-empty, and the accounts list must have at least one entry.

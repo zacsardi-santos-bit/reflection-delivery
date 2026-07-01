@@ -1,0 +1,28 @@
+patching file crates/primitives/src/snapshot/segment.rs
+   Compiling reth-primitives v0.1.0-alpha.16 (/workspace/repo/crates/primitives)
+error[E0061]: this method takes 2 arguments but 1 argument was supplied
+   --> crates/primitives/src/snapshot/segment.rs:206:42
+    |
+206 |         let _ = SnapshotSegment::Headers.filename(&(2_u64..=30_u64));
+    |                                          ^^^^^^^^------------------- an argument of type `&RangeInclusive<u64>` is missing
+    |
+note: method defined here
+   --> crates/primitives/src/snapshot/segment.rs:59:12
+    |
+59  |     pub fn filename(
+    |            ^^^^^^^^
+60  |         &self,
+61  |         block_range: &RangeInclusive<BlockNumber>,
+    |         -----------------------------------------
+62  |         tx_range: &RangeInclusive<TxNumber>,
+    |         -----------------------------------
+help: provide the argument
+    |
+206 |         let _ = SnapshotSegment::Headers.filename(&(2_u64..=30_u64), /* &RangeInclusive<u64> */);
+    |                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For more information about this error, try `rustc --explain E0061`.
+error: could not compile `reth-primitives` (lib test) due to previous error
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.75.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package reth-primitives` exited with code 101
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=cargo exit_code=101

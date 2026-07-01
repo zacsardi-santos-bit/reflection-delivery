@@ -1,0 +1,915 @@
+patching file tests/contrib/funsor/test_infer_discrete.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: cov-7.1.0
+collecting ... collected 12 items
+
+tests/contrib/funsor/test_infer_discrete.py::test_hmm_smoke[1] FAILED    [  8%]
+tests/contrib/funsor/test_infer_discrete.py::test_hmm_smoke[2] FAILED    [ 16%]
+tests/contrib/funsor/test_infer_discrete.py::test_hmm_smoke[10] FAILED   [ 25%]
+tests/contrib/funsor/test_infer_discrete.py::test_hmm_smoke[100] FAILED  [ 33%]
+tests/contrib/funsor/test_infer_discrete.py::test_distribution_1 FAILED  [ 41%]
+tests/contrib/funsor/test_infer_discrete.py::test_distribution_2 FAILED  [ 50%]
+tests/contrib/funsor/test_infer_discrete.py::test_distribution_3_simple FAILED [ 58%]
+tests/contrib/funsor/test_infer_discrete.py::test_distribution_3 FAILED  [ 66%]
+tests/contrib/funsor/test_infer_discrete.py::test_svi_model_side_enumeration[model_zzxx] FAILED [ 75%]
+tests/contrib/funsor/test_infer_discrete.py::test_svi_model_side_enumeration[model2] FAILED [ 83%]
+tests/contrib/funsor/test_infer_discrete.py::test_mcmc_model_side_enumeration[model_zzxx] FAILED [ 91%]
+tests/contrib/funsor/test_infer_discrete.py::test_mcmc_model_side_enumeration[model2] FAILED [100%]
+
+=================================== FAILURES ===================================
+______________________________ test_hmm_smoke[1] _______________________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+length = 1
+
+    @pytest.mark.parametrize('length', [1, 2, 10, 100])
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    def test_hmm_smoke(length):
+    
+        # This should match the example in the infer_discrete docstring.
+        def hmm(data, hidden_dim=10):
+            transition = 0.3 / hidden_dim + 0.7 * torch.eye(hidden_dim)
+            means = torch.arange(float(hidden_dim))
+            states = [0]
+            for t in pyro.markov(range(len(data))):
+                states.append(pyro.sample("states_{}".format(t),
+                                          dist.Categorical(transition[states[-1]])))
+                data[t] = pyro.sample("obs_{}".format(t),
+                                      dist.Normal(means[states[-1]], 1.),
+                                      obs=data[t])
+            return states, data
+    
+        true_states, data = hmm([None] * length)
+        assert len(data) == length
+        assert len(true_states) == 1 + len(data)
+    
+>       decoder = infer.infer_discrete(infer.config_enumerate(hmm))
+                  ^^^^^^^^^^^^^^^^^^^^
+
+tests/contrib/funsor/test_infer_discrete.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+______________________________ test_hmm_smoke[2] _______________________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+length = 2
+
+    @pytest.mark.parametrize('length', [1, 2, 10, 100])
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    def test_hmm_smoke(length):
+    
+        # This should match the example in the infer_discrete docstring.
+        def hmm(data, hidden_dim=10):
+            transition = 0.3 / hidden_dim + 0.7 * torch.eye(hidden_dim)
+            means = torch.arange(float(hidden_dim))
+            states = [0]
+            for t in pyro.markov(range(len(data))):
+                states.append(pyro.sample("states_{}".format(t),
+                                          dist.Categorical(transition[states[-1]])))
+                data[t] = pyro.sample("obs_{}".format(t),
+                                      dist.Normal(means[states[-1]], 1.),
+                                      obs=data[t])
+            return states, data
+    
+        true_states, data = hmm([None] * length)
+        assert len(data) == length
+        assert len(true_states) == 1 + len(data)
+    
+>       decoder = infer.infer_discrete(infer.config_enumerate(hmm))
+                  ^^^^^^^^^^^^^^^^^^^^
+
+tests/contrib/funsor/test_infer_discrete.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+______________________________ test_hmm_smoke[10] ______________________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+length = 10
+
+    @pytest.mark.parametrize('length', [1, 2, 10, 100])
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    def test_hmm_smoke(length):
+    
+        # This should match the example in the infer_discrete docstring.
+        def hmm(data, hidden_dim=10):
+            transition = 0.3 / hidden_dim + 0.7 * torch.eye(hidden_dim)
+            means = torch.arange(float(hidden_dim))
+            states = [0]
+            for t in pyro.markov(range(len(data))):
+                states.append(pyro.sample("states_{}".format(t),
+                                          dist.Categorical(transition[states[-1]])))
+                data[t] = pyro.sample("obs_{}".format(t),
+                                      dist.Normal(means[states[-1]], 1.),
+                                      obs=data[t])
+            return states, data
+    
+        true_states, data = hmm([None] * length)
+        assert len(data) == length
+        assert len(true_states) == 1 + len(data)
+    
+>       decoder = infer.infer_discrete(infer.config_enumerate(hmm))
+                  ^^^^^^^^^^^^^^^^^^^^
+
+tests/contrib/funsor/test_infer_discrete.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+_____________________________ test_hmm_smoke[100] ______________________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+length = 100
+
+    @pytest.mark.parametrize('length', [1, 2, 10, 100])
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    def test_hmm_smoke(length):
+    
+        # This should match the example in the infer_discrete docstring.
+        def hmm(data, hidden_dim=10):
+            transition = 0.3 / hidden_dim + 0.7 * torch.eye(hidden_dim)
+            means = torch.arange(float(hidden_dim))
+            states = [0]
+            for t in pyro.markov(range(len(data))):
+                states.append(pyro.sample("states_{}".format(t),
+                                          dist.Categorical(transition[states[-1]])))
+                data[t] = pyro.sample("obs_{}".format(t),
+                                      dist.Normal(means[states[-1]], 1.),
+                                      obs=data[t])
+            return states, data
+    
+        true_states, data = hmm([None] * length)
+        assert len(data) == length
+        assert len(true_states) == 1 + len(data)
+    
+>       decoder = infer.infer_discrete(infer.config_enumerate(hmm))
+                  ^^^^^^^^^^^^^^^^^^^^
+
+tests/contrib/funsor/test_infer_discrete.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+_____________________________ test_distribution_1 ______________________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    def test_distribution_1():
+        #      +-------+
+        #  z --|--> x  |
+        #      +-------+
+        data = torch.tensor([1., 2., 3.])
+    
+        @infer.config_enumerate
+        def model(z=None):
+            p = pyro.param("p", torch.tensor([0.75, 0.25]))
+            iz = pyro.sample("z", dist.Categorical(p), obs=z)
+            z = torch.tensor([0., 1.])[iz]
+            logger.info("z.shape = {}".format(z.shape))
+            with pyro.plate("data", 3):
+                pyro.sample("x", dist.Normal(z, 1.), obs=data)
+    
+        first_available_dim = -3
+>       sampled_model = infer.infer_discrete(model, first_available_dim)
+                        ^^^^^^^^^^^^^^^^^^^^
+
+tests/contrib/funsor/test_infer_discrete.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+_____________________________ test_distribution_2 ______________________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    def test_distribution_2():
+        #       +--------+
+        #  z1 --|--> x1  |
+        #   |   |        |
+        #   V   |        |
+        #  z2 --|--> x2  |
+        #       +--------+
+        data = torch.tensor([[-1., -1., 0.], [-1., 1., 1.]])
+    
+        @infer.config_enumerate
+        def model(z1=None, z2=None):
+            p = pyro.param("p", torch.tensor([[0.25, 0.75], [0.1, 0.9]]))
+            loc = pyro.param("loc", torch.tensor([-1., 1.]))
+            z1 = pyro.sample("z1", dist.Categorical(p[0]), obs=z1)
+            z2 = pyro.sample("z2", dist.Categorical(p[z1]), obs=z2)
+            logger.info("z1.shape = {}".format(z1.shape))
+            logger.info("z2.shape = {}".format(z2.shape))
+            with pyro.plate("data", 3):
+                pyro.sample("x1", dist.Normal(loc[z1], 1.), obs=data[0])
+                pyro.sample("x2", dist.Normal(loc[z2], 1.), obs=data[1])
+    
+        first_available_dim = -3
+>       sampled_model = infer.infer_discrete(model, first_available_dim)
+                        ^^^^^^^^^^^^^^^^^^^^
+
+tests/contrib/funsor/test_infer_discrete.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+__________________________ test_distribution_3_simple __________________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    def test_distribution_3_simple():
+        #  +---------------+
+        #  |  z2 ---> x2   |
+        #  |             2 |
+        #  +---------------+
+        data = torch.tensor([-1., 1.])
+    
+        @infer.config_enumerate
+        def model(z2=None):
+            p = pyro.param("p", torch.tensor([0.25, 0.75]))
+            loc = pyro.param("loc", torch.tensor([-1., 1.]))
+            with pyro.plate("data", 2):
+                z2 = pyro.sample("z2", dist.Categorical(p), obs=z2)
+                pyro.sample("x2", dist.Normal(loc[z2], 1.), obs=data)
+    
+        first_available_dim = -3
+>       argmax_model = infer.infer_discrete(model, first_available_dim)
+                       ^^^^^^^^^^^^^^^^^^^^
+
+tests/contrib/funsor/test_infer_discrete.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+_____________________________ test_distribution_3 ______________________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    def test_distribution_3():
+        #       +---------+  +---------------+
+        #  z1 --|--> x1   |  |  z2 ---> x2   |
+        #       |       3 |  |             2 |
+        #       +---------+  +---------------+
+        data = [torch.tensor([-1., -1., 0.]), torch.tensor([-1., 1.])]
+    
+        @infer.config_enumerate
+        def model(z1=None, z2=None):
+            p = pyro.param("p", torch.tensor([0.25, 0.75]))
+            loc = pyro.param("loc", torch.tensor([-1., 1.]))
+            z1 = pyro.sample("z1", dist.Categorical(p), obs=z1)
+            with pyro.plate("data[0]", 3):
+                pyro.sample("x1", dist.Normal(loc[z1], 1.), obs=data[0])
+            with pyro.plate("data[1]", 2):
+                z2 = pyro.sample("z2", dist.Categorical(p), obs=z2)
+                pyro.sample("x2", dist.Normal(loc[z2], 1.), obs=data[1])
+    
+        first_available_dim = -3
+>       sampled_model = infer.infer_discrete(model, first_available_dim)
+                        ^^^^^^^^^^^^^^^^^^^^
+
+tests/contrib/funsor/test_infer_discrete.py:192: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+_________________ test_svi_model_side_enumeration[model_zzxx] __________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+model = <function model_zzxx at 0x2b8cdd177ba0>
+
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    @pytest.mark.parametrize("model", [model_zzxx, model2])
+    def test_svi_model_side_enumeration(model):
+        # Perform fake inference.
+        # This has the wrong distribution but the right type for tests.
+        guide = AutoNormal(handlers.enum(handlers.block(infer.config_enumerate(model), expose=["loc", "scale"])))
+        guide()  # Initialize but don't bother to train.
+        guide_trace = handlers.trace(guide).get_trace()
+        guide_data = {
+            name: site["value"]
+            for name, site in guide_trace.nodes.items() if site["type"] == "sample"
+        }
+    
+        # MAP estimate discretes, conditioned on posterior sampled continous latents.
+        actual_trace = handlers.trace(
+>           infer.infer_discrete(
+            ^^^^^^^^^^^^^^^^^^^^
+                # TODO support replayed sites in infer_discrete.
+                # handlers.replay(infer.config_enumerate(model), guide_trace)
+                handlers.condition(infer.config_enumerate(model), guide_data)
+            )
+        ).get_trace()
+
+tests/contrib/funsor/test_infer_discrete.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+___________________ test_svi_model_side_enumeration[model2] ____________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+model = <function model2 at 0x2b8cdd177c40>
+
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    @pytest.mark.parametrize("model", [model_zzxx, model2])
+    def test_svi_model_side_enumeration(model):
+        # Perform fake inference.
+        # This has the wrong distribution but the right type for tests.
+        guide = AutoNormal(handlers.enum(handlers.block(infer.config_enumerate(model), expose=["loc", "scale"])))
+        guide()  # Initialize but don't bother to train.
+        guide_trace = handlers.trace(guide).get_trace()
+        guide_data = {
+            name: site["value"]
+            for name, site in guide_trace.nodes.items() if site["type"] == "sample"
+        }
+    
+        # MAP estimate discretes, conditioned on posterior sampled continous latents.
+        actual_trace = handlers.trace(
+>           infer.infer_discrete(
+            ^^^^^^^^^^^^^^^^^^^^
+                # TODO support replayed sites in infer_discrete.
+                # handlers.replay(infer.config_enumerate(model), guide_trace)
+                handlers.condition(infer.config_enumerate(model), guide_data)
+            )
+        ).get_trace()
+
+tests/contrib/funsor/test_infer_discrete.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+_________________ test_mcmc_model_side_enumeration[model_zzxx] _________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+model = <function model_zzxx at 0x2b8cdd177ba0>
+
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    @pytest.mark.parametrize("model", [model_zzxx, model2])
+    def test_mcmc_model_side_enumeration(model):
+        # Perform fake inference.
+        # Draw from prior rather than trying to sample from mcmc posterior.
+        # This has the wrong distribution but the right type for tests.
+        mcmc_trace = handlers.trace(
+            handlers.block(
+                handlers.enum(infer.config_enumerate(model)),
+                expose=["loc", "scale"]
+            )
+        ).get_trace()
+        mcmc_data = {
+            name: site["value"]
+            for name, site in mcmc_trace.nodes.items() if site["type"] == "sample"
+        }
+    
+        # MAP estimate discretes, conditioned on posterior sampled continous latents.
+        actual_trace = handlers.trace(
+>           infer.infer_discrete(
+            ^^^^^^^^^^^^^^^^^^^^
+                # TODO support replayed sites in infer_discrete.
+                # handlers.replay(infer.config_enumerate(model), mcmc_trace),
+                handlers.condition(infer.config_enumerate(model), mcmc_data),
+            ),
+        ).get_trace()
+
+tests/contrib/funsor/test_infer_discrete.py:298: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+___________________ test_mcmc_model_side_enumeration[model2] ___________________
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+>           return getattr(module, name)
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'pyro.contrib.funsor.infer' has no attribute 'infer_discrete'
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:68: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+model = <function model2 at 0x2b8cdd177c40>
+
+    @pyroapi.pyro_backend(_PYRO_BACKEND)
+    @pytest.mark.parametrize("model", [model_zzxx, model2])
+    def test_mcmc_model_side_enumeration(model):
+        # Perform fake inference.
+        # Draw from prior rather than trying to sample from mcmc posterior.
+        # This has the wrong distribution but the right type for tests.
+        mcmc_trace = handlers.trace(
+            handlers.block(
+                handlers.enum(infer.config_enumerate(model)),
+                expose=["loc", "scale"]
+            )
+        ).get_trace()
+        mcmc_data = {
+            name: site["value"]
+            for name, site in mcmc_trace.nodes.items() if site["type"] == "sample"
+        }
+    
+        # MAP estimate discretes, conditioned on posterior sampled continous latents.
+        actual_trace = handlers.trace(
+>           infer.infer_discrete(
+            ^^^^^^^^^^^^^^^^^^^^
+                # TODO support replayed sites in infer_discrete.
+                # handlers.replay(infer.config_enumerate(model), mcmc_trace),
+                handlers.condition(infer.config_enumerate(model), mcmc_data),
+            ),
+        ).get_trace()
+
+tests/contrib/funsor/test_infer_discrete.py:298: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pyroapi.dispatch.GenericModule object at 0x2b8cdd0c04d0>
+name = 'infer_discrete'
+
+    def __getattribute__(self, name):
+        module_name = super(GenericModule, self).__getattribute__('_name')
+        backend = GenericModule.current_backend[module_name]
+        try:
+            module = GenericModule._modules[backend]
+        except KeyError:
+            module = importlib.import_module(backend)
+            GenericModule._modules[backend] = module
+        if name.startswith('__'):
+            return getattr(module, name)  # allow magic attributes to return AttributeError
+        try:
+            return getattr(module, name)
+        except AttributeError:
+>           raise NotImplementedError('This Pyro backend does not implement {}.{}'
+                                      .format(module_name, name))
+E           NotImplementedError: This Pyro backend does not implement infer.infer_discrete
+
+/usr/local/lib/python3.11/site-packages/pyroapi/dispatch.py:70: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_hmm_smoke[1] - NotIm...
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_hmm_smoke[2] - NotIm...
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_hmm_smoke[10] - NotI...
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_hmm_smoke[100] - Not...
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_distribution_1 - Not...
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_distribution_2 - Not...
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_distribution_3_simple
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_distribution_3 - Not...
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_svi_model_side_enumeration[model_zzxx]
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_svi_model_side_enumeration[model2]
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_mcmc_model_side_enumeration[model_zzxx]
+FAILED tests/contrib/funsor/test_infer_discrete.py::test_mcmc_model_side_enumeration[model2]
+============================== 12 failed in 0.50s ==============================
+reward=0 graded=12 found=0 failed=0 parsed=4 framework=pytest exit_code=1

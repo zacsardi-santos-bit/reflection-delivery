@@ -1,0 +1,23 @@
+{
+ "task": "m3db-m3-1530",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds PatternTypeField + GetField/PutField and wires MatchField to check cache before segment; F2P includes TestReadThroughSegmentMatchField/CacheDisabled/NoCache"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

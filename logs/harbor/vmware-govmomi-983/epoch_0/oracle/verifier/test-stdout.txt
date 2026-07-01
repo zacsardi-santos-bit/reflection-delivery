@@ -1,0 +1,364 @@
+patching file govc/test/vm.bats
+patching file simulator/folder_test.go
+patching file simulator/property_collector_test.go
+patching file simulator/session_manager_test.go
+patching file simulator/simulator_test.go
+{"Time":"2026-06-29T15:17:20.033370937Z","Action":"start","Package":"github.com/vmware/govmomi/simulator"}
+{"Time":"2026-06-29T15:17:20.049337605Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestAuthorizationManager"}
+{"Time":"2026-06-29T15:17:20.049371265Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestAuthorizationManager","Output":"=== RUN   TestAuthorizationManager\n"}
+{"Time":"2026-06-29T15:17:20.050305112Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestAuthorizationManager","Output":"--- PASS: TestAuthorizationManager (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.050336867Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestAuthorizationManager","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.050365576Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestClusterESX"}
+{"Time":"2026-06-29T15:17:20.050373486Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestClusterESX","Output":"=== RUN   TestClusterESX\n"}
+{"Time":"2026-06-29T15:17:20.056412053Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestClusterESX","Output":"--- PASS: TestClusterESX (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.056446435Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestClusterESX","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.056485164Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestClusterVC"}
+{"Time":"2026-06-29T15:17:20.0564936Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestClusterVC","Output":"=== RUN   TestClusterVC\n"}
+{"Time":"2026-06-29T15:17:20.066913244Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestClusterVC","Output":"--- PASS: TestClusterVC (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.066942556Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestClusterVC","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.066961265Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestCustomFieldsManager"}
+{"Time":"2026-06-29T15:17:20.066969799Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCustomFieldsManager","Output":"=== RUN   TestCustomFieldsManager\n"}
+{"Time":"2026-06-29T15:17:20.07125588Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCustomFieldsManager","Output":"--- PASS: TestCustomFieldsManager (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.07129867Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestCustomFieldsManager","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.071311409Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatacenterCreateFolders"}
+{"Time":"2026-06-29T15:17:20.071319011Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatacenterCreateFolders","Output":"=== RUN   TestDatacenterCreateFolders\n"}
+{"Time":"2026-06-29T15:17:20.071349825Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatacenterCreateFolders","Output":"--- PASS: TestDatacenterCreateFolders (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.071368833Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatacenterCreateFolders","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.071393769Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestParseDatastorePath"}
+{"Time":"2026-06-29T15:17:20.071405387Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestParseDatastorePath","Output":"=== RUN   TestParseDatastorePath\n"}
+{"Time":"2026-06-29T15:17:20.071421073Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestParseDatastorePath","Output":"--- PASS: TestParseDatastorePath (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.0714297Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestParseDatastorePath","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.071469879Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestRefreshDatastore"}
+{"Time":"2026-06-29T15:17:20.07148824Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRefreshDatastore","Output":"=== RUN   TestRefreshDatastore\n"}
+{"Time":"2026-06-29T15:17:20.071607587Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRefreshDatastore","Output":"--- PASS: TestRefreshDatastore (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.071623622Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestRefreshDatastore","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.071642816Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP"}
+{"Time":"2026-06-29T15:17:20.071653571Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"=== RUN   TestDatastoreHTTP\n"}
+{"Time":"2026-06-29T15:17:20.082447711Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to GET '/tmp/govcsim-889503499/tmp.go': open /tmp/govcsim-889503499/tmp.go: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.084866749Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 search /tmp/govcsim-889503499/tmp.go: open /tmp/govcsim-889503499/tmp.go: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.086361403Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 search /tmp/govcsim-889503499/tmp.go: open /tmp/govcsim-889503499/tmp.go: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.106720727Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to GET '/tmp/govcsim-889503499/tmp.go': open /tmp/govcsim-889503499/tmp.go: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.107965019Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to PUT '/tmp/govcsim-889503499': open /tmp/govcsim-889503499: is a directory\n"}
+{"Time":"2026-06-29T15:17:20.161696949Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 search /tmp/govcsim-889503499/enoent: open /tmp/govcsim-889503499/enoent: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.163684898Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to locate datastore with query params: dcName=nope\n"}
+{"Time":"2026-06-29T15:17:20.164020372Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to locate datastore with query params: dsName=nope\n"}
+{"Time":"2026-06-29T15:17:20.174368852Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to GET '/tmp/govcsim-775139273/tmp.go': open /tmp/govcsim-775139273/tmp.go: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.176940486Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 search /tmp/govcsim-775139273/tmp.go: open /tmp/govcsim-775139273/tmp.go: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.178855493Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 search /tmp/govcsim-775139273/tmp.go: open /tmp/govcsim-775139273/tmp.go: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.201087264Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to GET '/tmp/govcsim-775139273/tmp.go': open /tmp/govcsim-775139273/tmp.go: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.202386608Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to PUT '/tmp/govcsim-775139273': open /tmp/govcsim-775139273: is a directory\n"}
+{"Time":"2026-06-29T15:17:20.259036838Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 search /tmp/govcsim-775139273/enoent: open /tmp/govcsim-775139273/enoent: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.260922882Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to locate datastore with query params: dcName=nope\n"}
+{"Time":"2026-06-29T15:17:20.261233017Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"2026/06/29 15:17:20 failed to locate datastore with query params: dsName=nope\n"}
+{"Time":"2026-06-29T15:17:20.263105186Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Output":"--- PASS: TestDatastoreHTTP (0.19s)\n"}
+{"Time":"2026-06-29T15:17:20.263207427Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestDatastoreHTTP","Elapsed":0.19}
+{"Time":"2026-06-29T15:17:20.263234389Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestDVS"}
+{"Time":"2026-06-29T15:17:20.263243612Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDVS","Output":"=== RUN   TestDVS\n"}
+{"Time":"2026-06-29T15:17:20.267646275Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDVS","Output":"--- PASS: TestDVS (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.267675607Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestDVS","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.267695281Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestRename"}
+{"Time":"2026-06-29T15:17:20.26770396Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRename","Output":"=== RUN   TestRename\n"}
+{"Time":"2026-06-29T15:17:20.272815982Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRename","Output":"--- PASS: TestRename (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.272838535Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestRename","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.27285889Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestFinderVPX"}
+{"Time":"2026-06-29T15:17:20.272873364Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFinderVPX","Output":"=== RUN   TestFinderVPX\n"}
+{"Time":"2026-06-29T15:17:20.433182834Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFinderVPX","Output":"--- PASS: TestFinderVPX (0.16s)\n"}
+{"Time":"2026-06-29T15:17:20.433231052Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestFinderVPX","Elapsed":0.16}
+{"Time":"2026-06-29T15:17:20.433244914Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestFinderESX"}
+{"Time":"2026-06-29T15:17:20.433287014Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFinderESX","Output":"=== RUN   TestFinderESX\n"}
+{"Time":"2026-06-29T15:17:20.448320837Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFinderESX","Output":"--- PASS: TestFinderESX (0.02s)\n"}
+{"Time":"2026-06-29T15:17:20.448361111Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestFinderESX","Elapsed":0.02}
+{"Time":"2026-06-29T15:17:20.448383028Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderESX"}
+{"Time":"2026-06-29T15:17:20.448405627Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderESX","Output":"=== RUN   TestFolderESX\n"}
+{"Time":"2026-06-29T15:17:20.452487172Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderESX","Output":"--- PASS: TestFolderESX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.452528667Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderESX","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.452547721Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderVC"}
+{"Time":"2026-06-29T15:17:20.452560861Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderVC","Output":"=== RUN   TestFolderVC\n"}
+{"Time":"2026-06-29T15:17:20.460389097Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderVC","Output":"--- PASS: TestFolderVC (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.460432341Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderVC","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.46044278Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderFaults"}
+{"Time":"2026-06-29T15:17:20.460450094Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderFaults","Output":"=== RUN   TestFolderFaults\n"}
+{"Time":"2026-06-29T15:17:20.46046955Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderFaults","Output":"--- PASS: TestFolderFaults (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.460492316Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderFaults","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.460505728Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm"}
+{"Time":"2026-06-29T15:17:20.460514519Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm","Output":"=== RUN   TestRegisterVm\n"}
+{"Time":"2026-06-29T15:17:20.467968834Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm","Output":"2026/06/29 15:17:20 register :: open /tmp/govcsim-3348412986/ha-host_VM0/ha-host_VM0.vmx-enoent/ha-host_VM0.vmx: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.470332044Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm","Output":"2026/06/29 15:17:20 object VirtualMachine:vm-7 no longer exists\n"}
+{"Time":"2026-06-29T15:17:20.472082208Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm","Output":"2026/06/29 15:17:20 managed object not found: VirtualMachine:vm-21\n"}
+{"Time":"2026-06-29T15:17:20.482020912Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm","Output":"2026/06/29 15:17:20 register :: open /tmp/govcsim-49081295/DC0_C0_APP0_VM0/DC0_C0_APP0_VM0.vmx-enoent/DC0_C0_APP0_VM0.vmx: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.484852398Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm","Output":"2026/06/29 15:17:20 object VirtualMachine:vm-62 no longer exists\n"}
+{"Time":"2026-06-29T15:17:20.486574755Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm","Output":"2026/06/29 15:17:20 managed object not found: VirtualMachine:vm-76\n"}
+{"Time":"2026-06-29T15:17:20.487871295Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm","Output":"--- PASS: TestRegisterVm (0.03s)\n"}
+{"Time":"2026-06-29T15:17:20.487898532Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegisterVm","Elapsed":0.03}
+{"Time":"2026-06-29T15:17:20.487918062Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderMoveInto"}
+{"Time":"2026-06-29T15:17:20.487925663Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderMoveInto","Output":"=== RUN   TestFolderMoveInto\n"}
+{"Time":"2026-06-29T15:17:20.504116892Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderMoveInto","Output":"--- PASS: TestFolderMoveInto (0.02s)\n"}
+{"Time":"2026-06-29T15:17:20.504146191Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderMoveInto","Elapsed":0.02}
+{"Time":"2026-06-29T15:17:20.504169354Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderCreateDVS"}
+{"Time":"2026-06-29T15:17:20.5041773Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderCreateDVS","Output":"=== RUN   TestFolderCreateDVS\n"}
+{"Time":"2026-06-29T15:17:20.522309539Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderCreateDVS","Output":"--- PASS: TestFolderCreateDVS (0.02s)\n"}
+{"Time":"2026-06-29T15:17:20.522336923Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestFolderCreateDVS","Elapsed":0.02}
+{"Time":"2026-06-29T15:17:20.522367257Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostDatastoreSystem"}
+{"Time":"2026-06-29T15:17:20.522383551Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostDatastoreSystem","Output":"=== RUN   TestHostDatastoreSystem\n"}
+{"Time":"2026-06-29T15:17:20.527568891Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostDatastoreSystem","Output":"--- PASS: TestHostDatastoreSystem (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.527593282Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostDatastoreSystem","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.527624559Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostFirewallSystem"}
+{"Time":"2026-06-29T15:17:20.527633526Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostFirewallSystem","Output":"=== RUN   TestHostFirewallSystem\n"}
+{"Time":"2026-06-29T15:17:20.527817751Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostFirewallSystem","Output":"--- PASS: TestHostFirewallSystem (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.527831077Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostFirewallSystem","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.527844392Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostLocalAccountManager"}
+{"Time":"2026-06-29T15:17:20.527852451Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostLocalAccountManager","Output":"=== RUN   TestHostLocalAccountManager\n"}
+{"Time":"2026-06-29T15:17:20.532724415Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostLocalAccountManager","Output":"--- PASS: TestHostLocalAccountManager (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.532751025Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostLocalAccountManager","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.532768559Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostNetworkSystem"}
+{"Time":"2026-06-29T15:17:20.5327759Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostNetworkSystem","Output":"=== RUN   TestHostNetworkSystem\n"}
+{"Time":"2026-06-29T15:17:20.533192453Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostNetworkSystem","Output":"--- PASS: TestHostNetworkSystem (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.533212515Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestHostNetworkSystem","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.533222652Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestDefaultESX"}
+{"Time":"2026-06-29T15:17:20.533232743Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDefaultESX","Output":"=== RUN   TestDefaultESX\n"}
+{"Time":"2026-06-29T15:17:20.539803707Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestDefaultESX","Output":"--- PASS: TestDefaultESX (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.539827131Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestDefaultESX","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.539839443Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestMaintenanceMode"}
+{"Time":"2026-06-29T15:17:20.539867601Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestMaintenanceMode","Output":"=== RUN   TestMaintenanceMode\n"}
+{"Time":"2026-06-29T15:17:20.541283194Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestMaintenanceMode","Output":"--- PASS: TestMaintenanceMode (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.541308458Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestMaintenanceMode","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.541328164Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestNewHostSystem"}
+{"Time":"2026-06-29T15:17:20.541337663Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestNewHostSystem","Output":"=== RUN   TestNewHostSystem\n"}
+{"Time":"2026-06-29T15:17:20.542784822Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestNewHostSystem","Output":"--- PASS: TestNewHostSystem (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.542804274Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestNewHostSystem","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.542818096Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolv4"}
+{"Time":"2026-06-29T15:17:20.542825903Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolv4","Output":"=== RUN   TestIpPoolv4\n"}
+{"Time":"2026-06-29T15:17:20.543392288Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolv4","Output":"--- PASS: TestIpPoolv4 (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.54341925Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolv4","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.543441181Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolv6"}
+{"Time":"2026-06-29T15:17:20.543459183Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolv6","Output":"=== RUN   TestIpPoolv6\n"}
+{"Time":"2026-06-29T15:17:20.544001596Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolv6","Output":"--- PASS: TestIpPoolv6 (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.544095131Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolv6","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.544114252Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolManagerLifecycle"}
+{"Time":"2026-06-29T15:17:20.544123364Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolManagerLifecycle","Output":"=== RUN   TestIpPoolManagerLifecycle\n"}
+{"Time":"2026-06-29T15:17:20.550779956Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolManagerLifecycle","Output":"--- PASS: TestIpPoolManagerLifecycle (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.550806491Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolManagerLifecycle","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.550824954Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolManagerAllocate"}
+{"Time":"2026-06-29T15:17:20.550843689Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolManagerAllocate","Output":"=== RUN   TestIpPoolManagerAllocate\n"}
+{"Time":"2026-06-29T15:17:20.556328705Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolManagerAllocate","Output":"--- PASS: TestIpPoolManagerAllocate (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.556354529Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestIpPoolManagerAllocate","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.556369981Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestLicenseManagerVPX"}
+{"Time":"2026-06-29T15:17:20.556382581Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestLicenseManagerVPX","Output":"=== RUN   TestLicenseManagerVPX\n"}
+{"Time":"2026-06-29T15:17:20.568465903Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestLicenseManagerVPX","Output":"--- PASS: TestLicenseManagerVPX (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.568488561Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestLicenseManagerVPX","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.568510213Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestLicenseManagerESX"}
+{"Time":"2026-06-29T15:17:20.568528944Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestLicenseManagerESX","Output":"=== RUN   TestLicenseManagerESX\n"}
+{"Time":"2026-06-29T15:17:20.572801169Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestLicenseManagerESX","Output":"--- PASS: TestLicenseManagerESX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.572824643Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestLicenseManagerESX","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.572839006Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestAddRemoveLicense"}
+{"Time":"2026-06-29T15:17:20.572855732Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestAddRemoveLicense","Output":"=== RUN   TestAddRemoveLicense\n"}
+{"Time":"2026-06-29T15:17:20.577308588Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestAddRemoveLicense","Output":"--- PASS: TestAddRemoveLicense (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.577330831Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestAddRemoveLicense","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.577344639Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelESX"}
+{"Time":"2026-06-29T15:17:20.577352671Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelESX","Output":"=== RUN   TestModelESX\n"}
+{"Time":"2026-06-29T15:17:20.578957245Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelESX","Output":"--- PASS: TestModelESX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.578977734Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelESX","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.578988406Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelVPX"}
+{"Time":"2026-06-29T15:17:20.578997751Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelVPX","Output":"=== RUN   TestModelVPX\n"}
+{"Time":"2026-06-29T15:17:20.582716168Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelVPX","Output":"--- PASS: TestModelVPX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.582731929Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelVPX","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.582745202Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelNoSwitchVPX"}
+{"Time":"2026-06-29T15:17:20.582752884Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelNoSwitchVPX","Output":"=== RUN   TestModelNoSwitchVPX\n"}
+{"Time":"2026-06-29T15:17:20.585366174Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelNoSwitchVPX","Output":"--- PASS: TestModelNoSwitchVPX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.585390557Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelNoSwitchVPX","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.585407707Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelCustomVPX"}
+{"Time":"2026-06-29T15:17:20.585418031Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelCustomVPX","Output":"=== RUN   TestModelCustomVPX\n"}
+{"Time":"2026-06-29T15:17:20.599434202Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelCustomVPX","Output":"--- PASS: TestModelCustomVPX (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.599460627Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelCustomVPX","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.599521454Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelWithFolders"}
+{"Time":"2026-06-29T15:17:20.599534193Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelWithFolders","Output":"=== RUN   TestModelWithFolders\n"}
+{"Time":"2026-06-29T15:17:20.609759675Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelWithFolders","Output":"--- PASS: TestModelWithFolders (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.609791409Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestModelWithFolders","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.609803172Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestOptionManagerESX"}
+{"Time":"2026-06-29T15:17:20.609824733Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestOptionManagerESX","Output":"=== RUN   TestOptionManagerESX\n"}
+{"Time":"2026-06-29T15:17:20.609993818Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestOptionManagerESX","Output":"--- PASS: TestOptionManagerESX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.610011642Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestOptionManagerESX","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.610021261Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestOptionManagerVPX"}
+{"Time":"2026-06-29T15:17:20.610034639Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestOptionManagerVPX","Output":"=== RUN   TestOptionManagerVPX\n"}
+{"Time":"2026-06-29T15:17:20.610620489Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestOptionManagerVPX","Output":"--- PASS: TestOptionManagerVPX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.610648279Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestOptionManagerVPX","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.6106627Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigurePortgroup"}
+{"Time":"2026-06-29T15:17:20.610670612Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigurePortgroup","Output":"=== RUN   TestReconfigurePortgroup\n"}
+{"Time":"2026-06-29T15:17:20.613535407Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigurePortgroup","Output":"--- PASS: TestReconfigurePortgroup (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.613564263Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigurePortgroup","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.613587086Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestRetrieveProperties"}
+{"Time":"2026-06-29T15:17:20.61359837Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRetrieveProperties","Output":"=== RUN   TestRetrieveProperties\n"}
+{"Time":"2026-06-29T15:17:20.636396046Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRetrieveProperties","Output":"--- PASS: TestRetrieveProperties (0.02s)\n"}
+{"Time":"2026-06-29T15:17:20.636428206Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestRetrieveProperties","Elapsed":0.02}
+{"Time":"2026-06-29T15:17:20.636458289Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestWaitForUpdates"}
+{"Time":"2026-06-29T15:17:20.63647687Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestWaitForUpdates","Output":"=== RUN   TestWaitForUpdates\n"}
+{"Time":"2026-06-29T15:17:20.643783668Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestWaitForUpdates","Output":"--- PASS: TestWaitForUpdates (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.643822495Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestWaitForUpdates","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.643849846Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestCollectInterfaceType"}
+{"Time":"2026-06-29T15:17:20.643870919Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCollectInterfaceType","Output":"=== RUN   TestCollectInterfaceType\n"}
+{"Time":"2026-06-29T15:17:20.643881151Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCollectInterfaceType","Output":"--- PASS: TestCollectInterfaceType (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.643894152Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestCollectInterfaceType","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.643901866Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestExtractEmbeddedField"}
+{"Time":"2026-06-29T15:17:20.643909223Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestExtractEmbeddedField","Output":"=== RUN   TestExtractEmbeddedField\n"}
+{"Time":"2026-06-29T15:17:20.643934131Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestExtractEmbeddedField","Output":"2026/06/29 15:17:20 types.ManagedObjectReference{Type:\"NoMo\", Value:\"no-mo\"} does not have an embedded mo type\n"}
+{"Time":"2026-06-29T15:17:20.64395471Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestExtractEmbeddedField","Output":"--- PASS: TestExtractEmbeddedField (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.643969525Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestExtractEmbeddedField","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.643976954Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorFold"}
+{"Time":"2026-06-29T15:17:20.643987939Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorFold","Output":"=== RUN   TestPropertyCollectorFold\n"}
+{"Time":"2026-06-29T15:17:20.650325036Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorFold","Output":"--- PASS: TestPropertyCollectorFold (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.650354751Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorFold","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.650374185Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorInvalidSpecName"}
+{"Time":"2026-06-29T15:17:20.650385524Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorInvalidSpecName","Output":"=== RUN   TestPropertyCollectorInvalidSpecName\n"}
+{"Time":"2026-06-29T15:17:20.650410677Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorInvalidSpecName","Output":"--- PASS: TestPropertyCollectorInvalidSpecName (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.65042993Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorInvalidSpecName","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.65043829Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorRecursiveSelectSet"}
+{"Time":"2026-06-29T15:17:20.650445796Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorRecursiveSelectSet","Output":"=== RUN   TestPropertyCollectorRecursiveSelectSet\n"}
+{"Time":"2026-06-29T15:17:20.656179599Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorRecursiveSelectSet","Output":"--- PASS: TestPropertyCollectorRecursiveSelectSet (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.656206507Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorRecursiveSelectSet","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.656224807Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorSelectionSpec"}
+{"Time":"2026-06-29T15:17:20.656232646Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorSelectionSpec","Output":"=== RUN   TestPropertyCollectorSelectionSpec\n"}
+{"Time":"2026-06-29T15:17:20.66268621Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorSelectionSpec","Output":"--- PASS: TestPropertyCollectorSelectionSpec (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.662710443Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorSelectionSpec","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.662726871Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestIssue945"}
+{"Time":"2026-06-29T15:17:20.662745047Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIssue945","Output":"=== RUN   TestIssue945\n"}
+{"Time":"2026-06-29T15:17:20.668992351Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestIssue945","Output":"--- PASS: TestIssue945 (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.669023882Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestIssue945","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.669044987Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorSession"}
+{"Time":"2026-06-29T15:17:20.669057067Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorSession","Output":"=== RUN   TestPropertyCollectorSession\n"}
+{"Time":"2026-06-29T15:17:20.677977776Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorSession","Output":"--- PASS: TestPropertyCollectorSession (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.678007015Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestPropertyCollectorSession","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.678024516Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegistry"}
+{"Time":"2026-06-29T15:17:20.678045361Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegistry","Output":"=== RUN   TestRegistry\n"}
+{"Time":"2026-06-29T15:17:20.678063388Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegistry","Output":"--- PASS: TestRegistry (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.678082347Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestRegistry","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.678098508Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestRemoveReference"}
+{"Time":"2026-06-29T15:17:20.6781086Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRemoveReference","Output":"=== RUN   TestRemoveReference\n"}
+{"Time":"2026-06-29T15:17:20.67811663Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestRemoveReference","Output":"--- PASS: TestRemoveReference (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.678123997Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestRemoveReference","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.67813615Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestResourcePool"}
+{"Time":"2026-06-29T15:17:20.678145656Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestResourcePool","Output":"=== RUN   TestResourcePool\n"}
+{"Time":"2026-06-29T15:17:20.679610322Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestResourcePool","Output":"--- PASS: TestResourcePool (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.67967135Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestResourcePool","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.679705736Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVAppESX"}
+{"Time":"2026-06-29T15:17:20.679725679Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVAppESX","Output":"=== RUN   TestCreateVAppESX\n"}
+{"Time":"2026-06-29T15:17:20.679796958Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVAppESX","Output":"--- PASS: TestCreateVAppESX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.679826526Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVAppESX","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.679844235Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVAppVPX"}
+{"Time":"2026-06-29T15:17:20.679853291Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVAppVPX","Output":"=== RUN   TestCreateVAppVPX\n"}
+{"Time":"2026-06-29T15:17:20.683118381Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVAppVPX","Output":"--- PASS: TestCreateVAppVPX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.683205657Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVAppVPX","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.683245348Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestResourcePoolValidation"}
+{"Time":"2026-06-29T15:17:20.683254758Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestResourcePoolValidation","Output":"=== RUN   TestResourcePoolValidation\n"}
+{"Time":"2026-06-29T15:17:20.683265449Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestResourcePoolValidation","Output":"--- PASS: TestResourcePoolValidation (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.683283274Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestResourcePoolValidation","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.683292584Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestSearchIndex"}
+{"Time":"2026-06-29T15:17:20.68330089Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestSearchIndex","Output":"=== RUN   TestSearchIndex\n"}
+{"Time":"2026-06-29T15:17:20.700947608Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestSearchIndex","Output":"--- PASS: TestSearchIndex (0.02s)\n"}
+{"Time":"2026-06-29T15:17:20.700971771Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestSearchIndex","Elapsed":0.02}
+{"Time":"2026-06-29T15:17:20.700989068Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestSearchIndexFindChild"}
+{"Time":"2026-06-29T15:17:20.701003579Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestSearchIndexFindChild","Output":"=== RUN   TestSearchIndexFindChild\n"}
+{"Time":"2026-06-29T15:17:20.722490522Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestSearchIndexFindChild","Output":"--- PASS: TestSearchIndexFindChild (0.02s)\n"}
+{"Time":"2026-06-29T15:17:20.722534038Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestSearchIndexFindChild","Elapsed":0.02}
+{"Time":"2026-06-29T15:17:20.722555287Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestSessionManagerAuth"}
+{"Time":"2026-06-29T15:17:20.722564613Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestSessionManagerAuth","Output":"=== RUN   TestSessionManagerAuth\n"}
+{"Time":"2026-06-29T15:17:20.731893731Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestSessionManagerAuth","Output":"--- PASS: TestSessionManagerAuth (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.731926687Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestSessionManagerAuth","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.73196725Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestUnmarshal"}
+{"Time":"2026-06-29T15:17:20.731986328Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestUnmarshal","Output":"=== RUN   TestUnmarshal\n"}
+{"Time":"2026-06-29T15:17:20.732166728Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestUnmarshal","Output":"--- PASS: TestUnmarshal (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.732188548Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestUnmarshal","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.732205819Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestUnmarshalError"}
+{"Time":"2026-06-29T15:17:20.732232588Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestUnmarshalError","Output":"=== RUN   TestUnmarshalError\n"}
+{"Time":"2026-06-29T15:17:20.732325939Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestUnmarshalError","Output":"--- PASS: TestUnmarshalError (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.732346262Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestUnmarshalError","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.732360721Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTP"}
+{"Time":"2026-06-29T15:17:20.73239194Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTP","Output":"=== RUN   TestServeHTTP\n"}
+{"Time":"2026-06-29T15:17:20.734589254Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTP","Output":"2026/06/29 15:17:20 managed object not found: :\n"}
+{"Time":"2026-06-29T15:17:20.734758293Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTP","Output":"2026/06/29 15:17:20 managed object not found: :\n"}
+{"Time":"2026-06-29T15:17:20.738171951Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTP","Output":"2026/06/29 15:17:20 managed object not found: :\n"}
+{"Time":"2026-06-29T15:17:20.738340236Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTP","Output":"2026/06/29 15:17:20 managed object not found: :\n"}
+{"Time":"2026-06-29T15:17:20.738832771Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTP","Output":"--- PASS: TestServeHTTP (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.738861217Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTP","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.738876831Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeAbout"}
+{"Time":"2026-06-29T15:17:20.73888535Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeAbout","Output":"=== RUN   TestServeAbout\n"}
+{"Time":"2026-06-29T15:17:20.746470648Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeAbout","Output":"--- PASS: TestServeAbout (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.746496921Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeAbout","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.746516686Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTPErrors"}
+{"Time":"2026-06-29T15:17:20.74652617Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTPErrors","Output":"=== RUN   TestServeHTTPErrors\n"}
+{"Time":"2026-06-29T15:17:20.74802222Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTPErrors","Output":"2026/06/29 15:17:20 HostSystem:ha-host does not implement: QueryMemoryOverhead\n"}
+{"Time":"2026-06-29T15:17:20.748712737Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTPErrors","Output":"2026/06/29 15:17:20 ServiceInstance:ServiceInstance does not implement: CurrentTime\n"}
+{"Time":"2026-06-29T15:17:20.749367783Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTPErrors","Output":"2026/06/29 15:17:20 error encoding CurrentTime response: time has stopped\n"}
+{"Time":"2026-06-29T15:17:20.750147888Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTPErrors","Output":"2026/06/29 15:17:20 managed object not found: ServiceInstance:ServiceInstance\n"}
+{"Time":"2026-06-29T15:17:20.75091536Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTPErrors","Output":"2026/06/29 15:17:20 error reading body: short buffer\n"}
+{"Time":"2026-06-29T15:17:20.751176101Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTPErrors","Output":"--- PASS: TestServeHTTPErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.751204264Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestServeHTTPErrors","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.751221938Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestTaskManagerRecent"}
+{"Time":"2026-06-29T15:17:20.75122951Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestTaskManagerRecent","Output":"=== RUN   TestTaskManagerRecent\n"}
+{"Time":"2026-06-29T15:17:20.751400492Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestTaskManagerRecent","Output":"--- PASS: TestTaskManagerRecent (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.751422306Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestTaskManagerRecent","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.751444303Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestNewTask"}
+{"Time":"2026-06-29T15:17:20.751471747Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestNewTask","Output":"=== RUN   TestNewTask\n"}
+{"Time":"2026-06-29T15:17:20.751502531Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestNewTask","Output":"--- PASS: TestNewTask (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.751538493Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestNewTask","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.751563287Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestUserDirectory"}
+{"Time":"2026-06-29T15:17:20.751579001Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestUserDirectory","Output":"=== RUN   TestUserDirectory\n"}
+{"Time":"2026-06-29T15:17:20.754357992Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestUserDirectory","Output":"--- PASS: TestUserDirectory (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.754385339Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestUserDirectory","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.754401727Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestUserDirectoryExactlyMatch"}
+{"Time":"2026-06-29T15:17:20.754417038Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestUserDirectoryExactlyMatch","Output":"=== RUN   TestUserDirectoryExactlyMatch\n"}
+{"Time":"2026-06-29T15:17:20.757139927Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestUserDirectoryExactlyMatch","Output":"--- PASS: TestUserDirectoryExactlyMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.757170268Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestUserDirectoryExactlyMatch","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.757197365Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestContainerViewVPX"}
+{"Time":"2026-06-29T15:17:20.757206273Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestContainerViewVPX","Output":"=== RUN   TestContainerViewVPX\n"}
+{"Time":"2026-06-29T15:17:20.795511172Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestContainerViewVPX","Output":"--- PASS: TestContainerViewVPX (0.04s)\n"}
+{"Time":"2026-06-29T15:17:20.795543282Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestContainerViewVPX","Elapsed":0.04}
+{"Time":"2026-06-29T15:17:20.795555549Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestVirtualDiskManager"}
+{"Time":"2026-06-29T15:17:20.795564684Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestVirtualDiskManager","Output":"=== RUN   TestVirtualDiskManager\n"}
+{"Time":"2026-06-29T15:17:20.819034331Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestVirtualDiskManager","Output":"--- PASS: TestVirtualDiskManager (0.02s)\n"}
+{"Time":"2026-06-29T15:17:20.819074498Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestVirtualDiskManager","Elapsed":0.02}
+{"Time":"2026-06-29T15:17:20.819110208Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVm"}
+{"Time":"2026-06-29T15:17:20.81912133Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVm","Output":"=== RUN   TestCreateVm\n"}
+{"Time":"2026-06-29T15:17:20.874218394Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVm","Output":"2026/06/29 15:17:20 search /tmp/govcsim-2960044831/test: open /tmp/govcsim-2960044831/test: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.929807479Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVm","Output":"2026/06/29 15:17:20 search /tmp/govcsim-1283141519/test: open /tmp/govcsim-1283141519/test: no such file or directory\n"}
+{"Time":"2026-06-29T15:17:20.9324401Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVm","Output":"--- PASS: TestCreateVm (0.11s)\n"}
+{"Time":"2026-06-29T15:17:20.932479424Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVm","Elapsed":0.11}
+{"Time":"2026-06-29T15:17:20.932509835Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigVmDevice"}
+{"Time":"2026-06-29T15:17:20.932519269Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigVmDevice","Output":"=== RUN   TestReconfigVmDevice\n"}
+{"Time":"2026-06-29T15:17:20.945937088Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigVmDevice","Output":"--- PASS: TestReconfigVmDevice (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.945965149Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigVmDevice","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.945980675Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigVm"}
+{"Time":"2026-06-29T15:17:20.946003839Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigVm","Output":"=== RUN   TestReconfigVm\n"}
+{"Time":"2026-06-29T15:17:20.986314766Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigVm","Output":"--- PASS: TestReconfigVm (0.04s)\n"}
+{"Time":"2026-06-29T15:17:20.986349668Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestReconfigVm","Elapsed":0.04}
+{"Time":"2026-06-29T15:17:20.986369898Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVmWithDevices"}
+{"Time":"2026-06-29T15:17:20.986393207Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVmWithDevices","Output":"=== RUN   TestCreateVmWithDevices\n"}
+{"Time":"2026-06-29T15:17:20.988442449Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVmWithDevices","Output":"--- PASS: TestCreateVmWithDevices (0.00s)\n"}
+{"Time":"2026-06-29T15:17:20.988477475Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestCreateVmWithDevices","Elapsed":0}
+{"Time":"2026-06-29T15:17:20.988497817Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestShutdownGuest"}
+{"Time":"2026-06-29T15:17:20.988510733Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestShutdownGuest","Output":"=== RUN   TestShutdownGuest\n"}
+{"Time":"2026-06-29T15:17:20.998871234Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestShutdownGuest","Output":"--- PASS: TestShutdownGuest (0.01s)\n"}
+{"Time":"2026-06-29T15:17:20.998896988Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestShutdownGuest","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:20.998925605Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"TestVmSnapshot"}
+{"Time":"2026-06-29T15:17:20.998937559Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestVmSnapshot","Output":"=== RUN   TestVmSnapshot\n"}
+{"Time":"2026-06-29T15:17:21.015474806Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"TestVmSnapshot","Output":"--- PASS: TestVmSnapshot (0.02s)\n"}
+{"Time":"2026-06-29T15:17:21.015514723Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"TestVmSnapshot","Elapsed":0.02}
+{"Time":"2026-06-29T15:17:21.015533334Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"Example"}
+{"Time":"2026-06-29T15:17:21.015550271Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"Example","Output":"=== RUN   Example\n"}
+{"Time":"2026-06-29T15:17:21.023523255Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"Example","Output":"--- PASS: Example (0.01s)\n"}
+{"Time":"2026-06-29T15:17:21.023556033Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"Example","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:21.023570842Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleESX"}
+{"Time":"2026-06-29T15:17:21.023578721Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleESX","Output":"=== RUN   ExampleESX\n"}
+{"Time":"2026-06-29T15:17:21.027218457Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleESX","Output":"--- PASS: ExampleESX (0.00s)\n"}
+{"Time":"2026-06-29T15:17:21.027260701Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleESX","Elapsed":0}
+{"Time":"2026-06-29T15:17:21.027276269Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleModel"}
+{"Time":"2026-06-29T15:17:21.027284422Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleModel","Output":"=== RUN   ExampleModel\n"}
+{"Time":"2026-06-29T15:17:21.029056384Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleModel","Output":"--- PASS: ExampleModel (0.00s)\n"}
+{"Time":"2026-06-29T15:17:21.029084145Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleModel","Elapsed":0}
+{"Time":"2026-06-29T15:17:21.029094384Z","Action":"run","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleVPX"}
+{"Time":"2026-06-29T15:17:21.029121277Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleVPX","Output":"=== RUN   ExampleVPX\n"}
+{"Time":"2026-06-29T15:17:21.034575742Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleVPX","Output":"--- PASS: ExampleVPX (0.01s)\n"}
+{"Time":"2026-06-29T15:17:21.034607531Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Test":"ExampleVPX","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:21.034630848Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Output":"PASS\n"}
+{"Time":"2026-06-29T15:17:21.036070556Z","Action":"output","Package":"github.com/vmware/govmomi/simulator","Output":"ok  \tgithub.com/vmware/govmomi/simulator\t1.002s\n"}
+{"Time":"2026-06-29T15:17:21.03615989Z","Action":"pass","Package":"github.com/vmware/govmomi/simulator","Elapsed":1.003}
+reward=1 graded=80 found=80 failed=0 parsed=80 framework=go exit_code=0

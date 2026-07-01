@@ -1,0 +1,5 @@
+I'm working with testcontainers-go and need a new module for socat so I can relay traffic between a test host and containers running on an internal Docker network. Right now there's no built-in way to do this, so I end up having to wire things up manually every time.
+
+I'd like to be able to run a socat relay container as part of my test setup and configure it with one or more forwarding targets. Each target should specify the host to forward traffic to and the port mapping. Sometimes the external port and the forwarded port are the same, and sometimes they're different — both cases should be supported. If the internal port isn't specified, it should fall back to the external port automatically. Trying to configure a target with a zero port should result in an error rather than silently creating a broken setup.
+
+Once the relay is running, I need a way to get the URL I can use to reach a particular forwarded service, so I can make HTTP requests through the relay in my tests. Multiple forwarding targets on the same relay container would also be useful.

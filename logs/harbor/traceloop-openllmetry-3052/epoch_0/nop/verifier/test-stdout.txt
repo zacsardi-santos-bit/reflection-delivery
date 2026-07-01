@@ -1,0 +1,126 @@
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/cassettes/test_responses/test_responses.yaml
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/cassettes/test_responses/test_responses_tool_calls.yaml
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/cassettes/test_responses/test_responses_with_input_history.yaml
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.3, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/packages/opentelemetry-instrumentation-openai
+configfile: pytest.ini
+plugins: anyio-4.14.1, sugar-1.0.0, recording-0.13.2, asyncio-0.23.8
+asyncio: mode=Mode.AUTO
+collecting ... collected 3 items
+
+packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py::test_responses FAILED [ 33%]
+packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py::test_responses_with_input_history FAILED [ 66%]
+packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py::test_responses_tool_calls FAILED [100%]
+
+=================================== FAILURES ===================================
+________________________________ test_responses ________________________________
+
+instrument_legacy = <opentelemetry.instrumentation.openai.OpenAIInstrumentor object at 0x2ad33e408e90>
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2ad33e47f490>
+openai_client = <openai.OpenAI object at 0x2ad33efb6710>
+
+    @pytest.mark.vcr
+    def test_responses(instrument_legacy, span_exporter: InMemorySpanExporter, openai_client: OpenAI):
+        response = openai_client.responses.create(
+            model="gpt-4.1-nano",
+            input="What is the capital of France?",
+        )
+        spans = span_exporter.get_finished_spans()
+>       assert len(spans) == 1
+E       assert 0 == 1
+E        +  where 0 = len(())
+
+packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py:16: AssertionError
+______________________ test_responses_with_input_history _______________________
+
+instrument_legacy = <opentelemetry.instrumentation.openai.OpenAIInstrumentor object at 0x2ad33e408e90>
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2ad33e47f490>
+openai_client = <openai.OpenAI object at 0x2ad33efa5790>
+
+    @pytest.mark.vcr
+    def test_responses_with_input_history(instrument_legacy, span_exporter: InMemorySpanExporter, openai_client: OpenAI):
+        user_message = "Come up with an adjective in English. Respond with just one word."
+        first_response = openai_client.responses.create(
+            model="gpt-4.1-nano",
+            input=user_message,
+        )
+        response = openai_client.responses.create(
+            model="gpt-4.1-nano",
+            input=[
+                {
+                    "role": "user",
+                    "content": user_message,
+                },
+                {
+                    "role": "assistant",
+                    "content": [
+                        {
+                            "type": "output_text",
+                            "text": first_response.output_text,
+                        }
+                    ],
+                },
+                {"role": "user", "content": "Can you explain why you chose that word?"},
+            ],
+        )
+    
+        spans = span_exporter.get_finished_spans()
+>       assert len(spans) == 2
+E       assert 0 == 2
+E        +  where 0 = len(())
+
+packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py:58: AssertionError
+__________________________ test_responses_tool_calls ___________________________
+
+instrument_legacy = <opentelemetry.instrumentation.openai.OpenAIInstrumentor object at 0x2ad33e408e90>
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2ad33e47f490>
+openai_client = <openai.OpenAI object at 0x2ad33f1db050>
+
+    @pytest.mark.vcr
+    def test_responses_tool_calls(instrument_legacy, span_exporter: InMemorySpanExporter, openai_client: OpenAI):
+        tools = [
+            {
+                "type": "function",
+                "name": "get_weather",
+                "description": "Get the current weather for a location",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "location": {
+                            "type": "string",
+                            "description": "The city and state, e.g. San Francisco, CA"
+                        }
+                    },
+                    "required": ["location"]
+                }
+            }
+        ]
+        openai_client.responses.create(
+            model="gpt-4.1-nano",
+            input=[
+                {
+                    "type": "message",
+                    "role": "user",
+                    "content": "What's the weather in London?"
+                }
+            ],
+            tools=tools,
+            tool_choice="auto"
+        )
+    
+        spans = span_exporter.get_finished_spans()
+    
+>       assert len(spans) == 1
+E       assert 0 == 1
+E        +  where 0 = len(())
+
+packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py:119: AssertionError
+=========================== short test summary info ============================
+FAILED packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py::test_responses
+FAILED packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py::test_responses_with_input_history
+FAILED packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py::test_responses_tool_calls
+============================== 3 failed in 1.30s ===============================
+reward=0 graded=3 found=0 failed=0 parsed=0 framework=pytest exit_code=1

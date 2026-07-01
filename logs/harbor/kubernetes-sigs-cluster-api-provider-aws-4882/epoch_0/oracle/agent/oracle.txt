@@ -1,0 +1,13 @@
+patching file api/v1beta1/awscluster_conversion.go
+patching file api/v1beta1/zz_generated.conversion.go
+patching file api/v1beta2/awscluster_webhook.go
+patching file api/v1beta2/network_types.go
+patching file api/v1beta2/zz_generated.deepcopy.go
+patching file config/crd/bases/controlplane.cluster.x-k8s.io_awsmanagedcontrolplanes.yaml
+patching file config/crd/bases/infrastructure.cluster.x-k8s.io_awsclusters.yaml
+patching file config/crd/bases/infrastructure.cluster.x-k8s.io_awsclustertemplates.yaml
+patching file docs/book/src/SUMMARY_PREFIX.md
+patching file docs/book/src/topics/provision-edge-zones.md
+patching file pkg/cloud/services/network/natgateways.go
+patching file pkg/cloud/services/network/routetables.go
+patching file pkg/cloud/services/network/subnets.go

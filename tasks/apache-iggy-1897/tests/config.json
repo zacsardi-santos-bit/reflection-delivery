@@ -1,0 +1,27 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/foreign/go && go test -json ./binary_serialization -count=1",
+  "test_files": [
+    "foreign/go/benchmarks/send_messages_benchmark_test.go",
+    "foreign/go/binary_serialization/fetch_messages_request_serializer_test.go",
+    "foreign/go/binary_serialization/send_messages_request_serializer_test.go",
+    "foreign/go/e2e/tcp_test/messages_feature_send.go",
+    "foreign/go/e2e/tcp_test/messages_steps.go",
+    "foreign/go/e2e/tcp_test/tcp_suite_test.go",
+    "foreign/go/e2e/tcp_test/test_helpers.go"
+  ],
+  "num_test_files": 7,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/iggy-rs/iggy-go-client/binary_serialization::TestSerialize_TcpCreateStreamRequest",
+    "github.com/iggy-rs/iggy-go-client/binary_serialization::TestSerialize_TcpFetchMessagesRequest",
+    "github.com/iggy-rs/iggy-go-client/binary_serialization::TestSerializeIdentifier_StringId",
+    "github.com/iggy-rs/iggy-go-client/binary_serialization::TestSerializeIdentifier_NumericId",
+    "github.com/iggy-rs/iggy-go-client/binary_serialization::TestSerializeIdentifier_EmptyStringId",
+    "github.com/iggy-rs/iggy-go-client/binary_serialization::TestSerialize_SendMessagesRequest",
+    "github.com/iggy-rs/iggy-go-client/binary_serialization::TestDeserialize",
+    "github.com/iggy-rs/iggy-go-client/binary_serialization::TestSerialize_UpdateStream",
+    "github.com/iggy-rs/iggy-go-client/binary_serialization::TestSerialize_UpdateTopic"
+  ],
+  "PASS_TO_PASS": []
+}

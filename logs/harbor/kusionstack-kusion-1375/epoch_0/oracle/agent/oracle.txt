@@ -1,0 +1,16 @@
+patching file pkg/cmd/workspace/update/cmd.go
+patching file pkg/cmd/workspace/update/options.go
+patching file pkg/cmd/workspace/util/util.go
+patching file pkg/domain/constant/workspace.go
+patching file pkg/domain/request/workspace_request.go
+patching file pkg/generators/appconfiguration/app_configurations_generator.go
+patching file pkg/server/manager/workspace/workspace_manager.go
+patching file pkg/workspace/storage.go
+patching file pkg/workspace/storages/google.go
+patching file pkg/workspace/storages/local.go
+patching file pkg/workspace/storages/oss.go
+patching file pkg/workspace/storages/s3.go
+patching file pkg/workspace/storages/testdata/for_rename_workspaces/.metadata.yml
+patching file pkg/workspace/storages/testdata/for_rename_workspaces/default.yaml
+patching file pkg/workspace/storages/testdata/for_rename_workspaces/newName.yaml
+patching file pkg/workspace/storages/util.go

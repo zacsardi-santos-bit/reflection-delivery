@@ -1,0 +1,732 @@
+patching file tests/core/test_chunked_prefill_scheduler.py
+patching file tests/core/test_scheduler.py
+patching file tests/test_sequence.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: asyncio-1.4.0, anyio-4.14.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 40 items
+
+tests/core/test_chunked_prefill_scheduler.py::test_simple PASSED         [  2%]
+tests/core/test_chunked_prefill_scheduler.py::test_chunk FAILED          [  5%]
+tests/core/test_chunked_prefill_scheduler.py::test_complex FAILED        [  7%]
+tests/core/test_chunked_prefill_scheduler.py::test_maximal_decoding FAILED [ 10%]
+tests/core/test_chunked_prefill_scheduler.py::test_prompt_limit FAILED   [ 12%]
+tests/core/test_chunked_prefill_scheduler.py::test_prompt_limit_exceed FAILED [ 15%]
+tests/core/test_chunked_prefill_scheduler.py::test_swap FAILED           [ 17%]
+tests/core/test_chunked_prefill_scheduler.py::test_running_prefill_prioritized_over_swap FAILED [ 20%]
+tests/core/test_chunked_prefill_scheduler.py::test_chunked_prefill_preempt FAILED [ 22%]
+tests/core/test_chunked_prefill_scheduler.py::test_chunked_prefill_max_seqs FAILED [ 25%]
+tests/core/test_scheduler.py::test_scheduler_add_seq_group PASSED        [ 27%]
+tests/core/test_scheduler.py::test_scheduler_abort_seq_group PASSED      [ 30%]
+tests/core/test_scheduler.py::test_scheduler_schedule_simple PASSED      [ 32%]
+tests/core/test_scheduler.py::test_scheduler_prefill_prioritized FAILED  [ 35%]
+tests/core/test_scheduler.py::test_scheduler_schedule_preempt_abort PASSED [ 37%]
+tests/core/test_scheduler.py::test_scheduler_max_seqs PASSED             [ 40%]
+tests/core/test_scheduler.py::test_scheduler_delay_factor PASSED         [ 42%]
+tests/core/test_scheduler.py::test_swapped_out_prioritized PASSED        [ 45%]
+tests/core/test_scheduler.py::test_prefill_schedule_max_prompt_len FAILED [ 47%]
+tests/core/test_scheduler.py::test_prefill_schedule_token_budget FAILED  [ 50%]
+tests/core/test_scheduler.py::test_prefill_schedule_max_seqs FAILED      [ 52%]
+tests/core/test_scheduler.py::test_prefill_schedule_max_lora FAILED      [ 55%]
+tests/core/test_scheduler.py::test_prefill_schedule_no_block_manager_capacity FAILED [ 57%]
+tests/core/test_scheduler.py::test_decode_schedule_preempted FAILED      [ 60%]
+tests/core/test_scheduler.py::test_decode_swap_beam_search FAILED        [ 62%]
+tests/core/test_scheduler.py::test_schedule_decode_blocks_to_copy_update FAILED [ 65%]
+tests/core/test_scheduler.py::test_schedule_swapped_simple FAILED        [ 67%]
+tests/core/test_scheduler.py::test_schedule_swapped_max_token_budget FAILED [ 70%]
+tests/core/test_scheduler.py::test_schedule_swapped_max_seqs FAILED      [ 72%]
+tests/core/test_scheduler.py::test_schedule_swapped_max_loras FAILED     [ 75%]
+tests/core/test_scheduler.py::test_schedule_swapped_cannot_swap_in FAILED [ 77%]
+tests/core/test_scheduler.py::test_schedule_swapped_blocks_to_copy FAILED [ 80%]
+tests/core/test_scheduler.py::test_scheduling_budget FAILED              [ 82%]
+tests/test_sequence.py::test_sampler_output_initialization PASSED        [ 85%]
+tests/test_sequence.py::test_sampler_output_getitem PASSED               [ 87%]
+tests/test_sequence.py::test_sampler_output_setitem PASSED               [ 90%]
+tests/test_sequence.py::test_sampler_output_len PASSED                   [ 92%]
+tests/test_sequence.py::test_sampler_output_eq PASSED                    [ 95%]
+tests/test_sequence.py::test_sequence_data_prefill FAILED                [ 97%]
+tests/test_sequence.py::test_sequence_group_stage FAILED                 [100%]
+
+=================================== FAILURES ===================================
+__________________________________ test_chunk __________________________________
+
+    def test_chunk():
+        """Verify prefills are chunked properly."""
+        block_size = 4
+        max_seqs = 60
+        max_model_len = 80
+        max_num_batched_tokens = 64
+>       scheduler_config = SchedulerConfig(max_num_batched_tokens,
+                                           max_seqs,
+                                           max_model_len,
+                                           enable_chunked_prefill=True)
+
+tests/core/test_chunked_prefill_scheduler.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vllm/config.py:576: in __init__
+    self._verify_args()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <vllm.config.SchedulerConfig object at 0x2ba777a24cd0>
+
+    def _verify_args(self) -> None:
+        if self.max_num_batched_tokens < self.max_model_len:
+>           raise ValueError(
+                f"max_num_batched_tokens ({self.max_num_batched_tokens}) is "
+                f"smaller than max_model_len ({self.max_model_len}). "
+                "This effectively limits the maximum sequence length to "
+                "max_num_batched_tokens and makes vLLM reject longer "
+                "sequences. Please increase max_num_batched_tokens or "
+                "decrease max_model_len.")
+E           ValueError: max_num_batched_tokens (64) is smaller than max_model_len (80). This effectively limits the maximum sequence length to max_num_batched_tokens and makes vLLM reject longer sequences. Please increase max_num_batched_tokens or decrease max_model_len.
+
+vllm/config.py:580: ValueError
+_________________________________ test_complex _________________________________
+
+    def test_complex():
+        block_size = 4
+        max_seqs = 60
+        max_model_len = 80
+        max_num_batched_tokens = 64
+>       scheduler_config = SchedulerConfig(max_num_batched_tokens,
+                                           max_seqs,
+                                           max_model_len,
+                                           enable_chunked_prefill=True)
+
+tests/core/test_chunked_prefill_scheduler.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vllm/config.py:576: in __init__
+    self._verify_args()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <vllm.config.SchedulerConfig object at 0x2ba7779810d0>
+
+    def _verify_args(self) -> None:
+        if self.max_num_batched_tokens < self.max_model_len:
+>           raise ValueError(
+                f"max_num_batched_tokens ({self.max_num_batched_tokens}) is "
+                f"smaller than max_model_len ({self.max_model_len}). "
+                "This effectively limits the maximum sequence length to "
+                "max_num_batched_tokens and makes vLLM reject longer "
+                "sequences. Please increase max_num_batched_tokens or "
+                "decrease max_model_len.")
+E           ValueError: max_num_batched_tokens (64) is smaller than max_model_len (80). This effectively limits the maximum sequence length to max_num_batched_tokens and makes vLLM reject longer sequences. Please increase max_num_batched_tokens or decrease max_model_len.
+
+vllm/config.py:580: ValueError
+____________________________ test_maximal_decoding _____________________________
+
+    def test_maximal_decoding():
+        """Verify decoding requests are prioritized."""
+        block_size = 4
+        max_seqs = 2
+        max_model_len = 2
+        max_num_batched_tokens = 2
+        scheduler_config = SchedulerConfig(max_num_batched_tokens,
+                                           max_seqs,
+                                           max_model_len,
+                                           enable_chunked_prefill=True)
+        cache_config = CacheConfig(block_size, 1.0, 1, "auto")
+        cache_config.num_cpu_blocks = 8
+        cache_config.num_gpu_blocks = 8
+        scheduler = Scheduler(scheduler_config, cache_config, None)
+        running: List[SequenceGroup] = []
+    
+        # Add seq groups to scheduler.
+        for i in range(2):
+            _, seq_group = create_dummy_prompt(str(i), prompt_length=2)
+            scheduler.add_seq_group(seq_group)
+            running.append(seq_group)
+>           assert seq_group.is_prefill()
+                   ^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'SequenceGroup' object has no attribute 'is_prefill'
+
+tests/core/test_chunked_prefill_scheduler.py:199: AttributeError
+------------------------------ Captured log call -------------------------------
+DEBUG    vllm.core.scheduler:scheduler.py:226 add_seq_group 0
+______________________________ test_prompt_limit _______________________________
+
+    def test_prompt_limit():
+        """Verify max_num_batched_tokens < max_model_len is possible."""
+        block_size = 4
+        max_seqs = 32
+        max_model_len = 64
+        max_num_batched_tokens = 32
+>       scheduler_config = SchedulerConfig(max_num_batched_tokens,
+                                           max_seqs,
+                                           max_model_len,
+                                           enable_chunked_prefill=True)
+
+tests/core/test_chunked_prefill_scheduler.py:271: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vllm/config.py:576: in __init__
+    self._verify_args()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <vllm.config.SchedulerConfig object at 0x2ba777a49710>
+
+    def _verify_args(self) -> None:
+        if self.max_num_batched_tokens < self.max_model_len:
+>           raise ValueError(
+                f"max_num_batched_tokens ({self.max_num_batched_tokens}) is "
+                f"smaller than max_model_len ({self.max_model_len}). "
+                "This effectively limits the maximum sequence length to "
+                "max_num_batched_tokens and makes vLLM reject longer "
+                "sequences. Please increase max_num_batched_tokens or "
+                "decrease max_model_len.")
+E           ValueError: max_num_batched_tokens (32) is smaller than max_model_len (64). This effectively limits the maximum sequence length to max_num_batched_tokens and makes vLLM reject longer sequences. Please increase max_num_batched_tokens or decrease max_model_len.
+
+vllm/config.py:580: ValueError
+___________________________ test_prompt_limit_exceed ___________________________
+
+    def test_prompt_limit_exceed():
+        block_size = 4
+        max_seqs = 64
+        max_model_len = 32
+        max_num_batched_tokens = 64
+        scheduler_config = SchedulerConfig(max_num_batched_tokens,
+                                           max_seqs,
+                                           max_model_len,
+                                           enable_chunked_prefill=True)
+        cache_config = CacheConfig(block_size, 1.0, 1, "auto")
+        cache_config.num_cpu_blocks = 8
+        cache_config.num_gpu_blocks = 8
+        scheduler = Scheduler(scheduler_config, cache_config, None)
+        running: List[SequenceGroup] = []
+    
+        _, seq_group = create_dummy_prompt("2", prompt_length=48)
+        scheduler.add_seq_group(seq_group)
+        running.append(seq_group)
+>       assert seq_group.is_prefill()
+               ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'SequenceGroup' object has no attribute 'is_prefill'
+
+tests/core/test_chunked_prefill_scheduler.py:313: AttributeError
+------------------------------ Captured log call -------------------------------
+DEBUG    vllm.core.scheduler:scheduler.py:226 add_seq_group 2
+__________________________________ test_swap ___________________________________
+
+    def test_swap():
+        """Verify swapping works with chunked prefill requests"""
+        block_size = 4
+        max_seqs = 30
+        max_model_len = 200
+        max_num_batched_tokens = 30
+>       scheduler_config = SchedulerConfig(max_num_batched_tokens,
+                                           max_seqs,
+                                           max_model_len,
+                                           enable_chunked_prefill=True)
+
+tests/core/test_chunked_prefill_scheduler.py:325: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vllm/config.py:576: in __init__
+    self._verify_args()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <vllm.config.SchedulerConfig object at 0x2ba777919950>
+
+    def _verify_args(self) -> None:
+        if self.max_num_batched_tokens < self.max_model_len:
+>           raise ValueError(
+                f"max_num_batched_tokens ({self.max_num_batched_tokens}) is "
+                f"smaller than max_model_len ({self.max_model_len}). "
+                "This effectively limits the maximum sequence length to "
+                "max_num_batched_tokens and makes vLLM reject longer "
+                "sequences. Please increase max_num_batched_tokens or "
+                "decrease max_model_len.")
+E           ValueError: max_num_batched_tokens (30) is smaller than max_model_len (200). This effectively limits the maximum sequence length to max_num_batched_tokens and makes vLLM reject longer sequences. Please increase max_num_batched_tokens or decrease max_model_len.
+
+vllm/config.py:580: ValueError
+__________________ test_running_prefill_prioritized_over_swap __________________
+
+    def test_running_prefill_prioritized_over_swap():
+        block_size = 4
+        max_seqs = 30
+        max_model_len = 200
+        max_num_batched_tokens = 30
+>       scheduler_config = SchedulerConfig(max_num_batched_tokens,
+                                           max_seqs,
+                                           max_model_len,
+                                           enable_chunked_prefill=True)
+
+tests/core/test_chunked_prefill_scheduler.py:376: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vllm/config.py:576: in __init__
+    self._verify_args()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <vllm.config.SchedulerConfig object at 0x2ba777a113d0>
+
+    def _verify_args(self) -> None:
+        if self.max_num_batched_tokens < self.max_model_len:
+>           raise ValueError(
+                f"max_num_batched_tokens ({self.max_num_batched_tokens}) is "
+                f"smaller than max_model_len ({self.max_model_len}). "
+                "This effectively limits the maximum sequence length to "
+                "max_num_batched_tokens and makes vLLM reject longer "
+                "sequences. Please increase max_num_batched_tokens or "
+                "decrease max_model_len.")
+E           ValueError: max_num_batched_tokens (30) is smaller than max_model_len (200). This effectively limits the maximum sequence length to max_num_batched_tokens and makes vLLM reject longer sequences. Please increase max_num_batched_tokens or decrease max_model_len.
+
+vllm/config.py:580: ValueError
+_________________________ test_chunked_prefill_preempt _________________________
+
+    def test_chunked_prefill_preempt():
+        """Verify preempt works with chunked prefill requests"""
+        block_size = 4
+        max_seqs = 30
+        max_model_len = 200
+        max_num_batched_tokens = 30
+>       scheduler_config = SchedulerConfig(max_num_batched_tokens,
+                                           max_seqs,
+                                           max_model_len,
+                                           enable_chunked_prefill=True)
+
+tests/core/test_chunked_prefill_scheduler.py:463: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vllm/config.py:576: in __init__
+    self._verify_args()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <vllm.config.SchedulerConfig object at 0x2ba777899d50>
+
+    def _verify_args(self) -> None:
+        if self.max_num_batched_tokens < self.max_model_len:
+>           raise ValueError(
+                f"max_num_batched_tokens ({self.max_num_batched_tokens}) is "
+                f"smaller than max_model_len ({self.max_model_len}). "
+                "This effectively limits the maximum sequence length to "
+                "max_num_batched_tokens and makes vLLM reject longer "
+                "sequences. Please increase max_num_batched_tokens or "
+                "decrease max_model_len.")
+E           ValueError: max_num_batched_tokens (30) is smaller than max_model_len (200). This effectively limits the maximum sequence length to max_num_batched_tokens and makes vLLM reject longer sequences. Please increase max_num_batched_tokens or decrease max_model_len.
+
+vllm/config.py:580: ValueError
+________________________ test_chunked_prefill_max_seqs _________________________
+
+    def test_chunked_prefill_max_seqs():
+        block_size = 4
+        max_seqs = 2
+        max_model_len = 80
+        max_num_batched_tokens = 64
+>       scheduler_config = SchedulerConfig(max_num_batched_tokens,
+                                           max_seqs,
+                                           max_model_len,
+                                           enable_chunked_prefill=True)
+
+tests/core/test_chunked_prefill_scheduler.py:524: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vllm/config.py:576: in __init__
+    self._verify_args()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <vllm.config.SchedulerConfig object at 0x2ba777a797d0>
+
+    def _verify_args(self) -> None:
+        if self.max_num_batched_tokens < self.max_model_len:
+>           raise ValueError(
+                f"max_num_batched_tokens ({self.max_num_batched_tokens}) is "
+                f"smaller than max_model_len ({self.max_model_len}). "
+                "This effectively limits the maximum sequence length to "
+                "max_num_batched_tokens and makes vLLM reject longer "
+                "sequences. Please increase max_num_batched_tokens or "
+                "decrease max_model_len.")
+E           ValueError: max_num_batched_tokens (64) is smaller than max_model_len (80). This effectively limits the maximum sequence length to max_num_batched_tokens and makes vLLM reject longer sequences. Please increase max_num_batched_tokens or decrease max_model_len.
+
+vllm/config.py:580: ValueError
+______________________ test_scheduler_prefill_prioritized ______________________
+
+    def test_scheduler_prefill_prioritized():
+        """Verify running batched tokens are not applied to prefill requests."""
+        block_size = 4
+        max_model_len = 30
+        max_batched_num_tokens = 30
+        scheduler_config = SchedulerConfig(max_batched_num_tokens, 2,
+                                           max_model_len)
+        cache_config = CacheConfig(block_size, 1.0, 1, "auto")
+        cache_config.num_cpu_blocks = 2
+        cache_config.num_gpu_blocks = 2
+        scheduler = Scheduler(scheduler_config, cache_config, None)
+    
+        # Add seq groups to scheduler.
+        _, seq_group_a = create_dummy_prompt("1", 1)
+        scheduler.add_seq_group(seq_group_a)
+    
+        # Schedule seq groups prompts.
+        _, out = schedule_and_update_computed_tokens(scheduler)
+        assert get_sequence_groups(out) == [seq_group_a]
+    
+        # Add a new prefill request B.
+        _, seq_group_b = create_dummy_prompt("2", 30)
+        scheduler.add_seq_group(seq_group_b)
+    
+        # Verify prefill requests are prioritized. Since max_batched_num_tokens
+        # is 1, new prefill request has to be scheduled first.
+        _, out = schedule_and_update_computed_tokens(scheduler)
+>       assert get_sequence_groups(out) == [seq_group_b]
+E       AssertionError: assert [SequenceGrou..., num_seqs=1)] == [SequenceGrou..., num_seqs=1)]
+E         
+E         At index 0 diff: SequenceGroup(request_id=1, sampling_params=SamplingParams(n=1, best_of=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=-1, min_p=0.0, seed=None, use_beam_search=False, length_penalty=1.0, early_stopping=False, stop=[], stop_token_ids=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=16, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True), num_seqs=1) != SequenceGroup(request_id=2, sampling_params=SamplingParams(n=1, be...
+E         
+E         ...Full output truncated (9 lines hidden), use '-vv' to show
+
+tests/core/test_scheduler.py:144: AssertionError
+------------------------------ Captured log call -------------------------------
+DEBUG    vllm.core.scheduler:scheduler.py:226 add_seq_group 1
+DEBUG    vllm.core.scheduler:scheduler.py:226 add_seq_group 2
+DEBUG    vllm.core.scheduler:scheduler.py:351 append slot for SequenceGroup(request_id=1, sampling_params=SamplingParams(n=1, best_of=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=1.0, top_p=1.0, top_k=-1, min_p=0.0, seed=None, use_beam_search=False, length_penalty=1.0, early_stopping=False, stop=[], stop_token_ids=[], include_stop_str_in_output=False, ignore_eos=False, max_tokens=16, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=True), num_seqs=1)
+_____________________ test_prefill_schedule_max_prompt_len _____________________
+
+    def test_prefill_schedule_max_prompt_len():
+        """
+        Test prompt longer than max_prompt_len is aborted.
+        """
+        scheduler = initialize_scheduler(max_model_len=30)
+        _, seq_group = create_dummy_prompt(0, prompt_length=60)
+        waiting = deque([seq_group])
+>       budget = create_token_budget()
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+tests/core/test_scheduler.py:351: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+token_budget = 10000, max_num_seqs = 10000
+
+    def create_token_budget(token_budget: int = 10000,
+                            max_num_seqs: int = 10000) -> SchedulingBudget:
+>       return SchedulingBudget(
+            token_budget=token_budget,
+            max_num_seqs=max_num_seqs,
+        )
+E       TypeError: SchedulingBudget.__init__() missing 2 required positional arguments: 'num_batched_tokens' and 'num_curr_seqs'
+
+tests/core/test_scheduler.py:329: TypeError
+______________________ test_prefill_schedule_token_budget ______________________
+
+    def test_prefill_schedule_token_budget():
+        """
+        Test token budget respected.
+        """
+        scheduler = initialize_scheduler()
+        waiting = deque()
+>       budget = create_token_budget(token_budget=0)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/core/test_scheduler.py:367: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+token_budget = 0, max_num_seqs = 10000
+
+    def create_token_budget(token_budget: int = 10000,
+                            max_num_seqs: int = 10000) -> SchedulingBudget:
+>       return SchedulingBudget(
+            token_budget=token_budget,
+            max_num_seqs=max_num_seqs,
+        )
+E       TypeError: SchedulingBudget.__init__() missing 2 required positional arguments: 'num_batched_tokens' and 'num_curr_seqs'
+
+tests/core/test_scheduler.py:329: TypeError
+________________________ test_prefill_schedule_max_seqs ________________________
+
+    def test_prefill_schedule_max_seqs():
+        """
+        Test max seq respected.
+        """
+        scheduler = initialize_scheduler()
+        waiting = deque()
+>       budget = create_token_budget(max_num_seqs=2)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/core/test_scheduler.py:422: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+token_budget = 10000, max_num_seqs = 2
+
+    def create_token_budget(token_budget: int = 10000,
+                            max_num_seqs: int = 10000) -> SchedulingBudget:
+>       return SchedulingBudget(
+            token_budget=token_budget,
+            max_num_seqs=max_num_seqs,
+        )
+E       TypeError: SchedulingBudget.__init__() missing 2 required positional arguments: 'num_batched_tokens' and 'num_curr_seqs'
+
+tests/core/test_scheduler.py:329: TypeError
+________________________ test_prefill_schedule_max_lora ________________________
+
+    def test_prefill_schedule_max_lora():
+        """
+        Test max lora is respected and prioritized.
+        """
+        lora_config = LoRAConfig(max_lora_rank=8, max_loras=1)
+        scheduler = initialize_scheduler(lora_config=lora_config)
+        waiting = deque()
+>       budget = create_token_budget(token_budget=120)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/core/test_scheduler.py:456: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+token_budget = 120, max_num_seqs = 10000
+
+    def create_token_budget(token_budget: int = 10000,
+                            max_num_seqs: int = 10000) -> SchedulingBudget:
+>       return SchedulingBudget(
+            token_budget=token_budget,
+            max_num_seqs=max_num_seqs,
+        )
+E       TypeError: SchedulingBudget.__init__() missing 2 required positional arguments: 'num_batched_tokens' and 'num_curr_seqs'
+
+tests/core/test_scheduler.py:329: TypeError
+_______________ test_prefill_schedule_no_block_manager_capacity ________________
+
+    def test_prefill_schedule_no_block_manager_capacity():
+        """
+        Test sequence cannot be scheduled due to block manager has no capacity.
+        """
+        scheduler = initialize_scheduler()
+        waiting = deque()
+>       budget = create_token_budget()
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+tests/core/test_scheduler.py:502: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+token_budget = 10000, max_num_seqs = 10000
+
+    def create_token_budget(token_budget: int = 10000,
+                            max_num_seqs: int = 10000) -> SchedulingBudget:
+>       return SchedulingBudget(
+            token_budget=token_budget,
+            max_num_seqs=max_num_seqs,
+        )
+E       TypeError: SchedulingBudget.__init__() missing 2 required positional arguments: 'num_batched_tokens' and 'num_curr_seqs'
+
+tests/core/test_scheduler.py:329: TypeError
+________________________ test_decode_schedule_preempted ________________________
+
+    def test_decode_schedule_preempted():
+        """
+        Test decodes cannot be scheduled and preempted.
+        """
+        scheduler = initialize_scheduler()
+        running = deque()
+        policy = PolicyFactory.get_policy(policy_name="fcfs")
+        curr_loras = None
+        for i in range(3):
+            _, seq_group = create_dummy_prompt(str(i), prompt_length=60)
+>           scheduler._allocate_and_set_running(seq_group, 60)
+E           TypeError: Scheduler._allocate_and_set_running() takes 2 positional arguments but 3 were given
+
+tests/core/test_scheduler.py:543: TypeError
+_________________________ test_decode_swap_beam_search _________________________
+
+    def test_decode_swap_beam_search():
+        """
+        Test best_of > 1 swap out blocks
+        """
+        scheduler = initialize_scheduler()
+        running = deque()
+        policy = PolicyFactory.get_policy(policy_name="fcfs")
+        curr_loras = None
+>       budget = create_token_budget()
+                 ^^^^^^^^^^^^^^^^^^^^^
+
+tests/core/test_scheduler.py:581: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+token_budget = 10000, max_num_seqs = 10000
+
+    def create_token_budget(token_budget: int = 10000,
+                            max_num_seqs: int = 10000) -> SchedulingBudget:
+>       return SchedulingBudget(
+            token_budget=token_budget,
+            max_num_seqs=max_num_seqs,
+        )
+E       TypeError: SchedulingBudget.__init__() missing 2 required positional arguments: 'num_batched_tokens' and 'num_curr_seqs'
+
+tests/core/test_scheduler.py:329: TypeError
+__________________ test_schedule_decode_blocks_to_copy_update __________________
+
+    def test_schedule_decode_blocks_to_copy_update():
+        """
+        Verify blocks_to_copy is updated.
+        """
+        scheduler = initialize_scheduler()
+        _, seq_group = create_dummy_prompt("1", prompt_length=60, best_of=2)
+        running = deque()
+        policy = PolicyFactory.get_policy(policy_name="fcfs")
+        curr_loras = None
+>       scheduler._allocate_and_set_running(seq_group, 60)
+E       TypeError: Scheduler._allocate_and_set_running() takes 2 positional arguments but 3 were given
+
+tests/core/test_scheduler.py:632: TypeError
+_________________________ test_schedule_swapped_simple _________________________
+
+    def test_schedule_swapped_simple():
+        scheduler = initialize_scheduler()
+        swapped = deque()
+        policy = PolicyFactory.get_policy(policy_name="fcfs")
+        curr_loras = None
+        blocks_to_swap_out = {}
+        _, seq_group = create_dummy_prompt("1", prompt_length=60, best_of=2)
+>       scheduler._allocate_and_set_running(seq_group, 60)
+E       TypeError: Scheduler._allocate_and_set_running() takes 2 positional arguments but 3 were given
+
+tests/core/test_scheduler.py:662: TypeError
+____________________ test_schedule_swapped_max_token_budget ____________________
+
+    def test_schedule_swapped_max_token_budget():
+        scheduler = initialize_scheduler()
+        swapped = deque()
+        policy = PolicyFactory.get_policy(policy_name="fcfs")
+        curr_loras = None
+        blocks_to_swap_out = {}
+        for _ in range(2):
+            _, seq_group = create_dummy_prompt("1", prompt_length=60, best_of=2)
+>           scheduler._allocate_and_set_running(seq_group, 60)
+E           TypeError: Scheduler._allocate_and_set_running() takes 2 positional arguments but 3 were given
+
+tests/core/test_scheduler.py:690: TypeError
+________________________ test_schedule_swapped_max_seqs ________________________
+
+    def test_schedule_swapped_max_seqs():
+        scheduler = initialize_scheduler()
+        swapped = deque()
+        policy = PolicyFactory.get_policy(policy_name="fcfs")
+        curr_loras = None
+        blocks_to_swap_out = {}
+        for i in range(4):
+            _, seq_group = create_dummy_prompt(str(i), prompt_length=60)
+>           scheduler._allocate_and_set_running(seq_group, 60)
+E           TypeError: Scheduler._allocate_and_set_running() takes 2 positional arguments but 3 were given
+
+tests/core/test_scheduler.py:724: TypeError
+_______________________ test_schedule_swapped_max_loras ________________________
+
+    def test_schedule_swapped_max_loras():
+        lora_config = LoRAConfig(max_lora_rank=8, max_loras=1)
+        scheduler = initialize_scheduler(lora_config=lora_config)
+        swapped = deque()
+        policy = PolicyFactory.get_policy(policy_name="fcfs")
+        curr_loras = set()
+        blocks_to_swap_out = {}
+        for i in range(2):
+            _, seq_group = create_dummy_prompt(str(i),
+                                               prompt_length=60,
+                                               lora_request=LoRARequest(
+                                                   lora_name=str(i),
+                                                   lora_int_id=i + 1,
+                                                   lora_local_path="abc"))
+>           scheduler._allocate_and_set_running(seq_group, 60)
+E           TypeError: Scheduler._allocate_and_set_running() takes 2 positional arguments but 3 were given
+
+tests/core/test_scheduler.py:762: TypeError
+_____________________ test_schedule_swapped_cannot_swap_in _____________________
+
+    def test_schedule_swapped_cannot_swap_in():
+        scheduler = initialize_scheduler()
+        swapped = deque()
+        policy = PolicyFactory.get_policy(policy_name="fcfs")
+        curr_loras = None
+        blocks_to_swap_out = {}
+        for _ in range(2):
+            _, seq_group = create_dummy_prompt("1", prompt_length=60, best_of=2)
+>           scheduler._allocate_and_set_running(seq_group, 60)
+E           TypeError: Scheduler._allocate_and_set_running() takes 2 positional arguments but 3 were given
+
+tests/core/test_scheduler.py:786: TypeError
+_____________________ test_schedule_swapped_blocks_to_copy _____________________
+
+    def test_schedule_swapped_blocks_to_copy():
+        scheduler = initialize_scheduler()
+        swapped = deque()
+        policy = PolicyFactory.get_policy(policy_name="fcfs")
+        curr_loras = None
+        _, seq_group = create_dummy_prompt("1", prompt_length=60, best_of=2)
+>       scheduler._allocate_and_set_running(seq_group, 60)
+E       TypeError: Scheduler._allocate_and_set_running() takes 2 positional arguments but 3 were given
+
+tests/core/test_scheduler.py:811: TypeError
+____________________________ test_scheduling_budget ____________________________
+
+    def test_scheduling_budget():
+        TOKEN_BUDGET = 4
+        MAX_SEQS = 4
+>       budget = SchedulingBudget(token_budget=TOKEN_BUDGET, max_num_seqs=MAX_SEQS)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: SchedulingBudget.__init__() missing 2 required positional arguments: 'num_batched_tokens' and 'num_curr_seqs'
+
+tests/core/test_scheduler.py:833: TypeError
+__________________________ test_sequence_data_prefill __________________________
+
+    def test_sequence_data_prefill():
+        seq_data = SequenceData(prompt_token_ids=[1, 2, 3, 4])
+        assert seq_data.get_num_uncomputed_tokens() == 4
+        assert seq_data.get_num_computed_tokens() == 0
+        # advance by 2
+        seq_data.update_num_computed_tokens(2)
+        assert seq_data.get_num_uncomputed_tokens() == 2
+        assert seq_data.get_num_computed_tokens() == 2
+    
+        # advance by 1
+        seq_data.update_num_computed_tokens(1)
+        assert seq_data.get_num_uncomputed_tokens() == 1
+        assert seq_data.get_num_computed_tokens() == 3
+    
+        # append tokens and reset, simulating recompute
+        seq_data.append_token_id(1, logprob=0.0)
+>       seq_data.reset_state_for_recompute()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'SequenceData' object has no attribute 'reset_state_for_recompute'
+
+tests/test_sequence.py:99: AttributeError
+__________________________ test_sequence_group_stage ___________________________
+
+    def test_sequence_group_stage():
+        seq_group = create_dummy_prompt("1", 12)
+>       assert seq_group.is_prefill() is True
+               ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'SequenceGroup' object has no attribute 'is_prefill'
+
+tests/test_sequence.py:106: AttributeError
+=============================== warnings summary ===============================
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/core/test_chunked_prefill_scheduler.py::test_chunk - ValueError:...
+FAILED tests/core/test_chunked_prefill_scheduler.py::test_complex - ValueErro...
+FAILED tests/core/test_chunked_prefill_scheduler.py::test_maximal_decoding - ...
+FAILED tests/core/test_chunked_prefill_scheduler.py::test_prompt_limit - Valu...
+FAILED tests/core/test_chunked_prefill_scheduler.py::test_prompt_limit_exceed
+FAILED tests/core/test_chunked_prefill_scheduler.py::test_swap - ValueError: ...
+FAILED tests/core/test_chunked_prefill_scheduler.py::test_running_prefill_prioritized_over_swap
+FAILED tests/core/test_chunked_prefill_scheduler.py::test_chunked_prefill_preempt
+FAILED tests/core/test_chunked_prefill_scheduler.py::test_chunked_prefill_max_seqs
+FAILED tests/core/test_scheduler.py::test_scheduler_prefill_prioritized - Ass...
+FAILED tests/core/test_scheduler.py::test_prefill_schedule_max_prompt_len - T...
+FAILED tests/core/test_scheduler.py::test_prefill_schedule_token_budget - Typ...
+FAILED tests/core/test_scheduler.py::test_prefill_schedule_max_seqs - TypeErr...
+FAILED tests/core/test_scheduler.py::test_prefill_schedule_max_lora - TypeErr...
+FAILED tests/core/test_scheduler.py::test_prefill_schedule_no_block_manager_capacity
+FAILED tests/core/test_scheduler.py::test_decode_schedule_preempted - TypeErr...
+FAILED tests/core/test_scheduler.py::test_decode_swap_beam_search - TypeError...
+FAILED tests/core/test_scheduler.py::test_schedule_decode_blocks_to_copy_update
+FAILED tests/core/test_scheduler.py::test_schedule_swapped_simple - TypeError...
+FAILED tests/core/test_scheduler.py::test_schedule_swapped_max_token_budget
+FAILED tests/core/test_scheduler.py::test_schedule_swapped_max_seqs - TypeErr...
+FAILED tests/core/test_scheduler.py::test_schedule_swapped_max_loras - TypeEr...
+FAILED tests/core/test_scheduler.py::test_schedule_swapped_cannot_swap_in - T...
+FAILED tests/core/test_scheduler.py::test_schedule_swapped_blocks_to_copy - T...
+FAILED tests/core/test_scheduler.py::test_scheduling_budget - TypeError: Sche...
+FAILED tests/test_sequence.py::test_sequence_data_prefill - AttributeError: '...
+FAILED tests/test_sequence.py::test_sequence_group_stage - AttributeError: 'S...
+================== 27 failed, 13 passed, 2 warnings in 4.14s ===================
+reward=0 graded=40 found=0 failed=0 parsed=40 framework=pytest exit_code=1

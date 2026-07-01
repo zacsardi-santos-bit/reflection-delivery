@@ -1,0 +1,59 @@
+patching file api/v1/cluster_types_test.go
+patching file api/v1/cluster_webhook_test.go
+patching file internal/controller/cluster_delete_test.go
+patching file internal/controller/cluster_status_test.go
+patching file internal/controller/suite_test.go
+patching file pkg/promotiontoken/promotion_token_test.go
+patching file pkg/promotiontoken/suite_test.go
+patching file pkg/utils/parser_test.go
+patching file tests/e2e/fixtures/replica_mode_cluster/cluster-replica-switchover-restart-1.yaml.template
+patching file tests/e2e/fixtures/replica_mode_cluster/cluster-replica-switchover-restart-2.yaml.template
+patching file tests/e2e/fixtures/replica_mode_cluster/cluster-replica-switchover-switchover-1.yaml.template
+patching file tests/e2e/fixtures/replica_mode_cluster/cluster-replica-switchover-switchover-2.yaml.template
+patching file tests/e2e/replica_mode_cluster_test.go
+# github.com/cloudnative-pg/cloudnative-pg/api/v1 [github.com/cloudnative-pg/cloudnative-pg/api/v1.test]
+api/v1/cluster_types_test.go:1235:6: unknown field PromotionToken in struct literal of type ReplicaClusterConfiguration
+api/v1/cluster_types_test.go:1239:18: cluster.ShouldPromoteFromReplicaCluster undefined (type *Cluster has no field or method ShouldPromoteFromReplicaCluster)
+api/v1/cluster_types_test.go:1250:18: cluster.ShouldPromoteFromReplicaCluster undefined (type *Cluster has no field or method ShouldPromoteFromReplicaCluster)
+api/v1/cluster_types_test.go:1259:18: cluster.ShouldPromoteFromReplicaCluster undefined (type *Cluster has no field or method ShouldPromoteFromReplicaCluster)
+api/v1/cluster_types_test.go:1267:6: unknown field PromotionToken in struct literal of type ReplicaClusterConfiguration
+api/v1/cluster_types_test.go:1271:5: unknown field LastPromotionToken in struct literal of type ClusterStatus
+api/v1/cluster_types_test.go:1274:18: cluster.ShouldPromoteFromReplicaCluster undefined (type *Cluster has no field or method ShouldPromoteFromReplicaCluster)
+api/v1/cluster_types_test.go:1282:6: unknown field PromotionToken in struct literal of type ReplicaClusterConfiguration
+api/v1/cluster_types_test.go:1286:5: unknown field LastPromotionToken in struct literal of type ClusterStatus
+api/v1/cluster_types_test.go:1289:18: cluster.ShouldPromoteFromReplicaCluster undefined (type *Cluster has no field or method ShouldPromoteFromReplicaCluster)
+api/v1/cluster_types_test.go:1289:18: too many errors
+# github.com/cloudnative-pg/cloudnative-pg/pkg/promotiontoken [github.com/cloudnative-pg/cloudnative-pg/pkg/promotiontoken.test]
+pkg/promotiontoken/promotion_token_test.go:27:24: undefined: utils.PgControldataTokenContent
+pkg/promotiontoken/promotion_token_test.go:30:23: undefined: utils.PgControldataTokenContent
+pkg/promotiontoken/promotion_token_test.go:40:12: undefined: ValidateAgainstInstanceStatus
+pkg/promotiontoken/promotion_token_test.go:49:12: undefined: ValidateAgainstLSN
+pkg/promotiontoken/promotion_token_test.go:56:12: undefined: ValidateAgainstLSN
+pkg/promotiontoken/promotion_token_test.go:63:12: undefined: ValidateAgainstLSN
+pkg/promotiontoken/promotion_token_test.go:73:12: undefined: ValidateAgainstTimelineID
+pkg/promotiontoken/promotion_token_test.go:79:12: undefined: ValidateAgainstTimelineID
+pkg/promotiontoken/promotion_token_test.go:86:12: undefined: ValidateAgainstTimelineID
+pkg/promotiontoken/promotion_token_test.go:96:12: undefined: ValidateAgainstSystemIdentifier
+pkg/promotiontoken/promotion_token_test.go:96:12: too many errors
+# github.com/cloudnative-pg/cloudnative-pg/pkg/utils [github.com/cloudnative-pg/cloudnative-pg/pkg/utils.test]
+pkg/utils/parser_test.go:70:10: undefined: PgDataState
+pkg/utils/parser_test.go:109:17: undefined: CreatePromotionToken
+pkg/utils/parser_test.go:120:17: undefined: CreatePromotionToken
+pkg/utils/parser_test.go:123:24: undefined: ParsePgControldataToken
+pkg/utils/parser_test.go:126:34: undefined: PgControldataTokenContent
+pkg/utils/parser_test.go:137:24: undefined: ParsePgControldataToken
+pkg/utils/parser_test.go:145:24: undefined: ParsePgControldataToken
+pkg/utils/parser_test.go:155:17: undefined: CreatePromotionToken
+pkg/utils/parser_test.go:158:24: undefined: ParsePgControldataToken
+pkg/utils/parser_test.go:166:12: undefined: PgControldataTokenContent
+pkg/utils/parser_test.go:166:12: too many errors
+{"Time":"2026-06-29T15:22:49.803508656Z","Action":"start","Package":"github.com/cloudnative-pg/cloudnative-pg/api/v1"}
+{"Time":"2026-06-29T15:22:49.803600148Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/api/v1","Output":"FAIL\tgithub.com/cloudnative-pg/cloudnative-pg/api/v1 [build failed]\n"}
+{"Time":"2026-06-29T15:22:49.803620584Z","Action":"start","Package":"github.com/cloudnative-pg/cloudnative-pg/pkg/promotiontoken"}
+{"Time":"2026-06-29T15:22:49.803656469Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/pkg/promotiontoken","Output":"FAIL\tgithub.com/cloudnative-pg/cloudnative-pg/pkg/promotiontoken [build failed]\n"}
+{"Time":"2026-06-29T15:22:49.80369233Z","Action":"fail","Package":"github.com/cloudnative-pg/cloudnative-pg/pkg/promotiontoken","Elapsed":0}
+{"Time":"2026-06-29T15:22:49.80361755Z","Action":"fail","Package":"github.com/cloudnative-pg/cloudnative-pg/api/v1","Elapsed":0}
+{"Time":"2026-06-29T15:22:49.803682379Z","Action":"start","Package":"github.com/cloudnative-pg/cloudnative-pg/pkg/utils"}
+{"Time":"2026-06-29T15:22:49.803840705Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/pkg/utils","Output":"FAIL\tgithub.com/cloudnative-pg/cloudnative-pg/pkg/utils [build failed]\n"}
+{"Time":"2026-06-29T15:22:49.803858552Z","Action":"fail","Package":"github.com/cloudnative-pg/cloudnative-pg/pkg/utils","Elapsed":0}
+reward=0 graded=3 found=0 failed=0 parsed=3 framework=go exit_code=1

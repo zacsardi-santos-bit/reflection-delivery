@@ -1,0 +1,30 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/providers/aws/lib/s3/s3_test.py -v",
+  "test_files": [
+    "tests/providers/aws/lib/s3/fixtures/compliance/prowler-output-123456789012_cis_1.4_aws.csv",
+    "tests/providers/aws/lib/s3/fixtures/prowler-output-123456789012.asff.json",
+    "tests/providers/aws/lib/s3/fixtures/prowler-output-123456789012.csv",
+    "tests/providers/aws/lib/s3/fixtures/prowler-output-123456789012.html",
+    "tests/providers/aws/lib/s3/fixtures/prowler-output-123456789012.ocsf.json",
+    "tests/providers/aws/lib/s3/s3_test.py"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_get_get_object_path_without_prowler",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_generate_subfolder_name_by_extension_json_ocsf",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_generate_subfolder_name_by_extension_csv",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_send_no_outputs",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_send_to_s3_bucket_compliance_iso_27001",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_send_to_s3_bucket_html",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_send_to_s3_non_existent_bucket",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_generate_subfolder_name_by_extension_json_asff",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_get_get_object_path_with_prowler",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_send_to_s3_bucket_csv",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_send_to_s3_bucket_ocsf",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_generate_subfolder_name_by_extension_html",
+    "tests.providers.aws.lib.s3.s3_test.TestS3::test_send_to_s3_bucket_csv_with_file_descriptor"
+  ],
+  "PASS_TO_PASS": []
+}

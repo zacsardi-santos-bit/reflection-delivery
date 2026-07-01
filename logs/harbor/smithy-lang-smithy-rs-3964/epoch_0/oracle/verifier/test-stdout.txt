@@ -1,0 +1,45 @@
+patching file aws/sdk-codegen/src/test/kotlin/software/amazon/smithy/rustsdk/RetryPartitionTest.kt
+patching file codegen-client/src/test/kotlin/software/amazon/smithy/rust/codegen/client/smithy/generators/ConfigOverrideRuntimePluginGeneratorTest.kt
+patching file rust-runtime/aws-smithy-runtime/tests/retries.rs
+   Compiling libc v0.2.169
+   Compiling parking_lot_core v0.9.10
+   Compiling scopeguard v1.2.0
+   Compiling slab v0.4.9
+   Compiling lock_api v0.4.12
+   Compiling futures-task v0.3.31
+   Compiling futures-macro v0.3.31
+   Compiling tokio-macros v2.4.0
+   Compiling futures-sink v0.3.31
+   Compiling try-lock v0.2.5
+   Compiling tracing-test-macro v0.2.5
+   Compiling futures-channel v0.3.31
+   Compiling tower-service v0.3.3
+   Compiling httpdate v1.0.3
+   Compiling approx v0.5.1
+   Compiling want v0.3.1
+   Compiling socket2 v0.5.8
+   Compiling signal-hook-registry v1.4.2
+   Compiling mio v1.0.3
+   Compiling parking_lot v0.12.3
+   Compiling tracing-test v0.2.5
+   Compiling tokio v1.42.0
+   Compiling futures-util v0.3.31
+   Compiling http-body-util v0.1.2
+   Compiling aws-smithy-types v1.2.11 (/workspace/repo/rust-runtime/aws-smithy-types)
+   Compiling aws-smithy-async v1.2.3 (/workspace/repo/rust-runtime/aws-smithy-async)
+   Compiling tokio-util v0.7.13
+   Compiling aws-smithy-runtime-api v1.7.3 (/workspace/repo/rust-runtime/aws-smithy-runtime-api)
+   Compiling h2 v0.3.26
+   Compiling aws-smithy-protocol-test v0.63.0 (/workspace/repo/rust-runtime/aws-smithy-protocol-test)
+   Compiling aws-smithy-http v0.60.11 (/workspace/repo/rust-runtime/aws-smithy-http)
+   Compiling aws-smithy-runtime v1.7.7 (/workspace/repo/rust-runtime/aws-smithy-runtime)
+   Compiling hyper v0.14.32
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.08s
+────────────
+ Nextest run ID c1ae2cef-8bcd-4d4e-8bbb-bca8d750c1ff with nextest profile: default
+    Starting 2 tests across 1 binary
+        PASS [   0.136s] (1/2) aws-smithy-runtime::retries token_bucket_exhausted_before_max_attempts
+        PASS [   0.338s] (2/2) aws-smithy-runtime::retries token_bucket_partitioning
+────────────
+     Summary [   0.339s] 2 tests run: 2 passed, 0 skipped
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

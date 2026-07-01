@@ -1,0 +1,522 @@
+diff --git a/aws/src/main/java/org/apache/iceberg/aws/s3/S3FileIO.java b/aws/src/main/java/org/apache/iceberg/aws/s3/S3FileIO.java
+index 172686d3d..0409db4ff 100644
+--- a/aws/src/main/java/org/apache/iceberg/aws/s3/S3FileIO.java
++++ b/aws/src/main/java/org/apache/iceberg/aws/s3/S3FileIO.java
+@@ -39,9 +39,14 @@ import org.apache.iceberg.io.DelegateFileIO;
+ import org.apache.iceberg.io.FileInfo;
+ import org.apache.iceberg.io.InputFile;
+ import org.apache.iceberg.io.OutputFile;
++import org.apache.iceberg.io.StorageCredential;
+ import org.apache.iceberg.io.SupportsRecoveryOperations;
++import org.apache.iceberg.io.SupportsStorageCredentials;
+ import org.apache.iceberg.metrics.MetricsContext;
+ import org.apache.iceberg.relocated.com.google.common.base.Joiner;
++import org.apache.iceberg.relocated.com.google.common.base.Preconditions;
++import org.apache.iceberg.relocated.com.google.common.collect.ImmutableList;
++import org.apache.iceberg.relocated.com.google.common.collect.ImmutableMap;
+ import org.apache.iceberg.relocated.com.google.common.collect.Lists;
+ import org.apache.iceberg.relocated.com.google.common.collect.Maps;
+ import org.apache.iceberg.relocated.com.google.common.collect.Multimaps;
+@@ -80,7 +85,11 @@ import software.amazon.awssdk.services.s3.paginators.ListObjectVersionsIterable;
+  * schemes s3a, s3n, https are also treated as s3 file paths. Using this FileIO with other schemes
+  * will result in {@link org.apache.iceberg.exceptions.ValidationException}.
+  */
+-public class S3FileIO implements CredentialSupplier, DelegateFileIO, SupportsRecoveryOperations {
++public class S3FileIO
++    implements CredentialSupplier,
++        DelegateFileIO,
++        SupportsRecoveryOperations,
++        SupportsStorageCredentials {
+   private static final Logger LOG = LoggerFactory.getLogger(S3FileIO.class);
+   private static final String DEFAULT_METRICS_IMPL =
+       "org.apache.iceberg.hadoop.HadoopMetricsContext";
+@@ -96,6 +105,7 @@ public class S3FileIO implements CredentialSupplier, DelegateFileIO, SupportsRec
+   private MetricsContext metrics = MetricsContext.nullMetrics();
+   private final AtomicBoolean isResourceClosed = new AtomicBoolean(false);
+   private transient StackTraceElement[] createStack;
++  private List<StorageCredential> storageCredentials = ImmutableList.of();
+ 
+   /**
+    * No-arg constructor to load the FileIO dynamically.
+@@ -422,7 +432,13 @@ public class S3FileIO implements CredentialSupplier, DelegateFileIO, SupportsRec
+   @Override
+   public void initialize(Map<String, String> props) {
+     this.properties = SerializableMap.copyOf(props);
+-    this.s3FileIOProperties = new S3FileIOProperties(properties);
++    Map<String, String> propertiesWithCredentials =
++        ImmutableMap.<String, String>builder()
++            .putAll(properties)
++            .putAll(storageCredentialConfig())
++            .buildKeepingLast();
++
++    this.s3FileIOProperties = new S3FileIOProperties(propertiesWithCredentials);
+     this.createStack =
+         PropertyUtil.propertyAsBoolean(props, "init-creation-stacktrace", true)
+             ? Thread.currentThread().getStackTrace()
+@@ -547,4 +563,28 @@ public class S3FileIO implements CredentialSupplier, DelegateFileIO, SupportsRec
+ 
+     return true;
+   }
++
++  @Override
++  public void setCredentials(List<StorageCredential> credentials) {
++    Preconditions.checkArgument(credentials != null, "Invalid storage credentials: null");
++    // copy credentials into a modifiable collection for Kryo serde
++    this.storageCredentials = Lists.newArrayList(credentials);
++  }
++
++  @Override
++  public List<StorageCredential> credentials() {
++    return ImmutableList.copyOf(storageCredentials);
++  }
++
++  private Map<String, String> storageCredentialConfig() {
++    List<StorageCredential> s3Credentials =
++        storageCredentials.stream()
++            .filter(c -> c.prefix().startsWith("s3"))
++            .collect(Collectors.toList());
++
++    Preconditions.checkState(
++        s3Credentials.size() <= 1, "Invalid S3 Credentials: only one S3 credential should exist");
++
++    return s3Credentials.isEmpty() ? Map.of() : s3Credentials.get(0).config();
++  }
+ }
+diff --git a/core/src/main/java/org/apache/iceberg/CatalogUtil.java b/core/src/main/java/org/apache/iceberg/CatalogUtil.java
+index 37d9ad86e..b25f84e1d 100644
+--- a/core/src/main/java/org/apache/iceberg/CatalogUtil.java
++++ b/core/src/main/java/org/apache/iceberg/CatalogUtil.java
+@@ -35,11 +35,14 @@ import org.apache.iceberg.exceptions.RuntimeIOException;
+ import org.apache.iceberg.exceptions.ValidationException;
+ import org.apache.iceberg.hadoop.Configurable;
+ import org.apache.iceberg.io.FileIO;
++import org.apache.iceberg.io.StorageCredential;
+ import org.apache.iceberg.io.SupportsBulkOperations;
++import org.apache.iceberg.io.SupportsStorageCredentials;
+ import org.apache.iceberg.metrics.LoggingMetricsReporter;
+ import org.apache.iceberg.metrics.MetricsReporter;
+ import org.apache.iceberg.relocated.com.google.common.base.Joiner;
+ import org.apache.iceberg.relocated.com.google.common.base.Preconditions;
++import org.apache.iceberg.relocated.com.google.common.collect.ImmutableList;
+ import org.apache.iceberg.relocated.com.google.common.collect.Iterables;
+ import org.apache.iceberg.relocated.com.google.common.collect.Lists;
+ import org.apache.iceberg.relocated.com.google.common.collect.MapMaker;
+@@ -343,6 +346,33 @@ public class CatalogUtil {
+    *     loaded class cannot be cast to the given interface type
+    */
+   public static FileIO loadFileIO(String impl, Map<String, String> properties, Object hadoopConf) {
++    return loadFileIO(impl, properties, hadoopConf, ImmutableList.of());
++  }
++
++  /**
++   * Load a custom {@link FileIO} implementation.
++   *
++   * <p>The implementation must have a no-arg constructor. If the class implements Configurable, a
++   * Hadoop config will be passed using Configurable.setConf. If the class implements {@link
++   * SupportsStorageCredentials}, the storage credentials will be passed using {@link
++   * SupportsStorageCredentials#setCredentials(List)}. {@link FileIO#initialize(Map properties)} is
++   * called to complete the initialization.
++   *
++   * @param impl full class name of a custom FileIO implementation
++   * @param properties used to initialize the FileIO implementation
++   * @param hadoopConf a hadoop Configuration
++   * @param storageCredentials the storage credentials to configure if the FileIO implementation
++   *     implements {@link SupportsStorageCredentials}
++   * @return FileIO class
++   * @throws IllegalArgumentException if class path not found or right constructor not found or the
++   *     loaded class cannot be cast to the given interface type
++   */
++  @SuppressWarnings("unchecked")
++  public static FileIO loadFileIO(
++      String impl,
++      Map<String, String> properties,
++      Object hadoopConf,
++      List<StorageCredential> storageCredentials) {
+     LOG.info("Loading custom FileIO implementation: {}", impl);
+     DynConstructors.Ctor<FileIO> ctor;
+     try {
+@@ -365,6 +395,9 @@ public class CatalogUtil {
+     }
+ 
+     configureHadoopConf(fileIO, hadoopConf);
++    if (fileIO instanceof SupportsStorageCredentials) {
++      ((SupportsStorageCredentials) fileIO).setCredentials(storageCredentials);
++    }
+ 
+     fileIO.initialize(properties);
+     return fileIO;
+diff --git a/core/src/main/java/org/apache/iceberg/io/ResolvingFileIO.java b/core/src/main/java/org/apache/iceberg/io/ResolvingFileIO.java
+index a8adf979f..381f47850 100644
+--- a/core/src/main/java/org/apache/iceberg/io/ResolvingFileIO.java
++++ b/core/src/main/java/org/apache/iceberg/io/ResolvingFileIO.java
+@@ -34,6 +34,7 @@ import org.apache.iceberg.hadoop.SerializableConfiguration;
+ import org.apache.iceberg.relocated.com.google.common.annotations.VisibleForTesting;
+ import org.apache.iceberg.relocated.com.google.common.base.Joiner;
+ import org.apache.iceberg.relocated.com.google.common.base.Preconditions;
++import org.apache.iceberg.relocated.com.google.common.collect.ImmutableList;
+ import org.apache.iceberg.relocated.com.google.common.collect.ImmutableMap;
+ import org.apache.iceberg.relocated.com.google.common.collect.Iterators;
+ import org.apache.iceberg.relocated.com.google.common.collect.Lists;
+@@ -48,7 +49,8 @@ import org.slf4j.LoggerFactory;
+  * Delegate FileIO implementations must implement the {@link DelegateFileIO} mixin interface,
+  * otherwise initialization will fail.
+  */
+-public class ResolvingFileIO implements HadoopConfigurable, DelegateFileIO {
++public class ResolvingFileIO
++    implements HadoopConfigurable, DelegateFileIO, SupportsStorageCredentials {
+   private static final Logger LOG = LoggerFactory.getLogger(ResolvingFileIO.class);
+   private static final int BATCH_SIZE = 100_000;
+   private static final String FALLBACK_IMPL = "org.apache.iceberg.hadoop.HadoopFileIO";
+@@ -71,6 +73,7 @@ public class ResolvingFileIO implements HadoopConfigurable, DelegateFileIO {
+   private final transient StackTraceElement[] createStack;
+   private SerializableMap<String, String> properties;
+   private SerializableSupplier<Configuration> hadoopConf;
++  private List<StorageCredential> storageCredentials = List.of();
+ 
+   /**
+    * No-arg constructor to load the FileIO dynamically.
+@@ -172,6 +175,11 @@ public class ResolvingFileIO implements HadoopConfigurable, DelegateFileIO {
+         }
+       }
+ 
++      if (io instanceof SupportsStorageCredentials
++          && !((SupportsStorageCredentials) io).credentials().equals(storageCredentials)) {
++        ((SupportsStorageCredentials) io).setCredentials(storageCredentials);
++      }
++
+       return io;
+     }
+ 
+@@ -186,7 +194,7 @@ public class ResolvingFileIO implements HadoopConfigurable, DelegateFileIO {
+             // ResolvingFileIO is keeping track of the creation stacktrace, so no need to do the
+             // same in S3FileIO.
+             props.put("init-creation-stacktrace", "false");
+-            fileIO = CatalogUtil.loadFileIO(key, props, conf);
++            fileIO = CatalogUtil.loadFileIO(key, props, conf, storageCredentials);
+           } catch (IllegalArgumentException e) {
+             if (key.equals(FALLBACK_IMPL)) {
+               // no implementation to fall back to, throw the exception
+@@ -199,7 +207,8 @@ public class ResolvingFileIO implements HadoopConfigurable, DelegateFileIO {
+                   FALLBACK_IMPL,
+                   e);
+               try {
+-                fileIO = CatalogUtil.loadFileIO(FALLBACK_IMPL, properties, conf);
++                fileIO =
++                    CatalogUtil.loadFileIO(FALLBACK_IMPL, properties, conf, storageCredentials);
+               } catch (IllegalArgumentException suppressed) {
+                 LOG.warn(
+                     "Failed to load FileIO implementation: {} (fallback)",
+@@ -268,4 +277,16 @@ public class ResolvingFileIO implements HadoopConfigurable, DelegateFileIO {
+   public void deletePrefix(String prefix) {
+     io(prefix).deletePrefix(prefix);
+   }
++
++  @Override
++  public void setCredentials(List<StorageCredential> credentials) {
++    Preconditions.checkArgument(credentials != null, "Invalid storage credentials: null");
++    // copy credentials into a modifiable collection for Kryo serde
++    this.storageCredentials = Lists.newArrayList(credentials);
++  }
++
++  @Override
++  public List<StorageCredential> credentials() {
++    return ImmutableList.copyOf(storageCredentials);
++  }
+ }
+diff --git a/core/src/main/java/org/apache/iceberg/io/StorageCredential.java b/core/src/main/java/org/apache/iceberg/io/StorageCredential.java
+new file mode 100644
+index 000000000..193a820f9
+--- /dev/null
++++ b/core/src/main/java/org/apache/iceberg/io/StorageCredential.java
+@@ -0,0 +1,42 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.iceberg.io;
++
++import java.io.Serializable;
++import java.util.Map;
++import org.apache.iceberg.relocated.com.google.common.base.Preconditions;
++import org.immutables.value.Value;
++
++@Value.Immutable
++public interface StorageCredential extends Serializable {
++
++  String prefix();
++
++  Map<String, String> config();
++
++  @Value.Check
++  default void validate() {
++    Preconditions.checkArgument(!prefix().isEmpty(), "Invalid prefix: must be non-empty");
++    Preconditions.checkArgument(!config().isEmpty(), "Invalid config: must be non-empty");
++  }
++
++  static StorageCredential create(String prefix, Map<String, String> config) {
++    return ImmutableStorageCredential.builder().prefix(prefix).config(config).build();
++  }
++}
+diff --git a/core/src/main/java/org/apache/iceberg/io/SupportsStorageCredentials.java b/core/src/main/java/org/apache/iceberg/io/SupportsStorageCredentials.java
+new file mode 100644
+index 000000000..39321f338
+--- /dev/null
++++ b/core/src/main/java/org/apache/iceberg/io/SupportsStorageCredentials.java
+@@ -0,0 +1,32 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.iceberg.io;
++
++import java.util.List;
++
++/**
++ * This interface is intended as an extension for {@link FileIO} implementations to be able to
++ * provide and retrieve storage credentials
++ */
++public interface SupportsStorageCredentials {
++
++  void setCredentials(List<StorageCredential> credentials);
++
++  List<StorageCredential> credentials();
++}
+diff --git a/core/src/main/java/org/apache/iceberg/rest/RESTSessionCatalog.java b/core/src/main/java/org/apache/iceberg/rest/RESTSessionCatalog.java
+index 41bc9c14d..5d4c0808e 100644
+--- a/core/src/main/java/org/apache/iceberg/rest/RESTSessionCatalog.java
++++ b/core/src/main/java/org/apache/iceberg/rest/RESTSessionCatalog.java
+@@ -27,6 +27,7 @@ import java.util.Map;
+ import java.util.Set;
+ import java.util.function.BiFunction;
+ import java.util.function.Function;
++import java.util.stream.Collectors;
+ import org.apache.iceberg.BaseTable;
+ import org.apache.iceberg.CatalogProperties;
+ import org.apache.iceberg.CatalogUtil;
+@@ -54,6 +55,7 @@ import org.apache.iceberg.hadoop.Configurable;
+ import org.apache.iceberg.io.CloseableGroup;
+ import org.apache.iceberg.io.FileIO;
+ import org.apache.iceberg.io.FileIOTracker;
++import org.apache.iceberg.io.StorageCredential;
+ import org.apache.iceberg.metrics.MetricsReporter;
+ import org.apache.iceberg.metrics.MetricsReporters;
+ import org.apache.iceberg.relocated.com.google.common.base.Preconditions;
+@@ -65,6 +67,7 @@ import org.apache.iceberg.relocated.com.google.common.collect.Maps;
+ import org.apache.iceberg.rest.auth.AuthManager;
+ import org.apache.iceberg.rest.auth.AuthManagers;
+ import org.apache.iceberg.rest.auth.AuthSession;
++import org.apache.iceberg.rest.credentials.Credential;
+ import org.apache.iceberg.rest.requests.CommitTransactionRequest;
+ import org.apache.iceberg.rest.requests.CreateNamespaceRequest;
+ import org.apache.iceberg.rest.requests.CreateTableRequest;
+@@ -436,7 +439,7 @@ public class RESTSessionCatalog extends BaseViewSessionCatalog
+             tableClient,
+             paths.table(finalIdentifier),
+             Map::of,
+-            tableFileIO(context, response.config()),
++            tableFileIO(context, tableConf, response.credentials()),
+             tableMetadata,
+             endpoints);
+ 
+@@ -515,7 +518,7 @@ public class RESTSessionCatalog extends BaseViewSessionCatalog
+             tableClient,
+             paths.table(ident),
+             Map::of,
+-            tableFileIO(context, response.config()),
++            tableFileIO(context, tableConf, response.credentials()),
+             response.tableMetadata(),
+             endpoints);
+ 
+@@ -774,7 +777,7 @@ public class RESTSessionCatalog extends BaseViewSessionCatalog
+               tableClient,
+               paths.table(ident),
+               Map::of,
+-              tableFileIO(context, response.config()),
++              tableFileIO(context, tableConf, response.credentials()),
+               response.tableMetadata(),
+               endpoints);
+ 
+@@ -801,7 +804,7 @@ public class RESTSessionCatalog extends BaseViewSessionCatalog
+               tableClient,
+               paths.table(ident),
+               Map::of,
+-              tableFileIO(context, response.config()),
++              tableFileIO(context, tableConf, response.credentials()),
+               RESTTableOperations.UpdateType.CREATE,
+               createChanges(meta),
+               meta,
+@@ -864,7 +867,7 @@ public class RESTSessionCatalog extends BaseViewSessionCatalog
+               tableClient,
+               paths.table(ident),
+               Map::of,
+-              tableFileIO(context, response.config()),
++              tableFileIO(context, tableConf, response.credentials()),
+               RESTTableOperations.UpdateType.REPLACE,
+               changes.build(),
+               base,
+@@ -962,22 +965,34 @@ public class RESTSessionCatalog extends BaseViewSessionCatalog
+   }
+ 
+   private FileIO newFileIO(SessionContext context, Map<String, String> properties) {
++    return newFileIO(context, properties, ImmutableList.of());
++  }
++
++  private FileIO newFileIO(
++      SessionContext context, Map<String, String> properties, List<Credential> storageCredentials) {
+     if (null != ioBuilder) {
+       return ioBuilder.apply(context, properties);
+     } else {
+       String ioImpl = properties.getOrDefault(CatalogProperties.FILE_IO_IMPL, DEFAULT_FILE_IO_IMPL);
+-      return CatalogUtil.loadFileIO(ioImpl, properties, conf);
++      return CatalogUtil.loadFileIO(
++          ioImpl,
++          properties,
++          conf,
++          storageCredentials.stream()
++              .map(c -> StorageCredential.create(c.prefix(), c.config()))
++              .collect(Collectors.toList()));
+     }
+   }
+ 
+-  private FileIO tableFileIO(SessionContext context, Map<String, String> config) {
+-    if (config.isEmpty() && ioBuilder == null) {
+-      return io; // reuse client and io since config is the same
++  private FileIO tableFileIO(
++      SessionContext context, Map<String, String> config, List<Credential> storageCredentials) {
++    if (config.isEmpty() && ioBuilder == null && storageCredentials.isEmpty()) {
++      return io; // reuse client and io since config/credentials are the same
+     }
+ 
+     Map<String, String> fullConf = RESTUtil.merge(properties(), config);
+ 
+-    return newFileIO(context, fullConf);
++    return newFileIO(context, fullConf, storageCredentials);
+   }
+ 
+   private static ConfigResponse fetchConfig(
+diff --git a/gcp/src/main/java/org/apache/iceberg/gcp/gcs/GCSFileIO.java b/gcp/src/main/java/org/apache/iceberg/gcp/gcs/GCSFileIO.java
+index b41be9c8f..ca3e97c5a 100644
+--- a/gcp/src/main/java/org/apache/iceberg/gcp/gcs/GCSFileIO.java
++++ b/gcp/src/main/java/org/apache/iceberg/gcp/gcs/GCSFileIO.java
+@@ -18,6 +18,7 @@
+  */
+ package org.apache.iceberg.gcp.gcs;
+ 
++import com.google.api.client.util.Lists;
+ import com.google.auth.oauth2.AccessToken;
+ import com.google.auth.oauth2.OAuth2Credentials;
+ import com.google.auth.oauth2.OAuth2CredentialsWithRefresh;
+@@ -26,8 +27,10 @@ import com.google.cloud.storage.Blob;
+ import com.google.cloud.storage.BlobId;
+ import com.google.cloud.storage.Storage;
+ import com.google.cloud.storage.StorageOptions;
++import java.util.List;
+ import java.util.Map;
+ import java.util.concurrent.atomic.AtomicBoolean;
++import java.util.stream.Collectors;
+ import java.util.stream.Stream;
+ import org.apache.iceberg.common.DynConstructors;
+ import org.apache.iceberg.gcp.GCPProperties;
+@@ -36,7 +39,12 @@ import org.apache.iceberg.io.DelegateFileIO;
+ import org.apache.iceberg.io.FileInfo;
+ import org.apache.iceberg.io.InputFile;
+ import org.apache.iceberg.io.OutputFile;
++import org.apache.iceberg.io.StorageCredential;
++import org.apache.iceberg.io.SupportsStorageCredentials;
+ import org.apache.iceberg.metrics.MetricsContext;
++import org.apache.iceberg.relocated.com.google.common.base.Preconditions;
++import org.apache.iceberg.relocated.com.google.common.collect.ImmutableList;
++import org.apache.iceberg.relocated.com.google.common.collect.ImmutableMap;
+ import org.apache.iceberg.relocated.com.google.common.collect.Iterators;
+ import org.apache.iceberg.relocated.com.google.common.collect.Streams;
+ import org.apache.iceberg.util.SerializableMap;
+@@ -56,7 +64,7 @@ import org.slf4j.LoggerFactory;
+  * <p>See <a href="https://cloud.google.com/storage/docs/folders#overview">Cloud Storage
+  * Overview</a>
+  */
+-public class GCSFileIO implements DelegateFileIO {
++public class GCSFileIO implements DelegateFileIO, SupportsStorageCredentials {
+   private static final Logger LOG = LoggerFactory.getLogger(GCSFileIO.class);
+   private static final String DEFAULT_METRICS_IMPL =
+       "org.apache.iceberg.hadoop.HadoopMetricsContext";
+@@ -68,6 +76,7 @@ public class GCSFileIO implements DelegateFileIO {
+   private final AtomicBoolean isResourceClosed = new AtomicBoolean(false);
+   private SerializableMap<String, String> properties = null;
+   private OAuth2RefreshCredentialsHandler refreshHandler = null;
++  private List<StorageCredential> storageCredentials = ImmutableList.of();
+ 
+   /**
+    * No-arg constructor to load the FileIO dynamically.
+@@ -134,7 +143,13 @@ public class GCSFileIO implements DelegateFileIO {
+   @Override
+   public void initialize(Map<String, String> props) {
+     this.properties = SerializableMap.copyOf(props);
+-    this.gcpProperties = new GCPProperties(properties);
++    Map<String, String> propertiesWithCredentials =
++        ImmutableMap.<String, String>builder()
++            .putAll(properties)
++            .putAll(storageCredentialConfig())
++            .buildKeepingLast();
++
++    this.gcpProperties = new GCPProperties(propertiesWithCredentials);
+ 
+     this.storageSupplier =
+         () -> {
+@@ -247,4 +262,29 @@ public class GCSFileIO implements DelegateFileIO {
+     Streams.stream(Iterators.partition(blobIdsToDelete.iterator(), gcpProperties.deleteBatchSize()))
+         .forEach(batch -> client().delete(batch));
+   }
++
++  @Override
++  public void setCredentials(List<StorageCredential> credentials) {
++    Preconditions.checkArgument(credentials != null, "Invalid storage credentials: null");
++    // copy credentials into a modifiable collection for Kryo serde
++    this.storageCredentials = Lists.newArrayList(credentials);
++  }
++
++  @Override
++  public List<StorageCredential> credentials() {
++    return ImmutableList.copyOf(storageCredentials);
++  }
++
++  private Map<String, String> storageCredentialConfig() {
++    List<StorageCredential> gcsCredentials =
++        storageCredentials.stream()
++            .filter(c -> c.prefix().startsWith("gs"))
++            .collect(Collectors.toList());
++
++    Preconditions.checkState(
++        gcsCredentials.size() <= 1,
++        "Invalid GCS Credentials: only one GCS credential should exist");
++
++    return gcsCredentials.isEmpty() ? Map.of() : gcsCredentials.get(0).config();
++  }
+ }

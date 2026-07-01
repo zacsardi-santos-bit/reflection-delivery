@@ -1,0 +1,11 @@
+patching file migrations/legacy_character_value.go
+patching file migrations/legacy_intersection_type.go
+patching file migrations/legacy_primitivestatic_type.go
+patching file migrations/legacy_reference_type.go
+patching file migrations/legacy_string_value.go
+patching file migrations/migration.go
+patching file runtime/sema/account.go
+patching file runtime/stdlib/account.go
+patching file runtime/stdlib/random.go
+patching file runtime/tests/checker/account_test.go
+patching file runtime/tests/checker/builtinfunctions_test.go

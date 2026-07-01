@@ -1,0 +1,133 @@
+patching file pkg/meta/random_test.go
+{"Time":"2026-06-29T15:26:42.123063609Z","Action":"start","Package":"github.com/juicedata/juicefs/pkg/meta"}
+{"Time":"2026-06-29T15:26:42.191343173Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisClient"}
+{"Time":"2026-06-29T15:26:42.191397222Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisClient","Output":"=== RUN   TestRedisClient\n"}
+{"Time":"2026-06-29T15:27:23.36574738Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisClient","Output":"2026/06/29 15:27:23.364836 juicefs[374] \u003cWARNING\u003e: parse info: dial tcp 127.0.0.1:6379: connect: connection refused [redis.go:3592]\n"}
+{"Time":"2026-06-29T15:27:44.24331889Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisClient","Output":"    base_test.go:118: reset meta: dial tcp 127.0.0.1:6379: connect: connection refused\n"}
+{"Time":"2026-06-29T15:27:44.243700784Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisClient","Output":"--- FAIL: TestRedisClient (62.05s)\n"}
+{"Time":"2026-06-29T15:27:44.243757388Z","Action":"fail","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisClient","Elapsed":62.05}
+{"Time":"2026-06-29T15:27:44.24377277Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestKeyDB"}
+{"Time":"2026-06-29T15:27:44.243780872Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestKeyDB","Output":"=== RUN   TestKeyDB\n"}
+{"Time":"2026-06-29T15:28:23.26603133Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestKeyDB","Output":"2026/06/29 15:28:23.265690 juicefs[374] \u003cWARNING\u003e: parse info: dial tcp 127.0.0.1:6378: connect: connection refused [redis.go:3592]\n"}
+{"Time":"2026-06-29T15:28:42.496199108Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestKeyDB","Output":"    base_test.go:73: parse info: dial tcp 127.0.0.1:6378: connect: connection refused\n"}
+{"Time":"2026-06-29T15:28:42.497012845Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestKeyDB","Output":"--- FAIL: TestKeyDB (58.25s)\n"}
+{"Time":"2026-06-29T15:28:42.4971333Z","Action":"fail","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestKeyDB","Elapsed":58.25}
+{"Time":"2026-06-29T15:28:42.497158214Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisCluster"}
+{"Time":"2026-06-29T15:28:42.497167804Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisCluster","Output":"=== RUN   TestRedisCluster\n"}
+{"Time":"2026-06-29T15:29:32.495231448Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisCluster","Output":"redis: 2026/06/29 15:29:32 cluster.go:1760: getting command info: dial tcp 127.0.0.1:7003: connect: connection refused\n"}
+{"Time":"2026-06-29T15:30:27.882258512Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisCluster","Output":"redis: 2026/06/29 15:30:27 cluster.go:1760: getting command info: dial tcp 127.0.0.1:7002: connect: connection refused\n"}
+{"Time":"2026-06-29T15:31:30.27738495Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisCluster","Output":"2026/06/29 15:31:30.277123 juicefs[374] \u003cWARNING\u003e: parse info: dial tcp 127.0.0.1:7003: connect: connection refused [redis.go:3592]\n"}
+{"Time":"2026-06-29T15:32:17.746323411Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisCluster","Output":"    base_test.go:118: reset meta: dial tcp 127.0.0.1:7001: connect: connection refused\n"}
+{"Time":"2026-06-29T15:32:17.746422371Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisCluster","Output":"--- FAIL: TestRedisCluster (215.25s)\n"}
+{"Time":"2026-06-29T15:32:17.746507851Z","Action":"fail","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRedisCluster","Elapsed":215.25}
+{"Time":"2026-06-29T15:32:17.746551803Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRemoveSecret"}
+{"Time":"2026-06-29T15:32:17.746571896Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRemoveSecret","Output":"=== RUN   TestRemoveSecret\n"}
+{"Time":"2026-06-29T15:32:17.746607162Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRemoveSecret","Output":"--- PASS: TestRemoveSecret (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.746638213Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestRemoveSecret","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.746662226Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEncrypt"}
+{"Time":"2026-06-29T15:32:17.746670145Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEncrypt","Output":"=== RUN   TestEncrypt\n"}
+{"Time":"2026-06-29T15:32:17.746713535Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEncrypt","Output":"--- PASS: TestEncrypt (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.746723284Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEncrypt","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.746737715Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestOlderThan"}
+{"Time":"2026-06-29T15:32:17.74684208Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestOlderThan","Output":"=== RUN   TestOlderThan\n"}
+{"Time":"2026-06-29T15:32:17.746901828Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestOlderThan","Output":"--- PASS: TestOlderThan (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.746921054Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestOlderThan","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.746934984Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion"}
+{"Time":"2026-06-29T15:32:17.746942451Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion","Output":"=== RUN   TestParseRedisVersion\n"}
+{"Time":"2026-06-29T15:32:17.746974735Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion/Should_return_error_for_invalid_redisVersion"}
+{"Time":"2026-06-29T15:32:17.746983742Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion/Should_return_error_for_invalid_redisVersion","Output":"=== RUN   TestParseRedisVersion/Should_return_error_for_invalid_redisVersion\n"}
+{"Time":"2026-06-29T15:32:17.747002292Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion/Should_return_error_for_invalid_redisVersion","Output":"--- PASS: TestParseRedisVersion/Should_return_error_for_invalid_redisVersion (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.74701086Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion/Should_return_error_for_invalid_redisVersion","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747025898Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion/Should_parse_redisVersion"}
+{"Time":"2026-06-29T15:32:17.74703307Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion/Should_parse_redisVersion","Output":"=== RUN   TestParseRedisVersion/Should_parse_redisVersion\n"}
+{"Time":"2026-06-29T15:32:17.747044313Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion/Should_parse_redisVersion","Output":"--- PASS: TestParseRedisVersion/Should_parse_redisVersion (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747052175Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion/Should_parse_redisVersion","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747066821Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion","Output":"--- PASS: TestParseRedisVersion (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747124827Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisVersion","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.7471415Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisInfo"}
+{"Time":"2026-06-29T15:32:17.747153908Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisInfo","Output":"=== RUN   TestParseRedisInfo\n"}
+{"Time":"2026-06-29T15:32:17.747169798Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisInfo/Should_parse_the_fields_we_are_interested_in"}
+{"Time":"2026-06-29T15:32:17.747181013Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisInfo/Should_parse_the_fields_we_are_interested_in","Output":"=== RUN   TestParseRedisInfo/Should_parse_the_fields_we_are_interested_in\n"}
+{"Time":"2026-06-29T15:32:17.747239135Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisInfo/Should_parse_the_fields_we_are_interested_in","Output":"2026/06/29 15:32:17.747170 juicefs[374] \u003cWARNING\u003e: AOF is not enabled, you may lose data if Redis is not shutdown properly. [info.go:84]\n"}
+{"Time":"2026-06-29T15:32:17.747252129Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisInfo/Should_parse_the_fields_we_are_interested_in","Output":"--- PASS: TestParseRedisInfo/Should_parse_the_fields_we_are_interested_in (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747260286Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisInfo/Should_parse_the_fields_we_are_interested_in","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747275322Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisInfo","Output":"--- PASS: TestParseRedisInfo (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747349337Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestParseRedisInfo","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747371751Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv"}
+{"Time":"2026-06-29T15:32:17.747394059Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv","Output":"=== RUN   Test_setPasswordFromEnv\n"}
+{"Time":"2026-06-29T15:32:17.74742808Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#00"}
+{"Time":"2026-06-29T15:32:17.747438289Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#00","Output":"=== RUN   Test_setPasswordFromEnv/#00\n"}
+{"Time":"2026-06-29T15:32:17.747455511Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#00","Output":"--- PASS: Test_setPasswordFromEnv/#00 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747463302Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#00","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747493698Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#01"}
+{"Time":"2026-06-29T15:32:17.747503229Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#01","Output":"=== RUN   Test_setPasswordFromEnv/#01\n"}
+{"Time":"2026-06-29T15:32:17.747514528Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#01","Output":"--- PASS: Test_setPasswordFromEnv/#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747526415Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#01","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747540713Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#02"}
+{"Time":"2026-06-29T15:32:17.747548371Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#02","Output":"=== RUN   Test_setPasswordFromEnv/#02\n"}
+{"Time":"2026-06-29T15:32:17.747589727Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#02","Output":"--- PASS: Test_setPasswordFromEnv/#02 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747606014Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#02","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747616399Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#03"}
+{"Time":"2026-06-29T15:32:17.747624486Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#03","Output":"=== RUN   Test_setPasswordFromEnv/#03\n"}
+{"Time":"2026-06-29T15:32:17.747636074Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#03","Output":"--- PASS: Test_setPasswordFromEnv/#03 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747643833Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#03","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747650981Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#04"}
+{"Time":"2026-06-29T15:32:17.747658147Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#04","Output":"=== RUN   Test_setPasswordFromEnv/#04\n"}
+{"Time":"2026-06-29T15:32:17.747687983Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#04","Output":"--- PASS: Test_setPasswordFromEnv/#04 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747704915Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#04","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747718145Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#05"}
+{"Time":"2026-06-29T15:32:17.747725824Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#05","Output":"=== RUN   Test_setPasswordFromEnv/#05\n"}
+{"Time":"2026-06-29T15:32:17.747736722Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#05","Output":"--- PASS: Test_setPasswordFromEnv/#05 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747749439Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#05","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747756904Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#06"}
+{"Time":"2026-06-29T15:32:17.747764886Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#06","Output":"=== RUN   Test_setPasswordFromEnv/#06\n"}
+{"Time":"2026-06-29T15:32:17.74777247Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#06","Output":"--- PASS: Test_setPasswordFromEnv/#06 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747785565Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#06","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.74780245Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#07"}
+{"Time":"2026-06-29T15:32:17.747809402Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#07","Output":"=== RUN   Test_setPasswordFromEnv/#07\n"}
+{"Time":"2026-06-29T15:32:17.747821695Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#07","Output":"--- PASS: Test_setPasswordFromEnv/#07 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747846812Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#07","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747857239Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#08"}
+{"Time":"2026-06-29T15:32:17.747873655Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#08","Output":"=== RUN   Test_setPasswordFromEnv/#08\n"}
+{"Time":"2026-06-29T15:32:17.747887787Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#08","Output":"--- PASS: Test_setPasswordFromEnv/#08 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747895693Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#08","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747911761Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#09"}
+{"Time":"2026-06-29T15:32:17.747920213Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#09","Output":"=== RUN   Test_setPasswordFromEnv/#09\n"}
+{"Time":"2026-06-29T15:32:17.747929965Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#09","Output":"--- PASS: Test_setPasswordFromEnv/#09 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.747947255Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#09","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.747954846Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#10"}
+{"Time":"2026-06-29T15:32:17.747961836Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#10","Output":"=== RUN   Test_setPasswordFromEnv/#10\n"}
+{"Time":"2026-06-29T15:32:17.747986046Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#10","Output":"--- PASS: Test_setPasswordFromEnv/#10 (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.74799632Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv/#10","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.748011934Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv","Output":"--- PASS: Test_setPasswordFromEnv (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.74801914Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"Test_setPasswordFromEnv","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.748026536Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape"}
+{"Time":"2026-06-29T15:32:17.748033574Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"=== RUN   TestEscape\n"}
+{"Time":"2026-06-29T15:32:17.748190595Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  %251F果汁数据科技有限公司%252B\n"}
+{"Time":"2026-06-29T15:32:17.748215318Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  %B9%FB汁数据科技有限公司%251F\n"}
+{"Time":"2026-06-29T15:32:17.748244182Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  果֭数据科技有限公司\n"}
+{"Time":"2026-06-29T15:32:17.74825647Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  果֭%CA%FD%BE%DD科技有限公司\n"}
+{"Time":"2026-06-29T15:32:17.748302671Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  果汁数据科%BC%BC%D3%D0%CF޹%AB˾\n"}
+{"Time":"2026-06-29T15:32:17.74831716Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  %B9%FB֭%CA%FD%BEݿƼ%BC%D3%D0%CF޹%AB˾\n"}
+{"Time":"2026-06-29T15:32:17.748328848Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  GBK%B9%FB֭%CA%FD%BEݿƼ%BC%D3%D0%CF޹%AB˾%CEļ%FE\n"}
+{"Time":"2026-06-29T15:32:17.748349057Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  %25%B9%FB֭%CA%FD据科%25技有限公司%25\n"}
+{"Time":"2026-06-29T15:32:17.748359559Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  %22%B9%FB֭%CA%FD据科%22技有限公司%25\n"}
+{"Time":"2026-06-29T15:32:17.748372383Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"    load_dump_test.go:65: escape value:  %5C%B9%FB֭%CA%FD%5C据科技有限公司\n"}
+{"Time":"2026-06-29T15:32:17.748390309Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Output":"--- PASS: TestEscape (0.00s)\n"}
+{"Time":"2026-06-29T15:32:17.74840763Z","Action":"pass","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestEscape","Elapsed":0}
+{"Time":"2026-06-29T15:32:17.748418714Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump"}
+{"Time":"2026-06-29T15:32:17.748426663Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump","Output":"=== RUN   TestLoadDump\n"}
+{"Time":"2026-06-29T15:32:17.748445853Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_redis"}
+{"Time":"2026-06-29T15:32:17.748452991Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_redis","Output":"=== RUN   TestLoadDump/Metadata_Engine:_redis\n"}
+{"Time":"2026-06-29T15:32:17.748482377Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_redis","Output":"2026/06/29 15:32:17.748448 juicefs[374] \u003cINFO\u003e: Meta address: redis://127.0.0.1/10 [interface.go:499]\n"}
+{"Time":"2026-06-29T15:32:55.273600234Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_redis","Output":"2026/06/29 15:32:55.273459 juicefs[374] \u003cWARNING\u003e: parse info: dial tcp 127.0.0.1:6379: connect: connection refused [redis.go:3592]\n"}
+{"Time":"2026-06-29T15:33:14.588990983Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_redis","Output":"    load_dump_test.go:94: reset meta: dial tcp 127.0.0.1:6379: connect: connection refused\n"}
+{"Time":"2026-06-29T15:33:14.589080397Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_redis","Output":"--- FAIL: TestLoadDump/Metadata_Engine:_redis (56.84s)\n"}
+{"Time":"2026-06-29T15:33:14.589126775Z","Action":"fail","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_redis","Elapsed":56.84}
+{"Time":"2026-06-29T15:33:14.58914551Z","Action":"run","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_mysql"}
+{"Time":"2026-06-29T15:33:14.589153957Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_mysql","Output":"=== RUN   TestLoadDump/Metadata_Engine:_mysql\n"}
+{"Time":"2026-06-29T15:33:14.589161514Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_mysql","Output":"2026/06/29 15:33:14.589013 juicefs[374] \u003cINFO\u003e: Meta address: mysql://root:****@/dev [interface.go:499]\n"}
+{"Time":"2026-06-29T15:33:14.590017049Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Test":"TestLoadDump/Metadata_Engine:_mysql","Output":"2026/06/29 15:33:14.589921 juicefs[374] \u003cFATAL\u003e: Meta mysql://root:****@/dev is not available: ping database: dial tcp 127.0.0.1:3306: connect: connection refused [interface.go:511]\n"}
+{"Time":"2026-06-29T15:33:14.592057857Z","Action":"output","Package":"github.com/juicedata/juicefs/pkg/meta","Output":"FAIL\tgithub.com/juicedata/juicefs/pkg/meta\t392.469s\n"}
+{"Time":"2026-06-29T15:33:14.592110554Z","Action":"fail","Package":"github.com/juicedata/juicefs/pkg/meta","Elapsed":392.469}
+reward=1 graded=21 found=21 failed=0 parsed=26 framework=go exit_code=1

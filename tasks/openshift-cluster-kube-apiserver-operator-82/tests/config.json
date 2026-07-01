@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /go/src/github.com/openshift/cluster-kube-apiserver-operator && go test -json ./pkg/cmd/installer -count=1",
+  "test_files": [
+    "pkg/cmd/installer/cmd_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer::TestCopyContent/basic",
+    "github.com/openshift/cluster-kube-apiserver-operator/pkg/cmd/installer::TestCopyContent"
+  ],
+  "PASS_TO_PASS": []
+}

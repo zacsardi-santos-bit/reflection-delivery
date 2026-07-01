@@ -1,0 +1,150 @@
+patching file tools/benchcomp/test/test_regression.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 21 items / 1 deselected / 20 selected
+
+tools/benchcomp/test/test_regression.py::RegressionTests::test_bad_filters PASSED [  5%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_command_parser PASSED [ 10%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_env PASSED [ 15%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_env_expansion PASSED [ 20%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_error_on_regression_two_benchmarks_one_failed PASSED [ 25%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_error_on_regression_two_benchmarks_previously_failed PASSED [ 30%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_error_on_regression_visualization_ratio_no_regressed PASSED [ 35%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_error_on_regression_visualization_ratio_regressed PASSED [ 40%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_error_on_regression_visualization_success_no_regressed PASSED [ 45%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_error_on_regression_visualization_success_regressed PASSED [ 50%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_ignore_dump_yaml PASSED [ 55%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_kani_perf_success PASSED [ 60%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_markdown_results_table FAILED [ 65%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_only_dump_yaml PASSED [ 70%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_return_0 PASSED [ 75%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_return_0_on_fail PASSED [ 80%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_run_command_visualization PASSED [ 85%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_run_failing_command_visualization PASSED [ 90%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_two_filters PASSED [ 95%]
+tools/benchcomp/test/test_regression.py::RegressionTests::test_unknown_metric_in_benchmark PASSED [100%]
+
+=================================== FAILURES ===================================
+_________________ RegressionTests.test_markdown_results_table __________________
+
+self = <test.test_regression.RegressionTests testMethod=test_markdown_results_table>
+
+    def test_markdown_results_table(self):
+        """Run the markdown results table visualization"""
+    
+        with tempfile.TemporaryDirectory() as tmp:
+            run_bc = Benchcomp({
+                "variants": {
+                    "variant_1": {
+                        "config": {
+                            "directory": str(tmp),
+                            "command_line":
+                                "mkdir bench_1 bench_2 bench_3"
+                                "&& echo true > bench_1/success"
+                                "&& echo true > bench_2/success"
+                                "&& echo false > bench_3/success"
+                                "&& echo 5 > bench_1/runtime"
+                                "&& echo 10 > bench_2/runtime"
+                        },
+                    },
+                    "variant_2": {
+                        "config": {
+                            "directory": str(tmp),
+                            "command_line":
+                                "mkdir bench_1 bench_2 bench_3"
+                                "&& echo true > bench_1/success"
+                                "&& echo false > bench_2/success"
+                                "&& echo true > bench_3/success"
+                                "&& echo 10 > bench_1/runtime"
+                                "&& echo 5 > bench_2/runtime"
+                        }
+                    }
+                },
+                "run": {
+                    "suites": {
+                        "suite_1": {
+                            "parser": { "module": "test_file_to_metric" },
+                            "variants": ["variant_1", "variant_2"]
+                        }
+                    }
+                },
+                "visualize": [{
+                    "type": "dump_markdown_results_table",
+                    "out_file": "-",
+                    "scatterplot": "linear",
+                    "extra_columns": {
+                        "runtime": [{
+                            "column_name": "ratio",
+                            "text":
+                                "lambda b: str(b['variant_2']/b['variant_1'])"
+                                "if b['variant_2'] < 1.5 * b['variant_1'] "
+                                "else '**' + str(b['variant_2']/b['variant_1']) + '**'"
+                        }],
+                        "success": [{
+                            "column_name": "notes",
+                            "text":
+                                "lambda b: '' if b['variant_2'] == b['variant_1']"
+                                "else 'newly passing' if b['variant_2'] "
+                                "else 'regressed'"
+                        }]
+                    }
+                }]
+            })
+            run_bc()
+    
+            self.assertEqual(run_bc.proc.returncode, 0, msg=run_bc.stderr)
+>           self.assertEqual(
+                run_bc.stdout, textwrap.dedent("""
+                    ## runtime
+    
+                    ```mermaid
+                    %%{init: { "quadrantChart": { "titlePadding": 15, "xAxisLabelPadding": 20, "yAxisLabelPadding": 20, "quadrantLabelFontSize": 0, "pointRadius": 2, "pointLabelFontSize": 2 }, "themeVariables": { "quadrant1Fill": "#FFFFFF", "quadrant2Fill": "#FFFFFF", "quadrant3Fill": "#FFFFFF", "quadrant4Fill": "#FFFFFF", "quadrant1TextFill": "#FFFFFF", "quadrant2TextFill": "#FFFFFF", "quadrant3TextFill": "#FFFFFF", "quadrant4TextFill": "#FFFFFF", "quadrantInternalBorderStrokeFill": "#FFFFFF" } } }%%
+                    quadrantChart
+                        title runtime
+                        x-axis "variant_1"
+                        y-axis "variant_2"
+                        quadrant-1 1
+                        quadrant-2 2
+                        quadrant-3 3
+                        quadrant-4 4
+                        "bench_1": [0.0, 0.909]
+                        "bench_2": [0.909, 0.0]
+                    ```
+                    Scatterplot axis ranges are 5 (bottom/left) to 10 (top/right).
+    
+                    <details> <summary>Breakdown by harness</summary>
+    
+                    | Benchmark |  variant_1 | variant_2 | ratio |
+                    | --- | --- | --- | --- |
+                    | bench_1 | 5 | 10 | **2.0** |
+                    | bench_2 | 10 | 5 | 0.5 |
+    
+                    </details>
+    
+    
+                    ## success
+    
+                    <details> <summary>Breakdown by harness</summary>
+    
+                    | Benchmark |  variant_1 | variant_2 | notes |
+                    | --- | --- | --- | --- |
+                    | bench_1 | True | True |  |
+                    | bench_2 | True | False | regressed |
+                    | bench_3 | False | True | newly passing |
+    
+                    </details>
+    
+                    """))
+E           AssertionError: '\n##[790 chars].\n\n| Benchmark |  variant_1 | variant_2 | ra[295 chars] |\n' != '\n##[790 chars].\n\n<details> <summary>Breakdown by harness</[433 chars]\n\n'
+E           Diff is 1318 characters long. Set self.maxDiff to None to see it.
+
+tools/benchcomp/test/test_regression.py:461: AssertionError
+=========================== short test summary info ============================
+FAILED tools/benchcomp/test/test_regression.py::RegressionTests::test_markdown_results_table
+================== 1 failed, 19 passed, 1 deselected in 8.10s ==================
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

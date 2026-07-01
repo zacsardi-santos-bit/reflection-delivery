@@ -1,0 +1,342 @@
+patching file crates/ruff_linter/resources/test/fixtures/pydocstyle/sections.py
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.05s
+────────────
+ Nextest run ID 28b8eafd-2514-4cab-bef5-19b1a95eb1b0 with nextest profile: default
+    Starting 77 tests across 1 binary (2142 tests skipped)
+        PASS [   0.474s] ( 1/77) ruff_linter rules::pydocstyle::tests::d209_d400
+        PASS [   0.484s] ( 2/77) ruff_linter rules::pydocstyle::tests::rules::rule_docstringtabindentation_path_new_d_py_expects
+        PASS [   0.487s] ( 3/77) ruff_linter rules::pydocstyle::tests::d417_numpy
+        PASS [   0.494s] ( 4/77) ruff_linter rules::pydocstyle::tests::all
+        PASS [   0.494s] ( 5/77) ruff_linter rules::pydocstyle::tests::bom
+        PASS [   0.487s] ( 6/77) ruff_linter rules::pydocstyle::tests::rules::rule_docstringstartswiththis_path_new_d_py_expects
+        PASS [   0.492s] ( 7/77) ruff_linter rules::pydocstyle::tests::rules::rule_blanklineafterfunction_path_new_d_py_expects
+        PASS [   0.502s] ( 8/77) ruff_linter rules::pydocstyle::tests::rules::rule_blanklinesbetweenheaderandcontent_path_new_sphinx_py_expects
+        PASS [   0.503s] ( 9/77) ruff_linter rules::pydocstyle::tests::rules::rule_blanklineafterfunction_path_new_d202_py_expects
+        PASS [   0.502s] (10/77) ruff_linter rules::pydocstyle::tests::rules::rule_emptydocstringsection_path_new_sections_py_expects
+        PASS [   0.502s] (11/77) ruff_linter rules::pydocstyle::tests::rules::rule_blanklinesbetweenheaderandcontent_path_new_sections_py_expects
+        PASS [   0.504s] (12/77) ruff_linter rules::pydocstyle::tests::rules::rule_blanklinebeforeclass_path_new_d_py_expects
+        PASS [   0.504s] (13/77) ruff_linter rules::pydocstyle::tests::d417_google_ignore_var_parameters
+        PASS [   0.502s] (14/77) ruff_linter rules::pydocstyle::tests::rules::rule_emptydocstring_path_new_d_py_expects
+        PASS [   0.504s] (15/77) ruff_linter rules::pydocstyle::tests::rules::rule_blanklinebeforefunction_path_new_d_py_expects
+        PASS [   0.510s] (16/77) ruff_linter rules::pydocstyle::tests::d417_google
+        PASS [   0.509s] (17/77) ruff_linter rules::pydocstyle::tests::d417_unspecified_ignore_var_parameters
+        PASS [   0.509s] (18/77) ruff_linter rules::pydocstyle::tests::d417_unspecified
+        PASS [   0.404s] (19/77) ruff_linter rules::pydocstyle::tests::rules::rule_escapesequenceindocstring_path_new_d301_py_expects
+        PASS [   0.413s] (20/77) ruff_linter rules::pydocstyle::tests::rules::rule_escapesequenceindocstring_path_new_d_py_expects
+        PASS [   0.418s] (21/77) ruff_linter rules::pydocstyle::tests::rules::rule_incorrectblanklineafterclass_path_new_d_py_expects
+        PASS [   0.414s] (22/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingsectionnamecolon_path_new_d_py_expects
+        PASS [   0.418s] (23/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingblanklineaftersummary_path_new_d_py_expects
+        PASS [   0.437s] (24/77) ruff_linter rules::pydocstyle::tests::rules::rule_firstworduncapitalized_path_new_d403_py_expects
+        PASS [   0.438s] (25/77) ruff_linter rules::pydocstyle::tests::rules::rule_firstworduncapitalized_path_new_d_py_expects
+        PASS [   0.423s] (26/77) ruff_linter rules::pydocstyle::tests::rules::rule_incorrectblanklinebeforeclass_path_new_d_py_expects
+        PASS [   0.427s] (27/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingterminalpunctuation_path_new_d400_415_py_expects
+        PASS [   0.432s] (28/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingsectionunderlineaftername_path_new_sections_py_expects
+        FAIL [   0.444s] (29/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingblanklineafterlastsection_path_new_sections_py_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/pydocstyle/snapshots/ruff_linter__rules__pydocstyle__tests__D413_sections.py.snap
+    Snapshot: D413_sections.py
+    Source: crates/ruff_linter/src/rules/pydocstyle/mod.rs:112
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+      135   135 │ 564 565 |     """
+      136   136 │ 565 566 | 
+      137   137 │ 566 567 | 
+      138   138 │ 
+      139       │-sections.py:590:5: D413 [*] Missing blank line after last section ("Parameters")
+            139 │+sections.py:570:5: D413 [*] Missing blank line after last section ("Args")
+            140 │+    |
+            141 │+568 |     """Below, `returns:` should be considered a section header.
+            142 │+569 | 
+            143 │+570 |     Args:
+            144 │+    |     ^^^^ D413
+            145 │+571 |         arg: Here's a note.
+      140   146 │     |
+      141       │-588 |     """Test that lower case subsection header is valid even if it has the same name as section kind.
+      142       │-589 | 
+      143       │-590 |     Parameters:
+            147 │+    = help: Add blank line after "Args"
+            148 │+
+            149 │+ℹ Safe fix
+            150 │+572 572 | 
+            151 │+573 573 |     returns:
+            152 │+574 574 |         Here's another note.
+            153 │+    575 |+
+            154 │+575 576 |     """
+            155 │+576 577 | 
+            156 │+577 578 | 
+            157 │+
+            158 │+sections.py:601:5: D413 [*] Missing blank line after last section ("Parameters")
+            159 │+    |
+            160 │+599 |     """Test that lower case subsection header is valid even if it has the same name as section kind.
+            161 │+600 | 
+            162 │+601 |     Parameters:
+      144   163 │     |     ^^^^^^^^^^ D413
+      145       │-591 |     ----------
+      146       │-592 |     parameters:
+            164 │+602 |     ----------
+            165 │+603 |     parameters:
+      147   166 │     |
+      148   167 │     = help: Add blank line after "Parameters"
+      149   168 │ 
+      150   169 │ ℹ Safe fix
+      151       │-593 593 |         A list of string parameters
+      152       │-594 594 |     value:
+      153       │-595 595 |         Some value
+      154       │-    596 |+
+      155       │-596 597 |     """
+      156       │-597 598 | 
+      157       │-598 599 |
+            170 │+604 604 |         A list of string parameters
+            171 │+605 605 |     value:
+            172 │+606 606 |         Some value
+            173 │+    607 |+
+            174 │+607 608 |     """
+            175 │+608 609 | 
+            176 │+609 610 |
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::pydocstyle::tests::rules::rule_missingblanklineafterlastsection_path_new_sections_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::pydocstyle::tests::rules::rule_missingblanklineafterlastsection_path_new_sections_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2218 filtered out; finished in 0.36s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/pydocstyle/snapshots/ruff_linter__rules__pydocstyle__tests__D413_sections.py.snap.new
+    thread 'rules::pydocstyle::tests::rules::rule_missingblanklineafterlastsection_path_new_sections_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'D413_sections.py' failed in line 112
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 17 tests still running
+        FAIL [   0.443s] (30/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingnewlineaftersectionname_path_new_sections_py_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/pydocstyle/snapshots/ruff_linter__rules__pydocstyle__tests__D406_sections.py.snap
+    Snapshot: D406_sections.py
+    Source: crates/ruff_linter/src/rules/pydocstyle/mod.rs:112
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       37    37 │ 228 228 |     My attention.
+       38    38 │ 229 229 | 
+       39    39 │ 230 230 |     """
+       40    40 │ 
+       41       │-sections.py:590:5: D406 [*] Section name should end with a newline ("Parameters")
+             41 │+sections.py:601:5: D406 [*] Section name should end with a newline ("Parameters")
+       42    42 │     |
+       43       │-588 |     """Test that lower case subsection header is valid even if it has the same name as section kind.
+       44       │-589 | 
+       45       │-590 |     Parameters:
+             43 │+599 |     """Test that lower case subsection header is valid even if it has the same name as section kind.
+             44 │+600 | 
+             45 │+601 |     Parameters:
+       46    46 │     |     ^^^^^^^^^^ D406
+       47       │-591 |     ----------
+       48       │-592 |     parameters:
+             47 │+602 |     ----------
+             48 │+603 |     parameters:
+       49    49 │     |
+       50    50 │     = help: Add newline after "Parameters"
+       51    51 │ 
+       52    52 │ ℹ Safe fix
+       53       │-587 587 | def test_lowercase_sub_section_header_should_be_valid(parameters: list[str], value: int):  # noqa: D213
+       54       │-588 588 |     """Test that lower case subsection header is valid even if it has the same name as section kind.
+       55       │-589 589 | 
+       56       │-590     |-    Parameters:
+       57       │-    590 |+    Parameters
+       58       │-591 591 |     ----------
+       59       │-592 592 |     parameters:
+       60       │-593 593 |         A list of string parameters
+             53 │+598 598 | def test_lowercase_sub_section_header_should_be_valid(parameters: list[str], value: int):  # noqa: D213
+             54 │+599 599 |     """Test that lower case subsection header is valid even if it has the same name as section kind.
+             55 │+600 600 | 
+             56 │+601     |-    Parameters:
+             57 │+    601 |+    Parameters
+             58 │+602 602 |     ----------
+             59 │+603 603 |     parameters:
+             60 │+604 604 |         A list of string parameters
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::pydocstyle::tests::rules::rule_missingnewlineaftersectionname_path_new_sections_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::pydocstyle::tests::rules::rule_missingnewlineaftersectionname_path_new_sections_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2218 filtered out; finished in 0.36s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/pydocstyle/snapshots/ruff_linter__rules__pydocstyle__tests__D406_sections.py.snap.new
+    thread 'rules::pydocstyle::tests::rules::rule_missingnewlineaftersectionname_path_new_sections_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'D406_sections.py' failed in line 112
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.449s] (31/77) ruff_linter rules::pydocstyle::tests::rules::rule_mismatchedsectionunderlinelength_path_new_sections_py_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/pydocstyle/snapshots/ruff_linter__rules__pydocstyle__tests__D409_sections.py.snap
+    Snapshot: D409_sections.py
+    Source: crates/ruff_linter/src/rules/pydocstyle/mod.rs:112
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       35    35 │ 226 226 |     Many many wonderful things.
+       36    36 │ 227 227 |     Raises:
+       37    37 │ 228 228 |     My attention.
+       38    38 │ 
+       39       │-sections.py:578:5: D409 [*] Section underline should match the length of its name ("Other Parameters")
+             39 │+sections.py:589:5: D409 [*] Section underline should match the length of its name ("Other Parameters")
+       40    40 │     |
+       41       │-577 |     Other Parameters
+       42       │-578 |     ----------
+             41 │+588 |     Other Parameters
+             42 │+589 |     ----------
+       43    43 │     |     ^^^^^^^^^^ D409
+       44       │-579 |     other_parameters:
+       45       │-580 |         A dictionary of string attributes
+             44 │+590 |     other_parameters:
+             45 │+591 |         A dictionary of string attributes
+       46    46 │     |
+       47    47 │     = help: Adjust underline length to match "Other Parameters"
+       48    48 │ 
+       49    49 │ ℹ Safe fix
+       50       │-575 575 |         A dictionary of string attributes
+       51       │-576 576 | 
+       52       │-577 577 |     Other Parameters
+       53       │-578     |-    ----------
+       54       │-    578 |+    ----------------
+       55       │-579 579 |     other_parameters:
+       56       │-580 580 |         A dictionary of string attributes
+       57       │-581 581 |     parameters:
+             50 │+586 586 |         A dictionary of string attributes
+             51 │+587 587 | 
+             52 │+588 588 |     Other Parameters
+             53 │+589     |-    ----------
+             54 │+    589 |+    ----------------
+             55 │+590 590 |     other_parameters:
+             56 │+591 591 |         A dictionary of string attributes
+             57 │+592 592 |     parameters:
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::pydocstyle::tests::rules::rule_mismatchedsectionunderlinelength_path_new_sections_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::pydocstyle::tests::rules::rule_mismatchedsectionunderlinelength_path_new_sections_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2218 filtered out; finished in 0.36s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/pydocstyle/snapshots/ruff_linter__rules__pydocstyle__tests__D409_sections.py.snap.new
+    thread 'rules::pydocstyle::tests::rules::rule_mismatchedsectionunderlinelength_path_new_sections_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'D409_sections.py' failed in line 112
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.451s] (32/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingblanklineafterlastsection_path_new_d413_py_expects
+        PASS [   0.447s] (33/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingtrailingperiod_path_new_d400_py_expects
+        FAIL [   0.457s] (34/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingdashedunderlineaftersection_path_new_sections_py_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/pydocstyle/snapshots/ruff_linter__rules__pydocstyle__tests__D407_sections.py.snap
+    Snapshot: D407_sections.py
+    Source: crates/ruff_linter/src/rules/pydocstyle/mod.rs:112
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+      112   112 │ 531 531 |     """
+      113   113 │ 532 532 | 
+      114   114 │ 533 533 | 
+      115   115 │ 
+      116       │-sections.py:602:4: D407 [*] Missing dashed underline after section ("Parameters")
+            116 │+sections.py:613:4: D407 [*] Missing dashed underline after section ("Parameters")
+      117   117 │     |
+      118       │-600 |    """Test that lower case subsection header is valid even if it is of a different kind.
+      119       │-601 | 
+      120       │-602 |    Parameters
+            118 │+611 |    """Test that lower case subsection header is valid even if it is of a different kind.
+            119 │+612 | 
+            120 │+613 |    Parameters
+      121   121 │     |    ^^^^^^^^^^ D407
+      122       │-603 |    -‐-----------------
+      123       │-604 |    returns:
+            122 │+614 |    -‐-----------------
+            123 │+615 |    returns:
+      124   124 │     |
+      125   125 │     = help: Add dashed line under "Parameters"
+      126   126 │ 
+      127   127 │ ℹ Safe fix
+      128       │-600 600 |    """Test that lower case subsection header is valid even if it is of a different kind.
+      129       │-601 601 | 
+      130       │-602 602 |    Parameters
+      131       │-    603 |+   ----------
+      132       │-603 604 |    -‐-----------------
+      133       │-604 605 |    returns:
+      134       │-605 606 |        some value
+            128 │+611 611 |    """Test that lower case subsection header is valid even if it is of a different kind.
+            129 │+612 612 | 
+            130 │+613 613 |    Parameters
+            131 │+    614 |+   ----------
+            132 │+614 615 |    -‐-----------------
+            133 │+615 616 |    returns:
+            134 │+616 617 |        some value
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::pydocstyle::tests::rules::rule_missingdashedunderlineaftersection_path_new_sections_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::pydocstyle::tests::rules::rule_missingdashedunderlineaftersection_path_new_sections_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2218 filtered out; finished in 0.37s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/pydocstyle/snapshots/ruff_linter__rules__pydocstyle__tests__D407_sections.py.snap.new
+    thread 'rules::pydocstyle::tests::rules::rule_missingdashedunderlineaftersection_path_new_sections_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'D407_sections.py' failed in line 112
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.452s] (35/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingtrailingperiod_path_new_d400_415_py_expects
+        PASS [   0.458s] (36/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingterminalpunctuation_path_new_d_py_expects
+        PASS [   0.340s] (37/77) ruff_linter rules::pydocstyle::tests::rules::rule_newlineafterlastparagraph_path_new_d_py_expects
+        PASS [   0.364s] (38/77) ruff_linter rules::pydocstyle::tests::rules::rule_multilinesummaryfirstline_path_new_d_py_expects
+        PASS [   0.390s] (39/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingtrailingperiod_path_new_d_py_expects
+        PASS [   0.351s] (40/77) ruff_linter rules::pydocstyle::tests::rules::rule_noblanklineaftersection_path_new_sections_py_expects
+        PASS [   0.353s] (41/77) ruff_linter rules::pydocstyle::tests::rules::rule_noblanklineaftersection_path_new_d410_py_expects
+        PASS [   0.354s] (42/77) ruff_linter rules::pydocstyle::tests::rules::rule_noblanklinebeforesection_path_new_sections_py_expects
+        PASS [   0.344s] (43/77) ruff_linter rules::pydocstyle::tests::rules::rule_overindentation_path_new_d208_py_expects
+        PASS [   0.356s] (44/77) ruff_linter rules::pydocstyle::tests::rules::rule_noncapitalizedsectionname_path_new_sections_py_expects
+        PASS [   0.379s] (45/77) ruff_linter rules::pydocstyle::tests::rules::rule_multilinesummarysecondline_path_new_d_py_expects
+        PASS [   0.355s] (46/77) ruff_linter rules::pydocstyle::tests::rules::rule_nonimperativemood_path_new_d401_py_expects
+────────────
+     Summary [   1.300s] 46/77 tests run: 42 passed, 4 failed, 2142 skipped
+        FAIL [   0.444s] (29/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingblanklineafterlastsection_path_new_sections_py_expects
+        FAIL [   0.443s] (30/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingnewlineaftersectionname_path_new_sections_py_expects
+        FAIL [   0.449s] (31/77) ruff_linter rules::pydocstyle::tests::rules::rule_mismatchedsectionunderlinelength_path_new_sections_py_expects
+        FAIL [   0.457s] (34/77) ruff_linter rules::pydocstyle::tests::rules::rule_missingdashedunderlineaftersection_path_new_sections_py_expects
+warning: 31/77 tests were not run due to test failure (run with --no-fail-fast to run all tests, or run with --max-fail)
+error: test run failed
+reward=0 graded=77 found=4 failed=0 parsed=46 framework=cargo exit_code=100

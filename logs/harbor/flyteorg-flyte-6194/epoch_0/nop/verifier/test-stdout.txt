@@ -1,0 +1,7 @@
+patching file flytepropeller/pkg/controller/nodes/attr_path_resolver_test.go
+# github.com/flyteorg/flyte/flytepropeller/pkg/controller/nodes [github.com/flyteorg/flyte/flytepropeller/pkg/controller/nodes.test]
+pkg/controller/nodes/attr_path_resolver_test.go:1879:40: undefined: errors.InvalidPrimitiveType
+{"Time":"2026-06-29T15:14:58.362643267Z","Action":"start","Package":"github.com/flyteorg/flyte/flytepropeller/pkg/controller/nodes"}
+{"Time":"2026-06-29T15:14:58.362760228Z","Action":"output","Package":"github.com/flyteorg/flyte/flytepropeller/pkg/controller/nodes","Output":"FAIL\tgithub.com/flyteorg/flyte/flytepropeller/pkg/controller/nodes [build failed]\n"}
+{"Time":"2026-06-29T15:14:58.362797409Z","Action":"fail","Package":"github.com/flyteorg/flyte/flytepropeller/pkg/controller/nodes","Elapsed":0}
+reward=0 graded=252 found=0 failed=0 parsed=1 framework=go exit_code=1

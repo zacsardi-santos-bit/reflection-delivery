@@ -1,0 +1,5 @@
+We're hitting a deadlock in the gossip synchronization subsystem when many peers try to apply gossip filters at the same time. Under rate-limited conditions, multiple goroutines all attempt to send the same backlog of messages simultaneously — this causes the gossiper to stall and in some cases deadlock entirely.
+
+I'd like to fix this by introducing two things: first, an atomic flag on the gossip syncer that tracks whether a backlog send is already in progress, so that any concurrent attempt can detect this and return early rather than starting redundant work. Second, incoming gossip filter requests should be placed into a bounded, non-blocking queue and processed asynchronously, one at a time. If the queue is full, the request should be dropped with a warning instead of blocking the caller.
+
+The queue should have a configurable capacity, with a sensible default, and should be drained by a background goroutine that starts when the syncer starts and exits cleanly when the syncer stops. Concurrent access to the queue from multiple goroutines must be safe, and messages must be processed in the order they were received.

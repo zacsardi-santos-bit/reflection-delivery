@@ -1,0 +1,23 @@
+{
+ "task": "okteto-okteto-4153",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden swaps 'github.com/whilp/git-urls' -> 'github.com/chainguard-dev/git-urls' in go.mod/go.sum and all importers; upstream PR 'fix cves'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

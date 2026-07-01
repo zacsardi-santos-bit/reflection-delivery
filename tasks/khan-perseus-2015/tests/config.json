@@ -1,0 +1,29 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx --coverage=false --watchAll=false --json",
+  "test_files": [
+    "packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to select normal width",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to select small width",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to select right alignment",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to select coefficient",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to select strictly match only these formats",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to update label text",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to set unsimplified answers to ungraded",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to set unsimplified answers to accepted",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to set unsimplified answers to wrong",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to set suggested answer format to: Integers",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to set suggested answer format to: Decimals",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to set suggested answer format to: Proper fractions",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to set suggested answer format to: Improper fractions",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to set suggested answer format to: Mixed numbers",
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should be possible to set suggested answer format to: Numbers with \u03c0"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx::numeric-input-editor should render"
+  ]
+}

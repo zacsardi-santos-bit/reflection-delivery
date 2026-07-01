@@ -1,0 +1,23 @@
+{
+ "task": "sveltejs-svelte-2404",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "36 mocha F2P assert real slug output, e.g. limaxProcessor('\u0412\u0441\u043f\u043b\u044b\u0442\u0438\u0435 \u0438 \u043f\u0435\u0440\u0435\u0445\u0432\u0430\u0442 \u0441\u043e\u0431\u044b\u0442\u0438\u0439') === 'vsplytie_i_perekhvat_sobytii' and unicode-preserving cases; golden adds site/src/utils/slug.js (limaxProcessor/unicodeSafeProcessor) and site/config.js (SLUG_SEPARATOR/SLUG_LANG)."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 49,
+  "shallow": true
+ }
+}

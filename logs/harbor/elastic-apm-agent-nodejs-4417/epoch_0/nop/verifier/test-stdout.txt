@@ -1,0 +1,23 @@
+patching file test/cloud-metadata/test-server.test.js
+patching file test/instrumentation/modules/http/request.test.js
+patching file test/sanitize-field-names/_shared.js
+patching file test/sanitize-field-names/express.test.js
+patching file test/sanitize-field-names/fastify.test.js
+patching file test/sanitize-field-names/hapi.test.js
+patching file test/sanitize-field-names/koa.test.js
+patching file test/sanitize-field-names/restify.test.js
+
+added 1373 packages in 2m
+
+160 packages are looking for funding
+  run `npm fund` for details
+  1) test/cloud-metadata/test-server.test.js
+  2) test/instrumentation/modules/http/request.test.js
+  3) test/sanitize-field-names/express.test.js
+  4) test/sanitize-field-names/fastify.test.js
+  5) test/sanitize-field-names/hapi.test.js
+  6) test/sanitize-field-names/koa.test.js
+  7) test/sanitize-field-names/restify.test.js
+0 passing
+7 failing
+reward=0 graded=7 found=7 failed=7 parsed=7 framework=mocha exit_code=1

@@ -1,0 +1,10 @@
+patching file exec/build-commands/test/__snapshots__/ignoredBuilds.test.ts.snap
+patching file exec/build-commands/test/approveBuilds.test.ts
+patching file exec/build-commands/test/ignoredBuilds.test.ts
+patching file exec/build-commands/test/tsconfig.json
+pnpm                                     |  WARN  The field "pnpm.overrides" was found in /workspace/repo/pnpm/package.json. This will not take effect. You should configure "pnpm.overrides" at the root of the workspace instead.
+Scope: all 179 workspace projects
+Already up to date
+Done in 1.1s
+error TS5083: Cannot read file '/workspace/repo/exec/build-commands/tsconfig.json'.
+reward=0 graded=4 found=0 failed=0 parsed=0 framework=jest exit_code=1

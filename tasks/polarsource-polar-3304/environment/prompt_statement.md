@@ -1,0 +1,9 @@
+We're refactoring the checkout flow for subscription products. Right now, creating and retrieving payment processor checkout sessions is implemented inside the subscriptions module as a "subscribe session" concept — but checkout is really a separate concern and shouldn't live there. I'd like to move this into a new dedicated checkout module.
+
+The new module should expose API endpoints for creating and retrieving checkout sessions. When creating a checkout, callers provide a product price ID and a success redirect URL, and optionally a customer email. The service should validate that the product and price both exist and aren't archived. If an already-subscribed user tries to create a checkout for a product they're already subscribed to, the request should be rejected with a specific error.
+
+The behavior should vary based on who's making the request: anonymous users get a basic checkout; cookie-authenticated users get their existing payment processor customer associated with the checkout session and their user ID tracked in the metadata; API token users who provide a customer email should have that email forwarded to the payment processor without associating a customer account. Products with tax-applicable benefits should trigger tax collection in the checkout session. When a user with an active free subscription is initiating a paid checkout (i.e., upgrading), the existing subscription ID should be included in the session metadata.
+
+There should also be a way to retrieve a checkout session by its ID, which looks up the session from the payment processor and resolves the associated product and price from the session metadata. If the session metadata is missing or incomplete (no valid product price reference), the retrieval should fail with a not-found error.
+
+The old subscribe-session service and its endpoints under the subscriptions module should be removed, with all that functionality replaced by this new checkout module.

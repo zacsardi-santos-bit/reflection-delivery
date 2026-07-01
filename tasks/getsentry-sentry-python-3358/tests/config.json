@@ -1,0 +1,23 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/integrations/litestar/__init__.py /workspace/repo/tests/integrations/litestar/test_litestar.py -v",
+  "test_files": [
+    "tests/integrations/litestar/__init__.py",
+    "tests/integrations/litestar/test_litestar.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.integrations.litestar.test_litestar::test_catch_exceptions[/some_url-ZeroDivisionError-division by zero-tests.integrations.litestar.test_litestar.litestar_app_factory.<locals>.homepage_handler]",
+    "tests.integrations.litestar.test_litestar::test_catch_exceptions[/custom_error-Exception-Too Hot-custom_name]",
+    "tests.integrations.litestar.test_litestar::test_catch_exceptions[/controller/error-Exception-Whoa-tests.integrations.litestar.test_litestar.litestar_app_factory.<locals>.MyController.controller_error]",
+    "tests.integrations.litestar.test_litestar::test_middleware_spans",
+    "tests.integrations.litestar.test_litestar::test_middleware_callback_spans",
+    "tests.integrations.litestar.test_litestar::test_middleware_receive_send",
+    "tests.integrations.litestar.test_litestar::test_middleware_partial_receive_send",
+    "tests.integrations.litestar.test_litestar::test_span_origin",
+    "tests.integrations.litestar.test_litestar::test_litestar_scope_user_on_exception_event[send_default_pii=True]",
+    "tests.integrations.litestar.test_litestar::test_litestar_scope_user_on_exception_event[send_default_pii=False]"
+  ],
+  "PASS_TO_PASS": []
+}

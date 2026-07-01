@@ -1,0 +1,42 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -mod=vendor ./builder/remotecontext/git -count=1",
+  "test_files": [
+    "builder/remotecontext/git/gitutils_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/git_scheme_uppercase,_no_url-fragment",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/git_scheme,_no_url-fragment",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/git_scheme,_with_url-fragment",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/https_scheme,_no_url-fragment",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/https_scheme,_with_url-fragment",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/git@,_no_url-fragment",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/git@,_with_url-fragment",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/ssh,_no_url-fragment",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/ssh,_with_url-fragment",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL/ssh,_with_url-fragment_and_user",
+    "github.com/docker/docker/builder/remotecontext/git::TestParseRemoteURL",
+    "github.com/docker/docker/builder/remotecontext/git::TestCloneArgsSmartHttp",
+    "github.com/docker/docker/builder/remotecontext/git::TestCloneArgsDumbHttp",
+    "github.com/docker/docker/builder/remotecontext/git::TestCloneArgsGit",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/#00",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/master",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/:subdir",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/:nosubdir",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/:Dockerfile",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/master:nosubdir",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/master:subdir",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/master:../subdir",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/test",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/test:",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/test:subdir",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/master:absolutelink",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit/master:parentlink",
+    "github.com/docker/docker/builder/remotecontext/git::TestCheckoutGit",
+    "github.com/docker/docker/builder/remotecontext/git::TestValidGitTransport",
+    "github.com/docker/docker/builder/remotecontext/git::TestGitInvalidRef"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,8 @@
+patching file lite/utils/timer_test.cc
+lite/utils/timer_test.cc:15:10: fatal error: lite/utils/timer.h: No such file or directory
+   15 | #include "lite/utils/timer.h"
+      |          ^~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+cc1plus: fatal error: lite/utils/timer.cc: No such file or directory
+compilation terminated.
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=gtest exit_code=1

@@ -1,0 +1,340 @@
+diff --git a/cmd/operator-sdk/execentrypoint/ansible.go b/cmd/operator-sdk/execentrypoint/ansible.go
+index 24bc3771..068909ce 100644
+--- a/cmd/operator-sdk/execentrypoint/ansible.go
++++ b/cmd/operator-sdk/execentrypoint/ansible.go
+@@ -38,7 +38,7 @@ in a Pod inside a cluster. Developers wanting to run their operator locally
+ should use "run --local" instead.`,
+ 		RunE: func(cmd *cobra.Command, args []string) error {
+ 			logf.SetLogger(zap.Logger())
+-			err := setAnsibleRolePathEnvVar(flags)
++			err := setAnsibleEnvVars(flags)
+ 			if err != nil {
+ 				log.Error(err)
+ 				os.Exit(1)
+@@ -51,15 +51,23 @@ should use "run --local" instead.`,
+ 	return runAnsibleCmd
+ }
+ 
+-// setAnsibleRolePathEnvVar will set the default role path for the ANSIBLE_ROLES_PATH
+-func setAnsibleRolePathEnvVar(flags *aoflags.AnsibleOperatorFlags) error {
+-	if flags != nil && len(flags.AnsibleRolesPath) > 0 {
+-		if err := os.Setenv(aoflags.AnsibleRolesPathEnvVar, flags.AnsibleRolesPath); err != nil {
+-			return fmt.Errorf("failed to set %s environment variable: (%v)", aoflags.AnsibleRolesPathEnvVar, err)
++// setAnsibleEnvVars will set Ansible-defined environment variables from CLI flags.
++func setAnsibleEnvVars(flags *aoflags.AnsibleOperatorFlags) error {
++	if flags != nil {
++		if len(flags.AnsibleRolesPath) > 0 {
++			if err := os.Setenv(aoflags.AnsibleRolesPathEnvVar, flags.AnsibleRolesPath); err != nil {
++				return fmt.Errorf("failed to set %s environment variable: (%v)", aoflags.AnsibleRolesPathEnvVar, err)
++			}
++			log.Infof("Set the value %v for environment variable %v.",
++				flags.AnsibleRolesPath, aoflags.AnsibleRolesPathEnvVar)
++		}
++		if len(flags.AnsibleCollectionsPath) > 0 {
++			if err := os.Setenv(aoflags.AnsibleCollectionsPathEnvVar, flags.AnsibleCollectionsPath); err != nil {
++				return fmt.Errorf("failed to set %s environment variable: (%v)", aoflags.AnsibleCollectionsPathEnvVar, err)
++			}
++			log.Infof("Set the value %v for environment variable %v.",
++				flags.AnsibleCollectionsPath, aoflags.AnsibleCollectionsPathEnvVar)
+ 		}
+-		log.Info(fmt.Sprintf("set the value %v for environment variable %v.", flags.AnsibleRolesPath,
+-			aoflags.AnsibleRolesPathEnvVar))
+ 	}
+-
+ 	return nil
+ }
+diff --git a/doc/ansible/dev/finalizers.md b/doc/ansible/dev/finalizers.md
+index 4df0f08d..e5890823 100644
+--- a/doc/ansible/dev/finalizers.md
++++ b/doc/ansible/dev/finalizers.md
+@@ -40,8 +40,9 @@ path to a playbook on the operator’s file system.
+ One of `playbook`, `role`, or `vars` must be provided. If `role` is not provided, it
+ will default to the role specified at the top level of the `watches.yaml` entry.
+ 
+-This field is identical to the top-level `role` field. It requires an absolute
+-path to a role on the operator’s file system.
++This field is identical to the top-level `role` field.
++https://github.com/operator-framework/operator-sdk/blob/master/doc/ansible/user-guide.md#watches-file
++
+ 
+ #### vars
+ 
+@@ -115,6 +116,20 @@ This example will run the `/opt/ansible/roles/teardown_database` role when the C
+ 
+ This example will run the `/opt/ansible/destroy.yml` playbook when the Custom Resource is deleted.
+ 
++```yaml
++---
++- version: v1alpha1
++  group: app.example.com
++  kind: Database
++  playbook: playbook.yml
++  finalizer:
++    name: finalizer.app.example.com
++    role: myNamespace.myCollection.myRole
++```
++
++This example will run the `myRole` when the Custom Resource is deleted. (The collection must have been installed.)
++
++
+ ### Run a different playbook or role with vars
+ 
+ You can set `playbook` or `role` and `vars` at the same time. This can be useful if only a small
+diff --git a/doc/ansible/user-guide.md b/doc/ansible/user-guide.md
+index b042a6ca..e79ad0d5 100644
+--- a/doc/ansible/user-guide.md
++++ b/doc/ansible/user-guide.md
+@@ -51,23 +51,25 @@ be monitored for updates and cached.
+ * **group**:  The group of the Custom Resource that you will be watching.
+ * **version**:  The version of the Custom Resource that you will be watching.
+ * **kind**:  The kind of the Custom Resource that you will be watching.
+-* **role** (default): This is the name of the role that you have added to the
+-  container. This field is mutually exclusive with the
+-  "playbook" field. If the path is relative, it is relative to the `roles` directory in the current working directory 
+-  which in the image by default is `/opt/ansible/roles`. Also, when it is running locally it is by default the directory 
+-  `roles` in the current project directory in the local machine. Note that it can be customized by using the flag 
+-  `ansible-roles-path` or the envinroment variable `ANSIBLE_ROLES_PATH`. 
++* **role** (default): Specifies a role to be executed. This field is mutually exclusive with the
++  "playbook" field. This field can be:
++  * an absolute path to a role directory.
++  * a relative path within one of the directories specified by `ANSIBLE_ROLES_PATH` environment variable or `ansible-roles-path` flag.
++  * a relative path within the current working directory, which defaults to `/opt/ansible/roles`.
++  * a fully qualified collection name of an installed Ansible collection. Ansible collections are installed to
++    `~/.ansible/collections` or `/usr/share/ansible/collections` by default. If they are installed elsewhere,
++    use the `ANSIBLE_COLLECTIONS_PATH` environment variable or the `ansible-collections-path` flag
+ * **playbook**: This is the playbook name that you have added to the
+   container. This playbook is expected to be simply a way to call roles. This
+-  field is mutually exclusive with the "role" field. Also, when it is running locally it looking for the playbook in the 
+-  current project directory in the local machine.
++  field is mutually exclusive with the "role" field. When running locally, the playbook is expected to be in the
++  current project directory.
+ * **vars**: This is an arbitrary map of key-value pairs. The contents will be
+   passed as `extra_vars` to the playbook or role specified for this watch.
+ * **reconcilePeriod** (optional): The reconciliation interval, how often the
+   role/playbook is run, for a given CR.
+ * **manageStatus** (optional): When true (default), the operator will manage
+   the status of the CR generically. Set to false, the status of the CR is
+-  managed elsewhere, by the specified role/playbook or in a separate controller. 
++  managed elsewhere, by the specified role/playbook or in a separate controller.
+ * **blacklist**: A list of child resources (by GVK) that will not be watched or cached.
+ 
+ An example Watches file:
+@@ -107,6 +109,12 @@ An example Watches file:
+     - group: ""
+       version: v1
+       kind: ConfigMap
++
++# Example usage with a role from an installed Ansible collection
++- version: v1alpha1
++  group: bar.example.com
++  kind: Bar
++  role: myNamespace.myCollection.myRole
+ ```
+ 
+ ## Customize the operator logic
+@@ -360,10 +368,10 @@ In order to see the logs from a particular you can run:
+ kubectl logs deployment/memcached-operator
+ ```
+ 
+-The logs contain the information about the Ansible run and will make it much easier to debug issues within your Ansible tasks. 
++The logs contain the information about the Ansible run and will make it much easier to debug issues within your Ansible tasks.
+ Note that the logs will contain much more detailed information about the Ansible Operator's internals and interface with Kubernetes as well.
+ 
+-Also, you can use the environment variable `ANSIBLE_DEBUG_LOGS` set as `True` to check the full Ansible result in the logs in order to be able to debug it. 
++Also, you can use the environment variable `ANSIBLE_DEBUG_LOGS` set as `True` to check the full Ansible result in the logs in order to be able to debug it.
+ 
+ **Example**
+ 
+diff --git a/pkg/ansible/flags/flag.go b/pkg/ansible/flags/flag.go
+index 30e522d8..3bb961ba 100644
+--- a/pkg/ansible/flags/flag.go
++++ b/pkg/ansible/flags/flag.go
+@@ -25,13 +25,15 @@ import (
+ // AnsibleOperatorFlags - Options to be used by an ansible operator
+ type AnsibleOperatorFlags struct {
+ 	watch.WatchFlags
+-	InjectOwnerRef   bool
+-	MaxWorkers       int
+-	AnsibleVerbosity int
+-	AnsibleRolesPath string
++	InjectOwnerRef         bool
++	MaxWorkers             int
++	AnsibleVerbosity       int
++	AnsibleRolesPath       string
++	AnsibleCollectionsPath string
+ }
+ 
+ const AnsibleRolesPathEnvVar = "ANSIBLE_ROLES_PATH"
++const AnsibleCollectionsPathEnvVar = "ANSIBLE_COLLECTIONS_PATH"
+ 
+ // AddTo - Add the ansible operator flags to the the flagset
+ // helpTextPrefix will allow you add a prefix to default help text. Joined by a space.
+@@ -63,8 +65,17 @@ func AddTo(flagSet *pflag.FlagSet, helpTextPrefix ...string) *AnsibleOperatorFla
+ 		"ansible-roles-path",
+ 		"",
+ 		strings.Join(append(helpTextPrefix,
+-			"Ansible Roles Path. By default, it will be {{CWD}}/roles."),
++			"Ansible Roles Path. If unset, roles are assumed to be in {{CWD}}/roles."),
+ 			" "),
+ 	)
++	flagSet.StringVar(&aof.AnsibleCollectionsPath,
++		"ansible-collections-path",
++		"",
++		strings.Join(append(helpTextPrefix,
++			`Path to installed Ansible Collections. If set, collections should be
++			located in {{value}}/ansible_collections/. If unset, collections are
++			assumed to be in ~/.ansible/collections or
++			/usr/share/ansible/collections.`), " "),
++	)
+ 	return aof
+ }
+diff --git a/pkg/ansible/watches/testdata/ansible_collections/nameSpace/collection/roles/someRole/empty_file b/pkg/ansible/watches/testdata/ansible_collections/nameSpace/collection/roles/someRole/empty_file
+new file mode 100644
+index 00000000..e69de29b
+diff --git a/pkg/ansible/watches/testdata/invalid_collection.yaml b/pkg/ansible/watches/testdata/invalid_collection.yaml
+new file mode 100644
+index 00000000..b1721987
+--- /dev/null
++++ b/pkg/ansible/watches/testdata/invalid_collection.yaml
+@@ -0,0 +1,5 @@
++---
++- version: v1alpha1
++  group: app.example.com
++  kind: SanityUnconfirmed
++  role: nameSpace.collection.someRole
+diff --git a/pkg/ansible/watches/testdata/valid.yaml.tmpl b/pkg/ansible/watches/testdata/valid.yaml.tmpl
+index c19388b1..d49bb617 100644
+--- a/pkg/ansible/watches/testdata/valid.yaml.tmpl
++++ b/pkg/ansible/watches/testdata/valid.yaml.tmpl
+@@ -87,3 +87,7 @@
+   role: {{ .ValidRole }}
+   vars:
+     sentinel: reconciling
++- version: v1alpha1
++  group: app.example.com
++  kind: AnsibleCollectionEnvTest
++  role: nameSpace.collection.someRole
+diff --git a/pkg/ansible/watches/watches.go b/pkg/ansible/watches/watches.go
+index 863bd689..f6ef0632 100644
+--- a/pkg/ansible/watches/watches.go
++++ b/pkg/ansible/watches/watches.go
+@@ -149,17 +149,34 @@ func (w *Watch) UnmarshalYAML(unmarshal func(interface{}) error) error {
+ 
+ // addRolePlaybookPaths will add the full path based on the current dir
+ func (w *Watch) addRolePlaybookPaths() {
+-	w.Playbook = getFullPath(w.Playbook)
+-	w.Role = getFullRolePath(w.Role)
++	if len(w.Playbook) > 0 {
++		w.Playbook = getFullPath(w.Playbook)
++	}
++
++	if len(w.Role) > 0 {
++		possibleRolePaths := getPossibleRolePaths(w.Role)
++		for _, possiblePath := range possibleRolePaths {
++			if _, err := os.Stat(possiblePath); err == nil {
++				w.Role = possiblePath
++				break
++			}
++		}
++	}
+ 	if w.Finalizer != nil && len(w.Finalizer.Role) > 0 {
+-		w.Finalizer.Role = getFullRolePath(w.Finalizer.Role)
++		possibleRolePaths := getPossibleRolePaths(w.Finalizer.Role)
++		for _, possiblePath := range possibleRolePaths {
++			if _, err := os.Stat(possiblePath); err == nil {
++				w.Finalizer.Role = possiblePath
++				break
++			}
++		}
+ 	}
+ 	if w.Finalizer != nil && len(w.Finalizer.Playbook) > 0 {
+ 		w.Finalizer.Playbook = getFullPath(w.Finalizer.Playbook)
+ 	}
+ }
+ 
+-// getFullPath will return a valid full path for the playbook
++// getFullPath returns an absolute path for the playbook
+ func getFullPath(path string) string {
+ 	if len(path) > 0 && !filepath.IsAbs(path) {
+ 		return filepath.Join(projutil.MustGetwd(), path)
+@@ -167,32 +184,41 @@ func getFullPath(path string) string {
+ 	return path
+ }
+ 
+-// getFullRolePath will return a valid full path for the role
+-func getFullRolePath(path string) string {
+-	if len(path) > 0 && !filepath.IsAbs(path) {
+-		envVar, ok := os.LookupEnv("ANSIBLE_ROLES_PATH")
+-		if ok && len(envVar) > 0 {
+-			// Check all values informed (e.g. path1/roles:path2/roles:/absolute/path3/roles)
+-			result := strings.Split(envVar, ":")
+-			for i := range result {
+-				// Check if the role can be found in the envVar + role path
+-				infoPath := filepath.Join(result[i], path)
+-				if _, err := os.Stat(infoPath); err == nil {
+-					return infoPath
+-				}
+-
+-				// Check if the role can be found in the envVar + roles + role path
+-				infoPathWithRolesDir := filepath.Join(result[i], "roles", path)
+-				if _, err := os.Stat(infoPathWithRolesDir); err == nil {
+-					return infoPathWithRolesDir
+-				}
++// getPossibleRolePaths returns list of possible absolute paths derived from a user provided value.
++func getPossibleRolePaths(path string) []string {
++	possibleRolePaths := []string{}
++	if filepath.IsAbs(path) || len(path) == 0 {
++		return append(possibleRolePaths, path)
++	}
++	fqcn := strings.Split(path, ".")
++	// If fqcn is a valid fully qualified collection name, it is <namespace>.<collectionName>.<roleName>
++	if len(fqcn) == 3 {
++		ansibleCollectionsPathEnv, ok := os.LookupEnv("ANSIBLE_COLLECTIONS_PATH")
++		if !ok || len(ansibleCollectionsPathEnv) == 0 {
++			ansibleCollectionsPathEnv = "/usr/share/ansible/collections"
++			home, err := os.UserHomeDir()
++			if err == nil {
++				homeCollections := filepath.Join(home, ".ansible/collections")
++				ansibleCollectionsPathEnv = ansibleCollectionsPathEnv + ":" + homeCollections
+ 			}
+ 		}
+-		// If the flag and/or env var ANSIBLE_ROLES_PATH was not set or no roles were informed in the path then, it will
+-		// be the current directory concat with roles.
+-		return getFullPath(filepath.Join("roles", path))
++		for _, possiblePathParent := range strings.Split(ansibleCollectionsPathEnv, ":") {
++			possiblePath := filepath.Join(possiblePathParent, "ansible_collections", fqcn[0], fqcn[1], "roles", fqcn[2])
++			possibleRolePaths = append(possibleRolePaths, possiblePath)
++		}
+ 	}
+-	return path
++
++	// Check for the role where Ansible would. If it exists, use it.
++	ansibleRolesPathEnv, ok := os.LookupEnv("ANSIBLE_ROLES_PATH")
++	if ok && len(ansibleRolesPathEnv) > 0 {
++		for _, possiblePathParent := range strings.Split(ansibleRolesPathEnv, ":") {
++			// "roles" is optionally a part of the path. Check with, and without.
++			possibleRolePaths = append(possibleRolePaths, filepath.Join(possiblePathParent, path))
++			possibleRolePaths = append(possibleRolePaths, filepath.Join(possiblePathParent, "roles", path))
++		}
++	}
++	// Roles can also live in the current working directory.
++	return append(possibleRolePaths, getFullPath(filepath.Join("roles", path)))
+ }
+ 
+ // Validate - ensures that a Watch is valid
+@@ -297,13 +323,11 @@ func verifyGVK(gvk schema.GroupVersionKind) error {
+ func verifyAnsiblePath(playbook string, role string) error {
+ 	switch {
+ 	case playbook != "":
+-		playbookPath := getFullPath(playbook)
+-		if _, err := os.Stat(playbookPath); err != nil {
++		if _, err := os.Stat(playbook); err != nil {
+ 			return fmt.Errorf("playbook: %v was not found", playbook)
+ 		}
+ 	case role != "":
+-		rolePath := getFullRolePath(role)
+-		if _, err := os.Stat(rolePath); err != nil {
++		if _, err := os.Stat(role); err != nil {
+ 			return fmt.Errorf("role: %v was not found", role)
+ 		}
+ 	default:

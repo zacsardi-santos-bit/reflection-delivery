@@ -1,0 +1,23 @@
+{
+ "task": "ruma-ruma-2092",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "trybuild ui test adds t.pass(14-enum-content-double-kind.rs) + t.compile_fail(15-...) with .stderr expecting 'only account data can have two kinds'; golden emits that exact syn::Error at event_content.rs line 541."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

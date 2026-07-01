@@ -1,0 +1,27 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && (npx patch-package 2>/dev/null; true) && node --expose-gc ./node_modules/jest/bin/jest.js --config ./config/jest.config.js src/testing/core/__tests__/createProxiedSchema.test.tsx src/testing/graphql-tools/utils.test.ts --coverage=false --watchAll=false --json",
+  "test_files": [
+    "src/__tests__/__snapshots__/exports.ts.snap",
+    "src/testing/core/__tests__/createProxiedSchema.test.tsx",
+    "src/testing/graphql-tools/utils.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/testing/graphql-tools/utils.test.ts::addMocksToSchema basic",
+    "/workspace/repo/src/testing/graphql-tools/utils.test.ts::addMocksToSchema handle _id key field",
+    "/workspace/repo/src/testing/graphql-tools/utils.test.ts::addMocksToSchema should handle union type",
+    "/workspace/repo/src/testing/graphql-tools/utils.test.ts::addMocksToSchema should handle interface type",
+    "/workspace/repo/src/testing/graphql-tools/utils.test.ts::addMocksToSchema should handle custom scalars",
+    "/workspace/repo/src/testing/core/__tests__/createProxiedSchema.test.tsx::schema proxy mocks scalars and resolvers",
+    "/workspace/repo/src/testing/core/__tests__/createProxiedSchema.test.tsx::schema proxy allows schema forking with .fork",
+    "/workspace/repo/src/testing/core/__tests__/createProxiedSchema.test.tsx::schema proxy does not pollute the original schema",
+    "/workspace/repo/src/testing/core/__tests__/createProxiedSchema.test.tsx::schema proxy allows you to call .fork without providing resolvers",
+    "/workspace/repo/src/testing/core/__tests__/createProxiedSchema.test.tsx::schema proxy handles mutations",
+    "/workspace/repo/src/testing/core/__tests__/createProxiedSchema.test.tsx::schema proxy returns GraphQL errors",
+    "/workspace/repo/src/testing/core/__tests__/createProxiedSchema.test.tsx::schema proxy validates schema by default and returns validation errors",
+    "/workspace/repo/src/testing/core/__tests__/createProxiedSchema.test.tsx::schema proxy preserves resolvers from previous calls to .add on subsequent calls to .fork"
+  ],
+  "PASS_TO_PASS": []
+}

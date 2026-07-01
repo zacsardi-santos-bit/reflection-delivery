@@ -1,0 +1,6 @@
+patching file docs/api.md
+patching file docs/assets/demo_schema.graphql
+patching file docs/assets/demo_schema.sql
+patching file src/builder.rs
+patching file src/graphql.rs
+patching file src/transpile.rs

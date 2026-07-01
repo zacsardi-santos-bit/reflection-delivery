@@ -1,0 +1,5 @@
+I'm working on a bug where a block device backed by a slow drive can starve all other virtual devices in the VMM. The root cause is that every time a descriptor is added to the virtio used ring, the ring's visible index is immediately updated and made visible to the guest. This prevents batching: instead of collecting multiple completed descriptors and notifying the guest once, each descriptor triggers a separate update cycle.
+
+The fix should decouple "adding a descriptor to the ring" from "publishing the ring index to the guest." After the change, adding a descriptor should only write the entry internally — the guest-visible index should remain unchanged until a separate, explicit publish step is called. Devices that process descriptors in a loop should add all of them first, then call the publish step once.
+
+This also means existing code that relies on the ring index being updated immediately after each add will need to be updated to call the new publish step explicitly before checking the ring index.

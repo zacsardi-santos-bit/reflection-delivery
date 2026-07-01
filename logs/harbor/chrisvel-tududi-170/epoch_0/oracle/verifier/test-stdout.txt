@@ -1,0 +1,305 @@
+patching file backend/tests/helpers/setup.js
+patching file backend/tests/integration/subtasks-completion.test.js
+patching file backend/tests/integration/subtasks.test.js
+patching file backend/tests/integration/tasks.test.js
+patching file backend/tests/unit/models/subtasks.test.js
+patching file backend/tests/unit/services/parentChildRelationship.test.js
+  console.log
+    Using database file '/tmp/test-60053f04.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+  console.log
+    Using database file '/tmp/test-4a63ab41.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+  console.log
+    Using database file '/tmp/test-9e1c323e.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+  console.log
+    Using database file '/tmp/test-0d179655.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+  console.log
+    Using database file '/tmp/test-ee54b265.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+PASS tests/unit/models/subtasks.test.js
+  Task Model - Subtasks
+    Subtask Creation
+      ✓ should create a task with subtasks (36 ms)
+      ✓ should allow multiple subtasks for a parent task (39 ms)
+      ✓ should allow null parent_task_id (top-level tasks) (22 ms)
+    Subtask Associations
+      ✓ should retrieve parent task from subtask (35 ms)
+      ✓ should retrieve all subtasks from parent task (27 ms)
+    Subtask Validation
+      ✓ should validate parent_task_id references existing task (17 ms)
+      ✓ should not allow subtask to reference itself as parent (22 ms)
+    Subtask Filtering
+      ✓ should filter parent tasks only (22 ms)
+      ✓ should filter subtasks only (23 ms)
+    Cascade Operations
+      ✓ should delete subtasks when parent is deleted (26 ms)
+
+PASS tests/unit/services/parentChildRelationship.test.js
+  Parent-Child Relationship Functionality
+    Task Instance Creation
+      ✓ should create child task with correct parent relationship (42 ms)
+      ✓ should preserve project assignment in child task (26 ms)
+      ✓ should handle null description and note correctly (21 ms)
+    Parent-Child Task Queries
+      ✓ should find all child tasks for a parent (28 ms)
+      ✓ should find parent task from child (25 ms)
+      ✓ should distinguish between parent and child tasks (26 ms)
+      ✓ should handle tasks with no parent relationship (28 ms)
+    Completion-Based Recurring Task Generation
+      ✓ should create next instance when completing completion-based parent task (27 ms)
+      ✓ should not create multiple children when called repeatedly (20 ms)
+      ✓ should handle child task completion properly (17 ms)
+    Parent Task Updates Through Child Tasks
+      ✓ should update parent recurrence settings through child task (23 ms)
+      ✓ should preserve child task properties when updating parent (24 ms)
+    Task Deletion Scenarios
+      ✓ should allow deleting child tasks without affecting parent (25 ms)
+      ✓ should allow deleting parent and set child recurring_parent_id to null (FK SET NULL) (26 ms)
+      ✓ should allow deleting parent after deleting all child tasks (27 ms)
+    Complex Parent-Child Scenarios
+      ✓ should handle multiple parents with different recurrence patterns (21 ms)
+      ✓ should maintain data integrity across multiple child generations (56 ms)
+      ✓ should handle orphaned child tasks gracefully (21 ms)
+    Data Consistency and Validation
+      ✓ should ensure child tasks cannot have recurrence settings (17 ms)
+      ✓ should ensure parent tasks have valid recurrence settings (16 ms)
+      ✓ should maintain user isolation for parent-child relationships (29 ms)
+
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "POST /api/task HTTP/1.1" 201 596 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "GET /api/task/1/subtasks HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "PATCH /api/task/1/toggle_completion HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "POST /api/task HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:02 +0000] "GET /api/task/4/subtasks HTTP/1.1" 200 2 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/5/toggle_completion HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/task HTTP/1.1" 400 34 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "GET /api/task/999999/subtasks HTTP/1.1" 200 2 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/9/toggle_completion HTTP/1.1" 200 679 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/10/toggle_completion HTTP/1.1" 200 679 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "GET /api/task/5/subtasks HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/12/toggle_completion HTTP/1.1" 200 658 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/task HTTP/1.1" 201 591 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "GET /api/tasks?type=today HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/14/toggle_completion HTTP/1.1" 200 685 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/task HTTP/1.1" 201 592 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "GET /api/tasks HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/17/toggle_completion HTTP/1.1" 200 681 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/task HTTP/1.1" 201 592 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/18/toggle_completion HTTP/1.1" 200 680 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/8 HTTP/1.1" 200 651 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/14 HTTP/1.1" 200 635 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/999999 HTTP/1.1" 404 27 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/20/toggle_completion HTTP/1.1" 200 678 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/20/toggle_completion HTTP/1.1" 200 656 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/20/toggle_completion HTTP/1.1" 200 678 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/17 HTTP/1.1" 200 627 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/11 HTTP/1.1" 404 27 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/20 HTTP/1.1" 200 628 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/12 HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/24/toggle_completion HTTP/1.1" 200 680 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/25/toggle_completion HTTP/1.1" 200 680 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "PATCH /api/task/22/toggle_completion HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "DELETE /api/task/13 HTTP/1.1" 200 39 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "DELETE /api/task/26 HTTP/1.1" 200 39 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:03 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/25/toggle_completion HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "DELETE /api/task/999999 HTTP/1.1" 404 27 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/29/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/30/toggle_completion HTTP/1.1" 200 681 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "DELETE /api/task/16 HTTP/1.1" 404 27 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/32/toggle_completion HTTP/1.1" 200 659 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "DELETE /api/task/17 HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/task HTTP/1.1" 201 657 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+PASS tests/integration/tasks.test.js
+  Tasks Routes
+    POST /api/task
+      ✓ should create a new task (160 ms)
+      ✓ should require authentication (82 ms)
+      ✓ should require task name (91 ms)
+    GET /api/tasks
+      ✓ should get all user tasks (135 ms)
+      ✓ should filter today tasks (returns all user tasks) (126 ms)
+      ✓ should require authentication (90 ms)
+    PATCH /api/task/:id
+      ✓ should update task (113 ms)
+      ✓ should return 404 for non-existent task (95 ms)
+      ✓ should not allow updating other user's tasks (147 ms)
+      ✓ should require authentication (78 ms)
+    DELETE /api/task/:id
+      ✓ should delete task (101 ms)
+      ✓ should return 404 for non-existent task (87 ms)
+      ✓ should not allow deleting other user's tasks (142 ms)
+      ✓ should require authentication (78 ms)
+    Task with tags
+      ✓ should create task with tags (106 ms)
+    Subtasks filtering
+      ✓ should not include subtasks at first level when retrieving /tasks (142 ms)
+
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "GET /api/task/42/subtasks HTTP/1.1" 200 2 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "POST /api/task HTTP/1.1" 400 32 "-" "-"
+PASS tests/integration/subtasks.test.js
+  Subtasks API
+    GET /api/task/:id/subtasks
+      ✓ should return subtasks for a parent task (170 ms)
+      ✓ should return empty array for task with no subtasks (95 ms)
+      ✓ should return empty array for non-existent task (95 ms)
+      ✓ should require authentication (82 ms)
+    POST /api/task - Creating task with subtasks
+      ✓ should create a task with subtasks (117 ms)
+      ✓ should ignore empty subtask names (108 ms)
+      ✓ should create task without subtasks when subtasks array is empty (100 ms)
+    PATCH /api/task/:id - Updating task with subtasks
+      ✓ should update subtasks for existing task (118 ms)
+      ✓ should delete removed subtasks (107 ms)
+      ✓ should clear all subtasks when empty array is provided (101 ms)
+    Task Completion Logic
+      ✓ should complete all subtasks when parent is completed (102 ms)
+      ✓ should undone all subtasks when parent is undone (101 ms)
+      ✓ should complete parent when all subtasks are done (122 ms)
+      ✓ should undone parent when subtask is undone (100 ms)
+    Task Lists Filtering
+      ✓ should exclude subtasks from main task lists (116 ms)
+      ✓ should exclude subtasks from completed today section (119 ms)
+      ✓ should include subtasks nested within parent tasks, not at first level (136 ms)
+    Authentication and Authorization
+      ✓ should not allow access to subtasks of other users (89 ms)
+      ✓ should not allow creating subtasks for other users tasks (92 ms)
+
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/33/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/44/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/75/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/55/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/47/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/46/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/31/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/53/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/77/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/49/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/29/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/51/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/57/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/36/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/39/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/30/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/63/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/65/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/67/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/69/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/73/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/61/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/32/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/58/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/71/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/34/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/45/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/35/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/38/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/50/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/37/toggle_completion HTTP/1.1" 200 682 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/56/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/52/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/68/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/42/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/41/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/74/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/59/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/40/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/78/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/76/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/48/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/66/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/43/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/70/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/62/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/64/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/72/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/54/toggle_completion HTTP/1.1" 200 683 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:14:04 +0000] "PATCH /api/task/60/toggle_completion HTTP/1.1" 200 683 "-" "-"
+PASS tests/integration/subtasks-completion.test.js
+  Subtasks Completion Logic Integration
+    Parent Task Completion Affects Subtasks
+      ✓ should complete all subtasks when parent task is completed (178 ms)
+      ✓ should undone all subtasks when parent task is undone (118 ms)
+    Subtask Completion Affects Parent Task
+      ✓ should complete parent task when all subtasks are completed (128 ms)
+      ✓ should undone parent task when any subtask is undone (108 ms)
+      ✓ should not affect parent task when no subtasks exist (109 ms)
+    Complex Completion Scenarios
+      ✓ should handle mixed subtask states correctly (139 ms)
+      ✓ should handle rapid completion toggles correctly (149 ms)
+    Edge Cases
+      ✓ should cascade delete subtasks when parent is deleted (87 ms)
+      ✓ should handle concurrent completion updates (119 ms)
+      ✓ should handle deleted parent task gracefully (FK constraints disabled) (106 ms)
+    Performance Considerations
+      ✓ should handle many subtasks efficiently (968 ms)
+
+Test Suites: 5 passed, 5 total
+Tests:       77 passed, 77 total
+Snapshots:   0 total
+Time:        5.231 s
+Ran all test suites matching /tests\/integration\/subtasks-completion.test.js|tests\/integration\/subtasks.test.js|tests\/integration\/tasks.test.js|tests\/unit\/models\/subtasks.test.js|tests\/unit\/services\/parentChildRelationship.test.js/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=1 (grader error: Extra data: line 96 column 1 (char 13993); fell back to exit_code=0)

@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "service postgresql start && sleep 3 && (su postgres -c \"createuser -s cds\" || true) && (su postgres -c \"createdb -O cds cds\" || true) && redis-server --daemonize yes && sleep 1 && cd /workspace/repo && sql-migrate up -env development -config=/workspace/dbconfig.yml && go test -json ./engine/api -run 'TestSkipMatrix|TestSkipJobTemplatedSkipped|TestEmptyMatrix' -count=1 -timeout 300s",
+  "test_files": [
+    "engine/api/v2_workflow_run_engine_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/ovh/cds/engine/api::TestSkipMatrix"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/ovh/cds/engine/api::TestSkipJobTemplatedSkipped",
+    "github.com/ovh/cds/engine/api::TestEmptyMatrix"
+  ]
+}

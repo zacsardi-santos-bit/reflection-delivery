@@ -1,0 +1,112 @@
+patching file ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=512m; support was removed in 8.0
+To honour the JVM settings for this build a new JVM will be forked. Please consider using the daemon: https://docs.gradle.org/2.12/userguide/gradle_daemon.html.
+Configuration on demand is an incubating feature.
+:ambry-utils:compileJava UP-TO-DATE
+:ambry-utils:processResources UP-TO-DATE
+:ambry-utils:classes UP-TO-DATE
+:ambry-utils:jar UP-TO-DATE
+:ambry-api:compileJava
+:ambry-api:processResources UP-TO-DATE
+:ambry-api:classes
+:ambry-api:jar
+:ambry-clustermap:compileJava
+:ambry-clustermap:processResources UP-TO-DATE
+:ambry-clustermap:classes
+:ambry-clustermap:jar UP-TO-DATE
+:ambry-messageformat:compileJavaNote: /workspace/repo/ambry-messageformat/src/main/java/com.github.ambry.messageformat/BlobPropertiesSerDe.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+:ambry-messageformat:processResources UP-TO-DATE
+:ambry-messageformat:classes
+:ambry-messageformat:jar UP-TO-DATE
+:ambry-commons:compileJava
+:ambry-commons:processResources UP-TO-DATE
+:ambry-commons:classes
+:ambry-commons:jar UP-TO-DATE
+:ambry-account:compileJavaNote: /workspace/repo/ambry-account/src/main/java/com/github/ambry/account/InMemoryUnknownAccountService.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+:ambry-account:processResources UP-TO-DATE
+:ambry-account:classes
+:ambry-utils:compileTestJava UP-TO-DATE
+:ambry-utils:processTestResources UP-TO-DATE
+:ambry-utils:testClasses UP-TO-DATE
+:ambry-clustermap:compileTestJavaNote: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+:ambry-clustermap:processTestResources UP-TO-DATE
+:ambry-clustermap:testClasses
+:ambry-api:compileTestJavaNote: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+:ambry-api:processTestResources UP-TO-DATE
+:ambry-api:testClasses
+:ambry-commons:compileTestJavaNote: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+:ambry-commons:processTestResources UP-TO-DATE
+:ambry-commons:testClasses
+:ambry-account:compileTestJavaNote: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+:ambry-account:processTestResources UP-TO-DATE
+:ambry-account:testClasses
+:ambry-network:compileJava
+:ambry-network:processResources UP-TO-DATE
+:ambry-network:classes
+:ambry-network:jar UP-TO-DATE
+:ambry-network:compileTestJava
+:ambry-network:processTestResources UP-TO-DATE
+:ambry-network:testClasses
+:ambry-protocol:compileJava
+:ambry-protocol:processResources UP-TO-DATE
+:ambry-protocol:classes
+:ambry-protocol:jar UP-TO-DATE
+:ambry-router:compileJavaNote: /workspace/repo/ambry-router/src/main/java/com.github.ambry.router/PutOperation.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+:ambry-router:processResources UP-TO-DATE
+:ambry-router:classes
+:ambry-router:compileTestJavaNote: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+:ambry-router:processTestResources UP-TO-DATE
+:ambry-router:testClasses
+:ambry-router:compileUnitTestJavaNote: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+:ambry-router:processUnitTestResources UP-TO-DATE
+:ambry-router:unitTestClasses
+:log4j-test-config:compileJava UP-TO-DATE
+:log4j-test-config:processResources UP-TO-DATE
+:log4j-test-config:classes UP-TO-DATE
+:log4j-test-config:jar UP-TO-DATE
+:ambry-router:unitTest
+
+BUILD SUCCESSFUL
+
+Total time: 11.676 secs
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.ambry.router.AdaptiveOperationTrackerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:24:08" hostname="localhost" time="0.228">
+  <properties/>
+  <testcase name="nodeLevelAdaptiveTrackerTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.184"/>
+  <testcase name="diskLevelAdaptiveTrackerTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.008"/>
+  <testcase name="adaptationTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.005"/>
+  <testcase name="trackerUpdateOnSuccessTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.001"/>
+  <testcase name="trackerUpdateOnFailureTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.001"/>
+  <testcase name="noUnexpiredRequestsTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.004"/>
+  <testcase name="trackerUpdateBetweenHasNextAndNextTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.005"/>
+  <testcase name="customPercentilesMetricsRegistryTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.005"/>
+  <testcase name="partitionLevelAdaptiveTrackerTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.009"/>
+  <testcase name="invalidOperationTrackerScopeTest" classname="com.github.ambry.router.AdaptiveOperationTrackerTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=10 found=10 failed=0 parsed=10 framework=junit exit_code=0

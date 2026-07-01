@@ -1,0 +1,5 @@
+I'm working with a Jinja-style template engine and running into a frustrating limitation with recursive for loops. When I have a recursive loop iterating over a tree (like a navigation menu), and I want to nest another inner loop inside it to render each item in multiple ways, I lose access to the outer loop's recursive callable once I enter the inner loop. It seems like the inner loop replaces the loop context variable, so I can't call the recursive function from inside the nested loop.
+
+What I'd like is the ability to save a reference to the outer loop's recursive callable — by assigning it to another variable before entering the inner loop — so I can still invoke it to render children while inside the nested context. This would make it much easier to write complex tree-rendering templates that also need inner loops.
+
+Also, if the recursive callable accidentally gets called as a function outside of any recursive loop context, the engine should report a clear "unknown function" error rather than doing something unexpected or silently producing wrong output.

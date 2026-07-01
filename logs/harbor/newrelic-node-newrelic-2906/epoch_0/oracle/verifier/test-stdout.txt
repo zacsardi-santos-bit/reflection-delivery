@@ -1,0 +1,39 @@
+patching file test/unit/feature_flag.test.js
+patching file test/unit/lib/otel/context.test.js
+patching file test/unit/lib/otel/segment-synthesizer.test.js
+patching file test/unit/lib/otel/setup.test.js
+patching file test/versioned/otel-bridge/newrelic.js
+patching file test/versioned/otel-bridge/package.json
+patching file test/versioned/otel-bridge/span.test.js
+{"Action":"pass","Test":"should declare every prerelease feature in the *used* variable","Elapsed":0.001534931}
+{"Action":"pass","Test":"should declare every release feature in the *used* variable","Elapsed":0.00034899599999999996}
+{"Action":"pass","Test":"should declare every unreleased feature in the *used* variable","Elapsed":0.00026276}
+{"Action":"pass","Test":"should not re-declare a flag in prerelease from released","Elapsed":0.000306747}
+{"Action":"pass","Test":"should not re-declare a flag in prerelease from unreleased","Elapsed":0.000355655}
+{"Action":"pass","Test":"should account for all *used* keys","Elapsed":0.0006188360000000001}
+{"Action":"pass","Test":"should warn if released flags are still in config","Elapsed":0.004999303}
+{"Action":"pass","Test":"should warn if unreleased flags are still in config","Elapsed":0.0013102469999999998}
+{"Action":"pass","Test":"should give root context","Elapsed":0.068756762}
+{"Action":"pass","Test":"should get proper context","Elapsed":0.006929844}
+{"Action":"pass","Test":"should delete value from context","Elapsed":0.005029752}
+{"Action":"pass","Test":"should remove otelSynthesis symbol when it exists on value","Elapsed":0.004895202}
+{"Action":"pass","Test":"should create http external segment from otel http client span","Elapsed":0.015538998}
+{"Action":"pass","Test":"should create db segment","Elapsed":0.007222488}
+{"Action":"pass","Test":"should create db segment and get operation and table from db.statement","Elapsed":0.008129075999999999}
+{"Action":"pass","Test":"should create db segment and get collection from db.mongodb.collection","Elapsed":0.0029075190000000003}
+{"Action":"pass","Test":"should create db segment and get operation from db.statement when system is redis","Elapsed":0.003388608}
+{"Action":"pass","Test":"should create db segment and get operation from db.operation when system is memcached","Elapsed":0.0028783059999999997}
+{"Action":"pass","Test":"should log table and operation as unknown when the db.system, db.sql.table and db.operation to not exist as span attributes","Elapsed":0.002779382}
+{"Action":"pass","Test":"should create rpc segment","Elapsed":0.002704659}
+{"Action":"pass","Test":"should create http server segment","Elapsed":0.003355694}
+{"Action":"pass","Test":"should create base http server segment","Elapsed":0.002194578}
+{"Action":"pass","Test":"should create topic producer segment","Elapsed":0.002311101}
+{"Action":"pass","Test":"should create queue producer segment","Elapsed":0.00198563}
+{"Action":"pass","Test":"should create internal custom segment","Elapsed":0.001878912}
+{"Action":"pass","Test":"should log warning span does not match a rule","Elapsed":0.002654311}
+{"Action":"pass","Test":"should create consumer segment from otel span","Elapsed":0.012473262}
+{"Action":"pass","Test":"should create supportability metric on successful setup of opentelemetry bridge","Elapsed":0.003930587}
+{"Action":"pass","Test":"should not create provider when `feature_flag.opentelemetry_bridge` is false","Elapsed":0.004848723}
+{"Action":"pass","Test":"Otel internal and NR span tests","Elapsed":0.082523956}
+{"Action":"pass","Test":"Otel http external span test","Elapsed":0.005864678}
+reward=1 graded=31 found=31 failed=0 parsed=31 framework=go exit_code=0

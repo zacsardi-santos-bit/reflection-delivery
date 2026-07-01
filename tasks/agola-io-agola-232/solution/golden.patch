@@ -1,0 +1,340 @@
+diff --git a/go.mod b/go.mod
+index e8e9006..86de7da 100644
+--- a/go.mod
++++ b/go.mod
+@@ -32,6 +32,7 @@ require (
+ 	github.com/spf13/cobra v0.0.5
+ 	github.com/xanzy/go-gitlab v0.26.0
+ 	go.etcd.io/etcd v0.0.0-20191023171146-3cf2f69b5738
++	go.starlark.net v0.0.0-20200203144150-6677ee5c7211
+ 	go.uber.org/zap v1.13.0
+ 	golang.org/x/crypto v0.0.0-20200214034016-1d94cc7ab1c6
+ 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
+diff --git a/go.sum b/go.sum
+index 9447472..3836587 100644
+--- a/go.sum
++++ b/go.sum
+@@ -59,6 +59,9 @@ github.com/blang/semver v3.1.0+incompatible/go.mod h1:kRBLl5iJ+tD4TcOOxsy/0fnweb
+ github.com/blang/semver v3.5.0+incompatible/go.mod h1:kRBLl5iJ+tD4TcOOxsy/0fnwebNt5EWlYSAyrTnjyyk=
+ github.com/bmatcuk/doublestar v1.2.2 h1:oC24CykoSAB8zd7XgruHo33E0cHJf/WhQA/7BeXj+x0=
+ github.com/bmatcuk/doublestar v1.2.2/go.mod h1:wiQtGV+rzVYxB7WIlirSN++5HPtPlXEo9MEoZQC/PmE=
++github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
++github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
++github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
+ github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
+ github.com/cockroachdb/datadriven v0.0.0-20190809214429-80d97fb3cbaa h1:OaNxuTZr7kxeODyLWsRMC+OD03aFUH+mW6r2d+MWa5Y=
+ github.com/cockroachdb/datadriven v0.0.0-20190809214429-80d97fb3cbaa/go.mod h1:zn76sxSg3SzpJ0PPJaLDCu+Bu0Lg3sKTORVIj19EIF8=
+@@ -429,6 +432,8 @@ go.etcd.io/etcd v0.0.0-20191023171146-3cf2f69b5738 h1:VcrIfasaLFkyjk6KNlXQSzO+B0
+ go.etcd.io/etcd v0.0.0-20191023171146-3cf2f69b5738/go.mod h1:dnLIgRNXwCJa5e+c6mIZCrds/GIG4ncV9HhK5PX7jPg=
+ go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=
+ go.opencensus.io v0.22.0/go.mod h1:+kGneAE2xo2IficOXnaByMWTGM9T73dGwxeWcUqIpI8=
++go.starlark.net v0.0.0-20200203144150-6677ee5c7211 h1:Qoe+9POtDT51UBQ8XEnS9QKeHDQzEl2QRh3eok9R4aw=
++go.starlark.net v0.0.0-20200203144150-6677ee5c7211/go.mod h1:nmDLcffg48OtT/PSW0Hg7FvpRQsQh5OSqIylirxKC7o=
+ go.uber.org/atomic v1.3.2/go.mod h1:gD2HeocX3+yG+ygLZcrzQJaqmWj9AIm7n08wl/qW/PE=
+ go.uber.org/atomic v1.5.0 h1:OI5t8sDa1Or+q8AeE+yKeB/SDYioSHAgcVljj9JIETY=
+ go.uber.org/atomic v1.5.0/go.mod h1:sABNBOSYdrvTF6hTgEIbc7YasKWGhgEQZyfxyTvoXHQ=
+@@ -528,6 +533,7 @@ golang.org/x/sys v0.0.0-20190626221950-04f50cda93cb/go.mod h1:h1NjWce9XRLGQEsW7w
+ golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+ golang.org/x/sys v0.0.0-20190826190057-c7b8b68b1456/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+ golang.org/x/sys v0.0.0-20190916202348-b4ddaad3f8a3/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
++golang.org/x/sys v0.0.0-20191002063906-3421d5a6bb1c/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+ golang.org/x/sys v0.0.0-20191010194322-b09406accb47 h1:/XfQ9z7ib8eEJX2hdgFTZJ/ntt0swNk5oYBziWeTCvY=
+ golang.org/x/sys v0.0.0-20191010194322-b09406accb47/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+ golang.org/x/text v0.0.0-20160726164857-2910a502d2bf/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
+diff --git a/internal/config/config.go b/internal/config/config.go
+index b0ba1c2..dd0af74 100644
+--- a/internal/config/config.go
++++ b/internal/config/config.go
+@@ -25,7 +25,6 @@ import (
+ 	"agola.io/agola/services/types"
+ 
+ 	"github.com/ghodss/yaml"
+-	"github.com/google/go-jsonnet"
+ 	errors "golang.org/x/xerrors"
+ 	"k8s.io/apimachinery/pkg/api/resource"
+ )
+@@ -44,6 +43,7 @@ const (
+ 	// ConfigFormatJSON handles both json or yaml format (since json is a subset of yaml)
+ 	ConfigFormatJSON ConfigFormat = iota
+ 	ConfigFormatJsonnet
++	ConfigFormatStarlark
+ )
+ 
+ var (
+@@ -660,19 +660,19 @@ type ConfigContext struct {
+ 
+ func ParseConfig(configData []byte, format ConfigFormat, configContext *ConfigContext) (*Config, error) {
+ 	// Generate json from jsonnet
+-	if format == ConfigFormatJsonnet {
+-		// TODO(sgotti) support custom import files inside the configdir ???
+-		vm := jsonnet.MakeVM()
+-		cj, err := json.Marshal(configContext)
++	switch format {
++	case ConfigFormatJsonnet:
++		var err error
++		configData, err = execJsonnet(configData, configContext)
+ 		if err != nil {
+-			return nil, errors.Errorf("failed to marshal config context: %w", err)
++			return nil, errors.Errorf("failed to execute jsonnet: %w", err)
+ 		}
+-		vm.TLACode("ctx", string(cj))
+-		out, err := vm.EvaluateSnippet("", string(configData))
++	case ConfigFormatStarlark:
++		var err error
++		configData, err = execStarlark(configData, configContext)
+ 		if err != nil {
+-			return nil, errors.Errorf("failed to evaluate jsonnet config: %w", err)
++			return nil, errors.Errorf("failed to execute starlark: %w", err)
+ 		}
+-		configData = []byte(out)
+ 	}
+ 
+ 	config := DefaultConfig
+diff --git a/internal/config/jsonnet.go b/internal/config/jsonnet.go
+new file mode 100644
+index 0000000..74d35f4
+--- /dev/null
++++ b/internal/config/jsonnet.go
+@@ -0,0 +1,38 @@
++// Copyright 2020 Sorint.lab
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//     http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++package config
++
++import (
++	"encoding/json"
++
++	"github.com/google/go-jsonnet"
++	errors "golang.org/x/xerrors"
++)
++
++func execJsonnet(configData []byte, configContext *ConfigContext) ([]byte, error) {
++	vm := jsonnet.MakeVM()
++	cj, err := json.Marshal(configContext)
++	if err != nil {
++		return nil, errors.Errorf("failed to marshal config context: %w", err)
++	}
++
++	vm.TLACode("ctx", string(cj))
++	out, err := vm.EvaluateSnippet("", string(configData))
++	if err != nil {
++		return nil, errors.Errorf("failed to evaluate jsonnet config: %w", err)
++	}
++
++	return []byte(out), nil
++}
+diff --git a/internal/config/starlark.go b/internal/config/starlark.go
+new file mode 100644
+index 0000000..1329127
+--- /dev/null
++++ b/internal/config/starlark.go
+@@ -0,0 +1,160 @@
++// Copyright 2020 Sorint.lab
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//     http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++package config
++
++import (
++	"bytes"
++	"encoding/json"
++	"fmt"
++
++	"go.starlark.net/starlark"
++	errors "golang.org/x/xerrors"
++)
++
++func starlarkArgs(cc *ConfigContext) (starlark.Tuple, error) {
++	d := &starlark.Dict{}
++	if err := d.SetKey(starlark.String("ref_type"), starlark.String(cc.RefType)); err != nil {
++		return nil, err
++	}
++	if err := d.SetKey(starlark.String("ref"), starlark.String(cc.Ref)); err != nil {
++		return nil, err
++	}
++	if err := d.SetKey(starlark.String("branch"), starlark.String(cc.Branch)); err != nil {
++		return nil, err
++	}
++	if err := d.SetKey(starlark.String("tag"), starlark.String(cc.Tag)); err != nil {
++		return nil, err
++	}
++	if err := d.SetKey(starlark.String("pull_request_id"), starlark.String(cc.PullRequestID)); err != nil {
++		return nil, err
++	}
++	if err := d.SetKey(starlark.String("commit_sha"), starlark.String(cc.CommitSHA)); err != nil {
++		return nil, err
++	}
++
++	return []starlark.Value{d}, nil
++}
++
++// based on (not existing anymore) function provided in
++// https://github.com/google/starlark-go/blob/6fffce7528ee0fce17d72a4abe2919f464225968/starlarkstruct/struct.go#L325
++// with changes to use go json marshalling functions
++func starlarkJSON(out *bytes.Buffer, v starlark.Value) error {
++	switch v := v.(type) {
++	case starlark.NoneType:
++		out.WriteString("null")
++	case starlark.Bool:
++		fmt.Fprintf(out, "%t", v)
++	case starlark.Int:
++		data, err := json.Marshal(v.BigInt())
++		if err != nil {
++			return err
++		}
++		out.Write(data)
++	case starlark.Float:
++		data, err := json.Marshal(float64(v))
++		if err != nil {
++			return err
++		}
++		out.Write(data)
++	case starlark.String:
++		// we have to use a json Encoder to disable noisy html
++		// escaping. But the encoder appends a final \n so we
++		// also should remove it.
++		data := &bytes.Buffer{}
++		e := json.NewEncoder(data)
++		e.SetEscapeHTML(false)
++		if err := e.Encode(string(v)); err != nil {
++			return err
++		}
++		// remove final \n introduced by the encoder
++		out.Write(bytes.TrimSuffix(data.Bytes(), []byte("\n")))
++	case starlark.Indexable: // Tuple, List
++		out.WriteByte('[')
++		for i, n := 0, starlark.Len(v); i < n; i++ {
++			if i > 0 {
++				out.WriteString(", ")
++			}
++			if err := starlarkJSON(out, v.Index(i)); err != nil {
++				return err
++			}
++		}
++		out.WriteByte(']')
++	case *starlark.Dict:
++		out.WriteByte('{')
++		for i, item := range v.Items() {
++			if i > 0 {
++				out.WriteString(", ")
++			}
++			if _, ok := item[0].(starlark.String); !ok {
++				return fmt.Errorf("cannot convert non-string dict key to JSON")
++			}
++			if err := starlarkJSON(out, item[0]); err != nil {
++				return err
++			}
++			out.WriteString(": ")
++			if err := starlarkJSON(out, item[1]); err != nil {
++				return err
++			}
++		}
++		out.WriteByte('}')
++
++	default:
++		return fmt.Errorf("cannot convert starlark type %q to JSON", v.Type())
++	}
++	return nil
++}
++
++func execStarlark(configData []byte, configContext *ConfigContext) ([]byte, error) {
++	thread := &starlark.Thread{
++		Name: "agola-starlark",
++		// TODO(sgotti) redirect print to a logger?
++		Print: func(_ *starlark.Thread, msg string) {},
++	}
++	globals, err := starlark.ExecFile(thread, "config.star", configData, nil)
++	if err != nil {
++		return nil, err
++	}
++
++	// we require a main function that will be called wiht one
++	// arguments containing the config context
++	mainVal, ok := globals["main"]
++	if !ok {
++		return nil, errors.Errorf("no main function in starlark config")
++	}
++	main, ok := mainVal.(starlark.Callable)
++	if !ok {
++		return nil, errors.Errorf("main in starlark config is not a function")
++	}
++	args, err := starlarkArgs(configContext)
++	if err != nil {
++		return nil, errors.Errorf("cannot create startlark arguments: %w", err)
++	}
++	mainVal, err = starlark.Call(thread, main, args, nil)
++	if err != nil {
++		return nil, err
++	}
++
++	buf := new(bytes.Buffer)
++	switch v := mainVal.(type) {
++	case *starlark.Dict:
++		if err := starlarkJSON(buf, v); err != nil {
++			return nil, err
++		}
++	default:
++		return nil, errors.Errorf("wrong starlark output, must be a dict")
++	}
++
++	return buf.Bytes(), nil
++}
+diff --git a/internal/services/gateway/action/run.go b/internal/services/gateway/action/run.go
+index 18f2f8d..38962f8 100644
+--- a/internal/services/gateway/action/run.go
++++ b/internal/services/gateway/action/run.go
+@@ -38,10 +38,11 @@ import (
+ const (
+ 	defaultSSHPort = "22"
+ 
+-	agolaDefaultConfigDir         = ".agola"
+-	agolaDefaultJsonnetConfigFile = "config.jsonnet"
+-	agolaDefaultJsonConfigFile    = "config.json"
+-	agolaDefaultYamlConfigFile    = "config.yml"
++	agolaDefaultConfigDir          = ".agola"
++	agolaDefaultStarlarkConfigFile = "config.star"
++	agolaDefaultJsonnetConfigFile  = "config.jsonnet"
++	agolaDefaultJsonConfigFile     = "config.json"
++	agolaDefaultYamlConfigFile     = "config.yml"
+ 
+ 	// List of runs annotations
+ 	AnnotationRunType   = "run_type"
+@@ -489,6 +490,8 @@ func (h *ActionHandler) CreateRuns(ctx context.Context, req *CreateRunRequest) e
+ 
+ 	var configFormat config.ConfigFormat
+ 	switch path.Ext(filename) {
++	case ".star":
++		configFormat = config.ConfigFormatStarlark
+ 	case ".jsonnet":
+ 		configFormat = config.ConfigFormatJsonnet
+ 	case ".json":
+@@ -566,7 +569,7 @@ func (h *ActionHandler) fetchConfigFiles(ctx context.Context, gitSource gitsourc
+ 	var data []byte
+ 	var filename string
+ 	err := util.ExponentialBackoff(ctx, util.FetchFileBackoff, func() (bool, error) {
+-		for _, filename = range []string{agolaDefaultJsonnetConfigFile, agolaDefaultJsonConfigFile, agolaDefaultYamlConfigFile} {
++		for _, filename = range []string{agolaDefaultStarlarkConfigFile, agolaDefaultJsonnetConfigFile, agolaDefaultJsonConfigFile, agolaDefaultYamlConfigFile} {
+ 			var err error
+ 			data, err = gitSource.GetFile(repopath, commitSHA, path.Join(agolaDefaultConfigDir, filename))
+ 			if err == nil {

@@ -1,0 +1,5 @@
+I'm working on a snippet generation library that can produce HTTP client code in various programming languages. It already supports a number of languages, but Dart is missing. I'd like to add a new Dart HTTP client snippet generator as a plugin.
+
+The generator should accept a standard request description — including the URL, HTTP method, headers, query string parameters, cookies, request body, and optional basic auth credentials — and return a complete, runnable Dart source file as a string.
+
+The generated code should properly handle all the common HTTP patterns: GET and POST requests (and other methods), request headers (filtering out empty values and handling duplicate names by taking the last one), query string params with URL encoding, cookies (also URL-encoded), JSON bodies as raw string literals, URL-encoded form bodies, multipart form data, and binary content. Basic auth should only be included when both a username and password are provided. Empty collections (headers, cookies) should not produce empty sections in the output. Special characters in URLs, query parameters, cookies, and auth credentials should be handled gracefully.

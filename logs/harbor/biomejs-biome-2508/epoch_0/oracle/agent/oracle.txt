@@ -1,0 +1,8 @@
+patching file crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
+patching file crates/biome_configuration/src/linter/rules.rs
+patching file crates/biome_diagnostics_categories/src/categories.rs
+patching file crates/biome_js_analyze/src/lint/nursery.rs
+patching file crates/biome_js_analyze/src/lint/nursery/use_adjacent_overload_signatures.rs
+patching file crates/biome_js_analyze/src/options.rs
+patching file packages/@biomejs/backend-jsonrpc/src/workspace.ts
+patching file packages/@biomejs/biome/configuration_schema.json

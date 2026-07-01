@@ -1,0 +1,3 @@
+I'm working on the Prebid Server and I need the setuid endpoint to validate publisher accounts before processing cookie sync requests. Right now, the endpoint accepts requests for any account regardless of whether that account has been disabled by the host operator. This means even deactivated publishers can still trigger user syncing.
+
+What I'd like is for the setuid endpoint to check whether the account specified in the request is active. If the account is disabled, the endpoint should respond with a 400 Bad Request and an error message indicating the account is disabled and directing the publisher to contact the host. If the account is valid and active, everything should continue working as normal.

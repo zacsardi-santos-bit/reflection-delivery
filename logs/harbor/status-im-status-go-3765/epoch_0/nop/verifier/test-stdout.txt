@@ -1,0 +1,15 @@
+patching file protocol/communities/community_encryption_key_action_test.go
+# github.com/status-im/status-go/protocol/communities [github.com/status-im/status-go/protocol/communities.test]
+protocol/communities/community_encryption_key_action_test.go:84:13: undefined: EvaluateCommunityEncryptionKeyActions
+protocol/communities/community_encryption_key_action_test.go:85:59: undefined: EncryptionKeyNone
+protocol/communities/community_encryption_key_action_test.go:94:23: undefined: EncryptionKeyActionType
+protocol/communities/community_encryption_key_action_test.go:107:24: undefined: EncryptionKeyAdd
+protocol/communities/community_encryption_key_action_test.go:126:24: undefined: EncryptionKeyAdd
+protocol/communities/community_encryption_key_action_test.go:152:24: undefined: EncryptionKeyNone
+protocol/communities/community_encryption_key_action_test.go:172:24: undefined: EncryptionKeyNone
+protocol/communities/community_encryption_key_action_test.go:185:25: undefined: EncryptionKeyRemove
+protocol/communities/community_encryption_key_action_test.go:211:24: undefined: EncryptionKeyNone
+protocol/communities/community_encryption_key_action_test.go:224:24: undefined: EncryptionKeyNone
+protocol/communities/community_encryption_key_action_test.go:224:24: too many errors
+FAIL	github.com/status-im/status-go/protocol/communities [build failed]
+reward=0 graded=34 found=34 failed=34 parsed=1 framework=go exit_code=1

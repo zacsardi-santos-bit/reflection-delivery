@@ -1,0 +1,5 @@
+patching file .github/workflows/cd-release.yaml
+patching file go/cmd/dolt/commands/sqlserver/minver.go
+patching file go/cmd/dolt/commands/sqlserver/testdata/minver_validation.txt
+patching file go/cmd/dolt/commands/sqlserver/yaml_config.go
+patching file go/utils/genminver_validation/main.go

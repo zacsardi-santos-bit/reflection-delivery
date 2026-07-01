@@ -1,0 +1,23 @@
+{
+ "task": "thealgorithms-rust-654",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds src/math/factorial.rs with `factorial_bigmath(num:u32)->BigUint` and wires `pub use ...factorial::{...}`; test.patch adds tests/test_factorial.rs: `use the_algorithms_rust::math::factorial_bigmath;` asserting factorial_bigmath(10)==3628800, (0)==1, (1)==1"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "basetenlabs-truss-1415",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden makes helper private: '-def map_to_supported_python_version' -> '+def _map_to_supported_python_version', and api.py '+ self._graphql_api_url, json=payload' replacing form-encoded 'data='"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

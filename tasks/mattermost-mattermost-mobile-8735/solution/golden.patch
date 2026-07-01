@@ -1,0 +1,529 @@
+diff --git a/app/components/announcement_banner/expanded_announcement_banner.tsx b/app/components/announcement_banner/expanded_announcement_banner.tsx
+index e455328f3..50e8defe4 100644
+--- a/app/components/announcement_banner/expanded_announcement_banner.tsx
++++ b/app/components/announcement_banner/expanded_announcement_banner.tsx
+@@ -25,6 +25,7 @@ import {typography} from '@utils/typography';
+ type Props = {
+     allowDismissal: boolean;
+     bannerText: string;
++    headingText?: string;
+ }
+ 
+ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
+@@ -55,6 +56,7 @@ const close = () => {
+ const ExpandedAnnouncementBanner = ({
+     allowDismissal,
+     bannerText,
++    headingText,
+ }: Props) => {
+     const theme = useTheme();
+     const style = getStyleSheet(theme);
+@@ -88,14 +90,16 @@ const ExpandedAnnouncementBanner = ({
+ 
+     const Scroll = useMemo(() => (isTablet ? ScrollView : BottomSheetScrollView), [isTablet]);
+ 
++    const heading = headingText || intl.formatMessage({
++        id: 'mobile.announcement_banner.title',
++        defaultMessage: 'Announcement',
++    });
++
+     return (
+         <View style={containerStyle}>
+             {!isTablet && (
+                 <Text style={style.title}>
+-                    {intl.formatMessage({
+-                        id: 'mobile.announcement_banner.title',
+-                        defaultMessage: 'Announcement',
+-                    })}
++                    {heading}
+                 </Text>
+             )}
+             <Scroll
+diff --git a/app/constants/license.ts b/app/constants/license.ts
+index 36edb975e..e62e2967b 100644
+--- a/app/constants/license.ts
++++ b/app/constants/license.ts
+@@ -8,6 +8,7 @@ export default {
+         Starter: 'starter',
+         Professional: 'professional',
+         Enterprise: 'enterprise',
++        Premium: 'premium',
+     },
+     SelfHostedProducts: {
+         STARTER: 'starter',
+diff --git a/app/constants/screens.ts b/app/constants/screens.ts
+index 59b107974..fdc49b1a2 100644
+--- a/app/constants/screens.ts
++++ b/app/constants/screens.ts
+@@ -81,6 +81,7 @@ export const THREAD_OPTIONS = 'ThreadOptions';
+ export const USER_PROFILE = 'UserProfile';
+ export const CHANNEL_BOOKMARK = 'ChannelBookmarkAddOrEdit';
+ export const GENERIC_OVERLAY = 'GenericOverlay';
++export const CHANNEL_BANNER = 'ChannelBanner';
+ 
+ export default {
+     ABOUT,
+@@ -162,6 +163,7 @@ export default {
+     THREAD_OPTIONS,
+     USER_PROFILE,
+     GENERIC_OVERLAY,
++    CHANNEL_BANNER,
+ } as const;
+ 
+ export const MODAL_SCREENS_WITHOUT_BACK = new Set<string>([
+diff --git a/app/constants/view.ts b/app/constants/view.ts
+index 5e77b1996..6a33c9816 100644
+--- a/app/constants/view.ts
++++ b/app/constants/view.ts
+@@ -31,6 +31,7 @@ export const CALL_NOTIFICATION_BAR_HEIGHT = 40;
+ 
+ export const ANNOUNCEMENT_BAR_HEIGHT = 40;
+ export const BOOKMARKS_BAR_HEIGHT = 48;
++export const CHANNEL_BANNER_HEIGHT = 40;
+ 
+ export const HOME_PADDING = {
+     paddingLeft: 18,
+diff --git a/app/products/calls/components/floating_call_container.tsx b/app/products/calls/components/floating_call_container.tsx
+index 3ab1741f5..25151cd81 100644
+--- a/app/products/calls/components/floating_call_container.tsx
++++ b/app/products/calls/components/floating_call_container.tsx
+@@ -8,7 +8,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
+ import CurrentCallBar from '@calls/components/current_call_bar';
+ import {IncomingCallsContainer} from '@calls/components/incoming_calls_container';
+ import JoinCallBanner from '@calls/components/join_call_banner';
+-import {BOOKMARKS_BAR_HEIGHT, DEFAULT_HEADER_HEIGHT, TABLET_HEADER_HEIGHT} from '@constants/view';
++import {BOOKMARKS_BAR_HEIGHT, CHANNEL_BANNER_HEIGHT, DEFAULT_HEADER_HEIGHT, TABLET_HEADER_HEIGHT} from '@constants/view';
+ import {useServerUrl} from '@context/server';
+ import {useIsTablet} from '@hooks/device';
+ 
+@@ -29,6 +29,7 @@ type Props = {
+     threadScreen?: boolean;
+     channelsScreen?: boolean;
+     includeBookmarkBar?: boolean;
++    includeChannelBanner?: boolean;
+ }
+ 
+ const FloatingCallContainer = ({
+@@ -39,6 +40,7 @@ const FloatingCallContainer = ({
+     threadScreen,
+     channelsScreen,
+     includeBookmarkBar,
++    includeChannelBanner,
+ }: Props) => {
+     const serverUrl = useServerUrl();
+     const insets = useSafeAreaInsets();
+@@ -47,7 +49,7 @@ const FloatingCallContainer = ({
+     const topBarForTablet = (isTablet && !threadScreen) ? TABLET_HEADER_HEIGHT : 0;
+     const topBarChannel = (!isTablet && !threadScreen) ? DEFAULT_HEADER_HEIGHT : 0;
+     const wrapperTop = {
+-        top: insets.top + topBarForTablet + topBarChannel + (includeBookmarkBar ? BOOKMARKS_BAR_HEIGHT : 0),
++        top: insets.top + topBarForTablet + topBarChannel + (includeBookmarkBar ? BOOKMARKS_BAR_HEIGHT : 0) + (includeChannelBanner ? CHANNEL_BANNER_HEIGHT : 0),
+     };
+     const wrapperBottom = {
+         bottom: 8,
+diff --git a/app/screens/channel/channel.tsx b/app/screens/channel/channel.tsx
+index 9b1b2fc80..058844f38 100644
+--- a/app/screens/channel/channel.tsx
++++ b/app/screens/channel/channel.tsx
+@@ -40,6 +40,7 @@ type ChannelProps = {
+     channelType: ChannelType;
+     hasGMasDMFeature: boolean;
+     includeBookmarkBar?: boolean;
++    includeChannelBanner: boolean;
+ };
+ 
+ const edges: Edge[] = ['left', 'right'];
+@@ -64,6 +65,7 @@ const Channel = ({
+     currentUserId,
+     hasGMasDMFeature,
+     includeBookmarkBar,
++    includeChannelBanner,
+ }: ChannelProps) => {
+     useGMasDMNotice(currentUserId, channelType, dismissedGMasDMNotice, hasGMasDMFeature);
+     const isTablet = useIsTablet();
+@@ -126,6 +128,7 @@ const Channel = ({
+                     groupCallsAllowed={groupCallsAllowed}
+                     isTabletView={isTabletView}
+                     shouldRenderBookmarks={shouldRender}
++                    shouldRenderChannelBanner={includeChannelBanner}
+                 />
+                 {shouldRender &&
+                 <ExtraKeyboardProvider>
+@@ -151,6 +154,7 @@ const Channel = ({
+                         showIncomingCalls={showIncomingCalls}
+                         isInACall={isInACall}
+                         includeBookmarkBar={includeBookmarkBar}
++                        includeChannelBanner={includeChannelBanner}
+                     />
+                 }
+             </SafeAreaView>
+diff --git a/app/screens/channel/channel_feature_checks.ts b/app/screens/channel/channel_feature_checks.ts
+new file mode 100644
+index 000000000..8d9deb521
+--- /dev/null
++++ b/app/screens/channel/channel_feature_checks.ts
+@@ -0,0 +1,16 @@
++// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
++// See LICENSE.txt for license information.
++
++import {General, License} from '@constants';
++
++export function shouldShowChannelBanner(channelType?: ChannelType, license?: ClientLicense, bannerInfo?: ChannelBannerInfo): boolean {
++    if (!license || !bannerInfo || !channelType) {
++        return false;
++    }
++
++    const isPremiumLicense = license.SkuShortName === License.SKU_SHORT_NAME.Premium;
++    const bannerInfoComplete = Boolean(bannerInfo.enabled && bannerInfo.text && bannerInfo.background_color);
++    const isValidChannelType = channelType === General.OPEN_CHANNEL || channelType === General.PRIVATE_CHANNEL;
++
++    return isPremiumLicense && bannerInfoComplete && isValidChannelType;
++}
+diff --git a/app/screens/channel/header/channel_banner/channel_banner.tsx b/app/screens/channel/header/channel_banner/channel_banner.tsx
+new file mode 100644
+index 000000000..8b5d3534b
+--- /dev/null
++++ b/app/screens/channel/header/channel_banner/channel_banner.tsx
+@@ -0,0 +1,145 @@
++// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
++// See LICENSE.txt for license information.
++
++import React, {useCallback, useMemo} from 'react';
++import {useIntl} from 'react-intl';
++import {Text, TouchableOpacity, View} from 'react-native';
++
++import ExpandedAnnouncementBanner from '@components/announcement_banner/expanded_announcement_banner';
++import RemoveMarkdown from '@components/remove_markdown';
++import {useTheme} from '@context/theme';
++import {useDefaultHeaderHeight} from '@hooks/header';
++import {bottomSheet} from '@screens/navigation';
++import {getContrastingSimpleColor} from '@utils/general';
++import {bottomSheetSnapPoint} from '@utils/helpers';
++import {getMarkdownTextStyles} from '@utils/markdown';
++import {typography} from '@utils/typography';
++
++const BUTTON_HEIGHT = 48; // From /app/utils/buttonStyles.ts, lg button
++const TITLE_HEIGHT = 30 + 12; // typography 600 line height
++const MARGINS = 12 + 24 + 10; // (after title + after text + after content)
++const SNAP_POINT = TITLE_HEIGHT + BUTTON_HEIGHT + MARGINS + BUTTON_HEIGHT + 10;
++
++const MAX_TEXT_CONTAINER_HEIGHT = 500;
++const MIN_TEXT_CONTAINER_HEIGHT = 40;
++
++const CLOSE_BUTTON_ID = 'channel-banner-close';
++
++const getStyleSheet = (bannerTextColor: string) => ({
++    container: {
++        paddingTop: 10,
++        paddingBottom: 10,
++        paddingLeft: 16,
++        paddingRight: 16,
++        height: 40,
++    },
++    containerTopItem: {
++        borderTopLeftRadius: 12,
++        borderTopRightRadius: 12,
++    },
++    baseTextStyle: {
++        borderWidth: 2,
++        borderColor: 'red',
++        ...typography('Body', 100, 'Regular'),
++        color: bannerTextColor,
++    },
++    bannerTextContainer: {
++        flex: 1,
++        flexGrow: 1,
++    },
++    bannerText: {
++        textAlign: 'center' as const,
++    },
++});
++
++type Props = {
++    bannerInfo?: ChannelBannerInfo;
++    isTopItem?: Boolean;
++}
++
++export function ChannelBanner({bannerInfo, isTopItem}: Props) {
++    const intl = useIntl();
++    const theme = useTheme();
++    const bannerTextColor = getContrastingSimpleColor(bannerInfo?.background_color || '');
++
++    const style = useMemo(() => {
++        return getStyleSheet(bannerTextColor);
++    }, [bannerTextColor]);
++
++    const defaultHeight = useDefaultHeaderHeight();
++    const containerStyle = useMemo(() => ({
++        ...style.container,
++        backgroundColor: bannerInfo?.background_color,
++        top: defaultHeight,
++        zIndex: 1,
++    }), [bannerInfo?.background_color, defaultHeight, style.container]);
++
++    const markdownTextStyle = useMemo(() => {
++        const textStyle = getMarkdownTextStyles(theme);
++
++        // channel banner colors are theme independent.
++        // If we let the link color being set by the theme, it will be unreadable in some cases.
++        // So we set the link color to the banner text color explicitly. This, with the controlled
++        // background color, ensures the banner text is always readable.
++        textStyle.link = {
++            ...textStyle.link,
++            color: bannerTextColor,
++        };
++        return textStyle;
++    }, [bannerTextColor, theme]);
++
++    const handlePress = useCallback(() => {
++        // set snap point based on text length, with a defined
++        // minimum and maximum height for the text container
++        const length = bannerInfo!.text!.length / 100;
++        const snapPoint = SNAP_POINT + Math.min(Math.max(bottomSheetSnapPoint(length, 100), MIN_TEXT_CONTAINER_HEIGHT), MAX_TEXT_CONTAINER_HEIGHT);
++
++        const expandedChannelBannerTitle = intl.formatMessage({
++            id: 'channel.banner.bottom_sheet.title',
++            defaultMessage: 'Channel Banner',
++        });
++
++        const renderContent = () => (
++            <ExpandedAnnouncementBanner
++                allowDismissal={false}
++                bannerText={bannerInfo!.text || ''}
++                headingText={expandedChannelBannerTitle}
++            />
++        );
++
++        bottomSheet({
++            closeButtonId: CLOSE_BUTTON_ID,
++            title: expandedChannelBannerTitle,
++            snapPoints: [1, snapPoint],
++            renderContent,
++            theme,
++        });
++    }, [bannerInfo, intl, theme]);
++
++    // banner info will be complete when this component renders,
++    // but this check is still here to avoid having to use non-null assertion everywhere.
++    if (!bannerInfo || !bannerInfo.enabled || !bannerInfo.text || !bannerInfo.background_color) {
++        return null;
++    }
++
++    return (
++        <View style={[containerStyle, isTopItem && style.containerTopItem]}>
++            <TouchableOpacity
++                onPress={handlePress}
++                style={style.bannerTextContainer}
++            >
++                <Text
++                    ellipsizeMode='tail'
++                    numberOfLines={1}
++                    style={style.bannerText}
++                >
++                    <RemoveMarkdown
++                        value={bannerInfo.text}
++                        textStyle={markdownTextStyle}
++                        baseStyle={style.baseTextStyle}
++                    />
++                </Text>
++            </TouchableOpacity>
++        </View>
++    );
++}
+diff --git a/app/screens/channel/header/channel_banner/index.ts b/app/screens/channel/header/channel_banner/index.ts
+new file mode 100644
+index 000000000..f84a89e71
+--- /dev/null
++++ b/app/screens/channel/header/channel_banner/index.ts
+@@ -0,0 +1,26 @@
++// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
++// See LICENSE.txt for license information.
++
++import {withDatabase, withObservables} from '@nozbe/watermelondb/react';
++import {of as of$} from 'rxjs';
++import {switchMap} from 'rxjs/operators';
++
++import {observeChannel} from '@queries/servers/channel';
++import {ChannelBanner} from '@screens/channel/header/channel_banner/channel_banner';
++
++import type {WithDatabaseArgs} from '@typings/database/database';
++
++type Props = WithDatabaseArgs & {
++    channelId: string;
++}
++
++const enhanced = withObservables(['channelId'], ({channelId, database}: Props) => {
++    const channel = observeChannel(database, channelId);
++    const bannerInfo = channel.pipe(switchMap((c) => of$(c?.bannerInfo)));
++
++    return {
++        bannerInfo,
++    };
++});
++
++export default withDatabase(enhanced(ChannelBanner));
+diff --git a/app/screens/channel/header/header.tsx b/app/screens/channel/header/header.tsx
+index 391b34a9d..7f57d12ea 100644
+--- a/app/screens/channel/header/header.tsx
++++ b/app/screens/channel/header/header.tsx
+@@ -19,6 +19,7 @@ import {useTheme} from '@context/theme';
+ import {useIsTablet} from '@hooks/device';
+ import {useDefaultHeaderHeight} from '@hooks/header';
+ import {BOTTOM_SHEET_ANDROID_OFFSET} from '@screens/bottom_sheet';
++import ChannelBanner from '@screens/channel/header/channel_banner';
+ import {bottomSheet, popTopScreen, showModal} from '@screens/navigation';
+ import {isTypeDMorGM} from '@utils/channel';
+ import {bottomSheetSnapPoint} from '@utils/helpers';
+@@ -51,6 +52,7 @@ type ChannelProps = {
+     groupCallsAllowed: boolean;
+     isTabletView?: boolean;
+     shouldRenderBookmarks: boolean;
++    shouldRenderChannelBanner: boolean;
+ };
+ 
+ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
+@@ -81,7 +83,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
+ const ChannelHeader = ({
+     canAddBookmarks, channelId, channelType, componentId, customStatus, displayName, hasBookmarks,
+     isBookmarksEnabled, isCustomStatusEnabled, isCustomStatusExpired, isOwnDirectMessage, memberCount,
+-    searchTerm, teamId, callsEnabledInChannel, groupCallsAllowed, isTabletView, shouldRenderBookmarks,
++    searchTerm, teamId, callsEnabledInChannel, groupCallsAllowed, isTabletView, shouldRenderBookmarks, shouldRenderChannelBanner,
+ }: ChannelProps) => {
+     const intl = useIntl();
+     const isTablet = useIsTablet();
+@@ -244,6 +246,8 @@ const ChannelHeader = ({
+         return undefined;
+     }, [memberCount, customStatus, isCustomStatusExpired]);
+ 
++    const showBookmarkBar = isBookmarksEnabled && hasBookmarks && shouldRenderBookmarks;
++
+     return (
+         <>
+             <NavigationHeader
+@@ -260,12 +264,19 @@ const ChannelHeader = ({
+             <View style={contextStyle}>
+                 <RoundedHeaderContext/>
+             </View>
+-            {isBookmarksEnabled && hasBookmarks && shouldRenderBookmarks &&
++            {showBookmarkBar &&
+             <ChannelHeaderBookmarks
+                 canAddBookmarks={canAddBookmarks}
+                 channelId={channelId}
+             />
+             }
++            {
++                shouldRenderChannelBanner &&
++                <ChannelBanner
++                    channelId={channelId}
++                    isTopItem={!showBookmarkBar}
++                />
++            }
+         </>
+     );
+ };
+diff --git a/app/screens/channel/index.tsx b/app/screens/channel/index.tsx
+index f7b20dc1d..1fac0b2f9 100644
+--- a/app/screens/channel/index.tsx
++++ b/app/screens/channel/index.tsx
+@@ -8,11 +8,17 @@ import {observeCallStateInChannel, observeIsCallsEnabledInChannel} from '@calls/
+ import {observeCallsConfig} from '@calls/state';
+ import {Preferences} from '@constants';
+ import {withServerUrl} from '@context/server';
+-import {observeCurrentChannel} from '@queries/servers/channel';
++import {observeChannel, observeCurrentChannel} from '@queries/servers/channel';
+ import {queryBookmarks} from '@queries/servers/channel_bookmark';
+ import {observeHasGMasDMFeature} from '@queries/servers/features';
+ import {queryPreferencesByCategoryAndName} from '@queries/servers/preference';
+-import {observeConfigBooleanValue, observeCurrentChannelId, observeCurrentUserId} from '@queries/servers/system';
++import {
++    observeConfigBooleanValue,
++    observeCurrentChannelId,
++    observeCurrentUserId,
++    observeLicense,
++} from '@queries/servers/system';
++import {shouldShowChannelBanner} from '@screens/channel/channel_feature_checks';
+ 
+ import Channel from './channel';
+ 
+@@ -49,6 +55,19 @@ const enhanced = withObservables([], ({database, serverUrl}: EnhanceProps) => {
+         distinctUntilChanged(),
+     );
+ 
++    const license = observeLicense(database);
++    const bannerInfo = channelId.pipe(
++        switchMap((cId) => observeChannel(database, cId)),
++        switchMap((channel) => of$(channel?.bannerInfo)),
++    );
++
++    const includeChannelBanner = channelType.pipe(
++        combineLatestWith(license, bannerInfo),
++        switchMap(([channelTypeValue, licenseValue, bannerInfoValue]) =>
++            of$(shouldShowChannelBanner(channelTypeValue, licenseValue, bannerInfoValue)),
++        ),
++    );
++
+     return {
+         channelId,
+         ...observeCallStateInChannel(serverUrl, database, channelId),
+@@ -59,6 +78,7 @@ const enhanced = withObservables([], ({database, serverUrl}: EnhanceProps) => {
+         currentUserId,
+         hasGMasDMFeature,
+         includeBookmarkBar,
++        includeChannelBanner,
+     };
+ });
+ 
+diff --git a/app/utils/general/index.ts b/app/utils/general/index.ts
+index 5e4b99a2a..8bcd319c3 100644
+--- a/app/utils/general/index.ts
++++ b/app/utils/general/index.ts
+@@ -50,3 +50,37 @@ export const sortByNewest = (a: SortByCreatAt, b: SortByCreatAt) => {
+ };
+ 
+ export const isBetaApp = applicationId && applicationId.includes('rnbeta');
++
++// getContrastingSimpleColor returns a contrasting color - either black or white, depending on the luminance
++// of the supplied color. Both input and output colors are in hexadecimal color code.
++// This function is copied from Mattermost webapp -
++// https://github.com/mattermost/mattermost/blob/03d724b6a64dbb7bb41a9491f60d277244a8c488/webapp/channels/src/packages/mattermost-redux/src/utils/theme_utils.ts#L176
++export function getContrastingSimpleColor(colorHexCode: string): string {
++    const color = colorHexCode.startsWith('#') ? colorHexCode.slice(1) : colorHexCode;
++
++    if (color.length !== 6) {
++        return '';
++    }
++
++    // split red, green and blue components
++    const red = parseInt(color.substring(0, 2), 16);
++    const green = parseInt(color.substring(2, 4), 16);
++    const blue = parseInt(color.substring(4, 6), 16);
++
++    // calculate relative luminance of each color channel - https://www.w3.org/TR/WCAG21/#dfn-relative-luminance
++    const srgb = [red / 255, green / 255, blue / 255];
++    const [redLuminance, greenLuminance, blueLuminance] = srgb.map((i) => {
++        if (i <= 0.04045) {
++            return i / 12.92;
++        }
++        return Math.pow((i + 0.055) / 1.055, 2.4);
++    });
++
++    // calculate luminance of the whole color by adding percieved luminance of each channel
++    const colorLuminance = (0.2126 * redLuminance) + (0.7152 * greenLuminance) + (0.0722 * blueLuminance);
++
++    // return black or white based on color's luminance
++    // 0.179 is the threshold for black and white contrast - https://www.w3.org/TR/WCAG21/#dfn-contrast-ratio,
++    // The exact value was derived empirically by testing the contrast of black and white on various colors
++    return colorLuminance > 0.179 ? '#000000' : '#FFFFFF';
++}
+diff --git a/assets/base/i18n/en.json b/assets/base/i18n/en.json
+index 6366c33ad..ee2a7fbee 100644
+--- a/assets/base/i18n/en.json
++++ b/assets/base/i18n/en.json
+@@ -232,6 +232,7 @@
+   "channel_notification_preferences.reset_default": "Reset to default",
+   "channel_notification_preferences.thread_replies": "Thread replies",
+   "channel_notification_preferences.unmute_content": "Unmute channel",
++  "channel.banner.bottom_sheet.title": "Channel Banner",
+   "combined_system_message.added_to_channel.many_expanded": "{users} and {lastUser} were **added to the channel** by {actor}.",
+   "combined_system_message.added_to_channel.one": "{firstUser} **added to the channel** by {actor}.",
+   "combined_system_message.added_to_channel.one_you": "You were **added to the channel** by {actor}.",

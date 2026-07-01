@@ -1,0 +1,23 @@
+{
+ "task": "go-acme-lego-2126",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds shellrent.go + internal/client.go + TTLRounder([]int{3600,14400,28800,57600,86400}); 30 F2P Go tests incl. TestTTLRounder and client CRUD via httptest"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

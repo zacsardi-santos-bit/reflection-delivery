@@ -1,0 +1,23 @@
+{
+ "task": "batfish-batfish-7081",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds grammar (CiscoNxosLexer/Parser.g4), extractor, VS model 'BgpVrfAddressFamilyAggregateNetworkConfiguration.java', and Conversions.java; test fixture 'aggregate-address 3.1.0.0/16 summary-only' exercises SUMMARY_ONLY_SUPPRESSION_POLICY_NAME"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 8,
+  "shallow": true
+ }
+}

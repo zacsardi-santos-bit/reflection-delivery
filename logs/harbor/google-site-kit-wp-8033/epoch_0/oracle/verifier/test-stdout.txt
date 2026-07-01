@@ -1,0 +1,26 @@
+patching file assets/js/components/notifications/OfflineNotification.test.js
+patching file assets/js/googlesitekit/datastore/ui/ui.test.js
+patching file assets/js/hooks/useMonitorInternetConnection.test.js
+patching file tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_0_small.png
+patching file tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_1_medium.png
+patching file tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_2_large.png
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS assets/js/googlesitekit/datastore/ui/ui.test.js (76.961 s)
+PASS assets/js/components/notifications/OfflineNotification.test.js (79.527 s)
+PASS assets/js/hooks/useMonitorInternetConnection.test.js (79.859 s)
+A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to find leaks.
+
+Test Suites: 3 passed, 3 total
+Tests:       34 passed, 34 total
+Snapshots:   0 total
+Time:        82.62 s
+Ran all test suites matching /assets\/js\/components\/notifications\/OfflineNotification.test.js|assets\/js\/googlesitekit\/datastore\/ui\/ui.test.js|assets\/js\/hooks\/useMonitorInternetConnection.test.js/i.
+reward=1 graded=34 found=0 failed=0 parsed=0 framework=jest exit_code=0

@@ -1,0 +1,9 @@
+I'm working on adding semantic analysis support for GraphQL documents in the biome linter. Right now, there's no way for lint rules to understand the relationships between declarations and references in GraphQL schemas and queries. I need a new crate that builds a semantic model from a parsed GraphQL document tree.
+
+The semantic model should be able to tell me all the name bindings in a document (type definitions, directive definitions, fragment definitions, operation definitions, and variable definitions), as well as which references remain unresolved. It needs to handle the fact that GraphQL has standard built-in scalar types and directives that are always available without being declared, so those should not be treated as unresolved.
+
+An important feature is variable resolution across fragments. When a variable is used inside a fragment, and that fragment is spread into a query operation that declares that same variable, the variable reference should be resolved to the operation's variable definition. This needs to work transitively — if a fragment includes another fragment that uses a variable, and an operation includes that nested fragment, the variable reference should resolve to the operation's variable definition. When a fragment is used in multiple operations, a single variable reference in the fragment should resolve to all matching variable definitions across all those operations.
+
+I also need to be able to navigate from any reference to its declaration (e.g., from a directive usage to the directive definition, from a fragment spread to the fragment definition, from a type extension to its base type definition) and from any declaration to all its references.
+
+For variable references that can't be resolved, the model should track which operation (if any) is responsible for the unresolved reference — meaning the operation that includes the fragment containing the variable, even though it doesn't declare that variable.

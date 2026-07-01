@@ -1,0 +1,23 @@
+{
+ "task": "pennylaneai-pennylane-5884",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds new file 'pennylane/transforms/split_to_single_terms.py' with 'def split_to_single_terms(tape):' plus unsupported-MPS error in split_non_commuting"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 25,
+  "shallow": true
+ }
+}

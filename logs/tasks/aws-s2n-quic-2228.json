@@ -1,0 +1,23 @@
+{
+ "task": "aws-s2n-quic-2228",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'pub struct ApplicationSettings { initial_congestion_window, probe_bw_cwnd_gain, probe_bw_up_pacing_gain, loss_threshold }' and threads it through BbrCongestionController::new / initial_window / State::cwnd_gain / loss_thresh and CubicCongestionController; F2P includes initial_window_wit"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

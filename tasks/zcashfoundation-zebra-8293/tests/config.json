@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p zebra-grpc --no-fail-fast",
+  "test_files": [
+    "zebra-grpc/src/tests.rs",
+    "zebra-grpc/src/tests/vectors.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) zebra-grpc tests::vectors::test_grpc_methods_mocked",
+    "(2/2) zebra-grpc tests::snapshot::test_grpc_response_data"
+  ],
+  "PASS_TO_PASS": []
+}

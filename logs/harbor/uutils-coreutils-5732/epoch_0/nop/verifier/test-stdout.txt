@@ -1,0 +1,67 @@
+patching file tests/by-util/test_head.rs
+   Compiling bigdecimal v0.4.0
+   Compiling coreutils v0.0.23 (/workspace/repo)
+   Compiling uu_seq v0.0.23 (/workspace/repo/src/uu/seq)
+    Finished test [unoptimized + debuginfo] target(s) in 19.26s
+────────────
+ Nextest run ID 7230213e-c8ca-4d15-8d4c-f1e15e676b03 with nextest profile: default
+    Starting 35 tests across 1 binary (2583 tests and 2 binaries skipped)
+        PASS [   0.056s] ( 1/35) coreutils::tests test_head::test_bad_utf8
+        PASS [   0.069s] ( 2/35) coreutils::tests test_head::test_negative_zero_bytes
+        PASS [   0.070s] ( 3/35) coreutils::tests test_head::test_bad_utf8_lines
+        PASS [   0.072s] ( 4/35) coreutils::tests test_head::test_multiple_files_with_stdin
+        PASS [   0.073s] ( 5/35) coreutils::tests test_head::test_no_such_file_or_directory
+        PASS [   0.075s] ( 6/35) coreutils::tests test_head::test_line_syntax
+        PASS [   0.081s] ( 7/35) coreutils::tests test_head::test_lines_leading_zeros
+        PASS [   0.082s] ( 8/35) coreutils::tests test_head::test_presume_input_pipe_5_chars
+        PASS [   0.085s] ( 9/35) coreutils::tests test_head::test_multiple_nonexistent_files
+        PASS [   0.087s] (10/35) coreutils::tests test_head::test_obsolete_extras
+        PASS [   0.087s] (11/35) coreutils::tests test_head::test_multiple_files
+        PASS [   0.092s] (12/35) coreutils::tests test_head::test_file_backwards
+        PASS [   0.096s] (13/35) coreutils::tests test_head::test_invalid_arg
+        PASS [   0.097s] (14/35) coreutils::tests test_head::test_byte_syntax
+        PASS [   0.100s] (15/35) coreutils::tests test_head::test_negative_byte_syntax
+        PASS [   0.107s] (16/35) coreutils::tests test_head::test_negative_zero_lines
+        PASS [   0.073s] (17/35) coreutils::tests test_head::test_presume_input_pipe_default
+        FAIL [   0.070s] (18/35) coreutils::tests test_head::test_read_backwards_bytes_proc_fs_version
+  stdout ───
+
+    running 1 test
+    run: /workspace/repo/target/debug/coreutils head -c -1 /proc/version
+    test test_head::test_read_backwards_bytes_proc_fs_version ... FAILED
+
+    failures:
+
+    failures:
+        test_head::test_read_backwards_bytes_proc_fs_version
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2617 filtered out; finished in 0.03s
+
+  stderr ───
+    thread 'test_head::test_read_backwards_bytes_proc_fs_version' panicked at tests/by-util/test_head.rs:393:5:
+    assertion failed: result.stdout().len() > 0
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 17 tests still running
+        PASS [   0.068s] (19/35) coreutils::tests test_head::test_single_1_line
+        PASS [   0.140s] (20/35) coreutils::tests test_head::test_head_num_with_undocumented_sign_bytes
+        PASS [   0.066s] (21/35) coreutils::tests test_head::test_single_5_chars
+        PASS [   0.078s] (22/35) coreutils::tests test_head::test_single_1_line_obsolete
+        PASS [   0.066s] (23/35) coreutils::tests test_head::test_stdin_5_chars
+        PASS [   0.072s] (24/35) coreutils::tests test_head::test_single_default
+        PASS [   0.070s] (25/35) coreutils::tests test_head::test_stdin_1_line_obsolete
+        PASS [   0.073s] (26/35) coreutils::tests test_head::test_stdin_1_line
+        PASS [   0.089s] (27/35) coreutils::tests test_head::test_sequence_fixture
+        PASS [   0.064s] (28/35) coreutils::tests test_head::test_zero_terminated
+        PASS [   0.069s] (29/35) coreutils::tests test_head::test_stdin_negative_23_line
+        PASS [   0.074s] (30/35) coreutils::tests test_head::test_stdin_default
+        PASS [   0.062s] (31/35) coreutils::tests test_head::test_zero_terminated_negative_lines
+        PASS [   0.059s] (32/35) coreutils::tests test_head::test_zero_terminated_syntax
+        PASS [   0.169s] (33/35) coreutils::tests test_head::test_head_invalid_num
+        PASS [   0.073s] (34/35) coreutils::tests test_head::test_verbose
+        PASS [   0.042s] (35/35) coreutils::tests test_head::test_zero_terminated_syntax_2
+────────────
+     Summary [   0.179s] 35 tests run: 34 passed, 1 failed, 2583 skipped
+        FAIL [   0.070s] (18/35) coreutils::tests test_head::test_read_backwards_bytes_proc_fs_version
+error: test run failed
+reward=0 graded=35 found=6 failed=0 parsed=35 framework=cargo exit_code=100

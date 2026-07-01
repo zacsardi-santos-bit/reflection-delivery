@@ -1,0 +1,5 @@
+patching file src/components/Navigator/NavGroup/NavGroup.stories.tsx
+patching file src/components/Navigator/NavGroup/NavGroup.styled.ts
+patching file src/components/Navigator/NavGroup/NavGroup.tsx
+patching file src/components/Navigator/NavGroup/NavGroup.types.ts
+patching file src/components/Navigator/NavGroup/__snapshots__/NavGroup.test.tsx.snap

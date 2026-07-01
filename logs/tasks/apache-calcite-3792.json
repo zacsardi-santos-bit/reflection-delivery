@@ -1,0 +1,23 @@
+{
+ "task": "apache-calcite-3792",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "70 F2P e.g. testHH12 assertEquals(\"12\", PostgresqlDateTimeFormatter.toChar(pattern, midnight)); golden implements NumberFormatPattern/StringFormatPattern toChar machinery"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 8,
+  "shallow": true
+ }
+}

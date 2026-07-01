@@ -1,0 +1,75 @@
+patching file clients/client-python/tests/integration/test_metalake.py
+patching file clients/client-python/tests/unittests/mock_base.py
+patching file clients/client-python/tests/unittests/test_gvfs_with_local.py
+patching file clients/client-python/tests/unittests/test_model_catalog_api.py
+patching file clients/client-python/tests/unittests/test_responses.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/clients/client-python
+plugins: mock-3.15.1
+collecting ... collected 38 items
+
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_cache PASSED [  2%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_cat_file PASSED [  5%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_convert_actual_path PASSED [  7%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_convert_info PASSED [ 10%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_cp_file PASSED [ 13%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_created PASSED [ 15%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_exist PASSED [ 18%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_extract_identifier PASSED [ 21%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_get_file PASSED [ 23%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_info PASSED [ 26%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_location_with_tailing_slash PASSED [ 28%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_ls PASSED [ 31%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_makedirs PASSED [ 34%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_mkdir PASSED [ 36%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_modified PASSED [ 39%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_mv PASSED [ 42%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_oauth2_auth PASSED [ 44%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_open PASSED [ 47%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_pandas PASSED [ 50%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_pyarrow PASSED [ 52%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_rm PASSED [ 55%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_rm_file PASSED [ 57%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_rmdir PASSED [ 60%]
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_simple_auth PASSED [ 63%]
+tests/unittests/test_model_catalog_api.py::TestModelCatalogApi::test_delete_model PASSED [ 65%]
+tests/unittests/test_model_catalog_api.py::TestModelCatalogApi::test_delete_model_version PASSED [ 68%]
+tests/unittests/test_model_catalog_api.py::TestModelCatalogApi::test_get_model PASSED [ 71%]
+tests/unittests/test_model_catalog_api.py::TestModelCatalogApi::test_get_model_version PASSED [ 73%]
+tests/unittests/test_model_catalog_api.py::TestModelCatalogApi::test_link_model_version PASSED [ 76%]
+tests/unittests/test_model_catalog_api.py::TestModelCatalogApi::test_list_model_versions PASSED [ 78%]
+tests/unittests/test_model_catalog_api.py::TestModelCatalogApi::test_list_models PASSED [ 81%]
+tests/unittests/test_model_catalog_api.py::TestModelCatalogApi::test_register_model PASSED [ 84%]
+tests/unittests/test_responses.py::TestResponses::test_credential_response PASSED [ 86%]
+tests/unittests/test_responses.py::TestResponses::test_file_location_response PASSED [ 89%]
+tests/unittests/test_responses.py::TestResponses::test_file_location_response_exception PASSED [ 92%]
+tests/unittests/test_responses.py::TestResponses::test_model_response PASSED [ 94%]
+tests/unittests/test_responses.py::TestResponses::test_model_version_list_response PASSED [ 97%]
+tests/unittests/test_responses.py::TestResponses::test_model_version_response PASSED [100%]
+
+=============================== warnings summary ===============================
+tests/unittests/test_gvfs_with_local.py::TestLocalFilesystem::test_oauth2_auth
+  /usr/local/lib/python3.11/site-packages/dataclasses_json/core.py:182: RuntimeWarning: Missing value of non-optional type _code detected when decoding OAuth2ErrorResponse and was defaulted to None by infer_missing=True. Set infer_missing=False (the default) to prevent this behavior.
+    warnings.warn(
+
+tests/unittests/test_responses.py::TestResponses::test_model_version_list_response
+  /usr/local/lib/python3.11/site-packages/dataclasses_json/core.py:182: RuntimeWarning: Missing value of non-optional type _versions detected when decoding ModelVersionListResponse and was defaulted to None by infer_missing=True. Set infer_missing=False (the default) to prevent this behavior.
+    warnings.warn(
+
+tests/unittests/test_responses.py::TestResponses::test_model_version_response
+  /usr/local/lib/python3.11/site-packages/dataclasses_json/core.py:182: RuntimeWarning: Missing value of non-optional type _version detected when decoding ModelVersionDTO and was defaulted to None by infer_missing=True. Set infer_missing=False (the default) to prevent this behavior.
+    warnings.warn(
+
+tests/unittests/test_responses.py::TestResponses::test_model_version_response
+  /usr/local/lib/python3.11/site-packages/dataclasses_json/core.py:182: RuntimeWarning: Missing value of non-optional type _uri detected when decoding ModelVersionDTO and was defaulted to None by infer_missing=True. Set infer_missing=False (the default) to prevent this behavior.
+    warnings.warn(
+
+tests/unittests/test_responses.py::TestResponses::test_model_version_response
+  /usr/local/lib/python3.11/site-packages/dataclasses_json/core.py:182: RuntimeWarning: Missing value of non-optional type _audit detected when decoding ModelVersionDTO and was defaulted to None by infer_missing=True. Set infer_missing=False (the default) to prevent this behavior.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 38 passed, 5 warnings in 4.20s ========================
+reward=1 graded=38 found=0 failed=0 parsed=38 framework=pytest exit_code=0

@@ -1,0 +1,36 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/rekortest ./pkg/sbom/cyclonedx ./pkg/sbom/cyclonedx/core -count=1",
+  "test_files": [
+    "pkg/rekortest/server.go",
+    "pkg/sbom/cyclonedx/core/cyclonedx_test.go",
+    "pkg/sbom/cyclonedx/marshal_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx/core::TestMarshaler_CoreComponent/marshal_CoreComponent",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx/core::TestMarshaler_CoreComponent",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestMarshaler_Marshal/happy_path_for_container_scan",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestMarshaler_Marshal/happy_path_for_local_container_scan",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestMarshaler_Marshal/happy_path_for_fs_scan",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestMarshaler_Marshal/happy_path._2_packages_for_1_CVE",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestMarshaler_Marshal/happy_path_aggregate_results",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestMarshaler_Marshal/happy_path_empty",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestMarshaler_Marshal",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_KBOM",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_with_infinity_loop",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_for_third_party_sbom",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_for_third_party_sbom,_no_operation-system_component",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_for_unrelated_bom",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_for_independent_library_bom",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_for_jar_where_name_is_GroupID_and_ArtifactID",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_only_os_component",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_empty_component",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/happy_path_empty_metadata_component",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal/sad_path_invalid_purl",
+    "github.com/aquasecurity/trivy/pkg/sbom/cyclonedx::TestUnmarshaler_Unmarshal"
+  ],
+  "PASS_TO_PASS": []
+}

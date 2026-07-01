@@ -1,0 +1,37 @@
+patching file pkg/test/resourcefixture/testdata/basic/bigqueryconnection/v1beta1/bigqueryconnectionconnection/cloudspannerconnectionbasic/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerdatabase/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerdatabase/_vcr_cassettes/nontf.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerdatabase/_vcr_cassettes/oauth.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerdatabase/_vcr_cassettes/tf.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-basic/_generated_object_spannerinstance-basic.golden.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-basic/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-basic/update.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-direct-full/_generated_object_spannerinstance-direct-full.golden.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-direct-full/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-direct-full/create.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-direct-full/update.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-full/_generated_object_spannerinstance-full.golden.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-full/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-full/update.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance/_generated_object_spannerinstance.golden.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance/_http.log
+patching file pkg/test/resourcefixture/testdata/externalref/externalwithsubresource/_http.log
+patching file tests/apichecks/testdata/exceptions/missingfields.txt
+=== RUN   TestCRDFieldPresenceInUnstructured
+    utils.go:149: FAIL: unexpected diff in testdata/exceptions/missingfields.txt:   (
+          	"""
+          	... // 3752 identical lines
+          	[missing_field] crd=spannerdatabases.spanner.cnrm.cloud.google.com version=v1beta1: field ".spec.encryptionConfig.kmsKeyRef" is not set; neither 'external' nor 'name' are set
+          	[missing_field] crd=spannerdatabases.spanner.cnrm.cloud.google.com version=v1beta1: field ".spec.versionRetentionPeriod" is not set in unstructured objects
+        - 	[missing_field] crd=spannerinstances.spanner.cnrm.cloud.google.com version=v1beta1: field ".spec.autoscalingConfig.autoscalingLimits.maxProcessingUnits" is not set in unstructured objects
+        - 	[missing_field] crd=spannerinstances.spanner.cnrm.cloud.google.com version=v1beta1: field ".spec.autoscalingConfig.autoscalingLimits.minProcessingUnits" is not set in unstructured objects
+          	[missing_field] crd=spannerinstances.spanner.cnrm.cloud.google.com version=v1beta1: field ".spec.processingUnits" is not set in unstructured objects
+          	[missing_field] crd=sqlinstances.sql.cnrm.cloud.google.com version=v1beta1: field ".spec.cloneSource.binLogCoordinates.binLogFileName" is not set in unstructured objects
+          	... // 134 identical lines
+          	"""
+          )
+--- FAIL: TestCRDFieldPresenceInUnstructured (1.47s)
+FAIL
+FAIL	github.com/GoogleCloudPlatform/k8s-config-connector/tests/apichecks	1.495s
+FAIL
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=1

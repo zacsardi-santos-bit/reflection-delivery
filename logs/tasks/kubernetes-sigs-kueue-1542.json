@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-sigs-kueue-1542",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds requeuing timestamp strategy field to config (configuration_types.go, defaults.go) + queue ordering; F2P includes TestSetDefaults_Configuration/* and queue/scheduler tests across the touched packages"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/go && go build -o /usr/local/bin/dolt ./cmd/dolt/ && test_dolt_zstd",
+  "test_files": [
+    "integration-tests/DataDumpLoadDockerfile",
+    "integration-tests/bats/zstd.bats"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "zstd_admin_zstd_works"
+  ],
+  "PASS_TO_PASS": []
+}

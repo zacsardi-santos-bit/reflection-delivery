@@ -1,0 +1,5 @@
+I'm working on the OCI client package and need to add functionality to build compressed archive files from local paths. The idea is simple: given a destination path and a source path (which can be a file or a directory), the function should produce a gzip-compressed tar archive at the destination. It should also accept a list of ignore patterns so certain files or subdirectories can be excluded from the archive — similar to how gitignore patterns work, including negation patterns that prevent a path from being excluded.
+
+The function needs to handle various path forms: relative paths, absolute paths, and paths prefixed with "./". If the source path doesn't exist, it should return an error. If the source is a single file rather than a directory, it should archive just that one file.
+
+I also need to add test fixture files under the package's testdata directory so the tests have real files to work with — including a sample deployment file and some extra files and directories to verify that the ignore patterns are applied correctly.

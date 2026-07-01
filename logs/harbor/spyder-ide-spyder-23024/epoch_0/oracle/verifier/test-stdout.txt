@@ -1,0 +1,40 @@
+patching file spyder/app/tests/spyder-boilerplate/setup.py
+patching file spyder/app/tests/spyder-boilerplate/spyder_boilerplate/spyder/plugin.py
+patching file spyder/app/tests/test_mainwindow.py
+patching file spyder/config/tests/test_user.py
+patching file spyder/plugins/editor/widgets/codeeditor/tests/conftest.py
+patching file spyder/plugins/editor/widgets/codeeditor/tests/test_codeeditor.py
+patching file spyder/plugins/editor/widgets/editorstack/tests/conftest.py
+patching file spyder/plugins/editor/widgets/editorstack/tests/test_editorstack.py
+patching file spyder/plugins/editor/widgets/editorstack/tests/test_editorstack_and_outline.py
+patching file spyder/plugins/editor/widgets/editorstack/tests/test_save.py
+patching file spyder/plugins/editor/widgets/editorstack/tests/test_shortcuts.py
+patching file spyder/plugins/editor/widgets/tests/test_editorsplitter.py
+patching file spyder/plugins/shortcuts/tests/test_shortcuts.py
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+PyQt5 5.15.11 -- Qt runtime 5.15.19 -- Qt compiled 5.15.14
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: timeout-2.4.0, cov-7.1.0, order-1.5.0, mock-3.15.1, qt-4.5.0
+collecting ... collected 1 item
+
+spyder/config/tests/test_user.py::test_invalid_shortcuts PASSED          [100%]
+
+=============================== warnings summary ===============================
+spyder/utils/encoding.py:27
+  /workspace/repo/spyder/utils/encoding.py:27: DeprecationWarning: chardet.universaldetector is deprecated, import UniversalDetector from chardet or chardet.detector instead
+    from chardet.universaldetector import UniversalDetector
+
+spyder/config/base.py:441
+  /workspace/repo/spyder/config/base.py:441: DeprecationWarning: 'locale.getdefaultlocale' is deprecated and slated for removal in Python 3.15. Use setlocale(), getencoding() and getlocale() instead.
+    locale_language = locale.getdefaultlocale()[0]
+
+spyder/config/tests/test_user.py:380
+  /workspace/repo/spyder/config/tests/test_user.py:380: PytestUnknownMarkWarning: Unknown pytest.mark.no_reset_conf - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.no_reset_conf
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 3 warnings in 0.92s =========================
+reward=1 graded=1 found=0 failed=0 parsed=1 framework=pytest exit_code=0

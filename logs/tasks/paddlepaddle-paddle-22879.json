@@ -1,0 +1,23 @@
+{
+ "task": "paddlepaddle-paddle-22879",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden moves __getitem__ slice logic into C++ (imperative.cc/strided_slice_op.h); test _test_slice asserts np.array_equal(local_out[15], tensor_array[::-1, ::-1, ::-1]) etc."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

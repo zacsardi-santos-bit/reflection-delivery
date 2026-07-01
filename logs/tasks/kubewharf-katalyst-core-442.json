@@ -1,0 +1,23 @@
+{
+ "task": "kubewharf-katalyst-core-442",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden renames pkg/agent/resourcemanager/outofband/* -> pkg/agent/orm/* and updates imports: orm.go '-\"...resourcemanager/outofband\" +\"...agent/orm\"' and 'orm.NewManager(...)'; test.patch renames test files to pkg/agent/orm/*; F2P ids are all at github.com/kubewharf/katalyst-core/pkg/agent/orm/..."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

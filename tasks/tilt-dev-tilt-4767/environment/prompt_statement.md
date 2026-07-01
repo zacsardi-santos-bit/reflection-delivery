@@ -1,0 +1,5 @@
+I'm working on adding support for user-defined resource labels in Tilt. Right now, there's no way to attach custom labels to resources (whether Kubernetes, Docker Compose, or local) directly in the Tiltfile. I'd like to add an optional parameter to the resource configuration functions that lets users specify one or more label names as a string or a list of strings.
+
+The labels should be stored on the resource's manifest and be available for organizational purposes like grouping in the UI. Multiple configuration calls for the same resource should accumulate labels rather than overwrite them. Label names need to be validated — they must be alphanumeric, non-empty, and must not contain slashes. Invalid label names should produce a clear error message. Importantly, changing a resource's labels should not trigger a rebuild, since labels are just metadata and shouldn't affect the build process.
+
+I also need a reusable type that can parse and validate these label values from Starlark — it should handle a single label string, a list of label strings, or a tuple of label strings, and reject unsupported input types with an appropriate error message.

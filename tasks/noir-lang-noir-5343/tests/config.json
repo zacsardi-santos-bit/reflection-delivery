@@ -1,0 +1,19 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p noirc_frontend -E 'test(/impl_stricter_than_trait|trait_impl_where_clause_stricter_pass|impl_not_found_for_inner_impl/)'",
+  "test_files": [
+    "compiler/noirc_frontend/src/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "noirc_frontend tests::impl_stricter_than_trait_different_trait_generics",
+    "noirc_frontend tests::impl_stricter_than_trait_different_object_generics",
+    "noirc_frontend tests::trait_impl_where_clause_stricter_pass",
+    "noirc_frontend tests::impl_stricter_than_trait_no_trait_method_constraints",
+    "noirc_frontend tests::impl_stricter_than_trait_different_trait",
+    "noirc_frontend tests::impl_stricter_than_trait_different_generics",
+    "noirc_frontend tests::impl_not_found_for_inner_impl"
+  ],
+  "PASS_TO_PASS": []
+}

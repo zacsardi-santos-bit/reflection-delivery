@@ -1,0 +1,18 @@
+patching file .github/workflows/rust.yml (renamed from .github/workflows/linux-ci-rust.yml)
+patching file .gitignore
+patching file android/gradlew
+patching file bootstrap.sh
+patching file kotlin/gradlew
+patching file rust/wallet_core_rs/src/ffi/utils/uuid_ffi.rs
+patching file samples/android/gradlew
+patching file samples/kmp/gradlew
+patching file tools/android-build
+patching file tools/android-release
+patching file tools/android-test
+patching file tools/coverage
+patching file tools/install-dependencies
+patching file tools/install-rust-dependencies
+patching file tools/kotlin-build
+patching file tools/kotlin-test
+patching file tools/rust-bindgen
+patching file tools/rust-coverage

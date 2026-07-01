@@ -1,0 +1,23 @@
+{
+ "task": "apache-datafusion-13880",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds trait UserDefinedLogicalNodeUnparser + with_extension_unparsers + dispatch loop returning first Modified else not_impl_err; tests register MockStatementUnparser and assert_eq!(sql, \"SELECT * FROM j1\") / assert_contains error"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 13,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "tanstack-router-1703",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden resolves `from` via looseRoutesByPath and adds invariant 'Could not find match for from: '; test asserts href '/posts/id1/info' and error 'Could not find match for from: /invoices'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,12 @@
+patching file vendor.mod
+patching file vendor.sum
+patching file vendor/go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace/clienttrace.go
+patching file vendor/go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace/httptrace.go
+patching file vendor/go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace/internal/semconvutil/gen.go
+patching file vendor/go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace/internal/semconvutil/httpconv.go
+patching file vendor/go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace/internal/semconvutil/netconv.go (renamed from vendor/go.opentelemetry.io/otel/semconv/internal/v2/net.go)
+patching file vendor/go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace/version.go
+patching file vendor/go.opentelemetry.io/otel/semconv/internal/v2/http.go
+patching file vendor/go.opentelemetry.io/otel/semconv/v1.17.0/httpconv/http.go
+patching file vendor/go.opentelemetry.io/otel/semconv/v1.17.0/netconv/net.go
+patching file vendor/modules.txt

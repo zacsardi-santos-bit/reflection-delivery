@@ -1,0 +1,5 @@
+I'm using Mitosis to compile components to Angular and I've run into a bug with state initialization ordering. I have a component where a state variable is initialized from one of the component's input props, and then that state variable is used in a spread/merge expression to pass a binding to a child component. When compiled to Angular, the generated lifecycle code has the order wrong — the computed binding that depends on the state runs before the state is actually initialized from the prop. So the child component gets an incorrect value on first render.
+
+The expected behavior is that whenever state depends on a prop value, the state should be initialized from the prop first in the lifecycle hook, and only then should any computed values that rely on that state be calculated. The initialization sequence should respect these dependencies.
+
+Specifically, I'd expect the generated Angular component to first set up all prop-dependent state values, and then initialize any bound expressions that depend on those state values — not the other way around as it currently does.

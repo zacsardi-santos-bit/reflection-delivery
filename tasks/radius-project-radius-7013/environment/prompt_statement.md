@@ -1,0 +1,5 @@
+I'm working on Terraform recipe support and running into an issue with module inspection when the template path includes a subdirectory. We use a convention where a double slash in the path (specifying a subdirectory within the archive) means to look inside that subdirectory rather than the archive root. Currently, the module inspection step ignores the part after the double slash and always looks in the root of the downloaded module — so when we package Terraform configuration inside a subdirectory of a zip archive, the inspection fails to find the right files.
+
+I need the module inspection logic to be updated to accept the full recipe definition (which includes both the recipe name and the template path) rather than just the module name. When the template path contains a subdirectory specifier, the inspection should navigate into that subdirectory when loading the module configuration. When there's no subdirectory specifier, behavior should stay the same as before.
+
+I also need a test data directory set up that represents a downloaded module with a subdirectory layout, so the new behavior can be verified end-to-end.

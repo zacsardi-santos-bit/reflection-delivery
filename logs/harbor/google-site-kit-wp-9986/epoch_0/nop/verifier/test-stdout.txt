@@ -1,0 +1,76 @@
+patching file assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+FAIL assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js (49.12 s)
+  ConsentModeSetupCTAWidget
+    ✓ should render the widget (184 ms)
+    ✓ should not render the widget when it is being dismissed (66 ms)
+    checkRequirements
+      ✕ is active when consent mode is not enabled and ads is connected (19 ms)
+      ✕ is not active when consent mode is already enabled and ads is connected (7 ms)
+      ✕ is not active when consent mode is not enabled but ads is not connected (7 ms)
+      ✕ is not active when consent mode is enabled and ads is not connected (6 ms)
+
+  ● ConsentModeSetupCTAWidget › checkRequirements › is active when consent mode is not enabled and ads is connected
+
+    TypeError: Cannot read properties of undefined (reading 'checkRequirements')
+
+      103 | 			} );
+      104 | 
+    > 105 | 			const isActive = await notification.checkRequirements(
+          | 			                                    ^
+      106 | 				registry,
+      107 | 				VIEW_CONTEXT_MAIN_DASHBOARD
+      108 | 			);
+
+      at Object.<anonymous> (assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:105:40)
+
+  ● ConsentModeSetupCTAWidget › checkRequirements › is not active when consent mode is already enabled and ads is connected
+
+    TypeError: Cannot read properties of undefined (reading 'checkRequirements')
+
+      116 | 			} );
+      117 | 
+    > 118 | 			const isActive = await notification.checkRequirements(
+          | 			                                    ^
+      119 | 				registry,
+      120 | 				VIEW_CONTEXT_MAIN_DASHBOARD
+      121 | 			);
+
+      at Object.<anonymous> (assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:118:40)
+
+  ● ConsentModeSetupCTAWidget › checkRequirements › is not active when consent mode is not enabled but ads is not connected
+
+    TypeError: Cannot read properties of undefined (reading 'checkRequirements')
+
+      133 | 				.receiveGetAdsMeasurementStatus( { connected: false } );
+      134 | 
+    > 135 | 			const isActive = await notification.checkRequirements(
+          | 			                                    ^
+      136 | 				registry,
+      137 | 				VIEW_CONTEXT_MAIN_DASHBOARD
+      138 | 			);
+
+      at Object.<anonymous> (assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:135:40)
+
+  ● ConsentModeSetupCTAWidget › checkRequirements › is not active when consent mode is enabled and ads is not connected
+
+    TypeError: Cannot read properties of undefined (reading 'checkRequirements')
+
+      146 | 			} );
+      147 | 
+    > 148 | 			const isActive = await notification.checkRequirements(
+          | 			                                    ^
+      149 | 				registry,
+      150 | 				VIEW_CONTEXT_MAIN_DASHBOARD
+      151 | 			);
+
+      at Object.<anonymous> (assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:148:40)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 2 passed, 6 total
+Snapshots:   1 passed, 1 total
+Time:        49.881 s
+Ran all test suites matching /assets\/js\/components\/consent-mode\/ConsentModeSetupCTAWidget.test.js/i.
+{"numFailedTestSuites":1,"numFailedTests":4,"numPassedTestSuites":0,"numPassedTests":2,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":6,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":1,"total":1,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746274990,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":["ConsentModeSetupCTAWidget"],"failureMessages":[],"fullName":"ConsentModeSetupCTAWidget should render the widget","location":null,"status":"passed","title":"should render the widget"},{"ancestorTitles":["ConsentModeSetupCTAWidget"],"failureMessages":[],"fullName":"ConsentModeSetupCTAWidget should not render the widget when it is being dismissed","location":null,"status":"passed","title":"should not render the widget when it is being dismissed"},{"ancestorTitles":["ConsentModeSetupCTAWidget","checkRequirements"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'checkRequirements')\n    at Object.<anonymous> (/workspace/repo/assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:105:40)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"ConsentModeSetupCTAWidget checkRequirements is active when consent mode is not enabled and ads is connected","location":null,"status":"failed","title":"is active when consent mode is not enabled and ads is connected"},{"ancestorTitles":["ConsentModeSetupCTAWidget","checkRequirements"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'checkRequirements')\n    at Object.<anonymous> (/workspace/repo/assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:118:40)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"ConsentModeSetupCTAWidget checkRequirements is not active when consent mode is already enabled and ads is connected","location":null,"status":"failed","title":"is not active when consent mode is already enabled and ads is connected"},{"ancestorTitles":["ConsentModeSetupCTAWidget","checkRequirements"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'checkRequirements')\n    at Object.<anonymous> (/workspace/repo/assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:135:40)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"ConsentModeSetupCTAWidget checkRequirements is not active when consent mode is not enabled but ads is not connected","location":null,"status":"failed","title":"is not active when consent mode is not enabled but ads is not connected"},{"ancestorTitles":["ConsentModeSetupCTAWidget","checkRequirements"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'checkRequirements')\n    at Object.<anonymous> (/workspace/repo/assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:148:40)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"ConsentModeSetupCTAWidget checkRequirements is not active when consent mode is enabled and ads is not connected","location":null,"status":"failed","title":"is not active when consent mode is enabled and ads is not connected"}],"endTime":1782746324859,"message":"  ● ConsentModeSetupCTAWidget › checkRequirements › is active when consent mode is not enabled and ads is connected\n\n    TypeError: Cannot read properties of undefined (reading 'checkRequirements')\n\n      103 | \t\t\t} );\n      104 | \n    > 105 | \t\t\tconst isActive = await notification.checkRequirements(\n          | \t\t\t                                    ^\n      106 | \t\t\t\tregistry,\n      107 | \t\t\t\tVIEW_CONTEXT_MAIN_DASHBOARD\n      108 | \t\t\t);\n\n      at Object.<anonymous> (assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:105:40)\n\n  ● ConsentModeSetupCTAWidget › checkRequirements › is not active when consent mode is already enabled and ads is connected\n\n    TypeError: Cannot read properties of undefined (reading 'checkRequirements')\n\n      116 | \t\t\t} );\n      117 | \n    > 118 | \t\t\tconst isActive = await notification.checkRequirements(\n          | \t\t\t                                    ^\n      119 | \t\t\t\tregistry,\n      120 | \t\t\t\tVIEW_CONTEXT_MAIN_DASHBOARD\n      121 | \t\t\t);\n\n      at Object.<anonymous> (assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:118:40)\n\n  ● ConsentModeSetupCTAWidget › checkRequirements › is not active when consent mode is not enabled but ads is not connected\n\n    TypeError: Cannot read properties of undefined (reading 'checkRequirements')\n\n      133 | \t\t\t\t.receiveGetAdsMeasurementStatus( { connected: false } );\n      134 | \n    > 135 | \t\t\tconst isActive = await notification.checkRequirements(\n          | \t\t\t                                    ^\n      136 | \t\t\t\tregistry,\n      137 | \t\t\t\tVIEW_CONTEXT_MAIN_DASHBOARD\n      138 | \t\t\t);\n\n      at Object.<anonymous> (assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:135:40)\n\n  ● ConsentModeSetupCTAWidget › checkRequirements › is not active when consent mode is enabled and ads is not connected\n\n    TypeError: Cannot read properties of undefined (reading 'checkRequirements')\n\n      146 | \t\t\t} );\n      147 | \n    > 148 | \t\t\tconst isActive = await notification.checkRequirements(\n          | \t\t\t                                    ^\n      149 | \t\t\t\tregistry,\n      150 | \t\t\t\tVIEW_CONTEXT_MAIN_DASHBOARD\n      151 | \t\t\t);\n\n      at Object.<anonymous> (assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js:148:40)\n","name":"/workspace/repo/assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js","startTime":1782746275739,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=6 found=6 failed=4 parsed=6 framework=jest exit_code=1

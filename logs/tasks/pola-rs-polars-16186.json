@@ -1,0 +1,23 @@
+{
+ "task": "pola-rs-polars-16186",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden fix: 'let new_first = if len == 0 { base_g[0] } else { base_g[0] + first }' in dynamic.rs; F2P test_rolling_sorted_empty_groups_16145 asserts id order [1,2]"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

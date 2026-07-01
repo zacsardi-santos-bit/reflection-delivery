@@ -1,0 +1,37 @@
+patching file central/cve/image/datastore/datastore.go
+patching file central/cve/image/datastore/datastore_impl.go
+patching file central/cve/image/datastore/search/mocks/searcher.go (renamed from central/cve/image/datastore/internal/search/mocks/searcher.go)
+patching file central/cve/image/datastore/search/searcher.go (renamed from central/cve/image/datastore/internal/search/searcher.go)
+patching file central/cve/image/datastore/search/searcher_impl.go (renamed from central/cve/image/datastore/internal/search/searcher_impl.go)
+patching file central/cve/image/datastore/singleton.go
+patching file central/cve/image/datastore/store/mocks/store.go (renamed from central/cve/image/datastore/internal/store/mocks/store.go)
+patching file central/cve/image/datastore/store/postgres/gen.go (renamed from central/cve/image/datastore/internal/store/postgres/gen.go)
+patching file central/cve/image/datastore/store/postgres/index.go (renamed from central/cve/image/datastore/internal/store/postgres/index.go)
+patching file central/cve/image/datastore/store/postgres/store.go (renamed from central/cve/image/datastore/internal/store/postgres/store.go)
+patching file central/cve/image/datastore/store/store.go (renamed from central/cve/image/datastore/internal/store/store.go)
+patching file central/cve/suppress/reprocessor.go
+patching file central/graphql/resolvers/vulnerability_requests_test.go
+patching file central/image/datastore/datastore.go
+patching file central/image/datastore/datastore_impl.go
+patching file central/image/datastore/search/mocks/searcher.go (renamed from central/image/datastore/internal/search/mocks/searcher.go)
+patching file central/image/datastore/search/searcher.go (renamed from central/image/datastore/internal/search/searcher.go)
+patching file central/image/datastore/search/searcher_impl.go (renamed from central/image/datastore/internal/search/searcher_impl.go)
+patching file central/image/datastore/search/searcher_impl_v2.go (renamed from central/image/datastore/internal/search/searcher_impl_v2.go)
+patching file central/image/datastore/singleton.go
+patching file central/image/datastore/store/common/merge.go (renamed from central/image/datastore/internal/store/common/merge.go)
+patching file central/image/datastore/store/common/parts.go (renamed from central/image/datastore/internal/store/common/parts.go)
+patching file central/image/datastore/store/common/split.go (renamed from central/image/datastore/internal/store/common/split.go)
+patching file central/image/datastore/store/dackbox/store_impl.go (renamed from central/image/datastore/internal/store/dackbox/store_impl.go)
+patching file central/image/datastore/store/mocks/store.go (renamed from central/image/datastore/internal/store/mocks/store.go)
+patching file central/image/datastore/store/postgres/gen.go (renamed from central/image/datastore/internal/store/postgres/gen.go)
+patching file central/image/datastore/store/postgres/index.go (renamed from central/image/datastore/internal/store/postgres/index.go)
+patching file central/image/datastore/store/postgres/store.go (renamed from central/image/datastore/internal/store/postgres/store.go)
+patching file central/image/datastore/store/store.go (renamed from central/image/datastore/internal/store/store.go)
+patching file central/image/service/service.go
+patching file central/image/service/service_impl.go
+patching file central/image/service/singleton.go
+patching file central/main.go
+patching file central/vulnerabilityrequest/manager/requestmgr/manager_impl.go
+patching file central/vulnerabilityrequest/manager/requestmgr/manager_impl_test.go
+patching file central/vulnerabilityrequest/manager/requestmgr/singleton.go
+patching file pkg/cve/cve.go

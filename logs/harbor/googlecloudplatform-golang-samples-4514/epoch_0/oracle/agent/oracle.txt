@@ -1,0 +1,6 @@
+patching file go.work
+patching file vertexai/evaluation/evaluate_output.go
+patching file vertexai/evaluation/get_rouge_score.go
+patching file vertexai/evaluation/go.mod
+patching file vertexai/evaluation/go.sum
+patching file vertexai/evaluation/pairwise_evaluation.go

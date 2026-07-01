@@ -1,0 +1,77 @@
+patching file crates/cairo-lang-sierra-generator/src/block_generator_test.rs
+patching file crates/cairo-lang-sierra-generator/src/resolve_labels_test.rs
+
+running 64 tests
+PASS [   0.001s] cairo-lang-sierra-generator canonical_id_replacer::test::test_replacer
+PASS [   0.001s] cairo-lang-sierra-generator lifetime::test::variable_lifetime::block
+PASS [   0.001s] cairo-lang-sierra-generator function_generator::test::function_generator::simple
+PASS [   0.001s] cairo-lang-sierra-generator function_generator::test::function_generator::literals
+PASS [   0.001s] cairo-lang-sierra-generator lifetime::test::variable_lifetime::enum_
+PASS [   0.001s] cairo-lang-sierra-generator lifetime::test::variable_lifetime::simple
+PASS [   0.001s] cairo-lang-sierra-generator function_generator::test::function_generator::struct_
+PASS [   0.001s] cairo-lang-sierra-generator lifetime::test::variable_lifetime::snapshot
+PASS [   0.001s] cairo-lang-sierra-generator lifetime::test::variable_lifetime::locals
+PASS [   0.001s] cairo-lang-sierra-generator function_generator::test::function_generator::match_
+PASS [   0.001s] cairo-lang-sierra-generator function_generator::test::function_generator::inline
+PASS [   0.001s] cairo-lang-sierra-generator lifetime::test::variable_lifetime::struct_
+PASS [   0.001s] cairo-lang-sierra-generator local_variables::test::find_local_variables::block
+PASS [   0.001s] cairo-lang-sierra-generator local_variables::test::find_local_variables::construct_enum
+PASS [   0.001s] cairo-lang-sierra-generator lifetime::test::variable_lifetime::early_return
+PASS [   0.001s] cairo-lang-sierra-generator function_generator::test::function_generator::stack_tracking
+PASS [   0.001s] cairo-lang-sierra-generator lifetime::test::variable_lifetime::match_
+PASS [   0.001s] cairo-lang-sierra-generator local_variables::test::find_local_variables::match_enum
+PASS [   0.001s] cairo-lang-sierra-generator local_variables::test::find_local_variables::snapshot
+PASS [   0.001s] cairo-lang-sierra-generator local_variables::test::find_local_variables::simple
+PASS [   0.001s] cairo-lang-sierra-generator local_variables::test::find_local_variables::inline
+PASS [   0.001s] cairo-lang-sierra-generator local_variables::test::find_local_variables::struct_
+PASS [   0.001s] cairo-lang-sierra-generator local_variables::test::find_local_variables::match_extern
+PASS [   0.001s] cairo-lang-sierra-generator function_generator::test::function_generator::snapshot
+PASS [   0.001s] cairo-lang-sierra-generator lifetime::test::variable_lifetime::inline
+PASS [   0.001s] cairo-lang-sierra-generator local_variables::test::e2e::e2e
+PASS [   0.001s] cairo-lang-sierra-generator resolve_labels::test::test_resolve_labels
+PASS [   0.001s] cairo-lang-sierra-generator program_generator::test::program_generator::type_dependency
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::known_stack::test::merge_stacks
+PASS [   0.001s] cairo-lang-sierra-generator program_generator::test::program_generator::function_call
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::consecutive_appends_with_branch
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::consecutive_const_additions
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::consecutive_const_additions_with_branch
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::consecutive_push_values
+PASS [   0.001s] cairo-lang-sierra-generator program_generator::test::test_only_include_dependencies::self_loop
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::push_values_after_branch_merge
+PASS [   0.001s] cairo-lang-sierra-generator program_generator::test::test_only_include_dependencies::f5_f6
+PASS [   0.001s] cairo-lang-sierra-generator program_generator::test::test_only_include_dependencies::f4_f5_f6_f6_
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::push_values_clear_known_stack
+PASS [   0.001s] cairo-lang-sierra-generator program_generator::test::test_only_include_dependencies::f3_f5_f6
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::push_values_temp_not_on_top
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::push_values_optimization
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::push_values_early_return
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::push_values_with_hole
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::same_as_param
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::same_as_param_push_value_optimization
+PASS [   0.001s] cairo-lang-sierra-generator program_generator::test::test_only_include_dependencies::all_but_first
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::store_local_result_of_if
+PASS [   0.001s] cairo-lang-sierra-generator program_generator::test::test_only_include_dependencies::finds_all
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::store_temp_for_branch_command
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::store_local_simple
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::store_temp_push_values
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::store_temp_push_values_with_dup
+PASS [   0.001s] cairo-lang-sierra-generator store_variables::test::store_temp_simple
+PASS [   0.001s] cairo-lang-sierra-generator program_generator::test::program_generator::coupon
+PASS [   0.001s] cairo-lang-sierra-generator block_generator::test::block_generator::literals
+PASS [   0.001s] cairo-lang-sierra-generator block_generator::test::block_generator::serialization
+PASS [   0.001s] cairo-lang-sierra-generator ap_change::test::ap_change::tests
+PASS [   0.001s] cairo-lang-sierra-generator block_generator::test::block_generator::inline
+PASS [   0.001s] cairo-lang-sierra-generator block_generator::test::block_generator::early_return
+PASS [   0.001s] cairo-lang-sierra-generator block_generator::test::block_generator::panic
+PASS [   0.001s] cairo-lang-sierra-generator statements_locations::test::sierra_location_test::simple
+PASS [   0.001s] cairo-lang-sierra-generator block_generator::test::block_generator::function_call
+PASS [   0.001s] cairo-lang-sierra-generator block_generator::test::block_generator::match_
+
+test result: ok. 64 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.55s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+reward=1 graded=64 found=64 failed=0 parsed=64 framework=cargo exit_code=0

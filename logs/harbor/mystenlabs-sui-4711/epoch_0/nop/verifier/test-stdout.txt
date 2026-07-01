@@ -1,0 +1,14 @@
+patching file sdk/typescript/test/e2e/example.test.ts
+patching file sdk/typescript/test/e2e/local-txn-builder.test.ts
+patching file sdk/typescript/test/e2e/objects.test.ts
+patching file sdk/typescript/test/e2e/read-transactions.test.ts
+patching file sdk/typescript/test/e2e/rpc-txn-builder.test.ts
+patching file sdk/typescript/test/e2e/utils/setup.ts
+Mock Sui servers started
+Scope: all 13 workspace projects
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 2.7s
+JSON report written to /workspace/test-results/output.json
+reward=0 graded=14 found=0 failed=0 parsed=0 framework=vitest exit_code=1

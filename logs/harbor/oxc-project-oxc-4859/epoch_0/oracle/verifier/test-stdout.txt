@@ -1,0 +1,96 @@
+patching file crates/oxc_semantic/tests/fixtures/typescript-eslint/call-expression/call-expression.snap
+patching file crates/oxc_semantic/tests/fixtures/typescript-eslint/class/declaration/method-param-default.snap
+   Compiling oxc_ast v0.24.3 (/workspace/repo/crates/oxc_ast)
+   Compiling oxc_parser v0.24.3 (/workspace/repo/crates/oxc_parser)
+   Compiling oxc_semantic v0.24.3 (/workspace/repo/crates/oxc_semantic)
+    Finished `test` profile [unoptimized] target(s) in 6.77s
+────────────
+ Nextest run ID eedb2880-f1e2-479f-81af-3396ff8617e5 with nextest profile: default
+    Starting 84 tests across 3 binaries (2 tests skipped)
+        PASS [   0.018s] ( 1/84) oxc_semantic jsdoc::builder::test::get_all_jsdoc
+        PASS [   0.021s] ( 2/84) oxc_semantic jsdoc::parser::jsdoc_tag::test::jsdoc_tag_kind
+        PASS [   0.025s] ( 3/84) oxc_semantic jsdoc::parser::jsdoc_parts::test::type_part_parsed
+        PASS [   0.027s] ( 4/84) oxc_semantic jsdoc::parser::jsdoc::test::parses_with_backticks
+        PASS [   0.029s] ( 5/84) oxc_semantic jsdoc::parser::jsdoc_parts::test::type_name_part_parsed
+        PASS [   0.029s] ( 6/84) oxc_semantic jsdoc::parser::jsdoc::test::jsdoc_span
+        PASS [   0.032s] ( 7/84) oxc_semantic jsdoc::parser::jsdoc_parts::test::comment_part_parsed
+        PASS [   0.033s] ( 8/84) oxc_semantic jsdoc::parser::jsdoc_parts::test::comment_part_span_trimmed
+        PASS [   0.033s] ( 9/84) oxc_semantic jsdoc::builder::test::found_ts
+        PASS [   0.033s] (10/84) oxc_semantic jsdoc::parser::jsdoc_parts::test::kind_part_parsed
+        PASS [   0.034s] (11/84) oxc_semantic jsdoc::parser::jsdoc::test::parses_practical
+        PASS [   0.034s] (12/84) oxc_semantic jsdoc::parser::jsdoc::test::parses_practical_with_multibyte
+        PASS [   0.035s] (13/84) oxc_semantic jsdoc::builder::test::found
+        PASS [   0.035s] (14/84) oxc_semantic jsdoc::parser::jsdoc_tag::test::jsdoc_tag_comment
+        PASS [   0.023s] (15/84) oxc_semantic jsdoc::parser::jsdoc_tag::test::jsdoc_tag_type
+        PASS [   0.039s] (16/84) oxc_semantic jsdoc::parser::jsdoc_tag::test::jsdoc_tag_span
+        PASS [   0.040s] (17/84) oxc_semantic jsdoc::builder::test::not_found
+        PASS [   0.039s] (18/84) oxc_semantic jsdoc::builder::test::get_all_by_span_order
+        PASS [   0.042s] (19/84) oxc_semantic jsdoc::parser::jsdoc::test::jsdoc_comment
+        PASS [   0.027s] (20/84) oxc_semantic jsdoc::parser::jsdoc_tag::test::jsdoc_tag_type_comment
+        PASS [   0.026s] (21/84) oxc_semantic jsdoc::parser::utils::test::extract_type_name_part_range
+        PASS [   0.030s] (22/84) oxc_semantic jsdoc::parser::jsdoc_tag::test::jsdoc_tag_type_name_comment
+        PASS [   0.027s] (23/84) oxc_semantic jsdoc::parser::utils::test::extract_type_part_range
+        PASS [   0.031s] (24/84) oxc_semantic jsdoc::parser::utils::test::extract_token_part_range
+        PASS [   0.030s] (25/84) oxc_semantic module_record::module_record_tests::export_declaration
+        PASS [   0.029s] (26/84) oxc_semantic module_record::module_record_tests::export_named_default
+        PASS [   0.030s] (27/84) oxc_semantic module_record::module_record_tests::export_default_declaration
+        PASS [   0.027s] (28/84) oxc_semantic module_record::module_record_tests::import_default
+        PASS [   0.031s] (29/84) oxc_semantic module_record::module_record_tests::export_default_expression
+        PASS [   0.032s] (30/84) oxc_semantic module_record::module_record_tests::export_default_function_expression
+        PASS [   0.032s] (31/84) oxc_semantic module_record::module_record_tests::export_star
+        PASS [   0.029s] (32/84) oxc_semantic module_record::module_record_tests::import_namespace
+        PASS [   0.033s] (33/84) oxc_semantic module_record::module_record_tests::export_star_as_namespace
+        PASS [   0.031s] (34/84) oxc_semantic module_record::module_record_tests::import_without_binding
+        PASS [   0.028s] (35/84) oxc_semantic module_record::module_record_tests::indirect_export_entries
+        PASS [   0.034s] (36/84) oxc_semantic module_record::module_record_tests::import_specifier_alias
+        PASS [   0.036s] (37/84) oxc_semantic module_record::module_record_tests::import_specifier
+        PASS [   0.029s] (38/84) oxc_semantic module_record::module_record_tests::named_exports
+        PASS [   0.027s] (39/84) oxc_semantic module_record::module_record_tests::named_exports_alias
+        PASS [   0.029s] (40/84) oxc_semantic module_record::module_record_tests::named_exports_alias_from
+        PASS [   0.029s] (41/84) oxc_semantic module_record::module_record_tests::named_exports_from
+        PASS [   0.024s] (42/84) oxc_semantic tests::test_symbols
+        PASS [   0.031s] (43/84) oxc_semantic tests::test_is_global
+        PASS [   0.028s] (44/84) oxc_semantic tests::test_top_level_symbols
+        PASS [   0.031s] (45/84) oxc_semantic tests::type_alias_gets_reference
+        PASS [   0.033s] (46/84) oxc_semantic tests::test_reference_resolutions_simple_read_write
+        PASS [   0.032s] (47/84) oxc_semantic::integration classes::test_class_simple
+        PASS [   0.030s] (48/84) oxc_semantic::integration modules::test_exported_default_class
+        PASS [   0.034s] (49/84) oxc_semantic::integration classes::test_class_with_ts
+        PASS [   0.034s] (50/84) oxc_semantic::integration modules::test_export_in_invalid_scope
+        PASS [   0.031s] (51/84) oxc_semantic::integration modules::test_exported_default_function
+        PASS [   0.029s] (52/84) oxc_semantic::integration modules::test_exported_named_function
+        PASS [   0.033s] (53/84) oxc_semantic::integration modules::test_exported_named_class
+        PASS [   0.030s] (54/84) oxc_semantic::integration modules::test_exports
+        PASS [   0.032s] (55/84) oxc_semantic::integration modules::test_exports_in_namespace
+        PASS [   0.028s] (56/84) oxc_semantic::integration scopes::test_enums
+        PASS [   0.034s] (57/84) oxc_semantic::integration modules::test_import_assignment
+        PASS [   0.027s] (58/84) oxc_semantic::integration scopes::test_function_parameters
+        PASS [   0.028s] (59/84) oxc_semantic::integration scopes::test_only_program
+        PASS [   0.036s] (60/84) oxc_semantic::integration scopes::test_catch_clause_parameters
+        PASS [   0.035s] (61/84) oxc_semantic::integration scopes::test_function_level_strict
+        PASS [   0.035s] (62/84) oxc_semantic::integration scopes::test_switch_case
+        PASS [   0.034s] (63/84) oxc_semantic::integration symbols::test_class_simple
+        PASS [   0.035s] (64/84) oxc_semantic::integration scopes::var_hoisting
+        PASS [   0.038s] (65/84) oxc_semantic::integration scopes::test_top_level_strict
+        PASS [   0.035s] (66/84) oxc_semantic::integration symbols::test_class_with_type_parameter
+        PASS [   0.038s] (67/84) oxc_semantic::integration symbols::test_export_flag
+        PASS [   0.040s] (68/84) oxc_semantic::integration symbols::test_export_default_flag
+        PASS [   0.038s] (69/84) oxc_semantic::integration symbols::test_function_with_type_parameter
+        PASS [   0.041s] (70/84) oxc_semantic::integration symbols::test_function_expressions
+        PASS [   0.040s] (71/84) oxc_semantic::integration symbols::test_function_simple
+        PASS [   0.037s] (72/84) oxc_semantic::integration symbols::test_multiple_ts_type_alias_declaration
+        PASS [   0.032s] (73/84) oxc_semantic::integration symbols::test_ts_infer_type
+        PASS [   0.033s] (74/84) oxc_semantic::integration symbols::test_ts_interface_declaration_with_type_parameter
+        PASS [   0.033s] (75/84) oxc_semantic::integration symbols::test_ts_interface_heritage
+        PASS [   0.030s] (76/84) oxc_semantic::integration symbols::test_type_query
+        PASS [   0.032s] (77/84) oxc_semantic::integration symbols::test_ts_mapped_type
+        PASS [   0.025s] (78/84) oxc_semantic::integration symbols::test_types_simple
+        PASS [   0.033s] (79/84) oxc_semantic::integration symbols::test_type_used_as_value
+        PASS [   0.024s] (80/84) oxc_semantic::integration symbols::test_var_read_write
+        PASS [   0.025s] (81/84) oxc_semantic::integration symbols::test_value_used_as_type
+        PASS [   0.023s] (82/84) oxc_semantic::integration symbols::test_var_simple
+        PASS [   0.173s] (83/84) oxc_semantic::integration cfg::test_cfg_files
+        PASS [   0.245s] (84/84) oxc_semantic::main main
+────────────
+     Summary [   0.385s] 84 tests run: 84 passed, 2 skipped
+reward=1 graded=84 found=14 failed=0 parsed=84 framework=cargo exit_code=0

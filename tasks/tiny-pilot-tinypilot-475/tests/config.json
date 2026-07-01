@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/app/update_result_test.py -v",
+  "test_files": [
+    "app/update_result_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "app.update_result_test.UpdateResultTest::test_reads_correct_values_for_failed_result",
+    "app.update_result_test.UpdateResultTest::test_reads_correct_values_for_successful_result",
+    "app.update_result_test.UpdateResultTest::test_reads_default_values_for_empty_dict",
+    "app.update_result_test.UpdateResultTest::test_writes_error_result_accurately",
+    "app.update_result_test.UpdateResultTest::test_writes_success_result_accurately"
+  ],
+  "PASS_TO_PASS": []
+}

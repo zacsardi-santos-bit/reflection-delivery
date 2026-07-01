@@ -1,0 +1,58 @@
+patching file packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async-node-10/options.json
+patching file packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async-node-10/using-null-multiple-collapse.js
+patching file packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async/invalid-not-a-function.js
+patching file packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async/sync-fallback-error.js
+patching file packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async/sync-fallback-promise.js
+{
+  "node": "20.20.2"
+}
+
+Using modules transform: false
+
+Using plugins:
+  syntax-import-attributes
+
+Using polyfills: No polyfills were added, since the `useBuiltIns` option was not set.
+FAIL packages/babel-plugin-proposal-explicit-resource-management/test/index.js
+  ● Test suite failed to run
+
+    expect(received).rejects.toThrow(expected)
+
+    Expected substring: "Object is not disposable."
+    Received message:   "Property [Symbol.dispose] is not a function."
+
+        [0m[0m
+
+          at using (packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:1408:113)
+          at packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async/invalid-not-a-function.js:16:28
+          at asyncGeneratorStep (packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:230:19)
+          at _next (packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:244:11)
+          at packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:249:9
+          at packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:241:14
+          at packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async/invalid-not-a-function.js:24:3
+          at runCodeInTestContext (packages/babel-helper-transform-fixture-test-runner/src/index.ts:239:7)
+
+      at using (packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:1408:113)
+      at packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async/invalid-not-a-function.js:16:28
+      at asyncGeneratorStep (packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:230:19)
+      at _next (packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:244:11)
+      at packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:249:9
+      at packages/babel-helper-transform-fixture-test-runner/lib/babel-helpers-in-memory.js:241:14
+      at packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async/invalid-not-a-function.js:24:3
+      at runCodeInTestContext (packages/babel-helper-transform-fixture-test-runner/src/index.ts:239:7)
+      at Object.toThrow (node_modules/expect/build/index.js:2105:20)
+      at packages/babel-plugin-proposal-explicit-resource-management/test/fixtures/exec-async/invalid-not-a-function.js:24:15
+      at runCodeInTestContext (packages/babel-helper-transform-fixture-test-runner/src/index.ts:239:7)
+      at run (packages/babel-helper-transform-fixture-test-runner/src/index.ts:320:20)
+      at async runTest (file:/workspace/repo/node_modules/jest-light-runner/src/worker-runner.js:176:3)
+      at async runTestBlock (file:/workspace/repo/node_modules/jest-light-runner/src/worker-runner.js:140:7)
+      at async runTestBlock (file:/workspace/repo/node_modules/jest-light-runner/src/worker-runner.js:130:7)
+      at async run (file:/workspace/repo/node_modules/jest-light-runner/src/worker-runner.js:85:3)
+      at async file:/workspace/repo/node_modules/tinypool/dist/esm/entry/worker.js:71:20
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        1.326 s
+Ran all test suites matching packages/babel-plugin-proposal-explicit-resource-management.
+reward=0 graded=40 found=0 failed=0 parsed=0 framework=jest exit_code=1

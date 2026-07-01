@@ -1,0 +1,23 @@
+{
+ "task": "boa-dev-boa-3634",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: 'pub(crate) fn create_byte_data_block(size: u64, max_buffer_size: Option<u64>, context...)'; test: 'create_byte_data_block(100, None, context).is_ok()'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

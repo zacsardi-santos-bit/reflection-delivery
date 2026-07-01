@@ -1,0 +1,9 @@
+I'm working on a feature for the CLI tool that handles publishing plugins and addons with their documentation. The docs are markdown files that often contain locally-stored images, and when we publish them to a remote registry those images need to be uploaded and the local paths in the markdown replaced with the hosted URLs.
+
+I need a utility that can scan a markdown document and find all the local image references, no matter what syntax is used — plain inline images (with or without alt text or titles), HTML image tags (single or double quotes, possibly spanning multiple lines, possibly with complex attributes), reference-style links, and even images that are also wrapped in a hyperlink. It should record exactly where in the document each reference appears so we can later replace those byte ranges with the remote URL.
+
+The utility should group references by unique image content (the same physical image referenced multiple times should only need to be uploaded once). It should skip images that are already externally hosted via http or https. It should also skip any images that appear inside code fences or inline code spans — those are just examples, not real references. It must support file-protocol URLs as well as image filenames with special characters.
+
+If a local image path doesn't exist on disk, the function should return an error. After images have been uploaded, I need a companion function to take the document and the resolved references and produce an updated document with all local paths replaced by their remote URLs.
+
+Finally, before performing the replacement, I'd like validation that the discovered reference positions are consistent — no overlapping ranges and no ranges where the end comes before the start — and an error returned if any inconsistency is found.

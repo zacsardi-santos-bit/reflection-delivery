@@ -1,0 +1,527 @@
+diff --git a/ambry-api/src/main/java/com.github.ambry/router/OperationTrackerScope.java b/ambry-api/src/main/java/com.github.ambry/router/OperationTrackerScope.java
+index 8aa8fbdc3..cdbae651d 100644
+--- a/ambry-api/src/main/java/com.github.ambry/router/OperationTrackerScope.java
++++ b/ambry-api/src/main/java/com.github.ambry/router/OperationTrackerScope.java
+@@ -19,5 +19,5 @@ package com.github.ambry.router;
+  * kept in a single Histogram)
+  */
+ public enum OperationTrackerScope {
+-  Datacenter, Partition
++  Datacenter, Partition, DataNode, Disk
+ }
+diff --git a/ambry-cloud/src/main/java/com.github.ambry.cloud/CloudBlobMetadata.java b/ambry-cloud/src/main/java/com.github.ambry.cloud/CloudBlobMetadata.java
+index ce889c1c1..4877b06fd 100644
+--- a/ambry-cloud/src/main/java/com.github.ambry.cloud/CloudBlobMetadata.java
++++ b/ambry-cloud/src/main/java/com.github.ambry.cloud/CloudBlobMetadata.java
+@@ -31,7 +31,6 @@ public class CloudBlobMetadata {
+   public static final String FIELD_ENCRYPTION_ORIGIN = "encryptionOrigin";
+   public static final String FIELD_VCR_KMS_CONTEXT = "vcrKmsContext";
+   public static final String FIELD_CRYPTO_AGENT_FACTORY = "cryptoAgentFactory";
+-  public static final String FIELD_CLOUD_BLOB_NAME = "cloudBlobName";
+ 
+   private String id;
+   private String partitionId;
+@@ -45,7 +44,6 @@ public class CloudBlobMetadata {
+   private EncryptionOrigin encryptionOrigin;
+   private String vcrKmsContext;
+   private String cryptoAgentFactory;
+-  private String cloudBlobName;
+ 
+   /**
+    * Possible values of encryption origin for cloud stored blobs.
+@@ -59,6 +57,7 @@ public class CloudBlobMetadata {
+     ROUTER,
+     /** Encrypted by VCR */
+     VCR
++
+   }
+ 
+   /**
+@@ -92,7 +91,6 @@ public class CloudBlobMetadata {
+     this.encryptionOrigin = encryptionOrigin;
+     this.vcrKmsContext = vcrKmsContext;
+     this.cryptoAgentFactory = cryptoAgentFactory;
+-    this.cloudBlobName = blobId.getID();
+   }
+ 
+   /**
+@@ -278,23 +276,6 @@ public class CloudBlobMetadata {
+     return this;
+   }
+ 
+-  /**
+-   * @return the blob's name in cloud.
+-   */
+-  public String getCloudBlobName() {
+-    return cloudBlobName;
+-  }
+-
+-  /**
+-   * Sets blob's name in cloud.
+-   * @param cloudBlobName the blob's name in cloud.
+-   * @return this instance.
+-   */
+-  public CloudBlobMetadata setCloudBlobName(String cloudBlobName) {
+-    this.cloudBlobName = cloudBlobName;
+-    return this;
+-  }
+-
+   /**
+    * @return the VCR crypto agent factory class name.
+    */
+diff --git a/ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureCloudDestination.java b/ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureCloudDestination.java
+index f99c81276..6994f294d 100644
+--- a/ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureCloudDestination.java
++++ b/ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureCloudDestination.java
+@@ -191,8 +191,9 @@ class AzureCloudDestination implements CloudDestination {
+ 
+     Objects.requireNonNull(blobId, "BlobId cannot be null");
+     Objects.requireNonNull(blobInputStream, "Input stream cannot be null");
++    azureMetrics.blobUploadRate.mark();
++    azureMetrics.blobUploadRequestCount.inc();
+     try {
+-      Timer.Context backupTimer = azureMetrics.backupSuccessLatency.time();
+       boolean uploaded = uploadIfNotExists(blobId, inputLength, cloudBlobMetadata, blobInputStream);
+       if (!uploaded) {
+         return false;
+@@ -204,11 +205,10 @@ class AzureCloudDestination implements CloudDestination {
+       } finally {
+         docTimer.stop();
+       }
+-      backupTimer.stop();
+-      azureMetrics.backupSuccessByteRate.mark(inputLength);
++      azureMetrics.blobUploadSuccessCount.inc();
+       return true;
+     } catch (URISyntaxException | StorageException | DocumentClientException | IOException e) {
+-      azureMetrics.backupErrorCount.inc();
++      azureMetrics.blobUploadErrorCount.inc();
+       updateErrorMetrics(e);
+       throw new CloudStorageException("Error uploading blob " + blobId, e);
+     }
+@@ -229,17 +229,14 @@ class AzureCloudDestination implements CloudDestination {
+       InputStream blobInputStream) throws StorageException, URISyntaxException, IOException {
+     BlobRequestOptions options = null; // may want to set BlobEncryptionPolicy here
+     AccessCondition condition = AccessCondition.generateIfNoneMatchCondition("*");
+-    azureMetrics.blobUploadRequestCount.inc();
+     Timer.Context storageTimer = azureMetrics.blobUploadTime.time();
+     try {
+       CloudBlobContainer azureContainer = getContainer(blobId, true);
+       String azureBlobName = getAzureBlobName(blobId);
+       CloudBlockBlob azureBlob = azureContainer.getBlockBlobReference(azureBlobName);
+-      cloudBlobMetadata.setCloudBlobName(getAzureBlobName(blobId));
+       azureBlob.setMetadata(getMetadataMap(cloudBlobMetadata));
+       azureBlob.upload(blobInputStream, inputLength, condition, options, blobOpContext);
+       logger.debug("Uploaded blob {} to Azure container {}.", blobId, azureContainer.getName());
+-      azureMetrics.blobUploadSuccessCount.inc();
+       return true;
+     } catch (StorageException sex) {
+       if (sex.getHttpStatusCode() == HttpURLConnection.HTTP_CONFLICT) {
+@@ -402,8 +399,7 @@ class AzureCloudDestination implements CloudDestination {
+   }
+ 
+   @Override
+-  public void persistTokens(String partitionPath, String tokenFileName, InputStream inputStream)
+-      throws CloudStorageException {
++  public void persistTokens(String partitionPath, String tokenFileName, InputStream inputStream) throws CloudStorageException {
+     // Path is partitionId path string
+     // Write to container partitionPath, blob filename "replicaTokens"
+     try {
+@@ -417,8 +413,7 @@ class AzureCloudDestination implements CloudDestination {
+   }
+ 
+   @Override
+-  public boolean retrieveTokens(String partitionPath, String tokenFileName, OutputStream outputStream)
+-      throws CloudStorageException {
++  public boolean retrieveTokens(String partitionPath, String tokenFileName, OutputStream outputStream) throws CloudStorageException {
+     try {
+       String containerName = getAzureContainerName(partitionPath);
+       CloudBlobContainer azureContainer = azureBlobClient.getContainerReference(containerName);
+@@ -443,10 +438,10 @@ class AzureCloudDestination implements CloudDestination {
+    * @param blobId The {@link BlobId} to store.
+    * @return An Azure-friendly blob name.
+    */
+-  String getAzureBlobName(BlobId blobId) {
+-    // Use the last four chars as prefix to assist in Azure sharding, since beginning of blobId has little variation.
+-    String blobIdStr = blobId.getID();
+-    return blobIdStr.substring(blobIdStr.length() - 4) + "-" + blobIdStr;
++  private String getAzureBlobName(BlobId blobId) {
++    // Prefix to assist in blob data sharding, since beginning of blobId has little variation.
++    String prefix = blobId.getUuid().substring(0, 4) + "-";
++    return prefix + blobId.getID();
+   }
+ 
+   /**
+@@ -475,7 +470,6 @@ class AzureCloudDestination implements CloudDestination {
+     map.put(CloudBlobMetadata.FIELD_ENCRYPTION_ORIGIN, cloudBlobMetadata.getEncryptionOrigin().name());
+     map.put(CloudBlobMetadata.FIELD_VCR_KMS_CONTEXT, String.valueOf(cloudBlobMetadata.getVcrKmsContext()));
+     map.put(CloudBlobMetadata.FIELD_CRYPTO_AGENT_FACTORY, String.valueOf(cloudBlobMetadata.getCryptoAgentFactory()));
+-    map.put(CloudBlobMetadata.FIELD_CLOUD_BLOB_NAME, String.valueOf(cloudBlobMetadata.getCloudBlobName()));
+     return map;
+   }
+ }
+diff --git a/ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureMetrics.java b/ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureMetrics.java
+index ffb8ebaca..27d177ffd 100644
+--- a/ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureMetrics.java
++++ b/ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureMetrics.java
+@@ -25,6 +25,7 @@ public class AzureMetrics {
+   public static final String BLOB_UPLOAD_REQUEST_COUNT = "BlobUploadRequestCount";
+   public static final String BLOB_UPLOAD_SUCCESS_COUNT = "BlobUploadSuccessCount";
+   public static final String BLOB_UPLOAD_CONFLICT_COUNT = "BlobUploadConflictCount";
++  public static final String BLOB_UPLOAD_ERROR_COUNT = "BlobUploadErrorCount";
+   public static final String BLOB_UPLOAD_TIME = "BlobUploadTime";
+   public static final String BLOB_UPDATE_TIME = "BlobUpdateTime";
+   public static final String BLOB_UPDATED_COUNT = "BlobUpdatedCount";
+@@ -40,14 +41,13 @@ public class AzureMetrics {
+   public static final String BLOB_DELETION_TIME = "BlobDeletionTime";
+   public static final String BLOB_DELETE_ERROR_COUNT = "BlobDeleteErrorCount";
+   public static final String CONFIG_ERROR_COUNT = "ConfigErrorCount";
+-  public static final String BACKUP_SUCCESS_LATENCY = "BackupSuccessLatency";
+-  public static final String BACKUP_SUCCESS_BYTE_RATE = "BackupSuccessByteRate";
+-  public static final String BACKUP_ERROR_COUNT = "BackupErrorCount";
++  public static final String BLOB_UPLOAD_RATE = "BlobUploadRate";
+ 
+   // Metrics
+   public final Counter blobUploadRequestCount;
+   public final Counter blobUploadSuccessCount;
+   public final Counter blobUploadConflictCount;
++  public final Counter blobUploadErrorCount;
+   public final Counter blobUpdatedCount;
+   public final Timer blobUploadTime;
+   public final Timer blobUpdateTime;
+@@ -63,9 +63,7 @@ public class AzureMetrics {
+   public final Timer blobDeletionTime;
+   public final Counter blobDeleteErrorCount;
+   public final Counter configErrorCount;
+-  public final Timer backupSuccessLatency;
+-  public final Meter backupSuccessByteRate;
+-  public final Counter backupErrorCount;
++  public final Meter blobUploadRate;
+ 
+   public AzureMetrics(MetricRegistry registry) {
+     blobUploadRequestCount =
+@@ -74,6 +72,7 @@ public class AzureMetrics {
+         registry.counter(MetricRegistry.name(AzureCloudDestination.class, BLOB_UPLOAD_SUCCESS_COUNT));
+     blobUploadConflictCount =
+         registry.counter(MetricRegistry.name(AzureCloudDestination.class, BLOB_UPLOAD_CONFLICT_COUNT));
++    blobUploadErrorCount = registry.counter(MetricRegistry.name(AzureCloudDestination.class, BLOB_UPLOAD_ERROR_COUNT));
+     blobUpdatedCount = registry.counter(MetricRegistry.name(AzureCloudDestination.class, BLOB_UPDATED_COUNT));
+     blobUploadTime = registry.timer(MetricRegistry.name(AzureCloudDestination.class, BLOB_UPLOAD_TIME));
+     blobUpdateTime = registry.timer(MetricRegistry.name(AzureCloudDestination.class, BLOB_UPDATE_TIME));
+@@ -90,8 +89,6 @@ public class AzureMetrics {
+     blobDeletionTime = registry.timer(MetricRegistry.name(AzureCloudDestination.class, BLOB_DELETION_TIME));
+     blobDeleteErrorCount = registry.counter(MetricRegistry.name(AzureCloudDestination.class, BLOB_DELETE_ERROR_COUNT));
+     configErrorCount = registry.counter(MetricRegistry.name(AzureCloudDestination.class, CONFIG_ERROR_COUNT));
+-    backupSuccessByteRate = registry.meter(MetricRegistry.name(AzureCloudDestination.class, BACKUP_SUCCESS_BYTE_RATE));
+-    backupSuccessLatency = registry.timer(MetricRegistry.name(AzureCloudDestination.class, BACKUP_SUCCESS_LATENCY));
+-    backupErrorCount = registry.counter(MetricRegistry.name(AzureCloudDestination.class, BACKUP_ERROR_COUNT));
++    blobUploadRate = registry.meter(MetricRegistry.name(AzureCloudDestination.class, BLOB_UPLOAD_RATE));
+   }
+ }
+diff --git a/ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureCloudDestinationTest.java b/ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureCloudDestinationTest.java
+index 8a7d12a65..c2161c3a6 100644
+--- a/ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureCloudDestinationTest.java
++++ b/ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureCloudDestinationTest.java
+@@ -129,7 +129,7 @@ public class AzureCloudDestinationTest {
+     assertEquals(1, azureMetrics.blobUploadRequestCount.getCount());
+     assertEquals(1, azureMetrics.blobUploadSuccessCount.getCount());
+     assertEquals(0, azureMetrics.blobUploadConflictCount.getCount());
+-    assertEquals(0, azureMetrics.backupErrorCount.getCount());
++    assertEquals(0, azureMetrics.blobUploadErrorCount.getCount());
+     assertEquals(1, azureMetrics.blobUploadTime.getCount());
+     assertEquals(1, azureMetrics.documentCreateTime.getCount());
+   }
+@@ -166,7 +166,7 @@ public class AzureCloudDestinationTest {
+     assertEquals(1, azureMetrics.blobUploadRequestCount.getCount());
+     assertEquals(0, azureMetrics.blobUploadSuccessCount.getCount());
+     assertEquals(1, azureMetrics.blobUploadConflictCount.getCount());
+-    assertEquals(0, azureMetrics.backupErrorCount.getCount());
++    assertEquals(0, azureMetrics.blobUploadErrorCount.getCount());
+   }
+ 
+   /** Test delete of nonexistent blob. */
+@@ -346,9 +346,9 @@ public class AzureCloudDestinationTest {
+    */
+   private void verifyUploadErrorMetrics(boolean isDocument) {
+     assertEquals(1, azureMetrics.blobUploadRequestCount.getCount());
++    assertEquals(0, azureMetrics.blobUploadSuccessCount.getCount());
+     assertEquals(0, azureMetrics.blobUploadConflictCount.getCount());
+-    assertEquals(0, azureMetrics.backupSuccessByteRate.getCount());
+-    assertEquals(1, azureMetrics.backupErrorCount.getCount());
++    assertEquals(1, azureMetrics.blobUploadErrorCount.getCount());
+     assertEquals(isDocument ? 0 : 1, azureMetrics.storageErrorCount.getCount());
+     assertEquals(isDocument ? 1 : 0, azureMetrics.documentErrorCount.getCount());
+   }
+diff --git a/ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureIntegrationTest.java b/ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureIntegrationTest.java
+index f0089f905..be2202dbe 100644
+--- a/ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureIntegrationTest.java
++++ b/ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureIntegrationTest.java
+@@ -110,12 +110,10 @@ public class AzureIntegrationTest {
+     assertTrue("Expected update to return true", azureDest.updateBlobExpiration(blobId, expirationTime));
+     CloudBlobMetadata metadata = azureDest.getBlobMetadata(Collections.singletonList(blobId)).get(blobId.getID());
+     assertEquals(expirationTime, metadata.getExpirationTime());
+-    assertEquals(azureDest.getAzureBlobName(blobId), metadata.getCloudBlobName());
+     long deletionTime = System.currentTimeMillis() + 1000;
+     assertTrue("Expected deletion to return true", azureDest.deleteBlob(blobId, deletionTime));
+     metadata = azureDest.getBlobMetadata(Collections.singletonList(blobId)).get(blobId.getID());
+     assertEquals(deletionTime, metadata.getDeletionTime());
+-    assertEquals(azureDest.getAzureBlobName(blobId), metadata.getCloudBlobName());
+   }
+ 
+   /**
+@@ -156,7 +154,6 @@ public class AzureIntegrationTest {
+           metadata.getEncryptionOrigin());
+       assertEquals("Unexpected metadata vcrKmsContext", vcrKmsContext, metadata.getVcrKmsContext());
+       assertEquals("Unexpected metadata cryptoAgentFactory", cryptoAgentFactory, metadata.getCryptoAgentFactory());
+-      assertEquals(azureDest.getAzureBlobName(blobId), metadata.getCloudBlobName());
+     }
+ 
+     // Cleanup
+diff --git a/ambry-replication/src/main/java/com.github.ambry.replication/ReplicationEngine.java b/ambry-replication/src/main/java/com.github.ambry.replication/ReplicationEngine.java
+index 5de5e68a9..ac0034822 100644
+--- a/ambry-replication/src/main/java/com.github.ambry.replication/ReplicationEngine.java
++++ b/ambry-replication/src/main/java/com.github.ambry.replication/ReplicationEngine.java
+@@ -214,7 +214,7 @@ public abstract class ReplicationEngine {
+         persistor.write(true);
+       }
+     } catch (Exception e) {
+-      logger.error("Error shutting down replica manager {}", e);
++      logger.error("Error shutting down replica manager", e);
+       throw new ReplicationException("Error shutting down replica manager");
+     }
+   }
+diff --git a/ambry-router/src/main/java/com.github.ambry.router/AdaptiveOperationTracker.java b/ambry-router/src/main/java/com.github.ambry.router/AdaptiveOperationTracker.java
+index d9a32395e..67001c94a 100644
+--- a/ambry-router/src/main/java/com.github.ambry.router/AdaptiveOperationTracker.java
++++ b/ambry-router/src/main/java/com.github.ambry.router/AdaptiveOperationTracker.java
+@@ -15,8 +15,11 @@ package com.github.ambry.router;
+ 
+ import com.codahale.metrics.Counter;
+ import com.codahale.metrics.Histogram;
++import com.github.ambry.clustermap.DataNodeId;
++import com.github.ambry.clustermap.DiskId;
+ import com.github.ambry.clustermap.PartitionId;
+ import com.github.ambry.clustermap.ReplicaId;
++import com.github.ambry.clustermap.Resource;
+ import com.github.ambry.config.RouterConfig;
+ import com.github.ambry.utils.Pair;
+ import com.github.ambry.utils.Time;
+@@ -46,8 +49,9 @@ class AdaptiveOperationTracker extends SimpleOperationTracker {
+   private final Counter pastDueCounter;
+   private final OpTrackerIterator otIterator;
+   private Iterator<ReplicaId> replicaIterator;
+-  private Map<PartitionId, Histogram> localDcPartitionToHistogram;
+-  private Map<PartitionId, Histogram> crossDcPartitionToHistogram;
++
++  private Map<Resource, Histogram> localDcResourceToHistogram;
++  private Map<Resource, Histogram> crossDcResourceToHistogram;
+ 
+   // The value contains a pair - the boolean indicates whether the request to the corresponding replicaId has been
+   // determined as expired (but not yet removed). The long is the time at which the request was sent.
+@@ -76,9 +80,9 @@ class AdaptiveOperationTracker extends SimpleOperationTracker {
+     this.pastDueCounter = getWholeDcPastDueCounter(routerOperation);
+     this.quantile = routerConfig.routerLatencyToleranceQuantile;
+     this.otIterator = new OpTrackerIterator();
+-    if (routerConfig.routerOperationTrackerMetricScope == OperationTrackerScope.Partition) {
+-      localDcPartitionToHistogram = getPartitionToLatencyMap(routerOperation, true);
+-      crossDcPartitionToHistogram = getPartitionToLatencyMap(routerOperation, false);
++    if (routerConfig.routerOperationTrackerMetricScope != OperationTrackerScope.Datacenter) {
++      localDcResourceToHistogram = getResourceToLatencyMap(routerOperation, true);
++      crossDcResourceToHistogram = getResourceToLatencyMap(routerOperation, false);
+     }
+   }
+ 
+@@ -117,15 +121,24 @@ class AdaptiveOperationTracker extends SimpleOperationTracker {
+   Histogram getLatencyHistogram(ReplicaId replicaId) {
+     boolean isLocalReplica = replicaId.getDataNodeId().getDatacenterName().equals(datacenterName);
+     Histogram histogramToReturn;
+-    // TODO add support for replica-level/disk-level/node-level histogram based on the config
+     switch (routerConfig.routerOperationTrackerMetricScope) {
+       case Datacenter:
+         histogramToReturn = isLocalReplica ? localDcHistogram : crossDcHistogram;
+         break;
+       case Partition:
+         PartitionId partitionId = replicaId.getPartitionId();
+-        histogramToReturn = isLocalReplica ? localDcPartitionToHistogram.get(partitionId)
+-            : crossDcPartitionToHistogram.get(partitionId);
++        histogramToReturn =
++            isLocalReplica ? localDcResourceToHistogram.get(partitionId) : crossDcResourceToHistogram.get(partitionId);
++        break;
++      case DataNode:
++        DataNodeId dataNodeId = replicaId.getDataNodeId();
++        histogramToReturn =
++            isLocalReplica ? localDcResourceToHistogram.get(dataNodeId) : crossDcResourceToHistogram.get(dataNodeId);
++        break;
++      case Disk:
++        DiskId diskId = replicaId.getDiskId();
++        histogramToReturn =
++            isLocalReplica ? localDcResourceToHistogram.get(diskId) : crossDcResourceToHistogram.get(diskId);
+         break;
+       default:
+         throw new IllegalArgumentException("Unsupported operation tracker metric scope.");
+@@ -176,26 +189,26 @@ class AdaptiveOperationTracker extends SimpleOperationTracker {
+   }
+ 
+   /**
+-   * Get certain partition-level histograms based on given arguments.
++   * Get certain resource-level histograms based on given arguments.
+    * @param routerOperation the {@link RouterOperation} that uses this tracker.
+-   * @param isLocal {@code true} if local partition-level histograms should be returned. {@code false} otherwise.
+-   * @return partition-to-histogram map.
++   * @param isLocal {@code true} if local resource-level histograms should be returned. {@code false} otherwise.
++   * @return resource-to-histogram map.
+    */
+-  Map<PartitionId, Histogram> getPartitionToLatencyMap(RouterOperation routerOperation, boolean isLocal) {
+-    Map<PartitionId, Histogram> partitionToHistogramMap;
++  Map<Resource, Histogram> getResourceToLatencyMap(RouterOperation routerOperation, boolean isLocal) {
++    Map<Resource, Histogram> resourceToHistogramMap;
+     switch (routerOperation) {
+       case GetBlobInfoOperation:
+-        partitionToHistogramMap = isLocal ? routerMetrics.getBlobInfoLocalDcPartitionToLatency
+-            : routerMetrics.getBlobInfoCrossDcPartitionToLatency;
++        resourceToHistogramMap = isLocal ? routerMetrics.getBlobInfoLocalDcResourceToLatency
++            : routerMetrics.getBlobInfoCrossDcResourceToLatency;
+         break;
+       case GetBlobOperation:
+-        partitionToHistogramMap =
+-            isLocal ? routerMetrics.getBlobLocalDcPartitionToLatency : routerMetrics.getBlobCrossDcPartitionToLatency;
++        resourceToHistogramMap =
++            isLocal ? routerMetrics.getBlobLocalDcResourceToLatency : routerMetrics.getBlobCrossDcResourceToLatency;
+         break;
+       default:
+-        throw new IllegalArgumentException("Unsupported router operation when getting partition-to-latency map");
++        throw new IllegalArgumentException("Unsupported router operation when getting resource-to-latency map");
+     }
+-    return partitionToHistogramMap;
++    return resourceToHistogramMap;
+   }
+ 
+   /**
+diff --git a/ambry-router/src/main/java/com.github.ambry.router/NonBlockingRouterMetrics.java b/ambry-router/src/main/java/com.github.ambry.router/NonBlockingRouterMetrics.java
+index db2ec3ece..ee7decc37 100644
+--- a/ambry-router/src/main/java/com.github.ambry.router/NonBlockingRouterMetrics.java
++++ b/ambry-router/src/main/java/com.github.ambry.router/NonBlockingRouterMetrics.java
+@@ -21,7 +21,10 @@ import com.codahale.metrics.Meter;
+ import com.codahale.metrics.MetricRegistry;
+ import com.github.ambry.clustermap.ClusterMap;
+ import com.github.ambry.clustermap.DataNodeId;
++import com.github.ambry.clustermap.DiskId;
+ import com.github.ambry.clustermap.PartitionId;
++import com.github.ambry.clustermap.ReplicaId;
++import com.github.ambry.clustermap.Resource;
+ import com.github.ambry.config.RouterConfig;
+ import com.github.ambry.utils.SystemTime;
+ import java.util.HashMap;
+@@ -182,12 +185,12 @@ public class NonBlockingRouterMetrics {
+   public final CryptoJobMetrics encryptJobMetrics;
+   public final CryptoJobMetrics decryptJobMetrics;
+ 
+-  // Partition-level Histogram for operation tracker
+-  Map<PartitionId, Histogram> getBlobLocalDcPartitionToLatency;
+-  Map<PartitionId, Histogram> getBlobCrossDcPartitionToLatency;
++  // Resource to latency histogram map. Here resource can be DataNode, Partition, Disk, Replica etc.
++  Map<Resource, Histogram> getBlobLocalDcResourceToLatency;
++  Map<Resource, Histogram> getBlobCrossDcResourceToLatency;
+ 
+-  Map<PartitionId, Histogram> getBlobInfoLocalDcPartitionToLatency;
+-  Map<PartitionId, Histogram> getBlobInfoCrossDcPartitionToLatency;
++  Map<Resource, Histogram> getBlobInfoLocalDcResourceToLatency;
++  Map<Resource, Histogram> getBlobInfoCrossDcResourceToLatency;
+ 
+   // Map that stores dataNode-level metrics.
+   private final Map<DataNodeId, NodeLevelMetrics> dataNodeToMetrics;
+@@ -396,10 +399,8 @@ public class NonBlockingRouterMetrics {
+     }
+ 
+     // AdaptiveOperationTracker trackers
+-    getBlobLocalDcLatencyMs =
+-        metricRegistry.histogram(MetricRegistry.name(GetBlobOperation.class, "LocalDcLatencyMs"));
+-    getBlobCrossDcLatencyMs =
+-        metricRegistry.histogram(MetricRegistry.name(GetBlobOperation.class, "CrossDcLatencyMs"));
++    getBlobLocalDcLatencyMs = metricRegistry.histogram(MetricRegistry.name(GetBlobOperation.class, "LocalDcLatencyMs"));
++    getBlobCrossDcLatencyMs = metricRegistry.histogram(MetricRegistry.name(GetBlobOperation.class, "CrossDcLatencyMs"));
+     getBlobPastDueCount = metricRegistry.counter(MetricRegistry.name(GetBlobOperation.class, "PastDueCount"));
+ 
+     getBlobInfoLocalDcLatencyMs =
+@@ -429,29 +430,67 @@ public class NonBlockingRouterMetrics {
+           routerConfig.routerOperationTrackerCustomPercentiles);
+     }
+ 
+-    if (routerConfig != null && routerConfig.routerOperationTrackerMetricScope == OperationTrackerScope.Partition) {
+-      // pre-populate all partition-to-histogram maps here to allow lock-free hashmap in adaptive operation tracker
+-      initializePartitionToHistogramMap(clusterMap, routerConfig);
++    if (routerConfig != null && routerConfig.routerOperationTrackerMetricScope != OperationTrackerScope.Datacenter) {
++      // pre-populate all resource-to-histogram maps here to allow lock-free hashmap in adaptive operation tracker
++      initializeResourceToHistogramMap(clusterMap, routerConfig);
+     }
+   }
+ 
+   /**
+-   * Initialize partition-level histogram for all partitions in cluster map.
+-   * @param clusterMap the {@link ClusterMap} that contains info of all partitions.
++   * Initialize resource-to-latency-histogram maps based on given resource type. Here resource can be {@link PartitionId},
++   * {@link DataNodeId}, etc. The resource type is defined by {@link RouterConfig#routerOperationTrackerMetricScope}.
++   * @param clusterMap the {@link ClusterMap} that contains info of all resources.
+    * @param routerConfig the {@link RouterConfig} that specifies histogram parameters.
+    */
+-  private void initializePartitionToHistogramMap(ClusterMap clusterMap, RouterConfig routerConfig) {
++  private void initializeResourceToHistogramMap(ClusterMap clusterMap, RouterConfig routerConfig) {
+     int reservoirSize = routerConfig.routerOperationTrackerReservoirSize;
+     double decayFactor = routerConfig.routerOperationTrackerReservoirDecayFactor;
+-    getBlobLocalDcPartitionToLatency = new HashMap<>();
+-    getBlobInfoLocalDcPartitionToLatency = new HashMap<>();
+-    getBlobCrossDcPartitionToLatency = new HashMap<>();
+-    getBlobInfoCrossDcPartitionToLatency = new HashMap<>();
+-    for (PartitionId partitionId : clusterMap.getAllPartitionIds(null)) {
+-      getBlobLocalDcPartitionToLatency.put(partitionId, createHistogram(reservoirSize, decayFactor));
+-      getBlobInfoLocalDcPartitionToLatency.put(partitionId, createHistogram(reservoirSize, decayFactor));
+-      getBlobCrossDcPartitionToLatency.put(partitionId, createHistogram(reservoirSize, decayFactor));
+-      getBlobInfoCrossDcPartitionToLatency.put(partitionId, createHistogram(reservoirSize, decayFactor));
++    String localDatacenterName = clusterMap.getDatacenterName(clusterMap.getLocalDatacenterId());
++    getBlobLocalDcResourceToLatency = new HashMap<>();
++    getBlobInfoLocalDcResourceToLatency = new HashMap<>();
++    getBlobCrossDcResourceToLatency = new HashMap<>();
++    getBlobInfoCrossDcResourceToLatency = new HashMap<>();
++    switch (routerConfig.routerOperationTrackerMetricScope) {
++      case Partition:
++        for (PartitionId partitionId : clusterMap.getAllPartitionIds(null)) {
++          getBlobLocalDcResourceToLatency.put(partitionId, createHistogram(reservoirSize, decayFactor));
++          getBlobInfoLocalDcResourceToLatency.put(partitionId, createHistogram(reservoirSize, decayFactor));
++          getBlobCrossDcResourceToLatency.put(partitionId, createHistogram(reservoirSize, decayFactor));
++          getBlobInfoCrossDcResourceToLatency.put(partitionId, createHistogram(reservoirSize, decayFactor));
++        }
++        break;
++      case DataNode:
++        List<? extends DataNodeId> dataNodeIds = clusterMap.getDataNodeIds();
++        for (DataNodeId dataNodeId : dataNodeIds) {
++          if (dataNodeId.getDatacenterName().equals(localDatacenterName)) {
++            getBlobLocalDcResourceToLatency.put(dataNodeId, createHistogram(reservoirSize, decayFactor));
++            getBlobInfoLocalDcResourceToLatency.put(dataNodeId, createHistogram(reservoirSize, decayFactor));
++          } else {
++            getBlobCrossDcResourceToLatency.put(dataNodeId, createHistogram(reservoirSize, decayFactor));
++            getBlobInfoCrossDcResourceToLatency.put(dataNodeId, createHistogram(reservoirSize, decayFactor));
++          }
++        }
++        break;
++      case Disk:
++        for (PartitionId partitionId : clusterMap.getAllPartitionIds(null)) {
++          for (ReplicaId replicaId : partitionId.getReplicaIds()) {
++            DiskId diskId = replicaId.getDiskId();
++            if (getBlobLocalDcResourceToLatency.containsKey(diskId) || getBlobCrossDcResourceToLatency.containsKey(
++                diskId)) {
++              continue;
++            }
++            if (replicaId.getDataNodeId().getDatacenterName().equals(localDatacenterName)) {
++              getBlobLocalDcResourceToLatency.put(diskId, createHistogram(reservoirSize, decayFactor));
++              getBlobInfoLocalDcResourceToLatency.put(diskId, createHistogram(reservoirSize, decayFactor));
++            } else {
++              getBlobCrossDcResourceToLatency.put(diskId, createHistogram(reservoirSize, decayFactor));
++              getBlobInfoCrossDcResourceToLatency.put(diskId, createHistogram(reservoirSize, decayFactor));
++            }
++          }
++        }
++      default:
++        // if routerOperationTrackerMetricScope = Datacenter, do nothing in this method because datacenter-level
++        // histograms and pastDueCounter are always instantiated.
+     }
+   }
+ 

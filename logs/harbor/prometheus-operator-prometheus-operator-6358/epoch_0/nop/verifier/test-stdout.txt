@@ -1,0 +1,18 @@
+patching file pkg/apis/monitoring/v1/types_test.go
+patching file pkg/webconfig/config_test.go
+# github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1 [github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1.test]
+v1/types_test.go:284:5: unknown field ClientCAFile in struct literal of type WebTLSConfig
+v1/types_test.go:285:5: unknown field CertFile in struct literal of type WebTLSConfig
+v1/types_test.go:286:5: unknown field KeyFile in struct literal of type WebTLSConfig
+v1/types_test.go:293:5: unknown field CertFile in struct literal of type WebTLSConfig
+v1/types_test.go:294:5: unknown field KeyFile in struct literal of type WebTLSConfig
+v1/types_test.go:301:5: unknown field ClientCAFile in struct literal of type WebTLSConfig
+v1/types_test.go:302:5: unknown field KeyFile in struct literal of type WebTLSConfig
+v1/types_test.go:309:5: unknown field ClientCAFile in struct literal of type WebTLSConfig
+v1/types_test.go:310:5: unknown field CertFile in struct literal of type WebTLSConfig
+v1/types_test.go:317:5: unknown field ClientCAFile in struct literal of type WebTLSConfig
+v1/types_test.go:317:5: too many errors
+{"Time":"2026-06-29T15:16:17.507667566Z","Action":"start","Package":"github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"}
+{"Time":"2026-06-29T15:16:17.507863366Z","Action":"output","Package":"github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1","Output":"FAIL\tgithub.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1 [build failed]\n"}
+{"Time":"2026-06-29T15:16:17.507893776Z","Action":"fail","Package":"github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1","Elapsed":0}
+reward=0 graded=57 found=0 failed=0 parsed=1 framework=go exit_code=1

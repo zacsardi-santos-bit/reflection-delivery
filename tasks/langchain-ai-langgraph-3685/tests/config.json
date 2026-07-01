@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/libs/langgraph && pytest tests/test_pregel.py -v -k \"test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[memory] or test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[sqlite]\"",
+  "test_files": [
+    "libs/langgraph/tests/__snapshots__/test_pregel.ambr",
+    "libs/langgraph/tests/test_pregel.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_pregel::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[memory]",
+    "tests.test_pregel::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class_pydantic_input[sqlite]"
+  ],
+  "PASS_TO_PASS": []
+}

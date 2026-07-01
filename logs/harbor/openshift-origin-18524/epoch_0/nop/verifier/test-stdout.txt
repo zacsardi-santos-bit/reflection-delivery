@@ -1,0 +1,10 @@
+patching file pkg/apps/controller/deployer/deployer_controller_test.go
+patching file pkg/apps/controller/deploymentconfig/deploymentconfig_controller_test.go
+patching file test/extended/deployments/deployments.go
+patching file test/extended/deployments/util.go
+patching file test/extended/testdata/bindata.go
+patching file test/extended/testdata/deployments/deployment-trigger.yaml
+# github.com/openshift/origin/pkg/apps/controller/deploymentconfig [github.com/openshift/origin/pkg/apps/controller/deploymentconfig.test]
+pkg/apps/controller/deploymentconfig/deploymentconfig_controller_test.go:581:48: cannot use test.updateObservedGeneration (variable of type bool) as type "github.com/openshift/origin/pkg/apps/apis/apps".DeploymentCondition in argument to calculateStatus
+FAIL	github.com/openshift/origin/pkg/apps/controller/deploymentconfig [build failed]
+reward=0 graded=2 found=2 failed=2 parsed=1 framework=go exit_code=1

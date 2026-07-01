@@ -1,0 +1,5 @@
+I'm working on the Ghost admin panel and need to add a new middleware that serves static files for an authentication frame — a separate, isolated login interface that runs within the admin app. Right now there's no way for the server to serve the auth frame's own assets, so I need to create a middleware factory that handles this.
+
+The middleware should serve files from a designated auth directory, using the configured public file path to locate them. When the root URL is requested it should serve the main HTML file, and for other URLs it should serve the corresponding file — but using only the filename rather than the full URL path, to prevent directory traversal. Files may contain a placeholder for the site's origin URL, and the middleware should substitute that placeholder with the real site URL at request time. If a file can't be found, the middleware should simply pass control to the next handler.
+
+On top of that, a frontend analytics script is moving from its current location in the public directory to a new home inside the frontend source directory. Any references to the old path need to be updated to point to the new location.

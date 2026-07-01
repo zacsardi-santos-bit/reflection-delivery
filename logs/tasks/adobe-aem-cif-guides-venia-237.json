@@ -1,0 +1,23 @@
+{
+ "task": "adobe-aem-cif-guides-venia-237",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds local OrderHistoryPage/orderRow.js, OrderDetails/*, MiniCart/ProductList/item.js etc. (matches 'locally-owned customizable versions'). Jest tests render components via react-test-renderer and assert concrete behavior beyond snapshots, e.g. orderProgressProps.status).toBe('Delivered') for"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 32,
+  "shallow": true
+ }
+}

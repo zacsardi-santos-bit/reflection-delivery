@@ -1,0 +1,23 @@
+{
+ "task": "tryghost-ghost-22859",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden ghost_head.js adds local-mode: 'const endpoint = localEnabled ? localConfig.endpoint : statsConfig.endpoint' and ghost-stats.js reads host: 'const url = `${host}?name=${DATASOURCE}&token=${token}`' replacing hardcoded e.ghost.org \u2014 matching F2P 'uses the provided host/endpoint from config' an"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 30,
+  "shallow": true
+ }
+}

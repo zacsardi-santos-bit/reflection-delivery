@@ -1,0 +1,32 @@
+patching file crates/cubecl-linalg/src/matmul/components/batch/shared.rs
+patching file crates/cubecl-linalg/src/matmul/components/config.rs
+patching file crates/cubecl-linalg/src/matmul/components/global/base.rs
+patching file crates/cubecl-linalg/src/matmul/components/global/homogeneous/base.rs (renamed from crates/cubecl-linalg/src/matmul/components/global/homogeneous.rs)
+patching file crates/cubecl-linalg/src/matmul/components/global/homogeneous/cyclic_loading.rs (renamed from crates/cubecl-linalg/src/matmul/components/global/tensor_view/cyclic_loading.rs)
+patching file crates/cubecl-linalg/src/matmul/components/global/homogeneous/loader.rs (renamed from crates/cubecl-linalg/src/matmul/components/global/tensor_view/loader.rs)
+patching file crates/cubecl-linalg/src/matmul/components/global/homogeneous/mod.rs
+patching file crates/cubecl-linalg/src/matmul/components/global/mod.rs
+patching file crates/cubecl-linalg/src/matmul/components/global/producer_consumer/base.rs
+patching file crates/cubecl-linalg/src/matmul/components/global/producer_consumer/buffer_loading.rs
+patching file crates/cubecl-linalg/src/matmul/components/global/producer_consumer/loader.rs
+patching file crates/cubecl-linalg/src/matmul/components/global/producer_consumer/mod.rs
+patching file crates/cubecl-linalg/src/matmul/components/global/tensor_view.rs (renamed from crates/cubecl-linalg/src/matmul/components/global/tensor_view/base.rs)
+patching file crates/cubecl-linalg/src/matmul/components/global/tensor_view/mod.rs
+patching file crates/cubecl-linalg/src/matmul/components/global/tilewise_unloading.rs (renamed from crates/cubecl-linalg/src/matmul/components/global/tensor_view/tilewise_unloading.rs)
+patching file crates/cubecl-linalg/src/matmul/components/global/unloader.rs (renamed from crates/cubecl-linalg/src/matmul/components/global/tensor_view/unloader.rs)
+patching file crates/cubecl-linalg/src/matmul/components/mod.rs
+patching file crates/cubecl-linalg/src/matmul/components/stage/base.rs
+patching file crates/cubecl-linalg/src/matmul/components/stage/mod.rs
+patching file crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/base.rs (renamed from crates/cubecl-linalg/src/matmul/components/stage/row_accumulate.rs)
+patching file crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/mod.rs
+patching file crates/cubecl-linalg/src/matmul/components/stage/multi_buffer/reader.rs (renamed from crates/cubecl-linalg/src/matmul/components/stage/reader.rs)
+patching file crates/cubecl-linalg/src/matmul/components/stage/single_buffer/base.rs
+patching file crates/cubecl-linalg/src/matmul/components/stage/single_buffer/mod.rs
+patching file crates/cubecl-linalg/src/matmul/components/stage/single_buffer/reader.rs
+patching file crates/cubecl-linalg/src/matmul/components/stage/staging.rs
+patching file crates/cubecl-linalg/src/matmul/components/stage/tiling_order.rs
+patching file crates/cubecl-linalg/src/matmul/components/tile/plane.rs
+patching file crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/base.rs
+patching file crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/cmma.rs
+patching file crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/plane_mma.rs
+patching file crates/cubecl-linalg/src/matmul/kernels/matmul/config.rs

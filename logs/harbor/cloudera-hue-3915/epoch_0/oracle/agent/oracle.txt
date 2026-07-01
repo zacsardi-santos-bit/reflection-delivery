@@ -1,0 +1,11 @@
+patching file desktop/core/src/desktop/js/apps/storageBrowser/FileChooserModal/FileChooserModal.tsx
+patching file desktop/core/src/desktop/js/apps/storageBrowser/InputModal/InputModal.tsx
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.scss
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.tsx
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.tsx
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.util.ts
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageDirectoryPage.scss
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageDirectoryPage.tsx
+patching file desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.scss
+patching file desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.tsx
+patching file desktop/core/src/desktop/js/reactComponents/FileChooser/api.ts

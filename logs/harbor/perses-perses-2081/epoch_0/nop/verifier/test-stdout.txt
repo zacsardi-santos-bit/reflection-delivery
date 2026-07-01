@@ -1,0 +1,17 @@
+patching file internal/api/discovery/cuetils/cuetils_test.go
+# github.com/perses/perses/internal/api/discovery/cuetils [github.com/perses/perses/internal/api/discovery/cuetils.test]
+internal/api/discovery/cuetils/cuetils_test.go:38:15: undefined: Node
+internal/api/discovery/cuetils/cuetils_test.go:43:17: undefined: Node
+internal/api/discovery/cuetils/cuetils_test.go:45:21: undefined: StringNodeType
+internal/api/discovery/cuetils/cuetils_test.go:50:17: undefined: StructNodeType
+internal/api/discovery/cuetils/cuetils_test.go:52:16: undefined: Node
+internal/api/discovery/cuetils/cuetils_test.go:54:19: undefined: StringNodeType
+internal/api/discovery/cuetils/cuetils_test.go:58:19: undefined: StructNodeType
+internal/api/discovery/cuetils/cuetils_test.go:60:18: undefined: Node
+internal/api/discovery/cuetils/cuetils_test.go:62:25: undefined: StringNodeType
+internal/api/discovery/cuetils/cuetils_test.go:206:25: undefined: Node
+internal/api/discovery/cuetils/cuetils_test.go:62:25: too many errors
+{"Time":"2026-06-29T15:22:07.645046906Z","Action":"start","Package":"github.com/perses/perses/internal/api/discovery/cuetils"}
+{"Time":"2026-06-29T15:22:07.645130633Z","Action":"output","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Output":"FAIL\tgithub.com/perses/perses/internal/api/discovery/cuetils [build failed]\n"}
+{"Time":"2026-06-29T15:22:07.645166367Z","Action":"fail","Package":"github.com/perses/perses/internal/api/discovery/cuetils","Elapsed":0}
+reward=0 graded=5 found=0 failed=0 parsed=1 framework=go exit_code=1

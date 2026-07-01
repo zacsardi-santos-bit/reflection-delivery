@@ -1,0 +1,23 @@
+{
+ "task": "vmware-govmomi-983",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden returns types.NotAuthenticated fault when ctx.Session==nil, tracks UserAgent/LastActiveTime, session-scopes collectors (ctx.Session.Put); F2P TestSessionManagerAuth asserts NotAuthenticated + UserAgent + LastActiveTime update + session-scoped pc ref; TestPropertyCollectorSession asserts re-lo"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

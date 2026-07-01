@@ -1,0 +1,23 @@
+{
+ "task": "tailcallhq-tailcall-862",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds conditional expr: 'Expression::If { cond, then, els } => { let cond = cond.eval(ctx).await?; if is_truthy(cond) { then.eval... } else { els.eval... } }' plus compile_if in expr.rs; F2P test_config_identity/test_server_to_client_sdl/test_failures_in_client_sdl exercise round-trip + client"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

@@ -1,0 +1,44 @@
+patching file tests/cli/actions/remoteAction.test.ts
+patching file tests/cli/cliPrint.test.ts
+patching file tests/config/configSchema.test.ts
+patching file tests/core/file/fileCollect.test.ts
+patching file tests/core/file/fileProcess.test.ts
+patching file tests/core/metrics/aggregateMetrics.test.ts
+patching file tests/core/metrics/calculateAllFileMetrics.test.ts
+patching file tests/core/metrics/calculateIndividualFileMetrics.test.ts
+patching file tests/core/metrics/calculateMetrics.test.ts
+patching file tests/core/metrics/calculateOutputMetrics.test.ts
+patching file tests/core/packager.test.ts
+patching file tests/core/packager/copyToClipboardIfEnabled.test.ts
+patching file tests/core/security/runSecurityCheckIfEnabled.test.ts
+patching file tests/core/security/securityCheck.test.ts
+patching file tests/core/security/validateFileSafety.test.ts
+patching file tests/core/security/workers/securityCheckWorker.test.ts
+patching file tests/integration-tests/packager.test.ts
+patching file tests/shared/processConcurrency.test.ts
+[?25l
+ RUN  v3.0.2 /workspace/repo
+
+ ✓ tests/config/configSchema.test.ts (14 tests) 9ms
+ ✓ tests/shared/processConcurrency.test.ts (6 tests) 4ms
+ ✓ tests/core/security/workers/securityCheckWorker.test.ts (2 tests) 7ms
+ ✓ tests/core/security/validateFileSafety.test.ts (1 test) 4ms
+ ✓ tests/cli/cliPrint.test.ts (8 tests) 24ms
+ ✓ tests/core/packager/copyToClipboardIfEnabled.test.ts (2 tests) 4ms
+ ✓ tests/core/security/securityCheck.test.ts (7 tests) 19ms
+ ✓ tests/core/file/fileProcess.test.ts (8 tests) 6ms
+ ✓ tests/core/metrics/calculateMetrics.test.ts (1 test) 4ms
+ ✓ tests/core/file/fileCollect.test.ts (4 tests) 9ms
+ ✓ tests/core/metrics/calculateOutputMetrics.test.ts (5 tests) 261ms
+ ✓ tests/core/metrics/calculateAllFileMetrics.test.ts (1 test) 253ms
+ ✓ tests/core/packager.test.ts (1 test) 5ms
+✔ Repository cloned successfully!
+ ✓ tests/cli/actions/remoteAction.test.ts (10 tests) 19ms
+ ✓ tests/integration-tests/packager.test.ts (2 tests) 88ms
+
+ Test Files  15 passed (15)
+      Tests  72 passed (72)
+   Start at  15:17:59
+   Duration  1.18s (transform 1.72s, setup 0ms, collect 5.27s, tests 716ms, environment 2ms, prepare 2.03s)
+
+[?25hreward=1 graded=72 found=0 failed=0 parsed=0 framework=vitest exit_code=0

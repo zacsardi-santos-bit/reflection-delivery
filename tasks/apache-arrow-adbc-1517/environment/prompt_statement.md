@@ -1,0 +1,7 @@
+I'm working with the Apache Arrow ADBC Flight SQL Java driver and I need help implementing the database object discovery functionality. Right now, when I try to list the catalogs, schemas, tables, and columns available on my Flight SQL server, the driver doesn't produce properly structured results.
+
+The driver needs to aggregate data from multiple Flight SQL server calls and combine them into a hierarchical structure: catalogs contain schemas, schemas contain tables, and tables contain columns. Some edge cases are tricky — for example, catalogs that have no schemas and schemas that have no tables should still show up in the results, just with empty child lists rather than being omitted entirely. When retrieving full column details, each column should include its name, ordinal position (1-based), nullability, and type-specific metadata like scale and precision radix. If I filter by column name and nothing matches, the column list should be an empty list (not absent). When I filter by catalog name and nothing matches, the result set should be completely empty.
+
+There's also a secondary issue: the method for retrieving connection info doesn't actually reach the server when I request specific info codes — it seems to build everything from local data only. This means my authentication headers are never sent to the server, which breaks tests that verify auth token propagation.
+
+Can you implement these two features — the hierarchical catalog metadata retrieval and the server-side connection info retrieval — in the Flight SQL driver?

@@ -1,0 +1,4 @@
+patching file book/src/message_validation.md
+patching file openmls/src/group/core_group/apply_proposals.rs
+patching file openmls/src/group/mls_group/mod.rs
+patching file openmls/src/messages/proposals.rs

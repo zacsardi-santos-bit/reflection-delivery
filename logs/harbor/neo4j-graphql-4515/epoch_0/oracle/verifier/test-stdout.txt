@@ -1,0 +1,65 @@
+patching file packages/graphql/tests/schema/experimental-schema/interfaces.test.ts
+patching file packages/graphql/tests/schema/interfaces.test.ts
+  console.warn
+    You have enabled experimental features of the Neo4j GraphQL Library. Be aware that experimental features may be incomplete and/or contain bugs, and that breaking changes may be introduced at any time.
+
+      27 |             Document() {
+      28 |                 if (experimental === true && !warningAlreadyIssued) {
+    > 29 |                     console.warn(
+         |                             ^
+      30 |                         "You have enabled experimental features of the Neo4j GraphQL Library. Be aware that experimental features may be incomplete and/or contain bugs, and that breaking changes may be introduced at any time."
+      31 |                     );
+      32 |
+
+      at Object.Document (packages/graphql/src/schema/validation/custom-rules/warnings/experimental-mode.ts:29:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:196:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:265:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:361:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:350:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:122:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:117:21)
+      at Object.<anonymous> (packages/graphql/tests/schema/experimental-schema/interfaces.test.ts:49:97)
+
+PASS @neo4j/graphql tests/schema/interfaces.test.ts (16.367 s)
+  Interfaces
+    ✓ Interfaces (108 ms)
+    ✓ Interface with directive (38 ms)
+
+  console.warn
+    You have enabled experimental features of the Neo4j GraphQL Library. Be aware that experimental features may be incomplete and/or contain bugs, and that breaking changes may be introduced at any time.
+
+      27 |             Document() {
+      28 |                 if (experimental === true && !warningAlreadyIssued) {
+    > 29 |                     console.warn(
+         |                             ^
+      30 |                         "You have enabled experimental features of the Neo4j GraphQL Library. Be aware that experimental features may be incomplete and/or contain bugs, and that breaking changes may be introduced at any time."
+      31 |                     );
+      32 |
+
+      at Object.Document (packages/graphql/src/schema/validation/custom-rules/warnings/experimental-mode.ts:29:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:196:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:265:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:361:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:350:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:122:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:117:21)
+      at Object.<anonymous> (packages/graphql/tests/schema/experimental-schema/interfaces.test.ts:462:97)
+
+PASS @neo4j/graphql tests/schema/experimental-schema/interfaces.test.ts (16.417 s)
+  Interfaces
+    ✓ Interfaces (151 ms)
+    ✓ Interface with directive (46 ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       4 passed, 4 total
+Snapshots:   4 passed, 4 total
+Time:        16.734 s
+Ran all test suites matching /tests\/schema\/experimental-schema\/interfaces.test.ts|tests\/schema\/interfaces.test.ts/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":2,"numPassedTests":4,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":4,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":4,"total":4,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746591672,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["Interfaces"],"duration":108,"failureDetails":[],"failureMessages":[],"fullName":"Interfaces Interfaces","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Interfaces"},{"ancestorTitles":["Interfaces"],"duration":38,"failureDetails":[],"failureMessages":[],"fullName":"Interfaces Interface with directive","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Interface with directive"}],"endTime":1782746608289,"message":"","name":"/workspace/repo/packages/graphql/tests/schema/interfaces.test.ts","startTime":1782746591922,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Interfaces"],"duration":151,"failureDetails":[],"failureMessages":[],"fullName":"Interfaces Interfaces","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Interfaces"},{"ancestorTitles":["Interfaces"],"duration":46,"failureDetails":[],"failureMessages":[],"fullName":"Interfaces Interface with directive","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"Interface with directive"}],"endTime":1782746608339,"message":"","name":"/workspace/repo/packages/graphql/tests/schema/experimental-schema/interfaces.test.ts","startTime":1782746591922,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=jest exit_code=0

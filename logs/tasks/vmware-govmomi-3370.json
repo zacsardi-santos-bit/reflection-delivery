@@ -1,0 +1,23 @@
+{
+ "task": "vmware-govmomi-3370",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden UpgradeVMTask returns InvalidPowerStateFault/state/not-supported/already-upgraded/invalid-argument errors + new vim25/types/hardware_version.go; F2P TestUpgradeVm subtests (InvalidPowerState, MaintenanceMode, Template, NotSupported, AlreadyUpgraded, InvalidArgument) and TestHardwareVersion"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "glaredb-glaredb-2415",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden makes 'pub async fn execute' public and adds DeleteDeltaTablesOperation after catalog mutate in drop_tables; test drops table then asserts 'panic!(\"expected directory to be empty\")' if any file remains"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

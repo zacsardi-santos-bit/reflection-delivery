@@ -1,0 +1,544 @@
+patching file v3/lints/cabf_br/lint_ext_tor_service_descriptor_hash_invalid_test.go
+patching file v3/lints/cabf_br/lint_san_dns_name_onion_invalid_test.go
+patching file v3/util/onion_test.go
+# github.com/zmap/zlint/v3/util [github.com/zmap/zlint/v3/util.test]
+util/onion_test.go:50:11: undefined: IsOnionV3Address
+util/onion_test.go:113:11: undefined: allAreOnionVX
+util/onion_test.go:113:34: undefined: IsOnionV3Address
+util/onion_test.go:183:11: undefined: anyAreOnionVX
+util/onion_test.go:183:34: undefined: IsOnionV2Address
+{"Time":"2026-06-29T15:27:01.959423482Z","Action":"start","Package":"github.com/zmap/zlint/v3/lints/cabf_br"}
+{"Time":"2026-06-29T15:27:01.978383036Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCommonNameMissing"}
+{"Time":"2026-06-29T15:27:01.978482278Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCommonNameMissing","Output":"=== RUN   TestCaCommonNameMissing\n"}
+{"Time":"2026-06-29T15:27:01.979785807Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCommonNameMissing","Output":"--- PASS: TestCaCommonNameMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.979836199Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCommonNameMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.979856079Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCommonNameNotMissing"}
+{"Time":"2026-06-29T15:27:01.979869779Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCommonNameNotMissing","Output":"=== RUN   TestCaCommonNameNotMissing\n"}
+{"Time":"2026-06-29T15:27:01.980564655Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCommonNameNotMissing","Output":"--- PASS: TestCaCommonNameNotMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.980692347Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCommonNameNotMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.980758759Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameInvalid"}
+{"Time":"2026-06-29T15:27:01.98079826Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameInvalid","Output":"=== RUN   TestCaCountryNameInvalid\n"}
+{"Time":"2026-06-29T15:27:01.981391013Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameInvalid","Output":"--- PASS: TestCaCountryNameInvalid (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.981422134Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameInvalid","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.981550657Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameValid"}
+{"Time":"2026-06-29T15:27:01.981580017Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameValid","Output":"=== RUN   TestCaCountryNameValid\n"}
+{"Time":"2026-06-29T15:27:01.982237352Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameValid","Output":"--- PASS: TestCaCountryNameValid (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.982329604Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameValid","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.982366695Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameMissing"}
+{"Time":"2026-06-29T15:27:01.982453457Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameMissing","Output":"=== RUN   TestCaCountryNameMissing\n"}
+{"Time":"2026-06-29T15:27:01.983092961Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameMissing","Output":"--- PASS: TestCaCountryNameMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.983148002Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNameMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.983195874Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNamePresent"}
+{"Time":"2026-06-29T15:27:01.983220744Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNamePresent","Output":"=== RUN   TestCaCountryNamePresent\n"}
+{"Time":"2026-06-29T15:27:01.983442929Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNamePresent","Output":"--- PASS: TestCaCountryNamePresent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.983519901Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaCountryNamePresent","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.983572042Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoCRLSign"}
+{"Time":"2026-06-29T15:27:01.983583342Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoCRLSign","Output":"=== RUN   TestCaKeyUsageNoCRLSign\n"}
+{"Time":"2026-06-29T15:27:01.984158235Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoCRLSign","Output":"--- PASS: TestCaKeyUsageNoCRLSign (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.984247417Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoCRLSign","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.984288698Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCRLSign"}
+{"Time":"2026-06-29T15:27:01.984312799Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCRLSign","Output":"=== RUN   TestKeyUsageCRLSign\n"}
+{"Time":"2026-06-29T15:27:01.985201728Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCRLSign","Output":"--- PASS: TestKeyUsageCRLSign (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.98526206Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCRLSign","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.985362422Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoDigSign"}
+{"Time":"2026-06-29T15:27:01.985387103Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoDigSign","Output":"=== RUN   TestCaKeyUsageNoDigSign\n"}
+{"Time":"2026-06-29T15:27:01.986066808Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoDigSign","Output":"--- PASS: TestCaKeyUsageNoDigSign (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.986100988Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoDigSign","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.986143089Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageDigSign"}
+{"Time":"2026-06-29T15:27:01.98615461Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageDigSign","Output":"=== RUN   TestKeyUsageDigSign\n"}
+{"Time":"2026-06-29T15:27:01.986935827Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageDigSign","Output":"--- PASS: TestKeyUsageDigSign (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.987016319Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageDigSign","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.98706032Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyCertSignNotCA"}
+{"Time":"2026-06-29T15:27:01.987089441Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyCertSignNotCA","Output":"=== RUN   TestKeyCertSignNotCA\n"}
+{"Time":"2026-06-29T15:27:01.987600362Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyCertSignNotCA","Output":"--- PASS: TestKeyCertSignNotCA (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.987681874Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyCertSignNotCA","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.987715515Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyCertSignCA"}
+{"Time":"2026-06-29T15:27:01.987734345Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyCertSignCA","Output":"=== RUN   TestKeyCertSignCA\n"}
+{"Time":"2026-06-29T15:27:01.988635075Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyCertSignCA","Output":"--- PASS: TestKeyCertSignCA (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.988686436Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyCertSignCA","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.988699586Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoCertSign"}
+{"Time":"2026-06-29T15:27:01.988710237Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoCertSign","Output":"=== RUN   TestCaKeyUsageNoCertSign\n"}
+{"Time":"2026-06-29T15:27:01.989232688Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoCertSign","Output":"--- PASS: TestCaKeyUsageNoCertSign (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.989262299Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNoCertSign","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.98929191Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCertSign"}
+{"Time":"2026-06-29T15:27:01.989355241Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCertSign","Output":"=== RUN   TestKeyUsageCertSign\n"}
+{"Time":"2026-06-29T15:27:01.989402522Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCertSign","Output":"--- PASS: TestKeyUsageCertSign (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.989446373Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCertSign","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.989467244Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageMissing"}
+{"Time":"2026-06-29T15:27:01.989486194Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageMissing","Output":"=== RUN   TestCaKeyUsageMissing\n"}
+{"Time":"2026-06-29T15:27:01.990046187Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageMissing","Output":"--- PASS: TestCaKeyUsageMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.990082607Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.990132718Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsagePresent"}
+{"Time":"2026-06-29T15:27:01.990143099Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsagePresent","Output":"=== RUN   TestKeyUsagePresent\n"}
+{"Time":"2026-06-29T15:27:01.990397015Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsagePresent","Output":"--- PASS: TestKeyUsagePresent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.990546168Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsagePresent","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.990607169Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNotCrit"}
+{"Time":"2026-06-29T15:27:01.9906308Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNotCrit","Output":"=== RUN   TestCaKeyUsageNotCrit\n"}
+{"Time":"2026-06-29T15:27:01.991168182Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNotCrit","Output":"--- PASS: TestCaKeyUsageNotCrit (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.991230923Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCaKeyUsageNotCrit","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.991274714Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCrit"}
+{"Time":"2026-06-29T15:27:01.991284074Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCrit","Output":"=== RUN   TestKeyUsageCrit\n"}
+{"Time":"2026-06-29T15:27:01.992155484Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCrit","Output":"--- PASS: TestKeyUsageCrit (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.992249576Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestKeyUsageCrit","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.992261556Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameBlank"}
+{"Time":"2026-06-29T15:27:01.992334428Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameBlank","Output":"=== RUN   TestCAOrgNameBlank\n"}
+{"Time":"2026-06-29T15:27:01.9928906Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameBlank","Output":"--- PASS: TestCAOrgNameBlank (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.992912961Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameBlank","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.992941041Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameMissing"}
+{"Time":"2026-06-29T15:27:01.992961322Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameMissing","Output":"=== RUN   TestCAOrgNameMissing\n"}
+{"Time":"2026-06-29T15:27:01.993812411Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameMissing","Output":"--- PASS: TestCAOrgNameMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.993844632Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.993891862Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameValid"}
+{"Time":"2026-06-29T15:27:01.993914543Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameValid","Output":"=== RUN   TestCAOrgNameValid\n"}
+{"Time":"2026-06-29T15:27:01.994506266Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameValid","Output":"--- PASS: TestCAOrgNameValid (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.994544867Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCAOrgNameValid","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.994599728Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithLocal"}
+{"Time":"2026-06-29T15:27:01.994611879Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithLocal","Output":"=== RUN   TestCertPolicyNotConflictWithLocal\n"}
+{"Time":"2026-06-29T15:27:01.995386796Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithLocal","Output":"--- PASS: TestCertPolicyNotConflictWithLocal (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.995481578Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithLocal","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.995512609Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithLocal"}
+{"Time":"2026-06-29T15:27:01.995523539Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithLocal","Output":"=== RUN   TestCertPolicyConflictsWithLocal\n"}
+{"Time":"2026-06-29T15:27:01.996252265Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithLocal","Output":"--- PASS: TestCertPolicyConflictsWithLocal (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.996286916Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithLocal","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.996311856Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithOrg"}
+{"Time":"2026-06-29T15:27:01.996331007Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithOrg","Output":"=== RUN   TestCertPolicyNotConflictWithOrg\n"}
+{"Time":"2026-06-29T15:27:01.996639504Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithOrg","Output":"--- PASS: TestCertPolicyNotConflictWithOrg (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.996684035Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithOrg","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.996705575Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithOrg"}
+{"Time":"2026-06-29T15:27:01.996716186Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithOrg","Output":"=== RUN   TestCertPolicyConflictsWithOrg\n"}
+{"Time":"2026-06-29T15:27:01.997254728Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithOrg","Output":"--- PASS: TestCertPolicyConflictsWithOrg (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.997294318Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithOrg","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.997313659Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithPostal"}
+{"Time":"2026-06-29T15:27:01.997324569Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithPostal","Output":"=== RUN   TestCertPolicyNotConflictWithPostal\n"}
+{"Time":"2026-06-29T15:27:01.997539764Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithPostal","Output":"--- PASS: TestCertPolicyNotConflictWithPostal (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.997636196Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithPostal","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.997672147Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithPostal"}
+{"Time":"2026-06-29T15:27:01.997682577Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithPostal","Output":"=== RUN   TestCertPolicyConflictsWithPostal\n"}
+{"Time":"2026-06-29T15:27:01.99825355Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithPostal","Output":"--- PASS: TestCertPolicyConflictsWithPostal (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.998336142Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithPostal","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.998380773Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithProv"}
+{"Time":"2026-06-29T15:27:01.998394213Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithProv","Output":"=== RUN   TestCertPolicyNotConflictWithProv\n"}
+{"Time":"2026-06-29T15:27:01.998562837Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithProv","Output":"--- PASS: TestCertPolicyNotConflictWithProv (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.998593418Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithProv","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.998623528Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithProv"}
+{"Time":"2026-06-29T15:27:01.998634439Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithProv","Output":"=== RUN   TestCertPolicyConflictsWithProv\n"}
+{"Time":"2026-06-29T15:27:01.999318674Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithProv","Output":"--- PASS: TestCertPolicyConflictsWithProv (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.999354235Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithProv","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.999393965Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithStreet"}
+{"Time":"2026-06-29T15:27:01.999422946Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithStreet","Output":"=== RUN   TestCertPolicyNotConflictWithStreet\n"}
+{"Time":"2026-06-29T15:27:01.999691802Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithStreet","Output":"--- PASS: TestCertPolicyNotConflictWithStreet (0.00s)\n"}
+{"Time":"2026-06-29T15:27:01.999718413Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyNotConflictWithStreet","Elapsed":0}
+{"Time":"2026-06-29T15:27:01.999764954Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithStreet"}
+{"Time":"2026-06-29T15:27:01.999775894Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithStreet","Output":"=== RUN   TestCertPolicyConflictsWithStreet\n"}
+{"Time":"2026-06-29T15:27:02.00051643Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithStreet","Output":"--- PASS: TestCertPolicyConflictsWithStreet (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.000561482Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyConflictsWithStreet","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.000575992Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasPerson"}
+{"Time":"2026-06-29T15:27:02.000586402Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasPerson","Output":"=== RUN   TestCertPolicyIvHasPerson\n"}
+{"Time":"2026-06-29T15:27:02.001231177Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasPerson","Output":"--- PASS: TestCertPolicyIvHasPerson (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.001260947Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasPerson","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.00136772Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasSurname"}
+{"Time":"2026-06-29T15:27:02.00140524Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasSurname","Output":"=== RUN   TestCertPolicyIvHasSurname\n"}
+{"Time":"2026-06-29T15:27:02.002197118Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasSurname","Output":"--- PASS: TestCertPolicyIvHasSurname (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.002321091Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasSurname","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.002396172Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasLastName"}
+{"Time":"2026-06-29T15:27:02.002427783Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasLastName","Output":"=== RUN   TestCertPolicyIvHasLastName\n"}
+{"Time":"2026-06-29T15:27:02.003378785Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasLastName","Output":"--- PASS: TestCertPolicyIvHasLastName (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.003457866Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvHasLastName","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.003571269Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoPerson"}
+{"Time":"2026-06-29T15:27:02.00362389Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoPerson","Output":"=== RUN   TestCertPolicyIvNoPerson\n"}
+{"Time":"2026-06-29T15:27:02.004210543Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoPerson","Output":"--- PASS: TestCertPolicyIvNoPerson (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.004253894Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoPerson","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.004268024Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasOrg"}
+{"Time":"2026-06-29T15:27:02.004279625Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasOrg","Output":"=== RUN   TestCertPolicyOvHasOrg\n"}
+{"Time":"2026-06-29T15:27:02.004926739Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasOrg","Output":"--- PASS: TestCertPolicyOvHasOrg (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.005007351Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasOrg","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.005042012Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoOrg"}
+{"Time":"2026-06-29T15:27:02.005052792Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoOrg","Output":"=== RUN   TestCertPolicyOvNoOrg\n"}
+{"Time":"2026-06-29T15:27:02.007679411Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoOrg","Output":"--- PASS: TestCertPolicyOvNoOrg (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.007710071Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoOrg","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.007743322Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvCountry"}
+{"Time":"2026-06-29T15:27:02.007757782Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvCountry","Output":"=== RUN   TestCertPolicyIvCountry\n"}
+{"Time":"2026-06-29T15:27:02.008844317Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvCountry","Output":"--- PASS: TestCertPolicyIvCountry (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.008896998Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvCountry","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.008944669Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoCountry"}
+{"Time":"2026-06-29T15:27:02.00898311Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoCountry","Output":"=== RUN   TestCertPolicyIvNoCountry\n"}
+{"Time":"2026-06-29T15:27:02.00988619Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoCountry","Output":"--- PASS: TestCertPolicyIvNoCountry (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.009922721Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoCountry","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.009988712Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyHasCountryOrLocal"}
+{"Time":"2026-06-29T15:27:02.010020173Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyHasCountryOrLocal","Output":"=== RUN   TestCertPolicyHasCountryOrLocal\n"}
+{"Time":"2026-06-29T15:27:02.010310169Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyHasCountryOrLocal","Output":"--- PASS: TestCertPolicyHasCountryOrLocal (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.010377781Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyHasCountryOrLocal","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.010418002Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoCountryOrLocal"}
+{"Time":"2026-06-29T15:27:02.010432252Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoCountryOrLocal","Output":"=== RUN   TestCertPolicyIvNoCountryOrLocal\n"}
+{"Time":"2026-06-29T15:27:02.011505756Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoCountryOrLocal","Output":"--- PASS: TestCertPolicyIvNoCountryOrLocal (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.011556407Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyIvNoCountryOrLocal","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.011570768Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasCountry"}
+{"Time":"2026-06-29T15:27:02.011584308Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasCountry","Output":"=== RUN   TestCertPolicyOvHasCountry\n"}
+{"Time":"2026-06-29T15:27:02.011800243Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasCountry","Output":"--- PASS: TestCertPolicyOvHasCountry (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.011841634Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasCountry","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.011931836Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoCountry"}
+{"Time":"2026-06-29T15:27:02.011957916Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoCountry","Output":"=== RUN   TestCertPolicyOvNoCountry\n"}
+{"Time":"2026-06-29T15:27:02.012514509Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoCountry","Output":"--- PASS: TestCertPolicyOvNoCountry (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.012541389Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoCountry","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.012600551Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasCountryOrLocal"}
+{"Time":"2026-06-29T15:27:02.012622881Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasCountryOrLocal","Output":"=== RUN   TestCertPolicyOvHasCountryOrLocal\n"}
+{"Time":"2026-06-29T15:27:02.012837026Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasCountryOrLocal","Output":"--- PASS: TestCertPolicyOvHasCountryOrLocal (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.012880507Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvHasCountryOrLocal","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.012911127Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoCountryOrLocal"}
+{"Time":"2026-06-29T15:27:02.012923968Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoCountryOrLocal","Output":"=== RUN   TestCertPolicyOvNoCountryOrLocal\n"}
+{"Time":"2026-06-29T15:27:02.013534341Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoCountryOrLocal","Output":"--- PASS: TestCertPolicyOvNoCountryOrLocal (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.013565192Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestCertPolicyOvNoCountryOrLocal","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.013662514Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestBadCharacterInDNSLabel"}
+{"Time":"2026-06-29T15:27:02.013701705Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestBadCharacterInDNSLabel","Output":"=== RUN   TestBadCharacterInDNSLabel\n"}
+{"Time":"2026-06-29T15:27:02.014424251Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestBadCharacterInDNSLabel","Output":"--- PASS: TestBadCharacterInDNSLabel (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.014523754Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestBadCharacterInDNSLabel","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.014543044Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestClientDNSCertificate"}
+{"Time":"2026-06-29T15:27:02.014556024Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestClientDNSCertificate","Output":"=== RUN   TestClientDNSCertificate\n"}
+{"Time":"2026-06-29T15:27:02.01528256Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestClientDNSCertificate","Output":"--- PASS: TestClientDNSCertificate (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.015311541Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestClientDNSCertificate","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.015438754Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestClientValidCertificate"}
+{"Time":"2026-06-29T15:27:02.015458635Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestClientValidCertificate","Output":"=== RUN   TestClientValidCertificate\n"}
+{"Time":"2026-06-29T15:27:02.016037987Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestClientValidCertificate","Output":"--- PASS: TestClientValidCertificate (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.01615384Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestClientValidCertificate","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.016247602Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestLeftLabelWildcardCorrect"}
+{"Time":"2026-06-29T15:27:02.016273593Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestLeftLabelWildcardCorrect","Output":"=== RUN   TestLeftLabelWildcardCorrect\n"}
+{"Time":"2026-06-29T15:27:02.016799585Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestLeftLabelWildcardCorrect","Output":"--- PASS: TestLeftLabelWildcardCorrect (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.016822505Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestLeftLabelWildcardCorrect","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.016854626Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestLeftLabelWildcardIncorrect"}
+{"Time":"2026-06-29T15:27:02.016879496Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestLeftLabelWildcardIncorrect","Output":"=== RUN   TestLeftLabelWildcardIncorrect\n"}
+{"Time":"2026-06-29T15:27:02.017578652Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestLeftLabelWildcardIncorrect","Output":"--- PASS: TestLeftLabelWildcardIncorrect (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.017616803Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestLeftLabelWildcardIncorrect","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.017634433Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestIANABareSuffix"}
+{"Time":"2026-06-29T15:27:02.017715535Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestIANABareSuffix","Output":"=== RUN   TestIANABareSuffix\n"}
+{"Time":"2026-06-29T15:27:02.018429431Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestIANABareSuffix","Output":"--- PASS: TestIANABareSuffix (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.018467972Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestIANABareSuffix","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.018490142Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameEmptyLabel"}
+{"Time":"2026-06-29T15:27:02.018502572Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameEmptyLabel","Output":"=== RUN   TestDNSNameEmptyLabel\n"}
+{"Time":"2026-06-29T15:27:02.019243319Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameEmptyLabel","Output":"--- PASS: TestDNSNameEmptyLabel (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.01928226Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameEmptyLabel","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.019388282Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotEmptyLabel"}
+{"Time":"2026-06-29T15:27:02.019417983Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotEmptyLabel","Output":"=== RUN   TestDNSNameNotEmptyLabel\n"}
+{"Time":"2026-06-29T15:27:02.019945125Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotEmptyLabel","Output":"--- PASS: TestDNSNameNotEmptyLabel (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.020007556Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotEmptyLabel","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.020066798Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHasProhibitedReservedLabel"}
+{"Time":"2026-06-29T15:27:02.020079718Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHasProhibitedReservedLabel","Output":"=== RUN   TestDNSNameHasProhibitedReservedLabel\n"}
+{"Time":"2026-06-29T15:27:02.020471056Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHasProhibitedReservedLabel","Output":"--- PASS: TestDNSNameHasProhibitedReservedLabel (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.020500987Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHasProhibitedReservedLabel","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.020521237Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHasXNLabel"}
+{"Time":"2026-06-29T15:27:02.020550058Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHasXNLabel","Output":"=== RUN   TestDNSNameHasXNLabel\n"}
+{"Time":"2026-06-29T15:27:02.021255564Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHasXNLabel","Output":"--- PASS: TestDNSNameHasXNLabel (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.021359646Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHasXNLabel","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.021386707Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHyphenBeginningSLD"}
+{"Time":"2026-06-29T15:27:02.021396167Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHyphenBeginningSLD","Output":"=== RUN   TestDNSNameHyphenBeginningSLD\n"}
+{"Time":"2026-06-29T15:27:02.021989Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHyphenBeginningSLD","Output":"--- PASS: TestDNSNameHyphenBeginningSLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.022069452Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHyphenBeginningSLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.022124884Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHyphenEndingSLD"}
+{"Time":"2026-06-29T15:27:02.022137284Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHyphenEndingSLD","Output":"=== RUN   TestDNSNameHyphenEndingSLD\n"}
+{"Time":"2026-06-29T15:27:02.022756158Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHyphenEndingSLD","Output":"--- PASS: TestDNSNameHyphenEndingSLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.022787448Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameHyphenEndingSLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.022834789Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoHyphenInSLD"}
+{"Time":"2026-06-29T15:27:02.02285259Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoHyphenInSLD","Output":"=== RUN   TestDNSNameNoHyphenInSLD\n"}
+{"Time":"2026-06-29T15:27:02.023166557Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoHyphenInSLD","Output":"--- PASS: TestDNSNameNoHyphenInSLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.023241338Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoHyphenInSLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.023278479Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNamePrivatePublicSuffixNoHyphenInSLD"}
+{"Time":"2026-06-29T15:27:02.02329852Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNamePrivatePublicSuffixNoHyphenInSLD","Output":"=== RUN   TestDNSNamePrivatePublicSuffixNoHyphenInSLD\n"}
+{"Time":"2026-06-29T15:27:02.024015476Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNamePrivatePublicSuffixNoHyphenInSLD","Output":"--- PASS: TestDNSNamePrivatePublicSuffixNoHyphenInSLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.024046946Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNamePrivatePublicSuffixNoHyphenInSLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.024059807Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameLabelTooLong"}
+{"Time":"2026-06-29T15:27:02.024068937Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameLabelTooLong","Output":"=== RUN   TestDNSNameLabelTooLong\n"}
+{"Time":"2026-06-29T15:27:02.024759192Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameLabelTooLong","Output":"--- PASS: TestDNSNameLabelTooLong (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.024789733Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameLabelTooLong","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.024829654Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameValidTLD"}
+{"Time":"2026-06-29T15:27:02.024903986Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameValidTLD","Output":"=== RUN   TestDNSNameValidTLD\n"}
+{"Time":"2026-06-29T15:27:02.025620771Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameValidTLD","Output":"--- PASS: TestDNSNameValidTLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.025708644Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameValidTLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.025757465Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotValidTLD"}
+{"Time":"2026-06-29T15:27:02.025770695Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotValidTLD","Output":"=== RUN   TestDNSNameNotValidTLD\n"}
+{"Time":"2026-06-29T15:27:02.026372268Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotValidTLD","Output":"--- PASS: TestDNSNameNotValidTLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.02646695Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotValidTLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.026519432Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotYetValidTLD"}
+{"Time":"2026-06-29T15:27:02.026545892Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotYetValidTLD","Output":"=== RUN   TestDNSNameNotYetValidTLD\n"}
+{"Time":"2026-06-29T15:27:02.027005173Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotYetValidTLD","Output":"--- PASS: TestDNSNameNotYetValidTLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.027112945Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNotYetValidTLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.027163066Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoLongerValidTLD"}
+{"Time":"2026-06-29T15:27:02.027196117Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoLongerValidTLD","Output":"=== RUN   TestDNSNameNoLongerValidTLD\n"}
+{"Time":"2026-06-29T15:27:02.02776359Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoLongerValidTLD","Output":"--- PASS: TestDNSNameNoLongerValidTLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.027838001Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoLongerValidTLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.027874792Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWasValidTLD"}
+{"Time":"2026-06-29T15:27:02.027890742Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWasValidTLD","Output":"=== RUN   TestDNSNameWasValidTLD\n"}
+{"Time":"2026-06-29T15:27:02.028500836Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWasValidTLD","Output":"--- PASS: TestDNSNameWasValidTLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.028578398Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWasValidTLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.028612538Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameOnionTLD"}
+{"Time":"2026-06-29T15:27:02.028622239Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameOnionTLD","Output":"=== RUN   TestDNSNameOnionTLD\n"}
+{"Time":"2026-06-29T15:27:02.029206002Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameOnionTLD","Output":"--- PASS: TestDNSNameOnionTLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.029239572Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameOnionTLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.029321064Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWithIPInCommonName"}
+{"Time":"2026-06-29T15:27:02.029340945Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWithIPInCommonName","Output":"=== RUN   TestDNSNameWithIPInCommonName\n"}
+{"Time":"2026-06-29T15:27:02.030062681Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWithIPInCommonName","Output":"--- PASS: TestDNSNameWithIPInCommonName (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.030153683Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWithIPInCommonName","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.030212794Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameUnderscoreInSLD"}
+{"Time":"2026-06-29T15:27:02.030246365Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameUnderscoreInSLD","Output":"=== RUN   TestDNSNameUnderscoreInSLD\n"}
+{"Time":"2026-06-29T15:27:02.030801247Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameUnderscoreInSLD","Output":"--- PASS: TestDNSNameUnderscoreInSLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.030833588Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameUnderscoreInSLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.030858788Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoUnderscoreInSLD"}
+{"Time":"2026-06-29T15:27:02.030883179Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoUnderscoreInSLD","Output":"=== RUN   TestDNSNameNoUnderscoreInSLD\n"}
+{"Time":"2026-06-29T15:27:02.031666027Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoUnderscoreInSLD","Output":"--- PASS: TestDNSNameNoUnderscoreInSLD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.031703998Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoUnderscoreInSLD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.031785689Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameUnderscoreInTRD"}
+{"Time":"2026-06-29T15:27:02.03181499Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameUnderscoreInTRD","Output":"=== RUN   TestDNSNameUnderscoreInTRD\n"}
+{"Time":"2026-06-29T15:27:02.032530026Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameUnderscoreInTRD","Output":"--- PASS: TestDNSNameUnderscoreInTRD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.032565467Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameUnderscoreInTRD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.032582367Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoUnderscoreInTRD"}
+{"Time":"2026-06-29T15:27:02.032607048Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoUnderscoreInTRD","Output":"=== RUN   TestDNSNameNoUnderscoreInTRD\n"}
+{"Time":"2026-06-29T15:27:02.033285073Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoUnderscoreInTRD","Output":"--- PASS: TestDNSNameNoUnderscoreInTRD (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.033317154Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameNoUnderscoreInTRD","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.033357384Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestWildcardLeftOfPublicSuffix"}
+{"Time":"2026-06-29T15:27:02.033373035Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestWildcardLeftOfPublicSuffix","Output":"=== RUN   TestWildcardLeftOfPublicSuffix\n"}
+{"Time":"2026-06-29T15:27:02.033972118Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestWildcardLeftOfPublicSuffix","Output":"--- PASS: TestWildcardLeftOfPublicSuffix (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.033999349Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestWildcardLeftOfPublicSuffix","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.034091771Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestWildcardNotLeftOfPublicSuffix"}
+{"Time":"2026-06-29T15:27:02.034115241Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestWildcardNotLeftOfPublicSuffix","Output":"=== RUN   TestWildcardNotLeftOfPublicSuffix\n"}
+{"Time":"2026-06-29T15:27:02.034766256Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestWildcardNotLeftOfPublicSuffix","Output":"--- PASS: TestWildcardNotLeftOfPublicSuffix (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.034794056Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestWildcardNotLeftOfPublicSuffix","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.034895139Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWildcardOnlyInLeftLabel"}
+{"Time":"2026-06-29T15:27:02.03492469Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWildcardOnlyInLeftLabel","Output":"=== RUN   TestDNSNameWildcardOnlyInLeftLabel\n"}
+{"Time":"2026-06-29T15:27:02.035626235Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWildcardOnlyInLeftLabel","Output":"--- PASS: TestDNSNameWildcardOnlyInLeftLabel (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.035672616Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWildcardOnlyInLeftLabel","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.035696787Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWildcardNotOnlyInLeftLabel"}
+{"Time":"2026-06-29T15:27:02.035794329Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWildcardNotOnlyInLeftLabel","Output":"=== RUN   TestDNSNameWildcardNotOnlyInLeftLabel\n"}
+{"Time":"2026-06-29T15:27:02.036439853Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWildcardNotOnlyInLeftLabel","Output":"--- PASS: TestDNSNameWildcardNotOnlyInLeftLabel (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.036543506Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDNSNameWildcardNotOnlyInLeftLabel","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.036587587Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSACorrectOrderSubgroup"}
+{"Time":"2026-06-29T15:27:02.036619147Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSACorrectOrderSubgroup","Output":"=== RUN   TestDSACorrectOrderSubgroup\n"}
+{"Time":"2026-06-29T15:27:02.037726152Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSACorrectOrderSubgroup","Output":"--- PASS: TestDSACorrectOrderSubgroup (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.037761983Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSACorrectOrderSubgroup","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.037782523Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotCorrectOrderSubgroup"}
+{"Time":"2026-06-29T15:27:02.037795323Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotCorrectOrderSubgroup","Output":"=== RUN   TestDSANotCorrectOrderSubgroup\n"}
+{"Time":"2026-06-29T15:27:02.038491939Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotCorrectOrderSubgroup","Output":"--- PASS: TestDSANotCorrectOrderSubgroup (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.038578851Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotCorrectOrderSubgroup","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.038608902Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestImproperModulusBadQ"}
+{"Time":"2026-06-29T15:27:02.038624142Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestImproperModulusBadQ","Output":"=== RUN   TestImproperModulusBadQ\n"}
+{"Time":"2026-06-29T15:27:02.039343138Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestImproperModulusBadQ","Output":"--- PASS: TestImproperModulusBadQ (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.039399259Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestImproperModulusBadQ","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.03942017Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestImproperModulusGoodQ"}
+{"Time":"2026-06-29T15:27:02.03943204Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestImproperModulusGoodQ","Output":"=== RUN   TestImproperModulusGoodQ\n"}
+{"Time":"2026-06-29T15:27:02.040193657Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestImproperModulusGoodQ","Output":"--- PASS: TestImproperModulusGoodQ (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.040237278Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestImproperModulusGoodQ","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.040281089Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSAShorterThan2048Bits"}
+{"Time":"2026-06-29T15:27:02.040293179Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSAShorterThan2048Bits","Output":"=== RUN   TestDSAShorterThan2048Bits\n"}
+{"Time":"2026-06-29T15:27:02.041054856Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSAShorterThan2048Bits","Output":"--- PASS: TestDSAShorterThan2048Bits (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.041150669Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSAShorterThan2048Bits","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.041175769Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotShorterThan2048Bits"}
+{"Time":"2026-06-29T15:27:02.04123307Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotShorterThan2048Bits","Output":"=== RUN   TestDSANotShorterThan2048Bits\n"}
+{"Time":"2026-06-29T15:27:02.041565178Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotShorterThan2048Bits","Output":"--- PASS: TestDSANotShorterThan2048Bits (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.041606629Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotShorterThan2048Bits","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.04166757Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSAUniqueCorrectRepresentation"}
+{"Time":"2026-06-29T15:27:02.041693591Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSAUniqueCorrectRepresentation","Output":"=== RUN   TestDSAUniqueCorrectRepresentation\n"}
+{"Time":"2026-06-29T15:27:02.042425497Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSAUniqueCorrectRepresentation","Output":"--- PASS: TestDSAUniqueCorrectRepresentation (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.042470568Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSAUniqueCorrectRepresentation","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.042486268Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotUniqueCorrectRepresentation"}
+{"Time":"2026-06-29T15:27:02.042497379Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotUniqueCorrectRepresentation","Output":"=== RUN   TestDSANotUniqueCorrectRepresentation\n"}
+{"Time":"2026-06-29T15:27:02.042922418Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotUniqueCorrectRepresentation","Output":"--- PASS: TestDSANotUniqueCorrectRepresentation (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.042951099Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestDSANotUniqueCorrectRepresentation","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.042969599Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing"}
+{"Time":"2026-06-29T15:27:02.043123033Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing","Output":"=== RUN   Test_SubCaAiaMissing\n"}
+{"Time":"2026-06-29T15:27:02.043198324Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/pass_-_cert_valid"}
+{"Time":"2026-06-29T15:27:02.043229135Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/pass_-_cert_valid","Output":"=== RUN   Test_SubCaAiaMissing/pass_-_cert_valid\n"}
+{"Time":"2026-06-29T15:27:02.043757757Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/pass_-_cert_valid","Output":"--- PASS: Test_SubCaAiaMissing/pass_-_cert_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.043781017Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/pass_-_cert_valid","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.043946731Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/not_effective_-_test_case_for_CABF_BR_1.7.1_version_of_lint"}
+{"Time":"2026-06-29T15:27:02.043964521Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/not_effective_-_test_case_for_CABF_BR_1.7.1_version_of_lint","Output":"=== RUN   Test_SubCaAiaMissing/not_effective_-_test_case_for_CABF_BR_1.7.1_version_of_lint\n"}
+{"Time":"2026-06-29T15:27:02.044739409Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/not_effective_-_test_case_for_CABF_BR_1.7.1_version_of_lint","Output":"--- PASS: Test_SubCaAiaMissing/not_effective_-_test_case_for_CABF_BR_1.7.1_version_of_lint (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.044775359Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/not_effective_-_test_case_for_CABF_BR_1.7.1_version_of_lint","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.044861221Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/error_-_intermediate_cert_missing_AIA"}
+{"Time":"2026-06-29T15:27:02.044904062Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/error_-_intermediate_cert_missing_AIA","Output":"=== RUN   Test_SubCaAiaMissing/error_-_intermediate_cert_missing_AIA\n"}
+{"Time":"2026-06-29T15:27:02.046834856Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/error_-_intermediate_cert_missing_AIA","Output":"--- PASS: Test_SubCaAiaMissing/error_-_intermediate_cert_missing_AIA (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.046889107Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing/error_-_intermediate_cert_missing_AIA","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.046992559Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing","Output":"--- PASS: Test_SubCaAiaMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.04703613Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"Test_SubCaAiaMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.04705169Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP224"}
+{"Time":"2026-06-29T15:27:02.047064531Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP224","Output":"=== RUN   TestECP224\n"}
+{"Time":"2026-06-29T15:27:02.047722716Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP224","Output":"--- PASS: TestECP224 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.047776567Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP224","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.04790562Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP256"}
+{"Time":"2026-06-29T15:27:02.04793497Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP256","Output":"=== RUN   TestECP256\n"}
+{"Time":"2026-06-29T15:27:02.048640486Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP256","Output":"--- PASS: TestECP256 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.048741518Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP256","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.048781629Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP384"}
+{"Time":"2026-06-29T15:27:02.04880326Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP384","Output":"=== RUN   TestECP384\n"}
+{"Time":"2026-06-29T15:27:02.050207321Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP384","Output":"--- PASS: TestECP384 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.050253222Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP384","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.050275562Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP521"}
+{"Time":"2026-06-29T15:27:02.050300683Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP521","Output":"=== RUN   TestECP521\n"}
+{"Time":"2026-06-29T15:27:02.051253544Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP521","Output":"--- PASS: TestECP521 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.051296115Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestECP521","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.051325946Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNCIPNetReserved"}
+{"Time":"2026-06-29T15:27:02.051360487Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNCIPNetReserved","Output":"=== RUN   TestNCIPNetReserved\n"}
+{"Time":"2026-06-29T15:27:02.052251887Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNCIPNetReserved","Output":"--- PASS: TestNCIPNetReserved (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.052277937Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNCIPNetReserved","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.05241968Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNCIPNetNotReserved"}
+{"Time":"2026-06-29T15:27:02.052438351Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNCIPNetNotReserved","Output":"=== RUN   TestNCIPNetNotReserved\n"}
+{"Time":"2026-06-29T15:27:02.052934162Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNCIPNetNotReserved","Output":"--- PASS: TestNCIPNetNotReserved (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.052960553Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNCIPNetNotReserved","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.053008083Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPReserved"}
+{"Time":"2026-06-29T15:27:02.053021274Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPReserved","Output":"=== RUN   TestSANIPReserved\n"}
+{"Time":"2026-06-29T15:27:02.053770151Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPReserved","Output":"--- PASS: TestSANIPReserved (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.053815341Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPReserved","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.053937214Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPReserved6"}
+{"Time":"2026-06-29T15:27:02.053953085Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPReserved6","Output":"=== RUN   TestSANIPReserved6\n"}
+{"Time":"2026-06-29T15:27:02.054860955Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPReserved6","Output":"--- PASS: TestSANIPReserved6 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.054957087Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPReserved6","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.055014108Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPNotReserved"}
+{"Time":"2026-06-29T15:27:02.055026359Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPNotReserved","Output":"=== RUN   TestSANIPNotReserved\n"}
+{"Time":"2026-06-29T15:27:02.055694843Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPNotReserved","Output":"--- PASS: TestSANIPNotReserved (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.055728664Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANIPNotReserved","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.055881538Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANCritWithSubjectDn"}
+{"Time":"2026-06-29T15:27:02.055903518Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANCritWithSubjectDn","Output":"=== RUN   TestSANCritWithSubjectDn\n"}
+{"Time":"2026-06-29T15:27:02.056796958Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANCritWithSubjectDn","Output":"--- PASS: TestSANCritWithSubjectDn (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.056827889Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANCritWithSubjectDn","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.05689797Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANNotCritWithSubjectDn"}
+{"Time":"2026-06-29T15:27:02.056934611Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANNotCritWithSubjectDn","Output":"=== RUN   TestSANNotCritWithSubjectDn\n"}
+{"Time":"2026-06-29T15:27:02.057443803Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANNotCritWithSubjectDn","Output":"--- PASS: TestSANNotCritWithSubjectDn (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.057489934Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANNotCritWithSubjectDn","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.057531605Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNamePresent2"}
+{"Time":"2026-06-29T15:27:02.057612986Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNamePresent2","Output":"=== RUN   TestSANDirNamePresent2\n"}
+{"Time":"2026-06-29T15:27:02.058361063Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNamePresent2","Output":"--- PASS: TestSANDirNamePresent2 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.058407814Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNamePresent2","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.058436385Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNamePresent"}
+{"Time":"2026-06-29T15:27:02.058543797Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNamePresent","Output":"=== RUN   TestSANDirNamePresent\n"}
+{"Time":"2026-06-29T15:27:02.059208652Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNamePresent","Output":"--- PASS: TestSANDirNamePresent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.059241433Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNamePresent","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.059262723Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNameMissing"}
+{"Time":"2026-06-29T15:27:02.059289274Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNameMissing","Output":"=== RUN   TestSANDirNameMissing\n"}
+{"Time":"2026-06-29T15:27:02.05999288Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNameMissing","Output":"--- PASS: TestSANDirNameMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.060029771Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANDirNameMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.060093222Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEDIPartyPresent"}
+{"Time":"2026-06-29T15:27:02.060106002Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEDIPartyPresent","Output":"=== RUN   TestSANEDIPartyPresent\n"}
+{"Time":"2026-06-29T15:27:02.06091396Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEDIPartyPresent","Output":"--- PASS: TestSANEDIPartyPresent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.060984942Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEDIPartyPresent","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.061014582Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEDIPartyMissing"}
+{"Time":"2026-06-29T15:27:02.061030763Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEDIPartyMissing","Output":"=== RUN   TestSANEDIPartyMissing\n"}
+{"Time":"2026-06-29T15:27:02.061601506Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEDIPartyMissing","Output":"--- PASS: TestSANEDIPartyMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.061628506Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEDIPartyMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.061672037Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNoSAN"}
+{"Time":"2026-06-29T15:27:02.061683257Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNoSAN","Output":"=== RUN   TestNoSAN\n"}
+{"Time":"2026-06-29T15:27:02.062570237Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNoSAN","Output":"--- PASS: TestNoSAN (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.062644529Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestNoSAN","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.06266931Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestHasSAN"}
+{"Time":"2026-06-29T15:27:02.0626813Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestHasSAN","Output":"=== RUN   TestHasSAN\n"}
+{"Time":"2026-06-29T15:27:02.062977676Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestHasSAN","Output":"--- PASS: TestHasSAN (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.063047638Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestHasSAN","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.063083809Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANOtherNamePresent"}
+{"Time":"2026-06-29T15:27:02.063102439Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANOtherNamePresent","Output":"=== RUN   TestSANOtherNamePresent\n"}
+{"Time":"2026-06-29T15:27:02.063387566Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANOtherNamePresent","Output":"--- PASS: TestSANOtherNamePresent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.063468407Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANOtherNamePresent","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.063489008Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANOtherNameMissing"}
+{"Time":"2026-06-29T15:27:02.063507438Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANOtherNameMissing","Output":"=== RUN   TestSANOtherNameMissing\n"}
+{"Time":"2026-06-29T15:27:02.063951638Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANOtherNameMissing","Output":"--- PASS: TestSANOtherNameMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.063980969Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANOtherNameMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.064010409Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdMissing"}
+{"Time":"2026-06-29T15:27:02.0640211Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdMissing","Output":"=== RUN   TestSANRegIdMissing\n"}
+{"Time":"2026-06-29T15:27:02.06450522Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdMissing","Output":"--- PASS: TestSANRegIdMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.064530321Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.064545121Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdPresent"}
+{"Time":"2026-06-29T15:27:02.064554272Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdPresent","Output":"=== RUN   TestSANRegIdPresent\n"}
+{"Time":"2026-06-29T15:27:02.065356539Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdPresent","Output":"--- PASS: TestSANRegIdPresent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.065636206Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdPresent","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.065678977Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdPresent2"}
+{"Time":"2026-06-29T15:27:02.065708747Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdPresent2","Output":"=== RUN   TestSANRegIdPresent2\n"}
+{"Time":"2026-06-29T15:27:02.06626724Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdPresent2","Output":"--- PASS: TestSANRegIdPresent2 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.066300291Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANRegIdPresent2","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.066312791Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailPresent"}
+{"Time":"2026-06-29T15:27:02.066323421Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailPresent","Output":"=== RUN   TestSANEmailPresent\n"}
+{"Time":"2026-06-29T15:27:02.067048827Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailPresent","Output":"--- PASS: TestSANEmailPresent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.067093628Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailPresent","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.067116699Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailPresent2"}
+{"Time":"2026-06-29T15:27:02.06714555Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailPresent2","Output":"=== RUN   TestSANEmailPresent2\n"}
+{"Time":"2026-06-29T15:27:02.067772893Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailPresent2","Output":"--- PASS: TestSANEmailPresent2 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.067807534Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailPresent2","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.067855175Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailMissing"}
+{"Time":"2026-06-29T15:27:02.067873466Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailMissing","Output":"=== RUN   TestSANEmailMissing\n"}
+{"Time":"2026-06-29T15:27:02.068201093Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailMissing","Output":"--- PASS: TestSANEmailMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.068234614Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANEmailMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.068247254Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIMissing"}
+{"Time":"2026-06-29T15:27:02.068257934Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIMissing","Output":"=== RUN   TestSANURIMissing\n"}
+{"Time":"2026-06-29T15:27:02.068610572Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIMissing","Output":"--- PASS: TestSANURIMissing (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.068637043Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIMissing","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.068684174Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIPresent"}
+{"Time":"2026-06-29T15:27:02.068695014Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIPresent","Output":"=== RUN   TestSANURIPresent\n"}
+{"Time":"2026-06-29T15:27:02.0693913Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIPresent","Output":"--- PASS: TestSANURIPresent (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.069502692Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIPresent","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.069547803Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIPresent2"}
+{"Time":"2026-06-29T15:27:02.069558833Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIPresent2","Output":"=== RUN   TestSANURIPresent2\n"}
+{"Time":"2026-06-29T15:27:02.070127806Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIPresent2","Output":"--- PASS: TestSANURIPresent2 (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.070152217Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestSANURIPresent2","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.070260209Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid"}
+{"Time":"2026-06-29T15:27:02.07031433Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"=== RUN   TestTorDescHashInvalid\n"}
+{"Time":"2026-06-29T15:27:02.070341731Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_before_util.CABV201Date"}
+{"Time":"2026-06-29T15:27:02.070361791Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_before_util.CABV201Date","Output":"=== RUN   TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_before_util.CABV201Date\n"}
+{"Time":"2026-06-29T15:27:02.070780451Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_before_util.CABV201Date","Output":"--- PASS: TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_before_util.CABV201Date (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.070821882Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_before_util.CABV201Date","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.070835892Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_after_util.CABV201Date"}
+{"Time":"2026-06-29T15:27:02.070846722Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_after_util.CABV201Date","Output":"=== RUN   TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_after_util.CABV201Date\n"}
+{"Time":"2026-06-29T15:27:02.071477546Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_after_util.CABV201Date","Output":"--- PASS: TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_after_util.CABV201Date (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.071540848Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_no_service_descriptor_extension,_after_util.CABV201Date","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.071672611Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_unknown_hash_algorithm"}
+{"Time":"2026-06-29T15:27:02.071692841Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_unknown_hash_algorithm","Output":"=== RUN   TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_unknown_hash_algorithm\n"}
+{"Time":"2026-06-29T15:27:02.072329155Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_unknown_hash_algorithm","Output":"--- PASS: TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_unknown_hash_algorithm (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.072441298Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_unknown_hash_algorithm","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.07255942Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_missing_hostname"}
+{"Time":"2026-06-29T15:27:02.072578421Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_missing_hostname","Output":"=== RUN   TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_missing_hostname\n"}
+{"Time":"2026-06-29T15:27:02.073141644Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_missing_hostname","Output":"--- PASS: TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_missing_hostname (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.073173454Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_missing_hostname","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.073237106Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_hash_alg_and_hash_bit_len_mismatch"}
+{"Time":"2026-06-29T15:27:02.073264676Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_hash_alg_and_hash_bit_len_mismatch","Output":"=== RUN   TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_hash_alg_and_hash_bit_len_mismatch\n"}
+{"Time":"2026-06-29T15:27:02.073822259Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_hash_alg_and_hash_bit_len_mismatch","Output":"--- PASS: TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_hash_alg_and_hash_bit_len_mismatch (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.073843049Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_bad_service_descriptor,_hash_alg_and_hash_bit_len_mismatch","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.073963702Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Multiple_Onion_subjects,_one_missing_service_descriptor_hash_entry"}
+{"Time":"2026-06-29T15:27:02.073993563Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Multiple_Onion_subjects,_one_missing_service_descriptor_hash_entry","Output":"=== RUN   TestTorDescHashInvalid/Multiple_Onion_subjects,_one_missing_service_descriptor_hash_entry\n"}
+{"Time":"2026-06-29T15:27:02.074484083Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Multiple_Onion_subjects,_one_missing_service_descriptor_hash_entry","Output":"--- PASS: TestTorDescHashInvalid/Multiple_Onion_subjects,_one_missing_service_descriptor_hash_entry (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.074516084Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Multiple_Onion_subjects,_one_missing_service_descriptor_hash_entry","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.074566005Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/More_service_descriptor_hash_entries_than_Onion_subjects"}
+{"Time":"2026-06-29T15:27:02.074584136Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/More_service_descriptor_hash_entries_than_Onion_subjects","Output":"=== RUN   TestTorDescHashInvalid/More_service_descriptor_hash_entries_than_Onion_subjects\n"}
+{"Time":"2026-06-29T15:27:02.075270041Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/More_service_descriptor_hash_entries_than_Onion_subjects","Output":"--- PASS: TestTorDescHashInvalid/More_service_descriptor_hash_entries_than_Onion_subjects (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.075304642Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/More_service_descriptor_hash_entries_than_Onion_subjects","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.075383914Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_valid_service_descriptor_extension"}
+{"Time":"2026-06-29T15:27:02.075423504Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_valid_service_descriptor_extension","Output":"=== RUN   TestTorDescHashInvalid/Onion_subject,_valid_service_descriptor_extension\n"}
+{"Time":"2026-06-29T15:27:02.076039978Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_valid_service_descriptor_extension","Output":"--- PASS: TestTorDescHashInvalid/Onion_subject,_valid_service_descriptor_extension (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.076069679Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/Onion_subject,_valid_service_descriptor_extension","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.0761163Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/V3_address_does_not_require_TorServiceDescriptorHash"}
+{"Time":"2026-06-29T15:27:02.07614146Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/V3_address_does_not_require_TorServiceDescriptorHash","Output":"=== RUN   TestTorDescHashInvalid/V3_address_does_not_require_TorServiceDescriptorHash\n"}
+{"Time":"2026-06-29T15:27:02.076980049Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/V3_address_does_not_require_TorServiceDescriptorHash","Output":"--- PASS: TestTorDescHashInvalid/V3_address_does_not_require_TorServiceDescriptorHash (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.07702387Z","Action":"pass","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/V3_address_does_not_require_TorServiceDescriptorHash","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.077073891Z","Action":"run","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/V3_address_with_also_a_regular_DNS_name"}
+{"Time":"2026-06-29T15:27:02.077101012Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/V3_address_with_also_a_regular_DNS_name","Output":"=== RUN   TestTorDescHashInvalid/V3_address_with_also_a_regular_DNS_name\n"}
+{"Time":"2026-06-29T15:27:02.07747411Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/V3_address_with_also_a_regular_DNS_name","Output":"--- FAIL: TestTorDescHashInvalid/V3_address_with_also_a_regular_DNS_name (0.00s)\n"}
+{"Time":"2026-06-29T15:27:02.077506871Z","Action":"fail","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid/V3_address_with_also_a_regular_DNS_name","Elapsed":0}
+{"Time":"2026-06-29T15:27:02.077521631Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"--- FAIL: TestTorDescHashInvalid (0.01s)\n"}
+{"Time":"2026-06-29T15:27:02.080624031Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"panic: Unable to read test certificate from \"../../testdata/onionV3AndDNS.pem\" - \"open ../../testdata/onionV3AndDNS.pem: no such file or directory\" Does a unit test have an incorrect test file name?\n"}
+{"Time":"2026-06-29T15:27:02.080659772Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":" [recovered]\n"}
+{"Time":"2026-06-29T15:27:02.080689292Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\tpanic: Unable to read test certificate from \"../../testdata/onionV3AndDNS.pem\" - \"open ../../testdata/onionV3AndDNS.pem: no such file or directory\" Does a unit test have an incorrect test file name?\n"}
+{"Time":"2026-06-29T15:27:02.080715203Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\n"}
+{"Time":"2026-06-29T15:27:02.080728053Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\n"}
+{"Time":"2026-06-29T15:27:02.080752683Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"goroutine 184 [running]:\n"}
+{"Time":"2026-06-29T15:27:02.080772724Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"testing.tRunner.func1.2({0x6302e0, 0xc000024ba0})\n"}
+{"Time":"2026-06-29T15:27:02.080798935Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\t/usr/local/go/src/testing/testing.go:1545 +0x238\n"}
+{"Time":"2026-06-29T15:27:02.080810915Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-06-29T15:27:02.080826605Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\t/usr/local/go/src/testing/testing.go:1548 +0x397\n"}
+{"Time":"2026-06-29T15:27:02.080940908Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"panic({0x6302e0?, 0xc000024ba0?})\n"}
+{"Time":"2026-06-29T15:27:02.080998409Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\t/usr/local/go/src/runtime/panic.go:914 +0x21f\n"}
+{"Time":"2026-06-29T15:27:02.08102328Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"github.com/zmap/zlint/v3/test.ReadTestCert({0x695d19?, 0x751bb2?})\n"}
+{"Time":"2026-06-29T15:27:02.08105029Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\t/workspace/repo/v3/test/helpers.go:77 +0x2b9\n"}
+{"Time":"2026-06-29T15:27:02.081121742Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"github.com/zmap/zlint/v3/test.TestLint({0x6b129a, 0x29}, {0x695d19?, 0x84b788?})\n"}
+{"Time":"2026-06-29T15:27:02.081150823Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\t/workspace/repo/v3/test/helpers.go:38 +0x28\n"}
+{"Time":"2026-06-29T15:27:02.081170553Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"github.com/zmap/zlint/v3/lints/cabf_br.TestTorDescHashInvalid.func1(0xc000503860)\n"}
+{"Time":"2026-06-29T15:27:02.081213314Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\t/workspace/repo/v3/lints/cabf_br/lint_ext_tor_service_descriptor_hash_invalid_test.go:77 +0x39\n"}
+{"Time":"2026-06-29T15:27:02.081261625Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"testing.tRunner(0xc000503860, 0xc000024b20)\n"}
+{"Time":"2026-06-29T15:27:02.081284025Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\t/usr/local/go/src/testing/testing.go:1595 +0xff\n"}
+{"Time":"2026-06-29T15:27:02.081302206Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"created by testing.(*T).Run in goroutine 174\n"}
+{"Time":"2026-06-29T15:27:02.081313606Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Output":"\t/usr/local/go/src/testing/testing.go:1648 +0x3ad\n"}
+{"Time":"2026-06-29T15:27:02.082429291Z","Action":"fail","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Test":"TestTorDescHashInvalid","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:02.082484202Z","Action":"output","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Output":"FAIL\tgithub.com/zmap/zlint/v3/lints/cabf_br\t0.123s\n"}
+{"Time":"2026-06-29T15:27:02.082555334Z","Action":"fail","Package":"github.com/zmap/zlint/v3/lints/cabf_br","Elapsed":0.123}
+FAIL	github.com/zmap/zlint/v3/util [build failed]
+reward=0 graded=500 found=251 failed=126 parsed=129 framework=go exit_code=1

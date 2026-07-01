@@ -1,0 +1,23 @@
+{
+ "task": "elastic-go-elasticsearch-784",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds IfSeqNo/IfPrimaryTerm *int64 and marshalls '\"if_seq_no\":'+'\"if_primary_term\":' only when DocumentID!='' && both non-nil; test asserts exact `{\"index\":{\"_id\":\"1\",\"if_seq_no\":45,\"if_primary_term\":67}}`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 8,
+  "shallow": true
+ }
+}

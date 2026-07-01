@@ -1,0 +1,11 @@
+patching file core/lib/types/src/event/tests.rs
+   Compiling zksync_types v0.1.0 (/workspace/repo/core/lib/types)
+    Finished test [unoptimized + debuginfo] target(s) in 16.79s
+────────────
+ Nextest run ID 672e3934-1d88-46b7-87ed-b17259de54b4 with nextest profile: default
+    Starting 0 tests across 1 binary (60 tests skipped)
+────────────
+     Summary [   0.001s] 0 tests run: 0 passed, 60 skipped
+error: no tests to run
+(hint: use `--no-tests` to customize)
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=cargo exit_code=4

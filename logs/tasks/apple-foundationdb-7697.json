@@ -1,0 +1,23 @@
+{
+ "task": "apple-foundationdb-7697",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "case EnvironmentArgumentType, IPListArgumentType: return argument.LookupEnv(env) ... return \"\", fmt.Errorf(\"could not find IP with family %d\", argument.IPFamily)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

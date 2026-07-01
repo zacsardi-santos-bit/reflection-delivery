@@ -1,0 +1,494 @@
+patching file tests/common/db/organizations.py
+patching file tests/unit/admin/test_routes.py
+patching file tests/unit/admin/views/test_organizations.py
+patching file tests/unit/manage/views/test_organizations.py
+patching file tests/unit/organizations/test_models.py
+patching file tests/unit/test_predicates.py
+Starting PostgreSQL 17 database server: main.
+============================= test session starts ==============================
+platform linux -- Python 3.13.14, pytest-8.4.1, pluggy-1.6.0 -- /usr/local/bin/python3.13
+cachedir: dev/.pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: postgresql-7.0.2, socket-0.7.0, Faker-37.5.3, mock-3.14.1, xdist-3.8.0, icdiff-0.9, sugar-1.1.0
+created: 17/17 workers
+17 workers [226 items]
+
+scheduling tests via LoadScheduling
+
+tests/unit/admin/test_routes.py::test_includeme 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_name_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_is_approved_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationForm::test_validate_missing_required_fields 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_type_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationActions::test_rename_not_found 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_organization_application_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_is_approved_true 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_no_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_not_found 
+tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_type_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_with_page 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_description_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_conflicting_applications[py-pi-conflicts1-conflicting_prefixes1-not_conflicting1] 
+tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_does_not_update_with_invalid_form 
+[gw0] [  0%] PASSED tests/unit/admin/test_routes.py::test_includeme 
+tests/unit/admin/views/test_organizations.py::TestOrganizationForm::test_validate_success 
+[gw1] [  0%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationForm::test_validate_missing_required_fields 
+tests/unit/admin/views/test_organizations.py::TestOrganizationForm::test_validate_field_too_long 
+[gw0] [  1%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationForm::test_validate_success 
+tests/unit/admin/views/test_organizations.py::TestOrganizationForm::test_validate_invalid_url 
+[gw1] [  1%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationForm::test_validate_field_too_long 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_no_query 
+[gw0] [  2%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationForm::test_validate_invalid_url 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_approve_turbo_mode 
+[gw7] [  2%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_not_found 
+tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_updates_organization 
+[gw9] [  3%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationActions::test_rename_not_found 
+tests/unit/admin/views/test_organizations.py::TestOrganizationActions::test_rename 
+[gw8] [  3%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_does_not_update_with_invalid_form 
+tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_with_roles 
+[gw11] [  3%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_organization_application_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_url_query 
+[gw14] [  4%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_edit 
+[gw15] [  4%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_is_approved_true 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_is_approved_false 
+[gw13] [  5%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_type_query 
+[gw6] [  5%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_invalid_type_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_is_approved_true 
+[gw3] [  6%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_name_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_organization_query 
+[gw0] [  6%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_approve_turbo_mode 
+[gw5] [  7%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_type_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_approve_not_found 
+[gw12] [  7%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_is_approved_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_invalid_type_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_is_declined_query 
+[gw4] [  7%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_description_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_is_active_query 
+[gw16] [  8%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_conflicting_applications[py-pi-conflicts1-conflicting_prefixes1-not_conflicting1] 
+[gw7] [  8%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_updates_organization 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_not_found 
+tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_updates_organization_with_stripe_customer 
+[gw10] [  9%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_no_query 
+[gw0] [  9%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_approve_not_found 
+[gw9] [ 10%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationActions::test_rename 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_basic_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_defer 
+[gw1] [ 10%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_no_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationActions::test_rename_fails_on_conflict 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_defer_not_found 
+[gw2] [ 11%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_with_page 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_with_invalid_page 
+[gw8] [ 11%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_with_roles 
+tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_no_roles 
+[gw14] [ 11%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_edit 
+[gw13] [ 12%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_invalid_type_query 
+[gw11] [ 12%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_url_query 
+[gw15] [ 13%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_is_approved_false 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_is_invalid_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_edit_invalid 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_description_query 
+[gw6] [ 13%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_is_approved_true 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_conflicting_applications[pypi-conflicts0-conflicting_prefixes0-not_conflicting0] 
+tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_is_approved_false 
+[gw16] [ 14%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_not_found 
+[gw5] [ 14%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_invalid_type_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_approve 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_is_invalid_query 
+[gw3] [ 15%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_organization_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_url_query 
+[gw12] [ 15%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_is_declined_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_is_submitted_query 
+[gw1] [ 15%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_defer_not_found 
+[gw2] [ 16%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_with_invalid_page 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_request_more_information 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_basic_query 
+[gw4] [ 16%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_is_active_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_is_inactive_query 
+[gw7] [ 17%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_updates_organization_with_stripe_customer 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_request_more_information_no_message 
+[gw0] [ 17%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_defer 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_defer_turbo_mode 
+[gw8] [ 18%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_no_roles 
+tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_unknown_user 
+[gw9] [ 18%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationActions::test_rename_fails_on_conflict 
+[gw10] [ 19%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_basic_query 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_decline_not_found 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_name_query 
+[gw6] [ 19%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_is_approved_false 
+tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_missing_seat_limit 
+[gw13] [ 19%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_is_invalid_query 
+[gw14] [ 20%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_edit_invalid 
+tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_organization_not_found 
+tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role_no_role_name 
+[gw11] [ 20%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_description_query 
+[gw16] [ 21%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_approve 
+tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role 
+tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_invalid_seat_limit_negative 
+[gw5] [ 21%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_is_invalid_query 
+tests/unit/admin/views/test_organizations.py::TestAddManualActivation::test_add_manual_activation_organization_not_found 
+[gw15] [ 22%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_conflicting_applications[pypi-conflicts0-conflicting_prefixes0-not_conflicting0] 
+[gw3] [ 22%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_url_query 
+tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role_no_confirmation 
+tests/unit/admin/views/test_organizations.py::TestUpdateManualActivation::test_update_manual_activation_success 
+[gw1] [ 23%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_request_more_information 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_request_more_information_turbo_mode 
+[gw9] [ 23%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_decline_not_found 
+tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role 
+[gw12] [ 23%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_is_submitted_query 
+[gw2] [ 24%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_basic_query 
+tests/unit/admin/views/test_organizations.py::TestUpdateManualActivation::test_update_manual_activation_organization_not_found 
+[gw7] [ 24%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_request_more_information_no_message 
+tests/unit/admin/views/test_organizations.py::TestDeleteManualActivation::test_delete_manual_activation_no_confirmation 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_decline 
+[gw8] [ 25%] PASSED tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_unknown_user 
+[gw0] [ 25%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_defer_turbo_mode 
+[gw13] [ 26%] PASSED tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_organization_not_found 
+tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_no_role_name 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_response_with_info_requests 
+tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role 
+[gw5] [ 26%] PASSED tests/unit/admin/views/test_organizations.py::TestAddManualActivation::test_add_manual_activation_organization_not_found 
+[gw4] [ 26%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_is_inactive_query 
+tests/unit/admin/views/test_organizations.py::TestDeleteManualActivation::test_delete_manual_activation_organization_not_found 
+tests/unit/admin/views/test_organizations.py::TestAddManualActivation::test_add_manual_activation_already_exists 
+[gw6] [ 27%] PASSED tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_missing_seat_limit 
+tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_missing_expires 
+[gw16] [ 27%] PASSED tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_invalid_seat_limit_negative 
+tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_expires_in_past 
+[gw10] [ 28%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_name_query 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_response_with_all_responded 
+[gw6] [ 28%] PASSED tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_missing_expires 
+tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_invalid_seat_limit_zero 
+[gw12] [ 29%] PASSED tests/unit/admin/views/test_organizations.py::TestUpdateManualActivation::test_update_manual_activation_organization_not_found 
+[gw16] [ 29%] PASSED tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_expires_in_past 
+tests/unit/admin/views/test_organizations.py::TestDeleteManualActivation::test_delete_manual_activation_success 
+tests/unit/admin/views/test_organizations.py::TestAddManualActivation::test_add_manual_activation_success 
+[gw6] [ 30%] PASSED tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_invalid_seat_limit_zero 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_submit_response 
+[gw14] [ 30%] PASSED tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role_no_role_name 
+tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role_same_role 
+[gw1] [ 30%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_request_more_information_turbo_mode 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_request_more_information_for_not_found 
+[gw4] [ 31%] PASSED tests/unit/admin/views/test_organizations.py::TestDeleteManualActivation::test_delete_manual_activation_organization_not_found 
+[gw11] [ 31%] PASSED tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application 
+tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role_not_found 
+[gw7] [ 32%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_decline 
+[gw15] [ 32%] PASSED tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role_no_confirmation 
+tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_decline_turbo_mode 
+[gw9] [ 33%] PASSED tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role 
+tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role_organization_not_found 
+tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_no_username 
+[gw2] [ 33%] PASSED tests/unit/admin/views/test_organizations.py::TestDeleteManualActivation::test_delete_manual_activation_no_confirmation 
+tests/unit/admin/views/test_organizations.py::TestDeleteManualActivation::test_delete_manual_activation_not_found 
+[gw8] [ 34%] PASSED tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_no_role_name 
+tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_user_already_has_role 
+[gw13] [ 34%] PASSED tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role 
+tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role_not_found 
+[gw1] [ 34%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_request_more_information_for_not_found 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_create_organization_application_with_subscription 
+[gw15] [ 35%] PASSED tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role_organization_not_found 
+tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_success 
+[gw3] [ 35%] PASSED tests/unit/admin/views/test_organizations.py::TestUpdateManualActivation::test_update_manual_activation_success 
+[gw16] [ 36%] PASSED tests/unit/admin/views/test_organizations.py::TestAddManualActivation::test_add_manual_activation_success 
+tests/unit/admin/views/test_organizations.py::TestUpdateManualActivation::test_update_manual_activation_not_found 
+[gw12] [ 36%] PASSED tests/unit/admin/views/test_organizations.py::TestDeleteManualActivation::test_delete_manual_activation_success 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_manage_organizations_disable_organizations 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_default_response 
+[gw16] [ 37%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_manage_organizations_disable_organizations 
+[gw14] [ 37%] PASSED tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role_same_role 
+[gw11] [ 38%] PASSED tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role_not_found 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_create_organization_application 
+[gw12] [ 38%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_default_response 
+[gw4] [ 38%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application 
+[gw9] [ 39%] PASSED tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_no_username 
+tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role_wrong_confirmation 
+tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role_organization_not_found 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_manage_organizations 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_create_organization_application_disable_organizations 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization[Community-False] 
+[gw12] [ 39%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_manage_organizations 
+[gw7] [ 40%] PASSED tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_decline_turbo_mode 
+[gw4] [ 40%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_create_organization_application_disable_organizations 
+[gw2] [ 41%] PASSED tests/unit/admin/views/test_organizations.py::TestDeleteManualActivation::test_delete_manual_activation_not_found 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_manage_subscription_local_mock 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization[Community-True] 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_manage_organization 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization_validation_fails 
+[gw0] [ 41%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_response_with_info_requests 
+[gw6] [ 42%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_submit_response 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_response_with_info_requests_and_responses 
+[gw5] [ 42%] PASSED tests/unit/admin/views/test_organizations.py::TestAddManualActivation::test_add_manual_activation_already_exists 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_submit_response_correct_request 
+[gw1] [ 42%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_create_organization_application_with_subscription 
+tests/unit/admin/views/test_organizations.py::TestAddManualActivation::test_add_manual_activation_invalid_form 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_create_organization_application_validation_fails 
+[gw1] [ 43%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_create_organization_application_validation_fails 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_existing_project_no_individual_owner 
+[gw8] [ 43%] PASSED tests/unit/admin/views/test_organizations.py::TestAddOrganizationRole::test_add_role_user_already_has_role 
+[gw10] [ 44%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_response_with_all_responded 
+[gw13] [ 44%] PASSED tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role_not_found 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_disable_save_organization_name 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_delete_organization_with_active_projects 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_submit_empty 
+[gw15] [ 45%] PASSED tests/unit/admin/views/test_organizations.py::TestManualActivationForm::test_validate_success 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_disable_organizations 
+[gw16] [ 45%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizations::test_create_organization_application 
+[gw3] [ 46%] PASSED tests/unit/admin/views/test_organizations.py::TestUpdateManualActivation::test_update_manual_activation_not_found 
+[gw14] [ 46%] PASSED tests/unit/admin/views/test_organizations.py::TestUpdateOrganizationRole::test_update_role_organization_not_found 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_post_activate_subscription_valid 
+tests/unit/admin/views/test_organizations.py::TestUpdateManualActivation::test_update_manual_activation_invalid_form 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_manage_subscription 
+[gw11] [ 46%] PASSED tests/unit/admin/views/test_organizations.py::TestDeleteOrganizationRole::test_delete_role_wrong_confirmation 
+[gw4] [ 47%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_manage_organization 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_create_subscription 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationTeams::test_create_team 
+[gw2] [ 47%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization_validation_fails 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization_name_wrong_confirm 
+[gw7] [ 48%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization[Community-True] 
+[gw9] [ 48%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization[Community-False] 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization[Company-True] 
+[gw5] [ 49%] PASSED tests/unit/admin/views/test_organizations.py::TestAddManualActivation::test_add_manual_activation_invalid_form 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization[Company-False] 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_existing_project 
+[gw6] [ 49%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_submit_response_correct_request 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_manage_organization_projects 
+[gw8] [ 50%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_disable_save_organization_name 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_delete_organization 
+[gw15] [ 50%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_disable_organizations 
+[gw12] [ 50%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_manage_subscription_local_mock 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationTeams::test_manage_teams 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_activate_subscription 
+[gw10] [ 51%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_submit_empty 
+[gw13] [ 51%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_delete_organization_with_active_projects 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_customer_id 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_new_project 
+[gw16] [ 52%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_post_activate_subscription_valid 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_post_activate_subscription_invalid 
+[gw3] [ 52%] PASSED tests/unit/admin/views/test_organizations.py::TestUpdateManualActivation::test_update_manual_activation_invalid_form 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_new_project_exception[-invalid-name--The name '-invalid-name-' is invalid.] 
+[gw2] [ 53%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization_name_wrong_confirm 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_new_organization_role[Community] 
+[gw14] [ 53%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_manage_subscription 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_new_project_exception[requirements.txt-The name 'requirements.txt' isn't allowed. See help-url for more information.] 
+[gw1] [ 53%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_existing_project_no_individual_owner 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_existing_project_invalid 
+[gw0] [ 54%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationApplication::test_manage_organization_application_response_with_info_requests_and_responses 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationTeams::test_create_team_invalid 
+[gw11] [ 54%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_create_subscription 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_new_project_name_conflict 
+[gw7] [ 55%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization[Company-True] 
+[gw9] [ 55%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_save_organization[Company-False] 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_new_organization_role[Company] 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_duplicate_organization_role 
+[gw15] [ 56%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_activate_subscription 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_manage_organization_roles_not_in_good_standing 
+[gw4] [ 56%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationTeams::test_create_team 
+[gw16] [ 57%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_post_activate_subscription_invalid 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_get_manage_organization_roles 
+[gw13] [ 57%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationBillingViews::test_customer_id 
+[gw12] [ 57%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationTeams::test_manage_teams 
+[gw8] [ 58%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationSettings::test_delete_organization 
+tests/unit/manage/views/test_organizations.py::TestResendOrganizationInvitations::test_resend_invitation_fails_missing_invitation 
+tests/unit/manage/views/test_organizations.py::TestResendOrganizationInvitations::test_resend_invitation 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_cannot_reinvite_organization_role 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_reinvite_organization_role_after_expiration 
+[gw6] [ 58%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_manage_organization_projects 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_unverified_email[False] 
+[gw5] [ 59%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_existing_project 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_unverified_email[True] 
+[gw0] [ 59%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationTeams::test_create_team_invalid 
+[gw3] [ 60%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_new_project_exception[-invalid-name--The name '-invalid-name-' is invalid.] 
+[gw10] [ 60%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_new_project 
+tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_role[Company] 
+tests/unit/manage/views/test_organizations.py::TestRevokeOrganizationInvitation::test_revoke_invitation 
+tests/unit/manage/views/test_organizations.py::TestResendOrganizationInvitations::test_resend_invitation_fails_corrupt_token 
+[gw9] [ 61%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_duplicate_organization_role 
+tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_own_owner_organization_role 
+[gw14] [ 61%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_new_project_exception[requirements.txt-The name 'requirements.txt' isn't allowed. See help-url for more information.] 
+tests/unit/manage/views/test_organizations.py::TestRevokeOrganizationInvitation::test_token_expired 
+[gw11] [ 61%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_new_project_name_conflict 
+[gw15] [ 62%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_manage_organization_roles_not_in_good_standing 
+[gw4] [ 62%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_get_manage_organization_roles 
+[gw16] [ 63%] PASSED tests/unit/manage/views/test_organizations.py::TestResendOrganizationInvitations::test_resend_invitation_fails_missing_invitation 
+tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_organization_role_invalid_role_name 
+tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_role 
+tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_other_role_as_nonowner 
+tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_missing_role 
+[gw6] [ 63%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_unverified_email[False] 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_raises_400_with_pagenum_type_str 
+[gw8] [ 64%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_cannot_reinvite_organization_role 
+tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_non_owner_role 
+[gw2] [ 64%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_new_organization_role[Community] 
+tests/unit/manage/views/test_organizations.py::TestRevokeOrganizationInvitation::test_invitation_does_not_exist 
+[gw1] [ 65%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationProjects::test_add_organization_project_existing_project_invalid 
+tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_role[Community] 
+[gw5] [ 65%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_unverified_email[True] 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_first_page 
+[gw0] [ 65%] PASSED tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_role[Company] 
+[gw9] [ 66%] PASSED tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_own_owner_organization_role 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_last_page 
+tests/unit/organizations/test_models.py::TestOrganizationApplicationFactory::test_traversal_cant_find 
+[gw10] [ 66%] PASSED tests/unit/manage/views/test_organizations.py::TestResendOrganizationInvitations::test_resend_invitation_fails_corrupt_token 
+[gw11] [ 67%] PASSED tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_organization_role_invalid_role_name 
+[gw6] [ 67%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_raises_400_with_pagenum_type_str 
+tests/unit/organizations/test_models.py::TestOrganizationApplicationFactory::test_traversal_finds 
+[gw12] [ 68%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_reinvite_organization_role_after_expiration 
+tests/unit/organizations/test_models.py::TestOrganization::test_customer_name 
+[gw7] [ 68%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationRoles::test_post_new_organization_role[Company] 
+[gw3] [ 69%] PASSED tests/unit/manage/views/test_organizations.py::TestRevokeOrganizationInvitation::test_revoke_invitation 
+[gw13] [ 69%] PASSED tests/unit/manage/views/test_organizations.py::TestResendOrganizationInvitations::test_resend_invitation 
+tests/unit/organizations/test_models.py::TestOrganizationFactory::test_traversal_finds[foo-foo] 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_get 
+tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_missing_organization_role 
+tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_raises_404_with_out_of_range_page 
+tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_own_owner_role 
+[gw14] [ 69%] PASSED tests/unit/manage/views/test_organizations.py::TestRevokeOrganizationInvitation::test_token_expired 
+tests/unit/organizations/test_models.py::TestOrganizationApplication::test_acl 
+[gw4] [ 70%] PASSED tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_missing_role 
+tests/unit/organizations/test_models.py::TestOrganizationFactory::test_traversal_redirects 
+[gw16] [ 70%] PASSED tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_other_role_as_nonowner 
+tests/unit/organizations/test_models.py::TestOrganizationFactory::test_traversal_cant_find 
+[gw15] [ 71%] PASSED tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_role 
+[gw2] [ 71%] PASSED tests/unit/manage/views/test_organizations.py::TestRevokeOrganizationInvitation::test_invitation_does_not_exist 
+tests/unit/organizations/test_models.py::TestOrganizationFactory::test_traversal_finds[Bar-bar] 
+tests/unit/organizations/test_models.py::TestOrganization::test_record_event_with_geoip 
+[gw8] [ 72%] PASSED tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_non_owner_role 
+tests/unit/organizations/test_models.py::TestOrganization::test_acl 
+[gw6] [ 72%] PASSED tests/unit/organizations/test_models.py::TestOrganization::test_customer_name 
+tests/unit/organizations/test_models.py::TestTeam::test_active_subscription_none 
+[gw1] [ 73%] PASSED tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_role[Community] 
+[gw9] [ 73%] PASSED tests/unit/organizations/test_models.py::TestOrganizationApplicationFactory::test_traversal_cant_find 
+tests/unit/organizations/test_models.py::TestOrganization::test_location_info_without_geoip 
+tests/unit/organizations/test_models.py::TestTeamFactory::test_traversal_cant_find 
+[gw11] [ 73%] PASSED tests/unit/organizations/test_models.py::TestOrganizationFactory::test_traversal_finds[foo-foo] 
+tests/unit/organizations/test_models.py::TestTeam::test_active_subscription 
+[gw10] [ 74%] PASSED tests/unit/organizations/test_models.py::TestOrganizationApplicationFactory::test_traversal_finds 
+tests/unit/organizations/test_models.py::TestTeam::test_acl 
+[gw14] [ 74%] PASSED tests/unit/organizations/test_models.py::TestOrganizationApplication::test_acl 
+tests/unit/organizations/test_models.py::TestTeam::test_good_standing_community_without_manual_activation 
+[gw12] [ 75%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_get 
+tests/unit/organizations/test_models.py::TestTeam::test_manageable_subscription 
+[gw4] [ 75%] PASSED tests/unit/organizations/test_models.py::TestOrganizationFactory::test_traversal_redirects 
+[gw7] [ 76%] PASSED tests/unit/manage/views/test_organizations.py::TestChangeOrganizationRole::test_change_missing_organization_role 
+tests/unit/organizations/test_models.py::TestTeam::test_good_standing_company_without_manual_activation_or_subscription 
+tests/unit/organizations/test_models.py::TestTeam::test_manageable_subscription_none 
+[gw5] [ 76%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_first_page 
+tests/unit/organizations/test_models.py::TestOrganization::test_location_info_with_partial 
+[gw0] [ 76%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_last_page 
+tests/unit/organizations/test_models.py::TestTeamFactory::test_traversal_finds 
+[gw13] [ 77%] PASSED tests/unit/manage/views/test_organizations.py::TestDeleteOrganizationRoles::test_delete_own_owner_role 
+tests/unit/organizations/test_models.py::TestTeam::test_good_standing_with_manual_activation_active 
+[gw15] [ 77%] PASSED tests/unit/organizations/test_models.py::TestOrganizationFactory::test_traversal_finds[Bar-bar] 
+[gw16] [ 78%] PASSED tests/unit/organizations/test_models.py::TestOrganizationFactory::test_traversal_cant_find 
+tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_is_active_past_expiration 
+[gw3] [ 78%] PASSED tests/unit/manage/views/test_organizations.py::TestManageOrganizationHistory::test_raises_404_with_out_of_range_page 
+tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_is_active_future_expiration 
+tests/unit/organizations/test_models.py::TestTeam::test_good_standing_with_manual_activation_expired 
+[gw2] [ 79%] PASSED tests/unit/organizations/test_models.py::TestOrganization::test_record_event_with_geoip 
+tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_current_member_count 
+[gw9] [ 79%] PASSED tests/unit/organizations/test_models.py::TestTeamFactory::test_traversal_cant_find 
+tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_available_seats 
+[gw1] [ 80%] PASSED tests/unit/organizations/test_models.py::TestOrganization::test_location_info_without_geoip 
+tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_has_available_seats_over_limit 
+[gw14] [ 80%] PASSED tests/unit/organizations/test_models.py::TestTeam::test_good_standing_community_without_manual_activation 
+tests/unit/organizations/test_models.py::TestOrganizationBillingMethods::test_is_in_good_standing_company_without_billing 
+[gw6] [ 80%] PASSED tests/unit/organizations/test_models.py::TestTeam::test_active_subscription_none 
+[gw8] [ 81%] PASSED tests/unit/organizations/test_models.py::TestOrganization::test_acl 
+tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_has_available_seats_at_limit 
+tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_has_available_seats_with_space 
+[gw4] [ 81%] PASSED tests/unit/organizations/test_models.py::TestTeam::test_good_standing_company_without_manual_activation_or_subscription 
+[gw11] [ 82%] PASSED tests/unit/organizations/test_models.py::TestTeam::test_active_subscription 
+tests/unit/test_predicates.py::TestDomainPredicate::test_text[None-domain = None] 
+tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_available_seats_negative 
+[gw12] [ 82%] PASSED tests/unit/organizations/test_models.py::TestTeam::test_manageable_subscription 
+tests/unit/organizations/test_models.py::TestOrganizationBillingMethods::test_is_in_good_standing_ignores_seat_limits 
+[gw4] [ 83%] PASSED tests/unit/test_predicates.py::TestDomainPredicate::test_text[None-domain = None] 
+tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_disable_predicate 
+[gw7] [ 83%] PASSED tests/unit/organizations/test_models.py::TestTeam::test_manageable_subscription_none 
+tests/unit/test_predicates.py::TestDomainPredicate::test_text[pypi.io-domain = 'pypi.io'] 
+[gw5] [ 84%] PASSED tests/unit/organizations/test_models.py::TestOrganization::test_location_info_with_partial 
+tests/unit/test_predicates.py::TestDomainPredicate::test_when_not_set 
+[gw0] [ 84%] PASSED tests/unit/organizations/test_models.py::TestTeamFactory::test_traversal_finds 
+[gw7] [ 84%] PASSED tests/unit/test_predicates.py::TestDomainPredicate::test_text[pypi.io-domain = 'pypi.io'] 
+tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_active_subscription 
+tests/unit/test_predicates.py::TestDomainPredicate::test_valid_value 
+[gw5] [ 85%] PASSED tests/unit/test_predicates.py::TestDomainPredicate::test_when_not_set 
+tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_active_manual_activation 
+[gw0] [ 85%] PASSED tests/unit/test_predicates.py::TestDomainPredicate::test_valid_value 
+tests/unit/test_predicates.py::test_includeme 
+[gw16] [ 86%] PASSED tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_is_active_future_expiration 
+[gw0] [ 86%] PASSED tests/unit/test_predicates.py::test_includeme 
+tests/unit/test_predicates.py::TestHeadersPredicate::test_text[value1-header Foo, header Bar=baz] 
+[gw10] [ 87%] PASSED tests/unit/organizations/test_models.py::TestTeam::test_acl 
+tests/unit/organizations/test_models.py::TestOrganizationBillingMethods::test_is_in_good_standing_company_with_manual_activation 
+[gw16] [ 87%] PASSED tests/unit/test_predicates.py::TestHeadersPredicate::test_text[value1-header Foo, header Bar=baz] 
+[gw15] [ 88%] PASSED tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_is_active_past_expiration 
+tests/unit/test_predicates.py::TestHeadersPredicate::test_text[value0-header Foo, header Bar] 
+[gw13] [ 88%] PASSED tests/unit/organizations/test_models.py::TestTeam::test_good_standing_with_manual_activation_active 
+[gw15] [ 88%] PASSED tests/unit/test_predicates.py::TestHeadersPredicate::test_text[value0-header Foo, header Bar] 
+tests/unit/test_predicates.py::TestDomainPredicate::test_invalid_value 
+[gw14] [ 89%] PASSED tests/unit/organizations/test_models.py::TestOrganizationBillingMethods::test_is_in_good_standing_company_without_billing 
+tests/unit/test_predicates.py::TestHeadersPredicate::test_invalid_value[value1] 
+[gw2] [ 89%] PASSED tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_current_member_count 
+[gw13] [ 90%] PASSED tests/unit/test_predicates.py::TestDomainPredicate::test_invalid_value 
+[gw14] [ 90%] PASSED tests/unit/test_predicates.py::TestHeadersPredicate::test_invalid_value[value1] 
+tests/unit/test_predicates.py::TestHeadersPredicate::test_valid_value[value0] 
+[gw3] [ 91%] PASSED tests/unit/organizations/test_models.py::TestTeam::test_good_standing_with_manual_activation_expired 
+tests/unit/test_predicates.py::TestHeadersPredicate::test_when_empty 
+[gw2] [ 91%] PASSED tests/unit/test_predicates.py::TestHeadersPredicate::test_valid_value[value0] 
+[gw3] [ 92%] PASSED tests/unit/test_predicates.py::TestHeadersPredicate::test_when_empty 
+[gw9] [ 92%] PASSED tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_available_seats 
+tests/unit/test_predicates.py::TestHeadersPredicate::test_valid_value[value1] 
+[gw9] [ 92%] PASSED tests/unit/test_predicates.py::TestHeadersPredicate::test_valid_value[value1] 
+[gw1] [ 93%] PASSED tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_has_available_seats_over_limit 
+tests/unit/test_predicates.py::TestHeadersPredicate::test_invalid_value[value0] 
+[gw1] [ 93%] PASSED tests/unit/test_predicates.py::TestHeadersPredicate::test_invalid_value[value0] 
+[gw4] [ 94%] PASSED tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_disable_predicate 
+tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_inactive_subscription 
+[gw8] [ 94%] PASSED tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_has_available_seats_with_space 
+[gw6] [ 95%] PASSED tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_has_available_seats_at_limit 
+tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_text[False-require_active_organization = False] 
+tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_text[True-require_active_organization = True] 
+[gw8] [ 95%] PASSED tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_text[False-require_active_organization = False] 
+[gw6] [ 96%] PASSED tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_text[True-require_active_organization = True] 
+[gw12] [ 96%] PASSED tests/unit/organizations/test_models.py::TestOrganizationBillingMethods::test_is_in_good_standing_ignores_seat_limits 
+tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_inactive_organization 
+[gw11] [ 96%] PASSED tests/unit/organizations/test_models.py::TestOrganizationManualActivation::test_available_seats_negative 
+tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_disable_organizations 
+[gw7] [ 97%] PASSED tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_active_subscription 
+tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_expired_manual_activation 
+[gw10] [ 97%] PASSED tests/unit/organizations/test_models.py::TestOrganizationBillingMethods::test_is_in_good_standing_company_with_manual_activation 
+[gw5] [ 98%] PASSED tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_active_manual_activation 
+[gw12] [ 98%] PASSED tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_inactive_organization 
+[gw11] [ 99%] PASSED tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_disable_organizations 
+[gw4] [ 99%] PASSED tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_inactive_subscription 
+[gw7] [100%] PASSED tests/unit/test_predicates.py::TestActiveOrganizationPredicate::test_expired_manual_activation 
+
+============================= slowest 20 durations =============================
+16.96s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_description_query
+16.93s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_conflicting_applications[py-pi-conflicts1-conflicting_prefixes1-not_conflicting1]
+16.89s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail
+16.88s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_type_query
+16.86s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_type_query
+16.86s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_is_approved_query
+16.86s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail_is_approved_true
+16.85s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationDetail::test_detail
+16.82s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_name_query
+16.81s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationActions::test_approve_turbo_mode
+16.81s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_detail_not_found
+16.80s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_with_page
+16.79s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationDetail::test_does_not_update_with_invalid_form
+16.77s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationActions::test_rename_not_found
+16.77s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationList::test_no_query
+16.75s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_organization_application_query
+16.72s setup    tests/unit/admin/views/test_organizations.py::TestOrganizationApplicationList::test_no_query
+0.92s teardown tests/unit/test_predicates.py::test_includeme
+0.87s teardown tests/unit/test_predicates.py::TestHeadersPredicate::test_text[value0-header Foo, header Bar]
+0.86s teardown tests/unit/test_predicates.py::TestHeadersPredicate::test_text[value1-header Foo, header Bar=baz]
+============================= 226 passed in 54.73s =============================
+reward=1 graded=226 found=0 failed=0 parsed=226 framework=pytest exit_code=0

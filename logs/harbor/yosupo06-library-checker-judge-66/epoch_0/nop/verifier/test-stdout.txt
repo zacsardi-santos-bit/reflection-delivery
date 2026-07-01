@@ -1,0 +1,11 @@
+patching file api/main_test.go
+patching file test/cloudbuild.yaml
+patching file test/gce_test.sh
+Starting PostgreSQL 15 database server: main.
+localhost:5432 - accepting connections
+2026/06/29 15:15:10 Must set HMAC_SECRET
+{"Time":"2026-06-29T15:15:16.615873493Z","Action":"start","Package":"github.com/yosupo06/library-checker-judge/api"}
+{"Time":"2026-06-29T15:15:16.620984705Z","Action":"output","Package":"github.com/yosupo06/library-checker-judge/api","Output":"2026/06/29 15:15:16 Must set HMAC_SECRET\n"}
+{"Time":"2026-06-29T15:15:16.622300841Z","Action":"output","Package":"github.com/yosupo06/library-checker-judge/api","Output":"FAIL\tgithub.com/yosupo06/library-checker-judge/api\t0.006s\n"}
+{"Time":"2026-06-29T15:15:16.622364869Z","Action":"fail","Package":"github.com/yosupo06/library-checker-judge/api","Elapsed":0.006}
+reward=0 graded=2 found=0 failed=0 parsed=1 framework=go exit_code=1

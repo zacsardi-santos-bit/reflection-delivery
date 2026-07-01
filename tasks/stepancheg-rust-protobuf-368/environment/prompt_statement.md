@@ -1,0 +1,5 @@
+I'm working with the protobuf code generation tools in this repository and I've run into a bug with how include directory paths are handled. When I pass an include path that contains redundant "current directory" references — like a path made up of multiple dot-slash segments — the function that strips the include directory prefix from a proto file path fails to recognize that the file is inside that directory. Instead of returning the file's relative path with the prefix removed, it returns nothing, as if the prefix didn't match at all.
+
+For example, if the include path is a series of repeated dot-slash components pointing to the current directory, and the file being processed is a plain proto filename without any directory component, the function should recognize that the file is inside that directory and return it unchanged after stripping the prefix. Right now it returns nothing, which breaks the build.
+
+The fix should normalize these redundant path components in the include directory prefix before doing the comparison, so that the function correctly handles paths that include unnecessary dot-slash sequences.

@@ -1,0 +1,23 @@
+{
+ "task": "pingcap-tidb-12282",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden replaces getSingleTableName with getSingleTableNameAndAlias and threads tblAlias through buildSchemaFromFields/getNameValuePairs; test TestPointGetAliasTableCharPK asserts `select * from t tmp where a=...` point-get and alias/error cases"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

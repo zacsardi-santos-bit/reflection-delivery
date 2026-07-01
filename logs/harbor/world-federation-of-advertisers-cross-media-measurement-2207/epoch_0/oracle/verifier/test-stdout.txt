@@ -1,0 +1,524 @@
+patching file src/main/kotlin/org/wfanet/measurement/integration/common/InProcessLifeOfAMeasurementIntegrationTest.kt
+patching file src/main/kotlin/org/wfanet/measurement/loadtest/common/SampleVids.kt
+patching file src/main/kotlin/org/wfanet/measurement/loadtest/measurementconsumer/MeasurementConsumerSimulator.kt
+patching file src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha/MeasurementsServiceTest.kt
+patching file src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt
+patching file src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt
+Starting local Bazel server and connecting to it...
+Computing main repo mapping: 
+WARNING: For repository 'com_google_googleapis', the root module requires module version googleapis@0.0.0-20250120-318818b.bzlmod.2, but got googleapis@0.0.0-bzlmod.1 in the resolved dependency graph.
+Computing main repo mapping: 
+Loading: 
+Loading: 0 packages loaded
+Analyzing: 3 targets (3 packages loaded)
+Analyzing: 3 targets (3 packages loaded, 0 targets configured)
+Analyzing: 3 targets (3 packages loaded, 0 targets configured)
+
+Analyzing: 3 targets (104 packages loaded, 218 targets configured)
+
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'rules_kotlin_jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'rules_kotlin_jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'rules_kotlin_jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+Analyzing: 3 targets (242 packages loaded, 5515 targets configured)
+
+Analyzing: 3 targets (409 packages loaded, 9982 targets configured)
+
+INFO: Analyzed 3 targets (521 packages loaded, 10782 targets configured).
+[33 / 2,138] checking cached actions
+[403 / 2,612] checking cached actions
+[1,356 / 2,612] Generating proto_library //src/main/proto/wfa/measurement/reporting/v2alpha:metric_proto; 0s linux-sandbox ... (3 actions running)
+[1,811 / 2,612] Generating Descriptor Set proto_library //src/main/proto/wfa/measurement/reporting/v2alpha:metrics_service_proto; 0s linux-sandbox ... (5 actions, 4 running)
+[2,592 / 2,612] Building src/main/proto/wfa/measurement/config/reporting/libmetric_spec_config_proto-speed.jar (1 source jar); 0s multiplex-worker ... (5 actions running)
+[2,593 / 2,612] Building src/main/proto/wfa/measurement/reporting/v2alpha/libmetric_proto-speed.jar (1 source jar); 6s multiplex-worker ... (4 actions running)
+[2,594 / 2,612] KotlinCompile //src/main/kotlin/org/wfanet/measurement/measurementconsumer/stats:covariances { kt: 1, java: 0, srcjars: 0 } for k8; 7s worker ... (3 actions running)
+[2,595 / 2,612] KotlinCompile //src/main/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:measurements_service { kt: 1, java: 0, srcjars: 0 } for k8; 9s worker ... (3 actions, 2 running)
+[2,597 / 2,612] KotlinCompile //src/main/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:measurements_service { kt: 1, java: 0, srcjars: 0 } for k8; 10s worker ... (3 actions running)
+INFO: From KotlinCompile //src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:metric_spec_defaults { kt: 1, java: 0, srcjars: 0 } for k8:
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:242:14: warning: 'fun hasVidSamplingInterval(): Boolean' is deprecated. Deprecated in Java.
+    if (this.hasVidSamplingInterval()) {
+             ^^^^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:243:12: warning: 'val vidSamplingInterval: MetricSpec.VidSamplingInterval!' is deprecated. Deprecated in Java.
+      this.vidSamplingInterval
+           ^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:324:20: warning: 'fun hasPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!this.hasPrivacyParams()) {
+                   ^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:374:20: warning: 'val privacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.privacyParams.withDefaults(
+                   ^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:434:21: warning: 'fun hasReachPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!(this.hasReachPrivacyParams() && this.hasFrequencyPrivacyParams())) {
+                    ^^^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:434:53: warning: 'fun hasFrequencyPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!(this.hasReachPrivacyParams() && this.hasFrequencyPrivacyParams())) {
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:518:20: warning: 'val reachPrivacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.reachPrivacyParams.withDefaults(
+                   ^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:529:20: warning: 'val frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.frequencyPrivacyParams.withDefaults(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:568:20: warning: 'fun hasPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!this.hasPrivacyParams()) {
+                   ^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:605:20: warning: 'val privacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.privacyParams.withDefaults(
+                   ^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:636:20: warning: 'fun hasPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!this.hasPrivacyParams()) {
+                   ^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:672:20: warning: 'val privacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.privacyParams.withDefaults(
+                   ^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:242:14: warning: 'fun hasVidSamplingInterval(): Boolean' is deprecated. Deprecated in Java.
+    if (this.hasVidSamplingInterval()) {
+             ^^^^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:243:12: warning: 'val vidSamplingInterval: MetricSpec.VidSamplingInterval!' is deprecated. Deprecated in Java.
+      this.vidSamplingInterval
+           ^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:324:20: warning: 'fun hasPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!this.hasPrivacyParams()) {
+                   ^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:374:20: warning: 'val privacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.privacyParams.withDefaults(
+                   ^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:434:21: warning: 'fun hasReachPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!(this.hasReachPrivacyParams() && this.hasFrequencyPrivacyParams())) {
+                    ^^^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:434:53: warning: 'fun hasFrequencyPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!(this.hasReachPrivacyParams() && this.hasFrequencyPrivacyParams())) {
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:518:20: warning: 'val reachPrivacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.reachPrivacyParams.withDefaults(
+                   ^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:529:20: warning: 'val frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.frequencyPrivacyParams.withDefaults(
+                   ^^^^^^^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:568:20: warning: 'fun hasPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!this.hasPrivacyParams()) {
+                   ^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:605:20: warning: 'val privacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.privacyParams.withDefaults(
+                   ^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:636:20: warning: 'fun hasPrivacyParams(): Boolean' is deprecated. Deprecated in Java.
+  } else if (!this.hasPrivacyParams()) {
+                   ^^^^^^^^^^^^^^^^
+src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt:672:20: warning: 'val privacyParams: MetricSpec.DifferentialPrivacyParams!' is deprecated. Deprecated in Java.
+            source.privacyParams.withDefaults(
+[2,602 / 2,612] KotlinCompile //src/main/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:measurements_service { kt: 1, java: 0, srcjars: 0 } for k8; 11s worker ... (3 actions running)
+[2,603 / 2,613] KotlinCompile //src/main/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:measurements_service { kt: 1, java: 0, srcjars: 0 } for k8; 12s worker ... (3 actions running)
+[2,603 / 2,613] 1 / 3 tests; KotlinCompile //src/main/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:measurements_service { kt: 1, java: 0, srcjars: 0 } for k8; 13s worker ... (3 actions running)
+[2,607 / 2,613] 1 / 3 tests; KotlinCompile //src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:MetricSpecDefaultsTest { kt: 1, java: 0, srcjars: 0 } for k8; 4s worker ... (2 actions running)
+                   ^^^^^^^^^^^^^
+INFO: From KotlinCompile //src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:MetricSpecDefaultsTest { kt: 1, java: 0, srcjars: 0 } for k8:
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:358:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:366:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:579:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:757:9: warning: 'var reachPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field reachPrivacyParams is deprecated.
+        reachPrivacyParams =
+        ^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:768:9: warning: 'var frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field frequencyPrivacyParams is deprecated.
+        frequencyPrivacyParams =
+        ^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:781:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1114:9: warning: 'var reachPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field reachPrivacyParams is deprecated.
+        reachPrivacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1115:9: warning: 'var frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field frequencyPrivacyParams is deprecated.
+        frequencyPrivacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1241:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1249:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1383:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1442:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1453:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1592:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1785:9: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+        vidSamplingInterval = MetricSpecKt.vidSamplingInterval { start = -1.0f }
+        ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1801:9: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+        vidSamplingInterval = MetricSpecKt.vidSamplingInterval { start = 1.0f }
+        ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1817:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1825:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1846:9: warning: 'var reachPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field reachPrivacyParams is deprecated.
+        reachPrivacyParams =
+        ^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1857:9: warning: 'var frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field frequencyPrivacyParams is deprecated.
+        frequencyPrivacyParams =
+        ^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1870:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1891:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1899:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1917:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1925:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1943:9: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+        vidSamplingInterval = MetricSpecKt.vidSamplingInterval { width = 0f }
+        ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1959:9: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+        vidSamplingInterval =
+        ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2111:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2128:9: warning: 'var reachPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field reachPrivacyParams is deprecated.
+        reachPrivacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2129:9: warning: 'var frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field frequencyPrivacyParams is deprecated.
+        frequencyPrivacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2148:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2161:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:358:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:366:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:579:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:757:9: warning: 'var reachPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field reachPrivacyParams is deprecated.
+        reachPrivacyParams =
+        ^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:768:9: warning: 'var frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field frequencyPrivacyParams is deprecated.
+        frequencyPrivacyParams =
+        ^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:781:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1114:9: warning: 'var reachPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field reachPrivacyParams is deprecated.
+        reachPrivacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1115:9: warning: 'var frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field frequencyPrivacyParams is deprecated.
+        frequencyPrivacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1241:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1249:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1383:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1442:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1453:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1592:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1785:9: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+        vidSamplingInterval = MetricSpecKt.vidSamplingInterval { start = -1.0f }
+        ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1801:9: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+        vidSamplingInterval = MetricSpecKt.vidSamplingInterval { start = 1.0f }
+        ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1817:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1825:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1846:9: warning: 'var reachPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field reachPrivacyParams is deprecated.
+        reachPrivacyParams =
+        ^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1857:9: warning: 'var frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field frequencyPrivacyParams is deprecated.
+        frequencyPrivacyParams =
+        ^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1870:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1891:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1899:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1917:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams =
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1925:7: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+      vidSamplingInterval =
+      ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1943:9: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+        vidSamplingInterval = MetricSpecKt.vidSamplingInterval { width = 0f }
+        ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1959:9: warning: 'var vidSamplingInterval: MetricSpec.VidSamplingInterval' is deprecated. Field vidSamplingInterval is deprecated.
+        vidSamplingInterval =
+        ^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2111:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2128:9: warning: 'var reachPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field reachPrivacyParams is deprecated.
+        reachPrivacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2129:9: warning: 'var frequencyPrivacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field frequencyPrivacyParams is deprecated.
+        frequencyPrivacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2148:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+        ^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:2161:9: warning: 'var privacyParams: MetricSpec.DifferentialPrivacyParams' is deprecated. Field privacyParams is deprecated.
+        privacyParams = MetricSpec.DifferentialPrivacyParams.getDefaultInstance()
+[2,609 / 2,613] 1 / 3 tests; KotlinCompile //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest { kt: 1, java: 0, srcjars: 0 } for k8; 3s worker ... (2 actions, 1 running)
+[2,610 / 2,614] 1 / 3 tests; KotlinCompile //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest { kt: 1, java: 0, srcjars: 0 } for k8; 4s worker ... (2 actions running)
+[2,610 / 2,614] 2 / 3 tests; KotlinCompile //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest { kt: 1, java: 0, srcjars: 0 } for k8; 6s worker ... (2 actions running)
+[2,611 / 2,614] 2 / 3 tests; KotlinCompile //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest { kt: 1, java: 0, srcjars: 0 } for k8; 7s worker
+[2,614 / 2,615] 2 / 3 tests; Testing //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest; 0s linux-sandbox
+[2,614 / 2,615] 3 / 3 tests; Testing //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest; 5s linux-sandbox
+        ^^^^^^^^^^^^^
+INFO: Found 3 test targets...
+INFO: Elapsed time: 59.079s, Critical Path: 28.79s
+INFO: 33 processes: 3 internal, 22 linux-sandbox, 8 worker.
+INFO: Build completed successfully, 33 total actions
+//src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest PASSED in 5.1s
+//src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats:covariances_test PASSED in 1.8s
+//src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:MetricSpecDefaultsTest PASSED in 3.0s
+
+Executed 3 out of 3 tests: 3 tests pass.
+There were tests whose specified size is too big. Use the --test_verbose_timeout_warnings command line option to see which ones these are.
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeDeterministicCovariance_returns_a_value_for_reach_when_large_reaches_overlap_and_small_sampling_widths_not_overlap", "Elapsed": 0.034}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeUnionSamplingWidth_is_correct_without_overlap_in_wrapping", "Elapsed": 0.286}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeMeasurementCovariance_returns_a_value_for_reach_when_two_reach_measurements_are_deterministic", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeMeasurementCovariance_returns_a_value_for_reach_when_two_reach_measurements_are_LiquidLegionsSketch", "Elapsed": 0.012}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeDeterministicCovariance_returns_a_value_for_reach_when_large_reaches_not_overlap_and_large_sampling_widths_overlap", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeLiquidLegionsCovariance_returns_a_value_for_reach_when_large_reaches_not_overlap_and_large_sampling_widths_not_overlap", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeUnionSampling_is_correct_when_intervals_are_wrapping_and_overlap", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeMeasurementCovariance_throws_IllegalArgumentException_for_reach_when_sketch_params_are_not_matched", "Elapsed": 0.031}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeUnionSamplingWidth_is_correct_when_one_interval_contains_another_in_wrapping", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeLiquidLegionsCovariance_returns_a_value_for_reach_when_one_reach_is_small", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeLiquidLegionsCovariance_returns_a_value_for_reach_when_small_reaches_overlap_and_small_sampling_widths_not_overlap", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeDeterministicCovariance_returns_a_value_for_reach_when_small_reaches_not_overlap_and_large_sampling_widths_not_overlap_", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeMeasurementCovariance_returns_a_value_for_reach_when_one_is_LiquidLegionsSketch_and_one_is_deterministic", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeUnionSamplingWidth_is_correct_when_intervals_touch", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeUnionSamplingWidth_is_correct_with_partial_overlap", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeDeterministicCovariance_returns_a_value_for_reach_when_one_reach_is_small", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeLiquidLegionsCovariance_returns_a_value_for_reach_when_large_reaches_overlap_and_small_sampling_widths_overlap", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeLiquidLegionsCovariance_returns_a_value_for_reach_when_small_reaches_not_overlap_and_large_sampling_widths_overlap_", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeMeasurementCovariance_returns_a_value_for_reach_when_one_is_LiquidLegionsSketch_and_one_is_HonestMajorityShareShuffle", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeMeasurementCovariance_returns_a_value_for_reach_when_one_is_HonestMajorityShareShuffle_and_one_is_deterministic", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeDeterministicCovariance_returns_a_value_for_reach_when_small_reaches_overlap_and_small_sampling_widths_overlap_", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeMeasurementCovariance_returns_zero_for_reach_when_one_is_from_custom_direct_methodology", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeUnionSamplingWidth_is_correct_when_one_interval_contains_another", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeUnionSamplingWidth_is_correct_when_intervals_have_no_overlap", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeLiquidLegionsCovariance_returns_a_value_for_reach_when_large_reaches_not_overlap_and_large_sampling_widths_overlap", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.measurementconsumer.stats.CovariancesTest", "Test": "computeUnionSamplingWidth_when_intervals_are_identical", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_rf_spec_without_overriding_multiple_and_single_edp_fields", "Elapsed": 1.4}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throws_MetricSpecBuildingException_with_sampling_width_larger_than_1", "Elapsed": 0.01}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_does_not_throw_exception_with_valid_random_start", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_vidSamplingInterval_is_too_long", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_reach_spec_without_overriding_multiple_and_single_edp_fields", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_epsilon_negative", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_single_reach_params_not_set", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_rf_freq_privacy_params_delta_negative", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_reach_and_frequency_params_missing", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_width_is_0", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_single_data_provider_params_missing", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_no_reach_params_set_set", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_watch_duration_metric_spec_without_overriding_privacy_params", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_no_metric_type_specified", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_watch_duration_metric_spec_when_no_field_filled_in_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_rf_spec_when_allowSamplingIntervalWrapping_enabled", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_start_negative", "Elapsed": 0.002}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_impression_count_spec_when_no_field_filled_in_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_vidSamplingInterval_start_is_less_than_0", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_impression_count_spec_by_partially_overriding_fields_in_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_rf_freq_privacy_params_epsilon_negative", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_rf_missing_multiple_data_provider_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_reach_spec_when_fields_not_set_and_config_has_random_start", "Elapsed": 0.469}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_delta_negative", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_rf_spec_when_no_fields_filled_in_multiple_and_single_edp_fields", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_rf_missing_single_data_provider_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_a_reach_metric_spec_when_no_field_is_filled_in_privacy_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_watch_duration_metric_spec_by_partially_overriding_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_impression_count_spec_when_all_fields_filled_in_privacy_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_reach_spec_when_allowSamplingIntervalWrapping_enabled", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_watch_duration_metric_spec_without_overriding_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_reach_params_missing", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_watch_duration_metric_spec_when_params_and_privacy_params_set", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_vidSamplingInterval_width_is_0", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_multiple_reach_params_not_set", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_rf_vid_interval_start_is_1", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_rf_spec_by_partially_overriding_multiple_and_single_edp_fields", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_watch_duration_metric_spec_when_no_field_filled_in_privacy_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_multiple_rf_params_not_set", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_reach_spec_when_edp_fields_set_and_privacy_params_also_set", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_rf_spec_when_edp_fields_set_and_reach_privacy_params_also_set", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_rf_spec_without_overriding_reach_and_freq_privacy_params", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_multiple_data_provider_params_missing", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_impression_count_spec_when_params_and_privacy_params_set", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_frequency_privacy_params_in_reach_and_frequency_is_not_set", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_reach_privacy_params_in_reach_and_frequency_is_not_set", "Elapsed": 0.001}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_single_rf_params_not_set", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throws_MetricSpecBuildingException_when_allowSamplingIntervalWrapping_disabled", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_watch_duration_params_not_set", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_rf_missing_maximum_frequency", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_throws_exception_when_rf_vid_interval_missing_width", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_impression_count_spec_without_overriding_fields_in_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_impression_count_spec_when_no_field_filled_in_privacy_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_rf_spec_when_no_field_filled_in_reach_and_freq_privacy_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_vidSamplingInterval_start_is_not_less_than_1", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_reach_spec_when_no_field_filled_in_multiple_and_single_edp_fields", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_reach_spec_by_partially_overriding_multiple_and_single_edp_fields", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "MetricSpecConfig_validate_does_not_throw_exception_with_valid_config", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_builds_a_reach_metric_spec_when_all_fields_are_filled_in_privacy_params", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.reporting.service.api.v2alpha.MetricSpecDefaultsTest", "Test": "buildMetricSpec_throw_MetricSpecBuildingException_when_impression_params_not_set", "Elapsed": 0.0}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_DURATION_type_specifies_direct_protocol", "Elapsed": 2.535}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_PERMISSION_DENIED_when_principal_without_authorization_is_found", "Elapsed": 0.028}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_no_page_size_uses_page_size_in_page_token", "Elapsed": 0.07}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_NOT_FOUND_with_measurement_name_when_measurement_not_found", "Elapsed": 0.069}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_no_page_token_returns_response", "Elapsed": 0.068}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_certificate_does_not_match_parent", "Elapsed": 0.019}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Data_Providers_is_missing", "Elapsed": 0.011}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurement_throws_NOT_FOUND_with_measurement_consumer_name_when_measurment_consumer_not_found", "Elapsed": 0.029}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_mc_caller_doesn't_match_name", "Elapsed": 0.012}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_parent_is_missing", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_Data_Providers_Entry_value_is_missing_spec", "Elapsed": 0.01}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_returns_measurement", "Elapsed": 0.026}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_measurement_spec_is_missing", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_Data_Providers_Entry_value_is_missing_nonce_hash", "Elapsed": 0.01}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_vid_sampling_interval_is_missing", "Elapsed": 0.008}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_impression_max_freq_per_user_is_missing", "Elapsed": 0.011}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_INVALID_ARGUMENT_when_resource_name_is_missing", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_no_filters_returns_response", "Elapsed": 0.032}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_reach_privacy_params_are_missing", "Elapsed": 0.008}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_HMSS_enabled_using_wrapping_VidSamplingInterval", "Elapsed": 0.021}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_NOT_FOUND_when_a_measurement_not_found", "Elapsed": 0.012}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_PERMISSION_DENIED_when_principal_without_auth_found", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_child_parent_doesn't_match", "Elapsed": 0.007}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Reach-only_vid_sampling_interval_is_missing", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_invalid_argument_when_states_don't_match_states_in_page_token", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_1_of_2_child_requests_has_no_parent", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_parent_is_missing", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_INVALID_ARGUMENT_when_pageSize_is_less_than_0", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Reach-only_privacy_params_are_missing", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_REACH_type_and_multiple_EDPs", "Elapsed": 0.018}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.011}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_FAILED_PRECONDITION_when_certificate_is_invalid", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_returns_measurements", "Elapsed": 0.016}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_returns_measurements", "Elapsed": 0.029}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_child_parent_is_invalid", "Elapsed": 0.007}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_spec_max_frequency_is_1", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_FAILED_PRECONDITION_with_duchy_name_when_duchy_not_found", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_frequency_privacy_params_are_missing", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Reach-only_epsilon_privacy_param_is_0", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_parent_is_missing", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_PERMISSION_DENIED_when_principal_without_authorization_is_found", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_IMPRESSION_type_specifies_direct_protocol", "Elapsed": 0.012}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_INVALID_ARGUMENT_when_resource_name_is_missing", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_returns_measurement", "Elapsed": 0.007}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_parent_is_invalid", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_HMSS_enabled_and_EDPs_capable_specifies_HMSS_protocol", "Elapsed": 0.01}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_INVALID_ARGUMENT_when_parent_is_missing", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_impression_privacy_params_are_missing", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_model_line_is_missing_for_POPULATION_measurement", "Elapsed": 0.011}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_PERMISSION_DENIED_when_principal_without_authorization_is_found", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_Data_Providers_Entry_value_is_missing_cert_name", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_Data_Providers_Entry_value_is_missing_public_key", "Elapsed": 0.013}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_page_token_with_filter_returns_response", "Elapsed": 0.012}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_FAILED_PRECONDITION_with_measurement_state_and_name_when_measurement_state_illegal", "Elapsed": 0.008}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_dataProviderList_has_duplicated_keys", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_certificate_does_not_match_parent", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match_parent", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_NOT_FOUND_with_measurement_name_when_measurement_not_found", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_measurement_public_key_is_missing", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_too_many_requests", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_invalid_argument_when_parent_doesn't_match_parent_in_page_token", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_NOT_FOUND_with_measurement_consumer_name_when_measurement_consumer_not_found", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_PERMISSION_DENIED_when_principal_without_authorization_is_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_resource_name_is_invalid", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_duration_privacy_params_are_missing", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_measurement_type_is_missing", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_REACH_AND_FREQUENCY_type_and_single_EDP_specifies_direct_protocol", "Elapsed": 0.015}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.002}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_certificate_resource_name_is_missing", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_LLv2_VidSamplingInterval_is_wrapping_around_1", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_duration_watch_time_per_user_is_missing", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_returns_measurements_when_all_child_requests_do_not_have_parent", "Elapsed": 0.012}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurement_throws_FAILED_PRECONDITION_with_data_provider_name_when_data_provider_not_found", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_too_many_requests", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_REACH_AND_FREQUENCY_type_and_multiple_EDPs", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_epsilon_privacy_param_is_0", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Data_Providers_Entry_is_missing_key", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_spec_is_missing_max_frequency", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_new_page_size_replaces_page_size_in_page_token", "Elapsed": 0.007}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_PERMISSION_DENIED_when_principal_without_authorization_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_POPULATION_type_specifies_direct_protocol", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_FAILED_PRECONDITION_with_data_provider_name_when_data_provider_not_found", "Elapsed": 0.006}
+reward=1 graded=177 found=177 failed=0 parsed=177 framework=go exit_code=0

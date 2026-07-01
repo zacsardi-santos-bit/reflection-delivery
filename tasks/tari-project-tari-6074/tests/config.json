@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --profile ci --color never -p minotari_wallet -E 'test(test_htlc_send_and_claim)'",
+  "test_files": [
+    "base_layer/wallet/tests/output_manager_service_tests/service.rs",
+    "base_layer/wallet/tests/output_manager_service_tests/storage.rs",
+    "base_layer/wallet/tests/transaction_service_tests/service.rs",
+    "integration_tests/src/miner.rs",
+    "integration_tests/tests/features/Sync.feature",
+    "integration_tests/tests/steps/wallet_steps.rs"
+  ],
+  "num_test_files": 6,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "minotari_wallet::wallet_integration_tests transaction_service_tests::service::test_htlc_send_and_claim"
+  ],
+  "PASS_TO_PASS": []
+}

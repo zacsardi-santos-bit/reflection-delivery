@@ -1,0 +1,17 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/code && NODE_OPTIONS=--max_old_space_size=4096 yarn vitest run lib/cli/src/autoblock/index.test.ts",
+  "test_files": [
+    "code/lib/cli/src/autoblock/index.test.ts",
+    "code/lib/cli/src/automigrate/fixes/nodejs-requirement.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/lib/cli/src/autoblock/index.test.ts:: with empty list",
+    "/workspace/repo/code/lib/cli/src/autoblock/index.test.ts:: all passing",
+    "/workspace/repo/code/lib/cli/src/autoblock/index.test.ts:: 1 fail",
+    "/workspace/repo/code/lib/cli/src/autoblock/index.test.ts:: multiple fails"
+  ],
+  "PASS_TO_PASS": []
+}

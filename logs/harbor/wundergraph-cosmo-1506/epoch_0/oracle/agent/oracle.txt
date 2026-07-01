@@ -1,0 +1,9 @@
+patching file router/cmd/instance.go
+patching file router/core/init_config_poller.go
+patching file router/core/router.go
+patching file router/pkg/config/config.go
+patching file router/pkg/config/config.schema.json
+patching file router/pkg/config/testdata/config_defaults.json
+patching file router/pkg/config/testdata/config_full.json
+patching file router/pkg/controlplane/configpoller/config_poller.go
+patching file router/pkg/controlplane/poll.go

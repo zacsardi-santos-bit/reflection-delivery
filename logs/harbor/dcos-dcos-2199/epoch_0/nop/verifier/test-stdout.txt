@@ -1,0 +1,772 @@
+patching file gen/tests/test_adminrouter_tls_conf.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: tox.ini
+plugins: teamcity-messages-1.33
+collecting ... collected 19 items
+
+gen/tests/test_adminrouter_tls_conf.py::TestAdminRouterTLSConfig::test_master[true-TLSv1 TLSv1.1 TLSv1.2] FAILED [  5%]
+gen/tests/test_adminrouter_tls_conf.py::TestAdminRouterTLSConfig::test_master[false-TLSv1.1 TLSv1.2] FAILED [ 10%]
+gen/tests/test_adminrouter_tls_conf.py::TestAdminRouterTLSConfig::test_agent[true] FAILED [ 15%]
+gen/tests/test_adminrouter_tls_conf.py::TestAdminRouterTLSConfig::test_agent[false] FAILED [ 21%]
+gen/tests/test_adminrouter_tls_conf.py::TestSetCipherOverride::test_cipher_agent_default FAILED [ 26%]
+gen/tests/test_adminrouter_tls_conf.py::TestSetCipherOverride::test_cipher_master_default FAILED [ 31%]
+gen/tests/test_adminrouter_tls_conf.py::TestSetCipherOverride::test_cipher_master_custom FAILED [ 36%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_validation_1_0 PASSED [ 42%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_validation_1_1 FAILED [ 47%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_validation_1_2 FAILED [ 52%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_default[new_arguments0] FAILED [ 57%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_default[new_arguments1] FAILED [ 63%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled0-expected_protocols0] FAILED [ 68%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled1-expected_protocols1] FAILED [ 73%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled2-expected_protocols2] FAILED [ 78%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled3-expected_protocols3] FAILED [ 84%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled4-expected_protocols4] FAILED [ 89%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_enable_custom_tls_versions[enabled5-expected_protocols5] FAILED [ 94%]
+gen/tests/test_adminrouter_tls_conf.py::TestToggleTLSVersions::test_no_tls_version_enabled FAILED [100%]
+
+=================================== FAILURES ===================================
+_______ TestAdminRouterTLSConfig.test_master[true-TLSv1 TLSv1.1 TLSv1.2] _______
+
+self = <gen.tests.test_adminrouter_tls_conf.TestAdminRouterTLSConfig object at 0x2b4aac601d00>
+adminrouter_tls_1_0_enabled = 'true', tls_versions = 'TLSv1 TLSv1.1 TLSv1.2'
+
+    @pytest.mark.parametrize(
+        'adminrouter_tls_1_0_enabled, tls_versions',
+        [('true', 'TLSv1 TLSv1.1 TLSv1.2'), ('false', 'TLSv1.1 TLSv1.2')]
+    )
+    def test_master(self, adminrouter_tls_1_0_enabled, tls_versions):
+        """
+        Test that Master Admin Router config file has the correct content.
+        """
+        config_path = '/etc/adminrouter-tls-master.conf'
+        arguments = make_arguments({
+            'adminrouter_tls_1_0_enabled': adminrouter_tls_1_0_enabled,
+        })
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:29: ValueError
+_________ TestAdminRouterTLSConfig.test_master[false-TLSv1.1 TLSv1.2] __________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestAdminRouterTLSConfig object at 0x2b4aac601d90>
+adminrouter_tls_1_0_enabled = 'false', tls_versions = 'TLSv1.1 TLSv1.2'
+
+    @pytest.mark.parametrize(
+        'adminrouter_tls_1_0_enabled, tls_versions',
+        [('true', 'TLSv1 TLSv1.1 TLSv1.2'), ('false', 'TLSv1.1 TLSv1.2')]
+    )
+    def test_master(self, adminrouter_tls_1_0_enabled, tls_versions):
+        """
+        Test that Master Admin Router config file has the correct content.
+        """
+        config_path = '/etc/adminrouter-tls-master.conf'
+        arguments = make_arguments({
+            'adminrouter_tls_1_0_enabled': adminrouter_tls_1_0_enabled,
+        })
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:29: ValueError
+__________________ TestAdminRouterTLSConfig.test_agent[true] ___________________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestAdminRouterTLSConfig object at 0x2b4aac6011f0>
+adminrouter_tls_1_0_enabled = 'true'
+
+    @pytest.mark.parametrize('adminrouter_tls_1_0_enabled', ['true', 'false'])
+    def test_agent(self, adminrouter_tls_1_0_enabled):
+        """
+        Test that Agent Admin Router config file has the correct content.
+        """
+        config_path = '/etc/adminrouter-tls-agent.conf'
+        arguments = make_arguments(new_arguments={
+            'adminrouter_tls_1_0_enabled': adminrouter_tls_1_0_enabled,
+        })
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:60: ValueError
+__________________ TestAdminRouterTLSConfig.test_agent[false] __________________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestAdminRouterTLSConfig object at 0x2b4aac6019d0>
+adminrouter_tls_1_0_enabled = 'false'
+
+    @pytest.mark.parametrize('adminrouter_tls_1_0_enabled', ['true', 'false'])
+    def test_agent(self, adminrouter_tls_1_0_enabled):
+        """
+        Test that Agent Admin Router config file has the correct content.
+        """
+        config_path = '/etc/adminrouter-tls-agent.conf'
+        arguments = make_arguments(new_arguments={
+            'adminrouter_tls_1_0_enabled': adminrouter_tls_1_0_enabled,
+        })
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:60: ValueError
+_______________ TestSetCipherOverride.test_cipher_agent_default ________________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestSetCipherOverride object at 0x2b4aac601dc0>
+
+    def test_cipher_agent_default(self):
+        """
+        The config variable adminrouter_external_cipher_string should not impact internal traffic.
+        """
+        new_arguments = {'adminrouter_external_cipher_override': 'false'}
+>       ciphers = self.supported_ssl_ciphers_agent(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+gen/tests/test_adminrouter_tls_conf.py:136: in supported_ssl_ciphers_agent
+    return self.supported_ssl_ciphers(new_config_arguments, config_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestSetCipherOverride object at 0x2b4aac601dc0>
+new_config_arguments = {'adminrouter_external_cipher_override': 'false'}
+config_path = '/etc/adminrouter-tls-agent.conf'
+
+    def supported_ssl_ciphers(
+            self,
+            new_config_arguments: Dict[str, str],
+            config_path: str) -> List[str]:
+        """
+        Finds the line that looks like:
+        ssl_ciphers EECDH+AES256:RSA+AES256:EECDH+AES128:RSA+AES128:EECDH+3DES:RSA+3DES:!MD5;
+        and returns the list of ciphers.
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+            config_path: A path to configuration file which should be examined
+                for ssl_ciphers configuration.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:99: ValueError
+_______________ TestSetCipherOverride.test_cipher_master_default _______________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestSetCipherOverride object at 0x2b4aac6015b0>
+
+    def test_cipher_master_default(self):
+        """
+        The config variable adminrouter_external_cipher_string must not be set.
+        """
+        new_arguments = {'adminrouter_external_cipher_string': ''}
+>       ciphers = self.supported_ssl_ciphers_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:153: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+gen/tests/test_adminrouter_tls_conf.py:122: in supported_ssl_ciphers_master
+    return self.supported_ssl_ciphers(new_config_arguments, config_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestSetCipherOverride object at 0x2b4aac6015b0>
+new_config_arguments = {'adminrouter_external_cipher_string': ''}
+config_path = '/etc/adminrouter-tls-master.conf'
+
+    def supported_ssl_ciphers(
+            self,
+            new_config_arguments: Dict[str, str],
+            config_path: str) -> List[str]:
+        """
+        Finds the line that looks like:
+        ssl_ciphers EECDH+AES256:RSA+AES256:EECDH+AES128:RSA+AES128:EECDH+3DES:RSA+3DES:!MD5;
+        and returns the list of ciphers.
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+            config_path: A path to configuration file which should be examined
+                for ssl_ciphers configuration.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:99: ValueError
+_______________ TestSetCipherOverride.test_cipher_master_custom ________________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestSetCipherOverride object at 0x2b4aac5fbbb0>
+
+    def test_cipher_master_custom(self):
+        """
+        The config variable adminrouter_external_cipher_string must be set
+        """
+        new_arguments = {'adminrouter_tls_cipher_suite': 'EECDH+AES128:RSA+AES128'}
+>       ciphers = self.supported_ssl_ciphers_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:163: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+gen/tests/test_adminrouter_tls_conf.py:122: in supported_ssl_ciphers_master
+    return self.supported_ssl_ciphers(new_config_arguments, config_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestSetCipherOverride object at 0x2b4aac5fbbb0>
+new_config_arguments = {'adminrouter_tls_cipher_suite': 'EECDH+AES128:RSA+AES128'}
+config_path = '/etc/adminrouter-tls-master.conf'
+
+    def supported_ssl_ciphers(
+            self,
+            new_config_arguments: Dict[str, str],
+            config_path: str) -> List[str]:
+        """
+        Finds the line that looks like:
+        ssl_ciphers EECDH+AES256:RSA+AES256:EECDH+AES128:RSA+AES128:EECDH+3DES:RSA+3DES:!MD5;
+        and returns the list of ciphers.
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+            config_path: A path to configuration file which should be examined
+                for ssl_ciphers configuration.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:99: ValueError
+__________________ TestToggleTLSVersions.test_validation_1_1 ___________________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fb1c0>
+
+    def test_validation_1_1(self):
+        """
+        The config variable `tls_1_1_enabled` must be 'true' or 'false'.
+        """
+>       validate_error(
+            new_arguments={'adminrouter_tls_1_1_enabled': 'foo'},
+            key='adminrouter_tls_1_1_enabled',
+            message=true_false_msg,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+new_arguments = {'adminrouter_tls_1_1_enabled': 'foo'}
+key = 'adminrouter_tls_1_1_enabled'
+message = "Must be one of 'true', 'false'. Got 'foo'.", unset = None
+
+    def validate_error(new_arguments, key, message, unset=None):
+>       assert gen.validate(arguments=make_arguments(new_arguments)) == {
+            'status': 'errors',
+            'errors': {key: {'message': message}},
+            'unset': set() if unset is None else unset,
+        }
+E       AssertionError
+
+gen/tests/utils.py:43: AssertionError
+__________________ TestToggleTLSVersions.test_validation_1_2 ___________________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac601d60>
+
+    def test_validation_1_2(self):
+        """
+        The config variable `tls_1_2_enabled` must be 'true' or 'false'.
+        """
+>       validate_error(
+            new_arguments={'adminrouter_tls_1_2_enabled': 'foo'},
+            key='adminrouter_tls_1_2_enabled',
+            message=true_false_msg,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:234: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+new_arguments = {'adminrouter_tls_1_2_enabled': 'foo'}
+key = 'adminrouter_tls_1_2_enabled'
+message = "Must be one of 'true', 'false'. Got 'foo'.", unset = None
+
+    def validate_error(new_arguments, key, message, unset=None):
+>       assert gen.validate(arguments=make_arguments(new_arguments)) == {
+            'status': 'errors',
+            'errors': {key: {'message': message}},
+            'unset': set() if unset is None else unset,
+        }
+E       AssertionError
+
+gen/tests/utils.py:43: AssertionError
+______________ TestToggleTLSVersions.test_default[new_arguments0] ______________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fbcd0>
+new_arguments = {}
+
+    @pytest.mark.parametrize(
+        'new_arguments', [{}, {'adminrouter_tls_1_0_enabled': 'false'}]
+    )
+    def test_default(self, new_arguments):
+        """
+        By default TLS 1.0 is disabled, and therefore by default the config
+        variable is set to 'false'.
+    
+        This test is parametrized to demonstrate that having no configuration
+        produces the same results as setting the config variable to `'false'`.
+        """
+>       protocols = self.supported_tls_protocols_ar_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:251: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fbcd0>
+new_config_arguments = {}
+
+    def supported_tls_protocols_ar_master(
+            self, new_config_arguments: Dict[str, str]) -> List[str]:
+        """
+        This finds a line which looks like the following:
+            ssl_protocols TLSv1, TLSv1.1;
+        in the Admin Router TLS configuration.
+        It then returns the listed protocols.
+    
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+    
+        Returns:
+            A list of supported SSL protocols.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+        config_path = '/etc/adminrouter-tls-master.conf'
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:199: ValueError
+______________ TestToggleTLSVersions.test_default[new_arguments1] ______________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fb040>
+new_arguments = {'adminrouter_tls_1_0_enabled': 'false'}
+
+    @pytest.mark.parametrize(
+        'new_arguments', [{}, {'adminrouter_tls_1_0_enabled': 'false'}]
+    )
+    def test_default(self, new_arguments):
+        """
+        By default TLS 1.0 is disabled, and therefore by default the config
+        variable is set to 'false'.
+    
+        This test is parametrized to demonstrate that having no configuration
+        produces the same results as setting the config variable to `'false'`.
+        """
+>       protocols = self.supported_tls_protocols_ar_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:251: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fb040>
+new_config_arguments = {'adminrouter_tls_1_0_enabled': 'false'}
+
+    def supported_tls_protocols_ar_master(
+            self, new_config_arguments: Dict[str, str]) -> List[str]:
+        """
+        This finds a line which looks like the following:
+            ssl_protocols TLSv1, TLSv1.1;
+        in the Admin Router TLS configuration.
+        It then returns the listed protocols.
+    
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+    
+        Returns:
+            A list of supported SSL protocols.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+        config_path = '/etc/adminrouter-tls-master.conf'
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:199: ValueError
+_ TestToggleTLSVersions.test_enable_custom_tls_versions[enabled0-expected_protocols0] _
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fb670>
+enabled = ('false', 'false', 'true'), expected_protocols = ['TLSv1.2']
+
+    @pytest.mark.parametrize(
+        'enabled,expected_protocols', [
+            (('false', 'false', 'true'), ['TLSv1.2']),
+            (('false', 'true', 'true'), ['TLSv1.1', 'TLSv1.2']),
+            (('true', 'true', 'true'), ['TLSv1', 'TLSv1.1', 'TLSv1.2']),
+            (('true', 'false', 'true'), ['TLSv1', 'TLSv1.2']),
+            (('true', 'false', 'false'), ['TLSv1']),
+            (('false', 'true', 'false'), ['TLSv1.1']),
+        ]
+    )
+    def test_enable_custom_tls_versions(self, enabled, expected_protocols):
+        new_arguments = {'adminrouter_tls_1_0_enabled': enabled[0],
+                         'adminrouter_tls_1_1_enabled': enabled[1],
+                         'adminrouter_tls_1_2_enabled': enabled[2]}
+>       protocols = self.supported_tls_protocols_ar_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:270: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fb670>
+new_config_arguments = {'adminrouter_tls_1_0_enabled': 'false', 'adminrouter_tls_1_1_enabled': 'false', 'adminrouter_tls_1_2_enabled': 'true'}
+
+    def supported_tls_protocols_ar_master(
+            self, new_config_arguments: Dict[str, str]) -> List[str]:
+        """
+        This finds a line which looks like the following:
+            ssl_protocols TLSv1, TLSv1.1;
+        in the Admin Router TLS configuration.
+        It then returns the listed protocols.
+    
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+    
+        Returns:
+            A list of supported SSL protocols.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+        config_path = '/etc/adminrouter-tls-master.conf'
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:199: ValueError
+_ TestToggleTLSVersions.test_enable_custom_tls_versions[enabled1-expected_protocols1] _
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fb4c0>
+enabled = ('false', 'true', 'true'), expected_protocols = ['TLSv1.1', 'TLSv1.2']
+
+    @pytest.mark.parametrize(
+        'enabled,expected_protocols', [
+            (('false', 'false', 'true'), ['TLSv1.2']),
+            (('false', 'true', 'true'), ['TLSv1.1', 'TLSv1.2']),
+            (('true', 'true', 'true'), ['TLSv1', 'TLSv1.1', 'TLSv1.2']),
+            (('true', 'false', 'true'), ['TLSv1', 'TLSv1.2']),
+            (('true', 'false', 'false'), ['TLSv1']),
+            (('false', 'true', 'false'), ['TLSv1.1']),
+        ]
+    )
+    def test_enable_custom_tls_versions(self, enabled, expected_protocols):
+        new_arguments = {'adminrouter_tls_1_0_enabled': enabled[0],
+                         'adminrouter_tls_1_1_enabled': enabled[1],
+                         'adminrouter_tls_1_2_enabled': enabled[2]}
+>       protocols = self.supported_tls_protocols_ar_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:270: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fb4c0>
+new_config_arguments = {'adminrouter_tls_1_0_enabled': 'false', 'adminrouter_tls_1_1_enabled': 'true', 'adminrouter_tls_1_2_enabled': 'true'}
+
+    def supported_tls_protocols_ar_master(
+            self, new_config_arguments: Dict[str, str]) -> List[str]:
+        """
+        This finds a line which looks like the following:
+            ssl_protocols TLSv1, TLSv1.1;
+        in the Admin Router TLS configuration.
+        It then returns the listed protocols.
+    
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+    
+        Returns:
+            A list of supported SSL protocols.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+        config_path = '/etc/adminrouter-tls-master.conf'
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:199: ValueError
+_ TestToggleTLSVersions.test_enable_custom_tls_versions[enabled2-expected_protocols2] _
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fbee0>
+enabled = ('true', 'true', 'true')
+expected_protocols = ['TLSv1', 'TLSv1.1', 'TLSv1.2']
+
+    @pytest.mark.parametrize(
+        'enabled,expected_protocols', [
+            (('false', 'false', 'true'), ['TLSv1.2']),
+            (('false', 'true', 'true'), ['TLSv1.1', 'TLSv1.2']),
+            (('true', 'true', 'true'), ['TLSv1', 'TLSv1.1', 'TLSv1.2']),
+            (('true', 'false', 'true'), ['TLSv1', 'TLSv1.2']),
+            (('true', 'false', 'false'), ['TLSv1']),
+            (('false', 'true', 'false'), ['TLSv1.1']),
+        ]
+    )
+    def test_enable_custom_tls_versions(self, enabled, expected_protocols):
+        new_arguments = {'adminrouter_tls_1_0_enabled': enabled[0],
+                         'adminrouter_tls_1_1_enabled': enabled[1],
+                         'adminrouter_tls_1_2_enabled': enabled[2]}
+>       protocols = self.supported_tls_protocols_ar_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:270: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fbee0>
+new_config_arguments = {'adminrouter_tls_1_0_enabled': 'true', 'adminrouter_tls_1_1_enabled': 'true', 'adminrouter_tls_1_2_enabled': 'true'}
+
+    def supported_tls_protocols_ar_master(
+            self, new_config_arguments: Dict[str, str]) -> List[str]:
+        """
+        This finds a line which looks like the following:
+            ssl_protocols TLSv1, TLSv1.1;
+        in the Admin Router TLS configuration.
+        It then returns the listed protocols.
+    
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+    
+        Returns:
+            A list of supported SSL protocols.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+        config_path = '/etc/adminrouter-tls-master.conf'
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:199: ValueError
+_ TestToggleTLSVersions.test_enable_custom_tls_versions[enabled3-expected_protocols3] _
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fbd60>
+enabled = ('true', 'false', 'true'), expected_protocols = ['TLSv1', 'TLSv1.2']
+
+    @pytest.mark.parametrize(
+        'enabled,expected_protocols', [
+            (('false', 'false', 'true'), ['TLSv1.2']),
+            (('false', 'true', 'true'), ['TLSv1.1', 'TLSv1.2']),
+            (('true', 'true', 'true'), ['TLSv1', 'TLSv1.1', 'TLSv1.2']),
+            (('true', 'false', 'true'), ['TLSv1', 'TLSv1.2']),
+            (('true', 'false', 'false'), ['TLSv1']),
+            (('false', 'true', 'false'), ['TLSv1.1']),
+        ]
+    )
+    def test_enable_custom_tls_versions(self, enabled, expected_protocols):
+        new_arguments = {'adminrouter_tls_1_0_enabled': enabled[0],
+                         'adminrouter_tls_1_1_enabled': enabled[1],
+                         'adminrouter_tls_1_2_enabled': enabled[2]}
+>       protocols = self.supported_tls_protocols_ar_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:270: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fbd60>
+new_config_arguments = {'adminrouter_tls_1_0_enabled': 'true', 'adminrouter_tls_1_1_enabled': 'false', 'adminrouter_tls_1_2_enabled': 'true'}
+
+    def supported_tls_protocols_ar_master(
+            self, new_config_arguments: Dict[str, str]) -> List[str]:
+        """
+        This finds a line which looks like the following:
+            ssl_protocols TLSv1, TLSv1.1;
+        in the Admin Router TLS configuration.
+        It then returns the listed protocols.
+    
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+    
+        Returns:
+            A list of supported SSL protocols.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+        config_path = '/etc/adminrouter-tls-master.conf'
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:199: ValueError
+_ TestToggleTLSVersions.test_enable_custom_tls_versions[enabled4-expected_protocols4] _
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fb3a0>
+enabled = ('true', 'false', 'false'), expected_protocols = ['TLSv1']
+
+    @pytest.mark.parametrize(
+        'enabled,expected_protocols', [
+            (('false', 'false', 'true'), ['TLSv1.2']),
+            (('false', 'true', 'true'), ['TLSv1.1', 'TLSv1.2']),
+            (('true', 'true', 'true'), ['TLSv1', 'TLSv1.1', 'TLSv1.2']),
+            (('true', 'false', 'true'), ['TLSv1', 'TLSv1.2']),
+            (('true', 'false', 'false'), ['TLSv1']),
+            (('false', 'true', 'false'), ['TLSv1.1']),
+        ]
+    )
+    def test_enable_custom_tls_versions(self, enabled, expected_protocols):
+        new_arguments = {'adminrouter_tls_1_0_enabled': enabled[0],
+                         'adminrouter_tls_1_1_enabled': enabled[1],
+                         'adminrouter_tls_1_2_enabled': enabled[2]}
+>       protocols = self.supported_tls_protocols_ar_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:270: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac5fb3a0>
+new_config_arguments = {'adminrouter_tls_1_0_enabled': 'true', 'adminrouter_tls_1_1_enabled': 'false', 'adminrouter_tls_1_2_enabled': 'false'}
+
+    def supported_tls_protocols_ar_master(
+            self, new_config_arguments: Dict[str, str]) -> List[str]:
+        """
+        This finds a line which looks like the following:
+            ssl_protocols TLSv1, TLSv1.1;
+        in the Admin Router TLS configuration.
+        It then returns the listed protocols.
+    
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+    
+        Returns:
+            A list of supported SSL protocols.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+        config_path = '/etc/adminrouter-tls-master.conf'
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:199: ValueError
+_ TestToggleTLSVersions.test_enable_custom_tls_versions[enabled5-expected_protocols5] _
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac3f3790>
+enabled = ('false', 'true', 'false'), expected_protocols = ['TLSv1.1']
+
+    @pytest.mark.parametrize(
+        'enabled,expected_protocols', [
+            (('false', 'false', 'true'), ['TLSv1.2']),
+            (('false', 'true', 'true'), ['TLSv1.1', 'TLSv1.2']),
+            (('true', 'true', 'true'), ['TLSv1', 'TLSv1.1', 'TLSv1.2']),
+            (('true', 'false', 'true'), ['TLSv1', 'TLSv1.2']),
+            (('true', 'false', 'false'), ['TLSv1']),
+            (('false', 'true', 'false'), ['TLSv1.1']),
+        ]
+    )
+    def test_enable_custom_tls_versions(self, enabled, expected_protocols):
+        new_arguments = {'adminrouter_tls_1_0_enabled': enabled[0],
+                         'adminrouter_tls_1_1_enabled': enabled[1],
+                         'adminrouter_tls_1_2_enabled': enabled[2]}
+>       protocols = self.supported_tls_protocols_ar_master(
+            new_config_arguments=new_arguments,
+        )
+
+gen/tests/test_adminrouter_tls_conf.py:270: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac3f3790>
+new_config_arguments = {'adminrouter_tls_1_0_enabled': 'false', 'adminrouter_tls_1_1_enabled': 'true', 'adminrouter_tls_1_2_enabled': 'false'}
+
+    def supported_tls_protocols_ar_master(
+            self, new_config_arguments: Dict[str, str]) -> List[str]:
+        """
+        This finds a line which looks like the following:
+            ssl_protocols TLSv1, TLSv1.1;
+        in the Admin Router TLS configuration.
+        It then returns the listed protocols.
+    
+        Args:
+            new_config_arguments: Arguments which are added to the 'standard'
+                set of arguments before generating configuration files.
+    
+        Returns:
+            A list of supported SSL protocols.
+        """
+        arguments = make_arguments(new_arguments=new_config_arguments)
+        generated = gen.generate(arguments=arguments)
+        package = generated.templates['dcos-config.yaml']['package']
+        config_path = '/etc/adminrouter-tls-master.conf'
+>       [config] = [item for item in package if item['path'] == config_path]
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+gen/tests/test_adminrouter_tls_conf.py:199: ValueError
+______________ TestToggleTLSVersions.test_no_tls_version_enabled _______________
+
+self = <gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions object at 0x2b4aac6a6880>
+
+    def test_no_tls_version_enabled(self):
+        """
+        Not setting the `adminrouter_tls_version_override` or any of the
+        TLS version configuration options results in error.
+        """
+        new_arguments = {'adminrouter_tls_1_0_enabled': 'false',
+                         'adminrouter_tls_1_1_enabled': 'false',
+                         'adminrouter_tls_1_2_enabled': 'false'}
+        expected_error_msg = (
+            'At least one of adminrouter_tls_1_0_enabled, '
+            'adminrouter_tls_1_1_enabled and adminrouter_tls_1_2_enabled must '
+            "be set to 'true'."
+        )
+        result = gen.validate(arguments=make_arguments(new_arguments))
+>       assert result['status'] == 'errors'
+E       AssertionError: assert 'ok' == 'errors'
+E         
+E         - errors
+E         + ok
+
+gen/tests/test_adminrouter_tls_conf.py:289: AssertionError
+=============================== warnings summary ===============================
+gen/calc.py:613
+  /workspace/repo/gen/calc.py:613: DeprecationWarning: invalid escape sequence \d
+    match = re.match("([\d\.]+)(\w+)", mesos_recovery_timeout)
+
+gen/calc.py:778
+  /workspace/repo/gen/calc.py:778: DeprecationWarning: invalid escape sequence \d
+    '^\d+(\.\d+)?({})$'.format('|'.join(timeout_units)),
+
+pkgpanda/__init__.py:45
+  /workspace/repo/pkgpanda/__init__.py:45: DeprecationWarning: invalid escape sequence \-
+    name_regex = "^[a-zA-Z0-9@_+][a-zA-Z0-9@._+\-]*$"
+
+pkgpanda/__init__.py:20
+  /workspace/repo/pkgpanda/__init__.py:20: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    from collections import Iterable
+
+gen/template.py:20
+  /workspace/repo/gen/template.py:20: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    from pkg_resources import resource_string
+
+gen/build_deploy/bash.py:106
+  /workspace/repo/gen/build_deploy/bash.py:106: DeprecationWarning: invalid escape sequence \e
+    bash_template = """#!/bin/bash
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================== 18 failed, 1 passed, 6 warnings in 12.93s ===================
+reward=0 graded=19 found=0 failed=0 parsed=7 framework=pytest exit_code=1

@@ -1,0 +1,718 @@
+patching file pkg/scripts/os_test.go
+{"Time":"2026-06-29T15:25:53.394026907Z","Action":"start","Package":"k8c.io/kubeone/pkg/scripts"}
+{"Time":"2026-06-29T15:25:53.421646173Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests"}
+{"Time":"2026-06-29T15:25:53.421727355Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests","Output":"=== RUN   TestCCMMigrationRegenerateControlPlaneManifests\n"}
+{"Time":"2026-06-29T15:25:53.422004942Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests","Output":"=== PAUSE TestCCMMigrationRegenerateControlPlaneManifests\n"}
+{"Time":"2026-06-29T15:25:53.422036083Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests"}
+{"Time":"2026-06-29T15:25:53.422066344Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig"}
+{"Time":"2026-06-29T15:25:53.422086174Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig","Output":"=== RUN   TestCCMMigrationUpdateKubeletConfig\n"}
+{"Time":"2026-06-29T15:25:53.422108165Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig","Output":"=== PAUSE TestCCMMigrationUpdateKubeletConfig\n"}
+{"Time":"2026-06-29T15:25:53.422138006Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig"}
+{"Time":"2026-06-29T15:25:53.422154436Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig"}
+{"Time":"2026-06-29T15:25:53.422166476Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig","Output":"=== RUN   TestSaveCloudConfig\n"}
+{"Time":"2026-06-29T15:25:53.422206077Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig","Output":"=== PAUSE TestSaveCloudConfig\n"}
+{"Time":"2026-06-29T15:25:53.422223488Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig"}
+{"Time":"2026-06-29T15:25:53.422236068Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig"}
+{"Time":"2026-06-29T15:25:53.422247759Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig","Output":"=== RUN   TestSaveAuditPolicyConfig\n"}
+{"Time":"2026-06-29T15:25:53.422273079Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig","Output":"=== PAUSE TestSaveAuditPolicyConfig\n"}
+{"Time":"2026-06-29T15:25:53.42229694Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig"}
+{"Time":"2026-06-29T15:25:53.422347672Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin"}
+{"Time":"2026-06-29T15:25:53.422364862Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin","Output":"=== RUN   TestKubeadmJoin\n"}
+{"Time":"2026-06-29T15:25:53.422394273Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin","Output":"=== PAUSE TestKubeadmJoin\n"}
+{"Time":"2026-06-29T15:25:53.422416313Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin"}
+{"Time":"2026-06-29T15:25:53.422438774Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker"}
+{"Time":"2026-06-29T15:25:53.422450784Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker","Output":"=== RUN   TestKubeadmJoinWorker\n"}
+{"Time":"2026-06-29T15:25:53.422475215Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker","Output":"=== PAUSE TestKubeadmJoinWorker\n"}
+{"Time":"2026-06-29T15:25:53.422490675Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker"}
+{"Time":"2026-06-29T15:25:53.422515866Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert"}
+{"Time":"2026-06-29T15:25:53.422537646Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert","Output":"=== RUN   TestKubeadmCert\n"}
+{"Time":"2026-06-29T15:25:53.422558087Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert","Output":"=== PAUSE TestKubeadmCert\n"}
+{"Time":"2026-06-29T15:25:53.422569037Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert"}
+{"Time":"2026-06-29T15:25:53.422579528Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit"}
+{"Time":"2026-06-29T15:25:53.422605738Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit","Output":"=== RUN   TestKubeadmInit\n"}
+{"Time":"2026-06-29T15:25:53.422627889Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit","Output":"=== PAUSE TestKubeadmInit\n"}
+{"Time":"2026-06-29T15:25:53.422638109Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit"}
+{"Time":"2026-06-29T15:25:53.422650769Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset"}
+{"Time":"2026-06-29T15:25:53.42267281Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset","Output":"=== RUN   TestKubeadmReset\n"}
+{"Time":"2026-06-29T15:25:53.422693921Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset","Output":"=== PAUSE TestKubeadmReset\n"}
+{"Time":"2026-06-29T15:25:53.422703481Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset"}
+{"Time":"2026-06-29T15:25:53.422720671Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade"}
+{"Time":"2026-06-29T15:25:53.422731462Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade","Output":"=== RUN   TestKubeadmUpgrade\n"}
+{"Time":"2026-06-29T15:25:53.422764893Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade","Output":"=== PAUSE TestKubeadmUpgrade\n"}
+{"Time":"2026-06-29T15:25:53.422792844Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade"}
+{"Time":"2026-06-29T15:25:53.422903776Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian"}
+{"Time":"2026-06-29T15:25:53.422937037Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian","Output":"=== RUN   TestKubeadmDebian\n"}
+{"Time":"2026-06-29T15:25:53.422960958Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian","Output":"=== PAUSE TestKubeadmDebian\n"}
+{"Time":"2026-06-29T15:25:53.422981629Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian"}
+{"Time":"2026-06-29T15:25:53.423007469Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd"}
+{"Time":"2026-06-29T15:25:53.42303541Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd","Output":"=== RUN   TestMigrateToContainerd\n"}
+{"Time":"2026-06-29T15:25:53.42304889Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd","Output":"=== PAUSE TestMigrateToContainerd\n"}
+{"Time":"2026-06-29T15:25:53.423065821Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd"}
+{"Time":"2026-06-29T15:25:53.423176874Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS"}
+{"Time":"2026-06-29T15:25:53.423208545Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS","Output":"=== RUN   TestKubeadmCentOS\n"}
+{"Time":"2026-06-29T15:25:53.423250776Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS","Output":"=== PAUSE TestKubeadmCentOS\n"}
+{"Time":"2026-06-29T15:25:53.423271116Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS"}
+{"Time":"2026-06-29T15:25:53.423284637Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.423307107Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux","Output":"=== RUN   TestKubeadmAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.423439921Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux","Output":"=== PAUSE TestKubeadmAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.423532353Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.423563304Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar"}
+{"Time":"2026-06-29T15:25:53.423584305Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar","Output":"=== RUN   TestKubeadmFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.423616326Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar","Output":"=== PAUSE TestKubeadmFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.423640776Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar"}
+{"Time":"2026-06-29T15:25:53.42378346Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesDebian"}
+{"Time":"2026-06-29T15:25:53.423825501Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesDebian","Output":"=== RUN   TestRemoveBinariesDebian\n"}
+{"Time":"2026-06-29T15:25:53.423850672Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesDebian","Output":"=== PAUSE TestRemoveBinariesDebian\n"}
+{"Time":"2026-06-29T15:25:53.423862542Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesDebian"}
+{"Time":"2026-06-29T15:25:53.423874573Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesCentOS"}
+{"Time":"2026-06-29T15:25:53.423889633Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesCentOS","Output":"=== RUN   TestRemoveBinariesCentOS\n"}
+{"Time":"2026-06-29T15:25:53.423910974Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesCentOS","Output":"=== PAUSE TestRemoveBinariesCentOS\n"}
+{"Time":"2026-06-29T15:25:53.423921434Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesCentOS"}
+{"Time":"2026-06-29T15:25:53.423932674Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.423944284Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesAmazonLinux","Output":"=== RUN   TestRemoveBinariesAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.423955455Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesAmazonLinux","Output":"=== PAUSE TestRemoveBinariesAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.423972185Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.424002606Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesFlatcar"}
+{"Time":"2026-06-29T15:25:53.424017746Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesFlatcar","Output":"=== RUN   TestRemoveBinariesFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.424030247Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesFlatcar","Output":"=== PAUSE TestRemoveBinariesFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.424055518Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesFlatcar"}
+{"Time":"2026-06-29T15:25:53.424078428Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIDebian"}
+{"Time":"2026-06-29T15:25:53.424094279Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIDebian","Output":"=== RUN   TestUpgradeKubeadmAndCNIDebian\n"}
+{"Time":"2026-06-29T15:25:53.424110139Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIDebian","Output":"=== PAUSE TestUpgradeKubeadmAndCNIDebian\n"}
+{"Time":"2026-06-29T15:25:53.42413755Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIDebian"}
+{"Time":"2026-06-29T15:25:53.42416013Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNICentOS"}
+{"Time":"2026-06-29T15:25:53.424177821Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNICentOS","Output":"=== RUN   TestUpgradeKubeadmAndCNICentOS\n"}
+{"Time":"2026-06-29T15:25:53.424189471Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNICentOS","Output":"=== PAUSE TestUpgradeKubeadmAndCNICentOS\n"}
+{"Time":"2026-06-29T15:25:53.424200422Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNICentOS"}
+{"Time":"2026-06-29T15:25:53.424230542Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.424247593Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIAmazonLinux","Output":"=== RUN   TestUpgradeKubeadmAndCNIAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.424259223Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIAmazonLinux","Output":"=== PAUSE TestUpgradeKubeadmAndCNIAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.424270453Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.424283084Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIFlatcar"}
+{"Time":"2026-06-29T15:25:53.424300804Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIFlatcar","Output":"=== RUN   TestUpgradeKubeadmAndCNIFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.424350755Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIFlatcar","Output":"=== PAUSE TestUpgradeKubeadmAndCNIFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.424367666Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIFlatcar"}
+{"Time":"2026-06-29T15:25:53.424383216Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlDebian"}
+{"Time":"2026-06-29T15:25:53.424393957Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlDebian","Output":"=== RUN   TestUpgradeKubeletAndKubectlDebian\n"}
+{"Time":"2026-06-29T15:25:53.424418747Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlDebian","Output":"=== PAUSE TestUpgradeKubeletAndKubectlDebian\n"}
+{"Time":"2026-06-29T15:25:53.424433268Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlDebian"}
+{"Time":"2026-06-29T15:25:53.424447018Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlCentOS"}
+{"Time":"2026-06-29T15:25:53.424458068Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlCentOS","Output":"=== RUN   TestUpgradeKubeletAndKubectlCentOS\n"}
+{"Time":"2026-06-29T15:25:53.424483069Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlCentOS","Output":"=== PAUSE TestUpgradeKubeletAndKubectlCentOS\n"}
+{"Time":"2026-06-29T15:25:53.42450041Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlCentOS"}
+{"Time":"2026-06-29T15:25:53.42452166Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.424533851Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlAmazonLinux","Output":"=== RUN   TestUpgradeKubeletAndKubectlAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.424549431Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlAmazonLinux","Output":"=== PAUSE TestUpgradeKubeletAndKubectlAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.424561261Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.424580372Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlFlatcar"}
+{"Time":"2026-06-29T15:25:53.424641923Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlFlatcar","Output":"=== RUN   TestUpgradeKubeletAndKubectlFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.424670034Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlFlatcar","Output":"=== PAUSE TestUpgradeKubeletAndKubectlFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.424697805Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlFlatcar"}
+{"Time":"2026-06-29T15:25:53.424749486Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile"}
+{"Time":"2026-06-29T15:25:53.424770257Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile","Output":"=== RUN   TestEnvironmentFile\n"}
+{"Time":"2026-06-29T15:25:53.424820078Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile","Output":"=== PAUSE TestEnvironmentFile\n"}
+{"Time":"2026-06-29T15:25:53.424837029Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile"}
+{"Time":"2026-06-29T15:25:53.424848869Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestTestDaemonsProxy"}
+{"Time":"2026-06-29T15:25:53.42487556Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestTestDaemonsProxy","Output":"=== RUN   TestTestDaemonsProxy\n"}
+{"Time":"2026-06-29T15:25:53.42488611Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestTestDaemonsProxy","Output":"=== PAUSE TestTestDaemonsProxy\n"}
+{"Time":"2026-06-29T15:25:53.42489562Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestTestDaemonsProxy"}
+{"Time":"2026-06-29T15:25:53.424910121Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests"}
+{"Time":"2026-06-29T15:25:53.424991113Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests","Output":"=== CONT  TestCCMMigrationRegenerateControlPlaneManifests\n"}
+{"Time":"2026-06-29T15:25:53.425049794Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/verbose"}
+{"Time":"2026-06-29T15:25:53.425074845Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/verbose","Output":"=== RUN   TestCCMMigrationRegenerateControlPlaneManifests/verbose\n"}
+{"Time":"2026-06-29T15:25:53.425087085Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesDebian"}
+{"Time":"2026-06-29T15:25:53.425104376Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesDebian","Output":"=== CONT  TestRemoveBinariesDebian\n"}
+{"Time":"2026-06-29T15:25:53.425139797Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig"}
+{"Time":"2026-06-29T15:25:53.425174918Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig","Output":"=== CONT  TestCCMMigrationUpdateKubeletConfig\n"}
+{"Time":"2026-06-29T15:25:53.425278731Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/verbose"}
+{"Time":"2026-06-29T15:25:53.425380343Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/verbose","Output":"=== RUN   TestCCMMigrationUpdateKubeletConfig/verbose\n"}
+{"Time":"2026-06-29T15:25:53.425452065Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/verbose","Output":"=== PAUSE TestCCMMigrationUpdateKubeletConfig/verbose\n"}
+{"Time":"2026-06-29T15:25:53.425531937Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/verbose"}
+{"Time":"2026-06-29T15:25:53.42563573Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/not-verbose"}
+{"Time":"2026-06-29T15:25:53.425656751Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/not-verbose","Output":"=== RUN   TestCCMMigrationUpdateKubeletConfig/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.425690152Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/not-verbose","Output":"=== PAUSE TestCCMMigrationUpdateKubeletConfig/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.425715372Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/not-verbose"}
+{"Time":"2026-06-29T15:25:53.425733493Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset"}
+{"Time":"2026-06-29T15:25:53.425768304Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset","Output":"=== CONT  TestKubeadmReset\n"}
+{"Time":"2026-06-29T15:25:53.425832535Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/verbose"}
+{"Time":"2026-06-29T15:25:53.425869876Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/verbose","Output":"=== RUN   TestKubeadmReset/verbose\n"}
+{"Time":"2026-06-29T15:25:53.425897727Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/verbose","Output":"=== PAUSE TestKubeadmReset/verbose\n"}
+{"Time":"2026-06-29T15:25:53.425929888Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/verbose"}
+{"Time":"2026-06-29T15:25:53.425940238Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/not-verbose"}
+{"Time":"2026-06-29T15:25:53.425957829Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/not-verbose","Output":"=== RUN   TestKubeadmReset/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.425968069Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/not-verbose","Output":"=== PAUSE TestKubeadmReset/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.425977589Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/not-verbose"}
+{"Time":"2026-06-29T15:25:53.4259873Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile"}
+{"Time":"2026-06-29T15:25:53.42599667Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile","Output":"=== CONT  TestEnvironmentFile\n"}
+{"Time":"2026-06-29T15:25:53.42600704Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/empty-proxy"}
+{"Time":"2026-06-29T15:25:53.42601744Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/empty-proxy","Output":"=== RUN   TestEnvironmentFile/empty-proxy\n"}
+{"Time":"2026-06-29T15:25:53.426040401Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/empty-proxy","Output":"=== PAUSE TestEnvironmentFile/empty-proxy\n"}
+{"Time":"2026-06-29T15:25:53.426059852Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/empty-proxy"}
+{"Time":"2026-06-29T15:25:53.426086732Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-proxy"}
+{"Time":"2026-06-29T15:25:53.426100293Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-proxy","Output":"=== RUN   TestEnvironmentFile/http-proxy\n"}
+{"Time":"2026-06-29T15:25:53.426188705Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-proxy","Output":"=== PAUSE TestEnvironmentFile/http-proxy\n"}
+{"Time":"2026-06-29T15:25:53.426213526Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-proxy"}
+{"Time":"2026-06-29T15:25:53.426225626Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-proxy"}
+{"Time":"2026-06-29T15:25:53.426241857Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-proxy","Output":"=== RUN   TestEnvironmentFile/http-https-proxy\n"}
+{"Time":"2026-06-29T15:25:53.426261387Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-proxy","Output":"=== PAUSE TestEnvironmentFile/http-https-proxy\n"}
+{"Time":"2026-06-29T15:25:53.426292678Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-proxy"}
+{"Time":"2026-06-29T15:25:53.426303928Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-no-proxy"}
+{"Time":"2026-06-29T15:25:53.42637376Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-no-proxy","Output":"=== RUN   TestEnvironmentFile/http-https-no-proxy\n"}
+{"Time":"2026-06-29T15:25:53.426423382Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-no-proxy","Output":"=== PAUSE TestEnvironmentFile/http-https-no-proxy\n"}
+{"Time":"2026-06-29T15:25:53.426447632Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-no-proxy"}
+{"Time":"2026-06-29T15:25:53.426478953Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlFlatcar"}
+{"Time":"2026-06-29T15:25:53.426590316Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlFlatcar","Output":"=== CONT  TestUpgradeKubeletAndKubectlFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.426689599Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert"}
+{"Time":"2026-06-29T15:25:53.4267272Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert","Output":"=== CONT  TestKubeadmCert\n"}
+{"Time":"2026-06-29T15:25:53.42674973Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/verbose"}
+{"Time":"2026-06-29T15:25:53.426784331Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/verbose","Output":"=== RUN   TestKubeadmCert/verbose\n"}
+{"Time":"2026-06-29T15:25:53.426798632Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/verbose","Output":"=== PAUSE TestKubeadmCert/verbose\n"}
+{"Time":"2026-06-29T15:25:53.426905975Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/verbose"}
+{"Time":"2026-06-29T15:25:53.426948076Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/not-verbose"}
+{"Time":"2026-06-29T15:25:53.426966196Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/not-verbose","Output":"=== RUN   TestKubeadmCert/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.426984806Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin"}
+{"Time":"2026-06-29T15:25:53.426998497Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin","Output":"=== CONT  TestKubeadmJoin\n"}
+{"Time":"2026-06-29T15:25:53.427052548Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker"}
+{"Time":"2026-06-29T15:25:53.427067189Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker","Output":"=== CONT  TestKubeadmJoinWorker\n"}
+{"Time":"2026-06-29T15:25:53.42710456Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/verbose"}
+{"Time":"2026-06-29T15:25:53.4271179Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/verbose","Output":"=== RUN   TestKubeadmJoinWorker/verbose\n"}
+{"Time":"2026-06-29T15:25:53.427136001Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/verbose","Output":"=== PAUSE TestKubeadmJoinWorker/verbose\n"}
+{"Time":"2026-06-29T15:25:53.427156021Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/verbose"}
+{"Time":"2026-06-29T15:25:53.427181702Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/not-verbose"}
+{"Time":"2026-06-29T15:25:53.427196332Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/not-verbose","Output":"=== RUN   TestKubeadmJoinWorker/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.427221183Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/not-verbose","Output":"=== PAUSE TestKubeadmJoinWorker/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.427242653Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/not-verbose"}
+{"Time":"2026-06-29T15:25:53.427256154Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.427279225Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlAmazonLinux","Output":"=== CONT  TestUpgradeKubeletAndKubectlAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.427380777Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlCentOS"}
+{"Time":"2026-06-29T15:25:53.427428058Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlCentOS","Output":"=== CONT  TestUpgradeKubeletAndKubectlCentOS\n"}
+{"Time":"2026-06-29T15:25:53.427458569Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig"}
+{"Time":"2026-06-29T15:25:53.42747032Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig","Output":"=== CONT  TestSaveAuditPolicyConfig\n"}
+{"Time":"2026-06-29T15:25:53.42748377Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone1"}
+{"Time":"2026-06-29T15:25:53.42749481Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone1","Output":"=== RUN   TestSaveAuditPolicyConfig/kubeone1\n"}
+{"Time":"2026-06-29T15:25:53.427517291Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone1","Output":"=== PAUSE TestSaveAuditPolicyConfig/kubeone1\n"}
+{"Time":"2026-06-29T15:25:53.427530551Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone1"}
+{"Time":"2026-06-29T15:25:53.427601243Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone2"}
+{"Time":"2026-06-29T15:25:53.427632504Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone2","Output":"=== RUN   TestSaveAuditPolicyConfig/kubeone2\n"}
+{"Time":"2026-06-29T15:25:53.427643844Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone2","Output":"=== PAUSE TestSaveAuditPolicyConfig/kubeone2\n"}
+{"Time":"2026-06-29T15:25:53.427652845Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone2"}
+{"Time":"2026-06-29T15:25:53.427674865Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesDebian","Output":"--- PASS: TestRemoveBinariesDebian (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.427725987Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesDebian","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.427743067Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig"}
+{"Time":"2026-06-29T15:25:53.427761378Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig","Output":"=== CONT  TestSaveCloudConfig\n"}
+{"Time":"2026-06-29T15:25:53.427771788Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone1"}
+{"Time":"2026-06-29T15:25:53.42785604Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone1","Output":"=== RUN   TestSaveCloudConfig/kubeone1\n"}
+{"Time":"2026-06-29T15:25:53.427880671Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone1","Output":"=== PAUSE TestSaveCloudConfig/kubeone1\n"}
+{"Time":"2026-06-29T15:25:53.427917282Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone1"}
+{"Time":"2026-06-29T15:25:53.427932952Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar"}
+{"Time":"2026-06-29T15:25:53.427956193Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar","Output":"=== CONT  TestKubeadmFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.427973013Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.427989034Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux","Output":"=== CONT  TestKubeadmAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.428002874Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS"}
+{"Time":"2026-06-29T15:25:53.428014934Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS","Output":"=== CONT  TestKubeadmCentOS\n"}
+{"Time":"2026-06-29T15:25:53.428028895Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd"}
+{"Time":"2026-06-29T15:25:53.428039685Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd","Output":"=== CONT  TestMigrateToContainerd\n"}
+{"Time":"2026-06-29T15:25:53.428060846Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian"}
+{"Time":"2026-06-29T15:25:53.428074746Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian","Output":"=== CONT  TestKubeadmDebian\n"}
+{"Time":"2026-06-29T15:25:53.428087326Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade"}
+{"Time":"2026-06-29T15:25:53.428101337Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade","Output":"=== CONT  TestKubeadmUpgrade\n"}
+{"Time":"2026-06-29T15:25:53.428120377Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/verbose","Output":"=== PAUSE TestCCMMigrationRegenerateControlPlaneManifests/verbose\n"}
+{"Time":"2026-06-29T15:25:53.428148008Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/verbose"}
+{"Time":"2026-06-29T15:25:53.428166038Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIFlatcar"}
+{"Time":"2026-06-29T15:25:53.428177439Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIFlatcar","Output":"=== CONT  TestUpgradeKubeadmAndCNIFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.428192309Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestTestDaemonsProxy"}
+{"Time":"2026-06-29T15:25:53.428254451Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestTestDaemonsProxy","Output":"=== CONT  TestTestDaemonsProxy\n"}
+{"Time":"2026-06-29T15:25:53.428388715Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit"}
+{"Time":"2026-06-29T15:25:53.428431176Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit","Output":"=== CONT  TestKubeadmInit\n"}
+{"Time":"2026-06-29T15:25:53.428445516Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/not-verbose","Output":"=== PAUSE TestKubeadmCert/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.428559339Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/not-verbose"}
+{"Time":"2026-06-29T15:25:53.42858108Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/verbose"}
+{"Time":"2026-06-29T15:25:53.42859259Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/verbose","Output":"=== RUN   TestKubeadmJoin/verbose\n"}
+{"Time":"2026-06-29T15:25:53.42860576Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlDebian"}
+{"Time":"2026-06-29T15:25:53.428622891Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlDebian","Output":"=== CONT  TestUpgradeKubeletAndKubectlDebian\n"}
+{"Time":"2026-06-29T15:25:53.428634481Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIDebian"}
+{"Time":"2026-06-29T15:25:53.428662242Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIDebian","Output":"=== CONT  TestUpgradeKubeadmAndCNIDebian\n"}
+{"Time":"2026-06-29T15:25:53.428696643Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlFlatcar","Output":"--- PASS: TestUpgradeKubeletAndKubectlFlatcar (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.428761054Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlFlatcar","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.428801066Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.428813086Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIAmazonLinux","Output":"=== CONT  TestUpgradeKubeadmAndCNIAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.428873897Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone2"}
+{"Time":"2026-06-29T15:25:53.428895848Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone2","Output":"=== RUN   TestSaveCloudConfig/kubeone2\n"}
+{"Time":"2026-06-29T15:25:53.429026272Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/simple"}
+{"Time":"2026-06-29T15:25:53.429079693Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/simple","Output":"=== RUN   TestKubeadmFlatcar/simple\n"}
+{"Time":"2026-06-29T15:25:53.429198596Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/simple"}
+{"Time":"2026-06-29T15:25:53.429229267Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/simple","Output":"=== RUN   TestMigrateToContainerd/simple\n"}
+{"Time":"2026-06-29T15:25:53.42933468Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/v1beta2"}
+{"Time":"2026-06-29T15:25:53.429377581Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/v1beta2","Output":"=== RUN   TestKubeadmUpgrade/v1beta2\n"}
+{"Time":"2026-06-29T15:25:53.429401242Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/not-verbose"}
+{"Time":"2026-06-29T15:25:53.429422832Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/not-verbose","Output":"=== RUN   TestCCMMigrationRegenerateControlPlaneManifests/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.429465024Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/simple"}
+{"Time":"2026-06-29T15:25:53.429486474Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/simple","Output":"=== RUN   TestKubeadmAmazonLinux/simple\n"}
+{"Time":"2026-06-29T15:25:53.429514375Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/simple"}
+{"Time":"2026-06-29T15:25:53.429537695Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/simple","Output":"=== RUN   TestKubeadmCentOS/simple\n"}
+{"Time":"2026-06-29T15:25:53.430543013Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/simple"}
+{"Time":"2026-06-29T15:25:53.430572203Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/simple","Output":"=== RUN   TestKubeadmDebian/simple\n"}
+{"Time":"2026-06-29T15:25:53.430735258Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/simple","Output":"=== PAUSE TestKubeadmDebian/simple\n"}
+{"Time":"2026-06-29T15:25:53.430769789Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/simple"}
+{"Time":"2026-06-29T15:25:53.43080787Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.43082166Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry","Output":"=== RUN   TestKubeadmDebian/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.430834221Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry","Output":"=== PAUSE TestKubeadmDebian/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.430907123Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.431069797Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/verbose","Output":"=== PAUSE TestKubeadmJoin/verbose\n"}
+{"Time":"2026-06-29T15:25:53.431100768Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/verbose"}
+{"Time":"2026-06-29T15:25:53.43154607Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNICentOS"}
+{"Time":"2026-06-29T15:25:53.43157773Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNICentOS","Output":"=== CONT  TestUpgradeKubeadmAndCNICentOS\n"}
+{"Time":"2026-06-29T15:25:53.431603191Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.431620652Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry_insecure","Output":"=== RUN   TestKubeadmDebian/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.431655653Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry_insecure","Output":"=== PAUSE TestKubeadmDebian/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.431672873Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.431697084Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/not-verbose"}
+{"Time":"2026-06-29T15:25:53.431721394Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/not-verbose","Output":"=== RUN   TestKubeadmJoin/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.431770906Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/not-verbose","Output":"=== PAUSE TestKubeadmJoin/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.431785676Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/not-verbose"}
+{"Time":"2026-06-29T15:25:53.431797776Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/simple","Output":"=== PAUSE TestKubeadmFlatcar/simple\n"}
+{"Time":"2026-06-29T15:25:53.431834408Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/simple"}
+{"Time":"2026-06-29T15:25:53.431868209Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/simple","Output":"=== PAUSE TestMigrateToContainerd/simple\n"}
+{"Time":"2026-06-29T15:25:53.431880779Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/simple"}
+{"Time":"2026-06-29T15:25:53.431898189Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone2","Output":"=== PAUSE TestSaveCloudConfig/kubeone2\n"}
+{"Time":"2026-06-29T15:25:53.43191375Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone2"}
+{"Time":"2026-06-29T15:25:53.43192344Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/force"}
+{"Time":"2026-06-29T15:25:53.4319322Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/force","Output":"=== RUN   TestKubeadmFlatcar/force\n"}
+{"Time":"2026-06-29T15:25:53.432047043Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd"}
+{"Time":"2026-06-29T15:25:53.432100015Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd","Output":"=== RUN   TestKubeadmDebian/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.43304637Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlDebian","Output":"--- PASS: TestUpgradeKubeletAndKubectlDebian (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.433080461Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlDebian","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.433094931Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesFlatcar"}
+{"Time":"2026-06-29T15:25:53.433112342Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesFlatcar","Output":"=== CONT  TestRemoveBinariesFlatcar\n"}
+{"Time":"2026-06-29T15:25:53.433176874Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/verbose"}
+{"Time":"2026-06-29T15:25:53.433189974Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/verbose","Output":"=== RUN   TestKubeadmInit/verbose\n"}
+{"Time":"2026-06-29T15:25:53.433216045Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/verbose","Output":"=== PAUSE TestKubeadmInit/verbose\n"}
+{"Time":"2026-06-29T15:25:53.433226525Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/verbose"}
+{"Time":"2026-06-29T15:25:53.433258686Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlAmazonLinux","Output":"--- PASS: TestUpgradeKubeletAndKubectlAmazonLinux (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.433273056Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlAmazonLinux","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.433302197Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/not-verbose"}
+{"Time":"2026-06-29T15:25:53.433348618Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/not-verbose","Output":"=== RUN   TestKubeadmInit/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.433376309Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/not-verbose","Output":"=== PAUSE TestKubeadmInit/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.43339311Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/not-verbose"}
+{"Time":"2026-06-29T15:25:53.434269033Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/not-verbose","Output":"=== PAUSE TestCCMMigrationRegenerateControlPlaneManifests/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.434411647Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/not-verbose"}
+{"Time":"2026-06-29T15:25:53.434559361Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestTestDaemonsProxy","Output":"--- PASS: TestTestDaemonsProxy (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.434674864Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestTestDaemonsProxy","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.434774517Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/verbose"}
+{"Time":"2026-06-29T15:25:53.434816378Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/verbose","Output":"=== CONT  TestKubeadmReset/verbose\n"}
+{"Time":"2026-06-29T15:25:53.434855829Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlCentOS","Output":"--- PASS: TestUpgradeKubeletAndKubectlCentOS (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.43488953Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeletAndKubectlCentOS","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.434925831Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/simple","Output":"=== PAUSE TestKubeadmCentOS/simple\n"}
+{"Time":"2026-06-29T15:25:53.434958432Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/simple"}
+{"Time":"2026-06-29T15:25:53.434992823Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/force","Output":"=== PAUSE TestKubeadmFlatcar/force\n"}
+{"Time":"2026-06-29T15:25:53.435020534Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/force"}
+{"Time":"2026-06-29T15:25:53.435045234Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/flatcar"}
+{"Time":"2026-06-29T15:25:53.435059504Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/flatcar","Output":"=== RUN   TestMigrateToContainerd/flatcar\n"}
+{"Time":"2026-06-29T15:25:53.435080475Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd","Output":"=== PAUSE TestKubeadmDebian/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.435115196Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd"}
+{"Time":"2026-06-29T15:25:53.43524364Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/v1beta2","Output":"=== PAUSE TestKubeadmUpgrade/v1beta2\n"}
+{"Time":"2026-06-29T15:25:53.435285141Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/v1beta2"}
+{"Time":"2026-06-29T15:25:53.435375773Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesCentOS"}
+{"Time":"2026-06-29T15:25:53.435402284Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesCentOS","Output":"=== CONT  TestRemoveBinariesCentOS\n"}
+{"Time":"2026-06-29T15:25:53.435447055Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/verbose"}
+{"Time":"2026-06-29T15:25:53.435478876Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/verbose","Output":"=== CONT  TestCCMMigrationUpdateKubeletConfig/verbose\n"}
+{"Time":"2026-06-29T15:25:53.435494836Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesAmazonLinux"}
+{"Time":"2026-06-29T15:25:53.435507067Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesAmazonLinux","Output":"=== CONT  TestRemoveBinariesAmazonLinux\n"}
+{"Time":"2026-06-29T15:25:53.435520577Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/not-verbose"}
+{"Time":"2026-06-29T15:25:53.435533867Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/not-verbose","Output":"=== CONT  TestCCMMigrationUpdateKubeletConfig/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.435564298Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/not-verbose"}
+{"Time":"2026-06-29T15:25:53.435574229Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/not-verbose","Output":"=== CONT  TestKubeadmReset/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.435591679Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/simple","Output":"=== PAUSE TestKubeadmAmazonLinux/simple\n"}
+{"Time":"2026-06-29T15:25:53.435602449Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/simple"}
+{"Time":"2026-06-29T15:25:53.43561872Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/empty-proxy"}
+{"Time":"2026-06-29T15:25:53.43562771Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/empty-proxy","Output":"=== CONT  TestEnvironmentFile/empty-proxy\n"}
+{"Time":"2026-06-29T15:25:53.43563692Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/proxy"}
+{"Time":"2026-06-29T15:25:53.43565252Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/proxy","Output":"=== RUN   TestKubeadmAmazonLinux/proxy\n"}
+{"Time":"2026-06-29T15:25:53.436021561Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/proxy","Output":"=== PAUSE TestKubeadmAmazonLinux/proxy\n"}
+{"Time":"2026-06-29T15:25:53.436047431Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/proxy"}
+{"Time":"2026-06-29T15:25:53.436095403Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/force"}
+{"Time":"2026-06-29T15:25:53.436120613Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/force","Output":"=== RUN   TestKubeadmAmazonLinux/force\n"}
+{"Time":"2026-06-29T15:25:53.436160124Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/force","Output":"=== PAUSE TestKubeadmAmazonLinux/force\n"}
+{"Time":"2026-06-29T15:25:53.436189255Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/force"}
+{"Time":"2026-06-29T15:25:53.436235816Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/v1.16.1"}
+{"Time":"2026-06-29T15:25:53.436248777Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/v1.16.1","Output":"=== RUN   TestKubeadmAmazonLinux/v1.16.1\n"}
+{"Time":"2026-06-29T15:25:53.436277737Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-no-proxy"}
+{"Time":"2026-06-29T15:25:53.436289788Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-no-proxy","Output":"=== CONT  TestEnvironmentFile/http-https-no-proxy\n"}
+{"Time":"2026-06-29T15:25:53.436774771Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/verbose","Output":"--- PASS: TestKubeadmReset/verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.436998757Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.437020148Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.437031988Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry","Output":"=== RUN   TestKubeadmFlatcar/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.437070139Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/verbose"}
+{"Time":"2026-06-29T15:25:53.437083739Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/verbose","Output":"=== CONT  TestKubeadmJoinWorker/verbose\n"}
+{"Time":"2026-06-29T15:25:53.4371137Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesFlatcar","Output":"--- PASS: TestRemoveBinariesFlatcar (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.43713266Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesFlatcar","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.437144431Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIFlatcar","Output":"--- PASS: TestUpgradeKubeadmAndCNIFlatcar (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.437155531Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIFlatcar","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.437166601Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/proxy"}
+{"Time":"2026-06-29T15:25:53.437177442Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/proxy","Output":"=== RUN   TestKubeadmCentOS/proxy\n"}
+{"Time":"2026-06-29T15:25:53.437188192Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/flatcar","Output":"=== PAUSE TestMigrateToContainerd/flatcar\n"}
+{"Time":"2026-06-29T15:25:53.437290415Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/flatcar"}
+{"Time":"2026-06-29T15:25:53.437340506Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/v1.16.1","Output":"=== PAUSE TestKubeadmAmazonLinux/v1.16.1\n"}
+{"Time":"2026-06-29T15:25:53.437368167Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/v1.16.1"}
+{"Time":"2026-06-29T15:25:53.437397728Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/proxy","Output":"=== PAUSE TestKubeadmCentOS/proxy\n"}
+{"Time":"2026-06-29T15:25:53.437408808Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/proxy"}
+{"Time":"2026-06-29T15:25:53.437444189Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/force"}
+{"Time":"2026-06-29T15:25:53.437457339Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/force","Output":"=== RUN   TestKubeadmCentOS/force\n"}
+{"Time":"2026-06-29T15:25:53.4374703Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/force","Output":"=== PAUSE TestKubeadmCentOS/force\n"}
+{"Time":"2026-06-29T15:25:53.43748572Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/force"}
+{"Time":"2026-06-29T15:25:53.4374978Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/v1.16.1"}
+{"Time":"2026-06-29T15:25:53.437518861Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/v1.16.1","Output":"=== RUN   TestKubeadmCentOS/v1.16.1\n"}
+{"Time":"2026-06-29T15:25:53.437530551Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/v1.16.1","Output":"=== PAUSE TestKubeadmCentOS/v1.16.1\n"}
+{"Time":"2026-06-29T15:25:53.437543592Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/v1.16.1"}
+{"Time":"2026-06-29T15:25:53.437554902Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.437574572Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry","Output":"=== RUN   TestKubeadmCentOS/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.437613704Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-proxy"}
+{"Time":"2026-06-29T15:25:53.437643104Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-proxy","Output":"=== CONT  TestEnvironmentFile/http-proxy\n"}
+{"Time":"2026-06-29T15:25:53.437656435Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesCentOS","Output":"--- PASS: TestRemoveBinariesCentOS (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.438411835Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesCentOS","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.438481767Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-proxy"}
+{"Time":"2026-06-29T15:25:53.438520028Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-proxy","Output":"=== CONT  TestEnvironmentFile/http-https-proxy\n"}
+{"Time":"2026-06-29T15:25:53.438551999Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.438563449Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry","Output":"=== RUN   TestKubeadmAmazonLinux/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.438575579Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry","Output":"=== PAUSE TestKubeadmAmazonLinux/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.43859292Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.438661042Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/leader"}
+{"Time":"2026-06-29T15:25:53.438684942Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/leader","Output":"=== RUN   TestKubeadmUpgrade/leader\n"}
+{"Time":"2026-06-29T15:25:53.438716693Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.438729444Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd_with_insecure_registry","Output":"=== RUN   TestKubeadmDebian/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.439458293Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry","Output":"=== PAUSE TestKubeadmFlatcar/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.439489734Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.439507075Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/verbose","Output":"--- PASS: TestCCMMigrationUpdateKubeletConfig/verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.439547676Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.439621788Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.43968466Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry_insecure","Output":"=== RUN   TestKubeadmAmazonLinux/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.439747451Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.439772562Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry_insecure","Output":"=== RUN   TestKubeadmFlatcar/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.439813143Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry","Output":"=== PAUSE TestKubeadmCentOS/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.439840844Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.439910626Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/insecureRegistry"}
+{"Time":"2026-06-29T15:25:53.439936256Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/insecureRegistry","Output":"=== RUN   TestMigrateToContainerd/insecureRegistry\n"}
+{"Time":"2026-06-29T15:25:53.439970257Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIDebian","Output":"--- PASS: TestUpgradeKubeadmAndCNIDebian (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.440249715Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIDebian","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.440284056Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNICentOS","Output":"--- PASS: TestUpgradeKubeadmAndCNICentOS (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.440396029Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNICentOS","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.440526482Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesAmazonLinux","Output":"--- PASS: TestRemoveBinariesAmazonLinux (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.440569713Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestRemoveBinariesAmazonLinux","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.440634465Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/not-verbose"}
+{"Time":"2026-06-29T15:25:53.440664786Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/not-verbose","Output":"=== CONT  TestKubeadmJoinWorker/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.440696707Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIAmazonLinux","Output":"--- PASS: TestUpgradeKubeadmAndCNIAmazonLinux (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.440731628Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestUpgradeKubeadmAndCNIAmazonLinux","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.440766409Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/not-verbose"}
+{"Time":"2026-06-29T15:25:53.440777119Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/not-verbose","Output":"=== CONT  TestKubeadmCert/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.44080583Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/leader","Output":"=== PAUSE TestKubeadmUpgrade/leader\n"}
+{"Time":"2026-06-29T15:25:53.44081645Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/leader"}
+{"Time":"2026-06-29T15:25:53.441085097Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/empty-proxy","Output":"--- PASS: TestEnvironmentFile/empty-proxy (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.441118948Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/empty-proxy","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.441140429Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/not-verbose"}
+{"Time":"2026-06-29T15:25:53.44116856Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/not-verbose","Output":"=== CONT  TestKubeadmJoin/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.441659323Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry_insecure","Output":"=== PAUSE TestKubeadmAmazonLinux/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.441697854Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.441845658Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/verbose"}
+{"Time":"2026-06-29T15:25:53.441868938Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/verbose","Output":"=== CONT  TestKubeadmCert/verbose\n"}
+{"Time":"2026-06-29T15:25:53.44190808Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone2"}
+{"Time":"2026-06-29T15:25:53.44193809Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone2","Output":"=== CONT  TestSaveAuditPolicyConfig/kubeone2\n"}
+{"Time":"2026-06-29T15:25:53.441951511Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/verbose"}
+{"Time":"2026-06-29T15:25:53.441962331Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/verbose","Output":"=== CONT  TestKubeadmJoin/verbose\n"}
+{"Time":"2026-06-29T15:25:53.44229005Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-proxy","Output":"--- PASS: TestEnvironmentFile/http-https-proxy (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.442369922Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-proxy","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.442390602Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-no-proxy","Output":"--- PASS: TestEnvironmentFile/http-https-no-proxy (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.442404303Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-https-no-proxy","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.442422843Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/verbose","Output":"--- PASS: TestKubeadmJoinWorker/verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.442509786Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.442558807Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/insecureRegistry","Output":"=== PAUSE TestMigrateToContainerd/insecureRegistry\n"}
+{"Time":"2026-06-29T15:25:53.44264948Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/insecureRegistry"}
+{"Time":"2026-06-29T15:25:53.442709641Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone1"}
+{"Time":"2026-06-29T15:25:53.442729162Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone1","Output":"=== CONT  TestSaveCloudConfig/kubeone1\n"}
+{"Time":"2026-06-29T15:25:53.442752042Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone1"}
+{"Time":"2026-06-29T15:25:53.442762752Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone1","Output":"=== CONT  TestSaveAuditPolicyConfig/kubeone1\n"}
+{"Time":"2026-06-29T15:25:53.442784463Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd_with_insecure_registry","Output":"=== PAUSE TestKubeadmDebian/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.442830354Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.442856685Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/not-verbose","Output":"--- PASS: TestCCMMigrationUpdateKubeletConfig/not-verbose (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.442937177Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig/not-verbose","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.442970588Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/not-verbose","Output":"--- PASS: TestKubeadmJoinWorker/not-verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.443003149Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker/not-verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.443085291Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/not-verbose"}
+{"Time":"2026-06-29T15:25:53.443116592Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/not-verbose","Output":"=== CONT  TestCCMMigrationRegenerateControlPlaneManifests/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.443152923Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/verbose"}
+{"Time":"2026-06-29T15:25:53.443176764Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/verbose","Output":"=== CONT  TestCCMMigrationRegenerateControlPlaneManifests/verbose\n"}
+{"Time":"2026-06-29T15:25:53.443211055Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig","Output":"--- PASS: TestCCMMigrationUpdateKubeletConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.443232255Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationUpdateKubeletConfig","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.443265626Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/v1beta2"}
+{"Time":"2026-06-29T15:25:53.443288577Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/v1beta2","Output":"=== CONT  TestKubeadmUpgrade/v1beta2\n"}
+{"Time":"2026-06-29T15:25:53.443344978Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/not-verbose","Output":"--- PASS: TestKubeadmCert/not-verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.44341577Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/not-verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.443450821Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/leader"}
+{"Time":"2026-06-29T15:25:53.443492362Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/leader","Output":"=== CONT  TestKubeadmUpgrade/leader\n"}
+{"Time":"2026-06-29T15:25:53.443550564Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker","Output":"--- PASS: TestKubeadmJoinWorker (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.443573614Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoinWorker","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.443585195Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone2"}
+{"Time":"2026-06-29T15:25:53.443601065Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone2","Output":"=== CONT  TestSaveCloudConfig/kubeone2\n"}
+{"Time":"2026-06-29T15:25:53.443618876Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd"}
+{"Time":"2026-06-29T15:25:53.443629326Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd","Output":"=== RUN   TestKubeadmAmazonLinux/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.443641116Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/verbose"}
+{"Time":"2026-06-29T15:25:53.443651007Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/verbose","Output":"=== CONT  TestKubeadmInit/verbose\n"}
+{"Time":"2026-06-29T15:25:53.443661837Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry_insecure","Output":"=== PAUSE TestKubeadmFlatcar/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.443680227Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.443704078Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/not-verbose"}
+{"Time":"2026-06-29T15:25:53.443724289Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/not-verbose","Output":"=== CONT  TestKubeadmInit/not-verbose\n"}
+{"Time":"2026-06-29T15:25:53.443737459Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-proxy","Output":"--- PASS: TestEnvironmentFile/http-proxy (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.44375985Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile/http-proxy","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.44378533Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile","Output":"--- PASS: TestEnvironmentFile (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.4437965Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestEnvironmentFile","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.443824371Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/not-verbose","Output":"--- PASS: TestKubeadmReset/not-verbose (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.443835752Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset/not-verbose","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.443849742Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset","Output":"--- PASS: TestKubeadmReset (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.443862222Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmReset","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.443882383Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.443898203Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry_insecure","Output":"=== RUN   TestKubeadmCentOS/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.443921474Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry_insecure","Output":"=== PAUSE TestKubeadmCentOS/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.443935314Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.443948195Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/verbose","Output":"--- PASS: TestKubeadmJoin/verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.443989076Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.444028207Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd"}
+{"Time":"2026-06-29T15:25:53.444039167Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd","Output":"=== RUN   TestKubeadmCentOS/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.444069088Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd","Output":"=== PAUSE TestKubeadmCentOS/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.444098099Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd"}
+{"Time":"2026-06-29T15:25:53.444111759Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.44413749Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd_with_insecure_registry","Output":"=== RUN   TestKubeadmCentOS/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.44415669Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd_with_insecure_registry","Output":"=== PAUSE TestKubeadmCentOS/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.444221152Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.444332915Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/nutanix_cluster"}
+{"Time":"2026-06-29T15:25:53.444373206Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/nutanix_cluster","Output":"=== RUN   TestKubeadmCentOS/nutanix_cluster\n"}
+{"Time":"2026-06-29T15:25:53.444426548Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/nutanix_cluster","Output":"=== PAUSE TestKubeadmCentOS/nutanix_cluster\n"}
+{"Time":"2026-06-29T15:25:53.444441518Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/nutanix_cluster"}
+{"Time":"2026-06-29T15:25:53.444478839Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/not-verbose","Output":"--- PASS: TestKubeadmJoin/not-verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.44452818Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin/not-verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.444543851Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin","Output":"--- PASS: TestKubeadmJoin (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.444553761Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmJoin","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.444575272Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/flatcar"}
+{"Time":"2026-06-29T15:25:53.444598372Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/flatcar","Output":"=== CONT  TestMigrateToContainerd/flatcar\n"}
+{"Time":"2026-06-29T15:25:53.444612913Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone1","Output":"--- PASS: TestSaveAuditPolicyConfig/kubeone1 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.444665234Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone1","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.444686195Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/simple"}
+{"Time":"2026-06-29T15:25:53.444713215Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/simple","Output":"=== CONT  TestMigrateToContainerd/simple\n"}
+{"Time":"2026-06-29T15:25:53.444975392Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/insecureRegistry"}
+{"Time":"2026-06-29T15:25:53.445000573Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/insecureRegistry","Output":"=== CONT  TestMigrateToContainerd/insecureRegistry\n"}
+{"Time":"2026-06-29T15:25:53.445158487Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/cilium_cluster"}
+{"Time":"2026-06-29T15:25:53.445190208Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/cilium_cluster","Output":"=== RUN   TestKubeadmCentOS/cilium_cluster\n"}
+{"Time":"2026-06-29T15:25:53.445657651Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd","Output":"=== PAUSE TestKubeadmAmazonLinux/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.445702742Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd"}
+{"Time":"2026-06-29T15:25:53.445736333Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.445765954Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd_with_insecure_registry","Output":"=== RUN   TestKubeadmAmazonLinux/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.445801505Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/not-verbose","Output":"--- PASS: TestCCMMigrationRegenerateControlPlaneManifests/not-verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.446197725Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/not-verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.446225346Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/verbose","Output":"--- PASS: TestKubeadmCert/verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.446255457Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert/verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.446270887Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert","Output":"--- PASS: TestKubeadmCert (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.446599626Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCert","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.446638777Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd_with_insecure_registry","Output":"=== PAUSE TestKubeadmAmazonLinux/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.446681648Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.446726739Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_cilium"}
+{"Time":"2026-06-29T15:25:53.446762091Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_cilium","Output":"=== RUN   TestKubeadmAmazonLinux/with_cilium\n"}
+{"Time":"2026-06-29T15:25:53.446851213Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_cilium","Output":"=== PAUSE TestKubeadmAmazonLinux/with_cilium\n"}
+{"Time":"2026-06-29T15:25:53.446886424Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_cilium"}
+{"Time":"2026-06-29T15:25:53.447201762Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/simple"}
+{"Time":"2026-06-29T15:25:53.447326386Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/simple","Output":"=== CONT  TestKubeadmAmazonLinux/simple\n"}
+{"Time":"2026-06-29T15:25:53.447378937Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/cilium_cluster","Output":"=== PAUSE TestKubeadmCentOS/cilium_cluster\n"}
+{"Time":"2026-06-29T15:25:53.447402998Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/cilium_cluster"}
+{"Time":"2026-06-29T15:25:53.447432629Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone2","Output":"--- PASS: TestSaveAuditPolicyConfig/kubeone2 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.44746841Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig/kubeone2","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.44749594Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/flatcar","Output":"--- PASS: TestMigrateToContainerd/flatcar (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.447554522Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/flatcar","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.447601643Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.447629304Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry_insecure","Output":"=== CONT  TestKubeadmAmazonLinux/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.447680045Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/v1beta2","Output":"--- PASS: TestKubeadmUpgrade/v1beta2 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.447698116Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/v1beta2","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.447722106Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/verbose","Output":"--- PASS: TestCCMMigrationRegenerateControlPlaneManifests/verbose (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.447746467Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests/verbose","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.447773948Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_cilium"}
+{"Time":"2026-06-29T15:25:53.447794168Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_cilium","Output":"=== CONT  TestKubeadmAmazonLinux/with_cilium\n"}
+{"Time":"2026-06-29T15:25:53.447821109Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.447835449Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd_with_insecure_registry","Output":"=== CONT  TestKubeadmAmazonLinux/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.447958513Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/nutanix_cluster"}
+{"Time":"2026-06-29T15:25:53.447985324Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/nutanix_cluster","Output":"=== CONT  TestKubeadmCentOS/nutanix_cluster\n"}
+{"Time":"2026-06-29T15:25:53.448105217Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd"}
+{"Time":"2026-06-29T15:25:53.448125407Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd","Output":"=== CONT  TestKubeadmAmazonLinux/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.448201799Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/proxy"}
+{"Time":"2026-06-29T15:25:53.44821818Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/proxy","Output":"=== CONT  TestKubeadmAmazonLinux/proxy\n"}
+{"Time":"2026-06-29T15:25:53.448393044Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/v1.16.1"}
+{"Time":"2026-06-29T15:25:53.448419675Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/v1.16.1","Output":"=== CONT  TestKubeadmAmazonLinux/v1.16.1\n"}
+{"Time":"2026-06-29T15:25:53.448452006Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone1","Output":"--- PASS: TestSaveCloudConfig/kubeone1 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.448480437Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone1","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.448499967Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.448571779Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry","Output":"=== CONT  TestKubeadmAmazonLinux/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.44896969Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/force"}
+{"Time":"2026-06-29T15:25:53.449006881Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/force","Output":"=== CONT  TestKubeadmAmazonLinux/force\n"}
+{"Time":"2026-06-29T15:25:53.449108254Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig","Output":"--- PASS: TestSaveAuditPolicyConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.449509475Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveAuditPolicyConfig","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.449548516Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/leader","Output":"--- PASS: TestKubeadmUpgrade/leader (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.452409413Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade/leader","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.452447224Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/nutanix_cluster"}
+{"Time":"2026-06-29T15:25:53.452467105Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/nutanix_cluster","Output":"=== RUN   TestKubeadmDebian/nutanix_cluster\n"}
+{"Time":"2026-06-29T15:25:53.452481755Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/nutanix_cluster","Output":"=== PAUSE TestKubeadmDebian/nutanix_cluster\n"}
+{"Time":"2026-06-29T15:25:53.452494875Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/nutanix_cluster"}
+{"Time":"2026-06-29T15:25:53.452525376Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.452549477Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd_with_insecure_registry","Output":"=== CONT  TestKubeadmCentOS/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.452574277Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry","Output":"--- PASS: TestKubeadmAmazonLinux/overwrite_registry (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.452599898Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.452610278Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/cilium_cluster"}
+{"Time":"2026-06-29T15:25:53.452619069Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/cilium_cluster","Output":"=== RUN   TestKubeadmDebian/cilium_cluster\n"}
+{"Time":"2026-06-29T15:25:53.45265211Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd"}
+{"Time":"2026-06-29T15:25:53.45267271Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd","Output":"=== CONT  TestKubeadmCentOS/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.452696461Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/nutanix_cluster","Output":"--- PASS: TestKubeadmCentOS/nutanix_cluster (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.45305539Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/nutanix_cluster","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.453092671Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/cilium_cluster"}
+{"Time":"2026-06-29T15:25:53.453124132Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/cilium_cluster","Output":"=== CONT  TestKubeadmCentOS/cilium_cluster\n"}
+{"Time":"2026-06-29T15:25:53.453458711Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd"}
+{"Time":"2026-06-29T15:25:53.453501613Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd","Output":"=== RUN   TestKubeadmFlatcar/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.45525518Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/v1.16.1"}
+{"Time":"2026-06-29T15:25:53.455295891Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/v1.16.1","Output":"=== CONT  TestKubeadmCentOS/v1.16.1\n"}
+{"Time":"2026-06-29T15:25:53.455370703Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone2","Output":"--- PASS: TestSaveCloudConfig/kubeone2 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.455425244Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig/kubeone2","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.455459815Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.455479756Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry","Output":"=== CONT  TestKubeadmCentOS/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.456209115Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests","Output":"--- PASS: TestCCMMigrationRegenerateControlPlaneManifests (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.456267857Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestCCMMigrationRegenerateControlPlaneManifests","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.456301808Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/force"}
+{"Time":"2026-06-29T15:25:53.456475293Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/force","Output":"=== CONT  TestKubeadmCentOS/force\n"}
+{"Time":"2026-06-29T15:25:53.456545625Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/not-verbose","Output":"--- PASS: TestKubeadmInit/not-verbose (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.456566245Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/not-verbose","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.456588026Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/verbose","Output":"--- PASS: TestKubeadmInit/verbose (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.456605826Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit/verbose","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.456632047Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/insecureRegistry","Output":"--- PASS: TestMigrateToContainerd/insecureRegistry (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.456937215Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/insecureRegistry","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.456967046Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/cilium_cluster","Output":"=== PAUSE TestKubeadmDebian/cilium_cluster\n"}
+{"Time":"2026-06-29T15:25:53.456997227Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/cilium_cluster"}
+{"Time":"2026-06-29T15:25:53.457224453Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/simple","Output":"--- PASS: TestMigrateToContainerd/simple (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.457273804Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd/simple","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.457296995Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/proxy"}
+{"Time":"2026-06-29T15:25:53.457350306Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/proxy","Output":"=== CONT  TestKubeadmCentOS/proxy\n"}
+{"Time":"2026-06-29T15:25:53.45822693Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_cilium","Output":"--- PASS: TestKubeadmAmazonLinux/with_cilium (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.458256571Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_cilium","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.458283162Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/simple","Output":"--- PASS: TestKubeadmAmazonLinux/simple (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.458370694Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/simple","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.458405235Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.458427906Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry_insecure","Output":"=== CONT  TestKubeadmCentOS/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.459031202Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd","Output":"=== PAUSE TestKubeadmFlatcar/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.459062492Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd"}
+{"Time":"2026-06-29T15:25:53.459081653Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade","Output":"--- PASS: TestKubeadmUpgrade (0.02s)\n"}
+{"Time":"2026-06-29T15:25:53.459112144Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmUpgrade","Elapsed":0.02}
+{"Time":"2026-06-29T15:25:53.459133985Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/simple"}
+{"Time":"2026-06-29T15:25:53.459153935Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/simple","Output":"=== CONT  TestKubeadmCentOS/simple\n"}
+{"Time":"2026-06-29T15:25:53.459771822Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.459799923Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd_with_insecure_registry","Output":"=== CONT  TestKubeadmDebian/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.459828383Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.459845574Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry_insecure","Output":"=== CONT  TestKubeadmDebian/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.459882095Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd"}
+{"Time":"2026-06-29T15:25:53.459922246Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd","Output":"=== CONT  TestKubeadmDebian/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.459942016Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/cilium_cluster"}
+{"Time":"2026-06-29T15:25:53.460008748Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/cilium_cluster","Output":"=== CONT  TestKubeadmDebian/cilium_cluster\n"}
+{"Time":"2026-06-29T15:25:53.460042849Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/nutanix_cluster"}
+{"Time":"2026-06-29T15:25:53.46006676Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/nutanix_cluster","Output":"=== CONT  TestKubeadmDebian/nutanix_cluster\n"}
+{"Time":"2026-06-29T15:25:53.460101421Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.460133741Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry","Output":"=== CONT  TestKubeadmDebian/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.460153722Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/cilium_cluster","Output":"--- PASS: TestKubeadmCentOS/cilium_cluster (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.460169613Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/cilium_cluster","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.460182303Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/simple"}
+{"Time":"2026-06-29T15:25:53.460192353Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/simple","Output":"=== CONT  TestKubeadmDebian/simple\n"}
+{"Time":"2026-06-29T15:25:53.460215364Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/proxy","Output":"--- PASS: TestKubeadmAmazonLinux/proxy (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.460235754Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/proxy","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.460245844Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig","Output":"--- PASS: TestSaveCloudConfig (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.460261455Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestSaveCloudConfig","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.460285425Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd","Output":"--- PASS: TestKubeadmCentOS/with_containerd (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.460572233Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.460609854Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit","Output":"--- PASS: TestKubeadmInit (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.460635095Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmInit","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.460655286Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.460685256Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd_with_insecure_registry","Output":"=== RUN   TestKubeadmFlatcar/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.460720407Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd_with_insecure_registry","Output":"=== PAUSE TestKubeadmFlatcar/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.460744228Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.46081764Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd_with_insecure_registry","Output":"--- PASS: TestKubeadmCentOS/with_containerd_with_insecure_registry (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.461056016Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/with_containerd_with_insecure_registry","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.461088987Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/v1.16.1","Output":"--- PASS: TestKubeadmCentOS/v1.16.1 (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.461103248Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/v1.16.1","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.461134959Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/force","Output":"--- PASS: TestKubeadmCentOS/force (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.46119517Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/force","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.461223851Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/force","Output":"--- PASS: TestKubeadmAmazonLinux/force (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.461241851Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/force","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.461259482Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd","Output":"--- PASS: TestMigrateToContainerd (0.02s)\n"}
+{"Time":"2026-06-29T15:25:53.461273982Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestMigrateToContainerd","Elapsed":0.02}
+{"Time":"2026-06-29T15:25:53.461285943Z","Action":"run","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_cilium"}
+{"Time":"2026-06-29T15:25:53.461306533Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_cilium","Output":"=== RUN   TestKubeadmFlatcar/with_cilium\n"}
+{"Time":"2026-06-29T15:25:53.461409356Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry","Output":"--- PASS: TestKubeadmCentOS/overwrite_registry (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.461447387Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.461470857Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry_insecure","Output":"--- PASS: TestKubeadmAmazonLinux/overwrite_registry_insecure (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.461501908Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/overwrite_registry_insecure","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.461519049Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/proxy","Output":"--- PASS: TestKubeadmCentOS/proxy (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.46153971Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/proxy","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.46157268Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd","Output":"--- PASS: TestKubeadmAmazonLinux/with_containerd (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.461606541Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.461638442Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/v1.16.1","Output":"--- PASS: TestKubeadmAmazonLinux/v1.16.1 (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.461674463Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/v1.16.1","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.461690194Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd_with_insecure_registry","Output":"--- PASS: TestKubeadmAmazonLinux/with_containerd_with_insecure_registry (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.461710084Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux/with_containerd_with_insecure_registry","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.461733245Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux","Output":"--- PASS: TestKubeadmAmazonLinux (0.02s)\n"}
+{"Time":"2026-06-29T15:25:53.462159416Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmAmazonLinux","Elapsed":0.02}
+{"Time":"2026-06-29T15:25:53.462209908Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_cilium","Output":"=== PAUSE TestKubeadmFlatcar/with_cilium\n"}
+{"Time":"2026-06-29T15:25:53.462243609Z","Action":"pause","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_cilium"}
+{"Time":"2026-06-29T15:25:53.46266798Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd"}
+{"Time":"2026-06-29T15:25:53.462705981Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd","Output":"=== CONT  TestKubeadmFlatcar/with_containerd\n"}
+{"Time":"2026-06-29T15:25:53.462737542Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry"}
+{"Time":"2026-06-29T15:25:53.462755562Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry","Output":"=== CONT  TestKubeadmFlatcar/overwrite_registry\n"}
+{"Time":"2026-06-29T15:25:53.462777463Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/simple"}
+{"Time":"2026-06-29T15:25:53.462794693Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/simple","Output":"=== CONT  TestKubeadmFlatcar/simple\n"}
+{"Time":"2026-06-29T15:25:53.462874906Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry_insecure"}
+{"Time":"2026-06-29T15:25:53.462903386Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry_insecure","Output":"=== CONT  TestKubeadmFlatcar/overwrite_registry_insecure\n"}
+{"Time":"2026-06-29T15:25:53.462942907Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_cilium"}
+{"Time":"2026-06-29T15:25:53.462958528Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_cilium","Output":"=== CONT  TestKubeadmFlatcar/with_cilium\n"}
+{"Time":"2026-06-29T15:25:53.463953695Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry_insecure","Output":"--- PASS: TestKubeadmCentOS/overwrite_registry_insecure (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.463993976Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/overwrite_registry_insecure","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.464023366Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd_with_insecure_registry"}
+{"Time":"2026-06-29T15:25:53.464042447Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd_with_insecure_registry","Output":"=== CONT  TestKubeadmFlatcar/with_containerd_with_insecure_registry\n"}
+{"Time":"2026-06-29T15:25:53.464273663Z","Action":"cont","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/force"}
+{"Time":"2026-06-29T15:25:53.464373256Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/force","Output":"=== CONT  TestKubeadmFlatcar/force\n"}
+{"Time":"2026-06-29T15:25:53.464559751Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry_insecure","Output":"--- PASS: TestKubeadmDebian/overwrite_registry_insecure (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.464720675Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry_insecure","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.464762417Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/cilium_cluster","Output":"--- PASS: TestKubeadmDebian/cilium_cluster (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.464792317Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/cilium_cluster","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.464814728Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/nutanix_cluster","Output":"--- PASS: TestKubeadmDebian/nutanix_cluster (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.466202965Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/nutanix_cluster","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.466239596Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd","Output":"--- PASS: TestKubeadmDebian/with_containerd (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.466281418Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.466306628Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd_with_insecure_registry","Output":"--- PASS: TestKubeadmDebian/with_containerd_with_insecure_registry (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.466694079Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/with_containerd_with_insecure_registry","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.46673092Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/simple","Output":"--- PASS: TestKubeadmDebian/simple (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.46710832Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/simple","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.46713677Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_cilium","Output":"--- PASS: TestKubeadmFlatcar/with_cilium (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.467322506Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_cilium","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.467367677Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry","Output":"--- PASS: TestKubeadmDebian/overwrite_registry (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.467416218Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian/overwrite_registry","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.467443899Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian","Output":"--- PASS: TestKubeadmDebian (0.03s)\n"}
+{"Time":"2026-06-29T15:25:53.468011864Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmDebian","Elapsed":0.03}
+{"Time":"2026-06-29T15:25:53.468045465Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry","Output":"--- PASS: TestKubeadmFlatcar/overwrite_registry (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.468135128Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.468153258Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/simple","Output":"--- PASS: TestKubeadmFlatcar/simple (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.468181649Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/simple","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.468203459Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry_insecure","Output":"--- PASS: TestKubeadmFlatcar/overwrite_registry_insecure (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.46822162Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/overwrite_registry_insecure","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.46823274Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd_with_insecure_registry","Output":"--- PASS: TestKubeadmFlatcar/with_containerd_with_insecure_registry (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.468269781Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd_with_insecure_registry","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.468280331Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/force","Output":"--- PASS: TestKubeadmFlatcar/force (0.00s)\n"}
+{"Time":"2026-06-29T15:25:53.468666342Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/force","Elapsed":0}
+{"Time":"2026-06-29T15:25:53.468700403Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd","Output":"--- PASS: TestKubeadmFlatcar/with_containerd (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.468727244Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar/with_containerd","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.468777085Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar","Output":"--- PASS: TestKubeadmFlatcar (0.03s)\n"}
+{"Time":"2026-06-29T15:25:53.468811276Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmFlatcar","Elapsed":0.03}
+{"Time":"2026-06-29T15:25:53.468834206Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/simple","Output":"--- PASS: TestKubeadmCentOS/simple (0.01s)\n"}
+{"Time":"2026-06-29T15:25:53.468851237Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS/simple","Elapsed":0.01}
+{"Time":"2026-06-29T15:25:53.468863997Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS","Output":"--- PASS: TestKubeadmCentOS (0.02s)\n"}
+{"Time":"2026-06-29T15:25:53.468887198Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Test":"TestKubeadmCentOS","Elapsed":0.02}
+{"Time":"2026-06-29T15:25:53.468900528Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Output":"PASS\n"}
+{"Time":"2026-06-29T15:25:53.4704511Z","Action":"output","Package":"k8c.io/kubeone/pkg/scripts","Output":"ok  \tk8c.io/kubeone/pkg/scripts\t0.076s\n"}
+{"Time":"2026-06-29T15:25:53.470495461Z","Action":"pass","Package":"k8c.io/kubeone/pkg/scripts","Elapsed":0.076}
+reward=1 graded=89 found=89 failed=0 parsed=89 framework=go exit_code=0

@@ -1,0 +1,50 @@
+patching file implementations/rust/ockam/ockam_api/tests/common/trace_code.rs
+patching file implementations/rust/ockam/ockam_api/tests/journeys.rs
+patching file implementations/rust/ockam/ockam_api/tests/logging_tracing.rs
+   Compiling ockam_node v0.116.0 (/workspace/repo/implementations/rust/ockam/ockam_node)
+   Compiling ockam_api v0.67.0 (/workspace/repo/implementations/rust/ockam/ockam_api)
+   Compiling ockam_vault v0.109.0 (/workspace/repo/implementations/rust/ockam/ockam_vault)
+   Compiling ockam_transport_tcp v0.114.0 (/workspace/repo/implementations/rust/ockam/ockam_transport_tcp)
+   Compiling ockam_identity v0.111.0 (/workspace/repo/implementations/rust/ockam/ockam_identity)
+   Compiling ockam_vault_aws v0.35.0 (/workspace/repo/implementations/rust/ockam/ockam_vault_aws)
+   Compiling ockam_abac v0.57.0 (/workspace/repo/implementations/rust/ockam/ockam_abac)
+   Compiling ockam v0.124.0 (/workspace/repo/implementations/rust/ockam/ockam)
+    Finished test [unoptimized + debuginfo] target(s) in 1m 04s
+------------
+ Nextest run ID 4c9e7c35-559c-4eac-95a0-7d2c210d6f96 with nextest profile: default
+    Starting 2 tests across 2 binaries
+        FAIL [   0.150s] ockam_api::logging_tracing test_log_and_traces
+
+--- STDOUT:              ockam_api::logging_tracing test_log_and_traces ---
+
+running 1 test
+test test_log_and_traces ... FAILED
+
+failures:
+
+failures:
+    test_log_and_traces
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+
+--- STDERR:              ockam_api::logging_tracing test_log_and_traces ---
+thread 'test_log_and_traces' panicked at implementations/rust/ockam/ockam_api/tests/logging_tracing.rs:37:47:
+called `Result::unwrap()` on an `Err` value: Ockam Error [origin: Application, kind: Io] at /workspace/repo/implementations/rust/ockam/ockam_node/src/storage/database/migrations/migration_support/migrator.rs:250:51
+--- Details ---
+- Caused by: migration error while executing migrations: error returned from database: (code: 1) no such table: confluent_config
+- possible root cause `alloc::string::String`: migration error while executing migrations: error returned from database: (code: 1) no such table: confluent_config
+  debug output: 
+    "migration error while executing migrations: error returned from database: (code: 1) no such table: confluent_config"
+--- Captured Spantrace ---
+
+--------------------------
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.443s] ockam_api::journeys test_create_journey_event
+------------
+     Summary [   0.445s] 2 tests run: 1 passed, 1 failed, 0 skipped
+        FAIL [   0.150s] ockam_api::logging_tracing test_log_and_traces
+error: test run failed
+reward=1 graded=1 found=1 failed=0 parsed=2 framework=cargo exit_code=100

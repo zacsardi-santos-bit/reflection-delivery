@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/packages/opentelemetry-instrumentation-mistralai && pytest tests/test_chat.py tests/test_embeddings.py -v",
+  "test_files": [
+    "packages/opentelemetry-instrumentation-mistralai/tests/__init__.py",
+    "packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_chat/test_mistralai_async_chat.yaml",
+    "packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_chat/test_mistralai_async_streaming_chat.yaml",
+    "packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_chat/test_mistralai_chat.yaml",
+    "packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_chat/test_mistralai_streaming_chat.yaml",
+    "packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_embeddings/test_mistral_async_embeddings.yaml",
+    "packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_embeddings/test_ollama_embeddings.yaml",
+    "packages/opentelemetry-instrumentation-mistralai/tests/conftest.py",
+    "packages/opentelemetry-instrumentation-mistralai/tests/test_chat.py",
+    "packages/opentelemetry-instrumentation-mistralai/tests/test_embeddings.py"
+  ],
+  "num_test_files": 10,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_chat::test_mistralai_chat",
+    "tests.test_chat::test_mistralai_streaming_chat",
+    "tests.test_chat::test_mistralai_async_chat",
+    "tests.test_chat::test_mistralai_async_streaming_chat",
+    "tests.test_embeddings::test_ollama_embeddings",
+    "tests.test_embeddings::test_mistral_async_embeddings"
+  ],
+  "PASS_TO_PASS": []
+}

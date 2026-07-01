@@ -1,0 +1,23 @@
+{
+ "task": "apache-airflow-39923",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds hooks/glue.py operators/glue.py sensors/glue.py triggers/glue.py waiters/glue.json; F2P=74 exercising GlueDataQualityHook/Operator/Sensor/Trigger real behavior"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 35,
+  "shallow": true
+ }
+}

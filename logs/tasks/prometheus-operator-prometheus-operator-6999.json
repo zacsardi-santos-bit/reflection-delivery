@@ -1,0 +1,23 @@
+{
+ "task": "prometheus-operator-prometheus-operator-6999",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds MessageThreadID to TelegramConfig + sanitize() drop-for-old-version logic; F2P includes TestSanitizeConfig/message_thread_id_field_for_Telegram_config and message_thread_id_is_dropped_for_unsupported_versions"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

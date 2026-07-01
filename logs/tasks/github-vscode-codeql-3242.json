@@ -1,0 +1,23 @@
+{
+ "task": "github-vscode-codeql-3242",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "useOpenKey: 'event.key === \" \" && event.ctrlKey && !event.altKey && !event.metaKey && !event.shiftKey' -> onOpenChange(true,...); tests assert opens on Ctrl+Space, ignores Cmd/Shift/Alt variants"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

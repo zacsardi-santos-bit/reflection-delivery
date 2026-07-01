@@ -1,0 +1,23 @@
+{
+ "task": "open-wc-open-wc-1974",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden createStoriesCode.js: `allCode += `${key}.parameters = ${key}.parameters || {};` and mdToJsx.js: `import { React, mdx } from '@web/storybook-prebuilt/${projectType}.js';`; test asserts flat `StoryA.parameters` + `mdjsToCsf(input, '/foo.js', 'web-components', {...})`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

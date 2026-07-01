@@ -1,0 +1,2 @@
+patching file ci/release/changelogs/next.md
+patching file d2layouts/d2near/layout.go

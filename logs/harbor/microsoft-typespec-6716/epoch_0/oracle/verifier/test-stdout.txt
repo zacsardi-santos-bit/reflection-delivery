@@ -1,0 +1,58 @@
+patching file packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/ScmMethodProviderCollectionTests.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/Unbranded-TypeSpec.tsp
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/Models/PageThing.Serialization.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/Models/PageThing.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecClient.RestClient.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecClient.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecModelFactory.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/tspCodeModel.json
+  Microsoft.TypeSpec.Generator.Input -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.Input/Debug/net8.0/Microsoft.TypeSpec.Generator.Input.dll
+  Microsoft.TypeSpec.Generator -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator/Debug/net8.0/Microsoft.TypeSpec.Generator.dll
+  Microsoft.TypeSpec.Generator.Tests.Common -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.Tests.Common/Debug/net8.0/Microsoft.TypeSpec.Generator.Tests.Common.dll
+  TestProjects.Local.Tests -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/TestProjects.Local.Tests/Debug/net8.0/TestProjects.Local.Tests.dll
+  Microsoft.TypeSpec.Generator.ClientModel -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.dll
+  Copying output to dist path
+  Microsoft.TypeSpec.Generator.ClientModel.Tests -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel.Tests/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.Tests.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:08.59
+Build started 06/29/2026 15:24:12.
+Test run for /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel.Tests/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+NUnit Adapter 4.5.0.0: Test execution started
+Running selected tests in /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel.Tests/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.Tests.dll
+   NUnit3TestExecutor discovered 5 of 5 NUnit test cases using Current Discovery mode, Non-Explicit run
+NUnit Adapter 4.5.0.0: Test execution complete
+  Passed ConvenienceMethodsHaveOptionalCancellationToken(Microsoft.TypeSpec.Generator.Input.InputOperation) [238 ms]
+  Passed ConvenienceMethodsHaveOptionalCancellationToken(Microsoft.TypeSpec.Generator.Input.InputOperation) [34 ms]
+  Passed ListMethodWithNoPaging [20 ms]
+  Passed TestDefaultCSharpMethodCollection(Microsoft.TypeSpec.Generator.Input.InputOperation) [4 ms]
+  Passed TestDefaultCSharpMethodCollection(Microsoft.TypeSpec.Generator.Input.InputOperation) [3 ms]
+Results File: /workspace/test-results/output.xml
+
+Test Run Successful.
+Total tests: 5
+     Passed: 5
+ Total time: 1.6821 Seconds
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.58
+﻿<?xml version="1.0" encoding="utf-8"?>
+<testsuites time="0.301" tests="5" failures="0">
+  <testsuite id="0" name="/workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel.Tests/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.Tests.dll" tests="5" failures="0" time="0.301">
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="ConvenienceMethodsHaveOptionalCancellationToken(Microsoft.TypeSpec.Generator.Input.InputOperation)" time="0.2385900" />
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="ConvenienceMethodsHaveOptionalCancellationToken(Microsoft.TypeSpec.Generator.Input.InputOperation)" time="0.0344729" />
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="ListMethodWithNoPaging" time="0.0204660" />
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="TestDefaultCSharpMethodCollection(Microsoft.TypeSpec.Generator.Input.InputOperation)" time="0.0041090" />
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="TestDefaultCSharpMethodCollection(Microsoft.TypeSpec.Generator.Input.InputOperation)" time="0.0032500" />
+  </testsuite>
+</testsuites>reward=1 graded=3 found=3 failed=0 parsed=3 framework=junit exit_code=0

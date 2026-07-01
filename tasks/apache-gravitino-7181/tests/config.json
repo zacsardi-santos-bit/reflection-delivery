@@ -1,0 +1,21 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && ./gradlew :core:test --tests \"*TestEntityCacheKey\" --no-daemon --no-watch-fs --init-script /workspace/test-events.gradle",
+  "test_files": [
+    "core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "unknown::test_1",
+    "unknown::test_2",
+    "unknown::test_3",
+    "unknown::test_4",
+    "unknown::test_5",
+    "unknown::test_6",
+    "unknown::test_7",
+    "unknown::test_8",
+    "unknown::test_9"
+  ],
+  "PASS_TO_PASS": []
+}

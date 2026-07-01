@@ -1,0 +1,10 @@
+patching file pkg/alertmanager/amcfg_test.go
+patching file test/e2e/scrapeconfig_test.go
+# github.com/prometheus-operator/prometheus-operator/pkg/alertmanager [github.com/prometheus-operator/prometheus-operator/pkg/alertmanager.test]
+pkg/alertmanager/amcfg_test.go:2955:9: unknown field MessageThreadID in struct literal of type telegramConfig
+pkg/alertmanager/amcfg_test.go:2969:9: unknown field MessageThreadID in struct literal of type telegramConfig
+pkg/alertmanager/amcfg_test.go:2987:9: unknown field MessageThreadID in struct literal of type telegramConfig
+{"Time":"2026-06-29T15:13:44.027039572Z","Action":"start","Package":"github.com/prometheus-operator/prometheus-operator/pkg/alertmanager"}
+{"Time":"2026-06-29T15:13:44.0271577Z","Action":"output","Package":"github.com/prometheus-operator/prometheus-operator/pkg/alertmanager","Output":"FAIL\tgithub.com/prometheus-operator/prometheus-operator/pkg/alertmanager [build failed]\n"}
+{"Time":"2026-06-29T15:13:44.027330033Z","Action":"fail","Package":"github.com/prometheus-operator/prometheus-operator/pkg/alertmanager","Elapsed":0}
+reward=0 graded=255 found=0 failed=0 parsed=1 framework=go exit_code=1

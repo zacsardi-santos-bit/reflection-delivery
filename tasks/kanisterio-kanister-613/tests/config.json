@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/blockstorage/awsebs ./pkg/blockstorage/gcepd ./pkg/blockstorage/zone -count=1",
+  "test_files": [
+    "pkg/blockstorage/awsebs/zone_test.go",
+    "pkg/blockstorage/gcepd/zone_test.go",
+    "pkg/blockstorage/zone/zone_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kanisterio/kanister/pkg/blockstorage/awsebs::Test",
+    "github.com/kanisterio/kanister/pkg/blockstorage/gcepd::Test",
+    "github.com/kanisterio/kanister/pkg/blockstorage/zone::Test"
+  ],
+  "PASS_TO_PASS": []
+}

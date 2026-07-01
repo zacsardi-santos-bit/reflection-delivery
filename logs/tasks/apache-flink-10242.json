@@ -1,0 +1,23 @@
+{
+ "task": "apache-flink-10242",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'Configuration configuration' param to JarListHandler ctor and 'program = new PackagedProgram(f, Collections.emptyList(), clazz, configuration)'; test.patch adds 'new Configuration()' to the JarSubmissionITCase JarListHandler ctor call -> pre-patch compile fails"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 21,
+  "shallow": true
+ }
+}

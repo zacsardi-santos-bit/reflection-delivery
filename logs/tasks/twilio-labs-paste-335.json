@@ -1,0 +1,23 @@
+{
+ "task": "twilio-labs-paste-335",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden ErrorIcon path -> `d=\"M12 2a9.968...\"` and IconWrapper `display: inline-block` -> `inline-flex`; alert snapshot expects the same rendered path + `display: -webkit-inline-flex; ...; inline-flex`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 16,
+  "shallow": true
+ }
+}

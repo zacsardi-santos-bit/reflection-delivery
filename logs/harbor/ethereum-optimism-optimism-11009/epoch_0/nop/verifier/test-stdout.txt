@@ -1,0 +1,7 @@
+patching file op-supervisor/supervisor/backend/source/heads_test.go
+# github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/source [github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/source.test]
+op-supervisor/supervisor/backend/source/heads_test.go:90:13: undefined: NewHeadMonitor
+op-supervisor/supervisor/backend/source/heads_test.go:150:7: undefined: HeadChangeCallback
+op-supervisor/supervisor/backend/source/heads_test.go:226:7: undefined: HeadMonitorClient
+FAIL	github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/source [build failed]
+reward=0 graded=5 found=5 failed=5 parsed=1 framework=go exit_code=1

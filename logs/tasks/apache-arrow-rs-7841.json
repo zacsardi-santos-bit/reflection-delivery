@@ -1,0 +1,23 @@
+{
+ "task": "apache-arrow-rs-7841",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds Decimal32/Decimal64 handling across parquet array_reader/primitive_array/schema + statistics reading; F2P includes statistics::test_decimal32, test_decimal64, test_data_page_stats_with_all_null_page"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 7,
+  "shallow": true
+ }
+}

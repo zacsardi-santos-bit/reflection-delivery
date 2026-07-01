@@ -1,0 +1,26 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/vm/engine/disttae -count=1",
+  "test_files": [
+    "pkg/vm/engine/disttae/util_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestSubscribedTable",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestGatherStats",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestBlockMetaMarshal",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestCheckExprIsZonemappable/test_checkExprIsZonemappable",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestCheckExprIsZonemappable",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestEvalZonemapFilter",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestGetCompositePkValueByExpr",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestGetNonIntPkValueByExpr/test_getPkValueByExpr",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestGetNonIntPkValueByExpr",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestNewStatsBlkIter",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestForeachBlkInObjStatsList",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestGetPKExpr",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestGetPkExprValue",
+    "github.com/matrixorigin/matrixone/pkg/vm/engine/disttae::TestEvalExprListToVec"
+  ],
+  "PASS_TO_PASS": []
+}

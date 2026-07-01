@@ -1,0 +1,9 @@
+patching file src/internal/clusterstate/v2.10.0.go
+patching file src/internal/clusterstate/v2.10.0/BUILD.bazel
+patching file src/internal/clusterstate/v2.10.0/clusterstate.go
+patching file src/internal/clusterstate/v2.10.0/pipelines.go
+patching file src/internal/clusterstate/v2.8.0.go
+patching file src/internal/pachd/builder.go
+patching file src/internal/pachd/full.go
+patching file src/internal/pachd/setup.go
+patching file src/internal/pachd/testpachd.go

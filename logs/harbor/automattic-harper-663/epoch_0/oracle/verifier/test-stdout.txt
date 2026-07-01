@@ -1,0 +1,675 @@
+patching file harper-core/src/linting/phrase_corrections.rs
+Hunk #1 succeeded at 139 (offset 43 lines).
+Hunk #2 succeeded at 257 (offset 43 lines).
+warning: /workspace/repo/harper-wasm/Cargo.toml: unused manifest key: package.private
+warning: /workspace/repo/harper-cli/Cargo.toml: unused manifest key: package.private
+   Compiling proc-macro2 v1.0.93
+   Compiling unicode-ident v1.0.15
+   Compiling memchr v2.7.4
+   Compiling serde v1.0.217
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.169
+   Compiling autocfg v1.4.0
+   Compiling serde_json v1.0.138
+   Compiling byteorder v1.5.0
+   Compiling regex-syntax v0.8.5
+   Compiling either v1.13.0
+   Compiling fst v0.4.7
+   Compiling itoa v1.0.14
+   Compiling ryu v1.0.18
+   Compiling ciborium-io v0.2.2
+   Compiling unicode-width v0.1.14
+   Compiling thiserror v2.0.11
+   Compiling pulldown-cmark v0.12.2
+   Compiling half v2.4.1
+   Compiling paste v1.0.15
+   Compiling clap_lex v0.7.4
+   Compiling anstyle v1.0.10
+   Compiling syn v1.0.109
+   Compiling itertools v0.10.5
+   Compiling unicase v2.8.1
+   Compiling num-traits v0.2.19
+   Compiling aho-corasick v1.1.3
+   Compiling clap_builder v4.5.27
+   Compiling ciborium-ll v0.2.2
+   Compiling getopts v0.2.21
+   Compiling log v0.4.25
+   Compiling cast v0.3.0
+   Compiling pulldown-cmark-escape v0.11.0
+   Compiling same-file v1.0.6
+   Compiling allocator-api2 v0.2.21
+   Compiling heck v0.5.0
+   Compiling equivalent v1.0.1
+   Compiling foldhash v0.1.4
+   Compiling bitflags v2.8.0
+   Compiling walkdir v2.5.0
+   Compiling itertools v0.14.0
+   Compiling once_cell v1.20.3
+   Compiling unicode-script v0.5.7
+   Compiling unicode-blocks v0.1.9
+   Compiling anes v0.1.6
+   Compiling lazy_static v1.5.0
+   Compiling quote v1.0.38
+   Compiling regex-automata v0.4.9
+   Compiling getrandom v0.2.15
+   Compiling criterion-plot v0.5.0
+   Compiling is-terminal v0.4.15
+   Compiling levenshtein_automata v0.2.1
+   Compiling unicode-width v0.2.0
+   Compiling oorandom v11.1.4
+   Compiling syn v2.0.96
+   Compiling rand_core v0.6.4
+   Compiling clap v4.5.28
+   Compiling regex v1.11.1
+   Compiling env_logger v0.8.4
+   Compiling quickcheck_macros v1.0.0
+   Compiling serde_derive v1.0.217
+   Compiling zerocopy-derive v0.7.35
+   Compiling thiserror-impl v2.0.11
+   Compiling is-macro v0.3.7
+   Compiling blanket v0.4.0
+   Compiling zerocopy v0.7.35
+   Compiling ppv-lite86 v0.2.20
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.5
+   Compiling quickcheck v1.0.3
+   Compiling ciborium v0.2.2
+   Compiling ordered-float v4.6.0
+   Compiling hashbrown v0.15.2
+   Compiling smallvec v1.13.2
+   Compiling tinytemplate v1.2.1
+   Compiling harper-core v0.20.0 (/workspace/repo/harper-core)
+   Compiling criterion v0.5.1
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/mod.rs:32:35
+   |
+32 | fn order_suggestions(matches: Vec<FuzzyMatchResult>) -> Vec<&[char]> {
+   |                                   ^^^^^^^^^^^^^^^^          ^^^^^^^ the same lifetime is elided here
+   |                                   |
+   |                                   the lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+32 | fn order_suggestions(matches: Vec<FuzzyMatchResult<'_>>) -> Vec<&[char]> {
+   |                                                   ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/dictionary.rs:17:9
+   |
+17 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+21 |     ) -> Vec<FuzzyMatchResult>;
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+21 |     ) -> Vec<FuzzyMatchResult<'_>>;
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/dictionary.rs:24:9
+   |
+24 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+28 |     ) -> Vec<FuzzyMatchResult>;
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+28 |     ) -> Vec<FuzzyMatchResult<'_>>;
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/fst_dictionary.rs:148:9
+    |
+148 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+152 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+152 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/fst_dictionary.rs:196:9
+    |
+196 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+200 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+200 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/merged_dictionary.rs:81:9
+   |
+81 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+85 |     ) -> Vec<FuzzyMatchResult> {
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+85 |     ) -> Vec<FuzzyMatchResult<'_>> {
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> harper-core/src/spell/merged_dictionary.rs:95:9
+   |
+95 |         &self,
+   |         ^^^^^ the lifetime is elided here
+...
+99 |     ) -> Vec<FuzzyMatchResult> {
+   |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+99 |     ) -> Vec<FuzzyMatchResult<'_>> {
+   |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/mutable_dictionary.rs:179:9
+    |
+179 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+183 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+183 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> harper-core/src/spell/mutable_dictionary.rs:234:9
+    |
+234 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+238 |     ) -> Vec<FuzzyMatchResult> {
+    |              ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+238 |     ) -> Vec<FuzzyMatchResult<'_>> {
+    |                              ++++
+
+warning: `harper-core` (lib) generated 11 warnings (2 duplicates) (run `cargo fix --lib -p harper-core` to apply 9 suggestions)
+warning: `harper-core` (lib test) generated 11 warnings (11 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.01s
+────────────
+ Nextest run ID e3003897-d440-4625-8770-282f7fce89c4 with nextest profile: default
+    Starting 449 tests across 2 binaries
+        PASS [   0.088s] (  1/449) harper-core char_ext::tests::cjk_is_not_english_lingual
+        PASS [   0.088s] (  2/449) harper-core edit_distance::tests::simple_edit_distance_2
+        PASS [   0.090s] (  3/449) harper-core edit_distance::tests::zero_edit_distance
+        PASS [   0.091s] (  4/449) harper-core edit_distance::tests::one_edit_distance
+        PASS [   0.092s] (  5/449) harper-core edit_distance::tests::simple_edit_distance_1
+        PASS [   1.907s] (  6/449) harper-core document::tests::parses_short_ellipsis
+        PASS [   1.939s] (  7/449) harper-core document::tests::simple_contraction2
+        PASS [   1.944s] (  8/449) harper-core document::tests::condenses_eg
+        PASS [   1.945s] (  9/449) harper-core document::tests::medium_contraction
+        PASS [   1.946s] ( 10/449) harper-core document::tests::condenses_nsa
+        PASS [   1.948s] ( 11/449) harper-core document::tests::selects_token_at_char_index
+        PASS [   1.950s] ( 12/449) harper-core document::tests::simple_contraction3
+        PASS [   1.864s] ( 13/449) harper-core language_detection::tests::detects_english
+        PASS [   1.972s] ( 14/449) harper-core document::tests::parses_long_ellipsis
+        PASS [   1.991s] ( 15/449) harper-core document::tests::medium_contraction2
+        PASS [   1.992s] ( 16/449) harper-core document::tests::simple_contraction
+        PASS [   1.994s] ( 17/449) harper-core document::tests::parses_ellipsis
+        PASS [   2.045s] ( 18/449) harper-core document::tests::condenses_ie
+        PASS [   1.976s] ( 19/449) harper-core ignored_lints::tests::an_a
+        PASS [   0.076s] ( 20/449) harper-core lexing::email_address::tests::does_not_allow_empty_domain
+        PASS [   2.079s] ( 21/449) harper-core document::tests::condenses_number_suffixes
+        PASS [   0.087s] ( 22/449) harper-core lexing::email_address::tests::example_local_parts_pass_validation
+        PASS [   2.040s] ( 23/449) harper-core ignored_lints::tests::spelling
+        PASS [   0.072s] ( 24/449) harper-core lexing::hostname::tests::can_parse_example_hostnames
+        PASS [   0.068s] ( 25/449) harper-core lexing::hostname::tests::hyphen_cannot_open_hostname
+        PASS [   0.067s] ( 26/449) harper-core lexing::tests::does_not_lex_bad_after_good
+        PASS [   0.063s] ( 27/449) harper-core lexing::tests::does_not_lex_bad_alphabetic
+        PASS [   0.067s] ( 28/449) harper-core lexing::tests::does_not_lex_prefix_only
+        PASS [   0.144s] ( 29/449) harper-core lexing::email_address::tests::test_many_example_email_addresses
+        PASS [   0.065s] ( 30/449) harper-core lexing::tests::does_not_lex_uppercase_prefix
+        PASS [   0.068s] ( 31/449) harper-core lexing::tests::lexes_cjk_as_unlintable
+        PASS [   0.066s] ( 32/449) harper-core lexing::tests::lexes_good_hex_lowercase
+        PASS [   0.060s] ( 33/449) harper-core lexing::tests::lexes_good_hex_mixed_case
+        PASS [   0.062s] ( 34/449) harper-core lexing::tests::lexes_good_hex_numeric
+        PASS [   0.068s] ( 35/449) harper-core lexing::tests::lexes_good_hex_lowercase_long
+        PASS [   0.061s] ( 36/449) harper-core lexing::tests::lexes_good_hex_uppercase
+        PASS [   0.068s] ( 37/449) harper-core lexing::tests::lexes_good_hex_uppercase_long
+        PASS [   0.064s] ( 38/449) harper-core lexing::url::tests::consumes_google
+        PASS [   0.068s] ( 39/449) harper-core lexing::tests::lexes_youtube_as_hostname
+        PASS [   0.067s] ( 40/449) harper-core lexing::url::tests::consumes_wikipedia
+        PASS [   0.069s] ( 41/449) harper-core lexing::url::tests::consumes_issue_142
+        PASS [   0.066s] ( 42/449) harper-core lexing::url::tests::consumes_youtube_not_garbage
+        PASS [   0.076s] ( 43/449) harper-core lexing::url::tests::consumes_with_path
+        PASS [   0.071s] ( 44/449) harper-core lexing::url::tests::consumes_youtube
+        PASS [   3.469s] ( 45/449) harper-core ignored_lints::tests::can_ignore_first
+        PASS [   3.582s] ( 46/449) harper-core ignored_lints::tests::can_ignore_all
+        PASS [   1.980s] ( 47/449) harper-core language_detection::tests::detects_python_fib
+        PASS [   1.972s] ( 48/449) harper-core language_detection::tests::mixed_french_english_park
+        PASS [   2.011s] ( 49/449) harper-core language_detection::tests::mixed_french_english_drunk
+        PASS [   2.040s] ( 50/449) harper-core language_detection::tests::english_motto
+        PASS [   2.074s] ( 51/449) harper-core language_detection::tests::detects_french
+        PASS [   2.073s] ( 52/449) harper-core language_detection::tests::detects_shebang
+        PASS [   2.074s] ( 53/449) harper-core language_detection::tests::detects_short_english
+        PASS [   2.124s] ( 54/449) harper-core language_detection::tests::detects_expressive_english
+        PASS [   2.107s] ( 55/449) harper-core language_detection::tests::mixed_french_english_dress
+        PASS [   2.169s] ( 56/449) harper-core language_detection::tests::detects_spanish
+        PASS [   1.990s] ( 57/449) harper-core linting::an_a::tests::allows_lowercase_vowels
+        PASS [   2.088s] ( 58/449) harper-core linting::an_a::tests::allows_lowercase_consonants
+        PASS [   2.070s] ( 59/449) harper-core linting::an_a::tests::allows_uppercase_consonants
+        PASS [   2.086s] ( 60/449) harper-core linting::an_a::tests::allows_uppercase_vowels
+        PASS [   3.347s] ( 61/449) harper-core lexing::email_address::tests::survives_random_chars
+        PASS [   3.230s] ( 62/449) harper-core lexing::url::tests::survives_random_chars
+        PASS [   2.050s] ( 63/449) harper-core linting::an_a::tests::capitalized_fourier
+        PASS [   2.116s] ( 64/449) harper-core linting::an_a::tests::detects_html_as_vowel
+        PASS [   1.987s] ( 65/449) harper-core linting::an_a::tests::disallows_lowercase_consonants
+        PASS [   2.029s] ( 66/449) harper-core linting::an_a::tests::detects_llm_hyphen_as_vowel
+        PASS [   2.084s] ( 67/449) harper-core linting::an_a::tests::detects_llm_as_vowel
+        PASS [   2.021s] ( 68/449) harper-core linting::an_a::tests::disallows_lowercase_vowels
+        PASS [   1.934s] ( 69/449) harper-core linting::avoid_curses::tests::detects_shit
+        PASS [   2.092s] ( 70/449) harper-core linting::an_a::tests::disallows_a_interface
+        PASS [   2.069s] ( 71/449) harper-core linting::an_a::tests::disallows_uppercase_consonants
+        PASS [   2.083s] ( 72/449) harper-core linting::an_a::tests::disallows_uppercase_vowels
+        PASS [   2.100s] ( 73/449) harper-core linting::an_a::tests::issue_196
+        PASS [   2.104s] ( 74/449) harper-core linting::an_a::tests::once_over
+        PASS [   1.967s] ( 75/449) harper-core linting::capitalize_personal_pronouns::tests::end
+        PASS [   1.964s] ( 76/449) harper-core linting::capitalize_personal_pronouns::tests::issue_365
+        PASS [   2.013s] ( 77/449) harper-core linting::capitalize_personal_pronouns::tests::middle
+        PASS [   2.076s] ( 78/449) harper-core linting::capitalize_personal_pronouns::tests::start
+        PASS [   2.069s] ( 79/449) harper-core linting::closed_compounds::tests::any_how
+        PASS [   1.959s] ( 80/449) harper-core linting::closed_compounds::tests::forth_with
+        PASS [   2.028s] ( 81/449) harper-core linting::closed_compounds::tests::hence_forth
+        PASS [   2.021s] ( 82/449) harper-core linting::closed_compounds::tests::how_ever
+        PASS [   1.956s] ( 83/449) harper-core linting::closed_compounds::tests::it_self
+        PASS [   2.018s] ( 84/449) harper-core linting::closed_compounds::tests::mis_understood
+        PASS [   1.968s] ( 85/449) harper-core linting::closed_compounds::tests::my_self
+        PASS [   2.015s] ( 86/449) harper-core linting::closed_compounds::tests::mis_used
+        PASS [   2.105s] ( 87/449) harper-core linting::closed_compounds::tests::in_so_far
+        PASS [   2.070s] ( 88/449) harper-core linting::closed_compounds::tests::mis_use
+        PASS [   2.136s] ( 89/449) harper-core linting::closed_compounds::tests::none_the_less
+        PASS [   2.101s] ( 90/449) harper-core linting::closed_compounds::tests::over_all
+        PASS [   2.141s] ( 91/449) harper-core linting::closed_compounds::tests::not_with_standing
+        PASS [   2.081s] ( 92/449) harper-core linting::closed_compounds::tests::over_night
+        PASS [   1.972s] ( 93/449) harper-core linting::closed_compounds::tests::there_fore
+        PASS [   1.942s] ( 94/449) harper-core linting::closed_compounds::tests::there_upon
+        PASS [   2.080s] ( 95/449) harper-core linting::closed_compounds::tests::regard_less
+        PASS [   2.033s] ( 96/449) harper-core linting::closed_compounds::tests::up_ward
+        PASS [   1.983s] ( 97/449) harper-core linting::closed_compounds::tests::where_upon
+        PASS [   1.977s] ( 98/449) harper-core linting::closed_compounds::tests::wide_spread
+        PASS [   1.917s] ( 99/449) harper-core linting::closed_compounds::tests::world_wide
+        PASS [   1.913s] (100/449) harper-core linting::compound_nouns::tests::back_pack
+        PASS [   1.953s] (101/449) harper-core linting::compound_nouns::tests::back_plane
+        PASS [   1.900s] (102/449) harper-core linting::compound_nouns::tests::bath_room
+        PASS [   1.890s] (103/449) harper-core linting::compound_nouns::tests::block_chain
+        PASS [   1.922s] (104/449) harper-core linting::compound_nouns::tests::cup_board
+        PASS [   2.040s] (105/449) harper-core linting::compound_nouns::tests::bit_stream
+        PASS [   2.001s] (106/449) harper-core linting::compound_nouns::tests::cyber_attack
+        PASS [   1.999s] (107/449) harper-core linting::compound_nouns::tests::dash_board
+        PASS [   2.027s] (108/449) harper-core linting::compound_nouns::tests::cyber_space
+        PASS [   2.025s] (109/449) harper-core linting::compound_nouns::tests::desk_top
+        PASS [   2.046s] (110/449) harper-core linting::compound_nouns::tests::every_one
+        PASS [   1.879s] (111/449) harper-core linting::compound_nouns::tests::fire_wall
+        PASS [   1.880s] (112/449) harper-core linting::compound_nouns::tests::firm_ware
+        PASS [   2.032s] (113/449) harper-core linting::compound_nouns::tests::finger_print
+        PASS [   1.995s] (114/449) harper-core linting::compound_nouns::tests::frame_work
+        PASS [   2.002s] (115/449) harper-core linting::compound_nouns::tests::got_is_not_possessive
+        PASS [   2.036s] (116/449) harper-core linting::compound_nouns::tests::head_phone
+        PASS [   2.081s] (117/449) harper-core linting::compound_nouns::tests::hand_held
+        PASS [   1.966s] (118/449) harper-core linting::compound_nouns::tests::head_set
+        PASS [   1.980s] (119/449) harper-core linting::compound_nouns::tests::lap_top
+        PASS [   2.021s] (120/449) harper-core linting::compound_nouns::tests::key_board
+        PASS [   2.013s] (121/449) harper-core linting::compound_nouns::tests::micro_processor
+        PASS [   1.975s] (122/449) harper-core linting::compound_nouns::tests::micro_services
+        PASS [   1.997s] (123/449) harper-core linting::compound_nouns::tests::mother_board
+        PASS [   1.982s] (124/449) harper-core linting::compound_nouns::tests::note_book
+        PASS [   1.921s] (125/449) harper-core linting::compound_nouns::tests::spread_sheet
+        PASS [   2.027s] (126/449) harper-core linting::compound_nouns::tests::play_ground
+        PASS [   2.044s] (127/449) harper-core linting::compound_nouns::tests::run_way
+        PASS [   2.043s] (128/449) harper-core linting::compound_nouns::tests::side_bar
+        PASS [   1.910s] (129/449) harper-core linting::compound_nouns::tests::thumb_nail
+        PASS [   2.043s] (130/449) harper-core linting::compound_nouns::tests::site_map
+        PASS [   2.052s] (131/449) harper-core linting::compound_nouns::tests::smart_phone
+        PASS [   2.010s] (132/449) harper-core linting::compound_nouns::tests::touch_pad
+        PASS [   1.933s] (133/449) harper-core linting::compound_nouns::tests::touch_screen
+        PASS [   1.925s] (134/449) harper-core linting::compound_nouns::tests::web_cam
+        PASS [   1.932s] (135/449) harper-core linting::compound_nouns::tests::web_socket
+        PASS [   1.920s] (136/449) harper-core linting::correct_number_suffix::tests::detects_incorrect_cases
+        PASS [   1.848s] (137/449) harper-core linting::currency_placement::tests::blog_title
+        PASS [   1.889s] (138/449) harper-core linting::correct_number_suffix::tests::passes_correct_cases
+        PASS [   1.888s] (139/449) harper-core linting::currency_placement::tests::blog_title_allows_correct
+        PASS [   1.915s] (140/449) harper-core linting::currency_placement::tests::blog_title_cents
+        PASS [   1.858s] (141/449) harper-core linting::currency_placement::tests::eof
+        PASS [   1.885s] (142/449) harper-core linting::currency_placement::tests::blog_title_with_space
+        PASS [   1.884s] (143/449) harper-core linting::currency_placement::tests::multiple_dollar
+        PASS [   1.908s] (144/449) harper-core linting::currency_placement::tests::multiple_pound
+        PASS [   1.876s] (145/449) harper-core linting::dashes::tests::catches_em_dash
+        PASS [   1.938s] (146/449) harper-core linting::currency_placement::tests::seven_even_two_decimal_clean
+        PASS [   1.961s] (147/449) harper-core linting::currency_placement::tests::suffix
+        PASS [   1.920s] (148/449) harper-core linting::dashes::tests::no_overlaps
+        PASS [   1.962s] (149/449) harper-core linting::dashes::tests::catches_en_dash
+        PASS [   1.862s] (150/449) harper-core linting::despite_of::tests::catches_different_cases
+        PASS [   2.003s] (151/449) harper-core linting::despite_of::tests::catches_lowercase
+        PASS [   1.946s] (152/449) harper-core linting::despite_of::tests::likes_correction
+        PASS [   1.961s] (153/449) harper-core linting::dot_initialisms::tests::matches_eg
+        PASS [   1.970s] (154/449) harper-core linting::ellipsis_length::tests::allows_correct_ellipsis
+        PASS [   1.859s] (155/449) harper-core linting::ellipsis_length::tests::corrects_short_ellipsis
+        PASS [   1.965s] (156/449) harper-core linting::ellipsis_length::tests::corrects_long_ellipsis
+        PASS [   1.887s] (157/449) harper-core linting::hereby::tests::declare
+        PASS [   1.909s] (158/449) harper-core linting::hop_hope::tests::corrects_hop_to_hope
+        PASS [   1.890s] (159/449) harper-core linting::hop_hope::tests::corrects_hoped_on_plane
+        PASS [   1.934s] (160/449) harper-core linting::hop_hope::tests::corrects_hope_on_bus
+        PASS [   1.914s] (161/449) harper-core linting::hop_hope::tests::corrects_hoping_on_call
+        PASS [   1.894s] (162/449) harper-core linting::hop_hope::tests::corrects_mixed_case_hop
+        PASS [   1.938s] (163/449) harper-core linting::hop_hope::tests::corrects_mixed_case
+        PASS [   1.909s] (164/449) harper-core linting::hop_hope::tests::does_not_correct_unrelated_context
+        PASS [   1.909s] (165/449) harper-core linting::hyphenate_number_day::tests::corrects_seven_day_plan
+        PASS [   1.958s] (166/449) harper-core linting::hyphenate_number_day::tests::corrects_five_day_challenge
+        PASS [   1.972s] (167/449) harper-core linting::hop_hope::tests::does_not_correct_unrelated_use
+        PASS [   1.880s] (168/449) harper-core linting::hyphenate_number_day::tests::corrects_three_day_training
+        PASS [   1.911s] (169/449) harper-core linting::hyphenate_number_day::tests::corrects_varied_phrases
+        PASS [   1.967s] (170/449) harper-core linting::hyphenate_number_day::tests::does_not_correct_when_not_adjective
+        PASS [   1.948s] (171/449) harper-core linting::hyphenate_number_day::tests::edge_case_day_long
+        PASS [   1.923s] (172/449) harper-core linting::hyphenate_number_day::tests::edge_case_plural_days
+        PASS [   1.849s] (173/449) harper-core linting::left_right_hand::tests::corrects_left_hand_side
+        PASS [   1.940s] (174/449) harper-core linting::hyphenate_number_day::tests::ignores_spelled_out_numbers
+        PASS [   1.922s] (175/449) harper-core linting::left_right_hand::tests::corrects_right_hand_corner
+        PASS [   1.889s] (176/449) harper-core linting::left_right_hand::tests::does_not_correct_noun_usage
+        PASS [   1.930s] (177/449) harper-core linting::lets_confusion::tests::from_harper_docs
+        PASS [   1.917s] (178/449) harper-core linting::lets_confusion::tests::issue_426_me
+        PASS [   1.837s] (179/449) harper-core linting::lets_confusion::tests::issue_470_missing_subject
+        PASS [   1.907s] (180/449) harper-core linting::lets_confusion::tests::issue_426_us
+        PASS [   1.828s] (181/449) harper-core linting::lets_confusion::tests::issue_548
+        PASS [   1.899s] (182/449) harper-core linting::lets_confusion::tests::issue_470_missing_apostrophe
+        PASS [   1.850s] (183/449) harper-core linting::lets_confusion::tests::walking
+        PASS [   1.914s] (184/449) harper-core linting::likewise::tests::like_wise
+        PASS [   1.938s] (185/449) harper-core linting::likewise::tests::wise_men
+        PASS [   1.883s] (186/449) harper-core linting::linking_verbs::tests::dora
+        PASS [   1.907s] (187/449) harper-core linting::linking_verbs::tests::working_right
+        PASS [   1.903s] (188/449) harper-core linting::linking_verbs::tests::working_wrong
+        PASS [   1.980s] (189/449) harper-core linting::lint_group::tests::can_get_all_descriptions
+        PASS [   1.889s] (190/449) harper-core linting::merge_words::tests::heretofore
+        PASS [   1.939s] (191/449) harper-core linting::merge_words::tests::clean
+        PASS [   1.882s] (192/449) harper-core linting::merge_words::tests::that_is_contraction
+        PASS [   1.948s] (193/449) harper-core linting::merge_words::tests::therefore
+        PASS [   1.914s] (194/449) harper-core linting::multiple_sequential_pronouns::tests::can_detect_three_pronouns
+        PASS [   1.943s] (195/449) harper-core linting::multiple_sequential_pronouns::tests::allows_single_pronouns
+        PASS [   2.266s] (196/449) harper-core linting::lint_group::tests::lint_descriptions_are_clean
+        PASS [   1.879s] (197/449) harper-core linting::multiple_sequential_pronouns::tests::detects_multiple_pronouns_at_end
+        PASS [   1.872s] (198/449) harper-core linting::no_oxford_comma::tests::allows_clean_music
+        PASS [   1.904s] (199/449) harper-core linting::multiple_sequential_pronouns::tests::comma_separated
+        PASS [   1.912s] (200/449) harper-core linting::multiple_sequential_pronouns::tests::can_detect_two_pronouns
+        PASS [   1.900s] (201/449) harper-core linting::no_oxford_comma::tests::allows_clean_nations
+        PASS [   1.897s] (202/449) harper-core linting::no_oxford_comma::tests::foods
+        PASS [   1.829s] (203/449) harper-core linting::no_oxford_comma::tests::nor_vegetables
+        PASS [   1.890s] (204/449) harper-core linting::no_oxford_comma::tests::fruits
+        PASS [   1.922s] (205/449) harper-core linting::no_oxford_comma::tests::or_writing
+        PASS [   1.881s] (206/449) harper-core linting::no_oxford_comma::tests::people
+        PASS [   1.891s] (207/449) harper-core linting::no_oxford_comma::tests::places
+        PASS [   1.848s] (208/449) harper-core linting::nobody::tests::both_valid_and_invalid
+        PASS [   1.921s] (209/449) harper-core linting::no_oxford_comma::tests::sports
+        PASS [   1.912s] (210/449) harper-core linting::number_suffix_capitalization::tests::detects_inconsistent_suffix
+        PASS [   1.862s] (211/449) harper-core linting::number_suffix_capitalization::tests::detects_uppercase_suffix
+        PASS [   1.898s] (212/449) harper-core linting::oxford_comma::tests::allows_clean_music
+        PASS [   1.918s] (213/449) harper-core linting::number_suffix_capitalization::tests::passes_correct_case
+        PASS [   1.904s] (214/449) harper-core linting::oxford_comma::tests::allows_clean_nations
+        PASS [   1.858s] (215/449) harper-core linting::oxford_comma::tests::nor_vegetables
+        PASS [   1.880s] (216/449) harper-core linting::oxford_comma::tests::fruits
+        PASS [   1.941s] (217/449) harper-core linting::oxford_comma::tests::foods
+        PASS [   1.941s] (218/449) harper-core linting::oxford_comma::tests::or_writing
+        PASS [   1.888s] (219/449) harper-core linting::oxford_comma::tests::people
+        PASS [   1.841s] (220/449) harper-core linting::phrase_corrections::tests::bad_rep
+        PASS [   1.886s] (221/449) harper-core linting::oxford_comma::tests::places
+        PASS [   1.919s] (222/449) harper-core linting::oxford_comma::tests::sports
+        PASS [   1.873s] (223/449) harper-core linting::phrase_corrections::tests::baited_breath
+        PASS [   1.900s] (224/449) harper-core linting::phrase_corrections::tests::change_tact
+        PASS [   1.866s] (225/449) harper-core linting::phrase_corrections::tests::hunger_pain
+        PASS [   1.874s] (226/449) harper-core linting::phrase_corrections::tests::in_mass
+        PASS [   1.909s] (227/449) harper-core linting::phrase_corrections::tests::i_and_of_confusion
+        PASS [   1.941s] (228/449) harper-core linting::phrase_corrections::tests::issue_574
+        PASS [   1.951s] (229/449) harper-core linting::phrase_corrections::tests::let_along
+        PASS [   1.940s] (230/449) harper-core linting::phrase_corrections::tests::mute_point_corrects
+        PASS [   1.957s] (231/449) harper-core linting::phrase_corrections::tests::long_and_behold
+        PASS [   1.892s] (232/449) harper-core linting::phrase_corrections::tests::of_confusion
+        PASS [   1.957s] (233/449) harper-core linting::phrase_corrections::tests::now_on_hold
+        PASS [   1.979s] (234/449) harper-core linting::phrase_corrections::tests::o_course
+        PASS [   1.921s] (235/449) harper-core linting::phrase_corrections::tests::off_course
+        PASS [   2.035s] (236/449) harper-core linting::phrase_corrections::tests::sneaky_suspicion
+        PASS [   1.929s] (237/449) harper-core linting::phrase_corrections::tests::than_others
+        PASS [   2.047s] (238/449) harper-core linting::phrase_corrections::tests::spacial_attention
+        PASS [   2.011s] (239/449) harper-core linting::phrase_corrections::tests::supposed_to
+        PASS [   1.954s] (240/449) harper-core linting::phrase_corrections::tests::turn_it_off_clean_lower
+        PASS [   2.060s] (241/449) harper-core linting::phrase_corrections::tests::turn_it_off_clean_upper
+        PASS [   2.045s] (242/449) harper-core linting::pique_interest::tests::corrects_peak_interest
+        PASS [   1.953s] (243/449) harper-core linting::pique_interest::tests::corrects_peaking_interest
+        PASS [   2.135s] (244/449) harper-core linting::pique_interest::tests::corrects_peak_interest_in_middle
+        PASS [   2.032s] (245/449) harper-core linting::pique_interest::tests::corrects_peaked_interest_at_end
+        PASS [   2.089s] (246/449) harper-core linting::pique_interest::tests::corrects_peeked_interest_at_start
+        PASS [   2.129s] (247/449) harper-core linting::pique_interest::tests::does_not_correct_unrelated_peak
+        PASS [   2.034s] (248/449) harper-core linting::plural_conjugate::tests::plural_students
+        PASS [   2.135s] (249/449) harper-core linting::plural_conjugate::tests::issue_256
+        PASS [   2.086s] (250/449) harper-core linting::plural_conjugate::tests::pronoun_singular
+        PASS [   2.093s] (251/449) harper-core linting::plural_conjugate::tests::review_doc_page
+        PASS [   2.043s] (252/449) harper-core linting::plural_conjugate::tests::singular_house
+        PASS [   1.952s] (253/449) harper-core linting::pronoun_contraction::tests::car
+        PASS [   2.126s] (254/449) harper-core linting::possessive_your::tests::your_comments
+        PASS [   1.934s] (255/449) harper-core linting::pronoun_contraction::tests::were_team
+        PASS [   2.015s] (256/449) harper-core linting::pronoun_contraction::tests::issue_225
+        PASS [   2.049s] (257/449) harper-core linting::pronoun_contraction::tests::issue_139
+        PASS [   2.032s] (258/449) harper-core linting::proper_noun_capitalization_linters::tests::americas_allow_correct
+        PASS [   1.841s] (259/449) harper-core linting::proper_noun_capitalization_linters::tests::americas_lowercase
+        PASS [   1.917s] (260/449) harper-core linting::proper_noun_capitalization_linters::tests::americas_uppercase
+        PASS [   1.877s] (261/449) harper-core linting::proper_noun_capitalization_linters::tests::meta_allow_correct
+        PASS [   1.845s] (262/449) harper-core linting::proper_noun_capitalization_linters::tests::microsoft_first_word_is_correct
+        PASS [   1.905s] (263/449) harper-core linting::proper_noun_capitalization_linters::tests::microsoft_lowercase
+        PASS [   1.968s] (264/449) harper-core linting::proper_noun_capitalization_linters::tests::united_arab_emirates_lowercase
+        PASS [   1.923s] (265/449) harper-core linting::proper_noun_capitalization_linters::tests::united_nations_allow_correct
+        PASS [   1.965s] (266/449) harper-core linting::proper_noun_capitalization_linters::tests::united_nations_uppercase
+        PASS [   1.892s] (267/449) harper-core linting::repeated_words::tests::catches_basic
+        PASS [   1.880s] (268/449) harper-core linting::repeated_words::tests::does_not_lint_homographs_record
+        PASS [   1.899s] (269/449) harper-core linting::repeated_words::tests::does_not_lint_homographs_address
+        PASS [   1.924s] (270/449) harper-core linting::repeated_words::tests::double_a
+        PASS [   1.855s] (271/449) harper-core linting::repeated_words::tests::issue_253
+        PASS [   1.949s] (272/449) harper-core linting::repeated_words::tests::double_and
+        PASS [   1.844s] (273/449) harper-core linting::repeated_words::tests::on_on_github
+        PASS [   1.924s] (274/449) harper-core linting::repeated_words::tests::issue_333
+        PASS [   1.897s] (275/449) harper-core linting::sentence_capitalization::tests::catches_basic
+        PASS [   0.072s] (276/449) harper-core linting::spelled_numbers::tests::produces_eighty_two
+        PASS [   0.063s] (277/449) harper-core linting::spelled_numbers::tests::produces_nine_hundred_ninety_nine
+        PASS [   1.884s] (278/449) harper-core linting::sentence_capitalization::tests::ignores_unlintable
+        PASS [   0.060s] (279/449) harper-core linting::spelled_numbers::tests::produces_zero
+        PASS [   0.056s] (280/449) harper-core linting::spelled_numbers::tests::services_range
+        PASS [   0.065s] (281/449) harper-core linting::suggestion::tests::insert_comma_after
+        PASS [   0.062s] (282/449) harper-core linting::suggestion::tests::suggestion_your_match_case
+        PASS [   1.867s] (283/449) harper-core linting::sentence_capitalization::tests::issue_228_allows_labels
+        PASS [   1.836s] (284/449) harper-core linting::sentence_capitalization::tests::no_period
+        PASS [   1.889s] (285/449) harper-core linting::sentence_capitalization::tests::start_with_number
+        PASS [   1.793s] (286/449) harper-core linting::sentence_capitalization::tests::unphased_comma
+        PASS [   1.886s] (287/449) harper-core linting::sentence_capitalization::tests::two_sentence
+        PASS [   1.924s] (288/449) harper-core linting::sentence_capitalization::tests::unphased_ellipsis
+        PASS [   1.945s] (289/449) harper-core linting::sentence_capitalization::tests::unphased_unlintable
+        PASS [   1.898s] (290/449) harper-core linting::spaces::tests::detects_space_before_period
+        PASS [   1.935s] (291/449) harper-core linting::somewhat_something::tests::issue_414
+        PASS [   1.912s] (292/449) harper-core linting::spell_check::tests::harper_automattic_capitalized
+        PASS [   1.946s] (293/449) harper-core linting::spaces::tests::allows_period_without_space
+        PASS [   1.837s] (294/449) harper-core linting::spelled_numbers::tests::does_not_correct_ten
+        PASS [   1.923s] (295/449) harper-core linting::spell_check::tests::markdown_capitalized
+        PASS [   1.926s] (296/449) harper-core linting::spelled_numbers::tests::corrects_nine
+        PASS [   1.836s] (297/449) harper-core linting::terminating_conjunctions::tests::issue_341
+        PASS [   1.864s] (298/449) harper-core linting::that_which::tests::catches_different_cases
+        PASS [   1.939s] (299/449) harper-core linting::terminating_conjunctions::tests::issue_131
+        PASS [   1.901s] (300/449) harper-core linting::terminating_conjunctions::tests::no_false_positive
+        PASS [   1.875s] (301/449) harper-core linting::that_which::tests::catches_lowercase
+        PASS [   1.879s] (302/449) harper-core linting::that_which::tests::likes_correction
+        PASS [   1.841s] (303/449) harper-core linting::then_than::tests::crazier_than_rat_should_change
+        PASS [   1.808s] (304/449) harper-core linting::then_than::tests::other_then_should_change
+        PASS [   1.872s] (305/449) harper-core linting::then_than::tests::half_a_loaf_should_change
+        PASS [   1.896s] (306/449) harper-core linting::then_than::tests::poke_in_eye_should_change
+        PASS [   1.894s] (307/449) harper-core linting::then_than::tests::stronger_should_change
+        PASS [   1.842s] (308/449) harper-core linting::use_genitive::tests::allows_faster_at_running
+        PASS [   1.837s] (309/449) harper-core linting::use_genitive::tests::allows_grantlemons_issue_267_apple
+        PASS [   1.879s] (310/449) harper-core linting::use_genitive::tests::allows_clause_termination
+        PASS [   0.061s] (311/449) harper-core mask::tests::bumps_existing
+        PASS [   1.944s] (312/449) harper-core linting::then_than::tests::then_everyone_clapped_should_be_allowed
+        PASS [   1.877s] (313/449) harper-core linting::use_genitive::tests::allows_grantlemons_issue_267_cat
+        PASS [   0.069s] (314/449) harper-core mask::tests::merges_whitespace_sep
+        PASS [   1.884s] (315/449) harper-core linting::use_genitive::tests::allows_grantlemons_issue_267_fruit
+        PASS [   0.060s] (316/449) harper-core number::tests::decimal_fifteen_and_a_half
+        PASS [   0.063s] (317/449) harper-core number::tests::decimal_fifteen
+        PASS [   0.066s] (318/449) harper-core number::tests::decimal_fifteen_suffix
+        PASS [   0.059s] (319/449) harper-core number::tests::hex_fifteen
+        PASS [   1.932s] (320/449) harper-core linting::use_genitive::tests::allows_grantlemons_issue_267_people
+        PASS [   0.072s] (321/449) harper-core parsers::collapse_identifiers::tests::matches_kebab
+        PASS [   1.888s] (322/449) harper-core linting::use_genitive::tests::allows_there_are
+        PASS [   1.851s] (323/449) harper-core linting::use_genitive::tests::allows_there_at_beginning
+        PASS [   1.878s] (324/449) harper-core linting::use_genitive::tests::catches_just_noun
+        PASS [   1.909s] (325/449) harper-core linting::use_genitive::tests::catches_adjective_noun
+        PASS [   1.894s] (326/449) harper-core linting::use_genitive::tests::catches_they_are
+        PASS [   1.823s] (327/449) harper-core linting::was_aloud::tests::corrects_was_aloud
+        PASS [   1.805s] (328/449) harper-core linting::was_aloud::tests::corrects_were_aloud
+        PASS [   1.908s] (329/449) harper-core linting::was_aloud::tests::be_aloud
+        PASS [   1.895s] (330/449) harper-core linting::was_aloud::tests::been_aloud
+        PASS [   0.070s] (331/449) harper-core parsers::markdown::tests::empty_wikilink_text
+        PASS [   0.073s] (332/449) harper-core parsers::markdown::tests::ends_with_newline
+        PASS [   0.072s] (333/449) harper-core parsers::markdown::tests::hidden_wikilink_text
+        PASS [   0.071s] (334/449) harper-core parsers::markdown::tests::html_is_unlintable
+        PASS [   0.076s] (335/449) harper-core parsers::markdown::tests::improper_wikilink_text
+        PASS [   0.064s] (336/449) harper-core parsers::markdown::tests::issue_194
+        PASS [   0.074s] (337/449) harper-core parsers::markdown::tests::just_pipe
+        PASS [   0.076s] (338/449) harper-core parsers::markdown::tests::link_title_unlintable
+        PASS [   0.070s] (339/449) harper-core parsers::markdown::tests::math_becomes_unlintable
+        PASS [   0.071s] (340/449) harper-core parsers::markdown::tests::normal_wikilink
+        PASS [   0.077s] (341/449) harper-core parsers::markdown::tests::respects_link_title_config
+        PASS [   0.063s] (342/449) harper-core parsers::markdown::tests::survives_emojis
+        PASS [   0.066s] (343/449) harper-core parsers::tests::inserts_newlines
+        PASS [   0.070s] (344/449) harper-core parsers::tests::parses_non_english
+        PASS [   0.066s] (345/449) harper-core parsers::tests::sentence
+        PASS [   0.070s] (346/449) harper-core parsers::tests::sentence_md
+        PASS [   0.068s] (347/449) harper-core parsers::tests::single_letter
+        PASS [   1.924s] (348/449) harper-core linting::was_aloud::tests::does_not_correct_proper_use_of_aloud
+        PASS [   1.899s] (349/449) harper-core linting::whereas::tests::where_as
+        PASS [   1.917s] (350/449) harper-core linting::was_aloud::tests::does_not_flag_unrelated_text
+        PASS [   1.899s] (351/449) harper-core parsers::collapse_identifiers::tests::double_collapse
+        PASS [   1.862s] (352/449) harper-core parsers::collapse_identifiers::tests::no_collapse
+        PASS [   1.900s] (353/449) harper-core parsers::collapse_identifiers::tests::kebab_collapse
+        PASS [   1.890s] (354/449) harper-core parsers::collapse_identifiers::tests::nested_identifiers
+        PASS [   1.921s] (355/449) harper-core parsers::collapse_identifiers::tests::one_collapse
+        PASS [   1.836s] (356/449) harper-core parsers::isolate_english::tests::chunked_trad_chinese_english
+        PASS [   1.923s] (357/449) harper-core parsers::collapse_identifiers::tests::overlapping_identifiers
+        PASS [   1.910s] (358/449) harper-core parsers::collapse_identifiers::tests::two_collapses
+        PASS [   0.061s] (359/449) harper-core span::tests::overlaps
+        PASS [   1.861s] (360/449) harper-core parsers::isolate_english::tests::english_no_edit_motto
+        PASS [   1.907s] (361/449) harper-core parsers::isolate_english::tests::chunked_trad_polish_english
+        PASS [   1.819s] (362/449) harper-core parsers::isolate_english::tests::mixed_spanish_english_breakfast
+        PASS [   0.055s] (363/449) harper-core spell::hunspell::matcher::tests::matches_vowels
+        PASS [   0.050s] (364/449) harper-core spell::hunspell::matcher::tests::parses_simple
+        PASS [   0.055s] (365/449) harper-core spell::hunspell::matcher::tests::round_trip
+        PASS [   1.910s] (366/449) harper-core parsers::isolate_english::tests::mixed_spanish_english_politics
+        PASS [   0.070s] (367/449) harper-core spell::hunspell::tests::correctly_expands_test_files
+        PASS [   1.828s] (368/449) harper-core patterns::noun_phrase::tests::complex_apple
+        PASS [   1.856s] (369/449) harper-core patterns::noun_phrase::tests::list_fruit
+        PASS [   1.928s] (370/449) harper-core patterns::noun_phrase::tests::food
+        PASS [   1.943s] (371/449) harper-core patterns::noun_phrase::tests::simple_apple
+        PASS [   1.902s] (372/449) harper-core patterns::repeating_pattern::tests::does_not_match_short
+        PASS [   1.922s] (373/449) harper-core patterns::noun_phrase::tests::simplest_banana
+        PASS [   1.851s] (374/449) harper-core patterns::sequence_pattern::tests::matches_sets
+        PASS [   0.072s] (375/449) harper-core spell::hunspell::tests::plural_giants
+        PASS [   1.926s] (376/449) harper-core patterns::repeating_pattern::tests::matches_anything
+        PASS [   1.855s] (377/449) harper-core patterns::word_set::tests::fruit
+        PASS [   0.073s] (378/449) harper-core spell::hunspell::word_list::tests::can_parse_test_file
+        PASS [   1.928s] (379/449) harper-core patterns::sequence_pattern::tests::matches_specific_words
+        PASS [   1.951s] (380/449) harper-core patterns::sequence_pattern::tests::matches_n_whitespace_tokens
+        PASS [   0.849s] (381/449) harper-core spell::hunspell::tests::can_expand_default
+        PASS [   1.895s] (382/449) harper-core spell::fst_dictionary::tests::fst_contains_hello
+        PASS [   1.995s] (383/449) harper-core patterns::word_set::tests::fruit_whack_capitalization
+        PASS [   0.877s] (384/449) harper-core spell::hunspell::tests::expanded_contains_deallocate
+        PASS [   1.942s] (385/449) harper-core spell::fst_dictionary::tests::fuzzy_result_sorted_by_edit_distance
+        PASS [   2.075s] (386/449) harper-core spell::fst_dictionary::tests::curated_contains_no_duplicates
+        PASS [   0.866s] (387/449) harper-core spell::hunspell::tests::expanded_contains_giants
+        PASS [   0.853s] (388/449) harper-core spell::hunspell::tests::expanded_contains_possessive_abandonment
+        PASS [   0.852s] (389/449) harper-core spell::hunspell::tests::expanded_contains_repo
+        PASS [   0.906s] (390/449) harper-core spell::hunspell::tests::has_is_not_a_noun
+        PASS [   0.935s] (391/449) harper-core spell::hunspell::tests::is_is_linking_verb
+        PASS [   1.306s] (392/449) harper-core spell::mutable_dictionary::tests::herself_is_pronoun
+        PASS [   1.346s] (393/449) harper-core spell::mutable_dictionary::tests::curated_matches_capitalized
+        PASS [   1.315s] (394/449) harper-core spell::mutable_dictionary::tests::im_is_common
+        PASS [   1.347s] (395/449) harper-core spell::mutable_dictionary::tests::discussion_171
+        PASS [   1.360s] (396/449) harper-core spell::mutable_dictionary::tests::than_is_conjunction
+        PASS [   0.070s] (397/449) harper-core spell::tests::normalizes_weve
+        PASS [   1.522s] (398/449) harper-core spell::mutable_dictionary::tests::curated_contains_no_duplicates
+        PASS [   1.361s] (399/449) harper-core spell::mutable_dictionary::tests::there_is_not_a_pronoun
+        PASS [   1.357s] (400/449) harper-core spell::mutable_dictionary::tests::this_is_noun
+        PASS [   1.322s] (401/449) harper-core spell::mutable_dictionary::tests::words_with_len_contains_self
+        PASS [   1.537s] (402/449) harper-core spell::mutable_dictionary::tests::fuzzy_result_sorted_by_edit_distance
+        PASS [   0.243s] (403/449) harper-core title_case::tests::a_stays_lowercase
+        PASS [   0.239s] (404/449) harper-core title_case::tests::about_becomes_uppercase
+        PASS [   1.388s] (405/449) harper-core spell::tests::full_spellcheck_hvllo
+        PASS [   1.449s] (406/449) harper-core spell::tests::full_spellcheck_common
+        PASS [   1.322s] (407/449) harper-core spell::tests::issue_182_full
+        PASS [   1.953s] (408/449) harper-core spell::tests::common_words_first
+        PASS [   1.964s] (409/449) harper-core spell::tests::fst_spellcheck_common
+        PASS [   1.896s] (410/449) harper-core spell::tests::fst_spellcheck_hvllo
+        PASS [   0.065s] (411/449) harper-core token::tests::parses_sentences_correctly
+        PASS [   0.055s] (412/449) harper-core vec_ext::tests::removes_requested_indices
+        PASS [   1.344s] (413/449) harper-core spell::tests::need_correction_full
+        PASS [   1.972s] (414/449) harper-core spell::tests::issue_182_fst
+        PASS [   1.927s] (415/449) harper-core spell::tests::need_correction_fst
+        PASS [   1.990s] (416/449) harper-core spell::tests::issue_624_no_duplicates
+        PASS [   2.000s] (417/449) harper-core spell::tests::punctation_no_duplicates
+        PASS [   1.904s] (418/449) harper-core title_case::tests::a_paragraph_does_not_cause_crash
+        PASS [   1.996s] (419/449) harper-core spell::tests::spellchecking_is_deterministic
+        PASS [   1.957s] (420/449) harper-core spell::tests::this_correction
+        PASS [   1.927s] (421/449) harper-core tests::keeps_space_lint
+        PASS [   1.836s] (422/449) harper-core title_case::tests::about_uppercase_with_numbers
+        PASS [   1.899s] (423/449) harper-core title_case::tests::complex
+        PASS [   1.868s] (424/449) harper-core title_case::tests::normal
+        PASS [   2.061s] (425/449) harper-core title_case::tests::first_word_is_upcase
+        PASS [   1.935s] (426/449) harper-core title_case::tests::pipe_does_not_cause_crash
+        PASS [   2.000s] (427/449) harper-core title_case::tests::start_as_uppercase
+        PASS [   1.948s] (428/449) harper-core title_case::tests::tab_a_becomes_upcase
+        PASS [   1.899s] (429/449) harper-core::run_tests lints_amazon_hostname_correctly
+        PASS [   1.944s] (430/449) harper-core::run_tests lints_chinese_lorem_ipsum_correctly
+        PASS [   1.931s] (431/449) harper-core::run_tests lints_hex_basic_clean_correctly
+        PASS [   1.959s] (432/449) harper-core::run_tests lints_hex_basic_dirty_correctly
+        PASS [   1.920s] (433/449) harper-core::run_tests lints_issue_109_correctly
+        PASS [   1.926s] (434/449) harper-core::run_tests lints_issue_195_correctly
+        PASS [   1.941s] (435/449) harper-core::run_tests lints_issue_118_correctly
+        PASS [   1.935s] (436/449) harper-core::run_tests lints_issue_267_correctly
+        PASS [   1.955s] (437/449) harper-core::run_tests lints_issue_159_correctly
+        PASS [   1.969s] (438/449) harper-core::run_tests lints_issue_109_ext_correctly
+        PASS [   1.874s] (439/449) harper-core::run_tests lints_issue_358_correctly
+        PASS [   1.872s] (440/449) harper-core::run_tests lints_lots_of_latin_correctly
+        PASS [   1.936s] (441/449) harper-core::run_tests lints_lukas_homework_correctly
+        PASS [   1.825s] (442/449) harper-core::run_tests lints_misc_closed_compound_clean_correctly
+        PASS [   1.903s] (443/449) harper-core::run_tests lints_obsidian_links_correctly
+        PASS [   1.807s] (444/449) harper-core::run_tests lints_pr_452_correctly
+        PASS [   1.828s] (445/449) harper-core::run_tests lints_pr_504_correctly
+        PASS [   1.768s] (446/449) harper-core::run_tests lints_preexisting_correctly
+        PASS [   1.754s] (447/449) harper-core::run_tests lints_proper_noun_capitalization_correctly
+        PASS [   1.750s] (448/449) harper-core::run_tests lints_whack_bullets_correctly
+        PASS [  10.351s] (449/449) harper-core spell::fst_dictionary::tests::fst_map_contains_all_in_full_dict
+────────────
+     Summary [  43.941s] 449 tests run: 449 passed, 0 skipped
+reward=1 graded=449 found=122 failed=0 parsed=449 framework=cargo exit_code=0

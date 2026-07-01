@@ -1,0 +1,2270 @@
+patching file lib/runtime-c-api/tests/.gitignore
+patching file lib/runtime-c-api/tests/CMakeLists.txt
+patching file lib/runtime-c-api/tests/test-module-imports.c
+   Compiling libc v0.2.49
+   Compiling autocfg v0.1.2
+   Compiling cfg-if v0.1.6
+   Compiling unicode-xid v0.1.0
+   Compiling semver-parser v0.7.0
+   Compiling serde v1.0.85
+   Compiling cc v1.0.28
+   Compiling proc-macro2 v0.4.26
+   Compiling rand_core v0.4.0
+   Compiling ryu v0.2.7
+   Compiling failure_derive v0.1.5
+   Compiling cranelift-entity v0.26.0
+   Compiling arrayvec v0.4.10
+   Compiling itoa v0.4.3
+   Compiling scopeguard v0.3.3
+   Compiling nodrop v0.1.13
+   Compiling rustc-demangle v0.1.13
+   Compiling void v1.0.2
+   Compiling byteorder v1.3.1
+   Compiling lazy_static v1.2.0
+   Compiling rand_core v0.3.1
+   Compiling semver v0.9.0
+   Compiling cranelift-codegen-meta v0.26.0
+   Compiling typenum v1.10.0
+   Compiling bitflags v1.0.4
+   Compiling cranelift-bforest v0.26.0
+   Compiling rand_hc v0.1.0
+   Compiling rand_isaac v0.1.1
+   Compiling rustc_version v0.2.3
+   Compiling backtrace v0.3.13
+   Compiling rand_chacha v0.1.1
+   Compiling rand v0.6.5
+   Compiling rand_xorshift v0.1.1
+   Compiling unreachable v1.0.0
+   Compiling backtrace-sys v0.1.28
+   Compiling rand_jitter v0.1.0
+   Compiling proc-macro2 v0.3.8
+   Compiling crossbeam-utils v0.2.2
+   Compiling log v0.4.6
+   Compiling rand_pcg v0.1.1
+   Compiling parking_lot_core v0.4.0
+   Compiling memoffset v0.2.1
+   Compiling stable_deref_trait v1.1.1
+   Compiling rayon-core v1.4.1
+   Compiling quote v0.5.2
+   Compiling cranelift-codegen v0.26.0
+   Compiling owning_ref v0.4.0
+   Compiling raw-cpuid v6.1.0
+   Compiling smallvec v0.6.8
+   Compiling nix v0.12.0
+   Compiling rayon v1.0.3
+   Compiling constant_time_eq v0.1.3
+   Compiling quote v0.6.11
+   Compiling rand_os v0.1.1
+   Compiling lock_api v0.1.5
+   Compiling crossbeam-epoch v0.3.1
+   Compiling syn v0.13.11
+   Compiling num_cpus v1.10.0
+   Compiling nix v0.13.0
+   Compiling syn v0.15.26
+   Compiling arrayref v0.3.5
+   Compiling page_size v0.4.1
+   Compiling errno v0.2.4
+   Compiling crossbeam-deque v0.2.0
+   Compiling blake2b_simd v0.4.1
+   Compiling either v1.5.1
+   Compiling cast v0.2.2
+   Compiling wasmparser v0.22.1
+   Compiling wasmparser v0.23.0
+   Compiling indexmap v1.0.2
+   Compiling hex v0.3.2
+   Compiling generic-array v0.12.0
+   Compiling memmap v0.7.0
+   Compiling wasmer-runtime-c-api v0.2.1 (/workspace/repo/lib/runtime-c-api)
+   Compiling digest v0.8.0
+   Compiling serde_json v1.0.37
+   Compiling hashbrown v0.1.8
+   Compiling serde-bench v0.0.7
+   Compiling serde_bytes v0.10.4
+   Compiling serde_derive v1.0.58
+   Compiling parking_lot v0.7.1
+   Compiling synstructure v0.10.1
+   Compiling target-lexicon v0.2.0
+   Compiling failure v0.1.5
+   Compiling wasmer-runtime-core v0.2.1 (/workspace/repo/lib/runtime-core)
+warning: unused import: `crate::sys::Memory`
+ --> lib/runtime-core/src/error.rs:1:5
+  |
+1 | use crate::sys::Memory;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unnecessary parentheses around type
+   --> lib/runtime-core/src/typed_func.rs:161:60
+    |
+161 |         impl< $( $x: WasmExternType, )* > WasmTypeList for ( $( $x ),* ) {
+    |                                                            ^^^^^  ^^^^^^
+...
+238 | impl_traits!([transparent] S1, A);
+    | ---------------------------------
+    | |
+    | in this macro invocation
+    | in this macro invocation
+    |
+    = note: `#[warn(unused_parens)]` on by default
+    = note: this warning originates in the macro `impl_traits` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove these parentheses
+    |
+161 -         impl< $( $x: WasmExternType, )* > WasmTypeList for ( $( $x ),* ) {
+161 +         impl< $( $x: WasmExternType, )* > WasmTypeList for $x {
+    |
+
+warning: unnecessary parentheses around type
+   --> lib/runtime-core/src/typed_func.rs:186:139
+    |
+186 |         impl< $( $x: WasmExternType, )* Rets: WasmTypeList, Trap: TrapEarly<Rets>, FN: Fn( &mut Ctx $( ,$x )* ) -> Trap> ExternalFunction<($( $x ),*), R...
+    |                                                                                                                                           ^^^^  ^^^^^
+...
+238 | impl_traits!([transparent] S1, A);
+    | ---------------------------------
+    | |
+    | in this macro invocation
+    | in this macro invocation
+    |
+    = note: this warning originates in the macro `impl_traits` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove these parentheses
+    |
+186 -         impl< $( $x: WasmExternType, )* Rets: WasmTypeList, Trap: TrapEarly<Rets>, FN: Fn( &mut Ctx $( ,$x )* ) -> Trap> ExternalFunction<($( $x ),*), Rets> for FN {
+186 +         impl< $( $x: WasmExternType, )* Rets: WasmTypeList, Trap: TrapEarly<Rets>, FN: Fn( &mut Ctx $( ,$x )* ) -> Trap> ExternalFunction<$x, Rets> for FN {
+    |
+
+warning: unnecessary parentheses around type
+   --> lib/runtime-core/src/typed_func.rs:224:59
+    |
+224 |         impl<'a, $( $x: WasmExternType, )* Rets> Func<'a, ( $( $x ),* ), Rets, Safe>
+    |                                                           ^^^^^  ^^^^^^
+...
+238 | impl_traits!([transparent] S1, A);
+    | ---------------------------------
+    | |
+    | in this macro invocation
+    | in this macro invocation
+    |
+    = note: this warning originates in the macro `impl_traits` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove these parentheses
+    |
+224 -         impl<'a, $( $x: WasmExternType, )* Rets> Func<'a, ( $( $x ),* ), Rets, Safe>
+224 +         impl<'a, $( $x: WasmExternType, )* Rets> Func<'a, $x, Rets, Safe>
+    |
+
+warning: use of deprecated function `std::mem::uninitialized`: use `mem::MaybeUninit` instead
+  --> lib/runtime-core/src/instance.rs:48:48
+   |
+48 |         let mut vmctx = unsafe { Box::new(mem::uninitialized()) };
+   |                                                ^^^^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: variable does not need to be mutable
+  --> lib/runtime-core/src/cache.rs:51:13
+   |
+51 |         let mut hasher = state.finalize();
+   |             ----^^^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: field `desc` is never read
+   --> lib/runtime-core/src/memory/mod.rs:287:5
+    |
+286 | pub struct SharedMemory {
+    |            ------------ field in this struct
+287 |     desc: MemoryDescriptor,
+    |     ^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: the type `Ctx` does not permit being left uninitialized
+  --> lib/runtime-core/src/instance.rs:48:43
+   |
+48 |         let mut vmctx = unsafe { Box::new(mem::uninitialized()) };
+   |                                           ^^^^^^^^^^^^^^^^^^^^
+   |                                           |
+   |                                           this code causes undefined behavior when executed
+   |                                           help: use `MaybeUninit<T>` instead, and only call `assume_init` after initialization is done
+   |
+note: raw pointers must be initialized (in this struct field)
+  --> lib/runtime-core/src/vm.rs:17:5
+   |
+17 |     pub(crate) memories: *mut *mut LocalMemory,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = note: `#[warn(invalid_value)]` on by default
+
+warning: `extern` fn uses type `LocalMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:17:19
+    |
+17  |     memory_index: LocalMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: `#[warn(improper_ctypes_definitions)]` on by default
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:18:12
+   |
+18 |     delta: Pages,
+   |            ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `LocalMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:31:19
+    |
+31  |     memory_index: LocalMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:32:6
+   |
+32 | ) -> Pages {
+   |      ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `LocalMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:41:19
+    |
+41  |     memory_index: LocalMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:42:12
+   |
+42 |     delta: Pages,
+   |            ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `LocalMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:55:19
+    |
+55  |     memory_index: LocalMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:56:6
+   |
+56 | ) -> Pages {
+   |      ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `ImportedMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:69:26
+    |
+69  |     import_memory_index: ImportedMemoryIndex,
+    |                          ^^^^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:70:12
+   |
+70 |     delta: Pages,
+   |            ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `ImportedMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:83:26
+    |
+83  |     import_memory_index: ImportedMemoryIndex,
+    |                          ^^^^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:84:6
+   |
+84 | ) -> Pages {
+   |      ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `ImportedMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:93:19
+    |
+93  |     memory_index: ImportedMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:94:12
+   |
+94 |     delta: Pages,
+   |            ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `ImportedMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:107:19
+    |
+107 |     memory_index: ImportedMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:108:6
+    |
+108 | ) -> Pages {
+    |      ^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/units.rs:12:1
+    |
+12  | pub struct Pages(pub u32);
+    | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `LocalTableIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:121:18
+    |
+121 |     table_index: LocalTableIndex,
+    |                  ^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `LocalTableIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:130:71
+    |
+130 | pub unsafe extern "C" fn local_table_size(ctx: &vm::Ctx, table_index: LocalTableIndex) -> u32 {
+    |                                                                       ^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+   Compiling cranelift-frontend v0.26.0
+   Compiling cranelift-native v0.26.0
+warning: `wasmer-runtime-core` (lib) generated 26 warnings (run `cargo fix --lib -p wasmer-runtime-core` to apply 5 suggestions)
+   Compiling cranelift-wasm v0.26.0
+   Compiling wasmer-clif-backend v0.2.0 (/workspace/repo/lib/clif-backend)
+warning: unused doc comment
+  --> lib/clif-backend/src/libcalls.rs:79:1
+   |
+79 | / /// A declaration for the stack probe function in Rust's standard library, for
+80 | | /// catching callstack overflow.
+   | |________________________________^
+81 | / extern "C" {
+82 | |     pub fn __rust_probestack();
+83 | | }
+   | |_- rustdoc does not generate documentation for extern blocks
+   |
+   = help: use `//` for a plain comment
+   = note: `#[warn(unused_doc_comments)]` on by default
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/module_env.rs:24:16
+   |
+24 |     isa: &'isa isa::TargetIsa,
+   |                ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+   = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+   |
+24 |     isa: &'isa dyn isa::TargetIsa,
+   |                +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/lib.rs:93:21
+   |
+93 | fn get_isa() -> Box<isa::TargetIsa> {
+   |                     ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+93 | fn get_isa() -> Box<dyn isa::TargetIsa> {
+   |                     +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/module.rs:59:15
+   |
+59 |         isa: &isa::TargetIsa,
+   |               ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+59 |         isa: &dyn isa::TargetIsa,
+   |               +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/module_env.rs:33:56
+   |
+33 |     pub fn new(module: &'module mut Module, isa: &'isa isa::TargetIsa) -> Self {
+   |                                                        ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+33 |     pub fn new(module: &'module mut Module, isa: &'isa dyn isa::TargetIsa) -> Self {
+   |                                                        +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/resolver.rs:92:15
+   |
+92 |         isa: &isa::TargetIsa,
+   |               ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+92 |         isa: &dyn isa::TargetIsa,
+   |               +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/trampoline.rs:71:22
+   |
+71 |     pub fn new(isa: &isa::TargetIsa, module: &ModuleInfo) -> Self {
+   |                      ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+71 |     pub fn new(isa: &dyn isa::TargetIsa, module: &ModuleInfo) -> Self {
+   |                      +++
+
+warning: unused variable: `wasm`
+  --> lib/clif-backend/src/module.rs:28:16
+   |
+28 |     pub fn new(wasm: &[u8]) -> Self {
+   |                ^^^^ help: if this is intentional, prefix it with an underscore: `_wasm`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `compiled_functions`
+  --> lib/clif-backend/src/resolver.rs:97:17
+   |
+97 |         let mut compiled_functions: Vec<(Vec<u8>, RelocSink)> = Vec::with_capacity(num_func_bodies);
+   |                 ^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_compiled_functions`
+
+warning: variable does not need to be mutable
+  --> lib/clif-backend/src/resolver.rs:97:13
+   |
+97 |         let mut compiled_functions: Vec<(Vec<u8>, RelocSink)> = Vec::with_capacity(num_func_bodies);
+   |             ----^^^^^^^^^^^^^^^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+   Compiling wasmer-runtime v0.2.1 (/workspace/repo/lib/runtime)
+warning: unnecessary braces around block return value
+   --> lib/runtime/src/lib.rs:160:58
+    |
+160 |         static ref DEFAULT_COMPILER: CraneliftCompiler = { CraneliftCompiler::new() };
+    |                                                          ^^                        ^^
+    |
+    = note: `#[warn(unused_braces)]` on by default
+help: remove these braces
+    |
+160 -         static ref DEFAULT_COMPILER: CraneliftCompiler = { CraneliftCompiler::new() };
+160 +         static ref DEFAULT_COMPILER: CraneliftCompiler = CraneliftCompiler::new();
+    |
+
+warning: `wasmer-runtime` (lib) generated 1 warning (run `cargo fix --lib -p wasmer-runtime` to apply 1 suggestion)
+warning: `wasmer-clif-backend` (lib) generated 10 warnings (run `cargo fix --lib -p wasmer-clif-backend` to apply 9 suggestions)
+warning: type `wasmer_value_tag` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:39:10
+   |
+39 | pub enum wasmer_value_tag {
+   |          ^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmerValueTag`
+   |
+   = note: `#[warn(non_camel_case_types)]` on by default
+
+warning: variant `WASM_I32` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:40:5
+   |
+40 |     WASM_I32,
+   |     ^^^^^^^^ help: convert the identifier to upper camel case: `WasmI32`
+
+warning: variant `WASM_I64` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:41:5
+   |
+41 |     WASM_I64,
+   |     ^^^^^^^^ help: convert the identifier to upper camel case: `WasmI64`
+
+warning: variant `WASM_F32` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:42:5
+   |
+42 |     WASM_F32,
+   |     ^^^^^^^^ help: convert the identifier to upper camel case: `WasmF32`
+
+warning: variant `WASM_F64` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:43:5
+   |
+43 |     WASM_F64,
+   |     ^^^^^^^^ help: convert the identifier to upper camel case: `WasmF64`
+
+warning: type `wasmer_import_export_kind` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:127:10
+    |
+127 | pub enum wasmer_import_export_kind {
+    |          ^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmerImportExportKind`
+
+warning: variant `WASM_FUNCTION` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:128:5
+    |
+128 |     WASM_FUNCTION,
+    |     ^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmFunction`
+
+warning: variant `WASM_GLOBAL` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:129:5
+    |
+129 |     WASM_GLOBAL,
+    |     ^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmGlobal`
+
+warning: variant `WASM_MEMORY` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:130:5
+    |
+130 |     WASM_MEMORY,
+    |     ^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmMemory`
+
+warning: variant `WASM_TABLE` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:131:5
+    |
+131 |     WASM_TABLE,
+    |     ^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmTable`
+
+warning: attribute should be applied to a free function, impl method or static
+  --> lib/runtime-c-api/src/lib.rs:30:1
+   |
+30 |   #[no_mangle]
+   |   ^^^^^^^^^^^^
+31 |   #[repr(C)]
+32 | / pub enum wasmer_result_t {
+33 | |     WASMER_OK = 1,
+34 | |     WASMER_ERROR = 2,
+35 | | }
+   | |_- not a free function, impl method or static
+   |
+   = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+   = note: `#[warn(unused_attributes)]` on by default
+
+warning: trait objects without an explicit `dyn` are deprecated
+    --> lib/runtime-c-api/src/lib.rs:1293:43
+     |
+1293 |     static LAST_ERROR: RefCell<Option<Box<Error>>> = RefCell::new(None);
+     |                                           ^^^^^
+     |
+     = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+     = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+     = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+     |
+1293 |     static LAST_ERROR: RefCell<Option<Box<dyn Error>>> = RefCell::new(None);
+     |                                           +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+    --> lib/runtime-c-api/src/lib.rs:1303:36
+     |
+1303 | fn take_last_error() -> Option<Box<Error>> {
+     |                                    ^^^^^
+     |
+     = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+     = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+     |
+1303 | fn take_last_error() -> Option<Box<dyn Error>> {
+     |                                    +++
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1197:17
+     |
+1193 | /                 wasmer_value_t {
+1194 | |                     tag: WASM_I32,
+1195 | |                     value: wasmer_value { I32 },
+1196 | |                 } => Value::I32(I32),
+     | |_________________- matches any value
+1197 | /                 wasmer_value_t {
+1198 | |                     tag: WASM_I64,
+1199 | |                     value: wasmer_value { I64 },
+1200 | |                 } => Value::I64(I64),
+     | |_________________^ unreachable pattern
+     |
+     = note: `#[warn(unreachable_patterns)]` on by default
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1201:17
+     |
+1193 | /                 wasmer_value_t {
+1194 | |                     tag: WASM_I32,
+1195 | |                     value: wasmer_value { I32 },
+1196 | |                 } => Value::I32(I32),
+     | |_________________- matches any value
+...
+1201 | /                 wasmer_value_t {
+1202 | |                     tag: WASM_F32,
+1203 | |                     value: wasmer_value { F32 },
+1204 | |                 } => Value::F32(F32),
+     | |_________________^ unreachable pattern
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1205:17
+     |
+1193 | /                 wasmer_value_t {
+1194 | |                     tag: WASM_I32,
+1195 | |                     value: wasmer_value { I32 },
+1196 | |                 } => Value::I32(I32),
+     | |_________________- matches any value
+...
+1205 | /                 wasmer_value_t {
+1206 | |                     tag: WASM_F64,
+1207 | |                     value: wasmer_value { F64 },
+1208 | |                 } => Value::F64(F64),
+     | |_________________^ unreachable pattern
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1209:17
+     |
+1193 | /                 wasmer_value_t {
+1194 | |                     tag: WASM_I32,
+1195 | |                     value: wasmer_value { I32 },
+1196 | |                 } => Value::I32(I32),
+     | |_________________- matches any value
+...
+1209 |                   _ => panic!("not implemented"),
+     |                   ^ unreachable pattern
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1245:13
+     |
+1245 |             _ => panic!("not implemented"),
+     |             ^
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1258:17
+     |
+1258 |                 _ => panic!("not implemented"),
+     |                 ^
+
+warning: unused variable: `error`
+   --> lib/runtime-c-api/src/lib.rs:638:13
+    |
+638 |         Err(error) => {
+    |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_error`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `memory_idx`
+    --> lib/runtime-c-api/src/lib.rs:1155:5
+     |
+1155 |     memory_idx: uint32_t,
+     |     ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_memory_idx`
+
+warning: unused variable: `WASM_I32`
+    --> lib/runtime-c-api/src/lib.rs:1194:26
+     |
+1194 |                     tag: WASM_I32,
+     |                          ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_WASM_I32`
+
+warning: unused variable: `WASM_I64`
+    --> lib/runtime-c-api/src/lib.rs:1198:26
+     |
+1198 |                     tag: WASM_I64,
+     |                          ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_WASM_I64`
+
+warning: unused variable: `WASM_F32`
+    --> lib/runtime-c-api/src/lib.rs:1202:26
+     |
+1202 |                     tag: WASM_F32,
+     |                          ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_WASM_F32`
+
+warning: unused variable: `WASM_F64`
+    --> lib/runtime-c-api/src/lib.rs:1206:26
+     |
+1206 |                     tag: WASM_F64,
+     |                          ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_WASM_F64`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:175:5
+    |
+175 |     mut memory: *mut *mut wasmer_memory_t,
+    |     ----^^^^^^
+    |     |
+    |     help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:243:5
+    |
+243 |     mut table: *mut *mut wasmer_table_t,
+    |     ----^^^^^
+    |     |
+    |     help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:383:5
+    |
+383 |     mut module: *mut *mut wasmer_module_t,
+    |     ----^^^^^^
+    |     |
+    |     help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:411:5
+    |
+411 |     mut instance: *mut *mut wasmer_instance_t,
+    |     ----^^^^^^^^
+    |     |
+    |     help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:482:9
+    |
+482 |     let mut module = unsafe { &*(module as *mut Module) };
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:528:9
+    |
+528 |     let mut named_export_descriptors =
+    |         ----^^^^^^^^^^^^^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:576:5
+    |
+576 |     mut instance: *mut *mut wasmer_instance_t,
+    |     ----^^^^^^^^
+    |     |
+    |     help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:737:9
+    |
+737 |     let mut instance_ref = unsafe { &mut *(instance as *mut Instance) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:781:9
+    |
+781 |     let mut named_exports = unsafe { &mut *(exports as *mut NamedExports) };
+    |         ----^^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:813:9
+    |
+813 |     let mut named_export = unsafe { &*(func as *mut NamedExport) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:814:9
+    |
+814 |     let mut export = &named_export.export;
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:840:9
+    |
+840 |     let mut named_export = unsafe { &*(func as *mut NamedExport) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:841:9
+    |
+841 |     let mut export = &named_export.export;
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:871:9
+    |
+871 |     let mut named_export = unsafe { &*(func as *mut NamedExport) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:872:9
+    |
+872 |     let mut export = &named_export.export;
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:901:9
+    |
+901 |     let mut named_export = unsafe { &*(func as *mut NamedExport) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:902:9
+    |
+902 |     let mut export = &named_export.export;
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:927:9
+    |
+927 |     let mut export = unsafe { &mut *(func as *mut Export) };
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:978:9
+    |
+978 |     let mut export = unsafe { &mut *(func as *mut Export) };
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> lib/runtime-c-api/src/lib.rs:1008:9
+     |
+1008 |     let mut export = unsafe { &mut *(func as *mut Export) };
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> lib/runtime-c-api/src/lib.rs:1037:9
+     |
+1037 |     let mut export = unsafe { &*(func as *mut Export) };
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> lib/runtime-c-api/src/lib.rs:1157:9
+     |
+1157 |     let mut ctx = unsafe { &mut *(ctx as *mut Ctx) };
+     |         ----^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: unnecessary `unsafe` block
+   --> lib/runtime-c-api/src/lib.rs:321:5
+    |
+321 |     unsafe { Box::into_raw(Box::new(global)) as *mut wasmer_global_t }
+    |     ^^^^^^ unnecessary `unsafe` block
+    |
+    = note: `#[warn(unused_unsafe)]` on by default
+
+warning: unnecessary `unsafe` block
+    --> lib/runtime-c-api/src/lib.rs:1252:9
+     |
+1252 |         unsafe {
+     |         ^^^^^^ unnecessary `unsafe` block
+
+warning: structure field `I32` should have a snake case name
+  --> lib/runtime-c-api/src/lib.rs:49:5
+   |
+49 |     I32: int32_t,
+   |     ^^^ help: convert the identifier to snake case (notice the capitalization): `i32`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: structure field `I64` should have a snake case name
+  --> lib/runtime-c-api/src/lib.rs:50:5
+   |
+50 |     I64: int64_t,
+   |     ^^^ help: convert the identifier to snake case (notice the capitalization): `i64`
+
+warning: structure field `F32` should have a snake case name
+  --> lib/runtime-c-api/src/lib.rs:51:5
+   |
+51 |     F32: f32,
+   |     ^^^ help: convert the identifier to snake case (notice the capitalization): `f32`
+
+warning: structure field `F64` should have a snake case name
+  --> lib/runtime-c-api/src/lib.rs:52:5
+   |
+52 |     F64: f64,
+   |     ^^^ help: convert the identifier to snake case (notice the capitalization): `f64`
+
+warning: variable `WASM_I32` should have a snake case name
+    --> lib/runtime-c-api/src/lib.rs:1194:26
+     |
+1194 |                     tag: WASM_I32,
+     |                          ^^^^^^^^ help: convert the identifier to snake case: `wasm_i32`
+
+warning: variable `WASM_I64` should have a snake case name
+    --> lib/runtime-c-api/src/lib.rs:1198:26
+     |
+1198 |                     tag: WASM_I64,
+     |                          ^^^^^^^^ help: convert the identifier to snake case: `wasm_i64`
+
+warning: variable `WASM_F32` should have a snake case name
+    --> lib/runtime-c-api/src/lib.rs:1202:26
+     |
+1202 |                     tag: WASM_F32,
+     |                          ^^^^^^^^ help: convert the identifier to snake case: `wasm_f32`
+
+warning: variable `WASM_F64` should have a snake case name
+    --> lib/runtime-c-api/src/lib.rs:1206:26
+     |
+1206 |                     tag: WASM_F64,
+     |                          ^^^^^^^^ help: convert the identifier to snake case: `wasm_f64`
+
+warning: `wasmer-runtime-c-api` (lib) generated 57 warnings (run `cargo fix --lib -p wasmer-runtime-c-api` to apply 30 suggestions)
+    Finished dev [unoptimized + debuginfo] target(s) in 16.76s
+warning: the following packages contain code that will be rejected by a future version of Rust: syn v0.13.11
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+warning: unused import: `crate::sys::Memory`
+ --> lib/runtime-core/src/error.rs:1:5
+  |
+1 | use crate::sys::Memory;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unnecessary parentheses around type
+   --> lib/runtime-core/src/typed_func.rs:161:60
+    |
+161 |         impl< $( $x: WasmExternType, )* > WasmTypeList for ( $( $x ),* ) {
+    |                                                            ^^^^^  ^^^^^^
+...
+238 | impl_traits!([transparent] S1, A);
+    | ---------------------------------
+    | |
+    | in this macro invocation
+    | in this macro invocation
+    |
+    = note: `#[warn(unused_parens)]` on by default
+    = note: this warning originates in the macro `impl_traits` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove these parentheses
+    |
+161 -         impl< $( $x: WasmExternType, )* > WasmTypeList for ( $( $x ),* ) {
+161 +         impl< $( $x: WasmExternType, )* > WasmTypeList for $x {
+    |
+
+warning: unnecessary parentheses around type
+   --> lib/runtime-core/src/typed_func.rs:186:139
+    |
+186 |         impl< $( $x: WasmExternType, )* Rets: WasmTypeList, Trap: TrapEarly<Rets>, FN: Fn( &mut Ctx $( ,$x )* ) -> Trap> ExternalFunction<($( $x ),*), R...
+    |                                                                                                                                           ^^^^  ^^^^^
+...
+238 | impl_traits!([transparent] S1, A);
+    | ---------------------------------
+    | |
+    | in this macro invocation
+    | in this macro invocation
+    |
+    = note: this warning originates in the macro `impl_traits` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove these parentheses
+    |
+186 -         impl< $( $x: WasmExternType, )* Rets: WasmTypeList, Trap: TrapEarly<Rets>, FN: Fn( &mut Ctx $( ,$x )* ) -> Trap> ExternalFunction<($( $x ),*), Rets> for FN {
+186 +         impl< $( $x: WasmExternType, )* Rets: WasmTypeList, Trap: TrapEarly<Rets>, FN: Fn( &mut Ctx $( ,$x )* ) -> Trap> ExternalFunction<$x, Rets> for FN {
+    |
+
+warning: unnecessary parentheses around type
+   --> lib/runtime-core/src/typed_func.rs:224:59
+    |
+224 |         impl<'a, $( $x: WasmExternType, )* Rets> Func<'a, ( $( $x ),* ), Rets, Safe>
+    |                                                           ^^^^^  ^^^^^^
+...
+238 | impl_traits!([transparent] S1, A);
+    | ---------------------------------
+    | |
+    | in this macro invocation
+    | in this macro invocation
+    |
+    = note: this warning originates in the macro `impl_traits` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: remove these parentheses
+    |
+224 -         impl<'a, $( $x: WasmExternType, )* Rets> Func<'a, ( $( $x ),* ), Rets, Safe>
+224 +         impl<'a, $( $x: WasmExternType, )* Rets> Func<'a, $x, Rets, Safe>
+    |
+
+warning: use of deprecated function `std::mem::uninitialized`: use `mem::MaybeUninit` instead
+  --> lib/runtime-core/src/instance.rs:48:48
+   |
+48 |         let mut vmctx = unsafe { Box::new(mem::uninitialized()) };
+   |                                                ^^^^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: variable does not need to be mutable
+  --> lib/runtime-core/src/cache.rs:51:13
+   |
+51 |         let mut hasher = state.finalize();
+   |             ----^^^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: field `desc` is never read
+   --> lib/runtime-core/src/memory/mod.rs:287:5
+    |
+286 | pub struct SharedMemory {
+    |            ------------ field in this struct
+287 |     desc: MemoryDescriptor,
+    |     ^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: the type `Ctx` does not permit being left uninitialized
+  --> lib/runtime-core/src/instance.rs:48:43
+   |
+48 |         let mut vmctx = unsafe { Box::new(mem::uninitialized()) };
+   |                                           ^^^^^^^^^^^^^^^^^^^^
+   |                                           |
+   |                                           this code causes undefined behavior when executed
+   |                                           help: use `MaybeUninit<T>` instead, and only call `assume_init` after initialization is done
+   |
+note: raw pointers must be initialized (in this struct field)
+  --> lib/runtime-core/src/vm.rs:17:5
+   |
+17 |     pub(crate) memories: *mut *mut LocalMemory,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   = note: `#[warn(invalid_value)]` on by default
+
+warning: `extern` fn uses type `LocalMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:17:19
+    |
+17  |     memory_index: LocalMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: `#[warn(improper_ctypes_definitions)]` on by default
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:18:12
+   |
+18 |     delta: Pages,
+   |            ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `LocalMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:31:19
+    |
+31  |     memory_index: LocalMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:32:6
+   |
+32 | ) -> Pages {
+   |      ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `LocalMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:41:19
+    |
+41  |     memory_index: LocalMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:42:12
+   |
+42 |     delta: Pages,
+   |            ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `LocalMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:55:19
+    |
+55  |     memory_index: LocalMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:56:6
+   |
+56 | ) -> Pages {
+   |      ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `ImportedMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:69:26
+    |
+69  |     import_memory_index: ImportedMemoryIndex,
+    |                          ^^^^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:70:12
+   |
+70 |     delta: Pages,
+   |            ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `ImportedMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:83:26
+    |
+83  |     import_memory_index: ImportedMemoryIndex,
+    |                          ^^^^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:84:6
+   |
+84 | ) -> Pages {
+   |      ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `ImportedMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:93:19
+    |
+93  |     memory_index: ImportedMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+  --> lib/runtime-core/src/vmcalls.rs:94:12
+   |
+94 |     delta: Pages,
+   |            ^^^^^ not FFI-safe
+   |
+   = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+   = note: this struct has unspecified layout
+note: the type is defined here
+  --> lib/runtime-core/src/units.rs:12:1
+   |
+12 | pub struct Pages(pub u32);
+   | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `ImportedMemoryIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:107:19
+    |
+107 |     memory_index: ImportedMemoryIndex,
+    |                   ^^^^^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `Pages`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:108:6
+    |
+108 | ) -> Pages {
+    |      ^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/units.rs:12:1
+    |
+12  | pub struct Pages(pub u32);
+    | ^^^^^^^^^^^^^^^^
+
+warning: `extern` fn uses type `LocalTableIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:121:18
+    |
+121 |     table_index: LocalTableIndex,
+    |                  ^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `extern` fn uses type `LocalTableIndex`, which is not FFI-safe
+   --> lib/runtime-core/src/vmcalls.rs:130:71
+    |
+130 | pub unsafe extern "C" fn local_table_size(ctx: &vm::Ctx, table_index: LocalTableIndex) -> u32 {
+    |                                                                       ^^^^^^^^^^^^^^^ not FFI-safe
+    |
+    = help: consider adding a `#[repr(C)]` or `#[repr(transparent)]` attribute to this struct
+    = note: this struct has unspecified layout
+note: the type is defined here
+   --> lib/runtime-core/src/types.rs:320:9
+    |
+320 |           pub struct $ty (u32);
+    |           ^^^^^^^^^^^^^^^^^^^^^
+...
+348 | / define_map_index![
+349 | |     FuncIndex, MemoryIndex, TableIndex, GlobalIndex,
+350 | |     | local: LocalFuncIndex, LocalMemoryIndex, LocalTableIndex, LocalGlobalIndex,
+351 | |     | imported: ImportedFuncIndex, ImportedMemoryIndex, ImportedTableIndex, ImportedGlobalIndex,
+352 | | ];
+    | |_- in this macro invocation
+    = note: this warning originates in the macro `define_map_index` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `wasmer-runtime-core` (lib) generated 26 warnings (run `cargo fix --lib -p wasmer-runtime-core` to apply 5 suggestions)
+warning: unused doc comment
+  --> lib/clif-backend/src/libcalls.rs:79:1
+   |
+79 | / /// A declaration for the stack probe function in Rust's standard library, for
+80 | | /// catching callstack overflow.
+   | |________________________________^
+81 | / extern "C" {
+82 | |     pub fn __rust_probestack();
+83 | | }
+   | |_- rustdoc does not generate documentation for extern blocks
+   |
+   = help: use `//` for a plain comment
+   = note: `#[warn(unused_doc_comments)]` on by default
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/module_env.rs:24:16
+   |
+24 |     isa: &'isa isa::TargetIsa,
+   |                ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+   = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+   |
+24 |     isa: &'isa dyn isa::TargetIsa,
+   |                +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/lib.rs:93:21
+   |
+93 | fn get_isa() -> Box<isa::TargetIsa> {
+   |                     ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+93 | fn get_isa() -> Box<dyn isa::TargetIsa> {
+   |                     +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/module.rs:59:15
+   |
+59 |         isa: &isa::TargetIsa,
+   |               ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+59 |         isa: &dyn isa::TargetIsa,
+   |               +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/module_env.rs:33:56
+   |
+33 |     pub fn new(module: &'module mut Module, isa: &'isa isa::TargetIsa) -> Self {
+   |                                                        ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+33 |     pub fn new(module: &'module mut Module, isa: &'isa dyn isa::TargetIsa) -> Self {
+   |                                                        +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/resolver.rs:92:15
+   |
+92 |         isa: &isa::TargetIsa,
+   |               ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+92 |         isa: &dyn isa::TargetIsa,
+   |               +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> lib/clif-backend/src/trampoline.rs:71:22
+   |
+71 |     pub fn new(isa: &isa::TargetIsa, module: &ModuleInfo) -> Self {
+   |                      ^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+71 |     pub fn new(isa: &dyn isa::TargetIsa, module: &ModuleInfo) -> Self {
+   |                      +++
+
+warning: unused variable: `wasm`
+  --> lib/clif-backend/src/module.rs:28:16
+   |
+28 |     pub fn new(wasm: &[u8]) -> Self {
+   |                ^^^^ help: if this is intentional, prefix it with an underscore: `_wasm`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `compiled_functions`
+  --> lib/clif-backend/src/resolver.rs:97:17
+   |
+97 |         let mut compiled_functions: Vec<(Vec<u8>, RelocSink)> = Vec::with_capacity(num_func_bodies);
+   |                 ^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_compiled_functions`
+
+warning: variable does not need to be mutable
+  --> lib/clif-backend/src/resolver.rs:97:13
+   |
+97 |         let mut compiled_functions: Vec<(Vec<u8>, RelocSink)> = Vec::with_capacity(num_func_bodies);
+   |             ----^^^^^^^^^^^^^^^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: `wasmer-clif-backend` (lib) generated 10 warnings (run `cargo fix --lib -p wasmer-clif-backend` to apply 9 suggestions)
+warning: unnecessary braces around block return value
+   --> lib/runtime/src/lib.rs:160:58
+    |
+160 |         static ref DEFAULT_COMPILER: CraneliftCompiler = { CraneliftCompiler::new() };
+    |                                                          ^^                        ^^
+    |
+    = note: `#[warn(unused_braces)]` on by default
+help: remove these braces
+    |
+160 -         static ref DEFAULT_COMPILER: CraneliftCompiler = { CraneliftCompiler::new() };
+160 +         static ref DEFAULT_COMPILER: CraneliftCompiler = CraneliftCompiler::new();
+    |
+
+warning: `wasmer-runtime` (lib) generated 1 warning (run `cargo fix --lib -p wasmer-runtime` to apply 1 suggestion)
+   Compiling wasmer-runtime-c-api v0.2.1 (/workspace/repo/lib/runtime-c-api)
+warning: type `wasmer_value_tag` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:39:10
+   |
+39 | pub enum wasmer_value_tag {
+   |          ^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmerValueTag`
+   |
+   = note: `#[warn(non_camel_case_types)]` on by default
+
+warning: variant `WASM_I32` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:40:5
+   |
+40 |     WASM_I32,
+   |     ^^^^^^^^ help: convert the identifier to upper camel case: `WasmI32`
+
+warning: variant `WASM_I64` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:41:5
+   |
+41 |     WASM_I64,
+   |     ^^^^^^^^ help: convert the identifier to upper camel case: `WasmI64`
+
+warning: variant `WASM_F32` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:42:5
+   |
+42 |     WASM_F32,
+   |     ^^^^^^^^ help: convert the identifier to upper camel case: `WasmF32`
+
+warning: variant `WASM_F64` should have an upper camel case name
+  --> lib/runtime-c-api/src/lib.rs:43:5
+   |
+43 |     WASM_F64,
+   |     ^^^^^^^^ help: convert the identifier to upper camel case: `WasmF64`
+
+warning: type `wasmer_import_export_kind` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:127:10
+    |
+127 | pub enum wasmer_import_export_kind {
+    |          ^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmerImportExportKind`
+
+warning: variant `WASM_FUNCTION` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:128:5
+    |
+128 |     WASM_FUNCTION,
+    |     ^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmFunction`
+
+warning: variant `WASM_GLOBAL` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:129:5
+    |
+129 |     WASM_GLOBAL,
+    |     ^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmGlobal`
+
+warning: variant `WASM_MEMORY` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:130:5
+    |
+130 |     WASM_MEMORY,
+    |     ^^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmMemory`
+
+warning: variant `WASM_TABLE` should have an upper camel case name
+   --> lib/runtime-c-api/src/lib.rs:131:5
+    |
+131 |     WASM_TABLE,
+    |     ^^^^^^^^^^ help: convert the identifier to upper camel case: `WasmTable`
+
+warning: attribute should be applied to a free function, impl method or static
+  --> lib/runtime-c-api/src/lib.rs:30:1
+   |
+30 |   #[no_mangle]
+   |   ^^^^^^^^^^^^
+31 |   #[repr(C)]
+32 | / pub enum wasmer_result_t {
+33 | |     WASMER_OK = 1,
+34 | |     WASMER_ERROR = 2,
+35 | | }
+   | |_- not a free function, impl method or static
+   |
+   = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+   = note: `#[warn(unused_attributes)]` on by default
+
+warning: trait objects without an explicit `dyn` are deprecated
+    --> lib/runtime-c-api/src/lib.rs:1293:43
+     |
+1293 |     static LAST_ERROR: RefCell<Option<Box<Error>>> = RefCell::new(None);
+     |                                           ^^^^^
+     |
+     = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+     = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+     = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+     |
+1293 |     static LAST_ERROR: RefCell<Option<Box<dyn Error>>> = RefCell::new(None);
+     |                                           +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+    --> lib/runtime-c-api/src/lib.rs:1303:36
+     |
+1303 | fn take_last_error() -> Option<Box<Error>> {
+     |                                    ^^^^^
+     |
+     = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+     = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+     |
+1303 | fn take_last_error() -> Option<Box<dyn Error>> {
+     |                                    +++
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1197:17
+     |
+1193 | /                 wasmer_value_t {
+1194 | |                     tag: WASM_I32,
+1195 | |                     value: wasmer_value { I32 },
+1196 | |                 } => Value::I32(I32),
+     | |_________________- matches any value
+1197 | /                 wasmer_value_t {
+1198 | |                     tag: WASM_I64,
+1199 | |                     value: wasmer_value { I64 },
+1200 | |                 } => Value::I64(I64),
+     | |_________________^ unreachable pattern
+     |
+     = note: `#[warn(unreachable_patterns)]` on by default
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1201:17
+     |
+1193 | /                 wasmer_value_t {
+1194 | |                     tag: WASM_I32,
+1195 | |                     value: wasmer_value { I32 },
+1196 | |                 } => Value::I32(I32),
+     | |_________________- matches any value
+...
+1201 | /                 wasmer_value_t {
+1202 | |                     tag: WASM_F32,
+1203 | |                     value: wasmer_value { F32 },
+1204 | |                 } => Value::F32(F32),
+     | |_________________^ unreachable pattern
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1205:17
+     |
+1193 | /                 wasmer_value_t {
+1194 | |                     tag: WASM_I32,
+1195 | |                     value: wasmer_value { I32 },
+1196 | |                 } => Value::I32(I32),
+     | |_________________- matches any value
+...
+1205 | /                 wasmer_value_t {
+1206 | |                     tag: WASM_F64,
+1207 | |                     value: wasmer_value { F64 },
+1208 | |                 } => Value::F64(F64),
+     | |_________________^ unreachable pattern
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1209:17
+     |
+1193 | /                 wasmer_value_t {
+1194 | |                     tag: WASM_I32,
+1195 | |                     value: wasmer_value { I32 },
+1196 | |                 } => Value::I32(I32),
+     | |_________________- matches any value
+...
+1209 |                   _ => panic!("not implemented"),
+     |                   ^ unreachable pattern
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1245:13
+     |
+1245 |             _ => panic!("not implemented"),
+     |             ^
+
+warning: unreachable pattern
+    --> lib/runtime-c-api/src/lib.rs:1258:17
+     |
+1258 |                 _ => panic!("not implemented"),
+     |                 ^
+
+warning: unused variable: `error`
+   --> lib/runtime-c-api/src/lib.rs:638:13
+    |
+638 |         Err(error) => {
+    |             ^^^^^ help: if this is intentional, prefix it with an underscore: `_error`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `memory_idx`
+    --> lib/runtime-c-api/src/lib.rs:1155:5
+     |
+1155 |     memory_idx: uint32_t,
+     |     ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_memory_idx`
+
+warning: unused variable: `WASM_I32`
+    --> lib/runtime-c-api/src/lib.rs:1194:26
+     |
+1194 |                     tag: WASM_I32,
+     |                          ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_WASM_I32`
+
+warning: unused variable: `WASM_I64`
+    --> lib/runtime-c-api/src/lib.rs:1198:26
+     |
+1198 |                     tag: WASM_I64,
+     |                          ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_WASM_I64`
+
+warning: unused variable: `WASM_F32`
+    --> lib/runtime-c-api/src/lib.rs:1202:26
+     |
+1202 |                     tag: WASM_F32,
+     |                          ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_WASM_F32`
+
+warning: unused variable: `WASM_F64`
+    --> lib/runtime-c-api/src/lib.rs:1206:26
+     |
+1206 |                     tag: WASM_F64,
+     |                          ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_WASM_F64`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:175:5
+    |
+175 |     mut memory: *mut *mut wasmer_memory_t,
+    |     ----^^^^^^
+    |     |
+    |     help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:243:5
+    |
+243 |     mut table: *mut *mut wasmer_table_t,
+    |     ----^^^^^
+    |     |
+    |     help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:383:5
+    |
+383 |     mut module: *mut *mut wasmer_module_t,
+    |     ----^^^^^^
+    |     |
+    |     help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:411:5
+    |
+411 |     mut instance: *mut *mut wasmer_instance_t,
+    |     ----^^^^^^^^
+    |     |
+    |     help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:482:9
+    |
+482 |     let mut module = unsafe { &*(module as *mut Module) };
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:528:9
+    |
+528 |     let mut named_export_descriptors =
+    |         ----^^^^^^^^^^^^^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:576:5
+    |
+576 |     mut instance: *mut *mut wasmer_instance_t,
+    |     ----^^^^^^^^
+    |     |
+    |     help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:737:9
+    |
+737 |     let mut instance_ref = unsafe { &mut *(instance as *mut Instance) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:781:9
+    |
+781 |     let mut named_exports = unsafe { &mut *(exports as *mut NamedExports) };
+    |         ----^^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:813:9
+    |
+813 |     let mut named_export = unsafe { &*(func as *mut NamedExport) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:814:9
+    |
+814 |     let mut export = &named_export.export;
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:840:9
+    |
+840 |     let mut named_export = unsafe { &*(func as *mut NamedExport) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:841:9
+    |
+841 |     let mut export = &named_export.export;
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:871:9
+    |
+871 |     let mut named_export = unsafe { &*(func as *mut NamedExport) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:872:9
+    |
+872 |     let mut export = &named_export.export;
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:901:9
+    |
+901 |     let mut named_export = unsafe { &*(func as *mut NamedExport) };
+    |         ----^^^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:902:9
+    |
+902 |     let mut export = &named_export.export;
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:927:9
+    |
+927 |     let mut export = unsafe { &mut *(func as *mut Export) };
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> lib/runtime-c-api/src/lib.rs:978:9
+    |
+978 |     let mut export = unsafe { &mut *(func as *mut Export) };
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> lib/runtime-c-api/src/lib.rs:1008:9
+     |
+1008 |     let mut export = unsafe { &mut *(func as *mut Export) };
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> lib/runtime-c-api/src/lib.rs:1037:9
+     |
+1037 |     let mut export = unsafe { &*(func as *mut Export) };
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> lib/runtime-c-api/src/lib.rs:1157:9
+     |
+1157 |     let mut ctx = unsafe { &mut *(ctx as *mut Ctx) };
+     |         ----^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: unnecessary `unsafe` block
+   --> lib/runtime-c-api/src/lib.rs:321:5
+    |
+321 |     unsafe { Box::into_raw(Box::new(global)) as *mut wasmer_global_t }
+    |     ^^^^^^ unnecessary `unsafe` block
+    |
+    = note: `#[warn(unused_unsafe)]` on by default
+
+warning: unnecessary `unsafe` block
+    --> lib/runtime-c-api/src/lib.rs:1252:9
+     |
+1252 |         unsafe {
+     |         ^^^^^^ unnecessary `unsafe` block
+
+warning: structure field `I32` should have a snake case name
+  --> lib/runtime-c-api/src/lib.rs:49:5
+   |
+49 |     I32: int32_t,
+   |     ^^^ help: convert the identifier to snake case (notice the capitalization): `i32`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: structure field `I64` should have a snake case name
+  --> lib/runtime-c-api/src/lib.rs:50:5
+   |
+50 |     I64: int64_t,
+   |     ^^^ help: convert the identifier to snake case (notice the capitalization): `i64`
+
+warning: structure field `F32` should have a snake case name
+  --> lib/runtime-c-api/src/lib.rs:51:5
+   |
+51 |     F32: f32,
+   |     ^^^ help: convert the identifier to snake case (notice the capitalization): `f32`
+
+warning: structure field `F64` should have a snake case name
+  --> lib/runtime-c-api/src/lib.rs:52:5
+   |
+52 |     F64: f64,
+   |     ^^^ help: convert the identifier to snake case (notice the capitalization): `f64`
+
+warning: variable `WASM_I32` should have a snake case name
+    --> lib/runtime-c-api/src/lib.rs:1194:26
+     |
+1194 |                     tag: WASM_I32,
+     |                          ^^^^^^^^ help: convert the identifier to snake case: `wasm_i32`
+
+warning: variable `WASM_I64` should have a snake case name
+    --> lib/runtime-c-api/src/lib.rs:1198:26
+     |
+1198 |                     tag: WASM_I64,
+     |                          ^^^^^^^^ help: convert the identifier to snake case: `wasm_i64`
+
+warning: variable `WASM_F32` should have a snake case name
+    --> lib/runtime-c-api/src/lib.rs:1202:26
+     |
+1202 |                     tag: WASM_F32,
+     |                          ^^^^^^^^ help: convert the identifier to snake case: `wasm_f32`
+
+warning: variable `WASM_F64` should have a snake case name
+    --> lib/runtime-c-api/src/lib.rs:1206:26
+     |
+1206 |                     tag: WASM_F64,
+     |                          ^^^^^^^^ help: convert the identifier to snake case: `wasm_f64`
+
+warning: `wasmer-runtime-c-api` (lib test) generated 57 warnings (run `cargo fix --lib -p wasmer-runtime-c-api --tests` to apply 30 suggestions)
+    Finished test [unoptimized + debuginfo] target(s) in 2.26s
+warning: the following packages contain code that will be rejected by a future version of Rust: syn v0.13.11
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+────────────
+ Nextest run ID cf051a40-b850-4683-8e4c-05ecec5235ee with nextest profile: default
+    Starting 1 test across 2 binaries
+        FAIL [   2.012s] (1/1) wasmer-runtime-c-api::runtime_c_api_tests test_c_api
+  stdout ───
+
+    running 1 test
+    Running command: `cmake` arg: Some(".")
+    output:
+    status: 0
+    stdout:
+    -- The C compiler identification is GNU 10.2.1
+    -- The CXX compiler identification is GNU 10.2.1
+    -- Detecting C compiler ABI info
+    -- Detecting C compiler ABI info - done
+    -- Check for working C compiler: /usr/bin/cc - skipped
+    -- Detecting C compile features
+    -- Detecting C compile features - done
+    -- Detecting CXX compiler ABI info
+    -- Detecting CXX compiler ABI info - done
+    -- Check for working CXX compiler: /usr/bin/c++ - skipped
+    -- Detecting CXX compile features
+    -- Detecting CXX compile features - done
+    -- Configuring done
+    -- Generating done
+    -- Build files have been written to: /workspace/repo/lib/runtime-c-api/tests
+
+    stderr:
+
+    Running command: `make` arg: None
+    output:
+    status: 2
+    stdout:
+    Scanning dependencies of target test-validate
+    [  5%] Building C object CMakeFiles/test-validate.dir/test-validate.c.o
+    [ 10%] Linking C executable test-validate
+    [ 10%] Built target test-validate
+    Scanning dependencies of target test-module
+    [ 15%] Building C object CMakeFiles/test-module.dir/test-module.c.o
+    [ 20%] Linking C executable test-module
+    [ 20%] Built target test-module
+    Scanning dependencies of target test-module-imports
+    [ 25%] Building C object CMakeFiles/test-module-imports.dir/test-module-imports.c.o
+
+    stderr:
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c: In function 'main':
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:22:5: error: unknown type name 'wasmer_import_descriptors_t'; did you mean 'wasmer_export_descriptors_t'?
+       22 |     wasmer_import_descriptors_t *imports = NULL;
+          |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+          |     wasmer_export_descriptors_t
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:23:5: warning: implicit declaration of function 'wasmer_import_descriptors'; did you mean 'wasmer_export_descriptors'? [-Wimplicit-function-declaration]
+       23 |     wasmer_import_descriptors(module, &imports);
+          |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+          |     wasmer_export_descriptors
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:25:23: warning: implicit declaration of function 'wasmer_import_descriptors_len'; did you mean 'wasmer_export_descriptors_len'? [-Wimplicit-function-declaration]
+       25 |     int imports_len = wasmer_import_descriptors_len(imports);
+          |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          |                       wasmer_export_descriptors_len
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:29:5: error: unknown type name 'wasmer_import_descriptor_t'; did you mean 'wasmer_export_descriptor_t'?
+       29 |     wasmer_import_descriptor_t *import = wasmer_import_descriptors_get(imports, 0);
+          |     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+          |     wasmer_export_descriptor_t
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:29:42: warning: implicit declaration of function 'wasmer_import_descriptors_get'; did you mean 'wasmer_export_descriptors_get'? [-Wimplicit-function-declaration]
+       29 |     wasmer_import_descriptor_t *import = wasmer_import_descriptors_get(imports, 0);
+          |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          |                                          wasmer_export_descriptors_get
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:29:42: warning: initialization of 'int *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:31:38: warning: implicit declaration of function 'wasmer_import_descriptor_kind'; did you mean 'wasmer_export_descriptor_kind'? [-Wimplicit-function-declaration]
+       31 |     wasmer_import_export_kind kind = wasmer_import_descriptor_kind(import);
+          |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          |                                      wasmer_export_descriptor_kind
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:34:36: warning: implicit declaration of function 'wasmer_import_descriptor_name'; did you mean 'wasmer_export_descriptor_name'? [-Wimplicit-function-declaration]
+       34 |     wasmer_byte_array name_bytes = wasmer_import_descriptor_name(import);
+          |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          |                                    wasmer_export_descriptor_name
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:34:36: error: invalid initializer
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:43:43: warning: implicit declaration of function 'wasmer_import_descriptor_module_name'; did you mean 'wasmer_export_descriptor_name'? [-Wimplicit-function-declaration]
+       43 |     wasmer_byte_array module_name_bytes = wasmer_import_descriptor_module_name(import);
+          |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          |                                           wasmer_export_descriptor_name
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:43:43: error: invalid initializer
+    /workspace/repo/lib/runtime-c-api/tests/test-module-imports.c:54:5: warning: implicit declaration of function 'wasmer_import_descriptors_destroy'; did you mean 'wasmer_export_descriptors_destroy'? [-Wimplicit-function-declaration]
+       54 |     wasmer_import_descriptors_destroy(imports);
+          |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          |     wasmer_export_descriptors_destroy
+    make[2]: *** [CMakeFiles/test-module-imports.dir/build.make:82: CMakeFiles/test-module-imports.dir/test-module-imports.c.o] Error 1
+    make[1]: *** [CMakeFiles/Makefile2:167: CMakeFiles/test-module-imports.dir/all] Error 2
+    make: *** [Makefile:114: all] Error 2
+
+    test test_c_api ... FAILED
+
+    failures:
+
+    failures:
+        test_c_api
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.00s
+
+  stderr ───
+    thread 'test_c_api' panicked at 'Command failed with exit status: ExitStatus(unix_wait_status(512))', lib/runtime-c-api/tests/runtime_c_api_tests.rs:34:17
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   2.014s] 1 test run: 0 passed, 1 failed, 0 skipped
+        FAIL [   2.012s] (1/1) wasmer-runtime-c-api::runtime_c_api_tests test_c_api
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

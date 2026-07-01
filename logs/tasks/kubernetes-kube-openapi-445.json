@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-kube-openapi-445",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'type CELTag struct { Rule ... }', 'CEL []CELTag' in CommentTags, CELTag.Validate(), and emitExtensions() writing \"x-kubernetes-validations\" in openapi.go; F2P include TestCELMarkerComments and TestParseCommentTags/cel_rule, /multiple_CEL_params, /non-consecutive_array_index."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

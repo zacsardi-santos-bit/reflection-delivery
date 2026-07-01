@@ -1,0 +1,5 @@
+I'm working on a graphics rendering library and I'd like to improve how geometry attributes are defined and resolved. Right now, creating geometry requires wrapping every attribute's data in a full descriptor object even when I just want to pass a simple array or a typed array. It would be much more ergonomic if I could pass the data directly as the attribute value and have it automatically wrapped.
+
+There's also an inconsistency in the attribute descriptor: the property that indicates which shader binding slot an attribute maps to uses a name that doesn't match the naming convention in modern GPU APIs. It should be renamed to match the standard.
+
+On top of this, I need two utility functions: one that parses a GPU shader program's source and automatically extracts attribute layout information (like format, stride, location, and offset) for each vertex input, and another that takes a geometry and the extracted shader attribute data and fills in any missing fields on the geometry's attributes — including correctly computing stride and start offset for attributes that share the same buffer (interleaved layout).

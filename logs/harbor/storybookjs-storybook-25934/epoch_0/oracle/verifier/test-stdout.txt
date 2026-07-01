@@ -1,0 +1,19 @@
+patching file code/lib/cli/src/autoblock/index.test.ts
+patching file code/lib/cli/src/automigrate/fixes/nodejs-requirement.test.ts
+[33mThe CJS build of Vite's Node API is deprecated. See https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+3:25:25 PM [vite-plugin-svelte] Your are using Svelte 5.0.0-next.28. Svelte 5 support is experimental, breaking changes can occur in any release until this notice is removed.
+work in progress:
+ - svelte-inspector is disabled until dev mode implements node to code mapping
+ - hmr for .svelte files is disabled until hmr api is implemented
+
+
+ RUN  v1.2.2 /workspace/repo/code
+
+ ✓ |lib/cli| src/autoblock/index.test.ts  (4 tests) 5ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  15:25:24
+   Duration  1.97s (transform 77ms, setup 131ms, collect 670ms, tests 5ms, environment 0ms, prepare 99ms)
+
+reward=1 graded=4 found=0 failed=0 parsed=0 framework=vitest exit_code=0

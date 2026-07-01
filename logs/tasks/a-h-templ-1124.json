@@ -1,0 +1,23 @@
+{
+ "task": "a-h-templ-1124",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds cmd/templ/lspcmd/proxy/templdoclazyloader.go plus server.go wiring for topological lazy loading + refcounting (matches 'load dependencies before dependents (topological order)' and 'reference count tracked per file'). test.patch adds real Go test templdoclazyloader_test.go; F2P=55 graded"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

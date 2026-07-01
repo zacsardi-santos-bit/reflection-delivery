@@ -1,0 +1,35 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p linkerd-policy-controller-k8s-index --no-fail-fast",
+  "test_files": [
+    "policy-controller/k8s/index/src/outbound/tests/routes.rs",
+    "policy-controller/k8s/index/src/outbound/tests/routes/grpc.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/22) linkerd-policy-controller-k8s-index inbound::tests::annotation::default_policy_annotated",
+    "( 2/22) linkerd-policy-controller-k8s-index inbound::tests::annotation::default_policy_annotated_invalid",
+    "( 3/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_ignores_udp",
+    "( 4/22) linkerd-policy-controller-k8s-index inbound::tests::authorization_policy::links_authorization_policy_with_mtls_name",
+    "( 5/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_only_references_within_container",
+    "( 6/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_with_params",
+    "( 7/22) linkerd-policy-controller-k8s-index inbound::tests::annotation::authenticated_annotated",
+    "( 8/22) linkerd-policy-controller-k8s-index defaults::test::test_parse_displayed",
+    "( 9/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_ports_optional",
+    "(10/22) linkerd-policy-controller-k8s-index inbound::tests::http_routes::routes_created_for_probes",
+    "(11/22) linkerd-policy-controller-k8s-index inbound::tests::authorization_policy::authorization_targets_namespace",
+    "(12/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_multiple_paths",
+    "(13/22) linkerd-policy-controller-k8s-index inbound::tests::server_authorization::links_server_authz_by_label",
+    "(14/22) linkerd-policy-controller-k8s-index inbound::tests::pod_must_exist_for_lookup",
+    "(15/22) linkerd-policy-controller-k8s-index inbound::tests::authorization_policy::links_authorization_policy_with_service_account",
+    "(16/22) linkerd-policy-controller-k8s-index outbound::tests::routes::grpc::backend_service",
+    "(17/22) linkerd-policy-controller-k8s-index inbound::tests::authorization_policy::authorization_policy_prevents_index_deletion",
+    "(18/22) linkerd-policy-controller-k8s-index inbound::tests::annotation::opaque_annotated",
+    "(19/22) linkerd-policy-controller-k8s-index inbound::tests::server_authorization::links_server_authz_by_name",
+    "(20/22) linkerd-policy-controller-k8s-index inbound::tests::http_routes::route_attaches_to_server",
+    "(21/22) linkerd-policy-controller-k8s-index outbound::tests::routes::http::backend_service",
+    "(22/22) linkerd-policy-controller-k8s-index ports::tests::parse_portset"
+  ],
+  "PASS_TO_PASS": []
+}

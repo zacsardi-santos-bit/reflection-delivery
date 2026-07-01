@@ -1,0 +1,50 @@
+patching file internal/cache/metadata/type_cache_test.go
+patching file internal/config/yaml_parser_test.go
+patching file internal/fs/handle/dir_handle_test.go
+patching file internal/fs/inode/base_dir_test.go
+patching file internal/fs/inode/core_test.go
+patching file internal/fs/inode/dir_test.go
+patching file main_test.go
+# github.com/googlecloudplatform/gcsfuse/internal/config [github.com/googlecloudplatform/gcsfuse/internal/config.test]
+internal/config/yaml_parser_test.go:114:46: mountConfig.MetadataCacheConfig.TypeCacheMaxEntries undefined (type MetadataCacheConfig has no field or method TypeCacheMaxEntries)
+internal/config/yaml_parser_test.go:174:60: undefined: TypeCacheMaxEntriesInvalidValueError
+internal/config/yaml_parser_test.go:182:11: undefined: DefaultTypeCacheMaxEntries
+internal/config/yaml_parser_test.go:182:71: mountConfig.MetadataCacheConfig.TypeCacheMaxEntries undefined (type MetadataCacheConfig has no field or method TypeCacheMaxEntries)
+# github.com/googlecloudplatform/gcsfuse/internal/cache/metadata [github.com/googlecloudplatform/gcsfuse/internal/cache/metadata.test]
+internal/cache/metadata/type_cache_test.go:47:8: undefined: TypeCache
+internal/cache/metadata/type_cache_test.go:52:8: undefined: TypeCache
+internal/cache/metadata/type_cache_test.go:57:8: undefined: TypeCache
+internal/cache/metadata/type_cache_test.go:84:61: undefined: typeCache
+internal/cache/metadata/type_cache_test.go:85:8: undefined: NewTypeCache
+internal/cache/metadata/type_cache_test.go:130:11: undefined: UnknownType
+internal/cache/metadata/type_cache_test.go:134:30: undefined: RegularFileType
+internal/cache/metadata/type_cache_test.go:136:11: undefined: UnknownType
+internal/cache/metadata/type_cache_test.go:140:30: undefined: RegularFileType
+internal/cache/metadata/type_cache_test.go:141:30: undefined: ExplicitDirType
+internal/cache/metadata/type_cache_test.go:141:30: too many errors
+# github.com/googlecloudplatform/gcsfuse/internal/fs/handle [github.com/googlecloudplatform/gcsfuse/internal/fs/handle.test]
+internal/fs/handle/dir_handle_test.go:81:3: too many arguments in call to inode.NewDirInode
+	have (number, inode.Name, fuseops.InodeAttributes, bool, bool, number, *gcsx.SyncerBucket, *timeutil.SimulatedClock, *timeutil.SimulatedClock, number)
+	want (fuseops.InodeID, inode.Name, fuseops.InodeAttributes, bool, bool, time.Duration, *gcsx.SyncerBucket, timeutil.Clock, timeutil.Clock)
+# github.com/googlecloudplatform/gcsfuse/internal/fs/inode [github.com/googlecloudplatform/gcsfuse/internal/fs/inode.test]
+internal/fs/inode/dir_test.go:58:14: undefined: metadata.TypeCache
+internal/fs/inode/dir_test.go:93:84: undefined: config.DefaultTypeCacheMaxEntries
+internal/fs/inode/dir_test.go:115:3: too many arguments in call to NewDirInode
+	have (number, Name, fuseops.InodeAttributes, bool, bool, time.Duration, *gcsx.SyncerBucket, *timeutil.SimulatedClock, *timeutil.SimulatedClock, int)
+	want (fuseops.InodeID, Name, fuseops.InodeAttributes, bool, bool, time.Duration, *gcsx.SyncerBucket, timeutil.Clock, timeutil.Clock)
+internal/fs/inode/dir_test.go:125:58: undefined: metadata.Type
+internal/fs/inode/dir_test.go:220:20: undefined: metadata.UnknownType
+internal/fs/inode/dir_test.go:238:20: undefined: metadata.RegularFileType
+internal/fs/inode/dir_test.go:249:20: undefined: metadata.UnknownType
+internal/fs/inode/dir_test.go:267:20: undefined: metadata.ExplicitDirType
+internal/fs/inode/base_dir_test.go:175:20: undefined: metadata.ImplicitDirType
+internal/fs/inode/base_dir_test.go:187:20: undefined: metadata.ImplicitDirType
+internal/fs/inode/dir_test.go:267:20: too many errors
+FAIL	github.com/googlecloudplatform/gcsfuse/internal/cache/metadata [build failed]
+FAIL	github.com/googlecloudplatform/gcsfuse/internal/config [build failed]
+FAIL	github.com/googlecloudplatform/gcsfuse/internal/fs/handle [build failed]
+FAIL	github.com/googlecloudplatform/gcsfuse/internal/fs/inode [build failed]
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

@@ -1,0 +1,23 @@
+{
+ "task": "operator-framework-operator-sdk-2587",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `func getPossibleRolePaths(path)`: splits on '.', when `len(fqcn)==3` searches ANSIBLE_COLLECTIONS_PATH or defaults `/usr/share/ansible/collections`+`~/.ansible/collections`, builds `<parent>/ansible_collections/<ns>/<col>/roles/<role>`; adds ANSIBLE_COLLECTIONS_PATH env var + flag"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

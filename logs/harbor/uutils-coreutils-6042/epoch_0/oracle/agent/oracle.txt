@@ -1,0 +1,3 @@
+patching file src/uu/chmod/src/chmod.rs
+patching file src/uucore/src/lib/features/fs.rs
+patching file src/uucore/src/lib/features/perms.rs

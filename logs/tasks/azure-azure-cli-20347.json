@@ -1,0 +1,23 @@
+{
+ "task": "azure-azure-cli-20347",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `def update_identity(self, mc: ManagedCluster)` handling spn/system/user-assigned + prompt; single F2P test_update_identity asserts 6 branches incl. `with self.assertRaises(DecoratorEarlyExitException)` and exact ground-truth mc equality"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 55,
+  "shallow": true
+ }
+}

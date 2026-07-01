@@ -1,0 +1,33 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest packages/utils/tests/prune.test.ts --coverage=false --verbose --json",
+  "test_files": [
+    "packages/utils/tests/prune.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes unused implementations of interfaces",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema does not prune types or its leaves that match the filter"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema can handle recursive input types",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes unused enums",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes unused objects",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema does not remove unused objects when skipUnusedTypesPruning is true",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes unused custom scalar",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema does not remove unused custom scalar when skipUnusedTypesPruning set to true",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes unused input objects",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema does not remove unused input objects when skipUnusedTypesPruning is true",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes unused unions",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema does not remove unused unions when skipEmptyUnionPruning is true",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes unused interfaces",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema does not remove unused interfaces when skipUnimplementedInterfacesPruning is true",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes top level objects with no fields",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema does not removes objects with no fields when skipEmptyCompositeTypePruning is true",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes unused interfaces when implementations are unused",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema removes unused unions when implementations are unused",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema does not throw on pruning unimplemented interfaces",
+    "/workspace/repo/packages/utils/tests/prune.test.ts::pruneSchema does not prune types that match the filter"
+  ]
+}

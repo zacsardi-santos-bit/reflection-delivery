@@ -1,0 +1,8 @@
+patching file vertexai/evaluation/evaluation_test.go
+# github.com/GoogleCloudPlatform/golang-samples/vertexai/evaluation [github.com/GoogleCloudPlatform/golang-samples/vertexai/evaluation.test]
+./evaluation_test.go:30:9: undefined: getROUGEScore
+./evaluation_test.go:36:8: undefined: evaluateModelResponse
+./evaluation_test.go:42:8: undefined: pairwiseEvaluation
+FAIL	github.com/GoogleCloudPlatform/golang-samples/vertexai/evaluation [build failed]
+FAIL
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

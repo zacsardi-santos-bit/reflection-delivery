@@ -1,0 +1,93 @@
+patching file tests/fixtures/text/config.json
+patching file tests/verbs/test_create_final_covariates.py
+patching file tests/verbs/util.py
+/usr/local/lib/python3.11/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.3, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.5.0, asyncio-0.24.0, devtools-0.12.2, timeout-2.3.1
+asyncio: mode=Mode.AUTO, default_loop_scope=None
+timeout: 800.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 1 item
+
+tests/verbs/test_create_final_covariates.py::test_create_final_covariates PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/graspologic/align/seedless_procrustes.py:18
+  /usr/local/lib/python3.11/site-packages/graspologic/align/seedless_procrustes.py:18: DeprecationWarning: invalid escape sequence '\i'
+    """
+
+../../usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:233
+  /usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:233: DeprecationWarning: invalid escape sequence '\m'
+    """
+
+../../usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:338
+  /usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:338: DeprecationWarning: invalid escape sequence '\m'
+    """
+
+../../usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:411
+  /usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:411: DeprecationWarning: invalid escape sequence '\m'
+    """
+
+../../usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:764
+  /usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:764: DeprecationWarning: invalid escape sequence '\m'
+    """
+
+../../usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:857
+  /usr/local/lib/python3.11/site-packages/ot/gromov/_quantized.py:857: DeprecationWarning: invalid escape sequence '\m'
+    """
+
+../../usr/local/lib/python3.11/site-packages/hyppo/independence/hhg.py:3
+  /usr/local/lib/python3.11/site-packages/hyppo/independence/hhg.py:3: DeprecationWarning: Please import `random` from the `scipy.sparse` namespace; the `scipy.sparse.construct` namespace is deprecated and will be removed in SciPy 2.0.0.
+    from scipy.sparse.construct import random
+
+../../usr/local/lib/python3.11/site-packages/hyppo/kgof/kernel.py:93
+  /usr/local/lib/python3.11/site-packages/hyppo/kgof/kernel.py:93: DeprecationWarning: invalid escape sequence '\s'
+    """
+
+../../usr/local/lib/python3.11/site-packages/hyppo/kgof/kernel.py:132
+  /usr/local/lib/python3.11/site-packages/hyppo/kgof/kernel.py:132: DeprecationWarning: invalid escape sequence '\s'
+    """
+
+../../usr/local/lib/python3.11/site-packages/hyppo/kgof/kernel.py:234
+  /usr/local/lib/python3.11/site-packages/hyppo/kgof/kernel.py:234: DeprecationWarning: invalid escape sequence '\s'
+    """
+
+../../usr/local/lib/python3.11/site-packages/numba/core/decorators.py:157
+  /usr/local/lib/python3.11/site-packages/numba/core/decorators.py:157: NumbaDeprecationWarning: The keyword argument 'nopython=False' was supplied. From Numba 0.59.0 the default is True and supplying this argument has no effect.
+    warnings.warn(msg, NumbaDeprecationWarning)
+
+../../usr/local/lib/python3.11/site-packages/graspologic/match/wrappers.py:74
+  /usr/local/lib/python3.11/site-packages/graspologic/match/wrappers.py:74: DeprecationWarning: invalid escape sequence '\s'
+    """
+
+../../usr/local/lib/python3.11/site-packages/graspologic/pipeline/embed/adjacency_spectral_embedding.py:37
+  /usr/local/lib/python3.11/site-packages/graspologic/pipeline/embed/adjacency_spectral_embedding.py:37: DeprecationWarning: invalid escape sequence '\S'
+    """
+
+../../usr/local/lib/python3.11/site-packages/graspologic/pipeline/embed/laplacian_spectral_embedding.py:38
+  /usr/local/lib/python3.11/site-packages/graspologic/pipeline/embed/laplacian_spectral_embedding.py:38: DeprecationWarning: invalid escape sequence '\S'
+    """
+
+../../usr/local/lib/python3.11/site-packages/azure/search/documents/indexes/_generated/models/_models_py3.py:5644
+  /usr/local/lib/python3.11/site-packages/azure/search/documents/indexes/_generated/models/_models_py3.py:5644: DeprecationWarning: invalid escape sequence '\W'
+    pattern: str = "\W+",
+
+../../usr/local/lib/python3.11/site-packages/azure/search/documents/indexes/_generated/models/_models_py3.py:5869
+  /usr/local/lib/python3.11/site-packages/azure/search/documents/indexes/_generated/models/_models_py3.py:5869: DeprecationWarning: invalid escape sequence '\W'
+    pattern: str = "\W+",
+
+../../usr/local/lib/python3.11/site-packages/pyaml_env/parse_config.py:58
+  /usr/local/lib/python3.11/site-packages/pyaml_env/parse_config.py:58: DeprecationWarning: invalid escape sequence '\w'
+    type_tag_pattern = re.compile(f'({type_tag}\w+\s)')
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 1 passed, 17 warnings in 59.65s ========================
+reward=1 graded=1 found=0 failed=0 parsed=1 framework=pytest exit_code=0

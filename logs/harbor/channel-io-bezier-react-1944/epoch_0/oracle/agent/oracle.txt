@@ -1,0 +1,37 @@
+patching file .changeset/six-lemons-admire.md
+patching file packages/bezier-react/src/components/LegacyStack/HStack/HStack.tsx
+patching file packages/bezier-react/src/components/LegacyStack/HStack/HStack.types.ts
+patching file packages/bezier-react/src/components/LegacyStack/HStack/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/LegacyHStack/LegacyHStack.tsx
+patching file packages/bezier-react/src/components/LegacyStack/LegacyHStack/LegacyHStack.types.ts
+patching file packages/bezier-react/src/components/LegacyStack/LegacyHStack/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/LegacySpacer/LegacySpacer.tsx
+patching file packages/bezier-react/src/components/LegacyStack/LegacySpacer/LegacySpacer.types.ts
+patching file packages/bezier-react/src/components/LegacyStack/LegacySpacer/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStack.mdx (renamed from packages/bezier-react/src/components/LegacyStack/Stack.mdx)
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStack.stories.tsx (renamed from packages/bezier-react/src/components/LegacyStack/Stack.stories.tsx)
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.module.scss
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.tsx (renamed from packages/bezier-react/src/components/LegacyStack/Stack/Stack.tsx)
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStack/LegacyStack.types.ts (renamed from packages/bezier-react/src/components/LegacyStack/Stack/Stack.types.ts)
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStack/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.module.scss
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.tsx
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStackItem/LegacyStackItem.types.ts (renamed from packages/bezier-react/src/components/LegacyStack/StackItem/StackItem.types.ts)
+patching file packages/bezier-react/src/components/LegacyStack/LegacyStackItem/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/LegacyVStack/LegacyVStack.tsx
+patching file packages/bezier-react/src/components/LegacyStack/LegacyVStack/LegacyVStack.types.ts
+patching file packages/bezier-react/src/components/LegacyStack/LegacyVStack/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/Spacer/Spacer.tsx
+patching file packages/bezier-react/src/components/LegacyStack/Spacer/Spacer.types.ts
+patching file packages/bezier-react/src/components/LegacyStack/Spacer/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/Stack/Stack.styled.ts
+patching file packages/bezier-react/src/components/LegacyStack/Stack/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/StackItem/StackItem.styled.ts
+patching file packages/bezier-react/src/components/LegacyStack/StackItem/StackItem.tsx
+patching file packages/bezier-react/src/components/LegacyStack/StackItem/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/VStack/VStack.tsx
+patching file packages/bezier-react/src/components/LegacyStack/VStack/VStack.types.ts
+patching file packages/bezier-react/src/components/LegacyStack/VStack/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/index.ts
+patching file packages/bezier-react/src/components/LegacyStack/util/flexAdapter.ts
+patching file packages/bezier-react/src/components/LegacyStack/util/index.ts

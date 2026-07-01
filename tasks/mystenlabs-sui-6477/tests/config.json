@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p sui-config -E 'test(populated_genesis_snapshot_matches)'",
+  "test_files": [
+    "crates/sui-config/tests/snapshots/snapshot_tests__populated_genesis_snapshot_matches-5.snap",
+    "crates/sui-open-rpc/spec/openrpc.json"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) sui-config::snapshot_tests populated_genesis_snapshot_matches"
+  ],
+  "PASS_TO_PASS": []
+}

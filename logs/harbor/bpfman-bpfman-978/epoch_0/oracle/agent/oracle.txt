@@ -1,0 +1,13 @@
+patching file bpfman-ns/src/main.rs
+patching file bpfman-operator/Containerfile.bpfman-agent
+patching file bpfman-operator/apis/v1alpha1/shared_types.go
+patching file bpfman-operator/apis/v1alpha1/uprobeProgram_types.go
+patching file bpfman-operator/config/bpfman-deployment/daemonset.yaml
+patching file bpfman-operator/config/crd/bases/bpfman.io_uprobeprograms.yaml
+patching file bpfman-operator/controllers/bpfman-agent/common.go
+patching file bpfman-operator/controllers/bpfman-agent/containers.go
+patching file bpfman-operator/controllers/bpfman-agent/uprobe-program.go
+patching file bpfman-operator/controllers/bpfman-operator/common.go
+patching file bpfman-operator/hack/nginx-deployment.yaml (renamed from bpfman-operator/config/samples/nginx-deployment.yaml)
+patching file bpfman/src/bpf.rs
+patching file bpfman/src/utils.rs

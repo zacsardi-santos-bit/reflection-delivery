@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "rm -f ~/.letta/sqlite.db && pytest /workspace/repo/tests/test_managers.py::test_create_local_sandbox_config_defaults /workspace/repo/tests/test_v1_routes.py::test_create_custom_local_sandbox_config -v",
+  "test_files": [
+    "tests/integration_test_tool_execution_sandbox.py",
+    "tests/test_managers.py",
+    "tests/test_tool_sandbox/restaurant_management_system/adjust_menu_prices.py",
+    "tests/test_v1_routes.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_managers::test_create_local_sandbox_config_defaults",
+    "test_v1_routes::test_create_custom_local_sandbox_config"
+  ],
+  "PASS_TO_PASS": []
+}

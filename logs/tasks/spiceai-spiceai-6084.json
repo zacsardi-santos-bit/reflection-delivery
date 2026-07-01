@@ -1,0 +1,23 @@
+{
+ "task": "spiceai-spiceai-6084",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `} else if let Some(epoch_array) = column.as_any().downcast_ref::<Int64Array>()` branch; test asserts `result.value(0), 1_696_164_330_000_000_000`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

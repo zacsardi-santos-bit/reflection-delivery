@@ -1,0 +1,23 @@
+{
+ "task": "cloudfoundry-cli-3472",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds trace_request.go wrappers (cc/router/uaa), api/shared/trace_headers.go, util/trace/trace.go injecting B3 trace/span IDs; 5 Ginkgo suites graded via go -json"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 13,
+  "shallow": true
+ }
+}

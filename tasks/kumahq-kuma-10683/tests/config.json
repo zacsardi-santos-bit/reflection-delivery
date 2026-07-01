@@ -1,0 +1,18 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/core/resources/apis/hostnamegenerator/api/v1alpha1 ./pkg/core/resources/apis/meshmultizoneservice/hostname -count=1",
+  "test_files": [
+    "pkg/core/resources/apis/hostnamegenerator/api/v1alpha1/validate_test.go",
+    "pkg/core/resources/apis/meshmultizoneservice/hostname/generator_test.go",
+    "pkg/core/resources/apis/meshmultizoneservice/hostname/suite_test.go",
+    "pkg/test/resources/builders/hostnamegenerator_builder.go",
+    "test/e2e_env/multizone/meshservice/sync.go"
+  ],
+  "num_test_files": 5,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kumahq/kuma/pkg/core/resources/apis/hostnamegenerator/api/v1alpha1::TestPlugin",
+    "github.com/kumahq/kuma/pkg/core/resources/apis/meshmultizoneservice/hostname::TestHostnameGenerator"
+  ],
+  "PASS_TO_PASS": []
+}

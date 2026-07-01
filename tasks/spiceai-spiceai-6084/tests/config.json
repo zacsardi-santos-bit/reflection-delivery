@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/crates/db_connection_pool && cargo nextest run --features snowflake --no-fail-fast 2>&1",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/10) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_fixed_point_number_to_decimal_i32",
+    "( 2/10) db_connection_pool dbconnection::snowflakeconn::tests::test_parse_snowflake_data_type",
+    "( 3/10) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_ntz_seconds_precision_to_arrow_timestamp",
+    "( 4/10) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_ntz_to_arrow_timestamp",
+    "( 5/10) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_fixed_point_number_to_decimal_i64",
+    "( 6/10) db_connection_pool dbconnection::snowflakeconn::tests::test_snowflake_int64_timestamp_handling",
+    "( 7/10) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_tz_seconds_precision_to_arrow_timestamp",
+    "( 8/10) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_ntz_to_arrow_timestamp_invalid_input",
+    "( 9/10) db_connection_pool dbconnection::snowflakeconn::tests::test_parse_snowflake_data_type_errors",
+    "(10/10) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_tz_to_arrow_timestamp"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./ioctl/newcmd/node ./test/mock/mock_ioctlclient -count=1",
+  "test_files": [
+    "ioctl/newcmd/node/nodereward_test.go",
+    "test/mock/mock_ioctlclient/mock_ioctlclient.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/iotexproject/iotex-core/ioctl/newcmd/node::TestNewNodeRewardCmd"
+  ],
+  "PASS_TO_PASS": []
+}

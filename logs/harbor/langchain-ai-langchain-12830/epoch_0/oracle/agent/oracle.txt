@@ -1,0 +1,4 @@
+patching file libs/langchain/langchain/agents/agent.py
+patching file libs/langchain/langchain/agents/agent_iterator.py
+patching file libs/langchain/langchain/schema/agent.py
+patching file libs/langchain/langchain/schema/runnable/utils.py

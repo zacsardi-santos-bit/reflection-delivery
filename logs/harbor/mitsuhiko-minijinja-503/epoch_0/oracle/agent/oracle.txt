@@ -1,0 +1,7 @@
+patching file CHANGELOG.md
+patching file examples/line-statements/Cargo.toml
+patching file examples/line-statements/README.md
+patching file examples/line-statements/src/hello.txt
+patching file examples/line-statements/src/main.rs
+patching file minijinja/src/compiler/lexer.rs
+patching file minijinja/src/syntax.rs

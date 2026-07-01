@@ -1,0 +1,23 @@
+{
+ "task": "bytecodealliance-wasmtime-8129",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "config.json test_command is the literal placeholder 'run_disas_test'; test.sh line 971 runs '{ run_disas_test ; } > /workspace/test-results/stdout.txt' but run_disas_test is never defined (only 1 occurrence, no cargo cmd) -> command-not-found exit 127"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 15,
+  "shallow": true
+ }
+}

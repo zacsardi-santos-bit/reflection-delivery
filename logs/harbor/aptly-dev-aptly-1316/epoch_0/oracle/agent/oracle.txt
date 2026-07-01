@@ -1,0 +1,695 @@
+patching file Makefile
+patching file api/repos.go
+patching file deb/snapshot.go
+patching file system/Dockerfile
+patching file system/api_lib.py
+patching file system/lib.py
+patching file system/run.py
+patching file system/t01_version/__init__.py
+patching file system/t01_version/version.py
+patching file system/t02_config/__init__.py
+patching file system/t02_config/config.py
+patching file system/t03_help/__init__.py
+patching file system/t03_help/help.py
+patching file system/t06_publish/list.py
+patching file system/t07_serve/__init__.py
+patching file system/t07_serve/serve.py
+patching file system/t12_api/gpg.py
+patching file system/t12_api/mirrors.py
+patching file system/t12_api/packages.py
+patching file system/t12_api/publish.py
+patching file system/t12_api/repos.py
+patching file system/t12_api/snapshots.py
+patching file system/t12_api/tasks.py
+patching file system/t12_api/unix_socket.py
+patching file system/testout.py
+patching file utils/utils.go
+patching file Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file Makefile.rej
+patching file api/repos.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file api/repos.go.rej
+patching file deb/snapshot.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file deb/snapshot.go.rej
+patching file system/Dockerfile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file system/Dockerfile.rej
+patching file system/api_lib.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file system/api_lib.py.rej
+patching file system/lib.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file system/lib.py.rej
+patching file system/run.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file system/run.py.rej
+patching file system/t01_version/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t01_version/__init__.py.rej
+The next patch would create the file system/t01_version/version.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t02_config/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t02_config/__init__.py.rej
+The next patch would create the file system/t02_config/config.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t03_help/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t03_help/__init__.py.rej
+The next patch would create the file system/t03_help/help.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t06_publish/list.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file system/t06_publish/list.py.rej
+patching file system/t07_serve/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t07_serve/__init__.py.rej
+The next patch would create the file system/t07_serve/serve.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t12_api/gpg.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t12_api/gpg.py.rej
+patching file system/t12_api/mirrors.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file system/t12_api/mirrors.py.rej
+patching file system/t12_api/packages.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file system/t12_api/packages.py.rej
+patching file system/t12_api/publish.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+29 out of 29 hunks ignored -- saving rejects to file system/t12_api/publish.py.rej
+patching file system/t12_api/repos.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+15 out of 15 hunks ignored -- saving rejects to file system/t12_api/repos.py.rej
+patching file system/t12_api/snapshots.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+17 out of 17 hunks ignored -- saving rejects to file system/t12_api/snapshots.py.rej
+patching file system/t12_api/tasks.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file system/t12_api/tasks.py.rej
+patching file system/t12_api/unix_socket.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t12_api/unix_socket.py.rej
+The next patch would create the file system/testout.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file utils/utils.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file utils/utils.go.rej
+patching file Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file Makefile.rej
+patching file api/repos.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file api/repos.go.rej
+patching file deb/snapshot.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file deb/snapshot.go.rej
+patching file system/Dockerfile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file system/Dockerfile.rej
+patching file system/api_lib.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file system/api_lib.py.rej
+patching file system/lib.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file system/lib.py.rej
+patching file system/run.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file system/run.py.rej
+patching file system/t01_version/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t01_version/__init__.py.rej
+The next patch would create the file system/t01_version/version.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t02_config/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t02_config/__init__.py.rej
+The next patch would create the file system/t02_config/config.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t03_help/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t03_help/__init__.py.rej
+The next patch would create the file system/t03_help/help.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t06_publish/list.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file system/t06_publish/list.py.rej
+patching file system/t07_serve/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t07_serve/__init__.py.rej
+The next patch would create the file system/t07_serve/serve.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t12_api/gpg.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t12_api/gpg.py.rej
+patching file system/t12_api/mirrors.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file system/t12_api/mirrors.py.rej
+patching file system/t12_api/packages.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file system/t12_api/packages.py.rej
+patching file system/t12_api/publish.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+29 out of 29 hunks ignored -- saving rejects to file system/t12_api/publish.py.rej
+patching file system/t12_api/repos.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+15 out of 15 hunks ignored -- saving rejects to file system/t12_api/repos.py.rej
+patching file system/t12_api/snapshots.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+17 out of 17 hunks ignored -- saving rejects to file system/t12_api/snapshots.py.rej
+patching file system/t12_api/tasks.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file system/t12_api/tasks.py.rej
+patching file system/t12_api/unix_socket.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t12_api/unix_socket.py.rej
+The next patch would create the file system/testout.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file utils/utils.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file utils/utils.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Makefile b/Makefile
+|index a67bd7da..736e1597 100644
+|--- a/Makefile
+|+++ b/Makefile
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 71
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/api/repos.go b/api/repos.go
+|index fac990a5..ca72f8c9 100644
+|--- a/api/repos.go
+|+++ b/api/repos.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 106
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/deb/snapshot.go b/deb/snapshot.go
+|index 0457f25a..f2a0d387 100644
+|--- a/deb/snapshot.go
+|+++ b/deb/snapshot.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 119
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/Dockerfile b/system/Dockerfile
+|index 3b39488e..9988f42a 100644
+|--- a/system/Dockerfile
+|+++ b/system/Dockerfile
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 149
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/api_lib.py b/system/api_lib.py
+|index e1a07757..eef9ad45 100644
+|--- a/system/api_lib.py
+|+++ b/system/api_lib.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 222
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/lib.py b/system/lib.py
+|index 66904104..e3bf521b 100644
+|--- a/system/lib.py
+|+++ b/system/lib.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 262
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/run.py b/system/run.py
+|index bd6de289..dcc3f72b 100755
+|--- a/system/run.py
+|+++ b/system/run.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 377
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t01_version/__init__.py b/system/t01_version/__init__.py
+|index 388e7df6..e0a28e39 100644
+|--- a/system/t01_version/__init__.py
+|+++ b/system/t01_version/__init__.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/system/t01_version/version.py
+can't find file to patch at input line 416
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t02_config/__init__.py b/system/t02_config/__init__.py
+|index 240e5944..a5b0d2f4 100644
+|--- a/system/t02_config/__init__.py
+|+++ b/system/t02_config/__init__.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/system/t02_config/config.py
+can't find file to patch at input line 559
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t03_help/__init__.py b/system/t03_help/__init__.py
+|index 07f1f828..bfd292b1 100644
+|--- a/system/t03_help/__init__.py
+|+++ b/system/t03_help/__init__.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/system/t03_help/help.py
+can't find file to patch at input line 700
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t06_publish/list.py b/system/t06_publish/list.py
+|index d5ad7c1f..408edcb2 100644
+|--- a/system/t06_publish/list.py
+|+++ b/system/t06_publish/list.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 728
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t07_serve/__init__.py b/system/t07_serve/__init__.py
+|index 457b9f59..1d3d2f7c 100644
+|--- a/system/t07_serve/__init__.py
+|+++ b/system/t07_serve/__init__.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/system/t07_serve/serve.py
+can't find file to patch at input line 901
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t12_api/gpg.py b/system/t12_api/gpg.py
+|index 8fb9a380..fb3acd76 100644
+|--- a/system/t12_api/gpg.py
+|+++ b/system/t12_api/gpg.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 932
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t12_api/mirrors.py b/system/t12_api/mirrors.py
+|index 88e1915b..6352b2ca 100644
+|--- a/system/t12_api/mirrors.py
+|+++ b/system/t12_api/mirrors.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 974
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t12_api/packages.py b/system/t12_api/packages.py
+|index 90e8844e..86cf6ea1 100644
+|--- a/system/t12_api/packages.py
+|+++ b/system/t12_api/packages.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 996
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t12_api/publish.py b/system/t12_api/publish.py
+|index 94765ec3..4ecffbc1 100644
+|--- a/system/t12_api/publish.py
+|+++ b/system/t12_api/publish.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+29 out of 29 hunks ignored
+can't find file to patch at input line 1425
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t12_api/repos.py b/system/t12_api/repos.py
+|index bc0a43cc..8cc8e4e5 100644
+|--- a/system/t12_api/repos.py
+|+++ b/system/t12_api/repos.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+15 out of 15 hunks ignored
+can't find file to patch at input line 1667
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t12_api/snapshots.py b/system/t12_api/snapshots.py
+|index 0d12066a..28595a04 100644
+|--- a/system/t12_api/snapshots.py
+|+++ b/system/t12_api/snapshots.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+17 out of 17 hunks ignored
+can't find file to patch at input line 1937
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t12_api/tasks.py b/system/t12_api/tasks.py
+|index 42b17c98..8d393248 100644
+|--- a/system/t12_api/tasks.py
+|+++ b/system/t12_api/tasks.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1968
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/system/t12_api/unix_socket.py b/system/t12_api/unix_socket.py
+|index b14fe946..075ff688 100644
+|--- a/system/t12_api/unix_socket.py
+|+++ b/system/t12_api/unix_socket.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/system/testout.py
+can't find file to patch at input line 2031
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/utils/utils.go b/utils/utils.go
+|index 598dc7c8..4d4734fc 100644
+|--- a/utils/utils.go
+|+++ b/utils/utils.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file Makefile.rej
+patching file api/repos.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file api/repos.go.rej
+patching file deb/snapshot.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file deb/snapshot.go.rej
+patching file system/Dockerfile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file system/Dockerfile.rej
+patching file system/api_lib.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file system/api_lib.py.rej
+patching file system/lib.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file system/lib.py.rej
+patching file system/run.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file system/run.py.rej
+patching file system/t01_version/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t01_version/__init__.py.rej
+The next patch would create the file system/t01_version/version.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t02_config/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t02_config/__init__.py.rej
+The next patch would create the file system/t02_config/config.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t03_help/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t03_help/__init__.py.rej
+The next patch would create the file system/t03_help/help.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t06_publish/list.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file system/t06_publish/list.py.rej
+patching file system/t07_serve/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t07_serve/__init__.py.rej
+The next patch would create the file system/t07_serve/serve.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file system/t12_api/gpg.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t12_api/gpg.py.rej
+patching file system/t12_api/mirrors.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file system/t12_api/mirrors.py.rej
+patching file system/t12_api/packages.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file system/t12_api/packages.py.rej
+patching file system/t12_api/publish.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+29 out of 29 hunks ignored -- saving rejects to file system/t12_api/publish.py.rej
+patching file system/t12_api/repos.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+15 out of 15 hunks ignored -- saving rejects to file system/t12_api/repos.py.rej
+patching file system/t12_api/snapshots.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+17 out of 17 hunks ignored -- saving rejects to file system/t12_api/snapshots.py.rej
+patching file system/t12_api/tasks.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file system/t12_api/tasks.py.rej
+patching file system/t12_api/unix_socket.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file system/t12_api/unix_socket.py.rej
+The next patch would create the file system/testout.py,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file utils/utils.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file utils/utils.go.rej
+ERROR: golden patch failed to apply by all strategies

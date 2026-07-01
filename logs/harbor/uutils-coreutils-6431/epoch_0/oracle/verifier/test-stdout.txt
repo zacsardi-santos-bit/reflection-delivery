@@ -1,0 +1,320 @@
+patching file tests/by-util/test_cksum.rs
+patching file tests/by-util/test_hashsum.rs
+   Compiling proc-macro2 v1.0.84
+   Compiling autocfg v1.1.0
+   Compiling bitflags v2.5.0
+   Compiling futures-core v0.3.28
+   Compiling semver v1.0.14
+   Compiling getrandom v0.2.9
+   Compiling nix v0.28.0
+   Compiling futures-task v0.3.28
+   Compiling futures-channel v0.3.28
+   Compiling ahash v0.8.11
+   Compiling futures-util v0.3.28
+   Compiling memchr v2.7.2
+   Compiling ppv-lite86 v0.2.17
+   Compiling futures-sink v0.3.28
+   Compiling rustix v0.38.31
+   Compiling zerocopy v0.7.33
+   Compiling radium v0.7.0
+   Compiling pin-utils v0.1.0
+   Compiling pin-project-lite v0.2.9
+   Compiling linux-raw-sys v0.4.12
+   Compiling rand_core v0.6.4
+   Compiling futures-io v0.3.28
+   Compiling tap v1.0.1
+   Compiling allocator-api2 v0.2.18
+   Compiling num-traits v0.2.19
+   Compiling slab v0.4.7
+   Compiling wyz v0.5.1
+   Compiling rand_chacha v0.3.1
+   Compiling powerfmt v0.2.0
+   Compiling aho-corasick v1.0.4
+   Compiling rlimit v0.10.1
+   Compiling relative-path v1.8.0
+   Compiling funty v2.0.0
+   Compiling rand v0.8.5
+   Compiling procfs v0.16.0
+   Compiling deranged v0.3.11
+   Compiling coreutils v0.0.26 (/workspace/repo)
+   Compiling procfs-core v0.16.0
+   Compiling lazy_static v1.4.0
+   Compiling rustc_version v0.4.0
+   Compiling regex-automata v0.4.4
+   Compiling bitvec v1.0.1
+   Compiling diff v0.1.13
+   Compiling num_threads v0.1.6
+   Compiling hashbrown v0.14.3
+   Compiling futures-timer v3.0.2
+   Compiling iana-time-zone v0.1.53
+   Compiling quote v1.0.36
+   Compiling yansi v0.5.1
+   Compiling rstest_macros v0.19.0
+   Compiling num-conv v0.1.0
+   Compiling syn v2.0.60
+   Compiling syn v1.0.109
+   Compiling same-file v1.0.6
+   Compiling fastrand v2.0.1
+   Compiling time-core v0.1.2
+   Compiling either v1.8.0
+   Compiling uucore_procs v0.0.26 (/workspace/repo/src/uucore_procs)
+   Compiling walkdir v2.5.0
+   Compiling time v0.3.36
+   Compiling pretty_assertions v1.4.0
+   Compiling lru v0.12.3
+   Compiling rand_pcg v0.3.1
+   Compiling filetime v0.2.23
+   Compiling num-integer v0.1.46
+   Compiling chrono v0.4.38
+   Compiling unindent v0.2.3
+   Compiling hex-literal v0.4.1
+   Compiling num-bigint v0.4.5
+   Compiling data-encoding-macro-internal v0.1.13
+   Compiling regex v1.10.4
+   Compiling num-modular v0.5.1
+   Compiling xattr v1.3.1
+   Compiling tempfile v3.10.1
+   Compiling num-prime v0.4.4
+   Compiling data-encoding-macro v0.1.15
+   Compiling thiserror-impl v1.0.61
+   Compiling futures-macro v0.3.28
+   Compiling thiserror v1.0.61
+   Compiling uucore v0.0.26 (/workspace/repo/src/uucore)
+   Compiling uu_cksum v0.0.26 (/workspace/repo/src/uu/cksum)
+   Compiling uu_hashsum v0.0.26 (/workspace/repo/src/uu/hashsum)
+   Compiling futures-executor v0.3.28
+   Compiling futures v0.3.28
+   Compiling rstest v0.19.0
+    Finished test [unoptimized + debuginfo] target(s) in 17.90s
+────────────
+ Nextest run ID 593e6d85-ae28-4342-bb83-64ca1c356b95 with nextest profile: default
+    Starting 226 tests across 3 binaries (3 tests skipped)
+        PASS [   0.023s] (  1/226) coreutils::test_util_name common::random::tests::test_random_string_generate
+        PASS [   0.029s] (  2/226) coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_should_not_end_with_delimiter
+        PASS [   0.029s] (  3/226) coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_when_num_delimiter_is_greater_than_length
+        PASS [   0.030s] (  4/226) coreutils::test_util_name common::random::tests::test_generate_with_delimiter_with_greater_length
+        PASS [   0.032s] (  5/226) coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_when_length_is_zero
+        PASS [   0.036s] (  6/226) coreutils::test_util_name common::random::tests::test_random_string_generate_with_delimiter_should_end_with_delimiter
+        PASS [   0.040s] (  7/226) coreutils::test_util_name common::util::tests::test_command_result_when_stderr_with_exit_0
+        PASS [   0.042s] (  8/226) coreutils::test_util_name common::util::tests::test_command_result_when_no_output_with_exit_0
+        PASS [   0.043s] (  9/226) coreutils::test_util_name common::util::tests::test_altering_umask
+        PASS [   0.043s] ( 10/226) coreutils::test_util_name common::util::tests::test_command_result_when_no_output_with_exit_32
+        PASS [   0.044s] ( 11/226) coreutils::test_util_name common::util::tests::test_command_result_when_stdout_with_exit_0
+        PASS [   0.045s] ( 12/226) coreutils::test_util_name common::util::tests::test_command_result_when_exit_0_then_failure_panics
+        PASS [   0.045s] ( 13/226) coreutils::test_util_name common::util::tests::test_application_of_process_resource_limits_limited_file_size
+        PASS [   0.046s] ( 14/226) coreutils::test_util_name common::util::tests::test_command_result_when_exit_0_then_silent_failure_panics
+        PASS [   0.046s] ( 15/226) coreutils::test_util_name common::util::tests::test_command_result_when_exit_32_then_success_panic
+        PASS [   0.050s] ( 16/226) coreutils::test_util_name common::util::tests::test_application_of_process_resource_limits_unlimited_file_size
+        PASS [   0.054s] ( 17/226) coreutils::test_util_name common::random::tests::test_generate_random_strings_when_length_is_around_critical_buffer_sizes
+        PASS [   0.056s] ( 18/226) coreutils::test_util_name common::util::tests::test_check_coreutil_version
+        PASS [   0.036s] ( 19/226) coreutils::test_util_name common::util::tests::test_compare_xattrs
+        PASS [   0.030s] ( 20/226) coreutils::test_util_name common::util::tests::test_host_name_for
+        PASS [   0.032s] ( 21/226) coreutils::test_util_name common::util::tests::test_parse_coreutil_version
+        PASS [   0.037s] ( 22/226) coreutils::test_util_name common::util::tests::test_std_does_not_contain
+        PASS [   0.028s] ( 23/226) coreutils::tests common::random::tests::test_generate_with_delimiter_with_greater_length
+        PASS [   0.025s] ( 24/226) coreutils::tests common::random::tests::test_random_string_generate
+        PASS [   0.035s] ( 25/226) coreutils::test_util_name common::util::tests::test_stdout_does_not_contain_fail
+        PASS [   0.022s] ( 26/226) coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_should_end_with_delimiter
+        PASS [   0.040s] ( 27/226) coreutils::test_util_name common::util::tests::test_stderr_does_not_contain_fail
+        PASS [   0.043s] ( 28/226) coreutils::test_util_name common::util::tests::test_stdout_matches_fail
+        PASS [   0.044s] ( 29/226) coreutils::test_util_name common::util::tests::test_stdout_matches
+        PASS [   0.043s] ( 30/226) coreutils::test_util_name util_invalid_name_invalid_command
+        PASS [   0.030s] ( 31/226) coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_when_num_delimiter_is_greater_than_length
+        PASS [   0.030s] ( 32/226) coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_when_length_is_zero
+        PASS [   0.046s] ( 33/226) coreutils::test_util_name common::util::tests::test_stdout_not_matches_fail
+        PASS [   0.045s] ( 34/226) coreutils::test_util_name util_invalid_name_help
+        PASS [   0.034s] ( 35/226) coreutils::tests common::random::tests::test_random_string_generate_with_delimiter_should_not_end_with_delimiter
+        PASS [   0.045s] ( 36/226) coreutils::test_util_name util_non_utf8_name_help
+        PASS [   0.076s] ( 37/226) coreutils::test_util_name common::util::tests::test_expected_result
+        PASS [   0.059s] ( 38/226) coreutils::tests common::random::tests::test_generate_random_strings_when_length_is_around_critical_buffer_sizes
+        PASS [   0.048s] ( 39/226) coreutils::tests common::util::tests::test_altering_umask
+        PASS [   0.045s] ( 40/226) coreutils::tests common::util::tests::test_application_of_process_resource_limits_limited_file_size
+        PASS [   0.038s] ( 41/226) coreutils::tests common::util::tests::test_command_result_when_exit_32_then_success_panic
+        PASS [   0.042s] ( 42/226) coreutils::tests common::util::tests::test_command_result_when_exit_0_then_failure_panics
+        PASS [   0.042s] ( 43/226) coreutils::tests common::util::tests::test_command_result_when_exit_0_then_silent_failure_panics
+        PASS [   0.047s] ( 44/226) coreutils::tests common::util::tests::test_application_of_process_resource_limits_unlimited_file_size
+        PASS [   0.033s] ( 45/226) coreutils::tests common::util::tests::test_command_result_when_stderr_with_exit_0
+        PASS [   0.035s] ( 46/226) coreutils::tests common::util::tests::test_parse_coreutil_version
+        PASS [   0.038s] ( 47/226) coreutils::tests common::util::tests::test_command_result_when_no_output_with_exit_0
+        PASS [   0.039s] ( 48/226) coreutils::tests common::util::tests::test_host_name_for
+        PASS [   0.043s] ( 49/226) coreutils::tests common::util::tests::test_command_result_when_stdout_with_exit_0
+        PASS [   0.056s] ( 50/226) coreutils::tests common::util::tests::test_check_coreutil_version
+        PASS [   0.045s] ( 51/226) coreutils::tests common::util::tests::test_compare_xattrs
+        PASS [   0.049s] ( 52/226) coreutils::tests common::util::tests::test_command_result_when_no_output_with_exit_32
+        PASS [   0.038s] ( 53/226) coreutils::tests common::util::tests::test_std_does_not_contain
+        PASS [   0.033s] ( 54/226) coreutils::tests common::util::tests::test_stdout_does_not_contain_fail
+        PASS [   0.035s] ( 55/226) coreutils::tests common::util::tests::test_stderr_does_not_contain_fail
+        PASS [   0.040s] ( 56/226) coreutils::tests common::util::tests::test_stdout_not_matches_fail
+        PASS [   0.041s] ( 57/226) coreutils::tests common::util::tests::test_stdout_matches_fail
+        PASS [   0.049s] ( 58/226) coreutils::tests common::util::tests::test_stdout_matches
+        PASS [   0.075s] ( 59/226) coreutils::tests common::util::tests::test_expected_result
+        PASS [   0.186s] ( 60/226) coreutils::tests test_cksum::test_base64_raw_conflicts
+        PASS [   0.193s] ( 61/226) coreutils::tests test_cksum::test_arg_overrides_stdin
+        PASS [   0.206s] ( 62/226) coreutils::tests test_cksum::test_base64_multiple_files
+        PASS [   0.205s] ( 63/226) coreutils::tests test_cksum::test_blake2b_bits
+        PASS [   0.214s] ( 64/226) coreutils::tests test_cksum::test_bsd_case
+        PASS [   0.197s] ( 65/226) coreutils::tests test_cksum::test_check_pipe
+        PASS [   0.212s] ( 66/226) coreutils::tests test_cksum::test_check_directory_error
+        PASS [   0.231s] ( 67/226) coreutils::tests test_cksum::test_check_algo_err
+        PASS [   0.238s] ( 68/226) coreutils::tests test_cksum::test_blake2b_512
+        PASS [   0.229s] ( 69/226) coreutils::tests test_cksum::test_check_error_incorrect_format
+        PASS [   0.240s] ( 70/226) coreutils::tests test_cksum::test_check_md5_format
+        PASS [   0.317s] ( 71/226) coreutils::tests test_cksum::test_all_algorithms_fail_on_folder
+        PASS [   0.214s] ( 72/226) coreutils::tests test_cksum::test_cksum_check_case
+        PASS [   0.229s] ( 73/226) coreutils::tests test_cksum::test_cksum_check_empty_line
+        PASS [   0.200s] ( 74/226) coreutils::tests test_cksum::test_cksum_garbage
+        PASS [   0.213s] ( 75/226) coreutils::tests test_cksum::test_cksum_check_leading_info
+        PASS [   0.230s] ( 76/226) coreutils::tests test_cksum::test_cksum_check_invalid
+        PASS [   0.202s] ( 77/226) coreutils::tests test_cksum::test_conflicting_options
+        PASS [   0.224s] ( 78/226) coreutils::tests test_cksum::test_cksum_check_space
+        PASS [   0.244s] ( 79/226) coreutils::tests test_cksum::test_cksum_mixed
+        PASS [   0.220s] ( 80/226) coreutils::tests test_cksum::test_crc_for_bigger_than_32_bytes
+        PASS [   0.314s] ( 81/226) coreutils::tests test_cksum::test_cksum_check
+        PASS [   0.293s] ( 82/226) coreutils::tests test_cksum::test_cksum_check_failed
+        PASS [   0.220s] ( 83/226) coreutils::tests test_cksum::test_dev_null
+        PASS [   0.558s] ( 84/226) coreutils::tests test_cksum::test_check_algo
+        PASS [   0.198s] ( 85/226) coreutils::tests test_cksum::test_fail_on_folder
+        PASS [   0.185s] ( 86/226) coreutils::tests test_cksum::test_invalid_arg
+        PASS [   0.192s] ( 87/226) coreutils::tests test_cksum::test_folder_and_file
+        PASS [   0.182s] ( 88/226) coreutils::tests test_cksum::test_length
+        PASS [   0.241s] ( 89/226) coreutils::tests test_cksum::test_empty_file
+        PASS [   0.197s] ( 90/226) coreutils::tests test_cksum::test_length_greater_than_512
+        PASS [   0.212s] ( 91/226) coreutils::tests test_cksum::test_length_is_zero
+        PASS [   0.202s] ( 92/226) coreutils::tests test_cksum::test_length_not_supported
+        PASS [   0.204s] ( 93/226) coreutils::tests test_cksum::test_multiple_files
+        PASS [   0.223s] ( 94/226) coreutils::tests test_cksum::test_length_repeated
+        PASS [   0.238s] ( 95/226) coreutils::tests test_cksum::test_nonexisting_file
+        PASS [   0.163s] ( 96/226) coreutils::tests test_cksum::test_raw_multiple_files
+        PASS [   0.267s] ( 97/226) coreutils::tests test_cksum::test_nonexisting_file_out
+        PASS [   0.209s] ( 98/226) coreutils::tests test_cksum::test_one_nonexisting_file
+        PASS [   0.197s] ( 99/226) coreutils::tests test_cksum::test_reset_binary
+        PASS [   0.209s] (100/226) coreutils::tests test_cksum::test_repeated_flags
+        PASS [   0.356s] (101/226) coreutils::tests test_cksum::test_length_with_wrong_algorithm
+        PASS [   0.253s] (102/226) coreutils::tests test_cksum::test_single_file
+        PASS [   0.227s] (103/226) coreutils::tests test_cksum::test_stdin_larger_than_128_bytes
+        PASS [   0.214s] (104/226) coreutils::tests test_cksum::test_tag_after_untagged
+        PASS [   0.255s] (105/226) coreutils::tests test_cksum::test_stdin
+        PASS [   0.220s] (106/226) coreutils::tests test_cksum::test_tag_short
+        PASS [   0.224s] (107/226) coreutils::tests test_cksum::test_text_tag
+        PASS [   0.210s] (108/226) coreutils::tests test_cksum::test_unknown_sha
+        PASS [   0.195s] (109/226) coreutils::tests test_cksum::test_untagged_algorithm_after_tag
+        PASS [   0.099s] (110/226) coreutils::tests test_hashsum::b2sum::test_single_file
+        PASS [   0.105s] (111/226) coreutils::tests test_hashsum::b2sum::test_nonames
+        PASS [   0.113s] (112/226) coreutils::tests test_hashsum::b2sum::test_check
+        PASS [   1.044s] (113/226) coreutils::tests test_cksum::test_binary_file
+        PASS [   0.107s] (114/226) coreutils::tests test_hashsum::b2sum::test_stdin
+        PASS [   0.187s] (115/226) coreutils::tests test_cksum::test_untagged_stdin
+        PASS [   0.101s] (116/226) coreutils::tests test_hashsum::b2sum::test_zero
+        PASS [   0.088s] (117/226) coreutils::tests test_hashsum::b3sum::test_check
+        PASS [   0.088s] (118/226) coreutils::tests test_hashsum::b3sum::test_single_file
+        PASS [   0.093s] (119/226) coreutils::tests test_hashsum::b3sum::test_nonames
+        PASS [   0.269s] (120/226) coreutils::tests test_cksum::test_untagged_multiple_files
+        PASS [   0.093s] (121/226) coreutils::tests test_hashsum::b3sum::test_stdin
+        PASS [   0.229s] (122/226) coreutils::tests test_cksum::test_untagged_single_file
+        PASS [   0.108s] (123/226) coreutils::tests test_hashsum::b3sum::test_zero
+        PASS [   0.057s] (124/226) coreutils::tests test_hashsum::sha1::test_nonames
+        PASS [   0.083s] (125/226) coreutils::tests test_hashsum::md5::test_nonames
+        PASS [   0.074s] (126/226) coreutils::tests test_hashsum::md5::test_stdin
+        PASS [   0.095s] (127/226) coreutils::tests test_hashsum::md5::test_check
+        PASS [   0.090s] (128/226) coreutils::tests test_hashsum::md5::test_single_file
+        PASS [   0.088s] (129/226) coreutils::tests test_hashsum::md5::test_zero
+        PASS [   0.086s] (130/226) coreutils::tests test_hashsum::sha1::test_stdin
+        PASS [   0.103s] (131/226) coreutils::tests test_hashsum::sha1::test_single_file
+        PASS [   0.113s] (132/226) coreutils::tests test_hashsum::sha1::test_check
+        PASS [   0.108s] (133/226) coreutils::tests test_hashsum::sha1::test_zero
+        PASS [   0.085s] (134/226) coreutils::tests test_hashsum::sha224::test_nonames
+        PASS [   0.080s] (135/226) coreutils::tests test_hashsum::sha224::test_single_file
+        PASS [   0.103s] (136/226) coreutils::tests test_hashsum::sha224::test_check
+        PASS [   0.091s] (137/226) coreutils::tests test_hashsum::sha224::test_zero
+        PASS [   0.103s] (138/226) coreutils::tests test_hashsum::sha224::test_stdin
+        PASS [   0.078s] (139/226) coreutils::tests test_hashsum::sha256::test_nonames
+        PASS [   0.099s] (140/226) coreutils::tests test_hashsum::sha256::test_check
+        PASS [   0.094s] (141/226) coreutils::tests test_hashsum::sha256::test_single_file
+        PASS [   0.080s] (142/226) coreutils::tests test_hashsum::sha384::test_check
+        PASS [   0.118s] (143/226) coreutils::tests test_hashsum::sha256::test_stdin
+        PASS [   0.093s] (144/226) coreutils::tests test_hashsum::sha256::test_zero
+        PASS [   0.093s] (145/226) coreutils::tests test_hashsum::sha384::test_nonames
+        PASS [   0.082s] (146/226) coreutils::tests test_hashsum::sha384::test_stdin
+        PASS [   0.085s] (147/226) coreutils::tests test_hashsum::sha384::test_single_file
+        PASS [   0.093s] (148/226) coreutils::tests test_hashsum::sha384::test_zero
+        PASS [   0.089s] (149/226) coreutils::tests test_hashsum::sha3_224::test_single_file
+        PASS [   0.112s] (150/226) coreutils::tests test_hashsum::sha3_224::test_nonames
+        PASS [   0.130s] (151/226) coreutils::tests test_hashsum::sha3_224::test_check
+        PASS [   0.065s] (152/226) coreutils::tests test_hashsum::sha3_256::test_nonames
+        PASS [   0.079s] (153/226) coreutils::tests test_hashsum::sha3_256::test_check
+        PASS [   0.096s] (154/226) coreutils::tests test_hashsum::sha3_224::test_stdin
+        PASS [   0.088s] (155/226) coreutils::tests test_hashsum::sha3_256::test_stdin
+        PASS [   0.107s] (156/226) coreutils::tests test_hashsum::sha3_224::test_zero
+        PASS [   0.098s] (157/226) coreutils::tests test_hashsum::sha3_256::test_single_file
+        PASS [   0.095s] (158/226) coreutils::tests test_hashsum::sha3_256::test_zero
+        PASS [   0.090s] (159/226) coreutils::tests test_hashsum::sha3_384::test_nonames
+        PASS [   0.084s] (160/226) coreutils::tests test_hashsum::sha3_384::test_single_file
+        PASS [   0.067s] (161/226) coreutils::tests test_hashsum::sha3_512::test_nonames
+        PASS [   0.110s] (162/226) coreutils::tests test_hashsum::sha3_384::test_check
+        PASS [   0.093s] (163/226) coreutils::tests test_hashsum::sha3_384::test_stdin
+        PASS [   0.090s] (164/226) coreutils::tests test_hashsum::sha3_512::test_check
+        PASS [   0.103s] (165/226) coreutils::tests test_hashsum::sha3_384::test_zero
+        PASS [   0.112s] (166/226) coreutils::tests test_hashsum::sha3_512::test_stdin
+        PASS [   0.120s] (167/226) coreutils::tests test_hashsum::sha3_512::test_single_file
+        PASS [   0.105s] (168/226) coreutils::tests test_hashsum::sha3_512::test_zero
+        PASS [   0.087s] (169/226) coreutils::tests test_hashsum::sha512::test_nonames
+        PASS [   0.093s] (170/226) coreutils::tests test_hashsum::sha512::test_check
+        PASS [   0.076s] (171/226) coreutils::tests test_hashsum::shake128_256::test_check
+        PASS [   0.087s] (172/226) coreutils::tests test_hashsum::sha512::test_stdin
+        PASS [   0.094s] (173/226) coreutils::tests test_hashsum::sha512::test_zero
+        PASS [   0.098s] (174/226) coreutils::tests test_hashsum::sha512::test_single_file
+        PASS [   0.106s] (175/226) coreutils::tests test_hashsum::shake128_256::test_nonames
+        PASS [   0.098s] (176/226) coreutils::tests test_hashsum::shake128_256::test_single_file
+        PASS [   0.095s] (177/226) coreutils::tests test_hashsum::shake128_256::test_stdin
+        PASS [   0.079s] (178/226) coreutils::tests test_hashsum::shake256_512::test_nonames
+        PASS [   0.094s] (179/226) coreutils::tests test_hashsum::shake128_256::test_zero
+        PASS [   0.073s] (180/226) coreutils::tests test_hashsum::shake256_512::test_single_file
+        PASS [   0.074s] (181/226) coreutils::tests test_hashsum::shake256_512::test_zero
+        PASS [   0.084s] (182/226) coreutils::tests test_hashsum::shake256_512::test_stdin
+        PASS [   0.113s] (183/226) coreutils::tests test_hashsum::shake256_512::test_check
+        PASS [   0.108s] (184/226) coreutils::tests test_hashsum::test_check_b2sum_length_option_0
+        PASS [   0.132s] (185/226) coreutils::tests test_hashsum::test_check_b2sum_length_duplicate
+        PASS [   0.082s] (186/226) coreutils::tests test_hashsum::test_check_b2sum_verify
+        PASS [   0.096s] (187/226) coreutils::tests test_hashsum::test_check_b2sum_tag_output
+        PASS [   0.093s] (188/226) coreutils::tests test_hashsum::test_check_check_ignore_no_file
+        PASS [   0.105s] (189/226) coreutils::tests test_hashsum::test_check_b2sum_length_option_8
+        PASS [   0.095s] (190/226) coreutils::tests test_hashsum::test_check_file_not_found_warning
+        PASS [   0.111s] (191/226) coreutils::tests test_hashsum::test_check_directory_error
+        PASS [   0.107s] (192/226) coreutils::tests test_hashsum::test_check_empty_line
+        PASS [   1.808s] (193/226) coreutils::tests test_cksum::test_base64_single_file
+        PASS [   0.092s] (194/226) coreutils::tests test_hashsum::test_check_md5sum
+        PASS [   0.100s] (195/226) coreutils::tests test_hashsum::test_check_md5sum_only_one_space
+        PASS [   0.110s] (196/226) coreutils::tests test_hashsum::test_check_md5sum_mixed_format
+        PASS [   0.159s] (197/226) coreutils::tests test_hashsum::test_check_md5_ignore_missing
+        PASS [   0.100s] (198/226) coreutils::tests test_hashsum::test_check_no_backslash_no_space
+        PASS [   0.094s] (199/226) coreutils::tests test_hashsum::test_check_sha1
+        PASS [   0.120s] (200/226) coreutils::tests test_hashsum::test_check_md5sum_reverse_bsd
+        PASS [   0.117s] (201/226) coreutils::tests test_hashsum::test_check_one_two_space_star
+        PASS [   0.103s] (202/226) coreutils::tests test_hashsum::test_check_status
+        PASS [   0.135s] (203/226) coreutils::tests test_hashsum::test_check_quiet
+        PASS [   0.137s] (204/226) coreutils::tests test_hashsum::test_check_space_star_or_not
+        PASS [   0.105s] (205/226) coreutils::tests test_hashsum::test_check_status_code
+        PASS [   0.088s] (206/226) coreutils::tests test_hashsum::test_check_strict_error
+        PASS [   0.084s] (207/226) coreutils::tests test_hashsum::test_invalid_arg
+        PASS [   0.112s] (208/226) coreutils::tests test_hashsum::test_check_warn
+        PASS [   0.088s] (209/226) coreutils::tests test_hashsum::test_incomplete_format
+        PASS [   0.108s] (210/226) coreutils::tests test_hashsum::test_check_with_escape_filename
+        PASS [   0.103s] (211/226) coreutils::tests test_hashsum::test_invalid_b2sum_length_option_not_multiple_of_8
+        PASS [   0.100s] (212/226) coreutils::tests test_hashsum::test_invalid_b2sum_length_option_too_large
+        PASS [   0.134s] (213/226) coreutils::tests test_hashsum::test_conflicting_arg
+        PASS [   0.087s] (214/226) coreutils::tests test_hashsum::test_sha1_with_md5sum_should_fail
+        PASS [   0.094s] (215/226) coreutils::tests test_hashsum::test_star_to_start
+        PASS [   0.084s] (216/226) coreutils::tests test_hashsum::test_start_error
+        PASS [   0.099s] (217/226) coreutils::tests test_hashsum::test_tag
+        PASS [   0.078s] (218/226) coreutils::tests test_hashsum::test_with_escape_filename
+        PASS [   0.080s] (219/226) coreutils::tests test_hashsum::test_with_escape_filename_zero_text
+        PASS [   1.636s] (220/226) coreutils::tests test_cksum::test_raw_single_file
+        PASS [   1.507s] (221/226) coreutils::tests test_cksum::test_untagged_algorithm_stdin
+        PASS [   1.516s] (222/226) coreutils::tests test_cksum::test_untagged_algorithm_multiple_files
+        PASS [   1.515s] (223/226) coreutils::tests test_cksum::test_untagged_algorithm_single_file
+        PASS [   2.643s] (224/226) coreutils::tests test_cksum::test_algorithm_stdin
+        PASS [   2.646s] (225/226) coreutils::tests test_cksum::test_algorithm_single_file
+        PASS [   2.648s] (226/226) coreutils::tests test_cksum::test_algorithm_multiple_files
+────────────
+     Summary [   2.772s] 226 tests run: 226 passed, 3 skipped
+reward=1 graded=226 found=47 failed=0 parsed=226 framework=cargo exit_code=0

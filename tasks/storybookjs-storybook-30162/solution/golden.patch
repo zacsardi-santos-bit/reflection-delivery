@@ -1,0 +1,927 @@
+diff --git a/code/.storybook/preview.tsx b/code/.storybook/preview.tsx
+index 23f95a0c5d5..cc4481a56d1 100644
+--- a/code/.storybook/preview.tsx
++++ b/code/.storybook/preview.tsx
+@@ -360,4 +360,4 @@ export const parameters = {
+   },
+ };
+ 
+-export const tags = ['test', 'vitest', '!a11ytest'];
++export const tags = ['test', 'vitest'];
+diff --git a/code/addons/a11y/src/constants.ts b/code/addons/a11y/src/constants.ts
+index e7c1c319df0..2e3e1a06fc1 100755
+--- a/code/addons/a11y/src/constants.ts
++++ b/code/addons/a11y/src/constants.ts
+@@ -14,4 +14,4 @@ export const TEST_PROVIDER_ID = 'storybook/addon-a11y/test-provider';
+ 
+ export const EVENTS = { RESULT, REQUEST, RUNNING, ERROR, MANUAL };
+ 
+-export const A11Y_TEST_TAG = 'a11ytest';
++export const A11Y_TEST_TAG = 'a11y-test';
+diff --git a/code/addons/a11y/src/postinstall.ts b/code/addons/a11y/src/postinstall.ts
+index 9a64796f5e1..a9ae3cee42e 100644
+--- a/code/addons/a11y/src/postinstall.ts
++++ b/code/addons/a11y/src/postinstall.ts
+@@ -11,5 +11,7 @@ const $ = execa({
+ });
+ 
+ export default async function postinstall(options: PostinstallOptions) {
+-  await $`storybook automigrate addonA11yAddonTest ${options.yes ? '--yes' : ''}`;
++  await $({
++    stdio: 'inherit',
++  })`storybook automigrate addonA11yAddonTest ${options.yes ? '--yes' : ''}`;
+ }
+diff --git a/code/addons/a11y/src/preview.tsx b/code/addons/a11y/src/preview.tsx
+index e496894cb11..2616a835094 100644
+--- a/code/addons/a11y/src/preview.tsx
++++ b/code/addons/a11y/src/preview.tsx
+@@ -85,6 +85,3 @@ export const initialGlobals = {
+     manual: false,
+   },
+ };
+-
+-// A11Y_TEST_TAG constant in ./constants.ts. Has to be statically analyzable.
+-export const tags = ['a11ytest'];
+diff --git a/code/core/template/stories/tags-add.stories.ts b/code/core/template/stories/tags-add.stories.ts
+index edb70171eba..5e6c64b1cae 100644
+--- a/code/core/template/stories/tags-add.stories.ts
++++ b/code/core/template/stories/tags-add.stories.ts
+@@ -19,9 +19,9 @@ export const Inheritance = {
+   tags: ['story-one', '!vitest'],
+   play: async ({ canvasElement, tags }: PlayFunctionContext<any>) => {
+     const canvas = within(canvasElement);
+-    if (tags.includes('a11ytest')) {
++    if (tags.includes('a11y-test')) {
+       await expect(JSON.parse(canvas.getByTestId('pre').innerText)).toEqual({
+-        tags: ['a11ytest', 'story-one'],
++        tags: ['a11y-test', 'story-one'],
+       });
+     } else {
+       await expect(JSON.parse(canvas.getByTestId('pre').innerText)).toEqual({
+diff --git a/code/core/template/stories/tags-config.stories.ts b/code/core/template/stories/tags-config.stories.ts
+index a57a70390ce..5d6a1faacf0 100644
+--- a/code/core/template/stories/tags-config.stories.ts
++++ b/code/core/template/stories/tags-config.stories.ts
+@@ -19,12 +19,12 @@ export const Inheritance = {
+   tags: ['story-one', '!vitest'],
+   play: async ({ canvasElement, tags }: PlayFunctionContext<any>) => {
+     const canvas = within(canvasElement);
+-    if (tags.includes('a11ytest')) {
++    if (tags.includes('a11y-test')) {
+       await expect(JSON.parse(canvas.getByTestId('pre').innerText)).toEqual({
+         tags: [
+           'dev',
+           'test',
+-          'a11ytest',
++          'a11y-test',
+           'component-one',
+           'component-two',
+           'autodocs',
+diff --git a/code/core/template/stories/tags-remove.stories.ts b/code/core/template/stories/tags-remove.stories.ts
+index 468f99614aa..a2db3328775 100644
+--- a/code/core/template/stories/tags-remove.stories.ts
++++ b/code/core/template/stories/tags-remove.stories.ts
+@@ -19,9 +19,9 @@ export const Inheritance = {
+   tags: ['story-one', '!vitest'],
+   play: async ({ canvasElement, tags }: PlayFunctionContext<any>) => {
+     const canvas = within(canvasElement);
+-    if (tags.includes('a11ytest')) {
++    if (tags.includes('a11y-test')) {
+       await expect(JSON.parse(canvas.getByTestId('pre').innerText)).toEqual({
+-        tags: ['dev', 'test', 'a11ytest', 'component-one', 'autodocs', 'story-one'],
++        tags: ['dev', 'test', 'a11y-test', 'component-one', 'autodocs', 'story-one'],
+       });
+     } else {
+       await expect(JSON.parse(canvas.getByTestId('pre').innerText)).toEqual({
+diff --git a/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.ts b/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.ts
+index a8cd25cdf37..d046a29ded3 100644
+--- a/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.ts
++++ b/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.ts
+@@ -1,5 +1,7 @@
+-import { rendererPackages } from 'storybook/internal/common';
++import { formatFileContent, rendererPackages } from 'storybook/internal/common';
++import { formatConfig, loadConfig } from 'storybook/internal/csf-tools';
+ 
++import { type ArrayExpression } from '@babel/types';
+ import { existsSync, readFileSync, writeFileSync } from 'fs';
+ import * as jscodeshift from 'jscodeshift';
+ import path from 'path';
+@@ -14,25 +16,39 @@ import {
+ import { getAddonNames, getFrameworkPackageName, getRendererName } from '../helpers/mainConfigFile';
+ import type { Fix } from '../types';
+ 
+-export const vitestFileExtensions = ['.js', '.ts', '.cts', '.mts', '.cjs', '.mjs'] as const;
++export const fileExtensions = [
++  '.js',
++  '.ts',
++  '.cts',
++  '.mts',
++  '.cjs',
++  '.mjs',
++  '.jsx',
++  '.tsx',
++] as const;
+ 
+ interface AddonA11yAddonTestOptions {
+   setupFile: string | null;
++  previewFile: string | null;
+   transformedSetupCode: string | null;
++  transformedPreviewCode: string | null;
++  skipVitestSetupTransformation: boolean;
++  skipPreviewTransformation: boolean;
+ }
+ 
+ /**
+  * If addon-a11y and experimental-addon-test are already installed, we need to update
+- * `.storybook/vitest.setup.<ts|js>` to set up project annotations from addon-a11y. If we can't find
+- * `.storybook/vitest.setup.<ts|js>`, we need to set up a notification to the user to manually
+- * update the file.
++ *
++ * - `.storybook/vitest.setup.<ts|js>` to set up project annotations from addon-a11y.
++ * - `.storybook/preview.<ts|js>` to set up tags.
++ * - If we can't transform the files automatically, we'll prompt the user to do it manually.
+  */
+ export const addonA11yAddonTest: Fix<AddonA11yAddonTestOptions> = {
+   id: 'addonA11yAddonTest',
+   versionRange: ['<8.5.0', '>=8.5.0'],
+ 
+   promptType(result) {
+-    if (result.setupFile === null) {
++    if (result.setupFile === null && result.previewFile === null) {
+       return 'manual';
+     }
+ 
+@@ -63,86 +79,152 @@ export const addonA11yAddonTest: Fix<AddonA11yAddonTestOptions> = {
+       return null;
+     }
+ 
+-    // get `${configDir}/vitest.setup.<ts|js>` absolute file path
+     const vitestSetupFile =
+-      vitestFileExtensions
++      fileExtensions
+         .map((ext) => path.join(configDir, `vitest.setup${ext}`))
+         .find((filePath) => existsSync(filePath)) ?? null;
+ 
+-    try {
+-      if (vitestSetupFile) {
+-        const source = readFileSync(vitestSetupFile, 'utf8');
+-        if (source.includes('@storybook/addon-a11y')) {
+-          return null;
+-        }
+-        const transformedSetupCode = transformSetupFile(source);
+-        return {
+-          setupFile: vitestSetupFile,
+-          transformedSetupCode,
+-        };
+-      } else {
+-        return {
+-          setupFile: null,
+-          transformedSetupCode: null,
+-        };
++    const previewFile =
++      fileExtensions
++        .map((ext) => path.join(configDir, `preview${ext}`))
++        .find((filePath) => existsSync(filePath)) ?? null;
++
++    let skipVitestSetupTransformation = false;
++    let skipPreviewTransformation = false;
++
++    if (vitestSetupFile && previewFile) {
++      const vitestSetupSource = readFileSync(vitestSetupFile, 'utf8');
++      const previewSetupSource = readFileSync(previewFile, 'utf8');
++
++      skipVitestSetupTransformation = vitestSetupSource.includes('@storybook/addon-a11y');
++      skipPreviewTransformation = previewSetupSource.includes('a11y-test');
++
++      if (skipVitestSetupTransformation && skipPreviewTransformation) {
++        return null;
+       }
+-    } catch (e) {
+-      return {
+-        setupFile: vitestSetupFile,
+-        transformedSetupCode: null,
+-      };
+     }
++
++    const getTransformedSetupCode = () => {
++      if (!vitestSetupFile || skipVitestSetupTransformation) {
++        return null;
++      }
++
++      try {
++        const vitestSetupSource = readFileSync(vitestSetupFile, 'utf8');
++        return transformSetupFile(vitestSetupSource);
++      } catch (e) {
++        return null;
++      }
++    };
++
++    const getTransformedPreviewCode = async () => {
++      if (!previewFile || skipPreviewTransformation) {
++        return null;
++      }
++
++      try {
++        const previewSetupSource = readFileSync(previewFile, 'utf8');
++        return await transformPreviewFile(previewSetupSource, previewFile);
++      } catch (e) {
++        return null;
++      }
++    };
++
++    return {
++      setupFile: vitestSetupFile,
++      previewFile: previewFile,
++      transformedSetupCode: getTransformedSetupCode(),
++      transformedPreviewCode: await getTransformedPreviewCode(),
++      skipVitestSetupTransformation,
++      skipPreviewTransformation,
++    };
+   },
+ 
+-  prompt({ setupFile, transformedSetupCode }) {
++  prompt({
++    setupFile,
++    previewFile,
++    transformedSetupCode,
++    transformedPreviewCode,
++    skipPreviewTransformation,
++    skipVitestSetupTransformation,
++  }) {
+     const introduction = dedent`
+       We have detected that you have ${picocolors.magenta(`@storybook/addon-a11y`)} and ${picocolors.magenta(`@storybook/experimental-addon-test`)} installed.
+ 
+-      ${picocolors.magenta(`@storybook/addon-a11y`)} integrates now with ${picocolors.magenta(`@storybook/experimental-addon-test`)} to provide automatic accessibility checks for your stories, powered by Axe and Vitest.
++      ${picocolors.magenta(`@storybook/addon-a11y`)} now integrates with ${picocolors.magenta(`@storybook/experimental-addon-test`)} to provide automatic accessibility checks for your stories, powered by Axe and Vitest.
+     `;
+ 
+-    if (setupFile === null || transformedSetupCode === null) {
+-      return dedent`
+-      ${introduction}
++    const prompt = [introduction];
+ 
+-      We couldn't find or automatically update your ${picocolors.cyan(`.storybook/vitest.setup.<ts|js>`)} in your project to smoothly set up project annotations from ${picocolors.magenta(`@storybook/addon-a11y`)}. 
+-      Please manually update your ${picocolors.cyan(`vitest.setup.ts`)} file to include the following:
++    let counter = 1;
+ 
+-      ${picocolors.gray('...')}   
+-      ${picocolors.green('+ import * as a11yAddonAnnotations from "@storybook/addon-a11y/preview";')}
++    if (!skipVitestSetupTransformation) {
++      if (transformedSetupCode === null) {
++        prompt.push(dedent`
++          ${counter++}) We couldn't find or automatically update ${picocolors.cyan(`.storybook/vitest.setup.<ts|js>`)} in your project to smoothly set up project annotations from ${picocolors.magenta(`@storybook/addon-a11y`)}. 
++          Please manually update your ${picocolors.cyan(`vitest.setup.ts`)} file to include the following:
+ 
+-      ${picocolors.gray('const annotations = setProjectAnnotations([')}
+-      ${picocolors.gray('  ...')}
+-      ${picocolors.green('+ a11yAddonAnnotations,')}
+-      ${picocolors.gray(']);')}
++          ${picocolors.gray('...')}   
++          ${picocolors.green('+ import * as a11yAddonAnnotations from "@storybook/addon-a11y/preview";')}
+ 
+-      ${picocolors.gray('beforeAll(annotations.beforeAll);')}
++          ${picocolors.gray('const annotations = setProjectAnnotations([')}
++          ${picocolors.gray('  ...')}
++          ${picocolors.green('+ a11yAddonAnnotations,')}
++          ${picocolors.gray(']);')}
+ 
+-      For more information, please refer to the addon test documentation: 
+-      ${picocolors.cyan('https://storybook.js.org/docs/writing-tests/addon-test')}
+-      `;
++          ${picocolors.gray('beforeAll(annotations.beforeAll);')}
++        `);
++      } else {
++        const fileExtensionSetupFile = path.extname(setupFile!);
++
++        prompt.push(
++          dedent`${counter++}) We have to update your ${picocolors.cyan(`.storybook/vitest.setup${fileExtensionSetupFile}`)} file to set up project annotations from ${picocolors.magenta(`@storybook/addon-a11y`)}.`
++        );
++      }
+     }
+ 
+-    const fileExtension = path.extname(setupFile);
++    if (!skipPreviewTransformation) {
++      if (transformedPreviewCode === null) {
++        prompt.push(dedent`
++          ${counter++}) We couldn't find or automatically update your ${picocolors.cyan(`.storybook/preview.<ts|js>`)} in your project to smoothly set up tags from ${picocolors.magenta(`@storybook/addon-a11y`)}. 
++          Please manually update your ${picocolors.cyan(`.storybook/preview.<ts|js>`)} file to include the following:
++
++          ${picocolors.gray('export default {')}
++          ${picocolors.gray('...')}
++          ${picocolors.green('+ tags: ["a11y-test"],')}
++          ${picocolors.gray('}')}
++        `);
++      } else {
++        const fileExtensionPreviewFile = path.extname(previewFile!);
+ 
+-    return dedent`
+-      We have detected that you have ${picocolors.magenta(`@storybook/addon-a11y`)} and ${picocolors.magenta(`@storybook/experimental-addon-test`)} installed.
++        prompt.push(
++          dedent`
++            ${counter++}) We have to update your ${picocolors.cyan(`.storybook/preview${fileExtensionPreviewFile}`)} file to set up tags from ${picocolors.magenta(`@storybook/addon-a11y`)}.
++          `
++        );
++      }
++    }
+ 
+-      ${picocolors.magenta(`@storybook/addon-a11y`)} integrates now with ${picocolors.magenta(`@storybook/experimental-addon-test`)} to provide automatic accessibility checks for your stories, powered by Axe and Vitest.
++    if (transformedPreviewCode === null || transformedSetupCode === null) {
++      prompt.push(dedent`
++        For more information, please refer to the accessibility addon documentation: 
++        ${picocolors.cyan('https://storybook.js.org/docs/writing-tests/accessibility-testing#test-addon-integration')}
++      `);
++    }
+ 
+-      In order for these checks to be enabled we have to update your ${picocolors.cyan(`.storybook/vitest.setup${fileExtension}`)} file.
+-    `;
++    return prompt.join('\n\n');
+   },
+ 
+   async run({ result }) {
+-    const { setupFile, transformedSetupCode } = result;
++    const { setupFile, transformedSetupCode, transformedPreviewCode, previewFile } = result;
+ 
+-    if (!setupFile || !transformedSetupCode) {
+-      return;
++    if (transformedSetupCode && setupFile) {
++      writeFileSync(setupFile, transformedSetupCode, 'utf8');
+     }
+ 
+-    // Write the transformed code back to the file
+-    writeFileSync(setupFile, transformedSetupCode, 'utf8');
++    if (transformedPreviewCode && previewFile) {
++      writeFileSync(previewFile, transformedPreviewCode, 'utf8');
++    }
+   },
+ };
+ 
+@@ -184,3 +266,60 @@ export function transformSetupFile(source: string) {
+ 
+   return root.toSource();
+ }
++
++export async function transformPreviewFile(source: string, filePath: string) {
++  const previewConfig = loadConfig(source).parse();
++  const tags = previewConfig.getFieldNode(['tags']);
++  const tagsNode = previewConfig.getFieldNode(['tags']) as ArrayExpression;
++  const tagsValue = previewConfig.getFieldValue(['tags']) ?? [];
++
++  if (tags && tagsValue && (tagsValue.includes('a11y-test') || tagsValue.includes('!a11y-test'))) {
++    return source;
++  }
++
++  if (tagsNode) {
++    const tagsElementsLength = (tagsNode as ArrayExpression).elements.length;
++    const lastTagElement = tagsNode.elements[tagsElementsLength - 1];
++
++    if (lastTagElement) {
++      // t.addComment(lastTagElement, 'trailing', ", 'a11y-test'");
++      // @ts-expect-error The commented line above would be the proper way of how to add a trailing comment but it is not supported by recast.
++      // https://github.com/benjamn/recast/issues/572
++      lastTagElement.comments = [
++        {
++          type: 'CommentBlock',
++          leading: false,
++          trailing: true,
++          value: ', "a11y-test"',
++        },
++      ];
++      previewConfig.setFieldNode(['tags'], tagsNode);
++    }
++  } else {
++    // t.addComment(newTagsNode, 'inner', 'a11y-test');
++    // The commented line above would be the proper way of how to add a trailing comment but innercomments are not supported by recast.
++    // https://github.com/benjamn/recast/issues/1417
++    // This case will be handled later by parsing the source code and editing it later.
++    previewConfig.setFieldValue(['tags'], ['a11y-test']);
++  }
++
++  const formattedPreviewConfig = formatConfig(previewConfig);
++  const lines = formattedPreviewConfig.split('\n');
++
++  // Find the line with the "tags" property
++  const tagsLineIndex = lines.findIndex((line) => line.includes('tags: ['));
++  if (tagsLineIndex === -1) {
++    return formattedPreviewConfig;
++  }
++
++  // Determine the indentation level of the "tags" property
++  lines[tagsLineIndex] = lines[tagsLineIndex].replace("['a11y-test']", "[/*'a11y-test'*/]");
++  lines[tagsLineIndex] = lines[tagsLineIndex].replace('["a11y-test"]', '[/*"a11y-test"*/]');
++  const indentation = lines[tagsLineIndex]?.match(/^\s*/)?.[0];
++
++  // Add the comment with the same indentation level
++  const comment = `${indentation}// The \`a11y-test\` tag controls whether accessibility tests are run as part of a standalone Vitest test run\n${indentation}// For more information please visit: https://storybook.js.org/docs/writing-tests/accessibility-testing#configure-accessibility-tests-with-the-test-addon`;
++  lines.splice(tagsLineIndex, 0, comment);
++
++  return formatFileContent(filePath, lines.join('\n'));
++}
+diff --git a/docs/_snippets/addon-a11y-meta-tag-exclude.md b/docs/_snippets/addon-a11y-meta-tag-exclude.md
+new file mode 100644
+index 00000000000..da3637b8290
+--- /dev/null
++++ b/docs/_snippets/addon-a11y-meta-tag-exclude.md
+@@ -0,0 +1,236 @@
++```ts filename="DataGrid.stories.ts" renderer="angular" language="ts"
++import type { Meta } from '@storybook/angular/';
++
++import { DataGrid } from './dataGrid.component';
++
++const meta: Meta<DataGrid> = {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++
++export default meta;
++```
++
++```js filename="DataGrid.stories.js" renderer="html" language="js"
++export default {
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++```
++
++```js filename="DataGrid.stories.js|jsx" renderer="common" language="js"
++import { DataGrid } from './DataGrid';
++
++export default {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++```
++
++```ts filename="DataGrid.stories.ts|tsx" renderer="common" language="ts-4-9"
++// Replace your-renderer with the renderer you are using (e.g., react, vue3)
++import { Meta } from '@storybook/your-renderer';
++
++import { DataGrid } from './DataGrid';
++
++const meta = {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++} satisfies Meta<typeof DataGrid>;
++
++export default meta;
++```
++
++```ts filename="DataGrid.stories.ts|tsx" renderer="common" language="ts"
++// Replace your-renderer with the renderer you are using (e.g., react, vue3)
++import { Meta } from '@storybook/your-renderer';
++
++import { DataGrid } from './DataGrid';
++
++const meta: Meta<typeof DataGrid> = {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++
++export default meta;
++```
++
++```js filename="DataGrid.stories.js|jsx" renderer="solid" language="js"
++import { DataGrid } from './DataGrid';
++
++export default {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++```
++
++```tsx filename="DataGrid.stories.ts|tsx" renderer="solid" language="ts-4-9"
++import type { Meta } from 'storybook-solidjs';
++
++import { DataGrid } from './DataGrid';
++
++const meta = {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++} satisfies Meta<typeof DataGrid>;
++
++export default meta;
++```
++
++```tsx filename="DataGrid.stories.ts|tsx" renderer="solid" language="ts"
++import type { Meta } from 'storybook-solidjs';
++
++import { DataGrid } from './DataGrid';
++
++const meta: Meta<typeof DataGrid> = {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++
++export default meta;
++```
++
++```svelte filename="DataGrid.stories.svelte" renderer="svelte" language="js" tabTitle="Svelte CSF"
++<script module>
++  import { defineMeta } from '@storybook/addon-svelte-csf';
++
++  import DataGrid from './DataGrid.svelte';
++
++  const { Story } = defineMeta({
++    component: DataGrid,
++    // 👇 Remove the a11y-test tag for this component's stories
++    tags: ['!a11y-test'],
++  });
++</script>
++```
++
++```js filename="DataGrid.stories.js" renderer="svelte" language="js" tabTitle="CSF"
++import DataGrid from './DataGrid.svelte';
++
++export default {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++```
++
++```svelte filename="DataGrid.stories.svelte" renderer="svelte" language="ts-4-9" tabTitle="Svelte CSF"
++<script module>
++  import { defineMeta } from '@storybook/addon-svelte-csf';
++
++  import DataGrid from './DataGrid.svelte';
++
++  const { Story } = defineMeta({
++    component: DataGrid,
++    // 👇 Remove the a11y-test tag for this component's stories
++    tags: ['!a11y-test'],
++  });
++</script>
++```
++
++```ts filename="DataGrid.stories.ts" renderer="svelte" language="ts-4-9" tabTitle="CSF"
++import type { Meta } from '@storybook/svelte';
++
++import DataGrid from './DataGrid.svelte';
++
++const meta = {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++} satisfies Meta<typeof DataGrid>;
++
++export default meta;
++```
++
++```svelte filename="DataGrid.stories.svelte" renderer="svelte" language="ts" tabTitle="Svelte CSF"
++<script module>
++  import { defineMeta } from '@storybook/addon-svelte-csf';
++
++  import DataGrid from './DataGrid.svelte';
++
++  const { Story } = defineMeta({
++    component: DataGrid,
++    // 👇 Remove the a11y-test tag for this component's stories
++    tags: ['!a11y-test'],
++  });
++</script>
++```
++
++```ts filename="DataGrid.stories.ts" renderer="svelte" language="ts" tabTitle="CSF"
++import type { Meta } from '@storybook/svelte';
++
++import DataGrid from './DataGrid.svelte';
++
++const meta: Meta<typeof DataGrid> = {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++
++export default meta;
++```
++
++```js filename="DataGrid.stories.js" renderer="vue" language="js"
++import DataGrid from './DataGrid.vue';
++
++export default {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++```
++
++```ts filename="DataGrid.stories.ts" renderer="vue" language="ts-4-9"
++import type { Meta, StoryObj } from '@storybook/vue3';
++
++import DataGrid from './DataGrid.vue';
++
++const meta = {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++} satisfies Meta<typeof DataGrid>;
++
++export default meta;
++```
++
++```ts filename="DataGrid.stories.ts" renderer="vue" language="ts"
++import type { Meta, StoryObj } from '@storybook/vue3';
++
++import DataGrid from './DataGrid.vue';
++
++const meta: Meta<typeof DataGrid> = {
++  component: DataGrid,
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++
++export default meta;
++```
++
++```js filename="DataGrid.stories.js" renderer="web-components" language="js"
++export default {
++  component: 'demo-dataGrid',
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++```
++
++```ts filename="DataGrid.stories.ts" renderer="web-components" language="ts"
++import type { Meta, StoryObj } from '@storybook/web-components';
++
++const meta: Meta = {
++  component: 'demo-dataGrid',
++  // 👇 Remove the a11y-test tag for this component's stories
++  tags: ['!a11y-test'],
++};
++
++export default meta;
++```
+diff --git a/docs/_snippets/addon-a11y-meta-tag.md b/docs/_snippets/addon-a11y-meta-tag-reinclude.md
+similarity index 63%
+rename from docs/_snippets/addon-a11y-meta-tag.md
+rename to docs/_snippets/addon-a11y-meta-tag-reinclude.md
+index 58de99af555..491d5c29480 100644
+--- a/docs/_snippets/addon-a11y-meta-tag.md
++++ b/docs/_snippets/addon-a11y-meta-tag-reinclude.md
+@@ -5,8 +5,10 @@ import { Button } from './button.component';
+ 
+ const meta: Meta<Button> = {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ 
+ export default meta;
+@@ -14,8 +16,10 @@ export default meta;
+ 
+ ```js filename="Button.stories.js" renderer="html" language="js"
+ export default {
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ ```
+ 
+@@ -24,8 +28,10 @@ import { Button } from './Button';
+ 
+ export default {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ ```
+ 
+@@ -37,8 +43,10 @@ import { Button } from './Button';
+ 
+ const meta = {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ } satisfies Meta<typeof Button>;
+ 
+ export default meta;
+@@ -52,8 +60,10 @@ import { Button } from './Button';
+ 
+ const meta: Meta<typeof Button> = {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ 
+ export default meta;
+@@ -64,8 +74,10 @@ import { Button } from './Button';
+ 
+ export default {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ ```
+ 
+@@ -76,8 +88,10 @@ import { Button } from './Button';
+ 
+ const meta = {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ } satisfies Meta<typeof Button>;
+ 
+ export default meta;
+@@ -90,8 +104,10 @@ import { Button } from './Button';
+ 
+ const meta: Meta<typeof Button> = {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ 
+ export default meta;
+@@ -105,8 +121,10 @@ export default meta;
+ 
+   const { Story } = defineMeta({
+     component: Button,
+-    // 👇 Re-apply the a11y-test tag for this component's stories
+-    tags: ['a11y-test'],
++    // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+   });
+ </script>
+ ```
+@@ -116,8 +134,10 @@ import Button from './Button.svelte';
+ 
+ export default {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ ```
+ 
+@@ -129,8 +149,10 @@ export default {
+ 
+   const { Story } = defineMeta({
+     component: Button,
+-    // 👇 Re-apply the a11y-test tag for this component's stories
+-    tags: ['a11y-test'],
++    // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+   });
+ </script>
+ ```
+@@ -142,8 +164,10 @@ import Button from './Button.svelte';
+ 
+ const meta = {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ } satisfies Meta<typeof Button>;
+ 
+ export default meta;
+@@ -157,8 +181,10 @@ export default meta;
+ 
+   const { Story } = defineMeta({
+     component: Button,
+-    // 👇 Re-apply the a11y-test tag for this component's stories
+-    tags: ['a11y-test'],
++    // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+   });
+ </script>
+ ```
+@@ -170,8 +196,10 @@ import Button from './Button.svelte';
+ 
+ const meta: Meta<typeof Button> = {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ 
+ export default meta;
+@@ -182,8 +210,10 @@ import Button from './Button.vue';
+ 
+ export default {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ ```
+ 
+@@ -194,8 +224,10 @@ import Button from './Button.vue';
+ 
+ const meta = {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ } satisfies Meta<typeof Button>;
+ 
+ export default meta;
+@@ -208,8 +240,10 @@ import Button from './Button.vue';
+ 
+ const meta: Meta<typeof Button> = {
+   component: Button,
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ 
+ export default meta;
+@@ -218,8 +252,10 @@ export default meta;
+ ```js filename="Button.stories.js" renderer="web-components" language="js"
+ export default {
+   component: 'demo-button',
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ ```
+ 
+@@ -228,8 +264,10 @@ import type { Meta, StoryObj } from '@storybook/web-components';
+ 
+ const meta: Meta = {
+   component: 'demo-button',
+-  // 👇 Re-apply the a11y-test tag for this component's stories
+-  tags: ['a11y-test'],
++  // 👇 Re-include this component's stories in a11y testing by removing the `!ally-test` tag
++  tags: [
++    // '!ally-test'
++  ],
+ };
+ 
+ export default meta;
+diff --git a/scripts/tasks/sandbox-parts.ts b/scripts/tasks/sandbox-parts.ts
+index 56ab7176a63..3d0c86853fe 100644
+--- a/scripts/tasks/sandbox-parts.ts
++++ b/scripts/tasks/sandbox-parts.ts
+@@ -799,7 +799,7 @@ export const extendPreview: Task['run'] = async ({ template, sandboxDir }) => {
+   const previewConfig = await readConfig({ cwd: sandboxDir, fileName: 'preview' });
+ 
+   if (template.expected.builder.includes('vite')) {
+-    previewConfig.setFieldValue(['tags'], ['vitest', '!a11ytest']);
++    previewConfig.setFieldValue(['tags'], ['vitest', '!a11y-test']);
+   }
+ 
+   await writeConfig(previewConfig);

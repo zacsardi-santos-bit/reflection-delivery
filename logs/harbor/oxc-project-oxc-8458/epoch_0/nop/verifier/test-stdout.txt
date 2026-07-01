@@ -1,0 +1,15 @@
+patching file 'tasks/transform_conformance/tests/babel-plugin-transform-typescript/test/fixtures/namespace/import-=/input.ts'
+patching file 'tasks/transform_conformance/tests/babel-plugin-transform-typescript/test/fixtures/namespace/import-=/output.js'
+patching file 'tasks/transform_conformance/tests/babel-plugin-transform-typescript/test/fixtures/namespace/preserve-import-=/input.ts'
+patching file 'tasks/transform_conformance/tests/babel-plugin-transform-typescript/test/fixtures/namespace/preserve-import-=/options.json'
+patching file 'tasks/transform_conformance/tests/babel-plugin-transform-typescript/test/fixtures/namespace/preserve-import-=/output.js'
+   Compiling oxc_traverse v0.45.0 (/workspace/repo/crates/oxc_traverse)
+   Compiling oxc_transformer v0.45.0 (/workspace/repo/crates/oxc_transformer)
+   Compiling oxc_minifier v0.45.0 (/workspace/repo/crates/oxc_minifier)
+   Compiling oxc v0.45.0 (/workspace/repo/crates/oxc)
+   Compiling oxc_transform_conformance v0.0.0 (/workspace/repo/tasks/transform_conformance)
+    Finished `dev` profile [unoptimized] target(s) in 12.89s
+     Running `target/debug/oxc_transform_conformance`
+FAIL [   0.001s] namespace_import_equals
+FAIL [   0.001s] namespace_preserve_import_equals
+reward=0 graded=2 found=2 failed=2 parsed=2 framework=cargo exit_code=1

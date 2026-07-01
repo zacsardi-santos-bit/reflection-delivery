@@ -1,0 +1,8 @@
+patching file Cargo.lock
+patching file Cargo.toml
+patching file cranelift/filetests/filetests/wasm/table-get-fixed-size.wat
+patching file cranelift/filetests/filetests/wasm/table-set-fixed-size.wat
+patching file cranelift/wasm/src/environ/dummy.rs
+patching file cranelift/wasm/src/lib.rs
+patching file cranelift/wasm/src/table.rs
+patching file crates/cranelift/src/func_environ.rs

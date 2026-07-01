@@ -1,0 +1,23 @@
+{
+ "task": "cloudflare-workers-sdk-7674",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits secret/index.ts, pages/secret/index.ts, versions/secrets/bulk.ts; 13 F2P vitest tests: 'should create secrets from a env file', 'should error on invalid json file'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

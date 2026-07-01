@@ -1,0 +1,4 @@
+patching file go.sum
+patching file ioctl/client.go
+patching file ioctl/newcmd/node/nodereward.go
+patching file ioctl/output/format.go

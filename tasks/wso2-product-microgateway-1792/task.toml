@@ -1,0 +1,49 @@
+schema_version = "1.1"
+
+[task]
+name = "offline/wso2-product-microgateway-1792"
+description = ""
+authors = []
+keywords = []
+
+[metadata]
+pass_at_k_opus_4_8 = "0/8"
+pass_at_k_gpt_5_5 = "pending"  # no Codex/GPT-5.5 pass@8 run yet
+difficulty_explanation = "Hard: Claude Opus 4.8 solved 0/8 attempts (pass@8=0.0); software-engineering; golden touches 5 file(s)/~51 LoC; 19 FAIL_TO_PASS test(s). [auto-derived from Opus-4.8 pass@8 eval + patch stats; pending human review]"
+objective_labels = ["Fix"]
+artifact_type_labels = ["Codebase", "Configuration file", "Container or virtual environment"]
+labels_provenance = "auto-derived; pending human review"
+
+source = "https://github.com/wso2/product-microgateway/pull/1792"
+
+version = "1.0"
+author_name = "swe-bench-extended"
+author_email = "unknown"
+difficulty = "medium"
+category = "Software Engineering"
+subcategory = "Web, API, and networking software"
+tags = [ "go", "software-engineering", "swe-bench-extended",]
+expert_time_estimate = 3600
+junior_time_estimate = 10800
+
+[verifier]
+timeout_sec = 3000.0
+
+[agent]
+timeout_sec = 3000.0
+
+[environment]
+network_mode = "no-network"
+build_timeout_sec = 1800.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+allow_internet = false
+mcp_servers = []
+
+[verifier.env]
+
+[environment.env]
+
+[solution.env]

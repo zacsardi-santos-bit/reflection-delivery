@@ -1,0 +1,250 @@
+patching file src/main/kotlin/org/wfanet/measurement/integration/common/InProcessLifeOfAMeasurementIntegrationTest.kt
+patching file src/main/kotlin/org/wfanet/measurement/loadtest/common/SampleVids.kt
+patching file src/main/kotlin/org/wfanet/measurement/loadtest/measurementconsumer/MeasurementConsumerSimulator.kt
+patching file src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha/MeasurementsServiceTest.kt
+patching file src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt
+patching file src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt
+Starting local Bazel server and connecting to it...
+Computing main repo mapping: 
+WARNING: For repository 'com_google_googleapis', the root module requires module version googleapis@0.0.0-20250120-318818b.bzlmod.2, but got googleapis@0.0.0-bzlmod.1 in the resolved dependency graph.
+Computing main repo mapping: 
+Loading: 
+Loading: 0 packages loaded
+Analyzing: 3 targets (3 packages loaded)
+Analyzing: 3 targets (3 packages loaded, 0 targets configured)
+Analyzing: 3 targets (3 packages loaded, 0 targets configured)
+
+Analyzing: 3 targets (104 packages loaded, 258 targets configured)
+
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'rules_kotlin_jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'rules_kotlin_jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'rules_kotlin_jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'common-jvm'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'any-sketch-java'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+DEBUG: /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/external/rules_jvm_external~/private/extensions/maven.bzl:155:14: The maven repository 'maven' is used in two different bazel modules, originally in 'cross-media-measurement-system' and now in 'virtual-people-common'
+Analyzing: 3 targets (231 packages loaded, 4919 targets configured)
+
+Analyzing: 3 targets (291 packages loaded, 9000 targets configured)
+
+Analyzing: 3 targets (388 packages loaded, 9530 targets configured)
+
+INFO: Analyzed 3 targets (521 packages loaded, 10782 targets configured).
+[1 / 164] checking cached actions
+[2,598 / 2,612] [Prepa] KotlinCompile //src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:MetricSpecDefaultsTest { kt: 1, java: 0, srcjars: 0 } for k8
+[2,603 / 2,612] KotlinCompile //src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:MetricSpecDefaultsTest { kt: 1, java: 0, srcjars: 0 } for k8; 1s worker ... (3 actions running)
+ERROR: /workspace/repo/src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/BUILD.bazel:18:12: KotlinCompile //src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats:covariances_test { kt: 1, java: 0, srcjars: 0 } for k8 failed: (Exit 1): build failed: error executing KotlinCompile command (from target //src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats:covariances_test) bazel-out/k8-opt-exec-ST-d57f47055a04/bin/external/rules_kotlin~/src/main/kotlin/build ... (remaining 2 arguments skipped)
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:26:69: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+import org.wfanet.measurement.measurementconsumer.stats.Covariances.computeUnionSamplingWidth
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:638:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:649:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:660:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:671:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:682:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:693:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:704:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:715:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+Jun 29, 2026 3:26:36 PM worker request 0
+SEVERE: Compilation failure: compile phase failed:
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:26:69: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+import org.wfanet.measurement.measurementconsumer.stats.Covariances.computeUnionSamplingWidth
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:638:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:649:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:660:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:671:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:682:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:693:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:704:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats/CovariancesTest.kt:715:23: error: cannot access 'fun computeUnionSamplingWidth(vidSamplingInterval: VidSamplingInterval, otherVidSamplingInterval: VidSamplingInterval): Double': it is private in 'org/wfanet/measurement/measurementconsumer/stats/Covariances'.
+    val actualWidth = computeUnionSamplingWidth(interval1, interval2)
+[2,606 / 2,612] 1 / 3 tests, 1 failed; KotlinCompile //src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:MetricSpecDefaultsTest { kt: 1, java: 0, srcjars: 0 } for k8; 10s worker ... (2 actions running)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+ERROR: /workspace/repo/src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/BUILD.bazel:98:12: KotlinCompile //src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:MetricSpecDefaultsTest { kt: 1, java: 0, srcjars: 0 } for k8 failed: (Exit 1): build failed: error executing KotlinCompile command (from target //src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:MetricSpecDefaultsTest) bazel-out/k8-opt-exec-ST-d57f47055a04/bin/external/rules_kotlin~/src/main/kotlin/build ... (remaining 2 arguments skipped)
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1832:60: error: no parameter with name 'allowSamplingIntervalWrapping' found.
+      initial.withDefaults(METRIC_SPEC_CONFIG, randomMock, allowSamplingIntervalWrapping = true)
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1877:60: error: no parameter with name 'allowSamplingIntervalWrapping' found.
+      initial.withDefaults(METRIC_SPEC_CONFIG, randomMock, allowSamplingIntervalWrapping = true)
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1907:62: error: no parameter with name 'allowSamplingIntervalWrapping' found.
+        initial.withDefaults(METRIC_SPEC_CONFIG, randomMock, allowSamplingIntervalWrapping = false)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1933:62: error: no parameter with name 'allowSamplingIntervalWrapping' found.
+        initial.withDefaults(METRIC_SPEC_CONFIG, randomMock, allowSamplingIntervalWrapping = true)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Jun 29, 2026 3:26:41 PM worker request 0
+SEVERE: Compilation failure: compile phase failed:
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1832:60: error: no parameter with name 'allowSamplingIntervalWrapping' found.
+      initial.withDefaults(METRIC_SPEC_CONFIG, randomMock, allowSamplingIntervalWrapping = true)
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1877:60: error: no parameter with name 'allowSamplingIntervalWrapping' found.
+      initial.withDefaults(METRIC_SPEC_CONFIG, randomMock, allowSamplingIntervalWrapping = true)
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1907:62: error: no parameter with name 'allowSamplingIntervalWrapping' found.
+        initial.withDefaults(METRIC_SPEC_CONFIG, randomMock, allowSamplingIntervalWrapping = false)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaultsTest.kt:1933:62: error: no parameter with name 'allowSamplingIntervalWrapping' found.
+        initial.withDefaults(METRIC_SPEC_CONFIG, randomMock, allowSamplingIntervalWrapping = true)
+[2,609 / 2,612] 2 / 3 tests, 2 failed; KotlinCompile //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest { kt: 1, java: 0, srcjars: 0 } for k8; 15s worker
+[2,611 / 2,612] 2 / 3 tests, 2 failed; [Prepa] Merging Kotlin output jar //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest (Runtime) from 1 inputs
+[2,612 / 2,613] 2 / 3 tests, 2 failed; Testing //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest; 1s linux-sandbox
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FAIL: //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest (see /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/execroot/_main/bazel-out/k8-fastbuild/testlogs/src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha/MeasurementsServiceTest/test.log)
+[2,612 / 2,613] 3 / 3 tests, 3 failed; Testing //src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest; 5s linux-sandbox
+INFO: Analysis succeeded for only 1 of 3 top-level targets
+INFO: Found 3 test targets...
+Use --verbose_failures to see the command lines of failed build steps.
+INFO: Elapsed time: 53.626s, Critical Path: 32.29s
+INFO: 6 processes: 3 internal, 2 linux-sandbox, 1 worker.
+ERROR: Build did NOT complete successfully
+//src/test/kotlin/org/wfanet/measurement/measurementconsumer/stats:covariances_test FAILED TO BUILD
+//src/test/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha:MetricSpecDefaultsTest FAILED TO BUILD
+//src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha:MeasurementsServiceTest FAILED in 5.1s
+  /root/.cache/bazel/_bazel_root/86c899372638dd29d4f35a5e86455b19/execroot/_main/bazel-out/k8-fastbuild/testlogs/src/test/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha/MeasurementsServiceTest/test.log
+
+Executed 1 out of 3 tests: 2 fail to build and 1 fails locally.
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_DURATION_type_specifies_direct_protocol", "Elapsed": 2.499}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_PERMISSION_DENIED_when_principal_without_authorization_is_found", "Elapsed": 0.017}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_no_page_size_uses_page_size_in_page_token", "Elapsed": 0.049}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_NOT_FOUND_with_measurement_name_when_measurement_not_found", "Elapsed": 0.049}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_no_page_token_returns_response", "Elapsed": 0.043}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_certificate_does_not_match_parent", "Elapsed": 0.013}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Data_Providers_is_missing", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurement_throws_NOT_FOUND_with_measurement_consumer_name_when_measurment_consumer_not_found", "Elapsed": 0.021}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_mc_caller_doesn't_match_name", "Elapsed": 0.011}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_parent_is_missing", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_Data_Providers_Entry_value_is_missing_spec", "Elapsed": 0.008}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_returns_measurement", "Elapsed": 0.02}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_measurement_spec_is_missing", "Elapsed": 0.008}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_Data_Providers_Entry_value_is_missing_nonce_hash", "Elapsed": 0.008}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_vid_sampling_interval_is_missing", "Elapsed": 0.007}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_impression_max_freq_per_user_is_missing", "Elapsed": 0.008}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_INVALID_ARGUMENT_when_resource_name_is_missing", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_no_filters_returns_response", "Elapsed": 0.02}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_reach_privacy_params_are_missing", "Elapsed": 0.008}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_HMSS_enabled_using_wrapping_VidSamplingInterval", "Elapsed": 0.021}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_NOT_FOUND_when_a_measurement_not_found", "Elapsed": 0.01}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_PERMISSION_DENIED_when_principal_without_auth_found", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_child_parent_doesn't_match", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Reach-only_vid_sampling_interval_is_missing", "Elapsed": 0.007}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_invalid_argument_when_states_don't_match_states_in_page_token", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_1_of_2_child_requests_has_no_parent", "Elapsed": 0.007}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_parent_is_missing", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_INVALID_ARGUMENT_when_pageSize_is_less_than_0", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Reach-only_privacy_params_are_missing", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_REACH_type_and_multiple_EDPs", "Elapsed": 0.017}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_FAILED_PRECONDITION_when_certificate_is_invalid", "Elapsed": 0.008}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_returns_measurements", "Elapsed": 0.019}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_returns_measurements", "Elapsed": 0.018}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_child_parent_is_invalid", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_spec_max_frequency_is_1", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_FAILED_PRECONDITION_with_duchy_name_when_duchy_not_found", "Elapsed": 0.007}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.002}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_frequency_privacy_params_are_missing", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Reach-only_epsilon_privacy_param_is_0", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_parent_is_missing", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_PERMISSION_DENIED_when_principal_without_authorization_is_found", "Elapsed": 0.002}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_IMPRESSION_type_specifies_direct_protocol", "Elapsed": 0.016}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_INVALID_ARGUMENT_when_resource_name_is_missing", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_returns_measurement", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_parent_is_invalid", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_HMSS_enabled_and_EDPs_capable_specifies_HMSS_protocol", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_INVALID_ARGUMENT_when_parent_is_missing", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_impression_privacy_params_are_missing", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_model_line_is_missing_for_POPULATION_measurement", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_PERMISSION_DENIED_when_principal_without_authorization_is_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_Data_Providers_Entry_value_is_missing_cert_name", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_Data_Providers_Entry_value_is_missing_public_key", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_page_token_with_filter_returns_response", "Elapsed": 0.011}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_FAILED_PRECONDITION_with_measurement_state_and_name_when_measurement_state_illegal", "Elapsed": 0.007}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_dataProviderList_has_duplicated_keys", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_certificate_does_not_match_parent", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match_parent", "Elapsed": 0.002}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "cancelMeasurement_throws_NOT_FOUND_with_measurement_name_when_measurement_not_found", "Elapsed": 0.012}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_measurement_public_key_is_missing", "Elapsed": 0.012}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.01}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_too_many_requests", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_invalid_argument_when_parent_doesn't_match_parent_in_page_token", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_NOT_FOUND_with_measurement_consumer_name_when_measurement_consumer_not_found", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_PERMISSION_DENIED_when_principal_without_authorization_is_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_INVALID_ARGUMENT_when_resource_name_is_invalid", "Elapsed": 0.002}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_duration_privacy_params_are_missing", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_measurement_type_is_missing", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_REACH_AND_FREQUENCY_type_and_single_EDP_specifies_direct_protocol", "Elapsed": 0.011}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_PERMISSION_DENIED_when_mc_caller_doesn't_match", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.002}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_certificate_resource_name_is_missing", "Elapsed": 0.003}
+{"Action": "fail", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_error_when_LLv2_VidSamplingInterval_is_wrapping_around_1", "Elapsed": 0.012}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_duration_watch_time_per_user_is_missing", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_returns_measurements_when_all_child_requests_do_not_have_parent", "Elapsed": 0.016}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurement_throws_FAILED_PRECONDITION_with_data_provider_name_when_data_provider_not_found", "Elapsed": 0.01}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchCreateMeasurements_throws_INVALID_ARGUMENT_when_too_many_requests", "Elapsed": 0.002}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_REACH_AND_FREQUENCY_type_and_multiple_EDPs", "Elapsed": 0.01}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_epsilon_privacy_param_is_0", "Elapsed": 0.005}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "getMeasurement_throws_UNAUTHENTICATED_when_mc_principal_not_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_Data_Providers_Entry_is_missing_key", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_INVALID_ARGUMENT_when_RF_spec_is_missing_max_frequency", "Elapsed": 0.004}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "listMeasurements_with_new_page_size_replaces_page_size_in_page_token", "Elapsed": 0.006}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "batchGetMeasurements_throws_PERMISSION_DENIED_when_principal_without_authorization_found", "Elapsed": 0.003}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_with_POPULATION_type_specifies_direct_protocol", "Elapsed": 0.009}
+{"Action": "pass", "Package": "org.wfanet.measurement.kingdom.service.api.v2alpha.MeasurementsServiceTest", "Test": "createMeasurement_throws_FAILED_PRECONDITION_with_data_provider_name_when_data_provider_not_found", "Elapsed": 0.006}
+reward=0 graded=177 found=91 failed=1 parsed=91 framework=go exit_code=1

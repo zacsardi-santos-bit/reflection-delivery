@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-kube-openapi-524",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits go.mod/go.sum + pkg/spec3/fuzz.go migrating gofuzz->randfill; test.patch flips *_test.go to randfill; F2P=1171 Go tests run via `go test -json`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

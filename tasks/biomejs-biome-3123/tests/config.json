@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "touch crates/biome_js_analyze/tests/spec_tests.rs && cargo nextest run --package biome_js_analyze --test spec_tests -E 'test(use_trim_start_end)' --no-fail-fast",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/useTrimStartEnd/invalid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/useTrimStartEnd/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/useTrimStartEnd/valid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/useTrimStartEnd/valid.js.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_js_analyze::spec_tests specs::nursery::use_trim_start_end::valid_js",
+    "(2/2) biome_js_analyze::spec_tests specs::nursery::use_trim_start_end::invalid_js"
+  ],
+  "PASS_TO_PASS": []
+}

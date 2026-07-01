@@ -1,0 +1,10 @@
+patching file api/v1alpha1/api.go
+patching file filterconfig/filterconfig.go
+patching file internal/apischema/awsbedrock/awsbedrock.go
+patching file internal/controller/sink.go
+patching file internal/extproc/processor.go
+patching file internal/extproc/router/request_body.go
+patching file internal/extproc/server.go
+patching file internal/extproc/translator/translator.go
+patching file manifests/charts/ai-gateway-helm/crds/aigateway.envoyproxy.io_aigatewayroutes.yaml
+patching file manifests/charts/ai-gateway-helm/crds/aigateway.envoyproxy.io_aiservicebackends.yaml

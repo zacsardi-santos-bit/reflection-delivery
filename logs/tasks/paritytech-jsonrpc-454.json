@@ -1,0 +1,23 @@
+{
+ "task": "paritytech-jsonrpc-454",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden rpc_attr.rs adds 'is_notification' detection ('Notifications must return ()'); to_delegate.rs adds MethodRegistration::Notification -> add_notification; test 'should_accept_only_notifications' asserts -32601 for id-call"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

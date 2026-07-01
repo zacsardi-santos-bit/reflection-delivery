@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./tools/testgrid -count=1",
+  "test_files": [
+    "test/library_test.go",
+    "test/presubmit-tests.sh",
+    "test/unit/library-tests.sh",
+    "tools/testgrid/testgrid_test.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/knative/test-infra/tools/testgrid::TestGetArtifacts",
+    "github.com/knative/test-infra/tools/testgrid::TestXMLOutput"
+  ],
+  "PASS_TO_PASS": []
+}

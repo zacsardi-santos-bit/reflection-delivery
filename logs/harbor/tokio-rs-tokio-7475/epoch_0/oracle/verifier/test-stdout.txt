@@ -1,0 +1,21 @@
+patching file tokio-util/tests/future.rs
+   Compiling tokio-util v0.7.15 (/workspace/repo/tokio-util)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.10s
+────────────
+ Nextest run ID ec659bd6-2cfa-4656-adb2-726b86d34728 with nextest profile: default
+    Starting 12 tests across 1 binary
+        PASS [   0.016s] ( 1/12) tokio-util::future ready_fut_with_cancellation_owned_token_test
+        PASS [   0.016s] ( 2/12) tokio-util::future ready_fut_with_already_cancelled_token_owned_test
+        PASS [   0.018s] ( 3/12) tokio-util::future ready_fut_with_already_cancelled_token_test
+        PASS [   0.023s] ( 4/12) tokio-util::future ready_fut_with_cancellation_token_test
+        PASS [   0.023s] ( 5/12) tokio-util::future pending_fut_with_cancellation_token_owned_test
+        PASS [   0.023s] ( 6/12) tokio-util::future pending_fut_with_already_cancelled_token_test
+        PASS [   0.023s] ( 7/12) tokio-util::future pending_fut_with_already_cancelled_token_owned_test
+        PASS [   0.023s] ( 8/12) tokio-util::future pending_fut_with_owned_token_cancelled_test
+        PASS [   0.024s] ( 9/12) tokio-util::future pending_only_on_first_poll_with_cancellation_token_owned_test
+        PASS [   0.024s] (10/12) tokio-util::future pending_only_on_first_poll_with_cancellation_token_test
+        PASS [   0.024s] (11/12) tokio-util::future pending_fut_with_cancellation_token_test
+        PASS [   0.026s] (12/12) tokio-util::future pending_fut_with_token_cancelled_test
+────────────
+     Summary [   0.027s] 12 tests run: 12 passed, 0 skipped
+reward=1 graded=12 found=2 failed=0 parsed=12 framework=cargo exit_code=0

@@ -1,0 +1,7 @@
+I'm working on the Podman Desktop extension for managing Podman virtual machines. When a user creates a new Podman machine on macOS or Windows, I'd like the host's container registry configuration to be automatically shared with the VM so that the same registries and settings are available inside it right from the start.
+
+To do this, I need to introduce a component that knows how to locate the registry configuration file on the host and also how to express that path in a way that's valid inside the VM. On macOS, the host path and the in-VM path are the same, but on Windows the path needs to be translated from the Windows-style notation into the Linux-compatible format used inside the VM — for example, a Windows drive-letter path should become a path under the appropriate mount prefix.
+
+This component should also be able to generate an automation script (saved to a temporary location) that creates a symbolic link from the computed in-VM path into the standard container runtime configuration directory inside the VM. The path to that generated script should then be passed as an argument to the machine initialization command, so the VM is set up correctly on first boot.
+
+I need both the interface definition for this registry configuration component and a working implementation, as well as the wiring so that the machine creation function uses it when supported by the installed version of Podman.

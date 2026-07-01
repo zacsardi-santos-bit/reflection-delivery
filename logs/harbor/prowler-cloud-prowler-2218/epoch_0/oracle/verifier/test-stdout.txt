@@ -1,0 +1,34 @@
+patching file tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py
+patching file tests/providers/aws/services/vpc/vpc_service_test.py
+patching file tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py
+patching file tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.3.0, pluggy-1.0.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.14.1, xdist-3.2.1
+collecting ... collected 19 items
+
+tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py::Test_vpc_different_regions::test_vpc_different_regions PASSED [  5%]
+tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py::Test_vpc_different_regions::test_vpc_only_one_regions PASSED [ 10%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test_service PASSED [ 15%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test_client PASSED [ 21%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__get_session__ PASSED [ 26%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test_audited_account PASSED [ 31%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpcs__ PASSED [ 36%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_flow_logs__ PASSED [ 42%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpc_peering_connections__ PASSED [ 47%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_route_tables__ PASSED [ 52%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpc_endpoints__ PASSED [ 57%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpc_endpoint_services__ PASSED [ 63%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpc_subnets__ PASSED [ 68%]
+tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py::Test_vpc_subnet_different_az::test_vpc_subnet_different_az PASSED [ 73%]
+tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py::Test_vpc_subnet_different_az::test_vpc_subnet_same_az PASSED [ 78%]
+tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py::Test_vpc_subnet_different_az::test_vpc_no_subnets PASSED [ 84%]
+tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py::Test_vpc_subnet_separate_private_public::test_vpc_subnet_only_private PASSED [ 89%]
+tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py::Test_vpc_subnet_separate_private_public::test_vpc_subnet_only_public PASSED [ 94%]
+tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py::Test_vpc_subnet_separate_private_public::test_vpc_subnet_private_and_public PASSED [100%]
+
+============================= 19 passed in 16.97s ==============================
+reward=1 graded=19 found=0 failed=0 parsed=19 framework=pytest exit_code=0

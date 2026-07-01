@@ -1,0 +1,37 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest tests/components/areaSeries.spec.ts tests/components/lineSeries.spec.ts --coverage=false --watchAll=false --json",
+  "test_files": [
+    "tests/components/areaSeries.spec.ts",
+    "tests/components/lineSeries.spec.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tests/components/lineSeries.spec.ts::basic should make models properly when calling render",
+    "/workspace/repo/tests/components/lineSeries.spec.ts::zoom should make models properly when calling render",
+    "/workspace/repo/tests/components/lineSeries.spec.ts::with show dot options should make models properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::basic should make linePointsModel properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::basic should make responders properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::basic should make models properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::basic remove line points model and circle model when mousemove after hover above line point",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::range should make linePointsModel properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::range should make responders properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::range should make models properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::stack should make linePointsModel properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::stack should make models properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::zoom should make linePointsModel properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::zoom should make models properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::with showDot options should make models properly when calling render"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/tests/components/lineSeries.spec.ts::basic should make rect properly when calling render",
+    "/workspace/repo/tests/components/lineSeries.spec.ts::basic should make responders properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::basic should make rect properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::basic add line points model and circle model when hover above line point",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::basic should apply transparency when legend active false",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::range should make rect properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::stack should make rect properly when calling render",
+    "/workspace/repo/tests/components/areaSeries.spec.ts::stack should make responders properly when calling render"
+  ]
+}

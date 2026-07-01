@@ -1,0 +1,15 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo/go && go build -mod=readonly -o /usr/local/bin/dolt ./cmd/dolt/. && bats --formatter junit --filter 'log: --stat' /workspace/repo/integration-tests/bats/log.bats",
+  "test_files": [
+    "integration-tests/bats/log.bats"
+  ],
+  "num_test_files": 1,
+  "language": "shell",
+  "FAIL_TO_PASS": [
+    "log.bats::log: --stat shows diffstat",
+    "log.bats::log: --stat works with --oneline",
+    "log.bats::log: --stat doesn't print diffstat for merge commits"
+  ],
+  "PASS_TO_PASS": []
+}

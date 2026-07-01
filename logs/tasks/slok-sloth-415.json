@@ -1,0 +1,23 @@
+{
+ "task": "slok-sloth-415",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden wraps securityContext in '{{- with .Values.securityContext.pod }}' (was inside the block) and sets values.yaml defaults to null; expected deployment_default.yaml diff removes the empty 'securityContext:' lines"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

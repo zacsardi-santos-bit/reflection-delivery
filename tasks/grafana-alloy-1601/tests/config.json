@@ -1,0 +1,21 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/component/prometheus/remote/queue/filequeue -count=1",
+  "test_files": [
+    "internal/component/prometheus/remote/queue/filequeue/filequeue_test.go",
+    "internal/component/prometheus/remote/queue/filequeue/record_gen_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue::TestFileQueue",
+    "github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue::TestMetaFileQueue",
+    "github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue::TestCorruption",
+    "github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue::TestFileDeleted",
+    "github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue::TestOtherFiles",
+    "github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue::TestResuming",
+    "github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue::TestMarshalUnmarshalRecord",
+    "github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue::TestEncodeDecodeRecord"
+  ],
+  "PASS_TO_PASS": []
+}

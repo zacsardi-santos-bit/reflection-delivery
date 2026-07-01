@@ -1,0 +1,23 @@
+{
+ "task": "peternator7-strum-279",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `#[proc_macro_derive(EnumTable, attributes(strum))]` + enum_table.rs generating `#table_name<T>` with new/filled/from_closure/transform/all/all_ok/Index/IndexMut; F2P tests exercise default/filled/index/disabled-panic/option_all/result_all_ok/etc."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

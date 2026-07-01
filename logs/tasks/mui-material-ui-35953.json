@@ -1,0 +1,23 @@
+{
+ "task": "mui-material-ui-35953",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden Input.tsx: 'getSlotProps: getInputProps, internalForwardedProps: propsToForward' fixes onKeyDown/onKeyUp forwarding; F2P uses 'fireEvent.keyDown' + 'expect(handleKeyDown.callCount).to.equal(1)'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 73,
+  "shallow": true
+ }
+}

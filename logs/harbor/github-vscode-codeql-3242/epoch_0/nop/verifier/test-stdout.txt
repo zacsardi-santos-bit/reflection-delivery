@@ -1,0 +1,26 @@
+patching file extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useEffectEvent.test.ts
+patching file extensions/ql-vscode/src/view/common/SuggestBox/__tests__/useOpenKey.test.ts
+patching file extensions/ql-vscode/test/mocked-object.ts
+patching file extensions/ql-vscode/test/vscode-tests/utils/mocking.helpers.ts
+FAIL src/view/common/SuggestBox/__tests__/useEffectEvent.test.ts
+  ● Test suite failed to run
+
+    [96msrc/view/common/SuggestBox/__tests__/useEffectEvent.test.ts[0m:[93m2[0m:[93m32[0m - [91merror[0m[90m TS2307: [0mCannot find module '../useEffectEvent' or its corresponding type declarations.
+
+    [7m2[0m import { useEffectEvent } from "../useEffectEvent";
+    [7m [0m [91m                               ~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL src/view/common/SuggestBox/__tests__/useOpenKey.test.ts
+  ● Test suite failed to run
+
+    [96msrc/view/common/SuggestBox/__tests__/useOpenKey.test.ts[0m:[93m5[0m:[93m28[0m - [91merror[0m[90m TS2307: [0mCannot find module '../useOpenKey' or its corresponding type declarations.
+
+    [7m5[0m import { useOpenKey } from "../useOpenKey";
+    [7m [0m [91m                           ~~~~~~~~~~~~~~~[0m
+
+Test Suites: 2 failed, 2 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        4.508 s
+Ran all test suites matching /SuggestBox\/__tests__\/(useEffectEvent|useOpenKey)/i.
+reward=0 graded=12 found=0 failed=0 parsed=0 framework=jest exit_code=1

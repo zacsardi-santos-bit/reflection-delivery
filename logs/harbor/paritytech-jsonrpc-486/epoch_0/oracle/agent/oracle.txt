@@ -1,0 +1,5 @@
+patching file core-client/transports/src/lib.rs
+patching file core-client/transports/src/transports/duplex.rs
+patching file core-client/transports/src/transports/http.rs
+patching file core-client/transports/src/transports/mod.rs
+patching file derive/src/to_client.rs

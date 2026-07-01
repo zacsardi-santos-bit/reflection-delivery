@@ -1,0 +1,5 @@
+patching file mypy.ini
+patching file src/sqlfluff/core/__init__.py
+patching file src/sqlfluff/dialects/dialect_ansi.py
+patching file src/sqlfluff/dialects/dialect_postgres.py
+patching file src/sqlfluff/dialects/dialect_postgres_keywords.py

@@ -1,0 +1,23 @@
+{
+ "task": "bootandy-dust-62",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: 'pub fn normalize_path<P: AsRef<Path>>' via components(); 'is_a_parent_of' uses path_child.starts_with(path_parent) && !path_parent.starts_with(path_child). F2P asserts e.g. '!is_a_parent_of(\"/usr/folder\", \"/usr/folder_not_a_child\")'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

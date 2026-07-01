@@ -1,0 +1,5 @@
+I'm working on adding reserved IPv6 address management to the doctl CLI. Right now, the CLI supports reserved IPv4 addresses with commands to create, list, get, delete, and assign/unassign them to servers. I'd like the same support for IPv6.
+
+Specifically, I need a set of compute subcommands for reserved IPv6 addresses that let users create a reservation in a given region, list all reserved IPv6 addresses on the account, get details about a specific address, and delete one. I also need action subcommands to assign a reserved IPv6 address to a specific server (by providing both the address and the server's numeric ID) and to unassign it. The create command should return an error if no region is provided. The delete command should support a force flag to skip confirmation. Each command that returns address data should display it in a table with columns for the address, region, and the associated server ID and name (which should be blank when no server is assigned).
+
+The new commands should be registered under the compute command group, consistent with how the existing reserved IPv4 address commands are organized.

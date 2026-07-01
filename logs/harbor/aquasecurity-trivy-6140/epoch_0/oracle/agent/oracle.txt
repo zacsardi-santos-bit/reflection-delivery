@@ -1,0 +1,14 @@
+patching file docs/docs/configuration/reporting.md
+patching file docs/docs/coverage/language/java.md
+patching file pkg/dependency/parser/gradle/lockfile/parse.go
+patching file pkg/fanal/analyzer/language/java/gradle/lockfile.go
+patching file pkg/fanal/analyzer/language/java/gradle/pom.go
+patching file pkg/fanal/analyzer/language/java/gradle/testdata/cache/caches/modules-2/files-2.1/junit/junit/4.13/5c17760663fae422643fc859fd352c68a1d91bfc/junit-4.13.pom
+patching file pkg/fanal/analyzer/language/java/gradle/testdata/cache/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/872e413497b906e7c9fa85ccc96046c5d1ef7ece/hamcrest-core-1.3.pom
+patching file pkg/fanal/analyzer/language/java/gradle/testdata/happy.lockfile
+patching file pkg/fanal/analyzer/language/java/gradle/testdata/lockfiles/empty/gradle.lockfile (renamed from pkg/fanal/analyzer/language/java/gradle/testdata/empty.lockfile)
+patching file pkg/fanal/analyzer/language/java/gradle/testdata/lockfiles/happy/gradle.lockfile
+patching file pkg/fanal/analyzer/language/java/gradle/testdata/poms/dep-version-as-property.pom
+patching file pkg/fanal/analyzer/language/java/gradle/testdata/poms/happy.pom
+patching file pkg/fanal/analyzer/language/java/gradle/testdata/poms/without-groupid-and-version.pom
+patching file pkg/fanal/analyzer/language/java/gradle/testdata/poms/without-licenses-and-deps.pom

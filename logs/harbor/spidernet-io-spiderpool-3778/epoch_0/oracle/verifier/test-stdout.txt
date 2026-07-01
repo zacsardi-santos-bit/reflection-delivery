@@ -1,0 +1,38 @@
+patching file pkg/workloadendpointmanager/workloadendpoint_manager_test.go
+patching file test/doc/reclaim.md
+patching file test/e2e/common/constant.go
+patching file test/e2e/common/kruise.go
+patching file test/e2e/common/pod.go
+patching file test/e2e/common/spiderpool.go
+patching file test/e2e/common/statefulset.go
+patching file test/e2e/common/tools.go
+patching file test/e2e/reclaim/chaos_test.go
+patching file test/e2e/reclaim/reclaim_suite_test.go
+patching file test/e2e/reclaim/reclaim_test.go
+patching file test/e2e/spidermultus/spidermultus_test.go
+=== RUN   TestWorkloadEndpointManager
+Running Suite: WorkloadEndpointManager Suite - /workspace/repo/pkg/workloadendpointmanager
+[38;5;204m[workloadendpointmanager, unittest][0m 
+==========================================================================================
+Random Seed: [1m1782746242[0m
+
+Will run [1m49[0m of [1m49[0m specs
+[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m{"level":"INFO","ts":"2026-06-29T15:17:22.087Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:159","msg":"try to create SpiderEndpoint &SpiderEndpoint{ObjectMeta:{endpoint-18  default    0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[] map[] [{v1 Pod endpoint-18 7094bd46-307b-4b9a-8615-4c5aa3007707 <nil> <nil>}] [spiderpool.spidernet.io] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:7094bd46-307b-4b9a-8615-4c5aa3007707,Node:node,IPs:[]IPs{},},OwnerControllerType:,OwnerControllerName:,},}"}
+[38;5;10m•[0m{"level":"INFO","ts":"2026-06-29T15:17:22.088Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:159","msg":"try to create SpiderEndpoint &SpiderEndpoint{ObjectMeta:{endpoint-19  default    0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[] map[] [{v1 Pod endpoint-19 42b6bfca-fb79-4939-888b-f9549d22d826 <nil> <nil>}] [spiderpool.spidernet.io] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:42b6bfca-fb79-4939-888b-f9549d22d826,Node:node,IPs:[]IPs{},},OwnerControllerType:Pod,OwnerControllerName:endpoint-19,},}"}
+[38;5;10m•[0m{"level":"INFO","ts":"2026-06-29T15:17:22.089Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:148","msg":"do not set OwnerReference for SpiderEndpoint '&SpiderEndpoint{ObjectMeta:{endpoint-20  default    0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[] map[] [] [] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:4e2c9afd-c17a-43f4-82fe-c3b3451005ff,Node:node,IPs:[]IPs{},},OwnerControllerType:StatefulSet,OwnerControllerName:endpoint-20-sts,},}' since the pod top controller is StatefulSet"}
+{"level":"INFO","ts":"2026-06-29T15:17:22.089Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:159","msg":"try to create SpiderEndpoint &SpiderEndpoint{ObjectMeta:{endpoint-20  default    0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[] map[] [] [spiderpool.spidernet.io] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:4e2c9afd-c17a-43f4-82fe-c3b3451005ff,Node:node,IPs:[]IPs{},},OwnerControllerType:StatefulSet,OwnerControllerName:endpoint-20-sts,},}"}
+[38;5;10m•[0m{"level":"INFO","ts":"2026-06-29T15:17:22.089Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:151","msg":"do not set OwnerReference for SpiderEndpoint '&SpiderEndpoint{ObjectMeta:{endpoint-21-vm  default    0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[] map[] [] [] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:4d6f4e4b-b33e-471a-bef9-e8bca1beaa4d,Node:node,IPs:[]IPs{},},OwnerControllerType:VirtualMachineInstance,OwnerControllerName:endpoint-21-vm,},}' since the pod top controller is VirtualMachineInstance"}
+{"level":"INFO","ts":"2026-06-29T15:17:22.090Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:159","msg":"try to create SpiderEndpoint &SpiderEndpoint{ObjectMeta:{endpoint-21-vm  default    0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[] map[] [] [spiderpool.spidernet.io] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:4d6f4e4b-b33e-471a-bef9-e8bca1beaa4d,Node:node,IPs:[]IPs{},},OwnerControllerType:VirtualMachineInstance,OwnerControllerName:endpoint-21-vm,},}"}
+[38;5;10m•[0m[38;5;10m•[0m{"level":"INFO","ts":"2026-06-29T15:17:22.091Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:168","msg":"try to update SpiderEndpoint &SpiderEndpoint{ObjectMeta:{endpoint-23  default    0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[foo:bar-23] map[] [] [] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:dc9fe97e-c2cc-4678-8d40-72c3b78a1657,Node:,IPs:[]IPs{},},OwnerControllerType:,OwnerControllerName:,},}"}
+[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m{"level":"INFO","ts":"2026-06-29T15:17:22.092Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:205","msg":"try to update Endpoint &SpiderEndpoint{ObjectMeta:{endpoint-26  default    0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[foo:bar-26] map[] [] [] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:0001864a-f5c5-440c-9d27-a84b281a5b41,Node:node,IPs:[]IPs{},},OwnerControllerType:,OwnerControllerName:,},}"}
+[38;5;10m•[0m{"level":"INFO","ts":"2026-06-29T15:17:22.092Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:205","msg":"try to update Endpoint &SpiderEndpoint{ObjectMeta:{endpoint-27  default   1 0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[foo:bar-27] map[] [] [] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:265feabd-9556-48cf-9e28-7d28008f9b8d,Node:new-node,IPs:[]IPs{IPAllocationDetail{NIC:eth0,IPv4:nil,IPv6:nil,IPv4Pool:nil,IPv6Pool:nil,Vlan:nil,IPv4Gateway:nil,IPv6Gateway:nil,CleanGateway:nil,Routes:[],},},},OwnerControllerType:,OwnerControllerName:,},}"}
+[38;5;10m•[0m{"level":"INFO","ts":"2026-06-29T15:17:22.093Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:205","msg":"try to update Endpoint &SpiderEndpoint{ObjectMeta:{endpoint-28  default   1 0 0001-01-01 00:00:00 +0000 UTC <nil> <nil> map[foo:bar-28] map[] [] [] []},Status:&WorkloadEndpointStatus{Current:&PodIPAllocation{UID:f060490f-f3f7-479e-8a77-bd921335fb62,Node:new-node,IPs:[]IPs{IPAllocationDetail{NIC:eth0,IPv4:nil,IPv6:nil,IPv4Pool:nil,IPv6Pool:nil,Vlan:nil,IPv4Gateway:nil,IPv6Gateway:nil,CleanGateway:nil,Routes:[],},},},OwnerControllerType:,OwnerControllerName:,},}"}
+[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m{"level":"INFO","ts":"2026-06-29T15:17:22.098Z","caller":"workloadendpointmanager/workloadendpoint_manager.go:273","msg":"remove SpiderEndpoint 'default/endpoint-41' finalizer successfully"}
+[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m[38;5;10m•[0m
+
+[38;5;10m[1mRan 49 of 49 Specs in 0.023 seconds[0m
+[38;5;10m[1mSUCCESS![0m -- [38;5;10m[1m49 Passed[0m | [38;5;9m[1m0 Failed[0m | [38;5;11m[1m0 Pending[0m | [38;5;14m[1m0 Skipped[0m
+--- PASS: TestWorkloadEndpointManager (0.02s)
+PASS
+ok  	github.com/spidernet-io/spiderpool/pkg/workloadendpointmanager	0.094s
+reward=1 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=0

@@ -1,0 +1,26 @@
+patching file crates/re_space_view_spatial/src/space_view_2d.rs
+   Compiling re_types_core v0.13.0-alpha.1+dev (/workspace/repo/crates/re_types_core)
+   Compiling seq-macro v0.3.5
+   Compiling re_format v0.13.0-alpha.1+dev (/workspace/repo/crates/re_format)
+   Compiling re_types v0.13.0-alpha.1+dev (/workspace/repo/crates/re_types)
+   Compiling re_log_types v0.13.0-alpha.1+dev (/workspace/repo/crates/re_log_types)
+   Compiling re_memory v0.13.0-alpha.1+dev (/workspace/repo/crates/re_memory)
+   Compiling re_data_store v0.13.0-alpha.1+dev (/workspace/repo/crates/re_data_store)
+   Compiling re_ws_comms v0.13.0-alpha.1+dev (/workspace/repo/crates/re_ws_comms)
+   Compiling re_log_encoding v0.13.0-alpha.1+dev (/workspace/repo/crates/re_log_encoding)
+   Compiling re_entity_db v0.13.0-alpha.1+dev (/workspace/repo/crates/re_entity_db)
+   Compiling re_query v0.13.0-alpha.1+dev (/workspace/repo/crates/re_query)
+   Compiling re_query_cache v0.13.0-alpha.1+dev (/workspace/repo/crates/re_query_cache)
+   Compiling re_data_source v0.13.0-alpha.1+dev (/workspace/repo/crates/re_data_source)
+   Compiling re_viewer_context v0.13.0-alpha.1+dev (/workspace/repo/crates/re_viewer_context)
+   Compiling re_space_view v0.13.0-alpha.1+dev (/workspace/repo/crates/re_space_view)
+   Compiling re_data_ui v0.13.0-alpha.1+dev (/workspace/repo/crates/re_data_ui)
+   Compiling re_space_view_spatial v0.13.0-alpha.1+dev (/workspace/repo/crates/re_space_view_spatial)
+    Finished test [optimized + debuginfo] target(s) in 26.22s
+────────────
+ Nextest run ID f7fe9a90-a9bb-4d1f-9de2-0c7a3fa2ab18 with nextest profile: default
+    Starting 1 test across 1 binary
+        PASS [   0.007s] (1/1) re_space_view_spatial space_view_2d::tests::test_points3d_component_data
+────────────
+     Summary [   0.008s] 1 test run: 1 passed, 0 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

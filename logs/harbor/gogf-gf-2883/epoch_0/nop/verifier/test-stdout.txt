@@ -1,0 +1,6 @@
+patching file os/gmutex/gmutex_z_bench_test.go
+patching file os/gmutex/gmutex_z_unit_mutex_test.go
+patching file os/gmutex/gmutex_z_unit_rwmutex_test.go
+github.com/gogf/gf/v2/os/gmutex: no non-test Go files in /workspace/repo/os/gmutex
+FAIL	github.com/gogf/gf/v2/os/gmutex [build failed]
+reward=0 graded=10 found=10 failed=10 parsed=1 framework=go exit_code=1

@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./snapshot -run Test_Upgrade_NothingToDo -count=1 -v",
+  "test_files": [
+    "snapshot/upgrader_test.go",
+    "system_test/single_node_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/rqlite/rqlite/snapshot::Test_Upgrade_NothingToDo"
+  ],
+  "PASS_TO_PASS": []
+}

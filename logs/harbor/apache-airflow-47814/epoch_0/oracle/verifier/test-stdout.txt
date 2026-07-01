@@ -1,0 +1,24 @@
+patching file dev/breeze/tests/test_publish_docs_to_s3.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/dev/breeze
+configfile: pyproject.toml
+collecting ... collected 13 items
+
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_get_all_docs PASSED [  7%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_get_all_docs_exception PASSED [ 15%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_get_all_excluded_docs PASSED [ 23%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_get_all_eligible_docs PASSED [ 30%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_get_all_eligible_docs_should_raise_when_empty PASSED [ 38%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_publish_stable_version_docs[no_doc_version_exists_in_destination] PASSED [ 46%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_publish_stable_version_docs[doc_version_exists_in_destination] PASSED [ 53%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_publish_stable_version_docs[overwrite_existing_doc] PASSED [ 61%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_publish_stable_version_docs[no_docs_to_publish] PASSED [ 69%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_publish_all_docs[no_doc_version_exists_in_destination] PASSED [ 76%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_publish_all_docs[doc_version_exists_in_destination] PASSED [ 84%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_publish_all_docs[overwrite_existing_doc] PASSED [ 92%]
+dev/breeze/tests/test_publish_docs_to_s3.py::TestPublishDocsToS3::test_publish_all_docs[no_docs_to_publish] PASSED [100%]
+
+============================== 13 passed in 2.96s ==============================
+reward=1 graded=13 found=0 failed=0 parsed=5 framework=pytest exit_code=0

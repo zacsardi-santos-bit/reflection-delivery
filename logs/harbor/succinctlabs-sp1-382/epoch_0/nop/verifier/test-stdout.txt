@@ -1,0 +1,684 @@
+patching file recursion/compiler/tests/arithmetic.rs
+patching file recursion/compiler/tests/conditionals.rs
+patching file recursion/compiler/tests/for_loops.rs
+warning: unused import: `core::marker::PhantomData`
+ --> recursion/compiler/src/heap/ptr.rs:1:5
+  |
+1 | use core::marker::PhantomData;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `ptr::*`
+ --> recursion/compiler/src/heap/mod.rs:4:9
+  |
+4 | pub use ptr::*;
+  |         ^^^^^^
+
+warning: unused import: `vec::*`
+ --> recursion/compiler/src/heap/mod.rs:5:9
+  |
+5 | pub use vec::*;
+  |         ^^^^^^
+
+warning: unused variable: `dst`
+  --> recursion/compiler/src/asm/builder.rs:89:31
+   |
+89 |                 DslIR::ImmExt(dst, src) => todo!(),
+   |                               ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `src`
+  --> recursion/compiler/src/asm/builder.rs:89:36
+   |
+89 |                 DslIR::ImmExt(dst, src) => todo!(),
+   |                                    ^^^ help: if this is intentional, prefix it with an underscore: `_src`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:102:29
+    |
+102 |                 DslIR::AddE(dst, lhs, rhs) => todo!(),
+    |                             ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:102:34
+    |
+102 |                 DslIR::AddE(dst, lhs, rhs) => todo!(),
+    |                                  ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:102:39
+    |
+102 |                 DslIR::AddE(dst, lhs, rhs) => todo!(),
+    |                                       ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:103:30
+    |
+103 |                 DslIR::AddEI(dst, lhs, rhs) => todo!(),
+    |                              ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:103:35
+    |
+103 |                 DslIR::AddEI(dst, lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:103:40
+    |
+103 |                 DslIR::AddEI(dst, lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:104:30
+    |
+104 |                 DslIR::AddEF(dst, lhs, rhs) => todo!(),
+    |                              ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:104:35
+    |
+104 |                 DslIR::AddEF(dst, lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:104:40
+    |
+104 |                 DslIR::AddEF(dst, lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:105:32
+    |
+105 |                 DslIR::AddEFFI(dst, lhs, rhs) => todo!(),
+    |                                ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:105:37
+    |
+105 |                 DslIR::AddEFFI(dst, lhs, rhs) => todo!(),
+    |                                     ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:105:42
+    |
+105 |                 DslIR::AddEFFI(dst, lhs, rhs) => todo!(),
+    |                                          ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:106:31
+    |
+106 |                 DslIR::AddEFI(dst, lhs, rhs) => todo!(),
+    |                               ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:106:36
+    |
+106 |                 DslIR::AddEFI(dst, lhs, rhs) => todo!(),
+    |                                    ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:106:41
+    |
+106 |                 DslIR::AddEFI(dst, lhs, rhs) => todo!(),
+    |                                         ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:146:32
+    |
+146 |                 DslIR::DivEFIN(dst, lhs, rhs) => todo!(),
+    |                                ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:146:37
+    |
+146 |                 DslIR::DivEFIN(dst, lhs, rhs) => todo!(),
+    |                                     ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:146:42
+    |
+146 |                 DslIR::DivEFIN(dst, lhs, rhs) => todo!(),
+    |                                          ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:147:30
+    |
+147 |                 DslIR::DivEF(dst, lhs, rhs) => todo!(),
+    |                              ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:147:35
+    |
+147 |                 DslIR::DivEF(dst, lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:147:40
+    |
+147 |                 DslIR::DivEF(dst, lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:148:31
+    |
+148 |                 DslIR::DivEFI(dst, lhs, rhs) => todo!(),
+    |                               ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:148:36
+    |
+148 |                 DslIR::DivEFI(dst, lhs, rhs) => todo!(),
+    |                                    ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:148:41
+    |
+148 |                 DslIR::DivEFI(dst, lhs, rhs) => todo!(),
+    |                                         ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:149:31
+    |
+149 |                 DslIR::DivEIN(dst, lhs, rhs) => todo!(),
+    |                               ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:149:36
+    |
+149 |                 DslIR::DivEIN(dst, lhs, rhs) => todo!(),
+    |                                    ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:149:41
+    |
+149 |                 DslIR::DivEIN(dst, lhs, rhs) => todo!(),
+    |                                         ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:150:29
+    |
+150 |                 DslIR::DivE(dst, lhs, rhs) => todo!(),
+    |                             ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:150:34
+    |
+150 |                 DslIR::DivE(dst, lhs, rhs) => todo!(),
+    |                                  ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:150:39
+    |
+150 |                 DslIR::DivE(dst, lhs, rhs) => todo!(),
+    |                                       ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:151:30
+    |
+151 |                 DslIR::DivEI(dst, lhs, rhs) => todo!(),
+    |                              ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:151:35
+    |
+151 |                 DslIR::DivEI(dst, lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:151:40
+    |
+151 |                 DslIR::DivEI(dst, lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:152:29
+    |
+152 |                 DslIR::InvE(dst, src) => todo!(),
+    |                             ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `src`
+   --> recursion/compiler/src/asm/builder.rs:152:34
+    |
+152 |                 DslIR::InvE(dst, src) => todo!(),
+    |                                  ^^^ help: if this is intentional, prefix it with an underscore: `_src`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:153:32
+    |
+153 |                 DslIR::SubEFIN(dst, lhs, rhs) => todo!(),
+    |                                ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:153:37
+    |
+153 |                 DslIR::SubEFIN(dst, lhs, rhs) => todo!(),
+    |                                     ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:153:42
+    |
+153 |                 DslIR::SubEFIN(dst, lhs, rhs) => todo!(),
+    |                                          ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:154:30
+    |
+154 |                 DslIR::SubEF(dst, lhs, rhs) => todo!(),
+    |                              ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:154:35
+    |
+154 |                 DslIR::SubEF(dst, lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:154:40
+    |
+154 |                 DslIR::SubEF(dst, lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:155:31
+    |
+155 |                 DslIR::SubEFI(dst, lhs, rhs) => todo!(),
+    |                               ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:155:36
+    |
+155 |                 DslIR::SubEFI(dst, lhs, rhs) => todo!(),
+    |                                    ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:155:41
+    |
+155 |                 DslIR::SubEFI(dst, lhs, rhs) => todo!(),
+    |                                         ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:156:31
+    |
+156 |                 DslIR::SubEIN(dst, lhs, rhs) => todo!(),
+    |                               ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:156:36
+    |
+156 |                 DslIR::SubEIN(dst, lhs, rhs) => todo!(),
+    |                                    ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:156:41
+    |
+156 |                 DslIR::SubEIN(dst, lhs, rhs) => todo!(),
+    |                                         ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:157:29
+    |
+157 |                 DslIR::SubE(dst, lhs, rhs) => todo!(),
+    |                             ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:157:34
+    |
+157 |                 DslIR::SubE(dst, lhs, rhs) => todo!(),
+    |                                  ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:157:39
+    |
+157 |                 DslIR::SubE(dst, lhs, rhs) => todo!(),
+    |                                       ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:158:30
+    |
+158 |                 DslIR::SubEI(dst, lhs, rhs) => todo!(),
+    |                              ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:158:35
+    |
+158 |                 DslIR::SubEI(dst, lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:158:40
+    |
+158 |                 DslIR::SubEI(dst, lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:159:29
+    |
+159 |                 DslIR::NegE(dst, src) => todo!(),
+    |                             ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `src`
+   --> recursion/compiler/src/asm/builder.rs:159:34
+    |
+159 |                 DslIR::NegE(dst, src) => todo!(),
+    |                                  ^^^ help: if this is intentional, prefix it with an underscore: `_src`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:172:29
+    |
+172 |                 DslIR::MulE(dst, lhs, rhs) => todo!(),
+    |                             ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:172:34
+    |
+172 |                 DslIR::MulE(dst, lhs, rhs) => todo!(),
+    |                                  ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:172:39
+    |
+172 |                 DslIR::MulE(dst, lhs, rhs) => todo!(),
+    |                                       ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:173:30
+    |
+173 |                 DslIR::MulEI(dst, lhs, rhs) => todo!(),
+    |                              ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:173:35
+    |
+173 |                 DslIR::MulEI(dst, lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:173:40
+    |
+173 |                 DslIR::MulEI(dst, lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:174:30
+    |
+174 |                 DslIR::MulEF(dst, lhs, rhs) => todo!(),
+    |                              ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:174:35
+    |
+174 |                 DslIR::MulEF(dst, lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:174:40
+    |
+174 |                 DslIR::MulEF(dst, lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `dst`
+   --> recursion/compiler/src/asm/builder.rs:175:31
+    |
+175 |                 DslIR::MulEFI(dst, lhs, rhs) => todo!(),
+    |                               ^^^ help: if this is intentional, prefix it with an underscore: `_dst`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:175:36
+    |
+175 |                 DslIR::MulEFI(dst, lhs, rhs) => todo!(),
+    |                                    ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:175:41
+    |
+175 |                 DslIR::MulEFI(dst, lhs, rhs) => todo!(),
+    |                                         ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:338:34
+    |
+338 |                 DslIR::AssertEqE(lhs, rhs) => todo!(),
+    |                                  ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:338:39
+    |
+338 |                 DslIR::AssertEqE(lhs, rhs) => todo!(),
+    |                                       ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:339:35
+    |
+339 |                 DslIR::AssertEqEI(lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:339:40
+    |
+339 |                 DslIR::AssertEqEI(lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:340:34
+    |
+340 |                 DslIR::AssertNeE(lhs, rhs) => todo!(),
+    |                                  ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:340:39
+    |
+340 |                 DslIR::AssertNeE(lhs, rhs) => todo!(),
+    |                                       ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: unused variable: `lhs`
+   --> recursion/compiler/src/asm/builder.rs:341:35
+    |
+341 |                 DslIR::AssertNeEI(lhs, rhs) => todo!(),
+    |                                   ^^^ help: if this is intentional, prefix it with an underscore: `_lhs`
+
+warning: unused variable: `rhs`
+   --> recursion/compiler/src/asm/builder.rs:341:40
+    |
+341 |                 DslIR::AssertNeEI(lhs, rhs) => todo!(),
+    |                                        ^^^ help: if this is intentional, prefix it with an underscore: `_rhs`
+
+warning: constant `HEAP_PTR` is never used
+  --> recursion/compiler/src/asm/builder.rs:19:18
+   |
+19 | pub(crate) const HEAP_PTR: i32 = -4;
+   |                  ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `sp1-recursion-compiler` (lib) generated 81 warnings (run `cargo fix --lib -p sp1-recursion-compiler` to apply 80 suggestions)
+warning: `sp1-recursion-compiler` (lib test) generated 81 warnings (81 duplicates)
+   Compiling sp1-recursion-compiler v0.1.0 (/workspace/repo/recursion/compiler)
+warning: unused import: `sp1_recursion_compiler::backend::GnarkBackend`
+ --> recursion/compiler/examples/fibonacci.rs:6:5
+  |
+6 | use sp1_recursion_compiler::backend::GnarkBackend;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+error[E0432]: unresolved import `rand`
+ --> recursion/compiler/tests/arithmetic.rs:2:5
+  |
+2 | use rand::{thread_rng, Rng};
+  |     ^^^^ use of undeclared crate or module `rand`
+
+error[E0107]: type alias takes 1 generic argument but 2 generic arguments were supplied
+  --> recursion/compiler/tests/conditionals.rs:12:23
+   |
+12 |     let mut builder = VmBuilder::<F, EF>::default();
+   |                       ^^^^^^^^^      -- help: remove this generic argument
+   |                       |
+   |                       expected 1 generic argument
+   |
+note: type alias defined here, with 1 generic parameter: `F`
+  --> /workspace/repo/recursion/compiler/src/asm/builder.rs:21:10
+   |
+21 | pub type VmBuilder<F> = Builder<AsmConfig<F>>;
+   |          ^^^^^^^^^ -
+
+error[E0107]: type alias takes 1 generic argument but 2 generic arguments were supplied
+  --> recursion/compiler/tests/arithmetic.rs:16:23
+   |
+16 |     let mut builder = VmBuilder::<F, EF>::default();
+   |                       ^^^^^^^^^      -- help: remove this generic argument
+   |                       |
+   |                       expected 1 generic argument
+   |
+note: type alias defined here, with 1 generic parameter: `F`
+  --> /workspace/repo/recursion/compiler/src/asm/builder.rs:21:10
+   |
+21 | pub type VmBuilder<F> = Builder<AsmConfig<F>>;
+   |          ^^^^^^^^^ -
+
+error[E0107]: type alias takes 1 generic argument but 2 generic arguments were supplied
+  --> recursion/compiler/tests/for_loops.rs:14:23
+   |
+14 |     let mut builder = VmBuilder::<F, EF>::default();
+   |                       ^^^^^^^^^      -- help: remove this generic argument
+   |                       |
+   |                       expected 1 generic argument
+   |
+note: type alias defined here, with 1 generic parameter: `F`
+  --> /workspace/repo/recursion/compiler/src/asm/builder.rs:21:10
+   |
+21 | pub type VmBuilder<F> = Builder<AsmConfig<F>>;
+   |          ^^^^^^^^^ -
+
+error[E0277]: the trait bound `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>: From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not satisfied
+  --> recursion/compiler/tests/arithmetic.rs:25:44
+   |
+25 |     let zero_ext: Ext<_, _> = builder.eval(EF::zero());
+   |                                       ---- ^^^^^^^^^^ the trait `From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not implemented for `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>`
+   |                                       |
+   |                                       required by a bound introduced by this call
+   |
+   = help: the following other types implement trait `From<T>`:
+             <SymbolicExt<F, EF> as From<sp1_recursion_compiler::ir::Ext<F, EF>>>
+             <SymbolicExt<F, EF> as From<EF>>
+   = note: required for `BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>` to implement `Into<SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>>`
+note: required by a bound in `sp1_recursion_compiler::ir::Builder::<C>::eval`
+  --> /workspace/repo/recursion/compiler/src/ir/builder.rs:47:36
+   |
+47 |     pub fn eval<V: Variable<C>, E: Into<V::Expression>>(&mut self, expr: E) -> V {
+   |                                    ^^^^^^^^^^^^^^^^^^^ required by this bound in `Builder::<C>::eval`
+
+For more information about this error, try `rustc --explain E0107`.
+error[E0277]: the trait bound `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>: From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not satisfied
+  --> recursion/compiler/tests/arithmetic.rs:26:43
+   |
+26 |     let one_ext: Ext<_, _> = builder.eval(EF::one());
+   |                                      ---- ^^^^^^^^^ the trait `From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not implemented for `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>`
+   |                                      |
+   |                                      required by a bound introduced by this call
+   |
+   = help: the following other types implement trait `From<T>`:
+             <SymbolicExt<F, EF> as From<sp1_recursion_compiler::ir::Ext<F, EF>>>
+             <SymbolicExt<F, EF> as From<EF>>
+   = note: required for `BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>` to implement `Into<SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>>`
+note: required by a bound in `sp1_recursion_compiler::ir::Builder::<C>::eval`
+  --> /workspace/repo/recursion/compiler/src/ir/builder.rs:47:36
+   |
+47 |     pub fn eval<V: Variable<C>, E: Into<V::Expression>>(&mut self, expr: E) -> V {
+   |                                    ^^^^^^^^^^^^^^^^^^^ required by this bound in `Builder::<C>::eval`
+
+error[E0277]: the trait bound `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>: From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not satisfied
+   --> recursion/compiler/tests/arithmetic.rs:28:47
+    |
+28  |     builder.assert_ext_eq(zero_ext * one_ext, EF::zero());
+    |             -------------                     ^^^^^^^^^^ the trait `From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not implemented for `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>`
+    |             |
+    |             required by a bound introduced by this call
+    |
+    = help: the following other types implement trait `From<T>`:
+              <SymbolicExt<F, EF> as From<sp1_recursion_compiler::ir::Ext<F, EF>>>
+              <SymbolicExt<F, EF> as From<EF>>
+    = note: required for `BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>` to implement `Into<SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>>`
+note: required by a bound in `sp1_recursion_compiler::ir::Builder::<C>::assert_ext_eq`
+   --> /workspace/repo/recursion/compiler/src/ir/builder.rs:103:18
+    |
+101 |     pub fn assert_ext_eq<
+    |            ------------- required by a bound in this associated function
+102 |         LhsExpr: Into<SymbolicExt<C::F, C::EF>>,
+103 |         RhsExpr: Into<SymbolicExt<C::F, C::EF>>,
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `Builder::<C>::assert_ext_eq`
+
+error[E0277]: the trait bound `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>: From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not satisfied
+   --> recursion/compiler/tests/arithmetic.rs:29:46
+    |
+29  |     builder.assert_ext_eq(one_ext * one_ext, EF::one());
+    |             -------------                    ^^^^^^^^^ the trait `From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not implemented for `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>`
+    |             |
+    |             required by a bound introduced by this call
+    |
+    = help: the following other types implement trait `From<T>`:
+              <SymbolicExt<F, EF> as From<sp1_recursion_compiler::ir::Ext<F, EF>>>
+              <SymbolicExt<F, EF> as From<EF>>
+    = note: required for `BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>` to implement `Into<SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>>`
+note: required by a bound in `sp1_recursion_compiler::ir::Builder::<C>::assert_ext_eq`
+   --> /workspace/repo/recursion/compiler/src/ir/builder.rs:103:18
+    |
+101 |     pub fn assert_ext_eq<
+    |            ------------- required by a bound in this associated function
+102 |         LhsExpr: Into<SymbolicExt<C::F, C::EF>>,
+103 |         RhsExpr: Into<SymbolicExt<C::F, C::EF>>,
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `Builder::<C>::assert_ext_eq`
+
+error: could not compile `sp1-recursion-compiler` (test "conditionals") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error[E0277]: the trait bound `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>: From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not satisfied
+   --> recursion/compiler/tests/arithmetic.rs:30:46
+    |
+30  |     builder.assert_ext_eq(one_ext + one_ext, EF::two());
+    |             -------------                    ^^^^^^^^^ the trait `From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not implemented for `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>`
+    |             |
+    |             required by a bound introduced by this call
+    |
+    = help: the following other types implement trait `From<T>`:
+              <SymbolicExt<F, EF> as From<sp1_recursion_compiler::ir::Ext<F, EF>>>
+              <SymbolicExt<F, EF> as From<EF>>
+    = note: required for `BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>` to implement `Into<SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>>`
+note: required by a bound in `sp1_recursion_compiler::ir::Builder::<C>::assert_ext_eq`
+   --> /workspace/repo/recursion/compiler/src/ir/builder.rs:103:18
+    |
+101 |     pub fn assert_ext_eq<
+    |            ------------- required by a bound in this associated function
+102 |         LhsExpr: Into<SymbolicExt<C::F, C::EF>>,
+103 |         RhsExpr: Into<SymbolicExt<C::F, C::EF>>,
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `Builder::<C>::assert_ext_eq`
+
+error[E0277]: the trait bound `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>: From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not satisfied
+   --> recursion/compiler/tests/arithmetic.rs:31:46
+    |
+31  |     builder.assert_ext_eq(one_ext - one_ext, EF::zero());
+    |             -------------                    ^^^^^^^^^^ the trait `From<BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>>` is not implemented for `SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>`
+    |             |
+    |             required by a bound introduced by this call
+    |
+    = help: the following other types implement trait `From<T>`:
+              <SymbolicExt<F, EF> as From<sp1_recursion_compiler::ir::Ext<F, EF>>>
+              <SymbolicExt<F, EF> as From<EF>>
+    = note: required for `BinomialExtensionField<p3_baby_bear::baby_bear::BabyBear, 4>` to implement `Into<SymbolicExt<p3_baby_bear::baby_bear::BabyBear, p3_baby_bear::baby_bear::BabyBear>>`
+note: required by a bound in `sp1_recursion_compiler::ir::Builder::<C>::assert_ext_eq`
+   --> /workspace/repo/recursion/compiler/src/ir/builder.rs:103:18
+    |
+101 |     pub fn assert_ext_eq<
+    |            ------------- required by a bound in this associated function
+102 |         LhsExpr: Into<SymbolicExt<C::F, C::EF>>,
+103 |         RhsExpr: Into<SymbolicExt<C::F, C::EF>>,
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `Builder::<C>::assert_ext_eq`
+
+error: could not compile `sp1-recursion-compiler` (test "for_loops") due to 1 previous error
+Some errors have detailed explanations: E0107, E0277, E0432.
+For more information about an error, try `rustc --explain E0107`.
+error: could not compile `sp1-recursion-compiler` (test "arithmetic") due to 8 previous errors
+warning: `sp1-recursion-compiler` (example "fibonacci") generated 1 warning (run `cargo fix --example "fibonacci"` to apply 1 suggestion)
+error: command `/usr/local/rustup/toolchains/nightly-2024-01-25-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package sp1-recursion-compiler` exited with code 101
+reward=0 graded=5 found=0 failed=0 parsed=0 framework=cargo exit_code=101

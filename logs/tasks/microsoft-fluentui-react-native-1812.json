@@ -1,0 +1,23 @@
+{
+ "task": "microsoft-fluentui-react-native-1812",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden rewrites ShadowDepth union to prefixed 'shadow2..shadow64' + 'shadow2brand..shadow64brand' and adds shadowStyle.ts opacity logic; F2P=12 tests cover neutral+brand depths 2/4/8/16/28/64"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

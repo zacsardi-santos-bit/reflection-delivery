@@ -1,0 +1,20 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/packages/opentelemetry-resource-detector-aws && npm run compile && npx ts-mocha -p tsconfig.json 'test/detectors/AwsEksDetector.test.ts'",
+  "test_files": [
+    "packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts::awsEksDetector on successful request should return an aws_eks_instance_resource",
+    "/workspace/repo/packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts::awsEksDetector on successful request should return a resource with clusterName attribute without cgroup file",
+    "/workspace/repo/packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts::awsEksDetector on successful request should return a resource with container ID attribute without a clusterName",
+    "/workspace/repo/packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts::awsEksDetector on successful request should return a resource with clusterName attribute when cgroup file does not contain valid Container ID",
+    "/workspace/repo/packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts::awsEksDetector on successful request should return an empty resource when not running on Eks",
+    "/workspace/repo/packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts::awsEksDetector on successful request should return an empty resource when k8s token file does not exist",
+    "/workspace/repo/packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts::awsEksDetector on successful request should return an empty resource when containerId and clusterName are invalid",
+    "/workspace/repo/packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts::awsEksDetector on unsuccesful request should throw when receiving error response code"
+  ],
+  "PASS_TO_PASS": []
+}

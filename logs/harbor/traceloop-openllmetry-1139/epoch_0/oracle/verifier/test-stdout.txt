@@ -1,0 +1,28 @@
+patching file packages/opentelemetry-instrumentation-mistralai/tests/__init__.py
+patching file packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_chat/test_mistralai_async_chat.yaml
+patching file packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_chat/test_mistralai_async_streaming_chat.yaml
+patching file packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_chat/test_mistralai_chat.yaml
+patching file packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_chat/test_mistralai_streaming_chat.yaml
+patching file packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_embeddings/test_mistral_async_embeddings.yaml
+patching file packages/opentelemetry-instrumentation-mistralai/tests/cassettes/test_embeddings/test_ollama_embeddings.yaml
+patching file packages/opentelemetry-instrumentation-mistralai/tests/conftest.py
+patching file packages/opentelemetry-instrumentation-mistralai/tests/test_chat.py
+patching file packages/opentelemetry-instrumentation-mistralai/tests/test_embeddings.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/packages/opentelemetry-instrumentation-mistralai
+configfile: pyproject.toml
+plugins: asyncio-0.23.8, anyio-4.14.1, recording-0.13.4, sugar-1.0.0
+asyncio: mode=Mode.STRICT
+collecting ... collected 6 items
+
+tests/test_chat.py::test_mistralai_chat PASSED                           [ 16%]
+tests/test_chat.py::test_mistralai_streaming_chat PASSED                 [ 33%]
+tests/test_chat.py::test_mistralai_async_chat PASSED                     [ 50%]
+tests/test_chat.py::test_mistralai_async_streaming_chat PASSED           [ 66%]
+tests/test_embeddings.py::test_ollama_embeddings PASSED                  [ 83%]
+tests/test_embeddings.py::test_mistral_async_embeddings PASSED           [100%]
+
+============================== 6 passed in 0.24s ===============================
+reward=1 graded=6 found=0 failed=0 parsed=6 framework=pytest exit_code=0

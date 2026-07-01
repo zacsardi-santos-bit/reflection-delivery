@@ -1,0 +1,23 @@
+{
+ "task": "biomejs-biome-5326",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds FixKind::Unsafe + AddDependency/RemoveDependency BatchMutation autofix to use_exhaustive_dependencies.rs (~320 LoC) and guards code-action validation on already-invalid source; 28 F2P + 4 P2P snapshot tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

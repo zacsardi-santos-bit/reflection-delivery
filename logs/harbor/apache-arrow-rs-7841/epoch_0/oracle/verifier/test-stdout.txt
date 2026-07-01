@@ -1,0 +1,70 @@
+patching file parquet/tests/arrow_reader/mod.rs
+patching file parquet/tests/arrow_reader/statistics.rs
+   Compiling arrow-cast v55.2.0 (/workspace/repo/arrow-cast)
+   Compiling arrow-json v55.2.0 (/workspace/repo/arrow-json)
+   Compiling parquet v55.2.0 (/workspace/repo/parquet)
+   Compiling arrow v55.2.0 (/workspace/repo/arrow)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.20s
+────────────
+ Nextest run ID 61ddcde3-23ec-46a1-813c-86e9a609e51b with nextest profile: default
+    Starting 57 tests across 1 binary (1 test skipped)
+        PASS [   0.172s] ( 1/57) parquet::arrow_reader bad_data::test_invalid_files
+        PASS [   0.181s] ( 2/57) parquet::arrow_reader bad_data::test_parquet_1481
+        PASS [   0.197s] ( 3/57) parquet::arrow_reader statistics::missing_null_counts_as_zero
+        PASS [   0.232s] ( 4/57) parquet::arrow_reader statistics::test::alltypes_plain
+        PASS [   0.240s] ( 5/57) parquet::arrow_reader statistics::test::fixed_length_decimal_legacy
+        PASS [   0.241s] ( 6/57) parquet::arrow_reader statistics::test::nan_in_stats
+        PASS [   0.244s] ( 7/57) parquet::arrow_reader bad_data::test_arrow_rs_gh_6229_dict_header
+        PASS [   0.245s] ( 8/57) parquet::arrow_reader bad_data::test_arrow_rs_gh_6229_dict_levels
+        PASS [   0.257s] ( 9/57) parquet::arrow_reader bad_data::test_arrow_rs_gh_45185_dict_levels
+        PASS [   0.273s] (10/57) parquet::arrow_reader statistics::test::alltypes_tiny_pages
+        PASS [   0.273s] (11/57) parquet::arrow_reader statistics::test::roundtrip_empty
+        PASS [   0.312s] (12/57) parquet::arrow_reader bad_data::test_arrow_gh_41321
+        PASS [   0.336s] (13/57) parquet::arrow_reader bad_data::test_arrow_gh_41317
+        PASS [   0.340s] (14/57) parquet::arrow_reader statistics::test_boolean
+        PASS [   0.341s] (15/57) parquet::arrow_reader statistics::test_binary_view
+        PASS [   0.359s] (16/57) parquet::arrow_reader statistics::test_column_not_found
+        PASS [   0.371s] (17/57) parquet::arrow_reader statistics::test_byte
+        PASS [   0.376s] (18/57) parquet::arrow_reader statistics::test_column_non_existent
+        PASS [   0.355s] (19/57) parquet::arrow_reader statistics::test_dates_32_diff_rg_sizes
+        PASS [   0.315s] (20/57) parquet::arrow_reader statistics::test_decimal64
+        PASS [   0.325s] (21/57) parquet::arrow_reader statistics::test_decimal128
+        PASS [   0.319s] (22/57) parquet::arrow_reader statistics::test_decimal32
+        PASS [   0.327s] (23/57) parquet::arrow_reader statistics::test_decimal_256
+        PASS [   0.376s] (24/57) parquet::arrow_reader statistics::test_dates_64_diff_rg_sizes
+        PASS [   0.327s] (25/57) parquet::arrow_reader statistics::test_float16
+        PASS [   0.321s] (26/57) parquet::arrow_reader statistics::test_float_16
+        PASS [   0.328s] (27/57) parquet::arrow_reader statistics::test_float64
+        PASS [   0.399s] (28/57) parquet::arrow_reader statistics::test_dictionary
+        PASS [   0.357s] (29/57) parquet::arrow_reader statistics::test_float_32
+        PASS [   0.373s] (30/57) parquet::arrow_reader statistics::test_int32_range
+        PASS [   0.380s] (31/57) parquet::arrow_reader statistics::test_float_64
+        PASS [   0.577s] (32/57) parquet::arrow_reader statistics::test_data_page_stats_with_all_null_page
+        PASS [   0.466s] (33/57) parquet::arrow_reader statistics::test_int_16
+        PASS [   0.452s] (34/57) parquet::arrow_reader statistics::test_int_32
+        PASS [   0.440s] (35/57) parquet::arrow_reader statistics::test_int_8
+        PASS [   0.456s] (36/57) parquet::arrow_reader statistics::test_int_64
+        PASS [   0.381s] (37/57) parquet::arrow_reader statistics::test_multiple_data_pages_nulls_and_negatives
+        PASS [   0.387s] (38/57) parquet::arrow_reader statistics::test_missing_statistics
+        PASS [   0.417s] (39/57) parquet::arrow_reader statistics::test_max_and_min_value_truncated
+        PASS [   0.369s] (40/57) parquet::arrow_reader statistics::test_one_row_group_without_null
+        PASS [   0.391s] (41/57) parquet::arrow_reader statistics::test_one_row_group_with_null_and_negative
+        PASS [   0.390s] (42/57) parquet::arrow_reader statistics::test_period_in_column_names
+        PASS [   0.355s] (43/57) parquet::arrow_reader statistics::test_time32_millisecond_diff_rg_sizes
+        PASS [   0.349s] (44/57) parquet::arrow_reader statistics::test_time32_second_diff_rg_sizes
+        PASS [   0.481s] (45/57) parquet::arrow_reader statistics::test_numeric_limits_float
+        PASS [   0.468s] (46/57) parquet::arrow_reader statistics::test_numeric_limits_unsigned
+        PASS [   0.332s] (47/57) parquet::arrow_reader statistics::test_time64_nanosecond_diff_rg_sizes
+        PASS [   0.335s] (48/57) parquet::arrow_reader statistics::test_time64_microsecond_diff_rg_sizes
+        PASS [   0.489s] (49/57) parquet::arrow_reader statistics::test_numeric_limits_signed
+        PASS [   0.277s] (50/57) parquet::arrow_reader statistics::test_two_row_group_with_null
+        PASS [   0.277s] (51/57) parquet::arrow_reader statistics::test_two_row_groups_with_all_nulls_in_one
+        PASS [   0.402s] (52/57) parquet::arrow_reader statistics::test_timestamp
+        PASS [   0.327s] (53/57) parquet::arrow_reader statistics::test_uint
+        PASS [   0.355s] (54/57) parquet::arrow_reader statistics::test_timestamp_diff_rg_sizes
+        PASS [   0.256s] (55/57) parquet::arrow_reader statistics::test_uint32_range
+        PASS [   0.245s] (56/57) parquet::arrow_reader statistics::test_utf8_view
+        PASS [   0.259s] (57/57) parquet::arrow_reader statistics::test_utf8
+────────────
+     Summary [   1.206s] 57 tests run: 57 passed, 1 skipped
+reward=1 graded=57 found=12 failed=0 parsed=57 framework=cargo exit_code=0

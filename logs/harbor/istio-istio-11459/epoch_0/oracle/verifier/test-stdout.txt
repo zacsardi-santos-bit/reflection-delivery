@@ -1,0 +1,84 @@
+patching file pilot/pkg/networking/plugin/authz/rbac_test.go
+patching file pilot/pkg/networking/plugin/authz/util_test.go
+{"Time":"2026-06-29T15:32:36.573493076Z","Action":"start","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz"}
+{"Time":"2026-06-29T15:32:36.581755452Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestIsRbacEnabled"}
+{"Time":"2026-06-29T15:32:36.581792262Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestIsRbacEnabled","Output":"=== RUN   TestIsRbacEnabled\n"}
+{"Time":"2026-06-29T15:32:36.581844512Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestIsRbacEnabled","Output":"--- PASS: TestIsRbacEnabled (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.581870022Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestIsRbacEnabled","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.581906002Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestBuildTCPFilter"}
+{"Time":"2026-06-29T15:32:36.581928172Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestBuildTCPFilter","Output":"=== RUN   TestBuildTCPFilter\n"}
+{"Time":"2026-06-29T15:32:36.582896183Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestBuildTCPFilter","Output":"--- PASS: TestBuildTCPFilter (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.582926383Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestBuildTCPFilter","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.582949783Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestBuildHTTPFilter"}
+{"Time":"2026-06-29T15:32:36.582971823Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestBuildHTTPFilter","Output":"=== RUN   TestBuildHTTPFilter\n"}
+{"Time":"2026-06-29T15:32:36.583791444Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestBuildHTTPFilter","Output":"--- PASS: TestBuildHTTPFilter (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.583819984Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestBuildHTTPFilter","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.583843474Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfig"}
+{"Time":"2026-06-29T15:32:36.583866264Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfig","Output":"=== RUN   TestConvertRbacRulesToFilterConfig\n"}
+{"Time":"2026-06-29T15:32:36.584519544Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfig","Output":"--- PASS: TestConvertRbacRulesToFilterConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.584555714Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfig","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.584579774Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfigForServiceWithBothHTTPAndTCP"}
+{"Time":"2026-06-29T15:32:36.584601734Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfigForServiceWithBothHTTPAndTCP","Output":"=== RUN   TestConvertRbacRulesToFilterConfigForServiceWithBothHTTPAndTCP\n"}
+{"Time":"2026-06-29T15:32:36.584630714Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfigForServiceWithBothHTTPAndTCP","Output":"--- PASS: TestConvertRbacRulesToFilterConfigForServiceWithBothHTTPAndTCP (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.584655034Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfigForServiceWithBothHTTPAndTCP","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.584678514Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfigPermissive"}
+{"Time":"2026-06-29T15:32:36.584706545Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfigPermissive","Output":"=== RUN   TestConvertRbacRulesToFilterConfigPermissive\n"}
+{"Time":"2026-06-29T15:32:36.584885425Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfigPermissive","Output":"--- PASS: TestConvertRbacRulesToFilterConfigPermissive (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.584910255Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertRbacRulesToFilterConfigPermissive","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.584933665Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestCreateServiceMetadata"}
+{"Time":"2026-06-29T15:32:36.584957745Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestCreateServiceMetadata","Output":"=== RUN   TestCreateServiceMetadata\n"}
+{"Time":"2026-06-29T15:32:36.584985085Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestCreateServiceMetadata","Output":"2026-06-29T15:32:36.584909Z\terror\trbac\tno namespace for service svc-name.test-ns\n"}
+{"Time":"2026-06-29T15:32:36.585014685Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestCreateServiceMetadata","Output":"--- PASS: TestCreateServiceMetadata (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585040995Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestCreateServiceMetadata","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585063985Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestServiceMetadataMatch"}
+{"Time":"2026-06-29T15:32:36.585085655Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestServiceMetadataMatch","Output":"=== RUN   TestServiceMetadataMatch\n"}
+{"Time":"2026-06-29T15:32:36.585109445Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestServiceMetadataMatch","Output":"--- PASS: TestServiceMetadataMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585132335Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestServiceMetadataMatch","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585159275Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestGenerateMetadataStringMatcher"}
+{"Time":"2026-06-29T15:32:36.585182245Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestGenerateMetadataStringMatcher","Output":"=== RUN   TestGenerateMetadataStringMatcher\n"}
+{"Time":"2026-06-29T15:32:36.585205955Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestGenerateMetadataStringMatcher","Output":"--- PASS: TestGenerateMetadataStringMatcher (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585228865Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestGenerateMetadataStringMatcher","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585251745Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestCreateDynamicMetadataMatcher"}
+{"Time":"2026-06-29T15:32:36.585273355Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestCreateDynamicMetadataMatcher","Output":"=== RUN   TestCreateDynamicMetadataMatcher\n"}
+{"Time":"2026-06-29T15:32:36.585296875Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestCreateDynamicMetadataMatcher","Output":"--- PASS: TestCreateDynamicMetadataMatcher (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585319595Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestCreateDynamicMetadataMatcher","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585342515Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestStringMatch"}
+{"Time":"2026-06-29T15:32:36.585370835Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestStringMatch","Output":"=== RUN   TestStringMatch\n"}
+{"Time":"2026-06-29T15:32:36.585394115Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestStringMatch","Output":"--- PASS: TestStringMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585416795Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestStringMatch","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585439875Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToCidr"}
+{"Time":"2026-06-29T15:32:36.585462145Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToCidr","Output":"=== RUN   TestConvertToCidr\n"}
+{"Time":"2026-06-29T15:32:36.585490295Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToCidr","Output":"--- PASS: TestConvertToCidr (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585512655Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToCidr","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585535425Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToPort"}
+{"Time":"2026-06-29T15:32:36.585557545Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToPort","Output":"=== RUN   TestConvertToPort\n"}
+{"Time":"2026-06-29T15:32:36.585581255Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToPort","Output":"--- PASS: TestConvertToPort (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585604175Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToPort","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585626845Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToHeaderMatcher"}
+{"Time":"2026-06-29T15:32:36.585648605Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToHeaderMatcher","Output":"=== RUN   TestConvertToHeaderMatcher\n"}
+{"Time":"2026-06-29T15:32:36.585672165Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToHeaderMatcher","Output":"--- PASS: TestConvertToHeaderMatcher (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585695075Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestConvertToHeaderMatcher","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585717705Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestIsKeyBinary"}
+{"Time":"2026-06-29T15:32:36.585743005Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestIsKeyBinary","Output":"=== RUN   TestIsKeyBinary\n"}
+{"Time":"2026-06-29T15:32:36.585780315Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestIsKeyBinary","Output":"--- PASS: TestIsKeyBinary (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585804505Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestIsKeyBinary","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585828405Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestExtractNameInBrackets"}
+{"Time":"2026-06-29T15:32:36.585852665Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestExtractNameInBrackets","Output":"=== RUN   TestExtractNameInBrackets\n"}
+{"Time":"2026-06-29T15:32:36.585886535Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestExtractNameInBrackets","Output":"--- PASS: TestExtractNameInBrackets (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.585916365Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestExtractNameInBrackets","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.585948076Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestExtractActualServiceAccount"}
+{"Time":"2026-06-29T15:32:36.585971146Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestExtractActualServiceAccount","Output":"=== RUN   TestExtractActualServiceAccount\n"}
+{"Time":"2026-06-29T15:32:36.585997406Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestExtractActualServiceAccount","Output":"--- PASS: TestExtractActualServiceAccount (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.586034466Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestExtractActualServiceAccount","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.586057846Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestValidateRule"}
+{"Time":"2026-06-29T15:32:36.586079736Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestValidateRule","Output":"=== RUN   TestValidateRule\n"}
+{"Time":"2026-06-29T15:32:36.586103216Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestValidateRule","Output":"--- PASS: TestValidateRule (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.586125886Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestValidateRule","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.586148526Z","Action":"run","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestValidateBinding"}
+{"Time":"2026-06-29T15:32:36.586170206Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestValidateBinding","Output":"=== RUN   TestValidateBinding\n"}
+{"Time":"2026-06-29T15:32:36.586194766Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestValidateBinding","Output":"--- PASS: TestValidateBinding (0.00s)\n"}
+{"Time":"2026-06-29T15:32:36.586218856Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Test":"TestValidateBinding","Elapsed":0}
+{"Time":"2026-06-29T15:32:36.586244946Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:36.586319786Z","Action":"output","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Output":"ok  \tistio.io/istio/pilot/pkg/networking/plugin/authz\t0.012s\n"}
+{"Time":"2026-06-29T15:32:36.586348976Z","Action":"pass","Package":"istio.io/istio/pilot/pkg/networking/plugin/authz","Elapsed":0.013}
+reward=1 graded=19 found=19 failed=0 parsed=19 framework=go exit_code=0

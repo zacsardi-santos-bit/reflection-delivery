@@ -1,0 +1,46 @@
+patching file tests/test_infer/test_batch_bucket.py
+patching file tests/test_infer/test_config_and_struct.py
+patching file tests/test_infer/test_kvcache_manager.py
+patching file tests/test_infer/test_request_handler.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+collecting ... collected 4 items / 1 error
+
+==================================== ERRORS ====================================
+____________ ERROR collecting tests/test_infer/test_batch_bucket.py ____________
+ImportError while importing test module '/workspace/repo/tests/test_infer/test_batch_bucket.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_infer/test_batch_bucket.py:4: in <module>
+    from colossalai.inference.batch_bucket import BatchBucket
+E   ModuleNotFoundError: No module named 'colossalai.inference.batch_bucket'
+------------------------------- Captured stdout --------------------------------
+Triton is not installed. Please install Triton to use Triton kernels.
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/transformers/utils/generic.py:441
+  /usr/local/lib/python3.11/site-packages/transformers/utils/generic.py:441: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+    _torch_pytree._register_pytree_node(
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+../../usr/local/lib/python3.11/site-packages/transformers/utils/generic.py:309
+  /usr/local/lib/python3.11/site-packages/transformers/utils/generic.py:309: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+    _torch_pytree._register_pytree_node(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_infer/test_batch_bucket.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+========================= 4 warnings, 1 error in 2.68s =========================
+sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+reward=0 graded=5 found=0 failed=0 parsed=0 framework=pytest exit_code=2

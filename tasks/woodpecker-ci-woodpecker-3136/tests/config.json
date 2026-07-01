@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pipeline -count=1",
+  "test_files": [
+    "pipeline/error_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline::TestExitError",
+    "go.woodpecker-ci.org/woodpecker/v2/pipeline::TestOomError"
+  ],
+  "PASS_TO_PASS": []
+}

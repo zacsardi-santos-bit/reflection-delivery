@@ -1,0 +1,7 @@
+I'm working with the Babel plugin that compiles explicit resource management syntax — the async disposable declarations — and I've found several correctness bugs in the compiled output that I need fixed.
+
+First, when an object has an async disposal property that is explicitly set to null (not just absent), the compiled code should treat that as an invalid disposable and throw an appropriate error. Right now it incorrectly falls back to using the synchronous disposal method in that case. The error message is also wrong — it currently references a disposal-related property name rather than indicating that the object is not in a disposable state.
+
+Second, when multiple null async disposable resources are declared in the same block, the compiled output currently generates an unnecessary async delay for each null entry, which causes observable differences in microtask timing compared to what a native implementation would do. Multiple null async disposals should be collapsed together so they don't multiply the async overhead.
+
+Third, when a synchronous disposal method is used as a fallback inside an async disposal context, two things go wrong: if that synchronous method throws, the error should be wrapped and propagated asynchronously so that other pending async work can interleave before any catch block handles the error. And if the synchronous method returns a Promise, that return value should be completely ignored — it should not be awaited by the disposal machinery.

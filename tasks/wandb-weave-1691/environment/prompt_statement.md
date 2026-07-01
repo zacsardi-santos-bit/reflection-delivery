@@ -1,0 +1,7 @@
+I need to add an expression-based query filtering capability to the call trace server. Right now, when I query calls, I can only filter by metadata like op names or call IDs — I can't filter based on what's actually stored in a call's inputs or outputs. I'd like to be able to write structured filter expressions that let me say things like "only return calls where the input value is greater than 5" or "find calls where the output string contains a certain substring."
+
+The filter expression system should support comparison operators (equals, greater-than, greater-than-or-equal), logical operators (AND, OR, NOT), and the ability to reference nested field values using dot notation. Array elements within nested fields should be accessible using dot-notation numeric indices. I'd also like type conversion support so I can treat a stored JSON value as a specific type — and if the conversion isn't possible for a given record, that record should just be excluded rather than causing a crash.
+
+Substring matching is also important, and it should support both case-sensitive and case-insensitive modes.
+
+On top of this, I need a new stats/count endpoint that accepts the same filter expression but returns only the total count of matching calls rather than the full records. This should always produce the same count as the number of results the regular query endpoint would return for the same filter.

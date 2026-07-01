@@ -1,0 +1,63 @@
+patching file internal/controllers/module_nmc_reconciler_test.go
+patching file internal/controllers/nmc_reconciler_test.go
+patching file internal/filter/filter_test.go
+patching file internal/nmc/helper_test.go
+patching file internal/worker/imagepuller_test.go
+patching file internal/worker/pullsecrets_test.go
+patching file internal/worker/worker_test.go
+# github.com/kubernetes-sigs/kernel-module-management/internal/nmc [github.com/kubernetes-sigs/kernel-module-management/internal/nmc.test]
+internal/nmc/helper_test.go:88:5: unknown field ModuleItem in struct literal of type struct{Name string "json:\"name\""; Namespace string "json:\"namespace\""; Config "github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig "json:\"config\""; ServiceAccountName string "json:\"serviceAccountName\""}
+internal/nmc/helper_test.go:88:28: undefined: kmmv1beta1.ModuleItem
+internal/nmc/helper_test.go:91:5: unknown field ModuleItem in struct literal of type struct{Name string "json:\"name\""; Namespace string "json:\"namespace\""; Config "github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig "json:\"config\""; ServiceAccountName string "json:\"serviceAccountName\""}
+internal/nmc/helper_test.go:91:28: undefined: kmmv1beta1.ModuleItem
+internal/nmc/helper_test.go:97:99: not enough arguments in call to nmcHelper.SetModuleConfig
+	have (*"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModulesConfig, *"github.com/kubernetes-sigs/kernel-module-management/internal/api".ModuleLoaderData, *"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig)
+	want ("context".Context, *"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModulesConfig, string, string, *"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig)
+internal/nmc/helper_test.go:107:5: unknown field ModuleItem in struct literal of type struct{Name string "json:\"name\""; Namespace string "json:\"namespace\""; Config "github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig "json:\"config\""; ServiceAccountName string "json:\"serviceAccountName\""}
+internal/nmc/helper_test.go:107:28: undefined: kmmv1beta1.ModuleItem
+internal/nmc/helper_test.go:113:5: unknown field ModuleItem in struct literal of type struct{Name string "json:\"name\""; Namespace string "json:\"namespace\""; Config "github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig "json:\"config\""; ServiceAccountName string "json:\"serviceAccountName\""}
+internal/nmc/helper_test.go:113:28: undefined: kmmv1beta1.ModuleItem
+internal/nmc/helper_test.go:123:99: not enough arguments in call to nmcHelper.SetModuleConfig
+	have (*"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModulesConfig, *"github.com/kubernetes-sigs/kernel-module-management/internal/api".ModuleLoaderData, *"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig)
+	want ("context".Context, *"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModulesConfig, string, string, *"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig)
+internal/nmc/helper_test.go:123:99: too many errors
+# github.com/kubernetes-sigs/kernel-module-management/internal/worker [github.com/kubernetes-sigs/kernel-module-management/internal/worker.test]
+internal/worker/imagepuller_test.go:122:43: too many arguments in call to NewImagePuller
+	have (string, authn.Keychain, logr.Logger)
+	want (string, logr.Logger)
+internal/worker/imagepuller_test.go:164:58: too many arguments in call to NewImagePuller
+	have (string, authn.Keychain, logr.Logger)
+	want (string, logr.Logger)
+internal/worker/pullsecrets_test.go:13:14: undefined: ReadKubernetesSecrets
+# github.com/kubernetes-sigs/kernel-module-management/internal/filter [github.com/kubernetes-sigs/kernel-module-management/internal/filter.test]
+internal/filter/filter_test.go:514:7: unknown field ModuleItem in struct literal of type struct{Name string "json:\"name\""; Namespace string "json:\"namespace\""; Config "github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig "json:\"config\""; ServiceAccountName string "json:\"serviceAccountName\""}
+internal/filter/filter_test.go:514:30: undefined: kmmv1beta1.ModuleItem
+internal/filter/filter_test.go:520:7: unknown field ModuleItem in struct literal of type struct{Name string "json:\"name\""; Namespace string "json:\"namespace\""; Config "github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig "json:\"config\""; ServiceAccountName string "json:\"serviceAccountName\""}
+internal/filter/filter_test.go:520:30: undefined: kmmv1beta1.ModuleItem
+# github.com/kubernetes-sigs/kernel-module-management/internal/controllers [github.com/kubernetes-sigs/kernel-module-management/internal/controllers.test]
+internal/controllers/module_nmc_reconciler_test.go:543:46: not enough arguments in call to helper.EXPECT().SetModuleConfig
+	have (*"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModulesConfig, *"github.com/kubernetes-sigs/kernel-module-management/internal/api".ModuleLoaderData, *"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig)
+	want (interface{}, interface{}, interface{}, interface{}, interface{})
+internal/controllers/module_nmc_reconciler_test.go:563:46: not enough arguments in call to helper.EXPECT().SetModuleConfig
+	have (*"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModulesConfig, *"github.com/kubernetes-sigs/kernel-module-management/internal/api".ModuleLoaderData, *"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".ModuleConfig)
+	want (interface{}, interface{}, interface{}, interface{}, interface{})
+internal/controllers/module_nmc_reconciler_test.go:620:61: not enough arguments in call to helper.EXPECT().RemoveModuleConfig
+	have (*"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModulesConfig, string, string)
+	want (interface{}, interface{}, interface{}, interface{})
+internal/controllers/module_nmc_reconciler_test.go:662:61: not enough arguments in call to helper.EXPECT().RemoveModuleConfig
+	have (*"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModulesConfig, string, string)
+	want (interface{}, interface{}, interface{}, interface{})
+internal/controllers/module_nmc_reconciler_test.go:680:61: not enough arguments in call to helper.EXPECT().RemoveModuleConfig
+	have (*"github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModulesConfig, string, string)
+	want (interface{}, interface{}, interface{}, interface{})
+internal/controllers/nmc_reconciler_test.go:97:4: unknown field ModuleItem in struct literal of type "github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModuleSpec
+internal/controllers/nmc_reconciler_test.go:97:27: undefined: kmmv1beta1.ModuleItem
+internal/controllers/nmc_reconciler_test.go:104:4: unknown field ModuleItem in struct literal of type "github.com/kubernetes-sigs/kernel-module-management/api/v1beta1".NodeModuleSpec
+internal/controllers/nmc_reconciler_test.go:104:27: undefined: kmmv1beta1.ModuleItem
+internal/controllers/nmc_reconciler_test.go:111:27: undefined: kmmv1beta1.ModuleItem
+internal/controllers/nmc_reconciler_test.go:111:27: too many errors
+FAIL	github.com/kubernetes-sigs/kernel-module-management/internal/controllers [build failed]
+FAIL	github.com/kubernetes-sigs/kernel-module-management/internal/filter [build failed]
+FAIL	github.com/kubernetes-sigs/kernel-module-management/internal/nmc [build failed]
+FAIL	github.com/kubernetes-sigs/kernel-module-management/internal/worker [build failed]
+reward=0 graded=5 found=5 failed=5 parsed=4 framework=go exit_code=1

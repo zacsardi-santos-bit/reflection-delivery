@@ -1,0 +1,17 @@
+patching file packages/core/src/mcp/token-storage/base-token-storage.test.ts
+patching file packages/core/src/mcp/token-storage/file-token-storage.test.ts
+
+ RUN  v3.2.4 /workspace/repo/packages/core
+      Coverage enabled with v8
+
+ ✓ src/mcp/token-storage/base-token-storage.test.ts (12 tests) 6ms
+ ✓ src/mcp/token-storage/file-token-storage.test.ts (16 tests) 618ms
+
+ Test Files  2 passed (2)
+      Tests  28 passed (28)
+   Start at  15:20:10
+   Duration  1.97s (transform 129ms, setup 58ms, collect 137ms, tests 625ms, environment 0ms, prepare 282ms)
+
+JUNIT report written to /workspace/repo/packages/core/junit.xml
+ % Coverage report from v8
+reward=1 graded=28 found=0 failed=0 parsed=0 framework=vitest exit_code=0

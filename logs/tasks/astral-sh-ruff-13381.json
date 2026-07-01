@@ -1,0 +1,23 @@
+{
+ "task": "astral-sh-ruff-13381",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits ruff_python_formatter expr_subscript.rs, parentheses.rs, stmt_function_def.rs, preview.rs to fix return-type parenthesization; F2P `ruff_python_formatter_fixtures format`/`black_compatibility` snapshot tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 8,
+  "shallow": true
+ }
+}

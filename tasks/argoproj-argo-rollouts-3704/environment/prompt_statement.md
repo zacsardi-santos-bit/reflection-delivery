@@ -1,0 +1,5 @@
+I'm working on the Prometheus metric provider in Argo Rollouts and I need to add support for range queries. Right now the provider can only do instant (point-in-time) queries, but I'd like to be able to specify a start time, end time, and step interval so the query covers a window of time. The time boundaries should accept flexible expressions that can compute dynamic timestamps — like "one hour before a given date" — rather than fixed values.
+
+The range query results should produce a flat collection of all values across all returned time series, which can then be evaluated with the existing success/failure conditions.
+
+I also need proper error handling: if the start time, end time, or step duration expressions can't be parsed, the analysis should fail with a descriptive error message that clearly identifies which parameter failed. Additionally, there should be a utility function for evaluating time expressions that returns a proper time value or an error if the expression is invalid or doesn't produce a time result.

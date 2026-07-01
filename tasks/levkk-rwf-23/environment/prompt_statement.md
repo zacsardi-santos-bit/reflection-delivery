@@ -1,0 +1,5 @@
+I'm working with a Rust web framework and I need to add support for parsing multipart form data from incoming requests. Right now, the framework can only parse URL-encoded form submissions — when a request comes in with a multipart content type and a boundary parameter in the header, the form data method either fails or returns nothing.
+
+I'd like to extend the existing form data handling so that when the content type is multipart, the framework reads the boundary from the content type header, splits the body into parts using that boundary, and makes each field accessible by name. Text fields should be retrievable as typed values using the existing generic field accessor, exactly the same way URL-encoded form fields work today.
+
+The standard format for multipart bodies uses a boundary string to delimit each part, each part starts with a content disposition header that specifies the field name, followed by a blank line and the field value, and the whole body ends with a closing boundary marker. The implementation should handle this standard format correctly.

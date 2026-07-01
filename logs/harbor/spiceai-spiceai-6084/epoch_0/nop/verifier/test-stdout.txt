@@ -1,0 +1,58 @@
+patching file crates/db_connection_pool/src/dbconnection/snowflakeconn.rs
+   Compiling db_connection_pool v1.4.0-unstable (/workspace/repo/crates/db_connection_pool)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.60s
+────────────
+ Nextest run ID e27bd81a-fef7-473b-a10b-9a6a27746fb7 with nextest profile: default
+    Starting 9 tests across 1 binary
+        PASS [   0.110s] (1/9) db_connection_pool dbconnection::snowflakeconn::tests::test_parse_snowflake_data_type_errors
+        FAIL [   0.112s] (2/9) db_connection_pool dbconnection::snowflakeconn::tests::test_sf_ts_tz_int64_to_arrow_timestamp
+  stdout ───
+
+    running 1 test
+    test dbconnection::snowflakeconn::tests::test_sf_ts_tz_int64_to_arrow_timestamp ... FAILED
+
+    failures:
+
+    failures:
+        dbconnection::snowflakeconn::tests::test_sf_ts_tz_int64_to_arrow_timestamp
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.01s
+
+  stderr ───
+
+    thread 'dbconnection::snowflakeconn::tests::test_sf_ts_tz_int64_to_arrow_timestamp' panicked at crates/db_connection_pool/src/dbconnection/snowflakeconn.rs:793:14:
+    Should cast Snowflake int64 timestamp to Arrow timestamp: UnableToCastSnowflakeTimestamp { reason: "value is not a struct" }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 7 tests still running
+        PASS [   0.117s] (3/9) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_ntz_to_arrow_timestamp
+        PASS [   0.118s] (4/9) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_ntz_to_arrow_timestamp_invalid_input
+        PASS [   0.118s] (5/9) db_connection_pool dbconnection::snowflakeconn::tests::test_parse_snowflake_data_type
+        PASS [   0.119s] (6/9) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_timestamp_tz_to_arrow_timestamp
+        PASS [   0.119s] (7/9) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_fixed_point_number_to_decimal_i32
+        FAIL [   0.121s] (8/9) db_connection_pool dbconnection::snowflakeconn::tests::test_sf_ts_ntz_int64_to_arrow_timestamp
+  stdout ───
+
+    running 1 test
+    test dbconnection::snowflakeconn::tests::test_sf_ts_ntz_int64_to_arrow_timestamp ... FAILED
+
+    failures:
+
+    failures:
+        dbconnection::snowflakeconn::tests::test_sf_ts_ntz_int64_to_arrow_timestamp
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.01s
+
+  stderr ───
+
+    thread 'dbconnection::snowflakeconn::tests::test_sf_ts_ntz_int64_to_arrow_timestamp' panicked at crates/db_connection_pool/src/dbconnection/snowflakeconn.rs:776:14:
+    Should cast Snowflake int64 timestamp to Arrow timestamp: UnableToCastSnowflakeTimestamp { reason: "value is not a struct" }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.123s] (9/9) db_connection_pool dbconnection::snowflakeconn::tests::test_cast_sf_fixed_point_number_to_decimal_i64
+────────────
+     Summary [   0.124s] 9 tests run: 7 passed, 2 failed, 0 skipped
+        FAIL [   0.112s] (2/9) db_connection_pool dbconnection::snowflakeconn::tests::test_sf_ts_tz_int64_to_arrow_timestamp
+        FAIL [   0.121s] (8/9) db_connection_pool dbconnection::snowflakeconn::tests::test_sf_ts_ntz_int64_to_arrow_timestamp
+error: test run failed
+reward=0 graded=11 found=0 failed=0 parsed=9 framework=cargo exit_code=100

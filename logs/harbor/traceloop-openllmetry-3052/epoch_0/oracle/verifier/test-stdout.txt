@@ -1,0 +1,19 @@
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/cassettes/test_responses/test_responses.yaml
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/cassettes/test_responses/test_responses_tool_calls.yaml
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/cassettes/test_responses/test_responses_with_input_history.yaml
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.3, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/packages/opentelemetry-instrumentation-openai
+configfile: pytest.ini
+plugins: anyio-4.14.1, sugar-1.0.0, recording-0.13.2, asyncio-0.23.8
+asyncio: mode=Mode.AUTO
+collecting ... collected 3 items
+
+packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py::test_responses PASSED [ 33%]
+packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py::test_responses_with_input_history PASSED [ 66%]
+packages/opentelemetry-instrumentation-openai/tests/traces/test_responses.py::test_responses_tool_calls PASSED [100%]
+
+============================== 3 passed in 3.30s ===============================
+reward=1 graded=3 found=0 failed=0 parsed=3 framework=pytest exit_code=0

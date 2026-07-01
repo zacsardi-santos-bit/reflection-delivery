@@ -1,0 +1,53 @@
+patching file packages/perseus/src/widgets/__tests__/__snapshots__/explanation.test.ts.snap
+patching file packages/perseus/src/widgets/__tests__/__snapshots__/graded-group.test.ts.snap
+patching file packages/perseus/src/widgets/__tests__/explanation.cypress.ts
+patching file packages/perseus/src/widgets/__tests__/explanation.test.ts
+patching file packages/perseus/src/widgets/__tests__/graded-group.test.ts
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ /workspace/repo/node_modules/.bin/jest packages/perseus/src/widgets/__tests__/explanation.test.ts packages/perseus/src/widgets/__tests__/graded-group.test.ts --coverage=false --watchAll=false --verbose
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS packages/perseus/src/widgets/__tests__/explanation.test.ts (10.155 s)
+  Explanation
+    ✓ should snapshot (46 ms)
+    ✓ should snapshot when expanded (111 ms)
+    ✓ can be expanded and collapsed with a mouse click (170 ms)
+    ✓ can be expanded and collapsed with the keyboard - Enter key (137 ms)
+    ✓ can be expanded and collapsed with the keyboard - Space bar (139 ms)
+    ✓ uses transitions when it is expanded/collapsed (116 ms)
+    ✓ does NOT use transitions when the user prefers reduced motion (100 ms)
+    ✓ communicates changes to its parent by using the provided 'onChange' callback (3 ms)
+    ✓ should return an empty object for getUserInput() (9 ms)
+    ✓ should return a zero score for simpleValidate() (8 ms)
+    static validate
+      ✓ should always return 0 points (1 ms)
+
+PASS packages/perseus/src/widgets/__tests__/graded-group.test.ts (12.282 s)
+  graded-group
+    ✓ should snapshot (60 ms)
+    ✓ should snapshot (23 ms)
+    on desktop
+      ✓ should be able to be answered correctly (940 ms)
+      ✓ should be able to be answered incorrectly (414 ms)
+      ✓ should display an error if not fully answered (139 ms)
+      ✓ should be able to reveal the hint (54 ms)
+      ✓ should be able to hide the hint (81 ms)
+    on mobile
+      ✓ should be able to be answered correctly (419 ms)
+      ✓ should be able to be answered incorrectly (384 ms)
+      ✓ should let the user retry when checked if not fully answered (327 ms)
+      ✓ should be able to reveal the hint (48 ms)
+      ✓ should be able to hide the hint (77 ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       23 passed, 23 total
+Snapshots:   7 passed, 7 total
+Time:        13.131 s
+Ran all test suites matching /packages\/perseus\/src\/widgets\/__tests__\/explanation.test.ts|packages\/perseus\/src\/widgets\/__tests__\/graded-group.test.ts/i.
+Done in 14.93s.
+reward=1 graded=22 found=0 failed=0 parsed=0 framework=jest exit_code=0

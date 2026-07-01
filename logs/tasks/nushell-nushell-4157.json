@@ -1,0 +1,23 @@
+{
+ "task": "nushell-nushell-4157",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `fn shell_arg_escape` that single-quote-wraps args with unsafe chars (`'\"'\"'` idiom) and applies it in spawn_sh_command; tests run `^echo \"a;b\"` and `assert_eq!(actual.out, \"a;b\")`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 7,
+  "shallow": true
+ }
+}

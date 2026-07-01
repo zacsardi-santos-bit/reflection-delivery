@@ -1,0 +1,52 @@
+patching file tests/e2e_test_data/libfuncs/array
+patching file tests/test_data/fib_array.casm
+patching file tests/test_data/fib_array.sierra
+    Finished test [unoptimized + debuginfo] target(s) in 0.46s
+warning: the following packages contain code that will be rejected by a future version of Rust: lalrpop v0.19.8
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+────────────
+ Nextest run ID 39e5c339-de07-46d0-b109-d4eb90fd0d02 with nextest profile: default
+    Starting 1 test across 1 binary (21 tests skipped)
+        FAIL [   6.000s] (1/1) tests::e2e_test libfunc_e2e::array
+  stdout ───
+
+    running 1 test
+    test libfunc_e2e::array ... FAILED
+
+    failures:
+
+    failures:
+        libfunc_e2e::array
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 21 filtered out; finished in 5.99s
+
+  stderr ───
+    thread 'libfunc_e2e::array' panicked at 'assertion failed: `(left == right)`
+
+    Diff < left / right > :
+    <error: Unexpected argument type. Expected: "core::array::Array::<core::felt>", found: "@core::array::Array::<core::felt>".
+    < --> lib.cairo:2:23
+    <    array_get::<felt>(arr, idx)
+    <                      ^*^
+    <
+    <error: ref argument must be a mutable variable.
+    < --> lib.cairo:2:23
+    <    array_get::<felt>(arr, idx)
+    <                      ^*^
+    <
+    <error: ref argument must be passed with a preceding 'ref'.
+    < --> lib.cairo:2:23
+    <    array_get::<felt>(arr, idx)
+    <                      ^*^
+    <
+    <
+
+    ', /workspace/repo/crates/cairo-lang-semantic/src/test_utils.rs:75:9
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   6.002s] 1 test run: 0 passed, 1 failed, 21 skipped
+        FAIL [   6.000s] (1/1) tests::e2e_test libfunc_e2e::array
+error: test run failed
+reward=0 graded=13 found=1 failed=1 parsed=1 framework=cargo exit_code=100

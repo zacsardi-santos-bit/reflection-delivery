@@ -1,0 +1,23 @@
+{
+ "task": "langchain-ai-langchain-12830",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds stream/astream/_iter_next_step/_aiter_next_step, AddableDict chunk merging, and RUN_KEY/RunInfo(run_id) with simplified iterator API; tests do `output=[a for a in agent.stream(...)]`, `[a async for a in agent.astream(...)]`, and `assert isinstance(outputs[-1][RUN_KEY].run_id, UUID)`."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 49,
+  "shallow": true
+ }
+}

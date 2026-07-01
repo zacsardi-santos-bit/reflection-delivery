@@ -1,0 +1,41 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed_test.py /workspace/repo/tests/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk_test.py /workspace/repo/tests/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk_test.py /workspace/repo/tests/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks_test.py /workspace/repo/tests/providers/azure/services/vm/vm_service_test.py -v",
+  "test_files": [
+    "tests/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed_test.py",
+    "tests/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk_test.py",
+    "tests/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk_test.py",
+    "tests/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks_test.py",
+    "tests/providers/azure/services/vm/vm_service_test.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.providers.azure.services.defender.defender_assessments_vm_endpoint_protection_installed.defender_assessments_vm_endpoint_protection_installed_test.Test_defender_assessments_vm_endpoint_protection_installed::test_defender_no_subscriptions",
+    "tests.providers.azure.services.defender.defender_assessments_vm_endpoint_protection_installed.defender_assessments_vm_endpoint_protection_installed_test.Test_defender_assessments_vm_endpoint_protection_installed::test_defender_subscriptions_with_healthy_assessments",
+    "tests.providers.azure.services.defender.defender_assessments_vm_endpoint_protection_installed.defender_assessments_vm_endpoint_protection_installed_test.Test_defender_assessments_vm_endpoint_protection_installed::test_defender_subscriptions_with_unhealthy_assessments",
+    "tests.providers.azure.services.defender.defender_assessments_vm_endpoint_protection_installed.defender_assessments_vm_endpoint_protection_installed_test.Test_defender_assessments_vm_endpoint_protection_installed::test_defender_subscriptions_with_no_assessments",
+    "tests.providers.azure.services.vm.vm_ensure_attached_disks_encrypted_with_cmk.vm_ensure_attached_disks_encrypted_with_cmk_test.Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_subscription_one_disk_attached_encrypt_cmk",
+    "tests.providers.azure.services.vm.vm_ensure_attached_disks_encrypted_with_cmk.vm_ensure_attached_disks_encrypted_with_cmk_test.Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_unattached_disk_encrypt_cmk",
+    "tests.providers.azure.services.vm.vm_ensure_attached_disks_encrypted_with_cmk.vm_ensure_attached_disks_encrypted_with_cmk_test.Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_subscription_empty",
+    "tests.providers.azure.services.vm.vm_ensure_attached_disks_encrypted_with_cmk.vm_ensure_attached_disks_encrypted_with_cmk_test.Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_no_subscriptions",
+    "tests.providers.azure.services.vm.vm_ensure_attached_disks_encrypted_with_cmk.vm_ensure_attached_disks_encrypted_with_cmk_test.Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_subscription_two_disk_attached_encrypt_cmk_and_pk",
+    "tests.providers.azure.services.vm.vm_ensure_attached_disks_encrypted_with_cmk.vm_ensure_attached_disks_encrypted_with_cmk_test.Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_subscription_one_disk_attached_encrypt_pk",
+    "tests.providers.azure.services.vm.vm_ensure_unattached_disks_encrypted_with_cmk.vm_ensure_unattached_disks_encrypted_with_cmk_test.Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_subscription_empty",
+    "tests.providers.azure.services.vm.vm_ensure_unattached_disks_encrypted_with_cmk.vm_ensure_unattached_disks_encrypted_with_cmk_test.Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_subscription_two_unattached_disk_encrypt_cmk_and_pk",
+    "tests.providers.azure.services.vm.vm_ensure_unattached_disks_encrypted_with_cmk.vm_ensure_unattached_disks_encrypted_with_cmk_test.Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_one_unattached_disk_encrypt_cmk",
+    "tests.providers.azure.services.vm.vm_ensure_unattached_disks_encrypted_with_cmk.vm_ensure_unattached_disks_encrypted_with_cmk_test.Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_no_subscriptions",
+    "tests.providers.azure.services.vm.vm_ensure_unattached_disks_encrypted_with_cmk.vm_ensure_unattached_disks_encrypted_with_cmk_test.Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_one_unattached_disk_encrypt_pk",
+    "tests.providers.azure.services.vm.vm_ensure_unattached_disks_encrypted_with_cmk.vm_ensure_unattached_disks_encrypted_with_cmk_test.Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_attached_disk_encrypt_cmk",
+    "tests.providers.azure.services.vm.vm_ensure_using_managed_disks.vm_ensure_using_managed_disks_test.Test_vm_ensure_using_managed_disks::test_vm_using_not_managed_data_disks",
+    "tests.providers.azure.services.vm.vm_ensure_using_managed_disks.vm_ensure_using_managed_disks_test.Test_vm_ensure_using_managed_disks::test_vm_ensure_using_managed_disks",
+    "tests.providers.azure.services.vm.vm_ensure_using_managed_disks.vm_ensure_using_managed_disks_test.Test_vm_ensure_using_managed_disks::test_vm_subscriptions",
+    "tests.providers.azure.services.vm.vm_ensure_using_managed_disks.vm_ensure_using_managed_disks_test.Test_vm_ensure_using_managed_disks::test_vm_no_subscriptions",
+    "tests.providers.azure.services.vm.vm_ensure_using_managed_disks.vm_ensure_using_managed_disks_test.Test_vm_ensure_using_managed_disks::test_vm_using_not_managed_os_disk",
+    "tests.providers.azure.services.vm.vm_service_test.Test_AppInsights_Service::test__get_virtual_machines",
+    "tests.providers.azure.services.vm.vm_service_test.Test_AppInsights_Service::test__get_client__",
+    "tests.providers.azure.services.vm.vm_service_test.Test_AppInsights_Service::test__get_disks",
+    "tests.providers.azure.services.vm.vm_service_test.Test_AppInsights_Service::test__get_subscriptions__"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "service postgresql start && service redis-server start && sleep 5 && su postgres -c \"createuser -s netbox\" 2>/dev/null || true && cd /workspace/repo/netbox && DJANGO_SETTINGS_MODULE=netbox.settings python -m pytest dcim/tests/test_models.py::CablePathTestCase -v",
+  "test_files": [
+    "netbox/dcim/tests/test_models.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "dcim.tests.test_models.CablePathTestCase::test_connection_via_circuit",
+    "dcim.tests.test_models.CablePathTestCase::test_connection_via_multiple_patches",
+    "dcim.tests.test_models.CablePathTestCase::test_connection_via_patched_circuit"
+  ],
+  "PASS_TO_PASS": [
+    "dcim.tests.test_models.CablePathTestCase::test_connection_via_patch",
+    "dcim.tests.test_models.CablePathTestCase::test_connection_via_stacked_rear_ports",
+    "dcim.tests.test_models.CablePathTestCase::test_direct_connection"
+  ]
+}

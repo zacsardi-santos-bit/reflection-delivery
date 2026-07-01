@@ -1,0 +1,22 @@
+patching file components/match_template/src/lib.rs
+Hunk #1 succeeded at 152 (offset 21 lines).
+   Compiling match_template v0.0.1 (/workspace/repo/components/match_template)
+    Finished dev [unoptimized + debuginfo] target(s) in 5.84s
+     Running target/debug/deps/match_template-ee9e2b43a80364ae
+
+running 3 tests
+PASS [ 0.000s] match_template tests::test_wildcard
+PASS [ 0.000s] match_template tests::test_wildcard_arm
+PASS [ 0.000s] match_template tests::test_basic
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+   Doc-tests match_template
+
+running 2 tests
+test src/lib.rs -  (line 19) ... ignored
+test src/lib.rs -  (line 8) ... ignored
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out
+
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=cargo exit_code=0

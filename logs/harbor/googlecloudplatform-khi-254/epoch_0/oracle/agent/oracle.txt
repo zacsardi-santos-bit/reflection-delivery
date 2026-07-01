@@ -1,0 +1,252 @@
+patching file cmd/kubernetes-history-inspector/main.go
+patching file cmd/reference-generator/main.go
+patching file docs/en/khi-task-system-concept.md
+patching file inspection.patch
+patching file pkg/common/parserutil/converter.go (renamed from pkg/core/inspection/logutil/converter.go)
+patching file pkg/common/parserutil/converter_test.go (renamed from pkg/core/inspection/logutil/converter_test.go)
+patching file pkg/common/patternfinder/finder.go
+patching file pkg/common/patternfinder/interface.go
+patching file pkg/common/patternfinder/naive.go
+patching file pkg/common/patternfinder/trie.go
+patching file pkg/common/structured/mergeoption.go
+patching file pkg/common/structured/merger.go
+patching file pkg/common/structured/merger_test.go
+patching file pkg/common/typeddict/typeddict.go
+patching file pkg/core/inspection/logger/format_test.go
+patching file pkg/core/inspection/logger/severity_filter.go
+patching file pkg/core/inspection/logger/severity_filter_test.go
+patching file pkg/core/inspection/logger/tee_handler.go
+patching file pkg/core/inspection/logger/tee_handler_test.go
+patching file pkg/core/inspection/logger/throttle_filter.go
+patching file pkg/core/inspection/logger/throttle_filter_test.go
+patching file pkg/core/inspection/logutil/doc.go
+patching file pkg/core/inspection/metadata/conformance_test.go
+patching file pkg/core/inspection/metadata/keys.go
+patching file pkg/core/inspection/metadata/log_metadata.go
+patching file pkg/core/inspection/metadata/log_metadata_test.go
+patching file pkg/core/inspection/metadata/progress_metadata.go
+patching file pkg/core/inspection/progressutil/progress_updator_test.go
+patching file pkg/core/inspection/runner.go
+patching file pkg/core/inspection/server.go
+patching file pkg/core/inspection/test/testutil.go
+patching file pkg/core/task/runner.go
+patching file pkg/core/task/runner_test.go
+patching file pkg/core/task/task.go
+patching file pkg/core/task/taskset.go
+patching file pkg/core/task/taskset_test.go
+patching file pkg/core/task/taskutil.go
+patching file pkg/core/task/taskutil_test.go
+patching file pkg/document/model/feature.go
+patching file pkg/document/model/form.go
+patching file pkg/document/model/inspection_type.go
+patching file pkg/inspection/cached_task/cached_task.go (renamed from pkg/core/inspection/taskbase/cached_task.go)
+patching file pkg/inspection/cached_task/cached_task_test.go (renamed from pkg/core/inspection/taskbase/cached_task_test.go)
+patching file pkg/inspection/common/task_registrer.go
+patching file pkg/inspection/common/task_registrer_test.go
+patching file pkg/inspection/contract/contextkey.go (renamed from pkg/task/inspection/contract/contextkey.go)
+patching file pkg/inspection/contract/ioconfig.go (renamed from pkg/task/inspection/contract/ioconfig.go)
+patching file pkg/inspection/contract/ioconfig_test.go (renamed from pkg/task/inspection/contract/ioconfig_test.go)
+patching file pkg/inspection/contract/taskmode.go (renamed from pkg/task/inspection/contract/taskmode.go)
+patching file pkg/inspection/form/fileform.go (renamed from pkg/core/inspection/formtask/fileform.go)
+patching file pkg/inspection/form/fileform_test.go (renamed from pkg/core/inspection/formtask/fileform_test.go)
+patching file pkg/inspection/form/formbase.go (renamed from pkg/core/inspection/formtask/formbase.go)
+patching file pkg/inspection/form/formbase_test.go (renamed from pkg/core/inspection/formtask/formbase_test.go)
+patching file pkg/inspection/form/test/testutil.go (renamed from pkg/core/inspection/formtask/test/testutil.go)
+patching file pkg/inspection/form/textform.go (renamed from pkg/core/inspection/formtask/textform.go)
+patching file pkg/inspection/form/textform_test.go (renamed from pkg/core/inspection/formtask/textform_test.go)
+patching file pkg/inspection/inspectiondata/result_repository.go (renamed from pkg/task/inspection/contract/result_repository.go)
+patching file pkg/inspection/inspectiondata/result_repository_test.go (renamed from pkg/task/inspection/contract/result_repository_test.go)
+patching file pkg/inspection/logger/attr.go (renamed from pkg/core/inspection/logger/attr.go)
+patching file pkg/inspection/logger/format.go (renamed from pkg/core/inspection/logger/format.go)
+patching file pkg/inspection/logger/logger.go (renamed from pkg/core/inspection/logger/global_logger.go)
+patching file pkg/inspection/logger/logger_test.go (renamed from pkg/core/inspection/logger/global_logger_test.go)
+patching file pkg/inspection/metadata/error/conformance_test.go (renamed from pkg/task/inspection/contract/task_registry.go)
+patching file pkg/inspection/metadata/error/error.go (renamed from pkg/core/inspection/metadata/error_metadata.go)
+patching file pkg/inspection/metadata/form/form.go (renamed from pkg/core/inspection/metadata/form_metadata.go)
+patching file pkg/inspection/metadata/form/form_test.go (renamed from pkg/core/inspection/metadata/form_metadata_test.go)
+patching file pkg/inspection/metadata/header/conformance_test.go (renamed from pkg/core/inspection/logger/doc.go)
+patching file pkg/inspection/metadata/header/header.go (renamed from pkg/core/inspection/metadata/header_metadata.go)
+patching file pkg/inspection/metadata/label.go (renamed from pkg/core/inspection/metadata/label.go)
+patching file pkg/inspection/metadata/labelopt.go (renamed from pkg/core/inspection/metadata/labelopt.go)
+patching file pkg/inspection/metadata/logger/logger.go
+patching file pkg/inspection/metadata/logger/logger_test.go
+patching file pkg/inspection/metadata/logger/throttle.go (renamed from pkg/core/inspection/logger/throttle.go)
+patching file pkg/inspection/metadata/logger/throttle_test.go (renamed from pkg/core/inspection/logger/throttle_test.go)
+patching file pkg/inspection/metadata/metadata.go (renamed from pkg/core/inspection/metadata/metadata.go)
+patching file pkg/inspection/metadata/plan/plan.go (renamed from pkg/core/inspection/metadata/plan_metadata.go)
+patching file pkg/inspection/metadata/plan/plan_test.go (renamed from pkg/task/inspection/impl/registration.go)
+patching file pkg/inspection/metadata/progress/conformance_test.go
+patching file pkg/inspection/metadata/progress/indeterminate_updator.go (renamed from pkg/core/inspection/progressutil/indeterminate_updator.go)
+patching file pkg/inspection/metadata/progress/indeterminate_updator_test.go (renamed from pkg/core/inspection/progressutil/indeterminate_updator_test.go)
+patching file pkg/inspection/metadata/progress/progress.go
+patching file pkg/inspection/metadata/progress/progress_test.go (renamed from pkg/core/inspection/metadata/progress_metadata_test.go)
+patching file pkg/inspection/metadata/progress/progress_updator.go (renamed from pkg/core/inspection/progressutil/progress_updator.go)
+patching file pkg/inspection/metadata/progress/progress_util.go (renamed from pkg/core/inspection/progressutil/progress_util.go)
+patching file pkg/inspection/metadata/progress/progress_util_test.go (renamed from pkg/core/inspection/progressutil/progress_util_test.go)
+patching file pkg/inspection/metadata/query/query.go (renamed from pkg/core/inspection/metadata/query_metadata.go)
+patching file pkg/inspection/metadata/query/query_test.go (renamed from pkg/core/inspection/metadata/query_metadata_test.go)
+patching file pkg/inspection/task/common.go (renamed from pkg/task/inspection/impl/time.go)
+patching file pkg/inspection/task/label.go (renamed from pkg/task/inspection/contract/tasklabel.go)
+patching file pkg/inspection/task/label/form.go (renamed from pkg/task/inspection/contract/form.go)
+patching file pkg/inspection/task/label/query.go (renamed from pkg/task/inspection/contract/query.go)
+patching file pkg/inspection/task/label/query_test.go (renamed from pkg/task/inspection/contract/query_test.go)
+patching file pkg/inspection/task/serializer/serializer.go
+patching file pkg/inspection/task/task.go (renamed from pkg/core/inspection/taskbase/task.go)
+patching file pkg/inspection/taskfilter/filter.go (renamed from pkg/core/task/registry.go)
+patching file pkg/inspection/test/testutil.go
+patching file pkg/log/common_field_set.go (renamed from pkg/model/log/common_field_set.go)
+patching file pkg/log/log.go (renamed from pkg/model/log/log.go)
+patching file pkg/log/log_test.go (renamed from pkg/model/log/log_test.go)
+patching file pkg/log/structure/merger/mergeconfigresolver.go (renamed from pkg/common/structured/mergeconfigresolver.go)
+patching file pkg/log/structure/merger/mergeconfigresolver_test.go (renamed from pkg/common/structured/mergeconfigresolver_test.go)
+patching file pkg/model/binarychunk/builder.go
+patching file pkg/model/binarychunk/builder_test.go
+patching file pkg/model/history/builder.go
+patching file pkg/model/history/builder_test.go
+patching file pkg/model/history/changeset.go
+patching file pkg/model/history/changeset_test.go
+patching file pkg/model/history/grouper/basic_groupers.go
+patching file pkg/model/history/grouper/basic_groupers_test.go
+patching file pkg/model/history/grouper/type.go
+patching file pkg/model/history/staging.go
+patching file pkg/model/k8s/configsource/reflect.go (renamed from pkg/model/k8s/reflect.go)
+patching file pkg/model/k8s/configsource/reflect_test.go (renamed from pkg/model/k8s/reflect_test.go)
+patching file pkg/model/k8s/default_merge_config.go
+patching file pkg/model/k8s/merge_config.go
+patching file pkg/parser/k8s/klog.go (renamed from pkg/core/inspection/logutil/klog.go)
+patching file pkg/parser/k8s/klog_test.go (renamed from pkg/core/inspection/logutil/klog_test.go)
+patching file pkg/parser/parser.go (renamed from pkg/core/inspection/parsertask/parser.go)
+patching file pkg/popup/popup_test.go (renamed from pkg/server/popup/popup_test.go)
+patching file pkg/popup/types.go (renamed from pkg/server/popup/types.go)
+patching file pkg/rawlogs/interfaces.go (renamed from pkg/core/inspection/registry.go)
+patching file pkg/rawlogs/repository.go
+patching file pkg/rawlogs/repository_test.go
+patching file pkg/server/server.go
+patching file pkg/server/server_test.go
+patching file pkg/server/upload/util.go
+patching file pkg/source/apache-airflow/airflow-scheduler/parser.go
+patching file pkg/source/apache-airflow/airflow-worker/parser.go
+patching file pkg/source/apache-airflow/dag-processor-manager/parser.go
+patching file pkg/source/common/k8s_audit/recorder/bindingrecorder/recorder.go
+patching file pkg/source/common/k8s_audit/recorder/commonrecorder/recorder.go
+patching file pkg/source/common/k8s_audit/recorder/containerstatusrecorder/recorder.go
+patching file pkg/source/common/k8s_audit/recorder/endpointslicerecorder/recorder.go
+patching file pkg/source/common/k8s_audit/recorder/noderecorder/recorder.go
+patching file pkg/source/common/k8s_audit/recorder/ownerreferencerecorder/recorder.go
+patching file pkg/source/common/k8s_audit/recorder/snegrecorder/recorder.go
+patching file pkg/source/common/k8s_audit/recorder/statusrecorder/recorder.go
+patching file pkg/source/common/k8s_audit/recorder/task.go
+patching file pkg/source/common/k8s_audit/task_registrer.go
+patching file pkg/source/common/k8s_audit/taskid/taskid.go
+patching file pkg/source/common/k8s_audit/types/type.go
+patching file pkg/source/common/k8s_audit/v2commonlogparse/task.go
+patching file pkg/source/common/k8s_audit/v2logconvert/task.go
+patching file pkg/source/common/k8s_audit/v2logconvert/task_test.go
+patching file pkg/source/common/k8s_audit/v2manifestgenerate/task.go
+patching file pkg/source/common/k8s_audit/v2manifestgenerate/task_test.go
+patching file pkg/source/common/k8s_audit/v2timelinegrouping/task.go
+patching file pkg/source/common/k8s_audit/v2timelinegrouping/task_test.go
+patching file pkg/source/gcp/api/accesstoken/oauth.go
+patching file pkg/source/gcp/api/gcp_client.go
+patching file pkg/source/gcp/api/interface.go
+patching file pkg/source/gcp/log/fieldset.go
+patching file pkg/source/gcp/log/fieldset_test.go
+patching file pkg/source/gcp/query/query.go
+patching file pkg/source/gcp/query/queryutil/parallel.go
+patching file pkg/source/gcp/task/autocomplete.go
+patching file pkg/source/gcp/task/cloud-composer/form/autocomplete.go
+patching file pkg/source/gcp/task/cloud-composer/form/form.go
+patching file pkg/source/gcp/task/cloud-composer/parser.go
+patching file pkg/source/gcp/task/cloud-composer/prefix.go
+patching file pkg/source/gcp/task/cloud-composer/query/query.go
+patching file pkg/source/gcp/task/cloud-composer/query/query_test.go
+patching file pkg/source/gcp/task/cloud-composer/taskid/taskid.go
+patching file pkg/source/gcp/task/constant.go
+patching file pkg/source/gcp/task/form.go
+patching file pkg/source/gcp/task/form_test.go
+patching file pkg/source/gcp/task/gcpcommon/filename.go
+patching file pkg/source/gcp/task/gcpcommon/filename_test.go
+patching file pkg/source/gcp/task/gdcv-for-baremetal/autocomplete.go
+patching file pkg/source/gcp/task/gdcv-for-baremetal/prefix.go
+patching file pkg/source/gcp/task/gdcv-for-vmware/autocomplete.go
+patching file pkg/source/gcp/task/gdcv-for-vmware/prefix.go
+patching file pkg/source/gcp/task/gke-on-aws/autocomplete.go
+patching file pkg/source/gcp/task/gke-on-aws/prefix.go
+patching file pkg/source/gcp/task/gke-on-azure/autocomplete.go
+patching file pkg/source/gcp/task/gke-on-azure/prefix.go
+patching file pkg/source/gcp/task/gke/autocomplete.go
+patching file pkg/source/gcp/task/gke/autoscaler/parser.go
+patching file pkg/source/gcp/task/gke/autoscaler/query.go
+patching file pkg/source/gcp/task/gke/autoscaler/taskid/taskid.go
+patching file pkg/source/gcp/task/gke/compute_api/parser.go
+patching file pkg/source/gcp/task/gke/compute_api/query.go
+patching file pkg/source/gcp/task/gke/compute_api/taskid/taskid.go
+patching file pkg/source/gcp/task/gke/gke_audit/parser.go
+patching file pkg/source/gcp/task/gke/gke_audit/query.go
+patching file pkg/source/gcp/task/gke/gke_audit/taskid/taskid.go
+patching file pkg/source/gcp/task/gke/k8s_audit/fieldextractor/fieldextractor.go
+patching file pkg/source/gcp/task/gke/k8s_audit/parser_v2.go
+patching file pkg/source/gcp/task/gke/k8s_audit/query/query.go
+patching file pkg/source/gcp/task/gke/k8s_audit/taskid/taskid.go
+patching file pkg/source/gcp/task/gke/k8s_container/form.go
+patching file pkg/source/gcp/task/gke/k8s_container/parser.go
+patching file pkg/source/gcp/task/gke/k8s_container/parser_test.go
+patching file pkg/source/gcp/task/gke/k8s_container/query.go
+patching file pkg/source/gcp/task/gke/k8s_container/taskid/taskid.go
+patching file pkg/source/gcp/task/gke/k8s_control_plane_component/componentparser/controllermanager.go
+patching file pkg/source/gcp/task/gke/k8s_control_plane_component/componentparser/default.go
+patching file pkg/source/gcp/task/gke/k8s_control_plane_component/componentparser/scheduler.go
+patching file pkg/source/gcp/task/gke/k8s_control_plane_component/componentparser/type.go
+patching file pkg/source/gcp/task/gke/k8s_control_plane_component/form.go
+patching file pkg/source/gcp/task/gke/k8s_control_plane_component/parser.go
+patching file pkg/source/gcp/task/gke/k8s_control_plane_component/query.go
+patching file pkg/source/gcp/task/gke/k8s_control_plane_component/taskid/taskid.go
+patching file pkg/source/gcp/task/gke/k8s_event/parser.go
+patching file pkg/source/gcp/task/gke/k8s_event/query.go
+patching file pkg/source/gcp/task/gke/k8s_event/taskid/taskid.go
+patching file pkg/source/gcp/task/gke/k8s_node/parser.go
+patching file pkg/source/gcp/task/gke/k8s_node/query.go
+patching file pkg/source/gcp/task/gke/k8s_node/taskid/taskid.go
+patching file pkg/source/gcp/task/gke/network_api/parser.go
+patching file pkg/source/gcp/task/gke/network_api/query.go
+patching file pkg/source/gcp/task/gke/network_api/taskid/taskid.go
+patching file pkg/source/gcp/task/gke/prefix.go
+patching file pkg/source/gcp/task/gke/serialport/parser.go
+patching file pkg/source/gcp/task/gke/serialport/parser_test.go
+patching file pkg/source/gcp/task/gke/serialport/query.go
+patching file pkg/source/gcp/task/gke/serialport/query_test.go
+patching file pkg/source/gcp/task/gke/serialport/taskid/taskid.go
+patching file pkg/source/gcp/task/multicloud_api/multicloud_api_taskid/taskid.go
+patching file pkg/source/gcp/task/multicloud_api/parser.go
+patching file pkg/source/gcp/task/multicloud_api/query.go
+patching file pkg/source/gcp/task/non_form_input.go
+patching file pkg/source/gcp/task/onprem_api/parser.go
+patching file pkg/source/gcp/task/onprem_api/query.go
+patching file pkg/source/gcp/task/onprem_api/taskid/taskid.go
+patching file pkg/source/gcp/task/query_resource_name_form.go
+patching file pkg/source/gcp/task_registrer.go
+patching file pkg/source/gcp/task_registrer_test.go
+patching file pkg/source/gcp/taskid/taskid.go
+patching file pkg/source/oss/fieldextractor/extractor.go
+patching file pkg/source/oss/form/audit.go
+patching file pkg/source/oss/log/fieldset_reader.go
+patching file pkg/source/oss/parser/audit.go
+patching file pkg/source/oss/parser/event.go
+patching file pkg/source/oss/parser/logfile-reader.go
+patching file pkg/source/oss/task_registerer.go
+patching file pkg/source/oss/taskid/taskid.go
+patching file pkg/task/core/contract/contextkey.go
+patching file pkg/task/core/contract/taskid/taskid.go (renamed from pkg/core/task/taskid/taskid.go)
+patching file pkg/task/core/contract/taskid/taskid_test.go (renamed from pkg/core/task/taskid/taskid_test.go)
+patching file pkg/task/inspection/contract/prefix.go
+patching file pkg/task/inspection/contract/request.go
+patching file pkg/task/inspection/contract/taskid.go
+patching file pkg/task/inspection/impl/serializer.go
+patching file pkg/task/test/testutil.go (renamed from pkg/core/task/test/testutil.go)
+patching file pkg/testutil/gcp/api/mock-client.go
+patching file pkg/testutil/gcp/log.go
+patching file pkg/testutil/inspection/conformance.go
+patching file pkg/testutil/metadata/conformance.go
+patching file pkg/testutil/parser/parser.go
+patching file pkg/testutil/testlog/mock.go
+patching file pkg/testutil/testlog/testlog.go

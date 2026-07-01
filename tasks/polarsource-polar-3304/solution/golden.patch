@@ -1,0 +1,2021 @@
+diff --git a/clients/apps/web/src/app/(topbar)/subscribe/success/page.tsx b/clients/apps/web/src/app/(topbar)/checkout/success/page.tsx
+similarity index 60%
+rename from clients/apps/web/src/app/(topbar)/subscribe/success/page.tsx
+rename to clients/apps/web/src/app/(topbar)/checkout/success/page.tsx
+index 394d3bbcc..d557309ad 100644
+--- a/clients/apps/web/src/app/(topbar)/subscribe/success/page.tsx
++++ b/clients/apps/web/src/app/(topbar)/checkout/success/page.tsx
+@@ -1,7 +1,7 @@
+-import SubscriptionSuccess from '@/components/Subscriptions/SubscriptionSuccess'
++import CheckoutSuccess from '@/components/Checkout/CheckoutSuccess'
+ import { PublicPageOrganizationContextProvider } from '@/providers/organization'
+ import { getServerSideAPI } from '@/utils/api/serverside'
+-import { Organization, ResponseError, SubscribeSession } from '@polar-sh/sdk'
++import { Checkout, Organization, ResponseError } from '@polar-sh/sdk'
+ import { notFound } from 'next/navigation'
+ 
+ export default async function Page({
+@@ -11,10 +11,10 @@ export default async function Page({
+ }) {
+   const api = getServerSideAPI()
+ 
+-  let subscribeSession: SubscribeSession | undefined
++  let checkout: Checkout | undefined
+ 
+   try {
+-    subscribeSession = await api.subscriptions.getSubscribeSession({
++    checkout = await api.checkouts.getCheckout({
+       id: searchParams.session_id,
+     })
+   } catch (e) {
+@@ -25,18 +25,10 @@ export default async function Page({
+     }
+   }
+ 
+-  if (!subscribeSession) {
+-    notFound()
+-  }
+-
+-  if (!subscribeSession.subscription_tier.organization_id) {
+-    notFound()
+-  }
+-
+   let organization: Organization | undefined
+   try {
+     organization = await api.organizations.get({
+-      id: subscribeSession.subscription_tier.organization_id,
++      id: checkout.product.organization_id,
+     })
+   } catch (e) {
+     if (e instanceof ResponseError && e.response.status === 404) {
+@@ -46,13 +38,9 @@ export default async function Page({
+     }
+   }
+ 
+-  if (!organization) {
+-    notFound()
+-  }
+-
+   return (
+     <PublicPageOrganizationContextProvider organization={organization}>
+-      <SubscriptionSuccess subscribeSession={subscribeSession} />
++      <CheckoutSuccess checkout={checkout} organization={organization} />
+     </PublicPageOrganizationContextProvider>
+   )
+ }
+diff --git a/clients/apps/web/src/app/[organization]/(sidebar)/donate/status/ClientPage.tsx b/clients/apps/web/src/app/[organization]/(sidebar)/donate/status/ClientPage.tsx
+index 758fa12c9..ec5665e99 100644
+--- a/clients/apps/web/src/app/[organization]/(sidebar)/donate/status/ClientPage.tsx
++++ b/clients/apps/web/src/app/[organization]/(sidebar)/donate/status/ClientPage.tsx
+@@ -1,10 +1,10 @@
+ 'use client'
+ 
+ import revalidate from '@/app/actions'
+-import SubscriptionTierCelebration from '@/components/Subscriptions/SubscriptionTierCelebration'
++import CheckoutCelebration from '@/components/Checkout/CheckoutCelebration'
+ import { useAuth } from '@/hooks/auth'
+ import { useSendMagicLink } from '@/hooks/magicLink'
+-import { Organization, SubscriptionTierType } from '@polar-sh/sdk'
++import { Organization } from '@polar-sh/sdk'
+ import Link from 'next/link'
+ import { useRouter } from 'next/navigation'
+ import Button from 'polarkit/components/ui/atoms/button'
+@@ -54,7 +54,7 @@ const ClientPage = ({
+     <>
+       <div className="mx-auto flex flex-col gap-16 p-4 md:mt-8 md:w-[768px] md:p-0">
+         <div className="flex flex-col items-center justify-center gap-4 text-center">
+-          <SubscriptionTierCelebration type={SubscriptionTierType.INDIVIDUAL} />
++          <CheckoutCelebration />
+           <p className="text-muted-foreground">Thank you!</p>
+         </div>
+ 
+diff --git a/clients/apps/web/src/app/[organization]/(sidebar)/subscriptions/ClientPage.tsx b/clients/apps/web/src/app/[organization]/(sidebar)/subscriptions/ClientPage.tsx
+index cda4179b1..e6366a4c0 100644
+--- a/clients/apps/web/src/app/[organization]/(sidebar)/subscriptions/ClientPage.tsx
++++ b/clients/apps/web/src/app/[organization]/(sidebar)/subscriptions/ClientPage.tsx
+@@ -75,7 +75,7 @@ const ClientPage: React.FC<OrganizationSubscriptionsPublicPageProps> = ({
+                     organization={organization}
+                     recurringInterval={recurringInterval}
+                     subscriptionTier={tier}
+-                    subscribePath="/api/subscribe"
++                    checkoutPath="/api/checkout"
+                   />
+                 ))}
+             </SubscriptionTierCard>
+diff --git a/clients/apps/web/src/app/[organization]/subscribe/ClientPage.tsx b/clients/apps/web/src/app/[organization]/subscribe/ClientPage.tsx
+index 03f58bb1c..201c9e243 100644
+--- a/clients/apps/web/src/app/[organization]/subscribe/ClientPage.tsx
++++ b/clients/apps/web/src/app/[organization]/subscribe/ClientPage.tsx
+@@ -109,7 +109,7 @@ export default function ClientPage({
+               organization={organization}
+               subscriptionTier={selectedTier}
+               recurringInterval={recurringInterval}
+-              subscribePath="/api/subscribe"
++              checkoutPath="/api/checkout"
+               variant="default"
+             />
+           ))}
+diff --git a/clients/apps/web/src/app/api/subscribe/route.ts b/clients/apps/web/src/app/api/checkout/route.ts
+similarity index 66%
+rename from clients/apps/web/src/app/api/subscribe/route.ts
+rename to clients/apps/web/src/app/api/checkout/route.ts
+index 4cc780fdf..5dc7a1ec3 100644
+--- a/clients/apps/web/src/app/api/subscribe/route.ts
++++ b/clients/apps/web/src/app/api/checkout/route.ts
+@@ -9,22 +9,16 @@ export async function GET(request: NextRequest) {
+   const api = getServerSideAPI()
+ 
+   const searchParams = request.nextUrl.searchParams
+-  const subscriptionTierId = searchParams.get('tier') as string
+   const priceId = searchParams.get('price') as string
+-  const organizationId = searchParams.get('organization_id') as
+-    | string
+-    | undefined
+ 
+   // Build success URL with custom domain support
+   const host = requestHost(request)
+-  const successURL = `${host.protocol}://${host.host}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`
++  const successURL = `${host.protocol}://${host.host}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
+ 
+   try {
+-    const { url } = await api.subscriptions.createSubscribeSession({
+-      subscribeSessionCreate: {
+-        tier_id: subscriptionTierId,
+-        price_id: priceId,
+-        organization_subscriber_id: organizationId,
++    const { url } = await api.checkouts.createCheckout({
++      checkoutCreate: {
++        product_price_id: priceId,
+         success_url: successURL,
+       },
+     })
+diff --git a/clients/apps/web/src/components/Subscriptions/SubscriptionTierCelebration.tsx b/clients/apps/web/src/components/Checkout/CheckoutCelebration.tsx
+similarity index 85%
+rename from clients/apps/web/src/components/Subscriptions/SubscriptionTierCelebration.tsx
+rename to clients/apps/web/src/components/Checkout/CheckoutCelebration.tsx
+index 923a999a8..e7a70fa8e 100644
+--- a/clients/apps/web/src/components/Subscriptions/SubscriptionTierCelebration.tsx
++++ b/clients/apps/web/src/components/Checkout/CheckoutCelebration.tsx
+@@ -1,23 +1,7 @@
+-import { SubscriptionTierType } from '@polar-sh/sdk'
+-import { useMemo } from 'react'
++interface CheckoutCelebrationProps {}
+ 
+-interface SubscriptionTierCelebrationProps {
+-  type: SubscriptionTierType
+-}
+-
+-const SubscriptionTierCelebration: React.FC<
+-  SubscriptionTierCelebrationProps
+-> = ({ type }) => {
+-  const [gradientColorStart, gradientColorEnd] = useMemo(() => {
+-    switch (type) {
+-      case SubscriptionTierType.FREE:
+-        return ['#3381FF', '#0054DB']
+-      case SubscriptionTierType.INDIVIDUAL:
+-        return ['#65ebc0', '#29dea5']
+-      case SubscriptionTierType.BUSINESS:
+-        return ['#d2a1ff', '#9d4cff']
+-    }
+-  }, [type])
++const CheckoutCelebration: React.FC<CheckoutCelebrationProps> = () => {
++  const [gradientColorStart, gradientColorEnd] = ['#d2a1ff', '#9d4cff']
+ 
+   return (
+     <svg
+@@ -125,4 +109,4 @@ const SubscriptionTierCelebration: React.FC<
+   )
+ }
+ 
+-export default SubscriptionTierCelebration
++export default CheckoutCelebration
+diff --git a/clients/apps/web/src/components/Subscriptions/SubscriptionSuccess.tsx b/clients/apps/web/src/components/Checkout/CheckoutSuccess.tsx
+similarity index 75%
+rename from clients/apps/web/src/components/Subscriptions/SubscriptionSuccess.tsx
+rename to clients/apps/web/src/components/Checkout/CheckoutSuccess.tsx
+index fd912a4d6..18c3d12a5 100644
+--- a/clients/apps/web/src/components/Subscriptions/SubscriptionSuccess.tsx
++++ b/clients/apps/web/src/components/Checkout/CheckoutSuccess.tsx
+@@ -2,7 +2,7 @@
+ 
+ import { useAuth } from '@/hooks'
+ import { useSendMagicLink } from '@/hooks/magicLink'
+-import { SubscribeSession } from '@polar-sh/sdk'
++import { Checkout, Organization } from '@polar-sh/sdk'
+ import Link from 'next/link'
+ import { useRouter } from 'next/navigation'
+ import Button from 'polarkit/components/ui/atoms/button'
+@@ -15,17 +15,15 @@ import {
+ } from 'polarkit/components/ui/atoms/card'
+ import { useCallback, useState } from 'react'
+ import { resolveBenefitIcon } from '../Benefit/utils'
+-import SubscriptionTierCelebration from './SubscriptionTierCelebration'
++import CheckoutCelebration from './CheckoutCelebration'
+ 
+-export const SubscriptionSuccess = (props: {
+-  subscribeSession: SubscribeSession
++export const CheckoutSuccess = (props: {
++  checkout: Checkout
++  organization: Organization
+ }) => {
+   const {
+-    subscribeSession: {
+-      customer_email: email,
+-      organization_name: organizationName,
+-      subscription_tier: subscriptionTier,
+-    },
++    checkout: { customer_email: email, product },
++    organization,
+   } = props
+   const router = useRouter()
+   const { currentUser } = useAuth()
+@@ -41,22 +39,22 @@ export const SubscriptionSuccess = (props: {
+ 
+     setEmailSigninLoading(true)
+     try {
+-      sendMagicLink(email, `/${organizationName}`)
++      sendMagicLink(email, `/${organization.name}`)
+     } catch (err) {
+       // TODO: error handling
+     } finally {
+       setEmailSigninLoading(false)
+     }
+-  }, [email, router, organizationName, sendMagicLink])
++  }, [email, router, organization, sendMagicLink])
+ 
+   return (
+     <>
+       <div className="mx-auto flex flex-col gap-16 p-4 md:mt-8 md:w-[768px] md:p-0">
+         <div className="flex flex-col items-center justify-center gap-4 text-center">
+-          <SubscriptionTierCelebration type={subscriptionTier.type} />
++          <CheckoutCelebration />
+           <p className="text-muted-foreground">Thank you!</p>
+           <h1 className="text-3xl">
+-            You&apos;re now a {subscriptionTier.name} subscriber
++            Your purchase of {product.name} is complete
+           </h1>
+         </div>
+ 
+@@ -64,15 +62,14 @@ export const SubscriptionSuccess = (props: {
+           <Card className="w-full md:w-1/2">
+             <CardHeader>
+               <CardTitle className="text-xl font-medium">
+-                Thank you for supporting {organizationName}!
++                Thank you for supporting {organization.name}!
+               </CardTitle>
+               <p className="text-muted-foreground text-sm">
+-                You&apos;re now eligible for the benefits in the{' '}
+-                {subscriptionTier.name} tier.
++                You&apos;re now eligible for the benefits of {product.name}.
+               </p>
+             </CardHeader>
+             <CardContent className="flex flex-col gap-y-1">
+-              {subscriptionTier.benefits.map((benefit) => (
++              {product.benefits.map((benefit) => (
+                 <div
+                   key={benefit.id}
+                   className="flex flex-row items-start text-blue-500 dark:text-blue-400"
+@@ -88,15 +85,15 @@ export const SubscriptionSuccess = (props: {
+             </CardContent>
+             <CardFooter className="flex justify-center">
+               {currentUser && (
+-                <Link className="grow" href={`/${organizationName}`}>
+-                  <Button className="w-full">Go to {organizationName}</Button>
++                <Link className="grow" href={`/${organization.name}`}>
++                  <Button className="w-full">Go to {organization.name}</Button>
+                 </Link>
+               )}
+               {!currentUser && (
+                 <div className="flex flex-col gap-4">
+                   <p className="text-muted-foreground text-sm">
+                     You now have an account with Polar! Sign in now to manage
+-                    your subscriptions and benefits.
++                    your purchases and benefits.
+                   </p>
+                   <Button
+                     className="w-full"
+@@ -116,4 +113,4 @@ export const SubscriptionSuccess = (props: {
+   )
+ }
+ 
+-export default SubscriptionSuccess
++export default CheckoutSuccess
+diff --git a/clients/apps/web/src/components/Organization/FreeTierSubscribe.tsx b/clients/apps/web/src/components/Organization/FreeTierSubscribe.tsx
+index d913935f2..fc568f646 100644
+--- a/clients/apps/web/src/components/Organization/FreeTierSubscribe.tsx
++++ b/clients/apps/web/src/components/Organization/FreeTierSubscribe.tsx
+@@ -17,9 +17,9 @@ import Input from 'polarkit/components/ui/atoms/input'
+ import { Form, FormField, FormMessage } from 'polarkit/components/ui/form'
+ import { useCallback, useState } from 'react'
+ import { SubmitHandler, useForm } from 'react-hook-form'
++import CheckoutCelebration from '../Checkout/CheckoutCelebration'
+ import { Modal } from '../Modal'
+ import SubscriptionGroupIcon from '../Subscriptions/SubscriptionGroupIcon'
+-import SubscriptionTierCelebration from '../Subscriptions/SubscriptionTierCelebration'
+ 
+ interface AuthenticatedFreeTierSubscribeProps {
+   organization: Organization
+@@ -211,7 +211,7 @@ export const AnonymousFreeTierSubscribe = ({
+           <div className="flex min-h-[240px] w-full flex-col items-center justify-center gap-y-6 px-16 py-10">
+             {success && (
+               <>
+-                <SubscriptionTierCelebration type={product.type} />
++                <CheckoutCelebration />
+                 <p className="text-muted-foreground text-center">Thank you!</p>
+                 <h2 className="text-center text-lg">
+                   You&apos;re now subscribed to {organization.name}
+diff --git a/clients/apps/web/src/components/Profile/HighlightedTiersEditor/HighlightedTiersEditor.tsx b/clients/apps/web/src/components/Profile/HighlightedTiersEditor/HighlightedTiersEditor.tsx
+index 4fca4f5eb..92b52ee13 100644
+--- a/clients/apps/web/src/components/Profile/HighlightedTiersEditor/HighlightedTiersEditor.tsx
++++ b/clients/apps/web/src/components/Profile/HighlightedTiersEditor/HighlightedTiersEditor.tsx
+@@ -133,7 +133,7 @@ export const HighlightedTiersEditor = ({
+                         organization={organization}
+                         subscriptionTier={tier}
+                         recurringInterval={recurringInterval}
+-                        subscribePath="/api/subscribe"
++                        checkoutPath="/api/checkout"
+                       />
+                     )}
+                   </>
+diff --git a/clients/apps/web/src/components/Profile/SubscriptionTierEditor/DraggableSubscriptionTierCard.tsx b/clients/apps/web/src/components/Profile/SubscriptionTierEditor/DraggableSubscriptionTierCard.tsx
+index 4d090a336..86fed7fe9 100644
+--- a/clients/apps/web/src/components/Profile/SubscriptionTierEditor/DraggableSubscriptionTierCard.tsx
++++ b/clients/apps/web/src/components/Profile/SubscriptionTierEditor/DraggableSubscriptionTierCard.tsx
+@@ -48,7 +48,7 @@ export const DraggableSubscriptionTierCard = ({
+               organization={organization}
+               subscriptionTier={subscriptionTier}
+               recurringInterval={recurringInterval}
+-              subscribePath="/api/subscribe"
++              checkoutPath="/api/checkout"
+             />
+           )}
+         </>
+diff --git a/clients/apps/web/src/components/Subscriptions/SubscribeNowWithModal.tsx b/clients/apps/web/src/components/Subscriptions/SubscribeNowWithModal.tsx
+index 67319d048..eaf0354d0 100644
+--- a/clients/apps/web/src/components/Subscriptions/SubscribeNowWithModal.tsx
++++ b/clients/apps/web/src/components/Subscriptions/SubscribeNowWithModal.tsx
+@@ -20,10 +20,10 @@ import Input from 'polarkit/components/ui/atoms/input'
+ import { Form, FormField, FormMessage } from 'polarkit/components/ui/form'
+ import { useCallback, useState } from 'react'
+ import { SubmitHandler, useForm } from 'react-hook-form'
++import CheckoutCelebration from '../Checkout/CheckoutCelebration'
+ import { CloseButton, Modal, ModalHeader } from '../Modal'
+ import { useModal } from '../Modal/useModal'
+ import Spinner from '../Shared/Spinner'
+-import SubscriptionTierCelebration from './SubscriptionTierCelebration'
+ 
+ const SubscribeNowWithModal = ({
+   organization,
+@@ -179,9 +179,7 @@ const LoggedInSubscribeModalContent = ({
+ 
+         {isSubscribed ? (
+           <div className="flex flex-col items-center gap-y-4">
+-            {subscription ? (
+-              <SubscriptionTierCelebration type={subscription?.product.type} />
+-            ) : null}
++            {subscription ? <CheckoutCelebration /> : null}
+ 
+             <p className="text-muted-foreground text-center">Thank you!</p>
+             <p>
+@@ -266,7 +264,7 @@ const AnonymousSubscribeModalContent = ({
+         <div className="flex w-full flex-col items-center justify-center gap-y-6">
+           <CloseButton hide={hide} className="absolute right-5 top-3" />
+ 
+-          <SubscriptionTierCelebration type={freeSubscriptionTier.type} />
++          <CheckoutCelebration />
+           <p className="text-muted-foreground text-center">Thank you!</p>
+           <h2 className="text-center text-lg">
+             You&apos;re now subscribed to {organization.name}
+diff --git a/clients/apps/web/src/components/Subscriptions/SubscriptionTierSubscribeButton.tsx b/clients/apps/web/src/components/Subscriptions/SubscriptionTierSubscribeButton.tsx
+index 14f0675cd..11a4676aa 100644
+--- a/clients/apps/web/src/components/Subscriptions/SubscriptionTierSubscribeButton.tsx
++++ b/clients/apps/web/src/components/Subscriptions/SubscriptionTierSubscribeButton.tsx
+@@ -1,9 +1,5 @@
+ import { useAuth } from '@/hooks'
+-import {
+-  useListAllOrganizations,
+-  useOrganizationSubscriptions,
+-  useUserSubscriptions,
+-} from '@/hooks/queries'
++import { useUserSubscriptions } from '@/hooks/queries'
+ import { api } from '@/utils/api'
+ import { formatCurrencyAndAmount } from '@/utils/money'
+ import {
+@@ -16,14 +12,7 @@ import {
+ } from '@polar-sh/sdk'
+ import Link from 'next/link'
+ import { useRouter } from 'next/navigation'
+-import Avatar from 'polarkit/components/ui/atoms/avatar'
+ import Button, { ButtonProps } from 'polarkit/components/ui/atoms/button'
+-import {
+-  Select,
+-  SelectContent,
+-  SelectItem,
+-  SelectTriggerBase,
+-} from 'polarkit/components/ui/atoms/select'
+ import { useCallback, useMemo, useState } from 'react'
+ import { ConfirmModal } from '../Modal/ConfirmModal'
+ 
+@@ -31,20 +20,16 @@ const buttonClasses =
+   'grow transition-colors dark:hover:border-[--var-dark-border-color] dark:hover:bg-[--var-dark-border-color] dark:hover:text-[--var-dark-fg-color]'
+ 
+ interface AnonymousSubscriptionTierSubscribeButtonProps {
+-  subscriptionTier: Product
+   price: ProductPrice
+-  subscribePath: string
++  checkoutPath: string
+   variant?: ButtonProps['variant']
+ }
+ 
+ const AnonymousSubscriptionTierSubscribeButton: React.FC<
+   AnonymousSubscriptionTierSubscribeButtonProps
+-> = ({ subscriptionTier, price, subscribePath, variant = 'outline' }) => {
++> = ({ price, checkoutPath, variant = 'outline' }) => {
+   return (
+-    <Link
+-      className="w-full"
+-      href={`${subscribePath}?tier=${subscriptionTier.id}&price=${price.id}`}
+-    >
++    <Link className="w-full" href={`${checkoutPath}?price=${price.id}`}>
+       <Button
+         className={variant === 'outline' ? buttonClasses : ''}
+         fullWidth
+@@ -61,7 +46,7 @@ interface AuthenticatedSubscriptionTierSubscribeButtonProps {
+   subscriptionTier: Product
+   price: ProductPrice
+   organization: Organization
+-  subscribePath: string
++  checkoutPath: string
+   variant?: ButtonProps['variant']
+ }
+ 
+@@ -72,43 +57,11 @@ const AuthenticatedSubscriptionTierSubscribeButton: React.FC<
+   subscriptionTier,
+   price,
+   organization,
+-  subscribePath,
++  checkoutPath,
+   variant = 'outline',
+ }) => {
+   const router = useRouter()
+ 
+-  const { data: organizationsList, isFetched: organizationsListFetched } =
+-    useListAllOrganizations(true)
+-
+-  const organizations = useMemo(
+-    () =>
+-      organizationsList &&
+-      organizationsList.items &&
+-      organizationsList.items.filter(
+-        (organization) => !organization.is_personal,
+-      ),
+-    [organizationsList],
+-  )
+-
+-  const [selectedSubscriber, setSelectedSubscriber] = useState<
+-    UserRead | Organization
+-  >(user)
+-
+-  const isUserSelected = selectedSubscriber.id === user.id
+-
+-  const onSubscriberSelect = (id: string) => {
+-    if (id === user.id) {
+-      setSelectedSubscriber(user)
+-    } else if (organizations) {
+-      const organizationIndex = organizations.findIndex(
+-        (organization) => organization.id === id,
+-      )
+-      if (organizationIndex > -1) {
+-        setSelectedSubscriber(organizations[organizationIndex])
+-      }
+-    }
+-  }
+-
+   const {
+     data: userSubscriptionsList,
+     refetch: refetchUserSubscriptions,
+@@ -119,21 +72,7 @@ const AuthenticatedSubscriptionTierSubscribeButton: React.FC<
+     10,
+     organization.platform,
+   )
+-
+-  const {
+-    data: organizationSubscriptionsList,
+-    refetch: refetchOrganizationSubscriptions,
+-    isFetched: organizationSubscriptionsListFetched,
+-  } = useOrganizationSubscriptions(
+-    !isUserSelected ? selectedSubscriber.id : undefined,
+-    organization.name,
+-    10,
+-    organization.platform,
+-  )
+-
+-  const subscriptions = isUserSelected
+-    ? userSubscriptionsList?.items
+-    : organizationSubscriptionsList?.items
++  const subscriptions = userSubscriptionsList?.items
+ 
+   const isSubscribed = useMemo(
+     () =>
+@@ -160,10 +99,7 @@ const AuthenticatedSubscriptionTierSubscribeButton: React.FC<
+ 
+   const [showConfirmModal, setShowConfirmModal] = useState(false)
+ 
+-  const fetched =
+-    organizationsListFetched &&
+-    (!isUserSelected || userSubscriptionsListFetched) &&
+-    (isUserSelected || organizationSubscriptionsListFetched)
++  const fetched = userSubscriptionsListFetched
+ 
+   const onUpgradeConfirm = useCallback(async () => {
+     if (!upgradableSubscription) {
+@@ -173,9 +109,7 @@ const AuthenticatedSubscriptionTierSubscribeButton: React.FC<
+       upgradableSubscription &&
+       upgradableSubscription.product.type === SubscriptionTierType.FREE
+     ) {
+-      router.push(
+-        `${subscribePath}?tier=${subscriptionTier.id}&price=${price.id}`,
+-      )
++      router.push(`${checkoutPath}?price=${price.id}`)
+     } else {
+       await api.subscriptions.upgradeSubscription({
+         id: upgradableSubscription.id,
+@@ -185,16 +119,14 @@ const AuthenticatedSubscriptionTierSubscribeButton: React.FC<
+         },
+       })
+       refetchUserSubscriptions()
+-      refetchOrganizationSubscriptions()
+     }
+   }, [
+     upgradableSubscription,
+     subscriptionTier,
+     price,
+     refetchUserSubscriptions,
+-    refetchOrganizationSubscriptions,
+     router,
+-    subscribePath,
++    checkoutPath,
+   ])
+ 
+   const onUpgrade = useCallback(() => {
+@@ -210,36 +142,6 @@ const AuthenticatedSubscriptionTierSubscribeButton: React.FC<
+ 
+   return (
+     <div className="flex w-full items-center gap-2">
+-      {organizations && organizations.length > 0 && (
+-        <Select onValueChange={onSubscriberSelect}>
+-          <SelectTriggerBase>
+-            <Avatar
+-              className="h-8 w-8"
+-              avatar_url={selectedSubscriber.avatar_url}
+-              name={selectedSubscriber.id}
+-            />
+-          </SelectTriggerBase>
+-          <SelectContent>
+-            <SelectItem value={user.id}>
+-              <div className="flex items-center gap-2">
+-                <Avatar avatar_url={user.avatar_url} name={user.username} />
+-                {user.username}
+-              </div>
+-            </SelectItem>
+-            {organizations.map((organization) => (
+-              <SelectItem value={organization.id} key={organization.id}>
+-                <div className="flex items-center gap-2">
+-                  <Avatar
+-                    avatar_url={organization.avatar_url}
+-                    name={organization.id}
+-                  />
+-                  {organization.name}
+-                </div>
+-              </SelectItem>
+-            ))}
+-          </SelectContent>
+-        </Select>
+-      )}
+       <div className="grow">
+         {fetched ? (
+           <>
+@@ -289,15 +191,7 @@ const AuthenticatedSubscriptionTierSubscribeButton: React.FC<
+               </>
+             )}
+             {!upgradableSubscription && !isSubscribed && (
+-              <Link
+-                href={`${subscribePath}?tier=${subscriptionTier.id}&price=${
+-                  price.id
+-                }${
+-                  !isUserSelected
+-                    ? `&organization_id=${selectedSubscriber.id}`
+-                    : ''
+-                }`}
+-              >
++              <Link href={`${checkoutPath}?price=${price.id}`}>
+                 <Button
+                   className={variant === 'outline' ? buttonClasses : ''}
+                   fullWidth
+@@ -325,7 +219,7 @@ interface SubscriptionTierSubscribeButtonProps {
+   subscriptionTier: Product
+   recurringInterval: ProductPriceRecurringInterval
+   organization: Organization
+-  subscribePath: string
++  checkoutPath: string
+   variant?: ButtonProps['variant']
+ }
+ 
+@@ -335,7 +229,7 @@ const SubscriptionTierSubscribeButton: React.FC<
+   subscriptionTier,
+   recurringInterval,
+   organization,
+-  subscribePath,
++  checkoutPath,
+   variant,
+ }) => {
+   const { currentUser } = useAuth()
+@@ -358,14 +252,13 @@ const SubscriptionTierSubscribeButton: React.FC<
+           subscriptionTier={subscriptionTier}
+           price={price}
+           organization={organization}
+-          subscribePath={subscribePath}
++          checkoutPath={checkoutPath}
+           variant={variant}
+         />
+       ) : (
+         <AnonymousSubscriptionTierSubscribeButton
+-          subscriptionTier={subscriptionTier}
+           price={price}
+-          subscribePath={subscribePath}
++          checkoutPath={checkoutPath}
+           variant={variant}
+         />
+       )}
+diff --git a/clients/apps/web/src/stories/SubscriptionSuccess.stories.tsx b/clients/apps/web/src/stories/CheckoutSuccess.stories.tsx
+similarity index 80%
+rename from clients/apps/web/src/stories/SubscriptionSuccess.stories.tsx
+rename to clients/apps/web/src/stories/CheckoutSuccess.stories.tsx
+index 8e5101aeb..bea527f51 100644
+--- a/clients/apps/web/src/stories/SubscriptionSuccess.stories.tsx
++++ b/clients/apps/web/src/stories/CheckoutSuccess.stories.tsx
+@@ -1,11 +1,11 @@
+ import { PolarQueryClientProvider } from '@/app/providers'
+-import SubscriptionSuccess from '@/components/Subscriptions/SubscriptionSuccess'
++import CheckoutSuccess from '@/components/Checkout/CheckoutSuccess'
+ import { UserContextProvider } from '@/providers/auth'
++import { org } from '@/utils/testdata'
+ import type { Meta, StoryObj } from '@storybook/react'
+-
+-const meta: Meta<typeof SubscriptionSuccess> = {
+-  title: 'Organisms/SubscriptionSucess',
+-  component: SubscriptionSuccess,
++const meta: Meta<typeof CheckoutSuccess> = {
++  title: 'Organisms/CheckoutSuccess',
++  component: CheckoutSuccess,
+   tags: ['autodocs'],
+   parameters: {
+     nextjs: {
+@@ -16,7 +16,7 @@ const meta: Meta<typeof SubscriptionSuccess> = {
+     return (
+       <UserContextProvider user={{}}>
+         <PolarQueryClientProvider>
+-          <SubscriptionSuccess {...args} />
++          <CheckoutSuccess {...args} />
+         </PolarQueryClientProvider>
+       </UserContextProvider>
+     )
+@@ -25,14 +25,14 @@ const meta: Meta<typeof SubscriptionSuccess> = {
+ 
+ export default meta
+ 
+-type Story = StoryObj<typeof SubscriptionSuccess>
++type Story = StoryObj<typeof CheckoutSuccess>
+ 
+ export const Default: Story = {
+   args: {
+-    subscribeSession: {
++    organization: org,
++    checkout: {
+       id: 'sub_1J5X2t2eZvKYlo2C2QqQ2Q2Q',
+-      organization_name: 'Polar',
+-      price: {
++      product_price: {
+         id: '123',
+         created_at: '2021-10-01T00:00:00Z',
+         is_archived: false,
+@@ -41,7 +41,7 @@ export const Default: Story = {
+         type: 'recurring',
+         recurring_interval: 'month',
+       },
+-      subscription_tier: {
++      product: {
+         id: 'sub_tier_1J5X2t2eZvKYlo2C2QqQ2Q2Q',
+         name: 'Free',
+         type: 'free',
+diff --git a/clients/packages/sdk/src/client/.openapi-generator/FILES b/clients/packages/sdk/src/client/.openapi-generator/FILES
+index a3a5ca441..36a294994 100644
+--- a/clients/packages/sdk/src/client/.openapi-generator/FILES
++++ b/clients/packages/sdk/src/client/.openapi-generator/FILES
+@@ -4,6 +4,7 @@ apis/ArticlesApi.ts
+ apis/AuthApi.ts
+ apis/BackofficeApi.ts
+ apis/BenefitsApi.ts
++apis/CheckoutsApi.ts
+ apis/DashboardApi.ts
+ apis/DonationsApi.ts
+ apis/FundingApi.ts
+diff --git a/clients/packages/sdk/src/client/PolarAPI.ts b/clients/packages/sdk/src/client/PolarAPI.ts
+index 164ab1514..03c199b9b 100644
+--- a/clients/packages/sdk/src/client/PolarAPI.ts
++++ b/clients/packages/sdk/src/client/PolarAPI.ts
+@@ -4,6 +4,7 @@ import {
+   ArticlesApi,
+   AuthApi,
+   BackofficeApi,
++  CheckoutsApi,
+   Configuration,
+   DashboardApi,
+   BenefitsApi,
+@@ -40,6 +41,7 @@ export class PolarAPI {
+   public readonly articles: ArticlesApi
+   public readonly auth: AuthApi
+   public readonly backoffice: BackofficeApi
++  public readonly checkouts: CheckoutsApi
+   public readonly benefits: BenefitsApi
+   public readonly dashboard: DashboardApi
+   public readonly donations: DonationsApi
+@@ -75,6 +77,7 @@ export class PolarAPI {
+     this.articles = new ArticlesApi(config)
+     this.auth = new AuthApi(config)
+     this.backoffice = new BackofficeApi(config)
++    this.checkouts = new CheckoutsApi(config)
+     this.benefits = new BenefitsApi(config)
+     this.dashboard = new DashboardApi(config)
+     this.donations = new DonationsApi(config)
+diff --git a/clients/packages/sdk/src/client/apis/CheckoutsApi.ts b/clients/packages/sdk/src/client/apis/CheckoutsApi.ts
+new file mode 100644
+index 000000000..95fc42632
+--- /dev/null
++++ b/clients/packages/sdk/src/client/apis/CheckoutsApi.ts
+@@ -0,0 +1,121 @@
++/* tslint:disable */
++/* eslint-disable */
++/**
++ * Polar API
++ *  Welcome to the **Polar API** for [polar.sh](https://polar.sh).  This specification contains both the definitions of the Polar HTTP API and the Webhook API.  #### Authentication  Use a [Personal Access Token](https://polar.sh/settings) and send it in the `Authorization` header on the format `Bearer [YOUR_TOKEN]`.  #### Feedback  If you have any feedback or comments, reach out in the [Polar API-issue](https://github.com/polarsource/polar/issues/834), or reach out on the Polar Discord server.  We\'d love to see what you\'ve built with the API and to get your thoughts on how we can make the API better!  #### Connecting  The Polar API is online at `https://api.polar.sh`. 
++ *
++ * The version of the OpenAPI document: 0.1.0
++ * 
++ *
++ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).
++ * https://openapi-generator.tech
++ * Do not edit the class manually.
++ */
++
++
++import * as runtime from '../runtime';
++import type {
++  Checkout,
++  CheckoutCreate,
++  HTTPValidationError,
++} from '../models/index';
++
++export interface CheckoutsApiCreateCheckoutRequest {
++    checkoutCreate: CheckoutCreate;
++}
++
++export interface CheckoutsApiGetCheckoutRequest {
++    id: string;
++}
++
++/**
++ * 
++ */
++export class CheckoutsApi extends runtime.BaseAPI {
++
++    /**
++     * Create Checkout
++     */
++    async createCheckoutRaw(requestParameters: CheckoutsApiCreateCheckoutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Checkout>> {
++        if (requestParameters['checkoutCreate'] == null) {
++            throw new runtime.RequiredError(
++                'checkoutCreate',
++                'Required parameter "checkoutCreate" was null or undefined when calling createCheckout().'
++            );
++        }
++
++        const queryParameters: any = {};
++
++        const headerParameters: runtime.HTTPHeaders = {};
++
++        headerParameters['Content-Type'] = 'application/json';
++
++        if (this.configuration && this.configuration.accessToken) {
++            const token = this.configuration.accessToken;
++            const tokenString = await token("HTTPBearer", []);
++
++            if (tokenString) {
++                headerParameters["Authorization"] = `Bearer ${tokenString}`;
++            }
++        }
++        const response = await this.request({
++            path: `/api/v1/checkouts/`,
++            method: 'POST',
++            headers: headerParameters,
++            query: queryParameters,
++            body: requestParameters['checkoutCreate'],
++        }, initOverrides);
++
++        return new runtime.JSONApiResponse(response);
++    }
++
++    /**
++     * Create Checkout
++     */
++    async createCheckout(requestParameters: CheckoutsApiCreateCheckoutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Checkout> {
++        const response = await this.createCheckoutRaw(requestParameters, initOverrides);
++        return await response.value();
++    }
++
++    /**
++     * Get Checkout
++     */
++    async getCheckoutRaw(requestParameters: CheckoutsApiGetCheckoutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Checkout>> {
++        if (requestParameters['id'] == null) {
++            throw new runtime.RequiredError(
++                'id',
++                'Required parameter "id" was null or undefined when calling getCheckout().'
++            );
++        }
++
++        const queryParameters: any = {};
++
++        const headerParameters: runtime.HTTPHeaders = {};
++
++        if (this.configuration && this.configuration.accessToken) {
++            const token = this.configuration.accessToken;
++            const tokenString = await token("HTTPBearer", []);
++
++            if (tokenString) {
++                headerParameters["Authorization"] = `Bearer ${tokenString}`;
++            }
++        }
++        const response = await this.request({
++            path: `/api/v1/checkouts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
++            method: 'GET',
++            headers: headerParameters,
++            query: queryParameters,
++        }, initOverrides);
++
++        return new runtime.JSONApiResponse(response);
++    }
++
++    /**
++     * Get Checkout
++     */
++    async getCheckout(requestParameters: CheckoutsApiGetCheckoutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Checkout> {
++        const response = await this.getCheckoutRaw(requestParameters, initOverrides);
++        return await response.value();
++    }
++
++}
+diff --git a/clients/packages/sdk/src/client/apis/SubscriptionsApi.ts b/clients/packages/sdk/src/client/apis/SubscriptionsApi.ts
+index c51909b0d..3d26313f7 100644
+--- a/clients/packages/sdk/src/client/apis/SubscriptionsApi.ts
++++ b/clients/packages/sdk/src/client/apis/SubscriptionsApi.ts
+@@ -21,8 +21,6 @@ import type {
+   ListResourceSubscriptionSubscriber,
+   ListResourceSubscriptionSummary,
+   Platforms,
+-  SubscribeSession,
+-  SubscribeSessionCreate,
+   Subscription,
+   SubscriptionCreateEmail,
+   SubscriptionTierType,
+@@ -45,14 +43,6 @@ export interface SubscriptionsApiCreateFreeSubscriptionRequest {
+     freeSubscriptionCreate: FreeSubscriptionCreate;
+ }
+ 
+-export interface SubscriptionsApiCreateSubscribeSessionRequest {
+-    subscribeSessionCreate: SubscribeSessionCreate;
+-}
+-
+-export interface SubscriptionsApiGetSubscribeSessionRequest {
+-    id: string;
+-}
+-
+ export interface SubscriptionsApiGetSubscriptionsStatisticsRequest {
+     startDate: string;
+     endDate: string;
+@@ -252,91 +242,6 @@ export class SubscriptionsApi extends runtime.BaseAPI {
+         return await response.value();
+     }
+ 
+-    /**
+-     * Create Subscribe Session
+-     */
+-    async createSubscribeSessionRaw(requestParameters: SubscriptionsApiCreateSubscribeSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscribeSession>> {
+-        if (requestParameters['subscribeSessionCreate'] == null) {
+-            throw new runtime.RequiredError(
+-                'subscribeSessionCreate',
+-                'Required parameter "subscribeSessionCreate" was null or undefined when calling createSubscribeSession().'
+-            );
+-        }
+-
+-        const queryParameters: any = {};
+-
+-        const headerParameters: runtime.HTTPHeaders = {};
+-
+-        headerParameters['Content-Type'] = 'application/json';
+-
+-        if (this.configuration && this.configuration.accessToken) {
+-            const token = this.configuration.accessToken;
+-            const tokenString = await token("HTTPBearer", []);
+-
+-            if (tokenString) {
+-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+-            }
+-        }
+-        const response = await this.request({
+-            path: `/api/v1/subscriptions/subscribe-sessions/`,
+-            method: 'POST',
+-            headers: headerParameters,
+-            query: queryParameters,
+-            body: requestParameters['subscribeSessionCreate'],
+-        }, initOverrides);
+-
+-        return new runtime.JSONApiResponse(response);
+-    }
+-
+-    /**
+-     * Create Subscribe Session
+-     */
+-    async createSubscribeSession(requestParameters: SubscriptionsApiCreateSubscribeSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscribeSession> {
+-        const response = await this.createSubscribeSessionRaw(requestParameters, initOverrides);
+-        return await response.value();
+-    }
+-
+-    /**
+-     * Get Subscribe Session
+-     */
+-    async getSubscribeSessionRaw(requestParameters: SubscriptionsApiGetSubscribeSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscribeSession>> {
+-        if (requestParameters['id'] == null) {
+-            throw new runtime.RequiredError(
+-                'id',
+-                'Required parameter "id" was null or undefined when calling getSubscribeSession().'
+-            );
+-        }
+-
+-        const queryParameters: any = {};
+-
+-        const headerParameters: runtime.HTTPHeaders = {};
+-
+-        if (this.configuration && this.configuration.accessToken) {
+-            const token = this.configuration.accessToken;
+-            const tokenString = await token("HTTPBearer", []);
+-
+-            if (tokenString) {
+-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+-            }
+-        }
+-        const response = await this.request({
+-            path: `/api/v1/subscriptions/subscribe-sessions/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+-            method: 'GET',
+-            headers: headerParameters,
+-            query: queryParameters,
+-        }, initOverrides);
+-
+-        return new runtime.JSONApiResponse(response);
+-    }
+-
+-    /**
+-     * Get Subscribe Session
+-     */
+-    async getSubscribeSession(requestParameters: SubscriptionsApiGetSubscribeSessionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscribeSession> {
+-        const response = await this.getSubscribeSessionRaw(requestParameters, initOverrides);
+-        return await response.value();
+-    }
+-
+     /**
+      * Get Subscriptions Statistics
+      */
+diff --git a/clients/packages/sdk/src/client/apis/index.ts b/clients/packages/sdk/src/client/apis/index.ts
+index 295dac9e9..3b1360554 100644
+--- a/clients/packages/sdk/src/client/apis/index.ts
++++ b/clients/packages/sdk/src/client/apis/index.ts
+@@ -6,6 +6,7 @@ export * from './ArticlesApi';
+ export * from './AuthApi';
+ export * from './BackofficeApi';
+ export * from './BenefitsApi';
++export * from './CheckoutsApi';
+ export * from './DashboardApi';
+ export * from './DonationsApi';
+ export * from './FundingApi';
+diff --git a/clients/packages/sdk/src/client/models/index.ts b/clients/packages/sdk/src/client/models/index.ts
+index 6d1ce1673..5860a9c1a 100644
+--- a/clients/packages/sdk/src/client/models/index.ts
++++ b/clients/packages/sdk/src/client/models/index.ts
+@@ -3529,6 +3529,74 @@ export interface Byline {
+      */
+     avatar_url?: string;
+ }
++/**
++ * A checkout session.
++ * @export
++ * @interface Checkout
++ */
++export interface Checkout {
++    /**
++     * The ID of the checkout.
++     * @type {string}
++     * @memberof Checkout
++     */
++    id: string;
++    /**
++     * 
++     * @type {string}
++     * @memberof Checkout
++     */
++    url?: string;
++    /**
++     * 
++     * @type {string}
++     * @memberof Checkout
++     */
++    customer_email?: string;
++    /**
++     * 
++     * @type {string}
++     * @memberof Checkout
++     */
++    customer_name?: string;
++    /**
++     * 
++     * @type {Product}
++     * @memberof Checkout
++     */
++    product: Product;
++    /**
++     * 
++     * @type {ProductPrice}
++     * @memberof Checkout
++     */
++    product_price: ProductPrice;
++}
++/**
++ * 
++ * @export
++ * @interface CheckoutCreate
++ */
++export interface CheckoutCreate {
++    /**
++     * ID of the product price to subscribe to.
++     * @type {string}
++     * @memberof CheckoutCreate
++     */
++    product_price_id: string;
++    /**
++     * URL where the customer will be redirected after a successful subscription. You can add the `session_id={CHECKOUT_SESSION_ID}` query parameter to retrieve the checkout session id.
++     * @type {string}
++     * @memberof CheckoutCreate
++     */
++    success_url: string;
++    /**
++     * 
++     * @type {string}
++     * @memberof CheckoutCreate
++     */
++    customer_email?: string;
++}
+ /**
+  * 
+  * @export
+@@ -9645,98 +9713,6 @@ export const Status = {
+ } as const;
+ export type Status = typeof Status[keyof typeof Status];
+ 
+-/**
+- * 
+- * @export
+- * @interface SubscribeSession
+- */
+-export interface SubscribeSession {
+-    /**
+-     * ID of the subscribe session.
+-     * @type {string}
+-     * @memberof SubscribeSession
+-     */
+-    id: string;
+-    /**
+-     * 
+-     * @type {string}
+-     * @memberof SubscribeSession
+-     */
+-    url?: string;
+-    /**
+-     * 
+-     * @type {string}
+-     * @memberof SubscribeSession
+-     */
+-    customer_email?: string;
+-    /**
+-     * 
+-     * @type {string}
+-     * @memberof SubscribeSession
+-     */
+-    customer_name?: string;
+-    /**
+-     * 
+-     * @type {string}
+-     * @memberof SubscribeSession
+-     */
+-    organization_subscriber_id?: string;
+-    /**
+-     * 
+-     * @type {Product}
+-     * @memberof SubscribeSession
+-     */
+-    subscription_tier: Product;
+-    /**
+-     * 
+-     * @type {ProductPrice}
+-     * @memberof SubscribeSession
+-     */
+-    price: ProductPrice;
+-    /**
+-     * 
+-     * @type {string}
+-     * @memberof SubscribeSession
+-     */
+-    organization_name: string;
+-}
+-/**
+- * 
+- * @export
+- * @interface SubscribeSessionCreate
+- */
+-export interface SubscribeSessionCreate {
+-    /**
+-     * ID of the Subscription Tier to subscribe to.
+-     * @type {string}
+-     * @memberof SubscribeSessionCreate
+-     */
+-    tier_id: string;
+-    /**
+-     * ID of the Subscription Tier Price to subscribe to.
+-     * @type {string}
+-     * @memberof SubscribeSessionCreate
+-     */
+-    price_id: string;
+-    /**
+-     * URL where the backer will be redirected after a successful subscription. You can add the `session_id={CHECKOUT_SESSION_ID}` query parameter to retrieve the subscribe session id.
+-     * @type {string}
+-     * @memberof SubscribeSessionCreate
+-     */
+-    success_url: string;
+-    /**
+-     * 
+-     * @type {string}
+-     * @memberof SubscribeSessionCreate
+-     */
+-    organization_subscriber_id?: string;
+-    /**
+-     * 
+-     * @type {string}
+-     * @memberof SubscribeSessionCreate
+-     */
+-    customer_email?: string;
+-}
+ /**
+  * 
+  * @export
+diff --git a/server/polar/api.py b/server/polar/api.py
+index f3a10784b..79fa85046 100644
+--- a/server/polar/api.py
++++ b/server/polar/api.py
+@@ -6,6 +6,7 @@ from polar.article.endpoints import router as articles_router
+ from polar.auth.endpoints import router as auth_router
+ from polar.backoffice.endpoints import router as backoffice_router
+ from polar.benefit.endpoints import router as benefits_router
++from polar.checkout.endpoints import router as checkout_router
+ from polar.dashboard.endpoints import router as dashboard_router
+ from polar.donation.endpoints import router as donations_router
+ from polar.eventstream.endpoints import router as stream_router
+@@ -106,3 +107,5 @@ router.include_router(webhook_router)
+ router.include_router(product_router)
+ # /sales
+ router.include_router(sale_router)
++# /checkout
++router.include_router(checkout_router)
+diff --git a/server/polar/checkout/__init__.py b/server/polar/checkout/__init__.py
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/server/polar/checkout/auth.py b/server/polar/checkout/auth.py
+new file mode 100644
+index 000000000..6d9767845
+--- /dev/null
++++ b/server/polar/checkout/auth.py
+@@ -0,0 +1,12 @@
++from typing import Annotated
++
++from fastapi import Depends
++
++from polar.auth.dependencies import Authenticator
++from polar.auth.models import Anonymous, AuthSubject, User
++
++_Checkout = Authenticator(
++    required_scopes=None,
++    allowed_subjects={User, Anonymous},
++)
++Checkout = Annotated[AuthSubject[User | Anonymous], Depends(_Checkout)]
+diff --git a/server/polar/checkout/endpoints.py b/server/polar/checkout/endpoints.py
+new file mode 100644
+index 000000000..5d315fcff
+--- /dev/null
++++ b/server/polar/checkout/endpoints.py
+@@ -0,0 +1,30 @@
++import structlog
++from fastapi import Depends
++
++from polar.kit.routing import APIRouter
++from polar.postgres import AsyncSession, get_db_session
++from polar.tags.api import Tags
++
++from . import auth
++from .schemas import Checkout, CheckoutCreate
++from .service import checkout as checkout_service
++
++log = structlog.get_logger()
++
++router = APIRouter(prefix="/checkouts", tags=["checkouts"])
++
++
++@router.post("/", response_model=Checkout, status_code=201, tags=[Tags.PUBLIC])
++async def create_checkout(
++    checkout_create: CheckoutCreate,
++    auth_subject: auth.Checkout,
++    session: AsyncSession = Depends(get_db_session),
++) -> Checkout:
++    return await checkout_service.create(session, checkout_create, auth_subject)
++
++
++@router.get("/{id}", response_model=Checkout, tags=[Tags.PUBLIC])
++async def get_checkout(
++    id: str, session: AsyncSession = Depends(get_db_session)
++) -> Checkout:
++    return await checkout_service.get_by_id(session, id)
+diff --git a/server/polar/checkout/schemas.py b/server/polar/checkout/schemas.py
+new file mode 100644
+index 000000000..67c9eca14
+--- /dev/null
++++ b/server/polar/checkout/schemas.py
+@@ -0,0 +1,40 @@
++from pydantic import UUID4, AnyHttpUrl, Field
++
++from polar.kit.schemas import EmailStrDNS, Schema
++from polar.product.schemas import Product, ProductPrice
++
++
++class CheckoutCreate(Schema):
++    product_price_id: UUID4 = Field(
++        ...,
++        description="ID of the product price to subscribe to.",
++    )
++    success_url: AnyHttpUrl = Field(
++        ...,
++        description=(
++            "URL where the customer will be redirected after a successful subscription. "
++            "You can add the `session_id={CHECKOUT_SESSION_ID}` query parameter "
++            "to retrieve the checkout session id."
++        ),
++    )
++    customer_email: EmailStrDNS | None = Field(
++        None,
++        description=(
++            "If you already know the email of your customer, you can set it. "
++            "It'll be pre-filled on the checkout page."
++        ),
++    )
++
++
++class Checkout(Schema):
++    """A checkout session."""
++
++    id: str = Field(..., description="The ID of the checkout.")
++    url: str | None = Field(
++        None,
++        description="URL the customer should be redirected to complete the purchase.",
++    )
++    customer_email: str | None = None
++    customer_name: str | None = None
++    product: Product
++    product_price: ProductPrice
+diff --git a/server/polar/checkout/service.py b/server/polar/checkout/service.py
+new file mode 100644
+index 000000000..d9b6ac136
+--- /dev/null
++++ b/server/polar/checkout/service.py
+@@ -0,0 +1,208 @@
++import uuid
++from typing import cast
++
++import stripe as stripe_lib
++
++from polar.auth.models import Anonymous, AuthMethod, AuthSubject, is_user
++from polar.checkout.schemas import Checkout, CheckoutCreate
++from polar.exceptions import PolarError, PolarRequestValidationError, ResourceNotFound
++from polar.integrations.stripe.service import stripe as stripe_service
++from polar.models import Product, Subscription, User
++from polar.models.product import SubscriptionTierType
++from polar.postgres import AsyncSession
++from polar.product.service.product import product as product_service
++from polar.product.service.product_price import product_price as product_price_service
++from polar.subscription.service.subscription import subscription as subscription_service
++
++
++class CheckoutError(PolarError): ...
++
++
++class AlreadySubscribed(CheckoutError):
++    def __init__(self, *, user_id: uuid.UUID, organization_id: uuid.UUID) -> None:
++        self.user_id = user_id
++        self.organization_id = organization_id
++        message = "You're already subscribed to one of the tier of this organization."
++        super().__init__(message, 403)
++
++
++class CheckoutService:
++    async def create(
++        self,
++        session: AsyncSession,
++        create_schema: CheckoutCreate,
++        auth_subject: AuthSubject[User | Anonymous],
++    ) -> Checkout:
++        price = await product_price_service.get_by_id(
++            session, create_schema.product_price_id
++        )
++
++        if price is None:
++            raise PolarRequestValidationError(
++                [
++                    {
++                        "type": "value_error",
++                        "loc": ("body", "price_id"),
++                        "msg": "Price does not exist.",
++                        "input": create_schema.product_price_id,
++                    }
++                ]
++            )
++
++        if price.is_archived:
++            raise PolarRequestValidationError(
++                [
++                    {
++                        "type": "value_error",
++                        "loc": ("body", "price_id"),
++                        "msg": "Price is archived.",
++                        "input": create_schema.product_price_id,
++                    }
++                ]
++            )
++
++        product = price.product
++        if product.is_archived:
++            raise PolarRequestValidationError(
++                [
++                    {
++                        "type": "value_error",
++                        "loc": ("body", "price_id"),
++                        "msg": "Product is archived.",
++                        "input": create_schema.product_price_id,
++                    }
++                ]
++            )
++
++        product = cast(Product, await product_service.get_loaded(session, product.id))
++
++        metadata: dict[str, str] = {
++            "product_id": str(product.id),
++            "product_price_id": str(price.id),
++        }
++
++        if auth_subject.method == AuthMethod.COOKIE and is_user(auth_subject):
++            metadata["user_id"] = str(auth_subject.subject.id)
++
++        if price.is_recurring:
++            free_subscription_upgrade = await self._check_existing_subscriptions(
++                session, auth_subject, product
++            )
++            if free_subscription_upgrade is not None:
++                metadata["subscription_id"] = str(free_subscription_upgrade.id)
++
++        customer_options: dict[str, str] = {}
++        # Set the customer only from a cookie-based authentication!
++        # With the PAT, it's probably a call from the maintainer who wants to redirect
++        # the backer they bring from their own website.
++        if is_user(auth_subject) and auth_subject.method == AuthMethod.COOKIE:
++            user = auth_subject.subject
++            if user.stripe_customer_id is not None:
++                customer_options["customer"] = user.stripe_customer_id
++            else:
++                customer_options["customer_email"] = user.email
++        elif create_schema.customer_email is not None:
++            customer_options["customer_email"] = create_schema.customer_email
++
++        checkout_session = stripe_service.create_checkout_session(
++            price.stripe_price_id,
++            str(create_schema.success_url),
++            is_subscription=price.is_recurring,
++            is_tax_applicable=product.is_tax_applicable,
++            **customer_options,
++            metadata=metadata,
++            subscription_metadata=metadata,
++        )
++
++        return Checkout(
++            id=checkout_session.id,
++            url=checkout_session.url,
++            customer_email=checkout_session.customer_details["email"]
++            if checkout_session.customer_details
++            else checkout_session.customer_email,
++            customer_name=checkout_session.customer_details["name"]
++            if checkout_session.customer_details
++            else None,
++            product=product,  # type: ignore
++            product_price=price,  # type: ignore
++        )
++
++    async def get_by_id(self, session: AsyncSession, id: str) -> Checkout:
++        try:
++            checkout_session = stripe_service.get_checkout_session(id)
++        except stripe_lib.InvalidRequestError as e:
++            raise ResourceNotFound() from e
++
++        if checkout_session.metadata is None:
++            raise ResourceNotFound()
++
++        try:
++            product_id = checkout_session.metadata["product_id"]
++            product_price_id = checkout_session.metadata["product_price_id"]
++        except KeyError as e:
++            raise ResourceNotFound() from e
++
++        product_price = await product_price_service.get_by_id(
++            session, uuid.UUID(product_price_id)
++        )
++        if product_price is None:
++            raise ResourceNotFound()
++
++        product = await product_service.get_loaded(session, uuid.UUID(product_id))
++        if product is None:
++            raise ResourceNotFound()
++        assert product.id == product_price.product_id
++
++        return Checkout(
++            id=checkout_session.id,
++            url=checkout_session.url,
++            customer_email=checkout_session.customer_details["email"]
++            if checkout_session.customer_details
++            else checkout_session.customer_email,
++            customer_name=checkout_session.customer_details["name"]
++            if checkout_session.customer_details
++            else None,
++            product=product,  # type: ignore
++            product_price=product_price,  # type: ignore
++        )
++
++    async def _check_existing_subscriptions(
++        self,
++        session: AsyncSession,
++        auth_subject: AuthSubject[User | Anonymous],
++        product: Product,
++    ) -> Subscription | None:
++        """
++        Check that the user doesn't already have a subscription, unless it's on the
++        free tier.
++        """
++        if is_user(auth_subject) and auth_subject.method == AuthMethod.COOKIE:
++            existing_subscriptions = (
++                await subscription_service.get_active_user_subscriptions(
++                    session,
++                    auth_subject.subject,
++                    organization_id=product.organization_id,
++                )
++            )
++            # Trying to upgrade from a Free subscription, set it in metadata for
++            # reconciliation when receiving Stripe Webhook
++            if len(existing_subscriptions) > 0:
++                try:
++                    free_subscription_upgrade = next(
++                        subscription
++                        for subscription in existing_subscriptions
++                        if subscription.product.type == SubscriptionTierType.free
++                    )
++                except StopIteration as e:
++                    # Prevent authenticated user to subscribe to another plan
++                    # from the same organization
++                    raise AlreadySubscribed(
++                        user_id=auth_subject.subject.id,
++                        organization_id=product.organization_id,
++                    ) from e
++                else:
++                    return free_subscription_upgrade
++        return None
++
++
++checkout = CheckoutService()
+diff --git a/server/polar/integrations/stripe/service.py b/server/polar/integrations/stripe/service.py
+index 59dd4385a..76ea4538c 100644
+--- a/server/polar/integrations/stripe/service.py
++++ b/server/polar/integrations/stripe/service.py
+@@ -381,11 +381,12 @@ class StripeService:
+     def archive_price(self, id: str) -> stripe_lib.Price:
+         return stripe_lib.Price.modify(id, active=False)
+ 
+-    def create_subscription_checkout_session(
++    def create_checkout_session(
+         self,
+         price: str,
+         success_url: str,
+         *,
++        is_subscription: bool,
+         is_tax_applicable: bool,
+         customer: str | None = None,
+         customer_email: str | None = None,
+@@ -400,19 +401,21 @@ class StripeService:
+                     "quantity": 1,
+                 },
+             ],
+-            "mode": "subscription",
++            "mode": "subscription" if is_subscription else "payment",
+             "automatic_tax": {"enabled": is_tax_applicable},
+             "tax_id_collection": {"enabled": is_tax_applicable},
+-            "payment_method_collection": "if_required",
+             "metadata": metadata or {},
+         }
++        if is_subscription:
++            create_params["payment_method_collection"] = "if_required"
++            if subscription_metadata is not None:
++                create_params["subscription_data"] = {"metadata": subscription_metadata}
+         if customer is not None:
+             create_params["customer"] = customer
+             create_params["customer_update"] = {"name": "auto", "address": "auto"}
+         if customer_email is not None:
+             create_params["customer_email"] = customer_email
+-        if subscription_metadata is not None:
+-            create_params["subscription_data"] = {"metadata": subscription_metadata}
++
+         return stripe_lib.checkout.Session.create(**create_params)
+ 
+     def get_checkout_session(self, id: str) -> stripe_lib.checkout.Session:
+diff --git a/server/polar/models/product_price.py b/server/polar/models/product_price.py
+index b4edf9a63..b913580a0 100644
+--- a/server/polar/models/product_price.py
++++ b/server/polar/models/product_price.py
+@@ -2,7 +2,8 @@ from enum import StrEnum
+ from typing import TYPE_CHECKING, Literal, cast
+ from uuid import UUID
+ 
+-from sqlalchemy import Boolean, ForeignKey, Integer, String
++from sqlalchemy import Boolean, ColumnElement, ForeignKey, Integer, String, type_coerce
++from sqlalchemy.ext.hybrid import hybrid_property
+ from sqlalchemy.orm import Mapped, declared_attr, mapped_column, relationship
+ 
+ from polar.kit.db.models import RecordModel
+@@ -54,3 +55,12 @@ class ProductPrice(RecordModel):
+     @declared_attr
+     def subscriptions(cls) -> Mapped[list["Subscription"]]:
+         return relationship("Subscription", lazy="raise", back_populates="price")
++
++    @hybrid_property
++    def is_recurring(self) -> bool:
++        return self.type == ProductPriceType.recurring
++
++    @is_recurring.inplace.expression
++    @classmethod
++    def _is_recurring_expression(cls) -> ColumnElement[bool]:
++        return type_coerce(cls.type == ProductPriceType.recurring, Boolean)
+diff --git a/server/polar/product/service/product_price.py b/server/polar/product/service/product_price.py
+index 7beace05c..b948d296c 100644
+--- a/server/polar/product/service/product_price.py
++++ b/server/polar/product/service/product_price.py
+@@ -1,3 +1,5 @@
++import uuid
++
+ from sqlalchemy import select
+ from sqlalchemy.orm import joinedload
+ 
+@@ -11,6 +13,18 @@ class ProductPriceError(PolarError): ...
+ 
+ 
+ class ProductPriceService(ResourceServiceReader[ProductPrice]):
++    async def get_by_id(
++        self, session: AsyncSession, id: uuid.UUID
++    ) -> ProductPrice | None:
++        statement = (
++            select(ProductPrice)
++            .where(ProductPrice.id == id)
++            .options(joinedload(ProductPrice.product))
++        )
++
++        result = await session.execute(statement)
++        return result.scalar_one_or_none()
++
+     async def get_by_stripe_price_id(
+         self, session: AsyncSession, stripe_price_id: str
+     ) -> ProductPrice | None:
+diff --git a/server/polar/subscription/endpoints.py b/server/polar/subscription/endpoints.py
+index 5fedec211..2e672e0d1 100644
+--- a/server/polar/subscription/endpoints.py
++++ b/server/polar/subscription/endpoints.py
+@@ -33,8 +33,6 @@ from ..product.service.product import (
+ from . import auth
+ from .schemas import (
+     FreeSubscriptionCreate,
+-    SubscribeSession,
+-    SubscribeSessionCreate,
+     SubscriptionCreateEmail,
+     SubscriptionsImported,
+     SubscriptionsStatistics,
+@@ -43,7 +41,6 @@ from .schemas import (
+     SubscriptionUpgrade,
+ )
+ from .schemas import Subscription as SubscriptionSchema
+-from .service.subscribe_session import subscribe_session as subscribe_session_service
+ from .service.subscription import AlreadySubscribed, SearchSortProperty
+ from .service.subscription import subscription as subscription_service
+ 
+@@ -52,62 +49,6 @@ log = structlog.get_logger()
+ router = APIRouter(prefix="/subscriptions", tags=["subscriptions"])
+ 
+ 
+-@router.post(
+-    "/subscribe-sessions/",
+-    response_model=SubscribeSession,
+-    status_code=201,
+-    tags=[Tags.PUBLIC],
+-)
+-async def create_subscribe_session(
+-    session_create: SubscribeSessionCreate,
+-    auth_subject: WebUserOrAnonymous,
+-    authz: Authz = Depends(Authz.authz),
+-    session: AsyncSession = Depends(get_db_session),
+-) -> SubscribeSession:
+-    subscription_tier = await product_service.get_by_id(
+-        session, auth_subject, session_create.tier_id
+-    )
+-
+-    if subscription_tier is None:
+-        raise ResourceNotFound()
+-
+-    price = subscription_tier.get_price(session_create.price_id)
+-    if price is None:
+-        raise ResourceNotFound()
+-
+-    if is_user(auth_subject):
+-        posthog.auth_subject_event(
+-            auth_subject,
+-            "subscriptions",
+-            "subscribe_session",
+-            "create",
+-            {"subscription_tier_id": subscription_tier.id},
+-        )
+-
+-    return await subscribe_session_service.create_subscribe_session(
+-        session,
+-        subscription_tier,
+-        price,
+-        str(session_create.success_url),
+-        auth_subject,
+-        authz,
+-        customer_email=session_create.customer_email,
+-        organization_id=session_create.organization_subscriber_id,
+-    )
+-
+-
+-@router.get(
+-    "/subscribe-sessions/{id}",
+-    response_model=SubscribeSession,
+-    tags=[Tags.PUBLIC],
+-)
+-async def get_subscribe_session(
+-    id: str,
+-    session: AsyncSession = Depends(get_db_session),
+-) -> SubscribeSession:
+-    return await subscribe_session_service.get_subscribe_session(session, id)
+-
+-
+ @router.get(
+     "/subscriptions/statistics",
+     response_model=SubscriptionsStatistics,
+diff --git a/server/polar/subscription/schemas.py b/server/polar/subscription/schemas.py
+index 4a464181a..c7627e75d 100644
+--- a/server/polar/subscription/schemas.py
++++ b/server/polar/subscription/schemas.py
+@@ -1,104 +1,12 @@
+-import uuid
+ from datetime import date, datetime
+-from typing import Self
+ 
+-import stripe as stripe_lib
+-from pydantic import UUID4, AnyHttpUrl, Field
++from pydantic import UUID4, Field
+ 
+ from polar.enums import Platforms
+ from polar.kit.schemas import EmailStrDNS, Schema, TimestampedSchema
+-from polar.models.product import Product as SubscriptionTierModel
+-from polar.models.product_price import ProductPrice as ProductPriceModel
+ from polar.models.subscription import SubscriptionStatus
+ from polar.product.schemas import Product, ProductPrice, ProductSubscriber
+ 
+-# SubscribeSession
+-
+-
+-class SubscribeSessionCreate(Schema):
+-    tier_id: UUID4 = Field(
+-        ...,
+-        description="ID of the Subscription Tier to subscribe to.",
+-    )
+-    price_id: UUID4 = Field(
+-        ...,
+-        description="ID of the Subscription Tier Price to subscribe to.",
+-    )
+-    success_url: AnyHttpUrl = Field(
+-        ...,
+-        description=(
+-            "URL where the backer will be redirected after a successful subscription. "
+-            "You can add the `session_id={CHECKOUT_SESSION_ID}` query parameter "
+-            "to retrieve the subscribe session id."
+-        ),
+-    )
+-    organization_subscriber_id: UUID4 | None = Field(
+-        None,
+-        description=(
+-            "ID of the Organization on behalf which you want to subscribe this tier to. "
+-            "You need to be an administrator of the Organization to do this."
+-        ),
+-    )
+-    customer_email: EmailStrDNS | None = Field(
+-        None,
+-        description=(
+-            "If you already know the email of your backer, you can set it. "
+-            "It'll be pre-filled on the subscription page."
+-        ),
+-    )
+-
+-
+-class SubscribeSession(Schema):
+-    id: str = Field(
+-        ...,
+-        description=("ID of the subscribe session."),
+-    )
+-    url: str | None = Field(
+-        None,
+-        description=(
+-            "URL where you should redirect your backer "
+-            "so they can subscribe to the selected tier."
+-        ),
+-    )
+-    customer_email: str | None = None
+-    customer_name: str | None = None
+-    organization_subscriber_id: UUID4 | None = None
+-    subscription_tier: Product
+-    price: ProductPrice
+-    organization_name: str
+-
+-    @classmethod
+-    def from_db(
+-        cls,
+-        checkout_session: stripe_lib.checkout.Session,
+-        subscription_tier: SubscriptionTierModel,
+-        price: ProductPriceModel,
+-    ) -> Self:
+-        organization_subscriber_id: uuid.UUID | None = None
+-        if checkout_session.metadata:
+-            try:
+-                organization_subscriber_id = uuid.UUID(
+-                    checkout_session.metadata["organization_subscriber_id"]
+-                )
+-            except (KeyError, ValueError):
+-                pass
+-
+-        return cls(
+-            id=checkout_session.id,
+-            url=checkout_session.url,
+-            customer_email=checkout_session.customer_details["email"]
+-            if checkout_session.customer_details
+-            else checkout_session.customer_email,
+-            customer_name=checkout_session.customer_details["name"]
+-            if checkout_session.customer_details
+-            else None,
+-            organization_subscriber_id=organization_subscriber_id,
+-            subscription_tier=subscription_tier,  # type: ignore
+-            price=price,  # type: ignore
+-            organization_name=subscription_tier.organization.name,
+-        )
+-
+-
+ # Subscriptions
+ 
+ 
+diff --git a/server/polar/subscription/service/subscribe_session.py b/server/polar/subscription/service/subscribe_session.py
+deleted file mode 100644
+index c94329650..000000000
+--- a/server/polar/subscription/service/subscribe_session.py
++++ /dev/null
+@@ -1,199 +0,0 @@
+-import uuid
+-
+-from polar.auth.models import Anonymous, AuthMethod, AuthSubject, Subject, is_user
+-from polar.authz.service import AccessType, Authz
+-from polar.exceptions import NotPermitted, PolarError, ResourceNotFound, Unauthorized
+-from polar.integrations.stripe.service import stripe as stripe_service
+-from polar.kit.db.postgres import AsyncSession
+-from polar.models import Product, ProductPrice
+-from polar.models.organization import Organization
+-from polar.models.product import SubscriptionTierType
+-from polar.organization.service import organization as organization_service
+-
+-from ...product.service.product import (
+-    product as product_service,
+-)
+-from ..schemas import SubscribeSession
+-from .subscription import subscription as subscription_service
+-
+-
+-class SubscribeSessionError(PolarError): ...
+-
+-
+-class FreeSubscriptionTier(SubscribeSessionError):
+-    def __init__(self, subscription_tier_id: uuid.UUID) -> None:
+-        self.subscription_tier_id = subscription_tier_id
+-        message = (
+-            "The free subscription tier can't be subscribed "
+-            "through a subscribe session. "
+-            "You should directly create a subscription with this tier."
+-        )
+-        super().__init__(message, 403)
+-
+-
+-class ArchivedSubscriptionTier(SubscribeSessionError):
+-    def __init__(self, subscription_tier_id: uuid.UUID) -> None:
+-        self.subscription_tier_id = subscription_tier_id
+-        message = "This subscription tier is archived."
+-        super().__init__(message, 404)
+-
+-
+-class AlreadySubscribed(SubscribeSessionError):
+-    def __init__(self, *, user_id: uuid.UUID, organization_id: uuid.UUID) -> None:
+-        self.user_id = user_id
+-        self.organization_id = organization_id
+-        message = "You're already subscribed to one of the tier of this organization."
+-        super().__init__(message, 400)
+-
+-
+-class SubscribeSessionService:
+-    async def create_subscribe_session(
+-        self,
+-        session: AsyncSession,
+-        subscription_tier: Product,
+-        price: ProductPrice,
+-        success_url: str,
+-        auth_subject: AuthSubject[Subject],
+-        authz: Authz,
+-        *,
+-        customer_email: str | None = None,
+-        organization_id: uuid.UUID | None = None,
+-    ) -> SubscribeSession:
+-        subscription_tier = await product_service.with_organization(
+-            session, subscription_tier
+-        )
+-
+-        if subscription_tier.type == SubscriptionTierType.free:
+-            raise FreeSubscriptionTier(subscription_tier.id)
+-
+-        if subscription_tier.is_archived:
+-            raise ArchivedSubscriptionTier(subscription_tier.id)
+-
+-        metadata: dict[str, str] = {
+-            "subscription_tier_id": str(subscription_tier.id),
+-            "subscription_tier_price_id": str(price.id),
+-        }
+-
+-        organization = (
+-            await self._get_organization(
+-                session, authz, auth_subject.subject, organization_id
+-            )
+-            if organization_id is not None
+-            else None
+-        )
+-
+-        if organization is not None:
+-            metadata["organization_subscriber_id"] = str(organization.id)
+-        if auth_subject.method == AuthMethod.COOKIE and is_user(auth_subject):
+-            metadata["user_id"] = str(auth_subject.subject.id)
+-
+-        if (
+-            is_user(auth_subject)
+-            and auth_subject.method == AuthMethod.COOKIE
+-            and organization is None
+-        ):
+-            existing_subscriptions = (
+-                await subscription_service.get_active_user_subscriptions(
+-                    session,
+-                    auth_subject.subject,
+-                    organization_id=subscription_tier.organization_id,
+-                )
+-            )
+-            # Trying to upgrade from a Free subscription, set it in metadata for
+-            # reconciliation when receiving Stripe Webhook
+-            if len(existing_subscriptions) > 0:
+-                try:
+-                    free_subscription_upgrade = next(
+-                        subscription
+-                        for subscription in existing_subscriptions
+-                        if subscription.product.type == SubscriptionTierType.free
+-                    )
+-                except StopIteration as e:
+-                    # Prevent authenticated user to subscribe to another plan
+-                    # from the same organization
+-                    raise AlreadySubscribed(
+-                        user_id=auth_subject.subject.id,
+-                        organization_id=subscription_tier.organization_id,
+-                    ) from e
+-                else:
+-                    metadata["subscription_id"] = str(free_subscription_upgrade.id)
+-
+-        customer_options: dict[str, str] = {}
+-        if organization is not None and organization.stripe_customer_id is not None:
+-            customer_options["customer"] = organization.stripe_customer_id
+-        # Set the customer only from a cookie-based authentication!
+-        # With the PAT, it's probably a call from the maintainer who wants to redirect
+-        # the backer they bring from their own website.
+-        elif is_user(auth_subject) and auth_subject.method == AuthMethod.COOKIE:
+-            user = auth_subject.subject
+-            if user.stripe_customer_id is not None:
+-                customer_options["customer"] = user.stripe_customer_id
+-            else:
+-                customer_options["customer_email"] = user.email
+-        elif customer_email is not None:
+-            customer_options["customer_email"] = customer_email
+-
+-        checkout_session = stripe_service.create_subscription_checkout_session(
+-            price.stripe_price_id,
+-            success_url,
+-            is_tax_applicable=subscription_tier.is_tax_applicable,
+-            **customer_options,
+-            metadata=metadata,
+-            subscription_metadata=metadata,
+-        )
+-
+-        return SubscribeSession.from_db(checkout_session, subscription_tier, price)
+-
+-    async def get_subscribe_session(
+-        self, session: AsyncSession, id: str
+-    ) -> SubscribeSession:
+-        checkout_session = stripe_service.get_checkout_session(id)
+-
+-        if checkout_session.metadata is None:
+-            raise ResourceNotFound()
+-
+-        try:
+-            subscription_tier_id = checkout_session.metadata["subscription_tier_id"]
+-            subscription_tier_price_id = checkout_session.metadata[
+-                "subscription_tier_price_id"
+-            ]
+-        except KeyError:
+-            raise ResourceNotFound()
+-
+-        subscription_tier = await product_service.get(
+-            session, uuid.UUID(subscription_tier_id)
+-        )
+-
+-        if subscription_tier is None:
+-            raise ResourceNotFound()
+-
+-        subscription_tier = await product_service.with_organization(
+-            session, subscription_tier
+-        )
+-
+-        price = subscription_tier.get_price(uuid.UUID(subscription_tier_price_id))
+-        if price is None:
+-            raise ResourceNotFound()
+-
+-        return SubscribeSession.from_db(checkout_session, subscription_tier, price)
+-
+-    async def _get_organization(
+-        self,
+-        session: AsyncSession,
+-        authz: Authz,
+-        auth_subject: Subject,
+-        organization_id: uuid.UUID,
+-    ) -> Organization:
+-        if isinstance(auth_subject, Anonymous):
+-            raise Unauthorized()
+-
+-        organization = await organization_service.get(session, organization_id)
+-        if organization is None or not (
+-            await authz.can(auth_subject, AccessType.write, organization)
+-        ):
+-            raise NotPermitted()
+-
+-        return organization
+-
+-
+-subscribe_session = SubscribeSessionService()

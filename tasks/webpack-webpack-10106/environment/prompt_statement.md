@@ -1,0 +1,5 @@
+I'm trying to understand and improve how webpack's scope hoisting optimization fits into the overall build pipeline. There are two things I'd like to address.
+
+First, when I look at verbose build stats output, I can see timing logs from other optimization plugins, but the module concatenation optimization contributes nothing to the logging output. I'd like it to emit timing information for each of its major phases — selecting which modules are candidates, sorting them, identifying which ones to group together, ordering the resulting groups, and finally creating the merged modules. These should appear as a dedicated section in the verbose stats output.
+
+Second, the concatenation optimization currently runs synchronously and has no connection to webpack's build cache. The results of grouping modules together should be cacheable so that subsequent builds can restore previously computed concatenated modules rather than recomputing everything from scratch. I'd like the concatenation process to be fully asynchronous and integrate with the cache — retrieving cached modules before building and storing the result afterward.

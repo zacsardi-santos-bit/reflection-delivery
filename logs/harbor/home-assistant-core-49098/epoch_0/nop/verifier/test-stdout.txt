@@ -1,0 +1,44 @@
+patching file tests/components/homeassistant/test_init.py
+patching file tests/components/recorder/test_migrate.py
+patching file tests/components/websocket_api/test_commands.py
+patching file tests/helpers/test_recorder.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-6.2.3, py-1.11.0, pluggy-1.0.0.dev0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo, configfile: pyproject.toml
+plugins: asyncio-0.20.3, xdist-2.1.0, requests-mock-1.8.0, aiohttp-0.3.0, timeout-1.4.2, forked-1.6.0, typeguard-4.3.0
+asyncio: mode=strict
+collecting ... collected 82 items / 1 error / 81 selected
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/helpers/test_recorder.py ________________
+ImportError while importing test module '/workspace/repo/tests/helpers/test_recorder.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.8/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/helpers/test_recorder.py:5: in <module>
+    from homeassistant.helpers import recorder
+E   ImportError: cannot import name 'recorder' from 'homeassistant.helpers' (/workspace/repo/homeassistant/helpers/__init__.py)
+=============================== warnings summary ===============================
+homeassistant/util/package.py:13
+  /workspace/repo/homeassistant/util/package.py:13: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('ruamel')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+homeassistant/helpers/template.py:1316
+  /workspace/repo/homeassistant/helpers/template.py:1316: DeprecationWarning: 'contextfilter' is renamed to 'pass_context', the old name will be removed in Jinja 3.1.
+    def random_every_time(context, values):
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+=========================== short test summary info ============================
+ERROR tests/helpers/test_recorder.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+========================= 3 warnings, 1 error in 0.19s =========================
+/usr/local/lib/python3.8/site-packages/pytest_asyncio/plugin.py:173: DeprecationWarning: You're using an outdated version of pytest. Newer releases of pytest-asyncio will not be compatible with this pytest version. Please update pytest to version 7 or later.
+  warnings.warn(
+reward=0 graded=83 found=0 failed=0 parsed=0 framework=pytest exit_code=2

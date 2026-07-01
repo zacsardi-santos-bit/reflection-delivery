@@ -1,0 +1,5 @@
+I'm working on prow deck's job rerun feature. Right now, the rerun endpoint doesn't check who's making the request — if the job creation feature is enabled, anyone who can hit the endpoint can trigger a new CI job. I need to add authorization so that only users on an approved list (or all users, if the configuration says to allow anyone) can actually create a new job.
+
+I also need the endpoint to properly distinguish between read and write requests. A read request should just return the job spec without creating anything, while a write request should go through the authorization check and actually trigger the job. If someone sends a write request but the creation feature is turned off, the server should reject it with a method-not-allowed response instead of doing something unexpected.
+
+On top of that, I need a way for the handler to look up the currently authenticated user's GitHub identity from the OAuth session, so the authorization logic can compare the user's login against the allowlist. The OAuth session stores the access token, and from that token we can retrieve the user's GitHub username via the GitHub API.

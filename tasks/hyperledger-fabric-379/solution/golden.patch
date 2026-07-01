@@ -1,0 +1,183 @@
+diff --git a/core/comm/client.go b/core/comm/client.go
+index 5506f2bad..7a94e0d81 100644
+--- a/core/comm/client.go
++++ b/core/comm/client.go
+@@ -14,7 +14,6 @@ import (
+ 
+ 	"github.com/pkg/errors"
+ 	"google.golang.org/grpc"
+-	"google.golang.org/grpc/credentials"
+ 	"google.golang.org/grpc/keepalive"
+ )
+ 
+@@ -166,10 +165,13 @@ func (client *GRPCClient) SetServerRootCAs(serverRoots [][]byte) error {
+ 	return nil
+ }
+ 
++// TLSOption changes the given TLS config
++type TLSOption func(tlsConfig *tls.Config)
++
+ // NewConnection returns a grpc.ClientConn for the target address and
+ // overrides the server name used to verify the hostname on the
+ // certificate returned by a server when using TLS
+-func (client *GRPCClient) NewConnection(address string, serverNameOverride string) (
++func (client *GRPCClient) NewConnection(address string, serverNameOverride string, tlsOptions ...TLSOption) (
+ 	*grpc.ClientConn, error) {
+ 
+ 	var dialOpts []grpc.DialOption
+@@ -183,7 +185,7 @@ func (client *GRPCClient) NewConnection(address string, serverNameOverride strin
+ 		client.tlsConfig.ServerName = serverNameOverride
+ 		dialOpts = append(dialOpts,
+ 			grpc.WithTransportCredentials(
+-				credentials.NewTLS(client.tlsConfig)))
++				&DynamicClientCredentials{TLSConfig: client.tlsConfig, TLSOptions: tlsOptions}))
+ 	} else {
+ 		dialOpts = append(dialOpts, grpc.WithInsecure())
+ 	}
+diff --git a/core/comm/creds.go b/core/comm/creds.go
+index 37747f0f3..d0d0d1d1a 100644
+--- a/core/comm/creds.go
++++ b/core/comm/creds.go
+@@ -22,6 +22,8 @@ var (
+ 	OverrrideHostnameNotSupportedError = errors.New(
+ 		"core/comm: OverrideServerName is " +
+ 			"not supported")
++	ServerHandshakeNotImplementedError = errors.New("core/comm: server handshakes are not implemented with clientCreds")
++
+ 	MissingServerConfigError = errors.New(
+ 		"core/comm: `serverConfig` cannot be nil")
+ 	// alpnProtoStr are the specified application level protocols for gRPC.
+@@ -89,3 +91,37 @@ func (sc *serverCreds) Clone() credentials.TransportCredentials {
+ func (sc *serverCreds) OverrideServerName(string) error {
+ 	return OverrrideHostnameNotSupportedError
+ }
++
++type DynamicClientCredentials struct {
++	TLSConfig  *tls.Config
++	TLSOptions []TLSOption
++}
++
++func (dtc *DynamicClientCredentials) latestConfig() *tls.Config {
++	tlsConfigCopy := dtc.TLSConfig.Clone()
++	for _, tlsOption := range dtc.TLSOptions {
++		tlsOption(tlsConfigCopy)
++	}
++	return tlsConfigCopy
++}
++
++func (dtc *DynamicClientCredentials) ClientHandshake(ctx context.Context, authority string, rawConn net.Conn) (net.Conn, credentials.AuthInfo, error) {
++	return credentials.NewTLS(dtc.latestConfig()).ClientHandshake(ctx, authority, rawConn)
++}
++
++func (dtc *DynamicClientCredentials) ServerHandshake(rawConn net.Conn) (net.Conn, credentials.AuthInfo, error) {
++	return nil, nil, ServerHandshakeNotImplementedError
++}
++
++func (dtc *DynamicClientCredentials) Info() credentials.ProtocolInfo {
++	return credentials.NewTLS(dtc.latestConfig()).Info()
++}
++
++func (dtc *DynamicClientCredentials) Clone() credentials.TransportCredentials {
++	return credentials.NewTLS(dtc.latestConfig())
++}
++
++func (dtc *DynamicClientCredentials) OverrideServerName(name string) error {
++	dtc.TLSConfig.ServerName = name
++	return nil
++}
+diff --git a/integration/nwo/configblock.go b/integration/nwo/configblock.go
+index 1c9d069a2..91227c457 100644
+--- a/integration/nwo/configblock.go
++++ b/integration/nwo/configblock.go
+@@ -7,18 +7,18 @@ SPDX-License-Identifier: Apache-2.0
+ package nwo
+ 
+ import (
++	"bytes"
+ 	"fmt"
+ 	"io/ioutil"
+ 	"os"
+ 	"path/filepath"
+ 	"strings"
+ 
+-	"bytes"
+-
+ 	"github.com/golang/protobuf/proto"
+ 	"github.com/hyperledger/fabric/common/tools/configtxlator/update"
+ 	"github.com/hyperledger/fabric/integration/nwo/commands"
+ 	"github.com/hyperledger/fabric/protos/common"
++	"github.com/hyperledger/fabric/protos/msp"
+ 	protosorderer "github.com/hyperledger/fabric/protos/orderer"
+ 	ectdraft_protos "github.com/hyperledger/fabric/protos/orderer/etcdraft"
+ 	"github.com/hyperledger/fabric/protos/utils"
+@@ -313,6 +313,9 @@ func RemoveConsenter(n *Network, peer *Peer, orderer *Orderer, channel string, c
+ // ConsensusMetadataMutator receives ConsensusType.Metadata and mutates it
+ type ConsensusMetadataMutator func([]byte) []byte
+ 
++// MSPMutator receives FabricMSPConfig and mutates it.
++type MSPMutator func(config msp.FabricMSPConfig) msp.FabricMSPConfig
++
+ // UpdateConsensusMetadata executes a config update that updates the consensus metadata according to the given ConsensusMetadataMutator
+ func UpdateConsensusMetadata(network *Network, peer *Peer, orderer *Orderer, channel string, mutateMetadata ConsensusMetadataMutator) {
+ 	config := GetConfig(network, peer, orderer, channel)
+@@ -347,3 +350,27 @@ func UpdateEtcdRaftMetadata(network *Network, peer *Peer, orderer *Orderer, chan
+ 		return newMetadata
+ 	})
+ }
++
++func UpdateOrdererMSP(network *Network, peer *Peer, orderer *Orderer, channel, orgID string, mutateMSP MSPMutator) {
++	config := GetConfig(network, peer, orderer, channel)
++	updatedConfig := proto.Clone(config).(*common.Config)
++
++	// Unpack the MSP config
++	rawMSPConfig := updatedConfig.ChannelGroup.Groups["Orderer"].Groups[orgID].Values["MSP"]
++	mspConfig := &msp.MSPConfig{}
++	err := proto.Unmarshal(rawMSPConfig.Value, mspConfig)
++	Expect(err).NotTo(HaveOccurred())
++
++	fabricConfig := &msp.FabricMSPConfig{}
++	err = proto.Unmarshal(mspConfig.Config, fabricConfig)
++	Expect(err).NotTo(HaveOccurred())
++
++	// Mutate it as we are asked
++	*fabricConfig = mutateMSP(*fabricConfig)
++
++	// Wrap it back into the config
++	mspConfig.Config = utils.MarshalOrPanic(fabricConfig)
++	rawMSPConfig.Value = utils.MarshalOrPanic(mspConfig)
++
++	UpdateOrdererConfig(network, orderer, channel, config, updatedConfig, peer, orderer)
++}
+diff --git a/orderer/common/cluster/util.go b/orderer/common/cluster/util.go
+index a319dc9c4..13e57f3c9 100644
+--- a/orderer/common/cluster/util.go
++++ b/orderer/common/cluster/util.go
+@@ -8,6 +8,8 @@ package cluster
+ 
+ import (
+ 	"bytes"
++	"crypto/tls"
++	"crypto/x509"
+ 	"encoding/hex"
+ 	"encoding/pem"
+ 	"sync"
+@@ -128,7 +130,18 @@ func (dialer *PredicateDialer) Dial(address string, verifyFunc RemoteVerifier) (
+ 	if err != nil {
+ 		return nil, errors.WithStack(err)
+ 	}
+-	return client.NewConnection(address, "")
++	return client.NewConnection(address, "", func(tlsConfig *tls.Config) {
++		// We need to dynamically overwrite the TLS root CAs,
++		// as they may be updated.
++		dialer.lock.RLock()
++		serverRootCAs := dialer.ClientConfig.Clone().SecOpts.ServerRootCAs
++		dialer.lock.RUnlock()
++
++		tlsConfig.RootCAs = x509.NewCertPool()
++		for _, pem := range serverRootCAs {
++			tlsConfig.RootCAs.AppendCertsFromPEM(pem)
++		}
++	})
+ }
+ 
+ // DERtoPEM returns a PEM representation of the DER

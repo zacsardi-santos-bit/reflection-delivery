@@ -1,0 +1,15 @@
+patching file go/libraries/doltcore/sqle/enginetest/dolt_queries.go
+patching file go/store/prolly/tree/json_indexed_document_test.go
+patching file integration-tests/bats/json.bats
+{"Time":"2026-06-29T15:16:21.342682487Z","Action":"start","Package":"github.com/dolthub/dolt/go/store/prolly/tree"}
+{"Time":"2026-06-29T15:16:21.363406643Z","Action":"run","Package":"github.com/dolthub/dolt/go/store/prolly/tree","Test":"TestIndexedJsonDocument_CreateLargeStringValues"}
+{"Time":"2026-06-29T15:16:21.363460504Z","Action":"output","Package":"github.com/dolthub/dolt/go/store/prolly/tree","Test":"TestIndexedJsonDocument_CreateLargeStringValues","Output":"=== RUN   TestIndexedJsonDocument_CreateLargeStringValues\n"}
+{"Time":"2026-06-29T15:16:21.460236282Z","Action":"output","Package":"github.com/dolthub/dolt/go/store/prolly/tree","Test":"TestIndexedJsonDocument_CreateLargeStringValues","Output":"--- PASS: TestIndexedJsonDocument_CreateLargeStringValues (0.10s)\n"}
+{"Time":"2026-06-29T15:16:21.460305273Z","Action":"pass","Package":"github.com/dolthub/dolt/go/store/prolly/tree","Test":"TestIndexedJsonDocument_CreateLargeStringValues","Elapsed":0.1}
+{"Time":"2026-06-29T15:16:21.460343923Z","Action":"output","Package":"github.com/dolthub/dolt/go/store/prolly/tree","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:21.461087348Z","Action":"output","Package":"github.com/dolthub/dolt/go/store/prolly/tree","Output":"ok  \tgithub.com/dolthub/dolt/go/store/prolly/tree\t0.118s\n"}
+{"Time":"2026-06-29T15:16:21.461159618Z","Action":"pass","Package":"github.com/dolthub/dolt/go/store/prolly/tree","Elapsed":0.118}
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

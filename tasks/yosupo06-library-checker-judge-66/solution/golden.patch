@@ -1,0 +1,305 @@
+diff --git a/.gitignore b/.gitignore
+index d037e5a..8b60bd6 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -2,7 +2,6 @@ judge/sand
+ judge/work
+ judge/executor/executor_core
+ *.log
+-*.pyc
+ /compiler/*
+ !/compiler/install.sh
+ !/compiler/PATH.txt
+diff --git a/README.md b/README.md
+index 1c3bd8f..4610da6 100644
+--- a/README.md
++++ b/README.md
+@@ -1,15 +1,22 @@
+-# library-checker-project
++# Library Checker Judge
+ 
+-- problems: [library-checker-problems](https://github.com/yosupo06/library-checker-problems)
+-- judge: [library-checker-judge](https://github.com/yosupo06/library-checker-judge)
+-- frontend: [library-checker-frontend](https://github.com/yosupo06/library-checker-frontend)
++ジャッジ / API のソースコードです
+ 
+-# Recommended Environment
++## Requirements
+ 
+ - Ubuntu 18.04
+-- ~~Debian 9(stretch)~~
+ 
+-# 動かすのに必要なもの
++## How to Use
++
++### Launch API & SQL
++
++```
++./launch_local.sh
++```
++
++APIサーバー(localhost:50051)とSQL(Postgre SQL)がdocker-composeで立ち上がります。
++
++### Launch Judge Server
+ 
+ - docker
+ 
+@@ -79,3 +86,9 @@ go run *.go
+ # Contribution
+ 
+ なんでも歓迎
++
++## library-checker-project
++
++- problems: [library-checker-problems](https://github.com/yosupo06/library-checker-problems)
++- judge: [library-checker-judge](https://github.com/yosupo06/library-checker-judge)
++- frontend: [library-checker-frontend](https://github.com/yosupo06/library-checker-frontend)
+diff --git a/api/Dockerfile b/api/Dockerfile
+index f62ae2e..e9084d9 100644
+--- a/api/Dockerfile
++++ b/api/Dockerfile
+@@ -1,9 +1,6 @@
+-# Run from parent directory(/path/to/library-checker-judge)
+ FROM golang:1.13.4-stretch as builder
+-WORKDIR /go/src/github.com/yosupo06/library-checker-judge/
+-COPY ./api ./api
+-COPY ./compiler/langs.toml ./compiler/langs.toml
+ WORKDIR /go/src/github.com/yosupo06/library-checker-judge/api
++COPY . .
+ RUN CGO_ENABLED=0 GOOS=linux go build .
+ 
+ ENV PORT 50051
+diff --git a/api/auth.go b/api/auth.go
+index 3242887..28389d0 100644
+--- a/api/auth.go
++++ b/api/auth.go
+@@ -16,7 +16,8 @@ var hmacSecret []byte
+ func init() {
+ 	s := os.Getenv("HMAC_SECRET")
+ 	if s == "" {
+-		log.Fatal("Must set HMAC_SECRET")
++		log.Print("Should set HMAC_SECRET")
++		s = "dummy_secret"
+ 	}
+ 	hmacSecret = []byte(s)
+ }
+diff --git a/api/cloudbuild.yaml b/api/cloudbuild.yaml
+index 0f00a1f..b0b8153 100644
+--- a/api/cloudbuild.yaml
++++ b/api/cloudbuild.yaml
+@@ -1,13 +1,11 @@
+-# Run from parent directory(/path/to/library-checker-judge)
+ steps:
+   - id: build
+     name: gcr.io/cloud-builders/docker
++    dir: api
+     args:
+       - build
+       - -t
+       - asia.gcr.io/library-checker-project/judge-api
+-      - -f
+-      - api/Dockerfile
+       - .
+   - id: push
+     name: gcr.io/cloud-builders/docker
+diff --git a/api/database.go b/api/database.go
+index 7e9fce2..25e8916 100644
+--- a/api/database.go
++++ b/api/database.go
+@@ -65,17 +65,21 @@ func dbConnect() *gorm.DB {
+ 	connStr := fmt.Sprintf(
+ 		"host=%s port=%s user=%s dbname=librarychecker password=%s sslmode=disable",
+ 		host, port, user, pass)
+-
+-	db, err := gorm.Open("postgres", connStr)
+-	if err != nil {
+-		log.Fatal(err)
++	log.Printf("Try connect %s", connStr)
++	for i := 0; i < 3; i++ {
++		db, err := gorm.Open("postgres", connStr)
++		if err != nil {
++			log.Printf("Cannot connect db %d/3", i)
++			time.Sleep(5 * time.Second)
++			continue
++		}
++		db.AutoMigrate(Problem{})
++		db.AutoMigrate(User{})
++		db.AutoMigrate(Submission{})
++		db.AutoMigrate(SubmissionTestcaseResult{})
++		db.AutoMigrate(Task{})
++		return db
+ 	}
+-
+-	db.AutoMigrate(Problem{})
+-	db.AutoMigrate(User{})
+-	db.AutoMigrate(Submission{})
+-	db.AutoMigrate(SubmissionTestcaseResult{})
+-	db.AutoMigrate(Task{})
+-
+-	return db
++	log.Fatal("Cannot connect db 3 times")
++	return nil
+ }
+diff --git a/compiler/langs.toml b/api/langs.toml
+similarity index 100%
+rename from compiler/langs.toml
+rename to api/langs.toml
+diff --git a/api/main.go b/api/main.go
+index 838a008..3e8d2a1 100644
+--- a/api/main.go
++++ b/api/main.go
+@@ -125,6 +125,9 @@ func (s *server) Submit(ctx context.Context, in *pb.SubmitRequest) (*pb.SubmitRe
+ 	if in.Source == "" {
+ 		return nil, errors.New("Empty Source")
+ 	}
++	if len(in.Source) > 1024 * 1024 {
++		return nil, errors.New("Too large Source")
++	}
+ 	ok := false
+ 	for _, lang := range langs {
+ 		if lang.Id == in.Lang {
+@@ -307,6 +310,7 @@ func (s *server) LangList(ctx context.Context, in *pb.LangListRequest) (*pb.Lang
+ func main() {
+ 	// connect db
+ 	db = dbConnect()
++	defer db.Close()
+ 	//db.LogMode(true)
+ 
+ 	// launch gRPC server
+@@ -315,7 +319,7 @@ func main() {
+ 	if err != nil {
+ 		log.Fatal(err)
+ 	}
+-	LoadLangsToml("../compiler/langs.toml")
++	LoadLangsToml("./langs.toml")
+ 	s := grpc.NewServer(
+ 		grpc.UnaryInterceptor(grpc_auth.UnaryServerInterceptor(authnFunc)))
+ 	pb.RegisterLibraryCheckerServiceServer(s, &server{})
+diff --git a/compiler/PATH.txt b/compiler/PATH.txt
+deleted file mode 100644
+index fc10e35..0000000
+--- a/compiler/PATH.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-/compiler/ldc2-1.15.0-linux-x86_64/bin:/compiler/rust/bin:/compiler/pypy3.6-v7.1.1-linux64/bin
+\ No newline at end of file
+diff --git a/deploy/cloudbuild.yaml b/deploy/cloudbuild.yaml
+index afc4b06..cce178e 100644
+--- a/deploy/cloudbuild.yaml
++++ b/deploy/cloudbuild.yaml
+@@ -1,9 +1,8 @@
+ steps:
+   - name:	gcr.io/cloud-builders/gcloud
+     entrypoint: sh
+-    args:
+-      - '-c'
+-      - 'cd deploy && ./deploy.sh'
++    dir: deploy
++    args: ./deploy.sh
+     env:
+       - 'PG_HOST=$_PG_HOST'
+       - 'PG_PASS=$_PG_PASS'
+diff --git a/deploy/cloudinit.yml b/deploy/cloudinit.yml
+index 8eb1fa6..0c51243 100644
+--- a/deploy/cloudinit.yml
++++ b/deploy/cloudinit.yml
+@@ -65,10 +65,10 @@ write_files:
+ 
+ runcmd:
+   - update-grub
++  # install docker, docker-compose
+   - curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh
+-  - git clone https://github.com/yosupo06/library-checker-problems /root/library-checker-problems
+-  - pip3 install termcolor toml psycopg2 psutil
+-  - pip3 install -r /root/library-checker-problems/requirements.txt
++  - curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
++  - chmod +x /usr/local/bin/docker-compose
+   # install go
+   - add-apt-repository -y ppa:longsleep/golang-backports
+   - apt-get install -y golang-go
+diff --git a/deploy/deploy.sh b/deploy/deploy.sh
+index 8e0793b..b481b7f 100755
+--- a/deploy/deploy.sh
++++ b/deploy/deploy.sh
+@@ -31,7 +31,7 @@ echo "Make Secret HOST=${PG_HOST} / PASS=${PG_PASS}"
+ gcpexec "cd /root/library-checker-judge/judge && PG_HOST=${PG_HOST} PG_PASS=${PG_PASS} ./make_secret.sh"
+ 
+ echo "Install compilers"
+-gcpexec "cd /root/library-checker-judge/compiler && ./install.sh"
++gcpexec "cd /root/library-checker-judge/deploy && ./install.sh"
+ 
+ echo "Build judge"
+ gcpexec "cd /root/library-checker-judge/judge && go build ."
+diff --git a/compiler/install.sh b/deploy/install.sh
+similarity index 100%
+rename from compiler/install.sh
+rename to deploy/install.sh
+diff --git a/docker-compose.yml b/docker-compose.yml
+index 75042ba..882f62e 100644
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@ -10,5 +10,11 @@ services:
+       - POSTGRES_PASSWORD=passwd
+   api:
+     build:
+-      context: ./
+-      dockerfile: api/Dockerfile
+\ No newline at end of file
++      context: api
++    ports:
++      - 50051:50051
++    depends_on:
++      - db
++    environment:
++      - POSTGRE_HOST=db
++      - HMAC_SECRET=dummy_secret
+\ No newline at end of file
+diff --git a/judge/judge.go b/judge/judge.go
+index 5fcccce..0a46e2e 100644
+--- a/judge/judge.go
++++ b/judge/judge.go
+@@ -116,7 +116,7 @@ func init() {
+ 			ID string `toml:"id"`
+ 		} `toml:"langs"`
+ 	}
+-	if _, err := toml.DecodeFile("../compiler/langs.toml", &tomlData); err != nil {
++	if _, err := toml.DecodeFile("../api/langs.toml", &tomlData); err != nil {
+ 		log.Fatal(err)
+ 	}
+ 	langs = make(map[string]Lang)
+diff --git a/local/launch.sh b/launch_local.sh
+similarity index 80%
+rename from local/launch.sh
+rename to launch_local.sh
+index c67bf56..c2571cf 100755
+--- a/local/launch.sh
++++ b/launch_local.sh
+@@ -1,6 +1,7 @@
+-./stop.sh
++set -e
+ 
+-docker run --name postgresql -p 5432:5432 -e POSTGRES_DB=librarychecker -e POSTGRES_PASSWORD=passwd -d postgres:11.3
++docker-compose down -v
++docker-compose up -d --build
+ 
+ until PGPASSWORD=passwd psql -c 'select 1;' -U postgres -h localhost 2>&1 > /dev/null; do
+     echo 'waiting...'
+@@ -17,4 +18,4 @@ echo "insert into users(name, passhash, admin) values ('admin', '\$2a\$10\$Aqftz
+ echo "insert into users(name, passhash, admin) values ('tester', '\$2a\$10\$AqftzLHYcaGH2GxUXiGO/OzHnIMJO.PGMrLFqm7mPbpqZlQrIRrq.', true)" \
+ | PGPASSWORD=passwd psql -h localhost -U postgres librarychecker
+ 
+-cd ../../library-checker-problems && ./deploy.py
++cd ../library-checker-problems && ./deploy.py
+diff --git a/local/stop.sh b/local/stop.sh
+deleted file mode 100755
+index a017673..0000000
+--- a/local/stop.sh
++++ /dev/null
+@@ -1,2 +0,0 @@
+-docker stop postgresql
+-docker rm postgresql
+\ No newline at end of file
+diff --git a/local/tables.sql b/tables.sql
+similarity index 100%
+rename from local/tables.sql
+rename to tables.sql

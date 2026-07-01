@@ -1,0 +1,23 @@
+{
+ "task": "cosmwasm-cosmwasm-1406",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden replaces OS-specific errors with fixed strings (File::open .map_err(|_e| cache_err(\"Error opening Wasm file for reading\"))) and adds filesystem.rs mkdir_p; test load_wasm_error_is_os_independent asserts_eq! msg == \"Error opening Wasm file for reading\""
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

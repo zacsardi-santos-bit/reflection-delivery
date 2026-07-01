@@ -1,0 +1,23 @@
+{
+ "task": "panoptes-pocs-428",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds class SensorRecorder(threading.Thread) with run()/queue()/stop_recorder(), _is_valid_reading warnings, save/send exception logging; tests assert level_counts == dict(info=2, warning=3) and dict(info=2, error=6)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

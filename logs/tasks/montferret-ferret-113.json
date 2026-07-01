@@ -1,0 +1,23 @@
+{
+ "task": "montferret-ferret-113",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `func Zip(...)` requiring 2 arrays, `keys.Length() != vals.Length()` error, string-key validation, and first-mapping-wins on duplicate keys (`if _, exists = keyExists[k]; exists { return true }`)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "khan-perseus-2015",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden removes 'aria-label=\"Toggle options\"' and adds role radio groups; tests do within(screen.getByRole(\"group\", {name: /^Width/})).getByRole(\"radio\", {name: \"Small\"}) then expect(onChangeMock).toBeCalledWith(...) \u2014 removed 'getByLabelText(\"Toggle options\")'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

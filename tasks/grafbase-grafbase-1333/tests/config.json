@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/engine/crates/integration-tests && cargo nextest run --profile ci -E 'test(nested_joins)'",
+  "test_files": [
+    "engine/crates/integration-tests/tests/execution/joins.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) integration-tests::integration_tests execution::joins::nested_joins"
+  ],
+  "PASS_TO_PASS": []
+}

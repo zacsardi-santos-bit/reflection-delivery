@@ -1,0 +1,313 @@
+patching file crates/nu-command/tests/commands/bytes/mod.rs
+patching file crates/nu-command/tests/commands/bytes/starts_with.rs
+patching file crates/nu-command/tests/commands/mod.rs
+   Compiling nu-command v0.76.1 (/workspace/repo/crates/nu-command)
+    Finished test [unoptimized + debuginfo] target(s) in 52.41s
+────────────
+ Nextest run ID d1f95c07-177f-437c-9b70-7a202ca86b45 with nextest profile: default
+    Starting 22 tests across 2 binaries (1343 tests skipped)
+        PASS [   0.142s] ( 1/22) nu-command bytes::index_of::tests::test_examples
+        PASS [   0.147s] ( 2/22) nu-command bytes::ends_with::tests::test_examples
+        PASS [   0.173s] ( 3/22) nu-command bytes::length::test::test_examples
+        PASS [   0.198s] ( 4/22) nu-command bytes::at::tests::test_examples
+        PASS [   0.241s] ( 5/22) nu-command bytes::build_::test::test_examples
+        PASS [   0.241s] ( 6/22) nu-command bytes::starts_with::tests::test_examples
+        PASS [   0.235s] ( 7/22) nu-command bytes::add::tests::test_examples
+        PASS [   0.248s] ( 8/22) nu-command bytes::collect::tests::test_examples
+        PASS [   0.250s] ( 9/22) nu-command bytes::replace::tests::test_examples
+        PASS [   0.260s] (10/22) nu-command bytes::reverse::tests::test_examples
+        PASS [   0.281s] (11/22) nu-command bytes::remove::tests::test_examples
+        PASS [   0.488s] (12/22) nu-command::main commands::bytes::starts_with::basic_string_fails
+        PASS [   0.531s] (13/22) nu-command::main commands::bytes::starts_with::basic_binary_starts_with
+        FAIL [   0.485s] (14/22) nu-command::main commands::bytes::starts_with::long_stream_string_exact
+  stdout ───
+
+    running 1 test
+    === stderr
+    Error: nu::shell::only_supports_this_input_type
+
+      × Input type not supported.
+       ╭─[source:1:1]
+     1 │ ;             nu --testbin repeater hell 8192 | bytes starts-with (0..<8192 | each { "hell" | into binary } | bytes collect);         
+       ·               ─┬                                ────────┬────────
+       ·                │                                        ╰── only binary input data is supported
+       ·                ╰── input type: string
+       ╰────
+
+
+    test commands::bytes::starts_with::long_stream_string_exact ... FAILED
+
+    failures:
+
+    failures:
+        commands::bytes::starts_with::long_stream_string_exact
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 988 filtered out; finished in 0.31s
+
+  stderr ───
+    thread 'commands::bytes::starts_with::long_stream_string_exact' panicked at 'assertion failed: `(left == right)`
+      left: `""`,
+     right: `"true"`', crates/nu-command/tests/commands/bytes/starts_with.rs:112:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.433s] (15/22) nu-command::main commands::bytes::starts_with::short_stream_mismatch
+  stdout ───
+
+    running 1 test
+    === stderr
+    Error: nu::shell::only_supports_this_input_type
+
+      × Input type not supported.
+       ╭─[source:1:1]
+     1 │ ;             nu --testbin repeater (0x[010203]) 5 | bytes starts-with 0x[010204];         
+       ·               ─┬                                     ────────┬────────
+       ·                │                                             ╰── only binary input data is supported
+       ·                ╰── input type: string
+       ╰────
+
+
+    test commands::bytes::starts_with::short_stream_mismatch ... FAILED
+
+    failures:
+
+    failures:
+        commands::bytes::starts_with::short_stream_mismatch
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 988 filtered out; finished in 0.24s
+
+  stderr ───
+    thread 'commands::bytes::starts_with::short_stream_mismatch' panicked at 'assertion failed: `(left == right)`
+      left: `""`,
+     right: `"false"`', crates/nu-command/tests/commands/bytes/starts_with.rs:49:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.636s] (16/22) nu-command::main commands::bytes::starts_with::long_stream_binary
+  stdout ───
+
+    running 1 test
+    === stderr
+    Error: nu::shell::only_supports_this_input_type
+
+      × Input type not supported.
+       ╭─[source:1:1]
+     1 │ ;             nu --testbin repeater (0x[01]) 32768 | bytes starts-with 0x[010101];         
+       ·               ─┬                                     ────────┬────────
+       ·                │                                             ╰── only binary input data is supported
+       ·                ╰── input type: string
+       ╰────
+
+
+    test commands::bytes::starts_with::long_stream_binary ... FAILED
+
+    failures:
+
+    failures:
+        commands::bytes::starts_with::long_stream_binary
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 988 filtered out; finished in 0.33s
+
+  stderr ───
+    thread 'commands::bytes::starts_with::long_stream_binary' panicked at 'assertion failed: `(left == right)`
+      left: `""`,
+     right: `"true"`', crates/nu-command/tests/commands/bytes/starts_with.rs:73:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.638s] (17/22) nu-command::main commands::bytes::starts_with::long_stream_binary_overflow
+  stdout ───
+
+    running 1 test
+    === stderr
+    Error: nu::shell::only_supports_this_input_type
+
+      × Input type not supported.
+       ╭─[source:1:1]
+     1 │ ;             nu --testbin repeater (0x[01]) 32768 | bytes starts-with (0..32768 | each { 0x[01] } | bytes collect);         
+       ·               ─┬                                     ────────┬────────
+       ·                │                                             ╰── only binary input data is supported
+       ·                ╰── input type: string
+       ╰────
+
+
+    test commands::bytes::starts_with::long_stream_binary_overflow ... FAILED
+
+    failures:
+
+    failures:
+        commands::bytes::starts_with::long_stream_binary_overflow
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 988 filtered out; finished in 0.39s
+
+  stderr ───
+    thread 'commands::bytes::starts_with::long_stream_binary_overflow' panicked at 'assertion failed: `(left == right)`
+      left: `""`,
+     right: `"false"`', crates/nu-command/tests/commands/bytes/starts_with.rs:86:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.665s] (18/22) nu-command::main commands::bytes::starts_with::long_stream_binary_exact
+  stdout ───
+
+    running 1 test
+    === stderr
+    Error: nu::shell::only_supports_this_input_type
+
+      × Input type not supported.
+       ╭─[source:1:1]
+     1 │ ;             nu --testbin repeater (0x[01020304]) 8192 | bytes starts-with (0..<8192 | each { 0x[01020304] } | bytes collect);         
+       ·               ─┬                                          ────────┬────────
+       ·                │                                                  ╰── only binary input data is supported
+       ·                ╰── input type: string
+       ╰────
+
+
+    test commands::bytes::starts_with::long_stream_binary_exact ... FAILED
+
+    failures:
+
+    failures:
+        commands::bytes::starts_with::long_stream_binary_exact
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 988 filtered out; finished in 0.37s
+
+  stderr ───
+    thread 'commands::bytes::starts_with::long_stream_binary_exact' panicked at 'assertion failed: `(left == right)`
+      left: `""`,
+     right: `"true"`', crates/nu-command/tests/commands/bytes/starts_with.rs:99:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.661s] (19/22) nu-command::main commands::bytes::starts_with::long_stream_mixed_overflow
+  stdout ───
+
+    running 1 test
+    === stderr
+    Error: nu::shell::only_supports_this_input_type
+
+      × Input type not supported.
+       ╭─[source:1:1]
+     1 │ ;             let binseg = (0..<2048 | each { 0x[003d9fbf] } | bytes collect);             let strseg = (0..<2048 | each { "hell" | into binary } | bytes collect); ;             nu --testbin repeat_bytes 003d9fbf 2048 68656c6c 2048 | bytes starts-with (bytes build $binseg $strseg 0x[01]);         
+       ·                                                                                                                                                                                   ─┬                                                      ────────┬────────
+       ·                                                                                                                                                                                    │                                                              ╰── only binary input data is supported
+       ·                                                                                                                                                                                    ╰── input type: string
+       ╰────
+
+
+    test commands::bytes::starts_with::long_stream_mixed_overflow ... FAILED
+
+    failures:
+
+    failures:
+        commands::bytes::starts_with::long_stream_mixed_overflow
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 988 filtered out; finished in 0.34s
+
+  stderr ───
+    thread 'commands::bytes::starts_with::long_stream_mixed_overflow' panicked at 'assertion failed: `(left == right)`
+      left: `"Error: \u{1b}[31mnu::shell::only_supports_this_input_type\u{1b}[0m\n\n  \u{1b}[31m×\u{1b}[0m Input type not supported.\n   ╭─[\u{1b}[36;1;4msource\u{1b}[0m:1:1]\n \u{1b}[2m1\u{1b}[0m │ ;             let binseg = (0..<2048 | each { 0x[003d9fbf] } | bytes collect);             let strseg = (0..<2048 | each { \"hell\" | into binary } | bytes collect); ;             nu --testbin repeat_bytes 003d9fbf 2048 68656c6c 2048 | bytes starts-with (bytes build $binseg $strseg 0x[01]);         \n   · \u{1b}[35;1m                                                                                                                                                                                  ─┬\u{1b}[0m\u{1b}[33;1m                                                      ────────┬────────\u{1b}[0m\n   ·                                                                                                                                                                                    \u{1b}[35;1m│\u{1b}[0m                                                              \u{1b}[33;1m╰── \u{1b}[33;1monly binary input data is supported\u{1b}[0m\u{1b}[0m\n   ·                                                                                                                                                                                    \u{1b}[35;1m╰── \u{1b}[35;1minput type: string\u{1b}[0m\u{1b}[0m\n   ╰────\n\n"`,
+     right: `""`: invocation failed. command line limit likely reached', crates/nu-command/tests/commands/bytes/starts_with.rs:148:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.672s] (20/22) nu-command::main commands::bytes::starts_with::long_stream_mixed_exact
+  stdout ───
+
+    running 1 test
+    === stderr
+    Error: nu::shell::only_supports_this_input_type
+
+      × Input type not supported.
+       ╭─[source:1:1]
+     1 │ ;             let binseg = (0..<2048 | each { 0x[003d9fbf] } | bytes collect);             let strseg = (0..<2048 | each { "hell" | into binary } | bytes collect); ;             nu --testbin repeat_bytes 003d9fbf 2048 68656c6c 2048 | bytes starts-with (bytes build $binseg $strseg);         
+       ·                                                                                                                                                                                   ─┬                                                      ────────┬────────
+       ·                                                                                                                                                                                    │                                                              ╰── only binary input data is supported
+       ·                                                                                                                                                                                    ╰── input type: string
+       ╰────
+
+
+    test commands::bytes::starts_with::long_stream_mixed_exact ... FAILED
+
+    failures:
+
+    failures:
+        commands::bytes::starts_with::long_stream_mixed_exact
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 988 filtered out; finished in 0.51s
+
+  stderr ───
+    thread 'commands::bytes::starts_with::long_stream_mixed_exact' panicked at 'assertion failed: `(left == right)`
+      left: `"Error: \u{1b}[31mnu::shell::only_supports_this_input_type\u{1b}[0m\n\n  \u{1b}[31m×\u{1b}[0m Input type not supported.\n   ╭─[\u{1b}[36;1;4msource\u{1b}[0m:1:1]\n \u{1b}[2m1\u{1b}[0m │ ;             let binseg = (0..<2048 | each { 0x[003d9fbf] } | bytes collect);             let strseg = (0..<2048 | each { \"hell\" | into binary } | bytes collect); ;             nu --testbin repeat_bytes 003d9fbf 2048 68656c6c 2048 | bytes starts-with (bytes build $binseg $strseg);         \n   · \u{1b}[35;1m                                                                                                                                                                                  ─┬\u{1b}[0m\u{1b}[33;1m                                                      ────────┬────────\u{1b}[0m\n   ·                                                                                                                                                                                    \u{1b}[35;1m│\u{1b}[0m                                                              \u{1b}[33;1m╰── \u{1b}[33;1monly binary input data is supported\u{1b}[0m\u{1b}[0m\n   ·                                                                                                                                                                                    \u{1b}[35;1m╰── \u{1b}[35;1minput type: string\u{1b}[0m\u{1b}[0m\n   ╰────\n\n"`,
+     right: `""`: invocation failed. command line limit likely reached', crates/nu-command/tests/commands/bytes/starts_with.rs:128:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.538s] (21/22) nu-command::main commands::bytes::starts_with::short_stream_binary
+  stdout ───
+
+    running 1 test
+    === stderr
+    Error: nu::shell::only_supports_this_input_type
+
+      × Input type not supported.
+       ╭─[source:1:1]
+     1 │ ;             nu --testbin repeater (0x[01]) 5 | bytes starts-with 0x[010101];         
+       ·               ─┬                                 ────────┬────────
+       ·                │                                         ╰── only binary input data is supported
+       ·                ╰── input type: string
+       ╰────
+
+
+    test commands::bytes::starts_with::short_stream_binary ... FAILED
+
+    failures:
+
+    failures:
+        commands::bytes::starts_with::short_stream_binary
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 988 filtered out; finished in 0.40s
+
+  stderr ───
+    thread 'commands::bytes::starts_with::short_stream_binary' panicked at 'assertion failed: `(left == right)`
+      left: `""`,
+     right: `"true"`', crates/nu-command/tests/commands/bytes/starts_with.rs:37:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.523s] (22/22) nu-command::main commands::bytes::starts_with::short_stream_binary_overflow
+  stdout ───
+
+    running 1 test
+    === stderr
+    Error: nu::shell::only_supports_this_input_type
+
+      × Input type not supported.
+       ╭─[source:1:1]
+     1 │ ;             nu --testbin repeater (0x[01]) 5 | bytes starts-with 0x[010101010101];         
+       ·               ─┬                                 ────────┬────────
+       ·                │                                         ╰── only binary input data is supported
+       ·                ╰── input type: string
+       ╰────
+
+
+    test commands::bytes::starts_with::short_stream_binary_overflow ... FAILED
+
+    failures:
+
+    failures:
+        commands::bytes::starts_with::short_stream_binary_overflow
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 988 filtered out; finished in 0.32s
+
+  stderr ───
+    thread 'commands::bytes::starts_with::short_stream_binary_overflow' panicked at 'assertion failed: `(left == right)`
+      left: `""`,
+     right: `"false"`', crates/nu-command/tests/commands/bytes/starts_with.rs:61:5
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.704s] 22 tests run: 13 passed, 9 failed, 1343 skipped
+        FAIL [   0.485s] (14/22) nu-command::main commands::bytes::starts_with::long_stream_string_exact
+        FAIL [   0.433s] (15/22) nu-command::main commands::bytes::starts_with::short_stream_mismatch
+        FAIL [   0.636s] (16/22) nu-command::main commands::bytes::starts_with::long_stream_binary
+        FAIL [   0.638s] (17/22) nu-command::main commands::bytes::starts_with::long_stream_binary_overflow
+        FAIL [   0.665s] (18/22) nu-command::main commands::bytes::starts_with::long_stream_binary_exact
+        FAIL [   0.661s] (19/22) nu-command::main commands::bytes::starts_with::long_stream_mixed_overflow
+        FAIL [   0.672s] (20/22) nu-command::main commands::bytes::starts_with::long_stream_mixed_exact
+        FAIL [   0.538s] (21/22) nu-command::main commands::bytes::starts_with::short_stream_binary
+        FAIL [   0.523s] (22/22) nu-command::main commands::bytes::starts_with::short_stream_binary_overflow
+error: test run failed
+reward=0 graded=22 found=6 failed=3 parsed=22 framework=cargo exit_code=100

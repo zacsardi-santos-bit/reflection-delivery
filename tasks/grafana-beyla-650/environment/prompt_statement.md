@@ -1,0 +1,5 @@
+I'm working on a network flow monitoring agent that deduplicates traffic observations seen across multiple interfaces. Currently the deduplicator has two modes: one that drops duplicate flows, and one that lets them through but marks them with a flag. I want to remove the "mark as duplicate" mode entirely — deduplication should always drop duplicates, full stop. Downstream consumers shouldn't have to worry about handling that flag at all.
+
+There's also a related issue: when a flow passes through the deduplicator and is forwarded, it still has its interface identifier and direction set to whatever values were on the first observation. Since those fields don't really mean anything after deduplication — the flow might have come from any of several interfaces — I want them replaced with sentinel "unset" values to make it clear they are not meaningful. This also helps avoid inflating metric cardinality with random per-interface values.
+
+On top of that, I'd like to remove the device-level address fields from the flow identity structure entirely, as they are no longer needed for flow tracking.

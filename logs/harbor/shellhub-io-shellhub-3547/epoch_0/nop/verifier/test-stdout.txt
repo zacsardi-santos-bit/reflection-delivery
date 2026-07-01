@@ -1,0 +1,16 @@
+patching file api/services/device_test.go
+patching file api/store/mongo/device_test.go
+# github.com/shellhub-io/shellhub/api/services [github.com/shellhub-io/shellhub/api/services.test]
+services/device_test.go:169:74: undefined: store.DeviceAcceptableFromRemoved
+services/device_test.go:208:74: undefined: store.DeviceAcceptableIfNotAccepted
+services/device_test.go:247:74: undefined: store.DeviceAcceptableIfNotAccepted
+services/device_test.go:300:74: undefined: store.DeviceAcceptableIfNotAccepted
+services/device_test.go:340:19: undefined: models.DeviceStatusEmpty
+services/device_test.go:353:74: undefined: store.DeviceAcceptableIfNotAccepted
+services/device_test.go:444:74: undefined: store.DeviceAcceptableAsFalse
+services/device_test.go:482:74: undefined: store.DeviceAcceptableIfNotAccepted
+services/device_test.go:526:74: undefined: store.DeviceAcceptableAsFalse
+services/device_test.go:578:74: undefined: store.DeviceAcceptableIfNotAccepted
+services/device_test.go:578:74: too many errors
+FAIL	github.com/shellhub-io/shellhub/api/services [build failed]
+reward=0 graded=323 found=323 failed=323 parsed=1 framework=go exit_code=1

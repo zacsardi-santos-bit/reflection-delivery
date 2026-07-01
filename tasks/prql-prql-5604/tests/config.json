@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p prqlc --test integration test_interval",
+  "test_files": [
+    "prqlc/prqlc/tests/integration/sql.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(2/2) prqlc::integration sql::test_interval"
+  ],
+  "PASS_TO_PASS": [
+    "(1/2) prqlc::integration sql::test_intervals"
+  ]
+}

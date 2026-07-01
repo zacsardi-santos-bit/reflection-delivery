@@ -1,0 +1,23 @@
+{
+ "task": "web-infra-dev-rsbuild-1197",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden bumps 'svgo': '^3.0.2' -> '^3.2.0' + pnpm-lock (viewBox/ID-prefix fix) and adds per-case rsbuild.config.ts; F2P=3 Playwright e2e tests build real projects and inspect compiled output"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./broker -count=1",
+  "test_files": [
+    "broker/broker_schema_mutator_test.go",
+    "broker/query_compiler_test.go",
+    "broker/query_plan_agg_test.go",
+    "broker/query_plan_non_agg_test.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/uber/aresdb/broker::TestDataNode"
+  ],
+  "PASS_TO_PASS": []
+}

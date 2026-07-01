@@ -1,0 +1,23 @@
+{
+ "task": "webassembly-wabt-958",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden rewrites LogOpcode in src/binary-reader-objdump.cc to wrap overflow bytes and fix prefix-opcode offset; F2P=13 pytest golden-file tests that build wabt and diff real disassembly output vs test/dump/*.txt"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

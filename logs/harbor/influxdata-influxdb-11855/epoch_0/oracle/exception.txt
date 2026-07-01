@@ -1,0 +1,74 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py", line 531, in run
+    await self._setup_environment()
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py", line 238, in _setup_environment
+    await self._start_environment_with_retry()
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 193, in async_wrapped
+    return await copy(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 112, in __call__
+    do = await self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 157, in iter
+    result = await action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/_utils.py", line 111, in inner
+    return call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 116, in __call__
+    result = await fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py", line 250, in _start_environment_with_retry
+    await asyncio.wait_for(
+  File "/usr/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/environments/modal.py", line 203, in start
+    self._sandbox = await self._create_sandbox(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 193, in async_wrapped
+    return await copy(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 112, in __call__
+    do = await self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 157, in iter
+    result = await action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/_utils.py", line 111, in inner
+    return call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py", line 413, in exc_check
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py", line 184, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py", line 116, in __call__
+    result = await fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/environments/modal.py", line 137, in _create_sandbox
+    return await Sandbox.create.aio(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/sandbox.py", line 455, in create
+    return await _Sandbox._create(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/sandbox.py", line 609, in _create
+    await resolver.load(obj, load_context)
+  File "/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/modal/sandbox.py", line 361, in _load
+    create_resp = await load_context.client.stub.SandboxCreate(create_req)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modal.exception.AlreadyExistsError: Sandbox with this name already exists

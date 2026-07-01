@@ -1,0 +1,9 @@
+patching file assets/js/components/DashboardEntityApp.js
+patching file assets/js/components/DashboardMainApp.js
+patching file assets/js/components/notifications/OfflineNotification.js
+patching file assets/js/components/notifications/OfflineNotification.stories.js
+patching file assets/js/googlesitekit/datastore/ui/ui.js
+patching file assets/js/hooks/useInView.js
+patching file assets/js/hooks/useMonitorInternetConnection.js
+patching file assets/sass/components/settings/_googlesitekit-settings-notice.scss
+patching file includes/Core/Util/Health_Checks.php

@@ -1,0 +1,64 @@
+patching file general_itests/environment.py
+patching file general_itests/steps/http_drain_method_steps.py
+patching file paasta_itests/environment.py
+patching file paasta_itests/hacheck.feature
+patching file paasta_itests/steps/hacheck_steps.py
+patching file tests/test_drain_lib.py
+patching file tests/test_setup_marathon_job.py
+============================= test session starts ==============================
+platform linux -- Python 3.6.15, pytest-3.3.1, py-1.11.0, pluggy-0.6.0 -- /usr/local/bin/python
+cachedir: .cache
+rootdir: /workspace/repo, inifile:
+plugins: asyncio-0.8.0
+collecting ... collected 44 items
+
+tests/test_drain_lib.py::test_register_drain_method PASSED               [  2%]
+tests/test_drain_lib.py::TestHacheckDrainMethod::test_spool_url PASSED   [  4%]
+tests/test_drain_lib.py::TestHacheckDrainMethod::test_spool_url_handles_tasks_with_no_ports PASSED [  6%]
+tests/test_drain_lib.py::TestHacheckDrainMethod::test_get_spool PASSED   [  9%]
+tests/test_drain_lib.py::TestHacheckDrainMethod::test_get_spool_handles_no_ports PASSED [ 11%]
+tests/test_drain_lib.py::TestHacheckDrainMethod::test_is_draining_yes PASSED [ 13%]
+tests/test_drain_lib.py::TestHacheckDrainMethod::test_is_draining_no PASSED [ 15%]
+tests/test_drain_lib.py::TestHTTPDrainMethod::test_get_format_params PASSED [ 18%]
+tests/test_drain_lib.py::TestHTTPDrainMethod::test_format_url PASSED     [ 20%]
+tests/test_drain_lib.py::TestHTTPDrainMethod::test_parse_success_codes PASSED [ 22%]
+tests/test_drain_lib.py::TestHTTPDrainMethod::test_check_response_code PASSED [ 25%]
+tests/test_drain_lib.py::TestHTTPDrainMethod::test_issue_request PASSED  [ 27%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_main_success PASSED [ 29%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_main_failure PASSED [ 31%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_main_exits_if_no_deployments_yet PASSED [ 34%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_send_event PASSED [ 36%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_do_bounce_when_create_app_and_new_app_not_running_but_already_created PASSED [ 38%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_do_bounce_when_create_app_and_new_app_not_running PASSED [ 40%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_do_bounce_when_create_app_and_new_app_running PASSED [ 43%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_do_bounce_when_tasks_to_drain PASSED [ 45%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_do_bounce_when_apps_to_kill PASSED [ 47%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_do_bounce_when_nothing_to_do PASSED [ 50%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_do_bounce_when_all_old_tasks_are_unhappy PASSED [ 52%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_scale_up PASSED [ 54%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_scale_up_at_risk_hosts PASSED [ 56%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_scale_down PASSED [ 59%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_scales_down_slack PASSED [ 61%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_scale_down_doesnt_undrain_scaling_tasks PASSED [ 63%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_setup_service_srv_already_exists PASSED [ 65%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_setup_service_srv_does_not_exist PASSED [ 68%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_setup_service_srv_complete_config_raises PASSED [ 70%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_setup_service_nerve_ns PASSED [ 72%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_unknown_drain_method PASSED [ 75%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_unknown_bounce PASSED [ 77%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_known_bounce PASSED [ 79%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_lock_exceptions PASSED [ 81%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_service_logs_exceptions PASSED [ 84%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_marathon_service PASSED [ 86%]
+tests/test_setup_marathon_job.py::TestSetupMarathonJob::test_deploy_marathon_service_with_noslavesavailable PASSED [ 88%]
+tests/test_setup_marathon_job.py::TestGetOldHappyUnhappyDrainingTasks::test_get_tasks_by_state_empty PASSED [ 90%]
+tests/test_setup_marathon_job.py::TestGetOldHappyUnhappyDrainingTasks::test_get_tasks_by_state_not_empty PASSED [ 93%]
+tests/test_setup_marathon_job.py::TestDrainTasksAndFindTasksToKill::test_catches_exception_during_drain PASSED [ 95%]
+tests/test_setup_marathon_job.py::TestDrainTasksAndFindTasksToKill::test_catches_exception_during_is_safe_to_kill PASSED [ 97%]
+tests/test_setup_marathon_job.py::test_undrain_tasks PASSED              [100%]
+
+========================== 44 passed in 0.69 seconds ===========================
+  File "/tests/grade.py", line 1
+    from __future__ import annotations
+    ^
+SyntaxError: future feature annotations is not defined

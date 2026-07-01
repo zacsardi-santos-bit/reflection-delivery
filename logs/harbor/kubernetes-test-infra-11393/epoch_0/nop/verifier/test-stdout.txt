@@ -1,0 +1,12 @@
+patching file prow/statusreconciler/controller_test.go
+# k8s.io/test-infra/prow/statusreconciler [k8s.io/test-infra/prow/statusreconciler.test]
+prow/statusreconciler/controller_test.go:803:6: unknown field addedPresubmitBlacklist in struct literal of type Controller
+prow/statusreconciler/controller_test.go:835:6: unknown field addedPresubmitBlacklist in struct literal of type Controller
+prow/statusreconciler/controller_test.go:867:6: unknown field addedPresubmitBlacklist in struct literal of type Controller
+prow/statusreconciler/controller_test.go:900:6: unknown field addedPresubmitBlacklist in struct literal of type Controller
+prow/statusreconciler/controller_test.go:932:6: unknown field addedPresubmitBlacklist in struct literal of type Controller
+prow/statusreconciler/controller_test.go:966:6: unknown field addedPresubmitBlacklist in struct literal of type Controller
+prow/statusreconciler/controller_test.go:1000:6: unknown field addedPresubmitBlacklist in struct literal of type Controller
+prow/statusreconciler/controller_test.go:1035:6: unknown field addedPresubmitBlacklist in struct literal of type Controller
+FAIL	k8s.io/test-infra/prow/statusreconciler [build failed]
+reward=0 graded=43 found=43 failed=43 parsed=1 framework=go exit_code=1

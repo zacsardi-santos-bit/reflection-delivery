@@ -1,0 +1,7 @@
+I'm working on the cross-media measurement system and need to add support for "wrapping" sampling intervals. Right now, the system validates that a sampling interval's start point plus its width cannot exceed 1.0. This makes sense for most protocols, but the shuffle-based distributed protocol should be allowed to use intervals that wrap around — for example, starting at 0.8 with a width of 0.5, which logically covers [0.0, 0.3] and [0.8, 1.0].
+
+I need several things updated: the validation logic in the sampling function should allow wrapping as long as the width itself doesn't exceed 1.0; the metric spec building function should accept a flag that controls whether wrapping is allowed (defaulting to disabled); and the measurements service should permit wrapping intervals when the shuffle-based protocol is selected but reject them with a clear validation error for other protocols.
+
+Additionally, there's a utility function that computes the combined coverage width of two sampling intervals. It currently doesn't handle wrapping intervals correctly. It needs to be updated and made publicly accessible so it can be used and tested independently.
+
+Finally, the measurement consumer simulator currently hardcodes a fixed sampling interval for all measurement types. It should accept a configurable sampling interval as a parameter (with a sensible default of start=0.2, width=0.5) so that wrapping interval scenarios can be tested end-to-end.

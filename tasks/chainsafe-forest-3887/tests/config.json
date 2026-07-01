@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -E 'test(/beacon::signatures/)'",
+  "test_files": [
+    "src/beacon/signatures/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/8) forest-filecoin beacon::signatures::tests::mainnet::test_verify_messages_mainnet_single_success",
+    "(2/8) forest-filecoin beacon::signatures::tests::quicknet::test_verify_messages_quicknet_batch_failure",
+    "(3/8) forest-filecoin beacon::signatures::tests::quicknet::test_verify_messages_quicknet_single_failure",
+    "(4/8) forest-filecoin beacon::signatures::tests::mainnet::test_verify_messages_mainnet_batch_success",
+    "(5/8) forest-filecoin beacon::signatures::tests::quicknet::test_verify_messages_quicknet_single_success",
+    "(6/8) forest-filecoin beacon::signatures::tests::mainnet::test_verify_messages_mainnet_single_failure",
+    "(7/8) forest-filecoin beacon::signatures::tests::quicknet::test_verify_messages_quicknet_batch_success",
+    "(8/8) forest-filecoin beacon::signatures::tests::mainnet::test_verify_messages_mainnet_batch_failure"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,1344 @@
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/resources/builtin_types.json b/joern-cli/frontends/csharpsrc2cpg/src/main/resources/builtin_types.json
+index eae95fed6..bdebc40c7 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/resources/builtin_types.json
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/resources/builtin_types.json
+@@ -7,7 +7,7 @@
+           "name": "Write",
+           "returnType": "void",
+           "parameterTypes": [
+-            ["format", "object"]
++            ["format", "System.Object"]
+           ],
+           "isStatic": true
+         },
+@@ -15,7 +15,7 @@
+           "name": "WriteLine",
+           "returnType": "void",
+           "parameterTypes": [
+-            ["format", "object"]
++            ["format", "System.Object"]
+           ],
+           "isStatic": true
+         }
+@@ -31,7 +31,7 @@
+           "name": "Advance",
+           "returnType": "void",
+           "parameterTypes": [
+-            ["count", "int"]
++            ["count", "System.Int32"]
+           ],
+           "isStatic": true
+         },
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/CSharpSrc2Cpg.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/CSharpSrc2Cpg.scala
+index 11dfb957c..2fb2cf20b 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/CSharpSrc2Cpg.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/CSharpSrc2Cpg.scala
+@@ -2,6 +2,7 @@ package io.joern.csharpsrc2cpg
+ 
+ import better.files.File
+ import io.joern.csharpsrc2cpg.astcreation.AstCreator
++import io.joern.csharpsrc2cpg.datastructures.CSharpProgramSummary
+ import io.joern.csharpsrc2cpg.parser.DotNetJsonParser
+ import io.joern.csharpsrc2cpg.passes.AstCreationPass
+ import io.joern.csharpsrc2cpg.utils.DotNetAstGenRunner
+@@ -9,31 +10,41 @@ import io.joern.x2cpg.X2Cpg.withNewEmptyCpg
+ import io.joern.x2cpg.astgen.AstGenRunner.AstGenRunnerResult
+ import io.joern.x2cpg.passes.callgraph.NaiveCallLinker
+ import io.joern.x2cpg.passes.frontend.MetaDataPass
+-import io.joern.x2cpg.utils.{Environment, HashUtil, Report}
++import io.joern.x2cpg.utils.{ConcurrentTaskUtil, Environment, HashUtil, Report}
+ import io.joern.x2cpg.{SourceFiles, X2CpgFrontend}
+ import io.shiftleft.codepropertygraph.Cpg
+ import io.shiftleft.codepropertygraph.generated.Languages
+ import io.shiftleft.passes.CpgPassBase
++import org.slf4j.LoggerFactory
+ 
+ import java.nio.file.Paths
+ import scala.concurrent.ExecutionContext.Implicits.global
+ import scala.concurrent.duration.Duration
+ import scala.concurrent.{Await, Future}
+-import scala.util.Try
++import scala.util.{Failure, Success, Try}
+ 
+ class CSharpSrc2Cpg extends X2CpgFrontend[Config] {
++
++  private val logger         = LoggerFactory.getLogger(getClass)
+   private val report: Report = new Report()
+ 
+   override def createCpg(config: Config): Try[Cpg] = {
+     withNewEmptyCpg(config.outputPath, config) { (cpg, config) =>
+       File.usingTemporaryDirectory("csharpsrc2cpgOut") { tmpDir =>
+         val astGenResult = new DotNetAstGenRunner(config).execute(tmpDir)
+-        val typeMap      = new TypeMap(astGenResult)
+-        val astCreators  = CSharpSrc2Cpg.processAstGenRunnerResults(astGenResult.parsedFiles, config, typeMap)
++        val astCreators  = CSharpSrc2Cpg.processAstGenRunnerResults(astGenResult.parsedFiles, config)
++        // Pre-parse the AST creators for high level structures
++        val programSummary = ConcurrentTaskUtil
++          .runUsingThreadPool(astCreators.map(x => () => x.summarize()).iterator)
++          .flatMap {
++            case Failure(exception) => logger.warn(s"Unable to pre-parse C# file, skipping - ", exception); None
++            case Success(summary)   => Option(summary)
++          }
++          .foldLeft(CSharpProgramSummary(CSharpProgramSummary.BuiltinTypes :: Nil))(_ ++ _)
+ 
+         val hash = HashUtil.sha256(astCreators.map(_.parserResult).map(x => Paths.get(x.fullPath)))
+         new MetaDataPass(cpg, Languages.CSHARPSRC, config.inputPath, Option(hash)).createAndApply()
+-        new AstCreationPass(cpg, astCreators, report).createAndApply()
++        new AstCreationPass(cpg, astCreators.map(_.withSummary(programSummary)), report).createAndApply()
+         report.print()
+       }
+     }
+@@ -47,7 +58,7 @@ object CSharpSrc2Cpg {
+ 
+   /** Parses the generated AST Gen files in parallel and produces AstCreators from each.
+     */
+-  def processAstGenRunnerResults(astFiles: List[String], config: Config, typeMap: TypeMap): Seq[AstCreator] = {
++  def processAstGenRunnerResults(astFiles: List[String], config: Config): Seq[AstCreator] = {
+     Await.result(
+       Future.sequence(
+         astFiles
+@@ -67,7 +78,7 @@ object CSharpSrc2Cpg {
+               } else {
+                 SourceFiles.toRelativePath(parserResult.fullPath, config.inputPath)
+               }
+-              new AstCreator(relativeFileName, parserResult, typeMap)(config.schemaValidation)
++              new AstCreator(relativeFileName, parserResult)(config.schemaValidation)
+             }
+           )
+       ),
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/Constants.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/Constants.scala
+index fe0378d47..3681234e5 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/Constants.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/Constants.scala
+@@ -1,7 +1,8 @@
+ package io.joern.csharpsrc2cpg
+ 
+ object Constants {
+-  val This: String = "this"
++  val This: String   = "this"
++  val Global: String = "global"
+ }
+ 
+ object CSharpOperators {
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/TypeMap.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/TypeMap.scala
+deleted file mode 100644
+index 89df6c464..000000000
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/TypeMap.scala
++++ /dev/null
+@@ -1,196 +0,0 @@
+-package io.joern.csharpsrc2cpg
+-
+-import com.typesafe.config.impl.*
+-import com.typesafe.config.{Config, ConfigFactory}
+-import io.joern.csharpsrc2cpg.astcreation.AstCreatorHelper
+-import io.joern.csharpsrc2cpg.parser.DotNetJsonAst.*
+-import io.joern.csharpsrc2cpg.parser.{DotNetJsonAst, DotNetJsonParser, DotNetNodeInfo, ParserKeys}
+-import io.joern.x2cpg.Ast
+-import io.joern.x2cpg.astgen.AstGenRunner.AstGenRunnerResult
+-import io.joern.x2cpg.datastructures.Stack.Stack
+-import io.joern.x2cpg.utils.ConcurrentTaskUtil
+-import io.shiftleft.codepropertygraph.generated.ModifierTypes
+-import io.shiftleft.codepropertygraph.generated.nodes.{NewModifier, NewNode}
+-import io.shiftleft.semanticcpg.language.*
+-import org.slf4j.LoggerFactory
+-import upickle.default.*
+-
+-import java.io.InputStream
+-import java.nio.file.Paths
+-import scala.collection.mutable
+-import scala.jdk.CollectionConverters.*
+-import scala.util.{Failure, Success, Try}
+-
+-type NamespaceToTypeMap = Map[String, Set[CSharpType]]
+-
+-/** A mapping of type stubs of known types within the scope of the analysis.
+-  *
+-  * @param astGenResult
+-  *   the parsed application code.
+-  * @param initialMappings
+-  *   any additional mappings to add to the scope.
+-  * @see
+-  *   [[io.joern.csharpsrc2cpg.TypeMap.jsonToInitialMapping]] for generating initial mappings.
+-  */
+-class TypeMap(astGenResult: AstGenRunnerResult, initialMappings: List[NamespaceToTypeMap] = List.empty) {
+-
+-  private val logger = LoggerFactory.getLogger(getClass)
+-
+-  private def builtinTypes: NamespaceToTypeMap =
+-    jsonToInitialMapping(getClass.getResourceAsStream("/builtin_types.json")) match
+-      case Failure(exception) => logger.warn("Unable to parse JSON type entry from builtin types", exception); Map.empty
+-      case Success(mapping)   => mapping
+-
+-  /** Converts a JSON type mapping to a NamespaceToTypeMap entry.
+-    * @param jsonInputStream
+-    *   a JSON file as an input stream.
+-    * @return
+-    *   the resulting type map in a Try
+-    */
+-  def jsonToInitialMapping(jsonInputStream: InputStream): Try[NamespaceToTypeMap] =
+-    Try(read[NamespaceToTypeMap](ujson.Readable.fromByteArray(jsonInputStream.readAllBytes())))
+-
+-  private val namespaceToType: NamespaceToTypeMap = {
+-    def typeMapTasks = astGenResult.parsedFiles.map { file =>
+-      val parserResult    = DotNetJsonParser.readFile(Paths.get(file))
+-      val compilationUnit = AstCreatorHelper.createDotNetNodeInfo(parserResult.json(ParserKeys.AstRoot))
+-      () => parseCompilationUnit(compilationUnit)
+-    }.iterator
+-    val typeMaps = ConcurrentTaskUtil.runUsingSpliterator(typeMapTasks).flatMap {
+-      case Failure(exception) => logger.warn("Exception encountered during pre-parsing", exception); None
+-      case Success(typeMap)   => Option(typeMap)
+-    }
+-    (builtinTypes +: typeMaps ++: initialMappings).foldLeft(Map.empty[String, Set[CSharpType]])((a, b) => {
+-      val accumulator = mutable.HashMap.from(a)
+-      val allKeys     = accumulator.keySet ++ b.keySet
+-
+-      allKeys.foreach(k =>
+-        accumulator.updateWith(k) {
+-          case Some(existing) => Option(a.getOrElse(k, Set.empty) ++ b.getOrElse(k, Set.empty) ++ existing)
+-          case None           => Option(a.getOrElse(k, Set.empty) ++ b.getOrElse(k, Set.empty))
+-        }
+-      )
+-      accumulator.toMap
+-    })
+-  }
+-
+-  /** For the given namespace, returns the declared classes.
+-    */
+-  def classesIn(namespace: String): Set[CSharpType] = namespaceToType.getOrElse(namespace, Set.empty)
+-
+-  def findType(typeFullName: String): Option[CSharpType] = namespaceToType.values.flatten.find(_.name == typeFullName)
+-  def findGlobalTypes: Set[CSharpType]                   = namespaceToType.getOrElse("global", Set.empty)
+-
+-  /** For a class, will search for the associated namespace.
+-    */
+-  def namespaceFor(clazz: CSharpType): Option[String] =
+-    namespaceToType.find { case (_, v) => v.contains(clazz) }.map(_._1)
+-
+-  /** Parses a compilation unit and returns a mapping from all the contained namespaces and the immediate children
+-    * types.
+-    */
+-  private def parseCompilationUnit(cu: DotNetNodeInfo): Map[String, Set[CSharpType]] = {
+-    val namespaceTypeMap = mutable.Map.empty[String, Set[CSharpType]]
+-    cu.json(ParserKeys.Members)
+-      .arr
+-      .map(AstCreatorHelper.createDotNetNodeInfo(_))
+-      .filter { x =>
+-        x.node match
+-          case _: DeclarationExpr => true
+-          case _                  => false
+-      }
+-      .foreach { parserNode =>
+-        parserNode.node match
+-          case NamespaceDeclaration | FileScopedNamespaceDeclaration => {
+-            val (namespace, typesInNamespace) = parseNamespace(parserNode)
+-            namespaceTypeMap.updateWith(namespace) {
+-              case Some(types) =>
+-                Option(types ++ typesInNamespace)
+-              case None => Option(typesInNamespace)
+-            }
+-          }
+-          case _: TypeDeclaration => {
+-            val globalClass = Set(parseClassDeclaration(parserNode, "global"))
+-            namespaceTypeMap.updateWith("global") {
+-              case Some(types) =>
+-                Option(types ++ globalClass)
+-              case None => Option(globalClass)
+-            }
+-          }
+-          case _ =>
+-      }
+-
+-    namespaceTypeMap.toMap
+-  }
+-
+-  private def parseNamespace(namespace: DotNetNodeInfo): (String, Set[CSharpType]) = {
+-    val namespaceName = AstCreatorHelper.nameFromNode(namespace)
+-    val classes = namespace
+-      .json(ParserKeys.Members)
+-      .arr
+-      .map(AstCreatorHelper.createDotNetNodeInfo(_))
+-      .filter { x =>
+-        x.node match
+-          case _: DeclarationExpr => true
+-          case _                  => false
+-      }
+-      .map(classDecl => parseClassDeclaration(classDecl, namespaceName))
+-      .toSet
+-
+-    namespaceName -> classes
+-  }
+-
+-  private def parseClassDeclaration(classDecl: DotNetNodeInfo, namespaceName: String): CSharpType = {
+-    val className = AstCreatorHelper.nameFromNode(classDecl)
+-    val fullName  = s"${namespaceName}.${className}"
+-    val members = classDecl
+-      .json(ParserKeys.Members)
+-      .arr
+-      .map(AstCreatorHelper.createDotNetNodeInfo(_))
+-      .flatMap { x =>
+-        x.node match
+-          case MethodDeclaration => parseMethodDeclaration(x)
+-          case FieldDeclaration  => parseFieldDeclaration(x)
+-          case _                 => List.empty
+-      }
+-      .toList
+-    CSharpType(fullName, members.collectAll[CSharpMethod].l, members.collectAll[CSharpField].l)
+-  }
+-
+-  private def parseMethodDeclaration(methodDecl: DotNetNodeInfo): List[CSharpMethod] = {
+-    val params = methodDecl
+-      .json(ParserKeys.ParameterList)
+-      .obj(ParserKeys.Parameters)
+-      .arr
+-    val isStatic     = methodDecl.json(ParserKeys.Modifiers).arr.exists(_(ParserKeys.Value).str == "static")
+-    val methodReturn = AstCreatorHelper.createDotNetNodeInfo(methodDecl.json(ParserKeys.ReturnType)).code
+-    val paramTypes = params
+-      .map(param => AstCreatorHelper.createDotNetNodeInfo(param))
+-      .map { param =>
+-        val typ  = AstCreatorHelper.createDotNetNodeInfo(param.json(ParserKeys.Type)).code
+-        val name = param.json(ParserKeys.Identifier)(ParserKeys.Value).str
+-        (name, typ)
+-      }
+-
+-    List(CSharpMethod(AstCreatorHelper.nameFromNode(methodDecl), methodReturn, paramTypes.toList, isStatic))
+-  }
+-
+-  private def parseFieldDeclaration(fieldDecl: DotNetNodeInfo): List[CSharpField] = {
+-    val declarationNode = AstCreatorHelper.createDotNetNodeInfo(fieldDecl.json(ParserKeys.Declaration))
+-    declarationNode
+-      .json(ParserKeys.Variables)
+-      .arr
+-      .map(AstCreatorHelper.createDotNetNodeInfo(_))
+-      .map(AstCreatorHelper.nameFromNode)
+-      .map(CSharpField.apply)
+-      .toList
+-  }
+-
+-}
+-
+-case class CSharpField(name: String) derives ReadWriter
+-
+-case class CSharpMethod(name: String, returnType: String, parameterTypes: List[(String, String)], isStatic: Boolean)
+-    derives ReadWriter
+-
+-case class CSharpType(name: String, methods: List[CSharpMethod], fields: List[CSharpField]) derives ReadWriter
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreator.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreator.scala
+index 56b03c00e..96a1d083a 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreator.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreator.scala
+@@ -1,12 +1,13 @@
+ package io.joern.csharpsrc2cpg.astcreation
+ 
+-import io.joern.csharpsrc2cpg.TypeMap
+-import io.joern.csharpsrc2cpg.datastructures.CSharpScope
++import io.joern.csharpsrc2cpg.Constants
++import io.joern.csharpsrc2cpg.datastructures.{CSharpProgramSummary, CSharpScope}
+ import io.joern.csharpsrc2cpg.parser.DotNetJsonAst.*
+ import io.joern.csharpsrc2cpg.parser.{DotNetNodeInfo, ParserKeys}
+ import io.joern.x2cpg.astgen.{AstGenNodeBuilder, ParserResult}
+ import io.joern.x2cpg.{Ast, AstCreatorBase, ValidationMode}
+-import io.shiftleft.codepropertygraph.generated.nodes.NewFile
++import io.shiftleft.codepropertygraph.generated.NodeTypes
++import io.shiftleft.codepropertygraph.generated.nodes.{NewFile, NewTypeDecl}
+ import org.slf4j.{Logger, LoggerFactory}
+ import overflowdb.BatchedUpdate.DiffGraphBuilder
+ import ujson.Value
+@@ -14,20 +15,26 @@ import ujson.Value
+ import java.math.BigInteger
+ import java.security.MessageDigest
+ 
+-class AstCreator(val relativeFileName: String, val parserResult: ParserResult, val typeMap: TypeMap)(implicit
+-  withSchemaValidation: ValidationMode
+-) extends AstCreatorBase(relativeFileName)
++class AstCreator(
++  val relativeFileName: String,
++  val parserResult: ParserResult,
++  val programSummary: CSharpProgramSummary = CSharpProgramSummary()
++)(implicit withSchemaValidation: ValidationMode)
++    extends AstCreatorBase(relativeFileName)
+     with AstCreatorHelper
+     with AstForDeclarationsCreator
+     with AstForPrimitivesCreator
+     with AstForExpressionsCreator
+     with AstForStatementsCreator
+     with AstForControlStructuresCreator
++    with AstSummaryVisitor
+     with AstGenNodeBuilder[AstCreator] {
+ 
+   protected val logger: Logger = LoggerFactory.getLogger(getClass)
+ 
+-  protected val scope: CSharpScope = new CSharpScope(typeMap)
++  protected val scope: CSharpScope = new CSharpScope(programSummary)
++
++  protected var parseLevel: AstParseLevel = AstParseLevel.FULL_AST
+ 
+   override def createAst(): DiffGraphBuilder = {
+     val hash = String.format(
+@@ -41,14 +48,27 @@ class AstCreator(val relativeFileName: String, val parserResult: ParserResult, v
+     diffGraph
+   }
+ 
+-  private def astForCompilationUnit(cu: DotNetNodeInfo): Seq[Ast] = {
++  protected def astForCompilationUnit(cu: DotNetNodeInfo): Seq[Ast] = {
+     val imports    = cu.json(ParserKeys.Usings).arr.flatMap(astForNode).toSeq
+-    val name       = s"${parserResult.filename}" // TODO: Find fullyQualifiedPackage
+     val memberAsts = astForMembers(cu.json(ParserKeys.Members).arr.map(createDotNetNodeInfo).toSeq)
+     imports ++ memberAsts
+   }
+ 
+-  protected def astForMembers(members: Seq[DotNetNodeInfo]): Seq[Ast] = members.flatMap(astForNode)
++  protected def astForMembers(members: Seq[DotNetNodeInfo]): Seq[Ast] = {
++    val memberAsts = members.flatMap(astForNode)
++    // If empty, then there is no parent namespace and this is a "global" type
++    if (scope.peekScope().isEmpty) {
++      val (typeDecls, other) = memberAsts.partition(x => x.root.exists(_.isInstanceOf[NewTypeDecl]))
++      typeDecls
++        .flatMap(_.root)
++        .collect { case x: NewTypeDecl => x }
++        .foreach(typ => typ.astParentFullName(Constants.Global).astParentType(NodeTypes.NAMESPACE_BLOCK))
++      typeDecls.foreach(Ast.storeInDiffGraph(_, diffGraph))
++      other
++    } else {
++      memberAsts
++    }
++  }
+ 
+   protected def astForNode(json: Value): Seq[Ast] = {
+     val nodeInfo = createDotNetNodeInfo(json)
+@@ -85,3 +105,16 @@ class AstCreator(val relativeFileName: String, val parserResult: ParserResult, v
+   }
+ 
+ }
++
++/** Determines till what depth the AST creator will parse until.
++  */
++enum AstParseLevel {
++
++  /** This level will parse all types and methods signatures, but exclude method bodies.
++    */
++  case SIGNATURES
++
++  /** This level will parse the full AST.
++    */
++  case FULL_AST
++}
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreatorHelper.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreatorHelper.scala
+index e3f47323d..4e0265a1b 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreatorHelper.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstCreatorHelper.scala
+@@ -8,6 +8,7 @@ import io.shiftleft.codepropertygraph.generated.nodes.*
+ import io.shiftleft.codepropertygraph.generated.{DispatchTypes, PropertyNames}
+ import ujson.Value
+ 
++import scala.annotation.tailrec
+ import scala.util.{Failure, Success, Try}
+ trait AstCreatorHelper(implicit withSchemaValidation: ValidationMode) { this: AstCreator =>
+ 
+@@ -51,9 +52,13 @@ trait AstCreatorHelper(implicit withSchemaValidation: ValidationMode) { this: As
+   }
+ 
+   protected def getTypeFullNameFromAstNode(ast: Seq[Ast]): String = {
+-    ast.headOption
+-      .flatMap(_.root)
+-      .map(_.properties.getOrElse(PropertyNames.TYPE_FULL_NAME, Defines.Any).toString)
++    ast.headOption.map(getTypeFullNameFromAstNode).getOrElse(Defines.Any)
++  }
++
++  protected def getTypeFullNameFromAstNode(ast: Ast): String = {
++    ast.root
++      .flatMap(_.properties.get(PropertyNames.TYPE_FULL_NAME))
++      .map(_.toString)
+       .getOrElse(Defines.Any)
+   }
+ 
+@@ -77,56 +82,55 @@ trait AstCreatorHelper(implicit withSchemaValidation: ValidationMode) { this: As
+         identifierNode(dotNetNode.orNull, x.name, x.name, Defines.Any)
+   }
+ 
+-  def typeFromGenericName(genericNode: String): String = {
+-    scope.tryResolveTypeReference(genericNode.split("<").head).getOrElse(genericNode)
+-  }
+-
+-  // TODO: Use type map to try resolve full name
+   protected def nodeTypeFullName(node: DotNetNodeInfo): String = {
+-    def typeFromTypeString(typeString: String, suffix: String = "[]"): String = {
+-      val rawType = typeString.stripSuffix(suffix)
+-      val resolvedType = scope
+-        .tryResolveTypeReference(rawType)
+-        .orElse(BuiltinTypes.DotNetTypeMap.get(rawType))
+-        .getOrElse(rawType)
+-
+-      if (typeString.endsWith(suffix)) s"$resolvedType$suffix" else resolvedType
+-    }
+-
+-    node.node match
++    node.node match {
+       case NumericLiteralExpression if node.code.matches("^\\d+$") => // e.g. 200
+-        BuiltinTypes.Int
++        BuiltinTypes.DotNetTypeMap(BuiltinTypes.Int)
+       case NumericLiteralExpression if node.code.matches("^\\d+\\.?\\d*[d|D]?$") => // e.g 2.1 or 2d
+-        BuiltinTypes.Double
++        BuiltinTypes.DotNetTypeMap(BuiltinTypes.Double)
+       case NumericLiteralExpression if node.code.matches("^\\d+\\.?\\d*[f|F]?$") => // e.g. 2f or 2.1F
+-        BuiltinTypes.Float
++        BuiltinTypes.DotNetTypeMap(BuiltinTypes.Float)
+       case NumericLiteralExpression if node.code.matches("^\\d+\\.?\\d*[m|M]?$") => // e.g. 2m or 2.1M
+-        BuiltinTypes.Decimal
++        BuiltinTypes.DotNetTypeMap(BuiltinTypes.Decimal)
+       case StringLiteralExpression                        => BuiltinTypes.DotNetTypeMap(BuiltinTypes.String)
+       case TrueLiteralExpression | FalseLiteralExpression => BuiltinTypes.DotNetTypeMap(BuiltinTypes.Bool)
+-      case IdentifierName                                 => typeFromTypeString(nameFromNode(node))
+       case ObjectCreationExpression =>
+         val typeName = nameFromNode(createDotNetNodeInfo(node.json(ParserKeys.Type)))
+         scope
+           .tryResolveTypeReference(typeName)
++          .map(_.name)
+           .getOrElse(typeName)
+       case ThisExpression =>
+         scope.surroundingTypeDeclFullName.getOrElse(Defines.Any)
+       case PredefinedType | SimpleBaseType =>
+         BuiltinTypes.DotNetTypeMap.getOrElse(node.code, Defines.Any)
++      case ArrayType =>
++        val elementTypeNode = createDotNetNodeInfo(node.json(ParserKeys.ElementType))
++        s"${nodeTypeFullName(elementTypeNode)}[]"
+       case GenericName =>
+-        typeFromGenericName(node.code)
+-      case VariableDeclaration =>
+-        nodeTypeFullName(createDotNetNodeInfo(node.json(ParserKeys.Type)))
++        val typeName = nameFromNode(node)
++        scope
++          .tryResolveTypeReference(typeName)
++          .map(_.name)
++          .getOrElse(typeName)
+       case NullableType =>
+-        typeFromTypeString(node.code, suffix = "?")
++        val elementTypeNode = createDotNetNodeInfo(node.json(ParserKeys.ElementType))
++        nodeTypeFullName(elementTypeNode)
++      case IdentifierName =>
++        val typeString = nameFromNode(node)
++        scope
++          .tryResolveTypeReference(typeString)
++          .map(_.name)
++          .orElse(BuiltinTypes.DotNetTypeMap.get(typeString))
++          .getOrElse(typeString)
+       case _ =>
+-        Try(createDotNetNodeInfo(node.json(ParserKeys.Type))) match
++        Try(node.json(ParserKeys.Type)).map(createDotNetNodeInfo) match
+           case Success(typeNode) =>
+-            typeFromTypeString(typeNode.code)
++            nodeTypeFullName(typeNode)
+           case Failure(e) =>
+             logger.debug(e.getMessage)
+             Defines.Any
++    }
+   }
+ }
+ 
+@@ -155,10 +159,11 @@ object AstCreatorHelper {
+   private def nodeType(node: Value, relativeFileName: Option[String] = None): DotNetParserNode =
+     DotNetJsonAst.fromString(node(ParserKeys.Kind).str, relativeFileName)
+ 
++  @tailrec
+   def nameFromNode(node: DotNetNodeInfo): String = {
+     node.node match
+       case NamespaceDeclaration | UsingDirective | FileScopedNamespaceDeclaration => nameFromNamespaceDeclaration(node)
+-      case IdentifierName | Parameter | _: DeclarationExpr                        => nameFromIdentifier(node)
++      case IdentifierName | Parameter | _: DeclarationExpr | GenericName          => nameFromIdentifier(node)
+       case QualifiedName                                                          => nameFromQualifiedName(node)
+       case SimpleMemberAccessExpression => nameFromIdentifier(createDotNetNodeInfo(node.json(ParserKeys.Name)))
+       case ObjectCreationExpression     => nameFromNode(createDotNetNodeInfo(node.json(ParserKeys.Type)))
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForDeclarationsCreator.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForDeclarationsCreator.scala
+index 8bb92b99f..bdcfc4a2c 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForDeclarationsCreator.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForDeclarationsCreator.scala
+@@ -1,30 +1,23 @@
+ package io.joern.csharpsrc2cpg.astcreation
+ 
+-import dotty.tools.dotc.ast.untpd.Modifiers
+-import io.joern.csharpsrc2cpg.datastructures.{BlockScope, MethodScope, NamespaceScope, TypeScope}
++import io.joern.csharpsrc2cpg.CSharpModifiers
++import io.joern.csharpsrc2cpg.astcreation.BuiltinTypes.DotNetTypeMap
++import io.joern.csharpsrc2cpg.datastructures.*
+ import io.joern.csharpsrc2cpg.parser.{DotNetNodeInfo, ParserKeys}
++import io.joern.csharpsrc2cpg.utils.Utils.{composeMethodFullName, composeMethodLikeSignature}
+ import io.joern.x2cpg.utils.NodeBuilders.{newMethodReturnNode, newModifierNode}
+ import io.joern.x2cpg.{Ast, Defines, ValidationMode}
+ import io.shiftleft.codepropertygraph.generated.*
+ import io.shiftleft.codepropertygraph.generated.nodes.*
+ import io.shiftleft.proto.cpg.Cpg.EvaluationStrategies
+ 
+-import scala.util.Try
+-import io.joern.csharpsrc2cpg.datastructures.FieldDecl
+-import io.joern.csharpsrc2cpg.utils.Utils.{composeMethodFullName, composeMethodLikeSignature}
+-
+-import scala.collection.mutable.ArrayBuffer
+-import io.joern.csharpsrc2cpg.{CSharpModifiers, CSharpOperators}
+-import io.joern.x2cpg.Defines
+-import io.joern.csharpsrc2cpg.astcreation.BuiltinTypes.DotNetTypeMap
+-import io.joern.csharpsrc2cpg.datastructures.EnumScope
+-import io.shiftleft.codepropertygraph.generated
+-
+ import scala.annotation.tailrec
++import scala.util.Try
+ 
+ trait AstForDeclarationsCreator(implicit withSchemaValidation: ValidationMode) { this: AstCreator =>
+ 
+   protected def astForNamespaceDeclaration(namespace: DotNetNodeInfo): Seq[Ast] = {
++    @tailrec
+     def recurseNamespace(parts: List[String], prefix: List[String] = List.empty): Unit = {
+       parts match {
+         case head :: tail =>
+@@ -143,7 +136,7 @@ trait AstForDeclarationsCreator(implicit withSchemaValidation: ValidationMode) {
+     val name = nameFromNode(enumMemberDecl)
+     val typeFullName = scope
+       .peekScope()
+-      .collectFirst { case EnumScope(fullName, aliasFor) => aliasFor }
++      .collectFirst { case EnumScope(_, aliasFor) => aliasFor }
+       .getOrElse(DotNetTypeMap(BuiltinTypes.Int))
+     val member    = memberNode(enumMemberDecl, name, code(enumMemberDecl), typeFullName)
+     val modifiers = astForModifiers(enumMemberDecl)
+@@ -210,7 +203,7 @@ trait AstForDeclarationsCreator(implicit withSchemaValidation: ValidationMode) {
+     val rhs             = if (!initializerJson.isNull) astForNode(createDotNetNodeInfo(initializerJson)) else Seq.empty
+     val rhsTypeFullName =
+       if (typeFullName == Defines.Any || typeFullName == "var") getTypeFullNameFromAstNode(rhs)
+-      else scope.tryResolveTypeReference(typeFullName).getOrElse(typeFullName)
++      else scope.tryResolveTypeReference(typeFullName).map(_.name).getOrElse(typeFullName)
+ 
+     val name          = nameFromNode(varDecl)
+     val identifierAst = astForIdentifier(varDecl, rhsTypeFullName)
+@@ -308,7 +301,7 @@ trait AstForDeclarationsCreator(implicit withSchemaValidation: ValidationMode) {
+       methodNode(constructorDecl, name, code(constructorDecl), fullName, Option(signature), relativeFileName)
+ 
+     val thisNode =
+-      if (!isStaticConstructor) astForThisNode(constructorDecl)
++      if (!isStaticConstructor) astForThisParameter(constructorDecl)
+       else Ast()
+     Seq(methodAst(methodNode_, thisNode +: params, body, methodReturn, modifiers))
+   }
+@@ -324,9 +317,8 @@ trait AstForDeclarationsCreator(implicit withSchemaValidation: ValidationMode) {
+       .map(astForParameter)
+       .toSeq
+ 
+-    val methodReturnNode = createDotNetNodeInfo(methodDecl.json(ParserKeys.ReturnType))
+-    val methodReturnStr  = nodeTypeFullName(methodReturnNode)
+-    val methodReturn     = nodeToMethodReturn(methodReturnNode)
++    val methodReturnAstNode = createDotNetNodeInfo(methodDecl.json(ParserKeys.ReturnType))
++    val methodReturn        = methodReturnNode(methodReturnAstNode, nodeTypeFullName(methodReturnAstNode))
+     val signature =
+       methodSignature(methodReturn, params.flatMap(_.nodes.collectFirst { case x: NewMethodParameterIn => x }))
+     val fullName    = s"${astFullName(methodDecl)}:$signature"
+@@ -336,12 +328,12 @@ trait AstForDeclarationsCreator(implicit withSchemaValidation: ValidationMode) {
+     // In the case of interfaces, the method body may not be present
+     val jsonBody = methodDecl.json(ParserKeys.Body)
+     val body =
+-      if (!jsonBody.isNull) astForBlock(createDotNetNodeInfo(jsonBody))
++      if (!jsonBody.isNull && parseLevel == AstParseLevel.FULL_AST) astForBlock(createDotNetNodeInfo(jsonBody))
+       else Ast(blockNode(methodDecl)) // Creates an empty block
+     scope.popScope()
+     val modifiers = astForModifiers(methodDecl).flatMap(_.nodes).collect { case x: NewModifier => x }
+     val thisNode =
+-      if (!modifiers.exists(_.modifierType == ModifierTypes.STATIC)) astForThisNode(methodDecl)
++      if (!modifiers.exists(_.modifierType == ModifierTypes.STATIC)) astForThisParameter(methodDecl)
+       else Ast()
+     Seq(methodAst(methodNode_, thisNode +: params, body, methodReturn, modifiers))
+   }
+@@ -361,13 +353,24 @@ trait AstForDeclarationsCreator(implicit withSchemaValidation: ValidationMode) {
+     Ast(param)
+   }
+ 
+-  private def astForThisNode(methodDecl: DotNetNodeInfo): Ast = {
++  private def astForThisParameter(methodDecl: DotNetNodeInfo): Ast = {
+     val name         = "this"
+     val typeFullName = scope.surroundingTypeDeclFullName.getOrElse(Defines.Any)
+     val param = parameterInNode(methodDecl, name, name, 0, false, EvaluationStrategies.BY_SHARING.name, typeFullName)
+     Ast(param)
+   }
+ 
++  protected def astForThisReceiver(invocationExpr: DotNetNodeInfo, typeFullName: Option[String] = None): Ast = {
++    val name = "this"
++    val param = identifierNode(
++      invocationExpr,
++      name,
++      name,
++      typeFullName.orElse(scope.surroundingTypeDeclFullName).getOrElse(Defines.Any)
++    )
++    Ast(param)
++  }
++
+   protected def astForBlock(
+     body: DotNetNodeInfo,
+     code: Option[String] = None,
+@@ -385,16 +388,6 @@ trait AstForDeclarationsCreator(implicit withSchemaValidation: ValidationMode) {
+     _blockAst
+   }
+ 
+-  private def nodeToMethodReturn(methodReturn: DotNetNodeInfo): NewMethodReturn = {
+-    methodReturnNode(
+-      methodReturn,
+-      Try(methodReturn.json(ParserKeys.Value).str)
+-        .orElse(Try(methodReturn.json(ParserKeys.Keyword).obj(ParserKeys.Value).str))
+-        .orElse(Try(methodReturn.code))
+-        .getOrElse(Defines.Any)
+-    )
+-  }
+-
+   /** Parses the modifier array and handles implicit defaults.
+     * @see
+     *   https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForExpressionsCreator.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForExpressionsCreator.scala
+index 9c417f488..72a8cfdcd 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForExpressionsCreator.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForExpressionsCreator.scala
+@@ -26,6 +26,7 @@ trait AstForExpressionsCreator(implicit withSchemaValidation: ValidationMode) {
+       case ObjectCreationExpression     => astForObjectCreationExpression(expr)
+       case SimpleMemberAccessExpression => astForSimpleMemberAccessExpression(expr)
+       case _: IdentifierNode            => astForIdentifier(expr) :: Nil
++      case ThisExpression               => astForThisReceiver(expr) :: Nil
+       case _                            => notHandledYet(expr)
+   }
+ 
+@@ -125,83 +126,78 @@ trait AstForExpressionsCreator(implicit withSchemaValidation: ValidationMode) {
+     astForNode(rhsNode)
+   }
+ 
+-  // TODO: This method is becoming a mess...
+   private def astForInvocationExpression(invocationExpr: DotNetNodeInfo): Seq[Ast] = {
+     val arguments = astForArgumentList(createDotNetNodeInfo(invocationExpr.json(ParserKeys.ArgumentList)))
++    val argTypes  = arguments.map(getTypeFullNameFromAstNode).toList
+ 
+     val expression = createDotNetNodeInfo(invocationExpr.json(ParserKeys.Expression))
+-    val name       = nameFromNode(expression)
++    val callName   = nameFromNode(expression)
+ 
+-    val (receiver, baseTypeFullName) = expression.node match
++    val (receiver, baseTypeFullName, methodMetaData) = expression.node match
+       case SimpleMemberAccessExpression =>
+         val baseNode = createDotNetNodeInfo(
+           createDotNetNodeInfo(invocationExpr.json(ParserKeys.Expression)).json(ParserKeys.Expression)
+         )
+-        val baseNodeName   = nameFromNode(baseNode)
+-        val staticTypeRef  = scope.tryResolveTypeReference(baseNodeName)
+-        val baseIdentifier = astForIdentifier(baseNode, staticTypeRef.getOrElse(Defines.Any))
+-        val _typeFullName  = getTypeFullNameFromAstNode(Seq(baseIdentifier))
+-
+-        if (_typeFullName != Defines.Any) {
+-          val _identifierNode =
+-            identifierNode(baseNode, nameFromNode(baseNode), code(baseNode), _typeFullName)
+-          (Option(Ast(_identifierNode)), Option(_identifierNode.typeFullName))
+-        } else if (staticTypeRef.isDefined) {
+-          (Option(baseIdentifier), Option(staticTypeRef.get))
+-        } else {
+-          (Option(baseIdentifier), Option(_typeFullName))
++        val receiverAst = astForNode(baseNode).toList
++        val baseTypeFullName = receiverAst match {
++          case head :: _ => Option(getTypeFullNameFromAstNode(head)).filterNot(_ == Defines.Any)
++          case _         => None
+         }
++        val methodMetaData = scope.tryResolveMethodInvocation(callName, argTypes, baseTypeFullName)
++        (receiverAst.headOption, baseTypeFullName, methodMetaData)
+       case IdentifierName =>
+-        val typeFullName = scope.findTypeFromMethodName(nameFromNode(expression)) match {
+-          case Some(typNode) => typNode.name
+-          case None          => Defines.Any
++        // This is when a call is made directly, which could also be made from a static import
++        scope
++          .tryResolveMethodInvocation(callName, argTypes)
++          .orElse(scope.tryResolveMethodInvocation(callName, argTypes, scope.surroundingTypeDeclFullName)) match {
++          case Some(methodMetaData) if methodMetaData.isStatic =>
++            // If static, create implicit type identifier explicitly
++            val typeMetaData = scope.typeForMethod(methodMetaData)
++            val typeName     = typeMetaData.flatMap(_.name.split("[.]").lastOption).getOrElse(Defines.Any)
++            val typeFullName = typeMetaData.map(_.name)
++            val receiverNode = Ast(
++              identifierNode(invocationExpr, typeName, typeName, typeFullName.getOrElse(Defines.Any))
++            )
++            (Option(receiverNode), typeFullName, Option(methodMetaData))
++          case Some(methodMetaData) =>
++            // If dynamic, create implicit `this` identifier explicitly
++            val typeMetaData = scope.typeForMethod(methodMetaData)
++            val thisAst      = astForThisReceiver(invocationExpr, typeMetaData.map(_.name))
++            (Option(thisAst), typeMetaData.map(_.name), Option(methodMetaData))
++          case None =>
++            (None, None, None)
+         }
+-        (None, Option(typeFullName))
+-      case _ => (None, None)
++      case x =>
++        logger.warn(s"Unhandled LHS $x for InvocationExpression")
++        (None, None, None)
+ 
+-    lazy val partialFullName = baseTypeFullName match
++    val methodSignature = methodMetaData match {
++      case Some(m) => s"${m.returnType}(${m.parameterTypes.filterNot(_._1 == "this").map(_._2).mkString(",")})"
++      case None    => Defines.UnresolvedSignature
++    }
++    val methodFullName = baseTypeFullName match {
+       case Some(typeFullName) =>
+-        s"$typeFullName.$name"
++        s"$typeFullName.$callName:$methodSignature"
+       case _ =>
+-        s"${Defines.UnresolvedNamespace}.$name"
+-
+-    val returnType =
+-      scope.tryResolveMethodReturn(baseTypeFullName.getOrElse(scope.surroundingTypeDeclFullName.getOrElse("")), name);
+-
+-    val parameterSignature = scope
+-      .tryResolveMethodSignature(baseTypeFullName.getOrElse(scope.surroundingTypeDeclFullName.getOrElse("")), name)
+-      .getOrElse(Defines.UnresolvedSignature)
+-    val typeFullName = returnType.getOrElse(Defines.Any)
+-
+-    val methodSignature = s"${returnType.getOrElse(Defines.Unknown)}($parameterSignature)"
+-    val defaultFullName = s"$partialFullName:$methodSignature"
+-    val (methodFullName, dispatchType) = baseTypeFullName match {
+-      case Some(baseFullName) if scope.tryResolveMethodInvocation(baseFullName, name).isDefined =>
+-        val methodMetaData = scope.tryResolveMethodInvocation(baseFullName, name).get
+-        s"$baseFullName.${methodMetaData.name}:$methodSignature" -> (if methodMetaData.isStatic then
+-                                                                       DispatchTypes.STATIC_DISPATCH
+-                                                                     else DispatchTypes.DYNAMIC_DISPATCH)
+-      case None
+-          if scope.surroundingTypeDeclFullName.isDefined && scope
+-            .tryResolveMethodInvocation(scope.surroundingTypeDeclFullName.get, name)
+-            .isDefined =>
+-        val baseTypeFullName = scope.surroundingTypeDeclFullName.get
+-        val methodMetaData   = scope.tryResolveMethodInvocation(baseTypeFullName, name).get
+-        s"$baseTypeFullName.${methodMetaData.name}:$methodSignature" -> (if methodMetaData.isStatic then
+-                                                                           DispatchTypes.STATIC_DISPATCH
+-                                                                         else DispatchTypes.DYNAMIC_DISPATCH)
+-      case _ => defaultFullName -> DispatchTypes.STATIC_DISPATCH
++        s"${Defines.UnresolvedNamespace}.$callName:$methodSignature"
+     }
++    val dispatchType = methodMetaData
++      .map(_.isStatic)
++      .map {
++        case true  => DispatchTypes.STATIC_DISPATCH
++        case false => DispatchTypes.DYNAMIC_DISPATCH
++      }
++      .getOrElse(DispatchTypes.STATIC_DISPATCH)
+ 
+     val _callAst = callAst(
+       callNode(
+         invocationExpr,
+         code(invocationExpr),
+-        name,
++        callName,
+         methodFullName,
+         dispatchType,
+         Option(methodSignature),
+-        Option(typeFullName)
++        methodMetaData.map(_.returnType)
+       ),
+       arguments,
+       receiver
+@@ -250,7 +246,8 @@ trait AstForExpressionsCreator(implicit withSchemaValidation: ValidationMode) {
+       .map(nodeTypeFullName)
+       .getOrElse(Defines.Any)
+ 
+-    val arguments = astForArgumentList(createDotNetNodeInfo(objectCreation.json(ParserKeys.ArgumentList)))
++    val arguments = Try(astForArgumentList(createDotNetNodeInfo(objectCreation.json(ParserKeys.ArgumentList))))
++      .getOrElse(Seq.empty)
+     // TODO: Handle signature
+     val signature      = None
+     val name           = Defines.ConstructorMethodName
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForPrimitivesCreator.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForPrimitivesCreator.scala
+index 256844a50..5827e2af2 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForPrimitivesCreator.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstForPrimitivesCreator.scala
+@@ -19,25 +19,17 @@ trait AstForPrimitivesCreator(implicit withSchemaValidation: ValidationMode) { t
+           Ast(node).withRefEdge(node, variable)
+         case None =>
+           scope.findFieldInScope(identifierName) match {
++            // Check for implicit field reference
+             case Some(field) if field.node.node != DotNetJsonAst.VariableDeclarator =>
+-              val fieldAccess =
+-                newOperatorCallNode(
+-                  Operators.fieldAccess,
+-                  field.node.code,
+-                  Some(field.typeFullName).orElse(Option(typeFullName)),
+-                  field.node.lineNumber,
+-                  field.node.columnNumber
+-                )
+-              val identifierAst = Ast(newIdentifierNode(identifierName, typeFullName))
+-              val fieldIdentifier = Ast(
+-                NewFieldIdentifier()
+-                  .code(field.name)
+-                  .canonicalName(field.name)
+-                  .lineNumber(field.node.lineNumber)
+-                  .columnNumber(field.node.columnNumber)
+-              )
+-              callAst(fieldAccess, Seq(identifierAst, fieldIdentifier))
+-            case _ => Ast(identifierNode(ident, identifierName, ident.code, typeFullName))
++              astForFieldIdentifier(typeFullName, identifierName, field)
++            case _ =>
++              // Check for static type reference
++              scope.tryResolveTypeReference(identifierName) match {
++                case Some(typeReference) =>
++                  Ast(identifierNode(ident, identifierName, ident.code, typeReference.name))
++                case None =>
++                  Ast(identifierNode(ident, identifierName, ident.code, typeFullName))
++              }
+           }
+       }
+     } else {
+@@ -45,11 +37,32 @@ trait AstForPrimitivesCreator(implicit withSchemaValidation: ValidationMode) { t
+     }
+   }
+ 
++  private def astForFieldIdentifier(baseTypeFullName: String, baseIdentifierName: String, field: FieldDecl) = {
++    val fieldAccess =
++      newOperatorCallNode(
++        Operators.fieldAccess,
++        field.node.code,
++        Some(field.typeFullName),
++        field.node.lineNumber,
++        field.node.columnNumber
++      )
++    val identifierAst = Ast(newIdentifierNode(baseIdentifierName, baseTypeFullName))
++    val fieldIdentifier = Ast(
++      NewFieldIdentifier()
++        .code(field.name)
++        .canonicalName(field.name)
++        .lineNumber(field.node.lineNumber)
++        .columnNumber(field.node.columnNumber)
++    )
++    callAst(fieldAccess, Seq(identifierAst, fieldIdentifier))
++  }
++
+   protected def astForUsing(usingNode: DotNetNodeInfo): Ast = {
+     val namespace  = nameFromNode(usingNode)
+     val alias      = namespace.split('.').last
+     val importNode = newImportNode(code(usingNode), namespace, alias, usingNode)
+-    scope.addImport(namespace)
++    scope.addImportedNamespace(namespace)
++    scope.addImportedTypeOrModule(namespace) // We cannot determine if the namespace refers to a type so we do both
+     Ast(importNode)
+   }
+ 
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstSummaryVisitor.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstSummaryVisitor.scala
+new file mode 100644
+index 000000000..04ccf3246
+--- /dev/null
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/astcreation/AstSummaryVisitor.scala
+@@ -0,0 +1,72 @@
++package io.joern.csharpsrc2cpg.astcreation
++
++import io.joern.csharpsrc2cpg.Constants
++import io.joern.csharpsrc2cpg.datastructures.{CSharpField, CSharpMethod, CSharpProgramSummary, CSharpType}
++import io.joern.csharpsrc2cpg.parser.ParserKeys
++import io.joern.x2cpg.{Ast, ValidationMode}
++import io.shiftleft.codepropertygraph.generated.nodes.*
++import io.shiftleft.codepropertygraph.generated.{Cpg, DiffGraphBuilder, EdgeTypes}
++import io.shiftleft.semanticcpg.language.*
++import overflowdb.{BatchedUpdate, Config}
++
++import scala.util.Using
++
++/** Allows the AST creator to run at a signature-only level and query the resulting CPG to build up a look-ahead cache.
++  */
++trait AstSummaryVisitor(implicit withSchemaValidation: ValidationMode) { this: AstCreator =>
++
++  /** Does a high-level parse of the compilation unit to obtain type and method signature information.
++    */
++  def summarize(): CSharpProgramSummary = {
++    this.parseLevel = AstParseLevel.SIGNATURES
++    val fileNode        = NewFile().name(relativeFileName)
++    val compilationUnit = createDotNetNodeInfo(parserResult.json(ParserKeys.AstRoot))
++    Using.resource(Cpg.withConfig(Config.withoutOverflow())) { cpg =>
++      // Build and store compilation unit AST
++      val ast = Ast(fileNode).withChildren(astForCompilationUnit(compilationUnit))
++      Ast.storeInDiffGraph(ast, diffGraph)
++      BatchedUpdate.applyDiff(cpg.graph, diffGraph)
++
++      // Simulate AST Linker for global namespace
++      val globalNode      = NewNamespaceBlock().fullName(Constants.Global).name(Constants.Global)
++      val globalDiffGraph = new DiffGraphBuilder
++      cpg.typeDecl
++        .where(_.astParentFullNameExact(Constants.Global))
++        .foreach(globalDiffGraph.addEdge(globalNode, _, EdgeTypes.AST))
++      BatchedUpdate.applyDiff(cpg.graph, globalDiffGraph)
++
++      // Summarize findings
++      summarize(cpg)
++    }
++  }
++
++  /** Creates a deep copy of the AST creator with the new summary.
++    */
++  def withSummary(newSummary: CSharpProgramSummary): AstCreator = {
++    AstCreator(relativeFileName, parserResult, newSummary)
++  }
++
++  private def summarize(cpg: Cpg): CSharpProgramSummary = {
++
++    def toMethod(m: Method): CSharpMethod = {
++      CSharpMethod(
++        m.name,
++        m.methodReturn.typeFullName,
++        m.parameter.map(x => x.name -> x.typeFullName).l,
++        m.isStatic.nonEmpty
++      )
++    }
++
++    def toField(f: Member): CSharpField = {
++      CSharpField(f.name, f.typeFullName)
++    }
++
++    val mapping = cpg.namespaceBlock.map { namespace =>
++      namespace.fullName -> namespace.typeDecl.map { typ =>
++        CSharpType(typ.fullName, typ.method.map(toMethod).l, typ.member.map(toField).l)
++      }.toSet
++    }.toMap
++    CSharpProgramSummary(List(mapping))
++  }
++
++}
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/CSharpProgramSummary.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/CSharpProgramSummary.scala
+new file mode 100644
+index 000000000..fff0e0934
+--- /dev/null
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/CSharpProgramSummary.scala
+@@ -0,0 +1,62 @@
++package io.joern.csharpsrc2cpg.datastructures
++
++import io.joern.csharpsrc2cpg.Constants
++import io.joern.x2cpg.datastructures.{FieldLike, MethodLike, ProgramSummary, TypeLike}
++import org.slf4j.LoggerFactory
++import upickle.default.*
++
++import java.io.InputStream
++import scala.annotation.targetName
++import scala.util.{Failure, Success, Try}
++
++type NamespaceToTypeMap = Map[String, Set[CSharpType]]
++
++/** A mapping of type stubs of known types within the scope of the analysis.
++  *
++  * @param initialMappings
++  *   mappings to create the scope from
++  * @see
++  *   [[CSharpProgramSummary.jsonToInitialMapping]] for generating initial mappings.
++  */
++class CSharpProgramSummary(initialMappings: List[NamespaceToTypeMap] = List.empty) extends ProgramSummary[CSharpType] {
++
++  override val namespaceToType: NamespaceToTypeMap = initialMappings.reduceOption(_ ++ _).getOrElse(Map.empty)
++  def findGlobalTypes: Set[CSharpType]             = namespaceToType.getOrElse(Constants.Global, Set.empty)
++
++  @targetName("add")
++  def ++(other: CSharpProgramSummary): CSharpProgramSummary = {
++    CSharpProgramSummary(ProgramSummary.combine(this.namespaceToType, other.namespaceToType) :: Nil)
++  }
++
++}
++
++object CSharpProgramSummary {
++
++  private val logger = LoggerFactory.getLogger(getClass)
++
++  /** @return
++    *   a mapping of the `System` package types.
++    */
++  def BuiltinTypes: NamespaceToTypeMap =
++    jsonToInitialMapping(getClass.getResourceAsStream("/builtin_types.json")) match
++      case Failure(exception) => logger.warn("Unable to parse JSON type entry from builtin types", exception); Map.empty
++      case Success(mapping)   => mapping
++
++  /** Converts a JSON type mapping to a NamespaceToTypeMap entry.
++    * @param jsonInputStream
++    *   a JSON file as an input stream.
++    * @return
++    *   the resulting type map in a Try
++    */
++  def jsonToInitialMapping(jsonInputStream: InputStream): Try[NamespaceToTypeMap] =
++    Try(read[NamespaceToTypeMap](ujson.Readable.fromByteArray(jsonInputStream.readAllBytes())))
++
++}
++
++case class CSharpField(name: String, typeName: String) extends FieldLike derives ReadWriter
++
++case class CSharpMethod(name: String, returnType: String, parameterTypes: List[(String, String)], isStatic: Boolean)
++    extends MethodLike derives ReadWriter
++
++case class CSharpType(name: String, methods: List[CSharpMethod], fields: List[CSharpField])
++    extends TypeLike[CSharpMethod, CSharpField] derives ReadWriter
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/CSharpScope.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/CSharpScope.scala
+index 7e12652bf..4ac2c9c7d 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/CSharpScope.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/CSharpScope.scala
+@@ -1,17 +1,15 @@
+ package io.joern.csharpsrc2cpg.datastructures
+ 
+-import io.joern.csharpsrc2cpg.astcreation.BuiltinTypes
+-import io.joern.csharpsrc2cpg.{CSharpMethod, CSharpType, TypeMap}
+-import io.joern.x2cpg.Defines
+-import io.joern.x2cpg.datastructures.{Scope, ScopeElement}
++import io.joern.x2cpg.datastructures.{Scope, ScopeElement, TypedScope, TypedScopeElement}
+ import io.shiftleft.codepropertygraph.generated.nodes.DeclarationNew
+ 
+ import scala.collection.mutable
+-import scala.util.boundary
+ 
+-class CSharpScope(typeMap: TypeMap) extends Scope[String, DeclarationNew, ScopeType] {
++class CSharpScope(summary: CSharpProgramSummary)
++    extends Scope[String, DeclarationNew, TypedScopeElement]
++    with TypedScope[CSharpMethod, CSharpField, CSharpType](summary) {
+ 
+-  private val typesInScope = mutable.Set.empty[CSharpType].addAll(typeMap.findGlobalTypes)
++  override val typesInScope: mutable.Set[CSharpType] = mutable.Set.empty[CSharpType].addAll(summary.findGlobalTypes)
+ 
+   /** @return
+     *   the surrounding type declaration if one exists.
+@@ -22,7 +20,7 @@ class CSharpScope(typeMap: TypeMap) extends Scope[String, DeclarationNew, ScopeT
+   }
+ 
+   def getFieldsInScope: List[FieldDecl] =
+-    stack.collect { case ScopeElement(TypeScope(_, fields), _) => fields }.flatten.toList
++    stack.collect { case ScopeElement(TypeScope(_, fields), _) => fields }.flatten
+ 
+   /** Works for `this`.field accesses or <currentType>.field accesses.
+     */
+@@ -30,6 +28,10 @@ class CSharpScope(typeMap: TypeMap) extends Scope[String, DeclarationNew, ScopeT
+     getFieldsInScope.find(_.name == fieldName)
+   }
+ 
++  override def isOverloadedBy(method: CSharpMethod, argTypes: List[String]): Boolean = {
++    method.parameterTypes.filterNot(_._1 == "this").size == argTypes.size
++  }
++
+   /** @return
+     *   the full name of the surrounding scope.
+     */
+@@ -47,57 +49,17 @@ class CSharpScope(typeMap: TypeMap) extends Scope[String, DeclarationNew, ScopeT
+     .filterNot(x => x.scopeNode.isInstanceOf[NamespaceScope])
+     .exists(x => x.scopeNode.isInstanceOf[MethodScope] || x.scopeNode.isInstanceOf[TypeLikeScope])
+ 
+-  def tryResolveTypeReference(typeName: String): Option[String] = {
++  override def tryResolveTypeReference(typeName: String): Option[CSharpType] = {
+     if (typeName == "this") {
+-      surroundingTypeDeclFullName
++      surroundingTypeDeclFullName.flatMap(summary.matchingTypes).headOption
+     } else {
+-      typesInScope
+-        .find(_.name.endsWith(typeName))
+-        .flatMap(typeMap.namespaceFor)
+-        .map {
+-          // To avoid recursive type prefixing on assignment calls.
+-          case n if typeName.startsWith(n) => typeName
+-          case n                           => s"$n.$typeName"
+-        }
+-    }
+-  }
+-
+-  def tryResolveMethodInvocation(typeFullName: String, callName: String): Option[CSharpMethod] = {
+-    typesInScope.find(_.name.endsWith(typeFullName)).flatMap { t =>
+-      t.methods.find(_.name == callName)
+-    }
+-  }
+-
+-  def tryResolveMethodReturn(typeFullName: String, callName: String): Option[String] = {
+-    typesInScope.find(_.name.endsWith(typeFullName)).flatMap { case t: CSharpType =>
+-      t.methods.find(_.name.endsWith(callName)).map { m =>
+-        m.returnType
+-      }
++      super.tryResolveTypeReference(typeName)
+     }
+   }
+ 
+-  def tryResolveMethodSignature(typeFullName: String, callName: String): Option[String] = {
+-    typesInScope
+-      .find(_.name.endsWith(typeFullName))
+-      .flatMap { t =>
+-        t.methods.find(_.name.endsWith(callName)).flatMap { m =>
+-          Some(
+-            m.parameterTypes
+-              .map { (_, typ) =>
+-                BuiltinTypes.DotNetTypeMap.getOrElse(typ, tryResolveTypeReference(typ).getOrElse(Defines.Any))
+-              }
+-              .mkString(",")
+-          )
+-        }
+-      }
+-  }
+-
++  // TODO: Add inherits field in CSharpType and handle this in `pushNewScope`
+   def pushTypeToScope(typeFullName: String): Unit = {
+-    typesInScope.addAll(typeMap.findType(typeFullName))
+-  }
+-
+-  def findTypeFromMethodName(methodName: String): Option[CSharpType] = {
+-    typesInScope.find(typ => typ.methods.map(_.name).contains(methodName))
++    typesInScope.addAll(summary.matchingTypes(typeFullName))
+   }
+ 
+   def pushField(field: FieldDecl): Unit = {
+@@ -110,42 +72,29 @@ class CSharpScope(typeMap: TypeMap) extends Scope[String, DeclarationNew, ScopeT
+     }
+   }
+ 
+-  /** Appends known types imported from a `using` statement into the scope.
+-    * @param namespace
+-    *   the fully qualified imported namespace.
+-    */
+-  def addImport(namespace: String): Unit = {
+-    /* If the alias is a type, the fullyQualifiedName won't be added to the TypeMap. Assuming no nested classes, this should extract the types from the namespace.
+-      E.g HelloBaz.Foo.Baz, where Baz is a type and HelloBaz.Foo is a namespace.
+-     */
+-    val knownTypesFromNamespace =
+-      typeMap.classesIn(namespace) ++ typeMap.findType(namespace).toList
+-    typesInScope.addAll(knownTypesFromNamespace)
+-  }
+-
+   /** Pops the scope, adding types from the scope if necessary.
+     */
+-  override def pushNewScope(scopeNode: ScopeType): Unit = {
++  override def pushNewScope(scopeNode: TypedScopeElement): Unit = {
+     scopeNode match
+-      case NamespaceScope(fullName) => typesInScope.addAll(typeMap.classesIn(fullName))
+-      case TypeScope(name, _)       => typesInScope.addAll(typeMap.findType(name))
++      case NamespaceScope(fullName) => typesInScope.addAll(summary.typesUnderNamespace(fullName))
++      case TypeScope(name, _)       => typesInScope.addAll(summary.matchingTypes(name))
+       case _                        =>
+     super.pushNewScope(scopeNode)
+   }
+ 
+   /** Pops the scope, removing types from the scope if necessary.
+     */
+-  override def popScope(): Option[ScopeType] = {
++  override def popScope(): Option[TypedScopeElement] = {
+     super.popScope() match
+       case Some(NamespaceScope(fullName)) =>
+-        typeMap.classesIn(fullName).foreach(typesInScope.remove)
++        summary.typesUnderNamespace(fullName).foreach(typesInScope.remove)
+         Some(NamespaceScope(fullName))
+       case x => x
+   }
+ 
+   /** Returns the top of the scope, without removing it from the stack.
+     */
+-  def peekScope(): Option[ScopeType] = {
++  def peekScope(): Option[TypedScopeElement] = {
+     super.popScope() match
+       case None => None
+       case Some(top) =>
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/ScopeType.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/ScopeType.scala
+index 81d3a2c3c..330ca02eb 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/ScopeType.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/datastructures/ScopeType.scala
+@@ -1,19 +1,16 @@
+ package io.joern.csharpsrc2cpg.datastructures
+ 
+ import io.joern.csharpsrc2cpg.parser.DotNetNodeInfo
+-
+ import io.joern.csharpsrc2cpg.astcreation.BuiltinTypes
+ import io.joern.csharpsrc2cpg.astcreation.BuiltinTypes.DotNetTypeMap
+-
+-/** The unifying scope type trait.
+-  */
+-sealed trait ScopeType
++import io.joern.x2cpg.datastructures.{NamespaceLikeScope, TypedScopeElement}
+ 
+ /** Represents scope objects mapping to namespace nodes. Likened to `namespace` or `package` declarations.
+   *
+   * @param fullName
++  *   the fully qualified name.
+   */
+-case class NamespaceScope(fullName: String) extends ScopeType
++case class NamespaceScope(fullName: String) extends NamespaceLikeScope
+ 
+ case class FieldDecl(
+   name: String,
+@@ -21,11 +18,11 @@ case class FieldDecl(
+   isStatic: Boolean,
+   isInitialized: Boolean,
+   node: DotNetNodeInfo
+-)
++) extends TypedScopeElement
+ 
+ /** Represents scope objects that map to a type declaration node.
+   */
+-sealed trait TypeLikeScope {
++sealed trait TypeLikeScope extends TypedScopeElement {
+   def fullName: String
+ }
+ 
+@@ -34,7 +31,7 @@ sealed trait TypeLikeScope {
+   * @param fullName
+   *   the type full name.
+   */
+-case class TypeScope(fullName: String, fields: List[FieldDecl] = List.empty) extends ScopeType with TypeLikeScope
++case class TypeScope(fullName: String, fields: List[FieldDecl] = List.empty) extends TypeLikeScope
+ 
+ /** An enumeration type.
+   *
+@@ -43,17 +40,15 @@ case class TypeScope(fullName: String, fields: List[FieldDecl] = List.empty) ext
+   * @param aliasFor
+   *   the integer equivalent type that this represents
+   */
+-case class EnumScope(fullName: String, aliasFor: String = DotNetTypeMap(BuiltinTypes.Int))
+-    extends ScopeType
+-    with TypeLikeScope
++case class EnumScope(fullName: String, aliasFor: String = DotNetTypeMap(BuiltinTypes.Int)) extends TypeLikeScope
+ 
+ /** Represents scope objects that map to a method node.
+   *
+   * @param fullName
+   *   the method full name.
+   */
+-case class MethodScope(fullName: String) extends ScopeType
++case class MethodScope(fullName: String) extends TypedScopeElement
+ 
+ /** Represents scope objects that map to a block node.
+   */
+-object BlockScope extends ScopeType
++object BlockScope extends TypedScopeElement
+diff --git a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/parser/DotNetJsonAst.scala b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/parser/DotNetJsonAst.scala
+index 53e6ffd04..8e5d933c6 100644
+--- a/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/parser/DotNetJsonAst.scala
++++ b/joern-cli/frontends/csharpsrc2cpg/src/main/scala/io/joern/csharpsrc2cpg/parser/DotNetJsonAst.scala
+@@ -1,7 +1,6 @@
+ package io.joern.csharpsrc2cpg.parser
+ 
+ import org.slf4j.LoggerFactory
+-import io.joern.csharpsrc2cpg.parser.ParserKeys.Type
+ 
+ object DotNetJsonAst {
+ 
+@@ -208,6 +207,8 @@ object DotNetJsonAst {
+ 
+   object PropertyDeclaration extends DeclarationExpr
+ 
++  object TypeArgumentList extends BaseStmt
++
+   object TypeParameter extends BaseStmt
+ 
+   object GenericName extends BaseStmt
+diff --git a/joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/datastructures/ProgramSummary.scala b/joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/datastructures/ProgramSummary.scala
+index 42f832256..b13911fa9 100644
+--- a/joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/datastructures/ProgramSummary.scala
++++ b/joern-cli/frontends/x2cpg/src/main/scala/io/joern/x2cpg/datastructures/ProgramSummary.scala
+@@ -113,7 +113,9 @@ trait TypedScope[M <: MethodLike, F <: FieldLike, T <: TypeLike[M, F]](summary:
+     typeFullName: Option[String] = None
+   ): Option[M] = typeFullName match {
+     case None =>
+-      membersInScope.collectFirst { case m: MethodLike if m.name == callName => m.asInstanceOf[M] }
++      // TODO: The typesInScope part is to imprecisely solve the unimplemented polymorphism limitation
++      (membersInScope ++ typesInScope.flatMap(_.methods))
++        .collectFirst { case m: MethodLike if m.name == callName => m.asInstanceOf[M] }
+     case Some(tfn) =>
+       tryResolveTypeReference(tfn).flatMap { t =>
+         t.methods.find { m => m.name == callName && isOverloadedBy(m, argTypes) }
+@@ -190,6 +192,16 @@ trait TypedScope[M <: MethodLike, F <: FieldLike, T <: TypeLike[M, F]](summary:
+     }
+   }
+ 
++  /** Given a method, will attempt to find the associated type with preference to the types in scope.
++    * @param m
++    *   the method meta data.
++    * @return
++    *   the type meta data, if found.
++    */
++  def typeForMethod(m: M): Option[T] = {
++    typesInScope.find(t => t.methods.contains(m))
++  }
++
+ }
+ 
+ /** An implementation of combining the typed scoping structures to manage the available type information at namespace

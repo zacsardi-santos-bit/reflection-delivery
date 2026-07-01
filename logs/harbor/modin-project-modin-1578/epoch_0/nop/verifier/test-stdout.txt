@@ -1,0 +1,139 @@
+patching file modin/data_management/test/test_dispatcher.py
+patching file modin/pandas/test/test_api.py
+patching file modin/test/test_publisher.py
+============================= test session starts ==============================
+collecting ... collected 0 items / 2 errors
+
+==================================== ERRORS ====================================
+________ ERROR collecting modin/data_management/test/test_dispatcher.py ________
+ImportError while importing test module '/workspace/repo/modin/data_management/test/test_dispatcher.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.7/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+modin/data_management/test/test_dispatcher.py:16: in <module>
+    from modin import execution_engine, partition_format
+E   ImportError: cannot import name 'execution_engine' from 'modin' (/workspace/repo/modin/__init__.py)
+________________ ERROR collecting modin/test/test_publisher.py _________________
+ImportError while importing test module '/workspace/repo/modin/test/test_publisher.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.7/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+modin/test/test_publisher.py:16: in <module>
+    from modin import Publisher
+E   ImportError: cannot import name 'Publisher' from 'modin' (/workspace/repo/modin/__init__.py)
+
+---------- coverage: platform linux, python 3.7.17-final-0 -----------
+Name                                                               Stmts   Miss  Cover
+--------------------------------------------------------------------------------------
+modin/__init__.py                                                     37     15    59%
+modin/_version.py                                                    272    158    42%
+modin/apply_license_header.py                                         19     19     0%
+modin/backends/__init__.py                                             0      0   100%
+modin/backends/base/__init__.py                                        0      0   100%
+modin/backends/base/query_compiler.py                                108    108     0%
+modin/backends/pandas/__init__.py                                      0      0   100%
+modin/backends/pandas/parsers.py                                     118    118     0%
+modin/backends/pandas/query_compiler.py                              589    589     0%
+modin/data_management/__init__.py                                      0      0   100%
+modin/data_management/dispatcher.py                                   73     73     0%
+modin/data_management/factories.py                                    83     83     0%
+modin/data_management/functions/__init__.py                            6      6     0%
+modin/data_management/functions/binary_function.py                    20     20     0%
+modin/data_management/functions/foldfunction.py                        6      6     0%
+modin/data_management/functions/function.py                            6      6     0%
+modin/data_management/functions/mapfunction.py                         6      6     0%
+modin/data_management/functions/mapreducefunction.py                   8      8     0%
+modin/data_management/functions/reductionfunction.py                   6      6     0%
+modin/data_management/test/test_dispatcher.py                         18     16    11%
+modin/data_management/utils.py                                        32     32     0%
+modin/engines/__init__.py                                              0      0   100%
+modin/engines/base/__init__.py                                         0      0   100%
+modin/engines/base/frame/__init__.py                                   0      0   100%
+modin/engines/base/frame/axis_partition.py                            45     45     0%
+modin/engines/base/frame/data.py                                     410    410     0%
+modin/engines/base/frame/partition.py                                  1      1     0%
+modin/engines/base/frame/partition_manager.py                        159    159     0%
+modin/engines/base/io/__init__.py                                     11     11     0%
+modin/engines/base/io/column_stores/__init__.py                        0      0   100%
+modin/engines/base/io/column_stores/column_store_reader.py            40     40     0%
+modin/engines/base/io/column_stores/feather_reader.py                  9      9     0%
+modin/engines/base/io/column_stores/hdf_reader.py                      3      3     0%
+modin/engines/base/io/column_stores/parquet_reader.py                 34     34     0%
+modin/engines/base/io/file_reader.py                                  85     85     0%
+modin/engines/base/io/io.py                                          108    108     0%
+modin/engines/base/io/sql/__init__.py                                  0      0   100%
+modin/engines/base/io/sql/sql_reader.py                               40     40     0%
+modin/engines/base/io/text/__init__.py                                 0      0   100%
+modin/engines/base/io/text/csv_reader.py                             112    112     0%
+modin/engines/base/io/text/fwf_reader.py                             115    115     0%
+modin/engines/base/io/text/json_reader.py                             50     50     0%
+modin/engines/base/io/text/text_file_reader.py                        26     26     0%
+modin/engines/base/series/__init__.py                                  0      0   100%
+modin/engines/dask/__init__.py                                         0      0   100%
+modin/engines/dask/pandas_on_dask/__init__.py                          0      0   100%
+modin/engines/dask/pandas_on_dask/frame/__init__.py                    0      0   100%
+modin/engines/dask/pandas_on_dask/frame/axis_partition.py             30     30     0%
+modin/engines/dask/pandas_on_dask/frame/data.py                       17     17     0%
+modin/engines/dask/pandas_on_dask/frame/partition.py                  75     75     0%
+modin/engines/dask/pandas_on_dask/frame/partition_manager.py          46     46     0%
+modin/engines/dask/pandas_on_dask/io.py                               16     16     0%
+modin/engines/dask/pandas_on_dask/series/__init__.py                   0      0   100%
+modin/engines/dask/task_wrapper.py                                    11     11     0%
+modin/engines/python/__init__.py                                       0      0   100%
+modin/engines/python/pandas_on_python/__init__.py                      0      0   100%
+modin/engines/python/pandas_on_python/frame/__init__.py                0      0   100%
+modin/engines/python/pandas_on_python/frame/axis_partition.py         14     14     0%
+modin/engines/python/pandas_on_python/frame/data.py                    4      4     0%
+modin/engines/python/pandas_on_python/frame/partition.py              63     63     0%
+modin/engines/python/pandas_on_python/frame/partition_manager.py       7      7     0%
+modin/engines/python/pandas_on_python/io.py                            6      6     0%
+modin/engines/python/pandas_on_python/series/__init__.py               0      0   100%
+modin/engines/ray/__init__.py                                          0      0   100%
+modin/engines/ray/generic/__init__.py                                  0      0   100%
+modin/engines/ray/generic/frame/__init__.py                            0      0   100%
+modin/engines/ray/generic/frame/partition_manager.py                  12     12     0%
+modin/engines/ray/generic/io.py                                       14     14     0%
+modin/engines/ray/generic/series/__init__.py                           0      0   100%
+modin/engines/ray/pandas_on_ray/__init__.py                            0      0   100%
+modin/engines/ray/pandas_on_ray/frame/__init__.py                      0      0   100%
+modin/engines/ray/pandas_on_ray/frame/axis_partition.py               26     26     0%
+modin/engines/ray/pandas_on_ray/frame/data.py                         13     13     0%
+modin/engines/ray/pandas_on_ray/frame/partition.py                    87     87     0%
+modin/engines/ray/pandas_on_ray/frame/partition_manager.py            45     45     0%
+modin/engines/ray/pandas_on_ray/io.py                                 17     17     0%
+modin/engines/ray/pandas_on_ray/series/__init__.py                     0      0   100%
+modin/engines/ray/task_wrapper.py                                      9      9     0%
+modin/engines/ray/utils.py                                            10     10     0%
+modin/error_message.py                                                22     22     0%
+modin/experimental/__init__.py                                         0      0   100%
+modin/experimental/engines/__init__.py                                 0      0   100%
+modin/experimental/engines/pandas_on_ray/__init__.py                   0      0   100%
+modin/experimental/engines/pandas_on_ray/io_exp.py                    42     42     0%
+modin/experimental/engines/pandas_on_ray/sql.py                       66     66     0%
+modin/experimental/pandas/__init__.py                                  6      6     0%
+modin/experimental/pandas/io_exp.py                                    7      7     0%
+modin/pandas/__init__.py                                              67     67     0%
+modin/pandas/base.py                                                1017   1017     0%
+modin/pandas/concat.py                                                42     42     0%
+modin/pandas/dataframe.py                                            825    825     0%
+modin/pandas/datetimes.py                                              7      7     0%
+modin/pandas/general.py                                               44     44     0%
+modin/pandas/groupby.py                                              300    300     0%
+modin/pandas/indexing.py                                             185    185     0%
+modin/pandas/io.py                                                   147    147     0%
+modin/pandas/iterator.py                                              17     17     0%
+modin/pandas/reshape.py                                               30     30     0%
+modin/pandas/series.py                                               875    875     0%
+modin/pandas/utils.py                                                 28     28     0%
+modin/test/test_publisher.py                                          24     22     8%
+--------------------------------------------------------------------------------------
+TOTAL                                                               6928   6788     2%
+
+=========================== short test summary info ============================
+ERROR modin/data_management/test/test_dispatcher.py
+ERROR modin/test/test_publisher.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+======================== 2 warnings, 2 errors in 0.60s =========================
+reward=0 graded=3 found=0 failed=0 parsed=0 framework=pytest exit_code=2

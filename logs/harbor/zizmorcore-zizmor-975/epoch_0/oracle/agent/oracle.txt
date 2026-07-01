@@ -1,0 +1,10 @@
+patching file crates/zizmor/src/audit/artipacked.rs
+patching file crates/zizmor/src/audit/template_injection.rs
+patching file crates/zizmor/src/finding.rs
+patching file crates/zizmor/src/main.rs
+patching file crates/zizmor/src/output/fix.rs
+patching file crates/zizmor/src/output/plain.rs
+patching file crates/zizmor/src/registry.rs
+patching file docs/assets/chips.css
+patching file docs/snippets/help.txt
+patching file docs/usage.md

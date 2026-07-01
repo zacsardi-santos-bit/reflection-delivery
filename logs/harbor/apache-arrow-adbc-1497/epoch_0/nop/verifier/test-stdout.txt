@@ -1,0 +1,33 @@
+patching file go/adbc/driver/flightsql/flightsql_adbc_server_test.go
+patching file go/adbc/driver/flightsql/flightsql_adbc_test.go
+patching file go/adbc/driver/flightsql/record_reader_test.go
+patching file go/adbc/driver/snowflake/driver_test.go
+patching file go/adbc/drivermgr/wrapper_sqlite_test.go
+patching file go/adbc/sqldriver/driver_internals_test.go
+patching file go/adbc/sqldriver/flightsql/flightsql_test.go
+go: finding module for package github.com/apache/arrow/go/v16/arrow/decimal256
+go: finding module for package github.com/apache/arrow/go/v16/arrow/flight/flightsql
+go: finding module for package github.com/apache/arrow/go/v16/arrow
+go: finding module for package github.com/apache/arrow/go/v16/arrow/array
+go: finding module for package github.com/apache/arrow/go/v16/arrow/flight
+go: finding module for package github.com/apache/arrow/go/v16/arrow/memory
+go: finding module for package github.com/apache/arrow/go/v16/arrow/ipc
+go: finding module for package github.com/apache/arrow/go/v16/arrow/decimal128
+go: finding module for package github.com/apache/arrow/go/v16/arrow/flight/flightsql/example
+go: finding module for package github.com/apache/arrow/go/v16/arrow/flight/flightsql/schema_ref
+# github.com/apache/arrow-adbc/go/adbc/driver/flightsql
+driver/flightsql/record_reader_test.go:27:2: cannot find module providing package github.com/apache/arrow/go/v16/arrow: module lookup disabled by GOPROXY=off
+FAIL	github.com/apache/arrow-adbc/go/adbc/driver/flightsql [setup failed]
+# github.com/apache/arrow-adbc/go/adbc/driver/snowflake
+driver/flightsql/record_reader_test.go:27:2: cannot find module providing package github.com/apache/arrow/go/v16/arrow: module lookup disabled by GOPROXY=off
+FAIL	github.com/apache/arrow-adbc/go/adbc/driver/snowflake [setup failed]
+# github.com/apache/arrow-adbc/go/adbc/drivermgr
+driver/flightsql/record_reader_test.go:27:2: cannot find module providing package github.com/apache/arrow/go/v16/arrow: module lookup disabled by GOPROXY=off
+FAIL	github.com/apache/arrow-adbc/go/adbc/drivermgr [setup failed]
+# github.com/apache/arrow-adbc/go/adbc/sqldriver
+driver/flightsql/record_reader_test.go:27:2: cannot find module providing package github.com/apache/arrow/go/v16/arrow: module lookup disabled by GOPROXY=off
+FAIL	github.com/apache/arrow-adbc/go/adbc/sqldriver [setup failed]
+# github.com/apache/arrow-adbc/go/adbc/sqldriver/flightsql
+driver/flightsql/record_reader_test.go:29:2: cannot find module providing package github.com/apache/arrow/go/v16/arrow/flight: module lookup disabled by GOPROXY=off
+FAIL	github.com/apache/arrow-adbc/go/adbc/sqldriver/flightsql [setup failed]
+reward=0 graded=199 found=0 failed=0 parsed=0 framework=go exit_code=1

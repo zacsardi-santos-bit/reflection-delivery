@@ -1,0 +1,294 @@
+patching file crates/ruma-events/tests/it/call.rs
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.46
+   Compiling stable_deref_trait v1.2.1
+   Compiling serde_core v1.0.228
+   Compiling serde v1.0.228
+   Compiling hashbrown v0.17.1
+   Compiling equivalent v1.0.2
+   Compiling litemap v0.8.2
+   Compiling writeable v0.6.3
+   Compiling utf8_iter v1.0.4
+   Compiling icu_properties_data v2.2.0
+   Compiling icu_normalizer_data v2.2.0
+   Compiling thiserror v1.0.69
+   Compiling memchr v2.8.2
+   Compiling smallvec v1.15.2
+   Compiling zmij v1.0.21
+   Compiling winnow v1.0.3
+   Compiling itoa v1.0.18
+   Compiling winnow v0.7.15
+   Compiling serde_json v1.0.150
+   Compiling percent-encoding v2.3.2
+   Compiling once_cell v1.21.4
+   Compiling toml_datetime v1.1.1+spec-1.1.0
+   Compiling js_int v0.2.2
+   Compiling indexmap v2.14.0
+   Compiling aho-corasick v1.1.4
+   Compiling form_urlencoded v1.2.2
+   Compiling regex-syntax v0.8.11
+   Compiling tracing-core v0.1.36
+   Compiling pin-project-lite v0.2.17
+   Compiling num-conv v0.2.2
+   Compiling ryu v1.0.23
+   Compiling bytes v1.12.0
+   Compiling time-core v0.1.9
+   Compiling target-triple v1.0.0
+   Compiling deranged v0.5.8
+   Compiling powerfmt v0.2.0
+   Compiling toml_writer v1.1.1+spec-1.1.0
+   Compiling base64 v0.22.1
+   Compiling toml_parser v1.1.2+spec-1.1.0
+   Compiling wildmatch v2.6.1
+   Compiling as_variant v1.3.0
+   Compiling web-time v1.1.0
+   Compiling glob v0.3.3
+   Compiling termcolor v1.4.1
+   Compiling maplit v1.0.2
+   Compiling assert_matches2 v0.1.2
+   Compiling http v1.4.2
+   Compiling assign v1.1.1
+   Compiling toml_edit v0.25.12+spec-1.1.0
+   Compiling syn v2.0.118
+   Compiling regex-automata v0.4.14
+   Compiling time v0.3.51
+   Compiling proc-macro-crate v3.5.0
+   Compiling serde_spanned v1.1.1
+   Compiling toml v1.1.2+spec-1.1.0
+   Compiling serde_html_form v0.2.8
+   Compiling regex v1.12.4
+   Compiling synstructure v0.13.2
+   Compiling zerovec-derive v0.11.3
+   Compiling serde_derive v1.0.228
+   Compiling displaydoc v0.2.6
+   Compiling thiserror-impl v1.0.69
+   Compiling tracing-attributes v0.1.31
+   Compiling zerofrom-derive v0.1.7
+   Compiling yoke-derive v0.8.2
+   Compiling zerofrom v0.1.8
+   Compiling tracing v0.1.44
+   Compiling ruma-identifiers-validation v0.9.5 (/workspace/repo/crates/ruma-identifiers-validation)
+   Compiling yoke v0.8.3
+   Compiling zerovec v0.11.6
+   Compiling zerotrie v0.2.4
+   Compiling tinystr v0.8.3
+   Compiling potential_utf v0.1.5
+   Compiling icu_collections v2.2.0
+   Compiling icu_locale_core v2.2.0
+   Compiling toml_datetime v0.6.11
+   Compiling serde_spanned v0.6.9
+   Compiling js_option v0.1.1
+   Compiling trybuild v1.0.117
+   Compiling toml_edit v0.22.27
+   Compiling icu_provider v2.2.0
+   Compiling icu_properties v2.2.0
+   Compiling icu_normalizer v2.2.0
+   Compiling idna_adapter v1.2.2
+   Compiling idna v1.1.0
+   Compiling toml v0.8.23
+   Compiling url v2.5.8
+   Compiling ruma-macros v0.13.0 (/workspace/repo/crates/ruma-macros)
+warning: enum `AuthScheme` is never used
+  --> crates/ruma-macros/src/api/auth_scheme.rs:11:10
+   |
+11 | pub enum AuthScheme {
+   |          ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `ruma-macros` (lib) generated 1 warning
+   Compiling ruma-common v0.13.0 (/workspace/repo/crates/ruma-common)
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/user_id.rs:19:48
+   |
+19 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, and `test` and 31 more
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/client_secret.rs:14:48
+   |
+14 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/device_id.rs:31:48
+   |
+31 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+ --> crates/ruma-common/src/identifiers/device_key_id.rs:9:48
+  |
+9 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+  |                                                ^^^^^
+  |
+  = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+  = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+  = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+  = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+  = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/event_id.rs:39:48
+   |
+39 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/key_id.rs:14:10
+   |
+14 | #[derive(IdZst)]
+   |          ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+ --> crates/ruma-common/src/identifiers/key_name.rs:8:48
+  |
+8 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+  |                                                ^^^^^
+  |
+  = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+  = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+  = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+  = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+  = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/mxc_uri.rs:18:48
+   |
+18 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/room_alias_id.rs:19:48
+   |
+19 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/room_id.rs:22:48
+   |
+22 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/room_or_alias_id.rs:29:48
+   |
+29 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/server_name.rs:13:48
+   |
+13 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/session_id.rs:12:48
+   |
+12 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/transaction_id.rs:12:48
+   |
+12 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition name: `ruma_identifiers_storage`
+  --> crates/ruma-common/src/identifiers/voip_id.rs:14:48
+   |
+14 | #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, IdZst)]
+   |                                                ^^^^^
+   |
+   = note: using a cfg inside a derive macro will use the cfgs from the destination crate and not the ones from the defining crate
+   = help: try referring to `IdZst` crate for guidance on how handle this unexpected cfg
+   = help: the derive macro `IdZst` may come from an old version of the `ruma_macros` crate, try updating your dependency with `cargo update -p ruma_macros`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `IdZst` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+   Compiling ruma-events v0.28.1 (/workspace/repo/crates/ruma-events)
+warning: `ruma-common` (lib) generated 15 warnings
+    Finished `test` profile [unoptimized] target(s) in 31.65s
+────────────
+ Nextest run ID 3b8c2db5-23fa-432e-b8e7-381d5ce159dd with nextest profile: default
+    Starting 0 tests across 2 binaries (249 tests skipped)
+────────────
+     Summary [   0.001s] 0 tests run: 0 passed, 249 skipped
+error: no tests to run
+(hint: use `--no-tests` to customize)
+reward=0 graded=6 found=0 failed=0 parsed=0 framework=cargo exit_code=4

@@ -1,0 +1,9 @@
+I'm building a task server management UI for the admin section of our application. I need three new React components along with supporting type definitions and constants.
+
+The main component should display a list of background server tasks fetched from the backend, with each task's unique identifier visible in the table. It needs a text search field (placeholder: "Search by task name, user ID, or task ID...") that filters the list in real time, plus status filter checkboxes labeled "Succeeded", "Running", and "Failed". There should be a "Schedule Task" button that opens a scheduling modal, and a "Kill Task" button that submits selected tasks (chosen via row checkboxes) to the backend using a form payload containing the selected task's identifier.
+
+The scheduling modal should present the available task categories as a radio group with exactly two options — a document cleanup task and a temporary-file cleanup task. Selecting the first option shows one numeric input field; selecting the second shows two numeric inputs. Submitting the form should call the save hook with the selected task's identifier as the task name and the filled-in parameter values as the task params. The modal also needs a close button.
+
+A separate log-viewing modal should accept a task identifier, fetch the corresponding log text, and display it under a "Task Logs" heading with a close button.
+
+The types file should define a task status enum (with success, failure, and running values) and a response interface with fields for task identifier, completion date, status, result details, and children. The constants file should define the API endpoint URLs and the task category configuration array — the first category corresponds to a document cleanup operation and has a single numeric parameter; the second category should be labeled "Tmp Cleanup" with two numeric parameter fields.

@@ -1,0 +1,20 @@
+patching file crates/ruff_linter/resources/test/fixtures/refurb/FURB122.py
+patching file crates/ruff_linter/resources/test/fixtures/ruff/RUF058.py (renamed from crates/ruff_linter/resources/test/fixtures/ruff/RUF058_0.py)
+patching file crates/ruff_linter/resources/test/fixtures/ruff/RUF058_1.py
+patching file crates/ruff_linter/src/checkers/ast/analyze/bindings.rs
+patching file crates/ruff_linter/src/checkers/ast/analyze/statement.rs
+patching file crates/ruff_linter/src/checkers/ast/mod.rs
+patching file crates/ruff_linter/src/rules/flake8_simplify/snapshots/ruff_linter__rules__flake8_simplify__tests__SIM108_SIM108.py.snap
+patching file crates/ruff_linter/src/rules/flake8_simplify/snapshots/ruff_linter__rules__flake8_simplify__tests__preview__SIM108_SIM108.py.snap
+patching file crates/ruff_linter/src/rules/flake8_type_checking/helpers.rs
+patching file crates/ruff_linter/src/rules/flynt/helpers.rs
+patching file crates/ruff_linter/src/rules/flynt/rules/static_join_to_fstring.rs
+patching file crates/ruff_linter/src/rules/refurb/rules/for_loop_writes.rs
+patching file crates/ruff_linter/src/rules/refurb/snapshots/ruff_linter__rules__refurb__tests__FURB122_FURB122.py.snap
+patching file crates/ruff_linter/src/rules/ruff/mod.rs
+patching file crates/ruff_linter/src/rules/ruff/rules/assert_with_print_message.rs
+patching file crates/ruff_linter/src/rules/ruff/rules/starmap_zip.rs
+patching file crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__preview__RUF058_RUF058.py.snap (renamed from crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__preview__RUF058_RUF058_0.py.snap)
+patching file crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__preview__RUF058_RUF058_1.py.snap
+patching file crates/ruff_python_ast/src/nodes.rs
+patching file crates/ruff_python_codegen/src/generator.rs

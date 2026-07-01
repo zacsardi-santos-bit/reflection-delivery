@@ -1,0 +1,23 @@
+{
+ "task": "tailscale-tailscale-11019",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds new 337-line cmd/k8s-operator/dnsrecords.go 'type dnsRecordsReconciler struct' + registers it in operator.go '.Complete(&dnsRecordsReconciler{'; F2P TestDNSRecordsReconciler drives egress-fqdn/ingress reconciles and asserts ConfigMap 'foo.bar.ts.net -> 10.8.8.7'."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

@@ -1,0 +1,6 @@
+patching file docs/3.0rc/develop/write-tasks.mdx
+patching file src/prefect/server/database/migrations/versions/postgresql/2024_07_15_145240_7495a5013e7e_adding_scope_to_followers.py
+patching file src/prefect/server/database/migrations/versions/sqlite/2024_07_15_145350_354f1ede7e9f_adding_scope_to_followers.py
+patching file src/prefect/server/database/orm_models.py
+patching file src/prefect/server/events/ordering.py
+patching file src/prefect/server/events/triggers.py

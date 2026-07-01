@@ -1,0 +1,32 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/plugins/source/alicloud && go test -json ./client -count=1",
+  "test_files": [
+    "plugins/source/alicloud/client/spec/gen/main.go",
+    "plugins/source/alicloud/client/spec_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate/valid_spec",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate/valid_spec_with_multiple_accounts",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate/empty_account_name",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate/empty_regions",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate/empty_key",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate/empty_secret",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate/empty_spec",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate/empty_accounts",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate/null_accounts",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestSpecValidate",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestJSONSchema/valid_spec",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestJSONSchema/missing_account_name",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestJSONSchema/missing_access_key",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestJSONSchema/missing_secret_key",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestJSONSchema/missing_regions",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestJSONSchema/empty_spec",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestJSONSchema/empty_accounts",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestJSONSchema/null_accounts",
+    "github.com/cloudquery/cloudquery/plugins/source/alicloud/client::TestJSONSchema"
+  ],
+  "PASS_TO_PASS": []
+}

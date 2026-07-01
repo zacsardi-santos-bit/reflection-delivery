@@ -1,0 +1,23 @@
+{
+ "task": "gonum-gonum-418",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden changes graph.Copy/CopyWeighted to 'dst.SetEdge(dst.NewEdge(u, v))' and 'dst.SetWeightedEdge(dst.NewWeightedEdge(u, v, src.WeightedEdge(u, v).Weight()))'; TestCopy/TestCopyWeighted table-test undirected<->directed + weighted + isolated nodes"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

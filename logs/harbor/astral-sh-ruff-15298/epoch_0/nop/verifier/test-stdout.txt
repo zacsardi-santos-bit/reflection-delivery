@@ -1,0 +1,403 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_return/RET503.py
+   Compiling ruff_linter v0.8.6 (/workspace/repo/crates/ruff_linter)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.80s
+────────────
+ Nextest run ID 1bef5453-e0e8-48b5-9548-fb30ab9ed0f7 with nextest profile: default
+    Starting 9 tests across 1 binary (2210 tests skipped)
+        PASS [   0.197s] (1/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsebreak_path_new_ret508_py_expects
+        PASS [   0.199s] (2/9) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturnvalue_path_new_ret502_py_expects
+        PASS [   0.202s] (3/9) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryreturnnone_path_new_ret501_py_expects
+        PASS [   0.205s] (4/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselseraise_path_new_ret506_py_expects
+        PASS [   0.209s] (5/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsecontinue_path_new_ret507_py_expects
+        PASS [   0.219s] (6/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+        FAIL [   0.221s] (7/9) ruff_linter rules::flake8_return::tests::preview_rules::rule_implicitreturn_path_new_ret503_py_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__preview__RET503_RET503.py.snap
+    Snapshot: preview__RET503_RET503.py
+    Source: crates/ruff_linter/src/rules/flake8_return/mod.rs:52
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+      405   405 │ 331 332 | 
+      406   406 │ 332 333 | 
+      407   407 │ 333 334 | # function return type annotation NoReturn
+      408   408 │ 
+      409       │-RET503.py:334:1: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            409 │+RET503.py:370:1: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+      410   410 │     |
+      411       │-333 |   # function return type annotation NoReturn
+      412       │-334 | / def foo(x: int) -> int:
+      413       │-335 | |     def bar() -> NoReturn:
+      414       │-336 | |         abort()
+      415       │-337 | |     if x == 5:
+      416       │-338 | |         return 5
+      417       │-339 | |     bar()
+      418       │-    | |_________^ RET503
+            411 │+368 |       abort()
+            412 │+369 |   
+            413 │+370 | / def foo(x: int) -> int:
+            414 │+371 | |     if x == 5:
+            415 │+372 | |         return 5
+            416 │+373 | |     bar_never_annotation()
+            417 │+    | |__________________________^ RET503
+      419   418 │     |
+      420   419 │     = help: Add explicit `return` statement
+      421   420 │ 
+      422   421 │ ℹ Unsafe fix
+      423       │-337 337 |     if x == 5:
+      424       │-338 338 |         return 5
+      425       │-339 339 |     bar()
+      426       │-    340 |+    return None
+      427       │-340 341 | 
+      428       │-341 342 | 
+      429       │-342 343 | def foo(string: str) -> str:
+            422 │+371 371 |     if x == 5:
+            423 │+372 372 |         return 5
+            424 │+373 373 |     bar_never_annotation()
+            425 │+    374 |+    return None
+            426 │+374 375 | 
+            427 │+375 376 | 
+            428 │+376 377 | def foo(string: str) -> str:
+      430   429 │ 
+      431       │-RET503.py:342:1: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            430 │+RET503.py:376:1: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+      432   431 │     |
+      433       │-342 | / def foo(string: str) -> str:
+      434       │-343 | |     def raises(value: str) -> NoReturn:
+      435       │-344 | |         raise RuntimeError("something went wrong")
+      436       │-345 | | 
+      437       │-346 | |     match string:
+      438       │-347 | |         case "a":
+      439       │-348 | |             return "first"
+      440       │-349 | |         case "b":
+      441       │-350 | |             return "second"
+      442       │-351 | |         case "c":
+      443       │-352 | |             return "third"
+      444       │-353 | |         case _:
+      445       │-354 | |             raises(string)
+      446       │-    | |__________________________^ RET503
+            432 │+376 | / def foo(string: str) -> str:
+            433 │+377 | | 
+            434 │+378 | |     match string:
+            435 │+379 | |         case "a":
+            436 │+380 | |             return "first"
+            437 │+381 | |         case "b":
+            438 │+382 | |             return "second"
+            439 │+383 | |         case "c":
+            440 │+384 | |             return "third"
+            441 │+385 | |         case _:
+            442 │+386 | |             bar_never_annotation()
+            443 │+    | |__________________________________^ RET503
+      447   444 │     |
+      448   445 │     = help: Add explicit `return` statement
+      449   446 │ 
+      450   447 │ ℹ Unsafe fix
+      451       │-352 352 |             return "third"
+      452       │-353 353 |         case _:
+      453       │-354 354 |             raises(string)
+      454       │-    355 |+    return None
+      455       │-355 356 | 
+      456       │-356 357 | 
+      457       │-357 358 | def foo() -> int:
+            448 │+384 384 |             return "third"
+            449 │+385 385 |         case _:
+            450 │+386 386 |             bar_never_annotation()
+            451 │+    387 |+    return None
+            452 │+387 388 | 
+            453 │+388 389 | 
+            454 │+389 390 | def foo() -> int:
+      458   455 │ 
+      459       │-RET503.py:357:1: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            456 │+RET503.py:389:1: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+      460   457 │     |
+      461       │-357 | / def foo() -> int:
+      462       │-358 | |     def baz() -> int:
+      463       │-359 | |         return 1
+      464       │-360 | | 
+      465       │-361 | | 
+      466       │-362 | |     def bar() -> NoReturn:
+      467       │-363 | |         a = 1 + 2
+      468       │-364 | |         raise AssertionError("Very bad")
+      469       │-365 | | 
+      470       │-366 | | 
+      471       │-367 | | 
+      472       │-368 | |     if baz() > 3:
+      473       │-369 | |         return 1
+      474       │-370 | |     bar()
+      475       │-    | |_________^ RET503
+            458 │+389 | / def foo() -> int:
+            459 │+390 | |     def baz() -> int:
+            460 │+391 | |         return 1
+            461 │+392 | | 
+            462 │+393 | |     if baz() > 3:
+            463 │+394 | |         return 1
+            464 │+395 | |     bar_never_annotation()
+            465 │+    | |__________________________^ RET503
+      476   466 │     |
+      477   467 │     = help: Add explicit `return` statement
+      478   468 │ 
+      479   469 │ ℹ Unsafe fix
+      480       │-368 368 |     if baz() > 3:
+      481       │-369 369 |         return 1
+      482       │-370 370 |     bar()
+      483       │-    371 |+    return None
+      484       │-371 372 | 
+      485       │-372 373 | 
+      486       │-373 374 | def f():
+            470 │+393 393 |     if baz() > 3:
+            471 │+394 394 |         return 1
+            472 │+395 395 |     bar_never_annotation()
+            473 │+    396 |+    return None
+            474 │+396 397 | 
+            475 │+397 398 | 
+            476 │+398 399 | def f():
+      487   477 │ 
+      488       │-RET503.py:373:1: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            478 │+RET503.py:398:1: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+      489   479 │     |
+      490       │-373 | / def f():
+      491       │-374 | |     if a:
+      492       │-375 | |         return b
+      493       │-376 | |     else:
+      494       │-377 | |         with c:
+      495       │-378 | |             d
+            480 │+398 | / def f():
+            481 │+399 | |     if a:
+            482 │+400 | |         return b
+            483 │+401 | |     else:
+            484 │+402 | |         with c:
+            485 │+403 | |             d
+      496   486 │     | |_____________^ RET503
+      497   487 │     |
+      498   488 │     = help: Add explicit `return` statement
+      499   489 │ 
+      500   490 │ ℹ Unsafe fix
+      501       │-376 376 |     else:
+      502       │-377 377 |         with c:
+      503       │-378 378 |             d
+      504       │-    379 |+    return None
+            491 │+401 401 |     else:
+            492 │+402 402 |         with c:
+            493 │+403 403 |             d
+            494 │+    404 |+    return None
+            495 │+404 405 | 
+            496 │+405 406 | 
+            497 │+406 407 | 
+            498 │+
+            499 │+RET503.py:413:1: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            500 │+    |
+            501 │+411 |   # the semantic model hasn't yet seen `bar`'s declaration.
+            502 │+412 |   # Supporting nested functions requires making this a deferred rule.
+            503 │+413 | / def foo(x: int) -> int:
+            504 │+414 | |     def bar() -> NoReturn:
+            505 │+415 | |         abort()
+            506 │+416 | |     if x == 5:
+            507 │+417 | |         return 5
+            508 │+418 | |     bar()
+            509 │+    | |_________^ RET503
+            510 │+    |
+            511 │+    = help: Add explicit `return` statement
+            512 │+
+            513 │+ℹ Unsafe fix
+            514 │+415 415 |         abort()
+            515 │+416 416 |     if x == 5:
+            516 │+417 417 |         return 5
+            517 │+418     |-    bar()
+            518 │+    418 |+    bar()
+            519 │+    419 |+    return None
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::flake8_return::tests::preview_rules::rule_implicitreturn_path_new_ret503_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::flake8_return::tests::preview_rules::rule_implicitreturn_path_new_ret503_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2218 filtered out; finished in 0.17s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__preview__RET503_RET503.py.snap.new
+    thread 'rules::flake8_return::tests::preview_rules::rule_implicitreturn_path_new_ret503_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'preview__RET503_RET503.py' failed in line 52
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 2 tests still running
+        PASS [   0.222s] (8/9) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryassign_path_new_ret504_py_expects
+        FAIL [   0.223s] (9/9) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__RET503_RET503.py.snap
+    Snapshot: RET503_RET503.py
+    Source: crates/ruff_linter/src/rules/flake8_return/mod.rs:34
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+      397   397 │ 331 332 | 
+      398   398 │ 332 333 | 
+      399   399 │ 333 334 | # function return type annotation NoReturn
+      400   400 │ 
+      401       │-RET503.py:339:5: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            401 │+RET503.py:373:5: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+      402   402 │     |
+      403       │-337 |     if x == 5:
+      404       │-338 |         return 5
+      405       │-339 |     bar()
+      406       │-    |     ^^^^^ RET503
+            403 │+371 |     if x == 5:
+            404 │+372 |         return 5
+            405 │+373 |     bar_never_annotation()
+            406 │+    |     ^^^^^^^^^^^^^^^^^^^^^^ RET503
+      407   407 │     |
+      408   408 │     = help: Add explicit `return` statement
+      409   409 │ 
+      410   410 │ ℹ Unsafe fix
+      411       │-337 337 |     if x == 5:
+      412       │-338 338 |         return 5
+      413       │-339 339 |     bar()
+      414       │-    340 |+    return None
+      415       │-340 341 | 
+      416       │-341 342 | 
+      417       │-342 343 | def foo(string: str) -> str:
+            411 │+371 371 |     if x == 5:
+            412 │+372 372 |         return 5
+            413 │+373 373 |     bar_never_annotation()
+            414 │+    374 |+    return None
+            415 │+374 375 | 
+            416 │+375 376 | 
+            417 │+376 377 | def foo(string: str) -> str:
+      418   418 │ 
+      419       │-RET503.py:354:13: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            419 │+RET503.py:386:13: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+      420   420 │     |
+      421       │-352 |             return "third"
+      422       │-353 |         case _:
+      423       │-354 |             raises(string)
+      424       │-    |             ^^^^^^^^^^^^^^ RET503
+            421 │+384 |             return "third"
+            422 │+385 |         case _:
+            423 │+386 |             bar_never_annotation()
+            424 │+    |             ^^^^^^^^^^^^^^^^^^^^^^ RET503
+      425   425 │     |
+      426   426 │     = help: Add explicit `return` statement
+      427   427 │ 
+      428   428 │ ℹ Unsafe fix
+      429       │-352 352 |             return "third"
+      430       │-353 353 |         case _:
+      431       │-354 354 |             raises(string)
+      432       │-    355 |+            return None
+      433       │-355 356 | 
+      434       │-356 357 | 
+      435       │-357 358 | def foo() -> int:
+            429 │+384 384 |             return "third"
+            430 │+385 385 |         case _:
+            431 │+386 386 |             bar_never_annotation()
+            432 │+    387 |+            return None
+            433 │+387 388 | 
+            434 │+388 389 | 
+            435 │+389 390 | def foo() -> int:
+      436   436 │ 
+      437       │-RET503.py:370:5: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            437 │+RET503.py:395:5: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+      438   438 │     |
+      439       │-368 |     if baz() > 3:
+      440       │-369 |         return 1
+      441       │-370 |     bar()
+      442       │-    |     ^^^^^ RET503
+            439 │+393 |     if baz() > 3:
+            440 │+394 |         return 1
+            441 │+395 |     bar_never_annotation()
+            442 │+    |     ^^^^^^^^^^^^^^^^^^^^^^ RET503
+      443   443 │     |
+      444   444 │     = help: Add explicit `return` statement
+      445   445 │ 
+      446   446 │ ℹ Unsafe fix
+      447       │-368 368 |     if baz() > 3:
+      448       │-369 369 |         return 1
+      449       │-370 370 |     bar()
+      450       │-    371 |+    return None
+      451       │-371 372 | 
+      452       │-372 373 | 
+      453       │-373 374 | def f():
+            447 │+393 393 |     if baz() > 3:
+            448 │+394 394 |         return 1
+            449 │+395 395 |     bar_never_annotation()
+            450 │+    396 |+    return None
+            451 │+396 397 | 
+            452 │+397 398 | 
+            453 │+398 399 | def f():
+      454   454 │ 
+      455       │-RET503.py:378:13: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            455 │+RET503.py:403:13: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+      456   456 │     |
+      457       │-376 |     else:
+      458       │-377 |         with c:
+      459       │-378 |             d
+            457 │+401 |     else:
+            458 │+402 |         with c:
+            459 │+403 |             d
+      460   460 │     |             ^ RET503
+      461   461 │     |
+      462   462 │     = help: Add explicit `return` statement
+      463   463 │ 
+      464   464 │ ℹ Unsafe fix
+      465       │-376 376 |     else:
+      466       │-377 377 |         with c:
+      467       │-378 378 |             d
+      468       │-    379 |+            return None
+            465 │+401 401 |     else:
+            466 │+402 402 |         with c:
+            467 │+403 403 |             d
+            468 │+    404 |+            return None
+            469 │+404 405 | 
+            470 │+405 406 | 
+            471 │+406 407 | 
+            472 │+
+            473 │+RET503.py:418:5: RET503 [*] Missing explicit `return` at the end of function able to return non-`None` value
+            474 │+    |
+            475 │+416 |     if x == 5:
+            476 │+417 |         return 5
+            477 │+418 |     bar()
+            478 │+    |     ^^^^^ RET503
+            479 │+    |
+            480 │+    = help: Add explicit `return` statement
+            481 │+
+            482 │+ℹ Unsafe fix
+            483 │+415 415 |         abort()
+            484 │+416 416 |     if x == 5:
+            485 │+417 417 |         return 5
+            486 │+418     |-    bar()
+            487 │+    418 |+    bar()
+            488 │+    419 |+    return None
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2218 filtered out; finished in 0.17s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__RET503_RET503.py.snap.new
+    thread 'rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'RET503_RET503.py' failed in line 34
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.228s] 9 tests run: 7 passed, 2 failed, 2210 skipped
+        FAIL [   0.221s] (7/9) ruff_linter rules::flake8_return::tests::preview_rules::rule_implicitreturn_path_new_ret503_py_expects
+        FAIL [   0.223s] (9/9) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects
+error: test run failed
+reward=0 graded=9 found=0 failed=0 parsed=9 framework=cargo exit_code=100

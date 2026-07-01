@@ -1,0 +1,37 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./cmd/operator-opamp-bridge/agent -count=1",
+  "test_files": [
+    "cmd/operator-opamp-bridge/agent/agent_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_getHealth/no_data",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_getHealth/base_case",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_getHealth/two_collectors",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_getHealth/with_pod_health",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_getHealth/with_pod_health,_nil_start_time",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_getHealth",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/no_data",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/base_case",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/base_case_http",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/failure",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/all_components_are_allowed",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/batch_not_allowed",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/processors_not_allowed",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/can_update_config_and_replicas",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/cannot_update_with_bad_config",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/update_with_new_collector",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage/can_delete_existing_collector",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::TestAgent_onMessage",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::Test_CanUpdateIdentity",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::Test_collectorKeyFromKey/base_case",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::Test_collectorKeyFromKey/unable_to_get_key",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::Test_collectorKeyFromKey/too_many_slashes",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::Test_collectorKeyFromKey",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::Test_collectorKey_String/can_make_a_key",
+    "github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent::Test_collectorKey_String"
+  ],
+  "PASS_TO_PASS": []
+}

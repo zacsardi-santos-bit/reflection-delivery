@@ -1,0 +1,372 @@
+patching file crates/parcel_filesystem/src/os_file_system/canonicalize.rs
+Hunk #1 succeeded at 148 (offset -4 lines).
+   Compiling proc-macro2 v1.0.85
+   Compiling unicode-ident v1.0.12
+   Compiling cfg-if v1.0.0
+   Compiling memchr v2.7.2
+   Compiling autocfg v1.3.0
+   Compiling once_cell v1.19.0
+   Compiling libc v0.2.155
+   Compiling serde v1.0.204
+   Compiling hashbrown v0.14.5
+   Compiling thiserror v1.0.63
+   Compiling anstyle v1.0.7
+   Compiling crossbeam-utils v0.8.20
+   Compiling smallvec v1.13.2
+   Compiling parking_lot_core v0.9.10
+   Compiling predicates-core v1.0.6
+   Compiling scopeguard v1.2.0
+   Compiling difflib v0.4.0
+   Compiling bitflags v2.6.0
+   Compiling termtree v0.4.1
+   Compiling lazy_static v1.4.0
+   Compiling ident_case v1.0.1
+   Compiling fnv v1.0.7
+   Compiling num-traits v0.2.19
+   Compiling lock_api v0.4.12
+   Compiling equivalent v1.0.1
+   Compiling strsim v0.11.1
+   Compiling aho-corasick v1.1.3
+   Compiling either v1.12.0
+   Compiling regex-syntax v0.8.3
+   Compiling log v0.4.21
+   Compiling predicates v3.1.0
+   Compiling predicates-tree v1.0.9
+   Compiling anyhow v1.0.86
+   Compiling serde_json v1.0.122
+   Compiling fragile v2.0.0
+   Compiling downcast v0.11.0
+   Compiling same-file v1.0.6
+   Compiling version_check v0.9.4
+   Compiling ryu v1.0.18
+   Compiling itoa v1.0.11
+   Compiling bstr v1.9.1
+   Compiling walkdir v2.5.0
+   Compiling xxhash-rust v0.8.10
+   Compiling tinyvec_macros v0.1.1
+   Compiling rustix v0.38.34
+   Compiling ucd-trie v0.1.6
+   Compiling tracing-core v0.1.32
+   Compiling tinyvec v1.6.0
+   Compiling ahash v0.8.11
+   Compiling zerocopy v0.7.34
+   Compiling quote v1.0.36
+   Compiling crossbeam-epoch v0.9.18
+   Compiling regex-automata v0.4.6
+   Compiling getrandom v0.2.15
+   Compiling linux-raw-sys v0.4.14
+   Compiling doc-comment v0.3.3
+   Compiling iana-time-zone v0.1.60
+   Compiling minimal-lexical v0.2.1
+   Compiling syn v2.0.66
+   Compiling crossbeam-deque v0.8.5
+   Compiling dashmap v5.5.3
+   Compiling unicode-width v0.1.12
+   Compiling chrono v0.4.38
+   Compiling ordered-float v2.10.1
+   Compiling itertools v0.13.0
+   Compiling itertools v0.10.5
+   Compiling nom v7.1.3
+   Compiling indexmap v1.9.3
+   Compiling unicode-normalization v0.1.23
+   Compiling fastrand v2.1.0
+   Compiling fixedbitset v0.4.2
+   Compiling percent-encoding v2.3.1
+   Compiling unicode-bidi v0.3.15
+   Compiling winnow v0.6.11
+   Compiling bytecount v0.6.8
+   Compiling rayon-core v1.12.1
+   Compiling form_urlencoded v1.2.1
+   Compiling half v2.4.1
+   Compiling ciborium-io v0.2.2
+   Compiling dyn-hash v0.2.0
+   Compiling pin-project-lite v0.2.14
+   Compiling idna v0.5.0
+   Compiling clap_lex v0.7.2
+   Compiling plotters-backend v0.3.6
+   Compiling hashbrown v0.12.3
+   Compiling overload v0.1.1
+   Compiling parking_lot v0.12.3
+   Compiling clap_builder v4.5.11
+   Compiling nu-ansi-term v0.46.0
+   Compiling ciborium-ll v0.2.2
+   Compiling plotters-svg v0.3.6
+   Compiling tracing-log v0.2.0
+   Compiling globset v0.4.14
+   Compiling url v2.5.2
+   Compiling sharded-slab v0.1.7
+   Compiling thread_local v1.1.8
+   Compiling glob-match v0.2.1
+   Compiling json_comments v0.2.1 (/workspace/repo/crates/json-comments-rs)
+   Compiling bitflags v1.3.2
+   Compiling tempfile v3.10.1
+   Compiling cast v0.3.0
+   Compiling stable_deref_trait v1.2.0
+   Compiling rayon v1.10.0
+   Compiling plotters v0.3.6
+   Compiling ignore v0.4.22
+   Compiling regex v1.10.5
+   Compiling elsa v1.10.0
+   Compiling criterion-plot v0.5.0
+   Compiling is-terminal v0.4.12
+   Compiling anes v0.1.6
+   Compiling tracing-subscriber v0.3.18
+   Compiling oorandom v11.1.4
+   Compiling typed-arena v2.0.2
+   Compiling darling_core v0.20.9
+   Compiling globwalk v0.9.1
+   Compiling clap v4.5.11
+   Compiling serde_derive v1.0.204
+   Compiling thiserror-impl v1.0.63
+   Compiling mockall_derive v0.12.1
+   Compiling miette-derive v7.2.0
+   Compiling serde_repr v0.1.19
+   Compiling tracing-attributes v0.1.27
+   Compiling assert_fs v1.1.1
+   Compiling darling_macro v0.20.9
+   Compiling tracing v0.1.40
+   Compiling pest v2.7.10
+   Compiling miette v7.2.0
+   Compiling darling v0.20.9
+   Compiling derive_builder_core v0.20.0
+   Compiling nodejs-semver v4.0.0
+   Compiling mockall v0.12.1
+   Compiling parcel_filesystem v0.1.0 (/workspace/repo/crates/parcel_filesystem)
+   Compiling pest_meta v2.7.10
+   Compiling derive_builder_macro v0.20.0
+   Compiling derive_builder v0.20.0
+   Compiling pest_generator v2.7.10
+   Compiling pest_derive v2.7.10
+   Compiling indexmap v2.2.6
+   Compiling serde-value v0.7.0
+   Compiling serde_json5 v0.1.0
+   Compiling ciborium v0.2.2
+   Compiling petgraph v0.6.5
+   Compiling tinytemplate v1.2.1
+   Compiling browserslist-rs v0.16.0
+   Compiling criterion v0.5.1
+   Compiling parcel_core v0.1.0 (/workspace/repo/crates/parcel_core)
+   Compiling parcel-resolver-old v0.1.0 (/workspace/repo/packages/utils/node-resolver-rs-old)
+   Compiling parcel-resolver v0.1.0 (/workspace/repo/packages/utils/node-resolver-rs)
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> packages/utils/node-resolver-rs-old/src/lib.rs:268:5
+    |
+268 |     &self,
+    |     ^^^^^ the lifetime is elided here
+...
+271 |   ) -> Result<Option<&PackageJson>, ResolverError> {
+    |                      ^^^^^^^^^^^^
+    |                      ||
+    |                      |the same lifetime is hidden here
+    |                      the same lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+271 |   ) -> Result<Option<&PackageJson<'_>>, ResolverError> {
+    |                                  ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> packages/utils/node-resolver-rs-old/src/lib.rs:434:19
+    |
+434 |   fn root_package(&self) -> Result<&Option<&PackageJson>, ResolverError> {
+    |                   ^^^^^            ^^^^^^^^^^^^^^^^^^^^^
+    |                   |                |       ||
+    |                   |                |       |the same lifetime is hidden here
+    |                   |                |       the same lifetime is elided here
+    |                   |                the same lifetime is elided here
+    |                   the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+434 |   fn root_package(&self) -> Result<&Option<&PackageJson<'_>>, ResolverError> {
+    |                                                        ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+    --> packages/utils/node-resolver-rs-old/src/lib.rs:1087:15
+     |
+1087 |   fn tsconfig(&self) -> Result<&Option<&TsConfig>, ResolverError> {
+     |               ^^^^^            ^^^^^^^^^^^^^^^^^^
+     |               |                |       ||
+     |               |                |       |the same lifetime is hidden here
+     |               |                |       the same lifetime is elided here
+     |               |                the same lifetime is elided here
+     |               the lifetime is elided here
+     |
+     = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+     |
+1087 |   fn tsconfig(&self) -> Result<&Option<&TsConfig<'_>>, ResolverError> {
+     |                                                 ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> packages/utils/node-resolver-rs/src/package_json.rs:175:18
+    |
+175 |   pub fn entries(&self, fields: Fields) -> EntryIter {
+    |                  ^^^^^                     ^^^^^^^^^ the same lifetime is hidden here
+    |                  |
+    |                  the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+175 |   pub fn entries(&self, fields: Fields) -> EntryIter<'_> {
+    |                                                     ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> packages/utils/node-resolver-rs-old/src/package_json.rs:182:18
+    |
+182 |   pub fn entries(&self, fields: Fields) -> EntryIter {
+    |                  ^^^^^                     ^^^^^^^^^ the same lifetime is hidden here
+    |                  |
+    |                  the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+182 |   pub fn entries(&self, fields: Fields) -> EntryIter<'_> {
+    |                                                     ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> packages/utils/node-resolver-rs-old/src/package_json.rs:436:5
+    |
+436 |     &self,
+    |     ^^^^^ the lifetime is elided here
+...
+439 |   ) -> Option<Cow<'_, AliasValue>> {
+    |                   ^^  ^^^^^^^^^^ the same lifetime is hidden here
+    |                   |
+    |                   the same lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+439 |   ) -> Option<Cow<'_, AliasValue<'_>>> {
+    |                                 ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> packages/utils/node-resolver-rs-old/src/package_json.rs:469:5
+    |
+469 |     &self,
+    |     ^^^^^ the lifetime is elided here
+...
+472 |   ) -> Option<Cow<'_, AliasValue>> {
+    |                   ^^  ^^^^^^^^^^ the same lifetime is hidden here
+    |                   |
+    |                   the same lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+472 |   ) -> Option<Cow<'_, AliasValue<'_>>> {
+    |                                 ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> packages/utils/node-resolver-rs-old/src/package_json.rs:537:5
+    |
+537 |     &self,
+    |     ^^^^^ the lifetime is elided here
+...
+540 |   ) -> Option<Cow<'_, AliasValue>> {
+    |                   ^^  ^^^^^^^^^^ the same lifetime is hidden here
+    |                   |
+    |                   the same lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+540 |   ) -> Option<Cow<'_, AliasValue<'_>>> {
+    |                                 ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> packages/utils/node-resolver-rs-old/src/specifier.rs:247:33
+    |
+247 | fn parse_package(specifier: Cow<'_, str>) -> Result<Specifier, SpecifierError> {
+    |                                 ^^                  ^^^^^^^^^ the same lifetime is hidden here
+    |                                 |
+    |                                 the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'_`
+    |
+247 | fn parse_package(specifier: Cow<'_, str>) -> Result<Specifier<'_>, SpecifierError> {
+    |                                                              ++++
+
+warning: `parcel-resolver` (lib) generated 1 warning (run `cargo fix --lib -p parcel-resolver` to apply 1 suggestion)
+warning: `parcel-resolver-old` (lib) generated 8 warnings (run `cargo fix --lib -p parcel-resolver-old` to apply 8 suggestions)
+warning: `parcel-resolver` (lib test) generated 1 warning (1 duplicate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 28.59s
+────────────
+ Nextest run ID a24bfda0-eda1-4909-b3f7-058a8635047f with nextest profile: default
+    Starting 65 tests across 2 binaries
+        PASS [   0.101s] ( 1/65) parcel-resolver package_json::tests::parsing
+        PASS [   0.105s] ( 2/65) parcel-resolver package_json::tests::side_effects_glob
+        PASS [   0.106s] ( 3/65) parcel-resolver package_json::tests::exports_array
+        PASS [   0.110s] ( 4/65) parcel-resolver package_json::tests::exports_dot_conditions
+        PASS [   0.110s] ( 5/65) parcel-resolver package_json::tests::side_effects_bool
+        PASS [   0.109s] ( 6/65) parcel-resolver package_json::tests::exports_null
+        PASS [   0.111s] ( 7/65) parcel-resolver package_json::tests::custom_conditions
+        PASS [   0.109s] ( 8/65) parcel-resolver package_json::tests::exports_invalid
+        PASS [   0.113s] ( 9/65) parcel-resolver package_json::tests::side_effects_array
+        PASS [   0.111s] (10/65) parcel-resolver package_json::tests::exports_dot
+        PASS [   0.115s] (11/65) parcel-resolver package_json::tests::nested_conditions
+        PASS [   0.116s] (12/65) parcel-resolver package_json::tests::exports_map_conditions
+        PASS [   0.116s] (13/65) parcel-resolver package_json::tests::side_effects_none
+        PASS [   0.116s] (14/65) parcel-resolver package_json::tests::aliases
+        PASS [   0.117s] (15/65) parcel-resolver package_json::tests::import_conditions
+        PASS [   0.120s] (16/65) parcel-resolver package_json::tests::exports_string
+        PASS [   0.119s] (17/65) parcel-resolver package_json::tests::exports_map_string
+        PASS [   0.123s] (18/65) parcel-resolver package_json::tests::imports
+        PASS [   0.110s] (19/65) parcel-resolver package_json::tests::subpath_nested_conditions
+        PASS [   0.111s] (20/65) parcel-resolver package_json::tests::test_replace_captures
+        PASS [   0.118s] (21/65) parcel-resolver package_json::tests::subpath_star
+        PASS [   0.128s] (22/65) parcel-resolver tests::test_self_reference
+        PASS [   0.134s] (23/65) parcel-resolver tests::test_imports
+        PASS [   0.138s] (24/65) parcel-resolver tests::test_include_node_modules
+        PASS [   0.142s] (25/65) parcel-resolver tests::test_builtins
+        PASS [   0.150s] (26/65) parcel-resolver tests::test_absolute
+        PASS [   0.154s] (27/65) parcel-resolver tests::browser_field
+        PASS [   0.167s] (28/65) parcel-resolver tests::test_module_suffixes
+        PASS [   0.177s] (29/65) parcel-resolver tests::local_aliases
+        PASS [   0.179s] (30/65) parcel-resolver tests::test_ts_extensions
+        PASS [   0.202s] (31/65) parcel-resolver tests::relative
+        PASS [   0.201s] (32/65) parcel-resolver tests::test_exports
+        PASS [   0.232s] (33/65) parcel-resolver tests::global_aliases
+        PASS [   0.120s] (34/65) parcel-resolver tsconfig::tests::test_base_url
+        PASS [   0.230s] (35/65) parcel-resolver tests::test_side_effects
+        PASS [   0.235s] (36/65) parcel-resolver tests::test_tsconfig
+        PASS [   0.257s] (37/65) parcel-resolver tests::node_modules
+        PASS [   0.158s] (38/65) parcel-resolver tests::test_tsconfig_parsing
+        PASS [   0.107s] (39/65) parcel_filesystem in_memory_file_system::test::test_changing_the_cwd_will_correctly_resolve_files
+        PASS [   0.122s] (40/65) parcel-resolver tsconfig::tests::test_paths
+        PASS [   0.128s] (41/65) parcel-resolver tsconfig::tests::test_deserialize
+        PASS [   0.120s] (42/65) parcel-resolver tsconfig::tests::test_paths_and_base_url
+        PASS [   0.125s] (43/65) parcel-resolver url_to_path::test::test
+        PASS [   0.166s] (44/65) parcel-resolver tests::test_urls
+        PASS [   0.103s] (45/65) parcel_filesystem in_memory_file_system::test::test_is_dir
+        PASS [   0.127s] (46/65) parcel_filesystem in_memory_file_system::test::test_canonicalize_noop
+        PASS [   0.112s] (47/65) parcel_filesystem in_memory_file_system::test::test_is_file
+        PASS [   0.098s] (48/65) parcel_filesystem in_memory_file_system::test::test_read_file_not_found
+        PASS [   0.100s] (49/65) parcel_filesystem in_memory_file_system::test::test_remove_relative_dots
+        PASS [   0.122s] (50/65) parcel_filesystem in_memory_file_system::test::test_read_file
+        PASS [   0.108s] (51/65) parcel_filesystem in_memory_file_system::test::test_with_cwd
+        PASS [   0.110s] (52/65) parcel_filesystem in_memory_file_system::test::test_remove_relative_parent_dots
+        PASS [   0.103s] (53/65) parcel_filesystem os_file_system::canonicalize::test::test_file_system_real_path_cache_default
+        PASS [   0.092s] (54/65) parcel_filesystem search::tests::returns_first_closest_ancestor_entry_path
+        PASS [   0.091s] (55/65) parcel_filesystem search::tests::returns_first_closest_ancestor_file_path
+        PASS [   0.098s] (56/65) parcel_filesystem search::tests::returns_first_closest_ancestor_directory_path
+        PASS [   0.094s] (57/65) parcel_filesystem search::tests::returns_none_when_ancestor_directory_is_outside_root
+        PASS [   0.096s] (58/65) parcel_filesystem search::tests::returns_none_when_ancestor_directory_is_a_file
+        PASS [   0.096s] (59/65) parcel_filesystem search::tests::returns_none_when_ancestor_file_is_a_directory
+        PASS [   0.092s] (60/65) parcel_filesystem search::tests::returns_none_when_ancestor_file_is_outside_root
+        PASS [   0.125s] (61/65) parcel_filesystem os_file_system::canonicalize::test::test_canonicalize
+        PASS [   0.093s] (62/65) parcel_filesystem search::tests::returns_none_when_there_are_are_no_matching_ancestor_files
+        PASS [   0.091s] (63/65) parcel_filesystem search::tests::returns_none_when_there_are_no_ancestor_files
+        PASS [   0.094s] (64/65) parcel_filesystem search::tests::returns_none_when_there_are_no_ancestor_directories
+        PASS [   0.087s] (65/65) parcel_filesystem search::tests::returns_none_when_there_are_no_matching_ancestor_directories
+────────────
+     Summary [   0.491s] 65 tests run: 65 passed, 0 skipped
+reward=1 graded=65 found=13 failed=0 parsed=65 framework=cargo exit_code=0

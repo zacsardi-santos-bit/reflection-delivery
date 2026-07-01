@@ -1,0 +1,34 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/v2 && go test -json ./pkg/graphqljsonschema -count=1",
+  "test_files": [
+    "v2/pkg/graphqljsonschema/jsonschema_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/input_object_array",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/nested_input_object_both_as_required_and_not_required",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/nested_input_object_both_as_required_and_not_required_-_reverse_order",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/optional_nested_input_object_used_twice",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/required_nested_input_object_used_twice",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/nested_object",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/recursive_object",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/recursive_object_with_multiple_branches",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/complex_recursive_schema",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/object",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/string",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/string_(required)",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/id",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/array",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/required_array",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/required_array_element",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/nested_object_with_override",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/one_level_deep_sub_path",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/multi_level_deep_sub_path",
+    "github.com/wundergraph/graphql-go-tools/v2/pkg/graphqljsonschema::TestJsonSchema/not_defined_scalar"
+  ]
+}

@@ -1,0 +1,142 @@
+patching file crates/polars-sql/tests/statements.rs
+patching file py-polars/tests/unit/sql/test_sql.py
+warning: variant `Fetched` is never constructed
+  --> crates/polars-io/src/parquet/mmap.rs:27:5
+   |
+24 | pub enum ColumnStore<'a> {
+   |          ----------- variant in this enum
+...
+27 |     Fetched(PlHashMap<u64, Bytes>),
+   |     ^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: fields `batches_per_iter`, `inner`, and `current_batch` are never read
+   --> crates/polars-io/src/parquet/read_impl.rs:686:5
+    |
+685 | pub struct BatchedParquetIter {
+    |            ------------------ fields in this struct
+686 |     batches_per_iter: usize,
+    |     ^^^^^^^^^^^^^^^^
+687 |     inner: BatchedParquetReader,
+    |     ^^^^^
+688 |     current_batch: std::vec::IntoIter<DataFrame>,
+    |     ^^^^^^^^^^^^^
+
+warning: method `next_` is never used
+   --> crates/polars-io/src/parquet/read_impl.rs:694:25
+    |
+692 | impl BatchedParquetIter {
+    | ----------------------- method in this implementation
+693 |     // todo! implement stream
+694 |     pub(crate) async fn next_(&mut self) -> Option<PolarsResult<DataFrame>> {
+    |                         ^^^^^
+
+warning: `polars-io` (lib) generated 3 warnings
+warning: unused variable: `range`
+   --> crates/polars-pipe/src/executors/sources/parquet.rs:245:17
+    |
+245 |             let range = 0..self.prefetch_size - self.batched_readers.len();
+    |                 ^^^^^ help: if this is intentional, prefix it with an underscore: `_range`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: `polars-pipe` (lib) generated 1 warning (run `cargo fix --lib -p polars-pipe` to apply 1 suggestion)
+   Compiling polars-sql v0.36.2 (/workspace/repo/crates/polars-sql)
+    Finished test [unoptimized + debuginfo] target(s) in 21.90s
+────────────
+ Nextest run ID 18466c75-50e5-4d62-91c7-e78855678114 with nextest profile: default
+    Starting 16 tests across 1 binary
+        PASS [   0.229s] ( 1/16) polars-sql::statements test_drop_table
+        PASS [   0.231s] ( 2/16) polars-sql::statements test_compound_invalid_3
+        PASS [   0.247s] ( 3/16) polars-sql::statements trailing_commas_allowed
+        PASS [   0.340s] ( 4/16) polars-sql::statements test_compound_invalid_1
+        FAIL [   0.345s] ( 5/16) polars-sql::statements test_compound_join_basic
+  stdout ───
+
+    running 1 test
+    test test_compound_join_basic ... FAILED
+
+    failures:
+
+    failures:
+        test_compound_join_basic
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 15 filtered out; finished in 0.06s
+
+  stderr ───
+    thread 'test_compound_join_basic' panicked at crates/polars-sql/tests/statements.rs:230:35:
+    called `Result::unwrap()` on an `Err` value: InvalidOperation(ErrString("SQL interface (currently) only supports basic equi-join constraints; found 'And' op in\nOn(BinaryOp { left: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"a\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"a\", quote_style: None }]) }, op: And, right: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"b\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"b\", quote_style: None }]) } })"))
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 11 tests still running
+        PASS [   0.349s] ( 6/16) polars-sql::statements tbl_alias
+        FAIL [   0.352s] ( 7/16) polars-sql::statements test_compound_join_three_tables
+  stdout ───
+
+    running 1 test
+    test test_compound_join_three_tables ... FAILED
+
+    failures:
+
+    failures:
+        test_compound_join_three_tables
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 15 filtered out; finished in 0.06s
+
+  stderr ───
+    thread 'test_compound_join_three_tables' panicked at crates/polars-sql/tests/statements.rs:293:35:
+    called `Result::unwrap()` on an `Err` value: InvalidOperation(ErrString("SQL interface (currently) only supports basic equi-join constraints; found 'And' op in\nOn(BinaryOp { left: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"a\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"a\", quote_style: None }]) }, op: And, right: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"b\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"b\", quote_style: None }]) } })"))
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.355s] ( 8/16) polars-sql::statements test_compound_invalid_2
+        FAIL [   0.373s] ( 9/16) polars-sql::statements test_compound_join_nested_and
+  stdout ───
+
+    running 1 test
+    test test_compound_join_nested_and ... FAILED
+
+    failures:
+
+    failures:
+        test_compound_join_nested_and
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 15 filtered out; finished in 0.05s
+
+  stderr ───
+    thread 'test_compound_join_nested_and' panicked at crates/polars-sql/tests/statements.rs:338:35:
+    called `Result::unwrap()` on an `Err` value: InvalidOperation(ErrString("SQL interface (currently) only supports basic equi-join constraints; found 'And' op in\nOn(BinaryOp { left: BinaryOp { left: BinaryOp { left: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"a\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"a\", quote_style: None }]) }, op: And, right: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"b\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"b\", quote_style: None }]) } }, op: And, right: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"c\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"c\", quote_style: None }]) } }, op: And, right: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"d\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"d\", quote_style: None }]) } })"))
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.373s] (10/16) polars-sql::statements test_compound_join_different_column_names
+  stdout ───
+
+    running 1 test
+    test test_compound_join_different_column_names ... FAILED
+
+    failures:
+
+    failures:
+        test_compound_join_different_column_names
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 15 filtered out; finished in 0.06s
+
+  stderr ───
+    thread 'test_compound_join_different_column_names' panicked at crates/polars-sql/tests/statements.rs:266:35:
+    called `Result::unwrap()` on an `Err` value: InvalidOperation(ErrString("SQL interface (currently) only supports basic equi-join constraints; found 'And' op in\nOn(BinaryOp { left: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"a\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"b\", quote_style: None }]) }, op: And, right: BinaryOp { left: CompoundIdentifier([Ident { value: \"df1\", quote_style: None }, Ident { value: \"b\", quote_style: None }]), op: Eq, right: CompoundIdentifier([Ident { value: \"df2\", quote_style: None }, Ident { value: \"a\", quote_style: None }]) } })"))
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.382s] (11/16) polars-sql::statements select_exclude_single
+        PASS [   0.402s] (12/16) polars-sql::statements select_exclude_multi
+        PASS [   0.443s] (13/16) polars-sql::statements test_union_all
+        PASS [   0.477s] (14/16) polars-sql::statements select_qualified_column
+        PASS [   0.476s] (15/16) polars-sql::statements select_qualified_wildcard
+        PASS [   0.479s] (16/16) polars-sql::statements iss_9560_join_as
+────────────
+     Summary [   0.485s] 16 tests run: 12 passed, 4 failed, 0 skipped
+        FAIL [   0.345s] ( 5/16) polars-sql::statements test_compound_join_basic
+        FAIL [   0.352s] ( 7/16) polars-sql::statements test_compound_join_three_tables
+        FAIL [   0.373s] ( 9/16) polars-sql::statements test_compound_join_nested_and
+        FAIL [   0.373s] (10/16) polars-sql::statements test_compound_join_different_column_names
+error: test run failed
+reward=0 (grader error: Extra data: line 30 column 1 (char 1304); fell back to exit_code=100)

@@ -1,0 +1,145 @@
+patching file openmls/src/group/tests/test_commit_validation.rs
+warning: patch for `tls_codec` uses the features mechanism. default-features and features will not take effect because the patch dependency does not support this mechanism
+warning: patch for `tls_codec` uses the features mechanism. default-features and features will not take effect because the patch dependency does not support this mechanism
+warning: unexpected `cfg` condition value: `evercrypt`
+  --> src/test_utils/mod.rs:83:5
+   |
+83 |     feature = "evercrypt",
+   |     ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `content-debug`, `crypto-debug`, `crypto-subtle`, `default`, `itertools`, `openmls_rust_crypto`, `rand`, `rstest`, `rstest_reuse`, and `test-utils`
+   = help: consider adding `evercrypt` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition value: `evercrypt`
+  --> src/test_utils/mod.rs:96:9
+   |
+96 |     not(feature = "evercrypt")
+   |         ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `content-debug`, `crypto-debug`, `crypto-subtle`, `default`, `itertools`, `openmls_rust_crypto`, `rand`, `rstest`, `rstest_reuse`, and `test-utils`
+   = help: consider adding `evercrypt` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `evercrypt`
+   --> src/test_utils/mod.rs:113:5
+    |
+113 |     feature = "evercrypt",
+    |     ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `content-debug`, `crypto-debug`, `crypto-subtle`, `default`, `itertools`, `openmls_rust_crypto`, `rand`, `rstest`, `rstest_reuse`, and `test-utils`
+    = help: consider adding `evercrypt` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `evercrypt`
+   --> src/test_utils/mod.rs:152:9
+    |
+152 |     not(feature = "evercrypt"),
+    |         ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `content-debug`, `crypto-debug`, `crypto-subtle`, `default`, `itertools`, `openmls_rust_crypto`, `rand`, `rstest`, `rstest_reuse`, and `test-utils`
+    = help: consider adding `evercrypt` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `evercrypt`
+   --> src/test_utils/mod.rs:171:5
+    |
+171 |     feature = "evercrypt",
+    |     ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `content-debug`, `crypto-debug`, `crypto-subtle`, `default`, `itertools`, `openmls_rust_crypto`, `rand`, `rstest`, `rstest_reuse`, and `test-utils`
+    = help: consider adding `evercrypt` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unused import: `sender::*`
+  --> src/framing/mod.rs:28:16
+   |
+28 | pub(crate) use sender::*;
+   |                ^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: elided lifetime has a name
+   --> src/group/core_group/mod.rs:683:47
+    |
+680 |     pub(crate) fn message_secrets_and_leaves_mut<'secret, 'group: 'secret>(
+    |                                                           ------ lifetime `'group` declared here
+...
+683 |     ) -> Result<(&'secret mut MessageSecrets, &[Member]), MessageDecryptionError> {
+    |                                               ^ this elided lifetime gets resolved as `'group`
+    |
+    = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: unused import: `mls_group::processing::*`
+  --> src/group/mod.rs:29:9
+   |
+29 | pub use mls_group::processing::*;
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `proposals::*`
+  --> src/group/mod.rs:41:9
+   |
+41 | pub use proposals::*;
+   |         ^^^^^^^^^^^^
+
+warning: ambiguous glob re-exports
+  --> src/prelude.rs:5:9
+   |
+5  | pub use crate::group::{core_group::Member, errors::*, ser::*, *};
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the name `errors` in the type namespace is first re-exported here
+...
+26 | pub use crate::key_packages::{errors::*, *};
+   |                                          - but the name `errors` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: unused import: `crate::key_store::*`
+  --> src/prelude.rs:29:9
+   |
+29 | pub use crate::key_store::*;
+   |         ^^^^^^^^^^^^^^^^^^^
+
+warning: `openmls` (lib) generated 11 warnings (run `cargo fix --lib -p openmls` to apply 4 suggestions)
+   Compiling openmls v0.4.1 (/workspace/repo/openmls)
+warning: unexpected `cfg` condition value: `evercrypt`
+  --> tests/book_code.rs:25:7
+   |
+25 | #[cfg(feature = "evercrypt")]
+   |       ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `content-debug`, `crypto-debug`, `crypto-subtle`, `default`, `itertools`, `openmls_rust_crypto`, `rand`, `rstest`, `rstest_reuse`, and `test-utils`
+   = help: consider adding `evercrypt` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: `openmls` (test "book_code") generated 1 warning
+warning: unused import: `crate::group::mls_group::ser::SerializedMlsGroup`
+  --> src/group/tests/test_commit_validation.rs:12:5
+   |
+12 | use crate::group::mls_group::ser::SerializedMlsGroup;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0624]: method `framing_parameters` is private
+   --> src/group/tests/test_commit_validation.rs:362:45
+    |
+362 |             .framing_parameters(alice_group.framing_parameters())
+    |                                             ^^^^^^^^^^^^^^^^^^ private method
+    |
+   ::: src/group/mls_group/mod.rs:361:5
+    |
+361 |     fn framing_parameters(&self) -> FramingParameters {
+    |     ------------------------------------------------- private method defined here
+
+error[E0616]: field `proposal_store` of struct `mls_group::MlsGroup` is private
+   --> src/group/tests/test_commit_validation.rs:364:42
+    |
+364 |             .proposal_store(&alice_group.proposal_store)
+    |                                          ^^^^^^^^^^^^^^ private field
+
+Some errors have detailed explanations: E0616, E0624.
+For more information about an error, try `rustc --explain E0616`.
+warning: `openmls` (lib test) generated 12 warnings (11 duplicates)
+error: could not compile `openmls` (lib test) due to 2 previous errors; 12 warnings emitted
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics` exited with code 101
+reward=0 graded=3 found=0 failed=0 parsed=0 framework=cargo exit_code=101

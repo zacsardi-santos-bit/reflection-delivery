@@ -1,0 +1,91 @@
+patching file crates/biome_js_analyze/tests/specs/nursery/noDestructuredProps/invalid.tsx
+patching file crates/biome_js_analyze/tests/specs/nursery/noDestructuredProps/invalid.tsx.snap
+patching file crates/biome_js_analyze/tests/specs/nursery/noDestructuredProps/valid.tsx
+patching file crates/biome_js_analyze/tests/specs/nursery/noDestructuredProps/valid.tsx.snap
+     Removed 861 files, 1.5GiB total
+   Compiling biome_diagnostics_categories v0.5.7 (/workspace/repo/crates/biome_diagnostics_categories)
+   Compiling biome_diagnostics v0.5.7 (/workspace/repo/crates/biome_diagnostics)
+   Compiling biome_parser v0.5.7 (/workspace/repo/crates/biome_parser)
+   Compiling biome_json_parser v0.5.7 (/workspace/repo/crates/biome_json_parser)
+   Compiling biome_suppression v0.5.7 (/workspace/repo/crates/biome_suppression)
+   Compiling biome_fs v0.5.7 (/workspace/repo/crates/biome_fs)
+   Compiling biome_deserialize v0.6.0 (/workspace/repo/crates/biome_deserialize)
+   Compiling biome_grit_parser v0.1.0 (/workspace/repo/crates/biome_grit_parser)
+   Compiling biome_css_parser v0.5.7 (/workspace/repo/crates/biome_css_parser)
+   Compiling biome_html_parser v0.0.1 (/workspace/repo/crates/biome_html_parser)
+   Compiling biome_graphql_parser v0.1.0 (/workspace/repo/crates/biome_graphql_parser)
+   Compiling biome_aria_metadata v0.5.7 (/workspace/repo/crates/biome_aria_metadata)
+   Compiling biome_analyze v0.5.7 (/workspace/repo/crates/biome_analyze)
+   Compiling biome_formatter v0.5.7 (/workspace/repo/crates/biome_formatter)
+   Compiling biome_json_value v0.1.0 (/workspace/repo/crates/biome_json_value)
+   Compiling biome_glob v0.1.0 (/workspace/repo/crates/biome_glob)
+   Compiling biome_package v0.5.7 (/workspace/repo/crates/biome_package)
+   Compiling biome_project_layout v0.0.1 (/workspace/repo/crates/biome_project_layout)
+   Compiling biome_html_formatter v0.0.0 (/workspace/repo/crates/biome_html_formatter)
+   Compiling biome_json_formatter v0.5.7 (/workspace/repo/crates/biome_json_formatter)
+   Compiling biome_css_formatter v0.5.7 (/workspace/repo/crates/biome_css_formatter)
+   Compiling biome_graphql_formatter v0.1.0 (/workspace/repo/crates/biome_graphql_formatter)
+   Compiling biome_grit_formatter v0.0.0 (/workspace/repo/crates/biome_grit_formatter)
+   Compiling biome_css_analyze v0.5.7 (/workspace/repo/crates/biome_css_analyze)
+   Compiling biome_graphql_analyze v0.0.1 (/workspace/repo/crates/biome_graphql_analyze)
+   Compiling biome_json_analyze v0.5.7 (/workspace/repo/crates/biome_json_analyze)
+   Compiling biome_aria v0.5.7 (/workspace/repo/crates/biome_aria)
+   Compiling biome_js_syntax v0.5.7 (/workspace/repo/crates/biome_js_syntax)
+   Compiling biome_js_factory v0.5.7 (/workspace/repo/crates/biome_js_factory)
+   Compiling biome_dependency_graph v0.0.1 (/workspace/repo/crates/biome_dependency_graph)
+   Compiling biome_js_semantic v0.5.7 (/workspace/repo/crates/biome_js_semantic)
+   Compiling biome_js_parser v0.5.7 (/workspace/repo/crates/biome_js_parser)
+   Compiling biome_js_formatter v0.5.7 (/workspace/repo/crates/biome_js_formatter)
+   Compiling biome_js_analyze v0.5.7 (/workspace/repo/crates/biome_js_analyze)
+   Compiling biome_grit_patterns v0.0.1 (/workspace/repo/crates/biome_grit_patterns)
+   Compiling biome_plugin_loader v0.0.1 (/workspace/repo/crates/biome_plugin_loader)
+   Compiling biome_configuration v0.0.1 (/workspace/repo/crates/biome_configuration)
+   Compiling biome_service v0.0.0 (/workspace/repo/crates/biome_service)
+   Compiling biome_test_utils v0.0.0 (/workspace/repo/crates/biome_test_utils)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 01s
+────────────
+ Nextest run ID ada5f241-ba53-4ce4-8635-53e53c3bf594 with nextest profile: default
+    Starting 2 tests across 1 binary (1244 tests skipped)
+        FAIL [   0.098s] (1/2) biome_js_analyze::spec_tests specs::nursery::no_destructured_props::invalid_tsx
+  stdout ───
+
+    running 1 test
+    test specs::nursery::no_destructured_props::invalid_tsx ... FAILED
+
+    failures:
+
+    failures:
+        specs::nursery::no_destructured_props::invalid_tsx
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1245 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'specs::nursery::no_destructured_props::invalid_tsx' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+    could not find rule nursery/noDestructuredProps
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 1 test still running
+        FAIL [   0.099s] (2/2) biome_js_analyze::spec_tests specs::nursery::no_destructured_props::valid_tsx
+  stdout ───
+
+    running 1 test
+    test specs::nursery::no_destructured_props::valid_tsx ... FAILED
+
+    failures:
+
+    failures:
+        specs::nursery::no_destructured_props::valid_tsx
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1245 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'specs::nursery::no_destructured_props::valid_tsx' panicked at crates/biome_js_analyze/tests/spec_tests.rs:45:9:
+    could not find rule nursery/noDestructuredProps
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.106s] 2 tests run: 0 passed, 2 failed, 1244 skipped
+        FAIL [   0.098s] (1/2) biome_js_analyze::spec_tests specs::nursery::no_destructured_props::invalid_tsx
+        FAIL [   0.099s] (2/2) biome_js_analyze::spec_tests specs::nursery::no_destructured_props::valid_tsx
+error: test run failed
+reward=0 graded=2 found=0 failed=0 parsed=2 framework=cargo exit_code=100

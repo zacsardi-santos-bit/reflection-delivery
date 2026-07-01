@@ -1,0 +1,1400 @@
+diff --git a/sdk/cosmosdb/cosmos/CHANGELOG.md b/sdk/cosmosdb/cosmos/CHANGELOG.md
+index ed8b7d831bc..01da8dc2c2e 100644
+--- a/sdk/cosmosdb/cosmos/CHANGELOG.md
++++ b/sdk/cosmosdb/cosmos/CHANGELOG.md
+@@ -2,8 +2,9 @@
+ 
+ ## 4.0.1 (Unreleased)
+ 
+-### Features Added
+-- Added Correlated Activity Id feature in JS SDK for better troubleshooting of queries. The correlated activity id is added in the request header for all types of queries on Items. 
++### Features Added  
++- Added Correlated Activity Id feature in JS SDK for better troubleshooting of queries. The correlated activity id is added in the request header for all types of queries on Items.
++- Added support for Vector embedding and Vector Indexes.
+ 
+ ### Breaking Changes
+ 
+diff --git a/sdk/cosmosdb/cosmos/review/cosmos.api.md b/sdk/cosmosdb/cosmos/review/cosmos.api.md
+index fe3d78dafb8..bd60f64e445 100644
+--- a/sdk/cosmosdb/cosmos/review/cosmos.api.md
++++ b/sdk/cosmosdb/cosmos/review/cosmos.api.md
+@@ -640,6 +640,7 @@ export interface ContainerDefinition {
+     indexingPolicy?: IndexingPolicy;
+     partitionKey?: PartitionKeyDefinition;
+     uniqueKeyPolicy?: UniqueKeyPolicy;
++    vectorEmbeddingPolicy?: VectorEmbeddingPolicy;
+ }
+ 
+ // Warning: (ae-forgotten-export) The symbol "VerboseOmit" needs to be exported by the entry point index.d.ts
+@@ -1048,6 +1049,7 @@ export interface FeedOptions extends SharedOptions {
+     continuation?: string;
+     continuationToken?: string;
+     continuationTokenLimitInKB?: number;
++    disableNonStreamingOrderByQuery?: boolean;
+     enableScanInQuery?: boolean;
+     forceQueryPlan?: boolean;
+     maxDegreeOfParallelism?: number;
+@@ -1056,6 +1058,7 @@ export interface FeedOptions extends SharedOptions {
+     populateIndexMetrics?: boolean;
+     populateQueryMetrics?: boolean;
+     useIncrementalFeed?: boolean;
++    vectorSearchBufferSize?: number;
+ }
+ 
+ // @public
+@@ -1187,6 +1190,7 @@ export interface IndexingPolicy {
+     indexingMode?: keyof typeof IndexingMode;
+     // (undocumented)
+     spatialIndexes?: SpatialIndex[];
++    vectorIndexes?: VectorIndex[];
+ }
+ 
+ // @public
+@@ -1640,6 +1644,7 @@ export interface QueryInfo {
+     groupByAliasToAggregateType: GroupByAliasToAggregateType;
+     // (undocumented)
+     groupByExpressions?: GroupByExpressions;
++    hasNonStreamingOrderBy: boolean;
+     // (undocumented)
+     hasSelectValue: boolean;
+     // (undocumented)
+@@ -2527,6 +2532,47 @@ export class Users {
+     upsert(body: UserDefinition, options?: RequestOptions): Promise<UserResponse>;
+ }
+ 
++// @public
++export interface VectorEmbedding {
++    dataType: VectorEmbeddingDataType;
++    dimensions: number;
++    distanceFunction: VectorEmbeddingDistanceFunction;
++    path: string;
++}
++
++// @public
++export enum VectorEmbeddingDataType {
++    Float16 = "float16",
++    Float32 = "float32",
++    Int8 = "int8",
++    UInt8 = "uint8"
++}
++
++// @public
++export enum VectorEmbeddingDistanceFunction {
++    Cosine = "cosine",
++    DotProduct = "dotproduct",
++    Euclidean = "euclidean"
++}
++
++// @public
++export interface VectorEmbeddingPolicy {
++    vectorEmbeddings: VectorEmbedding[];
++}
++
++// @public
++export interface VectorIndex {
++    path: string;
++    type: VectorIndexType;
++}
++
++// @public
++export enum VectorIndexType {
++    DiskANN = "diskANN",
++    Flat = "flat",
++    QuantizedFlat = "quantizedFlat"
++}
++
+ // (No @packageDocumentation comment for this package)
+ 
+ ```
+diff --git a/sdk/cosmosdb/cosmos/samples-dev/ContainerManagement.ts b/sdk/cosmosdb/cosmos/samples-dev/ContainerManagement.ts
+index ec45dd4f09a..2985f87e7f0 100644
+--- a/sdk/cosmosdb/cosmos/samples-dev/ContainerManagement.ts
++++ b/sdk/cosmosdb/cosmos/samples-dev/ContainerManagement.ts
+@@ -9,7 +9,12 @@ import * as dotenv from "dotenv";
+ dotenv.config();
+ 
+ import { finish, handleError, logStep, logSampleHeader } from "./Shared/handleError";
+-import { CosmosClient } from "@azure/cosmos";
++import {
++  CosmosClient,
++  VectorEmbeddingDataType,
++  VectorEmbeddingDistanceFunction,
++  VectorIndexType,
++} from "@azure/cosmos";
+ const key = process.env.COSMOS_KEY || "<cosmos key>";
+ const endpoint = process.env.COSMOS_ENDPOINT || "<cosmos endpoint>";
+ const databaseId = process.env.COSMOS_DATABASE || "<cosmos database>";
+@@ -42,6 +47,56 @@ async function run(): Promise<void> {
+   logStep(`Delete container ${containerDef && containerDef.id}`);
+   await container.delete();
+   await finish();
++
++  logStep("Create container with vector embedding and indexing policies");
++  const vectorEmbeddingPolicy = {
++    vectorEmbeddings: [
++      {
++        path: "/vector1",
++        dataType: VectorEmbeddingDataType.UInt8,
++        dimensions: 1000,
++        distanceFunction: VectorEmbeddingDistanceFunction.Euclidean,
++      },
++      {
++        path: "/vector2",
++        dataType: VectorEmbeddingDataType.Int8,
++        dimensions: 200,
++        distanceFunction: VectorEmbeddingDistanceFunction.DotProduct,
++      },
++      {
++        path: "/vector3",
++        dataType: VectorEmbeddingDataType.UInt8,
++        dimensions: 400,
++        distanceFunction: VectorEmbeddingDistanceFunction.Cosine,
++      },
++    ],
++  };
++
++  const indexingPolicy = {
++    automatic: true,
++    indexingMode: "consistent",
++    compositeIndexes: [
++      [
++        { path: "/numberField", order: "ascending" },
++        { path: "/stringField", order: "descending" },
++      ],
++    ],
++    spatialIndexes: [{ path: "/location/*", types: ["Point", "Polygon"] }],
++    vectorIndexes: [
++      { path: "/vector1", type: VectorIndexType.Flat },
++      { path: "/vector2", type: VectorIndexType.QuantizedFlat },
++      { path: "/vector3", type: VectorIndexType.DiskANN },
++    ],
++  };
++
++  const containerDefinition = {
++    id: containerId,
++    partitionKey: { path: "/id" },
++    indexingPolicy: indexingPolicy,
++    vectorEmbeddingPolicy: vectorEmbeddingPolicy,
++  };
++  await database.containers.createIfNotExists(containerDefinition);
++  logStep("Container with vector embedding and indexing policies created");
+ }
+ 
+ run().catch(handleError);
+diff --git a/sdk/cosmosdb/cosmos/src/ClientContext.ts b/sdk/cosmosdb/cosmos/src/ClientContext.ts
+index d6f5a45d685..1e99c8551ed 100644
+--- a/sdk/cosmosdb/cosmos/src/ClientContext.ts
++++ b/sdk/cosmosdb/cosmos/src/ClientContext.ts
+@@ -34,6 +34,7 @@ import { SessionContainer } from "./session/sessionContainer";
+ import { SessionContext } from "./session/SessionContext";
+ import { BulkOptions } from "./utils/batch";
+ import { sanitizeEndpoint } from "./utils/checkURL";
++import { supportedQueryFeaturesBuilder } from "./utils/supportedQueryFeaturesBuilder";
+ import { AzureLogger, createClientLogger } from "@azure/logger";
+ import { ClientConfigDiagnostic, CosmosDiagnostics } from "./CosmosDiagnostics";
+ import { DiagnosticNodeInternal } from "./diagnostics/DiagnosticNodeInternal";
+@@ -269,9 +270,10 @@ export class ClientContext {
+     }
+     request.headers[HttpHeaders.IsQueryPlan] = "True";
+     request.headers[HttpHeaders.QueryVersion] = "1.4";
+-    request.headers[HttpHeaders.SupportedQueryFeatures] =
+-      "NonValueAggregate, Aggregate, Distinct, MultipleOrderBy, OffsetAndLimit, OrderBy, Top, CompositeAggregate, GroupBy, MultipleAggregates";
+     request.headers[HttpHeaders.ContentType] = QueryJsonContentType;
++    request.headers[HttpHeaders.SupportedQueryFeatures] = supportedQueryFeaturesBuilder(
++      options.disableNonStreamingOrderByQuery,
++    );
+     if (typeof query === "string") {
+       request.body = { query }; // Converts query text to query object.
+     }
+diff --git a/sdk/cosmosdb/cosmos/src/client/Container/ContainerDefinition.ts b/sdk/cosmosdb/cosmos/src/client/Container/ContainerDefinition.ts
+index 93aca255e93..0242f5afd6c 100644
+--- a/sdk/cosmosdb/cosmos/src/client/Container/ContainerDefinition.ts
++++ b/sdk/cosmosdb/cosmos/src/client/Container/ContainerDefinition.ts
+@@ -6,6 +6,7 @@ import { UniqueKeyPolicy } from "./UniqueKeyPolicy";
+ import { GeospatialType } from "../../documents/GeospatialType";
+ import { ChangeFeedPolicy } from "../ChangeFeed/ChangeFeedPolicy";
+ import { ComputedProperty } from "../../documents/ComputedProperty";
++import { VectorEmbeddingPolicy } from "../../documents/VectorEmbeddingPolicy";
+ 
+ export interface ContainerDefinition {
+   /** The id of the container. */
+@@ -28,4 +29,6 @@ export interface ContainerDefinition {
+   changeFeedPolicy?: ChangeFeedPolicy;
+   /** The computed properties of the container */
+   computedProperties?: ComputedProperty[];
++  /** The vector embedding policy information for storing items in a container. */
++  vectorEmbeddingPolicy?: VectorEmbeddingPolicy;
+ }
+diff --git a/sdk/cosmosdb/cosmos/src/common/constants.ts b/sdk/cosmosdb/cosmos/src/common/constants.ts
+index e20c5e1da7d..102fe861ce3 100644
+--- a/sdk/cosmosdb/cosmos/src/common/constants.ts
++++ b/sdk/cosmosdb/cosmos/src/common/constants.ts
+@@ -261,6 +261,7 @@ export const Constants = {
+     MinimumInclusiveEffectivePartitionKey: "",
+     MaximumExclusiveEffectivePartitionKey: "FF",
+   },
++
+   // Changefeed AllVersionsAndDeletesMode formatting version
+   AllVersionsAndDeletesChangeFeedWireFormatVersion: "2021-09-15",
+   ChangeFeedIfNoneMatchStartFromNowHeader: "*",
+@@ -476,3 +477,17 @@ export enum SasTokenPermissionKind {
+   TriggerReplace = PermissionScopeValues.ScopeTriggerReplaceValue,
+   TriggerDelete = PermissionScopeValues.ScopeTriggerDeleteValue,
+ }
++
++export enum QueryFeature {
++  NonValueAggregate = "NonValueAggregate",
++  Aggregate = "Aggregate",
++  Distinct = "Distinct",
++  MultipleOrderBy = "MultipleOrderBy",
++  OffsetAndLimit = "OffsetAndLimit",
++  OrderBy = "OrderBy",
++  Top = "Top",
++  CompositeAggregate = "CompositeAggregate",
++  GroupBy = "GroupBy",
++  MultipleAggregates = "MultipleAggregates",
++  NonStreamingOrderBy = "NonStreamingOrderBy",
++}
+diff --git a/sdk/cosmosdb/cosmos/src/documents/IndexingPolicy.ts b/sdk/cosmosdb/cosmos/src/documents/IndexingPolicy.ts
+index f189804221c..2b1c52f0fee 100644
+--- a/sdk/cosmosdb/cosmos/src/documents/IndexingPolicy.ts
++++ b/sdk/cosmosdb/cosmos/src/documents/IndexingPolicy.ts
+@@ -11,6 +11,8 @@ export interface IndexingPolicy {
+   /** An array of {@link IncludedPath} represents the paths to be excluded for indexing. */
+   excludedPaths?: IndexedPath[];
+   spatialIndexes?: SpatialIndex[];
++  /** An array of {@link VectorIndex} represents the vector index paths to be included for indexing. */
++  vectorIndexes?: VectorIndex[];
+   /** An array of {@link CompositeIndexes} representing composite indexes to be included. */
+   compositeIndexes?: CompositePath[][];
+ }
+@@ -50,6 +52,40 @@ export interface Index {
+   dataType: keyof typeof DataType;
+   precision?: number;
+ }
++/**
++ * Represents a vector index in the Azure Cosmos DB service.
++ * A vector index is used to index vector fields in the documents.
++ */
++
++export interface VectorIndex {
++  /**
++   * The path to the vector field in the document.
++   * for example, path: "/path/to/vector".
++   */
++  path: string;
++  /**
++   * The index type of the vector.
++   * Currently, flat, diskANN, and quantizedFlat are supported.
++   */
++  type: VectorIndexType;
++}
++/**
++ * Represents the index type of the vector.
++ */
++export enum VectorIndexType {
++  /**
++   * Represents flat index type.
++   */
++  Flat = "flat",
++  /**
++   * Represents diskANN index type.
++   */
++  DiskANN = "diskANN",
++  /**
++   * Represents quantizedFlat index type.
++   */
++  QuantizedFlat = "quantizedFlat",
++}
+ 
+ /**
+  * Represents a composite path in the indexing policy.
+diff --git a/sdk/cosmosdb/cosmos/src/documents/VectorEmbeddingPolicy.ts b/sdk/cosmosdb/cosmos/src/documents/VectorEmbeddingPolicy.ts
+new file mode 100644
+index 00000000000..78ac6c29567
+--- /dev/null
++++ b/sdk/cosmosdb/cosmos/src/documents/VectorEmbeddingPolicy.ts
+@@ -0,0 +1,72 @@
++// Copyright (c) Microsoft Corporation.
++// Licensed under the MIT license.
++/**
++ * Represents the policy configuration for vector embeddings in the Azure Cosmos DB service.
++ */
++export interface VectorEmbeddingPolicy {
++  /**
++   * The vector embeddings to be configured.
++   */
++  vectorEmbeddings: VectorEmbedding[];
++}
++/**
++ * Represents a vector embedding.
++ * A vector embedding is used to define a vector field in the documents.
++ */
++export interface VectorEmbedding {
++  /**
++   * The path to the vector field in the document.
++   */
++  path: string;
++  /**
++   * The number of dimensions in the vector.
++   */
++  dimensions: number;
++  /**
++   * The data type of the vector.
++   */
++  dataType: VectorEmbeddingDataType;
++  /**
++   * The distance function to use for distance calculation in between vectors.
++   */
++  distanceFunction: VectorEmbeddingDistanceFunction;
++}
++
++/**
++ * Represents the data type of the vector.
++ */
++export enum VectorEmbeddingDataType {
++  /**
++   * 16-bit floating point number.
++   */
++  Float16 = "float16",
++  /**
++   * 32-bit floating point number.
++   */
++  Float32 = "float32",
++  /**
++   * 8-bit unsigned integer.
++   */
++  UInt8 = "uint8",
++  /**
++   * 8-bit signed integer.
++   */
++  Int8 = "int8",
++}
++/**
++ * Represents the distance function to use for distance calculation in between vectors.
++ */
++export enum VectorEmbeddingDistanceFunction {
++  /**
++   * Represents euclidean distance function.
++   */
++  Euclidean = "euclidean",
++  /**
++   * Represents cosine distance function.
++   */
++  Cosine = "cosine",
++  /**
++   * Represents dot product distance function.
++   */
++  DotProduct = "dotproduct",
++}
+diff --git a/sdk/cosmosdb/cosmos/src/documents/index.ts b/sdk/cosmosdb/cosmos/src/documents/index.ts
+index 889bd188396..53646755071 100644
+--- a/sdk/cosmosdb/cosmos/src/documents/index.ts
++++ b/sdk/cosmosdb/cosmos/src/documents/index.ts
+@@ -21,3 +21,4 @@ export * from "./TriggerType";
+ export * from "./UserDefinedFunctionType";
+ export * from "./GeospatialType";
+ export * from "./ComputedProperty";
++export * from "./VectorEmbeddingPolicy";
+diff --git a/sdk/cosmosdb/cosmos/src/index.ts b/sdk/cosmosdb/cosmos/src/index.ts
+index 79936043791..270783c3011 100644
+--- a/sdk/cosmosdb/cosmos/src/index.ts
++++ b/sdk/cosmosdb/cosmos/src/index.ts
+@@ -62,6 +62,12 @@ export {
+   UserDefinedFunctionType,
+   CompositePath,
+   ComputedProperty,
++  VectorEmbeddingPolicy,
++  VectorIndex,
++  VectorEmbedding,
++  VectorEmbeddingDataType,
++  VectorEmbeddingDistanceFunction,
++  VectorIndexType,
+ } from "./documents";
+ 
+ export { UniqueKeyPolicy, UniqueKey } from "./client/Container/UniqueKeyPolicy";
+diff --git a/sdk/cosmosdb/cosmos/src/queryExecutionContext/EndpointComponent/NonStreamingOrderByDistinctEndpointComponent.ts b/sdk/cosmosdb/cosmos/src/queryExecutionContext/EndpointComponent/NonStreamingOrderByDistinctEndpointComponent.ts
+new file mode 100644
+index 00000000000..62a3a0fed2d
+--- /dev/null
++++ b/sdk/cosmosdb/cosmos/src/queryExecutionContext/EndpointComponent/NonStreamingOrderByDistinctEndpointComponent.ts
+@@ -0,0 +1,140 @@
++// Copyright (c) Microsoft Corporation.
++// Licensed under the MIT license.
++import { QueryInfo, Response } from "../../request";
++import { ExecutionContext } from "../ExecutionContext";
++import { getInitialHeader } from "../headerUtils";
++import { DiagnosticNodeInternal } from "../../diagnostics/DiagnosticNodeInternal";
++import { hashObject } from "../../utils/hashObject";
++import { NonStreamingOrderByResult } from "../nonStreamingOrderByResult";
++import { NonStreamingOrderByResponse } from "../nonStreamingOrderByResponse";
++import { FixedSizePriorityQueue } from "../../utils/fixedSizePriorityQueue";
++import { NonStreamingOrderByMap } from "../../utils/nonStreamingOrderByMap";
++import { OrderByComparator } from "../orderByComparator";
++
++/**
++ * @hidden
++ * Represents an endpoint in handling an non-streaming order by distinct query.
++ */
++export class NonStreamingOrderByDistinctEndpointComponent implements ExecutionContext {
++  /**
++   * A Map that holds the distinct values of the items before storing in priority queue.
++   */
++  private aggregateMap: NonStreamingOrderByMap<NonStreamingOrderByResult>;
++  /**
++   * A priority queue to compute the final sorted results.
++   */
++  private nonStreamingOrderByPQ: FixedSizePriorityQueue<NonStreamingOrderByResult>;
++  /**
++   * Array to store the final sorted results.
++   */
++  private finalResultArray: NonStreamingOrderByResult[];
++
++  private sortOrders: string[];
++  /**
++   * Flag to determine if all results are fetched from backend and results can be returned.
++   */
++  private isCompleted: boolean = false;
++
++  constructor(
++    private executionContext: ExecutionContext,
++    private queryInfo: QueryInfo,
++    private priorityQueueBufferSize: number,
++  ) {
++    this.sortOrders = this.queryInfo.orderBy;
++    const comparator = new OrderByComparator(this.sortOrders);
++    this.aggregateMap = new NonStreamingOrderByMap<NonStreamingOrderByResult>(
++      (a: NonStreamingOrderByResult, b: NonStreamingOrderByResult) => {
++        return comparator.compareItems(a, b);
++      },
++    );
++    this.nonStreamingOrderByPQ = new FixedSizePriorityQueue<NonStreamingOrderByResult>(
++      (a: NonStreamingOrderByResult, b: NonStreamingOrderByResult) => {
++        return comparator.compareItems(b, a);
++      },
++      this.priorityQueueBufferSize,
++    );
++  }
++
++  public async nextItem(diagnosticNode: DiagnosticNodeInternal): Promise<Response<any>> {
++    let resHeaders = getInitialHeader();
++    // if size is 0, just return undefined to signal to more results. Valid if query is TOP 0 or LIMIT 0
++    if (this.priorityQueueBufferSize <= 0) {
++      return {
++        result: undefined,
++        headers: resHeaders,
++      };
++    }
++
++    // If there are more results in backend, keep filling map.
++    if (this.executionContext.hasMoreResults()) {
++      // Grab the next result
++      const { result, headers } = (await this.executionContext.nextItem(
++        diagnosticNode,
++      )) as NonStreamingOrderByResponse;
++      resHeaders = headers;
++      if (result) {
++        // make hash of result object and update the map if required.
++        const key = await hashObject(result?.payload);
++        this.aggregateMap.set(key, result);
++      }
++
++      // return {} to signal that there are more results to fetch.
++      if (this.executionContext.hasMoreResults()) {
++        return {
++          result: {},
++          headers: resHeaders,
++        };
++      }
++    }
++
++    // If all results are fetched from backend, prepare final results
++    if (!this.executionContext.hasMoreResults() && !this.isCompleted) {
++      this.isCompleted = true;
++      await this.buildFinalResultArray();
++    }
++
++    // Return results from final array.
++    if (this.finalResultArray.length > 0) {
++      return {
++        result: this.finalResultArray.shift(),
++        headers: resHeaders,
++      };
++    }
++    // Signal that there are no more results.
++    return {
++      result: undefined,
++      headers: resHeaders,
++    };
++  }
++
++  /**
++   * Build final sorted result array from which responses will be served.
++   */
++  private async buildFinalResultArray(): Promise<void> {
++    // Fetch all distinct values from the map and store in priority queue.
++    const allValues = this.aggregateMap.getAllValuesAndReset();
++    for (const value of allValues) {
++      this.nonStreamingOrderByPQ.enqueue(value);
++    }
++
++    // Compute the final result array size based on offset and limit.
++    const offSet = this.queryInfo.offset ? this.queryInfo.offset : 0;
++    const queueSize = this.nonStreamingOrderByPQ.size();
++    const finalArraySize = queueSize - offSet;
++
++    if (finalArraySize <= 0) {
++      this.finalResultArray = [];
++    } else {
++      this.finalResultArray = new Array(finalArraySize);
++      // Only keep the final result array size number of items in the final result array and discard the rest.
++      for (let count = finalArraySize - 1; count >= 0; count--) {
++        this.finalResultArray[count] = this.nonStreamingOrderByPQ.dequeue()?.payload;
++      }
++    }
++  }
++
++  public hasMoreResults(): boolean {
++    if (this.priorityQueueBufferSize === 0) return false;
++    return this.executionContext.hasMoreResults() || this.finalResultArray.length > 0;
++  }
++}
+diff --git a/sdk/cosmosdb/cosmos/src/queryExecutionContext/EndpointComponent/NonStreamingOrderByEndpointComponent.ts b/sdk/cosmosdb/cosmos/src/queryExecutionContext/EndpointComponent/NonStreamingOrderByEndpointComponent.ts
+new file mode 100644
+index 00000000000..ad3aa552e1f
+--- /dev/null
++++ b/sdk/cosmosdb/cosmos/src/queryExecutionContext/EndpointComponent/NonStreamingOrderByEndpointComponent.ts
+@@ -0,0 +1,114 @@
++// Copyright (c) Microsoft Corporation.
++// Licensed under the MIT license.
++import { DiagnosticNodeInternal } from "../../diagnostics/DiagnosticNodeInternal";
++import { Response } from "../../request";
++import { ExecutionContext } from "../ExecutionContext";
++import { OrderByComparator } from "../orderByComparator";
++import { NonStreamingOrderByResult } from "../nonStreamingOrderByResult";
++import { FixedSizePriorityQueue } from "../../utils/fixedSizePriorityQueue";
++import { getInitialHeader } from "../headerUtils";
++
++/**
++ * @hidden
++ * Represents an endpoint in handling an non-streaming order by query.
++ */
++export class NonStreamingOrderByEndpointComponent implements ExecutionContext {
++  /**
++   * A priority queue to store the final sorted results.
++   */
++  private nonStreamingOrderByPQ: FixedSizePriorityQueue<NonStreamingOrderByResult>;
++  /**
++   * Flag to determine if all results are fetched from backend and results can be returned from priority queue.
++   */
++  private isCompleted: boolean = false;
++  /**
++   * Represents an endpoint in handling an non-streaming order by query. For each processed orderby
++   * result it returns 'payload' item of the result
++   *
++   * @param executionContext - Underlying Execution Context
++   * @hidden
++   */
++  constructor(
++    private executionContext: ExecutionContext,
++    private sortOrders: any[],
++    private priorityQueueBufferSize: number,
++    private offset: number = 0,
++  ) {
++    const comparator = new OrderByComparator(this.sortOrders);
++    this.nonStreamingOrderByPQ = new FixedSizePriorityQueue<NonStreamingOrderByResult>(
++      (a: NonStreamingOrderByResult, b: NonStreamingOrderByResult) => {
++        return comparator.compareItems(b, a);
++      },
++      this.priorityQueueBufferSize,
++    );
++  }
++
++  public async nextItem(diagnosticNode: DiagnosticNodeInternal): Promise<Response<any>> {
++    let resHeaders = getInitialHeader();
++    // if size is 0, just return undefined to signal to more results. Valid if query is TOP 0 or LIMIT 0
++    if (this.priorityQueueBufferSize <= 0) {
++      return {
++        result: undefined,
++        headers: resHeaders,
++      };
++    }
++
++    // If there are more results in backend, keep filling pq.
++    if (this.executionContext.hasMoreResults()) {
++      const { result: item, headers } = await this.executionContext.nextItem(diagnosticNode);
++      resHeaders = headers;
++      if (item !== undefined) {
++        this.nonStreamingOrderByPQ.enqueue(item);
++      }
++
++      // If the backend has more results to fetch, return {} to signal that there are more results to fetch.
++      if (this.executionContext.hasMoreResults()) {
++        return {
++          result: {},
++          headers: resHeaders,
++        };
++      }
++    }
++    // If all results are fetched from backend, prepare final results
++    if (!this.executionContext.hasMoreResults() && !this.isCompleted) {
++      // Set isCompleted to true.
++      this.isCompleted = true;
++      // Reverse the priority queue to get the results in the correct order
++      this.nonStreamingOrderByPQ = this.nonStreamingOrderByPQ.reverse();
++      // For offset limit case we set the size of priority queue to offset + limit
++      // and we drain offset number of items from the priority queue
++      while (
++        this.offset < this.priorityQueueBufferSize &&
++        this.offset > 0 &&
++        !this.nonStreamingOrderByPQ.isEmpty()
++      ) {
++        this.nonStreamingOrderByPQ.dequeue();
++        this.offset--;
++      }
++    }
++    // If pq is not empty, return the result from pq.
++    if (!this.nonStreamingOrderByPQ.isEmpty()) {
++      const item = this.nonStreamingOrderByPQ.dequeue()?.payload;
++      return {
++        result: item,
++        headers: resHeaders,
++      };
++    }
++    // If pq is empty, return undefined to signal that there are no more results.
++    return {
++      result: undefined,
++      headers: resHeaders,
++    };
++  }
++
++  /**
++   * Determine if there are still remaining resources to processs.
++   * @returns true if there is other elements to process in the NonStreamingOrderByEndpointComponent.
++   */
++  public hasMoreResults(): boolean {
++    return (
++      this.priorityQueueBufferSize > 0 &&
++      (this.executionContext.hasMoreResults() || !this.nonStreamingOrderByPQ.isEmpty())
++    );
++  }
++}
+diff --git a/sdk/cosmosdb/cosmos/src/queryExecutionContext/index.ts b/sdk/cosmosdb/cosmos/src/queryExecutionContext/index.ts
+index 3d508fe5107..99f81c4c29a 100644
+--- a/sdk/cosmosdb/cosmos/src/queryExecutionContext/index.ts
++++ b/sdk/cosmosdb/cosmos/src/queryExecutionContext/index.ts
+@@ -12,3 +12,4 @@ export * from "./parallelQueryExecutionContextBase";
+ export * from "./parallelQueryExecutionContext";
+ export * from "./orderByQueryExecutionContext";
+ export * from "./pipelinedQueryExecutionContext";
++export * from "./orderByComparator";
+diff --git a/sdk/cosmosdb/cosmos/src/queryExecutionContext/nonStreamingOrderByResponse.ts b/sdk/cosmosdb/cosmos/src/queryExecutionContext/nonStreamingOrderByResponse.ts
+new file mode 100644
+index 00000000000..7ebbdf4eab3
+--- /dev/null
++++ b/sdk/cosmosdb/cosmos/src/queryExecutionContext/nonStreamingOrderByResponse.ts
+@@ -0,0 +1,10 @@
++// Copyright (c) Microsoft Corporation.
++// Licensed under the MIT license.
++
++import { CosmosHeaders } from "./CosmosHeaders";
++import { NonStreamingOrderByResult } from "./nonStreamingOrderByResult";
++
++export interface NonStreamingOrderByResponse {
++  result: NonStreamingOrderByResult;
++  headers: CosmosHeaders;
++}
+diff --git a/sdk/cosmosdb/cosmos/src/queryExecutionContext/nonStreamingOrderByResult.ts b/sdk/cosmosdb/cosmos/src/queryExecutionContext/nonStreamingOrderByResult.ts
+new file mode 100644
+index 00000000000..1175ea6e762
+--- /dev/null
++++ b/sdk/cosmosdb/cosmos/src/queryExecutionContext/nonStreamingOrderByResult.ts
+@@ -0,0 +1,7 @@
++// Copyright (c) Microsoft Corporation.
++// Licensed under the MIT license.
++
++export interface NonStreamingOrderByResult {
++  orderByItems: [];
++  payload: any;
++}
+diff --git a/sdk/cosmosdb/cosmos/src/queryExecutionContext/orderByComparator.ts b/sdk/cosmosdb/cosmos/src/queryExecutionContext/orderByComparator.ts
+new file mode 100644
+index 00000000000..f2216e6cc0f
+--- /dev/null
++++ b/sdk/cosmosdb/cosmos/src/queryExecutionContext/orderByComparator.ts
+@@ -0,0 +1,128 @@
++// Copyright (c) Microsoft Corporation.
++// Licensed under the MIT license.
++
++import { NonStreamingOrderByResult } from "./nonStreamingOrderByResult";
++
++/**
++ *  @hidden
++ * ord is used to compare different types. Eg. in ascending order, for cross type comparison, boolean will come first, then number and, then string.
++ * compFunc is used to compare the same type comparison.
++ */
++const TYPEORDCOMPARATOR: {
++  [type: string]: { ord: number; compFunc?: (a: any, b: any) => number };
++} = Object.freeze({
++  NoValue: {
++    ord: 0,
++  },
++  undefined: {
++    ord: 1,
++  },
++  boolean: {
++    ord: 2,
++    compFunc: (a: boolean, b: boolean) => {
++      return a === b ? 0 : a > b ? 1 : -1;
++    },
++  },
++  number: {
++    ord: 4,
++    compFunc: (a: number, b: number) => {
++      return a === b ? 0 : a > b ? 1 : -1;
++    },
++  },
++  string: {
++    ord: 5,
++    compFunc: (a: string, b: string) => {
++      return a === b ? 0 : a > b ? 1 : -1;
++    },
++  },
++});
++
++/** @hidden */
++export class OrderByComparator {
++  constructor(public sortOrder: string[]) {}
++
++  public compareItems(item1: NonStreamingOrderByResult, item2: NonStreamingOrderByResult): number {
++    const orderByItemsRes1 = this.getOrderByItems(item1);
++    const orderByItemsRes2 = this.getOrderByItems(item2);
++
++    for (let i = 0; i < orderByItemsRes1.length; i++) {
++      // compares the orderby items one by one
++      const compRes = this.compareOrderByItem(orderByItemsRes1[i], orderByItemsRes2[i]);
++      if (compRes !== 0) {
++        if (this.sortOrder[i] === "Descending") {
++          return compRes;
++        } else if (this.sortOrder[i] === "Ascending") {
++          return -compRes;
++        }
++      }
++    }
++  }
++
++  private getOrderByItems(res: any): any {
++    return res["orderByItems"];
++  }
++
++  private compareOrderByItem(orderByItem1: any, orderByItem2: any): number {
++    const type1 = this.getType(orderByItem1);
++    const type2 = this.getType(orderByItem2);
++    return this.compareValue(orderByItem1["item"], type1, orderByItem2["item"], type2);
++  }
++
++  private getType(
++    orderByItem: any,
++  ):
++    | "string"
++    | "number"
++    | "bigint"
++    | "boolean"
++    | "symbol"
++    | "undefined"
++    | "object"
++    | "function"
++    | "NoValue" {
++    // TODO: any item?
++    if (orderByItem === undefined || orderByItem.item === undefined) {
++      return "NoValue";
++    }
++    const type = typeof orderByItem.item;
++    if (TYPEORDCOMPARATOR[type] === undefined) {
++      throw new Error(`unrecognizable type ${type}`);
++    }
++    return type;
++  }
++
++  private compareValue(item1: unknown, type1: string, item2: unknown, type2: string): number {
++    // TODO: https://github.com/Azure/azure-sdk-for-js/issues/30122
++    // currently we do not support same type and cross type comparision for object and arrays.
++
++    if (type1 === "object" || type2 === "object") {
++      throw new Error("Tried to compare an object type");
++    }
++    const type1Ord = TYPEORDCOMPARATOR[type1].ord;
++    const type2Ord = TYPEORDCOMPARATOR[type2].ord;
++
++    // Validate if the two item are of same type or not based on the type ordinal.
++    const typeCmp = type1Ord - type2Ord;
++
++    // if not same type, compare based on the type ordinal. Lower ordinal takes precedence over higher ordinal.
++    if (typeCmp !== 0) {
++      return typeCmp;
++    }
++
++    // both are of the same type
++    if (
++      type1Ord === TYPEORDCOMPARATOR["undefined"].ord ||
++      type1Ord === TYPEORDCOMPARATOR["NoValue"].ord
++    ) {
++      // if both types are undefined or Null they are equal
++      return 0;
++    }
++
++    const compFunc = TYPEORDCOMPARATOR[type1].compFunc;
++    if (typeof compFunc === "undefined") {
++      throw new Error("Cannot find the comparison function");
++    }
++    // same type and type is defined compare the items
++    return compFunc(item1, item2);
++  }
++}
+diff --git a/sdk/cosmosdb/cosmos/src/queryExecutionContext/pipelinedQueryExecutionContext.ts b/sdk/cosmosdb/cosmos/src/queryExecutionContext/pipelinedQueryExecutionContext.ts
+index 085812e0ae0..d08295dc097 100644
+--- a/sdk/cosmosdb/cosmos/src/queryExecutionContext/pipelinedQueryExecutionContext.ts
++++ b/sdk/cosmosdb/cosmos/src/queryExecutionContext/pipelinedQueryExecutionContext.ts
+@@ -2,7 +2,7 @@
+ // Licensed under the MIT license.
+ import { ClientContext } from "../ClientContext";
+ import { Response, FeedOptions } from "../request";
+-import { PartitionedQueryExecutionInfo } from "../request/ErrorResponse";
++import { PartitionedQueryExecutionInfo, QueryInfo } from "../request/ErrorResponse";
+ import { CosmosHeaders } from "./CosmosHeaders";
+ import { OffsetLimitEndpointComponent } from "./EndpointComponent/OffsetLimitEndpointComponent";
+ import { OrderByEndpointComponent } from "./EndpointComponent/OrderByEndpointComponent";
+@@ -16,6 +16,8 @@ import { ParallelQueryExecutionContext } from "./parallelQueryExecutionContext";
+ import { GroupByValueEndpointComponent } from "./EndpointComponent/GroupByValueEndpointComponent";
+ import { SqlQuerySpec } from "./SqlQuerySpec";
+ import { DiagnosticNodeInternal } from "../diagnostics/DiagnosticNodeInternal";
++import { NonStreamingOrderByDistinctEndpointComponent } from "./EndpointComponent/NonStreamingOrderByDistinctEndpointComponent";
++import { NonStreamingOrderByEndpointComponent } from "./EndpointComponent/NonStreamingOrderByEndpointComponent";
+ 
+ /** @hidden */
+ export class PipelinedQueryExecutionContext implements ExecutionContext {
+@@ -23,7 +25,11 @@ export class PipelinedQueryExecutionContext implements ExecutionContext {
+   private fetchMoreRespHeaders: CosmosHeaders;
+   private endpoint: ExecutionContext;
+   private pageSize: number;
++  private vectorSearchBufferSize: number = 0;
+   private static DEFAULT_PAGE_SIZE = 10;
++  private static DEFAULT_VECTOR_SEARCH_BUFFER_SIZE = 2000;
++  private nonStreamingOrderBy = false;
++
+   constructor(
+     private clientContext: ClientContext,
+     private collectionLink: string,
+@@ -37,24 +43,20 @@ export class PipelinedQueryExecutionContext implements ExecutionContext {
+     if (this.pageSize === undefined) {
+       this.pageSize = PipelinedQueryExecutionContext.DEFAULT_PAGE_SIZE;
+     }
++    // Pick between Nonstreaming and streaming endpoints
++    this.nonStreamingOrderBy = partitionedQueryExecutionInfo.queryInfo.hasNonStreamingOrderBy;
+ 
+     // Pick between parallel vs order by execution context
+     const sortOrders = partitionedQueryExecutionInfo.queryInfo.orderBy;
+-    if (Array.isArray(sortOrders) && sortOrders.length > 0) {
+-      // Need to wrap orderby execution context in endpoint component, since the data is nested as a \
+-      //      "payload" property.
+-      this.endpoint = new OrderByEndpointComponent(
+-        new OrderByQueryExecutionContext(
+-          this.clientContext,
+-          this.collectionLink,
+-          this.query,
+-          this.options,
+-          this.partitionedQueryExecutionInfo,
+-          correlatedActivityId,
+-        ),
++    // TODO: Currently we don't get any field from backend to determine streaming queries
++    if (this.nonStreamingOrderBy) {
++      this.vectorSearchBufferSize = this.calculateVectorSearchBufferSize(
++        partitionedQueryExecutionInfo.queryInfo,
++        options,
+       );
+-    } else {
+-      this.endpoint = new ParallelQueryExecutionContext(
++
++      const distinctType = partitionedQueryExecutionInfo.queryInfo.distinctType;
++      const context: ExecutionContext = new ParallelQueryExecutionContext(
+         this.clientContext,
+         this.collectionLink,
+         this.query,
+@@ -62,44 +64,84 @@ export class PipelinedQueryExecutionContext implements ExecutionContext {
+         this.partitionedQueryExecutionInfo,
+         correlatedActivityId,
+       );
+-    }
+-    if (
+-      Object.keys(partitionedQueryExecutionInfo.queryInfo.groupByAliasToAggregateType).length > 0 ||
+-      partitionedQueryExecutionInfo.queryInfo.aggregates.length > 0 ||
+-      partitionedQueryExecutionInfo.queryInfo.groupByExpressions.length > 0
+-    ) {
+-      if (partitionedQueryExecutionInfo.queryInfo.hasSelectValue) {
+-        this.endpoint = new GroupByValueEndpointComponent(
+-          this.endpoint,
+-          partitionedQueryExecutionInfo.queryInfo,
++
++      if (distinctType === "None") {
++        this.endpoint = new NonStreamingOrderByEndpointComponent(
++          context,
++          sortOrders,
++          this.vectorSearchBufferSize,
++          partitionedQueryExecutionInfo.queryInfo.offset,
+         );
+       } else {
+-        this.endpoint = new GroupByEndpointComponent(
+-          this.endpoint,
++        this.endpoint = new NonStreamingOrderByDistinctEndpointComponent(
++          context,
+           partitionedQueryExecutionInfo.queryInfo,
++          this.vectorSearchBufferSize,
+         );
+       }
+-    }
+-    // If top then add that to the pipeline. TOP N is effectively OFFSET 0 LIMIT N
+-    const top = partitionedQueryExecutionInfo.queryInfo.top;
+-    if (typeof top === "number") {
+-      this.endpoint = new OffsetLimitEndpointComponent(this.endpoint, 0, top);
+-    }
++    } else {
++      if (Array.isArray(sortOrders) && sortOrders.length > 0) {
++        // Need to wrap orderby execution context in endpoint component, since the data is nested as a \
++        //      "payload" property.
++        this.endpoint = new OrderByEndpointComponent(
++          new OrderByQueryExecutionContext(
++            this.clientContext,
++            this.collectionLink,
++            this.query,
++            this.options,
++            this.partitionedQueryExecutionInfo,
++            correlatedActivityId,
++          ),
++        );
++      } else {
++        this.endpoint = new ParallelQueryExecutionContext(
++          this.clientContext,
++          this.collectionLink,
++          this.query,
++          this.options,
++          this.partitionedQueryExecutionInfo,
++          correlatedActivityId,
++        );
++      }
++      if (
++        Object.keys(partitionedQueryExecutionInfo.queryInfo.groupByAliasToAggregateType).length >
++          0 ||
++        partitionedQueryExecutionInfo.queryInfo.aggregates.length > 0 ||
++        partitionedQueryExecutionInfo.queryInfo.groupByExpressions.length > 0
++      ) {
++        if (partitionedQueryExecutionInfo.queryInfo.hasSelectValue) {
++          this.endpoint = new GroupByValueEndpointComponent(
++            this.endpoint,
++            partitionedQueryExecutionInfo.queryInfo,
++          );
++        } else {
++          this.endpoint = new GroupByEndpointComponent(
++            this.endpoint,
++            partitionedQueryExecutionInfo.queryInfo,
++          );
++        }
++      }
++      // If top then add that to the pipeline. TOP N is effectively OFFSET 0 LIMIT N
++      const top = partitionedQueryExecutionInfo.queryInfo.top;
++      if (typeof top === "number") {
++        this.endpoint = new OffsetLimitEndpointComponent(this.endpoint, 0, top);
++      }
+ 
+-    // If offset+limit then add that to the pipeline
+-    const limit = partitionedQueryExecutionInfo.queryInfo.limit;
+-    const offset = partitionedQueryExecutionInfo.queryInfo.offset;
+-    if (typeof limit === "number" && typeof offset === "number") {
+-      this.endpoint = new OffsetLimitEndpointComponent(this.endpoint, offset, limit);
+-    }
++      // If offset+limit then add that to the pipeline
++      const limit = partitionedQueryExecutionInfo.queryInfo.limit;
++      const offset = partitionedQueryExecutionInfo.queryInfo.offset;
++      if (typeof limit === "number" && typeof offset === "number") {
++        this.endpoint = new OffsetLimitEndpointComponent(this.endpoint, offset, limit);
++      }
+ 
+-    // If distinct then add that to the pipeline
+-    const distinctType = partitionedQueryExecutionInfo.queryInfo.distinctType;
+-    if (distinctType === "Ordered") {
+-      this.endpoint = new OrderedDistinctEndpointComponent(this.endpoint);
+-    }
+-    if (distinctType === "Unordered") {
+-      this.endpoint = new UnorderedDistinctEndpointComponent(this.endpoint);
++      // If distinct then add that to the pipeline
++      const distinctType = partitionedQueryExecutionInfo.queryInfo.distinctType;
++      if (distinctType === "Ordered") {
++        this.endpoint = new OrderedDistinctEndpointComponent(this.endpoint);
++      }
++      if (distinctType === "Unordered") {
++        this.endpoint = new UnorderedDistinctEndpointComponent(this.endpoint);
++      }
+     }
+   }
+ 
+@@ -120,7 +162,9 @@ export class PipelinedQueryExecutionContext implements ExecutionContext {
+     } else {
+       this.fetchBuffer = [];
+       this.fetchMoreRespHeaders = getInitialHeader();
+-      return this._fetchMoreImplementation(diagnosticNode);
++      return this.nonStreamingOrderBy
++        ? this._nonStreamingFetchMoreImplementation(diagnosticNode)
++        : this._fetchMoreImplementation(diagnosticNode);
+     }
+   }
+ 
+@@ -144,7 +188,6 @@ export class PipelinedQueryExecutionContext implements ExecutionContext {
+           return { result: temp, headers: this.fetchMoreRespHeaders };
+         }
+       } else {
+-        // append the result
+         this.fetchBuffer.push(item);
+         if (this.fetchBuffer.length >= this.pageSize) {
+           // fetched enough results
+@@ -165,4 +208,59 @@ export class PipelinedQueryExecutionContext implements ExecutionContext {
+       }
+     }
+   }
++
++  private async _nonStreamingFetchMoreImplementation(
++    diagnosticNode: DiagnosticNodeInternal,
++  ): Promise<Response<any>> {
++    try {
++      const { result: item, headers } = await this.endpoint.nextItem(diagnosticNode);
++      mergeHeaders(this.fetchMoreRespHeaders, headers);
++      if (item === undefined) {
++        // no more results
++        if (this.fetchBuffer.length === 0) {
++          return {
++            result: undefined,
++            headers: this.fetchMoreRespHeaders,
++          };
++        } else {
++          // Just give what we have
++          const temp = this.fetchBuffer;
++          this.fetchBuffer = [];
++          return { result: temp, headers: this.fetchMoreRespHeaders };
++        }
++      } else {
++        // append the result
++        if (typeof item !== "object") {
++          this.fetchBuffer.push(item);
++        } else if (Object.keys(item).length !== 0) {
++          this.fetchBuffer.push(item);
++        }
++        if (this.fetchBuffer.length >= this.pageSize) {
++          // fetched enough results
++          const temp = this.fetchBuffer.slice(0, this.pageSize);
++          this.fetchBuffer = this.fetchBuffer.splice(this.pageSize);
++          return { result: temp, headers: this.fetchMoreRespHeaders };
++        } else {
++          return this._nonStreamingFetchMoreImplementation(diagnosticNode);
++        }
++      }
++    } catch (err: any) {
++      mergeHeaders(this.fetchMoreRespHeaders, err.headers);
++      err.headers = this.fetchMoreRespHeaders;
++      if (err) {
++        throw err;
++      }
++    }
++  }
++
++  private calculateVectorSearchBufferSize(queryInfo: QueryInfo, options: FeedOptions): number {
++    if (queryInfo.top === 0 || queryInfo.limit === 0) return 0;
++    return queryInfo.top
++      ? queryInfo.top
++      : queryInfo.limit
++        ? queryInfo.offset + queryInfo.limit
++        : options["vectorSearchBufferSize"] && options["vectorSearchBufferSize"] > 0
++          ? options["vectorSearchBufferSize"]
++          : PipelinedQueryExecutionContext.DEFAULT_VECTOR_SEARCH_BUFFER_SIZE;
++  }
+ }
+diff --git a/sdk/cosmosdb/cosmos/src/queryIterator.ts b/sdk/cosmosdb/cosmos/src/queryIterator.ts
+index ca86d56f57a..677eeb7d27d 100644
+--- a/sdk/cosmosdb/cosmos/src/queryIterator.ts
++++ b/sdk/cosmosdb/cosmos/src/queryIterator.ts
+@@ -39,6 +39,7 @@ export class QueryIterator<T> {
+   private queryPlanPromise: Promise<Response<PartitionedQueryExecutionInfo>>;
+   private isInitialized: boolean;
+   private correlatedActivityId: string;
++  private nonStreamingOrderBy: boolean = false;
+   /**
+    * @hidden
+    */
+@@ -245,9 +246,16 @@ export class QueryIterator<T> {
+       const { result, headers } = response;
+       // concatenate the results and fetch more
+       mergeHeaders(this.fetchAllLastResHeaders, headers);
+-
+       if (result !== undefined) {
+-        this.fetchAllTempResources.push(result);
++        if (
++          this.nonStreamingOrderBy &&
++          typeof result === "object" &&
++          Object.keys(result).length === 0
++        ) {
++          // ignore empty results from NonStreamingOrderBy Endpoint components.
++        } else {
++          this.fetchAllTempResources.push(result);
++        }
+       }
+     }
+     return new FeedResponse(
+@@ -268,6 +276,7 @@ export class QueryIterator<T> {
+ 
+     const queryPlan = queryPlanResponse.result;
+     const queryInfo = queryPlan.queryInfo;
++    this.nonStreamingOrderBy = queryInfo.hasNonStreamingOrderBy ? true : false;
+     if (queryInfo.aggregates.length > 0 && queryInfo.hasSelectValue === false) {
+       throw new Error("Aggregate queries must use the VALUE keyword");
+     }
+diff --git a/sdk/cosmosdb/cosmos/src/request/ErrorResponse.ts b/sdk/cosmosdb/cosmos/src/request/ErrorResponse.ts
+index 9b6ccd4f8aa..4a67f5770b4 100644
+--- a/sdk/cosmosdb/cosmos/src/request/ErrorResponse.ts
++++ b/sdk/cosmosdb/cosmos/src/request/ErrorResponse.ts
+@@ -45,6 +45,10 @@ export interface QueryInfo {
+   rewrittenQuery?: any;
+   distinctType: string;
+   hasSelectValue: boolean;
++  /**
++   * determines whether the query is of non streaming orderby type.
++   */
++  hasNonStreamingOrderBy: boolean;
+ }
+ 
+ export type GroupByExpressions = string[];
+diff --git a/sdk/cosmosdb/cosmos/src/request/FeedOptions.ts b/sdk/cosmosdb/cosmos/src/request/FeedOptions.ts
+index d8367db4860..fb1c434f612 100644
+--- a/sdk/cosmosdb/cosmos/src/request/FeedOptions.ts
++++ b/sdk/cosmosdb/cosmos/src/request/FeedOptions.ts
+@@ -113,4 +113,14 @@ export interface FeedOptions extends SharedOptions {
+    * Enable returning index metrics in response headers. Default: false
+    */
+   populateIndexMetrics?: boolean;
++  /**
++   * Specifies a custom maximum buffer size for storing final results for nonStreamingOrderBy queries.
++   * This value is ignored if the query includes top/offset+limit clauses.
++   */
++  vectorSearchBufferSize?: number;
++  /**
++   * Disable the nonStreamingOrderBy query feature in supported query features.
++   * Default: false. Set to true to avoid error from an old gateway that doesn't support this feature.
++   */
++  disableNonStreamingOrderByQuery?: boolean;
+ }
+diff --git a/sdk/cosmosdb/cosmos/src/utils/fixedSizePriorityQueue.ts b/sdk/cosmosdb/cosmos/src/utils/fixedSizePriorityQueue.ts
+new file mode 100644
+index 00000000000..a50ff34c984
+--- /dev/null
++++ b/sdk/cosmosdb/cosmos/src/utils/fixedSizePriorityQueue.ts
+@@ -0,0 +1,65 @@
++// Copyright (c) Microsoft Corporation.
++// Licensed under the MIT license.
++import PriorityQueue from "priorityqueuejs";
++
++export class FixedSizePriorityQueue<T> {
++  private pq: PriorityQueue<T>;
++  // The compare function should return a positive number if a is greater than b, a negative number if a is less than b, and 0 if a is equal to b.
++  private compareFn: (a: T, b: T) => number;
++  private pqMaxSize: number;
++
++  constructor(compareFn: (a: T, b: T) => number, pqMaxSize: number) {
++    this.compareFn = compareFn;
++    this.pq = new PriorityQueue<T>(this.compareFn);
++    this.pqMaxSize = pqMaxSize;
++  }
++
++  public enqueue(item: T): void {
++    if (this.pq.size() < this.pqMaxSize) {
++      this.pq.enq(item);
++    } else {
++      const topItem = this.pq.peek();
++      if (this.compareFn(topItem, item) > 0) {
++        this.pq.deq();
++        this.pq.enq(item);
++      }
++    }
++  }
++
++  public dequeue(): T {
++    return this.pq.deq();
++  }
++
++  public size(): number {
++    return this.pq.size();
++  }
++
++  public isEmpty(): boolean {
++    return this.pq.isEmpty();
++  }
++
++  public peek(): T {
++    return this.pq.peek();
++  }
++
++  public getTopElements(): T[] {
++    const elements: T[] = [];
++    while (!this.pq.isEmpty()) {
++      elements.unshift(this.pq.deq());
++    }
++    return elements;
++  }
++
++  // Create a new instance of FixedSizePriorityQueue with a reversed compare function and the same maximum size.
++  // Enqueue all elements from the current priority queue into the reverse priority queue.
++  public reverse(): FixedSizePriorityQueue<T> {
++    const reversePQ = new FixedSizePriorityQueue<T>(
++      (a: T, b: T) => -this.compareFn(a, b),
++      this.pqMaxSize,
++    );
++    while (!this.pq.isEmpty()) {
++      reversePQ.enqueue(this.pq.deq());
++    }
++    return reversePQ;
++  }
++}
+diff --git a/sdk/cosmosdb/cosmos/src/utils/nonStreamingOrderByMap.ts b/sdk/cosmosdb/cosmos/src/utils/nonStreamingOrderByMap.ts
+new file mode 100644
+index 00000000000..ba6af4f7511
+--- /dev/null
++++ b/sdk/cosmosdb/cosmos/src/utils/nonStreamingOrderByMap.ts
+@@ -0,0 +1,56 @@
++// Copyright (c) Microsoft Corporation.
++// Licensed under the MIT license.
++
++/**
++ * Stores the most favourable distinct result from a set of nonStreamingOrderBy results.
++ */
++export class NonStreamingOrderByMap<T> {
++  private map: Map<string, T>;
++  private compareFn: (a: T | undefined, b: T | undefined) => number;
++
++  constructor(compareFn: (a: T | undefined, b: T | undefined) => number) {
++    this.compareFn = compareFn;
++    this.map = new Map<string, T>();
++  }
++
++  public set(key: string, value: T): void {
++    if (!this.map.has(key)) {
++      // If the key is not present in the map, add it.
++      this.map.set(key, value);
++    } else {
++      // If the key is present in the map, compare the similarity score of the new value with the old value. Keep the more favourable one.
++      const oldValue = this.map.get(key);
++      if (this.replaceResults(oldValue, value)) {
++        this.map.set(key, value);
++      }
++    }
++  }
++
++  public get(key: string): T | undefined {
++    if (!this.map.has(key)) return undefined;
++
++    return this.map.get(key);
++  }
++  /**
++   * Returns all the values in the map and resets the map.
++   */
++  public getAllValuesAndReset(): T[] {
++    const res: T[] = [];
++    for (const [key, value] of this.map) {
++      res.push(value);
++      this.map.delete(key);
++    }
++    return res;
++  }
++
++  private replaceResults(res1: T | undefined, res2: T | undefined): boolean {
++    const res = this.compareFn(res1, res2);
++    if (res < 0) return true;
++
++    return false;
++  }
++
++  public size(): number {
++    return this.map.size;
++  }
++}
+diff --git a/sdk/cosmosdb/cosmos/src/utils/supportedQueryFeaturesBuilder.ts b/sdk/cosmosdb/cosmos/src/utils/supportedQueryFeaturesBuilder.ts
+new file mode 100644
+index 00000000000..5e3e499d23b
+--- /dev/null
++++ b/sdk/cosmosdb/cosmos/src/utils/supportedQueryFeaturesBuilder.ts
+@@ -0,0 +1,13 @@
++// Copyright (c) Microsoft Corporation.
++// Licensed under the MIT license.
++import { QueryFeature } from "../common";
++
++export function supportedQueryFeaturesBuilder(disableNonStreamingOrderByQuery?: boolean): string {
++  if (disableNonStreamingOrderByQuery) {
++    return Object.keys(QueryFeature)
++      .filter((k) => k !== QueryFeature.NonStreamingOrderBy)
++      .join(", ");
++  } else {
++    return Object.keys(QueryFeature).join(", ");
++  }
++}
+diff --git a/sdk/cosmosdb/cosmos/tsconfig.strict.json b/sdk/cosmosdb/cosmos/tsconfig.strict.json
+index 7d4b2980a7d..f70d882bf8d 100644
+--- a/sdk/cosmosdb/cosmos/tsconfig.strict.json
++++ b/sdk/cosmosdb/cosmos/tsconfig.strict.json
+@@ -108,6 +108,7 @@
+     "src/utils/offers.ts",
+     "src/utils/strings.ts",
+     "src/utils/typeChecks.ts",
++    "src/utils/nonStreamingOrderByMap.ts",
+     "src/auth.ts",
+     "src/ChangeFeedIterator.ts",
+     "src/ChangeFeedResponse.ts",
+@@ -143,6 +144,14 @@
+     "src/utils/hashing",
+     "src/client/SasToken/SasTokenProperties.ts",
+     "src/client/SasToken/PermissionScopeValues.ts",
++    "src/documents/VectorEmbeddingPolicy.ts",
++    "src/queryExecutionContext/EndpointComponent/NonStreamingOrderByDistinctEndpointComponent.ts",
++    "src/queryExecutionContext/EndpointComponent/NonStreamingOrderByEndpointComponent.ts",
++    "src/queryExecutionContext/nonStreamingOrderByResponse.ts",
++    "src/queryExecutionContext/nonStreamingOrderByResult.ts",
++    "src/queryExecutionContext/orderByComparator.ts",
++    "src/utils/fixedSizePriorityQueue.ts",
++    "src/utils/supportedQueryFeaturesBuilder.ts",
+     "test/public/common/TestHelpers.ts",
+     "test/internal/session.spec.ts",
+     "test/internal/unit/auth.spec.ts",
+@@ -164,6 +173,8 @@
+     "test/internal/unit/utils/offer.spec.ts",
+     "test/internal/unit/client.spec.ts",
+     "test/internal/unit/timeoutFailoverRetryPolicy.spec.ts",
++    "test/internal/unit/nonStreamingOrderByMap.spec.ts",
++    "test/internal/unit/utils/supportedQueryFeaturesBuilder.spec.ts",
+     "test/public/common/BaselineTest.PathParser.ts",
+     "test/public/common/TestData.ts",
+     "test/public/common/setup.ts",
+@@ -178,6 +189,8 @@
+     "test/public/functional/item/bulk.item.spec.ts",
+     "test/public/functional/item/batch.item.spec.ts",
+     "test/public/functional/item/itemIdEncoding.spec.ts",
++    "test/public/functional/endpointComponent/NonStreamingOrderByEndpointComponent.spec.ts",
++    "test/public/functional/endpointComponent/NonStreamingOrderByDistinctEndpointComponent.spec.ts",
+     "test/public/functional/npcontainer.spec.ts",
+     "test/public/functional/offer.spec.ts",
+     "test/public/functional/permission.spec.ts",
+@@ -207,7 +220,11 @@
+     "test/public/integration/sslVerification.spec.ts",
+     "test/public/integration/timeout.spec.ts",
+     "test/public/integration/aggregates/groupBy.spec.ts",
++    "test/public/integration/nonStreamingOrderBy/nonStreamingOrderBy.spec.ts",
++    "test/public/integration/nonStreamingOrderBy/nonStreamingDistinctOrderBy.spec.ts",
++    "test/public/integration/client.retry.spec.ts",
++    "test/public/functional/vectorEmbeddingPolicy.spec.ts",
+     "test/public/functional/computedProperties.spec.ts",
+-    "test/public/integration/client.retry.spec.ts"
++    "test/internal/unit/utils/nonStreamingOrderByPriorityQueue.spec.ts"
+   ]
+ }

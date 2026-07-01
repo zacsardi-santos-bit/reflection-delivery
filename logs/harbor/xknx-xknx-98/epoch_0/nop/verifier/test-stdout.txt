@@ -1,0 +1,56 @@
+patching file test/config_test.py
+patching file test/dpt_scene_number_test.py
+patching file test/scene_test.py
+patching file test/str_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: timeout-2.4.0, cov-7.1.0
+collecting ... collected 0 items / 4 errors
+
+==================================== ERRORS ====================================
+_____________________ ERROR collecting test/config_test.py _____________________
+ImportError while importing test module '/workspace/repo/test/config_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+test/config_test.py:6: in <module>
+    from xknx.devices import (Action, BinarySensor, Climate, Cover, DateTime,
+E   ImportError: cannot import name 'Scene' from 'xknx.devices' (/workspace/repo/xknx/devices/__init__.py)
+________________ ERROR collecting test/dpt_scene_number_test.py ________________
+ImportError while importing test module '/workspace/repo/test/dpt_scene_number_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+test/dpt_scene_number_test.py:5: in <module>
+    from xknx.knx import DPTSceneNumber
+E   ImportError: cannot import name 'DPTSceneNumber' from 'xknx.knx' (/workspace/repo/xknx/knx/__init__.py)
+_____________________ ERROR collecting test/scene_test.py ______________________
+ImportError while importing test module '/workspace/repo/test/scene_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+test/scene_test.py:8: in <module>
+    from xknx.devices import Scene
+E   ImportError: cannot import name 'Scene' from 'xknx.devices' (/workspace/repo/xknx/devices/__init__.py)
+______________________ ERROR collecting test/str_test.py _______________________
+ImportError while importing test module '/workspace/repo/test/str_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+test/str_test.py:6: in <module>
+    from xknx.devices import (Action, ActionBase, ActionCallback, BinarySensor,
+E   ImportError: cannot import name 'Scene' from 'xknx.devices' (/workspace/repo/xknx/devices/__init__.py)
+=========================== short test summary info ============================
+ERROR test/config_test.py
+ERROR test/dpt_scene_number_test.py
+ERROR test/scene_test.py
+ERROR test/str_test.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 4 errors in 0.43s ===============================
+reward=0 graded=77 found=0 failed=0 parsed=0 framework=pytest exit_code=2

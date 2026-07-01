@@ -1,0 +1,17 @@
+patching file test/fixtures/dialects/snowflake/select_asof_join.sql
+patching file test/fixtures/dialects/snowflake/select_asof_join.yml
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: xdist-3.8.0, hypothesis-6.155.7
+collecting ... collected 4326 items / 4323 deselected / 3 selected
+
+test/dialects/dialects_test.py::test__dialect__base_file_parse[snowflake-select_asof_join.sql] PASSED [ 33%]
+test/dialects/dialects_test.py::test__dialect__base_broad_fix[snowflake-select_asof_join.sql] PASSED [ 66%]
+test/dialects/dialects_test.py::test__dialect__base_parse_struct[snowflake-select_asof_join.sql-True-select_asof_join.yml] PASSED [100%]
+
+====================== 3 passed, 4323 deselected in 2.20s ======================
+reward=1 graded=3 found=0 failed=0 parsed=4326 framework=pytest exit_code=0

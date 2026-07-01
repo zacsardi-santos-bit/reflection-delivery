@@ -1,0 +1,12 @@
+patching file naga/tests/snapshots.rs
+patching file naga/tests/spirv_capabilities.rs
+   Compiling naga v0.20.0 (/workspace/repo/naga)
+    Finished test [unoptimized + debuginfo] target(s) in 6.17s
+────────────
+ Nextest run ID 0ad1c0b7-ae55-446b-a1b3-bc2d85933908 with nextest profile: default
+    Starting 0 tests across 2 binaries (153 tests skipped)
+────────────
+     Summary [   0.001s] 0 tests run: 0 passed, 153 skipped
+error: no tests to run
+(hint: use `--no-tests` to customize)
+reward=0 graded=10 found=0 failed=0 parsed=0 framework=cargo exit_code=4

@@ -1,0 +1,43 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest --config=jest.json tests/renderer/components/settings-electron-spec.tsx tests/renderer/components/version-select-spec.tsx tests/utils/disable-download-spec.ts --coverage=false --verbose --json",
+  "test_files": [
+    "tests/renderer/components/settings-electron-spec.tsx",
+    "tests/renderer/components/version-select-spec.tsx",
+    "tests/utils.ts",
+    "tests/utils/disable-download-spec.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tests/utils/disable-download-spec.ts::disableDownload always return false when the system is windows",
+    "/workspace/repo/tests/utils/disable-download-spec.ts::disableDownload always return false when the system is linux",
+    "/workspace/repo/tests/utils/disable-download-spec.ts::disableDownload always return false when the system is macOS and the arch is not arm64",
+    "/workspace/repo/tests/utils/disable-download-spec.ts::disableDownload returns true if the system is macOS and the arch is arm64",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component renders",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component renderItem() renders an item",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component renderItem() returns null if it does not match predicate",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component disableDownload disables download buttons when return value is true",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component disableDownload does not disable enabled download buttons when return value is false",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component getItemLabel() returns the correct label for a local version",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component getItemLabel() returns the correct label for a version not downloaded",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component getItemLabel() returns the correct label for a version downloaded",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component getItemLabel() returns the correct label for a version downloading",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component getItemIcon() returns the correct icon",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component filterItems() correctly matches a numeric query",
+    "/workspace/repo/tests/renderer/components/version-select-spec.tsx::VersionSelect component filterItems() sorts in descending order when the query is non-numeric",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component renders",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handles removing a version",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handles downloading a version",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handles missing local versions",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handles the deleteAll()",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handles the downloadAll()",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handleDownloadClick() kicks off an update of Electron versions",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handleAddVersion() toggles the add version dialog",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handleStateChange() toggles remote versions",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handleShowObsoleteChange() toggles obsolete versions",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component handleChannelChange() handles a new selection",
+    "/workspace/repo/tests/renderer/components/settings-electron-spec.tsx::ElectronSettings component disableDownload() disables download buttons where return values are true"
+  ],
+  "PASS_TO_PASS": []
+}

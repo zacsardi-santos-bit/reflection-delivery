@@ -1,0 +1,31 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/components/generators/test_hugging_face_api.py /workspace/repo/test/utils/test_url_validation.py -v -m 'not integration'",
+  "test_files": [
+    "test/components/generators/test_hugging_face_api.py",
+    "test/utils/test_url_validation.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_init_invalid_api_type",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_init_serverless",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_init_serverless_invalid_model",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_init_serverless_no_model",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_init_tgi",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_init_tgi_invalid_url",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_init_tgi_no_url",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_to_dict",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_from_dict",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_generate_text_response_with_valid_prompt_and_generation_parameters",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_generate_text_with_custom_generation_parameters",
+    "test.components.generators.test_hugging_face_api.TestHuggingFaceAPIGenerator::test_generate_text_with_streaming_callback",
+    "test.utils.test_url_validation::test_url_validation_with_valid_http_url",
+    "test.utils.test_url_validation::test_url_validation_with_valid_https_url",
+    "test.utils.test_url_validation::test_url_validation_with_invalid_scheme",
+    "test.utils.test_url_validation::test_url_validation_with_no_scheme",
+    "test.utils.test_url_validation::test_url_validation_with_no_netloc",
+    "test.utils.test_url_validation::test_url_validation_with_empty_string"
+  ],
+  "PASS_TO_PASS": []
+}

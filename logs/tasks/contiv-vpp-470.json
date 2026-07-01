@@ -1,0 +1,23 @@
+{
+ "task": "contiv-vpp-470",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds shared Reflector base with HasSynced()/syncDataStore()/initial sync + argErrors; tests assert HasSynced() after Add/Delete/Update ops; F2P=9 across Endpoints/Namespace/Service reflectors"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 79,
+  "shallow": true
+ }
+}

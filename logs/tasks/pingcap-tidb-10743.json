@@ -1,0 +1,23 @@
+{
+ "task": "pingcap-tidb-10743",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden replaces `return errors.Trace(err)` with log+`continue` per range in deleteRanges/redoDeleteRanges and adds nil/empty-resp + `resp.UnsafeDestroyRange.Error` detection; F2P TestDeleteRangesFailure injects failRPCErr/failNilResp/failErrResp on a 3-store cluster and asserts the failing range sta"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

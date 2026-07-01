@@ -1,0 +1,20 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/component/observability/logging/vali ./pkg/component/observability/opentelemetry/collector ./pkg/gardenlet/operation/botanist ./pkg/utils/gardener -count=1",
+  "test_files": [
+    "pkg/component/observability/logging/vali/vali_suite_test.go",
+    "pkg/component/observability/logging/vali/vali_test.go",
+    "pkg/component/observability/opentelemetry/collector/collector_test.go",
+    "pkg/gardenlet/operation/botanist/logging_test.go",
+    "pkg/utils/gardener/shoot_test.go"
+  ],
+  "num_test_files": 5,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/gardener/gardener/pkg/component/observability/logging/vali::TestVali",
+    "github.com/gardener/gardener/pkg/component/observability/opentelemetry/collector::TestOpenTelemetryCollector",
+    "github.com/gardener/gardener/pkg/utils/gardener::TestGardener",
+    "github.com/gardener/gardener/pkg/gardenlet/operation/botanist::TestBotanist"
+  ],
+  "PASS_TO_PASS": []
+}

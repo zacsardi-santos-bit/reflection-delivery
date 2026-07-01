@@ -1,0 +1,2 @@
+patching file vertical-pod-autoscaler/pkg/utils/limitrange/limit_range_calculator.go
+patching file vertical-pod-autoscaler/pkg/utils/vpa/capping.go

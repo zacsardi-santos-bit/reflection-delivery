@@ -1,0 +1,9 @@
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 59 with fuzz 3.
+Hunk #2 succeeded at 545 with fuzz 2 (offset 113 lines).
+Hunk #3 succeeded at 650 (offset 117 lines).
+patching file internal/config/config.go
+patching file internal/config/jsonnet.go
+patching file internal/config/starlark.go
+patching file internal/services/gateway/action/run.go

@@ -1,0 +1,25 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/web && APP_ENV=testing NODE_ICU_DATA=node_modules/full-icu npx jest components/Technology/Details/__tests__/Responsibles.test.js --watchAll=false --coverage=false",
+  "test_files": [
+    "packages/web/__tests__/pages/user/my-account/__snapshots__/index.js.snap",
+    "packages/web/components/Authorization/__tests__/__snapshots__/Protected.js.snap",
+    "packages/web/components/Card/Share/__tests__/__snapshots__/index.js.snap",
+    "packages/web/components/Modal/__tests__/__snapshots__/BuyTechnologyModal.js.snap",
+    "packages/web/components/Modal/__tests__/__snapshots__/RegisterModal.js.snap",
+    "packages/web/components/Technology/Details/__tests__/Responsibles.test.js",
+    "packages/web/components/Technology/Details/__tests__/__snapshots__/Responsibles.test.js.snap",
+    "packages/web/components/TechnologyForm/Costs/__tests__/__snapshots__/index.js.snap",
+    "packages/web/components/TechnologyForm/Responsible/__tests__/__snapshots__/index.js.snap",
+    "packages/web/components/TechnologyForm/Review/__tests__/__snapshots__/index.js.snap"
+  ],
+  "num_test_files": 10,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/web/components/Technology/Details/__tests__/Responsibles.test.js::<Responsibles /> should render without crashing",
+    "/workspace/repo/packages/web/components/Technology/Details/__tests__/Responsibles.test.js::<Responsibles /> should not render the lattes information when hideLattesInfo is passed"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/web/components/Technology/Details/__tests__/Responsibles.test.js::<Responsibles /> should render without crashing when the responsible are being passed throught"
+  ]
+}

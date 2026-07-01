@@ -1,0 +1,23 @@
+{
+ "task": "builderio-mitosis-1382",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits solid generator: signals.ts adds createMemo to import + wraps onUpdate deps '(dep) => `const ${getReactiveDepName(dep)} = createMemo(() => ${dep});`', state.ts wraps getters '`const ${key} = createMemo(() => {${x}})`'; snapshot output asserts 'const onUpdateFn_0_inputRef = createMemo(()"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

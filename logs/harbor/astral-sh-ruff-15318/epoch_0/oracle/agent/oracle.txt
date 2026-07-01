@@ -1,0 +1,4 @@
+patching file crates/ruff_linter/src/rules/ruff/rules/pytest_raises_ambiguous_pattern.rs
+patching file crates/ruff_linter/src/rules/ruff/rules/unnecessary_regular_expression.rs
+patching file crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__preview__RUF043_RUF043.py.snap
+patching file crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__preview__RUF055_RUF055_0.py.snap

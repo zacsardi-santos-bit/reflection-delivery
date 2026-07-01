@@ -1,0 +1,671 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_pie/PIE800.py
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.67s
+────────────
+ Nextest run ID fb7ea528-a40c-4511-9fd5-1238a9452825 with nextest profile: default
+    Starting 9 tests across 1 binary (2215 tests skipped)
+        FAIL [   0.038s] (1/9) ruff_linter rules::flake8_pie::tests::rules::rule_unnecessaryspread_path_new_pie800_py_expects
+  stdout ───
+
+    running 1 test
+    test rules::flake8_pie::tests::rules::rule_unnecessaryspread_path_new_pie800_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::flake8_pie::tests::rules::rule_unnecessaryspread_path_new_pie800_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2223 filtered out; finished in 0.01s
+
+  stderr ───
+    thread 'rules::flake8_pie::tests::rules::rule_unnecessaryspread_path_new_pie800_py_expects' panicked at crates/ruff_linter/src/test.rs:208:17:
+    Fixed source has a syntax error where the source document does not. This is a bug in one of the generated fixes:
+    PIE800.py:24:40: SyntaxError: Expected ',', found ')'
+       |
+    22 | {
+    23 |     "data": [],
+    24 |     "count": 1 if include_count else {}),
+       |                                        ^
+    25 | }
+       |
+
+    PIE800.py:24:41: SyntaxError: Expected an expression or a '}'
+       |
+    22 | {
+    23 |     "data": [],
+    24 |     "count": 1 if include_count else {}),
+       |                                         ^
+    25 | }
+       |
+
+    PIE800.py:24:42: SyntaxError: Expected ',', found newline
+       |
+    22 | {
+    23 |     "data": [],
+    24 |     "count": 1 if include_count else {}),
+       |                                          ^
+    25 | }
+    26 | 
+    27 | {
+       |
+
+    PIE800.py:30:48: SyntaxError: Expected ',', found ')'
+       |
+    28 |     "data": [],
+    29 |       # Comment
+    30 |             "count": 1 if include_count else {}),
+       |                                                ^
+    31 | }
+       |
+
+    PIE800.py:30:49: SyntaxError: Expected an expression or a '}'
+       |
+    28 |     "data": [],
+    29 |       # Comment
+    30 |             "count": 1 if include_count else {}),
+       |                                                 ^
+    31 | }
+       |
+
+    PIE800.py:30:50: SyntaxError: Expected ',', found newline
+       |
+    28 |     "data": [],
+    29 |       # Comment
+    30 |             "count": 1 if include_count else {}),
+       |                                                  ^
+    31 | }
+    32 | 
+    33 | {
+       |
+
+    PIE800.py:36:30: SyntaxError: Expected ',', found ')'
+       |
+    34 |     "data": [],
+    35 |     
+    36 |             "count": (a := 1)),
+       |                              ^
+    37 | }
+       |
+
+    PIE800.py:36:31: SyntaxError: Expected an expression or a '}'
+       |
+    34 |     "data": [],
+    35 |     
+    36 |             "count": (a := 1)),
+       |                               ^
+    37 | }
+       |
+
+    PIE800.py:36:32: SyntaxError: Expected ',', found newline
+       |
+    34 |     "data": [],
+    35 |     
+    36 |             "count": (a := 1)),
+       |                                ^
+    37 | }
+    38 | 
+    39 | {
+       |
+
+    PIE800.py:44:5: SyntaxError: Expected ',', found ')'
+       |
+    42 |             "count": (a := 1)
+    43 |             
+    44 |     )
+       |     ^
+    45 |     ,
+    46 | }
+       |
+
+    PIE800.py:44:6: SyntaxError: Expected ',', found newline
+       |
+    42 |             "count": (a := 1)
+    43 |             
+    44 |     )
+       |      ^
+    45 |     ,
+    46 | }
+       |
+
+    PIE800.py:45:1: SyntaxError: Expected ',', found indent
+       |
+    44 |     )
+    45 |     ,
+       | ^
+    46 | }
+       |
+
+    PIE800.py:45:5: SyntaxError: Expected an expression or a '}'
+       |
+    44 |     )
+    45 |     ,
+       |     ^
+    46 | }
+       |
+
+    PIE800.py:45:6: SyntaxError: Expected ',', found newline
+       |
+    44 |     )
+    45 |     ,
+       |      ^
+    46 | }
+    47 | 
+    48 | {
+       |
+
+    PIE800.py:46:1: SyntaxError: Expected ',', found dedent
+       |
+    44 |     )
+    45 |     ,
+    46 | }
+       | ^
+    47 | 
+    48 | {
+       |
+
+    PIE800.py:53:5: SyntaxError: Expected ',', found ')'
+       |
+    51 |             "count": (a := 1)  # Comment
+    52 |               # Comment
+    53 |     ) # Comment
+       |     ^
+    54 |     ,
+    55 | }
+       |
+
+    PIE800.py:53:16: SyntaxError: Expected ',', found newline
+       |
+    51 |             "count": (a := 1)  # Comment
+    52 |               # Comment
+    53 |     ) # Comment
+       |                ^
+    54 |     ,
+    55 | }
+       |
+
+    PIE800.py:54:1: SyntaxError: Expected ',', found indent
+       |
+    52 |               # Comment
+    53 |     ) # Comment
+    54 |     ,
+       | ^
+    55 | }
+       |
+
+    PIE800.py:54:5: SyntaxError: Expected an expression or a '}'
+       |
+    52 |               # Comment
+    53 |     ) # Comment
+    54 |     ,
+       |     ^
+    55 | }
+       |
+
+    PIE800.py:54:6: SyntaxError: Expected ',', found newline
+       |
+    52 |               # Comment
+    53 |     ) # Comment
+    54 |     ,
+       |      ^
+    55 | }
+    56 | 
+    57 | ({
+       |
+
+    PIE800.py:55:1: SyntaxError: Expected ',', found dedent
+       |
+    53 |     ) # Comment
+    54 |     ,
+    55 | }
+       | ^
+    56 | 
+    57 | ({
+       |
+
+    PIE800.py:62:13: SyntaxError: Expected ',', found ')'
+       |
+    60 |             "count": (a := 1)  # Comment
+    61 |           # Comment
+    62 |             )
+       |             ^
+    63 |     ) # Comment
+    64 |     ,
+       |
+
+    PIE800.py:63:5: SyntaxError: Expected ',', found ')'
+       |
+    61 |           # Comment
+    62 |             )
+    63 |     ) # Comment
+       |     ^
+    64 |     ,
+    65 | })
+       |
+
+    PIE800.py:63:16: SyntaxError: Expected ',', found newline
+       |
+    61 |           # Comment
+    62 |             )
+    63 |     ) # Comment
+       |                ^
+    64 |     ,
+    65 | })
+       |
+
+    PIE800.py:64:1: SyntaxError: Expected ',', found indent
+       |
+    62 |             )
+    63 |     ) # Comment
+    64 |     ,
+       | ^
+    65 | })
+       |
+
+    PIE800.py:64:5: SyntaxError: Expected an expression or a '}'
+       |
+    62 |             )
+    63 |     ) # Comment
+    64 |     ,
+       |     ^
+    65 | })
+       |
+
+    PIE800.py:64:6: SyntaxError: Expected ',', found newline
+       |
+    62 |             )
+    63 |     ) # Comment
+    64 |     ,
+       |      ^
+    65 | })
+       |
+
+    PIE800.py:65:1: SyntaxError: Expected ',', found dedent
+       |
+    63 |     ) # Comment
+    64 |     ,
+    65 | })
+       | ^
+       |
+
+
+    Last generated fixes:
+    PIE800.py:1:14: PIE800 [*] Unnecessary spread `**`
+      |
+    1 | {"foo": 1, **{"bar": 1}}  # PIE800
+      |              ^^^^^^^^^^ PIE800
+    2 | 
+    3 | {**{"bar": 10}, "a": "b"}  # PIE800
+      |
+      = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    1   |-{"foo": 1, **{"bar": 1}}  # PIE800
+      1 |+{"foo": 1, "bar": 1}  # PIE800
+    2 2 | 
+    3 3 | {**{"bar": 10}, "a": "b"}  # PIE800
+    4 4 | 
+
+    PIE800.py:3:4: PIE800 [*] Unnecessary spread `**`
+      |
+    1 | {"foo": 1, **{"bar": 1}}  # PIE800
+    2 | 
+    3 | {**{"bar": 10}, "a": "b"}  # PIE800
+      |    ^^^^^^^^^^^ PIE800
+    4 | 
+    5 | foo({**foo, **{"bar": True}})  # PIE800
+      |
+      = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    1 1 | {"foo": 1, **{"bar": 1}}  # PIE800
+    2 2 | 
+    3   |-{**{"bar": 10}, "a": "b"}  # PIE800
+      3 |+{"bar": 10, "a": "b"}  # PIE800
+    4 4 | 
+    5 5 | foo({**foo, **{"bar": True}})  # PIE800
+    6 6 | 
+
+    PIE800.py:5:15: PIE800 [*] Unnecessary spread `**`
+      |
+    3 | {**{"bar": 10}, "a": "b"}  # PIE800
+    4 | 
+    5 | foo({**foo, **{"bar": True}})  # PIE800
+      |               ^^^^^^^^^^^^^ PIE800
+    6 | 
+    7 | {**foo, **{"bar": 10}}  # PIE800
+      |
+      = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    2 2 | 
+    3 3 | {**{"bar": 10}, "a": "b"}  # PIE800
+    4 4 | 
+    5   |-foo({**foo, **{"bar": True}})  # PIE800
+      5 |+foo({**foo, "bar": True})  # PIE800
+    6 6 | 
+    7 7 | {**foo, **{"bar": 10}}  # PIE800
+    8 8 | 
+
+    PIE800.py:7:11: PIE800 [*] Unnecessary spread `**`
+      |
+    5 | foo({**foo, **{"bar": True}})  # PIE800
+    6 | 
+    7 | {**foo, **{"bar": 10}}  # PIE800
+      |           ^^^^^^^^^^^ PIE800
+    8 | 
+    9 | { # PIE800
+      |
+      = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    4 4 | 
+    5 5 | foo({**foo, **{"bar": True}})  # PIE800
+    6 6 | 
+    7   |-{**foo, **{"bar": 10}}  # PIE800
+      7 |+{**foo, "bar": 10}  # PIE800
+    8 8 | 
+    9 9 | { # PIE800
+    10 10 |     "a": "b",
+
+    PIE800.py:12:7: PIE800 [*] Unnecessary spread `**`
+       |
+    10 |       "a": "b",
+    11 |       # Preserve
+    12 |       **{
+       |  _______^
+    13 | |         # all
+    14 | |         "bar": 10,  # the
+    15 | |         # comments
+    16 | |     },
+       | |_____^ PIE800
+    17 |   }
+       |
+       = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    9  9  | { # PIE800
+    10 10 |     "a": "b",
+    11 11 |     # Preserve
+    12    |-    **{
+       12 |+    
+    13 13 |         # all
+    14    |-        "bar": 10,  # the
+       14 |+        "bar": 10  # the
+    15 15 |         # comments
+    16    |-    },
+       16 |+    ,
+    17 17 | }
+    18 18 | 
+    19 19 | {**foo, **buzz, **{bar: 10}}  # PIE800
+
+    PIE800.py:19:19: PIE800 [*] Unnecessary spread `**`
+       |
+    17 | }
+    18 | 
+    19 | {**foo, **buzz, **{bar: 10}}  # PIE800
+       |                   ^^^^^^^^^ PIE800
+    20 | 
+    21 | # https://github.com/astral-sh/ruff/issues/15366
+       |
+       = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    16 16 |     },
+    17 17 | }
+    18 18 | 
+    19    |-{**foo, **buzz, **{bar: 10}}  # PIE800
+       19 |+{**foo, **buzz, bar: 10}  # PIE800
+    20 20 | 
+    21 21 | # https://github.com/astral-sh/ruff/issues/15366
+    22 22 | {
+
+    PIE800.py:24:8: PIE800 [*] Unnecessary spread `**`
+       |
+    22 | {
+    23 |     "data": [],
+    24 |     **({"count": 1 if include_count else {}}),
+       |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PIE800
+    25 | }
+       |
+       = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    21 21 | # https://github.com/astral-sh/ruff/issues/15366
+    22 22 | {
+    23 23 |     "data": [],
+    24    |-    **({"count": 1 if include_count else {}}),
+       24 |+    "count": 1 if include_count else {}),
+    25 25 | }
+    26 26 | 
+    27 27 | {
+
+    PIE800.py:30:9: PIE800 [*] Unnecessary spread `**`
+       |
+    28 |       "data": [],
+    29 |       **(  # Comment
+    30 |           {  # Comment
+       |  _________^
+    31 | |             "count": 1 if include_count else {}}),
+       | |________________________________________________^ PIE800
+    32 |   }
+       |
+       = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    26 26 | 
+    27 27 | {
+    28 28 |     "data": [],
+    29    |-    **(  # Comment
+    30    |-        {  # Comment
+    31    |-            "count": 1 if include_count else {}}),
+       29 |+      # Comment
+       30 |+            "count": 1 if include_count else {}),
+    32 31 | }
+    33 32 | 
+    34 33 | {
+
+    PIE800.py:37:9: PIE800 [*] Unnecessary spread `**`
+       |
+    35 |       "data": [],
+    36 |       **(
+    37 |           {
+       |  _________^
+    38 | |             "count": (a := 1),}),
+       | |_______________________________^ PIE800
+    39 |   }
+       |
+       = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    33 33 | 
+    34 34 | {
+    35 35 |     "data": [],
+    36    |-    **(
+    37    |-        {
+    38    |-            "count": (a := 1),}),
+       36 |+    
+       37 |+            "count": (a := 1)),
+    39 38 | }
+    40 39 | 
+    41 40 | {
+
+    PIE800.py:44:9: PIE800 [*] Unnecessary spread `**`
+       |
+    42 |       "data": [],
+    43 |       **(
+    44 |           {
+       |  _________^
+    45 | |             "count": (a := 1)
+    46 | |             }
+       | |_____________^ PIE800
+    47 |       )
+    48 |       ,
+       |
+       = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    40 40 | 
+    41 41 | {
+    42 42 |     "data": [],
+    43    |-    **(
+    44    |-        {
+       43 |+    
+    45 44 |             "count": (a := 1)
+    46    |-            }
+       45 |+            
+    47 46 |     )
+    48 47 |     ,
+    49 48 | }
+
+    PIE800.py:54:9: PIE800 [*] Unnecessary spread `**`
+       |
+    52 |       "data": [],
+    53 |       **(
+    54 |           {
+       |  _________^
+    55 | |             "count": (a := 1),  # Comment
+    56 | |             }  # Comment
+       | |_____________^ PIE800
+    57 |       ) # Comment
+    58 |       ,
+       |
+       = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    50 50 | 
+    51 51 | {
+    52 52 |     "data": [],
+    53    |-    **(
+    54    |-        {
+    55    |-            "count": (a := 1),  # Comment
+    56    |-            }  # Comment
+       53 |+    
+       54 |+            "count": (a := 1)  # Comment
+       55 |+              # Comment
+    57 56 |     ) # Comment
+    58 57 |     ,
+    59 58 | }
+
+    PIE800.py:65:1: PIE800 [*] Unnecessary spread `**`
+       |
+    63 |       **(  # Comment
+    64 |           (   # Comment
+    65 | / { # Comment
+    66 | |             "count": (a := 1),  # Comment
+    67 | |         }  # Comment
+       | |_________^ PIE800
+    68 |               )
+    69 |       ) # Comment
+       |
+       = help: Remove unnecessary dict
+
+    ℹ Safe fix
+    60 60 | 
+    61 61 | ({
+    62 62 |     "data": [],
+    63    |-    **(  # Comment
+    64    |-        (   # Comment
+    65    |-{ # Comment
+    66    |-            "count": (a := 1),  # Comment
+    67    |-        }  # Comment
+       63 |+     # Comment
+       64 |+            "count": (a := 1)  # Comment
+       65 |+          # Comment
+    68 66 |             )
+    69 67 |     ) # Comment
+    70 68 |     ,
+
+
+    Source with applied fixes:
+    {"foo": 1, "bar": 1}  # PIE800
+
+    {"bar": 10, "a": "b"}  # PIE800
+
+    foo({**foo, "bar": True})  # PIE800
+
+    {**foo, "bar": 10}  # PIE800
+
+    { # PIE800
+        "a": "b",
+        # Preserve
+        
+            # all
+            "bar": 10  # the
+            # comments
+        ,
+    }
+
+    {**foo, **buzz, bar: 10}  # PIE800
+
+    # https://github.com/astral-sh/ruff/issues/15366
+    {
+        "data": [],
+        "count": 1 if include_count else {}),
+    }
+
+    {
+        "data": [],
+          # Comment
+                "count": 1 if include_count else {}),
+    }
+
+    {
+        "data": [],
+        
+                "count": (a := 1)),
+    }
+
+    {
+        "data": [],
+        
+                "count": (a := 1)
+                
+        )
+        ,
+    }
+
+    {
+        "data": [],
+        
+                "count": (a := 1)  # Comment
+                  # Comment
+        ) # Comment
+        ,
+    }
+
+    ({
+        "data": [],
+         # Comment
+                "count": (a := 1)  # Comment
+              # Comment
+                )
+        ) # Comment
+        ,
+    })
+
+
+    {**foo,    "bar": True  }  # OK
+
+    {"foo": 1, "buzz": {"bar": 1}}  # OK
+
+    {**foo,    "bar": True  }  # OK
+
+    Table.objects.filter(inst=inst, **{f"foo__{bar}__exists": True})  # OK
+
+    buzz = {**foo, "bar": { 1: 2 }}  # OK
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 8 tests still running
+        PASS [   0.142s] (2/9) ruff_linter rules::flake8_pie::tests::rules::rule_multiplestartsendswith_path_new_pie810_py_expects
+        PASS [   0.142s] (3/9) ruff_linter rules::flake8_pie::tests::rules::rule_duplicateclassfielddefinition_path_new_pie794_py_expects
+        PASS [   0.143s] (4/9) ruff_linter rules::flake8_pie::tests::rules::rule_reimplementedcontainerbuiltin_path_new_pie807_py_expects
+        PASS [   0.144s] (5/9) ruff_linter rules::flake8_pie::tests::rules::rule_nonuniqueenums_path_new_pie796_pyi_expects
+        PASS [   0.145s] (6/9) ruff_linter rules::flake8_pie::tests::rules::rule_unnecessaryrangestart_path_new_pie808_py_expects
+        PASS [   0.147s] (7/9) ruff_linter rules::flake8_pie::tests::rules::rule_nonuniqueenums_path_new_pie796_py_expects
+        PASS [   0.147s] (8/9) ruff_linter rules::flake8_pie::tests::rules::rule_unnecessarydictkwargs_path_new_pie804_py_expects
+        PASS [   0.151s] (9/9) ruff_linter rules::flake8_pie::tests::rules::rule_unnecessaryplaceholder_path_new_pie790_py_expects
+────────────
+     Summary [   0.156s] 9 tests run: 8 passed, 1 failed, 2215 skipped
+        FAIL [   0.038s] (1/9) ruff_linter rules::flake8_pie::tests::rules::rule_unnecessaryspread_path_new_pie800_py_expects
+error: test run failed
+reward=0 graded=9 found=0 failed=0 parsed=9 framework=cargo exit_code=100

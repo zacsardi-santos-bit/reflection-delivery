@@ -1,0 +1,23 @@
+{
+ "task": "cri-o-cri-o-8213",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden ReloadPinnedImages sets `c.PinnedImages = []string{}` on empty newConfig; baked test asserts `len(c.PinnedImages) != 0` fails after reload with empty list"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 25,
+  "shallow": true
+ }
+}

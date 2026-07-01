@@ -1,0 +1,47 @@
+patching file tests/test_smoke.py
+patching file tests/test_yamls/test_storage_mounting.yaml.j2
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: xdist-3.8.0, env-1.6.0
+collected 5 items
+
+tests/test_smoke.py E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'ab'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz1'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'Abcdef'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'abc def'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'abc..def'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name '192.168.5.4'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'xn--bucket'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'bucket-s3alias'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'bucket--ol-s3'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name '.abc'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'abc.'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name '-abc'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.S3store with name 'abc-'.
+.E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'ab'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz1'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'Abcdef'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'abc def'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'abc..def'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'abc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz1abc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqfghijklmnopqrstuvwabc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz1abc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqfghijklmnopqrstuvwabc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz1abc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqfghijklmnopqrstuvwabc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz1abc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqfghijklmnopqrstuvwabc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz1abc_.def.ghi.jklmnopqrstuvwxyzabcdefghijklmnopqfghijklmnopqrstuvw'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name '192.168.5.4'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'googbucket'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'googlebucket'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'g00glebucket'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'go0glebucket'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'g0oglebucket'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name '.abc'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'abc.'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name '_abc'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.GCSstore with name 'abc_'.
+.E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.AZUREstore with name 'ab'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.AZUREstore with name 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz1'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.AZUREstore with name 'Abcdef'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.AZUREstore with name '.abc'.
+E 06-29 15:25:19 storage.py:916] Could not mount externally created StoreType.AZUREstore with name 'a--bc'.
+.ss
+
+================== 3 passed, 2 skipped, 248 warnings in 0.19s ==================
+reward=1 graded=3 found=0 failed=0 parsed=5 framework=pytest exit_code=0

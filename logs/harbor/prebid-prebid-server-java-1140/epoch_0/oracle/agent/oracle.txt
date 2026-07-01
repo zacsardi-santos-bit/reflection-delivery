@@ -1,0 +1,5 @@
+patching file src/main/java/org/prebid/server/bidder/OpenrtbBidder.java
+patching file src/main/java/org/prebid/server/bidder/pulsepoint/PulsepointBidder.java
+patching file src/main/java/org/prebid/server/proto/openrtb/ext/request/pulsepoint/ExtImpPulsepoint.java
+patching file src/main/resources/bidder-config/pulsepoint.yaml
+patching file src/main/resources/static/bidder-params/pulsepoint.json

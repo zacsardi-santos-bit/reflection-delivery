@@ -1,0 +1,38 @@
+patching file migrator/clone/clone_test.go
+patching file migrator/clone/postgres/db_clone_manager_impl_external_test.go
+patching file migrator/clone/postgres/db_clone_manager_impl_test.go
+Starting PostgreSQL 15 database server: main.
+# github.com/stackrox/rox/migrator/clone/postgres [github.com/stackrox/rox/migrator/clone/postgres.test]
+migrator/clone/postgres/db_clone_manager_impl_external_test.go:104:52: not enough arguments in call to dbm.GetCloneToMigrate
+	have (nil)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_external_test.go:162:52: not enough arguments in call to dbm.GetCloneToMigrate
+	have (*migrations.MigrationVersion)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_external_test.go:178:51: not enough arguments in call to dbm.GetCloneToMigrate
+	have (*migrations.MigrationVersion)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_external_test.go:194:51: not enough arguments in call to dbm.GetCloneToMigrate
+	have (*migrations.MigrationVersion)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_test.go:202:52: not enough arguments in call to dbm.GetCloneToMigrate
+	have (nil)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_test.go:225:52: not enough arguments in call to dbm.GetCloneToMigrate
+	have (*migrations.MigrationVersion)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_test.go:234:51: not enough arguments in call to dbm.GetCloneToMigrate
+	have (*migrations.MigrationVersion)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_test.go:250:51: not enough arguments in call to dbm.GetCloneToMigrate
+	have (*migrations.MigrationVersion)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_test.go:265:52: not enough arguments in call to dbm.GetCloneToMigrate
+	have (nil)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_test.go:288:52: not enough arguments in call to dbm.GetCloneToMigrate
+	have (nil)
+	want (*migrations.MigrationVersion, bool)
+migrator/clone/postgres/db_clone_manager_impl_test.go:288:52: too many errors
+FAIL	github.com/stackrox/rox/migrator/clone/postgres [build failed]
+reward=0 graded=16 found=16 failed=16 parsed=1 framework=go exit_code=1

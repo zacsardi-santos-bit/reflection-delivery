@@ -1,0 +1,47 @@
+patching file tests/pytests/functional/channel/test_req_channel.py
+patching file tests/pytests/functional/transport/tcp/test_pub_server.py
+patching file tests/pytests/unit/modules/test_minion.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+max open files: soft=1048576; hard=1048576
+salt-transport: zeromq
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: custom-exit-code-0.3.0, salt-factories-1.0.5, shell-utilities-1.9.7, system-statistics-1.0.2, skip-markers-1.5.2, flaky-3.8.1, helpers-namespace-2021.12.29, timeout-2.4.0, pyfakefs-6.2.0, pytest_httpserver-1.1.5
+collecting ... collected 25 items
+
+tests/pytests/unit/modules/test_minion.py::test_is_systemd_systemd PASSED [  4%]
+tests/pytests/unit/modules/test_minion.py::test_is_windows_system PASSED [  8%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_systemd PASSED [ 12%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_windows PASSED [ 16%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_invalid_delay PASSED [ 20%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_dispatch[neither] PASSED [ 24%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_dispatch[systemd] PASSED [ 28%]
+tests/pytests/unit/modules/test_minion.py::test_schedule_retry_dispatch[windows] PASSED [ 32%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_custom_command PASSED [ 36%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_systems[True-False-expected_service_call0] PASSED [ 40%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_systems[False-True-expected_service_call1] PASSED [ 44%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_override[False-None] PASSED [ 48%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_service_override[None-False] PASSED [ 52%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_non_service_systems[argv0-True] PASSED [ 56%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_non_service_systems[argv1-False] PASSED [ 60%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[True-False-None] PASSED [ 64%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[True-False-300] PASSED [ 68%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[False-True-None] PASSED [ 72%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_success[False-True-60] PASSED [ 76%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_failure[True-False] PASSED [ 80%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_with_schedule_retry_failure[False-True] PASSED [ 84%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_without_schedule_retry PASSED [ 88%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_schedule_retry_service_restart_failure[True-False] PASSED [ 92%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_schedule_retry_service_restart_failure[False-True] PASSED [ 96%]
+tests/pytests/unit/modules/test_minion.py::test_minion_restart_schedule_retry_non_service_system PASSED [100%]
+
+=============================== warnings summary ===============================
+salt/utils/pycrypto.py:27
+  /workspace/repo/salt/utils/pycrypto.py:27: DeprecationWarning: 'crypt' is deprecated and slated for removal in Python 3.13
+    import crypt
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 25 passed, 1 warning in 1.15s =========================
+reward=1 graded=25 found=0 failed=0 parsed=8 framework=pytest exit_code=0

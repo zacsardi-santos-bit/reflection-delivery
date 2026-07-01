@@ -1,0 +1,5 @@
+I'm working with sea-orm's partial model system and running into some limitations. When I build a custom query result struct that includes data from a joined table, I can use the nested attribute to pull in fields from a related partial model — but I can't use the actual entity model type directly as a nested field. If I want all the columns from a joined entity, I have to define a redundant partial struct that mirrors the entity model exactly, which feels like unnecessary boilerplate.
+
+Additionally, I'd like to be able to use an entity's own model type directly as the target type when calling the partial model query method — right now it only works with custom partial model structs, not with entity model types themselves.
+
+It would be great if entity model types were treated as first-class participants in the partial model system: both as the top-level target of a partial model query and as nested fields within a partial model struct, particularly when using left joins where the nested record may or may not be present.

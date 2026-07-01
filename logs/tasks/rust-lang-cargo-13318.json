@@ -1,0 +1,23 @@
+{
+ "task": "rust-lang-cargo-13318",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P pkgid_querystring_works runs cargo pkgid on a git-branch dep then 'cargo build -p <pkgid?branch=master#1.0.0>' asserting [COMPILING] gitdep; golden guards is_glob_pattern with PackageIdSpec::parse(x).is_err()."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

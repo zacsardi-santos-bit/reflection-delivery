@@ -1,0 +1,2 @@
+patching file examples/cryptocurrency/Cargo.toml
+patching file examples/cryptocurrency/src/lib.rs

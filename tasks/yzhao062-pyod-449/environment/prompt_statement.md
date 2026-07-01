@@ -1,0 +1,7 @@
+I'd like to add a new outlier detection algorithm to the pyod library that uses kernel-based dimensionality reduction. The idea is to project data into a lower-dimensional space using a kernel function and use the reconstruction error as the anomaly score — points that can't be well reconstructed are more likely to be outliers.
+
+The new detector should work just like all the existing ones in the library: it should support fitting on training data and then scoring, predicting labels, estimating probabilities, and computing rank-based scores on test data. It should also support returning confidence alongside predictions and probabilities, and it should be compatible with scikit-learn's model cloning.
+
+I also need it to support an optional sampling mode where only a subset of training data is used, since kernel methods can be slow on large datasets. Users should be able to specify the subset size either as a fraction of the training set (a positive value up to 1.0) or as an absolute count (a positive integer up to the full training set size). Invalid subset sizes — such as fractional values of 0 or greater than 1, non-positive integers, or integers exceeding the training set size — should raise a clear error.
+
+Additionally, the number of components used in the dimensionality reduction should be configurable, and there should also be an option to select only a subset of those components for scoring. Negative component counts and selected component counts that exceed the total number of components or are non-positive should also raise errors.

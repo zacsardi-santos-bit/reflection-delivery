@@ -1,0 +1,68 @@
+patching file tsdb/agent/db_test.go
+patching file tsdb/db_test.go
+patching file tsdb/head_test.go
+patching file tsdb/ooo_head_read_test.go
+patching file tsdb/record/record_test.go
+patching file tsdb/wlog/checkpoint_test.go
+patching file tsdb/wlog/watcher_test.go
+# github.com/prometheus/prometheus/tsdb/record [github.com/prometheus/prometheus/tsdb/record.test]
+tsdb/record/record_test.go:173:42: assignment mismatch: 2 variables but enc.HistogramSamples returns 1 value
+tsdb/record/record_test.go:174:34: enc.CustomBucketsHistogramSamples undefined (type Encoder has no field or method CustomBucketsHistogramSamples)
+tsdb/record/record_test.go:190:52: assignment mismatch: 2 variables but enc.FloatHistogramSamples returns 1 value
+tsdb/record/record_test.go:191:39: enc.CustomBucketsFloatHistogramSamples undefined (type Encoder has no field or method CustomBucketsFloatHistogramSamples)
+tsdb/record/record_test.go:204:52: assignment mismatch: 2 variables but enc.HistogramSamples returns 1 value
+tsdb/record/record_test.go:205:39: enc.CustomBucketsHistogramSamples undefined (type Encoder has no field or method CustomBucketsHistogramSamples)
+tsdb/record/record_test.go:218:62: assignment mismatch: 2 variables but enc.FloatHistogramSamples returns 1 value
+tsdb/record/record_test.go:219:44: enc.CustomBucketsFloatHistogramSamples undefined (type Encoder has no field or method CustomBucketsFloatHistogramSamples)
+tsdb/record/record_test.go:326:41: assignment mismatch: 2 variables but enc.HistogramSamples returns 1 value
+tsdb/record/record_test.go:328:38: enc.CustomBucketsHistogramSamples undefined (type Encoder has no field or method CustomBucketsHistogramSamples)
+tsdb/record/record_test.go:328:38: too many errors
+# github.com/prometheus/prometheus/tsdb/wlog [github.com/prometheus/prometheus/tsdb/wlog.test]
+tsdb/wlog/checkpoint_test.go:239:12: assignment mismatch: 2 variables but enc.HistogramSamples returns 1 value
+tsdb/wlog/checkpoint_test.go:248:13: enc.CustomBucketsHistogramSamples undefined (type record.Encoder has no field or method CustomBucketsHistogramSamples)
+tsdb/wlog/checkpoint_test.go:257:12: assignment mismatch: 2 variables but enc.FloatHistogramSamples returns 1 value
+tsdb/wlog/checkpoint_test.go:266:13: enc.CustomBucketsFloatHistogramSamples undefined (type record.Encoder has no field or method CustomBucketsFloatHistogramSamples)
+tsdb/wlog/checkpoint_test.go:333:42: undefined: record.CustomBucketsHistogramSamples
+tsdb/wlog/checkpoint_test.go:340:47: undefined: record.CustomBucketsFloatHistogramSamples
+tsdb/wlog/watcher_test.go:212:23: assignment mismatch: 2 variables but enc.HistogramSamples returns 1 value
+tsdb/wlog/watcher_test.go:229:36: enc.CustomBucketsHistogramSamples undefined (type record.Encoder has no field or method CustomBucketsHistogramSamples)
+tsdb/wlog/watcher_test.go:236:28: assignment mismatch: 2 variables but enc.FloatHistogramSamples returns 1 value
+tsdb/wlog/watcher_test.go:243:41: enc.CustomBucketsFloatHistogramSamples undefined (type record.Encoder has no field or method CustomBucketsFloatHistogramSamples)
+tsdb/wlog/watcher_test.go:243:41: too many errors
+# github.com/prometheus/prometheus/tsdb/agent [github.com/prometheus/prometheus/tsdb/agent.test]
+tsdb/agent/db_test.go:170:38: undefined: tsdbutil.GenerateTestCustomBucketsHistograms
+tsdb/agent/db_test.go:194:43: undefined: tsdbutil.GenerateTestCustomBucketsFloatHistograms
+tsdb/agent/db_test.go:233:40: undefined: record.CustomBucketsHistogramSamples
+tsdb/agent/db_test.go:239:45: undefined: record.CustomBucketsFloatHistogramSamples
+tsdb/agent/db_test.go:300:26: undefined: tsdbutil.GenerateTestCustomBucketsHistograms
+tsdb/agent/db_test.go:324:31: undefined: tsdbutil.GenerateTestCustomBucketsFloatHistograms
+tsdb/agent/db_test.go:372:40: undefined: record.CustomBucketsHistogramSamples
+tsdb/agent/db_test.go:378:45: undefined: record.CustomBucketsFloatHistogramSamples
+tsdb/agent/db_test.go:442:26: undefined: tsdbutil.GenerateTestCustomBucketsHistograms
+tsdb/agent/db_test.go:468:31: undefined: tsdbutil.GenerateTestCustomBucketsFloatHistograms
+tsdb/agent/db_test.go:468:31: too many errors
+# github.com/prometheus/prometheus/tsdb [github.com/prometheus/prometheus/tsdb.test]
+tsdb/db_test.go:4559:41: undefined: record.CustomBucketsHistogramSamples
+tsdb/db_test.go:4563:46: undefined: record.CustomBucketsFloatHistogramSamples
+tsdb/db_test.go:6464:7: undefined: customBucketsIntHistogram
+tsdb/db_test.go:6477:7: undefined: customBucketsFloatHistogram
+tsdb/db_test.go:6646:11: undefined: customBucketsIntHistogram
+tsdb/db_test.go:6649:11: undefined: customBucketsFloatHistogram
+tsdb/db_test.go:6683:12: undefined: customBucketsIntHistogram
+tsdb/db_test.go:6686:12: undefined: customBucketsFloatHistogram
+tsdb/head_test.go:190:40: undefined: record.CustomBucketsHistogramSamples
+tsdb/head_test.go:194:45: undefined: record.CustomBucketsFloatHistogramSamples
+tsdb/head_test.go:194:45: too many errors
+{"Time":"2026-06-29T15:15:11.043792101Z","Action":"start","Package":"github.com/prometheus/prometheus/tsdb"}
+{"Time":"2026-06-29T15:15:11.043883454Z","Action":"output","Package":"github.com/prometheus/prometheus/tsdb","Output":"FAIL\tgithub.com/prometheus/prometheus/tsdb [build failed]\n"}
+{"Time":"2026-06-29T15:15:11.044229047Z","Action":"fail","Package":"github.com/prometheus/prometheus/tsdb","Elapsed":0}
+{"Time":"2026-06-29T15:15:11.04426299Z","Action":"start","Package":"github.com/prometheus/prometheus/tsdb/agent"}
+{"Time":"2026-06-29T15:15:11.046902584Z","Action":"output","Package":"github.com/prometheus/prometheus/tsdb/agent","Output":"FAIL\tgithub.com/prometheus/prometheus/tsdb/agent [build failed]\n"}
+{"Time":"2026-06-29T15:15:11.046953009Z","Action":"start","Package":"github.com/prometheus/prometheus/tsdb/record"}
+{"Time":"2026-06-29T15:15:11.047042836Z","Action":"output","Package":"github.com/prometheus/prometheus/tsdb/record","Output":"FAIL\tgithub.com/prometheus/prometheus/tsdb/record [build failed]\n"}
+{"Time":"2026-06-29T15:15:11.047086466Z","Action":"fail","Package":"github.com/prometheus/prometheus/tsdb/record","Elapsed":0}
+{"Time":"2026-06-29T15:15:11.046956816Z","Action":"fail","Package":"github.com/prometheus/prometheus/tsdb/agent","Elapsed":0.003}
+{"Time":"2026-06-29T15:15:11.047072099Z","Action":"start","Package":"github.com/prometheus/prometheus/tsdb/wlog"}
+{"Time":"2026-06-29T15:15:11.047261181Z","Action":"output","Package":"github.com/prometheus/prometheus/tsdb/wlog","Output":"FAIL\tgithub.com/prometheus/prometheus/tsdb/wlog [build failed]\n"}
+{"Time":"2026-06-29T15:15:11.047401012Z","Action":"fail","Package":"github.com/prometheus/prometheus/tsdb/wlog","Elapsed":0}
+reward=0 graded=1899 found=0 failed=0 parsed=4 framework=go exit_code=1

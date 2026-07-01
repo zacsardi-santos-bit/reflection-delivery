@@ -1,0 +1,34 @@
+patching file internal/provider/resource_subaccount_environment_instance_test.go
+=== RUN   TestResourceSubaccountEnvironmentInstance
+=== PAUSE TestResourceSubaccountEnvironmentInstance
+=== CONT  TestResourceSubaccountEnvironmentInstance
+=== RUN   TestResourceSubaccountEnvironmentInstance/happy_path_-_simple_CF_creation
+    resource_subaccount_environment_instance_test.go:29: Step 2/2 error running import: exit status 1
+        
+        Error: State Write Error
+        
+        An unexpected error was encountered trying to retrieve type information at a
+        given path. This is always an error in the provider. Please report the
+        following to the provider developer:
+        
+        Error: AttributeName("subaccount") still remains in the path: could not find
+        attribute or block "subaccount" in schema
+        
+    testing_new.go:88: Error running post-test destroy, there may be dangling resources: exit status 1
+        
+        Error: unableToCreateClient
+        
+          with provider["registry.terraform.io/hashicorp/btp"],
+          on terraform_plugin_test.tf line 2, in provider "btp":
+           2: provider "btp" {
+        
+        Post "https://cpcli.cf.sap.hana.ondemand.com/login/v2.38.0": requested
+        interaction not found
+=== RUN   TestResourceSubaccountEnvironmentInstance/happy_path_-_update
+--- FAIL: TestResourceSubaccountEnvironmentInstance (45.25s)
+    --- FAIL: TestResourceSubaccountEnvironmentInstance/happy_path_-_simple_CF_creation (7.28s)
+    --- PASS: TestResourceSubaccountEnvironmentInstance/happy_path_-_update (37.98s)
+FAIL
+FAIL	github.com/SAP/terraform-provider-btp/internal/provider	45.314s
+FAIL
+reward=0 graded=3 found=0 failed=0 parsed=0 framework=go exit_code=1

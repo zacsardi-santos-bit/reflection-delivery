@@ -1,0 +1,8 @@
+patching file internal/manifests/targetallocator/container_test.go
+patching file internal/manifests/targetallocator/deployment_test.go
+patching file tests/e2e/targetallocator-features/00-assert.yaml
+patching file tests/e2e/targetallocator-features/00-install.yaml
+# github.com/open-telemetry/opentelemetry-operator/internal/manifests/targetallocator [github.com/open-telemetry/opentelemetry-operator/internal/manifests/targetallocator.test]
+internal/manifests/targetallocator/container_test.go:382:22: cannot use securityContext (variable of type *"k8s.io/api/core/v1".SecurityContext) as *"k8s.io/api/core/v1".PodSecurityContext value in struct literal
+FAIL	github.com/open-telemetry/opentelemetry-operator/internal/manifests/targetallocator [build failed]
+reward=0 graded=45 found=45 failed=45 parsed=1 framework=go exit_code=1

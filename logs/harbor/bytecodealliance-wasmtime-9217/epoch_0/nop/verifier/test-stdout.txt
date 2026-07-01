@@ -1,0 +1,97 @@
+patching file crates/component-macro/tests/expanded/char_async.rs
+patching file crates/component-macro/tests/expanded/conventions_async.rs
+patching file crates/component-macro/tests/expanded/dead-code_async.rs
+patching file crates/component-macro/tests/expanded/direct-import_async.rs
+patching file crates/component-macro/tests/expanded/flags_async.rs
+patching file crates/component-macro/tests/expanded/floats_async.rs
+patching file crates/component-macro/tests/expanded/integers_async.rs
+patching file crates/component-macro/tests/expanded/lists_async.rs
+patching file crates/component-macro/tests/expanded/many-arguments_async.rs
+patching file crates/component-macro/tests/expanded/multi-return_async.rs
+patching file crates/component-macro/tests/expanded/multiversion_async.rs
+patching file crates/component-macro/tests/expanded/records_async.rs
+patching file crates/component-macro/tests/expanded/rename_async.rs
+patching file crates/component-macro/tests/expanded/resources-import_async.rs
+patching file crates/component-macro/tests/expanded/share-types_async.rs
+patching file crates/component-macro/tests/expanded/simple-functions_async.rs
+patching file crates/component-macro/tests/expanded/simple-lists_async.rs
+patching file crates/component-macro/tests/expanded/simple-wasi_async.rs
+patching file crates/component-macro/tests/expanded/small-anonymous_async.rs
+patching file crates/component-macro/tests/expanded/smoke_async.rs
+patching file crates/component-macro/tests/expanded/strings_async.rs
+patching file crates/component-macro/tests/expanded/unversioned-foo_async.rs
+patching file crates/component-macro/tests/expanded/use-paths_async.rs
+patching file crates/component-macro/tests/expanded/variants_async.rs
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.113.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+   Compiling wasmtime-component-macro v26.0.0 (/workspace/repo/crates/component-macro)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.99s
+────────────
+ Nextest run ID 5d4823c8-d77d-4554-95a3-94d6e7fa11a9 with nextest profile: default
+    Starting 1 test across 3 binaries
+        FAIL [   0.035s] (1/1) wasmtime-component-macro::expanded expand_wits
+  stdout ───
+
+    running 1 test
+    test expand_wits ... FAILED
+
+    failures:
+
+    failures:
+        expand_wits
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+  stderr ───
+    Error: checked-in expanded bindings from "tests/expanded/char_async.rs" do not match those generated from "/workspace/repo/crates/component-macro/tests/codegen/char.wit"
+                        
+    --- expected
+    +++ actual
+    @@ -225,23 +225,19 @@
+                         move |
+                             mut caller: wasmtime::StoreContextMut<'_, T>,
+                             (arg0,): (char,)|
+    -                    {
+    -                        wasmtime::component::__internal::Box::new(async move {
+    -                            let host = &mut host_getter(caller.data_mut());
+    -                            let r = Host::take_char(host, arg0).await;
+    -                            Ok(r)
+    -                        })
+    -                    },
+    +                    wasmtime::component::__internal::Box::new(async move {
+    +                        let host = &mut host_getter(caller.data_mut());
+    +                        let r = Host::take_char(host, arg0).await;
+    +                        Ok(r)
+    +                    }),
+                     )?;
+                     inst.func_wrap_async(
+                         "return-char",
+    -                    move |mut caller: wasmtime::StoreContextMut<'_, T>, (): ()| {
+    -                        wasmtime::component::__internal::Box::new(async move {
+    -                            let host = &mut host_getter(caller.data_mut());
+    -                            let r = Host::return_char(host).await;
+    -                            Ok((r,))
+    -                        })
+    -                    },
+    +                    move |mut caller: wasmtime::StoreContextMut<'_, T>, (): ()| wasmtime::component::__internal::Box::new(async move {
+    +                        let host = &mut host_getter(caller.data_mut());
+    +                        let r = Host::return_char(host).await;
+    +                        Ok((r,))
+    +                    }),
+                     )?;
+                     Ok(())
+                 }
+
+
+    This test assertion can be automatically updated by setting the
+    BINDGEN_TEST_BLESS=1 environment variable when running this test.
+
+────────────
+     Summary [   0.037s] 1 test run: 0 passed, 1 failed, 0 skipped
+        FAIL [   0.035s] (1/1) wasmtime-component-macro::expanded expand_wits
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

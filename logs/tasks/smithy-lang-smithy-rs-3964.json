@@ -1,0 +1,23 @@
+{
+ "task": "smithy-lang-smithy-rs-3964",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'TokenBucketProvider::new(retry_partition.clone())' interceptor + 'static TOKEN_BUCKET: StaticPartitionMap<RetryPartition, TokenBucket>' partitioning; F2P = token_bucket_exhausted_before_max_attempts, token_bucket_partitioning graded via parse_cargo_nextest PASS/FAIL"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 7,
+  "shallow": true
+ }
+}

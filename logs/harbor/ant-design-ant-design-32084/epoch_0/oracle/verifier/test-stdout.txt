@@ -1,0 +1,19 @@
+patching file components/divider/__tests__/__snapshots__/demo.test.js.snap
+  console.log
+    Current React Version: 17.0.2
+
+      at Object.<anonymous> (tests/setup.js:8:9)
+
+PASS components/divider/__tests__/demo.test.js
+  ✓ renders ./components/divider/demo/customize-style.md correctly (2672 ms)
+  ✓ renders ./components/divider/demo/horizontal.md correctly (41 ms)
+  ✓ renders ./components/divider/demo/plain.md correctly (27 ms)
+  ✓ renders ./components/divider/demo/vertical.md correctly (25 ms)
+  ✓ renders ./components/divider/demo/with-text.md correctly (28 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   5 passed, 5 total
+Time:        7.397 s
+Ran all test suites matching /components\/divider\/__tests__\/demo.test.js/i.
+reward=1 graded=5 found=0 failed=0 parsed=0 framework=jest exit_code=0

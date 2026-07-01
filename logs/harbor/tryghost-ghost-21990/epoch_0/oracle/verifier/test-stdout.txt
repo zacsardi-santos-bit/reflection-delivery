@@ -1,0 +1,17 @@
+patching file ghost/captcha-service/test/.eslintrc.js
+patching file ghost/captcha-service/test/CaptchaService.test.js
+
+
+  CaptchaService
+    ✔ Creates a middleware when enabled
+    ✔ No-ops if CAPTCHA score is safe
+[2026-06-29 15:14:02] [31mERROR[39m Blocking request due to high score (0.8)
+    ✔ Errors when CAPTCHA score is suspicious
+    ✔ Fails gracefully if hcaptcha verification fails
+    ✔ Returns a 400 if no token provided
+    ✔ Returns no-op middleware when not enabled
+
+
+  6 passing (21ms)
+
+reward=1 graded=6 found=6 failed=0 parsed=6 framework=mocha exit_code=0

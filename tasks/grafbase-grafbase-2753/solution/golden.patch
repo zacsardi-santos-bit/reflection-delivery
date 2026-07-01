@@ -1,0 +1,1169 @@
+diff --git a/.github/renovate.json b/.github/renovate.json
+index 69cdc920c..94f0252b8 100644
+--- a/.github/renovate.json
++++ b/.github/renovate.json
+@@ -1,5 +1,8 @@
+ {
+-  "extends": ["github>grafbase/renovate", "github>grafbase/renovate:post-upgrade"],
++  "extends": [
++    "github>grafbase/renovate",
++    "github>grafbase/renovate:post-upgrade"
++  ],
+   "packageRules": [
+     {
+       "matchPackageNames": ["axum"],
+@@ -14,6 +17,6 @@
+       "matchPackageNames": ["rand"],
+       "matchPaths": ["crates/integration-tests/Cargo.toml"],
+       "enabled": false
+-    }
++    },
+   ]
+ }
+diff --git a/.github/workflows/rust-prs.yml b/.github/workflows/rust-prs.yml
+index 7f54c6166..ddf539a34 100644
+--- a/.github/workflows/rust-prs.yml
++++ b/.github/workflows/rust-prs.yml
+@@ -379,7 +379,7 @@ jobs:
+           tool: nextest
+ 
+       - name: Build CLI and Gateway
+-        # if: needs.what-chaged.outputs.cargo-bin-specs
++        if: needs.what-changed.outputs.cargo-bin-specs
+         shell: bash
+         run: |
+           cargo build -p grafbase -p grafbase-gateway
+diff --git a/Cargo.lock b/Cargo.lock
+index 1d5ba042e..cd06126d2 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -3646,7 +3646,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "grafbase-sdk"
+-version = "0.5.2"
++version = "0.5.4"
+ dependencies = [
+  "anyhow",
+  "async-tungstenite",
+@@ -3664,6 +3664,7 @@ dependencies = [
+  "jaq-core",
+  "jaq-json",
+  "jaq-std",
++ "minicbor",
+  "minicbor-serde",
+  "reqwest 0.12.12",
+  "semver 1.0.25",
+@@ -3887,9 +3888,6 @@ dependencies = [
+  "windows-sys 0.52.0",
+  "windows-sys 0.59.0",
+  "zeroize",
+- "zstd",
+- "zstd-safe",
+- "zstd-sys",
+ ]
+ 
+ [[package]]
+@@ -5001,7 +4999,6 @@ dependencies = [
+  "tracing-subscriber",
+  "ulid",
+  "url",
+- "zstd",
+ ]
+ 
+ [[package]]
+@@ -9056,10 +9053,8 @@ version = "0.6.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "403fa3b783d4b626a8ad51d766ab03cb6d2dbfc46b1c5d4448395e6628dc9697"
+ dependencies = [
+- "async-compression",
+  "bitflags 2.8.0",
+  "bytes",
+- "futures-core",
+  "futures-util",
+  "http 1.2.0",
+  "http-body 1.0.1",
+diff --git a/Cargo.toml b/Cargo.toml
+index b28a55301..43a1a7457 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -238,7 +238,6 @@ which = "7.0.2"
+ wiremock = "0.6.2"
+ wit-bindgen = "0.39.0"
+ xshell = "0.2"
+-zstd = "0.13"
+ 
+ # Common
+ grafbase-graphql-introspection = { path = "crates/grafbase-graphql-introspection" }
+diff --git a/crates/federated-server/Cargo.toml b/crates/federated-server/Cargo.toml
+index 3a890b88a..24b5bde90 100644
+--- a/crates/federated-server/Cargo.toml
++++ b/crates/federated-server/Cargo.toml
+@@ -42,14 +42,7 @@ tokio = { workspace = true, features = ["signal", "time", "net"] }
+ tokio-stream = { workspace = true, features = ["sync"] }
+ tokio-util = { workspace = true, features = ["codec"] }
+ toml.workspace = true
+-tower-http = { workspace = true, features = [
+-    "cors",
+-    "timeout",
+-    "compression-zstd",
+-    "compression-deflate",
+-    "compression-gzip",
+-    "compression-br",
+-] }
++tower-http = { workspace = true, features = ["cors", "timeout"] }
+ tracing.workspace = true
+ ulid = { workspace = true, features = ["serde"] }
+ url = { workspace = true, features = ["serde"] }
+diff --git a/crates/federated-server/src/server.rs b/crates/federated-server/src/server.rs
+index be3a93831..8ea57f2a4 100644
+--- a/crates/federated-server/src/server.rs
++++ b/crates/federated-server/src/server.rs
+@@ -26,7 +26,7 @@ use gateway_config::{Config, TlsConfig};
+ use std::{net::SocketAddr, path::PathBuf};
+ use tokio::sync::mpsc;
+ use tokio::{signal, sync::watch};
+-use tower_http::{compression::CompressionLayer, cors::CorsLayer};
++use tower_http::cors::CorsLayer;
+ 
+ /// Start parameter for the gateway.
+ pub struct ServeConfig {
+@@ -183,9 +183,7 @@ pub async fn router<R: engine::Runtime, SR: ServerRuntime>(
+         .route(path, get(engine_execute).post(engine_execute))
+         .route_service(websocket_path, WebsocketService::new(websocket_sender));
+ 
+-    router = inject_layers_before_cors(router)
+-        .layer(CompressionLayer::new())
+-        .layer(cors);
++    router = inject_layers_before_cors(router).layer(cors);
+ 
+     if config.health.enabled {
+         if let Some(listen) = config.health.listen {
+diff --git a/crates/federation-audit-tests/.tool-versions b/crates/federation-audit-tests/.tool-versions
+index 604be079d..f5fc23da4 100644
+--- a/crates/federation-audit-tests/.tool-versions
++++ b/crates/federation-audit-tests/.tool-versions
+@@ -1 +1 @@
+-nodejs 22.14.0
++nodejs 22.13.0
+diff --git a/crates/grafbase-sdk/Cargo.toml b/crates/grafbase-sdk/Cargo.toml
+index 2998b36ae..aef2ac28d 100644
+--- a/crates/grafbase-sdk/Cargo.toml
++++ b/crates/grafbase-sdk/Cargo.toml
+@@ -1,6 +1,6 @@
+ [package]
+ name = "grafbase-sdk"
+-version = "0.5.2"
++version = "0.5.4"
+ description = "An SDK to implement extensions for the Grafbase Gateway"
+ edition = "2021"
+ license.workspace = true
+@@ -55,6 +55,7 @@ indoc = { workspace = true, optional = true }
+ jaq-core = { version = "2.1.1", optional = true }
+ jaq-json = { version = "1.1.1", features = ["serde_json"], optional = true }
+ jaq-std = { version = "2.1.0", optional = true }
++minicbor = "0.26.0"
+ minicbor-serde = { workspace = true, features = ["alloc"] }
+ reqwest = { workspace = true, features = ["json"], optional = true }
+ serde.workspace = true
+diff --git a/crates/grafbase-sdk/README.md b/crates/grafbase-sdk/README.md
+index 7c84c6aaa..1ae12980f 100644
+--- a/crates/grafbase-sdk/README.md
++++ b/crates/grafbase-sdk/README.md
+@@ -24,14 +24,17 @@ You can initialize a new resolver extension with the Grafbase CLI:
+ grafbase extension init --type resolver my-extension
+ ```
+ 
+-The initialization accepts a list of schema directives from the federated schema (defined in the schema file) and a [`Configuration`](types::Configuration) object that remains empty for resolver extensions. The [`ResolverExtension`] derive macro generates the necessary code to initialize a resolver extension and guides you to implement two traits: [`Extension`] and [`Resolver`]. The [`Extension`] trait initializes the extension, and the [`Resolver`] trait implements the extension logic to resolve a field:
++The initialization accepts a list of schema directives from the federated schema (defined in the schema file) and a [`Configuration`](types::Configuration) object that remains empty for resolver extensions. The [`ResolverExtension`] derive macro generates the necessary code to initialize a resolver extension and guides you to implement two traits: [`Extension`] and [`Resolver`]. The [`Extension`] trait initializes the extension, and the [`Resolver`] trait implements the extension logic to resolve a field.
++
++The [`Resolver`] trait contains two methods: `resolve_field` and `resolve_subscription`. Either method can be left unimplemented if the extension does not need to handle that type of request.
+ 
+ ```rust
+-# use grafbase_sdk::{
+-#    types::{Configuration, Directive, FieldDefinition, FieldInputs, FieldOutput},
+-#    Error, Extension, Resolver, ResolverExtension, SharedContext,
+-# };
+-#[derive(ResolverExtension)]
++use grafbase_sdk::{
++   types::{Configuration, Directive, FieldDefinition, FieldInputs, FieldOutput},
++   Error, Extension, Resolver, ResolverExtension, SharedContext,
++};
++
++[derive(ResolverExtension)]
+ struct TestProject;
+ 
+ impl Extension for TestProject {
+@@ -50,6 +53,15 @@ impl Resolver for TestProject {
+     ) -> Result<FieldOutput, Error> {
+         todo!()
+     }
++
++    fn resolve_subscription(
++        &mut self,
++        context: SharedContext,
++        directive: Directive,
++        field_definition: FieldDefinition,
++    ) -> Result<Box<dyn Subscription>, Error> {
++        todo!()
++    }
+ }
+ ```
+ 
+@@ -57,7 +69,9 @@ The `schema_directives` in the constructor provides serialized access to all the
+ 
+ The [`FieldOutput`](types::FieldOutput) contains the serialized output of the resolver which transfers back to the gateway. Remember to match the serialized response to the type of the field resolver.
+ 
+-You can find a full [example](https://github.com/grafbase/grafbase/blob/main/extensions/rest/) of a REST resolver extension in the Grafbase repository.
++The [`Subscription`] trait defines the logic for a subscription resolver extension.
++
++You can find a full [example](https://github.com/grafbase/grafbase/blob/main/extensions/rest/) of a REST resolver extension in the Grafbase repository. And a full example of a [subscription resolver extension](https://github.com/grafbase/grafbase/blob/main/extensions/nats/) for NATS.
+ 
+ ### Authentication Example
+ 
+@@ -70,10 +84,10 @@ grafbase extension init --type auth my-extension
+ The initialization needs a list of schema directives from the federated schema (empty for authentication extensions) and a [`Configuration`](types::Configuration) object that reflects the extension provider configuration in `grafbase.toml`. The [`AuthenticationExtension`] derive macro generates code to initialize a resolver extension and guides you to implement two traits: [`Extension`] and [`Authenticator`]. The [`Extension`] trait initializes the extension, and the [`Authenticator`] trait implements the extension logic to authenticate a request:
+ 
+ ```rust
+-# use grafbase_sdk::{
+-#     types::{Configuration, Directive, ErrorResponse, Token},
+-#     AuthenticationExtension, Authenticator, Extension, Headers,
+-# };
++use grafbase_sdk::{
++    types::{Configuration, Directive, ErrorResponse, Token},
++    AuthenticationExtension, Authenticator, Extension, Headers,
++};
+ 
+ #[derive(AuthenticationExtension)]
+ struct TestProject;
+diff --git a/crates/grafbase-sdk/src/cbor.rs b/crates/grafbase-sdk/src/cbor.rs
+new file mode 100644
+index 000000000..927b09868
+--- /dev/null
++++ b/crates/grafbase-sdk/src/cbor.rs
+@@ -0,0 +1,396 @@
++//! Remove this when this PR is merged and a new version of minicbor-serde is released.
++//! https://github.com/twittner/minicbor/pull/20
++
++use minicbor::encode::{Encoder, Write};
++use minicbor_serde::error::EncodeError;
++use serde::ser::{self, SerializeSeq, SerializeTuple, SerializeTupleStruct};
++use serde::ser::{SerializeMap, SerializeStruct, SerializeStructVariant, SerializeTupleVariant};
++use serde::Serialize;
++
++/// Serialise a type implementing [`serde::Serialize`] and return the encoded byte vector.
++pub fn to_vec<T: Serialize>(val: T) -> Result<Vec<u8>, EncodeError<core::convert::Infallible>> {
++    let mut v = Vec::new();
++    val.serialize(&mut Serializer::new(&mut v))?;
++    Ok(v)
++}
++
++/// An implementation of [`serde::Serializer`] using a [`minicbor::Encoder`].
++#[derive(Debug, Clone)]
++pub struct Serializer<W> {
++    encoder: Encoder<W>,
++}
++
++impl<W: Write> Serializer<W> {
++    pub fn new(w: W) -> Self {
++        Self::from(Encoder::new(w))
++    }
++
++    pub fn encoder(&self) -> &Encoder<W> {
++        &self.encoder
++    }
++
++    pub fn encoder_mut(&mut self) -> &mut Encoder<W> {
++        &mut self.encoder
++    }
++
++    pub fn into_encoder(self) -> Encoder<W> {
++        self.encoder
++    }
++}
++
++impl<W: Write> From<Encoder<W>> for Serializer<W> {
++    fn from(e: Encoder<W>) -> Self {
++        Self { encoder: e }
++    }
++}
++
++impl<'a, W: Write> ser::Serializer for &'a mut Serializer<W>
++where
++    <W as Write>::Error: core::error::Error + 'static,
++{
++    type Ok = ();
++    type Error = EncodeError<W::Error>;
++
++    type SerializeSeq = SeqSerializer<'a, W>;
++    type SerializeTuple = SeqSerializer<'a, W>;
++    type SerializeTupleStruct = SeqSerializer<'a, W>;
++    type SerializeTupleVariant = SeqSerializer<'a, W>;
++    type SerializeMap = SeqSerializer<'a, W>;
++    type SerializeStruct = SeqSerializer<'a, W>;
++    type SerializeStructVariant = SeqSerializer<'a, W>;
++
++    fn serialize_bool(self, v: bool) -> Result<Self::Ok, Self::Error> {
++        self.encoder.bool(v)?;
++        Ok(())
++    }
++
++    fn serialize_i8(self, v: i8) -> Result<Self::Ok, Self::Error> {
++        self.encoder.i8(v)?;
++        Ok(())
++    }
++
++    fn serialize_i16(self, v: i16) -> Result<Self::Ok, Self::Error> {
++        self.encoder.i16(v)?;
++        Ok(())
++    }
++
++    fn serialize_i32(self, v: i32) -> Result<Self::Ok, Self::Error> {
++        self.encoder.i32(v)?;
++        Ok(())
++    }
++
++    fn serialize_i64(self, v: i64) -> Result<Self::Ok, Self::Error> {
++        self.encoder.i64(v)?;
++        Ok(())
++    }
++
++    fn serialize_u8(self, v: u8) -> Result<Self::Ok, Self::Error> {
++        self.encoder.u8(v)?;
++        Ok(())
++    }
++
++    fn serialize_u16(self, v: u16) -> Result<Self::Ok, Self::Error> {
++        self.encoder.u16(v)?;
++        Ok(())
++    }
++
++    fn serialize_u32(self, v: u32) -> Result<Self::Ok, Self::Error> {
++        self.encoder.u32(v)?;
++        Ok(())
++    }
++
++    fn serialize_u64(self, v: u64) -> Result<Self::Ok, Self::Error> {
++        self.encoder.u64(v)?;
++        Ok(())
++    }
++
++    fn serialize_f32(self, v: f32) -> Result<Self::Ok, Self::Error> {
++        self.encoder.f32(v)?;
++        Ok(())
++    }
++
++    fn serialize_f64(self, v: f64) -> Result<Self::Ok, Self::Error> {
++        self.encoder.f64(v)?;
++        Ok(())
++    }
++
++    fn serialize_char(self, v: char) -> Result<Self::Ok, Self::Error> {
++        self.encoder.char(v)?;
++        Ok(())
++    }
++
++    fn serialize_str(self, v: &str) -> Result<Self::Ok, Self::Error> {
++        self.encoder.str(v)?;
++        Ok(())
++    }
++
++    fn serialize_bytes(self, v: &[u8]) -> Result<Self::Ok, Self::Error> {
++        self.encoder.bytes(v)?;
++        Ok(())
++    }
++
++    fn serialize_none(self) -> Result<Self::Ok, Self::Error> {
++        self.encoder.null()?;
++        Ok(())
++    }
++
++    fn serialize_some<T>(self, value: &T) -> Result<Self::Ok, Self::Error>
++    where
++        T: Serialize + ?Sized,
++    {
++        value.serialize(self)
++    }
++
++    fn serialize_unit(self) -> Result<Self::Ok, Self::Error> {
++        self.encoder.null()?;
++
++        Ok(())
++    }
++
++    fn serialize_unit_struct(self, _name: &'static str) -> Result<Self::Ok, Self::Error> {
++        self.serialize_unit()
++    }
++
++    fn serialize_unit_variant(
++        self,
++        _name: &'static str,
++        _index: u32,
++        variant: &'static str,
++    ) -> Result<Self::Ok, Self::Error> {
++        variant.serialize(self)
++    }
++
++    fn serialize_newtype_struct<T>(self, _name: &'static str, value: &T) -> Result<Self::Ok, Self::Error>
++    where
++        T: Serialize + ?Sized,
++    {
++        value.serialize(self)
++    }
++
++    fn serialize_newtype_variant<T>(
++        self,
++        _name: &'static str,
++        _index: u32,
++        variant: &'static str,
++        value: &T,
++    ) -> Result<Self::Ok, Self::Error>
++    where
++        T: Serialize + ?Sized,
++    {
++        self.encoder.map(1)?.str(variant)?;
++        value.serialize(self)
++    }
++
++    fn serialize_seq(self, len: Option<usize>) -> Result<Self::SerializeSeq, Self::Error> {
++        if let Some(n) = len {
++            self.encoder.array(n as u64)?;
++        } else {
++            self.encoder.begin_array()?;
++        }
++        Ok(SeqSerializer {
++            serializer: self,
++            indefinite: len.is_none(),
++        })
++    }
++
++    fn serialize_tuple(self, len: usize) -> Result<Self::SerializeTuple, Self::Error> {
++        self.encoder.array(len as u64)?;
++        Ok(SeqSerializer {
++            serializer: self,
++            indefinite: false,
++        })
++    }
++
++    fn serialize_tuple_struct(
++        self,
++        _name: &'static str,
++        len: usize,
++    ) -> Result<Self::SerializeTupleStruct, Self::Error> {
++        self.serialize_tuple(len)
++    }
++
++    fn serialize_tuple_variant(
++        self,
++        _name: &'static str,
++        _index: u32,
++        variant: &'static str,
++        len: usize,
++    ) -> Result<Self::SerializeTupleVariant, Self::Error> {
++        self.encoder.map(1)?.str(variant)?;
++        self.serialize_tuple(len)
++    }
++
++    fn serialize_map(self, len: Option<usize>) -> Result<Self::SerializeMap, Self::Error> {
++        if let Some(n) = len {
++            self.encoder.map(n as u64)?;
++        } else {
++            self.encoder.begin_map()?;
++        }
++        Ok(SeqSerializer {
++            serializer: self,
++            indefinite: len.is_none(),
++        })
++    }
++
++    fn serialize_struct(self, _name: &'static str, len: usize) -> Result<Self::SerializeStruct, Self::Error> {
++        self.encoder.map(len as u64)?;
++        Ok(SeqSerializer {
++            serializer: self,
++            indefinite: false,
++        })
++    }
++
++    fn serialize_struct_variant(
++        self,
++        name: &'static str,
++        _index: u32,
++        variant: &'static str,
++        len: usize,
++    ) -> Result<Self::SerializeStructVariant, Self::Error> {
++        self.encoder.map(1)?.str(variant)?;
++        self.serialize_struct(name, len)
++    }
++
++    fn collect_str<T: core::fmt::Display + ?Sized>(self, _val: &T) -> Result<Self::Ok, Self::Error> {
++        Err(minicbor::encode::Error::message("collect_str requires features `alloc` or `std`").into())
++    }
++
++    fn is_human_readable(&self) -> bool {
++        false
++    }
++}
++
++pub struct SeqSerializer<'a, W> {
++    serializer: &'a mut Serializer<W>,
++    indefinite: bool,
++}
++
++impl<W: Write> SerializeSeq for SeqSerializer<'_, W>
++where
++    <W as Write>::Error: core::error::Error + 'static,
++{
++    type Ok = ();
++    type Error = minicbor_serde::error::EncodeError<W::Error>;
++
++    fn serialize_element<T: Serialize + ?Sized>(&mut self, x: &T) -> Result<(), Self::Error> {
++        x.serialize(&mut *self.serializer)
++    }
++
++    fn end(self) -> Result<Self::Ok, Self::Error> {
++        if self.indefinite {
++            self.serializer.encoder.end()?;
++        }
++        Ok(())
++    }
++}
++
++impl<W: Write> SerializeTuple for SeqSerializer<'_, W>
++where
++    <W as Write>::Error: core::error::Error + 'static,
++{
++    type Ok = ();
++    type Error = minicbor_serde::error::EncodeError<W::Error>;
++
++    fn serialize_element<T: Serialize + ?Sized>(&mut self, x: &T) -> Result<(), Self::Error> {
++        x.serialize(&mut *self.serializer)
++    }
++
++    fn end(self) -> Result<Self::Ok, Self::Error> {
++        Ok(())
++    }
++}
++
++impl<W: Write> SerializeTupleStruct for SeqSerializer<'_, W>
++where
++    <W as Write>::Error: core::error::Error + 'static,
++{
++    type Ok = ();
++    type Error = EncodeError<W::Error>;
++
++    fn serialize_field<T: Serialize + ?Sized>(&mut self, x: &T) -> Result<(), Self::Error> {
++        x.serialize(&mut *self.serializer)
++    }
++
++    fn end(self) -> Result<Self::Ok, Self::Error> {
++        Ok(())
++    }
++}
++
++impl<W: Write> SerializeTupleVariant for SeqSerializer<'_, W>
++where
++    <W as Write>::Error: core::error::Error + 'static,
++{
++    type Ok = ();
++    type Error = EncodeError<W::Error>;
++
++    fn serialize_field<T: Serialize + ?Sized>(&mut self, x: &T) -> Result<(), Self::Error> {
++        x.serialize(&mut *self.serializer)
++    }
++
++    fn end(self) -> Result<Self::Ok, Self::Error> {
++        Ok(())
++    }
++}
++
++impl<W: Write> SerializeMap for SeqSerializer<'_, W>
++where
++    <W as Write>::Error: core::error::Error + 'static,
++{
++    type Ok = ();
++    type Error = EncodeError<W::Error>;
++
++    fn serialize_key<T: Serialize + ?Sized>(&mut self, k: &T) -> Result<(), Self::Error> {
++        k.serialize(&mut *self.serializer)
++    }
++
++    fn serialize_value<T: Serialize + ?Sized>(&mut self, v: &T) -> Result<(), Self::Error> {
++        v.serialize(&mut *self.serializer)
++    }
++
++    fn end(self) -> Result<Self::Ok, Self::Error> {
++        if self.indefinite {
++            self.serializer.encoder.end()?;
++        }
++        Ok(())
++    }
++}
++
++impl<W: Write> SerializeStruct for SeqSerializer<'_, W>
++where
++    <W as Write>::Error: core::error::Error + 'static,
++{
++    type Ok = ();
++    type Error = EncodeError<W::Error>;
++
++    fn serialize_field<T>(&mut self, key: &'static str, val: &T) -> Result<(), Self::Error>
++    where
++        T: Serialize + ?Sized,
++    {
++        key.serialize(&mut *self.serializer)?;
++        val.serialize(&mut *self.serializer)
++    }
++
++    fn end(self) -> Result<Self::Ok, Self::Error> {
++        Ok(())
++    }
++}
++
++impl<W: Write> SerializeStructVariant for SeqSerializer<'_, W>
++where
++    <W as Write>::Error: core::error::Error + 'static,
++{
++    type Ok = ();
++    type Error = EncodeError<W::Error>;
++
++    fn serialize_field<T>(&mut self, key: &'static str, val: &T) -> Result<(), Self::Error>
++    where
++        T: Serialize + ?Sized,
++    {
++        key.serialize(&mut *self.serializer)?;
++        val.serialize(&mut *self.serializer)
++    }
++
++    fn end(self) -> Result<Self::Ok, Self::Error> {
++        Ok(())
++    }
++}
+diff --git a/crates/grafbase-sdk/src/host_io/cache.rs b/crates/grafbase-sdk/src/host_io/cache.rs
+index 87df27fa1..7ccd0b0ee 100644
+--- a/crates/grafbase-sdk/src/host_io/cache.rs
++++ b/crates/grafbase-sdk/src/host_io/cache.rs
+@@ -26,7 +26,7 @@ where
+         Ok(minicbor_serde::from_slice(&value)?)
+     } else {
+         let value = init()?;
+-        let serialized = minicbor_serde::to_vec(&value.value)?;
++        let serialized = crate::cbor::to_vec(&value.value)?;
+ 
+         crate::wit::Cache::set(key, &serialized, value.duration.map(|d| d.as_millis() as u64));
+ 
+diff --git a/crates/grafbase-sdk/src/lib.rs b/crates/grafbase-sdk/src/lib.rs
+index 450940166..763cbd005 100644
+--- a/crates/grafbase-sdk/src/lib.rs
++++ b/crates/grafbase-sdk/src/lib.rs
+@@ -2,6 +2,7 @@
+ #![deny(missing_docs)]
+ #![expect(unsafe_op_in_unsafe_fn)]
+ 
++mod cbor;
+ mod component;
+ #[doc(hidden)]
+ pub mod extension;
+diff --git a/crates/grafbase-sdk/src/types.rs b/crates/grafbase-sdk/src/types.rs
+index e01bb354c..bfa203d4b 100644
+--- a/crates/grafbase-sdk/src/types.rs
++++ b/crates/grafbase-sdk/src/types.rs
+@@ -1,7 +1,7 @@
+ //! Type definitions of the input and output data structures of the SDK.
+ 
+ pub use http::StatusCode;
+-pub use minicbor_serde::error::DecodeError;
++use minicbor_serde::error::DecodeError;
+ pub use serde::Deserialize;
+ use serde::Serialize;
+ 
+@@ -90,8 +90,7 @@ impl FieldOutput {
+     where
+         T: Serialize,
+     {
+-        let output =
+-            minicbor_serde::to_vec(output).expect("serialization error is Infallible, so it should never happen");
++        let output = crate::cbor::to_vec(output).expect("serialization error is Infallible, so it should never happen");
+ 
+         self.0.outputs.push(Ok(output));
+     }
+@@ -205,8 +204,7 @@ impl Token {
+         T: serde::Serialize,
+     {
+         Self {
+-            claims: minicbor_serde::to_vec(&claims)
+-                .expect("serialization error is Infallible, so it should never happen"),
++            claims: crate::cbor::to_vec(&claims).expect("serialization error is Infallible, so it should never happen"),
+         }
+     }
+ }
+diff --git a/crates/grafbase-workspace-hack/Cargo.toml b/crates/grafbase-workspace-hack/Cargo.toml
+index 3d6b8876b..cbd92d3e5 100644
+--- a/crates/grafbase-workspace-hack/Cargo.toml
++++ b/crates/grafbase-workspace-hack/Cargo.toml
+@@ -132,7 +132,7 @@ toml_datetime = { version = "0.6", default-features = false, features = ["serde"
+ toml_edit = { version = "0.22", features = ["serde"] }
+ tower-9fbad63c4bcf4a8f = { package = "tower", version = "0.4", features = ["balance", "buffer", "limit", "util"] }
+ tower-d8f496e17d97b5cb = { package = "tower", version = "0.5", default-features = false, features = ["make", "retry"] }
+-tower-http = { version = "0.6", features = ["compression-br", "compression-deflate", "compression-gzip", "compression-zstd", "cors", "fs", "set-header", "timeout", "trace"] }
++tower-http = { version = "0.6", features = ["cors", "fs", "set-header", "timeout", "trace"] }
+ tracing = { version = "0.1", features = ["log"] }
+ tracing-core = { version = "0.1" }
+ tracing-log = { version = "0.2" }
+@@ -143,9 +143,6 @@ url = { version = "2", features = ["serde"] }
+ uuid = { version = "1", features = ["v4"] }
+ wasmparser = { version = "0.224", default-features = false, features = ["component-model", "features", "serde", "simd", "std", "validate"] }
+ zeroize = { version = "1", features = ["zeroize_derive"] }
+-zstd = { version = "0.13" }
+-zstd-safe = { version = "7", default-features = false, features = ["arrays", "legacy", "std", "zdict_builder"] }
+-zstd-sys = { version = "2", default-features = false, features = ["legacy", "std", "zdict_builder"] }
+ 
+ [build-dependencies]
+ aho-corasick = { version = "1" }
+@@ -262,7 +259,7 @@ toml_datetime = { version = "0.6", default-features = false, features = ["serde"
+ toml_edit = { version = "0.22", features = ["serde"] }
+ tower-9fbad63c4bcf4a8f = { package = "tower", version = "0.4", features = ["balance", "buffer", "limit", "util"] }
+ tower-d8f496e17d97b5cb = { package = "tower", version = "0.5", default-features = false, features = ["make", "retry"] }
+-tower-http = { version = "0.6", features = ["compression-br", "compression-deflate", "compression-gzip", "compression-zstd", "cors", "fs", "set-header", "timeout", "trace"] }
++tower-http = { version = "0.6", features = ["cors", "fs", "set-header", "timeout", "trace"] }
+ tracing = { version = "0.1", features = ["log"] }
+ tracing-core = { version = "0.1" }
+ tracing-log = { version = "0.2" }
+@@ -273,9 +270,6 @@ url = { version = "2", features = ["serde"] }
+ uuid = { version = "1", features = ["v4"] }
+ wasmparser = { version = "0.224", default-features = false, features = ["component-model", "features", "serde", "simd", "std", "validate"] }
+ zeroize = { version = "1", features = ["zeroize_derive"] }
+-zstd = { version = "0.13" }
+-zstd-safe = { version = "7", default-features = false, features = ["arrays", "legacy", "std", "zdict_builder"] }
+-zstd-sys = { version = "2", default-features = false, features = ["legacy", "std", "zdict_builder"] }
+ 
+ [target.aarch64-apple-darwin.dependencies]
+ addr2line = { version = "0.24", default-features = false, features = ["std"] }
+diff --git a/crates/integration-tests/Cargo.toml b/crates/integration-tests/Cargo.toml
+index d98afb970..7f0fdc111 100644
+--- a/crates/integration-tests/Cargo.toml
++++ b/crates/integration-tests/Cargo.toml
+@@ -65,7 +65,6 @@ tracing-subscriber = { workspace = true, default-features = false, features = [
+ ] }
+ ulid.workspace = true
+ url.workspace = true
+-zstd.workspace = true
+ 
+ [dev-dependencies]
+ base64.workspace = true
+diff --git a/crates/integration-tests/tests/federation/basic/headers.rs b/crates/integration-tests/tests/federation/basic/headers.rs
+index cd7e6a55b..7c9f7757d 100644
+--- a/crates/integration-tests/tests/federation/basic/headers.rs
++++ b/crates/integration-tests/tests/federation/basic/headers.rs
+@@ -209,7 +209,7 @@ fn should_not_propagate_blacklisted_headers() {
+             .post("query { headers { name value }}")
+             .header("User-Agent", "Rusty")
+             .header("Accept", "application/json")
+-            .header("Accept-Encoding", "custom")
++            .header("Accept-Encoding", "gzip")
+             .header("Accept-Charset", "utf-8")
+             .header("Accept-Ranges", "bytes")
+             .header("Content-Length", "728")
+diff --git a/crates/integration-tests/tests/federation/compression.rs b/crates/integration-tests/tests/federation/compression.rs
+deleted file mode 100644
+index 203957b14..000000000
+--- a/crates/integration-tests/tests/federation/compression.rs
++++ /dev/null
+@@ -1,40 +0,0 @@
+-use engine::Engine;
+-use graphql_mocks::dynamic::DynamicSchema;
+-use integration_tests::{federation::EngineExt, runtime};
+-use rand::{Rng as _, distributions::Alphanumeric};
+-
+-#[test]
+-fn supports_zstd_compression() {
+-    runtime().block_on(async move {
+-        let s: String = rand::thread_rng()
+-            .sample_iter(Alphanumeric)
+-            .take(1024)
+-            .map(char::from)
+-            .collect();
+-
+-        let engine = Engine::builder()
+-            .with_subgraph(
+-                DynamicSchema::builder(r#"type Query { str: String! }"#)
+-                    .with_resolver("Query", "str", serde_json::Value::String(s.clone()))
+-                    .into_subgraph("x"),
+-            )
+-            .build()
+-            .await;
+-
+-        let response = engine
+-            .raw_execute(
+-                http::Request::builder()
+-                    .uri("http://localhost/graphql")
+-                    .method(http::Method::POST)
+-                    .header(http::header::CONTENT_TYPE, "application/json")
+-                    .header(http::header::ACCEPT_ENCODING, "zstd")
+-                    .body(Vec::from(br###"{"query":"{ str }"}"###))
+-                    .unwrap(),
+-            )
+-            .await;
+-
+-        let body = zstd::decode_all(response.body().as_ref()).unwrap();
+-        let body: serde_json::Value = serde_json::from_slice(&body).unwrap();
+-        assert_eq!(body, serde_json::json!({"data": {"str": s}}));
+-    })
+-}
+diff --git a/crates/integration-tests/tests/federation/mod.rs b/crates/integration-tests/tests/federation/mod.rs
+index 67ddb1289..11930492d 100644
+--- a/crates/integration-tests/tests/federation/mod.rs
++++ b/crates/integration-tests/tests/federation/mod.rs
+@@ -2,7 +2,6 @@ mod apq;
+ mod auth;
+ mod basic;
+ mod complexity_control;
+-mod compression;
+ mod config;
+ mod deser;
+ mod entity_caching;
+diff --git a/extensions/jwt/Cargo.lock b/extensions/jwt/Cargo.lock
+index ae33b2781..e6576d570 100644
+--- a/extensions/jwt/Cargo.lock
++++ b/extensions/jwt/Cargo.lock
+@@ -1931,7 +1931,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "grafbase-sdk"
+-version = "0.5.2"
++version = "0.5.4"
+ dependencies = [
+  "anyhow",
+  "async-tungstenite",
+@@ -1945,6 +1945,7 @@ dependencies = [
+  "graphql-ws-client",
+  "http 1.2.0",
+  "indoc",
++ "minicbor",
+  "minicbor-serde",
+  "reqwest 0.12.12",
+  "semver 1.0.25",
+diff --git a/extensions/nats/Cargo.lock b/extensions/nats/Cargo.lock
+index 033b9a958..3231e1033 100644
+--- a/extensions/nats/Cargo.lock
++++ b/extensions/nats/Cargo.lock
+@@ -1926,7 +1926,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "grafbase-sdk"
+-version = "0.5.2"
++version = "0.5.4"
+ dependencies = [
+  "anyhow",
+  "async-tungstenite",
+@@ -1944,6 +1944,7 @@ dependencies = [
+  "jaq-core",
+  "jaq-json",
+  "jaq-std",
++ "minicbor",
+  "minicbor-serde",
+  "reqwest",
+  "semver 1.0.25",
+diff --git a/extensions/nats/README.md b/extensions/nats/README.md
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/extensions/nats/definitions.graphql b/extensions/nats/definitions.graphql
+index b22f6504a..12d9f41b1 100644
+--- a/extensions/nats/definitions.graphql
++++ b/extensions/nats/definitions.graphql
+@@ -241,3 +241,7 @@ input Body {
+   """
+   static: JSON
+ }
++
++type NatsPublishResult {
++  success: Boolean!
++}
+diff --git a/extensions/nats/src/lib.rs b/extensions/nats/src/lib.rs
+index 56a8c0f35..73e97b3e4 100644
+--- a/extensions/nats/src/lib.rs
++++ b/extensions/nats/src/lib.rs
+@@ -12,10 +12,7 @@ use grafbase_sdk::{
+     Error, Extension, NatsAuth, Resolver, ResolverExtension, SharedContext, Subscription,
+ };
+ use subscription::FilteredSubscription;
+-use types::{
+-    DirectiveKind, KeyValueAction, KeyValueArguments, NatsKvCreateResult, NatsKvDeleteResult, NatsPublishResult,
+-    PublishArguments, RequestArguments, SubscribeArguments,
+-};
++use types::{DirectiveKind, KeyValueAction, KeyValueArguments, PublishArguments, RequestArguments, SubscribeArguments};
+ 
+ #[derive(ResolverExtension)]
+ struct Nats {
+@@ -163,10 +160,7 @@ impl Nats {
+         });
+ 
+         let mut output = FieldOutput::new();
+-
+-        output.push_value(NatsPublishResult {
+-            success: result.is_ok(),
+-        });
++        output.push_value(result.is_ok());
+ 
+         Ok(output)
+     }
+@@ -238,7 +232,7 @@ impl Nats {
+                 let body = args.body().unwrap_or(&serde_json::Value::Null);
+ 
+                 match store.create(args.key, body) {
+-                    Ok(sequence) => output.push_value(NatsKvCreateResult { sequence }),
++                    Ok(sequence) => output.push_value(sequence.to_string()),
+                     Err(error) => {
+                         return Err(Error {
+                             extensions: Vec::new(),
+@@ -251,7 +245,7 @@ impl Nats {
+                 let body = args.body().unwrap_or(&serde_json::Value::Null);
+ 
+                 match store.put(args.key, body) {
+-                    Ok(sequence) => output.push_value(NatsKvCreateResult { sequence }),
++                    Ok(sequence) => output.push_value(sequence.to_string()),
+                     Err(error) => {
+                         return Err(Error {
+                             extensions: Vec::new(),
+@@ -264,7 +258,7 @@ impl Nats {
+                 let value = match store.get::<serde_json::Value>(args.key) {
+                     Ok(Some(value)) => value,
+                     Ok(None) => {
+-                        output.push_value(Option::<serde_json::Value>::None);
++                        output.push_value(serde_json::Value::Null);
+                         return Ok(output);
+                     }
+                     Err(error) => {
+@@ -301,7 +295,7 @@ impl Nats {
+                 }
+             }
+             KeyValueAction::Delete => match store.delete(args.key) {
+-                Ok(()) => output.push_value(NatsKvDeleteResult { success: true }),
++                Ok(()) => output.push_value(true),
+                 Err(error) => {
+                     return Err(Error {
+                         extensions: Vec::new(),
+diff --git a/extensions/nats/src/types.rs b/extensions/nats/src/types.rs
+index 8cd0378ec..d117d2b85 100644
+--- a/extensions/nats/src/types.rs
++++ b/extensions/nats/src/types.rs
+@@ -114,24 +114,6 @@ pub struct RestInput {
+     input: Option<serde_json::Value>,
+ }
+ 
+-#[derive(Debug, serde::Serialize)]
+-#[serde(rename_all = "camelCase")]
+-pub struct NatsPublishResult {
+-    pub success: bool,
+-}
+-
+-#[derive(Debug, serde::Serialize)]
+-#[serde(rename_all = "camelCase")]
+-pub struct NatsKvCreateResult {
+-    pub sequence: u64,
+-}
+-
+-#[derive(Debug, serde::Serialize)]
+-#[serde(rename_all = "camelCase")]
+-pub struct NatsKvDeleteResult {
+-    pub success: bool,
+-}
+-
+ #[derive(Debug, serde::Deserialize)]
+ #[serde(rename_all = "camelCase")]
+ pub struct SubscribeArguments<'a> {
+diff --git a/extensions/rest/Cargo.lock b/extensions/rest/Cargo.lock
+index 91dab389f..b65158689 100644
+--- a/extensions/rest/Cargo.lock
++++ b/extensions/rest/Cargo.lock
+@@ -1917,7 +1917,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "grafbase-sdk"
+-version = "0.5.2"
++version = "0.5.4"
+ dependencies = [
+  "anyhow",
+  "async-tungstenite",
+@@ -1935,6 +1935,7 @@ dependencies = [
+  "jaq-core",
+  "jaq-json",
+  "jaq-std",
++ "minicbor",
+  "minicbor-serde",
+  "reqwest",
+  "semver 1.0.25",
+diff --git a/extensions/rest/definitions.graphql b/extensions/rest/definitions.graphql
+index b0d664162..58e70fc02 100644
+--- a/extensions/rest/definitions.graphql
++++ b/extensions/rest/definitions.graphql
+@@ -1,39 +1,139 @@
++extend schema @link(url: "https://specs.grafbase.com/grafbase", import: ["InputValueSet", "UrlTemplate"])
++
++"""
++@restEndpoint directive enables defining named REST endpoints for the schema.
++The directive can be used multiple times on a schema to define different endpoints.
++
++Example:
+ extend schema
+-  @link(
+-    url: "https://specs.grafbase.com/grafbase"
+-    import: ["InputValueSet", "UrlTemplate"]
+-  )
++  @restEndpoint(name: "weather", baseURL: "https://api.weather.com")
++  @restEndpoint(name: "users", baseURL: "https://api.users.example.com")
++"""
++directive @restEndpoint(
++  """
++  A unique identifier for the REST endpoint
++  """
++  name: String!
++  """
++  The base URL for the REST API
++  """
++  baseURL: String!
++) repeatable on SCHEMA
+ 
+-directive @restEndpoint(name: String!, baseURL: String!) repeatable on SCHEMA
++"""
++@rest directive allows you to define RESTful API integrations for GraphQL fields.
++This directive maps GraphQL fields to REST endpoints, enabling seamless integration
++between your GraphQL schema and external REST APIs.
+ 
++Example:
++type Query {
++  users: [User] @rest(
++    endpoint: "users",
++    http: { method: GET, path: "/users" },
++    selection: "*"
++  )
++}
++"""
+ directive @rest(
++  """
++  The name of the REST endpoint to use, as defined by @restEndpoint
++  """
+   endpoint: String!
++
++  """
++  HTTP request configuration including method and path
++  """
+   http: HttpRequestDefinition!
++
++  """
++  Specifies which fields from the GraphQL selection to include in the response
++  """
+   selection: String!
++
++  """
++  Configuration for the request body, can include static values or
++  selections from the GraphQL arguments
++  """
+   body: Body = { selection: "*" }
+ ) on FIELD_DEFINITION
+ 
+ scalar JSON
+ 
++"""
++Body input type defines how to construct the request body for REST API calls.
++It allows for dynamic construction from GraphQL arguments or static values.
++"""
+ input Body {
++  """
++  Specifies which GraphQL arguments to include in the request body.
++  Use "*" to include all arguments, or provide specific field names.
++  """
+   selection: InputValueSet
++
++  """
++  Static JSON content to include in the request body,
++  which will be merged with any selected values.
++  """
+   static: JSON
+ }
+ 
++"""
++HttpRequestDefinition configures the HTTP request that will be made
++to the REST endpoint, including both the method and path.
++"""
+ input HttpRequestDefinition {
++  """
++  The HTTP method to use for the request, such as GET, POST, etc.
++  """
+   method: HttpMethod!
++
++  """
++  The path template for the request, which can include
++  variable substitutions from GraphQL arguments.
++  This supports templating using GraphQL arguments: {{args.myArgument}}
++  """
+   path: UrlTemplate!
+ }
+ 
++"""
++HttpMethod enum represents the standard HTTP methods supported
++for REST API interactions.
++"""
+ enum HttpMethod {
++  """
++  HTTP GET method for retrieving resources
++  """
+   GET
++  """
++  HTTP POST method for creating resources
++  """
+   POST
++  """
++  HTTP PUT method for replacing resources
++  """
+   PUT
++  """
++  HTTP DELETE method for removing resources
++  """
+   DELETE
++  """
++  HTTP HEAD method for retrieving headers only
++  """
+   HEAD
++  """
++  HTTP OPTIONS method for describing communication options
++  """
+   OPTIONS
++  """
++  HTTP CONNECT method for establishing tunnels
++  """
+   CONNECT
++  """
++  HTTP TRACE method for diagnostic testing
++  """
+   TRACE
++  """
++  HTTP PATCH method for partial modifications
++  """
+   PATCH
+ }
+-
+diff --git a/extensions/rest/src/lib.rs b/extensions/rest/src/lib.rs
+index fbf697339..e168b4c7c 100644
+--- a/extensions/rest/src/lib.rs
++++ b/extensions/rest/src/lib.rs
+@@ -120,13 +120,18 @@ impl Resolver for RestExtension {
+             message: format!("Error deserializing response: {e}"),
+         })?;
+ 
++        let mut results = FieldOutput::new();
++
++        if !(data.is_object() || data.is_array()) {
++            results.push_value(data);
++            return Ok(results);
++        }
++
+         let filtered = self.jq_selection.select(rest.selection, data).map_err(|e| Error {
+             extensions: Vec::new(),
+             message: format!("Error selecting result value: {e}"),
+         })?;
+ 
+-        let mut results = FieldOutput::new();
+-
+         for result in filtered {
+             match result {
+                 Ok(result) => results.push_value(result),

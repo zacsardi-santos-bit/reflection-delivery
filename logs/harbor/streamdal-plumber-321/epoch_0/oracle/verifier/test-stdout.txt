@@ -1,0 +1,37 @@
+patching file backends/batch/replays_test.go
+patching file backends/batch/schemas_test.go
+{"Time":"2026-06-29T15:25:52.337752036Z","Action":"start","Package":"github.com/batchcorp/plumber/backends/batch"}
+{"Time":"2026-06-29T15:25:52.385398515Z","Action":"run","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAuthenticate"}
+{"Time":"2026-06-29T15:25:52.38544427Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAuthenticate","Output":"=== RUN   TestAuthenticate\n"}
+{"Time":"2026-06-29T15:25:52.385968278Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAuthenticate","Output":"--- PASS: TestAuthenticate (0.00s)\n"}
+{"Time":"2026-06-29T15:25:52.385992669Z","Action":"pass","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAuthenticate","Elapsed":0}
+{"Time":"2026-06-29T15:25:52.386005784Z","Action":"run","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadUsername"}
+{"Time":"2026-06-29T15:25:52.386014182Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadUsername","Output":"=== RUN   TestReadUsername\n"}
+{"Time":"2026-06-29T15:25:52.386033477Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadUsername","Output":"\n"}
+{"Time":"2026-06-29T15:25:52.386054911Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadUsername","Output":"\n"}
+{"Time":"2026-06-29T15:25:52.386065644Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadUsername","Output":"Enter Username: "}
+{"Time":"2026-06-29T15:25:52.386075582Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadUsername","Output":"--- PASS: TestReadUsername (0.00s)\n"}
+{"Time":"2026-06-29T15:25:52.386085926Z","Action":"pass","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadUsername","Elapsed":0}
+{"Time":"2026-06-29T15:25:52.386102029Z","Action":"run","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadPassword"}
+{"Time":"2026-06-29T15:25:52.386116059Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadPassword","Output":"=== RUN   TestReadPassword\n"}
+{"Time":"2026-06-29T15:25:52.386149779Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadPassword","Output":"Enter Password: \n"}
+{"Time":"2026-06-29T15:25:52.386166604Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadPassword","Output":"--- PASS: TestReadPassword (0.00s)\n"}
+{"Time":"2026-06-29T15:25:52.386174948Z","Action":"pass","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestReadPassword","Elapsed":0}
+{"Time":"2026-06-29T15:25:52.386183501Z","Action":"run","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite"}
+{"Time":"2026-06-29T15:25:52.386191661Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"=== RUN   TestAPISuite\n"}
+{"Time":"2026-06-29T15:25:52.389590646Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"Running Suite: Batch Test Suite\n"}
+{"Time":"2026-06-29T15:25:52.389628327Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"===============================\n"}
+{"Time":"2026-06-29T15:25:52.389648855Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"Random Seed: \u001b[1m1782746752\u001b[0m\n"}
+{"Time":"2026-06-29T15:25:52.389662254Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"Will run \u001b[1m22\u001b[0m of \u001b[1m22\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:25:52.389687732Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"\n"}
+{"Time":"2026-06-29T15:25:52.390014403Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m[]batch.ReplayOutput{batch.ReplayOutput{Name:\"Test Replay\", ID:\"44da12e6-6dfd-4f11-a952-6863958acf05\", Type:\"Single\", Query:\"*\", Source:\"Collection - Test Collection\", Destination:\"Test Destination\", Paused:false, Status:\"\"}}\n"}
+{"Time":"2026-06-29T15:25:52.390072572Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"\u001b[32m•\u001b[0m[]batch.ReplayOutput{batch.ReplayOutput{Name:\"Test Replay\", ID:\"44da12e6-6dfd-4f11-a952-6863958acf05\", Type:\"Single\", Query:\"*\", Source:\"Dead Letter Stage - Test Stage\", Destination:\"Test Destination\", Paused:false, Status:\"\"}}\n"}
+{"Time":"2026-06-29T15:25:52.390733898Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\u001b[32m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:25:52.390771042Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"\u001b[1m\u001b[32mRan 22 of 22 Specs in 0.001 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:25:52.390785013Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"\u001b[1m\u001b[32mSUCCESS!\u001b[0m -- \u001b[32m\u001b[1m22 Passed\u001b[0m | \u001b[91m\u001b[1m0 Failed\u001b[0m | \u001b[33m\u001b[1m0 Pending\u001b[0m | \u001b[36m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:25:52.390853745Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Output":"--- PASS: TestAPISuite (0.00s)\n"}
+{"Time":"2026-06-29T15:25:52.390877066Z","Action":"pass","Package":"github.com/batchcorp/plumber/backends/batch","Test":"TestAPISuite","Elapsed":0}
+{"Time":"2026-06-29T15:25:52.390895735Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Output":"PASS\n"}
+{"Time":"2026-06-29T15:25:52.392408984Z","Action":"output","Package":"github.com/batchcorp/plumber/backends/batch","Output":"ok  \tgithub.com/batchcorp/plumber/backends/batch\t0.054s\n"}
+{"Time":"2026-06-29T15:25:52.392440101Z","Action":"pass","Package":"github.com/batchcorp/plumber/backends/batch","Elapsed":0.055}
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=go exit_code=0

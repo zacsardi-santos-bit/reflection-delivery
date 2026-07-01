@@ -1,0 +1,23 @@
+{
+ "task": "apache-airflow-6050",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds @contextmanager provide_gcp_credential_file_as_context (sets/restores CREDENTIALS env) and delegates the decorator to it; F2P=5 context-manager+operator tests, P2P=46 regression net"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

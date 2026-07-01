@@ -1,0 +1,399 @@
+patching file src/tracing/packet/checksum.rs
+   Compiling proc-macro2 v1.0.71
+   Compiling unicode-ident v1.0.12
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.151
+   Compiling autocfg v1.1.0
+   Compiling once_cell v1.19.0
+   Compiling serde v1.0.193
+   Compiling log v0.4.20
+   Compiling version_check v0.9.4
+   Compiling heck v0.4.1
+   Compiling bitflags v2.4.1
+   Compiling zerocopy v0.7.32
+   Compiling allocator-api2 v0.2.16
+   Compiling smallvec v1.11.2
+   Compiling tinyvec_macros v0.1.1
+   Compiling pin-project-lite v0.2.13
+   Compiling crossbeam-utils v0.8.18
+   Compiling rustix v0.38.28
+   Compiling parking_lot_core v0.9.9
+   Compiling tinyvec v1.6.0
+   Compiling rustversion v1.0.14
+   Compiling unicode-bidi v0.3.14
+   Compiling syn v1.0.109
+   Compiling tracing-core v0.1.32
+   Compiling signal-hook v0.3.17
+   Compiling utf8parse v0.2.1
+   Compiling thiserror v1.0.52
+   Compiling linux-raw-sys v0.4.12
+   Compiling ahash v0.8.6
+   Compiling lock_api v0.4.11
+   Compiling slab v0.4.9
+   Compiling scopeguard v1.2.0
+   Compiling unicode-normalization v0.1.22
+   Compiling anstyle-parse v0.2.3
+   Compiling regex-syntax v0.8.2
+   Compiling percent-encoding v2.3.1
+   Compiling ryu v1.0.16
+   Compiling async-trait v0.1.75
+   Compiling anstyle-query v1.0.2
+   Compiling colorchoice v1.0.0
+   Compiling itoa v1.0.10
+   Compiling futures-core v0.3.30
+   Compiling serde_json v1.0.108
+   Compiling anstyle v1.0.4
+   Compiling regex-syntax v0.6.29
+   Compiling equivalent v1.0.1
+   Compiling ppv-lite86 v0.2.17
+   Compiling form_urlencoded v1.2.1
+   Compiling idna v0.5.0
+   Compiling num-traits v0.2.17
+   Compiling quote v1.0.33
+   Compiling anstream v0.6.5
+   Compiling memoffset v0.9.0
+   Compiling terminal_size v0.3.0
+   Compiling overload v0.1.1
+   Compiling hashbrown v0.14.3
+   Compiling syn v2.0.43
+   Compiling regex-automata v0.4.3
+   Compiling pin-utils v0.1.0
+   Compiling mio v0.8.10
+   Compiling getrandom v0.2.11
+   Compiling socket2 v0.5.5
+   Compiling signal-hook-registry v1.4.1
+   Compiling num_cpus v1.16.0
+   Compiling memchr v2.7.1
+   Compiling clap_lex v0.6.0
+   Compiling rand_core v0.6.4
+   Compiling parking_lot v0.12.1
+   Compiling indexmap v2.1.0
+   Compiling regex-automata v0.1.10
+   Compiling rand_chacha v0.3.1
+   Compiling futures-task v0.3.30
+   Compiling paste v1.0.14
+   Compiling lazy_static v1.4.0
+   Compiling bytes v1.5.0
+   Compiling match_cfg v0.1.0
+   Compiling signal-hook-mio v0.2.3
+   Compiling hostname v0.3.1
+   Compiling rand v0.8.5
+   Compiling sharded-slab v0.1.7
+   Compiling futures-util v0.3.30
+   Compiling regex v1.10.2
+   Compiling clap_builder v4.4.12
+   Compiling tokio v1.35.1
+   Compiling nu-ansi-term v0.46.0
+   Compiling matchers v0.1.0
+   Compiling url v2.5.0
+   Compiling futures-channel v0.3.30
+   Compiling crossbeam-epoch v0.9.17
+   Compiling idna v0.4.0
+   Compiling tracing-log v0.2.0
+   Compiling thread_local v1.1.7
+   Compiling unicode-width v0.1.11
+   Compiling ipnet v2.9.0
+   Compiling quick-error v1.2.3
+   Compiling linked-hash-map v0.5.6
+   Compiling winnow v0.5.31
+   Compiling anyhow v1.0.77
+   Compiling futures-io v0.3.30
+   Compiling data-encoding v2.5.0
+   Compiling either v1.9.0
+   Compiling resolv-conf v0.7.0
+   Compiling lru-cache v0.1.2
+   Compiling test-case-core v3.3.1
+   Compiling itertools v0.12.0
+   Compiling crossbeam-deque v0.8.4
+   Compiling crossterm v0.27.0
+   Compiling csv-core v0.1.11
+   Compiling lru v0.12.1
+   Compiling crossbeam-queue v0.3.10
+   Compiling crossbeam-channel v0.5.10
+   Compiling unicode-segmentation v1.10.1
+   Compiling home v0.5.9
+   Compiling iana-time-zone v0.1.58
+   Compiling cassowary v0.3.0
+   Compiling fixedbitset v0.4.2
+   Compiling indoc v2.0.4
+   Compiling crossbeam v0.8.3
+   Compiling petgraph v0.6.4
+   Compiling chrono v0.4.31
+   Compiling etcetera v0.8.0
+   Compiling nix v0.27.1
+   Compiling dns-lookup v2.0.4
+   Compiling yansi v0.5.1
+   Compiling humantime v2.1.0
+   Compiling diff v0.1.13
+   Compiling stability v0.1.1
+   Compiling serde_derive v1.0.193
+   Compiling tracing-attributes v0.1.27
+   Compiling thiserror-impl v1.0.52
+   Compiling strum_macros v0.25.3
+   Compiling clap_derive v4.4.7
+   Compiling enum-as-inner v0.6.0
+   Compiling test-case-macros v3.3.1
+   Compiling derive_more v0.99.17
+   Compiling arrayvec v0.7.4
+   Compiling pretty_assertions v1.4.0
+   Compiling hex-literal v0.4.1
+   Compiling test-case v3.3.1
+   Compiling tracing v0.1.40
+   Compiling clap v4.4.12
+   Compiling caps v0.5.5
+   Compiling clap_complete v4.4.5
+   Compiling hickory-proto v0.24.0
+   Compiling strum v0.25.0
+   Compiling ratatui v0.25.0
+   Compiling comfy-table v7.1.0
+   Compiling hickory-resolver v0.24.0
+   Compiling serde_spanned v0.6.5
+   Compiling tracing-serde v0.1.3
+   Compiling toml_datetime v0.6.5
+   Compiling ipnetwork v0.18.0
+   Compiling csv v1.3.0
+   Compiling toml_edit v0.21.0
+   Compiling maxminddb v0.23.0
+   Compiling tracing-subscriber v0.3.18
+   Compiling toml v0.8.8
+   Compiling tracing-chrome v0.7.1
+   Compiling trippy v0.10.0-dev (/workspace/repo)
+    Finished test [unoptimized + debuginfo] target(s) in 32.91s
+────────────
+ Nextest run ID 71d3eb1b-1bf8-48f0-8211-c26cd0b6aba4 with nextest profile: default
+    Starting 232 tests across 2 binaries
+        PASS [   0.116s] (  1/232) trippy tracing::packet::icmp_extension::extension_object::tests::test_class_num
+        PASS [   0.120s] (  2/232) trippy tracing::packet::icmp_extension::extension_object::tests::test_class_subtype
+        PASS [   0.122s] (  3/232) trippy tracing::config::tests::test_channel_config_builder_minimal
+        PASS [   0.121s] (  4/232) trippy tracing::packet::icmp_extension::extension_header::tests::test_version
+        PASS [   0.122s] (  5/232) trippy tracing::packet::icmp_extension::extension_header::tests::test_checksum
+        PASS [   0.123s] (  6/232) trippy tracing::packet::icmp_extension::extension_object::tests::test_extension_header_view
+        PASS [   0.125s] (  7/232) trippy tracing::packet::checksum::tests::test_ipv4_header_checksum
+        PASS [   0.124s] (  8/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::ipv4::test_split_extension_ipv4_time_exceeded_compliant_extension
+        PASS [   0.125s] (  9/232) trippy tracing::config::tests::test_channel_config_builder_full
+        PASS [   0.126s] ( 10/232) trippy tracing::packet::icmp_extension::extension_object::tests::test_length
+        PASS [   0.125s] ( 11/232) trippy tracing::config::tests::test_config_builder_full
+        PASS [   0.131s] ( 12/232) trippy tracing::packet::checksum::tests::test_udp_ipv6_checksum
+        PASS [   0.131s] ( 13/232) trippy tracing::config::tests::test_config_builder_minimal
+        PASS [   0.131s] ( 14/232) trippy tracing::packet::icmp_extension::extension_header::tests::test_extension_header_view
+        PASS [   0.132s] ( 15/232) trippy tracing::packet::checksum::tests::test_config_type_renamed
+        PASS [   0.132s] ( 16/232) trippy tracing::packet::checksum::tests::test_icmp_ipv4_checksum
+        PASS [   0.134s] ( 17/232) trippy tracing::packet::checksum::tests::test_icmp_ipv6_checksum
+        PASS [   0.139s] ( 18/232) trippy tracing::packet::checksum::tests::test_udp_ipv4_checksum
+        PASS [   0.104s] ( 19/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::test_split_empty_payload
+        PASS [   0.105s] ( 20/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::ipv6::test_ipv6_2
+        PASS [   0.104s] ( 21/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::test_split_payload_with_compliant_minimal_extension
+        PASS [   0.113s] ( 22/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::ipv4::test_split_extension_ipv4_time_exceeded_compliant_no_extension
+        PASS [   0.105s] ( 23/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::test_split_payload_with_invalid_rfc4884_length
+        PASS [   0.107s] ( 24/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::test_split_payload_with_compliant_empty_extension
+        PASS [   0.110s] ( 25/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::ipv4::test_split_extension_ipv4_time_exceeded_non_compliant_mpls
+        PASS [   0.111s] ( 26/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::ipv6::test_ipv6
+        PASS [   0.109s] ( 27/232) trippy tracing::packet::icmp_extension::extension_splitter::tests::test_split_payload_with_compliant_invalid_extension
+        PASS [   0.112s] ( 28/232) trippy tracing::packet::icmp_extension::extension_structure::tests::test_header
+        PASS [   0.113s] ( 29/232) trippy tracing::packet::icmp_extension::extension_structure::tests::test_object_iterator
+        PASS [   0.108s] ( 30/232) trippy tracing::packet::icmp_extension::extension_structure::tests::test_object_iterator_zero_length
+        PASS [   0.107s] ( 31/232) trippy tracing::packet::icmp_extension::mpls_label_stack_member::tests::test_exp
+        PASS [   0.107s] ( 32/232) trippy tracing::packet::icmp_extension::mpls_label_stack_member::tests::test_combined
+        PASS [   0.110s] ( 33/232) trippy tracing::packet::icmp_extension::mpls_label_stack_member::tests::test_bos
+        PASS [   0.111s] ( 34/232) trippy tracing::packet::icmp_extension::mpls_label_stack::tests::test_stack_member_iterator
+        PASS [   0.107s] ( 35/232) trippy tracing::packet::icmp_extension::mpls_label_stack_member::tests::test_label
+        PASS [   0.110s] ( 36/232) trippy tracing::packet::icmp_extension::mpls_label_stack_member::tests::test_ttl
+        PASS [   0.095s] ( 37/232) trippy tracing::packet::icmpv4::destination_unreachable::tests::test_view
+        PASS [   0.099s] ( 38/232) trippy tracing::packet::icmpv4::destination_unreachable::tests::test_checksum
+        PASS [   0.103s] ( 39/232) trippy tracing::packet::icmp_extension::mpls_label_stack_member::tests::test_view
+        PASS [   0.101s] ( 40/232) trippy tracing::packet::icmpv4::destination_unreachable::tests::test_icmp_code
+        PASS [   0.099s] ( 41/232) trippy tracing::packet::icmpv4::destination_unreachable::tests::test_length
+        PASS [   0.099s] ( 42/232) trippy tracing::packet::icmpv4::destination_unreachable::tests::test_icmp_type
+        PASS [   0.100s] ( 43/232) trippy tracing::packet::icmpv4::echo_reply::tests::test_checksum
+        PASS [   0.099s] ( 44/232) trippy tracing::packet::icmpv4::echo_reply::tests::test_icmp_code
+        PASS [   0.093s] ( 45/232) trippy tracing::packet::icmpv4::echo_request::tests::test_icmp_code
+        PASS [   0.093s] ( 46/232) trippy tracing::packet::icmpv4::echo_request::tests::test_checksum
+        PASS [   0.097s] ( 47/232) trippy tracing::packet::icmpv4::echo_reply::tests::test_identifier
+        PASS [   0.102s] ( 48/232) trippy tracing::packet::icmpv4::echo_reply::tests::test_icmp_type
+        PASS [   0.098s] ( 49/232) trippy tracing::packet::icmpv4::echo_reply::tests::test_sequence
+        PASS [   0.099s] ( 50/232) trippy tracing::packet::icmpv4::echo_reply::tests::test_view
+        PASS [   0.099s] ( 51/232) trippy tracing::packet::icmpv4::echo_request::tests::test_icmp_type
+        PASS [   0.100s] ( 52/232) trippy tracing::packet::icmpv4::echo_request::tests::test_identifier
+        PASS [   0.103s] ( 53/232) trippy tracing::packet::icmpv4::echo_request::tests::test_sequence
+        PASS [   0.104s] ( 54/232) trippy tracing::packet::icmpv4::echo_request::tests::test_view
+        PASS [   0.100s] ( 55/232) trippy tracing::packet::icmpv4::time_exceeded::tests::test_icmp_type
+        PASS [   0.107s] ( 56/232) trippy tracing::packet::icmpv4::tests::test_checksum
+        PASS [   0.104s] ( 57/232) trippy tracing::packet::icmpv4::time_exceeded::tests::test_length
+        PASS [   0.106s] ( 58/232) trippy tracing::packet::icmpv4::time_exceeded::tests::test_icmp_code
+        PASS [   0.107s] ( 59/232) trippy tracing::packet::icmpv4::tests::test_icmp_type
+        PASS [   0.114s] ( 60/232) trippy tracing::packet::icmpv4::tests::test_icmp_code
+        PASS [   0.111s] ( 61/232) trippy tracing::packet::icmpv4::time_exceeded::tests::test_checksum
+        PASS [   0.108s] ( 62/232) trippy tracing::packet::icmpv6::destination_unreachable::tests::test_icmp_code
+        PASS [   0.108s] ( 63/232) trippy tracing::packet::icmpv6::destination_unreachable::tests::test_checksum
+        PASS [   0.106s] ( 64/232) trippy tracing::packet::icmpv6::destination_unreachable::tests::test_length
+        PASS [   0.105s] ( 65/232) trippy tracing::packet::icmpv6::destination_unreachable::tests::test_view
+        PASS [   0.109s] ( 66/232) trippy tracing::packet::icmpv6::destination_unreachable::tests::test_icmp_type
+        PASS [   0.112s] ( 67/232) trippy tracing::packet::icmpv4::time_exceeded::tests::test_view
+        PASS [   0.107s] ( 68/232) trippy tracing::packet::icmpv6::echo_reply::tests::test_checksum
+        PASS [   0.105s] ( 69/232) trippy tracing::packet::icmpv6::echo_reply::tests::test_icmp_type
+        PASS [   0.107s] ( 70/232) trippy tracing::packet::icmpv6::echo_reply::tests::test_icmp_code
+        PASS [   0.109s] ( 71/232) trippy tracing::packet::icmpv6::echo_reply::tests::test_identifier
+        PASS [   0.111s] ( 72/232) trippy tracing::packet::icmpv6::echo_reply::tests::test_sequence
+        PASS [   0.106s] ( 73/232) trippy tracing::packet::icmpv6::echo_reply::tests::test_view
+        PASS [   0.107s] ( 74/232) trippy tracing::packet::icmpv6::echo_request::tests::test_checksum
+        PASS [   0.105s] ( 75/232) trippy tracing::packet::icmpv6::echo_request::tests::test_identifier
+        PASS [   0.106s] ( 76/232) trippy tracing::packet::icmpv6::echo_request::tests::test_icmp_type
+        PASS [   0.102s] ( 77/232) trippy tracing::packet::icmpv6::tests::test_icmp_type
+        PASS [   0.103s] ( 78/232) trippy tracing::packet::icmpv6::tests::test_checksum
+        PASS [   0.107s] ( 79/232) trippy tracing::packet::icmpv6::echo_request::tests::test_view
+        PASS [   0.113s] ( 80/232) trippy tracing::packet::icmpv6::echo_request::tests::test_icmp_code
+        PASS [   0.107s] ( 81/232) trippy tracing::packet::icmpv6::time_exceeded::tests::test_checksum
+        PASS [   0.109s] ( 82/232) trippy tracing::packet::icmpv6::tests::test_icmp_code
+        PASS [   0.112s] ( 83/232) trippy tracing::packet::icmpv6::echo_request::tests::test_sequence
+        PASS [   0.109s] ( 84/232) trippy tracing::packet::icmpv6::time_exceeded::tests::test_icmp_code
+        PASS [   0.110s] ( 85/232) trippy tracing::packet::icmpv6::time_exceeded::tests::test_icmp_type
+        PASS [   0.110s] ( 86/232) trippy tracing::packet::icmpv6::time_exceeded::tests::test_length
+        PASS [   0.108s] ( 87/232) trippy tracing::packet::ipv4::tests::test_destination
+        PASS [   0.109s] ( 88/232) trippy tracing::packet::icmpv6::time_exceeded::tests::test_view
+        PASS [   0.103s] ( 89/232) trippy tracing::packet::ipv4::tests::test_dscp
+        PASS [   0.107s] ( 90/232) trippy tracing::packet::ipv4::tests::test_dscp_and_ecn
+        PASS [   0.101s] ( 91/232) trippy tracing::packet::ipv4::tests::test_flags
+        PASS [   0.108s] ( 92/232) trippy tracing::packet::ipv4::tests::test_ecn
+        PASS [   0.107s] ( 93/232) trippy tracing::packet::ipv4::tests::test_header_checksum
+        PASS [   0.103s] ( 94/232) trippy tracing::packet::ipv4::tests::test_identification
+        PASS [   0.104s] ( 95/232) trippy tracing::packet::ipv4::tests::test_protocol
+        PASS [   0.109s] ( 96/232) trippy tracing::packet::ipv4::tests::test_header_length
+        PASS [   0.105s] ( 97/232) trippy tracing::packet::ipv4::tests::test_source
+        PASS [   0.104s] ( 98/232) trippy tracing::packet::ipv4::tests::test_version
+        PASS [   0.104s] ( 99/232) trippy tracing::packet::ipv4::tests::test_version_and_header_length
+        PASS [   0.109s] (100/232) trippy tracing::packet::ipv4::tests::test_total_length
+        PASS [   0.111s] (101/232) trippy tracing::packet::ipv4::tests::test_time_to_live
+        PASS [   0.103s] (102/232) trippy tracing::packet::ipv6::tests::test_hop_limit
+        PASS [   0.106s] (103/232) trippy tracing::packet::ipv6::tests::test_destination_address
+        PASS [   0.105s] (104/232) trippy tracing::packet::ipv6::tests::test_flow_label
+        PASS [   0.103s] (105/232) trippy tracing::packet::ipv6::tests::test_payload_length
+        PASS [   0.112s] (106/232) trippy tracing::packet::ipv4::tests::test_view
+        PASS [   0.108s] (107/232) trippy tracing::packet::ipv6::tests::test_next_header
+        PASS [   0.113s] (108/232) trippy tracing::packet::ipv6::tests::test_source_address
+        PASS [   0.106s] (109/232) trippy tracing::packet::ipv6::tests::test_traffic_class
+        PASS [   0.104s] (110/232) trippy tracing::packet::ipv6::tests::test_version
+        PASS [   0.101s] (111/232) trippy tracing::packet::ipv6::tests::test_view
+        PASS [   0.099s] (112/232) trippy tracing::packet::tcp::tests::test_checksum
+        PASS [   0.101s] (113/232) trippy tracing::packet::tcp::tests::test_data_offset
+        PASS [   0.100s] (114/232) trippy tracing::packet::tcp::tests::test_data_offset_and_reserved
+        PASS [   0.107s] (115/232) trippy tracing::packet::ipv6::tests::test_version_and_traffic_class
+        PASS [   0.107s] (116/232) trippy tracing::packet::tcp::tests::test_acknowledgement
+        PASS [   0.102s] (117/232) trippy tracing::packet::tcp::tests::test_destination
+        PASS [   0.105s] (118/232) trippy tracing::packet::tcp::tests::test_flags
+        PASS [   0.105s] (119/232) trippy tracing::packet::tcp::tests::test_reserved
+        PASS [   0.108s] (120/232) trippy tracing::packet::tcp::tests::test_data_offset_and_reserved_and_flags
+        PASS [   0.104s] (121/232) trippy tracing::packet::tcp::tests::test_reserved_and_flags
+        PASS [   0.107s] (122/232) trippy tracing::packet::tcp::tests::test_sequence
+        PASS [   0.105s] (123/232) trippy tracing::packet::tcp::tests::test_view
+        PASS [   0.112s] (124/232) trippy tracing::packet::tcp::tests::test_source
+        PASS [   0.113s] (125/232) trippy tracing::packet::tcp::tests::test_urgent_pointer
+        PASS [   0.118s] (126/232) trippy tracing::packet::tcp::tests::test_window_size
+        PASS [   0.104s] (127/232) trippy tracing::packet::udp::tests::test_checksum
+        PASS [   0.105s] (128/232) trippy tracing::packet::udp::tests::test_destination
+        PASS [   0.106s] (129/232) trippy tracing::packet::udp::tests::test_length
+        PASS [   0.108s] (130/232) trippy tracing::packet::udp::tests::test_source
+        PASS [   0.109s] (131/232) trippy tracing::packet::udp::tests::test_view
+        PASS [   0.113s] (132/232) trippy tracing::tracer::state::tests::test_in_round
+        PASS [   0.106s] (133/232) trippy::bin/trip backend::flows::tests::test_merge_flow1
+        PASS [   0.117s] (134/232) trippy tracing::tracer::state::tests::test_sequence_wrap1
+        PASS [   0.110s] (135/232) trippy tracing::tracer::state::tests::test_state
+        PASS [   0.121s] (136/232) trippy tracing::tracer::state::tests::test_in_delayed_probe_not_in_round
+        PASS [   0.115s] (137/232) trippy tracing::tracer::state::tests::test_sequence_wrap3
+        PASS [   0.112s] (138/232) trippy::bin/trip backend::flows::tests::test_merge_flow2
+        PASS [   0.109s] (139/232) trippy::bin/trip backend::flows::tests::test_merge_flow3
+        PASS [   0.107s] (140/232) trippy::bin/trip backend::flows::tests::test_single_flow
+        PASS [   0.108s] (141/232) trippy::bin/trip backend::flows::tests::test_start_any_then_diff_flows
+        PASS [   0.117s] (142/232) trippy::bin/trip backend::flows::tests::test_start_any_then_same_flows
+        PASS [   0.186s] (143/232) trippy tracing::tracer::state::tests::test_sequence_wrap2
+        PASS [   0.115s] (144/232) trippy::bin/trip backend::flows::tests::test_subset
+        PASS [   0.112s] (145/232) trippy::bin/trip backend::flows::tests::test_superset
+        PASS [   0.117s] (146/232) trippy::bin/trip backend::flows::tests::test_subset_any
+        PASS [   0.111s] (147/232) trippy::bin/trip backend::flows::tests::test_two_different_flows
+        PASS [   0.117s] (148/232) trippy::bin/trip backend::flows::tests::test_superset_any
+        PASS [   0.109s] (149/232) trippy::bin/trip backend::flows::tests::test_two_same_flows
+        PASS [   0.107s] (150/232) trippy::bin/trip backend::flows::tests::test_two_same_one_different_flows
+        PASS [   0.102s] (151/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::char_without_any_modifier
+        PASS [   0.099s] (152/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::down_without_any_modifier
+        PASS [   0.106s] (153/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::backspace_without_any_modifier
+        PASS [   0.103s] (154/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::delete_without_any_modifier
+        PASS [   0.108s] (155/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::backtab_without_any_modifier
+        PASS [   0.105s] (156/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::enter_without_any_modifier
+        PASS [   0.108s] (157/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::end_without_any_modifier
+        PASS [   0.108s] (158/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::escape_without_any_modifier
+        PASS [   0.123s] (159/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::home_without_any_modifier
+        PASS [   0.292s] (160/232) trippy tracing::tracer::state::tests::test_sequence_wrap_with_skip
+        PASS [   0.121s] (161/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::i_with_ctrl_modifier
+        PASS [   0.111s] (162/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::left_without_any_modifier
+        PASS [   0.114s] (163/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::insert_without_any_modifier
+        PASS [   0.117s] (164/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::i_with_shift_modifier
+        PASS [   0.113s] (165/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::null_without_any_modifier
+        PASS [   0.116s] (166/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::number_without_any_modifier
+        PASS [   0.116s] (167/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::pagedown_without_any_modifier
+        PASS [   0.114s] (168/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::punctuation_without_any_modifier
+        PASS [   0.112s] (169/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::tab_without_any_modifier
+        PASS [   0.112s] (170/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::up_without_any_modifier
+        PASS [   0.118s] (171/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::pageup_without_any_modifier
+        PASS [   0.116s] (172/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::right_without_any_modifier
+        PASS [   0.120s] (173/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::up_with_ctrl_modifier
+        PASS [   0.118s] (174/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::with_all_modifiers
+        PASS [   0.118s] (175/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::with_alt_modifier
+        PASS [   0.116s] (176/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::with_alt_shift_modifier
+        PASS [   0.118s] (177/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::with_hyper_modifier
+        PASS [   0.116s] (178/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::with_shift_modifier
+        PASS [   0.127s] (179/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::with_meta_modifier
+        PASS [   0.102s] (180/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_average_v_expects
+        PASS [   0.114s] (181/232) trippy::bin/trip config::binding::binding_tests::test_key_binding::with_super_modifier
+        PASS [   0.104s] (182/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_best_b_expects
+        PASS [   0.114s] (183/232) trippy::bin/trip config::binding::binding_tests::test_unknown_key
+        PASS [   0.104s] (184/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_host_o_expects
+        PASS [   0.111s] (185/232) trippy::bin/trip config::binding::binding_tests::test_unknown_second_modifier
+        PASS [   0.114s] (186/232) trippy::bin/trip config::binding::binding_tests::test_unknown_modifier
+        PASS [   0.107s] (187/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_losspct_l_expects
+        PASS [   0.109s] (188/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_received_r_expects
+        PASS [   0.100s] (189/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_status_t_expects
+        PASS [   0.116s] (190/232) trippy::bin/trip config::columns::tests::test_default_for_tui_columns
+        PASS [   0.111s] (191/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_last_a_expects
+        PASS [   0.101s] (192/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_stddev_d_expects
+        PASS [   0.107s] (193/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_sent_s_expects
+        PASS [   0.103s] (194/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_ttl_h_expects
+        PASS [   0.119s] (195/232) trippy::bin/trip config::columns::tests::test_display_formatting_for_tui_column::tuicolumn_worst_w_expects
+        PASS [   0.107s] (196/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_a_tuicolumn_last_expects
+        PASS [   0.115s] (197/232) trippy::bin/trip config::columns::tests::test_find_duplicates_for_tui_columns
+        PASS [   0.105s] (198/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_d_tuicolumn_stddev_expects
+        PASS [   0.100s] (199/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_s_tuicolumn_sent_expects
+        PASS [   0.110s] (200/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_b_tuicolumn_best_expects
+        PASS [   0.102s] (201/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_t_tuicolumn_status_expects
+        PASS [   0.108s] (202/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_o_tuicolumn_host_expects
+        PASS [   0.103s] (203/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_w_tuicolumn_worst_expects
+        PASS [   0.110s] (204/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_l_tuicolumn_losspct_expects
+        PASS [   0.111s] (205/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_h_tuicolumn_ttl_expects
+        PASS [   0.110s] (206/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_r_tuicolumn_received_expects
+        PASS [   0.102s] (207/232) trippy::bin/trip config::columns::tests::test_try_from_str_for_tui_columns
+        PASS [   0.103s] (208/232) trippy::bin/trip config::columns::tests::test_try_invalid_char_for_tui_column::invalid_z
+        PASS [   0.108s] (209/232) trippy::bin/trip config::columns::tests::test_try_from_char_for_tui_column::_v_tuicolumn_average_expects
+        PASS [   0.107s] (210/232) trippy::bin/trip config::columns::tests::test_try_invalid_char_for_tui_column::invalid_x
+        PASS [   0.132s] (211/232) trippy::bin/trip config::file::tests::test_parse_config_sample
+        PASS [   0.142s] (212/232) trippy::bin/trip config::tests::test_config_default
+        PASS [   0.100s] (213/232) trippy::bin/trip frontend::columns::tests::test_column_conversion_from_tui_column
+        PASS [   0.108s] (214/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_average_avg_expects
+        PASS [   0.102s] (215/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_last_last_expects
+        PASS [   0.107s] (216/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_host_host_expects
+        PASS [   0.102s] (217/232) trippy::bin/trip frontend::columns::tests::test_column_width_percentage::column_host_42_expects
+        PASS [   0.111s] (218/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_best_best_expects
+        PASS [   0.103s] (219/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_ttl_expects
+        PASS [   0.105s] (220/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_status_sts_expects
+        PASS [   0.106s] (221/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_stddev_stdev_expects
+        PASS [   0.101s] (222/232) trippy::bin/trip frontend::columns::tests::test_column_width_percentage::column_losspct_5_expects
+        PASS [   0.107s] (223/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_sent_snd_expects
+        PASS [   0.109s] (224/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_received_recv_expects
+        PASS [   0.106s] (225/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_worst_wrst_expects
+        PASS [   0.111s] (226/232) trippy::bin/trip frontend::columns::tests::test_column_display_formatting::column_losspct_loss_expects
+        PASS [   0.103s] (227/232) trippy::bin/trip frontend::columns::tests::test_column_width_percentage::column_ttl_3_expects
+        PASS [   0.094s] (228/232) trippy::bin/trip frontend::columns::tests::test_columns_conversion_from_tui_columns
+        PASS [   0.153s] (229/232) trippy::bin/trip config::tests::test_config_sample
+        PASS [   0.089s] (230/232) trippy::bin/trip frontend::columns::tests::test_columns_into_string_happy_path
+        PASS [   0.069s] (231/232) trippy::bin/trip frontend::columns::tests::test_columns_into_string_reverse_str
+        PASS [   0.063s] (232/232) trippy::bin/trip frontend::columns::tests::test_columns_into_string_short
+────────────
+     Summary [   1.477s] 232 tests run: 232 passed, 0 skipped
+reward=1 graded=232 found=31 failed=0 parsed=232 framework=cargo exit_code=0

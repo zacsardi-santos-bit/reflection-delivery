@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/management/controller -count=1",
+  "test_files": [
+    "internal/management/controller/database_controller_sql_test.go",
+    "internal/management/controller/database_controller_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cloudnative-pg/cloudnative-pg/internal/management/controller::TestWatches"
+  ],
+  "PASS_TO_PASS": []
+}

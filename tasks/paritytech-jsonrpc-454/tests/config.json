@@ -1,0 +1,26 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p jsonrpc-derive --no-fail-fast",
+  "test_files": [
+    "derive/tests/macros.rs",
+    "derive/tests/pubsub-macros.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "jsonrpc-derive::client client_server_roundtrip",
+    "jsonrpc-derive::macros should_accept_any_raw_params",
+    "jsonrpc-derive::macros should_accept_empty_array_as_no_params",
+    "jsonrpc-derive::macros should_accept_multiple_params",
+    "jsonrpc-derive::macros should_accept_only_notifications",
+    "jsonrpc-derive::macros should_accept_single_param",
+    "jsonrpc-derive::macros should_use_method_name_aliases",
+    "jsonrpc-derive::pubsub-macros test_invalid_trailing_pubsub_params",
+    "jsonrpc-derive::pubsub-macros test_subscribe_with_alias",
+    "jsonrpc-derive::trailing should_accept_missing_trailing_param",
+    "jsonrpc-derive::trailing should_accept_multiple_trailing_params",
+    "jsonrpc-derive::trailing should_accept_single_trailing_param",
+    "jsonrpc-derive::trailing should_accept_trailing_param"
+  ],
+  "PASS_TO_PASS": []
+}

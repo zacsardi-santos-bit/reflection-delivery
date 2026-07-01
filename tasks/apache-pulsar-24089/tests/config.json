@@ -1,0 +1,30 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl managed-ledger test -Dtest='EntryCountEstimatorTest,ManagedCursorTest#testEstimateEntryCountBySize,ReadOnlyCursorTest#asyncReadEntriesWithSizeAndBytes' -DfailIfNoTests=false -Dcheckstyle.skip=true -Dspotbugs.skip=true -Dlicense.skip=true -Drat.skip=true -Dmodernizer.skip=true",
+  "test_files": [
+    "managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/EntryCountEstimatorTest.java",
+    "managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ManagedCursorTest.java",
+    "managed-ledger/src/test/java/org/apache/bookkeeper/mledger/impl/ReadOnlyCursorTest.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Managed::test_1",
+    "Managed::test_2",
+    "Managed::test_3",
+    "Managed::test_4",
+    "Managed::test_5",
+    "Managed::test_6",
+    "Managed::test_7",
+    "Managed::test_8",
+    "Managed::test_9",
+    "Managed::test_10",
+    "Managed::test_11",
+    "Managed::test_12",
+    "Managed::test_13",
+    "Managed::test_14",
+    "Managed::test_15",
+    "Managed::test_16"
+  ],
+  "PASS_TO_PASS": []
+}

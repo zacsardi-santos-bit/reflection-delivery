@@ -1,0 +1,55 @@
+patching file packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx
+patching file packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx
+patching file packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx
+[?25l
+ RUN  v3.0.3 /workspace/repo/packages/manager
+
+Sourcemap for "/workspace/repo/node_modules/factory.ts/lib/index.js" points to missing source files
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+stderr | src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx > Alert Row > should have the show details action item present inside action menu
+Warning: validateDOMNesting(...): <tr> cannot appear as a child of <div>.
+    at tr
+    at /workspace/repo/node_modules/@emotion/react/dist/emotion-element-9150ebbd.development.cjs.js:75:23
+    at TableRow (/workspace/repo/node_modules/@mui/material/node/TableRow/TableRow.js:70:59)
+    at /workspace/repo/node_modules/@emotion/react/dist/emotion-element-9150ebbd.development.cjs.js:75:23
+    at /workspace/repo/packages/manager/src/components/TableRow/TableRow.tsx:6:13
+    at AlertTableRow (/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.tsx:21:13)
+    at Router (/workspace/repo/node_modules/react-router/cjs/react-router.js:283:30)
+    at MemoryRouter (/workspace/repo/node_modules/react-router/cjs/react-router.js:385:35)
+    at SnackbarProvider (/workspace/repo/node_modules/notistack/notistack.cjs.development.js:1478:24)
+    at $ (/workspace/repo/node_modules/launchdarkly-react-client-sdk/lib/esm/index.js:3:34)
+    at DefaultPropsProvider (/workspace/repo/node_modules/@mui/system/DefaultPropsProvider/DefaultPropsProvider.js:18:3)
+    at RtlProvider (/workspace/repo/node_modules/@mui/system/RtlProvider/index.js:19:7)
+    at ThemeProvider (/workspace/repo/node_modules/@mui/private-theming/node/ThemeProvider/ThemeProvider.js:39:5)
+    at ThemeProvider (/workspace/repo/node_modules/@mui/system/ThemeProvider/ThemeProvider.js:52:5)
+    at ThemeProvider (/workspace/repo/node_modules/@mui/material/node/styles/ThemeProvider.js:21:14)
+    at StyledEngineProvider (/workspace/repo/node_modules/@mui/styled-engine/node/StyledEngineProvider/StyledEngineProvider.js:27:5)
+    at LinodeThemeWrapper (/workspace/repo/packages/manager/src/LinodeThemeWrapper.tsx:6:13)
+    at QueryClientProvider (file:///workspace/repo/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:20:3)
+    at Provider (/workspace/repo/node_modules/react-redux/lib/components/Provider.js:19:20)
+
+ ✓ src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx (4 tests) 281ms
+ ✓ src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx (3 tests) 413ms
+ ✓ src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx (5 tests) 2021ms
+   ✓ Alert Listing > should render the alert landing table with items 434ms
+   ✓ Alert Listing > should filter the alerts with service filter 527ms
+   ✓ Alert Listing > should filter the alerts with status filter 331ms
+   ✓ Alert Listing > should filter the alerts with search text 600ms
+
+ Test Files  3 passed (3)
+      Tests  12 passed (12)
+   Start at  15:21:52
+   Duration  13.40s (transform 1.37s, setup 6.36s, collect 22.87s, tests 2.72s, environment 3.13s, prepare 620ms)
+
+[?25hreward=1 graded=12 found=0 failed=0 parsed=0 framework=vitest exit_code=0

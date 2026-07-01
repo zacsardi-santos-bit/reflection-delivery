@@ -1,0 +1,1023 @@
+patching file api_unit_test.go
+Not deleting file api_unit_test.go as content differs from patch
+patching file api_unit_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file api_unit_test.go.rej
+The next patch would delete the file b/api_unit_test.go,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file api_unit_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file api_unit_test.go.rej
+WARN: test.patch did not apply cleanly
+{"Time":"2026-06-29T15:16:17.322171919Z","Action":"start","Package":"github.com/minio/minio-go/v7"}
+{"Time":"2026-06-29T15:16:17.322368963Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/credentials"}
+{"Time":"2026-06-29T15:16:17.322427821Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/encrypt"}
+{"Time":"2026-06-29T15:16:17.322465498Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/encrypt","Output":"?   \tgithub.com/minio/minio-go/v7/pkg/encrypt\t[no test files]\n"}
+{"Time":"2026-06-29T15:16:17.32248328Z","Action":"skip","Package":"github.com/minio/minio-go/v7/pkg/encrypt","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.322494073Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/lifecycle"}
+{"Time":"2026-06-29T15:16:17.32257169Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/notification"}
+{"Time":"2026-06-29T15:16:17.322761812Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/policy"}
+{"Time":"2026-06-29T15:16:17.322869811Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/replication"}
+{"Time":"2026-06-29T15:16:17.322939089Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/s3utils"}
+{"Time":"2026-06-29T15:16:17.32302296Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/set"}
+{"Time":"2026-06-29T15:16:17.323099499Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/signer"}
+{"Time":"2026-06-29T15:16:17.323310084Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/sse"}
+{"Time":"2026-06-29T15:16:17.323346715Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/sse","Output":"?   \tgithub.com/minio/minio-go/v7/pkg/sse\t[no test files]\n"}
+{"Time":"2026-06-29T15:16:17.323361108Z","Action":"skip","Package":"github.com/minio/minio-go/v7/pkg/sse","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.323376144Z","Action":"start","Package":"github.com/minio/minio-go/v7/pkg/tags"}
+{"Time":"2026-06-29T15:16:17.327957002Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapAdd"}
+{"Time":"2026-06-29T15:16:17.328037529Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapAdd","Output":"=== RUN   TestConditionKeyMapAdd\n"}
+{"Time":"2026-06-29T15:16:17.328071332Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleUnmarshalJSON"}
+{"Time":"2026-06-29T15:16:17.32808538Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleUnmarshalJSON","Output":"=== RUN   TestLifecycleUnmarshalJSON\n"}
+{"Time":"2026-06-29T15:16:17.328282151Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapAdd","Output":"--- PASS: TestConditionKeyMapAdd (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328329468Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapAdd","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328343597Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapRemove"}
+{"Time":"2026-06-29T15:16:17.328354735Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapRemove","Output":"=== RUN   TestConditionKeyMapRemove\n"}
+{"Time":"2026-06-29T15:16:17.328370975Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapRemove","Output":"--- PASS: TestConditionKeyMapRemove (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328382244Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapRemove","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328392372Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapRemoveKey"}
+{"Time":"2026-06-29T15:16:17.328401913Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapRemoveKey","Output":"=== RUN   TestConditionKeyMapRemoveKey\n"}
+{"Time":"2026-06-29T15:16:17.328412608Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapRemoveKey","Output":"--- PASS: TestConditionKeyMapRemoveKey (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328439324Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionKeyMapRemoveKey","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328450801Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestCopyConditionKeyMap"}
+{"Time":"2026-06-29T15:16:17.328460286Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestCopyConditionKeyMap","Output":"=== RUN   TestCopyConditionKeyMap\n"}
+{"Time":"2026-06-29T15:16:17.328471304Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestCopyConditionKeyMap","Output":"--- PASS: TestCopyConditionKeyMap (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328480716Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestCopyConditionKeyMap","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328490815Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestMergeConditionKeyMap"}
+{"Time":"2026-06-29T15:16:17.328502584Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestMergeConditionKeyMap","Output":"=== RUN   TestMergeConditionKeyMap\n"}
+{"Time":"2026-06-29T15:16:17.328517834Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestMergeConditionKeyMap","Output":"--- PASS: TestMergeConditionKeyMap (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328527619Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestMergeConditionKeyMap","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328537125Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionMapAdd"}
+{"Time":"2026-06-29T15:16:17.328546961Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionMapAdd","Output":"=== RUN   TestConditionMapAdd\n"}
+{"Time":"2026-06-29T15:16:17.328557112Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionMapAdd","Output":"--- PASS: TestConditionMapAdd (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328566655Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionMapAdd","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328576521Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionMapRemove"}
+{"Time":"2026-06-29T15:16:17.328585873Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionMapRemove","Output":"=== RUN   TestConditionMapRemove\n"}
+{"Time":"2026-06-29T15:16:17.328596412Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionMapRemove","Output":"--- PASS: TestConditionMapRemove (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328605768Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestConditionMapRemove","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328619708Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestMergeConditionMap"}
+{"Time":"2026-06-29T15:16:17.328629501Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestMergeConditionMap","Output":"=== RUN   TestMergeConditionMap\n"}
+{"Time":"2026-06-29T15:16:17.328639675Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestMergeConditionMap","Output":"--- PASS: TestMergeConditionMap (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328649215Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestMergeConditionMap","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328658328Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestUnmarshalBucketPolicy"}
+{"Time":"2026-06-29T15:16:17.328671391Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestUnmarshalBucketPolicy","Output":"=== RUN   TestUnmarshalBucketPolicy\n"}
+{"Time":"2026-06-29T15:16:17.328712366Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestNewStringSet"}
+{"Time":"2026-06-29T15:16:17.32872797Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestNewStringSet","Output":"=== RUN   TestNewStringSet\n"}
+{"Time":"2026-06-29T15:16:17.328760412Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestNewStringSet","Output":"--- PASS: TestNewStringSet (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328770231Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestNewStringSet","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328783382Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestCreateStringSet"}
+{"Time":"2026-06-29T15:16:17.328795235Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestCreateStringSet","Output":"=== RUN   TestCreateStringSet\n"}
+{"Time":"2026-06-29T15:16:17.328762491Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleUnmarshalJSON","Output":"--- PASS: TestLifecycleUnmarshalJSON (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328862717Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleUnmarshalJSON","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.328891081Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleJSONRoundtrip"}
+{"Time":"2026-06-29T15:16:17.328811757Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestCreateStringSet","Output":"--- PASS: TestCreateStringSet (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.328926146Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList"}
+{"Time":"2026-06-29T15:16:17.328971617Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList","Output":"=== RUN   TestEqualEventTypeList\n"}
+{"Time":"2026-06-29T15:16:17.328933908Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestCreateStringSet","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329003289Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestCopyStringSet"}
+{"Time":"2026-06-29T15:16:17.3290214Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestCopyStringSet","Output":"=== RUN   TestCopyStringSet\n"}
+{"Time":"2026-06-29T15:16:17.328902271Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleJSONRoundtrip","Output":"=== RUN   TestLifecycleJSONRoundtrip\n"}
+{"Time":"2026-06-29T15:16:17.329055555Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags"}
+{"Time":"2026-06-29T15:16:17.32907458Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags","Output":"=== RUN   TestParseTags\n"}
+{"Time":"2026-06-29T15:16:17.329070257Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleJSONRoundtrip","Output":"--- PASS: TestLifecycleJSONRoundtrip (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.329107215Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleJSONRoundtrip","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329035717Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/same_order"}
+{"Time":"2026-06-29T15:16:17.329148132Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/same_order","Output":"=== RUN   TestEqualEventTypeList/same_order\n"}
+{"Time":"2026-06-29T15:16:17.329179306Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/same_order","Output":"--- PASS: TestEqualEventTypeList/same_order (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.329036647Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestCopyStringSet","Output":"--- PASS: TestCopyStringSet (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.329209758Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestCopyStringSet","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329181042Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestUnmarshalBucketPolicy","Output":"--- PASS: TestUnmarshalBucketPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.329123534Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleXMLRoundtrip"}
+{"Time":"2026-06-29T15:16:17.329286145Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestUnmarshalBucketPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329317549Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestIsValidStatement"}
+{"Time":"2026-06-29T15:16:17.329194598Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/same_order","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329400318Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/different_order"}
+{"Time":"2026-06-29T15:16:17.329428784Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/different_order","Output":"=== RUN   TestEqualEventTypeList/different_order\n"}
+{"Time":"2026-06-29T15:16:17.329194928Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value1\u0026key2=value2"}
+{"Time":"2026-06-29T15:16:17.329196044Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/replication","Test":"TestAddReplicationRule"}
+{"Time":"2026-06-29T15:16:17.329510388Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/replication","Test":"TestAddReplicationRule","Output":"=== RUN   TestAddReplicationRule\n"}
+{"Time":"2026-06-29T15:16:17.329237124Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetAdd"}
+{"Time":"2026-06-29T15:16:17.329559119Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetAdd","Output":"=== RUN   TestStringSetAdd\n"}
+{"Time":"2026-06-29T15:16:17.329586391Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetAdd","Output":"--- PASS: TestStringSetAdd (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.329304791Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleXMLRoundtrip","Output":"=== RUN   TestLifecycleXMLRoundtrip\n"}
+{"Time":"2026-06-29T15:16:17.329329944Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestIsValidStatement","Output":"=== RUN   TestIsValidStatement\n"}
+{"Time":"2026-06-29T15:16:17.329450544Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/different_order","Output":"--- PASS: TestEqualEventTypeList/different_order (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.329674767Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/different_order","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329699778Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/not_equal"}
+{"Time":"2026-06-29T15:16:17.329712486Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/not_equal","Output":"=== RUN   TestEqualEventTypeList/not_equal\n"}
+{"Time":"2026-06-29T15:16:17.329478851Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value1\u0026key2=value2","Output":"=== RUN   TestParseTags/key1=value1\u0026key2=value2\n"}
+{"Time":"2026-06-29T15:16:17.329753283Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value1\u0026key2=value2","Output":"    tags_test.go:98: key1=value1\u0026key2=value2\n"}
+{"Time":"2026-06-29T15:16:17.329542011Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/replication","Test":"TestAddReplicationRule","Output":"--- PASS: TestAddReplicationRule (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.329810857Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestPartsRequired"}
+{"Time":"2026-06-29T15:16:17.329847128Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestPartsRequired","Output":"=== RUN   TestPartsRequired\n"}
+{"Time":"2026-06-29T15:16:17.329605877Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetAdd","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329898922Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetRemove"}
+{"Time":"2026-06-29T15:16:17.329918789Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetRemove","Output":"=== RUN   TestStringSetRemove\n"}
+{"Time":"2026-06-29T15:16:17.329937097Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetRemove","Output":"--- PASS: TestStringSetRemove (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.329640986Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleXMLRoundtrip","Output":"--- PASS: TestLifecycleXMLRoundtrip (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.329970394Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestLifecycleXMLRoundtrip","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.330012021Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestExpiredObjectDeleteMarker"}
+{"Time":"2026-06-29T15:16:17.329664504Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestIsValidStatement","Output":"--- PASS: TestIsValidStatement (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330065542Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestIsValidStatement","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.330087262Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestNewStatements"}
+{"Time":"2026-06-29T15:16:17.330099329Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestNewStatements","Output":"=== RUN   TestNewStatements\n"}
+{"Time":"2026-06-29T15:16:17.330114842Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestNewStatements","Output":"--- PASS: TestNewStatements (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330126833Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestNewStatements","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329735151Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/not_equal","Output":"--- PASS: TestEqualEventTypeList/not_equal (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330177822Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList/not_equal","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.330210737Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList","Output":"--- PASS: TestEqualEventTypeList (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330232224Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualEventTypeList","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329784461Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value1\u0026key2=value2","Output":"--- PASS: TestParseTags/key1=value1\u0026key2=value2 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330288024Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value1\u0026key2=value2","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.329820151Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/replication","Test":"TestAddReplicationRule","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.3303425Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/replication","Test":"TestEditReplicationRule"}
+{"Time":"2026-06-29T15:16:17.329883615Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestPartsRequired","Output":"--- PASS: TestPartsRequired (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330394895Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestPartsRequired","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.32995346Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetRemove","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.330445017Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetContains"}
+{"Time":"2026-06-29T15:16:17.330491426Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetContains","Output":"=== RUN   TestStringSetContains\n"}
+{"Time":"2026-06-29T15:16:17.330037713Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestExpiredObjectDeleteMarker","Output":"=== RUN   TestExpiredObjectDeleteMarker\n"}
+{"Time":"2026-06-29T15:16:17.330535739Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestExpiredObjectDeleteMarker","Output":"--- PASS: TestExpiredObjectDeleteMarker (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330552405Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Test":"TestExpiredObjectDeleteMarker","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.330565865Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:17.330137588Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetInUsePolicy"}
+{"Time":"2026-06-29T15:16:17.330625411Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetInUsePolicy","Output":"=== RUN   TestGetInUsePolicy\n"}
+{"Time":"2026-06-29T15:16:17.330646093Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetInUsePolicy","Output":"--- PASS: TestGetInUsePolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330632976Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Output":"ok  \tgithub.com/minio/minio-go/v7/pkg/lifecycle\t0.008s\n"}
+{"Time":"2026-06-29T15:16:17.330687937Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/lifecycle","Elapsed":0.008}
+{"Time":"2026-06-29T15:16:17.330312721Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/store+forever=false\u0026factory=true"}
+{"Time":"2026-06-29T15:16:17.330754418Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/store+forever=false\u0026factory=true","Output":"=== RUN   TestParseTags/store+forever=false\u0026factory=true\n"}
+{"Time":"2026-06-29T15:16:17.330772681Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/store+forever=false\u0026factory=true","Output":"    tags_test.go:98: factory=true\u0026store+forever=false\n"}
+{"Time":"2026-06-29T15:16:17.330362342Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/replication","Test":"TestEditReplicationRule","Output":"=== RUN   TestEditReplicationRule\n"}
+{"Time":"2026-06-29T15:16:17.330821959Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/replication","Test":"TestEditReplicationRule","Output":"--- PASS: TestEditReplicationRule (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330428139Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestCalculateEvenSplits"}
+{"Time":"2026-06-29T15:16:17.3308613Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCalculateEvenSplits","Output":"=== RUN   TestCalculateEvenSplits\n"}
+{"Time":"2026-06-29T15:16:17.330511593Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetContains","Output":"--- PASS: TestStringSetContains (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330914466Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetContains","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.330939191Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetFuncMatch"}
+{"Time":"2026-06-29T15:16:17.330252358Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList"}
+{"Time":"2026-06-29T15:16:17.337581404Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList","Output":"=== RUN   TestEqualFilterRuleList\n"}
+{"Time":"2026-06-29T15:16:17.330661228Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetInUsePolicy","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.330786389Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/store+forever=false\u0026factory=true","Output":"--- PASS: TestParseTags/store+forever=false\u0026factory=true (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330840275Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/replication","Test":"TestEditReplicationRule","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.330880319Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCalculateEvenSplits","Output":"--- PASS: TestCalculateEvenSplits (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.330951739Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetFuncMatch","Output":"=== RUN   TestStringSetFuncMatch\n"}
+{"Time":"2026-06-29T15:16:17.331284421Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestGetSeedSignature"}
+{"Time":"2026-06-29T15:16:17.331707888Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestGetRegionFromURL"}
+{"Time":"2026-06-29T15:16:17.332004977Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainGet"}
+{"Time":"2026-06-29T15:16:17.337625444Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/same_order"}
+{"Time":"2026-06-29T15:16:17.337696966Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/same_order","Output":"=== RUN   TestEqualFilterRuleList/same_order\n"}
+{"Time":"2026-06-29T15:16:17.337708441Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestGetRegionFromURL","Output":"=== RUN   TestGetRegionFromURL\n"}
+{"Time":"2026-06-29T15:16:17.337756595Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestGetRegionFromURL","Output":"--- PASS: TestGetRegionFromURL (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.337719128Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/same_order","Output":"--- PASS: TestEqualFilterRuleList/same_order (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.337801271Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/same_order","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.337644546Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/store+forever=false\u0026factory=true","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.337840012Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/_store_forever_=false\u0026factory=true"}
+{"Time":"2026-06-29T15:16:17.337852501Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/_store_forever_=false\u0026factory=true","Output":"=== RUN   TestParseTags/_store_forever_=false\u0026factory=true\n"}
+{"Time":"2026-06-29T15:16:17.33786252Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/_store_forever_=false\u0026factory=true","Output":"    tags_test.go:98: +store+forever+=false\u0026factory=true\n"}
+{"Time":"2026-06-29T15:16:17.337872439Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/_store_forever_=false\u0026factory=true","Output":"--- PASS: TestParseTags/_store_forever_=false\u0026factory=true (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.337885577Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/_store_forever_=false\u0026factory=true","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.337906608Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"}
+{"Time":"2026-06-29T15:16:17.337920615Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Output":"=== RUN   TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n"}
+{"Time":"2026-06-29T15:16:17.33793203Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Output":"    tags_test.go:98: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n"}
+{"Time":"2026-06-29T15:16:17.337944531Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Output":"--- PASS: TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.337956266Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.337967463Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value1\u0026key1=value2"}
+{"Time":"2026-06-29T15:16:17.337978945Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value1\u0026key1=value2","Output":"=== RUN   TestParseTags/key1=value1\u0026key1=value2\n"}
+{"Time":"2026-06-29T15:16:17.338003342Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value1\u0026key1=value2","Output":"--- PASS: TestParseTags/key1=value1\u0026key1=value2 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338021701Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value1\u0026key1=value2","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.337650877Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/replication","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:17.338090952Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/replication","Output":"ok  \tgithub.com/minio/minio-go/v7/pkg/replication\t0.015s\n"}
+{"Time":"2026-06-29T15:16:17.337660648Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetFuncMatch","Output":"--- PASS: TestStringSetFuncMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338131947Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetFuncMatch","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338147886Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetApplyFunc"}
+{"Time":"2026-06-29T15:16:17.338158705Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetApplyFunc","Output":"=== RUN   TestStringSetApplyFunc\n"}
+{"Time":"2026-06-29T15:16:17.337669428Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestGetSeedSignature","Output":"=== RUN   TestGetSeedSignature\n"}
+{"Time":"2026-06-29T15:16:17.338204484Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestGetSeedSignature","Output":"--- PASS: TestGetSeedSignature (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338223971Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestGetSeedSignature","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338235769Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestChunkSignature"}
+{"Time":"2026-06-29T15:16:17.338246484Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestChunkSignature","Output":"=== RUN   TestChunkSignature\n"}
+{"Time":"2026-06-29T15:16:17.338258255Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestChunkSignature","Output":"--- PASS: TestChunkSignature (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338268392Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestChunkSignature","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.337640254Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestRemoveStatements"}
+{"Time":"2026-06-29T15:16:17.338290771Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestRemoveStatements","Output":"=== RUN   TestRemoveStatements\n"}
+{"Time":"2026-06-29T15:16:17.337771721Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestGetRegionFromURL","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338327649Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidDomain"}
+{"Time":"2026-06-29T15:16:17.338344397Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidDomain","Output":"=== RUN   TestIsValidDomain\n"}
+{"Time":"2026-06-29T15:16:17.338357452Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidDomain","Output":"--- PASS: TestIsValidDomain (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338369259Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidDomain","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.337819124Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/different_order"}
+{"Time":"2026-06-29T15:16:17.338397981Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/different_order","Output":"=== RUN   TestEqualFilterRuleList/different_order\n"}
+{"Time":"2026-06-29T15:16:17.338424644Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/different_order","Output":"--- PASS: TestEqualFilterRuleList/different_order (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338436187Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/different_order","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338449129Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/not_equal"}
+{"Time":"2026-06-29T15:16:17.33846006Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/not_equal","Output":"=== RUN   TestEqualFilterRuleList/not_equal\n"}
+{"Time":"2026-06-29T15:16:17.338472601Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/not_equal","Output":"--- PASS: TestEqualFilterRuleList/not_equal (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338484284Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList/not_equal","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338495029Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList","Output":"--- PASS: TestEqualFilterRuleList (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338505271Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestEqualFilterRuleList","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338515447Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal"}
+{"Time":"2026-06-29T15:16:17.338524581Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal","Output":"=== RUN   TestConfig_Equal\n"}
+{"Time":"2026-06-29T15:16:17.338534137Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/same_order"}
+{"Time":"2026-06-29T15:16:17.338543299Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/same_order","Output":"=== RUN   TestConfig_Equal/same_order\n"}
+{"Time":"2026-06-29T15:16:17.338554575Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/same_order","Output":"--- PASS: TestConfig_Equal/same_order (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338031712Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key$=value1"}
+{"Time":"2026-06-29T15:16:17.338582941Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key$=value1","Output":"=== RUN   TestParseTags/key$=value1\n"}
+{"Time":"2026-06-29T15:16:17.338599441Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key$=value1","Output":"--- PASS: TestParseTags/key$=value1 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338609768Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key$=value1","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338620439Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value$"}
+{"Time":"2026-06-29T15:16:17.338630052Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value$","Output":"=== RUN   TestParseTags/key1=value$\n"}
+{"Time":"2026-06-29T15:16:17.338641579Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value$","Output":"--- PASS: TestParseTags/key1=value$ (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338650871Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/key1=value$","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338662175Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"}
+{"Time":"2026-06-29T15:16:17.338682624Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Output":"=== RUN   TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n"}
+{"Time":"2026-06-29T15:16:17.338697486Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Output":"--- PASS: TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338707725Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.337655178Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestCalculateEvenSplits","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338117483Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/replication","Elapsed":0.015}
+{"Time":"2026-06-29T15:16:17.338722652Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"}
+{"Time":"2026-06-29T15:16:17.338749604Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Output":"=== RUN   TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n"}
+{"Time":"2026-06-29T15:16:17.33876298Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestDestOptions"}
+{"Time":"2026-06-29T15:16:17.338788924Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestDestOptions","Output":"=== RUN   TestDestOptions\n"}
+{"Time":"2026-06-29T15:16:17.337721412Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainGet","Output":"=== RUN   TestChainGet\n"}
+{"Time":"2026-06-29T15:16:17.338310578Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestRemoveStatements","Output":"--- PASS: TestRemoveStatements (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338822678Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestRemoveStatements","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338829501Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainGet","Output":"--- PASS: TestChainGet (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338851531Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainGet","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.338863378Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainIsExpired"}
+{"Time":"2026-06-29T15:16:17.338873703Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainIsExpired","Output":"=== RUN   TestChainIsExpired\n"}
+{"Time":"2026-06-29T15:16:17.338884375Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainIsExpired","Output":"--- PASS: TestChainIsExpired (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343232308Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainIsExpired","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343257841Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainWithNoProvider"}
+{"Time":"2026-06-29T15:16:17.343268028Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainWithNoProvider","Output":"=== RUN   TestChainWithNoProvider\n"}
+{"Time":"2026-06-29T15:16:17.34328025Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainWithNoProvider","Output":"--- PASS: TestChainWithNoProvider (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343289997Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainWithNoProvider","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343299303Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainProviderWithNoValidProvider"}
+{"Time":"2026-06-29T15:16:17.343308852Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainProviderWithNoValidProvider","Output":"=== RUN   TestChainProviderWithNoValidProvider\n"}
+{"Time":"2026-06-29T15:16:17.338834608Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestAppendStatement"}
+{"Time":"2026-06-29T15:16:17.338564264Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/same_order","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.33877306Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Output":"--- PASS: TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338278887Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestTrailerChunkSignature"}
+{"Time":"2026-06-29T15:16:17.338170975Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetApplyFunc","Output":"--- PASS: TestStringSetApplyFunc (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338806728Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestDestOptions","Output":"--- PASS: TestDestOptions (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.338380408Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidIP"}
+{"Time":"2026-06-29T15:16:17.343337779Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainProviderWithNoValidProvider","Output":"--- PASS: TestChainProviderWithNoValidProvider (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343399764Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidIP","Output":"=== RUN   TestIsValidIP\n"}
+{"Time":"2026-06-29T15:16:17.343424721Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidIP","Output":"--- PASS: TestIsValidIP (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343435492Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidIP","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343445243Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsVirtualHostSupported"}
+{"Time":"2026-06-29T15:16:17.343347471Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/different_order"}
+{"Time":"2026-06-29T15:16:17.343486471Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/different_order","Output":"=== RUN   TestConfig_Equal/different_order\n"}
+{"Time":"2026-06-29T15:16:17.343505258Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/different_order","Output":"--- PASS: TestConfig_Equal/different_order (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343515698Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/different_order","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343526592Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/not_equal"}
+{"Time":"2026-06-29T15:16:17.343536052Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/not_equal","Output":"=== RUN   TestConfig_Equal/not_equal\n"}
+{"Time":"2026-06-29T15:16:17.343545751Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/not_equal","Output":"--- PASS: TestConfig_Equal/not_equal (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343354772Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestAppendStatement","Output":"=== RUN   TestAppendStatement\n"}
+{"Time":"2026-06-29T15:16:17.343579258Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestAppendStatement","Output":"--- PASS: TestAppendStatement (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343594868Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestAppendStatement","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343605301Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetBucketPolicy"}
+{"Time":"2026-06-29T15:16:17.343624081Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetBucketPolicy","Output":"=== RUN   TestGetBucketPolicy\n"}
+{"Time":"2026-06-29T15:16:17.343635411Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetBucketPolicy","Output":"--- PASS: TestGetBucketPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343648052Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetBucketPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343657529Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetObjectPolicy"}
+{"Time":"2026-06-29T15:16:17.343666157Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetObjectPolicy","Output":"=== RUN   TestGetObjectPolicy\n"}
+{"Time":"2026-06-29T15:16:17.343675637Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetObjectPolicy","Output":"--- PASS: TestGetObjectPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343365312Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343725313Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"}
+{"Time":"2026-06-29T15:16:17.343386744Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestTrailerChunkSignature","Output":"=== RUN   TestTrailerChunkSignature\n"}
+{"Time":"2026-06-29T15:16:17.343772777Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestTrailerChunkSignature","Output":"--- PASS: TestTrailerChunkSignature (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343390903Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetApplyFunc","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343804722Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetEquals"}
+{"Time":"2026-06-29T15:16:17.343816288Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetEquals","Output":"=== RUN   TestStringSetEquals\n"}
+{"Time":"2026-06-29T15:16:17.343828388Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetEquals","Output":"--- PASS: TestStringSetEquals (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343839144Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetEquals","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343849699Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetIntersection"}
+{"Time":"2026-06-29T15:16:17.34385859Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetIntersection","Output":"=== RUN   TestStringSetIntersection\n"}
+{"Time":"2026-06-29T15:16:17.343869117Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetIntersection","Output":"--- PASS: TestStringSetIntersection (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343879942Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetIntersection","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343889218Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetDifference"}
+{"Time":"2026-06-29T15:16:17.343917074Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetDifference","Output":"=== RUN   TestStringSetDifference\n"}
+{"Time":"2026-06-29T15:16:17.343927547Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetDifference","Output":"--- PASS: TestStringSetDifference (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343937286Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetDifference","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343946577Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetUnion"}
+{"Time":"2026-06-29T15:16:17.343955232Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetUnion","Output":"=== RUN   TestStringSetUnion\n"}
+{"Time":"2026-06-29T15:16:17.34396504Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetUnion","Output":"--- PASS: TestStringSetUnion (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.343974017Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetUnion","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343983137Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetMarshalJSON"}
+{"Time":"2026-06-29T15:16:17.343999568Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetMarshalJSON","Output":"=== RUN   TestStringSetMarshalJSON\n"}
+{"Time":"2026-06-29T15:16:17.344015744Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetMarshalJSON","Output":"--- PASS: TestStringSetMarshalJSON (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344028194Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetMarshalJSON","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344039101Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetUnmarshalJSON"}
+{"Time":"2026-06-29T15:16:17.344048381Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetUnmarshalJSON","Output":"=== RUN   TestStringSetUnmarshalJSON\n"}
+{"Time":"2026-06-29T15:16:17.344066591Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetUnmarshalJSON","Output":"--- PASS: TestStringSetUnmarshalJSON (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344077498Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetUnmarshalJSON","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344088202Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetString"}
+{"Time":"2026-06-29T15:16:17.344097544Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetString","Output":"=== RUN   TestStringSetString\n"}
+{"Time":"2026-06-29T15:16:17.344109573Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetString","Output":"--- PASS: TestStringSetString (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.34412086Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetString","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343394262Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestDestOptions","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344153778Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestHttpRespToErrorResponse"}
+{"Time":"2026-06-29T15:16:17.344168458Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestHttpRespToErrorResponse","Output":"=== RUN   TestHttpRespToErrorResponse\n"}
+{"Time":"2026-06-29T15:16:17.343402917Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestChainProviderWithNoValidProvider","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344197941Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestCredentialsGet"}
+{"Time":"2026-06-29T15:16:17.344208766Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestCredentialsGet","Output":"=== RUN   TestCredentialsGet\n"}
+{"Time":"2026-06-29T15:16:17.344228157Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestCredentialsGet","Output":"--- PASS: TestCredentialsGet (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344238906Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestCredentialsGet","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344248968Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestCredentialsGetWithError"}
+{"Time":"2026-06-29T15:16:17.344257508Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestCredentialsGetWithError","Output":"=== RUN   TestCredentialsGetWithError\n"}
+{"Time":"2026-06-29T15:16:17.344266681Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestCredentialsGetWithError","Output":"--- PASS: TestCredentialsGetWithError (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344277121Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestCredentialsGetWithError","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344287116Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEnvAWSRetrieve"}
+{"Time":"2026-06-29T15:16:17.344296324Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEnvAWSRetrieve","Output":"=== RUN   TestEnvAWSRetrieve\n"}
+{"Time":"2026-06-29T15:16:17.344305872Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEnvAWSRetrieve","Output":"--- PASS: TestEnvAWSRetrieve (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344315221Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEnvAWSRetrieve","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344324353Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEnvMinioRetrieve"}
+{"Time":"2026-06-29T15:16:17.344333066Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEnvMinioRetrieve","Output":"=== RUN   TestEnvMinioRetrieve\n"}
+{"Time":"2026-06-29T15:16:17.344342702Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEnvMinioRetrieve","Output":"--- PASS: TestEnvMinioRetrieve (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344351843Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEnvMinioRetrieve","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344360908Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestFileAWS"}
+{"Time":"2026-06-29T15:16:17.344369632Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestFileAWS","Output":"=== RUN   TestFileAWS\n"}
+{"Time":"2026-06-29T15:16:17.344379503Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestFileAWS","Output":"--- PASS: TestFileAWS (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344391247Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestFileAWS","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344400471Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestFileMinioClient"}
+{"Time":"2026-06-29T15:16:17.344410416Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestFileMinioClient","Output":"=== RUN   TestFileMinioClient\n"}
+{"Time":"2026-06-29T15:16:17.344421458Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestFileMinioClient","Output":"--- PASS: TestFileMinioClient (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344432694Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestFileMinioClient","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344442749Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMMalformedEndpoint"}
+{"Time":"2026-06-29T15:16:17.344451937Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMMalformedEndpoint","Output":"=== RUN   TestIAMMalformedEndpoint\n"}
+{"Time":"2026-06-29T15:16:17.343454413Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsVirtualHostSupported","Output":"=== RUN   TestIsVirtualHostSupported\n"}
+{"Time":"2026-06-29T15:16:17.343554786Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/not_equal","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344493323Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/different_arn"}
+{"Time":"2026-06-29T15:16:17.344503172Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/different_arn","Output":"=== RUN   TestConfig_Equal/different_arn\n"}
+{"Time":"2026-06-29T15:16:17.344514224Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/different_arn","Output":"--- PASS: TestConfig_Equal/different_arn (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344525497Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal/different_arn","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344537626Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal","Output":"--- PASS: TestConfig_Equal (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344552858Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfig_Equal","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344566376Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix"}
+{"Time":"2026-06-29T15:16:17.343685062Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetObjectPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344604492Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestListBucketPolicies"}
+{"Time":"2026-06-29T15:16:17.344619817Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestListBucketPolicies","Output":"=== RUN   TestListBucketPolicies\n"}
+{"Time":"2026-06-29T15:16:17.344517228Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsVirtualHostSupported","Output":"--- PASS: TestIsVirtualHostSupported (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344653468Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsVirtualHostSupported","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344668911Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsAmazonEndpoint"}
+{"Time":"2026-06-29T15:16:17.344679532Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsAmazonEndpoint","Output":"=== RUN   TestIsAmazonEndpoint\n"}
+{"Time":"2026-06-29T15:16:17.344693772Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsAmazonEndpoint","Output":"--- PASS: TestIsAmazonEndpoint (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.34470446Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsAmazonEndpoint","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344715288Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsGoogleEndpoint"}
+{"Time":"2026-06-29T15:16:17.344726205Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsGoogleEndpoint","Output":"=== RUN   TestIsGoogleEndpoint\n"}
+{"Time":"2026-06-29T15:16:17.34473587Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsGoogleEndpoint","Output":"--- PASS: TestIsGoogleEndpoint (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344746968Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsGoogleEndpoint","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344757156Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestPercentEncodeSlash"}
+{"Time":"2026-06-29T15:16:17.344781477Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestPercentEncodeSlash","Output":"=== RUN   TestPercentEncodeSlash\n"}
+{"Time":"2026-06-29T15:16:17.344792054Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestPercentEncodeSlash","Output":"--- PASS: TestPercentEncodeSlash (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344801564Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestPercentEncodeSlash","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344811031Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestQueryEncode"}
+{"Time":"2026-06-29T15:16:17.344820689Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestQueryEncode","Output":"=== RUN   TestQueryEncode\n"}
+{"Time":"2026-06-29T15:16:17.34483219Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestQueryEncode","Output":"--- PASS: TestQueryEncode (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.34484143Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestQueryEncode","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344850862Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode"}
+{"Time":"2026-06-29T15:16:17.344862266Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode","Output":"=== RUN   TestTagDecode\n"}
+{"Time":"2026-06-29T15:16:17.344871674Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#00"}
+{"Time":"2026-06-29T15:16:17.344880319Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#00","Output":"=== RUN   TestTagDecode/#00\n"}
+{"Time":"2026-06-29T15:16:17.344891688Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#00","Output":"--- PASS: TestTagDecode/#00 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344901392Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#00","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344910402Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#01"}
+{"Time":"2026-06-29T15:16:17.344502678Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMMalformedEndpoint","Output":"--- PASS: TestIAMMalformedEndpoint (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344941368Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMMalformedEndpoint","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.343745506Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Output":"=== RUN   TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n"}
+{"Time":"2026-06-29T15:16:17.343789132Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestTrailerChunkSignature","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344130028Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetToSlice"}
+{"Time":"2026-06-29T15:16:17.344978155Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Output":"--- PASS: TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345032127Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags/000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.344985885Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetToSlice","Output":"=== RUN   TestStringSetToSlice\n"}
+{"Time":"2026-06-29T15:16:17.345063604Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetToSlice","Output":"--- PASS: TestStringSetToSlice (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345075984Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSetToSlice","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.34509031Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON"}
+{"Time":"2026-06-29T15:16:17.345101287Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON","Output":"=== RUN   TestStringSet_UnmarshalJSON\n"}
+{"Time":"2026-06-29T15:16:17.345115561Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_strings"}
+{"Time":"2026-06-29T15:16:17.345125585Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_strings","Output":"=== RUN   TestStringSet_UnmarshalJSON/test_strings\n"}
+{"Time":"2026-06-29T15:16:17.345135743Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_strings","Output":"--- PASS: TestStringSet_UnmarshalJSON/test_strings (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344632638Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestListBucketPolicies","Output":"--- PASS: TestListBucketPolicies (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345177732Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestListBucketPolicies","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345193928Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetPolicy"}
+{"Time":"2026-06-29T15:16:17.345204648Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetPolicy","Output":"=== RUN   TestGetPolicy\n"}
+{"Time":"2026-06-29T15:16:17.345216272Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetPolicy","Output":"--- PASS: TestGetPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345227363Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestGetPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345239548Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestSetPolicy"}
+{"Time":"2026-06-29T15:16:17.345248134Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestSetPolicy","Output":"=== RUN   TestSetPolicy\n"}
+{"Time":"2026-06-29T15:16:17.345257374Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestSetPolicy","Output":"--- PASS: TestSetPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.3452747Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestSetPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.34528561Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestIsValidBucketPolicy"}
+{"Time":"2026-06-29T15:16:17.344919114Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#01","Output":"=== RUN   TestTagDecode/#01\n"}
+{"Time":"2026-06-29T15:16:17.345309628Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#01","Output":"--- PASS: TestTagDecode/#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345321099Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#01","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345330808Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#02"}
+{"Time":"2026-06-29T15:16:17.345339545Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#02","Output":"=== RUN   TestTagDecode/#02\n"}
+{"Time":"2026-06-29T15:16:17.345349452Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#02","Output":"--- PASS: TestTagDecode/#02 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345359165Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#02","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345368859Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#03"}
+{"Time":"2026-06-29T15:16:17.345378801Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#03","Output":"=== RUN   TestTagDecode/#03\n"}
+{"Time":"2026-06-29T15:16:17.345388721Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#03","Output":"--- PASS: TestTagDecode/#03 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345399134Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#03","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345408177Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#04"}
+{"Time":"2026-06-29T15:16:17.345417095Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#04","Output":"=== RUN   TestTagDecode/#04\n"}
+{"Time":"2026-06-29T15:16:17.345426335Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#04","Output":"--- PASS: TestTagDecode/#04 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345435122Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#04","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345444326Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#05"}
+{"Time":"2026-06-29T15:16:17.345452983Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#05","Output":"=== RUN   TestTagDecode/#05\n"}
+{"Time":"2026-06-29T15:16:17.345462186Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#05","Output":"--- PASS: TestTagDecode/#05 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345471225Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#05","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345480249Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#06"}
+{"Time":"2026-06-29T15:16:17.345488994Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#06","Output":"=== RUN   TestTagDecode/#06\n"}
+{"Time":"2026-06-29T15:16:17.345498245Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#06","Output":"--- PASS: TestTagDecode/#06 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.344578403Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix","Output":"=== RUN   TestConfiguration_RemoveQueueByArnEventsPrefixSuffix\n"}
+{"Time":"2026-06-29T15:16:17.345541826Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix"}
+{"Time":"2026-06-29T15:16:17.344966964Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailServer"}
+{"Time":"2026-06-29T15:16:17.345589376Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailServer","Output":"=== RUN   TestIAMFailServer\n"}
+{"Time":"2026-06-29T15:16:17.344983741Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSetStreamingAuthorization"}
+{"Time":"2026-06-29T15:16:17.345614998Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailServer","Output":"--- PASS: TestIAMFailServer (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345630861Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailServer","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345641504Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMNoRoles"}
+{"Time":"2026-06-29T15:16:17.345653509Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMNoRoles","Output":"=== RUN   TestIAMNoRoles\n"}
+{"Time":"2026-06-29T15:16:17.345663945Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMNoRoles","Output":"--- PASS: TestIAMNoRoles (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345673841Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMNoRoles","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345683534Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM"}
+{"Time":"2026-06-29T15:16:17.345621872Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSetStreamingAuthorization","Output":"=== RUN   TestSetStreamingAuthorization\n"}
+{"Time":"2026-06-29T15:16:17.345727217Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSetStreamingAuthorization","Output":"--- PASS: TestSetStreamingAuthorization (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345747052Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSetStreamingAuthorization","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345776365Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSetStreamingAuthorizationTrailer"}
+{"Time":"2026-06-29T15:16:17.345787858Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSetStreamingAuthorizationTrailer","Output":"=== RUN   TestSetStreamingAuthorizationTrailer\n"}
+{"Time":"2026-06-29T15:16:17.345799463Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSetStreamingAuthorizationTrailer","Output":"    request-signature-streaming_test.go:156: 2e4ab969aa65b1ad6def2db10e4d3a8260683d194dbaf757f90e8a37960a4b3c\n"}
+{"Time":"2026-06-29T15:16:17.345294821Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestIsValidBucketPolicy","Output":"=== RUN   TestIsValidBucketPolicy\n"}
+{"Time":"2026-06-29T15:16:17.345833159Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestIsValidBucketPolicy","Output":"--- PASS: TestIsValidBucketPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345847053Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestIsValidBucketPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345856538Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestBucketPolicyResourceMatch"}
+{"Time":"2026-06-29T15:16:17.345865538Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestBucketPolicyResourceMatch","Output":"=== RUN   TestBucketPolicyResourceMatch\n"}
+{"Time":"2026-06-29T15:16:17.345881303Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestBucketPolicyResourceMatch","Output":"--- PASS: TestBucketPolicyResourceMatch (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.34551368Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#06","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.34592033Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#07"}
+{"Time":"2026-06-29T15:16:17.345047868Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags","Output":"--- PASS: TestParseTags (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345965008Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Test":"TestParseTags","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345979784Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:17.345694137Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM","Output":"=== RUN   TestIAM\n"}
+{"Time":"2026-06-29T15:16:17.346044347Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM","Output":"/latest/api/token\n"}
+{"Time":"2026-06-29T15:16:17.346055657Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM","Output":"PUT\n"}
+{"Time":"2026-06-29T15:16:17.34606459Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM","Output":"/latest/meta-data/iam/security-credentials/\n"}
+{"Time":"2026-06-29T15:16:17.346073654Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM","Output":"GET\n"}
+{"Time":"2026-06-29T15:16:17.346082665Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM","Output":"/latest/meta-data/iam/security-credentials/RoleName\n"}
+{"Time":"2026-06-29T15:16:17.346091624Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM","Output":"GET\n"}
+{"Time":"2026-06-29T15:16:17.346101317Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM","Output":"--- PASS: TestIAM (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346110234Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAM","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346119436Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume"}
+{"Time":"2026-06-29T15:16:17.346128317Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume","Output":"=== RUN   TestIAMFailAssume\n"}
+{"Time":"2026-06-29T15:16:17.346138144Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume","Output":"/latest/api/token\n"}
+{"Time":"2026-06-29T15:16:17.34614894Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume","Output":"PUT\n"}
+{"Time":"2026-06-29T15:16:17.346158833Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume","Output":"/latest/meta-data/iam/security-credentials/\n"}
+{"Time":"2026-06-29T15:16:17.346168001Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume","Output":"GET\n"}
+{"Time":"2026-06-29T15:16:17.346176728Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume","Output":"/latest/meta-data/iam/security-credentials/RoleName\n"}
+{"Time":"2026-06-29T15:16:17.346187097Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume","Output":"GET\n"}
+{"Time":"2026-06-29T15:16:17.346196483Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume","Output":"--- PASS: TestIAMFailAssume (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.345165178Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_strings","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.345810976Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSetStreamingAuthorizationTrailer","Output":"--- PASS: TestSetStreamingAuthorizationTrailer (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346235229Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_string"}
+{"Time":"2026-06-29T15:16:17.346254682Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_string","Output":"=== RUN   TestStringSet_UnmarshalJSON/test_string\n"}
+{"Time":"2026-06-29T15:16:17.346266973Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_string","Output":"--- PASS: TestStringSet_UnmarshalJSON/test_string (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346277051Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_string","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346286693Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_bools"}
+{"Time":"2026-06-29T15:16:17.34629561Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_bools","Output":"=== RUN   TestStringSet_UnmarshalJSON/test_bools\n"}
+{"Time":"2026-06-29T15:16:17.346305054Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_bools","Output":"--- PASS: TestStringSet_UnmarshalJSON/test_bools (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346315092Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_bools","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346335083Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_bool"}
+{"Time":"2026-06-29T15:16:17.346345312Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_bool","Output":"=== RUN   TestStringSet_UnmarshalJSON/test_bool\n"}
+{"Time":"2026-06-29T15:16:17.346355282Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_bool","Output":"--- PASS: TestStringSet_UnmarshalJSON/test_bool (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346372758Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_bool","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346382516Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_ints"}
+{"Time":"2026-06-29T15:16:17.346392581Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_ints","Output":"=== RUN   TestStringSet_UnmarshalJSON/test_ints\n"}
+{"Time":"2026-06-29T15:16:17.346402237Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_ints","Output":"--- PASS: TestStringSet_UnmarshalJSON/test_ints (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346412901Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_ints","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346422598Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_int"}
+{"Time":"2026-06-29T15:16:17.346431368Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_int","Output":"=== RUN   TestStringSet_UnmarshalJSON/test_int\n"}
+{"Time":"2026-06-29T15:16:17.346440848Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_int","Output":"--- PASS: TestStringSet_UnmarshalJSON/test_int (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346458368Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_int","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346468497Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_floats"}
+{"Time":"2026-06-29T15:16:17.346476934Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_floats","Output":"=== RUN   TestStringSet_UnmarshalJSON/test_floats\n"}
+{"Time":"2026-06-29T15:16:17.346486058Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_floats","Output":"--- PASS: TestStringSet_UnmarshalJSON/test_floats (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346494954Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_floats","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346503497Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_float"}
+{"Time":"2026-06-29T15:16:17.346512401Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_float","Output":"=== RUN   TestStringSet_UnmarshalJSON/test_float\n"}
+{"Time":"2026-06-29T15:16:17.34652153Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_float","Output":"--- PASS: TestStringSet_UnmarshalJSON/test_float (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346530824Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON/test_float","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346546679Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON","Output":"--- PASS: TestStringSet_UnmarshalJSON (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.34655699Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Test":"TestStringSet_UnmarshalJSON","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346235055Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSetStreamingAuthorizationTrailer","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346589332Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestStreamingReader"}
+{"Time":"2026-06-29T15:16:17.34556161Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix","Output":"=== RUN   TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix\n"}
+{"Time":"2026-06-29T15:16:17.346629114Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix","Output":"--- PASS: TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346646017Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346658791Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix,_suffix"}
+{"Time":"2026-06-29T15:16:17.34666918Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix,_suffix","Output":"=== RUN   TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix,_suffix\n"}
+{"Time":"2026-06-29T15:16:17.346681074Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix,_suffix","Output":"--- PASS: TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix,_suffix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346700499Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_events,_prefix,_suffix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346715288Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Error_Returned_Queue_Configuration_Not_Removed"}
+{"Time":"2026-06-29T15:16:17.346724794Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Error_Returned_Queue_Configuration_Not_Removed","Output":"=== RUN   TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Error_Returned_Queue_Configuration_Not_Removed\n"}
+{"Time":"2026-06-29T15:16:17.346736453Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Error_Returned_Queue_Configuration_Not_Removed","Output":"--- PASS: TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Error_Returned_Queue_Configuration_Not_Removed (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346746904Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Error_Returned_Queue_Configuration_Not_Removed","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346758132Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_nil_Filter"}
+{"Time":"2026-06-29T15:16:17.346767786Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_nil_Filter","Output":"=== RUN   TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_nil_Filter\n"}
+{"Time":"2026-06-29T15:16:17.345932845Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#07","Output":"=== RUN   TestTagDecode/#07\n"}
+{"Time":"2026-06-29T15:16:17.346806403Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#07","Output":"--- PASS: TestTagDecode/#07 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346823028Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode/#07","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346031057Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/tags","Output":"ok  \tgithub.com/minio/minio-go/v7/pkg/tags\t0.023s\n"}
+{"Time":"2026-06-29T15:16:17.346880548Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/tags","Elapsed":0.024}
+{"Time":"2026-06-29T15:16:17.346227383Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMFailAssume","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346934741Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired"}
+{"Time":"2026-06-29T15:16:17.346947281Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired","Output":"=== RUN   TestIAMIsExpired\n"}
+{"Time":"2026-06-29T15:16:17.346956925Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired","Output":"/latest/api/token\n"}
+{"Time":"2026-06-29T15:16:17.346966492Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired","Output":"PUT\n"}
+{"Time":"2026-06-29T15:16:17.346984979Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired","Output":"/latest/meta-data/iam/security-credentials/\n"}
+{"Time":"2026-06-29T15:16:17.347001027Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired","Output":"GET\n"}
+{"Time":"2026-06-29T15:16:17.345904556Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Test":"TestBucketPolicyResourceMatch","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.346565619Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:17.347076692Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/set","Output":"ok  \tgithub.com/minio/minio-go/v7/pkg/set\t0.024s\n"}
+{"Time":"2026-06-29T15:16:17.347193881Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/set","Elapsed":0.024}
+{"Time":"2026-06-29T15:16:17.347084092Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired","Output":"/latest/meta-data/iam/security-credentials/RoleName\n"}
+{"Time":"2026-06-29T15:16:17.35100393Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired","Output":"GET\n"}
+{"Time":"2026-06-29T15:16:17.346778505Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_nil_Filter","Output":"--- PASS: TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_nil_Filter (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.34683528Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode","Output":"--- PASS: TestTagDecode (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.346604321Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestStreamingReader","Output":"=== RUN   TestStreamingReader\n"}
+{"Time":"2026-06-29T15:16:17.34709273Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:17.351042729Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired","Output":"--- PASS: TestIAMIsExpired (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.351080721Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIAMIsExpired","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.351092219Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEcsTask"}
+{"Time":"2026-06-29T15:16:17.351102003Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEcsTask","Output":"=== RUN   TestEcsTask\n"}
+{"Time":"2026-06-29T15:16:17.351114392Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEcsTask","Output":"--- PASS: TestEcsTask (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.351125015Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEcsTask","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.351138939Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEcsTaskFullURI"}
+{"Time":"2026-06-29T15:16:17.354975604Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEcsTaskFullURI","Output":"=== RUN   TestEcsTaskFullURI\n"}
+{"Time":"2026-06-29T15:16:17.35110405Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/policy","Output":"ok  \tgithub.com/minio/minio-go/v7/pkg/policy\t0.028s\n"}
+{"Time":"2026-06-29T15:16:17.351049477Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_Removed_with_nil_Filter","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.351056758Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestStreamingReader","Output":"--- PASS: TestStreamingReader (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.351052352Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagDecode","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.355688803Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode"}
+{"Time":"2026-06-29T15:16:17.355699705Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode","Output":"=== RUN   TestTagEncode\n"}
+{"Time":"2026-06-29T15:16:17.355718002Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#00"}
+{"Time":"2026-06-29T15:16:17.355727774Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#00","Output":"=== RUN   TestTagEncode/#00\n"}
+{"Time":"2026-06-29T15:16:17.35573919Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#00","Output":"--- PASS: TestTagEncode/#00 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.355748961Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#00","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.355758443Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_no_prefix_and_Filter"}
+{"Time":"2026-06-29T15:16:17.355791635Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_no_prefix_and_Filter","Output":"=== RUN   TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_no_prefix_and_Filter\n"}
+{"Time":"2026-06-29T15:16:17.355805657Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_no_prefix_and_Filter","Output":"--- PASS: TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_no_prefix_and_Filter (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.355816361Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_no_prefix_and_Filter","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.355828148Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_prefix_and_nil_Filter"}
+{"Time":"2026-06-29T15:16:17.355840089Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_prefix_and_nil_Filter","Output":"=== RUN   TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_prefix_and_nil_Filter\n"}
+{"Time":"2026-06-29T15:16:17.355855389Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_prefix_and_nil_Filter","Output":"--- PASS: TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_prefix_and_nil_Filter (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.355865454Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix/Queue_Configuration_not_Removed_with_prefix_and_nil_Filter","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.355874981Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix","Output":"--- PASS: TestConfiguration_RemoveQueueByArnEventsPrefixSuffix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.355885386Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveQueueByArnEventsPrefixSuffix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.355894418Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix"}
+{"Time":"2026-06-29T15:16:17.355759842Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#01"}
+{"Time":"2026-06-29T15:16:17.355935438Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#01","Output":"=== RUN   TestTagEncode/#01\n"}
+{"Time":"2026-06-29T15:16:17.355961031Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#01","Output":"--- PASS: TestTagEncode/#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.355743624Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/policy","Elapsed":0.033}
+{"Time":"2026-06-29T15:16:17.355763749Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestStreamingReader","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.356046122Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestResourceListSorting"}
+{"Time":"2026-06-29T15:16:17.356061914Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestResourceListSorting","Output":"=== RUN   TestResourceListSorting\n"}
+{"Time":"2026-06-29T15:16:17.355760221Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEcsTaskFullURI","Output":"--- PASS: TestEcsTaskFullURI (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.356083134Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestEcsTaskFullURI","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.356096478Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestSts"}
+{"Time":"2026-06-29T15:16:17.355903812Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix","Output":"=== RUN   TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix\n"}
+{"Time":"2026-06-29T15:16:17.356118638Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix"}
+{"Time":"2026-06-29T15:16:17.356129815Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix","Output":"=== RUN   TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix\n"}
+{"Time":"2026-06-29T15:16:17.359799137Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix","Output":"--- PASS: TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.355971854Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#01","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.356073864Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestResourceListSorting","Output":"--- PASS: TestResourceListSorting (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.356106581Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestSts","Output":"=== RUN   TestSts\n"}
+{"Time":"2026-06-29T15:16:17.360231064Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360263644Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix,_suffix"}
+{"Time":"2026-06-29T15:16:17.360275665Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix,_suffix","Output":"=== RUN   TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix,_suffix\n"}
+{"Time":"2026-06-29T15:16:17.36032124Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix,_suffix","Output":"--- PASS: TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix,_suffix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.360343825Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_events,_prefix,_suffix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360359315Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Lambda_Configuration_Not_Removed"}
+{"Time":"2026-06-29T15:16:17.36036868Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Lambda_Configuration_Not_Removed","Output":"=== RUN   TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Lambda_Configuration_Not_Removed\n"}
+{"Time":"2026-06-29T15:16:17.360380964Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Lambda_Configuration_Not_Removed","Output":"--- PASS: TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Lambda_Configuration_Not_Removed (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.360389983Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Lambda_Configuration_Not_Removed","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360398971Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Invalid_ARN"}
+{"Time":"2026-06-29T15:16:17.360410896Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Invalid_ARN","Output":"=== RUN   TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Invalid_ARN\n"}
+{"Time":"2026-06-29T15:16:17.360240444Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestSts","Output":"--- PASS: TestSts (0.01s)\n"}
+{"Time":"2026-06-29T15:16:17.360460871Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestSts","Elapsed":0.01}
+{"Time":"2026-06-29T15:16:17.360476762Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestStsCn"}
+{"Time":"2026-06-29T15:16:17.36049362Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestStsCn","Output":"=== RUN   TestStsCn\n"}
+{"Time":"2026-06-29T15:16:17.360510344Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestStsCn","Output":"--- PASS: TestStsCn (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.360523827Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestStsCn","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360533243Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked"}
+{"Time":"2026-06-29T15:16:17.360551496Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked","Output":"=== RUN   TestIMDSv1Blocked\n"}
+{"Time":"2026-06-29T15:16:17.360245387Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestResourceListSorting","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360594411Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestRequestHost"}
+{"Time":"2026-06-29T15:16:17.360608371Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestRequestHost","Output":"=== RUN   TestRequestHost\n"}
+{"Time":"2026-06-29T15:16:17.360247985Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#02"}
+{"Time":"2026-06-29T15:16:17.360654042Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#02","Output":"=== RUN   TestTagEncode/#02\n"}
+{"Time":"2026-06-29T15:16:17.360431633Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Invalid_ARN","Output":"--- PASS: TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Invalid_ARN (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.36070441Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Error_Returned_Invalid_ARN","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360715946Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_nil_Filter"}
+{"Time":"2026-06-29T15:16:17.360725331Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_nil_Filter","Output":"=== RUN   TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_nil_Filter\n"}
+{"Time":"2026-06-29T15:16:17.36073582Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_nil_Filter","Output":"--- PASS: TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_nil_Filter (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.360745718Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Removed_with_nil_Filter","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360755024Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_no_prefix_and_Filter"}
+{"Time":"2026-06-29T15:16:17.360763844Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_no_prefix_and_Filter","Output":"=== RUN   TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_no_prefix_and_Filter\n"}
+{"Time":"2026-06-29T15:16:17.360773704Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_no_prefix_and_Filter","Output":"--- PASS: TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_no_prefix_and_Filter (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.360784765Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_no_prefix_and_Filter","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360794521Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_prefix_and_nil_Filter"}
+{"Time":"2026-06-29T15:16:17.360803525Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_prefix_and_nil_Filter","Output":"=== RUN   TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_prefix_and_nil_Filter\n"}
+{"Time":"2026-06-29T15:16:17.360813414Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_prefix_and_nil_Filter","Output":"--- PASS: TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_prefix_and_nil_Filter (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.360833723Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix/Lambda_Configuration_Not_Removed_with_prefix_and_nil_Filter","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360847762Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix","Output":"--- PASS: TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.360858556Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveLambdaByArnEventsPrefixSuffix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360868387Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix"}
+{"Time":"2026-06-29T15:16:17.360877598Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix","Output":"=== RUN   TestConfiguration_RemoveTopicByArnEventsPrefixSuffix\n"}
+{"Time":"2026-06-29T15:16:17.360886738Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix"}
+{"Time":"2026-06-29T15:16:17.360896383Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix","Output":"=== RUN   TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix\n"}
+{"Time":"2026-06-29T15:16:17.360906659Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix","Output":"--- PASS: TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.360916979Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360926634Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix,_suffix"}
+{"Time":"2026-06-29T15:16:17.360936678Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix,_suffix","Output":"=== RUN   TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix,_suffix\n"}
+{"Time":"2026-06-29T15:16:17.3609512Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix,_suffix","Output":"--- PASS: TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix,_suffix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.360960652Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_events,_prefix,_suffix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360969396Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Error_Returned_Topic_Configuration_Not_Removed"}
+{"Time":"2026-06-29T15:16:17.360979152Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Error_Returned_Topic_Configuration_Not_Removed","Output":"=== RUN   TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Error_Returned_Topic_Configuration_Not_Removed\n"}
+{"Time":"2026-06-29T15:16:17.361009045Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Error_Returned_Topic_Configuration_Not_Removed","Output":"--- PASS: TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Error_Returned_Topic_Configuration_Not_Removed (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.361033414Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Error_Returned_Topic_Configuration_Not_Removed","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.361042724Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_nil_Filter"}
+{"Time":"2026-06-29T15:16:17.361051403Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_nil_Filter","Output":"=== RUN   TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_nil_Filter\n"}
+{"Time":"2026-06-29T15:16:17.361060688Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_nil_Filter","Output":"--- PASS: TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_nil_Filter (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.361070036Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Removed_with_nil_Filter","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.360566078Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked","Output":"/latest/api/token\n"}
+{"Time":"2026-06-29T15:16:17.361103529Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked","Output":"PUT\n"}
+{"Time":"2026-06-29T15:16:17.361117094Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked","Output":"/latest/meta-data/iam/security-credentials/\n"}
+{"Time":"2026-06-29T15:16:17.361136482Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked","Output":"GET\n"}
+{"Time":"2026-06-29T15:16:17.361146049Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked","Output":"/latest/meta-data/iam/security-credentials/RoleName\n"}
+{"Time":"2026-06-29T15:16:17.361156196Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked","Output":"GET\n"}
+{"Time":"2026-06-29T15:16:17.361167018Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked","Output":"--- PASS: TestIMDSv1Blocked (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.361180561Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestIMDSv1Blocked","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.3611907Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestStaticGet"}
+{"Time":"2026-06-29T15:16:17.361199896Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestStaticGet","Output":"=== RUN   TestStaticGet\n"}
+{"Time":"2026-06-29T15:16:17.361222018Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestStaticGet","Output":"--- PASS: TestStaticGet (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.361232907Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Test":"TestStaticGet","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.361253445Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:17.361301988Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/credentials","Output":"ok  \tgithub.com/minio/minio-go/v7/pkg/credentials\t0.039s\n"}
+{"Time":"2026-06-29T15:16:17.361323546Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/credentials","Elapsed":0.039}
+{"Time":"2026-06-29T15:16:17.360620041Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestRequestHost","Output":"--- PASS: TestRequestHost (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.36136772Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestRequestHost","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.361384983Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignatureCalculationV4"}
+{"Time":"2026-06-29T15:16:17.36139575Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignatureCalculationV4","Output":"=== RUN   TestSignatureCalculationV4\n"}
+{"Time":"2026-06-29T15:16:17.361407698Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignatureCalculationV4","Output":"--- PASS: TestSignatureCalculationV4 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.361417923Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignatureCalculationV4","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.361427864Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignatureCalculationV2"}
+{"Time":"2026-06-29T15:16:17.361437381Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignatureCalculationV2","Output":"=== RUN   TestSignatureCalculationV2\n"}
+{"Time":"2026-06-29T15:16:17.360682278Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#02","Output":"--- PASS: TestTagEncode/#02 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.361470452Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#02","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.369491206Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#03"}
+{"Time":"2026-06-29T15:16:17.361079254Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_prefix_empty"}
+{"Time":"2026-06-29T15:16:17.361447907Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignatureCalculationV2","Output":"--- PASS: TestSignatureCalculationV2 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.369682429Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignatureCalculationV2","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.369693511Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestEncodeURL2Path"}
+{"Time":"2026-06-29T15:16:17.369697667Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#03","Output":"=== RUN   TestTagEncode/#03\n"}
+{"Time":"2026-06-29T15:16:17.369730602Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#03","Output":"--- PASS: TestTagEncode/#03 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.369741524Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#03","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.369752363Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#04"}
+{"Time":"2026-06-29T15:16:17.36976192Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#04","Output":"=== RUN   TestTagEncode/#04\n"}
+{"Time":"2026-06-29T15:16:17.369772215Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#04","Output":"--- PASS: TestTagEncode/#04 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.369781731Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#04","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.369790764Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#05"}
+{"Time":"2026-06-29T15:16:17.369799968Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#05","Output":"=== RUN   TestTagEncode/#05\n"}
+{"Time":"2026-06-29T15:16:17.369818508Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#05","Output":"--- PASS: TestTagEncode/#05 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.369828086Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#05","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.369836827Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#06"}
+{"Time":"2026-06-29T15:16:17.369846299Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#06","Output":"=== RUN   TestTagEncode/#06\n"}
+{"Time":"2026-06-29T15:16:17.36970236Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestEncodeURL2Path","Output":"=== RUN   TestEncodeURL2Path\n"}
+{"Time":"2026-06-29T15:16:17.369905809Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestEncodeURL2Path","Output":"--- PASS: TestEncodeURL2Path (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.369925315Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestEncodeURL2Path","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.369938922Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignV4TrimAll"}
+{"Time":"2026-06-29T15:16:17.369950986Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignV4TrimAll","Output":"=== RUN   TestSignV4TrimAll\n"}
+{"Time":"2026-06-29T15:16:17.369960979Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignV4TrimAll","Output":"--- PASS: TestSignV4TrimAll (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.369969819Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Test":"TestSignV4TrimAll","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.369978802Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:17.369705353Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_prefix_empty","Output":"=== RUN   TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_prefix_empty\n"}
+{"Time":"2026-06-29T15:16:17.370052096Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_prefix_empty","Output":"--- PASS: TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_prefix_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.370070774Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_prefix_empty","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.370081187Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_Config_Events_Empty"}
+{"Time":"2026-06-29T15:16:17.370090471Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_Config_Events_Empty","Output":"=== RUN   TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_Config_Events_Empty\n"}
+{"Time":"2026-06-29T15:16:17.370100524Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_Config_Events_Empty","Output":"--- PASS: TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_Config_Events_Empty (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.370110078Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix/Topic_Configuration_Not_Removed,_Config_Events_Empty","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.370136278Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix","Output":"--- PASS: TestConfiguration_RemoveTopicByArnEventsPrefixSuffix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.370148192Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfiguration_RemoveTopicByArnEventsPrefixSuffix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.369858987Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#06","Output":"--- PASS: TestTagEncode/#06 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.370177513Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#06","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.37018863Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#07"}
+{"Time":"2026-06-29T15:16:17.370198031Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#07","Output":"=== RUN   TestTagEncode/#07\n"}
+{"Time":"2026-06-29T15:16:17.370208112Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#07","Output":"--- PASS: TestTagEncode/#07 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.370217298Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode/#07","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.370226804Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode","Output":"--- PASS: TestTagEncode (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.370235908Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestTagEncode","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.370244579Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestEncodePath"}
+{"Time":"2026-06-29T15:16:17.370252844Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestEncodePath","Output":"=== RUN   TestEncodePath\n"}
+{"Time":"2026-06-29T15:16:17.370262658Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestEncodePath","Output":"--- PASS: TestEncodePath (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.370271768Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestEncodePath","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.370280331Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidBucketName"}
+{"Time":"2026-06-29T15:16:17.370288592Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidBucketName","Output":"=== RUN   TestIsValidBucketName\n"}
+{"Time":"2026-06-29T15:16:17.370313265Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidBucketName","Output":"--- PASS: TestIsValidBucketName (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.370330279Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidBucketName","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.370339675Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidBucketNameStrict"}
+{"Time":"2026-06-29T15:16:17.370348227Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidBucketNameStrict","Output":"=== RUN   TestIsValidBucketNameStrict\n"}
+{"Time":"2026-06-29T15:16:17.370358122Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidBucketNameStrict","Output":"--- PASS: TestIsValidBucketNameStrict (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.370367568Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Test":"TestIsValidBucketNameStrict","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.370376044Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:17.370420485Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Output":"ok  \tgithub.com/minio/minio-go/v7/pkg/s3utils\t0.047s\n"}
+{"Time":"2026-06-29T15:16:17.370435154Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/s3utils","Elapsed":0.048}
+{"Time":"2026-06-29T15:16:17.370030208Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/signer","Output":"ok  \tgithub.com/minio/minio-go/v7/pkg/signer\t0.047s\n"}
+{"Time":"2026-06-29T15:16:17.370576434Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/signer","Elapsed":0.047}
+{"Time":"2026-06-29T15:16:17.37015788Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual"}
+{"Time":"2026-06-29T15:16:17.374509795Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual","Output":"=== RUN   TestConfigEqual\n"}
+{"Time":"2026-06-29T15:16:17.371154834Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestHttpRespToErrorResponse","Output":"--- PASS: TestHttpRespToErrorResponse (0.04s)\n"}
+{"Time":"2026-06-29T15:16:17.379905771Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestHttpRespToErrorResponse","Elapsed":0.04}
+{"Time":"2026-06-29T15:16:17.379931167Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestErrEntityTooLarge"}
+{"Time":"2026-06-29T15:16:17.379942796Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrEntityTooLarge","Output":"=== RUN   TestErrEntityTooLarge\n"}
+{"Time":"2026-06-29T15:16:17.379955462Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrEntityTooLarge","Output":"--- PASS: TestErrEntityTooLarge (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.379966102Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestErrEntityTooLarge","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.379975997Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestErrEntityTooSmall"}
+{"Time":"2026-06-29T15:16:17.379985531Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrEntityTooSmall","Output":"=== RUN   TestErrEntityTooSmall\n"}
+{"Time":"2026-06-29T15:16:17.379381748Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_equal_true"}
+{"Time":"2026-06-29T15:16:17.380037709Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_equal_true","Output":"=== RUN   TestConfigEqual/Config_equal_true\n"}
+{"Time":"2026-06-29T15:16:17.380056871Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_equal_true","Output":"--- PASS: TestConfigEqual/Config_equal_true (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380079665Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_equal_true","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380092383Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_Events_different"}
+{"Time":"2026-06-29T15:16:17.380102322Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_Events_different","Output":"=== RUN   TestConfigEqual/Config_Events_different\n"}
+{"Time":"2026-06-29T15:16:17.380113497Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_Events_different","Output":"--- PASS: TestConfigEqual/Config_Events_different (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.38000131Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrEntityTooSmall","Output":"--- PASS: TestErrEntityTooSmall (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380147053Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestErrEntityTooSmall","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380163231Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestErrUnexpectedEOF"}
+{"Time":"2026-06-29T15:16:17.380184067Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrUnexpectedEOF","Output":"=== RUN   TestErrUnexpectedEOF\n"}
+{"Time":"2026-06-29T15:16:17.380197011Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrUnexpectedEOF","Output":"--- PASS: TestErrUnexpectedEOF (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380206647Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestErrUnexpectedEOF","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380216082Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestErrInvalidArgument"}
+{"Time":"2026-06-29T15:16:17.380225048Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrInvalidArgument","Output":"=== RUN   TestErrInvalidArgument\n"}
+{"Time":"2026-06-29T15:16:17.380234471Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrInvalidArgument","Output":"--- PASS: TestErrInvalidArgument (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380244258Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestErrInvalidArgument","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380122857Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_Events_different","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380290522Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix,_events_and_suffix_equal"}
+{"Time":"2026-06-29T15:16:17.380313019Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix,_events_and_suffix_equal","Output":"=== RUN   TestConfigEqual/Config_prefix,_events_and_suffix_equal\n"}
+{"Time":"2026-06-29T15:16:17.380326786Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix,_events_and_suffix_equal","Output":"--- PASS: TestConfigEqual/Config_prefix,_events_and_suffix_equal (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380337836Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix,_events_and_suffix_equal","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380349653Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config.Filter_nil,_filter_prefix_and_suffix_empty"}
+{"Time":"2026-06-29T15:16:17.380253827Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestErrWithoutMessage"}
+{"Time":"2026-06-29T15:16:17.380387547Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrWithoutMessage","Output":"=== RUN   TestErrWithoutMessage\n"}
+{"Time":"2026-06-29T15:16:17.380374897Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config.Filter_nil,_filter_prefix_and_suffix_empty","Output":"=== RUN   TestConfigEqual/Config.Filter_nil,_filter_prefix_and_suffix_empty\n"}
+{"Time":"2026-06-29T15:16:17.38041612Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config.Filter_nil,_filter_prefix_and_suffix_empty","Output":"--- PASS: TestConfigEqual/Config.Filter_nil,_filter_prefix_and_suffix_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380429391Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config.Filter_nil,_filter_prefix_and_suffix_empty","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380403491Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrWithoutMessage","Output":"--- PASS: TestErrWithoutMessage (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380454101Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestErrWithoutMessage","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380472814Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestErrorResponseComparable"}
+{"Time":"2026-06-29T15:16:17.380483248Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrorResponseComparable","Output":"=== RUN   TestErrorResponseComparable\n"}
+{"Time":"2026-06-29T15:16:17.380502855Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrorResponseComparable","Output":"--- PASS: TestErrorResponseComparable (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380441355Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config.Filter_nil_and_events,_prefix_and_suffix_empty"}
+{"Time":"2026-06-29T15:16:17.380529577Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config.Filter_nil_and_events,_prefix_and_suffix_empty","Output":"=== RUN   TestConfigEqual/Config.Filter_nil_and_events,_prefix_and_suffix_empty\n"}
+{"Time":"2026-06-29T15:16:17.380542457Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config.Filter_nil_and_events,_prefix_and_suffix_empty","Output":"--- PASS: TestConfigEqual/Config.Filter_nil_and_events,_prefix_and_suffix_empty (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380552414Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config.Filter_nil_and_events,_prefix_and_suffix_empty","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380561917Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix_empty,_Config.Filters_not_nil"}
+{"Time":"2026-06-29T15:16:17.380570994Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix_empty,_Config.Filters_not_nil","Output":"=== RUN   TestConfigEqual/Config_prefix_empty,_Config.Filters_not_nil\n"}
+{"Time":"2026-06-29T15:16:17.38058184Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix_empty,_Config.Filters_not_nil","Output":"--- PASS: TestConfigEqual/Config_prefix_empty,_Config.Filters_not_nil (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380591446Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix_empty,_Config.Filters_not_nil","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380600662Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix_not_empty,_Config.Filters_nil"}
+{"Time":"2026-06-29T15:16:17.380609512Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix_not_empty,_Config.Filters_nil","Output":"=== RUN   TestConfigEqual/Config_prefix_not_empty,_Config.Filters_nil\n"}
+{"Time":"2026-06-29T15:16:17.380618774Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix_not_empty,_Config.Filters_nil","Output":"--- PASS: TestConfigEqual/Config_prefix_not_empty,_Config.Filters_nil (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380627811Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual/Config_prefix_not_empty,_Config.Filters_nil","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380637908Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual","Output":"--- PASS: TestConfigEqual (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380647237Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestConfigEqual","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380673516Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString"}
+{"Time":"2026-06-29T15:16:17.380684384Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString","Output":"=== RUN   TestNewArnFromString\n"}
+{"Time":"2026-06-29T15:16:17.380693579Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/valid_ARN"}
+{"Time":"2026-06-29T15:16:17.380702147Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/valid_ARN","Output":"=== RUN   TestNewArnFromString/valid_ARN\n"}
+{"Time":"2026-06-29T15:16:17.380721867Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/valid_ARN","Output":"--- PASS: TestNewArnFromString/valid_ARN (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380731937Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/valid_ARN","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380741909Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/invalid_ARN_format"}
+{"Time":"2026-06-29T15:16:17.380513717Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestErrorResponseComparable","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380776258Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnSuccess"}
+{"Time":"2026-06-29T15:16:17.380787093Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnSuccess","Output":"=== RUN   TestGetObjectReturnSuccess\n"}
+{"Time":"2026-06-29T15:16:17.380751595Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/invalid_ARN_format","Output":"=== RUN   TestNewArnFromString/invalid_ARN_format\n"}
+{"Time":"2026-06-29T15:16:17.380818597Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/invalid_ARN_format","Output":"--- PASS: TestNewArnFromString/invalid_ARN_format (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380797855Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnSuccess","Output":"--- PASS: TestGetObjectReturnSuccess (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380862231Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnSuccess","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380829542Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/invalid_ARN_format","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380904335Z","Action":"run","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/invalid_ARN_prefix"}
+{"Time":"2026-06-29T15:16:17.380914265Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/invalid_ARN_prefix","Output":"=== RUN   TestNewArnFromString/invalid_ARN_prefix\n"}
+{"Time":"2026-06-29T15:16:17.380925584Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/invalid_ARN_prefix","Output":"--- PASS: TestNewArnFromString/invalid_ARN_prefix (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380935974Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString/invalid_ARN_prefix","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380946782Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString","Output":"--- PASS: TestNewArnFromString (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.380957488Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Test":"TestNewArnFromString","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.380967598Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:17.380880263Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerTruncatesResponse"}
+{"Time":"2026-06-29T15:16:17.381003521Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerTruncatesResponse","Output":"=== RUN   TestGetObjectReturnErrorIfServerTruncatesResponse\n"}
+{"Time":"2026-06-29T15:16:17.381019664Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerTruncatesResponse","Output":"--- PASS: TestGetObjectReturnErrorIfServerTruncatesResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.38103261Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerTruncatesResponse","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.381062934Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerTruncatesResponseDouble"}
+{"Time":"2026-06-29T15:16:17.381073551Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerTruncatesResponseDouble","Output":"=== RUN   TestGetObjectReturnErrorIfServerTruncatesResponseDouble\n"}
+{"Time":"2026-06-29T15:16:17.381040936Z","Action":"output","Package":"github.com/minio/minio-go/v7/pkg/notification","Output":"ok  \tgithub.com/minio/minio-go/v7/pkg/notification\t0.058s\n"}
+{"Time":"2026-06-29T15:16:17.381132994Z","Action":"pass","Package":"github.com/minio/minio-go/v7/pkg/notification","Elapsed":0.059}
+{"Time":"2026-06-29T15:16:17.381083915Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerTruncatesResponseDouble","Output":"--- PASS: TestGetObjectReturnErrorIfServerTruncatesResponseDouble (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.381181168Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerTruncatesResponseDouble","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.381201717Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerSendsMore"}
+{"Time":"2026-06-29T15:16:17.381211991Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerSendsMore","Output":"=== RUN   TestGetObjectReturnErrorIfServerSendsMore\n"}
+{"Time":"2026-06-29T15:16:17.381224669Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerSendsMore","Output":"--- PASS: TestGetObjectReturnErrorIfServerSendsMore (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.381238311Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectReturnErrorIfServerSendsMore","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.381248425Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestPutObjectOptionsValidate"}
+{"Time":"2026-06-29T15:16:17.381299413Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestPutObjectOptionsValidate","Output":"=== RUN   TestPutObjectOptionsValidate\n"}
+{"Time":"2026-06-29T15:16:17.384383686Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestPutObjectOptionsValidate","Output":"--- PASS: TestPutObjectOptionsValidate (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.384645507Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestPutObjectOptionsValidate","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.384658384Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders"}
+{"Time":"2026-06-29T15:16:17.384669255Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders","Output":"=== RUN   Test_SSEHeaders\n"}
+{"Time":"2026-06-29T15:16:17.38467913Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/noEncryption"}
+{"Time":"2026-06-29T15:16:17.384688208Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/noEncryption","Output":"=== RUN   Test_SSEHeaders/noEncryption\n"}
+{"Time":"2026-06-29T15:16:17.384698676Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/noEncryption","Output":"--- PASS: Test_SSEHeaders/noEncryption (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.384707896Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/noEncryption","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.384717276Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/sse"}
+{"Time":"2026-06-29T15:16:17.384725846Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/sse","Output":"=== RUN   Test_SSEHeaders/sse\n"}
+{"Time":"2026-06-29T15:16:17.384735122Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/sse","Output":"--- PASS: Test_SSEHeaders/sse (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.384744076Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/sse","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.384764125Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/sse_with_context"}
+{"Time":"2026-06-29T15:16:17.384773263Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/sse_with_context","Output":"=== RUN   Test_SSEHeaders/sse_with_context\n"}
+{"Time":"2026-06-29T15:16:17.38478323Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/sse_with_context","Output":"--- PASS: Test_SSEHeaders/sse_with_context (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.384792081Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders/sse_with_context","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.384800913Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders","Output":"--- PASS: Test_SSEHeaders (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.38481002Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"Test_SSEHeaders","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.384818701Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestValidBucketLocation"}
+{"Time":"2026-06-29T15:16:17.384827234Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestValidBucketLocation","Output":"=== RUN   TestValidBucketLocation\n"}
+{"Time":"2026-06-29T15:16:17.384836372Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestValidBucketLocation","Output":"--- PASS: TestValidBucketLocation (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.384845264Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestValidBucketLocation","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.384854342Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestErrorResponse"}
+{"Time":"2026-06-29T15:16:17.38486272Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrorResponse","Output":"=== RUN   TestErrorResponse\n"}
+{"Time":"2026-06-29T15:16:17.384871799Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestErrorResponse","Output":"--- PASS: TestErrorResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.3848812Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestErrorResponse","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.384889724Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestSignatureType"}
+{"Time":"2026-06-29T15:16:17.38489783Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestSignatureType","Output":"=== RUN   TestSignatureType\n"}
+{"Time":"2026-06-29T15:16:17.384906824Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestSignatureType","Output":"--- PASS: TestSignatureType (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.384915804Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestSignatureType","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.384924464Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestBucketPolicyTypes"}
+{"Time":"2026-06-29T15:16:17.384933759Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestBucketPolicyTypes","Output":"=== RUN   TestBucketPolicyTypes\n"}
+{"Time":"2026-06-29T15:16:17.384942968Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestBucketPolicyTypes","Output":"--- PASS: TestBucketPolicyTypes (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.384951664Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestBucketPolicyTypes","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.384960066Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestPartSize"}
+{"Time":"2026-06-29T15:16:17.384968334Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestPartSize","Output":"=== RUN   TestPartSize\n"}
+{"Time":"2026-06-29T15:16:17.384977347Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestPartSize","Output":"--- PASS: TestPartSize (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.384986079Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestPartSize","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385007444Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestMakeTargetURL"}
+{"Time":"2026-06-29T15:16:17.385016584Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestMakeTargetURL","Output":"=== RUN   TestMakeTargetURL\n"}
+{"Time":"2026-06-29T15:16:17.385025966Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestMakeTargetURL","Output":"--- PASS: TestMakeTargetURL (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385034688Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestMakeTargetURL","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385043399Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestHTTPStatusRetryableExcludesCloudflare"}
+{"Time":"2026-06-29T15:16:17.385051699Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestHTTPStatusRetryableExcludesCloudflare","Output":"=== RUN   TestHTTPStatusRetryableExcludesCloudflare\n"}
+{"Time":"2026-06-29T15:16:17.38506073Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestHTTPStatusRetryableExcludesCloudflare","Output":"    api_unit_test.go:230: HTTP 520 (Cloudflare catch-all) should not be retryable\n"}
+{"Time":"2026-06-29T15:16:17.385070008Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestHTTPStatusRetryableExcludesCloudflare","Output":"--- FAIL: TestHTTPStatusRetryableExcludesCloudflare (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385078984Z","Action":"fail","Package":"github.com/minio/minio-go/v7","Test":"TestHTTPStatusRetryableExcludesCloudflare","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385087563Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestNewBucketLocationCache"}
+{"Time":"2026-06-29T15:16:17.385095774Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestNewBucketLocationCache","Output":"=== RUN   TestNewBucketLocationCache\n"}
+{"Time":"2026-06-29T15:16:17.38510474Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestNewBucketLocationCache","Output":"--- PASS: TestNewBucketLocationCache (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385113634Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestNewBucketLocationCache","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.38512198Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestBucketLocationCacheOps"}
+{"Time":"2026-06-29T15:16:17.385130113Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestBucketLocationCacheOps","Output":"=== RUN   TestBucketLocationCacheOps\n"}
+{"Time":"2026-06-29T15:16:17.38513903Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestBucketLocationCacheOps","Output":"--- PASS: TestBucketLocationCacheOps (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385147737Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestBucketLocationCacheOps","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385156087Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestGetBucketLocationRequest"}
+{"Time":"2026-06-29T15:16:17.385164234Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetBucketLocationRequest","Output":"=== RUN   TestGetBucketLocationRequest\n"}
+{"Time":"2026-06-29T15:16:17.38517311Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetBucketLocationRequest","Output":"--- PASS: TestGetBucketLocationRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385181673Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestGetBucketLocationRequest","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385192082Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestProcessBucketLocationResponse"}
+{"Time":"2026-06-29T15:16:17.385200647Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestProcessBucketLocationResponse","Output":"=== RUN   TestProcessBucketLocationResponse\n"}
+{"Time":"2026-06-29T15:16:17.3852098Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestProcessBucketLocationResponse","Output":"--- PASS: TestProcessBucketLocationResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385224204Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestProcessBucketLocationResponse","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385233294Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectCore"}
+{"Time":"2026-06-29T15:16:17.385241798Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectCore","Output":"=== RUN   TestGetObjectCore\n"}
+{"Time":"2026-06-29T15:16:17.385250329Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectCore","Output":"    core_test.go:45: SERVER_ENDPOINT not set\n"}
+{"Time":"2026-06-29T15:16:17.385259208Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectCore","Output":"--- SKIP: TestGetObjectCore (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385267951Z","Action":"skip","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectCore","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385276338Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectContentEncoding"}
+{"Time":"2026-06-29T15:16:17.385284553Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectContentEncoding","Output":"=== RUN   TestGetObjectContentEncoding\n"}
+{"Time":"2026-06-29T15:16:17.385294937Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectContentEncoding","Output":"    core_test.go:242: SERVER_ENDPOINT not set\n"}
+{"Time":"2026-06-29T15:16:17.385304254Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectContentEncoding","Output":"--- SKIP: TestGetObjectContentEncoding (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385312826Z","Action":"skip","Package":"github.com/minio/minio-go/v7","Test":"TestGetObjectContentEncoding","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385321178Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestGetBucketPolicy"}
+{"Time":"2026-06-29T15:16:17.385329437Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetBucketPolicy","Output":"=== RUN   TestGetBucketPolicy\n"}
+{"Time":"2026-06-29T15:16:17.385338009Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetBucketPolicy","Output":"    core_test.go:315: SERVER_ENDPOINT not set\n"}
+{"Time":"2026-06-29T15:16:17.38534693Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetBucketPolicy","Output":"--- SKIP: TestGetBucketPolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385355587Z","Action":"skip","Package":"github.com/minio/minio-go/v7","Test":"TestGetBucketPolicy","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385364007Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObject"}
+{"Time":"2026-06-29T15:16:17.385372314Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObject","Output":"=== RUN   TestCoreCopyObject\n"}
+{"Time":"2026-06-29T15:16:17.385380899Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObject","Output":"    core_test.go:378: SERVER_ENDPOINT not set\n"}
+{"Time":"2026-06-29T15:16:17.385389781Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObject","Output":"--- SKIP: TestCoreCopyObject (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385398236Z","Action":"skip","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObject","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385406768Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObjectPart"}
+{"Time":"2026-06-29T15:16:17.385414895Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObjectPart","Output":"=== RUN   TestCoreCopyObjectPart\n"}
+{"Time":"2026-06-29T15:16:17.385423387Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObjectPart","Output":"    core_test.go:504: SERVER_ENDPOINT not set\n"}
+{"Time":"2026-06-29T15:16:17.385435819Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObjectPart","Output":"--- SKIP: TestCoreCopyObjectPart (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385444908Z","Action":"skip","Package":"github.com/minio/minio-go/v7","Test":"TestCoreCopyObjectPart","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385453497Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestCorePutObject"}
+{"Time":"2026-06-29T15:16:17.385461613Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCorePutObject","Output":"=== RUN   TestCorePutObject\n"}
+{"Time":"2026-06-29T15:16:17.38546997Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCorePutObject","Output":"    core_test.go:660: SERVER_ENDPOINT not set\n"}
+{"Time":"2026-06-29T15:16:17.385478861Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCorePutObject","Output":"--- SKIP: TestCorePutObject (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385487531Z","Action":"skip","Package":"github.com/minio/minio-go/v7","Test":"TestCorePutObject","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.38549605Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestCoreGetObjectMetadata"}
+{"Time":"2026-06-29T15:16:17.385504224Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreGetObjectMetadata","Output":"=== RUN   TestCoreGetObjectMetadata\n"}
+{"Time":"2026-06-29T15:16:17.385512742Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreGetObjectMetadata","Output":"    core_test.go:757: SERVER_ENDPOINT not set\n"}
+{"Time":"2026-06-29T15:16:17.385521773Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreGetObjectMetadata","Output":"--- SKIP: TestCoreGetObjectMetadata (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385532467Z","Action":"skip","Package":"github.com/minio/minio-go/v7","Test":"TestCoreGetObjectMetadata","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385540907Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestCoreMultipartUpload"}
+{"Time":"2026-06-29T15:16:17.385549054Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreMultipartUpload","Output":"=== RUN   TestCoreMultipartUpload\n"}
+{"Time":"2026-06-29T15:16:17.385557669Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreMultipartUpload","Output":"    core_test.go:817: SERVER_ENDPOINT not set\n"}
+{"Time":"2026-06-29T15:16:17.385566736Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCoreMultipartUpload","Output":"--- SKIP: TestCoreMultipartUpload (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385575317Z","Action":"skip","Package":"github.com/minio/minio-go/v7","Test":"TestCoreMultipartUpload","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385583777Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestSetHeader"}
+{"Time":"2026-06-29T15:16:17.385592168Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestSetHeader","Output":"=== RUN   TestSetHeader\n"}
+{"Time":"2026-06-29T15:16:17.38560133Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestSetHeader","Output":"--- PASS: TestSetHeader (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.385609984Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestSetHeader","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385618373Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestCustomQueryParameters"}
+{"Time":"2026-06-29T15:16:17.385626901Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCustomQueryParameters","Output":"=== RUN   TestCustomQueryParameters\n"}
+{"Time":"2026-06-29T15:16:17.385635856Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestCustomQueryParameters","Output":"--- PASS: TestCustomQueryParameters (0.00s)\n"}
+{"Time":"2026-06-29T15:16:17.38564462Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestCustomQueryParameters","Elapsed":0}
+{"Time":"2026-06-29T15:16:17.385655452Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestHealthCheck"}
+{"Time":"2026-06-29T15:16:17.385682884Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestHealthCheck","Output":"=== RUN   TestHealthCheck\n"}
+{"Time":"2026-06-29T15:16:20.386517199Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestHealthCheck","Output":"--- PASS: TestHealthCheck (3.00s)\n"}
+{"Time":"2026-06-29T15:16:20.386635964Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestHealthCheck","Elapsed":3}
+{"Time":"2026-06-29T15:16:20.386656753Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time"}
+{"Time":"2026-06-29T15:16:20.386667313Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time","Output":"=== RUN   TestParseRFC7231Time\n"}
+{"Time":"2026-06-29T15:16:20.386677813Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#00"}
+{"Time":"2026-06-29T15:16:20.3866871Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#00","Output":"=== RUN   TestParseRFC7231Time/#00\n"}
+{"Time":"2026-06-29T15:16:20.386702534Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#00","Output":"--- PASS: TestParseRFC7231Time/#00 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.386712544Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#00","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.386723238Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#01"}
+{"Time":"2026-06-29T15:16:20.386731943Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#01","Output":"=== RUN   TestParseRFC7231Time/#01\n"}
+{"Time":"2026-06-29T15:16:20.386741565Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#01","Output":"--- PASS: TestParseRFC7231Time/#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.386750658Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#01","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.38676927Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#02"}
+{"Time":"2026-06-29T15:16:20.386778357Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#02","Output":"=== RUN   TestParseRFC7231Time/#02\n"}
+{"Time":"2026-06-29T15:16:20.386787809Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#02","Output":"--- PASS: TestParseRFC7231Time/#02 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.386796833Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#02","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.386805894Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#03"}
+{"Time":"2026-06-29T15:16:20.386814175Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#03","Output":"=== RUN   TestParseRFC7231Time/#03\n"}
+{"Time":"2026-06-29T15:16:20.38682346Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#03","Output":"--- PASS: TestParseRFC7231Time/#03 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.386832177Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#03","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.386840866Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#04"}
+{"Time":"2026-06-29T15:16:20.386849126Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#04","Output":"=== RUN   TestParseRFC7231Time/#04\n"}
+{"Time":"2026-06-29T15:16:20.386858424Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#04","Output":"--- PASS: TestParseRFC7231Time/#04 (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.386867255Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time/#04","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.386890296Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time","Output":"--- PASS: TestParseRFC7231Time (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.386900155Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestParseRFC7231Time","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.386908962Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestRedactSignature"}
+{"Time":"2026-06-29T15:16:20.386917399Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestRedactSignature","Output":"=== RUN   TestRedactSignature\n"}
+{"Time":"2026-06-29T15:16:20.386926679Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestRedactSignature","Output":"--- PASS: TestRedactSignature (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.386935676Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestRedactSignature","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.386944224Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestGetEndpointURL"}
+{"Time":"2026-06-29T15:16:20.386952515Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetEndpointURL","Output":"=== RUN   TestGetEndpointURL\n"}
+{"Time":"2026-06-29T15:16:20.386961335Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestGetEndpointURL","Output":"--- PASS: TestGetEndpointURL (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.386970073Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestGetEndpointURL","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.386978583Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidEndpointURL"}
+{"Time":"2026-06-29T15:16:20.386986775Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidEndpointURL","Output":"=== RUN   TestIsValidEndpointURL\n"}
+{"Time":"2026-06-29T15:16:20.387004575Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidEndpointURL","Output":"--- PASS: TestIsValidEndpointURL (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.387014286Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidEndpointURL","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.387029779Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestDefaultBucketLocation"}
+{"Time":"2026-06-29T15:16:20.387038989Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestDefaultBucketLocation","Output":"=== RUN   TestDefaultBucketLocation\n"}
+{"Time":"2026-06-29T15:16:20.387050725Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestDefaultBucketLocation","Output":"--- PASS: TestDefaultBucketLocation (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.387060605Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestDefaultBucketLocation","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.387069969Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidExpiry"}
+{"Time":"2026-06-29T15:16:20.387078531Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidExpiry","Output":"=== RUN   TestIsValidExpiry\n"}
+{"Time":"2026-06-29T15:16:20.387087512Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidExpiry","Output":"--- PASS: TestIsValidExpiry (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.387100483Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidExpiry","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.387148098Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidBucketName"}
+{"Time":"2026-06-29T15:16:20.387170336Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidBucketName","Output":"=== RUN   TestIsValidBucketName\n"}
+{"Time":"2026-06-29T15:16:20.387183622Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidBucketName","Output":"--- PASS: TestIsValidBucketName (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.387194779Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestIsValidBucketName","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.387215915Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestIsStandardHeader"}
+{"Time":"2026-06-29T15:16:20.387225112Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsStandardHeader","Output":"=== RUN   TestIsStandardHeader\n"}
+{"Time":"2026-06-29T15:16:20.3872345Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsStandardHeader","Output":"--- PASS: TestIsStandardHeader (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.387243951Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestIsStandardHeader","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.387252601Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestIsSSEHeader"}
+{"Time":"2026-06-29T15:16:20.387262602Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsSSEHeader","Output":"=== RUN   TestIsSSEHeader\n"}
+{"Time":"2026-06-29T15:16:20.387276837Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsSSEHeader","Output":"--- PASS: TestIsSSEHeader (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.387286004Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestIsSSEHeader","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.387298729Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestIsAmzHeader"}
+{"Time":"2026-06-29T15:16:20.387309484Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsAmzHeader","Output":"=== RUN   TestIsAmzHeader\n"}
+{"Time":"2026-06-29T15:16:20.387321747Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsAmzHeader","Output":"--- PASS: TestIsAmzHeader (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.387350651Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestIsAmzHeader","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.387360286Z","Action":"run","Package":"github.com/minio/minio-go/v7","Test":"TestIsCustomQueryValue"}
+{"Time":"2026-06-29T15:16:20.387370917Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsCustomQueryValue","Output":"=== RUN   TestIsCustomQueryValue\n"}
+{"Time":"2026-06-29T15:16:20.387386571Z","Action":"output","Package":"github.com/minio/minio-go/v7","Test":"TestIsCustomQueryValue","Output":"--- PASS: TestIsCustomQueryValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:20.387405293Z","Action":"pass","Package":"github.com/minio/minio-go/v7","Test":"TestIsCustomQueryValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:20.387419563Z","Action":"output","Package":"github.com/minio/minio-go/v7","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:16:20.387581974Z","Action":"output","Package":"github.com/minio/minio-go/v7","Output":"FAIL\tgithub.com/minio/minio-go/v7\t3.065s\n"}
+{"Time":"2026-06-29T15:16:20.387605504Z","Action":"fail","Package":"github.com/minio/minio-go/v7","Elapsed":3.065}
+reward=0 graded=222 found=222 failed=1 parsed=231 framework=go exit_code=1

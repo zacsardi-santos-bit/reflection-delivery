@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tests/store/artifact/test_optimized_s3_artifact_repo.py -v",
+  "test_files": [
+    "tests/langchain/test_langchain_autolog.py",
+    "tests/store/artifact/test_optimized_s3_artifact_repo.py",
+    "tests/tracking/fluent/test_fluent_autolog.py",
+    "tests/tracking/test_client.py",
+    "tests/transformers/test_transformers_model_export.py",
+    "tests/transformers/test_transformers_prompt_templating.py"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_get_s3_client_verify_param_set_correctly[0-None]",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_get_s3_client_verify_param_set_correctly[1-False]",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_get_s3_client_verify_param_set_correctly[true-False]",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_get_s3_client_verify_param_set_correctly[false-None]",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_get_s3_client_region_name_set_correctly_with_non_throwing_response",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_s3_creds_passed_to_client"
+  ],
+  "PASS_TO_PASS": [
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_get_s3_client_hits_cache",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_get_s3_client_region_name_set_correctly[True]",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_get_s3_client_region_name_set_correctly[False]",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_s3_client_config_set_correctly",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_log_artifacts_in_parallel_when_necessary",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_download_file_in_parallel_when_necessary[None-False]",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_download_file_in_parallel_when_necessary[100-False]",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_download_file_in_parallel_when_necessary[524287999-False]",
+    "tests.store.artifact.test_optimized_s3_artifact_repo::test_download_file_in_parallel_when_necessary[524288000-True]"
+  ]
+}

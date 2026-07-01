@@ -1,0 +1,28 @@
+patching file geoarrow-pandas/tests/test_geoarrow_pandas.py
+patching file geoarrow-pyarrow/tests/test_compute.py
+patching file geoarrow-pyarrow/tests/test_pyarrow.py
+patching file geoarrow-types/tests/test_crs.py
+patching file geoarrow-types/tests/test_type_spec.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/geoarrow-pandas
+configfile: pyproject.toml
+collecting ... collected 90 items / 1 error / 3 deselected / 87 selected
+
+==================================== ERRORS ====================================
+________________________ ERROR collecting test session _________________________
+ImportError while importing test module '/workspace/repo/geoarrow-types/tests/test_type_spec.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+geoarrow-types/tests/test_type_spec.py:13: in <module>
+    from geoarrow.types.crs import (
+E   ImportError: cannot import name 'StringCrs' from 'geoarrow.types.crs' (/workspace/repo/geoarrow-types/src/geoarrow/types/crs.py)
+=========================== short test summary info ============================
+ERROR geoarrow-pandas
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+======================== 3 deselected, 1 error in 1.09s ========================
+reward=0 graded=101 found=0 failed=0 parsed=0 framework=pytest exit_code=2

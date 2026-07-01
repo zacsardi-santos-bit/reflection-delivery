@@ -1,0 +1,5 @@
+I'm working on extending the Winch JIT compiler with support for two SIMD operation families that are currently unimplemented. Specifically, I need to add support for checking whether all elements in a packed integer vector are non-zero, and for extracting a bitmask from the sign bits of each element in a vector. Both of these need to work for all integer vector lane widths — 8-bit, 16-bit, 32-bit, and 64-bit elements.
+
+On top of correctness, I also need these operations to take advantage of advanced vector instructions when the target CPU supports them. When the compiler is told that a hardware vector extension is available, it should emit the corresponding hardware-optimized instructions for each lane width rather than falling back to generic alternatives.
+
+The all-true operation must correctly return 0 when any lane contains a zero, and 1 when all lanes are non-zero. This needs to hold both when the vector is loaded from memory and when it is constructed by splatting a scalar value across all lanes.

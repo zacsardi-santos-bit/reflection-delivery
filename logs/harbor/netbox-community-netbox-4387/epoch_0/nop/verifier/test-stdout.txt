@@ -1,0 +1,170 @@
+patching file netbox/dcim/tests/test_models.py
+Starting PostgreSQL 15 database server: main.
+Starting redis-server: redis-server.
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+django: version: 2.2.28, settings: netbox.settings (from env)
+rootdir: /workspace/repo/netbox
+plugins: django-4.11.1
+collecting ... collected 6 items
+
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_circuit FAILED [ 16%]
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_multiple_patches FAILED [ 33%]
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_patch PASSED [ 50%]
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_patched_circuit FAILED [ 66%]
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_stacked_rear_ports PASSED [ 83%]
+dcim/tests/test_models.py::CablePathTestCase::test_direct_connection PASSED [100%]
+
+=================================== FAILURES ===================================
+________________ CablePathTestCase.test_connection_via_circuit _________________
+
+self = <dcim.tests.test_models.CablePathTestCase testMethod=test_connection_via_circuit>
+
+    def test_connection_via_circuit(self):
+        """
+                     1               2
+        [Device 1] ----- [Circuit] ----- [Device 2]
+             Iface1     A         Z     Iface1
+    
+        """
+        # Create cables
+        cable1 = Cable(
+            termination_a=Interface.objects.get(device__name='Device 1', name='Interface 1'),
+            termination_b=CircuitTermination.objects.get(term_side='A')
+        )
+        cable1.save()
+        cable2 = Cable(
+            termination_a=CircuitTermination.objects.get(term_side='Z'),
+            termination_b=Interface.objects.get(device__name='Device 2', name='Interface 1')
+        )
+        cable2.save()
+    
+        # Retrieve endpoints
+        endpoint_a = Interface.objects.get(device__name='Device 1', name='Interface 1')
+        endpoint_b = Interface.objects.get(device__name='Device 2', name='Interface 1')
+    
+        # Validate connections
+>       self.assertEqual(endpoint_a.connected_endpoint, endpoint_b)
+E       AssertionError: <CircuitTermination: Side A> != <Interface: Interface 1>
+
+dcim/tests/test_models.py:737: AssertionError
+---------------------------- Captured stdout setup -----------------------------
+
+    Adding console connections... 0 cables created
+    Adding power connections... 0 cables created
+    Adding interface connections... 0 cables created
+
+    Adding circuit terminations... 0 cables created
+
+Updating cable device terminations...
+---------------------------- Captured stderr setup -----------------------------
+Creating test database for alias 'default'...
+____________ CablePathTestCase.test_connection_via_multiple_patches ____________
+
+self = <dcim.tests.test_models.CablePathTestCase testMethod=test_connection_via_multiple_patches>
+
+    def test_connection_via_multiple_patches(self):
+        """
+                     1               2               3               4               5
+        [Device 1] ----- [Panel 1] ----- [Panel 2] ----- [Panel 3] ----- [Panel 4] ----- [Device 2]
+             Iface1     FP1     RP1     RP1     FP1     FP1     RP1     RP1     FP1     Iface1
+    
+        """
+        # Create cables
+        cable1 = Cable(
+            termination_a=Interface.objects.get(device__name='Device 1', name='Interface 1'),
+            termination_b=FrontPort.objects.get(device__name='Panel 1', name='Front Port 1')
+        )
+        cable1.save()
+        cable2 = Cable(
+            termination_a=RearPort.objects.get(device__name='Panel 1', name='Rear Port 1'),
+            termination_b=RearPort.objects.get(device__name='Panel 2', name='Rear Port 1')
+        )
+        cable2.save()
+        cable3 = Cable(
+            termination_a=FrontPort.objects.get(device__name='Panel 2', name='Front Port 1'),
+            termination_b=FrontPort.objects.get(device__name='Panel 3', name='Front Port 1')
+        )
+        cable3.save()
+        cable4 = Cable(
+            termination_a=RearPort.objects.get(device__name='Panel 3', name='Rear Port 1'),
+            termination_b=RearPort.objects.get(device__name='Panel 4', name='Rear Port 1')
+        )
+        cable4.save()
+        cable5 = Cable(
+            termination_a=FrontPort.objects.get(device__name='Panel 4', name='Front Port 1'),
+            termination_b=Interface.objects.get(device__name='Device 2', name='Interface 1')
+        )
+        cable5.save()
+    
+        # Retrieve endpoints
+        endpoint_a = Interface.objects.get(device__name='Device 1', name='Interface 1')
+        endpoint_b = Interface.objects.get(device__name='Device 2', name='Interface 1')
+    
+        # Validate connections
+        self.assertEqual(endpoint_a.connected_endpoint, endpoint_b)
+        self.assertEqual(endpoint_b.connected_endpoint, endpoint_a)
+        self.assertTrue(endpoint_a.connection_status)
+        self.assertTrue(endpoint_b.connection_status)
+    
+        # Delete cable 3
+        cable3.delete()
+    
+        # Refresh endpoints
+        endpoint_a.refresh_from_db()
+        endpoint_b.refresh_from_db()
+    
+        # Check that connections have been nullified
+>       self.assertIsNone(endpoint_a.connected_endpoint)
+E       AssertionError: <Interface: Interface 1> is not None
+
+dcim/tests/test_models.py:651: AssertionError
+____________ CablePathTestCase.test_connection_via_patched_circuit _____________
+
+self = <dcim.tests.test_models.CablePathTestCase testMethod=test_connection_via_patched_circuit>
+
+    def test_connection_via_patched_circuit(self):
+        """
+                     1               2               3               4
+        [Device 1] ----- [Panel 1] ----- [Circuit] ----- [Panel 2] ----- [Device 2]
+             Iface1     FP1     RP1     A         Z     RP1     FP1     Iface1
+    
+        """
+        # Create cables
+        cable1 = Cable(
+            termination_a=Interface.objects.get(device__name='Device 1', name='Interface 1'),
+            termination_b=FrontPort.objects.get(device__name='Panel 1', name='Front Port 1')
+        )
+        cable1.save()
+        cable2 = Cable(
+            termination_a=RearPort.objects.get(device__name='Panel 1', name='Rear Port 1'),
+            termination_b=CircuitTermination.objects.get(term_side='A')
+        )
+        cable2.save()
+        cable3 = Cable(
+            termination_a=CircuitTermination.objects.get(term_side='Z'),
+            termination_b=RearPort.objects.get(device__name='Panel 2', name='Rear Port 1')
+        )
+        cable3.save()
+        cable4 = Cable(
+            termination_a=FrontPort.objects.get(device__name='Panel 2', name='Front Port 1'),
+            termination_b=Interface.objects.get(device__name='Device 2', name='Interface 1')
+        )
+        cable4.save()
+    
+        # Retrieve endpoints
+        endpoint_a = Interface.objects.get(device__name='Device 1', name='Interface 1')
+        endpoint_b = Interface.objects.get(device__name='Device 2', name='Interface 1')
+    
+        # Validate connections
+>       self.assertEqual(endpoint_a.connected_endpoint, endpoint_b)
+E       AssertionError: <CircuitTermination: Side A> != <Interface: Interface 1>
+
+dcim/tests/test_models.py:789: AssertionError
+=========================== short test summary info ============================
+FAILED dcim/tests/test_models.py::CablePathTestCase::test_connection_via_circuit
+FAILED dcim/tests/test_models.py::CablePathTestCase::test_connection_via_multiple_patches
+FAILED dcim/tests/test_models.py::CablePathTestCase::test_connection_via_patched_circuit
+========================= 3 failed, 3 passed in 22.28s =========================
+reward=0 graded=6 found=0 failed=0 parsed=6 framework=pytest exit_code=1

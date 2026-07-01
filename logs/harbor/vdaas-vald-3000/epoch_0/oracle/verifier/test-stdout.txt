@@ -1,0 +1,42 @@
+patching file internal/jsonpath/jsonpath_test.go
+patching file tests/v2/e2e/assets/index_correction.yaml
+patching file tests/v2/e2e/crud/grpc_test.go
+patching file tests/v2/e2e/crud/kubernetes_test.go
+patching file tests/v2/e2e/kubernetes/client.go
+patching file tests/v2/e2e/kubernetes/doc.go
+patching file tests/v2/e2e/kubernetes/resources.go
+patching file tests/v2/e2e/kubernetes/rollout.go
+patching file tests/v2/e2e/kubernetes/status.go
+=== RUN   TestJSONPathEval
+=== RUN   TestJSONPathEval/empty_length
+=== RUN   TestJSONPathEval/root
+=== RUN   TestJSONPathEval/access_map_length
+=== RUN   TestJSONPathEval/access_array
+=== RUN   TestJSONPathEval/access_array_length
+=== RUN   TestJSONPathEval/missing_key
+=== RUN   TestJSONPathEval/length_on_non-array
+=== RUN   TestJSONPathEval/nested_key_access
+=== RUN   TestJSONPathEval/*_for_map
+=== RUN   TestJSONPathEval/*.key
+=== RUN   TestJSONPathEval/*.*
+=== RUN   TestJSONPathEval/*.*_for_array
+=== RUN   TestJSONPathEval/array_index
+=== RUN   TestJSONPathEval/sum
+--- PASS: TestJSONPathEval (0.00s)
+    --- PASS: TestJSONPathEval/empty_length (0.00s)
+    --- PASS: TestJSONPathEval/root (0.00s)
+    --- PASS: TestJSONPathEval/access_map_length (0.00s)
+    --- PASS: TestJSONPathEval/access_array (0.00s)
+    --- PASS: TestJSONPathEval/access_array_length (0.00s)
+    --- PASS: TestJSONPathEval/missing_key (0.00s)
+    --- PASS: TestJSONPathEval/length_on_non-array (0.00s)
+    --- PASS: TestJSONPathEval/nested_key_access (0.00s)
+    --- PASS: TestJSONPathEval/*_for_map (0.00s)
+    --- PASS: TestJSONPathEval/*.key (0.00s)
+    --- PASS: TestJSONPathEval/*.* (0.00s)
+    --- PASS: TestJSONPathEval/*.*_for_array (0.00s)
+    --- PASS: TestJSONPathEval/array_index (0.00s)
+    --- PASS: TestJSONPathEval/sum (0.00s)
+PASS
+ok  	github.com/vdaas/vald/internal/jsonpath	0.006s
+reward=1 graded=15 found=0 failed=0 parsed=0 framework=go exit_code=0

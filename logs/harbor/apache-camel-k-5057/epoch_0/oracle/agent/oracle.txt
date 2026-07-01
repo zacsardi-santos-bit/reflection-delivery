@@ -1,0 +1,1020 @@
+patching file .github/actions/automatic-updates/action.yml
+patching file .github/actions/e2e-build/action.yml
+patching file .github/dependabot.yml
+patching file .github/workflows/comment-pr.yaml
+patching file .gitignore
+patching file CHANGELOG.md
+patching file badge.out
+patching file config/crd/bases/camel.apache.org_builds.yaml
+patching file config/crd/bases/camel.apache.org_integrationkits.yaml
+patching file config/crd/bases/camel.apache.org_integrationplatforms.yaml
+patching file config/crd/bases/camel.apache.org_integrations.yaml
+patching file config/crd/bases/camel.apache.org_kameletbindings.yaml
+patching file config/crd/bases/camel.apache.org_pipes.yaml
+patching file coverage
+patching file coverage.out
+patching file docs/antora.yml
+patching file docs/modules/ROOT/pages/installation/registry/dockerhub.adoc
+patching file docs/modules/ROOT/pages/pipeline/pipeline.adoc
+patching file docs/modules/ROOT/partials/apis/camel-k-crds.adoc
+patching file docs/modules/traits/pages/builder.adoc
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 534 with fuzz 1 (offset 392 lines).
+Hunk #2 FAILED at 856.
+1 out of 2 hunks FAILED -- saving rejects to file go.sum.rej
+patching file helm/camel-k/crds/crd-build.yaml
+patching file helm/camel-k/crds/crd-integration-kit.yaml
+patching file helm/camel-k/crds/crd-integration-platform.yaml
+patching file helm/camel-k/crds/crd-integration.yaml
+patching file helm/camel-k/crds/crd-kamelet-binding.yaml
+patching file helm/camel-k/crds/crd-pipe.yaml
+patching file java/crds/pom.xml
+patching file pkg/apis/camel/v1/build_types.go
+patching file pkg/apis/camel/v1/trait/builder.go
+patching file pkg/apis/camel/v1/zz_generated.deepcopy.go
+patching file pkg/builder/quarkus.go
+patching file pkg/client/camel/applyconfiguration/camel/v1/usertask.go
+patching file pkg/controller/build/build_pod.go
+patching file pkg/controller/build/monitor_pod.go
+patching file pkg/resources/resources.go
+patching file pkg/trait/builder.go
+patching file pkg/util/bindings/kamelet.go
+patching file pkg/util/bindings/kamelet_test.go
+patching file pkg/util/registry/registry.go
+patching file pkg/util/registry/registry_test.go
+patching file resources/traits.yaml
+patching file script/Makefile
+patching file script/camel-k-runtime-archetype/pom.xml
+patching file .github/actions/automatic-updates/action.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file .github/actions/automatic-updates/action.yml.rej
+patching file .github/actions/e2e-build/action.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/actions/e2e-build/action.yml.rej
+patching file .github/dependabot.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/dependabot.yml.rej
+patching file .github/workflows/comment-pr.yaml
+patching file .gitignore
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .gitignore.rej
+patching file CHANGELOG.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file CHANGELOG.md.rej
+patching file badge.out
+patching file config/crd/bases/camel.apache.org_builds.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_builds.yaml.rej
+patching file config/crd/bases/camel.apache.org_integrationkits.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_integrationkits.yaml.rej
+patching file config/crd/bases/camel.apache.org_integrationplatforms.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/crd/bases/camel.apache.org_integrationplatforms.yaml.rej
+patching file config/crd/bases/camel.apache.org_integrations.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_integrations.yaml.rej
+patching file config/crd/bases/camel.apache.org_kameletbindings.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_kameletbindings.yaml.rej
+patching file config/crd/bases/camel.apache.org_pipes.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_pipes.yaml.rej
+patching file coverage
+patching file coverage.out
+patching file docs/antora.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/antora.yml.rej
+patching file docs/modules/ROOT/pages/installation/registry/dockerhub.adoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file docs/modules/ROOT/pages/installation/registry/dockerhub.adoc.rej
+patching file docs/modules/ROOT/pages/pipeline/pipeline.adoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file docs/modules/ROOT/pages/pipeline/pipeline.adoc.rej
+patching file docs/modules/ROOT/partials/apis/camel-k-crds.adoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file docs/modules/ROOT/partials/apis/camel-k-crds.adoc.rej
+patching file docs/modules/traits/pages/builder.adoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/modules/traits/pages/builder.adoc.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file go.sum.rej
+patching file helm/camel-k/crds/crd-build.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-build.yaml.rej
+patching file helm/camel-k/crds/crd-integration-kit.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-integration-kit.yaml.rej
+patching file helm/camel-k/crds/crd-integration-platform.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file helm/camel-k/crds/crd-integration-platform.yaml.rej
+patching file helm/camel-k/crds/crd-integration.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-integration.yaml.rej
+patching file helm/camel-k/crds/crd-kamelet-binding.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-kamelet-binding.yaml.rej
+patching file helm/camel-k/crds/crd-pipe.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-pipe.yaml.rej
+patching file java/crds/pom.xml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file java/crds/pom.xml.rej
+patching file pkg/apis/camel/v1/build_types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/apis/camel/v1/build_types.go.rej
+patching file pkg/apis/camel/v1/trait/builder.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/apis/camel/v1/trait/builder.go.rej
+patching file pkg/apis/camel/v1/zz_generated.deepcopy.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/apis/camel/v1/zz_generated.deepcopy.go.rej
+patching file pkg/builder/quarkus.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/builder/quarkus.go.rej
+patching file pkg/client/camel/applyconfiguration/camel/v1/usertask.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/client/camel/applyconfiguration/camel/v1/usertask.go.rej
+patching file pkg/controller/build/build_pod.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/build/build_pod.go.rej
+patching file pkg/controller/build/monitor_pod.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/controller/build/monitor_pod.go.rej
+patching file pkg/resources/resources.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file pkg/resources/resources.go.rej
+patching file pkg/trait/builder.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+10 out of 10 hunks ignored -- saving rejects to file pkg/trait/builder.go.rej
+patching file pkg/util/bindings/kamelet.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/util/bindings/kamelet.go.rej
+patching file pkg/util/bindings/kamelet_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/util/bindings/kamelet_test.go.rej
+patching file pkg/util/registry/registry.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file pkg/util/registry/registry.go.rej
+patching file pkg/util/registry/registry_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/util/registry/registry_test.go.rej
+patching file resources/traits.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file resources/traits.yaml.rej
+patching file script/Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file script/Makefile.rej
+patching file script/camel-k-runtime-archetype/pom.xml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file script/camel-k-runtime-archetype/pom.xml.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/actions/automatic-updates/action.yml b/.github/actions/automatic-updates/action.yml
+|index 8abaf35d1..21c8ea1d7 100644
+|--- a/.github/actions/automatic-updates/action.yml
+|+++ b/.github/actions/automatic-updates/action.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 97
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/actions/e2e-build/action.yml b/.github/actions/e2e-build/action.yml
+|index a5a976ff5..d3ac7dfeb 100644
+|--- a/.github/actions/e2e-build/action.yml
+|+++ b/.github/actions/e2e-build/action.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 121
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/dependabot.yml b/.github/dependabot.yml
+|index 5d45c477c..b279babc9 100644
+|--- a/.github/dependabot.yml
+|+++ b/.github/dependabot.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/.github/workflows/comment-pr.yaml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 206
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.gitignore b/.gitignore
+|index 6896b7685..1e5a72168 100644
+|--- a/.gitignore
+|+++ b/.gitignore
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 222
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/CHANGELOG.md b/CHANGELOG.md
+|index 9f0a5c597..a904dbe27 100644
+|--- a/CHANGELOG.md
+|+++ b/CHANGELOG.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+The next patch would delete the file a/badge.out,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 266
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/crd/bases/camel.apache.org_builds.yaml b/config/crd/bases/camel.apache.org_builds.yaml
+|index cb486ef73..3cb3ea1b6 100644
+|--- a/config/crd/bases/camel.apache.org_builds.yaml
+|+++ b/config/crd/bases/camel.apache.org_builds.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 284
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/crd/bases/camel.apache.org_integrationkits.yaml b/config/crd/bases/camel.apache.org_integrationkits.yaml
+|index e3dece12f..6ec3bd07d 100644
+|--- a/config/crd/bases/camel.apache.org_integrationkits.yaml
+|+++ b/config/crd/bases/camel.apache.org_integrationkits.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 302
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/crd/bases/camel.apache.org_integrationplatforms.yaml b/config/crd/bases/camel.apache.org_integrationplatforms.yaml
+|index f548fe157..9a7c238c9 100644
+|--- a/config/crd/bases/camel.apache.org_integrationplatforms.yaml
+|+++ b/config/crd/bases/camel.apache.org_integrationplatforms.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 334
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/crd/bases/camel.apache.org_integrations.yaml b/config/crd/bases/camel.apache.org_integrations.yaml
+|index fd9263a05..f0018b106 100644
+|--- a/config/crd/bases/camel.apache.org_integrations.yaml
+|+++ b/config/crd/bases/camel.apache.org_integrations.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 352
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/crd/bases/camel.apache.org_kameletbindings.yaml b/config/crd/bases/camel.apache.org_kameletbindings.yaml
+|index 0739d217f..cc0b8e10e 100644
+|--- a/config/crd/bases/camel.apache.org_kameletbindings.yaml
+|+++ b/config/crd/bases/camel.apache.org_kameletbindings.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 370
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/crd/bases/camel.apache.org_pipes.yaml b/config/crd/bases/camel.apache.org_pipes.yaml
+|index 8063ab981..35e8fdc8c 100644
+|--- a/config/crd/bases/camel.apache.org_pipes.yaml
+|+++ b/config/crd/bases/camel.apache.org_pipes.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/coverage,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/coverage.out,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2635
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/antora.yml b/docs/antora.yml
+|index bbc9fc5f6..d5aaa7583 100644
+|--- a/docs/antora.yml
+|+++ b/docs/antora.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2647
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/modules/ROOT/pages/installation/registry/dockerhub.adoc b/docs/modules/ROOT/pages/installation/registry/dockerhub.adoc
+|index 79f1d40e9..3b68c51d8 100644
+|--- a/docs/modules/ROOT/pages/installation/registry/dockerhub.adoc
+|+++ b/docs/modules/ROOT/pages/installation/registry/dockerhub.adoc
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 2677
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/modules/ROOT/pages/pipeline/pipeline.adoc b/docs/modules/ROOT/pages/pipeline/pipeline.adoc
+|index b204f338c..6712c940d 100644
+|--- a/docs/modules/ROOT/pages/pipeline/pipeline.adoc
+|+++ b/docs/modules/ROOT/pages/pipeline/pipeline.adoc
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 2795
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/modules/ROOT/partials/apis/camel-k-crds.adoc b/docs/modules/ROOT/partials/apis/camel-k-crds.adoc
+|index 4d7208467..16a74cf3a 100644
+|--- a/docs/modules/ROOT/partials/apis/camel-k-crds.adoc
+|+++ b/docs/modules/ROOT/partials/apis/camel-k-crds.adoc
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 2843
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/modules/traits/pages/builder.adoc b/docs/modules/traits/pages/builder.adoc
+|index f86b3edab..8560b38f9 100755
+|--- a/docs/modules/traits/pages/builder.adoc
+|+++ b/docs/modules/traits/pages/builder.adoc
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2860
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 87f75eb36..e17b596ff 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2877
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 10a9074dd..1a74a5e01 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2910
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/helm/camel-k/crds/crd-build.yaml b/helm/camel-k/crds/crd-build.yaml
+|index cb486ef73..3cb3ea1b6 100644
+|--- a/helm/camel-k/crds/crd-build.yaml
+|+++ b/helm/camel-k/crds/crd-build.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2928
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/helm/camel-k/crds/crd-integration-kit.yaml b/helm/camel-k/crds/crd-integration-kit.yaml
+|index e3dece12f..6ec3bd07d 100644
+|--- a/helm/camel-k/crds/crd-integration-kit.yaml
+|+++ b/helm/camel-k/crds/crd-integration-kit.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2946
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/helm/camel-k/crds/crd-integration-platform.yaml b/helm/camel-k/crds/crd-integration-platform.yaml
+|index f548fe157..9a7c238c9 100644
+|--- a/helm/camel-k/crds/crd-integration-platform.yaml
+|+++ b/helm/camel-k/crds/crd-integration-platform.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2978
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/helm/camel-k/crds/crd-integration.yaml b/helm/camel-k/crds/crd-integration.yaml
+|index fd9263a05..f0018b106 100644
+|--- a/helm/camel-k/crds/crd-integration.yaml
+|+++ b/helm/camel-k/crds/crd-integration.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2996
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/helm/camel-k/crds/crd-kamelet-binding.yaml b/helm/camel-k/crds/crd-kamelet-binding.yaml
+|index 0739d217f..cc0b8e10e 100644
+|--- a/helm/camel-k/crds/crd-kamelet-binding.yaml
+|+++ b/helm/camel-k/crds/crd-kamelet-binding.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3014
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/helm/camel-k/crds/crd-pipe.yaml b/helm/camel-k/crds/crd-pipe.yaml
+|index 8063ab981..35e8fdc8c 100644
+|--- a/helm/camel-k/crds/crd-pipe.yaml
+|+++ b/helm/camel-k/crds/crd-pipe.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3032
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/java/crds/pom.xml b/java/crds/pom.xml
+|index 2375e6306..99839e7aa 100644
+|--- a/java/crds/pom.xml
+|+++ b/java/crds/pom.xml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3072
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/apis/camel/v1/build_types.go b/pkg/apis/camel/v1/build_types.go
+|index 5e2a99681..a843eea5b 100644
+|--- a/pkg/apis/camel/v1/build_types.go
+|+++ b/pkg/apis/camel/v1/build_types.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3092
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/apis/camel/v1/trait/builder.go b/pkg/apis/camel/v1/trait/builder.go
+|index 69441859f..c98feafa6 100644
+|--- a/pkg/apis/camel/v1/trait/builder.go
+|+++ b/pkg/apis/camel/v1/trait/builder.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3107
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/apis/camel/v1/zz_generated.deepcopy.go b/pkg/apis/camel/v1/zz_generated.deepcopy.go
+|index e630aa257..f0d23440d 100644
+|--- a/pkg/apis/camel/v1/zz_generated.deepcopy.go
+|+++ b/pkg/apis/camel/v1/zz_generated.deepcopy.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3123
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/builder/quarkus.go b/pkg/builder/quarkus.go
+|index 6d5f7f8ea..4159f9931 100644
+|--- a/pkg/builder/quarkus.go
+|+++ b/pkg/builder/quarkus.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3139
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/client/camel/applyconfiguration/camel/v1/usertask.go b/pkg/client/camel/applyconfiguration/camel/v1/usertask.go
+|index f4fc11c89..5f396fcd5 100644
+|--- a/pkg/client/camel/applyconfiguration/camel/v1/usertask.go
+|+++ b/pkg/client/camel/applyconfiguration/camel/v1/usertask.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 3181
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/controller/build/build_pod.go b/pkg/controller/build/build_pod.go
+|index 5396573a7..46fd34d55 100644
+|--- a/pkg/controller/build/build_pod.go
+|+++ b/pkg/controller/build/build_pod.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3199
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/controller/build/monitor_pod.go b/pkg/controller/build/monitor_pod.go
+|index 31fe5c540..0af446104 100644
+|--- a/pkg/controller/build/monitor_pod.go
+|+++ b/pkg/controller/build/monitor_pod.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3316
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/resources/resources.go b/pkg/resources/resources.go
+|index 536db4af3..3d0b93b67 100644
+|--- a/pkg/resources/resources.go
+|+++ b/pkg/resources/resources.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 3431
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/trait/builder.go b/pkg/trait/builder.go
+|index fef01bcd8..a0da38970 100644
+|--- a/pkg/trait/builder.go
+|+++ b/pkg/trait/builder.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+10 out of 10 hunks ignored
+can't find file to patch at input line 3680
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/util/bindings/kamelet.go b/pkg/util/bindings/kamelet.go
+|index cb05d9646..af12afaa6 100644
+|--- a/pkg/util/bindings/kamelet.go
+|+++ b/pkg/util/bindings/kamelet.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 3717
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/util/bindings/kamelet_test.go b/pkg/util/bindings/kamelet_test.go
+|index 3721c3392..6c1aa14fe 100644
+|--- a/pkg/util/bindings/kamelet_test.go
+|+++ b/pkg/util/bindings/kamelet_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 3939
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/util/registry/registry.go b/pkg/util/registry/registry.go
+|index 623110d70..e2c118e16 100644
+|--- a/pkg/util/registry/registry.go
+|+++ b/pkg/util/registry/registry.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 4007
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/util/registry/registry_test.go b/pkg/util/registry/registry_test.go
+|index a9cb29dbb..948f2fa20 100644
+|--- a/pkg/util/registry/registry_test.go
+|+++ b/pkg/util/registry/registry_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4021
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/resources/traits.yaml b/resources/traits.yaml
+|index 0f9243967..a63e521e9 100755
+|--- a/resources/traits.yaml
+|+++ b/resources/traits.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4038
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/script/Makefile b/script/Makefile
+|index 817a65d61..24dff1e4f 100644
+|--- a/script/Makefile
+|+++ b/script/Makefile
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4055
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/script/camel-k-runtime-archetype/pom.xml b/script/camel-k-runtime-archetype/pom.xml
+|index b1558bdc0..7d58690cd 100644
+|--- a/script/camel-k-runtime-archetype/pom.xml
+|+++ b/script/camel-k-runtime-archetype/pom.xml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file .github/actions/automatic-updates/action.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file .github/actions/automatic-updates/action.yml.rej
+patching file .github/actions/e2e-build/action.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/actions/e2e-build/action.yml.rej
+patching file .github/dependabot.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/dependabot.yml.rej
+patching file .github/workflows/comment-pr.yaml
+patching file .gitignore
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .gitignore.rej
+patching file CHANGELOG.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file CHANGELOG.md.rej
+patching file badge.out
+patching file config/crd/bases/camel.apache.org_builds.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_builds.yaml.rej
+patching file config/crd/bases/camel.apache.org_integrationkits.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_integrationkits.yaml.rej
+patching file config/crd/bases/camel.apache.org_integrationplatforms.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/crd/bases/camel.apache.org_integrationplatforms.yaml.rej
+patching file config/crd/bases/camel.apache.org_integrations.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_integrations.yaml.rej
+patching file config/crd/bases/camel.apache.org_kameletbindings.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_kameletbindings.yaml.rej
+patching file config/crd/bases/camel.apache.org_pipes.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file config/crd/bases/camel.apache.org_pipes.yaml.rej
+patching file coverage
+patching file coverage.out
+patching file docs/antora.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/antora.yml.rej
+patching file docs/modules/ROOT/pages/installation/registry/dockerhub.adoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file docs/modules/ROOT/pages/installation/registry/dockerhub.adoc.rej
+patching file docs/modules/ROOT/pages/pipeline/pipeline.adoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file docs/modules/ROOT/pages/pipeline/pipeline.adoc.rej
+patching file docs/modules/ROOT/partials/apis/camel-k-crds.adoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file docs/modules/ROOT/partials/apis/camel-k-crds.adoc.rej
+patching file docs/modules/traits/pages/builder.adoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/modules/traits/pages/builder.adoc.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file go.sum.rej
+patching file helm/camel-k/crds/crd-build.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-build.yaml.rej
+patching file helm/camel-k/crds/crd-integration-kit.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-integration-kit.yaml.rej
+patching file helm/camel-k/crds/crd-integration-platform.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file helm/camel-k/crds/crd-integration-platform.yaml.rej
+patching file helm/camel-k/crds/crd-integration.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-integration.yaml.rej
+patching file helm/camel-k/crds/crd-kamelet-binding.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-kamelet-binding.yaml.rej
+patching file helm/camel-k/crds/crd-pipe.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file helm/camel-k/crds/crd-pipe.yaml.rej
+patching file java/crds/pom.xml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file java/crds/pom.xml.rej
+patching file pkg/apis/camel/v1/build_types.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/apis/camel/v1/build_types.go.rej
+patching file pkg/apis/camel/v1/trait/builder.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/apis/camel/v1/trait/builder.go.rej
+patching file pkg/apis/camel/v1/zz_generated.deepcopy.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/apis/camel/v1/zz_generated.deepcopy.go.rej
+patching file pkg/builder/quarkus.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/builder/quarkus.go.rej
+patching file pkg/client/camel/applyconfiguration/camel/v1/usertask.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file pkg/client/camel/applyconfiguration/camel/v1/usertask.go.rej
+patching file pkg/controller/build/build_pod.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/build/build_pod.go.rej
+patching file pkg/controller/build/monitor_pod.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/controller/build/monitor_pod.go.rej
+patching file pkg/resources/resources.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file pkg/resources/resources.go.rej
+patching file pkg/trait/builder.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+10 out of 10 hunks ignored -- saving rejects to file pkg/trait/builder.go.rej
+patching file pkg/util/bindings/kamelet.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/util/bindings/kamelet.go.rej
+patching file pkg/util/bindings/kamelet_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file pkg/util/bindings/kamelet_test.go.rej
+patching file pkg/util/registry/registry.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file pkg/util/registry/registry.go.rej
+patching file pkg/util/registry/registry_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/util/registry/registry_test.go.rej
+patching file resources/traits.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file resources/traits.yaml.rej
+patching file script/Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file script/Makefile.rej
+patching file script/camel-k-runtime-archetype/pom.xml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file script/camel-k-runtime-archetype/pom.xml.rej
+ERROR: golden patch failed to apply by all strategies

@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/controller/utils -count=1",
+  "test_files": [
+    "pkg/controller/utils/component_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/tigera/operator/pkg/controller/utils::TestStatus"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,35 @@
+patching file site/test/utils/slug.js
+/workspace/repo/site/test/utils/slug.js:1
+(function (exports, require, module, __filename, __dirname) { import {strict as assert} from 'assert';
+                                                              ^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at makeContextifyScript (node:internal/vm:185:14)
+    at wrapSafe (node:internal/modules/cjs/loader:1428:20)
+    at Module._compile (node:internal/modules/cjs/loader:1495:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Module._load (node:internal/modules/cjs/loader:1091:12)
+    at Module.require (node:internal/modules/cjs/loader:1289:19)
+    at require (node:internal/modules/helpers:182:18)
+    at /workspace/repo/site/node_modules/mocha/lib/mocha.js:330:36
+    at Array.forEach (<anonymous>)
+    at Mocha.loadFiles (/workspace/repo/site/node_modules/mocha/lib/mocha.js:327:14)
+    at Mocha.run (/workspace/repo/site/node_modules/mocha/lib/mocha.js:804:10)
+    at exports.singleRun (/workspace/repo/site/node_modules/mocha/lib/cli/run-helpers.js:207:16)
+    at exports.runMocha (/workspace/repo/site/node_modules/mocha/lib/cli/run-helpers.js:300:13)
+    at exports.handler (/workspace/repo/site/node_modules/mocha/lib/cli/run.js:296:3)
+    at Object.runCommand (/workspace/repo/site/node_modules/yargs/lib/command.js:242:26)
+    at Object.parseArgs [as _parseArgs] (/workspace/repo/site/node_modules/yargs/yargs.js:1087:28)
+    at Object.parse (/workspace/repo/site/node_modules/yargs/yargs.js:566:25)
+    at exports.main (/workspace/repo/site/node_modules/mocha/lib/cli/cli.js:63:6)
+    at Object.<anonymous> (/workspace/repo/site/node_modules/mocha/bin/_mocha:10:23)
+    at Module._compile (node:internal/modules/cjs/loader:1521:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1623:10)
+    at Module.load (node:internal/modules/cjs/loader:1266:32)
+    at Module._load (node:internal/modules/cjs/loader:1091:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12)
+    at node:internal/main/run_main_module:28:49
+
+Node.js v20.20.2
+reward=0 graded=36 found=0 failed=0 parsed=0 framework=mocha exit_code=1

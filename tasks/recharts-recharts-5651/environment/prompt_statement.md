@@ -1,0 +1,5 @@
+I'm working with scatter charts in Recharts and I've noticed a bug where changing the data key or dataset on a scatter chart causes incorrect scatter points to flash briefly before the correct data appears. It seems like the point computation is running with the new configuration before the chart's internal state has finished updating to reflect the change.
+
+The root cause appears to be that the selector responsible for computing scatter points doesn't wait for the scatter component to register itself in the chart state before computing data. It immediately uses whatever settings are passed in as props, even if those settings haven't been synchronized with the chart's registration state yet.
+
+What I'd expect is that on the very first render (before the scatter has registered), the selector should return nothing — no scatter points yet. Only after the chart state has caught up and confirmed that the scatter's current settings (data key and data reference) match a registered graphical item should the points be computed and returned. This way, the chart only shows data once everything is in sync, and no incorrect intermediate results are rendered.

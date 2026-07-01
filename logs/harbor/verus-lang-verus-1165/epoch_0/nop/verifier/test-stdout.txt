@@ -1,0 +1,262 @@
+patching file source/rust_verify_test/tests/hash.rs
+vargo info [1]: building rust_verify
+    Finished dev [unoptimized + debuginfo] target(s) in 2.28s
+vargo info [1]: building builtin
+    Finished dev [unoptimized + debuginfo] target(s) in 0.11s
+vargo info [1]: building builtin_macros
+   Compiling syn_verus v1.0.95 (/workspace/repo/dependencies/syn)
+   Compiling prettyplease_verus v0.1.15 (/workspace/repo/dependencies/prettyplease)
+   Compiling builtin_macros v0.1.0 (/workspace/repo/source/builtin_macros)
+    Finished dev [unoptimized + debuginfo] target(s) in 5.57s
+vargo info [1]: building state_machines_macros
+   Compiling state_machines_macros v0.1.0 (/workspace/repo/source/state_machines_macros)
+    Finished dev [unoptimized + debuginfo] target(s) in 3.47s
+vargo info [1]: building vstd_build
+    Finished dev [unoptimized + debuginfo] target(s) in 0.09s
+vargo info [1]: building verus
+    Finished dev [unoptimized + debuginfo] target(s) in 0.89s
+vargo info [1]: vstd outdated, rebuilding
+    Finished dev [unoptimized + debuginfo] target(s) in 0.10s
+     Running `target/debug/vstd_build target-verus/debug`
+verification results:: 769 verified, 0 errors
+vargo info [0]: rebuilding: done
+   Compiling console v0.15.7
+   Compiling rust_verify_test_macros v0.1.0 (/workspace/repo/source/rust_verify_test_macros)
+   Compiling serde_json v1.0.107
+   Compiling indicatif v0.16.2
+   Compiling z3tracer v0.11.2 (https://github.com/verus-lang/smt2utils.git?rev=ec4c894d04d7cd39c9a8aa1eda51db71cc54fe61#ec4c894d)
+   Compiling air v0.1.0 (/workspace/repo/source/air)
+   Compiling vir v0.1.0 (/workspace/repo/source/vir)
+   Compiling rust_verify_test v0.1.0 (/workspace/repo/source/rust_verify_test)
+    Finished test [unoptimized + debuginfo] target(s) in 18.99s
+     Running tests/hash.rs (target/debug/deps/hash-0a5f3e15d87f8597)
+
+running 8 tests
+FAIL [   0.000s] test_hash_map_with_view_fails
+FAIL [   0.000s] test_hash_map
+FAIL [   0.000s] test_string_hash_map
+FAIL [   0.000s] test_hash_map_box
+FAIL [   0.000s] test_hash_map_struct_fails
+FAIL [   0.000s] test_hash_map_with_view
+FAIL [   0.000s] test_hash_map_struct
+FAIL [   0.000s] test_default_hasher
+
+failures:
+
+---- test_hash_map_with_view_fails stdout ----
+error[E0432]: unresolved import `vstd::hash_map`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_with_view_fails/test.rs:14:11
+   |
+14 | use vstd::hash_map::HashMapWithView;
+   |           ^^^^^^^^ could not find `hash_map` in `vstd`
+
+
+error: aborting due to 1 previous error
+
+
+For more information about this error, try `rustc --explain E0432`.
+
+the input directory is /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_with_view_fails
+rerun this test with:
+vargo run -p rust_verify -- --crate-type=lib  /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_with_view_fails/test.rs
+
+thread 'test_hash_map_with_view_fails' panicked at rust_verify_test/tests/common/mod.rs:470:5:
+assertion failed: relevant_error_span(&err.errors[0].spans).text.iter().find(|x|
+            x.text.contains("FAILS")).is_some()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- test_hash_map stdout ----
+error[E0433]: failed to resolve: could not find `hash` in `std_specs`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map/test.rs:17:36
+   |
+17 |     broadcast use vstd::std_specs::hash::group_hash_axioms;
+   |                                    ^^^^ could not find `hash` in `std_specs`
+
+
+error: aborting due to 1 previous error
+
+
+For more information about this error, try `rustc --explain E0433`.
+
+the input directory is /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map
+rerun this test with:
+vargo run -p rust_verify -- --crate-type=lib  /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map/test.rs
+
+thread 'test_hash_map' panicked at rust_verify_test/tests/hash.rs:30:1:
+Err(_) does not match $result
+
+---- test_string_hash_map stdout ----
+error[E0432]: unresolved import `vstd::hash_map`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_string_hash_map/test.rs:13:11
+   |
+13 | use vstd::hash_map::StringHashMap;
+   |           ^^^^^^^^ could not find `hash_map` in `vstd`
+
+
+error[E0433]: failed to resolve: could not find `hash_map` in `vstd`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_string_hash_map/test.rs:34:15
+   |
+34 |         vstd::hash_map::axiom_string_hash_map_spec_len(&m);
+   |               ^^^^^^^^ could not find `hash_map` in `vstd`
+
+
+error: aborting due to 2 previous errors
+
+
+Some errors have detailed explanations: E0432, E0433.
+
+For more information about an error, try `rustc --explain E0432`.
+
+the input directory is /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_string_hash_map
+rerun this test with:
+vargo run -p rust_verify -- --crate-type=lib  /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_string_hash_map/test.rs
+
+thread 'test_string_hash_map' panicked at rust_verify_test/tests/hash.rs:324:1:
+Err(_) does not match $result
+
+---- test_hash_map_box stdout ----
+error[E0433]: failed to resolve: could not find `hash` in `std_specs`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_box/test.rs:18:36
+   |
+18 |     broadcast use vstd::std_specs::hash::group_hash_axioms;
+   |                                    ^^^^ could not find `hash` in `std_specs`
+
+
+error: aborting due to 1 previous error
+
+
+For more information about this error, try `rustc --explain E0433`.
+
+the input directory is /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_box
+rerun this test with:
+vargo run -p rust_verify -- --crate-type=lib  /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_box/test.rs
+
+thread 'test_hash_map_box' panicked at rust_verify_test/tests/hash.rs:68:1:
+Err(_) does not match $result
+
+---- test_hash_map_struct_fails stdout ----
+error[E0433]: failed to resolve: could not find `hash` in `std_specs`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_struct_fails/test.rs:38:36
+   |
+38 |     broadcast use vstd::std_specs::hash::group_hash_axioms;
+   |                                    ^^^^ could not find `hash` in `std_specs`
+
+
+error: aborting due to 1 previous error
+
+
+For more information about this error, try `rustc --explain E0433`.
+
+the input directory is /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_struct_fails
+rerun this test with:
+vargo run -p rust_verify -- --crate-type=lib  /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_struct_fails/test.rs
+
+thread 'test_hash_map_struct_fails' panicked at rust_verify_test/tests/common/mod.rs:470:5:
+assertion failed: relevant_error_span(&err.errors[0].spans).text.iter().find(|x|
+            x.text.contains("FAILS")).is_some()
+
+---- test_hash_map_with_view stdout ----
+error[E0432]: unresolved import `vstd::hash_map`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_with_view/test.rs:14:11
+   |
+14 | use vstd::hash_map::HashMapWithView;
+   |           ^^^^^^^^ could not find `hash_map` in `vstd`
+
+
+error[E0433]: failed to resolve: could not find `hash` in `std_specs`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_with_view/test.rs:47:29
+   |
+47 |     assume(vstd::std_specs::hash::obeys_key_model::<MyStruct>());
+   |                             ^^^^ could not find `hash` in `std_specs`
+
+
+error[E0433]: failed to resolve: could not find `hash_map` in `vstd`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_with_view/test.rs:63:15
+   |
+63 |         vstd::hash_map::axiom_hash_map_with_view_spec_len(&m);
+   |               ^^^^^^^^ could not find `hash_map` in `vstd`
+
+
+error: aborting due to 3 previous errors
+
+
+Some errors have detailed explanations: E0432, E0433.
+
+For more information about an error, try `rustc --explain E0432`.
+
+the input directory is /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_with_view
+rerun this test with:
+vargo run -p rust_verify -- --crate-type=lib  /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_with_view/test.rs
+
+thread 'test_hash_map_with_view' panicked at rust_verify_test/tests/hash.rs:200:1:
+Err(_) does not match $result
+
+---- test_hash_map_struct stdout ----
+error[E0433]: failed to resolve: could not find `hash` in `std_specs`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_struct/test.rs:38:36
+   |
+38 |     broadcast use vstd::std_specs::hash::group_hash_axioms;
+   |                                    ^^^^ could not find `hash` in `std_specs`
+
+
+error[E0433]: failed to resolve: could not find `hash` in `std_specs`
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_struct/test.rs:39:29
+   |
+39 |     assume(vstd::std_specs::hash::obeys_key_model::<MyStruct>());
+   |                             ^^^^ could not find `hash` in `std_specs`
+
+
+error: aborting due to 2 previous errors
+
+
+For more information about this error, try `rustc --explain E0433`.
+
+the input directory is /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_struct
+rerun this test with:
+vargo run -p rust_verify -- --crate-type=lib  /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_hash_map_struct/test.rs
+
+thread 'test_hash_map_struct' panicked at rust_verify_test/tests/hash.rs:104:1:
+Err(_) does not match $result
+
+---- test_default_hasher stdout ----
+error[E0599]: no method named `view` found for struct `std::hash::DefaultHasher` in the current scope
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_default_hasher/test.rs:20:14
+   |
+20 |     assert(h1@ == Seq::<Seq<u8>>::empty());
+   |              ^ method not found in `DefaultHasher`
+
+
+error[E0599]: no method named `view` found for struct `std::hash::DefaultHasher` in the current scope
+  --> /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_default_hasher/test.rs:27:14
+   |
+27 |     assert(h1@ == seq![seq![1u8, 2u8], seq![3u8, 4u8]]);
+   |              ^ method not found in `DefaultHasher`
+
+
+error: aborting due to 2 previous errors
+
+
+For more information about this error, try `rustc --explain E0599`.
+
+the input directory is /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_default_hasher
+rerun this test with:
+vargo run -p rust_verify -- --crate-type=lib  /workspace/repo/source/target/debug/test_inputs/hash-0a5f3e15d87f8597-test_default_hasher/test.rs
+
+thread 'test_default_hasher' panicked at rust_verify_test/tests/hash.rs:6:1:
+Err(_) does not match $result
+
+
+failures:
+    test_default_hasher
+    test_hash_map
+    test_hash_map_box
+    test_hash_map_struct
+    test_hash_map_struct_fails
+    test_hash_map_with_view
+    test_hash_map_with_view_fails
+    test_string_hash_map
+
+test result: FAILED. 0 passed; 8 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.42s
+
+error: test failed, to rerun pass `-p rust_verify_test --test hash`
+reward=0 graded=8 found=8 failed=8 parsed=8 framework=cargo exit_code=101

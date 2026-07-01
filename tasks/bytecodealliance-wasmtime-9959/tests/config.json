@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --test disas -E 'test(i8x16_shuffle)'",
+  "test_files": [
+    "tests/disas/winch/x64/i8x16_shuffle/const_avx.wat",
+    "tests/misc_testsuite/winch/_simd_lane.wast"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) wasmtime-cli::disas ./tests/disas/winch/x64/i8x16_shuffle/const_avx.wat"
+  ],
+  "PASS_TO_PASS": []
+}

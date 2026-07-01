@@ -1,0 +1,23 @@
+{
+ "task": "tensorflow-quantum-545",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits expectation.py + sampled_expectation.py; F2P tests exercise noisy backend: test_static_cases_noisy, hybrid-model training convergence (test_dnn_qnn_dnn, test_simple_*), and error regexes assertRaisesRegex(...,'repetitions not provided'/'cannot be parsed'/'noiseless')"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

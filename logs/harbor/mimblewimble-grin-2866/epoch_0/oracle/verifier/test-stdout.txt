@@ -1,0 +1,314 @@
+patching file core/tests/consensus.rs
+   Compiling grin_util v1.1.0-beta.2 (/workspace/repo/util)
+   Compiling grin_keychain v1.1.0-beta.2 (/workspace/repo/keychain)
+warning: unnecessary trailing semicolon
+   --> keychain/src/extkey_bip32.rs:125:91
+    |
+125 |         self.hmac_sha512 = HmacSha512::new_varkey(seed).expect("HMAC can take key of any size");;
+    |                                                                                                 ^ help: remove this semicolon
+    |
+    = note: `#[warn(redundant_semicolons)]` on by default
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> keychain/src/extkey_bip32.rs:388:13
+    |
+388 |         let key = r#try!(ExtendedPrivKey::new_master(secp, &mut hasher, &seed));
+    |                   ^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: unnecessary braces around block return value
+  --> keychain/src/mnemonic.rs:28:38
+   |
+28 |     pub static ref WORDS: Vec<String> = { include_str!("wordlists/en.txt").split_whitespace().map(|s| s.into()).collect() };
+   |                                         ^^                                                                               ^^
+   |
+   = note: `#[warn(unused_braces)]` on by default
+help: remove these braces
+   |
+28 -     pub static ref WORDS: Vec<String> = { include_str!("wordlists/en.txt").split_whitespace().map(|s| s.into()).collect() };
+28 +     pub static ref WORDS: Vec<String> = include_str!("wordlists/en.txt").split_whitespace().map(|s| s.into()).collect();
+   |
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+  --> keychain/src/mnemonic.rs:75:30
+   |
+75 |     let mut indexes: Vec<u16> = r#try!(words.iter().map(|x| search(x)).collect());
+   |                                 ^^^^^
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> keychain/src/mnemonic.rs:158:2
+    |
+158 |     r#try!(to_entropy(mnemonic));
+    |     ^^^^^
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> keychain/src/types.rs:219:3
+    |
+219 |         r#try!(write!(f, "{}(", stringify!(Identifier)));
+    |         ^^^^^
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> keychain/src/types.rs:220:3
+    |
+220 |         r#try!(write!(f, "{}", self.to_hex()));
+    |         ^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> keychain/src/extkey_bip32.rs:338:41
+    |
+338 |             Error::Ecdsa(ref e) => error::Error::description(e),
+    |                                                  ^^^^^^^^^^^
+
+   Compiling grin_core v1.1.0-beta.2 (/workspace/repo/core)
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:78:9
+    |
+78  |     ( $(r#try!($rdr.$read_call($($val),*))),* )
+    |         ^^^^^
+    |
+   ::: core/src/core/block.rs:294:29
+    |
+294 |         let (height, timestamp) = ser_multiread!(reader, read_u64, read_i64);
+    |                                   ------------------------------------------ in this macro invocation
+    |
+    = note: `#[warn(deprecated)]` on by default
+    = note: this warning originates in the macro `ser_multiread` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:78:9
+    |
+78  |     ( $(r#try!($rdr.$read_call($($val),*))),* )
+    |         ^^^^^
+    |
+   ::: core/src/core/block.rs:301:44
+    |
+301 |         let (output_mmr_size, kernel_mmr_size) = ser_multiread!(reader, read_u64, read_u64);
+    |                                                  ------------------------------------------ in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiread` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |       $( r#try!($wrtr.$write_call($val)) );*
+    |          ^^^^^
+    |
+   ::: core/src/core/block.rs:339:3
+    |
+339 | /         ser_multiwrite!(
+340 | |             writer,
+341 | |             [write_u64, self.height],
+342 | |             [write_i64, self.timestamp.timestamp()],
+...   |
+350 | |             [write_u64, self.kernel_mmr_size]
+351 | |         );
+    | |_________- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: trailing semicolon in macro used in expression position
+   --> core/src/macros.rs:23:48
+    |
+23  |         $thing.iter().map($mapfn).collect::<Vec<_>>();
+    |                                                      ^
+    |
+   ::: core/src/core/block.rs:748:21
+    |
+748 |                 secp.commit_sum(map_vec!(cb_outs, |x| x.commitment()), vec![over_commit])?;
+    |                                 ------------------------------------- in this macro invocation
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #79813 <https://github.com/rust-lang/rust/issues/79813>
+    = note: `#[warn(semicolon_in_expressions_from_macros)]` on by default
+    = note: this warning originates in the macro `map_vec` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unnecessary parentheses around type
+   --> core/src/core/committed.rs:128:14
+    |
+128 |     ) -> Result<((Commitment, Commitment)), Error> {
+    |                 ^                        ^
+    |
+    = note: `#[warn(unused_parens)]` on by default
+help: remove these parentheses
+    |
+128 -     ) -> Result<((Commitment, Commitment)), Error> {
+128 +     ) -> Result<(Commitment, Commitment), Error> {
+    |
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+  --> core/src/macros.rs:78:9
+   |
+78 |     ( $(r#try!($rdr.$read_call($($val),*))),* )
+   |         ^^^^^
+   |
+  ::: core/src/core/compact_block.rs:88:4
+   |
+88 |             ser_multiread!(reader, read_u64, read_u64, read_u64);
+   |             ---------------------------------------------------- in this macro invocation
+   |
+   = note: this warning originates in the macro `ser_multiread` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |       $( r#try!($wrtr.$write_call($val)) );*
+    |          ^^^^^
+    |
+   ::: core/src/core/compact_block.rs:104:3
+    |
+104 | /         ser_multiwrite!(
+105 | |             writer,
+106 | |             [write_u64, self.out_full.len() as u64],
+107 | |             [write_u64, self.kern_full.len() as u64],
+108 | |             [write_u64, self.kern_ids.len() as u64]
+109 | |         );
+    | |_________- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |     $( r#try!($wrtr.$write_call($val)) );*
+    |        ^^^^^
+    |
+   ::: core/src/core/transaction.rs:196:3
+    |
+196 |         ser_multiwrite!(writer, [write_u64, self.fee], [write_u64, self.lock_height]);
+    |         ----------------------------------------------------------------------------- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |       $( r#try!($wrtr.$write_call($val)) );*
+    |          ^^^^^
+    |
+   ::: core/src/core/transaction.rs:419:3
+    |
+419 | /         ser_multiwrite!(
+420 | |             writer,
+421 | |             [write_u64, self.inputs.len() as u64],
+422 | |             [write_u64, self.outputs.len() as u64],
+423 | |             [write_u64, self.kernels.len() as u64]
+424 | |         );
+    | |_________- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:78:9
+    |
+78  |     ( $(r#try!($rdr.$read_call($($val),*))),* )
+    |         ^^^^^
+    |
+   ::: core/src/core/transaction.rs:439:4
+    |
+439 |             ser_multiread!(reader, read_u64, read_u64, read_u64);
+    |             ---------------------------------------------------- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiread` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: trailing semicolon in macro used in expression position
+   --> core/src/macros.rs:23:48
+    |
+23  |         $thing.iter().map($mapfn).collect::<Vec<_>>();
+    |                                                      ^
+    |
+   ::: core/src/pow/cuckatoo.rs:267:15
+    |
+267 |             s.nonces = map_vec!(s.nonces, |n| val[*n as usize]);
+    |                        ---------------------------------------- in this macro invocation
+    |
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #79813 <https://github.com/rust-lang/rust/issues/79813>
+    = note: this warning originates in the macro `map_vec` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated macro `r#try`: use the `?` operator instead
+   --> core/src/macros.rs:92:8
+    |
+92  |       $( r#try!($wrtr.$write_call($val)) );*
+    |          ^^^^^
+    |
+   ::: core/src/pow/types.rs:271:3
+    |
+271 | /         ser_multiwrite!(
+272 | |             writer,
+273 | |             [write_u64, self.total_difficulty.to_num()],
+274 | |             [write_u32, self.secondary_scaling]
+275 | |         );
+    | |_________- in this macro invocation
+    |
+    = note: this warning originates in the macro `ser_multiwrite` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `grin_keychain` (lib) generated 8 warnings (run `cargo fix --lib -p grin_keychain` to apply 1 suggestion)
+warning: trait objects without an explicit `dyn` are deprecated
+   --> core/src/core/block.rs:124:23
+    |
+124 |     fn read(reader: &mut Reader) -> Result<HeaderEntry, ser::Error> {
+    |                          ^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+    = note: `#[warn(bare_trait_objects)]` on by default
+help: use `dyn`
+    |
+124 |     fn read(reader: &mut dyn Reader) -> Result<HeaderEntry, ser::Error> {
+    |                          +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> core/src/core/pmmr/backend.rs:56:33
+   |
+56 |     fn leaf_pos_iter(&self) -> Box<Iterator<Item = u64> + '_>;
+   |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+56 |     fn leaf_pos_iter(&self) -> Box<dyn Iterator<Item = u64> + '_>;
+   |                                    +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+  --> core/src/core/pmmr/rewindable_pmmr.rs:53:31
+   |
+53 |     pub fn backend(&'a self) -> &Backend<T> {
+   |                                  ^^^^^^^^^^
+   |
+   = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+   |
+53 |     pub fn backend(&'a self) -> &dyn Backend<T> {
+   |                                  +++
+
+warning: trait objects without an explicit `dyn` are deprecated
+   --> core/src/core/transaction.rs:341:23
+    |
+341 |     fn read(reader: &mut Reader) -> Result<TxKernelEntry, ser::Error> {
+    |                          ^^^^^^
+    |
+    = warning: this is accepted in the current edition (Rust 2018) but is a hard error in Rust 2021!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/warnings-promoted-to-error.html>
+help: use `dyn`
+    |
+341 |     fn read(reader: &mut dyn Reader) -> Result<TxKernelEntry, ser::Error> {
+    |                          +++
+
+warning: `grin_core` (lib) generated 16 warnings (run `cargo fix --lib -p grin_core` to apply 5 suggestions)
+    Finished test [unoptimized + debuginfo] target(s) in 4.86s
+warning: the following packages contain code that will be rejected by a future version of Rust: grin_core v1.1.0-beta.2 (/workspace/repo/core), grin_secp256k1zkp v0.7.5, nom v3.2.1, rustc-serialize v0.3.24, traitobject v0.1.0
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 2`
+------------
+ Nextest run ID 54893681-959b-4478-9282-355f411fbe8a with nextest profile: default
+    Starting 5 tests across 1 binary
+        PASS [   0.061s] grin_core::consensus hard_forks
+        PASS [   0.064s] grin_core::consensus next_target_adjustment
+        PASS [   0.058s] grin_core::consensus test_secondary_pow_scale
+        PASS [   0.063s] grin_core::consensus test_secondary_pow_ratio
+        PASS [   0.268s] grin_core::consensus adjustment_scenarios
+------------
+     Summary [   0.268s] 5 tests run: 5 passed, 0 skipped
+reward=1 graded=5 found=5 failed=0 parsed=5 framework=cargo exit_code=0

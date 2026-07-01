@@ -1,0 +1,23 @@
+patching file internal/tiltfile/tiltfile_docker_compose_test.go
+patching file internal/tiltfile/tiltfile_test.go
+patching file internal/tiltfile/value/label_test.go
+patching file pkg/model/manifest_test.go
+# github.com/tilt-dev/tilt/internal/tiltfile/value [github.com/tilt-dev/tilt/internal/tiltfile/value.test]
+internal/tiltfile/value/label_test.go:11:7: undefined: LabelSet
+internal/tiltfile/value/label_test.go:15:14: undefined: LabelSet
+internal/tiltfile/value/label_test.go:21:7: undefined: LabelSet
+internal/tiltfile/value/label_test.go:25:14: undefined: LabelSet
+internal/tiltfile/value/label_test.go:30:7: undefined: LabelSet
+internal/tiltfile/value/label_test.go:39:7: undefined: LabelSet
+internal/tiltfile/value/label_test.go:47:7: undefined: LabelSet
+internal/tiltfile/value/label_test.go:56:7: undefined: LabelSet
+internal/tiltfile/value/label_test.go:60:14: undefined: LabelSet
+# github.com/tilt-dev/tilt/pkg/model [github.com/tilt-dev/tilt/pkg/model.test]
+pkg/model/manifest_test.go:226:13: Manifest{}.WithLabels undefined (type Manifest has no field or method WithLabels)
+pkg/model/manifest_test.go:227:13: Manifest{}.WithLabels undefined (type Manifest has no field or method WithLabels)
+# github.com/tilt-dev/tilt/internal/tiltfile [github.com/tilt-dev/tilt/internal/tiltfile.test]
+internal/tiltfile/tiltfile_test.go:6199:35: m.Labels undefined (type model.Manifest has no field or method Labels)
+FAIL	github.com/tilt-dev/tilt/internal/tiltfile [build failed]
+FAIL	github.com/tilt-dev/tilt/internal/tiltfile/value [build failed]
+FAIL	github.com/tilt-dev/tilt/pkg/model [build failed]
+reward=0 graded=620 found=620 failed=620 parsed=3 framework=go exit_code=2

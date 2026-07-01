@@ -1,0 +1,6 @@
+patching file internal/ci/vulnerability_result_diff_test.go
+# github.com/google/osv-scanner/internal/ci_test [github.com/google/osv-scanner/internal/ci.test]
+internal/ci/vulnerability_result_diff_test.go:129:14: undefined: ci.DiffVulnerabilityResultsByOccurrences
+internal/ci/vulnerability_result_diff_test.go:130:38: cannot infer V (/workspace/repo/internal/testutility/utility.go:30:29)
+FAIL	github.com/google/osv-scanner/internal/ci [build failed]
+reward=0 graded=12 found=12 failed=12 parsed=1 framework=go exit_code=1

@@ -1,0 +1,1336 @@
+patching file .github/unittest/linux_libs/scripts_chess/environment.yml
+patching file .github/unittest/linux_libs/scripts_chess/install.sh
+patching file .github/unittest/linux_libs/scripts_chess/post_process.sh
+patching file .github/unittest/linux_libs/scripts_chess/run-clang-format.py
+patching file .github/unittest/linux_libs/scripts_chess/run_test.sh
+patching file .github/unittest/linux_libs/scripts_chess/setup_env.sh
+patching file test/test_env.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: instafail-0.5.0
+collecting ... collected 1584 items / 1554 deselected / 30 selected
+
+test/test_env.py::TestChessEnv::test_env[False] PASSED                   [  3%]
+test/test_env.py::TestChessEnv::test_env[True] PASSED                    [  6%]
+test/test_env.py::TestChessEnv::test_rollout[False] PASSED               [ 10%]
+test/test_env.py::TestChessEnv::test_rollout[True] PASSED                [ 13%]
+test/test_env.py::TestChessEnv::test_reset_white_to_move[False] FAILED   [ 16%]
+test/test_env.py::TestChessEnv::test_reset_white_to_move[True] FAILED    [ 20%]
+test/test_env.py::TestChessEnv::test_reset_black_to_move[False] FAILED   [ 23%]
+test/test_env.py::TestChessEnv::test_reset_black_to_move[True] FAILED    [ 26%]
+test/test_env.py::TestChessEnv::test_reset_done_error[False] FAILED      [ 30%]
+test/test_env.py::TestChessEnv::test_reset_done_error[True] FAILED       [ 33%]
+test/test_env.py::TestChessEnv::test_reward[white win-False-False] FAILED [ 36%]
+test/test_env.py::TestChessEnv::test_reward[white win-False-True] FAILED [ 40%]
+test/test_env.py::TestChessEnv::test_reward[white win-True-False] FAILED [ 43%]
+test/test_env.py::TestChessEnv::test_reward[white win-True-True] PASSED  [ 46%]
+test/test_env.py::TestChessEnv::test_reward[black win-False-False] FAILED [ 50%]
+test/test_env.py::TestChessEnv::test_reward[black win-False-True] FAILED [ 53%]
+test/test_env.py::TestChessEnv::test_reward[black win-True-False] FAILED [ 56%]
+test/test_env.py::TestChessEnv::test_reward[black win-True-True] PASSED  [ 60%]
+test/test_env.py::TestChessEnv::test_reward[stalemate-False-False] FAILED [ 63%]
+test/test_env.py::TestChessEnv::test_reward[stalemate-False-True] FAILED [ 66%]
+test/test_env.py::TestChessEnv::test_reward[stalemate-True-False] FAILED [ 70%]
+test/test_env.py::TestChessEnv::test_reward[stalemate-True-True] PASSED  [ 73%]
+test/test_env.py::TestChessEnv::test_reward[50 move-False-False] FAILED  [ 76%]
+test/test_env.py::TestChessEnv::test_reward[50 move-False-True] FAILED   [ 80%]
+test/test_env.py::TestChessEnv::test_reward[50 move-True-False] FAILED   [ 83%]
+test/test_env.py::TestChessEnv::test_reward[50 move-True-True] PASSED    [ 86%]
+test/test_env.py::TestChessEnv::test_reward[insufficient-False-False] FAILED [ 90%]
+test/test_env.py::TestChessEnv::test_reward[insufficient-False-True] FAILED [ 93%]
+test/test_env.py::TestChessEnv::test_reward[insufficient-True-False] FAILED [ 96%]
+test/test_env.py::TestChessEnv::test_reward[insufficient-True-True] PASSED [100%]
+
+=================================== FAILURES ===================================
+_________________ TestChessEnv.test_reset_white_to_move[False] _________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3403, in test_reset_white_to_move
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+_________________ TestChessEnv.test_reset_white_to_move[True] __________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3403, in test_reset_white_to_move
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+_________________ TestChessEnv.test_reset_black_to_move[False] _________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3411, in test_reset_black_to_move
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+_________________ TestChessEnv.test_reset_black_to_move[True] __________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3411, in test_reset_black_to_move
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+__________________ TestChessEnv.test_reset_done_error[False] ___________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3420, in test_reset_done_error
+    env.reset(TensorDict({"fen": fen}))
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+___________________ TestChessEnv.test_reset_done_error[True] ___________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3420, in test_reset_done_error
+    env.reset(TensorDict({"fen": fen}))
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+_______________ TestChessEnv.test_reward[white win-False-False] ________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+________________ TestChessEnv.test_reward[white win-False-True] ________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+________________ TestChessEnv.test_reward[white win-True-False] ________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3486, in test_reward
+    moves = env.get_legal_moves(None if stateful else td)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1967, in __getattr__
+    raise AttributeError(
+AttributeError: 'ChessEnv' object has no attribute 'get_legal_moves'
+_______________ TestChessEnv.test_reward[black win-False-False] ________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+________________ TestChessEnv.test_reward[black win-False-True] ________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+________________ TestChessEnv.test_reward[black win-True-False] ________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3486, in test_reward
+    moves = env.get_legal_moves(None if stateful else td)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1967, in __getattr__
+    raise AttributeError(
+AttributeError: 'ChessEnv' object has no attribute 'get_legal_moves'
+_______________ TestChessEnv.test_reward[stalemate-False-False] ________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+________________ TestChessEnv.test_reward[stalemate-False-True] ________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+________________ TestChessEnv.test_reward[stalemate-True-False] ________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3486, in test_reward
+    moves = env.get_legal_moves(None if stateful else td)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1967, in __getattr__
+    raise AttributeError(
+AttributeError: 'ChessEnv' object has no attribute 'get_legal_moves'
+________________ TestChessEnv.test_reward[50 move-False-False] _________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+_________________ TestChessEnv.test_reward[50 move-False-True] _________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+_________________ TestChessEnv.test_reward[50 move-True-False] _________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3486, in test_reward
+    moves = env.get_legal_moves(None if stateful else td)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1967, in __getattr__
+    raise AttributeError(
+AttributeError: 'ChessEnv' object has no attribute 'get_legal_moves'
+______________ TestChessEnv.test_reward[insufficient-False-False] ______________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+______________ TestChessEnv.test_reward[insufficient-False-True] _______________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3483, in test_reward
+    td = env.reset(TensorDict({"fen": fen}))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/common.py", line 2512, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/torchrl/envs/custom/chess.py", line 144, in _reset
+    hashing = hash(fen)
+              ^^^^^^^^^
+TypeError: unhashable type: 'NonTensorData'
+______________ TestChessEnv.test_reward[insufficient-True-False] _______________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
+    yield
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
+    teardown.throw(exception)
+  File "/usr/local/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
+    return (yield)
+            ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
+    item.runtest()
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
+    raise exception
+  File "/usr/local/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/test/test_env.py", line 3486, in test_reward
+    moves = env.get_legal_moves(None if stateful else td)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1967, in __getattr__
+    raise AttributeError(
+AttributeError: 'ChessEnv' object has no attribute 'get_legal_moves'
+=============================== warnings summary ===============================
+test/test_env.py:1092
+  /workspace/repo/test/test_env.py:1092: PytestUnknownMarkWarning: Unknown pytest.mark.flaky - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.flaky(reruns=3, reruns_delay=1)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test/test_env.py::TestChessEnv::test_reset_white_to_move[False] - Type...
+FAILED test/test_env.py::TestChessEnv::test_reset_white_to_move[True] - TypeE...
+FAILED test/test_env.py::TestChessEnv::test_reset_black_to_move[False] - Type...
+FAILED test/test_env.py::TestChessEnv::test_reset_black_to_move[True] - TypeE...
+FAILED test/test_env.py::TestChessEnv::test_reset_done_error[False] - TypeErr...
+FAILED test/test_env.py::TestChessEnv::test_reset_done_error[True] - TypeErro...
+FAILED test/test_env.py::TestChessEnv::test_reward[white win-False-False] - T...
+FAILED test/test_env.py::TestChessEnv::test_reward[white win-False-True] - Ty...
+FAILED test/test_env.py::TestChessEnv::test_reward[white win-True-False] - At...
+FAILED test/test_env.py::TestChessEnv::test_reward[black win-False-False] - T...
+FAILED test/test_env.py::TestChessEnv::test_reward[black win-False-True] - Ty...
+FAILED test/test_env.py::TestChessEnv::test_reward[black win-True-False] - At...
+FAILED test/test_env.py::TestChessEnv::test_reward[stalemate-False-False] - T...
+FAILED test/test_env.py::TestChessEnv::test_reward[stalemate-False-True] - Ty...
+FAILED test/test_env.py::TestChessEnv::test_reward[stalemate-True-False] - At...
+FAILED test/test_env.py::TestChessEnv::test_reward[50 move-False-False] - Typ...
+FAILED test/test_env.py::TestChessEnv::test_reward[50 move-False-True] - Type...
+FAILED test/test_env.py::TestChessEnv::test_reward[50 move-True-False] - Attr...
+FAILED test/test_env.py::TestChessEnv::test_reward[insufficient-False-False]
+FAILED test/test_env.py::TestChessEnv::test_reward[insufficient-False-True]
+FAILED test/test_env.py::TestChessEnv::test_reward[insufficient-True-False]
+=========== 21 failed, 9 passed, 1554 deselected, 1 warning in 6.58s ===========
+reward=0 graded=30 found=0 failed=0 parsed=1563 framework=pytest exit_code=1

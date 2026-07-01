@@ -1,0 +1,3 @@
+patching file pkg/dynamicrp/backend/controller/dynamicresource.go
+patching file pkg/dynamicrp/backend/processor/dynamicresource.go
+patching file pkg/schema/validator.go

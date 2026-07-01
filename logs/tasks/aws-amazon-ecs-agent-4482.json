@@ -1,0 +1,23 @@
+{
+ "task": "aws-amazon-ecs-agent-4482",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden (881 LoC/11 files) adds standalone ecs-agent/introspection server package with configurable timeouts/pprof, typed errors mapped to 404/500/400, panic->500 crash metric, and plain-text helper; 104 F2P go unit tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 24,
+  "shallow": true
+ }
+}

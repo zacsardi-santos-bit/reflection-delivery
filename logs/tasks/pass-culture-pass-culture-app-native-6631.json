@@ -1,0 +1,23 @@
+{
+ "task": "pass-culture-pass-culture-app-native-6631",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden errors.ts adds 'export enum LogTypeEnum { INFO=info, ...IGNORED=ignored }'; new hook 'export const useLogTypeFromRemoteConfig = () => ... shouldLogInfo ? LogTypeEnum.INFO : LogTypeEnum.IGNORED'; getEmailUpdateStatus({ logType })"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 17,
+  "shallow": true
+ }
+}

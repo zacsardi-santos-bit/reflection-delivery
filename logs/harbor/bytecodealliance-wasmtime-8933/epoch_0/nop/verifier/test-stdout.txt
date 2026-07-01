@@ -1,0 +1,664 @@
+patching file tests/all/main.rs
+patching file tests/all/structs.rs
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.111.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+   Compiling wasmtime-cli v24.0.0 (/workspace/repo)
+error[E0412]: cannot find type `StructRef` in this scope
+   --> tests/all/structs.rs:449:44
+    |
+449 |         |mut caller: Caller<()>, s: Rooted<StructRef>| -> Result<Rooted<StructRef>> {
+    |                                            ^^^^^^^^^ not found in this scope
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+449 |         |mut caller: Caller<()>, s: Rooted<wasmtime_environ::VMGcKind>| -> Result<Rooted<StructRef>> {
+    |                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+help: you might be missing a type parameter
+    |
+426 | fn passing_structs_through_wasm_with_typed_calls<StructRef>() -> Result<()> {
+    |                                                 +++++++++++
+
+error[E0412]: cannot find type `StructRef` in this scope
+   --> tests/all/structs.rs:449:73
+    |
+449 |         |mut caller: Caller<()>, s: Rooted<StructRef>| -> Result<Rooted<StructRef>> {
+    |                                                                         ^^^^^^^^^ not found in this scope
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+449 |         |mut caller: Caller<()>, s: Rooted<StructRef>| -> Result<Rooted<wasmtime_environ::VMGcKind>> {
+    |                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+help: you might be missing a type parameter
+    |
+426 | fn passing_structs_through_wasm_with_typed_calls<StructRef>() -> Result<()> {
+    |                                                 +++++++++++
+
+error[E0412]: cannot find type `StructRef` in this scope
+   --> tests/all/structs.rs:456:48
+    |
+456 |     let run = instance.get_typed_func::<Rooted<StructRef>, Rooted<StructRef>>(&mut store, "run")?;
+    |                                                ^^^^^^^^^ not found in this scope
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+456 |     let run = instance.get_typed_func::<Rooted<wasmtime_environ::VMGcKind>, Rooted<StructRef>>(&mut store, "run")?;
+    |                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~
+help: you might be missing a type parameter
+    |
+426 | fn passing_structs_through_wasm_with_typed_calls<StructRef>() -> Result<()> {
+    |                                                 +++++++++++
+
+error[E0412]: cannot find type `StructRef` in this scope
+   --> tests/all/structs.rs:456:67
+    |
+456 |     let run = instance.get_typed_func::<Rooted<StructRef>, Rooted<StructRef>>(&mut store, "run")?;
+    |                                                                   ^^^^^^^^^ not found in this scope
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+456 |     let run = instance.get_typed_func::<Rooted<StructRef>, Rooted<wasmtime_environ::VMGcKind>>(&mut store, "run")?;
+    |                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+help: you might be missing a type parameter
+    |
+426 | fn passing_structs_through_wasm_with_typed_calls<StructRef>() -> Result<()> {
+    |                                                 +++++++++++
+
+error[E0412]: cannot find type `StructRef` in this scope
+   --> tests/all/structs.rs:506:57
+    |
+506 |     let f = instance.get_typed_func::<(), Option<Rooted<StructRef>>>(&mut store, "f")?;
+    |                                                         ^^^^^^^^^ not found in this scope
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+506 |     let f = instance.get_typed_func::<(), Option<Rooted<wasmtime_environ::VMGcKind>>>(&mut store, "f")?;
+    |                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+help: you might be missing a type parameter
+    |
+471 | fn host_sets_struct_global<StructRef>() -> Result<()> {
+    |                           +++++++++++
+
+error[E0412]: cannot find type `StructRef` in this scope
+   --> tests/all/structs.rs:556:57
+    |
+556 |     let f = instance.get_typed_func::<(), Option<Rooted<StructRef>>>(&mut store, "get")?;
+    |                                                         ^^^^^^^^^ not found in this scope
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+556 |     let f = instance.get_typed_func::<(), Option<Rooted<wasmtime_environ::VMGcKind>>>(&mut store, "get")?;
+    |                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+help: you might be missing a type parameter
+    |
+516 | fn wasm_sets_struct_global<StructRef>() -> Result<()> {
+    |                           +++++++++++
+
+error[E0412]: cannot find type `StructRef` in this scope
+   --> tests/all/structs.rs:602:57
+    |
+602 |     let f = instance.get_typed_func::<(), Option<Rooted<StructRef>>>(&mut store, "f")?;
+    |                                                         ^^^^^^^^^ not found in this scope
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+602 |     let f = instance.get_typed_func::<(), Option<Rooted<wasmtime_environ::VMGcKind>>>(&mut store, "f")?;
+    |                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+help: you might be missing a type parameter
+    |
+566 | fn host_sets_struct_in_table<StructRef>() -> Result<()> {
+    |                             +++++++++++
+
+error[E0412]: cannot find type `StructRef` in this scope
+   --> tests/all/structs.rs:654:57
+    |
+654 |     let f = instance.get_typed_func::<(), Option<Rooted<StructRef>>>(&mut store, "get")?;
+    |                                                         ^^^^^^^^^ not found in this scope
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+654 |     let f = instance.get_typed_func::<(), Option<Rooted<wasmtime_environ::VMGcKind>>>(&mut store, "get")?;
+    |                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+help: you might be missing a type parameter
+    |
+612 | fn wasm_sets_struct_in_table<StructRef>() -> Result<()> {
+    |                             +++++++++++
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+  --> tests/all/structs.rs:18:15
+   |
+18 |     let pre = StructRefPre::new(&mut store, struct_ty);
+   |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+  --> tests/all/structs.rs:19:5
+   |
+19 |     StructRef::new(store, &pre, &[])?;
+   |     ^^^^^^^^^ use of undeclared type `StructRef`
+   |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+   |
+19 |     wasmtime_environ::VMGcKind(store, &pre, &[])?;
+   |     ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+  --> tests/all/structs.rs:34:15
+   |
+34 |     let pre = StructRefPre::new(&mut store, struct_ty);
+   |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+  --> tests/all/structs.rs:35:5
+   |
+35 |     StructRef::new(
+   |     ^^^^^^^^^ use of undeclared type `StructRef`
+   |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+   |
+35 |     wasmtime_environ::VMGcKind(
+   |     ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+  --> tests/all/structs.rs:59:15
+   |
+59 |     let pre = StructRefPre::new(&mut store, struct_ty);
+   |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+  --> tests/all/structs.rs:60:13
+   |
+60 |     assert!(StructRef::new(store, &pre, &[anyref.into()]).is_err());
+   |             ^^^^^^^^^ use of undeclared type `StructRef`
+   |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+   |
+60 |     assert!(wasmtime_environ::VMGcKind(store, &pre, &[anyref.into()]).is_err());
+   |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+  --> tests/all/structs.rs:80:15
+   |
+80 |     let pre = StructRefPre::new(&mut store, struct_ty);
+   |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+  --> tests/all/structs.rs:83:13
+   |
+83 |     let _ = StructRef::new(store, &pre, &[anyref.into()]);
+   |             ^^^^^^^^^ use of undeclared type `StructRef`
+   |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+   |
+83 |     let _ = wasmtime_environ::VMGcKind(store, &pre, &[anyref.into()]);
+   |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+  --> tests/all/structs.rs:93:15
+   |
+93 |     let pre = StructRefPre::new(&mut other_store, struct_ty);
+   |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+  --> tests/all/structs.rs:96:13
+   |
+96 |     let _ = StructRef::new(&mut store, &pre, &[]);
+   |             ^^^^^^^^^ use of undeclared type `StructRef`
+   |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+   |
+96 |     let _ = wasmtime_environ::VMGcKind(&mut store, &pre, &[]);
+   |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:107:15
+    |
+107 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:108:14
+    |
+108 |     let s0 = StructRef::new(&mut store, &pre, &[Val::I32(42)])?;
+    |              ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+108 |     let s0 = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(42)])?;
+    |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0599]: no method named `is_struct` found for struct `wasmtime::Rooted<wasmtime::AnyRef>` in the current scope
+   --> tests/all/structs.rs:117:21
+    |
+117 |     assert!(!anyref.is_struct(&store)?);
+    |                     ^^^^^^^^^ method not found in `Rooted<AnyRef>`
+
+error[E0599]: no method named `as_struct` found for struct `wasmtime::Rooted<wasmtime::AnyRef>` in the current scope
+   --> tests/all/structs.rs:118:20
+    |
+118 |     assert!(anyref.as_struct(&store)?.is_none());
+    |                    ^^^^^^^^^ method not found in `Rooted<AnyRef>`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:133:15
+    |
+133 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:134:13
+    |
+134 |     let s = StructRef::new(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+134 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:150:15
+    |
+150 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:151:13
+    |
+151 |     let s = StructRef::new(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+151 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:166:15
+    |
+166 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:169:9
+    |
+169 |         StructRef::new(&mut scope, &pre, &[Val::I32(1234)])?
+    |         ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+169 |         wasmtime_environ::VMGcKind(&mut scope, &pre, &[Val::I32(1234)])?
+    |         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:186:15
+    |
+186 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:187:13
+    |
+187 |     let s = StructRef::new(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+187 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:204:15
+    |
+204 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:205:13
+    |
+205 |     let s = StructRef::new(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+205 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:220:15
+    |
+220 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:223:9
+    |
+223 |         StructRef::new(&mut scope, &pre, &[Val::I32(1234)])?
+    |         ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+223 |         wasmtime_environ::VMGcKind(&mut scope, &pre, &[Val::I32(1234)])?
+    |         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:240:15
+    |
+240 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:241:13
+    |
+241 |     let s = StructRef::new(&mut store, &pre, &[Val::null_any_ref()])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+241 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::null_any_ref()])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:261:15
+    |
+261 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:262:13
+    |
+262 |     let s = StructRef::new(&mut store, &pre, &[Val::null_extern_ref()])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+262 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::null_extern_ref()])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:281:15
+    |
+281 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:282:13
+    |
+282 |     let s = StructRef::new(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+282 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:297:15
+    |
+297 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:298:13
+    |
+298 |     let s = StructRef::new(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+298 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(1234)])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:307:15
+    |
+307 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:308:13
+    |
+308 |     let s = StructRef::new(&mut store, &pre, &[])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+308 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:317:15
+    |
+317 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:320:9
+    |
+320 |         StructRef::new(&mut scope, &pre, &[])?
+    |         ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+320 |         wasmtime_environ::VMGcKind(&mut scope, &pre, &[])?
+    |         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:331:15
+    |
+331 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:332:13
+    |
+332 |     let s = StructRef::new(&mut store, &pre, &[])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+332 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:349:15
+    |
+349 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:350:13
+    |
+350 |     let s = StructRef::new(&mut store, &pre, &[Val::I32(36), Val::null_any_ref()])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+350 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(36), Val::null_any_ref()])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:363:15
+    |
+363 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:366:9
+    |
+366 |         StructRef::new(&mut scope, &pre, &[])?
+    |         ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+366 |         wasmtime_environ::VMGcKind(&mut scope, &pre, &[])?
+    |         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0599]: no method named `unwrap_struct` found for reference `&wasmtime::Rooted<wasmtime::AnyRef>` in the current scope
+   --> tests/all/structs.rs:401:19
+    |
+401 |         let s = s.unwrap_struct(&mut caller)?;
+    |                   ^^^^^^^^^^^^^ method not found in `&Rooted<AnyRef>`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:410:15
+    |
+410 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:411:13
+    |
+411 |     let s = StructRef::new(&mut store, &pre, &[Val::I32(42)])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+411 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(42)])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0599]: no method named `unwrap_struct` found for reference `&wasmtime::Rooted<wasmtime::AnyRef>` in the current scope
+   --> tests/all/structs.rs:417:15
+    |
+417 |     let t = t.unwrap_struct(&mut store)?;
+    |               ^^^^^^^^^^^^^ method not found in `&Rooted<AnyRef>`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:458:15
+    |
+458 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:459:13
+    |
+459 |     let s = StructRef::new(&mut store, &pre, &[Val::I32(42)])?;
+    |             ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+459 |     let s = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(42)])?;
+    |             ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:494:15
+    |
+494 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:495:14
+    |
+495 |     let s0 = StructRef::new(&mut store, &pre, &[Val::I32(42)])?;
+    |              ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+495 |     let s0 = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(42)])?;
+    |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0599]: no method named `unwrap_struct` found for reference `&wasmtime::Rooted<wasmtime::AnyRef>` in the current scope
+   --> tests/all/structs.rs:501:21
+    |
+501 |     let s1 = anyref.unwrap_struct(&store)?;
+    |                     ^^^^^^^^^^^^^ method not found in `&Rooted<AnyRef>`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:540:15
+    |
+540 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:541:14
+    |
+541 |     let s0 = StructRef::new(&mut store, &pre, &[Val::I32(42)])?;
+    |              ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+541 |     let s0 = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(42)])?;
+    |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0599]: no method named `unwrap_struct` found for reference `&wasmtime::Rooted<wasmtime::AnyRef>` in the current scope
+   --> tests/all/structs.rs:551:21
+    |
+551 |     let s1 = anyref.unwrap_struct(&store)?;
+    |                     ^^^^^^^^^^^^^ method not found in `&Rooted<AnyRef>`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:590:15
+    |
+590 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:591:14
+    |
+591 |     let s0 = StructRef::new(&mut store, &pre, &[Val::I32(42)])?;
+    |              ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+591 |     let s0 = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(42)])?;
+    |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0599]: no method named `unwrap_struct` found for reference `&wasmtime::Rooted<wasmtime::AnyRef>` in the current scope
+   --> tests/all/structs.rs:597:21
+    |
+597 |     let s1 = anyref.unwrap_struct(&store)?;
+    |                     ^^^^^^^^^^^^^ method not found in `&Rooted<AnyRef>`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:638:15
+    |
+638 |     let pre = StructRefPre::new(&mut store, struct_ty.clone());
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:639:14
+    |
+639 |     let s0 = StructRef::new(&mut store, &pre, &[Val::I32(42)])?;
+    |              ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+639 |     let s0 = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(42)])?;
+    |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0599]: no method named `unwrap_struct` found for reference `&wasmtime::Rooted<wasmtime::AnyRef>` in the current scope
+   --> tests/all/structs.rs:649:21
+    |
+649 |     let s1 = anyref.unwrap_struct(&store)?;
+    |                     ^^^^^^^^^^^^^ method not found in `&Rooted<AnyRef>`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRefPre`
+   --> tests/all/structs.rs:697:15
+    |
+697 |     let pre = StructRefPre::new(&mut store, struct_ty);
+    |               ^^^^^^^^^^^^ use of undeclared type `StructRefPre`
+
+error[E0433]: failed to resolve: use of undeclared type `StructRef`
+   --> tests/all/structs.rs:698:14
+    |
+698 |     let s0 = StructRef::new(&mut store, &pre, &[Val::I32(42)])?;
+    |              ^^^^^^^^^ use of undeclared type `StructRef`
+    |
+help: there is an enum variant `wasmtime_environ::VMGcKind::StructRef`; try using the variant's enum
+    |
+698 |     let s0 = wasmtime_environ::VMGcKind(&mut store, &pre, &[Val::I32(42)])?;
+    |              ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0599]: no method named `unwrap_struct` found for reference `&wasmtime::Rooted<wasmtime::AnyRef>` in the current scope
+   --> tests/all/structs.rs:704:21
+    |
+704 |     let s1 = anyref.unwrap_struct(&store)?;
+    |                     ^^^^^^^^^^^^^ method not found in `&Rooted<AnyRef>`
+
+Some errors have detailed explanations: E0412, E0433, E0599.
+For more information about an error, try `rustc --explain E0412`.
+error: could not compile `wasmtime-cli` (test "all") due to 73 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.77.2-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics` exited with code 101
+reward=0 graded=28 found=0 failed=0 parsed=0 framework=cargo exit_code=101

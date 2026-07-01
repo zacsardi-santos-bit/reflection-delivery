@@ -1,0 +1,3 @@
+patching file src/cli/logic-function.js
+patching file src/cmd/logic-function.js
+patching file src/lib/logic-function.js

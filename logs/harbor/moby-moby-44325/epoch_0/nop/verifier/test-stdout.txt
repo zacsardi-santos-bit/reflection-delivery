@@ -1,0 +1,23 @@
+patching file builder/remotecontext/git/gitutils_test.go
+# github.com/docker/docker/builder/remotecontext/git [github.com/docker/docker/builder/remotecontext/git.test]
+builder/remotecontext/git/gitutils_test.go:165:22: gitRepo{}.gitWithinDir undefined (type gitRepo has no field or method gitWithinDir)
+builder/remotecontext/git/gitutils_test.go:239:7: not enough arguments in call to must
+	have (gitRepo)
+	want ([]byte, error)
+builder/remotecontext/git/gitutils_test.go:239:17: gitRepo{}.gitWithinDir undefined (type gitRepo has no field or method gitWithinDir)
+builder/remotecontext/git/gitutils_test.go:240:7: not enough arguments in call to must
+	have (gitRepo)
+	want ([]byte, error)
+builder/remotecontext/git/gitutils_test.go:240:17: gitRepo{}.gitWithinDir undefined (type gitRepo has no field or method gitWithinDir)
+builder/remotecontext/git/gitutils_test.go:241:7: not enough arguments in call to must
+	have (gitRepo)
+	want ([]byte, error)
+builder/remotecontext/git/gitutils_test.go:241:17: gitRepo{}.gitWithinDir undefined (type gitRepo has no field or method gitWithinDir)
+builder/remotecontext/git/gitutils_test.go:253:7: not enough arguments in call to must
+	have (gitRepo)
+	want ([]byte, error)
+builder/remotecontext/git/gitutils_test.go:253:17: gitRepo{}.gitWithinDir undefined (type gitRepo has no field or method gitWithinDir)
+builder/remotecontext/git/gitutils_test.go:254:17: gitRepo{}.gitWithinDir undefined (type gitRepo has no field or method gitWithinDir)
+builder/remotecontext/git/gitutils_test.go:254:17: too many errors
+FAIL	github.com/docker/docker/builder/remotecontext/git [build failed]
+reward=0 graded=30 found=30 failed=30 parsed=1 framework=go exit_code=1

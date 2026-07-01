@@ -1,0 +1,23 @@
+patching file multicluster/cmd/multicluster-controller/controller_test.go
+patching file pkg/apiserver/certificate/cacert_controller_test.go
+patching file pkg/apiserver/certificate/certificate_test.go
+patching file pkg/apiserver/certificate/selfsignedcert_provider_test.go
+patching file test/e2e/security_test.go
+# antrea.io/antrea/pkg/apiserver/certificate [antrea.io/antrea/pkg/apiserver/certificate.test]
+pkg/apiserver/certificate/selfsignedcert_provider_test.go:46:101: undefined: loopbackAddresses
+pkg/apiserver/certificate/selfsignedcert_provider_test.go:47:101: undefined: loopbackAddresses
+pkg/apiserver/certificate/selfsignedcert_provider_test.go:48:101: undefined: loopbackAddresses
+pkg/apiserver/certificate/selfsignedcert_provider_test.go:51:148: undefined: providerOption
+pkg/apiserver/certificate/selfsignedcert_provider_test.go:51:165: undefined: selfSignedCertProvider
+pkg/apiserver/certificate/cacert_controller_test.go:112:28: undefined: newSelfSignedCertProvider
+pkg/apiserver/certificate/cacert_controller_test.go:197:28: undefined: newSelfSignedCertProvider
+pkg/apiserver/certificate/cacert_controller_test.go:286:28: undefined: newSelfSignedCertProvider
+pkg/apiserver/certificate/cacert_controller_test.go:414:28: undefined: newSelfSignedCertProvider
+pkg/apiserver/certificate/cacert_controller_test.go:521:28: undefined: newSelfSignedCertProvider
+pkg/apiserver/certificate/cacert_controller_test.go:521:28: too many errors
+# antrea.io/antrea/multicluster/cmd/multicluster-controller [antrea.io/antrea/multicluster/cmd/multicluster-controller.test]
+multicluster/cmd/multicluster-controller/controller_test.go:73:5: unknown field MinValidDuration in struct literal of type certificate.CAConfig
+multicluster/cmd/multicluster-controller/controller_test.go:89:5: unknown field MinValidDuration in struct literal of type certificate.CAConfig
+FAIL	antrea.io/antrea/multicluster/cmd/multicluster-controller [build failed]
+FAIL	antrea.io/antrea/pkg/apiserver/certificate [build failed]
+reward=0 graded=87 found=87 failed=87 parsed=2 framework=go exit_code=1

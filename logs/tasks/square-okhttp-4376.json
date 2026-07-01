@@ -1,0 +1,23 @@
+{
+ "task": "square-okhttp-4376",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden RealConnection.createTunnelRequest builds a 'Preemptive Authenticate' 407 with header 'Proxy-Authenticate','OkHttp-Preemptive', calls proxyAuthenticator().authenticate(route, fakeAuthChallengeResponse), uses returned request if non-null; tests assert challenges.get(0).scheme()=='OkHttp-Preemp"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

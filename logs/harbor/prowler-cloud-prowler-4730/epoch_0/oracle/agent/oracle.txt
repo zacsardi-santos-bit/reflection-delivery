@@ -1,0 +1,10 @@
+patching file prowler/providers/aws/services/rds/rds_cluster_default_admin/__init__.py
+patching file prowler/providers/aws/services/rds/rds_cluster_default_admin/rds_cluster_default_admin.metadata.json
+patching file prowler/providers/aws/services/rds/rds_cluster_default_admin/rds_cluster_default_admin.py
+patching file prowler/providers/aws/services/rds/rds_cluster_iam_authentication_enabled/__init__.py
+patching file prowler/providers/aws/services/rds/rds_cluster_iam_authentication_enabled/rds_cluster_iam_authentication_enabled.metadata.json
+patching file prowler/providers/aws/services/rds/rds_cluster_iam_authentication_enabled/rds_cluster_iam_authentication_enabled.py
+patching file prowler/providers/aws/services/rds/rds_instance_default_admin/rds_instance_default_admin.metadata.json
+patching file prowler/providers/aws/services/rds/rds_instance_default_admin/rds_instance_default_admin.py
+patching file prowler/providers/aws/services/rds/rds_instance_iam_authentication_enabled/rds_instance_iam_authentication_enabled.metadata.json
+patching file prowler/providers/aws/services/rds/rds_instance_iam_authentication_enabled/rds_instance_iam_authentication_enabled.py

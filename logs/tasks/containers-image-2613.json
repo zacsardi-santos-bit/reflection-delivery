@@ -1,0 +1,23 @@
+{
+ "task": "containers-image-2613",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden extracts layerID(parentID, trustedLayerIdentityData{...}) + DiffID commitment check in storage_dest.go; test.patch TestLayerID calls layerID(...) directly; F2P=22"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

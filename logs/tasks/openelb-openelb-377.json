@@ -1,0 +1,23 @@
+{
+ "task": "openelb-openelb-377",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds namespace-scoped EIP (labels/namespaceSelector, sort by priority, default fallback) in eip_types.go + ipam.go, removes Protocol from svcRecord; F2P=37 incl. eip_bind_default_namespace_by_spec.namespaceSelector and multi-eip_..._different_priority"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

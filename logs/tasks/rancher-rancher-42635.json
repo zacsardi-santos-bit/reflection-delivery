@@ -1,0 +1,23 @@
+{
+ "task": "rancher-rancher-42635",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'func (p *ldapProvider) loginUser(lConn ldapv3.Client, credential ...)' and 'func toBasicLogin(input interface{})' matching F2P Test_ldapProvider_loginUser/Test_getBasicLogin"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

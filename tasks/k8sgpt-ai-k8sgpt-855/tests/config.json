@@ -1,0 +1,12 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test -mod=mod -json ./pkg/integration/... -count=1",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/k8sgpt-ai/k8sgpt/pkg/integration::TestGetPrometheusIntegration",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/integration::TestListIntegrations"
+  ],
+  "PASS_TO_PASS": []
+}

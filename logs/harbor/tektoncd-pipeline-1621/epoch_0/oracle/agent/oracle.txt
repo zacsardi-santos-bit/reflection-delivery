@@ -1,0 +1,8 @@
+patching file pkg/pod/creds_init.go
+patching file pkg/pod/entrypoint.go
+patching file pkg/pod/entrypoint_lookup.go
+patching file pkg/pod/pod.go (renamed from pkg/reconciler/taskrun/resources/pod.go)
+patching file pkg/pod/script.go
+patching file pkg/pod/workingdir_init.go
+patching file pkg/reconciler/taskrun/resources/input_resources.go
+patching file pkg/reconciler/taskrun/taskrun.go

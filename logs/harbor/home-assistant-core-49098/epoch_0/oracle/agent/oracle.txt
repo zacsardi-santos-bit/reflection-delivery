@@ -1,0 +1,4 @@
+patching file homeassistant/components/homeassistant/__init__.py
+patching file homeassistant/components/recorder/__init__.py
+patching file homeassistant/components/websocket_api/commands.py
+patching file homeassistant/helpers/recorder.py

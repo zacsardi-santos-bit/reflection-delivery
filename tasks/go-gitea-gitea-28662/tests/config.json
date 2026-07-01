@@ -1,0 +1,22 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && GITEA_ROOT=/workspace/repo GITEA_CONF=tests/sqlite.ini CGO_CFLAGS=\"-DSQLITE_MAX_VARIABLE_NUMBER=32766\" CGO_ENABLED=1 go test -tags sqlite,sqlite_unlock_notify -count=1 -run 'TestAPICreateBranch|TestDatabaseCollation' ./tests/integration/ -v",
+  "test_files": [
+    "tests/integration/api_branch_test.go",
+    "tests/integration/db_collation_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "code.gitea.io/gitea/tests/integration::TestAPICreateBranch/CreateRepo",
+    "code.gitea.io/gitea/tests/integration::TestAPICreateBranch/new_branch_from_default_branch",
+    "code.gitea.io/gitea/tests/integration::TestAPICreateBranch/new_branch_from_master_1",
+    "code.gitea.io/gitea/tests/integration::TestAPICreateBranch/new_branch_from_master_1#01",
+    "code.gitea.io/gitea/tests/integration::TestAPICreateBranch/branch_2",
+    "code.gitea.io/gitea/tests/integration::TestAPICreateBranch/new_branch_from_non_existent",
+    "code.gitea.io/gitea/tests/integration::TestAPICreateBranch/test-\ud83d\udc40",
+    "code.gitea.io/gitea/tests/integration::TestAPICreateBranch",
+    "code.gitea.io/gitea/tests/integration::TestAPICreateBranchWithSyncBranches"
+  ],
+  "PASS_TO_PASS": []
+}

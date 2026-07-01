@@ -1,0 +1,45 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -tags test_unit ./pkg/common -count=1 -run TestHelperTestSuite",
+  "test_files": [
+    "pkg/common/helper_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPopulateFieldsFromValues/StringNonEmptyFields",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPopulateFieldsFromValues/IntNonEmptyFields",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPopulateFieldsFromValues",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestDurationTime",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestNegative",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestNumberOfCalls",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPositive",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestTimeBetweenIntervals",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestSucceedIfErrorMessageIsEmpty",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestNegativeData",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPositive#01",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestFileIsNotAFile",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestFileNotExist",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPositive#02",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestNegative#01",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPositive#03",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestFileIsADirectory",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestFileIsNotExist",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPositive#04",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPositive#05",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/Test/Sanity",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/Test/EmptyLabelSelectorsMatchAll",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/Test/NillableLabelMaps",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/Test/EncodedLabelSelectorsNotInLabels",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/Test/EncodedLabelSelectorsNilLabels",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/Test/InvalidEncodedLabelSelector",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/Test",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPopulateFieldsFromValues/StringEmptyFields",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPopulateFieldsFromValues/IntEmptyFields",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPopulateFieldsFromValues/BoolEmptyFields",
+    "github.com/nuclio/nuclio/pkg/common::TestHelperTestSuite/TestPopulateFieldsFromValues/BoolNonEmptyFields"
+  ]
+}

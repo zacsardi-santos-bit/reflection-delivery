@@ -1,0 +1,23 @@
+{
+ "task": "googlecloudplatform-gcsfuse-1577",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds internal/cache/metadata/type_cache.go + config TypeCacheMaxSizeMB validation + shared metadata type constants; F2P TestTypeCache/TestConfig/TestDir etc."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

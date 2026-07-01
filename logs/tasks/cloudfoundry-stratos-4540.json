@@ -1,0 +1,23 @@
+{
+ "task": "cloudfoundry-stratos-4540",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden config.go adds APIKeysConfigEnum{Disabled,AdminOnly,AllUsers} and middleware.go 'if p.Config.APIKeysEnabled == config.APIKeysConfigEnum.Disabled { return h(c) }'; F2P includes Test_apiKeyMiddleware, Test_addAPIKey, Test_deleteAPIKeys via 'go test -json'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

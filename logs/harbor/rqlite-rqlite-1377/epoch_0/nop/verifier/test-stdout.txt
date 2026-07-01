@@ -1,0 +1,8 @@
+patching file snapshot/upgrader_test.go
+patching file system_test/single_node_test.go
+# github.com/rqlite/rqlite/snapshot [github.com/rqlite/rqlite/snapshot.test]
+snapshot/upgrader_test.go:15:12: undefined: Upgrade
+snapshot/upgrader_test.go:21:12: undefined: Upgrade
+snapshot/upgrader_test.go:37:12: undefined: Upgrade
+FAIL	github.com/rqlite/rqlite/snapshot [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

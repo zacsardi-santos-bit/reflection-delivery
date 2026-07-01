@@ -1,0 +1,6 @@
+patching file discovery/linode/linode_test.go
+patching file discovery/linode/mock_test.go
+# github.com/prometheus/prometheus/discovery/linode [github.com/prometheus/prometheus/discovery/linode.test]
+discovery/linode/linode_test.go:227:8: cfg.Region undefined (type SDConfig has no field or method Region)
+FAIL	github.com/prometheus/prometheus/discovery/linode [build failed]
+reward=0 graded=8 found=8 failed=8 parsed=1 framework=go exit_code=1

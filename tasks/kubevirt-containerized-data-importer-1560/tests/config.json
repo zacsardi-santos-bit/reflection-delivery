@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/controller/... -count=1",
+  "test_files": [
+    "pkg/controller/import-controller_test.go",
+    "tests/datavolume_test.go",
+    "tests/utils/datavolume.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "kubevirt.io/containerized-data-importer/pkg/controller::TestController"
+  ],
+  "PASS_TO_PASS": []
+}

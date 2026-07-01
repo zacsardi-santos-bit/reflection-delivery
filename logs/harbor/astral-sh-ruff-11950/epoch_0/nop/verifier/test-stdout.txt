@@ -1,0 +1,94 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_commas/COM81_syntax_error.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_implicit_str_concat/ISC_syntax_error.py
+patching file crates/ruff_linter/resources/test/fixtures/pycodestyle/E30_syntax_error.py
+patching file crates/ruff_linter/resources/test/fixtures/pylint/invalid_characters_syntax_error.py
+
+running 14 tests
+test message::azure::tests::syntax_errors ... ok
+test message::github::tests::syntax_errors ... ok
+test message::gitlab::tests::syntax_errors ... ok
+test message::grouped::tests::syntax_errors ... ok
+test message::json::tests::syntax_errors ... ok
+test message::json_lines::tests::syntax_errors ... ok
+test message::junit::tests::syntax_errors ... ok
+test message::pylint::tests::syntax_errors ... ok
+test message::rdjson::tests::syntax_errors ... ok
+test message::sarif::tests::valid_syntax_error_json ... ok
+test message::text::tests::syntax_errors ... ok
+test noqa::tests::syntax_error ... ok
+test rules::flake8_commas::tests::rules::path_new_com81_syntax_error_py_expects ... FAILED
+test rules::pycodestyle::tests::white_space_syntax_error_compatibility ... ok
+
+failures:
+
+---- rules::flake8_commas::tests::rules::path_new_com81_syntax_error_py_expects stdout ----
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Snapshot file: crates/ruff_linter/src/rules/flake8_commas/snapshots/ruff_linter__rules__flake8_commas__tests__COM81_syntax_error.py.snap
+Snapshot: COM81_syntax_error.py
+Source: crates/ruff_linter/src/rules/flake8_commas/mod.rs:27
+────────────────────────────────────────────────────────────────────────────────
+-old snapshot
++new results
+────────────┬───────────────────────────────────────────────────────────────────
+    0       │-COM81_syntax_error.py:2:5: SyntaxError: Starred expression cannot be used here
+          0 │+COM81_syntax_error.py:3:5: SyntaxError: Starred expression cannot be used here
+    1     1 │   |
+    2       │-1 | (
+    3       │-2 |     *args
+          2 │+1 | # Check for `flake8-commas` violation for a file containing syntax errors.
+          3 │+2 | (
+          4 │+3 |     *args
+    4     5 │   |     ^
+    5       │-3 | )
+    6       │-  |
+          6 │+4 | )
+          7 │+  |
+          8 │+
+          9 │+COM81_syntax_error.py:6:9: SyntaxError: Type parameter list cannot be empty
+         10 │+  |
+         11 │+4 | )
+         12 │+5 | 
+         13 │+6 | def foo[(param1='test', param2='test',):
+         14 │+  |         ^
+         15 │+7 |     pass
+         16 │+  |
+         17 │+
+         18 │+COM81_syntax_error.py:6:38: COM819 Trailing comma prohibited
+         19 │+  |
+         20 │+4 | )
+         21 │+5 | 
+         22 │+6 | def foo[(param1='test', param2='test',):
+         23 │+  |                                      ^ COM819
+         24 │+7 |     pass
+         25 │+  |
+         26 │+  = help: Remove trailing comma
+────────────┴───────────────────────────────────────────────────────────────────
+Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+thread 'rules::flake8_commas::tests::rules::path_new_com81_syntax_error_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+snapshot assertion for 'COM81_syntax_error.py' failed in line 27
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules::flake8_commas::tests::rules::path_new_com81_syntax_error_py_expects
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 2028 filtered out; finished in 0.10s
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.69s
+     Running unittests src/lib.rs (target/debug/deps/ruff_linter-b790b0232322679f)
+error: test failed, to rerun pass `-p ruff_linter --lib`
+message::azure::tests::syntax_errors PASSED
+message::github::tests::syntax_errors PASSED
+message::gitlab::tests::syntax_errors PASSED
+message::grouped::tests::syntax_errors PASSED
+message::json::tests::syntax_errors PASSED
+message::json_lines::tests::syntax_errors PASSED
+message::junit::tests::syntax_errors PASSED
+message::pylint::tests::syntax_errors PASSED
+message::rdjson::tests::syntax_errors PASSED
+message::sarif::tests::valid_syntax_error_json PASSED
+message::text::tests::syntax_errors PASSED
+noqa::tests::syntax_error PASSED
+rules::flake8_commas::tests::rules::path_new_com81_syntax_error_py_expects FAILED
+rules::pycodestyle::tests::white_space_syntax_error_compatibility PASSED
+reward=0 graded=22 found=14 failed=1 parsed=14 framework=pytest exit_code=101

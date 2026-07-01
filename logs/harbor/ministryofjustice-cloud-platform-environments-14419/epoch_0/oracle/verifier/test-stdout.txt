@@ -1,0 +1,17 @@
+patching file pkg/ingress/ingress_test.go
+{"Time":"2026-06-29T15:14:52.529575447Z","Action":"run","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestIngressWithClass"}
+{"Time":"2026-06-29T15:14:52.529690346Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestIngressWithClass","Output":"=== RUN   TestIngressWithClass\n"}
+{"Time":"2026-06-29T15:14:52.529716424Z","Action":"run","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestIngressWithClass/Get_ingressClass_default"}
+{"Time":"2026-06-29T15:14:52.5297272Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestIngressWithClass/Get_ingressClass_default","Output":"=== RUN   TestIngressWithClass/Get_ingressClass_default\n"}
+{"Time":"2026-06-29T15:14:52.529846024Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestIngressWithClass","Output":"--- PASS: TestIngressWithClass (0.00s)\n"}
+{"Time":"2026-06-29T15:14:52.529879766Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestIngressWithClass/Get_ingressClass_default","Output":"    --- PASS: TestIngressWithClass/Get_ingressClass_default (0.00s)\n"}
+{"Time":"2026-06-29T15:14:52.529890817Z","Action":"pass","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestIngressWithClass/Get_ingressClass_default","Elapsed":0}
+{"Time":"2026-06-29T15:14:52.529906258Z","Action":"pass","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestIngressWithClass","Elapsed":0}
+{"Time":"2026-06-29T15:14:52.5299166Z","Action":"run","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestActivitiesApiDevNoIrsaFile"}
+{"Time":"2026-06-29T15:14:52.529927015Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestActivitiesApiDevNoIrsaFile","Output":"=== RUN   TestActivitiesApiDevNoIrsaFile\n"}
+{"Time":"2026-06-29T15:14:52.530145119Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestActivitiesApiDevNoIrsaFile","Output":"--- PASS: TestActivitiesApiDevNoIrsaFile (0.00s)\n"}
+{"Time":"2026-06-29T15:14:52.530218488Z","Action":"pass","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Test":"TestActivitiesApiDevNoIrsaFile","Elapsed":0}
+{"Time":"2026-06-29T15:14:52.530243717Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:52.531382569Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Output":"ok  \tgithub.com/ministryofjustice/cloud-platform-environments/pkg/ingress\t0.036s\n"}
+{"Time":"2026-06-29T15:14:52.531420528Z","Action":"pass","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/ingress","Elapsed":0.036}
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=go exit_code=0

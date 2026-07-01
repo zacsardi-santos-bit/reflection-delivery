@@ -1,0 +1,54 @@
+patching file .github/unittest/linux_libs/scripts_chess/environment.yml
+patching file .github/unittest/linux_libs/scripts_chess/install.sh
+patching file .github/unittest/linux_libs/scripts_chess/post_process.sh
+patching file .github/unittest/linux_libs/scripts_chess/run-clang-format.py
+patching file .github/unittest/linux_libs/scripts_chess/run_test.sh
+patching file .github/unittest/linux_libs/scripts_chess/setup_env.sh
+patching file test/test_env.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: instafail-0.5.0
+collecting ... collected 1584 items / 1554 deselected / 30 selected
+
+test/test_env.py::TestChessEnv::test_env[False] PASSED                   [  3%]
+test/test_env.py::TestChessEnv::test_env[True] PASSED                    [  6%]
+test/test_env.py::TestChessEnv::test_rollout[False] PASSED               [ 10%]
+test/test_env.py::TestChessEnv::test_rollout[True] PASSED                [ 13%]
+test/test_env.py::TestChessEnv::test_reset_white_to_move[False] PASSED   [ 16%]
+test/test_env.py::TestChessEnv::test_reset_white_to_move[True] PASSED    [ 20%]
+test/test_env.py::TestChessEnv::test_reset_black_to_move[False] PASSED   [ 23%]
+test/test_env.py::TestChessEnv::test_reset_black_to_move[True] PASSED    [ 26%]
+test/test_env.py::TestChessEnv::test_reset_done_error[False] PASSED      [ 30%]
+test/test_env.py::TestChessEnv::test_reset_done_error[True] PASSED       [ 33%]
+test/test_env.py::TestChessEnv::test_reward[white win-False-False] PASSED [ 36%]
+test/test_env.py::TestChessEnv::test_reward[white win-False-True] PASSED [ 40%]
+test/test_env.py::TestChessEnv::test_reward[white win-True-False] PASSED [ 43%]
+test/test_env.py::TestChessEnv::test_reward[white win-True-True] PASSED  [ 46%]
+test/test_env.py::TestChessEnv::test_reward[black win-False-False] PASSED [ 50%]
+test/test_env.py::TestChessEnv::test_reward[black win-False-True] PASSED [ 53%]
+test/test_env.py::TestChessEnv::test_reward[black win-True-False] PASSED [ 56%]
+test/test_env.py::TestChessEnv::test_reward[black win-True-True] PASSED  [ 60%]
+test/test_env.py::TestChessEnv::test_reward[stalemate-False-False] PASSED [ 63%]
+test/test_env.py::TestChessEnv::test_reward[stalemate-False-True] PASSED [ 66%]
+test/test_env.py::TestChessEnv::test_reward[stalemate-True-False] PASSED [ 70%]
+test/test_env.py::TestChessEnv::test_reward[stalemate-True-True] PASSED  [ 73%]
+test/test_env.py::TestChessEnv::test_reward[50 move-False-False] PASSED  [ 76%]
+test/test_env.py::TestChessEnv::test_reward[50 move-False-True] PASSED   [ 80%]
+test/test_env.py::TestChessEnv::test_reward[50 move-True-False] PASSED   [ 83%]
+test/test_env.py::TestChessEnv::test_reward[50 move-True-True] PASSED    [ 86%]
+test/test_env.py::TestChessEnv::test_reward[insufficient-False-False] PASSED [ 90%]
+test/test_env.py::TestChessEnv::test_reward[insufficient-False-True] PASSED [ 93%]
+test/test_env.py::TestChessEnv::test_reward[insufficient-True-False] PASSED [ 96%]
+test/test_env.py::TestChessEnv::test_reward[insufficient-True-True] PASSED [100%]
+
+=============================== warnings summary ===============================
+test/test_env.py:1092
+  /workspace/repo/test/test_env.py:1092: PytestUnknownMarkWarning: Unknown pytest.mark.flaky - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.flaky(reruns=3, reruns_delay=1)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================ 30 passed, 1554 deselected, 1 warning in 3.16s ================
+reward=1 graded=30 found=0 failed=0 parsed=1584 framework=pytest exit_code=0

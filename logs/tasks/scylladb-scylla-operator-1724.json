@@ -1,0 +1,23 @@
+{
+ "task": "scylladb-scylla-operator-1724",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds pkg/kubelet/podresourcesclient.go + rewrites getIRQCPUs(ctx, kubeletPodResourcesClient, ...); test.patch replaces fakeCriClient with fakeKubeletPodResources implementing List/Close; F2P TestGetIRQCPUs/{burstable,single/multiple guaranteed}"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 18,
+  "shallow": true
+ }
+}

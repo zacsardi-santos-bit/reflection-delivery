@@ -1,0 +1,38 @@
+patching file tests/by-util/test_printf.rs
+   Compiling coreutils v0.0.30 (/workspace/repo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.62s
+────────────
+ Nextest run ID 6e70a475-e3c5-4b93-a4d9-ccda1035db4d with nextest profile: default
+    Starting 3 tests across 1 binary (3459 tests skipped)
+        PASS [   0.038s] (1/3) coreutils::tests test_printf::float_non_finite
+        FAIL [   0.042s] (2/3) coreutils::tests test_printf::float_non_finite_zero_padding
+  stdout ───
+
+    running 1 test
+    run: /workspace/repo/target/debug/coreutils printf %05.2f|%05.2f|%05.2f|%05.2f inf -inf nan -nan
+    test test_printf::float_non_finite_zero_padding ... FAILED
+
+    failures:
+
+    failures:
+        test_printf::float_non_finite_zero_padding
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3461 filtered out; finished in 0.01s
+
+  stderr ───
+    thread 'test_printf::float_non_finite_zero_padding' panicked at tests/by-util/test_printf.rs:1007:10:
+    assertion failed: `(left == right)`
+
+    Diff < left / right > :
+    <00inf|-0inf|00nan|-0nan
+    >  inf| -inf|  nan| -nan
+
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.045s] (3/3) coreutils::tests test_printf::float_non_finite_space_padding
+────────────
+     Summary [   0.055s] 3 tests run: 2 passed, 1 failed, 3459 skipped
+        FAIL [   0.042s] (2/3) coreutils::tests test_printf::float_non_finite_zero_padding
+error: test run failed
+reward=0 graded=3 found=3 failed=1 parsed=3 framework=cargo exit_code=100

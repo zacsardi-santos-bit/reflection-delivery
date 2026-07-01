@@ -1,0 +1,36 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/devices/test_legacy_facade.py -v",
+  "test_files": [
+    "tests/devices/test_legacy_facade.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "devices.test_legacy_facade::test_error_if_not_legacy_device",
+    "devices.test_legacy_facade::test_shots",
+    "devices.test_legacy_facade::test_tracker",
+    "devices.test_legacy_facade::test_debugger",
+    "devices.test_legacy_facade::test_shot_distribution",
+    "devices.test_legacy_facade::test_legacy_device_expand_fn",
+    "devices.test_legacy_facade::test_legacy_device_batch_transform",
+    "devices.test_legacy_facade::test_batch_transform_supports_hamiltonian",
+    "devices.test_legacy_facade::test_basic_properties",
+    "devices.test_legacy_facade::test_preprocessing_program",
+    "devices.test_legacy_facade::test_preprocessing_program_supports_mid_measure",
+    "devices.test_legacy_facade::test_pass_postselect_mode_to_dev[hw-like]",
+    "devices.test_legacy_facade::test_pass_postselect_mode_to_dev[fill-shots]",
+    "devices.test_legacy_facade.TestGradientSupport::test_no_derivatives_case",
+    "devices.test_legacy_facade.TestGradientSupport::test_adjoint_support[best]",
+    "devices.test_legacy_facade.TestGradientSupport::test_adjoint_support[adjoint]",
+    "devices.test_legacy_facade.TestGradientSupport::test_device_derivatives",
+    "devices.test_legacy_facade.TestGradientSupport::test_no_backprop_with_sparse_hamiltonian",
+    "devices.test_legacy_facade.TestGradientSupport::test_passthru_interface_no_substitution",
+    "devices.test_legacy_facade.TestGradientSupport::test_backprop_has_passthru_devices",
+    "devices.test_legacy_facade.TestGradientSupport::test_backprop_passthru_device_self",
+    "devices.test_legacy_facade.TestGradientSupport::test_passthru_device_does_not_exist",
+    "devices.test_legacy_facade.TestGradientSupport::test_backprop_device_substitution[DefaultQubitLegacy]",
+    "devices.test_legacy_facade.TestGradientSupport::test_backprop_device_substitution[DefaultQubitAutograd]"
+  ],
+  "PASS_TO_PASS": []
+}

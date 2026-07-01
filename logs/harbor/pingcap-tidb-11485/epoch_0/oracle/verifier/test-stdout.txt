@@ -1,0 +1,17 @@
+patching file util/chunk/chunk_test.go
+patching file util/chunk/codec_test.go
+patching file util/chunk/column_test.go
+{"Time":"2026-06-29T15:32:45.528425968Z","Action":"start","Package":"github.com/pingcap/tidb/util/chunk"}
+{"Time":"2026-06-29T15:32:45.534171281Z","Action":"run","Package":"github.com/pingcap/tidb/util/chunk","Test":"TestT"}
+{"Time":"2026-06-29T15:32:45.53421903Z","Action":"output","Package":"github.com/pingcap/tidb/util/chunk","Test":"TestT","Output":"=== RUN   TestT\n"}
+{"Time":"2026-06-29T15:32:46.677200328Z","Action":"output","Package":"github.com/pingcap/tidb/util/chunk","Test":"TestT","Output":"OK: 46 passed\n"}
+{"Time":"2026-06-29T15:32:46.677284298Z","Action":"output","Package":"github.com/pingcap/tidb/util/chunk","Test":"TestT","Output":"--- PASS: TestT (1.14s)\n"}
+{"Time":"2026-06-29T15:32:46.677308478Z","Action":"pass","Package":"github.com/pingcap/tidb/util/chunk","Test":"TestT","Elapsed":1.14}
+{"Time":"2026-06-29T15:32:46.677348297Z","Action":"run","Package":"github.com/pingcap/tidb/util/chunk","Test":"TestCopySelectedJoinRows"}
+{"Time":"2026-06-29T15:32:46.677370077Z","Action":"output","Package":"github.com/pingcap/tidb/util/chunk","Test":"TestCopySelectedJoinRows","Output":"=== RUN   TestCopySelectedJoinRows\n"}
+{"Time":"2026-06-29T15:32:46.678148624Z","Action":"output","Package":"github.com/pingcap/tidb/util/chunk","Test":"TestCopySelectedJoinRows","Output":"--- PASS: TestCopySelectedJoinRows (0.00s)\n"}
+{"Time":"2026-06-29T15:32:46.678178314Z","Action":"pass","Package":"github.com/pingcap/tidb/util/chunk","Test":"TestCopySelectedJoinRows","Elapsed":0}
+{"Time":"2026-06-29T15:32:46.678207323Z","Action":"output","Package":"github.com/pingcap/tidb/util/chunk","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:46.678775241Z","Action":"output","Package":"github.com/pingcap/tidb/util/chunk","Output":"ok  \tgithub.com/pingcap/tidb/util/chunk\t1.150s\n"}
+{"Time":"2026-06-29T15:32:46.67882626Z","Action":"pass","Package":"github.com/pingcap/tidb/util/chunk","Elapsed":1.15}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

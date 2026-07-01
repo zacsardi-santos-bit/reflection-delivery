@@ -1,0 +1,124 @@
+patching file packages/gasket-plugin-command/test/configure.test.js
+patching file packages/gasket-plugin-command/test/index.test.js
+patching file packages/gasket-plugin-command/test/prepare.test.js
+patching file packages/gasket-plugin-dynamic-plugins/test/__mocks__/plugin-custom.js
+patching file packages/gasket-plugin-dynamic-plugins/test/prepare-hook.test.js
+patching file packages/gasket-plugin-dynamic-plugins/test/prepare.test.js
+FAIL test/prepare.test.js
+  ● Test suite failed to run
+
+    Cannot find module '../lib/prepare.js' from 'test/prepare.test.js'
+
+      21 | });
+      22 |
+    > 23 | const prepare = ((await import('../lib/prepare.js')).default);
+         |                   ^
+      24 |
+      25 | describe('prepare', () => {
+      26 |   let mockGasket, mockConfig;
+
+      at Resolver._throwModNotFoundError (../../node_modules/jest-resolve/build/resolver.js:427:11)
+      at test/prepare.test.js:23:19
+
+(node:178) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/commands.test.js
+(node:227) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:213) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/create.test.js
+(node:192) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/ready.test.js
+(node:199) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/utils/logo.test.js
+(node:206) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/utils/create-option.test.js
+(node:166) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/utils/process-args.test.js
+(node:219) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/cli.test.js
+(node:165) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/utils/process-command.test.js
+(node:164) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/utils/process-options.test.js
+(node:185) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/configure.test.js
+(node:172) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL test/index.test.js
+  ● @gasket/plugin-command › should have expected hooks
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining ["create", "configure", "prepare", "commands", "ready", "metadata"]
+    Received: ["create", "configure", "commands", "ready", "metadata"]
+
+      26 |       'metadata'
+      27 |     ];
+    > 28 |     expect(Object.keys(plugin.hooks)).toEqual(
+         |                                       ^
+      29 |       expect.arrayContaining(expectedHooks)
+      30 |     );
+      31 |   });
+
+      at Object.toEqual (test/index.test.js:28:39)
+
+  ● @gasket/plugin-command › should return metadata from the metadata hook
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 4
+    + Received  + 4
+
+    @@ -1,21 +1,21 @@
+    - ObjectContaining {
+    -   "commands": ArrayContaining [
+    + Object {
+    +   "commands": Array [
+          Object {
+            "description": "Gasket build command",
+            "link": "README.md#build",
+            "name": "build",
+          },
+        ],
+        "existing": "value",
+    -   "lifecycles": ArrayContaining [
+    +   "lifecycles": Array [
+          Object {
+            "description": "Add custom commands to the CLI",
+            "link": "README.md#commands",
+            "method": "exec",
+            "name": "commands",
+    -       "parent": "prepare",
+    +       "parent": "ready",
+          },
+          Object {
+            "description": "Gasket build lifecycle",
+            "link": "README.md#build",
+            "method": "exec",
+
+      37 |     const result = plugin.hooks.metadata(gasket, meta);
+      38 |
+    > 39 |     expect(result).toEqual(
+         |                    ^
+      40 |       expect.objectContaining({
+      41 |         existing: 'value',
+      42 |         commands: expect.arrayContaining([
+
+      at Object.toEqual (test/index.test.js:39:20)
+
+Test Suites: 2 failed, 10 passed, 12 total
+Tests:       2 failed, 55 passed, 57 total
+Snapshots:   0 total
+Time:        1.848 s
+Ran all test suites.
+reward=0 graded=8 found=0 failed=0 parsed=0 framework=jest exit_code=1

@@ -1,0 +1,23 @@
+{
+ "task": "paritytech-jsonrpc-486",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden to_client.rs replaces 'unimplemented!()' with 'self.inner.notify(#rpc_name, args_tuple)'; adds 'pub fn notify' to RawClient and TypedClient; test calls client.notify(res) and asserts res==7"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

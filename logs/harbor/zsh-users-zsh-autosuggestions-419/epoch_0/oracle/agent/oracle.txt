@@ -1,0 +1,12 @@
+patching file CHANGELOG.md
+patching file Makefile
+patching file README.md
+patching file VERSION
+patching file ZSH_VERSIONS
+patching file install_test_zsh.sh
+patching file src/async.zsh
+patching file src/config.zsh
+patching file src/features.zsh
+patching file src/start.zsh
+patching file src/widgets.zsh
+patching file zsh-autosuggestions.zsh

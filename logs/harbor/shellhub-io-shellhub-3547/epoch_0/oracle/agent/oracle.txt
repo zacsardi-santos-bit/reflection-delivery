@@ -1,0 +1,15 @@
+patching file api/go.mod
+patching file api/go.sum
+patching file api/services/device.go
+patching file api/services/mocks/services.go
+patching file api/store/device.go
+patching file api/store/mocks/store.go
+patching file api/store/mongo/device.go
+patching file cli/go.mod
+patching file cli/go.sum
+patching file docker-compose.yml
+patching file gateway/Dockerfile
+patching file pkg/models/device.go
+patching file pkg/models/namespace.go
+patching file ui/Dockerfile
+patching file ui/package-lock.json

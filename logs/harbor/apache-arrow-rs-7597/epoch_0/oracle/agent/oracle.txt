@@ -1,0 +1,14 @@
+patching file .github/workflows/dev_pr/labeler.yml
+patching file .github/workflows/parquet-variant.yml
+patching file arrow-select/src/coalesce.rs
+patching file arrow-select/src/filter.rs
+patching file arrow-select/src/lib.rs
+patching file arrow-select/src/take.rs
+patching file arrow/Cargo.toml
+patching file arrow/benches/coalesce_kernels.rs
+patching file arrow/src/compute/kernels.rs
+patching file arrow/src/compute/mod.rs
+patching file arrow/src/util/bench_util.rs
+patching file parquet-variant/src/decoder.rs
+patching file parquet-variant/src/utils.rs
+patching file parquet-variant/src/variant.rs

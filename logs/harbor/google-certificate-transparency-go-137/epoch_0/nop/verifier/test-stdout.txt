@@ -1,0 +1,266 @@
+patching file x509/x509_test.go
+{"Time":"2026-06-29T15:29:25.94913349Z","Action":"start","Package":"github.com/google/certificate-transparency-go/x509"}
+{"Time":"2026-06-29T15:29:25.957446879Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestTemplateIDs"}
+{"Time":"2026-06-29T15:29:25.957506539Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestTemplateIDs","Output":"=== RUN   TestTemplateIDs\n"}
+{"Time":"2026-06-29T15:29:25.957654144Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestTemplateIDs","Output":"--- PASS: TestTemplateIDs (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.957672372Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestTemplateIDs","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.957691461Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGeneralNames"}
+{"Time":"2026-06-29T15:29:25.957711301Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGeneralNames","Output":"=== RUN   TestParseGeneralNames\n"}
+{"Time":"2026-06-29T15:29:25.957794207Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGeneralNames","Output":"--- PASS: TestParseGeneralNames (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.957851213Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGeneralNames","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.957871004Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGeneralName"}
+{"Time":"2026-06-29T15:29:25.957879386Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGeneralName","Output":"=== RUN   TestParseGeneralName\n"}
+{"Time":"2026-06-29T15:29:25.958222909Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGeneralName","Output":"--- PASS: TestParseGeneralName (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.958260686Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGeneralName","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.958270891Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt"}
+{"Time":"2026-06-29T15:29:25.958282729Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt","Output":"=== RUN   TestDecrypt\n"}
+{"Time":"2026-06-29T15:29:25.958303922Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt","Output":"    pem_decrypt_test.go:18: test 0. 1\n"}
+{"Time":"2026-06-29T15:29:25.958454521Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt","Output":"    pem_decrypt_test.go:18: test 1. 2\n"}
+{"Time":"2026-06-29T15:29:25.958497576Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt","Output":"    pem_decrypt_test.go:18: test 2. 3\n"}
+{"Time":"2026-06-29T15:29:25.958524327Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt","Output":"    pem_decrypt_test.go:18: test 3. 4\n"}
+{"Time":"2026-06-29T15:29:25.958554993Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt","Output":"    pem_decrypt_test.go:18: test 4. 5\n"}
+{"Time":"2026-06-29T15:29:25.959136287Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt","Output":"    pem_decrypt_test.go:18: test 5. 3\n"}
+{"Time":"2026-06-29T15:29:25.959257001Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt","Output":"--- PASS: TestDecrypt (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.959301238Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestDecrypt","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.959337082Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt"}
+{"Time":"2026-06-29T15:29:25.959350823Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt","Output":"=== RUN   TestEncrypt\n"}
+{"Time":"2026-06-29T15:29:25.959365686Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt","Output":"    pem_decrypt_test.go:43: test 0. 1\n"}
+{"Time":"2026-06-29T15:29:25.959385636Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt","Output":"    pem_decrypt_test.go:43: test 1. 2\n"}
+{"Time":"2026-06-29T15:29:25.959502604Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt","Output":"    pem_decrypt_test.go:43: test 2. 3\n"}
+{"Time":"2026-06-29T15:29:25.959524347Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt","Output":"    pem_decrypt_test.go:43: test 3. 4\n"}
+{"Time":"2026-06-29T15:29:25.959616898Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt","Output":"    pem_decrypt_test.go:43: test 4. 5\n"}
+{"Time":"2026-06-29T15:29:25.95966432Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt","Output":"    pem_decrypt_test.go:43: test 5. 3\n"}
+{"Time":"2026-06-29T15:29:25.959689278Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt","Output":"--- PASS: TestEncrypt (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.959699884Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEncrypt","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.959792405Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestIncompleteBlock"}
+{"Time":"2026-06-29T15:29:25.959835861Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestIncompleteBlock","Output":"=== RUN   TestIncompleteBlock\n"}
+{"Time":"2026-06-29T15:29:25.959857574Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestIncompleteBlock","Output":"--- PASS: TestIncompleteBlock (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.959870593Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestIncompleteBlock","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.959893779Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestPKCS8"}
+{"Time":"2026-06-29T15:29:25.95990116Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestPKCS8","Output":"=== RUN   TestPKCS8\n"}
+{"Time":"2026-06-29T15:29:25.964015765Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestPKCS8","Output":"--- PASS: TestPKCS8 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.964148107Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestPKCS8","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.964200296Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateList"}
+{"Time":"2026-06-29T15:29:25.964211122Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateList","Output":"=== RUN   TestParseCertificateList\n"}
+{"Time":"2026-06-29T15:29:25.965305746Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateList","Output":"--- PASS: TestParseCertificateList (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.96535436Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateList","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.965384496Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseRevokedCertificate"}
+{"Time":"2026-06-29T15:29:25.965392528Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseRevokedCertificate","Output":"=== RUN   TestParseRevokedCertificate\n"}
+{"Time":"2026-06-29T15:29:25.965560324Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseRevokedCertificate","Output":"--- PASS: TestParseRevokedCertificate (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.965575376Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseRevokedCertificate","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.965589648Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseIssuingDistributionPoint"}
+{"Time":"2026-06-29T15:29:25.965595377Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseIssuingDistributionPoint","Output":"=== RUN   TestParseIssuingDistributionPoint\n"}
+{"Time":"2026-06-29T15:29:25.965664191Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseIssuingDistributionPoint","Output":"--- PASS: TestParseIssuingDistributionPoint (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.965678493Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseIssuingDistributionPoint","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.965694948Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGIAG2CertificateList"}
+{"Time":"2026-06-29T15:29:25.965700987Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGIAG2CertificateList","Output":"=== RUN   TestParseGIAG2CertificateList\n"}
+{"Time":"2026-06-29T15:29:25.965942254Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGIAG2CertificateList","Output":"--- PASS: TestParseGIAG2CertificateList (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.965958168Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseGIAG2CertificateList","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.965972821Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars"}
+{"Time":"2026-06-29T15:29:25.965979321Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars","Output":"=== RUN   TestEnvVars\n"}
+{"Time":"2026-06-29T15:29:25.966000853Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/override-defaults"}
+{"Time":"2026-06-29T15:29:25.966006702Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/override-defaults","Output":"=== RUN   TestEnvVars/override-defaults\n"}
+{"Time":"2026-06-29T15:29:25.966186205Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/override-defaults","Output":"--- PASS: TestEnvVars/override-defaults (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.966193346Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/override-defaults","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.966202209Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/file"}
+{"Time":"2026-06-29T15:29:25.966208178Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/file","Output":"=== RUN   TestEnvVars/file\n"}
+{"Time":"2026-06-29T15:29:25.966519442Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/file","Output":"--- PASS: TestEnvVars/file (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.966556899Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/file","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.966575958Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/dir"}
+{"Time":"2026-06-29T15:29:25.966588757Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/dir","Output":"=== RUN   TestEnvVars/dir\n"}
+{"Time":"2026-06-29T15:29:25.96709086Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/dir","Output":"--- PASS: TestEnvVars/dir (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.967124251Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/dir","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.967148548Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/file+dir"}
+{"Time":"2026-06-29T15:29:25.967154928Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/file+dir","Output":"=== RUN   TestEnvVars/file+dir\n"}
+{"Time":"2026-06-29T15:29:25.967466491Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/file+dir","Output":"--- PASS: TestEnvVars/file+dir (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.967486612Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/file+dir","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.967501995Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/empty-fall-through"}
+{"Time":"2026-06-29T15:29:25.96751148Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/empty-fall-through","Output":"=== RUN   TestEnvVars/empty-fall-through\n"}
+{"Time":"2026-06-29T15:29:25.967749642Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/empty-fall-through","Output":"--- PASS: TestEnvVars/empty-fall-through (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.967764905Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars/empty-fall-through","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.967779597Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars","Output":"--- PASS: TestEnvVars (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.967786197Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestEnvVars","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.96779421Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseECPrivateKey"}
+{"Time":"2026-06-29T15:29:25.967818416Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseECPrivateKey","Output":"=== RUN   TestParseECPrivateKey\n"}
+{"Time":"2026-06-29T15:29:25.969848172Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseECPrivateKey","Output":"--- PASS: TestParseECPrivateKey (0.00s)\n"}
+{"Time":"2026-06-29T15:29:25.969860992Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseECPrivateKey","Elapsed":0}
+{"Time":"2026-06-29T15:29:25.969872419Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestGoVerify"}
+{"Time":"2026-06-29T15:29:25.969877287Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestGoVerify","Output":"=== RUN   TestGoVerify\n"}
+{"Time":"2026-06-29T15:29:26.047464542Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestGoVerify","Output":"--- PASS: TestGoVerify (0.08s)\n"}
+{"Time":"2026-06-29T15:29:26.047495429Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestGoVerify","Elapsed":0.08}
+{"Time":"2026-06-29T15:29:26.047512254Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestSystemVerify"}
+{"Time":"2026-06-29T15:29:26.047519746Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestSystemVerify","Output":"=== RUN   TestSystemVerify\n"}
+{"Time":"2026-06-29T15:29:26.047599217Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestSystemVerify","Output":"    verify_test.go:530: skipping verify test using system APIs on \"linux\"\n"}
+{"Time":"2026-06-29T15:29:26.0477394Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestSystemVerify","Output":"--- SKIP: TestSystemVerify (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.047777978Z","Action":"skip","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestSystemVerify","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.047874615Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestUnknownAuthorityError"}
+{"Time":"2026-06-29T15:29:26.047890059Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestUnknownAuthorityError","Output":"=== RUN   TestUnknownAuthorityError\n"}
+{"Time":"2026-06-29T15:29:26.047972945Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestUnknownAuthorityError","Output":"--- PASS: TestUnknownAuthorityError (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.048004062Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestUnknownAuthorityError","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.048030092Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNameConstraints"}
+{"Time":"2026-06-29T15:29:26.048037873Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNameConstraints","Output":"=== RUN   TestNameConstraints\n"}
+{"Time":"2026-06-29T15:29:26.048046446Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNameConstraints","Output":"--- PASS: TestNameConstraints (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.048054008Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNameConstraints","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.048061439Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePKCS1PrivateKey"}
+{"Time":"2026-06-29T15:29:26.048069772Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePKCS1PrivateKey","Output":"=== RUN   TestParsePKCS1PrivateKey\n"}
+{"Time":"2026-06-29T15:29:26.048118857Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePKCS1PrivateKey","Output":"--- PASS: TestParsePKCS1PrivateKey (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.048135993Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePKCS1PrivateKey","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.04815384Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePKIXPublicKey"}
+{"Time":"2026-06-29T15:29:26.048161251Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePKIXPublicKey","Output":"=== RUN   TestParsePKIXPublicKey\n"}
+{"Time":"2026-06-29T15:29:26.048174101Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePKIXPublicKey","Output":"--- PASS: TestParsePKIXPublicKey (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.04820024Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePKIXPublicKey","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.048214883Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMarshalRSAPrivateKey"}
+{"Time":"2026-06-29T15:29:26.048223596Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMarshalRSAPrivateKey","Output":"=== RUN   TestMarshalRSAPrivateKey\n"}
+{"Time":"2026-06-29T15:29:26.048358561Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMarshalRSAPrivateKey","Output":"--- PASS: TestMarshalRSAPrivateKey (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.048395257Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMarshalRSAPrivateKey","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.048418332Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMatchHostnames"}
+{"Time":"2026-06-29T15:29:26.048426034Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMatchHostnames","Output":"=== RUN   TestMatchHostnames\n"}
+{"Time":"2026-06-29T15:29:26.048451162Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMatchHostnames","Output":"--- PASS: TestMatchHostnames (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.048458663Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMatchHostnames","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.048466335Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMatchIP"}
+{"Time":"2026-06-29T15:29:26.048474087Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMatchIP","Output":"=== RUN   TestMatchIP\n"}
+{"Time":"2026-06-29T15:29:26.048488388Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMatchIP","Output":"--- PASS: TestMatchIP (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.048511884Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMatchIP","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.048518995Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCertificateParse"}
+{"Time":"2026-06-29T15:29:26.048525575Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCertificateParse","Output":"=== RUN   TestCertificateParse\n"}
+{"Time":"2026-06-29T15:29:26.048716946Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCertificateParse","Output":"--- PASS: TestCertificateParse (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.048730997Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCertificateParse","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.04873965Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateSCTs"}
+{"Time":"2026-06-29T15:29:26.048744277Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateSCTs","Output":"=== RUN   TestParseCertificateSCTs\n"}
+{"Time":"2026-06-29T15:29:26.048873334Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateSCTs","Output":"--- PASS: TestParseCertificateSCTs (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.048886253Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateSCTs","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.048896849Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCreateSelfSignedCertificate"}
+{"Time":"2026-06-29T15:29:26.048904651Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCreateSelfSignedCertificate","Output":"=== RUN   TestCreateSelfSignedCertificate\n"}
+{"Time":"2026-06-29T15:29:26.051091916Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCreateSelfSignedCertificate","Output":"--- PASS: TestCreateSelfSignedCertificate (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.051108592Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCreateSelfSignedCertificate","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.05112038Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestUnknownCriticalExtension"}
+{"Time":"2026-06-29T15:29:26.051126359Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestUnknownCriticalExtension","Output":"=== RUN   TestUnknownCriticalExtension\n"}
+{"Time":"2026-06-29T15:29:26.051615182Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestUnknownCriticalExtension","Output":"--- PASS: TestUnknownCriticalExtension (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.051643475Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestUnknownCriticalExtension","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.051664036Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestECDSA"}
+{"Time":"2026-06-29T15:29:26.051676215Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestECDSA","Output":"=== RUN   TestECDSA\n"}
+{"Time":"2026-06-29T15:29:26.053849749Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestECDSA","Output":"--- PASS: TestECDSA (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.053891493Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestECDSA","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.053909971Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateWithDsaPublicKey"}
+{"Time":"2026-06-29T15:29:26.053930752Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateWithDsaPublicKey","Output":"=== RUN   TestParseCertificateWithDsaPublicKey\n"}
+{"Time":"2026-06-29T15:29:26.054083735Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateWithDsaPublicKey","Output":"--- PASS: TestParseCertificateWithDsaPublicKey (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.054113931Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateWithDsaPublicKey","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.05419914Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateWithDSASignatureAlgorithm"}
+{"Time":"2026-06-29T15:29:26.054247274Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateWithDSASignatureAlgorithm","Output":"=== RUN   TestParseCertificateWithDSASignatureAlgorithm\n"}
+{"Time":"2026-06-29T15:29:26.054390812Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateWithDSASignatureAlgorithm","Output":"--- PASS: TestParseCertificateWithDSASignatureAlgorithm (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.054428439Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateWithDSASignatureAlgorithm","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.05444914Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestVerifyCertificateWithDSASignature"}
+{"Time":"2026-06-29T15:29:26.054465195Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestVerifyCertificateWithDSASignature","Output":"=== RUN   TestVerifyCertificateWithDSASignature\n"}
+{"Time":"2026-06-29T15:29:26.055270028Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestVerifyCertificateWithDSASignature","Output":"--- PASS: TestVerifyCertificateWithDSASignature (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.055293214Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestVerifyCertificateWithDSASignature","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.055304771Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRSAPSSSelfSigned"}
+{"Time":"2026-06-29T15:29:26.055315578Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRSAPSSSelfSigned","Output":"=== RUN   TestRSAPSSSelfSigned\n"}
+{"Time":"2026-06-29T15:29:26.05599439Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRSAPSSSelfSigned","Output":"--- PASS: TestRSAPSSSelfSigned (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.056020559Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRSAPSSSelfSigned","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.056056264Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCRLCreation"}
+{"Time":"2026-06-29T15:29:26.056065157Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCRLCreation","Output":"=== RUN   TestCRLCreation\n"}
+{"Time":"2026-06-29T15:29:26.056452666Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCRLCreation","Output":"--- PASS: TestCRLCreation (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.056467539Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCRLCreation","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.056476272Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseDERCRL"}
+{"Time":"2026-06-29T15:29:26.056484004Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseDERCRL","Output":"=== RUN   TestParseDERCRL\n"}
+{"Time":"2026-06-29T15:29:26.056621082Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseDERCRL","Output":"--- PASS: TestParseDERCRL (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.056637067Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseDERCRL","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.056647172Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCRLWithoutExpiry"}
+{"Time":"2026-06-29T15:29:26.056657578Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCRLWithoutExpiry","Output":"=== RUN   TestCRLWithoutExpiry\n"}
+{"Time":"2026-06-29T15:29:26.056670868Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCRLWithoutExpiry","Output":"--- PASS: TestCRLWithoutExpiry (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.056681705Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCRLWithoutExpiry","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.056700703Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePEMCRL"}
+{"Time":"2026-06-29T15:29:26.056712562Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePEMCRL","Output":"=== RUN   TestParsePEMCRL\n"}
+{"Time":"2026-06-29T15:29:26.056745782Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePEMCRL","Output":"--- PASS: TestParsePEMCRL (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.056758371Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParsePEMCRL","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.056766634Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNonFatalErrors"}
+{"Time":"2026-06-29T15:29:26.056772052Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNonFatalErrors","Output":"=== RUN   TestNonFatalErrors\n"}
+{"Time":"2026-06-29T15:29:26.05678378Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNonFatalErrors","Output":"--- PASS: TestNonFatalErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.056812814Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNonFatalErrors","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.056828127Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRemoveCTPoison"}
+{"Time":"2026-06-29T15:29:26.056833796Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRemoveCTPoison","Output":"=== RUN   TestRemoveCTPoison\n"}
+{"Time":"2026-06-29T15:29:26.057038737Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRemoveCTPoison","Output":"--- PASS: TestRemoveCTPoison (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.057059339Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRemoveCTPoison","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.057068893Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestBuildPrecertTBS"}
+{"Time":"2026-06-29T15:29:26.057080571Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestBuildPrecertTBS","Output":"=== RUN   TestBuildPrecertTBS\n"}
+{"Time":"2026-06-29T15:29:26.058514511Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestBuildPrecertTBS","Output":"    x509_test.go:1342: BuildPrecertTBS(both-without-AKI)=nil,\"issuer has no auth-key-id extension\"; want _,nil\n"}
+{"Time":"2026-06-29T15:29:26.058538207Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestBuildPrecertTBS","Output":"    x509_test.go:1342: BuildPrecertTBS(precert-with-preIssuer-without-AKI)=nil,\"issuer has no auth-key-id extension\"; want _,nil\n"}
+{"Time":"2026-06-29T15:29:26.058551798Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestBuildPrecertTBS","Output":"    x509_test.go:1342: BuildPrecertTBS(precert-without-preIssuer-with-AKI)=nil,\"pre-cert has no authority-key-id extension to update\"; want _,nil\n"}
+{"Time":"2026-06-29T15:29:26.058570887Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestBuildPrecertTBS","Output":"--- FAIL: TestBuildPrecertTBS (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.058577947Z","Action":"fail","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestBuildPrecertTBS","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.058584978Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestImports"}
+{"Time":"2026-06-29T15:29:26.05859941Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestImports","Output":"=== RUN   TestImports\n"}
+{"Time":"2026-06-29T15:29:26.75520906Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestImports","Output":"--- PASS: TestImports (0.70s)\n"}
+{"Time":"2026-06-29T15:29:26.758410167Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestImports","Elapsed":0.7}
+{"Time":"2026-06-29T15:29:26.758613856Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCreateCertificateRequest"}
+{"Time":"2026-06-29T15:29:26.76180663Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCreateCertificateRequest","Output":"=== RUN   TestCreateCertificateRequest\n"}
+{"Time":"2026-06-29T15:29:26.761883187Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCreateCertificateRequest","Output":"--- PASS: TestCreateCertificateRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.761900263Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCreateCertificateRequest","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.761914524Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCertificateRequestOverrides"}
+{"Time":"2026-06-29T15:29:26.761923067Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCertificateRequestOverrides","Output":"=== RUN   TestCertificateRequestOverrides\n"}
+{"Time":"2026-06-29T15:29:26.761930338Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCertificateRequestOverrides","Output":"--- PASS: TestCertificateRequestOverrides (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.761963128Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCertificateRequestOverrides","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.761981786Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateRequest"}
+{"Time":"2026-06-29T15:29:26.761998682Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateRequest","Output":"=== RUN   TestParseCertificateRequest\n"}
+{"Time":"2026-06-29T15:29:26.762020606Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateRequest","Output":"--- PASS: TestParseCertificateRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.762036379Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestParseCertificateRequest","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.762046545Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCriticalFlagInCSRRequestedExtensions"}
+{"Time":"2026-06-29T15:29:26.762056099Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCriticalFlagInCSRRequestedExtensions","Output":"=== RUN   TestCriticalFlagInCSRRequestedExtensions\n"}
+{"Time":"2026-06-29T15:29:26.762415806Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCriticalFlagInCSRRequestedExtensions","Output":"--- PASS: TestCriticalFlagInCSRRequestedExtensions (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.762483109Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestCriticalFlagInCSRRequestedExtensions","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.762498162Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMaxPathLen"}
+{"Time":"2026-06-29T15:29:26.762518673Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMaxPathLen","Output":"=== RUN   TestMaxPathLen\n"}
+{"Time":"2026-06-29T15:29:26.762541858Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMaxPathLen","Output":"--- PASS: TestMaxPathLen (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.762574948Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMaxPathLen","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.76262898Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNoAuthorityKeyIdInSelfSignedCert"}
+{"Time":"2026-06-29T15:29:26.762645045Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNoAuthorityKeyIdInSelfSignedCert","Output":"=== RUN   TestNoAuthorityKeyIdInSelfSignedCert\n"}
+{"Time":"2026-06-29T15:29:26.762671806Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNoAuthorityKeyIdInSelfSignedCert","Output":"--- PASS: TestNoAuthorityKeyIdInSelfSignedCert (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.762704706Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestNoAuthorityKeyIdInSelfSignedCert","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.762749143Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestASN1BitLength"}
+{"Time":"2026-06-29T15:29:26.762776745Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestASN1BitLength","Output":"=== RUN   TestASN1BitLength\n"}
+{"Time":"2026-06-29T15:29:26.762835534Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestASN1BitLength","Output":"--- PASS: TestASN1BitLength (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.762858379Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestASN1BitLength","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.762987546Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestVerifyEmptyCertificate"}
+{"Time":"2026-06-29T15:29:26.763023901Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestVerifyEmptyCertificate","Output":"=== RUN   TestVerifyEmptyCertificate\n"}
+{"Time":"2026-06-29T15:29:26.763105605Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestVerifyEmptyCertificate","Output":"--- PASS: TestVerifyEmptyCertificate (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.76319432Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestVerifyEmptyCertificate","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.763258407Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestInsecureAlgorithmErrorString"}
+{"Time":"2026-06-29T15:29:26.76328003Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestInsecureAlgorithmErrorString","Output":"=== RUN   TestInsecureAlgorithmErrorString\n"}
+{"Time":"2026-06-29T15:29:26.763321643Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestInsecureAlgorithmErrorString","Output":"--- PASS: TestInsecureAlgorithmErrorString (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.76338512Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestInsecureAlgorithmErrorString","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.763465252Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMD5"}
+{"Time":"2026-06-29T15:29:26.763771918Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMD5","Output":"=== RUN   TestMD5\n"}
+{"Time":"2026-06-29T15:29:26.763830597Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMD5","Output":"--- PASS: TestMD5 (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.763848625Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMD5","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.763862275Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRSAMissingNULLParameters"}
+{"Time":"2026-06-29T15:29:26.763868365Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRSAMissingNULLParameters","Output":"=== RUN   TestRSAMissingNULLParameters\n"}
+{"Time":"2026-06-29T15:29:26.763876557Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRSAMissingNULLParameters","Output":"--- PASS: TestRSAMissingNULLParameters (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.763882065Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestRSAMissingNULLParameters","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.76389175Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestISOOIDInCertificate"}
+{"Time":"2026-06-29T15:29:26.763903258Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestISOOIDInCertificate","Output":"=== RUN   TestISOOIDInCertificate\n"}
+{"Time":"2026-06-29T15:29:26.763927404Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestISOOIDInCertificate","Output":"--- PASS: TestISOOIDInCertificate (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.763938031Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestISOOIDInCertificate","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.763945552Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMultipleRDN"}
+{"Time":"2026-06-29T15:29:26.763958452Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMultipleRDN","Output":"=== RUN   TestMultipleRDN\n"}
+{"Time":"2026-06-29T15:29:26.763971391Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMultipleRDN","Output":"--- PASS: TestMultipleRDN (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.76398342Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestMultipleRDN","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.763993875Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestSystemCertPool"}
+{"Time":"2026-06-29T15:29:26.764001858Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestSystemCertPool","Output":"=== RUN   TestSystemCertPool\n"}
+{"Time":"2026-06-29T15:29:26.815360327Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestSystemCertPool","Output":"--- PASS: TestSystemCertPool (0.05s)\n"}
+{"Time":"2026-06-29T15:29:26.815407568Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestSystemCertPool","Elapsed":0.05}
+{"Time":"2026-06-29T15:29:26.815444154Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrors"}
+{"Time":"2026-06-29T15:29:26.815455591Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrors","Output":"=== RUN   TestErrors\n"}
+{"Time":"2026-06-29T15:29:26.81546794Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrors","Output":"--- PASS: TestErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.815492297Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrors","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.815519308Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrorsAppend"}
+{"Time":"2026-06-29T15:29:26.81552731Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrorsAppend","Output":"=== RUN   TestErrorsAppend\n"}
+{"Time":"2026-06-29T15:29:26.815536765Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrorsAppend","Output":"--- PASS: TestErrorsAppend (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.815547681Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrorsAppend","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.815555633Z","Action":"run","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrorsFilter"}
+{"Time":"2026-06-29T15:29:26.815567632Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrorsFilter","Output":"=== RUN   TestErrorsFilter\n"}
+{"Time":"2026-06-29T15:29:26.815589034Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrorsFilter","Output":"--- PASS: TestErrorsFilter (0.00s)\n"}
+{"Time":"2026-06-29T15:29:26.815627733Z","Action":"pass","Package":"github.com/google/certificate-transparency-go/x509","Test":"TestErrorsFilter","Elapsed":0}
+{"Time":"2026-06-29T15:29:26.815635024Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:29:26.816997025Z","Action":"output","Package":"github.com/google/certificate-transparency-go/x509","Output":"FAIL\tgithub.com/google/certificate-transparency-go/x509\t0.867s\n"}
+{"Time":"2026-06-29T15:29:26.81705977Z","Action":"fail","Package":"github.com/google/certificate-transparency-go/x509","Elapsed":0.868}
+reward=0 graded=60 found=60 failed=1 parsed=62 framework=go exit_code=1

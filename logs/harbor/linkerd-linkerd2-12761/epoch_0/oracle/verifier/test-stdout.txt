@@ -1,0 +1,175 @@
+patching file policy-controller/k8s/index/src/outbound/tests/routes.rs
+patching file policy-controller/k8s/index/src/outbound/tests/routes/grpc.rs
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.12
+   Compiling libc v0.2.155
+   Compiling autocfg v1.3.0
+   Compiling once_cell v1.19.0
+   Compiling itoa v1.0.11
+   Compiling pin-project-lite v0.2.14
+   Compiling cfg-if v1.0.0
+   Compiling memchr v2.7.4
+   Compiling serde v1.0.203
+   Compiling futures-core v0.3.30
+   Compiling bytes v1.6.0
+   Compiling fnv v1.0.7
+   Compiling ryu v1.0.18
+   Compiling futures-sink v0.3.30
+   Compiling serde_json v1.0.117
+   Compiling thiserror v1.0.61
+   Compiling futures-io v0.3.30
+   Compiling futures-task v0.3.30
+   Compiling pin-utils v0.1.0
+   Compiling version_check v0.9.4
+   Compiling log v0.4.21
+   Compiling schemars v0.8.21
+   Compiling futures-channel v0.3.30
+   Compiling dyn-clone v1.0.17
+   Compiling zerocopy v0.7.34
+   Compiling tracing-core v0.1.32
+   Compiling ucd-trie v0.1.6
+   Compiling iana-time-zone v0.1.60
+   Compiling httparse v1.9.4
+   Compiling regex-syntax v0.8.3
+   Compiling http v0.2.12
+   Compiling tower-service v0.3.2
+   Compiling slab v0.4.9
+   Compiling num-traits v0.2.19
+   Compiling ahash v0.8.11
+   Compiling aho-corasick v1.1.3
+   Compiling lock_api v0.4.12
+   Compiling parking_lot_core v0.9.10
+   Compiling allocator-api2 v0.2.18
+   Compiling try-lock v0.2.5
+   Compiling k8s-openapi v0.20.0
+   Compiling smallvec v1.13.2
+   Compiling base64 v0.21.7
+   Compiling want v0.3.1
+   Compiling syn v1.0.109
+   Compiling httpdate v1.0.3
+   Compiling ppv-lite86 v0.2.17
+   Compiling http-body v0.4.6
+   Compiling tower-layer v0.3.2
+   Compiling equivalent v1.0.1
+   Compiling percent-encoding v2.3.1
+   Compiling scopeguard v1.2.0
+   Compiling zeroize v1.8.1
+   Compiling mime v0.3.17
+   Compiling base64 v0.22.1
+   Compiling http-range-header v0.3.1
+   Compiling quote v1.0.36
+   Compiling form_urlencoded v1.2.1
+   Compiling bitflags v2.5.0
+   Compiling getrandom v0.2.15
+   Compiling socket2 v0.5.7
+   Compiling signal-hook-registry v1.4.2
+   Compiling mio v0.8.11
+   Compiling syn v2.0.66
+   Compiling regex-automata v0.4.6
+   Compiling rand_core v0.6.4
+   Compiling unsafe-libyaml v0.2.11
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.11.1
+   Compiling pem v3.0.4
+   Compiling rand_chacha v0.3.1
+   Compiling hashbrown v0.14.5
+   Compiling parking_lot v0.12.3
+   Compiling instant v0.1.13
+   Compiling ordered-float v2.10.1
+   Compiling rand v0.8.5
+   Compiling home v0.5.9
+   Compiling either v1.12.0
+   Compiling anyhow v1.0.86
+   Compiling prometheus-client v0.22.2
+   Compiling dtoa v1.0.9
+   Compiling overload v0.1.1
+   Compiling lazy_static v1.5.0
+   Compiling tracing-log v0.2.0
+   Compiling sharded-slab v0.1.7
+   Compiling nu-ansi-term v0.46.0
+   Compiling thread_local v1.1.8
+   Compiling indexmap v2.2.6
+   Compiling maplit v1.0.2
+   Compiling backoff v0.4.0
+   Compiling tracing-subscriber v0.3.18
+   Compiling regex v1.10.5
+   Compiling derivative v2.2.0
+   Compiling serde_derive_internals v0.29.1
+   Compiling darling_core v0.20.9
+   Compiling serde_derive v1.0.203
+   Compiling tokio-macros v2.3.0
+   Compiling futures-macro v0.3.30
+   Compiling thiserror-impl v1.0.61
+   Compiling tracing-attributes v0.1.27
+   Compiling pin-project-internal v1.1.5
+   Compiling async-trait v0.1.80
+   Compiling prometheus-client-derive-encode v0.4.2
+   Compiling async-stream-impl v0.3.5
+   Compiling schemars_derive v0.8.21
+   Compiling darling_macro v0.20.9
+   Compiling async-stream v0.3.5
+   Compiling futures-util v0.3.30
+   Compiling tokio v1.38.0
+   Compiling pin-project v1.1.5
+   Compiling pest v2.7.10
+   Compiling tracing v0.1.40
+   Compiling darling v0.20.9
+   Compiling kube-derive v0.87.2
+   Compiling pest_meta v2.7.10
+   Compiling futures-executor v0.3.30
+   Compiling tower-http v0.4.4
+   Compiling futures v0.3.30
+   Compiling tokio-io-timeout v1.2.0
+   Compiling tokio-util v0.7.11
+   Compiling hyper v0.14.28
+   Compiling tokio-stream v0.1.15
+   Compiling tokio-test v0.4.4
+   Compiling pest_generator v2.7.10
+   Compiling tower v0.4.13
+   Compiling chrono v0.4.38
+   Compiling serde-value v0.7.0
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling secrecy v0.8.0
+   Compiling pest_derive v2.7.10
+   Compiling json-patch v1.4.0
+   Compiling hyper-timeout v0.4.1
+   Compiling ipnet v2.9.0
+   Compiling linkerd-policy-controller-core v0.1.0 (/workspace/repo/policy-controller/core)
+   Compiling jsonpath-rust v0.3.5
+   Compiling kube-core v0.87.2
+   Compiling kube-client v0.87.2
+   Compiling kube-runtime v0.87.2
+   Compiling kube v0.87.2
+   Compiling kubert v0.21.2
+   Compiling k8s-gateway-api v0.16.0
+   Compiling linkerd-policy-controller-k8s-api v0.1.0 (/workspace/repo/policy-controller/k8s/api)
+   Compiling linkerd-policy-controller-k8s-index v0.1.0 (/workspace/repo/policy-controller/k8s/index)
+    Finished test [unoptimized + debuginfo] target(s) in 28.42s
+────────────
+ Nextest run ID 6cdc80b7-7a12-4da8-b536-9f6f373b6762 with nextest profile: default
+    Starting 22 tests across 1 binary
+        PASS [   0.082s] ( 1/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_only_references_within_container
+        PASS [   0.084s] ( 2/22) linkerd-policy-controller-k8s-index defaults::test::test_parse_displayed
+        PASS [   0.089s] ( 3/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_ignores_udp
+        PASS [   0.089s] ( 4/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_ports_optional
+        PASS [   0.093s] ( 5/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_multiple_paths
+        PASS [   0.093s] ( 6/22) linkerd-policy-controller-k8s-index inbound::tests::pod_must_exist_for_lookup
+        PASS [   0.100s] ( 7/22) linkerd-policy-controller-k8s-index inbound::tests::annotation::default_policy_annotated
+        PASS [   0.103s] ( 8/22) linkerd-policy-controller-k8s-index inbound::tests::authorization_policy::authorization_policy_prevents_index_deletion
+        PASS [   0.109s] ( 9/22) linkerd-policy-controller-k8s-index inbound::tests::authorization_policy::authorization_targets_namespace
+        PASS [   0.110s] (10/22) linkerd-policy-controller-k8s-index inbound::tests::server_authorization::links_server_authz_by_label
+        PASS [   0.111s] (11/22) linkerd-policy-controller-k8s-index inbound::tests::annotation::default_policy_annotated_invalid
+        PASS [   0.112s] (12/22) linkerd-policy-controller-k8s-index inbound::tests::annotation::authenticated_annotated
+        PASS [   0.115s] (13/22) linkerd-policy-controller-k8s-index inbound::tests::authorization_policy::links_authorization_policy_with_service_account
+        PASS [   0.114s] (14/22) linkerd-policy-controller-k8s-index inbound::tests::authorization_policy::links_authorization_policy_with_mtls_name
+        PASS [   0.115s] (15/22) linkerd-policy-controller-k8s-index inbound::tests::annotation::opaque_annotated
+        PASS [   0.115s] (16/22) linkerd-policy-controller-k8s-index inbound::tests::server_authorization::links_server_authz_by_name
+        PASS [   0.117s] (17/22) linkerd-policy-controller-k8s-index inbound::tests::http_routes::route_attaches_to_server
+        PASS [   0.117s] (18/22) linkerd-policy-controller-k8s-index inbound::tests::http_routes::routes_created_for_probes
+        PASS [   0.063s] (19/22) linkerd-policy-controller-k8s-index inbound::workload::tests::probe_with_params
+        PASS [   0.060s] (20/22) linkerd-policy-controller-k8s-index ports::tests::parse_portset
+        PASS [   0.072s] (21/22) linkerd-policy-controller-k8s-index outbound::tests::routes::grpc::backend_service
+        PASS [   0.070s] (22/22) linkerd-policy-controller-k8s-index outbound::tests::routes::http::backend_service
+────────────
+     Summary [   0.161s] 22 tests run: 22 passed, 0 skipped
+reward=1 graded=22 found=1 failed=0 parsed=22 framework=cargo exit_code=0

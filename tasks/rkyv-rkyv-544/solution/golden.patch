@@ -1,0 +1,916 @@
+diff --git a/rkyv_derive/src/archive/enum.rs b/rkyv_derive/src/archive/enum.rs
+index e087431..d5baf00 100644
+--- a/rkyv_derive/src/archive/enum.rs
++++ b/rkyv_derive/src/archive/enum.rs
+@@ -2,7 +2,7 @@ use proc_macro2::TokenStream;
+ use quote::{format_ident, quote};
+ use syn::{
+     parse_quote, spanned::Spanned as _, DataEnum, Error, Field, Fields,
+-    Generics, Ident, Index, Member,
++    Generics, Ident, Index, Member, Path,
+ };
+ 
+ use crate::{
+@@ -11,7 +11,7 @@ use crate::{
+         resolver_variant_doc, variant_doc,
+     },
+     attributes::{Attributes, FieldAttributes},
+-    util::strip_raw,
++    util::{strip_generics_from_path, strip_raw},
+ };
+ 
+ pub fn impl_enum(
+@@ -65,8 +65,6 @@ pub fn impl_enum(
+ 
+     private.extend(generate_variant_structs(printing, generics, data)?);
+ 
+-    let resolve_arms = generate_resolve_arms(printing, generics, data)?;
+-
+     if let Some(ref compares) = attributes.compares {
+         for compare in compares {
+             if compare.is_ident("PartialEq") {
+@@ -89,12 +87,46 @@ pub fn impl_enum(
+ 
+     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
+ 
+-    Ok(quote! {
+-        #public
+-
+-        const _: () = {
+-            #private
++    let archive_impl = if let Some(ref remote) = attributes.remote {
++        let resolve_arms = generate_resolve_arms(
++            printing,
++            generics,
++            data,
++            &strip_generics_from_path(remote.clone()),
++        )?;
++
++        quote! {
++            impl #impl_generics #rkyv_path::with::ArchiveWith<#remote>
++                for #name #ty_generics
++            #where_clause
++            {
++                type Archived = #archived_type;
++                type Resolver = #resolver_name #ty_generics;
+ 
++                // Some resolvers will be (), this allow is to prevent clippy
++                // from complaining
++                #[allow(clippy::unit_arg)]
++                fn resolve_with(
++                    field: &#remote,
++                    resolver: Self::Resolver,
++                    out: #rkyv_path::Place<Self::Archived>,
++                ) {
++                    let __this = field;
++                    match resolver {
++                        #resolve_arms
++                    }
++                }
++            }
++        }
++    } else {
++        let resolve_arms = generate_resolve_arms(
++            printing,
++            generics,
++            data,
++            &parse_quote!(#name),
++        )?;
++
++        quote! {
+             impl #impl_generics #rkyv_path::Archive for #name #ty_generics
+             #where_clause
+             {
+@@ -109,11 +141,22 @@ pub fn impl_enum(
+                     resolver: Self::Resolver,
+                     out: #rkyv_path::Place<Self::Archived>,
+                 ) {
++                    let __this = self;
+                     match resolver {
+                         #resolve_arms
+                     }
+                 }
+             }
++        }
++    };
++
++    Ok(quote! {
++        #public
++
++        const _: () = {
++            #private
++
++            #archive_impl
+         };
+     })
+ }
+@@ -264,10 +307,10 @@ fn generate_resolve_arms(
+     printing: &Printing,
+     generics: &Generics,
+     data: &DataEnum,
++    name: &Path,
+ ) -> Result<TokenStream, Error> {
+     let Printing {
+         rkyv_path,
+-        name,
+         resolver_name,
+         ..
+     } = printing;
+@@ -317,9 +360,9 @@ fn generate_resolve_arms(
+                 #resolver_name::#variant_name {
+                     #(#members: #resolver_bindings,)*
+                 } => {
+-                    match self {
++                    match __this {
+                         #name::#variant_name {
+-                            #(#members: #self_bindings,)*
++                            #(#members: #self_bindings,)*..
+                         } => {
+                             let out = unsafe {
+                                 out.cast_unchecked::<
+@@ -362,8 +405,8 @@ fn generate_resolve_arms(
+             }),
+             Fields::Unnamed(_) => result.extend(quote! {
+                 #resolver_name::#variant_name( #(#resolver_bindings,)* ) => {
+-                    match self {
+-                        #name::#variant_name(#(#self_bindings,)*) => {
++                    match __this {
++                        #name::#variant_name(#(#self_bindings,)* ..) => {
+                             let out = unsafe {
+                                 out.cast_unchecked::<
+                                     #archived_variant_name #ty_generics
+diff --git a/rkyv_derive/src/archive/mod.rs b/rkyv_derive/src/archive/mod.rs
+index 2f98ad9..3344b98 100644
+--- a/rkyv_derive/src/archive/mod.rs
++++ b/rkyv_derive/src/archive/mod.rs
+@@ -1,12 +1,12 @@
+ mod r#enum;
+-mod printing;
++pub mod printing;
+ mod r#struct;
+ 
+ use proc_macro2::{Span, TokenStream};
+ use quote::quote;
+ use syn::{
+     parse_quote, Data, DataStruct, DeriveInput, Error, Field, Ident, Meta,
+-    Token, Type,
++    Path, Token, Type,
+ };
+ 
+ use crate::{
+@@ -46,9 +46,14 @@ fn archive_field_metas<'a>(
+                 meta.input.parse::<Token![=]>()?;
+                 meta.input.parse::<Type>()?;
+                 Ok(())
++            } else if meta.path.is_ident("getter") {
++                meta.input.parse::<Token![=]>()?;
++                meta.input.parse::<Path>()?;
++                Ok(())
+             } else {
+                 Err(meta.error(
+-                    "unrecognized argument; expected `omit_bounds` or `attr`",
++                    "unrecognized argument; expected `omit_bounds`, `attr`, \
++                     or `getter`",
+                 ))
+             }
+         })?;
+diff --git a/rkyv_derive/src/archive/struct.rs b/rkyv_derive/src/archive/struct.rs
+index 44a1468..d07a948 100644
+--- a/rkyv_derive/src/archive/struct.rs
++++ b/rkyv_derive/src/archive/struct.rs
+@@ -1,4 +1,4 @@
+-use proc_macro2::TokenStream;
++use proc_macro2::{Ident, Span, TokenStream};
+ use quote::quote;
+ use syn::{
+     parse_quote, punctuated::Punctuated, Error, Field, Fields, Generics,
+@@ -35,41 +35,64 @@ pub fn impl_struct(
+ 
+     result.extend(generate_resolver_type(printing, generics, fields)?);
+ 
+-    let mut resolve_statements = TokenStream::new();
+-    for (field, member) in fields.iter().zip(fields.members()) {
+-        let field_attrs = FieldAttributes::parse(field)?;
+-        let resolves = field_attrs.resolve(rkyv_path, field);
+-        resolve_statements.extend(quote! {
+-            let field_ptr = unsafe {
+-                ::core::ptr::addr_of_mut!((*out.ptr()).#member)
+-            };
+-            let field_out = unsafe {
+-                #rkyv_path::Place::from_field_unchecked(out, field_ptr)
+-            };
+-            #resolves(&self.#member, resolver.#member, field_out);
+-        });
+-    }
+-
+     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
+-    result.extend(quote! {
+-        impl #impl_generics #rkyv_path::Archive for #name #ty_generics
+-        #where_clause
+-        {
+-            type Archived = #archived_type;
+-            type Resolver = #resolver_name #ty_generics;
+ 
+-            // Some resolvers will be (), this allow is to prevent clippy
+-            // from complaining.
+-            #[allow(clippy::unit_arg)]
+-            fn resolve(
+-                &self,
+-                resolver: Self::Resolver,
+-                out: #rkyv_path::Place<Self::Archived>,
+-            ) {
+-                #resolve_statements
++    let archive_impl = if let Some(ref remote) = attributes.remote {
++        let resolve_statements = generate_resolve_statements(
++            printing,
++            fields,
++            Ident::new("field", Span::call_site()),
++        )?;
++
++        quote! {
++            impl #impl_generics #rkyv_path::with::ArchiveWith<#remote>
++                for #name #ty_generics
++            #where_clause
++            {
++                type Archived = #archived_type;
++                type Resolver = #resolver_name #ty_generics;
++
++                // Some resolvers will be (), this allow is to prevent clippy
++                // from complaining.
++                #[allow(clippy::unit_arg)]
++                fn resolve_with(
++                    field: &#remote,
++                    resolver: Self::Resolver,
++                    out: #rkyv_path::Place<Self::Archived>,
++                ) {
++                    #resolve_statements
++                }
+             }
+         }
+-    });
++    } else {
++        let resolve_statements = generate_resolve_statements(
++            printing,
++            fields,
++            Ident::new("self", Span::call_site()),
++        )?;
++
++        quote! {
++            impl #impl_generics #rkyv_path::Archive for #name #ty_generics
++            #where_clause
++            {
++                type Archived = #archived_type;
++                type Resolver = #resolver_name #ty_generics;
++
++                // Some resolvers will be (), this allow is to prevent clippy
++                // from complaining.
++                #[allow(clippy::unit_arg)]
++                fn resolve(
++                    &self,
++                    resolver: Self::Resolver,
++                    out: #rkyv_path::Place<Self::Archived>,
++                ) {
++                    #resolve_statements
++                }
++            }
++        }
++    };
++
++    result.extend(archive_impl);
+ 
+     for compare in attributes.compares.iter().flat_map(Punctuated::iter) {
+         if compare.is_ident("PartialEq") {
+@@ -90,6 +113,30 @@ pub fn impl_struct(
+     Ok(result)
+ }
+ 
++fn generate_resolve_statements(
++    printing: &Printing,
++    fields: &Fields,
++    this: Ident,
++) -> Result<TokenStream, Error> {
++    let rkyv_path = &printing.rkyv_path;
++    let mut resolve_statements = TokenStream::new();
++    for (field, member) in fields.iter().zip(fields.members()) {
++        let field_attrs = FieldAttributes::parse(field)?;
++        let resolves = field_attrs.resolve(rkyv_path, field);
++        let access_field = field_attrs.access_field(&this, &member);
++        resolve_statements.extend(quote! {
++            let field_ptr = unsafe {
++                ::core::ptr::addr_of_mut!((*out.ptr()).#member)
++            };
++            let field_out = unsafe {
++                #rkyv_path::Place::from_field_unchecked(out, field_ptr)
++            };
++            #resolves(#access_field, resolver.#member, field_out);
++        });
++    }
++    Ok(resolve_statements)
++}
++
+ fn generate_archived_type(
+     printing: &Printing,
+     generics: &Generics,
+diff --git a/rkyv_derive/src/attributes.rs b/rkyv_derive/src/attributes.rs
+index 88ac006..dd32bbd 100644
+--- a/rkyv_derive/src/attributes.rs
++++ b/rkyv_derive/src/attributes.rs
+@@ -27,6 +27,7 @@ pub struct Attributes {
+     pub as_type: Option<Type>,
+     pub archived: Option<Ident>,
+     pub resolver: Option<Ident>,
++    pub remote: Option<Path>,
+     pub metas: Vec<Meta>,
+     pub compares: Option<Punctuated<Path, Token![,]>>,
+     pub archive_bounds: Option<Punctuated<WherePredicate, Token![,]>>,
+@@ -137,6 +138,12 @@ impl Attributes {
+             self.metas
+                 .extend(metas.parse_terminated(Meta::parse, Token![,])?);
+             Ok(())
++        } else if meta.path.is_ident("remote") {
++            try_set_attribute(
++                &mut self.remote,
++                meta.value()?.parse()?,
++                "remote",
++            )
+         } else {
+             Err(meta.error("unrecognized rkyv argument"))
+         }
+@@ -192,6 +199,7 @@ pub struct FieldAttributes {
+     pub attrs: Punctuated<Meta, Token![,]>,
+     pub omit_bounds: Option<Path>,
+     pub with: Option<Type>,
++    pub getter: Option<Path>,
+ }
+ 
+ impl FieldAttributes {
+@@ -208,6 +216,10 @@ impl FieldAttributes {
+             meta.input.parse::<Token![=]>()?;
+             self.with = Some(meta.input.parse::<Type>()?);
+             Ok(())
++        } else if meta.path.is_ident("getter") {
++            meta.input.parse::<Token![=]>()?;
++            self.getter = Some(meta.input.parse::<Path>()?);
++            Ok(())
+         } else {
+             Err(meta.error("unrecognized rkyv arguments"))
+         }
+@@ -358,4 +370,16 @@ impl FieldAttributes {
+             }
+         }
+     }
++
++    pub fn access_field(
++        &self,
++        this: &Ident,
++        member: &impl ToTokens,
++    ) -> TokenStream {
++        if let Some(ref getter) = self.getter {
++            quote! { &#getter(&#this) }
++        } else {
++            quote! { &#this.#member }
++        }
++    }
+ }
+diff --git a/rkyv_derive/src/deserialize.rs b/rkyv_derive/src/deserialize.rs
+index 73725d0..716e546 100644
+--- a/rkyv_derive/src/deserialize.rs
++++ b/rkyv_derive/src/deserialize.rs
+@@ -1,11 +1,14 @@
+-use proc_macro2::TokenStream;
++use proc_macro2::{Span, TokenStream};
+ use quote::quote;
+ use syn::{
+     parse_quote, punctuated::Punctuated, spanned::Spanned, Data, DeriveInput,
+-    Error, Fields, Generics, Ident, Index,
++    Error, Fields, Generics, Ident, Index, Path, WhereClause,
+ };
+ 
+-use crate::attributes::{Attributes, FieldAttributes};
++use crate::{
++    archive::printing::Printing,
++    attributes::{Attributes, FieldAttributes},
++};
+ 
+ pub fn derive(input: DeriveInput) -> Result<TokenStream, Error> {
+     let attributes = Attributes::parse(&input)?;
+@@ -50,6 +53,84 @@ fn derive_deserialize_impl(
+ 
+     let mut deserialize_where = where_clause.clone();
+ 
++    if let Some(ref remote) = attributes.remote {
++        let printing = Printing::new(&input, attributes)?;
++
++        let body = generate_deserialize_body(
++            &input,
++            &mut deserialize_where,
++            &rkyv_path,
++            printing.archived_name,
++            name,
++        )?;
++
++        Ok(quote! {
++            #[automatically_derived]
++            impl #impl_generics
++                #rkyv_path::with::DeserializeWith<
++                    <
++                        #name #ty_generics as
++                            #rkyv_path::with::ArchiveWith<#remote>
++                    >::Archived,
++                    #remote,
++                    __D,
++                >
++                for #name #ty_generics
++            #deserialize_where
++            {
++                fn deserialize_with(
++                    field: &<
++                        #name #ty_generics as
++                            #rkyv_path::with::ArchiveWith<#remote>
++                    >::Archived,
++                    deserializer: &mut __D,
++                ) -> ::core::result::Result<
++                    #remote,
++                    <__D as #rkyv_path::rancor::Fallible>::Error,
++                > {
++                    let __this = field;
++                    #body.map(<#remote as From<#name #ty_generics>>::from)
++                }
++            }
++        })
++    } else {
++        let body = generate_deserialize_body(
++            &input,
++            &mut deserialize_where,
++            &rkyv_path,
++            Ident::new("Self", Span::call_site()),
++            name,
++        )?;
++
++        Ok(quote! {
++            #[automatically_derived]
++            impl #impl_generics #rkyv_path::Deserialize<#name #ty_generics, __D>
++                for #rkyv_path::Archived<#name #ty_generics>
++            #deserialize_where
++            {
++                fn deserialize(
++                    &self,
++                    deserializer: &mut __D,
++                ) -> ::core::result::Result<
++                    #name #ty_generics,
++                    <__D as #rkyv_path::rancor::Fallible>::Error,
++                > {
++                    let __this = self;
++                    #body
++                }
++            }
++        })
++    }
++}
++
++fn generate_deserialize_body(
++    input: &DeriveInput,
++    deserialize_where: &mut WhereClause,
++    rkyv_path: &Path,
++    self_type: Ident,
++    return_type: &Ident,
++) -> Result<TokenStream, Error> {
++    let this = Ident::new("__this", Span::call_site());
+     let body = match input.data {
+         Data::Struct(ref data) => match data.fields {
+             Fields::Named(ref fields) => {
+@@ -60,22 +141,22 @@ fn derive_deserialize_impl(
+                         let field_attrs = FieldAttributes::parse(field)?;
+ 
+                         deserialize_where.predicates.extend(
+-                            field_attrs.archive_bound(&rkyv_path, field),
++                            field_attrs.archive_bound(rkyv_path, field),
+                         );
+                         deserialize_where.predicates.extend(
+-                            field_attrs.deserialize_bound(&rkyv_path, field),
++                            field_attrs.deserialize_bound(rkyv_path, field),
+                         );
+ 
+                         let name = &field.ident;
+                         let deserialize =
+-                            field_attrs.deserialize(&rkyv_path, field);
++                            field_attrs.deserialize(rkyv_path, field);
+                         Ok(quote! {
+-                            #name: #deserialize(&self.#name, deserializer)?
++                            #name: #deserialize(&#this.#name, deserializer)?
+                         })
+                     })
+                     .collect::<Result<Vec<_>, Error>>()?;
+ 
+-                quote! { #name { #(#deserialize_fields,)* } }
++                quote! { #return_type { #(#deserialize_fields,)* } }
+             }
+             Fields::Unnamed(ref fields) => {
+                 let deserialize_fields = fields
+@@ -86,27 +167,24 @@ fn derive_deserialize_impl(
+                         let field_attrs = FieldAttributes::parse(field)?;
+ 
+                         deserialize_where.predicates.extend(
+-                            field_attrs.archive_bound(&rkyv_path, field),
++                            field_attrs.archive_bound(rkyv_path, field),
+                         );
+                         deserialize_where.predicates.extend(
+-                            field_attrs.deserialize_bound(&rkyv_path, field),
++                            field_attrs.deserialize_bound(rkyv_path, field),
+                         );
+ 
+                         let index = Index::from(i);
+                         let deserialize =
+-                            field_attrs.deserialize(&rkyv_path, field);
++                            field_attrs.deserialize(rkyv_path, field);
+                         Ok(quote! {
+-                            #deserialize(
+-                                &self.#index,
+-                                deserializer,
+-                            )?
++                            #deserialize(&#this.#index, deserializer)?
+                         })
+                     })
+                     .collect::<Result<Vec<_>, Error>>()?;
+ 
+-                quote! { #name(#(#deserialize_fields,)*) }
++                quote! { #return_type(#(#deserialize_fields,)*) }
+             }
+-            Fields::Unit => quote! { #name },
++            Fields::Unit => quote! { #return_type },
+         },
+         Data::Enum(ref data) => {
+             let deserialize_variants = data
+@@ -129,17 +207,17 @@ fn derive_deserialize_impl(
+ 
+                                     deserialize_where.predicates.extend(
+                                         field_attrs
+-                                            .archive_bound(&rkyv_path, field),
++                                            .archive_bound(rkyv_path, field),
+                                     );
+                                     deserialize_where.predicates.extend(
+                                         field_attrs.deserialize_bound(
+-                                            &rkyv_path, field,
++                                            rkyv_path, field,
+                                         ),
+                                     );
+ 
+                                     let name = &field.ident;
+                                     let deserialize = field_attrs
+-                                        .deserialize(&rkyv_path, field);
++                                        .deserialize(rkyv_path, field);
+                                     Ok(quote! {
+                                         #name: #deserialize(
+                                             #name,
+@@ -149,9 +227,9 @@ fn derive_deserialize_impl(
+                                 })
+                                 .collect::<Result<Vec<_>, Error>>()?;
+                             Ok(quote! {
+-                                Self::#variant {
+-                                    #(#bindings,)*
+-                                } => #name::#variant { #(#fields,)* }
++                                #self_type::#variant {
++                                    #(#bindings,)*..
++                                } => #return_type::#variant { #(#fields,)* }
+                             })
+                         }
+                         Fields::Unnamed(ref fields) => {
+@@ -171,11 +249,11 @@ fn derive_deserialize_impl(
+ 
+                                     deserialize_where.predicates.extend(
+                                         field_attrs
+-                                            .archive_bound(&rkyv_path, field),
++                                            .archive_bound(rkyv_path, field),
+                                     );
+                                     deserialize_where.predicates.extend(
+                                         field_attrs.deserialize_bound(
+-                                            &rkyv_path, field,
++                                            rkyv_path, field,
+                                         ),
+                                     );
+ 
+@@ -184,7 +262,7 @@ fn derive_deserialize_impl(
+                                         field.span(),
+                                     );
+                                     let deserialize = field_attrs
+-                                        .deserialize(&rkyv_path, field);
++                                        .deserialize(rkyv_path, field);
+                                     Ok(quote! {
+                                         #deserialize(
+                                             #binding,
+@@ -194,20 +272,20 @@ fn derive_deserialize_impl(
+                                 })
+                                 .collect::<Result<Vec<_>, Error>>()?;
+                             Ok(quote! {
+-                                Self::#variant(
+-                                    #(#bindings,)*
+-                                ) => #name::#variant(#(#fields,)*)
++                                #self_type::#variant(
++                                    #(#bindings,)*..
++                                ) => #return_type::#variant(#(#fields,)*)
+                             })
+                         }
+-                        Fields::Unit => {
+-                            Ok(quote! { Self::#variant => #name::#variant })
+-                        }
++                        Fields::Unit => Ok(quote! {
++                            #self_type::#variant => #return_type::#variant
++                        }),
+                     }
+                 })
+                 .collect::<Result<Vec<_>, Error>>()?;
+ 
+             quote! {
+-                match self {
++                match __this {
+                     #(#deserialize_variants,)*
+                 }
+             }
+@@ -220,21 +298,5 @@ fn derive_deserialize_impl(
+         }
+     };
+ 
+-    Ok(quote! {
+-        #[automatically_derived]
+-        impl #impl_generics #rkyv_path::Deserialize<#name #ty_generics, __D>
+-            for #rkyv_path::Archived<#name #ty_generics>
+-        #deserialize_where
+-        {
+-            fn deserialize(
+-                &self,
+-                deserializer: &mut __D,
+-            ) -> ::core::result::Result<
+-                #name #ty_generics,
+-                <__D as #rkyv_path::rancor::Fallible>::Error,
+-            > {
+-                ::core::result::Result::Ok(#body)
+-            }
+-        }
+-    })
++    Ok(quote! { ::core::result::Result::Ok(#body) })
+ }
+diff --git a/rkyv_derive/src/serialize.rs b/rkyv_derive/src/serialize.rs
+index 28a50c3..9d68bff 100644
+--- a/rkyv_derive/src/serialize.rs
++++ b/rkyv_derive/src/serialize.rs
+@@ -1,13 +1,13 @@
+-use proc_macro2::TokenStream;
++use proc_macro2::{Span, TokenStream};
+ use quote::quote;
+ use syn::{
+     parse_quote, punctuated::Punctuated, spanned::Spanned, Data, DeriveInput,
+-    Error, Fields, Generics, Ident, Index,
++    Error, Fields, Generics, Ident, Index, Path, WhereClause,
+ };
+ 
+ use crate::{
+     attributes::{Attributes, FieldAttributes},
+-    util::strip_raw,
++    util::{strip_generics_from_path, strip_raw},
+ };
+ 
+ pub fn derive(input: DeriveInput) -> Result<TokenStream, Error> {
+@@ -57,6 +57,72 @@ fn derive_serialize_impl(
+     );
+ 
+     let mut serialize_where = where_clause.clone();
++
++    if let Some(ref remote) = attributes.remote {
++        let body = generate_serialize_body(
++            &input,
++            &mut serialize_where,
++            &rkyv_path,
++            resolver,
++            strip_generics_from_path(remote.clone()),
++        )?;
++
++        Ok(quote! {
++            #[automatically_derived]
++            impl #impl_generics #rkyv_path::with::SerializeWith<#remote, __S>
++                for #name #ty_generics
++            #serialize_where
++            {
++                fn serialize_with(
++                    field: &#remote,
++                    serializer: &mut __S,
++                ) -> ::core::result::Result<
++                    <Self as #rkyv_path::with::ArchiveWith<#remote>>::Resolver,
++                    <__S as #rkyv_path::rancor::Fallible>::Error,
++                > {
++                    let __this = field;
++                    #body
++                }
++            }
++        })
++    } else {
++        let body = generate_serialize_body(
++            &input,
++            &mut serialize_where,
++            &rkyv_path,
++            resolver,
++            parse_quote!(#name),
++        )?;
++
++        Ok(quote! {
++            #[automatically_derived]
++            impl #impl_generics #rkyv_path::Serialize<__S>
++                for #name #ty_generics
++            #serialize_where
++            {
++                fn serialize(
++                    &self,
++                    serializer: &mut __S,
++                ) -> ::core::result::Result<
++                    <Self as #rkyv_path::Archive>::Resolver,
++                    <__S as #rkyv_path::rancor::Fallible>::Error,
++                > {
++                    let __this = self;
++                    #body
++                }
++            }
++        })
++    }
++}
++
++fn generate_serialize_body(
++    input: &DeriveInput,
++    serialize_where: &mut WhereClause,
++    rkyv_path: &Path,
++    resolver: Ident,
++    name: Path,
++) -> Result<TokenStream, Error> {
++    let this = Ident::new("__this", Span::call_site());
+     let body = match input.data {
+         Data::Struct(ref data) => match data.fields {
+             Fields::Named(ref fields) => {
+@@ -67,14 +133,15 @@ fn derive_serialize_impl(
+                         let field_attrs = FieldAttributes::parse(field)?;
+ 
+                         serialize_where.predicates.extend(
+-                            field_attrs.serialize_bound(&rkyv_path, field),
++                            field_attrs.serialize_bound(rkyv_path, field),
+                         );
+ 
+                         let name = &field.ident;
+-                        let serialize =
+-                            field_attrs.serialize(&rkyv_path, field);
++                        let access_field =
++                            field_attrs.access_field(&this, name);
++                        let serialize = field_attrs.serialize(rkyv_path, field);
+                         Ok(quote! {
+-                            #name: #serialize(&self.#name, serializer)?
++                            #name: #serialize(#access_field, serializer)?
+                         })
+                     })
+                     .collect::<Result<Vec<_>, Error>>()?;
+@@ -90,13 +157,14 @@ fn derive_serialize_impl(
+                         let field_attrs = FieldAttributes::parse(field)?;
+ 
+                         serialize_where.predicates.extend(
+-                            field_attrs.serialize_bound(&rkyv_path, field),
++                            field_attrs.serialize_bound(rkyv_path, field),
+                         );
+ 
+                         let index = Index::from(i);
+-                        let serialize =
+-                            field_attrs.serialize(&rkyv_path, field);
+-                        Ok(quote! { #serialize(&self.#index, serializer)? })
++                        let access_field =
++                            field_attrs.access_field(&this, &index);
++                        let serialize = field_attrs.serialize(rkyv_path, field);
++                        Ok(quote! { #serialize(#access_field, serializer)? })
+                     })
+                     .collect::<Result<Vec<_>, Error>>()?;
+ 
+@@ -121,23 +189,22 @@ fn derive_serialize_impl(
+                                     let field_attrs =
+                                         FieldAttributes::parse(field)?;
+ 
+-                                    serialize_where
+-                                        .predicates
+-                                        .extend(field_attrs.serialize_bound(
+-                                            &rkyv_path, field,
+-                                        ));
++                                    serialize_where.predicates.extend(
++                                        field_attrs
++                                            .serialize_bound(rkyv_path, field),
++                                    );
+ 
+                                     let name = &field.ident;
+-                                    let serialize = field_attrs
+-                                        .serialize(&rkyv_path, field);
++                                    let serialize =
++                                        field_attrs.serialize(rkyv_path, field);
+                                     Ok(quote! {
+                                         #name: #serialize(#name, serializer)?
+                                     })
+                                 })
+                                 .collect::<Result<Vec<_>, Error>>()?;
+                             Ok(quote! {
+-                                Self::#variant {
+-                                    #(#bindings,)*
++                                #name::#variant {
++                                    #(#bindings,)*..
+                                 } => #resolver::#variant {
+                                     #(#fields,)*
+                                 }
+@@ -159,38 +226,37 @@ fn derive_serialize_impl(
+                                     let field_attrs =
+                                         FieldAttributes::parse(field)?;
+ 
+-                                    serialize_where
+-                                        .predicates
+-                                        .extend(field_attrs.serialize_bound(
+-                                            &rkyv_path, field,
+-                                        ));
++                                    serialize_where.predicates.extend(
++                                        field_attrs
++                                            .serialize_bound(rkyv_path, field),
++                                    );
+ 
+                                     let binding = Ident::new(
+                                         &format!("_{}", i),
+                                         field.span(),
+                                     );
+-                                    let serialize = field_attrs
+-                                        .serialize(&rkyv_path, field);
++                                    let serialize =
++                                        field_attrs.serialize(rkyv_path, field);
+                                     Ok(quote! {
+                                         #serialize(#binding, serializer)?
+                                     })
+                                 })
+                                 .collect::<Result<Vec<_>, Error>>()?;
+                             Ok(quote! {
+-                                Self::#variant(
+-                                    #(#bindings,)*
++                                #name::#variant(
++                                    #(#bindings,)*..
+                                 ) => #resolver::#variant(#(#fields,)*)
+                             })
+                         }
+-                        Fields::Unit => {
+-                            Ok(quote! { Self::#variant => #resolver::#variant })
+-                        }
++                        Fields::Unit => Ok(
++                            quote! { #name::#variant => #resolver::#variant },
++                        ),
+                     }
+                 })
+                 .collect::<Result<Vec<_>, Error>>()?;
+ 
+             quote! {
+-                match self {
++                match __this {
+                     #(#serialize_arms,)*
+                 }
+             }
+@@ -203,21 +269,5 @@ fn derive_serialize_impl(
+         }
+     };
+ 
+-    Ok(quote! {
+-        #[automatically_derived]
+-        impl #impl_generics #rkyv_path::Serialize<__S>
+-            for #name #ty_generics
+-        #serialize_where
+-        {
+-            fn serialize(
+-                &self,
+-                serializer: &mut __S,
+-            ) -> ::core::result::Result<
+-                Self::Resolver,
+-                <__S as #rkyv_path::rancor::Fallible>::Error,
+-            > {
+-                ::core::result::Result::Ok(#body)
+-            }
+-        }
+-    })
++    Ok(quote! { ::core::result::Result::Ok(#body) })
+ }
+diff --git a/rkyv_derive/src/util.rs b/rkyv_derive/src/util.rs
+index 4467b6f..cb383fe 100644
+--- a/rkyv_derive/src/util.rs
++++ b/rkyv_derive/src/util.rs
+@@ -2,7 +2,8 @@ use core::iter::FlatMap;
+ 
+ use proc_macro2::Ident;
+ use syn::{
+-    punctuated::Iter, Data, DataEnum, DataStruct, DataUnion, Field, Variant,
++    punctuated::Iter, Data, DataEnum, DataStruct, DataUnion, Field, Path,
++    PathArguments, Variant,
+ };
+ 
+ pub fn strip_raw(ident: &Ident) -> String {
+@@ -48,3 +49,11 @@ pub fn iter_fields(data: &Data) -> FieldsIter<'_> {
+         }
+     }
+ }
++
++pub fn strip_generics_from_path(mut path: Path) -> Path {
++    for segment in path.segments.iter_mut() {
++        segment.arguments = PathArguments::None;
++    }
++
++    path
++}

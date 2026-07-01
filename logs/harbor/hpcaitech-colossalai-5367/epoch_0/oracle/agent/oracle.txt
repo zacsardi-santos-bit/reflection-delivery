@@ -1,0 +1,7 @@
+patching file colossalai/inference/batch_bucket.py
+patching file colossalai/inference/config.py
+patching file colossalai/inference/core/engine.py
+patching file colossalai/inference/core/request_handler.py
+patching file colossalai/inference/kv_cache/kvcache_manager.py
+patching file colossalai/inference/modeling/models/nopadding_llama.py
+patching file colossalai/inference/struct.py

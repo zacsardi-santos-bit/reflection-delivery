@@ -1,0 +1,477 @@
+patching file app/src/androidTest/java/au/com/shiftyjelly/pocketcasts/models/db/AppDatabaseTest.kt
+patching file modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt
+patching file modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfViewModelTest.kt
+patching file modules/features/podcasts/src/test/java/au/com/shiftyjelly/pocketcasts/podcasts/view/folders/SuggestedFoldersViewModelTest.kt
+patching file modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptCuesInfoBuilderTest.kt
+patching file modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt
+patching file modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessTest.kt
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.12.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Type-safe project accessors is an incubating feature.
+
+> Configure project :app
+WARNING: Sentry configuration file 'sentry.properties' not found. The ProGuard mapping files won't be uploaded.
+
+> Configure project :wear
+WARNING: Sentry configuration file 'sentry.properties' not found. The ProGuard mapping files won't be uploaded.
+Configuration 'debugCompileClasspath' was resolved during configuration time.
+This is a build performance and scalability issue.
+See https://github.com/gradle/gradle/issues/2298
+Run with --info for a stacktrace.
+Configuration 'debugRuntimeClasspath' was resolved during configuration time.
+This is a build performance and scalability issue.
+See https://github.com/gradle/gradle/issues/2298
+Run with --info for a stacktrace.
+
+> Task :modules:services:images:preBuild UP-TO-DATE
+> Task :modules:services:protobuf:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:preferences:preBuild UP-TO-DATE
+> Task :modules:services:model:preBuild UP-TO-DATE
+> Task :modules:services:compose:preBuild UP-TO-DATE
+> Task :modules:services:analytics:preBuild UP-TO-DATE
+> Task :modules:services:deeplink:preBuild UP-TO-DATE
+> Task :modules:services:ui:preBuild UP-TO-DATE
+> Task :modules:services:views:preBuild UP-TO-DATE
+> Task :modules:services:crashlogging:preBuild UP-TO-DATE
+> Task :modules:services:localization:preBuild UP-TO-DATE
+> Task :modules:services:servers:preBuild UP-TO-DATE
+> Task :modules:features:settings:preBuild UP-TO-DATE
+> Task :modules:features:reimagine:preBuild UP-TO-DATE
+> Task :modules:services:repositories:preBuild UP-TO-DATE
+> Task :modules:services:utils:preBuild UP-TO-DATE
+> Task :modules:features:player:preBuild UP-TO-DATE
+> Task :modules:services:preferences:preDebugBuild UP-TO-DATE
+> Task :modules:services:deeplink:preDebugBuild UP-TO-DATE
+> Task :modules:services:images:preDebugBuild UP-TO-DATE
+> Task :modules:services:repositories:preDebugBuild UP-TO-DATE
+> Task :modules:features:player:preDebugBuild UP-TO-DATE
+> Task :modules:services:crashlogging:preDebugBuild UP-TO-DATE
+> Task :modules:services:analytics:preDebugBuild UP-TO-DATE
+> Task :modules:features:settings:preDebugBuild UP-TO-DATE
+> Task :modules:services:localization:preDebugBuild UP-TO-DATE
+> Task :modules:features:player:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:compose:preDebugBuild UP-TO-DATE
+> Task :modules:services:model:preDebugBuild UP-TO-DATE
+> Task :modules:services:ui:preDebugBuild UP-TO-DATE
+> Task :modules:services:servers:preDebugBuild UP-TO-DATE
+> Task :modules:services:views:preDebugBuild UP-TO-DATE
+> Task :modules:features:reimagine:preDebugBuild UP-TO-DATE
+> Task :modules:services:utils:preDebugBuild UP-TO-DATE
+> Task :modules:services:localization:generateDebugResources UP-TO-DATE
+> Task :modules:services:compose:generateDebugResources UP-TO-DATE
+> Task :modules:services:analytics:generateDebugResources UP-TO-DATE
+> Task :modules:services:model:generateDebugResources UP-TO-DATE
+> Task :modules:services:repositories:generateDebugResources UP-TO-DATE
+> Task :modules:services:ui:generateDebugResources UP-TO-DATE
+> Task :modules:features:reimagine:generateDebugResources UP-TO-DATE
+> Task :modules:services:preferences:generateDebugResources UP-TO-DATE
+> Task :modules:services:crashlogging:generateDebugResources UP-TO-DATE
+> Task :modules:services:servers:generateDebugResources UP-TO-DATE
+> Task :modules:services:utils:generateDebugResources UP-TO-DATE
+> Task :modules:services:deeplink:generateDebugResources UP-TO-DATE
+> Task :modules:services:sharing:preBuild UP-TO-DATE
+> Task :modules:services:preferences:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:crashlogging:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:sharing:preDebugBuild UP-TO-DATE
+> Task :modules:services:servers:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:sharing:generateDebugResources UP-TO-DATE
+> Task :modules:services:deeplink:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:servers:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:crashlogging:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:preferences:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:deeplink:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:deeplink:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:sharing:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:sharing:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:model:packageDebugResources UP-TO-DATE
+> Task :modules:services:compose:packageDebugResources UP-TO-DATE
+> Task :modules:services:utils:packageDebugResources UP-TO-DATE
+> Task :modules:services:analytics:packageDebugResources UP-TO-DATE
+> Task :modules:features:reimagine:packageDebugResources UP-TO-DATE
+> Task :modules:services:repositories:packageDebugResources UP-TO-DATE
+> Task :modules:services:deeplink:packageDebugResources UP-TO-DATE
+> Task :modules:services:localization:packageDebugResources UP-TO-DATE
+> Task :modules:services:localization:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:localization:generateDebugRFile UP-TO-DATE
+> Task :modules:services:utils:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:utils:generateDebugRFile UP-TO-DATE
+> Task :modules:services:localization:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:localization:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:images:generateDebugResources UP-TO-DATE
+> Task :modules:services:ui:packageDebugResources UP-TO-DATE
+> Task :modules:services:model:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:ui:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:model:generateDebugRFile UP-TO-DATE
+> Task :modules:services:ui:generateDebugRFile UP-TO-DATE
+> Task :modules:services:model:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:utils:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:model:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:deeplink:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:deeplink:generateDebugRFile UP-TO-DATE
+> Task :modules:services:utils:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:images:packageDebugResources UP-TO-DATE
+> Task :modules:services:images:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:images:generateDebugRFile UP-TO-DATE
+> Task :modules:services:images:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:images:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:repositories:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:compose:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:analytics:parseDebugLocalResources UP-TO-DATE
+> Task :modules:features:reimagine:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:compose:generateDebugRFile UP-TO-DATE
+> Task :modules:services:repositories:generateDebugRFile UP-TO-DATE
+> Task :modules:services:analytics:generateDebugRFile UP-TO-DATE
+> Task :modules:services:compose:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:protobuf:extractIncludeProto UP-TO-DATE
+> Task :modules:services:repositories:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:analytics:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:protobuf:extractProto UP-TO-DATE
+> Task :modules:features:reimagine:generateDebugRFile UP-TO-DATE
+> Task :modules:features:reimagine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:analytics:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:repositories:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:compose:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:ui:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:sharing:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:servers:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:crashlogging:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:analytics:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:preferences:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:repositories:javaPreCompileDebug UP-TO-DATE
+> Task :modules:features:reimagine:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:sharedtest:preBuild UP-TO-DATE
+> Task :modules:services:sharedtest:preDebugBuild UP-TO-DATE
+> Task :modules:services:ui:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:sharing:packageDebugResources UP-TO-DATE
+> Task :modules:services:crashlogging:packageDebugResources UP-TO-DATE
+> Task :modules:services:ui:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:repositories:preDebugUnitTestBuild UP-TO-DATE
+> Task :modules:services:sharing:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:repositories:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :modules:services:sharing:generateDebugRFile UP-TO-DATE
+> Task :modules:services:protobuf:generateProto UP-TO-DATE
+> Task :modules:features:reimagine:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:model:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:sharedtest:generateDebugResources UP-TO-DATE
+> Task :modules:services:compose:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:preferences:packageDebugResources UP-TO-DATE
+> Task :modules:services:servers:packageDebugResources UP-TO-DATE
+> Task :modules:services:crashlogging:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:preferences:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:servers:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:sharedtest:packageDebugResources UP-TO-DATE
+> Task :modules:services:crashlogging:generateDebugRFile UP-TO-DATE
+> Task :modules:services:servers:generateDebugRFile UP-TO-DATE
+> Task :modules:services:preferences:generateDebugRFile UP-TO-DATE
+> Task :modules:services:sharedtest:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:sharedtest:generateDebugRFile UP-TO-DATE
+> Task :modules:services:sharedtest:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:services:sharedtest:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:sharedtest:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:views:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :modules:features:settings:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :modules:services:protobuf:compileKotlin UP-TO-DATE
+> Task :modules:features:player:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :modules:services:views:generateDebugResources UP-TO-DATE
+> Task :modules:features:settings:generateDebugResources UP-TO-DATE
+> Task :modules:services:localization:compileDebugKotlin UP-TO-DATE
+> Task :modules:features:settings:collectDependenciesDebug UP-TO-DATE
+> Task :modules:services:localization:javaPreCompileDebug UP-TO-DATE
+> Task :modules:features:settings:prepareLibraryDefinitionsDebug UP-TO-DATE
+> Task :modules:services:images:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:deeplink:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:images:javaPreCompileDebug UP-TO-DATE
+> Task :modules:features:player:generateDebugResources UP-TO-DATE
+> Task :modules:services:protobuf:compileJava UP-TO-DATE
+> Task :modules:services:deeplink:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:images:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:localization:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:deeplink:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:protobuf:processResources UP-TO-DATE
+> Task :modules:services:protobuf:classes UP-TO-DATE
+> Task :modules:services:views:packageDebugResources UP-TO-DATE
+> Task :modules:services:localization:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:images:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:deeplink:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:images:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:localization:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:views:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:protobuf:jar UP-TO-DATE
+> Task :modules:services:deeplink:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:images:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:localization:processDebugJavaRes UP-TO-DATE
+> Task :modules:features:settings:packageDebugResources UP-TO-DATE
+> Task :modules:features:settings:parseDebugLocalResources UP-TO-DATE
+> Task :modules:features:settings:generateDebugRFile UP-TO-DATE
+> Task :modules:features:settings:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:features:settings:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:features:settings:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:repositories:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :modules:services:views:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :modules:services:utils:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:views:generateDebugRFile UP-TO-DATE
+> Task :modules:features:player:packageDebugResources UP-TO-DATE
+> Task :modules:services:views:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :modules:features:player:parseDebugLocalResources UP-TO-DATE
+> Task :modules:services:views:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:features:player:generateDebugBuildConfig UP-TO-DATE
+> Task :modules:services:views:javaPreCompileDebug UP-TO-DATE
+> Task :modules:features:player:generateDebugRFile UP-TO-DATE
+> Task :modules:features:player:javaPreCompileDebug UP-TO-DATE
+> Task :modules:features:player:preDebugUnitTestBuild UP-TO-DATE
+> Task :modules:features:settings:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :modules:features:player:generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :modules:features:player:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :modules:features:player:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :modules:services:utils:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:utils:javaPreCompileDebug UP-TO-DATE
+> Task :modules:services:utils:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:utils:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:services:utils:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:utils:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:utils:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:crashlogging:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:sharedtest:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:sharedtest:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:sharedtest:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:sharedtest:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:sharedtest:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:model:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:crashlogging:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:crashlogging:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:crashlogging:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:services:crashlogging:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:crashlogging:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:crashlogging:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:model:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:model:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:model:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:model:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:model:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:preferences:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:preferences:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:preferences:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:preferences:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:services:preferences:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:preferences:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:preferences:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:servers:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:servers:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:servers:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:servers:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:services:servers:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:servers:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:servers:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:analytics:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:analytics:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:analytics:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:analytics:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:services:analytics:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:analytics:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:analytics:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:repositories:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:repositories:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:repositories:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:repositories:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:services:repositories:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:repositories:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:repositories:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:sharing:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:ui:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:sharing:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:ui:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:ui:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:sharing:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:sharing:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:services:sharing:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:sharing:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:ui:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:services:ui:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:sharing:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:ui:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:ui:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:compose:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:compose:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:compose:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:compose:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:compose:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:compose:processDebugJavaRes UP-TO-DATE
+> Task :modules:services:views:kspDebugKotlin UP-TO-DATE
+> Task :modules:services:views:compileDebugKotlin UP-TO-DATE
+> Task :modules:services:views:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:services:views:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:services:views:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:views:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:services:views:processDebugJavaRes UP-TO-DATE
+> Task :modules:features:reimagine:kspDebugKotlin UP-TO-DATE
+> Task :modules:features:settings:kspDebugKotlin UP-TO-DATE
+> Task :modules:features:reimagine:compileDebugKotlin UP-TO-DATE
+> Task :modules:features:settings:compileDebugKotlin UP-TO-DATE
+> Task :modules:features:reimagine:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:features:settings:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:features:reimagine:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:features:reimagine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:features:reimagine:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:features:reimagine:processDebugJavaRes UP-TO-DATE
+> Task :modules:features:settings:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:features:settings:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:features:settings:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:features:settings:processDebugJavaRes UP-TO-DATE
+> Task :modules:features:player:kspDebugKotlin UP-TO-DATE
+> Task :modules:features:player:compileDebugKotlin UP-TO-DATE
+> Task :modules:features:player:compileDebugJavaWithJavac UP-TO-DATE
+> Task :modules:features:player:transformDebugClassesWithAsm UP-TO-DATE
+> Task :modules:features:player:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :modules:features:player:processDebugJavaRes UP-TO-DATE
+> Task :modules:features:player:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :modules:services:repositories:kspDebugUnitTestKotlin
+> Task :modules:features:player:kspDebugUnitTestKotlin
+
+> Task :modules:services:repositories:compileDebugUnitTestKotlin
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptCuesInfoBuilderTest.kt:23:82 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:51:74 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:52:84 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:98:54 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:99:57 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:100:50 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:110:62 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:111:57 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:130:54 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:131:54 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:142:57 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:153:57 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:154:57 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:165:57 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:166:50 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:239:57 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/podcast/TranscriptsManagerImplTest.kt:251:57 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessTest.kt:450:13 No parameter with name 'pocketCastsTranscripts' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessTest.kt:474:17 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessTest.kt:481:17 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessTest.kt:487:17 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessTest.kt:506:13 No parameter with name 'pocketCastsTranscripts' found.
+e: file:///workspace/repo/modules/services/repositories/src/test/java/au/com/shiftyjelly/pocketcasts/repositories/shownotes/ShowNotesProcessTest.kt:535:13 No parameter with name 'pocketCastsTranscripts' found.
+
+> Task :modules:services:repositories:compileDebugUnitTestKotlin FAILED
+
+> Task :modules:features:player:compileDebugUnitTestKotlin FAILED
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:46:82 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:52:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:52:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:52:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:63:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:63:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:63:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:74:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:74:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:74:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:77:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:87:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:87:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:87:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:90:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:99:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:99:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:99:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:102:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:111:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:111:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:111:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:114:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:123:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:123:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:123:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:126:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:135:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:135:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:135:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:138:42 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:145:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:145:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:145:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:148:42 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:155:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:155:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:155:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:158:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:168:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:168:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:168:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:171:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:181:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:181:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:181:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:184:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:194:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:194:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:194:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:197:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:207:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:207:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:207:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:207:107 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:211:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:215:30 Unresolved reference 'showPaywall'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:222:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:222:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:222:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:222:107 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:226:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:230:31 Unresolved reference 'showPaywall'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:237:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:237:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:237:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:237:107 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:241:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:245:31 Unresolved reference 'showPaywall'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:252:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:252:37 Unresolved reference 'observeTranscriptForEpisode'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:252:65 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:252:107 No parameter with name 'isGenerated' found.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:256:41 No value passed for parameter 'isTranscriptViewOpen'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:260:31 Unresolved reference 'showPaywall'.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/view/transcripts/TranscriptViewModelTest.kt:293:13 No parameter with name 'subscriptionManager' found.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfViewModelTest.kt:218:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///workspace/repo/modules/features/player/src/test/java/au/com/shiftyjelly/pocketcasts/player/viewmodel/ShelfViewModelTest.kt:218:37 Unresolved reference 'observeTranscriptForEpisode'.
+
+[Incubating] Problems report is available at: file:///workspace/repo/build/reports/problems/problems-report.html
+
+FAILURE: Build completed with 2 failures.
+
+1: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':modules:features:player:compileDebugUnitTestKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':modules:services:repositories:compileDebugUnitTestKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.12.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 59s
+247 actionable tasks: 4 executed, 243 up-to-date
+WARNING: The following functionality has been deprecated and will be removed in the next major release of the Develocity Gradle plugin. Run with '-Ddevelocity.deprecation.captureOrigin=true' to see where the deprecated functionality is being used. For assistance with migration, see https://gradle.com/help/gradle-plugin-develocity-migration.
+- The deprecated "gradleEnterprise.buildScan.buildScanPublished" API has been replaced by "develocity.buildScan.buildScanPublished"
+reward=0 graded=225 found=0 failed=0 parsed=0 framework=junit exit_code=1

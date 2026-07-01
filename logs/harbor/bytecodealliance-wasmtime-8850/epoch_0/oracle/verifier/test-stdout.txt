@@ -1,0 +1,27 @@
+patching file cranelift/filetests/filetests/isa/riscv64/issue8847-1.clif
+patching file cranelift/filetests/filetests/isa/riscv64/issue8847.clif
+patching file cranelift/filetests/filetests/isa/riscv64/return-call.clif
+warning: cranelift-codegen@0.110.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.110.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.110.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.110.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.110.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+   Compiling cranelift-codegen v0.110.0 (/workspace/repo/cranelift/codegen)
+   Compiling cranelift-module v0.110.0 (/workspace/repo/cranelift/module)
+   Compiling cranelift-native v0.110.0 (/workspace/repo/cranelift/native)
+   Compiling cranelift-frontend v0.110.0 (/workspace/repo/cranelift/frontend)
+   Compiling cranelift-interpreter v0.110.0 (/workspace/repo/cranelift/interpreter)
+   Compiling cranelift-reader v0.110.0 (/workspace/repo/cranelift/reader)
+   Compiling cranelift-jit v0.110.0 (/workspace/repo/cranelift/jit)
+   Compiling cranelift-object v0.110.0 (/workspace/repo/cranelift/object)
+   Compiling cranelift v0.110.0 (/workspace/repo/cranelift/umbrella)
+   Compiling cranelift-filetests v0.0.0 (/workspace/repo/cranelift/filetests)
+   Compiling cranelift-tools v0.0.0 (/workspace/repo/cranelift)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.43s
+────────────
+ Nextest run ID e9eb6c39-8764-4186-ae71-dab6996c1343 with nextest profile: default
+    Starting 1 test across 1 binary
+        PASS [   1.589s] (1/1) cranelift-tools::filetests filetests
+────────────
+     Summary [   1.590s] 1 test run: 1 passed, 0 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

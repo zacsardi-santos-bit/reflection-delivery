@@ -1,0 +1,1253 @@
+diff --git a/.gitignore b/.gitignore
+index fe790007a21..0a9020bcff7 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -16,6 +16,7 @@ test-results
+ .verdaccio-cache
+ .next
+ /.npmrc
++tsconfig.vitest-temp.json
+ 
+ # Yarn stuff
+ /**/.yarn/*
+diff --git a/code/.eslintrc.js b/code/.eslintrc.js
+index 4268ec993dd..e43666e36c2 100644
+--- a/code/.eslintrc.js
++++ b/code/.eslintrc.js
+@@ -93,6 +93,7 @@ module.exports = {
+         '**/__tests__/**',
+         '**/__testfixtures__/**',
+         '**/*.test.*',
++        '**/*.test-d.*',
+         '**/*.stories.*',
+         '**/*.mockdata.*',
+         '**/template/**/*',
+diff --git a/code/core/src/channels/index.ts b/code/core/src/channels/index.ts
+index a31de6c556f..c9dce040e55 100644
+--- a/code/core/src/channels/index.ts
++++ b/code/core/src/channels/index.ts
+@@ -1,6 +1,7 @@
+ /// <reference path="../typings.d.ts" />
+ import { global } from '@storybook/global';
+ 
++import { UniversalStore } from '../shared/universal-store';
+ import { Channel } from './main';
+ import { PostMessageTransport } from './postmessage';
+ import type { ChannelTransport, Config } from './types';
+@@ -39,7 +40,14 @@ export function createBrowserChannel({ page, extraTransports = [] }: Options): C
+     transports.push(new WebsocketTransport({ url: channelUrl, onError: () => {}, page }));
+   }
+ 
+-  return new Channel({ transports });
++  const channel = new Channel({ transports });
++  // eslint-disable-next-line no-underscore-dangle
++  UniversalStore.__prepare(
++    channel,
++    page === 'manager' ? UniversalStore.Environment.MANAGER : UniversalStore.Environment.PREVIEW
++  );
++
++  return channel;
+ }
+ 
+ export type { Listener, ChannelEvent, ChannelTransport, ChannelHandler } from './types';
+diff --git a/code/core/src/core-server/index.ts b/code/core/src/core-server/index.ts
+index 5a74e0056c1..01725df3cf7 100644
+--- a/code/core/src/core-server/index.ts
++++ b/code/core/src/core-server/index.ts
+@@ -10,3 +10,5 @@ export { mapStaticDir } from './utils/server-statics';
+ export { StoryIndexGenerator } from './utils/StoryIndexGenerator';
+ 
+ export { loadStorybook as experimental_loadStorybook } from './load';
++
++export { UniversalStore as experimental_UniversalStore } from '../shared/universal-store';
+diff --git a/code/core/src/core-server/utils/get-server-channel.ts b/code/core/src/core-server/utils/get-server-channel.ts
+index 3c8370e8955..47f7a06e14e 100644
+--- a/code/core/src/core-server/utils/get-server-channel.ts
++++ b/code/core/src/core-server/utils/get-server-channel.ts
+@@ -4,6 +4,8 @@ import { Channel, HEARTBEAT_INTERVAL } from '@storybook/core/channels';
+ import { isJSON, parse, stringify } from 'telejson';
+ import WebSocket, { WebSocketServer } from 'ws';
+ 
++import { UniversalStore } from '../../shared/universal-store';
++
+ type Server = NonNullable<NonNullable<ConstructorParameters<typeof WebSocketServer>[0]>['server']>;
+ 
+ /**
+@@ -72,7 +74,12 @@ export class ServerChannelTransport {
+ export function getServerChannel(server: Server) {
+   const transports = [new ServerChannelTransport(server)];
+ 
+-  return new Channel({ transports, async: true });
++  const channel = new Channel({ transports, async: true });
++
++  // eslint-disable-next-line no-underscore-dangle
++  UniversalStore.__prepare(channel, UniversalStore.Environment.SERVER);
++
++  return channel;
+ }
+ 
+ // for backwards compatibility
+diff --git a/code/core/src/manager-api/root.tsx b/code/core/src/manager-api/root.tsx
+index 0fd7fc0fa7a..0dde4a2c3f0 100644
+--- a/code/core/src/manager-api/root.tsx
++++ b/code/core/src/manager-api/root.tsx
+@@ -514,6 +514,9 @@ export function useArgTypes(): ArgTypes {
+   return (current?.type === 'story' && current.argTypes) || {};
+ }
+ 
++export { UniversalStore as experimental_UniversalStore } from '../shared/universal-store';
++export { useUniversalStore as experimental_useUniversalStore } from '../shared/universal-store/use-universal-store-manager';
++
+ export { addons } from './lib/addons';
+ 
+ // We need to rename this so it's not compiled to a straight re-export
+diff --git a/code/core/src/manager/globals/exports.ts b/code/core/src/manager/globals/exports.ts
+index 4e34bb61244..fb4f045d5ed 100644
+--- a/code/core/src/manager/globals/exports.ts
++++ b/code/core/src/manager/globals/exports.ts
+@@ -522,7 +522,9 @@ export default {
+     'controlOrMetaSymbol',
+     'eventMatchesShortcut',
+     'eventToShortcut',
++    'experimental_UniversalStore',
+     'experimental_requestResponse',
++    'experimental_useUniversalStore',
+     'isMacLike',
+     'isShortcutTaken',
+     'keyToSymbol',
+@@ -556,7 +558,9 @@ export default {
+     'controlOrMetaSymbol',
+     'eventMatchesShortcut',
+     'eventToShortcut',
++    'experimental_UniversalStore',
+     'experimental_requestResponse',
++    'experimental_useUniversalStore',
+     'isMacLike',
+     'isShortcutTaken',
+     'keyToSymbol',
+@@ -590,7 +594,9 @@ export default {
+     'controlOrMetaSymbol',
+     'eventMatchesShortcut',
+     'eventToShortcut',
++    'experimental_UniversalStore',
+     'experimental_requestResponse',
++    'experimental_useUniversalStore',
+     'isMacLike',
+     'isShortcutTaken',
+     'keyToSymbol',
+diff --git a/code/core/src/preview-api/index.ts b/code/core/src/preview-api/index.ts
+index d067acad89c..bc57ddbe6ce 100644
+--- a/code/core/src/preview-api/index.ts
++++ b/code/core/src/preview-api/index.ts
+@@ -27,6 +27,9 @@ export { makeDecorator } from './addons';
+  */
+ export { addons, mockChannel } from './addons';
+ 
++export { UniversalStore as experimental_UniversalStore } from '../shared/universal-store';
++export { useUniversalStore as experimental_useUniversalStore } from '../shared/universal-store/use-universal-store-preview';
++
+ /** DOCS API */
+ export { DocsContext } from './preview-web';
+ 
+diff --git a/code/core/src/shared/universal-store/__mocks__/instances.ts b/code/core/src/shared/universal-store/__mocks__/instances.ts
+new file mode 100644
+index 00000000000..2f1eede4d99
+--- /dev/null
++++ b/code/core/src/shared/universal-store/__mocks__/instances.ts
+@@ -0,0 +1,73 @@
++/* eslint-disable import/no-extraneous-dependencies */
++
++/**
++ * Mock implementation of a universal store instances manager for testing purposes.
++ *
++ * This class provides a two-level map structure to manage store instances:
++ *
++ * - First level: environments (identified by environment key)
++ * - Second level: store instances within each environment (identified by instance key)
++ *
++ * The keys must be in the format "environment:instance".
++ */
++import { vi } from 'vitest';
++
++import invariant from 'tiny-invariant';
++
++import type { UniversalStore } from '..';
++
++class MockInstancesMap {
++  environments = new Map<string, Map<string, UniversalStore<any, any>>>();
++
++  set = vi.fn((key: string, value: UniversalStore<any, any>) => {
++    const { environment, instanceKey } = this.getKeys(key);
++    environment.set(instanceKey, value);
++
++    return this;
++  });
++
++  get = vi.fn((key: string) => {
++    const { environment, instanceKey } = this.getKeys(key);
++    return environment.get(instanceKey);
++  });
++
++  has = vi.fn((key: string) => {
++    const { environment, instanceKey } = this.getKeys(key);
++    return environment.has(instanceKey);
++  });
++
++  delete = vi.fn((key: string) => {
++    const { environment, instanceKey } = this.getKeys(key);
++    return environment.delete(instanceKey);
++  });
++
++  clear = vi.fn((environmentKey: string) => {
++    invariant(
++      this.environments.has(environmentKey),
++      'Environment key is required when clearing instances. To clear all environments, use `clearAllEnvironments`'
++    );
++    return this.environments.get(environmentKey)!.clear();
++  });
++
++  environmentSize = vi.fn((environmentKey: string) => {
++    return this.environments.get(environmentKey)?.size ?? 0;
++  });
++
++  clearAllEnvironments = vi.fn(() => {
++    this.environments.clear();
++  });
++
++  private getKeys(key: string) {
++    const [environmentKey, instanceKey] = key.split(':');
++    invariant(
++      environmentKey && instanceKey,
++      'Creating instances with the mock requires that the id is in the form "environment:instance"'
++    );
++    if (!this.environments.has(environmentKey)) {
++      this.environments.set(environmentKey, new Map());
++    }
++    return { environment: this.environments.get(environmentKey)!, instanceKey };
++  }
++}
++
++export const instances = new MockInstancesMap();
+diff --git a/code/core/src/shared/universal-store/index.test-d.ts b/code/core/src/shared/universal-store/index.test-d.ts
+new file mode 100644
+index 00000000000..24217141d93
+--- /dev/null
++++ b/code/core/src/shared/universal-store/index.test-d.ts
+@@ -0,0 +1,105 @@
++import { describe, expectTypeOf, it } from 'vitest';
++
++import { UniversalStore } from '.';
++import type { EventInfo, InternalEvent } from './types';
++import { useUniversalStore as useUniversalStoreManager } from './use-universal-store-manager';
++import { useUniversalStore as useUniversalStorePreview } from './use-universal-store-preview';
++
++type State = { count: number; done: boolean };
++type IncrementEvent = {
++  type: 'INCREMENT';
++  payload: number;
++};
++type ToggleEvent = { type: 'TOGGLE' };
++type CustomEvent = IncrementEvent | ToggleEvent;
++
++describe('UniversalStore', () => {
++  it('should have any types without State or Event specified', () => {
++    const store = UniversalStore.create({ id: 'test' });
++    expectTypeOf(store).toEqualTypeOf<UniversalStore<any, { type: string; payload?: any }>>();
++
++    expectTypeOf(store.getState()).toEqualTypeOf<any>();
++    expectTypeOf(store.setState).parameter(0).toEqualTypeOf<any | ((state: any) => any)>();
++    store.onStateChange((state, previousState, eventInfo) => {
++      expectTypeOf(state).toEqualTypeOf<any>();
++      expectTypeOf(previousState).toEqualTypeOf<any>();
++      expectTypeOf(eventInfo).toEqualTypeOf<EventInfo>();
++    });
++  });
++
++  it('should have the correct types for State', () => {
++    const store = UniversalStore.create<State>({ id: 'test' });
++    expectTypeOf(store).toEqualTypeOf<UniversalStore<State, { type: string; payload?: any }>>();
++
++    // Assert - get
++    expectTypeOf(store.getState()).toEqualTypeOf<State>();
++
++    // Assert - set
++    expectTypeOf(store.setState).parameter(0).toEqualTypeOf<State | ((state: State) => State)>();
++
++    // Assert - listener
++    store.onStateChange((state, previousState, eventInfo) => {
++      expectTypeOf(state).toEqualTypeOf<State>();
++      expectTypeOf(previousState).toEqualTypeOf<State>();
++      expectTypeOf(eventInfo).toEqualTypeOf<EventInfo>();
++    });
++  });
++
++  it('should have the correct types for CustomEvent', () => {
++    const store = UniversalStore.create<any, CustomEvent>({ id: 'test' });
++    expectTypeOf(store).toEqualTypeOf<UniversalStore<any, CustomEvent>>();
++
++    expectTypeOf(store.send).parameter(0).toEqualTypeOf<CustomEvent>();
++
++    store.subscribe((event) => {
++      expectTypeOf(event).toMatchTypeOf<CustomEvent | InternalEvent<State>>();
++      if (event.type === 'INCREMENT') {
++        expectTypeOf(event.payload).toEqualTypeOf<IncrementEvent['payload']>();
++      }
++    });
++
++    store.subscribe('TOGGLE', (event) => {
++      expectTypeOf(event).toEqualTypeOf<ToggleEvent>();
++    });
++  });
++
++  describe('useUniversalStore', () => {
++    describe('Manager', () => {
++      it('should have correct types for the state without a selector', () => {
++        const store = UniversalStore.create<State, CustomEvent>({ id: 'test' });
++        const [state, setState] = useUniversalStoreManager(store);
++        expectTypeOf(state).toEqualTypeOf<State>();
++        expectTypeOf(setState).parameter(0).toEqualTypeOf<State | ((state: State) => State)>();
++      });
++
++      it('should have correct types for the state with a selector', () => {
++        const store = UniversalStore.create<State, CustomEvent>({ id: 'test' });
++        const [state, setState] = useUniversalStoreManager(store, (s) => {
++          expectTypeOf(s).toEqualTypeOf<State>();
++          return s.count;
++        });
++        expectTypeOf(state).toEqualTypeOf<State['count']>();
++        expectTypeOf(setState).parameter(0).toEqualTypeOf<State | ((state: State) => State)>();
++      });
++    });
++
++    describe('Preview', () => {
++      it('should have correct types for the state without a selector', () => {
++        const store = UniversalStore.create<State, CustomEvent>({ id: 'test' });
++        const [state, setState] = useUniversalStorePreview(store);
++        expectTypeOf(state).toEqualTypeOf<State>();
++        expectTypeOf(setState).parameter(0).toEqualTypeOf<State | ((state: State) => State)>();
++      });
++
++      it('should have correct types for the state with a selector', () => {
++        const store = UniversalStore.create<State, CustomEvent>({ id: 'test' });
++        const [state, setState] = useUniversalStorePreview(store, (s) => {
++          expectTypeOf(s).toEqualTypeOf<State>();
++          return s.count;
++        });
++        expectTypeOf(state).toEqualTypeOf<State['count']>();
++        expectTypeOf(setState).parameter(0).toEqualTypeOf<State | ((state: State) => State)>();
++      });
++    });
++  });
++});
+diff --git a/code/core/src/shared/universal-store/index.ts b/code/core/src/shared/universal-store/index.ts
+new file mode 100644
+index 00000000000..65883108c80
+--- /dev/null
++++ b/code/core/src/shared/universal-store/index.ts
+@@ -0,0 +1,648 @@
++import { isEqual } from 'es-toolkit';
++import { dedent } from 'ts-dedent';
++
++import { instances } from './instances';
++import type {
++  Actor,
++  ChannelEvent,
++  ChannelLike,
++  EnvironmentType,
++  Event,
++  EventInfo,
++  ExistingStateResponseEvent,
++  Listener,
++  SetStateEvent,
++  StateUpdater,
++  StoreOptions,
++} from './types';
++
++const CHANNEL_EVENT_PREFIX = 'UNIVERSAL_STORE:' as const;
++
++const ProgressState = {
++  PENDING: 'PENDING',
++  RESOLVED: 'RESOLVED',
++  REJECTED: 'REJECTED',
++} as const;
++
++/**
++ * A universal store implementation that synchronizes state across different environments using a
++ * channel-based communication.
++ *
++ * The store follows a leader-follower pattern where:
++ *
++ * - Leader: The main store instance that owns and manages the state
++ * - Follower: Store instances that mirror the leader's state
++ *
++ * Features:
++ *
++ * - State synchronization across environments
++ * - Event-based communication
++ * - Type-safe state and custom events
++ * - Subscription system for state changes and custom events
++ *
++ * @remarks
++ * - The store must be created using the static `create()` method, not the constructor
++ * - Only leader stores can set initial state
++ * - Follower stores will automatically sync with their leader's state
++ *
++ * @example
++ *
++ * ```typescript
++ * interface MyState {
++ *   count: number;
++ * }
++ * interface MyCustomEvent {
++ *   type: 'INCREMENT';
++ *   payload: number;
++ * }
++ *
++ * // Create a leader store
++ * const leaderStore = UniversalStore.create<MyState, MyCustomEvent>({
++ *   id: 'my-store',
++ *   leader: true,
++ *   initialState: { count: 0 },
++ * });
++ *
++ * // Create a follower store
++ * const followerStore = UniversalStore.create<MyState, MyCustomEvent>({
++ *   id: 'my-store',
++ *   leader: false,
++ * });
++ * ```
++ *
++ * @template State - The type of state managed by the store
++ * @template CustomEvent - Custom events that can be sent through the store. Must have a `type`
++ *   string and optional `payload`
++ * @throws {Error} If constructed directly instead of using `create()`
++ * @throws {Error} If created without setting a channel first
++ * @throws {Error} If a follower is created with initial state
++ * @throws {Error} If a follower cannot find its leader within 1 second
++ */
++export class UniversalStore<State, CustomEvent extends { type: string; payload?: any }> {
++  /**
++   * Defines the possible actor types in the store system
++   *
++   * @readonly
++   */
++  public static readonly ActorType = {
++    LEADER: 'LEADER',
++    FOLLOWER: 'FOLLOWER',
++  } as const;
++
++  /**
++   * Defines the possible environments the store can run in
++   *
++   * @readonly
++   */
++  public static readonly Environment = {
++    SERVER: 'SERVER',
++    MANAGER: 'MANAGER',
++    PREVIEW: 'PREVIEW',
++  } as const;
++
++  /**
++   * Internal event types used for store synchronization
++   *
++   * @readonly
++   */
++  public static readonly InternalEventType = {
++    EXISTING_STATE_REQUEST: '__EXISTING_STATE_REQUEST',
++    EXISTING_STATE_RESPONSE: '__EXISTING_STATE_RESPONSE',
++    SET_STATE: '__SET_STATE',
++    LEADER_CREATED: '__LEADER_CREATED',
++    FOLLOWER_CREATED: '__FOLLOWER_CREATED',
++  } as const;
++
++  public static readonly Status = {
++    UNPREPARED: 'UNPREPARED',
++    SYNCING: 'SYNCING',
++    READY: 'READY',
++    ERROR: 'ERROR',
++  } as const;
++
++  // This is used to check if constructor was called from the static factory create()
++  private static isInternalConstructing = false;
++
++  // Will be set when Storybook prepares the static store with UniversalStore.__prepare()
++  private static channel: ChannelLike;
++
++  // Will be set when Storybook prepares the static store with UniversalStore.__prepare()
++  private static environment: (typeof UniversalStore.Environment)[keyof typeof UniversalStore.Environment];
++
++  static {
++    UniversalStore.setupPreparationPromise();
++  }
++
++  /**
++   * The preparation construct is used to keep track of all store's preparation state the promise is
++   * resolved when the store is prepared with the static __prepare() method which will also change
++   * the state from PENDING to RESOLVED
++   */
++  private static preparation: {
++    state: (typeof ProgressState)[keyof typeof ProgressState];
++    resolve: (args: Awaited<typeof UniversalStore.preparation.promise>) => void;
++    reject: (error: Error) => void;
++    promise: Promise<{ channel: ChannelLike; environment: EnvironmentType }>;
++  };
++
++  private static setupPreparationPromise() {
++    let resolveRef: typeof UniversalStore.preparation.resolve;
++    let rejectRef: typeof UniversalStore.preparation.reject;
++
++    const promise = new Promise<Awaited<typeof UniversalStore.preparation.promise>>(
++      (resolve, reject) => {
++        resolveRef = (args) => {
++          UniversalStore.preparation.state = ProgressState.RESOLVED;
++          resolve(args);
++        };
++        rejectRef = (...args) => {
++          UniversalStore.preparation.state = ProgressState.REJECTED;
++          reject(args);
++        };
++      }
++    );
++
++    UniversalStore.preparation = {
++      state: ProgressState.PENDING,
++      resolve: resolveRef!,
++      reject: rejectRef!,
++      promise,
++    };
++  }
++
++  /** Enable debug logs for this store */
++  public debugging = false;
++
++  /** The actor object representing the store instance with a unique ID and a type */
++  public get actor(): Actor {
++    return Object.freeze({
++      id: this.actorId,
++      type: this.actorType,
++      environment: UniversalStore.environment,
++    });
++  }
++
++  /**
++   * The current state of the store, that signals both if the store is prepared by Storybook and
++   * also - in the case of a follower - if the state has been synced with the leader's state.
++   */
++  public get status(): (typeof UniversalStore.Status)[keyof typeof UniversalStore.Status] {
++    switch (UniversalStore.preparation.state) {
++      case ProgressState.PENDING:
++        return UniversalStore.Status.UNPREPARED;
++      case ProgressState.REJECTED:
++        return UniversalStore.Status.ERROR;
++      case ProgressState.RESOLVED:
++        break;
++      default:
++    }
++    switch (this.syncing?.state) {
++      case ProgressState.PENDING:
++      case undefined:
++        return UniversalStore.Status.SYNCING;
++      case ProgressState.REJECTED:
++        return UniversalStore.Status.ERROR;
++      case ProgressState.RESOLVED:
++      default:
++        return UniversalStore.Status.READY;
++    }
++  }
++
++  /**
++   * A promise that resolves when the store is fully ready. A leader will be ready when the store
++   * has been prepared by Storybook, which is almost instantly.
++   *
++   * A follower will be ready when the state has been synced with the leader's state, within a few
++   * hundred milliseconds.
++   */
++  public untilReady = () => {
++    return Promise.all([UniversalStore.preparation.promise, this.syncing?.promise]);
++  };
++
++  /**
++   * The syncing construct is used to keep track of if the instance's state has been synced with the
++   * other instances. A leader will immediately have the promise resolved. A follower will initially
++   * be in a PENDING state, and resolve the the leader has sent the existing state, or reject if no
++   * leader has responded before the timeout.
++   */
++  private syncing?: {
++    state: (typeof ProgressState)[keyof typeof ProgressState];
++    promise?: Promise<void>;
++    resolve?: () => void;
++    reject?: (error: Error) => void;
++  };
++
++  private channelEventName: string;
++
++  private state: State;
++
++  // TODO: narrow type of listeners based on event type
++  private listeners: Map<string, Set<Listener<any>>> = new Map([['*', new Set()]]);
++
++  private id: string;
++
++  private actorId: Actor['id'];
++
++  private actorType: Actor['type'];
++
++  private constructor(options: StoreOptions<State>) {
++    this.debugging = options.debug ?? false;
++    // This constructor is a simulated private constructor
++    // it can only be called from within the static factory method create()
++    // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_propertiessimulating_private_constructors
++    if (!UniversalStore.isInternalConstructing) {
++      throw new TypeError(
++        'UniversalStore is not constructable - use UniversalStore.create() instead'
++      );
++    }
++    UniversalStore.isInternalConstructing = false;
++
++    this.id = options.id;
++    this.actorId = globalThis.crypto
++      ? globalThis.crypto.randomUUID()
++      : // TODO: remove this fallback in SB 9.0 when we no longer support Node 18
++        Date.now().toString(36) + Math.random().toString(36).substring(2);
++    this.actorType = options.leader
++      ? UniversalStore.ActorType.LEADER
++      : UniversalStore.ActorType.FOLLOWER;
++    this.state = options.initialState as State;
++    this.channelEventName = `${CHANNEL_EVENT_PREFIX}${this.id}`;
++
++    this.debug('constructor', { options, channelEventName: this.channelEventName });
++
++    if (this.actor.type === UniversalStore.ActorType.LEADER) {
++      // If this is a leader, resolve the syncing promise immediately
++      // because the state doesn't need to be synced
++      this.syncing = {
++        state: ProgressState.RESOLVED,
++        promise: Promise.resolve(),
++      };
++    } else {
++      // Set up the syncing promise for followers, that will be resolved when the state
++      // is synced with the leader
++      let syncingResolve: () => void;
++      let syncingReject: (error: Error) => void;
++      const syncingPromise = new Promise<void>((resolve, reject) => {
++        syncingResolve = () => {
++          if (this.syncing!.state !== ProgressState.PENDING) {
++            return;
++          }
++          this.syncing!.state = ProgressState.RESOLVED;
++          resolve();
++        };
++        syncingReject = (reason) => {
++          if (this.syncing!.state !== ProgressState.PENDING) {
++            return;
++          }
++          this.syncing!.state = ProgressState.REJECTED;
++          reject(reason);
++        };
++      });
++      this.syncing = {
++        state: ProgressState.PENDING,
++        promise: syncingPromise,
++        resolve: syncingResolve!,
++        reject: syncingReject!,
++      };
++    }
++
++    UniversalStore.preparation.promise.then(({ channel, environment }) => {
++      this.debug('prepared', { channel, environment });
++      UniversalStore.channel.on(this.channelEventName, this.handleChannelEvents);
++
++      if (this.actor.type === UniversalStore.ActorType.LEADER) {
++        this.emitToChannel(
++          {
++            type: UniversalStore.InternalEventType.LEADER_CREATED,
++          },
++          { actor: this.actor }
++        );
++      } else {
++        this.emitToChannel(
++          {
++            type: UniversalStore.InternalEventType.FOLLOWER_CREATED,
++          },
++          { actor: this.actor }
++        );
++        // 1. Emit a request for the existing state
++        this.emitToChannel(
++          {
++            type: UniversalStore.InternalEventType.EXISTING_STATE_REQUEST,
++          },
++          { actor: this.actor }
++        );
++        // 2. Wait 1 sec for a response, then reject the syncing promise if not already resolved
++        setTimeout(() => {
++          // if the state is already resolved by a response before this timeout,
++          // rejecting it doesn't do anything, it will be ignored
++          this.syncing!.reject!(
++            new TypeError(
++              `No existing state found for follower with id: '${options.id}'. Make sure a leader with the same id exists before creating a follower.`
++            )
++          );
++        }, 1000);
++      }
++    });
++  }
++
++  /** Creates a new instance of UniversalStore */
++  static create<
++    State = any,
++    CustomEvent extends { type: string; payload?: any } = { type: string; payload?: any },
++  >(options: StoreOptions<State>): UniversalStore<State, CustomEvent> {
++    if (!options || typeof options?.id !== 'string') {
++      throw new TypeError('id is required and must be a string, when creating a UniversalStore');
++    }
++    if (options.debug) {
++      console.debug(
++        dedent`[UniversalStore:${UniversalStore.environment}]
++        create`,
++        { options }
++      );
++    }
++
++    const existing = instances.get(options.id);
++    if (existing) {
++      console.warn(dedent`UniversalStore with id "${options.id}" already exists in this environment, re-using existing.
++        You should reuse the existing instance instead of trying to create a new one.`);
++      return existing;
++    }
++
++    UniversalStore.isInternalConstructing = true;
++    const store = new UniversalStore<State, CustomEvent>(options);
++    instances.set(options.id, store);
++    return store;
++  }
++
++  /**
++   * Used by Storybook to set the channel for all instances of UniversalStore in the given
++   * environment.
++   *
++   * @internal
++   */
++  static __prepare(
++    channel: ChannelLike,
++    environment: (typeof UniversalStore.Environment)[keyof typeof UniversalStore.Environment]
++  ) {
++    UniversalStore.channel = channel;
++    UniversalStore.environment = environment;
++    UniversalStore.preparation.resolve({ channel, environment });
++  }
++
++  /** Gets the current state */
++  public getState = (): State => {
++    this.debug('getState', { state: this.state });
++    return this.state;
++  };
++
++  /**
++   * Updates the store's state
++   *
++   * Either a new state or a state updater function can be passed to the method.
++   */
++  public setState = (updater: State | StateUpdater<State>) => {
++    const previousState = this.state;
++    const newState =
++      typeof updater === 'function' ? (updater as StateUpdater<State>)(previousState) : updater;
++
++    this.debug('setState', { newState, previousState, updater });
++
++    if (this.status !== UniversalStore.Status.READY) {
++      throw new TypeError(
++        dedent`Cannot set state before store is ready. You can get the current status with store.status,
++        or await store.readyPromise to wait for the store to be ready before sending events.
++        ${JSON.stringify(
++          {
++            newState,
++            id: this.id,
++            actor: this.actor,
++            environment: UniversalStore.environment,
++          },
++          null,
++          2
++        )}`
++      );
++    }
++
++    this.state = newState;
++    const event = {
++      type: UniversalStore.InternalEventType.SET_STATE,
++      payload: {
++        state: newState,
++        previousState,
++      },
++    };
++    this.emitToChannel(event, { actor: this.actor });
++    this.emitToListeners(event, { actor: this.actor });
++  };
++
++  /**
++   * Subscribes to store events
++   *
++   * @returns A function to unsubscribe
++   */
++
++  public subscribe: {
++    (listener: Listener<Event<State, CustomEvent>>): () => void;
++    <EventType extends Event<State, CustomEvent>['type']>(
++      eventType: EventType,
++      listener: Listener<Extract<Event<State, CustomEvent>, { type: EventType }>>
++    ): () => void;
++  } = <EventType extends Event<State, CustomEvent>['type']>(
++    eventTypeOrListener: Listener<Event<State, CustomEvent>> | EventType,
++    maybeListener?: Listener<Extract<Event<State, CustomEvent>, { type: EventType }>>
++  ) => {
++    const subscribesToAllEvents = typeof eventTypeOrListener === 'function';
++
++    const eventType = subscribesToAllEvents ? '*' : eventTypeOrListener;
++    const listener = subscribesToAllEvents ? eventTypeOrListener : maybeListener;
++
++    this.debug('subscribe', { eventType, listener });
++
++    if (!listener) {
++      throw new TypeError(
++        `Missing first subscribe argument, or second if first is the event type, when subscribing to a UniversalStore with id '${this.id}'`
++      );
++    }
++
++    if (!this.listeners.has(eventType)) {
++      this.listeners.set(eventType, new Set());
++    }
++    this.listeners.get(eventType)!.add(listener);
++
++    return () => {
++      this.debug('unsubscribe', { eventType, listener });
++      if (!this.listeners.has(eventType)) {
++        return;
++      }
++      this.listeners.get(eventType)!.delete(listener);
++      if (this.listeners.get(eventType)?.size === 0) {
++        this.listeners.delete(eventType);
++      }
++    };
++  };
++
++  /**
++   * Subscribes to state changes
++   *
++   * @returns Unsubscribe function
++   */
++  public onStateChange = (
++    listener: (state: State, previousState: State, eventInfo: EventInfo) => void
++  ) => {
++    this.debug('onStateChange', { listener });
++    return this.subscribe(
++      UniversalStore.InternalEventType.SET_STATE as any,
++      ({ payload }, eventInfo) => {
++        listener(payload.state, payload.previousState, eventInfo);
++      }
++    );
++  };
++
++  /** Sends a custom event to the other stores */
++  public send = (event: CustomEvent) => {
++    this.debug('send', { event });
++    if (this.status !== UniversalStore.Status.READY) {
++      throw new TypeError(
++        dedent`Cannot send event before store is ready. You can get the current status with store.status,
++        or await store.readyPromise to wait for the store to be ready before sending events.
++        ${JSON.stringify(
++          {
++            event,
++            id: this.id,
++            actor: this.actor,
++            environment: UniversalStore.environment,
++          },
++          null,
++          2
++        )}`
++      );
++    }
++    this.emitToListeners(event, { actor: this.actor });
++    this.emitToChannel(event, { actor: this.actor });
++  };
++
++  private emitToListeners = (event: any, eventInfo: EventInfo) => {
++    const eventTypeListeners = this.listeners.get(event.type);
++    const everythingListeners = this.listeners.get('*');
++    this.debug('emitToListeners', {
++      event,
++      eventInfo,
++      eventTypeListeners,
++      everythingListeners,
++    });
++
++    [...(eventTypeListeners ?? []), ...(everythingListeners ?? [])].forEach(
++      (listener: Listener<CustomEvent>) => listener(event, eventInfo)
++    );
++  };
++
++  private emitToChannel = (event: any, eventInfo: EventInfo) => {
++    this.debug('emitToChannel', { event, eventInfo });
++    UniversalStore.channel.emit(this.channelEventName, {
++      event,
++      eventInfo,
++    });
++  };
++
++  private handleChannelEvents = (channelEvent: ChannelEvent<State, CustomEvent>) => {
++    const { event, eventInfo } = channelEvent;
++
++    if ([eventInfo.actor.id, eventInfo.forwardingActor?.id].includes(this.actor.id)) {
++      // Ignore events from self
++      this.debug('handleChannelEvents: Ignoring event from self', { channelEvent });
++      return;
++    }
++    this.debug('handleChannelEvents', { channelEvent });
++
++    if (this.actor.type === UniversalStore.ActorType.LEADER) {
++      let shouldForwardEvent = true;
++      switch (event.type) {
++        case UniversalStore.InternalEventType.EXISTING_STATE_REQUEST:
++          // No need to forward request events
++          shouldForwardEvent = false;
++          // Respond by emitting an event with the existing state
++          const responseEvent: ExistingStateResponseEvent<State> = {
++            type: UniversalStore.InternalEventType.EXISTING_STATE_RESPONSE,
++            payload: this.state,
++          };
++          this.debug('handleChannelEvents: responding to existing state request', {
++            responseEvent,
++          });
++          this.emitToChannel(responseEvent, { actor: this.actor });
++          break;
++        case UniversalStore.InternalEventType.LEADER_CREATED:
++          // if a leader receives a LEADER_CREATED event it should not forward it,
++          // as that would lead to infinite forwarding between the two leaders
++          // all instances will go in an error state in this scenario anyway
++          shouldForwardEvent = false;
++          this.syncing!.state = ProgressState.REJECTED;
++          this.debug('handleChannelEvents: erroring due to second leader being created', {
++            event,
++          });
++          console.error(
++            dedent`Detected multiple UniversalStore leaders created with the same id "${this.id}".
++            Only one leader can exists at a time, your stores are now in an invalid state.
++            Leaders detected:
++            this: ${JSON.stringify(this.actor, null, 2)}
++            other: ${JSON.stringify(eventInfo.actor, null, 2)}`
++          );
++
++          break;
++      }
++      if (shouldForwardEvent) {
++        // Forward the event to followers in other environments
++        this.debug('handleChannelEvents: forwarding event', { channelEvent });
++        this.emitToChannel(event, { actor: eventInfo.actor, forwardingActor: this.actor });
++      }
++    }
++    if (this.actor.type === UniversalStore.ActorType.FOLLOWER) {
++      switch (event.type) {
++        case UniversalStore.InternalEventType.EXISTING_STATE_RESPONSE:
++          this.debug("handleChannelEvents: Setting state from leader's existing state response", {
++            event,
++          });
++          this.state = event.payload;
++          this.syncing!.resolve?.();
++          break;
++      }
++    }
++
++    switch (event.type) {
++      case UniversalStore.InternalEventType.SET_STATE:
++        this.debug('handleChannelEvents: Setting state', { event });
++        this.state = event.payload.state;
++        break;
++    }
++
++    this.emitToListeners(event, { actor: eventInfo.actor });
++  };
++
++  private debug = (message: string, data?: any) => {
++    if (this.debugging) {
++      console.debug(
++        dedent`[UniversalStore::${this.id}::${UniversalStore.environment}]
++        ${message}`,
++        data,
++        {
++          actor: this.actor,
++          state: this.state,
++          status: this.status,
++        }
++      );
++    }
++  };
++
++  /**
++   * Used to reset the static fields of the UniversalStore class when cleaning up tests
++   *
++   * @internal
++   */
++  static __reset() {
++    UniversalStore.preparation.reject(new Error('reset'));
++    UniversalStore.setupPreparationPromise();
++    UniversalStore.channel = undefined as any;
++    UniversalStore.environment = undefined as any;
++    UniversalStore.isInternalConstructing = false;
++  }
++}
+diff --git a/code/core/src/shared/universal-store/instances.ts b/code/core/src/shared/universal-store/instances.ts
+new file mode 100644
+index 00000000000..5fd13ff4117
+--- /dev/null
++++ b/code/core/src/shared/universal-store/instances.ts
+@@ -0,0 +1,5 @@
++// this module just contains a map of all the instances of the UniversalStore
++// it's a separate module so it can be mocked in tests
++import type { UniversalStore } from '.';
++
++export const instances: Map<string, UniversalStore<any, any>> = new Map();
+diff --git a/code/core/src/shared/universal-store/types.ts b/code/core/src/shared/universal-store/types.ts
+new file mode 100644
+index 00000000000..5b5b2b6f97e
+--- /dev/null
++++ b/code/core/src/shared/universal-store/types.ts
+@@ -0,0 +1,70 @@
++import type { Channel } from '@storybook/core/channels';
++
++import type { UniversalStore } from '.';
++
++export type EnvironmentType =
++  (typeof UniversalStore.Environment)[keyof typeof UniversalStore.Environment];
++
++export type StateUpdater<TState> = (prevState: TState) => TState;
++export type Actor = {
++  id: string;
++  type: (typeof UniversalStore.ActorType)[keyof typeof UniversalStore.ActorType];
++  environment: EnvironmentType;
++};
++export type EventInfo = {
++  actor: Actor;
++  forwardingActor?: Actor;
++};
++
++export type Listener<TEvent> = (event: TEvent, eventInfo: EventInfo) => void;
++
++export type BaseEvent = {
++  type: string;
++  payload?: any;
++};
++
++export interface SetStateEvent<TState> extends BaseEvent {
++  type: typeof UniversalStore.InternalEventType.SET_STATE;
++  payload: {
++    state: TState;
++    previousState: TState;
++  };
++}
++export interface ExistingStateRequestEvent extends BaseEvent {
++  type: typeof UniversalStore.InternalEventType.EXISTING_STATE_REQUEST;
++  payload: never;
++}
++export interface ExistingStateResponseEvent<TState> extends BaseEvent {
++  type: typeof UniversalStore.InternalEventType.EXISTING_STATE_RESPONSE;
++  payload: TState;
++}
++export interface LeaderCreatedEvent extends BaseEvent {
++  type: typeof UniversalStore.InternalEventType.LEADER_CREATED;
++  payload: never;
++}
++export interface FollowerCreatedEvent extends BaseEvent {
++  type: typeof UniversalStore.InternalEventType.FOLLOWER_CREATED;
++  payload: never;
++}
++
++export type InternalEvent<TState> =
++  | SetStateEvent<TState>
++  | ExistingStateRequestEvent
++  | ExistingStateResponseEvent<TState>
++  | FollowerCreatedEvent
++  | LeaderCreatedEvent;
++export type Event<TState, TEvent extends BaseEvent> = TEvent | InternalEvent<TState>;
++
++export type ChannelEvent<TState, TEvent extends BaseEvent> = {
++  event: Event<TState, TEvent>;
++  eventInfo: EventInfo;
++};
++
++export type ChannelLike = Pick<Channel, 'on' | 'off' | 'emit'>;
++
++export type StoreOptions<TState> = {
++  id: string;
++  leader?: boolean;
++  initialState?: TState;
++  debug?: boolean;
++};
+diff --git a/code/core/src/shared/universal-store/use-universal-store-manager.ts b/code/core/src/shared/universal-store/use-universal-store-manager.ts
+new file mode 100644
+index 00000000000..a64aa09ec09
+--- /dev/null
++++ b/code/core/src/shared/universal-store/use-universal-store-manager.ts
+@@ -0,0 +1,65 @@
++import * as React from 'react';
++
++import { isEqual } from 'es-toolkit';
++
++import type { UniversalStore } from './index';
++
++/**
++ * A hook to use a UniversalStore in the manager UI (eg. in an addon panel). This hook will react to
++ * changes in the store state and re-render when the store changes.
++ *
++ * @param universalStore The UniversalStore instance to use.
++ * @param selector An optional selector function to select a subset of the store state.
++ * @remark This hook is intended for use in the manager UI. For use in the preview, import from
++ * `storybook/internal/preview-api` instead.
++ */
++export const useUniversalStore: {
++  <
++    TUniversalStore extends UniversalStore<TState, any>,
++    TState = TUniversalStore extends UniversalStore<infer S, any> ? S : never,
++  >(
++    universalStore: TUniversalStore
++  ): [TState, TUniversalStore['setState']];
++  <
++    TUniversalStore extends UniversalStore<any, any>,
++    TSelectedState,
++    TState = TUniversalStore extends UniversalStore<infer S, any> ? S : never,
++  >(
++    universalStore: TUniversalStore,
++    selector: (state: TState) => TSelectedState
++  ): [TSelectedState, TUniversalStore['setState']];
++} = <
++  TUniversalStore extends UniversalStore<any, any>,
++  TSelectedState,
++  TState = TUniversalStore extends UniversalStore<infer S, any> ? S : never,
++>(
++  universalStore: TUniversalStore,
++  selector?: (state: TState) => TSelectedState
++): [TSelectedState, TUniversalStore['setState']] => {
++  const subscribe = React.useCallback<Parameters<(typeof React)['useSyncExternalStore']>[0]>(
++    (listener) =>
++      universalStore.onStateChange((state, previousState) => {
++        if (!selector) {
++          listener();
++          return;
++        }
++        const selectedState = selector(state);
++        const selectedPreviousState = selector(previousState);
++
++        const hasChanges = !isEqual(selectedState, selectedPreviousState);
++        if (hasChanges) {
++          listener();
++        }
++      }),
++    [universalStore, selector]
++  );
++
++  const getSnapshot = React.useCallback(
++    () => (selector ? selector(universalStore.getState()) : universalStore.getState()),
++    [universalStore, selector]
++  );
++
++  const state = React.useSyncExternalStore(subscribe, getSnapshot);
++
++  return [state, universalStore.setState];
++};
+diff --git a/code/core/src/shared/universal-store/use-universal-store-preview.ts b/code/core/src/shared/universal-store/use-universal-store-preview.ts
+new file mode 100644
+index 00000000000..d8382641d44
+--- /dev/null
++++ b/code/core/src/shared/universal-store/use-universal-store-preview.ts
+@@ -0,0 +1,60 @@
++import { useEffect, useState } from '@storybook/core/preview-api';
++
++import { isEqual } from 'es-toolkit';
++
++import type { UniversalStore } from './index';
++
++/**
++ * A hook to use a UniversalStore in a rendered preview. This hook will react to changes in the
++ * store state and re-render when the store changes.
++ *
++ * @param universalStore The UniversalStore instance to use.
++ * @param selector An optional selector function to select a subset of the store state.
++ * @remark This hook is intended for use in the preview. For use in the manager UI, import from
++ * `storybook/internal/manager-api` instead.
++ */
++export const useUniversalStore: {
++  <
++    TUniversalStore extends UniversalStore<TState, any>,
++    TState = TUniversalStore extends UniversalStore<infer S, any> ? S : never,
++  >(
++    universalStore: TUniversalStore
++  ): [TState, TUniversalStore['setState']];
++  <
++    TUniversalStore extends UniversalStore<any, any>,
++    TSelectedState,
++    TState = TUniversalStore extends UniversalStore<infer S, any> ? S : never,
++  >(
++    universalStore: TUniversalStore,
++    selector: (state: TState) => TSelectedState
++  ): [TSelectedState, TUniversalStore['setState']];
++} = <
++  TUniversalStore extends UniversalStore<any, any>,
++  TSelectedState,
++  TState = TUniversalStore extends UniversalStore<infer S, any> ? S : never,
++>(
++  universalStore: TUniversalStore,
++  selector?: (state: TState) => TSelectedState
++): [TSelectedState, TUniversalStore['setState']] => {
++  const [state, setState] = useState(
++    selector ? selector(universalStore.getState()) : universalStore.getState()
++  );
++
++  useEffect(() => {
++    return universalStore.onStateChange((nextState, previousState) => {
++      if (!selector) {
++        setState(nextState);
++        return;
++      }
++      const selectedNextState = selector(nextState);
++      const selectedPreviousState = selector(previousState);
++
++      const hasChanges = !isEqual(selectedNextState, selectedPreviousState);
++      if (hasChanges) {
++        setState(selectedNextState);
++      }
++    });
++  }, [universalStore, setState, selector]);
++
++  return [state, universalStore.setState];
++};
+diff --git a/code/core/tsconfig.json b/code/core/tsconfig.json
+index 2dcc611b29a..c135cdd5ea8 100644
+--- a/code/core/tsconfig.json
++++ b/code/core/tsconfig.json
+@@ -2,7 +2,8 @@
+   "extends": "../tsconfig.json",
+   "compilerOptions": {
+     "resolveJsonModule": true,
+-    "module": "ES2022"
++    "module": "ES2022",
++    "stripInternal": true
+   },
+   "include": ["src/**/*", "scripts/**/*", "*.d.ts"]
+ }
+diff --git a/code/core/vitest.config.ts b/code/core/vitest.config.ts
+index df83dd4dc88..c2f7f17e814 100644
+--- a/code/core/vitest.config.ts
++++ b/code/core/vitest.config.ts
+@@ -2,4 +2,14 @@ import { defineConfig, mergeConfig } from 'vitest/config';
+ 
+ import { vitestCommonConfig } from '../vitest.workspace';
+ 
+-export default mergeConfig(vitestCommonConfig, defineConfig({}));
++export default mergeConfig(
++  vitestCommonConfig,
++  defineConfig({
++    test: {
++      typecheck: {
++        enabled: true,
++        ignoreSourceErrors: true,
++      },
++    },
++  })
++);

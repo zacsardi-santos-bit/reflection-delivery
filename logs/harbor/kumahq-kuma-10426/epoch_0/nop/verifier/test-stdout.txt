@@ -1,0 +1,239 @@
+patching file pkg/config/loader_test.go
+patching file pkg/xds/ingress/dataplane_test.go
+patching file pkg/xds/sync/proxy_builder_test.go
+patching file pkg/zone/available_services_test.go
+patching file pkg/zone/zone_suite_test.go
+patching file test/e2e_env/multizone/connectivity/available_services.go
+patching file test/e2e_env/multizone/multizone_suite_test.go
+patching file test/e2e_env/multizone/sync/sync.go
+patching file test/framework/constants.go
+patching file test/framework/setup.go
+patching file test/framework/universal_app.go
+patching file test/framework/universal_cluster.go
+github.com/kumahq/kuma/pkg/zone: no non-test Go files in /workspace/repo/pkg/zone
+# github.com/kumahq/kuma/pkg/xds/ingress_test [github.com/kumahq/kuma/pkg/xds/ingress.test]
+pkg/xds/ingress/dataplane_test.go:305:12: undefined: ingress.GetAvailableServices
+{"Time":"2026-06-29T15:20:50.874329501Z","Action":"start","Package":"github.com/kumahq/kuma/pkg/config"}
+{"Time":"2026-06-29T15:20:51.049118352Z","Action":"start","Package":"github.com/kumahq/kuma/pkg/xds/sync"}
+{"Time":"2026-06-29T15:20:51.059327371Z","Action":"run","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig"}
+{"Time":"2026-06-29T15:20:51.059445254Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"=== RUN   TestConfig\n"}
+{"Time":"2026-06-29T15:20:51.062372284Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"Running Suite: Configuration Suite - /workspace/repo/pkg/config\n"}
+{"Time":"2026-06-29T15:20:51.062542397Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"===============================================================\n"}
+{"Time":"2026-06-29T15:20:51.06258024Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"Random Seed: \u001b[1m1782746451\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.062619846Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.062731517Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"Will run \u001b[1m3\u001b[0m of \u001b[1m3\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:20:51.097878578Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.097925589Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;243m------------------------------\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.098071987Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;9m• [FAILED] [0.028 seconds]\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.09809973Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[0mConfig loader \u001b[38;5;243mshould load config \u001b[38;5;9m\u001b[1m[It] from env variables\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.098128857Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;243m/workspace/repo/pkg/config/loader_test.go:764\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.098146551Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.098168093Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  \u001b[38;5;243mTimeline \u003e\u003e\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.098194754Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  2026-06-29T15:20:51Z\tINFO\tkubernetes-config\t[WARNING]: using deprecated configuration option - .ServiceAccountName, please use AllowedUsers.\n"}
+{"Time":"2026-06-29T15:20:51.098221395Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  \u001b[38;5;9m[FAILED]\u001b[0m in [It] - /workspace/repo/pkg/config/loader_test.go:80 \u001b[38;5;243m@ 06/29/26 15:20:51.097\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.098436696Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  \u001b[38;5;243m\u003c\u003c Timeline\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.098547645Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.098579416Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  \u001b[38;5;9m[FAILED] config values are not overridden in the test. Add overrides for them with a value that is different than default.\n"}
+{"Time":"2026-06-29T15:20:51.09869854Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  Expected\n"}
+{"Time":"2026-06-29T15:20:51.098761727Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"      \u003c[]string | len:278, cap:278\u003e: [\n"}
+{"Time":"2026-06-29T15:20:51.098796013Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_REPORTS_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.098836161Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_INTER_CP_SERVER_PORT\",\n"}
+{"Time":"2026-06-29T15:20:51.098862702Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_TLS_MIN_VERSION\",\n"}
+{"Time":"2026-06-29T15:20:51.098881929Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_AUTHN_ENABLE_RELOADABLE_TOKENS\",\n"}
+{"Time":"2026-06-29T15:20:51.098893802Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_ACCESS_STATIC_CONTROL_PLANE_METADATA_USERS\",\n"}
+{"Time":"2026-06-29T15:20:51.098914261Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_NODE_TAINT_CONTROLLER_CNI_NAMESPACE\",\n"}
+{"Time":"2026-06-29T15:20:51.098930443Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_ACCESS_STATIC_VIEW_STATS_USERS\",\n"}
+{"Time":"2026-06-29T15:20:51.098948527Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_MIN_OPEN_CONNECTIONS\",\n"}
+{"Time":"2026-06-29T15:20:51.098974257Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_CA_CERT_FILE\",\n"}
+{"Time":"2026-06-29T15:20:51.09908447Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_HTTPS_PORT\",\n"}
+{"Time":"2026-06-29T15:20:51.099223297Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_HTTPS_TLS_CA_FILE\",\n"}
+{"Time":"2026-06-29T15:20:51.099291729Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_HTTPS_TLS_MAX_VERSION\",\n"}
+{"Time":"2026-06-29T15:20:51.099345704Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_IPAM_MESH_SERVICE_CIDR\",\n"}
+{"Time":"2026-06-29T15:20:51.099369409Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_KDS_EVENT_BASED_WATCHDOG_DELAY_FULL_RESYNC\",\n"}
+{"Time":"2026-06-29T15:20:51.099501259Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_USER\",\n"}
+{"Time":"2026-06-29T15:20:51.099609633Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_NODE_TAINT_CONTROLLER_CNI_APP\",\n"}
+{"Time":"2026-06-29T15:20:51.099642536Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_SIDECAR_CONTAINER_WAIT_FOR_DATAPLANE_READY\",\n"}
+{"Time":"2026-06-29T15:20:51.099784039Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_TLS_MIN_VERSION\",\n"}
+{"Time":"2026-06-29T15:20:51.099809238Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_UPSERT_CONFLICT_RETRY_JITTER_PERCENT\",\n"}
+{"Time":"2026-06-29T15:20:51.09984148Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_UNSAFE_DELETE\",\n"}
+{"Time":"2026-06-29T15:20:51.099858563Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_INJECTOR_INIT_CONTAINER_IMAGE\",\n"}
+{"Time":"2026-06-29T15:20:51.099869815Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_ZONE_KDS_MAX_MSG_SIZE\",\n"}
+{"Time":"2026-06-29T15:20:51.099892829Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_SIDECAR_CONTAINER_READINESS_PROBE_TIMEOUT_SECONDS\",\n"}
+{"Time":"2026-06-29T15:20:51.099904271Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_HDS_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.099914991Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_ACCESS_STATIC_GENERATE_ZONE_TOKEN_GROUPS\",\n"}
+{"Time":"2026-06-29T15:20:51.099934479Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MONITORING_ASSIGNMENT_SERVER_PORT\",\n"}
+{"Time":"2026-06-29T15:20:51.100034787Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_CONTROL_PLANE_SERVICE_NAME\",\n"}
+{"Time":"2026-06-29T15:20:51.100154253Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_MAX_CONNECTION_IDLE_TIME\",\n"}
+{"Time":"2026-06-29T15:20:51.100175915Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_AUTHN_ZONE_PROXY_ZONE_TOKEN_ENABLE_ISSUER\",\n"}
+{"Time":"2026-06-29T15:20:51.100188409Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_CONTAINER_PATCHES\",\n"}
+{"Time":"2026-06-29T15:20:51.100199691Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DEFAULTS_SKIP_MESH_CREATION\",\n"}
+{"Time":"2026-06-29T15:20:51.100213347Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_HTTPS_REQUIRE_CLIENT_CERT\",\n"}
+{"Time":"2026-06-29T15:20:51.100225561Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_TLS_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.100238676Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_LEADER_ELECTION_RENEW_DEADLINE\",\n"}
+{"Time":"2026-06-29T15:20:51.100263334Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_TLS_KEY_PATH\",\n"}
+{"Time":"2026-06-29T15:20:51.100276208Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_ZONE_INSIGHT_FLUSH_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.100392623Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_READ_REPLICA_RATIO\",\n"}
+{"Time":"2026-06-29T15:20:51.100426763Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_USE_TAG_FIRST_VIRTUAL_OUTBOUND_MODEL\",\n"}
+{"Time":"2026-06-29T15:20:51.100463204Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_METRICS_DATAPLANE_IDLE_TIMEOUT\",\n"}
+{"Time":"2026-06-29T15:20:51.100586823Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_XDS_SERVER_DATAPLANE_CONFIGURATION_REFRESH_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.100622642Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_TLS_CERT_FILE\",\n"}
+{"Time":"2026-06-29T15:20:51.100643472Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_METRICS_DATAPLANE_SUBSCRIPTION_LIMIT\",\n"}
+{"Time":"2026-06-29T15:20:51.100657279Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_MAX_CONNECTION_LIFETIME_JITTER\",\n"}
+{"Time":"2026-06-29T15:20:51.100766584Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_VIRTUAL_PROBES_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.100789168Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_TRACING_OPENTELEMETRY_ENDPOINT\",\n"}
+{"Time":"2026-06-29T15:20:51.100807403Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_TRACING_OPENTELEMETRY_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.100820538Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MONITORING_ASSIGNMENT_SERVER_API_VERSIONS\",\n"}
+{"Time":"2026-06-29T15:20:51.100850396Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DIAGNOSTICS_TLS_KEY_FILE\",\n"}
+{"Time":"2026-06-29T15:20:51.100867679Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_GENERAL_TLS_CERT_FILE\",\n"}
+{"Time":"2026-06-29T15:20:51.100882588Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_UPSERT_CONFLICT_RETRY_BASE_BACKOFF\",\n"}
+{"Time":"2026-06-29T15:20:51.1009769Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_AUTHN_TOKENS_BOOTSTRAP_ADMIN_TOKEN\",\n"}
+{"Time":"2026-06-29T15:20:51.101028329Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_ZONE_HEALTH_CHECK_POLL_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.101135195Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_KDS_EVENT_BASED_WATCHDOG_FULL_RESYNC_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.101186314Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_AUTHN_DP_PROXY_DP_TOKEN_ENABLE_ISSUER\",\n"}
+{"Time":"2026-06-29T15:20:51.10120517Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_ACCESS_STATIC_CONTROL_PLANE_METADATA_GROUPS\",\n"}
+{"Time":"2026-06-29T15:20:51.101218045Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_ZONE_KDS_REFRESH_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.10123122Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_AUTH_CLIENT_CERTS_DIR\",\n"}
+{"Time":"2026-06-29T15:20:51.101250678Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_SIDECAR_CONTAINER_STARTUP_PROBE_PERIOD_SECONDS\",\n"}
+{"Time":"2026-06-29T15:20:51.10127276Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DEFAULTS_CREATE_MESH_ROUTING_RESOURCES\",\n"}
+{"Time":"2026-06-29T15:20:51.101293641Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_SIDECAR_CONTAINER_ADMIN_PORT\",\n"}
+{"Time":"2026-06-29T15:20:51.101347414Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DNS_SERVER_CIDR\",\n"}
+{"Time":"2026-06-29T15:20:51.101368204Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_GRPC_PORT\",\n"}
+{"Time":"2026-06-29T15:20:51.101406047Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_HTTP_INTERFACE\",\n"}
+{"Time":"2026-06-29T15:20:51.101424884Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_KDS_EVENT_BASED_WATCHDOG_FLUSH_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.101451976Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_ZONE_KDS_RESPONSE_BACKOFF\",\n"}
+{"Time":"2026-06-29T15:20:51.101481824Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_KDS_EVENT_BASED_WATCHDOG_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.101575885Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_AUTHN_DP_PROXY_DP_TOKEN_VALIDATOR_USE_SECRETS\",\n"}
+{"Time":"2026-06-29T15:20:51.101595022Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_METRICS_MESH_MIN_RESYNC_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.101729101Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_GENERAL_TLS_CIPHER_SUITES\",\n"}
+{"Time":"2026-06-29T15:20:51.101745442Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_CACHE_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.101756924Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_AUTHN_TOKENS_VALIDATOR_USE_SECRETS\",\n"}
+{"Time":"2026-06-29T15:20:51.101814365Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_GENERATE_MESH_SERVICES\",\n"}
+{"Time":"2026-06-29T15:20:51.101906803Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_CNI_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.101930258Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          ...\n"}
+{"Time":"2026-06-29T15:20:51.102026639Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.102051607Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  Gomega truncated this representation as it exceeds 'format.MaxLength'.\n"}
+{"Time":"2026-06-29T15:20:51.102141591Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  Consider having the object provide a custom 'GomegaStringer' representation\n"}
+{"Time":"2026-06-29T15:20:51.10216698Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  or adjust the parameters in Gomega's 'format' package.\n"}
+{"Time":"2026-06-29T15:20:51.102255566Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.102281556Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  Learn more here: https://onsi.github.io/gomega/#adjusting-output\n"}
+{"Time":"2026-06-29T15:20:51.102302506Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.102410624Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  to consist of\n"}
+{"Time":"2026-06-29T15:20:51.102465921Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"      \u003c[]string | len:277, cap:277\u003e: [\n"}
+{"Time":"2026-06-29T15:20:51.102489046Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_TLS_CIPHER_SUITES\",\n"}
+{"Time":"2026-06-29T15:20:51.102503133Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_RESPONSE_BACKOFF\",\n"}
+{"Time":"2026-06-29T15:20:51.102565694Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_AUTHN_ZONE_PROXY_ZONE_TOKEN_ENABLE_ISSUER\",\n"}
+{"Time":"2026-06-29T15:20:51.1026103Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_CONNECTION_TIMEOUT\",\n"}
+{"Time":"2026-06-29T15:20:51.102634817Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MONITORING_ASSIGNMENT_SERVER_DEFAULT_FETCH_TIMEOUT\",\n"}
+{"Time":"2026-06-29T15:20:51.102653743Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_SIDECAR_TRAFFIC_EXCLUDE_OUTBOUND_PORTS\",\n"}
+{"Time":"2026-06-29T15:20:51.102744258Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_CLIENT_CONFIG_BURST_QPS\",\n"}
+{"Time":"2026-06-29T15:20:51.102795918Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_BOOTSTRAP_SERVER_PARAMS_COREFILE_TEMPLATE_PATH\",\n"}
+{"Time":"2026-06-29T15:20:51.102811828Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_ACCESS_TYPE\",\n"}
+{"Time":"2026-06-29T15:20:51.102824673Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_AUTH_CLIENT_CERTS_DIR\",\n"}
+{"Time":"2026-06-29T15:20:51.102836095Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_ADMISSION_SERVER_ADDRESS\",\n"}
+{"Time":"2026-06-29T15:20:51.102849741Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_SIDECAR_CONTAINER_DRAIN_TIME\",\n"}
+{"Time":"2026-06-29T15:20:51.102861003Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_EBPF_PROGRAMS_SOURCE_PATH\",\n"}
+{"Time":"2026-06-29T15:20:51.102882936Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_INTER_CP_CATALOG_HEARTBEAT_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.10290066Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_IGNORED_SERVICE_SELECTOR_LABELS\",\n"}
+{"Time":"2026-06-29T15:20:51.102915078Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_REPORTS_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.103013092Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_TLS_CERT_FILE\",\n"}
+{"Time":"2026-06-29T15:20:51.103073558Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_ACCESS_STATIC_GENERATE_USER_TOKEN_USERS\",\n"}
+{"Time":"2026-06-29T15:20:51.1030949Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_GENERAL_TLS_CIPHER_SUITES\",\n"}
+{"Time":"2026-06-29T15:20:51.103184362Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_BUILTIN_DNS_PORT\",\n"}
+{"Time":"2026-06-29T15:20:51.103239989Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_MAX_MSG_SIZE\",\n"}
+{"Time":"2026-06-29T15:20:51.103255219Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_EBPF_BPFFS_PATH\",\n"}
+{"Time":"2026-06-29T15:20:51.103267322Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_TLS_CERT_PATH\",\n"}
+{"Time":"2026-06-29T15:20:51.103279786Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_UNSAFE_DELETE\",\n"}
+{"Time":"2026-06-29T15:20:51.103293192Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MONITORING_ASSIGNMENT_SERVER_ASSIGNMENT_REFRESH_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.103307229Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_SIDECAR_CONTAINER_READINESS_PROBE_TIMEOUT_SECONDS\",\n"}
+{"Time":"2026-06-29T15:20:51.103335383Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_AUTHN_ZONE_PROXY_TYPE\",\n"}
+{"Time":"2026-06-29T15:20:51.103435011Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_HDS_CHECK_HEALTHY_THRESHOLD\",\n"}
+{"Time":"2026-06-29T15:20:51.103541075Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_INTER_CP_CATALOG_INSTANCE_ADDRESS\",\n"}
+{"Time":"2026-06-29T15:20:51.103568538Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_GENERAL_WORK_DIR\",\n"}
+{"Time":"2026-06-29T15:20:51.103582555Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_TLS_CA_PATH\",\n"}
+{"Time":"2026-06-29T15:20:51.103594207Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_UPSERT_CONFLICT_RETRY_JITTER_PERCENT\",\n"}
+{"Time":"2026-06-29T15:20:51.103611892Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_HTTPS_REQUIRE_CLIENT_CERT\",\n"}
+{"Time":"2026-06-29T15:20:51.103623895Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_EBPF_INSTANCE_IP_ENV_VAR_NAME\",\n"}
+{"Time":"2026-06-29T15:20:51.103715051Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_NODE_TAINT_CONTROLLER_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.103731903Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_ZONE_KDS_MSG_SEND_TIMEOUT\",\n"}
+{"Time":"2026-06-29T15:20:51.103822848Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_KDS_EVENT_BASED_WATCHDOG_DELAY_FULL_RESYNC\",\n"}
+{"Time":"2026-06-29T15:20:51.1038441Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_TLS_KEY_FILE\",\n"}
+{"Time":"2026-06-29T15:20:51.103869388Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_GENERAL_TLS_CERT_FILE\",\n"}
+{"Time":"2026-06-29T15:20:51.103885149Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_HTTPS_TLS_CA_FILE\",\n"}
+{"Time":"2026-06-29T15:20:51.103899917Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_CONTROLLERS_CONCURRENCY_POD_CONTROLLER\",\n"}
+{"Time":"2026-06-29T15:20:51.103925587Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_CLIENT_CONFIG_QPS\",\n"}
+{"Time":"2026-06-29T15:20:51.103941908Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_MSG_SEND_TIMEOUT\",\n"}
+{"Time":"2026-06-29T15:20:51.103952449Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_PROXY_GATEWAY_GLOBAL_DOWNSTREAM_MAX_CONNECTIONS\",\n"}
+{"Time":"2026-06-29T15:20:51.103963039Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_READ_REPLICA_PORT\",\n"}
+{"Time":"2026-06-29T15:20:51.103973529Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_INJECTOR_SIDECAR_CONTAINER_RESOURCES_REQUESTS_MEMORY\",\n"}
+{"Time":"2026-06-29T15:20:51.103986033Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_UNIVERSAL_VIP_REFRESH_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.103996604Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_USE_TAG_FIRST_VIRTUAL_OUTBOUND_MODEL\",\n"}
+{"Time":"2026-06-29T15:20:51.104008216Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_TLS_MODE\",\n"}
+{"Time":"2026-06-29T15:20:51.104020821Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_GENERAL_TLS_MIN_VERSION\",\n"}
+{"Time":"2026-06-29T15:20:51.104032202Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_HTTPS_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.104043213Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_METRICS_MESH_MIN_RESYNC_TIMEOUT\",\n"}
+{"Time":"2026-06-29T15:20:51.104053463Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_ACCESS_STATIC_GENERATE_ZONE_TOKEN_GROUPS\",\n"}
+{"Time":"2026-06-29T15:20:51.104064014Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_INTER_CP_SERVER_PORT\",\n"}
+{"Time":"2026-06-29T15:20:51.104074574Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_SIDECAR_CONTAINER_STARTUP_PROBE_FAILURE_THRESHOLD\",\n"}
+{"Time":"2026-06-29T15:20:51.104085595Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_EBPF_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.104095925Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_METRICS_MESH_MIN_RESYNC_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.104106245Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_DP_SERVER_TLS_CIPHER_SUITES\",\n"}
+{"Time":"2026-06-29T15:20:51.104125713Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_GENERATE_MESH_SERVICES\",\n"}
+{"Time":"2026-06-29T15:20:51.104210913Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_API_SERVER_GUI_ENABLED\",\n"}
+{"Time":"2026-06-29T15:20:51.104231502Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_ALLOWED_USERS\",\n"}
+{"Time":"2026-06-29T15:20:51.10425621Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_NODE_TAINT_CONTROLLER_CNI_APP\",\n"}
+{"Time":"2026-06-29T15:20:51.104278653Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_ZONE_KDS_REFRESH_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.104290005Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_USER\",\n"}
+{"Time":"2026-06-29T15:20:51.104300525Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_EBPF_TC_ATTACH_IFACE\",\n"}
+{"Time":"2026-06-29T15:20:51.104311587Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_EXPERIMENTAL_KUBE_OUTBOUNDS_AS_VIPS\",\n"}
+{"Time":"2026-06-29T15:20:51.104340422Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_ACCESS_STATIC_VIEW_STATS_GROUPS\",\n"}
+{"Time":"2026-06-29T15:20:51.104359539Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_ACCESS_STATIC_CONTROL_PLANE_METADATA_GROUPS\",\n"}
+{"Time":"2026-06-29T15:20:51.10437575Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_POSTGRES_READ_REPLICA_RATIO\",\n"}
+{"Time":"2026-06-29T15:20:51.104399686Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_STORE_UPSERT_CONFLICT_RETRY_MAX_TIMES\",\n"}
+{"Time":"2026-06-29T15:20:51.104410698Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_ADMISSION_SERVER_CERT_DIR\",\n"}
+{"Time":"2026-06-29T15:20:51.104421118Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_GLOBAL_KDS_TLS_MIN_VERSION\",\n"}
+{"Time":"2026-06-29T15:20:51.104431508Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_RUNTIME_KUBERNETES_INJECTOR_SIDECA...\n"}
+{"Time":"2026-06-29T15:20:51.104442239Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.10445321Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  Gomega truncated this representation as it exceeds 'format.MaxLength'.\n"}
+{"Time":"2026-06-29T15:20:51.104463981Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  Consider having the object provide a custom 'GomegaStringer' representation\n"}
+{"Time":"2026-06-29T15:20:51.104474401Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  or adjust the parameters in Gomega's 'format' package.\n"}
+{"Time":"2026-06-29T15:20:51.10448457Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.104496523Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  Learn more here: https://onsi.github.io/gomega/#adjusting-output\n"}
+{"Time":"2026-06-29T15:20:51.104506643Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.104516872Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  the extra elements were\n"}
+{"Time":"2026-06-29T15:20:51.104536781Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"      \u003c[]string | len:1, cap:1\u003e: [\n"}
+{"Time":"2026-06-29T15:20:51.104553313Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"          \"KUMA_MULTIZONE_ZONE_INGRESS_UPDATE_INTERVAL\",\n"}
+{"Time":"2026-06-29T15:20:51.104608139Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"      ]\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.104651692Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  \u001b[38;5;9mIn \u001b[1m[It]\u001b[0m\u001b[38;5;9m at: \u001b[1m/workspace/repo/pkg/config/loader_test.go:80\u001b[0m \u001b[38;5;243m@ 06/29/26 15:20:51.097\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.104666681Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;243m------------------------------\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.104677132Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.104689055Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.104699435Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;9m\u001b[1mSummarizing 1 Failure:\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.104709925Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  \u001b[38;5;9m[FAIL]\u001b[0m \u001b[0mConfig loader \u001b[38;5;243mshould load config \u001b[38;5;9m\u001b[1m[It] from env variables\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.104721177Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"  \u001b[38;5;243m/workspace/repo/pkg/config/loader_test.go:80\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.104731577Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.104741857Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;9m\u001b[1mRan 3 of 3 Specs in 0.039 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.104752617Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"\u001b[38;5;9m\u001b[1mFAIL!\u001b[0m -- \u001b[38;5;10m\u001b[1m2 Passed\u001b[0m | \u001b[38;5;9m\u001b[1m1 Failed\u001b[0m | \u001b[38;5;11m\u001b[1m0 Pending\u001b[0m | \u001b[38;5;14m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.104781172Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Output":"--- FAIL: TestConfig (0.04s)\n"}
+{"Time":"2026-06-29T15:20:51.104792564Z","Action":"fail","Package":"github.com/kumahq/kuma/pkg/config","Test":"TestConfig","Elapsed":0.04}
+{"Time":"2026-06-29T15:20:51.10480606Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:20:51.105825401Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/config","Output":"FAIL\tgithub.com/kumahq/kuma/pkg/config\t0.231s\n"}
+{"Time":"2026-06-29T15:20:51.105871178Z","Action":"fail","Package":"github.com/kumahq/kuma/pkg/config","Elapsed":0.232}
+FAIL	github.com/kumahq/kuma/pkg/xds/ingress [build failed]
+{"Time":"2026-06-29T15:20:51.272800491Z","Action":"run","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync"}
+{"Time":"2026-06-29T15:20:51.272842302Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"=== RUN   TestSync\n"}
+{"Time":"2026-06-29T15:20:51.84955375Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"Running Suite: Sync Suite - /workspace/repo/pkg/xds/sync\n"}
+{"Time":"2026-06-29T15:20:51.849606612Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"========================================================\n"}
+{"Time":"2026-06-29T15:20:51.849642852Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"Random Seed: \u001b[1m1782746451\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:51.849679442Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\n"}
+{"Time":"2026-06-29T15:20:51.849732474Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"Will run \u001b[1m4\u001b[0m of \u001b[1m4\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:20:52.589459634Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:52.589528557Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\n"}
+{"Time":"2026-06-29T15:20:52.589544738Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\u001b[38;5;10m\u001b[1mRan 4 of 4 Specs in 0.740 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:52.589579776Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"\u001b[38;5;10m\u001b[1mSUCCESS!\u001b[0m -- \u001b[38;5;10m\u001b[1m4 Passed\u001b[0m | \u001b[38;5;9m\u001b[1m0 Failed\u001b[0m | \u001b[38;5;11m\u001b[1m0 Pending\u001b[0m | \u001b[38;5;14m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:20:52.589643368Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Output":"--- PASS: TestSync (1.32s)\n"}
+{"Time":"2026-06-29T15:20:52.589657626Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/xds/sync","Test":"TestSync","Elapsed":1.32}
+{"Time":"2026-06-29T15:20:52.589689126Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Output":"PASS\n"}
+{"Time":"2026-06-29T15:20:52.59305087Z","Action":"output","Package":"github.com/kumahq/kuma/pkg/xds/sync","Output":"ok  \tgithub.com/kumahq/kuma/pkg/xds/sync\t1.544s\n"}
+{"Time":"2026-06-29T15:20:52.593117679Z","Action":"pass","Package":"github.com/kumahq/kuma/pkg/xds/sync","Elapsed":1.544}
+FAIL	github.com/kumahq/kuma/pkg/zone [build failed]
+reward=0 graded=4 found=4 failed=3 parsed=5 framework=go exit_code=1

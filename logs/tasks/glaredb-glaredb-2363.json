@@ -1,0 +1,23 @@
+{
+ "task": "glaredb-glaredb-2363",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden moves runner to crates/testing/src/main.rs with '.test_files_dir(\"testdata\")?' (root-relative) + adds slt bin; F2P runs real ./target/debug/slt over parquet/csv/etc, e.g. 'select count(*) from './testdata/parquet/userdata1.parquet' ---- 1000'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "grafana-beyla-1645",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "go test ./pkg/internal/ebpf/common; F2P incl TestPostgresQueryParsing/*, TestSQLDetection, TestTCPReqSQLParsing (132 F2P)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 56,
+  "shallow": true
+ }
+}

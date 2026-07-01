@@ -1,0 +1,110 @@
+patching file ghost/core/test/unit/server/services/stats/TopContentStatsService.test.js
+patching file ghost/core/test/unit/server/services/stats/utils/tinybird.test.js
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+warning ghost@5.118.1: The engine "cli" appears to be invalid.
+$ /workspace/repo/node_modules/.bin/mocha --require /workspace/require-fallback.js --require tsx --exit --trace-warnings --timeout=60000 test/unit/server/services/stats/TopContentStatsService.test.js test/unit/server/services/stats/utils/tinybird.test.js
+
+
+  TopContentStatsService
+    tinybird client integration
+      ✓ buildRequest builds correct request with default options
+      ✓ parseResponse handles various response formats
+    extractPostUuids
+      ✓ extracts UUIDs from post_uuid field
+      ✓ filters out null/undefined/empty UUIDs
+    lookupPostTitles
+      ✓ returns empty object for empty UUIDs array
+      ✓ queries database and builds title map
+    getResourceTitle
+      ✓ returns null if urlService is not available
+      ✓ returns title from resource with title property
+      ✓ returns name from resource with name property (tags, authors)
+      ✓ returns null if resource lookup fails
+      ✓ returns null if resource has no data or title/name
+    enrichTopContentData
+      ✓ returns empty array for empty input
+      ✓ enriches data with post_uuid titles
+      ✓ uses urlService for non-post pages
+      ✓ falls back to formatted pathname for unknown pages
+      ✓ handles home page
+    fetchRawTopContentData
+      ✓ returns data from successful API request
+      ✓ returns null on API request failure
+    getTopContent
+      ✓ returns enriched data for successful request
+      ✓ returns empty data array when fetch returns no data
+[2026-06-29 15:16:58] [31mERROR[39m Error fetching top content:
+[2026-06-29 15:16:58] [31mERROR[39m Test error
+[31m
+[31mTest error[39m
+
+[90m----------------------------------------[39m
+
+[90mError: Test error
+    at Context.<anonymous> (/workspace/repo/ghost/core/test/unit/server/services/stats/TopContentStatsService.test.js:401:52)
+    at callFn (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runnable.js:326:21)
+    at Runnable.run (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runnable.js:319:7)
+    at Runner.runTest (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:422:10)
+    at /workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:528:12
+    at next (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:342:14)
+    at /workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:352:7
+    at next (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:284:14)
+    at /workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:315:7
+    at done (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runnable.js:287:5)
+    at callFn (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runnable.js:344:7)
+    at Runnable.run (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runnable.js:319:7)
+    at next (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:298:10)
+    at Immediate.<anonymous> (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:320:5)
+    at process.processImmediate (node:internal/timers:483:21)[39m
+[39m
+      ✓ returns empty data array on error
+      ✓ returns empty data array when tinybirdClient is not available
+    tinybird integration
+      ✓ fetchRawTopContentData calls tinybird client with correct parameters
+      ✓ handles null response from tinybird client
+
+  Tinybird Client
+    buildRequest
+      ✓ builds correct request with default options
+      ✓ uses tbVersion if provided
+      ✓ overrides defaults with provided options
+      ✓ uses local endpoint and token when local is enabled
+      ✓ ignores tbVersion when local is enabled
+    parseResponse
+      ✓ handles JSON string in response.body
+      ✓ handles JSON object in response.body
+      ✓ handles direct JSON string response
+      ✓ handles direct object response
+      ✓ returns empty array for empty data
+[2026-06-29 15:16:58] [31mERROR[39m Error parsing response body: Unexpected token 'o', "not json" is not valid JSON
+      ✓ returns null for invalid JSON
+    fetch
+      ✓ successfully fetches and parses data
+[2026-06-29 15:16:58] [31mERROR[39m Error in Tinybird API request to https://api.tinybird.co/v0/pipes/test_pipe.json?site_uuid=site-id&date_from=undefined&date_to=undefined&timezone=UTC&member_status=all: Network error
+[31m
+[31mNetwork error[39m
+
+[90m----------------------------------------[39m
+
+[90mError: Network error
+    at Context.<anonymous> (/workspace/repo/ghost/core/test/unit/server/services/stats/utils/tinybird.test.js:231:37)
+    at callFn (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runnable.js:326:21)
+    at Runnable.run (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runnable.js:319:7)
+    at Runner.runTest (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:422:10)
+    at /workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:528:12
+    at next (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:342:14)
+    at /workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:352:7
+    at next (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:284:14)
+    at Immediate.<anonymous> (/workspace/repo/node_modules/ember-mocha/node_modules/mocha/lib/runner.js:320:5)
+    at process.processImmediate (node:internal/timers:483:21)[39m
+[39m
+      ✓ returns null when request fails
+[2026-06-29 15:16:58] [31mERROR[39m Error parsing response body: Unexpected token 'i', "invalid json" is not valid JSON
+      ✓ returns null when response parsing fails
+
+
+  38 passing (66ms)
+
+Done in 0.81s.
+reward=1 graded=38 found=38 failed=0 parsed=38 framework=mocha exit_code=0

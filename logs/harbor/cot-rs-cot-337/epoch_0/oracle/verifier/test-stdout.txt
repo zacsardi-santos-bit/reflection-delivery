@@ -1,0 +1,508 @@
+patching file cot/src/config.rs
+Hunk #1 succeeded at 1439 with fuzz 1 (offset 380 lines).
+   Compiling chrono v0.4.41
+   Compiling sqlx-core v0.8.5
+   Compiling sea-query v0.32.4
+   Compiling fake v4.3.0
+   Compiling sqlx-sqlite v0.8.5
+   Compiling sqlx-mysql v0.8.5
+   Compiling sqlx-postgres v0.8.5
+   Compiling sqlx v0.8.5
+   Compiling sea-query-binder v0.7.0
+   Compiling cot v0.3.1 (/workspace/repo/cot)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 51.06s
+────────────
+ Nextest run ID 42ed2b72-b67c-48b5-8a5d-02a027d10094 with nextest profile: default
+    Starting 489 tests across 10 binaries (30 tests skipped)
+        PASS [   0.197s] (  1/489) cot auth::tests::anonymous_user
+        PASS [   0.200s] (  2/489) cot auth::tests::password_hash_debug
+        PASS [   0.203s] (  3/489) cot auth::tests::password_hash_str
+        PASS [   0.209s] (  4/489) cot auth::tests::session_auth_hash_debug
+        PASS [   0.306s] (  5/489) cot auth::tests::authenticate
+        PASS [   0.323s] (  6/489) cot auth::tests::logout_on_invalid_user_id_in_session
+        PASS [   0.373s] (  7/489) cot auth::tests::login_logout
+        PASS [   0.390s] (  8/489) cot auth::tests::logout_on_session_hash_change
+        PASS [   0.392s] (  9/489) cot auth::tests::login_cycle_id
+        PASS [   0.365s] ( 10/489) cot auth::tests::test_user_wrapper_debug
+        PASS [   0.376s] ( 11/489) cot auth::tests::user_anonymous
+        PASS [   0.269s] ( 12/489) cot body::tests::body_empty
+        PASS [   0.293s] ( 13/489) cot auth::tests::user_wrapper_with_anonymous_user
+        PASS [   0.255s] ( 14/489) cot body::tests::body_fixed
+        PASS [   0.434s] ( 15/489) cot auth::tests::user
+        PASS [   0.275s] ( 16/489) cot body::tests::http_body_is_end_stream
+        PASS [   0.468s] ( 17/489) cot auth::tests::user_secret_key_change
+        PASS [   0.300s] ( 18/489) cot body::tests::body_streaming
+        PASS [   0.802s] ( 19/489) cot auth::db::tests::database_user_traits
+        PASS [   0.214s] ( 20/489) cot body::tests::http_body_size_hint
+        PASS [   0.824s] ( 21/489) cot auth::db::tests::get_by_id
+        PASS [   0.262s] ( 22/489) cot body::tests::http_body_poll_frame_fixed
+        PASS [   0.248s] ( 23/489) cot body::tests::http_body_poll_frame_streaming
+        PASS [   0.850s] ( 24/489) cot auth::db::tests::session_auth_hash
+        PASS [   0.877s] ( 25/489) cot auth::db::tests::create_user
+        PASS [   0.259s] ( 26/489) cot cli::tests::cli_add_task
+        PASS [   0.240s] ( 27/489) cot cli::tests::cli_new
+        PASS [   0.329s] ( 28/489) cot cli::tests::check_execute
+        PASS [   0.267s] ( 29/489) cot cli::tests::cli_set_metadata
+        PASS [   0.328s] ( 30/489) cot cli::tests::collect_static_execute
+        PASS [   0.213s] ( 31/489) cot common_types::tests::askama_renders_email_field
+        PASS [   0.231s] ( 32/489) cot cli::tests::run_server_subcommand
+        PASS [   0.220s] ( 33/489) cot common_types::tests::askama_renders_url_field
+        PASS [   0.206s] ( 34/489) cot common_types::tests::db_tests::test_email_to_db_value
+        PASS [   0.205s] ( 35/489) cot common_types::tests::db_tests::test_email_to_db_value_is_normalized
+        PASS [   0.219s] ( 36/489) cot common_types::tests::db_tests::test_url_to_db_value
+        PASS [   0.211s] ( 37/489) cot common_types::tests::password_debug
+        PASS [   0.223s] ( 38/489) cot common_types::tests::password_str
+        PASS [   0.221s] ( 39/489) cot common_types::tests::test_from_str_trait
+        PASS [   0.224s] ( 40/489) cot common_types::tests::test_invalid_email_creation
+        PASS [   0.207s] ( 41/489) cot common_types::tests::url_new
+        PASS [   0.234s] ( 42/489) cot common_types::tests::test_try_from_trait
+        PASS [   0.221s] ( 43/489) cot common_types::tests::test_valid_email_creation
+        PASS [   0.223s] ( 44/489) cot common_types::tests::url_new_normalize
+        PASS [   1.333s] ( 45/489) cot auth::tests::password_hash
+        PASS [   1.399s] ( 46/489) cot auth::db::tests::authenticate_invalid_password
+        PASS [   0.281s] ( 47/489) cot config::tests::expiry_from_valid_toml
+        PASS [   1.428s] ( 48/489) cot auth::db::tests::authenticate
+        PASS [   1.435s] ( 49/489) cot auth::db::tests::authenticate_non_existing
+        PASS [   0.205s] ( 50/489) cot db::fields::chrono_wrapper::tests::weekday_set_all_weekdays
+        PASS [   0.257s] ( 51/489) cot config::tests::from_toml_missing_fields
+        PASS [   0.263s] ( 52/489) cot config::tests::from_toml_valid
+        PASS [   0.240s] ( 53/489) cot config::tests::same_site_from_valid_toml
+        PASS [   0.208s] ( 54/489) cot db::fields::chrono_wrapper::tests::weekday_set_chrono_conversion
+        PASS [   0.204s] ( 55/489) cot db::fields::chrono_wrapper::tests::weekday_set_empty
+        PASS [   0.246s] ( 56/489) cot config::tests::test_same_site_lax_from_config
+        PASS [   0.219s] ( 57/489) cot db::fields::chrono_wrapper::tests::weekday_set_from_u8
+        PASS [   0.204s] ( 58/489) cot db::fields::chrono_wrapper::tests::weekday_set_insert
+        PASS [   0.205s] ( 59/489) cot db::fields::chrono_wrapper::tests::weekday_set_option_to_db_value
+        PASS [   0.209s] ( 60/489) cot db::fields::chrono_wrapper::tests::weekday_set_single
+        PASS [   0.197s] ( 61/489) cot db::fields::chrono_wrapper::tests::weekday_set_to_db_value
+        PASS [   0.206s] ( 62/489) cot db::fields::chrono_wrapper::tests::weekday_set_to_u8
+        PASS [   0.206s] ( 63/489) cot db::fields::chrono_wrapper::tests::weekday_set_weekdays
+        PASS [   0.221s] ( 64/489) cot db::migrations::sorter::tests::create_lookup_table
+        PASS [   0.216s] ( 65/489) cot db::migrations::sorter::tests::duplicate_model
+        PASS [   0.219s] ( 66/489) cot db::migrations::sorter::tests::duplicate_migration
+        PASS [   0.231s] ( 67/489) cot db::migrations::sorter::tests::cycle_detection
+        PASS [   0.208s] ( 68/489) cot db::migrations::tests::field_foreign_key
+        PASS [   1.853s] ( 69/489) cot auth::tests::password_hash_verify
+        PASS [   0.236s] ( 70/489) cot db::migrations::sorter::tests::sort
+        PASS [   0.239s] ( 71/489) cot db::migrations::sorter::tests::toposort
+        PASS [   0.191s] ( 72/489) cot db::migrations::tests::field_new
+        PASS [   0.259s] ( 73/489) cot db::migrations::sorter::tests::toposort_big
+        PASS [   0.226s] ( 74/489) cot db::migrations::tests::test_field_to_column_def
+        PASS [   0.202s] ( 75/489) cot db::migrations::tests::test_migration_wrapper
+        PASS [   0.228s] ( 76/489) cot db::migrations::tests::test_field_to_column_def_without_options
+        PASS [   0.208s] ( 77/489) cot db::migrations::tests::test_operation_add_field
+        PASS [   0.189s] ( 78/489) cot db::migrations::tests::test_operation_remove_model
+        PASS [   0.195s] ( 79/489) cot db::migrations::tests::test_operation_create_model
+        PASS [   0.195s] ( 80/489) cot db::migrations::tests::test_operation_remove_field
+        PASS [   0.197s] ( 81/489) cot db::migrations::tests::test_remove_field_builder_field
+        PASS [   0.195s] ( 82/489) cot db::migrations::tests::test_remove_field_builder_missing_field
+        PASS [   0.203s] ( 83/489) cot db::migrations::tests::test_remove_field_builder_missing_table_name
+        PASS [   0.182s] ( 84/489) cot db::migrations::tests::test_remove_field_builder_new
+        PASS [   0.378s] ( 85/489) cot db::migrations::tests::test_migration_engine_multiple_migrations_run_sqlite
+        PASS [   0.376s] ( 86/489) cot db::migrations::tests::test_migration_engine_run_sqlite
+        PASS [   0.192s] ( 87/489) cot db::migrations::tests::test_remove_field_builder_table_name
+        PASS [   0.191s] ( 88/489) cot db::query::tests::expr_add
+        PASS [   0.194s] ( 89/489) cot db::query::tests::expr_div
+        PASS [   0.197s] ( 90/489) cot db::query::tests::expr_and
+        PASS [   0.204s] ( 91/489) cot db::query::tests::expr_eq
+        PASS [   0.200s] ( 92/489) cot db::query::tests::expr_field
+        PASS [   0.208s] ( 93/489) cot db::query::tests::expr_gt
+        PASS [   0.341s] ( 94/489) cot db::migrations::tests::test_remove_field_operation_backwards_sqlite
+        PASS [   0.345s] ( 95/489) cot db::migrations::tests::test_remove_field_operation_forwards_sqlite
+        PASS [   0.191s] ( 96/489) cot db::query::tests::expr_lt
+        PASS [   0.211s] ( 97/489) cot db::query::tests::expr_gte
+        PASS [   0.203s] ( 98/489) cot db::query::tests::expr_lte
+        PASS [   0.209s] ( 99/489) cot db::query::tests::expr_mul
+        PASS [   0.212s] (100/489) cot db::query::tests::expr_ne
+        PASS [   0.209s] (101/489) cot db::query::tests::expr_or
+        PASS [   0.209s] (102/489) cot db::query::tests::expr_sub
+        PASS [   0.206s] (103/489) cot db::query::tests::expr_value
+        PASS [   0.184s] (104/489) cot db::query::tests::query_default
+        PASS [   0.192s] (105/489) cot db::query::tests::query_filter
+        PASS [   0.231s] (106/489) cot db::query::tests::query_all
+        PASS [   0.189s] (107/489) cot db::query::tests::query_limit
+        PASS [   0.231s] (108/489) cot db::query::tests::query_delete
+        PASS [   0.183s] (109/489) cot db::query::tests::query_new
+        PASS [   0.231s] (110/489) cot db::query::tests::query_exists
+        PASS [   0.233s] (111/489) cot db::query::tests::query_get
+        PASS [   0.185s] (112/489) cot db::relations::tests::test_from_model
+        PASS [   0.189s] (113/489) cot db::query::tests::query_offset
+        PASS [   0.191s] (114/489) cot db::relations::tests::test_from_model_ref
+        PASS [   0.183s] (115/489) cot db::relations::tests::test_model
+        PASS [   0.178s] (116/489) cot db::relations::tests::test_partial_eq
+        PASS [   0.169s] (117/489) cot db::relations::tests::test_primary_key
+        PASS [   0.179s] (118/489) cot db::relations::tests::test_unwrap_model
+        PASS [   0.175s] (119/489) cot db::relations::tests::unwrap_primary_key
+        PASS [   0.174s] (120/489) cot db::tests::column
+        PASS [   0.178s] (121/489) cot db::tests::db_field_value_expect
+        PASS [   0.183s] (122/489) cot db::tests::db_field_value_expect_panic
+        PASS [   0.182s] (123/489) cot db::tests::db_field_value_is_auto
+        PASS [   0.179s] (124/489) cot db::tests::db_field_value_is_value
+        PASS [   0.178s] (125/489) cot db::tests::db_field_value_unwrap
+        PASS [   0.180s] (126/489) cot db::tests::db_field_value_unwrap_panic
+        PASS [   0.174s] (127/489) cot db::tests::identifier
+        PASS [   0.174s] (128/489) cot db::tests::limited_string_eq
+        PASS [   0.174s] (129/489) cot db::tests::limited_string_new_exact_limit
+        PASS [   0.174s] (130/489) cot db::tests::limited_string_new_exceeds_limit
+        PASS [   0.175s] (131/489) cot db::tests::limited_string_new_within_limit
+        PASS [   0.186s] (132/489) cot error::backtrace::tests::test_backtrace_frames
+        PASS [   0.180s] (133/489) cot error::backtrace::tests::test_stack_frame_location
+        PASS [   0.176s] (134/489) cot error::backtrace::tests::test_stack_frame_location_no_colno
+        PASS [   0.173s] (135/489) cot error::backtrace::tests::test_stack_frame_location_unknown
+        PASS [   0.174s] (136/489) cot error::backtrace::tests::test_stack_frame_symbol_name
+        PASS [   0.174s] (137/489) cot error::backtrace::tests::test_stack_frame_symbol_name_unknown
+        PASS [   0.172s] (138/489) cot error_page::tests::test_build_cot_failure_page
+        PASS [   0.194s] (139/489) cot error_page::tests::build_route_data
+        PASS [   0.239s] (140/489) cot error_page::tests::test_handle_not_found
+        PASS [   0.272s] (141/489) cot error_page::tests::test_handle_response_panic
+        PASS [   0.331s] (142/489) cot error_page::tests::test_handle_response_panic_logging
+        PASS [   0.288s] (143/489) cot error_page::tests::test_log_not_found
+        PASS [   0.296s] (144/489) cot error_page::tests::test_log_panic
+        PASS [   0.256s] (145/489) cot form::field_value::tests::multipart_field_value
+        PASS [   0.235s] (146/489) cot form::field_value::tests::text_field_value
+        PASS [   0.232s] (147/489) cot form::fields::chrono::tests::weekday_as_form_field_clean_value
+        PASS [   0.225s] (148/489) cot form::fields::chrono::tests::weekday_as_form_field_clean_value_invalid
+        PASS [   0.199s] (149/489) cot form::fields::chrono::tests::weekday_as_form_field_clean_value_required_empty
+        PASS [   0.189s] (150/489) cot form::fields::chrono::tests::weekday_as_form_field_to_field_value
+        PASS [   0.212s] (151/489) cot form::fields::chrono::tests::weekday_hash_set_as_form_field_clean_value
+        PASS [   3.048s] (152/489) cot cli::tests::get_user_friendly_error_addr_in_use
+        PASS [   3.039s] (153/489) cot cli::tests::get_user_friendly_error_unsupported_error
+        PASS [   0.205s] (154/489) cot form::fields::chrono::tests::weekday_index_set_as_form_field_clean_value
+        PASS [   3.098s] (155/489) cot cli::tests::get_user_friendly_error_io_error_other
+        PASS [   0.212s] (156/489) cot form::fields::chrono::tests::weekday_linked_list_as_form_field_clean_value
+        PASS [   0.186s] (157/489) cot form::fields::chrono::tests::weekday_select_choice_default_choices
+        PASS [   0.187s] (158/489) cot form::fields::chrono::tests::weekday_select_choice_from_str_case_insensitive
+        PASS [   0.188s] (159/489) cot form::fields::chrono::tests::weekday_select_choice_from_str_invalid
+        PASS [   0.186s] (160/489) cot form::fields::chrono::tests::weekday_select_choice_from_str_valid
+        PASS [   0.187s] (161/489) cot form::fields::chrono::tests::weekday_select_choice_id
+        PASS [   3.448s] (162/489) cot cli::tests::check_execute_db_fail
+        PASS [   0.195s] (163/489) cot form::fields::chrono::tests::weekday_select_choice_to_string
+        PASS [   0.227s] (164/489) cot form::fields::chrono::tests::weekday_select_field_render
+        PASS [   0.228s] (165/489) cot form::fields::chrono::tests::weekday_select_multiple_field_render
+        PASS [   3.071s] (166/489) cot config::tests::expiry_from_invalid_toml
+        PASS [   0.243s] (167/489) cot form::fields::chrono::tests::weekday_set_as_form_field_clean_value
+        PASS [   0.220s] (168/489) cot form::fields::chrono::tests::weekday_set_as_form_field_to_field_value
+        PASS [   3.106s] (169/489) cot config::tests::from_toml_invalid
+        PASS [   0.247s] (170/489) cot form::fields::chrono::tests::weekday_vec_as_form_field_clean_value_empty_required
+        PASS [   0.258s] (171/489) cot form::fields::chrono::tests::weekday_vec_as_form_field_clean_value
+        PASS [   0.218s] (172/489) cot form::fields::chrono::tests::weekday_vec_as_form_field_to_field_value
+        PASS [   0.263s] (173/489) cot form::fields::chrono::tests::weekday_vec_as_form_field_clean_value_invalid
+        PASS [   0.232s] (174/489) cot form::fields::files::tests::file_field_clean_required
+        PASS [   0.257s] (175/489) cot form::fields::chrono::tests::weekday_vec_deque_as_form_field_clean_value
+        PASS [   0.262s] (176/489) cot form::fields::files::tests::file_field_clean_value
+        PASS [   0.239s] (177/489) cot form::fields::files::tests::file_field_render
+        PASS [   0.204s] (178/489) cot form::fields::files::tests::in_memory_uploaded_file
+        PASS [   0.230s] (179/489) cot form::fields::files::tests::file_field_render_no_accept
+        PASS [   0.204s] (180/489) cot form::fields::files::tests::in_memory_uploaded_file_no_metadata
+        PASS [   0.207s] (181/489) cot form::fields::select::tests::check_required_multiple_empty
+        PASS [   0.193s] (182/489) cot form::fields::select::tests::select_choice_default_choices
+        PASS [   0.240s] (183/489) cot form::fields::select::tests::check_required_multiple_with_values
+        PASS [   0.199s] (184/489) cot form::fields::select::tests::select_choice_from_str_invalid
+        PASS [   0.221s] (185/489) cot form::fields::select::tests::select_field_render_custom_choices
+        PASS [   0.227s] (186/489) cot form::fields::select::tests::select_field_render_custom_none_option
+        PASS [   0.218s] (187/489) cot form::fields::select::tests::select_field_render_default
+        PASS [   0.226s] (188/489) cot form::fields::select::tests::select_field_render_required
+        PASS [   0.213s] (189/489) cot form::fields::select::tests::select_multiple_field_render_default
+        PASS [   0.219s] (190/489) cot form::fields::select::tests::select_multiple_field_render_required
+        PASS [   0.251s] (191/489) cot form::fields::select::tests::select_field_with_value
+        PASS [   0.219s] (192/489) cot form::fields::select::tests::select_multiple_field_render_with_size
+        PASS [   0.237s] (193/489) cot form::fields::select::tests::select_multiple_field_values_iterator
+        PASS [   0.208s] (194/489) cot form::fields::tests::bool_field_clean_value
+        PASS [   0.253s] (195/489) cot form::fields::select::tests::select_multiple_field_with_values
+        PASS [   0.200s] (196/489) cot form::fields::tests::bool_field_render
+        PASS [   0.207s] (197/489) cot form::fields::tests::bool_field_render_must_be_true
+        PASS [   0.211s] (198/489) cot form::fields::tests::email_field_clean_below_min_length
+        PASS [   0.210s] (199/489) cot form::fields::tests::email_field_clean_exceeds_max_length
+        PASS [   0.204s] (200/489) cot form::fields::tests::email_field_clean_invalid_length_options
+        PASS [   0.211s] (201/489) cot form::fields::tests::email_field_clean_invalid_format
+        PASS [   0.217s] (202/489) cot form::fields::tests::email_field_clean_valid
+        PASS [   0.217s] (203/489) cot form::fields::tests::email_field_render
+        PASS [   0.215s] (204/489) cot form::fields::tests::float_field_clean_value
+        PASS [   0.226s] (205/489) cot form::fields::tests::float_field_clean_required
+        PASS [   0.223s] (206/489) cot form::fields::tests::float_field_clean_value_max_value_exceeded
+        PASS [   0.215s] (207/489) cot form::fields::tests::float_field_clean_value_min_value_not_met
+        PASS [   0.222s] (208/489) cot form::fields::tests::float_field_clean_value_nan_and_inf
+        PASS [   0.223s] (209/489) cot form::fields::tests::float_field_render
+        PASS [   0.213s] (210/489) cot form::fields::tests::integer_field_clean_value_above_max_value
+        PASS [   0.217s] (211/489) cot form::fields::tests::integer_field_clean_value
+        PASS [   0.222s] (212/489) cot form::fields::tests::integer_field_clean_value_below_min_value
+        PASS [   0.222s] (213/489) cot form::fields::tests::integer_field_render
+        PASS [   0.227s] (214/489) cot form::fields::tests::password_field_clean_value
+        PASS [   0.232s] (215/489) cot form::fields::tests::password_field_render
+        PASS [   0.218s] (216/489) cot form::fields::tests::string_field_clean_required
+        PASS [   0.224s] (217/489) cot form::fields::tests::string_field_clean_value
+        PASS [   0.219s] (218/489) cot form::fields::tests::string_field_render
+        PASS [   0.221s] (219/489) cot form::fields::tests::url_field_clean_required
+        PASS [   0.231s] (220/489) cot form::fields::tests::url_field_clean_value
+        PASS [   0.241s] (221/489) cot form::fields::tests::url_field_render
+        PASS [   0.290s] (222/489) cot form::tests::form_data_extract_multipart
+        PASS [   0.237s] (223/489) cot form::tests::urlencoded_form_data_extract_get
+        PASS [   0.228s] (224/489) cot form::tests::urlencoded_form_data_extract_get_empty
+        PASS [   0.278s] (225/489) cot form::tests::form_data_extract_multipart_with_file
+        PASS [   0.196s] (226/489) cot html::tests::test_html_new
+        PASS [   0.234s] (227/489) cot form::tests::urlencoded_form_data_extract_head
+        PASS [   0.204s] (228/489) cot html::tests::test_html_node_tag
+        PASS [   0.240s] (229/489) cot form::tests::urlencoded_form_data_extract_urlencoded
+        PASS [   0.209s] (230/489) cot html::tests::test_html_node_text
+        PASS [   2.996s] (231/489) cot error::backtrace::tests::test_create_backtrace
+        PASS [   0.213s] (232/489) cot html::tests::test_html_tag_children
+        PASS [   0.208s] (233/489) cot html::tests::test_html_tag_deeply_nested
+        PASS [   0.211s] (234/489) cot html::tests::test_html_tag_escaping
+        PASS [   0.209s] (235/489) cot html::tests::test_html_tag_mixed_content
+        PASS [   0.217s] (236/489) cot html::tests::test_html_tag_input
+        PASS [   0.214s] (237/489) cot html::tests::test_html_tag_nested_structure
+        PASS [   0.215s] (238/489) cot html::tests::test_html_tag_new
+        PASS [   0.216s] (239/489) cot html::tests::test_html_tag_text
+        PASS [   0.222s] (240/489) cot html::tests::test_html_tag_text_escaping_in_children
+        PASS [   0.228s] (241/489) cot html::tests::test_html_tag_with_attributes
+        PASS [   0.208s] (242/489) cot html::tests::test_html_tag_with_boolean_attributes
+        PASS [   0.214s] (243/489) cot html::tests::test_html_text_escaping
+        PASS [   0.211s] (244/489) cot html::tests::test_html_text_render
+        PASS [   3.176s] (245/489) cot error::tests::test_error_from_repr
+        PASS [   3.159s] (246/489) cot error::tests::test_error_new
+        PASS [   3.183s] (247/489) cot error::tests::test_error_display
+        PASS [   3.111s] (248/489) cot error_page::tests::test_handle_response_error
+        PASS [   0.258s] (249/489) cot middleware::tests::auth_middleware_requires_session
+        PASS [   3.128s] (250/489) cot error_page::tests::test_handle_response_error_logging
+        PASS [   0.268s] (251/489) cot middleware::tests::auth_middleware_adds_auth
+        PASS [   0.284s] (252/489) cot middleware::tests::auth_service_cloning
+        PASS [   0.290s] (253/489) cot middleware::tests::session_middleware_adds_cookie_not_secure
+        PASS [   0.299s] (254/489) cot middleware::tests::session_middleware_adds_cookie
+        PASS [   0.278s] (255/489) cot middleware::tests::session_middleware_adds_session
+        PASS [   3.145s] (256/489) cot error_page::tests::test_log_error
+        PASS [   0.222s] (257/489) cot openapi::tests::api_operation_part_for_form_get
+        PASS [   3.122s] (258/489) cot error_page::tests::test_log_error_without_request
+        PASS [   0.222s] (259/489) cot openapi::tests::api_operation_part_for_form_post
+        PASS [   0.213s] (260/489) cot openapi::tests::api_operation_part_for_json
+        PASS [   0.219s] (261/489) cot openapi::tests::api_operation_part_for_path_object
+        PASS [   0.225s] (262/489) cot openapi::tests::api_operation_part_for_path_single
+        PASS [   0.229s] (263/489) cot openapi::tests::api_operation_part_for_query
+        PASS [   0.232s] (264/489) cot openapi::tests::api_operation_part_for_path_tuple
+        PASS [   0.249s] (265/489) cot openapi::tests::api_operation_part_for_path_object_invalid_route_info
+        PASS [   0.223s] (266/489) cot openapi::tests::api_operation_response_for_result
+        PASS [   0.234s] (267/489) cot openapi::tests::api_operation_response_for_with_extension
+        PASS [   0.214s] (268/489) cot openapi::tests::no_api_handler
+        PASS [   0.242s] (269/489) cot openapi::tests::api_operation_response_for_json
+        PASS [   0.205s] (270/489) cot openapi::tests::route_context
+        PASS [   0.217s] (271/489) cot openapi::tests::no_api_param
+        PASS [   0.230s] (272/489) cot project::tests::app_default_impl
+        PASS [   0.212s] (273/489) cot project::tests::project_default_cli_metadata
+        PASS [   0.228s] (274/489) cot project::tests::project_default_register_apps
+        PASS [   0.256s] (275/489) cot project::tests::bootstrapper
+        PASS [   0.274s] (276/489) cot project::tests::project_default_config
+        PASS [   0.259s] (277/489) cot project::tests::test_default_auth_backend
+        PASS [   0.294s] (278/489) cot project::tests::project_middlewares
+        PASS [   0.246s] (279/489) cot request::extractors::tests::json_empty
+        PASS [   0.262s] (280/489) cot request::extractors::tests::json
+        PASS [   0.249s] (281/489) cot request::extractors::tests::method_extraction
+        PASS [   0.265s] (282/489) cot request::extractors::tests::json_struct
+        PASS [   0.232s] (283/489) cot request::extractors::tests::url_query_empty
+        PASS [   0.275s] (284/489) cot request::extractors::tests::path_extraction
+        PASS [   0.271s] (285/489) cot request::extractors::tests::request_form
+        PASS [   0.258s] (286/489) cot request::extractors::tests::url_query_extraction
+        PASS [   0.229s] (287/489) cot request::path_params_deserializer::tests::deserialize_bool_false
+        PASS [   0.221s] (288/489) cot request::path_params_deserializer::tests::deserialize_char
+        PASS [   0.340s] (289/489) cot request::extractors::tests::request_db
+        PASS [   0.229s] (290/489) cot request::path_params_deserializer::tests::deserialize_bool_true
+        PASS [   0.289s] (291/489) cot request::extractors::tests::urls_extraction
+        PASS [   0.242s] (292/489) cot request::path_params_deserializer::tests::deserialize_enum
+        PASS [   0.249s] (293/489) cot request::path_params_deserializer::tests::deserialize_enum_vec
+        PASS [   0.237s] (294/489) cot request::path_params_deserializer::tests::deserialize_f32
+        PASS [   0.228s] (295/489) cot request::path_params_deserializer::tests::deserialize_i128
+        PASS [   0.239s] (296/489) cot request::path_params_deserializer::tests::deserialize_f64
+        PASS [   0.229s] (297/489) cot request::path_params_deserializer::tests::deserialize_i16
+        PASS [   0.227s] (298/489) cot request::path_params_deserializer::tests::deserialize_i32
+        PASS [   0.221s] (299/489) cot request::path_params_deserializer::tests::deserialize_i64
+        PASS [   0.212s] (300/489) cot request::path_params_deserializer::tests::deserialize_i8
+        PASS [   0.223s] (301/489) cot request::path_params_deserializer::tests::deserialize_map
+        PASS [   0.231s] (302/489) cot request::path_params_deserializer::tests::deserialize_map_ints
+        PASS [   0.213s] (303/489) cot request::path_params_deserializer::tests::deserialize_parse_error
+        PASS [   0.204s] (304/489) cot request::path_params_deserializer::tests::deserialize_str
+        PASS [   0.215s] (305/489) cot request::path_params_deserializer::tests::deserialize_string
+        PASS [   0.214s] (306/489) cot request::path_params_deserializer::tests::deserialize_tuple
+        PASS [   0.221s] (307/489) cot request::path_params_deserializer::tests::deserialize_struct
+        PASS [   0.222s] (308/489) cot request::path_params_deserializer::tests::deserialize_tuple_pairs
+        PASS [   0.219s] (309/489) cot request::path_params_deserializer::tests::deserialize_u128
+        PASS [   0.216s] (310/489) cot request::path_params_deserializer::tests::deserialize_u16
+        PASS [   0.204s] (311/489) cot request::path_params_deserializer::tests::deserialize_u64
+        PASS [   0.207s] (312/489) cot request::path_params_deserializer::tests::deserialize_u32
+        PASS [   0.208s] (313/489) cot request::path_params_deserializer::tests::deserialize_u8
+        PASS [   0.201s] (314/489) cot request::path_params_deserializer::tests::deserialize_unsupported_type_error
+        PASS [   0.200s] (315/489) cot request::path_params_deserializer::tests::deserialize_vec
+        PASS [   0.208s] (316/489) cot request::path_params_deserializer::tests::deserialize_wrong_param_num_struct_error
+        PASS [   0.198s] (317/489) cot request::path_params_deserializer::tests::deserialize_wrong_param_num_tuple_error
+        PASS [   0.186s] (318/489) cot request::tests::parts_ext_content_type
+        PASS [   0.201s] (319/489) cot request::tests::parts_ext_app_name
+        PASS [   0.179s] (320/489) cot request::tests::parts_ext_route_name
+        PASS [   0.208s] (321/489) cot request::tests::parts_ext_mutating_path_params
+        PASS [   0.207s] (322/489) cot request::tests::parts_ext_path_params
+        PASS [   0.232s] (323/489) cot request::tests::parts_extract_parts
+        PASS [   0.211s] (324/489) cot request::tests::path_params
+        PASS [   0.217s] (325/489) cot request::tests::path_params_parse
+        PASS [   0.219s] (326/489) cot request::tests::request_ext_app_name
+        PASS [   0.226s] (327/489) cot request::tests::request_ext_content_type
+        PASS [   0.206s] (328/489) cot request::tests::request_ext_parts_route_name
+        PASS [   0.214s] (329/489) cot request::tests::request_ext_route_name
+        PASS [   0.235s] (330/489) cot request::tests::request_ext_path_params
+        PASS [   0.224s] (331/489) cot request::tests::request_ext_path_params_mut
+        PASS [   0.263s] (332/489) cot request::tests::request_ext_extract_parts
+        PASS [   0.215s] (333/489) cot response::into_response::tests::test_body_into_response
+        PASS [   0.226s] (334/489) cot response::into_response::tests::test_box_str_into_response
+        PASS [   0.222s] (335/489) cot response::into_response::tests::test_box_u8_slice_into_response
+        PASS [   0.235s] (336/489) cot response::into_response::tests::test_bytes_into_response
+        PASS [   0.229s] (337/489) cot response::into_response::tests::test_bytes_mut_into_response
+        PASS [   0.238s] (338/489) cot response::into_response::tests::test_extensions_into_response
+        PASS [   0.241s] (339/489) cot response::into_response::tests::test_header_map_into_response
+        PASS [   0.235s] (340/489) cot response::into_response::tests::test_html_into_response
+        PASS [   0.241s] (341/489) cot response::into_response::tests::test_json_struct_into_response
+        PASS [   0.219s] (342/489) cot response::into_response::tests::test_response_into_response
+        PASS [   0.266s] (343/489) cot response::into_response::tests::test_json_hashmap_into_response
+        PASS [   0.249s] (344/489) cot response::into_response::tests::test_parts_into_response
+        PASS [   0.230s] (345/489) cot response::into_response::tests::test_result_ok_into_response
+        PASS [   0.231s] (346/489) cot response::into_response::tests::test_static_u8_array_into_response
+        PASS [   0.235s] (347/489) cot response::into_response::tests::test_static_str_into_response
+        PASS [   0.227s] (348/489) cot response::into_response::tests::test_status_code_into_response
+        PASS [   0.245s] (349/489) cot response::into_response::tests::test_static_u8_slice_into_response
+        PASS [   0.239s] (350/489) cot response::into_response::tests::test_string_into_response
+        PASS [   0.251s] (351/489) cot response::into_response::tests::test_u8_array_into_response
+        PASS [   0.246s] (352/489) cot response::into_response::tests::test_unit_into_response
+        PASS [   0.233s] (353/489) cot response::into_response::tests::test_vec_u8_into_response
+        PASS [   0.235s] (354/489) cot response::into_response::tests::test_with_body
+        PASS [   0.223s] (355/489) cot response::into_response::tests::test_with_content_type
+        PASS [   0.182s] (356/489) cot response::tests::response_new_redirect
+        PASS [   0.208s] (357/489) cot response::tests::response_new_json
+        PASS [   0.224s] (358/489) cot response::into_response::tests::test_with_status
+        PASS [   0.232s] (359/489) cot response::into_response::tests::test_with_extension
+        PASS [   0.239s] (360/489) cot response::into_response::tests::test_with_header
+        PASS [   0.232s] (361/489) cot router::method::openapi::tests::api_method_router_custom_fallback
+        PASS [   0.220s] (362/489) cot router::method::openapi::tests::api_method_router_default_fallback
+        PASS [   0.228s] (363/489) cot router::method::openapi::tests::api_method_router_default_head
+        PASS [   0.231s] (364/489) cot router::method::openapi::tests::api_method_router_fallback
+        PASS [   0.244s] (365/489) cot router::method::openapi::tests::api_method_router_multiple
+        PASS [   0.188s] (366/489) cot router::method::openapi::tests::inner_api_handler_debug
+        PASS [   0.243s] (367/489) cot router::method::openapi::tests::api_method_router_router_get
+        PASS [   0.235s] (368/489) cot router::method::openapi::tests::method_api_router_connect
+        PASS [   0.227s] (369/489) cot router::method::openapi::tests::method_api_router_delete
+        PASS [   0.225s] (370/489) cot router::method::openapi::tests::method_api_router_head
+        PASS [   0.226s] (371/489) cot router::method::openapi::tests::method_api_router_options
+        PASS [   0.225s] (372/489) cot router::method::openapi::tests::method_api_router_patch
+        PASS [   0.232s] (373/489) cot router::method::openapi::tests::method_api_router_post
+        PASS [   0.186s] (374/489) cot router::method::openapi::tests::openapi_empty
+        PASS [   0.243s] (375/489) cot router::method::openapi::tests::method_api_router_put
+        PASS [   0.200s] (376/489) cot router::method::openapi::tests::openapi_multiple
+        PASS [   0.232s] (377/489) cot router::method::openapi::tests::method_api_router_trace
+        PASS [   0.209s] (378/489) cot router::method::openapi::tests::openapi_post
+        PASS [   0.188s] (379/489) cot router::method::tests::inner_handler_debug
+        PASS [   0.238s] (380/489) cot router::method::tests::method_router_connect
+        PASS [   0.247s] (381/489) cot router::method::tests::method_router_custom_fallback
+        PASS [   0.222s] (382/489) cot router::method::tests::method_router_default_fallback
+        PASS [   0.213s] (383/489) cot router::method::tests::method_router_fallback
+        PASS [   0.229s] (384/489) cot router::method::tests::method_router_default_head
+        PASS [   0.221s] (385/489) cot router::method::tests::method_router_get
+        PASS [   0.227s] (386/489) cot router::method::tests::method_router_delete
+        PASS [   0.218s] (387/489) cot router::method::tests::method_router_head
+        PASS [   0.226s] (388/489) cot router::method::tests::method_router_multiple
+        PASS [   0.222s] (389/489) cot router::method::tests::method_router_options
+        PASS [   0.229s] (390/489) cot router::method::tests::method_router_patch
+        PASS [   0.232s] (391/489) cot router::method::tests::method_router_post
+        PASS [   0.234s] (392/489) cot router::method::tests::method_router_put
+        PASS [   0.239s] (393/489) cot router::method::tests::method_router_trace
+        PASS [   0.205s] (394/489) cot router::path::tests::path_parser_consecutive_params
+        PASS [   0.206s] (395/489) cot router::path::tests::path_parser_display
+        PASS [   0.196s] (396/489) cot router::path::tests::path_parser_escaped
+        PASS [   0.192s] (397/489) cot router::path::tests::path_parser_escaping_unclosed
+        PASS [   0.193s] (398/489) cot router::path::tests::path_parser_invalid_name_empty
+        PASS [   0.199s] (399/489) cot router::path::tests::path_parser_invalid_name_non_alphanumeric
+        PASS [   0.198s] (400/489) cot router::path::tests::path_parser_invalid_name_numeric
+        PASS [   0.196s] (401/489) cot router::path::tests::path_parser_missing_opening_brace
+        PASS [   0.206s] (402/489) cot router::path::tests::path_parser_multiple_params
+        PASS [   0.193s] (403/489) cot router::path::tests::path_parser_no_params
+        PASS [   3.141s] (404/489) cot form::tests::form_data_extract_invalid_content_type
+        PASS [   0.205s] (405/489) cot router::path::tests::path_parser_param_whitespace
+        PASS [   0.204s] (406/489) cot router::path::tests::path_parser_single_param
+        PASS [   0.203s] (407/489) cot router::path::tests::path_parser_unclosed
+        PASS [   0.202s] (408/489) cot router::path::tests::path_parser_unclosed_double
+        PASS [   0.209s] (409/489) cot router::path::tests::path_parser_unclosed_slash
+        PASS [   0.200s] (410/489) cot router::path::tests::reverse_param_map_default
+        PASS [   0.210s] (411/489) cot router::path::tests::reverse_with_missing_param
+        PASS [   0.220s] (412/489) cot router::path::tests::reverse_with_extra_param
+        PASS [   0.198s] (413/489) cot router::tests::route_router
+        PASS [   0.210s] (414/489) cot router::path::tests::reverse_with_valid_params
+        PASS [   0.203s] (415/489) cot router::tests::route_kind
+        PASS [   0.205s] (416/489) cot router::tests::route_inner_debug
+        PASS [   0.200s] (417/489) cot router::tests::route_with_handler_and_name
+        PASS [   0.207s] (418/489) cot router::tests::route_with_handler
+        PASS [   0.213s] (419/489) cot router::tests::route_with_handler_and_params
+        PASS [   0.208s] (420/489) cot router::tests::route_with_router
+        PASS [   0.203s] (421/489) cot router::tests::router_is_empty
+        PASS [   0.259s] (422/489) cot router::tests::router_handle
+        PASS [   0.222s] (423/489) cot router::tests::router_reverse
+        PASS [   0.228s] (424/489) cot router::tests::router_reverse_app_name
+        PASS [   0.215s] (425/489) cot router::tests::router_reverse_app_name_nested
+        PASS [   0.197s] (426/489) cot router::tests::router_routes
+        PASS [   0.198s] (427/489) cot router::tests::router_with_urls
+        PASS [   0.212s] (428/489) cot router::tests::router_reverse_option
+        PASS [   0.213s] (429/489) cot router::tests::router_reverse_with_param
+        PASS [   0.197s] (430/489) cot serializers::tests::json_serialize_session_expiry_time
+        PASS [   0.245s] (431/489) cot router::tests::sub_router_handle
+        PASS [   0.254s] (432/489) cot router::tests::router_route
+        PASS [   0.245s] (433/489) cot router::tests::test_reverse_macro
+        PASS [   0.245s] (434/489) cot router::tests::test_reverse_redirect_macro
+        PASS [   0.224s] (435/489) cot static_files::tests::collect_into
+        PASS [   0.210s] (436/489) cot static_files::tests::collect_into_empty
+        PASS [   0.194s] (437/489) cot static_files::tests::static_file_mime_type_detection
+        PASS [   0.225s] (438/489) cot static_files::tests::file_as_response
+        PASS [   0.202s] (439/489) cot static_files::tests::static_files_add_and_get_file
+        PASS [   0.186s] (440/489) cot static_files::tests::static_files_macro
+        PASS [   0.184s] (441/489) cot static_files::tests::static_files_macro_trailing_comma
+        PASS [   0.209s] (442/489) cot static_files::tests::static_files_hash_changes_with_content
+        PASS [   0.200s] (443/489) cot static_files::tests::static_files_hash_consistency
+        PASS [   0.235s] (444/489) cot static_files::tests::static_files_middleware
+        PASS [   0.167s] (445/489) cot utils::graph::tests::graph_toposort
+        PASS [   0.215s] (446/489) cot static_files::tests::static_files_middleware_from_context
+        PASS [   0.198s] (447/489) cot static_files::tests::static_files_url_rewriting
+        PASS [   0.199s] (448/489) cot static_files::tests::static_files_url_rewriting_with_different_prefix
+        PASS [   0.225s] (449/489) cot static_files::tests::static_files_middleware_not_found
+        PASS [   0.180s] (450/489) cot utils::graph::tests::graph_toposort_stable
+        PASS [   0.240s] (451/489) cot static_files::tests::static_files_middleware_with_config
+        PASS [   0.180s] (452/489) cot utils::graph::tests::graph_toposort_with_cycle
+        PASS [   0.160s] (453/489) cot::form context_display_non_empty
+        PASS [   0.157s] (454/489) cot::form context_from_empty_request
+        PASS [   0.140s] (455/489) cot::form foreign_key_field_to_field_value
+        PASS [   0.169s] (456/489) cot::form foreign_key_field
+        PASS [   0.335s] (457/489) cot::db foreign_keys_cascade_sqlite
+        PASS [   2.969s] (458/489) cot request::extractors::tests::json_invalid_content_type
+        PASS [   0.335s] (459/489) cot::db foreign_keys_option_sqlite
+        PASS [   0.335s] (460/489) cot::db foreign_keys_sqlite
+        PASS [   0.322s] (461/489) cot::db model_insert_sqlite
+        PASS [   0.336s] (462/489) cot::db model_crud_sqlite
+        PASS [   0.320s] (463/489) cot::db model_macro_filtering_sqlite
+        PASS [   0.326s] (464/489) cot::db model_update_sqlite
+        PASS [   0.340s] (465/489) cot::db weekday_set_field_functionality_sqlite
+        PASS [   0.182s] (466/489) cot::form form_from_request
+        PASS [   0.204s] (467/489) cot::form form_errors_required
+        PASS [   0.194s] (468/489) cot::form select_field_context_display
+        PASS [   0.200s] (469/489) cot::form select_field_form_integration
+        PASS [   0.141s] (470/489) cot::from_request test_tuple_struct
+        PASS [   0.150s] (471/489) cot::from_request test_named_struct
+        PASS [   0.506s] (472/489) cot::db all_fields_model_sqlite
+        PASS [   0.193s] (473/489) cot::form select_field_validation_error
+        PASS [   0.194s] (474/489) cot::form values_persist_on_form_errors
+        PASS [   0.143s] (475/489) cot::from_request test_unit_struct
+        PASS [   0.170s] (476/489) cot::openapi api_method_router
+        PASS [   0.176s] (477/489) cot::openapi api_router_cycle
+        PASS [   0.158s] (478/489) cot::openapi api_router_nested
+        PASS [   0.206s] (479/489) cot::openapi api_route_integration
+        PASS [   0.177s] (480/489) cot::openapi no_api_in_method_router
+        PASS [   0.184s] (481/489) cot::openapi no_api_in_params
+        PASS [   0.178s] (482/489) cot::project cot_project_router_sub_path
+        PASS [   0.177s] (483/489) cot::project cot_router_reverse_local
+        PASS [   0.170s] (484/489) cot::router test_index
+        PASS [   0.180s] (485/489) cot::router path_params
+        PASS [   2.749s] (486/489) cot request::tests::request_ext_expect_content_type
+        PASS [   2.667s] (487/489) cot response::into_response::tests::test_result_err_into_response
+        PASS [   1.717s] (488/489) cot::auth database_user_sqlite
+        PASS [  41.731s] (489/489) cot::compile_tests diagnostic_on_unimplemented
+────────────
+     Summary [  50.612s] 489 tests run: 489 passed, 30 skipped
+reward=1 graded=489 found=126 failed=0 parsed=489 framework=cargo exit_code=0

@@ -1,0 +1,23 @@
+{
+ "task": "grafbase-grafbase-1258",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch removes the spurious {\"message\":\"Upstream response error: Missing required field named 'fail'\"} error from the expected mutation response snapshot, leaving only the real upstream error"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

@@ -1,0 +1,5 @@
+I'm working with the XKNX Python library for KNX home automation, and I need to add support for KNX scenes. Right now the library handles lights, switches, covers, and other device types, but there's no way to represent or trigger a KNX scene — the kind that lets you activate a predefined environment like a "Romantic" lighting setup with a single command.
+
+I need a new device class that accepts a group address and a scene number, and when activated, sends the scene number encoded as a single byte to that group address. The sync operation for this device should be a no-op since there's no state to read back. I also need it to support a generic "run" action through the existing action dispatch system, and to log a warning (without crashing) for any unrecognized actions.
+
+In addition, the library needs a proper KNX data type encoder/decoder for scene numbers, covering the valid range of 0 to 63, and raising a conversion error for values outside that range or of the wrong type. The configuration file format should also be extended so that scenes can be defined with a group address and scene number in the YAML config, alongside all the other device types.

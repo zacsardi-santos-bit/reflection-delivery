@@ -1,0 +1,9 @@
+patching file backends/batch/collections.go
+patching file backends/batch/replays.go
+patching file backends/batch/schemas.go
+patching file go.mod
+patching file go.sum
+patching file vendor/github.com/batchcorp/plumber-schemas/build/go/protos/opts/batch_connection_options.pb.go
+patching file vendor/github.com/batchcorp/plumber-schemas/build/go/protos/opts/ps_opts_batch.pb.go
+patching file vendor/github.com/batchcorp/plumber-schemas/build/go/protos/records/ps_records_base.pb.go
+patching file vendor/modules.txt

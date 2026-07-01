@@ -1,0 +1,7 @@
+I'd like rust-analyzer to flag redundant trailing return expressions — cases where someone writes an explicit return at the end of a function or closure when Rust's implicit return would do the same thing. The diagnostic should be a weak hint (not an error) and should include a fix that removes the return keyword and turns the statement into a proper tail expression, or removes the statement entirely for bare unit returns.
+
+The diagnostic should cover all the realistic places a trailing return can appear: the end of a straight-line function body, both branches of an if/else that is itself the last thing in the function, every arm of a trailing match expression, closures (both single-expression and block-body), and inner function definitions nested inside outer ones.
+
+It should be smart enough not to flag returns that appear before other statements — it should only fire when the return is genuinely the final value of the function or closure.
+
+One tricky part: some test cases involve if/else bodies where both an existing diagnostic (about unnecessary else branches) and the new trailing-return diagnostic would fire simultaneously. Writing clean fix tests for those cases requires a way to disable a specific other diagnostic while running the fix check. A new test helper should be added that accepts a list of diagnostic names to suppress, so fix tests can be written without interference from unrelated diagnostics.

@@ -1,0 +1,254 @@
+diff --git a/corelib/array.cairo b/corelib/array.cairo
+index a1f677e87..09a91ca92 100644
+--- a/corelib/array.cairo
++++ b/corelib/array.cairo
+@@ -4,16 +4,16 @@ extern fn array_append<T>(ref arr: Array::<T>, value: T) nopanic;
+ extern fn array_pop_front<T>(ref arr: Array::<T>) -> Option::<T> nopanic;
+ #[panic_with('Array out of bounds', array_at)]
+ extern fn array_get<T>(
+-    ref arr: Array::<T>, index: usize
+-) -> Option::<T> implicits(RangeCheck) nopanic;
++    arr: @Array::<T>, index: usize
++) -> Option::<@T> implicits(RangeCheck) nopanic;
+ extern fn array_len<T>(arr: @Array::<T>) -> usize nopanic;
+ 
+ trait ArrayTrait<T> {
+     fn new() -> Array::<T>;
+     fn append(ref self: Array::<T>, value: T);
+     fn pop_front(ref self: Array::<T>) -> Option::<T>;
+-    fn get(ref self: Array::<T>, index: usize) -> Option::<T>;
+-    fn at(ref self: Array::<T>, index: usize) -> T;
++    fn get(self: @Array::<T>, index: usize) -> Option::<@T>;
++    fn at(self: @Array::<T>, index: usize) -> @T;
+     fn len(self: @Array::<T>) -> usize;
+     fn is_empty(self: @Array::<T>) -> bool;
+ }
+@@ -31,11 +31,11 @@ impl ArrayImpl<T> of ArrayTrait::<T> {
+         array_pop_front(ref self)
+     }
+     #[inline(always)]
+-    fn get(ref self: Array::<T>, index: usize) -> Option::<T> {
+-        array_get(ref self, index)
++    fn get(self: @Array::<T>, index: usize) -> Option::<@T> {
++        array_get(self, index)
+     }
+-    fn at(ref self: Array::<T>, index: usize) -> T {
+-        array_at(ref self, index)
++    fn at(self: @Array::<T>, index: usize) -> @T {
++        array_at(self, index)
+     }
+     #[inline(always)]
+     fn len(self: @Array::<T>) -> usize {
+diff --git a/corelib/test.cairo b/corelib/test.cairo
+index a00a62052..aa3826fc4 100644
+--- a/corelib/test.cairo
++++ b/corelib/test.cairo
+@@ -792,32 +792,34 @@ fn test_u256_mul_overflow_2() {
+     as_u256(0_u128, pow_2_127()) * as_u256(2_u128, 0_u128);
+ }
+ 
+-// TODO(orizi): Switch to operators and literals when added.
+-fn test_array_helper(idx: usize) -> felt {
++fn test_array_helper() -> Array::<felt> {
+     let mut arr = ArrayTrait::new();
+     arr.append(10);
+     arr.append(11);
+     arr.append(12);
+-    array_at(ref arr, idx)
++    arr
+ }
+ 
+ #[test]
+ fn test_array() {
+-    assert(test_array_helper(0_usize) == 10, 'array[0] == 10');
+-    assert(test_array_helper(1_usize) == 11, 'array[1] == 11');
+-    assert(test_array_helper(2_usize) == 12, 'array[2] == 12');
++    let arr = test_array_helper();
++    assert(arr.at(0_usize) == 10, 'array[0] == 10');
++    assert(arr.at(1_usize) == 11, 'array[1] == 11');
++    assert(arr.at(2_usize) == 12, 'array[2] == 12');
+ }
+ 
+ #[test]
+ #[should_panic]
+ fn test_array_out_of_bound_1() {
+-    test_array_helper(3_usize);
++    let arr = test_array_helper();
++    arr.at(3_usize);
+ }
+ 
+ #[test]
+ #[should_panic]
+ fn test_array_out_of_bound_2() {
+-    test_array_helper(11_usize);
++    let arr = test_array_helper();
++    arr.at(11_usize);
+ }
+ 
+ #[test]
+diff --git a/crates/cairo-lang-sierra-to-casm/src/invocations/array.rs b/crates/cairo-lang-sierra-to-casm/src/invocations/array.rs
+index 81f9632a5..782e5c9a5 100644
+--- a/crates/cairo-lang-sierra-to-casm/src/invocations/array.rs
++++ b/crates/cairo-lang-sierra-to-casm/src/invocations/array.rs
+@@ -174,8 +174,8 @@ fn build_array_get(
+     Ok(builder.build_from_casm_builder(
+         casm_builder,
+         [
+-            ("Fallthrough", &[&[range_check], &[arr_start, arr_end], &elem_cells], None),
+-            ("FailureHandle", &[&[range_check], &[arr_start, arr_end]], Some(failure_handle)),
++            ("Fallthrough", &[&[range_check], &elem_cells], None),
++            ("FailureHandle", &[&[range_check]], Some(failure_handle)),
+         ],
+         CostValidationInfo {
+             range_check_info: Some((orig_range_check, range_check)),
+diff --git a/crates/cairo-lang-sierra/src/extensions/modules/array.rs b/crates/cairo-lang-sierra/src/extensions/modules/array.rs
+index 1e87de1fc..1f7230144 100644
+--- a/crates/cairo-lang-sierra/src/extensions/modules/array.rs
++++ b/crates/cairo-lang-sierra/src/extensions/modules/array.rs
+@@ -1,5 +1,5 @@
+ use super::range_check::RangeCheckType;
+-use super::snapshot::SnapshotType;
++use super::snapshot::snapshot_ty;
+ use crate::define_libfunc_hierarchy;
+ use crate::extensions::lib_func::{
+     BranchSignature, DeferredOutputKind, LibfuncSignature, OutputVarInfo, ParamSignature,
+@@ -82,9 +82,8 @@ impl SignatureAndTypeGenericLibfunc for ArrayLenLibfuncWrapped {
+         ty: ConcreteTypeId,
+     ) -> Result<LibfuncSignature, SpecializationError> {
+         let arr_ty = context.get_wrapped_concrete_type(ArrayType::id(), ty)?;
+-        let snapshot_ty = context.get_wrapped_concrete_type(SnapshotType::id(), arr_ty)?;
+         Ok(LibfuncSignature::new_non_branch(
+-            vec![snapshot_ty],
++            vec![snapshot_ty(context, arr_ty)?],
+             vec![OutputVarInfo {
+                 ty: context.get_concrete_type(ArrayIndexType::id(), &[])?,
+                 ref_info: OutputVarReferenceInfo::Deferred(DeferredOutputKind::Generic),
+@@ -190,11 +189,11 @@ impl SignatureAndTypeGenericLibfunc for ArrayGetLibfuncWrapped {
+         }
+         let arr_type = context.get_wrapped_concrete_type(ArrayType::id(), ty.clone())?;
+         let range_check_type = context.get_concrete_type(RangeCheckType::id(), &[])?;
+-        let uint128_type = context.get_concrete_type(ArrayIndexType::id(), &[])?;
++        let index_type = context.get_concrete_type(ArrayIndexType::id(), &[])?;
+         let param_signatures = vec![
+             ParamSignature::new(range_check_type.clone()),
+-            ParamSignature::new(arr_type.clone()),
+-            ParamSignature::new(uint128_type),
++            ParamSignature::new(snapshot_ty(context, arr_type)?),
++            ParamSignature::new(index_type),
+         ];
+         let branch_signatures = vec![
+             // First (success) branch returns rc, array and element; failure branch does not return
+@@ -207,10 +206,6 @@ impl SignatureAndTypeGenericLibfunc for ArrayGetLibfuncWrapped {
+                             param_idx: 0,
+                         }),
+                     },
+-                    OutputVarInfo {
+-                        ty: arr_type.clone(),
+-                        ref_info: OutputVarReferenceInfo::SameAsParam { param_idx: 1 },
+-                    },
+                     OutputVarInfo {
+                         ty,
+                         ref_info: OutputVarReferenceInfo::Deferred(DeferredOutputKind::Generic),
+@@ -219,18 +214,12 @@ impl SignatureAndTypeGenericLibfunc for ArrayGetLibfuncWrapped {
+                 ap_change: SierraApChange::Known { new_vars_only: false },
+             },
+             BranchSignature {
+-                vars: vec![
+-                    OutputVarInfo {
+-                        ty: range_check_type,
+-                        ref_info: OutputVarReferenceInfo::Deferred(DeferredOutputKind::AddConst {
+-                            param_idx: 0,
+-                        }),
+-                    },
+-                    OutputVarInfo {
+-                        ty: arr_type,
+-                        ref_info: OutputVarReferenceInfo::SameAsParam { param_idx: 1 },
+-                    },
+-                ],
++                vars: vec![OutputVarInfo {
++                    ty: range_check_type,
++                    ref_info: OutputVarReferenceInfo::Deferred(DeferredOutputKind::AddConst {
++                        param_idx: 0,
++                    }),
++                }],
+                 ap_change: SierraApChange::Known { new_vars_only: false },
+             },
+         ];
+diff --git a/crates/cairo-lang-sierra/src/simulation/core.rs b/crates/cairo-lang-sierra/src/simulation/core.rs
+index 37c913a3e..d40201400 100644
+--- a/crates/cairo-lang-sierra/src/simulation/core.rs
++++ b/crates/cairo-lang-sierra/src/simulation/core.rs
+@@ -169,10 +169,8 @@ pub fn simulate<
+                 let arr = extract_matches!(iter.next().unwrap(), CoreValue::Array);
+                 let idx = extract_matches!(iter.next().unwrap(), CoreValue::Uint64) as usize;
+                 match arr.get(idx).cloned() {
+-                    Some(element) => {
+-                        Ok((vec![CoreValue::RangeCheck, CoreValue::Array(arr), element], 0))
+-                    }
+-                    None => Ok((vec![CoreValue::RangeCheck, CoreValue::Array(arr)], 1)),
++                    Some(element) => Ok((vec![CoreValue::RangeCheck, element], 0)),
++                    None => Ok((vec![CoreValue::RangeCheck], 1)),
+                 }
+             }
+             [_, _, _] => Err(LibfuncSimulationError::MemoryLayoutMismatch),
+@@ -182,7 +180,7 @@ pub fn simulate<
+             [CoreValue::Array(_)] => {
+                 let arr = extract_matches!(inputs.into_iter().next().unwrap(), CoreValue::Array);
+                 let len = arr.len();
+-                Ok((vec![CoreValue::Array(arr), CoreValue::Uint64(len as u64)], 0))
++                Ok((vec![CoreValue::Uint64(len as u64)], 0))
+             }
+             [_] => Err(LibfuncSimulationError::MemoryLayoutMismatch),
+             _ => Err(LibfuncSimulationError::WrongNumberOfArgs),
+diff --git a/crates/cairo-lang-sierra/src/simulation/test.rs b/crates/cairo-lang-sierra/src/simulation/test.rs
+index 4bdcc1a11..494604b06 100644
+--- a/crates/cairo-lang-sierra/src/simulation/test.rs
++++ b/crates/cairo-lang-sierra/src/simulation/test.rs
+@@ -72,6 +72,14 @@ impl TypeSpecializationContext for MockSpecializationContext {
+                 duplicatable: false,
+                 size: 0,
+             })
++        } else if id == "ArrayU128".into() {
++            Some(TypeInfo {
++                long_id: self.mapping.get_by_left(&id)?.clone(),
++                storable: true,
++                droppable: true,
++                duplicatable: false,
++                size: 2,
++            })
+         } else {
+             None
+         }
+@@ -163,9 +171,9 @@ fn simulate_branch(
+ #[test_case("array_append", vec![type_arg("u128")], vec![Array(vec![]), Uint128(4)] =>
+             Ok(vec![Array(vec![Uint128(4)])]); "array_append([], 4)")]
+ #[test_case("array_get", vec![type_arg("u128")], vec![RangeCheck, Array(vec![Uint128(5)]), Uint64(0)]
+-             => Ok(vec![RangeCheck, Array(vec![Uint128(5)]), Uint128(5)]); "array_get([5], 0)")]
++             => Ok(vec![RangeCheck, Uint128(5)]); "array_get([5], 0)")]
+ #[test_case("array_len", vec![type_arg("u128")], vec![Array(vec![])] =>
+-            Ok(vec![Array(vec![]), Uint64(0)]); "array_len([])")]
++            Ok(vec![Uint64(0)]); "array_len([])")]
+ #[test_case("u128_safe_divmod", vec![], vec![RangeCheck, Uint128(32), NonZero(Box::new(Uint128(5)))]
+              => Ok(vec![RangeCheck, Uint128(6), Uint128(2)]); "u128_safe_divmod(32, 5)")]
+ #[test_case("u128_const", vec![value_arg(3)], vec![] => Ok(vec![Uint128(3)]);
+diff --git a/examples/fib_array.cairo b/examples/fib_array.cairo
+index 645fefa4c..570c0da14 100644
+--- a/examples/fib_array.cairo
++++ b/examples/fib_array.cairo
+@@ -9,7 +9,7 @@ fn fib(n: usize) -> (Array::<felt>, felt, usize) {
+     let mut arr = fib_inner(:n, :arr);
+     let len = arr.len();
+     let last = arr.at(len - 1_usize);
+-    return (arr, last, len);
++    return (arr,  * last, len);
+ }
+ 
+ fn fib_inner(n: usize, mut arr: Array::<felt>) -> Array::<felt> {
+@@ -17,6 +17,6 @@ fn fib_inner(n: usize, mut arr: Array::<felt>) -> Array::<felt> {
+     if n <= length {
+         return arr;
+     }
+-    arr.append(arr.at(length - 1_usize) + arr.at(length - 2_usize));
++    arr.append( * arr.at(length - 1_usize) + * arr.at(length - 2_usize));
+     fib_inner(:n, :arr)
+ }

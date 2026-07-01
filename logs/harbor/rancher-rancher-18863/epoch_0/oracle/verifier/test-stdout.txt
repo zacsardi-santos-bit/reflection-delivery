@@ -1,0 +1,10 @@
+patching file pkg/controllers/user/logging/utils/testwrap_test.go
+{"Time":"2026-06-29T15:15:49.331998344Z","Action":"start","Package":"github.com/rancher/rancher/pkg/controllers/user/logging/utils"}
+{"Time":"2026-06-29T15:15:49.339516382Z","Action":"run","Package":"github.com/rancher/rancher/pkg/controllers/user/logging/utils","Test":"TestIsSignedBy"}
+{"Time":"2026-06-29T15:15:49.339558986Z","Action":"output","Package":"github.com/rancher/rancher/pkg/controllers/user/logging/utils","Test":"TestIsSignedBy","Output":"=== RUN   TestIsSignedBy\n"}
+{"Time":"2026-06-29T15:15:49.340012165Z","Action":"output","Package":"github.com/rancher/rancher/pkg/controllers/user/logging/utils","Test":"TestIsSignedBy","Output":"--- PASS: TestIsSignedBy (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.340058885Z","Action":"pass","Package":"github.com/rancher/rancher/pkg/controllers/user/logging/utils","Test":"TestIsSignedBy","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.340093286Z","Action":"output","Package":"github.com/rancher/rancher/pkg/controllers/user/logging/utils","Output":"PASS\n"}
+{"Time":"2026-06-29T15:15:49.34035573Z","Action":"output","Package":"github.com/rancher/rancher/pkg/controllers/user/logging/utils","Output":"ok  \tgithub.com/rancher/rancher/pkg/controllers/user/logging/utils\t0.008s\n"}
+{"Time":"2026-06-29T15:15:49.34040908Z","Action":"pass","Package":"github.com/rancher/rancher/pkg/controllers/user/logging/utils","Elapsed":0.008}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

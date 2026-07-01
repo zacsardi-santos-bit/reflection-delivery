@@ -1,0 +1,112 @@
+patching file tests/e2e_test.rs
+   Compiling cairo-lang-lowering v2.5.4 (/workspace/repo/crates/cairo-lang-lowering)
+   Compiling cairo-lang-sierra-generator v2.5.4 (/workspace/repo/crates/cairo-lang-sierra-generator)
+   Compiling cairo-lang-compiler v2.5.4 (/workspace/repo/crates/cairo-lang-compiler)
+   Compiling cairo-lang-starknet v2.5.4 (/workspace/repo/crates/cairo-lang-starknet)
+   Compiling cairo-lang-runner v2.5.4 (/workspace/repo/crates/cairo-lang-runner)
+   Compiling tests v2.5.4 (/workspace/repo/tests)
+    Finished test [unoptimized + debuginfo] target(s) in 40.22s
+────────────
+ Nextest run ID 08977576-8240-41bb-bdd1-e24c6ec0499d with nextest profile: default
+    Starting 98 tests across 2 binaries
+        PASS [   2.098s] ( 1/98) tests::e2e_test libfunc_e2e::builtin_costs
+        PASS [   2.976s] ( 2/98) tests::e2e_test libfunc_e2e::bitwise
+        PASS [   3.244s] ( 3/98) tests::e2e_test libfunc_e2e::felt252
+        PASS [   3.405s] ( 4/98) tests::e2e_test libfunc_e2e::bool
+        PASS [   3.675s] ( 5/98) tests::e2e_test libfunc_e2e::felt252_downcast
+        PASS [   3.969s] ( 6/98) tests::e2e_test libfunc_e2e::enum_snapshot
+        PASS [   4.009s] ( 7/98) tests::e2e_test libfunc_e2e::bytes31
+        PASS [   4.012s] ( 8/98) tests::e2e_test libfunc_e2e::felt252_dict
+        PASS [   4.119s] ( 9/98) tests::e2e_test libfunc_e2e::enum_
+        PASS [   4.353s] (10/98) tests::e2e_test libfunc_e2e::box_
+        PASS [   4.376s] (11/98) tests::e2e_test libfunc_e2e::ec
+        PASS [   4.539s] (12/98) tests::e2e_test libfunc_e2e::i128
+        PASS [   4.561s] (13/98) tests::e2e_test general_e2e::cmp
+        PASS [   4.566s] (14/98) tests::e2e_test libfunc_e2e::i16
+        PASS [   4.579s] (15/98) tests::e2e_test libfunc_e2e::i64
+        PASS [   4.637s] (16/98) tests::e2e_test libfunc_e2e::i32
+        PASS [   4.774s] (17/98) tests::e2e_test libfunc_e2e::casts
+        PASS [   4.899s] (18/98) tests::e2e_test libfunc_e2e::array
+        PASS [   4.943s] (19/98) tests::e2e_test libfunc_e2e::i8
+        PASS [   4.119s] (20/98) tests::e2e_test libfunc_e2e::snapshot
+        PASS [   4.992s] (21/98) tests::e2e_test libfunc_e2e::nullable
+        PASS [   4.442s] (22/98) tests::e2e_test libfunc_e2e::u512
+        PASS [   4.939s] (23/98) tests::e2e_test libfunc_e2e::u128
+        PASS [   5.408s] (24/98) tests::e2e_test libfunc_e2e::poseidon
+        PASS [   4.187s] (25/98) tests::e2e_test starknet_libfunc_e2e::contract_address
+        PASS [   4.346s] (26/98) tests::e2e_test starknet_libfunc_e2e::class_hash
+        PASS [   5.186s] (27/98) tests::e2e_test libfunc_e2e::u32
+        PASS [   5.193s] (28/98) tests::e2e_test libfunc_e2e::u256
+        PASS [   5.259s] (29/98) tests::e2e_test libfunc_e2e::u16
+        PASS [   5.281s] (30/98) tests::e2e_test libfunc_e2e::u8
+        PASS [   5.322s] (31/98) tests::e2e_test libfunc_e2e::u64
+        PASS [   5.221s] (32/98) tests::e2e_test libfunc_e2e_skip_add_gas::gas
+        PASS [   4.999s] (33/98) tests::e2e_test starknet_libfunc_e2e::storage_address
+        PASS [   5.563s] (34/98) tests::e2e_test metadata_e2e::metadata_computation
+        PASS [   5.670s] (35/98) tests::e2e_test starknet_libfunc_e2e::secp256k1
+        PASS [   5.769s] (36/98) tests::e2e_test starknet_libfunc_e2e::secp256r1
+        PASS [   6.548s] (37/98) tests::e2e_test starknet_libfunc_e2e::syscalls
+        PASS [   6.321s] (38/98) tests::examples_test cairo_to_casm::case_01_fib
+        PASS [   6.307s] (39/98) tests::examples_test cairo_to_casm::case_02_fib_box
+        PASS [   6.136s] (40/98) tests::examples_test cairo_to_casm::case_05_fib_match
+        PASS [   6.219s] (41/98) tests::examples_test cairo_to_casm::case_04_fib_counter
+        PASS [   6.187s] (42/98) tests::examples_test cairo_to_casm::case_06_fib_struct
+        PASS [   6.131s] (43/98) tests::examples_test cairo_to_casm::case_09_fib_local
+        PASS [   6.447s] (44/98) tests::examples_test cairo_to_casm::case_07_fib_u128
+        PASS [   6.250s] (45/98) tests::examples_test cairo_to_casm::case_10_fib_loop
+        PASS [   6.976s] (46/98) tests::examples_test cairo_to_casm::case_03_fib_array
+        PASS [   6.424s] (47/98) tests::examples_test cairo_to_casm::case_08_fib_u128_checked
+        PASS [   6.081s] (48/98) tests::examples_test cairo_to_casm::case_12_enum_flow
+        PASS [   6.180s] (49/98) tests::examples_test cairo_to_casm::case_11_fib_unary
+        PASS [   6.193s] (50/98) tests::examples_test cairo_to_casm::case_13_corelib_usage
+        PASS [   6.225s] (51/98) tests::examples_test cairo_to_casm::case_14_hash_chain
+        PASS [   6.066s] (52/98) tests::examples_test cairo_to_casm::case_16_pedersen_test
+        PASS [   6.306s] (53/98) tests::examples_test cairo_to_casm::case_15_hash_chain_gas
+        PASS [   6.477s] (54/98) tests::examples_test cairo_to_casm::case_17_match_or
+        PASS [   6.201s] (55/98) tests::examples_test cairo_to_casm_auto_gas::case_1_fib
+        PASS [   5.976s] (56/98) tests::examples_test cairo_to_sierra::case_01_fib
+        PASS [   6.037s] (57/98) tests::examples_test cairo_to_sierra::case_02_fib_box
+        PASS [   5.869s] (58/98) tests::examples_test cairo_to_sierra::case_04_fib_counter
+        PASS [   5.905s] (59/98) tests::examples_test cairo_to_sierra::case_05_fib_match
+        PASS [   5.896s] (60/98) tests::examples_test cairo_to_sierra::case_06_fib_struct
+        PASS [   6.624s] (61/98) tests::examples_test cairo_to_sierra::case_03_fib_array
+        PASS [   5.940s] (62/98) tests::examples_test cairo_to_sierra::case_08_fib_u128_checked
+        PASS [   6.129s] (63/98) tests::examples_test cairo_to_sierra::case_07_fib_u128
+        PASS [   5.991s] (64/98) tests::examples_test cairo_to_sierra::case_09_fib_local
+        PASS [   5.975s] (65/98) tests::examples_test cairo_to_sierra::case_10_fib_loop
+        PASS [   5.881s] (66/98) tests::examples_test cairo_to_sierra::case_12_enum_flow
+        PASS [   5.930s] (67/98) tests::examples_test cairo_to_sierra::case_13_corelib_usage
+        PASS [   6.237s] (68/98) tests::examples_test cairo_to_sierra::case_11_fib_unary
+        PASS [   5.967s] (69/98) tests::examples_test cairo_to_sierra::case_14_hash_chain
+        PASS [   5.877s] (70/98) tests::examples_test cairo_to_sierra::case_16_pedersen_test
+        PASS [   6.104s] (71/98) tests::examples_test cairo_to_sierra::case_15_hash_chain_gas
+        PASS [   6.165s] (72/98) tests::examples_test cairo_to_sierra::case_17_match_or
+        PASS [   5.662s] (73/98) tests::examples_test lowering_test
+        PASS [   5.987s] (74/98) tests::examples_test cairo_to_sierra_auto_gas::case_1_fib
+        PASS [   6.642s] (75/98) tests::examples_test run_fib_array_len::case_1_size_2
+        PASS [   6.622s] (76/98) tests::examples_test run_fib_array_len::case_2_size_3
+        PASS [   6.573s] (77/98) tests::examples_test run_fib_array_len::case_3_size_4
+        PASS [   5.900s] (78/98) tests::examples_test run_function_auto_gas_test::case_1_fib_pass
+        PASS [   6.426s] (79/98) tests::examples_test run_fib_array_len::case_4_size_5
+        PASS [   5.776s] (80/98) tests::examples_test run_function_test::case_01_fib
+        PASS [   5.943s] (81/98) tests::examples_test run_function_auto_gas_test::case_2_fib_fail
+        PASS [   6.441s] (82/98) tests::examples_test run_fib_array_len::case_6_size_7
+        PASS [   6.439s] (83/98) tests::examples_test run_fib_array_len::case_7_size_8
+        PASS [   6.516s] (84/98) tests::examples_test run_fib_array_len::case_5_size_6
+        PASS [   6.450s] (85/98) tests::examples_test run_fib_array_len::case_8_size_9
+        PASS [   6.424s] (86/98) tests::examples_test run_fib_array_len::case_9_size_10
+        PASS [   5.739s] (87/98) tests::examples_test run_function_test::case_03_fib_counter
+        PASS [   6.020s] (88/98) tests::examples_test run_function_test::case_02_fib
+        PASS [   5.672s] (89/98) tests::examples_test run_function_test::case_04_fib_match
+        PASS [   5.529s] (90/98) tests::examples_test run_function_test::case_05_fib_struct
+        PASS [   4.596s] (91/98) tests::examples_test run_function_test::case_06_fib_u128_checked_pass
+        PASS [   4.521s] (92/98) tests::examples_test run_function_test::case_07_fib_u128_checked_fail
+        PASS [   4.344s] (93/98) tests::examples_test run_function_test::case_08_fib_u128_pass
+        PASS [   3.981s] (94/98) tests::examples_test run_function_test::case_10_fib_local
+        PASS [   3.899s] (95/98) tests::examples_test run_function_test::case_12_hash_chain
+        PASS [   4.235s] (96/98) tests::examples_test run_function_test::case_09_fib_u128_fail
+        PASS [   3.963s] (97/98) tests::examples_test run_function_test::case_11_fib_unary
+        PASS [   4.027s] (98/98) tests::examples_test run_function_test::case_13_hash_chain_gas
+────────────
+     Summary [  31.800s] 98 tests run: 98 passed, 0 skipped
+reward=1 graded=98 found=22 failed=0 parsed=98 framework=cargo exit_code=0

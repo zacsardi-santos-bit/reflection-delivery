@@ -1,0 +1,98 @@
+{
+    "id": "3d1c8b0c-4668-4590-a9e5-951e1ba22280",
+    "task_name": "offline/wundergraph-cosmo-2108",
+    "trial_name": "wundergraph-cosmo-2108__iyN5PcB",
+    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/wundergraph-cosmo-2108__iyN5PcB",
+    "task_id": {
+        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/wundergraph-cosmo-2108"
+    },
+    "source": "harbor",
+    "task_checksum": "8450860e89b21e32ec4c573ba534f6b861ce85614aeae497af5b13a2e2551c2b",
+    "config": {
+        "task": {
+            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/wundergraph-cosmo-2108",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "harbor"
+        },
+        "trial_name": "wundergraph-cosmo-2108__iyN5PcB",
+        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "modal",
+            "import_path": null,
+            "force_build": false,
+            "delete": false,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-06-29T15:14:12.369508Z",
+    "finished_at": "2026-06-29T15:15:04.954354Z",
+    "environment_setup": {
+        "started_at": "2026-06-29T15:14:12.375562Z",
+        "finished_at": "2026-06-29T15:14:20.118824Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-06-29T15:14:20.118831Z",
+        "finished_at": "2026-06-29T15:14:20.118854Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-06-29T15:14:20.118877Z",
+        "finished_at": "2026-06-29T15:14:20.118894Z"
+    },
+    "verifier": {
+        "started_at": "2026-06-29T15:14:25.116092Z",
+        "finished_at": "2026-06-29T15:15:01.703908Z"
+    }
+}

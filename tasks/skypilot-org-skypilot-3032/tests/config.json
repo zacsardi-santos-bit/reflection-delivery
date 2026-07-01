@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tests/test_smoke.py::TestStorageWithCredentials::test_invalid_names -v --override-ini=\"addopts=\" -n 0",
+  "test_files": [
+    "tests/test_smoke.py",
+    "tests/test_yamls/test_storage_mounting.yaml.j2"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_smoke.TestStorageWithCredentials::test_invalid_names[invalid_name_list2-StoreType.AZURE]"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_smoke.TestStorageWithCredentials::test_invalid_names[invalid_name_list0-StoreType.S3]",
+    "tests.test_smoke.TestStorageWithCredentials::test_invalid_names[invalid_name_list1-StoreType.GCS]"
+  ]
+}

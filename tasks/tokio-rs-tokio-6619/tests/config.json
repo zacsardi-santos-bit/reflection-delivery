@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p tokio --features full --test rt_metrics",
+  "test_files": [
+    "tokio/tests/rt_metrics.rs",
+    "tokio/tests/rt_unstable_metrics.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) tokio::rt_metrics num_workers",
+    "(2/2) tokio::rt_metrics num_alive_tasks"
+  ],
+  "PASS_TO_PASS": []
+}

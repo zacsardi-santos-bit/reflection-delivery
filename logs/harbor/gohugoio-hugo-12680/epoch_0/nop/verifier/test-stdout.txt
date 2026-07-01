@@ -1,0 +1,15 @@
+patching file tpl/math/math_test.go
+# github.com/gohugoio/hugo/tpl/math [github.com/gohugoio/hugo/tpl/math.test]
+tpl/math/math_test.go:560:15: ns.Pi undefined (type *Namespace has no field or method Pi)
+tpl/math/math_test.go:587:21: ns.Sin undefined (type *Namespace has no field or method Sin)
+tpl/math/math_test.go:621:21: ns.Cos undefined (type *Namespace has no field or method Cos)
+tpl/math/math_test.go:655:21: ns.Tan undefined (type *Namespace has no field or method Tan)
+tpl/math/math_test.go:673:20: ns.Tan undefined (type *Namespace has no field or method Tan)
+tpl/math/math_test.go:695:21: ns.Asin undefined (type *Namespace has no field or method Asin)
+tpl/math/math_test.go:710:20: ns.Asin undefined (type *Namespace has no field or method Asin)
+tpl/math/math_test.go:730:21: ns.Acos undefined (type *Namespace has no field or method Acos)
+tpl/math/math_test.go:746:20: ns.Acos undefined (type *Namespace has no field or method Acos)
+tpl/math/math_test.go:766:21: ns.Atan undefined (type *Namespace has no field or method Atan)
+tpl/math/math_test.go:766:21: too many errors
+FAIL	github.com/gohugoio/hugo/tpl/math [build failed]
+reward=0 graded=24 found=24 failed=24 parsed=1 framework=go exit_code=1

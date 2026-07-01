@@ -1,0 +1,752 @@
+patching file gateway/tests/integration_tests.rs
+patching file gateway/tests/schemas/tiny.graphql
+patching file gateway/tests/schemas/tiny_modified.graphql
+   Compiling proc-macro2 v1.0.93
+   Compiling unicode-ident v1.0.14
+   Compiling libc v0.2.169
+   Compiling serde v1.0.217
+   Compiling cfg-if v1.0.0
+   Compiling autocfg v1.4.0
+   Compiling memchr v2.7.4
+   Compiling once_cell v1.20.2
+   Compiling itoa v1.0.14
+   Compiling scopeguard v1.2.0
+   Compiling foldhash v0.1.3
+   Compiling pin-project-lite v0.2.15
+   Compiling log v0.4.22
+   Compiling equivalent v1.0.1
+   Compiling version_check v0.9.5
+   Compiling futures-core v0.3.31
+   Compiling futures-io v0.3.31
+   Compiling parking_lot_core v0.9.10
+   Compiling futures-sink v0.3.31
+   Compiling shlex v1.3.0
+   Compiling fnv v1.0.7
+   Compiling byteorder v1.5.0
+   Compiling hashbrown v0.15.2
+   Compiling subtle v2.6.1
+   Compiling futures-channel v0.3.31
+   Compiling pin-utils v0.1.0
+   Compiling futures-task v0.3.31
+   Compiling ryu v1.0.18
+   Compiling serde_json v1.0.135
+   Compiling tracing-core v0.1.33
+   Compiling thiserror v1.0.69
+   Compiling typenum v1.17.0
+   Compiling bitflags v2.7.0
+   Compiling const-oid v0.9.6
+   Compiling stable_deref_trait v1.2.0
+   Compiling httparse v1.9.5
+   Compiling generic-array v0.14.7
+   Compiling percent-encoding v2.3.1
+   Compiling dunce v1.0.5
+   Compiling fs_extra v1.3.0
+   Compiling lock_api v0.4.12
+   Compiling slab v0.4.9
+   Compiling paste v1.0.15
+   Compiling rustls-pki-types v1.10.0
+   Compiling semver v1.0.23
+   Compiling aws-lc-rs v1.12.0
+   Compiling tower-service v0.3.3
+   Compiling untrusted v0.9.0
+   Compiling spin v0.9.8
+   Compiling libm v0.2.11
+   Compiling httpdate v1.0.3
+   Compiling atomic-waker v1.1.2
+   Compiling form_urlencoded v1.2.1
+   Compiling litemap v0.7.4
+   Compiling writeable v0.5.5
+   Compiling try-lock v0.2.5
+   Compiling num-traits v0.2.19
+   Compiling want v0.3.1
+   Compiling rustversion v1.0.18
+   Compiling cpufeatures v0.2.16
+   Compiling icu_locid_transform_data v1.5.0
+   Compiling crossbeam-utils v0.8.20
+   Compiling either v1.13.0
+   Compiling regex-syntax v0.8.5
+   Compiling icu_properties_data v1.5.0
+   Compiling anyhow v1.0.95
+   Compiling rustls v0.23.21
+   Compiling utf8_iter v1.0.4
+   Compiling quote v1.0.38
+   Compiling tower-layer v0.3.3
+   Compiling write16 v1.0.0
+   Compiling icu_normalizer_data v1.5.0
+   Compiling syn v2.0.96
+   Compiling utf16_iter v1.0.5
+   Compiling getrandom v0.2.15
+   Compiling jobserver v0.1.32
+   Compiling socket2 v0.5.8
+   Compiling signal-hook-registry v1.4.2
+   Compiling mio v1.0.3
+   Compiling lazy_static v1.5.0
+   Compiling mime v0.3.17
+   Compiling rand_core v0.6.4
+   Compiling strsim v0.11.1
+   Compiling cc v1.2.2
+   Compiling unicode-width v0.1.14
+   Compiling rustix v0.38.41
+   Compiling sync_wrapper v1.0.2
+   Compiling linux-raw-sys v0.4.14
+   Compiling ahash v0.7.8
+   Compiling base64 v0.22.1
+   Compiling allocator-api2 v0.2.21
+   Compiling data-encoding v2.6.0
+   Compiling base64ct v1.6.0
+   Compiling syn v1.0.109
+   Compiling ipnet v2.10.1
+   Compiling pem-rfc7468 v0.7.0
+   Compiling ahash v0.8.11
+   Compiling ident_case v1.0.1
+   Compiling heck v0.5.0
+   Compiling aho-corasick v1.1.3
+   Compiling utf-8 v0.7.6
+   Compiling itertools v0.12.1
+   Compiling rustls-pemfile v2.2.0
+   Compiling cmake v0.1.52
+   Compiling yansi v1.0.1
+   Compiling webpki-roots v0.26.7
+   Compiling beef v0.5.2
+   Compiling proc-macro2-diagnostics v0.10.1
+   Compiling hashbrown v0.12.3
+   Compiling ucd-trie v0.1.7
+   Compiling rustc-demangle v0.1.24
+   Compiling winnow v0.6.20
+   Compiling wasmparser v0.221.2
+   Compiling bytecheck v0.6.12
+   Compiling crc32fast v1.4.2
+   Compiling rend v0.4.2
+   Compiling simdutf8 v0.1.5
+   Compiling base16ct v0.2.0
+   Compiling arrayvec v0.5.2
+   Compiling typed-arena v2.0.2
+   Compiling ariadne v0.4.1
+   Compiling lalrpop-util v0.22.0
+   Compiling crossbeam-epoch v0.9.18
+   Compiling ff v0.13.0
+   Compiling rkyv v0.7.45
+   Compiling heck v0.4.1
+   Compiling pretty v0.12.3
+   Compiling static_assertions v1.1.0
+   Compiling group v0.13.0
+   Compiling regex-automata v0.4.9
+   Compiling num-integer v0.1.46
+   Compiling indexmap v1.9.3
+   Compiling seahash v4.1.0
+   Compiling ring v0.17.8
+   Compiling aws-lc-sys v0.24.1
+   Compiling crossbeam-deque v0.8.5
+   Compiling utf8parse v0.2.2
+   Compiling thiserror v2.0.11
+   Compiling rayon-core v1.12.1
+   Compiling aliasable v0.1.3
+   Compiling anstyle-parse v0.2.6
+   Compiling concurrent-queue v2.5.0
+   Compiling adler2 v2.0.0
+   Compiling colorchoice v1.0.3
+   Compiling anstyle-query v1.1.2
+   Compiling is_terminal_polyfill v1.70.1
+   Compiling fastrand v2.2.0
+   Compiling anstyle v1.0.10
+   Compiling strsim v0.10.0
+   Compiling iana-time-zone v0.1.61
+   Compiling miniz_oxide v0.8.0
+   Compiling anstream v0.6.18
+   Compiling regex-syntax v0.6.29
+   Compiling num-bigint-dig v0.8.4
+   Compiling clap_lex v0.7.4
+   Compiling matchit v0.7.3
+   Compiling rayon v1.10.0
+   Compiling num-iter v0.1.45
+   Compiling uuid v1.11.1
+   Compiling itertools v0.13.0
+   Compiling half v2.4.1
+   Compiling ref-cast v1.0.23
+   Compiling ciborium-io v0.2.2
+   Compiling unicode-segmentation v1.12.0
+   Compiling unicase v2.8.0
+   Compiling overload v0.1.1
+   Compiling nu-ansi-term v0.46.0
+   Compiling ciborium-ll v0.2.2
+   Compiling tracing-log v0.2.0
+   Compiling synstructure v0.13.1
+   Compiling darling_core v0.20.10
+   Compiling similar v2.6.0
+   Compiling mime_guess v2.0.5
+   Compiling thread_local v1.1.8
+   Compiling gimli v0.31.1
+   Compiling owo-colors v4.1.0
+   Compiling ct-codecs v1.1.2
+   Compiling terminal_size v0.4.1
+   Compiling plotters-backend v0.3.7
+   Compiling same-file v1.0.6
+   Compiling ed25519-compact v2.1.1
+   Compiling itertools v0.10.5
+   Compiling walkdir v2.5.0
+   Compiling object v0.36.5
+   Compiling plotters-svg v0.3.7
+   Compiling regex-automata v0.1.10
+   Compiling is_ci v1.2.0
+   Compiling unicode-linebreak v0.1.5
+   Compiling cast v0.3.0
+   Compiling powerfmt v0.2.0
+   Compiling supports-color v3.0.2
+   Compiling regex v1.11.1
+   Compiling deranged v0.3.11
+   Compiling textwrap v0.16.1
+   Compiling ptr_meta_derive v0.1.4
+   Compiling bytecheck_derive v0.6.12
+   Compiling rkyv_derive v0.7.45
+   Compiling matchers v0.1.0
+   Compiling criterion-plot v0.5.0
+   Compiling serde_derive v1.0.217
+   Compiling zeroize_derive v1.4.2
+   Compiling tokio-macros v2.5.0
+   Compiling futures-macro v0.3.31
+   Compiling zerocopy-derive v0.7.35
+   Compiling thiserror-impl v1.0.69
+   Compiling tracing-attributes v0.1.28
+   Compiling zerofrom-derive v0.1.5
+   Compiling yoke-derive v0.7.5
+   Compiling zerovec-derive v0.10.3
+   Compiling displaydoc v0.2.5
+   Compiling icu_provider_macros v1.5.0
+   Compiling async-trait v0.1.85
+   Compiling zeroize v1.8.1
+   Compiling futures-util v0.3.31
+   Compiling der v0.7.9
+   Compiling zerocopy v0.7.35
+   Compiling darling_macro v0.20.10
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.6
+   Compiling ppv-lite86 v0.2.20
+   Compiling digest v0.10.7
+   Compiling ptr_meta v0.1.4
+   Compiling sha1 v0.10.6
+   Compiling hmac v0.12.1
+   Compiling spki v0.7.3
+   Compiling rand_chacha v0.3.1
+   Compiling pest v2.7.14
+   Compiling sha2 v0.10.8
+   Compiling pin-project-internal v1.1.7
+   Compiling hkdf v0.12.4
+   Compiling pkcs8 v0.10.2
+   Compiling signature v2.2.0
+   Compiling crypto-bigint v0.5.5
+   Compiling rand v0.8.5
+   Compiling ouroboros_macro v0.18.4
+   Compiling tracing v0.1.41
+   Compiling zerofrom v0.1.5
+   Compiling thiserror-impl v2.0.11
+   Compiling yoke v0.7.5
+   Compiling rfc6979 v0.4.0
+   Compiling prost-derive v0.13.3
+   Compiling clap_derive v4.5.24
+   Compiling ref-cast-impl v1.0.23
+   Compiling zerovec v0.10.4
+   Compiling strum_macros v0.26.4
+   Compiling pkcs1 v0.7.5
+   Compiling darling v0.20.10
+   Compiling addr2line v0.24.2
+   Compiling tinystr v0.7.6
+   Compiling icu_collections v1.5.0
+   Compiling icu_locid v1.5.0
+   Compiling futures-executor v0.3.31
+   Compiling pest_meta v2.7.14
+   Compiling backtrace v0.3.74
+   Compiling futures v0.3.31
+   Compiling miette-derive v7.4.0
+   Compiling axum-macros v0.5.0
+   Compiling plotters v0.3.7
+   Compiling icu_provider v1.5.0
+   Compiling pin-project v1.1.7
+   Compiling pest_generator v2.7.14
+   Compiling clap_builder v4.5.26
+   Compiling icu_locid_transform v1.5.0
+   Compiling crossbeam-channel v0.5.13
+   Compiling ouroboros v0.18.4
+   Compiling console v0.15.8
+   Compiling is-terminal v0.4.13
+   Compiling http-range-header v0.4.2
+   Compiling matchit v0.8.4
+   Compiling time-core v0.1.2
+   Compiling anes v0.1.6
+   Compiling supports-hyperlinks v3.1.0
+   Compiling icu_properties v1.5.1
+   Compiling linked-hash-map v0.5.6
+   Compiling pest_derive v2.7.14
+   Compiling supports-unicode v3.0.0
+   Compiling num-conv v0.1.0
+   Compiling oorandom v11.1.4
+   Compiling backtrace-ext v0.2.1
+   Compiling serde_with_macros v3.12.0
+   Compiling crossbeam-queue v0.3.12
+   Compiling time v0.3.36
+   Compiling sharded-slab v0.1.7
+   Compiling bstr v1.11.0
+   Compiling hex v0.4.3
+   Compiling strum v0.26.3
+   Compiling async-stream-impl v0.3.6
+   Compiling arrayvec v0.7.6
+   Compiling smallvec v1.13.2
+   Compiling indexmap v2.7.0
+   Compiling bytes v1.9.0
+   Compiling serde_urlencoded v0.7.1
+   Compiling hashbrown v0.14.5
+   Compiling rustc_version v0.4.1
+   Compiling parking_lot v0.12.3
+   Compiling serde_spanned v0.6.8
+   Compiling toml_datetime v0.6.8
+   Compiling http v1.2.0
+   Compiling tokio v1.43.0
+   Compiling logos-codegen v0.14.3
+   Compiling toml_edit v0.22.22
+   Compiling serdect v0.2.0
+   Compiling sec1 v0.7.3
+   Compiling icu_normalizer v1.5.0
+   Compiling serde_path_to_error v0.1.16
+   Compiling http-body v1.0.1
+   Compiling http-body-util v0.1.2
+   Compiling tracing-serde v0.2.0
+   Compiling idna_adapter v1.2.0
+   Compiling elliptic-curve v0.13.8
+   Compiling axum-core v0.4.5
+   Compiling idna v1.0.3
+   Compiling prost v0.13.3
+   Compiling ciborium v0.2.2
+   Compiling url v2.5.4
+   Compiling primeorder v0.13.6
+   Compiling ecdsa v0.16.9
+   Compiling chrono v0.4.39
+   Compiling tinytemplate v1.2.1
+   Compiling axum-core v0.5.0
+   Compiling p256 v0.13.2
+   Compiling p384 v0.13.0
+   Compiling tungstenite v0.26.1
+   Compiling logos-derive v0.14.3
+   Compiling clap v4.5.26
+   Compiling serde_with v3.12.0
+   Compiling tracing-subscriber v0.3.19
+   Compiling insta v1.42.0
+   Compiling miette v7.4.0
+   Compiling similar-asserts v1.6.0
+   Compiling rsa v0.9.7
+   Compiling ulid v1.1.4
+   Compiling ascii v1.1.0
+   Compiling rust_decimal v1.36.0
+   Compiling async-stream v0.3.6
+   Compiling openssl-probe v0.1.5
+   Compiling heapless v0.7.17
+   Compiling opentelemetry v0.27.1
+   Compiling itertools v0.14.0
+   Compiling tokio-util v0.7.13
+   Compiling logos v0.14.3
+   Compiling tower v0.5.2
+   Compiling cynic-parser v0.8.7
+   Compiling tokio-tungstenite v0.26.1
+   Compiling h2 v0.4.7
+   Compiling tokio-stream v0.1.17
+   Compiling tower v0.4.13
+   Compiling tower-http v0.6.2
+   Compiling combine v4.6.7
+   Compiling deadpool-runtime v0.1.4
+   Compiling criterion v0.5.1
+   Compiling hash32 v0.2.1
+   Compiling rustls-native-certs v0.8.1
+   Compiling cynic-codegen v3.9.1
+   Compiling cobs v0.2.3
+   Compiling base64 v0.21.7
+   Compiling glob v0.3.1
+   Compiling postcard v1.1.1
+   Compiling duration-str v0.12.0
+   Compiling serde_regex v1.1.0
+   Compiling io-lifetimes v2.0.3
+   Compiling opentelemetry_sdk v0.27.1
+   Compiling size v0.5.0-preview2
+   Compiling rustc-hash v2.1.0
+   Compiling cranelift-isle v0.115.0
+   Compiling hyper v1.5.2
+   Compiling headers-core v0.3.0
+   Compiling cranelift-bitset v0.115.0
+   Compiling wasmtime-versioned-export-macros v28.0.0
+   Compiling blake3 v1.5.5
+   Compiling bumpalo v3.16.0
+   Compiling fxhash v0.2.1
+   Compiling pkg-config v0.3.31
+   Compiling target-lexicon v0.12.16
+   Compiling cranelift-codegen-shared v0.115.0
+   Compiling io-extras v0.18.3
+   Compiling cranelift-codegen-meta v0.115.0
+   Compiling zstd-sys v2.0.13+zstd.1.5.6
+   Compiling hyper-util v0.1.10
+   Compiling cranelift-entity v0.115.0
+   Compiling headers v0.4.0
+   Compiling cynic-parser-deser-macros v0.8.7
+   Compiling ordered-float v4.5.0
+   Compiling arrayref v0.3.9
+   Compiling cap-primitives v3.4.1
+   Compiling indoc v2.0.5
+   Compiling parking v2.2.1
+   Compiling constant_time_eq v0.3.1
+   Compiling ambient-authority v0.0.2
+   Compiling opentelemetry-stdout v0.27.0
+   Compiling tracing-opentelemetry v0.28.0
+   Compiling axum v0.8.1
+   Compiling axum v0.7.9
+   Compiling hyper-timeout v0.5.2
+   Compiling fs-set-times v0.20.1
+   Compiling opentelemetry-appender-tracing v0.27.0
+   Compiling leb128 v0.2.5
+   Compiling maybe-owned v0.3.4
+   Compiling arbitrary v1.4.1
+   Compiling wasm-encoder v0.221.2
+   Compiling cranelift-bforest v0.115.0
+   Compiling regalloc2 v0.11.1
+   Compiling encoding_rs v0.8.35
+   Compiling getrandom v0.1.16
+   Compiling cynic-proc-macros v3.9.1
+   Compiling cranelift-codegen v0.115.0
+   Compiling cap-std v3.4.1
+   Compiling cynic-parser-deser v0.8.7
+   Compiling zstd-safe v7.2.1
+   Compiling cpp_demangle v0.4.4
+   Compiling cranelift-control v0.115.0
+   Compiling secrecy v0.10.3
+   Compiling ittapi-sys v0.4.0
+   Compiling unicode-xid v0.2.6
+   Compiling id-arena v2.2.1
+   Compiling wasmtime-component-util v28.0.0
+   Compiling termcolor v1.4.1
+   Compiling wit-parser v0.221.2
+   Compiling wasmtime-fiber v28.0.0
+   Compiling wasmprinter v0.221.2
+   Compiling fixedbitset v0.5.7
+   Compiling dirs-sys-next v0.1.2
+   Compiling futures-timer v3.0.3
+   Compiling unicode-width v0.2.0
+   Compiling wasmtime-cache v28.0.0
+   Compiling wasmtime-component-macro v28.0.0
+   Compiling directories-next v2.0.0
+   Compiling wast v221.0.2
+   Compiling rand_core v0.5.1
+   Compiling wasmtime v28.0.0
+   Compiling toml v0.8.19
+   Compiling engine-schema v0.0.0 (/workspace/repo/crates/engine/schema)
+   Compiling debugid v0.8.0
+   Compiling wasmtime-asm-macros v28.0.0
+   Compiling cap-fs-ext v3.4.1
+   Compiling rustls v0.22.4
+   Compiling system-interface v0.27.2
+   Compiling fxprof-processed-profile v0.6.0
+   Compiling wasmtime-environ v28.0.0
+   Compiling rand_chacha v0.2.2
+   Compiling wasmtime-jit-debug v28.0.0
+   Compiling ittapi v0.4.0
+   Compiling graphql-parser v0.4.0 (https://github.com/graphql-rust/graphql-parser#f75d96f1)
+   Compiling memfd v0.6.4
+   Compiling wasmtime-jit-icache-coherence v28.0.0
+   Compiling wasmtime-slab v28.0.0
+   Compiling http-types v2.12.0
+   Compiling sptr v0.3.2
+   Compiling event-listener v2.5.3
+   Compiling waker-fn v1.2.0
+   Compiling fastrand v1.9.0
+   Compiling rand v0.7.3
+   Compiling wasmtime-wit-bindgen v28.0.0
+   Compiling async-channel v1.9.0
+   Compiling cap-net-ext v3.4.1
+   Compiling futures-lite v1.13.0
+   Compiling cap-time-ext v3.4.1
+   Compiling cap-rand v3.4.1
+   Compiling futures-lite v2.6.0
+   Compiling event-listener v5.3.1
+   Compiling sfv v0.9.4
+   Compiling lasso2 v0.8.2
+   Compiling serde_qs v0.8.5
+   Compiling bitmaps v2.1.0
+   Compiling num_cpus v1.16.0
+   Compiling im v15.1.0
+   Compiling base64 v0.13.1
+   Compiling infer v0.2.3
+   Compiling minimal-lexical v0.2.1
+   Compiling portable-atomic v1.10.0
+   Compiling httpsig v0.0.16
+   Compiling event-listener-strategy v0.5.3
+   Compiling petgraph v0.7.1
+   Compiling nom v7.1.3
+   Compiling sized-chunks v0.6.5
+   Compiling jwt-compact v0.8.0
+   Compiling async-graphql-value v7.0.13
+   Compiling enumflags2_derive v0.7.10
+   Compiling ordered-float v2.10.1
+   Compiling rand_xoshiro v0.6.0
+   Compiling raw-cpuid v11.2.0
+   Compiling multer v3.1.0
+   Compiling arc-swap v1.7.1
+   Compiling mini-moka v0.10.3
+   Compiling httpsig-hyper v0.0.16
+   Compiling async-graphql-parser v7.0.13
+   Compiling serde-value v0.7.0
+   Compiling async-channel v2.3.1
+   Compiling rustls-native-certs v0.7.3
+   Compiling async-sse v5.1.0
+   Compiling eventsource-stream v0.2.3
+   Compiling quanta v0.12.3
+   Compiling enumflags2 v0.7.10
+   Compiling proc-macro-crate v3.2.0
+   Compiling multipart-stream v0.1.2 (https://github.com/grafbase/multipart-stream-rs-fork?rev=06ff198e4041c8a8c1c93e580c260d597727c193#06ff198e)
+   Compiling dashmap v6.1.0
+   Compiling dashmap v5.5.3
+   Compiling crossbeam v0.8.4
+   Compiling Inflector v0.11.4
+   Compiling backon v1.3.0
+   Compiling num-bigint v0.4.6
+   Compiling libmimalloc-sys v0.1.39
+   Compiling inotify-sys v0.1.5
+   Compiling spinning_top v0.3.0
+   Compiling instant v0.1.13
+   Compiling sha1_smol v1.0.1
+   Compiling wat v1.221.2
+   Compiling triomphe v0.1.14
+   Compiling tagptr v0.2.0
+   Compiling bitflags v1.3.2
+   Compiling ascii_utils v0.9.3
+   Compiling no-std-compat v0.4.1
+   Compiling nonzero_ext v0.3.0
+   Compiling mediatype v0.19.18
+   Compiling fast_chemail v0.9.6
+   Compiling inotify v0.10.2
+   Compiling governor v0.8.0
+   Compiling notify-types v1.0.0
+   Compiling deadpool v0.12.1
+   Compiling cynic-introspection v3.9.1
+   Compiling handlebars v5.1.2
+   Compiling tempfile v3.15.0
+   Compiling filetime v0.2.25
+   Compiling static_assertions_next v1.1.2
+   Compiling serde_derive_internals v0.29.1
+   Compiling notify v7.0.0
+   Compiling indenter v0.3.3
+   Compiling deadpool v0.10.0
+   Compiling opentelemetry-aws v0.15.0
+   Compiling assert-json-diff v2.0.2
+   Compiling sealed v0.6.0
+   Compiling shared_child v1.0.1
+   Compiling os_pipe v1.2.1
+   Compiling replace_with v0.1.7
+   Compiling lz4_flex v0.11.3
+   Compiling cityhash-rs v1.0.1
+   Compiling duct v0.13.7
+   Compiling wiremock v0.6.2
+   Compiling ctor v0.2.9
+   Compiling fslock v0.2.1
+   Compiling clickhouse-derive v0.2.0
+   Compiling mimalloc v0.1.43
+   Compiling async-graphql-derive v7.0.13
+   Compiling clickhouse v0.13.1
+   Compiling zstd v0.13.2
+   Compiling async-graphql v7.0.13
+   Compiling rustls-webpki v0.102.8
+   Compiling tokio-rustls v0.25.0
+   Compiling tokio-rustls v0.26.1
+   Compiling tungstenite v0.24.0
+   Compiling hyper-rustls v0.27.3
+   Compiling redis v0.28.1
+   Compiling axum-server v0.7.1
+   Compiling reqwest v0.12.12
+   Compiling tokio-tungstenite v0.24.0
+   Compiling async-tungstenite v0.28.2
+   Compiling graphql-ws-client v0.11.1
+   Compiling cynic v3.9.1
+   Compiling opentelemetry-http v0.27.0
+   Compiling reqwest-eventsource v0.6.0
+   Compiling grafbase-workspace-hack v0.1.0 (/workspace/repo/crates/grafbase-workspace-hack)
+   Compiling engine-id-derives v0.0.0 (/workspace/repo/crates/engine/id-derives)
+   Compiling cranelift-native v0.115.0
+   Compiling cranelift-frontend v0.115.0
+   Compiling wasmtime-cranelift v28.0.0
+   Compiling tonic v0.12.3
+   Compiling async-graphql-axum v7.0.13
+   Compiling serde-dynamic-string v0.82.4 (/workspace/repo/crates/serde-dynamic-string)
+   Compiling graphql-wrapping-types v0.2.0 (/workspace/repo/crates/graphql-wrapping-types)
+   Compiling engine-walker v0.0.0 (/workspace/repo/crates/engine/walker)
+   Compiling operation-normalizer v0.82.4 (/workspace/repo/crates/operation-normalizer)
+   Compiling rolling-logger v0.0.0 (/workspace/repo/crates/rolling-logger)
+   Compiling graph-ref v0.82.4 (/workspace/repo/crates/graph-ref)
+   Compiling engine-id-newtypes v0.0.0 (/workspace/repo/crates/engine/id-newtypes)
+   Compiling graphql-federated-graph v0.5.0 (/workspace/repo/crates/graphql-federated-graph)
+   Compiling grafbase-graphql-introspection v0.82.4 (/workspace/repo/crates/grafbase-graphql-introspection)
+   Compiling graphql-mocks v0.0.0 (/workspace/repo/crates/graphql-mocks)
+   Compiling graphql-composition v0.5.0 (/workspace/repo/crates/graphql-composition)
+   Compiling gateway-config v0.0.0 (/workspace/repo/crates/gateway-config)
+   Compiling opentelemetry-proto v0.27.0
+   Compiling opentelemetry-otlp v0.27.0
+   Compiling grafbase-telemetry v0.1.0 (/workspace/repo/crates/telemetry)
+   Compiling engine-config v0.0.0 (/workspace/repo/crates/engine/config)
+   Compiling runtime v0.1.0 (/workspace/repo/crates/runtime)
+   Compiling engine-config-builder v0.82.4 (/workspace/repo/crates/engine-config-builder)
+   Compiling engine-auth v0.0.0 (/workspace/repo/crates/engine/auth)
+   Compiling runtime-noop v0.1.0 (/workspace/repo/crates/runtime-noop)
+   Compiling engine-operation v0.0.0 (/workspace/repo/crates/engine/operation)
+   Compiling wasmtime-wasi v28.0.0
+   Compiling engine-query-solver v0.0.0 (/workspace/repo/crates/engine/query-solver)
+   Compiling engine v0.0.0 (/workspace/repo/crates/engine)
+   Compiling wasmtime-wasi-http v28.0.0
+   Compiling engine-axum v0.0.0 (/workspace/repo/crates/engine/axum)
+   Compiling wasi-component-loader v0.82.4 (/workspace/repo/crates/wasi-component-loader)
+   Compiling runtime-local v0.1.0 (/workspace/repo/crates/runtime-local)
+   Compiling federated-server v0.0.0 (/workspace/repo/crates/federated-server)
+   Compiling grafbase-gateway v0.26.0 (/workspace/repo/gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 16s
+────────────
+ Nextest run ID 87103a57-e3c7-422a-8d47-af4f2527d4dc with nextest profile: ci
+    Starting 1 test across 2 binaries (73 tests skipped)
+  TRY 1 FAIL [   7.316s] (───) grafbase-gateway::integration_tests schema_file_hot_reload
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot: schema_file_hot_reload-2
+    Source: gateway/tests/integration_tests.rs:1035
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: &result
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        2     2 │ }
+        3     3 │ 
+        4     4 │ type User {
+        5     5 │   id: ID!
+              6 │+  username: String!
+        6     7 │ }
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test schema_file_hot_reload ... FAILED
+
+    failures:
+
+    failures:
+        schema_file_hot_reload
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 73 filtered out; finished in 7.30s
+
+  stderr ───
+    thread 'schema_file_hot_reload' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'schema_file_hot_reload-2' failed in line 1035
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  TRY 2 FAIL [   7.249s] (───) grafbase-gateway::integration_tests schema_file_hot_reload
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot: schema_file_hot_reload-2
+    Source: gateway/tests/integration_tests.rs:1035
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: &result
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        2     2 │ }
+        3     3 │ 
+        4     4 │ type User {
+        5     5 │   id: ID!
+              6 │+  username: String!
+        6     7 │ }
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test schema_file_hot_reload ... FAILED
+
+    failures:
+
+    failures:
+        schema_file_hot_reload
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 73 filtered out; finished in 7.24s
+
+  stderr ───
+    thread 'schema_file_hot_reload' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'schema_file_hot_reload-2' failed in line 1035
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  TRY 3 FAIL [   7.245s] (1/1) grafbase-gateway::integration_tests schema_file_hot_reload
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot: schema_file_hot_reload-2
+    Source: gateway/tests/integration_tests.rs:1035
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: &result
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        2     2 │ }
+        3     3 │ 
+        4     4 │ type User {
+        5     5 │   id: ID!
+              6 │+  username: String!
+        6     7 │ }
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test schema_file_hot_reload ... FAILED
+
+    failures:
+
+    failures:
+        schema_file_hot_reload
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 73 filtered out; finished in 7.23s
+
+  stderr ───
+    thread 'schema_file_hot_reload' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'schema_file_hot_reload-2' failed in line 1035
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [  21.815s] 1 test run: 0 passed, 1 failed, 73 skipped
+  TRY 3 FAIL [   7.245s] (1/1) grafbase-gateway::integration_tests schema_file_hot_reload
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot: schema_file_hot_reload-2
+    Source: gateway/tests/integration_tests.rs:1035
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: &result
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        2     2 │ }
+        3     3 │ 
+        4     4 │ type User {
+        5     5 │   id: ID!
+              6 │+  username: String!
+        6     7 │ }
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test schema_file_hot_reload ... FAILED
+
+    failures:
+
+    failures:
+        schema_file_hot_reload
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 73 filtered out; finished in 7.23s
+
+  stderr ───
+    thread 'schema_file_hot_reload' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.42.0/src/runtime.rs:679:13:
+    snapshot assertion for 'schema_file_hot_reload-2' failed in line 1035
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+error: test run failed
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=cargo exit_code=100

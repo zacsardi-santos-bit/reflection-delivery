@@ -1,0 +1,23 @@
+{
+ "task": "openshift-assisted-service-3914",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden adds dropClusterIgnitionOverrides() with 'ALTER TABLE clusters DROP COLUMN IF EXISTS ignition_config_overrides' and removes populateInfraEnv() from the chain"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 22,
+  "shallow": true
+ }
+}

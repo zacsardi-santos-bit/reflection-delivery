@@ -1,0 +1,87 @@
+patching file kolibri/core/content/test/utils/test_assignment.py
+patching file kolibri/core/exams/test/test_exam_api.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+django: settings: kolibri.deployment.default.settings.test (from ini)
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: Faker-40.23.0, django-3.10.0, env-1.6.0, cov-7.1.0
+collecting ... collected 45 items
+
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_downloadable_assignments__dataset_id PASSED [  2%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_downloadable_assignments__one_parameter PASSED [  4%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_downloadable_assignments__transfer_session_id PASSED [  6%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_removable_assignments__dataset_id PASSED [  8%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_removable_assignments__one_parameter PASSED [ 11%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_removable_assignments__transfer_session_id PASSED [ 13%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_get_assignments__lookup_func PASSED [ 15%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_get_assignments__no_lookup_func PASSED [ 17%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_get_assignments__one_to_many PASSED [ 20%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__exam PASSED [ 22%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__individual_syncable_exam PASSED [ 24%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__individual_syncable_lesson PASSED [ 26%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__lesson PASSED [ 28%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_removable_assignment__lesson PASSED [ 31%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_removable_assignment__lesson__deletion PASSED [ 33%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_can_get_quiz_size PASSED [ 35%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_cannot_create_exam_same_title_case_insensitive PASSED [ 37%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_complete_mastery_logs_when_exam_is_closed PASSED [ 40%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_model_get_questions_v2_v1 PASSED [ 42%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_model_get_questions_v3 PASSED [ 44%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_invalid_exercise_id PASSED [ 46%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_invalid_question_id PASSED [ 48%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_no_counter_in_exercise_fails PASSED [ 51%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_no_exercise_id PASSED [ 53%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_no_question_id_succeeds PASSED [ 55%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_valid_question_sources_succeeds PASSED [ 57%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_get_on_older_versions_of_exam_model PASSED [ 60%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create PASSED [ 62%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create_with_assignments PASSED [ 64%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create_with_learner_assignments PASSED [ 66%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create_with_learner_assignments_for_wrong_collection PASSED [ 68%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_delete PASSED [ 71%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update PASSED [ 73%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update_additional_assignments PASSED [ 75%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update_different_assignments PASSED [ 77%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update_no_assignments PASSED [ 80%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_user_exam_no_create PASSED [ 82%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_user_exam_no_delete PASSED [ 84%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_user_exam_no_update PASSED [ 86%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_post_exam_v2_model_fails PASSED [ 88%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_invalid_section_id PASSED [ 91%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_no_question_count PASSED [ 93%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_no_question_succeds PASSED [ 95%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_no_resource_pool PASSED [ 97%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_no_section_id PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/django/utils/encoding.py:279
+  /usr/local/lib/python3.11/site-packages/django/utils/encoding.py:279: DeprecationWarning: 'locale.getdefaultlocale' is deprecated and slated for removal in Python 3.15. Use setlocale(), getencoding() and getlocale() instead.
+    encoding = locale.getdefaultlocale()[1] or 'ascii'
+
+../../usr/local/lib/python3.11/site-packages/django/http/multipartparser.py:11
+  /usr/local/lib/python3.11/site-packages/django/http/multipartparser.py:11: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+../../usr/local/lib/python3.11/site-packages/importlib_resources/_py3.py:12
+../../usr/local/lib/python3.11/site-packages/importlib_resources/_py3.py:12
+  /usr/local/lib/python3.11/site-packages/importlib_resources/_py3.py:12: DeprecationWarning: typing.io is deprecated, import directly from typing instead. typing.io will be removed in Python 3.12.
+    from typing.io import BinaryIO, TextIO
+
+kolibri/utils/i18n.py:84
+  /workspace/repo/kolibri/utils/i18n.py:84: DeprecationWarning: 'locale.getdefaultlocale' is deprecated and slated for removal in Python 3.15. Use setlocale(), getencoding() and getlocale() instead.
+    for loc in (locale.getlocale()[0], locale.getdefaultlocale()[0]):
+
+kolibri/core/tasks/storage.py:36
+  /workspace/repo/kolibri/core/tasks/storage.py:36: MovedIn20Warning: Deprecated API features detected! These feature(s) are not compatible with SQLAlchemy 2.0. To prevent incompatible upgrades prior to updating applications, ensure requirements files are pinned to "sqlalchemy<2.0". Set environment variable SQLALCHEMY_WARN_20=1 to show all deprecation warnings.  Set environment variable SQLALCHEMY_SILENCE_UBER_WARNING=1 to silence this message. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base()
+
+../../usr/local/lib/python3.11/site-packages/_pytest/config/__init__.py:1464
+  /usr/local/lib/python3.11/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: python_paths
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 45 passed, 7 warnings in 25.63s ========================
+reward=1 graded=45 found=0 failed=0 parsed=45 framework=pytest exit_code=0

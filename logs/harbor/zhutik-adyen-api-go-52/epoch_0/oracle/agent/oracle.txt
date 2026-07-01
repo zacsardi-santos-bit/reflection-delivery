@@ -1,0 +1,6 @@
+patching file README.md
+patching file adyen.go
+patching file checkout.go
+patching file checkout_gateway.go
+patching file environment.go
+patching file response.go

@@ -1,0 +1,18 @@
+patching file client_test.go
+patching file driver_test.go
+patching file insert_opts_test.go
+patching file internal/riverinternaltest/riverdrivertest/riverdrivertest.go
+patching file internal/riverinternaltest/testfactory/test_factory.go
+{"Time":"2026-06-29T15:22:24.173257583Z","Action":"start","Package":"github.com/riverqueue/river"}
+{"Time":"2026-06-29T15:22:24.179423492Z","Action":"run","Package":"github.com/riverqueue/river","Test":"TestTagRE"}
+{"Time":"2026-06-29T15:22:24.179477293Z","Action":"output","Package":"github.com/riverqueue/river","Test":"TestTagRE","Output":"=== RUN   TestTagRE\n"}
+{"Time":"2026-06-29T15:22:24.179511663Z","Action":"output","Package":"github.com/riverqueue/river","Test":"TestTagRE","Output":"=== PAUSE TestTagRE\n"}
+{"Time":"2026-06-29T15:22:24.179533473Z","Action":"pause","Package":"github.com/riverqueue/river","Test":"TestTagRE"}
+{"Time":"2026-06-29T15:22:24.179557553Z","Action":"cont","Package":"github.com/riverqueue/river","Test":"TestTagRE"}
+{"Time":"2026-06-29T15:22:24.179579553Z","Action":"output","Package":"github.com/riverqueue/river","Test":"TestTagRE","Output":"=== CONT  TestTagRE\n"}
+{"Time":"2026-06-29T15:22:24.179613883Z","Action":"output","Package":"github.com/riverqueue/river","Test":"TestTagRE","Output":"--- PASS: TestTagRE (0.00s)\n"}
+{"Time":"2026-06-29T15:22:24.179638083Z","Action":"pass","Package":"github.com/riverqueue/river","Test":"TestTagRE","Elapsed":0}
+{"Time":"2026-06-29T15:22:24.179672554Z","Action":"output","Package":"github.com/riverqueue/river","Output":"PASS\n"}
+{"Time":"2026-06-29T15:22:24.179992125Z","Action":"output","Package":"github.com/riverqueue/river","Output":"ok  \tgithub.com/riverqueue/river\t0.006s\n"}
+{"Time":"2026-06-29T15:22:24.180028975Z","Action":"pass","Package":"github.com/riverqueue/river","Elapsed":0.007}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

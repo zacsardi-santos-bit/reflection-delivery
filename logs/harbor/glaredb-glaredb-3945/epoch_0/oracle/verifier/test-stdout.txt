@@ -1,0 +1,361 @@
+patching file crates/glaredb_core/src/functions/table/builtin/series.rs
+Hunk #1 succeeded at 410 (offset 10 lines).
+   Compiling proc-macro2 v1.0.92
+   Compiling unicode-ident v1.0.12
+   Compiling cfg-if v1.0.0
+   Compiling autocfg v1.1.0
+   Compiling libc v0.2.172
+   Compiling stable_deref_trait v1.2.0
+   Compiling anyhow v1.0.86
+   Compiling either v1.10.0
+   Compiling memchr v2.7.1
+   Compiling rustix v1.0.2
+   Compiling getrandom v0.3.3
+   Compiling bytes v1.10.0
+   Compiling bitflags v2.9.0
+   Compiling regex-syntax v0.8.2
+   Compiling writeable v0.5.5
+   Compiling litemap v0.7.3
+   Compiling hashbrown v0.15.2
+   Compiling equivalent v1.0.1
+   Compiling linux-raw-sys v0.9.3
+   Compiling prettyplease v0.2.17
+   Compiling itertools v0.13.0
+   Compiling once_cell v1.20.3
+   Compiling crossbeam-utils v0.8.19
+   Compiling fastrand v2.3.0
+   Compiling pin-project-lite v0.2.13
+   Compiling fixedbitset v0.4.2
+   Compiling slab v0.4.9
+   Compiling icu_locid_transform_data v1.5.0
+   Compiling indexmap v2.9.0
+   Compiling heck v0.5.0
+   Compiling multimap v0.10.0
+   Compiling smallvec v1.14.0
+   Compiling log v0.4.27
+   Compiling libm v0.2.8
+   Compiling serde v1.0.219
+   Compiling num-traits v0.2.19
+   Compiling icu_properties_data v1.5.0
+   Compiling futures-sink v0.3.30
+   Compiling zerocopy v0.8.25
+   Compiling version_check v0.9.4
+   Compiling futures-core v0.3.30
+   Compiling aho-corasick v1.1.2
+   Compiling lock_api v0.4.13
+   Compiling quote v1.0.35
+   Compiling regex-automata v0.4.5
+   Compiling petgraph v0.6.5
+   Compiling crossbeam-epoch v0.9.18
+   Compiling ahash v0.8.12
+   Compiling futures-channel v0.3.30
+   Compiling icu_normalizer_data v1.5.0
+   Compiling syn v2.0.89
+   Compiling rayon-core v1.12.1
+   Compiling pin-utils v0.1.0
+   Compiling utf16_iter v1.0.5
+   Compiling utf8_iter v1.0.4
+   Compiling parking_lot_core v0.9.11
+   Compiling write16 v1.0.0
+   Compiling futures-io v0.3.30
+   Compiling futures-task v0.3.30
+   Compiling crossbeam-deque v0.8.5
+   Compiling rand_core v0.9.3
+   Compiling uuid v1.17.0
+   Compiling percent-encoding v2.3.1
+   Compiling ppv-lite86 v0.2.17
+   Compiling tracing-core v0.1.32
+   Compiling glaredb_error v25.6.3 (/workspace/repo/crates/glaredb_error)
+   Compiling serde_json v1.0.140
+   Compiling scopeguard v1.2.0
+   Compiling form_urlencoded v1.2.1
+   Compiling rand_chacha v0.9.0
+   Compiling bstr v1.12.0
+   Compiling tracing v0.1.40
+   Compiling unicase v2.8.1
+   Compiling tempfile v3.20.0
+   Compiling unicode-width v0.1.11
+   Compiling allocator-api2 v0.2.16
+   Compiling iana-time-zone v0.1.60
+   Compiling sdd v3.0.2
+   Compiling itoa v1.0.10
+   Compiling ryu v1.0.16
+   Compiling textwrap v0.16.1
+   Compiling rand v0.9.1
+   Compiling chrono v0.4.41
+   Compiling rayon v1.10.0
+   Compiling regex v1.10.5
+   Compiling scc v2.3.4
+   Compiling parking_lot v0.12.4
+   Compiling num_cpus v1.17.0
+   Compiling tokio v1.45.1
+   Compiling md5 v0.7.0
+   Compiling strsim v0.11.1
+   Compiling hashbrown v0.14.5
+   Compiling synstructure v0.13.1
+   Compiling zerovec-derive v0.10.2
+   Compiling displaydoc v0.2.4
+   Compiling prost-derive v0.14.1
+   Compiling icu_provider_macros v1.5.0
+   Compiling serde_derive v1.0.219
+   Compiling futures-macro v0.3.30
+   Compiling zerofrom-derive v0.1.4
+   Compiling yoke-derive v0.7.4
+   Compiling futures-util v0.3.30
+   Compiling globset v0.4.16
+   Compiling zerofrom v0.1.4
+   Compiling yoke v0.7.4
+   Compiling prost v0.14.1
+   Compiling zerovec v0.10.2
+   Compiling prost-types v0.14.1
+   Compiling tinystr v0.7.6
+   Compiling icu_collections v1.5.0
+   Compiling icu_locid v1.5.0
+   Compiling prost-build v0.14.1
+   Compiling icu_provider v1.5.0
+   Compiling glaredb_proto v25.6.3 (/workspace/repo/crates/glaredb_proto)
+   Compiling icu_locid_transform v1.5.0
+   Compiling futures-executor v0.3.30
+   Compiling futures v0.3.30
+   Compiling icu_properties v1.5.0
+   Compiling half v2.6.0
+   Compiling icu_normalizer v1.5.0
+   Compiling glaredb_parser v25.6.3 (/workspace/repo/crates/glaredb_parser)
+   Compiling idna v1.0.0
+   Compiling url v2.5.1
+   Compiling glaredb_core v25.6.3 (/workspace/repo/crates/glaredb_core)
+warning: useless assignment of field of type `f64` to itself
+  --> crates/glaredb_core/src/optimizer/join_reorder/subgraph.rs:61:21
+   |
+61 |                     self.selectivity_denom = self.selectivity_denom
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/glaredb_core/src/arrays/array/mod.rs:436:22
+    |
+436 |     pub fn get_value(&self, idx: usize) -> Result<BorrowedScalarValue> {
+    |                      ^^^^^                        ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                      |
+    |                      the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+436 |     pub fn get_value(&self, idx: usize) -> Result<BorrowedScalarValue<'_>> {
+    |                                                                      ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/arrays/array/selection.rs:34:17
+   |
+34 |     pub fn iter(&self) -> FlatSelectionIter {
+   |                 ^^^^^     ^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+34 |     pub fn iter(&self) -> FlatSelectionIter<'_> {
+   |                                            ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/arrays/array/validity.rs:85:17
+   |
+85 |     pub fn iter(&self) -> ValidityIter {
+   |                 ^^^^^     ^^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+85 |     pub fn iter(&self) -> ValidityIter<'_> {
+   |                                       ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/glaredb_core/src/arrays/format/pretty/table.rs:619:17
+    |
+619 |     pub fn iter(&self) -> ColumnValuesIter {
+    |                 ^^^^^     ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                 |
+    |                 the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+619 |     pub fn iter(&self) -> ColumnValuesIter<'_> {
+    |                                           ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/arrays/row/row_blocks.rs:84:29
+   |
+84 |     pub fn row_mut_ptr_iter(&self) -> RowMutPtrIter<I> {
+   |                             ^^^^^     ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                             |
+   |                             the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+84 |     pub fn row_mut_ptr_iter(&self) -> RowMutPtrIter<'_, I> {
+   |                                                     +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/glaredb_core/src/shell/lineedit.rs:181:24
+    |
+181 |     pub fn consume_key(&mut self, key: KeyEvent) -> Result<Signal> {
+    |                        ^^^^^^^^^                           ^^^^^^ the same lifetime is hidden here
+    |                        |
+    |                        the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+181 |     pub fn consume_key(&mut self, key: KeyEvent) -> Result<Signal<'_>> {
+    |                                                                  ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/glaredb_core/src/shell/lineedit.rs:756:14
+    |
+756 |     fn lines(&self) -> LineIter {
+    |              ^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |              |
+    |              the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+756 |     fn lines(&self) -> LineIter<'_> {
+    |                                ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+ --> crates/glaredb_core/src/util/fmt/displayable.rs:8:30
+  |
+8 |     fn display_with_brackets(&self) -> DisplayableSlice<T>;
+  |                              ^^^^^     ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+  |                              |
+  |                              the lifetime is elided here
+  |
+  = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+  |
+8 |     fn display_with_brackets(&self) -> DisplayableSlice<'_, T>;
+  |                                                         +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/util/fmt/displayable.rs:11:24
+   |
+11 |     fn display_as_list(&self) -> DisplayableSlice<T>;
+   |                        ^^^^^     ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                        |
+   |                        the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+11 |     fn display_as_list(&self) -> DisplayableSlice<'_, T>;
+   |                                                   +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/util/fmt/displayable.rs:15:30
+   |
+15 |     fn display_with_brackets(&self) -> DisplayableSlice<T> {
+   |                              ^^^^^     ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                              |
+   |                              the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+15 |     fn display_with_brackets(&self) -> DisplayableSlice<'_, T> {
+   |                                                         +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/util/fmt/displayable.rs:23:24
+   |
+23 |     fn display_as_list(&self) -> DisplayableSlice<T> {
+   |                        ^^^^^     ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                        |
+   |                        the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+23 |     fn display_as_list(&self) -> DisplayableSlice<'_, T> {
+   |                                                   +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/util/fmt/displayable.rs:33:30
+   |
+33 |     fn display_with_brackets(&self) -> DisplayableSlice<T> {
+   |                              ^^^^^     ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                              |
+   |                              the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+33 |     fn display_with_brackets(&self) -> DisplayableSlice<'_, T> {
+   |                                                         +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/util/fmt/displayable.rs:41:24
+   |
+41 |     fn display_as_list(&self) -> DisplayableSlice<T> {
+   |                        ^^^^^     ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                        |
+   |                        the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+41 |     fn display_as_list(&self) -> DisplayableSlice<'_, T> {
+   |                                                   +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/util/fmt/displayable.rs:51:30
+   |
+51 |     fn display_with_brackets(&self) -> DisplayableSlice<T> {
+   |                              ^^^^^     ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                              |
+   |                              the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+51 |     fn display_with_brackets(&self) -> DisplayableSlice<'_, T> {
+   |                                                         +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> crates/glaredb_core/src/util/fmt/displayable.rs:59:24
+   |
+59 |     fn display_as_list(&self) -> DisplayableSlice<T> {
+   |                        ^^^^^     ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                        |
+   |                        the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+59 |     fn display_as_list(&self) -> DisplayableSlice<'_, T> {
+   |                                                   +++
+
+warning: `glaredb_core` (lib) generated 16 warnings (run `cargo fix --lib -p glaredb_core` to apply 15 suggestions)
+warning: `glaredb_core` (lib test) generated 16 warnings (16 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.06s
+────────────
+ Nextest run ID b3d53302-9342-4dd3-b989-d6227b750685 with nextest profile: default
+    Starting 7 tests across 1 binary (504 tests skipped)
+        PASS [   0.050s] (1/7) glaredb_core functions::table::builtin::series::tests::test_poll_execute_with_bind_state
+        PASS [   0.051s] (2/7) glaredb_core functions::table::builtin::series::tests::generate_series_neverending_start_lt_stop
+        PASS [   0.053s] (3/7) glaredb_core functions::table::builtin::series::tests::generate_series_neverending_start_gt_stop
+        PASS [   0.054s] (4/7) glaredb_core functions::table::builtin::series::tests::generate_series_single_row_out_lacks_capacity_by_1
+        PASS [   0.055s] (5/7) glaredb_core functions::table::builtin::series::tests::generate_series_single_row_out_lacks_capacity
+        PASS [   0.055s] (6/7) glaredb_core functions::table::builtin::series::tests::generate_series_multiple_rows
+        PASS [   0.054s] (7/7) glaredb_core functions::table::builtin::series::tests::generate_series_single_row
+────────────
+     Summary [   0.057s] 7 tests run: 7 passed, 504 skipped
+reward=1 graded=7 found=2 failed=0 parsed=7 framework=cargo exit_code=0

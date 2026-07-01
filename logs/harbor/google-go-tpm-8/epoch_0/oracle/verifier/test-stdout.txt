@@ -1,0 +1,139 @@
+patching file tpm2/encoding_test.go
+patching file tpm2/tpm2_test.go
+{"Time":"2026-06-29T15:32:13.971384375Z","Action":"start","Package":"_/workspace/repo/tpm2"}
+{"Time":"2026-06-29T15:32:13.983891847Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadPCRs"}
+{"Time":"2026-06-29T15:32:13.983974978Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadPCRs","Output":"=== RUN   TestDecodeReadPCRs\n"}
+{"Time":"2026-06-29T15:32:13.984146343Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadPCRs","Output":"--- PASS: TestDecodeReadPCRs (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.984183224Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadPCRs","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.984205984Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodeDecodeTPMLSelection"}
+{"Time":"2026-06-29T15:32:13.984223215Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeDecodeTPMLSelection","Output":"=== RUN   TestEncodeDecodeTPMLSelection\n"}
+{"Time":"2026-06-29T15:32:13.984251085Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeDecodeTPMLSelection","Output":"--- PASS: TestEncodeDecodeTPMLSelection (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.984266506Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodeDecodeTPMLSelection","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.984280446Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadClock"}
+{"Time":"2026-06-29T15:32:13.984300627Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadClock","Output":"=== RUN   TestDecodeReadClock\n"}
+{"Time":"2026-06-29T15:32:13.984337098Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadClock","Output":"--- PASS: TestDecodeReadClock (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.984348618Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadClock","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.984360998Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeGetCapability"}
+{"Time":"2026-06-29T15:32:13.984376708Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeGetCapability","Output":"=== RUN   TestDecodeGetCapability\n"}
+{"Time":"2026-06-29T15:32:13.984388719Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeGetCapability","Output":"--- PASS: TestDecodeGetCapability (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.984411789Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeGetCapability","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.98442321Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodeLoad"}
+{"Time":"2026-06-29T15:32:13.98443608Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeLoad","Output":"=== RUN   TestEncodeLoad\n"}
+{"Time":"2026-06-29T15:32:13.98445176Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeLoad","Output":"--- PASS: TestEncodeLoad (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.984471621Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodeLoad","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.984500131Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeLoad"}
+{"Time":"2026-06-29T15:32:13.984519342Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeLoad","Output":"=== RUN   TestDecodeLoad\n"}
+{"Time":"2026-06-29T15:32:13.984531972Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeLoad","Output":"--- PASS: TestDecodeLoad (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.984553233Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeLoad","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.984658846Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodeCreate"}
+{"Time":"2026-06-29T15:32:13.984689506Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeCreate","Output":"=== RUN   TestEncodeCreate\n"}
+{"Time":"2026-06-29T15:32:13.984735148Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeCreate","Output":"--- PASS: TestEncodeCreate (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.984770668Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodeCreate","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.984786409Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeCreatePrimary"}
+{"Time":"2026-06-29T15:32:13.984796909Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeCreatePrimary","Output":"=== RUN   TestDecodeCreatePrimary\n"}
+{"Time":"2026-06-29T15:32:13.984810009Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeCreatePrimary","Output":"--- PASS: TestDecodeCreatePrimary (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.98482219Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeCreatePrimary","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.98484948Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodePolicyPCR"}
+{"Time":"2026-06-29T15:32:13.984874581Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodePolicyPCR","Output":"=== RUN   TestEncodePolicyPCR\n"}
+{"Time":"2026-06-29T15:32:13.984911332Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodePolicyPCR","Output":"--- PASS: TestEncodePolicyPCR (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.984921542Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodePolicyPCR","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.984957633Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeStartAuthSession"}
+{"Time":"2026-06-29T15:32:13.984970233Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeStartAuthSession","Output":"=== RUN   TestDecodeStartAuthSession\n"}
+{"Time":"2026-06-29T15:32:13.984982944Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeStartAuthSession","Output":"--- PASS: TestDecodeStartAuthSession (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.984993894Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeStartAuthSession","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.985066156Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeCreateKey"}
+{"Time":"2026-06-29T15:32:13.985090986Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeCreateKey","Output":"=== RUN   TestDecodeCreateKey\n"}
+{"Time":"2026-06-29T15:32:13.985107677Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeCreateKey","Output":"--- PASS: TestDecodeCreateKey (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985127457Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeCreateKey","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.985139438Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodeUnseal"}
+{"Time":"2026-06-29T15:32:13.985167428Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeUnseal","Output":"=== RUN   TestEncodeUnseal\n"}
+{"Time":"2026-06-29T15:32:13.985185389Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeUnseal","Output":"--- PASS: TestEncodeUnseal (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985197189Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodeUnseal","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.98521964Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeUnseal"}
+{"Time":"2026-06-29T15:32:13.9852368Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeUnseal","Output":"=== RUN   TestDecodeUnseal\n"}
+{"Time":"2026-06-29T15:32:13.98525038Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeUnseal","Output":"--- PASS: TestDecodeUnseal (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985276961Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeUnseal","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.985288931Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodeQuote"}
+{"Time":"2026-06-29T15:32:13.985304242Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeQuote","Output":"=== RUN   TestEncodeQuote\n"}
+{"Time":"2026-06-29T15:32:13.985319312Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeQuote","Output":"--- PASS: TestEncodeQuote (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985348623Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodeQuote","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.985364913Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeQuote"}
+{"Time":"2026-06-29T15:32:13.985376464Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeQuote","Output":"=== RUN   TestDecodeQuote\n"}
+{"Time":"2026-06-29T15:32:13.985393574Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeQuote","Output":"--- PASS: TestDecodeQuote (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985418685Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeQuote","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.985432385Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadPublic"}
+{"Time":"2026-06-29T15:32:13.985441565Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadPublic","Output":"=== RUN   TestDecodeReadPublic\n"}
+{"Time":"2026-06-29T15:32:13.985450935Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadPublic","Output":"--- PASS: TestDecodeReadPublic (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985476066Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestDecodeReadPublic","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.985489776Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodeEvictControl"}
+{"Time":"2026-06-29T15:32:13.985509737Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeEvictControl","Output":"=== RUN   TestEncodeEvictControl\n"}
+{"Time":"2026-06-29T15:32:13.985527407Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeEvictControl","Output":"--- PASS: TestEncodeEvictControl (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985541208Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodeEvictControl","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.985558048Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodePasswordAuthArea"}
+{"Time":"2026-06-29T15:32:13.985567488Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodePasswordAuthArea","Output":"=== RUN   TestEncodePasswordAuthArea\n"}
+{"Time":"2026-06-29T15:32:13.985588739Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodePasswordAuthArea","Output":"--- PASS: TestEncodePasswordAuthArea (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985600739Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodePasswordAuthArea","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.9856314Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodeSensitiveArea"}
+{"Time":"2026-06-29T15:32:13.98565193Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeSensitiveArea","Output":"=== RUN   TestEncodeSensitiveArea\n"}
+{"Time":"2026-06-29T15:32:13.985671311Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeSensitiveArea","Output":"--- PASS: TestEncodeSensitiveArea (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985681481Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodeSensitiveArea","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.985692711Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodeRSAParams"}
+{"Time":"2026-06-29T15:32:13.985703852Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeRSAParams","Output":"=== RUN   TestEncodeRSAParams\n"}
+{"Time":"2026-06-29T15:32:13.985719962Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeRSAParams","Output":"--- PASS: TestEncodeRSAParams (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985749393Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodeRSAParams","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.985763553Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEncodeTPMLPCRSelection"}
+{"Time":"2026-06-29T15:32:13.985773403Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeTPMLPCRSelection","Output":"=== RUN   TestEncodeTPMLPCRSelection\n"}
+{"Time":"2026-06-29T15:32:13.985904277Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEncodeTPMLPCRSelection","Output":"--- PASS: TestEncodeTPMLPCRSelection (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.985994659Z","Action":"pass","Package":"_/workspace/repo/tpm2","Test":"TestEncodeTPMLPCRSelection","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.986078651Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestGetRandom"}
+{"Time":"2026-06-29T15:32:13.986118032Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestGetRandom","Output":"=== RUN   TestGetRandom\n"}
+{"Time":"2026-06-29T15:32:13.986135082Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestGetRandom","Output":"--- SKIP: TestGetRandom (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.986153153Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestGetRandom","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.986166233Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestReadPCRs"}
+{"Time":"2026-06-29T15:32:13.986180584Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestReadPCRs","Output":"=== RUN   TestReadPCRs\n"}
+{"Time":"2026-06-29T15:32:13.986192484Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestReadPCRs","Output":"--- SKIP: TestReadPCRs (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.986218425Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestReadPCRs","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.986237105Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestReadClock"}
+{"Time":"2026-06-29T15:32:13.986248185Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestReadClock","Output":"=== RUN   TestReadClock\n"}
+{"Time":"2026-06-29T15:32:13.986258766Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestReadClock","Output":"--- SKIP: TestReadClock (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.986274496Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestReadClock","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.986286916Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestGetCapability"}
+{"Time":"2026-06-29T15:32:13.986300387Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestGetCapability","Output":"=== RUN   TestGetCapability\n"}
+{"Time":"2026-06-29T15:32:13.986318417Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestGetCapability","Output":"--- SKIP: TestGetCapability (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.986332417Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestGetCapability","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.986343317Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestCombinedKeyTest"}
+{"Time":"2026-06-29T15:32:13.986354108Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCombinedKeyTest","Output":"=== RUN   TestCombinedKeyTest\n"}
+{"Time":"2026-06-29T15:32:13.986365078Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCombinedKeyTest","Output":"--- SKIP: TestCombinedKeyTest (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.986377338Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestCombinedKeyTest","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.986388829Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestCombinedEndorsementTest"}
+{"Time":"2026-06-29T15:32:13.986398429Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCombinedEndorsementTest","Output":"=== RUN   TestCombinedEndorsementTest\n"}
+{"Time":"2026-06-29T15:32:13.98642213Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCombinedEndorsementTest","Output":"--- SKIP: TestCombinedEndorsementTest (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.98643393Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestCombinedEndorsementTest","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.98644593Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestCombinedContextTest"}
+{"Time":"2026-06-29T15:32:13.98645599Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCombinedContextTest","Output":"=== RUN   TestCombinedContextTest\n"}
+{"Time":"2026-06-29T15:32:13.986485321Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCombinedContextTest","Output":"--- SKIP: TestCombinedContextTest (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.986508052Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestCombinedContextTest","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.986518652Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestEvictControl"}
+{"Time":"2026-06-29T15:32:13.986528732Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEvictControl","Output":"=== RUN   TestEvictControl\n"}
+{"Time":"2026-06-29T15:32:13.986592114Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestEvictControl","Output":"--- SKIP: TestEvictControl (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.986636335Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestEvictControl","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.986660016Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestHash"}
+{"Time":"2026-06-29T15:32:13.986670746Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestHash","Output":"=== RUN   TestHash\n"}
+{"Time":"2026-06-29T15:32:13.986684896Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestHash","Output":"--- SKIP: TestHash (0.00s)\n"}
+{"Time":"2026-06-29T15:32:13.986695546Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestHash","Elapsed":0}
+{"Time":"2026-06-29T15:32:13.986705677Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestLoadExternalPublicKey"}
+{"Time":"2026-06-29T15:32:13.986812339Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestLoadExternalPublicKey","Output":"=== RUN   TestLoadExternalPublicKey\n"}
+{"Time":"2026-06-29T15:32:14.065119041Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestLoadExternalPublicKey","Output":"--- SKIP: TestLoadExternalPublicKey (0.08s)\n"}
+{"Time":"2026-06-29T15:32:14.065160762Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestLoadExternalPublicKey","Elapsed":0.08}
+{"Time":"2026-06-29T15:32:14.065177912Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestCertify"}
+{"Time":"2026-06-29T15:32:14.065198783Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCertify","Output":"=== RUN   TestCertify\n"}
+{"Time":"2026-06-29T15:32:14.065226743Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCertify","Output":"--- SKIP: TestCertify (0.00s)\n"}
+{"Time":"2026-06-29T15:32:14.065241294Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestCertify","Elapsed":0}
+{"Time":"2026-06-29T15:32:14.065255384Z","Action":"run","Package":"_/workspace/repo/tpm2","Test":"TestCertifyExternalKey"}
+{"Time":"2026-06-29T15:32:14.065287765Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCertifyExternalKey","Output":"=== RUN   TestCertifyExternalKey\n"}
+{"Time":"2026-06-29T15:32:14.269037073Z","Action":"output","Package":"_/workspace/repo/tpm2","Test":"TestCertifyExternalKey","Output":"--- SKIP: TestCertifyExternalKey (0.20s)\n"}
+{"Time":"2026-06-29T15:32:14.269127465Z","Action":"skip","Package":"_/workspace/repo/tpm2","Test":"TestCertifyExternalKey","Elapsed":0.2}
+{"Time":"2026-06-29T15:32:14.269146545Z","Action":"output","Package":"_/workspace/repo/tpm2","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:14.269828352Z","Action":"output","Package":"_/workspace/repo/tpm2","Output":"ok  \t_/workspace/repo/tpm2\t0.298s\n"}
+{"Time":"2026-06-29T15:32:14.269897914Z","Action":"pass","Package":"_/workspace/repo/tpm2","Elapsed":0.299}
+reward=1 graded=21 found=21 failed=0 parsed=33 framework=go exit_code=0

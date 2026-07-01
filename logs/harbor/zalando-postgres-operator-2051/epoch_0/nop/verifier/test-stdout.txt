@@ -1,0 +1,7 @@
+patching file pkg/cluster/k8sres_test.go
+# github.com/zalando/postgres-operator/pkg/cluster [github.com/zalando/postgres-operator/pkg/cluster.test]
+pkg/cluster/k8sres_test.go:482:6: unknown field 'LogicalBackupCronjobEnvironmentSecret' in struct literal of type config.LogicalBackup
+pkg/cluster/k8sres_test.go:491:6: unknown field 'LogicalBackupCronjobEnvironmentSecret' in struct literal of type config.LogicalBackup
+pkg/cluster/k8sres_test.go:534:18: c.getCronjobEnvironmentSecretVariables undefined (type *Cluster has no field or method getCronjobEnvironmentSecretVariables)
+FAIL	github.com/zalando/postgres-operator/pkg/cluster [build failed]
+reward=0 graded=113 found=113 failed=113 parsed=1 framework=go exit_code=1

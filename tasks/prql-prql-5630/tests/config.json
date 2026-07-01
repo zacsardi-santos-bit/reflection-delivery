@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p prqlc -E 'test(test_mssql_distinct_fetch)'",
+  "test_files": [
+    "prqlc/prqlc/tests/integration/sql.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) prqlc::integration sql::test_mssql_distinct_fetch"
+  ],
+  "PASS_TO_PASS": []
+}

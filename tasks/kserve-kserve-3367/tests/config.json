@@ -1,0 +1,25 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/controller/v1alpha1/inferencegraph -count=1 -skip TestAPIs",
+  "test_files": [
+    "pkg/controller/v1alpha1/inferencegraph/controller_test.go",
+    "pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestCreateInferenceGraphPodSpec/Basic_Inference_graph",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestCreateInferenceGraphPodSpec/Inference_graph_with_resource_requirements",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestCreateInferenceGraphPodSpec/Inference_graph_with_propagate_headers",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestCreateInferenceGraphPodSpec",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestConstructGraphObjectMeta/Basic_Inference_graph",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestConstructGraphObjectMeta/Inference_graph_with_annotations_,_min_and_max_replicas_",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestConstructGraphObjectMeta/Inference_graph_with_labels",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestConstructGraphObjectMeta/Inference_graph_with_annotations_and_labels",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestConstructGraphObjectMeta",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestPropagateRawStatus/Basic_Inference_graph_with_with_graph_status_as_ready_and_deployment_available",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestPropagateRawStatus/Basic_Inference_graph_with_with_Inferencegraph_status_as_not_ready_and_deployment_unavailable",
+    "github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph::TestPropagateRawStatus"
+  ],
+  "PASS_TO_PASS": []
+}

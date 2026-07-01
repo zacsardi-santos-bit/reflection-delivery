@@ -1,0 +1,27 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && TZ=UTC JEST=true node --no-experimental-fetch --no-compilation-cache --expose-gc ./node_modules/.bin/jest --config jest.web.config.js src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx src/features/navigation/RootNavigator/Header/Header.web.test.tsx --coverage=false --forceExit --verbose --json",
+  "test_files": [
+    "src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx",
+    "src/features/navigation/RootNavigator/Header/Header.web.test.tsx",
+    "src/features/navigation/TabBar/TabBar.native.test.tsx"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx::AccessibleTabBar renders correclty when FF is enabled",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/Header.web.test.tsx::Header should render correctly when FF is enabled"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx::AccessibleTabBar should display the 5 following tabs",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx::AccessibleTabBar displays only one selected at a time",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx::AccessibleTabBar should identify only one tab as current page",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx::AccessibleTabBar should call navigate with searchState params on press \"Recherche\"",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx::AccessibleTabBar should reset params on press \"Recherche\" when already on Search tab",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/Header.web.test.tsx::Header should render correctly",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/Header.web.test.tsx::Header should render Header without Bookings item for non-beneficiary and logged out users",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/Header.web.test.tsx::Header should render Header without Bookings item for non-beneficiary and logged in users",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/Header.web.test.tsx::Header should render Header for beneficiary and logged in users",
+    "/workspace/repo/src/features/navigation/RootNavigator/Header/Header.web.test.tsx::Header should identify one tab as current page"
+  ]
+}

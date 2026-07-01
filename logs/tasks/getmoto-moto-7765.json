@@ -1,0 +1,23 @@
+{
+ "task": "getmoto-moto-7765",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test_create_cluster_bad_source_s3_uri, test_create_cluster_duplicate_name; F2P=11 boto3 SageMaker cluster tests + resourcegroupstaggingapi integration"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 7,
+  "shallow": true
+ }
+}

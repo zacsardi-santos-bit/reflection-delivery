@@ -1,0 +1,23 @@
+patching file exec/build-commands/test/__snapshots__/ignoredBuilds.test.ts.snap
+patching file exec/build-commands/test/approveBuilds.test.ts
+patching file exec/build-commands/test/ignoredBuilds.test.ts
+patching file exec/build-commands/test/tsconfig.json
+pnpm                                     |  WARN  The field "pnpm.overrides" was found in /workspace/repo/pnpm/package.json. This will not take effect. You should configure "pnpm.overrides" at the root of the workspace instead.
+Scope: all 180 workspace projects
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 2s
+PASS test/ignoredBuilds.test.ts
+  ✓ ignoredBuilds lists automatically ignored dependencies (22 ms)
+  ✓ ignoredBuilds lists explicitly ignored dependencies (3 ms)
+  ✓ ignoredBuilds lists both automatically and explicitly ignored dependencies (3 ms)
+  ✓ ignoredBuilds prints an info message when there is no node_modules (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   4 passed, 4 total
+Time:        3.453 s
+Ran all test suites matching /test\/ignoredBuilds.test.ts/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":4,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":4,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":4,"total":4,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746057973,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":[],"duration":22,"failureDetails":[],"failureMessages":[],"fullName":"ignoredBuilds lists automatically ignored dependencies","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"ignoredBuilds lists automatically ignored dependencies"},{"ancestorTitles":[],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"ignoredBuilds lists explicitly ignored dependencies","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"ignoredBuilds lists explicitly ignored dependencies"},{"ancestorTitles":[],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"ignoredBuilds lists both automatically and explicitly ignored dependencies","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"ignoredBuilds lists both automatically and explicitly ignored dependencies"},{"ancestorTitles":[],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"ignoredBuilds prints an info message when there is no node_modules","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"ignoredBuilds prints an info message when there is no node_modules"}],"endTime":1782746061422,"message":"","name":"/workspace/repo/exec/build-commands/test/ignoredBuilds.test.ts","startTime":1782746058056,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=jest exit_code=0

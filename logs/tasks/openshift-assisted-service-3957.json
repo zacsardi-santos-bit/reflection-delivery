@@ -1,0 +1,23 @@
+{
+ "task": "openshift-assisted-service-3957",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden adds env vars {Name: \"IMAGE_SERVICE_SCHEME\"} / {Name: \"IMAGE_SERVICE_HOST\"} populated via r.getImageService reading the Route; test asserts scheme==https and host==my.test.images"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 22,
+  "shallow": true
+ }
+}

@@ -1,0 +1,95 @@
+patching file datafusion/sql/tests/cases/plan_to_sql.rs
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> datafusion/common/src/error.rs:435:20
+    |
+435 |     pub fn message(&self) -> Cow<str> {
+    |                    ^^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |                    |
+    |                    the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+435 |     pub fn message(&self) -> Cow<'_, str> {
+    |                                  +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> datafusion/common/src/utils/mod.rs:249:28
+    |
+249 | pub fn quote_identifier(s: &str) -> Cow<str> {
+    |                            ^^^^     ^^^^^^^^ the same lifetime is hidden here
+    |                            |
+    |                            the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+249 | pub fn quote_identifier(s: &str) -> Cow<'_, str> {
+    |                                         +++
+
+warning: `datafusion-common` (lib) generated 2 warnings (run `cargo fix --lib -p datafusion-common` to apply 2 suggestions)
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> datafusion/expr/src/table_source.rs:113:25
+    |
+113 |     fn get_logical_plan(&self) -> Option<Cow<LogicalPlan>> {
+    |                         ^^^^^            ^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                         |
+    |                         the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+113 |     fn get_logical_plan(&self) -> Option<Cow<'_, LogicalPlan>> {
+    |                                              +++
+
+warning: `datafusion-expr` (lib) generated 1 warning (run `cargo fix --lib -p datafusion-expr` to apply 1 suggestion)
+warning: unnecessary parentheses around type
+   --> datafusion/physical-expr/src/expressions/binary.rs:157:17
+    |
+157 | ) -> Result<Arc<(dyn Array + 'static)>, ArrowError> {
+    |                 ^                   ^
+    |
+    = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+    |
+157 - ) -> Result<Arc<(dyn Array + 'static)>, ArrowError> {
+157 + ) -> Result<Arc<dyn Array + 'static>, ArrowError> {
+    |
+
+warning: `datafusion-physical-expr` (lib) generated 1 warning (run `cargo fix --lib -p datafusion-physical-expr` to apply 1 suggestion)
+warning: unused import: `crate::define_udwf_and_expr`
+  --> datafusion/functions-window/src/rank.rs:27:5
+   |
+27 | use crate::define_udwf_and_expr;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `datafusion-functions-window` (lib) generated 1 warning (run `cargo fix --lib -p datafusion-functions-window` to apply 1 suggestion)
+   Compiling datafusion-sql v44.0.0 (/workspace/repo/datafusion/sql)
+error[E0432]: unresolved import `datafusion_sql::unparser::extension_unparser`
+  --> datafusion/sql/tests/cases/plan_to_sql.rs:53:31
+   |
+53 | use datafusion_sql::unparser::extension_unparser::{
+   |                               ^^^^^^^^^^^^^^^^^^ could not find `extension_unparser` in `unparser`
+
+error[E0603]: module `ast` is private
+  --> datafusion/sql/tests/cases/plan_to_sql.rs:50:31
+   |
+50 | use datafusion_sql::unparser::ast::{
+   |                               ^^^ private module
+   |
+note: the module `ast` is defined here
+  --> datafusion/sql/src/unparser/mod.rs:20:1
+   |
+20 | mod ast;
+   | ^^^^^^^
+
+Some errors have detailed explanations: E0432, E0603.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `datafusion-sql` (test "sql_integration") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.96.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package datafusion-sql` exited with code 101
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=cargo exit_code=101

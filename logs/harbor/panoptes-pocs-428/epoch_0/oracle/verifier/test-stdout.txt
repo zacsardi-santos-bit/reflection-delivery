@@ -1,0 +1,35 @@
+patching file pocs/tests/conftest.py
+patching file pocs/tests/test_arduino_io.py
+patching file pocs/tests/test_sensor_recorder.py
+============================= test session starts ==============================
+platform linux -- Python 3.7.17, pytest-7.4.4, pluggy-1.2.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: cov-4.1.0
+collecting ... collected 3 items
+
+pocs/tests/test_sensor_recorder.py::test_basic_recording PASSED          [ 33%]
+pocs/tests/test_sensor_recorder.py::test_exceptions_sensor_recorder PASSED [ 66%]
+pocs/tests/test_sensor_recorder.py::test_missing_funcs PASSED            [100%]
+
+=============================== warnings summary ===============================
+pocs/utils/__init__.py:88
+  /workspace/repo/pocs/utils/__init__.py:88: DeprecationWarning: invalid escape sequence \w
+    camera_match = re.match('([\w\d\s_\.]{30})\s(usb:\d{3},\d{3})', line)
+
+../../usr/local/lib/python3.7/site-packages/astropy/version.py:26
+  /usr/local/lib/python3.7/site-packages/astropy/version.py:26: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    for j, piece in enumerate(LooseVersion(version).version[:3]):
+
+../../usr/local/lib/python3.7/site-packages/astropy/utils/introspection.py:160
+../../usr/local/lib/python3.7/site-packages/astropy/utils/introspection.py:160
+../../usr/local/lib/python3.7/site-packages/astropy/utils/introspection.py:160
+../../usr/local/lib/python3.7/site-packages/astropy/utils/introspection.py:160
+../../usr/local/lib/python3.7/site-packages/astropy/utils/introspection.py:160
+../../usr/local/lib/python3.7/site-packages/astropy/utils/introspection.py:160
+  /usr/local/lib/python3.7/site-packages/astropy/utils/introspection.py:160: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    return LooseVersion(have_version) >= LooseVersion(version)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 3 passed, 8 warnings in 0.33s =========================
+reward=1 graded=3 found=0 failed=0 parsed=3 framework=pytest exit_code=0

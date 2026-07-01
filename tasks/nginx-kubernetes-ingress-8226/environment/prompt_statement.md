@@ -1,0 +1,7 @@
+I'm working on an NGINX Kubernetes Ingress controller and we have a feature flag that controls whether proxy buffer directive values are automatically adjusted and normalized. When auto-adjust is disabled, users expect their exact proxy buffer configuration values to flow through to NGINX unchanged. But right now, even with auto-adjust turned off, the controller still parses the values into internal structured objects and may normalize or correct them before they reach NGINX.
+
+I'd like the behavior to be: when auto-adjust is disabled, take the user's values as plain strings and pass them through without any validation or correction. When auto-adjust is enabled, continue to validate and normalize recognized size units (e.g., case-normalize size units), and reject clearly invalid formats with an error event.
+
+There's also an issue with how annotation validation errors are reported. When someone sets a size-type annotation (like proxy buffer size or upstream zone size) to an invalid value, the error message just says "must be a size" — that's too vague. The error should describe what format is expected, what unit suffixes are valid, and ideally show an example or the regex used for validation.
+
+There's also a related problem: currently, proxy buffer specifications that contain completely unrecognized unit characters are silently normalized to use a default unit, rather than being rejected. When auto-adjust is enabled, these should produce a clear error so the user knows their configuration is invalid.

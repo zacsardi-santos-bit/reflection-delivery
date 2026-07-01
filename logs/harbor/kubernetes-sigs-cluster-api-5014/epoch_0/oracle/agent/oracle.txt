@@ -1,0 +1,2 @@
+patching file cmd/clusterctl/client/repository/components.go
+patching file cmd/clusterctl/client/repository/template.go

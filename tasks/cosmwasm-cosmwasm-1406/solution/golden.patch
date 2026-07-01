@@ -1,0 +1,344 @@
+diff --git a/.circleci/config.yml b/.circleci/config.yml
+index 01ce7296d..cd8159bc5 100644
+--- a/.circleci/config.yml
++++ b/.circleci/config.yml
+@@ -2,6 +2,7 @@ version: 2.1
+ 
+ orbs:
+   codecov: codecov/codecov@3.2.0
++  win: circleci/windows@5.0
+ 
+ workflows:
+   test:
+@@ -15,6 +16,7 @@ workflows:
+       - package_std
+       - package_storage
+       - package_vm
++      - package_vm_windows
+       - contract_burner
+       - contract_crypto_verify
+       - contract_cyberpunk
+@@ -376,6 +378,49 @@ jobs:
+             - target/debug/deps
+           key: cargocache-v2-package_vm-rust:1.59.0-{{ checksum "Cargo.lock" }}
+ 
++  package_vm_windows:
++    executor:
++      name: win/default
++      shell: bash.exe
++    steps:
++      - run:
++          name: Enable symlinks for the checkout
++          command: git config --global core.symlinks true
++      - checkout
++      - run:
++          name: Reset git config set by CircleCI to make Cargo work
++          command: git config --global --unset url.ssh://git@github.com.insteadof
++      - run:
++          name: Install Rust
++          command: |
++            set -o errexit
++            curl -sS --output rustup-init.exe https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe
++            ./rustup-init.exe --default-toolchain 1.65.0 -y
++            echo 'export PATH="$PATH;$USERPROFILE/.cargo/bin"' >> "$BASH_ENV"
++      - run:
++          name: Version information
++          command: |
++            set -o errexit
++            rustc --version; cargo --version; rustup --version; rustup target list --installed
++      - restore_cache:
++          keys:
++            - cargocache-v2-package_vm_windows-rust:1.65.0-{{ checksum "Cargo.lock" }}
++      - run:
++          name: Test
++          working_directory: ~/project/packages/vm
++          command: cargo test --locked
++      - run:
++          name: Test with all features
++          working_directory: ~/project/packages/vm
++          command: cargo test --locked --features allow_interface_version_7,iterator,staking,stargate
++      - save_cache:
++          paths:
++            - /usr/local/cargo/registry
++            - target/debug/.fingerprint
++            - target/debug/build
++            - target/debug/deps
++          key: cargocache-v2-package_vm_windows-rust:1.65.0-{{ checksum "Cargo.lock" }}
++
+   contract_burner:
+     docker:
+       - image: rust:1.59.0
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index fffd4fe22..4c6ad4537 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -6,6 +6,15 @@ and this project adheres to
+ 
+ ## [Unreleased]
+ 
++### Changed
++
++- cosmwasm-vm: Avoid exposing OS specific file system errors in order to test
++  cosmwasm-vm on Windows. This gives us confidence for integrating cosmwasm-vm
++  in a libwasmvm build on Windows. This change is likely to be consensus
++  breaking as error messages change. ([#1406])
++
++[#1406]: https://github.com/CosmWasm/cosmwasm/pull/1406
++
+ ## [1.1.6] - 2022-11-16
+ 
+ ### Added
+diff --git a/packages/vm/src/cache.rs b/packages/vm/src/cache.rs
+index 6310f3ca4..b08b9c7c9 100644
+--- a/packages/vm/src/cache.rs
++++ b/packages/vm/src/cache.rs
+@@ -1,5 +1,5 @@
+ use std::collections::HashSet;
+-use std::fs::{create_dir_all, File, OpenOptions};
++use std::fs::{File, OpenOptions};
+ use std::io::{Read, Write};
+ use std::marker::PhantomData;
+ use std::path::{Path, PathBuf};
+@@ -10,6 +10,7 @@ use crate::capabilities::required_capabilities_from_module;
+ use crate::checksum::Checksum;
+ use crate::compatibility::check_wasm;
+ use crate::errors::{VmError, VmResult};
++use crate::filesystem::mkdir_p;
+ use crate::instance::{Instance, InstanceOptions};
+ use crate::modules::{FileSystemCache, InMemoryCache, PinnedMemoryCache};
+ use crate::size::Size;
+@@ -108,15 +109,9 @@ where
+         let wasm_path = state_path.join(WASM_DIR);
+ 
+         // Ensure all the needed directories exist on disk.
+-        for path in [&state_path, &cache_path, &wasm_path].iter() {
+-            create_dir_all(path).map_err(|e| {
+-                VmError::cache_err(format!(
+-                    "Error creating directory {}: {}",
+-                    path.display(),
+-                    e
+-                ))
+-            })?;
+-        }
++        mkdir_p(&state_path).map_err(|_e| VmError::cache_err("Error creating state directory"))?;
++        mkdir_p(&cache_path).map_err(|_e| VmError::cache_err("Error creating cache directory"))?;
++        mkdir_p(&wasm_path).map_err(|_e| VmError::cache_err("Error creating wasm directory"))?;
+ 
+         let fs_cache = FileSystemCache::new(cache_path.join(MODULES_DIR))
+             .map_err(|e| VmError::cache_err(format!("Error file system cache: {}", e)))?;
+@@ -356,12 +351,12 @@ fn save_wasm_to_disk(dir: impl Into<PathBuf>, wasm: &[u8]) -> VmResult<Checksum>
+ fn load_wasm_from_disk(dir: impl Into<PathBuf>, checksum: &Checksum) -> VmResult<Vec<u8>> {
+     // this requires the directory and file to exist
+     let path = dir.into().join(checksum.to_hex());
+-    let mut file = File::open(path)
+-        .map_err(|e| VmError::cache_err(format!("Error opening Wasm file for reading: {}", e)))?;
++    let mut file =
++        File::open(path).map_err(|_e| VmError::cache_err("Error opening Wasm file for reading"))?;
+ 
+     let mut wasm = Vec::<u8>::new();
+     file.read_to_end(&mut wasm)
+-        .map_err(|e| VmError::cache_err(format!("Error reading Wasm file: {}", e)))?;
++        .map_err(|_e| VmError::cache_err("Error reading Wasm file"))?;
+     Ok(wasm)
+ }
+ 
+@@ -373,7 +368,7 @@ mod tests {
+     use crate::errors::VmError;
+     use crate::testing::{mock_backend, mock_env, mock_info, MockApi, MockQuerier, MockStorage};
+     use cosmwasm_std::{coins, Empty};
+-    use std::fs::OpenOptions;
++    use std::fs::{create_dir_all, OpenOptions};
+     use std::io::Write;
+     use tempfile::TempDir;
+ 
+@@ -523,8 +518,7 @@ mod tests {
+ 
+         match cache.load_wasm(&checksum).unwrap_err() {
+             VmError::CacheErr { msg, .. } => {
+-                assert!(msg
+-                    .starts_with("Error opening Wasm file for reading: No such file or directory"))
++                assert_eq!(msg, "Error opening Wasm file for reading")
+             }
+             e => panic!("Unexpected error: {:?}", e),
+         }
+diff --git a/packages/vm/src/filesystem.rs b/packages/vm/src/filesystem.rs
+new file mode 100644
+index 000000000..45a60f435
+--- /dev/null
++++ b/packages/vm/src/filesystem.rs
+@@ -0,0 +1,43 @@
++use std::{fs::create_dir_all, path::Path};
++
++#[derive(Debug)]
++pub struct MkdirPFailure;
++
++/// An implementation for `mkdir -p`.
++///
++/// This is a thin wrapper around fs::create_dir_all that
++/// hides all OS specific error messages to ensure they don't end up
++/// breaking consensus.
++pub fn mkdir_p(path: &Path) -> Result<(), MkdirPFailure> {
++    create_dir_all(path).map_err(|_e| MkdirPFailure)
++}
++
++#[cfg(test)]
++mod tests {
++    use tempfile::TempDir;
++
++    use super::*;
++
++    #[test]
++    fn mkdir_p_works() {
++        let tmp_root = TempDir::new().unwrap();
++
++        // Can create
++        let path = tmp_root.path().join("something");
++        assert!(!path.is_dir());
++        mkdir_p(&path).unwrap();
++        assert!(path.is_dir());
++
++        // Can be called on existing dir
++        let path = tmp_root.path().join("something else");
++        assert!(!path.is_dir());
++        mkdir_p(&path).unwrap();
++        assert!(path.is_dir());
++        mkdir_p(&path).unwrap(); // no-op
++        assert!(path.is_dir());
++
++        // Fails for dir with null
++        let path = tmp_root.path().join("something\0with NULL");
++        mkdir_p(&path).unwrap_err();
++    }
++}
+diff --git a/packages/vm/src/lib.rs b/packages/vm/src/lib.rs
+index 37713763f..986275853 100644
+--- a/packages/vm/src/lib.rs
++++ b/packages/vm/src/lib.rs
+@@ -9,6 +9,7 @@ mod compatibility;
+ mod conversion;
+ mod environment;
+ mod errors;
++mod filesystem;
+ mod imports;
+ mod instance;
+ mod limited;
+diff --git a/packages/vm/src/modules/file_system_cache.rs b/packages/vm/src/modules/file_system_cache.rs
+index 0488ca763..406a0ebcc 100644
+--- a/packages/vm/src/modules/file_system_cache.rs
++++ b/packages/vm/src/modules/file_system_cache.rs
+@@ -1,12 +1,13 @@
+-use std::fs;
+ use std::io;
+ use std::path::PathBuf;
++use thiserror::Error;
+ 
+ use wasmer::{DeserializeError, Module, Store};
+ 
+ use crate::checksum::Checksum;
+ use crate::errors::{VmError, VmResult};
+ 
++use crate::filesystem::mkdir_p;
+ use crate::modules::current_wasmer_module_version;
+ 
+ /// Bump this version whenever the module system changes in a way
+@@ -47,6 +48,20 @@ pub struct FileSystemCache {
+     wasmer_module_version: u32,
+ }
+ 
++/// An error type that hides system specific error information
++/// to ensure deterministic errors across operating systems.
++#[derive(Error, Debug)]
++pub enum NewFileSystemCacheError {
++    #[error("Could not get metadata of cache path")]
++    CouldntGetMetadata,
++    #[error("The supplied path is readonly")]
++    ReadonlyPath,
++    #[error("The supplied path already exists but is no directory")]
++    ExistsButNoDirectory,
++    #[error("Could not create cache path")]
++    CouldntCreatePath,
++}
++
+ impl FileSystemCache {
+     /// Construct a new `FileSystemCache` around the specified directory.
+     /// The contents of the cache are stored in sub-versioned directories.
+@@ -55,12 +70,14 @@ impl FileSystemCache {
+     ///
+     /// This method is unsafe because there's no way to ensure the artifacts
+     /// stored in this cache haven't been corrupted or tampered with.
+-    pub unsafe fn new(path: impl Into<PathBuf>) -> io::Result<Self> {
++    pub unsafe fn new(path: impl Into<PathBuf>) -> Result<Self, NewFileSystemCacheError> {
+         let wasmer_module_version = current_wasmer_module_version();
+ 
+         let path: PathBuf = path.into();
+         if path.exists() {
+-            let metadata = path.metadata()?;
++            let metadata = path
++                .metadata()
++                .map_err(|_e| NewFileSystemCacheError::CouldntGetMetadata)?;
+             if metadata.is_dir() {
+                 if !metadata.permissions().readonly() {
+                     Ok(Self {
+@@ -68,25 +85,14 @@ impl FileSystemCache {
+                         wasmer_module_version,
+                     })
+                 } else {
+-                    // This directory is readonly.
+-                    Err(io::Error::new(
+-                        io::ErrorKind::PermissionDenied,
+-                        format!("the supplied path is readonly: {}", path.display()),
+-                    ))
++                    Err(NewFileSystemCacheError::ReadonlyPath)
+                 }
+             } else {
+-                // This path points to a file.
+-                Err(io::Error::new(
+-                    io::ErrorKind::PermissionDenied,
+-                    format!(
+-                        "the supplied path already points to a file: {}",
+-                        path.display()
+-                    ),
+-                ))
++                Err(NewFileSystemCacheError::ExistsButNoDirectory)
+             }
+         } else {
+             // Create the directory and any parent directories if they don't yet exist.
+-            fs::create_dir_all(&path)?;
++            mkdir_p(&path).map_err(|_e| NewFileSystemCacheError::CouldntCreatePath)?;
+             Ok(Self {
+                 base_path: path,
+                 wasmer_module_version,
+@@ -120,8 +126,9 @@ impl FileSystemCache {
+     /// Stores a serialized module to the file system. Returns the size of the serialized module.
+     pub fn store(&mut self, checksum: &Checksum, module: &Module) -> VmResult<()> {
+         let modules_dir = self.latest_modules_path();
+-        fs::create_dir_all(&modules_dir)
+-            .map_err(|e| VmError::cache_err(format!("Error creating directory: {}", e)))?;
++        mkdir_p(&modules_dir)
++            .map_err(|_e| VmError::cache_err("Error creating modules directory"))?;
++
+         let filename = checksum.to_hex();
+         let path = modules_dir.join(filename);
+         module
+@@ -142,6 +149,8 @@ impl FileSystemCache {
+ 
+ #[cfg(test)]
+ mod tests {
++    use std::fs;
++
+     use super::*;
+     use crate::size::Size;
+     use crate::wasm_backend::{compile, make_runtime_store};
+diff --git a/packages/vm/src/modules/mod.rs b/packages/vm/src/modules/mod.rs
+index c00ebae12..daa0adef1 100644
+--- a/packages/vm/src/modules/mod.rs
++++ b/packages/vm/src/modules/mod.rs
+@@ -4,7 +4,7 @@ mod pinned_memory_cache;
+ mod sized_module;
+ mod versioning;
+ 
+-pub use file_system_cache::FileSystemCache;
++pub use file_system_cache::{FileSystemCache, NewFileSystemCacheError};
+ pub use in_memory_cache::InMemoryCache;
+ pub use pinned_memory_cache::PinnedMemoryCache;
+ pub use versioning::current_wasmer_module_version;

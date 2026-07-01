@@ -1,0 +1,5 @@
+I'm working with a set of procedural macros that automatically derive WebAssembly Interface Types serialization for Rust structs and enums. The macros handle computing the wire format layout, loading values from WebAssembly memory, and storing values to WebAssembly memory.
+
+The problem I'm running into is that some of my types have fields that are purely internal implementation details — things like marker types or phantom data — that should not be part of the WIT wire format at all. Right now the derive macros include every field in the serialization, which means I can't use them for types with these kinds of fields.
+
+I'd like to add support for a field-level attribute that lets me mark specific fields to be skipped during WIT serialization. When a field is marked as skipped, it should be excluded from the type layout computation, not loaded from memory (instead getting a default value), and not stored to memory. This needs to work for named structs, tuple structs, and all types of enum variants. The attribute needs to be properly registered with each of the three derive macros so the compiler doesn't produce warnings about unknown attributes.

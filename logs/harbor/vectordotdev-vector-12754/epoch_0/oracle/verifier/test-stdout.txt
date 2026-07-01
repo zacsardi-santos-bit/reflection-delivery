@@ -1,0 +1,54 @@
+patching file lib/codecs/src/encoding/format/raw_message.rs
+   Compiling codecs v0.1.0 (/workspace/repo/lib/codecs)
+    Finished test [unoptimized + debuginfo] target(s) in 27.81s
+    Starting 48 tests across 2 binaries
+        PASS [   0.027s]         codecs decoding::format::json::tests::deserialize_error_invalid_json
+        PASS [   0.028s]         codecs decoding::framing::character_delimited::tests::decode_discard_repeat
+        PASS [   0.030s]         codecs decoding::framing::length_delimited::tests::decode_eof_frame_missing_header
+        PASS [   0.032s]         codecs decoding::framing::bytes::tests::decode_frame
+        PASS [   0.032s]         codecs decoding::framing::bytes::tests::decode_frame_reader_empty
+        PASS [   0.038s]         codecs decoding::framing::length_delimited::tests::decode_eof_frame_exceeding_bytes_without_header
+        PASS [   0.039s]         codecs decoding::framing::character_delimited::tests::decode_json_multiline
+        PASS [   0.040s]         codecs decoding::format::json::tests::deserialize_skip_empty
+        PASS [   0.039s]         codecs decoding::framing::character_delimited::tests::decode
+        PASS [   0.041s]         codecs decoding::framing::length_delimited::tests::decode_eof_frame_unexpected_eof
+        PASS [   0.042s]         codecs decoding::framing::character_delimited::tests::decode_json_escaped
+        PASS [   0.042s]         codecs decoding::framing::length_delimited::tests::decode_eof_frame
+        PASS [   0.044s]         codecs decoding::format::native_json::test::parses_top_level_arrays
+        PASS [   0.046s]         codecs decoding::framing::character_delimited::tests::decode_max_length
+        PASS [   0.047s]         codecs decoding::format::json::tests::deserialize_json_array
+        PASS [   0.047s]         codecs decoding::format::json::tests::deserialize_json
+        PASS [   0.047s]         codecs decoding::framing::bytes::tests::decode_frame_reader
+        PASS [   0.047s]         codecs decoding::format::bytes::tests::deserialize_bytes
+        PASS [   0.022s]         codecs decoding::framing::length_delimited::tests::decode_eof_frames
+        PASS [   0.022s]         codecs decoding::framing::length_delimited::tests::decode_frame
+        PASS [   0.025s]         codecs decoding::framing::length_delimited::tests::decode_frame_ignore_exceeding_bytes_without_header
+        PASS [   0.023s]         codecs decoding::framing::length_delimited::tests::decode_frame_ignore_unexpected_eof
+        PASS [   0.025s]         codecs decoding::framing::length_delimited::tests::decode_frame_ignore_missing_header
+        PASS [   0.031s]         codecs decoding::framing::newline_delimited::tests::decode_eof_bytes_with_newlines
+        PASS [   0.037s]         codecs decoding::framing::length_delimited::tests::decode_frames
+        PASS [   0.036s]         codecs decoding::framing::newline_delimited::tests::decode_bytes_with_newlines_and_max_length
+        PASS [   0.034s]         codecs decoding::framing::newline_delimited::tests::decode_eof_bytes_with_newlines_and_max_length
+        PASS [   0.029s]         codecs decoding::framing::octet_counting::tests::octet_decode_moves_past_exceeded_frame_length_multiple_frames
+        PASS [   0.036s]         codecs decoding::framing::newline_delimited::tests::decode_bytes_with_newlines_trailing
+        PASS [   0.035s]         codecs decoding::framing::newline_delimited::tests::decode_eof_bytes_with_newlines_trailing
+        PASS [   0.031s]         codecs decoding::framing::octet_counting::tests::octet_decode_moves_past_exceeded_frame_length
+        PASS [   0.030s]         codecs decoding::framing::octet_counting::tests::octet_decode_moves_past_invalid_length
+        PASS [   0.034s]         codecs decoding::framing::octet_counting::tests::non_octet_decode_works_with_multiple_frames
+        PASS [   0.032s]         codecs decoding::framing::octet_counting::tests::octet_decode_moves_past_invalid_utf8
+        PASS [   0.030s]         codecs decoding::framing::octet_counting::tests::octet_decode_works_with_multiple_frames
+        PASS [   0.033s]         codecs decoding::framing::octet_counting::tests::octet_decode_rejects_exceeded_frame_length
+        PASS [   0.042s]         codecs decoding::framing::newline_delimited::tests::decode_bytes_with_newlines
+        PASS [   0.025s]         codecs encoding::format::raw_message::tests::serialize_bytes
+        PASS [   0.032s]         codecs decoding::framing::octet_counting::tests::octet_decode_rejects_exceeded_frame_length_multiple_frames
+        PASS [   0.025s]         codecs encoding::format::raw_message::tests::text_serializer_exists
+        PASS [   0.029s]         codecs encoding::format::json::tests::serialize_json
+        PASS [   0.016s]         codecs encoding::format::text::tests::serialize_bytes_metric
+        PASS [   0.018s]         codecs encoding::format::text::tests::serialize_bytes_event
+        PASS [   0.017s]         codecs encoding::framing::bytes::tests::encode
+        PASS [   0.017s]         codecs encoding::framing::character_delimited::tests::encode
+        PASS [   0.018s]         codecs encoding::framing::newline_delimited::tests::encode_bytes
+        PASS [   0.040s]         codecs encoding::framing::length_delimited::tests::encode
+        PASS [   0.976s] codecs::native roundtrip_native_fixtures
+     Summary [   1.053s] 48 tests run: 48 passed, 0 skipped
+reward=1 graded=48 found=48 failed=0 parsed=48 framework=cargo exit_code=0

@@ -1,0 +1,23 @@
+{
+ "task": "linode-manager-10177",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P 'BackupLinodeRow should not render error indicator for $0 price' and 'hasInvalidNodePoolPrice returns false if the prices are both zero, which is valid' assert real rendered behavior"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

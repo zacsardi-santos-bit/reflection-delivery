@@ -1,0 +1,5 @@
+I'm working on the Kubernetes API server's admission webhook system and I'd like to improve how HTTP protocol versions are selected for webhook connections. Right now, the webhook client always forces HTTP/1 for every webhook endpoint, no matter where it is. This was originally done to avoid HTTP/2's connection multiplexing from breaking load balancing across multiple backend webhook pods.
+
+The problem is that this applies even to webhooks running on loopback addresses — local endpoints that don't need multi-backend load balancing at all. For those, we'd actually want HTTP/2 to be allowed, since it's more efficient and there's no load-balancing concern.
+
+I'd like the webhook client to differentiate: when the webhook URL targets a loopback address (like localhost, 127.0.0.1, or the IPv6 loopback), HTTP/2 should be permitted. When the webhook URL targets a non-loopback address (an external hostname or a cluster service), HTTP/1 should continue to be forced to preserve load balancing. This differentiation should happen during the transport configuration step, when the client config is being built from the webhook's URL.

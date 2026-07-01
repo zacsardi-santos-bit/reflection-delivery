@@ -1,0 +1,3 @@
+patching file agent/api/appnet/client_linux.go
+patching file agent/api/task/service_connect.go
+patching file agent/engine/service_connect/manager_linux.go

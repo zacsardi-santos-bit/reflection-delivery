@@ -1,0 +1,72 @@
+patching file .config/wt.toml
+patching file prqlc/prqlc/src/sql/dialect.rs
+patching file prqlc/prqlc/src/sql/gen_expr.rs
+The next patch would delete the file .config/wt.toml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file prqlc/prqlc/src/sql/dialect.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file prqlc/prqlc/src/sql/dialect.rs.rej
+patching file prqlc/prqlc/src/sql/gen_expr.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file prqlc/prqlc/src/sql/gen_expr.rs.rej
+patching file .config/wt.toml
+patching file prqlc/prqlc/src/sql/dialect.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file prqlc/prqlc/src/sql/dialect.rs.rej
+patching file prqlc/prqlc/src/sql/gen_expr.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file prqlc/prqlc/src/sql/gen_expr.rs.rej
+The next patch would delete the file a/.config/wt.toml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 31
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/prqlc/prqlc/src/sql/dialect.rs b/prqlc/prqlc/src/sql/dialect.rs
+|index dbf77ef6..ce2a5e6d 100644
+|--- a/prqlc/prqlc/src/sql/dialect.rs
+|+++ b/prqlc/prqlc/src/sql/dialect.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 61
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/prqlc/prqlc/src/sql/gen_expr.rs b/prqlc/prqlc/src/sql/gen_expr.rs
+|index 9f55bf9d..21af752b 100644
+|--- a/prqlc/prqlc/src/sql/gen_expr.rs
+|+++ b/prqlc/prqlc/src/sql/gen_expr.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .config/wt.toml
+patching file prqlc/prqlc/src/sql/dialect.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file prqlc/prqlc/src/sql/dialect.rs.rej
+patching file prqlc/prqlc/src/sql/gen_expr.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file prqlc/prqlc/src/sql/gen_expr.rs.rej
+ERROR: golden patch failed to apply by all strategies

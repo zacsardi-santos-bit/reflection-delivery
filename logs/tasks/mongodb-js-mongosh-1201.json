@@ -1,0 +1,23 @@
+{
+ "task": "mongodb-js-mongosh-1201",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden analytics-helpers.ts adds 'class ToggleableAnalytics' with _state paused/enabled/disabled, buffering _queue, enable() flush, disable() discard; F2P asserts setupLoggerAndTelemetry(bus, logger, analytics, ...) buffering behavior"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

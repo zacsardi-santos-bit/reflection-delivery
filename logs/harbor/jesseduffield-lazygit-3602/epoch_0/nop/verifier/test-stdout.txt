@@ -1,0 +1,18 @@
+patching file pkg/gui/controllers/helpers/fixup_helper_test.go
+patching file pkg/integration/tests/commit/find_base_commit_for_fixup_only_added_lines.go
+patching file pkg/integration/tests/test_list.go
+# github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers [github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers.test]
+pkg/gui/controllers/helpers/fixup_helper_test.go:13:31: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:14:31: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:19:33: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:20:33: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:32:33: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:39:31: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:52:33: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:59:31: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:72:33: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:73:31: undefined: hunk
+pkg/gui/controllers/helpers/fixup_helper_test.go:73:31: too many errors
+FAIL	github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers [build failed]
+FAIL
+reward=0 graded=6 found=6 failed=6 parsed=1 framework=go exit_code=1

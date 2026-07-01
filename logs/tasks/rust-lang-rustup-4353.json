@@ -1,0 +1,23 @@
+{
+ "task": "rust-lang-rustup-4353",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden re-exports 'Assert' from clitools in src/test.rs ('+    Assert, CliTestContext, ...'); confirmed base_commit clitools.rs already defines 'pub struct Assert' with is_ok/is_err/with_stdout/without_stdout; test.patch rewrites tests/suite/cli_inst_interactive.rs to 'use rustup::test::{Assert, ..."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

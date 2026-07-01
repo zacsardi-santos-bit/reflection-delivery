@@ -1,0 +1,61 @@
+patching file tokio-trace/test-log-support/tests/log_no_trace.rs
+patching file tokio-trace/tests/filter_caching_is_lexically_scoped.rs
+patching file tokio-trace/tests/filters_are_not_reevaluated_for_the_same_span.rs
+patching file tokio-trace/tests/filters_are_reevaluated_for_different_call_sites.rs
+patching file tokio-trace/tests/span.rs
+warning: /workspace/repo/tokio-trace/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-trace/tokio-trace-core/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+   Compiling tokio-trace v0.1.0 (/workspace/repo/tokio-trace)
+error: trait `AssertSend` is never used
+   --> tokio-trace/src/span.rs:724:11
+    |
+724 |     trait AssertSend: Send {}
+    |           ^^^^^^^^^^
+    |
+note: the lint level is defined here
+   --> tokio-trace/src/lib.rs:3:24
+    |
+3   | #![cfg_attr(test, deny(warnings))]
+    |                        ^^^^^^^^
+    = note: `#[deny(dead_code)]` implied by `#[deny(warnings)]`
+
+error: trait `AssertSync` is never used
+   --> tokio-trace/src/span.rs:727:11
+    |
+727 |     trait AssertSync: Sync {}
+    |           ^^^^^^^^^^
+
+error: could not compile `tokio-trace` (lib test) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --lib --tests` exited with code 101
+warning: /workspace/repo/tokio-trace/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-trace/test-log-support/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+   Compiling tokio-trace v0.1.0 (/workspace/repo/tokio-trace)
+   Compiling test_log_support v0.1.0 (/workspace/repo/tokio-trace/test-log-support)
+warning: variable does not need to be mutable
+  --> tests/log_no_trace.rs:45:9
+   |
+45 |     let mut foo = span!(Level::TRACE, "foo");
+   |         ----^^^
+   |         |
+   |         help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+  --> tests/log_no_trace.rs:58:9
+   |
+58 |     let mut span = span!(Level::TRACE, "foo", bar, baz);
+   |         ----^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: `test_log_support` (test "log_no_trace") generated 2 warnings (run `cargo fix --test "log_no_trace"` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.90s
+────────────
+ Nextest run ID 86940aef-8e13-4ec2-bc09-cb0d25ceb4a2 with nextest profile: default
+    Starting 1 test across 1 binary
+        PASS [   0.008s] test_log_support::log_no_trace test_always_log
+────────────
+     Summary [   0.010s] 1 test run: 1 passed, 0 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

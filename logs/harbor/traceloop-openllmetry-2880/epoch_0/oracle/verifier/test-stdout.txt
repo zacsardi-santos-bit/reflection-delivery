@@ -1,0 +1,25 @@
+patching file packages/opentelemetry-instrumentation-alephalpha/tests/cassettes/test_completion/test_alephalpha_completion_with_events_with_content.yaml
+patching file packages/opentelemetry-instrumentation-alephalpha/tests/cassettes/test_completion/test_alephalpha_completion_with_events_with_no_content.yaml
+patching file packages/opentelemetry-instrumentation-alephalpha/tests/conftest.py
+patching file packages/opentelemetry-instrumentation-alephalpha/tests/test_completion.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.2.2, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/packages/opentelemetry-instrumentation-alephalpha
+configfile: pytest.ini
+plugins: asyncio-0.23.8, recording-0.13.2, anyio-4.14.1, sugar-1.0.0
+asyncio: mode=Mode.AUTO
+collecting ... collected 3 items
+
+tests/test_completion.py::test_alephalpha_completion PASSED              [ 33%]
+tests/test_completion.py::test_alephalpha_completion_with_events_with_content PASSED [ 66%]
+tests/test_completion.py::test_alephalpha_completion_with_events_with_no_content PASSED [100%]
+
+=============================== warnings summary ===============================
+../../../../usr/local/lib/python3.11/site-packages/aleph_alpha_client/completion.py:9
+  /usr/local/lib/python3.11/site-packages/aleph_alpha_client/completion.py:9: DeprecationWarning: invalid escape sequence '\,'
+    """
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========================= 3 passed, 1 warning in 0.24s =========================
+reward=1 graded=3 found=0 failed=0 parsed=3 framework=pytest exit_code=0

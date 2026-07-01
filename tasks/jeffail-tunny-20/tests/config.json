@@ -1,0 +1,20 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -count=1 -skip TestTimedJobsAfterClose",
+  "test_files": [
+    "tunny_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "_/workspace/repo::TestPoolSizeAdjustment",
+    "_/workspace/repo::TestFuncJob",
+    "_/workspace/repo::TestFuncJobTimed",
+    "_/workspace/repo::TestCallbackJob",
+    "_/workspace/repo::TestTimeout",
+    "_/workspace/repo::TestJobsAfterClose",
+    "_/workspace/repo::TestParallelJobs",
+    "_/workspace/repo::TestCustomWorker"
+  ],
+  "PASS_TO_PASS": []
+}

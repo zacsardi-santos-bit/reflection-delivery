@@ -1,0 +1,242 @@
+patching file pkg/events/dependencies/manager_test.go
+patching file pkg/policy/v1beta1/policy_file_test.go
+patching file tests/integration/dependencies_test.go
+patching file tests/integration/event_filters_test.go
+patching file tests/testutils/logger.go
+patching file tests/testutils/policies.go
+# github.com/aquasecurity/tracee/pkg/events/dependencies_test [github.com/aquasecurity/tracee/pkg/events/dependencies.test]
+pkg/events/dependencies/manager_test.go:43:14: undefined: events.NewProbe
+pkg/events/dependencies/manager_test.go:59:14: undefined: events.NewProbe
+pkg/events/dependencies/manager_test.go:60:14: undefined: events.NewProbe
+pkg/events/dependencies/manager_test.go:69:14: undefined: events.NewProbe
+pkg/events/dependencies/manager_test.go:86:19: undefined: dependencies.EventNodeType
+pkg/events/dependencies/manager_test.go:87:44: undefined: dependencies.Action
+pkg/events/dependencies/manager_test.go:96:16: assignment mismatch: 2 variables but m.SelectEvent returns 1 value
+pkg/events/dependencies/manager_test.go:102:25: cannot use err (variable of type bool) as error value in argument to assert.NoError: bool does not implement error (missing method Error)
+pkg/events/dependencies/manager_test.go:116:26: cannot use err (variable of type bool) as error value in argument to assert.NoError: bool does not implement error (missing method Error)
+pkg/events/dependencies/manager_test.go:117:37: dependencyNode.GetDependents undefined (type *dependencies.EventNode has no field or method GetDependents)
+pkg/events/dependencies/manager_test.go:117:37: too many errors
+{"Time":"2026-06-29T15:14:11.542789342Z","Action":"start","Package":"github.com/aquasecurity/tracee/pkg/events/dependencies"}
+{"Time":"2026-06-29T15:14:11.542878678Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/events/dependencies","Output":"FAIL\tgithub.com/aquasecurity/tracee/pkg/events/dependencies [build failed]\n"}
+{"Time":"2026-06-29T15:14:11.542907271Z","Action":"fail","Package":"github.com/aquasecurity/tracee/pkg/events/dependencies","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.053907198Z","Action":"start","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1"}
+{"Time":"2026-06-29T15:14:14.077437045Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate"}
+{"Time":"2026-06-29T15:14:14.077478197Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate","Output":"=== RUN   TestPolicyValidate\n"}
+{"Time":"2026-06-29T15:14:14.077549025Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate","Output":"=== PAUSE TestPolicyValidate\n"}
+{"Time":"2026-06-29T15:14:14.077570337Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate"}
+{"Time":"2026-06-29T15:14:14.077598941Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate"}
+{"Time":"2026-06-29T15:14:14.077618981Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate","Output":"=== CONT  TestPolicyValidate\n"}
+{"Time":"2026-06-29T15:14:14.077641475Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_API"}
+{"Time":"2026-06-29T15:14:14.077661926Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_API","Output":"=== RUN   TestPolicyValidate/empty_API\n"}
+{"Time":"2026-06-29T15:14:14.077685672Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_API","Output":"=== PAUSE TestPolicyValidate/empty_API\n"}
+{"Time":"2026-06-29T15:14:14.077709178Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_API"}
+{"Time":"2026-06-29T15:14:14.077731512Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_API"}
+{"Time":"2026-06-29T15:14:14.077752233Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_API","Output":"=== RUN   TestPolicyValidate/invalid_API\n"}
+{"Time":"2026-06-29T15:14:14.077773976Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_API","Output":"=== PAUSE TestPolicyValidate/invalid_API\n"}
+{"Time":"2026-06-29T15:14:14.077806866Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_API"}
+{"Time":"2026-06-29T15:14:14.077832735Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_Kind"}
+{"Time":"2026-06-29T15:14:14.077853858Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_Kind","Output":"=== RUN   TestPolicyValidate/empty_Kind\n"}
+{"Time":"2026-06-29T15:14:14.07787556Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_Kind","Output":"=== PAUSE TestPolicyValidate/empty_Kind\n"}
+{"Time":"2026-06-29T15:14:14.077896022Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_Kind"}
+{"Time":"2026-06-29T15:14:14.077918436Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_Kind"}
+{"Time":"2026-06-29T15:14:14.077939427Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_Kind","Output":"=== RUN   TestPolicyValidate/invalid_Kind\n"}
+{"Time":"2026-06-29T15:14:14.077967149Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_Kind","Output":"=== PAUSE TestPolicyValidate/invalid_Kind\n"}
+{"Time":"2026-06-29T15:14:14.077997616Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_Kind"}
+{"Time":"2026-06-29T15:14:14.078020661Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_scope"}
+{"Time":"2026-06-29T15:14:14.078040952Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_scope","Output":"=== RUN   TestPolicyValidate/empty_scope\n"}
+{"Time":"2026-06-29T15:14:14.078064397Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_scope","Output":"=== PAUSE TestPolicyValidate/empty_scope\n"}
+{"Time":"2026-06-29T15:14:14.07808607Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_scope"}
+{"Time":"2026-06-29T15:14:14.078108053Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_rules"}
+{"Time":"2026-06-29T15:14:14.078128294Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_rules","Output":"=== RUN   TestPolicyValidate/empty_rules\n"}
+{"Time":"2026-06-29T15:14:14.078150638Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_rules","Output":"=== PAUSE TestPolicyValidate/empty_rules\n"}
+{"Time":"2026-06-29T15:14:14.078172251Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_rules"}
+{"Time":"2026-06-29T15:14:14.078194495Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_event_name"}
+{"Time":"2026-06-29T15:14:14.078216117Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_event_name","Output":"=== RUN   TestPolicyValidate/empty_event_name\n"}
+{"Time":"2026-06-29T15:14:14.078241957Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_event_name","Output":"=== PAUSE TestPolicyValidate/empty_event_name\n"}
+{"Time":"2026-06-29T15:14:14.078263459Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_event_name"}
+{"Time":"2026-06-29T15:14:14.078285733Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_event_name"}
+{"Time":"2026-06-29T15:14:14.078314987Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_event_name","Output":"=== RUN   TestPolicyValidate/invalid_event_name\n"}
+{"Time":"2026-06-29T15:14:14.07833665Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_event_name","Output":"=== PAUSE TestPolicyValidate/invalid_event_name\n"}
+{"Time":"2026-06-29T15:14:14.078357051Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_event_name"}
+{"Time":"2026-06-29T15:14:14.078378604Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope_operator"}
+{"Time":"2026-06-29T15:14:14.078398905Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope_operator","Output":"=== RUN   TestPolicyValidate/invalid_scope_operator\n"}
+{"Time":"2026-06-29T15:14:14.078420407Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope_operator","Output":"=== PAUSE TestPolicyValidate/invalid_scope_operator\n"}
+{"Time":"2026-06-29T15:14:14.078441159Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope_operator"}
+{"Time":"2026-06-29T15:14:14.078462461Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope"}
+{"Time":"2026-06-29T15:14:14.078482662Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope","Output":"=== RUN   TestPolicyValidate/invalid_scope\n"}
+{"Time":"2026-06-29T15:14:14.078504345Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope","Output":"=== PAUSE TestPolicyValidate/invalid_scope\n"}
+{"Time":"2026-06-29T15:14:14.078524926Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope"}
+{"Time":"2026-06-29T15:14:14.078546198Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/global_scope_must_be_unique"}
+{"Time":"2026-06-29T15:14:14.078566279Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/global_scope_must_be_unique","Output":"=== RUN   TestPolicyValidate/global_scope_must_be_unique\n"}
+{"Time":"2026-06-29T15:14:14.078588202Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/global_scope_must_be_unique","Output":"=== PAUSE TestPolicyValidate/global_scope_must_be_unique\n"}
+{"Time":"2026-06-29T15:14:14.078608573Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/global_scope_must_be_unique"}
+{"Time":"2026-06-29T15:14:14.078631207Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/duplicated_event"}
+{"Time":"2026-06-29T15:14:14.078651478Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/duplicated_event","Output":"=== RUN   TestPolicyValidate/duplicated_event\n"}
+{"Time":"2026-06-29T15:14:14.078673081Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/duplicated_event","Output":"=== PAUSE TestPolicyValidate/duplicated_event\n"}
+{"Time":"2026-06-29T15:14:14.078693923Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/duplicated_event"}
+{"Time":"2026-06-29T15:14:14.078715285Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_filter_operator"}
+{"Time":"2026-06-29T15:14:14.078742827Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_filter_operator","Output":"=== RUN   TestPolicyValidate/invalid_filter_operator\n"}
+{"Time":"2026-06-29T15:14:14.07876496Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_filter_operator","Output":"=== PAUSE TestPolicyValidate/invalid_filter_operator\n"}
+{"Time":"2026-06-29T15:14:14.078786794Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_filter_operator"}
+{"Time":"2026-06-29T15:14:14.078808106Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_policy_action"}
+{"Time":"2026-06-29T15:14:14.078828477Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_policy_action","Output":"=== RUN   TestPolicyValidate/invalid_policy_action\n"}
+{"Time":"2026-06-29T15:14:14.078851041Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_policy_action","Output":"=== PAUSE TestPolicyValidate/invalid_policy_action\n"}
+{"Time":"2026-06-29T15:14:14.078871582Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_policy_action"}
+{"Time":"2026-06-29T15:14:14.078892895Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_retval"}
+{"Time":"2026-06-29T15:14:14.078913496Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_retval","Output":"=== RUN   TestPolicyValidate/invalid_retval\n"}
+{"Time":"2026-06-29T15:14:14.078934949Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_retval","Output":"=== PAUSE TestPolicyValidate/invalid_retval\n"}
+{"Time":"2026-06-29T15:14:14.078955329Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_retval"}
+{"Time":"2026-06-29T15:14:14.078984103Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_retval"}
+{"Time":"2026-06-29T15:14:14.079007949Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_retval","Output":"=== RUN   TestPolicyValidate/empty_retval\n"}
+{"Time":"2026-06-29T15:14:14.079030774Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_retval","Output":"=== PAUSE TestPolicyValidate/empty_retval\n"}
+{"Time":"2026-06-29T15:14:14.079051235Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_retval"}
+{"Time":"2026-06-29T15:14:14.079072758Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/retval_not_an_integer"}
+{"Time":"2026-06-29T15:14:14.079194793Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/retval_not_an_integer","Output":"=== RUN   TestPolicyValidate/retval_not_an_integer\n"}
+{"Time":"2026-06-29T15:14:14.079235945Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/retval_not_an_integer","Output":"=== PAUSE TestPolicyValidate/retval_not_an_integer\n"}
+{"Time":"2026-06-29T15:14:14.079263657Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/retval_not_an_integer"}
+{"Time":"2026-06-29T15:14:14.079296147Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_1"}
+{"Time":"2026-06-29T15:14:14.079321746Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_1","Output":"=== RUN   TestPolicyValidate/empty_data_name_1\n"}
+{"Time":"2026-06-29T15:14:14.079359563Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_1","Output":"=== PAUSE TestPolicyValidate/empty_data_name_1\n"}
+{"Time":"2026-06-29T15:14:14.079380655Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_1"}
+{"Time":"2026-06-29T15:14:14.079402648Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_3"}
+{"Time":"2026-06-29T15:14:14.079422909Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_3","Output":"=== RUN   TestPolicyValidate/empty_data_name_3\n"}
+{"Time":"2026-06-29T15:14:14.079444923Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_3","Output":"=== PAUSE TestPolicyValidate/empty_data_name_3\n"}
+{"Time":"2026-06-29T15:14:14.079465484Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_3"}
+{"Time":"2026-06-29T15:14:14.079486786Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_4"}
+{"Time":"2026-06-29T15:14:14.079507097Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_4","Output":"=== RUN   TestPolicyValidate/empty_data_name_4\n"}
+{"Time":"2026-06-29T15:14:14.07952887Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_4","Output":"=== PAUSE TestPolicyValidate/empty_data_name_4\n"}
+{"Time":"2026-06-29T15:14:14.079551805Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_4"}
+{"Time":"2026-06-29T15:14:14.079585336Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_data"}
+{"Time":"2026-06-29T15:14:14.079611255Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_data","Output":"=== RUN   TestPolicyValidate/invalid_data\n"}
+{"Time":"2026-06-29T15:14:14.079635712Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_data","Output":"=== PAUSE TestPolicyValidate/invalid_data\n"}
+{"Time":"2026-06-29T15:14:14.079661521Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_data"}
+{"Time":"2026-06-29T15:14:14.079684737Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_args"}
+{"Time":"2026-06-29T15:14:14.079705658Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_args","Output":"=== RUN   TestPolicyValidate/invalid_args\n"}
+{"Time":"2026-06-29T15:14:14.079728123Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_args","Output":"=== PAUSE TestPolicyValidate/invalid_args\n"}
+{"Time":"2026-06-29T15:14:14.079749685Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_args"}
+{"Time":"2026-06-29T15:14:14.079773261Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value"}
+{"Time":"2026-06-29T15:14:14.079794483Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value","Output":"=== RUN   TestPolicyValidate/empty_data_value\n"}
+{"Time":"2026-06-29T15:14:14.079817098Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value","Output":"=== PAUSE TestPolicyValidate/empty_data_value\n"}
+{"Time":"2026-06-29T15:14:14.07984473Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value"}
+{"Time":"2026-06-29T15:14:14.079866302Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value#01"}
+{"Time":"2026-06-29T15:14:14.079892162Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value#01","Output":"=== RUN   TestPolicyValidate/empty_data_value#01\n"}
+{"Time":"2026-06-29T15:14:14.079915327Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value#01","Output":"=== PAUSE TestPolicyValidate/empty_data_value#01\n"}
+{"Time":"2026-06-29T15:14:14.079935828Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value#01"}
+{"Time":"2026-06-29T15:14:14.079959263Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_args_value"}
+{"Time":"2026-06-29T15:14:14.080007416Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_args_value","Output":"=== RUN   TestPolicyValidate/empty_args_value\n"}
+{"Time":"2026-06-29T15:14:14.08002954Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_args_value","Output":"=== PAUSE TestPolicyValidate/empty_args_value\n"}
+{"Time":"2026-06-29T15:14:14.080054558Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_args_value"}
+{"Time":"2026-06-29T15:14:14.080078134Z","Action":"run","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/signature_filter_data"}
+{"Time":"2026-06-29T15:14:14.080098505Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/signature_filter_data","Output":"=== RUN   TestPolicyValidate/signature_filter_data\n"}
+{"Time":"2026-06-29T15:14:14.080127829Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/signature_filter_data","Output":"=== PAUSE TestPolicyValidate/signature_filter_data\n"}
+{"Time":"2026-06-29T15:14:14.080150203Z","Action":"pause","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/signature_filter_data"}
+{"Time":"2026-06-29T15:14:14.080173148Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_API"}
+{"Time":"2026-06-29T15:14:14.08019425Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_API","Output":"=== CONT  TestPolicyValidate/empty_API\n"}
+{"Time":"2026-06-29T15:14:14.080218697Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_policy_action"}
+{"Time":"2026-06-29T15:14:14.080239078Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_policy_action","Output":"=== CONT  TestPolicyValidate/invalid_policy_action\n"}
+{"Time":"2026-06-29T15:14:14.080264837Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_event_name"}
+{"Time":"2026-06-29T15:14:14.080285378Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_event_name","Output":"=== CONT  TestPolicyValidate/invalid_event_name\n"}
+{"Time":"2026-06-29T15:14:14.080346081Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_API","Output":"--- PASS: TestPolicyValidate/empty_API (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.080381665Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_API","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.080404299Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_event_name"}
+{"Time":"2026-06-29T15:14:14.08042496Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_event_name","Output":"=== CONT  TestPolicyValidate/empty_event_name\n"}
+{"Time":"2026-06-29T15:14:14.080446503Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope_operator"}
+{"Time":"2026-06-29T15:14:14.080466764Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope_operator","Output":"=== CONT  TestPolicyValidate/invalid_scope_operator\n"}
+{"Time":"2026-06-29T15:14:14.080489658Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_policy_action","Output":"--- PASS: TestPolicyValidate/invalid_policy_action (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.080512613Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_policy_action","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.080533685Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_event_name","Output":"--- PASS: TestPolicyValidate/empty_event_name (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.080554998Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_event_name","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.080575719Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/signature_filter_data"}
+{"Time":"2026-06-29T15:14:14.08059627Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/signature_filter_data","Output":"=== CONT  TestPolicyValidate/signature_filter_data\n"}
+{"Time":"2026-06-29T15:14:14.080619716Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope_operator","Output":"--- PASS: TestPolicyValidate/invalid_scope_operator (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.080641349Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope_operator","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.08066194Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_Kind"}
+{"Time":"2026-06-29T15:14:14.080682131Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_Kind","Output":"=== CONT  TestPolicyValidate/invalid_Kind\n"}
+{"Time":"2026-06-29T15:14:14.080704264Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_Kind","Output":"--- PASS: TestPolicyValidate/invalid_Kind (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.080725607Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_Kind","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.080746048Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_rules"}
+{"Time":"2026-06-29T15:14:14.080766168Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_rules","Output":"=== CONT  TestPolicyValidate/empty_rules\n"}
+{"Time":"2026-06-29T15:14:14.080788292Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_rules","Output":"--- PASS: TestPolicyValidate/empty_rules (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.080810255Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_rules","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.080838258Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_event_name","Output":"--- PASS: TestPolicyValidate/invalid_event_name (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.08085966Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_event_name","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.080880121Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_scope"}
+{"Time":"2026-06-29T15:14:14.080900252Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_scope","Output":"=== CONT  TestPolicyValidate/empty_scope\n"}
+{"Time":"2026-06-29T15:14:14.080922786Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_Kind"}
+{"Time":"2026-06-29T15:14:14.080942937Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_Kind","Output":"=== CONT  TestPolicyValidate/empty_Kind\n"}
+{"Time":"2026-06-29T15:14:14.080964529Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_args_value"}
+{"Time":"2026-06-29T15:14:14.080993423Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_args_value","Output":"=== CONT  TestPolicyValidate/empty_args_value\n"}
+{"Time":"2026-06-29T15:14:14.0810174Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_API"}
+{"Time":"2026-06-29T15:14:14.08103764Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_API","Output":"=== CONT  TestPolicyValidate/invalid_API\n"}
+{"Time":"2026-06-29T15:14:14.081059123Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value"}
+{"Time":"2026-06-29T15:14:14.081079253Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value","Output":"=== CONT  TestPolicyValidate/empty_data_value\n"}
+{"Time":"2026-06-29T15:14:14.081100796Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/global_scope_must_be_unique"}
+{"Time":"2026-06-29T15:14:14.081121137Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/global_scope_must_be_unique","Output":"=== CONT  TestPolicyValidate/global_scope_must_be_unique\n"}
+{"Time":"2026-06-29T15:14:14.08114267Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_args"}
+{"Time":"2026-06-29T15:14:14.081163181Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_args","Output":"=== CONT  TestPolicyValidate/invalid_args\n"}
+{"Time":"2026-06-29T15:14:14.081184663Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_filter_operator"}
+{"Time":"2026-06-29T15:14:14.081205044Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_filter_operator","Output":"=== CONT  TestPolicyValidate/invalid_filter_operator\n"}
+{"Time":"2026-06-29T15:14:14.081226517Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_data"}
+{"Time":"2026-06-29T15:14:14.081247028Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_data","Output":"=== CONT  TestPolicyValidate/invalid_data\n"}
+{"Time":"2026-06-29T15:14:14.081268401Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_4"}
+{"Time":"2026-06-29T15:14:14.081295682Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_4","Output":"=== CONT  TestPolicyValidate/empty_data_name_4\n"}
+{"Time":"2026-06-29T15:14:14.081317054Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_3"}
+{"Time":"2026-06-29T15:14:14.081337305Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_3","Output":"=== CONT  TestPolicyValidate/empty_data_name_3\n"}
+{"Time":"2026-06-29T15:14:14.081358958Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_1"}
+{"Time":"2026-06-29T15:14:14.081379259Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_1","Output":"=== CONT  TestPolicyValidate/empty_data_name_1\n"}
+{"Time":"2026-06-29T15:14:14.081400792Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/retval_not_an_integer"}
+{"Time":"2026-06-29T15:14:14.081421002Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/retval_not_an_integer","Output":"=== CONT  TestPolicyValidate/retval_not_an_integer\n"}
+{"Time":"2026-06-29T15:14:14.081443266Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/duplicated_event"}
+{"Time":"2026-06-29T15:14:14.081464538Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/duplicated_event","Output":"=== CONT  TestPolicyValidate/duplicated_event\n"}
+{"Time":"2026-06-29T15:14:14.081485991Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_retval"}
+{"Time":"2026-06-29T15:14:14.081506352Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_retval","Output":"=== CONT  TestPolicyValidate/empty_retval\n"}
+{"Time":"2026-06-29T15:14:14.081528175Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope"}
+{"Time":"2026-06-29T15:14:14.081548235Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope","Output":"=== CONT  TestPolicyValidate/invalid_scope\n"}
+{"Time":"2026-06-29T15:14:14.08158448Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_retval"}
+{"Time":"2026-06-29T15:14:14.081605032Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_retval","Output":"=== CONT  TestPolicyValidate/invalid_retval\n"}
+{"Time":"2026-06-29T15:14:14.081627185Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/signature_filter_data","Output":"--- PASS: TestPolicyValidate/signature_filter_data (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.081649088Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/signature_filter_data","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.0816698Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_scope","Output":"--- PASS: TestPolicyValidate/empty_scope (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.081691813Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_scope","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.081712515Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_API","Output":"--- PASS: TestPolicyValidate/invalid_API (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.081741128Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_API","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.081761419Z","Action":"cont","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value#01"}
+{"Time":"2026-06-29T15:14:14.08178174Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value#01","Output":"=== CONT  TestPolicyValidate/empty_data_value#01\n"}
+{"Time":"2026-06-29T15:14:14.081803813Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value#01","Output":"--- PASS: TestPolicyValidate/empty_data_value#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.081825586Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value#01","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.081846208Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_Kind","Output":"--- PASS: TestPolicyValidate/empty_Kind (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.081868191Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_Kind","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.081888772Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value","Output":"--- PASS: TestPolicyValidate/empty_data_value (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.081911787Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_value","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.081932489Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_args_value","Output":"--- PASS: TestPolicyValidate/empty_args_value (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.081954332Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_args_value","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.081980381Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/global_scope_must_be_unique","Output":"--- PASS: TestPolicyValidate/global_scope_must_be_unique (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082005119Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/global_scope_must_be_unique","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.08202598Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_args","Output":"--- PASS: TestPolicyValidate/invalid_args (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082047924Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_args","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082068826Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_filter_operator","Output":"--- PASS: TestPolicyValidate/invalid_filter_operator (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082090819Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_filter_operator","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.0821114Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_data","Output":"--- PASS: TestPolicyValidate/invalid_data (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082133283Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_data","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082154045Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_4","Output":"--- PASS: TestPolicyValidate/empty_data_name_4 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082183189Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_4","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082203921Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_3","Output":"--- PASS: TestPolicyValidate/empty_data_name_3 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082225884Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_3","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082246415Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_1","Output":"--- PASS: TestPolicyValidate/empty_data_name_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082268188Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_data_name_1","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.08228905Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/retval_not_an_integer","Output":"--- PASS: TestPolicyValidate/retval_not_an_integer (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082311344Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/retval_not_an_integer","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082333818Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/duplicated_event","Output":"--- PASS: TestPolicyValidate/duplicated_event (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082356362Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/duplicated_event","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082377063Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_retval","Output":"--- PASS: TestPolicyValidate/empty_retval (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082398967Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/empty_retval","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082419618Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope","Output":"--- PASS: TestPolicyValidate/invalid_scope (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082442292Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_scope","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082462964Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_retval","Output":"--- PASS: TestPolicyValidate/invalid_retval (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082484777Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate/invalid_retval","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082505268Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate","Output":"--- PASS: TestPolicyValidate (0.00s)\n"}
+{"Time":"2026-06-29T15:14:14.082527492Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Test":"TestPolicyValidate","Elapsed":0}
+{"Time":"2026-06-29T15:14:14.082549335Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:14.08262524Z","Action":"output","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Output":"ok  \tgithub.com/aquasecurity/tracee/pkg/policy/v1beta1\t0.028s\n"}
+{"Time":"2026-06-29T15:14:14.082659302Z","Action":"pass","Package":"github.com/aquasecurity/tracee/pkg/policy/v1beta1","Elapsed":0.029}
+reward=0 graded=48 found=27 failed=0 parsed=28 framework=go exit_code=1

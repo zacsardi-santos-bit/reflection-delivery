@@ -1,0 +1,6 @@
+patching file packages/gestalt/src/Dropdown.js
+patching file packages/gestalt/src/__snapshots__/Dropdown.jsdom.test.js.snap
+patching file packages/gestalt/src/__snapshots__/Popover.jsdom.test.js.snap
+patching file packages/gestalt/src/__snapshots__/PopoverEducational.jsdom.test.js.snap
+patching file packages/gestalt/src/__snapshots__/Tooltip.jsdom.test.js.snap
+patching file packages/gestalt/src/utils/testing/renderWithExperiment.js

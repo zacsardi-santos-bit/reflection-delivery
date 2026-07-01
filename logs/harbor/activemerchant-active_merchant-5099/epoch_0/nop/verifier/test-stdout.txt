@@ -1,0 +1,13 @@
+patching file test/fixtures.yml
+patching file test/remote/gateways/remote_datatrans_test.rb
+patching file test/unit/gateways/datatrans_test.rb
+-e:1:in `block in <main>': undefined method `text' for nil:NilClass (NoMethodError)
+
+require 'rexml/document'; input=STDIN.read; doc=REXML::Document.new(input); results=[]; doc.elements.each('stream/test-result') do |r|; name=r.elements['test/name'].text; status=r.elements['result/status'].text; results<<[name,status]; end; puts '<testsuite>'; results.each{|n,s| if s=='success'; puts %(<testcase classname="DatatransTest" name="#{n}"/>); else; puts %(<testcase classname="DatatransTest" name="#{n}"><failure/></testcase>); end}; puts '</testsuite>'
+                                                                                                                                                                    ^^^^^
+	from /var/lib/gems/3.2.0/gems/rexml-3.2.9/lib/rexml/element.rb:1968:in `block in each'
+	from /var/lib/gems/3.2.0/gems/rexml-3.2.9/lib/rexml/xpath.rb:68:in `each'
+	from /var/lib/gems/3.2.0/gems/rexml-3.2.9/lib/rexml/xpath.rb:68:in `each'
+	from /var/lib/gems/3.2.0/gems/rexml-3.2.9/lib/rexml/element.rb:1968:in `each'
+	from -e:1:in `<main>'
+reward=0 graded=19 found=0 failed=0 parsed=1 framework=junit exit_code=1

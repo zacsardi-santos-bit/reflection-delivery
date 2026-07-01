@@ -1,0 +1,23 @@
+{
+ "task": "matrix-org-matrix-rust-sdk-4998",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "New test to_device.rs calls 'encrypt_and_send_raw_to_device' and asserts happy path, server-500 retries (expect(3)), and OTK-exhaustion failure reporting; golden adds that method under 'experimental-send-custom-to-device'."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

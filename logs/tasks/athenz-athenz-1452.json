@@ -1,0 +1,23 @@
+{
+ "task": "athenz-athenz-1452",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `public static String extractX509CertSpiffeUri(...)` returning null if 0 or >1 URIs, plus AccessToken proxy list verification; F2P athenz-auth-core::test_1..test_438 require full auth_core suite passing"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

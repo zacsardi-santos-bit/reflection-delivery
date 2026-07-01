@@ -1,0 +1,87 @@
+patching file packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/ScmMethodProviderCollectionTests.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/Unbranded-TypeSpec.tsp
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/Models/PageThing.Serialization.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/Models/PageThing.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecClient.RestClient.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecClient.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecModelFactory.cs
+patching file packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/tspCodeModel.json
+  Microsoft.TypeSpec.Generator.Input -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.Input/Debug/net8.0/Microsoft.TypeSpec.Generator.Input.dll
+  Microsoft.TypeSpec.Generator -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator/Debug/net8.0/Microsoft.TypeSpec.Generator.dll
+  Microsoft.TypeSpec.Generator.Tests.Common -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.Tests.Common/Debug/net8.0/Microsoft.TypeSpec.Generator.Tests.Common.dll
+  Microsoft.TypeSpec.Generator.ClientModel -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.dll
+  Copying output to dist path
+  TestProjects.Local.Tests -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/TestProjects.Local.Tests/Debug/net8.0/TestProjects.Local.Tests.dll
+  Microsoft.TypeSpec.Generator.ClientModel.Tests -> /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel.Tests/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.Tests.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:14.71
+Build started 06/29/2026 15:19:43.
+Test run for /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel.Tests/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+NUnit Adapter 4.5.0.0: Test execution started
+Running selected tests in /workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel.Tests/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.Tests.dll
+   NUnit3TestExecutor discovered 5 of 5 NUnit test cases using Current Discovery mode, Non-Explicit run
+  Passed ConvenienceMethodsHaveOptionalCancellationToken(Microsoft.TypeSpec.Generator.Input.InputOperation) [448 ms]
+  Passed ConvenienceMethodsHaveOptionalCancellationToken(Microsoft.TypeSpec.Generator.Input.InputOperation) [63 ms]
+NUnit Adapter 4.5.0.0: Test execution complete
+  Failed ListMethodWithNoPaging [47 ms]
+  Error Message:
+   System.InvalidCastException : Unable to cast object of type 'Microsoft.TypeSpec.Generator.Input.InputArrayType' to type 'Microsoft.TypeSpec.Generator.Input.InputModelType'.
+  Stack Trace:
+     at Microsoft.TypeSpec.Generator.ClientModel.Providers.CollectionResultDefinition..ctor(ClientProvider client, InputOperation operation, CSharpType itemModelType, Boolean isAsync) in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/CollectionResultDefinition.cs:line 82
+   at Microsoft.TypeSpec.Generator.ClientModel.Providers.ClientResultProvider.CreateClientCollectionResultDefinition(ClientProvider client, InputOperation operation, CSharpType type, Boolean isAsync) in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/ClientResultProvider.cs:line 38
+   at Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmMethodProviderCollection.BuildProtocolMethod(MethodProvider createRequestMethod, Boolean isAsync) in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/ScmMethodProviderCollection.cs:line 446
+   at Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmMethodProviderCollection.BuildMethods() in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/ScmMethodProviderCollection.cs:line 49
+   at Microsoft.TypeSpec.Generator.Providers.MethodProviderCollection.get_MethodProviders() in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator/src/Providers/MethodProviderCollection.cs:line 26
+   at Microsoft.TypeSpec.Generator.Providers.MethodProviderCollection.get_Count() in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator/src/Providers/MethodProviderCollection.cs:line 35
+   at Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests.ListMethodWithNoPaging() in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/ScmMethodProviderCollectionTests.cs:line 137
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+  Passed TestDefaultCSharpMethodCollection(Microsoft.TypeSpec.Generator.Input.InputOperation) [9 ms]
+  Passed TestDefaultCSharpMethodCollection(Microsoft.TypeSpec.Generator.Input.InputOperation) [8 ms]
+Results File: /workspace/test-results/output.xml
+
+Test Run Failed.
+Total tests: 5
+     Passed: 4
+     Failed: 1
+ Total time: 2.9235 Seconds
+     1>Project "/workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Microsoft.TypeSpec.Generator.ClientModel.Tests.csproj" on node 1 (VSTest target(s)).
+     1>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Done Building Project "/workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Microsoft.TypeSpec.Generator.ClientModel.Tests.csproj" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.56
+﻿<?xml version="1.0" encoding="utf-8"?>
+<testsuites time="0.577" tests="5" failures="1">
+  <testsuite id="0" name="/workspace/repo/packages/http-client-csharp/generator/artifacts/bin/Microsoft.TypeSpec.Generator.ClientModel.Tests/Debug/net8.0/Microsoft.TypeSpec.Generator.ClientModel.Tests.dll" tests="5" failures="1" time="0.577">
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="ConvenienceMethodsHaveOptionalCancellationToken(Microsoft.TypeSpec.Generator.Input.InputOperation)" time="0.4483390" />
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="ConvenienceMethodsHaveOptionalCancellationToken(Microsoft.TypeSpec.Generator.Input.InputOperation)" time="0.0632940" />
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="ListMethodWithNoPaging" time="0.0473950">
+      <error message="System.InvalidCastException : Unable to cast object of type 'Microsoft.TypeSpec.Generator.Input.InputArrayType' to type 'Microsoft.TypeSpec.Generator.Input.InputModelType'.">   at Microsoft.TypeSpec.Generator.ClientModel.Providers.CollectionResultDefinition..ctor(ClientProvider client, InputOperation operation, CSharpType itemModelType, Boolean isAsync) in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/CollectionResultDefinition.cs:line 82
+   at Microsoft.TypeSpec.Generator.ClientModel.Providers.ClientResultProvider.CreateClientCollectionResultDefinition(ClientProvider client, InputOperation operation, CSharpType type, Boolean isAsync) in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/ClientResultProvider.cs:line 38
+   at Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmMethodProviderCollection.BuildProtocolMethod(MethodProvider createRequestMethod, Boolean isAsync) in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/ScmMethodProviderCollection.cs:line 446
+   at Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmMethodProviderCollection.BuildMethods() in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/src/Providers/ScmMethodProviderCollection.cs:line 49
+   at Microsoft.TypeSpec.Generator.Providers.MethodProviderCollection.get_MethodProviders() in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator/src/Providers/MethodProviderCollection.cs:line 26
+   at Microsoft.TypeSpec.Generator.Providers.MethodProviderCollection.get_Count() in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator/src/Providers/MethodProviderCollection.cs:line 35
+   at Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests.ListMethodWithNoPaging() in /workspace/repo/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/ScmMethodProviderCollectionTests.cs:line 137
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+</error>
+    </testcase>
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="TestDefaultCSharpMethodCollection(Microsoft.TypeSpec.Generator.Input.InputOperation)" time="0.0093840" />
+    <testcase classname="Microsoft.TypeSpec.Generator.ClientModel.Tests.Providers.ScmMethodProviderCollectionTests" name="TestDefaultCSharpMethodCollection(Microsoft.TypeSpec.Generator.Input.InputOperation)" time="0.0087490" />
+  </testsuite>
+</testsuites>reward=0 graded=3 found=3 failed=1 parsed=3 framework=junit exit_code=0

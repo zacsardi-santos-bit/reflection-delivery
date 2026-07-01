@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/test/e2e/stackset && go test -v -count=1 ./...",
+  "test_files": [
+    "test/e2e/stackset/go.mod",
+    "test/e2e/stackset/go.sum"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/zalando-incubator/kubernetes-on-aws/test/e2e/stackset::TestIngressSourceSwitchTTLRemoved"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/zalando-incubator/kubernetes-on-aws/test/e2e/stackset::TestStacksetControllerVersion"
+  ]
+}

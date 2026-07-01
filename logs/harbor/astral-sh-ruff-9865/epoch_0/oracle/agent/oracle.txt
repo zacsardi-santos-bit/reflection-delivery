@@ -1,0 +1,5 @@
+patching file crates/ruff_linter/src/rules/ruff/mod.rs
+patching file crates/ruff_linter/src/rules/ruff/rules/missing_fstring_syntax.rs
+patching file crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__RUF027_RUF027.py.snap
+patching file crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__RUF027_RUF027_0.py.snap
+patching file crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__RUF027_RUF027_1.py.snap

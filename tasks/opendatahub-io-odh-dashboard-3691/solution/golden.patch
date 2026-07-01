@@ -1,0 +1,2472 @@
+diff --git a/backend/src/routes/api/integrations/nim/index.ts b/backend/src/routes/api/integrations/nim/index.ts
+index 25237c60d..244659af2 100644
+--- a/backend/src/routes/api/integrations/nim/index.ts
++++ b/backend/src/routes/api/integrations/nim/index.ts
+@@ -2,7 +2,16 @@ import { FastifyReply, FastifyRequest } from 'fastify';
+ import { secureAdminRoute } from '../../../../utils/route-security';
+ import { KubeFastifyInstance } from '../../../../types';
+ import { isString } from 'lodash';
+-import { createNIMAccount, getNIMAccount, isAppEnabled, manageNIMSecret } from './nimUtils';
++import { VariablesValidationStatus } from '../../../../types';
++import {
++  createNIMAccount,
++  manageNIMSecret,
++  getNIMAccount,
++  errorMsgList,
++  apiKeyValidationStatus,
++  apiKeyValidationTimestamp,
++  isAppEnabled,
++} from './nimUtils';
+ 
+ module.exports = async (fastify: KubeFastifyInstance) => {
+   const PAGE_NOT_FOUND_MESSAGE = '404 page not found';
+@@ -15,11 +24,28 @@ module.exports = async (fastify: KubeFastifyInstance) => {
+           if (response) {
+             // Installed
+             const isEnabled = isAppEnabled(response);
+-            reply.send({ isInstalled: true, isEnabled: isEnabled, canInstall: false, error: '' });
++            const keyValidationStatus: string = apiKeyValidationStatus(response);
++            const keyValidationTimestamp: string = apiKeyValidationTimestamp(response);
++            const errorMsg: string = errorMsgList(response)[0];
++            reply.send({
++              isInstalled: true,
++              isEnabled: isEnabled,
++              variablesValidationStatus: keyValidationStatus,
++              variablesValidationTimestamp: keyValidationTimestamp,
++              canInstall: !isEnabled,
++              error: errorMsg,
++            });
+           } else {
+             // Not installed
+             fastify.log.info(`NIM account does not exist`);
+-            reply.send({ isInstalled: false, isEnabled: false, canInstall: true, error: '' });
++            reply.send({
++              isInstalled: false,
++              isEnabled: false,
++              variablesValidationStatus: VariablesValidationStatus.UNKNOWN,
++              variablesValidationTimestamp: '',
++              canInstall: true,
++              error: '',
++            });
+           }
+         })
+         .catch((e) => {
+@@ -33,6 +59,8 @@ module.exports = async (fastify: KubeFastifyInstance) => {
+               reply.send({
+                 isInstalled: false,
+                 isEnabled: false,
++                variablesValidationStatus: VariablesValidationStatus.UNKNOWN,
++                variablesValidationTimestamp: '',
+                 canInstall: false,
+                 error: 'NIM not installed',
+               });
+@@ -41,7 +69,9 @@ module.exports = async (fastify: KubeFastifyInstance) => {
+             fastify.log.error(`An unexpected error occurred: ${e.response.body?.message}`);
+             reply.send({
+               isInstalled: false,
+-              isAppEnabled: false,
++              isEnabled: false,
++              variablesValidationStatus: VariablesValidationStatus.UNKNOWN,
++              variablesValidationTimestamp: '',
+               canInstall: false,
+               error: 'An unexpected error occurred. Please try again later.',
+             });
+@@ -66,24 +96,18 @@ module.exports = async (fastify: KubeFastifyInstance) => {
+           // Ensure the account exists
+           try {
+             const account = await getNIMAccount(fastify);
+-            if (!account) {
+-              const response = await createNIMAccount(fastify);
+-              const isEnabled = isAppEnabled(response);
+-              reply.send({
+-                isInstalled: true,
+-                isEnabled: isEnabled,
+-                canInstall: false,
+-                error: '',
+-              });
+-            } else {
+-              const isEnabled = isAppEnabled(account);
+-              reply.send({
+-                isInstalled: true,
+-                isEnabled: isEnabled,
+-                canInstall: false,
+-                error: '',
+-              });
+-            }
++            const nimAccount = !account ? await createNIMAccount(fastify) : account;
++            const isEnabled = isAppEnabled(nimAccount);
++            const keyValidationStatus: string = apiKeyValidationStatus(nimAccount);
++            const keyValidationTimeStamp: string = apiKeyValidationTimestamp(nimAccount);
++            reply.send({
++              isInstalled: true,
++              isEnabled: isEnabled,
++              variablesValidationStatus: keyValidationStatus,
++              variablesValidationTimestamp: keyValidationTimeStamp,
++              canInstall: !isEnabled,
++              error: '',
++            });
+           } catch (accountError: any) {
+             const message = `Failed to create or retrieve NIM account: ${accountError.response?.body?.message}`;
+             fastify.log.error(message);
+diff --git a/backend/src/routes/api/integrations/nim/nimUtils.ts b/backend/src/routes/api/integrations/nim/nimUtils.ts
+index 84b1045da..9090858f8 100644
+--- a/backend/src/routes/api/integrations/nim/nimUtils.ts
++++ b/backend/src/routes/api/integrations/nim/nimUtils.ts
+@@ -3,6 +3,25 @@ import { KubeFastifyInstance, NIMAccountKind, SecretKind } from '../../../../typ
+ const NIM_SECRET_NAME = 'nvidia-nim-access';
+ const NIM_ACCOUNT_NAME = 'odh-nim-account';
+ 
++export const errorMsgList = (app: NIMAccountKind): string[] => {
++  const conditions = app?.status?.conditions || [];
++  return conditions
++    .filter((condition) => condition.status === 'False')
++    .map((condition) => condition.message);
++};
++
++export const apiKeyValidationTimestamp = (app: NIMAccountKind): string => {
++  const conditions = app?.status?.conditions || [];
++  const apiKeyCondition = conditions.find((condition) => condition.type === 'APIKeyValidation');
++  return apiKeyCondition?.lastTransitionTime || '';
++};
++
++export const apiKeyValidationStatus = (app: NIMAccountKind): string => {
++  const conditions = app?.status?.conditions || [];
++  const apiKeyCondition = conditions.find((condition) => condition.type === 'APIKeyValidation');
++  return apiKeyCondition?.status || 'Unknown';
++};
++
+ export const isAppEnabled = (app: NIMAccountKind): boolean => {
+   const conditions = app?.status?.conditions || [];
+   return (
+diff --git a/backend/src/types.ts b/backend/src/types.ts
+index a1cbf5a7c..31937497c 100644
+--- a/backend/src/types.ts
++++ b/backend/src/types.ts
+@@ -1249,6 +1249,12 @@ export enum ServiceAddressAnnotation {
+   EXTERNAL_GRPC = 'routing.opendatahub.io/external-address-grpc',
+ }
+ 
++export enum VariablesValidationStatus {
++  UNKNOWN = 'Unknown',
++  FAILED = 'False',
++  SUCCESS = 'True',
++}
++
+ export type NIMAccountKind = K8sResourceCommon & {
+   metadata: {
+     name: string;
+diff --git a/frontend/src/__mocks__/mockKserveMetricsConfigMap.ts b/frontend/src/__mocks__/mockKserveMetricsConfigMap.ts
+index 02713dd55..e732d2705 100644
+--- a/frontend/src/__mocks__/mockKserveMetricsConfigMap.ts
++++ b/frontend/src/__mocks__/mockKserveMetricsConfigMap.ts
+@@ -144,6 +144,217 @@ export const MOCK_KSERVE_METRICS_CONFIG_3 = `
+   ]
+ }`;
+ 
++// NVIDIA NIM
++export const MOCK_NIM_METRICS_CONFIG_1 = `{
++  "config": [
++    {
++      "title": "GPU cache usage over time",
++      "type": "KV_CACHE",
++      "queries": [
++        {
++          "title": "GPU cache usage over time",
++          "query": "sum_over_time(gpu_cache_usage_perc{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[24h])"
++        }
++      ]
++    },
++    {
++      "title": "Current running, waiting, and max requests count",
++      "type": "CURRENT_REQUESTS",
++      "queries": [
++        {
++          "title": "Requests waiting",
++          "query": "num_requests_waiting{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}"
++        },
++        {
++          "title": "Requests running",
++          "query": "num_requests_running{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}"
++        },
++        {
++          "title": "Max requests",
++          "query": "num_request_max{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}"
++        }
++      ]
++    },
++    {
++      "title": "Tokens count",
++      "type": "TOKENS_COUNT",
++      "queries": [
++        {
++          "title": "Total prompts token",
++          "query": "round(rate(prompt_tokens_total{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[1m]))"
++        },
++        {
++          "title": "Total generation token",
++          "query": "round(rate(generation_tokens_total{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[1m]))"
++        }
++      ]
++    },
++    {
++      "title": "Time to first token",
++      "type": "TIME_TO_FIRST_TOKEN",
++      "queries": [
++        {
++          "title": "Time to first token",
++          "query": "rate(time_to_first_token_seconds_sum{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[1m])"
++        }
++      ]
++    },
++    {
++      "title": "Time per output token",
++      "type": "TIME_PER_OUTPUT_TOKEN",
++      "queries": [
++        {
++          "title": "Time per output token",
++          "query": "rate(time_per_output_token_seconds_sum{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[1m])"
++        }
++      ]
++    },
++    {
++      "title": "Requests outcomes",
++      "type": "REQUEST_OUTCOMES",
++      "queries": [
++        {
++          "title": "Number of successful incoming requests",
++          "query": "round(sum(increase(request_success_total{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[5m])))"
++        },
++        {
++          "title": "Number of failed incoming requests",
++          "query": "round(sum(increase(request_failure_total{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[5m])))"
++        }
++      ]
++    }
++  ]
++}`;
++
++export const MOCK_NIM_METRICS_CONFIG_3 = `{
++  "config": [
++    {
++      "title": "GPU cache usage over time",
++      "type": "KV_CACHE",
++      "queries": [
++        {
++          "title": "GPU cache usage over time",
++          "query": "sum_over_time(gpu_cache_usage_perc{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[24h])"
++        }
++      ]
++    },
++    {
++      "title": "Current running, waiting, and max requests count",
++      "type": "CURRENT_REQUESTS",
++      "queries": [
++        {
++          "title": "Requests waiting",
++          "query": "num_requests_waiting{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}"
++        },
++        {
++          "title": "Requests running",
++          "query": "num_requests_running{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}"
++        },
++        {
++          "title": "Max requests",
++          "query": "num_request_max{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}"
++        }
++      ]
++    }
++  ]
++}`;
++
++export const MOCK_NIM_METRICS_CONFIG_MISSING_QUERY = `{
++  "config": [
++    {
++      "title": "GPU cache usage over time",
++      "type": "KV_CACHE",
++      "queries": [
++        {
++          "title": "GPU cache usage over time",
++          "query": "sum_over_time(gpu_cache_usage_perc{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[24h])"
++        }
++      ]
++    },
++    {
++      "title": "Tokens count",
++      "type": "TOKENS_COUNT",
++      "queries": [
++        {
++          "title": "Total prompts token",
++          "query": "round(rate(prompt_tokens_total{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[1m]))"
++        }
++      ]
++    }
++  ]
++}`;
++
++export const MOCK_NIM_METRICS_CONFIG_MISSING_QUERY_2 = `{
++  "config": [
++    {
++      "title": "GPU cache usage over time",
++      "type": "KV_CACHE",
++      "queries": [
++        {
++          "title": "GPU cache usage over time",
++          "query": "sum_over_time(gpu_cache_usage_perc{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[24h])"
++        }
++      ]
++    },
++    {
++      "title": "Tokens count",
++      "type": "TOKENS_COUNT",
++      "queries": [
++        {
++          "title": "Total generation token",
++          "query": "round(rate(generation_tokens_total{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[1m]))"
++        }
++      ]
++    },
++    {
++      "title": "Current running, waiting, and max requests count",
++      "type": "CURRENT_REQUESTS",
++      "queries": [
++        {
++        },
++        {
++        },
++        {
++        }
++      ]
++    }
++  ]
++}`;
++
++export const MOCK_NIM_METRICS_CONFIG_MISSING_QUERY_3 = `{
++  "config": [
++    {
++      "title": "GPU cache usage over time",
++      "type": "KV_CACHE",
++      "queries": [
++        {
++          "title": "GPU cache usage over time",
++          "query": "sum_over_time(gpu_cache_usage_perc{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[24h])"
++        }
++      ]
++    },
++    {
++      "title": "Tokens count",
++      "type": "TOKENS_COUNT",
++      "queries": [
++        {
++          "title": "Total prompts token",
++          "query": "round(rate(prompt_tokens_total{namespace='tomer-test-2', pod=~'nim-deploy-predictor-.*'}[1m]))"
++        }
++      ]
++    },
++    {
++      "title": "Requests outcomes",
++      "type": "REQUEST_OUTCOMES",
++      "queries": [
++      {
++      },
++      {
++      }
++      ]
++    }
++  ]
++}`;
+ export const mockKserveMetricsConfigMap = ({
+   namespace = 'test-project',
+   modelName = 'test-inference-service',
+@@ -156,3 +367,16 @@ export const mockKserveMetricsConfigMap = ({
+   };
+   return mockConfigMap({ data, namespace, name: `${modelName}-metrics-dashboard` });
+ };
++
++export const mockNimMetricsConfigMap = ({
++  namespace = 'test-project',
++  modelName = 'test-inference-service',
++  supported = true,
++  config = MOCK_NIM_METRICS_CONFIG_1,
++}: MockKserveMetricsConfigMapType): ConfigMapKind => {
++  const data = {
++    metrics: config,
++    supported: String(supported),
++  };
++  return mockConfigMap({ data, namespace, name: `${modelName}-metrics-dashboard` });
++};
+diff --git a/frontend/src/__mocks__/mockProjectK8sResource.ts b/frontend/src/__mocks__/mockProjectK8sResource.ts
+index 91b9fa801..6e7b0e1cf 100644
+--- a/frontend/src/__mocks__/mockProjectK8sResource.ts
++++ b/frontend/src/__mocks__/mockProjectK8sResource.ts
+@@ -38,9 +38,6 @@ export const mockProjectK8sResource = ({
+       ...(enableModelMesh !== undefined && {
+         [KnownLabels.MODEL_SERVING_PROJECT]: enableModelMesh ? 'true' : 'false',
+       }),
+-      ...(enableNIM && {
+-        'opendatahub.io/nim-support': 'true',
+-      }),
+       ...(isDSProject && { [KnownLabels.DASHBOARD_RESOURCE]: 'true' }),
+     },
+     ...(hasAnnotations && {
+@@ -48,6 +45,7 @@ export const mockProjectK8sResource = ({
+         ...(description && { 'openshift.io/description': description }),
+         ...(displayName && { 'openshift.io/display-name': displayName }),
+         ...(username && { 'openshift.io/requester': username }),
++        ...(enableNIM && { 'opendatahub.io/nim-support': 'true' }),
+       },
+     }),
+     resourceVersion: '1',
+diff --git a/frontend/src/api/prometheus/kservePerformanceMetrics.ts b/frontend/src/api/prometheus/kservePerformanceMetrics.ts
+index 129b3bd34..39480ea3e 100644
+--- a/frontend/src/api/prometheus/kservePerformanceMetrics.ts
++++ b/frontend/src/api/prometheus/kservePerformanceMetrics.ts
+@@ -1,5 +1,8 @@
+ import React from 'react';
+-import { KserveMetricGraphDefinition } from '~/concepts/metrics/kserve/types';
++import {
++  KserveMetricGraphDefinition,
++  NimMetricGraphDefinition,
++} from '~/concepts/metrics/kserve/types';
+ import { defaultResponsePredicate } from '~/api/prometheus/usePrometheusQueryRange';
+ import { SupportedArea, useIsAreaAvailable } from '~/concepts/areas';
+ import { TimeframeTitle } from '~/concepts/metrics/types';
+@@ -178,6 +181,293 @@ export const useFetchKserveMemoryUsageData = (
+   });
+ };
+ 
++// Nim Metrics graphs
++
++// Graph #1 - KV Cache usage over time
++type KVCacheUsageData = {
++  data: {
++    kvCacheUsage: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++  };
++  refreshAll: () => void;
++};
++
++export const useFetchNimKVCacheUsageData = (
++  metricsDef: NimMetricGraphDefinition,
++  timeframe: TimeframeTitle,
++  endInMs: number,
++  namespace: string,
++): KVCacheUsageData => {
++  const active = useIsAreaAvailable(SupportedArea.K_SERVE_METRICS).status;
++
++  const kvCacheUsage = useQueryRangeResourceData(
++    active,
++    metricsDef.queries[0]?.query,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++
++  const data = React.useMemo(
++    () => ({
++      kvCacheUsage,
++    }),
++    [kvCacheUsage],
++  );
++
++  return useAllSettledContextResourceData(data, {
++    kvCacheUsage: DEFAULT_PENDING_CONTEXT_RESOURCE,
++  });
++};
++
++// Graph #2
++type CurrentRequestsData = {
++  data: {
++    requestsWaiting: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++    requestsRunning: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++    maxRequests: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++  };
++  refreshAll: () => void;
++};
++
++export const useFetchNimCurrentRequestsData = (
++  metricsDef: NimMetricGraphDefinition,
++  timeframe: TimeframeTitle,
++  endInMs: number,
++  namespace: string,
++): CurrentRequestsData => {
++  // Check if Nim metrics are active
++  const active = useIsAreaAvailable(SupportedArea.K_SERVE_METRICS).status;
++
++  // Extract the queries for "Requests waiting", "Requests running", and "Max requests"
++  const requestsWaitingQuery = metricsDef.queries[0].query;
++  const requestsRunningQuery = metricsDef.queries[1].query;
++  const maxRequestsQuery = metricsDef.queries[2].query;
++
++  // Fetch data using useQueryRangeResourceData
++  const requestsWaiting = useQueryRangeResourceData(
++    active,
++    requestsWaitingQuery,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++
++  const requestsRunning = useQueryRangeResourceData(
++    active,
++    requestsRunningQuery,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++
++  const maxRequests = useQueryRangeResourceData(
++    active,
++    maxRequestsQuery,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++
++  // Combine the fetched data
++  const data = React.useMemo(
++    () => ({
++      requestsWaiting,
++      requestsRunning,
++      maxRequests,
++    }),
++    [requestsWaiting, requestsRunning, maxRequests],
++  );
++
++  // Use helper to handle pending state and refresh functionality
++  return useAllSettledContextResourceData(data, {
++    requestsWaiting: DEFAULT_PENDING_CONTEXT_RESOURCE,
++    requestsRunning: DEFAULT_PENDING_CONTEXT_RESOURCE,
++    maxRequests: DEFAULT_PENDING_CONTEXT_RESOURCE,
++  });
++};
++
++// Graph #3 - Total Prompt Token Count and Total Generation Token Count
++type TokensCountData = {
++  data: {
++    totalPromptTokenCount: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++    totalGenerationTokenCount: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++  };
++  refreshAll: () => void;
++};
++
++export const useFetchNimTokensCountData = (
++  metricsDef: NimMetricGraphDefinition,
++  timeframe: TimeframeTitle,
++  endInMs: number,
++  namespace: string,
++): TokensCountData => {
++  const active = useIsAreaAvailable(SupportedArea.K_SERVE_METRICS).status;
++
++  // Extract the queries for "Total Prompt Token Count" and "Total Generation Token Count
++  const totalPromptTokenCount = useQueryRangeResourceData(
++    active,
++    metricsDef.queries[0]?.query,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++
++  const totalGenerationTokenCount = useQueryRangeResourceData(
++    active,
++    metricsDef.queries[1]?.query,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++
++  const data = React.useMemo(
++    () => ({
++      totalPromptTokenCount,
++      totalGenerationTokenCount,
++    }),
++    [totalPromptTokenCount, totalGenerationTokenCount],
++  );
++
++  return useAllSettledContextResourceData(data, {
++    totalPromptTokenCount: DEFAULT_PENDING_CONTEXT_RESOURCE,
++    totalGenerationTokenCount: DEFAULT_PENDING_CONTEXT_RESOURCE,
++  });
++};
++
++// Graph #4 - Time to First Token
++type TimeToFirstTokenData = {
++  data: {
++    timeToFirstToken: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++  };
++  refreshAll: () => void;
++};
++
++export const useFetchNimTimeToFirstTokenData = (
++  metricsDef: NimMetricGraphDefinition,
++  timeframe: TimeframeTitle,
++  endInMs: number,
++  namespace: string,
++): TimeToFirstTokenData => {
++  const active = useIsAreaAvailable(SupportedArea.K_SERVE_METRICS).status;
++
++  const timeToFirstToken = useQueryRangeResourceData(
++    active,
++    metricsDef.queries[0]?.query,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++
++  const data = React.useMemo(
++    () => ({
++      timeToFirstToken,
++    }),
++    [timeToFirstToken],
++  );
++
++  return useAllSettledContextResourceData(data, {
++    timeToFirstToken: DEFAULT_PENDING_CONTEXT_RESOURCE,
++  });
++};
++
++// Graph #5
++type TimePerOutputTokenData = {
++  data: {
++    timePerOutputToken: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++  };
++  refreshAll: () => void;
++};
++export const useFetchNimTimePerOutputTokenData = (
++  metricsDef: NimMetricGraphDefinition,
++  timeframe: TimeframeTitle,
++  endInMs: number,
++  namespace: string,
++): TimePerOutputTokenData => {
++  // Check if Nim metrics are active
++  const active = useIsAreaAvailable(SupportedArea.K_SERVE_METRICS).status;
++  // Extract the query for TIME_PER_OUTPUT_TOKEN
++  const timePerOutputTokenQuery = metricsDef.queries[0].query; // Assumes it's the first query in the metric definition
++  // Fetch data using useQueryRangeResourceData
++  const timePerOutputToken = useQueryRangeResourceData(
++    active,
++    timePerOutputTokenQuery,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++  // Memoize the fetched data
++  const data = React.useMemo(
++    () => ({
++      timePerOutputToken,
++    }),
++    [timePerOutputToken],
++  );
++  // Return all-settled context resource data
++  return useAllSettledContextResourceData(data, {
++    timePerOutputToken: DEFAULT_PENDING_CONTEXT_RESOURCE,
++  });
++};
++
++// Graph #6
++type RequestsOutcomesData = {
++  data: {
++    successCount: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++    failedCount: PendingContextResourceData<PrometheusQueryRangeResultValue>;
++  };
++  refreshAll: () => void;
++};
++
++export const useFetchNimRequestsOutcomesData = (
++  metricsDef: NimMetricGraphDefinition,
++  timeframe: TimeframeTitle,
++  endInMs: number,
++  namespace: string,
++): RequestsOutcomesData => {
++  const active = useIsAreaAvailable(SupportedArea.K_SERVE_METRICS).status;
++
++  const successQuery = metricsDef.queries[0]?.query;
++  const failedQuery = metricsDef.queries[1]?.query;
++
++  const successCount = useQueryRangeResourceData(
++    active,
++    successQuery,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++
++  const failedCount = useQueryRangeResourceData(
++    active,
++    failedQuery,
++    endInMs,
++    timeframe,
++    defaultResponsePredicate,
++    namespace,
++  );
++
++  const data = React.useMemo(
++    () => ({
++      successCount,
++      failedCount,
++    }),
++    [failedCount, successCount],
++  );
++
++  return useAllSettledContextResourceData(data, {
++    successCount: DEFAULT_PENDING_CONTEXT_RESOURCE,
++    failedCount: DEFAULT_PENDING_CONTEXT_RESOURCE,
++  });
++};
++
+ const useAllSettledContextResourceData = <
+   T,
+   U extends Record<string, PendingContextResourceData<T>>,
+diff --git a/frontend/src/components/OdhAppCard.tsx b/frontend/src/components/OdhAppCard.tsx
+index 252cb9edc..eca65f8e6 100644
+--- a/frontend/src/components/OdhAppCard.tsx
++++ b/frontend/src/components/OdhAppCard.tsx
+@@ -13,9 +13,10 @@ import {
+   MenuToggle,
+   DropdownList,
+   Label,
++  capitalize,
+ } from '@patternfly/react-core';
+ import { css } from '@patternfly/react-styles';
+-import { EllipsisVIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
++import { EllipsisVIcon, ExclamationCircleIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
+ import { OdhApplication } from '~/types';
+ import { getLaunchStatus, launchQuickStart } from '~/utilities/quickStartUtils';
+ import EnableModal from '~/pages/exploreApplication/EnableModal';
+@@ -25,6 +26,7 @@ import { ODH_PRODUCT_NAME } from '~/utilities/const';
+ import { useAppContext } from '~/app/AppContext';
+ import { useAppDispatch } from '~/redux/hooks';
+ import { SupportedArea, useIsAreaAvailable } from '~/concepts/areas';
++import { isInternalRouteIntegrationsApp } from '~/utilities/utils';
+ import { useQuickStartCardSelected } from './useQuickStartCardSelected';
+ import SupportedAppTitle from './SupportedAppTitle';
+ import BrandImage from './BrandImage';
+@@ -140,39 +142,53 @@ const OdhAppCard: React.FC<OdhAppCardProps> = ({ odhApp }) => {
+ 
+   const popoverBodyContent = (hide: () => void) => (
+     <div>
+-      Subscription is no longer valid. To validate click&nbsp;
+-      <Button
+-        isInline
+-        variant="link"
+-        onClick={() => {
+-          hide();
+-          setEnableOpen(true);
+-        }}
+-      >
+-        here
+-      </Button>
+-      . To remove card click&nbsp;
+-      <Button
+-        isInline
+-        variant="link"
+-        onClick={() => {
+-          hide();
+-          removeApplication();
+-        }}
+-      >
+-        here
+-      </Button>
+-      .
++      {isInternalRouteIntegrationsApp(odhApp.spec.internalRoute) ? (
++        <>
++          {odhApp.spec.error ? `${capitalize(odhApp.spec.error)}.` : ''} Contact your administrator.
++        </>
++      ) : (
++        <>
++          Subscription is no longer valid. To validate click&nbsp;
++          <Button
++            isInline
++            variant="link"
++            onClick={() => {
++              hide();
++              setEnableOpen(true);
++            }}
++          >
++            here.
++          </Button>
++          To remove card click&nbsp;
++          <Button
++            isInline
++            variant="link"
++            onClick={() => {
++              hide();
++              removeApplication();
++            }}
++          >
++            here
++          </Button>
++          .
++        </>
++      )}
+     </div>
+   );
+ 
+   const disabledPopover = (
+     <Popover
+-      headerContent={<div className="odh-card__disabled-popover-title">Application disabled</div>}
++      headerContent={
++        <div className="odh-card__disabled-popover-title">
++          Enable {odhApp.spec.displayName} failed
++        </div>
++      }
+       bodyContent={popoverBodyContent}
+-      position="bottom"
++      position="right"
++      headerIcon={<ExclamationCircleIcon />}
++      alertSeverityVariant="danger"
+     >
+-      <Button variant="plain" className="odh-card__disabled-text">
++      <Button variant="link" className="odh-card__disabled-text">
+         Disabled
+       </Button>
+     </Popover>
+diff --git a/frontend/src/components/OdhCard.scss b/frontend/src/components/OdhCard.scss
+index 304ccad23..2db39f8ed 100644
+--- a/frontend/src/components/OdhCard.scss
++++ b/frontend/src/components/OdhCard.scss
+@@ -44,7 +44,8 @@
+   }
+ 
+   &__disabled-popover-title {
+-    font-size: var(--pf-t--global--font--size--heading--h6);
++    font-size: var(--pf-t--global--font--size--heading--h7);
++    color: var(--pf-t--global--text--color--status--danger--default);
+   }
+ 
+   &__explore-badges {
+diff --git a/frontend/src/concepts/metrics/kserve/NimMetricsContext.tsx b/frontend/src/concepts/metrics/kserve/NimMetricsContext.tsx
+new file mode 100644
+index 000000000..be008dfcf
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/NimMetricsContext.tsx
+@@ -0,0 +1,119 @@
++import * as React from 'react';
++import {
++  Bullseye,
++  EmptyState,
++  EmptyStateBody,
++  EmptyStateVariant,
++  Spinner,
++} from '@patternfly/react-core';
++import { CubesIcon, ErrorCircleOIcon } from '@patternfly/react-icons';
++import { MetricsCommonContext } from '~/concepts/metrics/MetricsCommonContext';
++import useKserveMetricsConfigMap from '~/concepts/metrics/kserve/useKserveMetricsConfigMap';
++import useNimMetricsGraphDefinitions from '~/concepts/metrics/kserve/useNimMetricsGraphDefinition';
++import useRefreshInterval from '~/utilities/useRefreshInterval';
++import { RefreshIntervalValue } from '~/concepts/metrics/const';
++import { RefreshIntervalTitle, TimeframeTitle } from '~/concepts/metrics/types';
++import { NimMetricGraphDefinition } from '~/concepts/metrics/kserve/types';
++import { conditionalArea, SupportedArea } from '~/concepts/areas';
++
++type NimMetricsContextProps = {
++  namespace: string;
++  timeframe: TimeframeTitle;
++  refreshInterval: RefreshIntervalTitle;
++  lastUpdateTime: number;
++  graphDefinitions: NimMetricGraphDefinition[];
++};
++
++export const NimMetricsContext = React.createContext<NimMetricsContextProps>({
++  namespace: '',
++  timeframe: TimeframeTitle.ONE_DAY,
++  refreshInterval: RefreshIntervalTitle.FIVE_MINUTES,
++  lastUpdateTime: 0,
++  graphDefinitions: [],
++});
++
++type NimMetricsContextProviderProps = {
++  children: React.ReactNode;
++  namespace: string;
++  modelName: string;
++};
++
++export const NimMetricsContextProvider = conditionalArea<NimMetricsContextProviderProps>(
++  SupportedArea.K_SERVE_METRICS,
++  true,
++)(({ children, namespace, modelName }) => {
++  const { currentTimeframe, currentRefreshInterval, lastUpdateTime, setLastUpdateTime } =
++    React.useContext(MetricsCommonContext);
++  const [configMap, configMapLoaded, configMapError] = useKserveMetricsConfigMap(
++    namespace,
++    modelName,
++  );
++  const {
++    graphDefinitions,
++    error: graphDefinitionsError,
++    loaded: graphDefinitionsLoaded,
++    supported,
++  } = useNimMetricsGraphDefinitions(configMap);
++
++  const loaded = configMapLoaded && graphDefinitionsLoaded;
++
++  const error = graphDefinitionsError || configMapError;
++
++  const refreshAllMetrics = React.useCallback(() => {
++    setLastUpdateTime(Date.now());
++  }, [setLastUpdateTime]);
++
++  useRefreshInterval(RefreshIntervalValue[currentRefreshInterval], refreshAllMetrics);
++
++  const contextValue = React.useMemo(
++    () => ({
++      namespace,
++      lastUpdateTime,
++      refreshInterval: currentRefreshInterval,
++      timeframe: currentTimeframe,
++      graphDefinitions,
++    }),
++    [currentRefreshInterval, currentTimeframe, graphDefinitions, lastUpdateTime, namespace],
++  );
++
++  if (error) {
++    return (
++      <EmptyState
++        data-testid="kserve-unknown-error"
++        headingLevel="h5"
++        icon={ErrorCircleOIcon}
++        titleText="Unknown error"
++        variant={EmptyStateVariant.lg}
++      >
++        <EmptyStateBody>Error loading metrics configuration</EmptyStateBody>
++      </EmptyState>
++    );
++  }
++
++  if (!loaded) {
++    return (
++      <Bullseye>
++        <Spinner />
++      </Bullseye>
++    );
++  }
++
++  if (!supported) {
++    return (
++      <EmptyState
++        data-testid="kserve-metrics-runtime-unsupported"
++        headingLevel="h4"
++        icon={CubesIcon}
++        titleText="Metrics not supported"
++      >
++        <EmptyStateBody>
++          {modelName} is using a custom serving runtime. Metrics are only supported for models
++          served via a pre-installed runtime when the single-model serving platform is enabled for a
++          project.
++        </EmptyStateBody>
++      </EmptyState>
++    );
++  }
++
++  return <NimMetricsContext.Provider value={contextValue}>{children}</NimMetricsContext.Provider>;
++});
+diff --git a/frontend/src/concepts/metrics/kserve/const.ts b/frontend/src/concepts/metrics/kserve/const.ts
+index 674f29a2d..b34d31ee8 100644
+--- a/frontend/src/concepts/metrics/kserve/const.ts
++++ b/frontend/src/concepts/metrics/kserve/const.ts
+@@ -6,3 +6,12 @@ export enum KserveMetricsGraphTypes {
+   REQUEST_COUNT = 'REQUEST_COUNT',
+   MEAN_LATENCY = 'MEAN_LATENCY',
+ }
++
++export enum NimMetricsGraphTypes {
++  TIME_TO_FIRST_TOKEN = 'TIME_TO_FIRST_TOKEN',
++  TIME_PER_OUTPUT_TOKEN = 'TIME_PER_OUTPUT_TOKEN',
++  KV_CACHE = 'KV_CACHE',
++  CURRENT_REQUESTS = 'CURRENT_REQUESTS',
++  TOKENS_COUNT = 'TOKENS_COUNT',
++  REQUEST_OUTCOMES = 'REQUEST_OUTCOMES',
++}
+diff --git a/frontend/src/concepts/metrics/kserve/content/NIMCurrentRequestsGraph.tsx b/frontend/src/concepts/metrics/kserve/content/NIMCurrentRequestsGraph.tsx
+new file mode 100644
+index 000000000..95924c870
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/content/NIMCurrentRequestsGraph.tsx
+@@ -0,0 +1,70 @@
++import React from 'react';
++import { NimMetricGraphDefinition } from '~/concepts/metrics/kserve/types';
++import { TimeframeTitle } from '~/concepts/metrics/types';
++import MetricsChart from '~/pages/modelServing/screens/metrics/MetricsChart';
++import { useFetchNimCurrentRequestsData } from '~/api';
++import { convertPrometheusNaNToZero } from '~/pages/modelServing/screens/metrics/utils';
++import { MetricsChartTypes } from '~/pages/modelServing/screens/metrics/types';
++
++type NimCurrentRequestsGraphProps = {
++  graphDefinition: NimMetricGraphDefinition; // Contains queries and title
++  timeframe: TimeframeTitle; // Time range
++  end: number; // End timestamp
++  namespace: string; // Namespace
++};
++
++const NimCurrentRequestsGraph: React.FC<NimCurrentRequestsGraphProps> = ({
++  graphDefinition,
++  timeframe,
++  end,
++  namespace,
++}) => {
++  // Fetch the data for "Running", "Waiting", and "Max Requests"
++  const {
++    data: { requestsWaiting, requestsRunning, maxRequests },
++  } = useFetchNimCurrentRequestsData(graphDefinition, timeframe, end, namespace);
++
++  return (
++    <MetricsChart
++      title={graphDefinition.title}
++      metrics={[
++        ...(graphDefinition.queries[0]
++          ? [
++              {
++                name: graphDefinition.queries[0].title, // "Requests waiting"
++                metric: {
++                  ...requestsWaiting,
++                  data: convertPrometheusNaNToZero(requestsWaiting.data),
++                },
++              },
++            ]
++          : []),
++        ...(graphDefinition.queries[1]
++          ? [
++              {
++                name: graphDefinition.queries[1].title, // "Requests running"
++                metric: {
++                  ...requestsRunning,
++                  data: convertPrometheusNaNToZero(requestsRunning.data),
++                },
++              },
++            ]
++          : []),
++        ...(graphDefinition.queries[2]
++          ? [
++              {
++                name: graphDefinition.queries[2].title, // "Max requests"
++                metric: {
++                  ...maxRequests,
++                  data: convertPrometheusNaNToZero(maxRequests.data),
++                },
++              },
++            ]
++          : []),
++      ]}
++      type={MetricsChartTypes.LINE} // Render as line graph
++    />
++  );
++};
++
++export default NimCurrentRequestsGraph;
+diff --git a/frontend/src/concepts/metrics/kserve/content/NIMKVCacheUsageGraph.tsx b/frontend/src/concepts/metrics/kserve/content/NIMKVCacheUsageGraph.tsx
+new file mode 100644
+index 000000000..65c417e9d
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/content/NIMKVCacheUsageGraph.tsx
+@@ -0,0 +1,39 @@
++import React from 'react';
++import { NimMetricGraphDefinition } from '~/concepts/metrics/kserve/types';
++import { TimeframeTitle } from '~/concepts/metrics/types';
++import { useFetchNimKVCacheUsageData } from '~/api';
++import MetricsChart from '~/pages/modelServing/screens/metrics/MetricsChart';
++import { MetricsChartTypes } from '~/pages/modelServing/screens/metrics/types';
++import { toPercentage } from '~/pages/modelServing/screens/metrics/utils';
++
++// Graph #1 - KV Cache usage over time
++type NimKVCacheUsageGraphProps = {
++  graphDefinition: NimMetricGraphDefinition;
++  timeframe: TimeframeTitle;
++  end: number;
++  namespace: string;
++};
++
++const NimKVCacheUsageGraph: React.FC<NimKVCacheUsageGraphProps> = ({
++  graphDefinition,
++  timeframe,
++  end,
++  namespace,
++}) => {
++  const {
++    data: { kvCacheUsage },
++  } = useFetchNimKVCacheUsageData(graphDefinition, timeframe, end, namespace);
++
++  return (
++    <MetricsChart
++      title={graphDefinition.title}
++      metrics={{ metric: kvCacheUsage, translatePoint: toPercentage }}
++      type={MetricsChartTypes.LINE}
++      domain={() => ({
++        y: [0, 100],
++      })}
++    />
++  );
++};
++
++export default NimKVCacheUsageGraph;
+diff --git a/frontend/src/concepts/metrics/kserve/content/NIMRequestsOutcomesGraph.tsx b/frontend/src/concepts/metrics/kserve/content/NIMRequestsOutcomesGraph.tsx
+new file mode 100644
+index 000000000..1b0bd9184
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/content/NIMRequestsOutcomesGraph.tsx
+@@ -0,0 +1,53 @@
++import React from 'react';
++import { NimMetricGraphDefinition } from '~/concepts/metrics/kserve/types';
++import { useFetchNimRequestsOutcomesData } from '~/api';
++import MetricsChart from '~/pages/modelServing/screens/metrics/MetricsChart';
++import { TimeframeTitle } from '~/concepts/metrics/types';
++import { MetricsChartTypes } from '~/pages/modelServing/screens/metrics/types';
++
++type NimRequestsOutcomesGraphProps = {
++  graphDefinition: NimMetricGraphDefinition;
++  timeframe: TimeframeTitle;
++  end: number;
++  namespace: string;
++};
++
++const NimRequestsOutcomesGraph: React.FC<NimRequestsOutcomesGraphProps> = ({
++  graphDefinition,
++  timeframe,
++  end,
++  namespace,
++}) => {
++  const {
++    data: { successCount, failedCount },
++  } = useFetchNimRequestsOutcomesData(graphDefinition, timeframe, end, namespace);
++
++  return (
++    <MetricsChart
++      metrics={[
++        ...(graphDefinition.queries[0]
++          ? [
++              {
++                name: `Successful`,
++                metric: successCount,
++              },
++            ]
++          : []),
++        ...(graphDefinition.queries[1]
++          ? [
++              {
++                name: `Failed`,
++                metric: failedCount,
++              },
++            ]
++          : []),
++      ]}
++      color="blue"
++      title={graphDefinition.title}
++      isStack
++      type={MetricsChartTypes.DONUT}
++    />
++  );
++};
++
++export default NimRequestsOutcomesGraph;
+diff --git a/frontend/src/concepts/metrics/kserve/content/NIMTimeForFirstTokenGraphs.tsx b/frontend/src/concepts/metrics/kserve/content/NIMTimeForFirstTokenGraphs.tsx
+new file mode 100644
+index 000000000..7b362d519
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/content/NIMTimeForFirstTokenGraphs.tsx
+@@ -0,0 +1,40 @@
++import React from 'react';
++import { NimMetricGraphDefinition } from '~/concepts/metrics/kserve/types';
++import { TimeframeTitle } from '~/concepts/metrics/types';
++import { useFetchNimTimeToFirstTokenData } from '~/api';
++import MetricsChart from '~/pages/modelServing/screens/metrics/MetricsChart';
++import { convertPrometheusNaNToZero } from '~/pages/modelServing/screens/metrics/utils';
++
++// Graph #4 - Time to First Token
++type NimTimeToFirstTokenGraphProps = {
++  graphDefinition: NimMetricGraphDefinition;
++  timeframe: TimeframeTitle;
++  end: number;
++  namespace: string;
++};
++
++const NimTimeToFirstTokenGraph: React.FC<NimTimeToFirstTokenGraphProps> = ({
++  graphDefinition,
++  timeframe,
++  end,
++  namespace,
++}) => {
++  const {
++    data: { timeToFirstToken },
++  } = useFetchNimTimeToFirstTokenData(graphDefinition, timeframe, end, namespace);
++
++  return (
++    <MetricsChart
++      title={graphDefinition.title}
++      metrics={{
++        metric: { ...timeToFirstToken, data: convertPrometheusNaNToZero(timeToFirstToken.data) },
++      }}
++      color="blue"
++      domain={() => ({
++        y: [0, 20],
++      })}
++    />
++  );
++};
++
++export default NimTimeToFirstTokenGraph;
+diff --git a/frontend/src/concepts/metrics/kserve/content/NIMTimePerOutputTokenGraph.tsx b/frontend/src/concepts/metrics/kserve/content/NIMTimePerOutputTokenGraph.tsx
+new file mode 100644
+index 000000000..d30387178
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/content/NIMTimePerOutputTokenGraph.tsx
+@@ -0,0 +1,39 @@
++import React from 'react';
++import { NimMetricGraphDefinition } from '~/concepts/metrics/kserve/types';
++import { TimeframeTitle } from '~/concepts/metrics/types';
++import MetricsChart from '~/pages/modelServing/screens/metrics/MetricsChart';
++import { useFetchNimTimePerOutputTokenData } from '~/api';
++import { convertPrometheusNaNToZero } from '~/pages/modelServing/screens/metrics/utils';
++import { MetricsChartTypes } from '~/pages/modelServing/screens/metrics/types';
++
++type NimTimePerOutputTokenGraphProps = {
++  graphDefinition: NimMetricGraphDefinition; // Contains query and title
++  timeframe: TimeframeTitle; // Time range
++  end: number; // End timestamp
++  namespace: string; // Namespace
++};
++const NimTimePerOutputTokenGraph: React.FC<NimTimePerOutputTokenGraphProps> = ({
++  graphDefinition,
++  timeframe,
++  end,
++  namespace,
++}) => {
++  // Fetch the data for "Time per Output Token"
++  const {
++    data: { timePerOutputToken },
++  } = useFetchNimTimePerOutputTokenData(graphDefinition, timeframe, end, namespace);
++  return (
++    <MetricsChart
++      title={graphDefinition.title}
++      metrics={{
++        metric: {
++          ...timePerOutputToken,
++          data: convertPrometheusNaNToZero(timePerOutputToken.data),
++        },
++      }}
++      color="blue"
++      type={MetricsChartTypes.AREA}
++    />
++  );
++};
++export default NimTimePerOutputTokenGraph;
+diff --git a/frontend/src/concepts/metrics/kserve/content/NIMTokensCountGraph.tsx b/frontend/src/concepts/metrics/kserve/content/NIMTokensCountGraph.tsx
+new file mode 100644
+index 000000000..46638391d
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/content/NIMTokensCountGraph.tsx
+@@ -0,0 +1,59 @@
++import React from 'react';
++import { NimMetricGraphDefinition } from '~/concepts/metrics/kserve/types';
++import { TimeframeTitle } from '~/concepts/metrics/types';
++import { useFetchNimTokensCountData } from '~/api';
++import MetricsChart from '~/pages/modelServing/screens/metrics/MetricsChart';
++import { MetricsChartTypes } from '~/pages/modelServing/screens/metrics/types';
++import { convertPrometheusNaNToZero } from '~/pages/modelServing/screens/metrics/utils';
++
++// Graph #3 - Total Prompt Token Count and Total Generation Token Count
++type NimTokensCountGraphProps = {
++  graphDefinition: NimMetricGraphDefinition;
++  timeframe: TimeframeTitle;
++  end: number;
++  namespace: string;
++};
++
++const NimTokensCountGraph: React.FC<NimTokensCountGraphProps> = ({
++  graphDefinition,
++  timeframe,
++  end,
++  namespace,
++}) => {
++  const {
++    data: { totalPromptTokenCount, totalGenerationTokenCount },
++  } = useFetchNimTokensCountData(graphDefinition, timeframe, end, namespace);
++
++  return (
++    <MetricsChart
++      title={graphDefinition.title}
++      metrics={[
++        ...(graphDefinition.queries[0]
++          ? [
++              {
++                name: graphDefinition.queries[0].title, // "Total Prompt Token Count"
++                metric: {
++                  ...totalPromptTokenCount,
++                  data: convertPrometheusNaNToZero(totalPromptTokenCount.data),
++                },
++              },
++            ]
++          : []),
++        ...(graphDefinition.queries[1]
++          ? [
++              {
++                name: graphDefinition.queries[1].title, // "Total Generation Token Count"
++                metric: {
++                  ...totalGenerationTokenCount,
++                  data: convertPrometheusNaNToZero(totalGenerationTokenCount.data),
++                },
++              },
++            ]
++          : []),
++      ]}
++      type={MetricsChartTypes.LINE}
++    />
++  );
++};
++
++export default NimTokensCountGraph;
+diff --git a/frontend/src/concepts/metrics/kserve/content/NimMetricsContent.tsx b/frontend/src/concepts/metrics/kserve/content/NimMetricsContent.tsx
+new file mode 100644
+index 000000000..4b5c1704a
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/content/NimMetricsContent.tsx
+@@ -0,0 +1,19 @@
++import React from 'react';
++import NimPerformanceGraphs from '~/concepts/metrics/kserve/content/NimPerformanceGraphs';
++import { NimMetricsContext } from '~/concepts/metrics/kserve/NimMetricsContext';
++
++const NimMetricsContent: React.FC = () => {
++  const { namespace, graphDefinitions, timeframe, lastUpdateTime } =
++    React.useContext(NimMetricsContext);
++
++  return (
++    <NimPerformanceGraphs
++      namespace={namespace}
++      graphDefinitions={graphDefinitions}
++      timeframe={timeframe}
++      end={lastUpdateTime}
++    />
++  );
++};
++
++export default NimMetricsContent;
+diff --git a/frontend/src/concepts/metrics/kserve/content/NimPerformanceGraphs.tsx b/frontend/src/concepts/metrics/kserve/content/NimPerformanceGraphs.tsx
+new file mode 100644
+index 000000000..89fa9f278
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/content/NimPerformanceGraphs.tsx
+@@ -0,0 +1,115 @@
++import { Stack, StackItem } from '@patternfly/react-core/dist/esm';
++import React from 'react';
++import { NimMetricGraphDefinition } from '~/concepts/metrics/kserve/types';
++import { NimMetricsGraphTypes } from '~/concepts/metrics/kserve/const';
++import { TimeframeTitle } from '~/concepts/metrics/types';
++import NIMTimeToFirstTokenGraph from './NIMTimeForFirstTokenGraphs';
++import NIMKVCacheUsageGraph from './NIMKVCacheUsageGraph';
++import NIMTokensCountGraph from './NIMTokensCountGraph';
++import NIMRequestsOutcomesGraph from './NIMRequestsOutcomesGraph';
++import NIMTimePerOutputTokenGraph from './NIMTimePerOutputTokenGraph';
++import NIMCurrentRequestsGraph from './NIMCurrentRequestsGraph';
++
++type NimPerformanceGraphsProps = {
++  namespace: string;
++  graphDefinitions: NimMetricGraphDefinition[];
++  timeframe: TimeframeTitle;
++  end: number;
++};
++
++const NimPerformanceGraphs: React.FC<NimPerformanceGraphsProps> = ({
++  namespace,
++  graphDefinitions,
++  timeframe,
++  end,
++}) => {
++  const renderGraph = (graphDefinition: NimMetricGraphDefinition) => {
++    // Graph #1 - KV Cache usage over time
++    if (graphDefinition.type === NimMetricsGraphTypes.KV_CACHE) {
++      return (
++        <NIMKVCacheUsageGraph
++          graphDefinition={graphDefinition}
++          timeframe={timeframe}
++          end={end}
++          namespace={namespace}
++        />
++      );
++    }
++
++    // Graph #3 - Total Prompt Token Count and Total Generation Token Count
++    if (graphDefinition.type === NimMetricsGraphTypes.TOKENS_COUNT) {
++      return (
++        <NIMTokensCountGraph
++          graphDefinition={graphDefinition}
++          timeframe={timeframe}
++          end={end}
++          namespace={namespace}
++        />
++      );
++    }
++
++    // Graph #4 - Time to First Token
++    if (graphDefinition.type === NimMetricsGraphTypes.TIME_TO_FIRST_TOKEN) {
++      return (
++        <NIMTimeToFirstTokenGraph
++          graphDefinition={graphDefinition}
++          timeframe={timeframe}
++          end={end}
++          namespace={namespace}
++        />
++      );
++    }
++
++    // Graph #5 - Time per Output Token
++    if (graphDefinition.type === NimMetricsGraphTypes.TIME_PER_OUTPUT_TOKEN) {
++      return (
++        <NIMTimePerOutputTokenGraph
++          graphDefinition={graphDefinition}
++          timeframe={timeframe}
++          end={end}
++          namespace={namespace}
++        />
++      );
++    }
++
++    // Graph #6- Requests Outcomes
++    if (graphDefinition.type === NimMetricsGraphTypes.REQUEST_OUTCOMES) {
++      return (
++        <NIMRequestsOutcomesGraph
++          graphDefinition={graphDefinition}
++          timeframe={timeframe}
++          end={end}
++          namespace={namespace}
++        />
++      );
++    }
++
++    // Graph #2 Current Requests
++    // Condition IS necessary as graph types are provided by the backend.
++    // We need to guard against receiving an unknown value at runtime and fail gracefully.
++    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
++    if (graphDefinition.type === NimMetricsGraphTypes.CURRENT_REQUESTS) {
++      return (
++        <NIMCurrentRequestsGraph
++          graphDefinition={graphDefinition}
++          timeframe={timeframe}
++          end={end}
++          namespace={namespace}
++        />
++      );
++    }
++
++    // TODO: add an unsupported graph type error state.
++    return null;
++  };
++
++  return (
++    <Stack hasGutter>
++      {graphDefinitions.map((x) => (
++        <StackItem key={x.title}>{renderGraph(x)}</StackItem>
++      ))}
++    </Stack>
++  );
++};
++
++export default NimPerformanceGraphs;
+diff --git a/frontend/src/concepts/metrics/kserve/types.ts b/frontend/src/concepts/metrics/kserve/types.ts
+index cd127327f..9fc51378d 100644
+--- a/frontend/src/concepts/metrics/kserve/types.ts
++++ b/frontend/src/concepts/metrics/kserve/types.ts
+@@ -1,5 +1,5 @@
+ import { ConfigMapKind } from '~/k8sTypes';
+-import { KserveMetricsGraphTypes } from '~/concepts/metrics/kserve/const';
++import { KserveMetricsGraphTypes, NimMetricsGraphTypes } from '~/concepts/metrics/kserve/const';
+ 
+ export type KserveMetricsConfigMapKind = ConfigMapKind & {
+   data: {
+@@ -8,24 +8,44 @@ export type KserveMetricsConfigMapKind = ConfigMapKind & {
+   };
+ };
+ 
+-export type KserveMetricGraphDefinition = {
+-  title: string;
+-  type: KserveMetricsGraphTypes;
+-  queries: KserveMetricQueryDefinition[];
+-};
+-
+-export type KserveMetricQueryDefinition = {
++export type MetricQueryDefinition = {
+   title: string;
+   query: string;
+ };
+ 
++//Kserve Data Type Defenitions
++
+ export type KserveMetricsDataObject = {
+   config: KserveMetricGraphDefinition[];
+ };
+ 
++export type KserveMetricGraphDefinition = {
++  title: string;
++  type: KserveMetricsGraphTypes;
++  queries: MetricQueryDefinition[];
++};
++
+ export type KserveMetricsDefinition = {
+   supported: boolean;
+   loaded: boolean;
+   error?: Error;
+   graphDefinitions: KserveMetricGraphDefinition[];
+ };
++
++//Nim Data Type Defenitions
++export type NimMetricsDataObject = {
++  config: NimMetricGraphDefinition[];
++};
++
++export type NimMetricGraphDefinition = {
++  title: string;
++  type: NimMetricsGraphTypes;
++  queries: MetricQueryDefinition[];
++};
++
++export type NimMetricsDefinition = {
++  supported: boolean;
++  loaded: boolean;
++  error?: Error;
++  graphDefinitions: NimMetricGraphDefinition[];
++};
+diff --git a/frontend/src/concepts/metrics/kserve/useNimMetricsGraphDefinition.ts b/frontend/src/concepts/metrics/kserve/useNimMetricsGraphDefinition.ts
+new file mode 100644
+index 000000000..4119bfc02
+--- /dev/null
++++ b/frontend/src/concepts/metrics/kserve/useNimMetricsGraphDefinition.ts
+@@ -0,0 +1,40 @@
++import React from 'react';
++import { KserveMetricsConfigMapKind, NimMetricsDefinition } from '~/concepts/metrics/kserve/types';
++import { isValidNimMetricsDataObject } from '~/concepts/metrics/kserve/utils';
++
++const useNimMetricsGraphDefinitions = (
++  kserveMetricsConfigMap: KserveMetricsConfigMapKind | null,
++): NimMetricsDefinition =>
++  React.useMemo(() => {
++    const result: NimMetricsDefinition = {
++      supported: false,
++      loaded: !!kserveMetricsConfigMap,
++      graphDefinitions: [],
++    };
++
++    if (kserveMetricsConfigMap) {
++      result.supported = kserveMetricsConfigMap.data.supported === 'true';
++
++      let parsed: unknown;
++      if (result.supported) {
++        try {
++          parsed = JSON.parse(kserveMetricsConfigMap.data.metrics);
++        } catch (e) {
++          result.error = new Error('Error reading metrics configuration: malformed JSON');
++          result.loaded = true;
++        }
++
++        if (!result.error) {
++          if (isValidNimMetricsDataObject(parsed)) {
++            result.graphDefinitions = parsed.config;
++          } else {
++            result.error = new Error('Error reading metrics configuration: schema mismatch');
++            result.loaded = true;
++          }
++        }
++      }
++    }
++    return result;
++  }, [kserveMetricsConfigMap]);
++
++export default useNimMetricsGraphDefinitions;
+diff --git a/frontend/src/concepts/metrics/kserve/utils.ts b/frontend/src/concepts/metrics/kserve/utils.ts
+index ad5e7ecde..7fb59466d 100644
+--- a/frontend/src/concepts/metrics/kserve/utils.ts
++++ b/frontend/src/concepts/metrics/kserve/utils.ts
+@@ -2,6 +2,7 @@ import { ConfigMapKind } from '~/k8sTypes';
+ import {
+   KserveMetricsConfigMapKind,
+   KserveMetricsDataObject,
++  NimMetricsDataObject,
+ } from '~/concepts/metrics/kserve/types';
+ 
+ export const isKserveMetricsConfigMapKind = (
+@@ -21,3 +22,11 @@ export const isValidKserveMetricsDataObject = (obj: unknown): obj is KserveMetri
+ 
+   return 'config' in obj && Array.isArray(obj.config) && obj.config.length > 0;
+ };
++
++export const isValidNimMetricsDataObject = (obj: unknown): obj is NimMetricsDataObject => {
++  if (typeof obj !== 'object' || obj === null) {
++    return false;
++  }
++
++  return 'config' in obj && Array.isArray(obj.config) && obj.config.length > 0;
++};
+diff --git a/frontend/src/concepts/nimServing/NIMAvailabilityContext.tsx b/frontend/src/concepts/nimServing/NIMAvailabilityContext.tsx
+index 299459238..059d43925 100644
+--- a/frontend/src/concepts/nimServing/NIMAvailabilityContext.tsx
++++ b/frontend/src/concepts/nimServing/NIMAvailabilityContext.tsx
+@@ -18,11 +18,7 @@ export const NIMAvailabilityContext = React.createContext<NIMAvailabilityContext
+ export const NimContextProvider: React.FC<NIMAvailabilityContextProviderProps> = ({
+   children,
+   ...props
+-}) => {
+-  return <EnabledNimContextProvider {...props}>{children}</EnabledNimContextProvider>;
+-
+-  return children;
+-};
++}) => <EnabledNimContextProvider {...props}>{children}</EnabledNimContextProvider>;
+ 
+ const EnabledNimContextProvider: React.FC<NIMAvailabilityContextProviderProps> = ({ children }) => {
+   const [isNIMAvailable, loaded] = useIsNIMAvailable();
+diff --git a/frontend/src/pages/exploreApplication/EnableModal.tsx b/frontend/src/pages/exploreApplication/EnableModal.tsx
+index 903a599a6..cd43d7a50 100644
+--- a/frontend/src/pages/exploreApplication/EnableModal.tsx
++++ b/frontend/src/pages/exploreApplication/EnableModal.tsx
+@@ -2,6 +2,7 @@ import * as React from 'react';
+ import { Alert, Button, Form, FormAlert, Spinner, TextInputTypes } from '@patternfly/react-core';
+ import { Modal, ModalVariant } from '@patternfly/react-core/deprecated';
+ import { ExternalLinkAltIcon } from '@patternfly/react-icons';
++import { isEmpty, values } from 'lodash-es';
+ import { OdhApplication } from '~/types';
+ import { EnableApplicationStatus, useEnableApplication } from '~/utilities/useEnableApplication';
+ import { asEnumMember } from '~/utilities/utils';
+@@ -18,6 +19,10 @@ const EnableModal: React.FC<EnableModalProps> = ({ selectedApp, shown, onClose }
+   const [postError, setPostError] = React.useState('');
+   const [validationInProgress, setValidationInProgress] = React.useState(false);
+   const [enableValues, setEnableValues] = React.useState<{ [key: string]: string }>({});
++  const isEnableValuesHasEmptyValue = React.useMemo(
++    () => isEmpty(enableValues) || values(enableValues).some((val) => isEmpty(val)),
++    [enableValues],
++  );
+   const [validationStatus, validationErrorMessage] = useEnableApplication(
+     validationInProgress,
+     selectedApp.metadata.name,
+@@ -44,6 +49,12 @@ const EnableModal: React.FC<EnableModalProps> = ({ selectedApp, shown, onClose }
+     setValidationInProgress(true);
+   };
+ 
++  const handleClose = React.useCallback(() => {
++    setEnableValues({});
++    setPostError('');
++    onClose();
++  }, [onClose]);
++
+   React.useEffect(() => {
+     if (validationInProgress && validationStatus === EnableApplicationStatus.SUCCESS) {
+       setValidationInProgress(false);
+@@ -53,13 +64,19 @@ const EnableModal: React.FC<EnableModalProps> = ({ selectedApp, shown, onClose }
+       selectedApp.spec.shownOnEnabledPage = true;
+       /* eslint-enable no-param-reassign */
+ 
+-      onClose();
++      handleClose();
+     }
+     if (validationInProgress && validationStatus === EnableApplicationStatus.FAILED) {
+       setValidationInProgress(false);
+       setPostError(validationErrorMessage);
+     }
+-  }, [onClose, selectedApp.spec, validationErrorMessage, validationInProgress, validationStatus]);
++  }, [
++    handleClose,
++    selectedApp.spec,
++    validationErrorMessage,
++    validationInProgress,
++    validationStatus,
++  ]);
+ 
+   React.useEffect(() => {
+     if (shown) {
+@@ -71,13 +88,6 @@ const EnableModal: React.FC<EnableModalProps> = ({ selectedApp, shown, onClose }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [shown]);
+ 
+-  const handleClose = () => {
+-    if (!validationInProgress) {
+-      setEnableValues({});
+-    }
+-    onClose();
+-  };
+-
+   if (!selectedApp.spec.enable || !shown) {
+     return null;
+   }
+@@ -97,7 +107,7 @@ const EnableModal: React.FC<EnableModalProps> = ({ selectedApp, shown, onClose }
+           key="confirm"
+           variant="primary"
+           onClick={onDoEnableApp}
+-          isDisabled={validationInProgress}
++          isDisabled={validationInProgress || isEnableValuesHasEmptyValue}
+         >
+           {enable.actionLabel}
+         </Button>,
+diff --git a/frontend/src/pages/exploreApplication/GetStartedPanel.tsx b/frontend/src/pages/exploreApplication/GetStartedPanel.tsx
+index a3deae816..a7d86a0ea 100644
+--- a/frontend/src/pages/exploreApplication/GetStartedPanel.tsx
++++ b/frontend/src/pages/exploreApplication/GetStartedPanel.tsx
+@@ -13,6 +13,7 @@ import {
+   DrawerPanelBody,
+   DrawerPanelContent,
+   Tooltip,
++  Skeleton,
+   Content,
+ } from '@patternfly/react-core';
+ import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+@@ -38,7 +39,7 @@ type GetStartedPanelProps = {
+ const GetStartedPanel: React.FC<GetStartedPanelProps> = ({ selectedApp, onClose, onEnable }) => {
+   const { dashboardConfig } = useAppContext();
+   const { enablement } = dashboardConfig.spec.dashboardConfig;
+-  const [{ isInstalled, canInstall, error }, loaded] = useIntegratedAppStatus(selectedApp);
++  const [{ isEnabled, canInstall, error }, loaded] = useIntegratedAppStatus(selectedApp);
+   const { isAdmin } = useUser();
+ 
+   if (!selectedApp) {
+@@ -46,27 +47,32 @@ const GetStartedPanel: React.FC<GetStartedPanelProps> = ({ selectedApp, onClose,
+   }
+ 
+   const renderEnableButton = () => {
+-    if (!selectedApp.spec.enable || selectedApp.spec.isEnabled || isInstalled || !isAdmin) {
++    if (!selectedApp.spec.enable || selectedApp.spec.isEnabled || isEnabled || !isAdmin) {
+       return null;
+     }
++
++    if (!loaded && !error) {
++      return <Skeleton style={{ minWidth: 100 }} fontSize="3xl" />;
++    }
++
+     const button = (
+       <Button
+         variant={ButtonVariant.secondary}
+         onClick={onEnable}
+         isDisabled={!enablement || !canInstall}
+-        isLoading={!loaded && !error}
+       >
+         Enable
+       </Button>
+     );
+-    if (enablement) {
+-      return button;
++
++    if (!enablement || !canInstall) {
++      return (
++        <Tooltip content="This feature has been disabled by an administrator.">
++          <span>{button}</span>
++        </Tooltip>
++      );
+     }
+-    return (
+-      <Tooltip content="This feature has been disabled by an administrator.">
+-        <span>{button}</span>
+-      </Tooltip>
+-    );
++    return button;
+   };
+ 
+   return (
+diff --git a/frontend/src/pages/exploreApplication/useIntegratedAppStatus.ts b/frontend/src/pages/exploreApplication/useIntegratedAppStatus.ts
+index 3fa6b1377..973b8d5f9 100644
+--- a/frontend/src/pages/exploreApplication/useIntegratedAppStatus.ts
++++ b/frontend/src/pages/exploreApplication/useIntegratedAppStatus.ts
+@@ -1,10 +1,13 @@
+ import * as React from 'react';
+-import { IntegrationAppStatus, OdhApplication } from '~/types';
++import { IntegrationAppStatus, OdhApplication, VariablesValidationStatus } from '~/types';
+ import useFetchState, { FetchState, NotReadyError } from '~/utilities/useFetchState';
+ import { getIntegrationAppEnablementStatus } from '~/services/integrationAppService';
+ import { isIntegrationApp } from '~/utilities/utils';
++import { useAppSelector } from '~/redux/hooks';
+ 
+ export const useIntegratedAppStatus = (app?: OdhApplication): FetchState<IntegrationAppStatus> => {
++  const forceUpdate = useAppSelector((state) => state.forceComponentsUpdate);
++
+   const callback = React.useCallback(() => {
+     if (!app) {
+       return Promise.reject(new NotReadyError('Need an app to check'));
+@@ -15,12 +18,14 @@ export const useIntegratedAppStatus = (app?: OdhApplication): FetchState<Integra
+         isInstalled: false,
+         isEnabled: false,
+         canInstall: true,
++        variablesValidationStatus: VariablesValidationStatus.UNKNOWN,
++        variablesValidationTimestamp: '',
+         error: '',
+       });
+     }
+ 
+     return getIntegrationAppEnablementStatus(app.spec.internalRoute);
+-  }, [app]);
++  }, [app, forceUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
+ 
+   return useFetchState(
+     callback,
+@@ -28,8 +33,12 @@ export const useIntegratedAppStatus = (app?: OdhApplication): FetchState<Integra
+       isInstalled: false,
+       isEnabled: false,
+       canInstall: false,
++      variablesValidationStatus: VariablesValidationStatus.UNKNOWN,
++      variablesValidationTimestamp: '',
+       error: '',
+     },
+-    { initialPromisePurity: true },
++    {
++      initialPromisePurity: true,
++    },
+   );
+ };
+diff --git a/frontend/src/pages/modelServing/screens/global/InferenceServiceTableRow.tsx b/frontend/src/pages/modelServing/screens/global/InferenceServiceTableRow.tsx
+index dee017644..310abd0ab 100644
+--- a/frontend/src/pages/modelServing/screens/global/InferenceServiceTableRow.tsx
++++ b/frontend/src/pages/modelServing/screens/global/InferenceServiceTableRow.tsx
+@@ -47,8 +47,7 @@ const InferenceServiceTableRow: React.FC<InferenceServiceTableRowProps> = ({
+ 
+   const modelMesh = isModelMesh(inferenceService);
+   const modelMeshMetricsSupported = modelMetricsEnabled && modelMesh;
+-  const kserveMetricsSupported =
+-    modelMetricsEnabled && kserveMetricsEnabled && !modelMesh && !isKServeNIMEnabled;
++  const kserveMetricsSupported = modelMetricsEnabled && kserveMetricsEnabled && !modelMesh;
+   const displayName = getDisplayNameFromK8sResource(inferenceService);
+ 
+   return (
+diff --git a/frontend/src/pages/modelServing/screens/metrics/MetricsChart.tsx b/frontend/src/pages/modelServing/screens/metrics/MetricsChart.tsx
+index eaede9658..39a547b74 100644
+--- a/frontend/src/pages/modelServing/screens/metrics/MetricsChart.tsx
++++ b/frontend/src/pages/modelServing/screens/metrics/MetricsChart.tsx
+@@ -15,6 +15,7 @@ import {
+   Chart,
+   ChartArea,
+   ChartAxis,
++  ChartDonut,
+   ChartGroup,
+   ChartLegendTooltip,
+   ChartLine,
+@@ -77,7 +78,6 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+   const [tooltipTitle, setTooltipTitle] = React.useState(
+     convertTimestamp(Date.now(), formatToShow(currentTimeframe)),
+   );
+-
+   const {
+     data: graphLines,
+     maxYValue,
+@@ -93,7 +93,6 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+           const newMinYValue = Math.min(...lineValues.map((v) => v.y));
+           const newMaxXValue = Math.max(...lineValues.map((v) => v.x));
+           const newMinXValue = Math.min(...lineValues.map((v) => v.x));
+-
+           return {
+             data: [...acc.data, { points: lineValues, name: metric.name }],
+             maxYValue: Math.max(acc.maxYValue, newMaxYValue),
+@@ -106,13 +105,10 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+       ),
+     [metrics],
+   );
+-
+   const error = metrics.find((line) => line.metric.error)?.metric.error;
+   const isAllLoaded = error || metrics.every((line) => line.metric.loaded);
+   const hasSomeData = graphLines.some((line) => line.points.length > 0);
+-
+   const ChartGroupWrapper = React.useMemo(() => (isStack ? ChartStack : ChartGroup), [isStack]);
+-
+   React.useEffect(() => {
+     const ref = bodyRef.current;
+     let observer: ReturnType<typeof getResizeObserver> = () => undefined;
+@@ -125,7 +121,6 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+     }
+     return () => observer();
+   }, []);
+-
+   const handleCursorChange = React.useCallback(
+     (xValue: number) => {
+       if (!xValue) {
+@@ -140,7 +135,6 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+     },
+     [minXValue, currentTimeframe, maxXValue],
+   );
+-
+   let legendProps: Partial<React.ComponentProps<typeof Chart>> = {};
+   let containerComponent;
+   if (metrics.length > 1 && metrics.every(({ name }) => !!name)) {
+@@ -170,7 +164,6 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+       />
+     );
+   }
+-
+   return (
+     <Card data-testid={`metrics-card-${title}`}>
+       <CardHeader
+@@ -189,7 +182,7 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+           {hasSomeData ? (
+             <Chart
+               ariaTitle={title}
+-              containerComponent={containerComponent}
++              containerComponent={type !== MetricsChartTypes.DONUT ? containerComponent : undefined}
+               domain={domain(maxYValue, minYValue)}
+               height={400}
+               width={chartWidth}
+@@ -198,6 +191,7 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+               theme={theme}
+               hasPatterns={hasPatterns}
+               data-testid="metrics-chart-has-data"
++              showAxis={type !== MetricsChartTypes.DONUT}
+               {...legendProps}
+             >
+               <ChartAxis
+@@ -221,6 +215,21 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+                       );
+                     case MetricsChartTypes.LINE:
+                       return <ChartLine key={i} data={line.points} name={line.name} />;
++                    case MetricsChartTypes.DONUT:
++                      return (
++                        <ChartDonut
++                          key={i}
++                          legendData={legendProps.legendData}
++                          legendOrientation="vertical"
++                          legendPosition="right"
++                          data={line.points}
++                          name={line.name}
++                          containerComponent={containerComponent}
++                          labels={({ datum }) => `${datum.name}: ${datum.y}`}
++                          constrainToVisibleArea
++                          themeColor={metrics[i]?.color}
++                        />
++                      );
+                     default:
+                       return null;
+                   }
+@@ -260,5 +269,4 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
+     </Card>
+   );
+ };
+-
+ export default MetricsChart;
+diff --git a/frontend/src/pages/modelServing/screens/metrics/MetricsPageTabs.tsx b/frontend/src/pages/modelServing/screens/metrics/MetricsPageTabs.tsx
+index 6486761d1..04b1383d7 100644
+--- a/frontend/src/pages/modelServing/screens/metrics/MetricsPageTabs.tsx
++++ b/frontend/src/pages/modelServing/screens/metrics/MetricsPageTabs.tsx
+@@ -8,19 +8,28 @@ import useDoesTrustyAICRExist from '~/concepts/trustyai/context/useDoesTrustyAIC
+ import { SupportedArea, useIsAreaAvailable } from '~/concepts/areas';
+ import { InferenceServiceKind } from '~/k8sTypes';
+ import { TrustyInstallState } from '~/concepts/trustyai/types';
++import './MetricsPageTabs.scss';
++import useServingPlatformStatuses from '~/pages/modelServing/useServingPlatformStatuses';
++import { byName, ProjectsContext } from '~/concepts/projects/ProjectsContext';
++import { isProjectNIMSupported } from '~/pages/modelServing/screens/projects/nimUtils';
++import useMetricsPageEnabledTabs from './useMetricsPageEnabledTabs';
++import BiasConfigurationAlertPopover from './bias/BiasConfigurationPage/BiasConfigurationAlertPopover';
+ import PerformanceTab from './performance/PerformanceTab';
+ import BiasTab from './bias/BiasTab';
+-import BiasConfigurationAlertPopover from './bias/BiasConfigurationPage/BiasConfigurationAlertPopover';
+-import useMetricsPageEnabledTabs from './useMetricsPageEnabledTabs';
+-
+-import './MetricsPageTabs.scss';
++import NIMTab from './nim/NimTab';
+ 
+ type MetricsPageTabsProps = {
+   model: InferenceServiceKind;
+ };
+ 
+ const MetricsPageTabs: React.FC<MetricsPageTabsProps> = ({ model }) => {
++  const servingPlatformStatuses = useServingPlatformStatuses();
++  const isNIMAvailable = servingPlatformStatuses.kServeNIM.enabled;
++  const { projects } = React.useContext(ProjectsContext);
++  const project = projects.find(byName(model.metadata.namespace));
+   const enabledTabs = useMetricsPageEnabledTabs();
++  const isKServeNIMEnabled = project ? isProjectNIMSupported(project) : false;
++  const isNimEnabled = isNIMAvailable && isKServeNIMEnabled;
+   const { biasMetricConfigs, statusState } = useModelBiasData();
+   const [biasMetricsInstalled] = useDoesTrustyAICRExist();
+   const performanceMetricsAreaAvailable = useIsAreaAvailable(
+@@ -41,10 +50,19 @@ const MetricsPageTabs: React.FC<MetricsPageTabsProps> = ({ model }) => {
+     return <NotFound />;
+   }
+ 
++  //Display only one tab that is available
+   if (enabledTabs.length === 1) {
+-    return performanceMetricsAreaAvailable ? <PerformanceTab model={model} /> : <BiasTab />;
++    if (performanceMetricsAreaAvailable) {
++      return <PerformanceTab model={model} />;
++    }
++    if (isNimEnabled) {
++      return <NIMTab model={model} />;
++    }
++
++    return <BiasTab />;
+   }
+ 
++  //Display multiple available tabs
+   return (
+     <Tabs
+       activeKey={tab}
+@@ -70,6 +88,20 @@ const MetricsPageTabs: React.FC<MetricsPageTabsProps> = ({ model }) => {
+           <PerformanceTab model={model} />
+         </Tab>
+       )}
++
++      {/* Add NIN metrics tab */}
++      {isNimEnabled && (
++        <Tab
++          eventKey={MetricsTabKeys.NIM}
++          title={<TabTitleText>NIM Metrics</TabTitleText>}
++          aria-label="Nim tab"
++          className="odh-metrics-page-tabs__content"
++          data-testid="nim-tab"
++        >
++          <NIMTab model={model} />
++        </Tab>
++      )}
++
+       {biasMetricsInstalled && (
+         <Tab
+           eventKey={MetricsTabKeys.BIAS}
+diff --git a/frontend/src/pages/modelServing/screens/metrics/nim/NimMetrics.tsx b/frontend/src/pages/modelServing/screens/metrics/nim/NimMetrics.tsx
+new file mode 100644
+index 000000000..7238310ac
+--- /dev/null
++++ b/frontend/src/pages/modelServing/screens/metrics/nim/NimMetrics.tsx
+@@ -0,0 +1,20 @@
++import * as React from 'react';
++import { ModelServingMetricsContext } from '~/pages/modelServing/screens/metrics/ModelServingMetricsContext';
++import { NimMetricsContextProvider } from '~/concepts/metrics/kserve/NimMetricsContext';
++import NimMetricsContent from '~/concepts/metrics/kserve/content/NimMetricsContent';
++
++type NimMetricsProps = {
++  modelName: string;
++};
++
++const NimMetrics: React.FC<NimMetricsProps> = ({ modelName }) => {
++  const { namespace } = React.useContext(ModelServingMetricsContext);
++
++  return (
++    <NimMetricsContextProvider namespace={namespace} modelName={modelName}>
++      <NimMetricsContent />
++    </NimMetricsContextProvider>
++  );
++};
++
++export default NimMetrics;
+diff --git a/frontend/src/pages/modelServing/screens/metrics/nim/NimTab.tsx b/frontend/src/pages/modelServing/screens/metrics/nim/NimTab.tsx
+new file mode 100644
+index 000000000..83013c6c0
+--- /dev/null
++++ b/frontend/src/pages/modelServing/screens/metrics/nim/NimTab.tsx
+@@ -0,0 +1,22 @@
++import React from 'react';
++import { PageSection, Stack, StackItem } from '@patternfly/react-core';
++import { InferenceServiceKind } from '~/k8sTypes';
++import MetricsPageToolbar from '~/concepts/metrics/MetricsPageToolbar';
++import NimMetrics from './NimMetrics';
++
++type NIMTabProps = {
++  model: InferenceServiceKind;
++};
++
++const NIMTab: React.FC<NIMTabProps> = ({ model }) => (
++  <Stack data-testid="nim-metrics-loaded">
++    <StackItem>
++      <MetricsPageToolbar />
++    </StackItem>
++    <PageSection hasBodyWrapper={false} isFilled>
++      <NimMetrics modelName={model.metadata.name} />
++    </PageSection>
++  </Stack>
++);
++
++export default NIMTab;
+diff --git a/frontend/src/pages/modelServing/screens/metrics/types.ts b/frontend/src/pages/modelServing/screens/metrics/types.ts
+index 60e9a2c1d..c543c21dd 100644
+--- a/frontend/src/pages/modelServing/screens/metrics/types.ts
++++ b/frontend/src/pages/modelServing/screens/metrics/types.ts
+@@ -14,6 +14,7 @@ type MetricChartLineBase = {
+ };
+ export type NamedMetricChartLine = MetricChartLineBase & {
+   name: string;
++  color?: string; // Add customColor as an optional property
+ };
+ export type UnnamedMetricChartLine = MetricChartLineBase & {
+   /** Assumes chart title */
+@@ -50,11 +51,13 @@ export type DomainCalculator = (
+ export enum MetricsChartTypes {
+   AREA,
+   LINE,
++  DONUT,
+ }
+ 
+ export enum MetricsTabKeys {
+   PERFORMANCE = 'performance',
+   BIAS = 'bias',
++  NIM = 'nim',
+ }
+ 
+ export type BiasChartConfig = {
+diff --git a/frontend/src/pages/modelServing/screens/metrics/useMetricsPageEnabledTabs.ts b/frontend/src/pages/modelServing/screens/metrics/useMetricsPageEnabledTabs.ts
+index 6951ded38..2c128fc62 100644
+--- a/frontend/src/pages/modelServing/screens/metrics/useMetricsPageEnabledTabs.ts
++++ b/frontend/src/pages/modelServing/screens/metrics/useMetricsPageEnabledTabs.ts
+@@ -3,16 +3,23 @@ import { MetricsTabKeys } from './types';
+ 
+ const useMetricsPageEnabledTabs = (): MetricsTabKeys[] => {
+   const enabledTabs: MetricsTabKeys[] = [];
++  //check availability of Bias metrics
+   const biasMetricsAreaAvailable = useIsAreaAvailable(SupportedArea.BIAS_METRICS).status;
++  //check availability of Performance metrics
+   const performanceMetricsAreaAvailable = useIsAreaAvailable(
+     SupportedArea.PERFORMANCE_METRICS,
+   ).status;
++  //check availability of NIM metrics
++  const nimMetricsAreaAvailable = useIsAreaAvailable(SupportedArea.NIM_MODEL).status;
+   if (performanceMetricsAreaAvailable) {
+     enabledTabs.push(MetricsTabKeys.PERFORMANCE);
+   }
+   if (biasMetricsAreaAvailable) {
+     enabledTabs.push(MetricsTabKeys.BIAS);
+   }
++  if (nimMetricsAreaAvailable) {
++    enabledTabs.push(MetricsTabKeys.NIM);
++  }
+   return enabledTabs;
+ };
+ 
+diff --git a/frontend/src/pages/modelServing/useModelMetricsEnabled.ts b/frontend/src/pages/modelServing/useModelMetricsEnabled.ts
+index 7322e4b41..5834e9211 100644
+--- a/frontend/src/pages/modelServing/useModelMetricsEnabled.ts
++++ b/frontend/src/pages/modelServing/useModelMetricsEnabled.ts
+@@ -6,8 +6,10 @@ const useModelMetricsEnabled = (): [modelMetricsEnabled: boolean] => {
+   ).status;
+   const biasMetricsAreaAvailable = useIsAreaAvailable(SupportedArea.BIAS_METRICS).status;
+ 
++  const nimMetricsAreaAvailable = useIsAreaAvailable(SupportedArea.NIM_MODEL).status;
++
+   const checkModelMetricsEnabled = () =>
+-    performanceMetricsAreaAvailable || biasMetricsAreaAvailable;
++    performanceMetricsAreaAvailable || biasMetricsAreaAvailable || nimMetricsAreaAvailable;
+ 
+   return [checkModelMetricsEnabled()];
+ };
+diff --git a/frontend/src/pages/projects/screens/detail/overview/serverModels/deployedModels/DeployedModelCard.tsx b/frontend/src/pages/projects/screens/detail/overview/serverModels/deployedModels/DeployedModelCard.tsx
+index e2f7fc7d6..97fc8692e 100644
+--- a/frontend/src/pages/projects/screens/detail/overview/serverModels/deployedModels/DeployedModelCard.tsx
++++ b/frontend/src/pages/projects/screens/detail/overview/serverModels/deployedModels/DeployedModelCard.tsx
+@@ -23,8 +23,6 @@ import InferenceServiceEndpoint from '~/pages/modelServing/screens/global/Infere
+ import TypeBorderedCard from '~/concepts/design/TypeBorderedCard';
+ import { SupportedArea, useIsAreaAvailable } from '~/concepts/areas/';
+ import { getDisplayNameFromK8sResource } from '~/concepts/k8s/utils';
+-import { ProjectDetailsContext } from '~/pages/projects/ProjectDetailsContext';
+-import { isProjectNIMSupported } from '~/pages/modelServing/screens/projects/nimUtils';
+ 
+ interface DeployedModelCardProps {
+   inferenceService: InferenceServiceKind;
+@@ -38,11 +36,7 @@ const DeployedModelCard: React.FC<DeployedModelCardProps> = ({
+   const navigate = useNavigate();
+   const kserveMetricsEnabled = useIsAreaAvailable(SupportedArea.K_SERVE_METRICS).status;
+   const modelMesh = isModelMesh(inferenceService);
+-  const { currentProject } = React.useContext(ProjectDetailsContext);
+-  const isKServeNIMEnabled = isProjectNIMSupported(currentProject);
+-
+-  const modelMetricsSupported =
+-    modelMetricsEnabled && (modelMesh || kserveMetricsEnabled) && !isKServeNIMEnabled;
++  const modelMetricsSupported = modelMetricsEnabled && (modelMesh || kserveMetricsEnabled);
+ 
+   const inferenceServiceDisplayName = getDisplayNameFromK8sResource(inferenceService);
+ 
+diff --git a/frontend/src/types.ts b/frontend/src/types.ts
+index d763d32f8..45d4aba2e 100644
+--- a/frontend/src/types.ts
++++ b/frontend/src/types.ts
+@@ -176,6 +176,7 @@ export type OdhApplication = {
+     };
+     featureFlag?: string;
+     internalRoute?: string;
++    error?: string;
+   };
+ };
+ 
+@@ -668,9 +669,17 @@ export type KeyValuePair = {
+   value: string;
+ };
+ 
++export enum VariablesValidationStatus {
++  UNKNOWN = 'Unknown',
++  FAILED = 'False',
++  SUCCESS = 'True',
++}
++
+ export type IntegrationAppStatus = {
+   isInstalled: boolean;
+   isEnabled: boolean;
+   canInstall: boolean;
++  variablesValidationStatus?: VariablesValidationStatus;
++  variablesValidationTimestamp?: string;
+   error: string;
+ };
+diff --git a/frontend/src/utilities/useEnableApplication.tsx b/frontend/src/utilities/useEnableApplication.tsx
+index 7824d99ee..08c7728a5 100644
+--- a/frontend/src/utilities/useEnableApplication.tsx
++++ b/frontend/src/utilities/useEnableApplication.tsx
+@@ -1,5 +1,6 @@
+ import * as React from 'react';
+ import { AlertVariant } from '@patternfly/react-core';
++import * as _ from 'lodash-es';
+ import { getValidationStatus, postValidateIsv } from '~/services/validateIsvService';
+ import {
+   enableIntegrationApp,
+@@ -7,6 +8,7 @@ import {
+ } from '~/services/integrationAppService';
+ import { addNotification, forceComponentsUpdate } from '~/redux/actions/actions';
+ import { useAppDispatch } from '~/redux/hooks';
++import { IntegrationAppStatus, VariablesValidationStatus } from '~/types';
+ import { isInternalRouteIntegrationsApp } from './utils';
+ 
+ export enum EnableApplicationStatus {
+@@ -27,29 +29,26 @@ export const useEnableApplication = (
+     status: EnableApplicationStatus;
+     error: string;
+   }>({ status: EnableApplicationStatus.IDLE, error: '' });
++  const [lastVariablesValidationTimestamp, setLastVariablesValidationTimestamp] =
++    React.useState<string>('');
+   const dispatch = useAppDispatch();
+ 
+   const dispatchResults = React.useCallback(
+     (error?: string) => {
+-      if (!error) {
+-        dispatch(
+-          addNotification({
+-            status: AlertVariant.success,
+-            title: `${appName} has been added to the Enabled page.`,
+-            timestamp: new Date(),
+-          }),
+-        );
+-        dispatch(forceComponentsUpdate());
+-        return;
+-      }
+       dispatch(
+         addNotification({
+-          status: AlertVariant.danger,
+-          title: `Error attempting to validate ${appName}.`,
++          status: error ? AlertVariant.danger : AlertVariant.success,
++          title: error
++            ? `Error attempting to validate ${appName}`
++            : `${appName} has been added to the Enabled page.`,
+           message: error,
+           timestamp: new Date(),
+         }),
+       );
++
++      if (!error) {
++        dispatch(forceComponentsUpdate());
++      }
+     },
+     [appName, dispatch],
+   );
+@@ -63,22 +62,39 @@ export const useEnableApplication = (
+   React.useEffect(() => {
+     let cancelled = false;
+     let watchHandle: ReturnType<typeof setTimeout>;
++
+     if (enableStatus.status === EnableApplicationStatus.INPROGRESS) {
++      const shouldContinueWatching = (response: IntegrationAppStatus): boolean => {
++        if (!_.isEqual(response.variablesValidationTimestamp, lastVariablesValidationTimestamp)) {
++          return false;
++        }
++        return true;
++      };
++
+       const watchStatus = () => {
+         if (isInternalRouteIntegrationsApp(internalRoute)) {
+           getIntegrationAppEnablementStatus(internalRoute)
+             .then((response) => {
+-              if (!response.isInstalled && response.canInstall) {
++              if (shouldContinueWatching(response)) {
+                 watchHandle = setTimeout(watchStatus, 10 * 1000);
+                 return;
+               }
+-              if (response.isInstalled) {
+-                setEnableStatus({
+-                  status: EnableApplicationStatus.SUCCESS,
+-                  error: '',
+-                });
+-                dispatchResults(undefined);
+-              }
++              setLastVariablesValidationTimestamp(response.variablesValidationTimestamp || '');
++              setEnableStatus({
++                status:
++                  response.variablesValidationStatus === VariablesValidationStatus.SUCCESS
++                    ? EnableApplicationStatus.SUCCESS
++                    : EnableApplicationStatus.FAILED,
++                error:
++                  response.variablesValidationStatus === VariablesValidationStatus.SUCCESS
++                    ? ''
++                    : 'Variables are not valid',
++              });
++              dispatchResults(
++                response.variablesValidationStatus === VariablesValidationStatus.SUCCESS
++                  ? undefined
++                  : 'Variables are not valid',
++              );
+             })
+             .catch((e) => {
+               if (!cancelled) {
+@@ -115,7 +131,13 @@ export const useEnableApplication = (
+       cancelled = true;
+       clearTimeout(watchHandle);
+     };
+-  }, [appId, dispatchResults, enableStatus.status, internalRoute]);
++  }, [
++    appId,
++    dispatchResults,
++    enableStatus.status,
++    internalRoute,
++    lastVariablesValidationTimestamp,
++  ]);
+ 
+   React.useEffect(() => {
+     let closed = false;
+@@ -124,23 +146,38 @@ export const useEnableApplication = (
+         enableIntegrationApp(internalRoute, enableValues)
+           .then((response) => {
+             if (!closed) {
+-              if (!response.isInstalled && response.canInstall) {
++              if (response.isInstalled && response.canInstall) {
+                 setEnableStatus({ status: EnableApplicationStatus.INPROGRESS, error: '' });
+-                return;
+-              }
++                setLastVariablesValidationTimestamp(response.variablesValidationTimestamp || '');
+ 
+-              if (response.isInstalled) {
+-                setEnableStatus({
+-                  status: EnableApplicationStatus.SUCCESS,
+-                  error: response.error,
+-                });
+-                dispatchResults(undefined);
++                if (
++                  response.variablesValidationTimestamp !== '' &&
++                  lastVariablesValidationTimestamp !== '' &&
++                  response.variablesValidationTimestamp !== lastVariablesValidationTimestamp &&
++                  response.variablesValidationStatus !== VariablesValidationStatus.UNKNOWN
++                ) {
++                  setEnableStatus({
++                    status:
++                      response.variablesValidationStatus === VariablesValidationStatus.SUCCESS
++                        ? EnableApplicationStatus.SUCCESS
++                        : EnableApplicationStatus.FAILED,
++                    error:
++                      response.variablesValidationStatus === VariablesValidationStatus.SUCCESS
++                        ? ''
++                        : 'Variables are not valid',
++                  });
++                  dispatchResults(
++                    response.variablesValidationStatus === VariablesValidationStatus.SUCCESS
++                      ? undefined
++                      : 'Variables are not valid',
++                  );
++                }
+               }
+             }
+           })
+           .catch((e) => {
+             if (!closed) {
+-              setEnableStatus({ status: EnableApplicationStatus.FAILED, error: e.m });
++              setEnableStatus({ status: EnableApplicationStatus.FAILED, error: e.message });
+             }
+             dispatchResults(e.message);
+           });
+@@ -164,7 +201,7 @@ export const useEnableApplication = (
+           })
+           .catch((e) => {
+             if (!closed) {
+-              setEnableStatus({ status: EnableApplicationStatus.FAILED, error: e.m });
++              setEnableStatus({ status: EnableApplicationStatus.FAILED, error: e.message });
+             }
+             dispatchResults(e.message);
+           });
+@@ -174,6 +211,15 @@ export const useEnableApplication = (
+     return () => {
+       closed = true;
+     };
+-  }, [appId, appName, dispatch, dispatchResults, doEnable, enableValues, internalRoute]);
++  }, [
++    appId,
++    appName,
++    dispatch,
++    dispatchResults,
++    doEnable,
++    enableValues,
++    internalRoute,
++    lastVariablesValidationTimestamp,
++  ]);
+   return [enableStatus.status, enableStatus.error];
+ };
+diff --git a/frontend/src/utilities/useWatchIntegrationComponents.tsx b/frontend/src/utilities/useWatchIntegrationComponents.tsx
+index f555efaf0..f63153d0b 100644
+--- a/frontend/src/utilities/useWatchIntegrationComponents.tsx
++++ b/frontend/src/utilities/useWatchIntegrationComponents.tsx
+@@ -1,6 +1,11 @@
+ import * as React from 'react';
+ import { useAppSelector } from '~/redux/hooks';
+-import { IntegrationAppStatus, OdhApplication, OdhIntegrationApplication } from '~/types';
++import {
++  IntegrationAppStatus,
++  OdhApplication,
++  OdhIntegrationApplication,
++  VariablesValidationStatus,
++} from '~/types';
+ import { getIntegrationAppEnablementStatus } from '~/services/integrationAppService';
+ import { allSettledPromises } from '~/utilities/allSettledPromises';
+ import { POLL_INTERVAL } from './const';
+@@ -29,15 +34,26 @@ export const useWatchIntegrationComponents = (
+             isInstalled: false,
+             isEnabled: false,
+             canInstall: false,
+-            error: e.message ?? e.error, // might be an error from the server, might be an error in the network call itself
++            variablesValidationStatus: VariablesValidationStatus.UNKNOWN,
++            variablesValidationTimestamp: '',
++            error: e.message ?? e.error,
+           } satisfies IntegrationAppStatus),
+       );
+ 
+       if (response.error) {
+-        // TODO: Show the error somehow
+-        setNewComponents(
+-          componentList.filter((app) => app.metadata.name !== component.metadata.name),
++        const updatedComponents = componentList.map((app) =>
++          app.metadata.name === component.metadata.name
++            ? {
++                ...app,
++                spec: {
++                  ...app.spec,
++                  isEnabled: false,
++                  error: response.error,
++                },
++              }
++            : app,
+         );
++        setNewComponents(updatedComponents);
+       } else {
+         const updatedComponents = componentList
+           .filter(
+@@ -62,13 +78,21 @@ export const useWatchIntegrationComponents = (
+ 
+   React.useEffect(() => {
+     let watchHandle: ReturnType<typeof setTimeout>;
++    let isMounted = true;
++
+     if (integrationComponents && components) {
+       if (integrationComponents.length === 0) {
+         setIsIntegrationComponentsChecked(true);
+         setNewComponents(components);
+       } else {
+         const watchComponents = () => {
++          if (!isMounted) {
++            return;
++          }
+           updateComponentEnablementStatus(integrationComponents, components).then(() => {
++            if (!isMounted) {
++              return;
++            }
+             setIsIntegrationComponentsChecked(true);
+             watchHandle = setTimeout(watchComponents, POLL_INTERVAL);
+           });
+@@ -76,7 +100,9 @@ export const useWatchIntegrationComponents = (
+         watchComponents();
+       }
+     }
++
+     return () => {
++      isMounted = false;
+       clearTimeout(watchHandle);
+     };
+   }, [components, integrationComponents]);

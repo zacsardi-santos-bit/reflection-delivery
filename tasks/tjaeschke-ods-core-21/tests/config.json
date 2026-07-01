@@ -1,0 +1,24 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/jenkins/webhook-proxy && go test -json . -count=1",
+  "test_files": [
+    "jenkins/webhook-proxy/main_test.go",
+    "jenkins/webhook-proxy/test/fixtures/README.md",
+    "jenkins/webhook-proxy/test/fixtures/pr-declined-payload.json",
+    "jenkins/webhook-proxy/test/fixtures/pr-merged-payload.json",
+    "jenkins/webhook-proxy/test/fixtures/repo-refs-changed-payload.json",
+    "jenkins/webhook-proxy/test/fixtures/webhook-triggered-payload.json",
+    "jenkins/webhook-proxy/test/golden/pipeline.json"
+  ],
+  "num_test_files": 7,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/opendevstack/ods-core/jenkins/webhook-proxy::TestMakePipelineName",
+    "github.com/opendevstack/ods-core/jenkins/webhook-proxy::TestIsProtectedBranch",
+    "github.com/opendevstack/ods-core/jenkins/webhook-proxy::TestHandleRootRequiresTriggerSecret",
+    "github.com/opendevstack/ods-core/jenkins/webhook-proxy::TestHandleRootReadsRequests",
+    "github.com/opendevstack/ods-core/jenkins/webhook-proxy::TestForward",
+    "github.com/opendevstack/ods-core/jenkins/webhook-proxy::TestGetBuildConfig"
+  ],
+  "PASS_TO_PASS": []
+}

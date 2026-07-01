@@ -1,0 +1,17 @@
+patching file commit_test.go
+patching file structure_test.go
+patching file transform_test.go
+patching file vis_config_test.go
+=== RUN   TestCommitMarshalJSONObject
+--- PASS: TestCommitMarshalJSONObject (0.00s)
+=== RUN   TestStructureMarshalJSONObject
+--- PASS: TestStructureMarshalJSONObject (0.00s)
+=== RUN   TestTransformMarshalJSONObject
+--- PASS: TestTransformMarshalJSONObject (0.00s)
+=== RUN   TestTransformMarshalJSON
+--- PASS: TestTransformMarshalJSON (0.00s)
+=== RUN   TestVisConfigMarshalJSONObject
+--- PASS: TestVisConfigMarshalJSONObject (0.00s)
+PASS
+ok  	github.com/qri-io/dataset	0.042s
+reward=1 graded=5 found=0 failed=0 parsed=0 framework=go exit_code=0

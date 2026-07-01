@@ -1,0 +1,10 @@
+patching file docs/content/docs/concepts/worker-model/ascode.md
+patching file engine/api/v2_workflow_run_craft.go
+patching file engine/hooks/dao_repository_event.go
+patching file engine/hooks/hooks_repositories_handlers.go
+patching file engine/hooks/scheduler_clean_old_repository_event.go
+patching file engine/hooks/scheduler_repository_event_retry.go
+patching file sdk/entity.go
+patching file sdk/hooks.go
+patching file sdk/namesgenerator/namesgenerator.go
+patching file sdk/v2_workflow.go

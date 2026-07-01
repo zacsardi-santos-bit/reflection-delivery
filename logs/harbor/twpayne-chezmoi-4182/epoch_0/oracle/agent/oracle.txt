@@ -1,0 +1,11 @@
+patching file internal/cmd/addcmd.go
+patching file internal/cmd/catconfigcmd.go
+patching file internal/cmd/config.go
+patching file internal/cmd/doctorcmd.go
+patching file internal/cmd/doctorcmd_unix.go
+patching file internal/cmd/doctorcmd_windows.go
+patching file internal/cmd/editconfigcmd.go
+patching file internal/cmd/editconfigtemplatecmd.go
+patching file internal/cmd/purgecmd.go
+patching file internal/cmd/testdata/scripts/doctor_unix.txtar
+patching file internal/cmd/testdata/scripts/issue4181.txtar

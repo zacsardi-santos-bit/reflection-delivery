@@ -1,0 +1,24 @@
+patching file .chloggen/2622-bump-autoinstrumentation-nodejs-to-allow-disabling-instrumentations-via-env.yaml
+patching file .chloggen/2788-fix-k8sattributes-rbac-creation.yaml
+patching file .chloggen/add-missing-label-servicemonitor.yaml
+patching file .chloggen/autoinstrumentation-nginx-cli-flag.yaml
+patching file .chloggen/cronjob-service-name.yaml
+patching file .chloggen/featuregate_cli_python.yaml
+patching file .chloggen/fix-2655.yaml
+patching file .chloggen/include-node-ip-in-env-vars.yaml
+patching file .chloggen/js-build-remove-dev.yaml
+patching file .chloggen/opampbridge-version-label.yaml
+patching file .chloggen/promote-rewrite-featuregate.yaml
+patching file .chloggen/remove-env-var-validation.yaml
+patching file CHANGELOG.md
+patching file CONTRIBUTING.md
+patching file Makefile
+patching file README.md
+patching file RELEASE.md
+patching file bundle/manifests/opentelemetry-operator.clusterserviceversion.yaml
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 896 (offset 378 lines).
+patching file internal/manifests/collector/horizontalpodautoscaler.go
+patching file pkg/instrumentation/upgrade/upgrade.go
+patching file versions.txt

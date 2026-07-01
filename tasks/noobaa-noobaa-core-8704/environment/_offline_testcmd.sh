@@ -1,0 +1,1 @@
+cd /workspace/repo && npx jest src/test/unit_tests/jest_tests/test_nc_upgrade_manager.test.js src/test/unit_tests/jest_tests/test_nc_online_upgrade_cli_integrations.js --coverage=false --verbose --json

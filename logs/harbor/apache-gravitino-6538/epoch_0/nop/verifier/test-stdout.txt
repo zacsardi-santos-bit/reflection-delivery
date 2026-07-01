@@ -1,0 +1,296 @@
+patching file clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java
+patching file clients/cli/src/test/java/org/apache/gravitino/cli/output/TestPlainFormat.java
+patching file clients/cli/src/test/java/org/apache/gravitino/cli/output/TestTableFormat.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Skipping filesystem-fuse module since enableFuse is set to false
+
+> Configure project :
+checkDockerStatus command execution failed: Cannot run program "docker": error=2, No such file or directory
+------------------ Check Docker environment ---------------------
+Docker server status ............................................ [[31mstop[0m]
+Run test cases without `gravitino-docker-test` tag .............. [embedded test]
+-----------------------------------------------------------------
+Tip: Please make sure to start the [31mDocker server[0m before running the integration tests.
+
+> Configure project :docs
+Kotlin DSL property assignment is an incubating feature.
+
+> Task :catalogs:catalog-jdbc-common:processResources NO-SOURCE
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:processResources UP-TO-DATE
+> Task :api:processResources UP-TO-DATE
+> Task :clients:client-java:processResources NO-SOURCE
+> Task :server-common:processResources NO-SOURCE
+> Task :catalogs:catalog-common:processResources NO-SOURCE
+> Task :core:processResources NO-SOURCE
+> Task :server:processResources NO-SOURCE
+> Task :integration-test-common:processResources NO-SOURCE
+> Task :clients:cli:processResources UP-TO-DATE
+> Task :common:processResources
+> Task :server-common:spotlessJava UP-TO-DATE
+> Task :server-common:spotlessJavaCheck UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessJava UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessJavaCheck UP-TO-DATE
+> Task :server-common:spotlessKotlinGradle UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessJava UP-TO-DATE
+> Task :server-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessJavaCheck UP-TO-DATE
+> Task :server-common:spotlessCheck UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessKotlinGradle UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessKotlinGradle UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:spotlessCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessJava UP-TO-DATE
+> Task :integration-test-common:spotlessJava UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessJavaCheck UP-TO-DATE
+> Task :integration-test-common:spotlessJavaCheck UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessKotlinGradle UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :integration-test-common:spotlessKotlinGradle UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:spotlessCheck UP-TO-DATE
+> Task :integration-test-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :integration-test-common:spotlessCheck UP-TO-DATE
+> Task :integration-test-common:compileJava NO-SOURCE
+> Task :integration-test-common:classes UP-TO-DATE
+> Task :integration-test-common:processTestResources UP-TO-DATE
+> Task :clients:client-java:spotlessJava UP-TO-DATE
+> Task :clients:client-java:spotlessJavaCheck UP-TO-DATE
+> Task :clients:client-java:spotlessKotlinGradle UP-TO-DATE
+> Task :server:spotlessJava UP-TO-DATE
+> Task :clients:client-java:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :server:spotlessJavaCheck UP-TO-DATE
+> Task :clients:client-java:spotlessCheck UP-TO-DATE
+> Task :server:spotlessKotlinGradle UP-TO-DATE
+> Task :server:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :server:spotlessCheck UP-TO-DATE
+> Task :catalogs:catalog-common:compileJava UP-TO-DATE
+> Task :catalogs:catalog-common:classes UP-TO-DATE
+> Task :catalogs:catalog-common:jar UP-TO-DATE
+> Task :api:spotlessJava UP-TO-DATE
+> Task :api:spotlessJavaCheck UP-TO-DATE
+> Task :api:spotlessKotlinGradle UP-TO-DATE
+> Task :api:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :api:spotlessCheck UP-TO-DATE
+> Task :common:spotlessJava UP-TO-DATE
+> Task :common:spotlessJavaCheck UP-TO-DATE
+> Task :common:spotlessKotlinGradle UP-TO-DATE
+> Task :common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :common:spotlessCheck UP-TO-DATE
+> Task :api:compileJava UP-TO-DATE
+> Task :api:classes UP-TO-DATE
+> Task :api:jar UP-TO-DATE
+> Task :common:compileJava UP-TO-DATE
+> Task :common:classes
+> Task :core:spotlessJava UP-TO-DATE
+> Task :core:spotlessJavaCheck UP-TO-DATE
+> Task :core:spotlessKotlinGradle UP-TO-DATE
+> Task :core:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :core:spotlessCheck UP-TO-DATE
+> Task :common:jar
+> Task :clients:client-java:compileJava UP-TO-DATE
+> Task :clients:client-java:classes UP-TO-DATE
+> Task :clients:client-java:jar UP-TO-DATE
+> Task :clients:cli:spotlessJava
+> Task :clients:cli:spotlessJavaCheck
+> Task :clients:cli:spotlessKotlinGradle UP-TO-DATE
+> Task :clients:cli:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :clients:cli:spotlessCheck
+> Task :clients:cli:compileJava UP-TO-DATE
+> Task :clients:cli:classes UP-TO-DATE
+> Task :core:compileJava UP-TO-DATE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:compileJava UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:classes UP-TO-DATE
+> Task :catalogs:catalog-jdbc-common:jar UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:compileJava UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:classes UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:jar UP-TO-DATE
+> Task :server-common:compileJava UP-TO-DATE
+> Task :server-common:classes UP-TO-DATE
+> Task :server-common:jar UP-TO-DATE
+> Task :catalogs:catalog-jdbc-postgresql:runtimeJars
+> Task :server:compileJava UP-TO-DATE
+> Task :server:classes UP-TO-DATE
+> Task :server:jar UP-TO-DATE
+> Task :integration-test-common:compileTestJava UP-TO-DATE
+> Task :integration-test-common:testClasses UP-TO-DATE
+> Task :integration-test-common:testJar UP-TO-DATE
+> Task :clients:cli:jar
+
+> Task :clients:cli:compileTestJava
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:64: error: cannot find symbol
+    Assertions.assertEquals("true", LineUtil.getAutoIncrement(mockColumn1));
+                                            ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:70: error: cannot find symbol
+    Assertions.assertEquals("false", LineUtil.getAutoIncrement(mockColumn2));
+                                             ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:79: error: cannot find symbol
+    Assertions.assertEquals("true", LineUtil.getAutoIncrement(mockColumn1));
+                                            ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:85: error: cannot find symbol
+    Assertions.assertEquals("false", LineUtil.getAutoIncrement(mockColumn2));
+                                             ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:94: error: cannot find symbol
+    Assertions.assertEquals("true", LineUtil.getAutoIncrement(mockColumn1));
+                                            ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:100: error: cannot find symbol
+    Assertions.assertEquals("false", LineUtil.getAutoIncrement(mockColumn2));
+                                             ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:109: error: cannot find symbol
+    Assertions.assertEquals("true", LineUtil.getAutoIncrement(mockColumn1));
+                                            ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:115: error: cannot find symbol
+    Assertions.assertEquals("false", LineUtil.getAutoIncrement(mockColumn2));
+                                             ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:124: error: cannot find symbol
+    Assertions.assertEquals("", LineUtil.getAutoIncrement(mockColumn1));
+                                        ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:130: error: cannot find symbol
+    Assertions.assertEquals("", LineUtil.getAutoIncrement(mockColumn2));
+                                        ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:136: error: cannot find symbol
+    Assertions.assertEquals("", LineUtil.getAutoIncrement(mockColumn3));
+                                        ^
+  symbol:   method getAutoIncrement(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:144: error: cannot find symbol
+    Assertions.assertEquals("This is a comment", LineUtil.getComment(mockColumn1));
+                                                         ^
+  symbol:   method getComment(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:149: error: cannot find symbol
+    Assertions.assertEquals("N/A", LineUtil.getComment(mockColumn2));
+                                           ^
+  symbol:   method getComment(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:170: error: cannot find symbol
+    Assertions.assertEquals("1", LineUtil.getDefaultValue(mockColumn1));
+                                         ^
+  symbol:   method getDefaultValue(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:179: error: cannot find symbol
+    Assertions.assertEquals(LineUtil.EMPTY_DEFAULT_VALUE, LineUtil.getDefaultValue(mockColumn1));
+                                    ^
+  symbol:   variable EMPTY_DEFAULT_VALUE
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:179: error: cannot find symbol
+    Assertions.assertEquals(LineUtil.EMPTY_DEFAULT_VALUE, LineUtil.getDefaultValue(mockColumn1));
+                                                                  ^
+  symbol:   method getDefaultValue(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:185: error: cannot find symbol
+    Assertions.assertEquals(LineUtil.EMPTY_DEFAULT_VALUE, LineUtil.getDefaultValue(mockColumn2));
+                                    ^
+  symbol:   variable EMPTY_DEFAULT_VALUE
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:185: error: cannot find symbol
+    Assertions.assertEquals(LineUtil.EMPTY_DEFAULT_VALUE, LineUtil.getDefaultValue(mockColumn2));
+                                                                  ^
+  symbol:   method getDefaultValue(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:206: error: cannot find symbol
+    Assertions.assertEquals("''", LineUtil.getDefaultValue(mockColumn1));
+                                          ^
+  symbol:   method getDefaultValue(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:224: error: cannot find symbol
+    Assertions.assertEquals("Hello, world!", LineUtil.getDefaultValue(mockColumn2));
+                                                     ^
+  symbol:   method getDefaultValue(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:233: error: cannot find symbol
+    Assertions.assertEquals("current_timestamp()", LineUtil.getDefaultValue(mockColumn1));
+                                                           ^
+  symbol:   method getDefaultValue(Column)
+  location: class LineUtil
+/workspace/repo/clients/cli/src/test/java/org/apache/gravitino/cli/output/TestLineUtil.java:242: error: cannot find symbol
+    Assertions.assertEquals("date([b])", LineUtil.getDefaultValue(mockColumn1));
+                                                 ^
+  symbol:   method getDefaultValue(Column)
+  location: class LineUtil
+22 errors
+
+> Task :clients:cli:compileTestJava FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':clients:cli:compileTestJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 36s
+74 actionable tasks: 7 executed, 67 up-to-date
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.apache.gravitino.cli.output.TestPlainFormat" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:20:12" hostname="modal" time="0.759">
+  <properties/>
+  <testcase name="testListMetalakeWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.597"/>
+  <testcase name="testCatalogDetailsWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.045"/>
+  <testcase name="testTableDetailsWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.054"/>
+  <testcase name="testListSchemaWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.019"/>
+  <testcase name="testListCatalogWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.004"/>
+  <testcase name="testListTableWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.005"/>
+  <testcase name="testSchemaDetailsWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.001"/>
+  <testcase name="testAuditWithTableFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.022"/>
+  <testcase name="testOutputWithUnsupportType()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.003"/>
+  <testcase name="testMetalakeDetailsWithPlainFormat()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.001"/>
+  <testcase name="testAuditWithTableFormatWithNullValues()" classname="org.apache.gravitino.cli.output.TestPlainFormat" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.apache.gravitino.cli.output.TestTableFormat" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:20:13" hostname="modal" time="0.054">
+  <properties/>
+  <testcase name="testListSchemaWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.016"/>
+  <testcase name="testDataWithCenterAlign()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testListCatalogWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.004"/>
+  <testcase name="testTitleWithLeftAlign()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testListTableWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.005"/>
+  <testcase name="testSchemaDetailsWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.004"/>
+  <testcase name="testDataWithRightAlign()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testCreateDefaultTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testMetalakeDetailsWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testAuditWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testOutputWithUnsupportType()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testTitleWithRightAlign()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testListMetalakeWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testAuditWithTableFormatWithNullValues()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.001"/>
+  <testcase name="testCatalogDetailsWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.002"/>
+  <testcase name="testTableDetailsWithTableFormat()" classname="org.apache.gravitino.cli.output.TestTableFormat" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=0 graded=45 found=27 failed=0 parsed=27 framework=junit exit_code=1

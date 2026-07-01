@@ -1,0 +1,23 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn install -Dmaven.test.skip=true -B && mvn -pl instancio-tests/feature-tests test -B && mvn -pl instancio-tests/instancio-core-tests -Dtest=SettingsSupportTest,UnicodeBlocksTest -Dsurefire.failIfNoSpecifiedTests=false test -B",
+  "test_files": [
+    "instancio-tests/feature-tests/src/test/java/org/instancio/test/features/generator/string/StringGeneratorTest.java",
+    "instancio-tests/feature-tests/src/test/java/org/instancio/test/features/settings/StringSettingsTest.java",
+    "instancio-tests/feature-tests/src/test/java/org/instancio/test/features/values/StringSpecTest.java",
+    "instancio-tests/instancio-core-tests/src/test/java/org/instancio/internal/settings/SettingsSupportTest.java",
+    "instancio-tests/instancio-core-tests/src/test/java/org/instancio/internal/util/UnicodeBlocksTest.java",
+    "instancio-tests/instancio-core-tests/src/test/resources/instancio.properties",
+    "instancio-tests/instancio-test-support/src/main/java/org/instancio/test/support/asserts/StringAssertExtras.java"
+  ],
+  "num_test_files": 7,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Instancio::test_1",
+    "Instancio::test_2",
+    "Instancio::test_3",
+    "Instancio::test_4",
+    "Instancio::test_5"
+  ],
+  "PASS_TO_PASS": []
+}

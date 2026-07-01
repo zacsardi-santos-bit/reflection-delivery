@@ -1,0 +1,135 @@
+patching file bin/test/fail.config.json
+patching file bin/test/fail.tact
+patching file bin/test/success.config.json
+patching file bin/test/success.config.with.decompilation.json
+patching file bin/test/success.tact
+patching file src/cli/tact/e2e.spec.ts
+patching file src/cli/unboc/e2e.spec.ts
+patching file src/test/benchmarks/contracts/benchmark_functions.tact (renamed from src/test/benchmarks/contracts/functions.tact)
+patching file src/test/benchmarks/contracts/benchmark_functions_inline.tact
+patching file src/test/compilation-failed/tact.config.json
+patching file src/test/compilation-failed/util.ts
+patching file src/test/contracts.build.ts
+patching file src/test/e2e-emulated/contracts/deep.tact (renamed from src/test/e2e-emulated/contracts/deep-sequence.tact)
+patching file src/test/e2e-emulated/map-tests/generate.ts
+patching file src/test/tact.config.json
+patching file src/test/utils/all-in-folder.build.ts
+src/cli/tact/e2e.spec.ts(2,41): error TS2307: Cannot find module '../test-util.build' or its corresponding type declarations.
+src/cli/unboc/e2e.spec.ts(2,41): error TS2307: Cannot find module '../test-util.build' or its corresponding type declarations.
+src/test/benchmarks/benchmarks.spec.ts(7,27): error TS2307: Cannot find module './contracts/output/benchmark_functions_Functions' or its corresponding type declarations.
+src/test/benchmarks/benchmarks.spec.ts(8,46): error TS2307: Cannot find module './contracts/output/benchmark_functions_inline_Functions' or its corresponding type declarations.
+src/test/compilation-failed/util.ts(2,21): error TS2307: Cannot find module '../../cli/tact' or its corresponding type declarations.
+src/test/compilation-failed/util.ts(46,43): error TS7006: Parameter 'err' implicitly has an 'any' type.
+src/test/e2e-emulated/address.spec.ts(3,31): error TS2307: Cannot find module './contracts/output/address_AddressTester' or its corresponding type declarations.
+src/test/e2e-emulated/allocation.spec.ts(3,22): error TS2307: Cannot find module './contracts/output/allocation_Test' or its corresponding type declarations.
+src/test/e2e-emulated/asm-functions.spec.ts(3,52): error TS2307: Cannot find module './contracts/output/asm-functions_AsmFunctionsTester' or its corresponding type declarations.
+src/test/e2e-emulated/block-statements.spec.ts(3,22): error TS2307: Cannot find module './contracts/output/block-statements_Test' or its corresponding type declarations.
+src/test/e2e-emulated/bounced-routing.spec.ts(3,33): error TS2307: Cannot find module './contracts/output/bounced-routing_SampleContract2' or its corresponding type declarations.
+src/test/e2e-emulated/bounced-routing.spec.ts(4,32): error TS2307: Cannot find module './contracts/output/bounced-routing_SampleContract' or its corresponding type declarations.
+src/test/e2e-emulated/constants.spec.ts(3,32): error TS2307: Cannot find module './contracts/output/constants_ConstantTester' or its corresponding type declarations.
+src/test/e2e-emulated/contract-methods.spec.ts(3,22): error TS2307: Cannot find module './contracts/output/contract-methods_Test' or its corresponding type declarations.
+src/test/e2e-emulated/debug.spec.ts(3,23): error TS2307: Cannot find module './contracts/output/debug_Debug' or its corresponding type declarations.
+src/test/e2e-emulated/deep.spec.ts(3,19): error TS2307: Cannot find module './contracts/output/deep_A' or its corresponding type declarations.
+src/test/e2e-emulated/deep.spec.ts(4,19): error TS2307: Cannot find module './contracts/output/deep_B' or its corresponding type declarations.
+src/test/e2e-emulated/deep.spec.ts(5,19): error TS2307: Cannot find module './contracts/output/deep_C' or its corresponding type declarations.
+src/test/e2e-emulated/dns.spec.ts(3,27): error TS2307: Cannot find module './contracts/output/dns_DNSTester' or its corresponding type declarations.
+src/test/e2e-emulated/external-fallbacks.spec.ts(3,41): error TS2307: Cannot find module './contracts/output/external-fallbacks_ExternalFallbacksTester' or its corresponding type declarations.
+src/test/e2e-emulated/getters.spec.ts(3,42): error TS2307: Cannot find module './contracts/output/getters_Test' or its corresponding type declarations.
+src/test/e2e-emulated/implicit-init.spec.ts(3,28): error TS2307: Cannot find module './contracts/output/implicit-init_MyContract' or its corresponding type declarations.
+src/test/e2e-emulated/init-of-message.spec.ts(3,32): error TS2307: Cannot find module './contracts/output/init-of-message_Test' or its corresponding type declarations.
+src/test/e2e-emulated/init-return.spec.ts(3,22): error TS2307: Cannot find module './contracts/output/init-return_Test' or its corresponding type declarations.
+src/test/e2e-emulated/initof.spec.ts(3,22): error TS2307: Cannot find module './contracts/output/initof_Self' or its corresponding type declarations.
+src/test/e2e-emulated/initof.spec.ts(4,24): error TS2307: Cannot find module './contracts/output/initof_Parent' or its corresponding type declarations.
+src/test/e2e-emulated/initof.spec.ts(5,26): error TS2307: Cannot find module './contracts/output/initof-2_TestInit' or its corresponding type declarations.
+src/test/e2e-emulated/initof.spec.ts(6,19): error TS2307: Cannot find module './contracts/output/initof-3_A' or its corresponding type declarations.
+src/test/e2e-emulated/integer-literals.spec.ts(3,39): error TS2307: Cannot find module './contracts/output/integer-literals_IntegerLiteralsTester' or its corresponding type declarations.
+src/test/e2e-emulated/intrinsics.spec.ts(3,34): error TS2307: Cannot find module './contracts/output/intrinsics_IntrinsicsTester' or its corresponding type declarations.
+src/test/e2e-emulated/local-type-inference.spec.ts(3,42): error TS2307: Cannot find module './contracts/output/local-type-inference_LocalTypeInferenceTester' or its corresponding type declarations.
+src/test/e2e-emulated/map-comparison.spec.ts(3,43): error TS2307: Cannot find module './contracts/output/map-comparison_MapComparisonTestContract' or its corresponding type declarations.
+src/test/e2e-emulated/map-comparison.spec.ts(198,51): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/test/e2e-emulated/map-comparison.spec.ts(221,30): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/test/e2e-emulated/map-tests/generate.ts(1,45): error TS2307: Cannot find module '../../../cli/tact' or its corresponding type declarations.
+src/test/e2e-emulated/map-traverse.spec.ts(3,41): error TS2307: Cannot find module './contracts/output/map-traverse_MapTraverseTestContract' or its corresponding type declarations.
+src/test/e2e-emulated/map1.spec.ts(12,8): error TS2307: Cannot find module './contracts/output/maps1_MapTestContract' or its corresponding type declarations.
+src/test/e2e-emulated/map2.spec.ts(11,8): error TS2307: Cannot find module './contracts/output/maps2_MapTestContract' or its corresponding type declarations.
+src/test/e2e-emulated/masterchain.spec.ts(3,35): error TS2307: Cannot find module './contracts/output/masterchain_MasterchainTester' or its corresponding type declarations.
+src/test/e2e-emulated/math.spec.ts(3,28): error TS2307: Cannot find module './contracts/output/math_MathTester' or its corresponding type declarations.
+src/test/e2e-emulated/mutating-methods.spec.ts(3,24): error TS2307: Cannot find module './contracts/output/mutating-methods_Tester' or its corresponding type declarations.
+src/test/e2e-emulated/non-mutating-methods.spec.ts(3,24): error TS2307: Cannot find module './contracts/output/non-mutating-methods_Tester' or its corresponding type declarations.
+src/test/e2e-emulated/optionals.spec.ts(6,8): error TS2307: Cannot find module './contracts/output/optionals_ContractWithOptionals' or its corresponding type declarations.
+src/test/e2e-emulated/optionals.spec.ts(7,22): error TS2307: Cannot find module './contracts/output/optionals_Opt4' or its corresponding type declarations.
+src/test/e2e-emulated/ordering.spec.ts(3,19): error TS2307: Cannot find module './contracts/output/ordering_A' or its corresponding type declarations.
+src/test/e2e-emulated/ordering.spec.ts(4,19): error TS2307: Cannot find module './contracts/output/ordering_B' or its corresponding type declarations.
+src/test/e2e-emulated/random.spec.ts(3,32): error TS2307: Cannot find module './contracts/output/random_RandomContract' or its corresponding type declarations.
+src/test/e2e-emulated/receiver-empty.spec.ts(3,22): error TS2307: Cannot find module './contracts/output/receiver-empty_Test' or its corresponding type declarations.
+src/test/e2e-emulated/recursion.spec.ts(3,33): error TS2307: Cannot find module './contracts/output/recursion_RecursionTester' or its corresponding type declarations.
+src/test/e2e-emulated/sample-jetton.spec.ts(3,30): error TS2307: Cannot find module './contracts/output/sample-jetton_SampleJetton' or its corresponding type declarations.
+src/test/e2e-emulated/sample-jetton.spec.ts(4,37): error TS2307: Cannot find module './contracts/output/sample-jetton_JettonDefaultWallet' or its corresponding type declarations.
+src/test/e2e-emulated/semantics.spec.ts(3,33): error TS2307: Cannot find module './contracts/output/semantics_SemanticsTester' or its corresponding type declarations.
+src/test/e2e-emulated/send.spec.ts(3,28): error TS2307: Cannot find module './contracts/output/send_SendTester' or its corresponding type declarations.
+src/test/e2e-emulated/serialization.spec.ts(3,38): error TS2307: Cannot find module './contracts/output/serialization-3_SerializationTester3' or its corresponding type declarations.
+src/test/e2e-emulated/serialization.spec.ts(4,38): error TS2307: Cannot find module './contracts/output/serialization-2_SerializationTester2' or its corresponding type declarations.
+src/test/e2e-emulated/serialization.spec.ts(5,37): error TS2307: Cannot find module './contracts/output/serialization_SerializationTester' or its corresponding type declarations.
+src/test/e2e-emulated/stdlib.spec.ts(3,28): error TS2307: Cannot find module './contracts/output/stdlib_StdlibTest' or its corresponding type declarations.
+src/test/e2e-emulated/strings.spec.ts(3,31): error TS2307: Cannot find module './contracts/output/strings_StringsTester' or its corresponding type declarations.
+src/test/e2e-emulated/structs.spec.ts(19,8): error TS2307: Cannot find module './contracts/output/structs_StructsTester' or its corresponding type declarations.
+src/test/e2e-emulated/ternary.spec.ts(3,31): error TS2307: Cannot find module './contracts/output/ternary_TernaryTester' or its corresponding type declarations.
+src/test/e2e-emulated/text-message-receivers.spec.ts(3,38): error TS2307: Cannot find module './contracts/output/text-message-receivers_TextMessageReceivers' or its corresponding type declarations.
+src/test/e2e-emulated/traits.spec.ts(3,31): error TS2307: Cannot find module './contracts/output/traits_LaikaContract' or its corresponding type declarations.
+src/test/e2e-emulated/try-catch.spec.ts(3,32): error TS2307: Cannot find module './contracts/output/try-catch_TryCatchTester' or its corresponding type declarations.
+src/test/e2e-emulated/underscore-variable.spec.ts(3,48): error TS2307: Cannot find module './contracts/output/underscore-variable_UnderscoreVariableTestContract' or its corresponding type declarations.
+src/test/exit-codes/compute-phase-errors.spec.ts(6,8): error TS2307: Cannot find module './contracts/output/compute-phase-errors_ComputePhaseErrorsTester' or its corresponding type declarations.
+src/test/exit-codes/repeat-range.spec.ts(3,51): error TS2307: Cannot find module './contracts/output/repeat-range_RepeatRangeTester' or its corresponding type declarations.
+src/test/exit-codes/tact-reserved-contract-errors.spec.ts(3,62): error TS2307: Cannot find module './contracts/output/tact-reserved-contract-errors_ReservedContractErrorsTester' or its corresponding type declarations.
+src/test/utils/all-in-folder.build.ts(7,21): error TS2307: Cannot find module '../../cli/tact' or its corresponding type declarations.
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ ts-node src/stdlib/copy.build.ts
+Done in 1.52s.
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ ts-node src/grammar/prev/copy.build.ts
+Done in 1.37s.
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ ts-node src/func/copy.build.ts
+Done in 1.35s.
+FAIL src/cli/unboc/e2e.spec.ts
+  ● Test suite failed to run
+
+    Cannot find module '../test-util.build' from 'src/cli/unboc/e2e.spec.ts'
+
+      4 | // disable tests on windows
+      5 | const testWin = process.platform !== "win32" ? test : test.skip;
+    > 6 |
+        | ^
+      7 | const tact = (args: string) => {
+      8 |     const tactPath = normalize(
+      9 |         join(__dirname, "..", "..", "..", "bin", "tact.js"),
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.<anonymous> (src/cli/unboc/e2e.spec.ts:6:24)
+
+FAIL src/cli/tact/e2e.spec.ts
+  ● Test suite failed to run
+
+    Cannot find module '../test-util.build' from 'src/cli/tact/e2e.spec.ts'
+
+      4 |
+      5 | // disable tests on windows
+    > 6 | const testWin = process.platform !== "win32" ? test : test.skip;
+        |                        ^
+      7 |
+      8 | const tact = (args: string) => {
+      9 |     const tactPath = normalize(
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.<anonymous> (src/cli/tact/e2e.spec.ts:6:24)
+
+Test Suites: 2 failed, 2 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        1.047 s
+Ran all test suites matching /src\/cli\/tact\/e2e.spec.ts|src\/cli\/unboc\/e2e.spec.ts/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=0 (grader error: Extra data: line 46 column 1 (char 2971); fell back to exit_code=1)

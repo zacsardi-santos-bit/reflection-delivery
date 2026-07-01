@@ -1,0 +1,6 @@
+patching file cluster/config-defaults.yaml
+patching file cluster/node-pools/master-default/stack.yaml
+patching file cluster/node-pools/master-default/userdata.yaml
+patching file cluster/node-pools/worker-combined/stack.yaml
+patching file cluster/node-pools/worker-karpenter/provisioners.yaml
+patching file cluster/node-pools/worker-splitaz/stack.yaml

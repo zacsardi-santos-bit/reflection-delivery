@@ -1,0 +1,1652 @@
+diff --git a/implementations/rust/ockam/ockam_api/src/cli_state/mod.rs b/implementations/rust/ockam/ockam_api/src/cli_state/mod.rs
+index eb9e175b6..f6ac8209a 100644
+--- a/implementations/rust/ockam/ockam_api/src/cli_state/mod.rs
++++ b/implementations/rust/ockam/ockam_api/src/cli_state/mod.rs
+@@ -21,6 +21,7 @@ mod resources;
+ pub mod secure_channels;
+ pub mod spaces;
+ pub mod storage;
++mod tcp_portals;
+ pub mod test_support;
+ pub mod trust;
+ pub mod users;
+diff --git a/implementations/rust/ockam/ockam_api/src/cli_state/nodes.rs b/implementations/rust/ockam/ockam_api/src/cli_state/nodes.rs
+index 923f16b55..63d29e2f5 100644
+--- a/implementations/rust/ockam/ockam_api/src/cli_state/nodes.rs
++++ b/implementations/rust/ockam/ockam_api/src/cli_state/nodes.rs
+@@ -164,6 +164,7 @@ impl CliState {
+         let repository = self.nodes_repository();
+         let node_exists = repository.get_node(node_name).await.is_ok();
+         repository.delete_node(node_name).await?;
++
+         // set another node as the default node
+         if node_exists {
+             let other_nodes = repository.get_nodes().await?;
+diff --git a/implementations/rust/ockam/ockam_api/src/cli_state/repositories.rs b/implementations/rust/ockam/ockam_api/src/cli_state/repositories.rs
+index 7267f65e3..2d9e80e47 100644
+--- a/implementations/rust/ockam/ockam_api/src/cli_state/repositories.rs
++++ b/implementations/rust/ockam/ockam_api/src/cli_state/repositories.rs
+@@ -44,6 +44,10 @@ impl CliState {
+         Arc::new(NodesSqlxDatabase::new(self.database()))
+     }
+ 
++    pub(super) fn tcp_portals_repository(&self) -> Arc<dyn TcpPortalsRepository> {
++        Arc::new(TcpPortalsSqlxDatabase::new(self.database()))
++    }
++
+     pub(super) fn projects_repository(&self) -> Arc<dyn ProjectsRepository> {
+         Arc::new(ProjectsSqlxDatabase::new(self.database()))
+     }
+diff --git a/implementations/rust/ockam/ockam_api/src/cli_state/storage/enrollments_repository_sql.rs b/implementations/rust/ockam/ockam_api/src/cli_state/storage/enrollments_repository_sql.rs
+index c189d9f6f..48303edd1 100644
+--- a/implementations/rust/ockam/ockam_api/src/cli_state/storage/enrollments_repository_sql.rs
++++ b/implementations/rust/ockam/ockam_api/src/cli_state/storage/enrollments_repository_sql.rs
+@@ -36,9 +36,9 @@ impl EnrollmentsSqlxDatabase {
+ impl EnrollmentsRepository for EnrollmentsSqlxDatabase {
+     async fn set_as_enrolled(&self, identifier: &Identifier, email: &EmailAddress) -> Result<()> {
+         let query = query("INSERT OR REPLACE INTO identity_enrollment(identifier, enrolled_at, email) VALUES (?, ?, ?)")
+-            .bind(identifier.to_sql())
+-            .bind(OffsetDateTime::now_utc().to_sql())
+-            .bind(email.to_sql());
++                .bind(identifier.to_sql())
++                .bind(OffsetDateTime::now_utc().to_sql())
++                .bind(email.to_sql());
+         Ok(query.execute(&*self.database.pool).await.void()?)
+     }
+ 
+@@ -163,11 +163,13 @@ impl EnrollmentRow {
+ 
+ #[cfg(test)]
+ mod tests {
+-    use crate::cli_state::{EnrollmentsRepository, IdentitiesRepository, IdentitiesSqlxDatabase};
++    use std::sync::Arc;
++
+     use ockam::identity::{
+         identities, ChangeHistoryRepository, ChangeHistorySqlxDatabase, Identity,
+     };
+-    use std::sync::Arc;
++
++    use crate::cli_state::{EnrollmentsRepository, IdentitiesRepository, IdentitiesSqlxDatabase};
+ 
+     use super::*;
+ 
+diff --git a/implementations/rust/ockam/ockam_api/src/cli_state/storage/mod.rs b/implementations/rust/ockam/ockam_api/src/cli_state/storage/mod.rs
+index 53eb35a24..ccd17ddca 100644
+--- a/implementations/rust/ockam/ockam_api/src/cli_state/storage/mod.rs
++++ b/implementations/rust/ockam/ockam_api/src/cli_state/storage/mod.rs
+@@ -10,6 +10,8 @@ pub use projects_repository::*;
+ pub use projects_repository_sql::*;
+ pub use spaces_repository::*;
+ pub use spaces_repository_sql::*;
++pub use tcp_portals_repository::*;
++pub use tcp_portals_repository_sql::*;
+ pub use users_repository::*;
+ pub use users_repository_sql::*;
+ pub use vaults_repository::*;
+@@ -27,6 +29,8 @@ mod projects_repository;
+ mod projects_repository_sql;
+ mod spaces_repository;
+ mod spaces_repository_sql;
++mod tcp_portals_repository;
++mod tcp_portals_repository_sql;
+ mod users_repository;
+ mod users_repository_sql;
+ mod vaults_repository;
+diff --git a/implementations/rust/ockam/ockam_api/src/cli_state/storage/nodes_repository_sql.rs b/implementations/rust/ockam/ockam_api/src/cli_state/storage/nodes_repository_sql.rs
+index 1f98f1f0f..581a87b1e 100644
+--- a/implementations/rust/ockam/ockam_api/src/cli_state/storage/nodes_repository_sql.rs
++++ b/implementations/rust/ockam/ockam_api/src/cli_state/storage/nodes_repository_sql.rs
+@@ -134,6 +134,13 @@ impl NodesRepository for NodesSqlxDatabase {
+             .bind(node_name.to_sql());
+         query.execute(&mut *transaction).await.void()?;
+ 
++        let query = sqlx::query("DELETE FROM tcp_inlet WHERE node_name=?").bind(node_name.to_sql());
++        query.execute(&mut *transaction).await.void()?;
++
++        let query =
++            sqlx::query("DELETE FROM tcp_outlet_status WHERE node_name=?").bind(node_name.to_sql());
++        query.execute(&mut *transaction).await.void()?;
++
+         let query =
+             sqlx::query("DELETE FROM node_project WHERE node_name=?").bind(node_name.to_sql());
+         query.execute(&mut *transaction).await.void()?;
+diff --git a/implementations/rust/ockam/ockam_api/src/cli_state/storage/tcp_portals_repository.rs b/implementations/rust/ockam/ockam_api/src/cli_state/storage/tcp_portals_repository.rs
+new file mode 100644
+index 000000000..c050d177d
+--- /dev/null
++++ b/implementations/rust/ockam/ockam_api/src/cli_state/storage/tcp_portals_repository.rs
+@@ -0,0 +1,62 @@
++use crate::nodes::models::portal::OutletStatus;
++use ockam_core::Result;
++use ockam_core::{async_trait, Address};
++use ockam_multiaddr::MultiAddr;
++use std::net::SocketAddr;
++
++/// The TcpPortalsRepository is responsible for accessing the configured tcp inlets and tcp outlets
++#[async_trait]
++pub trait TcpPortalsRepository: Send + Sync + 'static {
++    /// Store the configuration of a TcpInlet for a given node name
++    async fn store_tcp_inlet(&self, node_name: &str, tcp_inlet: &TcpInlet) -> Result<()>;
++    /// Return the configuration of a TcpInlet for a given node name and inlet alias
++    async fn get_tcp_inlet(&self, node_name: &str, alias: &str) -> Result<Option<TcpInlet>>;
++    /// Delete the configuration of a TcpInlet for a given node name and inlet alias
++    async fn delete_tcp_inlet(&self, node_name: &str, alias: &str) -> Result<()>;
++
++    /// Store the configuration of a TcpOutlet for a given node name
++    async fn store_tcp_outlet(
++        &self,
++        node_name: &str,
++        tcp_outlet_status: &OutletStatus,
++    ) -> Result<()>;
++
++    /// Return the configuration of a TcpOutlet for a given node name and worker address
++    async fn get_tcp_outlet(
++        &self,
++        node_name: &str,
++        worker_addr: &Address,
++    ) -> Result<Option<OutletStatus>>;
++
++    /// Delete the configuration of a TcpOutlet for a given node name and worker address
++    async fn delete_tcp_outlet(&self, node_name: &str, worker_addr: &Address) -> Result<()>;
++}
++
++#[derive(Debug, Clone, PartialEq, Eq)]
++pub struct TcpInlet {
++    bind_addr: SocketAddr,
++    outlet_addr: MultiAddr,
++    alias: String,
++}
++
++impl TcpInlet {
++    pub fn new(bind_addr: &SocketAddr, outlet_addr: &MultiAddr, alias: &str) -> TcpInlet {
++        Self {
++            bind_addr: *bind_addr,
++            outlet_addr: outlet_addr.clone(),
++            alias: alias.to_string(),
++        }
++    }
++
++    pub fn bind_addr(&self) -> SocketAddr {
++        self.bind_addr
++    }
++
++    pub fn outlet_addr(&self) -> MultiAddr {
++        self.outlet_addr.clone()
++    }
++
++    pub fn alias(&self) -> String {
++        self.alias.clone()
++    }
++}
+diff --git a/implementations/rust/ockam/ockam_api/src/cli_state/storage/tcp_portals_repository_sql.rs b/implementations/rust/ockam/ockam_api/src/cli_state/storage/tcp_portals_repository_sql.rs
+new file mode 100644
+index 000000000..bd3f097e8
+--- /dev/null
++++ b/implementations/rust/ockam/ockam_api/src/cli_state/storage/tcp_portals_repository_sql.rs
+@@ -0,0 +1,225 @@
++use std::net::SocketAddr;
++use std::str::FromStr;
++use std::sync::Arc;
++
++use sqlx::*;
++use tracing::debug;
++
++use crate::nodes::models::portal::OutletStatus;
++use ockam::{FromSqlxError, SqlxDatabase, ToSqlxType, ToVoid};
++use ockam_core::errcode::{Kind, Origin};
++use ockam_core::Error;
++use ockam_core::Result;
++use ockam_core::{async_trait, Address};
++use ockam_multiaddr::MultiAddr;
++
++use crate::cli_state::storage::tcp_portals_repository::TcpPortalsRepository;
++use crate::cli_state::TcpInlet;
++
++#[derive(Clone)]
++pub struct TcpPortalsSqlxDatabase {
++    database: SqlxDatabase,
++}
++
++impl TcpPortalsSqlxDatabase {
++    /// Create a new database
++    pub fn new(database: SqlxDatabase) -> Self {
++        debug!("create a repository for tcp portals");
++        Self { database }
++    }
++
++    /// Create a new in-memory database
++    #[allow(unused)]
++    pub async fn create() -> Result<Arc<Self>> {
++        Ok(Arc::new(Self::new(
++            SqlxDatabase::in_memory("tcp portals").await?,
++        )))
++    }
++}
++
++#[async_trait]
++impl TcpPortalsRepository for TcpPortalsSqlxDatabase {
++    async fn store_tcp_inlet(
++        &self,
++        node_name: &str,
++        tcp_inlet: &TcpInlet,
++    ) -> ockam_core::Result<()> {
++        let query = query("INSERT OR REPLACE INTO tcp_inlet VALUES (?, ?, ?, ?)")
++            .bind(node_name.to_sql())
++            .bind(tcp_inlet.bind_addr().to_string().to_sql())
++            .bind(tcp_inlet.outlet_addr().to_string().to_sql())
++            .bind(tcp_inlet.alias().to_sql());
++        query.execute(&*self.database.pool).await.void()?;
++        Ok(())
++    }
++
++    async fn get_tcp_inlet(
++        &self,
++        node_name: &str,
++        alias: &str,
++    ) -> ockam_core::Result<Option<TcpInlet>> {
++        let query = query_as(
++            "SELECT bind_addr, outlet_addr, alias FROM tcp_inlet WHERE node_name = ? AND alias = ?",
++        )
++        .bind(node_name.to_sql())
++        .bind(alias.to_sql());
++        let result: Option<TcpInletRow> = query
++            .fetch_optional(&*self.database.pool)
++            .await
++            .into_core()?;
++        Ok(result.map(|r| r.tcp_inlet()).transpose()?)
++    }
++
++    async fn delete_tcp_inlet(&self, node_name: &str, alias: &str) -> ockam_core::Result<()> {
++        let query = query("DELETE FROM tcp_inlet WHERE node_name = ? AND alias = ?")
++            .bind(node_name.to_sql())
++            .bind(alias.to_sql());
++        query.execute(&*self.database.pool).await.into_core()?;
++        Ok(())
++    }
++
++    async fn store_tcp_outlet(
++        &self,
++        node_name: &str,
++        tcp_outlet_status: &OutletStatus,
++    ) -> ockam_core::Result<()> {
++        let query = query("INSERT OR REPLACE INTO tcp_outlet_status VALUES (?, ?, ?, ?)")
++            .bind(node_name.to_sql())
++            .bind(tcp_outlet_status.socket_addr.to_sql())
++            .bind(tcp_outlet_status.worker_addr.to_sql())
++            .bind(tcp_outlet_status.payload.as_ref().map(|p| p.to_sql()));
++        query.execute(&*self.database.pool).await.void()?;
++        Ok(())
++    }
++
++    async fn get_tcp_outlet(
++        &self,
++        node_name: &str,
++        worker_addr: &Address,
++    ) -> ockam_core::Result<Option<OutletStatus>> {
++        let query = query_as("SELECT socket_addr, worker_addr, payload FROM tcp_outlet_status WHERE node_name = ? AND worker_addr = ?")
++            .bind(node_name.to_sql())
++            .bind(worker_addr.to_sql());
++        let result: Option<TcpOutletStatusRow> = query
++            .fetch_optional(&*self.database.pool)
++            .await
++            .into_core()?;
++        Ok(result.map(|r| r.tcp_outlet_status()).transpose()?)
++    }
++
++    async fn delete_tcp_outlet(
++        &self,
++        node_name: &str,
++        worker_addr: &Address,
++    ) -> ockam_core::Result<()> {
++        let query = query("DELETE FROM tcp_outlet_status WHERE node_name = ? AND worker_addr = ?")
++            .bind(node_name.to_sql())
++            .bind(worker_addr.to_sql());
++        query.execute(&*self.database.pool).await.into_core()?;
++        Ok(())
++    }
++}
++
++// Database serialization / deserialization
++
++/// Low-level representation of a row in the tcp_outlet_status table
++#[derive(sqlx::FromRow)]
++struct TcpInletRow {
++    bind_addr: String,
++    outlet_addr: String,
++    alias: String,
++}
++
++impl TcpInletRow {
++    fn bind_addr(&self) -> Result<SocketAddr> {
++        SocketAddr::from_str(&self.bind_addr)
++            .map_err(|e| ockam_core::Error::new(Origin::Api, Kind::Serialization, format!("{e:?}")))
++    }
++
++    fn outlet_addr(&self) -> Result<MultiAddr> {
++        MultiAddr::from_str(&self.outlet_addr)
++            .map_err(|e| ockam_core::Error::new(Origin::Api, Kind::Serialization, format!("{e:?}")))
++    }
++
++    fn tcp_inlet(&self) -> Result<TcpInlet> {
++        Ok(TcpInlet::new(
++            &self.bind_addr()?,
++            &self.outlet_addr()?,
++            &self.alias,
++        ))
++    }
++}
++
++/// Low-level representation of a row in the tcp_outlet_status table
++#[derive(sqlx::FromRow)]
++struct TcpOutletStatusRow {
++    socket_addr: String,
++    worker_addr: String,
++    payload: Option<String>,
++}
++
++impl TcpOutletStatusRow {
++    fn tcp_outlet_status(&self) -> Result<OutletStatus> {
++        let socket_addr = SocketAddr::from_str(&self.socket_addr)
++            .map_err(|e| Error::new(Origin::Application, Kind::Serialization, e.to_string()))?;
++        let worker_addr = Address::from_string(&self.worker_addr);
++        Ok(OutletStatus {
++            socket_addr,
++            worker_addr,
++            payload: self.payload.clone(),
++        })
++    }
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[tokio::test]
++    async fn test_repository() -> Result<()> {
++        let db = create_database().await?;
++        let repository = create_repository(db.clone());
++
++        let tcp_inlet = TcpInlet::new(
++            &SocketAddr::from_str("127.0.0.1:80").unwrap(),
++            &MultiAddr::from_str("/node/outlet").unwrap(),
++            "alias",
++        );
++        repository.store_tcp_inlet("node_name", &tcp_inlet).await?;
++        let actual = repository.get_tcp_inlet("node_name", "alias").await?;
++        assert_eq!(actual, Some(tcp_inlet.clone()));
++
++        repository.delete_tcp_inlet("node_name", "alias").await?;
++        let actual = repository.get_tcp_inlet("node_name", "alias").await?;
++        assert_eq!(actual, None);
++
++        let worker_addr = Address::from_str("worker_addr").unwrap();
++        let tcp_outlet_status = OutletStatus::new(
++            SocketAddr::from_str("127.0.0.1:80").unwrap(),
++            worker_addr.clone(),
++            Some("payload".to_string()),
++        );
++        repository
++            .store_tcp_outlet("node_name", &tcp_outlet_status)
++            .await?;
++        let actual = repository.get_tcp_outlet("node_name", &worker_addr).await?;
++        assert_eq!(actual, Some(tcp_outlet_status.clone()));
++
++        repository
++            .delete_tcp_outlet("node_name", &worker_addr)
++            .await?;
++        let actual = repository.get_tcp_outlet("node_name", &worker_addr).await?;
++        assert_eq!(actual, None);
++
++        Ok(())
++    }
++
++    /// HELPERS
++    fn create_repository(db: SqlxDatabase) -> Arc<dyn TcpPortalsRepository> {
++        Arc::new(TcpPortalsSqlxDatabase::new(db))
++    }
++
++    async fn create_database() -> Result<SqlxDatabase> {
++        SqlxDatabase::in_memory("test").await
++    }
++}
+diff --git a/implementations/rust/ockam/ockam_api/src/cli_state/tcp_portals.rs b/implementations/rust/ockam/ockam_api/src/cli_state/tcp_portals.rs
+new file mode 100644
+index 000000000..340b9ba23
+--- /dev/null
++++ b/implementations/rust/ockam/ockam_api/src/cli_state/tcp_portals.rs
+@@ -0,0 +1,77 @@
++use ockam_core::errcode::{Kind, Origin};
++use ockam_core::Address;
++use ockam_multiaddr::MultiAddr;
++use std::net::SocketAddr;
++
++use super::Result;
++use crate::cli_state::TcpInlet;
++use crate::nodes::models::portal::OutletStatus;
++use crate::CliState;
++
++impl CliState {
++    /// Create a TCP inlet
++    #[instrument(skip_all)]
++    pub async fn create_tcp_inlet(
++        &self,
++        node_name: &str,
++        bind_addr: &SocketAddr,
++        outlet_addr: &MultiAddr,
++        alias: &str,
++    ) -> Result<TcpInlet> {
++        let tcp_inlet = TcpInlet::new(bind_addr, outlet_addr, alias);
++        self.tcp_portals_repository()
++            .store_tcp_inlet(node_name, &tcp_inlet)
++            .await?;
++        Ok(tcp_inlet)
++    }
++
++    /// Get a TCP inlet by node name and alias
++    #[instrument(skip_all)]
++    pub async fn get_tcp_inlet(&self, node_name: &str, alias: &str) -> Result<TcpInlet> {
++        Ok(self
++            .tcp_portals_repository()
++            .get_tcp_inlet(node_name, alias)
++            .await?
++            .ok_or(ockam_core::Error::new(
++                Origin::Api,
++                Kind::NotFound,
++                format!("no tcp inlet found for node {node_name}, with alias {alias}"),
++            ))?)
++    }
++
++    /// Delete a TCP inlet
++    #[instrument(skip_all)]
++    pub async fn delete_tcp_inlet(&self, node_name: &str, alias: &str) -> Result<()> {
++        Ok(self
++            .tcp_portals_repository()
++            .delete_tcp_inlet(node_name, alias)
++            .await?)
++    }
++
++    /// Create a TCP outlet
++    #[instrument(skip_all)]
++    pub async fn create_tcp_outlet(
++        &self,
++        node_name: &str,
++        socket_addr: &SocketAddr,
++        worker_addr: &Address,
++        payload: &Option<String>,
++    ) -> Result<OutletStatus> {
++        let tcp_outlet_status =
++            OutletStatus::new(*socket_addr, worker_addr.clone(), payload.clone());
++
++        self.tcp_portals_repository()
++            .store_tcp_outlet(node_name, &tcp_outlet_status)
++            .await?;
++        Ok(tcp_outlet_status)
++    }
++
++    /// Delete a TCP outlet
++    #[instrument(skip_all)]
++    pub async fn delete_tcp_outlet(&self, node_name: &str, worker_addr: &Address) -> Result<()> {
++        Ok(self
++            .tcp_portals_repository()
++            .delete_tcp_outlet(node_name, worker_addr)
++            .await?)
++    }
++}
+diff --git a/implementations/rust/ockam/ockam_api/src/logs/default_values.rs b/implementations/rust/ockam/ockam_api/src/logs/default_values.rs
+index 77c9e8dc4..9da0040dd 100644
+--- a/implementations/rust/ockam/ockam_api/src/logs/default_values.rs
++++ b/implementations/rust/ockam/ockam_api/src/logs/default_values.rs
+@@ -48,3 +48,10 @@ pub(crate) const DEFAULT_SPAN_EXPORT_QUEUE_SIZE: u16 = 2048;
+ 
+ // Size of the queue used to batch logs.
+ pub(crate) const DEFAULT_LOG_EXPORT_QUEUE_SIZE: u16 = 2048;
++
++// Maximum time for sending log record batches when using a portal
++pub(crate) const DEFAULT_FOREGROUND_LOG_EXPORT_PORTAL_CUTOFF: Duration = Duration::from_millis(300);
++
++// Maximum time for sending span batches when using a portal
++pub(crate) const DEFAULT_FOREGROUND_SPAN_EXPORT_PORTAL_CUTOFF: Duration =
++    Duration::from_millis(300);
+diff --git a/implementations/rust/ockam/ockam_api/src/logs/env_variables.rs b/implementations/rust/ockam/ockam_api/src/logs/env_variables.rs
+index c4c3c8884..667f881ae 100644
+--- a/implementations/rust/ockam/ockam_api/src/logs/env_variables.rs
++++ b/implementations/rust/ockam/ockam_api/src/logs/env_variables.rs
+@@ -34,9 +34,16 @@ pub(crate) const OCKAM_LOG_CRATES_FILTER: &str = "OCKAM_LOG_CRATES_FILTER";
+ /// Decides if spans and log records should be created and exported. Accepted values, see BooleanVar. For example; true, false, 1, 0
+ pub(crate) const OCKAM_OPENTELEMETRY_EXPORT: &str = "OCKAM_OPENTELEMETRY_EXPORT";
+ 
++/// Decides if spans and log records should be exported via the project exporter portal. Accepted values, see BooleanVar. For example; true, false, 1, 0
++pub(crate) const OCKAM_OPENTELEMETRY_EXPORT_VIA_PORTAL: &str =
++    "OCKAM_OPENTELEMETRY_EXPORT_VIA_PORTAL";
++
+ /// Boolean set to true if the current user is an Ockam developer
+ pub(crate) const OCKAM_DEVELOPER: &str = "OCKAM_DEVELOPER";
+ 
++/// If this variable is true, print statements will debug the setting of the OpenTelemetry export
++pub(crate) const OCKAM_OPENTELEMETRY_EXPORT_DEBUG: &str = "OCKAM_OPENTELEMETRY_EXPORT_DEBUG";
++
+ ///
+ /// OPENTELEMETRY COLLECTOR ENDPOINT CONFIGURATION
+ ///
+@@ -58,6 +65,15 @@ pub(crate) const OCKAM_BACKGROUND_OPENTELEMETRY_ENDPOINT_CONNECTION_TIMEOUT: &st
+ /// OPENTELEMETRY COLLECTOR EXPORT CONFIGURATION
+ ///
+ 
++/// Name of the background node used to export OpenTelemetry traces
++pub(crate) const OCKAM_OPENTELEMETRY_NODE_NAME: &str = "ockam-opentelemetry-inlet";
++
++/// Name of the inlet used to export OpenTelemetry traces
++pub(crate) const OCKAM_OPENTELEMETRY_INLET_ALIAS: &str = "ockam-opentelemetry";
++
++/// Name of the relay used to export OpenTelemetry traces
++pub(crate) const OCKAM_OPENTELEMETRY_RELAY_NAME: &str = "ockam-opentelemetry";
++
+ /// Timeout for trying to export spans to the endpoint.
+ /// Accepted values, see DurationVar. For example: 500ms
+ pub(crate) const OCKAM_SPAN_EXPORT_TIMEOUT: &str = "OCKAM_SPAN_EXPORT_TIMEOUT";
+@@ -94,6 +110,16 @@ pub(crate) const OCKAM_SPAN_EXPORT_QUEUE_SIZE: &str = "OCKAM_SPAN_EXPORT_QUEUE_S
+ /// Accepted values, u16. For example: 2048
+ pub(crate) const OCKAM_LOG_EXPORT_QUEUE_SIZE: &str = "OCKAM_LOG_EXPORT_QUEUE_SIZE";
+ 
++/// Maximum time for sending a log batch and not waiting for a response when running
++/// a foreground command and using a portal to export log records. For example: 200ms
++pub(crate) const OCKAM_FOREGROUND_LOG_EXPORT_PORTAL_CUTOFF: &str =
++    "OCKAM_FOREGROUND_LOG_EXPORT_PORTAL_CUTOFF";
++
++/// Maximum time for sending a span batch and not waiting for a response when running
++/// a foreground command and using a portal to export span batches. For example: 200ms
++pub(crate) const OCKAM_FOREGROUND_SPAN_EXPORT_PORTAL_CUTOFF: &str =
++    "OCKAM_FOREGROUND_SPAN_EXPORT_PORTAL_CUTOFF";
++
+ ///
+ /// OPENTELEMETRY COLLECTOR ERRORS CONFIGURATION
+ ///
+diff --git a/implementations/rust/ockam/ockam_api/src/logs/exporting_configuration.rs b/implementations/rust/ockam/ockam_api/src/logs/exporting_configuration.rs
+index 754401bca..75c912943 100644
+--- a/implementations/rust/ockam/ockam_api/src/logs/exporting_configuration.rs
++++ b/implementations/rust/ockam/ockam_api/src/logs/exporting_configuration.rs
+@@ -1,11 +1,21 @@
++use crate::address::get_free_address;
++use crate::cli_state::TcpInlet;
+ use crate::config::UrlVar;
+ use crate::logs::default_values::*;
+ use crate::logs::env_variables::*;
+ use crate::logs::ExportingEnabled;
++use crate::CliState;
+ use ockam_core::env::{get_env_with_default, FromString};
++use ockam_core::errcode::{Kind, Origin};
++use ockam_node::Executor;
++use std::env::current_exe;
+ use std::fmt::{Display, Formatter};
+ use std::net::{SocketAddr, ToSocketAddrs};
++use std::process::{Command, Stdio};
++use std::str::FromStr;
+ use std::time::Duration;
++use tokio::time::Instant;
++use tokio_retry::strategy::FibonacciBackoff;
+ use url::Url;
+ 
+ /// The exporting configuration contains all the parameters needed to configure the OpenTelemetry tracing layer.
+@@ -15,14 +25,19 @@ use url::Url;
+ ///
+ /// The configuration for log messages printed in a file, or in the console, use the LoggingConfiguration.
+ ///
++/// When a portal is used to export log records and traces we don't wait for a response from the
++/// OpenTelemetry collector because this makes the command line less responsive.
++///
++/// The time necessary to send just a batch can be configured with the 'cutoff' variables.
++///
+ #[derive(Debug, Clone, PartialEq, Eq)]
+ pub struct ExportingConfiguration {
+     /// If TracingEnabled::On then spans and log records are sent to an OpenTelemetry collector.
+     /// Some parameters for exporting the
+     enabled: ExportingEnabled,
+-    /// Maximum time for exporting a batch of spans
++    /// Maximum time for exporting a batch of spans (with a response)
+     span_export_timeout: Duration,
+-    /// Maximum time for exporting a batch of log records
++    /// Maximum time for exporting a batch of log records (with a response)
+     log_export_timeout: Duration,
+     /// Maximum time to wait until sending the current batch of spans
+     span_export_scheduled_delay: Duration,
+@@ -37,6 +52,10 @@ pub struct ExportingConfiguration {
+     /// True if the user is an Ockam developer
+     /// This boolean is set on spans to distinguish internal usage for external usage
+     is_ockam_developer: bool,
++    /// Maximum time for exporting a batch of spans (with no response)
++    span_export_portal_cutoff: Option<Duration>,
++    /// Maximum time for exporting a batch of log records (with no response)
++    log_export_portal_cutoff: Option<Duration>,
+ }
+ 
+ impl ExportingConfiguration {
+@@ -80,6 +99,16 @@ impl ExportingConfiguration {
+         self.log_export_queue_size
+     }
+ 
++    /// Return the maximum time to wait until sending the current batch of spans (without waiting for a response)
++    pub fn span_export_cutoff(&self) -> Option<Duration> {
++        self.span_export_portal_cutoff
++    }
++
++    /// Return the maximum time to wait until sending the current batch of log records (without waiting for a response)
++    pub fn log_export_cutoff(&self) -> Option<Duration> {
++        self.log_export_portal_cutoff
++    }
++
+     /// Return the URL where to export spans and log records
+     pub fn opentelemetry_endpoint(&self) -> Url {
+         self.opentelemetry_endpoint.clone()
+@@ -87,39 +116,49 @@ impl ExportingConfiguration {
+ 
+     /// Create a tracing configuration for a user command running in the foreground.
+     /// (meaning that the process will shut down once the command has been executed)
+-    pub fn foreground(quiet: bool) -> ockam_core::Result<ExportingConfiguration> {
+-        Ok(ExportingConfiguration {
+-            enabled: exporting_enabled(
+-                quiet,
+-                opentelemetry_endpoint_foreground_connection_timeout()?,
+-            )?,
+-            span_export_timeout: span_export_timeout()?,
+-            log_export_timeout: span_export_timeout()?,
+-            span_export_scheduled_delay: foreground_span_export_scheduled_delay()?,
+-            log_export_scheduled_delay: foreground_log_export_scheduled_delay()?,
+-            span_export_queue_size: span_export_queue_size()?,
+-            log_export_queue_size: log_export_queue_size()?,
+-            opentelemetry_endpoint: opentelemetry_endpoint()?,
+-            is_ockam_developer: is_ockam_developer()?,
+-        })
++    pub fn foreground() -> ockam_core::Result<ExportingConfiguration> {
++        match opentelemetry_endpoint()? {
++            None => ExportingConfiguration::off(),
++            Some(endpoint) => Ok(ExportingConfiguration {
++                enabled: exporting_enabled(
++                    &endpoint,
++                    opentelemetry_endpoint_foreground_connection_timeout()?,
++                )?,
++                span_export_timeout: span_export_timeout()?,
++                log_export_timeout: log_export_timeout()?,
++                span_export_scheduled_delay: foreground_span_export_scheduled_delay()?,
++                log_export_scheduled_delay: foreground_log_export_scheduled_delay()?,
++                span_export_queue_size: span_export_queue_size()?,
++                log_export_queue_size: log_export_queue_size()?,
++                opentelemetry_endpoint: endpoint.url(),
++                is_ockam_developer: is_ockam_developer()?,
++                span_export_portal_cutoff: Some(foreground_span_export_portal_cutoff().unwrap()),
++                log_export_portal_cutoff: Some(foreground_log_export_portal_cutoff().unwrap()),
++            }),
++        }
+     }
+ 
+     /// Create a tracing configuration for a background node
+-    pub fn background(quiet: bool) -> ockam_core::Result<ExportingConfiguration> {
+-        Ok(ExportingConfiguration {
+-            enabled: exporting_enabled(
+-                quiet,
+-                opentelemetry_endpoint_background_connection_timeout()?,
+-            )?,
+-            span_export_timeout: span_export_timeout()?,
+-            log_export_timeout: log_export_timeout()?,
+-            span_export_scheduled_delay: background_span_export_scheduled_delay()?,
+-            log_export_scheduled_delay: background_log_export_scheduled_delay()?,
+-            span_export_queue_size: span_export_queue_size()?,
+-            log_export_queue_size: log_export_queue_size()?,
+-            opentelemetry_endpoint: opentelemetry_endpoint()?,
+-            is_ockam_developer: is_ockam_developer()?,
+-        })
++    pub fn background() -> ockam_core::Result<ExportingConfiguration> {
++        match opentelemetry_endpoint()? {
++            None => ExportingConfiguration::off(),
++            Some(endpoint) => Ok(ExportingConfiguration {
++                enabled: exporting_enabled(
++                    &endpoint,
++                    opentelemetry_endpoint_background_connection_timeout()?,
++                )?,
++                span_export_timeout: span_export_timeout()?,
++                log_export_timeout: log_export_timeout()?,
++                span_export_scheduled_delay: background_span_export_scheduled_delay()?,
++                log_export_scheduled_delay: background_log_export_scheduled_delay()?,
++                span_export_queue_size: span_export_queue_size()?,
++                log_export_queue_size: log_export_queue_size()?,
++                opentelemetry_endpoint: endpoint.url(),
++                is_ockam_developer: is_ockam_developer()?,
++                span_export_portal_cutoff: None,
++                log_export_portal_cutoff: None,
++            }),
++        }
+     }
+ 
+     /// Create a a tracing configuration which is disabled
+@@ -134,6 +173,8 @@ impl ExportingConfiguration {
+             log_export_queue_size: DEFAULT_LOG_EXPORT_QUEUE_SIZE,
+             opentelemetry_endpoint: Self::default_opentelemetry_endpoint()?,
+             is_ockam_developer: is_ockam_developer()?,
++            span_export_portal_cutoff: None,
++            log_export_portal_cutoff: None,
+         })
+     }
+ 
+@@ -151,48 +192,117 @@ impl Display for ExportingConfiguration {
+     }
+ }
+ 
+-/// Return true if tracing is enabled, as decided by the OCKAM_TRACING environment variable.
++/// This enum represents the 2 possible endpoints for exporting traces. Either via:
++///
++///  - An HTTPS collector
++///  - An Ockam portal to an HTTPS collector
++///
++#[derive(Debug, Clone)]
++pub enum OpenTelemetryEndpoint {
++    PortalEndpoint(Url),
++    HttpsEndpoint(Url),
++}
++
++impl OpenTelemetryEndpoint {
++    /// Return the URL to connect to
++    pub fn url(&self) -> Url {
++        match self {
++            OpenTelemetryEndpoint::PortalEndpoint(url) => url.clone(),
++            OpenTelemetryEndpoint::HttpsEndpoint(url) => url.clone(),
++        }
++    }
++
++    /// Return true if the export must go through an Ockam portal
++    pub fn is_portal_endpoint(&self) -> bool {
++        match &self {
++            OpenTelemetryEndpoint::PortalEndpoint(_) => true,
++            OpenTelemetryEndpoint::HttpsEndpoint(_) => false,
++        }
++    }
++}
++
++/// Return true if the export of traces and log records is enabled,
++/// as decided by the OCKAM_OPENTELEMETRY_EXPORT environment variable.
+ pub fn is_exporting_set() -> ockam_core::Result<bool> {
+     get_env_with_default(OCKAM_OPENTELEMETRY_EXPORT, true)
+ }
+ 
++/// Return true if traces and log records can be exported via a portal (when a project exists),
++/// as decided by the OCKAM_OPENTELEMETRY_EXPORT_VIA_PORTAL environment variable.
++pub fn is_exporting_via_portal_set() -> ockam_core::Result<bool> {
++    get_env_with_default(OCKAM_OPENTELEMETRY_EXPORT_VIA_PORTAL, false)
++}
++
++/// Return true to display messages during the setup of the export
++pub fn is_export_debug_set() -> ockam_core::Result<bool> {
++    get_env_with_default(OCKAM_OPENTELEMETRY_EXPORT_DEBUG, false)
++}
++
++/// Print a debug statement if OCKAM_OPENTELEMETRY_EXPORT_DEBUG is true
++fn print_debug(message: impl Into<String>) {
++    if is_export_debug_set().unwrap_or(false) {
++        println!("{}", message.into());
++    }
++}
++
+ /// Return ExportingEnabled::On if:
+ ///
+ /// - Exporting has not been deactivated by the user
+ /// - The opentelemetry endpoint is accessible
+ ///
+ fn exporting_enabled(
+-    quiet: bool,
++    endpoint: &OpenTelemetryEndpoint,
+     connection_check_timeout: Duration,
+ ) -> ockam_core::Result<ExportingEnabled> {
+-    if !is_exporting_set()? {
+-        Ok(ExportingEnabled::Off)
++    if is_endpoint_accessible(&endpoint.url(), connection_check_timeout) {
++        print_debug("Exporting is enabled");
++        Ok(ExportingEnabled::On)
+     } else {
+-        let endpoint = opentelemetry_endpoint()?;
+-        if is_endpoint_accessible(endpoint.clone(), connection_check_timeout) {
+-            Ok(ExportingEnabled::On)
+-        } else {
+-            if !quiet {
+-                eprintln!("Exporting OpenTelemetry events is disabled because the OpenTelemetry collector endpoint at {} cannot be reached after {}ms", endpoint, connection_check_timeout.as_millis());
+-                eprintln!("You can disable the export of OpenTelemetry events with: `export OCKAM_OPENTELEMETRY_EXPORT=false` to avoid this connection check.");
+-            }
+-            Ok(ExportingEnabled::Off)
+-        }
++        let endpoint_kind = match endpoint {
++            OpenTelemetryEndpoint::HttpsEndpoint(_) => "OpenTelemetry collector endpoint",
++            OpenTelemetryEndpoint::PortalEndpoint(_) => "OpenTelemetry inlet",
++        };
++        print_debug(format!("Exporting OpenTelemetry events is disabled because the {} at {} cannot be reached after {}ms", endpoint_kind, endpoint.url(), connection_check_timeout.as_millis()));
++        print_debug("You can disable the export of OpenTelemetry events with: `export OCKAM_OPENTELEMETRY_EXPORT=false` to avoid this connection check.");
++
++        print_debug("Exporting is disabled");
++        Ok(ExportingEnabled::Off)
+     }
+ }
+ 
+ /// Return true if the endpoint can be accessed with a TCP connection
+-fn is_endpoint_accessible(url: Url, connection_check_timeout: Duration) -> bool {
++fn is_endpoint_accessible(url: &Url, connection_check_timeout: Duration) -> bool {
+     match to_socket_addr(url) {
+         Some(address) => {
+-            std::net::TcpStream::connect_timeout(&address, connection_check_timeout).is_ok()
++            let retries = FibonacciBackoff::from_millis(100);
++            let now = Instant::now();
++
++            for timeout_duration in retries {
++                print_debug(format!(
++                    "trying to connect to {address} in {timeout_duration:?}"
++                ));
++                if std::net::TcpStream::connect_timeout(&address, timeout_duration).is_ok() {
++                    return true;
++                } else {
++                    if now.elapsed() >= connection_check_timeout {
++                        return false;
++                    };
++                    std::thread::sleep(timeout_duration);
++                }
++            }
++            false
++        }
++        _ => {
++            print_debug(format!(
++                "the url {url} can not be parsed as a socket address"
++            ));
++            false
+         }
+-        _ => false,
+     }
+ }
+ 
+ /// Return a SocketAddr corresponding to the Url
+-fn to_socket_addr(url: Url) -> Option<SocketAddr> {
++fn to_socket_addr(url: &Url) -> Option<SocketAddr> {
+     match (url.host_str(), url.port()) {
+         (Some(host), Some(port)) => (host, port)
+             .to_socket_addrs()
+@@ -208,12 +318,102 @@ fn to_socket_addr(url: Url) -> Option<SocketAddr> {
+ }
+ 
+ /// Return the tracing endpoint, defined by an environment variable
+-fn opentelemetry_endpoint() -> ockam_core::Result<Url> {
+-    Ok(get_env_with_default(
+-        OCKAM_OPENTELEMETRY_ENDPOINT,
+-        UrlVar::new(ExportingConfiguration::default_opentelemetry_endpoint()?),
+-    )?
+-    .url)
++/// If the endpoint can be established with an Ockam portal to the opentelemetry-relay created in the project
++/// use that URL, otherwise use the HTTPS endpoint
++fn opentelemetry_endpoint() -> ockam_core::Result<Option<OpenTelemetryEndpoint>> {
++    if !is_exporting_set()? {
++        print_debug("Exporting is turned off");
++        Ok(None)
++    } else {
++        let cli_state = CliState::with_default_dir()?;
++        match Executor::execute_future(async move {
++            // if a project is defined try to use the OpenTelemetry portal
++            // and if we allow traces to be exported via a portal
++            if cli_state.projects().get_default_project().await.is_ok()
++                && is_exporting_via_portal_set()?
++            {
++                print_debug("A default project exists. Getting the project export endpoint");
++                get_project_endpoint_url(&cli_state).await
++            } else {
++                print_debug("A default project does not exist. Getting the default HTTPs endpoint");
++                get_https_endpoint()
++            }
++        }) {
++            Ok(Ok(url)) => Ok(Some(url)),
++            Ok(Err(e)) => {
++                print_debug(format!(
++                    "There was an issue when setting up the exporting of traces: {e:?}"
++                ));
++                Ok(None)
++            }
++            Err(e) => {
++                print_debug(format!("There was an issue when running the code setting up the exporting of traces: {e:?}"));
++                Ok(None)
++            }
++        }
++    }
++}
++
++/// When a project exists, return the OpenTelemetry node inlet address
++/// If the node does not exist, create it.
++/// If the node is not running, restart it.
++async fn get_project_endpoint_url(
++    cli_state: &CliState,
++) -> ockam_core::Result<OpenTelemetryEndpoint> {
++    let node = cli_state.get_node(OCKAM_OPENTELEMETRY_NODE_NAME).await.ok();
++    match node {
++        // If no opentelemetry node is running locally, start one
++        None => {
++            print_debug("There is no existing opentelemetry node. Starting one.");
++            let url = start_opentelemetry_node().await?;
++            print_debug(format!("The OpenTelemetry URL is {url}"));
++
++            Ok::<OpenTelemetryEndpoint, ockam_core::Error>(OpenTelemetryEndpoint::PortalEndpoint(
++                url,
++            ))
++        }
++        Some(node) => {
++            // If a node exists and is running, use it
++            if node.is_running() {
++                print_debug("An export node is running");
++                let tcp_inlet = get_opentelemetry_inlet(cli_state).await?;
++
++                print_debug("There is a TCP inlet configured for that node");
++                let url = socket_addr_to_url(&tcp_inlet.bind_addr().to_string())?;
++
++                print_debug(format!("The TCP inlet URL is {url}"));
++                Ok(OpenTelemetryEndpoint::PortalEndpoint(url))
++            } else {
++                print_debug("The export node is running, it is going to be recreated");
++                // if the node is not running, restart it and recreate the inlet
++                let url = restart_opentelemetry_node().await?;
++
++                print_debug(format!("The OpenTelemetry URL is {url})"));
++                Ok(OpenTelemetryEndpoint::PortalEndpoint(url))
++            }
++        }
++    }
++}
++
++/// Return the inlet used to export OpenTelemetry traces
++async fn get_opentelemetry_inlet(cli_state: &CliState) -> ockam_core::Result<TcpInlet> {
++    Ok(cli_state
++        .get_tcp_inlet(
++            OCKAM_OPENTELEMETRY_NODE_NAME,
++            OCKAM_OPENTELEMETRY_INLET_ALIAS,
++        )
++        .await?)
++}
++
++/// Return the default HTTPs endpoint
++fn get_https_endpoint() -> ockam_core::Result<OpenTelemetryEndpoint> {
++    Ok(OpenTelemetryEndpoint::HttpsEndpoint(
++        get_env_with_default(
++            OCKAM_OPENTELEMETRY_ENDPOINT,
++            UrlVar::new(ExportingConfiguration::default_opentelemetry_endpoint()?),
++        )?
++        .url,
++    ))
+ }
+ 
+ /// Return true if the current user is an internal user
+@@ -288,3 +488,94 @@ pub fn background_log_export_scheduled_delay() -> ockam_core::Result<Duration> {
+         DEFAULT_BACKGROUND_EXPORT_SCHEDULED_DELAY,
+     )
+ }
++
++/// Return the maximum time for sending log record batches when using a portal
++pub fn foreground_log_export_portal_cutoff() -> ockam_core::Result<Duration> {
++    get_env_with_default(
++        OCKAM_FOREGROUND_LOG_EXPORT_PORTAL_CUTOFF,
++        DEFAULT_FOREGROUND_LOG_EXPORT_PORTAL_CUTOFF,
++    )
++}
++
++/// Return the maximum time for sending span batches when using a portal
++pub fn foreground_span_export_portal_cutoff() -> ockam_core::Result<Duration> {
++    get_env_with_default(
++        OCKAM_FOREGROUND_SPAN_EXPORT_PORTAL_CUTOFF,
++        DEFAULT_FOREGROUND_SPAN_EXPORT_PORTAL_CUTOFF,
++    )
++}
++
++/// Delete the opentelemetry node and recreate it to restart the inlet
++async fn restart_opentelemetry_node() -> ockam_core::Result<Url> {
++    let args = vec![
++        "node".to_string(),
++        "delete".to_string(),
++        "-y".to_string(),
++        OCKAM_OPENTELEMETRY_NODE_NAME.to_string(),
++    ];
++    run_ockam(args).await?;
++    start_opentelemetry_node().await
++}
++
++/// Start a node with an that will forward traces via a relay deployed by the authority node.
++/// The relay is connected to an outlet which sends traces to the OpenTelemetry collector
++async fn start_opentelemetry_node() -> ockam_core::Result<Url> {
++    // get a free address for the inlet
++    let local_address = get_free_address().map_err(|e| {
++        ockam_core::Error::new(
++            Origin::Api,
++            Kind::Io,
++            format!("cannot get a free address on this machine: {e:?}"),
++        )
++    })?;
++    // configure a node with an
++    let config = format!(
++        "{{nodes: {OCKAM_OPENTELEMETRY_NODE_NAME}, tcp-inlets: {{opentelemetry-inlet: {{at: {OCKAM_OPENTELEMETRY_NODE_NAME}, from: '{local_address}', via: {OCKAM_OPENTELEMETRY_RELAY_NAME}, alias: {OCKAM_OPENTELEMETRY_INLET_ALIAS}}}}}}}"
++    );
++    let args = vec![
++        "run".to_string(),
++        "--inline".to_string(),
++        config.to_string(),
++    ];
++    run_ockam(args).await?;
++    socket_addr_to_url(&local_address.to_string())
++}
++
++/// Create a URL from a socket address
++fn socket_addr_to_url(socket_addr: &str) -> ockam_core::Result<Url> {
++    Url::from_str(&format!("http://{socket_addr}")).map_err(|e| {
++        ockam_core::Error::new(
++            Origin::Api,
++            Kind::Serialization,
++            format!("{} is not a valid URL: {e:?}", socket_addr),
++        )
++    })
++}
++
++/// Run the ockam command line with specific arguments
++async fn run_ockam(args: Vec<String>) -> ockam_core::Result<()> {
++    let ockam_exe = current_exe().map_err(|e| {
++        ockam_core::Error::new(
++            Origin::Api,
++            Kind::Io,
++            format!("cannot get the current ockam exe: {e:?}"),
++        )
++    })?;
++
++    Command::new(ockam_exe)
++        .args(args.clone())
++        .env(OCKAM_OPENTELEMETRY_EXPORT, "false")
++        .stdout(Stdio::null())
++        .stderr(Stdio::null())
++        .stdin(Stdio::null())
++        .spawn()
++        .map_err(|e| {
++            let message = format!(
++                "cannot run the ockam command with arguments: {:?}. Got: {e:?}",
++                args.join(",")
++            );
++            print_debug(&message);
++            ockam_core::Error::new(Origin::Api, Kind::Io, message)
++        })?;
++    Ok(())
++}
+diff --git a/implementations/rust/ockam/ockam_api/src/logs/log_exporters.rs b/implementations/rust/ockam/ockam_api/src/logs/log_exporters.rs
+index 5219e8ab9..5c84a61a0 100644
+--- a/implementations/rust/ockam/ockam_api/src/logs/log_exporters.rs
++++ b/implementations/rust/ockam/ockam_api/src/logs/log_exporters.rs
+@@ -1,11 +1,12 @@
+ use ockam_core::async_trait;
+ use opentelemetry::logs::{LogResult, Severity};
+ use opentelemetry_sdk::export::logs::{LogData, LogExporter};
++use std::time::Duration;
+ 
+ /// This exporter can be used to intercept the log records sent to an OpenTelemetry collector
+ #[derive(Debug)]
+ pub struct DecoratedLogExporter<L: LogExporter> {
+-    pub exporter: L,
++    exporter: L,
+ }
+ 
+ #[async_trait]
+@@ -22,3 +23,48 @@ impl<L: LogExporter> LogExporter for DecoratedLogExporter<L> {
+         self.exporter.event_enabled(level, target, name)
+     }
+ }
++
++impl<L: LogExporter> DecoratedLogExporter<L> {
++    pub fn new(exporter: L) -> DecoratedLogExporter<L> {
++        DecoratedLogExporter { exporter }
++    }
++}
++
++/// This exporter is used to avoid waiting on a full request/response roundtrip when sending
++/// log records sent to an OpenTelemetry collector
++#[derive(Debug)]
++pub struct OckamLogExporter<L: LogExporter> {
++    exporter: L,
++    log_export_cutoff: Option<Duration>,
++}
++
++#[async_trait]
++impl<L: LogExporter> LogExporter for OckamLogExporter<L> {
++    async fn export(&mut self, batch: Vec<LogData>) -> LogResult<()> {
++        match self.log_export_cutoff {
++            Some(cutoff) => {
++                let f = self.exporter.export(batch);
++                let _ = tokio::time::timeout(cutoff, f).await;
++                Ok(())
++            }
++            None => self.exporter.export(batch).await,
++        }
++    }
++
++    fn shutdown(&mut self) {
++        self.exporter.shutdown()
++    }
++
++    fn event_enabled(&self, level: Severity, target: &str, name: &str) -> bool {
++        self.exporter.event_enabled(level, target, name)
++    }
++}
++
++impl<L: LogExporter> OckamLogExporter<L> {
++    pub fn new(exporter: L, log_export_cutoff: Option<Duration>) -> OckamLogExporter<L> {
++        OckamLogExporter {
++            exporter,
++            log_export_cutoff,
++        }
++    }
++}
+diff --git a/implementations/rust/ockam/ockam_api/src/logs/setup.rs b/implementations/rust/ockam/ockam_api/src/logs/setup.rs
+index 306ed1da9..40a57ff78 100644
+--- a/implementations/rust/ockam/ockam_api/src/logs/setup.rs
++++ b/implementations/rust/ockam/ockam_api/src/logs/setup.rs
+@@ -28,7 +28,9 @@ use crate::cli_state::journeys::APP_NAME;
+ use ockam_node::Executor;
+ 
+ use crate::logs::tracing_guard::TracingGuard;
+-use crate::logs::{ExportingConfiguration, GlobalErrorHandler, LoggingConfiguration};
++use crate::logs::{
++    ExportingConfiguration, GlobalErrorHandler, LoggingConfiguration, OckamLogExporter,
++};
+ use crate::logs::{LogFormat, OckamSpanExporter};
+ 
+ pub struct LoggingTracing;
+@@ -237,12 +239,18 @@ fn create_opentelemetry_tracing_layer<
+         .with_max_queue_size(exporting_configuration.span_export_queue_size() as usize)
+         .build();
+     let is_ockam_developer = exporting_configuration.is_ockam_developer();
++    let span_export_cutoff = exporting_configuration.span_export_cutoff();
+     Executor::execute_future(async move {
+         let trace_config = sdk::trace::Config::default().with_resource(make_resource(app));
+         let (tracer, tracer_provider) = create_tracer(
+             trace_config,
+             batch_config,
+-            OckamSpanExporter::new(span_exporter, node_name, is_ockam_developer),
++            OckamSpanExporter::new(
++                span_exporter,
++                node_name,
++                is_ockam_developer,
++                span_export_cutoff,
++            ),
+         );
+         (
+             tracing_opentelemetry::layer().with_tracer(tracer),
+@@ -266,6 +274,7 @@ fn create_opentelemetry_logging_layer<L: LogExporter + Send + 'static>(
+     let log_export_timeout = exporting_configuration.log_export_timeout();
+     let log_export_scheduled_delay = exporting_configuration.log_export_scheduled_delay();
+     let log_export_queue_size = exporting_configuration.log_export_queue_size();
++    let log_export_cutoff = exporting_configuration.log_export_cutoff();
+     Executor::execute_future(async move {
+         let config = sdk::logs::Config::default().with_resource(make_resource(app));
+         let batch_config = logs::BatchConfigBuilder::default()
+@@ -273,6 +282,9 @@ fn create_opentelemetry_logging_layer<L: LogExporter + Send + 'static>(
+             .with_scheduled_delay(log_export_scheduled_delay)
+             .with_max_queue_size(log_export_queue_size as usize)
+             .build();
++
++        let log_exporter = OckamLogExporter::new(log_exporter, log_export_cutoff);
++
+         let log_processor =
+             BatchLogProcessor::builder(log_exporter, opentelemetry_sdk::runtime::Tokio)
+                 .with_batch_config(batch_config)
+diff --git a/implementations/rust/ockam/ockam_api/src/logs/span_exporters.rs b/implementations/rust/ockam/ockam_api/src/logs/span_exporters.rs
+index acc4ed051..b8bbfa918 100644
+--- a/implementations/rust/ockam/ockam_api/src/logs/span_exporters.rs
++++ b/implementations/rust/ockam/ockam_api/src/logs/span_exporters.rs
+@@ -3,11 +3,12 @@ use futures::future::BoxFuture;
+ use ockam_core::async_trait;
+ use opentelemetry::KeyValue;
+ use opentelemetry_sdk::export::trace::{ExportResult, SpanData, SpanExporter};
++use std::time::Duration;
+ 
+ /// This exporter can be used to intercept the spans sent to an OpenTelemetry collector
+ #[derive(Debug)]
+ pub struct DecoratedSpanExporter<S: SpanExporter> {
+-    pub exporter: S,
++    exporter: S,
+ }
+ 
+ #[async_trait]
+@@ -27,23 +28,41 @@ impl<S: SpanExporter> SpanExporter for DecoratedSpanExporter<S> {
+     }
+ }
+ 
++impl<S: SpanExporter> DecoratedSpanExporter<S> {
++    pub fn new(exporter: S) -> DecoratedSpanExporter<S> {
++        DecoratedSpanExporter { exporter }
++    }
++}
++
+ /// This exporter can be used to intercept the spans sent to an OpenTelemetry collector
+ /// and add custom attributes
+ #[derive(Debug)]
+ pub struct OckamSpanExporter<S: SpanExporter> {
+-    pub exporter: S,
+-    pub node_name: Option<String>,
+-    pub is_ockam_developer: bool,
++    exporter: S,
++    node_name: Option<String>,
++    is_ockam_developer: bool,
++    span_export_cutoff: Option<Duration>,
+ }
+ 
+ #[async_trait]
+ impl<S: SpanExporter> SpanExporter for OckamSpanExporter<S> {
+     fn export(&mut self, batch: Vec<SpanData>) -> BoxFuture<'static, ExportResult> {
+-        self.exporter.export(self.add_attributes(
++        let f = self.exporter.export(self.add_attributes(
+             batch,
+             self.node_name.clone(),
+             self.is_ockam_developer,
+-        ))
++        ));
++        let span_export_cutoff = self.span_export_cutoff;
++
++        Box::pin(async move {
++            match span_export_cutoff {
++                Some(cutoff) => {
++                    let _ = tokio::time::timeout(cutoff, f).await;
++                    Ok(())
++                }
++                None => f.await,
++            }
++        })
+     }
+ 
+     fn shutdown(&mut self) {
+@@ -62,11 +81,13 @@ impl<S: SpanExporter> OckamSpanExporter<S> {
+         exporter: S,
+         node_name: Option<String>,
+         is_ockam_developer: bool,
++        span_export_cutoff: Option<Duration>,
+     ) -> OckamSpanExporter<S> {
+         OckamSpanExporter {
+             exporter,
+             node_name,
+             is_ockam_developer,
++            span_export_cutoff,
+         }
+     }
+ 
+diff --git a/implementations/rust/ockam/ockam_api/src/nodes/service/portals.rs b/implementations/rust/ockam/ockam_api/src/nodes/service/portals.rs
+index 80cd980e6..64a847d26 100644
+--- a/implementations/rust/ockam/ockam_api/src/nodes/service/portals.rs
++++ b/implementations/rust/ockam/ockam_api/src/nodes/service/portals.rs
+@@ -265,7 +265,9 @@ impl NodeManager {
+                     )
+                     .await;
+ 
+-                OutletStatus::new(socket_addr, worker_addr, None)
++                self.cli_state
++                    .create_tcp_outlet(&self.node_name, &socket_addr, &worker_addr, &None)
++                    .await?
+             }
+             Err(e) => {
+                 warn!(at = %socket_addr, err = %e, "Failed to create TCP outlet");
+@@ -284,6 +286,9 @@ impl NodeManager {
+         if let Some(deleted_outlet) = self.registry.outlets.remove(worker_addr).await {
+             debug!(%worker_addr, "Successfully removed outlet from node registry");
+ 
++            self.cli_state
++                .delete_tcp_outlet(&self.node_name, worker_addr)
++                .await?;
+             self.resources()
+                 .delete_resource(&worker_addr.address().into())
+                 .await?;
+@@ -348,14 +353,13 @@ impl NodeManager {
+ 
+         // the port could be zero, to simplify the following code we
+         // resolve the address to a full socket address
++        let socket_addr = SocketAddr::from_str(&listen_addr)
++            .map_err(|err| ockam_core::Error::new(Origin::Transport, Kind::Invalid, err))?;
+         let listen_addr = if listen_addr.ends_with(":0") {
+-            let socket_addr = SocketAddr::from_str(&listen_addr)
+-                .map_err(|err| ockam_core::Error::new(Origin::Transport, Kind::Invalid, err))?;
+             get_free_address_for(&socket_addr.ip().to_string())
+                 .map_err(|err| ockam_core::Error::new(Origin::Transport, Kind::Invalid, err))?
+-                .to_string()
+         } else {
+-            listen_addr
++            socket_addr
+         };
+ 
+         // Check registry for duplicated alias or bind address
+@@ -377,7 +381,7 @@ impl NodeManager {
+                 .values()
+                 .await
+                 .iter()
+-                .any(|inlet| inlet.bind_addr == listen_addr)
++                .any(|inlet| inlet.bind_addr == listen_addr.to_string())
+             {
+                 let message =
+                     format!("A TCP inlet with bind tcp address '{listen_addr}' already exists");
+@@ -392,7 +396,7 @@ impl NodeManager {
+         let replacer = InletSessionReplacer {
+             node_manager: self.clone(),
+             context: Arc::new(ctx.async_try_clone().await?),
+-            listen_addr: listen_addr.clone(),
++            listen_addr: listen_addr.to_string(),
+             outlet_addr: outlet_addr.clone(),
+             prefix_route,
+             suffix_route,
+@@ -404,6 +408,11 @@ impl NodeManager {
+             inlet_address: None,
+         };
+ 
++        let _ = self
++            .cli_state
++            .create_tcp_inlet(&self.node_name, &listen_addr, &outlet_addr, &alias)
++            .await?;
++
+         let mut session = Session::new(replacer);
+         let outcome = if wait_connection {
+             let result =
+@@ -431,22 +440,24 @@ impl NodeManager {
+             .inlets
+             .insert(
+                 alias.clone(),
+-                InletInfo::new(&listen_addr, outlet_addr.clone(), session),
++                InletInfo::new(&listen_addr.to_string(), outlet_addr.clone(), session),
+             )
+             .await;
+ 
+-        Ok(InletStatus::new(
+-            listen_addr.clone(),
+-            outcome.as_ref().map(|s| s.worker.address().to_string()),
+-            alias.clone(),
++        let tcp_inlet_status = InletStatus::new(
++            listen_addr.to_string(),
++            outcome.clone().map(|s| s.worker.address().to_string()),
++            &alias,
+             None,
+-            outcome.as_ref().map(|s| s.route.to_string()),
++            outcome.clone().map(|s| s.route.to_string()),
+             outcome
+                 .as_ref()
+                 .map(|s| s.connection_status)
+                 .unwrap_or(ConnectionStatus::Down),
+             outlet_addr.to_string(),
+-        ))
++        );
++
++        Ok(tcp_inlet_status)
+     }
+ 
+     pub async fn delete_inlet(&self, alias: &str) -> Result<InletStatus> {
+@@ -455,6 +466,9 @@ impl NodeManager {
+             debug!(%alias, "Successfully removed inlet from node registry");
+             inlet_to_delete.session.close().await?;
+             self.resources().delete_resource(&alias.into()).await?;
++            self.cli_state
++                .delete_tcp_inlet(&self.node_name, alias)
++                .await?;
+             Ok(InletStatus::new(
+                 inlet_to_delete.bind_addr,
+                 None,
+diff --git a/implementations/rust/ockam/ockam_app_lib/src/log.rs b/implementations/rust/ockam/ockam_app_lib/src/log.rs
+index a4a831734..82440d70f 100644
+--- a/implementations/rust/ockam/ockam_app_lib/src/log.rs
++++ b/implementations/rust/ockam/ockam_app_lib/src/log.rs
+@@ -39,7 +39,7 @@ impl AppState {
+                 ockam_crates,
+             )
+             .unwrap(),
+-            &ExportingConfiguration::foreground(true).unwrap(),
++            &ExportingConfiguration::foreground().unwrap(),
+             "portals",
+             Some("portals".to_string()),
+         );
+diff --git a/implementations/rust/ockam/ockam_app_lib/src/state/mod.rs b/implementations/rust/ockam/ockam_app_lib/src/state/mod.rs
+index e2aa2f6af..3beadea11 100644
+--- a/implementations/rust/ockam/ockam_app_lib/src/state/mod.rs
++++ b/implementations/rust/ockam/ockam_app_lib/src/state/mod.rs
+@@ -144,7 +144,7 @@ impl AppState {
+         let node_manager = create_node_manager(context.clone(), &cli_state).await;
+         let model_state_repository = create_model_state_repository(&cli_state);
+         let model_state = model_state_repository
+-            .load()
++            .load(&node_manager.node_name())
+             .await
+             .unwrap_or(ModelState::default());
+ 
+@@ -434,10 +434,12 @@ impl AppState {
+         trace!(?model_state, "updating model state locally");
+         f(&mut model_state);
+         trace!(?model_state, "persisting model state to DB");
++
++        let node_manager = self.node_manager.read().await;
+         self.model_state_repository
+             .read()
+             .await
+-            .store(&model_state)
++            .store(&node_manager.node_name(), &model_state)
+             .await?;
+         Ok(())
+     }
+diff --git a/implementations/rust/ockam/ockam_app_lib/src/state/model_state_repository.rs b/implementations/rust/ockam/ockam_app_lib/src/state/model_state_repository.rs
+index bbb0d79ff..d4b1f0599 100644
+--- a/implementations/rust/ockam/ockam_app_lib/src/state/model_state_repository.rs
++++ b/implementations/rust/ockam/ockam_app_lib/src/state/model_state_repository.rs
+@@ -8,8 +8,8 @@ use crate::Result;
+ #[async_trait]
+ pub trait ModelStateRepository: Send + Sync + 'static {
+     /// Store / update the full model state in the database
+-    async fn store(&self, model_state: &ModelState) -> Result<()>;
++    async fn store(&self, node_name: &str, model_state: &ModelState) -> Result<()>;
+ 
+     /// Load the model state from the database
+-    async fn load(&self) -> Result<ModelState>;
++    async fn load(&self, node_name: &str) -> Result<ModelState>;
+ }
+diff --git a/implementations/rust/ockam/ockam_app_lib/src/state/model_state_repository_sql.rs b/implementations/rust/ockam/ockam_app_lib/src/state/model_state_repository_sql.rs
+index 46b3a861f..9e7b80920 100644
+--- a/implementations/rust/ockam/ockam_app_lib/src/state/model_state_repository_sql.rs
++++ b/implementations/rust/ockam/ockam_app_lib/src/state/model_state_repository_sql.rs
+@@ -40,18 +40,20 @@ impl ModelStateSqlxDatabase {
+ /// The implementation simply serializes / deserializes the ModelState as JSON
+ #[async_trait]
+ impl ModelStateRepository for ModelStateSqlxDatabase {
+-    async fn store(&self, model_state: &ModelState) -> Result<()> {
++    async fn store(&self, node_name: &str, model_state: &ModelState) -> Result<()> {
+         let mut transaction = self.database.begin().await.into_core()?;
+ 
+         // remove previous tcp_outlet_status state
+-        query("DELETE FROM tcp_outlet_status")
++        query("DELETE FROM tcp_outlet_status where node_name = ?")
++            .bind(node_name.to_sql())
+             .execute(&mut *transaction)
+             .await
+             .void()?;
+ 
+         // re-insert the new state
+         for tcp_outlet_status in &model_state.tcp_outlets {
+-            let query = query("INSERT OR REPLACE INTO tcp_outlet_status VALUES (?, ?, ?)")
++            let query = query("INSERT OR REPLACE INTO tcp_outlet_status VALUES (?, ?, ?, ?)")
++                .bind(node_name.to_sql())
+                 .bind(tcp_outlet_status.socket_addr.to_sql())
+                 .bind(tcp_outlet_status.worker_addr.to_sql())
+                 .bind(tcp_outlet_status.payload.as_ref().map(|p| p.to_sql()));
+@@ -77,8 +79,11 @@ impl ModelStateRepository for ModelStateSqlxDatabase {
+         Ok(())
+     }
+ 
+-    async fn load(&self) -> Result<ModelState> {
+-        let query1 = query_as("SELECT socket_addr, worker_addr, payload FROM tcp_outlet_status");
++    async fn load(&self, node_name: &str) -> Result<ModelState> {
++        let query1 = query_as(
++            "SELECT socket_addr, worker_addr, payload FROM tcp_outlet_status WHERE node_name = ?",
++        )
++        .bind(node_name.to_sql());
+         let result: Vec<TcpOutletStatusRow> =
+             query1.fetch_all(&*self.database.pool).await.into_core()?;
+         let tcp_outlets = result
+@@ -149,10 +154,11 @@ mod tests {
+     async fn store_and_load() -> Result<()> {
+         let db = create_database().await?;
+         let repository = create_repository(db.clone());
++        let node_name = "node";
+ 
+         let mut state = ModelState::default();
+-        repository.store(&state).await?;
+-        let loaded = repository.load().await?;
++        repository.store(node_name, &state).await?;
++        let loaded = repository.load(node_name).await?;
+         assert!(state.tcp_outlets.is_empty());
+         assert_eq!(state, loaded);
+ 
+@@ -168,8 +174,8 @@ mod tests {
+             enabled: true,
+             name: Some("aws".to_string()),
+         });
+-        repository.store(&state).await?;
+-        let loaded = repository.load().await?;
++        repository.store(node_name, &state).await?;
++        let loaded = repository.load(node_name).await?;
+         assert_eq!(state.tcp_outlets.len(), 1);
+         assert_eq!(state.incoming_services.len(), 1);
+         assert_eq!(state, loaded);
+@@ -181,15 +187,15 @@ mod tests {
+                 Address::from_string(format!("s{i}")),
+                 None,
+             ));
+-            repository.store(&state).await.unwrap();
++            repository.store(node_name, &state).await.unwrap();
+         }
+-        let loaded = repository.load().await?;
++        let loaded = repository.load(node_name).await?;
+         assert_eq!(state.tcp_outlets.len(), 5);
+         assert_eq!(state, loaded);
+ 
+         // Reload from DB scratch to emulate an app restart
+         let repository = create_repository(db);
+-        let loaded = repository.load().await?;
++        let loaded = repository.load(node_name).await?;
+         assert_eq!(state.tcp_outlets.len(), 5);
+         assert_eq!(state.incoming_services.len(), 1);
+         assert_eq!(state, loaded);
+@@ -202,8 +208,8 @@ mod tests {
+             name: Some("aws".to_string()),
+         });
+ 
+-        repository.store(&state).await?;
+-        let loaded = repository.load().await?;
++        repository.store(node_name, &state).await?;
++        let loaded = repository.load(node_name).await?;
+ 
+         assert_eq!(state.tcp_outlets.len(), 2);
+         assert_eq!(state.incoming_services.len(), 2);
+diff --git a/implementations/rust/ockam/ockam_command/src/command_global_opts.rs b/implementations/rust/ockam/ockam_command/src/command_global_opts.rs
+index 4ca8c9823..1011b2932 100644
+--- a/implementations/rust/ockam/ockam_command/src/command_global_opts.rs
++++ b/implementations/rust/ockam/ockam_command/src/command_global_opts.rs
+@@ -47,8 +47,10 @@ impl CommandGlobalOpts {
+         global_args: &GlobalArgs,
+         cmd: &OckamSubcommand,
+     ) -> miette::Result<Self> {
++        let rt = Arc::new(Runtime::new().expect("cannot initialize the tokio runtime"));
+         let logging_configuration =
+             Self::make_logging_configuration(global_args, cmd, Term::stdout().is_term())?;
++        let tracing_configuration = Self::make_tracing_configuration(cmd)?;
+         let terminal = Terminal::new(
+             logging_configuration.is_enabled(),
+             global_args.quiet,
+@@ -56,7 +58,6 @@ impl CommandGlobalOpts {
+             global_args.no_input,
+             global_args.output_format.clone(),
+         );
+-        let tracing_configuration = Self::make_tracing_configuration(global_args, cmd)?;
+         let tracing_guard =
+             Self::setup_logging_tracing(cmd, &logging_configuration, &tracing_configuration);
+ 
+@@ -109,7 +110,7 @@ impl CommandGlobalOpts {
+             global_args: global_args.clone(),
+             state,
+             terminal,
+-            rt: Arc::new(Runtime::new().expect("cannot initialize the tokio runtime")),
++            rt,
+             tracing_guard,
+         })
+     }
+@@ -164,14 +165,11 @@ impl CommandGlobalOpts {
+     }
+ 
+     /// Create the tracing configuration, depending on the command to execute
+-    fn make_tracing_configuration(
+-        global_args: &GlobalArgs,
+-        cmd: &OckamSubcommand,
+-    ) -> miette::Result<ExportingConfiguration> {
++    fn make_tracing_configuration(cmd: &OckamSubcommand) -> miette::Result<ExportingConfiguration> {
+         Ok(if cmd.is_background_node() {
+-            ExportingConfiguration::background(global_args.quiet).into_diagnostic()?
++            ExportingConfiguration::background().into_diagnostic()?
+         } else {
+-            ExportingConfiguration::foreground(global_args.quiet).into_diagnostic()?
++            ExportingConfiguration::foreground().into_diagnostic()?
+         })
+     }
+ 
+diff --git a/implementations/rust/ockam/ockam_command/src/entry_point.rs b/implementations/rust/ockam/ockam_command/src/entry_point.rs
+index b61b04bfb..35c8e28a8 100644
+--- a/implementations/rust/ockam/ockam_command/src/entry_point.rs
++++ b/implementations/rust/ockam/ockam_command/src/entry_point.rs
+@@ -51,7 +51,7 @@ pub fn run() -> miette::Result<()> {
+                 );
+                 let _guard = LoggingTracing::setup(
+                     &logging_configuration.into_diagnostic()?,
+-                    &ExportingConfiguration::foreground(true).into_diagnostic()?,
++                    &ExportingConfiguration::foreground().into_diagnostic()?,
+                     "local node",
+                     None,
+                 );
+diff --git a/implementations/rust/ockam/ockam_command/src/environment/static/env_info.txt b/implementations/rust/ockam/ockam_command/src/environment/static/env_info.txt
+index 49aefd645..98b58abeb 100644
+--- a/implementations/rust/ockam/ockam_command/src/environment/static/env_info.txt
++++ b/implementations/rust/ockam/ockam_command/src/environment/static/env_info.txt
+@@ -34,6 +34,10 @@ Tracing
+ - OCKAM_SPAN_EXPORT_QUEUE_SIZE: Size of the queue used to store batched spans before export. When the queue is full, spans are dropped. Default value: `2048`
+ - OCKAM_LOG_EXPORT_QUEUE_SIZE: Size of the queue used to store batched log records before export. When the queue is full, log records are dropped. Default value: `2048`
+ - OCKAM_TRACING_GLOBAL_ERROR_HANDLER: Configuration for printing tracing/logging errors: `console`, `logfile`, `off`. Default value: `logfile`.
++- OCKAM_FOREGROUND_LOG_EXPORT_PORTAL_CUTOFF: Cutoff time for sending log records batches to an OpenTelemetry portal inlet, without waiting for a response. Default value: `300ms`.
++- OCKAM_FOREGROUND_SPAN_EXPORT_PORTAL_CUTOFF: Cutoff time for sending span batches to an OpenTelemetry portal inlet, without waiting for a response. Default value: `300ms`.
++- OCKAM_TRACING_GLOBAL_ERROR_HANDLER: Configuration for printing tracing/logging errors: `console`, `logfile`, `off`. Default value: `console`.
++
+ 
+ Devs Usage
+ - OCKAM: a `string` that defines the path to the ockam binary to use.
+@@ -42,6 +46,8 @@ Devs Usage
+ - OCKAM_CONTROLLER_IDENTITY_ID: a `string` that overrides the default identifier of the controller.
+ - OCKAM_AUTHENTICATOR_ENDPOINT: a `string` that overrides the default endpoint of the authenticator. Defaults to `https://account.ockam.io`.
+ - OCKAM_DEVELOPER: a `boolean` specifying if the current user is an Ockam developer (for more accurate metrics).
++- OCKAM_OPENTELEMETRY_EXPORT_DEBUG: a `boolean` specifying if debug messages must be printed to the console when the OpenTelemetry export is configured.
++- OCKAM_OPENTELEMETRY_EXPORT_VIA_PORTAL: a `boolean` specifying if traces must be exported via a portal when a project exists (this feature flag is set to `false` for now)
+ 
+ Internal (to enable some special behavior in the logic)
+ - OCKAM_HELP_RENDER_MARKDOWN: a `boolean` to control the markdown rendering of the commands documentation.
+diff --git a/implementations/rust/ockam/ockam_node/src/storage/database/migrations/node_migrations/sql/20240314150000_tcp_portals.sql b/implementations/rust/ockam/ockam_node/src/storage/database/migrations/node_migrations/sql/20240314150000_tcp_portals.sql
+new file mode 100644
+index 000000000..bd570441c
+--- /dev/null
++++ b/implementations/rust/ockam/ockam_node/src/storage/database/migrations/node_migrations/sql/20240314150000_tcp_portals.sql
+@@ -0,0 +1,25 @@
++-- This migration create tables to store the active TCP inlets and outlets per node
++CREATE TABLE tcp_inlet
++(
++    node_name    TEXT NOT NULL, -- Node where that tcp inlet has been created
++    bind_addr    TEXT NOT NULL, -- Input address to connect to
++    outlet_addr  TEXT NOT NULL, -- MultiAddress to the outlet
++    alias        TEXT NOT NULL  -- Alias for that inlet
++);
++
++-- Add a node_name column to the tcp_outlet_status table
++-- That table was previously only used to store the outlets created for the portal app
++-- with node_name = 'ockam_app'
++CREATE TABLE tcp_outlet_status_copy
++(
++    node_name   TEXT NOT NULL, -- Node where that tcp outlet has been created
++    socket_addr TEXT NOT NULL, -- Socket address that the outlet connects to
++    worker_addr TEXT NOT NULL, -- Worker address for the outlet itself
++    payload     TEXT           -- Optional status payload
++);
++INSERT INTO tcp_outlet_status_copy (node_name, socket_addr, worker_addr, payload)
++SELECT 'ockam_app', socket_addr, worker_addr, payload
++FROM tcp_outlet_status;
++DROP TABLE tcp_outlet_status;
++ALTER TABLE tcp_outlet_status_copy
++    RENAME TO tcp_outlet_status;

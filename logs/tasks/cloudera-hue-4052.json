@@ -1,0 +1,23 @@
+{
+ "task": "cloudera-hue-4052",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden uses `metricLabels[caption] ?? caption` + new reusable PaginatedTable; F2P asserts friendly labels ('Number of Queries'), row-selection callback `expect(onRowSelect).toHaveBeenCalledWith([mockData[0]])`, and pagination hide when totalPages 0"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 48,
+  "shallow": true
+ }
+}

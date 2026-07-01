@@ -1,0 +1,24 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -count=1 -run \"TestWithListener|TestServer_Run|TestServer_RunTLS\" .",
+  "test_files": [
+    "serve_test.go",
+    "server_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/go-fuego/fuego::TestServer_Run/can_run_server",
+    "github.com/go-fuego/fuego::TestServer_Run/can_run_server_WithListener",
+    "github.com/go-fuego/fuego::TestServer_Run/invalid_address",
+    "github.com/go-fuego/fuego::TestServer_Run",
+    "github.com/go-fuego/fuego::TestServer_RunTLS/can_run_TLS_server_with_TLS_config_and_empty_files",
+    "github.com/go-fuego/fuego::TestServer_RunTLS/can_run_TLS_server_with_TLS_files",
+    "github.com/go-fuego/fuego::TestServer_RunTLS/invalid_address",
+    "github.com/go-fuego/fuego::TestServer_RunTLS",
+    "github.com/go-fuego/fuego::TestWithListener/with_custom_listener",
+    "github.com/go-fuego/fuego::TestWithListener/no_custom_listener",
+    "github.com/go-fuego/fuego::TestWithListener"
+  ],
+  "PASS_TO_PASS": []
+}

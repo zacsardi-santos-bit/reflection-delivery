@@ -1,0 +1,76 @@
+patching file tests/evaluate/test_evaluation.py
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: timeout-2.4.0
+timeout: 1200.0s
+timeout method: signal
+timeout func_only: False
+[1mcollecting ... [0mERROR: not found: /workspace/repo/tests/evaluate/test_evaluation.py::test_is_model_deployment_endpoint_uri
+(no name '/workspace/repo/tests/evaluate/test_evaluation.py::test_is_model_deployment_endpoint_uri' in any of [<Module test_evaluation.py>])
+
+ERROR: not found: /workspace/repo/tests/evaluate/test_evaluation.py::test_evaluate_on_model_endpoint_invalid_input_data
+(no name '/workspace/repo/tests/evaluate/test_evaluation.py::test_evaluate_on_model_endpoint_invalid_input_data' in any of [<Module test_evaluation.py>])
+
+collected 0 items / 2 errors
+
+==================================== ERRORS ====================================
+[31m[1m______________ ERROR collecting tests/evaluate/test_evaluation.py ______________[0m
+[31mImportError while importing test module '/workspace/repo/tests/evaluate/test_evaluation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/site-packages/_pytest/python.py:617: in _importtestmodule
+    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)
+/usr/local/lib/python3.11/site-packages/_pytest/pathlib.py:567: in import_path
+    importlib.import_module(module_name)
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+/usr/local/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:186: in exec_module
+    exec(co, module.__dict__)
+tests/evaluate/test_evaluation.py:43: in <module>
+    from mlflow.models.evaluation.base import (
+E   ImportError: cannot import name '_is_model_deployment_endpoint_uri' from 'mlflow.models.evaluation.base' (/workspace/repo/mlflow/models/evaluation/base.py)[0m
+[31m[1m______________ ERROR collecting tests/evaluate/test_evaluation.py ______________[0m
+[31mImportError while importing test module '/workspace/repo/tests/evaluate/test_evaluation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/site-packages/_pytest/python.py:617: in _importtestmodule
+    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)
+/usr/local/lib/python3.11/site-packages/_pytest/pathlib.py:567: in import_path
+    importlib.import_module(module_name)
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+/usr/local/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:186: in exec_module
+    exec(co, module.__dict__)
+tests/evaluate/test_evaluation.py:43: in <module>
+    from mlflow.models.evaluation.base import (
+E   ImportError: cannot import name '_is_model_deployment_endpoint_uri' from 'mlflow.models.evaluation.base' (/workspace/repo/mlflow/models/evaluation/base.py)[0m
+[33m=============================== warnings summary ===============================[0m
+mlflow/utils/requirements_utils.py:20
+  /workspace/repo/mlflow/utils/requirements_utils.py:20: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources  # noqa: TID251
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+[36m[1m=========================== short test summary info ============================[0m
+[31mERROR[0m tests/evaluate/test_evaluation.py
+[31mERROR[0m tests/evaluate/test_evaluation.py
+[31m======================== [33m1 warning[0m, [31m[1m2 errors[0m[31m in 10.12s[0m[31m =========================[0m
+reward=0 graded=7 found=0 failed=0 parsed=0 framework=pytest exit_code=4

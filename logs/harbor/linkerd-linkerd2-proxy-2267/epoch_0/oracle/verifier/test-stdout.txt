@@ -1,0 +1,241 @@
+patching file linkerd/app/gateway/src/http/tests.rs
+patching file linkerd/app/inbound/src/accept/tests.rs
+patching file linkerd/app/inbound/src/detect/tests.rs
+patching file linkerd/app/inbound/src/http/tests.rs
+patching file linkerd/app/inbound/src/policy/http/tests.rs
+patching file linkerd/app/inbound/src/policy/tcp/tests.rs
+patching file linkerd/app/integration/src/tests/transparency.rs
+   Compiling linkerd-idle-cache v0.1.0 (/workspace/repo/linkerd/idle-cache)
+   Compiling linkerd-app-core v0.1.0 (/workspace/repo/linkerd/app/core)
+   Compiling linkerd-app-test v0.1.0 (/workspace/repo/linkerd/app/test)
+   Compiling linkerd-app-inbound v0.1.0 (/workspace/repo/linkerd/app/inbound)
+   Compiling linkerd-app-outbound v0.1.0 (/workspace/repo/linkerd/app/outbound)
+   Compiling linkerd-app-gateway v0.1.0 (/workspace/repo/linkerd/app/gateway)
+   Compiling linkerd-app-admin v0.1.0 (/workspace/repo/linkerd/app/admin)
+   Compiling linkerd-app v0.1.0 (/workspace/repo/linkerd/app)
+   Compiling linkerd-app-integration v0.1.0 (/workspace/repo/linkerd/app/integration)
+    Finished test [unoptimized] target(s) in 1m 43s
+────────────
+ Nextest run ID ac32a193-bd49-4adf-8487-ecd0a2dbda7a with nextest profile: default
+    Starting 218 tests across 3 binaries (14 tests skipped)
+        PASS [   0.122s] (  1/218) linkerd-app-gateway http::tests::forward_loop
+        PASS [   0.122s] (  2/218) linkerd-app-gateway http::tests::gateway
+        PASS [   0.149s] (  3/218) linkerd-app-inbound accept::tests::direct
+        PASS [   0.153s] (  4/218) linkerd-app-inbound accept::tests::default_allow
+        PASS [   0.157s] (  5/218) linkerd-app-inbound accept::tests::default_deny
+        PASS [   0.181s] (  6/218) linkerd-app-inbound detect::tests::hinted_http1
+        PASS [   0.181s] (  7/218) linkerd-app-inbound detect::tests::detect_tls_opaque
+        PASS [   0.187s] (  8/218) linkerd-app-inbound detect::tests::detect_http
+        PASS [   0.190s] (  9/218) linkerd-app-gateway http::tests::upgraded_request_remains_relative_form
+        PASS [   0.191s] ( 10/218) linkerd-app-inbound detect::tests::hinted_http1_supports_http2
+        PASS [   0.193s] ( 11/218) linkerd-app-inbound detect::tests::hinted_http2
+        PASS [   0.202s] ( 12/218) linkerd-app-inbound detect::tests::detect_http_non_http
+        PASS [   0.247s] ( 13/218) linkerd-app-inbound http::tests::downgrade_absolute_form
+        PASS [   0.253s] ( 14/218) linkerd-app-inbound http::tests::downgrade_origin_form
+        PASS [   0.092s] ( 15/218) linkerd-app-inbound policy::tcp::tests::authenticated_identity
+        PASS [   0.116s] ( 16/218) linkerd-app-inbound policy::http::tests::grpc_filter_header
+        PASS [   0.110s] ( 17/218) linkerd-app-inbound policy::http::tests::http_filter_inject_failure
+        PASS [   0.113s] ( 18/218) linkerd-app-inbound policy::http::tests::grpc_route
+        PASS [   0.122s] ( 19/218) linkerd-app-inbound policy::http::tests::grpc_filter_inject_failure
+        PASS [   0.111s] ( 20/218) linkerd-app-inbound policy::http::tests::http_route
+        PASS [   0.117s] ( 21/218) linkerd-app-inbound policy::http::tests::http_filter_header
+        PASS [   0.201s] ( 22/218) linkerd-app-inbound http::tests::http1_bad_gateway_unmeshed_response
+        PASS [   0.094s] ( 23/218) linkerd-app-inbound policy::tcp::tests::authenticated_suffix
+        PASS [   0.092s] ( 24/218) linkerd-app-inbound policy::tcp::tests::tls_unauthenticated
+        PASS [   0.238s] ( 25/218) linkerd-app-inbound http::tests::http1_bad_gateway_meshed_response_error_header
+        PASS [   0.216s] ( 26/218) linkerd-app-inbound http::tests::http1_connect_timeout_meshed_response_error_header
+        PASS [   0.218s] ( 27/218) linkerd-app-inbound http::tests::http1_connect_timeout_unmeshed_response_error_header
+        PASS [   0.223s] ( 28/218) linkerd-app-inbound http::tests::unmeshed_http1_hello_world
+        PASS [   0.095s] ( 29/218) linkerd-app-inbound policy::tcp::tests::unauthenticated_allowed
+        PASS [   0.180s] ( 30/218) linkerd-app-integration test_assert_eventually
+        PASS [   0.334s] ( 31/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_asks_controller_api
+        PASS [   0.340s] ( 32/218) linkerd-app-integration tests::discovery::http1::absolute_uris::dst_resolutions_are_cached
+        PASS [   0.296s] ( 33/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_falls_back_to_orig_dst_after_invalid_argument
+        PASS [   0.305s] ( 34/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_falls_back_to_orig_dst_when_outside_search_path
+        PASS [   0.313s] ( 35/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_reconnects_if_controller_stream_ends
+        PASS [   0.324s] ( 36/218) linkerd-app-integration tests::discovery::http1::dst_resolutions_are_cached
+        PASS [   0.342s] ( 37/218) linkerd-app-integration tests::discovery::http1::outbound_asks_controller_api
+        PASS [   0.261s] ( 38/218) linkerd-app-integration tests::discovery::http1::outbound_falls_back_to_orig_dst_after_invalid_argument
+        PASS [   0.250s] ( 39/218) linkerd-app-integration tests::discovery::http1::outbound_falls_back_to_orig_dst_when_outside_search_path
+        PASS [   0.247s] ( 40/218) linkerd-app-integration tests::discovery::http1::outbound_reconnects_if_controller_stream_ends
+        PASS [   0.221s] ( 41/218) linkerd-app-integration tests::discovery::http2::dst_resolutions_are_cached
+        PASS [   0.197s] ( 42/218) linkerd-app-integration tests::discovery::http2::outbound_asks_controller_api
+        PASS [   1.236s] ( 43/218) linkerd-app-inbound http::tests::grpc_meshed_response_error_header
+        PASS [   1.237s] ( 44/218) linkerd-app-inbound http::tests::h2_response_meshed_error_header
+        PASS [   1.239s] ( 45/218) linkerd-app-inbound http::tests::h2_response_unmeshed_error_header
+        PASS [   1.243s] ( 46/218) linkerd-app-inbound http::tests::grpc_unmeshed_response_error_header
+        PASS [   0.254s] ( 47/218) linkerd-app-integration tests::discovery::http2::outbound_balancer_waits_for_ready_endpoint
+        PASS [   1.267s] ( 48/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_error_reconnects_after_backoff
+        PASS [   0.145s] ( 49/218) linkerd-app-integration tests::discovery::http2::outbound_falls_back_to_orig_dst_after_invalid_argument
+        PASS [   0.136s] ( 50/218) linkerd-app-integration tests::discovery::http2::outbound_falls_back_to_orig_dst_when_outside_search_path
+        PASS [   0.138s] ( 51/218) linkerd-app-integration tests::discovery::http2::outbound_reconnects_if_controller_stream_ends
+        PASS [   0.140s] ( 52/218) linkerd-app-integration tests::identity::http1_accepts_tls_after_identity_is_certified
+        PASS [   1.232s] ( 53/218) linkerd-app-integration tests::discovery::http1::outbound_error_reconnects_after_backoff
+        PASS [   0.109s] ( 54/218) linkerd-app-integration tests::identity::http1_rejects_tls_before_identity_is_certified
+        PASS [   0.145s] ( 55/218) linkerd-app-integration tests::identity::http2_accepts_tls_after_identity_is_certified
+        PASS [   0.112s] ( 56/218) linkerd-app-integration tests::identity::http2_rejects_tls_before_identity_is_certified
+        PASS [   0.111s] ( 57/218) linkerd-app-integration tests::identity::nonblocking_identity_detection
+        PASS [   0.112s] ( 58/218) linkerd-app-integration tests::identity::ready
+        PASS [   0.107s] ( 59/218) linkerd-app-integration tests::identity::refresh
+        PASS [   1.231s] ( 60/218) linkerd-app-integration tests::discovery::http2::outbound_error_reconnects_after_backoff
+        PASS [   0.155s] ( 61/218) linkerd-app-integration tests::orig_proto::outbound_http1
+        PASS [   0.637s] ( 62/218) linkerd-app-integration tests::identity::identity_header_stripping
+        PASS [   0.648s] ( 63/218) linkerd-app-integration tests::orig_proto::inbound_http1
+        PASS [   0.610s] ( 64/218) linkerd-app-integration tests::profile_dst_overrides::add_a_dst_override
+        PASS [   0.638s] ( 65/218) linkerd-app-integration tests::profile_dst_overrides::add_multiple_dst_overrides
+        PASS [   3.296s] ( 66/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_fails_fast_when_destination_does_not_exist
+        PASS [   3.288s] ( 67/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_fails_fast_when_destination_has_no_endpoints
+        PASS [   0.603s] ( 68/218) linkerd-app-integration tests::profile_dst_overrides::remove_a_dst_override
+        PASS [   3.341s] ( 69/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_times_out
+        PASS [   0.254s] ( 70/218) linkerd-app-integration tests::profiles::grpc_retry::does_not_eat_multiple_data_frame_body
+        PASS [   0.640s] ( 71/218) linkerd-app-integration tests::profile_dst_overrides::set_a_dst_override_weight_to_zero
+        PASS [   0.263s] ( 72/218) linkerd-app-integration tests::profiles::grpc_retry::does_not_retry_success_in_trailers
+        PASS [   0.234s] ( 73/218) linkerd-app-integration tests::profiles::grpc_retry::retries_failure_in_headers
+        PASS [   3.274s] ( 74/218) linkerd-app-integration tests::discovery::http1::outbound_fails_fast_when_destination_has_no_endpoints
+        PASS [   0.229s] ( 75/218) linkerd-app-integration tests::profiles::grpc_retry::retries_failure_in_trailers
+        PASS [   3.293s] ( 76/218) linkerd-app-integration tests::discovery::http1::outbound_fails_fast_when_destination_does_not_exist
+        PASS [   0.669s] ( 77/218) linkerd-app-integration tests::profile_dst_overrides::set_all_dst_override_weights_to_zero
+        PASS [   3.204s] ( 78/218) linkerd-app-integration tests::discovery::http1::outbound_times_out
+        PASS [   0.298s] ( 79/218) linkerd-app-integration tests::profiles::http1::does_not_retry_if_earlier_response_class_is_success
+        PASS [   0.310s] ( 80/218) linkerd-app-integration tests::profiles::http1::does_not_retry_if_body_is_too_long
+        PASS [   0.303s] ( 81/218) linkerd-app-integration tests::profiles::http1::does_not_retry_if_missing_retry_budget
+        PASS [   0.312s] ( 82/218) linkerd-app-integration tests::profiles::http1::does_not_retry_if_request_does_not_match
+        PASS [   0.309s] ( 83/218) linkerd-app-integration tests::profiles::http1::ignores_invalid_retry_budget_negative_ratio
+        PASS [   0.316s] ( 84/218) linkerd-app-integration tests::profiles::http1::does_not_retry_if_streaming_body_exceeds_max_length
+        PASS [   0.330s] ( 85/218) linkerd-app-integration tests::profiles::http1::ignores_invalid_retry_budget_ratio
+        PASS [   0.307s] ( 86/218) linkerd-app-integration tests::profiles::http1::ignores_invalid_retry_budget_ttl
+        PASS [   0.309s] ( 87/218) linkerd-app-integration tests::profiles::http1::retry_if_profile_allows
+        PASS [   3.263s] ( 88/218) linkerd-app-integration tests::discovery::http2::outbound_fails_fast_when_destination_has_no_endpoints
+        PASS [   3.272s] ( 89/218) linkerd-app-integration tests::discovery::http2::outbound_fails_fast_when_destination_does_not_exist
+        PASS [   0.347s] ( 90/218) linkerd-app-integration tests::profiles::http1::retry_uses_budget
+        PASS [   0.338s] ( 91/218) linkerd-app-integration tests::profiles::http1::retry_with_small_post_body
+        PASS [   0.336s] ( 92/218) linkerd-app-integration tests::profiles::http1::retry_with_small_put_body
+        PASS [   0.329s] ( 93/218) linkerd-app-integration tests::profiles::http1::retry_without_content_length
+        PASS [   0.331s] ( 94/218) linkerd-app-integration tests::profiles::http2::does_not_retry_if_body_is_too_long
+        PASS [   0.339s] ( 95/218) linkerd-app-integration tests::profiles::http2::does_not_retry_if_earlier_response_class_is_success
+        PASS [   0.353s] ( 96/218) linkerd-app-integration tests::profiles::http2::does_not_retry_if_missing_retry_budget
+        PASS [   4.337s] ( 97/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_destinations_reset_on_reconnect_followed_by_dne
+        PASS [   4.340s] ( 98/218) linkerd-app-integration tests::discovery::http1::absolute_uris::outbound_destinations_reset_on_reconnect_followed_by_empty
+        PASS [   0.311s] ( 99/218) linkerd-app-integration tests::profiles::http2::does_not_retry_if_request_does_not_match
+        PASS [   0.318s] (100/218) linkerd-app-integration tests::profiles::http2::does_not_retry_if_streaming_body_exceeds_max_length
+        PASS [   4.352s] (101/218) linkerd-app-integration tests::discovery::http1::outbound_destinations_reset_on_reconnect_followed_by_dne
+        PASS [   0.320s] (102/218) linkerd-app-integration tests::profiles::http2::http2_failures_dont_leak_connection_window
+        PASS [   0.310s] (103/218) linkerd-app-integration tests::profiles::http2::ignores_invalid_retry_budget_negative_ratio
+        PASS [   0.313s] (104/218) linkerd-app-integration tests::profiles::http2::ignores_invalid_retry_budget_ratio
+        PASS [   0.308s] (105/218) linkerd-app-integration tests::profiles::http2::ignores_invalid_retry_budget_ttl
+        PASS [   3.156s] (106/218) linkerd-app-integration tests::discovery::http2::outbound_times_out
+        PASS [   0.315s] (107/218) linkerd-app-integration tests::profiles::http2::retry_if_profile_allows
+        PASS [   0.318s] (108/218) linkerd-app-integration tests::profiles::http2::retry_uses_budget
+        PASS [   0.320s] (109/218) linkerd-app-integration tests::profiles::http2::retry_with_small_post_body
+        PASS [   4.293s] (110/218) linkerd-app-integration tests::discovery::http1::outbound_destinations_reset_on_reconnect_followed_by_empty
+        PASS [   0.325s] (111/218) linkerd-app-integration tests::profiles::http2::retry_with_small_put_body
+        PASS [   0.321s] (112/218) linkerd-app-integration tests::profiles::http2::retry_without_content_length
+        PASS [   0.210s] (113/218) linkerd-app-integration tests::tap::tap_disabled_when_identity_disabled
+        PASS [   0.209s] (114/218) linkerd-app-integration tests::tap::tap_enabled_when_tap_svc_name_set
+        PASS [   0.228s] (115/218) linkerd-app-integration tests::tap::tap_disabled_when_tap_svc_name_not_set
+        PASS [   0.264s] (116/218) linkerd-app-integration tests::shutdown::tcp_waits_for_proxies_to_close
+        PASS [   0.280s] (117/218) linkerd-app-integration tests::shutdown::h2_goaways_connections
+        PASS [   0.281s] (118/218) linkerd-app-integration tests::shutdown::http1_closes_idle_connections
+        PASS [   0.246s] (119/218) linkerd-app-integration tests::telemetry::admin_request_count
+        PASS [   0.242s] (120/218) linkerd-app-integration tests::telemetry::env::filters_on_query_params
+        PASS [   0.271s] (121/218) linkerd-app-integration tests::telemetry::admin_transport_metrics
+        PASS [   0.231s] (122/218) linkerd-app-integration tests::telemetry::env::returns_env_var_json
+        PASS [   0.410s] (123/218) linkerd-app-integration tests::shutdown::h2_exercise_goaways_connections
+        PASS [   0.304s] (124/218) linkerd-app-integration tests::telemetry::log_stream::is_valid_json
+        PASS [   0.310s] (125/218) linkerd-app-integration tests::telemetry::log_stream::multi_filter
+        PASS [   0.223s] (126/218) linkerd-app-integration tests::telemetry::log_stream::valid_get_does_not_error
+        PASS [   0.224s] (127/218) linkerd-app-integration tests::telemetry::log_stream::valid_query_does_not_error
+        PASS [   0.291s] (128/218) linkerd-app-integration tests::telemetry::log_stream::query_is_valid_json
+        PASS [   0.306s] (129/218) linkerd-app-integration tests::telemetry::metrics_endpoint_outbound_request_count
+        PASS [   0.272s] (130/218) linkerd-app-integration tests::telemetry::metrics_has_start_time
+        PASS [   4.275s] (131/218) linkerd-app-integration tests::discovery::http2::outbound_destinations_reset_on_reconnect_followed_by_dne
+        PASS [   0.309s] (132/218) linkerd-app-integration tests::telemetry::metrics_endpoint_outbound_response_count
+        PASS [   0.325s] (133/218) linkerd-app-integration tests::telemetry::metrics_have_no_double_commas
+        PASS [   4.293s] (134/218) linkerd-app-integration tests::discovery::http2::outbound_destinations_reset_on_reconnect_followed_by_empty
+        PASS [   0.326s] (135/218) linkerd-app-integration tests::telemetry::outbound_dst_labels::labeled_addr_and_addrset
+        PASS [   1.330s] (136/218) linkerd-app-integration tests::profiles::http1::timeout
+        PASS [   0.348s] (137/218) linkerd-app-integration tests::telemetry::outbound_dst_labels::multiple_addrset_labels
+        PASS [   0.363s] (138/218) linkerd-app-integration tests::telemetry::outbound_dst_labels::multiple_addr_labels
+        PASS [   0.273s] (139/218) linkerd-app-integration tests::telemetry::tcp_errors::inbound_io_err
+        PASS [   0.398s] (140/218) linkerd-app-integration tests::telemetry::response_classification::outbound_http
+        PASS [   0.787s] (141/218) linkerd-app-integration tests::telemetry::metrics_endpoint_inbound_request_count
+        PASS [   0.791s] (142/218) linkerd-app-integration tests::telemetry::metrics_endpoint_inbound_response_count
+        PASS [   0.848s] (143/218) linkerd-app-integration tests::telemetry::metrics_compression
+        PASS [   1.320s] (144/218) linkerd-app-integration tests::profiles::http2::timeout
+        PASS [   0.209s] (145/218) linkerd-app-integration tests::telemetry::transport::inbound_tcp_connect
+        PASS [   0.253s] (146/218) linkerd-app-integration tests::telemetry::transport::inbound_tcp_accept
+        PASS [   0.257s] (147/218) linkerd-app-integration tests::telemetry::transport::inbound_tcp_open_connections
+        PASS [   0.269s] (148/218) linkerd-app-integration tests::telemetry::transport::inbound_tcp_read_bytes_total
+        PASS [   0.911s] (149/218) linkerd-app-integration tests::telemetry::response_classification::inbound_http
+        PASS [   0.273s] (150/218) linkerd-app-integration tests::telemetry::transport::inbound_tcp_write_bytes_total
+        PASS [   0.317s] (151/218) linkerd-app-integration tests::telemetry::transport::outbound_http_accept
+        PASS [   0.329s] (152/218) linkerd-app-integration tests::telemetry::transport::outbound_http_connect
+        PASS [   0.324s] (153/218) linkerd-app-integration tests::telemetry::transport::outbound_http_tcp_open_connections
+        PASS [   0.786s] (154/218) linkerd-app-integration tests::telemetry::transport::inbound_http_accept
+        PASS [   0.928s] (155/218) linkerd-app-integration tests::telemetry::tcp_errors::inbound_invalid_ip
+        PASS [   0.768s] (156/218) linkerd-app-integration tests::telemetry::transport::inbound_http_connect
+        PASS [   0.784s] (157/218) linkerd-app-integration tests::telemetry::transport::inbound_http_tcp_open_connections
+        PASS [   0.898s] (158/218) linkerd-app-integration tests::telemetry::tcp_errors::inbound_timeout
+        PASS [   0.266s] (159/218) linkerd-app-integration tests::telemetry::transport::outbound_tcp_accept
+        PASS [   0.264s] (160/218) linkerd-app-integration tests::telemetry::transport::outbound_tcp_connect
+        PASS [   0.284s] (161/218) linkerd-app-integration tests::telemetry::transport::outbound_tcp_open_connections
+        PASS [   0.268s] (162/218) linkerd-app-integration tests::telemetry::transport::outbound_tcp_read_bytes_total
+        PASS [   0.278s] (163/218) linkerd-app-integration tests::telemetry::transport::outbound_tcp_write_bytes_total
+        PASS [   0.267s] (164/218) linkerd-app-integration tests::transparency::http10_without_host
+        PASS [   0.327s] (165/218) linkerd-app-integration tests::transparency::http1_one_connection_per_host
+        PASS [   0.259s] (166/218) linkerd-app-integration tests::transparency::http2_request_without_authority
+        PASS [   0.288s] (167/218) linkerd-app-integration tests::transparency::http1_orig_proto_does_not_propagate_rst_stream
+        PASS [   0.283s] (168/218) linkerd-app-integration tests::transparency::http1_requests_without_host_have_unique_connections
+        PASS [   0.263s] (169/218) linkerd-app-integration tests::transparency::http2_rst_stream_is_propagated
+        PASS [   0.255s] (170/218) linkerd-app-integration tests::transparency::inbound_tcp
+        PASS [   0.280s] (171/218) linkerd-app-integration tests::transparency::one_proxy::http11_connect_bad_requests
+        PASS [   1.579s] (172/218) linkerd-app-integration tests::telemetry::outbound_response_latency
+        PASS [   1.997s] (173/218) linkerd-app-integration tests::telemetry::inbound_response_latency
+        PASS [   1.470s] (174/218) linkerd-app-integration tests::telemetry::tcp_errors::inbound_success
+        PASS [   1.617s] (175/218) linkerd-app-integration tests::telemetry::tcp_errors::inbound_direct_multi
+        PASS [   1.604s] (176/218) linkerd-app-integration tests::telemetry::tcp_errors::inbound_multi
+        PASS [   0.771s] (177/218) linkerd-app-integration tests::transparency::inbound_http1
+        PASS [   0.767s] (178/218) linkerd-app-integration tests::transparency::one_proxy::http10_with_host
+        PASS [   0.768s] (179/218) linkerd-app-integration tests::transparency::one_proxy::http11_absolute_uri_differs_from_host
+        PASS [   0.770s] (180/218) linkerd-app-integration tests::transparency::one_proxy::http11_connect
+        PASS [   0.770s] (181/218) linkerd-app-integration tests::transparency::one_proxy::http11_connect_headers_stripped
+        PASS [   0.764s] (182/218) linkerd-app-integration tests::transparency::one_proxy::http11_upgrade_h2_stripped
+        PASS [   0.770s] (183/218) linkerd-app-integration tests::transparency::one_proxy::http11_upgrades
+        PASS [   0.779s] (184/218) linkerd-app-integration tests::transparency::one_proxy::http1_bodyless_responses
+        PASS [   0.235s] (185/218) linkerd-app-integration tests::transparency::outbound_tcp
+        PASS [   0.774s] (186/218) linkerd-app-integration tests::transparency::one_proxy::http1_content_length_zero_is_preserved
+        PASS [   0.759s] (187/218) linkerd-app-integration tests::transparency::one_proxy::http1_removes_connection_headers
+        PASS [   0.774s] (188/218) linkerd-app-integration tests::transparency::one_proxy::http1_head_responses
+        PASS [   0.258s] (189/218) linkerd-app-integration tests::transparency::outbound_http1
+        PASS [   0.234s] (190/218) linkerd-app-integration tests::transparency::outbound_tcp_external
+        PASS [   0.772s] (191/218) linkerd-app-integration tests::transparency::one_proxy::http1_request_with_body_chunked
+        PASS [   0.766s] (192/218) linkerd-app-integration tests::transparency::one_proxy::http1_request_with_body_content_length
+        PASS [   0.290s] (193/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http11_connect_bad_requests
+        PASS [   0.746s] (194/218) linkerd-app-integration tests::transparency::one_proxy::http1_requests_without_body_doesnt_add_transfer_encoding
+        PASS [   0.727s] (195/218) linkerd-app-integration tests::transparency::one_proxy::http1_response_end_of_file
+        PASS [   0.717s] (196/218) linkerd-app-integration tests::transparency::one_proxy::inbound_http1
+        PASS [   0.755s] (197/218) linkerd-app-integration tests::transparency::one_proxy::l5d_orig_proto_header_isnt_leaked
+        PASS [   0.783s] (198/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http10_with_host
+        PASS [   0.812s] (199/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http11_absolute_uri_differs_from_host
+        PASS [   0.814s] (200/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http11_connect
+        PASS [   0.812s] (201/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http11_upgrade_h2_stripped
+        PASS [   0.813s] (202/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http11_upgrades
+        PASS [   0.821s] (203/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http11_connect_headers_stripped
+        PASS [   0.815s] (204/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http1_head_responses
+        PASS [   0.828s] (205/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http1_bodyless_responses
+        PASS [   0.794s] (206/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http1_inbound_timeout
+        PASS [   0.239s] (207/218) linkerd-app-integration tests::transparency::retry_reconnect_errors
+        PASS [   0.845s] (208/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http1_content_length_zero_is_preserved
+        PASS [   0.151s] (209/218) linkerd-app-integration tests::transparency::tcp_connections_close_if_client_closes
+        PASS [   0.139s] (210/218) linkerd-app-integration tests::transparency::tcp_server_first
+        PASS [   0.798s] (211/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http1_removes_connection_headers
+        PASS [   0.807s] (212/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http1_request_with_body_chunked
+        PASS [   0.799s] (213/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http1_request_with_body_content_length
+        PASS [   0.788s] (214/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http1_response_end_of_file
+        PASS [   0.775s] (215/218) linkerd-app-integration tests::transparency::proxy_to_proxy::inbound_http1
+        PASS [   0.813s] (216/218) linkerd-app-integration tests::transparency::proxy_to_proxy::http1_requests_without_body_doesnt_add_transfer_encoding
+        PASS [   0.764s] (217/218) linkerd-app-integration tests::transparency::proxy_to_proxy::l5d_orig_proto_header_isnt_leaked
+        PASS [   4.010s] (218/218) linkerd-app-integration tests::telemetry::tcp_errors::inbound_direct_success
+────────────
+     Summary [   9.448s] 218 tests run: 218 passed, 14 skipped
+reward=1 graded=218 found=44 failed=0 parsed=218 framework=cargo exit_code=0

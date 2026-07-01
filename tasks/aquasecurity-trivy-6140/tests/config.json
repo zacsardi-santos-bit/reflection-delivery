@@ -1,0 +1,31 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/dependency/parser/gradle/lockfile ./pkg/fanal/analyzer/language/java/gradle -count=1",
+  "test_files": [
+    "pkg/dependency/parser/gradle/lockfile/parse_test.go",
+    "pkg/fanal/analyzer/language/java/gradle/lockfile_test.go",
+    "pkg/fanal/analyzer/language/java/gradle/pom_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/gradle/lockfile::TestParser_Parse/happy_path",
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/gradle/lockfile::TestParser_Parse",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_gradleLockAnalyzer_Analyze/happy_path",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_gradleLockAnalyzer_Analyze/happy_path_without_cache",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_gradleLockAnalyzer_Analyze/empty_file",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_gradleLockAnalyzer_Analyze",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_nugetLibraryAnalyzer_Required/default_name",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_nugetLibraryAnalyzer_Required/name_with_prefix",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_nugetLibraryAnalyzer_Required/txt",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_nugetLibraryAnalyzer_Required",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_parsePom/happy_path",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_parsePom/happy_path._Take_GroupID_and_Version_from_path",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_parsePom/happy_path._Dependency_version_as_property.",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_parsePom/happy_path._Dependency_version_as_property.#01",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/java/gradle::Test_parsePom"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/gradle/lockfile::TestParser_Parse/empty"
+  ]
+}

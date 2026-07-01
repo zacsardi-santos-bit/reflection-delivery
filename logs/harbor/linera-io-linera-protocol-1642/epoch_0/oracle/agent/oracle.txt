@@ -1,0 +1,6 @@
+patching file linera-witty-macros/src/lib.rs
+patching file linera-witty-macros/src/util/fields.rs
+patching file linera-witty-macros/src/util/mod.rs
+patching file linera-witty-macros/src/wit_load.rs
+patching file linera-witty-macros/src/wit_store.rs
+patching file linera-witty-macros/src/wit_type.rs

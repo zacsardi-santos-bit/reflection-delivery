@@ -1,0 +1,23 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :core:domain:testFossDebugUnitTest --tests \"com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest\" --no-daemon --no-watch-fs && cat core/domain/build/test-results/testFossDebugUnitTest/*.xml",
+  "test_files": [
+    "core/data-test/src/main/kotlin/com/merxury/blocker/core/data/test/TestDataModule.kt",
+    "core/data-test/src/main/kotlin/com/merxury/blocker/core/data/test/repository/FakeComponentDetailRepository.kt",
+    "core/domain/src/test/kotlin/com/merxury/blocker/core/domain/components/SearchComponentsUseCaseTest.kt"
+  ],
+  "num_test_files": 3,
+  "language": "kotlin",
+  "FAIL_TO_PASS": [
+    "com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest::givenSortByFullNameDescending_whenNoSearchKeyword_thenGetSortedList",
+    "com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest::givenSortByNameAscending_whenNoSearchKeyword_thenReturnUnfilteredResult",
+    "com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest::givenComponentListWithDisabledItems_whenSetShowEnabledFirst_thenGetSortedList",
+    "com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest::givenEmptyList_whenSearchComponents_thenEmptyResult",
+    "com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest::givenComponentListWithDisabledItems_whenSetShowDisabledFirst_thenGetSortedList",
+    "com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest::givenComponentListWithRunningService_whenInDefault_thenShowRunningServiceOnTop",
+    "com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest::givenSortByNameDescending_whenNoSearchKeyword_thenGetSortedList",
+    "com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest::givenSortByFullNameAscending_whenNoSearchKeyword_thenGetSortedList",
+    "com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest::givenComponentList_whenSearchByKeyword_thenGetFilteredList"
+  ],
+  "PASS_TO_PASS": []
+}

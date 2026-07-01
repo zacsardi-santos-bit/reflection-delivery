@@ -1,0 +1,12 @@
+patching file pkg/embeddedcluster/node_join_test.go
+patching file pkg/handlers/embedded_cluster_node_join_command_test.go
+# github.com/replicatedhq/kots/pkg/handlers
+pkg/handlers/embedded_cluster_node_join_command_test.go:16:2: no required module provides package github.com/replicatedhq/kots/pkg/handlers/kubeclient; to add it:
+	go get github.com/replicatedhq/kots/pkg/handlers/kubeclient
+FAIL	github.com/replicatedhq/kots/pkg/handlers [setup failed]
+# github.com/replicatedhq/kots/pkg/embeddedcluster [github.com/replicatedhq/kots/pkg/embeddedcluster.test]
+pkg/embeddedcluster/node_join_test.go:351:22: undefined: GetEndpointsToCheck
+{"Time":"2026-06-29T15:14:37.920067747Z","Action":"start","Package":"github.com/replicatedhq/kots/pkg/embeddedcluster"}
+{"Time":"2026-06-29T15:14:37.920156773Z","Action":"output","Package":"github.com/replicatedhq/kots/pkg/embeddedcluster","Output":"FAIL\tgithub.com/replicatedhq/kots/pkg/embeddedcluster [build failed]\n"}
+{"Time":"2026-06-29T15:14:37.920172876Z","Action":"fail","Package":"github.com/replicatedhq/kots/pkg/embeddedcluster","Elapsed":0}
+reward=0 graded=219 found=0 failed=0 parsed=1 framework=go exit_code=1

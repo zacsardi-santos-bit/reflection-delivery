@@ -1,0 +1,47 @@
+patching file cranelift/filetests/filetests/isa/riscv64/float.clif
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.14s
+     Running tests/filetests.rs (target/debug/deps/filetests-f2eb600636e06467)
+
+running 1 test
+test filetests ... FAILED
+
+failures:
+
+---- filetests stdout ----
+FAIL filetests/filetests/isa/riscv64/float.clif: compile
+
+Caused by:
+    compilation of function on line 694 does not match
+    the text expectation
+    
+    --- expected
+    +++ actual
+    @@ -1,6 +1,6 @@
+     VCode:
+     block0:
+    -  fcvt.d.wu fa0,a0,rne
+    +  fcvt.d.wu fa0,a0
+       ret
+     
+     Disassembled:
+    
+    
+    This test assertion can be automatically updated by setting the
+    CRANELIFT_TEST_BLESS=1 environment variable when running this test.
+             
+1004 tests
+Error: 1 failure
+
+
+failures:
+    filetests
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.90s
+
+error: test failed, to rerun pass `--test filetests`
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=lust exit_code=101

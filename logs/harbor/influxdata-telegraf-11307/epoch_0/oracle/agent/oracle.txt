@@ -1,0 +1,17 @@
+patching file config/config.go
+patching file docs/DATA_FORMATS_OUTPUT.md
+patching file plugins/serializers/csv/README.md
+patching file plugins/serializers/csv/csv.go
+patching file plugins/serializers/csv/testcases/basic.conf
+patching file plugins/serializers/csv/testcases/basic.csv
+patching file plugins/serializers/csv/testcases/header.conf
+patching file plugins/serializers/csv/testcases/header.csv
+patching file plugins/serializers/csv/testcases/nanoseconds.conf
+patching file plugins/serializers/csv/testcases/nanoseconds.csv
+patching file plugins/serializers/csv/testcases/prefix.conf
+patching file plugins/serializers/csv/testcases/prefix.csv
+patching file plugins/serializers/csv/testcases/rfc3339.conf
+patching file plugins/serializers/csv/testcases/rfc3339.csv
+patching file plugins/serializers/csv/testcases/semicolon.conf
+patching file plugins/serializers/csv/testcases/semicolon.csv
+patching file plugins/serializers/registry.go

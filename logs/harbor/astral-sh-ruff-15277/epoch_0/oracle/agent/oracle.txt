@@ -1,0 +1,12 @@
+patching file crates/red_knot_python_semantic/resources/mdtest/assignment/annotations.md
+patching file crates/red_knot_python_semantic/resources/mdtest/conditional/if_statement.md
+patching file crates/red_knot_python_semantic/resources/mdtest/stubs/ellipsis.md
+patching file crates/red_knot_python_semantic/src/semantic_index/builder.rs
+patching file crates/red_knot_python_semantic/src/types/context.rs
+patching file crates/red_knot_python_semantic/src/types/infer.rs
+patching file crates/red_knot_python_semantic/src/types/unpacker.rs
+patching file crates/red_knot_python_semantic/src/unpack.rs
+patching file crates/ruff_linter/src/rules/refurb/rules/single_item_membership_test.rs
+patching file crates/ruff_linter/src/rules/refurb/snapshots/ruff_linter__rules__refurb__tests__FURB171_FURB171.py.snap
+patching file crates/ruff_linter/src/rules/ruff/rules/unnecessary_cast_to_int.rs
+patching file crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__preview__RUF046_RUF046.py.snap

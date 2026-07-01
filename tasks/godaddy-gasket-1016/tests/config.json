@@ -1,0 +1,25 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/gasket-plugin-command && NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' /workspace/repo/node_modules/.bin/jest && cd /workspace/repo/packages/gasket-plugin-dynamic-plugins && NODE_OPTIONS='--unhandled-rejections=strict --experimental-vm-modules' /workspace/repo/node_modules/.bin/jest",
+  "test_files": [
+    "packages/gasket-plugin-command/test/configure.test.js",
+    "packages/gasket-plugin-command/test/index.test.js",
+    "packages/gasket-plugin-command/test/prepare.test.js",
+    "packages/gasket-plugin-dynamic-plugins/test/__mocks__/plugin-custom.js",
+    "packages/gasket-plugin-dynamic-plugins/test/prepare-hook.test.js",
+    "packages/gasket-plugin-dynamic-plugins/test/prepare.test.js"
+  ],
+  "num_test_files": 6,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/gasket-plugin-dynamic-plugins/test/index.test.js::Plugin is an object",
+    "/workspace/repo/packages/gasket-plugin-dynamic-plugins/test/index.test.js::Plugin has expected properties",
+    "/workspace/repo/packages/gasket-plugin-dynamic-plugins/test/index.test.js::Plugin has expected hooks",
+    "/workspace/repo/packages/gasket-plugin-dynamic-plugins/test/prepare.test.js::Prepare Hook does not add plugins if dynamicPlugins is not configured",
+    "/workspace/repo/packages/gasket-plugin-dynamic-plugins/test/prepare.test.js::Prepare Hook registers multiple dynamic plugins and calls hooks if configured",
+    "/workspace/repo/packages/gasket-plugin-dynamic-plugins/test/prepare.test.js::Prepare Hook registers dynamic plugins ignoring falsy",
+    "/workspace/repo/packages/gasket-plugin-dynamic-plugins/test/prepare.test.js::Prepare Hook ignores setup lifecycles for non-dynamic plugins",
+    "/workspace/repo/packages/gasket-plugin-dynamic-plugins/test/prepare.test.js::Prepare Hook loads local app plugins from relative path"
+  ],
+  "PASS_TO_PASS": []
+}

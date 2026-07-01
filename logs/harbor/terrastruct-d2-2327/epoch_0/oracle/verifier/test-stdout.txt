@@ -1,0 +1,29 @@
+patching file e2etests/testdata/txtar/elk-title-near/dagre/board.exp.json
+patching file e2etests/testdata/txtar/elk-title-near/dagre/sketch.exp.svg
+patching file e2etests/testdata/txtar/elk-title-near/elk/board.exp.json
+patching file e2etests/testdata/txtar/elk-title-near/elk/sketch.exp.svg
+patching file e2etests/txtar.txt
+?   	oss.terrastruct.com/d2/e2etests/report	[no test files]
+=== RUN   TestE2E
+=== PAUSE TestE2E
+=== CONT  TestE2E
+=== RUN   TestE2E/txtar
+=== RUN   TestE2E/txtar/elk-title-near
+=== PAUSE TestE2E/txtar/elk-title-near
+=== CONT  TestE2E/txtar/elk-title-near
+[2m2026-06-29T15:19:10Z[0m [36mDEBUG[0m layout nested level=1 child=title gi={true }
+[2m2026-06-29T15:19:10Z[0m [36mDEBUG[0m default layout rootlevel=0 shapes=Objects: [title, ]
+[2m2026-06-29T15:19:10Z[0m [36mDEBUG[0m done rootlevel=0 shapes=Objects: [title, ]
+[2m2026-06-29T15:19:10Z[0m [36mDEBUG[0m default layout rootlevel=0 shapes=Objects: [a, a.a, a.b, b, b.c, ]
+[2m2026-06-29T15:19:11Z[0m [36mDEBUG[0m done rootlevel=0 shapes=Objects: [a, a.a, a.b, b, b.c, title, ]
+[2m2026-06-29T15:19:11Z[0m [36mDEBUG[0m layout nested level=1 child=title gi={true }
+[2m2026-06-29T15:19:11Z[0m [36mDEBUG[0m default layout rootlevel=0 shapes=Objects: [title, ]
+[2m2026-06-29T15:19:11Z[0m [36mDEBUG[0m done rootlevel=0 shapes=Objects: [title, ]
+[2m2026-06-29T15:19:11Z[0m [36mDEBUG[0m default layout rootlevel=0 shapes=Objects: [a, a.a, a.b, b, b.c, ]
+[2m2026-06-29T15:19:12Z[0m [36mDEBUG[0m done rootlevel=0 shapes=Objects: [a, a.a, a.b, b, b.c, title, ]
+--- PASS: TestE2E (1.41s)
+    --- PASS: TestE2E/txtar (0.00s)
+        --- PASS: TestE2E/txtar/elk-title-near (1.41s)
+PASS
+ok  	oss.terrastruct.com/d2/e2etests	1.448s
+reward=1 (grader error: Extra data: line 20 column 1 (char 713); fell back to exit_code=0)

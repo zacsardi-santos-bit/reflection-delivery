@@ -1,0 +1,23 @@
+{
+ "task": "brave-intl-bat-go-2313",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds newMobileOrderMdata, newOrderItemReqForSubID, newCreateOrderReqNewLeo, CreateOrderWithReceiptResponse in receipt.go/skus.go/response.go; 116 F2P e.g. TestSKUNameByMobileName/android_release_monthly_leo, TestCreateOrderWithReceipt/successful_case via go test -json ./skus"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

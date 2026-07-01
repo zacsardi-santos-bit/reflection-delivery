@@ -1,0 +1,3 @@
+patching file WORKSPACE
+patching file pkg/virt-handler/device-manager/device_controller.go
+patching file pkg/virt-handler/device-manager/generic_device.go

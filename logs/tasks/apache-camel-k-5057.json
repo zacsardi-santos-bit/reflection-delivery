@@ -1,0 +1,23 @@
+{
+ "task": "apache-camel-k-5057",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden builder.go: if t.TasksFilter != \"\" { flt := strings.Split(...); filter(...) }, failIntegrationKit sets Status.SetCondition, custom task uid ParseInt(splitted[3]); test.patch adds TestBuilderTasksFilter*/TestBuilderCustomTasksSecurityContextScript"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

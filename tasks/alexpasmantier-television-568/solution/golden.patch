@@ -1,0 +1,529 @@
+diff --git a/.github/workflows/cd.yml b/.github/workflows/cd.yml
+index 990fd4a8..e4347069 100644
+--- a/.github/workflows/cd.yml
++++ b/.github/workflows/cd.yml
+@@ -5,13 +5,13 @@ permissions:
+ on:
+   push:
+     tags:
+-      - '[v]?[0-9]+.[0-9]+.[0-9]+'
++      - "[v]?[0-9]+.[0-9]+.[0-9]+"
+   workflow_dispatch:
+     inputs:
+       tag:
+-        description: 'Tag to deploy'
++        description: "Tag to deploy"
+         required: true
+-        default: '0.0.0'
++        default: "0.0.0"
+ 
+ jobs:
+   create-release:
+@@ -39,9 +39,7 @@ jobs:
+           prerelease: false
+           bodyFile: BODY.md
+ 
+-
+   publish-release:
+-
+     name: Publishing for ${{ matrix.os }}
+     runs-on: ${{ matrix.os }}
+ 
+@@ -124,7 +122,6 @@ jobs:
+ 
+           args: --release --target ${{ matrix.target }}
+ 
+-
+       - name: install strip command
+         shell: bash
+         run: |
+@@ -187,7 +184,6 @@ jobs:
+             tv-*.sha256
+ 
+         env:
+-
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ 
+   publish-release-deb:
+@@ -204,9 +200,9 @@ jobs:
+           - target: x86_64-unknown-linux-gnu
+             os: linux
+             arch: x86_64
+-          # - target: aarch64-unknown-linux-gnu
+-          #   os: linux
+-          #   arch: arm64
++          - target: aarch64-unknown-linux-gnu
++            os: linux
++            arch: arm64
+ 
+     env:
+       # Emit backtraces on panics.
+@@ -216,84 +212,148 @@ jobs:
+       PCRE2_SYS_STATIC: 1
+ 
+     steps:
+-    - name: Checkout repository
+-      uses: actions/checkout@v4
+-
+-    - name: Install packages (Ubuntu)
+-      shell: bash
+-      run: |
+-       if ! command -V sudo; then
+-        apt-get update
+-        apt-get install -y --no-install-recommends sudo
+-       fi
+-       sudo apt-get update
+-       sudo apt-get install -y --no-install-recommends \
+-        zsh xz-utils liblz4-tool musl-tools brotli zstd 
+-
+-    - name: Install Rust
+-      uses: dtolnay/rust-toolchain@master
+-      with:
+-        toolchain: nightly
+-        target: ${{ matrix.target }}
+-        
+-    # for some reason, the above action doesn't seem to set the target correctly
+-    - name: Add rustup target
+-      shell: bash
+-      run: |
+-        rustup target add ${{ matrix.target }}
+-
+-    - name: Install cargo-deb and cross
+-      shell: bash
+-      run: |
+-        cargo install cargo-deb cross
+-
+-    - name: Create deployment directory
+-      shell: bash
+-      run: |
+-        dir=deployment/deb
+-        mkdir -p "$dir"
+-        echo "DEPLOY_DIR=$dir" >> $GITHUB_ENV
+-
+-    - name: Copy man page
+-      shell: bash
+-      run: |
+-        cp man/tv.1 "$DEPLOY_DIR/"
+-
+-    - name: Build release binary
+-      shell: bash
+-      run: |
+-        version="${{ github.ref_name }}"
+-        DEB_NAME="tv-$version-${{ matrix.target }}.deb"
+-        DEB_DIR="target/${{ matrix.target }}/debian"
+-
+-        # Build the actual binary
+-        # if aarch64, we need to install the cross compiler since we're running x86_64
+-        if [[ ${{ matrix.target }} == aarch64-unknown-linux-gnu ]]; then
+-          sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu
+-
+-          cargo deb --profile deb --target ${{ matrix.target }} -o "$DEB_DIR/$DEB_NAME" \
+-            --cargo-build cross
+-            -- --no-default-features --features zero-copy,simd,fancy
+-        else
+-          cargo deb --profile deb --target ${{ matrix.target }} -o "$DEB_DIR/$DEB_NAME"
+-        fi
+-
+-        echo "DEB_DIR=$DEB_DIR" >> $GITHUB_ENV
+-        echo "DEB_NAME=$DEB_NAME" >> $GITHUB_ENV
+-
+-    - name: Create sha256 sum of deb file
+-      shell: bash
+-      run: |
+-        cd "$DEB_DIR"
+-        sum="$DEB_NAME.sha256"
+-        shasum -a 256 "$DEB_NAME" > "$sum"
+-        echo "SUM=$sum" >> $GITHUB_ENV
+-
+-    - name: Upload release archive
+-      env:
+-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+-      shell: bash
+-      run: |
+-        cd "$DEB_DIR"
+-        version="${{ github.ref_name }}"
+-        gh release upload "$version" "$DEB_NAME" "$SUM"
++      - name: Checkout repository
++        uses: actions/checkout@v4
++
++      - name: Install packages (Ubuntu)
++        shell: bash
++        run: |
++          if ! command -V sudo; then
++           apt-get update
++           apt-get install -y --no-install-recommends sudo
++          fi
++          sudo apt-get update
++          sudo apt-get install -y --no-install-recommends \
++           zsh xz-utils liblz4-tool musl-tools brotli zstd
++
++      - name: Install Rust
++        uses: dtolnay/rust-toolchain@master
++        with:
++          toolchain: nightly
++          target: ${{ matrix.target }}
++
++      # for some reason, the above action doesn't seem to set the target correctly
++      - name: Add rustup target
++        shell: bash
++        run: |
++          rustup target add ${{ matrix.target }}
++
++      - name: Install cargo-deb and cross
++        shell: bash
++        run: |
++          cargo install cargo-deb cross
++
++      - name: Create deployment directory
++        shell: bash
++        run: |
++          dir=deployment/deb
++          mkdir -p "$dir"
++          echo "DEPLOY_DIR=$dir" >> $GITHUB_ENV
++
++      - name: Copy man page
++        shell: bash
++        run: |
++          cp man/tv.1 "$DEPLOY_DIR/"
++
++      - name: Build release binary
++        shell: bash
++        run: |
++          version="${{ github.ref_name }}"
++          DEB_NAME="tv-$version-${{ matrix.target }}.deb"
++          DEB_DIR="target/${{ matrix.target }}/debian"
++
++          # Build the actual binary
++          # if aarch64, we need to install the cross compiler since we're running x86_64
++          if [[ ${{ matrix.target }} == aarch64-unknown-linux-gnu ]]; then
++            sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu
++
++            cargo deb --profile deb --target ${{ matrix.target }} -o "$DEB_DIR/$DEB_NAME" \
++              --cargo-build cross
++              -- --no-default-features --features zero-copy,simd,fancy
++          else
++            cargo deb --profile deb --target ${{ matrix.target }} -o "$DEB_DIR/$DEB_NAME"
++          fi
++
++          echo "DEB_DIR=$DEB_DIR" >> $GITHUB_ENV
++          echo "DEB_NAME=$DEB_NAME" >> $GITHUB_ENV
++
++      - name: Create sha256 sum of deb file
++        shell: bash
++        run: |
++          cd "$DEB_DIR"
++          sum="$DEB_NAME.sha256"
++          shasum -a 256 "$DEB_NAME" > "$sum"
++          echo "SUM=$sum" >> $GITHUB_ENV
++
++      - name: Upload release archive
++        env:
++          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
++        shell: bash
++        run: |
++          cd "$DEB_DIR"
++          version="${{ github.ref_name }}"
++          gh release upload "$version" "$DEB_NAME" "$SUM"
++
++  packaging:
++    name: Packaging
++    runs-on: ubuntu-latest
++    needs: [create-release, publish-release, publish-release-deb]
++
++    steps:
++      - name: Checkout
++        uses: actions/checkout@v4
++
++      - name: Import GPG key
++        uses: crazy-max/ghaction-import-gpg@v5
++        with:
++          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
++          passphrase: ${{ secrets.GPG_PASSPHRASE }}
++
++      - name: Run repository update
++        run: |
++          sudo apt-get update
++          sudo apt-get install -y reprepro
++
++          mkdir -p apt/deb/stable >> /dev/null 2>&1
++          RELEASE_DATA=$(curl -s https://api.github.com/repos/alexpasmantier/television/releases/latest)
++
++          ARCHITECTURES=(
++            "x86_64-unknown-linux-gnu:amd64"
++            "aarch64-unknown-linux-gnu:arm64"
++          )
++          ROOT_DIR=$(pwd)
++          APT_DIR=$ROOT_DIR/apt
++          REPREPRO_DIR=$APT_DIR/reprepro
++          DISTS_STABLE_DIR=$APT_DIR/dists/stable
++          DEB_STABLE_DIR=$APT_DIR/deb/stable
++
++          for ARCH_MAPPING in "${ARCHITECTURES[@]}"; do
++            ARCH_PATTERN="${ARCH_MAPPING%:*}"
++            ARCH_NAME="${ARCH_MAPPING#*:}"
++
++            echo "Processing $ARCH_PATTERN architecture..."
++            URL=$(echo "$RELEASE_DATA" | grep "browser_download_url" | grep "$ARCH_PATTERN.deb" | cut -d '"' -f 4)
++
++            if [ -n "$URL" ]; then
++              echo "Found $ARCH_PATTERN package, downloading..."
++              FILE_NAME=$(curl -LO $URL | awk '{print $2}')
++              mv $FILE_NAME $DEB_STABLE_DIR/
++
++              echo "Downloaded $FILE_NAME to $DEB_STABLE_DIR"
++              reprepro --dbdir $REPREPRO_DIR/db --confdir $REPREPRO_DIR/conf -C main includedeb stable $DEB_STABLE_DIR/*deb
++
++              GPG_KEY_ID=$(gpg --list-keys --keyid-format LONG | grep '^pub' | awk -F'/' '{print $2}' | awk '{print $1}')
++              cat $DISTS_STABLE_DIR/Release | gpg -s --default-key GPG_KEY_ID -abs > $DISTS_STABLE_DIR/Release.gpg
++
++              echo "$ARCH_PATTERN package added successfully"
++            else
++              echo "No $ARCH_PATTERN package found in release"
++            fi
++          done
++
++          git config user.name "github-actions[bot]"
++          git config user.email "github-actions[bot]@users.noreply.github.com"
++
++          git add .
++          git commit -m "feat: [bot] update apt package repository" || echo "No changes to commit"
++          git push origin main
+diff --git a/.github/workflows/static.yml b/.github/workflows/static.yml
+index f2c9e97c..486b2825 100644
+--- a/.github/workflows/static.yml
++++ b/.github/workflows/static.yml
+@@ -2,13 +2,17 @@
+ name: Deploy static content to Pages
+ 
+ on:
+-  # Runs on pushes targeting the default branch
+-  push:
+-    branches: ["main"]
+-
+   # Allows you to run this workflow manually from the Actions tab
+   workflow_dispatch:
+ 
++  # Runs when the publishing of the Linux .deb file is successfully completed in the CD workflow.
++  # So that it can be installed through apt
++  workflow_run:
++    workflows: ["CD"]
++    branches: [main]
++    types:
++      - completed
++
+ # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+ permissions:
+   contents: read
+@@ -37,7 +41,7 @@ jobs:
+         uses: actions/upload-pages-artifact@v3
+         with:
+           # Upload entire repository
+-          path: '.'
++          path: "."
+       - name: Deploy to GitHub Pages
+         id: deployment
+         uses: actions/deploy-pages@v4
+diff --git a/Cargo.toml b/Cargo.toml
+index ce2d1394..a417b652 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -2,7 +2,7 @@
+ name = "television"
+ version = "0.11.9"
+ edition = "2024"
+-description = "A cross-platform, fast and extensible general purpose fuzzy finder TUI."
++description = "Cross-platform, fast and extensible general purpose fuzzy finder TUI."
+ license = "MIT"
+ authors = ["Alexandre Pasmantier <alex.pasmant@gmail.com>"]
+ repository = "https://github.com/alexpasmantier/television"
+@@ -135,3 +135,17 @@ float_cmp = "allow"
+ implicit_hasher = "allow"
+ wildcard_imports = "allow"
+ from_iter_instead_of_collect = "allow"
++
++[package.metadata.deb]
++maintainer = "Alexandre Pasmantier <alex.pasmant@gmail.com>"
++copyright = "Copyright 2025 Alexandre Pasmantier <alex.pasmant@gmail.com>"
++extended-description = """\
++Television is a cross-platform, fast and extensible fuzzy finder TUI.
++It integrates with your shell and lets you quickly search through any kind of data source (files, git repositories, environment variables, docker images, you name it) using a fuzzy matching algorithm and is designed to be easily extensible."""
++section = "utils"
++priority = "optional"
++depends = "$auto"
++assets = [
++    ["target/release/tv", "usr/bin/", "755"],
++    { source = "man/tv.1", dest = "usr/share/man/man1/", mode = "644"},
++]
+diff --git a/apt/dists/stable/InRelease b/apt/dists/stable/InRelease
+new file mode 100644
+index 00000000..dd4db28b
+--- /dev/null
++++ b/apt/dists/stable/InRelease
+@@ -0,0 +1,36 @@
++-----BEGIN PGP SIGNED MESSAGE-----
++Hash: SHA512
++
++Codename: stable
++Date: Sat, 28 Jun 2025 07:44:52 UTC
++Architectures: amd64
++Components: main
++Description: Cross-platform, fast and extensible general purpose fuzzy finder
++MD5Sum:
++ 297215550eacf798cf901363118bb257 874 main/binary-amd64/Packages
++ 42af63684d49eae2c746ba2378f1e0cc 567 main/binary-amd64/Packages.gz
++ 68bf389ba549b00b25a76cf9ed7c39a0 114 main/binary-amd64/Release
++SHA1:
++ b915d3198ea4c225a64ac7ec6e55228f8a895f29 874 main/binary-amd64/Packages
++ c43afcf01f2531f31ce1ec33709b9a36b396bda8 567 main/binary-amd64/Packages.gz
++ bebb0993a743356f2e72c7062d36d0e04125f32f 114 main/binary-amd64/Release
++SHA256:
++ dcd709eb6c4dba7bdcdedd1a1a23850b57ddb97ab0d674dfdf393f2cd16c1708 874 main/binary-amd64/Packages
++ 2f57387839b5aa778859dbb72f7d1d3cae5bf1e74bea3c258b3898555aeebfb6 567 main/binary-amd64/Packages.gz
++ 6a1dfac31d78b56d037ff55af8658af74bc09f80ffae729c433b3bf4f7bee1e1 114 main/binary-amd64/Release
++-----BEGIN PGP SIGNATURE-----
++
++iQIzBAEBCgAdFiEEGZeCq9NntZEW1ER+Q71VEAVV2/IFAmhfnXUACgkQQ71VEAVV
++2/ICkA//Zd4AJuzgRhrzArG8JQd7lYQYFtXn/vIQ91IJ6UDNYnIEDSV3fQsRFQFq
++Y2/om4QduBkiB2EJ+/5TvQX/POXtW8hPZtnyWl5bUE2pgfTsRR9zG81mLKLxW4o9
++6OCgicFUj2r0RtX+drtElaN7NjddvKNTaTkFMQzWbrMi1P1ozcLtWPG5ek8+kC4V
++a34/iugqkzgTEE0n4/01weBCdj02n+SKtHBwxuJrZSd9HVvqvacDEWqpb6ZJbQpp
++YcnrwSLB6qHqDN3ym4cAwAHnZ8OKp5NmkUK9GyNOx4Q3NoPptkkD9oDdf+Dkwcir
++qAA7LQ+xWpV0dNfl6/4FsthkWT1fso3J1vrag7Ifp05a+8zwsq8X6ukzZxpwj0ye
++FtPlWDybLOdvIquItHgdYcUgG70ZNUgHnNC9885vafznoscokkBKQzOSPeFJrDj1
++HPTXrhCbbHWtdU1+gvgcMJCqbAcdxZb+Tla2eO1JCA4QuWtd2cZOdliX0Y/vxOiH
++inNPTHnK0xsNP86in6t0/JSWTRE9MjENzlEZxDN1a/M7276ijL8pI7wSfXj3JZFb
++c1FG99zpYWg3HZnF2fGbF1Ost2K+bXYp/jNzTxkP5GBg93+M3HAp4Um29wguliE/
++ROX8z31Q7aAezDdNA+TOfSijdb7NPBeiwqUzJSu4JIe7I8BnG7Q=
++=suel
++-----END PGP SIGNATURE-----
+diff --git a/apt/dists/stable/Release b/apt/dists/stable/Release
+new file mode 100644
+index 00000000..af40dc17
+--- /dev/null
++++ b/apt/dists/stable/Release
+@@ -0,0 +1,17 @@
++Codename: stable
++Date: Sat, 28 Jun 2025 07:44:52 UTC
++Architectures: amd64
++Components: main
++Description: Cross-platform, fast and extensible general purpose fuzzy finder
++MD5Sum:
++ 297215550eacf798cf901363118bb257 874 main/binary-amd64/Packages
++ 42af63684d49eae2c746ba2378f1e0cc 567 main/binary-amd64/Packages.gz
++ 68bf389ba549b00b25a76cf9ed7c39a0 114 main/binary-amd64/Release
++SHA1:
++ b915d3198ea4c225a64ac7ec6e55228f8a895f29 874 main/binary-amd64/Packages
++ c43afcf01f2531f31ce1ec33709b9a36b396bda8 567 main/binary-amd64/Packages.gz
++ bebb0993a743356f2e72c7062d36d0e04125f32f 114 main/binary-amd64/Release
++SHA256:
++ dcd709eb6c4dba7bdcdedd1a1a23850b57ddb97ab0d674dfdf393f2cd16c1708 874 main/binary-amd64/Packages
++ 2f57387839b5aa778859dbb72f7d1d3cae5bf1e74bea3c258b3898555aeebfb6 567 main/binary-amd64/Packages.gz
++ 6a1dfac31d78b56d037ff55af8658af74bc09f80ffae729c433b3bf4f7bee1e1 114 main/binary-amd64/Release
+diff --git a/apt/dists/stable/Release.gpg b/apt/dists/stable/Release.gpg
+new file mode 100644
+index 00000000..6fd998ed
+--- /dev/null
++++ b/apt/dists/stable/Release.gpg
+@@ -0,0 +1,16 @@
++-----BEGIN PGP SIGNATURE-----
++
++iQIzBAABCgAdFiEEGZeCq9NntZEW1ER+Q71VEAVV2/IFAmhfnXYACgkQQ71VEAVV
++2/IslA/5AWJVoPHYiiYf36KDuZ6mZy8Slf/1fga8TqhmRfOfiqVSp/doAPHpx7rZ
++K6G6GvMXECXePDeV79a0nP5WEPznGRMFMRbRTG2NGuWT1TZ0jElcoDfBb1Lvu8YG
++8ZEUXjZ4QQfAwRCbUk5QDHFw6UteEz73va1qONbjXhWiJcDcUZ20TS0D9tXSiYx3
++gkTGM2ktaF453wwrob/S04ANo453T49uRAr6j72Hm++ZOhl8Vw6eCda/SDiMapbQ
++SJ8EXkkVTOx2Qqrlhj6t40aG7tZANRJeEcESNtfg7ecITR8Gnkq33rrcBtpuy+NJ
++gY/NNEcveH00gotLmx9kqUDN17t3obcmDZNg7r8X4kb5r9REVLuUquu7pNBVDrpF
++GsyCeF0XDsyESdXgITxpwCNYCzYeKpaoBClfuPGJSxhpee096qqPzGrSZFMwPxw5
++JtmnVJUFztbbS7FaR/uT18hGhhFKrwvX57Qx0S+ayg5HJE+F8/hSQUnPHW1eVu5E
++BW1NsNU/Cx57z6ubcODuVjnKcCfVMpX8d6p/bj9F5JAolxjRx0dG5ip+w70IkwPZ
++PHfPsk8K8Cv9JBvLkOP6ZuprDQNk486cWGL8AzXCDlCFSQna6+R3Mn8nuWTrVgAu
++kAvI+VHgc0r/anMO1NDNvdFG/q7lM2KLZBm5v59B2LtDBWLkd48=
++=ya6C
++-----END PGP SIGNATURE-----
+diff --git a/apt/dists/stable/main/binary-amd64/Packages b/apt/dists/stable/main/binary-amd64/Packages
+new file mode 100644
+index 00000000..7a7c0088
+--- /dev/null
++++ b/apt/dists/stable/main/binary-amd64/Packages
+@@ -0,0 +1,21 @@
++Package: television
++Version: 0.11.9-1
++Architecture: amd64
++Homepage: https://github.com/alexpasmantier/television
++Maintainer: Alexandre Pasmantier <alex.pasmant@gmail.com>
++Installed-Size: 4923
++Depends: 
++Priority: optional
++Section: utils
++Filename: pool/main/t/television/television_0.11.9-1_amd64.deb
++Size: 1506056
++SHA256: 497e99def6addafc61ca9bfdaf125aa5403796aee35ff162235f06bef29a00d3
++SHA1: 731581bef05bb06c3d207640a83cb270ea313ab9
++MD5sum: a2b836e2d33297cd0e442ad67849cb88
++Description: Cross-platform, fast and extensible general purpose fuzzy finder TUI.
++ Television is a cross-platform, fast and extensible fuzzy finder TUI.
++ It integrates with your shell and lets you quickly search through any kind of
++ data source (files, git repositories, environment variables, docker images, you
++ name it) using a fuzzy matching algorithm and is designed to be easily
++ extensible.
++
+diff --git a/apt/dists/stable/main/binary-amd64/Packages.gz b/apt/dists/stable/main/binary-amd64/Packages.gz
+new file mode 100644
+index 00000000..1964952d
+Binary files /dev/null and b/apt/dists/stable/main/binary-amd64/Packages.gz differ
+diff --git a/apt/dists/stable/main/binary-amd64/Release b/apt/dists/stable/main/binary-amd64/Release
+new file mode 100644
+index 00000000..d0238901
+--- /dev/null
++++ b/apt/dists/stable/main/binary-amd64/Release
+@@ -0,0 +1,3 @@
++Component: main
++Architecture: amd64
++Description: Cross-platform, fast and extensible general purpose fuzzy finder
+diff --git a/apt/repository-key.asc b/apt/repository-key.asc
+new file mode 100644
+index 00000000..0c822376
+--- /dev/null
++++ b/apt/repository-key.asc
+@@ -0,0 +1,29 @@
++-----BEGIN PGP PUBLIC KEY BLOCK-----
++
++mQINBGhgBwUBEADBlFh1YSwq3WWpvVa5kF/UQ6lMNTvKlPyBybodnukUdrI5RS4B
++gR/UHnOme9ozpuxNhMsoL8vEWhO2KJlyJT+CnQ4i5CbRHyEA1kt+8pcecDHSk7ge
++t4oJ00JUlfwD/rsP6RvsHGeqyM4HMAinaECE3bpOt4aujExS5glt/PjE54wN+H7y
++4gYTbZHQyqok05j34gbwvoPtps63qZr7GxQI0AOJM2bsgQTNDcjH3NChL4VPBvnB
++It6tgScD9uS1LmXRrFEjsC2krBFhHNpbwvkxelG+N3gBG72gFDL5LvnYcSR2SrLU
++yPOWLV4Gw4KBtjDI3pFpu7aOqFOpwRf0H7mt9xGq8tyxiUWBzot79AWwd8zAegCd
++hmdQd37eHD6Hfqj6CngGmt1T+wosSHM1BkiNPY24bO44yBqfybBwxJrfa+MrAEd6
++pXbZGs+ZYnzP5eu38PBLBttGWTLGg6HvnGNgOXitPIb+950JifD4zBD7Riv7hOZ0
++n0+7YPn+Rpgj6PrzAe7k0pgkvpT7lY5k52efL4ACdxRFgMXYrTx/DZCwQ2i39oqN
++CbbSqfr3TVad/q4Y4LPkVQTxqeqeuajChQYdrWSwZpnlrX3pbDTAE5TPTsxUZDBn
++gNBAHKC4n4svL0NjhkN1r3w12XD54e9DGJsQqZLsTOjNzl533wqNWo6/1wARAQAB
++tElBbGV4YW5kcmUgUGFzbWFudGllciAoYXB0IHJlcG9zaXRvcnkga2V5IGZvciB0
++dikgPGFsZXgucGFzbWFudEBnbWFpbC5jb20+iQJOBBMBCgA4FiEEmrmF2TLZd/3e
++ZEa7G6RUurRc3mcFAmhgBwUCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQ
++G6RUurRc3mcDuA//fNHRdQxNbibktdK7fTFzpSwDqojhxeuiQdmJ9FVi9AO1WB6Q
++Fh+n5EmOpyj2nlb+6Nn4KuzfOC1GYyayNQRAT6FQhcRiu0+LJj3gO+eAiL63utTR
++tdIXloXdC/EkJ+azZQbPXEg+6PWRIXsSAynuzgGx6oKzYuR1RskHoWLmL81q/IjH
++oIhKg+8ti1cdF/fcsV1Zvkn64+1QbXMcim1tldelt5djPoG/9FI5VX75ZJ4FFud1
++b9h+cVHfTqx9nahsz8zuRC5N15CDbjSF83D8A1xzm6xFyVVWKiPh6p5KefKG4gro
++qS576nCMSjqniykNS07M3soRkusjUMoqu4pN4ljieBdWL9+KdF0u58kt+hkSr3If
++yHPAwKPmZik7Sv97BdnT0oHvcGH+c1QAKstz9TA49tM8UiHFOgCNaLS+ceB50snM
++FmrbslyfspwFWQlYKRHorozQn43Tq4dCvlapcLkPi+qZGLmVtOwOA7Yzw4YdvZw0
++QkOJ+kUyptXu1NnFl0YXL15+Rd4HsOSX4PjmmLXq1XSKPbraBk77Aib30RzTNJ7X
++rFr1daPqwfvtyW1DJ/3WnGQrA+QUjwTrxCpVllIGscqEgLlQXl+pcP54NNdTXAP1
++THFoVviec5VbMmQ8yn9cBbM1/xC7OunLtYEs1xttqL0o3+mCZnXA3WoS8xk=
++=KFq6
++-----END PGP PUBLIC KEY BLOCK-----
+diff --git a/apt/reprepro/conf/distributions b/apt/reprepro/conf/distributions
+new file mode 100644
+index 00000000..671c97ea
+--- /dev/null
++++ b/apt/reprepro/conf/distributions
+@@ -0,0 +1,5 @@
++Codename: stable
++Architectures: amd64 arm64
++Components: main 
++Description: Cross-platform, fast and extensible general purpose fuzzy finder 
++SignWith: 1BA454BAB45CDE67

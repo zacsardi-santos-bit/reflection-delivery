@@ -1,0 +1,42 @@
+patching file internal/provider/utils/utils_test.go
+{"Time":"2026-06-29T15:19:37.626861165Z","Action":"start","Package":"github.com/envoyproxy/gateway/internal/provider/utils"}
+{"Time":"2026-06-29T15:19:37.658048072Z","Action":"run","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName"}
+{"Time":"2026-06-29T15:19:37.658084938Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName","Output":"=== RUN   TestGetHashedName\n"}
+{"Time":"2026-06-29T15:19:37.65818638Z","Action":"run","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_default_name"}
+{"Time":"2026-06-29T15:19:37.658214557Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_default_name","Output":"=== RUN   TestGetHashedName/test_default_name\n"}
+{"Time":"2026-06-29T15:19:37.658249312Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_default_name","Output":"--- PASS: TestGetHashedName/test_default_name (0.00s)\n"}
+{"Time":"2026-06-29T15:19:37.658278575Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_default_name","Elapsed":0}
+{"Time":"2026-06-29T15:19:37.658307537Z","Action":"run","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_removing_trailing_slash"}
+{"Time":"2026-06-29T15:19:37.65832733Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_removing_trailing_slash","Output":"=== RUN   TestGetHashedName/test_removing_trailing_slash\n"}
+{"Time":"2026-06-29T15:19:37.658347902Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_removing_trailing_slash","Output":"--- PASS: TestGetHashedName/test_removing_trailing_slash (0.00s)\n"}
+{"Time":"2026-06-29T15:19:37.65836526Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_removing_trailing_slash","Elapsed":0}
+{"Time":"2026-06-29T15:19:37.65837764Z","Action":"run","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_removing_trailing_hyphen"}
+{"Time":"2026-06-29T15:19:37.658388458Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_removing_trailing_hyphen","Output":"=== RUN   TestGetHashedName/test_removing_trailing_hyphen\n"}
+{"Time":"2026-06-29T15:19:37.658404834Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_removing_trailing_hyphen","Output":"--- PASS: TestGetHashedName/test_removing_trailing_hyphen (0.00s)\n"}
+{"Time":"2026-06-29T15:19:37.658413779Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName/test_removing_trailing_hyphen","Elapsed":0}
+{"Time":"2026-06-29T15:19:37.658434234Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName","Output":"--- PASS: TestGetHashedName (0.00s)\n"}
+{"Time":"2026-06-29T15:19:37.658446009Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestGetHashedName","Elapsed":0}
+{"Time":"2026-06-29T15:19:37.658461434Z","Action":"run","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels"}
+{"Time":"2026-06-29T15:19:37.658470754Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels","Output":"=== RUN   TestContainsAllLabels\n"}
+{"Time":"2026-06-29T15:19:37.658512946Z","Action":"run","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_all_labels_present"}
+{"Time":"2026-06-29T15:19:37.658534624Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_all_labels_present","Output":"=== RUN   TestContainsAllLabels/test_all_labels_present\n"}
+{"Time":"2026-06-29T15:19:37.658565936Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_all_labels_present","Output":"--- PASS: TestContainsAllLabels/test_all_labels_present (0.00s)\n"}
+{"Time":"2026-06-29T15:19:37.658594549Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_all_labels_present","Elapsed":0}
+{"Time":"2026-06-29T15:19:37.658628603Z","Action":"run","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_some_labels_missing"}
+{"Time":"2026-06-29T15:19:37.658645681Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_some_labels_missing","Output":"=== RUN   TestContainsAllLabels/test_some_labels_missing\n"}
+{"Time":"2026-06-29T15:19:37.658659185Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_some_labels_missing","Output":"--- PASS: TestContainsAllLabels/test_some_labels_missing (0.00s)\n"}
+{"Time":"2026-06-29T15:19:37.658674834Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_some_labels_missing","Elapsed":0}
+{"Time":"2026-06-29T15:19:37.65868628Z","Action":"run","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_empty_map"}
+{"Time":"2026-06-29T15:19:37.658694565Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_empty_map","Output":"=== RUN   TestContainsAllLabels/test_empty_map\n"}
+{"Time":"2026-06-29T15:19:37.658703221Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_empty_map","Output":"--- PASS: TestContainsAllLabels/test_empty_map (0.00s)\n"}
+{"Time":"2026-06-29T15:19:37.658721154Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_empty_map","Elapsed":0}
+{"Time":"2026-06-29T15:19:37.658732729Z","Action":"run","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_empty_labelsToCheck"}
+{"Time":"2026-06-29T15:19:37.658740159Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_empty_labelsToCheck","Output":"=== RUN   TestContainsAllLabels/test_empty_labelsToCheck\n"}
+{"Time":"2026-06-29T15:19:37.658758465Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_empty_labelsToCheck","Output":"--- PASS: TestContainsAllLabels/test_empty_labelsToCheck (0.00s)\n"}
+{"Time":"2026-06-29T15:19:37.65876621Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels/test_empty_labelsToCheck","Elapsed":0}
+{"Time":"2026-06-29T15:19:37.658800305Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels","Output":"--- PASS: TestContainsAllLabels (0.00s)\n"}
+{"Time":"2026-06-29T15:19:37.65881631Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Test":"TestContainsAllLabels","Elapsed":0}
+{"Time":"2026-06-29T15:19:37.658828889Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Output":"PASS\n"}
+{"Time":"2026-06-29T15:19:37.660051746Z","Action":"output","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Output":"ok  \tgithub.com/envoyproxy/gateway/internal/provider/utils\t0.033s\n"}
+{"Time":"2026-06-29T15:19:37.660084941Z","Action":"pass","Package":"github.com/envoyproxy/gateway/internal/provider/utils","Elapsed":0.033}
+reward=1 graded=9 found=9 failed=0 parsed=9 framework=go exit_code=0

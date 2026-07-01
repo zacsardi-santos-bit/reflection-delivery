@@ -1,0 +1,5 @@
+patching file netbox/dcim/api/views.py
+patching file netbox/dcim/models/__init__.py
+patching file netbox/dcim/models/device_components.py
+patching file netbox/dcim/signals.py
+patching file netbox/dcim/views.py

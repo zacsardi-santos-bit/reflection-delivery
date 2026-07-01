@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./lib/promscrape/discovery/hetzner -count=1",
+  "test_files": [
+    "lib/promscrape/discovery/hetzner/hcloud_test.go",
+    "lib/promscrape/discovery/hetzner/robot_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/VictoriaMetrics/VictoriaMetrics/lib/promscrape/discovery/hetzner::TestParseHcloudNetworksList",
+    "github.com/VictoriaMetrics/VictoriaMetrics/lib/promscrape/discovery/hetzner::TestParseHcloudServerListResponse",
+    "github.com/VictoriaMetrics/VictoriaMetrics/lib/promscrape/discovery/hetzner::TestParseRobotServerListResponse"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,22 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :ambry-router:unitTest --tests \"com.github.ambry.router.AdaptiveOperationTrackerTest\" --no-daemon && (find /workspace/repo -name 'TEST-*.xml' -exec cat {} + 2>/dev/null; exit 0)",
+  "test_files": [
+    "ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::partitionLevelAdaptiveTrackerTest",
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::nodeLevelAdaptiveTrackerTest",
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::diskLevelAdaptiveTrackerTest",
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::trackerUpdateOnSuccessTest",
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::trackerUpdateOnFailureTest",
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::noUnexpiredRequestsTest",
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::trackerUpdateBetweenHasNextAndNextTest",
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::customPercentilesMetricsRegistryTest",
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::invalidOperationTrackerScopeTest",
+    "com.github.ambry.router.AdaptiveOperationTrackerTest::adaptationTest"
+  ],
+  "PASS_TO_PASS": []
+}

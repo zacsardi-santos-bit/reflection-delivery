@@ -1,0 +1,30 @@
+patching file config/config_test.go
+patching file config/tunneling/sshtunnel/sshtunnel_test.go
+patching file config/tunneling/tunneling_test.go
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling","Action":"build-output","Output":"github.com/TwiN/gatus/v5/config/tunneling: no non-test Go files in /workspace/repo/config/tunneling\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling","Action":"build-fail"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel","Action":"build-output","Output":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel: no non-test Go files in /workspace/repo/config/tunneling/sshtunnel\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel","Action":"build-fail"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"# github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:10:12: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:16:13: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:26:13: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:36:13: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:47:13: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:57:13: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:68:13: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:78:13: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:88:13: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:124:13: undefined: Config\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-output","Output":"config/tunneling/sshtunnel/sshtunnel_test.go:124:13: too many errors\n"}
+{"ImportPath":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]","Action":"build-fail"}
+{"Time":"2026-06-29T15:19:21.304339737Z","Action":"start","Package":"github.com/TwiN/gatus/v5/config"}
+{"Time":"2026-06-29T15:19:21.304481912Z","Action":"output","Package":"github.com/TwiN/gatus/v5/config","Output":"FAIL\tgithub.com/TwiN/gatus/v5/config [build failed]\n"}
+{"Time":"2026-06-29T15:19:21.304538632Z","Action":"fail","Package":"github.com/TwiN/gatus/v5/config","Elapsed":0,"FailedBuild":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel"}
+{"Time":"2026-06-29T15:19:21.304520216Z","Action":"start","Package":"github.com/TwiN/gatus/v5/config/tunneling"}
+{"Time":"2026-06-29T15:19:21.304703235Z","Action":"output","Package":"github.com/TwiN/gatus/v5/config/tunneling","Output":"FAIL\tgithub.com/TwiN/gatus/v5/config/tunneling [build failed]\n"}
+{"Time":"2026-06-29T15:19:21.304754875Z","Action":"start","Package":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel"}
+{"Time":"2026-06-29T15:19:21.304806344Z","Action":"output","Package":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel","Output":"FAIL\tgithub.com/TwiN/gatus/v5/config/tunneling/sshtunnel [build failed]\n"}
+{"Time":"2026-06-29T15:19:21.30488148Z","Action":"fail","Package":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel","Elapsed":0,"FailedBuild":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel [github.com/TwiN/gatus/v5/config/tunneling/sshtunnel.test]"}
+{"Time":"2026-06-29T15:19:21.304756718Z","Action":"fail","Package":"github.com/TwiN/gatus/v5/config/tunneling","Elapsed":0,"FailedBuild":"github.com/TwiN/gatus/v5/config/tunneling/sshtunnel"}
+reward=0 graded=133 found=0 failed=0 parsed=3 framework=go exit_code=1

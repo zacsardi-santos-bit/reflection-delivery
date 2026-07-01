@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "bash -c 'SKIP_UT_DB=1 go test -v -count=1 ./internal/controller/controllers -args -ginkgo.focus=reconcileImageServiceStatefulSet 2>&1 | go tool test2json -p github.com/openshift/assisted-service/internal/controller/controllers'",
+  "test_files": [
+    "internal/controller/controllers/agentserviceconfig_controller_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/openshift/assisted-service/internal/controller/controllers::TestControllers"
+  ],
+  "PASS_TO_PASS": []
+}

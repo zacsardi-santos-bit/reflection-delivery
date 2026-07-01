@@ -1,0 +1,23 @@
+{
+ "task": "pyro-ppl-pyro-2781",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds pyro/contrib/funsor/infer/discrete.py with 'def infer_discrete(model, first_available_dim=None)'; tests compare 'actual_max = sampled_trace.log_prob_sum()' to expected max over configs"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

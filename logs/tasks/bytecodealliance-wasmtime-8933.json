@@ -1,0 +1,23 @@
+{
+ "task": "bytecodealliance-wasmtime-8933",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P=28 structs:: tests (e.g. 'wasmtime-cli::all structs::struct_field_simple'); golden adds GC struct support across crates/wasmtime/src/runtime/gc/{enabled,disabled}/structref.rs etc.; test.patch adds tests/all/structs.rs"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 36,
+  "shallow": true
+ }
+}

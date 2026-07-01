@@ -1,0 +1,38 @@
+{
+  "test_framework": "pytest",
+  "test_command": "gcloud beta emulators bigtable start --host-port=localhost:8086 --quiet & sleep 10 && export BIGTABLE_EMULATOR_HOST=localhost:8086 && pytest /workspace/repo/bigtable/snippets/filters/filters_test.py /workspace/repo/bigtable/snippets/reads/reads_test.py -v --deselect=bigtable/snippets/filters/filters_test.py::test_filter_limit_cells_per_row --deselect=bigtable/snippets/filters/filters_test.py::test_filter_limit_cells_per_row_offset",
+  "test_files": [
+    "bigtable/snippets/filters/filters_test.py",
+    "bigtable/snippets/filters/snapshots/snap_filters_test.py",
+    "bigtable/snippets/reads/reads_test.py",
+    "bigtable/snippets/reads/snapshots/snap_reads_test.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "bigtable.snippets.filters.filters_test::test_filter_limit_row_sample",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_row_regex",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_cells_per_col",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_col_family_regex",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_col_qualifier_regex",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_col_range",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_value_range",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_value_regex",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_timestamp_range",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_block_all",
+    "bigtable.snippets.filters.filters_test::test_filter_limit_pass_all",
+    "bigtable.snippets.filters.filters_test::test_filter_modify_strip_value",
+    "bigtable.snippets.filters.filters_test::test_filter_modify_apply_label",
+    "bigtable.snippets.filters.filters_test::test_filter_composing_chain",
+    "bigtable.snippets.filters.filters_test::test_filter_composing_interleave",
+    "bigtable.snippets.filters.filters_test::test_filter_composing_condition",
+    "bigtable.snippets.reads.reads_test::test_read_row",
+    "bigtable.snippets.reads.reads_test::test_read_row_partial",
+    "bigtable.snippets.reads.reads_test::test_read_rows",
+    "bigtable.snippets.reads.reads_test::test_read_row_range",
+    "bigtable.snippets.reads.reads_test::test_read_row_ranges",
+    "bigtable.snippets.reads.reads_test::test_read_prefix",
+    "bigtable.snippets.reads.reads_test::test_read_filter"
+  ],
+  "PASS_TO_PASS": []
+}

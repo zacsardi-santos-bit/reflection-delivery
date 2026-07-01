@@ -1,0 +1,9 @@
+patching file .changelog/35354.txt
+patching file internal/service/bedrock/custom_model.go
+patching file internal/service/bedrock/custom_model_data_source.go
+patching file internal/service/securitylake/aws_log_source.go
+patching file internal/service/securitylake/custom_log_source.go
+patching file internal/service/securitylake/data_lake.go
+patching file internal/service/securitylake/errors.go
+patching file internal/service/securitylake/service_package_gen.go
+patching file website/docs/r/securitylake_custom_log_source.html.markdown

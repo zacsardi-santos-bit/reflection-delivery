@@ -1,0 +1,23 @@
+{
+ "task": "taskcluster-taskcluster-7428",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden replaces makeDirReadWritableForTaskUser with exchangeDirectoryOwnership (chown via find -uid) logging 'Updating ownership of files inside directory ... from ... to ...' and removes the Unmount revoke call; test expects regex 'Updating ownership of files inside directory ... to task_[0-9]*' an"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

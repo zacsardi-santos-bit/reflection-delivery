@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --lib --package ruff_linter -E 'test(rule_forloopwrites_path_new_furb122_py_expects)'",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/refurb/FURB122.py"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) ruff_linter rules::refurb::tests::rules::rule_forloopwrites_path_new_furb122_py_expects"
+  ],
+  "PASS_TO_PASS": []
+}

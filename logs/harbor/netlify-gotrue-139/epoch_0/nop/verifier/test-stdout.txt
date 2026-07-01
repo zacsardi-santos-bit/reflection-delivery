@@ -1,0 +1,29 @@
+patching file api/admin_test.go
+patching file api/api_test.go
+patching file api/external_test.go
+patching file api/hook_test.go
+patching file api/instance_test.go
+patching file api/invite_test.go
+patching file api/recover_test.go
+patching file api/signup_test.go
+patching file api/user_test.go
+patching file api/verify_test.go
+patching file models/refresh_token_test.go
+patching file models/user_test.go
+patching file storage/dial_test.go
+patching file storage/sql/storage_test.go
+patching file storage/test/db_setup.go
+# github.com/netlify/gotrue/vendor/github.com/mattn/go-sqlite3
+In file included from sqlite3-binding.c:2:
+code/sqlite3-binding.c: In function 'sqlite3SelectNew':
+code/sqlite3-binding.c:100721:10: warning: function may return address of local variable [-Wreturn-local-addr]
+100721 |   return pNew;
+       |          ^~~~
+code/sqlite3-binding.c:100687:10: note: declared here
+100687 |   Select standin;
+       |          ^~~~~~~
+# github.com/netlify/gotrue/storage [github.com/netlify/gotrue/storage.test]
+storage/dial_test.go:18:15: undefined: getExcludedColumns
+storage/dial_test.go:26:12: undefined: getExcludedColumns
+FAIL	github.com/netlify/gotrue/storage [build failed]
+reward=0 graded=2 found=2 failed=2 parsed=1 framework=go exit_code=1

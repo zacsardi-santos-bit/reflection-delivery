@@ -1,0 +1,742 @@
+patching file crates/loro-internal/tests/test.rs
+patching file crates/loro/tests/loro_rust_test.rs
+patching file loro-js/tests/event.test.ts
+patching file loro-js/tests/richtext.test.ts
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+  |
+  = note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+  = note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+  = note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+  |
+  = note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+  = note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+  = note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+   Compiling cc v1.0.83
+   Compiling crossbeam-utils v0.8.14
+   Compiling memoffset v0.7.1
+   Compiling adler v1.0.2
+   Compiling crossbeam-epoch v0.9.13
+   Compiling memchr v2.5.0
+   Compiling proc-macro2 v0.4.30
+   Compiling indexmap v1.9.2
+   Compiling gimli v0.27.0
+   Compiling crc32fast v1.3.2
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/rle/src/rle_vec.rs:374:9
+    |
+374 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+377 |     ) -> SliceIterator<A::Item> {
+    |          ^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+377 |     ) -> SliceIterator<'_, A::Item> {
+    |                        +++
+
+   Compiling rayon-core v1.10.1
+   Compiling unicode-xid v0.1.0
+   Compiling num_cpus v1.15.0
+warning: `loro-rle` (lib) generated 1 warning (run `cargo fix --lib -p loro-rle` to apply 1 suggestion)
+   Compiling regex-syntax v0.6.28
+   Compiling lazy_static v1.4.0
+   Compiling remove_dir_all v0.5.3
+   Compiling half v1.8.2
+   Compiling loro-internal v0.2.2 (/workspace/repo/crates/loro-internal)
+   Compiling miniz_oxide v0.6.2
+   Compiling os_str_bytes v6.4.1
+   Compiling fastrand v1.8.0
+   Compiling plotters-backend v0.3.4
+   Compiling bitflags v1.3.2
+   Compiling rustc-demangle v0.1.21
+   Compiling hashbrown v0.12.3
+   Compiling syn v0.15.44
+   Compiling ciborium-io v0.2.0
+   Compiling plotters-svg v0.3.3
+   Compiling ciborium-ll v0.2.0
+   Compiling tempfile v3.3.0
+   Compiling clap_lex v0.2.4
+   Compiling atty v0.2.14
+   Compiling wait-timeout v0.2.0
+   Compiling itertools v0.10.5
+   Compiling textwrap v0.16.0
+   Compiling bit-vec v0.6.3
+   Compiling quick-error v1.2.3
+   Compiling sys-info v0.9.1
+   Compiling backtrace v0.3.67
+   Compiling same-file v1.0.6
+   Compiling object v0.30.2
+   Compiling crossbeam-channel v0.5.6
+   Compiling quote v0.6.13
+   Compiling cast v0.3.0
+   Compiling walkdir v2.3.2
+   Compiling bit-set v0.5.3
+   Compiling rusty-fork v0.3.0
+   Compiling flate2 v1.0.25
+   Compiling ciborium v0.2.0
+   Compiling crossbeam-deque v0.8.2
+   Compiling plotters v0.3.4
+   Compiling tinytemplate v1.2.1
+   Compiling rand_xorshift v0.3.0
+   Compiling thousands v0.2.0
+   Compiling clap v3.2.23
+   Compiling rustc-hash v1.1.0
+   Compiling termcolor v1.2.0
+   Compiling anes v0.1.6
+   Compiling quick-error v2.0.1
+   Compiling addr2line v0.19.0
+   Compiling oorandom v11.1.3
+   Compiling bench-utils v0.1.0 (/workspace/repo/crates/bench-utils)
+   Compiling miniz_oxide v0.7.1
+   Compiling mintex v0.1.2
+   Compiling arbtest v0.2.0
+   Compiling ctor v0.1.26
+   Compiling base64 v0.21.5
+   Compiling static_assertions v1.1.0
+warning: unnecessary parentheses around type
+  --> crates/loro-internal/src/obs.rs:18:31
+   |
+18 | pub type Subscriber = Arc<dyn (for<'a> Fn(DiffEvent<'a>)) + Send + Sync>;
+   |                               ^                         ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+18 - pub type Subscriber = Arc<dyn (for<'a> Fn(DiffEvent<'a>)) + Send + Sync>;
+18 + pub type Subscriber = Arc<dyn for<'a> Fn(DiffEvent<'a>)  + Send + Sync>;
+   |
+
+warning: unexpected `cfg` condition value: `json`
+  --> crates/loro-internal/src/value.rs:40:15
+   |
+40 |         #[cfg(feature = "json")]
+   |               ^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `arbitrary`, `default`, `js-sys`, `rand`, `serde-wasm-bindgen`, `tabled`, `test_utils`, `wasm`, and `wasm-bindgen`
+   = help: consider adding `json` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition value: `json`
+  --> crates/loro-internal/src/value.rs:42:19
+   |
+42 |         #[cfg(not(feature = "json"))]
+   |                   ^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `arbitrary`, `default`, `js-sys`, `rand`, `serde-wasm-bindgen`, `tabled`, `test_utils`, `wasm`, and `wasm-bindgen`
+   = help: consider adding `json` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+   Compiling regex v1.7.1
+   Compiling proptest v1.0.0
+   Compiling rayon v1.6.1
+   Compiling criterion-plot v0.5.0
+warning: struct `CompactMapValue` is never constructed
+   --> crates/loro-internal/src/diff_calc.rs:439:8
+    |
+439 | struct CompactMapValue {
+    |        ^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `get_lamport_from_counter` is never used
+  --> crates/loro-internal/src/dag.rs:40:8
+   |
+36 | pub(crate) trait DagNode: HasLamport + HasId + HasLength + Debug + Sliceable {
+   |                  ------- method in this trait
+...
+40 |     fn get_lamport_from_counter(&self, c: Counter) -> Lamport {
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `frontier` is never used
+  --> crates/loro-internal/src/dag.rs:54:8
+   |
+49 | pub(crate) trait Dag: Debug {
+   |                  --- method in this trait
+...
+54 |     fn frontier(&self) -> &[ID];
+   |        ^^^^^^^^
+
+warning: methods `get_vv`, `iter`, `iter_with_vv`, and `mermaid` are never used
+  --> crates/loro-internal/src/dag.rs:61:8
+   |
+58 | pub(crate) trait DagUtils: Dag {
+   |                  -------- methods in this trait
+...
+61 |     fn get_vv(&self, id: ID) -> VersionVector;
+   |        ^^^^^^
+...
+67 |     fn iter(&self) -> DagIterator<'_, Self::Node>
+   |        ^^^^
+...
+70 |     fn iter_with_vv(&self) -> DagIteratorVV<'_, Self::Node>
+   |        ^^^^^^^^^^^^
+...
+73 |     fn mermaid(&self) -> String
+   |        ^^^^^^^
+
+warning: function `get_version_vector` is never used
+   --> crates/loro-internal/src/dag.rs:191:4
+    |
+191 | fn get_version_vector<'a, Get, D>(get: &'a Get, id: ID) -> VersionVector
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: struct `IdHeapItem` is never constructed
+ --> crates/loro-internal/src/dag/iter.rs:9:8
+  |
+9 | struct IdHeapItem {
+  |        ^^^^^^^^^^
+
+warning: function `iter_dag_with_vv` is never used
+  --> crates/loro-internal/src/dag/iter.rs:26:15
+   |
+26 | pub(crate) fn iter_dag_with_vv<T, D: Dag<Node = T>>(dag: &D) -> DagIteratorVV<'_, T> {
+   |               ^^^^^^^^^^^^^^^^
+
+warning: function `iter_dag` is never used
+  --> crates/loro-internal/src/dag/iter.rs:34:15
+   |
+34 | pub(crate) fn iter_dag<T>(dag: &dyn Dag<Node = T>) -> DagIterator<'_, T> {
+   |               ^^^^^^^^
+
+warning: struct `DagIterator` is never constructed
+  --> crates/loro-internal/src/dag/iter.rs:42:12
+   |
+42 | pub struct DagIterator<'a, T> {
+   |            ^^^^^^^^^^^
+
+warning: struct `DagIteratorVV` is never constructed
+  --> crates/loro-internal/src/dag/iter.rs:95:19
+   |
+95 | pub(crate) struct DagIteratorVV<'a, T> {
+   |                   ^^^^^^^^^^^^^
+
+warning: struct `BreakPoints` is never constructed
+ --> crates/loro-internal/src/dag/mermaid.rs:2:8
+  |
+2 | struct BreakPoints {
+  |        ^^^^^^^^^^^
+
+warning: struct `Output` is never constructed
+  --> crates/loro-internal/src/dag/mermaid.rs:10:8
+   |
+10 | struct Output {
+   |        ^^^^^^
+
+warning: function `to_str` is never used
+  --> crates/loro-internal/src/dag/mermaid.rs:18:4
+   |
+18 | fn to_str(output: Output) -> String {
+   |    ^^^^^^
+
+warning: function `break_points_to_output` is never used
+  --> crates/loro-internal/src/dag/mermaid.rs:73:4
+   |
+73 | fn break_points_to_output(input: BreakPoints) -> Output {
+   |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `get_dag_break_points` is never used
+   --> crates/loro-internal/src/dag/mermaid.rs:115:4
+    |
+115 | fn get_dag_break_points<T: DagNode>(dag: &impl Dag<Node = T>) -> BreakPoints {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `dag_to_mermaid` is never used
+   --> crates/loro-internal/src/dag/mermaid.rs:143:15
+    |
+143 | pub(crate) fn dag_to_mermaid<T: DagNode>(dag: &impl Dag<Node = T>) -> String {
+    |               ^^^^^^^^^^^^^^
+
+warning: struct `TotalOrderStamp` is never constructed
+   --> crates/loro-internal/src/version.rs:873:19
+    |
+873 | pub(crate) struct TotalOrderStamp {
+    |                   ^^^^^^^^^^^^^^^
+
+warning: struct `MapDiffRaw` is never constructed
+  --> crates/loro-internal/src/delta/map.rs:82:12
+   |
+82 | pub struct MapDiffRaw<T> {
+   |            ^^^^^^^^^^
+
+warning: method `to_tree_id` is never used
+  --> crates/loro-internal/src/state/tree_state.rs:49:19
+   |
+35 | impl TreeParentId {
+   | ----------------- method in this implementation
+...
+49 |     pub(crate) fn to_tree_id(self) -> Option<TreeID> {
+   |                   ^^^^^^^^^^
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/loro-internal/src/oplog.rs:475:33
+    |
+475 |     pub fn get_remote_change_at(&self, id: ID) -> Option<Change<RemoteOp>> {
+    |                                 ^^^^^                           ^^^^^^^^ the same lifetime is hidden here
+    |                                 |
+    |                                 the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+475 |     pub fn get_remote_change_at(&self, id: ID) -> Option<Change<RemoteOp<'_>>> {
+    |                                                                         ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/loro-internal/src/oplog.rs:480:33
+    |
+480 |     fn convert_change_to_remote(&self, change: &Change) -> Change<RemoteOp> {
+    |                                 ^^^^^ the lifetime is elided here ^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+480 |     fn convert_change_to_remote(&self, change: &Change) -> Change<RemoteOp<'_>> {
+    |                                                                           ++++
+
+warning: hiding a lifetime that's named elsewhere is confusing
+   --> crates/loro-internal/src/dag.rs:278:58
+    |
+278 |     fn from_dag_node<D, F>(id: ID, get: &'a F) -> Option<OrdIdSpan>
+    |                                          --              ^^^^^^^^^ the same lifetime is hidden here
+    |                                          |
+    |                                          the lifetime is named here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'a`
+    |
+278 |     fn from_dag_node<D, F>(id: ID, get: &'a F) -> Option<OrdIdSpan<'a>>
+    |                                                                   ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/loro-internal/src/encoding.rs:172:44
+    |
+172 | pub(crate) fn parse_header_and_body(bytes: &[u8]) -> Result<ParsedHeaderAndBody, LoroError> {
+    |                                            ^^^^^            ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                                            |
+    |                                            the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+172 | pub(crate) fn parse_header_and_body(bytes: &[u8]) -> Result<ParsedHeaderAndBody<'_>, LoroError> {
+    |                                                                                ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+    --> crates/loro-internal/src/encoding/encode_reordered.rs:2195:32
+     |
+2195 |     pub fn decode_arena(bytes: &[u8]) -> LoroResult<DecodedArenas> {
+     |                                ^^^^^                ^^^^^^^^^^^^^ the same lifetime is hidden here
+     |                                |
+     |                                the lifetime is elided here
+     |
+     = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+     |
+2195 |     pub fn decode_arena(bytes: &[u8]) -> LoroResult<DecodedArenas<'_>> {
+     |                                                                  ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+    --> crates/loro-internal/src/encoding/encode_reordered.rs:2232:33
+     |
+2232 |         fn decode_arenas(bytes: &[u8]) -> LoroResult<EncodedArenas> {
+     |                                 ^^^^^                ^^^^^^^^^^^^^ the same lifetime is hidden here
+     |                                 |
+     |                                 the lifetime is elided here
+     |
+     = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+     |
+2232 |         fn decode_arenas(bytes: &[u8]) -> LoroResult<EncodedArenas<'_>> {
+     |                                                                   ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> crates/loro-internal/src/op.rs:304:20
+    |
+304 |     pub fn rich_op(&self) -> RichOp {
+    |                    ^^^^^     ^^^^^^ the same lifetime is hidden here
+    |                    |
+    |                    the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+304 |     pub fn rich_op(&self) -> RichOp<'_> {
+    |                                    ++++
+
+   Compiling color-backtrace v0.5.1
+   Compiling dhat v0.3.2
+   Compiling criterion v0.4.0
+   Compiling loro v0.2.2 (/workspace/repo/crates/loro)
+   Compiling proptest-derive v0.3.0
+warning: unexpected `cfg` condition name: `proptest`
+ --> crates/loro-internal/src/tests/mod.rs:5:7
+  |
+5 | #[cfg(proptest)]
+  |       ^^^^^^^^
+  |
+  = help: expected names are: `docsrs`, `feature`, and `test` and 31 more
+  = help: consider using a Cargo feature instead
+  = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+           [lints.rust]
+           unexpected_cfgs = { level = "warn", check-cfg = ['cfg(proptest)'] }
+  = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(proptest)");` to the top of the `build.rs`
+  = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+  = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `proptest`
+ --> crates/loro-internal/src/tests/mod.rs:7:11
+  |
+7 | #[cfg(not(proptest))]
+  |           ^^^^^^^^
+  |
+  = help: consider using a Cargo feature instead
+  = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+           [lints.rust]
+           unexpected_cfgs = { level = "warn", check-cfg = ['cfg(proptest)'] }
+  = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(proptest)");` to the top of the `build.rs`
+  = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `proptest`
+  --> crates/loro-internal/src/tests/mod.rs:10:7
+   |
+10 | #[cfg(proptest)]
+   |       ^^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(proptest)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(proptest)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `proptest`
+  --> crates/loro-internal/src/tests/mod.rs:12:11
+   |
+12 | #[cfg(not(proptest))]
+   |           ^^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(proptest)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(proptest)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `json`
+   --> crates/loro-internal/src/value.rs:448:7
+    |
+448 | #[cfg(feature = "json")]
+    |       ^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `arbitrary`, `default`, `js-sys`, `rand`, `serde-wasm-bindgen`, `tabled`, `test_utils`, `wasm`, and `wasm-bindgen`
+    = help: consider adding `json` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition value: `json`
+  --> crates/loro-internal/src/value.rs:40:15
+   |
+40 |         #[cfg(feature = "json")]
+   |               ^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `arbitrary`, `default`, `js-sys`, `rand`, `serde-wasm-bindgen`, `tabled`, `test_utils`, `wasm`, and `wasm-bindgen`
+   = help: consider adding `json` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: `loro-internal` (lib) generated 29 warnings (run `cargo fix --lib -p loro-internal` to apply 8 suggestions)
+warning: creating a shared reference to mutable static
+  --> crates/loro-internal/src/configure.rs:32:25
+   |
+32 |             let bytes = TEST_RANDOM.fetch_add(1, std::sync::atomic::Ordering::Release);
+   |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ shared reference to mutable static
+   |
+   = note: shared references to mutable statics are dangerous; it's undefined behavior if the static is mutated or if a mutable reference is created for it while the shared reference lives
+   = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/static-mut-references.html>
+   = note: `#[warn(static_mut_refs)]` (part of `#[warn(rust_2024_compatibility)]`) on by default
+
+warning: `loro-internal` (lib test) generated 20 warnings (13 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.74s
+────────────
+ Nextest run ID 154bac4f-2613-4ec9-bf0e-a7c95e0193a7 with nextest profile: default
+    Starting 273 tests across 7 binaries (3 tests skipped)
+        PASS [   0.021s] (  1/273) loro::loro_rust_test save
+        PASS [   0.022s] (  2/273) loro::loro_rust_test map
+        PASS [   0.023s] (  3/273) loro::loro_rust_test get_change_at_lamport
+        PASS [   0.023s] (  4/273) loro-internal container::map::map_content::test::fix_fields_order
+        PASS [   0.026s] (  5/273) loro::loro_rust_test subscribe
+        PASS [   0.028s] (  6/273) loro-internal container::list::list_op::test::test_del_span_merge_slice
+        PASS [   0.032s] (  7/273) loro-internal change::test::size_of_change
+        PASS [   0.033s] (  8/273) loro-internal arena::str_arena::test::slice_long_unicode_correctly
+        PASS [   0.033s] (  9/273) loro-internal container::list::list_op::test::fix_fields_order
+        PASS [   0.035s] ( 10/273) loro::loro_rust_test travel_back_should_remove_styles
+        PASS [   0.035s] ( 11/273) loro::loro_rust_test richtext_test
+        PASS [   0.035s] ( 12/273) loro::loro_rust_test tree
+        PASS [   0.035s] ( 13/273) loro-internal arena::str_arena::test::test
+        PASS [   0.035s] ( 14/273) loro-internal arena::str_arena::test::parse_unicode_correctly
+        PASS [   0.036s] ( 15/273) loro::loro_rust_test sync
+        PASS [   0.035s] ( 16/273) loro::loro_rust_test cmp_frontiers
+        PASS [   0.037s] ( 17/273) loro::loro_rust_test time_travel
+        PASS [   0.017s] ( 18/273) loro-internal container::richtext::richtext_state::test::continuous_text_insert_should_be_merged
+        PASS [   0.027s] ( 19/273) loro-internal container::richtext::richtext_state::test::bold_and_link_at_the_same_place
+        PASS [   0.027s] ( 20/273) loro-internal container::richtext::richtext_state::test::bold_should_expand
+        PASS [   0.052s] ( 21/273) loro::loro_rust_test list
+        PASS [   0.030s] ( 22/273) loro-internal container::richtext::richtext_state::test::continuous_text_insert_should_be_merged_and_have_bold
+        PASS [   0.022s] ( 23/273) loro-internal container::richtext::richtext_state::test::delete_text
+        PASS [   0.024s] ( 24/273) loro-internal container::richtext::richtext_state::test::delete_bold
+        PASS [   0.028s] ( 25/273) loro-internal container::richtext::richtext_state::test::continuous_text_insert_should_not_be_merged_when_prev_is_link
+        PASS [   0.025s] ( 26/273) loro-internal container::richtext::richtext_state::test::link_should_not_expand
+        PASS [   0.026s] ( 27/273) loro-internal container::richtext::test::test
+        PASS [   0.028s] ( 28/273) loro-internal container::richtext::richtext_state::test::remove_style_anchors_should_also_delete_style
+        PASS [   0.027s] ( 29/273) loro-internal container::richtext::style_range_map::test::test_basic_insert
+        PASS [   0.028s] ( 30/273) loro-internal container::richtext::style_range_map::test::delete_style
+        PASS [   0.029s] ( 31/273) loro-internal container::richtext::richtext_state::test::remove_start_anchor_in_the_middle_should_remove_style
+        PASS [   0.029s] ( 32/273) loro-internal container::richtext::richtext_state::test::test_comments
+        PASS [   0.030s] ( 33/273) loro-internal container::richtext::richtext_state::test::test
+        PASS [   0.030s] ( 34/273) loro-internal container::richtext::richtext_state::test::remove_start_anchor_should_remove_style
+        PASS [   0.026s] ( 35/273) loro-internal container::richtext::tracker::crdt_rope::test::checkout_future
+        PASS [   0.029s] ( 36/273) loro-internal container::richtext::tracker::crdt_rope::test::checkout
+        PASS [   0.026s] ( 37/273) loro-internal container::richtext::tracker::crdt_rope::test::checkout_future_with_delete
+        PASS [   0.025s] ( 38/273) loro-internal container::richtext::tracker::crdt_rope::test::content_insert_should_ignore_tombstone
+        PASS [   0.027s] ( 39/273) loro-internal container::richtext::tracker::crdt_rope::test::content_insert_middle
+        PASS [   0.025s] ( 40/273) loro-internal container::richtext::tracker::crdt_rope::test::should_ignore_future_spans_when_getting_origin_left
+        PASS [   0.028s] ( 41/273) loro-internal container::richtext::tracker::crdt_rope::test::get_origin_left_and_right
+        PASS [   0.023s] ( 42/273) loro-internal container::richtext::tracker::crdt_rope::test::update
+        PASS [   0.027s] ( 43/273) loro-internal container::richtext::tracker::crdt_rope::test::get_origin_left_and_right_among_tombstones
+        PASS [   0.030s] ( 44/273) loro-internal container::richtext::tracker::crdt_rope::test::len_test
+        PASS [   0.023s] ( 45/273) loro-internal container::richtext::tracker::test::test_checkout_in_doc_with_del_span
+        PASS [   0.024s] ( 46/273) loro-internal container::richtext::tracker::id_to_cursor::test::test_id_to_cursor
+        PASS [   0.026s] ( 47/273) loro-internal container::richtext::tracker::test::test_checkout_in_doc_with_reversed_del_span
+        PASS [   0.027s] ( 48/273) loro-internal container::richtext::tracker::test::test_len
+        PASS [   0.027s] ( 49/273) loro-internal container::test::container_id_convert
+        PASS [   0.030s] ( 50/273) loro-internal container::richtext::tracker::test::test_retreat_and_forward_delete
+        PASS [   0.028s] ( 51/273) loro-internal dag::test::find_common_ancestors::no_common_ancestors_when_there_is_an_redundant_node
+        PASS [   0.030s] ( 52/273) loro-internal dag::test::find_common_ancestors::large_lamport_with_longer_path
+        PASS [   0.029s] ( 53/273) loro-internal dag::test::find_common_ancestors::no_common_ancestors
+        PASS [   0.031s] ( 54/273) loro-internal dag::test::find_common_ancestors::dep_in_middle
+        PASS [   0.026s] ( 55/273) loro-internal dag::test::find_common_ancestors_proptest::issue_1
+        PASS [   0.031s] ( 56/273) loro-internal dag::test::find_common_ancestors::siblings
+        PASS [   0.029s] ( 57/273) loro-internal dag::test::find_common_ancestors_proptest::issue_0
+        PASS [   0.023s] ( 58/273) loro-internal dag::test::find_path::issue
+        PASS [   0.031s] ( 59/273) loro-internal dag::test::find_path::one_path
+        PASS [   0.036s] ( 60/273) loro-internal dag::test::find_path::middle
+        PASS [   0.031s] ( 61/273) loro-internal dag::test::iter::test
+        PASS [   0.033s] ( 62/273) loro-internal dag::test::mermaid::gen
+        PASS [   0.036s] ( 63/273) loro-internal dag::test::find_path::retreat_to_beginning
+        PASS [   0.037s] ( 64/273) loro-internal dag::test::get_version_vector::vv
+        PASS [   0.029s] ( 65/273) loro-internal dag::test::mermaid::simple
+        PASS [   0.030s] ( 66/273) loro-internal dag::test::mermaid::three
+        PASS [   0.031s] ( 67/273) loro-internal dag::test::test_dag
+        PASS [   0.032s] ( 68/273) loro-internal delta::seq::test::delete_delete
+        PASS [   0.022s] ( 69/273) loro-internal delta::seq::test::delete_entire
+        PASS [   0.020s] ( 70/273) loro-internal delta::seq::test::delete_failed
+        PASS [   0.022s] ( 71/273) loro-internal delta::seq::test::delete_insert
+        PASS [   0.020s] ( 72/273) loro-internal delta::seq::test::delete_retain
+        PASS [   0.018s] ( 73/273) loro-internal delta::seq::test::delta_push
+        PASS [   0.021s] ( 74/273) loro-internal delta::seq::test::delta_compose
+        PASS [   0.020s] ( 75/273) loro-internal delta::seq::test::insert_delete
+        PASS [   0.066s] ( 76/273) loro-internal dag::test::find_path::proptest_path
+        PASS [   0.020s] ( 77/273) loro-internal delta::seq::test::insert_retain
+        PASS [   0.019s] ( 78/273) loro-internal delta::seq::test::remove_meta
+        PASS [   0.081s] ( 79/273) loro-internal dag::test::find_common_ancestors_proptest::test_10dags
+        PASS [   0.027s] ( 80/273) loro-internal delta::seq::test::insert_insert
+        PASS [   0.021s] ( 81/273) loro-internal delta::seq::test::retain_end_opt
+        PASS [   0.024s] ( 82/273) loro-internal delta::seq::test::retain_delete
+        PASS [   0.021s] ( 83/273) loro-internal delta::seq::test::retain_insert
+        PASS [   0.019s] ( 84/273) loro-internal delta::seq::test::retain_retain
+        PASS [   0.022s] ( 85/273) loro-internal delta::seq::test::retain_end_opt_join
+        PASS [   0.023s] ( 86/273) loro-internal delta::seq::test::retain_more
+        PASS [   0.092s] ( 87/273) loro-internal dag::test::find_common_ancestors_proptest::test_mul_ancestors_10dags
+        PASS [   0.021s] ( 88/273) loro-internal delta::seq::test::retain_start_opt
+        PASS [   0.091s] ( 89/273) loro-internal dag::test::find_common_ancestors_proptest::test_mul_ancestors_5dags
+        PASS [   0.086s] ( 90/273) loro-internal dag::test::find_path::proptest_path_large
+        PASS [   0.023s] ( 91/273) loro-internal delta::seq::test::retain_start_opt_split
+        PASS [   0.025s] ( 92/273) loro-internal encoding::encode_reordered::test::test_value_read_write
+        PASS [   0.025s] ( 93/273) loro-internal event::test::test_text_event
+        PASS [   0.020s] ( 94/273) loro-internal fuzz::recursive_refactored::failed_tests::empty
+        PASS [   0.023s] ( 95/273) loro-internal fuzz::recursive_refactored::failed_tests::checkout_error
+        PASS [   0.031s] ( 96/273) loro-internal fuzz::recursive_refactored::failed_tests::apply_directly
+        PASS [   0.029s] ( 97/273) loro-internal fuzz::recursive_refactored::failed_tests::deleted_container
+        PASS [   0.037s] ( 98/273) loro-internal fuzz::recursive_refactored::failed_tests::cannot_skip_ops_from_deleted_container_due_to_this_case
+        PASS [   0.032s] ( 99/273) loro-internal fuzz::recursive_refactored::failed_tests::find_path_for_deleted_container
+        PASS [   0.121s] (100/273) loro-internal dag::test::find_common_ancestors_proptest::test_4dags
+        PASS [   0.033s] (101/273) loro-internal fuzz::recursive_refactored::failed_tests::encoding_sub_container
+        PASS [   0.030s] (102/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_1
+        PASS [   0.033s] (103/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_0
+        PASS [   0.032s] (104/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_11_checkout
+        PASS [   0.030s] (105/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_12
+        PASS [   0.037s] (106/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_13
+        PASS [   0.029s] (107/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_3
+        PASS [   0.045s] (108/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_10_checkout
+        PASS [   0.034s] (109/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_2
+        PASS [   0.136s] (110/273) loro-internal dag::test::find_common_ancestors_proptest::test_mul_ancestors_15dags_2
+        PASS [   0.023s] (111/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_6_reset_children
+        PASS [   0.032s] (112/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_4
+        PASS [   0.025s] (113/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_7_checkout
+        PASS [   0.028s] (114/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_9_checkout
+        PASS [   0.029s] (115/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_map_bring_back
+        PASS [   0.019s] (116/273) loro-internal fuzz::recursive_refactored::failed_tests::insert_container
+        PASS [   0.035s] (117/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_8_checkout
+        PASS [   0.034s] (118/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_bring_back_sub_is_other_bring_back
+        PASS [   0.028s] (119/273) loro-internal fuzz::recursive_refactored::failed_tests::hierarchy
+        PASS [   0.033s] (120/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_sub_sub_bring_back
+        PASS [   0.032s] (121/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_sub_sub_is_has_diff
+        PASS [   0.022s] (122/273) loro-internal fuzz::recursive_refactored::failed_tests::insert_container_1
+        PASS [   0.161s] (123/273) loro-internal dag::test::find_common_ancestors_proptest::test_2dags
+        PASS [   0.029s] (124/273) loro-internal fuzz::recursive_refactored::failed_tests::list_insert_del
+        PASS [   0.030s] (125/273) loro-internal fuzz::recursive_refactored::failed_tests::list_unknown
+        PASS [   0.030s] (126/273) loro-internal fuzz::recursive_refactored::failed_tests::map_apply
+        PASS [   0.030s] (127/273) loro-internal fuzz::recursive_refactored::failed_tests::list_slice_err
+        PASS [   0.030s] (128/273) loro-internal fuzz::recursive_refactored::failed_tests::maybe_because_of_hierarchy
+        PASS [   0.063s] (129/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_5
+        PASS [   0.031s] (130/273) loro-internal fuzz::recursive_refactored::failed_tests::merge_err
+        PASS [   0.025s] (131/273) loro-internal fuzz::recursive_refactored::failed_tests::obs
+        PASS [   0.030s] (132/273) loro-internal fuzz::recursive_refactored::failed_tests::notify_causal_order_check
+        PASS [   0.026s] (133/273) loro-internal fuzz::recursive_refactored::failed_tests::path_issue
+        PASS [   0.023s] (134/273) loro-internal fuzz::recursive_refactored::failed_tests::to_minify
+        PASS [   0.029s] (135/273) loro-internal fuzz::recursive_refactored::failed_tests::obs_map
+        PASS [   0.029s] (136/273) loro-internal fuzz::recursive_refactored::failed_tests::obs_text
+        PASS [   0.029s] (137/273) loro-internal fuzz::recursive_refactored::failed_tests::should_notify
+        PASS [   0.034s] (138/273) loro-internal fuzz::recursive_refactored::failed_tests::unknown
+        PASS [   0.030s] (139/273) loro-internal fuzz::recursive_refactored::failed_tests::unknown_1
+        PASS [   0.032s] (140/273) loro-internal fuzz::recursive_refactored::failed_tests::utf16_err
+        PASS [   0.034s] (141/273) loro-internal fuzz::recursive_refactored::failed_tests::unknown_fuzz_err
+        PASS [   0.034s] (142/273) loro-internal fuzz::richtext::failed_tests::checkout
+        PASS [   0.036s] (143/273) loro-internal fuzz::richtext::failed_tests::allow_overlap
+        PASS [   0.028s] (144/273) loro-internal fuzz::richtext::failed_tests::checkout_err_2
+        PASS [   0.032s] (145/273) loro-internal fuzz::richtext::failed_tests::checkout_delete
+        PASS [   0.036s] (146/273) loro-internal fuzz::richtext::failed_tests::checkout_5
+        PASS [   0.032s] (147/273) loro-internal fuzz::richtext::failed_tests::fuzz1
+        PASS [   0.044s] (148/273) loro-internal fuzz::richtext::failed_tests::checkout2
+        PASS [   0.045s] (149/273) loro-internal fuzz::richtext::failed_tests::checkout_4
+        PASS [   0.039s] (150/273) loro-internal fuzz::richtext::failed_tests::checkout_err
+        PASS [   0.019s] (151/273) loro-internal fuzz::test::checkout
+        PASS [   0.041s] (152/273) loro-internal fuzz::richtext::failed_tests::checkout_err_3
+        PASS [   0.024s] (153/273) loro-internal fuzz::test::fuzz_4
+        PASS [   0.024s] (154/273) loro-internal fuzz::test::fuzz_5
+        PASS [   0.035s] (155/273) loro-internal fuzz::richtext::failed_tests::iter_range_err
+        PASS [   0.025s] (156/273) loro-internal fuzz::test::fuzz_6
+        PASS [   0.025s] (157/273) loro-internal fuzz::test::fuzz_9
+        PASS [   0.029s] (158/273) loro-internal fuzz::test::fuzz_7
+        PASS [   0.027s] (159/273) loro-internal fuzz::test::fuzz_8
+        PASS [   0.027s] (160/273) loro-internal fuzz::test::mini_r
+        PASS [   0.028s] (161/273) loro-internal fuzz::test::fuzz_snapshot
+        PASS [   0.030s] (162/273) loro-internal fuzz::test::fuzz_r1
+        PASS [   0.076s] (163/273) loro-internal fuzz::richtext::failed_tests::checkout_3
+        PASS [   0.023s] (164/273) loro-internal fuzz::test::richtext_fuzz_1
+        PASS [   0.022s] (165/273) loro-internal fuzz::test::richtext_fuzz_3
+        PASS [   0.029s] (166/273) loro-internal fuzz::test::richtext_fuzz_0
+        PASS [   0.027s] (167/273) loro-internal fuzz::test::richtext_fuzz_2
+        PASS [   0.037s] (168/273) loro-internal fuzz::test::new_encode
+        PASS [   0.031s] (169/273) loro-internal fuzz::test::snapshot
+        PASS [   0.020s] (170/273) loro-internal fuzz::tree::failed_tests::empty
+        PASS [   0.020s] (171/273) loro-internal fuzz::tree::failed_tests::history
+        PASS [   0.033s] (172/273) loro-internal fuzz::test::snapshot_fuzz_test
+        PASS [   0.021s] (173/273) loro-internal fuzz::tree::failed_tests::to_minify
+        PASS [   0.026s] (174/273) loro-internal fuzz::test::text_fuzz_3
+        PASS [   0.036s] (175/273) loro-internal fuzz::test::text_fuzz_2
+        PASS [   0.030s] (176/273) loro-internal fuzz::test::text_fuzz_4
+        PASS [   0.123s] (177/273) loro-internal fuzz::recursive_refactored::failed_tests::test_3sites
+        PASS [   0.123s] (178/273) loro-internal fuzz::recursive_refactored::failed_tests::test
+        PASS [   0.028s] (179/273) loro-internal fuzz::tree::failed_tests::tree
+        PASS [   0.088s] (180/273) loro-internal fuzz::richtext::failed_tests::fuzz_2
+        PASS [   0.069s] (181/273) loro-internal fuzz::test::fuzz_r
+        PASS [   0.033s] (182/273) loro-internal fuzz::tree::failed_tests::tree2
+        PASS [   0.041s] (183/273) loro-internal fuzz::tree::failed_tests::encoding_err
+        PASS [   0.028s] (184/273) loro-internal fuzz::tree::failed_tests::tree_meta
+        PASS [   0.027s] (185/273) loro-internal fuzz::tree::failed_tests::tree_meta2
+        PASS [   0.039s] (186/273) loro-internal fuzz::tree::failed_tests::tree4
+        PASS [   0.023s] (187/273) loro-internal handler::test::import
+        PASS [   0.021s] (188/273) loro-internal handler::test::richtext_handler
+        PASS [   0.024s] (189/273) loro-internal handler::test::richtext_apply_delta
+        PASS [   0.018s] (190/273) loro-internal handler::test::richtext_handler_mark
+        PASS [   0.034s] (191/273) loro-internal fuzz::tree::failed_tests::tree_meta3
+        PASS [   0.069s] (192/273) loro-internal fuzz::test::snapshot_2
+        PASS [   0.033s] (193/273) loro-internal fuzz::tree::failed_tests::tree_meta4
+        PASS [   0.021s] (194/273) loro-internal handler::test::richtext_snapshot
+        PASS [   0.054s] (195/273) loro-internal fuzz::tree::failed_tests::tree3
+        PASS [   0.032s] (196/273) loro-internal fuzz::tree::failed_tests::tree_replace_old_parent
+        PASS [   0.036s] (197/273) loro-internal fuzz::tree::failed_tests::tree_meta_container
+        PASS [   0.053s] (198/273) loro-internal fuzz::tree::failed_tests::tree_0
+        PASS [   0.023s] (199/273) loro-internal handler::test::tree_meta_event
+        PASS [   0.023s] (200/273) loro-internal handler::test::tree_meta
+        PASS [   0.020s] (201/273) loro-internal macros::test::test_macro
+        PASS [   0.022s] (202/273) loro-internal loro::test::test_sync
+        PASS [   0.025s] (203/273) loro-internal loro::test::test_checkout
+        PASS [   0.229s] (204/273) loro-internal fuzz::recursive_refactored::failed_tests::fuzz_14
+        PASS [   0.027s] (205/273) loro-internal loro::test::import_batch_err_181
+        PASS [   0.061s] (206/273) loro-internal fuzz::tree::failed_tests::tree5
+        PASS [   0.025s] (207/273) loro-internal obs::test::test_recursive_events
+        PASS [   0.028s] (208/273) loro-internal obs::test::unsubscribe
+        PASS [   0.027s] (209/273) loro-internal op::content::test::fix_fields_order
+        PASS [   0.026s] (210/273) loro-internal op::test::fix_fields_order
+        PASS [   0.026s] (211/273) loro-internal oplog::pending_changes::test::import_pending
+        PASS [   0.025s] (212/273) loro-internal oplog::pending_changes::test::should_activate_pending_change_when
+        PASS [   0.027s] (213/273) loro-internal oplog::pending_changes::test::pending_import_snapshot
+        PASS [   0.029s] (214/273) loro-internal oplog::pending_changes::test::need_deps_pending_import
+        PASS [   0.023s] (215/273) loro-internal state::list_state::test::test
+        PASS [   0.024s] (216/273) loro-internal state::test_size
+        PASS [   0.024s] (217/273) loro-internal state::tree_state::tests::test_tree_state
+        PASS [   0.025s] (218/273) loro-internal state::tree_state::tests::delete_node
+        PASS [   0.025s] (219/273) loro-internal state::tree_state::tests::tree_convert
+        PASS [   0.023s] (220/273) loro-internal utils::utf16::tests::test_3_byte
+        PASS [   0.024s] (221/273) loro-internal utils::utf16::tests::test_4_byte
+        PASS [   0.026s] (222/273) loro-internal utils::utf16::tests::test_2_byte
+        PASS [   0.028s] (223/273) loro-internal tests::size_of
+        PASS [   0.025s] (224/273) loro-internal utils::utf16::tests::test_ascii
+        PASS [   0.023s] (225/273) loro-internal utils::utf16::tests::test_empty_string
+        PASS [   0.023s] (226/273) loro-internal utils::utf16::tests::test_long_string
+        PASS [   0.026s] (227/273) loro-internal utils::utf16::tests::test_crazy_emoji_bytes
+        PASS [   0.023s] (228/273) loro-internal utils::utf16::tests::test_single_char
+        PASS [   0.024s] (229/273) loro-internal utils::utf16::tests::test_utf8_with_bom
+        PASS [   0.023s] (230/273) loro-internal utils::utf16::tests::test_utf8_with_null_char
+        PASS [   0.023s] (231/273) loro-internal version::tests::cmp::test
+        PASS [   0.025s] (232/273) loro-internal version::tests::field_order
+        PASS [   0.026s] (233/273) loro-internal::autocommit auto_commit
+        PASS [   0.026s] (234/273) loro-internal::autocommit auto_commit_list
+        PASS [   0.027s] (235/273) loro-internal version::tests::im
+        PASS [   0.026s] (236/273) loro-internal::autocommit auto_commit_with_checkout
+        PASS [   0.024s] (237/273) loro-internal::fugue test_backward_interleaving
+        PASS [   0.022s] (238/273) loro-internal::fugue test_forward_interleaving
+        PASS [   0.025s] (239/273) loro-internal::fugue test_forward_backward
+        PASS [   0.028s] (240/273) loro-internal::fugue test_yjs_interleave
+        PASS [   0.027s] (241/273) loro-internal::richtext case1
+        PASS [   0.028s] (242/273) loro-internal::richtext case0
+        PASS [   0.026s] (243/273) loro-internal::richtext case2
+        PASS [   0.026s] (244/273) loro-internal::richtext case6
+        PASS [   0.028s] (245/273) loro-internal::richtext case3
+        PASS [   0.026s] (246/273) loro-internal::richtext case5
+        PASS [   0.029s] (247/273) loro-internal::richtext case4
+        PASS [   0.026s] (248/273) loro-internal::richtext case7
+        PASS [   0.024s] (249/273) loro-internal::richtext case8
+        PASS [   0.026s] (250/273) loro-internal::test a_list_of_map_checkout
+        PASS [   0.023s] (251/273) loro-internal::test import
+        PASS [   0.028s] (252/273) loro-internal::richtext case9
+        PASS [   0.026s] (253/273) loro-internal::test handler_in_event
+        PASS [   0.029s] (254/273) loro-internal::richtext insert_after_link
+        PASS [   0.030s] (255/273) loro-internal::test event_from_checkout
+        PASS [   0.032s] (256/273) loro-internal::test concurrent_richtext_mark_event
+        PASS [   0.025s] (257/273) loro-internal::test import_after_init_handlers
+        PASS [   0.024s] (258/273) loro-internal::test issue_211
+        PASS [   0.026s] (259/273) loro-internal::test insert_richtext_event
+        PASS [   0.023s] (260/273) loro-internal::test list
+        PASS [   0.027s] (261/273) loro-internal::test issue_225
+        PASS [   0.024s] (262/273) loro-internal::test map_concurrent_checkout
+        PASS [   0.025s] (263/273) loro-internal::test map_checkout
+        PASS [   0.023s] (264/273) loro-internal::test out_of_bound_test
+        PASS [   0.025s] (265/273) loro-internal::test mark_with_the_same_key_value_should_be_skipped
+        PASS [   0.023s] (266/273) loro-internal::test richtext_mark_event
+        PASS [   0.021s] (267/273) loro-internal::test test_from_snapshot
+        PASS [   0.020s] (268/273) loro-internal::test test_text_checkout
+        PASS [   0.021s] (269/273) loro-internal::test test_timestamp
+        PASS [   0.018s] (270/273) loro-internal::test tree_checkout
+        PASS [   0.025s] (271/273) loro-internal::test test_pending
+        PASS [   0.028s] (272/273) loro-internal::test test_checkout
+        PASS [   0.408s] (273/273) loro-internal handler::test::richtext_handler_concurrent
+────────────
+     Summary [   0.778s] 273 tests run: 273 passed, 3 skipped
+reward=1 graded=273 found=8 failed=0 parsed=273 framework=cargo exit_code=0

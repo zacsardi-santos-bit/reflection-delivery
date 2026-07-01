@@ -1,0 +1,53 @@
+patching file crates/trie/db/tests/fuzz_in_memory_nodes.rs
+patching file crates/trie/db/tests/post_state.rs
+patching file crates/trie/db/tests/walker.rs
+   Compiling reth-trie-db v1.0.3 (/workspace/repo/crates/trie/db)
+error[E0432]: unresolved import `reth_trie_db::DatabaseHashedCursorFactory`
+  --> crates/trie/db/tests/post_state.rs:12:5
+   |
+12 | use reth_trie_db::DatabaseHashedCursorFactory;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `DatabaseHashedCursorFactory` in the root
+   |
+help: consider importing this struct instead
+   |
+12 | use reth_trie::hashed_cursor::DatabaseHashedCursorFactory;
+   |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0432]: unresolved import `reth_trie_db::DatabaseTrieCursorFactory`
+  --> crates/trie/db/tests/fuzz_in_memory_nodes.rs:12:39
+   |
+12 | use reth_trie_db::{DatabaseStateRoot, DatabaseTrieCursorFactory};
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^ no `DatabaseTrieCursorFactory` in the root
+   |
+   = help: consider importing this struct instead:
+           reth_trie::trie_cursor::DatabaseTrieCursorFactory
+
+error[E0432]: unresolved imports `reth_trie_db::DatabaseAccountTrieCursor`, `reth_trie_db::DatabaseStorageTrieCursor`
+ --> crates/trie/db/tests/walker.rs:9:20
+  |
+9 | use reth_trie_db::{DatabaseAccountTrieCursor, DatabaseStorageTrieCursor};
+  |                    ^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^ no `DatabaseStorageTrieCursor` in the root
+  |                    |
+  |                    no `DatabaseAccountTrieCursor` in the root
+  |
+  = help: consider importing this struct instead:
+          reth_trie::trie_cursor::DatabaseAccountTrieCursor
+  = help: consider importing this struct instead:
+          reth_trie::trie_cursor::DatabaseStorageTrieCursor
+
+For more information about this error, try `rustc --explain E0432`.
+error: could not compile `reth-trie-db` (test "walker") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+warning: unused import: `HashedStorageCursor`
+ --> crates/trie/db/tests/post_state.rs:8:74
+  |
+8 |         HashedCursor, HashedCursorFactory, HashedPostStateCursorFactory, HashedStorageCursor,
+  |                                                                          ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+error: could not compile `reth-trie-db` (test "fuzz_in_memory_nodes") due to 1 previous error
+warning: `reth-trie-db` (test "post_state") generated 1 warning
+error: could not compile `reth-trie-db` (test "post_state") due to 1 previous error; 1 warning emitted
+error: command `/usr/local/rustup/toolchains/1.79.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package reth-trie-db` exited with code 101
+reward=0 graded=36 found=0 failed=0 parsed=0 framework=cargo exit_code=101

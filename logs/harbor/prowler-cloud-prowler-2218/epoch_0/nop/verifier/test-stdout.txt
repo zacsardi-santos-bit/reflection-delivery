@@ -1,0 +1,1030 @@
+patching file tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py
+patching file tests/providers/aws/services/vpc/vpc_service_test.py
+patching file tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py
+patching file tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.3.0, pluggy-1.0.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: xdist-3.2.1, anyio-4.14.1
+collecting ... collected 19 items
+
+tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py::Test_vpc_different_regions::test_vpc_different_regions FAILED [  5%]
+tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py::Test_vpc_different_regions::test_vpc_only_one_regions FAILED [ 10%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test_service PASSED [ 15%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test_client PASSED [ 21%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__get_session__ PASSED [ 26%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test_audited_account PASSED [ 31%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpcs__ PASSED [ 36%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_flow_logs__ PASSED [ 42%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpc_peering_connections__ PASSED [ 47%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_route_tables__ PASSED [ 52%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpc_endpoints__ PASSED [ 57%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpc_endpoint_services__ PASSED [ 63%]
+tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpc_subnets__ FAILED [ 68%]
+tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py::Test_vpc_subnet_different_az::test_vpc_subnet_different_az FAILED [ 73%]
+tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py::Test_vpc_subnet_different_az::test_vpc_subnet_same_az FAILED [ 78%]
+tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py::Test_vpc_subnet_different_az::test_vpc_no_subnets FAILED [ 84%]
+tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py::Test_vpc_subnet_separate_private_public::test_vpc_subnet_only_private FAILED [ 89%]
+tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py::Test_vpc_subnet_separate_private_public::test_vpc_subnet_only_public FAILED [ 94%]
+tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py::Test_vpc_subnet_separate_private_public::test_vpc_subnet_private_and_public FAILED [100%]
+
+=================================== FAILURES ===================================
+____________ Test_vpc_different_regions.test_vpc_different_regions _____________
+
+self = <vpc_different_regions_test.Test_vpc_different_regions object at 0x2a6086fe2410>
+
+    @mock_ec2
+    def test_vpc_different_regions(self):
+        # VPC Region 1
+        ec2_client = client("ec2", region_name=AWS_REGION)
+        vpc = ec2_client.create_vpc(
+            CidrBlock="172.28.7.0/24", InstanceTenancy="default"
+        )
+        # VPC Region 2
+        ec2_client_eu = client("ec2", region_name="eu-west-1")
+        vpc_eu = ec2_client_eu.create_vpc(
+            CidrBlock="172.28.7.0/24", InstanceTenancy="default"
+        )
+    
+        from prowler.providers.aws.services.vpc.vpc_service import VPC
+    
+        current_audit_info = self.set_mocked_audit_info()
+    
+        with mock.patch(
+            "prowler.providers.aws.lib.audit_info.audit_info.current_audit_info",
+            new=current_audit_info,
+        ):
+>           with mock.patch(
+                "prowler.providers.aws.services.vpc.vpc_different_regions.vpc_different_regions.vpc_client",
+                new=VPC(current_audit_info),
+            ):
+
+tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'prowler.providers.aws.services.vpc.vpc_different_regions.vpc_different_regions'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+E           AttributeError: module 'prowler.providers.aws.services.vpc' has no attribute 'vpc_different_regions'
+
+/usr/local/lib/python3.11/pkgutil.py:715: AttributeError
+------------------------------ Captured log call -------------------------------
+ERROR    root:vpc_service.py:208 us-east-1 -- ModuleNotFoundError[190]: No module named 'jose'
+ERROR    root:vpc_service.py:208 eu-west-1 -- ModuleNotFoundError[190]: No module named 'jose'
+_____________ Test_vpc_different_regions.test_vpc_only_one_regions _____________
+
+self = <vpc_different_regions_test.Test_vpc_different_regions object at 0x2a6086fea050>
+
+    @mock_ec2
+    def test_vpc_only_one_regions(self):
+        ec2_client = client("ec2", region_name=AWS_REGION)
+        # VPC Region 1
+        vpc = ec2_client.create_vpc(
+            CidrBlock="172.28.6.0/24", InstanceTenancy="default"
+        )
+    
+        from prowler.providers.aws.services.vpc.vpc_service import VPC
+    
+        current_audit_info = self.set_mocked_audit_info()
+    
+        with mock.patch(
+            "prowler.providers.aws.lib.audit_info.audit_info.current_audit_info",
+            new=current_audit_info,
+        ):
+>           with mock.patch(
+                "prowler.providers.aws.services.vpc.vpc_different_regions.vpc_different_regions.vpc_client",
+                new=VPC(current_audit_info),
+            ):
+
+tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'prowler.providers.aws.services.vpc.vpc_different_regions.vpc_different_regions'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+E           AttributeError: module 'prowler.providers.aws.services.vpc' has no attribute 'vpc_different_regions'
+
+/usr/local/lib/python3.11/pkgutil.py:715: AttributeError
+________________ Test_VPC_Service.test__describe_vpc_subnets__ _________________
+
+self = <vpc_service_test.Test_VPC_Service object at 0x2a6086c41350>
+
+    @mock_ec2
+    def test__describe_vpc_subnets__(self):
+        # Generate VPC Client
+        ec2_client = client("ec2", region_name=AWS_REGION)
+        # Create VPC
+        vpc = ec2_client.create_vpc(
+            CidrBlock="172.28.7.0/24", InstanceTenancy="default"
+        )
+        subnet = ec2_client.create_subnet(
+            VpcId=vpc["Vpc"]["VpcId"],
+            CidrBlock="172.28.7.192/26",
+            AvailabilityZone=f"{AWS_REGION}a",
+        )
+        # VPC client for this test class
+        audit_info = self.set_mocked_audit_info()
+        vpc = VPC(audit_info)
+        assert (
+            len(vpc.vpcs) == 3
+        )  # Number of AWS regions + created VPC, one default VPC per region
+        for vpc in vpc.vpcs:
+            if vpc.cidr_block == "172.28.7.0/24":
+>               assert vpc.subnets[0].id == subnet["Subnet"]["SubnetId"]
+E               AttributeError: 'VPCs' object has no attribute 'subnets'
+
+tests/providers/aws/services/vpc/vpc_service_test.py:308: AttributeError
+__________ Test_vpc_subnet_different_az.test_vpc_subnet_different_az ___________
+
+self = <vpc_subnet_different_az_test.Test_vpc_subnet_different_az object at 0x2a6086c2b4d0>
+
+    @mock_ec2
+    def test_vpc_subnet_different_az(self):
+        ec2_client = client("ec2", region_name=AWS_REGION)
+        vpc = ec2_client.create_vpc(
+            CidrBlock="172.28.7.0/24", InstanceTenancy="default"
+        )
+        # VPC AZ 1
+        ec2_client.create_subnet(
+            VpcId=vpc["Vpc"]["VpcId"],
+            CidrBlock="172.28.7.192/26",
+            AvailabilityZone=f"{AWS_REGION}a",
+        )
+    
+        # VPC AZ 2
+        ec2_client.create_subnet(
+            VpcId=vpc["Vpc"]["VpcId"],
+            CidrBlock="172.28.7.0/26",
+            AvailabilityZone=f"{AWS_REGION}b",
+        )
+    
+        from prowler.providers.aws.services.vpc.vpc_service import VPC
+    
+        current_audit_info = self.set_mocked_audit_info()
+    
+        with mock.patch(
+            "prowler.providers.aws.lib.audit_info.audit_info.current_audit_info",
+            new=current_audit_info,
+        ):
+>           with mock.patch(
+                "prowler.providers.aws.services.vpc.vpc_subnet_different_az.vpc_subnet_different_az.vpc_client",
+                new=VPC(current_audit_info),
+            ):
+
+tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'prowler.providers.aws.services.vpc.vpc_subnet_different_az.vpc_subnet_different_az'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+E           AttributeError: module 'prowler.providers.aws.services.vpc' has no attribute 'vpc_subnet_different_az'
+
+/usr/local/lib/python3.11/pkgutil.py:715: AttributeError
+_____________ Test_vpc_subnet_different_az.test_vpc_subnet_same_az _____________
+
+self = <vpc_subnet_different_az_test.Test_vpc_subnet_different_az object at 0x2a6086c5ab50>
+
+    @mock_ec2
+    def test_vpc_subnet_same_az(self):
+        ec2_client = client("ec2", region_name=AWS_REGION)
+        vpc = ec2_client.create_vpc(
+            CidrBlock="172.28.7.0/24", InstanceTenancy="default"
+        )
+        # VPC AZ 1
+        ec2_client.create_subnet(
+            VpcId=vpc["Vpc"]["VpcId"],
+            CidrBlock="172.28.7.192/26",
+            AvailabilityZone=f"{AWS_REGION}a",
+        )
+    
+        # VPC AZ 2
+        ec2_client.create_subnet(
+            VpcId=vpc["Vpc"]["VpcId"],
+            CidrBlock="172.28.7.0/26",
+            AvailabilityZone=f"{AWS_REGION}a",
+        )
+    
+        from prowler.providers.aws.services.vpc.vpc_service import VPC
+    
+        current_audit_info = self.set_mocked_audit_info()
+    
+        with mock.patch(
+            "prowler.providers.aws.lib.audit_info.audit_info.current_audit_info",
+            new=current_audit_info,
+        ):
+>           with mock.patch(
+                "prowler.providers.aws.services.vpc.vpc_subnet_different_az.vpc_subnet_different_az.vpc_client",
+                new=VPC(current_audit_info),
+            ):
+
+tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'prowler.providers.aws.services.vpc.vpc_subnet_different_az.vpc_subnet_different_az'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+E           AttributeError: module 'prowler.providers.aws.services.vpc' has no attribute 'vpc_subnet_different_az'
+
+/usr/local/lib/python3.11/pkgutil.py:715: AttributeError
+_______________ Test_vpc_subnet_different_az.test_vpc_no_subnets _______________
+
+self = <vpc_subnet_different_az_test.Test_vpc_subnet_different_az object at 0x2a6086e95a10>
+
+    @mock_ec2
+    def test_vpc_no_subnets(self):
+        ec2_client = client("ec2", region_name=AWS_REGION)
+        vpc = ec2_client.create_vpc(
+            CidrBlock="172.28.7.0/24", InstanceTenancy="default"
+        )
+    
+        from prowler.providers.aws.services.vpc.vpc_service import VPC
+    
+        current_audit_info = self.set_mocked_audit_info()
+    
+        with mock.patch(
+            "prowler.providers.aws.lib.audit_info.audit_info.current_audit_info",
+            new=current_audit_info,
+        ):
+>           with mock.patch(
+                "prowler.providers.aws.services.vpc.vpc_subnet_different_az.vpc_subnet_different_az.vpc_client",
+                new=VPC(current_audit_info),
+            ):
+
+tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'prowler.providers.aws.services.vpc.vpc_subnet_different_az.vpc_subnet_different_az'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+E           AttributeError: module 'prowler.providers.aws.services.vpc' has no attribute 'vpc_subnet_different_az'
+
+/usr/local/lib/python3.11/pkgutil.py:715: AttributeError
+_____ Test_vpc_subnet_separate_private_public.test_vpc_subnet_only_private _____
+
+self = <vpc_subnet_separate_private_public_test.Test_vpc_subnet_separate_private_public object at 0x2a6088574090>
+
+    @mock_ec2
+    def test_vpc_subnet_only_private(self):
+        ec2_client = client("ec2", region_name=AWS_REGION)
+        vpc = ec2_client.create_vpc(
+            CidrBlock="172.28.7.0/24", InstanceTenancy="default"
+        )
+        # VPC Private
+        subnet_private = ec2_client.create_subnet(
+            VpcId=vpc["Vpc"]["VpcId"],
+            CidrBlock="172.28.7.192/26",
+            AvailabilityZone=f"{AWS_REGION}a",
+        )
+        route_table_private = ec2_client.create_route_table(
+            VpcId=vpc["Vpc"]["VpcId"],
+        )
+        ec2_client.create_route(
+            DestinationCidrBlock="10.10.10.0",
+            RouteTableId=route_table_private["RouteTable"]["RouteTableId"],
+        )
+        ec2_client.associate_route_table(
+            RouteTableId=route_table_private["RouteTable"]["RouteTableId"],
+            SubnetId=subnet_private["Subnet"]["SubnetId"],
+        )
+    
+        from prowler.providers.aws.services.vpc.vpc_service import VPC
+    
+        current_audit_info = self.set_mocked_audit_info()
+    
+        with mock.patch(
+            "prowler.providers.aws.lib.audit_info.audit_info.current_audit_info",
+            new=current_audit_info,
+        ):
+>           with mock.patch(
+                "prowler.providers.aws.services.vpc.vpc_subnet_separate_private_public.vpc_subnet_separate_private_public.vpc_client",
+                new=VPC(current_audit_info),
+            ):
+
+tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'prowler.providers.aws.services.vpc.vpc_subnet_separate_private_public.vpc_subnet_separate_private_public'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+E           AttributeError: module 'prowler.providers.aws.services.vpc' has no attribute 'vpc_subnet_separate_private_public'
+
+/usr/local/lib/python3.11/pkgutil.py:715: AttributeError
+_____ Test_vpc_subnet_separate_private_public.test_vpc_subnet_only_public ______
+
+self = <vpc_subnet_separate_private_public_test.Test_vpc_subnet_separate_private_public object at 0x2a6088574390>
+
+    @mock_ec2
+    def test_vpc_subnet_only_public(self):
+        ec2_client = client("ec2", region_name=AWS_REGION)
+        vpc = ec2_client.create_vpc(
+            CidrBlock="172.28.7.0/24", InstanceTenancy="default"
+        )
+        # VPC Public
+        subnet_public = ec2_client.create_subnet(
+            VpcId=vpc["Vpc"]["VpcId"],
+            CidrBlock="172.28.7.192/26",
+            AvailabilityZone=f"{AWS_REGION}a",
+        )
+        route_table_public = ec2_client.create_route_table(
+            VpcId=vpc["Vpc"]["VpcId"],
+        )
+        igw = ec2_client.create_internet_gateway()
+        ec2_client.create_route(
+            DestinationCidrBlock="0.0.0.0",
+            RouteTableId=route_table_public["RouteTable"]["RouteTableId"],
+            GatewayId=igw["InternetGateway"]["InternetGatewayId"],
+        )
+        ec2_client.associate_route_table(
+            RouteTableId=route_table_public["RouteTable"]["RouteTableId"],
+            SubnetId=subnet_public["Subnet"]["SubnetId"],
+        )
+    
+        from prowler.providers.aws.services.vpc.vpc_service import VPC
+    
+        current_audit_info = self.set_mocked_audit_info()
+    
+        with mock.patch(
+            "prowler.providers.aws.lib.audit_info.audit_info.current_audit_info",
+            new=current_audit_info,
+        ):
+>           with mock.patch(
+                "prowler.providers.aws.services.vpc.vpc_subnet_separate_private_public.vpc_subnet_separate_private_public.vpc_client",
+                new=VPC(current_audit_info),
+            ):
+
+tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'prowler.providers.aws.services.vpc.vpc_subnet_separate_private_public.vpc_subnet_separate_private_public'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+E           AttributeError: module 'prowler.providers.aws.services.vpc' has no attribute 'vpc_subnet_separate_private_public'
+
+/usr/local/lib/python3.11/pkgutil.py:715: AttributeError
+__ Test_vpc_subnet_separate_private_public.test_vpc_subnet_private_and_public __
+
+self = <vpc_subnet_separate_private_public_test.Test_vpc_subnet_separate_private_public object at 0x2a6088574310>
+
+    @mock_ec2
+    def test_vpc_subnet_private_and_public(self):
+        ec2_client = client("ec2", region_name=AWS_REGION)
+        vpc = ec2_client.create_vpc(
+            CidrBlock="172.28.7.0/24", InstanceTenancy="default"
+        )
+        # VPC Private
+        subnet_private = ec2_client.create_subnet(
+            VpcId=vpc["Vpc"]["VpcId"],
+            CidrBlock="172.28.7.192/26",
+            AvailabilityZone=f"{AWS_REGION}a",
+        )
+        route_table_private = ec2_client.create_route_table(
+            VpcId=vpc["Vpc"]["VpcId"],
+        )
+        ec2_client.create_route(
+            DestinationCidrBlock="10.10.10.0",
+            RouteTableId=route_table_private["RouteTable"]["RouteTableId"],
+        )
+        ec2_client.associate_route_table(
+            RouteTableId=route_table_private["RouteTable"]["RouteTableId"],
+            SubnetId=subnet_private["Subnet"]["SubnetId"],
+        )
+        # VPC Public
+        subnet_public = ec2_client.create_subnet(
+            VpcId=vpc["Vpc"]["VpcId"],
+            CidrBlock="172.28.7.0/26",
+            AvailabilityZone=f"{AWS_REGION}a",
+        )
+        route_table_public = ec2_client.create_route_table(
+            VpcId=vpc["Vpc"]["VpcId"],
+        )
+        igw = ec2_client.create_internet_gateway()
+        ec2_client.create_route(
+            DestinationCidrBlock="0.0.0.0",
+            RouteTableId=route_table_public["RouteTable"]["RouteTableId"],
+            GatewayId=igw["InternetGateway"]["InternetGatewayId"],
+        )
+        ec2_client.associate_route_table(
+            RouteTableId=route_table_public["RouteTable"]["RouteTableId"],
+            SubnetId=subnet_public["Subnet"]["SubnetId"],
+        )
+    
+        from prowler.providers.aws.services.vpc.vpc_service import VPC
+    
+        current_audit_info = self.set_mocked_audit_info()
+    
+        with mock.patch(
+            "prowler.providers.aws.lib.audit_info.audit_info.current_audit_info",
+            new=current_audit_info,
+        ):
+>           with mock.patch(
+                "prowler.providers.aws.services.vpc.vpc_subnet_separate_private_public.vpc_subnet_separate_private_public.vpc_client",
+                new=VPC(current_audit_info),
+            ):
+
+tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py:205: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'prowler.providers.aws.services.vpc.vpc_subnet_separate_private_public.vpc_subnet_separate_private_public'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+E           AttributeError: module 'prowler.providers.aws.services.vpc' has no attribute 'vpc_subnet_separate_private_public'
+
+/usr/local/lib/python3.11/pkgutil.py:715: AttributeError
+=========================== short test summary info ============================
+FAILED tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py::Test_vpc_different_regions::test_vpc_different_regions
+FAILED tests/providers/aws/services/vpc/vpc_different_regions/vpc_different_regions_test.py::Test_vpc_different_regions::test_vpc_only_one_regions
+FAILED tests/providers/aws/services/vpc/vpc_service_test.py::Test_VPC_Service::test__describe_vpc_subnets__
+FAILED tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py::Test_vpc_subnet_different_az::test_vpc_subnet_different_az
+FAILED tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py::Test_vpc_subnet_different_az::test_vpc_subnet_same_az
+FAILED tests/providers/aws/services/vpc/vpc_subnet_different_az/vpc_subnet_different_az_test.py::Test_vpc_subnet_different_az::test_vpc_no_subnets
+FAILED tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py::Test_vpc_subnet_separate_private_public::test_vpc_subnet_only_private
+FAILED tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py::Test_vpc_subnet_separate_private_public::test_vpc_subnet_only_public
+FAILED tests/providers/aws/services/vpc/vpc_subnet_separate_private_public/vpc_subnet_separate_private_public_test.py::Test_vpc_subnet_separate_private_public::test_vpc_subnet_private_and_public
+======================== 9 failed, 10 passed in 18.89s =========================
+reward=0 graded=19 found=0 failed=0 parsed=19 framework=pytest exit_code=1

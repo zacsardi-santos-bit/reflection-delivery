@@ -1,0 +1,5 @@
+I'm working on the admin metrics page in our application and I'd like to improve how metric names are displayed. Right now, the table shows raw internal identifiers for each metric — things that look like dotted technical keys — which makes it really hard for non-developer admins to understand what they're looking at. I'd like these to be replaced with clear, human-friendly labels so the page is more immediately readable.
+
+The filtering and dropdown selection features on the metrics page need to keep working properly after this change, just with the new human-readable names showing up in the results. Metrics from internal subsystems like authentication, background processes, and garbage collection should still be excluded from the view as they are today.
+
+As part of this, I'd also like to create a new reusable paginated table component that can be shared across the application. It should support selecting rows via checkboxes (with a callback that receives the selected rows), clicking on rows with a customizable handler, and optional pagination that disappears automatically when there's nothing to paginate.

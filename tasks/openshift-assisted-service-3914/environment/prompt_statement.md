@@ -1,0 +1,5 @@
+I'm working on cleaning up the cluster database schema in this OpenShift assisted-service project. There's an old column in the clusters table for ignition configuration overrides that is no longer part of the current data model. The field has been removed from the Go struct, but we never added a database migration to actually drop the column. I need a new database migration that removes this obsolete column safely — it should handle the case where the column is already gone (for environments that were set up fresh or had it removed earlier) without returning an error, as well as the case where it still exists and needs to be dropped.
+
+There's also an older migration in the pre-migration chain that used to populate infrastructure environment records from cluster data. That migration is no longer needed and should be removed from the list along with its implementation file and tests.
+
+Finally, the existing test for the overrides-to-text migration needs to be updated to use the current install-config overrides field on the cluster struct instead of the old ignition overrides field that was removed from the model.

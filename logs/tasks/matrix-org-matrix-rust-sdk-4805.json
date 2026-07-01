@@ -1,0 +1,23 @@
+{
+ "task": "matrix-org-matrix-rust-sdk-4805",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch renames Oidc->OAuth symbols e.g. 'Error::OAuth(OAuthError::AuthorizationCode(OAuthAuthorizationCodeError::Cancelled))'; 636 F2P via cargo nextest."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

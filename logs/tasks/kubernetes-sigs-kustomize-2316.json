@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-sigs-kustomize-2316",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "TestFilter cases update_field/add_field/no_update_if_CreateIfNotPresent_is_false/update_multiple_fields assert full YAML transforms (replicas 5->42); golden replicacount.go uses fsslice.Filter keyed on meta.Name==Replica.Name"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 10,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "firecracker-microvm-firecracker-5277",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: add_used calls advance_next_used(1) but new advance_used_ring_idx() flushes idx; F2P test asserts \"q.add_used(1, 0x1000).unwrap(); assert_eq!(vq.used.idx.get(), 0);\""
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

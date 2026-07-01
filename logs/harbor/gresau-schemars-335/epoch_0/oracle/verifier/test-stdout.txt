@@ -1,0 +1,205 @@
+patching file schemars/tests/contract.rs
+patching file schemars/tests/expected/bigdecimal04.json
+patching file schemars/tests/expected/contract_deserialize.json
+patching file schemars/tests/expected/contract_deserialize_adjacent_tag_enum.json
+patching file schemars/tests/expected/contract_deserialize_external_tag_enum.json
+patching file schemars/tests/expected/contract_deserialize_internal_tag_enum.json
+patching file schemars/tests/expected/contract_deserialize_tuple_struct.json
+patching file schemars/tests/expected/contract_deserialize_untagged_enum.json
+patching file schemars/tests/expected/contract_serialize.json
+patching file schemars/tests/expected/contract_serialize_adjacent_tag_enum.json
+patching file schemars/tests/expected/contract_serialize_external_tag_enum.json
+patching file schemars/tests/expected/contract_serialize_internal_tag_enum.json
+patching file schemars/tests/expected/contract_serialize_tuple_struct.json
+patching file schemars/tests/expected/contract_serialize_untagged_enum.json
+patching file schemars/tests/expected/enum-adjacent-tagged-duf.json
+patching file schemars/tests/expected/enum-adjacent-tagged.json
+patching file schemars/tests/expected/extend_enum_adjacent.json
+patching file schemars/tests/expected/no-variants.json
+patching file schemars/tests/expected/rust_decimal.json
+patching file schemars/tests/expected/schema_with-enum-adjacent-tagged.json
+patching file schemars/tests/expected/skip_struct_fields.json
+   Compiling proc-macro2 v1.0.81
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.1.0
+   Compiling serde v1.0.208
+   Compiling fnv v1.0.7
+   Compiling ident_case v1.0.1
+   Compiling tinyvec_macros v0.1.1
+   Compiling memchr v2.5.0
+   Compiling serde_json v1.0.127
+   Compiling libm v0.2.8
+   Compiling equivalent v1.0.1
+   Compiling hashbrown v0.14.2
+   Compiling semver v1.0.20
+   Compiling rust_decimal v1.32.0
+   Compiling unicode-bidi v0.3.13
+   Compiling ref-cast v1.0.22
+   Compiling ryu v1.0.15
+   Compiling percent-encoding v2.3.0
+   Compiling tinyvec v1.6.0
+   Compiling itoa v1.0.9
+   Compiling trybuild v1.0.85
+   Compiling arrayvec v0.7.4
+   Compiling form_urlencoded v1.2.0
+   Compiling either v1.9.0
+   Compiling termcolor v1.3.0
+   Compiling yansi v0.5.1
+   Compiling indexmap v2.4.0
+   Compiling num-traits v0.2.17
+   Compiling num-integer v0.1.45
+   Compiling num-bigint v0.4.4
+   Compiling bigdecimal v0.4.2
+   Compiling unicode-normalization v0.1.22
+   Compiling uuid v1.5.0
+   Compiling smallvec v1.11.1
+   Compiling smol_str v0.2.1
+   Compiling diff v0.1.13
+   Compiling bytes v1.5.0
+   Compiling once_cell v1.18.0
+   Compiling dyn-clone v1.0.14
+   Compiling glob v0.3.1
+   Compiling pretty_assertions v1.4.0
+   Compiling idna v0.4.0
+   Compiling quote v1.0.36
+   Compiling url v2.4.1
+   Compiling syn v2.0.60
+   Compiling chrono v0.4.31
+   Compiling darling_core v0.20.3
+   Compiling serde_derive_internals v0.29.0
+   Compiling serde_derive v1.0.208
+   Compiling ref-cast-impl v1.0.22
+   Compiling schemars_derive v1.0.0-alpha.14 (/workspace/repo/schemars_derive)
+   Compiling darling_macro v0.20.3
+   Compiling darling v0.20.3
+   Compiling enumset_derive v0.8.1
+   Compiling enumset v1.1.3
+   Compiling basic-toml v0.1.4
+   Compiling schemars v1.0.0-alpha.14 (/workspace/repo/schemars)
+    Finished test [unoptimized + debuginfo] target(s) in 40.01s
+────────────
+ Nextest run ID ba3a5a60-be1c-4472-86cf-de6ad9b55241 with nextest profile: default
+    Starting 120 tests across 52 binaries
+        PASS [   0.084s] (  1/120) schemars::contract contract_serialize_untagged_enum
+        PASS [   0.112s] (  2/120) schemars::contract contract_deserialize_tuple_struct
+        PASS [   0.127s] (  3/120) schemars::contract contract_serialize_adjacent_tag_enum
+        PASS [   0.134s] (  4/120) schemars::bytes bytes
+        PASS [   0.135s] (  5/120) schemars::chrono chrono_types
+        PASS [   0.134s] (  6/120) schemars::contract contract_deserialize_external_tag_enum
+        PASS [   0.143s] (  7/120) schemars::contract contract_serialize_tuple_struct
+        PASS [   0.146s] (  8/120) schemars::crate_alias test_crate_alias
+        PASS [   0.157s] (  9/120) schemars::contract contract_deserialize_adjacent_tag_enum
+        PASS [   0.156s] ( 10/120) schemars::arrayvec arrayvec07
+        PASS [   0.158s] ( 11/120) schemars::contract contract_deserialize_untagged_enum
+        PASS [   0.170s] ( 12/120) schemars::contract contract_serialize_internal_tag_enum
+        PASS [   0.169s] ( 13/120) schemars::contract contract_serialize
+        PASS [   0.203s] ( 14/120) schemars::bound manual_bound_set
+        PASS [   0.207s] ( 15/120) schemars::arrayvec arrayvec07_string
+        PASS [   0.216s] ( 16/120) schemars::contract contract_serialize_external_tag_enum
+        PASS [   0.139s] ( 17/120) schemars::decimal bigdecimal04
+        PASS [   0.133s] ( 18/120) schemars::decimal rust_decimal
+        PASS [   0.249s] ( 19/120) schemars::contract contract_deserialize_internal_tag_enum
+        PASS [   0.125s] ( 20/120) schemars::default schema_default_values
+        PASS [   0.252s] ( 21/120) schemars::contract contract_deserialize
+        PASS [   0.120s] ( 22/120) schemars::docs doc_comments_struct
+        PASS [   0.110s] ( 23/120) schemars::enum enum_external_tag
+        PASS [   0.137s] ( 24/120) schemars::docs doc_comments_enum
+        PASS [   0.098s] ( 25/120) schemars::enum enum_simple_internal_tag
+        PASS [   0.135s] ( 26/120) schemars::enum enum_no_variants
+        PASS [   0.137s] ( 27/120) schemars::enum enum_internal_tag
+        PASS [   0.169s] ( 28/120) schemars::docs doc_comments_override
+        PASS [   0.108s] ( 29/120) schemars::enum enum_unit_rename_all
+        PASS [   0.185s] ( 30/120) schemars::deprecated deprecated_struct
+        PASS [   0.162s] ( 31/120) schemars::enum enum_adjacent_tagged
+        PASS [   0.165s] ( 32/120) schemars::either either
+        PASS [   0.129s] ( 33/120) schemars::enum enum_unit_rename_all_fields
+        PASS [   0.101s] ( 34/120) schemars::enum enum_untagged
+        PASS [   0.105s] ( 35/120) schemars::enum_deny_unknown_fields enum_external_tag
+        PASS [   0.087s] ( 36/120) schemars::enum_deny_unknown_fields enum_simple_internal_tag
+        PASS [   0.091s] ( 37/120) schemars::enum_deny_unknown_fields enum_internal_tag
+        PASS [   0.150s] ( 38/120) schemars::enum enum_unit_rename_attribute
+        PASS [   0.128s] ( 39/120) schemars::enum_deny_unknown_fields enum_adjacent_tagged
+        PASS [   0.089s] ( 40/120) schemars::enum_flatten test_flat_schema_duf
+        PASS [   0.094s] ( 41/120) schemars::enum_repr enum_repr_with_attrs
+        PASS [   0.099s] ( 42/120) schemars::enum_repr enum_repr
+        PASS [   0.070s] ( 43/120) schemars::extend extend_enum_external
+        PASS [   0.114s] ( 44/120) schemars::enum_flatten test_flat_schema_duf_draft07
+        PASS [   0.112s] ( 45/120) schemars::extend extend_enum_adjacent
+        PASS [   0.113s] ( 46/120) schemars::examples examples
+        PASS [   0.305s] ( 47/120) schemars::deprecated deprecated_enum
+        PASS [   0.091s] ( 48/120) schemars::extend extend_struct
+        PASS [   0.154s] ( 49/120) schemars::enumset enumset
+        PASS [   0.180s] ( 50/120) schemars::enum_flatten test_flat_schema
+        PASS [   0.132s] ( 51/120) schemars::ffi os_strings
+        PASS [   0.117s] ( 52/120) schemars::flatten test_flattened_map
+        PASS [   0.099s] ( 53/120) schemars::flatten test_flattened_value
+        PASS [   0.270s] ( 54/120) schemars::enum enum_unit_with_doc_comments
+        PASS [   0.110s] ( 55/120) schemars::from_value schema_from_json_value
+        PASS [   0.252s] ( 56/120) schemars::enum_deny_unknown_fields enum_untagged
+        PASS [   0.062s] ( 57/120) schemars::garde garde_schemars_attrs
+        PASS [   0.085s] ( 58/120) schemars::garde garde_newtype
+        PASS [   0.167s] ( 59/120) schemars::flatten test_flat_schema
+        PASS [   0.112s] ( 60/120) schemars::from_value schema_from_value_matches_draft07
+        PASS [   0.108s] ( 61/120) schemars::garde garde
+        PASS [   0.152s] ( 62/120) schemars::flatten test_flattened_schema
+        PASS [   0.232s] ( 63/120) schemars::extend extend_enum_internal
+        PASS [   0.086s] ( 64/120) schemars::inline_subschemas struct_normal
+        PASS [   0.164s] ( 65/120) schemars::from_value schema_from_value_matches_2019_09
+        PASS [   0.072s] ( 66/120) schemars::macro macro_built_enum
+        PASS [   0.184s] ( 67/120) schemars::flatten test_flattened_struct_deny_unknown_fields
+        PASS [   0.074s] ( 68/120) schemars::property_name set_struct_property_names
+        PASS [   0.129s] ( 69/120) schemars::garde garde_tuple
+        PASS [   0.071s] ( 70/120) schemars::remote_derive remote_derive_json_schema
+        PASS [   0.082s] ( 71/120) schemars::nonzero_ints nonzero_ints
+        PASS [   0.079s] ( 72/120) schemars::range result
+        PASS [   0.110s] ( 73/120) schemars::macro macro_built_struct
+        PASS [   0.093s] ( 74/120) schemars::remote_derive_generic remote_derive_json_schema
+        PASS [   0.070s] ( 75/120) schemars::schema_name overriden_with_rename_const_generics
+        PASS [   0.165s] ( 76/120) schemars::indexmap indexmap_types
+        PASS [   0.096s] ( 77/120) schemars::schema_name default_name_multiple_type_params
+        PASS [   0.138s] ( 78/120) schemars::result result
+        PASS [   0.159s] ( 79/120) schemars::no_std no_std
+        PASS [   0.261s] ( 80/120) schemars::from_value schema_from_value_matches_openapi3
+        PASS [   0.060s] ( 81/120) schemars::schema_with_enum enum_internal_tag
+        PASS [   0.091s] ( 82/120) schemars::schema_settings schema_matches_2020_12
+        PASS [   0.096s] ( 83/120) schemars::schema_settings schema_matches_draft07
+        PASS [   0.358s] ( 84/120) schemars::extend extend_enum_untagged
+        PASS [   0.062s] ( 85/120) schemars::schema_with_enum enum_untagged
+        PASS [   0.103s] ( 86/120) schemars::schema_settings schema_matches_openapi3
+        PASS [   0.069s] ( 87/120) schemars::schema_with_struct struct_newtype
+        PASS [   0.114s] ( 88/120) schemars::schema_with_enum enum_adjacent_tagged
+        PASS [   0.224s] ( 89/120) schemars::inline_subschemas struct_recursive
+        PASS [   0.106s] ( 90/120) schemars::schema_with_enum enum_external_tag
+        PASS [   0.154s] ( 91/120) schemars::schema_name overriden_with_rename_multiple_type_params
+        PASS [   0.169s] ( 92/120) schemars::schema_name default_name_mixed_generics
+        PASS [   0.177s] ( 93/120) schemars::same_name same_name
+        PASS [   0.092s] ( 94/120) schemars::schema_with_struct struct_tuple
+        PASS [   0.087s] ( 95/120) schemars::semver semver_types
+        PASS [   0.117s] ( 96/120) schemars::schema_with_struct struct_normal
+        PASS [   0.078s] ( 97/120) schemars::std_time duration_and_systemtime
+        PASS [   0.097s] ( 98/120) schemars::skip skip_tuple_fields
+        PASS [   0.113s] ( 99/120) schemars::skip skip_enum_variants
+        PASS [   0.092s] (100/120) schemars::struct struct_tuple
+        PASS [   0.091s] (101/120) schemars::struct struct_unit
+        PASS [   0.123s] (102/120) schemars::smol_str smol_str
+        PASS [   0.091s] (103/120) schemars::transform transform_enum_external
+        PASS [   0.131s] (104/120) schemars::struct struct_newtype
+        PASS [   0.120s] (105/120) schemars::struct_additional_properties struct_normal_additional_properties
+        PASS [   0.256s] (106/120) schemars::schema_settings schema_matches_2019_09
+        PASS [   0.076s] (107/120) schemars::url url_types
+        PASS [   0.076s] (108/120) schemars::uuid uuid1
+        PASS [   0.099s] (109/120) schemars::transparent transparent_struct
+        PASS [   0.128s] (110/120) schemars::transform transform_struct
+        PASS [   0.046s] (111/120) schemars::validate_inner validate_inner
+        PASS [   0.075s] (112/120) schemars::validate validate_newtype
+        PASS [   0.075s] (113/120) schemars::validate validate_schemars_attrs
+        PASS [   0.082s] (114/120) schemars::validate validate_tuple
+        PASS [   0.186s] (115/120) schemars::struct struct_normal
+        PASS [   0.232s] (116/120) schemars::schema_with_struct struct_transparent_newtype
+        PASS [   0.221s] (117/120) schemars::smallvec smallvec
+        PASS [   0.455s] (118/120) schemars::skip skip_struct_fields
+        PASS [   0.421s] (119/120) schemars::validate validate
+        PASS [  15.553s] (120/120) schemars::ui ui
+────────────
+     Summary [  16.339s] 120 tests run: 120 passed, 0 skipped
+reward=1 graded=120 found=11 failed=0 parsed=120 framework=cargo exit_code=0

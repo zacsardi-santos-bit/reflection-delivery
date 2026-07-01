@@ -1,0 +1,19 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p rolldown --no-fail-fast issue_4880",
+  "test_files": [
+    "crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/_config.json",
+    "crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/artifacts.snap",
+    "crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/dynamic.js",
+    "crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/foo.js",
+    "crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/foo2.js",
+    "crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/main.js",
+    "crates/rolldown/tests/snapshots/integration_rolldown__filename_with_hash.snap"
+  ],
+  "num_test_files": 7,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__preserve_entry_signature__issue_4880__config_json"
+  ],
+  "PASS_TO_PASS": []
+}

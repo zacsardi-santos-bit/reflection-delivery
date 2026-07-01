@@ -1,0 +1,167 @@
+patching file test/functional/transaction/database-specific-isolation/entity/Category.ts
+patching file test/functional/transaction/database-specific-isolation/entity/Post.ts
+patching file test/functional/transaction/database-specific-isolation/full-isolation-support.ts
+patching file test/functional/transaction/database-specific-isolation/oracle-isolation.ts
+patching file test/functional/transaction/database-specific-isolation/sqlite-isolation.ts
+patching file test/functional/transaction/transaction-decorator/controller/PostController.ts
+patching file test/functional/transaction/transaction-decorator/transaction-decorator.ts
+[96mtest/functional/transaction/database-specific-isolation/full-isolation-support.ts[0m:[93m22[0m:[93m13[0m - [91merror[0m[90m TS2554: [0mExpected 1 arguments, but got 2.
+
+[30;47m 22[0m       await connection.manager.transaction("READ UNCOMMITTED", async entityManager => {
+[30;47m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[30;47m 23[0m 
+[30;47m   [0m [91m[0m
+[30;47m...[0m 
+[30;47m 34[0m 
+[30;47m   [0m [91m[0m
+[30;47m 35[0m       });
+[30;47m   [0m [91m~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/full-isolation-support.ts[0m:[93m22[0m:[93m70[0m - [91merror[0m[90m TS7006: [0mParameter 'entityManager' implicitly has an 'any' type.
+
+[30;47m22[0m       await connection.manager.transaction("READ UNCOMMITTED", async entityManager => {
+[30;47m  [0m [91m                                                                     ~~~~~~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/full-isolation-support.ts[0m:[93m57[0m:[93m13[0m - [91merror[0m[90m TS2554: [0mExpected 1 arguments, but got 2.
+
+[30;47m 57[0m       await connection.manager.transaction("READ COMMITTED", async entityManager => {
+[30;47m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[30;47m 58[0m 
+[30;47m   [0m [91m[0m
+[30;47m...[0m 
+[30;47m 69[0m 
+[30;47m   [0m [91m[0m
+[30;47m 70[0m       });
+[30;47m   [0m [91m~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/full-isolation-support.ts[0m:[93m57[0m:[93m68[0m - [91merror[0m[90m TS7006: [0mParameter 'entityManager' implicitly has an 'any' type.
+
+[30;47m57[0m       await connection.manager.transaction("READ COMMITTED", async entityManager => {
+[30;47m  [0m [91m                                                                   ~~~~~~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/full-isolation-support.ts[0m:[93m92[0m:[93m13[0m - [91merror[0m[90m TS2554: [0mExpected 1 arguments, but got 2.
+
+[30;47m 92[0m       await connection.manager.transaction("REPEATABLE READ", async entityManager => {
+[30;47m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[30;47m 93[0m 
+[30;47m   [0m [91m[0m
+[30;47m...[0m 
+[30;47m104[0m 
+[30;47m   [0m [91m[0m
+[30;47m105[0m       });
+[30;47m   [0m [91m~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/full-isolation-support.ts[0m:[93m92[0m:[93m69[0m - [91merror[0m[90m TS7006: [0mParameter 'entityManager' implicitly has an 'any' type.
+
+[30;47m92[0m       await connection.manager.transaction("REPEATABLE READ", async entityManager => {
+[30;47m  [0m [91m                                                                    ~~~~~~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/full-isolation-support.ts[0m:[93m127[0m:[93m13[0m - [91merror[0m[90m TS2554: [0mExpected 1 arguments, but got 2.
+
+[30;47m127[0m       await connection.manager.transaction("SERIALIZABLE", async entityManager => {
+[30;47m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[30;47m128[0m 
+[30;47m   [0m [91m[0m
+[30;47m...[0m 
+[30;47m139[0m 
+[30;47m   [0m [91m[0m
+[30;47m140[0m       });
+[30;47m   [0m [91m~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/full-isolation-support.ts[0m:[93m127[0m:[93m66[0m - [91merror[0m[90m TS7006: [0mParameter 'entityManager' implicitly has an 'any' type.
+
+[30;47m127[0m       await connection.manager.transaction("SERIALIZABLE", async entityManager => {
+[30;47m   [0m [91m                                                                 ~~~~~~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/oracle-isolation.ts[0m:[93m22[0m:[93m13[0m - [91merror[0m[90m TS2554: [0mExpected 1 arguments, but got 2.
+
+[30;47m 22[0m       await connection.manager.transaction("READ COMMITTED", async entityManager => {
+[30;47m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[30;47m 23[0m 
+[30;47m   [0m [91m[0m
+[30;47m...[0m 
+[30;47m 34[0m 
+[30;47m   [0m [91m[0m
+[30;47m 35[0m       });
+[30;47m   [0m [91m~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/oracle-isolation.ts[0m:[93m22[0m:[93m68[0m - [91merror[0m[90m TS7006: [0mParameter 'entityManager' implicitly has an 'any' type.
+
+[30;47m22[0m       await connection.manager.transaction("READ COMMITTED", async entityManager => {
+[30;47m  [0m [91m                                                                   ~~~~~~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/oracle-isolation.ts[0m:[93m57[0m:[93m13[0m - [91merror[0m[90m TS2554: [0mExpected 1 arguments, but got 2.
+
+[30;47m 57[0m       await connection.manager.transaction("SERIALIZABLE", async entityManager => {
+[30;47m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[30;47m 58[0m 
+[30;47m   [0m [91m[0m
+[30;47m...[0m 
+[30;47m 69[0m 
+[30;47m   [0m [91m[0m
+[30;47m 70[0m       });
+[30;47m   [0m [91m~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/oracle-isolation.ts[0m:[93m57[0m:[93m66[0m - [91merror[0m[90m TS7006: [0mParameter 'entityManager' implicitly has an 'any' type.
+
+[30;47m57[0m       await connection.manager.transaction("SERIALIZABLE", async entityManager => {
+[30;47m  [0m [91m                                                                 ~~~~~~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/sqlite-isolation.ts[0m:[93m22[0m:[93m13[0m - [91merror[0m[90m TS2554: [0mExpected 1 arguments, but got 2.
+
+[30;47m 22[0m       await connection.manager.transaction("READ UNCOMMITTED", async entityManager => {
+[30;47m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[30;47m 23[0m 
+[30;47m   [0m [91m[0m
+[30;47m...[0m 
+[30;47m 34[0m 
+[30;47m   [0m [91m[0m
+[30;47m 35[0m       });
+[30;47m   [0m [91m~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/sqlite-isolation.ts[0m:[93m22[0m:[93m70[0m - [91merror[0m[90m TS7006: [0mParameter 'entityManager' implicitly has an 'any' type.
+
+[30;47m22[0m       await connection.manager.transaction("READ UNCOMMITTED", async entityManager => {
+[30;47m  [0m [91m                                                                     ~~~~~~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/sqlite-isolation.ts[0m:[93m57[0m:[93m13[0m - [91merror[0m[90m TS2554: [0mExpected 1 arguments, but got 2.
+
+[30;47m 57[0m       await connection.manager.transaction("SERIALIZABLE", async entityManager => {
+[30;47m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[30;47m 58[0m 
+[30;47m   [0m [91m[0m
+[30;47m...[0m 
+[30;47m 69[0m 
+[30;47m   [0m [91m[0m
+[30;47m 70[0m       });
+[30;47m   [0m [91m~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/database-specific-isolation/sqlite-isolation.ts[0m:[93m57[0m:[93m66[0m - [91merror[0m[90m TS7006: [0mParameter 'entityManager' implicitly has an 'any' type.
+
+[30;47m57[0m       await connection.manager.transaction("SERIALIZABLE", async entityManager => {
+[30;47m  [0m [91m                                                                 ~~~~~~~~~~~~~[0m
+
+
+[96mtest/functional/transaction/transaction-decorator/controller/PostController.ts[0m:[93m38[0m:[93m18[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ connectionName: string; isolationLevel: string; }' is not assignable to parameter of type 'string | undefined'.
+  Type '{ connectionName: string; isolationLevel: string; }' is not assignable to type 'string'.
+
+[30;47m38[0m     @Transaction({ connectionName: "mysql", isolationLevel: "SERIALIZABLE" }) // "mysql" is a connection name. you can not pass it if you are using default connection.
+[30;47m  [0m [91m                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=mocha exit_code=2

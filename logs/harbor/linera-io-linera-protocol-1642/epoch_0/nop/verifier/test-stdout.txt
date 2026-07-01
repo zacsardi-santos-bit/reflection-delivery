@@ -1,0 +1,255 @@
+patching file linera-witty-macros/src/unit_tests/wit_load.rs
+patching file linera-witty-macros/src/unit_tests/wit_store.rs
+patching file linera-witty-macros/src/unit_tests/wit_type.rs
+   Compiling linera-witty-macros v0.8.0 (/workspace/repo/linera-witty-macros)
+    Finished test [unoptimized + debuginfo] target(s) in 3.50s
+────────────
+ Nextest run ID b1fc56d3-9727-466c-92f1-900c621f02ce with nextest profile: default
+    Starting 23 tests across 1 binary
+        PASS [   0.110s] ( 1/23) linera-witty-macros wit_store::tests::zero_sized_type
+        PASS [   0.115s] ( 2/23) linera-witty-macros wit_load::tests::zero_sized_type
+        PASS [   0.120s] ( 3/23) linera-witty-macros util::specialization::tests::derive_input_changes
+        PASS [   0.120s] ( 4/23) linera-witty-macros wit_store::tests::tuple_struct
+        PASS [   0.122s] ( 5/23) linera-witty-macros wit_type::tests::enum_type
+        PASS [   0.126s] ( 6/23) linera-witty-macros wit_load::tests::enum_type
+        FAIL [   0.124s] ( 7/23) linera-witty-macros wit_load::tests::tuple_struct_with_skipped_fields
+  stdout ───
+
+    running 1 test
+    test wit_load::tests::tuple_struct_with_skipped_fields ... FAILED
+
+    failures:
+
+    failures:
+        wit_load::tests::tuple_struct_with_skipped_fields
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.03s
+
+  stderr ───
+    thread 'wit_load::tests::tuple_struct_with_skipped_fields' panicked at linera-witty-macros/src/unit_tests/wit_load.rs:412:5:
+    assertion `left == right` failed
+      left: "fn load < Instance > (memory : & linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let linera_witty :: hlist_pat ! [field0 , field1 , field2 , field3 , field4] = < linera_witty :: HList ! [PhantomData < T > , String , Vec < CustomType > , bool , i64] as linera_witty :: WitLoad > :: load (memory , location) ? ; Ok (Self (field0 , field1 , field2 , field3 , field4)) } fn lift_from < Instance > (flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat , memory : & linera_witty :: Memory < '_ , Instance > ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let linera_witty :: hlist_pat ! [field0 , field1 , field2 , field3 , field4] = < linera_witty :: HList ! [PhantomData < T > , String , Vec < CustomType > , bool , i64] as linera_witty :: WitLoad > :: lift_from (flat_layout , memory) ? ; Ok (Self (field0 , field1 , field2 , field3 , field4)) }"
+     right: "fn load < Instance > (memory : & linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let linera_witty :: hlist_pat ! [field1 , field2 , field4] = < linera_witty :: HList ! [String , Vec < CustomType > , i64] as linera_witty :: WitLoad > :: load (memory , location) ? ; let field0 = Default :: default () ; let field3 = Default :: default () ; Ok (Self (field0 , field1 , field2 , field3 , field4)) } fn lift_from < Instance > (flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat , memory : & linera_witty :: Memory < '_ , Instance > ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let linera_witty :: hlist_pat ! [field1 , field2 , field4] = < linera_witty :: HList ! [String , Vec < CustomType > , i64] as linera_witty :: WitLoad > :: lift_from (flat_layout , memory) ? ; let field0 = Default :: default () ; let field3 = Default :: default () ; Ok (Self (field0 , field1 , field2 , field3 , field4)) }"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.124s] ( 8/23) linera-witty-macros wit_store::tests::named_struct
+  stdout ───
+
+    running 1 test
+    test wit_store::tests::named_struct ... FAILED
+
+    failures:
+
+    failures:
+        wit_store::tests::named_struct
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.03s
+
+  stderr ───
+    thread 'wit_store::tests::named_struct' panicked at linera-witty-macros/src/unit_tests/wit_store.rs:90:5:
+    assertion `left == right` failed
+      left: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self { first , second } = self ; linera_witty :: hlist ! [first , second] . store (memory , location) } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self { first , second } = self ; linera_witty :: hlist ! [first , second] . lower (memory) }"
+     right: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self { first , second , } = self ; linera_witty :: hlist ! [first , second] . store (memory , location) } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self { first , second , } = self ; linera_witty :: hlist ! [first , second] . lower (memory) }"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.129s] ( 9/23) linera-witty-macros wit_store::tests::tuple_struct_with_skipped_fields
+  stdout ───
+
+    running 1 test
+    test wit_store::tests::tuple_struct_with_skipped_fields ... FAILED
+
+    failures:
+
+    failures:
+        wit_store::tests::tuple_struct_with_skipped_fields
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.04s
+
+  stderr ───
+    thread 'wit_store::tests::tuple_struct_with_skipped_fields' panicked at linera-witty-macros/src/unit_tests/wit_store.rs:335:5:
+    assertion `left == right` failed
+      left: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self (field0 , field1 , field2 , field3 , field4) = self ; linera_witty :: hlist ! [field0 , field1 , field2 , field3 , field4] . store (memory , location) } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self (field0 , field1 , field2 , field3 , field4) = self ; linera_witty :: hlist ! [field0 , field1 , field2 , field3 , field4] . lower (memory) }"
+     right: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self (_ , field1 , field2 , _ , field4) = self ; linera_witty :: hlist ! [field1 , field2 , field4] . store (memory , location) } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self (_ , field1 , field2 , _ , field4) = self ; linera_witty :: hlist ! [field1 , field2 , field4] . lower (memory) }"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.129s] (10/23) linera-witty-macros wit_store::tests::named_struct_with_skipped_fields
+  stdout ───
+
+    running 1 test
+    test wit_store::tests::named_struct_with_skipped_fields ... FAILED
+
+    failures:
+
+    failures:
+        wit_store::tests::named_struct_with_skipped_fields
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.03s
+
+  stderr ───
+    thread 'wit_store::tests::named_struct_with_skipped_fields' panicked at linera-witty-macros/src/unit_tests/wit_store.rs:286:5:
+    assertion `left == right` failed
+      left: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self { ignored1 , first , ignored2 , ignored3 , second , ignored4 } = self ; linera_witty :: hlist ! [ignored1 , first , ignored2 , ignored3 , second , ignored4] . store (memory , location) } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self { ignored1 , first , ignored2 , ignored3 , second , ignored4 } = self ; linera_witty :: hlist ! [ignored1 , first , ignored2 , ignored3 , second , ignored4] . lower (memory) }"
+     right: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self { first , second , .. } = self ; linera_witty :: hlist ! [first , second] . store (memory , location) } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let Self { first , second , .. } = self ; linera_witty :: hlist ! [first , second] . lower (memory) }"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.129s] (11/23) linera-witty-macros wit_load::tests::named_struct
+        PASS [   0.131s] (12/23) linera-witty-macros wit_load::tests::tuple_struct
+        FAIL [   0.133s] (13/23) linera-witty-macros wit_load::tests::named_struct_with_skipped_fields
+  stdout ───
+
+    running 1 test
+    test wit_load::tests::named_struct_with_skipped_fields ... FAILED
+
+    failures:
+
+    failures:
+        wit_load::tests::named_struct_with_skipped_fields
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.03s
+
+  stderr ───
+    thread 'wit_load::tests::named_struct_with_skipped_fields' panicked at linera-witty-macros/src/unit_tests/wit_load.rs:348:5:
+    assertion `left == right` failed
+      left: "fn load < Instance > (memory : & linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let linera_witty :: hlist_pat ! [ignored1 , first , ignored2 , ignored3 , second , ignored4] = < linera_witty :: HList ! [u8 , u8 , i128 , String , CustomType , Vec < () >] as linera_witty :: WitLoad > :: load (memory , location) ? ; Ok (Self { ignored1 , first , ignored2 , ignored3 , second , ignored4 }) } fn lift_from < Instance > (flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat , memory : & linera_witty :: Memory < '_ , Instance > ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let linera_witty :: hlist_pat ! [ignored1 , first , ignored2 , ignored3 , second , ignored4] = < linera_witty :: HList ! [u8 , u8 , i128 , String , CustomType , Vec < () >] as linera_witty :: WitLoad > :: lift_from (flat_layout , memory) ? ; Ok (Self { ignored1 , first , ignored2 , ignored3 , second , ignored4 }) }"
+     right: "fn load < Instance > (memory : & linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let linera_witty :: hlist_pat ! [first , second] = < linera_witty :: HList ! [u8 , CustomType] as linera_witty :: WitLoad > :: load (memory , location) ? ; let ignored1 = Default :: default () ; let ignored2 = Default :: default () ; let ignored3 = Default :: default () ; let ignored4 = Default :: default () ; Ok (Self { ignored1 , first , ignored2 , ignored3 , second , ignored4 }) } fn lift_from < Instance > (flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat , memory : & linera_witty :: Memory < '_ , Instance > ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let linera_witty :: hlist_pat ! [first , second] = < linera_witty :: HList ! [u8 , CustomType] as linera_witty :: WitLoad > :: lift_from (flat_layout , memory) ? ; let ignored1 = Default :: default () ; let ignored2 = Default :: default () ; let ignored3 = Default :: default () ; let ignored4 = Default :: default () ; Ok (Self { ignored1 , first , ignored2 , ignored3 , second , ignored4 }) }"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.135s] (14/23) linera-witty-macros util::specialization::tests::generics_are_specialized
+        FAIL [   0.135s] (15/23) linera-witty-macros wit_load::tests::enum_type_with_skipped_fields
+  stdout ───
+
+    running 1 test
+    test wit_load::tests::enum_type_with_skipped_fields ... FAILED
+
+    failures:
+
+    failures:
+        wit_load::tests::enum_type_with_skipped_fields
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.04s
+
+  stderr ───
+    thread 'wit_load::tests::enum_type_with_skipped_fields' panicked at linera-witty-macros/src/unit_tests/wit_load.rs:555:5:
+    assertion `left == right` failed
+      left: "fn load < Instance > (memory : & linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let discriminant = < u8 as linera_witty :: WitLoad > :: load (memory , location ,) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType , u128] > () . after_padding_for :: < linera_witty :: HList ! [() , (u8 , u16) , String , String , Option < String >] > () ; match discriminant { 0 => { let linera_witty :: hlist_pat ! [] = < linera_witty :: HList ! [] as linera_witty :: WitLoad > :: load (memory , location) ? ; Ok (Enum :: Empty) } 1 => { let linera_witty :: hlist_pat ! [field0 , field1 , field2] = < linera_witty :: HList ! [i8 , CustomType , u128] as linera_witty :: WitLoad > :: load (memory , location) ? ; Ok (Enum :: Tuple (field0 , field1 , field2)) } 2 => { let linera_witty :: hlist_pat ! [first , ignored1 , ignored2 , second , ignored3] = < linera_witty :: HList ! [() , (u8 , u16) , String , String , Option < String >] as linera_witty :: WitLoad > :: load (memory , location) ? ; Ok (Enum :: Struct { first , ignored1 , ignored2 , second , ignored3 }) } _ => Err (linera_witty :: RuntimeError :: InvalidVariant) , } } fn lift_from < Instance > (linera_witty :: hlist_pat ! [discriminant_flat_type , ... flat_layout] : < Self :: Layout as linera_witty :: Layout > :: Flat , memory : & linera_witty :: Memory < '_ , Instance > ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let discriminant = < u8 as linera_witty :: WitLoad > :: lift_from (linera_witty :: hlist ! [discriminant_flat_type] , memory ,) ? ; match discriminant { 0 => { let linera_witty :: hlist_pat ! [] = < linera_witty :: HList ! [] as linera_witty :: WitLoad > :: lift_from (linera_witty :: JoinFlatLayouts :: from_joined (flat_layout) , memory ,) ? ; Ok (Enum :: Empty) } 1 => { let linera_witty :: hlist_pat ! [field0 , field1 , field2] = < linera_witty :: HList ! [i8 , CustomType , u128] as linera_witty :: WitLoad > :: lift_from (linera_witty :: JoinFlatLayouts :: from_joined (flat_layout) , memory ,) ? ; Ok (Enum :: Tuple (field0 , field1 , field2)) } 2 => { let linera_witty :: hlist_pat ! [first , ignored1 , ignored2 , second , ignored3] = < linera_witty :: HList ! [() , (u8 , u16) , String , String , Option < String >] as linera_witty :: WitLoad > :: lift_from (linera_witty :: JoinFlatLayouts :: from_joined (flat_layout) , memory ,) ? ; Ok (Enum :: Struct { first , ignored1 , ignored2 , second , ignored3 }) } _ => Err (linera_witty :: RuntimeError :: InvalidVariant) , } }"
+     right: "fn load < Instance > (memory : & linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let discriminant = < u8 as linera_witty :: WitLoad > :: load (memory , location ,) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; match discriminant { 0 => { let linera_witty :: hlist_pat ! [] = < linera_witty :: HList ! [] as linera_witty :: WitLoad > :: load (memory , location) ? ; Ok (Enum :: Empty) } 1 => { let linera_witty :: hlist_pat ! [field0 , field1] = < linera_witty :: HList ! [i8 , CustomType] as linera_witty :: WitLoad > :: load (memory , location) ? ; let field2 = Default :: default () ; Ok (Enum :: Tuple (field0 , field1 , field2)) } 2 => { let linera_witty :: hlist_pat ! [first , second] = < linera_witty :: HList ! [() , String] as linera_witty :: WitLoad > :: load (memory , location) ? ; let ignored1 = Default :: default () ; let ignored2 = Default :: default () ; let ignored3 = Default :: default () ; Ok (Enum :: Struct { first , ignored1 , ignored2 , second , ignored3 }) } _ => Err (linera_witty :: RuntimeError :: InvalidVariant) , } } fn lift_from < Instance > (linera_witty :: hlist_pat ! [discriminant_flat_type , ... flat_layout] : < Self :: Layout as linera_witty :: Layout > :: Flat , memory : & linera_witty :: Memory < '_ , Instance > ,) -> Result < Self , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { let discriminant = < u8 as linera_witty :: WitLoad > :: lift_from (linera_witty :: hlist ! [discriminant_flat_type] , memory ,) ? ; match discriminant { 0 => { let linera_witty :: hlist_pat ! [] = < linera_witty :: HList ! [] as linera_witty :: WitLoad > :: lift_from (linera_witty :: JoinFlatLayouts :: from_joined (flat_layout) , memory ,) ? ; Ok (Enum :: Empty) } 1 => { let linera_witty :: hlist_pat ! [field0 , field1] = < linera_witty :: HList ! [i8 , CustomType] as linera_witty :: WitLoad > :: lift_from (linera_witty :: JoinFlatLayouts :: from_joined (flat_layout) , memory ,) ? ; let field2 = Default :: default () ; Ok (Enum :: Tuple (field0 , field1 , field2)) } 2 => { let linera_witty :: hlist_pat ! [first , second] = < linera_witty :: HList ! [() , String] as linera_witty :: WitLoad > :: lift_from (linera_witty :: JoinFlatLayouts :: from_joined (flat_layout) , memory ,) ? ; let ignored1 = Default :: default () ; let ignored2 = Default :: default () ; let ignored3 = Default :: default () ; Ok (Enum :: Struct { first , ignored1 , ignored2 , second , ignored3 }) } _ => Err (linera_witty :: RuntimeError :: InvalidVariant) , } }"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.134s] (16/23) linera-witty-macros wit_store::tests::enum_type
+  stdout ───
+
+    running 1 test
+    test wit_store::tests::enum_type ... FAILED
+
+    failures:
+
+    failures:
+        wit_store::tests::enum_type
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.04s
+
+  stderr ───
+    thread 'wit_store::tests::enum_type' panicked at linera-witty-macros/src/unit_tests/wit_store.rs:234:5:
+    assertion `left == right` failed
+      left: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { match self { Enum :: Empty => { 0_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; linera_witty :: hlist ! [] . store (memory , location) } Enum :: Tuple (field0 , field1) => { 1_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; linera_witty :: hlist ! [field0 , field1] . store (memory , location) } Enum :: Struct { first , second } => { 2_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; linera_witty :: hlist ! [first , second] . store (memory , location) } } } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { match self { Enum :: Empty => { let variant_flat_layout = linera_witty :: hlist ! [] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (0_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } Enum :: Tuple (field0 , field1) => { let variant_flat_layout = linera_witty :: hlist ! [field0 , field1] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (1_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } Enum :: Struct { first , second } => { let variant_flat_layout = linera_witty :: hlist ! [first , second] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (2_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } } }"
+     right: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { match self { Enum :: Empty => { 0_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; linera_witty :: hlist ! [] . store (memory , location) } Enum :: Tuple (field0 , field1) => { 1_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; linera_witty :: hlist ! [field0 , field1] . store (memory , location) } Enum :: Struct { first , second , } => { 2_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; linera_witty :: hlist ! [first , second] . store (memory , location) } } } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { match self { Enum :: Empty => { let variant_flat_layout = linera_witty :: hlist ! [] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (0_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } Enum :: Tuple (field0 , field1) => { let variant_flat_layout = linera_witty :: hlist ! [field0 , field1] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (1_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } Enum :: Struct { first , second , } => { let variant_flat_layout = linera_witty :: hlist ! [first , second] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (2_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } } }"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.133s] (17/23) linera-witty-macros wit_type::tests::enum_type_with_skipped_fields
+  stdout ───
+
+    running 1 test
+    test wit_type::tests::enum_type_with_skipped_fields ... FAILED
+
+    failures:
+
+    failures:
+        wit_type::tests::enum_type_with_skipped_fields
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.04s
+
+  stderr ───
+    thread 'wit_type::tests::enum_type_with_skipped_fields' panicked at linera-witty-macros/src/unit_tests/wit_type.rs:263:5:
+    assertion `left == right` failed
+      left: "const SIZE : u32 = { let discriminant_size = std :: mem :: size_of :: < u8 > () as u32 ; let mut size = discriminant_size ; let mut variants_alignment = < < < linera_witty :: HList ! [] as linera_witty :: WitType > :: Layout as linera_witty :: Merge < < < linera_witty :: HList ! [i8 , CustomType , u128] as linera_witty :: WitType > :: Layout as linera_witty :: Merge < < linera_witty :: HList ! [() , (u8 , u16) , String , String , Option < String >] as linera_witty :: WitType > :: Layout >> :: Output >> :: Output as linera_witty :: Layout > :: ALIGNMENT ; let padding = (- (size as i32) & (variants_alignment as i32 - 1)) as u32 ; let variant_size = discriminant_size + padding + < linera_witty :: HList ! [] as linera_witty :: WitType > :: SIZE ; if variant_size > size { size = variant_size ; } let variant_size = discriminant_size + padding + < linera_witty :: HList ! [i8 , CustomType , u128] as linera_witty :: WitType > :: SIZE ; if variant_size > size { size = variant_size ; } let variant_size = discriminant_size + padding + < linera_witty :: HList ! [() , (u8 , u16) , String , String , Option < String >] as linera_witty :: WitType > :: SIZE ; if variant_size > size { size = variant_size ; } size } ; type Layout = linera_witty :: HCons < u8 , < < linera_witty :: HList ! [] as linera_witty :: WitType > :: Layout as linera_witty :: Merge < < < linera_witty :: HList ! [i8 , CustomType , u128] as linera_witty :: WitType > :: Layout as linera_witty :: Merge < < linera_witty :: HList ! [() , (u8 , u16) , String , String , Option < String >] as linera_witty :: WitType > :: Layout >> :: Output >> :: Output > ;"
+     right: "const SIZE : u32 = { let discriminant_size = std :: mem :: size_of :: < u8 > () as u32 ; let mut size = discriminant_size ; let mut variants_alignment = < < < linera_witty :: HList ! [] as linera_witty :: WitType > :: Layout as linera_witty :: Merge < < < linera_witty :: HList ! [i8 , CustomType] as linera_witty :: WitType > :: Layout as linera_witty :: Merge < < linera_witty :: HList ! [() , String] as linera_witty :: WitType > :: Layout >> :: Output >> :: Output as linera_witty :: Layout > :: ALIGNMENT ; let padding = (- (size as i32) & (variants_alignment as i32 - 1)) as u32 ; let variant_size = discriminant_size + padding + < linera_witty :: HList ! [] as linera_witty :: WitType > :: SIZE ; if variant_size > size { size = variant_size ; } let variant_size = discriminant_size + padding + < linera_witty :: HList ! [i8 , CustomType] as linera_witty :: WitType > :: SIZE ; if variant_size > size { size = variant_size ; } let variant_size = discriminant_size + padding + < linera_witty :: HList ! [() , String] as linera_witty :: WitType > :: SIZE ; if variant_size > size { size = variant_size ; } size } ; type Layout = linera_witty :: HCons < u8 , < < linera_witty :: HList ! [] as linera_witty :: WitType > :: Layout as linera_witty :: Merge < < < linera_witty :: HList ! [i8 , CustomType] as linera_witty :: WitType > :: Layout as linera_witty :: Merge < < linera_witty :: HList ! [() , String] as linera_witty :: WitType > :: Layout >> :: Output >> :: Output > ;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.136s] (18/23) linera-witty-macros wit_store::tests::enum_type_with_skipped_fields
+  stdout ───
+
+    running 1 test
+    test wit_store::tests::enum_type_with_skipped_fields ... FAILED
+
+    failures:
+
+    failures:
+        wit_store::tests::enum_type_with_skipped_fields
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.04s
+
+  stderr ───
+    thread 'wit_store::tests::enum_type_with_skipped_fields' panicked at linera-witty-macros/src/unit_tests/wit_store.rs:446:5:
+    assertion `left == right` failed
+      left: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { match self { Enum :: Empty => { 0_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType , u128] > () . after_padding_for :: < linera_witty :: HList ! [() , (u8 , u16) , String , String , Option < String >] > () ; linera_witty :: hlist ! [] . store (memory , location) } Enum :: Tuple (field0 , field1 , field2) => { 1_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType , u128] > () . after_padding_for :: < linera_witty :: HList ! [() , (u8 , u16) , String , String , Option < String >] > () ; linera_witty :: hlist ! [field0 , field1 , field2] . store (memory , location) } Enum :: Struct { first , ignored1 , ignored2 , second , ignored3 } => { 2_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType , u128] > () . after_padding_for :: < linera_witty :: HList ! [() , (u8 , u16) , String , String , Option < String >] > () ; linera_witty :: hlist ! [first , ignored1 , ignored2 , second , ignored3] . store (memory , location) } } } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { match self { Enum :: Empty => { let variant_flat_layout = linera_witty :: hlist ! [] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (0_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } Enum :: Tuple (field0 , field1 , field2) => { let variant_flat_layout = linera_witty :: hlist ! [field0 , field1 , field2] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (1_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } Enum :: Struct { first , ignored1 , ignored2 , second , ignored3 } => { let variant_flat_layout = linera_witty :: hlist ! [first , ignored1 , ignored2 , second , ignored3] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (2_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } } }"
+     right: "fn store < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > , mut location : linera_witty :: GuestPointer ,) -> Result < () , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { match self { Enum :: Empty => { 0_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; linera_witty :: hlist ! [] . store (memory , location) } Enum :: Tuple (field0 , field1 , _) => { 1_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; linera_witty :: hlist ! [field0 , field1] . store (memory , location) } Enum :: Struct { first , second , .. } => { 2_u8 . store (memory , location) ? ; location = location . after :: < u8 > () . after_padding_for :: < linera_witty :: HList ! [] > () . after_padding_for :: < linera_witty :: HList ! [i8 , CustomType] > () . after_padding_for :: < linera_witty :: HList ! [() , String] > () ; linera_witty :: hlist ! [first , second] . store (memory , location) } } } fn lower < Instance > (& self , memory : & mut linera_witty :: Memory < '_ , Instance > ,) -> Result << Self :: Layout as linera_witty :: Layout > :: Flat , linera_witty :: RuntimeError > where Instance : linera_witty :: InstanceWithMemory , < Instance :: Runtime as linera_witty :: Runtime > :: Memory : linera_witty :: RuntimeMemory < Instance > , { match self { Enum :: Empty => { let variant_flat_layout = linera_witty :: hlist ! [] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (0_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } Enum :: Tuple (field0 , field1 , _) => { let variant_flat_layout = linera_witty :: hlist ! [field0 , field1] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (1_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } Enum :: Struct { first , second , .. } => { let variant_flat_layout = linera_witty :: hlist ! [first , second] . lower (memory) ? ; let flat_layout : < Self :: Layout as linera_witty :: Layout > :: Flat = linera_witty :: JoinFlatLayouts :: into_joined (2_u8 . lower (memory) ? + variant_flat_layout ,) ; Ok (flat_layout) } } }"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.076s] (19/23) linera-witty-macros wit_type::tests::zero_sized_type
+        PASS [   0.088s] (20/23) linera-witty-macros wit_type::tests::named_struct
+        FAIL [   0.088s] (21/23) linera-witty-macros wit_type::tests::named_struct_with_skipped_fields
+  stdout ───
+
+    running 1 test
+    test wit_type::tests::named_struct_with_skipped_fields ... FAILED
+
+    failures:
+
+    failures:
+        wit_type::tests::named_struct_with_skipped_fields
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'wit_type::tests::named_struct_with_skipped_fields' panicked at linera-witty-macros/src/unit_tests/wit_type.rs:160:5:
+    assertion `left == right` failed
+      left: "const SIZE : u32 = < linera_witty :: HList ! [u8 , u8 , i128 , String , CustomType , Vec < () >] as linera_witty :: WitType > :: SIZE ; type Layout = < linera_witty :: HList ! [u8 , u8 , i128 , String , CustomType , Vec < () >] as linera_witty :: WitType > :: Layout ;"
+     right: "const SIZE : u32 = < linera_witty :: HList ! [u8 , CustomType] as linera_witty :: WitType > :: SIZE ; type Layout = < linera_witty :: HList ! [u8 , CustomType] as linera_witty :: WitType > :: Layout ;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.084s] (22/23) linera-witty-macros wit_type::tests::tuple_struct
+        FAIL [   0.083s] (23/23) linera-witty-macros wit_type::tests::tuple_struct_with_skipped_fields
+  stdout ───
+
+    running 1 test
+    test wit_type::tests::tuple_struct_with_skipped_fields ... FAILED
+
+    failures:
+
+    failures:
+        wit_type::tests::tuple_struct_with_skipped_fields
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'wit_type::tests::tuple_struct_with_skipped_fields' panicked at linera-witty-macros/src/unit_tests/wit_type.rs:188:5:
+    assertion `left == right` failed
+      left: "const SIZE : u32 = < linera_witty :: HList ! [PhantomData < T > , String , Vec < CustomType > , bool , i64] as linera_witty :: WitType > :: SIZE ; type Layout = < linera_witty :: HList ! [PhantomData < T > , String , Vec < CustomType > , bool , i64] as linera_witty :: WitType > :: Layout ;"
+     right: "const SIZE : u32 = < linera_witty :: HList ! [String , Vec < CustomType > , i64] as linera_witty :: WitType > :: SIZE ; type Layout = < linera_witty :: HList ! [String , Vec < CustomType > , i64] as linera_witty :: WitType > :: Layout ;"
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.206s] 23 tests run: 12 passed, 11 failed, 0 skipped
+        FAIL [   0.124s] ( 7/23) linera-witty-macros wit_load::tests::tuple_struct_with_skipped_fields
+        FAIL [   0.124s] ( 8/23) linera-witty-macros wit_store::tests::named_struct
+        FAIL [   0.129s] ( 9/23) linera-witty-macros wit_store::tests::tuple_struct_with_skipped_fields
+        FAIL [   0.129s] (10/23) linera-witty-macros wit_store::tests::named_struct_with_skipped_fields
+        FAIL [   0.133s] (13/23) linera-witty-macros wit_load::tests::named_struct_with_skipped_fields
+        FAIL [   0.135s] (15/23) linera-witty-macros wit_load::tests::enum_type_with_skipped_fields
+        FAIL [   0.134s] (16/23) linera-witty-macros wit_store::tests::enum_type
+        FAIL [   0.133s] (17/23) linera-witty-macros wit_type::tests::enum_type_with_skipped_fields
+        FAIL [   0.136s] (18/23) linera-witty-macros wit_store::tests::enum_type_with_skipped_fields
+        FAIL [   0.088s] (21/23) linera-witty-macros wit_type::tests::named_struct_with_skipped_fields
+        FAIL [   0.083s] (23/23) linera-witty-macros wit_type::tests::tuple_struct_with_skipped_fields
+error: test run failed
+reward=0 graded=23 found=5 failed=3 parsed=23 framework=cargo exit_code=100

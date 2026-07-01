@@ -1,0 +1,23 @@
+{
+ "task": "ros2-rosbag2-1007",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds Stop.srv, implements 'void Player::stop()', registers create_service<...srv::Stop>, and modifies ~Player() for implicit stop; F2P stop_in_pause/stop_in_active_play call the /stop service and require play thread to exit without rclcpp::shutdown"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

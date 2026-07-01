@@ -1,0 +1,3 @@
+patching file tensorflow_quantum/python/layers/circuit_executors/BUILD
+patching file tensorflow_quantum/python/layers/circuit_executors/expectation.py
+patching file tensorflow_quantum/python/layers/circuit_executors/sampled_expectation.py

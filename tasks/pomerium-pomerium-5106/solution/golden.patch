@@ -1,0 +1,1605 @@
+diff --git a/config/runtime_flags.go b/config/runtime_flags.go
+index 957e048f6..85b4af1ba 100644
+--- a/config/runtime_flags.go
++++ b/config/runtime_flags.go
+@@ -11,6 +11,8 @@ var (
+ 
+ 	// RuntimeFlagLegacyIdentityManager enables the legacy identity manager
+ 	RuntimeFlagLegacyIdentityManager = runtimeFlag("legacy_identity_manager", false)
++
++	RuntimeFlagEnvoyResourceManagerEnabled = runtimeFlag("envoy_resource_manager_enabled", true)
+ )
+ 
+ // RuntimeFlag is a runtime flag that can flip on/off certain features
+diff --git a/go.mod b/go.mod
+index 54a32bf6f..948f403fc 100644
+--- a/go.mod
++++ b/go.mod
+@@ -79,6 +79,7 @@ require (
+ 	golang.org/x/net v0.24.0
+ 	golang.org/x/oauth2 v0.19.0
+ 	golang.org/x/sync v0.7.0
++	golang.org/x/sys v0.20.0
+ 	golang.org/x/time v0.5.0
+ 	google.golang.org/api v0.177.0
+ 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240429193739-8cf5692501f6
+@@ -209,7 +210,6 @@ require (
+ 	go.opentelemetry.io/proto/otlp v1.2.0 // indirect
+ 	go.uber.org/multierr v1.11.0 // indirect
+ 	golang.org/x/mod v0.14.0 // indirect
+-	golang.org/x/sys v0.19.0 // indirect
+ 	golang.org/x/text v0.14.0 // indirect
+ 	golang.org/x/tools v0.15.0 // indirect
+ 	google.golang.org/genproto v0.0.0-20240227224415-6ceb2ff114de // indirect
+diff --git a/go.sum b/go.sum
+index d2a1b7b1f..34821e823 100644
+--- a/go.sum
++++ b/go.sum
+@@ -930,8 +930,9 @@ golang.org/x/sys v0.11.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+ golang.org/x/sys v0.12.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+ golang.org/x/sys v0.14.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
+ golang.org/x/sys v0.17.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
+-golang.org/x/sys v0.19.0 h1:q5f1RH2jigJ1MoAWp2KTp3gm5zAGFUTarQZ5U386+4o=
+ golang.org/x/sys v0.19.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
++golang.org/x/sys v0.20.0 h1:Od9JTbYCk261bKm4M/mw7AklTlFYIa0bIp9BgSm1S8Y=
++golang.org/x/sys v0.20.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
+ golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
+ golang.org/x/term v0.0.0-20210927222741-03fcf44c2211/go.mod h1:jbD1KX2456YbFQfuXm/mYQcufACuNUgVhRMnK/tPxf8=
+ golang.org/x/term v0.5.0/go.mod h1:jMB1sMXY+tzblOD4FWmEbocvup2/aLOaQEp7JmGp78k=
+diff --git a/internal/telemetry/metrics/const.go b/internal/telemetry/metrics/const.go
+index b7230e1c5..248e0d0a0 100644
+--- a/internal/telemetry/metrics/const.go
++++ b/internal/telemetry/metrics/const.go
+@@ -18,6 +18,9 @@ var (
+ 	TagKeyStorageOperation = tag.MustNewKey("operation")
+ 	TagKeyStorageResult    = tag.MustNewKey("result")
+ 	TagKeyStorageBackend   = tag.MustNewKey("backend")
++
++	TagKeyCgroup     = tag.MustNewKey("cgroup")
++	TagKeyActionName = tag.MustNewKey("action_name")
+ )
+ 
+ // Default distributions used by views in this package.
+@@ -44,5 +47,6 @@ var (
+ 		HTTPServerViews,
+ 		InfoViews,
+ 		StorageViews,
++		EnvoyViews,
+ 	}
+ )
+diff --git a/internal/telemetry/metrics/envoy.go b/internal/telemetry/metrics/envoy.go
+new file mode 100644
+index 000000000..1961bc933
+--- /dev/null
++++ b/internal/telemetry/metrics/envoy.go
+@@ -0,0 +1,104 @@
++package metrics
++
++import (
++	"context"
++
++	"go.opencensus.io/stats"
++	"go.opencensus.io/stats/view"
++	"go.opencensus.io/tag"
++
++	"github.com/pomerium/pomerium/internal/log"
++	"github.com/pomerium/pomerium/pkg/metrics"
++)
++
++var (
++	EnvoyViews = []*view.View{
++		EnvoyOverloadActionStateView,
++		EnvoyOverloadActionThresholdView,
++		EnvoyCgroupMemorySaturationView,
++	}
++
++	EnvoyOverloadActionState = stats.Int64(
++		metrics.EnvoyOverloadActionState,
++		"Current state of envoy overload actions by cgroup",
++		stats.UnitDimensionless,
++	)
++
++	EnvoyOverloadActionThreshold = stats.Float64(
++		metrics.EnvoyOverloadActionThreshold,
++		"Injected memory usage minimum thresholds for envoy overload actions",
++		stats.UnitDimensionless,
++	)
++
++	EnvoyCgroupMemorySaturation = stats.Float64(
++		metrics.EnvoyCgroupMemorySaturation,
++		"Memory usage percent (0.0-1.0) of the cgroup in which envoy is running",
++		stats.UnitDimensionless,
++	)
++
++	EnvoyOverloadActionStateView = &view.View{
++		Name:        EnvoyOverloadActionState.Name(),
++		Description: EnvoyOverloadActionState.Description(),
++		TagKeys:     []tag.Key{TagKeyCgroup, TagKeyActionName},
++		Measure:     EnvoyOverloadActionState,
++		Aggregation: view.LastValue(),
++	}
++
++	EnvoyOverloadActionThresholdView = &view.View{
++		Name:        EnvoyOverloadActionThreshold.Name(),
++		Description: EnvoyOverloadActionThreshold.Description(),
++		TagKeys:     []tag.Key{TagKeyActionName},
++		Measure:     EnvoyOverloadActionThreshold,
++		Aggregation: view.LastValue(),
++	}
++
++	EnvoyCgroupMemorySaturationView = &view.View{
++		Name:        EnvoyCgroupMemorySaturation.Name(),
++		Description: EnvoyCgroupMemorySaturation.Description(),
++		TagKeys:     []tag.Key{TagKeyCgroup},
++		Measure:     EnvoyCgroupMemorySaturation,
++		Aggregation: view.LastValue(),
++	}
++)
++
++type EnvoyOverloadActionStateTags struct {
++	Cgroup     string
++	ActionName string
++}
++
++func RecordEnvoyOverloadActionState(ctx context.Context, tags EnvoyOverloadActionStateTags, state int64) {
++	err := stats.RecordWithTags(ctx,
++		[]tag.Mutator{
++			tag.Upsert(TagKeyCgroup, tags.Cgroup),
++			tag.Upsert(TagKeyActionName, tags.ActionName),
++		},
++		EnvoyOverloadActionState.M(state),
++	)
++	if err != nil {
++		log.Warn(ctx).Err(err).Msg("internal/telemetry/metrics: failed to record")
++	}
++}
++
++func RecordEnvoyOverloadActionThreshold(ctx context.Context, actionName string, threshold float64) {
++	err := stats.RecordWithTags(ctx,
++		[]tag.Mutator{
++			tag.Upsert(TagKeyActionName, actionName),
++		},
++		EnvoyOverloadActionThreshold.M(threshold),
++	)
++	if err != nil {
++		log.Warn(ctx).Err(err).Msg("internal/telemetry/metrics: failed to record")
++	}
++}
++
++func RecordEnvoyCgroupMemorySaturation(ctx context.Context, cgroup string, percent float64) {
++	err := stats.RecordWithTags(ctx,
++		[]tag.Mutator{
++			tag.Upsert(TagKeyCgroup, cgroup),
++		},
++		EnvoyCgroupMemorySaturation.M(percent),
++	)
++	if err != nil {
++		log.Warn(ctx).Err(err).Msg("internal/telemetry/metrics: failed to record")
++	}
++}
+diff --git a/internal/zero/healthcheck/check_routes.go b/internal/zero/healthcheck/check_routes.go
+index 57bc568e8..18d92934e 100644
+--- a/internal/zero/healthcheck/check_routes.go
++++ b/internal/zero/healthcheck/check_routes.go
+@@ -2,7 +2,6 @@ package healthcheck
+ 
+ import (
+ 	"context"
+-	"crypto/tls"
+ 	"encoding/base64"
+ 	"errors"
+ 	"fmt"
+@@ -15,10 +14,13 @@ import (
+ 	"golang.org/x/exp/maps"
+ 
+ 	"github.com/pomerium/pomerium/config"
++	"github.com/pomerium/pomerium/internal/log"
+ 	"github.com/pomerium/pomerium/internal/urlutil"
+ 	"github.com/pomerium/pomerium/pkg/cryptutil"
+ 	configpb "github.com/pomerium/pomerium/pkg/grpc/config"
++	"github.com/pomerium/pomerium/pkg/grpc/databroker"
+ 	"github.com/pomerium/pomerium/pkg/health"
++	"github.com/pomerium/pomerium/pkg/protoutil"
+ 	clusterping "github.com/pomerium/pomerium/pkg/zero/ping"
+ )
+ 
+@@ -26,20 +28,11 @@ import (
+ // it resolves the DNS entry and tries to access a pomerium jwks route
+ // we should hit ourselves and observe the same public key that we have in our configuration
+ // otherwise, something is misconfigured on the DNS level
+-func (c *checker) CheckRoutes(ctx context.Context) error {
+-	key, err := getClusterPublicKey(c.bootstrap.GetConfig())
++func (c *checker) CheckRoutes(ctx context.Context) {
++	err := checkRoutesReachable(ctx, c.bootstrap.GetConfig(), c.databrokerClient)
+ 	if err != nil {
+-		health.ReportInternalError(health.RoutesReachable, err)
+-		return err
++		log.Warn(ctx).Err(err).Msg("routes reachability check failed")
+ 	}
+-
+-	err = checkRoutesReachable(ctx, key, c.GetConfigs())
+-	if err == nil {
+-		health.ReportOK(health.RoutesReachable)
+-	} else if ctx.Err() == nil {
+-		health.ReportError(health.RoutesReachable, err)
+-	}
+-	return err
+ }
+ 
+ const (
+@@ -50,9 +43,6 @@ func getPingHTTPClient() *http.Client {
+ 	return &http.Client{
+ 		Timeout: connectionTimeout,
+ 		Transport: &http.Transport{
+-			TLSClientConfig: &tls.Config{
+-				InsecureSkipVerify: true,
+-			},
+ 			DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
+ 				return (&net.Dialer{
+ 					Timeout: connectionTimeout,
+@@ -64,10 +54,15 @@ func getPingHTTPClient() *http.Client {
+ 
+ func checkRoutesReachable(
+ 	ctx context.Context,
+-	key *jose.JSONWebKey,
+-	configs []*configpb.Config,
++	cfg *config.Config,
++	databrokerClient databroker.DataBrokerServiceClient,
+ ) error {
+-	hosts, err := getHosts(configs)
++	key, err := getClusterPublicKey(cfg)
++	if err != nil {
++		return fmt.Errorf("error getting cluster public key: %w", err)
++	}
++
++	hosts, err := getRouteHosts(ctx, databrokerClient)
+ 	if err != nil {
+ 		return fmt.Errorf("error getting route hosts: %w", err)
+ 	}
+@@ -82,7 +77,13 @@ func checkRoutesReachable(
+ 		}
+ 	}
+ 
+-	return errors.Join(errs...)
++	if len(errs) == 0 {
++		health.ReportOK(health.RoutesReachable)
++	} else {
++		health.ReportError(health.RoutesReachable, errors.Join(errs...))
++	}
++
++	return nil
+ }
+ 
+ func getClusterPublicKey(cfg *config.Config) (*jose.JSONWebKey, error) {
+@@ -99,9 +100,21 @@ func getClusterPublicKey(cfg *config.Config) (*jose.JSONWebKey, error) {
+ 	return key, nil
+ }
+ 
+-func getHosts(configs []*configpb.Config) ([]string, error) {
++func getRouteHosts(ctx context.Context, databrokerClient databroker.DataBrokerServiceClient) ([]string, error) {
++	records, _, _, err := databroker.InitialSync(ctx, databrokerClient, &databroker.SyncLatestRequest{
++		Type: protoutil.GetTypeURL(new(configpb.Config)),
++	})
++	if err != nil {
++		return nil, fmt.Errorf("error during initial sync: %w", err)
++	}
++
+ 	hosts := make(map[string]struct{})
+-	for _, cfg := range configs {
++	for _, record := range records {
++		var cfg configpb.Config
++		if err := record.Data.UnmarshalTo(&cfg); err != nil {
++			return nil, fmt.Errorf("error unmarshalling config: %w", err)
++		}
++
+ 		for _, route := range cfg.GetRoutes() {
+ 			if route.GetTlsCustomCa() != "" {
+ 				continue
+@@ -110,11 +123,6 @@ func getHosts(configs []*configpb.Config) ([]string, error) {
+ 			if err != nil {
+ 				continue
+ 			}
+-			if u.Scheme != "https" {
+-				// there's a complication with TCP+HTTPS routes as in general we may not know the host address for them
+-				// and we can't rely on the config's server address port part, as it may be different from actual externally reachable port
+-				continue
+-			}
+ 			hosts[u.Host] = struct{}{}
+ 		}
+ 	}
+diff --git a/internal/zero/healthcheck/checks.go b/internal/zero/healthcheck/checks.go
+index bf3593257..353329be9 100644
+--- a/internal/zero/healthcheck/checks.go
++++ b/internal/zero/healthcheck/checks.go
+@@ -2,13 +2,9 @@ package healthcheck
+ 
+ import (
+ 	"context"
+-	"fmt"
+-	"sync/atomic"
+-
+-	"golang.org/x/sync/errgroup"
++	"time"
+ 
+ 	"github.com/pomerium/pomerium/config"
+-	configpb "github.com/pomerium/pomerium/pkg/grpc/config"
+ 	"github.com/pomerium/pomerium/pkg/grpc/databroker"
+ )
+ 
+@@ -20,29 +16,28 @@ func RunChecks(
+ 	c := &checker{
+ 		bootstrap:        bootstrap,
+ 		databrokerClient: databrokerClient,
+-		forceCheck:       make(chan struct{}, 1),
+ 	}
+-	eg, ctx := errgroup.WithContext(ctx)
+-	eg.Go(func() error { c.Scheduler(ctx); return nil })
+-	eg.Go(func() error { return c.ConfigSyncer(ctx) })
+-	return eg.Wait()
++	return c.run(ctx)
+ }
+ 
+ type checker struct {
+ 	bootstrap        config.Source
+ 	databrokerClient databroker.DataBrokerServiceClient
+-	forceCheck       chan struct{}
+-	configs          atomic.Value
+ }
+ 
+-func getConfig(records []*databroker.Record) ([]*configpb.Config, error) {
+-	var cfgs []*configpb.Config
+-	for _, record := range records {
+-		cfg := new(configpb.Config)
+-		if err := record.Data.UnmarshalTo(cfg); err != nil {
+-			return nil, fmt.Errorf("error unmarshalling config: %w", err)
++const runHealthChecksInterval = time.Minute * 30
++
++func (c *checker) run(ctx context.Context) error {
++	tm := time.NewTimer(runHealthChecksInterval)
++	defer tm.Stop()
++
++	for {
++		select {
++		case <-ctx.Done():
++			return nil
++		case <-tm.C:
++			c.CheckRoutes(ctx)
++			tm.Reset(runHealthChecksInterval)
+ 		}
+-		cfgs = append(cfgs, cfg)
+ 	}
+-	return cfgs, nil
+ }
+diff --git a/internal/zero/healthcheck/scheduler.go b/internal/zero/healthcheck/scheduler.go
+deleted file mode 100644
+index 0e0539c38..000000000
+--- a/internal/zero/healthcheck/scheduler.go
++++ /dev/null
+@@ -1,54 +0,0 @@
+-package healthcheck
+-
+-import (
+-	"context"
+-	"time"
+-
+-	"github.com/cenkalti/backoff/v4"
+-)
+-
+-const (
+-	runHealthChecksMaxInterval = time.Minute * 30
+-	runHealthCheckMinInterval  = time.Minute
+-)
+-
+-func (c *checker) Scheduler(ctx context.Context) {
+-	bo := backoff.NewExponentialBackOff()
+-	bo.MaxElapsedTime = 0
+-	bo.MaxInterval = runHealthChecksMaxInterval
+-	bo.InitialInterval = runHealthCheckMinInterval
+-	bo.Reset()
+-
+-	tm := time.NewTimer(runHealthCheckMinInterval)
+-	defer tm.Stop()
+-
+-	select {
+-	case <-ctx.Done():
+-		return
+-	case <-tm.C:
+-	}
+-
+-	for {
+-		select {
+-		case <-ctx.Done():
+-			return
+-		case <-c.forceCheck:
+-		case <-tm.C:
+-		}
+-
+-		next := runHealthChecksMaxInterval
+-		err := c.CheckRoutes(ctx)
+-		if err != nil {
+-			next = bo.NextBackOff()
+-		} else {
+-			bo.Reset()
+-		}
+-		if !tm.Stop() {
+-			select {
+-			case <-tm.C:
+-			default:
+-			}
+-		}
+-		tm.Reset(next)
+-	}
+-}
+diff --git a/internal/zero/healthcheck/syncer.go b/internal/zero/healthcheck/syncer.go
+deleted file mode 100644
+index 443c8f9b1..000000000
+--- a/internal/zero/healthcheck/syncer.go
++++ /dev/null
+@@ -1,51 +0,0 @@
+-package healthcheck
+-
+-import (
+-	"context"
+-
+-	configpb "github.com/pomerium/pomerium/pkg/grpc/config"
+-	"github.com/pomerium/pomerium/pkg/grpc/databroker"
+-	"github.com/pomerium/pomerium/pkg/health"
+-	"github.com/pomerium/pomerium/pkg/protoutil"
+-)
+-
+-func (c *checker) ConfigSyncer(ctx context.Context) error {
+-	syncer := databroker.NewSyncer("zero-health-check", c, databroker.WithTypeURL(protoutil.GetTypeURL(new(configpb.Config))))
+-	return syncer.Run(ctx)
+-}
+-
+-func (c *checker) GetConfigs() []*configpb.Config {
+-	configs := c.configs.Load()
+-	if configs == nil {
+-		return nil
+-	}
+-	return configs.([]*configpb.Config)
+-}
+-
+-// ClearRecords implements databroker.Syncer interface
+-func (c *checker) ClearRecords(_ context.Context) {
+-	c.configs.Store([]*configpb.Config{})
+-}
+-
+-// UpdateRecords implements databroker.Syncer interface
+-func (c *checker) UpdateRecords(_ context.Context, _ uint64, records []*databroker.Record) {
+-	if len(records) == 0 {
+-		return
+-	}
+-
+-	cfgs, err := getConfig(records)
+-	if err != nil {
+-		health.ReportInternalError(health.RoutesReachable, err)
+-		return
+-	}
+-	c.configs.Store(cfgs)
+-	select {
+-	case c.forceCheck <- struct{}{}:
+-	default:
+-	}
+-}
+-
+-// GetDataBrokerServiceClient implements databroker.Syncer interface
+-func (c *checker) GetDataBrokerServiceClient() databroker.DataBrokerServiceClient {
+-	return c.databrokerClient
+-}
+diff --git a/pkg/envoy/envoy.go b/pkg/envoy/envoy.go
+index 62f2d34c9..e2be26cde 100644
+--- a/pkg/envoy/envoy.go
++++ b/pkg/envoy/envoy.go
+@@ -47,6 +47,7 @@ type Server struct {
+ 	cmd *exec.Cmd
+ 
+ 	builder            *envoyconfig.Builder
++	resourceMonitor    ResourceMonitor
+ 	grpcPort, httpPort string
+ 	envoyPath          string
+ 
+@@ -78,6 +79,12 @@ func NewServer(ctx context.Context, src config.Source, builder *envoyconfig.Buil
+ 	}
+ 	go srv.runProcessCollector(ctx)
+ 
++	if rm, err := NewSharedResourceMonitor(ctx, src, srv.wd); err == nil {
++		srv.resourceMonitor = rm
++	} else {
++		log.Error(ctx).Err(err).Str("service", "envoy").Msg("not starting resource monitor")
++	}
++
+ 	src.OnConfigChange(ctx, srv.onConfigChange)
+ 	srv.onConfigChange(ctx, src.GetConfig())
+ 
+@@ -181,6 +188,19 @@ func (srv *Server) run(ctx context.Context, cfg *config.Config) error {
+ 	monitorProcessCtx, srv.monitorProcessCancel = context.WithCancel(context.Background())
+ 	go srv.monitorProcess(monitorProcessCtx, int32(cmd.Process.Pid))
+ 
++	if srv.resourceMonitor != nil {
++		log.Debug(ctx).Str("service", "envoy").Msg("starting resource monitor")
++		go func() {
++			err := srv.resourceMonitor.Run(ctx, cmd.Process.Pid)
++			if err != nil {
++				if errors.Is(err, context.Canceled) {
++					log.Debug(ctx).Err(err).Str("service", "envoy").Msg("resource monitor stopped")
++				} else {
++					log.Error(ctx).Err(err).Str("service", "envoy").Msg("resource monitor exited with error")
++				}
++			}
++		}()
++	}
+ 	srv.cmd = cmd
+ 
+ 	return nil
+@@ -203,6 +223,9 @@ func (srv *Server) buildBootstrapConfig(ctx context.Context, cfg *config.Config)
+ 	if err != nil {
+ 		return nil, err
+ 	}
++	if srv.resourceMonitor != nil {
++		srv.resourceMonitor.ApplyBootstrapConfig(bootstrapCfg)
++	}
+ 
+ 	jsonBytes, err := protojson.Marshal(bootstrapCfg)
+ 	if err != nil {
+diff --git a/pkg/envoy/resource_monitor.go b/pkg/envoy/resource_monitor.go
+new file mode 100644
+index 000000000..eb837f1dc
+--- /dev/null
++++ b/pkg/envoy/resource_monitor.go
+@@ -0,0 +1,12 @@
++package envoy
++
++import (
++	"context"
++
++	envoy_config_bootstrap_v3 "github.com/envoyproxy/go-control-plane/envoy/config/bootstrap/v3"
++)
++
++type ResourceMonitor interface {
++	Run(ctx context.Context, envoyPid int) error
++	ApplyBootstrapConfig(bootstrap *envoy_config_bootstrap_v3.Bootstrap)
++}
+diff --git a/pkg/envoy/resource_monitor_linux.go b/pkg/envoy/resource_monitor_linux.go
+new file mode 100644
+index 000000000..57f22836f
+--- /dev/null
++++ b/pkg/envoy/resource_monitor_linux.go
+@@ -0,0 +1,772 @@
++//go:build linux
++
++package envoy
++
++import (
++	"bufio"
++	"bytes"
++	"context"
++	"errors"
++	"fmt"
++	"io/fs"
++	"os"
++	"path/filepath"
++	"slices"
++	"strconv"
++	"strings"
++	"sync"
++	"sync/atomic"
++	"time"
++	"unsafe"
++
++	envoy_config_bootstrap_v3 "github.com/envoyproxy/go-control-plane/envoy/config/bootstrap/v3"
++	envoy_config_overload_v3 "github.com/envoyproxy/go-control-plane/envoy/config/overload/v3"
++	envoy_extensions_resource_monitors_injected_resource_v3 "github.com/envoyproxy/go-control-plane/envoy/extensions/resource_monitors/injected_resource/v3"
++	typev3 "github.com/envoyproxy/go-control-plane/envoy/type/v3"
++	atomicfs "github.com/natefinch/atomic"
++	"golang.org/x/sys/unix"
++	"google.golang.org/protobuf/proto"
++	"google.golang.org/protobuf/types/known/anypb"
++
++	"github.com/pomerium/pomerium/config"
++	"github.com/pomerium/pomerium/internal/log"
++	"github.com/pomerium/pomerium/internal/telemetry/metrics"
++)
++
++type CgroupFilePath int
++
++const (
++	RootPath CgroupFilePath = iota
++	MemoryUsagePath
++	MemoryLimitPath
++)
++
++type CgroupDriver interface {
++	CgroupForPid(pid int) (string, error)
++	Path(cgroup string, kind CgroupFilePath) string
++	Validate(cgroup string) error
++	MemoryUsage(cgroup string) (uint64, error)
++	MemoryLimit(cgroup string) (uint64, error)
++}
++
++var (
++	overloadActions = []struct {
++		ActionName string
++		Trigger    *envoy_config_overload_v3.Trigger
++	}{
++		// At 90%, envoy will shrink its heap every 10 seconds
++		// https://github.com/envoyproxy/envoy/blob/v1.30.1/source/common/memory/heap_shrinker.cc
++		{"shrink_heap", memUsageThreshold(0.9)},
++
++		// At >85% memory usage, gradually start reducing timeouts, by up to 50%.
++		// https://www.envoyproxy.io/docs/envoy/latest/configuration/operations/overload_manager/overload_manager#reducing-timeouts
++		// https://github.com/envoyproxy/envoy/blob/v1.30.1/source/server/overload_manager_impl.cc#L565-L572
++		{"reduce_timeouts", memUsageScaled(0.85, 0.95)},
++
++		// At 90%, start resetting streams using the most memory. As memory usage
++		// increases, the eligibility threshold is reduced.
++		// https://www.envoyproxy.io/docs/envoy/latest/configuration/operations/overload_manager/overload_manager#reset-streams
++		// https://github.com/envoyproxy/envoy/blob/v1.30.1/source/server/worker_impl.cc#L180
++		{"reset_high_memory_stream", memUsageScaled(0.90, 0.98)},
++
++		// At 95%, stop accepting new connections, but keep existing ones open.
++		// https://github.com/envoyproxy/envoy/blob/v1.30.1/source/server/worker_impl.cc#L168-L174
++		{"stop_accepting_connections", memUsageThreshold(0.95)},
++
++		// At 98%, disable HTTP keepalive. This prevents new http/2 streams and
++		// ends all existing ones.
++		// https://github.com/envoyproxy/envoy/blob/v1.30.1/source/common/http/conn_manager_impl.cc#L1735-L1755
++		{"disable_http_keepalive", memUsageThreshold(0.98)},
++
++		// At 99%, drop all new requests.
++		// https://github.com/envoyproxy/envoy/blob/v1.30.1/source/common/http/conn_manager_impl.cc#L1203-L1225
++		{"stop_accepting_requests", memUsageThreshold(0.99)},
++	}
++	overloadActionConfigs = map[string]*anypb.Any{
++		"reduce_timeouts": marshalAny(&envoy_config_overload_v3.ScaleTimersOverloadActionConfig{
++			TimerScaleFactors: []*envoy_config_overload_v3.ScaleTimersOverloadActionConfig_ScaleTimer{
++				{
++					Timer: envoy_config_overload_v3.ScaleTimersOverloadActionConfig_HTTP_DOWNSTREAM_CONNECTION_IDLE,
++					OverloadAdjust: &envoy_config_overload_v3.ScaleTimersOverloadActionConfig_ScaleTimer_MinScale{
++						MinScale: &typev3.Percent{
++							Value: 50, // reduce the idle timeout by 50% at most
++						},
++					},
++				},
++			},
++		}),
++	}
++	recordActionThresholdsOnce sync.Once
++	computedActionThresholds   = make(map[string]float64)
++)
++
++func init() {
++	for _, action := range overloadActions {
++		var minThreshold float64
++		switch trigger := action.Trigger.TriggerOneof.(type) {
++		case *envoy_config_overload_v3.Trigger_Scaled:
++			minThreshold = trigger.Scaled.ScalingThreshold
++		case *envoy_config_overload_v3.Trigger_Threshold:
++			minThreshold = trigger.Threshold.Value
++		}
++		computedActionThresholds[action.ActionName] = minThreshold
++	}
++}
++
++func recordActionThresholds() {
++	recordActionThresholdsOnce.Do(func() {
++		for name, minThreshold := range computedActionThresholds {
++			metrics.RecordEnvoyOverloadActionThreshold(context.Background(), name, minThreshold)
++		}
++	})
++}
++
++const (
++	groupMemory = "memory"
++
++	metricCgroupMemorySaturation = "cgroup_memory_saturation"
++)
++
++type ResourceMonitorOptions struct {
++	driver CgroupDriver
++}
++
++type ResourceMonitorOption func(*ResourceMonitorOptions)
++
++func (o *ResourceMonitorOptions) apply(opts ...ResourceMonitorOption) {
++	for _, op := range opts {
++		op(o)
++	}
++}
++
++// WithCgroupDriver overrides the cgroup driver used for the resource monitor.
++// If unset, it will be chosen automatically.
++func WithCgroupDriver(driver CgroupDriver) ResourceMonitorOption {
++	return func(o *ResourceMonitorOptions) {
++		o.driver = driver
++	}
++}
++
++// NewSharedResourceMonitor creates a new ResourceMonitor suitable for running
++// envoy in the same cgroup as the parent process. It reports the cgroup's
++// memory saturation to envoy as an injected resource. This allows envoy to
++// react to actual memory pressure in the cgroup, taking into account memory
++// usage from pomerium itself.
++func NewSharedResourceMonitor(ctx context.Context, src config.Source, tempDir string, opts ...ResourceMonitorOption) (ResourceMonitor, error) {
++	options := ResourceMonitorOptions{}
++	options.apply(opts...)
++	if options.driver == nil {
++		var err error
++		options.driver, err = DetectCgroupDriver()
++		if err != nil {
++			return nil, err
++		}
++	}
++	recordActionThresholds()
++
++	selfCgroup, err := options.driver.CgroupForPid(os.Getpid())
++	if err != nil {
++		return nil, fmt.Errorf("failed to look up cgroup: %w", err)
++	}
++	if err := options.driver.Validate(selfCgroup); err != nil {
++		return nil, fmt.Errorf("cgroup not valid for resource monitoring: %w", err)
++	}
++
++	if err := os.MkdirAll(filepath.Join(tempDir, "resource_monitor", groupMemory), 0o755); err != nil {
++		return nil, fmt.Errorf("failed to create resource monitor directory: %w", err)
++	}
++
++	s := &sharedResourceMonitor{
++		ResourceMonitorOptions: options,
++		cgroup:                 selfCgroup,
++		tempDir:                filepath.Join(tempDir, "resource_monitor"),
++	}
++	readInitialConfig := make(chan struct{})
++	src.OnConfigChange(ctx, func(ctx context.Context, c *config.Config) {
++		<-readInitialConfig
++		s.onConfigChange(ctx, c)
++	})
++	s.onConfigChange(ctx, src.GetConfig())
++	close(readInitialConfig)
++
++	if err := s.writeMetricFile(groupMemory, metricCgroupMemorySaturation, "0", 0o644); err != nil {
++		return nil, fmt.Errorf("failed to initialize metrics: %w", err)
++	}
++	return s, nil
++}
++
++type sharedResourceMonitor struct {
++	ResourceMonitorOptions
++	cgroup  string
++	tempDir string
++	enabled atomic.Bool
++}
++
++func (s *sharedResourceMonitor) onConfigChange(_ context.Context, cfg *config.Config) {
++	if cfg == nil || cfg.Options == nil {
++		s.enabled.Store(config.DefaultRuntimeFlags()[config.RuntimeFlagEnvoyResourceManagerEnabled])
++		return
++	}
++	s.enabled.Store(cfg.Options.IsRuntimeFlagSet(config.RuntimeFlagEnvoyResourceManagerEnabled))
++}
++
++func (s *sharedResourceMonitor) metricFilename(group, name string) string {
++	return filepath.Join(s.tempDir, group, name)
++}
++
++func memUsageScaled(scaling, saturation float64) *envoy_config_overload_v3.Trigger {
++	return &envoy_config_overload_v3.Trigger{
++		Name: "envoy.resource_monitors.injected_resource",
++		TriggerOneof: &envoy_config_overload_v3.Trigger_Scaled{
++			Scaled: &envoy_config_overload_v3.ScaledTrigger{
++				ScalingThreshold:    scaling,
++				SaturationThreshold: saturation,
++			},
++		},
++	}
++}
++
++func memUsageThreshold(threshold float64) *envoy_config_overload_v3.Trigger {
++	return &envoy_config_overload_v3.Trigger{
++		Name: "envoy.resource_monitors.injected_resource",
++		TriggerOneof: &envoy_config_overload_v3.Trigger_Threshold{
++			Threshold: &envoy_config_overload_v3.ThresholdTrigger{
++				Value: threshold,
++			},
++		},
++	}
++}
++
++func (s *sharedResourceMonitor) ApplyBootstrapConfig(bootstrap *envoy_config_bootstrap_v3.Bootstrap) {
++	if bootstrap.OverloadManager == nil {
++		bootstrap.OverloadManager = &envoy_config_overload_v3.OverloadManager{}
++	}
++
++	bootstrap.OverloadManager.ResourceMonitors = append(bootstrap.OverloadManager.ResourceMonitors,
++		&envoy_config_overload_v3.ResourceMonitor{
++			Name: "envoy.resource_monitors.injected_resource",
++			ConfigType: &envoy_config_overload_v3.ResourceMonitor_TypedConfig{
++				TypedConfig: marshalAny(&envoy_extensions_resource_monitors_injected_resource_v3.InjectedResourceConfig{
++					Filename: s.metricFilename(groupMemory, metricCgroupMemorySaturation),
++				}),
++			},
++		},
++	)
++
++	for _, action := range overloadActions {
++		bootstrap.OverloadManager.Actions = append(bootstrap.OverloadManager.Actions,
++			&envoy_config_overload_v3.OverloadAction{
++				Name:        fmt.Sprintf("envoy.overload_actions.%s", action.ActionName),
++				Triggers:    []*envoy_config_overload_v3.Trigger{action.Trigger},
++				TypedConfig: overloadActionConfigs[action.ActionName],
++			},
++		)
++	}
++
++	bootstrap.OverloadManager.BufferFactoryConfig = &envoy_config_overload_v3.BufferFactoryConfig{
++		// https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/overload/v3/overload.proto#config-overload-v3-bufferfactoryconfig
++		MinimumAccountToTrackPowerOfTwo: 20,
++	}
++}
++
++var (
++	monitorInitialTickDelay = 1 * time.Second
++	monitorMaxTickInterval  = 10 * time.Second
++	monitorMinTickInterval  = 250 * time.Millisecond
++)
++
++func (s *sharedResourceMonitor) Run(ctx context.Context, envoyPid int) error {
++	envoyCgroup, err := s.driver.CgroupForPid(envoyPid)
++	if err != nil {
++		return fmt.Errorf("failed to look up cgroup for envoy process: %w", err)
++	}
++	if envoyCgroup != s.cgroup {
++		return fmt.Errorf("envoy process is not in the expected cgroup: %s", envoyCgroup)
++	}
++	log.Info(ctx).Str("service", "envoy").Str("cgroup", s.cgroup).Msg("starting resource monitor")
++
++	ctx, ca := context.WithCancelCause(ctx)
++
++	limitWatcher := &memoryLimitWatcher{
++		limitFilePath: filepath.Clean("/" + s.driver.Path(s.cgroup, MemoryLimitPath)),
++	}
++
++	watcherExited := make(chan struct{})
++	if err := limitWatcher.Watch(ctx); err != nil {
++		return fmt.Errorf("failed to start watch on cgroup memory limit: %w", err)
++	}
++	go func() {
++		limitWatcher.Wait()
++		ca(errors.New("memory limit watcher stopped"))
++		close(watcherExited)
++	}()
++
++	// Set initial values for state metrics
++	s.updateActionStates(ctx, 0)
++
++	// The interval at which we check memory usage is scaled based on the current
++	// memory saturation. When memory usage is low, we check less frequently, and
++	// as the saturation increases, we also increase the frequency of checks. Most
++	// of the thresholds at which some action is taken to reduce memory usage are
++	// very high (e.g. 95% of the limit). As memory usage approaches this limit,
++	// it becomes increasingly important to have accurate data, since memory usage
++	// can change rapidly; we want to avoid hitting the limit, but also delay
++	// taking disruptive actions for as long as possible.
++
++	// the envoy default interval for the builtin heap monitor is 1s
++
++	tick := time.NewTimer(monitorInitialTickDelay)
++	var lastValue string
++LOOP:
++	for {
++		select {
++		case <-ctx.Done():
++			tick.Stop()
++			break LOOP
++		case <-tick.C:
++			var saturation float64
++			if s.enabled.Load() {
++				if limit := limitWatcher.Value(); limit > 0 {
++					usage, err := s.driver.MemoryUsage(s.cgroup)
++					if err != nil {
++						log.Error(ctx).Err(err).Msg("failed to get memory saturation")
++						continue
++					}
++					saturation = max(0.0, min(1.0, float64(usage)/float64(limit)))
++				}
++			}
++
++			saturationStr := fmt.Sprintf("%.6f", saturation)
++			nextInterval := computeScaledTickInterval(saturation)
++
++			if saturationStr != lastValue {
++				lastValue = saturationStr
++				if err := s.writeMetricFile(groupMemory, metricCgroupMemorySaturation, saturationStr, 0o644); err != nil {
++					log.Error(ctx).Err(err).Msg("failed to write metric file")
++				}
++				s.updateActionStates(ctx, saturation)
++				metrics.RecordEnvoyCgroupMemorySaturation(ctx, s.cgroup, saturation)
++				log.Debug(ctx).
++					Str("service", "envoy").
++					Str("metric", metricCgroupMemorySaturation).
++					Str("value", saturationStr).
++					Dur("interval_ms", nextInterval).
++					Msg("updated metric")
++			}
++
++			tick.Reset(nextInterval)
++		}
++	}
++
++	<-watcherExited
++	return context.Cause(ctx)
++}
++
++// Returns a value between monitorMinTickInterval and monitorMaxTickInterval, based
++// on the given saturation value in the range [0.0, 1.0].
++func computeScaledTickInterval(saturation float64) time.Duration {
++	return monitorMaxTickInterval - (time.Duration(float64(monitorMaxTickInterval-monitorMinTickInterval) * max(0.0, min(1.0, saturation)))).
++		Round(time.Millisecond)
++}
++
++func (s *sharedResourceMonitor) updateActionStates(ctx context.Context, pct float64) {
++	for name, minThreshold := range computedActionThresholds {
++		var state int64
++		if pct >= minThreshold {
++			state = 1
++		}
++		metrics.RecordEnvoyOverloadActionState(ctx,
++			metrics.EnvoyOverloadActionStateTags{
++				Cgroup:     s.cgroup,
++				ActionName: name,
++			},
++			state,
++		)
++	}
++}
++
++func (s *sharedResourceMonitor) writeMetricFile(group, name, data string, mode fs.FileMode) error {
++	// Logic here is similar to atomic.WriteFile, but because envoy watches the
++	// parent directory for changes to any file, we write the temp file one level
++	// up before moving it into the watched location, to avoid triggering inotify
++	// events for the temp file.
++	f, err := os.CreateTemp(s.tempDir, name)
++	if err != nil {
++		return err
++	}
++	tempFilename := f.Name()
++	defer os.Remove(tempFilename)
++	defer f.Close()
++	if _, err := f.Write([]byte(data)); err != nil {
++		return err
++	}
++	if err := f.Sync(); err != nil {
++		return err
++	}
++	if err := f.Close(); err != nil {
++		return err
++	}
++	if err := os.Chmod(tempFilename, mode); err != nil {
++		return err
++	}
++	if err := atomicfs.ReplaceFile(tempFilename, filepath.Join(s.tempDir, group, name)); err != nil {
++		return err
++	}
++	return nil
++}
++
++type cgroupV2Driver struct {
++	fs   fs.FS
++	root string
++}
++
++func (d *cgroupV2Driver) Path(cgroup string, kind CgroupFilePath) string {
++	switch kind {
++	case RootPath:
++		return d.root
++	case MemoryUsagePath:
++		return filepath.Join(d.root, cgroup, "memory.current")
++	case MemoryLimitPath:
++		return filepath.Join(d.root, cgroup, "memory.max")
++	}
++	return ""
++}
++
++func (d *cgroupV2Driver) CgroupForPid(pid int) (string, error) {
++	data, err := fs.ReadFile(d.fs, fmt.Sprintf("proc/%d/cgroup", pid))
++	if err != nil {
++		return "", err
++	}
++	return parseCgroupName(data)
++}
++
++// MemoryUsage implements CgroupDriver.
++func (d *cgroupV2Driver) MemoryUsage(cgroup string) (uint64, error) {
++	current, err := fs.ReadFile(d.fs, d.Path(cgroup, MemoryUsagePath))
++	if err != nil {
++		return 0, err
++	}
++	return strconv.ParseUint(strings.TrimSpace(string(current)), 10, 64)
++}
++
++// MemoryLimit implements CgroupDriver.
++func (d *cgroupV2Driver) MemoryLimit(cgroup string) (uint64, error) {
++	data, err := fs.ReadFile(d.fs, d.Path(cgroup, MemoryLimitPath))
++	if err != nil {
++		return 0, err
++	}
++	max := strings.TrimSpace(string(data))
++	if max == "max" {
++		return 0, nil
++	}
++	return strconv.ParseUint(max, 10, 64)
++}
++
++// Validate implements CgroupDriver.
++func (d *cgroupV2Driver) Validate(cgroup string) error {
++	if typ, err := fs.ReadFile(d.fs, filepath.Join(d.root, cgroup, "cgroup.type")); err != nil {
++		return err
++	} else if strings.TrimSpace(string(typ)) != "domain" {
++		return errors.New("not a domain cgroup")
++	}
++
++	if controllers, err := d.enabledSubtreeControllers(cgroup); err != nil {
++		return err
++	} else if len(controllers) > 0 {
++		return errors.New("not a leaf cgroup")
++	}
++
++	if controllers, err := d.enabledControllers(cgroup); err != nil {
++		return err
++	} else if !slices.Contains(controllers, "memory") {
++		return errors.New("memory controller not enabled")
++	}
++
++	return nil
++}
++
++func (d *cgroupV2Driver) enabledControllers(cgroup string) ([]string, error) {
++	data, err := fs.ReadFile(d.fs, filepath.Join(d.root, cgroup, "cgroup.controllers"))
++	if err != nil {
++		return nil, err
++	}
++	return strings.Fields(string(data)), nil
++}
++
++func (d *cgroupV2Driver) enabledSubtreeControllers(cgroup string) ([]string, error) {
++	data, err := fs.ReadFile(d.fs, filepath.Join(d.root, cgroup, "cgroup.subtree_control"))
++	if err != nil {
++		return nil, err
++	}
++	return strings.Fields(string(data)), nil
++}
++
++var _ CgroupDriver = (*cgroupV2Driver)(nil)
++
++type cgroupV1Driver struct {
++	fs   fs.FS
++	root string
++}
++
++func (d *cgroupV1Driver) Path(cgroup string, kind CgroupFilePath) string {
++	switch kind {
++	case RootPath:
++		return d.root
++	case MemoryUsagePath:
++		return filepath.Join(d.root, "memory", cgroup, "memory.usage_in_bytes")
++	case MemoryLimitPath:
++		return filepath.Join(d.root, "memory", cgroup, "memory.limit_in_bytes")
++	}
++	return ""
++}
++
++func (d *cgroupV1Driver) CgroupForPid(pid int) (string, error) {
++	data, err := fs.ReadFile(d.fs, fmt.Sprintf("proc/%d/cgroup", pid))
++	if err != nil {
++		return "", err
++	}
++	name, err := parseCgroupName(data)
++	if err != nil {
++		return "", err
++	}
++
++	mountinfo, err := fs.ReadFile(d.fs, fmt.Sprintf("proc/%d/mountinfo", pid))
++	if err != nil {
++		return "", err
++	}
++	scanner := bufio.NewScanner(bytes.NewReader(mountinfo))
++	for scanner.Scan() {
++		line := strings.Fields(scanner.Text())
++		if len(line) < 5 {
++			continue
++		}
++
++		// Entries 3 and 4 contain the root path and the mountpoint, respectively.
++		// each resource will contain a separate mountpoint for the same path, so
++		// we can just pick one.
++		if line[4] == fmt.Sprintf("/%s/memory", d.root) {
++			mountpoint, err := filepath.Rel(line[3], name)
++			if err != nil {
++				return "", err
++			}
++			return filepath.Clean("/" + mountpoint), nil
++		}
++	}
++	return "", errors.New("cgroup not found")
++}
++
++// MemoryUsage implements CgroupDriver.
++func (d *cgroupV1Driver) MemoryUsage(cgroup string) (uint64, error) {
++	current, err := fs.ReadFile(d.fs, d.Path(cgroup, MemoryUsagePath))
++	if err != nil {
++		return 0, err
++	}
++	return strconv.ParseUint(strings.TrimSpace(string(current)), 10, 64)
++}
++
++// MemoryLimit implements CgroupDriver.
++func (d *cgroupV1Driver) MemoryLimit(cgroup string) (uint64, error) {
++	data, err := fs.ReadFile(d.fs, d.Path(cgroup, MemoryLimitPath))
++	if err != nil {
++		return 0, err
++	}
++	max := strings.TrimSpace(string(data))
++	if max == "max" {
++		return 0, nil
++	}
++	return strconv.ParseUint(max, 10, 64)
++}
++
++// Validate implements CgroupDriver.
++func (d *cgroupV1Driver) Validate(cgroup string) error {
++	memoryPath := filepath.Join(d.root, "memory", cgroup)
++	info, err := fs.Stat(d.fs, memoryPath)
++	if err != nil {
++		if errors.Is(err, fs.ErrNotExist) {
++			return errors.New("memory controller not enabled")
++		}
++		return fmt.Errorf("failed to stat cgroup: %w", err)
++	}
++	if !info.IsDir() {
++		return fmt.Errorf("%s is not a directory", memoryPath)
++	}
++	return nil
++}
++
++var _ CgroupDriver = (*cgroupV1Driver)(nil)
++
++func DetectCgroupDriver() (CgroupDriver, error) {
++	osFs := os.DirFS("/")
++
++	// fast path: cgroup2 only
++	var stat unix.Statfs_t
++	if err := unix.Statfs("/sys/fs/cgroup", &stat); err != nil {
++		return nil, err
++	}
++	if stat.Type == unix.CGROUP2_SUPER_MAGIC {
++		return &cgroupV2Driver{root: "sys/fs/cgroup", fs: osFs}, nil
++	}
++
++	// find the hybrid mountpoint, or fall back to v1
++	mountpoint, isV2, err := findMountpoint(osFs)
++	if err != nil {
++		return nil, err
++	}
++	if isV2 {
++		return &cgroupV2Driver{root: mountpoint, fs: osFs}, nil
++	}
++	return &cgroupV1Driver{root: mountpoint, fs: osFs}, nil
++}
++
++func parseCgroupName(contents []byte) (string, error) {
++	scan := bufio.NewScanner(bytes.NewReader(contents))
++	for scan.Scan() {
++		line := scan.Text()
++		if strings.HasPrefix(line, "0::") {
++			return strings.Split(strings.TrimPrefix(strings.TrimSpace(line), "0::"), " ")[0], nil
++		}
++	}
++	return "", errors.New("cgroup not found")
++}
++
++func findMountpoint(fsys fs.FS) (mountpoint string, isV2 bool, err error) {
++	mounts, err := fs.ReadFile(fsys, fmt.Sprintf("proc/%d/mountinfo", os.Getpid()))
++	if err != nil {
++		return "", false, err
++	}
++	scanner := bufio.NewScanner(bytes.NewReader(mounts))
++	var cgv1Root string
++	for scanner.Scan() {
++		line := strings.Fields(scanner.Text())
++		fsType := line[slices.Index(line, "-")+1]
++		switch fsType {
++		case "cgroup2":
++			return line[4][1:], true, nil
++		case "cgroup":
++			if cgv1Root == "" {
++				cgv1Root = filepath.Dir(line[4][1:])
++			}
++		}
++	}
++	if cgv1Root == "" {
++		return "", false, errors.New("no cgroup mount found")
++	}
++	return cgv1Root, false, nil
++}
++
++func marshalAny(msg proto.Message) *anypb.Any {
++	data := new(anypb.Any)
++	_ = anypb.MarshalFrom(data, msg, proto.MarshalOptions{
++		AllowPartial:  true,
++		Deterministic: true,
++	})
++	return data
++}
++
++type memoryLimitWatcher struct {
++	limitFilePath string
++
++	value atomic.Uint64
++
++	watches sync.WaitGroup
++}
++
++func (w *memoryLimitWatcher) Value() uint64 {
++	return w.value.Load()
++}
++
++func (w *memoryLimitWatcher) readValue() (uint64, error) {
++	data, err := os.ReadFile(w.limitFilePath)
++	if err != nil {
++		return 0, err
++	}
++	max := strings.TrimSpace(string(data))
++	if max == "max" {
++		return 0, nil
++	}
++	return strconv.ParseUint(max, 10, 64)
++}
++
++func (w *memoryLimitWatcher) Watch(ctx context.Context) error {
++	fd, err := unix.InotifyInit1(unix.IN_CLOEXEC)
++	if err != nil {
++		return err
++	}
++	closeInotify := sync.OnceFunc(func() {
++		log.Debug(ctx).Msg("stopping memory limit watcher")
++		unix.Close(fd)
++	})
++	log.Debug(ctx).Str("file", w.limitFilePath).Msg("starting watch")
++	wd, err := unix.InotifyAddWatch(fd, w.limitFilePath, unix.IN_MODIFY)
++	if err != nil {
++		closeInotify()
++		return fmt.Errorf("failed to watch %s: %w", w.limitFilePath, err)
++	}
++	w.watches.Add(1)
++	closeWatch := sync.OnceFunc(func() {
++		log.Debug(ctx).Str("file", w.limitFilePath).Msg("stopping watch")
++		_, _ = unix.InotifyRmWatch(fd, uint32(wd))
++		closeInotify()
++		w.watches.Done()
++	})
++
++	// perform the initial read synchronously and only after setting up the watch
++	v, err := w.readValue()
++	if err != nil {
++		closeWatch()
++		return err
++	}
++	w.value.Store(v)
++	log.Debug(ctx).Uint64("bytes", v).Msg("current memory limit")
++
++	context.AfterFunc(ctx, closeWatch) // to unblock unix.Read below
++	go func() {
++		defer closeWatch()
++		var buf [unix.SizeofInotifyEvent]byte
++		for ctx.Err() == nil {
++			v, err := w.readValue()
++			if err != nil {
++				log.Error(ctx).Err(err).Msg("error reading memory limit")
++			} else if prev := w.value.Swap(v); prev != v {
++				log.Debug(ctx).
++					Uint64("prev", prev).
++					Uint64("current", v).
++					Msg("memory limit updated")
++			}
++			// After ctx is canceled, inotify_rm_watch sends an IN_IGNORED event,
++			// which unblocks this read and allows the loop to exit.
++			n, err := unix.Read(fd, buf[:])
++			if err != nil {
++				if errors.Is(err, unix.EINTR) {
++					continue
++				}
++				return
++			}
++			if n == unix.SizeofInotifyEvent {
++				event := (*unix.InotifyEvent)(unsafe.Pointer(&buf))
++				if (event.Mask & unix.IN_IGNORED) != 0 {
++					// watch was removed, or the file was deleted (this can happen if
++					// the memory controller is removed from the parent's subtree_control)
++					log.Info(ctx).Str("file", w.limitFilePath).Msg("watched file removed")
++					return
++				}
++			}
++		}
++	}()
++
++	return nil
++}
++
++// Wait blocks until all watches have been closed.
++//
++// Example use:
++//
++//	ctx, ca := context.WithCancel(context.Background())
++//	w := &memoryLimitWatcher{...}
++//	w.Watch(ctx)
++//	...
++//	ca()
++//	w.Wait() // blocks until the previous watch is closed
++func (w *memoryLimitWatcher) Wait() {
++	w.watches.Wait()
++}
+diff --git a/pkg/envoy/resource_monitor_other.go b/pkg/envoy/resource_monitor_other.go
+new file mode 100644
+index 000000000..d82ab9a10
+--- /dev/null
++++ b/pkg/envoy/resource_monitor_other.go
+@@ -0,0 +1,14 @@
++//go:build !linux
++
++package envoy
++
++import (
++	"context"
++	"errors"
++
++	"github.com/pomerium/pomerium/config"
++)
++
++func NewSharedResourceMonitor(ctx context.Context, src config.Source, tempDir string) (ResourceMonitor, error) {
++	return nil, errors.New("unsupported platform")
++}
+diff --git a/pkg/health/provider.go b/pkg/health/provider.go
+index 2907abbe4..135ff7414 100644
+--- a/pkg/health/provider.go
++++ b/pkg/health/provider.go
+@@ -1,7 +1,6 @@
+ package health
+ 
+ import (
+-	"errors"
+ 	"sync"
+ )
+ 
+@@ -16,14 +15,6 @@ func StrAttr(key, value string) Attr {
+ 	return Attr{Key: key, Value: value}
+ }
+ 
+-// InternalErrorKey is the key used to indicate that a check failed due to some non-user facing error
+-const InternalErrorKey = "internal_error"
+-
+-// ErrorAttr creates a new error attribute, that is used to indicate that a check failed due to some non-user facing error
+-func ErrorAttr(err error) Attr {
+-	return Attr{Key: InternalErrorKey, Value: err.Error()}
+-}
+-
+ // ReportOK reports that a check was successful
+ func ReportOK(check Check, attributes ...Attr) {
+ 	p := defaultProvider.Load()
+@@ -32,13 +23,6 @@ func ReportOK(check Check, attributes ...Attr) {
+ 	}
+ }
+ 
+-var ErrInternalError = errors.New("internal error")
+-
+-// ReportInternalError reports that a check failed due to an internal error
+-func ReportInternalError(check Check, err error, attributes ...Attr) {
+-	ReportError(check, ErrInternalError, append([]Attr{ErrorAttr(err)}, attributes...)...)
+-}
+-
+ // ReportError reports that a check failed
+ func ReportError(check Check, err error, attributes ...Attr) {
+ 	p := defaultProvider.Load()
+diff --git a/pkg/metrics/constants.go b/pkg/metrics/constants.go
+index 84a8c0741..abcab6f96 100644
+--- a/pkg/metrics/constants.go
++++ b/pkg/metrics/constants.go
+@@ -41,6 +41,14 @@ const (
+ 	// IdentityManagerLastSessionRefreshSuccess is a counter of last session refresh success
+ 	IdentityManagerLastSessionRefreshSuccess = "identity_manager_last_session_refresh_success"
+ 
++	// EnvoyOverloadActionState tracks the current state of envoy overload actions
++	EnvoyOverloadActionState = "envoy_overload_action_state"
++	// EnvoyOverloadActionThreshold tracks container memory usage minimum thresholds for envoy overload actions
++	EnvoyOverloadActionThreshold = "envoy_overload_action_threshold"
++	// EnvoyCgroupMemorySaturation tracks the memory usage percent (0.0-1.0) of the cgroup in which envoy is running.
++	// This metric is computed by pomerium and used as an injected resource in envoy's overload manager.
++	EnvoyCgroupMemorySaturation = "envoy_cgroup_memory_saturation"
++
+ 	// BuildInfo is a gauge that may be used to detect whether component is live, and also has version
+ 	BuildInfo = "build_info"
+ 	// PolicyCountTotal is total amount of routes currently configured
+diff --git a/ui/src/App.tsx b/ui/src/App.tsx
+index 0b1e287a4..ee315e1b4 100644
+--- a/ui/src/App.tsx
++++ b/ui/src/App.tsx
+@@ -12,7 +12,6 @@ import WebAuthnRegistrationPage from "./components/WebAuthnRegistrationPage";
+ import { SubpageContextProvider } from "./context/Subpage";
+ import { createTheme } from "./theme";
+ import { PageData } from "./types";
+-import UpstreamErrorPage from "./components/UpstreamErrorPage";
+ 
+ const App: FC = () => {
+   const data = (window["POMERIUM_DATA"] || {}) as PageData;
+@@ -20,13 +19,7 @@ const App: FC = () => {
+   const secondary = data?.secondaryColor || "#49AAA1";
+   const theme = createTheme(primary, secondary);
+   let body: React.ReactNode = <></>;
+-  if(data?.page === 'Error' && data?.statusText?.toLowerCase().includes('upstream')) {
+-    data.page = 'UpstreamError';
+-  }
+   switch (data?.page) {
+-    case "UpstreamError":
+-      body = <UpstreamErrorPage data={data} />;
+-      break;
+     case "Error":
+       body = <ErrorPage data={data} />;
+       break;
+diff --git a/ui/src/components/UpstreamErrorPage.tsx b/ui/src/components/UpstreamErrorPage.tsx
+deleted file mode 100644
+index 2a7380bb5..000000000
+--- a/ui/src/components/UpstreamErrorPage.tsx
++++ /dev/null
+@@ -1,140 +0,0 @@
+-import { CheckCircleRounded, Circle } from "@mui/icons-material";
+-import {
+-  Alert,
+-  AlertTitle,
+-  Card,
+-  CardContent,
+-  Container,
+-  Divider,
+-  Link,
+-  Stack,
+-  Typography,
+-} from "@mui/material";
+-import React, { FC } from "react";
+-
+-import { ErrorPageProps } from "./ErrorPage";
+-
+-export const UpstreamErrorPage: FC<ErrorPageProps> = ({ data }) => {
+-  const status = data?.status || 500;
+-  console.log(data.statusText);
+-  return (
+-    <Container>
+-      <Card>
+-        <Alert severity="error" sx={{ borderRadius: 0 }}>
+-          <AlertTitle>
+-            <Typography variant="h3">Error {status}</Typography>
+-          </AlertTitle>
+-          <Typography variant="body2">Web Server is down</Typography>
+-        </Alert>
+-
+-        <Divider sx={{ color: "rgba(234, 236, 240, 1)" }} />
+-
+-        <Card sx={{ borderRadius: 0, borderTop: 0 }}>
+-          <Stack
+-            direction="row"
+-            alignItems="center"
+-            width="100%"
+-            sx={{
+-              m: "3vw",
+-            }}
+-            gap={15}
+-          >
+-            <Stack direction="row" alignItems="center" gap={2}>
+-              <CheckCircleRounded color="primary" fontSize="large" />
+-              <Stack>
+-                <Typography variant="overline">YOU (BROWSER)</Typography>
+-                <Typography color="primary.main" variant="body2">
+-                  Working
+-                </Typography>
+-              </Stack>
+-            </Stack>
+-
+-            <Divider
+-              sx={{
+-                color: "primary.main",
+-                width: "2vw",
+-                height: 1,
+-                border: 1,
+-              }}
+-            />
+-
+-            <Stack direction="row" alignItems="center" gap={2}>
+-              <CheckCircleRounded color="primary" fontSize="large" />
+-              <Stack>
+-                <Typography variant="overline">POMERIUM</Typography>
+-                <Typography color="primary.main" variant="body2">
+-                  Working
+-                </Typography>
+-              </Stack>
+-            </Stack>
+-
+-            <Divider
+-              sx={{
+-                color: "rgba(234, 236, 240, 1)",
+-                width: "2vw",
+-                height: 1,
+-                border: 1,
+-              }}
+-            />
+-
+-            <Stack direction="row" alignItems="center" gap={2}>
+-              <Circle color="error" fontSize="large" />
+-              <Stack>
+-                <Typography variant="overline">UPSTREAM HOST</Typography>
+-                <Typography color="error" variant="body2">
+-                  Error
+-                </Typography>
+-              </Stack>
+-            </Stack>
+-          </Stack>
+-          <CardContent>
+-            <Divider sx={{ color: "rgba(234, 236, 240, 1)" }} />
+-            <Stack gap={1} sx={{ my: 5 }}>
+-              <Typography variant="h5">What happened?</Typography>
+-              <Typography variant="body2" color="rgba(102, 112, 133, 1)">
+-                The web server is not returning a connection. As a result, the
+-                webpage is not displaying.
+-              </Typography>
+-            </Stack>
+-            <Divider sx={{ color: "rgba(234, 236, 240, 1)" }} />
+-            <Stack gap={2} sx={{ my: 5 }}>
+-              <Stack gap={1}>
+-                <Typography variant="h5">What can I do?</Typography>
+-              </Stack>
+-              <Stack>
+-                <Typography variant="body2" fontWeight={700} color="rgba(102, 112, 133, 1)">
+-                  If you are a visitor of this website:
+-                </Typography>
+-                <Typography variant="body2" fontWeight={400} color="rgba(102, 112, 133, 1)">
+-                  Please try again in a few minutes.
+-                </Typography>
+-              </Stack>
+-              <Stack>
+-                <Typography variant="body2" fontWeight={700}>
+-                  If you are the owner of this website:
+-                </Typography>
+-                <Typography variant="body2" fontWeight={400} color="rgba(102, 112, 133, 1)">
+-                  Contact your hosting provider letting them know your web
+-                  server is not responding.
+-                </Typography>
+-                <Typography variant="body2" fontWeight={400} color="rgba(102, 112, 133, 1)">
+-                  Error Text: {data.statusText}
+-                </Typography>
+-                <Link
+-                    href="https://www.pomerium.com/docs/troubleshooting#envoy-error-messages"
+-                    underline="hover"
+-                    color="primary.main"
+-                    variant="body2"
+-                    target="_blank"
+-                >
+-                  Additional troubleshooting information.
+-                </Link>
+-              </Stack>
+-            </Stack>
+-          </CardContent>
+-        </Card>
+-      </Card>
+-    </Container>
+-  );
+-};
+-export default UpstreamErrorPage;
+diff --git a/ui/src/types/index.ts b/ui/src/types/index.ts
+index 13eea01fe..d8158402f 100644
+--- a/ui/src/types/index.ts
++++ b/ui/src/types/index.ts
+@@ -97,7 +97,7 @@ type BasePageData = {
+ };
+ 
+ export type ErrorPageData = BasePageData & {
+-  page: "Error" | "UpstreamError";
++  page: "Error";
+ 
+   canDebug?: boolean;
+   debugUrl?: string;

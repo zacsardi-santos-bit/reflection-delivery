@@ -1,0 +1,11 @@
+patching file .vscode/launch.json
+patching file bin/spice/pkg/github/runtime_release.go
+patching file crates/runtime/src/embeddings/metrics.rs
+patching file crates/runtime/src/embeddings/mod.rs
+patching file crates/runtime/src/embeddings/task.rs
+patching file crates/runtime/src/init/embedding.rs
+patching file crates/runtime/src/init/model.rs
+patching file crates/runtime/src/model/chat.rs
+patching file crates/runtime/src/model/metrics.rs
+patching file crates/runtime/src/model/mod.rs
+patching file crates/runtime/src/tools/utils.rs

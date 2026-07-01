@@ -1,0 +1,18 @@
+patching file docs/antora.yml
+patching file docs/modules/ROOT/nav.adoc
+patching file docs/modules/ROOT/pages/development-guide.adoc
+patching file docs/modules/ROOT/pages/getting-started.adoc
+patching file docs/modules/ROOT/pages/index.adoc
+patching file docs/modules/ROOT/pages/update-guide.adoc
+patching file docs/modules/jenkins/nav.adoc
+patching file docs/modules/jenkins/pages/slave-base.adoc
+patching file docs/modules/jenkins/pages/webhook-proxy.adoc
+patching file docs/modules/shared-images/nav.adoc
+patching file docs/modules/shared-images/pages/nginx-authproxy-crowd.adoc
+patching file docs/modules/shared-images/pages/openresty-nginx.adoc
+patching file docs/modules/sonarqube/pages/index.adoc
+patching file infrastructure-setup/scripts/keycloak.sh
+patching file jenkins/master/plugins.txt
+patching file jenkins/slave-base/README.md
+patching file jenkins/webhook-proxy/main.go
+patching file jenkins/webhook-proxy/pipeline.json.tmpl (renamed from jenkins/webhook-proxy/pipeline.template.json)

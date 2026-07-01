@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd codex-rs && cargo nextest run --package codex-core --test stream_error_allows_next_turn --no-fail-fast",
+  "test_files": [
+    "codex-rs/core/tests/common/lib.rs",
+    "codex-rs/core/tests/stream_error_allows_next_turn.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) codex-core::stream_error_allows_next_turn continue_after_stream_error"
+  ],
+  "PASS_TO_PASS": []
+}

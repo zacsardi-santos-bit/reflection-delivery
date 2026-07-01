@@ -1,0 +1,23 @@
+{
+ "task": "slackapi-python-slack-sdk-944",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'unknown_fields: Dict[str, Any]' and 'self.unknown_fields = kwargs' across audit-log/SCIM model classes; F2P test_logs asserts 'logs.unknown_fields.get(\"new_attribute\")' and test_response asserts 'user.to_dict().get(\"newAttribute\")'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

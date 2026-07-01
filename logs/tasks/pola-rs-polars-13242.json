@@ -1,0 +1,23 @@
+{
+ "task": "pola-rs-polars-13242",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds process_join_on (recursive AND of Eq constraints) + collect_compound_identifiers in crates/polars-sql/src/sql_expr.rs, with polars_bail! for malformed/non-equality/non-qualified conditions; F2P=16 statements tests incl. test_compound_join_basic/_different_column_names/_three_tables/_nest"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

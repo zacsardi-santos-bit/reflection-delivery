@@ -1,0 +1,637 @@
+patching file app/actions/remote/user.test.ts
+patching file app/client/rest/custom_profile_attributes.test.ts
+patching file app/hooks/field_refs.test.ts
+patching file app/screens/edit_profile/components/form.test.tsx
+FAIL app/hooks/field_refs.test.ts
+  ● Test suite failed to run
+
+    Cannot find module './field_refs' from 'app/hooks/field_refs.test.ts'
+
+    However, Jest was able to find:
+    	'./field_refs.test.ts'
+
+    You might want to include a file extension in your import, or update your 'moduleFileExtensions', which is currently ['ts', 'tsx', 'js', 'jsx', 'json', 'node'].
+
+    See https://jestjs.io/docs/configuration#modulefileextensions-arraystring
+
+      4 | import {renderHook, act} from '@testing-library/react-hooks';
+      5 |
+    > 6 | import useFieldRefs from './field_refs';
+        | ^
+      7 |
+      8 | describe('useFieldRefs', () => {
+      9 |     it('should initialize with empty refs', () => {
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (app/hooks/field_refs.test.ts:6:1)
+
+FAIL app/screens/edit_profile/components/form.test.tsx (13.992 s)
+  ProfileForm
+    ✓ should render without custom attributes when disabled (985 ms)
+    ✕ should render custom attributes when enabled (15 ms)
+    ✕ should call onUpdateField when custom attribute is changed (7 ms)
+    ✓ should handle empty custom attributes (6 ms)
+
+  ● ProfileForm › should render custom attributes when enabled
+
+    Unable to find an element with testID: edit_profile_form.customAttributes.field1
+
+    [
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mSome fields below are handled through your login provider. If you want to change them, you’ll need to do so through your login provider.[0m
+        [36m</Text>[39m
+      [36m</View>[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.first_name"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mFirst Name[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.first_name.input"[39m
+              [33mvalue[39m=[32m"First"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.last_name"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mLast Name[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.last_name.input"[39m
+              [33mvalue[39m=[32m"Last"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.username"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mUsername[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.username.input"[39m
+              [33mvalue[39m=[32m"username"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.email"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mEmail[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.email.input.disabled"[39m
+              [33mvalue[39m=[32m"test@test.com"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View>[39m
+        [36m<Text[39m
+          [33mtestID[39m=[32m"edit_profile_form.email.input.description"[39m
+        [36m>[39m
+          [0mEmail must be updated using a web client or desktop application.[0m
+        [36m</Text>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.nickname"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mNickname[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.nickname.input"[39m
+              [33mvalue[39m=[32m"nick"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.position"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mPosition (optional)[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.position.input"[39m
+              [33mvalue[39m=[32m"position"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+    ]
+
+      79 |
+      80 |         expect(getByTestId('edit_profile_form.nickname')).toBeTruthy();
+    > 81 |         expect(getByTestId('edit_profile_form.customAttributes.field1')).toBeTruthy();
+         |                ^
+      82 |         expect(getByTestId('edit_profile_form.customAttributes.field2')).toBeTruthy();
+      83 |     });
+      84 |
+
+      at Object.getByTestId (app/screens/edit_profile/components/form.test.tsx:81:16)
+
+  ● ProfileForm › should call onUpdateField when custom attribute is changed
+
+    Unable to find an element with testID: edit_profile_form.customAttributes.field1.input
+
+    [
+      [36m<View>[39m
+        [36m<Text>[39m
+          [0mSome fields below are handled through your login provider. If you want to change them, you’ll need to do so through your login provider.[0m
+        [36m</Text>[39m
+      [36m</View>[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.first_name"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mFirst Name[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.first_name.input"[39m
+              [33mvalue[39m=[32m"First"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.last_name"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mLast Name[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.last_name.input"[39m
+              [33mvalue[39m=[32m"Last"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.username"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mUsername[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.username.input"[39m
+              [33mvalue[39m=[32m"username"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.email"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mEmail[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.email.input.disabled"[39m
+              [33mvalue[39m=[32m"test@test.com"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View>[39m
+        [36m<Text[39m
+          [33mtestID[39m=[32m"edit_profile_form.email.input.description"[39m
+        [36m>[39m
+          [0mEmail must be updated using a web client or desktop application.[0m
+        [36m</Text>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.nickname"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mNickname[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.nickname.input"[39m
+              [33mvalue[39m=[32m"nick"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+      [36m<View[39m
+        [33mtestID[39m=[32m"edit_profile_form.position"[39m
+      [36m>[39m
+        [36m<View[39m
+          [33maccessible[39m=[32m{true}[39m
+        [36m>[39m
+          [36m<Text>[39m
+            [0mPosition (optional)[0m
+          [36m</Text>[39m
+          [36m<View>[39m
+            [36m<TextInput[39m
+              [33mtestID[39m=[32m"edit_profile_form.position.input"[39m
+              [33mvalue[39m=[32m"position"[39m
+            [36m/>[39m
+          [36m</View>[39m
+        [36m</View>[39m
+      [36m</View>[39m,
+      [36m<View />[39m,
+    ]
+
+      105 |         );
+      106 |
+    > 107 |         const input = getByTestId('edit_profile_form.customAttributes.field1.input');
+          |                       ^
+      108 |         fireEvent.changeText(input, 'new value');
+      109 |
+      110 |         expect(onUpdateField).toHaveBeenCalledWith('customAttributes.field1', 'new value');
+
+      at Object.getByTestId (app/screens/edit_profile/components/form.test.tsx:107:23)
+
+FAIL app/client/rest/custom_profile_attributes.test.ts (15.567 s)
+  CustomAttributes
+    ✓ getCustomProfileAttributeFields (11 ms)
+    ✓ getCustomProfileAttributeValues
+    ✕ updateCustomProfileAttributeValues (1 ms)
+
+  ● CustomAttributes › updateCustomProfileAttributeValues
+
+    TypeError: client.updateCustomProfileAttributeValues is not a function
+
+      39 |             field_2: 'value2',
+      40 |         };
+    > 41 |         await client.updateCustomProfileAttributeValues(values);
+         |                      ^
+      42 |
+      43 |         expect(client.doFetch).toHaveBeenCalledWith(
+      44 |             `${client.getCustomProfileAttributesRoute()}/values`,
+
+      at Object.updateCustomProfileAttributeValues (app/client/rest/custom_profile_attributes.test.ts:41:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at tryCallTwo (node_modules/promise/lib/core.js:45:5)
+      at doResolve (node_modules/promise/lib/core.js:200:13)
+      at new Promise (node_modules/promise/lib/core.js:66:3)
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  console.debug
+    error on fetchMe foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchMe User not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesInChannel foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesInGroupChannels foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesPerChannels foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchUserOrGroupsByMentionNames foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchUsersByUsernames foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchUsersByIds foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfiles foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesInTeam foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesNotInChannel foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on searchProfiles foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on searchUsers foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on updateMe foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchRolesIfNeeded Invalid "fieldName" or "tableName" has been passed to the processRecords method for tableName Role fieldName id
+
+      at apply (app/utils/log.ts:28:18)
+          at Generator.throw (<anonymous>)
+
+  console.debug
+    error on updateAllUsersSince foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on updateUsersNoLongerVisible foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on uploadUserProfileImage foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchRolesIfNeeded Invalid "fieldName" or "tableName" has been passed to the processRecords method for tableName Role fieldName id
+
+      at apply (app/utils/log.ts:28:18)
+          at Generator.throw (<anonymous>)
+
+  console.debug
+    error on fetchStatusByIds foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+FAIL app/actions/remote/user.test.ts (17.204 s)
+  get users
+    ✓ fetchMe - handle not found database (1457 ms)
+    ✓ fetchMe - handle bad user (4 ms)
+    ✓ fetchMe - base case (3 ms)
+    ✓ fetchProfilesInChannel - handle not found database (3 ms)
+    ✓ fetchProfilesInChannel - base case (4 ms)
+    ✓ fetchProfilesInChannel - exclude user id (2 ms)
+    ✓ fetchProfilesInGroupChannels - handle not found database (3 ms)
+    ✓ fetchProfilesInGroupChannels - base case (3 ms)
+    ✓ fetchProfilesInGroupChannels - profiles already exist (2 ms)
+    ✓ fetchProfilesPerChannels - handle not found database (4 ms)
+    ✓ fetchProfilesPerChannels - base case (7 ms)
+    ✓ fetchUserOrGroupsByMentionNames - handle not found database (3 ms)
+    ✓ fetchUserOrGroupsByMentionNames - base case (3 ms)
+    ✓ fetchUsersByUsernames - handle not found database (3 ms)
+    ✓ fetchUsersByUsernames - no usernames (1 ms)
+    ✓ fetchUsersByUsernames - base case (2 ms)
+    ✓ fetchUsersByIds - handle not found database (2 ms)
+    ✓ fetchUsersByIds - no ids (2 ms)
+    ✓ fetchUsersByIds - base case (3 ms)
+    ✓ fetchProfiles - handle not found database (2 ms)
+    ✓ fetchProfiles - base case (2 ms)
+    ✓ fetchProfilesInTeam - handle not found database (3 ms)
+    ✓ fetchProfilesInTeam - base case (2 ms)
+    ✓ fetchProfilesNotInChannel - handle not found database (2 ms)
+    ✓ fetchProfilesNotInChannel - base case (2 ms)
+    ✓ searchProfiles - handle not found database (6 ms)
+    ✓ searchProfiles - base case (2 ms)
+    ✓ fetchMissingProfilesByIds - base case (4 ms)
+    ✓ fetchMissingProfilesByUsernames - base case (2 ms)
+    ✓ searchUsers - base case (1 ms)
+    ✓ buildProfileImageUrlFromUser - base case (2 ms)
+    ✓ fetchTeamAndChannelMembership - handle not found database (2 ms)
+    ✓ fetchTeamAndChannelMembership - base case (2 ms)
+    ✓ getAllSupportedTimezones - base case (2 ms)
+  Custom Profile Attributes
+    ✕ fetchCustomAttributes - base case (1 ms)
+    ✕ fetchCustomAttributes - no fields (2 ms)
+    ✕ fetchCustomAttributes - error on fields (1 ms)
+    ✕ fetchCustomAttributes - error on values (1 ms)
+    ✕ updateCustomAttributes - base case (2 ms)
+    ✕ updateCustomAttributes - error (1 ms)
+  update users
+    ✓ updateMe - handle not found database (3 ms)
+    ✓ updateMe - handle base case (3 ms)
+    ✓ updateAllUsersSince - handle not found database (3 ms)
+    ✓ updateAllUsersSince - no time (4 ms)
+    ✓ updateAllUsersSince - handle base case (3 ms)
+    ✓ updateUsersNoLongerVisible - handle not found database (3 ms)
+    ✓ updateUsersNoLongerVisible - handle base case (2 ms)
+    ✓ setDefaultProfileImage - base case (2 ms)
+    ✓ uploadUserProfileImage - handle not found database (2 ms)
+    ✓ uploadUserProfileImage - handle base case (2 ms)
+    ✓ autoUpdateTimezone - handle not found database (1 ms)
+    ✓ autoUpdateTimezone - no current user (1 ms)
+    ✓ autoUpdateTimezone - handle base case (3 ms)
+  user status
+    ✓ fetchStatusByIds - handle not found database (2 ms)
+    ✓ fetchStatusByIds - no ids (2 ms)
+    ✓ fetchStatusByIds - base case (1 ms)
+    ✓ setStatus - base case (2 ms)
+    ✓ updateCustomStatus - base case (1 ms)
+    ✓ removeRecentCustomStatus - base case (2 ms)
+    ✓ unsetCustomStatus - base case (1 ms)
+
+  ● Custom Profile Attributes › fetchCustomAttributes - base case
+
+    TypeError: (0 , _user.fetchCustomAttributes) is not a function
+
+      375 |         });
+      376 |
+    > 377 |         const result = await fetchCustomAttributes(serverUrl, 'user1');
+          |                                                   ^
+      378 |         expect(result.error).toBeUndefined();
+      379 |         expect(result.attributes).toBeDefined();
+      380 |         expect(Object.keys(result.attributes!)).toHaveLength(2);
+
+      at Object.<anonymous> (app/actions/remote/user.test.ts:377:51)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at tryCallTwo (node_modules/promise/lib/core.js:45:5)
+      at doResolve (node_modules/promise/lib/core.js:200:13)
+      at new Promise (node_modules/promise/lib/core.js:66:3)
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● Custom Profile Attributes › fetchCustomAttributes - no fields
+
+    TypeError: (0 , _user.fetchCustomAttributes) is not a function
+
+      395 |         mockClient.getCustomProfileAttributeValues = jest.fn().mockResolvedValue({});
+      396 |
+    > 397 |         const result = await fetchCustomAttributes(serverUrl, 'user1');
+          |                                                   ^
+      398 |         expect(result.error).toBeUndefined();
+      399 |         expect(result.attributes).toEqual({});
+      400 |     });
+
+      at Object.<anonymous> (app/actions/remote/user.test.ts:397:51)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at tryCallTwo (node_modules/promise/lib/core.js:45:5)
+      at doResolve (node_modules/promise/lib/core.js:200:13)
+      at new Promise (node_modules/promise/lib/core.js:66:3)
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● Custom Profile Attributes › fetchCustomAttributes - error on fields
+
+    TypeError: (0 , _user.fetchCustomAttributes) is not a function
+
+      409 |         });
+      410 |
+    > 411 |         const result = await fetchCustomAttributes(serverUrl, 'user1');
+          |                                                   ^
+      412 |         expect(result.error).toBeDefined();
+      413 |     });
+      414 |
+
+      at Object.<anonymous> (app/actions/remote/user.test.ts:411:51)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at tryCallTwo (node_modules/promise/lib/core.js:45:5)
+      at doResolve (node_modules/promise/lib/core.js:200:13)
+      at new Promise (node_modules/promise/lib/core.js:66:3)
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● Custom Profile Attributes › fetchCustomAttributes - error on values
+
+    TypeError: (0 , _user.fetchCustomAttributes) is not a function
+
+      422 |         mockClient.getCustomProfileAttributeValues = jest.fn().mockRejectedValue(error);
+      423 |
+    > 424 |         const result = await fetchCustomAttributes(serverUrl, 'user1');
+          |                                                   ^
+      425 |         expect(result.error).toBeDefined();
+      426 |     });
+      427 |
+
+      at Object.<anonymous> (app/actions/remote/user.test.ts:424:51)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at tryCallTwo (node_modules/promise/lib/core.js:45:5)
+      at doResolve (node_modules/promise/lib/core.js:200:13)
+      at new Promise (node_modules/promise/lib/core.js:66:3)
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● Custom Profile Attributes › updateCustomAttributes - base case
+
+    TypeError: (0 , _user.updateCustomAttributes) is not a function
+
+      442 |         };
+      443 |
+    > 444 |         const result = await updateCustomAttributes(serverUrl, attributes);
+          |                                                    ^
+      445 |         expect(result.error).toBeUndefined();
+      446 |         expect(result.success).toBe(true);
+      447 |         expect(mockClient.updateCustomProfileAttributeValues).toHaveBeenCalledWith({
+
+      at Object.<anonymous> (app/actions/remote/user.test.ts:444:52)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at tryCallTwo (node_modules/promise/lib/core.js:45:5)
+      at doResolve (node_modules/promise/lib/core.js:200:13)
+      at new Promise (node_modules/promise/lib/core.js:66:3)
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+  ● Custom Profile Attributes › updateCustomAttributes - error
+
+    TypeError: (0 , _user.updateCustomAttributes) is not a function
+
+      464 |         };
+      465 |
+    > 466 |         const result = await updateCustomAttributes(serverUrl, attributes);
+          |                                                    ^
+      467 |         expect(result.error).toBeDefined();
+      468 |         expect(result.success).toBe(false);
+      469 |     });
+
+      at Object.<anonymous> (app/actions/remote/user.test.ts:466:52)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at tryCallTwo (node_modules/promise/lib/core.js:45:5)
+      at doResolve (node_modules/promise/lib/core.js:200:13)
+      at new Promise (node_modules/promise/lib/core.js:66:3)
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+
+A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to find leaks. Active timers can also cause this, ensure that .unref() was called on them.
+Test Suites: 4 failed, 4 total
+Tests:       9 failed, 58 passed, 67 total
+Snapshots:   0 total
+Time:        18.914 s
+Ran all test suites matching /app\/actions\/remote\/user.test.ts|app\/client\/rest\/custom_profile_attributes.test.ts|app\/hooks\/field_refs.test.ts|app\/screens\/edit_profile\/components\/form.test.tsx/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=0 graded=72 found=0 failed=0 parsed=0 framework=jest exit_code=1

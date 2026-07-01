@@ -1,0 +1,23 @@
+{
+ "task": "authelia-authelia-7140",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds NewSignalService + svcSignalLogReOpenFunc using logging.Reopen on syscall.SIGHUP; F2P TestLogReopenFiles asserts 2 files created after SIGHUP"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 7,
+  "shallow": true
+ }
+}

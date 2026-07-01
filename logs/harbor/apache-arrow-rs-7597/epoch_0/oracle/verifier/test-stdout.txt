@@ -1,0 +1,246 @@
+patching file arrow-select/tests/coalesce_test.rs
+   Compiling getrandom v0.3.4
+   Compiling ppv-lite86 v0.2.21
+   Compiling rand_core v0.9.5
+   Compiling ahash v0.8.12
+   Compiling rand_chacha v0.9.0
+   Compiling arrow-array v55.1.0 (/workspace/repo/arrow-array)
+   Compiling rand v0.9.4
+   Compiling arrow-select v55.1.0 (/workspace/repo/arrow-select)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.48s
+────────────
+ Nextest run ID d0b120b0-7061-474c-b025-3cf6fa8ef013 with nextest profile: default
+    Starting 230 tests across 2 binaries
+        PASS [   0.093s] (  1/230) arrow-select concat::tests::concat_dictionary_list_array_simple
+        PASS [   0.096s] (  2/230) arrow-select concat::tests::concat_record_batches_of_different_schemas_incompatible_data
+        PASS [   0.095s] (  3/230) arrow-select coalesce::tests::test_gc_string_view_test_batch_empty
+        PASS [   0.095s] (  4/230) arrow-select coalesce::tests::test_coalesce_empty
+        PASS [   0.100s] (  5/230) arrow-select coalesce::tests::test_gc_string_view_batch_large_slice_compact
+        PASS [   0.107s] (  6/230) arrow-select coalesce::tests::test_coalesce_one_by_one
+        PASS [   0.105s] (  7/230) arrow-select concat::tests::concat_empty_record_batch
+        PASS [   0.107s] (  8/230) arrow-select concat::tests::concat_record_batches_of_different_schemas_but_compatible_data
+        PASS [   0.110s] (  9/230) arrow-select coalesce::tests::test_gc_string_view_batch_large_no_compact
+        PASS [   0.107s] ( 10/230) arrow-select coalesce::tests::test_single_large_batch_equal_to_target
+        PASS [   0.112s] ( 11/230) arrow-select coalesce::tests::test_single_large_batch_greater_than_target
+        PASS [   0.111s] ( 12/230) arrow-select coalesce::tests::test_single_large_batch_smaller_than_target
+        PASS [   0.112s] ( 13/230) arrow-select coalesce::tests::test_coalesce
+        PASS [   0.116s] ( 14/230) arrow-select concat::tests::concat_record_batches
+        PASS [   0.116s] ( 15/230) arrow-select coalesce::tests::test_gc_string_view_batch_small_no_compact
+        PASS [   0.118s] ( 16/230) arrow-select concat::tests::concat_capacity
+        PASS [   0.122s] ( 17/230) arrow-select coalesce::tests::test_single_large_batch_equally_divisible_in_target
+        PASS [   0.073s] ( 18/230) arrow-select concat::tests::test_concat_batches_no_columns
+        PASS [   0.074s] ( 19/230) arrow-select concat::tests::test_concat_empty_vec
+        PASS [   0.077s] ( 20/230) arrow-select concat::tests::test_concat_boolean_primitive_arrays
+        PASS [   0.091s] ( 21/230) arrow-select concat::tests::test_concat_11_incompatible_datatypes_should_only_include_10
+        PASS [   0.076s] ( 22/230) arrow-select concat::tests::test_concat_primitive_fixed_size_list_arrays
+        PASS [   0.093s] ( 23/230) arrow-select concat::tests::test_concat_13_incompatible_datatypes_should_not_include_all_of_them
+        PASS [   0.100s] ( 24/230) arrow-select concat::tests::concat_sparse_nulls
+        PASS [   0.111s] ( 25/230) arrow-select concat::tests::test_concat_10_incompatible_datatypes_should_include_all_of_them
+        PASS [   0.099s] ( 26/230) arrow-select concat::tests::test_concat_incompatible_datatypes
+        PASS [   0.101s] ( 27/230) arrow-select concat::tests::test_concat_one_element_vec
+        PASS [   0.101s] ( 28/230) arrow-select concat::tests::test_concat_primitive_arrays
+        PASS [   0.094s] ( 29/230) arrow-select concat::tests::test_concat_run_array
+        PASS [   0.092s] ( 30/230) arrow-select concat::tests::test_concat_run_array_matching_first_last_value
+        PASS [   0.106s] ( 31/230) arrow-select concat::tests::test_concat_primitive_array_slices
+        PASS [   0.100s] ( 32/230) arrow-select concat::tests::test_concat_primitive_list_arrays_sliced_lengths
+        PASS [   0.111s] ( 33/230) arrow-select concat::tests::test_concat_primitive_list_arrays_slices
+        PASS [   0.118s] ( 34/230) arrow-select concat::tests::test_concat_primitive_list_arrays
+        PASS [   0.091s] ( 35/230) arrow-select concat::tests::test_concat_run_array_single
+        PASS [   0.099s] ( 36/230) arrow-select concat::tests::test_concat_run_array_with_3_arrays
+        PASS [   0.095s] ( 37/230) arrow-select concat::tests::test_concat_string_sizes
+        PASS [   0.098s] ( 38/230) arrow-select concat::tests::test_concat_string_arrays
+        PASS [   0.107s] ( 39/230) arrow-select concat::tests::test_concat_run_array_with_nulls
+        PASS [   0.104s] ( 40/230) arrow-select concat::tests::test_concat_struct_array_slices
+        PASS [   0.105s] ( 41/230) arrow-select concat::tests::test_concat_struct_arrays
+        PASS [   0.089s] ( 42/230) arrow-select concat::tests::test_string_array_slices
+        PASS [   0.096s] ( 43/230) arrow-select concat::tests::test_concat_struct_arrays_no_nulls
+        PASS [   0.096s] ( 44/230) arrow-select concat::tests::test_string_array_with_null_slices
+        PASS [   0.102s] ( 45/230) arrow-select concat::tests::test_dictionary_concat_reuse
+        PASS [   0.105s] ( 46/230) arrow-select concat::tests::test_string_dictionary_array_nulls
+        PASS [   0.105s] ( 47/230) arrow-select concat::tests::test_string_dictionary_array_nulls_in_values
+        PASS [   0.109s] ( 48/230) arrow-select concat::tests::test_string_dictionary_merge
+        PASS [   0.116s] ( 49/230) arrow-select concat::tests::test_string_dictionary_array
+        PASS [   0.103s] ( 50/230) arrow-select dictionary::tests::test_merge_keys_smaller
+        PASS [   0.110s] ( 51/230) arrow-select dictionary::tests::test_merge_nulls
+        PASS [   0.109s] ( 52/230) arrow-select dictionary::tests::test_merge_strings
+        PASS [   0.091s] ( 53/230) arrow-select filter::tests::test_fast_path
+        PASS [   0.087s] ( 54/230) arrow-select filter::tests::test_filter_array_high_density
+        PASS [   0.088s] ( 55/230) arrow-select filter::tests::test_filter_array_slice
+        PASS [   0.093s] ( 56/230) arrow-select filter::tests::test_filter_array_low_density
+        PASS [   0.088s] ( 57/230) arrow-select filter::tests::test_filter_array_slice_with_null
+        PASS [   0.093s] ( 58/230) arrow-select filter::tests::test_filter_binary_array_with_null
+        PASS [   0.113s] ( 59/230) arrow-select filter::tests::fuzz_test_slices_iterator
+        PASS [   0.087s] ( 60/230) arrow-select filter::tests::test_filter_binary_view
+        PASS [   0.088s] ( 61/230) arrow-select filter::tests::test_filter_date32
+        PASS [   0.083s] ( 62/230) arrow-select filter::tests::test_filter_date64
+        PASS [   0.080s] ( 63/230) arrow-select filter::tests::test_filter_duration_microsecond
+        PASS [   0.089s] ( 64/230) arrow-select filter::tests::test_filter_dictionary_array
+        PASS [   0.079s] ( 65/230) arrow-select filter::tests::test_filter_duration_nanosecond
+        PASS [   0.084s] ( 66/230) arrow-select filter::tests::test_filter_duration_millisecond
+        PASS [   0.085s] ( 67/230) arrow-select filter::tests::test_filter_duration_second
+        PASS [   0.074s] ( 68/230) arrow-select filter::tests::test_filter_empty_struct
+        PASS [   0.073s] ( 69/230) arrow-select filter::tests::test_filter_fixed_binary
+        PASS [   0.074s] ( 70/230) arrow-select filter::tests::test_filter_fixed_size_list_arrays
+        PASS [   0.065s] ( 71/230) arrow-select filter::tests::test_filter_primitive_array_with_null
+        PASS [   0.074s] ( 72/230) arrow-select filter::tests::test_filter_fixed_size_list_arrays_with_null
+        PASS [   0.067s] ( 73/230) arrow-select filter::tests::test_filter_record_batch_no_columns
+        PASS [   0.184s] ( 74/230) arrow-select filter::tests::fuzz_filter
+        PASS [   0.075s] ( 75/230) arrow-select filter::tests::test_filter_map
+        PASS [   0.081s] ( 76/230) arrow-select filter::tests::test_filter_list_array
+        PASS [   0.072s] ( 77/230) arrow-select filter::tests::test_filter_run_end_encoding_array_empty
+        PASS [   0.066s] ( 78/230) arrow-select filter::tests::test_filter_run_end_encoding_array_remove_all_but_one
+        PASS [   0.069s] ( 79/230) arrow-select filter::tests::test_filter_run_end_encoding_array_max_value_gt_predicate_len
+        PASS [   0.075s] ( 80/230) arrow-select filter::tests::test_filter_run_end_encoding_array
+        PASS [   0.071s] ( 81/230) arrow-select filter::tests::test_filter_run_end_encoding_array_remove_value
+        PASS [   0.071s] ( 82/230) arrow-select filter::tests::test_filter_run_union_array_dense
+        PASS [   0.075s] ( 83/230) arrow-select filter::tests::test_filter_string_array_simple
+        PASS [   0.079s] ( 84/230) arrow-select filter::tests::test_filter_string_array_with_null
+        PASS [   0.080s] ( 85/230) arrow-select filter::tests::test_filter_string_view
+        PASS [   0.083s] ( 86/230) arrow-select filter::tests::test_filter_time32_millisecond
+        PASS [   0.089s] ( 87/230) arrow-select filter::tests::test_filter_struct
+        PASS [   0.082s] ( 88/230) arrow-select filter::tests::test_filter_time64_microsecond
+        PASS [   0.082s] ( 89/230) arrow-select filter::tests::test_filter_timestamp_microsecond
+        PASS [   0.087s] ( 90/230) arrow-select filter::tests::test_filter_time32_second
+        PASS [   0.086s] ( 91/230) arrow-select filter::tests::test_filter_time64_nanosecond
+        PASS [   0.085s] ( 92/230) arrow-select filter::tests::test_filter_timestamp_millisecond
+        PASS [   0.080s] ( 93/230) arrow-select filter::tests::test_filter_timestamp_nanosecond
+        PASS [   0.086s] ( 94/230) arrow-select filter::tests::test_filter_timestamp_second
+        PASS [   0.085s] ( 95/230) arrow-select filter::tests::test_filter_union_array_dense_with_nulls
+        PASS [   0.088s] ( 96/230) arrow-select filter::tests::test_filter_union_array_dense
+        PASS [   0.076s] ( 97/230) arrow-select filter::tests::test_slice_iterator_bits
+        PASS [   0.090s] ( 98/230) arrow-select filter::tests::test_filter_union_array_sparse_with_nulls
+        PASS [   0.090s] ( 99/230) arrow-select filter::tests::test_null_mask
+        PASS [   0.102s] (100/230) arrow-select filter::tests::test_filter_union_array_sparse
+        PASS [   0.090s] (101/230) arrow-select filter::tests::test_slice_iterator_bits1
+        PASS [   0.084s] (102/230) arrow-select filter::tests::test_slice_iterator_chunk_and_bits
+        PASS [   0.084s] (103/230) arrow-select filter::tests::test_slices
+        PASS [   0.102s] (104/230) arrow-select interleave::tests::interleave_sparse_nulls
+        PASS [   0.089s] (105/230) arrow-select interleave::tests::test_primitive
+        PASS [   0.100s] (106/230) arrow-select interleave::tests::test_interleave_dictionary_nulls
+        PASS [   0.102s] (107/230) arrow-select interleave::tests::test_interleave_dictionary
+        PASS [   0.099s] (108/230) arrow-select interleave::tests::test_interleave_views
+        PASS [   0.090s] (109/230) arrow-select interleave::tests::test_primitive_empty
+        PASS [   0.099s] (110/230) arrow-select interleave::tests::test_interleave_views_multiple_buffers
+        PASS [   0.094s] (111/230) arrow-select interleave::tests::test_primitive_nulls
+        PASS [   0.105s] (112/230) arrow-select interleave::tests::test_lists
+        PASS [   0.106s] (113/230) arrow-select interleave::tests::test_interleave_views_with_nulls
+        PASS [   0.092s] (114/230) arrow-select interleave::tests::test_strings
+        PASS [   0.091s] (115/230) arrow-select nullif::tests::nullif_empty
+        PASS [   0.094s] (116/230) arrow-select nullif::tests::test_nullif_boolean_offset
+        PASS [   0.091s] (117/230) arrow-select nullif::tests::test_nullif_int_array
+        PASS [   0.085s] (118/230) arrow-select nullif::tests::test_nullif_int_array_offset
+        PASS [   0.084s] (119/230) arrow-select nullif::tests::test_nullif_int_large_left_offset
+        PASS [   0.071s] (120/230) arrow-select nullif::tests::test_nullif_int_large_right_offset
+        PASS [   0.068s] (121/230) arrow-select nullif::tests::test_nullif_null_array
+        PASS [   0.072s] (122/230) arrow-select nullif::tests::test_nullif_no_nulls
+        PASS [   0.075s] (123/230) arrow-select nullif::tests::test_nullif_struct_slices
+        PASS [   0.075s] (124/230) arrow-select take::tests::test_null_array_indices_out_of_bounds
+        PASS [   0.079s] (125/230) arrow-select nullif::tests::test_nullif_string
+        PASS [   0.079s] (126/230) arrow-select take::tests::test_null_array_larger_than_indices
+        PASS [   0.075s] (127/230) arrow-select take::tests::test_null_array_smaller_than_indices
+        PASS [   0.075s] (128/230) arrow-select take::tests::test_take_binary_view
+        PASS [   0.069s] (129/230) arrow-select take::tests::test_take_bool_nullable_index_nonnull_values
+        PASS [   0.160s] (130/230) arrow-select nullif::tests::nullif_fuzz
+        PASS [   0.073s] (131/230) arrow-select take::tests::test_take_bool_nullable_index
+        PASS [   0.068s] (132/230) arrow-select take::tests::test_take_bool_with_offset
+        PASS [   0.083s] (133/230) arrow-select take::tests::test_take_bool
+        PASS [   0.083s] (134/230) arrow-select take::tests::test_take_bytes_null_indices
+        PASS [   0.080s] (135/230) arrow-select take::tests::test_take_decimal128
+        PASS [   0.088s] (136/230) arrow-select take::tests::test_take_decimal128_non_null_indices
+        PASS [   0.086s] (137/230) arrow-select take::tests::test_take_impl_primitive_with_int64_indices
+        PASS [   0.086s] (138/230) arrow-select take::tests::test_take_impl_primitive_with_uint8_indices
+        PASS [   0.095s] (139/230) arrow-select take::tests::test_take_fixed_size_list_null_indices
+        PASS [   0.098s] (140/230) arrow-select take::tests::test_take_dict
+        PASS [   0.099s] (141/230) arrow-select take::tests::test_take_fixed_size_list
+        PASS [   0.090s] (142/230) arrow-select take::tests::test_take_large_string
+        PASS [   0.097s] (143/230) arrow-select take::tests::test_take_large_list
+        PASS [   0.087s] (144/230) arrow-select take::tests::test_take_null_indices
+        PASS [   0.091s] (145/230) arrow-select take::tests::test_take_list_with_value_nulls
+        PASS [   0.084s] (146/230) arrow-select take::tests::test_take_out_of_bounds
+        PASS [   0.094s] (147/230) arrow-select take::tests::test_take_map
+        PASS [   0.101s] (148/230) arrow-select take::tests::test_take_large_list_with_value_nulls
+        PASS [   0.096s] (149/230) arrow-select take::tests::test_take_list_out_of_bounds
+        PASS [   0.099s] (150/230) arrow-select take::tests::test_take_list
+        PASS [   0.093s] (151/230) arrow-select take::tests::test_take_out_of_bounds_panic
+        PASS [   0.089s] (152/230) arrow-select take::tests::test_take_preserve_timezone
+        PASS [   0.088s] (153/230) arrow-select take::tests::test_take_primitive
+        PASS [   0.073s] (154/230) arrow-select take::tests::test_take_primitive_non_null_values
+        PASS [   0.073s] (155/230) arrow-select take::tests::test_take_primitive_nullable_indices_nullable_values_with_offset
+        PASS [   0.080s] (156/230) arrow-select take::tests::test_take_primitive_non_null_indices
+        PASS [   0.078s] (157/230) arrow-select take::tests::test_take_primitive_nullable_indices_non_null_values_with_offset
+        PASS [   0.082s] (158/230) arrow-select take::tests::test_take_primitive_non_null
+        PASS [   0.078s] (159/230) arrow-select take::tests::test_take_slice_string
+        PASS [   0.077s] (160/230) arrow-select take::tests::test_take_string_view
+        PASS [   0.085s] (161/230) arrow-select take::tests::test_take_runs
+        PASS [   0.082s] (162/230) arrow-select take::tests::test_take_string
+        PASS [   0.081s] (163/230) arrow-select take::tests::test_take_struct_with_null_indices
+        PASS [   0.082s] (164/230) arrow-select take::tests::test_take_union_dense_all_match_issue_6206
+        PASS [   0.088s] (165/230) arrow-select take::tests::test_take_union_dense
+        PASS [   0.091s] (166/230) arrow-select take::tests::test_take_union_dense_using_builder
+        PASS [   0.097s] (167/230) arrow-select take::tests::test_take_struct
+        PASS [   0.078s] (168/230) arrow-select take::tests::test_take_union_sparse
+        PASS [   0.073s] (169/230) arrow-select take::tests::test_take_value_index_from_large_list
+        PASS [   0.090s] (170/230) arrow-select take::tests::test_take_value_index_from_fixed_list
+        PASS [   0.077s] (171/230) arrow-select take::tests::test_take_value_index_from_list
+        PASS [   0.074s] (172/230) arrow-select union_extract::tests::dense_1_2_empty_union_target_non_empty
+        PASS [   0.077s] (173/230) arrow-select union_extract::tests::dense_1_1_both_empty
+        PASS [   0.084s] (174/230) arrow-select take::tests::test_test_take_large_list_with_nulls
+        PASS [   0.082s] (175/230) arrow-select take::tests::test_test_take_list_with_nulls
+        PASS [   0.075s] (176/230) arrow-select union_extract::tests::dense_3_1_null_target_smaller_len
+        PASS [   0.077s] (177/230) arrow-select union_extract::tests::dense_2_non_empty_union_target_empty
+        PASS [   0.075s] (178/230) arrow-select union_extract::tests::dense_4_1a_single_type_sequential_offsets_equal_len
+        PASS [   0.080s] (179/230) arrow-select union_extract::tests::dense_3_2_null_target_equal_len
+        PASS [   0.080s] (180/230) arrow-select union_extract::tests::dense_3_3_null_target_bigger_len
+        PASS [   0.078s] (181/230) arrow-select union_extract::tests::dense_4_1b_empty_siblings_sequential_equal_len
+        PASS [   0.076s] (182/230) arrow-select union_extract::tests::dense_4_1c_all_types_match_sequential_equal_len
+        PASS [   0.073s] (183/230) arrow-select union_extract::tests::dense_4_2a_single_type_sequential_offsets_bigger
+        PASS [   0.083s] (184/230) arrow-select union_extract::tests::dense_4_2b_empty_siblings_sequential_bigger_len
+        PASS [   0.079s] (185/230) arrow-select union_extract::tests::dense_4_2c_all_types_match_sequential_bigger_len
+        PASS [   0.078s] (186/230) arrow-select union_extract::tests::dense_4_3b_empty_sibling_non_sequential
+        PASS [   0.085s] (187/230) arrow-select union_extract::tests::dense_4_3a_single_type_non_sequential
+        PASS [   0.076s] (188/230) arrow-select union_extract::tests::dense_5_1a_none_match_less_len
+        PASS [   0.084s] (189/230) arrow-select union_extract::tests::dense_4_3c_all_types_match_non_sequential
+        PASS [   0.072s] (190/230) arrow-select union_extract::tests::empty_dense_union
+        PASS [   0.081s] (191/230) arrow-select union_extract::tests::dense_5_3_none_match_greater_len
+        PASS [   0.082s] (192/230) arrow-select union_extract::tests::dense_5_2_none_match_equal_len
+        PASS [   0.087s] (193/230) arrow-select union_extract::tests::dense_5_1b_cant_contain_null_mask
+        PASS [   0.077s] (194/230) arrow-select union_extract::tests::empty_sparse_union
+        PASS [   0.087s] (195/230) arrow-select union_extract::tests::dense_6_some_matches
+        PASS [   0.082s] (196/230) arrow-select union_extract::tests::sparse_1_2_empty
+        PASS [   0.081s] (197/230) arrow-select union_extract::tests::sparse_1_3a_null_target
+        PASS [   0.078s] (198/230) arrow-select union_extract::tests::sparse_1_3b_null_target
+        PASS [   0.077s] (199/230) arrow-select union_extract::tests::sparse_2_all_types_match
+        PASS [   0.094s] (200/230) arrow-select union_extract::tests::sparse_1_1_single_field
+        PASS [   0.081s] (201/230) arrow-select union_extract::tests::sparse_3_1_none_match_target_can_contain_null_mask
+        PASS [   0.077s] (202/230) arrow-select union_extract::tests::sparse_3_2_none_match_cant_contain_null_mask_union_target
+        PASS [   0.064s] (203/230) arrow-select union_extract::tests::test_is_sequential
+        PASS [   0.077s] (204/230) arrow-select union_extract::tests::sparse_4_1_1_target_with_nulls
+        PASS [   0.079s] (205/230) arrow-select union_extract::tests::sparse_4_1_2_target_without_nulls
+        PASS [   0.075s] (206/230) arrow-select union_extract::tests::test_eq_scalar
+        PASS [   0.070s] (207/230) arrow-select window::tests::test_shift_boundary_neg_min
+        PASS [   0.084s] (208/230) arrow-select union_extract::tests::sparse_4_2_some_match_target_cant_contain_null_mask
+        PASS [   0.067s] (209/230) arrow-select window::tests::test_shift_large_neg
+        PASS [   0.073s] (210/230) arrow-select window::tests::test_shift_boundary_pos
+        PASS [   0.080s] (211/230) arrow-select window::tests::test_shift_boundary_neg
+        PASS [   0.073s] (212/230) arrow-select window::tests::test_shift_large_pos
+        PASS [   0.070s] (213/230) arrow-select window::tests::test_shift_nil
+        PASS [   0.075s] (214/230) arrow-select window::tests::test_shift_neg
+        PASS [   0.074s] (215/230) arrow-select window::tests::test_shift_neg_float64
+        PASS [   0.080s] (216/230) arrow-select window::tests::test_shift_neg_int32_dict
+        PASS [   0.073s] (217/230) arrow-select window::tests::test_shift_pos
+        PASS [   0.073s] (218/230) arrow-select window::tests::test_shift_pos_float64
+        PASS [   0.084s] (219/230) arrow-select window::tests::test_shift_pos_int32_dict
+        PASS [   0.077s] (220/230) arrow-select zip::test::test_zip_kernel_scalar_both
+        PASS [   0.078s] (221/230) arrow-select zip::test::test_zip_kernel_one
+        PASS [   0.079s] (222/230) arrow-select zip::test::test_zip_kernel_scalar_falsy_1
+        PASS [   0.078s] (223/230) arrow-select zip::test::test_zip_kernel_scalar_falsy_2
+        PASS [   0.079s] (224/230) arrow-select zip::test::test_zip_kernel_scalar_none_1
+        PASS [   0.077s] (225/230) arrow-select zip::test::test_zip_kernel_scalar_truthy_2
+        PASS [   0.077s] (226/230) arrow-select zip::test::test_zip_kernel_scalar_truthy_1
+        PASS [   0.082s] (227/230) arrow-select zip::test::test_zip_kernel_scalar_none_2
+        PASS [   0.075s] (228/230) arrow-select zip::test::test_zip_kernel_two
+        PASS [   0.072s] (229/230) arrow-select::coalesce_test test_batch_coalescer_integration
+        PASS [   6.752s] (230/230) arrow-select concat::tests::concat_many_dictionary_list_arrays
+────────────
+     Summary [   6.755s] 230 tests run: 230 passed, 0 skipped
+reward=1 graded=230 found=55 failed=0 parsed=230 framework=cargo exit_code=0

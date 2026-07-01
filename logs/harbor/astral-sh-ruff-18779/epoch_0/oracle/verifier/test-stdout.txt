@@ -1,0 +1,11 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_pytest_style/PT023.py
+   Compiling ruff_linter v0.12.0 (/workspace/repo/crates/ruff_linter)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 43.24s
+────────────
+ Nextest run ID 853285db-d7f2-4be6-84a9-b289b0abeaba with nextest profile: default
+    Starting 2 tests across 1 binary (2430 tests skipped)
+        PASS [   0.293s] (1/2) ruff_linter rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_mark_parentheses_true_settings_default_pt023_parentheses_expects
+        PASS [   0.295s] (2/2) ruff_linter rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_default_pt023_default_expects
+────────────
+     Summary [   0.307s] 2 tests run: 2 passed, 2430 skipped
+reward=1 graded=2 found=0 failed=0 parsed=2 framework=cargo exit_code=0

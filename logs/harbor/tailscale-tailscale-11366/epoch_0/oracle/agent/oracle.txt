@@ -1,0 +1,14 @@
+patching file client/tailscale/localclient.go
+patching file cmd/tailscale/cli/share.go
+patching file cmd/viewer/viewer.go
+patching file ipn/backend.go
+patching file ipn/ipn_clone.go
+patching file ipn/ipn_view.go
+patching file ipn/ipnlocal/local.go
+patching file ipn/ipnlocal/tailfs.go
+patching file ipn/localapi/localapi.go
+patching file ipn/prefs.go
+patching file tailfs/remote.go
+patching file tailfs/tailfs_clone.go
+patching file tailfs/tailfs_view.go
+patching file tailfs/tailfsimpl/remote_impl.go

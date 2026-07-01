@@ -1,0 +1,34 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./precompiles/staking -count=1",
+  "test_files": [
+    "precompiles/staking/staking_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestCreateValidator/successful_creation",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestCreateValidator/fails_with_no_self_delegation",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestCreateValidator/fails_with_invalid_public_key",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestCreateValidator/fails_with_invalid_amount",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestCreateValidator/fails_with_invalid_commission_rate",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestCreateValidator/fails_with_invalid_max_commission_rate",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestCreateValidator/fails_with_invalid_max_commission_change_rate",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestCreateValidator",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestCreateValidator_UnassociatedAddress",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestEditValidator_ErorrIfDoesNotExist",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestEditValidator"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestStaking",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestStakingError",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestPrecompile_Run_Delegation/fails_if_value_passed",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestPrecompile_Run_Delegation/fails_if_caller_!=_callingContract",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestPrecompile_Run_Delegation/fails_if_delegator_address_unassociated",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestPrecompile_Run_Delegation/fails_if_delegator_address_is_invalid",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestPrecompile_Run_Delegation/should_return_error_if_delegation_not_found",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestPrecompile_Run_Delegation/should_return_delegation_details",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestPrecompile_Run_Delegation/should_allow_static_call",
+    "github.com/sei-protocol/sei-chain/precompiles/staking::TestPrecompile_Run_Delegation"
+  ]
+}

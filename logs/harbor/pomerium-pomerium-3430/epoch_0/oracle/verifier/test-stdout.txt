@@ -1,0 +1,171 @@
+patching file internal/httputil/httputil_test.go
+{"Time":"2026-06-29T15:14:11.819025423Z","Action":"start","Package":"github.com/pomerium/pomerium/internal/httputil"}
+{"Time":"2026-06-29T15:14:11.8295532Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestDefaultClient"}
+{"Time":"2026-06-29T15:14:11.829611017Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestDefaultClient","Output":"=== RUN   TestDefaultClient\n"}
+{"Time":"2026-06-29T15:14:11.832215105Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestDefaultClient","Output":"--- PASS: TestDefaultClient (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.832253522Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestDefaultClient","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.832295676Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse"}
+{"Time":"2026-06-29T15:14:11.83231882Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse","Output":"=== RUN   TestHTTPError_ErrorResponse\n"}
+{"Time":"2026-06-29T15:14:11.832342145Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse/404_json"}
+{"Time":"2026-06-29T15:14:11.832364859Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse/404_json","Output":"=== RUN   TestHTTPError_ErrorResponse/404_json\n"}
+{"Time":"2026-06-29T15:14:11.832557478Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse/404_json","Output":"--- PASS: TestHTTPError_ErrorResponse/404_json (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.832585911Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse/404_json","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.832610057Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse/404_html"}
+{"Time":"2026-06-29T15:14:11.832632631Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse/404_html","Output":"=== RUN   TestHTTPError_ErrorResponse/404_html\n"}
+{"Time":"2026-06-29T15:14:11.832817358Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse/404_html","Output":"--- PASS: TestHTTPError_ErrorResponse/404_html (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.832845901Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse/404_html","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.832870338Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse","Output":"--- PASS: TestHTTPError_ErrorResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.832894434Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHTTPError_ErrorResponse","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.83291873Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewError"}
+{"Time":"2026-06-29T15:14:11.832941244Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewError","Output":"=== RUN   TestNewError\n"}
+{"Time":"2026-06-29T15:14:11.832971029Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewError/good"}
+{"Time":"2026-06-29T15:14:11.832993623Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewError/good","Output":"=== RUN   TestNewError/good\n"}
+{"Time":"2026-06-29T15:14:11.833019802Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewError/good","Output":"--- PASS: TestNewError/good (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.833042897Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewError/good","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.833076357Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewError","Output":"--- PASS: TestNewError (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.833099341Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewError","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.833123468Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck"}
+{"Time":"2026-06-29T15:14:11.8331453Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck","Output":"=== RUN   TestHealthCheck\n"}
+{"Time":"2026-06-29T15:14:11.833169066Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck","Output":"=== PAUSE TestHealthCheck\n"}
+{"Time":"2026-06-29T15:14:11.8331918Z","Action":"pause","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck"}
+{"Time":"2026-06-29T15:14:11.833215696Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect"}
+{"Time":"2026-06-29T15:14:11.833237699Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect","Output":"=== RUN   TestRedirect\n"}
+{"Time":"2026-06-29T15:14:11.833262026Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect","Output":"=== PAUSE TestRedirect\n"}
+{"Time":"2026-06-29T15:14:11.833284239Z","Action":"pause","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect"}
+{"Time":"2026-06-29T15:14:11.833308105Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP"}
+{"Time":"2026-06-29T15:14:11.833330759Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP","Output":"=== RUN   TestHandlerFunc_ServeHTTP\n"}
+{"Time":"2026-06-29T15:14:11.833355676Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP/good_http_error"}
+{"Time":"2026-06-29T15:14:11.833378721Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP/good_http_error","Output":"=== RUN   TestHandlerFunc_ServeHTTP/good_http_error\n"}
+{"Time":"2026-06-29T15:14:11.833403838Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP/good_http_error","Output":"--- PASS: TestHandlerFunc_ServeHTTP/good_http_error (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.833428055Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP/good_http_error","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.83345124Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP/good_std_error"}
+{"Time":"2026-06-29T15:14:11.833473293Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP/good_std_error","Output":"=== RUN   TestHandlerFunc_ServeHTTP/good_std_error\n"}
+{"Time":"2026-06-29T15:14:11.833504519Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP/good_std_error","Output":"--- PASS: TestHandlerFunc_ServeHTTP/good_std_error (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.833528606Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP/good_std_error","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.833552361Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP","Output":"--- PASS: TestHandlerFunc_ServeHTTP (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.833576417Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHandlerFunc_ServeHTTP","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.833599652Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON"}
+{"Time":"2026-06-29T15:14:11.833627985Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON","Output":"=== RUN   TestRenderJSON\n"}
+{"Time":"2026-06-29T15:14:11.833650819Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/simple"}
+{"Time":"2026-06-29T15:14:11.833673773Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/simple","Output":"=== RUN   TestRenderJSON/simple\n"}
+{"Time":"2026-06-29T15:14:11.833706382Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/simple","Output":"--- PASS: TestRenderJSON/simple (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.833730749Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/simple","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.833755196Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/map"}
+{"Time":"2026-06-29T15:14:11.833777419Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/map","Output":"=== RUN   TestRenderJSON/map\n"}
+{"Time":"2026-06-29T15:14:11.833802757Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/map","Output":"--- PASS: TestRenderJSON/map (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.833825892Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/map","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.833848816Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/bad!"}
+{"Time":"2026-06-29T15:14:11.833872972Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/bad!","Output":"=== RUN   TestRenderJSON/bad!\n"}
+{"Time":"2026-06-29T15:14:11.833897529Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/bad!","Output":"--- PASS: TestRenderJSON/bad! (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.833921345Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON/bad!","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.833945301Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON","Output":"--- PASS: TestRenderJSON (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.833968436Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRenderJSON","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.833992171Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestGetClientIPAddress"}
+{"Time":"2026-06-29T15:14:11.834014965Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestGetClientIPAddress","Output":"=== RUN   TestGetClientIPAddress\n"}
+{"Time":"2026-06-29T15:14:11.834038681Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestGetClientIPAddress","Output":"--- PASS: TestGetClientIPAddress (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.834061325Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestGetClientIPAddress","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.834086062Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewRouter"}
+{"Time":"2026-06-29T15:14:11.834108155Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewRouter","Output":"=== RUN   TestNewRouter\n"}
+{"Time":"2026-06-29T15:14:11.834131851Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewRouter/this_is_a_gorilla_router_right?"}
+{"Time":"2026-06-29T15:14:11.834153924Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewRouter/this_is_a_gorilla_router_right?","Output":"=== RUN   TestNewRouter/this_is_a_gorilla_router_right?\n"}
+{"Time":"2026-06-29T15:14:11.834183879Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewRouter/this_is_a_gorilla_router_right?","Output":"--- PASS: TestNewRouter/this_is_a_gorilla_router_right? (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.834206853Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewRouter/this_is_a_gorilla_router_right?","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.834230429Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewRouter","Output":"--- PASS: TestNewRouter (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.834253573Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewRouter","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.834276418Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer"}
+{"Time":"2026-06-29T15:14:11.834298311Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer","Output":"=== RUN   TestNewServer\n"}
+{"Time":"2026-06-29T15:14:11.834321886Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer","Output":"=== PAUSE TestNewServer\n"}
+{"Time":"2026-06-29T15:14:11.834343889Z","Action":"pause","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer"}
+{"Time":"2026-06-29T15:14:11.834367274Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler"}
+{"Time":"2026-06-29T15:14:11.834390319Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler","Output":"=== RUN   TestRedirectHandler\n"}
+{"Time":"2026-06-29T15:14:11.834413473Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example"}
+{"Time":"2026-06-29T15:14:11.834435717Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example","Output":"=== RUN   TestRedirectHandler/http://example\n"}
+{"Time":"2026-06-29T15:14:11.834466303Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example","Output":"--- PASS: TestRedirectHandler/http://example (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.834489788Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.834512822Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example:8080"}
+{"Time":"2026-06-29T15:14:11.834535256Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example:8080","Output":"=== RUN   TestRedirectHandler/http://example:8080\n"}
+{"Time":"2026-06-29T15:14:11.834559432Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example:8080","Output":"--- PASS: TestRedirectHandler/http://example:8080 (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.834582407Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example:8080","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.834605411Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example:8080/some/path?x=y"}
+{"Time":"2026-06-29T15:14:11.834627785Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example:8080/some/path?x=y","Output":"=== RUN   TestRedirectHandler/http://example:8080/some/path?x=y\n"}
+{"Time":"2026-06-29T15:14:11.834652162Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example:8080/some/path?x=y","Output":"--- PASS: TestRedirectHandler/http://example:8080/some/path?x=y (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.834675246Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler/http://example:8080/some/path?x=y","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.834712442Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler","Output":"--- PASS: TestRedirectHandler (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.834735527Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirectHandler","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.834758812Z","Action":"cont","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck"}
+{"Time":"2026-06-29T15:14:11.834781165Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck","Output":"=== CONT  TestHealthCheck\n"}
+{"Time":"2026-06-29T15:14:11.83480417Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/good_-_Get"}
+{"Time":"2026-06-29T15:14:11.834826173Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/good_-_Get","Output":"=== RUN   TestHealthCheck/good_-_Get\n"}
+{"Time":"2026-06-29T15:14:11.834849458Z","Action":"cont","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer"}
+{"Time":"2026-06-29T15:14:11.83487119Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer","Output":"=== CONT  TestNewServer\n"}
+{"Time":"2026-06-29T15:14:11.834894355Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_basic_http_handler"}
+{"Time":"2026-06-29T15:14:11.834917119Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_basic_http_handler","Output":"=== RUN   TestNewServer/good_basic_http_handler\n"}
+{"Time":"2026-06-29T15:14:11.834940514Z","Action":"cont","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect"}
+{"Time":"2026-06-29T15:14:11.834962427Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect","Output":"=== CONT  TestRedirect\n"}
+{"Time":"2026-06-29T15:14:11.834985392Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect/good"}
+{"Time":"2026-06-29T15:14:11.835006984Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect/good","Output":"=== RUN   TestRedirect/good\n"}
+{"Time":"2026-06-29T15:14:11.83503078Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect/good","Output":"--- PASS: TestRedirect/good (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835054746Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect/good","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835078992Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect","Output":"--- PASS: TestRedirect (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835102828Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestRedirect","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835125362Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/good_-_Get","Output":"--- PASS: TestHealthCheck/good_-_Get (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835148456Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/good_-_Get","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835171661Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/good_-_Head"}
+{"Time":"2026-06-29T15:14:11.835194936Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/good_-_Head","Output":"=== RUN   TestHealthCheck/good_-_Head\n"}
+{"Time":"2026-06-29T15:14:11.835219623Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/good_-_Head","Output":"--- PASS: TestHealthCheck/good_-_Head (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835248246Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/good_-_Head","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835271892Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Options"}
+{"Time":"2026-06-29T15:14:11.835293594Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Options","Output":"=== RUN   TestHealthCheck/bad_-_Options\n"}
+{"Time":"2026-06-29T15:14:11.83531768Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Options","Output":"--- PASS: TestHealthCheck/bad_-_Options (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835342037Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Options","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835364801Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Put"}
+{"Time":"2026-06-29T15:14:11.835387295Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Put","Output":"=== RUN   TestHealthCheck/bad_-_Put\n"}
+{"Time":"2026-06-29T15:14:11.835411882Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Put","Output":"--- PASS: TestHealthCheck/bad_-_Put (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835435667Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Put","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835458602Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Post"}
+{"Time":"2026-06-29T15:14:11.835480535Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Post","Output":"=== RUN   TestHealthCheck/bad_-_Post\n"}
+{"Time":"2026-06-29T15:14:11.835504661Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Post","Output":"--- PASS: TestHealthCheck/bad_-_Post (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835528006Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_Post","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835551711Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_route_miss"}
+{"Time":"2026-06-29T15:14:11.835573544Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_route_miss","Output":"=== RUN   TestHealthCheck/bad_-_route_miss\n"}
+{"Time":"2026-06-29T15:14:11.835597821Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_route_miss","Output":"--- PASS: TestHealthCheck/bad_-_route_miss (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835621266Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck/bad_-_route_miss","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835645632Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck","Output":"--- PASS: TestHealthCheck (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835668116Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck","Output":"{\"level\":\"info\",\"service\":\"\",\"insecure\":true,\"addr\":\":0\",\"time\":\"2026-06-29T15:14:11Z\",\"message\":\"internal/httputil: http server started\"}\n"}
+{"Time":"2026-06-29T15:14:11.835701857Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck","Output":"Hello, http\n"}
+{"Time":"2026-06-29T15:14:11.835726414Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck","Output":"{\"level\":\"info\",\"signal\":\"interrupt\",\"time\":\"2026-06-29T15:14:11Z\",\"message\":\"internal/httputil: shutting down servers\"}\n"}
+{"Time":"2026-06-29T15:14:11.835755948Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestHealthCheck","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835778582Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_basic_http_handler","Output":"--- PASS: TestNewServer/good_basic_http_handler (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835801907Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_basic_http_handler","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835827946Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/bad_neither_insecure_nor_certs_set"}
+{"Time":"2026-06-29T15:14:11.83585071Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/bad_neither_insecure_nor_certs_set","Output":"=== RUN   TestNewServer/bad_neither_insecure_nor_certs_set\n"}
+{"Time":"2026-06-29T15:14:11.835874566Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/bad_neither_insecure_nor_certs_set","Output":"--- PASS: TestNewServer/bad_neither_insecure_nor_certs_set (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.835898802Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/bad_neither_insecure_nor_certs_set","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.835922558Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_no_address"}
+{"Time":"2026-06-29T15:14:11.835945442Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_no_address","Output":"=== RUN   TestNewServer/good_no_address\n"}
+{"Time":"2026-06-29T15:14:11.835968467Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_no_address","Output":"{\"level\":\"info\",\"service\":\"\",\"insecure\":true,\"addr\":\":0\",\"time\":\"2026-06-29T15:14:11Z\",\"message\":\"internal/httputil: http server started\"}\n"}
+{"Time":"2026-06-29T15:14:11.835996088Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_no_address","Output":"Hello, http\n"}
+{"Time":"2026-06-29T15:14:11.836018632Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_no_address","Output":"{\"level\":\"info\",\"signal\":\"interrupt\",\"time\":\"2026-06-29T15:14:11Z\",\"message\":\"internal/httputil: shutting down servers\"}\n"}
+{"Time":"2026-06-29T15:14:11.836051662Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_no_address","Output":"--- PASS: TestNewServer/good_no_address (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.836075017Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_no_address","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.836102688Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/empty_handler"}
+{"Time":"2026-06-29T15:14:11.836125202Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/empty_handler","Output":"=== RUN   TestNewServer/empty_handler\n"}
+{"Time":"2026-06-29T15:14:11.836153484Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/empty_handler","Output":"--- PASS: TestNewServer/empty_handler (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.836188106Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/empty_handler","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.836215598Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/bad_port_-_invalid_port_range_"}
+{"Time":"2026-06-29T15:14:11.836237881Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/bad_port_-_invalid_port_range_","Output":"=== RUN   TestNewServer/bad_port_-_invalid_port_range_\n"}
+{"Time":"2026-06-29T15:14:11.836267786Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/bad_port_-_invalid_port_range_","Output":"--- PASS: TestNewServer/bad_port_-_invalid_port_range_ (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.8362907Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/bad_port_-_invalid_port_range_","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.836314536Z","Action":"run","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_tls_set"}
+{"Time":"2026-06-29T15:14:11.836336379Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_tls_set","Output":"=== RUN   TestNewServer/good_tls_set\n"}
+{"Time":"2026-06-29T15:14:11.836362508Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_tls_set","Output":"{\"level\":\"info\",\"service\":\"\",\"insecure\":false,\"addr\":\":0\",\"time\":\"2026-06-29T15:14:11Z\",\"message\":\"internal/httputil: http server started\"}\n"}
+{"Time":"2026-06-29T15:14:11.837124241Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_tls_set","Output":"Hello, http\n"}
+{"Time":"2026-06-29T15:14:11.83718335Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_tls_set","Output":"{\"level\":\"info\",\"signal\":\"interrupt\",\"time\":\"2026-06-29T15:14:11Z\",\"message\":\"internal/httputil: shutting down servers\"}\n"}
+{"Time":"2026-06-29T15:14:11.837351192Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_tls_set","Output":"--- PASS: TestNewServer/good_tls_set (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.837400756Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer/good_tls_set","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.837426685Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer","Output":"--- PASS: TestNewServer (0.00s)\n"}
+{"Time":"2026-06-29T15:14:11.837451222Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Test":"TestNewServer","Elapsed":0}
+{"Time":"2026-06-29T15:14:11.837475328Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:11.837868658Z","Action":"output","Package":"github.com/pomerium/pomerium/internal/httputil","Output":"ok  \tgithub.com/pomerium/pomerium/internal/httputil\t0.018s\n"}
+{"Time":"2026-06-29T15:14:11.837905894Z","Action":"pass","Package":"github.com/pomerium/pomerium/internal/httputil","Elapsed":0.019}
+reward=1 graded=36 found=36 failed=0 parsed=36 framework=go exit_code=0

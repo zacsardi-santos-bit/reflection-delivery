@@ -1,0 +1,23 @@
+{
+ "task": "uutils-coreutils-5780",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds pub fn path_ends_with_terminator to uucore/fs.rs and uses it in cp/mv: `if path_ends_with_terminator(dest) && !dest.is_dir() { return Err(Error::NotADirectory(...)) }`; test.patch F2P test_cp_no_such asserts stderr_is \"cp: 'no-such/' is not a directory\\n\""
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

@@ -1,0 +1,14 @@
+patching file api/v1alpha2/eip_types.go
+patching file api/v1alpha2/zz_generated.deepcopy.go
+patching file cmd/controller/app/manager.go
+patching file config/crd/bases/manifests.yaml
+patching file config/crd/bases/network.kubesphere.io_eips.yaml
+patching file config/crd/bases/role.yaml
+patching file config/webhook/kustomization.yaml
+patching file config/webhook/manifests.yaml
+patching file config/webhook/mutating_webhook.yaml
+patching file config/workloads/cert.yaml
+patching file deploy/openelb.yaml
+patching file pkg/controllers/ipam/ipam.go
+patching file pkg/controllers/lb/controller.go
+patching file pkg/speaker/manager.go

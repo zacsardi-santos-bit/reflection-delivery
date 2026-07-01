@@ -1,0 +1,23 @@
+{
+ "task": "seaql-sea-orm-2626",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'BackendNotSupported { db: &'static str, ctx: &'static str }' DbErr variant and 'DatabaseBackend::as_str()'; test.patch adds catch-all arms 'db => { return Err(DbErr::BackendNotSupported { db: db.as_str(), ctx: ... }) }' that only compile with the new API"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

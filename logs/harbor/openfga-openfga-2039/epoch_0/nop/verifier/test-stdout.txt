@@ -1,0 +1,331 @@
+patching file internal/authz/authz_test.go
+patching file pkg/server/batch_check_test.go
+patching file pkg/server/commands/batch_check_command_test.go
+# github.com/openfga/openfga/pkg/server/commands [github.com/openfga/openfga/pkg/server/commands.test]
+pkg/server/commands/batch_check_command_test.go:50:9: undefined: NewBatchCheckCommand
+pkg/server/commands/batch_check_command_test.go:54:3: undefined: WithBatchCheckMaxChecksPerBatch
+pkg/server/commands/batch_check_command_test.go:55:3: undefined: WithBatchCheckCommandCacheController
+pkg/server/commands/batch_check_command_test.go:60:31: undefined: openfgav1.BatchCheckItem
+pkg/server/commands/batch_check_command_test.go:62:27: undefined: openfgav1.BatchCheckItem
+pkg/server/commands/batch_check_command_test.go:76:14: undefined: BatchCheckCommandParams
+pkg/server/commands/batch_check_command_test.go:93:31: undefined: openfgav1.BatchCheckItem
+pkg/server/commands/batch_check_command_test.go:98:27: undefined: openfgav1.BatchCheckItem
+pkg/server/commands/batch_check_command_test.go:112:14: undefined: BatchCheckCommandParams
+pkg/server/commands/batch_check_command_test.go:126:20: undefined: CorrelationID
+pkg/server/commands/batch_check_command_test.go:126:20: too many errors
+# github.com/openfga/openfga/pkg/server [github.com/openfga/openfga/pkg/server.test]
+pkg/server/batch_check_test.go:75:34: undefined: openfgav1.BatchCheckRequest
+pkg/server/batch_check_test.go:77:24: undefined: openfgav1.BatchCheckItem
+pkg/server/batch_check_test.go:96:26: s.BatchCheck undefined (type *Server has no field or method BatchCheck)
+pkg/server/batch_check_test.go:101:27: s.BatchCheck undefined (type *Server has no field or method BatchCheck)
+pkg/server/batch_check_test.go:119:28: undefined: openfgav1.BatchCheckRequest
+pkg/server/batch_check_test.go:123:24: undefined: openfgav1.BatchCheckRequest
+pkg/server/batch_check_test.go:124:26: undefined: openfgav1.BatchCheckItem
+pkg/server/batch_check_test.go:138:24: undefined: openfgav1.BatchCheckRequest
+pkg/server/batch_check_test.go:139:26: undefined: openfgav1.BatchCheckItem
+pkg/server/batch_check_test.go:153:16: s.BatchCheck undefined (type *Server has no field or method BatchCheck)
+pkg/server/batch_check_test.go:153:16: too many errors
+{"Time":"2026-06-29T15:22:14.068460847Z","Action":"start","Package":"github.com/openfga/openfga/internal/authz"}
+{"Time":"2026-06-29T15:22:14.068748185Z","Action":"start","Package":"github.com/openfga/openfga/pkg/server"}
+{"Time":"2026-06-29T15:22:14.068860489Z","Action":"output","Package":"github.com/openfga/openfga/pkg/server","Output":"FAIL\tgithub.com/openfga/openfga/pkg/server [build failed]\n"}
+{"Time":"2026-06-29T15:22:14.068918741Z","Action":"fail","Package":"github.com/openfga/openfga/pkg/server","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.06888998Z","Action":"start","Package":"github.com/openfga/openfga/pkg/server/commands"}
+{"Time":"2026-06-29T15:22:14.069040014Z","Action":"output","Package":"github.com/openfga/openfga/pkg/server/commands","Output":"FAIL\tgithub.com/openfga/openfga/pkg/server/commands [build failed]\n"}
+{"Time":"2026-06-29T15:22:14.069195238Z","Action":"fail","Package":"github.com/openfga/openfga/pkg/server/commands","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.127382119Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation"}
+{"Time":"2026-06-29T15:22:14.127472562Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation","Output":"=== RUN   TestGetRelation\n"}
+{"Time":"2026-06-29T15:22:14.12880684Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAuthorizationModel"}
+{"Time":"2026-06-29T15:22:14.128839361Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAuthorizationModel","Output":"=== RUN   TestGetRelation/ReadAuthorizationModel\n"}
+{"Time":"2026-06-29T15:22:14.129339665Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAuthorizationModel","Output":"--- PASS: TestGetRelation/ReadAuthorizationModel (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.129384686Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAuthorizationModel","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.129574192Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAuthorizationModels"}
+{"Time":"2026-06-29T15:22:14.129807009Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAuthorizationModels","Output":"=== RUN   TestGetRelation/ReadAuthorizationModels\n"}
+{"Time":"2026-06-29T15:22:14.129994404Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAuthorizationModels","Output":"--- PASS: TestGetRelation/ReadAuthorizationModels (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.130046636Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAuthorizationModels","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.130458357Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Read"}
+{"Time":"2026-06-29T15:22:14.130484818Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Read","Output":"=== RUN   TestGetRelation/Read\n"}
+{"Time":"2026-06-29T15:22:14.130504849Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Read","Output":"--- PASS: TestGetRelation/Read (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.130531329Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Read","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.1305647Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Write"}
+{"Time":"2026-06-29T15:22:14.130575491Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Write","Output":"=== RUN   TestGetRelation/Write\n"}
+{"Time":"2026-06-29T15:22:14.130585561Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Write","Output":"--- PASS: TestGetRelation/Write (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.130603732Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Write","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.130629902Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ListObjects"}
+{"Time":"2026-06-29T15:22:14.130640013Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ListObjects","Output":"=== RUN   TestGetRelation/ListObjects\n"}
+{"Time":"2026-06-29T15:22:14.130650593Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ListObjects","Output":"--- PASS: TestGetRelation/ListObjects (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.130668783Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ListObjects","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.130705154Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/StreamedListObjects"}
+{"Time":"2026-06-29T15:22:14.130726265Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/StreamedListObjects","Output":"=== RUN   TestGetRelation/StreamedListObjects\n"}
+{"Time":"2026-06-29T15:22:14.130754336Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/StreamedListObjects","Output":"--- PASS: TestGetRelation/StreamedListObjects (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.130763636Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/StreamedListObjects","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.130796767Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Check"}
+{"Time":"2026-06-29T15:22:14.130807427Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Check","Output":"=== RUN   TestGetRelation/Check\n"}
+{"Time":"2026-06-29T15:22:14.130824768Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Check","Output":"--- PASS: TestGetRelation/Check (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.130847588Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Check","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.131086785Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/BatchCheck"}
+{"Time":"2026-06-29T15:22:14.131116206Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/BatchCheck","Output":"=== RUN   TestGetRelation/BatchCheck\n"}
+{"Time":"2026-06-29T15:22:14.131790775Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/BatchCheck","Output":"    authz_test.go:60: \n"}
+{"Time":"2026-06-29T15:22:14.131827587Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/BatchCheck","Output":"        \tError Trace:\t/workspace/repo/internal/authz/authz_test.go:60\n"}
+{"Time":"2026-06-29T15:22:14.131864358Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/BatchCheck","Output":"        \tError:      \tReceived unexpected error:\n"}
+{"Time":"2026-06-29T15:22:14.131884518Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/BatchCheck","Output":"        \t            \tunknown API method\n"}
+{"Time":"2026-06-29T15:22:14.131895018Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/BatchCheck","Output":"        \tTest:       \tTestGetRelation/BatchCheck\n"}
+{"Time":"2026-06-29T15:22:14.132438384Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/BatchCheck","Output":"--- FAIL: TestGetRelation/BatchCheck (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.132511106Z","Action":"fail","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/BatchCheck","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.132535807Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ListUsers"}
+{"Time":"2026-06-29T15:22:14.133264528Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ListUsers","Output":"=== RUN   TestGetRelation/ListUsers\n"}
+{"Time":"2026-06-29T15:22:14.133320439Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ListUsers","Output":"--- PASS: TestGetRelation/ListUsers (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.13334682Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ListUsers","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133369971Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/WriteAssertions"}
+{"Time":"2026-06-29T15:22:14.133380771Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/WriteAssertions","Output":"=== RUN   TestGetRelation/WriteAssertions\n"}
+{"Time":"2026-06-29T15:22:14.133392861Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/WriteAssertions","Output":"--- PASS: TestGetRelation/WriteAssertions (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.133403942Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/WriteAssertions","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133413422Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAssertions"}
+{"Time":"2026-06-29T15:22:14.133434173Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAssertions","Output":"=== RUN   TestGetRelation/ReadAssertions\n"}
+{"Time":"2026-06-29T15:22:14.133464143Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAssertions","Output":"--- PASS: TestGetRelation/ReadAssertions (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.133577917Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadAssertions","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133597507Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/WriteAuthorizationModel"}
+{"Time":"2026-06-29T15:22:14.133612778Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/WriteAuthorizationModel","Output":"=== RUN   TestGetRelation/WriteAuthorizationModel\n"}
+{"Time":"2026-06-29T15:22:14.133627628Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/WriteAuthorizationModel","Output":"--- PASS: TestGetRelation/WriteAuthorizationModel (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.133640128Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/WriteAuthorizationModel","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133652689Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/CreateStore"}
+{"Time":"2026-06-29T15:22:14.133661229Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/CreateStore","Output":"=== RUN   TestGetRelation/CreateStore\n"}
+{"Time":"2026-06-29T15:22:14.13367642Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/CreateStore","Output":"--- PASS: TestGetRelation/CreateStore (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.13369264Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/CreateStore","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133704761Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/GetStore"}
+{"Time":"2026-06-29T15:22:14.133715991Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/GetStore","Output":"=== RUN   TestGetRelation/GetStore\n"}
+{"Time":"2026-06-29T15:22:14.133725781Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/GetStore","Output":"--- PASS: TestGetRelation/GetStore (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.133734371Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/GetStore","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133743171Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/DeleteStore"}
+{"Time":"2026-06-29T15:22:14.133751512Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/DeleteStore","Output":"=== RUN   TestGetRelation/DeleteStore\n"}
+{"Time":"2026-06-29T15:22:14.133766152Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/DeleteStore","Output":"--- PASS: TestGetRelation/DeleteStore (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.133775023Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/DeleteStore","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133784693Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Expand"}
+{"Time":"2026-06-29T15:22:14.133793033Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Expand","Output":"=== RUN   TestGetRelation/Expand\n"}
+{"Time":"2026-06-29T15:22:14.133802333Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Expand","Output":"--- PASS: TestGetRelation/Expand (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.133814164Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Expand","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133826354Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadChanges"}
+{"Time":"2026-06-29T15:22:14.133834644Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadChanges","Output":"=== RUN   TestGetRelation/ReadChanges\n"}
+{"Time":"2026-06-29T15:22:14.133848665Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadChanges","Output":"--- PASS: TestGetRelation/ReadChanges (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.133858915Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/ReadChanges","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133873965Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Unknown"}
+{"Time":"2026-06-29T15:22:14.133890866Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Unknown","Output":"=== RUN   TestGetRelation/Unknown\n"}
+{"Time":"2026-06-29T15:22:14.133900166Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Unknown","Output":"--- PASS: TestGetRelation/Unknown (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.133910266Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation/Unknown","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.133924337Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation","Output":"--- FAIL: TestGetRelation (0.01s)\n"}
+{"Time":"2026-06-29T15:22:14.133950028Z","Action":"fail","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetRelation","Elapsed":0.01}
+{"Time":"2026-06-29T15:22:14.134089841Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID"}
+{"Time":"2026-06-29T15:22:14.134168964Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID","Output":"=== RUN   TestGetStoreID\n"}
+{"Time":"2026-06-29T15:22:14.134222755Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID/has_store_ID"}
+{"Time":"2026-06-29T15:22:14.134237596Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID/has_store_ID","Output":"=== RUN   TestGetStoreID/has_store_ID\n"}
+{"Time":"2026-06-29T15:22:14.134251396Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID/has_store_ID","Output":"--- PASS: TestGetStoreID/has_store_ID (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.134262497Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID/has_store_ID","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.134276377Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID/no_config"}
+{"Time":"2026-06-29T15:22:14.134329588Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID/no_config","Output":"=== RUN   TestGetStoreID/no_config\n"}
+{"Time":"2026-06-29T15:22:14.134368249Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID/no_config","Output":"--- PASS: TestGetStoreID/no_config (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.13438088Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID/no_config","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.13439354Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID","Output":"--- PASS: TestGetStoreID (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.134404341Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetStoreID","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.134414471Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore"}
+{"Time":"2026-06-29T15:22:14.134424321Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore","Output":"=== RUN   TestAuthorizeCreateStore\n"}
+{"Time":"2026-06-29T15:22:14.134445482Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/error_when_authorized_errors"}
+{"Time":"2026-06-29T15:22:14.134469883Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/error_when_authorized_errors","Output":"=== RUN   TestAuthorizeCreateStore/error_when_authorized_errors\n"}
+{"Time":"2026-06-29T15:22:14.134508904Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/error_when_authorized_errors","Output":"--- PASS: TestAuthorizeCreateStore/error_when_authorized_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.134615096Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/error_when_authorized_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.134814292Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/error_when_not_authorized"}
+{"Time":"2026-06-29T15:22:14.134830893Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/error_when_not_authorized","Output":"=== RUN   TestAuthorizeCreateStore/error_when_not_authorized\n"}
+{"Time":"2026-06-29T15:22:14.134954946Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/error_when_not_authorized","Output":"--- PASS: TestAuthorizeCreateStore/error_when_not_authorized (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.135037899Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/error_when_not_authorized","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.13508432Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/succeed"}
+{"Time":"2026-06-29T15:22:14.13509631Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/succeed","Output":"=== RUN   TestAuthorizeCreateStore/succeed\n"}
+{"Time":"2026-06-29T15:22:14.135115371Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/succeed","Output":"--- PASS: TestAuthorizeCreateStore/succeed (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.135125201Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore/succeed","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.135146562Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore","Output":"--- PASS: TestAuthorizeCreateStore (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.135156352Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeCreateStore","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.135244455Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores"}
+{"Time":"2026-06-29T15:22:14.135263155Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores","Output":"=== RUN   TestAuthorizeListStores\n"}
+{"Time":"2026-06-29T15:22:14.135302026Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/error_when_authorized_errors"}
+{"Time":"2026-06-29T15:22:14.135324477Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/error_when_authorized_errors","Output":"=== RUN   TestAuthorizeListStores/error_when_authorized_errors\n"}
+{"Time":"2026-06-29T15:22:14.135340948Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/error_when_authorized_errors","Output":"--- PASS: TestAuthorizeListStores/error_when_authorized_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.135356338Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/error_when_authorized_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.13543394Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/error_when_not_authorized"}
+{"Time":"2026-06-29T15:22:14.135458081Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/error_when_not_authorized","Output":"=== RUN   TestAuthorizeListStores/error_when_not_authorized\n"}
+{"Time":"2026-06-29T15:22:14.135477391Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/error_when_not_authorized","Output":"--- PASS: TestAuthorizeListStores/error_when_not_authorized (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.135492252Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/error_when_not_authorized","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.135504162Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/succeed"}
+{"Time":"2026-06-29T15:22:14.135514432Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/succeed","Output":"=== RUN   TestAuthorizeListStores/succeed\n"}
+{"Time":"2026-06-29T15:22:14.135530333Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/succeed","Output":"--- PASS: TestAuthorizeListStores/succeed (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.135539573Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores/succeed","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.135549854Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores","Output":"--- PASS: TestAuthorizeListStores (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.135563414Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorizeListStores","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.135586164Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize"}
+{"Time":"2026-06-29T15:22:14.135594745Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize","Output":"=== RUN   TestAuthorize\n"}
+{"Time":"2026-06-29T15:22:14.135724479Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_given_invalid_api_method"}
+{"Time":"2026-06-29T15:22:14.135744149Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_given_invalid_api_method","Output":"=== RUN   TestAuthorize/error_when_given_invalid_api_method\n"}
+{"Time":"2026-06-29T15:22:14.135758159Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_given_invalid_api_method","Output":"=== PAUSE TestAuthorize/error_when_given_invalid_api_method\n"}
+{"Time":"2026-06-29T15:22:14.13576867Z","Action":"pause","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_given_invalid_api_method"}
+{"Time":"2026-06-29T15:22:14.135831142Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_modules_errors"}
+{"Time":"2026-06-29T15:22:14.135848652Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_modules_errors","Output":"=== RUN   TestAuthorize/error_when_modules_errors\n"}
+{"Time":"2026-06-29T15:22:14.135871213Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_modules_errors","Output":"=== PAUSE TestAuthorize/error_when_modules_errors\n"}
+{"Time":"2026-06-29T15:22:14.135884063Z","Action":"pause","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_modules_errors"}
+{"Time":"2026-06-29T15:22:14.135910794Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_check_errors"}
+{"Time":"2026-06-29T15:22:14.135919804Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_check_errors","Output":"=== RUN   TestAuthorize/error_when_check_errors\n"}
+{"Time":"2026-06-29T15:22:14.135929294Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_check_errors","Output":"=== PAUSE TestAuthorize/error_when_check_errors\n"}
+{"Time":"2026-06-29T15:22:14.135960025Z","Action":"pause","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_check_errors"}
+{"Time":"2026-06-29T15:22:14.136010527Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_unauthorized"}
+{"Time":"2026-06-29T15:22:14.136028667Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_unauthorized","Output":"=== RUN   TestAuthorize/error_when_unauthorized\n"}
+{"Time":"2026-06-29T15:22:14.136054718Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_unauthorized","Output":"=== PAUSE TestAuthorize/error_when_unauthorized\n"}
+{"Time":"2026-06-29T15:22:14.136064798Z","Action":"pause","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_unauthorized"}
+{"Time":"2026-06-29T15:22:14.136222423Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed"}
+{"Time":"2026-06-29T15:22:14.136282264Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed","Output":"=== RUN   TestAuthorize/succeed\n"}
+{"Time":"2026-06-29T15:22:14.136337266Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed","Output":"=== PAUSE TestAuthorize/succeed\n"}
+{"Time":"2026-06-29T15:22:14.136383547Z","Action":"pause","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed"}
+{"Time":"2026-06-29T15:22:14.136403918Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed_with_modules"}
+{"Time":"2026-06-29T15:22:14.136416528Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed_with_modules","Output":"=== RUN   TestAuthorize/succeed_with_modules\n"}
+{"Time":"2026-06-29T15:22:14.136452819Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed_with_modules","Output":"=== PAUSE TestAuthorize/succeed_with_modules\n"}
+{"Time":"2026-06-29T15:22:14.13647561Z","Action":"pause","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed_with_modules"}
+{"Time":"2026-06-29T15:22:14.13648688Z","Action":"cont","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_given_invalid_api_method"}
+{"Time":"2026-06-29T15:22:14.136501381Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_given_invalid_api_method","Output":"=== CONT  TestAuthorize/error_when_given_invalid_api_method\n"}
+{"Time":"2026-06-29T15:22:14.136608144Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_given_invalid_api_method","Output":"--- PASS: TestAuthorize/error_when_given_invalid_api_method (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.136646725Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_given_invalid_api_method","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.136666246Z","Action":"cont","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_unauthorized"}
+{"Time":"2026-06-29T15:22:14.136687846Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_unauthorized","Output":"=== CONT  TestAuthorize/error_when_unauthorized\n"}
+{"Time":"2026-06-29T15:22:14.136701556Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_unauthorized","Output":"--- PASS: TestAuthorize/error_when_unauthorized (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.136712297Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_unauthorized","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.136721827Z","Action":"cont","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed_with_modules"}
+{"Time":"2026-06-29T15:22:14.136744168Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed_with_modules","Output":"=== CONT  TestAuthorize/succeed_with_modules\n"}
+{"Time":"2026-06-29T15:22:14.136758068Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed_with_modules","Output":"--- PASS: TestAuthorize/succeed_with_modules (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.136780859Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed_with_modules","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.136790539Z","Action":"cont","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed"}
+{"Time":"2026-06-29T15:22:14.13680421Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed","Output":"=== CONT  TestAuthorize/succeed\n"}
+{"Time":"2026-06-29T15:22:14.13682456Z","Action":"cont","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_check_errors"}
+{"Time":"2026-06-29T15:22:14.136912013Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_check_errors","Output":"=== CONT  TestAuthorize/error_when_check_errors\n"}
+{"Time":"2026-06-29T15:22:14.136961454Z","Action":"cont","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_modules_errors"}
+{"Time":"2026-06-29T15:22:14.136997745Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_modules_errors","Output":"=== CONT  TestAuthorize/error_when_modules_errors\n"}
+{"Time":"2026-06-29T15:22:14.137011995Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed","Output":"--- PASS: TestAuthorize/succeed (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.137024386Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/succeed","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.137151539Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_check_errors","Output":"--- PASS: TestAuthorize/error_when_check_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.137212381Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_check_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.137245112Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_modules_errors","Output":"--- PASS: TestAuthorize/error_when_modules_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.137258632Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize/error_when_modules_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.137268933Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize","Output":"--- PASS: TestAuthorize (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.137403657Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestAuthorize","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.137458318Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples"}
+{"Time":"2026-06-29T15:22:14.137469509Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples","Output":"=== RUN   TestExtractModulesFromTuples\n"}
+{"Time":"2026-06-29T15:22:14.14064775Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_map_when_no_tuples"}
+{"Time":"2026-06-29T15:22:14.140686821Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_map_when_no_tuples","Output":"=== RUN   TestExtractModulesFromTuples/return_empty_map_when_no_tuples\n"}
+{"Time":"2026-06-29T15:22:14.140721352Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_map_when_no_tuples","Output":"--- PASS: TestExtractModulesFromTuples/return_empty_map_when_no_tuples (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.140738412Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_map_when_no_tuples","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.140754903Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_error_when_objectType_not_found"}
+{"Time":"2026-06-29T15:22:14.140765953Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_error_when_objectType_not_found","Output":"=== RUN   TestExtractModulesFromTuples/return_error_when_objectType_not_found\n"}
+{"Time":"2026-06-29T15:22:14.141167735Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_error_when_objectType_not_found","Output":"--- PASS: TestExtractModulesFromTuples/return_error_when_objectType_not_found (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.141290718Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_error_when_objectType_not_found","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.141876525Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_error_when_GetModuleForObjectTypeRelation_errors"}
+{"Time":"2026-06-29T15:22:14.141940927Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_error_when_GetModuleForObjectTypeRelation_errors","Output":"=== RUN   TestExtractModulesFromTuples/return_error_when_GetModuleForObjectTypeRelation_errors\n"}
+{"Time":"2026-06-29T15:22:14.142881954Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_error_when_GetModuleForObjectTypeRelation_errors","Output":"--- PASS: TestExtractModulesFromTuples/return_error_when_GetModuleForObjectTypeRelation_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.142920825Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_error_when_GetModuleForObjectTypeRelation_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.143076459Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_first_tuple_has_no_modules"}
+{"Time":"2026-06-29T15:22:14.143114931Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_first_tuple_has_no_modules","Output":"=== RUN   TestExtractModulesFromTuples/return_empty_when_first_tuple_has_no_modules\n"}
+{"Time":"2026-06-29T15:22:14.143139021Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_first_tuple_has_no_modules","Output":"--- PASS: TestExtractModulesFromTuples/return_empty_when_first_tuple_has_no_modules (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.143182613Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_first_tuple_has_no_modules","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.143195613Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_any_tuple_has_no_modules"}
+{"Time":"2026-06-29T15:22:14.143314066Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_any_tuple_has_no_modules","Output":"=== RUN   TestExtractModulesFromTuples/return_empty_when_any_tuple_has_no_modules\n"}
+{"Time":"2026-06-29T15:22:14.143375408Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_any_tuple_has_no_modules","Output":"--- PASS: TestExtractModulesFromTuples/return_empty_when_any_tuple_has_no_modules (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.143406609Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_any_tuple_has_no_modules","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.14344175Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_last_tuple_has_no_modules"}
+{"Time":"2026-06-29T15:22:14.143460961Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_last_tuple_has_no_modules","Output":"=== RUN   TestExtractModulesFromTuples/return_empty_when_last_tuple_has_no_modules\n"}
+{"Time":"2026-06-29T15:22:14.143476461Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_last_tuple_has_no_modules","Output":"--- PASS: TestExtractModulesFromTuples/return_empty_when_last_tuple_has_no_modules (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.143485951Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_empty_when_last_tuple_has_no_modules","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.143495642Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_modules"}
+{"Time":"2026-06-29T15:22:14.143524062Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_modules","Output":"=== RUN   TestExtractModulesFromTuples/return_modules\n"}
+{"Time":"2026-06-29T15:22:14.143554233Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_modules","Output":"--- PASS: TestExtractModulesFromTuples/return_modules (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.143637036Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples/return_modules","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.143664496Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples","Output":"--- PASS: TestExtractModulesFromTuples (0.01s)\n"}
+{"Time":"2026-06-29T15:22:14.143690847Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestExtractModulesFromTuples","Elapsed":0.01}
+{"Time":"2026-06-29T15:22:14.14379566Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores"}
+{"Time":"2026-06-29T15:22:14.143820671Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores","Output":"=== RUN   TestListAuthorizedStores\n"}
+{"Time":"2026-06-29T15:22:14.143873222Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/error_when_invalid_claims"}
+{"Time":"2026-06-29T15:22:14.143891463Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/error_when_invalid_claims","Output":"=== RUN   TestListAuthorizedStores/error_when_invalid_claims\n"}
+{"Time":"2026-06-29T15:22:14.144122369Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/error_when_invalid_claims","Output":"--- PASS: TestListAuthorizedStores/error_when_invalid_claims (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.144163721Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/error_when_invalid_claims","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.144196492Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/error_when_list_objects_errors"}
+{"Time":"2026-06-29T15:22:14.144210772Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/error_when_list_objects_errors","Output":"=== RUN   TestListAuthorizedStores/error_when_list_objects_errors\n"}
+{"Time":"2026-06-29T15:22:14.144273334Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/error_when_list_objects_errors","Output":"--- PASS: TestListAuthorizedStores/error_when_list_objects_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.144286514Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/error_when_list_objects_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.144519321Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/succeed"}
+{"Time":"2026-06-29T15:22:14.144584953Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/succeed","Output":"=== RUN   TestListAuthorizedStores/succeed\n"}
+{"Time":"2026-06-29T15:22:14.144625664Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/succeed","Output":"--- PASS: TestListAuthorizedStores/succeed (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.144680685Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores/succeed","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.144698076Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores","Output":"--- PASS: TestListAuthorizedStores (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.144721987Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestListAuthorizedStores","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.144742857Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize"}
+{"Time":"2026-06-29T15:22:14.144752858Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize","Output":"=== RUN   TestIndividualAuthorize\n"}
+{"Time":"2026-06-29T15:22:14.144948513Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/error_when_check_errors"}
+{"Time":"2026-06-29T15:22:14.144999045Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/error_when_check_errors","Output":"=== RUN   TestIndividualAuthorize/error_when_check_errors\n"}
+{"Time":"2026-06-29T15:22:14.145602972Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/error_when_check_errors","Output":"--- PASS: TestIndividualAuthorize/error_when_check_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.145750296Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/error_when_check_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.145925531Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/error_when_unauthorized"}
+{"Time":"2026-06-29T15:22:14.145951082Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/error_when_unauthorized","Output":"=== RUN   TestIndividualAuthorize/error_when_unauthorized\n"}
+{"Time":"2026-06-29T15:22:14.145994493Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/error_when_unauthorized","Output":"--- PASS: TestIndividualAuthorize/error_when_unauthorized (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.146014584Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/error_when_unauthorized","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.146357994Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/succeed"}
+{"Time":"2026-06-29T15:22:14.146399535Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/succeed","Output":"=== RUN   TestIndividualAuthorize/succeed\n"}
+{"Time":"2026-06-29T15:22:14.146662793Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/succeed","Output":"--- PASS: TestIndividualAuthorize/succeed (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.146701414Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize/succeed","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.146749385Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize","Output":"--- PASS: TestIndividualAuthorize (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.146833237Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestIndividualAuthorize","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.14693068Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize"}
+{"Time":"2026-06-29T15:22:14.146996832Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize","Output":"=== RUN   TestModuleAuthorize\n"}
+{"Time":"2026-06-29T15:22:14.147066934Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/return_no_error_when_no_modules"}
+{"Time":"2026-06-29T15:22:14.147079814Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/return_no_error_when_no_modules","Output":"=== RUN   TestModuleAuthorize/return_no_error_when_no_modules\n"}
+{"Time":"2026-06-29T15:22:14.147369283Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/return_no_error_when_no_modules","Output":"--- PASS: TestModuleAuthorize/return_no_error_when_no_modules (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.147395514Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/return_no_error_when_no_modules","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.147427464Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_first_module_errors"}
+{"Time":"2026-06-29T15:22:14.147439645Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_first_module_errors","Output":"=== RUN   TestModuleAuthorize/error_when_first_module_errors\n"}
+{"Time":"2026-06-29T15:22:14.14760662Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_first_module_errors","Output":"--- PASS: TestModuleAuthorize/error_when_first_module_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.147708872Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_first_module_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.147771034Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_last_module_errors"}
+{"Time":"2026-06-29T15:22:14.147831376Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_last_module_errors","Output":"=== RUN   TestModuleAuthorize/error_when_last_module_errors\n"}
+{"Time":"2026-06-29T15:22:14.147897158Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_last_module_errors","Output":"--- PASS: TestModuleAuthorize/error_when_last_module_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.147911928Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_last_module_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.147935819Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_all_modules_error"}
+{"Time":"2026-06-29T15:22:14.148030662Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_all_modules_error","Output":"=== RUN   TestModuleAuthorize/error_when_all_modules_error\n"}
+{"Time":"2026-06-29T15:22:14.148107334Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_all_modules_error","Output":"--- PASS: TestModuleAuthorize/error_when_all_modules_error (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.148143305Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/error_when_all_modules_error","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.148164196Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/succeed"}
+{"Time":"2026-06-29T15:22:14.148173466Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/succeed","Output":"=== RUN   TestModuleAuthorize/succeed\n"}
+{"Time":"2026-06-29T15:22:14.14829884Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/succeed","Output":"--- PASS: TestModuleAuthorize/succeed (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.14831741Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/succeed","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.148349161Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/succeed_when_all_modules_are_allowed"}
+{"Time":"2026-06-29T15:22:14.148374792Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/succeed_when_all_modules_are_allowed","Output":"=== RUN   TestModuleAuthorize/succeed_when_all_modules_are_allowed\n"}
+{"Time":"2026-06-29T15:22:14.148432173Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/succeed_when_all_modules_are_allowed","Output":"--- PASS: TestModuleAuthorize/succeed_when_all_modules_are_allowed (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.148481865Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize/succeed_when_all_modules_are_allowed","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.148858536Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize","Output":"--- PASS: TestModuleAuthorize (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.148881566Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestModuleAuthorize","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.148908527Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest"}
+{"Time":"2026-06-29T15:22:14.149046731Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest","Output":"=== RUN   TestGetModulesForWriteRequest\n"}
+{"Time":"2026-06-29T15:22:14.149069171Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/error_when_write_tuples_errors"}
+{"Time":"2026-06-29T15:22:14.149107163Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/error_when_write_tuples_errors","Output":"=== RUN   TestGetModulesForWriteRequest/error_when_write_tuples_errors\n"}
+{"Time":"2026-06-29T15:22:14.150191454Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/error_when_write_tuples_errors","Output":"--- PASS: TestGetModulesForWriteRequest/error_when_write_tuples_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.150256096Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/error_when_write_tuples_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.150334198Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/error_when_delete_tuples_errors"}
+{"Time":"2026-06-29T15:22:14.150393509Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/error_when_delete_tuples_errors","Output":"=== RUN   TestGetModulesForWriteRequest/error_when_delete_tuples_errors\n"}
+{"Time":"2026-06-29T15:22:14.150428301Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/error_when_delete_tuples_errors","Output":"--- PASS: TestGetModulesForWriteRequest/error_when_delete_tuples_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.150458371Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/error_when_delete_tuples_errors","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.150475472Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_empty_when_a_write_tuple_has_no_modules"}
+{"Time":"2026-06-29T15:22:14.150494152Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_empty_when_a_write_tuple_has_no_modules","Output":"=== RUN   TestGetModulesForWriteRequest/return_empty_when_a_write_tuple_has_no_modules\n"}
+{"Time":"2026-06-29T15:22:14.150524873Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_empty_when_a_write_tuple_has_no_modules","Output":"--- PASS: TestGetModulesForWriteRequest/return_empty_when_a_write_tuple_has_no_modules (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.150641187Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_empty_when_a_write_tuple_has_no_modules","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.15075772Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_empty_when_a_delete_tuple_has_no_modules"}
+{"Time":"2026-06-29T15:22:14.150850693Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_empty_when_a_delete_tuple_has_no_modules","Output":"=== RUN   TestGetModulesForWriteRequest/return_empty_when_a_delete_tuple_has_no_modules\n"}
+{"Time":"2026-06-29T15:22:14.150931575Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_empty_when_a_delete_tuple_has_no_modules","Output":"--- PASS: TestGetModulesForWriteRequest/return_empty_when_a_delete_tuple_has_no_modules (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.15108556Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_empty_when_a_delete_tuple_has_no_modules","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.15110905Z","Action":"run","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_modules"}
+{"Time":"2026-06-29T15:22:14.151120341Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_modules","Output":"=== RUN   TestGetModulesForWriteRequest/return_modules\n"}
+{"Time":"2026-06-29T15:22:14.151142901Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_modules","Output":"--- PASS: TestGetModulesForWriteRequest/return_modules (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.151154651Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest/return_modules","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.151165542Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest","Output":"--- PASS: TestGetModulesForWriteRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:22:14.151176152Z","Action":"pass","Package":"github.com/openfga/openfga/internal/authz","Test":"TestGetModulesForWriteRequest","Elapsed":0}
+{"Time":"2026-06-29T15:22:14.151185722Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:22:14.152337295Z","Action":"output","Package":"github.com/openfga/openfga/internal/authz","Output":"FAIL\tgithub.com/openfga/openfga/internal/authz\t0.083s\n"}
+{"Time":"2026-06-29T15:22:14.152404627Z","Action":"fail","Package":"github.com/openfga/openfga/internal/authz","Elapsed":0.084}
+reward=0 graded=919 found=66 failed=2 parsed=69 framework=go exit_code=1

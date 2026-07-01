@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /go/src/github.com/ovh/cds && go test -json -vet=off ./engine/api/workflow -count=1 -run TestCanBeRun",
+  "test_files": [
+    "engine/api/workflow/dao_run_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/ovh/cds/engine/api/workflow::TestCanBeRun"
+  ],
+  "PASS_TO_PASS": []
+}

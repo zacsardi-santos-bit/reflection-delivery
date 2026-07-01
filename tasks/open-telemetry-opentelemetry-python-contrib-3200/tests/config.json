@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py -v",
+  "test_files": [
+    "instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py",
+    "instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_converse_with_content.yaml",
+    "instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_converse_with_invalid_model.yaml",
+    "instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_content[amazon.nova].yaml",
+    "instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_content[amazon.titan].yaml",
+    "instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_content[anthropic.claude].yaml",
+    "instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_invalid_model.yaml",
+    "instrumentation/opentelemetry-instrumentation-botocore/tests/conftest.py",
+    "instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py"
+  ],
+  "num_test_files": 9,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "instrumentation.opentelemetry-instrumentation-botocore.tests.test_botocore_bedrock::test_invoke_model_with_content[amazon.nova]",
+    "instrumentation.opentelemetry-instrumentation-botocore.tests.test_botocore_bedrock::test_invoke_model_with_content[amazon.titan]",
+    "instrumentation.opentelemetry-instrumentation-botocore.tests.test_botocore_bedrock::test_invoke_model_with_content[anthropic.claude]",
+    "instrumentation.opentelemetry-instrumentation-botocore.tests.test_botocore_bedrock::test_invoke_model_with_invalid_model"
+  ],
+  "PASS_TO_PASS": [
+    "instrumentation.opentelemetry-instrumentation-botocore.tests.test_botocore_bedrock::test_converse_with_content",
+    "instrumentation.opentelemetry-instrumentation-botocore.tests.test_botocore_bedrock::test_converse_with_invalid_model"
+  ]
+}

@@ -1,0 +1,3719 @@
+diff --git a/cli/cdsctl/config.go b/cli/cdsctl/config.go
+index e3375a238..deb0f197c 100644
+--- a/cli/cdsctl/config.go
++++ b/cli/cdsctl/config.go
+@@ -2,41 +2,35 @@ package main
+ 
+ import (
+ 	"fmt"
++	"io/ioutil"
+ 	"os"
++	"os/user"
+ 	"path"
+-	"runtime"
+ 	"strconv"
+ 
++	"github.com/BurntSushi/toml"
++
+ 	"github.com/ovh/cds/sdk/cdsclient"
++	"github.com/ovh/cds/sdk/keychain"
+ )
+ 
+ type config struct {
+ 	Host                  string
+-	User                  string
+-	Token                 string
++	user                  string
++	token                 string
+ 	InsecureSkipVerifyTLS bool
+ }
+ 
+-func userHomeDir() string {
+-	env := "HOME"
+-	if runtime.GOOS == "windows" {
+-		env = "USERPROFILE"
+-	} else if runtime.GOOS == "plan9" {
+-		env = "home"
+-	}
+-	return os.Getenv(env)
+-}
+-
+ func loadConfig(configFile string) (*cdsclient.Config, error) {
+ 	var verbose = os.Getenv("CDS_VERBOSE") == "true"
+ 
+ 	c := &config{}
+ 	c.Host = os.Getenv("CDS_API_URL")
+-	c.User = os.Getenv("CDS_USER")
+-	c.Token = os.Getenv("CDS_TOKEN")
++	c.user = os.Getenv("CDS_USER")
++	c.token = os.Getenv("CDS_TOKEN")
+ 	c.InsecureSkipVerifyTLS, _ = strconv.ParseBool(os.Getenv("CDS_INSECURE"))
+ 
+-	if c.Host != "" && c.User != "" {
++	if c.Host != "" && c.user != "" {
+ 		if verbose {
+ 			fmt.Println("Configuration loaded from environment variables")
+ 		}
+@@ -47,7 +41,10 @@ func loadConfig(configFile string) (*cdsclient.Config, error) {
+ 		return nil, err
+ 	}
+ 
+-	homedir := userHomeDir()
++	u, err := user.Current()
++	if err != nil {
++		return nil, err
++	}
+ 
+ 	var configFiles []string
+ 	if configFile != "" {
+@@ -55,29 +52,23 @@ func loadConfig(configFile string) (*cdsclient.Config, error) {
+ 	} else {
+ 		configFiles = []string{
+ 			path.Join(dir, ".cdsrc"),
+-			path.Join(homedir, ".cdsrc"),
++			path.Join(u.HomeDir, ".cdsrc"),
+ 		}
+ 	}
+ 
+ 	var i int
+ 	for c.Host == "" && i < len(configFiles) {
+ 		if _, err := os.Stat(configFiles[i]); err == nil {
+-			f, err := os.Open(configFiles[i])
++			b, err := ioutil.ReadFile(configFiles[i])
+ 			if err != nil {
+ 				if verbose {
+ 					fmt.Printf("Unable to read %s \n", configFiles[i])
+ 				}
+ 				return nil, err
+ 			}
+-			defer f.Close()
+-
+-			if err := loadSecret(f, c); err != nil {
+-				if verbose {
+-					fmt.Printf("Unable to load configuration %s \n", configFiles[i])
+-				}
++			if _, err := toml.Decode(string(b), c); err != nil {
+ 				return nil, err
+ 			}
+-
+ 			if verbose {
+ 				fmt.Println("Configuration loaded from", configFiles[i])
+ 			}
+@@ -91,10 +82,20 @@ func loadConfig(configFile string) (*cdsclient.Config, error) {
+ 
+ 	conf := &cdsclient.Config{
+ 		Host:    c.Host,
+-		User:    c.User,
+-		Token:   c.Token,
++		User:    c.user,
++		Token:   c.token,
+ 		Verbose: verbose,
+ 	}
+ 
+ 	return conf, nil
+ }
++
++func loadClient(c *cdsclient.Config) (cdsclient.Interface, error) {
++	user, secret, err := keychain.GetSecret(c.Host)
++	if err != nil {
++		return nil, err
++	}
++	c.User = user
++	c.Token = secret
++	return cdsclient.New(*c), nil
++}
+diff --git a/cli/cdsctl/configstore.go b/cli/cdsctl/configstore.go
+deleted file mode 100644
+index 0db880595..000000000
+--- a/cli/cdsctl/configstore.go
++++ /dev/null
+@@ -1,19 +0,0 @@
+-// +build dragonfly freebsd netbsd openbsd linux,386
+-
+-package main
+-
+-import (
+-	"io"
+-
+-	toml "github.com/pelletier/go-toml"
+-)
+-
+-func storeSecret(configFile io.Writer, c *config) error {
+-	enc := toml.NewEncoder(configFile)
+-	return enc.Encode(c)
+-}
+-
+-func loadSecret(configFile io.Reader, c *config) error {
+-	dec := toml.NewDecoder(configFile)
+-	return dec.Decode(c)
+-}
+diff --git a/cli/cdsctl/configstore_darwin.go b/cli/cdsctl/configstore_darwin.go
+deleted file mode 100644
+index b1534a6f9..000000000
+--- a/cli/cdsctl/configstore_darwin.go
++++ /dev/null
+@@ -1,35 +0,0 @@
+-package main
+-
+-import (
+-	"io"
+-
+-	toml "github.com/pelletier/go-toml"
+-
+-	"github.com/ovh/cds/sdk/keychain"
+-)
+-
+-func storeSecret(configFile io.Writer, c *config) error {
+-	storedConf := *c
+-	storedConf.Token = "xxxxxxxx"
+-	enc := toml.NewEncoder(configFile)
+-	if err := enc.Encode(&storedConf); err != nil {
+-		return err
+-	}
+-	return keychain.StoreSecret(c.Host, c.User, c.Token)
+-}
+-
+-func loadSecret(configFile io.Reader, c *config) error {
+-	dec := toml.NewDecoder(configFile)
+-	if err := dec.Decode(c); err != nil {
+-		return err
+-	}
+-
+-	username, token, err := keychain.GetSecret(c.Host)
+-	if err != nil {
+-		return err
+-	}
+-
+-	c.Token = token
+-	c.User = username
+-	return nil
+-}
+diff --git a/cli/cdsctl/configstore_linux_amd64.go b/cli/cdsctl/configstore_linux_amd64.go
+deleted file mode 100644
+index b1534a6f9..000000000
+--- a/cli/cdsctl/configstore_linux_amd64.go
++++ /dev/null
+@@ -1,35 +0,0 @@
+-package main
+-
+-import (
+-	"io"
+-
+-	toml "github.com/pelletier/go-toml"
+-
+-	"github.com/ovh/cds/sdk/keychain"
+-)
+-
+-func storeSecret(configFile io.Writer, c *config) error {
+-	storedConf := *c
+-	storedConf.Token = "xxxxxxxx"
+-	enc := toml.NewEncoder(configFile)
+-	if err := enc.Encode(&storedConf); err != nil {
+-		return err
+-	}
+-	return keychain.StoreSecret(c.Host, c.User, c.Token)
+-}
+-
+-func loadSecret(configFile io.Reader, c *config) error {
+-	dec := toml.NewDecoder(configFile)
+-	if err := dec.Decode(c); err != nil {
+-		return err
+-	}
+-
+-	username, token, err := keychain.GetSecret(c.Host)
+-	if err != nil {
+-		return err
+-	}
+-
+-	c.Token = token
+-	c.User = username
+-	return nil
+-}
+diff --git a/cli/cdsctl/configstore_windows.go b/cli/cdsctl/configstore_windows.go
+deleted file mode 100644
+index b1534a6f9..000000000
+--- a/cli/cdsctl/configstore_windows.go
++++ /dev/null
+@@ -1,35 +0,0 @@
+-package main
+-
+-import (
+-	"io"
+-
+-	toml "github.com/pelletier/go-toml"
+-
+-	"github.com/ovh/cds/sdk/keychain"
+-)
+-
+-func storeSecret(configFile io.Writer, c *config) error {
+-	storedConf := *c
+-	storedConf.Token = "xxxxxxxx"
+-	enc := toml.NewEncoder(configFile)
+-	if err := enc.Encode(&storedConf); err != nil {
+-		return err
+-	}
+-	return keychain.StoreSecret(c.Host, c.User, c.Token)
+-}
+-
+-func loadSecret(configFile io.Reader, c *config) error {
+-	dec := toml.NewDecoder(configFile)
+-	if err := dec.Decode(c); err != nil {
+-		return err
+-	}
+-
+-	username, token, err := keychain.GetSecret(c.Host)
+-	if err != nil {
+-		return err
+-	}
+-
+-	c.Token = token
+-	c.User = username
+-	return nil
+-}
+diff --git a/cli/cdsctl/login.go b/cli/cdsctl/login.go
+index 4960a45b9..134407704 100644
+--- a/cli/cdsctl/login.go
++++ b/cli/cdsctl/login.go
+@@ -1,17 +1,22 @@
+ package main
+ 
+ import (
++	"bytes"
+ 	"fmt"
++	"io/ioutil"
+ 	"os"
++	"os/user"
+ 	"path"
+ 	"reflect"
+ 	"regexp"
+ 	"runtime"
+ 
+ 	"github.com/howeyc/gopass"
++	"github.com/naoina/toml"
+ 
+ 	"github.com/ovh/cds/cli"
+ 	"github.com/ovh/cds/sdk/cdsclient"
++	"github.com/ovh/cds/sdk/keychain"
+ )
+ 
+ var loginCmd = cli.Command{
+@@ -114,38 +119,35 @@ func doLogin(url, username, password string, env bool) error {
+ 	}
+ 
+ 	if configFile == "" {
+-		homedir := userHomeDir()
+-		configFile = path.Join(homedir, ".cdsrc")
++		u, err := user.Current()
++		if err != nil {
++			return err
++		}
++		configFile = path.Join(u.HomeDir, ".cdsrc")
+ 		fmt.Printf("You didn't specify config file location; %s will be used.\n", configFile)
+ 	}
+ 
+-	var errfi error
+-	var fi *os.File
+-
+ 	//Check if file exists
+ 	if _, err := os.Stat(configFile); err == nil {
+ 		if !cli.AskForConfirmation(fmt.Sprintf("File %s exists, do you want to overwrite?", configFile)) {
+ 			return fmt.Errorf("aborted")
+ 		}
+-		fi, errfi = os.OpenFile(configFile, os.O_RDWR, os.FileMode(0600))
+-	} else {
+-		fi, errfi = os.Create(configFile)
+-	}
+-
+-	if errfi != nil {
+-		return errfi
+ 	}
+ 
+ 	tomlConf := config{
+ 		Host: url,
+ 		InsecureSkipVerifyTLS: insecureSkipVerifyTLS,
+-		User:  username,
+-		Token: token,
++	}
++	var buf = new(bytes.Buffer)
++	e := toml.NewEncoder(buf)
++	if err := e.Encode(tomlConf); err != nil {
++		return err
++	}
++	if err := ioutil.WriteFile(configFile, buf.Bytes(), os.FileMode(0644)); err != nil {
++		return err
+ 	}
+ 
+-	defer fi.Close()
+-
+-	if err := storeSecret(fi, &tomlConf); err != nil {
++	if err := keychain.StoreSecret(url, username, token); err != nil {
+ 		return err
+ 	}
+ 
+diff --git a/cli/cdsctl/main.go b/cli/cdsctl/main.go
+index ce96b00a5..cee0cca28 100644
+--- a/cli/cdsctl/main.go
++++ b/cli/cdsctl/main.go
+@@ -51,7 +51,7 @@ func main() {
+ 	root.PersistentFlags().BoolVarP(&noWarnings, "no-warnings", "w", false, "do not display warnings")
+ 	root.PersistentFlags().BoolVarP(&insecureSkipVerifyTLS, "insecure", "k", false, `(SSL) This option explicitly allows curl to perform "insecure" SSL connections and transfers.`)
+ 	root.PersistentPreRun = func(cmd *cobra.Command, args []string) {
+-		//Do not load config on login
++		//Do not load config nor display warnings on login
+ 		if cmd == login || cmd == signup || (cmd.Run == nil && cmd.RunE == nil) {
+ 			return
+ 		}
+@@ -60,7 +60,12 @@ func main() {
+ 		cfg, err = loadConfig(configFile)
+ 		cli.ExitOnError(err, login.Help)
+ 
+-		client = cdsclient.New(*cfg)
++		if cfg.Host != "" && cfg.User != "" && cfg.Token != "" {
++			client = cdsclient.New(*cfg)
++		} else {
++			client, err = loadClient(cfg)
++			cli.ExitOnError(err)
++		}
+ 	}
+ 
+ 	if err := root.Execute(); err != nil {
+diff --git a/cli/cdsctl/update.go b/cli/cdsctl/update.go
+index f6d6ab5ff..853757563 100644
+--- a/cli/cdsctl/update.go
++++ b/cli/cdsctl/update.go
+@@ -44,7 +44,7 @@ func updateRun(v cli.Values) error {
+ 
+ 	resp, err := http.Get(urlBinary)
+ 	if err != nil {
+-		return fmt.Errorf("error while getting binary from CDS API: %v", err)
++		return fmt.Errorf("Error while getting binary from CDS API: %s\n", err)
+ 	}
+ 	defer resp.Body.Close()
+ 
+diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+index e651c9bcf..d77cec3b2 100644
+--- a/contrib/plugins/Makefile
++++ b/contrib/plugins/Makefile
+@@ -4,7 +4,7 @@ VERSION := $(if ${CDS_SEMVER},${CDS_SEMVER},snapshot)
+ 
+ TARGET_DIR = ./dist
+ TARGET_BINARY = cds-
+-TARGET_LDFLAGS = -ldflags "-X main.VERSION=$(VERSION)"
++TARGET_LDFLAGS = -ldflags "-X github.com/ovh/cds/sdk.VERSION=$(VERSION)"
+ TARGET_OS = $(if ${OS},${OS},windows darwin linux freebsd)
+ TARGET_ARCH = $(if ${ARCH},${ARCH},amd64 arm 386)
+ 
+diff --git a/contrib/plugins/plugin-marathon/marathon.go b/contrib/plugins/plugin-marathon/marathon.go
+index 39bb37c2c..7380c69e2 100644
+--- a/contrib/plugins/plugin-marathon/marathon.go
++++ b/contrib/plugins/plugin-marathon/marathon.go
+@@ -19,7 +19,6 @@ import (
+ 	"github.com/gambol99/go-marathon"
+ 	"github.com/xeipuuv/gojsonschema"
+ 
+-	"github.com/ovh/cds/sdk/interpolate"
+ 	"github.com/ovh/cds/sdk/plugin"
+ )
+ 
+@@ -290,7 +289,7 @@ func tmplApplicationConfigFile(a plugin.IJob, filepath string) (string, error) {
+ 	}
+ 
+ 	// apply cds.var on marathon.json file
+-	out, errapp := interpolate.Do(string(buff), a.Arguments().Data)
++	out, errapp := plugin.ApplyArguments(a.Arguments().Data, buff)
+ 	if errapp != nil {
+ 		plugin.SendLog(a, "Apply cds variables error: %s\n", errapp)
+ 		return "", errapp
+@@ -305,7 +304,7 @@ func tmplApplicationConfigFile(a plugin.IJob, filepath string) (string, error) {
+ 	outPath := outfile.Name()
+ 
+ 	// write new content in new marathon.json
+-	if _, errw := outfile.Write([]byte(out)); errw != nil {
++	if _, errw := outfile.Write(out); errw != nil {
+ 		plugin.SendLog(a, "Error writing content to file: %s\n", errw.Error())
+ 		return "", errw
+ 	}
+diff --git a/engine/api/workflow/dao_run.go b/engine/api/workflow/dao_run.go
+index 4661caf7a..eeb9af8ab 100644
+--- a/engine/api/workflow/dao_run.go
++++ b/engine/api/workflow/dao_run.go
+@@ -286,6 +286,7 @@ func loadRun(db gorp.SqlExecutor, withArtifacts bool, query string, args ...inte
+ 		if wr.WorkflowNodeRuns == nil {
+ 			wr.WorkflowNodeRuns = make(map[int64][]sdk.WorkflowNodeRun)
+ 		}
++		wnr.CanBeRun = canBeRun(&wr, wnr)
+ 
+ 		if withArtifacts {
+ 			arts, errA := loadArtifactByNodeRunID(db, wnr.ID)
+@@ -313,6 +314,36 @@ func loadRun(db gorp.SqlExecutor, withArtifacts bool, query string, args ...inte
+ 	return &wr, nil
+ }
+ 
++//TODO: if no bugs are found, it could be used to refactor process.go
++// canBeRun return boolean to know if a wokrflow node run can be run or not
++func canBeRun(workflowRun *sdk.WorkflowRun, workflowNodeRun *sdk.WorkflowNodeRun) bool {
++	if !sdk.StatusIsTerminated(workflowNodeRun.Status) {
++		return false
++	}
++	if workflowRun == nil {
++		return false
++	}
++	node := workflowRun.Workflow.GetNode(workflowNodeRun.WorkflowNodeID)
++	if node == nil {
++		return true
++	}
++
++	ancestorsID := node.Ancestors(&workflowRun.Workflow, true)
++	if ancestorsID == nil || len(ancestorsID) == 0 {
++		return true
++	}
++
++	for _, ancestorID := range ancestorsID {
++		nodeRuns, ok := workflowRun.WorkflowNodeRuns[ancestorID]
++		if ok && (len(nodeRuns) == 0 || !sdk.StatusIsTerminated(nodeRuns[0].Status) ||
++			nodeRuns[0].Status == "" || nodeRuns[0].Status == sdk.StatusNeverBuilt.String()) {
++			return false
++		}
++	}
++
++	return true
++}
++
+ func loadTagsByRunID(db gorp.SqlExecutor, runID int64) ([]sdk.WorkflowRunTag, error) {
+ 	tags := []sdk.WorkflowRunTag{}
+ 	dbTags := []sdk.WorkflowRunTag{}
+diff --git a/engine/api/workflow/process_parameters.go b/engine/api/workflow/process_parameters.go
+index 22705c742..4ad303616 100644
+--- a/engine/api/workflow/process_parameters.go
++++ b/engine/api/workflow/process_parameters.go
+@@ -11,7 +11,6 @@ import (
+ 	"github.com/ovh/cds/engine/api/cache"
+ 	"github.com/ovh/cds/engine/api/repositoriesmanager"
+ 	"github.com/ovh/cds/sdk"
+-	"github.com/ovh/cds/sdk/interpolate"
+ 	"github.com/ovh/cds/sdk/log"
+ )
+ 
+@@ -24,7 +23,7 @@ func getNodeJobRunParameters(db gorp.SqlExecutor, j sdk.Job, run *sdk.WorkflowNo
+ 	errm := &sdk.MultiError{}
+ 
+ 	for k, v := range tmp {
+-		s, err := interpolate.Do(v, tmp)
++		s, err := sdk.Interpolate(v, tmp)
+ 		if err != nil {
+ 			errm.Append(err)
+ 			continue
+@@ -213,7 +212,7 @@ func getNodeRunBuildParameters(db gorp.SqlExecutor, store cache.Store, proj *sdk
+ 
+ 	params = []sdk.Parameter{}
+ 	for k, v := range tmp {
+-		s, err := interpolate.Do(v, tmp)
++		s, err := sdk.Interpolate(v, tmp)
+ 		if err != nil {
+ 			errm.Append(err)
+ 			continue
+diff --git a/engine/api/workflow/process_requirements.go b/engine/api/workflow/process_requirements.go
+index 92c44ebaf..efcd11e63 100644
+--- a/engine/api/workflow/process_requirements.go
++++ b/engine/api/workflow/process_requirements.go
+@@ -7,7 +7,6 @@ import (
+ 	"github.com/go-gorp/gorp"
+ 
+ 	"github.com/ovh/cds/sdk"
+-	"github.com/ovh/cds/sdk/interpolate"
+ )
+ 
+ func getNodeJobRunRequirements(db gorp.SqlExecutor, j sdk.Job, run *sdk.WorkflowNodeRun) ([]sdk.Requirement, *sdk.MultiError) {
+@@ -20,12 +19,12 @@ func getNodeJobRunRequirements(db gorp.SqlExecutor, j sdk.Job, run *sdk.Workflow
+ 	}
+ 
+ 	for _, v := range j.Action.Requirements {
+-		name, errName := interpolate.Do(v.Name, tmp)
++		name, errName := sdk.Interpolate(v.Name, tmp)
+ 		if errName != nil {
+ 			errm.Append(errName)
+ 			continue
+ 		}
+-		value, errValue := interpolate.Do(v.Value, tmp)
++		value, errValue := sdk.Interpolate(v.Value, tmp)
+ 		if errValue != nil {
+ 			errm.Append(errValue)
+ 			continue
+diff --git a/engine/worker/cmd_tmpl.go b/engine/worker/cmd_tmpl.go
+index 3af1b8b0c..42a8682ee 100644
+--- a/engine/worker/cmd_tmpl.go
++++ b/engine/worker/cmd_tmpl.go
+@@ -13,7 +13,6 @@ import (
+ 	"github.com/spf13/cobra"
+ 
+ 	"github.com/ovh/cds/sdk"
+-	"github.com/ovh/cds/sdk/interpolate"
+ 	"github.com/ovh/cds/sdk/log"
+ )
+ 
+@@ -103,7 +102,7 @@ func (wk *currentWorker) tmplHandler(w http.ResponseWriter, r *http.Request) {
+ 
+ 	vars := sdk.ParametersToMap(wk.currentJob.params)
+ 
+-	res, err := interpolate.Do(string(btes), vars)
++	res, err := sdk.Interpolate(string(btes), vars)
+ 	if err != nil {
+ 		log.Error("Unable to interpolate: %v", err)
+ 		newError := sdk.NewError(sdk.ErrWrongRequest, err)
+diff --git a/sdk/interpolate/interpolate.go b/sdk/interpolate.go
+similarity index 93%
+rename from sdk/interpolate/interpolate.go
+rename to sdk/interpolate.go
+index 61dcc2e37..4dc79aa01 100644
+--- a/sdk/interpolate/interpolate.go
++++ b/sdk/interpolate.go
+@@ -1,4 +1,4 @@
+-package interpolate
++package sdk
+ 
+ import (
+ 	"bytes"
+@@ -10,8 +10,8 @@ import (
+ 
+ var interpolateRegex = regexp.MustCompile("({{\\.[a-zA-Z0-9._\\-µ|\\s]+}})")
+ 
+-// Do returns interpolated input with vars
+-func Do(input string, vars map[string]string) (string, error) {
++// Interpolate returns interpolated input with vars
++func Interpolate(input string, vars map[string]string) (string, error) {
+ 	if !strings.Contains(input, "{{") {
+ 		return input, nil
+ 	}
+@@ -43,7 +43,7 @@ func Do(input string, vars map[string]string) (string, error) {
+ 			if len(sm[i]) > 0 {
+ 				e := sm[i][1][2 : len(sm[i][1])-2]
+ 				// alreadyReplaced: check if var is already replaced.
+-				// see test "two same unknown" on DoTest
++				// see test "two same unknown" on InterpolateTest
+ 				if _, ok := alreadyReplaced[sm[i][1]]; !ok {
+ 					if _, ok := defaults[e]; !ok {
+ 						// replace {{.cds.foo.bar}} with {{ default "{{.cds.foo.bar}}" .cds.foo.bar}}
+diff --git a/sdk/interpolate/interpolate_helper.go b/sdk/interpolate_helper.go
+similarity index 97%
+rename from sdk/interpolate/interpolate_helper.go
+rename to sdk/interpolate_helper.go
+index be6b03276..35c070861 100644
+--- a/sdk/interpolate/interpolate_helper.go
++++ b/sdk/interpolate_helper.go
+@@ -1,4 +1,4 @@
+-package interpolate
++package sdk
+ 
+ // This functions come from https://github.com/Masterminds/sprig
+ // Copyright (C) 2013 Masterminds
+@@ -62,7 +62,6 @@ func init() {
+ 		"toPrettyJson": toPrettyJson,
+ 		"b64enc":       base64encode,
+ 		"b64dec":       base64decode,
+-		"escape":       escape,
+ 	}
+ }
+ 
+@@ -311,10 +310,3 @@ func substring(start, length int, s string) string {
+ 	}
+ 	return s[start:length]
+ }
+-
+-func escape(s string) string {
+-	s1 := strings.Replace(s, "_", "-", -1)
+-	s1 = strings.Replace(s1, "/", "-", -1)
+-	s1 = strings.Replace(s1, ".", "-", -1)
+-	return s1
+-}
+diff --git a/sdk/interpolate/interpolate_test.go b/sdk/interpolate_test.go
+similarity index 89%
+rename from sdk/interpolate/interpolate_test.go
+rename to sdk/interpolate_test.go
+index 29e48a17e..085c20698 100644
+--- a/sdk/interpolate/interpolate_test.go
++++ b/sdk/interpolate_test.go
+@@ -1,11 +1,11 @@
+-package interpolate
++package sdk
+ 
+ import (
+ 	"fmt"
+ 	"testing"
+ )
+ 
+-func BenchmarkDo(b *testing.B) {
++func BenchmarkInterpolate(b *testing.B) {
+ 	for n := 0; n < b.N; n++ {
+ 
+ 		type args struct {
+@@ -36,11 +36,11 @@ func BenchmarkDo(b *testing.B) {
+ 			test.args.vars[fmt.Sprintf("%d", i)] = fmt.Sprintf(">>%d<<", i)
+ 		}
+ 
+-		Do(test.args.input, test.args.vars)
++		Interpolate(test.args.input, test.args.vars)
+ 	}
+ }
+ 
+-func BenchmarkDoNothing(b *testing.B) {
++func BenchmarkInterpolateNothing(b *testing.B) {
+ 	for n := 0; n < b.N; n++ {
+ 
+ 		type args struct {
+@@ -64,12 +64,12 @@ func BenchmarkDoNothing(b *testing.B) {
+ 			test.args.vars[fmt.Sprintf("%d", i)] = fmt.Sprintf(">>%d<<", i)
+ 		}
+ 
+-		Do(test.args.input, test.args.vars)
++		Interpolate(test.args.input, test.args.vars)
+ 
+ 	}
+ }
+ 
+-func TestDo(t *testing.T) {
++func TestInterpolate(t *testing.T) {
+ 	type args struct {
+ 		input string
+ 		vars  map[string]string
+@@ -176,20 +176,6 @@ func TestDo(t *testing.T) {
+ 			},
+ 			want: `"METRICS_WRITE_TOKEN": "valueKey"`,
+ 		},
+-		{
+-			name: "espace func",
+-			args: args{
+-				input: `a {{.cds.foo}} here, {{.cds.title | title}}, {{.cds.upper | upper}}, {{.cds.lower | lower}}, {{.cds.escape | escape}}`,
+-				vars: map[string]string{
+-					"cds.foo":    "valbar",
+-					"cds.title":  "mytitle-bis",
+-					"cds.upper":  "toupper",
+-					"cds.lower":  "TOLOWER",
+-					"cds.escape": "a/b.c_d",
+-				},
+-			},
+-			want: `a valbar here, Mytitle-Bis, TOUPPER, tolower, a-b-c-d`,
+-		},
+ 		{
+ 			name: "config",
+ 			args: args{
+@@ -223,13 +209,13 @@ func TestDo(t *testing.T) {
+ 	}
+ 	for _, tt := range tests {
+ 		t.Run(tt.name, func(t *testing.T) {
+-			got, err := Do(tt.args.input, tt.args.vars)
++			got, err := Interpolate(tt.args.input, tt.args.vars)
+ 			if (err != nil) != tt.wantErr {
+-				t.Errorf("Do() error = %v, wantErr %v", err, tt.wantErr)
++				t.Errorf("Interpolate() error = %v, wantErr %v", err, tt.wantErr)
+ 				return
+ 			}
+ 			if got != tt.want {
+-				t.Errorf("Do() = %v, want %v", got, tt.want)
++				t.Errorf("Interpolate() = %v, want %v", got, tt.want)
+ 			}
+ 		})
+ 	}
+diff --git a/sdk/keychain/keychain_darwin_test.go b/sdk/keychain/keychain_darwin_test.go
+new file mode 100644
+index 000000000..4fb21216c
+--- /dev/null
++++ b/sdk/keychain/keychain_darwin_test.go
+@@ -0,0 +1,22 @@
++package keychain
++
++import (
++	"testing"
++
++	"github.com/stretchr/testify/assert"
++)
++
++func Test_StoreSecret(t *testing.T) {
++	err := StoreSecret("http://test.url.local", "username", "password")
++	assert.NoError(t, err)
++
++	username, secret, err := GetSecret("http://test.url.local")
++	assert.NoError(t, err)
++	assert.Equal(t, "username", username)
++	assert.Equal(t, "password", secret)
++}
++
++func Test_EmptyStoreSecret(t *testing.T) {
++	_, _, err := GetSecret("http://test.url.local.empty")
++	assert.Error(t, err)
++}
+diff --git a/sdk/keychain/keychain_linux_test.go b/sdk/keychain/keychain_linux_test.go
+new file mode 100644
+index 000000000..d2289c93c
+--- /dev/null
++++ b/sdk/keychain/keychain_linux_test.go
+@@ -0,0 +1,38 @@
++package keychain
++
++import (
++	"testing"
++
++	"os"
++
++	"github.com/stretchr/testify/assert"
++)
++
++func Test_checkLibSecretAvailable(t *testing.T) {
++	checkLibSecretAvailable()
++}
++
++func Test_StoreSecret(t *testing.T) {
++	//If we are runnig inside a CDS worker. Skip the test
++	if os.Getenv("CDS_KEY") != "" {
++		t.SkipNow()
++	}
++
++	err := StoreSecret("http://test.url.local", "username", "password")
++	assert.NoError(t, err)
++
++	username, secret, err := GetSecret("http://test.url.local")
++	assert.NoError(t, err)
++	assert.Equal(t, "username", username)
++	assert.Equal(t, "password", secret)
++}
++
++func Test_EmptyStoreSecret(t *testing.T) {
++	//If we are runnig inside a CDS worker. Skip the test
++	if os.Getenv("CDS_KEY") != "" {
++		t.SkipNow()
++	}
++
++	_, _, err := GetSecret("http://test.url.local.empty")
++	assert.Error(t, err)
++}
+diff --git a/sdk/keychain/keychain_windows.go b/sdk/keychain/keychain_windows.go
+deleted file mode 100644
+index baf7a805d..000000000
+--- a/sdk/keychain/keychain_windows.go
++++ /dev/null
+@@ -1,26 +0,0 @@
+-package keychain
+-
+-import (
+-	"github.com/docker/docker-credential-helpers/credentials"
+-	"github.com/docker/docker-credential-helpers/wincred"
+-)
+-
+-//StoreSecret store a credential through wincred
+-func StoreSecret(url, username, secret string) error {
+-	var nativeStore = wincred.Wincred{}
+-
+-	c := &credentials.Credentials{
+-		ServerURL: url,
+-		Username:  username,
+-		Secret:    secret,
+-	}
+-
+-	return nativeStore.Add(c)
+-}
+-
+-//GetSecret rerieves a credential through wincred
+-func GetSecret(url string) (username string, secret string, err error) {
+-	var nativeStore = secretservice.Wincred{}
+-	username, secret, err = nativeStore.Get(url)
+-	return
+-}
+diff --git a/sdk/keychain/types.go b/sdk/keychain/types.go
+index 7e2fd6ea8..8cd434e92 100644
+--- a/sdk/keychain/types.go
++++ b/sdk/keychain/types.go
+@@ -1,14 +1,6 @@
+ package keychain
+ 
+-import (
+-	"fmt"
+-
+-	"github.com/docker/docker-credential-helpers/credentials"
+-)
+-
+-func init() {
+-	credentials.CredsLabel = "CDS Credentials"
+-}
++import "fmt"
+ 
+ // Errors
+ var (
+diff --git a/sdk/plugin/common.go b/sdk/plugin/common.go
+index 2d28be300..e93f18d78 100644
+--- a/sdk/plugin/common.go
++++ b/sdk/plugin/common.go
+@@ -20,6 +20,8 @@ import (
+ 	"github.com/golang/protobuf/ptypes"
+ 	"github.com/golang/protobuf/ptypes/timestamp"
+ 	"github.com/spf13/cobra"
++
++	"github.com/ovh/cds/sdk"
+ )
+ 
+ //HTTP Constants
+@@ -88,10 +90,18 @@ func (*Common) Version() string {
+ 
+ // Main func call by plugin, display info only
+ func Main(p CDSAction) {
++	var format string
++
+ 	var cmdInfo = &cobra.Command{
+ 		Use:   "info",
+-		Short: "info: Print plugin Information anything to the screen",
++		Short: "Print plugin Information anything to the screen: info --format <yml>",
+ 		Run: func(cmd *cobra.Command, args []string) {
++			if format != "markdown" {
++				if err := sdk.Output(format, p, fmt.Printf); err != nil {
++					fmt.Printf("Error:%s", err)
++				}
++				return
++			}
+ 			fmt.Print(InfoMarkdown(p))
+ 		},
+ 	}
+@@ -100,10 +110,12 @@ func Main(p CDSAction) {
+ 		Use:   "version",
+ 		Short: "Print plugin version",
+ 		Run: func(cmd *cobra.Command, args []string) {
+-			fmt.Printf("CDS Plugin version:%s os:%s architecture:%s\n", VERSION, runtime.GOOS, runtime.GOARCH)
++			fmt.Printf("CDS Plugin version:%s os:%s architecture:%s\n", sdk.VERSION, runtime.GOOS, runtime.GOARCH)
+ 		},
+ 	}
+ 
++	cmdInfo.Flags().StringVarP(&format, "format", "", "markdown", "--format:yaml, json, xml, markdown")
++
+ 	var rootCmd = &cobra.Command{
+ 		Run: func(cmd *cobra.Command, args []string) {
+ 			Serve(p)
+diff --git a/sdk/plugin/template.go b/sdk/plugin/template.go
+new file mode 100644
+index 000000000..68e07c550
+--- /dev/null
++++ b/sdk/plugin/template.go
+@@ -0,0 +1,56 @@
++package plugin
++
++import (
++	"bytes"
++	"fmt"
++	"regexp"
++	"strings"
++	"text/template"
++)
++
++// ApplyArguments apply plugin Arguments on a string
++// replace {{.cds.var... }} by values from cds
++func ApplyArguments(variables map[string]string, in []byte) ([]byte, error) {
++	input := string(in)
++	data := map[string]string{}
++	for k, v := range variables {
++		kb := strings.Replace(k, ".", "__", -1)
++		data[kb] = v
++		re := regexp.MustCompile("{{." + k + "(.*)}}")
++		for {
++			sm := re.FindStringSubmatch(input)
++			if len(sm) > 0 {
++				input = strings.Replace(input, sm[0], "{{."+kb+sm[1]+"}}", -1)
++			} else {
++				break
++			}
++		}
++	}
++
++	funcMap := template.FuncMap{
++		"title":  strings.Title,
++		"lower":  strings.ToLower,
++		"upper":  strings.ToUpper,
++		"escape": Escape,
++	}
++
++	t, err := template.New("input").Funcs(funcMap).Parse(input)
++	if err != nil {
++		return []byte{}, fmt.Errorf("Invalid template format: %s\n", err.Error())
++	}
++
++	var buff bytes.Buffer
++	if err := t.Execute(&buff, data); err != nil {
++		return []byte{}, fmt.Errorf("Failed to execute template: %s\n", err.Error())
++	}
++
++	return buff.Bytes(), nil
++}
++
++// Escape replace '_', '/', '.' with '-'
++func Escape(s string) string {
++	s1 := strings.Replace(s, "_", "-", -1)
++	s1 = strings.Replace(s1, "/", "-", -1)
++	s1 = strings.Replace(s1, ".", "-", -1)
++	return s1
++}
+diff --git a/sdk/plugin/template_test.go b/sdk/plugin/template_test.go
+new file mode 100644
+index 000000000..d815da177
+--- /dev/null
++++ b/sdk/plugin/template_test.go
+@@ -0,0 +1,44 @@
++package plugin
++
++import "testing"
++
++func TestApplyArguments(t *testing.T) {
++	type args struct {
++		variables map[string]string
++		input     string
++	}
++	tests := []struct {
++		name    string
++		args    args
++		want    string
++		wantErr bool
++	}{
++		{
++			name: "test template",
++			args: args{
++				variables: map[string]string{
++					"cds.foo":    "valbar",
++					"cds.title":  "mytitle",
++					"cds.upper":  "toupper",
++					"cds.lower":  "TOLOWER",
++					"cds.escape": "a/b.c_d",
++				},
++				input: "a {{.cds.foo}} here, {{.cds.title | title}}, {{.cds.upper | upper}}, {{.cds.lower | lower}}, {{.cds.escape | escape}}",
++			},
++			want:    "a valbar here, Mytitle, TOUPPER, tolower, a-b-c-d",
++			wantErr: false,
++		},
++	}
++	for _, tt := range tests {
++		t.Run(tt.name, func(t *testing.T) {
++			got, err := ApplyArguments(tt.args.variables, []byte(tt.args.input))
++			if (err != nil) != tt.wantErr {
++				t.Errorf("ApplyArguments() error = %v, wantErr %v", err, tt.wantErr)
++				return
++			}
++			if string(got) != tt.want {
++				t.Errorf("ApplyArguments() = %v, want %v", got, tt.want)
++			}
++		})
++	}
++}
+diff --git a/sdk/workflow_conditions.go b/sdk/workflow_conditions.go
+index eaaa53f39..dc3643ca5 100644
+--- a/sdk/workflow_conditions.go
++++ b/sdk/workflow_conditions.go
+@@ -4,8 +4,6 @@ import (
+ 	"fmt"
+ 	"regexp"
+ 	"strings"
+-
+-	"github.com/ovh/cds/sdk/interpolate"
+ )
+ 
+ // Workflow conditions operator
+@@ -37,7 +35,7 @@ func WorkflowCheckConditions(conditions []WorkflowNodeCondition, params []Parame
+ 	mapParams := ParametersToMap(params)
+ 	for k, v := range mapParams {
+ 		var err error
+-		mapParams[k], err = interpolate.Do(v, mapParams)
++		mapParams[k], err = Interpolate(v, mapParams)
+ 		if err != nil {
+ 			return false, fmt.Errorf("Unable to interpolate %s (%v)", v, err)
+ 		}
+@@ -46,7 +44,7 @@ func WorkflowCheckConditions(conditions []WorkflowNodeCondition, params []Parame
+ 	var conditionsOK = true
+ 	for _, cond := range conditions {
+ 		var err error
+-		cond.Value, err = interpolate.Do(cond.Value, mapParams)
++		cond.Value, err = Interpolate(cond.Value, mapParams)
+ 		if err != nil {
+ 			return false, fmt.Errorf("Unable to interpolate %s (%v)", cond.Value, err)
+ 		}
+diff --git a/sdk/workflow_run.go b/sdk/workflow_run.go
+index 24b0a99e9..baf1b391d 100644
+--- a/sdk/workflow_run.go
++++ b/sdk/workflow_run.go
+@@ -112,6 +112,7 @@ type WorkflowNodeRun struct {
+ 	VCSRepository      string                           `json:"vcs_repository"`
+ 	VCSBranch          string                           `json:"vcs_branch"`
+ 	VCSHash            string                           `json:"vcs_hash"`
++	CanBeRun           bool                             `json:"can_be_run"`
+ }
+ 
+ // WorkflowNodeTriggerRun Represent the state of a trigger
+diff --git a/ui/src/app/model/workflow.model.ts b/ui/src/app/model/workflow.model.ts
+index 7c2c61edb..7f3c447e3 100644
+--- a/ui/src/app/model/workflow.model.ts
++++ b/ui/src/app/model/workflow.model.ts
+@@ -250,6 +250,76 @@ export class Workflow {
+         }
+     }
+ 
++    static getParentNodeIds(workflow: Workflow, currentNodeID: number): number[] {
++      let ancestors = {};
++
++      for (let join of workflow.joins) {
++        for (let trigger of join.triggers) {
++          if (trigger.workflow_dest_node) {
++            let parentNodeInfos = this.getParentNode(workflow, trigger.workflow_dest_node, currentNodeID);
++            if (parentNodeInfos.found) {
++              if (parentNodeInfos.node) {
++                ancestors[parentNodeInfos.node.id] = true;
++              } else {
++                ancestors[workflow.root.id] = true;
++                join.source_node_id.forEach((source) => ancestors[source] = true);
++                return Object.keys(ancestors).map((ancestor) => parseInt(ancestor, 10));
++              }
++            }
++          }
++        }
++
++        for (let sourceNodeId of join.source_node_id) {
++          let nodeFound = Workflow.getNodeByID(sourceNodeId, workflow);
++          if (nodeFound) {
++            let parentNodeInfos = this.getParentNode(workflow, nodeFound, currentNodeID);
++            if (parentNodeInfos.found) {
++              if (parentNodeInfos.node) {
++                ancestors[parentNodeInfos.node.id] = true;
++              }
++            }
++          }
++        }
++      }
++
++      let parentNodeInfosFromRoot = this.getParentNode(workflow, workflow.root, currentNodeID);
++      if (parentNodeInfosFromRoot.found) {
++        if (parentNodeInfosFromRoot.node) {
++          ancestors[parentNodeInfosFromRoot.node.id] = true;
++        } else {
++          ancestors[workflow.root.id] = true;
++        }
++      }
++
++      return Object.keys(ancestors).map((id) => parseInt(id, 10));
++    }
++
++    static getParentNode(workflow: Workflow, workflowNode: WorkflowNode, currentNodeID: number): {found: boolean, node?: WorkflowNode} {
++      if (!workflowNode) {
++        return {found: false};
++      }
++      if (workflowNode.id === currentNodeID) {
++        return {found: true};
++      }
++
++      if (!Array.isArray(workflowNode.triggers)) {
++        return {found: false};
++      }
++
++      for (let trigger of workflowNode.triggers) {
++        let parentNodeInfos = this.getParentNode(workflow, trigger.workflow_dest_node, currentNodeID);
++        if (parentNodeInfos.found) {
++          if (parentNodeInfos.node) {
++            return parentNodeInfos;
++          } else {
++            return {found: true, node: workflowNode};
++          }
++        }
++      }
++
++      return {found: false};
++    }
++
+     constructor() {
+         this.root = new WorkflowNode();
+     }
+diff --git a/ui/src/app/model/workflow.run.model.ts b/ui/src/app/model/workflow.run.model.ts
+index b48433597..bd6ed1586 100644
+--- a/ui/src/app/model/workflow.run.model.ts
++++ b/ui/src/app/model/workflow.run.model.ts
+@@ -63,6 +63,7 @@ export class WorkflowNodeRun {
+     tests: Tests;
+     commits: Array<Commit>;
+     triggers_run: Map<number, TriggerRun>
++    can_be_run: boolean
+ }
+ 
+ export class TriggerRun {
+diff --git a/ui/src/app/shared/action/action.html b/ui/src/app/shared/action/action.html
+index e4b489133..4a79a594d 100644
+--- a/ui/src/app/shared/action/action.html
++++ b/ui/src/app/shared/action/action.html
+@@ -41,7 +41,6 @@
+                                         (onChange)="editableAction.hasChanged = true"
+                                         (event)="requirementEvent($event)"></app-requirements-list>
+                                     <div class="requirementForm" *ngIf="edit && pipeline">
+-                                        <h3>{{ 'requirement_add' | translate }}</h3>
+                                         <app-requirements-form [groupsPermission]="pipeline.groups" [suggest]="suggest" [modal]="requirementModal" (event)="requirementEvent($event)"></app-requirements-form>
+                                     </div>
+                                     <div class="requirementForm" *ngIf="edit && !pipeline">
+diff --git a/ui/src/app/shared/action/action.scss b/ui/src/app/shared/action/action.scss
+index 092a98038..379495a50 100644
+--- a/ui/src/app/shared/action/action.scss
++++ b/ui/src/app/shared/action/action.scss
+@@ -3,10 +3,6 @@
+ 
+ .requirementForm {
+   margin-top: 10px;
+-
+-  h3 {
+-    margin-top: 10px;
+-  }
+ }
+ 
+ .mt10 {
+diff --git a/ui/src/app/shared/requirements/list/requirements.list.html b/ui/src/app/shared/requirements/list/requirements.list.html
+index 2749dc843..1f76496cd 100644
+--- a/ui/src/app/shared/requirements/list/requirements.list.html
++++ b/ui/src/app/shared/requirements/list/requirements.list.html
+@@ -9,7 +9,7 @@
+         </thead>
+         <tbody>
+         <tr *ngFor="let r of getDataForCurrentPage()">
+-            <td class="border">
++            <td>
+                 <div *ngIf="edit;else rType">
+                     <div class="ui form">
+                         <sm-select class="search"
+@@ -25,7 +25,7 @@
+                     <span>{{r.type}}</span>
+                 </ng-template>
+             </td>
+-            <td class="border">
++            <td>
+                 <div  *ngIf="!loading && r.type === 'service'">
+                     <div class="ui fluid" *ngIf="edit;else rName">
+                         <label for="requirementname">
+@@ -91,7 +91,7 @@
+                 </ng-template>
+                 
+             </td>
+-            <td class="center border">
++            <td class="center">
+                 <ng-container *ngIf="edit">
+                     <app-delete-button (event)="deleteEvent(r)"></app-delete-button>
+                 </ng-container>
+@@ -100,7 +100,7 @@
+         </tbody>
+         <tfoot *ngIf="getNbOfPages() > 1">
+         <tr>
+-            <th colspan="3">
++            <th colspan="4">
+                 <div class="ui right floated pagination menu" >
+                     <a class="icon item" (click)="downPage()">
+                         <i class="left chevron icon"></i>
+diff --git a/ui/src/app/shared/workflow/node/hook/hook.component.ts b/ui/src/app/shared/workflow/node/hook/hook.component.ts
+index 115485409..e344d6d7c 100644
+--- a/ui/src/app/shared/workflow/node/hook/hook.component.ts
++++ b/ui/src/app/shared/workflow/node/hook/hook.component.ts
+@@ -51,7 +51,7 @@ export class WorkflowNodeHookComponent implements AfterViewInit {
+     }
+ 
+     openEditHookModal(): void {
+-        if (this.editHook && !this.readonly)  {
++        if (this.editHook) {
+             this.editHook.show();
+         }
+     }
+diff --git a/ui/src/app/shared/workflow/node/run/node.run.param.component.ts b/ui/src/app/shared/workflow/node/run/node.run.param.component.ts
+index 55c4b93ba..1d538e72e 100644
+--- a/ui/src/app/shared/workflow/node/run/node.run.param.component.ts
++++ b/ui/src/app/shared/workflow/node/run/node.run.param.component.ts
+@@ -4,6 +4,7 @@ import {ModalTemplate, SuiModalService, TemplateModalConfig} from 'ng2-semantic-
+ import {ActiveModal} from 'ng2-semantic-ui/dist';
+ import {Workflow, WorkflowNode, WorkflowNodeContext} from '../../../../model/workflow.model';
+ import {Project} from '../../../../model/project.model';
++import {Parameter} from '../../../../model/parameter.model';
+ import {cloneDeep} from 'lodash';
+ import {Pipeline} from '../../../../model/pipeline.model';
+ import {Commit} from '../../../../model/repositories.model';
+@@ -202,7 +203,7 @@ export class WorkflowNodeRunParamComponent {
+         let request = new WorkflowRunRequest();
+         request.manual = new WorkflowNodeRunManual();
+         request.manual.payload = this.payloadString ? JSON.parse(this.payloadString) : null;
+-        request.manual.pipeline_parameter = this.nodeToRun.context.default_pipeline_parameters;
++        request.manual.pipeline_parameter = Parameter.formatForAPI(this.nodeToRun.context.default_pipeline_parameters);
+ 
+         if (this.nodeRun) {
+             request.from_nodes = [this.nodeRun.workflow_node_id];
+diff --git a/ui/src/app/views/workflow/sidebar/edit/node/workflow.sidebar.edit.node.component.html b/ui/src/app/views/workflow/sidebar/edit/node/workflow.sidebar.edit.node.component.html
+index 135c0300a..5fd957e9b 100644
+--- a/ui/src/app/views/workflow/sidebar/edit/node/workflow.sidebar.edit.node.component.html
++++ b/ui/src/app/views/workflow/sidebar/edit/node/workflow.sidebar.edit.node.component.html
+@@ -63,7 +63,7 @@
+ <ng-container *ngIf="project && node && node.id === workflow.root.id">
+     <ng-template let-context let-modal="modal" #nodeParentModal>
+         <div class="header">{{ 'workflow_node_parent' | translate }}</div>
+-        <div class="content ui form">
++        <div class="content">
+             <app-workflow-node-form [project]="project" [(node)]="newParentNode"></app-workflow-node-form>
+         </div>
+         <div class="actions">
+diff --git a/ui/src/app/views/workflow/sidebar/run/list/workflow.sidebar.run.component.ts b/ui/src/app/views/workflow/sidebar/run/list/workflow.sidebar.run.component.ts
+index 3c75fe064..08db27e84 100644
+--- a/ui/src/app/views/workflow/sidebar/run/list/workflow.sidebar.run.component.ts
++++ b/ui/src/app/views/workflow/sidebar/run/list/workflow.sidebar.run.component.ts
+@@ -151,7 +151,7 @@ export class WorkflowSidebarRunListComponent implements OnDestroy {
+         return tagsFormatted;
+     }
+ 
+-    getDuration(status: string, start: string, done: string) {
++    getDuration(status: string, start: string, done: string): string {
+         if (status === PipelineStatus.BUILDING || status === PipelineStatus.WAITING) {
+             return this._duration.duration(new Date(start), new Date());
+         }
+diff --git a/ui/src/app/views/workflow/sidebar/run/node/workflow.sidebar.run.node.component.html b/ui/src/app/views/workflow/sidebar/run/node/workflow.sidebar.run.node.component.html
+index b748e8296..c3ae20c69 100644
+--- a/ui/src/app/views/workflow/sidebar/run/node/workflow.sidebar.run.node.component.html
++++ b/ui/src/app/views/workflow/sidebar/run/node/workflow.sidebar.run.node.component.html
+@@ -17,9 +17,7 @@
+       <div class="ui fluid buttons" *ngIf="currentWorkflowRun">
+         <button class="ui positive icon button"
+             [class.loading]="loading"
+-            [disabled]="loading || !currentWorkflowRun || !currentWorkflowRun.status ||
+-            currentWorkflowRun.status === pipelineStatusEnum.BUILDING ||
+-            currentWorkflowRun.status === pipelineStatusEnum.WAITING"
++            [disabled]="loading || !currentWorkflowRun || !canBeRun"
+             [title]="'btn_run' | translate" (click)="openRunNode()"
+             *ngIf="currentWorkflowNodeRun?.status !== pipelineStatusEnum.BUILDING &&
+                 currentWorkflowNodeRun?.status !== pipelineStatusEnum.WAITING">
+diff --git a/ui/src/app/views/workflow/sidebar/run/node/workflow.sidebar.run.node.component.ts b/ui/src/app/views/workflow/sidebar/run/node/workflow.sidebar.run.node.component.ts
+index 559d3779b..7ba62d5c2 100644
+--- a/ui/src/app/views/workflow/sidebar/run/node/workflow.sidebar.run.node.component.ts
++++ b/ui/src/app/views/workflow/sidebar/run/node/workflow.sidebar.run.node.component.ts
+@@ -44,6 +44,7 @@ export class WorkflowSidebarRunNodeComponent implements OnInit {
+     displayEditOption = false;
+     displaySummary = true;
+     duration: string;
++    canBeRun = false;
+     pipelineStatusEnum = PipelineStatus;
+ 
+     constructor(private _wrService: WorkflowRunService, private _router: Router,
+@@ -71,6 +72,7 @@ export class WorkflowSidebarRunNodeComponent implements OnInit {
+           } else {
+               this.currentWorkflowNodeRun = null;
+           }
++          this.canBeRun = this.getCanBeRun();
+ 
+           this.displayEditOption = Workflow.getNodeByID(this.nodeId, this.workflow) != null;
+         });
+@@ -89,24 +91,9 @@ export class WorkflowSidebarRunNodeComponent implements OnInit {
+             }
+             this.loading = false;
+             this.displayEditOption = Workflow.getNodeByID(this.nodeId, this.workflow) != null;
++            this.canBeRun = this.getCanBeRun();
+           }
+         );
+-
+-        this.currentWorkflowRunSub = this._workflowCoreService.getCurrentWorkflowRun()
+-            .subscribe((wr) => {
+-                if (!wr) {
+-                    return;
+-                }
+-                this.currentWorkflowRun = wr;
+-                this.node = Workflow.getNodeByID(this.nodeId, this.currentWorkflowRun.workflow);
+-                if (this.node && wr.nodes && wr.nodes[this.node.id] && Array.isArray(wr.nodes[this.node.id])) {
+-                    this.currentWorkflowNodeRun = wr.nodes[this.node.id].find((n) => n.id === this.runId && n.num === this.runNumber);
+-                    this.duration = this.getDuration();
+-                } else {
+-                    this.currentWorkflowNodeRun = null;
+-                }
+-                this.loading = false;
+-            });
+     }
+ 
+     displayLogs() {
+@@ -130,6 +117,47 @@ export class WorkflowSidebarRunNodeComponent implements OnInit {
+         return this._durationService.duration(new Date(this.currentWorkflowNodeRun.start), done);
+     }
+ 
++    getCanBeRun(): boolean {
++      if (this.currentWorkflowNodeRun) {
++        return this.currentWorkflowNodeRun.can_be_run;
++      }
++
++      let workflowRunIsNotActive = this.currentWorkflowRun && !PipelineStatus.isActive(this.currentWorkflowRun.status);
++      if (workflowRunIsNotActive && this.currentWorkflowNodeRun) {
++        return true;
++      }
++
++      if (workflowRunIsNotActive && !this.currentWorkflowNodeRun && this.nodeId === this.workflow.root_id) {
++        return true;
++      }
++
++      let nbNodeFound = 0;
++      let parentNodes = Workflow.getParentNodeIds(this.workflow, this.nodeId);
++      for (let parentNodeId of parentNodes) {
++        for (let nodeRunId in this.currentWorkflowRun.nodes) {
++          if (!this.currentWorkflowRun.nodes[nodeRunId]) {
++            continue;
++          }
++          let nodeRuns = this.currentWorkflowRun.nodes[nodeRunId];
++          if (nodeRuns[0].workflow_node_id === parentNodeId) { // if node id is still the same
++            if (PipelineStatus.isActive(nodeRuns[0].status)) {
++              return false;
++            }
++            nbNodeFound++;
++          } else if (!Workflow.getNodeByID(nodeRuns[0].workflow_node_id, this.workflow)) {
++            // workflow updated so prefer return true
++            return true;
++          }
++        }
++      }
++
++      if (nbNodeFound !== parentNodes.length) { // It means that a parent node isn't already executed
++        return false;
++      }
++
++      return true;
++    }
++
+     stopNodeRun(): void {
+         this.loading = true;
+         this._wrService.stopNodeRun(this.project.key, this.workflow.name, this.runNumber, this.runId)
+diff --git a/ui/src/assets/i18n/en.json b/ui/src/assets/i18n/en.json
+index 41f70b5a1..237a65eee 100644
+--- a/ui/src/assets/i18n/en.json
++++ b/ui/src/assets/i18n/en.json
+@@ -437,7 +437,6 @@
+   "repoman_modal_verif_text" : "Click on the following link to finalize the link between CDS and the repository manager: ",
+   "repoman_modal_verif_title" : "Repository manager authorization",
+ 
+-  "requirement_add" : "Add a requirement",
+   "requirement_name" : "Name",
+   "requirement_type" : "Type",
+   "requirement_value" : "Value",
+diff --git a/ui/src/assets/i18n/fr.json b/ui/src/assets/i18n/fr.json
+index 14d3ccd19..a1f91bac5 100644
+--- a/ui/src/assets/i18n/fr.json
++++ b/ui/src/assets/i18n/fr.json
+@@ -437,7 +437,6 @@
+   "repoman_modal_verif_text" : "Cliquez sur le lien suivant pour finaliser la connexion entre CDS et le gestionnaire de dépôt : ",
+   "repoman_modal_verif_title" : "Autorisation auprès du gestionnaire de dépôt",
+ 
+-  "requirement_add" : "Ajouter un pré-requis",
+   "requirement_name" : "Nom",
+   "requirement_type" : "Type",
+   "requirement_value" : "Valeur",
+diff --git a/ui/src/common.scss b/ui/src/common.scss
+index be377373a..bb8804ad9 100644
+--- a/ui/src/common.scss
++++ b/ui/src/common.scss
+@@ -114,16 +114,6 @@ pre {
+     overflow: visible;
+     padding-top: 4px;
+     padding-bottom: 4px;
+-    vertical-align: top;
+-  }
+-
+-  tbody tr td.border {
+-    border: none;
+-    border-top: 1px solid rgba(34, 36, 38, 0.15);
+-  }
+-
+-  tbody tr:first-child td.border {
+-    border: none;
+   }
+ 
+   tbody tr:not(:hover) {
+diff --git a/vendor/github.com/danieljoos/wincred/LICENSE b/vendor/github.com/danieljoos/wincred/LICENSE
+deleted file mode 100644
+index 2f436f1b3..000000000
+--- a/vendor/github.com/danieljoos/wincred/LICENSE
++++ /dev/null
+@@ -1,21 +0,0 @@
+-The MIT License (MIT)
+-
+-Copyright (c) 2014 Daniel Joos
+-
+-Permission is hereby granted, free of charge, to any person obtaining a copy
+-of this software and associated documentation files (the "Software"), to deal
+-in the Software without restriction, including without limitation the rights
+-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+-copies of the Software, and to permit persons to whom the Software is
+-furnished to do so, subject to the following conditions:
+-
+-The above copyright notice and this permission notice shall be included in all
+-copies or substantial portions of the Software.
+-
+-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+-SOFTWARE.
+\ No newline at end of file
+diff --git a/vendor/github.com/danieljoos/wincred/README.md b/vendor/github.com/danieljoos/wincred/README.md
+deleted file mode 100644
+index 1b523f9af..000000000
+--- a/vendor/github.com/danieljoos/wincred/README.md
++++ /dev/null
+@@ -1,98 +0,0 @@
+-wincred
+-=======
+-
+-Go wrapper around the Windows Credential Manager API functions.
+-
+-[![Build status](https://ci.appveyor.com/api/projects/status/eclecjwniu2n4u3w/branch/master?svg=true)](https://ci.appveyor.com/project/danieljoos/wincred/branch/master)
+-[![GoDoc](https://godoc.org/github.com/danieljoos/wincred?status.svg)](https://godoc.org/github.com/danieljoos/wincred)
+-
+-
+-Installation
+-------------
+-
+-```Go
+-go get github.com/danieljoos/wincred
+-```
+-
+-
+-Usage
+------
+-
+-See the following examples:
+-
+-### Create and store a new generic credential object
+-```Go
+-package main
+-
+-import (
+-    "fmt"
+-    "github.com/danieljoos/wincred"
+-)
+-
+-func main() {
+-    cred := wincred.NewGenericCredential("myGoApplication")
+-    cred.CredentialBlob = []byte("my secret")
+-    err := cred.Write()
+-    
+-    if err != nil {
+-        fmt.Println(err)
+-    }
+-} 
+-```
+-
+-### Retrieve a credential object
+-```Go
+-package main
+-
+-import (
+-    "fmt"
+-    "github.com/danieljoos/wincred"
+-)
+-
+-func main() {
+-    cred, err := wincred.GetGenericCredential("myGoApplication")
+-    if err == nil {
+-        fmt.Println(string(cred.CredentialBlob))
+-    }
+-} 
+-```
+-
+-### Remove a credential object
+-```Go
+-package main
+-
+-import (
+-    "fmt"
+-    "github.com/danieljoos/wincred"
+-)
+-
+-func main() {
+-    cred, err := wincred.GetGenericCredential("myGoApplication")
+-    if err != nil {
+-        fmt.Println(err)
+-        return
+-    }
+-    cred.Delete()
+-} 
+-```
+-
+-### List all available credentials
+-```Go
+-package main
+-
+-import (
+-    "fmt"
+-    "github.com/danieljoos/wincred"
+-)
+-
+-func main() {
+-    creds, err := wincred.List()
+-    if err != nil {
+-        fmt.Println(err)
+-        return
+-    }
+-    for i := range(creds) {
+-        fmt.Println(creds[i].TargetName)
+-    }
+-}
+-```
+diff --git a/vendor/github.com/danieljoos/wincred/appveyor.yml b/vendor/github.com/danieljoos/wincred/appveyor.yml
+deleted file mode 100644
+index cda4bb3cd..000000000
+--- a/vendor/github.com/danieljoos/wincred/appveyor.yml
++++ /dev/null
+@@ -1,24 +0,0 @@
+-version: '{build}'
+-clone_folder: c:\gopath\src\github.com\danieljoos\wincred
+-environment:
+-  GOPATH: c:\gopath
+-install:
+-- cmd: >-
+-    rmdir c:\go /s /q
+-
+-    appveyor DownloadFile https://storage.googleapis.com/golang/go1.6.1.windows-amd64.msi
+-
+-    msiexec /i go1.6.1.windows-amd64.msi /q
+-
+-    go version
+-
+-    go env
+-
+-    go get -t
+-build_script:
+-- cmd: go install
+-test_script:
+-- cmd: >-
+-    cd %GOPATH%/src/github.com/danieljoos/wincred
+-
+-    go test -v -cover
+diff --git a/vendor/github.com/danieljoos/wincred/conversion.go b/vendor/github.com/danieljoos/wincred/conversion.go
+deleted file mode 100644
+index a89436010..000000000
+--- a/vendor/github.com/danieljoos/wincred/conversion.go
++++ /dev/null
+@@ -1,124 +0,0 @@
+-package wincred
+-
+-import (
+-	"encoding/binary"
+-	"reflect"
+-	"syscall"
+-	"time"
+-	"unicode/utf16"
+-	"unsafe"
+-)
+-
+-// uf16PtrToString creates a Go string from a pointer to a UTF16 encoded zero-terminated string.
+-// Such pointers are returned from the Windows API calls.
+-// The function creates a copy of the string.
+-func utf16PtrToString(wstr *uint16) string {
+-	if wstr != nil {
+-		for len := 0; ; len++ {
+-			ptr := unsafe.Pointer(uintptr(unsafe.Pointer(wstr)) + uintptr(len)*unsafe.Sizeof(*wstr)) // see https://golang.org/pkg/unsafe/#Pointer (3)
+-			if *(*uint16)(ptr) == 0 {
+-				return string(utf16.Decode(*(*[]uint16)(unsafe.Pointer(&reflect.SliceHeader{
+-					Data: uintptr(unsafe.Pointer(wstr)),
+-					Len:  len,
+-					Cap:  len,
+-				}))))
+-			}
+-		}
+-	}
+-	return ""
+-}
+-
+-// utf16ToByte creates a byte array from a given UTF 16 char array.
+-func utf16ToByte(wstr []uint16) (result []byte) {
+-	result = make([]byte, len(wstr)*2)
+-	for i := range wstr {
+-		binary.LittleEndian.PutUint16(result[(i*2):(i*2)+2], wstr[i])
+-	}
+-	return
+-}
+-
+-// goBytes copies the given C byte array to a Go byte array (see `C.GoBytes`).
+-// This function avoids having cgo as dependency.
+-func goBytes(src uintptr, len uint32) []byte {
+-	if src == uintptr(0) {
+-		return []byte{}
+-	}
+-	rv := make([]byte, len)
+-	copy(rv, *(*[]byte)(unsafe.Pointer(&reflect.SliceHeader{
+-		Data: src,
+-		Len:  int(len),
+-		Cap:  int(len),
+-	})))
+-	return rv
+-}
+-
+-// Convert the given CREDENTIAL struct to a more usable structure
+-func nativeToCredential(cred *nativeCREDENTIAL) (result *Credential) {
+-	if cred == nil {
+-		return nil
+-	}
+-	result = new(Credential)
+-	result.Comment = utf16PtrToString(cred.Comment)
+-	result.TargetName = utf16PtrToString(cred.TargetName)
+-	result.TargetAlias = utf16PtrToString(cred.TargetAlias)
+-	result.UserName = utf16PtrToString(cred.UserName)
+-	result.LastWritten = time.Unix(0, cred.LastWritten.Nanoseconds())
+-	result.Persist = CredentialPersistence(cred.Persist)
+-	result.CredentialBlob = goBytes(cred.CredentialBlob, cred.CredentialBlobSize)
+-	result.Attributes = make([]CredentialAttribute, cred.AttributeCount)
+-	attrSlice := *(*[]nativeCREDENTIAL_ATTRIBUTE)(unsafe.Pointer(&reflect.SliceHeader{
+-		Data: cred.Attributes,
+-		Len:  int(cred.AttributeCount),
+-		Cap:  int(cred.AttributeCount),
+-	}))
+-	for i, attr := range attrSlice {
+-		resultAttr := &result.Attributes[i]
+-		resultAttr.Keyword = utf16PtrToString(attr.Keyword)
+-		resultAttr.Value = goBytes(attr.Value, attr.ValueSize)
+-	}
+-	return result
+-}
+-
+-// Convert the given Credential object back to a CREDENTIAL struct, which can be used for calling the
+-// Windows APIs
+-func nativeFromCredential(cred *Credential) (result *nativeCREDENTIAL) {
+-	if cred == nil {
+-		return nil
+-	}
+-	result = new(nativeCREDENTIAL)
+-	result.Flags = 0
+-	result.Type = 0
+-	result.TargetName, _ = syscall.UTF16PtrFromString(cred.TargetName)
+-	result.Comment, _ = syscall.UTF16PtrFromString(cred.Comment)
+-	result.LastWritten = syscall.NsecToFiletime(cred.LastWritten.UnixNano())
+-	result.CredentialBlobSize = uint32(len(cred.CredentialBlob))
+-	if len(cred.CredentialBlob) > 0 {
+-		result.CredentialBlob = uintptr(unsafe.Pointer(&cred.CredentialBlob[0]))
+-	} else {
+-		result.CredentialBlob = 0
+-	}
+-	result.Persist = uint32(cred.Persist)
+-	result.AttributeCount = uint32(len(cred.Attributes))
+-	attributes := make([]nativeCREDENTIAL_ATTRIBUTE, len(cred.Attributes))
+-	if len(attributes) > 0 {
+-		result.Attributes = uintptr(unsafe.Pointer(&attributes[0]))
+-	} else {
+-		result.Attributes = 0
+-	}
+-	for i := range cred.Attributes {
+-		inAttr := &cred.Attributes[i]
+-		outAttr := &attributes[i]
+-		outAttr.Keyword, _ = syscall.UTF16PtrFromString(inAttr.Keyword)
+-		outAttr.Flags = 0
+-		outAttr.ValueSize = uint32(len(inAttr.Value))
+-		if len(inAttr.Value) > 0 {
+-			outAttr.Value = uintptr(unsafe.Pointer(&inAttr.Value[0]))
+-		} else {
+-			outAttr.Value = 0
+-		}
+-	}
+-	result.TargetAlias, _ = syscall.UTF16PtrFromString(cred.TargetAlias)
+-	result.UserName, _ = syscall.UTF16PtrFromString(cred.UserName)
+-
+-	return
+-}
+diff --git a/vendor/github.com/danieljoos/wincred/native.go b/vendor/github.com/danieljoos/wincred/native.go
+deleted file mode 100644
+index fd55e678a..000000000
+--- a/vendor/github.com/danieljoos/wincred/native.go
++++ /dev/null
+@@ -1,142 +0,0 @@
+-package wincred
+-
+-import (
+-	"reflect"
+-	"syscall"
+-	"unsafe"
+-)
+-
+-var (
+-	modadvapi32 = syscall.NewLazyDLL("advapi32.dll")
+-
+-	procCredRead      proc = modadvapi32.NewProc("CredReadW")
+-	procCredWrite     proc = modadvapi32.NewProc("CredWriteW")
+-	procCredDelete    proc = modadvapi32.NewProc("CredDeleteW")
+-	procCredFree      proc = modadvapi32.NewProc("CredFree")
+-	procCredEnumerate proc = modadvapi32.NewProc("CredEnumerateW")
+-)
+-
+-// Interface for syscall.Proc: helps testing
+-type proc interface {
+-	Call(a ...uintptr) (r1, r2 uintptr, lastErr error)
+-}
+-
+-// http://msdn.microsoft.com/en-us/library/windows/desktop/aa374788(v=vs.85).aspx
+-type nativeCREDENTIAL struct {
+-	Flags              uint32
+-	Type               uint32
+-	TargetName         *uint16
+-	Comment            *uint16
+-	LastWritten        syscall.Filetime
+-	CredentialBlobSize uint32
+-	CredentialBlob     uintptr
+-	Persist            uint32
+-	AttributeCount     uint32
+-	Attributes         uintptr
+-	TargetAlias        *uint16
+-	UserName           *uint16
+-}
+-
+-// http://msdn.microsoft.com/en-us/library/windows/desktop/aa374790(v=vs.85).aspx
+-type nativeCREDENTIAL_ATTRIBUTE struct {
+-	Keyword   *uint16
+-	Flags     uint32
+-	ValueSize uint32
+-	Value     uintptr
+-}
+-
+-// http://msdn.microsoft.com/en-us/library/windows/desktop/aa374788(v=vs.85).aspx
+-type nativeCRED_TYPE uint32
+-
+-const (
+-	naCRED_TYPE_GENERIC                 nativeCRED_TYPE = 0x1
+-	naCRED_TYPE_DOMAIN_PASSWORD         nativeCRED_TYPE = 0x2
+-	naCRED_TYPE_DOMAIN_CERTIFICATE      nativeCRED_TYPE = 0x3
+-	naCRED_TYPE_DOMAIN_VISIBLE_PASSWORD nativeCRED_TYPE = 0x4
+-	naCRED_TYPE_GENERIC_CERTIFICATE     nativeCRED_TYPE = 0x5
+-	naCRED_TYPE_DOMAIN_EXTENDED         nativeCRED_TYPE = 0x6
+-
+-	naERROR_NOT_FOUND = "Element not found."
+-)
+-
+-// http://msdn.microsoft.com/en-us/library/windows/desktop/aa374804(v=vs.85).aspx
+-func nativeCredRead(targetName string, typ nativeCRED_TYPE) (*Credential, error) {
+-	var pcred *nativeCREDENTIAL
+-	targetNamePtr, _ := syscall.UTF16PtrFromString(targetName)
+-	ret, _, err := procCredRead.Call(
+-		uintptr(unsafe.Pointer(targetNamePtr)),
+-		uintptr(typ),
+-		0,
+-		uintptr(unsafe.Pointer(&pcred)),
+-	)
+-	if ret == 0 {
+-		return nil, err
+-	}
+-	defer procCredFree.Call(uintptr(unsafe.Pointer(pcred)))
+-
+-	return nativeToCredential(pcred), nil
+-}
+-
+-// http://msdn.microsoft.com/en-us/library/windows/desktop/aa375187(v=vs.85).aspx
+-func nativeCredWrite(cred *Credential, typ nativeCRED_TYPE) error {
+-	ncred := nativeFromCredential(cred)
+-	ncred.Type = uint32(typ)
+-	ret, _, err := procCredWrite.Call(
+-		uintptr(unsafe.Pointer(ncred)),
+-		0,
+-	)
+-	if ret == 0 {
+-		return err
+-	}
+-
+-	return nil
+-}
+-
+-// http://msdn.microsoft.com/en-us/library/windows/desktop/aa374787(v=vs.85).aspx
+-func nativeCredDelete(cred *Credential, typ nativeCRED_TYPE) error {
+-	targetNamePtr, _ := syscall.UTF16PtrFromString(cred.TargetName)
+-	ret, _, err := procCredDelete.Call(
+-		uintptr(unsafe.Pointer(targetNamePtr)),
+-		uintptr(typ),
+-		0,
+-	)
+-	if ret == 0 {
+-		return err
+-	}
+-
+-	return nil
+-}
+-
+-// https://msdn.microsoft.com/en-us/library/windows/desktop/aa374794(v=vs.85).aspx
+-func nativeCredEnumerate(filter string, all bool) ([]*Credential, error) {
+-	var count int
+-	var pcreds uintptr
+-	var filterPtr uintptr
+-	if !all {
+-		filterUtf16Ptr, _ := syscall.UTF16PtrFromString(filter)
+-		filterPtr = uintptr(unsafe.Pointer(filterUtf16Ptr))
+-	} else {
+-		filterPtr = 0
+-	}
+-	ret, _, err := procCredEnumerate.Call(
+-		filterPtr,
+-		0,
+-		uintptr(unsafe.Pointer(&count)),
+-		uintptr(unsafe.Pointer(&pcreds)),
+-	)
+-	if ret == 0 {
+-		return nil, err
+-	}
+-	defer procCredFree.Call(pcreds)
+-	credsSlice := *(*[]*nativeCREDENTIAL)(unsafe.Pointer(&reflect.SliceHeader{
+-		Data: pcreds,
+-		Len:  count,
+-		Cap:  count,
+-	}))
+-	creds := make([]*Credential, count, count)
+-	for i, cred := range credsSlice {
+-		creds[i] = nativeToCredential(cred)
+-	}
+-
+-	return creds, nil
+-}
+diff --git a/vendor/github.com/danieljoos/wincred/types.go b/vendor/github.com/danieljoos/wincred/types.go
+deleted file mode 100644
+index 42e24a2f1..000000000
+--- a/vendor/github.com/danieljoos/wincred/types.go
++++ /dev/null
+@@ -1,69 +0,0 @@
+-package wincred
+-
+-import (
+-	"time"
+-)
+-
+-// CredentialPersistence describes one of three persistence modes of a credential.
+-// A detailed description of the available modes can be found on
+-// MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/aa374788(v=vs.85).aspx
+-type CredentialPersistence uint32
+-
+-const (
+-	// PersistSession indicates that the credential only persists for the life
+-	// of the current Windows login session. Such a credential is not visible in
+-	// any other logon session, even from the same user.
+-	PersistSession CredentialPersistence = 0x1
+-
+-	// PersistLocalMachine indicates that the credential persists for this and
+-	// all subsequent logon sessions on this local machine/computer. It is
+-	// however not visible for logon sessions of this user on a different
+-	// machine.
+-	PersistLocalMachine CredentialPersistence = 0x2
+-
+-	// PersistEnterprise indicates that the credential persists for this and all
+-	// subsequent logon sessions for this user. It is also visible for logon
+-	// sessions on different computers.
+-	PersistEnterprise CredentialPersistence = 0x3
+-)
+-
+-// CredentialAttribute represents an application-specific attribute of a credential.
+-type CredentialAttribute struct {
+-	Keyword string
+-	Value   []byte
+-}
+-
+-// Credential is the basic credential structure.
+-// A credential is identified by its target name.
+-// The actual credential secret is available in the CredentialBlob field.
+-type Credential struct {
+-	TargetName     string
+-	Comment        string
+-	LastWritten    time.Time
+-	CredentialBlob []byte
+-	Attributes     []CredentialAttribute
+-	TargetAlias    string
+-	UserName       string
+-	Persist        CredentialPersistence
+-}
+-
+-// GenericCredential holds a credential for generic usage.
+-// It is typically defined and used by applications that need to manage user
+-// secrets.
+-//
+-// More information about the available kinds of credentials of the Windows
+-// Credential Management API can be found on MSDN:
+-// https://msdn.microsoft.com/en-us/library/windows/desktop/aa380517(v=vs.85).aspx
+-type GenericCredential struct {
+-	Credential
+-}
+-
+-// DomainPassword holds a domain credential that is typically used by the
+-// operating system for user logon.
+-//
+-// More information about the available kinds of credentials of the Windows
+-// Credential Management API can be found on MSDN:
+-// https://msdn.microsoft.com/en-us/library/windows/desktop/aa380517(v=vs.85).aspx
+-type DomainPassword struct {
+-	Credential
+-}
+diff --git a/vendor/github.com/danieljoos/wincred/wincred.go b/vendor/github.com/danieljoos/wincred/wincred.go
+deleted file mode 100644
+index 234aef786..000000000
+--- a/vendor/github.com/danieljoos/wincred/wincred.go
++++ /dev/null
+@@ -1,90 +0,0 @@
+-// Package wincred provides primitives for accessing the Windows Credentials Management API.
+-// This includes functions for retrieval, listing and storage of credentials as well as Go structures for convenient access to the credential data.
+-//
+-// A more detailed description of Windows Credentials Management can be found on
+-// MSDN: https://msdn.microsoft.com/en-us/library/windows/desktop/aa374789(v=vs.85).aspx
+-package wincred
+-
+-import (
+-	"syscall"
+-)
+-
+-// GetGenericCredential fetches the generic credential with the given name from Windows credential manager.
+-// It returns nil and an error if the credential could not be found or an error occurred.
+-func GetGenericCredential(targetName string) (*GenericCredential, error) {
+-	cred, err := nativeCredRead(targetName, naCRED_TYPE_GENERIC)
+-	if cred != nil {
+-		return &GenericCredential{*cred}, err
+-	}
+-	return nil, err
+-}
+-
+-// NewGenericCredential creates a new generic credential object with the given name.
+-// The persist mode of the newly created object is set to a default value that indicates local-machine-wide storage.
+-// The credential object is NOT yet persisted to the Windows credential vault.
+-func NewGenericCredential(targetName string) (result *GenericCredential) {
+-	result = new(GenericCredential)
+-	result.TargetName = targetName
+-	result.Persist = PersistLocalMachine
+-	return
+-}
+-
+-// Write persists the generic credential object to Windows credential manager.
+-func (t *GenericCredential) Write() (err error) {
+-	err = nativeCredWrite(&t.Credential, naCRED_TYPE_GENERIC)
+-	return
+-}
+-
+-// Delete removes the credential object from Windows credential manager.
+-func (t *GenericCredential) Delete() (err error) {
+-	err = nativeCredDelete(&t.Credential, naCRED_TYPE_GENERIC)
+-	return
+-}
+-
+-// GetDomainPassword fetches the domain-password credential with the given target host name from Windows credential manager.
+-// It returns nil and an error if the credential could not be found or an error occurred.
+-func GetDomainPassword(targetName string) (*DomainPassword, error) {
+-	cred, err := nativeCredRead(targetName, naCRED_TYPE_DOMAIN_PASSWORD)
+-	if cred != nil {
+-		return &DomainPassword{*cred}, err
+-	}
+-	return nil, err
+-}
+-
+-// NewDomainPassword creates a new domain-password credential used for login to the given target host name.
+-// The  persist mode of the newly created object is set to a default value that indicates local-machine-wide storage.
+-// The credential object is NOT yet persisted to the Windows credential vault.
+-func NewDomainPassword(targetName string) (result *DomainPassword) {
+-	result = new(DomainPassword)
+-	result.TargetName = targetName
+-	result.Persist = PersistLocalMachine
+-	return
+-}
+-
+-// Write persists the domain-password credential to Windows credential manager.
+-func (t *DomainPassword) Write() (err error) {
+-	err = nativeCredWrite(&t.Credential, naCRED_TYPE_DOMAIN_PASSWORD)
+-	return
+-}
+-
+-// Delete removes the domain-password credential from Windows credential manager.
+-func (t *DomainPassword) Delete() (err error) {
+-	err = nativeCredDelete(&t.Credential, naCRED_TYPE_DOMAIN_PASSWORD)
+-	return
+-}
+-
+-// SetPassword sets the CredentialBlob field of a domain password credential to the given string.
+-func (t *DomainPassword) SetPassword(pw string) {
+-	t.CredentialBlob = utf16ToByte(syscall.StringToUTF16(pw))
+-}
+-
+-// List retrieves all credentials of the Credentials store.
+-func List() ([]*Credential, error) {
+-	creds, err := nativeCredEnumerate("", true)
+-	if err != nil && err.Error() == naERROR_NOT_FOUND {
+-		// Ignore ERROR_NOT_FOUND and return an empty list instead
+-		creds = []*Credential{}
+-		err = nil
+-	}
+-	return creds, err
+-}
+diff --git a/vendor/github.com/docker/docker-credential-helpers/osxkeychain/osxkeychain_darwin.go b/vendor/github.com/docker/docker-credential-helpers/osxkeychain/osxkeychain_darwin.go
+index 439126761..a3f5da84b 100644
+--- a/vendor/github.com/docker/docker-credential-helpers/osxkeychain/osxkeychain_darwin.go
++++ b/vendor/github.com/docker/docker-credential-helpers/osxkeychain/osxkeychain_darwin.go
+@@ -135,27 +135,30 @@ func (h Osxkeychain) List() (map[string]string, error) {
+ }
+ 
+ func splitServer(serverURL string) (*C.struct_Server, error) {
+-	u, err := parseURL(serverURL)
++	u, err := url.Parse(serverURL)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 
+-	proto := C.kSecProtocolTypeHTTPS
+-	if u.Scheme == "http" {
+-		proto = C.kSecProtocolTypeHTTP
+-	}
++	hostAndPort := strings.Split(u.Host, ":")
++	host := hostAndPort[0]
+ 	var port int
+-	p := getPort(u)
+-	if p != "" {
+-		port, err = strconv.Atoi(p)
++	if len(hostAndPort) == 2 {
++		p, err := strconv.Atoi(hostAndPort[1])
+ 		if err != nil {
+ 			return nil, err
+ 		}
++		port = p
++	}
++
++	proto := C.kSecProtocolTypeHTTPS
++	if u.Scheme != "https" {
++		proto = C.kSecProtocolTypeHTTP
+ 	}
+ 
+ 	return &C.struct_Server{
+ 		proto: C.SecProtocolType(proto),
+-		host:  C.CString(getHostname(u)),
++		host:  C.CString(host),
+ 		port:  C.uint(port),
+ 		path:  C.CString(u.Path),
+ 	}, nil
+@@ -165,32 +168,3 @@ func freeServer(s *C.struct_Server) {
+ 	C.free(unsafe.Pointer(s.host))
+ 	C.free(unsafe.Pointer(s.path))
+ }
+-
+-// parseURL parses and validates a given serverURL to an url.URL, and
+-// returns an error if validation failed. Querystring parameters are
+-// omitted in the resulting URL, because they are not used in the helper.
+-//
+-// If serverURL does not have a valid scheme, `//` is used as scheme
+-// before parsing. This prevents the hostname being used as path,
+-// and the credentials being stored without host.
+-func parseURL(serverURL string) (*url.URL, error) {
+-	// Check if serverURL has a scheme, otherwise add `//` as scheme.
+-	if !strings.Contains(serverURL, "://") && !strings.HasPrefix(serverURL, "//") {
+-		serverURL = "//" + serverURL
+-	}
+-
+-	u, err := url.Parse(serverURL)
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	if u.Scheme != "" && u.Scheme != "https" && u.Scheme != "http" {
+-		return nil, errors.New("unsupported scheme: " + u.Scheme)
+-	}
+-	if getHostname(u) == "" {
+-		return nil, errors.New("no hostname in URL")
+-	}
+-
+-	u.RawQuery = ""
+-	return u, nil
+-}
+diff --git a/vendor/github.com/docker/docker-credential-helpers/osxkeychain/url_go18.go b/vendor/github.com/docker/docker-credential-helpers/osxkeychain/url_go18.go
+deleted file mode 100644
+index 0b7297d2f..000000000
+--- a/vendor/github.com/docker/docker-credential-helpers/osxkeychain/url_go18.go
++++ /dev/null
+@@ -1,13 +0,0 @@
+-//+build go1.8
+-
+-package osxkeychain
+-
+-import "net/url"
+-
+-func getHostname(u *url.URL) string {
+-	return u.Hostname()
+-}
+-
+-func getPort(u *url.URL) string {
+-	return u.Port()
+-}
+diff --git a/vendor/github.com/docker/docker-credential-helpers/osxkeychain/url_non_go18.go b/vendor/github.com/docker/docker-credential-helpers/osxkeychain/url_non_go18.go
+deleted file mode 100644
+index bdf9b7b00..000000000
+--- a/vendor/github.com/docker/docker-credential-helpers/osxkeychain/url_non_go18.go
++++ /dev/null
+@@ -1,41 +0,0 @@
+-//+build !go1.8
+-
+-package osxkeychain
+-
+-import (
+-	"net/url"
+-	"strings"
+-)
+-
+-func getHostname(u *url.URL) string {
+-	return stripPort(u.Host)
+-}
+-
+-func getPort(u *url.URL) string {
+-	return portOnly(u.Host)
+-}
+-
+-func stripPort(hostport string) string {
+-	colon := strings.IndexByte(hostport, ':')
+-	if colon == -1 {
+-		return hostport
+-	}
+-	if i := strings.IndexByte(hostport, ']'); i != -1 {
+-		return strings.TrimPrefix(hostport[:i], "[")
+-	}
+-	return hostport[:colon]
+-}
+-
+-func portOnly(hostport string) string {
+-	colon := strings.IndexByte(hostport, ':')
+-	if colon == -1 {
+-		return ""
+-	}
+-	if i := strings.Index(hostport, "]:"); i != -1 {
+-		return hostport[i+len("]:"):]
+-	}
+-	if strings.Contains(hostport, "]") {
+-		return ""
+-	}
+-	return hostport[colon+len(":"):]
+-}
+diff --git a/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.c b/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.c
+index 35dea92da..ab23a5ebd 100644
+--- a/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.c
++++ b/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.c
+@@ -7,7 +7,6 @@ const SecretSchema *docker_get_schema(void)
+ 	static const SecretSchema docker_schema = {
+ 		"io.docker.Credentials", SECRET_SCHEMA_NONE,
+ 		{
+-		    { "label", SECRET_SCHEMA_ATTRIBUTE_STRING },
+ 			{ "server", SECRET_SCHEMA_ATTRIBUTE_STRING },
+ 			{ "username", SECRET_SCHEMA_ATTRIBUTE_STRING },
+ 			{ "docker_cli", SECRET_SCHEMA_ATTRIBUTE_STRING },
+@@ -17,12 +16,11 @@ const SecretSchema *docker_get_schema(void)
+ 	return &docker_schema;
+ }
+ 
+-GError *add(char *label, char *server, char *username, char *secret) {
++GError *add(char *server, char *username, char *secret) {
+ 	GError *err = NULL;
+ 
+ 	secret_password_store_sync (DOCKER_SCHEMA, SECRET_COLLECTION_DEFAULT,
+ 			server, secret, NULL, &err,
+-			"label", label,
+ 			"server", server,
+ 			"username", username,
+ 			"docker_cli", "1",
+@@ -42,7 +40,7 @@ GError *delete(char *server) {
+ 	return NULL;
+ }
+ 
+-char *get_attribute(const char *attribute, SecretItem *item) {
++char *get_username(SecretItem *item) {
+ 	GHashTable *attributes;
+ 	GHashTableIter iter;
+ 	gchar *value, *key;
+@@ -50,7 +48,7 @@ char *get_attribute(const char *attribute, SecretItem *item) {
+ 	attributes = secret_item_get_attributes(item);
+ 	g_hash_table_iter_init(&iter, attributes);
+ 	while (g_hash_table_iter_next(&iter, (void **)&key, (void **)&value)) {
+-		if (strncmp(key, attribute, strlen(key)) == 0)
++		if (strncmp(key, "username", strlen(key)) == 0)
+ 			return (char *)value;
+ 	}
+ 	g_hash_table_unref(attributes);
+@@ -73,7 +71,7 @@ GError *get(char *server, char **username, char **secret) {
+ 
+ 	service = secret_service_get_sync(SECRET_SERVICE_NONE, NULL, &err);
+ 	if (err == NULL) {
+-		items = secret_service_search_sync(service, DOCKER_SCHEMA, attributes, flags, NULL, &err);
++		items = secret_service_search_sync(service, NULL, attributes, flags, NULL, &err);
+ 		if (err == NULL) {
+ 			for (l = items; l != NULL; l = g_list_next(l)) {
+ 				value = secret_item_get_schema_name(l->data);
+@@ -87,7 +85,7 @@ GError *get(char *server, char **username, char **secret) {
+ 					*secret = strdup(secret_value_get(secretValue, &length));
+ 					secret_value_unref(secretValue);
+ 				}
+-				*username = get_attribute("username", l->data);
++				*username = get_username(l->data);
+ 			}
+ 			g_list_free_full(items, g_object_unref);
+ 		}
+@@ -100,30 +98,22 @@ GError *get(char *server, char **username, char **secret) {
+ 	return NULL;
+ }
+ 
+-GError *list(char *ref_label, char *** paths, char *** accts, unsigned int *list_l) {
++GError *list(char *** paths, char *** accts, unsigned int *list_l) {
+ 	GList *items;
+ 	GError *err = NULL;
+ 	SecretService *service;
+ 	SecretSearchFlags flags = SECRET_SEARCH_LOAD_SECRETS | SECRET_SEARCH_ALL | SECRET_SEARCH_UNLOCK;
+-	GHashTable *attributes = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
+-
+-	// List credentials with the right label only
+-	g_hash_table_insert(attributes, g_strdup("label"), g_strdup(ref_label));
+-
++	GHashTable *attributes;
++	g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
++	attributes = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
+ 	service = secret_service_get_sync(SECRET_SERVICE_NONE, NULL, &err);
+-	if (err != NULL) {
+-		return err;
+-	}
+-
+ 	items = secret_service_search_sync(service, NULL, attributes, flags, NULL, &err);
+ 	int numKeys = g_list_length(items);
+ 	if (err != NULL) {
+ 		return err;
+ 	}
+-
+-	char **tmp_paths = (char **) calloc(1,(int)sizeof(char *)*numKeys);
+-	char **tmp_accts = (char **) calloc(1,(int)sizeof(char *)*numKeys);
+-
++	*paths = (char **) malloc((int)sizeof(char *)*numKeys);
++	*accts = (char **) malloc((int)sizeof(char *)*numKeys);
+ 	// items now contains our keys from the gnome keyring
+ 	// we will now put it in our two lists to return it to go
+ 	GList *current;
+@@ -131,25 +121,21 @@ GError *list(char *ref_label, char *** paths, char *** accts, unsigned int *list
+ 	for(current = items; current!=NULL; current = current->next) {
+ 		char *pathTmp = secret_item_get_label(current->data);
+ 		// you cannot have a key without a label in the gnome keyring
+-		char *acctTmp = get_attribute("username",current->data);
++		char *acctTmp = get_username(current->data);
+ 		if (acctTmp==NULL) {
+ 			acctTmp = "account not defined";
+ 		}
+-
+-		tmp_paths[listNumber] = (char *) calloc(1, sizeof(char)*(strlen(pathTmp)+1));
+-		tmp_accts[listNumber] = (char *) calloc(1, sizeof(char)*(strlen(acctTmp)+1));
+-
+-		memcpy(tmp_paths[listNumber], pathTmp, sizeof(char)*(strlen(pathTmp)+1));
+-		memcpy(tmp_accts[listNumber], acctTmp, sizeof(char)*(strlen(acctTmp)+1));
+-
++		char *path = (char *) malloc(strlen(pathTmp));
++		char *acct = (char *) malloc(strlen(acctTmp));
++		path = pathTmp;
++		acct = acctTmp;
++		(*paths)[listNumber] = (char *) malloc(sizeof(char)*(strlen(path)));
++		memcpy((*paths)[listNumber], path, sizeof(char)*(strlen(path)));
++		(*accts)[listNumber] = (char *) malloc(sizeof(char)*(strlen(acct)));
++		memcpy((*accts)[listNumber], acct, sizeof(char)*(strlen(acct)));
+ 		listNumber = listNumber + 1;
+ 	}
+-
+-	*paths = (char **) realloc(tmp_paths, (int)sizeof(char *)*listNumber);
+-	*accts = (char **) realloc(tmp_accts, (int)sizeof(char *)*listNumber);
+-
+-	*list_l = listNumber;
+-
++	*list_l = numKeys;
+ 	return NULL;
+ }
+ 
+diff --git a/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.go b/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.go
+index 95a1310b6..9178f904c 100644
+--- a/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.go
++++ b/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.go
+@@ -22,8 +22,6 @@ func (h Secretservice) Add(creds *credentials.Credentials) error {
+ 	if creds == nil {
+ 		return errors.New("missing credentials")
+ 	}
+-	credsLabel := C.CString(credentials.CredsLabel)
+-	defer C.free(unsafe.Pointer(credsLabel))
+ 	server := C.CString(creds.ServerURL)
+ 	defer C.free(unsafe.Pointer(server))
+ 	username := C.CString(creds.Username)
+@@ -31,7 +29,7 @@ func (h Secretservice) Add(creds *credentials.Credentials) error {
+ 	secret := C.CString(creds.Secret)
+ 	defer C.free(unsafe.Pointer(secret))
+ 
+-	if err := C.add(credsLabel, server, username, secret); err != nil {
++	if err := C.add(server, username, secret); err != nil {
+ 		defer C.g_error_free(err)
+ 		errMsg := (*C.char)(unsafe.Pointer(err.message))
+ 		return errors.New(C.GoString(errMsg))
+@@ -81,38 +79,27 @@ func (h Secretservice) Get(serverURL string) (string, string, error) {
+ 	return user, pass, nil
+ }
+ 
+-// List returns the stored URLs and corresponding usernames for a given credentials label
+-func (h Secretservice) List() (map[string]string, error) {
+-	credsLabelC := C.CString(credentials.CredsLabel)
+-	defer C.free(unsafe.Pointer(credsLabelC))
+-
++func (h Secretservice) List() ([]string, []string, error) {
+ 	var pathsC **C.char
+ 	defer C.free(unsafe.Pointer(pathsC))
+ 	var acctsC **C.char
+ 	defer C.free(unsafe.Pointer(acctsC))
+ 	var listLenC C.uint
+-	err := C.list(credsLabelC, &pathsC, &acctsC, &listLenC)
++	err := C.list(&pathsC, &acctsC, &listLenC)
+ 	if err != nil {
+ 		defer C.free(unsafe.Pointer(err))
+-		return nil, errors.New("Error from list function in secretservice_linux.c likely due to error in secretservice library")
++		return nil, nil, errors.New("Error from list function in secretservice_linux.c likely due to error in secretservice library")
+ 	}
+-	defer C.freeListData(&pathsC, listLenC)
+-	defer C.freeListData(&acctsC, listLenC)
+-
+-	resp := make(map[string]string)
+-
+ 	listLen := int(listLenC)
+-	if listLen == 0 {
+-		return resp, nil
+-	}
+-	// The maximum capacity of the following two slices is limited to (2^29)-1 to remain compatible
+-	// with 32-bit platforms. The size of a `*C.char` (a pointer) is 4 Byte on a 32-bit system
+-	// and (2^29)*4 == math.MaxInt32 + 1. -- See issue golang/go#13656
+-	pathTmp := (*[(1 << 29) - 1]*C.char)(unsafe.Pointer(pathsC))[:listLen:listLen]
+-	acctTmp := (*[(1 << 29) - 1]*C.char)(unsafe.Pointer(acctsC))[:listLen:listLen]
++	pathTmp := (*[1 << 30]*C.char)(unsafe.Pointer(pathsC))[:listLen:listLen]
++	acctTmp := (*[1 << 30]*C.char)(unsafe.Pointer(acctsC))[:listLen:listLen]
++	paths := make([]string, listLen)
++	accts := make([]string, listLen)
+ 	for i := 0; i < listLen; i++ {
+-		resp[C.GoString(pathTmp[i])] = C.GoString(acctTmp[i])
++		paths[i] = C.GoString(pathTmp[i])
++		accts[i] = C.GoString(acctTmp[i])
+ 	}
+-
+-	return resp, nil
++	C.freeListData(&pathsC, listLenC)
++	C.freeListData(&acctsC, listLenC)
++	return paths, accts, nil
+ }
+diff --git a/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.h b/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.h
+index a28179db3..319cdc06a 100644
+--- a/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.h
++++ b/vendor/github.com/docker/docker-credential-helpers/secretservice/secretservice_linux.h
+@@ -6,8 +6,8 @@ const SecretSchema *docker_get_schema(void) G_GNUC_CONST;
+ 
+ #define DOCKER_SCHEMA docker_get_schema()
+ 
+-GError *add(char *label, char *server, char *username, char *secret);
++GError *add(char *server, char *username, char *secret);
+ GError *delete(char *server);
+ GError *get(char *server, char **username, char **secret);
+-GError *list(char *label, char *** paths, char *** accts, unsigned int *list_l);
++GError *list(char *** paths, char *** accts, unsigned int *list_l);
+ void freeListData(char *** data, unsigned int length);
+diff --git a/vendor/github.com/docker/docker-credential-helpers/wincred/wincred_windows.go b/vendor/github.com/docker/docker-credential-helpers/wincred/wincred_windows.go
+deleted file mode 100644
+index dcfa123a3..000000000
+--- a/vendor/github.com/docker/docker-credential-helpers/wincred/wincred_windows.go
++++ /dev/null
+@@ -1,74 +0,0 @@
+-package wincred
+-
+-import (
+-	"bytes"
+-	"strings"
+-
+-	winc "github.com/danieljoos/wincred"
+-	"github.com/docker/docker-credential-helpers/credentials"
+-)
+-
+-// Wincred handles secrets using the Windows credential service.
+-type Wincred struct{}
+-
+-// Add adds new credentials to the windows credentials manager.
+-func (h Wincred) Add(creds *credentials.Credentials) error {
+-	g := winc.NewGenericCredential(creds.ServerURL)
+-	g.UserName = creds.Username
+-	g.CredentialBlob = []byte(creds.Secret)
+-	g.Persist = winc.PersistLocalMachine
+-	g.Attributes = []winc.CredentialAttribute{{"label", []byte(credentials.CredsLabel)}}
+-
+-	return g.Write()
+-}
+-
+-// Delete removes credentials from the windows credentials manager.
+-func (h Wincred) Delete(serverURL string) error {
+-	g, err := winc.GetGenericCredential(serverURL)
+-	if g == nil {
+-		return nil
+-	}
+-	if err != nil {
+-		return err
+-	}
+-	return g.Delete()
+-}
+-
+-// Get retrieves credentials from the windows credentials manager.
+-func (h Wincred) Get(serverURL string) (string, string, error) {
+-	g, _ := winc.GetGenericCredential(serverURL)
+-	if g == nil {
+-		return "", "", credentials.NewErrCredentialsNotFound()
+-	}
+-	for _, attr := range g.Attributes {
+-		if strings.Compare(attr.Keyword, "label") == 0 &&
+-			bytes.Compare(attr.Value, []byte(credentials.CredsLabel)) == 0 {
+-
+-			return g.UserName, string(g.CredentialBlob), nil
+-		}
+-	}
+-	return "", "", credentials.NewErrCredentialsNotFound()
+-}
+-
+-// List returns the stored URLs and corresponding usernames for a given credentials label.
+-func (h Wincred) List() (map[string]string, error) {
+-	creds, err := winc.List()
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	resp := make(map[string]string)
+-	for i := range creds {
+-		attrs := creds[i].Attributes
+-		for _, attr := range attrs {
+-			if strings.Compare(attr.Keyword, "label") == 0 &&
+-				bytes.Compare(attr.Value, []byte(credentials.CredsLabel)) == 0 {
+-
+-				resp[creds[i].TargetName] = creds[i].UserName
+-			}
+-		}
+-
+-	}
+-
+-	return resp, nil
+-}
+diff --git a/vendor/github.com/pelletier/go-toml/README.md b/vendor/github.com/pelletier/go-toml/README.md
+index 0d357acf3..22da41a81 100644
+--- a/vendor/github.com/pelletier/go-toml/README.md
++++ b/vendor/github.com/pelletier/go-toml/README.md
+@@ -33,7 +33,7 @@ import "github.com/pelletier/go-toml"
+ Read a TOML document:
+ 
+ ```go
+-config, _ := toml.Load(`
++config, _ := toml.LoadString(`
+ [postgres]
+ user = "pelletier"
+ password = "mypassword"`)
+@@ -42,7 +42,7 @@ user := config.Get("postgres.user").(string)
+ 
+ // or using an intermediate object
+ postgresConfig := config.Get("postgres").(*toml.Tree)
+-password := postgresConfig.Get("password").(string)
++password = postgresConfig.Get("password").(string)
+ ```
+ 
+ Or use Unmarshal:
+@@ -57,12 +57,12 @@ type Config struct {
+ }
+ 
+ doc := []byte(`
+-[Postgres]
+-User = "pelletier"
+-Password = "mypassword"`)
++[postgres]
++user = "pelletier"
++password = "mypassword"`)
+ 
+ config := Config{}
+-toml.Unmarshal(doc, &config)
++Unmarshal(doc, &config)
+ fmt.Println("user=", config.Postgres.User)
+ ```
+ 
+@@ -70,8 +70,7 @@ Or use a query:
+ 
+ ```go
+ // use a query to gather elements without walking the tree
+-q, _ := query.Compile("$..[user,password]")
+-results := q.Execute(config)
++results, _ := config.Query("$..[user,password]")
+ for ii, item := range results.Values() {
+     fmt.Println("Query result %d: %v", ii, item)
+ }
+@@ -114,18 +113,6 @@ You have to make sure two kind of tests run:
+ 
+ You can run both of them using `./test.sh`.
+ 
+-### Fuzzing
+-
+-The script `./fuzz.sh` is available to
+-run [go-fuzz](https://github.com/dvyukov/go-fuzz) on go-toml.
+-
+-## Versioning
+-
+-Go-toml follows [Semantic Versioning](http://semver.org/). The supported version
+-of [TOML](https://github.com/toml-lang/toml) is indicated at the beginning of
+-this document. The last two major versions of Go are supported
+-(see [Go Release Policy](https://golang.org/doc/devel/release.html#policy)).
+-
+ ## License
+ 
+ The MIT License (MIT). Read [LICENSE](LICENSE).
+diff --git a/vendor/github.com/pelletier/go-toml/doc.go b/vendor/github.com/pelletier/go-toml/doc.go
+index d5fd98c02..3c89619e8 100644
+--- a/vendor/github.com/pelletier/go-toml/doc.go
++++ b/vendor/github.com/pelletier/go-toml/doc.go
+@@ -17,7 +17,7 @@
+ // JSONPath-like queries
+ //
+ // The package github.com/pelletier/go-toml/query implements a system
+-// similar to JSONPath to quickly retrieve elements of a TOML document using a
++// similar to JSONPath to quickly retrive elements of a TOML document using a
+ // single expression. See the package documentation for more information.
+ //
+ package toml
+diff --git a/vendor/github.com/pelletier/go-toml/fuzz.go b/vendor/github.com/pelletier/go-toml/fuzz.go
+deleted file mode 100644
+index 14570c8d3..000000000
+--- a/vendor/github.com/pelletier/go-toml/fuzz.go
++++ /dev/null
+@@ -1,31 +0,0 @@
+-// +build gofuzz
+-
+-package toml
+-
+-func Fuzz(data []byte) int {
+-	tree, err := LoadBytes(data)
+-	if err != nil {
+-		if tree != nil {
+-			panic("tree must be nil if there is an error")
+-		}
+-		return 0
+-	}
+-
+-	str, err := tree.ToTomlString()
+-	if err != nil {
+-		if str != "" {
+-			panic(`str must be "" if there is an error`)
+-		}
+-		panic(err)
+-	}
+-
+-	tree, err = Load(str)
+-	if err != nil {
+-		if tree != nil {
+-			panic("tree must be nil if there is an error")
+-		}
+-		return 0
+-	}
+-
+-	return 1
+-}
+diff --git a/vendor/github.com/pelletier/go-toml/fuzz.sh b/vendor/github.com/pelletier/go-toml/fuzz.sh
+deleted file mode 100755
+index 3204b4c44..000000000
+--- a/vendor/github.com/pelletier/go-toml/fuzz.sh
++++ /dev/null
+@@ -1,15 +0,0 @@
+-#! /bin/sh
+-set -eu
+-
+-go get github.com/dvyukov/go-fuzz/go-fuzz
+-go get github.com/dvyukov/go-fuzz/go-fuzz-build
+-
+-if [ ! -e toml-fuzz.zip ]; then
+-    go-fuzz-build github.com/pelletier/go-toml
+-fi
+-
+-rm -fr fuzz
+-mkdir -p fuzz/corpus
+-cp *.toml fuzz/corpus
+-
+-go-fuzz -bin=toml-fuzz.zip -workdir=fuzz
+diff --git a/vendor/github.com/pelletier/go-toml/keysparsing.go b/vendor/github.com/pelletier/go-toml/keysparsing.go
+index 0da938b03..d62ca5fd1 100644
+--- a/vendor/github.com/pelletier/go-toml/keysparsing.go
++++ b/vendor/github.com/pelletier/go-toml/keysparsing.go
+@@ -6,37 +6,15 @@ import (
+ 	"bytes"
+ 	"errors"
+ 	"fmt"
+-	"strconv"
+ 	"unicode"
+ )
+ 
+-var escapeSequenceMap = map[rune]rune{
+-	'b':  '\b',
+-	't':  '\t',
+-	'n':  '\n',
+-	'f':  '\f',
+-	'r':  '\r',
+-	'"':  '"',
+-	'\\': '\\',
+-}
+-
+-type parseKeyState int
+-
+-const (
+-	bare parseKeyState = iota
+-	basic
+-	literal
+-	esc
+-	unicode4
+-	unicode8
+-)
+-
+ func parseKey(key string) ([]string, error) {
+ 	groups := []string{}
+ 	var buffer bytes.Buffer
+-	var hex bytes.Buffer
+-	state := bare
++	inQuotes := false
+ 	wasInQuotes := false
++	escapeNext := false
+ 	ignoreSpace := true
+ 	expectDot := false
+ 
+@@ -47,67 +25,25 @@ func parseKey(key string) ([]string, error) {
+ 			}
+ 			ignoreSpace = false
+ 		}
+-
+-		if state == esc {
+-			if char == 'u' {
+-				state = unicode4
+-				hex.Reset()
+-			} else if char == 'U' {
+-				state = unicode8
+-				hex.Reset()
+-			} else if newChar, ok := escapeSequenceMap[char]; ok {
+-				buffer.WriteRune(newChar)
+-				state = basic
+-			} else {
+-				return nil, fmt.Errorf(`invalid escape sequence \%c`, char)
+-			}
+-			continue
+-		}
+-
+-		if state == unicode4 || state == unicode8 {
+-			if isHexDigit(char) {
+-				hex.WriteRune(char)
+-			}
+-			if (state == unicode4 && hex.Len() == 4) || (state == unicode8 && hex.Len() == 8) {
+-				if value, err := strconv.ParseInt(hex.String(), 16, 32); err == nil {
+-					buffer.WriteRune(rune(value))
+-				} else {
+-					return nil, err
+-				}
+-				state = basic
+-			}
++		if escapeNext {
++			buffer.WriteRune(char)
++			escapeNext = false
+ 			continue
+ 		}
+-
+ 		switch char {
+ 		case '\\':
+-			if state == basic {
+-				state = esc
+-			} else if state == literal {
+-				buffer.WriteRune(char)
+-			}
+-		case '\'':
+-			if state == bare {
+-				state = literal
+-			} else if state == literal {
+-				groups = append(groups, buffer.String())
+-				buffer.Reset()
+-				wasInQuotes = true
+-				state = bare
+-			}
+-			expectDot = false
++			escapeNext = true
++			continue
+ 		case '"':
+-			if state == bare {
+-				state = basic
+-			} else if state == basic {
++			if inQuotes {
+ 				groups = append(groups, buffer.String())
+ 				buffer.Reset()
+-				state = bare
+ 				wasInQuotes = true
+ 			}
++			inQuotes = !inQuotes
+ 			expectDot = false
+ 		case '.':
+-			if state != bare {
++			if inQuotes {
+ 				buffer.WriteRune(char)
+ 			} else {
+ 				if !wasInQuotes {
+@@ -122,31 +58,28 @@ func parseKey(key string) ([]string, error) {
+ 				wasInQuotes = false
+ 			}
+ 		case ' ':
+-			if state == basic {
++			if inQuotes {
+ 				buffer.WriteRune(char)
+ 			} else {
+ 				expectDot = true
+ 			}
+ 		default:
+-			if state == bare {
+-				if !isValidBareChar(char) {
+-					return nil, fmt.Errorf("invalid bare character: %c", char)
+-				} else if expectDot {
+-					return nil, errors.New("what?")
+-				}
++			if !inQuotes && !isValidBareChar(char) {
++				return nil, fmt.Errorf("invalid bare character: %c", char)
++			}
++			if !inQuotes && expectDot {
++				return nil, errors.New("what?")
+ 			}
+ 			buffer.WriteRune(char)
+ 			expectDot = false
+ 		}
+ 	}
+-
+-	// state must be bare at the end
+-	if state == esc {
+-		return nil, errors.New("unfinished escape sequence")
+-	} else if state != bare {
++	if inQuotes {
+ 		return nil, errors.New("mismatched quotes")
+ 	}
+-
++	if escapeNext {
++		return nil, errors.New("unfinished escape sequence")
++	}
+ 	if buffer.Len() > 0 {
+ 		groups = append(groups, buffer.String())
+ 	}
+diff --git a/vendor/github.com/pelletier/go-toml/lexer.go b/vendor/github.com/pelletier/go-toml/lexer.go
+index 209665676..1b6647d66 100644
+--- a/vendor/github.com/pelletier/go-toml/lexer.go
++++ b/vendor/github.com/pelletier/go-toml/lexer.go
+@@ -575,67 +575,8 @@ func (l *tomlLexer) lexRightBracket() tomlLexStateFn {
+ 	return l.lexRvalue
+ }
+ 
+-type validRuneFn func(r rune) bool
+-
+-func isValidHexRune(r rune) bool {
+-	return r >= 'a' && r <= 'f' ||
+-		r >= 'A' && r <= 'F' ||
+-		r >= '0' && r <= '9' ||
+-		r == '_'
+-}
+-
+-func isValidOctalRune(r rune) bool {
+-	return r >= '0' && r <= '7' || r == '_'
+-}
+-
+-func isValidBinaryRune(r rune) bool {
+-	return r == '0' || r == '1' || r == '_'
+-}
+-
+ func (l *tomlLexer) lexNumber() tomlLexStateFn {
+ 	r := l.peek()
+-
+-	if r == '0' {
+-		follow := l.peekString(2)
+-		if len(follow) == 2 {
+-			var isValidRune validRuneFn
+-			switch follow[1] {
+-			case 'x':
+-				isValidRune = isValidHexRune
+-			case 'o':
+-				isValidRune = isValidOctalRune
+-			case 'b':
+-				isValidRune = isValidBinaryRune
+-			default:
+-				if follow[1] >= 'a' && follow[1] <= 'z' || follow[1] >= 'A' && follow[1] <= 'Z' {
+-					return l.errorf("unknown number base: %s. possible options are x (hex) o (octal) b (binary)", string(follow[1]))
+-				}
+-			}
+-
+-			if isValidRune != nil {
+-				l.next()
+-				l.next()
+-				digitSeen := false
+-				for {
+-					next := l.peek()
+-					if !isValidRune(next) {
+-						break
+-					}
+-					digitSeen = true
+-					l.next()
+-				}
+-
+-				if !digitSeen {
+-					return l.errorf("number needs at least one digit")
+-				}
+-
+-				l.emit(tokenInteger)
+-
+-				return l.lexRvalue
+-			}
+-		}
+-	}
+-
+ 	if r == '+' || r == '-' {
+ 		l.next()
+ 	}
+diff --git a/vendor/github.com/pelletier/go-toml/marshal.go b/vendor/github.com/pelletier/go-toml/marshal.go
+index 6280225e9..1a3176f97 100644
+--- a/vendor/github.com/pelletier/go-toml/marshal.go
++++ b/vendor/github.com/pelletier/go-toml/marshal.go
+@@ -4,30 +4,17 @@ import (
+ 	"bytes"
+ 	"errors"
+ 	"fmt"
+-	"io"
+ 	"reflect"
+-	"strconv"
+ 	"strings"
+ 	"time"
+ )
+ 
+ type tomlOpts struct {
+ 	name      string
+-	comment   string
+-	commented bool
+ 	include   bool
+ 	omitempty bool
+ }
+ 
+-type encOpts struct {
+-	quoteMapKeys            bool
+-	arraysOneElementPerLine bool
+-}
+-
+-var encOptsDefaults = encOpts{
+-	quoteMapKeys: false,
+-}
+-
+ var timeType = reflect.TypeOf(time.Time{})
+ var marshalerType = reflect.TypeOf(new(Marshaler)).Elem()
+ 
+@@ -107,15 +94,8 @@ encoder, except that there is no concept of a Marshaler interface or MarshalTOML
+ function for sub-structs, and currently only definite types can be marshaled
+ (i.e. no `interface{}`).
+ 
+-The following struct annotations are supported:
+-
+-  toml:"Field"      Overrides the field's name to output.
+-  omitempty         When set, empty values and groups are not emitted.
+-  comment:"comment" Emits a # comment on the same line. This supports new lines.
+-  commented:"true"  Emits the value as commented.
+-
+ Note that pointers are automatically assigned the "omitempty" option, as TOML
+-explicitly does not handle null values (saying instead the label should be
++explicity does not handle null values (saying instead the label should be
+ dropped).
+ 
+ Tree structural types and corresponding marshal types:
+@@ -135,66 +115,6 @@ Tree primitive types and corresponding marshal types:
+   time.Time  time.Time{}, pointers to same
+ */
+ func Marshal(v interface{}) ([]byte, error) {
+-	return NewEncoder(nil).marshal(v)
+-}
+-
+-// Encoder writes TOML values to an output stream.
+-type Encoder struct {
+-	w io.Writer
+-	encOpts
+-}
+-
+-// NewEncoder returns a new encoder that writes to w.
+-func NewEncoder(w io.Writer) *Encoder {
+-	return &Encoder{
+-		w:       w,
+-		encOpts: encOptsDefaults,
+-	}
+-}
+-
+-// Encode writes the TOML encoding of v to the stream.
+-//
+-// See the documentation for Marshal for details.
+-func (e *Encoder) Encode(v interface{}) error {
+-	b, err := e.marshal(v)
+-	if err != nil {
+-		return err
+-	}
+-	if _, err := e.w.Write(b); err != nil {
+-		return err
+-	}
+-	return nil
+-}
+-
+-// QuoteMapKeys sets up the encoder to encode
+-// maps with string type keys with quoted TOML keys.
+-//
+-// This relieves the character limitations on map keys.
+-func (e *Encoder) QuoteMapKeys(v bool) *Encoder {
+-	e.quoteMapKeys = v
+-	return e
+-}
+-
+-// ArraysWithOneElementPerLine sets up the encoder to encode arrays
+-// with more than one element on multiple lines instead of one.
+-//
+-// For example:
+-//
+-//   A = [1,2,3]
+-//
+-// Becomes
+-//
+-//   A = [
+-//     1,
+-//     2,
+-//     3
+-//   ]
+-func (e *Encoder) ArraysWithOneElementPerLine(v bool) *Encoder {
+-	e.arraysOneElementPerLine = v
+-	return e
+-}
+-
+-func (e *Encoder) marshal(v interface{}) ([]byte, error) {
+ 	mtype := reflect.TypeOf(v)
+ 	if mtype.Kind() != reflect.Struct {
+ 		return []byte{}, errors.New("Only a struct can be marshaled to TOML")
+@@ -203,21 +123,18 @@ func (e *Encoder) marshal(v interface{}) ([]byte, error) {
+ 	if isCustomMarshaler(mtype) {
+ 		return callCustomMarshaler(sval)
+ 	}
+-	t, err := e.valueToTree(mtype, sval)
++	t, err := valueToTree(mtype, sval)
+ 	if err != nil {
+ 		return []byte{}, err
+ 	}
+-
+-	var buf bytes.Buffer
+-	_, err = t.writeTo(&buf, "", "", 0, e.arraysOneElementPerLine)
+-
+-	return buf.Bytes(), err
++	s, err := t.ToTomlString()
++	return []byte(s), err
+ }
+ 
+ // Convert given marshal struct or map value to toml tree
+-func (e *Encoder) valueToTree(mtype reflect.Type, mval reflect.Value) (*Tree, error) {
++func valueToTree(mtype reflect.Type, mval reflect.Value) (*Tree, error) {
+ 	if mtype.Kind() == reflect.Ptr {
+-		return e.valueToTree(mtype.Elem(), mval.Elem())
++		return valueToTree(mtype.Elem(), mval.Elem())
+ 	}
+ 	tval := newTree()
+ 	switch mtype.Kind() {
+@@ -226,39 +143,31 @@ func (e *Encoder) valueToTree(mtype reflect.Type, mval reflect.Value) (*Tree, er
+ 			mtypef, mvalf := mtype.Field(i), mval.Field(i)
+ 			opts := tomlOptions(mtypef)
+ 			if opts.include && (!opts.omitempty || !isZero(mvalf)) {
+-				val, err := e.valueToToml(mtypef.Type, mvalf)
++				val, err := valueToToml(mtypef.Type, mvalf)
+ 				if err != nil {
+ 					return nil, err
+ 				}
+-				tval.Set(opts.name, opts.comment, opts.commented, val)
++				tval.Set(opts.name, val)
+ 			}
+ 		}
+ 	case reflect.Map:
+ 		for _, key := range mval.MapKeys() {
+ 			mvalf := mval.MapIndex(key)
+-			val, err := e.valueToToml(mtype.Elem(), mvalf)
++			val, err := valueToToml(mtype.Elem(), mvalf)
+ 			if err != nil {
+ 				return nil, err
+ 			}
+-			if e.quoteMapKeys {
+-				keyStr, err := tomlValueStringRepresentation(key.String(), "", e.arraysOneElementPerLine)
+-				if err != nil {
+-					return nil, err
+-				}
+-				tval.SetPath([]string{keyStr}, "", false, val)
+-			} else {
+-				tval.Set(key.String(), "", false, val)
+-			}
++			tval.Set(key.String(), val)
+ 		}
+ 	}
+ 	return tval, nil
+ }
+ 
+ // Convert given marshal slice to slice of Toml trees
+-func (e *Encoder) valueToTreeSlice(mtype reflect.Type, mval reflect.Value) ([]*Tree, error) {
++func valueToTreeSlice(mtype reflect.Type, mval reflect.Value) ([]*Tree, error) {
+ 	tval := make([]*Tree, mval.Len(), mval.Len())
+ 	for i := 0; i < mval.Len(); i++ {
+-		val, err := e.valueToTree(mtype.Elem(), mval.Index(i))
++		val, err := valueToTree(mtype.Elem(), mval.Index(i))
+ 		if err != nil {
+ 			return nil, err
+ 		}
+@@ -268,10 +177,10 @@ func (e *Encoder) valueToTreeSlice(mtype reflect.Type, mval reflect.Value) ([]*T
+ }
+ 
+ // Convert given marshal slice to slice of toml values
+-func (e *Encoder) valueToOtherSlice(mtype reflect.Type, mval reflect.Value) (interface{}, error) {
++func valueToOtherSlice(mtype reflect.Type, mval reflect.Value) (interface{}, error) {
+ 	tval := make([]interface{}, mval.Len(), mval.Len())
+ 	for i := 0; i < mval.Len(); i++ {
+-		val, err := e.valueToToml(mtype.Elem(), mval.Index(i))
++		val, err := valueToToml(mtype.Elem(), mval.Index(i))
+ 		if err != nil {
+ 			return nil, err
+ 		}
+@@ -281,19 +190,19 @@ func (e *Encoder) valueToOtherSlice(mtype reflect.Type, mval reflect.Value) (int
+ }
+ 
+ // Convert given marshal value to toml value
+-func (e *Encoder) valueToToml(mtype reflect.Type, mval reflect.Value) (interface{}, error) {
++func valueToToml(mtype reflect.Type, mval reflect.Value) (interface{}, error) {
+ 	if mtype.Kind() == reflect.Ptr {
+-		return e.valueToToml(mtype.Elem(), mval.Elem())
++		return valueToToml(mtype.Elem(), mval.Elem())
+ 	}
+ 	switch {
+ 	case isCustomMarshaler(mtype):
+ 		return callCustomMarshaler(mval)
+ 	case isTree(mtype):
+-		return e.valueToTree(mtype, mval)
++		return valueToTree(mtype, mval)
+ 	case isTreeSlice(mtype):
+-		return e.valueToTreeSlice(mtype, mval)
++		return valueToTreeSlice(mtype, mval)
+ 	case isOtherSlice(mtype):
+-		return e.valueToOtherSlice(mtype, mval)
++		return valueToOtherSlice(mtype, mval)
+ 	default:
+ 		switch mtype.Kind() {
+ 		case reflect.Bool:
+@@ -318,16 +227,17 @@ func (e *Encoder) valueToToml(mtype reflect.Type, mval reflect.Value) (interface
+ // Neither Unmarshaler interfaces nor UnmarshalTOML functions are supported for
+ // sub-structs, and only definite types can be unmarshaled.
+ func (t *Tree) Unmarshal(v interface{}) error {
+-	d := Decoder{tval: t}
+-	return d.unmarshal(v)
+-}
++	mtype := reflect.TypeOf(v)
++	if mtype.Kind() != reflect.Ptr || mtype.Elem().Kind() != reflect.Struct {
++		return errors.New("Only a pointer to struct can be unmarshaled from TOML")
++	}
+ 
+-// Marshal returns the TOML encoding of Tree.
+-// See Marshal() documentation for types mapping table.
+-func (t *Tree) Marshal() ([]byte, error) {
+-	var buf bytes.Buffer
+-	err := NewEncoder(&buf).Encode(t)
+-	return buf.Bytes(), err
++	sval, err := valueFromTree(mtype.Elem(), t)
++	if err != nil {
++		return err
++	}
++	reflect.ValueOf(v).Elem().Set(sval)
++	return nil
+ }
+ 
+ // Unmarshal parses the TOML-encoded data and stores the result in the value
+@@ -336,10 +246,6 @@ func (t *Tree) Marshal() ([]byte, error) {
+ // sub-structs, and currently only definite types can be unmarshaled to (i.e. no
+ // `interface{}`).
+ //
+-// The following struct annotations are supported:
+-//
+-//   toml:"Field" Overrides the field's name to map to.
+-//
+ // See Marshal() documentation for types mapping table.
+ func Unmarshal(data []byte, v interface{}) error {
+ 	t, err := LoadReader(bytes.NewReader(data))
+@@ -349,52 +255,10 @@ func Unmarshal(data []byte, v interface{}) error {
+ 	return t.Unmarshal(v)
+ }
+ 
+-// Decoder reads and decodes TOML values from an input stream.
+-type Decoder struct {
+-	r    io.Reader
+-	tval *Tree
+-	encOpts
+-}
+-
+-// NewDecoder returns a new decoder that reads from r.
+-func NewDecoder(r io.Reader) *Decoder {
+-	return &Decoder{
+-		r:       r,
+-		encOpts: encOptsDefaults,
+-	}
+-}
+-
+-// Decode reads a TOML-encoded value from it's input
+-// and unmarshals it in the value pointed at by v.
+-//
+-// See the documentation for Marshal for details.
+-func (d *Decoder) Decode(v interface{}) error {
+-	var err error
+-	d.tval, err = LoadReader(d.r)
+-	if err != nil {
+-		return err
+-	}
+-	return d.unmarshal(v)
+-}
+-
+-func (d *Decoder) unmarshal(v interface{}) error {
+-	mtype := reflect.TypeOf(v)
+-	if mtype.Kind() != reflect.Ptr || mtype.Elem().Kind() != reflect.Struct {
+-		return errors.New("Only a pointer to struct can be unmarshaled from TOML")
+-	}
+-
+-	sval, err := d.valueFromTree(mtype.Elem(), d.tval)
+-	if err != nil {
+-		return err
+-	}
+-	reflect.ValueOf(v).Elem().Set(sval)
+-	return nil
+-}
+-
+ // Convert toml tree to marshal struct or map, using marshal type
+-func (d *Decoder) valueFromTree(mtype reflect.Type, tval *Tree) (reflect.Value, error) {
++func valueFromTree(mtype reflect.Type, tval *Tree) (reflect.Value, error) {
+ 	if mtype.Kind() == reflect.Ptr {
+-		return d.unwrapPointer(mtype, tval)
++		return unwrapPointer(mtype, tval)
+ 	}
+ 	var mval reflect.Value
+ 	switch mtype.Kind() {
+@@ -412,7 +276,7 @@ func (d *Decoder) valueFromTree(mtype reflect.Type, tval *Tree) (reflect.Value,
+ 						continue
+ 					}
+ 					val := tval.Get(key)
+-					mvalf, err := d.valueFromToml(mtypef.Type, val)
++					mvalf, err := valueFromToml(mtypef.Type, val)
+ 					if err != nil {
+ 						return mval, formatError(err, tval.GetPosition(key))
+ 					}
+@@ -424,9 +288,8 @@ func (d *Decoder) valueFromTree(mtype reflect.Type, tval *Tree) (reflect.Value,
+ 	case reflect.Map:
+ 		mval = reflect.MakeMap(mtype)
+ 		for _, key := range tval.Keys() {
+-			// TODO: path splits key
+-			val := tval.GetPath([]string{key})
+-			mvalf, err := d.valueFromToml(mtype.Elem(), val)
++			val := tval.Get(key)
++			mvalf, err := valueFromToml(mtype.Elem(), val)
+ 			if err != nil {
+ 				return mval, formatError(err, tval.GetPosition(key))
+ 			}
+@@ -437,10 +300,10 @@ func (d *Decoder) valueFromTree(mtype reflect.Type, tval *Tree) (reflect.Value,
+ }
+ 
+ // Convert toml value to marshal struct/map slice, using marshal type
+-func (d *Decoder) valueFromTreeSlice(mtype reflect.Type, tval []*Tree) (reflect.Value, error) {
++func valueFromTreeSlice(mtype reflect.Type, tval []*Tree) (reflect.Value, error) {
+ 	mval := reflect.MakeSlice(mtype, len(tval), len(tval))
+ 	for i := 0; i < len(tval); i++ {
+-		val, err := d.valueFromTree(mtype.Elem(), tval[i])
++		val, err := valueFromTree(mtype.Elem(), tval[i])
+ 		if err != nil {
+ 			return mval, err
+ 		}
+@@ -450,10 +313,10 @@ func (d *Decoder) valueFromTreeSlice(mtype reflect.Type, tval []*Tree) (reflect.
+ }
+ 
+ // Convert toml value to marshal primitive slice, using marshal type
+-func (d *Decoder) valueFromOtherSlice(mtype reflect.Type, tval []interface{}) (reflect.Value, error) {
++func valueFromOtherSlice(mtype reflect.Type, tval []interface{}) (reflect.Value, error) {
+ 	mval := reflect.MakeSlice(mtype, len(tval), len(tval))
+ 	for i := 0; i < len(tval); i++ {
+-		val, err := d.valueFromToml(mtype.Elem(), tval[i])
++		val, err := valueFromToml(mtype.Elem(), tval[i])
+ 		if err != nil {
+ 			return mval, err
+ 		}
+@@ -463,27 +326,17 @@ func (d *Decoder) valueFromOtherSlice(mtype reflect.Type, tval []interface{}) (r
+ }
+ 
+ // Convert toml value to marshal value, using marshal type
+-func (d *Decoder) valueFromToml(mtype reflect.Type, tval interface{}) (reflect.Value, error) {
++func valueFromToml(mtype reflect.Type, tval interface{}) (reflect.Value, error) {
+ 	if mtype.Kind() == reflect.Ptr {
+-		return d.unwrapPointer(mtype, tval)
++		return unwrapPointer(mtype, tval)
+ 	}
+-
+-	switch tval.(type) {
+-	case *Tree:
+-		if isTree(mtype) {
+-			return d.valueFromTree(mtype, tval.(*Tree))
+-		}
+-		return reflect.ValueOf(nil), fmt.Errorf("Can't convert %v(%T) to a tree", tval, tval)
+-	case []*Tree:
+-		if isTreeSlice(mtype) {
+-			return d.valueFromTreeSlice(mtype, tval.([]*Tree))
+-		}
+-		return reflect.ValueOf(nil), fmt.Errorf("Can't convert %v(%T) to trees", tval, tval)
+-	case []interface{}:
+-		if isOtherSlice(mtype) {
+-			return d.valueFromOtherSlice(mtype, tval.([]interface{}))
+-		}
+-		return reflect.ValueOf(nil), fmt.Errorf("Can't convert %v(%T) to a slice", tval, tval)
++	switch {
++	case isTree(mtype):
++		return valueFromTree(mtype, tval.(*Tree))
++	case isTreeSlice(mtype):
++		return valueFromTreeSlice(mtype, tval.([]*Tree))
++	case isOtherSlice(mtype):
++		return valueFromOtherSlice(mtype, tval.([]interface{}))
+ 	default:
+ 		switch mtype.Kind() {
+ 		case reflect.Bool:
+@@ -577,13 +430,13 @@ func (d *Decoder) valueFromToml(mtype reflect.Type, tval interface{}) (reflect.V
+ 			}
+ 			return reflect.ValueOf(val), nil
+ 		default:
+-			return reflect.ValueOf(nil), fmt.Errorf("Can't convert %v(%T) to %v(%v)", tval, tval, mtype, mtype.Kind())
++			return reflect.ValueOf(nil), fmt.Errorf("Unmarshal can't handle %v(%v)", mtype, mtype.Kind())
+ 		}
+ 	}
+ }
+ 
+-func (d *Decoder) unwrapPointer(mtype reflect.Type, tval interface{}) (reflect.Value, error) {
+-	val, err := d.valueFromToml(mtype.Elem(), tval)
++func unwrapPointer(mtype reflect.Type, tval interface{}) (reflect.Value, error) {
++	val, err := valueFromToml(mtype.Elem(), tval)
+ 	if err != nil {
+ 		return reflect.ValueOf(nil), err
+ 	}
+@@ -595,12 +448,7 @@ func (d *Decoder) unwrapPointer(mtype reflect.Type, tval interface{}) (reflect.V
+ func tomlOptions(vf reflect.StructField) tomlOpts {
+ 	tag := vf.Tag.Get("toml")
+ 	parse := strings.Split(tag, ",")
+-	var comment string
+-	if c := vf.Tag.Get("comment"); c != "" {
+-		comment = c
+-	}
+-	commented, _ := strconv.ParseBool(vf.Tag.Get("commented"))
+-	result := tomlOpts{name: vf.Name, comment: comment, commented: commented, include: true, omitempty: false}
++	result := tomlOpts{vf.Name, true, false}
+ 	if parse[0] != "" {
+ 		if parse[0] == "-" && len(parse) == 1 {
+ 			result.include = false
+diff --git a/vendor/github.com/pelletier/go-toml/parser.go b/vendor/github.com/pelletier/go-toml/parser.go
+index 0f2ab7a33..8ee49cb56 100644
+--- a/vendor/github.com/pelletier/go-toml/parser.go
++++ b/vendor/github.com/pelletier/go-toml/parser.go
+@@ -110,7 +110,7 @@ func (p *tomlParser) parseGroupArray() tomlParserStateFn {
+ 	newTree := newTree()
+ 	newTree.position = startToken.Position
+ 	array = append(array, newTree)
+-	p.tree.SetPath(p.currentTable, "", false, array)
++	p.tree.SetPath(p.currentTable, array)
+ 
+ 	// remove all keys that were children of this table array
+ 	prefix := key.val + "."
+@@ -205,32 +205,20 @@ func (p *tomlParser) parseAssign() tomlParserStateFn {
+ 	case *Tree, []*Tree:
+ 		toInsert = value
+ 	default:
+-		toInsert = &tomlValue{value: value, position: key.Position}
++		toInsert = &tomlValue{value, key.Position}
+ 	}
+ 	targetNode.values[keyVal] = toInsert
+ 	return p.parseStart
+ }
+ 
+ var numberUnderscoreInvalidRegexp *regexp.Regexp
+-var hexNumberUnderscoreInvalidRegexp *regexp.Regexp
+ 
+-func numberContainsInvalidUnderscore(value string) error {
++func cleanupNumberToken(value string) (string, error) {
+ 	if numberUnderscoreInvalidRegexp.MatchString(value) {
+-		return errors.New("invalid use of _ in number")
++		return "", errors.New("invalid use of _ in number")
+ 	}
+-	return nil
+-}
+-
+-func hexNumberContainsInvalidUnderscore(value string) error {
+-	if hexNumberUnderscoreInvalidRegexp.MatchString(value) {
+-		return errors.New("invalid use of _ in hex number")
+-	}
+-	return nil
+-}
+-
+-func cleanupNumberToken(value string) string {
+ 	cleanedVal := strings.Replace(value, "_", "", -1)
+-	return cleanedVal
++	return cleanedVal, nil
+ }
+ 
+ func (p *tomlParser) parseRvalue() interface{} {
+@@ -247,49 +235,20 @@ func (p *tomlParser) parseRvalue() interface{} {
+ 	case tokenFalse:
+ 		return false
+ 	case tokenInteger:
+-		cleanedVal := cleanupNumberToken(tok.val)
+-		var err error
+-		var val int64
+-		if len(cleanedVal) >= 3 && cleanedVal[0] == '0' {
+-			switch cleanedVal[1] {
+-			case 'x':
+-				err = hexNumberContainsInvalidUnderscore(tok.val)
+-				if err != nil {
+-					p.raiseError(tok, "%s", err)
+-				}
+-				val, err = strconv.ParseInt(cleanedVal[2:], 16, 64)
+-			case 'o':
+-				err = numberContainsInvalidUnderscore(tok.val)
+-				if err != nil {
+-					p.raiseError(tok, "%s", err)
+-				}
+-				val, err = strconv.ParseInt(cleanedVal[2:], 8, 64)
+-			case 'b':
+-				err = numberContainsInvalidUnderscore(tok.val)
+-				if err != nil {
+-					p.raiseError(tok, "%s", err)
+-				}
+-				val, err = strconv.ParseInt(cleanedVal[2:], 2, 64)
+-			default:
+-				panic("invalid base") // the lexer should catch this first
+-			}
+-		} else {
+-			err = numberContainsInvalidUnderscore(tok.val)
+-			if err != nil {
+-				p.raiseError(tok, "%s", err)
+-			}
+-			val, err = strconv.ParseInt(cleanedVal, 10, 64)
++		cleanedVal, err := cleanupNumberToken(tok.val)
++		if err != nil {
++			p.raiseError(tok, "%s", err)
+ 		}
++		val, err := strconv.ParseInt(cleanedVal, 10, 64)
+ 		if err != nil {
+ 			p.raiseError(tok, "%s", err)
+ 		}
+ 		return val
+ 	case tokenFloat:
+-		err := numberContainsInvalidUnderscore(tok.val)
++		cleanedVal, err := cleanupNumberToken(tok.val)
+ 		if err != nil {
+ 			p.raiseError(tok, "%s", err)
+ 		}
+-		cleanedVal := cleanupNumberToken(tok.val)
+ 		val, err := strconv.ParseFloat(cleanedVal, 64)
+ 		if err != nil {
+ 			p.raiseError(tok, "%s", err)
+@@ -340,7 +299,7 @@ Loop:
+ 			key := p.getToken()
+ 			p.assume(tokenEqual)
+ 			value := p.parseRvalue()
+-			tree.Set(key.val, "", false, value)
++			tree.Set(key.val, value)
+ 		case tokenComma:
+ 			if previous == nil {
+ 				p.raiseError(follow, "inline table cannot start with a comma")
+@@ -420,6 +379,5 @@ func parseToml(flow []token) *Tree {
+ }
+ 
+ func init() {
+-	numberUnderscoreInvalidRegexp = regexp.MustCompile(`([^\d]_|_[^\d])|_$|^_`)
+-	hexNumberUnderscoreInvalidRegexp = regexp.MustCompile(`(^0x_)|([^\da-f]_|_[^\da-f])|_$|^_`)
++	numberUnderscoreInvalidRegexp = regexp.MustCompile(`([^\d]_|_[^\d]|_$|^_)`)
+ }
+diff --git a/vendor/github.com/pelletier/go-toml/toml.go b/vendor/github.com/pelletier/go-toml/toml.go
+index c3e324374..64f19ed30 100644
+--- a/vendor/github.com/pelletier/go-toml/toml.go
++++ b/vendor/github.com/pelletier/go-toml/toml.go
+@@ -11,18 +11,14 @@ import (
+ )
+ 
+ type tomlValue struct {
+-	value     interface{} // string, int64, uint64, float64, bool, time.Time, [] of any of this list
+-	comment   string
+-	commented bool
+-	position  Position
++	value    interface{} // string, int64, uint64, float64, bool, time.Time, [] of any of this list
++	position Position
+ }
+ 
+ // Tree is the result of the parsing of a TOML file.
+ type Tree struct {
+-	values    map[string]interface{} // string -> *tomlValue, *Tree, []*Tree
+-	comment   string
+-	commented bool
+-	position  Position
++	values   map[string]interface{} // string -> *tomlValue, *Tree, []*Tree
++	position Position
+ }
+ 
+ func newTree() *Tree {
+@@ -181,14 +177,14 @@ func (t *Tree) GetDefault(key string, def interface{}) interface{} {
+ // Set an element in the tree.
+ // Key is a dot-separated path (e.g. a.b.c).
+ // Creates all necessary intermediate trees, if needed.
+-func (t *Tree) Set(key string, comment string, commented bool, value interface{}) {
+-	t.SetPath(strings.Split(key, "."), comment, commented, value)
++func (t *Tree) Set(key string, value interface{}) {
++	t.SetPath(strings.Split(key, "."), value)
+ }
+ 
+ // SetPath sets an element in the tree.
+ // Keys is an array of path elements (e.g. {"a","b","c"}).
+ // Creates all necessary intermediate trees, if needed.
+-func (t *Tree) SetPath(keys []string, comment string, commented bool, value interface{}) {
++func (t *Tree) SetPath(keys []string, value interface{}) {
+ 	subtree := t
+ 	for _, intermediateKey := range keys[:len(keys)-1] {
+ 		nextTree, exists := subtree.values[intermediateKey]
+@@ -213,17 +209,13 @@ func (t *Tree) SetPath(keys []string, comment string, commented bool, value inte
+ 
+ 	switch value.(type) {
+ 	case *Tree:
+-		tt := value.(*Tree)
+-		tt.comment = comment
+ 		toInsert = value
+ 	case []*Tree:
+ 		toInsert = value
+ 	case *tomlValue:
+-		tt := value.(*tomlValue)
+-		tt.comment = comment
+-		toInsert = tt
++		toInsert = value
+ 	default:
+-		toInsert = &tomlValue{value: value, comment: comment, commented: commented}
++		toInsert = &tomlValue{value: value}
+ 	}
+ 
+ 	subtree.values[keys[len(keys)-1]] = toInsert
+diff --git a/vendor/github.com/pelletier/go-toml/tomltree_create.go b/vendor/github.com/pelletier/go-toml/tomltree_create.go
+index 79610e9b3..19d1c0dc6 100644
+--- a/vendor/github.com/pelletier/go-toml/tomltree_create.go
++++ b/vendor/github.com/pelletier/go-toml/tomltree_create.go
+@@ -104,7 +104,7 @@ func sliceToTree(object interface{}) (interface{}, error) {
+ 		}
+ 		arrayValue = reflect.Append(arrayValue, reflect.ValueOf(simpleValue))
+ 	}
+-	return &tomlValue{value: arrayValue.Interface(), position: Position{}}, nil
++	return &tomlValue{arrayValue.Interface(), Position{}}, nil
+ }
+ 
+ func toTree(object interface{}) (interface{}, error) {
+@@ -127,7 +127,7 @@ func toTree(object interface{}) (interface{}, error) {
+ 			}
+ 			values[key.String()] = newValue
+ 		}
+-		return &Tree{values: values, position: Position{}}, nil
++		return &Tree{values, Position{}}, nil
+ 	}
+ 
+ 	if value.Kind() == reflect.Array || value.Kind() == reflect.Slice {
+@@ -138,5 +138,5 @@ func toTree(object interface{}) (interface{}, error) {
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &tomlValue{value: simpleValue, position: Position{}}, nil
++	return &tomlValue{simpleValue, Position{}}, nil
+ }
+diff --git a/vendor/github.com/pelletier/go-toml/tomltree_write.go b/vendor/github.com/pelletier/go-toml/tomltree_write.go
+index f5ef124f0..ca763ed58 100644
+--- a/vendor/github.com/pelletier/go-toml/tomltree_write.go
++++ b/vendor/github.com/pelletier/go-toml/tomltree_write.go
+@@ -44,7 +44,7 @@ func encodeTomlString(value string) string {
+ 	return b.String()
+ }
+ 
+-func tomlValueStringRepresentation(v interface{}, indent string, arraysOneElementPerLine bool) (string, error) {
++func tomlValueStringRepresentation(v interface{}) (string, error) {
+ 	switch value := v.(type) {
+ 	case uint64:
+ 		return strconv.FormatUint(value, 10), nil
+@@ -61,7 +61,7 @@ func tomlValueStringRepresentation(v interface{}, indent string, arraysOneElemen
+ 		return "\"" + encodeTomlString(value) + "\"", nil
+ 	case []byte:
+ 		b, _ := v.([]byte)
+-		return tomlValueStringRepresentation(string(b), indent, arraysOneElementPerLine)
++		return tomlValueStringRepresentation(string(b))
+ 	case bool:
+ 		if value {
+ 			return "true", nil
+@@ -76,40 +76,21 @@ func tomlValueStringRepresentation(v interface{}, indent string, arraysOneElemen
+ 	rv := reflect.ValueOf(v)
+ 
+ 	if rv.Kind() == reflect.Slice {
+-		var values []string
++		values := []string{}
+ 		for i := 0; i < rv.Len(); i++ {
+ 			item := rv.Index(i).Interface()
+-			itemRepr, err := tomlValueStringRepresentation(item, indent, arraysOneElementPerLine)
++			itemRepr, err := tomlValueStringRepresentation(item)
+ 			if err != nil {
+ 				return "", err
+ 			}
+ 			values = append(values, itemRepr)
+ 		}
+-		if arraysOneElementPerLine && len(values) > 1 {
+-			stringBuffer := bytes.Buffer{}
+-			valueIndent := indent + `  ` // TODO: move that to a shared encoder state
+-
+-			stringBuffer.WriteString("[\n")
+-
+-			for i, value := range values {
+-				stringBuffer.WriteString(valueIndent)
+-				stringBuffer.WriteString(value)
+-				if i != len(values)-1 {
+-					stringBuffer.WriteString(`,`)
+-				}
+-				stringBuffer.WriteString("\n")
+-			}
+-
+-			stringBuffer.WriteString(indent + "]")
+-
+-			return stringBuffer.String(), nil
+-		}
+ 		return "[" + strings.Join(values, ",") + "]", nil
+ 	}
+ 	return "", fmt.Errorf("unsupported value type %T: %v", v, v)
+ }
+ 
+-func (t *Tree) writeTo(w io.Writer, indent, keyspace string, bytesCount int64, arraysOneElementPerLine bool) (int64, error) {
++func (t *Tree) writeTo(w io.Writer, indent, keyspace string, bytesCount int64) (int64, error) {
+ 	simpleValuesKeys := make([]string, 0)
+ 	complexValuesKeys := make([]string, 0)
+ 
+@@ -132,29 +113,12 @@ func (t *Tree) writeTo(w io.Writer, indent, keyspace string, bytesCount int64, a
+ 			return bytesCount, fmt.Errorf("invalid value type at %s: %T", k, t.values[k])
+ 		}
+ 
+-		repr, err := tomlValueStringRepresentation(v.value, indent, arraysOneElementPerLine)
++		repr, err := tomlValueStringRepresentation(v.value)
+ 		if err != nil {
+ 			return bytesCount, err
+ 		}
+ 
+-		if v.comment != "" {
+-			comment := strings.Replace(v.comment, "\n", "\n"+indent+"#", -1)
+-			start := "# "
+-			if strings.HasPrefix(comment, "#") {
+-				start = ""
+-			}
+-			writtenBytesCountComment, errc := writeStrings(w, "\n", indent, start, comment, "\n")
+-			bytesCount += int64(writtenBytesCountComment)
+-			if errc != nil {
+-				return bytesCount, errc
+-			}
+-		}
+-
+-		var commented string
+-		if v.commented {
+-			commented = "# "
+-		}
+-		writtenBytesCount, err := writeStrings(w, indent, commented, k, " = ", repr, "\n")
++		writtenBytesCount, err := writeStrings(w, indent, k, " = ", repr, "\n")
+ 		bytesCount += int64(writtenBytesCount)
+ 		if err != nil {
+ 			return bytesCount, err
+@@ -168,48 +132,28 @@ func (t *Tree) writeTo(w io.Writer, indent, keyspace string, bytesCount int64, a
+ 		if keyspace != "" {
+ 			combinedKey = keyspace + "." + combinedKey
+ 		}
+-		var commented string
+-		if t.commented {
+-			commented = "# "
+-		}
+ 
+ 		switch node := v.(type) {
+ 		// node has to be of those two types given how keys are sorted above
+ 		case *Tree:
+-			tv, ok := t.values[k].(*Tree)
+-			if !ok {
+-				return bytesCount, fmt.Errorf("invalid value type at %s: %T", k, t.values[k])
+-			}
+-			if tv.comment != "" {
+-				comment := strings.Replace(tv.comment, "\n", "\n"+indent+"#", -1)
+-				start := "# "
+-				if strings.HasPrefix(comment, "#") {
+-					start = ""
+-				}
+-				writtenBytesCountComment, errc := writeStrings(w, "\n", indent, start, comment)
+-				bytesCount += int64(writtenBytesCountComment)
+-				if errc != nil {
+-					return bytesCount, errc
+-				}
+-			}
+-			writtenBytesCount, err := writeStrings(w, "\n", indent, commented, "[", combinedKey, "]\n")
++			writtenBytesCount, err := writeStrings(w, "\n", indent, "[", combinedKey, "]\n")
+ 			bytesCount += int64(writtenBytesCount)
+ 			if err != nil {
+ 				return bytesCount, err
+ 			}
+-			bytesCount, err = node.writeTo(w, indent+"  ", combinedKey, bytesCount, arraysOneElementPerLine)
++			bytesCount, err = node.writeTo(w, indent+"  ", combinedKey, bytesCount)
+ 			if err != nil {
+ 				return bytesCount, err
+ 			}
+ 		case []*Tree:
+ 			for _, subTree := range node {
+-				writtenBytesCount, err := writeStrings(w, "\n", indent, commented, "[[", combinedKey, "]]\n")
++				writtenBytesCount, err := writeStrings(w, "\n", indent, "[[", combinedKey, "]]\n")
+ 				bytesCount += int64(writtenBytesCount)
+ 				if err != nil {
+ 					return bytesCount, err
+ 				}
+ 
+-				bytesCount, err = subTree.writeTo(w, indent+"  ", combinedKey, bytesCount, arraysOneElementPerLine)
++				bytesCount, err = subTree.writeTo(w, indent+"  ", combinedKey, bytesCount)
+ 				if err != nil {
+ 					return bytesCount, err
+ 				}
+@@ -235,7 +179,7 @@ func writeStrings(w io.Writer, s ...string) (int, error) {
+ // WriteTo encode the Tree as Toml and writes it to the writer w.
+ // Returns the number of bytes written in case of success, or an error if anything happened.
+ func (t *Tree) WriteTo(w io.Writer) (int64, error) {
+-	return t.writeTo(w, "", "", 0, false)
++	return t.writeTo(w, "", "", 0)
+ }
+ 
+ // ToTomlString generates a human-readable representation of the current tree.
+diff --git a/vendor/vendor.json b/vendor/vendor.json
+index 4b4b01377..4ed40b1b2 100644
+--- a/vendor/vendor.json
++++ b/vendor/vendor.json
+@@ -115,12 +115,6 @@
+ 			"revision": "003851be7bb0694fe3cc457a49529a19388ee7cf",
+ 			"revisionTime": "2015-10-26T16:03:18Z"
+ 		},
+-		{
+-			"checksumSHA1": "vvFDcA+qQlBPrJjKEYQCHVBS9xQ=",
+-			"path": "github.com/danieljoos/wincred",
+-			"revision": "412b574fb496839b312a75fba146bd32a89001cf",
+-			"revisionTime": "2017-04-09T18:24:07Z"
+-		},
+ 		{
+ 			"checksumSHA1": "5rPfda8jFccr3A6heL+JAmi9K9g=",
+ 			"origin": "github.com/stretchr/testify/vendor/github.com/davecgh/go-spew/spew",
+@@ -135,22 +129,16 @@
+ 			"revisionTime": "2017-05-30T18:56:52Z"
+ 		},
+ 		{
+-			"checksumSHA1": "4mlh3C37GG+taAkJvxOU6ndwS4c=",
++			"checksumSHA1": "9TP1bsS5s04Bm3W3IAv6W6S147M=",
+ 			"path": "github.com/docker/docker-credential-helpers/osxkeychain",
+-			"revision": "d68f9aeca33f5fd3f08eeae5e9d175edf4e731d1",
+-			"revisionTime": "2017-08-30T12:17:07Z"
++			"revision": "d8f57a18c61ade10ddf767fa080b4778359f5c66",
++			"revisionTime": "2017-05-30T18:56:52Z"
+ 		},
+ 		{
+-			"checksumSHA1": "taRG2UZdlWv25kaPaBt5r6oCoPw=",
++			"checksumSHA1": "CJGEjijnKnYUV6uCrUR8jJLfw3Y=",
+ 			"path": "github.com/docker/docker-credential-helpers/secretservice",
+-			"revision": "d68f9aeca33f5fd3f08eeae5e9d175edf4e731d1",
+-			"revisionTime": "2017-08-30T12:17:07Z"
+-		},
+-		{
+-			"checksumSHA1": "B5ONPQNlMtfcTyxwCI80z1kOmmc=",
+-			"path": "github.com/docker/docker-credential-helpers/wincred",
+-			"revision": "d68f9aeca33f5fd3f08eeae5e9d175edf4e731d1",
+-			"revisionTime": "2017-08-30T12:17:07Z"
++			"revision": "80833adff5dd10aa3b3d55dbc94308fde69e2d92",
++			"revisionTime": "2016-07-20T20:55:38Z"
+ 		},
+ 		{
+ 			"checksumSHA1": "HoN/78ovv3/DC+kDKF7IENEc40g=",
+@@ -1129,10 +1117,10 @@
+ 			"revisionTime": "2016-01-24T19:35:03Z"
+ 		},
+ 		{
+-			"checksumSHA1": "H5wlR62j1Ru5rKRDM9eCb6iUKLA=",
++			"checksumSHA1": "zZg0J0MqvnqXVYo644QDvnUinrc=",
+ 			"path": "github.com/pelletier/go-toml",
+-			"revision": "0131db6d737cfbbfb678f8b7d92e55e27ce46224",
+-			"revisionTime": "2017-12-22T11:45:48Z"
++			"revision": "9c1b4e331f1e3d98e72600677699fbe212cd6d16",
++			"revisionTime": "2017-08-25T03:46:50Z"
+ 		},
+ 		{
+ 			"checksumSHA1": "um1W+OIBS3N+hqSxShnQBkXptrQ=",

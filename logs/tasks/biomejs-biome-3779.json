@@ -1,0 +1,23 @@
+{
+ "task": "biomejs-biome-3779",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "cargo nextest run --no-fail-fast -p biome_cli -p biome_css_analyze; F2P includes 'no_missing_var_function::invalid_css' + 'no_unused_dependencies'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 10,
+  "shallow": true
+ }
+}

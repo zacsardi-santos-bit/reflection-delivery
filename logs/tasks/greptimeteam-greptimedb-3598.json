@@ -1,0 +1,23 @@
+{
+ "task": "greptimeteam-greptimedb-3598",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds unordered_scan.rs + 'Scanner::Unordered', 'if self.version.options.append_mode { ... self.unordered_scan()... }', 'pub(crate) fn seq_scan(self)', and reopen_region '+    options: HashMap<String, String>' passed through to RegionOpenRequest."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

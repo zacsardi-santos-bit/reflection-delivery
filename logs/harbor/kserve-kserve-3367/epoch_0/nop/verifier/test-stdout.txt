@@ -1,0 +1,9 @@
+patching file pkg/controller/v1alpha1/inferencegraph/controller_test.go
+patching file pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go
+# github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph [github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph.test]
+pkg/controller/v1alpha1/inferencegraph/controller_test.go:69:41: undefined: constants.GetRouterReadinessProbe
+pkg/controller/v1alpha1/inferencegraph/raw_ig_test.go:63:38: undefined: constants.GetRouterReadinessProbe
+{"Time":"2026-06-29T15:13:47.036809118Z","Action":"start","Package":"github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph"}
+{"Time":"2026-06-29T15:13:47.036946305Z","Action":"output","Package":"github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph","Output":"FAIL\tgithub.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph [build failed]\n"}
+{"Time":"2026-06-29T15:13:47.037046019Z","Action":"fail","Package":"github.com/kserve/kserve/pkg/controller/v1alpha1/inferencegraph","Elapsed":0}
+reward=0 graded=12 found=0 failed=0 parsed=1 framework=go exit_code=1

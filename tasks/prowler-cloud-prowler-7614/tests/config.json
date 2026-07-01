@@ -1,0 +1,39 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py /workspace/repo/tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py /workspace/repo/tests/providers/m365/services/defender/m365_defender_service_test.py /workspace/repo/tests/providers/m365/services/teams/teams_security_reporting_enabled/teams_security_reporting_enabled_test.py /workspace/repo/tests/providers/m365/services/teams/teams_service_test.py -v",
+  "test_files": [
+    "tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py",
+    "tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py",
+    "tests/providers/m365/services/defender/m365_defender_service_test.py",
+    "tests/providers/m365/services/teams/teams_security_reporting_enabled/teams_security_reporting_enabled_test.py",
+    "tests/providers/m365/services/teams/teams_service_test.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test_get_outbound_spam_filter_policy",
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test__get_inbound_spam_filter_policy",
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test_get_antiphising_policy",
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test_get_antiphising_rules",
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test__get_malware_filter_policy",
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test_get_report_submission_policy",
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test_get_outbound_spam_filter_rule",
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test_get_dkim_config",
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test__get_connection_filter_policy",
+    "tests.providers.m365.services.defender.m365_defender_service_test.Test_Defender_Service::test_get_client",
+    "tests.providers.m365.services.defender.defender_report_policy_configured.defender_report_policy_configured_test.Test_defender_chat_report_policy_configured::test_report_policy_configured_none",
+    "tests.providers.m365.services.defender.defender_report_policy_configured.defender_report_policy_configured_test.Test_defender_chat_report_policy_configured::test_report_policy_configured_pass",
+    "tests.providers.m365.services.defender.defender_report_policy_configured.defender_report_policy_configured_test.Test_defender_chat_report_policy_configured::test_report_policy_configured_fail",
+    "tests.providers.m365.services.teams.teams_security_reporting_enabled.teams_security_reporting_enabled_test.Test_teams_security_reporting_enabled::test_security_reporting_properly_configured",
+    "tests.providers.m365.services.teams.teams_security_reporting_enabled.teams_security_reporting_enabled_test.Test_teams_security_reporting_enabled::test_no_policies",
+    "tests.providers.m365.services.teams.teams_service_test.Test_Teams_Service::test_get_client",
+    "tests.providers.m365.services.teams.teams_service_test.Test_Teams_Service::test_get_settings",
+    "tests.providers.m365.services.teams.teams_service_test.Test_Teams_Service::test_get_user_settings",
+    "tests.providers.m365.services.teams.teams_service_test.Test_Teams_Service::test_get_global_messaging_policy",
+    "tests.providers.m365.services.teams.teams_service_test.Test_Teams_Service::test_get_global_meeting_policy",
+    "tests.providers.m365.services.defender.defender_chat_report_policy_configured.defender_chat_report_policy_configured_test.Test_defender_chat_report_policy_configured::test_report_policy_configured_none",
+    "tests.providers.m365.services.defender.defender_chat_report_policy_configured.defender_chat_report_policy_configured_test.Test_defender_chat_report_policy_configured::test_report_policy_configured_pass",
+    "tests.providers.m365.services.defender.defender_chat_report_policy_configured.defender_chat_report_policy_configured_test.Test_defender_chat_report_policy_configured::test_report_policy_configured_fail"
+  ],
+  "PASS_TO_PASS": []
+}

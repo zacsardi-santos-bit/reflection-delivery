@@ -1,0 +1,7 @@
+I'm working on a feature where clusters that use external etcd with Ubuntu bootstrapping need to receive an explicit download URL for the etcd binary during node setup. Right now, the bootstrapping configuration only includes the version number of etcd, but not where to actually download it. If the binary isn't cached on the node, bootstrapping can fail.
+
+I need to update the internal distribution metadata structure to carry a download URL field for the etcd binary, sourced from the existing release metadata assets. Then the function that configures Ubuntu-based etcd clusters needs to be updated — instead of taking just a version string, it should take the full version bundle and the cluster version, so it can decide whether to include the download URL.
+
+The URL should only be provided for cluster versions at or above a specific threshold, so older clusters don't get an unexpected configuration change that would trigger rolling restarts. The dev/unreleased build version should also be treated as eligible for this feature. A helper utility should be introduced to encapsulate this logic: given a cluster version string and a version bundle, return the appropriate URL or an empty string. It should also return a clear error when the version string is not a valid semantic version.
+
+I also need a test helper function that returns an version value representing the dev build, which can be used to set up test cluster specs that exercise the URL-including code paths.

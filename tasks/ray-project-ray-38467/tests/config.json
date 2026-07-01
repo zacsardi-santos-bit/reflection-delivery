@@ -1,0 +1,25 @@
+{
+  "test_framework": "pytest",
+  "test_command": "/workspace/setup_mocks.sh && pytest /workspace/repo/python/ray/serve/tests/test_proxy_request_response.py -v",
+  "test_files": [
+    "python/ray/serve/tests/test_proxy_request_response.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python.ray.serve.tests.test_proxy_request_response.TestASGIProxyRequest::test_request_type",
+    "python.ray.serve.tests.test_proxy_request_response.TestASGIProxyRequest::test_client",
+    "python.ray.serve.tests.test_proxy_request_response.TestASGIProxyRequest::test_method",
+    "python.ray.serve.tests.test_proxy_request_response.TestASGIProxyRequest::test_root_path",
+    "python.ray.serve.tests.test_proxy_request_response.TestASGIProxyRequest::test_path",
+    "python.ray.serve.tests.test_proxy_request_response.TestASGIProxyRequest::test_headers",
+    "python.ray.serve.tests.test_proxy_request_response.TestASGIProxyRequest::test_request_object",
+    "python.ray.serve.tests.test_proxy_request_response.TestASGIProxyRequest::test_is_route_request",
+    "python.ray.serve.tests.test_proxy_request_response.TestASGIProxyRequest::test_is_health_request",
+    "python.ray.serve.tests.test_proxy_request_response.TestgRPCProxyRequest::test_calling_list_applications_method",
+    "python.ray.serve.tests.test_proxy_request_response.TestgRPCProxyRequest::test_calling_healthz_method",
+    "python.ray.serve.tests.test_proxy_request_response.TestgRPCProxyRequest::test_calling_user_defined_method",
+    "python.ray.serve.tests.test_proxy_request_response::test_proxy_response"
+  ],
+  "PASS_TO_PASS": []
+}

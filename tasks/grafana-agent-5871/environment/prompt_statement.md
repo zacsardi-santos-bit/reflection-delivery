@@ -1,0 +1,5 @@
+I'm working with the Grafana Agent Helm chart and I need a way to add extra sidecar containers to the pod through Helm values. Right now, the chart only ever deploys the main agent container and the config-reloader, with no way to configure additional containers without editing the chart templates directly.
+
+What I'd like is a values key that lets me specify a list of extra containers — including their images, environment variables, and volume mounts — and have those containers appear alongside the existing ones in the rendered DaemonSet. I also need to be able to declare shared volumes (so the sidecar can write data the agent reads), and add corresponding volume mounts to the main agent container so it can access that shared data.
+
+A concrete use case is a GeoIP database updater that runs as a sidecar, writes an updated database to a shared volume, and the agent then uses that database to enrich telemetry. Having a CI test values file that exercises this exact scenario would also help confirm the feature works correctly end-to-end.

@@ -1,0 +1,14 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/playwright && npx jest src/migrations/update-17-3-1/add-project-to-config.spec.ts --coverage=false --verbose --json",
+  "test_files": [
+    "packages/playwright/src/migrations/update-17-3-1/add-project-to-config.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/playwright/src/migrations/update-17-3-1/add-project-to-config.spec.ts::update-nx-next-dependency should update playwright.config.ts",
+    "/workspace/repo/packages/playwright/src/migrations/update-17-3-1/add-project-to-config.spec.ts::update-nx-next-dependency should not update playwright.config.ts if projects is already defined"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,15 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest src/Apps/SaleAgreements/__tests__/SaleAgreementRoute.jest.tsx src/Apps/SaleAgreements/__tests__/SaleAgreementsApp.jest.tsx --coverage=false --verbose --json",
+  "test_files": [
+    "src/Apps/SaleAgreements/__tests__/SaleAgreementRoute.jest.tsx",
+    "src/Apps/SaleAgreements/__tests__/SaleAgreementsApp.jest.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/Apps/SaleAgreements/__tests__/SaleAgreementRoute.jest.tsx::SaleAgreementsRoute renders correctly",
+    "/workspace/repo/src/Apps/SaleAgreements/__tests__/SaleAgreementsApp.jest.tsx::SaleAgreementsApp sorts and renders sale agreements correctly"
+  ],
+  "PASS_TO_PASS": []
+}

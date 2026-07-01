@@ -1,0 +1,12 @@
+patching file warehouse/admin/routes.py
+patching file warehouse/admin/templates/admin/organizations/detail.html
+patching file warehouse/admin/views/organizations.py
+patching file warehouse/locale/messages.pot
+patching file warehouse/manage/forms.py
+patching file warehouse/manage/views/organizations.py
+patching file warehouse/migrations/versions/6713c727bad2_create_organization_manual_activation_.py
+patching file warehouse/organizations/models.py
+patching file warehouse/predicates.py
+patching file warehouse/templates/manage/organization/roles.html
+patching file warehouse/templates/manage/organization/settings.html
+patching file warehouse/templates/manage/organizations.html

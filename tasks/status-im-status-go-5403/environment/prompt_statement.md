@@ -1,0 +1,5 @@
+I'm working on adding a connector service to the node that lets external clients like dApps route raw RPC calls through it. Right now there's no dedicated service layer for this, so I need to create a new service package that follows the existing service patterns in the project.
+
+The service needs to be togglable via a boolean in the node configuration, and that setting should be saved and loaded from the database along with all the other node config fields. The service itself should expose a versioned RPC namespace so that callers can send raw RPC requests — valid methods should go through cleanly, while requests for methods that don't exist should come back with a response indicating they're unavailable. The service also needs to implement the standard lifecycle interface (start and stop should both succeed cleanly) and should not expose any peer-to-peer protocols.
+
+Could you help me implement this connector service with its configuration, database persistence, lifecycle methods, RPC namespace registration, and the raw RPC call forwarding functionality?

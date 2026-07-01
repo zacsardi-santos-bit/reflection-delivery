@@ -1,0 +1,23 @@
+{
+ "task": "istio-proxy-2671",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden upgrades go-control-plane to v0.9.3, adds context.Background() to NewServer, uses snap.Resources[cache.Cluster]/map access, converts config->typed_config, removes --allow-unknown-fields"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

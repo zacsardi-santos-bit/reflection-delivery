@@ -1,0 +1,640 @@
+patching file command_test.go
+patching file flag_bool_with_inverse_test.go
+patching file flag_test.go
+patching file flag_value_source_test.go
+patching file value_source_test.go
+{"Time":"2026-06-29T15:28:33.424312894Z","Action":"start","Package":"github.com/urfave/cli/v3"}
+{"Time":"2026-06-29T15:28:33.443086154Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars"}
+{"Time":"2026-06-29T15:28:33.443129777Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars","Output":"=== RUN   TestBoolWithInverseEnvVars\n"}
+{"Time":"2026-06-29T15:28:33.443614261Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e"}
+{"Time":"2026-06-29T15:28:33.443652666Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e","Output":"=== RUN   TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e\n"}
+{"Time":"2026-06-29T15:28:33.44404717Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e","Output":"--- PASS: TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.444070937Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.444121322Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/true_true_\u003cnil\u003e"}
+{"Time":"2026-06-29T15:28:33.444134229Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/true_true_\u003cnil\u003e","Output":"=== RUN   TestBoolWithInverseEnvVars/true_true_\u003cnil\u003e\n"}
+{"Time":"2026-06-29T15:28:33.444159405Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/true_true_\u003cnil\u003e","Output":"--- PASS: TestBoolWithInverseEnvVars/true_true_\u003cnil\u003e (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.444181216Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/true_true_\u003cnil\u003e","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.444276534Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e#01"}
+{"Time":"2026-06-29T15:28:33.444289184Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e#01","Output":"=== RUN   TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e#01\n"}
+{"Time":"2026-06-29T15:28:33.444329348Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e#01","Output":"--- PASS: TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.444340734Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_true_\u003cnil\u003e#01","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.444417435Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_false_\u003cnil\u003e"}
+{"Time":"2026-06-29T15:28:33.444465552Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_false_\u003cnil\u003e","Output":"=== RUN   TestBoolWithInverseEnvVars/false_false_\u003cnil\u003e\n"}
+{"Time":"2026-06-29T15:28:33.444573556Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_false_\u003cnil\u003e","Output":"--- PASS: TestBoolWithInverseEnvVars/false_false_\u003cnil\u003e (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.444597966Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_false_\u003cnil\u003e","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.444664802Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_false_cannot_set_both_flags_`--env`_and_`--no-env`"}
+{"Time":"2026-06-29T15:28:33.444679009Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_false_cannot_set_both_flags_`--env`_and_`--no-env`","Output":"=== RUN   TestBoolWithInverseEnvVars/false_false_cannot_set_both_flags_`--env`_and_`--no-env`\n"}
+{"Time":"2026-06-29T15:28:33.44478277Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_false_cannot_set_both_flags_`--env`_and_`--no-env`","Output":"--- PASS: TestBoolWithInverseEnvVars/false_false_cannot_set_both_flags_`--env`_and_`--no-env` (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.44481304Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars/false_false_cannot_set_both_flags_`--env`_and_`--no-env`","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.444832259Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars","Output":"--- PASS: TestBoolWithInverseEnvVars (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.444860293Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestBoolWithInverseEnvVars","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.445155927Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv"}
+{"Time":"2026-06-29T15:28:33.445173541Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv","Output":"=== RUN   TestFlagsFromEnv\n"}
+{"Time":"2026-06-29T15:28:33.445258629Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_valid_true"}
+{"Time":"2026-06-29T15:28:33.445329788Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_valid_true","Output":"=== RUN   TestFlagsFromEnv/BoolFlag_valid_true\n"}
+{"Time":"2026-06-29T15:28:33.445493374Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_valid_true","Output":"--- PASS: TestFlagsFromEnv/BoolFlag_valid_true (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.445509807Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_valid_true","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.445524834Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_valid_false"}
+{"Time":"2026-06-29T15:28:33.445533073Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_valid_false","Output":"=== RUN   TestFlagsFromEnv/BoolFlag_valid_false\n"}
+{"Time":"2026-06-29T15:28:33.445561661Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_valid_false","Output":"--- PASS: TestFlagsFromEnv/BoolFlag_valid_false (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.445588171Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_valid_false","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.445603891Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid"}
+{"Time":"2026-06-29T15:28:33.445612321Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"=== RUN   TestFlagsFromEnv/BoolFlag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.445963016Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as bool value from environment variable \"DEBUG\" for flag debug: parse error\n"}
+{"Time":"2026-06-29T15:28:33.445983079Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.446296558Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.446409289Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.446430835Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.446448843Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.446495324Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.446523543Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.446555065Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.446633983Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.446659155Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.446675165Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.446723592Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"   --debug     (default: false) [$DEBUG]\n"}
+{"Time":"2026-06-29T15:28:33.446746171Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"   --help, -h  show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.446785603Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Output":"--- PASS: TestFlagsFromEnv/BoolFlag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.446803041Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/BoolFlag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.446823345Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_valid"}
+{"Time":"2026-06-29T15:28:33.446874524Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_valid","Output":"=== RUN   TestFlagsFromEnv/DurationFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.447015079Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_valid","Output":"--- PASS: TestFlagsFromEnv/DurationFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.44704537Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.447062622Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid"}
+{"Time":"2026-06-29T15:28:33.447078279Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"=== RUN   TestFlagsFromEnv/DurationFlag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.447101985Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as time.Duration value from environment variable \"TIME\" for flag time: time: invalid duration \"foobar\"\n"}
+{"Time":"2026-06-29T15:28:33.447116352Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.447360635Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.447398804Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.447414414Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.447430787Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.44747626Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.447506591Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.447524369Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.44755237Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.447571661Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.447609948Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.44767577Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"   --time value  (default: 0s) [$TIME]\n"}
+{"Time":"2026-06-29T15:28:33.447697211Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"   --help, -h    show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.447741914Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Output":"--- PASS: TestFlagsFromEnv/DurationFlag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.447761021Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/DurationFlag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.447770708Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_valid"}
+{"Time":"2026-06-29T15:28:33.447784423Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_valid","Output":"=== RUN   TestFlagsFromEnv/Float64Flag_valid\n"}
+{"Time":"2026-06-29T15:28:33.447920675Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_valid","Output":"--- PASS: TestFlagsFromEnv/Float64Flag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.447937349Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.447960343Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_valid_from_int"}
+{"Time":"2026-06-29T15:28:33.447970362Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_valid_from_int","Output":"=== RUN   TestFlagsFromEnv/Float64Flag_valid_from_int\n"}
+{"Time":"2026-06-29T15:28:33.447988875Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_valid_from_int","Output":"--- PASS: TestFlagsFromEnv/Float64Flag_valid_from_int (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.448016343Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_valid_from_int","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.448029051Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid"}
+{"Time":"2026-06-29T15:28:33.448037195Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"=== RUN   TestFlagsFromEnv/Float64Flag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.448110578Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as float64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseFloat: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.448125679Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.448320827Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.448352672Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.448365141Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.448381883Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.4484115Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.448423501Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.448457322Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.448493634Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.448505743Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.448523636Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.448597524Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.448628266Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.448655308Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Output":"--- PASS: TestFlagsFromEnv/Float64Flag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.448668705Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64Flag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.448683166Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_valid"}
+{"Time":"2026-06-29T15:28:33.448693072Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_valid","Output":"=== RUN   TestFlagsFromEnv/Int64Flag_valid\n"}
+{"Time":"2026-06-29T15:28:33.448772073Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_valid","Output":"--- PASS: TestFlagsFromEnv/Int64Flag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.448795457Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.448806218Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float"}
+{"Time":"2026-06-29T15:28:33.448813757Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"=== RUN   TestFlagsFromEnv/Int64Flag_invalid_from_float\n"}
+{"Time":"2026-06-29T15:28:33.44882681Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"Incorrect Usage: could not parse \"1.2\" as int64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseInt: parsing \"1.2\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.448834921Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.449018169Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.449051765Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.449062869Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.449078615Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.449093936Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.449109257Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.449130057Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.449160453Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.449174991Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.449194248Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.449239177Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.449275514Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.449304973Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Output":"--- PASS: TestFlagsFromEnv/Int64Flag_invalid_from_float (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.449322145Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid_from_float","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.44933244Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid"}
+{"Time":"2026-06-29T15:28:33.449341576Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"=== RUN   TestFlagsFromEnv/Int64Flag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.449361158Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as int64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseInt: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.449373493Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.449568046Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.449595356Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.449605881Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.449619488Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.449639674Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.449657507Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.449680828Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.449713858Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.449728914Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.449746181Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.449786297Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.449808211Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.449842952Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Output":"--- PASS: TestFlagsFromEnv/Int64Flag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.449861041Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64Flag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.449869348Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid"}
+{"Time":"2026-06-29T15:28:33.449877976Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid","Output":"=== RUN   TestFlagsFromEnv/IntFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.449942209Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid","Output":"--- PASS: TestFlagsFromEnv/IntFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.449958589Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.449975366Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal"}
+{"Time":"2026-06-29T15:28:33.449983862Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal","Output":"=== RUN   TestFlagsFromEnv/IntFlag_invalid_from_octal\n"}
+{"Time":"2026-06-29T15:28:33.45000323Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal","Output":"--- PASS: TestFlagsFromEnv/IntFlag_invalid_from_octal (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.450016859Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.45003238Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid_from_octal"}
+{"Time":"2026-06-29T15:28:33.450041768Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid_from_octal","Output":"=== RUN   TestFlagsFromEnv/IntFlag_valid_from_octal\n"}
+{"Time":"2026-06-29T15:28:33.450061059Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid_from_octal","Output":"--- PASS: TestFlagsFromEnv/IntFlag_valid_from_octal (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.45007689Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid_from_octal","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.450090647Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid_from_hex"}
+{"Time":"2026-06-29T15:28:33.450102514Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid_from_hex","Output":"=== RUN   TestFlagsFromEnv/IntFlag_valid_from_hex\n"}
+{"Time":"2026-06-29T15:28:33.450142329Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid_from_hex","Output":"--- PASS: TestFlagsFromEnv/IntFlag_valid_from_hex (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.450151337Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_valid_from_hex","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.450167967Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01"}
+{"Time":"2026-06-29T15:28:33.450179182Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"=== RUN   TestFlagsFromEnv/IntFlag_invalid_from_octal#01\n"}
+{"Time":"2026-06-29T15:28:33.450201552Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"Incorrect Usage: could not parse \"08\" as int value from environment variable \"SECONDS\" for flag seconds: strconv.ParseInt: parsing \"08\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.450212453Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.450385318Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.450403063Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.45041506Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.450431285Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.450457105Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.45047373Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.450497016Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.450523865Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.450537387Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.450556677Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.450610161Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.450635646Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.450672455Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Output":"--- PASS: TestFlagsFromEnv/IntFlag_invalid_from_octal#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.450688373Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_octal#01","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.450698213Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float"}
+{"Time":"2026-06-29T15:28:33.450711359Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"=== RUN   TestFlagsFromEnv/IntFlag_invalid_from_float\n"}
+{"Time":"2026-06-29T15:28:33.450727565Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"Incorrect Usage: could not parse \"1.2\" as int value from environment variable \"SECONDS\" for flag seconds: strconv.ParseInt: parsing \"1.2\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.450738302Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.450928276Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.450948551Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.450964149Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.450980596Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.451002167Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.451017709Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.451046029Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.451070969Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.451086381Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.451099689Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.451134851Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.451165387Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.451188261Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Output":"--- PASS: TestFlagsFromEnv/IntFlag_invalid_from_float (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.45120618Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid_from_float","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.451216093Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid"}
+{"Time":"2026-06-29T15:28:33.451229046Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"=== RUN   TestFlagsFromEnv/IntFlag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.451250929Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as int value from environment variable \"SECONDS\" for flag seconds: strconv.ParseInt: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.451260211Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.451428589Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.451453676Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.451478864Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.451491811Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.451515143Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.451528176Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.451557515Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.451588437Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.451604486Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.451628234Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.451659612Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.451683451Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.451711203Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Output":"--- PASS: TestFlagsFromEnv/IntFlag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.451724511Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntFlag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.451742081Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_valid"}
+{"Time":"2026-06-29T15:28:33.45175324Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_valid","Output":"=== RUN   TestFlagsFromEnv/Float64SliceFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.451821777Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_valid","Output":"--- PASS: TestFlagsFromEnv/Float64SliceFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.45184439Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.451853316Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid"}
+{"Time":"2026-06-29T15:28:33.451860954Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"=== RUN   TestFlagsFromEnv/Float64SliceFlag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.451875228Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as []float64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseFloat: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.451885256Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.452060362Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.452080036Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.452091485Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.452110633Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.452149877Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.452166136Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.452187047Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.452212643Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.452229461Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.45225011Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.452297257Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"   --seconds value [ --seconds value ]   [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.452338909Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"   --help, -h                           show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.452371469Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Output":"--- PASS: TestFlagsFromEnv/Float64SliceFlag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.452383144Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Float64SliceFlag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.452403034Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_valid"}
+{"Time":"2026-06-29T15:28:33.452412082Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_valid","Output":"=== RUN   TestFlagsFromEnv/IntSliceFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.452467494Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_valid","Output":"--- PASS: TestFlagsFromEnv/IntSliceFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.452486338Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.452503595Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float"}
+{"Time":"2026-06-29T15:28:33.452511561Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"=== RUN   TestFlagsFromEnv/IntSliceFlag_invalid_from_float\n"}
+{"Time":"2026-06-29T15:28:33.452549018Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"Incorrect Usage: could not parse \"1.2,2\" as []int value from environment variable \"SECONDS\" for flag seconds: strconv.ParseInt: parsing \"1.2\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.452568792Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.452747267Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.452780379Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.452799489Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.452817844Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.452844463Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.452866386Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.452880848Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.452905344Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.452920484Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.452933864Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.452998102Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"   --seconds value [ --seconds value ]   [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.45304012Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"   --help, -h                           show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.453065571Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Output":"--- PASS: TestFlagsFromEnv/IntSliceFlag_invalid_from_float (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.453088216Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid_from_float","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.453107499Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid"}
+{"Time":"2026-06-29T15:28:33.453117035Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"=== RUN   TestFlagsFromEnv/IntSliceFlag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.453131824Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as []int value from environment variable \"SECONDS\" for flag seconds: strconv.ParseInt: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.453139543Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.453315318Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.453335128Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.453353763Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.453374518Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.45340429Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.453418548Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.453442919Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.453467358Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.453487877Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.453502683Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.453549529Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"   --seconds value [ --seconds value ]   [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.453588153Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"   --help, -h                           show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.453630203Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Output":"--- PASS: TestFlagsFromEnv/IntSliceFlag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.453645085Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/IntSliceFlag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.453656669Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_valid"}
+{"Time":"2026-06-29T15:28:33.453664109Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_valid","Output":"=== RUN   TestFlagsFromEnv/UintSliceFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.453717842Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_valid","Output":"--- PASS: TestFlagsFromEnv/UintSliceFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.453731038Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.453744426Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float"}
+{"Time":"2026-06-29T15:28:33.453751644Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"=== RUN   TestFlagsFromEnv/UintSliceFlag_invalid_with_float\n"}
+{"Time":"2026-06-29T15:28:33.45376665Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"Incorrect Usage: could not parse \"1.2,2\" as []uint value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"1.2\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.453778053Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.453973583Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.453995218Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.454016638Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.454031217Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.454052677Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.454066856Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.454092801Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.454119707Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.454143274Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.454162456Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.454238153Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"   --seconds value [ --seconds value ]   [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.454275322Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"   --help, -h                           show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.454302431Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Output":"--- PASS: TestFlagsFromEnv/UintSliceFlag_invalid_with_float (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.454318258Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid_with_float","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.454327593Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid"}
+{"Time":"2026-06-29T15:28:33.45433467Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"=== RUN   TestFlagsFromEnv/UintSliceFlag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.454347164Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as []uint value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.454354753Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.454543163Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.454569157Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.454581355Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.454598494Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.454628398Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.454646561Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.454669697Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.454695834Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.454707475Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.454724427Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.454769627Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"   --seconds value [ --seconds value ]   [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.454814839Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"   --help, -h                           show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.454838022Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Output":"--- PASS: TestFlagsFromEnv/UintSliceFlag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.454858107Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintSliceFlag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.454878494Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_valid"}
+{"Time":"2026-06-29T15:28:33.454895782Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_valid","Output":"=== RUN   TestFlagsFromEnv/Int64SliceFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.454916458Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_valid","Output":"--- PASS: TestFlagsFromEnv/Int64SliceFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.454931772Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.454947731Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float"}
+{"Time":"2026-06-29T15:28:33.454955205Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"=== RUN   TestFlagsFromEnv/Int64SliceFlag_invalid_with_float\n"}
+{"Time":"2026-06-29T15:28:33.454970861Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"Incorrect Usage: could not parse \"1.2,2\" as []int64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseInt: parsing \"1.2\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.454979596Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.455170804Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.45519252Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.455207657Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.455223119Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.455241259Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.455257293Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.455275833Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.455313239Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.455332868Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.455346676Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.45539122Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"   --seconds value [ --seconds value ]   [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.455429886Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"   --help, -h                           show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.45544995Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Output":"--- PASS: TestFlagsFromEnv/Int64SliceFlag_invalid_with_float (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.455481536Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid_with_float","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.455492954Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid"}
+{"Time":"2026-06-29T15:28:33.455500524Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"=== RUN   TestFlagsFromEnv/Int64SliceFlag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.455515873Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as []int64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseInt: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.455523589Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.455715134Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.455741747Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.455753073Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.455768856Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.455787214Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.455796416Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.455816004Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.455840738Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.455852644Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.455875902Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.455915922Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"   --seconds value [ --seconds value ]   [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.455956939Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"   --help, -h                           show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.455985544Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Output":"--- PASS: TestFlagsFromEnv/Int64SliceFlag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.456006777Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Int64SliceFlag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.456018563Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_valid"}
+{"Time":"2026-06-29T15:28:33.456026103Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_valid","Output":"=== RUN   TestFlagsFromEnv/Uint64SliceFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.456091326Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_valid","Output":"--- PASS: TestFlagsFromEnv/Uint64SliceFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.456112592Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.456133985Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float"}
+{"Time":"2026-06-29T15:28:33.456142387Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"=== RUN   TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float\n"}
+{"Time":"2026-06-29T15:28:33.456160938Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"Incorrect Usage: could not parse \"1.2,2\" as []uint64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"1.2\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.456175012Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.456339878Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.456361414Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.456373911Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.456390574Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.456419969Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.456437396Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.456462499Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.456507745Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.456520523Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.456532261Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.45658258Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"   --seconds value [ --seconds value ]   [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.456621261Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"   --help, -h                           show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.456648128Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Output":"--- PASS: TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.456673782Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid_with_float","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.456695251Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid"}
+{"Time":"2026-06-29T15:28:33.456707593Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"=== RUN   TestFlagsFromEnv/Uint64SliceFlag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.45672797Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as []uint64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.456738636Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.457001345Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.457030753Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.457044331Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.457056873Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.457085356Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.45710307Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.457123808Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.457151605Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.457166692Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.457187367Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.457232508Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"   --seconds value [ --seconds value ]   [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.457284079Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"   --help, -h                           show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.457342917Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Output":"--- PASS: TestFlagsFromEnv/Uint64SliceFlag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.457353149Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64SliceFlag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.45736813Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringFlag_valid"}
+{"Time":"2026-06-29T15:28:33.457377405Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringFlag_valid","Output":"=== RUN   TestFlagsFromEnv/StringFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.457456013Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringFlag_valid","Output":"--- PASS: TestFlagsFromEnv/StringFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.457493555Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.457506647Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringFlag_valid_with_TrimSpace"}
+{"Time":"2026-06-29T15:28:33.457514583Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringFlag_valid_with_TrimSpace","Output":"=== RUN   TestFlagsFromEnv/StringFlag_valid_with_TrimSpace\n"}
+{"Time":"2026-06-29T15:28:33.457531692Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringFlag_valid_with_TrimSpace","Output":"--- PASS: TestFlagsFromEnv/StringFlag_valid_with_TrimSpace (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.457541731Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringFlag_valid_with_TrimSpace","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.4575561Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringSliceFlag_valid"}
+{"Time":"2026-06-29T15:28:33.457564029Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringSliceFlag_valid","Output":"=== RUN   TestFlagsFromEnv/StringSliceFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.457632203Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringSliceFlag_valid","Output":"--- PASS: TestFlagsFromEnv/StringSliceFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.457660924Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringSliceFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.457677021Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringSliceFlag_valid_with_TrimSpace"}
+{"Time":"2026-06-29T15:28:33.457686978Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringSliceFlag_valid_with_TrimSpace","Output":"=== RUN   TestFlagsFromEnv/StringSliceFlag_valid_with_TrimSpace\n"}
+{"Time":"2026-06-29T15:28:33.457706061Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringSliceFlag_valid_with_TrimSpace","Output":"--- PASS: TestFlagsFromEnv/StringSliceFlag_valid_with_TrimSpace (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.457718103Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringSliceFlag_valid_with_TrimSpace","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.45773405Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringMapFlag_valid"}
+{"Time":"2026-06-29T15:28:33.457746219Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringMapFlag_valid","Output":"=== RUN   TestFlagsFromEnv/StringMapFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.457787669Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringMapFlag_valid","Output":"--- PASS: TestFlagsFromEnv/StringMapFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.45780213Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringMapFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.457818007Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringMapFlag_valid_with_TrimSpace"}
+{"Time":"2026-06-29T15:28:33.45783064Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringMapFlag_valid_with_TrimSpace","Output":"=== RUN   TestFlagsFromEnv/StringMapFlag_valid_with_TrimSpace\n"}
+{"Time":"2026-06-29T15:28:33.457871079Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringMapFlag_valid_with_TrimSpace","Output":"--- PASS: TestFlagsFromEnv/StringMapFlag_valid_with_TrimSpace (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.457894408Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/StringMapFlag_valid_with_TrimSpace","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.457907557Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid"}
+{"Time":"2026-06-29T15:28:33.457915625Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid","Output":"=== RUN   TestFlagsFromEnv/UintFlag_valid\n"}
+{"Time":"2026-06-29T15:28:33.45795218Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid","Output":"--- PASS: TestFlagsFromEnv/UintFlag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.4579847Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.458001173Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_leading_zero"}
+{"Time":"2026-06-29T15:28:33.458011917Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_leading_zero","Output":"=== RUN   TestFlagsFromEnv/UintFlag_valid_leading_zero\n"}
+{"Time":"2026-06-29T15:28:33.458034033Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_leading_zero","Output":"--- PASS: TestFlagsFromEnv/UintFlag_valid_leading_zero (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.458042201Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_leading_zero","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.458059052Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_from_octal"}
+{"Time":"2026-06-29T15:28:33.45806713Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_from_octal","Output":"=== RUN   TestFlagsFromEnv/UintFlag_valid_from_octal\n"}
+{"Time":"2026-06-29T15:28:33.458083034Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_from_octal","Output":"--- PASS: TestFlagsFromEnv/UintFlag_valid_from_octal (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.458106462Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_from_octal","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.458121522Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_from_hex"}
+{"Time":"2026-06-29T15:28:33.458130428Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_from_hex","Output":"=== RUN   TestFlagsFromEnv/UintFlag_valid_from_hex\n"}
+{"Time":"2026-06-29T15:28:33.458170807Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_from_hex","Output":"--- PASS: TestFlagsFromEnv/UintFlag_valid_from_hex (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.458188889Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_valid_from_hex","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.458204372Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal"}
+{"Time":"2026-06-29T15:28:33.458211448Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"=== RUN   TestFlagsFromEnv/UintFlag_invalid_octal\n"}
+{"Time":"2026-06-29T15:28:33.458237491Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"Incorrect Usage: could not parse \"08\" as uint value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"08\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.458253171Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.458470672Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.458553057Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.458568093Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.458583758Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.458612056Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.458629354Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.458653722Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.458685871Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.458701708Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.458717829Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.458808876Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.458822229Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.458841008Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Output":"--- PASS: TestFlagsFromEnv/UintFlag_invalid_octal (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.45884925Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_octal","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.458864581Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float"}
+{"Time":"2026-06-29T15:28:33.458878212Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"=== RUN   TestFlagsFromEnv/UintFlag_invalid_float\n"}
+{"Time":"2026-06-29T15:28:33.458905305Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"Incorrect Usage: could not parse \"1.2\" as uint value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"1.2\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.459109171Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.459168826Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.459197384Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.459222814Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.459244153Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.459291902Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.459309276Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.459350645Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.459369515Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.459397869Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.459430742Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.459450024Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.45947901Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.459509869Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Output":"--- PASS: TestFlagsFromEnv/UintFlag_invalid_float (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.45953233Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid_float","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.459542709Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid"}
+{"Time":"2026-06-29T15:28:33.459551482Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"=== RUN   TestFlagsFromEnv/UintFlag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.459565818Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as uint value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.459586046Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.459782542Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.459905557Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.459957544Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.460028255Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.460128816Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.460168137Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.460371171Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.460388506Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.460402816Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.460412868Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.460432682Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.460440643Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.460450811Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Output":"--- PASS: TestFlagsFromEnv/UintFlag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.460478612Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/UintFlag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.460509518Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid"}
+{"Time":"2026-06-29T15:28:33.46052826Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid","Output":"=== RUN   TestFlagsFromEnv/Uint64Flag_valid\n"}
+{"Time":"2026-06-29T15:28:33.460553671Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid","Output":"--- PASS: TestFlagsFromEnv/Uint64Flag_valid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.460562578Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.460583287Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_leading_zero"}
+{"Time":"2026-06-29T15:28:33.460594695Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_leading_zero","Output":"=== RUN   TestFlagsFromEnv/Uint64Flag_valid_leading_zero\n"}
+{"Time":"2026-06-29T15:28:33.460629649Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_leading_zero","Output":"--- PASS: TestFlagsFromEnv/Uint64Flag_valid_leading_zero (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.460640702Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_leading_zero","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.460655416Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_octal"}
+{"Time":"2026-06-29T15:28:33.460663492Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_octal","Output":"=== RUN   TestFlagsFromEnv/Uint64Flag_valid_octal\n"}
+{"Time":"2026-06-29T15:28:33.460691946Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_octal","Output":"--- PASS: TestFlagsFromEnv/Uint64Flag_valid_octal (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.460707759Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_octal","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.460717997Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_hex"}
+{"Time":"2026-06-29T15:28:33.460728066Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_hex","Output":"=== RUN   TestFlagsFromEnv/Uint64Flag_valid_hex\n"}
+{"Time":"2026-06-29T15:28:33.460743794Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_hex","Output":"--- PASS: TestFlagsFromEnv/Uint64Flag_valid_hex (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.460756682Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_valid_hex","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.460775799Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero"}
+{"Time":"2026-06-29T15:28:33.46079673Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"=== RUN   TestFlagsFromEnv/Uint64Flag_invalid_leading_zero\n"}
+{"Time":"2026-06-29T15:28:33.460874682Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"Incorrect Usage: could not parse \"08\" as uint64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"08\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.460912454Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.461017848Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.461054839Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.461073216Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.461116703Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.46114295Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.461163953Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.461171607Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.461191248Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.461213469Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.461226862Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.461281416Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.461301199Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.461321439Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Output":"--- PASS: TestFlagsFromEnv/Uint64Flag_invalid_leading_zero (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.461339687Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_leading_zero","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.461354595Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float"}
+{"Time":"2026-06-29T15:28:33.461363099Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"=== RUN   TestFlagsFromEnv/Uint64Flag_invalid_float\n"}
+{"Time":"2026-06-29T15:28:33.461375139Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"Incorrect Usage: could not parse \"1.2\" as uint64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"1.2\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.461382961Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.461593731Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.461622156Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.461636867Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.46165136Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.461678222Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.461698414Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.461713025Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.461743025Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.46175804Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.461773844Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.461813918Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.461839659Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.461889449Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Output":"--- PASS: TestFlagsFromEnv/Uint64Flag_invalid_float (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.461901123Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid_float","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.461911243Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid"}
+{"Time":"2026-06-29T15:28:33.461919977Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"=== RUN   TestFlagsFromEnv/Uint64Flag_invalid\n"}
+{"Time":"2026-06-29T15:28:33.461949343Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"Incorrect Usage: could not parse \"foobar\" as uint64 value from environment variable \"SECONDS\" for flag seconds: strconv.ParseUint: parsing \"foobar\": invalid syntax\n"}
+{"Time":"2026-06-29T15:28:33.461958874Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.462127168Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"NAME:\n"}
+{"Time":"2026-06-29T15:28:33.46214653Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"   run - A new cli application\n"}
+{"Time":"2026-06-29T15:28:33.462154638Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.462166882Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"USAGE:\n"}
+{"Time":"2026-06-29T15:28:33.462181697Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"   run [global options] [command [command options]] [arguments...]\n"}
+{"Time":"2026-06-29T15:28:33.462202537Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.462224124Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"COMMANDS:\n"}
+{"Time":"2026-06-29T15:28:33.462251108Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"   help, h  Shows a list of commands or help for one command\n"}
+{"Time":"2026-06-29T15:28:33.46227026Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"\n"}
+{"Time":"2026-06-29T15:28:33.462286134Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"GLOBAL OPTIONS:\n"}
+{"Time":"2026-06-29T15:28:33.462333297Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"   --seconds value  (default: 0) [$SECONDS]\n"}
+{"Time":"2026-06-29T15:28:33.46235748Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"   --help, -h       show help (default: false)\n"}
+{"Time":"2026-06-29T15:28:33.462398232Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Output":"--- PASS: TestFlagsFromEnv/Uint64Flag_invalid (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.462413688Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv/Uint64Flag_invalid","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.46242745Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv","Output":"--- PASS: TestFlagsFromEnv (0.02s)\n"}
+{"Time":"2026-06-29T15:28:33.462435235Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFlagsFromEnv","Elapsed":0.02}
+{"Time":"2026-06-29T15:28:33.46799545Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource"}
+{"Time":"2026-06-29T15:28:33.468022272Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource","Output":"=== RUN   TestEnvVarValueSource\n"}
+{"Time":"2026-06-29T15:28:33.468038805Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource"}
+{"Time":"2026-06-29T15:28:33.468048723Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource","Output":"=== RUN   TestEnvVarValueSource/implements_ValueSource\n"}
+{"Time":"2026-06-29T15:28:33.468072919Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource/not_found"}
+{"Time":"2026-06-29T15:28:33.468081243Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource/not_found","Output":"=== RUN   TestEnvVarValueSource/implements_ValueSource/not_found\n"}
+{"Time":"2026-06-29T15:28:33.468110373Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource/not_found","Output":"--- PASS: TestEnvVarValueSource/implements_ValueSource/not_found (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.468124884Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource/not_found","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.468154734Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource/found"}
+{"Time":"2026-06-29T15:28:33.468162373Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource/found","Output":"=== RUN   TestEnvVarValueSource/implements_ValueSource/found\n"}
+{"Time":"2026-06-29T15:28:33.46819869Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource/found","Output":"--- PASS: TestEnvVarValueSource/implements_ValueSource/found (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.468214884Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource/found","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.46822558Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource","Output":"--- PASS: TestEnvVarValueSource/implements_ValueSource (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.468237828Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_ValueSource","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.468252188Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_fmt.Stringer"}
+{"Time":"2026-06-29T15:28:33.468259576Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_fmt.Stringer","Output":"=== RUN   TestEnvVarValueSource/implements_fmt.Stringer\n"}
+{"Time":"2026-06-29T15:28:33.468274434Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_fmt.Stringer","Output":"--- PASS: TestEnvVarValueSource/implements_fmt.Stringer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.468302102Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_fmt.Stringer","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.468323907Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_fmt.GoStringer"}
+{"Time":"2026-06-29T15:28:33.468331896Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_fmt.GoStringer","Output":"=== RUN   TestEnvVarValueSource/implements_fmt.GoStringer\n"}
+{"Time":"2026-06-29T15:28:33.468350056Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_fmt.GoStringer","Output":"--- PASS: TestEnvVarValueSource/implements_fmt.GoStringer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.468382299Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource/implements_fmt.GoStringer","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.46839138Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource","Output":"--- PASS: TestEnvVarValueSource (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.468407967Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestEnvVarValueSource","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.468417358Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestEnvVars"}
+{"Time":"2026-06-29T15:28:33.46842448Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVars","Output":"=== RUN   TestEnvVars\n"}
+{"Time":"2026-06-29T15:28:33.468442782Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestEnvVars","Output":"--- PASS: TestEnvVars (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.468456625Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestEnvVars","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.468510262Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource"}
+{"Time":"2026-06-29T15:28:33.468529502Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource","Output":"=== RUN   TestFileValueSource\n"}
+{"Time":"2026-06-29T15:28:33.468545349Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource"}
+{"Time":"2026-06-29T15:28:33.468553066Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource","Output":"=== RUN   TestFileValueSource/implements_ValueSource\n"}
+{"Time":"2026-06-29T15:28:33.468566628Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource/not_found"}
+{"Time":"2026-06-29T15:28:33.468574829Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource/not_found","Output":"=== RUN   TestFileValueSource/implements_ValueSource/not_found\n"}
+{"Time":"2026-06-29T15:28:33.468660489Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource/not_found","Output":"--- PASS: TestFileValueSource/implements_ValueSource/not_found (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.468705597Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource/not_found","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.468902408Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource/found"}
+{"Time":"2026-06-29T15:28:33.468924035Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource/found","Output":"=== RUN   TestFileValueSource/implements_ValueSource/found\n"}
+{"Time":"2026-06-29T15:28:33.469031033Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource/found","Output":"--- PASS: TestFileValueSource/implements_ValueSource/found (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469190022Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource/found","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.469237781Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource","Output":"--- PASS: TestFileValueSource/implements_ValueSource (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469255826Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_ValueSource","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.469266531Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_fmt.Stringer"}
+{"Time":"2026-06-29T15:28:33.469280821Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_fmt.Stringer","Output":"=== RUN   TestFileValueSource/implements_fmt.Stringer\n"}
+{"Time":"2026-06-29T15:28:33.469294438Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_fmt.Stringer","Output":"--- PASS: TestFileValueSource/implements_fmt.Stringer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469304789Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_fmt.Stringer","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.469315439Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_fmt.GoStringer"}
+{"Time":"2026-06-29T15:28:33.469344598Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_fmt.GoStringer","Output":"=== RUN   TestFileValueSource/implements_fmt.GoStringer\n"}
+{"Time":"2026-06-29T15:28:33.469363049Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_fmt.GoStringer","Output":"--- PASS: TestFileValueSource/implements_fmt.GoStringer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469389692Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource/implements_fmt.GoStringer","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.469399627Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource","Output":"--- PASS: TestFileValueSource (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469409984Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFileValueSource","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.46941831Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestFilePaths"}
+{"Time":"2026-06-29T15:28:33.469425558Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFilePaths","Output":"=== RUN   TestFilePaths\n"}
+{"Time":"2026-06-29T15:28:33.469618187Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestFilePaths","Output":"--- PASS: TestFilePaths (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469684067Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestFilePaths","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.469715182Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain"}
+{"Time":"2026-06-29T15:28:33.469725549Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain","Output":"=== RUN   TestValueSourceChain\n"}
+{"Time":"2026-06-29T15:28:33.469733413Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_ValueSource"}
+{"Time":"2026-06-29T15:28:33.46974334Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_ValueSource","Output":"=== RUN   TestValueSourceChain/implements_ValueSource\n"}
+{"Time":"2026-06-29T15:28:33.469758938Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_ValueSource","Output":"--- PASS: TestValueSourceChain/implements_ValueSource (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469766897Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_ValueSource","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.469781764Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_fmt.GoStringer"}
+{"Time":"2026-06-29T15:28:33.46979036Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_fmt.GoStringer","Output":"=== RUN   TestValueSourceChain/implements_fmt.GoStringer\n"}
+{"Time":"2026-06-29T15:28:33.469820102Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_fmt.GoStringer","Output":"--- PASS: TestValueSourceChain/implements_fmt.GoStringer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469839093Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_fmt.GoStringer","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.469860884Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_fmt.Stringer"}
+{"Time":"2026-06-29T15:28:33.469881474Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_fmt.Stringer","Output":"=== RUN   TestValueSourceChain/implements_fmt.Stringer\n"}
+{"Time":"2026-06-29T15:28:33.469898772Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_fmt.Stringer","Output":"--- PASS: TestValueSourceChain/implements_fmt.Stringer (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469911116Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain/implements_fmt.Stringer","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.469920577Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain","Output":"--- PASS: TestValueSourceChain (0.00s)\n"}
+{"Time":"2026-06-29T15:28:33.469932549Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestValueSourceChain","Elapsed":0}
+{"Time":"2026-06-29T15:28:33.470039898Z","Action":"output","Package":"github.com/urfave/cli/v3","Output":"PASS\n"}
+{"Time":"2026-06-29T15:28:33.47113608Z","Action":"output","Package":"github.com/urfave/cli/v3","Output":"ok  \tgithub.com/urfave/cli/v3\t0.046s\n"}
+{"Time":"2026-06-29T15:28:33.471177228Z","Action":"pass","Package":"github.com/urfave/cli/v3","Elapsed":0.047}
+reward=1 graded=77 found=77 failed=0 parsed=77 framework=go exit_code=0

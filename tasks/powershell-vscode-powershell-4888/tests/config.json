@@ -1,0 +1,33 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && npm run build-test 2>&1 | tail -10 && npx mocha --no-config --require source-map-support/register --require /workspace/test-support/vscode-require-hook.js --timeout 30000 --reporter spec --grep 'E2E|Finds the correct' --invert out/test/features/DebugSession.test.js",
+  "test_files": [
+    "test/features/DebugSession.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Attach: Prompts for PS Process if not specified",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Attach: Exits if process was not selected from the picker",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Attach: Prompts for Runspace if not specified",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Attach: Exits if runspace was not selected from the picker"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature Constructor Registers debug configuration provider and factory",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfiguration Defaults to LaunchCurrentFile if no request type was specified",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfiguration Errors if current file config was specified but no file is open in the editor",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfiguration Detects an untitled document",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Sets internalConsoleOptions to neverOpen",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Rejects invalid request type",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Uses createTemporaryIntegratedConsole config setting if not explicitly specified",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables LaunchCurrentFile: Rejects non-Powershell language active editor",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables LaunchScript: Rejects scripts without a powershell script extension",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Prevents debugging untitled files in a temp console",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Attach: Exits if session version details cannot be retrieved",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Attach: Prevents attach on non-windows if not PS7.0 or higher",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Starts dotnet attach debug session with default config",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Prevents dotnet attach session if terminal is not temporary",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature resolveDebugConfigurationWithSubstitutedVariables Errors if dotnetDebuggerConfigName was provided but the config was not found",
+    "/workspace/repo/out/test/features/DebugSession.test.js::DebugSessionFeature createDebugAdapterDescriptor Creates a named pipe server for the debug adapter"
+  ]
+}

@@ -1,0 +1,27 @@
+patching file pkg/nfd-master/nfd-master-internal_test.go
+patching file pkg/nfd-worker/nfd-worker_test.go
+patching file pkg/utils/featuregate/featuregate_test.go
+# sigs.k8s.io/node-feature-discovery/pkg/nfd-master
+pkg/nfd-master/nfd-master-internal_test.go:48:2: no required module provides package sigs.k8s.io/node-feature-discovery/pkg/features; to add it:
+	go get sigs.k8s.io/node-feature-discovery/pkg/features
+FAIL	sigs.k8s.io/node-feature-discovery/pkg/nfd-master [setup failed]
+# sigs.k8s.io/node-feature-discovery/pkg/nfd-worker
+pkg/nfd-master/nfd-master-internal_test.go:48:2: no required module provides package sigs.k8s.io/node-feature-discovery/pkg/features; to add it:
+	go get sigs.k8s.io/node-feature-discovery/pkg/features
+FAIL	sigs.k8s.io/node-feature-discovery/pkg/nfd-worker [setup failed]
+# sigs.k8s.io/node-feature-discovery/pkg/utils/featuregate [sigs.k8s.io/node-feature-discovery/pkg/utils/featuregate.test]
+pkg/utils/featuregate/featuregate_test.go:30:22: undefined: Feature
+pkg/utils/featuregate/featuregate_test.go:31:21: undefined: Feature
+pkg/utils/featuregate/featuregate_test.go:35:18: undefined: Feature
+pkg/utils/featuregate/featuregate_test.go:40:16: undefined: Feature
+pkg/utils/featuregate/featuregate_test.go:47:16: undefined: Feature
+pkg/utils/featuregate/featuregate_test.go:57:9: undefined: NewFeatureGate
+pkg/utils/featuregate/featuregate_test.go:58:18: undefined: Feature
+pkg/utils/featuregate/featuregate_test.go:58:26: undefined: FeatureSpec
+pkg/utils/featuregate/featuregate_test.go:64:52: undefined: flagName
+pkg/utils/featuregate/featuregate_test.go:83:22: undefined: Feature
+pkg/utils/featuregate/featuregate_test.go:83:22: too many errors
+{"Time":"2026-06-29T15:19:48.103128686Z","Action":"start","Package":"sigs.k8s.io/node-feature-discovery/pkg/utils/featuregate"}
+{"Time":"2026-06-29T15:19:48.103200025Z","Action":"output","Package":"sigs.k8s.io/node-feature-discovery/pkg/utils/featuregate","Output":"FAIL\tsigs.k8s.io/node-feature-discovery/pkg/utils/featuregate [build failed]\n"}
+{"Time":"2026-06-29T15:19:48.103214307Z","Action":"fail","Package":"sigs.k8s.io/node-feature-discovery/pkg/utils/featuregate","Elapsed":0}
+reward=0 graded=58 found=0 failed=0 parsed=1 framework=go exit_code=1

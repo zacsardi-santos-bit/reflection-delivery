@@ -1,0 +1,30 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest test/ner/duckling/duckling.test.js --coverage=false --verbose --json",
+  "test_files": [
+    "test/ner/duckling/duckling.test.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration Constructor Should put the port if is https",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration Constructor Should put the port if is http",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration Constructor Should put the port if provided",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration Constructor Can create without providing settings",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration Get locale It should return the culture locale from a 2 char locale",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English When there is an exception, return empty array",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Email",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Phone Number",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English URL",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Number",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Number Float",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Distance",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Quantity",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Temperature",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Volume",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Currency",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Duration",
+    "/workspace/repo/test/ner/duckling/duckling.test.js::Duckling Integration English Duckling English Time"
+  ],
+  "PASS_TO_PASS": []
+}

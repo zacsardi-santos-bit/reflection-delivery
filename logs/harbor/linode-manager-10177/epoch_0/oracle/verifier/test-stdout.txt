@@ -1,0 +1,33 @@
+patching file packages/manager/cypress/e2e/core/kubernetes/lke-update.spec.ts
+patching file packages/manager/cypress/e2e/core/linodes/backup-linode.spec.ts
+patching file packages/manager/src/features/Backups/BackupDrawer.test.tsx
+patching file packages/manager/src/features/Backups/BackupLinodeRow.test.tsx
+patching file packages/manager/src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/ResizeNodePoolDrawer.test.tsx
+patching file packages/manager/src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/utils.test.ts
+patching file packages/manager/src/features/Linodes/LinodesDetail/LinodeBackup/EnableBackupsDialog.test.tsx
+patching file packages/manager/src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx
+patching file packages/manager/src/utilities/pricing/backups.test.tsx
+
+ RUN  v1.2.0 /workspace/repo/packages/manager
+
+ ✓ src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/utils.test.ts  (3 tests) 5ms
+ ✓ src/utilities/pricing/backups.test.tsx  (5 tests) 7ms
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ src/features/Linodes/MigrateLinode/MigrationPricing.test.tsx  (10 tests) 217ms
+ ✓ src/features/Backups/BackupLinodeRow.test.tsx  (4 tests) 546ms
+stderr | src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/ResizeNodePoolDrawer.test.tsx > ResizeNodePoolDrawer > should render the pool's type and size
+Using kebab-case for css properties in objects is not supported. Did you mean WebkitAppearance?
+Using kebab-case for css properties in objects is not supported. Did you mean MozAppearance?
+
+ ✓ src/features/Linodes/LinodesDetail/LinodeBackup/EnableBackupsDialog.test.tsx  (3 tests) 463ms
+ ✓ src/features/Backups/BackupDrawer.test.tsx  (4 tests) 874ms
+ ✓ src/features/Kubernetes/KubernetesClusterDetail/NodePoolsDisplay/ResizeNodePoolDrawer.test.tsx  (3 tests) 654ms
+
+ Test Files  7 passed (7)
+      Tests  32 passed (32)
+   Start at  15:17:24
+   Duration  7.63s (transform 2.87s, setup 10.18s, collect 15.36s, tests 2.77s, environment 4.18s, prepare 1.02s)
+
+reward=1 graded=32 found=0 failed=0 parsed=0 framework=vitest exit_code=0

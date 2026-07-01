@@ -1,0 +1,5 @@
+patching file ChangeLog
+patching file VERSION
+patching file src/parse/asp/lexer.go
+patching file src/remote/action.go
+patching file src/remote/utils.go

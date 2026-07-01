@@ -1,0 +1,23 @@
+{
+ "task": "aws-eks-anywhere-2432",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'func (k *Kubectl) WaitForService(ctx context.Context, kubeconfig string, timeout string, target string, namespace string) error' with time.ParseDuration + poll for ClusterIP/LoadBalancer.Ingress; F2P TestKubectlWaitForService{,WithLoadBalancer,TimedOut,BadTimeout}"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 49,
+  "shallow": true
+ }
+}

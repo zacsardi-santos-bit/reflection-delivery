@@ -1,0 +1,7 @@
+patching file .changeset/wicked-phones-hunt.md
+patching file packages/perseus-editor/src/components/heading.tsx
+patching file packages/perseus-editor/src/components/start-coord-settings.tsx
+patching file packages/perseus-editor/src/util/object-utils.ts
+patching file packages/perseus-editor/src/widgets/interactive-graph-editor.tsx
+patching file packages/perseus/src/index.ts
+patching file packages/perseus/src/widgets/interactive-graphs/reducer/initialize-graph-state.ts

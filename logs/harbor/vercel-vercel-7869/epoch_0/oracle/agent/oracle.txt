@@ -1,0 +1,4 @@
+patching file packages/cli/src/commands/build.ts
+patching file packages/cli/src/util/build/write-build-result.ts
+patching file packages/cli/src/util/get-files.ts
+patching file packages/cli/src/util/unique-strings.ts

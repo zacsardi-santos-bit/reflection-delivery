@@ -1,0 +1,4 @@
+patching file cli/src/command_error.rs
+patching file cli/src/commands/fix.rs
+patching file lib/src/fix.rs
+patching file lib/src/lib.rs

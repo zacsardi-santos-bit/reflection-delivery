@@ -1,0 +1,23 @@
+{
+ "task": "aws-s2n-quic-2409",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds tcp/manager.rs (Manager<Worker>), manager/list.rs, worker.rs, task/waker + waker/set + bitset; F2P tests drive Manager via Harness: replace_test asserts preemption after max_sojourn_time + bounded capacity, wake_test asserts poll-only-when-woken, ready_test asserts slot freed on completi"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

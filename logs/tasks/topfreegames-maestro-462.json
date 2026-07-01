@@ -1,0 +1,23 @@
+{
+ "task": "topfreegames-maestro-462",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden makes Ports optional (`Ports []ContainerPort `validate:\"dive\"``) and adds name-patch handling; F2P includes `when_create_a_new_spec_without_ports` and `Have_name_return_scheduler_with_changed_Name`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

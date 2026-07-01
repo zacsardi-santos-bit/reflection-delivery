@@ -1,0 +1,5 @@
+patching file rosbag2_interfaces/CMakeLists.txt
+patching file rosbag2_interfaces/srv/Stop.srv
+patching file rosbag2_transport/CMakeLists.txt
+patching file rosbag2_transport/include/rosbag2_transport/player.hpp
+patching file rosbag2_transport/src/rosbag2_transport/player.cpp

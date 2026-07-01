@@ -1,0 +1,35 @@
+patching file src/components/manage/BlockChooser/BlockChooserButton.test.jsx
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+FAIL src/components/manage/BlockChooser/BlockChooserButton.test.jsx
+  ● Test suite failed to run
+
+    Cannot find module './BlockChooserButton' from 'BlockChooserButton.test.jsx'
+
+    However, Jest was able to find:
+    	'./BlockChooserButton.test.jsx'
+
+    You might want to include a file extension in your import, or update your 'moduleFileExtensions', which is currently ['js', 'json', 'jsx', 'ts', 'tsx', 'node'].
+
+    See https://jestjs.io/docs/en/configuration#modulefileextensions-array-string
+
+      2 | import { Provider } from 'react-intl-redux';
+      3 | import configureStore from 'redux-mock-store';
+    > 4 | import BlockChooserButton from './BlockChooserButton';
+        | ^
+      5 | import { render } from '@testing-library/react';
+      6 |
+      7 | import config from '@plone/volto/registry';
+
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:259:17)
+      at Object.<anonymous> (src/components/manage/BlockChooser/BlockChooserButton.test.jsx:4:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        1.926s
+Ran all test suites matching /src\/components\/manage\/BlockChooser\/BlockChooserButton.test.jsx/i.
+reward=0 graded=3 found=0 failed=0 parsed=0 framework=jest exit_code=1

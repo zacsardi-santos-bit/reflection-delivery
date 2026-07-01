@@ -1,0 +1,1135 @@
+patching file tests/test_networkmanager/__init__.py
+patching file tests/test_networkmanager/test_networkmanager.py
+patching file tests/test_networkmanager/test_server.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: order-1.5.0, cov-7.1.0
+collecting ... collected 11 items
+
+tests/test_networkmanager/test_networkmanager.py::test_create_global_network FAILED [  9%]
+tests/test_networkmanager/test_networkmanager.py::test_create_core_network FAILED [ 18%]
+tests/test_networkmanager/test_networkmanager.py::test_delete_core_network FAILED [ 27%]
+tests/test_networkmanager/test_networkmanager.py::test_tag_resource FAILED [ 36%]
+tests/test_networkmanager/test_networkmanager.py::test_untag_resource FAILED [ 45%]
+tests/test_networkmanager/test_networkmanager.py::test_list_core_networks FAILED [ 54%]
+tests/test_networkmanager/test_networkmanager.py::test_get_core_network FAILED [ 63%]
+tests/test_networkmanager/test_networkmanager.py::test_describe_global_networks FAILED [ 72%]
+tests/test_networkmanager/test_server.py::test_list_global_networks FAILED [ 81%]
+tests/test_networkmanager/test_server.py::test_list_core_networks FAILED [ 90%]
+tests/test_networkmanager/test_server.py::test_tag_resource FAILED       [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_create_global_network __________________________
+
+    @mock_aws
+    def test_create_global_network():
+        client = boto3.client("networkmanager")
+>       resp = client.create_global_network(
+            Description="Test global network",
+            Tags=[
+                {"Key": "Name", "Value": "TestNetwork"},
+            ],
+        )
+
+tests/test_networkmanager/test_networkmanager.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/botocore/client.py:606: in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/botocore/context.py:123: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <botocore.client.NetworkManager object at 0x2abad828b410>
+operation_name = 'CreateGlobalNetwork'
+api_params = {'Description': 'Test global network', 'Tags': [{'Key': 'Name', 'Value': 'TestNetwork'}]}
+
+    @with_current_context()
+    def _make_api_call(self, operation_name, api_params):
+        operation_model = self._service_model.operation_model(operation_name)
+        service_name = self._service_model.service_name
+        history_recorder.record(
+            'API_CALL',
+            {
+                'service': service_name,
+                'operation': operation_name,
+                'params': api_params,
+            },
+        )
+        if operation_model.deprecated:
+            logger.debug(
+                'Warning: %s.%s() is deprecated', service_name, operation_name
+            )
+        # If the operation has the `auth` property and the client has a
+        # configured auth scheme preference, use both to compute the
+        # auth type. Otherwise, fallback to auth/auth_type resolution.
+        if operation_model.auth and self.meta.config.auth_scheme_preference:
+            preferred_schemes = self.meta.config.auth_scheme_preference.split(
+                ','
+            )
+            auth_type = resolve_auth_scheme_preference(
+                preferred_schemes, operation_model.auth
+            )
+        else:
+            auth_type = operation_model.resolved_auth_type
+        request_context = {
+            'client_region': self.meta.region_name,
+            'client_config': self.meta.config,
+            'has_streaming_input': operation_model.has_streaming_input,
+            'auth_type': auth_type,
+            'unsigned_payload': operation_model.unsigned_payload,
+            'auth_options': self._service_model.metadata.get('auth'),
+        }
+    
+        api_params = self._emit_api_params(
+            api_params=api_params,
+            operation_model=operation_model,
+            context=request_context,
+        )
+        (
+            endpoint_url,
+            additional_headers,
+            properties,
+        ) = self._resolve_endpoint_ruleset(
+            operation_model, api_params, request_context
+        )
+        if properties:
+            # Pass arbitrary endpoint info with the Request
+            # for use during construction.
+            request_context['endpoint_properties'] = properties
+        request_dict = self._convert_to_request_dict(
+            api_params=api_params,
+            operation_model=operation_model,
+            endpoint_url=endpoint_url,
+            context=request_context,
+            headers=additional_headers,
+        )
+        resolve_checksum_context(request_dict, operation_model, api_params)
+    
+        service_id = self._service_model.service_id.hyphenize()
+        handler, event_response = self.meta.events.emit_until_response(
+            f'before-call.{service_id}.{operation_name}',
+            model=operation_model,
+            params=request_dict,
+            request_signer=self._request_signer,
+            context=request_context,
+        )
+    
+        if event_response is not None:
+            http, parsed_response = event_response
+        else:
+            maybe_compress_request(
+                self.meta.config, request_dict, operation_model
+            )
+            apply_request_checksum(request_dict)
+            http, parsed_response = self._make_request(
+                operation_model, request_dict, request_context
+            )
+    
+        self.meta.events.emit(
+            f'after-call.{service_id}.{operation_name}',
+            http_response=http,
+            parsed=parsed_response,
+            model=operation_model,
+            context=request_context,
+        )
+    
+        if http.status_code >= 300:
+            error_info = parsed_response.get("Error", {})
+            error_code = request_context.get(
+                'error_code_override'
+            ) or error_info.get("Code")
+            error_class = self.exceptions.from_code(error_code)
+>           raise error_class(parsed_response, operation_name)
+E           botocore.exceptions.ClientError: An error occurred (404) when calling the CreateGlobalNetwork operation: Not yet implemented
+
+/usr/local/lib/python3.11/site-packages/botocore/client.py:1094: ClientError
+___________________________ test_create_core_network ___________________________
+
+    @mock_aws
+    def test_create_core_network():
+        client = boto3.client("networkmanager")
+        # Create a global network
+>       global_network_id = client.create_global_network(
+            Description="Test global network",
+            Tags=[
+                {"Key": "Name", "Value": "TestNetwork"},
+            ],
+        )["GlobalNetwork"]["GlobalNetworkId"]
+
+tests/test_networkmanager/test_networkmanager.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/botocore/client.py:606: in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/botocore/context.py:123: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <botocore.client.NetworkManager object at 0x2abad8a15890>
+operation_name = 'CreateGlobalNetwork'
+api_params = {'Description': 'Test global network', 'Tags': [{'Key': 'Name', 'Value': 'TestNetwork'}]}
+
+    @with_current_context()
+    def _make_api_call(self, operation_name, api_params):
+        operation_model = self._service_model.operation_model(operation_name)
+        service_name = self._service_model.service_name
+        history_recorder.record(
+            'API_CALL',
+            {
+                'service': service_name,
+                'operation': operation_name,
+                'params': api_params,
+            },
+        )
+        if operation_model.deprecated:
+            logger.debug(
+                'Warning: %s.%s() is deprecated', service_name, operation_name
+            )
+        # If the operation has the `auth` property and the client has a
+        # configured auth scheme preference, use both to compute the
+        # auth type. Otherwise, fallback to auth/auth_type resolution.
+        if operation_model.auth and self.meta.config.auth_scheme_preference:
+            preferred_schemes = self.meta.config.auth_scheme_preference.split(
+                ','
+            )
+            auth_type = resolve_auth_scheme_preference(
+                preferred_schemes, operation_model.auth
+            )
+        else:
+            auth_type = operation_model.resolved_auth_type
+        request_context = {
+            'client_region': self.meta.region_name,
+            'client_config': self.meta.config,
+            'has_streaming_input': operation_model.has_streaming_input,
+            'auth_type': auth_type,
+            'unsigned_payload': operation_model.unsigned_payload,
+            'auth_options': self._service_model.metadata.get('auth'),
+        }
+    
+        api_params = self._emit_api_params(
+            api_params=api_params,
+            operation_model=operation_model,
+            context=request_context,
+        )
+        (
+            endpoint_url,
+            additional_headers,
+            properties,
+        ) = self._resolve_endpoint_ruleset(
+            operation_model, api_params, request_context
+        )
+        if properties:
+            # Pass arbitrary endpoint info with the Request
+            # for use during construction.
+            request_context['endpoint_properties'] = properties
+        request_dict = self._convert_to_request_dict(
+            api_params=api_params,
+            operation_model=operation_model,
+            endpoint_url=endpoint_url,
+            context=request_context,
+            headers=additional_headers,
+        )
+        resolve_checksum_context(request_dict, operation_model, api_params)
+    
+        service_id = self._service_model.service_id.hyphenize()
+        handler, event_response = self.meta.events.emit_until_response(
+            f'before-call.{service_id}.{operation_name}',
+            model=operation_model,
+            params=request_dict,
+            request_signer=self._request_signer,
+            context=request_context,
+        )
+    
+        if event_response is not None:
+            http, parsed_response = event_response
+        else:
+            maybe_compress_request(
+                self.meta.config, request_dict, operation_model
+            )
+            apply_request_checksum(request_dict)
+            http, parsed_response = self._make_request(
+                operation_model, request_dict, request_context
+            )
+    
+        self.meta.events.emit(
+            f'after-call.{service_id}.{operation_name}',
+            http_response=http,
+            parsed=parsed_response,
+            model=operation_model,
+            context=request_context,
+        )
+    
+        if http.status_code >= 300:
+            error_info = parsed_response.get("Error", {})
+            error_code = request_context.get(
+                'error_code_override'
+            ) or error_info.get("Code")
+            error_class = self.exceptions.from_code(error_code)
+>           raise error_class(parsed_response, operation_name)
+E           botocore.exceptions.ClientError: An error occurred (404) when calling the CreateGlobalNetwork operation: Not yet implemented
+
+/usr/local/lib/python3.11/site-packages/botocore/client.py:1094: ClientError
+___________________________ test_delete_core_network ___________________________
+
+    @mock_aws
+    def test_delete_core_network():
+        client = boto3.client("networkmanager")
+>       gn_id = create_global_network(client)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_networkmanager/test_networkmanager.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_networkmanager/test_networkmanager.py:13: in create_global_network
+    return client.create_global_network(
+/usr/local/lib/python3.11/site-packages/botocore/client.py:606: in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/botocore/context.py:123: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <botocore.client.NetworkManager object at 0x2abad89e1290>
+operation_name = 'CreateGlobalNetwork'
+api_params = {'Description': 'Test global network', 'Tags': [{'Key': 'Name', 'Value': 'TestNetwork'}]}
+
+    @with_current_context()
+    def _make_api_call(self, operation_name, api_params):
+        operation_model = self._service_model.operation_model(operation_name)
+        service_name = self._service_model.service_name
+        history_recorder.record(
+            'API_CALL',
+            {
+                'service': service_name,
+                'operation': operation_name,
+                'params': api_params,
+            },
+        )
+        if operation_model.deprecated:
+            logger.debug(
+                'Warning: %s.%s() is deprecated', service_name, operation_name
+            )
+        # If the operation has the `auth` property and the client has a
+        # configured auth scheme preference, use both to compute the
+        # auth type. Otherwise, fallback to auth/auth_type resolution.
+        if operation_model.auth and self.meta.config.auth_scheme_preference:
+            preferred_schemes = self.meta.config.auth_scheme_preference.split(
+                ','
+            )
+            auth_type = resolve_auth_scheme_preference(
+                preferred_schemes, operation_model.auth
+            )
+        else:
+            auth_type = operation_model.resolved_auth_type
+        request_context = {
+            'client_region': self.meta.region_name,
+            'client_config': self.meta.config,
+            'has_streaming_input': operation_model.has_streaming_input,
+            'auth_type': auth_type,
+            'unsigned_payload': operation_model.unsigned_payload,
+            'auth_options': self._service_model.metadata.get('auth'),
+        }
+    
+        api_params = self._emit_api_params(
+            api_params=api_params,
+            operation_model=operation_model,
+            context=request_context,
+        )
+        (
+            endpoint_url,
+            additional_headers,
+            properties,
+        ) = self._resolve_endpoint_ruleset(
+            operation_model, api_params, request_context
+        )
+        if properties:
+            # Pass arbitrary endpoint info with the Request
+            # for use during construction.
+            request_context['endpoint_properties'] = properties
+        request_dict = self._convert_to_request_dict(
+            api_params=api_params,
+            operation_model=operation_model,
+            endpoint_url=endpoint_url,
+            context=request_context,
+            headers=additional_headers,
+        )
+        resolve_checksum_context(request_dict, operation_model, api_params)
+    
+        service_id = self._service_model.service_id.hyphenize()
+        handler, event_response = self.meta.events.emit_until_response(
+            f'before-call.{service_id}.{operation_name}',
+            model=operation_model,
+            params=request_dict,
+            request_signer=self._request_signer,
+            context=request_context,
+        )
+    
+        if event_response is not None:
+            http, parsed_response = event_response
+        else:
+            maybe_compress_request(
+                self.meta.config, request_dict, operation_model
+            )
+            apply_request_checksum(request_dict)
+            http, parsed_response = self._make_request(
+                operation_model, request_dict, request_context
+            )
+    
+        self.meta.events.emit(
+            f'after-call.{service_id}.{operation_name}',
+            http_response=http,
+            parsed=parsed_response,
+            model=operation_model,
+            context=request_context,
+        )
+    
+        if http.status_code >= 300:
+            error_info = parsed_response.get("Error", {})
+            error_code = request_context.get(
+                'error_code_override'
+            ) or error_info.get("Code")
+            error_class = self.exceptions.from_code(error_code)
+>           raise error_class(parsed_response, operation_name)
+E           botocore.exceptions.ClientError: An error occurred (404) when calling the CreateGlobalNetwork operation: Not yet implemented
+
+/usr/local/lib/python3.11/site-packages/botocore/client.py:1094: ClientError
+______________________________ test_tag_resource _______________________________
+
+    @mock_aws
+    def test_tag_resource():
+        client = boto3.client("networkmanager")
+>       gn_id = create_global_network(client)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_networkmanager/test_networkmanager.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_networkmanager/test_networkmanager.py:13: in create_global_network
+    return client.create_global_network(
+/usr/local/lib/python3.11/site-packages/botocore/client.py:606: in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/botocore/context.py:123: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <botocore.client.NetworkManager object at 0x2abad89f8e90>
+operation_name = 'CreateGlobalNetwork'
+api_params = {'Description': 'Test global network', 'Tags': [{'Key': 'Name', 'Value': 'TestNetwork'}]}
+
+    @with_current_context()
+    def _make_api_call(self, operation_name, api_params):
+        operation_model = self._service_model.operation_model(operation_name)
+        service_name = self._service_model.service_name
+        history_recorder.record(
+            'API_CALL',
+            {
+                'service': service_name,
+                'operation': operation_name,
+                'params': api_params,
+            },
+        )
+        if operation_model.deprecated:
+            logger.debug(
+                'Warning: %s.%s() is deprecated', service_name, operation_name
+            )
+        # If the operation has the `auth` property and the client has a
+        # configured auth scheme preference, use both to compute the
+        # auth type. Otherwise, fallback to auth/auth_type resolution.
+        if operation_model.auth and self.meta.config.auth_scheme_preference:
+            preferred_schemes = self.meta.config.auth_scheme_preference.split(
+                ','
+            )
+            auth_type = resolve_auth_scheme_preference(
+                preferred_schemes, operation_model.auth
+            )
+        else:
+            auth_type = operation_model.resolved_auth_type
+        request_context = {
+            'client_region': self.meta.region_name,
+            'client_config': self.meta.config,
+            'has_streaming_input': operation_model.has_streaming_input,
+            'auth_type': auth_type,
+            'unsigned_payload': operation_model.unsigned_payload,
+            'auth_options': self._service_model.metadata.get('auth'),
+        }
+    
+        api_params = self._emit_api_params(
+            api_params=api_params,
+            operation_model=operation_model,
+            context=request_context,
+        )
+        (
+            endpoint_url,
+            additional_headers,
+            properties,
+        ) = self._resolve_endpoint_ruleset(
+            operation_model, api_params, request_context
+        )
+        if properties:
+            # Pass arbitrary endpoint info with the Request
+            # for use during construction.
+            request_context['endpoint_properties'] = properties
+        request_dict = self._convert_to_request_dict(
+            api_params=api_params,
+            operation_model=operation_model,
+            endpoint_url=endpoint_url,
+            context=request_context,
+            headers=additional_headers,
+        )
+        resolve_checksum_context(request_dict, operation_model, api_params)
+    
+        service_id = self._service_model.service_id.hyphenize()
+        handler, event_response = self.meta.events.emit_until_response(
+            f'before-call.{service_id}.{operation_name}',
+            model=operation_model,
+            params=request_dict,
+            request_signer=self._request_signer,
+            context=request_context,
+        )
+    
+        if event_response is not None:
+            http, parsed_response = event_response
+        else:
+            maybe_compress_request(
+                self.meta.config, request_dict, operation_model
+            )
+            apply_request_checksum(request_dict)
+            http, parsed_response = self._make_request(
+                operation_model, request_dict, request_context
+            )
+    
+        self.meta.events.emit(
+            f'after-call.{service_id}.{operation_name}',
+            http_response=http,
+            parsed=parsed_response,
+            model=operation_model,
+            context=request_context,
+        )
+    
+        if http.status_code >= 300:
+            error_info = parsed_response.get("Error", {})
+            error_code = request_context.get(
+                'error_code_override'
+            ) or error_info.get("Code")
+            error_class = self.exceptions.from_code(error_code)
+>           raise error_class(parsed_response, operation_name)
+E           botocore.exceptions.ClientError: An error occurred (404) when calling the CreateGlobalNetwork operation: Not yet implemented
+
+/usr/local/lib/python3.11/site-packages/botocore/client.py:1094: ClientError
+_____________________________ test_untag_resource ______________________________
+
+    @mock_aws
+    def test_untag_resource():
+        client = boto3.client("networkmanager")
+>       gn_id = create_global_network(client)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_networkmanager/test_networkmanager.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_networkmanager/test_networkmanager.py:13: in create_global_network
+    return client.create_global_network(
+/usr/local/lib/python3.11/site-packages/botocore/client.py:606: in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/botocore/context.py:123: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <botocore.client.NetworkManager object at 0x2abad8b00910>
+operation_name = 'CreateGlobalNetwork'
+api_params = {'Description': 'Test global network', 'Tags': [{'Key': 'Name', 'Value': 'TestNetwork'}]}
+
+    @with_current_context()
+    def _make_api_call(self, operation_name, api_params):
+        operation_model = self._service_model.operation_model(operation_name)
+        service_name = self._service_model.service_name
+        history_recorder.record(
+            'API_CALL',
+            {
+                'service': service_name,
+                'operation': operation_name,
+                'params': api_params,
+            },
+        )
+        if operation_model.deprecated:
+            logger.debug(
+                'Warning: %s.%s() is deprecated', service_name, operation_name
+            )
+        # If the operation has the `auth` property and the client has a
+        # configured auth scheme preference, use both to compute the
+        # auth type. Otherwise, fallback to auth/auth_type resolution.
+        if operation_model.auth and self.meta.config.auth_scheme_preference:
+            preferred_schemes = self.meta.config.auth_scheme_preference.split(
+                ','
+            )
+            auth_type = resolve_auth_scheme_preference(
+                preferred_schemes, operation_model.auth
+            )
+        else:
+            auth_type = operation_model.resolved_auth_type
+        request_context = {
+            'client_region': self.meta.region_name,
+            'client_config': self.meta.config,
+            'has_streaming_input': operation_model.has_streaming_input,
+            'auth_type': auth_type,
+            'unsigned_payload': operation_model.unsigned_payload,
+            'auth_options': self._service_model.metadata.get('auth'),
+        }
+    
+        api_params = self._emit_api_params(
+            api_params=api_params,
+            operation_model=operation_model,
+            context=request_context,
+        )
+        (
+            endpoint_url,
+            additional_headers,
+            properties,
+        ) = self._resolve_endpoint_ruleset(
+            operation_model, api_params, request_context
+        )
+        if properties:
+            # Pass arbitrary endpoint info with the Request
+            # for use during construction.
+            request_context['endpoint_properties'] = properties
+        request_dict = self._convert_to_request_dict(
+            api_params=api_params,
+            operation_model=operation_model,
+            endpoint_url=endpoint_url,
+            context=request_context,
+            headers=additional_headers,
+        )
+        resolve_checksum_context(request_dict, operation_model, api_params)
+    
+        service_id = self._service_model.service_id.hyphenize()
+        handler, event_response = self.meta.events.emit_until_response(
+            f'before-call.{service_id}.{operation_name}',
+            model=operation_model,
+            params=request_dict,
+            request_signer=self._request_signer,
+            context=request_context,
+        )
+    
+        if event_response is not None:
+            http, parsed_response = event_response
+        else:
+            maybe_compress_request(
+                self.meta.config, request_dict, operation_model
+            )
+            apply_request_checksum(request_dict)
+            http, parsed_response = self._make_request(
+                operation_model, request_dict, request_context
+            )
+    
+        self.meta.events.emit(
+            f'after-call.{service_id}.{operation_name}',
+            http_response=http,
+            parsed=parsed_response,
+            model=operation_model,
+            context=request_context,
+        )
+    
+        if http.status_code >= 300:
+            error_info = parsed_response.get("Error", {})
+            error_code = request_context.get(
+                'error_code_override'
+            ) or error_info.get("Code")
+            error_class = self.exceptions.from_code(error_code)
+>           raise error_class(parsed_response, operation_name)
+E           botocore.exceptions.ClientError: An error occurred (404) when calling the CreateGlobalNetwork operation: Not yet implemented
+
+/usr/local/lib/python3.11/site-packages/botocore/client.py:1094: ClientError
+___________________________ test_list_core_networks ____________________________
+
+    @mock_aws
+    def test_list_core_networks():
+        NUM_CORE_NETWORKS = 3
+        client = boto3.client("networkmanager")
+        for _ in range(NUM_CORE_NETWORKS):
+>           gn_id = create_global_network(client)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_networkmanager/test_networkmanager.py:145: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_networkmanager/test_networkmanager.py:13: in create_global_network
+    return client.create_global_network(
+/usr/local/lib/python3.11/site-packages/botocore/client.py:606: in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/botocore/context.py:123: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <botocore.client.NetworkManager object at 0x2abad8ab6910>
+operation_name = 'CreateGlobalNetwork'
+api_params = {'Description': 'Test global network', 'Tags': [{'Key': 'Name', 'Value': 'TestNetwork'}]}
+
+    @with_current_context()
+    def _make_api_call(self, operation_name, api_params):
+        operation_model = self._service_model.operation_model(operation_name)
+        service_name = self._service_model.service_name
+        history_recorder.record(
+            'API_CALL',
+            {
+                'service': service_name,
+                'operation': operation_name,
+                'params': api_params,
+            },
+        )
+        if operation_model.deprecated:
+            logger.debug(
+                'Warning: %s.%s() is deprecated', service_name, operation_name
+            )
+        # If the operation has the `auth` property and the client has a
+        # configured auth scheme preference, use both to compute the
+        # auth type. Otherwise, fallback to auth/auth_type resolution.
+        if operation_model.auth and self.meta.config.auth_scheme_preference:
+            preferred_schemes = self.meta.config.auth_scheme_preference.split(
+                ','
+            )
+            auth_type = resolve_auth_scheme_preference(
+                preferred_schemes, operation_model.auth
+            )
+        else:
+            auth_type = operation_model.resolved_auth_type
+        request_context = {
+            'client_region': self.meta.region_name,
+            'client_config': self.meta.config,
+            'has_streaming_input': operation_model.has_streaming_input,
+            'auth_type': auth_type,
+            'unsigned_payload': operation_model.unsigned_payload,
+            'auth_options': self._service_model.metadata.get('auth'),
+        }
+    
+        api_params = self._emit_api_params(
+            api_params=api_params,
+            operation_model=operation_model,
+            context=request_context,
+        )
+        (
+            endpoint_url,
+            additional_headers,
+            properties,
+        ) = self._resolve_endpoint_ruleset(
+            operation_model, api_params, request_context
+        )
+        if properties:
+            # Pass arbitrary endpoint info with the Request
+            # for use during construction.
+            request_context['endpoint_properties'] = properties
+        request_dict = self._convert_to_request_dict(
+            api_params=api_params,
+            operation_model=operation_model,
+            endpoint_url=endpoint_url,
+            context=request_context,
+            headers=additional_headers,
+        )
+        resolve_checksum_context(request_dict, operation_model, api_params)
+    
+        service_id = self._service_model.service_id.hyphenize()
+        handler, event_response = self.meta.events.emit_until_response(
+            f'before-call.{service_id}.{operation_name}',
+            model=operation_model,
+            params=request_dict,
+            request_signer=self._request_signer,
+            context=request_context,
+        )
+    
+        if event_response is not None:
+            http, parsed_response = event_response
+        else:
+            maybe_compress_request(
+                self.meta.config, request_dict, operation_model
+            )
+            apply_request_checksum(request_dict)
+            http, parsed_response = self._make_request(
+                operation_model, request_dict, request_context
+            )
+    
+        self.meta.events.emit(
+            f'after-call.{service_id}.{operation_name}',
+            http_response=http,
+            parsed=parsed_response,
+            model=operation_model,
+            context=request_context,
+        )
+    
+        if http.status_code >= 300:
+            error_info = parsed_response.get("Error", {})
+            error_code = request_context.get(
+                'error_code_override'
+            ) or error_info.get("Code")
+            error_class = self.exceptions.from_code(error_code)
+>           raise error_class(parsed_response, operation_name)
+E           botocore.exceptions.ClientError: An error occurred (404) when calling the CreateGlobalNetwork operation: Not yet implemented
+
+/usr/local/lib/python3.11/site-packages/botocore/client.py:1094: ClientError
+____________________________ test_get_core_network _____________________________
+
+    @mock_aws
+    def test_get_core_network():
+        client = boto3.client("networkmanager")
+>       gn_id = create_global_network(client)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_networkmanager/test_networkmanager.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_networkmanager/test_networkmanager.py:13: in create_global_network
+    return client.create_global_network(
+/usr/local/lib/python3.11/site-packages/botocore/client.py:606: in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/botocore/context.py:123: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <botocore.client.NetworkManager object at 0x2abad8a18550>
+operation_name = 'CreateGlobalNetwork'
+api_params = {'Description': 'Test global network', 'Tags': [{'Key': 'Name', 'Value': 'TestNetwork'}]}
+
+    @with_current_context()
+    def _make_api_call(self, operation_name, api_params):
+        operation_model = self._service_model.operation_model(operation_name)
+        service_name = self._service_model.service_name
+        history_recorder.record(
+            'API_CALL',
+            {
+                'service': service_name,
+                'operation': operation_name,
+                'params': api_params,
+            },
+        )
+        if operation_model.deprecated:
+            logger.debug(
+                'Warning: %s.%s() is deprecated', service_name, operation_name
+            )
+        # If the operation has the `auth` property and the client has a
+        # configured auth scheme preference, use both to compute the
+        # auth type. Otherwise, fallback to auth/auth_type resolution.
+        if operation_model.auth and self.meta.config.auth_scheme_preference:
+            preferred_schemes = self.meta.config.auth_scheme_preference.split(
+                ','
+            )
+            auth_type = resolve_auth_scheme_preference(
+                preferred_schemes, operation_model.auth
+            )
+        else:
+            auth_type = operation_model.resolved_auth_type
+        request_context = {
+            'client_region': self.meta.region_name,
+            'client_config': self.meta.config,
+            'has_streaming_input': operation_model.has_streaming_input,
+            'auth_type': auth_type,
+            'unsigned_payload': operation_model.unsigned_payload,
+            'auth_options': self._service_model.metadata.get('auth'),
+        }
+    
+        api_params = self._emit_api_params(
+            api_params=api_params,
+            operation_model=operation_model,
+            context=request_context,
+        )
+        (
+            endpoint_url,
+            additional_headers,
+            properties,
+        ) = self._resolve_endpoint_ruleset(
+            operation_model, api_params, request_context
+        )
+        if properties:
+            # Pass arbitrary endpoint info with the Request
+            # for use during construction.
+            request_context['endpoint_properties'] = properties
+        request_dict = self._convert_to_request_dict(
+            api_params=api_params,
+            operation_model=operation_model,
+            endpoint_url=endpoint_url,
+            context=request_context,
+            headers=additional_headers,
+        )
+        resolve_checksum_context(request_dict, operation_model, api_params)
+    
+        service_id = self._service_model.service_id.hyphenize()
+        handler, event_response = self.meta.events.emit_until_response(
+            f'before-call.{service_id}.{operation_name}',
+            model=operation_model,
+            params=request_dict,
+            request_signer=self._request_signer,
+            context=request_context,
+        )
+    
+        if event_response is not None:
+            http, parsed_response = event_response
+        else:
+            maybe_compress_request(
+                self.meta.config, request_dict, operation_model
+            )
+            apply_request_checksum(request_dict)
+            http, parsed_response = self._make_request(
+                operation_model, request_dict, request_context
+            )
+    
+        self.meta.events.emit(
+            f'after-call.{service_id}.{operation_name}',
+            http_response=http,
+            parsed=parsed_response,
+            model=operation_model,
+            context=request_context,
+        )
+    
+        if http.status_code >= 300:
+            error_info = parsed_response.get("Error", {})
+            error_code = request_context.get(
+                'error_code_override'
+            ) or error_info.get("Code")
+            error_class = self.exceptions.from_code(error_code)
+>           raise error_class(parsed_response, operation_name)
+E           botocore.exceptions.ClientError: An error occurred (404) when calling the CreateGlobalNetwork operation: Not yet implemented
+
+/usr/local/lib/python3.11/site-packages/botocore/client.py:1094: ClientError
+________________________ test_describe_global_networks _________________________
+
+    @mock_aws
+    def test_describe_global_networks():
+        NUM_NETWORKS = 3
+        client = boto3.client("networkmanager")
+        global_ids = []
+        for i in range(NUM_NETWORKS):
+>           global_id = client.create_global_network(
+                Description=f"Test global network #{i}",
+                Tags=[
+                    {"Key": "Name", "Value": f"TestNetwork-{i}"},
+                ],
+            )["GlobalNetwork"]["GlobalNetworkId"]
+
+tests/test_networkmanager/test_networkmanager.py:178: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/botocore/client.py:606: in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/botocore/context.py:123: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <botocore.client.NetworkManager object at 0x2abad8a44510>
+operation_name = 'CreateGlobalNetwork'
+api_params = {'Description': 'Test global network #0', 'Tags': [{'Key': 'Name', 'Value': 'TestNetwork-0'}]}
+
+    @with_current_context()
+    def _make_api_call(self, operation_name, api_params):
+        operation_model = self._service_model.operation_model(operation_name)
+        service_name = self._service_model.service_name
+        history_recorder.record(
+            'API_CALL',
+            {
+                'service': service_name,
+                'operation': operation_name,
+                'params': api_params,
+            },
+        )
+        if operation_model.deprecated:
+            logger.debug(
+                'Warning: %s.%s() is deprecated', service_name, operation_name
+            )
+        # If the operation has the `auth` property and the client has a
+        # configured auth scheme preference, use both to compute the
+        # auth type. Otherwise, fallback to auth/auth_type resolution.
+        if operation_model.auth and self.meta.config.auth_scheme_preference:
+            preferred_schemes = self.meta.config.auth_scheme_preference.split(
+                ','
+            )
+            auth_type = resolve_auth_scheme_preference(
+                preferred_schemes, operation_model.auth
+            )
+        else:
+            auth_type = operation_model.resolved_auth_type
+        request_context = {
+            'client_region': self.meta.region_name,
+            'client_config': self.meta.config,
+            'has_streaming_input': operation_model.has_streaming_input,
+            'auth_type': auth_type,
+            'unsigned_payload': operation_model.unsigned_payload,
+            'auth_options': self._service_model.metadata.get('auth'),
+        }
+    
+        api_params = self._emit_api_params(
+            api_params=api_params,
+            operation_model=operation_model,
+            context=request_context,
+        )
+        (
+            endpoint_url,
+            additional_headers,
+            properties,
+        ) = self._resolve_endpoint_ruleset(
+            operation_model, api_params, request_context
+        )
+        if properties:
+            # Pass arbitrary endpoint info with the Request
+            # for use during construction.
+            request_context['endpoint_properties'] = properties
+        request_dict = self._convert_to_request_dict(
+            api_params=api_params,
+            operation_model=operation_model,
+            endpoint_url=endpoint_url,
+            context=request_context,
+            headers=additional_headers,
+        )
+        resolve_checksum_context(request_dict, operation_model, api_params)
+    
+        service_id = self._service_model.service_id.hyphenize()
+        handler, event_response = self.meta.events.emit_until_response(
+            f'before-call.{service_id}.{operation_name}',
+            model=operation_model,
+            params=request_dict,
+            request_signer=self._request_signer,
+            context=request_context,
+        )
+    
+        if event_response is not None:
+            http, parsed_response = event_response
+        else:
+            maybe_compress_request(
+                self.meta.config, request_dict, operation_model
+            )
+            apply_request_checksum(request_dict)
+            http, parsed_response = self._make_request(
+                operation_model, request_dict, request_context
+            )
+    
+        self.meta.events.emit(
+            f'after-call.{service_id}.{operation_name}',
+            http_response=http,
+            parsed=parsed_response,
+            model=operation_model,
+            context=request_context,
+        )
+    
+        if http.status_code >= 300:
+            error_info = parsed_response.get("Error", {})
+            error_code = request_context.get(
+                'error_code_override'
+            ) or error_info.get("Code")
+            error_class = self.exceptions.from_code(error_code)
+>           raise error_class(parsed_response, operation_name)
+E           botocore.exceptions.ClientError: An error occurred (404) when calling the CreateGlobalNetwork operation: Not yet implemented
+
+/usr/local/lib/python3.11/site-packages/botocore/client.py:1094: ClientError
+__________________________ test_list_global_networks ___________________________
+
+    def test_list_global_networks():
+>       backend = server.create_backend_app("networkmanager")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_networkmanager/test_server.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+moto/moto_server/werkzeug_app.py:280: in create_backend_app
+    backend_dict = backends.get_backend(service)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+moto/backends.py:689: in get_backend
+    return _import_backend(
+moto/backends.py:314: in _import_backend
+    module = importlib.import_module("moto." + module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'moto.networkmanager', import_ = <function _gcd_import at 0x2abad52dfd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'moto.networkmanager'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+___________________________ test_list_core_networks ____________________________
+
+    def test_list_core_networks():
+>       backend = server.create_backend_app("networkmanager")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_networkmanager/test_server.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+moto/moto_server/werkzeug_app.py:280: in create_backend_app
+    backend_dict = backends.get_backend(service)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+moto/backends.py:689: in get_backend
+    return _import_backend(
+moto/backends.py:314: in _import_backend
+    module = importlib.import_module("moto." + module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'moto.networkmanager', import_ = <function _gcd_import at 0x2abad52dfd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'moto.networkmanager'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+______________________________ test_tag_resource _______________________________
+
+    def test_tag_resource():
+>       backend = server.create_backend_app("networkmanager")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_networkmanager/test_server.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+moto/moto_server/werkzeug_app.py:280: in create_backend_app
+    backend_dict = backends.get_backend(service)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+moto/backends.py:689: in get_backend
+    return _import_backend(
+moto/backends.py:314: in _import_backend
+    module = importlib.import_module("moto." + module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'moto.networkmanager', import_ = <function _gcd_import at 0x2abad52dfd80>
+
+>   ???
+E   ModuleNotFoundError: No module named 'moto.networkmanager'
+
+<frozen importlib._bootstrap>:1140: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_networkmanager/test_networkmanager.py::test_create_global_network
+FAILED tests/test_networkmanager/test_networkmanager.py::test_create_core_network
+FAILED tests/test_networkmanager/test_networkmanager.py::test_delete_core_network
+FAILED tests/test_networkmanager/test_networkmanager.py::test_tag_resource - ...
+FAILED tests/test_networkmanager/test_networkmanager.py::test_untag_resource
+FAILED tests/test_networkmanager/test_networkmanager.py::test_list_core_networks
+FAILED tests/test_networkmanager/test_networkmanager.py::test_get_core_network
+FAILED tests/test_networkmanager/test_networkmanager.py::test_describe_global_networks
+FAILED tests/test_networkmanager/test_server.py::test_list_global_networks - ...
+FAILED tests/test_networkmanager/test_server.py::test_list_core_networks - Mo...
+FAILED tests/test_networkmanager/test_server.py::test_tag_resource - ModuleNo...
+============================== 11 failed in 2.27s ==============================
+reward=0 graded=11 found=0 failed=0 parsed=11 framework=pytest exit_code=1

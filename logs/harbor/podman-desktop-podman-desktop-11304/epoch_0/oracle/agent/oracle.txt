@@ -1,0 +1,8 @@
+patching file extensions/podman/packages/extension/package.json
+patching file extensions/podman/packages/extension/src/configuration/playbook-setup-registry-conf-file.mustache
+patching file extensions/podman/packages/extension/src/configuration/registry-configuration.ts
+patching file extensions/podman/packages/extension/src/extension.ts
+patching file extensions/podman/packages/extension/src/podman-configuration.ts
+patching file extensions/podman/packages/extension/tsconfig.json
+patching file extensions/podman/packages/extension/types/template.d.ts
+patching file pnpm-lock.yaml

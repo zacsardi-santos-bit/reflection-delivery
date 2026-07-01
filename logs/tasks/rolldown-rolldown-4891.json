@@ -1,0 +1,23 @@
+{
+ "task": "rolldown-rolldown-4891",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden core fix in compute_cross_chunk_links.rs '!is_user_defined' -> 'is_dynamic_imported' and create_exports_for_ecma_modules.rs passes is_dynamic_imported; issue-4880 fixture snapshot verifies dynamic-import-target entry keeps exports"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 13,
+  "shallow": true
+ }
+}

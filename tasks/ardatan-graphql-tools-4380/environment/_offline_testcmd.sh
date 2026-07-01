@@ -1,0 +1,1 @@
+cd /workspace/repo && npx jest packages/utils/tests/prune.test.ts --coverage=false --verbose --json

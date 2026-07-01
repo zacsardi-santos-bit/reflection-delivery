@@ -1,0 +1,7 @@
+I'm working on adding a spin lattice module to PennyLane that lets users define lattice geometries and build spin Hamiltonians on them. The idea is to have a class that takes the lattice's primitive vectors, basis site positions, number of unit cells per dimension, and boundary conditions, and then automatically computes all the lattice sites and their neighbor connections. A scalar boundary condition should apply to all dimensions, while a per-dimension list should be supported too.
+
+I also need a helper that generates standard named lattice geometries — chain, square, rectangle, honeycomb, triangle, and kagome — by name, handling case variations and surrounding whitespace gracefully, and raising a clear error if an unsupported name is given.
+
+On top of the lattice, I need a function that constructs a transverse-field Ising Hamiltonian, where coupling strengths can be given as a uniform number, a single-element array, or a full site-by-site coupling matrix. The transverse field should also be configurable. The Hamiltonian should consist of pairwise interaction terms for each lattice edge and single-site transverse field terms for each site.
+
+I'd like proper input validation throughout: errors for wrong-dimensional input arrays, non-integer or negative cell counts, duplicate edges added manually, edge tuples of wrong length, and coupling arrays of incorrect shape. All these should raise descriptive exceptions with clear messages.

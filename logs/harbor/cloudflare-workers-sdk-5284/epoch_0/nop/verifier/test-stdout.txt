@@ -1,0 +1,287 @@
+patching file fixtures/pages-functions-with-config-file-app/tests/index.test.ts
+patching file fixtures/pages-functions-with-config-file-app/tests/tsconfig.json
+patching file fixtures/pages-workerjs-with-config-file-app/tests/index.test.ts
+patching file fixtures/pages-workerjs-with-config-file-app/tests/tsconfig.json
+patching file packages/wrangler/e2e/pages-dev.test.ts
+patching file packages/wrangler/src/__tests__/config-validation-pages.test.ts
+patching file packages/wrangler/src/__tests__/pages/deploy.test.ts
+patching file packages/wrangler/src/__tests__/pages/dev.test.ts
+patching file packages/wrangler/src/__tests__/pages/pages.test.ts
+FAIL src/__tests__/config-validation-pages.test.ts
+  ● validatePagesConfig() › `main` field validation › should error if configuration contains both `pages_build_output_dir` and `main` config fields
+
+    expect(received).toMatchInlineSnapshot(snapshot)
+
+    Snapshot name: `validatePagesConfig() \`main\` field validation should error if configuration contains both \`pages_build_output_dir\` and \`main\` config fields 1`
+
+    - Snapshot  - 1
+    + Received  + 1
+
+      Running configuration file validation for Pages:
+        - Configuration file cannot contain both both "main" and "pages_build_output_dir" configuration keys.
+    -     Please use "main" if you are deploying a Worker, or "pages_build_output_dir" if you are deploying a Pages project.
+    +     			Please use "main" if you are deploying a Worker, or "pages_build_output_dir" if you are deploying a Pages project.
+        - Configuration file for Pages projects does not support "main"
+
+      13 | 			expect(diagnostics.hasWarnings()).toBeFalsy();
+      14 | 			expect(diagnostics.hasErrors()).toBeTruthy();
+    > 15 | 			expect(diagnostics.renderErrors()).toMatchInlineSnapshot(`
+         | 			                                   ^
+      16 | 			"Running configuration file validation for Pages:
+      17 | 			  - Configuration file cannot contain both both \\"main\\" and \\"pages_build_output_dir\\" configuration keys.
+      18 | 			    Please use \\"main\\" if you are deploying a Worker, or \\"pages_build_output_dir\\" if you are deploying a Pages project.
+
+      at Object.<anonymous> (src/__tests__/config-validation-pages.test.ts:15:39)
+
+  ● validatePagesConfig() › named environments validation › should error for any other named environments
+
+    expect(received).toMatchInlineSnapshot(snapshot)
+
+    Snapshot name: `validatePagesConfig() named environments validation should error for any other named environments 1`
+
+    - Snapshot  - 3
+    + Received  + 3
+
+      Running configuration file validation for Pages:
+    -   - Configuration file contains the following environment names that are not supported by Pages projects:
+    +   - Configuration file contains environment names that are not supported by Pages projects:
+    -     "unsupported-env-name-1","unsupported-env-name-2".
+    +     			unsupported-env-name-1,unsupported-env-name-2.
+    -     The supported named-environments for Pages are "preview" and "production".
+    +     			The supported named-environments for Pages are "preview" and "production".
+
+      59 | 			expect(diagnostics.hasWarnings()).toBeFalsy();
+      60 | 			expect(diagnostics.hasErrors()).toBeTruthy();
+    > 61 | 			expect(diagnostics.renderErrors()).toMatchInlineSnapshot(`
+         | 			                                   ^
+      62 | 			"Running configuration file validation for Pages:
+      63 | 			  - Configuration file contains the following environment names that are not supported by Pages projects:
+      64 | 			    \\"unsupported-env-name-1\\",\\"unsupported-env-name-2\\".
+
+      at Object.<anonymous> (src/__tests__/config-validation-pages.test.ts:61:39)
+
+  ● validatePagesConfig() › named environments validation › should error for any other named environments
+
+    expect(received).toMatchInlineSnapshot(snapshot)
+
+    Snapshot name: `validatePagesConfig() named environments validation should error for any other named environments 2`
+
+    - Snapshot  - 3
+    + Received  + 3
+
+      Running configuration file validation for Pages:
+    -   - Configuration file contains the following environment names that are not supported by Pages projects:
+    +   - Configuration file contains environment names that are not supported by Pages projects:
+    -     "unsupported-env-name".
+    +     			unsupported-env-name.
+    -     The supported named-environments for Pages are "preview" and "production".
+    +     			The supported named-environments for Pages are "preview" and "production".
+
+      72 | 			expect(diagnostics.hasWarnings()).toBeFalsy();
+      73 | 			expect(diagnostics.hasErrors()).toBeTruthy();
+    > 74 | 			expect(diagnostics.renderErrors()).toMatchInlineSnapshot(`
+         | 			                                   ^
+      75 | 			"Running configuration file validation for Pages:
+      76 | 			  - Configuration file contains the following environment names that are not supported by Pages projects:
+      77 | 			    \\"unsupported-env-name\\".
+
+      at Object.<anonymous> (src/__tests__/config-validation-pages.test.ts:74:39)
+
+ › 3 snapshots failed.
+FAIL src/__tests__/pages/dev.test.ts (6.34 s)
+  ● Console
+
+    console.warn
+      [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mSpecifying a `-- <command>` or `--proxy` is deprecated and will be removed in a future version of Wrangler.[0m
+      
+        Build your application to a directory and run the `wrangler pages dev <directory>` instead.
+        This results in a more faithful emulation of production behavior.
+
+       96 | 		// only send logs to the terminal if their level is at least the configured log-level
+       97 | 		if (LOGGER_LEVELS[this.loggerLevel] >= LOGGER_LEVELS[messageLevel]) {
+    >  98 | 			console[messageLevel](message);
+          | 			                    ^
+       99 | 		}
+      100 | 	}
+      101 |
+
+      at Logger.doLog (src/logger.ts:98:24)
+      at Logger.warn (src/logger.ts:71:38)
+      at Object.Handler (src/pages/dev.ts:294:10)
+      at ../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:9095
+      at j (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:5058)
+      at _.handleValidationAndGetResult (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:9064)
+      at _.applyMiddlewareAndGetResult (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:9706)
+      at _.runCommand (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:7333)
+      at te.[runYargsParserAndExecuteCommands] (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:58641)
+      at _.parseAndUpdateUsage (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:8204)
+      at _.applyBuilderUpdateUsageAndParse (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:7911)
+      at _.runCommand (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:7180)
+      at te.[runYargsParserAndExecuteCommands] (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:58641)
+      at te.parse (../../node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/index.cjs:1:40580)
+      at main (src/index.ts:759:32)
+      at runWrangler (src/__tests__/helpers/run-wrangler.ts:11:9)
+      at Object.<anonymous> (src/__tests__/pages/dev.test.ts:13:4)
+
+    console.log
+
+
+      at Logger.doLog (src/logger.ts:98:24)
+
+    console.error
+      [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mMust specify a directory of static assets to serve or a command to run or a proxy port.[0m
+
+       96 | 		// only send logs to the terminal if their level is at least the configured log-level
+       97 | 		if (LOGGER_LEVELS[this.loggerLevel] >= LOGGER_LEVELS[messageLevel]) {
+    >  98 | 			console[messageLevel](message);
+          | 			                    ^
+       99 | 		}
+      100 | 	}
+      101 |
+
+      at Logger.doLog (src/logger.ts:98:24)
+      at Logger.error (src/logger.ts:72:39)
+      at main (src/index.ts:821:11)
+      at runWrangler (src/__tests__/helpers/run-wrangler.ts:11:3)
+      at Object.<anonymous> (src/__tests__/pages/dev.test.ts:12:3)
+
+    console.log
+
+
+      at Logger.doLog (src/logger.ts:98:24)
+
+    console.error
+      [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mSpecify either a directory OR a proxy command, not both.[0m
+
+       96 | 		// only send logs to the terminal if their level is at least the configured log-level
+       97 | 		if (LOGGER_LEVELS[this.loggerLevel] >= LOGGER_LEVELS[messageLevel]) {
+    >  98 | 			console[messageLevel](message);
+          | 			                    ^
+       99 | 		}
+      100 | 	}
+      101 |
+
+      at Logger.doLog (src/logger.ts:98:24)
+      at Logger.error (src/logger.ts:72:39)
+      at main (src/index.ts:821:11)
+      at runWrangler (src/__tests__/helpers/run-wrangler.ts:11:3)
+      at Object.<anonymous> (src/__tests__/pages/dev.test.ts:20:3)
+
+    console.log
+
+
+      at Logger.doLog (src/logger.ts:98:24)
+
+    console.error
+      [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mPages does not support wrangler.toml[0m
+
+       96 | 		// only send logs to the terminal if their level is at least the configured log-level
+       97 | 		if (LOGGER_LEVELS[this.loggerLevel] >= LOGGER_LEVELS[messageLevel]) {
+    >  98 | 			console[messageLevel](message);
+          | 			                    ^
+       99 | 		}
+      100 | 	}
+      101 |
+
+      at Logger.doLog (src/logger.ts:98:24)
+      at Logger.error (src/logger.ts:72:39)
+      at main (src/index.ts:821:11)
+      at runWrangler (src/__tests__/helpers/run-wrangler.ts:11:3)
+      at Object.<anonymous> (src/__tests__/pages/dev.test.ts:28:3)
+
+  ● pages dev › should error if neither [<directory>] nor [--<command>] command line args were specififed
+
+    expect(received).rejects.toThrowErrorMatchingInlineSnapshot(snapshot)
+
+    Snapshot name: `pages dev should error if neither [<directory>] nor [--<command>] command line args were specififed 1`
+
+    Snapshot: "Must specify a directory of static assets to serve, or a command to run, or a proxy port, or configure `pages_build_output_dir` in `wrangler.toml`."
+    Received: "Must specify a directory of static assets to serve or a command to run or a proxy port."
+
+      12 | 		await expect(
+      13 | 			runWrangler("pages dev")
+    > 14 | 		).rejects.toThrowErrorMatchingInlineSnapshot(
+         | 		          ^
+      15 | 			`"Must specify a directory of static assets to serve, or a command to run, or a proxy port, or configure \`pages_build_output_dir\` in \`wrangler.toml\`."`
+      16 | 		);
+      17 | 	});
+
+      at Object.toThrowErrorMatchingInlineSnapshot (../../node_modules/.pnpm/expect@29.7.0/node_modules/expect/build/index.js:218:22)
+      at Object.<anonymous> (src/__tests__/pages/dev.test.ts:14:13)
+
+  ● pages dev › should error if the [--config] command line arg was specififed
+
+    expect(received).rejects.toThrowErrorMatchingInlineSnapshot(snapshot)
+
+    Snapshot name: `pages dev should error if the [--config] command line arg was specififed 1`
+
+    Snapshot: "Pages does not support custom paths for the `wrangler.toml` configuration file"
+    Received: "Pages does not support wrangler.toml"
+
+      28 | 		await expect(
+      29 | 			runWrangler("pages dev public --config=/path/to/wrangler.toml")
+    > 30 | 		).rejects.toThrowErrorMatchingInlineSnapshot(
+         | 		          ^
+      31 | 			`"Pages does not support custom paths for the \`wrangler.toml\` configuration file"`
+      32 | 		);
+      33 | 	});
+
+      at Object.toThrowErrorMatchingInlineSnapshot (../../node_modules/.pnpm/expect@29.7.0/node_modules/expect/build/index.js:218:22)
+      at Object.<anonymous> (src/__tests__/pages/dev.test.ts:30:13)
+
+ › 2 snapshots failed.
+FAIL src/__tests__/pages/deploy.test.ts (9.63 s)
+  ● deployment create › should throw an error if user attempts to use config with pages
+
+    expect(received).rejects.toThrowErrorMatchingInlineSnapshot(snapshot)
+
+    Snapshot name: `deployment create should throw an error if user attempts to use config with pages 1`
+
+    Snapshot: "Pages does not support custom paths for the `wrangler.toml` configuration file"
+    Received: "Pages does not support wrangler.toml"
+
+      1172 | 		await expect(
+      1173 | 			runWrangler("pages dev --config foo.toml")
+    > 1174 | 		).rejects.toThrowErrorMatchingInlineSnapshot(
+           | 		          ^
+      1175 | 			`"Pages does not support custom paths for the \`wrangler.toml\` configuration file"`
+      1176 | 		);
+      1177 | 		await expect(
+
+      at Object.toThrowErrorMatchingInlineSnapshot (../../node_modules/.pnpm/expect@29.7.0/node_modules/expect/build/index.js:218:22)
+      at Object.<anonymous> (src/__tests__/pages/deploy.test.ts:1174:13)
+
+ › 1 snapshot failed.
+/bin/sh: 1: lsof: not found
+/bin/sh: 1: lsof: not found
+FAIL src/__tests__/pages/pages.test.ts (16.436 s)
+  ● pages › beta message for subcommands › should display for pages:dev
+
+    expect(received).rejects.toThrowErrorMatchingInlineSnapshot(snapshot)
+
+    Snapshot name: `pages beta message for subcommands should display for pages:dev 1`
+
+    Snapshot: "Must specify a directory of static assets to serve, or a command to run, or a proxy port, or configure `pages_build_output_dir` in `wrangler.toml`."
+    Received: "Must specify a directory of static assets to serve or a command to run or a proxy port."
+
+      84 | 			await expect(
+      85 | 				runWrangler("pages dev")
+    > 86 | 			).rejects.toThrowErrorMatchingInlineSnapshot(
+         | 			          ^
+      87 | 				`"Must specify a directory of static assets to serve, or a command to run, or a proxy port, or configure \`pages_build_output_dir\` in \`wrangler.toml\`."`
+      88 | 			);
+      89 |
+
+      at Object.toThrowErrorMatchingInlineSnapshot (../../node_modules/.pnpm/expect@29.7.0/node_modules/expect/build/index.js:218:22)
+      at Object.<anonymous> (src/__tests__/pages/pages.test.ts:86:14)
+
+ › 1 snapshot failed.
+Snapshot Summary
+ › 7 snapshots failed from 4 test suites. Inspect your code changes or run `npm run npx -- -u` to update them.
+
+Test Suites: 4 failed, 4 total
+Tests:       6 failed, 44 passed, 50 total
+Snapshots:   7 failed, 65 passed, 72 total
+Time:        16.725 s
+Ran all test suites matching /src\/__tests__\/config-validation-pages.test.ts|src\/__tests__\/pages\/deploy.test.ts|src\/__tests__\/pages\/dev.test.ts|src\/__tests__\/pages\/pages.test.ts/i.
+reward=0 graded=50 found=0 failed=0 parsed=0 framework=jest exit_code=1

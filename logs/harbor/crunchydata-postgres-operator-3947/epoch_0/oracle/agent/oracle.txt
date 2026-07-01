@@ -1,0 +1,6 @@
+patching file .github/workflows/test.yaml
+patching file internal/controller/standalone_pgadmin/pod.go
+patching file internal/pgbackrest/config.go
+patching file internal/pgbouncer/config.go
+patching file internal/pgmonitor/exporter.go
+patching file internal/postgres/config.go

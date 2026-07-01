@@ -1,0 +1,23 @@
+{
+ "task": "mystenlabs-sui-4711",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden types/transactions.ts adds EffectsCert branch: \"} else if ('EffectsCert' in data) { return data.EffectsCert.effects.effects.status; }\" and json-rpc-provider.ts adds 'getCoinBalancesOwnedByAddress'; mock returns EFFECTS_CERT for executeTransaction when params.length>=5 so pre-golden getExecuti"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 50,
+  "shallow": true
+ }
+}

@@ -1,0 +1,168 @@
+diff --git a/kubectl-pg/cmd/list.go b/kubectl-pg/cmd/list.go
+index df827ffa..f4dea882 100644
+--- a/kubectl-pg/cmd/list.go
++++ b/kubectl-pg/cmd/list.go
+@@ -24,13 +24,14 @@ package cmd
+ 
+ import (
+ 	"fmt"
+-	"github.com/spf13/cobra"
+-	"github.com/zalando/postgres-operator/pkg/apis/acid.zalan.do/v1"
+-	PostgresqlLister "github.com/zalando/postgres-operator/pkg/generated/clientset/versioned/typed/acid.zalan.do/v1"
+-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+ 	"log"
+ 	"strconv"
+ 	"time"
++
++	"github.com/spf13/cobra"
++	v1 "github.com/zalando/postgres-operator/pkg/apis/acid.zalan.do/v1"
++	PostgresqlLister "github.com/zalando/postgres-operator/pkg/generated/clientset/versioned/typed/acid.zalan.do/v1"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+ )
+ 
+ const (
+@@ -95,8 +96,12 @@ func listAll(listPostgres *v1.PostgresqlList) {
+ 	template := "%-32s%-16s%-12s%-12s%-12s%-12s%-12s\n"
+ 	fmt.Printf(template, "NAME", "STATUS", "INSTANCES", "VERSION", "AGE", "VOLUME", "NAMESPACE")
+ 	for _, pgObjs := range listPostgres.Items {
+-		fmt.Printf(template, pgObjs.Name, pgObjs.Status.PostgresClusterStatus, strconv.Itoa(int(pgObjs.Spec.NumberOfInstances)),
+-			pgObjs.Spec.PgVersion, time.Since(pgObjs.CreationTimestamp.Time).Truncate(TrimCreateTimestamp), pgObjs.Spec.Size, pgObjs.Namespace)
++		fmt.Printf(template, pgObjs.Name,
++			pgObjs.Status.PostgresClusterStatus,
++			strconv.Itoa(int(pgObjs.Spec.NumberOfInstances)),
++			pgObjs.Spec.PostgresqlParam.PgVersion,
++			time.Since(pgObjs.CreationTimestamp.Time).Truncate(TrimCreateTimestamp),
++			pgObjs.Spec.Size, pgObjs.Namespace)
+ 	}
+ }
+ 
+@@ -104,8 +109,12 @@ func listWithNamespace(listPostgres *v1.PostgresqlList) {
+ 	template := "%-32s%-16s%-12s%-12s%-12s%-12s\n"
+ 	fmt.Printf(template, "NAME", "STATUS", "INSTANCES", "VERSION", "AGE", "VOLUME")
+ 	for _, pgObjs := range listPostgres.Items {
+-		fmt.Printf(template, pgObjs.Name, pgObjs.Status.PostgresClusterStatus, strconv.Itoa(int(pgObjs.Spec.NumberOfInstances)),
+-			pgObjs.Spec.PgVersion, time.Since(pgObjs.CreationTimestamp.Time).Truncate(TrimCreateTimestamp), pgObjs.Spec.Size)
++		fmt.Printf(template, pgObjs.Name,
++			pgObjs.Status.PostgresClusterStatus,
++			strconv.Itoa(int(pgObjs.Spec.NumberOfInstances)),
++			pgObjs.Spec.PostgresqlParam.PgVersion,
++			time.Since(pgObjs.CreationTimestamp.Time).Truncate(TrimCreateTimestamp),
++			pgObjs.Spec.Size)
+ 	}
+ }
+ 
+diff --git a/pkg/cluster/cluster.go b/pkg/cluster/cluster.go
+index 91e7a519..d740260d 100644
+--- a/pkg/cluster/cluster.go
++++ b/pkg/cluster/cluster.go
+@@ -554,10 +554,11 @@ func (c *Cluster) Update(oldSpec, newSpec *acidv1.Postgresql) error {
+ 		}
+ 	}()
+ 
+-	if oldSpec.Spec.PgVersion != newSpec.Spec.PgVersion { // PG versions comparison
+-		c.logger.Warningf("postgresql version change(%q -> %q) has no effect", oldSpec.Spec.PgVersion, newSpec.Spec.PgVersion)
++	if oldSpec.Spec.PostgresqlParam.PgVersion != newSpec.Spec.PostgresqlParam.PgVersion { // PG versions comparison
++		c.logger.Warningf("postgresql version change(%q -> %q) has no effect",
++			oldSpec.Spec.PostgresqlParam.PgVersion, newSpec.Spec.PostgresqlParam.PgVersion)
+ 		//we need that hack to generate statefulset with the old version
+-		newSpec.Spec.PgVersion = oldSpec.Spec.PgVersion
++		newSpec.Spec.PostgresqlParam.PgVersion = oldSpec.Spec.PostgresqlParam.PgVersion
+ 	}
+ 
+ 	// Service
+diff --git a/pkg/cluster/k8sres.go b/pkg/cluster/k8sres.go
+index e2251a67..fb53b0c6 100644
+--- a/pkg/cluster/k8sres.go
++++ b/pkg/cluster/k8sres.go
+@@ -26,7 +26,7 @@ import (
+ )
+ 
+ const (
+-	pgBinariesLocationTemplate       = "/usr/lib/postgresql/%s/bin"
++	pgBinariesLocationTemplate       = "/usr/lib/postgresql/%v/bin"
+ 	patroniPGBinariesParameterName   = "bin_dir"
+ 	patroniPGParametersParameterName = "parameters"
+ 	patroniPGHBAConfParameterName    = "pg_hba"
+@@ -716,6 +716,50 @@ func makeResources(cpuRequest, memoryRequest, cpuLimit, memoryLimit string) acid
+ 	}
+ }
+ 
++func extractPgVersionFromBinPath(binPath string, template string) (string, error) {
++	var pgVersion float32
++	_, err := fmt.Sscanf(binPath, template, &pgVersion)
++	if err != nil {
++		return "", err
++	}
++	return fmt.Sprintf("%v", pgVersion), nil
++}
++
++func (c *Cluster) getNewPgVersion(container v1.Container, newPgVersion string) (string, error) {
++	var (
++		spiloConfiguration spiloConfiguration
++		runningPgVersion   string
++		err                error
++	)
++
++	for _, env := range container.Env {
++		if env.Name != "SPILO_CONFIGURATION" {
++			continue
++		}
++		err = json.Unmarshal([]byte(env.Value), &spiloConfiguration)
++		if err != nil {
++			return newPgVersion, err
++		}
++	}
++
++	if len(spiloConfiguration.PgLocalConfiguration) > 0 {
++		currentBinPath := fmt.Sprintf("%v", spiloConfiguration.PgLocalConfiguration[patroniPGBinariesParameterName])
++		runningPgVersion, err = extractPgVersionFromBinPath(currentBinPath, pgBinariesLocationTemplate)
++		if err != nil {
++			return "", fmt.Errorf("could not extract Postgres version from %v in SPILO_CONFIGURATION", currentBinPath)
++		}
++	} else {
++		return "", fmt.Errorf("could not find %q setting in SPILO_CONFIGURATION", patroniPGBinariesParameterName)
++	}
++
++	if runningPgVersion != newPgVersion {
++		c.logger.Warningf("postgresql version change(%q -> %q) has no effect", runningPgVersion, newPgVersion)
++		newPgVersion = runningPgVersion
++	}
++
++	return newPgVersion, nil
++}
++
+ func (c *Cluster) generateStatefulSet(spec *acidv1.PostgresSpec) (*appsv1.StatefulSet, error) {
+ 
+ 	var (
+@@ -1624,7 +1668,7 @@ func (c *Cluster) generateLogicalBackupPodEnvVars() []v1.EnvVar {
+ 		// Postgres env vars
+ 		{
+ 			Name:  "PG_VERSION",
+-			Value: c.Spec.PgVersion,
++			Value: c.Spec.PostgresqlParam.PgVersion,
+ 		},
+ 		{
+ 			Name:  "PGPORT",
+diff --git a/pkg/cluster/sync.go b/pkg/cluster/sync.go
+index 053db9ff..b04ff863 100644
+--- a/pkg/cluster/sync.go
++++ b/pkg/cluster/sync.go
+@@ -285,6 +285,18 @@ func (c *Cluster) syncStatefulSet() error {
+ 		// statefulset is already there, make sure we use its definition in order to compare with the spec.
+ 		c.Statefulset = sset
+ 
++		// check if there is no Postgres version mismatch
++		for _, container := range c.Statefulset.Spec.Template.Spec.Containers {
++			if container.Name != "postgres" {
++				continue
++			}
++			pgVersion, err := c.getNewPgVersion(container, c.Spec.PostgresqlParam.PgVersion)
++			if err != nil {
++				return fmt.Errorf("could not parse current Postgres version: %v", err)
++			}
++			c.Spec.PostgresqlParam.PgVersion = pgVersion
++		}
++
+ 		desiredSS, err := c.generateStatefulSet(&c.Spec)
+ 		if err != nil {
+ 			return fmt.Errorf("could not generate statefulset: %v", err)

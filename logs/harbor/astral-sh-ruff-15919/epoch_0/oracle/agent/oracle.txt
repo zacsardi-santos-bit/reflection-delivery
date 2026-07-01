@@ -1,0 +1,3 @@
+patching file crates/ruff_linter/src/rules/pylint/rules/unnecessary_dunder_call.rs
+patching file crates/ruff_linter/src/rules/pyupgrade/rules/native_literals.rs
+patching file crates/ruff_linter/src/rules/pyupgrade/snapshots/ruff_linter__rules__pyupgrade__tests__UP018.py.snap

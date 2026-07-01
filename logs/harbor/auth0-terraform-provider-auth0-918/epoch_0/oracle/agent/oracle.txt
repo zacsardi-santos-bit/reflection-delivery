@@ -1,0 +1,14 @@
+patching file .gitignore
+patching file CHANGELOG.md
+patching file docs/resources/prompt_partials.md
+patching file examples/resources/auth0_prompt_partials/import.sh
+patching file examples/resources/auth0_prompt_partials/resource.tf
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 30 (offset 9 lines).
+Hunk #2 succeeded at 96 (offset 30 lines).
+Hunk #3 succeeded at 282 (offset 57 lines).
+patching file internal/auth0/prompt/expand.go
+patching file internal/auth0/prompt/flatten.go
+patching file internal/auth0/prompt/resource_partials.go
+patching file internal/provider/provider.go

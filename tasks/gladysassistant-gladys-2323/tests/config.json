@@ -1,0 +1,40 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/server && NODE_ENV=test ./node_modules/.bin/mocha ./test/utils/units.test.js --exit",
+  "test_files": [
+    "server/test/utils/units.test.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts kilometers to miles (US preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts miles to kilometers (metric preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts meters to feet (US preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts feet to meters (metric preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts mm to inches (US preference, <10)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts inches to mm (metric preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts cm to inches (US preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts km/h to mph (US preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts m/s to ft/s (US preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts km/kWh to mi/kWh (US preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts kWh/100km to kWh/100mi (US preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts Wh/km to Wh/mi (US preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts mph to km/h (metric preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts ft/s to m/s (metric preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts mi/kWh to km/kWh (metric preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts kWh/100mi to kWh/100km (metric preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit converts Wh/mi to Wh/km (metric preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit returns the original value if null with converts (metric preference)",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit returns the original value if unknown user system preference",
+    "/workspace/repo/server/test/utils/units.test.js::checkAndConvertUnit returns the original value if no unit conversion rules",
+    "/workspace/repo/server/test/utils/units.test.js::smartRound returns value as is for abs(value) < 1",
+    "/workspace/repo/server/test/utils/units.test.js::smartRound rounds to 2 decimals for 1 <= abs(value) < 10",
+    "/workspace/repo/server/test/utils/units.test.js::smartRound rounds to 1 decimal for 10 <= abs(value) < 1000",
+    "/workspace/repo/server/test/utils/units.test.js::smartRound rounds to integer for abs(value) >= 1000"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/server/test/utils/units.test.js::celsiusToFahrenheit should convert celsius to fahrenheit",
+    "/workspace/repo/server/test/utils/units.test.js::fahrenheitToCelsius should convert fahrenheit to celsius",
+    "/workspace/repo/server/test/utils/units.test.js::hslToRgb should convert hsl to rgb"
+  ]
+}

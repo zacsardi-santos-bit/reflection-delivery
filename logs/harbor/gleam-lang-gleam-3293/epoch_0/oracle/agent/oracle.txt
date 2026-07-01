@@ -1,0 +1,9 @@
+patching file CHANGELOG.md
+patching file compiler-core/src/bit_array.rs
+patching file compiler-core/src/javascript.rs
+patching file compiler-core/src/javascript/endianness.rs
+patching file compiler-core/src/javascript/expression.rs
+patching file compiler-core/src/javascript/pattern.rs
+patching file compiler-core/src/pretty.rs
+patching file compiler-core/templates/prelude.d.mts
+patching file compiler-core/templates/prelude.mjs

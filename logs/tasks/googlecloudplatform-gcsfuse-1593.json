@@ -1,0 +1,23 @@
+{
+ "task": "googlecloudplatform-gcsfuse-1593",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden splits stat/type TTL into two independent flags, adds reusable effective-TTL function, and rejects too-high config TTL (metadata_cache_config_ttl_too_high.yaml); F2P TestFlag/TestConfig/TestYamlParser"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

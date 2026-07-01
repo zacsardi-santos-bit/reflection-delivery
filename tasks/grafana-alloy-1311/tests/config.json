@@ -1,0 +1,33 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/service/cluster/discovery -count=1",
+  "test_files": [
+    "internal/service/cluster/discovery/peer_discovery_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/no_logger",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/no_tracer",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/both_join_and_discover_peers_given",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/static_host:port",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/multiple_static_host:ports_given",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/static_ip_address_with_port",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/static_ip_address_with_default_port",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/invalid_ip_address",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/multiple_ip_addresses",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/multiple_ip_addresses_with_some_invalid",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/no_DNS_records_found",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/SRV_DNS_record_lookup_error",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/single_SRV_record_found",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/multiple_SRV_records_found",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/multiple_hosts_and_multiple_SRV_records_found",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/one_SRV_record_lookup_fails,_another_succeeds",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/go_discovery_factory_error",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/go_discovery_AWS_successful_lookup",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/go_discovery_lookup_error",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery/go_discovery_unknown_provider",
+    "github.com/grafana/alloy/internal/service/cluster/discovery::TestPeerDiscovery"
+  ],
+  "PASS_TO_PASS": []
+}

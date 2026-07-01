@@ -1,0 +1,135 @@
+patching file naga/tests/in/bits.wgsl
+patching file naga/tests/out/glsl/bits.main.Compute.glsl
+patching file naga/tests/out/hlsl/bits.hlsl
+patching file naga/tests/out/msl/bits.msl
+patching file naga/tests/out/spv/bits.spvasm
+patching file naga/tests/out/wgsl/bits.wgsl
+patching file tests/tests/shader/data_builtins.rs
+patching file tests/tests/shader/mod.rs
+   Compiling serde v1.0.201
+   Compiling crossbeam-utils v0.8.19
+   Compiling memchr v2.7.2
+   Compiling autocfg v1.3.0
+   Compiling anstyle v1.0.7
+   Compiling regex-syntax v0.8.3
+   Compiling serde_json v1.0.117
+   Compiling libc v0.2.154
+   Compiling cfg-if v1.0.0
+   Compiling rayon-core v1.12.1
+   Compiling either v1.11.0
+   Compiling itoa v1.0.11
+   Compiling clap_lex v0.7.0
+   Compiling utf8parse v0.2.1
+   Compiling log v0.4.21
+   Compiling half v2.4.1
+   Compiling anyhow v1.0.83
+   Compiling plotters-backend v0.3.5
+   Compiling ciborium-io v0.2.2
+   Compiling ryu v1.0.18
+   Compiling clap_builder v4.5.2
+   Compiling itertools v0.10.5
+   Compiling anstyle-parse v0.2.4
+   Compiling ciborium-ll v0.2.2
+   Compiling aho-corasick v1.1.3
+   Compiling num-traits v0.2.19
+   Compiling plotters-svg v0.3.5
+   Compiling cast v0.3.0
+   Compiling anstyle-query v1.0.3
+   Compiling same-file v1.0.6
+   Compiling is_terminal_polyfill v1.70.0
+   Compiling colorchoice v1.0.1
+   Compiling nanoserde-derive v0.1.22
+   Compiling bitflags v1.3.2
+   Compiling walkdir v2.5.0
+   Compiling anstream v0.6.14
+   Compiling spirv v0.2.0+sdk-1.2.198 (https://github.com/gfx-rs/rspirv?rev=b969f175d5663258b4891e44b76c1544da9661ab#b969f175)
+   Compiling once_cell v1.19.0
+   Compiling oorandom v11.1.3
+   Compiling humantime v2.1.0
+   Compiling base64 v0.21.7
+   Compiling anes v0.1.6
+   Compiling diff v0.1.13
+   Compiling crossbeam-epoch v0.9.18
+   Compiling criterion-plot v0.5.0
+   Compiling regex-automata v0.4.6
+   Compiling rspirv v0.11.0+sdk-1.2.198 (https://github.com/gfx-rs/rspirv?rev=b969f175d5663258b4891e44b76c1544da9661ab#b969f175)
+   Compiling crossbeam-deque v0.8.5
+   Compiling clap v4.5.4
+   Compiling is-terminal v0.4.12
+   Compiling nanoserde v0.1.37
+   Compiling plotters v0.3.5
+   Compiling rayon v1.10.0
+   Compiling hlsl-snapshots v0.1.0 (/workspace/repo/naga/hlsl-snapshots)
+   Compiling bitflags v2.5.0
+   Compiling indexmap v2.2.6
+   Compiling ciborium v0.2.2
+   Compiling bincode v1.3.3
+   Compiling spirv v0.3.0+sdk-1.3.268.0
+   Compiling ron v0.8.1
+   Compiling regex v1.10.4
+   Compiling petgraph v0.6.5
+   Compiling env_filter v0.1.0
+   Compiling tinytemplate v1.2.1
+   Compiling env_logger v0.11.3
+   Compiling criterion v0.5.1
+   Compiling naga v0.20.0 (/workspace/repo/naga)
+    Finished test [unoptimized + debuginfo] target(s) in 24.91s
+────────────
+ Nextest run ID 89b6159d-6bc5-4950-ba26-3b840be19b36 with nextest profile: default
+    Starting 1 test across 2 binaries (156 tests skipped)
+        FAIL [   1.065s] (1/1) naga::naga-test snapshots::convert_wgsl
+  stdout ───
+
+    running 1 test
+    Processing 'array-in-ctor.wgsl'
+    Generating SPIR-V for "array-in-ctor.wgsl"
+    generating MSL
+    generating GLSL
+    generating HLSL
+    generating WGSL
+    Processing 'array-in-function-return-type.wgsl'
+    Generating SPIR-V for "array-in-function-return-type.wgsl"
+    generating MSL
+    generating GLSL
+    generating WGSL
+    Processing 'empty.wgsl'
+    Generating SPIR-V for "empty.wgsl"
+    generating MSL
+    generating GLSL
+    generating HLSL
+    generating WGSL
+    Processing 'quad.wgsl'
+    Generating SPIR-V for "quad.wgsl"
+    generating MSL
+    generating GLSL
+    generating GLSL
+    generating GLSL
+    generating HLSL
+    generating WGSL
+    Processing 'bits.wgsl'
+    test snapshots::convert_wgsl ... FAILED
+
+    failures:
+
+    failures:
+        snapshots::convert_wgsl
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 89 filtered out; finished in 1.05s
+
+  stderr ───
+    thread 'snapshots::convert_wgsl' panicked at naga/tests/snapshots.rs:894:23:
+    error: no definition in scope for identifier: 'pack4xI8'
+       ┌─ /workspace/repo/naga/tests/in/bits.wgsl:18:9
+       │
+    18 │     u = pack4xI8(i4);
+       │         ^^^^^^^^ unknown identifier
+
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   1.067s] 1 test run: 0 passed, 1 failed, 156 skipped
+        FAIL [   1.065s] (1/1) naga::naga-test snapshots::convert_wgsl
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

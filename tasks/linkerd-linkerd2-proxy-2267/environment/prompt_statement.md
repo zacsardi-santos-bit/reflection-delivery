@@ -1,0 +1,7 @@
+I'm working on the inbound proxy policy system and I've noticed that there are two separate address types being used to represent what is essentially the same thing: the address of the inbound server. The policy enforcement code uses one address type for lookups and another for the connection metadata and authorization results, which requires unnecessary conversions throughout the codebase. I'd like to consolidate these so that the original destination address type is used consistently everywhere in the inbound policy path — from the policy lookup interface down to the authorization permit and connection metadata.
+
+Along with this, the policy lookup interface currently returns a future even though the policy state is already available synchronously in memory. It would be cleaner to make this synchronous.
+
+On the testing side, our integration test harness currently requires setting up and running a full policy controller service for every test, even tests that don't need dynamic policy discovery at all. I'd like to be able to configure specific inbound ports to skip protocol detection directly on the proxy builder, without needing to wire up a policy controller. This would simplify tests that just want to mark a port as opaque.
+
+Finally, I'd like to verify that when an inbound server is not reachable (connection times out), the proxy correctly returns a "bad gateway" response to the client.

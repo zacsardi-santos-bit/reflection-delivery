@@ -1,0 +1,3 @@
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/CHANGELOG.md
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/src/opentelemetry/instrumentation/vertexai/events.py
+patching file instrumentation-genai/opentelemetry-instrumentation-vertexai/src/opentelemetry/instrumentation/vertexai/utils.py

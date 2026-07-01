@@ -1,0 +1,23 @@
+{
+ "task": "azure-azure-dev-3269",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `type ContainerImage struct { Registry ... Repository ... Tag ...}` + `func ParseContainerImage` + `Image string yaml:\"image\"`; F2P=209 Go subtests (ParseContainerImage, Deploy pull/tag/push, ConfiguredImage) via `go test -json`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

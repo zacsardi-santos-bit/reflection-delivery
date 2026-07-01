@@ -1,0 +1,12 @@
+patching file apps/oxlint/fixtures/report_unused_directives/.oxlintrc.json
+patching file apps/oxlint/fixtures/report_unused_directives/test.js
+patching file apps/oxlint/src/command/lint.rs
+patching file apps/oxlint/src/command/mod.rs
+patching file apps/oxlint/src/lint.rs
+patching file 'apps/oxlint/src/snapshots/fixtures__report_unused_directives_-c .oxlintrc.json --report-unused-disable-directives test.js@oxlint.snap'
+patching file crates/oxc_linter/src/context/host.rs
+patching file crates/oxc_linter/src/disable_directives.rs
+patching file crates/oxc_linter/src/lib.rs
+patching file crates/oxc_linter/src/options/mod.rs
+patching file tasks/website/src/linter/snapshots/cli.snap
+patching file tasks/website/src/linter/snapshots/cli_terminal.snap

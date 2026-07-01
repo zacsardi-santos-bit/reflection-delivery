@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./test -run TestOCSPGatewayReload -count=1 -timeout 120s",
+  "test_files": [
+    "test/ocsp_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/nats-io/nats-server/v2/test::TestOCSPGatewayReload"
+  ],
+  "PASS_TO_PASS": []
+}

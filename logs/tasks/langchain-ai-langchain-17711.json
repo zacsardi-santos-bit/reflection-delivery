@@ -1,0 +1,23 @@
+{
+ "task": "langchain-ai-langchain-17711",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds document_compressors/llmlingua_filter.py LLMLinguaCompressor(BaseDocumentCompressor) with _format_context, extract_ref_id_tuples_and_clean, compress_documents (returns [] on empty, preserves metadata via Document(..., metadata=documents[index].metadata)); tests mock llmlingua.PromptCompr"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 62,
+  "shallow": true
+ }
+}

@@ -1,0 +1,36 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run src/helpers/activitypub/activity.unit.test.ts src/publishing/content.unit.test.ts src/publishing/service.unit.test.ts",
+  "test_files": [
+    "src/helpers/activitypub/activity.unit.test.ts",
+    "src/publishing/content.unit.test.ts",
+    "src/publishing/service.unit.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/publishing/content.unit.test.ts::ContentPreparer prepare Removing member content should remove member content",
+    "/workspace/repo/src/publishing/content.unit.test.ts::ContentPreparer prepare Removing member content should not remove member by default",
+    "/workspace/repo/src/publishing/content.unit.test.ts::ContentPreparer prepare Escaping HTML should escape HTML",
+    "/workspace/repo/src/publishing/content.unit.test.ts::ContentPreparer prepare Escaping HTML should not escape HTML by default",
+    "/workspace/repo/src/publishing/content.unit.test.ts::ContentPreparer prepare Converting line breaks should convert line breaks to HTML",
+    "/workspace/repo/src/publishing/content.unit.test.ts::ContentPreparer prepare Converting line breaks should convert line breaks to HTML with multiple line breaks",
+    "/workspace/repo/src/publishing/content.unit.test.ts::ContentPreparer prepare Converting line breaks should not convert line breaks by default",
+    "/workspace/repo/src/publishing/content.unit.test.ts::ContentPreparer prepare Wrapping in paragraph should wrap in paragraph",
+    "/workspace/repo/src/publishing/content.unit.test.ts::ContentPreparer prepare Wrapping in paragraph should not wrap in paragraph by default",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should throw an error if the actor can not be resolved",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should store the created ActivityPub objects",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should add the create activity to the outbox",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should send the create activity to the followers of the actor",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should return a publish result",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should ensure that member content is not included in the article content",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should not publish a post if there is no public content",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishPost should not publish a post if there is no public content prior to the member content marker",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishNote should throw an error if the actor can not be resolved",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishNote should store the created ActivityPub objects",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishNote should add the create activity to the outbox",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishNote should send the create activity to the followers of the actor",
+    "/workspace/repo/src/publishing/service.unit.test.ts::FedifyPublishingService publishNote should return a publish result"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,45 @@
+patching file common/instrumentationdevice_test.go
+patching file tests/e2e/workload-lifecycle/01-assert-apps-installed.yaml
+patching file tests/e2e/workload-lifecycle/01-assert-runtime-detected.yaml
+patching file tests/e2e/workload-lifecycle/01-assert-workloads.yaml
+patching file tests/e2e/workload-lifecycle/01-generate-traffic.yaml
+patching file tests/e2e/workload-lifecycle/01-install-test-apps.yaml
+patching file tests/e2e/workload-lifecycle/02-assert-workload-update.yaml
+patching file tests/e2e/workload-lifecycle/02-update-workload-manifests.yaml
+patching file tests/e2e/workload-lifecycle/03-wait-for-trace.yaml
+patching file tests/e2e/workload-lifecycle/chainsaw-test.yaml
+patching file tests/e2e/workload-lifecycle/services/dotnet-musl-server/Dockerfile
+patching file tests/e2e/workload-lifecycle/services/dotnet-musl-server/Program.cs
+patching file tests/e2e/workload-lifecycle/services/dotnet-musl-server/dotnet-musl-server.csproj
+patching file tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/dotnet-musl-server.csproj.nuget.dgspec.json
+patching file tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/dotnet-musl-server.csproj.nuget.g.props
+patching file tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/dotnet-musl-server.csproj.nuget.g.targets
+patching file tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/project.assets.json
+patching file tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/project.nuget.cache
+# github.com/odigos-io/odigos/common [github.com/odigos-io/odigos/common.test]
+./instrumentationdevice_test.go:13:61: too many arguments in call to InstrumentationPluginName
+	have (ProgrammingLanguage, OtelSdk, nil)
+	want (ProgrammingLanguage, OtelSdk)
+./instrumentationdevice_test.go:26:10: undefined: Musl
+./instrumentationdevice_test.go:27:61: too many arguments in call to InstrumentationPluginName
+	have (ProgrammingLanguage, OtelSdk, unknown type)
+	want (ProgrammingLanguage, OtelSdk)
+./instrumentationdevice_test.go:40:10: undefined: Glibc
+./instrumentationdevice_test.go:41:61: too many arguments in call to InstrumentationPluginName
+	have (ProgrammingLanguage, OtelSdk, unknown type)
+	want (ProgrammingLanguage, OtelSdk)
+./instrumentationdevice_test.go:54:61: too many arguments in call to InstrumentationDeviceName
+	have (ProgrammingLanguage, OtelSdk, nil)
+	want (ProgrammingLanguage, OtelSdk)
+./instrumentationdevice_test.go:67:10: undefined: Glibc
+./instrumentationdevice_test.go:68:61: too many arguments in call to InstrumentationDeviceName
+	have (ProgrammingLanguage, OtelSdk, unknown type)
+	want (ProgrammingLanguage, OtelSdk)
+./instrumentationdevice_test.go:81:57: too many arguments in call to InstrumentationDeviceName
+	have (ProgrammingLanguage, OtelSdk, nil)
+	want (ProgrammingLanguage, OtelSdk)
+./instrumentationdevice_test.go:102:10: undefined: Musl
+./instrumentationdevice_test.go:102:10: too many errors
+FAIL	github.com/odigos-io/odigos/common [build failed]
+FAIL
+reward=0 graded=14 found=14 failed=14 parsed=1 framework=go exit_code=1

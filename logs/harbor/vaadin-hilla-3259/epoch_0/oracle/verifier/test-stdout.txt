@@ -1,0 +1,16 @@
+patching file packages/ts/file-router/test/runtime/createMenuItems.spec.ts
+patching file packages/ts/file-router/test/utils.tsx
+[?25l
+ RUN  v3.0.4 /workspace/repo/packages/ts/file-router
+
+ ✓ test/runtime/createMenuItems.spec.ts > @vaadin/hilla-file-router > createMenuItems > should generate a set of menu items
+ ✓ test/runtime/createMenuItems.spec.ts > @vaadin/hilla-file-router > createMenuItems > should sort menu items by order then by natural string comparison based on path
+ ✓ test/runtime/createMenuItems.spec.ts > @vaadin/hilla-file-router > createMenuItems > should exclude items with { "menu": { "exclude": true } } but leave children in place
+ ✓ test/runtime/createMenuItems.spec.ts > @vaadin/hilla-file-router > createMenuItems > should exclude items with variable path segments and their children
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  15:28:49
+   Duration  856ms (transform 169ms, setup 0ms, collect 288ms, tests 5ms, environment 0ms, prepare 188ms)
+
+[?25hreward=1 graded=4 found=0 failed=0 parsed=0 framework=vitest exit_code=0

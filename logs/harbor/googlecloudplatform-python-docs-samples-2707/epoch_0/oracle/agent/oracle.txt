@@ -1,0 +1,6 @@
+patching file bigtable/snippets/filters/filter_snippets.py
+patching file bigtable/snippets/filters/requirements.txt
+patching file bigtable/snippets/filters/snapshots/__init__.py
+patching file bigtable/snippets/reads/read_snippets.py
+patching file bigtable/snippets/reads/requirements.txt
+patching file bigtable/snippets/reads/snapshots/__init__.py

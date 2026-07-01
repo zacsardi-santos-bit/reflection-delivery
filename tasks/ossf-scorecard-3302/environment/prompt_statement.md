@@ -1,0 +1,7 @@
+I'm working on the scorecard project and need to add two new probes for evaluating code review quality on a repository's default branch.
+
+The first probe should check whether all recent human-authored changesets have been formally approved by at least one person who is not the author. Reviews where the reviewer is the same person as the author should not count. Only reviews with an explicit approval state qualify. If no human-authored changesets are found (for example, everything was authored by bots), the probe should report that the result is not available rather than passing or failing. Similarly, if author or reviewer identity data is missing, it should report unavailability. If any human-authored changeset lacks a qualifying approval, the probe should report a negative outcome; if all have at least one, it should report a positive outcome.
+
+The second probe is similar but less strict — it should check whether all recent human-authored changesets were reviewed by at least one person other than the author, regardless of whether they gave a formal approval. The same rules apply for bot authors (skip them), missing author data (not available), and missing reviewer data (not available). Duplicate reviews from the same reviewer should count as only one unique reviewer. If even a single changeset had no non-author reviewer, report a negative outcome; if all changesets had at least one unique non-author reviewer, report positive.
+
+Both probes should return an error (not a finding) when there are no changesets at all to evaluate.

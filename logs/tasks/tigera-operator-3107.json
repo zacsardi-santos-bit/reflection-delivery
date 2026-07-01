@@ -1,0 +1,23 @@
+{
+ "task": "tigera-operator-3107",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds prometheusagents(+finalizers/status), scrapeconfigs, alertmanagers/status, thanosrulers/status to clusterrole and storageclasses get + reorders services/endpoints verbs; test asserts Rules HaveLen(10) with those exact resources/verbs"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

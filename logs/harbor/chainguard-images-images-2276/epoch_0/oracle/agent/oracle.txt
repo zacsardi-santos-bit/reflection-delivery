@@ -1,0 +1,6 @@
+patching file images/grafana-agent-operator/README.md
+patching file images/grafana-agent-operator/config/main.tf
+patching file images/grafana-agent-operator/config/template.apko.yaml
+patching file images/grafana-agent-operator/main.tf
+patching file images/grafana-agent-operator/metadata.yaml
+patching file main.tf

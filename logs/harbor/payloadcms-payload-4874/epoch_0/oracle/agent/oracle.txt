@@ -1,0 +1,7 @@
+patching file packages/db-mongodb/src/migrateFresh.ts
+patching file packages/db-postgres/src/createMigration.ts
+patching file packages/db-postgres/src/migrateFresh.ts
+patching file packages/db-postgres/src/types.ts
+patching file packages/payload/src/bin/migrate.ts
+patching file packages/payload/src/database/createDatabaseAdapter.ts
+patching file packages/payload/src/database/types.ts

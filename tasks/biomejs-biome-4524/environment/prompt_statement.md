@@ -1,0 +1,5 @@
+I'd like to add a new lint rule to Biome's nursery category that enforces correct usage of the built-in string-to-integer parsing function. Specifically, I need the rule to flag three distinct situations: when the function is called without a radix argument at all, when the radix argument is present but invalid (wrong type, out of valid numeric range, or using an unsupported numeric literal format), and when the function is called with no arguments whatsoever.
+
+For the missing-radix case, the rule should also offer an automatic (but unsafe) fix that inserts 10 as the radix. For the invalid-radix and no-argument cases, no automatic fix should be provided.
+
+Valid calls — where an in-range integer radix is supplied, including using numeric separator syntax — should not produce any warning. Calls to similar but unrelated parsing functions should be ignored entirely. The rule should also handle the form of the function accessed as a method on the built-in number object, not just the global standalone form.

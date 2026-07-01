@@ -1,0 +1,34 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/api && go test -json ./filesys -count=1",
+  "test_files": [
+    "api/filesys/fsinmemory_test.go",
+    "api/filesys/util_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "sigs.k8s.io/kustomize/api/filesys::TestJoin",
+    "sigs.k8s.io/kustomize/api/filesys::TestHasPrefix_Slash",
+    "sigs.k8s.io/kustomize/api/filesys::TestHasPrefix_SlashFoo",
+    "sigs.k8s.io/kustomize/api/filesys::TestHasPrefix_SlashFooBar",
+    "sigs.k8s.io/kustomize/api/filesys::TestNewTempConfirmDir",
+    "sigs.k8s.io/kustomize/api/filesys::TestOldExists",
+    "sigs.k8s.io/kustomize/api/filesys::TestIsDir",
+    "sigs.k8s.io/kustomize/api/filesys::TestRemoveAll",
+    "sigs.k8s.io/kustomize/api/filesys::TestIsDirDeeper",
+    "sigs.k8s.io/kustomize/api/filesys::TestCreate",
+    "sigs.k8s.io/kustomize/api/filesys::TestReadFile",
+    "sigs.k8s.io/kustomize/api/filesys::TestWriteFile",
+    "sigs.k8s.io/kustomize/api/filesys::TestOldGlob",
+    "sigs.k8s.io/kustomize/api/filesys::TestCleanedAbs_1",
+    "sigs.k8s.io/kustomize/api/filesys::TestCleanedAbs_2",
+    "sigs.k8s.io/kustomize/api/filesys::TestCleanedAbs_3",
+    "sigs.k8s.io/kustomize/api/filesys::TestCleanedAbs_4",
+    "sigs.k8s.io/kustomize/api/filesys::TestReadFilesRealFS",
+    "sigs.k8s.io/kustomize/api/filesys::TestFilePathMatch",
+    "sigs.k8s.io/kustomize/api/filesys::TestFilePathSplit",
+    "sigs.k8s.io/kustomize/api/filesys::TestStripTrailingSeps"
+  ],
+  "PASS_TO_PASS": []
+}

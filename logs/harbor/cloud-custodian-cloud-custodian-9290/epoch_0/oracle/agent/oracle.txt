@@ -1,0 +1,97 @@
+patching file c7n/query.py
+patching file c7n/reports/csvout.py
+patching file c7n/resources/appmesh.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file c7n/resources/appmesh.py.rej
+patching file c7n/utils.py
+patching file c7n/query.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file c7n/query.py.rej
+patching file c7n/reports/csvout.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file c7n/reports/csvout.py.rej
+patching file c7n/resources/appmesh.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file c7n/resources/appmesh.py.rej
+patching file c7n/utils.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file c7n/utils.py.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/c7n/query.py b/c7n/query.py
+|index be0f00cc4..a9801651f 100644
+|--- a/c7n/query.py
+|+++ b/c7n/query.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 210
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/c7n/reports/csvout.py b/c7n/reports/csvout.py
+|index 7a3d65993..1f5f9f562 100644
+|--- a/c7n/reports/csvout.py
+|+++ b/c7n/reports/csvout.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 248
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/c7n/resources/appmesh.py b/c7n/resources/appmesh.py
+|index 0f6e9b16a..bb3b1f65e 100644
+|--- a/c7n/resources/appmesh.py
+|+++ b/c7n/resources/appmesh.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 593
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/c7n/utils.py b/c7n/utils.py
+|index f64bc7529..0033edbde 100644
+|--- a/c7n/utils.py
+|+++ b/c7n/utils.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file c7n/query.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file c7n/query.py.rej
+patching file c7n/reports/csvout.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file c7n/reports/csvout.py.rej
+patching file c7n/resources/appmesh.py
+patching file c7n/utils.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file c7n/utils.py.rej
+ERROR: golden patch failed to apply by all strategies

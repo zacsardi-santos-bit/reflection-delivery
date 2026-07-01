@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-tokio-313",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds \"pub fn has_polled(&self) -> bool\" to Turn and polls pending futures in the same turn via has_pending_futures(); F2P includes turn_has_polled, turn_fair, tasks_are_scheduled_fairly"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

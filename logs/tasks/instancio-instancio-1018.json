@@ -1,0 +1,23 @@
+{
+ "task": "instancio-instancio-1018",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'private String generateUnicodeString(...)', 'getCodePoint' using 'UnicodeBlocks.getInstance().getRange(block)', 'MAX_CODE_POINT = 0x3FFFF', StringType.UNICODE enum, Keys.STRING_TYPE; tests assert hasCodePointCount/hasUnicodeBlockCount"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

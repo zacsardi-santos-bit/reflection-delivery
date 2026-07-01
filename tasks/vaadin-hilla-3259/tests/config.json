@@ -1,0 +1,18 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/ts/file-router && npx vitest run --reporter=verbose test/runtime/createMenuItems.spec.ts",
+  "test_files": [
+    "packages/ts/file-router/test/runtime/createMenuItems.spec.ts",
+    "packages/ts/file-router/test/utils.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/ts/file-router/test/runtime/createMenuItems.spec.ts::@vaadin/hilla-file-router createMenuItems should exclude items with variable path segments and their children"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/ts/file-router/test/runtime/createMenuItems.spec.ts::@vaadin/hilla-file-router createMenuItems should generate a set of menu items",
+    "/workspace/repo/packages/ts/file-router/test/runtime/createMenuItems.spec.ts::@vaadin/hilla-file-router createMenuItems should sort menu items by order then by natural string comparison based on path",
+    "/workspace/repo/packages/ts/file-router/test/runtime/createMenuItems.spec.ts::@vaadin/hilla-file-router createMenuItems should exclude items with { \"menu\": { \"exclude\": true } } but leave children in place"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -E 'test(~structs)' --no-fail-fast",
+  "test_files": [
+    "tests/all/main.rs",
+    "tests/all/structs.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "wasmtime-cli::all structs::anyref_as_struct",
+    "wasmtime-cli::all structs::struct_field_out_of_bounds",
+    "wasmtime-cli::all structs::struct_field_on_unrooted",
+    "wasmtime-cli::all structs::struct_field_simple",
+    "wasmtime-cli::all structs::struct_fields_empty",
+    "wasmtime-cli::all structs::struct_new_cross_store_pre",
+    "wasmtime-cli::all structs::struct_fields_non_empty",
+    "wasmtime-cli::all structs::struct_fields_unrooted",
+    "wasmtime-cli::all structs::struct_new_cross_store_field",
+    "wasmtime-cli::all structs::struct_new_unrooted_field",
+    "wasmtime-cli::all structs::struct_new_empty",
+    "wasmtime-cli::all structs::struct_new_with_fields",
+    "wasmtime-cli::all structs::struct_set_field_cross_store_value",
+    "wasmtime-cli::all structs::instantiate_with_struct_global",
+    "wasmtime-cli::all structs::struct_set_field_on_unrooted",
+    "wasmtime-cli::all structs::struct_set_field_immutable",
+    "wasmtime-cli::all structs::host_sets_struct_global",
+    "wasmtime-cli::all structs::host_sets_struct_in_table",
+    "wasmtime-cli::all structs::passing_structs_through_wasm_with_typed_calls",
+    "wasmtime-cli::all structs::passing_structs_through_wasm_with_untyped_calls",
+    "wasmtime-cli::all structs::struct_set_field_out_of_bounds",
+    "wasmtime-cli::all structs::struct_set_field_simple",
+    "wasmtime-cli::all structs::struct_set_field_with_unrooted",
+    "wasmtime-cli::all structs::struct_set_field_wrong_type",
+    "wasmtime-cli::all structs::struct_ty",
+    "wasmtime-cli::all structs::struct_ty_unrooted",
+    "wasmtime-cli::all structs::wasm_sets_struct_in_table",
+    "wasmtime-cli::all structs::wasm_sets_struct_global"
+  ],
+  "PASS_TO_PASS": []
+}

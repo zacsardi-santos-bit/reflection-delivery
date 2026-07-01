@@ -1,0 +1,135 @@
+patching file packages/import/tests/schema/fixtures/multiple-levels-master-schema/level1.graphql
+patching file packages/import/tests/schema/fixtures/multiple-levels-master-schema/level2.graphql
+patching file packages/import/tests/schema/fixtures/multiple-levels-master-schema/level3.graphql
+patching file packages/import/tests/schema/fixtures/multiple-levels-master-schema/level4.graphql
+patching file packages/import/tests/schema/import-schema.spec.ts
+Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+FAIL packages/import/tests/schema/import-schema.spec.ts
+  importSchema
+    ✓ parseImportLine: parse single import (2 ms)
+    ✓ parseImportLine: optional semicolon
+    ✓ parseImportLine: invalid (39 ms)
+    ✓ parseImportLine: invalid 2 (1 ms)
+    ✓ parseImportLine: invalid 3
+    ✓ parseImportLine: invalid 4 (1 ms)
+    ✓ parseImportLine: parse multi import
+    ✓ parseImportLine: parse multi import (weird spacing) (1 ms)
+    ✓ parseImportLine: different path (1 ms)
+    ✓ parseImportLine: module in node_modules
+    ✓ parseImportLine: specific field (1 ms)
+    ✓ parseImportLine: multiple specific fields
+    ✓ parseImportLine: default import (1 ms)
+    ✓ parseSDL: non-import comment (1 ms)
+    ✓ parse: multi line import
+    ✓ Module in node_modules (12 ms)
+    ✓ importSchema: imports only (3 ms)
+    ✓ importSchema: import .gql extension (1 ms)
+    ✓ importSchema: import duplicate (3 ms)
+    ✓ importSchema: import nested (3 ms)
+    ✓ importSchema: field types (3 ms)
+    ✓ importSchema: enums (3 ms)
+    ✓ importSchema: import all (8 ms)
+    ✓ importSchema: import all from objects (3 ms)
+    ✓ importSchema: single object schema (1 ms)
+    ✓ importSchema: import all mix 'n match (3 ms)
+    ✓ importSchema: import all mix 'n match 2 (3 ms)
+    ✓ importSchema: import all - include Query/Mutation/Subscription type (3 ms)
+    ✓ importSchema: scalar (1 ms)
+    ✓ importSchema: directive (7 ms)
+    ✓ importSchema: key directive (2 ms)
+    ✓ importSchema: external directive (2 ms)
+    ✓ importSchema: requires directive (2 ms)
+    ✓ importSchema: interfaces (3 ms)
+    ✓ importSchema: interfaces-many (3 ms)
+    ✓ importSchema: interfaces-implements (1 ms)
+    ✓ importSchema: interfaces-implements-many (2 ms)
+    ✓ importSchema: input types (3 ms)
+    ✓ importSchema: complex test (149 ms)
+    ✓ circular imports (9 ms)
+    ✓ related types (2 ms)
+    ✓ relative paths (4 ms)
+    ✓ root field imports (2 ms)
+    ✓ extend root field (2 ms)
+    ✓ extend root field imports (2 ms)
+    ✓ merged root field imports (7 ms)
+    ✓ global schema modules (2 ms)
+    ✓ missing type on type (1 ms)
+    ✓ missing type on interface (1 ms)
+    ✓ missing type on input type (1 ms)
+    ✓ missing interface type (1 ms)
+    ✓ missing union type
+    ✓ missing type on input type
+    ✓ missing type on directive (1 ms)
+    ✓ import with collision (2 ms)
+    ✓ merged custom root fields imports (3 ms)
+    ✓ respect schema definition (2 ms)
+    ✓ import schema with shadowed type (8 ms)
+    ✓ import specific types (3 ms)
+    ✓ imports missing named imports for file imported multiple time without duplicates (5 ms)
+    ✓ imports multiple imports at least 3 levels deep with transitive dependencies (4 ms)
+    ✕ imports dependencies at least 3 levels deep with transitive dependencies while using master schemata (2 ms)
+    ✓ imports multi-level types without direct references (2 ms)
+    ○ skipped importSchema: multiple key directive
+
+  ● importSchema › imports dependencies at least 3 levels deep with transitive dependencies while using master schemata
+
+    expected
+           type PaginatedWrapper {
+      user: User
+    }
+
+    type Query {
+      pagination: PaginatedWrapper
+    }
+
+           to be a string containing (ignoring indents)
+           
+          type Account {
+            id: ID
+            cart: Cart
+          }
+
+          type Cart {
+            products: Products
+            total: Int
+          }
+
+          type PaginatedWrapper {
+            user: User
+          }
+
+          type Product {
+            price: Int
+          }
+
+          type Products {
+            items: [Product]
+          }
+
+          type Query {
+            pagination: PaginatedWrapper
+          }
+
+          type User {
+            account: Account
+          }
+
+      982 |       }
+      983 |     `;
+    > 984 |     expect(importSchema('fixtures/multiple-levels-master-schema/level1.graphql')).toBeSimilarGqlDoc(expectedSDL);
+          |                                                                                   ^
+      985 |   });
+      986 |
+      987 |   test('imports multi-level types without direct references', () => {
+
+          
+      at Object.<anonymous> (packages/import/tests/schema/import-schema.spec.ts:984:83)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 skipped, 62 passed, 64 total
+Snapshots:   0 total
+Time:        2.772 s
+Ran all test suites matching /packages\/import\/tests\/schema\/import-schema.spec.ts/i.
+{"numFailedTestSuites":1,"numFailedTests":1,"numPassedTestSuites":0,"numPassedTests":62,"numPendingTestSuites":0,"numPendingTests":1,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":64,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746611518,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: parse single import","location":null,"status":"passed","title":"parseImportLine: parse single import"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: optional semicolon","location":null,"status":"passed","title":"parseImportLine: optional semicolon"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: invalid","location":null,"status":"passed","title":"parseImportLine: invalid"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: invalid 2","location":null,"status":"passed","title":"parseImportLine: invalid 2"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: invalid 3","location":null,"status":"passed","title":"parseImportLine: invalid 3"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: invalid 4","location":null,"status":"passed","title":"parseImportLine: invalid 4"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: parse multi import","location":null,"status":"passed","title":"parseImportLine: parse multi import"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: parse multi import (weird spacing)","location":null,"status":"passed","title":"parseImportLine: parse multi import (weird spacing)"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: different path","location":null,"status":"passed","title":"parseImportLine: different path"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: module in node_modules","location":null,"status":"passed","title":"parseImportLine: module in node_modules"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: specific field","location":null,"status":"passed","title":"parseImportLine: specific field"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: multiple specific fields","location":null,"status":"passed","title":"parseImportLine: multiple specific fields"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseImportLine: default import","location":null,"status":"passed","title":"parseImportLine: default import"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parseSDL: non-import comment","location":null,"status":"passed","title":"parseSDL: non-import comment"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema parse: multi line import","location":null,"status":"passed","title":"parse: multi line import"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema Module in node_modules","location":null,"status":"passed","title":"Module in node_modules"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: imports only","location":null,"status":"passed","title":"importSchema: imports only"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: import .gql extension","location":null,"status":"passed","title":"importSchema: import .gql extension"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: import duplicate","location":null,"status":"passed","title":"importSchema: import duplicate"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: import nested","location":null,"status":"passed","title":"importSchema: import nested"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: field types","location":null,"status":"passed","title":"importSchema: field types"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: enums","location":null,"status":"passed","title":"importSchema: enums"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: import all","location":null,"status":"passed","title":"importSchema: import all"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: import all from objects","location":null,"status":"passed","title":"importSchema: import all from objects"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: single object schema","location":null,"status":"passed","title":"importSchema: single object schema"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: import all mix 'n match","location":null,"status":"passed","title":"importSchema: import all mix 'n match"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: import all mix 'n match 2","location":null,"status":"passed","title":"importSchema: import all mix 'n match 2"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: import all - include Query/Mutation/Subscription type","location":null,"status":"passed","title":"importSchema: import all - include Query/Mutation/Subscription type"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: scalar","location":null,"status":"passed","title":"importSchema: scalar"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: directive","location":null,"status":"passed","title":"importSchema: directive"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: key directive","location":null,"status":"passed","title":"importSchema: key directive"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: multiple key directive","location":null,"status":"pending","title":"importSchema: multiple key directive"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: external directive","location":null,"status":"passed","title":"importSchema: external directive"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: requires directive","location":null,"status":"passed","title":"importSchema: requires directive"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: interfaces","location":null,"status":"passed","title":"importSchema: interfaces"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: interfaces-many","location":null,"status":"passed","title":"importSchema: interfaces-many"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: interfaces-implements","location":null,"status":"passed","title":"importSchema: interfaces-implements"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: interfaces-implements-many","location":null,"status":"passed","title":"importSchema: interfaces-implements-many"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: input types","location":null,"status":"passed","title":"importSchema: input types"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema importSchema: complex test","location":null,"status":"passed","title":"importSchema: complex test"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema circular imports","location":null,"status":"passed","title":"circular imports"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema related types","location":null,"status":"passed","title":"related types"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema relative paths","location":null,"status":"passed","title":"relative paths"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema root field imports","location":null,"status":"passed","title":"root field imports"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema extend root field","location":null,"status":"passed","title":"extend root field"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema extend root field imports","location":null,"status":"passed","title":"extend root field imports"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema merged root field imports","location":null,"status":"passed","title":"merged root field imports"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema global schema modules","location":null,"status":"passed","title":"global schema modules"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema missing type on type","location":null,"status":"passed","title":"missing type on type"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema missing type on interface","location":null,"status":"passed","title":"missing type on interface"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema missing type on input type","location":null,"status":"passed","title":"missing type on input type"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema missing interface type","location":null,"status":"passed","title":"missing interface type"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema missing union type","location":null,"status":"passed","title":"missing union type"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema missing type on input type","location":null,"status":"passed","title":"missing type on input type"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema missing type on directive","location":null,"status":"passed","title":"missing type on directive"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema import with collision","location":null,"status":"passed","title":"import with collision"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema merged custom root fields imports","location":null,"status":"passed","title":"merged custom root fields imports"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema respect schema definition","location":null,"status":"passed","title":"respect schema definition"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema import schema with shadowed type","location":null,"status":"passed","title":"import schema with shadowed type"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema import specific types","location":null,"status":"passed","title":"import specific types"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema imports missing named imports for file imported multiple time without duplicates","location":null,"status":"passed","title":"imports missing named imports for file imported multiple time without duplicates"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema imports multiple imports at least 3 levels deep with transitive dependencies","location":null,"status":"passed","title":"imports multiple imports at least 3 levels deep with transitive dependencies"},{"ancestorTitles":["importSchema"],"failureMessages":["Error: expected\n       type PaginatedWrapper {\n  user: User\n}\n\ntype Query {\n  pagination: PaginatedWrapper\n}\n\n       to be a string containing (ignoring indents)\n       \n      type Account {\n        id: ID\n        cart: Cart\n      }\n\n      type Cart {\n        products: Products\n        total: Int\n      }\n\n      type PaginatedWrapper {\n        user: User\n      }\n\n      type Product {\n        price: Int\n      }\n\n      type Products {\n        items: [Product]\n      }\n\n      type Query {\n        pagination: PaginatedWrapper\n      }\n\n      type User {\n        account: Account\n      }\n    \n    at Object.<anonymous> (/workspace/repo/packages/import/tests/schema/import-schema.spec.ts:984:83)\n    at Promise.then.completed (/workspace/repo/node_modules/jest-circus/build/utils.js:390:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/workspace/repo/node_modules/jest-circus/build/utils.js:315:10)\n    at _callCircusTest (/workspace/repo/node_modules/jest-circus/build/run.js:218:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _runTest (/workspace/repo/node_modules/jest-circus/build/run.js:155:3)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:66:9)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:60:9)\n    at run (/workspace/repo/node_modules/jest-circus/build/run.js:25:3)"],"fullName":"importSchema imports dependencies at least 3 levels deep with transitive dependencies while using master schemata","location":null,"status":"failed","title":"imports dependencies at least 3 levels deep with transitive dependencies while using master schemata"},{"ancestorTitles":["importSchema"],"failureMessages":[],"fullName":"importSchema imports multi-level types without direct references","location":null,"status":"passed","title":"imports multi-level types without direct references"}],"endTime":1782746614280,"message":"  ● importSchema › imports dependencies at least 3 levels deep with transitive dependencies while using master schemata\n\n    expected\n           type PaginatedWrapper {\n      user: User\n    }\n\n    type Query {\n      pagination: PaginatedWrapper\n    }\n\n           to be a string containing (ignoring indents)\n           \n          type Account {\n            id: ID\n            cart: Cart\n          }\n\n          type Cart {\n            products: Products\n            total: Int\n          }\n\n          type PaginatedWrapper {\n            user: User\n          }\n\n          type Product {\n            price: Int\n          }\n\n          type Products {\n            items: [Product]\n          }\n\n          type Query {\n            pagination: PaginatedWrapper\n          }\n\n          type User {\n            account: Account\n          }\n\n      982 |       }\n      983 |     `;\n    > 984 |     expect(importSchema('fixtures/multiple-levels-master-schema/level1.graphql')).toBeSimilarGqlDoc(expectedSDL);\n          |                                                                                   ^\n      985 |   });\n      986 |\n      987 |   test('imports multi-level types without direct references', () => {\n\n          \n      at Object.<anonymous> (packages/import/tests/schema/import-schema.spec.ts:984:83)\n","name":"/workspace/repo/packages/import/tests/schema/import-schema.spec.ts","startTime":1782746611583,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=62 found=62 failed=1 parsed=63 framework=jest exit_code=1

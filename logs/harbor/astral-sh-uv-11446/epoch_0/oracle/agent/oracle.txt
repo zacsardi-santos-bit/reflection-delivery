@@ -1,0 +1,25 @@
+patching file .github/workflows/build-binaries.yml
+patching file .github/workflows/ci.yml
+patching file .github/workflows/publish-pypi.yml
+patching file .gitignore
+patching file Cargo.lock
+patching file Cargo.toml
+patching file crates/uv-build-backend/src/lib.rs
+patching file crates/uv-build-backend/src/metadata.rs
+patching file crates/uv-build-backend/src/serde_verbatim.rs
+patching file crates/uv-build/Cargo.toml
+patching file crates/uv-build/LICENSE-APACHE
+patching file crates/uv-build/LICENSE-MIT
+patching file crates/uv-build/README.md
+patching file crates/uv-build/deny.toml
+patching file crates/uv-build/pyproject.toml
+patching file crates/uv-build/python/uv_build/__init__.py (renamed from python/uv/_build_backend.py)
+patching file crates/uv-build/python/uv_build/__main__.py
+patching file crates/uv-build/python/uv_build/py.typed
+patching file crates/uv-build/src/main.rs
+patching file crates/uv-types/src/traits.rs
+patching file crates/uv/src/commands/build_backend.rs
+patching file crates/uv/src/commands/project/init.rs
+patching file pyproject.toml
+patching file python/uv/__init__.py
+patching file scripts/packages/built-by-uv/pyproject.toml

@@ -1,0 +1,18 @@
+patching file providers/dns/webnames/internal/client_test.go
+patching file providers/dns/webnames/webnames_test.go
+# github.com/go-acme/lego/v4/providers/dns/webnames [github.com/go-acme/lego/v4/providers/dns/webnames.test]
+providers/dns/webnames/webnames_test.go:11:19: undefined: envNamespace
+providers/dns/webnames/webnames_test.go:13:33: undefined: EnvAPIKey
+providers/dns/webnames/webnames_test.go:24:5: undefined: EnvAPIKey
+providers/dns/webnames/webnames_test.go:30:5: undefined: EnvAPIKey
+providers/dns/webnames/webnames_test.go:43:14: undefined: NewDNSProvider
+providers/dns/webnames/webnames_test.go:74:14: undefined: NewDefaultConfig
+providers/dns/webnames/webnames_test.go:77:14: undefined: NewDNSProviderConfig
+providers/dns/webnames/webnames_test.go:96:19: undefined: NewDNSProvider
+providers/dns/webnames/webnames_test.go:109:19: undefined: NewDNSProvider
+# github.com/go-acme/lego/v4/providers/dns/webnames/internal [github.com/go-acme/lego/v4/providers/dns/webnames/internal.test]
+providers/dns/webnames/internal/client_test.go:17:75: undefined: Client
+providers/dns/webnames/internal/client_test.go:68:12: undefined: NewClient
+FAIL	github.com/go-acme/lego/v4/providers/dns/webnames [build failed]
+FAIL	github.com/go-acme/lego/v4/providers/dns/webnames/internal [build failed]
+reward=0 graded=12 found=12 failed=12 parsed=2 framework=go exit_code=1

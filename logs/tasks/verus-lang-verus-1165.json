@@ -1,0 +1,23 @@
+{
+ "task": "verus-lang-verus-1165",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden creates `source/vstd/hash_map.rs` with `pub struct HashMapWithView<Key,Value>`, `obeys_key_model::<Key>()`, DefaultHasher/string-map specs; test.sh sed-maps `test X ... ok` -> `PASS [...] X` so parse_cargo_nextest matches all 8 F2P names incl. negative `_fails` verification-reject tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

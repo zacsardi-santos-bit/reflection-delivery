@@ -1,0 +1,23 @@
+patching file .travis.yml
+patching file python/ray/rllib/a3c/a3c.py
+patching file python/ray/rllib/a3c/a3c_evaluator.py
+patching file python/ray/rllib/a3c/policy.py
+patching file python/ray/rllib/a3c/shared_model.py
+patching file python/ray/rllib/a3c/shared_model_lstm.py
+patching file python/ray/rllib/a3c/tfpolicy.py
+patching file python/ray/rllib/a3c/torchpolicy.py
+patching file python/ray/rllib/dqn/dqn.py
+patching file python/ray/rllib/dqn/dqn_evaluator.py
+patching file python/ray/rllib/dqn/dqn_replay_evaluator.py
+patching file python/ray/rllib/optimizers/sample_batch.py
+patching file python/ray/rllib/optimizers/util.py
+patching file python/ray/rllib/ppo/ppo.py
+patching file python/ray/rllib/ppo/ppo_evaluator.py (renamed from python/ray/rllib/ppo/runner.py)
+patching file python/ray/rllib/ppo/rollout.py
+patching file python/ray/rllib/tuned_examples/pong-a3c-pytorch.yaml
+patching file python/ray/rllib/tuned_examples/pong-a3c.yaml
+patching file python/ray/rllib/utils/__init__.py
+patching file python/ray/rllib/utils/filter.py
+patching file python/ray/rllib/utils/filter_manager.py
+patching file python/ray/rllib/utils/process_rollout.py
+patching file python/ray/rllib/utils/sampler.py

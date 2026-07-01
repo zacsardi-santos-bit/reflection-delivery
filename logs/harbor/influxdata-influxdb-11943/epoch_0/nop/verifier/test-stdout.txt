@@ -1,0 +1,9 @@
+patching file http/task_service_test.go
+patching file query/preauthorizer_test.go
+# github.com/influxdata/influxdb/query_test [github.com/influxdata/influxdb/query.test]
+query/preauthorizer_test.go:111:30: preAuthorizer.RequiredPermissions undefined (type query.PreAuthorizer has no field or method RequiredPermissions)
+# github.com/influxdata/influxdb/http [github.com/influxdata/influxdb/http.test]
+http/task_service_test.go:969:3: unknown field BucketService in struct literal of type TaskBackend
+FAIL	github.com/influxdata/influxdb/http [build failed]
+FAIL	github.com/influxdata/influxdb/query [build failed]
+reward=0 graded=565 found=565 failed=565 parsed=2 framework=go exit_code=1

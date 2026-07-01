@@ -1,0 +1,17 @@
+patching file pkg/envoy/xds/ack_test.go
+patching file pkg/envoy/xds/node_test.go
+patching file pkg/envoy/xds/server_e2e_test.go
+# github.com/cilium/cilium/pkg/envoy/xds [github.com/cilium/cilium/pkg/envoy/xds.test]
+pkg/envoy/xds/ack_test.go:78:11: undefined: NewAckingResourceMutatorWrapper
+pkg/envoy/xds/ack_test.go:78:50: undefined: IstioNodeToIP
+pkg/envoy/xds/ack_test.go:111:11: undefined: NewAckingResourceMutatorWrapper
+pkg/envoy/xds/ack_test.go:111:50: undefined: IstioNodeToIP
+pkg/envoy/xds/ack_test.go:141:11: undefined: NewAckingResourceMutatorWrapper
+pkg/envoy/xds/ack_test.go:141:50: undefined: IstioNodeToIP
+pkg/envoy/xds/ack_test.go:166:11: undefined: NewAckingResourceMutatorWrapper
+pkg/envoy/xds/ack_test.go:166:50: undefined: IstioNodeToIP
+pkg/envoy/xds/ack_test.go:203:11: undefined: NewAckingResourceMutatorWrapper
+pkg/envoy/xds/ack_test.go:203:50: undefined: IstioNodeToIP
+pkg/envoy/xds/ack_test.go:203:50: too many errors
+FAIL	github.com/cilium/cilium/pkg/envoy/xds [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

@@ -1,0 +1,427 @@
+diff --git a/api/audit/models.py b/api/audit/models.py
+index e027f5f5f..cf9c71b69 100644
+--- a/api/audit/models.py
++++ b/api/audit/models.py
+@@ -17,6 +17,9 @@ from api_keys.models import MasterAPIKey
+ from audit.related_object_type import RelatedObjectType
+ from projects.models import Project
+ 
++if typing.TYPE_CHECKING:
++    from organisations.models import Organisation
++
+ RELATED_OBJECT_TYPES = ((tag.name, tag.value) for tag in RelatedObjectType)
+ 
+ 
+@@ -68,6 +71,21 @@ class AuditLog(LifecycleModel):
+         verbose_name_plural = "Audit Logs"
+         ordering = ("-created_date",)
+ 
++    @property
++    def organisation(self) -> "Organisation | None":
++        # TODO properly implement organisation relation
++        # maybe the relation list should not be _that_ exhaustive...
++        for relation in (
++            "project",
++            "environment",
++            "author",
++            "master_api_key",
++            "history_record",
++        ):
++            if hasattr(related_instance := getattr(self, relation), "organisation"):
++                return related_instance.organisation
++        return None
++
+     @property
+     def environment_document_updated(self) -> bool:
+         if self.related_object_type == RelatedObjectType.CHANGE_REQUEST.name:
+@@ -126,7 +144,10 @@ class AuditLog(LifecycleModel):
+         when="environment_document_updated",
+         is_now=True,
+     )
+-    def process_environment_update(self):
++    def process_environment_update(self) -> None:
++        if not self.project:
++            return
++
+         from environments.models import Environment
+         from environments.tasks import process_environment_update
+ 
+diff --git a/api/audit/signals.py b/api/audit/signals.py
+index 6e6bb0289..deb31810f 100644
+--- a/api/audit/signals.py
++++ b/api/audit/signals.py
+@@ -6,6 +6,7 @@ from django.dispatch import receiver
+ 
+ from audit.models import AuditLog, RelatedObjectType
+ from audit.serializers import AuditLogListSerializer
++from integrations.common.models import IntegrationsModel
+ from integrations.datadog.datadog import DataDogWrapper
+ from integrations.dynatrace.dynatrace import DynatraceWrapper
+ from integrations.grafana.grafana import GrafanaWrapper
+@@ -41,12 +42,15 @@ def call_webhooks(sender, instance, **kwargs):
+         )
+ 
+ 
+-def _get_integration_config(instance, integration_name):
+-    if hasattr(instance.project, integration_name):
+-        return getattr(instance.project, integration_name)
+-    elif hasattr(instance.environment, integration_name):
+-        return getattr(instance.environment, integration_name)
+-
++def _get_integration_config(
++    instance: AuditLog, integration_name: str
++) -> IntegrationsModel | None:
++    if hasattr(project := instance.project, integration_name):
++        return getattr(project, integration_name)
++    if hasattr(environment := instance.environment, integration_name):
++        return getattr(environment, integration_name)
++    if hasattr(organisation := instance.organisation, integration_name):
++        return getattr(organisation, integration_name)
+     return None
+ 
+ 
+diff --git a/api/environments/urls.py b/api/environments/urls.py
+index 5489d426c..8615e4fa3 100644
+--- a/api/environments/urls.py
++++ b/api/environments/urls.py
+@@ -14,7 +14,7 @@ from features.views import (
+ )
+ from integrations.amplitude.views import AmplitudeConfigurationViewSet
+ from integrations.dynatrace.views import DynatraceConfigurationViewSet
+-from integrations.grafana.views import GrafanaConfigurationViewSet
++from integrations.grafana.views import GrafanaProjectConfigurationViewSet
+ from integrations.heap.views import HeapConfigurationViewSet
+ from integrations.mixpanel.views import MixpanelConfigurationViewSet
+ from integrations.rudderstack.views import RudderstackConfigurationViewSet
+@@ -83,7 +83,7 @@ environments_router.register(
+ )
+ environments_router.register(
+     r"integrations/grafana",
+-    GrafanaConfigurationViewSet,
++    GrafanaProjectConfigurationViewSet,
+     basename="integrations-grafana",
+ )
+ environments_router.register(
+diff --git a/api/integrations/common/serializers.py b/api/integrations/common/serializers.py
+index a6f52a19c..bab3a8b6a 100644
+--- a/api/integrations/common/serializers.py
++++ b/api/integrations/common/serializers.py
+@@ -34,3 +34,7 @@ class BaseEnvironmentIntegrationModelSerializer(_BaseIntegrationModelSerializer)
+ 
+ class BaseProjectIntegrationModelSerializer(_BaseIntegrationModelSerializer):
+     one_to_one_field_name = "project_id"
++
++
++class BaseOrganisationIntegrationModelSerializer(_BaseIntegrationModelSerializer):
++    one_to_one_field_name = "organisation_id"
+diff --git a/api/integrations/common/views.py b/api/integrations/common/views.py
+index 40ce6cb5e..f4ed2d230 100644
+--- a/api/integrations/common/views.py
++++ b/api/integrations/common/views.py
+@@ -9,6 +9,9 @@ from rest_framework.serializers import BaseSerializer
+ from environments.models import Environment
+ from environments.permissions.constants import VIEW_ENVIRONMENT
+ from environments.permissions.permissions import NestedEnvironmentPermissions
++from organisations.permissions.permissions import (
++    NestedOrganisationEntityPermission,
++)
+ from projects.permissions import VIEW_PROJECT, NestedProjectPermissions
+ 
+ 
+@@ -74,3 +77,29 @@ class ProjectIntegrationBaseViewSet(viewsets.ModelViewSet):
+ 
+     def perform_update(self, serializer: BaseSerializer) -> None:
+         serializer.save(project_id=self.kwargs["project_pk"])
++
++
++class OrganisationIntegrationBaseViewSet(viewsets.ModelViewSet):
++    serializer_class = None
++    pagination_class = None
++    model_class = None
++
++    permission_classes = [IsAuthenticated, NestedOrganisationEntityPermission]
++
++    def get_queryset(self) -> QuerySet:
++        if getattr(self, "swagger_fake_view", False):
++            return self.model_class.objects.none()
++
++        return self.model_class.objects.filter(
++            organisation_id=self.kwargs["organisation_pk"]
++        )
++
++    def perform_create(self, serializer: BaseSerializer) -> None:
++        if self.get_queryset().exists():
++            raise ValidationError(
++                "This integration already exists for this organisation."
++            )
++        serializer.save(organisation_id=self.kwargs["organisation_pk"])
++
++    def perform_update(self, serializer: BaseSerializer) -> None:
++        serializer.save(organisation_id=self.kwargs["organisation_pk"])
+diff --git a/api/integrations/grafana/migrations/0002_add_grafana_organisation_configuration.py b/api/integrations/grafana/migrations/0002_add_grafana_organisation_configuration.py
+new file mode 100644
+index 000000000..2ee818314
+--- /dev/null
++++ b/api/integrations/grafana/migrations/0002_add_grafana_organisation_configuration.py
+@@ -0,0 +1,61 @@
++# Generated by Django 3.2.25 on 2024-07-27 14:21
++
++from django.db import migrations, models
++import django.db.models.deletion
++import uuid
++
++
++class Migration(migrations.Migration):
++    dependencies = [
++        ("organisations", "0055_alter_percent_usage"),
++        ("projects", "0024_add_project_edge_v2_migration_read_capacity_budget"),
++        ("grafana", "0001_initial"),
++    ]
++
++    operations = [
++        migrations.RenameModel(
++            old_name="GrafanaConfiguration",
++            new_name="GrafanaProjectConfiguration",
++        ),
++        migrations.CreateModel(
++            name="GrafanaOrganisationConfiguration",
++            fields=[
++                (
++                    "id",
++                    models.AutoField(
++                        auto_created=True,
++                        primary_key=True,
++                        serialize=False,
++                        verbose_name="ID",
++                    ),
++                ),
++                (
++                    "deleted_at",
++                    models.DateTimeField(
++                        blank=True,
++                        db_index=True,
++                        default=None,
++                        editable=False,
++                        null=True,
++                    ),
++                ),
++                (
++                    "uuid",
++                    models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
++                ),
++                ("base_url", models.URLField(null=True)),
++                ("api_key", models.CharField(max_length=100)),
++                (
++                    "organisation",
++                    models.OneToOneField(
++                        on_delete=django.db.models.deletion.CASCADE,
++                        related_name="grafana_config",
++                        to="organisations.organisation",
++                    ),
++                ),
++            ],
++            options={
++                "abstract": False,
++            },
++        ),
++    ]
+diff --git a/api/integrations/grafana/models.py b/api/integrations/grafana/models.py
+index ba9e01af9..37bd10cea 100644
+--- a/api/integrations/grafana/models.py
++++ b/api/integrations/grafana/models.py
+@@ -1,44 +1,50 @@
++"""
++Example `integration_data` entry:
++
++```
++    "grafana": {
++        "perEnvironment": false,
++        "image": "/static/images/integrations/grafana.svg",
++        "docs": "https://docs.flagsmith.com/integrations/apm/grafana",
++        "fields": [
++            {
++                "key": "base_url",
++                "label": "Base URL",
++                "default": "https://grafana.com"
++            },
++            {
++                "key": "api_key",
++                "label": "Service account token",
++                "hidden": true
++            }
++        ],
++        "tags": [
++            "logging"
++        ],
++        "title": "Grafana",
++        "description": "Receive Flagsmith annotations to your Grafana instance on feature flag and segment changes."
++    },
++```
++"""
++
+ import logging
+ 
+ from django.db import models
+ 
+ from integrations.common.models import IntegrationsModel
++from organisations.models import Organisation
+ from projects.models import Project
+ 
+ logger = logging.getLogger(__name__)
+ 
+ 
+-class GrafanaConfiguration(IntegrationsModel):
+-    """
+-    Example `integration_data` entry:
+-
+-    ```
+-        "grafana": {
+-            "perEnvironment": false,
+-            "image": "/static/images/integrations/grafana.svg",
+-            "docs": "https://docs.flagsmith.com/integrations/apm/grafana",
+-            "fields": [
+-                {
+-                    "key": "base_url",
+-                    "label": "Base URL",
+-                    "default": "https://grafana.com"
+-                },
+-                {
+-                    "key": "api_key",
+-                    "label": "Service account token",
+-                    "hidden": true
+-                }
+-            ],
+-            "tags": [
+-                "logging"
+-            ],
+-            "title": "Grafana",
+-            "description": "Receive Flagsmith annotations to your Grafana instance on feature flag and segment changes."
+-        },
+-    ```
+-    """
+-
+-    base_url = models.URLField(blank=False, null=True)
++class GrafanaProjectConfiguration(IntegrationsModel):
+     project = models.OneToOneField(
+         Project, on_delete=models.CASCADE, related_name="grafana_config"
+     )
++
++
++class GrafanaOrganisationConfiguration(IntegrationsModel):
++    organisation = models.OneToOneField(
++        Organisation, on_delete=models.CASCADE, related_name="grafana_config"
++    )
+diff --git a/api/integrations/grafana/serializers.py b/api/integrations/grafana/serializers.py
+index 47ee252c3..3bcdd0ad6 100644
+--- a/api/integrations/grafana/serializers.py
++++ b/api/integrations/grafana/serializers.py
+@@ -1,11 +1,24 @@
+ from integrations.common.serializers import (
++    BaseOrganisationIntegrationModelSerializer,
+     BaseProjectIntegrationModelSerializer,
+ )
++from integrations.grafana.models import (
++    GrafanaOrganisationConfiguration,
++    GrafanaProjectConfiguration,
++)
++
+ 
+-from .models import GrafanaConfiguration
++class GrafanaProjectConfigurationSerializer(
++    BaseProjectIntegrationModelSerializer,
++):
++    class Meta:
++        model = GrafanaProjectConfiguration
++        fields = ("id", "base_url", "api_key")
+ 
+ 
+-class GrafanaConfigurationSerializer(BaseProjectIntegrationModelSerializer):
++class GrafanaOrganisationConfigurationSerializer(
++    BaseOrganisationIntegrationModelSerializer,
++):
+     class Meta:
+-        model = GrafanaConfiguration
++        model = GrafanaOrganisationConfiguration
+         fields = ("id", "base_url", "api_key")
+diff --git a/api/integrations/grafana/views.py b/api/integrations/grafana/views.py
+index cd36b2c0e..07a1cec53 100644
+--- a/api/integrations/grafana/views.py
++++ b/api/integrations/grafana/views.py
+@@ -1,9 +1,24 @@
+-from integrations.common.views import ProjectIntegrationBaseViewSet
+-from integrations.grafana.models import GrafanaConfiguration
+-from integrations.grafana.serializers import GrafanaConfigurationSerializer
++from integrations.common.views import (
++    OrganisationIntegrationBaseViewSet,
++    ProjectIntegrationBaseViewSet,
++)
++from integrations.grafana.models import (
++    GrafanaOrganisationConfiguration,
++    GrafanaProjectConfiguration,
++)
++from integrations.grafana.serializers import (
++    GrafanaOrganisationConfigurationSerializer,
++    GrafanaProjectConfigurationSerializer,
++)
+ 
+ 
+-class GrafanaConfigurationViewSet(ProjectIntegrationBaseViewSet):
+-    serializer_class = GrafanaConfigurationSerializer
++class GrafanaProjectConfigurationViewSet(ProjectIntegrationBaseViewSet):
++    serializer_class = GrafanaProjectConfigurationSerializer
+     pagination_class = None  # set here to ensure documentation is correct
+-    model_class = GrafanaConfiguration
++    model_class = GrafanaProjectConfiguration
++
++
++class GrafanaOrganisationConfigurationViewSet(OrganisationIntegrationBaseViewSet):
++    serializer_class = GrafanaOrganisationConfigurationSerializer
++    pagination_class = None  # set here to ensure documentation is correct
++    model_class = GrafanaOrganisationConfiguration
+diff --git a/api/organisations/urls.py b/api/organisations/urls.py
+index 5504a0afa..56faeedab 100644
+--- a/api/organisations/urls.py
++++ b/api/organisations/urls.py
+@@ -16,6 +16,7 @@ from integrations.github.views import (
+     fetch_repo_contributors,
+     fetch_repositories,
+ )
++from integrations.grafana.views import GrafanaOrganisationConfigurationViewSet
+ from metadata.views import MetaDataModelFieldViewSet
+ from organisations.views import (
+     OrganisationAPIUsageNotificationView,
+@@ -77,6 +78,12 @@ organisations_router.register(
+     "audit", OrganisationAuditLogViewSet, basename="audit-log"
+ )
+ 
++organisations_router.register(
++    r"integrations/grafana",
++    GrafanaOrganisationConfigurationViewSet,
++    basename="integrations-grafana",
++)
++
+ organisations_router.register(
+     r"integrations/github",
+     GithubConfigurationViewSet,
+diff --git a/api/projects/urls.py b/api/projects/urls.py
+index d68750b97..4a38160dc 100644
+--- a/api/projects/urls.py
++++ b/api/projects/urls.py
+@@ -12,7 +12,7 @@ from features.import_export.views import (
+ from features.multivariate.views import MultivariateFeatureOptionViewSet
+ from features.views import FeatureViewSet
+ from integrations.datadog.views import DataDogConfigurationViewSet
+-from integrations.grafana.views import GrafanaConfigurationViewSet
++from integrations.grafana.views import GrafanaProjectConfigurationViewSet
+ from integrations.launch_darkly.views import LaunchDarklyImportRequestViewSet
+ from integrations.new_relic.views import NewRelicConfigurationViewSet
+ from projects.tags.views import TagViewSet
+@@ -59,7 +59,7 @@ projects_router.register(
+ )
+ projects_router.register(
+     r"integrations/grafana",
+-    GrafanaConfigurationViewSet,
++    GrafanaProjectConfigurationViewSet,
+     basename="integrations-grafana",
+ )
+ projects_router.register(

@@ -1,0 +1,78 @@
+patching file crates/ide-assists/src/tests.rs
+patching file crates/ide-db/src/imports/insert_use/tests.rs
+   Compiling dissimilar v1.0.7
+   Compiling xshell-macros v0.2.5
+   Compiling test-utils v0.0.0 (/workspace/repo/crates/test-utils)
+   Compiling expect-test v1.4.1
+   Compiling xshell v0.2.5
+   Compiling test-fixture v0.0.0 (/workspace/repo/crates/test-fixture)
+   Compiling sourcegen v0.0.0 (/workspace/repo/crates/sourcegen)
+   Compiling ide-assists v0.0.0 (/workspace/repo/crates/ide-assists)
+   Compiling ide-db v0.0.0 (/workspace/repo/crates/ide-db)
+error[E0599]: no variant or associated item named `One` found for enum `ImportGranularity` in the current scope
+  --> crates/ide-assists/src/tests.rs:57:41
+   |
+57 |         granularity: ImportGranularity::One,
+   |                                         ^^^ variant or associated item not found in `ImportGranularity`
+
+error[E0599]: no variant or associated item named `One` found for enum `imports::insert_use::ImportGranularityGuess` in the current scope
+   --> crates/ide-db/src/imports/insert_use/tests.rs:999:61
+    |
+999 |     check_guess(r"use {foo::bar};", ImportGranularityGuess::One);
+    |                                                             ^^^ variant or associated item not found in `ImportGranularityGuess`
+    |
+   ::: crates/ide-db/src/imports/insert_use.rs:280:1
+    |
+280 | enum ImportGranularityGuess {
+    | --------------------------- variant or associated item `One` not found for this enum
+
+error[E0599]: no variant or associated item named `One` found for enum `imports::insert_use::ImportGranularityGuess` in the current scope
+    --> crates/ide-db/src/imports/insert_use/tests.rs:1100:33
+     |
+1100 |         ImportGranularityGuess::One,
+     |                                 ^^^ variant or associated item not found in `ImportGranularityGuess`
+     |
+    ::: crates/ide-db/src/imports/insert_use.rs:280:1
+     |
+280  | enum ImportGranularityGuess {
+     | --------------------------- variant or associated item `One` not found for this enum
+
+error[E0599]: no variant or associated item named `One` found for enum `imports::insert_use::ImportGranularityGuess` in the current scope
+    --> crates/ide-db/src/imports/insert_use/tests.rs:1122:33
+     |
+1122 |         ImportGranularityGuess::One,
+     |                                 ^^^ variant or associated item not found in `ImportGranularityGuess`
+     |
+    ::: crates/ide-db/src/imports/insert_use.rs:280:1
+     |
+280  | enum ImportGranularityGuess {
+     | --------------------------- variant or associated item `One` not found for this enum
+
+error[E0599]: no variant or associated item named `One` found for enum `imports::insert_use::ImportGranularityGuess` in the current scope
+    --> crates/ide-db/src/imports/insert_use/tests.rs:1157:33
+     |
+1157 |         ImportGranularityGuess::One,
+     |                                 ^^^ variant or associated item not found in `ImportGranularityGuess`
+     |
+    ::: crates/ide-db/src/imports/insert_use.rs:280:1
+     |
+280  | enum ImportGranularityGuess {
+     | --------------------------- variant or associated item `One` not found for this enum
+
+error[E0599]: no variant or associated item named `One` found for enum `imports::insert_use::ImportGranularity` in the current scope
+    --> crates/ide-db/src/imports/insert_use/tests.rs:1292:73
+     |
+1292 |     check(path, ra_fixture_before, ra_fixture_after, ImportGranularity::One)
+     |                                                                         ^^^ variant or associated item not found in `ImportGranularity`
+     |
+    ::: crates/ide-db/src/imports/insert_use.rs:28:1
+     |
+28   | pub enum ImportGranularity {
+     | -------------------------- variant or associated item `One` not found for this enum
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `ide-db` (lib test) due to 5 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `ide-assists` (lib test) due to previous error
+error: command `/usr/local/rustup/toolchains/1.75.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package ide-db --package ide-assists` exited with code 101
+reward=0 graded=2218 found=0 failed=0 parsed=0 framework=cargo exit_code=101

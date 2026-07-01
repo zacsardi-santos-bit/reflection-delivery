@@ -1,0 +1,10 @@
+patching file packages/core/src/__tests__/__snapshots__/angular.import.test.ts.snap
+patching file packages/core/src/__tests__/__snapshots__/angular.mapper.test.ts.snap
+patching file packages/core/src/__tests__/__snapshots__/angular.state.test.ts.snap
+patching file packages/core/src/__tests__/__snapshots__/angular.styles.test.ts.snap
+patching file packages/core/src/__tests__/__snapshots__/angular.test.ts.snap
+patching file packages/core/src/__tests__/__snapshots__/solid.test.ts.snap
+patching file packages/core/src/__tests__/data/angular/state-init-sequence.raw.tsx
+patching file packages/core/src/__tests__/test-generator.ts
+JSON report written to /workspace/test-results/output.json
+reward=0 graded=10 found=10 failed=2 parsed=1225 framework=vitest exit_code=0

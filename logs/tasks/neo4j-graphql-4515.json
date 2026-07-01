@@ -1,0 +1,23 @@
+{
+ "task": "neo4j-graphql-4515",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden refactors generation logic in make-augmented-schema.ts ('generateInterfaceObjectType' unifies interface augmentation) and interface-type.ts; snapshot tests assert interface field gains args e.g. 'movies(directed: Boolean = true, options: MovieOptions, where: MovieWhere): [Movie!]!'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

@@ -1,0 +1,4 @@
+patching file crates/parser/src/grammar/paths.rs
+patching file crates/parser/src/grammar/types.rs
+patching file crates/parser/test_data/parser/inline/ok/dyn_trait_type_weak.rast
+patching file crates/parser/test_data/parser/inline/ok/dyn_trait_type_weak.rs

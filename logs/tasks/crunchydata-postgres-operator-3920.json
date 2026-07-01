@@ -1,0 +1,23 @@
+{
+ "task": "crunchydata-postgres-operator-3920",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden implements auto-grow: 'internal/util/features.go', 'setVolumeSize', 'storeDesiredRequest'; F2P includes TestSetVolumeSize/TestStoreDesiredRequest run via 'go test -json' parsed by grade.py"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "vitessio-vitess-14836",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds '_waitForGrantsComplete chan struct{}' + 'func (tm *TabletManager) waitForGrantsToHaveApplied(ctx) error' selecting on ctx.Done()/channel; test drives 100ms timeout -> ErrorContains 'deadline exceeded', then waitForDBAGrants(nil,0) closes channel -> NoError"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 23,
+  "shallow": true
+ }
+}

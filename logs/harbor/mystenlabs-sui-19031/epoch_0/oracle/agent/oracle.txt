@@ -1,0 +1,4 @@
+patching file crates/sui-protocol-config/src/lib.rs
+patching file crates/sui-protocol-config/src/snapshots/sui_protocol_config__test__Mainnet_version_55.snap
+patching file crates/sui-protocol-config/src/snapshots/sui_protocol_config__test__Testnet_version_55.snap
+patching file crates/sui-protocol-config/src/snapshots/sui_protocol_config__test__version_55.snap

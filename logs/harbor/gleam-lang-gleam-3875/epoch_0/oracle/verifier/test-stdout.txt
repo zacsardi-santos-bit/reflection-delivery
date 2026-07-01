@@ -1,0 +1,52 @@
+patching file compiler-core/src/language_server/tests/action.rs
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_alias_to_case.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_bit_array_to_case.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_result_to_case.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_string_prefix_pattern_alias_to_case.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_string_prefix_to_case.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_to_case_discard.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_to_case_indented.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_to_case_multi_variables.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_to_case_no_variables.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_tuple_to_case.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inner_inexhaustive_let_to_case.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__outer_inexhaustive_let_to_case.snap
+   Compiling getrandom v0.2.15
+   Compiling same-file v1.0.6
+   Compiling ppv-lite86 v0.2.17
+   Compiling gleam-core v1.6.2 (/workspace/repo/compiler-core)
+   Compiling console v0.15.8
+   Compiling similar v2.5.0
+   Compiling yansi v1.0.1
+   Compiling linked-hash-map v0.5.6
+   Compiling diff v0.1.13
+   Compiling walkdir v2.5.0
+   Compiling rand_core v0.6.4
+   Compiling ring v0.17.8
+   Compiling pretty_assertions v1.4.1
+   Compiling rand_xoshiro v0.6.0
+   Compiling rand_chacha v0.3.1
+   Compiling insta v1.39.0
+   Compiling rand v0.8.5
+   Compiling im v15.1.0
+   Compiling hexpm v2.4.1
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 42.68s
+────────────
+ Nextest run ID db4121e6-aa69-4de3-90d6-029f4a82be0a with nextest profile: default
+    Starting 13 tests across 1 binary (3049 tests skipped)
+        PASS [   0.047s] ( 1/13) gleam-core language_server::tests::action::no_code_action_for_exhaustive_let_to_case
+        PASS [   0.090s] ( 2/13) gleam-core language_server::tests::action::inexhaustive_let_alias_to_case
+        PASS [   0.090s] ( 3/13) gleam-core language_server::tests::action::inexhaustive_let_string_prefix_pattern_alias_to_case
+        PASS [   0.093s] ( 4/13) gleam-core language_server::tests::action::inexhaustive_let_result_to_case
+        PASS [   0.093s] ( 5/13) gleam-core language_server::tests::action::inner_inexhaustive_let_to_case
+        PASS [   0.094s] ( 6/13) gleam-core language_server::tests::action::inexhaustive_let_to_case_no_variables
+        PASS [   0.094s] ( 7/13) gleam-core language_server::tests::action::inexhaustive_let_bit_array_to_case
+        PASS [   0.095s] ( 8/13) gleam-core language_server::tests::action::outer_inexhaustive_let_to_case
+        PASS [   0.095s] ( 9/13) gleam-core language_server::tests::action::inexhaustive_let_to_case_indented
+        PASS [   0.095s] (10/13) gleam-core language_server::tests::action::inexhaustive_let_string_prefix_to_case
+        PASS [   0.096s] (11/13) gleam-core language_server::tests::action::inexhaustive_let_to_case_multi_variables
+        PASS [   0.096s] (12/13) gleam-core language_server::tests::action::inexhaustive_let_to_case_discard
+        PASS [   0.100s] (13/13) gleam-core language_server::tests::action::inexhaustive_let_tuple_to_case
+────────────
+     Summary [   0.106s] 13 tests run: 13 passed, 3049 skipped
+reward=1 graded=13 found=2 failed=0 parsed=13 framework=cargo exit_code=0

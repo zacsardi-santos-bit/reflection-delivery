@@ -1,0 +1,691 @@
+diff --git a/crates/biome_aria/src/roles.rs b/crates/biome_aria/src/roles.rs
+index 526b07b1eb..b84de06dc6 100644
+--- a/crates/biome_aria/src/roles.rs
++++ b/crates/biome_aria/src/roles.rs
+@@ -1034,6 +1034,14 @@ impl<'a> AriaRoles {
+             "marquee" => &MarqueeRole as &dyn AriaRoleDefinition,
+             "math" => &MathRole as &dyn AriaRoleDefinition,
+             "menu" => &ListRole as &dyn AriaRoleDefinition,
++            "menuitem" => {
++                let type_values = attributes.get("type")?;
++                match type_values.first()?.as_str() {
++                    "checkbox" => &MenuItemCheckboxRole as &dyn AriaRoleDefinition,
++                    "radio" => &MenuItemRadioRole as &dyn AriaRoleDefinition,
++                    _ => &MenuItemRole as &dyn AriaRoleDefinition,
++                }
++            }
+             "meter" => &MeterRole as &dyn AriaRoleDefinition,
+             "nav" => &NavigationRole as &dyn AriaRoleDefinition,
+             "ul" | "ol" => &ListRole as &dyn AriaRoleDefinition,
+@@ -1311,6 +1319,22 @@ impl<'a> AriaRoles {
+         role_candidate.concepts_by_role()
+     }
+ 
++    /// Given an element name and attributes, it returns the role associated with that element.
++    /// If no explicit role attribute is present, an implicit role is returned.
++    pub fn get_role_by_element_name(
++        &self,
++        element_name: &str,
++        attributes: &FxHashMap<String, Vec<String>>,
++    ) -> Option<&'static dyn AriaRoleDefinition> {
++        attributes
++            .get("role")
++            .and_then(|role| role.first())
++            .map_or_else(
++                || self.get_implicit_role(element_name, attributes),
++                |r| self.get_role(r),
++            )
++    }
++
+     pub fn is_not_static_element(
+         &self,
+         element_name: &str,
+@@ -1333,14 +1357,7 @@ impl<'a> AriaRoles {
+             return true;
+         }
+ 
+-        // if the element has a interactive role, it is considered interactive.
+-        let role_name = attributes
+-            .get("role")
+-            .and_then(|role| role.first())
+-            .map_or_else(
+-                || self.get_implicit_role(element_name, attributes),
+-                |r| self.get_role(r),
+-            );
++        let role_name = self.get_role_by_element_name(element_name, attributes);
+ 
+         match role_name.map(|role| role.type_name()) {
+             Some("biome_aria::roles::PresentationRole" | "biome_aria::roles::GenericRole") => false,
+diff --git a/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs b/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
+index 3457f55f33..55d8286778 100644
+--- a/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
++++ b/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
+@@ -186,18 +186,6 @@ pub(crate) fn migrate_eslint_any_rule(
+                 .get_or_insert(Default::default());
+             rule.set_level(rule_severity.into());
+         }
+-        "@typescript-eslint/no-throw-literal" => {
+-            if !options.include_inspired {
+-                results.has_inspired_rules = true;
+-                return false;
+-            }
+-            if !options.include_nursery {
+-                return false;
+-            }
+-            let group = rules.nursery.get_or_insert_with(Default::default);
+-            let rule = group.use_throw_only_error.get_or_insert(Default::default());
+-            rule.set_level(rule_severity.into());
+-        }
+         "@typescript-eslint/no-unnecessary-type-constraint" => {
+             let group = rules.complexity.get_or_insert_with(Default::default);
+             let rule = group
+@@ -676,6 +664,16 @@ pub(crate) fn migrate_eslint_any_rule(
+                 .get_or_insert(Default::default());
+             rule.set_level(rule_severity.into());
+         }
++        "jsx-a11y/role-supports-aria-props" => {
++            if !options.include_nursery {
++                return false;
++            }
++            let group = rules.nursery.get_or_insert_with(Default::default);
++            let rule = group
++                .use_aria_props_supported_by_role
++                .get_or_insert(Default::default());
++            rule.set_level(rule_severity.into());
++        }
+         "jsx-a11y/scope" => {
+             let group = rules.a11y.get_or_insert_with(Default::default);
+             let rule = group.no_header_scope.get_or_insert(Default::default());
+diff --git a/crates/biome_configuration/src/analyzer/linter/rules.rs b/crates/biome_configuration/src/analyzer/linter/rules.rs
+index c34760efdd..1f8c7922af 100644
+--- a/crates/biome_configuration/src/analyzer/linter/rules.rs
++++ b/crates/biome_configuration/src/analyzer/linter/rules.rs
+@@ -3014,6 +3014,10 @@ pub struct Nursery {
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub use_adjacent_overload_signatures:
+         Option<RuleConfiguration<biome_js_analyze::options::UseAdjacentOverloadSignatures>>,
++    #[doc = "Enforce that ARIA properties are valid for the roles that are supported by the element."]
++    #[serde(skip_serializing_if = "Option::is_none")]
++    pub use_aria_props_supported_by_role:
++        Option<RuleConfiguration<biome_js_analyze::options::UseAriaPropsSupportedByRole>>,
+     #[doc = "Enforce the use of new for all builtins, except String, Number, Boolean, Symbol and BigInt."]
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub use_consistent_builtin_instantiation:
+@@ -3150,6 +3154,7 @@ impl Nursery {
+         "noValueAtRule",
+         "noYodaExpression",
+         "useAdjacentOverloadSignatures",
++        "useAriaPropsSupportedByRole",
+         "useConsistentBuiltinInstantiation",
+         "useConsistentCurlyBraces",
+         "useConsistentGridAreas",
+@@ -3193,6 +3198,7 @@ impl Nursery {
+         "noUnknownUnit",
+         "noUnmatchableAnbSelector",
+         "noUselessEscapeInRegex",
++        "useAriaPropsSupportedByRole",
+         "useDeprecatedReason",
+         "useFocusableInteractive",
+         "useGenericFontNames",
+@@ -3220,11 +3226,12 @@ impl Nursery {
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[29]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[30]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[32]),
+-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[43]),
+-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[46]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[38]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[44]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[47]),
+-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[51]),
+-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[53]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[48]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[52]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[54]),
+     ];
+     const ALL_RULES_AS_FILTERS: &'static [RuleFilter<'static>] = &[
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
+@@ -3286,6 +3293,7 @@ impl Nursery {
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[56]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[57]),
+         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[58]),
++        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[59]),
+     ];
+     #[doc = r" Retrieves the recommended rules"]
+     pub(crate) fn is_recommended_true(&self) -> bool {
+@@ -3492,111 +3500,116 @@ impl Nursery {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[37]));
+             }
+         }
+-        if let Some(rule) = self.use_consistent_builtin_instantiation.as_ref() {
++        if let Some(rule) = self.use_aria_props_supported_by_role.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[38]));
+             }
+         }
+-        if let Some(rule) = self.use_consistent_curly_braces.as_ref() {
++        if let Some(rule) = self.use_consistent_builtin_instantiation.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[39]));
+             }
+         }
+-        if let Some(rule) = self.use_consistent_grid_areas.as_ref() {
++        if let Some(rule) = self.use_consistent_curly_braces.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[40]));
+             }
+         }
+-        if let Some(rule) = self.use_date_now.as_ref() {
++        if let Some(rule) = self.use_consistent_grid_areas.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[41]));
+             }
+         }
+-        if let Some(rule) = self.use_default_switch_clause.as_ref() {
++        if let Some(rule) = self.use_date_now.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[42]));
+             }
+         }
+-        if let Some(rule) = self.use_deprecated_reason.as_ref() {
++        if let Some(rule) = self.use_default_switch_clause.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[43]));
+             }
+         }
+-        if let Some(rule) = self.use_error_message.as_ref() {
++        if let Some(rule) = self.use_deprecated_reason.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[44]));
+             }
+         }
+-        if let Some(rule) = self.use_explicit_length_check.as_ref() {
++        if let Some(rule) = self.use_error_message.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[45]));
+             }
+         }
+-        if let Some(rule) = self.use_focusable_interactive.as_ref() {
++        if let Some(rule) = self.use_explicit_length_check.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[46]));
+             }
+         }
+-        if let Some(rule) = self.use_generic_font_names.as_ref() {
++        if let Some(rule) = self.use_focusable_interactive.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[47]));
+             }
+         }
+-        if let Some(rule) = self.use_import_extensions.as_ref() {
++        if let Some(rule) = self.use_generic_font_names.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[48]));
+             }
+         }
+-        if let Some(rule) = self.use_import_restrictions.as_ref() {
++        if let Some(rule) = self.use_import_extensions.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[49]));
+             }
+         }
+-        if let Some(rule) = self.use_number_to_fixed_digits_argument.as_ref() {
++        if let Some(rule) = self.use_import_restrictions.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[50]));
+             }
+         }
+-        if let Some(rule) = self.use_semantic_elements.as_ref() {
++        if let Some(rule) = self.use_number_to_fixed_digits_argument.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[51]));
+             }
+         }
+-        if let Some(rule) = self.use_sorted_classes.as_ref() {
++        if let Some(rule) = self.use_semantic_elements.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[52]));
+             }
+         }
+-        if let Some(rule) = self.use_strict_mode.as_ref() {
++        if let Some(rule) = self.use_sorted_classes.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[53]));
+             }
+         }
+-        if let Some(rule) = self.use_throw_new_error.as_ref() {
++        if let Some(rule) = self.use_strict_mode.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[54]));
+             }
+         }
+-        if let Some(rule) = self.use_throw_only_error.as_ref() {
++        if let Some(rule) = self.use_throw_new_error.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[55]));
+             }
+         }
+-        if let Some(rule) = self.use_top_level_regex.as_ref() {
++        if let Some(rule) = self.use_throw_only_error.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[56]));
+             }
+         }
+-        if let Some(rule) = self.use_trim_start_end.as_ref() {
++        if let Some(rule) = self.use_top_level_regex.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[57]));
+             }
+         }
+-        if let Some(rule) = self.use_valid_autocomplete.as_ref() {
++        if let Some(rule) = self.use_trim_start_end.as_ref() {
+             if rule.is_enabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[58]));
+             }
+         }
++        if let Some(rule) = self.use_valid_autocomplete.as_ref() {
++            if rule.is_enabled() {
++                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[59]));
++            }
++        }
+         index_set
+     }
+     pub(crate) fn get_disabled_rules(&self) -> FxHashSet<RuleFilter<'static>> {
+@@ -3791,111 +3804,116 @@ impl Nursery {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[37]));
+             }
+         }
+-        if let Some(rule) = self.use_consistent_builtin_instantiation.as_ref() {
++        if let Some(rule) = self.use_aria_props_supported_by_role.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[38]));
+             }
+         }
+-        if let Some(rule) = self.use_consistent_curly_braces.as_ref() {
++        if let Some(rule) = self.use_consistent_builtin_instantiation.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[39]));
+             }
+         }
+-        if let Some(rule) = self.use_consistent_grid_areas.as_ref() {
++        if let Some(rule) = self.use_consistent_curly_braces.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[40]));
+             }
+         }
+-        if let Some(rule) = self.use_date_now.as_ref() {
++        if let Some(rule) = self.use_consistent_grid_areas.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[41]));
+             }
+         }
+-        if let Some(rule) = self.use_default_switch_clause.as_ref() {
++        if let Some(rule) = self.use_date_now.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[42]));
+             }
+         }
+-        if let Some(rule) = self.use_deprecated_reason.as_ref() {
++        if let Some(rule) = self.use_default_switch_clause.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[43]));
+             }
+         }
+-        if let Some(rule) = self.use_error_message.as_ref() {
++        if let Some(rule) = self.use_deprecated_reason.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[44]));
+             }
+         }
+-        if let Some(rule) = self.use_explicit_length_check.as_ref() {
++        if let Some(rule) = self.use_error_message.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[45]));
+             }
+         }
+-        if let Some(rule) = self.use_focusable_interactive.as_ref() {
++        if let Some(rule) = self.use_explicit_length_check.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[46]));
+             }
+         }
+-        if let Some(rule) = self.use_generic_font_names.as_ref() {
++        if let Some(rule) = self.use_focusable_interactive.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[47]));
+             }
+         }
+-        if let Some(rule) = self.use_import_extensions.as_ref() {
++        if let Some(rule) = self.use_generic_font_names.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[48]));
+             }
+         }
+-        if let Some(rule) = self.use_import_restrictions.as_ref() {
++        if let Some(rule) = self.use_import_extensions.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[49]));
+             }
+         }
+-        if let Some(rule) = self.use_number_to_fixed_digits_argument.as_ref() {
++        if let Some(rule) = self.use_import_restrictions.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[50]));
+             }
+         }
+-        if let Some(rule) = self.use_semantic_elements.as_ref() {
++        if let Some(rule) = self.use_number_to_fixed_digits_argument.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[51]));
+             }
+         }
+-        if let Some(rule) = self.use_sorted_classes.as_ref() {
++        if let Some(rule) = self.use_semantic_elements.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[52]));
+             }
+         }
+-        if let Some(rule) = self.use_strict_mode.as_ref() {
++        if let Some(rule) = self.use_sorted_classes.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[53]));
+             }
+         }
+-        if let Some(rule) = self.use_throw_new_error.as_ref() {
++        if let Some(rule) = self.use_strict_mode.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[54]));
+             }
+         }
+-        if let Some(rule) = self.use_throw_only_error.as_ref() {
++        if let Some(rule) = self.use_throw_new_error.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[55]));
+             }
+         }
+-        if let Some(rule) = self.use_top_level_regex.as_ref() {
++        if let Some(rule) = self.use_throw_only_error.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[56]));
+             }
+         }
+-        if let Some(rule) = self.use_trim_start_end.as_ref() {
++        if let Some(rule) = self.use_top_level_regex.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[57]));
+             }
+         }
+-        if let Some(rule) = self.use_valid_autocomplete.as_ref() {
++        if let Some(rule) = self.use_trim_start_end.as_ref() {
+             if rule.is_disabled() {
+                 index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[58]));
+             }
+         }
++        if let Some(rule) = self.use_valid_autocomplete.as_ref() {
++            if rule.is_disabled() {
++                index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[59]));
++            }
++        }
+         index_set
+     }
+     #[doc = r" Checks if, given a rule name, matches one of the rules contained in this category"]
+@@ -4084,6 +4102,10 @@ impl Nursery {
+                 .use_adjacent_overload_signatures
+                 .as_ref()
+                 .map(|conf| (conf.level(), conf.get_options())),
++            "useAriaPropsSupportedByRole" => self
++                .use_aria_props_supported_by_role
++                .as_ref()
++                .map(|conf| (conf.level(), conf.get_options())),
+             "useConsistentBuiltinInstantiation" => self
+                 .use_consistent_builtin_instantiation
+                 .as_ref()
+diff --git a/crates/biome_diagnostics_categories/src/categories.rs b/crates/biome_diagnostics_categories/src/categories.rs
+index ba03c5acf3..d3a59a5302 100644
+--- a/crates/biome_diagnostics_categories/src/categories.rs
++++ b/crates/biome_diagnostics_categories/src/categories.rs
+@@ -154,6 +154,7 @@ define_categories! {
+     "lint/nursery/noValueAtRule": "https://biomejs.dev/linter/rules/no-value-at-rule",
+     "lint/nursery/noYodaExpression": "https://biomejs.dev/linter/rules/no-yoda-expression",
+     "lint/nursery/useAdjacentOverloadSignatures": "https://biomejs.dev/linter/rules/use-adjacent-overload-signatures",
++    "lint/nursery/useAriaPropsSupportedByRole": "https://biomejs.dev/linter/rules/use-aria-props-supported-by-role",
+     "lint/nursery/useBiomeSuppressionComment": "https://biomejs.dev/linter/rules/use-biome-suppression-comment",
+     "lint/nursery/useConsistentBuiltinInstantiation": "https://biomejs.dev/linter/rules/use-consistent-new-builtin",
+     "lint/nursery/useConsistentCurlyBraces": "https://biomejs.dev/linter/rules/use-consistent-curly-braces",
+diff --git a/crates/biome_js_analyze/src/lint/nursery.rs b/crates/biome_js_analyze/src/lint/nursery.rs
+index 2b5312c534..ca46454181 100644
+--- a/crates/biome_js_analyze/src/lint/nursery.rs
++++ b/crates/biome_js_analyze/src/lint/nursery.rs
+@@ -22,6 +22,7 @@ pub mod no_useless_string_concat;
+ pub mod no_useless_undefined_initialization;
+ pub mod no_yoda_expression;
+ pub mod use_adjacent_overload_signatures;
++pub mod use_aria_props_supported_by_role;
+ pub mod use_consistent_builtin_instantiation;
+ pub mod use_consistent_curly_braces;
+ pub mod use_date_now;
+@@ -65,6 +66,7 @@ declare_lint_group! {
+             self :: no_useless_undefined_initialization :: NoUselessUndefinedInitialization ,
+             self :: no_yoda_expression :: NoYodaExpression ,
+             self :: use_adjacent_overload_signatures :: UseAdjacentOverloadSignatures ,
++            self :: use_aria_props_supported_by_role :: UseAriaPropsSupportedByRole ,
+             self :: use_consistent_builtin_instantiation :: UseConsistentBuiltinInstantiation ,
+             self :: use_consistent_curly_braces :: UseConsistentCurlyBraces ,
+             self :: use_date_now :: UseDateNow ,
+diff --git a/crates/biome_js_analyze/src/lint/nursery/use_aria_props_supported_by_role.rs b/crates/biome_js_analyze/src/lint/nursery/use_aria_props_supported_by_role.rs
+new file mode 100644
+index 0000000000..be5b8789a4
+--- /dev/null
++++ b/crates/biome_js_analyze/src/lint/nursery/use_aria_props_supported_by_role.rs
+@@ -0,0 +1,159 @@
++use crate::services::aria::Aria;
++use biome_analyze::{context::RuleContext, declare_lint_rule, Rule, RuleDiagnostic, RuleSource};
++use biome_console::markup;
++use biome_js_syntax::jsx_ext::AnyJsxElement;
++use biome_rowan::AstNode;
++
++declare_lint_rule! {
++    /// Enforce that ARIA properties are valid for the roles that are supported by the element.
++    ///
++    /// Invalid ARIA properties can make it difficult for users of assistive technologies to understand the purpose of the element.
++    ///
++    /// ## Examples
++    ///
++    /// ### Invalid
++    ///
++    /// ```jsx,expect_diagnostic
++    /// <a href="#" aria-checked />
++    /// ```
++    ///
++    /// ```jsx,expect_diagnostic
++    /// <img alt="foobar" aria-checked />
++    /// ```
++    ///
++    /// ### Valid
++    ///
++    /// ```js
++    /// <>
++    ///     <a href="#" aria-expanded />
++    ///     <img alt="foobar" aria-hidden />
++    ///     <div role="heading" aria-level="1" />
++    /// </>
++    /// ```
++    ///
++    pub UseAriaPropsSupportedByRole {
++        version: "next",
++        name: "useAriaPropsSupportedByRole",
++        language: "js",
++        sources: &[RuleSource::EslintJsxA11y("role-supports-aria-props")],
++        recommended: true,
++    }
++}
++
++impl Rule for UseAriaPropsSupportedByRole {
++    type Query = Aria<AnyJsxElement>;
++    type State = String;
++    type Signals = Option<Self::State>;
++    type Options = ();
++
++    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
++        let node = ctx.query();
++        let element_name = node.name().ok()?.as_jsx_name()?.value_token().ok()?;
++        let element_name = element_name.text_trimmed();
++        let aria_roles = ctx.aria_roles();
++        let attributes = ctx.extract_attributes(&node.attributes());
++        let attributes = ctx.convert_all_attribute_values(attributes);
++
++        if let Some(attributes) = &attributes {
++            let role_name = aria_roles.get_role_by_element_name(element_name, attributes)?;
++            for attribute in attributes.keys() {
++                if attribute.starts_with("aria-")
++                    && !is_valid_aria_props_supported_by_role(
++                        role_name.type_name(),
++                        attribute.as_str(),
++                    )
++                {
++                    return Some(attribute.clone());
++                }
++            }
++        }
++
++        None
++    }
++
++    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
++        let node = ctx.query();
++        let invalid_aria_prop = state;
++
++        Some(
++            RuleDiagnostic::new(
++                rule_category!(),
++                node.range(),
++                markup! {
++                    "The ARIA attribute '"{invalid_aria_prop}"' is not supported by this element."
++                },
++            )
++            .note(markup! {
++                "Ensure that ARIA attributes are valid for the role of the element."
++            }),
++        )
++    }
++}
++
++fn is_valid_aria_props_supported_by_role(role_name: &'static str, aria_attribute: &str) -> bool {
++    if is_global_aria(aria_attribute) {
++        return true;
++    }
++
++    match role_name {
++        "biome_aria::roles::LinkRole" => {
++            matches!(
++                aria_attribute,
++                "aria-expanded" | "aria-haspopup" | "aria-current"
++            )
++        }
++        "biome_aria::roles::ButtonRole" => {
++            matches!(aria_attribute, "aria-expanded" | "aria-pressed")
++        }
++        "biome_aria::roles::CheckboxRole"
++        | "biome_aria::roles::RadioRole"
++        | "biome_aria::roles::MenuItemCheckboxRole"
++        | "biome_aria::roles::MenuItemRadioRole" => {
++            matches!(aria_attribute, "aria-checked")
++        }
++        "biome_aria::roles::ComboBoxRole" => {
++            matches!(aria_attribute, "aria-expanded")
++        }
++        "biome_aria::roles::SliderRole" => {
++            matches!(
++                aria_attribute,
++                "aria-valuemax" | "aria-valuemin" | "aria-valuenow"
++            )
++        }
++        "biome_aria::roles::ListRole" => {
++            matches!(aria_attribute, "aria-activedescendant")
++        }
++        "biome_aria::roles::HeadingRole" => matches!(aria_attribute, "aria-level"),
++        // This rule is not concerned with the abstract role
++        "biome_aria::roles::PresentationRole" | "biome_aria::roles::GenericRole" => true,
++        _ => false,
++    }
++}
++
++/// Check if the aria attribute is global
++/// https://www.w3.org/TR/wai-aria-1.1/#global_states
++///
++/// However, aria-invalid and aria-haspopup are not included this list
++/// Because every elements cannot have These attributes.
++/// https://www.w3.org/TR/wai-aria-1.1/#aria-invalid
++/// https://www.w3.org/TR/wai-aria-1.1/#aria-haspopup
++fn is_global_aria(aria_attribute: &str) -> bool {
++    matches! {
++        aria_attribute,
++        "aria-atomic"
++            | "aria-busy"
++            | "aria-controls"
++            | "aria-describedby"
++            | "aria-disabled"
++            | "aria-dropeffect"
++            | "aria-flowto"
++            | "aria-grabbed"
++            | "aria-hidden"
++            | "aria-label"
++            | "aria-labelledby"
++            | "aria-live"
++            | "aria-owns"
++            | "aria-relevant"
++            | "aria-roledescription"
++    }
++}
+diff --git a/crates/biome_js_analyze/src/options.rs b/crates/biome_js_analyze/src/options.rs
+index ec27bf46b6..814899e66e 100644
+--- a/crates/biome_js_analyze/src/options.rs
++++ b/crates/biome_js_analyze/src/options.rs
+@@ -263,6 +263,7 @@ pub type UseAnchorContent =
+ pub type UseAriaActivedescendantWithTabindex = < lint :: a11y :: use_aria_activedescendant_with_tabindex :: UseAriaActivedescendantWithTabindex as biome_analyze :: Rule > :: Options ;
+ pub type UseAriaPropsForRole =
+     <lint::a11y::use_aria_props_for_role::UseAriaPropsForRole as biome_analyze::Rule>::Options;
++pub type UseAriaPropsSupportedByRole = < lint :: nursery :: use_aria_props_supported_by_role :: UseAriaPropsSupportedByRole as biome_analyze :: Rule > :: Options ;
+ pub type UseArrayLiterals =
+     <lint::correctness::use_array_literals::UseArrayLiterals as biome_analyze::Rule>::Options;
+ pub type UseArrowFunction =
+diff --git a/packages/@biomejs/backend-jsonrpc/src/workspace.ts b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+index e22361ba1b..38aafbc508 100644
+--- a/packages/@biomejs/backend-jsonrpc/src/workspace.ts
++++ b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+@@ -1278,6 +1278,10 @@ export interface Nursery {
+ 	 * Disallow the use of overload signatures that are not next to each other.
+ 	 */
+ 	useAdjacentOverloadSignatures?: RuleConfiguration_for_Null;
++	/**
++	 * Enforce that ARIA properties are valid for the roles that are supported by the element.
++	 */
++	useAriaPropsSupportedByRole?: RuleConfiguration_for_Null;
+ 	/**
+ 	 * Enforce the use of new for all builtins, except String, Number, Boolean, Symbol and BigInt.
+ 	 */
+@@ -2657,6 +2661,7 @@ export type Category =
+ 	| "lint/nursery/noValueAtRule"
+ 	| "lint/nursery/noYodaExpression"
+ 	| "lint/nursery/useAdjacentOverloadSignatures"
++	| "lint/nursery/useAriaPropsSupportedByRole"
+ 	| "lint/nursery/useBiomeSuppressionComment"
+ 	| "lint/nursery/useConsistentBuiltinInstantiation"
+ 	| "lint/nursery/useConsistentCurlyBraces"
+diff --git a/packages/@biomejs/biome/configuration_schema.json b/packages/@biomejs/biome/configuration_schema.json
+index 3768bb955b..b4ebcc80fa 100644
+--- a/packages/@biomejs/biome/configuration_schema.json
++++ b/packages/@biomejs/biome/configuration_schema.json
+@@ -2123,6 +2123,13 @@
+ 						{ "type": "null" }
+ 					]
+ 				},
++				"useAriaPropsSupportedByRole": {
++					"description": "Enforce that ARIA properties are valid for the roles that are supported by the element.",
++					"anyOf": [
++						{ "$ref": "#/definitions/RuleConfiguration" },
++						{ "type": "null" }
++					]
++				},
+ 				"useConsistentBuiltinInstantiation": {
+ 					"description": "Enforce the use of new for all builtins, except String, Number, Boolean, Symbol and BigInt.",
+ 					"anyOf": [

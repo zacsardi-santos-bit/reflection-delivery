@@ -1,0 +1,11 @@
+patching file vergen-git2/src/git2/mod.rs
+patching file vergen-git2/src/lib.rs
+patching file vergen-gitcl/src/gitcl/mod.rs
+patching file vergen-gix/src/gix/mod.rs
+patching file vergen-lib/src/emitter.rs
+patching file vergen-lib/src/entries.rs
+patching file vergen-lib/src/utils.rs
+patching file vergen/src/feature/build.rs
+patching file vergen/src/feature/cargo.rs
+patching file vergen/src/feature/rustc.rs
+patching file vergen/src/feature/si.rs

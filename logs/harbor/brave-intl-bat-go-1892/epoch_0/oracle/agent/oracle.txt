@@ -1,0 +1,18 @@
+patching file Makefile
+patching file libs/clients/radom/instrumented.go
+patching file libs/clients/radom/instrumented_client.go
+patching file libs/clients/radom/mock.go
+patching file libs/clients/radom/mock/mock.go
+patching file libs/clients/radom/radom.go (renamed from libs/clients/radom/client.go)
+patching file main/go.mod
+patching file main/go.sum
+patching file services/go.mod
+patching file services/go.sum
+patching file services/grant/cmd/grant.go
+patching file services/skus/controllers.go
+patching file services/skus/datastore.go
+patching file services/skus/model/model.go
+patching file services/skus/order.go
+patching file services/skus/service.go
+patching file services/skus/storage/repository/repository.go
+patching file services/wallet/datastore.go

@@ -1,0 +1,5 @@
+I'm working on the wasmtime component macro's code generator and want to fix how it emits async host function bindings. Right now, when the generator produces the closure that gets passed to each async function registration call, the closure body is just the boxed async future returned directly — there's no wrapping block expression. This can cause borrow-checker issues in some configurations because Rust doesn't have a clear block boundary to delimit the async region.
+
+I'd like to update the code generator so that it always wraps the closure body in an explicit block expression, with the boxed async future as the last expression inside that block. This should apply consistently to all async function wrappers across every WIT interface type — whether the closure takes no arguments or multiple typed arguments. The change also means the code inside the block should be indented one extra level to match the new structure.
+
+The expanded snapshot test files that the macro tests compare against all need to reflect this new block-expression style.

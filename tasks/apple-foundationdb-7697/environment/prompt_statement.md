@@ -1,0 +1,5 @@
+I'm working on the Kubernetes process monitor for FoundationDB and I need to add support for dual-stack networking. Specifically, I need a new argument type that can take a comma-separated list of IP addresses from an environment variable and return just the address that matches a given IP family — either IPv4 or IPv6. The list may contain addresses of both families in any order, and invalid entries should be silently skipped. If no address of the requested family is present, the operation should fail with a descriptive error. If an unsupported IP family is specified, that should also be an error.
+
+I also need a new method on the argument type that resolves an argument's value given a set of environment variables, without going through the full argument generation pipeline. This method should work for both simple environment variable lookups and the new IP list type, using the same logic and the same error messages.
+
+Additionally, I noticed that error messages for missing environment variables are currently capitalized inconsistently — they should start with a lowercase letter.

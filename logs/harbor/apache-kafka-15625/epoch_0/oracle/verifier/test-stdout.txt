@@ -1,0 +1,328 @@
+patching file core/src/test/java/kafka/log/remote/RemoteLogManagerTest.java
+patching file core/src/test/java/kafka/log/remote/quota/RLMQuotaManagerTest.java
+patching file core/src/test/scala/unit/kafka/server/ReplicaManagerTest.scala
+patching file storage/src/test/java/org/apache/kafka/server/log/remote/storage/RemoteLogManagerConfigTest.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Starting build with version 3.8.0-SNAPSHOT (commit id 131ce0ba) using Gradle 8.7, Java 21 and Scala 2.13.14
+Build properties: maxParallelForks=17, maxScalacThreads=8, maxTestRetries=0
+
+> Task :storage:storage-api:processResources NO-SOURCE
+> Task :server-common:processResources NO-SOURCE
+> Task :server:processResources NO-SOURCE
+> Task :tools:tools-api:processResources NO-SOURCE
+> Task :storage:storage-api:processTestResources NO-SOURCE
+> Task :server:processTestResources NO-SOURCE
+> Task :server-common:processTestResources UP-TO-DATE
+> Task :raft:processResources UP-TO-DATE
+> Task :storage:storage-api:createVersionFile UP-TO-DATE
+> Task :group-coordinator:processResources UP-TO-DATE
+> Task :core:processResources UP-TO-DATE
+> Task :server:createVersionFile UP-TO-DATE
+> Task :tools:tools-api:createVersionFile UP-TO-DATE
+> Task :storage:processResources UP-TO-DATE
+> Task :metadata:processResources UP-TO-DATE
+> Task :storage:createVersionFile UP-TO-DATE
+> Task :transaction-coordinator:compileJava UP-TO-DATE
+> Task :raft:processTestResources UP-TO-DATE
+> Task :group-coordinator:processTestResources UP-TO-DATE
+> Task :raft:createVersionFile UP-TO-DATE
+> Task :transaction-coordinator:processResources NO-SOURCE
+> Task :core:processTestResources UP-TO-DATE
+> Task :metadata:processTestResources UP-TO-DATE
+> Task :transaction-coordinator:classes UP-TO-DATE
+> Task :transaction-coordinator:jar UP-TO-DATE
+> Task :server-common:createVersionFile UP-TO-DATE
+> Task :generator:compileJava UP-TO-DATE
+> Task :generator:processResources NO-SOURCE
+> Task :generator:classes UP-TO-DATE
+> Task :generator:jar UP-TO-DATE
+> Task :core:processMessages UP-TO-DATE
+> Task :raft:processMessages UP-TO-DATE
+> Task :storage:processMessages UP-TO-DATE
+> Task :clients:processResources UP-TO-DATE
+> Task :group-coordinator:processMessages UP-TO-DATE
+> Task :metadata:processMessages UP-TO-DATE
+> Task :clients:processMessages UP-TO-DATE
+> Task :clients:compileJava UP-TO-DATE
+> Task :clients:classes UP-TO-DATE
+> Task :clients:processTestMessages UP-TO-DATE
+> Task :tools:tools-api:compileJava UP-TO-DATE
+> Task :tools:tools-api:classes UP-TO-DATE
+> Task :tools:tools-api:jar UP-TO-DATE
+> Task :server-common:compileJava UP-TO-DATE
+> Task :server-common:classes UP-TO-DATE
+> Task :server-common:jar UP-TO-DATE
+> Task :storage:storage-api:compileJava UP-TO-DATE
+> Task :storage:storage-api:classes UP-TO-DATE
+> Task :storage:storage-api:jar UP-TO-DATE
+> Task :raft:compileJava UP-TO-DATE
+> Task :raft:classes UP-TO-DATE
+> Task :raft:jar UP-TO-DATE
+> Task :metadata:compileJava UP-TO-DATE
+> Task :metadata:classes UP-TO-DATE
+> Task :metadata:jar UP-TO-DATE
+> Task :clients:compileTestJava UP-TO-DATE
+> Task :clients:createVersionFile UP-TO-DATE
+> Task :clients:shadowJar UP-TO-DATE
+> Task :clients:jar SKIPPED
+> Task :clients:processTestResources UP-TO-DATE
+> Task :clients:testClasses UP-TO-DATE
+> Task :storage:storage-api:compileTestJava UP-TO-DATE
+> Task :storage:storage-api:testClasses UP-TO-DATE
+> Task :server-common:compileTestJava UP-TO-DATE
+> Task :server-common:testClasses UP-TO-DATE
+> Task :raft:compileTestJava UP-TO-DATE
+> Task :raft:testClasses UP-TO-DATE
+> Task :metadata:compileTestJava UP-TO-DATE
+> Task :metadata:testClasses UP-TO-DATE
+> Task :storage:compileJava
+> Task :storage:classes
+> Task :storage:jar
+> Task :group-coordinator:compileJava UP-TO-DATE
+> Task :group-coordinator:classes UP-TO-DATE
+> Task :server:compileJava UP-TO-DATE
+> Task :server:classes UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :server:compileTestJava UP-TO-DATE
+> Task :server:testClasses UP-TO-DATE
+> Task :server:jar UP-TO-DATE
+> Task :group-coordinator:compileTestJava UP-TO-DATE
+> Task :group-coordinator:testClasses UP-TO-DATE
+> Task :group-coordinator:jar UP-TO-DATE
+> Task :core:compileScala
+Unexpected javac output: warning: [options] bootstrap class path not set in conjunction with -source 8
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /workspace/repo/core/src/main/java/kafka/log/remote/RemoteLogManager.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+4 warnings.
+
+> Task :core:classes
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:checkstyleMain
+> Task :core:compileTestScala
+Unexpected javac output: warning: [options] bootstrap class path not set in conjunction with -source 8
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+4 warnings.
+
+> Task :core:testClasses
+> Task :core:checkstyleTest
+> Task :core:spotbugsMain
+
+> Task :core:test
+
+Gradle Test Run :core:test > Gradle Test Executor 9 > RLMQuotaManagerTest > testQuotaExceeded() PASSED
+
+Gradle Test Run :core:test > Gradle Test Executor 9 > RLMQuotaManagerTest > testQuotaUpdate() PASSED
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.7/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 51s
+61 actionable tasks: 8 executed, 53 up-to-date
+The build is running offline. A build scan will not be published at this time, but it can be published if you run the 'buildScanPublishPrevious' task in the next build.
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Starting build with version 3.8.0-SNAPSHOT (commit id 131ce0ba) using Gradle 8.7, Java 21 and Scala 2.13.14
+Build properties: maxParallelForks=17, maxScalacThreads=8, maxTestRetries=0
+
+> Task :tools:tools-api:processResources NO-SOURCE
+> Task :storage:storage-api:processResources NO-SOURCE
+> Task :server-common:processResources NO-SOURCE
+> Task :server:processResources NO-SOURCE
+> Task :server:processTestResources NO-SOURCE
+> Task :storage:storage-api:processTestResources NO-SOURCE
+> Task :server-common:processTestResources UP-TO-DATE
+> Task :group-coordinator:processResources UP-TO-DATE
+> Task :storage:storage-api:createVersionFile UP-TO-DATE
+> Task :storage:processResources UP-TO-DATE
+> Task :raft:processResources UP-TO-DATE
+> Task :tools:tools-api:createVersionFile UP-TO-DATE
+> Task :core:processResources UP-TO-DATE
+> Task :server:createVersionFile UP-TO-DATE
+> Task :metadata:processResources UP-TO-DATE
+> Task :transaction-coordinator:compileJava UP-TO-DATE
+> Task :storage:createVersionFile UP-TO-DATE
+> Task :transaction-coordinator:processResources NO-SOURCE
+> Task :metadata:processTestResources UP-TO-DATE
+> Task :group-coordinator:processTestResources UP-TO-DATE
+> Task :transaction-coordinator:classes UP-TO-DATE
+> Task :raft:processTestResources UP-TO-DATE
+> Task :core:processTestResources UP-TO-DATE
+> Task :storage:processTestResources UP-TO-DATE
+> Task :raft:createVersionFile UP-TO-DATE
+> Task :server-common:createVersionFile UP-TO-DATE
+> Task :transaction-coordinator:jar UP-TO-DATE
+> Task :generator:compileJava UP-TO-DATE
+> Task :generator:processResources NO-SOURCE
+> Task :generator:classes UP-TO-DATE
+> Task :generator:jar UP-TO-DATE
+> Task :core:processMessages UP-TO-DATE
+> Task :raft:processMessages UP-TO-DATE
+> Task :storage:processMessages UP-TO-DATE
+> Task :clients:processResources UP-TO-DATE
+> Task :group-coordinator:processMessages UP-TO-DATE
+> Task :metadata:processMessages UP-TO-DATE
+> Task :clients:processMessages UP-TO-DATE
+> Task :clients:compileJava UP-TO-DATE
+> Task :clients:classes UP-TO-DATE
+> Task :clients:processTestMessages UP-TO-DATE
+> Task :tools:tools-api:compileJava UP-TO-DATE
+> Task :tools:tools-api:classes UP-TO-DATE
+> Task :tools:tools-api:jar UP-TO-DATE
+> Task :server-common:compileJava UP-TO-DATE
+> Task :server-common:classes UP-TO-DATE
+> Task :server-common:jar UP-TO-DATE
+> Task :storage:storage-api:compileJava UP-TO-DATE
+> Task :storage:storage-api:classes UP-TO-DATE
+> Task :storage:storage-api:jar UP-TO-DATE
+> Task :raft:compileJava UP-TO-DATE
+> Task :raft:classes UP-TO-DATE
+> Task :raft:jar UP-TO-DATE
+> Task :storage:compileJava UP-TO-DATE
+> Task :storage:classes UP-TO-DATE
+> Task :storage:jar UP-TO-DATE
+> Task :metadata:compileJava UP-TO-DATE
+> Task :metadata:classes UP-TO-DATE
+> Task :metadata:jar UP-TO-DATE
+> Task :clients:compileTestJava UP-TO-DATE
+> Task :clients:createVersionFile UP-TO-DATE
+> Task :clients:shadowJar UP-TO-DATE
+> Task :clients:jar SKIPPED
+> Task :clients:processTestResources UP-TO-DATE
+> Task :clients:testClasses UP-TO-DATE
+> Task :group-coordinator:compileJava UP-TO-DATE
+> Task :group-coordinator:classes UP-TO-DATE
+> Task :group-coordinator:jar UP-TO-DATE
+> Task :storage:storage-api:compileTestJava UP-TO-DATE
+> Task :storage:storage-api:testClasses UP-TO-DATE
+> Task :server:compileJava UP-TO-DATE
+> Task :server:classes UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :server-common:compileTestJava UP-TO-DATE
+> Task :server-common:testClasses UP-TO-DATE
+> Task :server:compileTestJava UP-TO-DATE
+> Task :server:testClasses UP-TO-DATE
+> Task :server:jar UP-TO-DATE
+> Task :raft:compileTestJava UP-TO-DATE
+> Task :raft:testClasses UP-TO-DATE
+> Task :group-coordinator:compileTestJava UP-TO-DATE
+> Task :group-coordinator:testClasses UP-TO-DATE
+> Task :metadata:compileTestJava UP-TO-DATE
+> Task :metadata:testClasses UP-TO-DATE
+> Task :core:compileScala UP-TO-DATE
+> Task :core:classes UP-TO-DATE
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:compileTestScala UP-TO-DATE
+> Task :core:copyDependantLibs
+> Task :core:jar
+> Task :core:testClasses UP-TO-DATE
+> Task :storage:checkstyleMain
+> Task :storage:compileTestJava
+> Task :storage:testClasses
+> Task :storage:checkstyleTest
+> Task :storage:spotbugsMain
+
+> Task :storage:test
+
+Gradle Test Run :storage:test > Gradle Test Executor 14 > RemoteLogManagerConfigTest > testValidConfigs(boolean) > "testValidConfigs(boolean).useDefaultRemoteLogMetadataManagerClass=true" PASSED
+
+Gradle Test Run :storage:test > Gradle Test Executor 14 > RemoteLogManagerConfigTest > testValidConfigs(boolean) > "testValidConfigs(boolean).useDefaultRemoteLogMetadataManagerClass=false" PASSED
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.7/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 21s
+65 actionable tasks: 7 executed, 58 up-to-date
+The build is running offline. A build scan will not be published at this time, but it can be published if you run the 'buildScanPublishPrevious' task in the next build.
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="kafka.log.remote.quota.RLMQuotaManagerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:22:10" hostname="modal" time="0.037">
+  <properties/>
+  <testcase name="testQuotaExceeded()" classname="kafka.log.remote.quota.RLMQuotaManagerTest" time="0.03"/>
+  <testcase name="testQuotaUpdate()" classname="kafka.log.remote.quota.RLMQuotaManagerTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.apache.kafka.server.log.remote.storage.RemoteLogManagerConfigTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:22:32" hostname="modal" time="0.148">
+  <properties/>
+  <testcase name="&quot;testValidConfigs(boolean).useDefaultRemoteLogMetadataManagerClass=true&quot;" classname="org.apache.kafka.server.log.remote.storage.RemoteLogManagerConfigTest" time="0.14"/>
+  <testcase name="&quot;testValidConfigs(boolean).useDefaultRemoteLogMetadataManagerClass=false&quot;" classname="org.apache.kafka.server.log.remote.storage.RemoteLogManagerConfigTest" time="0.004"/>
+  <system-out><![CDATA[[2026-06-29 15:22:32,273] INFO TestConfig values: 
+	log.local.retention.bytes = -2
+	log.local.retention.ms = -2
+	remote.log.index.file.cache.total.size.bytes = 1048576
+	remote.log.manager.copy.max.bytes.per.second = 9223372036854775807
+	remote.log.manager.copy.quota.window.num = 11
+	remote.log.manager.copy.quota.window.size.seconds = 1
+	remote.log.manager.fetch.max.bytes.per.second = 9223372036854775807
+	remote.log.manager.fetch.quota.window.num = 11
+	remote.log.manager.fetch.quota.window.size.seconds = 1
+	remote.log.manager.task.interval.ms = 60000
+	remote.log.manager.task.retry.backoff.max.ms = 60000
+	remote.log.manager.task.retry.backoff.ms = 100
+	remote.log.manager.task.retry.jitter = 0.3
+	remote.log.manager.thread.pool.size = 1
+	remote.log.metadata.custom.metadata.max.bytes = 100
+	remote.log.metadata.manager.class.name = org.apache.kafka.server.log.remote.metadata.storage.TopicBasedRemoteLogMetadataManager
+	remote.log.metadata.manager.class.path = dummy.remote.log.metadata.class.path
+	remote.log.metadata.manager.impl.prefix = __custom.rlmm.
+	remote.log.metadata.manager.listener.name = listener.name
+	remote.log.reader.max.pending.tasks = 100
+	remote.log.reader.threads = 10
+	remote.log.storage.manager.class.name = dummy.remote.storage.class
+	remote.log.storage.manager.class.path = dummy.remote.storage.class.path
+	remote.log.storage.manager.impl.prefix = __custom.rsm.
+	remote.log.storage.system.enable = true
+ (org.apache.kafka.server.log.remote.storage.RemoteLogManagerConfigTest$TestConfig:372)
+[2026-06-29 15:22:32,292] INFO TestConfig values: 
+	log.local.retention.bytes = -2
+	log.local.retention.ms = -2
+	remote.log.index.file.cache.total.size.bytes = 1048576
+	remote.log.manager.copy.max.bytes.per.second = 9223372036854775807
+	remote.log.manager.copy.quota.window.num = 11
+	remote.log.manager.copy.quota.window.size.seconds = 1
+	remote.log.manager.fetch.max.bytes.per.second = 9223372036854775807
+	remote.log.manager.fetch.quota.window.num = 11
+	remote.log.manager.fetch.quota.window.size.seconds = 1
+	remote.log.manager.task.interval.ms = 60000
+	remote.log.manager.task.retry.backoff.max.ms = 60000
+	remote.log.manager.task.retry.backoff.ms = 100
+	remote.log.manager.task.retry.jitter = 0.3
+	remote.log.manager.thread.pool.size = 1
+	remote.log.metadata.custom.metadata.max.bytes = 100
+	remote.log.metadata.manager.class.name = dummy.remote.log.metadata.class
+	remote.log.metadata.manager.class.path = dummy.remote.log.metadata.class.path
+	remote.log.metadata.manager.impl.prefix = __custom.rlmm.
+	remote.log.metadata.manager.listener.name = listener.name
+	remote.log.reader.max.pending.tasks = 100
+	remote.log.reader.threads = 10
+	remote.log.storage.manager.class.name = dummy.remote.storage.class
+	remote.log.storage.manager.class.path = dummy.remote.storage.class.path
+	remote.log.storage.manager.impl.prefix = __custom.rsm.
+	remote.log.storage.system.enable = true
+ (org.apache.kafka.server.log.remote.storage.RemoteLogManagerConfigTest$TestConfig:372)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=junit exit_code=0

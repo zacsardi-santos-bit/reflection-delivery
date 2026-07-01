@@ -1,0 +1,24 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/code && test -f lib/core-server/src/utils/posix.ts && yarn vitest run lib/core-server/src/utils/posix.test.ts lib/core-server/src/utils/get-component-variable-name.test.ts lib/core-server/src/utils/new-story-templates/javascript.test.ts lib/core-server/src/utils/new-story-templates/typescript.test.ts",
+  "test_files": [
+    "code/lib/core-server/src/server-channel/create-new-story-channel.test.ts",
+    "code/lib/core-server/src/utils/get-component-variable-name.test.ts",
+    "code/lib/core-server/src/utils/get-new-story-file.test.ts",
+    "code/lib/core-server/src/utils/get-story-id.test.ts",
+    "code/lib/core-server/src/utils/new-story-templates/javascript.test.ts",
+    "code/lib/core-server/src/utils/new-story-templates/typescript.test.ts",
+    "code/lib/core-server/src/utils/posix.test.ts"
+  ],
+  "num_test_files": 7,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/lib/core-server/src/utils/get-component-variable-name.test.ts:: get-variable-name should return a valid variable name for a given string",
+    "/workspace/repo/code/lib/core-server/src/utils/posix.test.ts:: posix should replace backslashes with forward slashes",
+    "/workspace/repo/code/lib/core-server/src/utils/new-story-templates/javascript.test.ts:: javascript should return a TypeScript template with a default import",
+    "/workspace/repo/code/lib/core-server/src/utils/new-story-templates/javascript.test.ts:: javascript should return a TypeScript template with a named import",
+    "/workspace/repo/code/lib/core-server/src/utils/new-story-templates/typescript.test.ts:: typescript should return a TypeScript template with a default import",
+    "/workspace/repo/code/lib/core-server/src/utils/new-story-templates/typescript.test.ts:: typescript should return a TypeScript template with a named import"
+  ],
+  "PASS_TO_PASS": []
+}

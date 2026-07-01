@@ -1,0 +1,19 @@
+patching file aws/resources/s3_access_point_test.go
+patching file aws/resources/s3_multi_region_access_point_test.go
+patching file aws/resources/s3_object_lambda_access_point_test.go
+patching file config/config_test.go
+# github.com/gruntwork-io/cloud-nuke/config [github.com/gruntwork-io/cloud-nuke/config.test]
+config/config_test.go:96:3: too many values in struct literal of type Config
+# github.com/gruntwork-io/cloud-nuke/aws/resources [github.com/gruntwork-io/cloud-nuke/aws/resources.test]
+aws/resources/s3_access_point_test.go:41:8: undefined: S3AccessPoint
+aws/resources/s3_access_point_test.go:79:5: unknown field S3AccessPoint in struct literal of type config.Config
+aws/resources/s3_access_point_test.go:91:8: undefined: S3AccessPoint
+aws/resources/s3_multi_region_access_point_test.go:44:8: undefined: S3MultiRegionAccessPoint
+aws/resources/s3_multi_region_access_point_test.go:91:5: unknown field S3MultiRegionAccessPoint in struct literal of type config.Config
+aws/resources/s3_multi_region_access_point_test.go:103:8: undefined: S3MultiRegionAccessPoint
+aws/resources/s3_object_lambda_access_point_test.go:41:8: undefined: S3ObjectLambdaAccessPoint
+aws/resources/s3_object_lambda_access_point_test.go:79:5: unknown field S3ObjectLambdaAccessPoint in struct literal of type config.Config
+aws/resources/s3_object_lambda_access_point_test.go:91:8: undefined: S3ObjectLambdaAccessPoint
+FAIL	github.com/gruntwork-io/cloud-nuke/aws/resources [build failed]
+FAIL	github.com/gruntwork-io/cloud-nuke/config [build failed]
+reward=0 graded=386 found=386 failed=386 parsed=2 framework=go exit_code=1

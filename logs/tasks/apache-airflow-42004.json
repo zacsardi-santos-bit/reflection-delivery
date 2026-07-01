@@ -1,0 +1,23 @@
+{
+ "task": "apache-airflow-42004",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds airflow/auth/managers/simple/{simple_auth_manager.py,user.py,views/auth.py} + login templates/JS; F2P=101 incl test_is_authorized_methods, test_login_submit, test_logout_redirects_to_login_and_clear_user"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 36,
+  "shallow": true
+ }
+}

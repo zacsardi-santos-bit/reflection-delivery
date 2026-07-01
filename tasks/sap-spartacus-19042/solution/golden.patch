@@ -1,0 +1,2470 @@
+diff --git a/.eslintrc.json b/.eslintrc.json
+index de13d0dadb..308ab98249 100644
+--- a/.eslintrc.json
++++ b/.eslintrc.json
+@@ -114,6 +114,12 @@
+         "@nx/workspace/use-provide-default-feature-toggles": "error",
+         "@nx/workspace/use-provide-default-feature-toggles-factory": "error"
+       }
++    },
++    {
++      "files": ["*.action*.ts"],
++      "rules": {
++        "@nx/workspace/no-ngrx-fail-action-without-error-action-implementation": "error"
++      }
+     }
+   ]
+ }
+diff --git a/feature-libs/asm/core/store/actions/customer.action.ts b/feature-libs/asm/core/store/actions/customer.action.ts
+index 78cff30854..bcadde1e86 100644
+--- a/feature-libs/asm/core/store/actions/customer.action.ts
++++ b/feature-libs/asm/core/store/actions/customer.action.ts
+@@ -5,7 +5,7 @@
+  */
+ 
+ import { CustomerSearchOptions, CustomerSearchPage } from '@spartacus/asm/root';
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import {
+   CUSTOMER_LIST_CUSTOMERS_SEARCH_DATA,
+   CUSTOMER_SEARCH_DATA,
+@@ -32,7 +32,10 @@ export class CustomerSearch extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class CustomerSearchFail extends StateUtils.LoaderFailAction {
++export class CustomerSearchFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = CUSTOMER_SEARCH_FAIL;
+   constructor(public payload: any) {
+     super(CUSTOMER_SEARCH_DATA, payload);
+@@ -60,7 +63,10 @@ export class CustomerListCustomersSearch extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class CustomerListCustomersSearchFail extends StateUtils.LoaderFailAction {
++export class CustomerListCustomersSearchFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = CUSTOMER_LIST_CUSTOMERS_SEARCH_FAIL;
+   constructor(public payload: any) {
+     super(CUSTOMER_LIST_CUSTOMERS_SEARCH_DATA, payload);
+diff --git a/feature-libs/cart/base/core/store/actions/cart-voucher.action.ts b/feature-libs/cart/base/core/store/actions/cart-voucher.action.ts
+index b3be803eb5..5fcd6c55c3 100644
+--- a/feature-libs/cart/base/core/store/actions/cart-voucher.action.ts
++++ b/feature-libs/cart/base/core/store/actions/cart-voucher.action.ts
+@@ -30,7 +30,10 @@ export class CartAddVoucher extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CartAddVoucherFail extends StateUtils.EntityFailAction {
++export class CartAddVoucherFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CART_ADD_VOUCHER_FAIL;
+ 
+   constructor(
+diff --git a/feature-libs/cart/base/core/store/actions/cart.action.ts b/feature-libs/cart/base/core/store/actions/cart.action.ts
+index 15eb6e1bc3..d71f4e4160 100644
+--- a/feature-libs/cart/base/core/store/actions/cart.action.ts
++++ b/feature-libs/cart/base/core/store/actions/cart.action.ts
+@@ -58,7 +58,10 @@ interface CreateCartFailPayload extends CreateCartPayload {
+   error: any;
+ }
+ 
+-export class CreateCartFail extends StateUtils.EntityFailAction {
++export class CreateCartFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_CART_FAIL;
+   constructor(public payload: CreateCartFailPayload) {
+     super(MULTI_CART_DATA, payload.tempCartId, payload.error);
+@@ -133,7 +136,10 @@ interface LoadCartFailPayload extends LoadCartPayload {
+   error: any;
+ }
+ 
+-export class LoadCartFail extends StateUtils.EntityFailAction {
++export class LoadCartFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_CART_FAIL;
+   constructor(public payload: LoadCartFailPayload) {
+     super(MULTI_CART_DATA, payload.cartId, payload.error);
+diff --git a/feature-libs/cart/saved-cart/core/store/actions/saved-cart.action.ts b/feature-libs/cart/saved-cart/core/store/actions/saved-cart.action.ts
+index ea65df00d9..8cfae6d1c2 100644
+--- a/feature-libs/cart/saved-cart/core/store/actions/saved-cart.action.ts
++++ b/feature-libs/cart/saved-cart/core/store/actions/saved-cart.action.ts
+@@ -5,7 +5,7 @@
+  */
+ 
+ import { MULTI_CART_DATA } from '@spartacus/cart/base/core';
+-import { PROCESS_FEATURE, StateUtils } from '@spartacus/core';
++import { ErrorAction, PROCESS_FEATURE, StateUtils } from '@spartacus/core';
+ import {
+   SAVED_CART_CLONE_CART_PROCESS_ID,
+   SAVED_CART_LIST_PROCESS_ID,
+@@ -68,7 +68,10 @@ export class LoadSavedCartSuccess extends StateUtils.EntitySuccessAction {
+   }
+ }
+ 
+-export class LoadSavedCartFail extends StateUtils.EntityFailAction {
++export class LoadSavedCartFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_SAVED_CART_FAIL;
+ 
+   constructor(public payload: { userId: string; cartId: string; error: any }) {
+@@ -100,7 +103,10 @@ export class LoadSavedCartsSuccess extends StateUtils.EntitySuccessAction {
+   }
+ }
+ 
+-export class LoadSavedCartsFail extends StateUtils.EntityFailAction {
++export class LoadSavedCartsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_SAVED_CARTS_FAIL;
+ 
+   constructor(
+@@ -147,7 +153,10 @@ export class RestoreSavedCartSuccess extends StateUtils.EntitySuccessAction {
+   }
+ }
+ 
+-export class RestoreSavedCartFail extends StateUtils.EntityFailAction {
++export class RestoreSavedCartFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = RESTORE_SAVED_CART_FAIL;
+ 
+   constructor(
+@@ -199,7 +208,10 @@ export class SaveCartSuccess extends StateUtils.EntitySuccessAction {
+   }
+ }
+ 
+-export class SaveCartFail extends StateUtils.EntityFailAction {
++export class SaveCartFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = SAVE_CART_FAIL;
+ 
+   constructor(
+@@ -253,7 +265,10 @@ export class EditSavedCartSuccess extends StateUtils.EntitySuccessAction {
+   }
+ }
+ 
+-export class EditSavedCartFail extends StateUtils.EntityFailAction {
++export class EditSavedCartFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = EDIT_SAVED_CART_FAIL;
+ 
+   constructor(
+@@ -297,7 +312,10 @@ export class CloneSavedCartSuccess extends StateUtils.EntitySuccessAction {
+   }
+ }
+ 
+-export class CloneSavedCartFail extends StateUtils.EntityFailAction {
++export class CloneSavedCartFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CLONE_SAVED_CART_FAIL;
+ 
+   constructor(
+diff --git a/feature-libs/cart/wish-list/core/store/actions/wish-list.action.ts b/feature-libs/cart/wish-list/core/store/actions/wish-list.action.ts
+index 99ae74f9cd..8212d378db 100644
+--- a/feature-libs/cart/wish-list/core/store/actions/wish-list.action.ts
++++ b/feature-libs/cart/wish-list/core/store/actions/wish-list.action.ts
+@@ -7,7 +7,7 @@
+ import { Action } from '@ngrx/store';
+ import { MULTI_CART_DATA } from '@spartacus/cart/base/core';
+ import { Cart } from '@spartacus/cart/base/root';
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ 
+ export const CREATE_WISH_LIST = '[Wish List] Create Wish List';
+ export const CREATE_WISH_LIST_FAIL = '[Wish List] Create Wish List Fail';
+@@ -37,7 +37,10 @@ export class CreateWishListSuccess extends StateUtils.EntitySuccessAction {
+   }
+ }
+ 
+-export class CreateWishListFail extends StateUtils.EntityFailAction {
++export class CreateWishListFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_WISH_LIST_FAIL;
+   constructor(payload: { cartId: string; error: any });
+   /**
+@@ -91,7 +94,10 @@ interface LoadWishListFailPayload {
+   error: any;
+ }
+ 
+-export class LoadWishListFail extends StateUtils.EntityFailAction {
++export class LoadWishListFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_WISH_LIST_FAIL;
+ 
+   constructor(public payload: LoadWishListFailPayload) {
+diff --git a/feature-libs/order/core/store/actions/consignment-tracking-by-id.action.ts b/feature-libs/order/core/store/actions/consignment-tracking-by-id.action.ts
+index f4c58c306c..821c2078ff 100644
+--- a/feature-libs/order/core/store/actions/consignment-tracking-by-id.action.ts
++++ b/feature-libs/order/core/store/actions/consignment-tracking-by-id.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import { ConsignmentTracking } from '@spartacus/order/root';
+ import {
+   CONSIGNMENT_TRACKING_BY_ID_ENTITIES,
+@@ -37,7 +37,10 @@ export class LoadConsignmentTrackingById extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadConsignmentTrackingByIdFail extends StateUtils.EntityFailAction {
++export class LoadConsignmentTrackingByIdFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_CONSIGNMENT_TRACKING_BY_ID_FAIL;
+   constructor(
+     public payload: { orderCode: string; consignmentCode: string; error: any }
+diff --git a/feature-libs/order/core/store/actions/order-by-id.action.ts b/feature-libs/order/core/store/actions/order-by-id.action.ts
+index 1ee032efdf..ce60bac819 100644
+--- a/feature-libs/order/core/store/actions/order-by-id.action.ts
++++ b/feature-libs/order/core/store/actions/order-by-id.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import { Order } from '@spartacus/order/root';
+ import { ORDER_BY_ID_ENTITIES } from '../order-state';
+ 
+@@ -18,7 +18,10 @@ export class LoadOrderById extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadOrderByIdFail extends StateUtils.EntityFailAction {
++export class LoadOrderByIdFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ORDER_BY_ID_FAIL;
+   constructor(public payload: { code: string; error: any }) {
+     super(ORDER_BY_ID_ENTITIES, payload.code, payload.error);
+diff --git a/feature-libs/order/core/store/actions/order-details.action.ts b/feature-libs/order/core/store/actions/order-details.action.ts
+index a17248e326..87b6db9347 100644
+--- a/feature-libs/order/core/store/actions/order-details.action.ts
++++ b/feature-libs/order/core/store/actions/order-details.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { PROCESS_FEATURE, StateUtils } from '@spartacus/core';
++import { ErrorAction, PROCESS_FEATURE, StateUtils } from '@spartacus/core';
+ import {
+   CancellationRequestEntryInputList,
+   Order,
+@@ -33,7 +33,10 @@ export class LoadOrderDetails extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadOrderDetailsFail extends StateUtils.LoaderFailAction {
++export class LoadOrderDetailsFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ORDER_DETAILS_FAIL;
+   constructor(public payload: any) {
+     super(ORDER_DETAILS, payload);
+@@ -67,7 +70,10 @@ export class CancelOrder extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CancelOrderFail extends StateUtils.EntityFailAction {
++export class CancelOrderFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CANCEL_ORDER_FAIL;
+   constructor(public payload: any) {
+     super(PROCESS_FEATURE, CANCEL_ORDER_PROCESS_ID, payload);
+diff --git a/feature-libs/order/core/store/actions/order-return-request.action.ts b/feature-libs/order/core/store/actions/order-return-request.action.ts
+index cf605ec0b1..e8bcef2588 100644
+--- a/feature-libs/order/core/store/actions/order-return-request.action.ts
++++ b/feature-libs/order/core/store/actions/order-return-request.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { PROCESS_FEATURE, StateUtils } from '@spartacus/core';
++import { ErrorAction, PROCESS_FEATURE, StateUtils } from '@spartacus/core';
+ import {
+   ReturnRequest,
+   ReturnRequestEntryInputList,
+@@ -65,7 +65,10 @@ export class CreateOrderReturnRequest extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class CreateOrderReturnRequestFail extends StateUtils.LoaderFailAction {
++export class CreateOrderReturnRequestFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_ORDER_RETURN_REQUEST_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -94,7 +97,10 @@ export class LoadOrderReturnRequest extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadOrderReturnRequestFail extends StateUtils.LoaderFailAction {
++export class LoadOrderReturnRequestFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ORDER_RETURN_REQUEST_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -124,7 +130,10 @@ export class CancelOrderReturnRequest extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CancelOrderReturnRequestFail extends StateUtils.EntityFailAction {
++export class CancelOrderReturnRequestFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CANCEL_ORDER_RETURN_REQUEST_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -155,7 +164,10 @@ export class LoadOrderReturnRequestList extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadOrderReturnRequestListFail extends StateUtils.LoaderFailAction {
++export class LoadOrderReturnRequestListFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ORDER_RETURN_REQUEST_LIST_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/feature-libs/order/core/store/actions/orders.action.ts b/feature-libs/order/core/store/actions/orders.action.ts
+index ed6dfff764..3a05a2b040 100644
+--- a/feature-libs/order/core/store/actions/orders.action.ts
++++ b/feature-libs/order/core/store/actions/orders.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import { OrderHistoryList } from '@spartacus/order/root';
+ import { ORDERS } from '../order-state';
+ 
+@@ -29,7 +29,10 @@ export class LoadUserOrders extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadUserOrdersFail extends StateUtils.LoaderFailAction {
++export class LoadUserOrdersFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_USER_ORDERS_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/feature-libs/order/core/store/actions/replenishment-order-details.action.ts b/feature-libs/order/core/store/actions/replenishment-order-details.action.ts
+index 11e11cd3a0..5f3645fe3a 100644
+--- a/feature-libs/order/core/store/actions/replenishment-order-details.action.ts
++++ b/feature-libs/order/core/store/actions/replenishment-order-details.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { PROCESS_FEATURE, StateUtils } from '@spartacus/core';
++import { ErrorAction, PROCESS_FEATURE, StateUtils } from '@spartacus/core';
+ import { ReplenishmentOrder } from '@spartacus/order/root';
+ import {
+   CANCEL_REPLENISHMENT_ORDER_PROCESS_ID,
+@@ -49,7 +49,10 @@ export class LoadReplenishmentOrderDetailsSuccess extends StateUtils.LoaderSucce
+   }
+ }
+ 
+-export class LoadReplenishmentOrderDetailsFail extends StateUtils.LoaderFailAction {
++export class LoadReplenishmentOrderDetailsFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_REPLENISHMENT_ORDER_DETAILS_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -86,7 +89,10 @@ export class CancelReplenishmentOrderSuccess extends StateUtils.EntitySuccessAct
+   }
+ }
+ 
+-export class CancelReplenishmentOrderFail extends StateUtils.EntityFailAction {
++export class CancelReplenishmentOrderFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CANCEL_REPLENISHMENT_ORDER_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/feature-libs/order/core/store/actions/replenishment-orders.action.ts b/feature-libs/order/core/store/actions/replenishment-orders.action.ts
+index 648c587f72..9753e57bbd 100644
+--- a/feature-libs/order/core/store/actions/replenishment-orders.action.ts
++++ b/feature-libs/order/core/store/actions/replenishment-orders.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import { ReplenishmentOrderList } from '@spartacus/order/root';
+ import { REPLENISHMENT_ORDERS } from '../order-state';
+ 
+@@ -32,7 +32,10 @@ export class LoadUserReplenishmentOrders extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadUserReplenishmentOrdersFail extends StateUtils.LoaderFailAction {
++export class LoadUserReplenishmentOrdersFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_USER_REPLENISHMENT_ORDERS_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/feature-libs/organization/administration/core/store/actions/b2b-user.action.ts b/feature-libs/organization/administration/core/store/actions/b2b-user.action.ts
+index 0a67e4ce77..bc1e8ab7a2 100644
+--- a/feature-libs/organization/administration/core/store/actions/b2b-user.action.ts
++++ b/feature-libs/organization/administration/core/store/actions/b2b-user.action.ts
+@@ -4,7 +4,13 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { B2BUser, ListModel, SearchConfig, StateUtils } from '@spartacus/core';
++import {
++  B2BUser,
++  ErrorAction,
++  ListModel,
++  SearchConfig,
++  StateUtils,
++} from '@spartacus/core';
+ import {
+   B2B_USER_APPROVERS,
+   B2B_USER_ENTITIES,
+@@ -95,7 +101,10 @@ export class LoadB2BUser extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadB2BUserFail extends StateUtils.EntityFailAction {
++export class LoadB2BUserFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_B2B_USER_FAIL;
+ 
+   constructor(public payload: { orgCustomerId: string; error: any }) {
+@@ -124,7 +133,10 @@ export class CreateB2BUser extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CreateB2BUserFail extends StateUtils.EntityFailAction {
++export class CreateB2BUserFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_B2B_USER_FAIL;
+ 
+   constructor(public payload: { orgCustomerId: string; error: any }) {
+@@ -154,7 +166,10 @@ export class UpdateB2BUser extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UpdateB2BUserFail extends StateUtils.EntityFailAction {
++export class UpdateB2BUserFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_B2B_USER_FAIL;
+ 
+   constructor(public payload: { orgCustomerId: string; error: any }) {
+@@ -183,7 +198,10 @@ export class LoadB2BUsers extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadB2BUsersFail extends StateUtils.EntityFailAction {
++export class LoadB2BUsersFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_B2B_USERS_FAIL;
+ 
+   constructor(public payload: { params: SearchConfig; error: any }) {
+@@ -225,7 +243,10 @@ export class LoadB2BUserApprovers extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadB2BUserApproversFail extends StateUtils.EntityFailAction {
++export class LoadB2BUserApproversFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_B2B_USER_APPROVERS_FAIL;
+ 
+   constructor(
+@@ -274,7 +295,10 @@ export class AssignB2BUserApprover extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class AssignB2BUserApproverFail extends StateUtils.EntityFailAction {
++export class AssignB2BUserApproverFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = ASSIGN_B2B_USER_APPROVER_FAIL;
+ 
+   constructor(
+@@ -315,7 +339,10 @@ export class UnassignB2BUserApprover extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UnassignB2BUserApproverFail extends StateUtils.EntityFailAction {
++export class UnassignB2BUserApproverFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UNASSIGN_B2B_USER_APPROVER_FAIL;
+ 
+   constructor(
+@@ -359,7 +386,10 @@ export class LoadB2BUserPermissions extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadB2BUserPermissionsFail extends StateUtils.EntityFailAction {
++export class LoadB2BUserPermissionsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_B2B_USER_PERMISSIONS_FAIL;
+ 
+   constructor(
+@@ -404,7 +434,10 @@ export class AssignB2BUserPermission extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class AssignB2BUserPermissionFail extends StateUtils.EntityFailAction {
++export class AssignB2BUserPermissionFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = ASSIGN_B2B_USER_PERMISSION_FAIL;
+ 
+   constructor(
+@@ -445,7 +478,10 @@ export class UnassignB2BUserPermission extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UnassignB2BUserPermissionFail extends StateUtils.EntityFailAction {
++export class UnassignB2BUserPermissionFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UNASSIGN_B2B_USER_PERMISSION_FAIL;
+ 
+   constructor(
+@@ -489,7 +525,10 @@ export class LoadB2BUserUserGroups extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadB2BUserUserGroupsFail extends StateUtils.EntityFailAction {
++export class LoadB2BUserUserGroupsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_B2B_USER_USER_GROUPS_FAIL;
+ 
+   constructor(
+@@ -538,7 +577,10 @@ export class AssignB2BUserUserGroup extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class AssignB2BUserUserGroupFail extends StateUtils.EntityFailAction {
++export class AssignB2BUserUserGroupFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = ASSIGN_B2B_USER_USER_GROUP_FAIL;
+ 
+   constructor(
+@@ -579,7 +621,10 @@ export class UnassignB2BUserUserGroup extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UnassignB2BUserUserGroupFail extends StateUtils.EntityFailAction {
++export class UnassignB2BUserUserGroupFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UNASSIGN_B2B_USER_USER_GROUP_FAIL;
+ 
+   constructor(
+diff --git a/feature-libs/organization/administration/core/store/actions/budget.action.ts b/feature-libs/organization/administration/core/store/actions/budget.action.ts
+index 45cf716508..24581c5d30 100644
+--- a/feature-libs/organization/administration/core/store/actions/budget.action.ts
++++ b/feature-libs/organization/administration/core/store/actions/budget.action.ts
+@@ -4,7 +4,12 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { ListModel, SearchConfig, StateUtils } from '@spartacus/core';
++import {
++  ErrorAction,
++  ListModel,
++  SearchConfig,
++  StateUtils,
++} from '@spartacus/core';
+ import { Budget } from '../../model/budget.model';
+ import { BUDGET_ENTITIES, BUDGET_LIST } from '../organization-state';
+ 
+@@ -32,7 +37,10 @@ export class LoadBudget extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadBudgetFail extends StateUtils.EntityFailAction {
++export class LoadBudgetFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_BUDGET_FAIL;
+ 
+   constructor(public payload: { budgetCode: string; error: any }) {
+@@ -66,7 +74,10 @@ export class LoadBudgets extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadBudgetsFail extends StateUtils.EntityFailAction {
++export class LoadBudgetsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_BUDGETS_FAIL;
+ 
+   constructor(public payload: { params: SearchConfig; error: any }) {
+@@ -99,7 +110,10 @@ export class CreateBudget extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CreateBudgetFail extends StateUtils.EntityFailAction {
++export class CreateBudgetFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_BUDGET_FAIL;
+ 
+   constructor(public payload: { budgetCode: string; error: any }) {
+@@ -125,7 +139,10 @@ export class UpdateBudget extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UpdateBudgetFail extends StateUtils.EntityFailAction {
++export class UpdateBudgetFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_BUDGET_FAIL;
+ 
+   constructor(public payload: { budgetCode: string; error: any }) {
+diff --git a/feature-libs/organization/administration/core/store/actions/cost-center.action.ts b/feature-libs/organization/administration/core/store/actions/cost-center.action.ts
+index 1a1ec79c3e..81ea3c3a4f 100644
+--- a/feature-libs/organization/administration/core/store/actions/cost-center.action.ts
++++ b/feature-libs/organization/administration/core/store/actions/cost-center.action.ts
+@@ -6,6 +6,7 @@
+ 
+ import {
+   CostCenter,
++  ErrorAction,
+   ListModel,
+   SearchConfig,
+   StateUtils,
+@@ -58,7 +59,10 @@ export class LoadCostCenter extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadCostCenterFail extends StateUtils.EntityFailAction {
++export class LoadCostCenterFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_COST_CENTER_FAIL;
+ 
+   constructor(public payload: { costCenterCode: string; error: any }) {
+@@ -92,7 +96,10 @@ export class LoadCostCenters extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadCostCentersFail extends StateUtils.EntityFailAction {
++export class LoadCostCentersFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_COST_CENTERS_FAIL;
+ 
+   constructor(public payload: { params: SearchConfig; error: any }) {
+@@ -125,7 +132,10 @@ export class CreateCostCenter extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CreateCostCenterFail extends StateUtils.EntityFailAction {
++export class CreateCostCenterFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_COST_CENTER_FAIL;
+ 
+   constructor(public payload: { costCenterCode: string; error: any }) {
+@@ -155,7 +165,10 @@ export class UpdateCostCenter extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UpdateCostCenterFail extends StateUtils.EntityFailAction {
++export class UpdateCostCenterFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_COST_CENTER_FAIL;
+ 
+   constructor(public payload: { costCenterCode: string; error: any }) {
+@@ -188,7 +201,10 @@ export class LoadAssignedBudgets extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadAssignedBudgetsFail extends StateUtils.EntityFailAction {
++export class LoadAssignedBudgetsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ASSIGNED_BUDGETS_FAIL;
+ 
+   constructor(
+@@ -237,7 +253,10 @@ export class AssignBudget extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class AssignBudgetFail extends StateUtils.EntityFailAction {
++export class AssignBudgetFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = ASSIGN_BUDGET_FAIL;
+ 
+   constructor(public payload: { budgetCode: string; error: any }) {
+@@ -267,7 +286,10 @@ export class UnassignBudget extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UnassignBudgetFail extends StateUtils.EntityFailAction {
++export class UnassignBudgetFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UNASSIGN_BUDGET_FAIL;
+ 
+   constructor(public payload: { budgetCode: string; error: any }) {
+diff --git a/feature-libs/organization/administration/core/store/actions/org-unit.action.ts b/feature-libs/organization/administration/core/store/actions/org-unit.action.ts
+index 96775b20f9..b414f9eeb4 100644
+--- a/feature-libs/organization/administration/core/store/actions/org-unit.action.ts
++++ b/feature-libs/organization/administration/core/store/actions/org-unit.action.ts
+@@ -8,6 +8,7 @@ import {
+   Address,
+   B2BApprovalProcess,
+   B2BUnit,
++  ErrorAction,
+   ListModel,
+   SearchConfig,
+   StateUtils,
+@@ -108,7 +109,10 @@ export class LoadOrgUnit extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadOrgUnitFail extends StateUtils.EntityFailAction {
++export class LoadOrgUnitFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ORG_UNIT_FAIL;
+ 
+   constructor(public payload: { orgUnitId: string; error: any }) {
+@@ -141,7 +145,10 @@ export class LoadOrgUnitNodes extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadOrgUnitNodesFail extends StateUtils.EntityFailAction {
++export class LoadOrgUnitNodesFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_UNIT_NODES_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -165,7 +172,10 @@ export class CreateUnit extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CreateUnitFail extends StateUtils.EntityFailAction {
++export class CreateUnitFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_ORG_UNIT_FAIL;
+ 
+   constructor(public payload: { unitCode: string; error: any }) {
+@@ -191,7 +201,10 @@ export class UpdateUnit extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UpdateUnitFail extends StateUtils.EntityFailAction {
++export class UpdateUnitFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_ORG_UNIT_FAIL;
+ 
+   constructor(public payload: { unitCode: string; error: any }) {
+@@ -215,7 +228,10 @@ export class LoadTree extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadTreeFail extends StateUtils.EntityFailAction {
++export class LoadTreeFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_UNIT_TREE_FAIL;
+ 
+   constructor(public payload: { error: any }) {
+@@ -239,7 +255,10 @@ export class LoadApprovalProcesses extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadApprovalProcessesFail extends StateUtils.EntityFailAction {
++export class LoadApprovalProcessesFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_APPROVAL_PROCESSES_FAIL;
+ 
+   constructor(public payload: { error: any }) {
+@@ -300,7 +319,10 @@ export class ClearAssignedUsers extends StateUtils.EntityRemoveAction {
+   }
+ }
+ 
+-export class LoadAssignedUsersFail extends StateUtils.EntityFailAction {
++export class LoadAssignedUsersFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ASSIGNED_USERS_FAIL;
+ 
+   constructor(
+@@ -357,7 +379,10 @@ export class AssignRole extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class AssignRoleFail extends StateUtils.EntityFailAction {
++export class AssignRoleFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = ASSIGN_ROLE_FAIL;
+ 
+   constructor(
+@@ -394,7 +419,10 @@ export class UnassignRole extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UnassignRoleFail extends StateUtils.EntityFailAction {
++export class UnassignRoleFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UNASSIGN_ROLE_FAIL;
+ 
+   constructor(
+@@ -432,7 +460,10 @@ export class AssignApprover extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class AssignApproverFail extends StateUtils.EntityFailAction {
++export class AssignApproverFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = ASSIGN_APPROVER_FAIL;
+ 
+   constructor(
+@@ -470,7 +501,10 @@ export class UnassignApprover extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UnassignApproverFail extends StateUtils.EntityFailAction {
++export class UnassignApproverFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UNASSIGN_APPROVER_FAIL;
+ 
+   constructor(
+@@ -503,7 +537,10 @@ export class CreateAddress extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CreateAddressFail extends StateUtils.EntityFailAction {
++export class CreateAddressFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_ADDRESS_FAIL;
+ 
+   constructor(public payload: { addressId: string; error: any }) {
+@@ -534,7 +571,10 @@ export class UpdateAddress extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UpdateAddressFail extends StateUtils.EntityFailAction {
++export class UpdateAddressFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_ADDRESS_FAIL;
+ 
+   constructor(public payload: { addressId: string; error: any }) {
+@@ -564,7 +604,10 @@ export class DeleteAddress extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class DeleteAddressFail extends StateUtils.EntityFailAction {
++export class DeleteAddressFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = DELETE_ADDRESS_FAIL;
+ 
+   constructor(public payload: { addressId: string; error: any }) {
+@@ -601,7 +644,10 @@ export class LoadAddresses extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadAddressesFail extends StateUtils.EntityFailAction {
++export class LoadAddressesFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ADDRESSES_FAIL;
+ 
+   constructor(public payload: { orgUnitId: string; error: any }) {
+diff --git a/feature-libs/organization/administration/core/store/actions/permission.action.ts b/feature-libs/organization/administration/core/store/actions/permission.action.ts
+index 9690a797c2..3d18979e33 100644
+--- a/feature-libs/organization/administration/core/store/actions/permission.action.ts
++++ b/feature-libs/organization/administration/core/store/actions/permission.action.ts
+@@ -5,6 +5,7 @@
+  */
+ 
+ import {
++  ErrorAction,
+   ListModel,
+   OrderApprovalPermissionType,
+   SearchConfig,
+@@ -51,7 +52,10 @@ export class LoadPermission extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadPermissionFail extends StateUtils.EntityFailAction {
++export class LoadPermissionFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_PERMISSION_FAIL;
+ 
+   constructor(public payload: { permissionCode: string; error: any }) {
+@@ -85,7 +89,10 @@ export class LoadPermissions extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadPermissionsFail extends StateUtils.EntityFailAction {
++export class LoadPermissionsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_PERMISSIONS_FAIL;
+ 
+   constructor(public payload: { params: SearchConfig; error: any }) {
+@@ -118,7 +125,10 @@ export class CreatePermission extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CreatePermissionFail extends StateUtils.EntityFailAction {
++export class CreatePermissionFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_PERMISSION_FAIL;
+ 
+   constructor(public payload: { permissionCode: string; error: any }) {
+@@ -148,7 +158,10 @@ export class UpdatePermission extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UpdatePermissionFail extends StateUtils.EntityFailAction {
++export class UpdatePermissionFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_PERMISSION_FAIL;
+ 
+   constructor(public payload: { permissionCode: string; error: any }) {
+@@ -172,7 +185,10 @@ export class LoadPermissionTypes extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadPermissionTypesFail extends StateUtils.EntityFailAction {
++export class LoadPermissionTypesFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_PERMISSION_TYPES_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/feature-libs/organization/administration/core/store/actions/user-group.action.ts b/feature-libs/organization/administration/core/store/actions/user-group.action.ts
+index 829a2c3358..5de3ac8552 100644
+--- a/feature-libs/organization/administration/core/store/actions/user-group.action.ts
++++ b/feature-libs/organization/administration/core/store/actions/user-group.action.ts
+@@ -4,7 +4,12 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { ListModel, SearchConfig, StateUtils } from '@spartacus/core';
++import {
++  ErrorAction,
++  ListModel,
++  SearchConfig,
++  StateUtils,
++} from '@spartacus/core';
+ import { UserGroup } from '../../model/user-group.model';
+ import {
+   B2B_USER_ENTITIES,
+@@ -86,7 +91,10 @@ export class LoadUserGroup extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadUserGroupFail extends StateUtils.EntityFailAction {
++export class LoadUserGroupFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_USER_GROUP_FAIL;
+ 
+   constructor(public payload: { userGroupId: string; error: any }) {
+@@ -120,7 +128,10 @@ export class LoadUserGroups extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadUserGroupsFail extends StateUtils.EntityFailAction {
++export class LoadUserGroupsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_USER_GROUPS_FAIL;
+ 
+   constructor(public payload: { params: SearchConfig; error: any }) {
+@@ -162,7 +173,10 @@ export class LoadPermissions extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadPermissionsFail extends StateUtils.EntityFailAction {
++export class LoadPermissionsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_USER_GROUP_PERMISSIONS_FAIL;
+ 
+   constructor(
+@@ -214,7 +228,10 @@ export class LoadAvailableOrgCustomers extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadAvailableOrgCustomersFail extends StateUtils.EntityFailAction {
++export class LoadAvailableOrgCustomersFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_USER_GROUP_AVAILABLE_CUSTOMERS_FAIL;
+ 
+   constructor(
+@@ -257,7 +274,10 @@ export class CreateUserGroup extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CreateUserGroupFail extends StateUtils.EntityFailAction {
++export class CreateUserGroupFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_USER_GROUP_FAIL;
+ 
+   constructor(public payload: { userGroupId: string; error: any }) {
+@@ -287,7 +307,10 @@ export class AssignMember extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class AssignMemberFail extends StateUtils.EntityFailAction {
++export class AssignMemberFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = USER_GROUP_ASSIGN_MEMBER_FAIL;
+ 
+   constructor(
+@@ -323,7 +346,10 @@ export class AssignPermission extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class AssignPermissionFail extends StateUtils.EntityFailAction {
++export class AssignPermissionFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = USER_GROUP_ASSIGN_PERMISSION_FAIL;
+ 
+   constructor(
+@@ -359,7 +385,10 @@ export class UpdateUserGroup extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UpdateUserGroupFail extends StateUtils.EntityFailAction {
++export class UpdateUserGroupFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_USER_GROUP_FAIL;
+ 
+   constructor(public payload: { userGroupId: string; error: any }) {
+@@ -388,7 +417,10 @@ export class DeleteUserGroup extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class DeleteUserGroupFail extends StateUtils.EntityFailAction {
++export class DeleteUserGroupFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = DELETE_USER_GROUP_FAIL;
+ 
+   constructor(public payload: { userGroupId: string; error: any }) {
+@@ -418,7 +450,10 @@ export class UnassignMember extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UnassignMemberFail extends StateUtils.EntityFailAction {
++export class UnassignMemberFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = USER_GROUP_UNASSIGN_MEMBER_FAIL;
+ 
+   constructor(
+@@ -453,7 +488,10 @@ export class UnassignAllMembers extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UnassignAllMembersFail extends StateUtils.EntityFailAction {
++export class UnassignAllMembersFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = USER_GROUP_UNASSIGN_ALL_MEMBERS_FAIL;
+ 
+   constructor(public payload: { userGroupId: string; error: any }) {
+@@ -483,7 +521,10 @@ export class UnassignPermission extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UnassignPermissionFail extends StateUtils.EntityFailAction {
++export class UnassignPermissionFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = USER_GROUP_UNASSIGN_PERMISSION_FAIL;
+ 
+   constructor(
+diff --git a/feature-libs/organization/order-approval/core/store/actions/order-approval.action.ts b/feature-libs/organization/order-approval/core/store/actions/order-approval.action.ts
+index c7f4b62790..1e114bc14a 100644
+--- a/feature-libs/organization/order-approval/core/store/actions/order-approval.action.ts
++++ b/feature-libs/organization/order-approval/core/store/actions/order-approval.action.ts
+@@ -5,6 +5,7 @@
+  */
+ 
+ import {
++  ErrorAction,
+   ListModel,
+   PROCESS_FEATURE,
+   SearchConfig,
+@@ -48,7 +49,10 @@ export class LoadOrderApproval extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadOrderApprovalFail extends StateUtils.EntityFailAction {
++export class LoadOrderApprovalFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ORDER_APPROVAL_FAIL;
+ 
+   constructor(public payload: { orderApprovalCode: string; error: any }) {
+@@ -85,7 +89,10 @@ export class LoadOrderApprovals extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadOrderApprovalsFail extends StateUtils.EntityFailAction {
++export class LoadOrderApprovalsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ORDER_APPROVALS_FAIL;
+ 
+   constructor(public payload: { params: SearchConfig; error: any }) {
+@@ -127,7 +134,10 @@ export class MakeDecision extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class MakeDecisionFail extends StateUtils.EntityFailAction {
++export class MakeDecisionFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = MAKE_DECISION_FAIL;
+ 
+   constructor(public payload: { orderApprovalCode: string; error: any }) {
+diff --git a/feature-libs/organization/unit-order/core/store/actions/unit-order.action.ts b/feature-libs/organization/unit-order/core/store/actions/unit-order.action.ts
+index bce08be34b..b66988f6f0 100644
+--- a/feature-libs/organization/unit-order/core/store/actions/unit-order.action.ts
++++ b/feature-libs/organization/unit-order/core/store/actions/unit-order.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import { Order, OrderHistoryList } from '@spartacus/order/root';
+ import { UNIT_ORDERS, UNIT_ORDER_DETAILS } from '../unit-order-state';
+ 
+@@ -36,7 +36,10 @@ export class LoadUnitOrders extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadUnitOrdersFail extends StateUtils.LoaderFailAction {
++export class LoadUnitOrdersFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_UNIT_ORDERS_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -73,7 +76,10 @@ export class LoadOrderDetails extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadOrderDetailsFail extends StateUtils.LoaderFailAction {
++export class LoadOrderDetailsFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ORDER_DETAILS_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/feature-libs/pickup-in-store/core/store/actions/stock.action.ts b/feature-libs/pickup-in-store/core/store/actions/stock.action.ts
+index f291ad6ddc..09f62b1dcb 100644
+--- a/feature-libs/pickup-in-store/core/store/actions/stock.action.ts
++++ b/feature-libs/pickup-in-store/core/store/actions/stock.action.ts
+@@ -5,7 +5,12 @@
+  */
+ 
+ import { createAction, props } from '@ngrx/store';
+-import { StateUtils, Stock, StoreFinderStockSearchPage } from '@spartacus/core';
++import {
++  ErrorAction,
++  StateUtils,
++  Stock,
++  StoreFinderStockSearchPage,
++} from '@spartacus/core';
+ import { StockLocationSearchParams } from '@spartacus/pickup-in-store/root';
+ import { STOCK_DATA } from '../stock-state';
+ 
+@@ -35,7 +40,10 @@ export class StockLevelOnHold extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class StockLevelFail extends StateUtils.LoaderFailAction {
++export class StockLevelFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = STOCK_LEVEL_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/feature-libs/product-configurator/rulebased/core/state/actions/configurator-cart.action.ts b/feature-libs/product-configurator/rulebased/core/state/actions/configurator-cart.action.ts
+index 400ad7d0f5..47239dd190 100644
+--- a/feature-libs/product-configurator/rulebased/core/state/actions/configurator-cart.action.ts
++++ b/feature-libs/product-configurator/rulebased/core/state/actions/configurator-cart.action.ts
+@@ -6,7 +6,7 @@
+ 
+ import { Action } from '@ngrx/store';
+ import { MULTI_CART_DATA } from '@spartacus/cart/base/core';
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import { CommonConfigurator } from '@spartacus/product-configurator/common';
+ import { Configurator } from '../../model/configurator.model';
+ import { CONFIGURATOR_DATA } from '../configurator-state';
+@@ -52,7 +52,10 @@ export class ReadCartEntryConfigurationSuccess extends StateUtils.EntitySuccessA
+   }
+ }
+ 
+-export class ReadCartEntryConfigurationFail extends StateUtils.EntityFailAction {
++export class ReadCartEntryConfigurationFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = READ_CART_ENTRY_CONFIGURATION_FAIL;
+   constructor(public payload: { ownerKey: string; error: any }) {
+     super(CONFIGURATOR_DATA, payload.ownerKey, payload.error);
+@@ -75,7 +78,10 @@ export class ReadOrderEntryConfigurationSuccess extends StateUtils.EntitySuccess
+   }
+ }
+ 
+-export class ReadOrderEntryConfigurationFail extends StateUtils.EntityFailAction {
++export class ReadOrderEntryConfigurationFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = READ_ORDER_ENTRY_CONFIGURATION_FAIL;
+   constructor(public payload: { ownerKey: string; error: any }) {
+     super(CONFIGURATOR_DATA, payload.ownerKey, payload.error);
+diff --git a/feature-libs/product-configurator/rulebased/core/state/actions/configurator-variant.action.ts b/feature-libs/product-configurator/rulebased/core/state/actions/configurator-variant.action.ts
+index 43cc958c13..8693978d3b 100644
+--- a/feature-libs/product-configurator/rulebased/core/state/actions/configurator-variant.action.ts
++++ b/feature-libs/product-configurator/rulebased/core/state/actions/configurator-variant.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import { Configurator } from '../../model/configurator.model';
+ import { CONFIGURATOR_DATA } from '../configurator-state';
+ 
+@@ -19,7 +19,10 @@ export class SearchVariants extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class SearchVariantsFail extends StateUtils.EntityFailAction {
++export class SearchVariantsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = SEARCH_VARIANTS_FAIL;
+   constructor(public payload: { ownerKey: string; error: any }) {
+     super(CONFIGURATOR_DATA, payload.ownerKey, payload.error);
+diff --git a/feature-libs/product-configurator/rulebased/core/state/actions/configurator.action.ts b/feature-libs/product-configurator/rulebased/core/state/actions/configurator.action.ts
+index 6696f882ad..c7480b8775 100644
+--- a/feature-libs/product-configurator/rulebased/core/state/actions/configurator.action.ts
++++ b/feature-libs/product-configurator/rulebased/core/state/actions/configurator.action.ts
+@@ -84,7 +84,10 @@ export class CreateConfiguration extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class CreateConfigurationFail extends StateUtils.EntityFailAction {
++export class CreateConfigurationFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_CONFIGURATION_FAIL;
+ 
+   constructor(
+@@ -118,7 +121,10 @@ export class ReadConfiguration extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class ReadConfigurationFail extends StateUtils.EntityFailAction {
++export class ReadConfigurationFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = READ_CONFIGURATION_FAIL;
+ 
+   constructor(public payload: { ownerKey: string; error: any }) {
+@@ -179,6 +185,7 @@ export class UpdateConfigurationFinalizeSuccess extends StateUtils.EntitySuccess
+   }
+ }
+ 
++// eslint-disable-next-line @nx/workspace/no-ngrx-fail-action-without-error-action-implementation -- CXSPA-7091: `UpdateConfigurationFinalFail` contains `Fail` word in its name, but the purpose ot this action is not clear due to extending `EntitySuccessAction` instead of `EntitySuccessAction` That said, it's not know whether this action should implement `ErrorAction` or not.
+ export class UpdateConfigurationFinalizeFail extends StateUtils.EntitySuccessAction {
+   readonly type = UPDATE_CONFIGURATION_FINALIZE_FAIL;
+ 
+@@ -195,7 +202,10 @@ export class UpdatePriceSummary extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UpdatePriceSummaryFail extends StateUtils.EntityFailAction {
++export class UpdatePriceSummaryFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_PRICE_SUMMARY_FAIL;
+ 
+   constructor(public payload: { ownerKey: string; error: any }) {
+@@ -253,7 +263,10 @@ export class GetConfigurationOverview extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class GetConfigurationOverviewFail extends StateUtils.EntityFailAction {
++export class GetConfigurationOverviewFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = GET_CONFIGURATION_OVERVIEW_FAIL;
+ 
+   constructor(public payload: { ownerKey: string; error: any }) {
+@@ -279,7 +292,10 @@ export class UpdateConfigurationOverview extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class UpdateConfigurationOverviewFail extends StateUtils.EntityFailAction {
++export class UpdateConfigurationOverviewFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_CONFIGURATION_OVERVIEW_FAIL;
+ 
+   constructor(public payload: { ownerKey: string; error: any }) {
+diff --git a/feature-libs/product-configurator/textfield/core/state/actions/configurator-textfield.action.ts b/feature-libs/product-configurator/textfield/core/state/actions/configurator-textfield.action.ts
+index 1d5248f113..aa24e9c400 100644
+--- a/feature-libs/product-configurator/textfield/core/state/actions/configurator-textfield.action.ts
++++ b/feature-libs/product-configurator/textfield/core/state/actions/configurator-textfield.action.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import { CommonConfigurator } from '@spartacus/product-configurator/common';
+ import { ConfiguratorTextfield } from '../../model/configurator-textfield.model';
+ import { CONFIGURATION_TEXTFIELD_DATA } from '../configuration-textfield-state';
+@@ -49,7 +49,10 @@ export class CreateConfiguration extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class CreateConfigurationFail extends StateUtils.LoaderFailAction {
++export class CreateConfigurationFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = CREATE_CONFIGURATION_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -81,7 +84,10 @@ export class AddToCart extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class AddToCartFail extends StateUtils.LoaderFailAction {
++export class AddToCartFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = ADD_TO_CART_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -97,7 +103,10 @@ export class UpdateCartEntryConfiguration extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class UpdateCartEntryConfigurationFail extends StateUtils.LoaderFailAction {
++export class UpdateCartEntryConfigurationFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_CART_ENTRY_CONFIGURATION_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -123,7 +132,10 @@ export class ReadCartEntryConfigurationSuccess extends StateUtils.LoaderSuccessA
+   }
+ }
+ 
+-export class ReadCartEntryConfigurationFail extends StateUtils.LoaderFailAction {
++export class ReadCartEntryConfigurationFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = READ_CART_ENTRY_CONFIGURATION_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -149,7 +161,10 @@ export class ReadOrderEntryConfigurationSuccess extends StateUtils.LoaderSuccess
+   }
+ }
+ 
+-export class ReadOrderEntryConfigurationFail extends StateUtils.LoaderFailAction {
++export class ReadOrderEntryConfigurationFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = READ_ORDER_ENTRY_CONFIGURATION_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/feature-libs/storefinder/core/store/actions/find-stores.action.ts b/feature-libs/storefinder/core/store/actions/find-stores.action.ts
+index 5d254890f4..e618ed5a63 100644
+--- a/feature-libs/storefinder/core/store/actions/find-stores.action.ts
++++ b/feature-libs/storefinder/core/store/actions/find-stores.action.ts
+@@ -4,7 +4,12 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { GeoPoint, SearchConfig, StateUtils } from '@spartacus/core';
++import {
++  ErrorAction,
++  GeoPoint,
++  SearchConfig,
++  StateUtils,
++} from '@spartacus/core';
+ import { STORE_FINDER_DATA } from '../store-finder-state';
+ 
+ export const FIND_STORES_ON_HOLD = '[StoreFinder] On Hold';
+@@ -42,7 +47,10 @@ export class FindStores extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class FindStoresFail extends StateUtils.LoaderFailAction {
++export class FindStoresFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = FIND_STORES_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -66,7 +74,10 @@ export class FindStoreById extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class FindStoreByIdFail extends StateUtils.LoaderFailAction {
++export class FindStoreByIdFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = FIND_STORE_BY_ID_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/feature-libs/storefinder/core/store/actions/view-all-stores.action.ts b/feature-libs/storefinder/core/store/actions/view-all-stores.action.ts
+index 69e182c885..78dbf7a924 100644
+--- a/feature-libs/storefinder/core/store/actions/view-all-stores.action.ts
++++ b/feature-libs/storefinder/core/store/actions/view-all-stores.action.ts
+@@ -5,7 +5,7 @@
+  */
+ 
+ import { Action } from '@ngrx/store';
+-import { StateUtils } from '@spartacus/core';
++import { ErrorAction, StateUtils } from '@spartacus/core';
+ import { STORE_FINDER_DATA } from '../store-finder-state';
+ 
+ export const VIEW_ALL_STORES = '[StoreFinder] View All Stores';
+@@ -21,7 +21,10 @@ export class ViewAllStores extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class ViewAllStoresFail extends StateUtils.LoaderFailAction {
++export class ViewAllStoresFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = VIEW_ALL_STORES_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/projects/core/src/anonymous-consents/store/actions/anonymous-consents.action.ts b/projects/core/src/anonymous-consents/store/actions/anonymous-consents.action.ts
+index 87bcb246f1..82ef2c046b 100644
+--- a/projects/core/src/anonymous-consents/store/actions/anonymous-consents.action.ts
++++ b/projects/core/src/anonymous-consents/store/actions/anonymous-consents.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import {
+   AnonymousConsent,
+   ConsentTemplate,
+@@ -54,7 +55,10 @@ export class LoadAnonymousConsentTemplatesSuccess extends StateUtils.LoaderSucce
+   }
+ }
+ 
+-export class LoadAnonymousConsentTemplatesFail extends StateUtils.LoaderFailAction {
++export class LoadAnonymousConsentTemplatesFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ANONYMOUS_CONSENT_TEMPLATES_FAIL;
+ 
+   constructor(payload: any) {
+diff --git a/projects/core/src/auth/client-auth/store/actions/client-token.action.ts b/projects/core/src/auth/client-auth/store/actions/client-token.action.ts
+index 4323e9f8da..4a63e6caf1 100644
+--- a/projects/core/src/auth/client-auth/store/actions/client-token.action.ts
++++ b/projects/core/src/auth/client-auth/store/actions/client-token.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../../model';
+ import { StateUtils } from '../../../../state/utils/index';
+ import { ClientToken } from '../../models/client-token.model';
+ import { CLIENT_TOKEN_DATA } from '../client-auth-state';
+@@ -20,7 +21,10 @@ export class LoadClientToken extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadClientTokenFail extends StateUtils.LoaderFailAction {
++export class LoadClientTokenFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_CLIENT_TOKEN_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/projects/core/src/cms/store/actions/components.action.ts b/projects/core/src/cms/store/actions/components.action.ts
+index 405e521a01..c59fa7c1f8 100755
+--- a/projects/core/src/cms/store/actions/components.action.ts
++++ b/projects/core/src/cms/store/actions/components.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import { CmsComponent } from '../../../model/cms.model';
+ import { PageContext } from '../../../routing/index';
+ import { StateUtils } from '../../../state/utils/index';
+@@ -27,7 +28,10 @@ export class LoadCmsComponent extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadCmsComponentFail extends StateUtils.EntityFailAction {
++export class LoadCmsComponentFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_CMS_COMPONENT_FAIL;
+ 
+   constructor(payload: { uid: string; error: any; pageContext: PageContext });
+diff --git a/projects/core/src/cms/store/actions/navigation-entry-item.action.ts b/projects/core/src/cms/store/actions/navigation-entry-item.action.ts
+index b4c8c13434..924df914ec 100755
+--- a/projects/core/src/cms/store/actions/navigation-entry-item.action.ts
++++ b/projects/core/src/cms/store/actions/navigation-entry-item.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import { StateUtils } from '../../../state/utils/index';
+ import { NAVIGATION_DETAIL_ENTITY } from '../cms-state';
+ 
+@@ -21,7 +22,10 @@ export class LoadCmsNavigationItems extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadCmsNavigationItemsFail extends StateUtils.EntityFailAction {
++export class LoadCmsNavigationItemsFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_CMS_NAVIGATION_ITEMS_FAIL;
+ 
+   constructor(
+diff --git a/projects/core/src/cms/store/actions/page.action.ts b/projects/core/src/cms/store/actions/page.action.ts
+index 2bac0b25b5..a22726ac23 100755
+--- a/projects/core/src/cms/store/actions/page.action.ts
++++ b/projects/core/src/cms/store/actions/page.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import { PageContext } from '../../../routing/index';
+ import { StateUtils } from '../../../state/utils/index';
+ import { Page } from '../../model/page.model';
+@@ -22,7 +23,10 @@ export class LoadCmsPageData extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class LoadCmsPageDataFail extends StateUtils.EntityFailAction {
++export class LoadCmsPageDataFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_CMS_PAGE_DATA_FAIL;
+ 
+   constructor(pageContext: PageContext, error: any) {
+@@ -46,7 +50,10 @@ export class CmsSetPageSuccessIndex extends StateUtils.EntitySuccessAction {
+   }
+ }
+ 
+-export class CmsSetPageFailIndex extends StateUtils.EntityFailAction {
++export class CmsSetPageFailIndex
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CMS_SET_PAGE_FAIL_INDEX;
+ 
+   constructor(
+diff --git a/projects/core/src/product/store/actions/product.action.ts b/projects/core/src/product/store/actions/product.action.ts
+index 965cc4a851..09b6bc4902 100644
+--- a/projects/core/src/product/store/actions/product.action.ts
++++ b/projects/core/src/product/store/actions/product.action.ts
+@@ -5,6 +5,7 @@
+  */
+ 
+ import { Action } from '@ngrx/store';
++import { ErrorAction } from '../../../model';
+ import { Product } from '../../../model/product.model';
+ import { EntityLoaderMeta } from '../../../state/utils/entity-loader/entity-loader.action';
+ import { EntityScopedLoaderActions } from '../../../state/utils/scoped-loader/entity-scoped-loader.actions';
+@@ -36,7 +37,10 @@ export class LoadProduct extends EntityScopedLoaderActions.EntityScopedLoadActio
+   }
+ }
+ 
+-export class LoadProductFail extends EntityScopedLoaderActions.EntityScopedFailAction {
++export class LoadProductFail
++  extends EntityScopedLoaderActions.EntityScopedFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_PRODUCT_FAIL;
+ 
+   constructor(
+diff --git a/projects/core/src/state/utils/entity-loader/entity-loader.action.ts b/projects/core/src/state/utils/entity-loader/entity-loader.action.ts
+index 442b9f9ff1..42a1602de6 100644
+--- a/projects/core/src/state/utils/entity-loader/entity-loader.action.ts
++++ b/projects/core/src/state/utils/entity-loader/entity-loader.action.ts
+@@ -5,6 +5,7 @@
+  */
+ 
+ import { Action } from '@ngrx/store';
++import { ErrorAction } from '../../../model';
+ import { EntityId, entityMeta, EntityMeta } from '../entity/entity.action';
+ import {
+   failMeta,
+@@ -90,9 +91,10 @@ export class EntityLoadAction implements EntityLoaderAction {
+   }
+ }
+ 
+-export class EntityFailAction implements EntityLoaderAction {
++export class EntityFailAction implements EntityLoaderAction, ErrorAction {
+   type = ENTITY_FAIL_ACTION;
+   readonly meta: EntityLoaderMeta;
++  public error: any;
+ 
+   // eslint-disable-next-line @typescript-eslint/unified-signatures
+   constructor(entityType: string, id: EntityId, error: any);
+@@ -102,12 +104,9 @@ export class EntityFailAction implements EntityLoaderAction {
+    *             the feature toggle `ssrStrictErrorHandlingForHttpAndNgrx`.
+    */
+   constructor(entityType: string, id: EntityId);
+-  constructor(
+-    entityType: string,
+-    id: EntityId,
+-    public error?: any
+-  ) {
++  constructor(entityType: string, id: EntityId, error?: any) {
+     this.meta = entityFailMeta(entityType, id, error);
++    this.error = error;
+   }
+ }
+ 
+diff --git a/projects/core/src/user/store/actions/customer-coupon.action.ts b/projects/core/src/user/store/actions/customer-coupon.action.ts
+index f2d0295f18..8d84f48573 100644
+--- a/projects/core/src/user/store/actions/customer-coupon.action.ts
++++ b/projects/core/src/user/store/actions/customer-coupon.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import {
+   CustomerCoupon2Customer,
+   CustomerCouponNotification,
+@@ -78,7 +79,10 @@ export class LoadCustomerCoupons extends LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadCustomerCouponsFail extends LoaderFailAction {
++export class LoadCustomerCouponsFail
++  extends LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_CUSTOMER_COUPONS_FAIL;
+   constructor(public payload: any) {
+     super(CUSTOMER_COUPONS, payload);
+@@ -112,7 +116,10 @@ export class SubscribeCustomerCoupon extends EntityLoadAction {
+   }
+ }
+ 
+-export class SubscribeCustomerCouponFail extends EntityFailAction {
++export class SubscribeCustomerCouponFail
++  extends EntityFailAction
++  implements ErrorAction
++{
+   readonly type = SUBSCRIBE_CUSTOMER_COUPON_FAIL;
+   constructor(public payload: any) {
+     super(PROCESS_FEATURE, SUBSCRIBE_CUSTOMER_COUPON_PROCESS_ID, payload);
+@@ -145,7 +152,10 @@ export class UnsubscribeCustomerCoupon extends EntityLoadAction {
+   }
+ }
+ 
+-export class UnsubscribeCustomerCouponFail extends EntityFailAction {
++export class UnsubscribeCustomerCouponFail
++  extends EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UNSUBSCRIBE_CUSTOMER_COUPON_FAIL;
+   constructor(public payload: any) {
+     super(PROCESS_FEATURE, UNSUBSCRIBE_CUSTOMER_COUPON_PROCESS_ID, payload);
+@@ -197,7 +207,10 @@ export class ResetDisclaimCustomerCoupon extends EntityLoaderResetAction {
+   }
+ }
+ 
+-export class DisclaimCustomerCouponFail extends EntityFailAction {
++export class DisclaimCustomerCouponFail
++  extends EntityFailAction
++  implements ErrorAction
++{
+   readonly type = DISCLAIM_CUSTOMER_COUPON_FAIL;
+   constructor(public payload: any) {
+     super(PROCESS_FEATURE, DISCLAIM_CUSTOMER_COUPON_PROCESS_ID, payload);
+@@ -211,7 +224,10 @@ export class DisclaimCustomerCouponSuccess extends EntitySuccessAction {
+   }
+ }
+ 
+-export class ClaimCustomerCouponFail extends EntityFailAction {
++export class ClaimCustomerCouponFail
++  extends EntityFailAction
++  implements ErrorAction
++{
+   readonly type = CLAIM_CUSTOMER_COUPON_FAIL;
+   constructor(public payload: any) {
+     super(PROCESS_FEATURE, CLAIM_CUSTOMER_COUPON_PROCESS_ID, payload);
+diff --git a/projects/core/src/user/store/actions/notification-preference.action.ts b/projects/core/src/user/store/actions/notification-preference.action.ts
+index 70fb43350e..66641a3fdd 100644
+--- a/projects/core/src/user/store/actions/notification-preference.action.ts
++++ b/projects/core/src/user/store/actions/notification-preference.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import { NotificationPreference } from '../../../model/notification-preference.model';
+ import { PROCESS_FEATURE } from '../../../process/store/process-state';
+ import {
+@@ -43,7 +44,10 @@ export class LoadNotificationPreferences extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadNotificationPreferencesFail extends StateUtils.LoaderFailAction {
++export class LoadNotificationPreferencesFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_NOTIFICATION_PREFERENCES_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -69,7 +73,10 @@ export class UpdateNotificationPreferences extends EntityLoadAction {
+   }
+ }
+ 
+-export class UpdateNotificationPreferencesFail extends EntityFailAction {
++export class UpdateNotificationPreferencesFail
++  extends EntityFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_NOTIFICATION_PREFERENCES_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/projects/core/src/user/store/actions/payment-methods.action.ts b/projects/core/src/user/store/actions/payment-methods.action.ts
+index dfb3603589..be76ce8d91 100644
+--- a/projects/core/src/user/store/actions/payment-methods.action.ts
++++ b/projects/core/src/user/store/actions/payment-methods.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import { PaymentDetails } from '../../../model/payment.model';
+ import { StateUtils } from '../../../state/utils/index';
+ import { USER_PAYMENT_METHODS } from '../user-state';
+@@ -35,7 +36,10 @@ export class LoadUserPaymentMethods extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadUserPaymentMethodsFail extends StateUtils.LoaderFailAction {
++export class LoadUserPaymentMethodsFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_USER_PAYMENT_METHODS_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -59,7 +63,10 @@ export class SetDefaultUserPaymentMethod extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class SetDefaultUserPaymentMethodFail extends StateUtils.LoaderFailAction {
++export class SetDefaultUserPaymentMethodFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = SET_DEFAULT_USER_PAYMENT_METHOD_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -83,7 +90,10 @@ export class DeleteUserPaymentMethod extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class DeleteUserPaymentMethodFail extends StateUtils.LoaderFailAction {
++export class DeleteUserPaymentMethodFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = DELETE_USER_PAYMENT_METHOD_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/projects/core/src/user/store/actions/product-interests.actions.ts b/projects/core/src/user/store/actions/product-interests.actions.ts
+index 036022eb8a..57eaa3ae76 100644
+--- a/projects/core/src/user/store/actions/product-interests.actions.ts
++++ b/projects/core/src/user/store/actions/product-interests.actions.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import {
+   NotificationType,
+   ProductInterestEntryRelation,
+@@ -63,7 +64,10 @@ export class LoadProductInterests extends LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadProductInterestsFail extends LoaderFailAction {
++export class LoadProductInterestsFail
++  extends LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_PRODUCT_INTERESTS_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -101,7 +105,10 @@ export class RemoveProductInterestSuccess extends EntitySuccessAction {
+   }
+ }
+ 
+-export class RemoveProductInterestFail extends EntityFailAction {
++export class RemoveProductInterestFail
++  extends EntityFailAction
++  implements ErrorAction
++{
+   readonly type = REMOVE_PRODUCT_INTEREST_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -131,7 +138,10 @@ export class AddProductInterestSuccess extends EntitySuccessAction {
+   }
+ }
+ 
+-export class AddProductInterestFail extends EntityFailAction {
++export class AddProductInterestFail
++  extends EntityFailAction
++  implements ErrorAction
++{
+   readonly type = ADD_PRODUCT_INTEREST_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/projects/core/src/user/store/actions/regions.action.ts b/projects/core/src/user/store/actions/regions.action.ts
+index 6c8417bf25..201746ed19 100644
+--- a/projects/core/src/user/store/actions/regions.action.ts
++++ b/projects/core/src/user/store/actions/regions.action.ts
+@@ -5,6 +5,7 @@
+  */
+ 
+ import { Action } from '@ngrx/store';
++import { ErrorAction } from '../../../model';
+ import { Region } from '../../../model/address.model';
+ import { StateUtils } from '../../../state/utils/index';
+ import { REGIONS } from '../user-state';
+@@ -22,7 +23,10 @@ export class LoadRegions extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadRegionsFail extends StateUtils.LoaderFailAction {
++export class LoadRegionsFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_REGIONS_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/projects/core/src/user/store/actions/user-addresses.action.ts b/projects/core/src/user/store/actions/user-addresses.action.ts
+index cca78e9e74..35db516b02 100644
+--- a/projects/core/src/user/store/actions/user-addresses.action.ts
++++ b/projects/core/src/user/store/actions/user-addresses.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import { Address } from '../../../model/address.model';
+ import { StateUtils } from '../../../state/utils/index';
+ import { USER_ADDRESSES } from '../user-state';
+@@ -32,7 +33,10 @@ export class LoadUserAddresses extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadUserAddressesFail extends StateUtils.LoaderFailAction {
++export class LoadUserAddressesFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_USER_ADDRESSES_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -57,7 +61,10 @@ export class AddUserAddress extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class AddUserAddressFail extends StateUtils.LoaderFailAction {
++export class AddUserAddressFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = ADD_USER_ADDRESS_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -84,7 +91,10 @@ export class UpdateUserAddress extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class UpdateUserAddressFail extends StateUtils.LoaderFailAction {
++export class UpdateUserAddressFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = UPDATE_USER_ADDRESS_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -109,7 +119,10 @@ export class DeleteUserAddress extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class DeleteUserAddressFail extends StateUtils.LoaderFailAction {
++export class DeleteUserAddressFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = DELETE_USER_ADDRESS_FAIL;
+ 
+   constructor(public payload: any) {
+diff --git a/projects/core/src/user/store/actions/user-consents.action.ts b/projects/core/src/user/store/actions/user-consents.action.ts
+index fb5f02a168..b9ec6706cd 100644
+--- a/projects/core/src/user/store/actions/user-consents.action.ts
++++ b/projects/core/src/user/store/actions/user-consents.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import { ConsentTemplate } from '../../../model/consent.model';
+ import { PROCESS_FEATURE } from '../../../process/store/process-state';
+ import { StateUtils } from '../../../state/utils/index';
+@@ -40,7 +41,10 @@ export class LoadUserConsents extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadUserConsentsFail extends StateUtils.LoaderFailAction {
++export class LoadUserConsentsFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_USER_CONSENTS_FAIL;
+ 
+   constructor(public payload: any) {
+@@ -78,7 +82,10 @@ export class GiveUserConsent extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class GiveUserConsentFail extends StateUtils.EntityFailAction {
++export class GiveUserConsentFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = GIVE_USER_CONSENT_FAIL;
+ 
+   constructor(payload: any) {
+@@ -128,7 +135,10 @@ export class WithdrawUserConsent extends StateUtils.EntityLoadAction {
+   }
+ }
+ 
+-export class WithdrawUserConsentFail extends StateUtils.EntityFailAction {
++export class WithdrawUserConsentFail
++  extends StateUtils.EntityFailAction
++  implements ErrorAction
++{
+   readonly type = WITHDRAW_USER_CONSENT_FAIL;
+ 
+   constructor(payload: any) {
+diff --git a/projects/core/src/user/store/actions/user-cost-center.action.ts b/projects/core/src/user/store/actions/user-cost-center.action.ts
+index c9665585f0..dc2fa02865 100644
+--- a/projects/core/src/user/store/actions/user-cost-center.action.ts
++++ b/projects/core/src/user/store/actions/user-cost-center.action.ts
+@@ -4,6 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import { ErrorAction } from '../../../model';
+ import { CostCenter } from '../../../model/org-unit.model';
+ import { StateUtils } from '../../../state/utils/index';
+ import { USER_COST_CENTERS } from '../user-state';
+@@ -21,7 +22,10 @@ export class LoadActiveCostCenters extends StateUtils.LoaderLoadAction {
+   }
+ }
+ 
+-export class LoadActiveCostCentersFail extends StateUtils.LoaderFailAction {
++export class LoadActiveCostCentersFail
++  extends StateUtils.LoaderFailAction
++  implements ErrorAction
++{
+   readonly type = LOAD_ACTIVE_COST_CENTERS_FAIL;
+   constructor(public payload: any) {
+     super(USER_COST_CENTERS, payload);
+diff --git a/tools/eslint-rules/index.ts b/tools/eslint-rules/index.ts
+index 7489e4b58e..a7cedb0a7b 100644
+--- a/tools/eslint-rules/index.ts
++++ b/tools/eslint-rules/index.ts
+@@ -24,6 +24,11 @@ import {
+   RULE_NAME as useProvideDefaultFeatureTogglesFactoryName,
+ } from './rules/use-provide-default-feature-toggles-factory';
+ 
++import {
++  rule as noNgrxFailActionWithoutErrorActionImplementation,
++  RULE_NAME as noNgrxFailActionWithoutErrorActionImplementationName,
++} from './rules/no-ngrx-fail-action-without-error-action-implementation';
++
+ /**
+  * Import your custom workspace rules at the top of this file.
+  *
+@@ -55,5 +60,7 @@ module.exports = {
+     [useProvideDefaultFeatureTogglesName]: useProvideDefaultFeatureToggles,
+     [useProvideDefaultFeatureTogglesFactoryName]:
+       useProvideDefaultFeatureTogglesFactory,
++    [noNgrxFailActionWithoutErrorActionImplementationName]:
++      noNgrxFailActionWithoutErrorActionImplementation,
+   },
+ };
+diff --git a/tools/eslint-rules/rules/no-ngrx-fail-action-without-error-action-implementation.ts b/tools/eslint-rules/rules/no-ngrx-fail-action-without-error-action-implementation.ts
+new file mode 100644
+index 0000000000..7ca72e0116
+--- /dev/null
++++ b/tools/eslint-rules/rules/no-ngrx-fail-action-without-error-action-implementation.ts
+@@ -0,0 +1,82 @@
++/*
++ * SPDX-FileCopyrightText: 2024 SAP Spartacus team <spartacus-team@sap.com>
++ *
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++/**
++ * This file sets you up with structure needed for an ESLint rule.
++ *
++ * It leverages utilities from @typescript-eslint to allow TypeScript to
++ * provide autocompletions etc for the configuration.
++ *
++ * Your rule's custom logic will live within the create() method below
++ * and you can learn more about writing ESLint rules on the official guide:
++ *
++ * https://eslint.org/docs/developer-guide/working-with-rules
++ *
++ */
++
++import { ESLintUtils, TSESTree } from '@typescript-eslint/utils';
++import {
++  fixMissingImplementsInterface,
++  hasImplementsInterface,
++} from './utils/implements-interface-utils';
++import { fixPossiblyMissingImport } from './utils/import-utils';
++
++// NOTE: The rule will be available in ESLint configs as "@nrwl/nx/workspace/no-ngrx-fail-action-without-error-action-implementation"
++export const RULE_NAME =
++  'no-ngrx-fail-action-without-error-action-implementation';
++
++export const rule = ESLintUtils.RuleCreator(() => __filename)({
++  name: RULE_NAME,
++  meta: {
++    type: 'problem',
++    docs: {
++      description: ``,
++      recommended: 'recommended',
++    },
++    schema: [], // no options
++    messages: {
++      missingImplementsErrorAction:
++        '[Spartacus] NgRx Failure Action class should have `implements ErrorAction`. Otherwise it might be not handled properly by `EffectsErrorHandlerService`',
++    },
++    fixable: 'code',
++  },
++  defaultOptions: [],
++  create(context) {
++    return {
++      'ClassDeclaration[id.name=/Fail/]'(node: TSESTree.ClassDeclaration) {
++        const Constants = {
++          ErrorAction: 'ErrorAction',
++          SpartacusCore: '@spartacus/core',
++        };
++
++        if (!hasImplementsInterface(node, Constants.ErrorAction)) {
++          context.report({
++            node: node.id ?? node,
++            messageId: 'missingImplementsErrorAction',
++            fix(fixer) {
++              const sourceCode = context.sourceCode;
++              return [
++                ...fixMissingImplementsInterface({
++                  node,
++                  interfaceName: Constants.ErrorAction,
++                  sourceCode,
++                  fixer,
++                }),
++
++                ...fixPossiblyMissingImport({
++                  importedIdentifier: Constants.ErrorAction,
++                  importPath: Constants.SpartacusCore,
++                  sourceCode,
++                  fixer,
++                }),
++              ];
++            },
++          });
++        }
++      },
++    };
++  },
++});
+diff --git a/tools/eslint-rules/rules/utils/implements-interface-utils.ts b/tools/eslint-rules/rules/utils/implements-interface-utils.ts
+new file mode 100644
+index 0000000000..7d2d0a6c82
+--- /dev/null
++++ b/tools/eslint-rules/rules/utils/implements-interface-utils.ts
+@@ -0,0 +1,85 @@
++/*
++ * SPDX-FileCopyrightText: 2024 SAP Spartacus team <spartacus-team@sap.com>
++ *
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import { AST_NODE_TYPES, TSESTree } from '@typescript-eslint/utils';
++import {
++  RuleFix,
++  RuleFixer,
++  SourceCode,
++} from '@typescript-eslint/utils/ts-eslint';
++
++/**
++ * Tells whether the class declaration `node` has an `implements` clause with the given `interfaceName`.
++ */
++export function hasImplementsInterface(
++  node: TSESTree.ClassDeclaration,
++  interfaceName: string
++): boolean {
++  return node.implements?.some(
++    (impl) =>
++      impl.expression.type === AST_NODE_TYPES.Identifier &&
++      impl.expression.name === interfaceName
++  );
++}
++
++/**
++ * Adds missing `implements` clause for the class declaration.
++ *
++ * - if there are already implemented interfaces, it adds the new one at the end
++ * - if there is a superclass, it adds the new interface after it
++ * - if there is no superclass, it adds the new interface after the class name
++ */
++export function fixMissingImplementsInterface({
++  fixer,
++  interfaceName,
++  node,
++  sourceCode,
++}: {
++  node: TSESTree.ClassDeclaration;
++  interfaceName: string;
++  sourceCode: SourceCode;
++  fixer: RuleFixer;
++}): RuleFix[] {
++  const implementsText = createImplementsText({
++    node,
++    interfaceName,
++    sourceCode,
++  });
++
++  const fixes = [];
++  if (node.implements?.length > 0) {
++    const lastImplementsNode = node.implements[node.implements.length - 1];
++    fixes.push(fixer.insertTextAfter(lastImplementsNode, `, ${interfaceName}`));
++  } else if (node.superClass) {
++    fixes.push(fixer.insertTextAfter(node.superClass, implementsText));
++  } else if (node.id) {
++    fixes.push(fixer.insertTextAfter(node.id, implementsText));
++  }
++  return fixes;
++}
++
++/**
++ * Returns a string with the `implements` clause for the class declaration.
++ *
++ * - if there are already implemented interfaces, it adds the new one at the end
++ * - if there is a superclass, it adds the new interface after it
++ * - if there is no superclass, it adds the new interface after the class name
++ */
++function createImplementsText({
++  node,
++  interfaceName,
++  sourceCode,
++}: {
++  node: TSESTree.ClassDeclaration;
++  interfaceName: string;
++  sourceCode: SourceCode;
++}): string {
++  let otherImplements = node.implements
++    ? node.implements.map((impl) => sourceCode.getText(impl)).join(', ')
++    : '';
++  const optionalComma = otherImplements ? ', ' : '';
++  return ` implements ${otherImplements}${optionalComma}${interfaceName}`;
++}
+diff --git a/tools/eslint-rules/rules/utils/import-utils.ts b/tools/eslint-rules/rules/utils/import-utils.ts
+new file mode 100644
+index 0000000000..91cfa5c77d
+--- /dev/null
++++ b/tools/eslint-rules/rules/utils/import-utils.ts
+@@ -0,0 +1,99 @@
++/*
++ * SPDX-FileCopyrightText: 2024 SAP Spartacus team <spartacus-team@sap.com>
++ *
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import { AST_NODE_TYPES } from '@typescript-eslint/utils';
++import {
++  RuleFix,
++  RuleFixer,
++  SourceCode,
++} from '@typescript-eslint/utils/ts-eslint';
++
++/**
++ * Adds an import in the file for `importedIdentifier` from `importPath`,
++ * if it's missing in the file `sourceCode`.
++ */
++export function fixPossiblyMissingImport({
++  fixer,
++  importedIdentifier,
++  importPath,
++  sourceCode,
++}: {
++  fixer: RuleFixer;
++  importedIdentifier: string;
++  importPath: string;
++  sourceCode: SourceCode;
++}): RuleFix[] {
++  if (isIdentifierImported({ sourceCode, importedIdentifier, importPath })) {
++    return [];
++  }
++
++  return fixMissingImport({
++    sourceCode,
++    importedIdentifier,
++    importPath,
++    fixer,
++  });
++}
++
++/**
++ * Tells whether the `importedIdentifier` is imported from `importPath` in the file of `sourceCode`.
++ */
++export function isIdentifierImported({
++  importedIdentifier,
++  importPath,
++  sourceCode,
++}: {
++  importedIdentifier: string;
++  importPath: string;
++  sourceCode: SourceCode;
++}): boolean {
++  const importDeclarations = sourceCode.ast.body.filter(
++    (statement) => statement.type === AST_NODE_TYPES.ImportDeclaration
++  );
++  return importDeclarations.some(
++    (declaration) =>
++      declaration.type === AST_NODE_TYPES.ImportDeclaration &&
++      declaration.source.value === importPath &&
++      declaration.specifiers.some(
++        (specifier) =>
++          specifier.type === AST_NODE_TYPES.ImportSpecifier &&
++          specifier.imported.name === importedIdentifier
++      )
++  );
++}
++
++/**
++ * Adds an import in the file for `importedIdentifier` from `importPath`,
++ * in the file `sourceCode`.
++ */
++export function fixMissingImport({
++  fixer,
++  importedIdentifier,
++  importPath,
++  sourceCode,
++}: {
++  fixer: RuleFixer;
++  importedIdentifier: string;
++  importPath: string;
++  sourceCode: SourceCode;
++}): RuleFix[] {
++  const fixes = [];
++  const importStatementText = `import { ${importedIdentifier} } from '${importPath}';\n`;
++  const importDeclarations = sourceCode.ast.body.filter(
++    (statement) => statement.type === AST_NODE_TYPES.ImportDeclaration
++  );
++
++  if (importDeclarations.length > 0) {
++    const lastImport = importDeclarations[importDeclarations.length - 1];
++    fixes.push(fixer.insertTextAfter(lastImport, `\n${importStatementText}`));
++  } else {
++    fixes.push(
++      fixer.insertTextBefore(sourceCode.ast.body[0], importStatementText)
++    );
++  }
++
++  return fixes;
++}

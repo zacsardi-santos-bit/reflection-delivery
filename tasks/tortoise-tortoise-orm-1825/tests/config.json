@@ -1,0 +1,25 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_concurrency.py -v",
+  "test_files": [
+    "tests/test_concurrency.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_concurrency.TestConcurrentDBConnectionInitialization::test_concurrent_transactions"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_concurrency.TestConcurrencyIsolated::test_concurrency_create",
+    "tests.test_concurrency.TestConcurrencyIsolated::test_concurrency_read",
+    "tests.test_concurrency.TestConcurrencyIsolated::test_concurrent_get_or_create",
+    "tests.test_concurrency.TestConcurrencyIsolated::test_concurrent_transactions_with_multiple_ops",
+    "tests.test_concurrency.TestConcurrencyIsolated::test_concurrent_transactions_with_single_op",
+    "tests.test_concurrency.TestConcurrencyIsolated::test_nested_concurrent_transactions_with_multiple_ops",
+    "tests.test_concurrency.TestConcurrencyIsolated::test_nonconcurrent_get_or_create",
+    "tests.test_concurrency.TestConcurrencyTransactioned::test_concurrency_create",
+    "tests.test_concurrency.TestConcurrencyTransactioned::test_concurrency_read",
+    "tests.test_concurrency.TestConcurrencyTransactioned::test_nonconcurrent_get_or_create",
+    "tests.test_concurrency.TestConcurrentDBConnectionInitialization::test_concurrent_queries"
+  ]
+}

@@ -1,0 +1,5 @@
+patching file src/component/areaSeries.ts
+patching file src/component/lineSeries.ts
+patching file stories/area.stories.ts
+patching file stories/line.stories.ts
+patching file types/components/series.d.ts

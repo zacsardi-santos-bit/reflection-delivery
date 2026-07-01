@@ -1,0 +1,12 @@
+patching file adapters/repos/db/vector/hnsw/distancer/bench_amd64_test.go
+patching file adapters/repos/db/vector/hnsw/distancer/dot_product_amd64_test.go
+patching file adapters/repos/db/vector/hnsw/distancer/l2_amd64_test.go
+# github.com/weaviate/weaviate/adapters/repos/db/vector/hnsw/distancer [github.com/weaviate/weaviate/adapters/repos/db/vector/hnsw/distancer.test]
+adapters/repos/db/vector/hnsw/distancer/bench_amd64_test.go:43:66: undefined: asm.DotAVX512
+adapters/repos/db/vector/hnsw/distancer/dot_product_amd64_test.go:134:43: undefined: asm.DotAVX512
+adapters/repos/db/vector/hnsw/distancer/dot_product_amd64_test.go:135:44: undefined: asm.DotAVX512
+adapters/repos/db/vector/hnsw/distancer/l2_amd64_test.go:53:21: undefined: asm.L2AVX512
+adapters/repos/db/vector/hnsw/distancer/l2_amd64_test.go:78:21: undefined: asm.L2AVX512
+adapters/repos/db/vector/hnsw/distancer/l2_amd64_test.go:141:10: undefined: asm.L2AVX512
+FAIL	github.com/weaviate/weaviate/adapters/repos/db/vector/hnsw/distancer [build failed]
+reward=0 graded=98 found=98 failed=98 parsed=1 framework=go exit_code=1

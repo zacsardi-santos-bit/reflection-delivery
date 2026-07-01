@@ -1,0 +1,23 @@
+{
+ "task": "apache-gravitino-6538",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds LineUtil.getDefaultValue/getAutoIncrement/getComment/getDisplayWidth and 'Default' columns in PlainFormat & TableFormat; F2P=44 JUnit methods"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 26,
+  "shallow": true
+ }
+}

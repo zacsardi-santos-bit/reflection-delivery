@@ -1,0 +1,67 @@
+patching file packages/ts/file-router/test/runtime/createMenuItems.spec.ts
+patching file packages/ts/file-router/test/utils.tsx
+[?25l
+ RUN  v3.0.4 /workspace/repo/packages/ts/file-router
+
+ ✓ test/runtime/createMenuItems.spec.ts > @vaadin/hilla-file-router > createMenuItems > should generate a set of menu items
+ ✓ test/runtime/createMenuItems.spec.ts > @vaadin/hilla-file-router > createMenuItems > should sort menu items by order then by natural string comparison based on path
+ ✓ test/runtime/createMenuItems.spec.ts > @vaadin/hilla-file-router > createMenuItems > should exclude items with { "menu": { "exclude": true } } but leave children in place
+ × test/runtime/createMenuItems.spec.ts > @vaadin/hilla-file-router > createMenuItems > should exclude items with variable path segments and their children
+   → expected [ …(7) ] to deeply equal [ { title: 'Baz', to: '/baz' }, …(2) ]
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/runtime/createMenuItems.spec.ts > @vaadin/hilla-file-router > createMenuItems > should exclude items with variable path segments and their children
+AssertionError: expected [ …(7) ] to deeply equal [ { title: 'Baz', to: '/baz' }, …(2) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[2m    {[22m
+[31m+     "title": "Bar",[39m
+[31m+     "to": "/bar/:id",[39m
+[31m+   },[39m
+[31m+   {[39m
+[31m+     "title": "Bar Foo",[39m
+[31m+     "to": "/bar/:id/foo",[39m
+[31m+   },[39m
+[31m+   {[39m
+[2m      "title": "Baz",[22m
+[2m      "to": "/baz",[22m
+[31m+   },[39m
+[31m+   {[39m
+[31m+     "title": "Baz Bar",[39m
+[31m+     "to": "/baz/bar/:id",[39m
+[31m+   },[39m
+[31m+   {[39m
+[31m+     "title": "Baz Bar Foo",[39m
+[31m+     "to": "/baz/bar/:id/foo",[39m
+[2m    },[22m
+[2m    {[22m
+[2m      "title": "Baz Foo",[22m
+[2m      "to": "/baz/foo",[22m
+[2m    },[22m
+[2m    {[22m
+[2m      "title": "Foo",[22m
+[2m      "to": "/foo",[22m
+[2m    },[22m
+[2m  ][22m
+
+ ❯ test/runtime/createMenuItems.spec.ts:153:65
+    151|       };
+    152| 
+    153|       expect(deepRemoveNullProps(createMenuItems())).to.be.deep.equal([
+       |                                                                 ^
+    154|         {
+    155|           title: 'Baz',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  15:22:40
+   Duration  957ms (transform 174ms, setup 0ms, collect 325ms, tests 11ms, environment 0ms, prepare 208ms)
+
+[?25hreward=0 graded=4 found=0 failed=0 parsed=0 framework=vitest exit_code=1

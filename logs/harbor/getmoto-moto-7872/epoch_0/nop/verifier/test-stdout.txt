@@ -1,0 +1,1275 @@
+patching file tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py
+patching file tests/test_sagemaker/test_sagemaker_automljobs.py
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml (WARNING: ignoring pytest config in setup.cfg!)
+plugins: cov-7.1.0
+[1mcollecting ... [0mcollected 33 items / 3 deselected / 30 selected
+
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_cloudformation [32mPASSED[0m[32m [  3%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_acm [32mPASSED[0m[32m [  6%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_backup [32mPASSED[0m[32m [ 10%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ecs [32mPASSED[0m[32m [ 13%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ec2 [32mPASSED[0m[32m [ 16%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ec2_vpc [32mPASSED[0m[32m [ 20%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_tag_keys_ec2 [32mPASSED[0m[32m [ 23%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_tag_values_ec2 [32mPASSED[0m[32m [ 26%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_many_resources [32mPASSED[0m[32m [ 30%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_target_group [32mPASSED[0m[32m [ 33%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_s3[s3] [32mPASSED[0m[32m [ 36%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_s3[s3:bucket] [32mPASSED[0m[32m [ 40%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_multiple_tag_filters [32mPASSED[0m[32m [ 43%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_lambda [32mPASSED[0m[32m [ 46%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sqs [32mPASSED[0m[32m [ 50%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sns [32mPASSED[0m[32m [ 53%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ssm [32mPASSED[0m[32m [ 56%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_tag_resources_for_unknown_service [32mPASSED[0m[32m [ 60%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_elb [32mPASSED[0m[32m [ 63%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sagemaker_cluster [32mPASSED[0m[32m [ 66%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sagemaker_automljob [31mFAILED[0m[31m [ 70%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_tag_resources_sagemaker [32mPASSED[0m[31m [ 73%][0m
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_efs [32mPASSED[0m[31m [ 76%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_create_auto_ml_job_v2 [31mFAILED[0m[31m [ 80%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_describe_auto_ml_job_v2 [31mFAILED[0m[31m [ 83%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_describe_auto_ml_job_v2_defaults [31mFAILED[0m[31m [ 86%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_list_auto_ml_jobs [31mFAILED[0m[31m [ 90%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_list_auto_ml_jobs_filters [31mFAILED[0m[31m [ 93%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_stop_auto_ml_job [31mFAILED[0m[31m [ 96%][0m
+tests/test_sagemaker/test_sagemaker_automljobs.py::test_tag_auto_ml_job [31mFAILED[0m[31m [100%][0m
+
+=================================== FAILURES ===================================
+[31m[1m____________________ test_get_resources_sagemaker_automljob ____________________[0m
+
+    [0m[37m@mock_aws[39;49;00m[90m[39;49;00m
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_get_resources_sagemaker_automljob[39;49;00m():[90m[39;49;00m
+        sagemaker = boto3.client([33m"[39;49;00m[33msagemaker[39;49;00m[33m"[39;49;00m, region_name=[33m"[39;49;00m[33mus-east-1[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+>       sagemaker.create_auto_ml_job_v2([90m[39;49;00m
+            AutoMLJobName=[33m"[39;49;00m[33mtestautomljob[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            AutoMLJobInputDataConfig=[[90m[39;49;00m
+                {[90m[39;49;00m
+                    [33m"[39;49;00m[33mChannelType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtraining[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompressionType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mNone[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mDataSource[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mS3DataSource[39;49;00m[33m"[39;49;00m: {[33m"[39;49;00m[33mS3DataType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mS3Prefix[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3Uri[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://data[39;49;00m[33m"[39;49;00m}[90m[39;49;00m
+                    },[90m[39;49;00m
+                },[90m[39;49;00m
+            ],[90m[39;49;00m
+            OutputDataConfig={[33m"[39;49;00m[33mKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mkms[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3OutputPath[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://output[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            AutoMLProblemTypeConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mImageClassificationJobConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompletionCriteria[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxCandidates[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxRuntimePerTrainingJobInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxAutoMLJobRuntimeInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                    }[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            RoleArn=[33m"[39;49;00m[33marn:aws:iam::123456789012:role/FakeRole[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            Tags=[[90m[39;49;00m
+                {[33m"[39;49;00m[33mKey[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33msagemakerkey[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mValue[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33msagemakervalue[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            ],[90m[39;49;00m
+        )[90m[39;49;00m
+
+[1m[31mtests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py[0m:1039: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:606: in _api_call
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._make_api_call(operation_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/context.py[0m:123: in wrapper
+    [0m[94mreturn[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1076: in _make_api_call
+    [0mhttp, parsed_response = [96mself[39;49;00m._make_request([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1100: in _make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._endpoint.make_request(operation_model, request_dict)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:119: in make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._send_request(request_dict, operation_model)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:200: in _send_request
+    [0m[94mwhile[39;49;00m [96mself[39;49;00m._needs_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:360: in _needs_retry
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:207: in __call__
+    [0m[94mif[39;49;00m [96mself[39;49;00m._checker(**checker_kwargs):[90m[39;49;00m
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:284: in __call__
+    [0mshould_retry = [96mself[39;49;00m._should_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:307: in _should_retry
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:363: in __call__
+    [0mchecker_response = checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:247: in __call__
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._check_caught_exception([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:416: in _check_caught_exception
+    [0m[94mraise[39;49;00m caught_exception[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:276: in _do_get_response
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit(event_name, request=request)[90m[39;49;00m
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:37: in __call__
+    [0mresponse = [96mself[39;49;00m.process_request(request)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:84: in process_request
+    [0mstatus, headers, body = method_to_execute([90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:290: in dispatch
+    [0m[94mreturn[39;49;00m [96mcls[39;49;00m()._dispatch(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:501: in _dispatch
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m.call_action()[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <moto.sagemaker.responses.SageMakerResponse object at 0x2b2735ced350>
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mcall_action[39;49;00m([96mself[39;49;00m) -> TYPE_RESPONSE:[90m[39;49;00m
+        headers = [96mself[39;49;00m.response_headers[90m[39;49;00m
+        [94mif[39;49;00m [96mhasattr[39;49;00m([96mself[39;49;00m, [33m"[39;49;00m[33m_determine_resource[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+            resource = [96mself[39;49;00m._determine_resource()[90m[39;49;00m
+        [94melse[39;49;00m:[90m[39;49;00m
+            resource = [33m"[39;49;00m[33m*[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+        [94mtry[39;49;00m:[90m[39;49;00m
+            [96mself[39;49;00m._authenticate_and_authorize_normal_action(resource)[90m[39;49;00m
+        [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+            response = http_error.description, [96mdict[39;49;00m(status=http_error.code)[90m[39;49;00m
+            status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        action = camelcase_to_underscores([96mself[39;49;00m._get_action())[90m[39;49;00m
+        method_names = method_names_from_class([96mself[39;49;00m.[91m__class__[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m action [95min[39;49;00m method_names:[90m[39;49;00m
+            method = [96mgetattr[39;49;00m([96mself[39;49;00m, action)[90m[39;49;00m
+            [94mtry[39;49;00m:[90m[39;49;00m
+                response = method()[90m[39;49;00m
+            [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+                response_headers: Dict[[96mstr[39;49;00m, Union[[96mstr[39;49;00m, [96mint[39;49;00m]] = [96mdict[39;49;00m([90m[39;49;00m
+                    http_error.get_headers() [95mor[39;49;00m [][90m[39;49;00m
+                )[90m[39;49;00m
+                response_headers[[33m"[39;49;00m[33mstatus[39;49;00m[33m"[39;49;00m] = http_error.code  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+                response = http_error.description, response_headers  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+            [94mif[39;49;00m [96misinstance[39;49;00m(response, [96mstr[39;49;00m):[90m[39;49;00m
+                status = [94m200[39;49;00m[90m[39;49;00m
+                body = response[90m[39;49;00m
+            [94melse[39;49;00m:[90m[39;49;00m
+                status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+    [90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m [95mnot[39;49;00m action:[90m[39;49;00m
+            [94mreturn[39;49;00m [94m404[39;49;00m, headers, [33m"[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+>       [94mraise[39;49;00m [96mNotImplementedError[39;49;00m([33mf[39;49;00m[33m"[39;49;00m[33mThe [39;49;00m[33m{[39;49;00maction[33m}[39;49;00m[33m action has not been implemented[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE       NotImplementedError: The create_auto_ml_job_v2 action has not been implemented[0m
+
+[1m[31mmoto/core/responses.py[0m:608: NotImplementedError
+[31m[1m__________________________ test_create_auto_ml_job_v2 __________________________[0m
+
+    [0m[37m@mock_aws[39;49;00m[90m[39;49;00m
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_create_auto_ml_job_v2[39;49;00m():[90m[39;49;00m
+        client = boto3.client([33m"[39;49;00m[33msagemaker[39;49;00m[33m"[39;49;00m, region_name=[33m"[39;49;00m[33mus-east-1[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+>       arn = client.create_auto_ml_job_v2([90m[39;49;00m
+            AutoMLJobName=[33m"[39;49;00m[33mtestautomljob[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            AutoMLJobInputDataConfig=[[90m[39;49;00m
+                {[90m[39;49;00m
+                    [33m"[39;49;00m[33mChannelType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtraining[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompressionType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mNone[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mDataSource[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mS3DataSource[39;49;00m[33m"[39;49;00m: {[33m"[39;49;00m[33mS3DataType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mS3Prefix[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3Uri[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://data[39;49;00m[33m"[39;49;00m}[90m[39;49;00m
+                    },[90m[39;49;00m
+                },[90m[39;49;00m
+            ],[90m[39;49;00m
+            OutputDataConfig={[33m"[39;49;00m[33mKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mkms[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3OutputPath[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://output[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            AutoMLProblemTypeConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mTextClassificationJobConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompletionCriteria[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxCandidates[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxRuntimePerTrainingJobInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxAutoMLJobRuntimeInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                    },[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentColumn[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mcontent[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mTargetLabelColumn[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtarget[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            RoleArn=[33mf[39;49;00m[33m"[39;49;00m[33marn:aws:iam::[39;49;00m[33m{[39;49;00mACCOUNT_ID[33m}[39;49;00m[33m:role/FakeRole[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            Tags=[[90m[39;49;00m
+                {[33m"[39;49;00m[33mKey[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestkey[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mValue[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestvalue[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            ],[90m[39;49;00m
+            SecurityConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mVolumeKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestkmskeyid[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                [33m"[39;49;00m[33mEnableInterContainerTrafficEncryption[39;49;00m[33m"[39;49;00m: [94mTrue[39;49;00m,[90m[39;49;00m
+                [33m"[39;49;00m[33mVpcConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mSecurityGroupIds[39;49;00m[33m"[39;49;00m: [[90m[39;49;00m
+                        [33m"[39;49;00m[33msg-12345678901234567[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    ],[90m[39;49;00m
+                    [33m"[39;49;00m[33mSubnets[39;49;00m[33m"[39;49;00m: [[90m[39;49;00m
+                        [33m"[39;49;00m[33msubnet-12345678901234567[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    ],[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            AutoMLJobObjective={[33m"[39;49;00m[33mMetricName[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mAccuracy[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            ModelDeployConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mAutoGenerateEndpointName[39;49;00m[33m"[39;49;00m: [94mFalse[39;49;00m,[90m[39;49;00m
+                [33m"[39;49;00m[33mEndpointName[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestendpointname[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            },[90m[39;49;00m
+            DataSplitConfig={[33m"[39;49;00m[33mValidationFraction[39;49;00m[33m"[39;49;00m: [94m0.2[39;49;00m},[90m[39;49;00m
+        )[90m[39;49;00m
+
+[1m[31mtests/test_sagemaker/test_sagemaker_automljobs.py[0m:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:606: in _api_call
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._make_api_call(operation_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/context.py[0m:123: in wrapper
+    [0m[94mreturn[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1076: in _make_api_call
+    [0mhttp, parsed_response = [96mself[39;49;00m._make_request([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1100: in _make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._endpoint.make_request(operation_model, request_dict)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:119: in make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._send_request(request_dict, operation_model)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:200: in _send_request
+    [0m[94mwhile[39;49;00m [96mself[39;49;00m._needs_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:360: in _needs_retry
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:207: in __call__
+    [0m[94mif[39;49;00m [96mself[39;49;00m._checker(**checker_kwargs):[90m[39;49;00m
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:284: in __call__
+    [0mshould_retry = [96mself[39;49;00m._should_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:307: in _should_retry
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:363: in __call__
+    [0mchecker_response = checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:247: in __call__
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._check_caught_exception([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:416: in _check_caught_exception
+    [0m[94mraise[39;49;00m caught_exception[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:276: in _do_get_response
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit(event_name, request=request)[90m[39;49;00m
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:37: in __call__
+    [0mresponse = [96mself[39;49;00m.process_request(request)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:84: in process_request
+    [0mstatus, headers, body = method_to_execute([90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:290: in dispatch
+    [0m[94mreturn[39;49;00m [96mcls[39;49;00m()._dispatch(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:501: in _dispatch
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m.call_action()[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <moto.sagemaker.responses.SageMakerResponse object at 0x2b27412a2c50>
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mcall_action[39;49;00m([96mself[39;49;00m) -> TYPE_RESPONSE:[90m[39;49;00m
+        headers = [96mself[39;49;00m.response_headers[90m[39;49;00m
+        [94mif[39;49;00m [96mhasattr[39;49;00m([96mself[39;49;00m, [33m"[39;49;00m[33m_determine_resource[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+            resource = [96mself[39;49;00m._determine_resource()[90m[39;49;00m
+        [94melse[39;49;00m:[90m[39;49;00m
+            resource = [33m"[39;49;00m[33m*[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+        [94mtry[39;49;00m:[90m[39;49;00m
+            [96mself[39;49;00m._authenticate_and_authorize_normal_action(resource)[90m[39;49;00m
+        [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+            response = http_error.description, [96mdict[39;49;00m(status=http_error.code)[90m[39;49;00m
+            status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        action = camelcase_to_underscores([96mself[39;49;00m._get_action())[90m[39;49;00m
+        method_names = method_names_from_class([96mself[39;49;00m.[91m__class__[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m action [95min[39;49;00m method_names:[90m[39;49;00m
+            method = [96mgetattr[39;49;00m([96mself[39;49;00m, action)[90m[39;49;00m
+            [94mtry[39;49;00m:[90m[39;49;00m
+                response = method()[90m[39;49;00m
+            [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+                response_headers: Dict[[96mstr[39;49;00m, Union[[96mstr[39;49;00m, [96mint[39;49;00m]] = [96mdict[39;49;00m([90m[39;49;00m
+                    http_error.get_headers() [95mor[39;49;00m [][90m[39;49;00m
+                )[90m[39;49;00m
+                response_headers[[33m"[39;49;00m[33mstatus[39;49;00m[33m"[39;49;00m] = http_error.code  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+                response = http_error.description, response_headers  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+            [94mif[39;49;00m [96misinstance[39;49;00m(response, [96mstr[39;49;00m):[90m[39;49;00m
+                status = [94m200[39;49;00m[90m[39;49;00m
+                body = response[90m[39;49;00m
+            [94melse[39;49;00m:[90m[39;49;00m
+                status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+    [90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m [95mnot[39;49;00m action:[90m[39;49;00m
+            [94mreturn[39;49;00m [94m404[39;49;00m, headers, [33m"[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+>       [94mraise[39;49;00m [96mNotImplementedError[39;49;00m([33mf[39;49;00m[33m"[39;49;00m[33mThe [39;49;00m[33m{[39;49;00maction[33m}[39;49;00m[33m action has not been implemented[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE       NotImplementedError: The create_auto_ml_job_v2 action has not been implemented[0m
+
+[1m[31mmoto/core/responses.py[0m:608: NotImplementedError
+[31m[1m_________________________ test_describe_auto_ml_job_v2 _________________________[0m
+
+    [0m[37m@mock_aws[39;49;00m[90m[39;49;00m
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_describe_auto_ml_job_v2[39;49;00m():[90m[39;49;00m
+        client = boto3.client([33m"[39;49;00m[33msagemaker[39;49;00m[33m"[39;49;00m, region_name=[33m"[39;49;00m[33mus-west-2[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+>       client.create_auto_ml_job_v2([90m[39;49;00m
+            AutoMLJobName=[33m"[39;49;00m[33mtestautomljob[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            AutoMLJobInputDataConfig=[[90m[39;49;00m
+                {[90m[39;49;00m
+                    [33m"[39;49;00m[33mChannelType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtraining[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompressionType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mNone[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mDataSource[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mS3DataSource[39;49;00m[33m"[39;49;00m: {[33m"[39;49;00m[33mS3DataType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mS3Prefix[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3Uri[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://data[39;49;00m[33m"[39;49;00m}[90m[39;49;00m
+                    },[90m[39;49;00m
+                },[90m[39;49;00m
+            ],[90m[39;49;00m
+            OutputDataConfig={[33m"[39;49;00m[33mKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mkms[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3OutputPath[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://output[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            AutoMLProblemTypeConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mTextClassificationJobConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompletionCriteria[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxCandidates[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxRuntimePerTrainingJobInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxAutoMLJobRuntimeInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                    },[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentColumn[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mcontent[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mTargetLabelColumn[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtarget[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            RoleArn=[33mf[39;49;00m[33m"[39;49;00m[33marn:aws:iam::[39;49;00m[33m{[39;49;00mACCOUNT_ID[33m}[39;49;00m[33m:role/FakeRole[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            Tags=[[90m[39;49;00m
+                {[33m"[39;49;00m[33mKey[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestkey[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mValue[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestvalue[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            ],[90m[39;49;00m
+            SecurityConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mVolumeKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestkmskeyid[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                [33m"[39;49;00m[33mEnableInterContainerTrafficEncryption[39;49;00m[33m"[39;49;00m: [94mTrue[39;49;00m,[90m[39;49;00m
+                [33m"[39;49;00m[33mVpcConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mSecurityGroupIds[39;49;00m[33m"[39;49;00m: [[90m[39;49;00m
+                        [33m"[39;49;00m[33msg-12345678901234567[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    ],[90m[39;49;00m
+                    [33m"[39;49;00m[33mSubnets[39;49;00m[33m"[39;49;00m: [[90m[39;49;00m
+                        [33m"[39;49;00m[33msubnet-12345678901234567[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    ],[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            AutoMLJobObjective={[33m"[39;49;00m[33mMetricName[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mAccuracy[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            ModelDeployConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mAutoGenerateEndpointName[39;49;00m[33m"[39;49;00m: [94mFalse[39;49;00m,[90m[39;49;00m
+                [33m"[39;49;00m[33mEndpointName[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestendpointname[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            },[90m[39;49;00m
+            DataSplitConfig={[33m"[39;49;00m[33mValidationFraction[39;49;00m[33m"[39;49;00m: [94m0.3[39;49;00m},[90m[39;49;00m
+        )[90m[39;49;00m
+
+[1m[31mtests/test_sagemaker/test_sagemaker_automljobs.py[0m:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:606: in _api_call
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._make_api_call(operation_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/context.py[0m:123: in wrapper
+    [0m[94mreturn[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1076: in _make_api_call
+    [0mhttp, parsed_response = [96mself[39;49;00m._make_request([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1100: in _make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._endpoint.make_request(operation_model, request_dict)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:119: in make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._send_request(request_dict, operation_model)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:200: in _send_request
+    [0m[94mwhile[39;49;00m [96mself[39;49;00m._needs_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:360: in _needs_retry
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:207: in __call__
+    [0m[94mif[39;49;00m [96mself[39;49;00m._checker(**checker_kwargs):[90m[39;49;00m
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:284: in __call__
+    [0mshould_retry = [96mself[39;49;00m._should_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:307: in _should_retry
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:363: in __call__
+    [0mchecker_response = checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:247: in __call__
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._check_caught_exception([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:416: in _check_caught_exception
+    [0m[94mraise[39;49;00m caught_exception[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:276: in _do_get_response
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit(event_name, request=request)[90m[39;49;00m
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:37: in __call__
+    [0mresponse = [96mself[39;49;00m.process_request(request)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:84: in process_request
+    [0mstatus, headers, body = method_to_execute([90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:290: in dispatch
+    [0m[94mreturn[39;49;00m [96mcls[39;49;00m()._dispatch(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:501: in _dispatch
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m.call_action()[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <moto.sagemaker.responses.SageMakerResponse object at 0x2b273ea6c150>
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mcall_action[39;49;00m([96mself[39;49;00m) -> TYPE_RESPONSE:[90m[39;49;00m
+        headers = [96mself[39;49;00m.response_headers[90m[39;49;00m
+        [94mif[39;49;00m [96mhasattr[39;49;00m([96mself[39;49;00m, [33m"[39;49;00m[33m_determine_resource[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+            resource = [96mself[39;49;00m._determine_resource()[90m[39;49;00m
+        [94melse[39;49;00m:[90m[39;49;00m
+            resource = [33m"[39;49;00m[33m*[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+        [94mtry[39;49;00m:[90m[39;49;00m
+            [96mself[39;49;00m._authenticate_and_authorize_normal_action(resource)[90m[39;49;00m
+        [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+            response = http_error.description, [96mdict[39;49;00m(status=http_error.code)[90m[39;49;00m
+            status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        action = camelcase_to_underscores([96mself[39;49;00m._get_action())[90m[39;49;00m
+        method_names = method_names_from_class([96mself[39;49;00m.[91m__class__[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m action [95min[39;49;00m method_names:[90m[39;49;00m
+            method = [96mgetattr[39;49;00m([96mself[39;49;00m, action)[90m[39;49;00m
+            [94mtry[39;49;00m:[90m[39;49;00m
+                response = method()[90m[39;49;00m
+            [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+                response_headers: Dict[[96mstr[39;49;00m, Union[[96mstr[39;49;00m, [96mint[39;49;00m]] = [96mdict[39;49;00m([90m[39;49;00m
+                    http_error.get_headers() [95mor[39;49;00m [][90m[39;49;00m
+                )[90m[39;49;00m
+                response_headers[[33m"[39;49;00m[33mstatus[39;49;00m[33m"[39;49;00m] = http_error.code  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+                response = http_error.description, response_headers  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+            [94mif[39;49;00m [96misinstance[39;49;00m(response, [96mstr[39;49;00m):[90m[39;49;00m
+                status = [94m200[39;49;00m[90m[39;49;00m
+                body = response[90m[39;49;00m
+            [94melse[39;49;00m:[90m[39;49;00m
+                status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+    [90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m [95mnot[39;49;00m action:[90m[39;49;00m
+            [94mreturn[39;49;00m [94m404[39;49;00m, headers, [33m"[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+>       [94mraise[39;49;00m [96mNotImplementedError[39;49;00m([33mf[39;49;00m[33m"[39;49;00m[33mThe [39;49;00m[33m{[39;49;00maction[33m}[39;49;00m[33m action has not been implemented[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE       NotImplementedError: The create_auto_ml_job_v2 action has not been implemented[0m
+
+[1m[31mmoto/core/responses.py[0m:608: NotImplementedError
+[31m[1m____________________ test_describe_auto_ml_job_v2_defaults _____________________[0m
+
+    [0m[37m@mock_aws[39;49;00m[90m[39;49;00m
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_describe_auto_ml_job_v2_defaults[39;49;00m():[90m[39;49;00m
+        client = boto3.client([33m"[39;49;00m[33msagemaker[39;49;00m[33m"[39;49;00m, region_name=[33m"[39;49;00m[33mus-west-2[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+>       client.create_auto_ml_job_v2([90m[39;49;00m
+            AutoMLJobName=[33m"[39;49;00m[33mtestautomljob[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            AutoMLJobInputDataConfig=[[90m[39;49;00m
+                {[90m[39;49;00m
+                    [33m"[39;49;00m[33mChannelType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtraining[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompressionType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mNone[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mDataSource[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mS3DataSource[39;49;00m[33m"[39;49;00m: {[33m"[39;49;00m[33mS3DataType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mS3Prefix[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3Uri[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://data[39;49;00m[33m"[39;49;00m}[90m[39;49;00m
+                    },[90m[39;49;00m
+                },[90m[39;49;00m
+            ],[90m[39;49;00m
+            OutputDataConfig={[33m"[39;49;00m[33mKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mkms[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3OutputPath[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://output[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            AutoMLProblemTypeConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mTextClassificationJobConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompletionCriteria[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxCandidates[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxRuntimePerTrainingJobInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxAutoMLJobRuntimeInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                    },[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentColumn[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mcontent[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mTargetLabelColumn[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtarget[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            RoleArn=[33mf[39;49;00m[33m"[39;49;00m[33marn:aws:iam::[39;49;00m[33m{[39;49;00mACCOUNT_ID[33m}[39;49;00m[33m:role/FakeRole[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+        )[90m[39;49;00m
+
+[1m[31mtests/test_sagemaker/test_sagemaker_automljobs.py[0m:254: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:606: in _api_call
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._make_api_call(operation_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/context.py[0m:123: in wrapper
+    [0m[94mreturn[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1076: in _make_api_call
+    [0mhttp, parsed_response = [96mself[39;49;00m._make_request([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1100: in _make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._endpoint.make_request(operation_model, request_dict)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:119: in make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._send_request(request_dict, operation_model)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:200: in _send_request
+    [0m[94mwhile[39;49;00m [96mself[39;49;00m._needs_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:360: in _needs_retry
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:207: in __call__
+    [0m[94mif[39;49;00m [96mself[39;49;00m._checker(**checker_kwargs):[90m[39;49;00m
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:284: in __call__
+    [0mshould_retry = [96mself[39;49;00m._should_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:307: in _should_retry
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:363: in __call__
+    [0mchecker_response = checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:247: in __call__
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._check_caught_exception([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:416: in _check_caught_exception
+    [0m[94mraise[39;49;00m caught_exception[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:276: in _do_get_response
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit(event_name, request=request)[90m[39;49;00m
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:37: in __call__
+    [0mresponse = [96mself[39;49;00m.process_request(request)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:84: in process_request
+    [0mstatus, headers, body = method_to_execute([90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:290: in dispatch
+    [0m[94mreturn[39;49;00m [96mcls[39;49;00m()._dispatch(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:501: in _dispatch
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m.call_action()[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <moto.sagemaker.responses.SageMakerResponse object at 0x2b27413cd550>
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mcall_action[39;49;00m([96mself[39;49;00m) -> TYPE_RESPONSE:[90m[39;49;00m
+        headers = [96mself[39;49;00m.response_headers[90m[39;49;00m
+        [94mif[39;49;00m [96mhasattr[39;49;00m([96mself[39;49;00m, [33m"[39;49;00m[33m_determine_resource[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+            resource = [96mself[39;49;00m._determine_resource()[90m[39;49;00m
+        [94melse[39;49;00m:[90m[39;49;00m
+            resource = [33m"[39;49;00m[33m*[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+        [94mtry[39;49;00m:[90m[39;49;00m
+            [96mself[39;49;00m._authenticate_and_authorize_normal_action(resource)[90m[39;49;00m
+        [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+            response = http_error.description, [96mdict[39;49;00m(status=http_error.code)[90m[39;49;00m
+            status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        action = camelcase_to_underscores([96mself[39;49;00m._get_action())[90m[39;49;00m
+        method_names = method_names_from_class([96mself[39;49;00m.[91m__class__[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m action [95min[39;49;00m method_names:[90m[39;49;00m
+            method = [96mgetattr[39;49;00m([96mself[39;49;00m, action)[90m[39;49;00m
+            [94mtry[39;49;00m:[90m[39;49;00m
+                response = method()[90m[39;49;00m
+            [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+                response_headers: Dict[[96mstr[39;49;00m, Union[[96mstr[39;49;00m, [96mint[39;49;00m]] = [96mdict[39;49;00m([90m[39;49;00m
+                    http_error.get_headers() [95mor[39;49;00m [][90m[39;49;00m
+                )[90m[39;49;00m
+                response_headers[[33m"[39;49;00m[33mstatus[39;49;00m[33m"[39;49;00m] = http_error.code  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+                response = http_error.description, response_headers  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+            [94mif[39;49;00m [96misinstance[39;49;00m(response, [96mstr[39;49;00m):[90m[39;49;00m
+                status = [94m200[39;49;00m[90m[39;49;00m
+                body = response[90m[39;49;00m
+            [94melse[39;49;00m:[90m[39;49;00m
+                status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+    [90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m [95mnot[39;49;00m action:[90m[39;49;00m
+            [94mreturn[39;49;00m [94m404[39;49;00m, headers, [33m"[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+>       [94mraise[39;49;00m [96mNotImplementedError[39;49;00m([33mf[39;49;00m[33m"[39;49;00m[33mThe [39;49;00m[33m{[39;49;00maction[33m}[39;49;00m[33m action has not been implemented[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE       NotImplementedError: The create_auto_ml_job_v2 action has not been implemented[0m
+
+[1m[31mmoto/core/responses.py[0m:608: NotImplementedError
+[31m[1m____________________________ test_list_auto_ml_jobs ____________________________[0m
+
+    [0m[37m@mock_aws[39;49;00m[90m[39;49;00m
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_list_auto_ml_jobs[39;49;00m():[90m[39;49;00m
+        client = boto3.client([33m"[39;49;00m[33msagemaker[39;49;00m[33m"[39;49;00m, region_name=[33m"[39;49;00m[33map-southeast-1[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+>       client.create_auto_ml_job_v2([90m[39;49;00m
+            AutoMLJobName=[33m"[39;49;00m[33mtestautomljob[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            AutoMLJobInputDataConfig=[[90m[39;49;00m
+                {[90m[39;49;00m
+                    [33m"[39;49;00m[33mChannelType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtraining[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompressionType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mNone[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mDataSource[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mS3DataSource[39;49;00m[33m"[39;49;00m: {[33m"[39;49;00m[33mS3DataType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mS3Prefix[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3Uri[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://data[39;49;00m[33m"[39;49;00m}[90m[39;49;00m
+                    },[90m[39;49;00m
+                },[90m[39;49;00m
+            ],[90m[39;49;00m
+            OutputDataConfig={[33m"[39;49;00m[33mKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mkms[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3OutputPath[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://output[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            AutoMLProblemTypeConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mTextClassificationJobConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompletionCriteria[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxCandidates[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxRuntimePerTrainingJobInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxAutoMLJobRuntimeInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                    },[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentColumn[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mcontent[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mTargetLabelColumn[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtarget[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            RoleArn=[33mf[39;49;00m[33m"[39;49;00m[33marn:aws:iam::[39;49;00m[33m{[39;49;00mACCOUNT_ID[33m}[39;49;00m[33m:role/FakeRole[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+        )[90m[39;49;00m
+
+[1m[31mtests/test_sagemaker/test_sagemaker_automljobs.py[0m:401: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:606: in _api_call
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._make_api_call(operation_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/context.py[0m:123: in wrapper
+    [0m[94mreturn[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1076: in _make_api_call
+    [0mhttp, parsed_response = [96mself[39;49;00m._make_request([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1100: in _make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._endpoint.make_request(operation_model, request_dict)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:119: in make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._send_request(request_dict, operation_model)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:200: in _send_request
+    [0m[94mwhile[39;49;00m [96mself[39;49;00m._needs_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:360: in _needs_retry
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:207: in __call__
+    [0m[94mif[39;49;00m [96mself[39;49;00m._checker(**checker_kwargs):[90m[39;49;00m
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:284: in __call__
+    [0mshould_retry = [96mself[39;49;00m._should_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:307: in _should_retry
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:363: in __call__
+    [0mchecker_response = checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:247: in __call__
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._check_caught_exception([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:416: in _check_caught_exception
+    [0m[94mraise[39;49;00m caught_exception[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:276: in _do_get_response
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit(event_name, request=request)[90m[39;49;00m
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:37: in __call__
+    [0mresponse = [96mself[39;49;00m.process_request(request)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:84: in process_request
+    [0mstatus, headers, body = method_to_execute([90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:290: in dispatch
+    [0m[94mreturn[39;49;00m [96mcls[39;49;00m()._dispatch(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:501: in _dispatch
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m.call_action()[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <moto.sagemaker.responses.SageMakerResponse object at 0x2b2741474890>
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mcall_action[39;49;00m([96mself[39;49;00m) -> TYPE_RESPONSE:[90m[39;49;00m
+        headers = [96mself[39;49;00m.response_headers[90m[39;49;00m
+        [94mif[39;49;00m [96mhasattr[39;49;00m([96mself[39;49;00m, [33m"[39;49;00m[33m_determine_resource[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+            resource = [96mself[39;49;00m._determine_resource()[90m[39;49;00m
+        [94melse[39;49;00m:[90m[39;49;00m
+            resource = [33m"[39;49;00m[33m*[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+        [94mtry[39;49;00m:[90m[39;49;00m
+            [96mself[39;49;00m._authenticate_and_authorize_normal_action(resource)[90m[39;49;00m
+        [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+            response = http_error.description, [96mdict[39;49;00m(status=http_error.code)[90m[39;49;00m
+            status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        action = camelcase_to_underscores([96mself[39;49;00m._get_action())[90m[39;49;00m
+        method_names = method_names_from_class([96mself[39;49;00m.[91m__class__[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m action [95min[39;49;00m method_names:[90m[39;49;00m
+            method = [96mgetattr[39;49;00m([96mself[39;49;00m, action)[90m[39;49;00m
+            [94mtry[39;49;00m:[90m[39;49;00m
+                response = method()[90m[39;49;00m
+            [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+                response_headers: Dict[[96mstr[39;49;00m, Union[[96mstr[39;49;00m, [96mint[39;49;00m]] = [96mdict[39;49;00m([90m[39;49;00m
+                    http_error.get_headers() [95mor[39;49;00m [][90m[39;49;00m
+                )[90m[39;49;00m
+                response_headers[[33m"[39;49;00m[33mstatus[39;49;00m[33m"[39;49;00m] = http_error.code  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+                response = http_error.description, response_headers  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+            [94mif[39;49;00m [96misinstance[39;49;00m(response, [96mstr[39;49;00m):[90m[39;49;00m
+                status = [94m200[39;49;00m[90m[39;49;00m
+                body = response[90m[39;49;00m
+            [94melse[39;49;00m:[90m[39;49;00m
+                status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+    [90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m [95mnot[39;49;00m action:[90m[39;49;00m
+            [94mreturn[39;49;00m [94m404[39;49;00m, headers, [33m"[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+>       [94mraise[39;49;00m [96mNotImplementedError[39;49;00m([33mf[39;49;00m[33m"[39;49;00m[33mThe [39;49;00m[33m{[39;49;00maction[33m}[39;49;00m[33m action has not been implemented[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE       NotImplementedError: The create_auto_ml_job_v2 action has not been implemented[0m
+
+[1m[31mmoto/core/responses.py[0m:608: NotImplementedError
+[31m[1m________________________ test_list_auto_ml_jobs_filters ________________________[0m
+
+    [0m[37m@mock_aws[39;49;00m[90m[39;49;00m
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_list_auto_ml_jobs_filters[39;49;00m():[90m[39;49;00m
+        client = boto3.client([33m"[39;49;00m[33msagemaker[39;49;00m[33m"[39;49;00m, region_name=[33m"[39;49;00m[33map-southeast-1[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+>       client.create_auto_ml_job_v2([90m[39;49;00m
+            AutoMLJobName=[33m"[39;49;00m[33mtestautomljob[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            AutoMLJobInputDataConfig=[[90m[39;49;00m
+                {[90m[39;49;00m
+                    [33m"[39;49;00m[33mChannelType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtraining[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompressionType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mNone[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mDataSource[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mS3DataSource[39;49;00m[33m"[39;49;00m: {[33m"[39;49;00m[33mS3DataType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mS3Prefix[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3Uri[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://data[39;49;00m[33m"[39;49;00m}[90m[39;49;00m
+                    },[90m[39;49;00m
+                },[90m[39;49;00m
+            ],[90m[39;49;00m
+            OutputDataConfig={[33m"[39;49;00m[33mKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mkms[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3OutputPath[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://output[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            AutoMLProblemTypeConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mImageClassificationJobConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompletionCriteria[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxCandidates[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxRuntimePerTrainingJobInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxAutoMLJobRuntimeInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                    }[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            RoleArn=[33mf[39;49;00m[33m"[39;49;00m[33marn:aws:iam::[39;49;00m[33m{[39;49;00mACCOUNT_ID[33m}[39;49;00m[33m:role/FakeRole[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+        )[90m[39;49;00m
+
+[1m[31mtests/test_sagemaker/test_sagemaker_automljobs.py[0m:495: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:606: in _api_call
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._make_api_call(operation_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/context.py[0m:123: in wrapper
+    [0m[94mreturn[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1076: in _make_api_call
+    [0mhttp, parsed_response = [96mself[39;49;00m._make_request([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1100: in _make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._endpoint.make_request(operation_model, request_dict)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:119: in make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._send_request(request_dict, operation_model)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:200: in _send_request
+    [0m[94mwhile[39;49;00m [96mself[39;49;00m._needs_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:360: in _needs_retry
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:207: in __call__
+    [0m[94mif[39;49;00m [96mself[39;49;00m._checker(**checker_kwargs):[90m[39;49;00m
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:284: in __call__
+    [0mshould_retry = [96mself[39;49;00m._should_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:307: in _should_retry
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:363: in __call__
+    [0mchecker_response = checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:247: in __call__
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._check_caught_exception([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:416: in _check_caught_exception
+    [0m[94mraise[39;49;00m caught_exception[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:276: in _do_get_response
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit(event_name, request=request)[90m[39;49;00m
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:37: in __call__
+    [0mresponse = [96mself[39;49;00m.process_request(request)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:84: in process_request
+    [0mstatus, headers, body = method_to_execute([90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:290: in dispatch
+    [0m[94mreturn[39;49;00m [96mcls[39;49;00m()._dispatch(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:501: in _dispatch
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m.call_action()[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <moto.sagemaker.responses.SageMakerResponse object at 0x2b273fcd25d0>
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mcall_action[39;49;00m([96mself[39;49;00m) -> TYPE_RESPONSE:[90m[39;49;00m
+        headers = [96mself[39;49;00m.response_headers[90m[39;49;00m
+        [94mif[39;49;00m [96mhasattr[39;49;00m([96mself[39;49;00m, [33m"[39;49;00m[33m_determine_resource[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+            resource = [96mself[39;49;00m._determine_resource()[90m[39;49;00m
+        [94melse[39;49;00m:[90m[39;49;00m
+            resource = [33m"[39;49;00m[33m*[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+        [94mtry[39;49;00m:[90m[39;49;00m
+            [96mself[39;49;00m._authenticate_and_authorize_normal_action(resource)[90m[39;49;00m
+        [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+            response = http_error.description, [96mdict[39;49;00m(status=http_error.code)[90m[39;49;00m
+            status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        action = camelcase_to_underscores([96mself[39;49;00m._get_action())[90m[39;49;00m
+        method_names = method_names_from_class([96mself[39;49;00m.[91m__class__[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m action [95min[39;49;00m method_names:[90m[39;49;00m
+            method = [96mgetattr[39;49;00m([96mself[39;49;00m, action)[90m[39;49;00m
+            [94mtry[39;49;00m:[90m[39;49;00m
+                response = method()[90m[39;49;00m
+            [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+                response_headers: Dict[[96mstr[39;49;00m, Union[[96mstr[39;49;00m, [96mint[39;49;00m]] = [96mdict[39;49;00m([90m[39;49;00m
+                    http_error.get_headers() [95mor[39;49;00m [][90m[39;49;00m
+                )[90m[39;49;00m
+                response_headers[[33m"[39;49;00m[33mstatus[39;49;00m[33m"[39;49;00m] = http_error.code  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+                response = http_error.description, response_headers  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+            [94mif[39;49;00m [96misinstance[39;49;00m(response, [96mstr[39;49;00m):[90m[39;49;00m
+                status = [94m200[39;49;00m[90m[39;49;00m
+                body = response[90m[39;49;00m
+            [94melse[39;49;00m:[90m[39;49;00m
+                status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+    [90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m [95mnot[39;49;00m action:[90m[39;49;00m
+            [94mreturn[39;49;00m [94m404[39;49;00m, headers, [33m"[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+>       [94mraise[39;49;00m [96mNotImplementedError[39;49;00m([33mf[39;49;00m[33m"[39;49;00m[33mThe [39;49;00m[33m{[39;49;00maction[33m}[39;49;00m[33m action has not been implemented[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE       NotImplementedError: The create_auto_ml_job_v2 action has not been implemented[0m
+
+[1m[31mmoto/core/responses.py[0m:608: NotImplementedError
+[31m[1m____________________________ test_stop_auto_ml_job _____________________________[0m
+
+    [0m[37m@mock_aws[39;49;00m[90m[39;49;00m
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_stop_auto_ml_job[39;49;00m():[90m[39;49;00m
+        client = boto3.client([33m"[39;49;00m[33msagemaker[39;49;00m[33m"[39;49;00m, region_name=[33m"[39;49;00m[33map-southeast-1[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+>       client.create_auto_ml_job_v2([90m[39;49;00m
+            AutoMLJobName=[33m"[39;49;00m[33mtestautomljob[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            AutoMLJobInputDataConfig=[[90m[39;49;00m
+                {[90m[39;49;00m
+                    [33m"[39;49;00m[33mChannelType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtraining[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompressionType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mNone[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mDataSource[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mS3DataSource[39;49;00m[33m"[39;49;00m: {[33m"[39;49;00m[33mS3DataType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mS3Prefix[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3Uri[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://data[39;49;00m[33m"[39;49;00m}[90m[39;49;00m
+                    },[90m[39;49;00m
+                },[90m[39;49;00m
+            ],[90m[39;49;00m
+            OutputDataConfig={[33m"[39;49;00m[33mKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mkms[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3OutputPath[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://output[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            AutoMLProblemTypeConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mImageClassificationJobConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompletionCriteria[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxCandidates[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxRuntimePerTrainingJobInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxAutoMLJobRuntimeInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                    }[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            RoleArn=[33mf[39;49;00m[33m"[39;49;00m[33marn:aws:iam::[39;49;00m[33m{[39;49;00mACCOUNT_ID[33m}[39;49;00m[33m:role/FakeRole[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+        )[90m[39;49;00m
+
+[1m[31mtests/test_sagemaker/test_sagemaker_automljobs.py[0m:641: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:606: in _api_call
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._make_api_call(operation_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/context.py[0m:123: in wrapper
+    [0m[94mreturn[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1076: in _make_api_call
+    [0mhttp, parsed_response = [96mself[39;49;00m._make_request([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1100: in _make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._endpoint.make_request(operation_model, request_dict)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:119: in make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._send_request(request_dict, operation_model)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:200: in _send_request
+    [0m[94mwhile[39;49;00m [96mself[39;49;00m._needs_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:360: in _needs_retry
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:207: in __call__
+    [0m[94mif[39;49;00m [96mself[39;49;00m._checker(**checker_kwargs):[90m[39;49;00m
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:284: in __call__
+    [0mshould_retry = [96mself[39;49;00m._should_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:307: in _should_retry
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:363: in __call__
+    [0mchecker_response = checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:247: in __call__
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._check_caught_exception([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:416: in _check_caught_exception
+    [0m[94mraise[39;49;00m caught_exception[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:276: in _do_get_response
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit(event_name, request=request)[90m[39;49;00m
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:37: in __call__
+    [0mresponse = [96mself[39;49;00m.process_request(request)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:84: in process_request
+    [0mstatus, headers, body = method_to_execute([90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:290: in dispatch
+    [0m[94mreturn[39;49;00m [96mcls[39;49;00m()._dispatch(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:501: in _dispatch
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m.call_action()[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <moto.sagemaker.responses.SageMakerResponse object at 0x2b2741021b10>
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mcall_action[39;49;00m([96mself[39;49;00m) -> TYPE_RESPONSE:[90m[39;49;00m
+        headers = [96mself[39;49;00m.response_headers[90m[39;49;00m
+        [94mif[39;49;00m [96mhasattr[39;49;00m([96mself[39;49;00m, [33m"[39;49;00m[33m_determine_resource[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+            resource = [96mself[39;49;00m._determine_resource()[90m[39;49;00m
+        [94melse[39;49;00m:[90m[39;49;00m
+            resource = [33m"[39;49;00m[33m*[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+        [94mtry[39;49;00m:[90m[39;49;00m
+            [96mself[39;49;00m._authenticate_and_authorize_normal_action(resource)[90m[39;49;00m
+        [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+            response = http_error.description, [96mdict[39;49;00m(status=http_error.code)[90m[39;49;00m
+            status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        action = camelcase_to_underscores([96mself[39;49;00m._get_action())[90m[39;49;00m
+        method_names = method_names_from_class([96mself[39;49;00m.[91m__class__[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m action [95min[39;49;00m method_names:[90m[39;49;00m
+            method = [96mgetattr[39;49;00m([96mself[39;49;00m, action)[90m[39;49;00m
+            [94mtry[39;49;00m:[90m[39;49;00m
+                response = method()[90m[39;49;00m
+            [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+                response_headers: Dict[[96mstr[39;49;00m, Union[[96mstr[39;49;00m, [96mint[39;49;00m]] = [96mdict[39;49;00m([90m[39;49;00m
+                    http_error.get_headers() [95mor[39;49;00m [][90m[39;49;00m
+                )[90m[39;49;00m
+                response_headers[[33m"[39;49;00m[33mstatus[39;49;00m[33m"[39;49;00m] = http_error.code  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+                response = http_error.description, response_headers  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+            [94mif[39;49;00m [96misinstance[39;49;00m(response, [96mstr[39;49;00m):[90m[39;49;00m
+                status = [94m200[39;49;00m[90m[39;49;00m
+                body = response[90m[39;49;00m
+            [94melse[39;49;00m:[90m[39;49;00m
+                status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+    [90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m [95mnot[39;49;00m action:[90m[39;49;00m
+            [94mreturn[39;49;00m [94m404[39;49;00m, headers, [33m"[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+>       [94mraise[39;49;00m [96mNotImplementedError[39;49;00m([33mf[39;49;00m[33m"[39;49;00m[33mThe [39;49;00m[33m{[39;49;00maction[33m}[39;49;00m[33m action has not been implemented[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE       NotImplementedError: The create_auto_ml_job_v2 action has not been implemented[0m
+
+[1m[31mmoto/core/responses.py[0m:608: NotImplementedError
+[31m[1m_____________________________ test_tag_auto_ml_job _____________________________[0m
+
+    [0m[37m@mock_aws[39;49;00m[90m[39;49;00m
+    [94mdef[39;49;00m[90m [39;49;00m[92mtest_tag_auto_ml_job[39;49;00m():[90m[39;49;00m
+        client = boto3.client([33m"[39;49;00m[33msagemaker[39;49;00m[33m"[39;49;00m, region_name=[33m"[39;49;00m[33map-southeast-1[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+>       arn = client.create_auto_ml_job_v2([90m[39;49;00m
+            AutoMLJobName=[33m"[39;49;00m[33mtestautomljob[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            AutoMLJobInputDataConfig=[[90m[39;49;00m
+                {[90m[39;49;00m
+                    [33m"[39;49;00m[33mChannelType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtraining[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mContentType[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompressionType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mNone[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+                    [33m"[39;49;00m[33mDataSource[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mS3DataSource[39;49;00m[33m"[39;49;00m: {[33m"[39;49;00m[33mS3DataType[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mS3Prefix[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3Uri[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://data[39;49;00m[33m"[39;49;00m}[90m[39;49;00m
+                    },[90m[39;49;00m
+                },[90m[39;49;00m
+            ],[90m[39;49;00m
+            OutputDataConfig={[33m"[39;49;00m[33mKmsKeyId[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mkms[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mS3OutputPath[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33ms3://output[39;49;00m[33m"[39;49;00m},[90m[39;49;00m
+            AutoMLProblemTypeConfig={[90m[39;49;00m
+                [33m"[39;49;00m[33mImageClassificationJobConfig[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                    [33m"[39;49;00m[33mCompletionCriteria[39;49;00m[33m"[39;49;00m: {[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxCandidates[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxRuntimePerTrainingJobInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                        [33m"[39;49;00m[33mMaxAutoMLJobRuntimeInSeconds[39;49;00m[33m"[39;49;00m: [94m123[39;49;00m,[90m[39;49;00m
+                    }[90m[39;49;00m
+                },[90m[39;49;00m
+            },[90m[39;49;00m
+            RoleArn=[33mf[39;49;00m[33m"[39;49;00m[33marn:aws:iam::[39;49;00m[33m{[39;49;00mACCOUNT_ID[33m}[39;49;00m[33m:role/FakeRole[39;49;00m[33m"[39;49;00m,[90m[39;49;00m
+            Tags=[{[33m"[39;49;00m[33mKey[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestkey[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mValue[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtestvalue[39;49;00m[33m"[39;49;00m}],[90m[39;49;00m
+        )[90m[39;49;00m
+
+[1m[31mtests/test_sagemaker/test_sagemaker_automljobs.py[0m:675: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:606: in _api_call
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._make_api_call(operation_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/context.py[0m:123: in wrapper
+    [0m[94mreturn[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1076: in _make_api_call
+    [0mhttp, parsed_response = [96mself[39;49;00m._make_request([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/client.py[0m:1100: in _make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._endpoint.make_request(operation_model, request_dict)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:119: in make_request
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._send_request(request_dict, operation_model)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:200: in _send_request
+    [0m[94mwhile[39;49;00m [96mself[39;49;00m._needs_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:360: in _needs_retry
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:207: in __call__
+    [0m[94mif[39;49;00m [96mself[39;49;00m._checker(**checker_kwargs):[90m[39;49;00m
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:284: in __call__
+    [0mshould_retry = [96mself[39;49;00m._should_retry([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:307: in _should_retry
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:363: in __call__
+    [0mchecker_response = checker([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:247: in __call__
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._check_caught_exception([90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/retryhandler.py[0m:416: in _check_caught_exception
+    [0m[94mraise[39;49;00m caught_exception[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/endpoint.py[0m:276: in _do_get_response
+    [0mresponses = [96mself[39;49;00m._event_emitter.emit(event_name, request=request)[90m[39;49;00m
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:412: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emitter.emit(aliased_event_name, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:256: in emit
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m._emit(event_name, kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31m/usr/local/lib/python3.11/site-packages/botocore/hooks.py[0m:239: in _emit
+    [0mresponse = handler(**kwargs)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:37: in __call__
+    [0mresponse = [96mself[39;49;00m.process_request(request)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/botocore_stubber.py[0m:84: in process_request
+    [0mstatus, headers, body = method_to_execute([90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:290: in dispatch
+    [0m[94mreturn[39;49;00m [96mcls[39;49;00m()._dispatch(*args, **kwargs)[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mmoto/core/responses.py[0m:501: in _dispatch
+    [0m[94mreturn[39;49;00m [96mself[39;49;00m.call_action()[90m[39;49;00m
+           ^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <moto.sagemaker.responses.SageMakerResponse object at 0x2b27414a79d0>
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mcall_action[39;49;00m([96mself[39;49;00m) -> TYPE_RESPONSE:[90m[39;49;00m
+        headers = [96mself[39;49;00m.response_headers[90m[39;49;00m
+        [94mif[39;49;00m [96mhasattr[39;49;00m([96mself[39;49;00m, [33m"[39;49;00m[33m_determine_resource[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+            resource = [96mself[39;49;00m._determine_resource()[90m[39;49;00m
+        [94melse[39;49;00m:[90m[39;49;00m
+            resource = [33m"[39;49;00m[33m*[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+        [94mtry[39;49;00m:[90m[39;49;00m
+            [96mself[39;49;00m._authenticate_and_authorize_normal_action(resource)[90m[39;49;00m
+        [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+            response = http_error.description, [96mdict[39;49;00m(status=http_error.code)[90m[39;49;00m
+            status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        action = camelcase_to_underscores([96mself[39;49;00m._get_action())[90m[39;49;00m
+        method_names = method_names_from_class([96mself[39;49;00m.[91m__class__[39;49;00m)[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m action [95min[39;49;00m method_names:[90m[39;49;00m
+            method = [96mgetattr[39;49;00m([96mself[39;49;00m, action)[90m[39;49;00m
+            [94mtry[39;49;00m:[90m[39;49;00m
+                response = method()[90m[39;49;00m
+            [94mexcept[39;49;00m HTTPException [94mas[39;49;00m http_error:[90m[39;49;00m
+                response_headers: Dict[[96mstr[39;49;00m, Union[[96mstr[39;49;00m, [96mint[39;49;00m]] = [96mdict[39;49;00m([90m[39;49;00m
+                    http_error.get_headers() [95mor[39;49;00m [][90m[39;49;00m
+                )[90m[39;49;00m
+                response_headers[[33m"[39;49;00m[33mstatus[39;49;00m[33m"[39;49;00m] = http_error.code  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+                response = http_error.description, response_headers  [90m# type: ignore[assignment][39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+            [94mif[39;49;00m [96misinstance[39;49;00m(response, [96mstr[39;49;00m):[90m[39;49;00m
+                status = [94m200[39;49;00m[90m[39;49;00m
+                body = response[90m[39;49;00m
+            [94melse[39;49;00m:[90m[39;49;00m
+                status, headers, body = [96mself[39;49;00m._transform_response(headers, response)[90m[39;49;00m
+    [90m[39;49;00m
+            headers, body = [96mself[39;49;00m._enrich_response(headers, body)[90m[39;49;00m
+    [90m[39;49;00m
+            [94mreturn[39;49;00m status, headers, body[90m[39;49;00m
+    [90m[39;49;00m
+        [94mif[39;49;00m [95mnot[39;49;00m action:[90m[39;49;00m
+            [94mreturn[39;49;00m [94m404[39;49;00m, headers, [33m"[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+    [90m[39;49;00m
+>       [94mraise[39;49;00m [96mNotImplementedError[39;49;00m([33mf[39;49;00m[33m"[39;49;00m[33mThe [39;49;00m[33m{[39;49;00maction[33m}[39;49;00m[33m action has not been implemented[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE       NotImplementedError: The create_auto_ml_job_v2 action has not been implemented[0m
+
+[1m[31mmoto/core/responses.py[0m:608: NotImplementedError
+[36m[1m=========================== short test summary info ============================[0m
+[31mFAILED[0m tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::[1mtest_get_resources_sagemaker_automljob[0m - NotImplementedError: The create_auto_ml_job_v2 action has not been implemented
+[31mFAILED[0m tests/test_sagemaker/test_sagemaker_automljobs.py::[1mtest_create_auto_ml_job_v2[0m - NotImplementedError: The create_auto_ml_job_v2 action has not been implemented
+[31mFAILED[0m tests/test_sagemaker/test_sagemaker_automljobs.py::[1mtest_describe_auto_ml_job_v2[0m - NotImplementedError: The create_auto_ml_job_v2 action has not been implemented
+[31mFAILED[0m tests/test_sagemaker/test_sagemaker_automljobs.py::[1mtest_describe_auto_ml_job_v2_defaults[0m - NotImplementedError: The create_auto_ml_job_v2 action has not been implemented
+[31mFAILED[0m tests/test_sagemaker/test_sagemaker_automljobs.py::[1mtest_list_auto_ml_jobs[0m - NotImplementedError: The create_auto_ml_job_v2 action has not been implemented
+[31mFAILED[0m tests/test_sagemaker/test_sagemaker_automljobs.py::[1mtest_list_auto_ml_jobs_filters[0m - NotImplementedError: The create_auto_ml_job_v2 action has not been implemented
+[31mFAILED[0m tests/test_sagemaker/test_sagemaker_automljobs.py::[1mtest_stop_auto_ml_job[0m - NotImplementedError: The create_auto_ml_job_v2 action has not been implemented
+[31mFAILED[0m tests/test_sagemaker/test_sagemaker_automljobs.py::[1mtest_tag_auto_ml_job[0m - NotImplementedError: The create_auto_ml_job_v2 action has not been implemented
+[31m================== [31m[1m8 failed[0m, [32m22 passed[0m, [33m3 deselected[0m[31m in 9.20s[0m[31m ==================[0m
+reward=0 graded=30 found=0 failed=0 parsed=22 framework=pytest exit_code=1

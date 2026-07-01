@@ -1,0 +1,19 @@
+patching file internal/auth0/prompt/resource_partials_test.go
+patching file test/data/recordings/TestAccPromptPartials.yaml
+=== RUN   TestAccPromptPartials
+=== PAUSE TestAccPromptPartials
+=== CONT  TestAccPromptPartials
+    acctest.go:25: Step 1/2 error: Error running pre-apply plan: exit status 1
+        
+        Error: Invalid resource type
+        
+          on terraform_plugin_test.tf line 25, in resource "auth0_prompt_partials" "prompt_partials":
+          25: resource "auth0_prompt_partials" "prompt_partials" {
+        
+        The provider hashicorp/auth0 does not support resource type
+        "auth0_prompt_partials".
+--- FAIL: TestAccPromptPartials (1.54s)
+FAIL
+FAIL	github.com/auth0/terraform-provider-auth0/internal/auth0/prompt	1.559s
+FAIL
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=1

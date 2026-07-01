@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "service postgresql start && sleep 2 && su -c \"psql -c \\\"ALTER USER postgres WITH PASSWORD 'postgres';\\\"\" postgres && SQLX_OFFLINE=false DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/postgres cargo nextest run -p pgt_lsp -E 'test(test_multiple_content_changes_single_request)' --no-fail-fast",
+  "test_files": [
+    "crates/pgt_lsp/tests/server.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "pgt_lsp::server test_multiple_content_changes_single_request"
+  ],
+  "PASS_TO_PASS": []
+}

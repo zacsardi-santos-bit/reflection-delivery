@@ -1,0 +1,11 @@
+patching file code/.storybook/preview.tsx
+patching file code/addons/a11y/src/constants.ts
+patching file code/addons/a11y/src/postinstall.ts
+patching file code/addons/a11y/src/preview.tsx
+patching file code/core/template/stories/tags-add.stories.ts
+patching file code/core/template/stories/tags-config.stories.ts
+patching file code/core/template/stories/tags-remove.stories.ts
+patching file code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.ts
+patching file docs/_snippets/addon-a11y-meta-tag-exclude.md
+patching file docs/_snippets/addon-a11y-meta-tag-reinclude.md (renamed from docs/_snippets/addon-a11y-meta-tag.md)
+patching file scripts/tasks/sandbox-parts.ts

@@ -1,0 +1,261 @@
+patching file dev-packages/e2e-tests/test-applications/create-remix-app-express-vite-dev/instrument.mjs
+patching file dev-packages/e2e-tests/test-applications/node-express-esm-preload/tests/server.test.ts
+patching file dev-packages/e2e-tests/test-applications/node-profiling/build.mjs
+patching file dev-packages/e2e-tests/test-applications/node-profiling/index.ts (renamed from dev-packages/e2e-tests/test-applications/node-profiling/index.js)
+patching file dev-packages/e2e-tests/test-applications/node-profiling/package.json
+patching file dev-packages/e2e-tests/test-applications/node-profiling/tsconfig.json
+patching file packages/core/test/lib/tracing/trace.test.ts
+patching file packages/opentelemetry/test/trace.test.ts
+patching file packages/profiling-node/test/cpu_profiler.test.ts
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[ts-compiler] (WARN) [96mtest/lib/tracing/trace.test.ts[0m:[93m277[0m:[93m41[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ name: string; parentSpan: SentrySpan; }' is not assignable to parameter of type 'StartSpanOptions'.
+  Object literal may only specify known properties, and 'parentSpan' does not exist in type 'StartSpanOptions'.
+
+[7m277[0m     startSpan({ name: 'GET users/[id]', parentSpan }, span => {
+[7m   [0m [91m                                        ~~~~~~~~~~[0m
+[96mtest/lib/tracing/trace.test.ts[0m:[93m686[0m:[93m47[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ name: string; parentSpan: SentrySpan; }' is not assignable to parameter of type 'StartSpanOptions'.
+  Object literal may only specify known properties, and 'parentSpan' does not exist in type 'StartSpanOptions'.
+
+[7m686[0m     startSpanManual({ name: 'GET users/[id]', parentSpan }, span => {
+[7m   [0m [91m                                              ~~~~~~~~~~[0m
+[96mtest/lib/tracing/trace.test.ts[0m:[93m1007[0m:[93m62[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ name: string; parentSpan: SentrySpan; }' is not assignable to parameter of type 'StartSpanOptions'.
+  Object literal may only specify known properties, and 'parentSpan' does not exist in type 'StartSpanOptions'.
+
+[7m1007[0m     const span = startInactiveSpan({ name: 'GET users/[id]', parentSpan });
+[7m    [0m [91m                                                             ~~~~~~~~~~[0m
+ts-jest[ts-compiler] (WARN) [96msrc/tracing/trace.ts[0m:[93m44[0m:[93m29[0m - [91merror[0m[90m TS2339: [0mProperty 'parentSpan' does not exist on type 'StartSpanOptions'.
+
+[7m44[0m   const { forceTransaction, parentSpan: customParentSpan } = options;
+[7m  [0m [91m                            ~~~~~~~~~~[0m
+[96msrc/tracing/trace.ts[0m:[93m98[0m:[93m29[0m - [91merror[0m[90m TS2339: [0mProperty 'parentSpan' does not exist on type 'StartSpanOptions'.
+
+[7m98[0m   const { forceTransaction, parentSpan: customParentSpan } = options;
+[7m  [0m [91m                            ~~~~~~~~~~[0m
+[96msrc/tracing/trace.ts[0m:[93m154[0m:[93m29[0m - [91merror[0m[90m TS2339: [0mProperty 'parentSpan' does not exist on type 'StartSpanOptions'.
+
+[7m154[0m   const { forceTransaction, parentSpan: customParentSpan } = options;
+[7m   [0m [91m                            ~~~~~~~~~~[0m
+PASS test/lib/tracing/trace.test.ts
+  startSpan
+    ✓ returns a non recording span if tracing is disabled
+    ✓ creates & finishes span (2 ms)
+    ✓ allows to pass a `startTime`
+    ✓ forks the scope (1 ms)
+    ✓ allows to pass a scope (1 ms)
+    ✓ allows to pass a parentSpan (1 ms)
+    ✓ allows to force a transaction with forceTransaction=true (3 ms)
+    ✓ picks up the trace id off the parent scope's propagation context (1 ms)
+    ✓ samples with a tracesSampler (2 ms)
+    ✓ includes the scope at the time the span was started when finished (5 ms)
+    ✓ sets a child span reference on the parent span (1 ms)
+    ✓ uses implementation from ACS, if it exists
+    with async callback and error false
+      ✓ should return the same value as the callback (8 ms)
+      ✓ creates a transaction (2 ms)
+      ✓ allows for transaction to be mutated (2 ms)
+      ✓ creates a span with correct description (3 ms)
+      ✓ allows for span to be mutated (2 ms)
+      ✓ correctly sets the span origin (1 ms)
+    with sync callback and error false
+      ✓ should return the same value as the callback (1 ms)
+      ✓ creates a transaction (1 ms)
+      ✓ allows for transaction to be mutated (2 ms)
+      ✓ creates a span with correct description (2 ms)
+      ✓ allows for span to be mutated (1 ms)
+      ✓ correctly sets the span origin (1 ms)
+    with async callback and error true
+      ✓ should return the same value as the callback (1 ms)
+      ✓ creates a transaction (1 ms)
+      ✓ allows for transaction to be mutated (2 ms)
+      ✓ creates a span with correct description (1 ms)
+      ✓ allows for span to be mutated (1 ms)
+      ✓ correctly sets the span origin (1 ms)
+    with sync callback and error true
+      ✓ should return the same value as the callback (1 ms)
+      ✓ creates a transaction (1 ms)
+      ✓ allows for transaction to be mutated (1 ms)
+      ✓ creates a span with correct description (3 ms)
+      ✓ allows for span to be mutated (1 ms)
+      ✓ correctly sets the span origin (1 ms)
+    onlyIfParent
+      ✓ starts a non recording span if there is no parent
+      ✓ creates a span if there is a parent (1 ms)
+    parentSpanIsAlwaysRootSpan
+      ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (2 ms)
+      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (1 ms)
+    [experimental] standalone spans
+      ✓ starts a standalone segment span if standalone is set
+      ✓ doesn't set segment properties if standalone is falsy (undefined)
+      ✓ doesn't set segment properties if standalone is falsy (false) (1 ms)
+  startSpanManual
+    ✓ returns a non recording span if tracing is disabled (1 ms)
+    ✓ creates & finishes span (1 ms)
+    ✓ forks the scope automatically (1 ms)
+    ✓ allows to pass a scope
+    ✓ allows to pass a parentSpan
+    ✓ allows to force a transaction with forceTransaction=true (2 ms)
+    ✓ allows to pass a `startTime` (1 ms)
+    ✓ picks up the trace id off the parent scope's propagation context (1 ms)
+    ✓ sets a child span reference on the parent span (1 ms)
+    ✓ uses implementation from ACS, if it exists
+    onlyIfParent
+      ✓ does not create a span if there is no parent (1 ms)
+      ✓ creates a span if there is a parent
+    parentSpanIsAlwaysRootSpan
+      ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (1 ms)
+      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (1 ms)
+  startInactiveSpan
+    ✓ returns a non recording span if tracing is disabled (1 ms)
+    ✓ creates & finishes span
+    ✓ does not set span on scope
+    ✓ allows to pass a scope (1 ms)
+    ✓ allows to pass a parentSpan (2 ms)
+    ✓ allows to force a transaction with forceTransaction=true (2 ms)
+    ✓ allows to pass a `startTime` (1 ms)
+    ✓ picks up the trace id off the parent scope's propagation context
+    ✓ includes the scope at the time the span was started when finished (8 ms)
+    ✓ sets a child span reference on the parent span (1 ms)
+    ✓ uses implementation from ACS, if it exists
+    onlyIfParent
+      ✓ does not create a span if there is no parent
+      ✓ creates a span if there is a parent (1 ms)
+    parentSpanIsAlwaysRootSpan
+      ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (1 ms)
+      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (2 ms)
+  continueTrace
+    ✓ works without trace & baggage data
+    ✓ works with trace data (1 ms)
+    ✓ works with trace & baggage data (1 ms)
+    ✓ works with trace & 3rd party baggage data
+    ✓ returns response of callback (1 ms)
+  getActiveSpan
+    ✓ works without an active span on the scope
+    ✓ works with an active span on the scope
+    ✓ uses implementation from ACS, if it exists (1 ms)
+  withActiveSpan()
+    ✓ should set the active span within the callback
+    ✓ should create child spans when calling startSpan within the callback (1 ms)
+    ✓ when `null` is passed, no span should be active within the callback (1 ms)
+    ✓ uses implementation from ACS, if it exists
+  span hooks
+    ✓ correctly emits span hooks (2 ms)
+  suppressTracing
+    ✓ works for a root span
+    ✓ works for a child span (2 ms)
+    ✓ works for a child span with forceTransaction=true (1 ms)
+  startNewTrace
+    ✓ creates a new propagation context on the current scope
+    ✓ keeps the propagation context on the isolation scope as-is (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       90 passed, 90 total
+Snapshots:   0 total
+Time:        3.688 s
+Ran all test suites matching /test\/lib\/tracing\/trace.test.ts/i.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[ts-compiler] (WARN) [96mtest/trace.test.ts[0m:[93m320[0m:[93m43[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ name: string; parentSpan: Span; }' is not assignable to parameter of type 'OpenTelemetrySpanContext'.
+  Object literal may only specify known properties, and 'parentSpan' does not exist in type 'OpenTelemetrySpanContext'.
+
+[7m320[0m       startSpan({ name: 'GET users/[id]', parentSpan: parentSpan! }, span => {
+[7m   [0m [91m                                          ~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96mtest/trace.test.ts[0m:[93m574[0m:[93m64[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ name: string; parentSpan: Span; }' is not assignable to parameter of type 'OpenTelemetrySpanContext'.
+  Object literal may only specify known properties, and 'parentSpan' does not exist in type 'OpenTelemetrySpanContext'.
+
+[7m574[0m       const span = startInactiveSpan({ name: 'GET users/[id]', parentSpan: parentSpan! });
+[7m   [0m [91m                                                               ~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96mtest/trace.test.ts[0m:[93m853[0m:[93m49[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ name: string; parentSpan: Span; }' is not assignable to parameter of type 'OpenTelemetrySpanContext'.
+  Object literal may only specify known properties, and 'parentSpan' does not exist in type 'OpenTelemetrySpanContext'.
+
+[7m853[0m       startSpanManual({ name: 'GET users/[id]', parentSpan: parentSpan! }, span => {
+[7m   [0m [91m                                                ~~~~~~~~~~~~~~~~~~~~~~~[0m
+ts-jest[ts-compiler] (WARN) [96msrc/trace.ts[0m:[93m35[0m:[93m17[0m - [91merror[0m[90m TS2339: [0mProperty 'parentSpan' does not exist on type 'OpenTelemetrySpanContext'.
+
+[7m35[0m   const { name, parentSpan: customParentSpan } = options;
+[7m  [0m [91m                ~~~~~~~~~~[0m
+[96msrc/trace.ts[0m:[93m80[0m:[93m17[0m - [91merror[0m[90m TS2339: [0mProperty 'parentSpan' does not exist on type 'OpenTelemetrySpanContext'.
+
+[7m80[0m   const { name, parentSpan: customParentSpan } = options;
+[7m  [0m [91m                ~~~~~~~~~~[0m
+[96msrc/trace.ts[0m:[93m120[0m:[93m17[0m - [91merror[0m[90m TS2339: [0mProperty 'parentSpan' does not exist on type 'OpenTelemetrySpanContext'.
+
+[7m120[0m   const { name, parentSpan: customParentSpan } = options;
+[7m   [0m [91m                ~~~~~~~~~~[0m
+PASS test/trace.test.ts
+  trace
+    startSpan
+      ✓ works with a sync callback (20 ms)
+      ✓ works with an async callback (27 ms)
+      ✓ works with multiple parallel calls (6 ms)
+      ✓ works with multiple parallel async calls (17 ms)
+      ✓ allows to pass context arguments (3 ms)
+      ✓ allows to pass base SpanOptions (4 ms)
+      ✓ allows to pass a startTime in seconds (2 ms)
+      ✓ allows to pass a scope (3 ms)
+      ✓ allows to pass a parentSpan (3 ms)
+      ✓ allows to force a transaction with forceTransaction=true (8 ms)
+      onlyIfParent
+        ✓ does not create a span if there is no parent (2 ms)
+        ✓ creates a span if there is a parent (3 ms)
+    startInactiveSpan
+      ✓ works at the root (2 ms)
+      ✓ works as a child span (2 ms)
+      ✓ allows to pass context arguments (2 ms)
+      ✓ allows to pass base SpanOptions (3 ms)
+      ✓ allows to pass a startTime in seconds (1 ms)
+      ✓ allows to pass a scope (2 ms)
+      ✓ allows to pass a parentSpan (1 ms)
+      ✓ allows to force a transaction with forceTransaction=true (5 ms)
+      ✓ includes the scope at the time the span was started when finished (5 ms)
+      onlyIfParent
+        ✓ does not create a span if there is no parent (1 ms)
+        ✓ creates a span if there is a parent (2 ms)
+    startSpanManual
+      ✓ does not automatically finish the span (2 ms)
+      ✓ allows to pass base SpanOptions (2 ms)
+      ✓ allows to pass a startTime in seconds (2 ms)
+      ✓ allows to pass a scope (1 ms)
+      ✓ allows to pass a parentSpan (2 ms)
+      ✓ allows to force a transaction with forceTransaction=true (5 ms)
+      onlyIfParent
+        ✓ does not create a span if there is no parent (1 ms)
+        ✓ creates a span if there is a parent (1 ms)
+    propagation
+      ✓ picks up the trace context from the scope, if there is no parent (2 ms)
+      ✓ picks up the trace context from the scope, including parentSpanId, if there is no parent (2 ms)
+      ✓ picks up the trace context from the parent without DSC (2 ms)
+      ✓ picks up the trace context from the parent with DSC (1 ms)
+      ✓ picks up the trace context from a remote parent (2 ms)
+  trace (tracing disabled)
+    ✓ startSpan calls callback without span (2 ms)
+    ✓ startInactiveSpan returns a NonRecordinSpan (1 ms)
+  trace (sampling)
+    ✓ samples with a tracesSampleRate, when Math.random() > tracesSampleRate (2 ms)
+    ✓ samples with a tracesSampleRate, when Math.random() < tracesSampleRate (2 ms)
+    ✓ positive parent sampling takes precedence over tracesSampleRate (4 ms)
+    ✓ negative parent sampling takes precedence over tracesSampleRate (1 ms)
+    ✓ positive remote parent sampling takes precedence over tracesSampleRate (3 ms)
+    ✓ negative remote parent sampling takes precedence over tracesSampleRate (1 ms)
+    ✓ samples with a tracesSampler returning a boolean (2 ms)
+    ✓ samples with a tracesSampler returning a number (4 ms)
+    ✓ samples with a tracesSampler even if parent is remotely sampled (1 ms)
+  HTTP methods (sampling)
+    ✓ does sample when HTTP method is other than OPTIONS or HEAD (3 ms)
+    ✓ does not sample when HTTP method is OPTIONS (2 ms)
+    ✓ does not sample when HTTP method is HEAD (1 ms)
+  continueTrace
+    ✓ works without trace & baggage data (2 ms)
+    ✓ works with trace data (2 ms)
+    ✓ works with trace & baggage data (2 ms)
+    ✓ works with trace & 3rd party baggage data (1 ms)
+    ✓ returns response of callback (1 ms)
+  suppressTracing
+    ✓ works for a root span (2 ms)
+    ✓ works for a child span (2 ms)
+    ✓ works for a child span with forceTransaction=true (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       58 passed, 58 total
+Snapshots:   0 total
+Time:        3.001 s
+Ran all test suites matching /test\/trace.test.ts/i.
+reward=1 graded=58 found=0 failed=0 parsed=0 framework=jest exit_code=0

@@ -1,0 +1,26 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && yarn workspace n4s jest --config /workspace/jest.config.wrapper.js packages/n4s/src/runtime/__tests__/enforceContext.test.ts --watchAll=false --coverage=false",
+  "test_files": [
+    "packages/n4s/src/runtime/__tests__/enforceContext.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context base structure Should match snapshot",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context When in top level Should return top level value when not in a nested rule",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context When in top level context.parent() returns null when in top level",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context context.parent traversal Allows traversal to parent values via \"parent\"",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context context.parent traversal Should return null when no further parents to traverse to",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context In schema rules enforce.shape Should add the current value within shape rules",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context In schema rules enforce.shape Adds name of current key to \"meta\"",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context In schema rules enforce.loose Should add the current value within shape rules",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context In schema rules enforce.loose Adds name of current key to \"meta\"",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context In schema rules enforce.isArrayOf passes the current value into the context",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context In schema rules enforce.isArrayOf passes the current index into the context meta field",
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context real usecase example Should pass if username is not in the friends list"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/n4s/src/runtime/__tests__/enforceContext.test.ts::enforce.context real usecase example Should fail if username is in the friends list"
+  ]
+}

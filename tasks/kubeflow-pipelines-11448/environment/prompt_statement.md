@@ -1,0 +1,7 @@
+We upgraded our Kubernetes client library dependencies in the Kubeflow Pipelines backend, and now several packages are failing to compile and tests are failing. The upgrade changed a number of interface signatures in ways that are backward-incompatible.
+
+The main issues are: the method for registering event handlers with informers previously had no return value, but now it must return a registration handle and an error — this needs to be reflected in our custom interfaces and all their concrete implementations. The notification callback that fires when an object is added to an informer cache now takes an additional boolean argument, so any code that invokes or implements that callback needs to be updated.
+
+There are also two more minor issues: the type used to specify resource requirements for persistent volume claim templates inside ephemeral volume definitions has been renamed in the Kubernetes API to be more volume-specific, so code building those specs needs to use the new type name. And several files import a Kubernetes condition status type from an internal Kubernetes package that shouldn't be used externally — those imports need to be switched to the equivalent type from the standard public Kubernetes API package.
+
+All of these changes are purely about keeping the code compatible with the upgraded library versions. I need the interfaces, implementations, and type usages updated throughout the relevant backend packages so everything compiles and the test suite passes again.

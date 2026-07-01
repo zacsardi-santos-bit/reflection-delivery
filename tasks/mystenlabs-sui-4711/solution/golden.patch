@@ -1,0 +1,205 @@
+diff --git a/.changeset/fifty-tips-boil.md b/.changeset/fifty-tips-boil.md
+new file mode 100644
+index 0000000000..a9f5ac09f6
+--- /dev/null
++++ b/.changeset/fifty-tips-boil.md
+@@ -0,0 +1,5 @@
++---
++"@mysten/sui.js": minor
++---
++
++Add util function to get coin balances
+diff --git a/apps/explorer/src/components/transaction-card/TxCardUtils.tsx b/apps/explorer/src/components/transaction-card/TxCardUtils.tsx
+index 8829abfcb1..35a68d6188 100644
+--- a/apps/explorer/src/components/transaction-card/TxCardUtils.tsx
++++ b/apps/explorer/src/components/transaction-card/TxCardUtils.tsx
+@@ -170,7 +170,7 @@ export const getDataOnTxDigests = (
+                         return {
+                             seq,
+                             txId: digest,
+-                            status: getExecutionStatusType(txEff),
++                            status: getExecutionStatusType(txEff)!,
+                             txGas: getTotalGasUsed(txEff),
+                             suiAmount: getTransferSuiAmount(txn),
+                             kind: txKind,
+diff --git a/apps/explorer/src/pages/transaction-result/TransactionResult.tsx b/apps/explorer/src/pages/transaction-result/TransactionResult.tsx
+index 439fd1332a..45aebe9605 100644
+--- a/apps/explorer/src/pages/transaction-result/TransactionResult.tsx
++++ b/apps/explorer/src/pages/transaction-result/TransactionResult.tsx
+@@ -110,7 +110,7 @@ const transformTransactionResponse = (
+ ): TxnState => {
+     return {
+         ...txObj.certificate,
+-        status: getExecutionStatusType(txObj),
++        status: getExecutionStatusType(txObj)!,
+         gasFee: getTotalGasUsed(txObj),
+         txError: getExecutionStatusError(txObj) ?? '',
+         txId: id,
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index a266582969..03d07f208d 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -303,6 +303,7 @@ importers:
+       '@size-limit/preset-small-lib': ^7.0.8
+       '@types/bn.js': ^5.1.0
+       '@types/lossless-json': ^1.0.1
++      axios: ^0.27.2
+       bn.js: ^5.2.0
+       buffer: ^6.0.3
+       cross-fetch: ^3.1.5
+@@ -346,6 +347,7 @@ importers:
+       '@size-limit/preset-small-lib': 7.0.8_size-limit@7.0.8
+       '@types/bn.js': 5.1.0
+       '@types/lossless-json': 1.0.1
++      axios: 0.27.2
+       eslint: 8.23.0
+       eslint-config-prettier: 8.5.0_eslint@8.23.0
+       eslint-config-react-app: 7.0.1_itqs5654cmlnjraw6gjzqacppi
+@@ -8488,10 +8490,6 @@ packages:
+       safe-buffer: 5.2.1
+     dev: true
+ 
+-  /browserify-unibabel/3.0.0:
+-    resolution: {integrity: sha512-j3MX0k2dC1/DEo9jSUyj7zpv5wLd1+klpFwYlM0E5mr7MX6LblQOWb+jkBEKV2iRszmhJuLHAtNuqranlGnpNQ==}
+-    dev: false
+-
+   /browserify-zlib/0.2.0:
+     resolution: {integrity: sha512-Z942RysHXmJrhqk88FmKBVq/v5tqmSkDz7p54G/MGyjMnCFFnC79XWNbg+Vta8W6Wb2qtSZTSxIGkJrRpCFEiA==}
+     dependencies:
+@@ -19799,7 +19797,7 @@ packages:
+       schema-utils: 3.1.1
+       serialize-javascript: 6.0.0
+       terser: 5.14.2
+-      webpack: 5.74.0_webpack-cli@4.10.0
++      webpack: 5.74.0
+     dev: true
+ 
+   /terser/4.8.1:
+diff --git a/sdk/typescript/package.json b/sdk/typescript/package.json
+index 487a8d7dc5..0d6c3a6cb6 100644
+--- a/sdk/typescript/package.json
++++ b/sdk/typescript/package.json
+@@ -65,6 +65,7 @@
+     "@size-limit/preset-small-lib": "^7.0.8",
+     "@types/bn.js": "^5.1.0",
+     "@types/lossless-json": "^1.0.1",
++    "axios": "^0.27.2",
+     "eslint": "^8.23.0",
+     "eslint-config-prettier": "^8.5.0",
+     "eslint-config-react-app": "^7.0.1",
+diff --git a/sdk/typescript/src/providers/json-rpc-provider.ts b/sdk/typescript/src/providers/json-rpc-provider.ts
+index 85ab138663..e17758246c 100644
+--- a/sdk/typescript/src/providers/json-rpc-provider.ts
++++ b/sdk/typescript/src/providers/json-rpc-provider.ts
+@@ -201,6 +201,22 @@ export class JsonRpcProvider extends Provider {
+     return objects.filter((obj: SuiObjectInfo) => Coin.isSUI(obj));
+   }
+ 
++  async getCoinBalancesOwnedByAddress(
++    address: string,
++    typeArg?: string
++  ): Promise<GetObjectDataResponse[]> {
++    const objects = await this.getObjectsOwnedByAddress(address);
++    const coinIds = objects
++      .filter(
++        (obj: SuiObjectInfo) =>
++          Coin.isCoin(obj) &&
++          (typeArg === undefined || typeArg === Coin.getCoinTypeArg(obj))
++      )
++      .map((c) => c.objectId);
++
++    return await this.getObjectBatch(coinIds);
++  }
++
+   async getObjectsOwnedByObject(objectId: string): Promise<SuiObjectInfo[]> {
+     try {
+       return await this.client.requestWithType(
+diff --git a/sdk/typescript/src/providers/provider.ts b/sdk/typescript/src/providers/provider.ts
+index 3bf4995992..0489b5bb5d 100644
+--- a/sdk/typescript/src/providers/provider.ts
++++ b/sdk/typescript/src/providers/provider.ts
+@@ -44,6 +44,15 @@ export abstract class Provider {
+     _address: string
+   ): Promise<SuiObjectInfo[]>;
+ 
++  /**
++   * Convenience method for getting all coins objects owned by an address
++   * @param typeArg optional argument for filter by coin type
++   */
++  abstract getCoinBalancesOwnedByAddress(
++    address: string,
++    typeArg?: string
++  ): Promise<GetObjectDataResponse[]>;
++
+   /**
+    * Get details about an object
+    */
+diff --git a/sdk/typescript/src/providers/void-provider.ts b/sdk/typescript/src/providers/void-provider.ts
+index ebf3c9c0ba..24987cec07 100644
+--- a/sdk/typescript/src/providers/void-provider.ts
++++ b/sdk/typescript/src/providers/void-provider.ts
+@@ -40,6 +40,13 @@ export class VoidProvider extends Provider {
+     throw this.newError('getGasObjectsOwnedByAddress');
+   }
+ 
++  async getCoinBalancesOwnedByAddress(
++    _address: string,
++    _typeArg?: string
++  ): Promise<GetObjectDataResponse[]> {
++    throw this.newError('getCoinBalancesOwnedByAddress');
++  }
++
+   async getObject(_objectId: string): Promise<GetObjectDataResponse> {
+     throw this.newError('getObject');
+   }
+diff --git a/sdk/typescript/src/signers/txn-data-serializers/local-txn-data-serializer.ts b/sdk/typescript/src/signers/txn-data-serializers/local-txn-data-serializer.ts
+index 11c9eceb14..ed890e799a 100644
+--- a/sdk/typescript/src/signers/txn-data-serializers/local-txn-data-serializer.ts
++++ b/sdk/typescript/src/signers/txn-data-serializers/local-txn-data-serializer.ts
+@@ -254,8 +254,6 @@ export class LocalTxnDataSerializer implements TxnDataSerializer {
+       sender: signerAddress,
+     };
+ 
+-    console.log('transactiondata', txData);
+-
+     return this.serializeTransactionData(txData);
+   }
+ 
+diff --git a/sdk/typescript/src/types/transactions.ts b/sdk/typescript/src/types/transactions.ts
+index 920129500a..479eee16c6 100644
+--- a/sdk/typescript/src/types/transactions.ts
++++ b/sdk/typescript/src/types/transactions.ts
+@@ -307,21 +307,26 @@ export function getTransactionKindName(
+ /* ----------------------------- ExecutionStatus ---------------------------- */
+ 
+ export function getExecutionStatusType(
+-  data: SuiTransactionResponse
+-): ExecutionStatusType {
+-  return getExecutionStatus(data).status;
++  data: SuiTransactionResponse | SuiExecuteTransactionResponse
++): ExecutionStatusType | undefined {
++  return getExecutionStatus(data)?.status;
+ }
+ 
+ export function getExecutionStatus(
+-  data: SuiTransactionResponse
+-): ExecutionStatus {
+-  return data.effects.status;
++  data: SuiTransactionResponse | SuiExecuteTransactionResponse
++): ExecutionStatus | undefined {
++  if ('effects' in data) {
++    return data.effects.status;
++  } else if ('EffectsCert' in data) {
++    return data.EffectsCert.effects.effects.status;
++  }
++  return undefined;
+ }
+ 
+ export function getExecutionStatusError(
+   data: SuiTransactionResponse
+ ): string | undefined {
+-  return getExecutionStatus(data).error;
++  return getExecutionStatus(data)?.error;
+ }
+ 
+ export function getExecutionStatusGasSummary(

@@ -1,0 +1,146 @@
+patching file crates/ruma-events/CHANGELOG.md
+patching file crates/ruma-macros/src/events/event_content.rs
+patching file crates/ruma-macros/src/events/event_enum.rs
+patching file crates/ruma-macros/src/events/event_parse.rs
+patching file crates/ruma-macros/src/events/event_type.rs
+patching file crates/ruma-events/CHANGELOG.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/ruma-events/CHANGELOG.md.rej
+patching file crates/ruma-macros/src/events/event_content.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+28 out of 28 hunks ignored -- saving rejects to file crates/ruma-macros/src/events/event_content.rs.rej
+patching file crates/ruma-macros/src/events/event_enum.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/ruma-macros/src/events/event_enum.rs.rej
+patching file crates/ruma-macros/src/events/event_parse.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file crates/ruma-macros/src/events/event_parse.rs.rej
+patching file crates/ruma-macros/src/events/event_type.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file crates/ruma-macros/src/events/event_type.rs.rej
+patching file crates/ruma-events/CHANGELOG.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/ruma-events/CHANGELOG.md.rej
+patching file crates/ruma-macros/src/events/event_content.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+28 out of 28 hunks ignored -- saving rejects to file crates/ruma-macros/src/events/event_content.rs.rej
+patching file crates/ruma-macros/src/events/event_enum.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/ruma-macros/src/events/event_enum.rs.rej
+patching file crates/ruma-macros/src/events/event_parse.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file crates/ruma-macros/src/events/event_parse.rs.rej
+patching file crates/ruma-macros/src/events/event_type.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file crates/ruma-macros/src/events/event_type.rs.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/ruma-events/CHANGELOG.md b/crates/ruma-events/CHANGELOG.md
+|index d8016ccfc..6c192c643 100644
+|--- a/crates/ruma-events/CHANGELOG.md
+|+++ b/crates/ruma-events/CHANGELOG.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 19
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/ruma-macros/src/events/event_content.rs b/crates/ruma-macros/src/events/event_content.rs
+|index 93bc36a3c..6b0953832 100644
+|--- a/crates/ruma-macros/src/events/event_content.rs
+|+++ b/crates/ruma-macros/src/events/event_content.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+28 out of 28 hunks ignored
+can't find file to patch at input line 549
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/ruma-macros/src/events/event_enum.rs b/crates/ruma-macros/src/events/event_enum.rs
+|index dba02a977..8e279bbcb 100644
+|--- a/crates/ruma-macros/src/events/event_enum.rs
+|+++ b/crates/ruma-macros/src/events/event_enum.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 568
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/ruma-macros/src/events/event_parse.rs b/crates/ruma-macros/src/events/event_parse.rs
+|index 41741b17c..f417b5bd7 100644
+|--- a/crates/ruma-macros/src/events/event_parse.rs
+|+++ b/crates/ruma-macros/src/events/event_parse.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 657
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/crates/ruma-macros/src/events/event_type.rs b/crates/ruma-macros/src/events/event_type.rs
+|index ace606575..ce5e19d9f 100644
+|--- a/crates/ruma-macros/src/events/event_type.rs
+|+++ b/crates/ruma-macros/src/events/event_type.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file crates/ruma-events/CHANGELOG.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/ruma-events/CHANGELOG.md.rej
+patching file crates/ruma-macros/src/events/event_content.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+28 out of 28 hunks ignored -- saving rejects to file crates/ruma-macros/src/events/event_content.rs.rej
+patching file crates/ruma-macros/src/events/event_enum.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file crates/ruma-macros/src/events/event_enum.rs.rej
+patching file crates/ruma-macros/src/events/event_parse.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file crates/ruma-macros/src/events/event_parse.rs.rej
+patching file crates/ruma-macros/src/events/event_type.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file crates/ruma-macros/src/events/event_type.rs.rej
+ERROR: golden patch failed to apply by all strategies

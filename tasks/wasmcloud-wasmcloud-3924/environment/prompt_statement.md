@@ -1,0 +1,7 @@
+I'm working on the wasmCloud host and I'd like to add path-based routing to the built-in HTTP server. Right now the built-in HTTP server only supports address-based routing — one component per listen address. I need a way to have a single HTTP listener route requests to different components depending on the URL path, configured through the lattice link system.
+
+The idea is that each link would carry a configuration key specifying which path should be routed to the linked component. When a request arrives, the server looks up the path in a routing table and dispatches to the right component. If the path isn't registered, it should return a 404. Removing a link should deregister the path (so requests return 404), and re-adding the link should register it again (restoring 200 responses). When the provider is stopped entirely, all traffic should stop.
+
+I also need a test utility for stopping a provider and confirming it stopped — something that sends the stop command and then polls until the provider no longer responds to health checks.
+
+On the implementation side, I want the path routing logic in its own module (separate from the existing address-based routing). The path routing state should track both a forward mapping from URL paths to component IDs, and a reverse mapping from component-and-link-name pairs back to their registered paths. Registering a duplicate path (already claimed by another component) or registering a second path for the same component-and-link-name pair should both be rejected with an error.

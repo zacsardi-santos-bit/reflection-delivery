@@ -1,0 +1,8 @@
+patching file Makefile
+patching file go.work
+patching file go.work.sum
+patching file tools/format_self/format.go
+patching file tools/format_self/format_self.go
+patching file tools/format_self/go.mod
+patching file tools/structs_sorted/go.mod
+patching file tools/structs_sorted/structs_sorted.go

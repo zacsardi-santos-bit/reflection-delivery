@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cockroach sql --insecure --host=localhost:26257 -e 'SELECT 1' 2>/dev/null || (rm -rf /tmp/cockroach-data && cockroach start-single-node --insecure --background --store=/tmp/cockroach-data --listen-addr=localhost:26257 && sleep 8 && cockroach sql --insecure --host=localhost:26257 -e 'CREATE USER IF NOT EXISTS prisma WITH CREATEDB; GRANT ALL ON DATABASE defaultdb TO prisma;') && TEST_DATABASE_URL=postgresql://prisma@localhost:26257 cargo nextest run -p introspection-engine-tests --no-fail-fast -E 'test(multi_schema::cockroach)'",
+  "test_files": [
+    "introspection-engine/introspection-engine-tests/tests/multi_schema/cockroach.rs",
+    "introspection-engine/introspection-engine-tests/tests/multi_schema/mod.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(6/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_tables_are_reintrospected",
+    "(1/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_enums_are_introspected",
+    "(2/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_duplicate_table_names_are_introspected",
+    "(3/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::same_table_name_with_relation_in_two_schemas",
+    "(4/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_cross_schema_are_reintrospected"
+  ],
+  "PASS_TO_PASS": [
+    "(5/6) introspection-engine-tests::introspection_tests multi_schema::cockroach::multiple_schemas_w_duplicate_enums_are_introspected"
+  ]
+}

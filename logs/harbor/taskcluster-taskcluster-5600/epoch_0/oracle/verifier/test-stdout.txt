@@ -1,0 +1,17 @@
+patching file ui/src/utils/validateTaskPayloadSchemas.test.js
+yarn run v1.22.19
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+warning From Yarn 1.0 onwards, scripts don't require "--" for options to be forwarded. In a future version, any explicit "--" will be forwarded as-is to the scripts.
+$ cross-env TZ=Europe/Berlin jest src/utils/validateTaskPayloadSchemas.test.js --watchAll=false
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS src/utils/validateTaskPayloadSchemas.test.js
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        3.91 s
+Ran all test suites matching /src\/utils\/validateTaskPayloadSchemas.test.js/i.
+Done in 17.05s.
+reward=1 graded=2 found=0 failed=0 parsed=0 framework=jest exit_code=0

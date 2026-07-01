@@ -1,0 +1,8 @@
+patching file tools/format_self/format_self_test.go
+patching file tools/format_unittests/format.go
+patching file tools/format_unittests/format_unittests.go
+patching file tools/format_unittests/format_unittests_test.go
+patching file tools/format_unittests/go.mod
+patching file tools/structs_sorted/structs_sorted_test.go
+pattern ./tools/format_unittests/...: directory prefix tools/format_unittests does not contain main module or its selected dependencies
+reward=0 graded=22 found=0 failed=0 parsed=0 framework=go exit_code=1

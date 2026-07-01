@@ -1,0 +1,23 @@
+{
+ "task": "googleapis-google-cloud-go-10966",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden renames updateStartEndOffset->prefixAdjustedOffsets, doSeqListing->listNextPageSequentially (adds pageSize), defaultPageSize->seqDefaultPageSize, and implements worksteal nextPage() (was a stub); test.patch updates test refs so package only compiles post-patch"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 29,
+  "shallow": true
+ }
+}

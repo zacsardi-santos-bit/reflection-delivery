@@ -1,0 +1,8 @@
+patching file docs/source/plugins/index.rst
+patching file docs/source/plugins/inference.rst
+patching file plugins/flytekit-inference/README.md
+patching file plugins/flytekit-inference/flytekitplugins/inference/__init__.py
+patching file plugins/flytekit-inference/flytekitplugins/inference/nim/__init__.py
+patching file plugins/flytekit-inference/flytekitplugins/inference/nim/serve.py
+patching file plugins/flytekit-inference/flytekitplugins/inference/sidecar_template.py
+patching file plugins/flytekit-inference/setup.py

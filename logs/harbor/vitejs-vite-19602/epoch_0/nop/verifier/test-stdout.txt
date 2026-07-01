@@ -1,0 +1,135 @@
+patching file packages/vite/src/node/__tests__/plugins/index.spec.ts
+patching file packages/vite/src/node/__tests__/plugins/pluginFilter.spec.ts
+
+> vite@6.2.2 build-bundle /workspace/repo/packages/vite
+> rollup --config rollup.config.ts --configPlugin esbuild
+
+[36m
+[1m/workspace/repo/packages/vite/src/client/env.ts[22m → [1mdist/client/env.mjs[22m...[39m
+[32mcreated [1mdist/client/env.mjs[22m in [1m41ms[22m[39m
+[36m
+[1m/workspace/repo/packages/vite/src/client/client.ts[22m → [1mdist/client/client.mjs[22m...[39m
+[32mcreated [1mdist/client/client.mjs[22m in [1m183ms[22m[39m
+[36m
+[1m/workspace/repo/packages/vite/src/node/index.ts, /workspace/repo/packages/vite/src/node/cli.ts, /workspace/repo/packages/vite/src/node/constants.ts[22m → [1m./dist[22m...[39m
+shimmed: fsevents-handler.js
+shimmed: postcss-import/index.js
+shimmed: postcss-load-config/src/req.js
+shimmed: postcss-import/lib/parse-styles.js
+shimmed: process-content.js
+shimmed: lilconfig/src/index.js
+patched cjs context: node/chunks/dep-!~{001}~.js
+patched cjs context: node/chunks/dep-!~{003}~.js
+[32mcreated [1m./dist[22m in [1m11.3s[22m[39m
+[36m
+[1m/workspace/repo/packages/vite/src/module-runner/index.ts[22m → [1m./dist[22m...[39m
+[32mcreated [1m./dist[22m in [1m191ms[22m[39m
+[36m
+[1m/workspace/repo/packages/vite/src/node/publicUtils.ts[22m → [1m./dist[22m...[39m
+[32mcreated [1m./dist[22m in [1m457ms[22m[39m
+
+ RUN  v3.0.8 /workspace/repo/packages/vite
+
+ ❯ src/node/__tests__/plugins/pluginFilter.spec.ts (0 test)
+ ❯ src/node/__tests__/plugins/index.spec.ts (6 tests | 6 failed) 63ms
+   × hook filter with plugin container > resolveId 8ms
+     → expected "spy" to be called 1 times, but got 2 times
+   × hook filter with plugin container > load 1ms
+     → expected "spy" to be called 1 times, but got 2 times
+   × hook filter with plugin container > transform 45ms
+     → expected "spy" to be called 1 times, but got 2 times
+   × hook filter with build > resolveId 1ms
+     → expected "spy" to be called 1 times, but got 3 times
+   × hook filter with build > load 1ms
+     → expected "spy" to be called 1 times, but got 2 times
+   × hook filter with build > transform 0ms
+     → expected "spy" to be called 1 times, but got 2 times
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/node/__tests__/plugins/pluginFilter.spec.ts [ src/node/__tests__/plugins/pluginFilter.spec.ts ]
+Error: Failed to load url ../../plugins/pluginFilter (resolved id: ../../plugins/pluginFilter) in /workspace/repo/packages/vite/src/node/__tests__/plugins/pluginFilter.spec.ts. Does the file exist?
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/node/__tests__/plugins/index.spec.ts > hook filter with plugin container > resolveId
+AssertionError: expected "spy" to be called 1 times, but got 2 times
+ ❯ src/node/__tests__/plugins/index.spec.ts:57:23
+     55|     await pluginContainer.resolveId('foo.js')
+     56|     await pluginContainer.resolveId('foo.ts')
+     57|     expect(resolveId).toHaveBeenCalledTimes(1)
+       |                       ^
+     58|     expect(resolveId).toHaveBeenCalledWith('foo.js', any, any)
+     59|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  src/node/__tests__/plugins/index.spec.ts > hook filter with plugin container > load
+AssertionError: expected "spy" to be called 1 times, but got 2 times
+ ❯ src/node/__tests__/plugins/index.spec.ts:64:18
+     62|     await pluginContainer.load('foo.js')
+     63|     await pluginContainer.load('foo.ts')
+     64|     expect(load).toHaveBeenCalledTimes(1)
+       |                  ^
+     65|     expect(load).toHaveBeenCalledWith('foo.js', any)
+     66|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  src/node/__tests__/plugins/index.spec.ts > hook filter with plugin container > transform
+AssertionError: expected "spy" to be called 1 times, but got 2 times
+ ❯ src/node/__tests__/plugins/index.spec.ts:74:29
+     72|     await pluginContainer.transform('import_meta', 'foo.js')
+     73|     await pluginContainer.transform('import.meta', 'foo.ts')
+     74|     expect(transformWithId).toHaveBeenCalledTimes(1)
+       |                             ^
+     75|     expect(transformWithId).toHaveBeenCalledWith(
+     76|       expect.stringContaining('import_meta'),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  src/node/__tests__/plugins/index.spec.ts > hook filter with build > resolveId
+AssertionError: expected "spy" to be called 1 times, but got 3 times
+ ❯ src/node/__tests__/plugins/index.spec.ts:139:23
+    137| 
+    138|   test('resolveId', async () => {
+    139|     expect(resolveId).toHaveBeenCalledTimes(1)
+       |                       ^
+    140|     expect(resolveId).toHaveBeenCalledWith('foo.js', undefined, any)
+    141|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  src/node/__tests__/plugins/index.spec.ts > hook filter with build > load
+AssertionError: expected "spy" to be called 1 times, but got 2 times
+ ❯ src/node/__tests__/plugins/index.spec.ts:144:18
+    142| 
+    143|   test('load', async () => {
+    144|     expect(load).toHaveBeenCalledTimes(1)
+       |                  ^
+    145|     expect(load).toHaveBeenCalledWith('foo.js', any)
+    146|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  src/node/__tests__/plugins/index.spec.ts > hook filter with build > transform
+AssertionError: expected "spy" to be called 1 times, but got 2 times
+ ❯ src/node/__tests__/plugins/index.spec.ts:149:29
+    147| 
+    148|   test('transform', async () => {
+    149|     expect(transformWithId).toHaveBeenCalledTimes(1)
+       |                             ^
+    150|     expect(transformWithId).toHaveBeenCalledWith(
+    151|       expect.stringContaining('import_meta'),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  6 failed (6)
+   Start at  15:20:09
+   Duration  4.07s (transform 1.41s, setup 0ms, collect 2.75s, tests 63ms, environment 0ms, prepare 587ms)
+
+reward=0 graded=36 found=0 failed=0 parsed=0 framework=vitest exit_code=1

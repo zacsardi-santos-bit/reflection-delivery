@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p rkyv --test derive --no-default-features --features std",
+  "test_files": [
+    "rkyv/tests/derive.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "rkyv::derive unit_struct",
+    "rkyv::derive unnamed_struct_private",
+    "rkyv::derive unnamed_struct",
+    "rkyv::derive full_enum",
+    "rkyv::derive named_struct",
+    "rkyv::derive named_struct_private"
+  ],
+  "PASS_TO_PASS": []
+}

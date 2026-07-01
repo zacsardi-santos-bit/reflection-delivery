@@ -1,0 +1,12 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_pyi/PYI058.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_pyi/PYI058.pyi
+   Compiling ruff_linter v0.1.9 (/workspace/repo/crates/ruff_linter)
+    Finished test [unoptimized + debuginfo] target(s) in 38.76s
+────────────
+ Nextest run ID b967f79c-14ac-4e42-86ef-5d4de85c95ec with nextest profile: default
+    Starting 2 tests across 1 binary (1780 tests skipped)
+        PASS [   0.161s] (1/2) ruff_linter rules::flake8_pyi::tests::rules::rule_generatorreturnfromitermethod_path_new_pyi058_pyi_expects
+        PASS [   0.167s] (2/2) ruff_linter rules::flake8_pyi::tests::rules::rule_generatorreturnfromitermethod_path_new_pyi058_py_expects
+────────────
+     Summary [   0.171s] 2 tests run: 2 passed, 1780 skipped
+reward=1 graded=2 found=0 failed=0 parsed=2 framework=cargo-nextest exit_code=0

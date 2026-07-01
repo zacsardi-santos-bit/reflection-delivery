@@ -1,0 +1,74 @@
+patching file packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+  console.error
+    Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node
+        at TooltipAnchor (/workspace/repo/node_modules/@khanacademy/wonder-blocks-tooltip/dist/index.js:81:5)
+        at Id (/workspace/repo/node_modules/@khanacademy/wonder-blocks-core/dist/index.js:287:3)
+        at Tooltip (/workspace/repo/node_modules/@khanacademy/wonder-blocks-tooltip/dist/index.js:801:5)
+        at children (/workspace/repo/packages/perseus/src/components/info-tip/info-tip-base.tsx:16:55)
+        at InfoTip (/workspace/repo/packages/perseus/src/components/info-tip/index.tsx:20:1)
+        at fieldset
+        at div
+        at div
+        at div
+        at NumericInputEditor (/workspace/repo/packages/perseus-editor/src/widgets/numeric-input-editor.tsx:89:9)
+
+      22 |
+      23 |     it("should render", async () => {
+    > 24 |         render(<NumericInputEditor onChange={() => undefined} />);
+         |               ^
+      25 |
+      26 |         await waitFor(async () =>
+      27 |             expect(
+
+      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)
+      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)
+      at Object.findDOMNode (node_modules/react-dom/cjs/react-dom.development.js:29666:7)
+      at TooltipAnchor.componentDidMount (node_modules/@khanacademy/wonder-blocks-tooltip/dist/index.js:120:44)
+      at commitLayoutEffectOnFiber (node_modules/react-dom/cjs/react-dom.development.js:23349:28)
+      at commitLayoutMountEffects_complete (node_modules/react-dom/cjs/react-dom.development.js:24727:9)
+      at commitLayoutEffects_begin (node_modules/react-dom/cjs/react-dom.development.js:24713:7)
+      at commitLayoutEffects (node_modules/react-dom/cjs/react-dom.development.js:24651:3)
+      at commitRootImpl (node_modules/react-dom/cjs/react-dom.development.js:26862:5)
+      at commitRoot (node_modules/react-dom/cjs/react-dom.development.js:26721:5)
+      at performSyncWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:26156:3)
+      at flushSyncCallbacks (node_modules/react-dom/cjs/react-dom.development.js:12042:22)
+      at commitRootImpl (node_modules/react-dom/cjs/react-dom.development.js:26998:3)
+      at commitRoot (node_modules/react-dom/cjs/react-dom.development.js:26721:5)
+      at finishConcurrentRender (node_modules/react-dom/cjs/react-dom.development.js:26020:9)
+      at performConcurrentWorkOnRoot (node_modules/react-dom/cjs/react-dom.development.js:25848:7)
+      at flushActQueue (node_modules/react/cjs/react.development.js:2667:24)
+      at act (node_modules/react/cjs/react.development.js:2582:11)
+      at node_modules/@testing-library/react/dist/act-compat.js:47:25
+      at renderRoot (node_modules/@testing-library/react/dist/pure.js:180:26)
+      at render (node_modules/@testing-library/react/dist/pure.js:271:10)
+      at Object.<anonymous> (packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx:24:15)
+
+PASS packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx (15.527 s)
+  numeric-input-editor
+    ✓ should render (131 ms)
+    ✓ should be possible to select normal width (144 ms)
+    ✓ should be possible to select small width (77 ms)
+    ✓ should be possible to select right alignment (77 ms)
+    ✓ should be possible to select coefficient (68 ms)
+    ✓ should be possible to select strictly match only these formats (91 ms)
+    ✓ should be possible to update label text (46 ms)
+    ✓ should be possible to set unsimplified answers to ungraded (93 ms)
+    ✓ should be possible to set unsimplified answers to accepted (86 ms)
+    ✓ should be possible to set unsimplified answers to wrong (90 ms)
+    ✓ should be possible to set suggested answer format to: Integers (55 ms)
+    ✓ should be possible to set suggested answer format to: Decimals (60 ms)
+    ✓ should be possible to set suggested answer format to: Proper fractions (52 ms)
+    ✓ should be possible to set suggested answer format to: Improper fractions (53 ms)
+    ✓ should be possible to set suggested answer format to: Mixed numbers (55 ms)
+    ✓ should be possible to set suggested answer format to: Numbers with π (50 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        16.38 s
+Ran all test suites matching /packages\/perseus-editor\/src\/widgets\/__tests__\/numeric-input-editor.test.tsx/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":16,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":16,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746076197,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["numeric-input-editor"],"duration":131,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should render","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should render"},{"ancestorTitles":["numeric-input-editor"],"duration":144,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to select normal width","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to select normal width"},{"ancestorTitles":["numeric-input-editor"],"duration":77,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to select small width","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to select small width"},{"ancestorTitles":["numeric-input-editor"],"duration":77,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to select right alignment","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to select right alignment"},{"ancestorTitles":["numeric-input-editor"],"duration":68,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to select coefficient","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to select coefficient"},{"ancestorTitles":["numeric-input-editor"],"duration":91,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to select strictly match only these formats","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to select strictly match only these formats"},{"ancestorTitles":["numeric-input-editor"],"duration":46,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to update label text","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to update label text"},{"ancestorTitles":["numeric-input-editor"],"duration":93,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to set unsimplified answers to ungraded","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to set unsimplified answers to ungraded"},{"ancestorTitles":["numeric-input-editor"],"duration":86,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to set unsimplified answers to accepted","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to set unsimplified answers to accepted"},{"ancestorTitles":["numeric-input-editor"],"duration":90,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to set unsimplified answers to wrong","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to set unsimplified answers to wrong"},{"ancestorTitles":["numeric-input-editor"],"duration":55,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to set suggested answer format to: Integers","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to set suggested answer format to: Integers"},{"ancestorTitles":["numeric-input-editor"],"duration":60,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to set suggested answer format to: Decimals","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to set suggested answer format to: Decimals"},{"ancestorTitles":["numeric-input-editor"],"duration":52,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to set suggested answer format to: Proper fractions","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to set suggested answer format to: Proper fractions"},{"ancestorTitles":["numeric-input-editor"],"duration":53,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to set suggested answer format to: Improper fractions","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to set suggested answer format to: Improper fractions"},{"ancestorTitles":["numeric-input-editor"],"duration":55,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to set suggested answer format to: Mixed numbers","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to set suggested answer format to: Mixed numbers"},{"ancestorTitles":["numeric-input-editor"],"duration":50,"failureDetails":[],"failureMessages":[],"fullName":"numeric-input-editor should be possible to set suggested answer format to: Numbers with π","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should be possible to set suggested answer format to: Numbers with π"}],"endTime":1782746092568,"message":"","name":"/workspace/repo/packages/perseus-editor/src/widgets/__tests__/numeric-input-editor.test.tsx","startTime":1782746077041,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=16 found=16 failed=0 parsed=16 framework=jest exit_code=0

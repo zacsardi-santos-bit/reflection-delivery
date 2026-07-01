@@ -1,0 +1,32 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./db/column ./db/memory ./lib/bloom ./lib/wal -count=1",
+  "test_files": [
+    "db/column/column_test.go",
+    "db/memory/db_test.go",
+    "db/memory/memory_test.go",
+    "lib/bloom/bloom_test.go",
+    "lib/wal/wal_test.go"
+  ],
+  "num_test_files": 5,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/ByteStorage/FlyDB/lib/bloom::TestNewBloomFilter",
+    "github.com/ByteStorage/FlyDB/lib/bloom::TestFilter_Add",
+    "github.com/ByteStorage/FlyDB/lib/bloom::TestFilter_MayContainItem",
+    "github.com/ByteStorage/FlyDB/db/column::TestColumn_CreateColumnFamily",
+    "github.com/ByteStorage/FlyDB/db/column::TestColumn_ListColumnFamilies",
+    "github.com/ByteStorage/FlyDB/db/column::TestColumn_Put",
+    "github.com/ByteStorage/FlyDB/db/column::TestColumn_Get",
+    "github.com/ByteStorage/FlyDB/db/column::TestColumn_Delete",
+    "github.com/ByteStorage/FlyDB/db/column::TestColumn_Keys",
+    "github.com/ByteStorage/FlyDB/db/column::TestColumn_Put_Sql",
+    "github.com/ByteStorage/FlyDB/lib/wal::TestWal_Put",
+    "github.com/ByteStorage/FlyDB/db/memory::TestPutAndGet",
+    "github.com/ByteStorage/FlyDB/db/memory::TestDb_Keys",
+    "github.com/ByteStorage/FlyDB/db/memory::TestNewMemTable",
+    "github.com/ByteStorage/FlyDB/db/memory::TestMemTable_Get",
+    "github.com/ByteStorage/FlyDB/db/memory::TestMemTable_Put"
+  ],
+  "PASS_TO_PASS": []
+}

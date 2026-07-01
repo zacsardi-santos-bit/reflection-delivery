@@ -1,0 +1,6 @@
+patching file copy/single.go
+patching file internal/image/fixtures/oci1.encrypted.json
+patching file internal/image/oci.go
+patching file manifest/docker_schema1.go
+patching file manifest/docker_schema2.go
+patching file manifest/fixtures/ociv1.encrypted.manifest.json

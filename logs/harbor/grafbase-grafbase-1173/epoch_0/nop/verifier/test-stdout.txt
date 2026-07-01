@@ -1,0 +1,37 @@
+patching file engine/crates/graphql-schema-diff/tests/diff/add_fields.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/add_fields.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/add_one_object.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/add_one_object.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/directive_basic.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/directive_basic.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/enum_basic.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/enum_basic.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/field_argument_default.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/field_argument_default.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/field_argument_default_value.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/field_argument_default_value.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/field_arguments_basic.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/field_arguments_basic.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/field_type_change.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/field_type_change.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/interface_implements_interface.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/interface_implements_interface.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/mutation_type_changed.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/mutation_type_changed.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/object_becomes_enum.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/object_becomes_enum.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/object_interface.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/object_interface.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/query_type_changed.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/query_type_changed.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/schema_definition_basic.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/schema_definition_basic.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/subscription_type_changed.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/subscription_type_changed.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/union_basic.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/union_basic.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff/union_members.graphql
+patching file engine/crates/graphql-schema-diff/tests/diff/union_members.snapshot.json
+patching file engine/crates/graphql-schema-diff/tests/diff_tests.rs
+cp: cannot stat '/workspace/repo/engine/crates/graphql-schema-diff/src': No such file or directory
+reward=0 graded=17 found=0 failed=0 parsed=0 framework=cargo exit_code=1

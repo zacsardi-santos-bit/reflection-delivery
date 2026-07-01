@@ -1,0 +1,23 @@
+{
+ "task": "slawlor-ractor-277",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'pub fn stop_children', 'pub async fn stop_children_and_wait', 'pub fn drain_children', 'pub fn is_message_type_of<TMessage: Message>(&self) -> Option<bool>'; F2P tests spawn real actors and assert post_stop counts / is_message_type_of results"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "system-ui-theme-ui-1095",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "23 jest F2P in color-modes/test/index.tsx and custom-properties.tsx render color modes and 'converts color modes to css custom properties'; golden makes toCustomProperties accept undefined obj and createColorStyles default modes to {}."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

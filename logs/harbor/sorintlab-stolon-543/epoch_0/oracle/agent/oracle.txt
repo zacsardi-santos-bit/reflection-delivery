@@ -1,0 +1,6 @@
+patching file CHANGELOG.md
+patching file cmd/keeper/cmd/keeper.go
+patching file cmd/sentinel/cmd/sentinel.go
+patching file doc/cluster_spec.md
+patching file internal/cluster/cluster.go
+patching file internal/postgresql/postgresql.go

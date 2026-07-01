@@ -1,0 +1,15 @@
+patching file packages/headless/src/api/commerce/commerce-api-client.ts
+patching file packages/headless/src/api/commerce/facet-search/facet-search-request.ts
+patching file packages/headless/src/controllers/commerce/core/facets/category/headless-commerce-category-facet-search.ts
+patching file packages/headless/src/controllers/commerce/core/facets/regular/headless-commerce-regular-facet-search.ts
+patching file packages/headless/src/controllers/commerce/core/facets/searchable/headless-commerce-searchable-facet.ts
+patching file packages/headless/src/controllers/commerce/core/sub-controller/headless-sub-controller.ts
+patching file packages/headless/src/controllers/commerce/field-suggestions/headless-field-suggestions-generator.ts
+patching file packages/headless/src/controllers/core/facets/facet-search/category/headless-category-facet-search.ts
+patching file packages/headless/src/controllers/core/facets/facet-search/facet-search.ts
+patching file packages/headless/src/controllers/core/facets/facet-search/specific/headless-facet-search.ts
+patching file packages/headless/src/features/commerce/facets/facet-search-set/category/commerce-category-facet-search-request-builder.ts
+patching file packages/headless/src/features/commerce/facets/facet-search-set/commerce-facet-search-actions.ts
+patching file packages/headless/src/features/commerce/facets/facet-search-set/regular/commerce-regular-facet-search-request-builder.ts
+patching file packages/headless/src/features/facets/facet-search-set/category/category-facet-search-set-slice.ts
+patching file packages/headless/src/features/facets/facet-search-set/specific/specific-facet-search-set-slice.ts

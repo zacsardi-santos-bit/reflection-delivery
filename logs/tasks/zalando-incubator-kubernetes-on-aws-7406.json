@@ -1,0 +1,23 @@
+{
+ "task": "zalando-incubator-kubernetes-on-aws-7406",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "tests assert '!strings.Contains(contents, \"kubelet_image_gc_high_threshold\")' fail and 'strings.Contains(string(data), \"cronjob_time_zone_enabled\")' fail; golden adds '+kubelet_image_gc_high_threshold: 50' / '+kubelet_image_gc_low_threshold: 40' and removes 'cronjob_time_zone_enabled: \"true\"'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

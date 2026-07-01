@@ -1,0 +1,25 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/code && NODE_OPTIONS=--max_old_space_size=4096 yarn vitest run --config lib/cli-storybook/vitest.config.ts lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts",
+  "test_files": [
+    "code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts",
+    "code/lib/codemod/src/transforms/__tests__/csf-3-to-4.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod javascript should wrap const declared meta",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod javascript should transform and wrap inline default exported meta",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod javascript should rename meta object to meta if it has a different name",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod javascript should wrap stories in a meta.story method",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod javascript should respect existing config imports",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod javascript if there is an existing local constant called config, rename storybook config import",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod javascript converts CSF1 into CSF4 with render",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod typescript meta satisfies syntax",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod typescript meta as syntax",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod typescript story satisfies syntax",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod typescript story as syntax",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts::csf-factories stories codemod typescript should yield the same result to all syntaxes"
+  ],
+  "PASS_TO_PASS": []
+}

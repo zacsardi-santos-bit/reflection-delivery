@@ -1,0 +1,290 @@
+patching file skrifa/src/outline/glyf/hint/engine/definition.rs
+Hunk #1 succeeded at 465 with fuzz 2.
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling serde_core v1.0.228
+   Compiling serde v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde_json v1.0.150
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.2
+   Compiling font-test-data v0.1.0 (/workspace/repo/font-test-data)
+   Compiling syn v2.0.118
+   Compiling serde_derive v1.0.228
+   Compiling font-types v0.4.2 (/workspace/repo/font-types)
+   Compiling read-fonts v0.15.5 (/workspace/repo/read-fonts)
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> read-fonts/src/tables/glyf/bytecode/instruction.rs:97:21
+   |
+97 |     pub fn operands(&self) -> InlineOperands {
+   |                     ^^^^^     ^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                     |
+   |                     the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+97 |     pub fn operands(&self) -> InlineOperands<'_> {
+   |                                             ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> read-fonts/src/tables/../../generated/generated_gvar.rs:626:36
+    |
+626 |     pub fn tuple_variation_headers(&self) -> VarLenArray<'a, TupleVariationHeader> {
+    |                                    ^^^^^                     ^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                                    |
+    |                                    the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+626 |     pub fn tuple_variation_headers(&self) -> VarLenArray<'a, TupleVariationHeader<'_>> {
+    |                                                                                  ++++
+
+   Compiling skrifa v0.15.5 (/workspace/repo/skrifa)
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> skrifa/src/outline/embedded_hinting.rs:62:21
+   |
+62 |     pub fn location(&self) -> LocationRef {
+   |                     ^^^^^     ^^^^^^^^^^^ the same lifetime is hidden here
+   |                     |
+   |                     the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+62 |     pub fn location(&self) -> LocationRef<'_> {
+   |                                          ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> skrifa/src/outline/glyf/hint/graphics_state/zone.rs:375:16
+    |
+375 |     pub fn zp1(&self) -> &Zone {
+    |                ^^^^^     ^^^^^
+    |                |         ||
+    |                |         |the same lifetime is hidden here
+    |                |         the same lifetime is elided here
+    |                the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+375 |     pub fn zp1(&self) -> &Zone<'_> {
+    |                               ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> skrifa/src/outline/glyf/hint/graphics_state/zone.rs:385:16
+    |
+385 |     pub fn zp2(&self) -> &Zone {
+    |                ^^^^^     ^^^^^
+    |                |         ||
+    |                |         |the same lifetime is hidden here
+    |                |         the same lifetime is elided here
+    |                the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+385 |     pub fn zp2(&self) -> &Zone<'_> {
+    |                               ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> skrifa/src/scale.rs:211:23
+    |
+211 |     pub fn new_scaler(&mut self) -> ScalerBuilder {
+    |                       ^^^^^^^^^     ^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                       |
+    |                       the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+211 |     pub fn new_scaler(&mut self) -> ScalerBuilder<'_> {
+    |                                                  ++++
+
+warning: `read-fonts` (lib) generated 2 warnings (run `cargo fix --lib -p read-fonts` to apply 2 suggestions)
+warning: `skrifa` (lib) generated 4 warnings (run `cargo fix --lib -p skrifa` to apply 4 suggestions)
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> skrifa/src/outline/glyf/hint/engine/mod.rs:119:23
+    |
+119 |         pub fn engine(&mut self) -> Engine {
+    |                       ^^^^^^^^^     ^^^^^^ the same lifetime is hidden here
+    |                       |
+    |                       the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+119 |         pub fn engine(&mut self) -> Engine<'_> {
+    |                                           ++++
+
+warning: `skrifa` (lib test) generated 5 warnings (4 duplicates) (run `cargo fix --lib -p skrifa --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.09s
+────────────
+ Nextest run ID 46ae3d31-5f03-406f-8e0c-80dc35d88d2c with nextest profile: default
+    Starting 183 tests across 1 binary
+        PASS [   0.022s] (  1/183) skrifa charmap::tests::choose_format_4
+        PASS [   0.026s] (  2/183) skrifa charmap::tests::map_format_12
+        PASS [   0.027s] (  3/183) skrifa charmap::tests::choose_format_12_over_4
+        PASS [   0.027s] (  4/183) skrifa charmap::tests::map_variants
+        PASS [   0.027s] (  5/183) skrifa attribute::tests::missing_os2
+        PASS [   0.028s] (  6/183) skrifa color::tests::has_colrv1_glyph_test
+        PASS [   0.029s] (  7/183) skrifa charmap::tests::map_format_4
+        PASS [   0.029s] (  8/183) skrifa attribute::tests::so_stylish
+        PASS [   0.030s] (  9/183) skrifa charmap::tests::choose_symbol
+        PASS [   0.030s] ( 10/183) skrifa charmap::tests::mappings
+        PASS [   0.032s] ( 11/183) skrifa color::traversal_tests::colored_circles
+        PASS [   0.032s] ( 12/183) skrifa charmap::tests::map_symbol_pua
+        PASS [   0.032s] ( 13/183) skrifa color::traversal::tests::clipbox_test
+        PASS [   0.032s] ( 14/183) skrifa color::traversal_tests::clipbox_default
+        PASS [   0.033s] ( 15/183) skrifa charmap::tests::variant_mappings
+        PASS [   0.033s] ( 16/183) skrifa color::traversal_tests::clipbox_var_1
+        PASS [   0.033s] ( 17/183) skrifa color::tests::paintcolrglyph_cycle_test
+        PASS [   0.033s] ( 18/183) skrifa color::traversal_tests::comp_mode_default
+        PASS [   0.020s] ( 19/183) skrifa color::traversal_tests::extend_mode_default
+        PASS [   0.023s] ( 20/183) skrifa color::traversal_tests::extend_mode_var1
+        PASS [   0.023s] ( 21/183) skrifa color::traversal_tests::extend_mode_var11
+        PASS [   0.024s] ( 22/183) skrifa color::traversal_tests::extend_mode_var10
+        PASS [   0.022s] ( 23/183) skrifa color::traversal_tests::extend_mode_var3
+        PASS [   0.026s] ( 24/183) skrifa color::traversal_tests::extend_mode_var13
+        PASS [   0.029s] ( 25/183) skrifa color::traversal_tests::extend_mode_var12
+        PASS [   0.023s] ( 26/183) skrifa color::traversal_tests::extend_mode_var8
+        PASS [   0.025s] ( 27/183) skrifa color::traversal_tests::extend_mode_var4
+        PASS [   0.023s] ( 28/183) skrifa color::traversal_tests::extend_mode_var9
+        PASS [   0.023s] ( 29/183) skrifa color::traversal_tests::gradient_skewed
+        PASS [   0.023s] ( 30/183) skrifa color::traversal_tests::gradient_stops_repeat
+        PASS [   0.024s] ( 31/183) skrifa color::traversal_tests::nocycle_multi_colrglyph
+        PASS [   0.028s] ( 32/183) skrifa color::traversal_tests::extend_mode_var2
+        PASS [   0.026s] ( 33/183) skrifa color::traversal_tests::extend_mode_var7
+        PASS [   0.028s] ( 34/183) skrifa color::traversal_tests::extend_mode_var5
+        PASS [   0.026s] ( 35/183) skrifa color::traversal_tests::foreground_color_default
+        PASS [   0.027s] ( 36/183) skrifa color::traversal_tests::extend_mode_var6
+        PASS [   0.021s] ( 37/183) skrifa color::traversal_tests::paint_glyph_nested
+        PASS [   0.021s] ( 38/183) skrifa color::traversal_tests::paint_rotate_default
+        PASS [   0.021s] ( 39/183) skrifa color::traversal_tests::paint_rotate_var1
+        PASS [   0.021s] ( 40/183) skrifa color::traversal_tests::paint_rotate_var2
+        PASS [   0.021s] ( 41/183) skrifa color::traversal_tests::paint_scale_default
+        PASS [   0.020s] ( 42/183) skrifa color::traversal_tests::paint_scale_var1
+        PASS [   0.022s] ( 43/183) skrifa color::traversal_tests::paint_scale_var2
+        PASS [   0.024s] ( 44/183) skrifa color::traversal_tests::paint_scale_var3
+        PASS [   0.023s] ( 45/183) skrifa color::traversal_tests::paint_skew_var2
+        PASS [   0.024s] ( 46/183) skrifa color::traversal_tests::paint_skew_var1
+        PASS [   0.024s] ( 47/183) skrifa color::traversal_tests::paint_skew_default
+        PASS [   0.026s] ( 48/183) skrifa color::traversal_tests::paint_skew_var3
+        PASS [   0.030s] ( 49/183) skrifa color::traversal_tests::paint_sweep_var2
+        PASS [   0.029s] ( 50/183) skrifa color::traversal_tests::paint_sweep_var5
+        PASS [   0.032s] ( 51/183) skrifa color::traversal_tests::paint_sweep_var1
+        PASS [   0.020s] ( 52/183) skrifa color::traversal_tests::paint_transform_default
+        PASS [   0.032s] ( 53/183) skrifa color::traversal_tests::paint_sweep_var4
+        PASS [   0.029s] ( 54/183) skrifa color::traversal_tests::paint_sweep_var6
+        PASS [   0.034s] ( 55/183) skrifa color::traversal_tests::paint_sweep_default
+        PASS [   0.033s] ( 56/183) skrifa color::traversal_tests::paint_sweep_var3
+        PASS [   0.022s] ( 57/183) skrifa color::traversal_tests::paint_translate_default
+        PASS [   0.021s] ( 58/183) skrifa color::traversal_tests::sweep_coincident
+        PASS [   0.025s] ( 59/183) skrifa color::traversal_tests::paint_translate_var_1
+        PASS [   0.020s] ( 60/183) skrifa color::traversal_tests::variable_alpha_default
+        PASS [   0.029s] ( 61/183) skrifa color::traversal_tests::paint_sweep_var7
+        PASS [   0.019s] ( 62/183) skrifa metrics::tests::glyph_metrics
+        PASS [   0.021s] ( 63/183) skrifa color::traversal_tests::variable_alpha_var1
+        PASS [   0.021s] ( 64/183) skrifa color::traversal_tests::variable_alpha_var2
+        PASS [   0.023s] ( 65/183) skrifa metrics::tests::glyph_metrics_missing_hvar
+        PASS [   0.021s] ( 66/183) skrifa metrics::tests::glyph_metrics_unscaled_matches_upem_scale
+        PASS [   0.017s] ( 67/183) skrifa metrics::tests::metrics
+        PASS [   0.019s] ( 68/183) skrifa metrics::tests::glyph_metrics_var
+        PASS [   0.018s] ( 69/183) skrifa outline::cff::hint::tests::blue_zone_capture
+        PASS [   0.021s] ( 70/183) skrifa metrics::tests::match_freetype_glyph_metric_scaling
+        PASS [   0.020s] ( 71/183) skrifa outline::cff::hint::tests::hint_mapping
+        PASS [   0.021s] ( 72/183) skrifa outline::cff::hint::tests::hint_mask_ops
+        PASS [   0.023s] ( 73/183) skrifa metrics::tests::metrics_missing_os2
+        PASS [   0.022s] ( 74/183) skrifa outline::cff::hint::tests::hinting_sink_omits_closing_line_that_matches_start
+        PASS [   0.021s] ( 75/183) skrifa outline::cff::hint::tests::midpoint_avoids_overflow
+        PASS [   0.020s] ( 76/183) skrifa outline::cff::hint::tests::scaled_blue_zones
+        PASS [   0.019s] ( 77/183) skrifa outline::cff::tests::read_cff2_static
+        PASS [   0.020s] ( 78/183) skrifa outline::cff::tests::cff_static_outlines_match_freetype
+        PASS [   0.018s] ( 79/183) skrifa outline::cff::tests::scaled_scaling_sink
+        PASS [   0.019s] ( 80/183) skrifa outline::cff::tests::read_example_cff2_table
+        PASS [   0.021s] ( 81/183) skrifa outline::cff::tests::read_cff_static
+        PASS [   0.017s] ( 82/183) skrifa outline::glyf::deltas::tests::interpolate
+        PASS [   0.019s] ( 83/183) skrifa outline::cff::tests::unscaled_scaling_sink_produces_integers
+        PASS [   0.025s] ( 84/183) skrifa outline::cff::tests::cff2_variable_outlines_match_freetype
+        PASS [   0.019s] ( 85/183) skrifa outline::glyf::hint::call_stack::tests::stack_overflow
+        PASS [   0.022s] ( 86/183) skrifa outline::glyf::deltas::tests::shift
+        PASS [   0.019s] ( 87/183) skrifa outline::glyf::hint::call_stack::tests::stack_push_pop
+        PASS [   0.019s] ( 88/183) skrifa outline::glyf::hint::call_stack::tests::stack_underflow
+        PASS [   0.019s] ( 89/183) skrifa outline::glyf::hint::cow_slice::tests::copy_on_write
+        PASS [   0.021s] ( 90/183) skrifa outline::glyf::hint::cow_slice::tests::out_of_bounds
+        PASS [   0.021s] ( 91/183) skrifa outline::glyf::hint::cow_slice::tests::size_mismatch_error
+        PASS [   0.021s] ( 92/183) skrifa outline::glyf::hint::definition::tests::allocate_mixed
+        PASS [   0.024s] ( 93/183) skrifa outline::glyf::hint::definition::tests::allocate_dense
+        PASS [   0.022s] ( 94/183) skrifa outline::glyf::hint::definition::tests::allocate_sparse
+        PASS [   0.020s] ( 95/183) skrifa outline::glyf::hint::definition::tests::too_many_and_invalid
+        PASS [   0.021s] ( 96/183) skrifa outline::glyf::hint::engine::arith::tests::f26dot6_binops
+        PASS [   0.020s] ( 97/183) skrifa outline::glyf::hint::engine::arith::tests::simple_unops
+        PASS [   0.021s] ( 98/183) skrifa outline::glyf::hint::engine::arith::tests::f26dot6_unops
+        PASS [   0.020s] ( 99/183) skrifa outline::glyf::hint::engine::control_flow::tests::if_else
+        PASS [   0.022s] (100/183) skrifa outline::glyf::hint::engine::arith::tests::simple_binops
+        PASS [   0.020s] (101/183) skrifa outline::glyf::hint::engine::control_flow::tests::jumps
+        PASS [   0.021s] (102/183) skrifa outline::glyf::hint::engine::cvt::tests::pedantry
+        PASS [   0.017s] (103/183) skrifa outline::glyf::hint::engine::cvt::tests::write_scaled_read
+        PASS [   0.020s] (104/183) skrifa outline::glyf::hint::engine::cvt::tests::write_read
+        PASS [   0.018s] (105/183) skrifa outline::glyf::hint::engine::definition::tests::call_different_program
+        PASS [   0.020s] (106/183) skrifa outline::glyf::hint::engine::definition::tests::call_stack_underflow
+        PASS [   0.020s] (107/183) skrifa outline::glyf::hint::engine::definition::tests::define_instruction_and_use
+        PASS [   0.027s] (108/183) skrifa outline::glyf::hint::engine::definition::tests::big_definition
+        PASS [   0.021s] (109/183) skrifa outline::glyf::hint::engine::definition::tests::define_function_call_loopcall
+        PASS [   0.019s] (110/183) skrifa outline::glyf::hint::engine::definition::tests::nested_definition
+        PASS [   0.021s] (111/183) skrifa outline::glyf::hint::engine::definition::tests::loopcall_budget
+        PASS [   0.024s] (112/183) skrifa outline::glyf::hint::engine::definition::tests::definition_in_glyph_program
+        PASS [   0.019s] (113/183) skrifa outline::glyf::hint::engine::definition::tests::unhandled_opcode
+        PASS [   0.024s] (114/183) skrifa outline::glyf::hint::engine::definition::tests::infinite_recursion
+        PASS [   0.019s] (115/183) skrifa outline::glyf::hint::engine::graphics_state::tests::instctrl
+        PASS [   0.021s] (116/183) skrifa outline::glyf::hint::engine::definition::tests::too_many_definitions
+        PASS [   0.022s] (117/183) skrifa outline::glyf::hint::engine::definition::tests::override_function
+        PASS [   0.023s] (118/183) skrifa outline::glyf::hint::engine::definition::tests::undefined_function
+        PASS [   0.020s] (119/183) skrifa outline::glyf::hint::engine::graphics_state::tests::scanctrl
+        FAIL [   0.020s] (120/183) skrifa outline::glyf::hint::engine::definition::tests::ws_dispatch
+  stdout ───
+
+    running 1 test
+    test outline::glyf::hint::engine::definition::tests::ws_dispatch ... FAILED
+
+    failures:
+
+    failures:
+        outline::glyf::hint::engine::definition::tests::ws_dispatch
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 182 filtered out; finished in 0.00s
+
+  stderr ───
+
+    thread 'outline::glyf::hint::engine::definition::tests::ws_dispatch' (1465) panicked at skrifa/src/outline/glyf/hint/engine/definition.rs:478:22:
+    called `Result::unwrap()` on an `Err` value: HintError { program: Font, glyph_id: None, pc: 0, kind: UnhandledOpcode(WS) }
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 17 tests still running
+        PASS [   0.020s] (121/183) skrifa outline::glyf::hint::engine::graphics_state::tests::set_vectors_to_coord_axis
+        PASS [   0.021s] (122/183) skrifa outline::glyf::hint::engine::graphics_state::tests::set_get_vectors_from_stack
+        PASS [   0.021s] (123/183) skrifa outline::glyf::hint::engine::graphics_state::tests::set_vectors_to_line
+        PASS [   0.021s] (124/183) skrifa outline::glyf::hint::engine::graphics_state::tests::simple_state_setting
+        PASS [   0.019s] (125/183) skrifa outline::glyf::hint::engine::logical::tests::and_or_ops
+        PASS [   0.019s] (126/183) skrifa outline::glyf::hint::engine::logical::tests::compare_ops
+        PASS [   0.019s] (127/183) skrifa outline::glyf::hint::engine::logical::tests::not_op
+        PASS [   0.018s] (128/183) skrifa outline::glyf::hint::engine::stack::tests::stack_ops
+        PASS [   0.017s] (129/183) skrifa outline::glyf::hint::engine::storage::tests::pedantry
+        PASS [   0.020s] (130/183) skrifa outline::glyf::hint::engine::logical::tests::parity_ops
+        PASS [   0.017s] (131/183) skrifa outline::glyf::hint::graphics_state::round::tests::round_down_to_grid
+        PASS [   0.019s] (132/183) skrifa outline::glyf::hint::graphics_state::round::tests::round_off
+        PASS [   0.019s] (133/183) skrifa outline::glyf::hint::graphics_state::projection::tests::project_both_axes
+        PASS [   0.020s] (134/183) skrifa outline::glyf::hint::engine::storage::tests::write_read
+        PASS [   0.016s] (135/183) skrifa outline::glyf::hint::graphics_state::round::tests::round_to_grid
+        PASS [   0.022s] (136/183) skrifa outline::glyf::hint::graphics_state::projection::tests::project_one_axis
+        PASS [   0.020s] (137/183) skrifa outline::glyf::hint::graphics_state::round::tests::round_to_double_grid
+────────────
+     Summary [   0.185s] 137/183 tests run: 136 passed, 1 failed, 0 skipped
+        FAIL [   0.020s] (120/183) skrifa outline::glyf::hint::engine::definition::tests::ws_dispatch
+warning: 46/183 tests were not run due to test failure (run with --no-fail-fast to run all tests, or run with --max-fail)
+error: test run failed
+reward=0 graded=189 found=0 failed=0 parsed=137 framework=cargo exit_code=100

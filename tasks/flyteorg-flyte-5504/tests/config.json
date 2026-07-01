@@ -1,0 +1,29 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/flytestdlib && go test -json ./otelutils -count=1",
+  "test_files": [
+    "flytestdlib/otelutils/config_flags_test.go",
+    "flytestdlib/otelutils/factory_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_GetPFlagSet",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_type/Override",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_type",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_file.filename/Override",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_file.filename",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_jaeger.endpoint/Override",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_jaeger.endpoint",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_otlpgrpc.endpoint/Override",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_otlpgrpc.endpoint",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_otlphttp.endpoint/Override",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_otlphttp.endpoint",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_sampler.parentSampler/Override",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags/Test_sampler.parentSampler",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestConfig_SetFlags",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestRegisterTracerProviderWithContext",
+    "github.com/flyteorg/flyte/flytestdlib/otelutils::TestNewSpan"
+  ],
+  "PASS_TO_PASS": []
+}

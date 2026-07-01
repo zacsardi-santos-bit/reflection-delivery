@@ -1,0 +1,5 @@
+patching file crates/cairo-lang-sierra-generator/src/block_generator_test.rs
+patching file crates/cairo-lang-sierra-generator/src/resolve_labels_test.rs
+FAIL [   0.001s] cairo-lang-sierra-generator resolve_labels::test::test_resolve_labels
+FAIL [   0.001s] cairo-lang-sierra-generator block_generator::test::block_generator::serialization
+reward=0 graded=64 found=2 failed=2 parsed=2 framework=cargo exit_code=1

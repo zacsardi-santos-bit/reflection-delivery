@@ -1,0 +1,23 @@
+{
+ "task": "operator-framework-operator-lifecycle-manager-2793",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds security package with `Privileged: pointer.Bool(false)`, `RunAsNonRoot`, `RunAsUser int64=1001`, `SeccompProfile{Type: RuntimeDefault}`, `AllowPrivilegeEscalation false`, drop all caps, applied to `spec.SecurityContext`, `spec.Containers[idx]` and `spec.InitContainers[idx]`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 21,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "mlflow-mlflow-11028",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden optimized_s3_artifact_repo.py: 'if _BUCKET_REGION in head_bucket_resp: return...' + HTTPHeaders x-amz-bucket-region path; F2P test test_get_s3_client_region_name_set_correctly_with_non_throwing_response asserts region_name=region_name passed to boto3.client"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 91,
+  "shallow": true
+ }
+}

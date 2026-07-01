@@ -1,0 +1,23 @@
+{
+ "task": "biomejs-biome-6525",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden infers function/method return types from bodies (JsReturnStatement handling, union+dedup, empty return) across local_inference.rs/type_info.rs/flattening; 1625 F2P whole-crate unit+snapshot tests run with INSTA_UPDATE=no"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 12,
+  "shallow": true
+ }
+}

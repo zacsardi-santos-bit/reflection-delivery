@@ -1,0 +1,7 @@
+I'm working on a secret management system that periodically renews secrets from a vault. The current implementation calculates how long until a secret needs to be renewed by measuring from the current time, which means every call returns a different value — making it impossible to write reliable, repeatable tests.
+
+I need to refactor the renewal timing logic so that instead of computing a duration relative to "now", the system computes an absolute point in time at which a secret should next be renewed. This way, calling the renewal-time function multiple times on the same secret always returns the same result, regardless of when the call happens.
+
+Along with that, the system should also support deriving renewal timing from TLS certificates embedded in the secret data — using the certificate's own validity window (start and end dates) scaled by the configured ratio to determine when renewal should happen. This means secrets containing certificates don't need a separate TTL field; the certificate itself determines the renewal schedule.
+
+The function that finds which secret to update next should be updated to work with these absolute times: it should return an absolute renewal time (not a duration), and only consider secrets that have a known renewal time. When comparing secrets, the one with the earliest absolute renewal time should be selected. The place in the code that schedules the next update timer should be updated accordingly to convert the absolute time back to a duration before scheduling.

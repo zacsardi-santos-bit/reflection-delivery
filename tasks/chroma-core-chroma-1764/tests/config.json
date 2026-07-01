@@ -1,0 +1,22 @@
+{
+  "test_framework": "go",
+  "test_command": "service postgresql start && sleep 3 && su postgres -c 'createuser chroma 2>/dev/null || true' && su postgres -c 'createdb -O chroma chroma 2>/dev/null || true' && cd /workspace/repo/go/coordinator && go test -p 1 -json ./internal/logservice/grpc ./internal/metastore/db/dao -count=1",
+  "test_files": [
+    "go/coordinator/internal/logservice/grpc/record_log_service_test.go",
+    "go/coordinator/internal/metastore/db/dao/record_log_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/chroma/chroma-coordinator/internal/logservice/grpc::TestRecordLogServiceTestSuite/TestServer_Bad_CollectionId",
+    "github.com/chroma/chroma-coordinator/internal/logservice/grpc::TestRecordLogServiceTestSuite/TestServer_PullLogs",
+    "github.com/chroma/chroma-coordinator/internal/logservice/grpc::TestRecordLogServiceTestSuite/TestServer_PushLogs",
+    "github.com/chroma/chroma-coordinator/internal/logservice/grpc::TestRecordLogServiceTestSuite",
+    "github.com/chroma/chroma-coordinator/internal/metastore/db/dao::TestCollectionDb_GetCollections",
+    "github.com/chroma/chroma-coordinator/internal/metastore/db/dao::TestRecordLogDbTestSuite/TestRecordLogDb_PullLogsFromID",
+    "github.com/chroma/chroma-coordinator/internal/metastore/db/dao::TestRecordLogDbTestSuite/TestRecordLogDb_PushLogs",
+    "github.com/chroma/chroma-coordinator/internal/metastore/db/dao::TestRecordLogDbTestSuite",
+    "github.com/chroma/chroma-coordinator/internal/metastore/db/dao::TestSegmentDb_GetSegments"
+  ],
+  "PASS_TO_PASS": []
+}

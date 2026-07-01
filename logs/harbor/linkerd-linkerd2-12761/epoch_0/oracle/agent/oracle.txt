@@ -1,0 +1,10 @@
+patching file policy-controller/core/src/outbound.rs
+patching file policy-controller/core/src/routes.rs
+patching file policy-controller/grpc/src/outbound.rs
+patching file policy-controller/grpc/src/outbound/grpc.rs
+patching file policy-controller/grpc/src/routes.rs
+patching file policy-controller/grpc/src/routes/grpc.rs
+patching file policy-controller/k8s/index/src/outbound/index.rs
+patching file policy-controller/k8s/index/src/routes.rs
+patching file policy-controller/k8s/index/src/routes/grpc.rs
+patching file policy-controller/src/main.rs

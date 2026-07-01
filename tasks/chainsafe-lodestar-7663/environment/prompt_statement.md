@@ -1,0 +1,5 @@
+I'm working on the beacon node's state archiving system and I need to add a utility for computing hierarchical archive layers. The idea is that historical states are stored at multiple tiers: the widest interval stores full snapshots, and narrower intervals store incremental diffs. A user should be able to express the entire configuration as a comma-separated list of positive integer epoch intervals in ascending order, where the last number represents how often a full snapshot is taken.
+
+Given any slot, the utility should return the nearest preceding snapshot slot and an ordered, deduplicated list of diff slots — one from each diff tier — that together with the snapshot allow state reconstruction. Slots before any snapshot has occurred should return genesis as the snapshot with no diffs.
+
+The utility should also validate the input string and reject it with specific, identifiable error codes if: the string is empty, fewer than two layers are provided, any interval is zero, negative, or non-integer, or the intervals are not in strictly ascending order. Errors need to be structured so callers can inspect the error code programmatically.

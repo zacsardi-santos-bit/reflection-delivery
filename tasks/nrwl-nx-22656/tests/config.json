@@ -1,0 +1,15 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/rollup && npx jest src/plugins/plugin.spec.ts --coverage=false --verbose --json",
+  "test_files": [
+    "e2e/rollup/src/rollup.test.ts",
+    "packages/rollup/src/plugins/plugin.spec.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/rollup/src/plugins/plugin.spec.ts::@nx/rollup/plugin root project should create nodes",
+    "/workspace/repo/packages/rollup/src/plugins/plugin.spec.ts::@nx/rollup/plugin non-root project should create nodes"
+  ],
+  "PASS_TO_PASS": []
+}

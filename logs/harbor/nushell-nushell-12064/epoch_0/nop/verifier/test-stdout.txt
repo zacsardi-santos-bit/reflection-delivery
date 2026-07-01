@@ -1,0 +1,159 @@
+patching file crates/nu-plugin/src/plugin/interface/plugin/tests.rs
+patching file crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs
+patching file crates/nu-plugin/src/serializers/tests.rs
+patching file src/tests/test_config.rs
+patching file tests/main.rs
+patching file tests/plugin_persistence/mod.rs
+   Compiling nu-plugin v0.91.1 (/workspace/repo/crates/nu-plugin)
+error[E0432]: unresolved import `crate::plugin::PluginSource`
+  --> crates/nu-plugin/src/plugin/interface/plugin/tests.rs:15:9
+   |
+15 |         PluginSource,
+   |         ^^^^^^^^^^^^ no `PluginSource` in `plugin`
+
+error[E0432]: unresolved import `crate::plugin::PluginSource`
+ --> crates/nu-plugin/src/protocol/plugin_custom_value/tests.rs:8:5
+  |
+8 |     plugin::PluginSource,
+  |     ^^^^^^^^^^^^^^^^^^^^ no `PluginSource` in `plugin`
+
+error[E0432]: unresolved import `crate::protocol::PluginOption`
+   --> crates/nu-plugin/src/serializers/tests.rs:5:65
+    |
+5   |             PluginCallResponse, PluginCustomValue, PluginInput, PluginOption, PluginOutput,
+    |                                                                 ^^^^^^^^^^^^
+    |                                                                 |
+    |                                                                 no `PluginOption` in `protocol`
+    |                                                                 help: a similar name exists in the module: `PluginOutput`
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0432]: unresolved import `crate::protocol::PluginOption`
+   --> crates/nu-plugin/src/serializers/tests.rs:5:65
+    |
+5   |             PluginCallResponse, PluginCustomValue, PluginInput, PluginOption, PluginOutput,
+    |                                                                 ^^^^^^^^^^^^
+    |                                                                 |
+    |                                                                 no `PluginOption` in `protocol`
+    |                                                                 help: a similar name exists in the module: `PluginOutput`
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `name` found for reference `&Arc<PluginIdentity>` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/plugin/tests.rs:653:35
+    |
+653 |         assert_eq!("test", source.name());
+    |                                   ^^^^ method not found in `&Arc<PluginIdentity>`
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0599]: no method named `name` found for reference `&Arc<PluginIdentity>` in the current scope
+   --> crates/nu-plugin/src/plugin/interface/plugin/tests.rs:683:35
+    |
+683 |         assert_eq!("test", source.name());
+    |                                   ^^^^ method not found in `&Arc<PluginIdentity>`
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `name`, perhaps you need to implement one of them:
+            candidate #1: `plugin::PluginEncoder`
+            candidate #2: `nu_protocol::engine::Command`
+            candidate #3: `SpanContents`
+
+error[E0609]: no field `source` on type `Arc<PluginInterfaceState>`
+    --> crates/nu-plugin/src/plugin/interface/plugin/tests.rs:1099:42
+     |
+1099 |             source: Some(interface.state.source.clone()),
+     |                                          ^^^^^^ unknown field
+
+error[E0599]: no variant or associated item named `Option` found for enum `PluginOutput` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:537:47
+    |
+537 |             let plugin_output = PluginOutput::Option(PluginOption::GcDisabled(true));
+    |                                               ^^^^^^ variant or associated item not found in `PluginOutput`
+    |
+   ::: crates/nu-plugin/src/protocol/mod.rs:328:1
+    |
+328 | pub enum PluginOutput {
+    | --------------------- variant or associated item `Option` not found for this enum
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no variant or associated item named `Option` found for enum `PluginOutput` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:550:31
+    |
+550 |                 PluginOutput::Option(PluginOption::GcDisabled(disabled)) => {
+    |                               ^^^^^^ variant or associated item not found in `PluginOutput`
+    |
+   ::: crates/nu-plugin/src/protocol/mod.rs:328:1
+    |
+328 | pub enum PluginOutput {
+    | --------------------- variant or associated item `Option` not found for this enum
+    |
+   ::: crates/nu-plugin/src/serializers/json.rs:100:5
+    |
+100 |     crate::serializers::tests::generate_tests!(JsonSerializer {});
+    |     ------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no variant or associated item named `Option` found for enum `PluginOutput` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:537:47
+    |
+537 |             let plugin_output = PluginOutput::Option(PluginOption::GcDisabled(true));
+    |                                               ^^^^^^ variant or associated item not found in `PluginOutput`
+    |
+   ::: crates/nu-plugin/src/protocol/mod.rs:328:1
+    |
+328 | pub enum PluginOutput {
+    | --------------------- variant or associated item `Option` not found for this enum
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no variant or associated item named `Option` found for enum `PluginOutput` in the current scope
+   --> crates/nu-plugin/src/serializers/tests.rs:550:31
+    |
+550 |                 PluginOutput::Option(PluginOption::GcDisabled(disabled)) => {
+    |                               ^^^^^^ variant or associated item not found in `PluginOutput`
+    |
+   ::: crates/nu-plugin/src/protocol/mod.rs:328:1
+    |
+328 | pub enum PluginOutput {
+    | --------------------- variant or associated item `Option` not found for this enum
+    |
+   ::: crates/nu-plugin/src/serializers/msgpack.rs:109:5
+    |
+109 |     crate::serializers::tests::generate_tests!(MsgPackSerializer {});
+    |     ---------------------------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `crate::serializers::tests::generate_tests` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+Some errors have detailed explanations: E0432, E0599, E0609.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `nu-plugin` (lib test) due to 11 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.74.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package nu-plugin` exited with code 101
+reward=0 graded=162 found=0 failed=0 parsed=0 framework=cargo exit_code=101

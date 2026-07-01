@@ -1,0 +1,905 @@
+patching file entry_types/scrolled/package/spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ /workspace/repo/node_modules/.bin/jest spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js --watchAll=false
+FAIL spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js
+  withFixedColumns
+    insertBreak
+      ✓ adds new row when inserting break (34 ms)
+      ✓ splits content of first cell when inserting break inside cell text (10 ms)
+      ✓ splits content of second cell when inserting break inside cell text (8 ms)
+      ✕ preserves formatting in first cell (20 ms)
+      ✕ preserves formatting in second cell (10 ms)
+    deleteBackwards
+      ✓ can delete backward in first column (4 ms)
+      ✓ can delete backward in second column (4 ms)
+      ✓ moves cursor to first column when deleting backward from beginning of second column (2 ms)
+      ✕ allows undoing insert break in second column (3 ms)
+      ✕ allows undoing insert break in first column (4 ms)
+      ✓ moves cursor to end of previous row when deleting backwards from first cell (4 ms)
+      ✓ removes empty previous row when deleting backwards from first cell (3 ms)
+      ✓ removes empty row when deleting backward from first cell (3 ms)
+      ✓ makes deleting backward from first cell no-op (2 ms)
+    deleteForward
+      ✓ can delete forward in first column (2 ms)
+      ✓ can delete forward at start of first column (3 ms)
+      ✓ can delete forward in second column (4 ms)
+      ✓ moves cursor to second column when deleting forward from end of first column (2 ms)
+      ✕ allows undoing insert break in second column (3 ms)
+      ✕ allows undoing insert break in first column (3 ms)
+      ✓ moves cursor to start of next row when deleting forward from second cell (2 ms)
+      ✓ removes empty next row when deleting forward from last cell (3 ms)
+      ✓ removes empty row when deleting forward from first cell (3 ms)
+      ✓ removes empty row when deleting forward from first cell of last line (4 ms)
+      ✓ makes deleting forward from first cell of last remaining line no-op (1 ms)
+      ✓ makes deleting forward from last cell no-op (2 ms)
+    deleteFragment
+      ✓ does not remove cells when deleting selection across cells (5 ms)
+      ✕ can delete from end of first column  (10 ms)
+      ✕ can delete until start of first column  (2 ms)
+      ✕ can delete inside second column  (1 ms)
+      ✕ preserves formatting (6 ms)
+      ✕ can handle cursor inside formatted text node (2 ms)
+      ✕ does not care about the order of anchor and focus when deleting across rows (1 ms)
+      keeps two column structure when deleting selection across rows
+        ✕ from label to value cell (8 ms)
+        ✕ from value to value cell (1 ms)
+        ✕ from label to label cell (5 ms)
+        ✕ from value to label cell (1 ms)
+    insertFragment
+      ✓ inserts text if single cell (4 ms)
+      ✕ inserts new rows if multiple cells (4 ms)
+      ✕ can insert multiple rows (7 ms)
+      ✕ adds missing cells to fragment (5 ms)
+  handleTableNavigation
+    ✓ moves the cursor to the cell above when pressing ArrowUp (2 ms)
+    ✓ moves the cursor to the cell below when pressing ArrowDown (7 ms)
+
+  ● withFixedColumns › insertBreak › preserves formatting in first cell
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 8
+    + Received  + 1
+
+    @@ -2,15 +2,11 @@
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+    -             "bold": true,
+                  "text": "First",
+    -           },
+    -           Object {
+    -             "text": " Name",
+                },
+              ],
+              "type": "label",
+            },
+            Object {
+    @@ -27,15 +23,12 @@
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Last ",
+    -           },
+    -           Object {
+                  "bold": true,
+    -             "text": "Name",
+    +             "text": " NameLast Name",
+                },
+              ],
+              "type": "label",
+            },
+            Object {
+
+      167 |       editor.insertBreak();
+      168 |
+    > 169 |       expect(editor.children).toEqual((
+          |                               ^
+      170 |         <editor>
+      171 |           <row>
+      172 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:169:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › insertBreak › preserves formatting in second cell
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 8
+    + Received  + 1
+
+    @@ -13,13 +13,10 @@
+              "children": Array [
+                Object {
+                  "bold": true,
+                  "text": "Jane",
+                },
+    -           Object {
+    -             "text": " Doe",
+    -           },
+              ],
+              "type": "value",
+            },
+          ],
+          "type": "row",
+    @@ -35,15 +32,11 @@
+              "type": "label",
+            },
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Joe ",
+    -           },
+    -           Object {
+    -             "bold": true,
+    -             "text": "Shmoe",
+    +             "text": " DoeJoe Shmoe",
+                },
+              ],
+              "type": "value",
+            },
+          ],
+
+      209 |       editor.insertBreak();
+      210 |
+    > 211 |       expect(editor.children).toEqual((
+          |                               ^
+      212 |         <editor>
+      213 |           <row>
+      214 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:211:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteBackwards › allows undoing insert break in second column
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 22
+
+    @@ -10,11 +10,32 @@
+              "type": "label",
+            },
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Jane Doe",
+    +             "text": "Jane",
+    +           },
+    +         ],
+    +         "type": "value",
+    +       },
+    +     ],
+    +     "type": "row",
+    +   },
+    +   Object {
+    +     "children": Array [
+    +       Object {
+    +         "children": Array [
+    +           Object {
+    +             "text": "",
+    +           },
+    +         ],
+    +         "type": "label",
+    +       },
+    +       Object {
+    +         "children": Array [
+    +           Object {
+    +             "text": " Doe",
+                },
+              ],
+              "type": "value",
+            },
+          ],
+
+      355 |       editor.deleteBackward();
+      356 |
+    > 357 |       expect(editor.children).toEqual((
+          |                               ^
+      358 |         <editor>
+      359 |           <row>
+      360 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:357:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteBackwards › allows undoing insert break in first column
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 22
+
+    @@ -2,11 +2,32 @@
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "First name",
+    +             "text": "First",
+    +           },
+    +         ],
+    +         "type": "label",
+    +       },
+    +       Object {
+    +         "children": Array [
+    +           Object {
+    +             "text": "",
+    +           },
+    +         ],
+    +         "type": "value",
+    +       },
+    +     ],
+    +     "type": "row",
+    +   },
+    +   Object {
+    +     "children": Array [
+    +       Object {
+    +         "children": Array [
+    +           Object {
+    +             "text": " name",
+                },
+              ],
+              "type": "label",
+            },
+            Object {
+
+      397 |       editor.deleteBackward();
+      398 |
+    > 399 |       expect(editor.children).toEqual((
+          |                               ^
+      400 |         <editor>
+      401 |           <row>
+      402 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:399:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteForward › allows undoing insert break in second column
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 22
+
+    @@ -10,11 +10,32 @@
+              "type": "label",
+            },
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Jane Doe",
+    +             "text": "Jane ",
+    +           },
+    +         ],
+    +         "type": "value",
+    +       },
+    +     ],
+    +     "type": "row",
+    +   },
+    +   Object {
+    +     "children": Array [
+    +       Object {
+    +         "children": Array [
+    +           Object {
+    +             "text": "",
+    +           },
+    +         ],
+    +         "type": "label",
+    +       },
+    +       Object {
+    +         "children": Array [
+    +           Object {
+    +             "text": "Doe",
+                },
+              ],
+              "type": "value",
+            },
+          ],
+
+      749 |       editor.deleteForward();
+      750 |
+    > 751 |       expect(editor.children).toEqual((
+          |                               ^
+      752 |         <editor>
+      753 |           <row>
+      754 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:751:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteForward › allows undoing insert break in first column
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 22
+
+    @@ -2,11 +2,32 @@
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "First name",
+    +             "text": "First ",
+    +           },
+    +         ],
+    +         "type": "label",
+    +       },
+    +       Object {
+    +         "children": Array [
+    +           Object {
+    +             "text": "",
+    +           },
+    +         ],
+    +         "type": "value",
+    +       },
+    +     ],
+    +     "type": "row",
+    +   },
+    +   Object {
+    +     "children": Array [
+    +       Object {
+    +         "children": Array [
+    +           Object {
+    +             "text": "name",
+                },
+              ],
+              "type": "label",
+            },
+            Object {
+
+      791 |       editor.deleteForward();
+      792 |
+    > 793 |       expect(editor.children).toEqual((
+          |                               ^
+      794 |         <editor>
+      795 |           <row>
+      796 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:793:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › can delete from end of first column 
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 9
+    + Received  + 1
+
+    @@ -2,22 +2,14 @@
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Name",
+    +             "text": "NameDoe",
+                },
+              ],
+              "type": "label",
+    -       },
+    -       Object {
+    -         "children": Array [
+    -           Object {
+    -             "text": "Doe",
+    -           },
+    -         ],
+    -         "type": "value",
+            },
+          ],
+          "type": "row",
+        },
+      ]
+
+      1117 |       editor.deleteFragment();
+      1118 |
+    > 1119 |       expect(editor.children).toEqual((
+           |                               ^
+      1120 |         <editor>
+      1121 |           <row>
+      1122 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1119:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › can delete until start of first column 
+
+    TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+
+      194 |       if (startCellMatch && endCellMatch) {
+      195 |         const [, startCellPath] = startCellMatch;
+    > 196 |         const [, startRowSecondCellPath] = Editor.next(editor, {at: startCellPath});
+          |                                            ^
+      197 |         const [, endCellPath] = endCellMatch;
+      198 |
+      199 |         // Collect all rows in the selection range
+
+      at Object.deleteFragment (src/frontend/inlineEditing/EditableTable/withFixedColumns.js:196:44)
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1155:14)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › can delete inside second column 
+
+    TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+
+      194 |       if (startCellMatch && endCellMatch) {
+      195 |         const [, startCellPath] = startCellMatch;
+    > 196 |         const [, startRowSecondCellPath] = Editor.next(editor, {at: startCellPath});
+          |                                            ^
+      197 |         const [, endCellPath] = endCellMatch;
+      198 |
+      199 |         // Collect all rows in the selection range
+
+      at Object.deleteFragment (src/frontend/inlineEditing/EditableTable/withFixedColumns.js:196:44)
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1193:14)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › preserves formatting
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 4
+    + Received  + 1
+
+    @@ -14,15 +14,12 @@
+              "type": "label",
+            },
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Doe ",
+    -           },
+    -           Object {
+                  "bold": true,
+    -             "text": "Foo",
+    +             "text": "Doe Foo",
+                },
+              ],
+              "type": "value",
+            },
+          ],
+
+      1223 |       editor.deleteFragment();
+      1224 |
+    > 1225 |       expect(editor.children).toEqual((
+           |                               ^
+      1226 |         <editor>
+      1227 |           <row>
+      1228 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1225:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › can handle cursor inside formatted text node
+
+    TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+
+      194 |       if (startCellMatch && endCellMatch) {
+      195 |         const [, startCellPath] = startCellMatch;
+    > 196 |         const [, startRowSecondCellPath] = Editor.next(editor, {at: startCellPath});
+          |                                            ^
+      197 |         const [, endCellPath] = endCellMatch;
+      198 |
+      199 |         // Collect all rows in the selection range
+
+      at Object.deleteFragment (src/frontend/inlineEditing/EditableTable/withFixedColumns.js:196:44)
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1261:14)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › keeps two column structure when deleting selection across rows › from label to value cell
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+    @@ -1,16 +1,16 @@
+      Object {
+        "anchor": Object {
+    -     "offset": 0,
+    +     "offset": 7,
+          "path": Array [
+            0,
+            1,
+            0,
+          ],
+        },
+        "focus": Object {
+    -     "offset": 0,
+    +     "offset": 7,
+          "path": Array [
+            0,
+            1,
+            0,
+          ],
+
+      1324 |           </editor>).children
+      1325 |         );
+    > 1326 |         expect(editor.selection).toEqual({
+           |                                  ^
+      1327 |           anchor: {path: [0, 1, 0], offset: 0},
+      1328 |           focus: {path: [0, 1, 0], offset: 0},
+      1329 |         });
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1326:34)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › keeps two column structure when deleting selection across rows › from value to value cell
+
+    TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+
+      194 |       if (startCellMatch && endCellMatch) {
+      195 |         const [, startCellPath] = startCellMatch;
+    > 196 |         const [, startRowSecondCellPath] = Editor.next(editor, {at: startCellPath});
+          |                                            ^
+      197 |         const [, endCellPath] = endCellMatch;
+      198 |
+      199 |         // Collect all rows in the selection range
+
+      at Object.deleteFragment (src/frontend/inlineEditing/EditableTable/withFixedColumns.js:196:44)
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1362:16)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › keeps two column structure when deleting selection across rows › from label to label cell
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+    @@ -2,19 +2,19 @@
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Name Thing",
+    +             "text": "Name",
+                },
+              ],
+              "type": "label",
+            },
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Content",
+    +             "text": " Thing",
+                },
+              ],
+              "type": "value",
+            },
+          ],
+
+      1412 |         editor.deleteFragment();
+      1413 |
+    > 1414 |         expect(editor.children).toEqual((
+           |                                 ^
+      1415 |           <editor>
+      1416 |             <row>
+      1417 |               <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1414:33)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › keeps two column structure when deleting selection across rows › from value to label cell
+
+    TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+
+      194 |       if (startCellMatch && endCellMatch) {
+      195 |         const [, startCellPath] = startCellMatch;
+    > 196 |         const [, startRowSecondCellPath] = Editor.next(editor, {at: startCellPath});
+          |                                            ^
+      197 |         const [, endCellPath] = endCellMatch;
+      198 |
+      199 |         // Collect all rows in the selection range
+
+      at Object.deleteFragment (src/frontend/inlineEditing/EditableTable/withFixedColumns.js:196:44)
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1462:16)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › deleteFragment › does not care about the order of anchor and focus when deleting across rows
+
+    TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+
+      194 |       if (startCellMatch && endCellMatch) {
+      195 |         const [, startCellPath] = startCellMatch;
+    > 196 |         const [, startRowSecondCellPath] = Editor.next(editor, {at: startCellPath});
+          |                                            ^
+      197 |         const [, endCellPath] = endCellMatch;
+      198 |
+      199 |         // Collect all rows in the selection range
+
+      at Object.deleteFragment (src/frontend/inlineEditing/EditableTable/withFixedColumns.js:196:44)
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1521:14)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › insertFragment › inserts new rows if multiple cells
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 14
+    + Received  +  1
+
+    @@ -2,11 +2,11 @@
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Some",
+    +             "text": "SomeInserted",
+                },
+              ],
+              "type": "label",
+            },
+            Object {
+    @@ -14,23 +14,10 @@
+                Object {
+                  "text": "row",
+                },
+              ],
+              "type": "value",
+    -       },
+    -     ],
+    -     "type": "row",
+    -   },
+    -   Object {
+    -     "children": Array [
+    -       Object {
+    -         "children": Array [
+    -           Object {
+    -             "text": "Inserted",
+    -           },
+    -         ],
+    -         "type": "label",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "text": "row",
+
+      1635 |       ]);
+      1636 |
+    > 1637 |       expect(editor.children).toEqual((
+           |                               ^
+      1638 |         <editor>
+      1639 |           <row>
+      1640 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1637:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › insertFragment › can insert multiple rows
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  +  2
+
+    @@ -2,11 +2,11 @@
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Some",
+    +             "text": "SomeInserted",
+                },
+              ],
+              "type": "label",
+            },
+            Object {
+    @@ -14,20 +14,17 @@
+                Object {
+                  "text": "row",
+                },
+              ],
+              "type": "value",
+    -       },
+    -     ],
+    -     "type": "row",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [
+                    Object {
+    -             "text": "Inserted",
+    +                 "text": "Other",
+                    },
+                  ],
+                  "type": "label",
+                },
+                Object {
+    @@ -38,20 +35,10 @@
+                  ],
+                  "type": "value",
+                },
+              ],
+              "type": "row",
+    -   },
+    -   Object {
+    -     "children": Array [
+    -       Object {
+    -         "children": Array [
+    -           Object {
+    -             "text": "Other",
+    -           },
+    -         ],
+    -         "type": "label",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "text": "row",
+
+      1728 |       ]);
+      1729 |
+    > 1730 |       expect(editor.children).toEqual((
+           |                               ^
+      1731 |         <editor>
+      1732 |           <row>
+      1733 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1730:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+  ● withFixedColumns › insertFragment › adds missing cells to fragment
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 32
+    + Received  +  3
+
+    @@ -2,61 +2,32 @@
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "Some",
+    +             "text": "SomeOnly value",
+                },
+              ],
+              "type": "label",
+            },
+            Object {
+              "children": Array [
+                Object {
+    -             "text": "row",
+    -           },
+    -         ],
+    -         "type": "value",
+    -       },
+    -     ],
+    -     "type": "row",
+    -   },
+    -   Object {
+                  "children": Array [
+                    Object {
+    -         "children": Array [
+    -           Object {
+    -             "text": "",
+    +                 "text": "Only label",
+                    },
+                  ],
+                  "type": "label",
+                },
+    -       Object {
+    -         "children": Array [
+    -           Object {
+    -             "text": "Only value",
+    -           },
+    -         ],
+    -         "type": "value",
+    -       },
+              ],
+              "type": "row",
+            },
+            Object {
+              "children": Array [
+                Object {
+    -         "children": Array [
+    -           Object {
+    -             "text": "Only label",
+    -           },
+    -         ],
+    -         "type": "label",
+    -       },
+    -       Object {
+    -         "children": Array [
+    -           Object {
+    -             "text": "",
+    +             "text": "row",
+                },
+              ],
+              "type": "value",
+            },
+          ],
+
+      1805 |       ]);
+      1806 |
+    > 1807 |       expect(editor.children).toEqual((
+           |                               ^
+      1808 |         <editor>
+      1809 |           <row>
+      1810 |             <label>
+
+      at Object.<anonymous> (spec/frontend/inlineEditing/EditableTable/withFixedColumns-spec.js:1807:31)
+      at TestScheduler.scheduleTests (../../../node_modules/@jest/core/build/TestScheduler.js:333:13)
+      at runJest (../../../node_modules/@jest/core/build/runJest.js:387:19)
+      at _run10000 (../../../node_modules/@jest/core/build/cli/index.js:408:7)
+      at runCLI (../../../node_modules/@jest/core/build/cli/index.js:261:3)
+
+Test Suites: 1 failed, 1 total
+Tests:       19 failed, 24 passed, 43 total
+Snapshots:   0 total
+Time:        6.081 s
+Ran all test suites matching /spec\/frontend\/inlineEditing\/EditableTable\/withFixedColumns-spec.js/i.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+reward=0 graded=43 found=0 failed=0 parsed=0 framework=jest exit_code=1

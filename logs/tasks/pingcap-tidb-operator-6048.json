@@ -1,0 +1,23 @@
+{
+ "task": "pingcap-tidb-operator-6048",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden moves 'BootstrapSQL *corev1.LocalObjectReference' from TiDBSecurity to ClusterSpec and changes config.go to 'if cluster.Spec.BootstrapSQL != nil'; test.patch relocates the field 'BootstrapSQL: &corev1.LocalObjectReference{Name: \"bootstrap-sql\"}' into ClusterSpec then calls c.Overlay(cluster, "
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

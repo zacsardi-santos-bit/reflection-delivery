@@ -1,0 +1,25 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/autoscaling/test_load_boost.py /workspace/repo/tests/test_paasta_cluster_boost.py -v",
+  "test_files": [
+    "tests/autoscaling/test_load_boost.py",
+    "tests/test_paasta_cluster_boost.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.autoscaling.test_load_boost::test_get_zk_cluster_boost_path",
+    "tests.autoscaling.test_load_boost::test_get_boost_values",
+    "tests.autoscaling.test_load_boost::test_get_boost_values_when_no_values_exist",
+    "tests.autoscaling.test_load_boost::test_set_boost_factor_with_defaults",
+    "tests.autoscaling.test_load_boost::test_set_boost_factor",
+    "tests.autoscaling.test_load_boost::test_set_boost_factor_with_active_boost",
+    "tests.autoscaling.test_load_boost::test_set_boost_factor_with_active_boost_override",
+    "tests.autoscaling.test_load_boost::test_clear_boost",
+    "tests.test_paasta_cluster_boost::test_get_regions",
+    "tests.test_paasta_cluster_boost::test_get_regions_wrong_pool",
+    "tests.test_paasta_cluster_boost::test_main",
+    "tests.test_paasta_cluster_boost::test_paasta_cluster_boost"
+  ],
+  "PASS_TO_PASS": []
+}

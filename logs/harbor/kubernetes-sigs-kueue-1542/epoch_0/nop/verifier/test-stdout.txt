@@ -1,0 +1,72 @@
+patching file apis/config/v1beta1/defaults_test.go
+patching file pkg/config/config_test.go
+patching file pkg/queue/cluster_queue_best_effort_fifo_test.go
+patching file pkg/queue/cluster_queue_impl_test.go
+patching file pkg/queue/cluster_queue_strict_fifo_test.go
+patching file pkg/scheduler/preemption/preemption_test.go
+patching file pkg/scheduler/scheduler_test.go
+patching file pkg/workload/workload_test.go
+patching file test/integration/scheduler/podsready/scheduler_test.go
+patching file test/integration/scheduler/podsready/suite_test.go
+# sigs.k8s.io/kueue/pkg/workload
+package sigs.k8s.io/kueue/pkg/workload
+	imports sigs.k8s.io/kueue/apis/config/v1beta1
+	imports sigs.k8s.io/kueue/pkg/controller/jobs/job
+	imports sigs.k8s.io/kueue/pkg/controller/jobframework
+	imports sigs.k8s.io/kueue/pkg/workload: import cycle not allowed in test
+FAIL	sigs.k8s.io/kueue/pkg/workload [setup failed]
+# sigs.k8s.io/kueue/apis/config/v1beta1 [sigs.k8s.io/kueue/apis/config/v1beta1.test]
+apis/config/v1beta1/defaults_test.go:54:24: undefined: defaultJobFrameworkName
+apis/config/v1beta1/defaults_test.go:76:24: undefined: defaultJobFrameworkName
+apis/config/v1beta1/defaults_test.go:327:6: unknown field RequeuingTimestamp in struct literal of type WaitForPodsReady
+apis/config/v1beta1/defaults_test.go:327:32: cannot infer T (/go/pkg/mod/k8s.io/utils@v0.0.0-20230726121419-3b25d923346b/ptr/ptr.go:50:9)
+apis/config/v1beta1/defaults_test.go:327:33: undefined: EvictionTimestamp
+apis/config/v1beta1/defaults_test.go:353:6: unknown field RequeuingTimestamp in struct literal of type WaitForPodsReady
+apis/config/v1beta1/defaults_test.go:353:32: cannot infer T (/go/pkg/mod/k8s.io/utils@v0.0.0-20230726121419-3b25d923346b/ptr/ptr.go:50:9)
+apis/config/v1beta1/defaults_test.go:353:33: undefined: EvictionTimestamp
+apis/config/v1beta1/defaults_test.go:370:32: cannot infer T (/go/pkg/mod/k8s.io/utils@v0.0.0-20230726121419-3b25d923346b/ptr/ptr.go:50:9)
+apis/config/v1beta1/defaults_test.go:370:33: undefined: CreationTimestamp
+apis/config/v1beta1/defaults_test.go:370:32: too many errors
+# sigs.k8s.io/kueue/pkg/config [sigs.k8s.io/kueue/pkg/config.test]
+pkg/config/config_test.go:505:6: unknown field RequeuingTimestamp in struct literal of type "sigs.k8s.io/kueue/apis/config/v1beta1".WaitForPodsReady
+pkg/config/config_test.go:505:32: cannot infer T (/go/pkg/mod/k8s.io/utils@v0.0.0-20230726121419-3b25d923346b/ptr/ptr.go:50:9)
+pkg/config/config_test.go:505:43: undefined: configapi.EvictionTimestamp
+# sigs.k8s.io/kueue/pkg/scheduler/preemption [sigs.k8s.io/kueue/pkg/scheduler/preemption.test]
+pkg/scheduler/preemption/preemption_test.go:978:34: undefined: workload.Ordering
+pkg/scheduler/preemption/preemption_test.go:978:46: too many arguments in call to New
+	have (client.WithWatch, unknown type, record.EventRecorder)
+	want (client.Client, record.EventRecorder)
+# sigs.k8s.io/kueue/pkg/queue [sigs.k8s.io/kueue/pkg/queue.test]
+pkg/queue/cluster_queue_impl_test.go:40:29: undefined: queueOrderingFunc
+pkg/queue/cluster_queue_impl_test.go:40:56: undefined: workload.Ordering
+pkg/queue/cluster_queue_impl_test.go:41:39: undefined: config.EvictionTimestamp
+pkg/queue/cluster_queue_best_effort_fifo_test.go:85:5: too many arguments in call to newClusterQueueBestEffortFIFO
+	have (*"sigs.k8s.io/kueue/apis/kueue/v1beta1".ClusterQueue, unknown type)
+	want (*"sigs.k8s.io/kueue/apis/kueue/v1beta1".ClusterQueue)
+pkg/queue/cluster_queue_best_effort_fifo_test.go:85:14: undefined: workload.Ordering
+pkg/queue/cluster_queue_best_effort_fifo_test.go:85:59: undefined: config.EvictionTimestamp
+pkg/queue/cluster_queue_strict_fifo_test.go:44:3: too many arguments in call to newClusterQueue
+	have (*"sigs.k8s.io/kueue/apis/kueue/v1beta1".ClusterQueue, unknown type)
+	want (*"sigs.k8s.io/kueue/apis/kueue/v1beta1".ClusterQueue)
+pkg/queue/cluster_queue_strict_fifo_test.go:44:12: undefined: workload.Ordering
+pkg/queue/cluster_queue_strict_fifo_test.go:45:40: undefined: config.EvictionTimestamp
+pkg/queue/cluster_queue_strict_fifo_test.go:113:30: undefined: workload.Ordering
+pkg/queue/cluster_queue_strict_fifo_test.go:113:30: too many errors
+# sigs.k8s.io/kueue/pkg/scheduler [sigs.k8s.io/kueue/pkg/scheduler.test]
+pkg/scheduler/scheduler_test.go:1470:29: undefined: workload.Ordering
+pkg/scheduler/scheduler_test.go:1476:31: undefined: workload.Ordering
+pkg/scheduler/scheduler_test.go:1476:76: undefined: config.EvictionTimestamp
+pkg/scheduler/scheduler_test.go:1482:31: undefined: workload.Ordering
+pkg/scheduler/scheduler_test.go:1482:76: undefined: config.CreationTimestamp
+pkg/scheduler/scheduler_test.go:1488:31: undefined: workload.Ordering
+pkg/scheduler/scheduler_test.go:1488:76: undefined: config.EvictionTimestamp
+pkg/scheduler/scheduler_test.go:1494:31: undefined: workload.Ordering
+pkg/scheduler/scheduler_test.go:1494:76: undefined: config.CreationTimestamp
+pkg/scheduler/scheduler_test.go:1501:5: undefined: entries
+pkg/scheduler/scheduler_test.go:1501:5: too many errors
+FAIL	sigs.k8s.io/kueue/apis/config/v1beta1 [build failed]
+FAIL	sigs.k8s.io/kueue/pkg/config [build failed]
+FAIL	sigs.k8s.io/kueue/pkg/queue [build failed]
+FAIL	sigs.k8s.io/kueue/pkg/scheduler [build failed]
+FAIL	sigs.k8s.io/kueue/pkg/scheduler/preemption [build failed]
+reward=0 graded=241 found=196 failed=196 parsed=5 framework=go exit_code=1

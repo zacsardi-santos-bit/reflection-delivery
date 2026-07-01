@@ -1,0 +1,5 @@
+I'm working on adding pagination support to MLflow's run search functionality. Right now, when you search for runs, you get all the results back as a plain list with no way to page through them. I'd like the result to still behave like a list (so existing code doesn't break), but also carry a pagination token that callers can use to retrieve the next page of results.
+
+The design I have in mind is: the public search method on the base store class becomes non-abstract and handles wrapping the results in a special list-like object that also has a token attribute. Concrete store implementations would then override a new private method instead of the existing public one. That private method returns a tuple of the runs list and a token. The public method calls the private one and wraps the result.
+
+For stores that don't yet have pagination, the token should come back as None, and if a caller passes in a non-empty pagination token, the store should raise an error rather than silently ignoring it — though an empty-string token should be fine. The high-level client interface also needs to be updated to accept and pass through an optional pagination token.

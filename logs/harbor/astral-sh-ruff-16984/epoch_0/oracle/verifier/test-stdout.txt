@@ -1,0 +1,182 @@
+patching file crates/ruff_python_parser/tests/fixtures.rs
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_class.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_function.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_import.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_match.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_try.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_type_alias.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_with.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@del_debug_py39.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@write_to_debug_expr.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/valid_syntax@debug_rename_import.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/valid_syntax@del_debug_py38.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/valid_syntax@read_from_debug.py.snap
+   Compiling ruff_python_parser v0.0.0 (/workspace/repo/crates/ruff_python_parser)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.66s
+────────────
+ Nextest run ID 8ea5c7ba-5d27-4b3a-9fa9-35c4a6e3ad8f with nextest profile: ci
+    Starting 160 tests across 3 binaries (1 test skipped)
+        PASS [   0.024s] (  1/160) ruff_python_parser lexer::indentation::tests::indentation_try_compare
+        PASS [   0.181s] (  2/160) ruff_python_parser lexer::tests::test_double_dedent_with_unix_eol
+        PASS [   0.185s] (  3/160) ruff_python_parser lexer::tests::test_double_dedent_with_tabs_windows_eol
+        PASS [   0.194s] (  4/160) ruff_python_parser lexer::tests::test_emoji_identifier
+        PASS [   0.196s] (  5/160) ruff_python_parser lexer::tests::bom
+        PASS [   0.200s] (  6/160) ruff_python_parser lexer::tests::test_empty_fstrings
+        PASS [   0.211s] (  7/160) ruff_python_parser lexer::tests::dedent_after_whitespace
+        PASS [   0.018s] (  8/160) ruff_python_parser lexer::tests::test_fstring_error
+        PASS [   0.225s] (  9/160) ruff_python_parser lexer::tests::bom_with_offset
+        PASS [   0.227s] ( 10/160) ruff_python_parser lexer::tests::test_double_dedent_with_tabs_mac_eol
+        PASS [   0.230s] ( 11/160) ruff_python_parser lexer::tests::test_comment_until_mac_eol
+        PASS [   0.234s] ( 12/160) ruff_python_parser lexer::tests::test_comment_until_windows_eol
+        PASS [   0.235s] ( 13/160) ruff_python_parser lexer::tests::test_double_dedent_with_tabs_unix_eol
+        PASS [   0.236s] ( 14/160) ruff_python_parser lexer::tests::test_comment_until_unix_eol
+        PASS [   0.239s] ( 15/160) ruff_python_parser lexer::tests::test_double_dedent_with_windows_eol
+        PASS [   0.244s] ( 16/160) ruff_python_parser lexer::tests::test_double_dedent_with_mac_eol
+        PASS [   0.221s] ( 17/160) ruff_python_parser lexer::tests::test_escape_unicode_name
+        PASS [   0.246s] ( 18/160) ruff_python_parser lexer::tests::bom_with_offset_edge
+        PASS [   0.247s] ( 19/160) ruff_python_parser lexer::tests::test_assignment
+        PASS [   0.246s] ( 20/160) ruff_python_parser lexer::tests::test_empty_ipython_escape_command
+        PASS [   0.163s] ( 21/160) ruff_python_parser lexer::tests::test_fstring
+        PASS [   0.195s] ( 22/160) ruff_python_parser lexer::tests::test_fstring_comments
+        PASS [   0.190s] ( 23/160) ruff_python_parser lexer::tests::test_fstring_conversion
+        PASS [   0.189s] ( 24/160) ruff_python_parser lexer::tests::test_fstring_escape
+        PASS [   0.184s] ( 25/160) ruff_python_parser lexer::tests::test_fstring_prefix
+        PASS [   0.208s] ( 26/160) ruff_python_parser lexer::tests::test_fstring_escape_raw
+        PASS [   0.187s] ( 27/160) ruff_python_parser lexer::tests::test_fstring_parentheses
+        PASS [   0.184s] ( 28/160) ruff_python_parser lexer::tests::test_fstring_single_quote_escape_unix_eol
+        PASS [   0.223s] ( 29/160) ruff_python_parser lexer::tests::test_fstring_escape_braces
+        PASS [   0.207s] ( 30/160) ruff_python_parser lexer::tests::test_fstring_nested
+        PASS [   0.215s] ( 31/160) ruff_python_parser lexer::tests::test_fstring_multiline
+        PASS [   0.019s] ( 32/160) ruff_python_parser lexer::tests::test_infinite_loop
+        PASS [   0.223s] ( 33/160) ruff_python_parser lexer::tests::test_fstring_named_unicode
+        PASS [   0.228s] ( 34/160) ruff_python_parser lexer::tests::test_fstring_expression_multiline
+        PASS [   0.212s] ( 35/160) ruff_python_parser lexer::tests::test_fstring_single_quote_escape_mac_eol
+        PASS [   0.214s] ( 36/160) ruff_python_parser lexer::tests::test_fstring_with_ipy_escape_command
+        PASS [   0.217s] ( 37/160) ruff_python_parser lexer::tests::test_fstring_single_quote_escape_windows_eol
+        PASS [   0.233s] ( 38/160) ruff_python_parser lexer::tests::test_fstring_named_unicode_raw
+        PASS [   0.222s] ( 39/160) ruff_python_parser lexer::tests::test_fstring_with_format_spec
+        PASS [   0.138s] ( 40/160) ruff_python_parser lexer::tests::test_fstring_with_lambda_expression
+        PASS [   0.020s] ( 41/160) ruff_python_parser lexer::tests::test_ipython_escape_command_not_an_assignment
+        PASS [   0.145s] ( 42/160) ruff_python_parser lexer::tests::test_fstring_with_multiline_format_spec
+        PASS [   0.158s] ( 43/160) ruff_python_parser lexer::tests::test_fstring_with_named_expression
+        PASS [   0.161s] ( 44/160) ruff_python_parser lexer::tests::test_fstring_with_nul_char
+        PASS [   0.198s] ( 45/160) ruff_python_parser lexer::tests::test_indentation_with_windows_eol
+        PASS [   0.185s] ( 46/160) ruff_python_parser lexer::tests::test_ipython_escape_command_assignment
+        PASS [   0.213s] ( 47/160) ruff_python_parser lexer::tests::test_indentation_with_unix_eol
+        PASS [   0.196s] ( 48/160) ruff_python_parser lexer::tests::test_invalid_leading_zero_small
+        PASS [   0.216s] ( 49/160) ruff_python_parser lexer::tests::test_indentation_with_mac_eol
+        PASS [   0.192s] ( 50/160) ruff_python_parser lexer::tests::test_ipython_escape_command_line_continuation_unix_eol
+        PASS [   0.198s] ( 51/160) ruff_python_parser lexer::tests::test_ipython_escape_command_indentation
+        PASS [   0.213s] ( 52/160) ruff_python_parser lexer::tests::test_ipython_escape_command
+        PASS [   0.222s] ( 53/160) ruff_python_parser lexer::tests::test_invalid_leading_zero_big
+        PASS [   0.018s] ( 54/160) ruff_python_parser lexer::tests::test_nfkc_normalization
+        PASS [   0.211s] ( 55/160) ruff_python_parser lexer::tests::test_ipython_escape_command_line_continuation_with_unix_eol_and_eof
+        PASS [   0.225s] ( 56/160) ruff_python_parser lexer::tests::test_ipython_escape_command_line_continuation_mac_eol
+        PASS [   0.216s] ( 57/160) ruff_python_parser lexer::tests::test_ipython_escape_command_line_continuation_with_mac_eol_and_eof
+        PASS [   0.221s] ( 58/160) ruff_python_parser lexer::tests::test_ipython_escape_command_line_continuation_windows_eol
+        PASS [   0.216s] ( 59/160) ruff_python_parser lexer::tests::test_ipython_escape_command_line_continuation_with_windows_eol_and_eof
+        PASS [   0.165s] ( 60/160) ruff_python_parser lexer::tests::test_line_comment_empty
+        PASS [   0.191s] ( 61/160) ruff_python_parser lexer::tests::test_ipython_help_end_escape_command
+        PASS [   0.144s] ( 62/160) ruff_python_parser lexer::tests::test_line_comment_single_whitespace
+        PASS [   0.155s] ( 63/160) ruff_python_parser lexer::tests::test_line_comment_long
+        PASS [   0.161s] ( 64/160) ruff_python_parser lexer::tests::test_logical_newline_line_comment
+        PASS [   0.174s] ( 65/160) ruff_python_parser lexer::tests::test_newline_in_brackets_mac_eol
+        PASS [   0.201s] ( 66/160) ruff_python_parser lexer::tests::test_line_comment_whitespace
+        PASS [   0.194s] ( 67/160) ruff_python_parser lexer::tests::test_newline_in_brackets_windows_eol
+        PASS [   0.223s] ( 68/160) ruff_python_parser lexer::tests::test_match_softkeyword_in_notebook
+        PASS [   0.226s] ( 69/160) ruff_python_parser lexer::tests::test_newline_in_brackets_unix_eol
+        PASS [   0.212s] ( 70/160) ruff_python_parser lexer::tests::test_non_logical_newline_in_string_continuation
+        PASS [   0.198s] ( 71/160) ruff_python_parser lexer::tests::test_string
+        PASS [   0.209s] ( 72/160) ruff_python_parser lexer::tests::test_operators
+        PASS [   0.025s] ( 73/160) ruff_python_parser parser::tests::test_modes
+        PASS [   0.209s] ( 74/160) ruff_python_parser lexer::tests::test_string_continuation_with_unix_eol
+        PASS [   0.205s] ( 75/160) ruff_python_parser lexer::tests::test_triple_quoted_mac_eol
+        PASS [   0.240s] ( 76/160) ruff_python_parser lexer::tests::test_numbers
+        PASS [   0.216s] ( 77/160) ruff_python_parser lexer::tests::test_string_continuation_with_windows_eol
+        PASS [   0.208s] ( 78/160) ruff_python_parser lexer::tests::test_triple_quoted_unix_eol
+        PASS [   0.222s] ( 79/160) ruff_python_parser lexer::tests::test_string_continuation_with_mac_eol
+        PASS [   0.210s] ( 80/160) ruff_python_parser lexer::tests::test_triple_quoted_windows_eol
+        PASS [   0.212s] ( 81/160) ruff_python_parser parser::tests::test_expr_mode_invalid_syntax1
+        PASS [   0.220s] ( 82/160) ruff_python_parser lexer::tests::tet_too_low_dedent
+        PASS [   0.136s] ( 83/160) ruff_python_parser parser::tests::test_expr_mode_invalid_syntax2
+        PASS [   0.123s] ( 84/160) ruff_python_parser parser::tests::test_expr_mode_invalid_syntax3
+        PASS [   0.126s] ( 85/160) ruff_python_parser parser::tests::test_expr_mode_valid_syntax
+        PASS [   0.176s] ( 86/160) ruff_python_parser string::tests::test_backspace_alias
+        PASS [   0.211s] ( 87/160) ruff_python_parser parser::tests::test_ipython_escape_commands
+        PASS [   0.176s] ( 88/160) ruff_python_parser string::tests::test_delete_alias
+        PASS [   0.206s] ( 89/160) ruff_python_parser parser::tests::test_unicode_aliases
+        PASS [   0.206s] ( 90/160) ruff_python_parser string::tests::test_carriage_return_alias
+        PASS [   0.188s] ( 91/160) ruff_python_parser string::tests::test_escape_alias
+        PASS [   0.206s] ( 92/160) ruff_python_parser string::tests::test_escape_char_in_byte_literal
+        PASS [   0.221s] ( 93/160) ruff_python_parser string::tests::test_character_tabulation_with_justification_alias
+        PASS [   0.231s] ( 94/160) ruff_python_parser string::tests::test_bell_alias
+        PASS [   0.224s] ( 95/160) ruff_python_parser string::tests::test_dont_panic_on_8_in_octal_escape
+        PASS [   0.217s] ( 96/160) ruff_python_parser string::tests::test_double_quoted_byte
+        PASS [   0.220s] ( 97/160) ruff_python_parser string::tests::test_escape_octet
+        PASS [   0.220s] ( 98/160) ruff_python_parser string::tests::test_fstring_constant_range
+        PASS [   0.230s] ( 99/160) ruff_python_parser string::tests::test_form_feed_alias
+        PASS [   0.207s] (100/160) ruff_python_parser string::tests::test_fstring_escaped_newline
+        PASS [   0.192s] (101/160) ruff_python_parser string::tests::test_fstring_parse_self_documenting_base
+        PASS [   0.208s] (102/160) ruff_python_parser string::tests::test_fstring_line_continuation
+        PASS [   0.229s] (103/160) ruff_python_parser string::tests::test_fstring_escaped_character
+        PASS [   0.167s] (104/160) ruff_python_parser string::tests::test_fstring_parse_self_documenting_base_more
+        PASS [   0.182s] (105/160) ruff_python_parser string::tests::test_fstring_parse_self_documenting_format
+        PASS [   0.175s] (106/160) ruff_python_parser string::tests::test_fstring_unescaped_newline
+        PASS [   0.203s] (107/160) ruff_python_parser string::tests::test_hts_alias
+        PASS [   0.194s] (108/160) ruff_python_parser string::tests::test_invalid_unicode_literal
+        PASS [   0.200s] (109/160) ruff_python_parser string::tests::test_invalid_byte_literal_error
+        PASS [   0.189s] (110/160) ruff_python_parser string::tests::test_missing_unicode_rbrace_error
+        PASS [   0.202s] (111/160) ruff_python_parser string::tests::test_invalid_unicode_name_error
+        PASS [   0.194s] (112/160) ruff_python_parser string::tests::test_parse_empty_fstring
+        PASS [   0.197s] (113/160) ruff_python_parser string::tests::test_parse_f_string_concat_1
+        PASS [   0.018s] (114/160) ruff_python_parser string::tests::test_parse_invalid_fstring
+        PASS [   0.208s] (115/160) ruff_python_parser string::tests::test_missing_unicode_lbrace_error
+        PASS [   0.197s] (116/160) ruff_python_parser string::tests::test_parse_f_string_concat_2
+        PASS [   0.190s] (117/160) ruff_python_parser string::tests::test_parse_f_string_concat_4
+        PASS [   0.199s] (118/160) ruff_python_parser string::tests::test_parse_fstring
+        PASS [   0.207s] (119/160) ruff_python_parser string::tests::test_parse_f_string_concat_3
+        PASS [   0.195s] (120/160) ruff_python_parser string::tests::test_parse_fstring_equals
+        PASS [   0.206s] (121/160) ruff_python_parser string::tests::test_parse_fstring_nested_concatenation_string_spec
+        PASS [   0.217s] (122/160) ruff_python_parser string::tests::test_parse_fstring_nested_spec
+        PASS [   0.201s] (123/160) ruff_python_parser string::tests::test_parse_fstring_nested_string_spec
+        PASS [   0.176s] (124/160) ruff_python_parser string::tests::test_parse_fstring_not_nested_spec
+        PASS [   0.189s] (125/160) ruff_python_parser string::tests::test_parse_fstring_not_equals
+        PASS [   0.020s] (126/160) ruff_python_parser tests::tokens_after_offset_at_last_token_end
+        PASS [   0.020s] (127/160) ruff_python_parser tests::tokens_after_offset_at_token_end
+        PASS [   0.187s] (128/160) ruff_python_parser string::tests::test_parse_fstring_yield_expr
+        PASS [   0.197s] (129/160) ruff_python_parser string::tests::test_parse_fstring_self_doc_trailing_space
+        PASS [   0.018s] (130/160) ruff_python_parser tests::tokens_after_offset_at_token_start
+        PASS [   0.021s] (131/160) ruff_python_parser tests::tokens_after_offset_between_tokens
+        PASS [   0.021s] (132/160) ruff_python_parser tests::tokens_after_offset_inside_token
+        PASS [   0.227s] (133/160) ruff_python_parser string::tests::test_parse_fstring_self_doc_prec_space
+        PASS [   0.021s] (134/160) ruff_python_parser tests::tokens_in_range_at_token_offset
+        PASS [   0.020s] (135/160) ruff_python_parser tests::tokens_in_range_end_offset_at_token_start
+        PASS [   0.201s] (136/160) ruff_python_parser string::tests::test_parse_u_f_string_concat_2
+        PASS [   0.023s] (137/160) ruff_python_parser tests::tokens_in_range_end_offset_between_tokens
+        PASS [   0.212s] (138/160) ruff_python_parser string::tests::test_parse_u_f_string_concat_1
+        PASS [   0.019s] (139/160) ruff_python_parser tests::tokens_in_range_start_offset_at_token_end
+        PASS [   0.207s] (140/160) ruff_python_parser string::tests::test_parse_u_string_concat_2
+        SKIP [         ] (───────) ruff_python_parser::fixtures parser_quick_test
+        PASS [   0.028s] (141/160) ruff_python_parser tests::tokens_in_range_end_offset_inside_token
+        PASS [   0.021s] (142/160) ruff_python_parser tests::tokens_in_range_start_offset_between_tokens
+        PASS [   0.221s] (143/160) ruff_python_parser string::tests::test_parse_u_string_concat_1
+        PASS [   0.020s] (144/160) ruff_python_parser tests::tokens_in_range_start_offset_inside_token
+        PASS [   0.021s] (145/160) ruff_python_parser token_set::token_set_works_for_tokens
+        PASS [   0.235s] (146/160) ruff_python_parser string::tests::test_parse_string_concat
+        PASS [   0.242s] (147/160) ruff_python_parser string::tests::test_parse_string_triple_quotes_with_kind
+        PASS [   0.228s] (148/160) ruff_python_parser string::tests::test_raw_byte_literal_1
+        PASS [   0.218s] (149/160) ruff_python_parser string::tests::test_raw_byte_literal_2
+        PASS [   0.219s] (150/160) ruff_python_parser string::tests::test_raw_fstring
+        PASS [   0.202s] (151/160) ruff_python_parser string::tests::test_string_parser_escaped_unix_eol
+        PASS [   0.227s] (152/160) ruff_python_parser string::tests::test_single_quoted_byte
+        PASS [   0.216s] (153/160) ruff_python_parser string::tests::test_string_parser_escaped_mac_eol
+        PASS [   0.158s] (154/160) ruff_python_parser string::tests::test_string_parser_escaped_windows_eol
+        PASS [   0.155s] (155/160) ruff_python_parser string::tests::test_triple_quoted_raw_fstring
+        PASS [   0.092s] (156/160) ruff_python_parser::generate_inline_tests generate_inline_tests
+        PASS [   0.219s] (157/160) ruff_python_parser::fixtures inline_ok
+        PASS [   0.236s] (158/160) ruff_python_parser::fixtures valid_syntax
+        PASS [   0.294s] (159/160) ruff_python_parser::fixtures invalid_syntax
+        PASS [   0.324s] (160/160) ruff_python_parser::fixtures inline_err
+────────────
+     Summary [   1.849s] 160 tests run: 160 passed, 1 skipped
+reward=1 graded=160 found=31 failed=0 parsed=161 framework=cargo exit_code=0

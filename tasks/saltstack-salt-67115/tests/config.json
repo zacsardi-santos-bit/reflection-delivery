@@ -1,0 +1,37 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/pytests/unit/states/test_module.py -v",
+  "test_files": [
+    "tests/pytests/unit/states/test_module.py",
+    "tests/unit/states/test_module.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.pytests.unit.states.test_module::test_get_result"
+  ],
+  "PASS_TO_PASS": [
+    "tests.pytests.unit.states.test_module::test_run_module_not_available",
+    "tests.pytests.unit.states.test_module::test_run_module_not_available_testmode",
+    "tests.pytests.unit.states.test_module::test_run_module_noop",
+    "tests.pytests.unit.states.test_module::test_module_run_hidden_varargs",
+    "tests.pytests.unit.states.test_module::test_run_testmode",
+    "tests.pytests.unit.states.test_module::test_run_missing_arg",
+    "tests.pytests.unit.states.test_module::test_run_correct_arg",
+    "tests.pytests.unit.states.test_module::test_run_state_apply_result_false",
+    "tests.pytests.unit.states.test_module::test_run_service_status_dead",
+    "tests.pytests.unit.states.test_module::test_run_unexpected_keywords",
+    "tests.pytests.unit.states.test_module::test_run_args",
+    "tests.pytests.unit.states.test_module::test_run_42270",
+    "tests.pytests.unit.states.test_module::test_run_42270_kwargs_to_args",
+    "tests.pytests.unit.states.test_module::test_run_none_return",
+    "tests.pytests.unit.states.test_module::test_run_typed_return",
+    "tests.pytests.unit.states.test_module::test_run_batch_call",
+    "tests.pytests.unit.states.test_module::test_module_run_module_not_available",
+    "tests.pytests.unit.states.test_module::test_module_run_test_true",
+    "tests.pytests.unit.states.test_module::test_module_run_missing_arg",
+    "tests.pytests.unit.states.test_module::test_call_function_named_args",
+    "tests.pytests.unit.states.test_module::test_call_function_ordered_args",
+    "tests.pytests.unit.states.test_module::test_call_function_ordered_and_named_args"
+  ]
+}

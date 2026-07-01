@@ -1,0 +1,2046 @@
+diff --git a/Makefile b/Makefile
+index a67bd7da..736e1597 100644
+--- a/Makefile
++++ b/Makefile
+@@ -7,6 +7,7 @@ PYTHON?=python3
+ TESTS?=
+ BINPATH?=$(GOPATH)/bin
+ RUN_LONG_TESTS?=yes
++GOLANGCI_LINT_VERSION=v1.56.2
+ COVERAGE_DIR?=$(shell mktemp -d)
+ # Uncomment to update test outputs
+ # CAPTURE := "--capture"
+@@ -19,7 +20,7 @@ help:  ## Print this help
+ 	@grep -E '^[a-zA-Z][a-zA-Z0-9_-]*:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+ 
+ prepare:
+-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(shell go env GOPATH)/bin v1.51.2
++	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(shell go env GOPATH)/bin $(GOLANGCI_LINT_VERSION)
+ 
+ modules:
+ 	go mod download
+@@ -37,8 +38,10 @@ ifeq ($(RUN_LONG_TESTS), yes)
+ endif
+ 
+ install:
++	@echo Building aptly ...
+ 	go generate
+-	go install -v
++	@echo go install -v
++	@out=`mktemp`; if ! go install -v > $$out 2>&1; then cat $$out; rm -f $$out; echo "\nBuild failed\n"; exit 1; else rm -f $$out; fi
+ 
+ system/env: system/requirements.txt
+ ifeq ($(RUN_LONG_TESTS), yes)
+@@ -57,8 +60,13 @@ ifeq ($(RUN_LONG_TESTS), yes)
+ endif
+ 
+ docker-test: install
++	@echo Building aptly.test ...
++	@rm -f aptly.test
+ 	go test -v -coverpkg="./..." -c -tags testruncli
+-	PATH=$(BINPATH)/:$(PATH) APTLY_VERSION=$(VERSION) $(PYTHON) system/run.py --long $(TESTS) --coverage-dir $(COVERAGE_DIR) $(CAPTURE) $(TEST)
++	@echo Running python tests ...
++	export PATH=$(BINPATH)/:$(PATH); \
++	export APTLY_VERSION=$(VERSION); \
++	$(PYTHON) system/run.py --long $(TESTS) --coverage-dir $(COVERAGE_DIR) $(CAPTURE) $(TEST)
+ 
+ test:
+ 	go test -v ./... -gocheck.v=true -coverprofile=unit.out
+@@ -93,7 +101,7 @@ version:  ## Print aptly version
+ 	@echo $(VERSION)
+ 
+ docker-build-system-tests:  ## Build system-test docker image
+-	docker build -f system/Dockerfile --no-cache . -t aptly-system-test
++	docker build -f system/Dockerfile . -t aptly-system-test
+ 
+ docker-unit-tests:  ## Run unit tests in docker container
+ 	docker run -it --rm -v ${PWD}:/app aptly-system-test go test -v ./... -gocheck.v=true
+@@ -102,7 +110,7 @@ docker-system-tests:  ## Run system tests in docker container (add TEST=t04_mirr
+ 	docker run -it --rm -v ${PWD}:/app aptly-system-test /app/system/run-system-tests $(TEST)
+ 
+ golangci-lint:  ## Run golangci-line in docker container
+-	docker run -it --rm -v ~/.cache/golangci-lint/v1.56.2:/root/.cache -v ${PWD}:/app -w /app golangci/golangci-lint:v1.56.2 golangci-lint run
++	docker run -it --rm -v ~/.cache/golangci-lint/$(GOLANGCI_LINT_VERSION):/root/.cache -v ${PWD}:/app -w /app golangci/golangci-lint:$(GOLANGCI_LINT_VERSION) golangci-lint run
+ 
+ flake8:
+ 	flake8 system
+diff --git a/api/repos.go b/api/repos.go
+index fac990a5..ca72f8c9 100644
+--- a/api/repos.go
++++ b/api/repos.go
+@@ -419,6 +419,7 @@ func apiReposPackageFromDir(c *gin.Context) {
+ func apiReposCopyPackage(c *gin.Context) {
+ 	dstRepoName := c.Params.ByName("name")
+ 	srcRepoName := c.Params.ByName("src")
++	fileName := c.Params.ByName("file")
+ 
+ 	jsonBody := struct {
+ 		WithDeps bool `json:"with-deps,omitempty"`
+@@ -513,9 +514,9 @@ func apiReposCopyPackage(c *gin.Context) {
+ 
+ 		// srcList.Filter|FilterWithProgress only accept query list
+ 		queries := make([]deb.PackageQuery, 1)
+-		queries[0], err = query.Parse(c.Params.ByName("file"))
++		queries[0], err = query.Parse(fileName)
+ 		if err != nil {
+-			return &task.ProcessReturnValue{Code: http.StatusUnprocessableEntity, Value: nil}, fmt.Errorf("unable to parse query: %s", err)
++			return &task.ProcessReturnValue{Code: http.StatusUnprocessableEntity, Value: nil}, fmt.Errorf("unable to parse query '%s': %s", fileName, err)
+ 		}
+ 
+ 		toProcess, err := srcList.FilterWithProgress(queries, jsonBody.WithDeps, dstList, context.DependencyOptions(), architecturesList, context.Progress())
+@@ -523,6 +524,10 @@ func apiReposCopyPackage(c *gin.Context) {
+ 			return &task.ProcessReturnValue{Code: http.StatusInternalServerError, Value: nil}, fmt.Errorf("filter error: %s", err)
+ 		}
+ 
++		if toProcess.Len() == 0 {
++			return &task.ProcessReturnValue{Code: http.StatusUnprocessableEntity, Value: nil}, fmt.Errorf("no package found for filter: '%s'", fileName)
++		}
++
+ 		err = toProcess.ForEach(func(p *deb.Package) error {
+ 			err = dstList.Add(p)
+ 			if err != nil {
+diff --git a/deb/snapshot.go b/deb/snapshot.go
+index 0457f25a..f2a0d387 100644
+--- a/deb/snapshot.go
++++ b/deb/snapshot.go
+@@ -45,7 +45,7 @@ type Snapshot struct {
+ 
+ // NewSnapshotFromRepository creates snapshot from current state of repository
+ func NewSnapshotFromRepository(name string, repo *RemoteRepo) (*Snapshot, error) {
+-	if repo.packageRefs == nil {
++	if repo.packageRefs == nil || repo.packageRefs.Len() == 0 {
+ 		return nil, errors.New("mirror not updated")
+ 	}
+ 
+diff --git a/system/Dockerfile b/system/Dockerfile
+index 3b39488e..9988f42a 100644
+--- a/system/Dockerfile
++++ b/system/Dockerfile
+@@ -1,10 +1,6 @@
+ FROM debian:bookworm-slim
+ 
+-RUN apt-get update -y && apt-get install -y --no-install-recommends curl gnupg && apt-get clean && rm -rf /var/lib/apt/lists/*
+-
+-RUN echo deb http://deb.debian.org/debian bookworm-backports main > /etc/apt/sources.list.d/backports.list
+-RUN apt-get update && \
+-    apt-get install -y --no-install-recommends apg bzip2 xz-utils ca-certificates golang/bookworm-backports golang-go/bookworm-backports golang-doc/bookworm-backports golang-src/bookworm-backports make git python3 python3-requests-unixsocket python3-termcolor python3-swiftclient python3-boto && \
++RUN apt-get update -y && apt-get install -y --no-install-recommends curl gnupg apg bzip2 xz-utils ca-certificates golang golang-go golang-doc golang-src make git python3 python3-requests-unixsocket python3-termcolor python3-swiftclient python3-boto python3-azure-storage g++ && \
+     apt-get clean && rm -rf /var/lib/apt/lists/*
+ 
+ RUN useradd -m --shell /bin/sh --home-dir /var/lib/aptly aptly
+@@ -13,7 +9,13 @@ RUN mkdir app
+ WORKDIR /app
+ 
+ RUN mkdir /home/runner
++RUN chown aptly /home/runner
+ RUN cd /home/runner; git clone https://github.com/aptly-dev/aptly-fixture-db.git
+ RUN cd /home/runner; git clone https://github.com/aptly-dev/aptly-fixture-pool.git
++RUN cd /home/runner; curl -O http://repo.aptly.info/system-tests/etcd.db
++ADD . /src
++RUN chown aptly -R /src
++RUN cd /src; su aptly -c "HOME=/home/runner go mod tidy"
++RUN rm -rf /src
+ 
+ CMD /app/system/run-system-tests
+diff --git a/system/api_lib.py b/system/api_lib.py
+index e1a07757..eef9ad45 100644
+--- a/system/api_lib.py
++++ b/system/api_lib.py
+@@ -7,6 +7,7 @@ import string
+ import time
+ 
+ from lib import BaseTest
++from testout import TestOut
+ 
+ try:
+     import requests
+@@ -23,6 +24,8 @@ class APITest(BaseTest):
+     BaseTest + testing aptly API
+     """
+     aptly_server = None
++    aptly_out = None
++    debugOutput = True
+     base_url = "127.0.0.1:8765"
+     configOverride = {
+         "FileSystemPublishEndpoints": {
+@@ -40,13 +43,20 @@ class APITest(BaseTest):
+         if APITest.aptly_server is None:
+             super(APITest, self).prepare()
+ 
++            APITest.aptly_out = TestOut()
++
+             configPath = os.path.join(os.environ["HOME"], self.aptlyConfigFile)
+-            APITest.aptly_server = self._start_process(f"aptly api serve -no-lock -config={configPath} -listen={self.base_url}",)
++            APITest.aptly_server = self._start_process(f"aptly api serve -no-lock -config={configPath} -listen={self.base_url}", stdout=APITest.aptly_out, stderr=APITest.aptly_out)
+             time.sleep(1)
++        else:
++            APITest.aptly_out.clear()
+ 
+         if os.path.exists(os.path.join(os.environ["HOME"], self.aptlyDir, "upload")):
+             shutil.rmtree(os.path.join(os.environ["HOME"], self.aptlyDir, "upload"))
+ 
++    def debug_output(self):
++        return APITest.aptly_out.get_contents()
++
+     def run(self):
+         pass
+ 
+@@ -79,6 +89,20 @@ class APITest(BaseTest):
+ 
+         return self.get("/api/tasks/" + str(_id))
+ 
++    def check_task(self, task):
++        self.check_equal(task.status_code, 200)
++        if task.json()['State'] != TASK_SUCCEEDED:
++            resp2 = self.get("/api/tasks/" + str(task.json()['ID']) + "/output")
++            raise Exception(f"task failed: {resp2.text}")
++
++    def check_task_fail(self, task, expected_output=None):
++        self.check_equal(task.status_code, 200)
++        if task.json()['State'] == TASK_SUCCEEDED:
++            raise Exception("task expected to fail")
++        if expected_output:
++            resp = self.get("/api/tasks/" + str(task.json()['ID']) + "/output")
++            self.check_equal(resp.json(), expected_output)
++
+     def put(self, uri, *args, **kwargs):
+         if "json" in kwargs:
+             kwargs["data"] = json.dumps(kwargs.pop("json"))
+@@ -142,6 +166,8 @@ class APITest(BaseTest):
+             cls.aptly_server.terminate()
+             cls.aptly_server.wait()
+             cls.aptly_server = None
++        if APITest.aptly_out is not None:
++            APITest.aptly_out.close()
+ 
+     def random_name(self):
+         return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(15))
+diff --git a/system/lib.py b/system/lib.py
+index 66904104..e3bf521b 100644
+--- a/system/lib.py
++++ b/system/lib.py
+@@ -128,6 +128,7 @@ class BaseTest(object):
+     requiresGPG2 = False
+     requiresDot = False
+     sortOutput = False
++    debugOutput = False
+ 
+     aptlyDir = ".aptly"
+     aptlyConfigFile = ".aptly.conf"
+@@ -177,6 +178,10 @@ class BaseTest(object):
+         try:
+             self.run()
+             self.check()
++        except Exception as exc:
++            if self.debugOutput:
++                print(f"API log:\n{self.debug_output()}")
++            raise exc
+         finally:
+             self.teardown()
+ 
+@@ -273,6 +278,7 @@ class BaseTest(object):
+                 params['url'] = self.webServerUrl
+ 
+             command = string.Template(command).substitute(params)
++            print(f"running command: {command}\n")
+             command = shlex.split(command)
+ 
+         if command[0] == "aptly":
+@@ -289,7 +295,7 @@ class BaseTest(object):
+             proc = self._start_process(command, stdout=subprocess.PIPE)
+             raw_output, _ = proc.communicate()
+ 
+-            raw_output = raw_output.decode("utf-8")
++            raw_output = raw_output.decode("utf-8", errors='replace')
+ 
+             returncodes = [proc.returncode]
+             is_aptly_command = False
+diff --git a/system/run.py b/system/run.py
+index bd6de289..dcc3f72b 100755
+--- a/system/run.py
++++ b/system/run.py
+@@ -18,6 +18,7 @@ from swift_lib import SwiftTest
+ from azure_lib import AzureTest
+ from api_lib import APITest
+ from fs_endpoint_lib import FileSystemEndpointTest
++from testout import TestOut
+ 
+ try:
+     from termcolor import colored
+@@ -34,27 +35,12 @@ def natural_key(string_):
+     return [int(s) if s.isdigit() else s for s in re.split(r'(\d+)', string_)]
+ 
+ 
+-class TestStdout:
+-    def __init__(self):
+-        self.output = []
+-
+-    def write(self, text):
+-        self.output.append(text)
+-
+-    def flush(self):
+-        pass
+-
+-    def get_output(self):
+-        return ''.join(self.output)
+-
+-    def truncate(self):
+-        self.output = []
+-
+-
+ def run(include_long_tests=False, capture_results=False, tests=None, filters=None, coverage_dir=None):
+     """
+     Run system test.
+     """
++    print(colored("\n Aptly System Tests\n====================\n", color="green", attrs=["bold"]))
++
+     if not tests:
+         tests = sorted(glob.glob("t*_*"), key=natural_key)
+     fails = []
+@@ -68,18 +54,24 @@ def run(include_long_tests=False, capture_results=False, tests=None, filters=Non
+         orig_stderr = sys.stderr
+ 
+         # importlib.import_module(test)
+-        for name in sorted(glob.glob(test + "/*.py"), key=natural_key):
+-            name = os.path.splitext(os.path.basename(name))[0]
+-            if name == "__init__":
++        for fname in sorted(glob.glob(test + "/*.py"), key=natural_key):
++            fname = os.path.splitext(os.path.basename(fname))[0]
++            if fname == "__init__":
+                 continue
+ 
+-            testout = TestStdout()
++            testout = TestOut()
+             sys.stdout = testout
+             sys.stderr = testout
+-            testModule = importlib.import_module(test + "." + name)
++
++            try:
++                testModule = importlib.import_module(test + "." + fname)
++            except Exception as exc:
++                orig_stdout.write(f"error importing: {test + '.' + fname}: {exc}\n")
++                continue
+ 
+             for name in sorted(dir(testModule), key=natural_key):
+-                testout.truncate()
++                testout.clear()
++
+                 o = getattr(testModule, name)
+ 
+                 if not (inspect.isclass(o) and issubclass(o, BaseTest) and o is not BaseTest and
+@@ -130,7 +122,7 @@ def run(include_long_tests=False, capture_results=False, tests=None, filters=Non
+                     fails.append((test, t, typ, val, tb, testModule))
+                     orig_stdout.write(colored("\b\b\b\bFAIL\n", color="red", attrs=["bold"]))
+ 
+-                    orig_stdout.write(testout.get_output())
++                    orig_stdout.write(testout.get_contents())
+                     traceback.print_exception(typ, val, tb, file=orig_stdout)
+                 else:
+                     orig_stdout.write(colored("\b\b\b\bOK \n", color="green", attrs=["bold"]))
+@@ -143,21 +135,23 @@ def run(include_long_tests=False, capture_results=False, tests=None, filters=Non
+     if lastBase is not None:
+         lastBase.shutdown_class()
+ 
+-    print("COVERAGE_RESULTS: %s" % coverage_dir)
++    print("\nCOVERAGE_RESULTS: %s" % coverage_dir)
+ 
+-    print("TESTS: %d SUCCESS: %d FAIL: %d SKIP: %d" % (
+-        numTests, numTests - numFailed, numFailed, numSkipped))
++    print(f"TESTS: {numTests}    ",
++          colored(f"SUCCESS: {numTests - numFailed}    ", color="green", attrs=["bold"]) if numFailed == 0 else
++          f"SUCCESS: {numTests - numFailed}    ",
++          colored(f"FAIL: {numFailed}    ", color="red", attrs=["bold"]) if numFailed > 0 else "FAIL: 0    ",
++          colored(f"SKIP: {numSkipped}", color="yellow", attrs=["bold"]) if numSkipped > 0 else "SKIP: 0")
++    print()
+ 
+     if len(fails) > 0:
+-        print("\nFAILURES (%d):" % (len(fails), ))
++        print(colored("FAILURES (%d):" % (len(fails), ), color="red", attrs=["bold"]))
+ 
+         for (test, t, typ, val, tb, testModule) in fails:
+             doc = t.__doc__ or ''
+-            print("%s:%s %s" % (test, t.__class__.__name__,
+-                                testModule.__name__ + ": " + doc.strip()))
+-            traceback.print_exception(typ, val, tb)
+-            print("=" * 60)
+-
++            print(" - %s: %s %s" % (test, colored(t.__class__.__name__, color="yellow", attrs=["bold"]),
++                                    testModule.__name__ + ": " + doc.strip()))
++        print()
+         sys.exit(1)
+ 
+ 
+diff --git a/system/t01_version/__init__.py b/system/t01_version/__init__.py
+index 388e7df6..e0a28e39 100644
+--- a/system/t01_version/__init__.py
++++ b/system/t01_version/__init__.py
+@@ -1,14 +1,3 @@
+ """
+ Test aptly version
+ """
+-
+-from lib import BaseTest
+-
+-
+-class VersionTest(BaseTest):
+-    """
+-    version should match
+-    """
+-    gold_processor = BaseTest.expand_environ
+-
+-    runCmd = "aptly version"
+diff --git a/system/t01_version/version.py b/system/t01_version/version.py
+new file mode 100644
+index 00000000..388e7df6
+--- /dev/null
++++ b/system/t01_version/version.py
+@@ -0,0 +1,14 @@
++"""
++Test aptly version
++"""
++
++from lib import BaseTest
++
++
++class VersionTest(BaseTest):
++    """
++    version should match
++    """
++    gold_processor = BaseTest.expand_environ
++
++    runCmd = "aptly version"
+diff --git a/system/t02_config/__init__.py b/system/t02_config/__init__.py
+index 240e5944..a5b0d2f4 100644
+--- a/system/t02_config/__init__.py
++++ b/system/t02_config/__init__.py
+@@ -1,66 +1,3 @@
+ """
+ Test config file
+ """
+-
+-import os
+-import re
+-import inspect
+-from lib import BaseTest
+-
+-
+-class CreateConfigTest(BaseTest):
+-    """
+-    new file is generated if missing
+-    """
+-    runCmd = "aptly mirror list"
+-    checkedFile = os.path.join(os.environ["HOME"], ".aptly.conf")
+-
+-    check = BaseTest.check_file
+-    gold_processor = BaseTest.expand_environ
+-    prepare = BaseTest.prepare_remove_all
+-
+-
+-class BadConfigTest(BaseTest):
+-    """
+-    broken config file
+-    """
+-    runCmd = "aptly mirror list"
+-    expectedCode = 1
+-
+-    gold_processor = BaseTest.expand_environ
+-
+-    def prepare(self):
+-        self.prepare_remove_all()
+-
+-        f = open(os.path.join(os.environ["HOME"], ".aptly.conf"), "w")
+-        f.write("{some crap")
+-        f.close()
+-
+-
+-class ConfigInFileTest(BaseTest):
+-    """
+-    config in other file test
+-    """
+-    runCmd = ["aptly", "mirror", "list",
+-              "-config=%s" % (os.path.join(os.path.dirname(inspect.getsourcefile(BadConfigTest)), "aptly.conf"), )]
+-    prepare = BaseTest.prepare_remove_all
+-
+-    def outputMatchPrepare(_, s):
+-        return re.sub(r'  -(cpuprofile|memprofile|memstats|meminterval)=.*\n', '', s, flags=re.MULTILINE)
+-
+-
+-class ConfigInMissingFileTest(BaseTest):
+-    """
+-    config in other file test
+-    """
+-    runCmd = ["aptly", "mirror", "list", "-config=nosuchfile.conf"]
+-    expectedCode = 1
+-    prepare = BaseTest.prepare_remove_all
+-
+-
+-class ConfigShowTest(BaseTest):
+-    """
+-    config showing
+-    """
+-    runCmd = ["aptly", "config", "show"]
+-    gold_processor = BaseTest.expand_environ
+diff --git a/system/t02_config/config.py b/system/t02_config/config.py
+new file mode 100644
+index 00000000..240e5944
+--- /dev/null
++++ b/system/t02_config/config.py
+@@ -0,0 +1,66 @@
++"""
++Test config file
++"""
++
++import os
++import re
++import inspect
++from lib import BaseTest
++
++
++class CreateConfigTest(BaseTest):
++    """
++    new file is generated if missing
++    """
++    runCmd = "aptly mirror list"
++    checkedFile = os.path.join(os.environ["HOME"], ".aptly.conf")
++
++    check = BaseTest.check_file
++    gold_processor = BaseTest.expand_environ
++    prepare = BaseTest.prepare_remove_all
++
++
++class BadConfigTest(BaseTest):
++    """
++    broken config file
++    """
++    runCmd = "aptly mirror list"
++    expectedCode = 1
++
++    gold_processor = BaseTest.expand_environ
++
++    def prepare(self):
++        self.prepare_remove_all()
++
++        f = open(os.path.join(os.environ["HOME"], ".aptly.conf"), "w")
++        f.write("{some crap")
++        f.close()
++
++
++class ConfigInFileTest(BaseTest):
++    """
++    config in other file test
++    """
++    runCmd = ["aptly", "mirror", "list",
++              "-config=%s" % (os.path.join(os.path.dirname(inspect.getsourcefile(BadConfigTest)), "aptly.conf"), )]
++    prepare = BaseTest.prepare_remove_all
++
++    def outputMatchPrepare(_, s):
++        return re.sub(r'  -(cpuprofile|memprofile|memstats|meminterval)=.*\n', '', s, flags=re.MULTILINE)
++
++
++class ConfigInMissingFileTest(BaseTest):
++    """
++    config in other file test
++    """
++    runCmd = ["aptly", "mirror", "list", "-config=nosuchfile.conf"]
++    expectedCode = 1
++    prepare = BaseTest.prepare_remove_all
++
++
++class ConfigShowTest(BaseTest):
++    """
++    config showing
++    """
++    runCmd = ["aptly", "config", "show"]
++    gold_processor = BaseTest.expand_environ
+diff --git a/system/t03_help/__init__.py b/system/t03_help/__init__.py
+index 07f1f828..bfd292b1 100644
+--- a/system/t03_help/__init__.py
++++ b/system/t03_help/__init__.py
+@@ -1,65 +1,3 @@
+ """
+ Test help screens
+ """
+-
+-import re
+-from lib import BaseTest
+-
+-
+-class MainTest(BaseTest):
+-    """
+-    main
+-    """
+-    expectedCode = 2
+-    runCmd = "aptly"
+-
+-    def outputMatchPrepare(_, s):
+-        return re.sub(r'  -(cpuprofile|memprofile|memstats|meminterval)=.*\n', '', s, flags=re.MULTILINE)
+-
+-
+-class MirrorTest(BaseTest):
+-    """
+-    main
+-    """
+-    expectedCode = 2
+-    runCmd = "aptly mirror"
+-
+-
+-class MirrorCreateTest(BaseTest):
+-    """
+-    main
+-    """
+-    expectedCode = 2
+-    runCmd = "aptly mirror create"
+-
+-
+-class MainHelpTest(BaseTest):
+-    """
+-    main
+-    """
+-    runCmd = "aptly help"
+-
+-    def outputMatchPrepare(_, s):
+-        return re.sub(r'  -(cpuprofile|memprofile|memstats|meminterval)=.*\n', '', s, flags=re.MULTILINE)
+-
+-
+-class MirrorHelpTest(BaseTest):
+-    """
+-    main
+-    """
+-    runCmd = "aptly help mirror"
+-
+-
+-class MirrorCreateHelpTest(BaseTest):
+-    """
+-    main
+-    """
+-    runCmd = "aptly help mirror create"
+-
+-
+-class WrongFlagTest(BaseTest):
+-    """
+-    main
+-    """
+-    expectedCode = 2
+-    runCmd = "aptly mirror create -fxz=sss"
+diff --git a/system/t03_help/help.py b/system/t03_help/help.py
+new file mode 100644
+index 00000000..07f1f828
+--- /dev/null
++++ b/system/t03_help/help.py
+@@ -0,0 +1,65 @@
++"""
++Test help screens
++"""
++
++import re
++from lib import BaseTest
++
++
++class MainTest(BaseTest):
++    """
++    main
++    """
++    expectedCode = 2
++    runCmd = "aptly"
++
++    def outputMatchPrepare(_, s):
++        return re.sub(r'  -(cpuprofile|memprofile|memstats|meminterval)=.*\n', '', s, flags=re.MULTILINE)
++
++
++class MirrorTest(BaseTest):
++    """
++    main
++    """
++    expectedCode = 2
++    runCmd = "aptly mirror"
++
++
++class MirrorCreateTest(BaseTest):
++    """
++    main
++    """
++    expectedCode = 2
++    runCmd = "aptly mirror create"
++
++
++class MainHelpTest(BaseTest):
++    """
++    main
++    """
++    runCmd = "aptly help"
++
++    def outputMatchPrepare(_, s):
++        return re.sub(r'  -(cpuprofile|memprofile|memstats|meminterval)=.*\n', '', s, flags=re.MULTILINE)
++
++
++class MirrorHelpTest(BaseTest):
++    """
++    main
++    """
++    runCmd = "aptly help mirror"
++
++
++class MirrorCreateHelpTest(BaseTest):
++    """
++    main
++    """
++    runCmd = "aptly help mirror create"
++
++
++class WrongFlagTest(BaseTest):
++    """
++    main
++    """
++    expectedCode = 2
++    runCmd = "aptly mirror create -fxz=sss"
+diff --git a/system/t06_publish/list.py b/system/t06_publish/list.py
+index d5ad7c1f..408edcb2 100644
+--- a/system/t06_publish/list.py
++++ b/system/t06_publish/list.py
+@@ -12,6 +12,7 @@ class PublishList2Test(BaseTest):
+     """
+     publish list: several repos list
+     """
++    requiresGPG2 = True
+     fixtureDB = True
+     fixturePool = True
+     fixtureCmds = [
+@@ -30,6 +31,7 @@ class PublishList3Test(BaseTest):
+     """
+     publish list: several repos list, raw
+     """
++    requiresGPG2 = True
+     fixtureDB = True
+     fixturePool = True
+     fixtureCmds = [
+@@ -54,6 +56,7 @@ class PublishList5Test(BaseTest):
+     """
+     publish list json: several repos list
+     """
++    requiresGPG2 = True
+     fixtureDB = True
+     fixturePool = True
+     fixtureCmds = [
+diff --git a/system/t07_serve/__init__.py b/system/t07_serve/__init__.py
+index 457b9f59..1d3d2f7c 100644
+--- a/system/t07_serve/__init__.py
++++ b/system/t07_serve/__init__.py
+@@ -1,81 +1,3 @@
+ """
+ Testing serving public repo
+ """
+-
+-import http.client
+-import os
+-import signal
+-import subprocess
+-import shlex
+-import time
+-
+-from lib import BaseTest
+-
+-
+-class RootDirInaccessible(BaseTest):
+-    """
+-    serve command aborts if rootDir is inaccessible
+-    """
+-    skipTest = 'User is root' if os.environ['USER'] == 'root' else False
+-    fixtureDB = False
+-    fixturePool = False
+-
+-    configOverride = {
+-        "rootDir": "/root"  # any directory that exists but is not writable
+-    }
+-
+-    runCmd = "aptly serve -listen=127.0.0.1:8765"
+-    expectedCode = 1
+-
+-
+-class Serve1Test(BaseTest):
+-    """
+-    serve public: two publishes, verify HTTP
+-    """
+-    fixtureDB = True
+-    fixturePool = True
+-    fixtureCmds = [
+-        "aptly snapshot create snap1 from mirror gnuplot-maverick",
+-        "aptly snapshot create snap2 from mirror gnuplot-maverick-src",
+-        "aptly publish snapshot -keyring=${files}/aptly.pub -secret-keyring=${files}/aptly.sec snap1",
+-        "aptly publish snapshot -keyring=${files}/aptly.pub -secret-keyring=${files}/aptly.sec snap2 debian",
+-        "aptly publish snapshot -keyring=${files}/aptly.pub -secret-keyring=${files}/aptly.sec -component=main,contrib snap1 snap2 multi",
+-    ]
+-    runCmd = "aptly serve -listen=127.0.0.1:8765"
+-
+-    def run(self):
+-        try:
+-            proc = subprocess.Popen(shlex.split(self.runCmd), stderr=subprocess.STDOUT, stdout=subprocess.PIPE, bufsize=0)
+-
+-            try:
+-                time.sleep(1)
+-
+-                conn = http.client.HTTPConnection("127.0.0.1", 8765)
+-                conn.request("GET", "/")
+-                r = conn.getresponse()
+-                if r.status != 200:
+-                    raise Exception("Expected status 200 != %d" % r.status)
+-                self.http_response = r.read()
+-
+-                output = os.read(proc.stdout.fileno(), 8192)
+-
+-            finally:
+-                proc.send_signal(signal.SIGINT)
+-                proc.wait()
+-
+-            if proc.returncode != -2 and proc.returncode != 2:
+-                raise Exception("exit code %d != %d (output: %s)" % (proc.returncode, -2, output))
+-            self.output = output
+-        except Exception as e:
+-            raise Exception("Running command %s failed: %s" % (self.runCmd, str(e)))
+-
+-    def check(self):
+-        self.check_output()
+-        self.verify_match(self.get_gold('http'), self.http_response, match_prepare=lambda s: "\n".join(sorted(s.split("\n"))))
+-
+-
+-class Serve2Test(BaseTest):
+-    """
+-    serve public: no publishes
+-    """
+-    runCmd = "aptly serve -listen=127.0.0.1:8765"
+diff --git a/system/t07_serve/serve.py b/system/t07_serve/serve.py
+new file mode 100644
+index 00000000..457b9f59
+--- /dev/null
++++ b/system/t07_serve/serve.py
+@@ -0,0 +1,81 @@
++"""
++Testing serving public repo
++"""
++
++import http.client
++import os
++import signal
++import subprocess
++import shlex
++import time
++
++from lib import BaseTest
++
++
++class RootDirInaccessible(BaseTest):
++    """
++    serve command aborts if rootDir is inaccessible
++    """
++    skipTest = 'User is root' if os.environ['USER'] == 'root' else False
++    fixtureDB = False
++    fixturePool = False
++
++    configOverride = {
++        "rootDir": "/root"  # any directory that exists but is not writable
++    }
++
++    runCmd = "aptly serve -listen=127.0.0.1:8765"
++    expectedCode = 1
++
++
++class Serve1Test(BaseTest):
++    """
++    serve public: two publishes, verify HTTP
++    """
++    fixtureDB = True
++    fixturePool = True
++    fixtureCmds = [
++        "aptly snapshot create snap1 from mirror gnuplot-maverick",
++        "aptly snapshot create snap2 from mirror gnuplot-maverick-src",
++        "aptly publish snapshot -keyring=${files}/aptly.pub -secret-keyring=${files}/aptly.sec snap1",
++        "aptly publish snapshot -keyring=${files}/aptly.pub -secret-keyring=${files}/aptly.sec snap2 debian",
++        "aptly publish snapshot -keyring=${files}/aptly.pub -secret-keyring=${files}/aptly.sec -component=main,contrib snap1 snap2 multi",
++    ]
++    runCmd = "aptly serve -listen=127.0.0.1:8765"
++
++    def run(self):
++        try:
++            proc = subprocess.Popen(shlex.split(self.runCmd), stderr=subprocess.STDOUT, stdout=subprocess.PIPE, bufsize=0)
++
++            try:
++                time.sleep(1)
++
++                conn = http.client.HTTPConnection("127.0.0.1", 8765)
++                conn.request("GET", "/")
++                r = conn.getresponse()
++                if r.status != 200:
++                    raise Exception("Expected status 200 != %d" % r.status)
++                self.http_response = r.read()
++
++                output = os.read(proc.stdout.fileno(), 8192)
++
++            finally:
++                proc.send_signal(signal.SIGINT)
++                proc.wait()
++
++            if proc.returncode != -2 and proc.returncode != 2:
++                raise Exception("exit code %d != %d (output: %s)" % (proc.returncode, -2, output))
++            self.output = output
++        except Exception as e:
++            raise Exception("Running command %s failed: %s" % (self.runCmd, str(e)))
++
++    def check(self):
++        self.check_output()
++        self.verify_match(self.get_gold('http'), self.http_response, match_prepare=lambda s: "\n".join(sorted(s.split("\n"))))
++
++
++class Serve2Test(BaseTest):
++    """
++    serve public: no publishes
++    """
++    runCmd = "aptly serve -listen=127.0.0.1:8765"
+diff --git a/system/t12_api/gpg.py b/system/t12_api/gpg.py
+index 8fb9a380..fb3acd76 100644
+--- a/system/t12_api/gpg.py
++++ b/system/t12_api/gpg.py
+@@ -7,17 +7,23 @@ from api_lib import APITest
+ 
+ 
+ def check_gpgkey_exists(gpg_key, keyring):
+-    subprocess.check_call([
++    p = subprocess.Popen([
+         "gpg", "--no-default-keyring",
+         "--keyring", keyring,
+-        "--fingerprint", gpg_key,
+-    ])
++        "--fingerprint", gpg_key],
++        stdout=subprocess.PIPE,
++        stderr=subprocess.PIPE,
++    )
++    p.communicate()
++    if p.returncode != 0:
++        raise Exception("gpg key does not exists")
+ 
+ 
+ class GPGAPITestAddKey(APITest):
+     """
+     POST /gpg/key
+     """
++    requiresGPG2 = True
+ 
+     def check(self):
+         with tempfile.NamedTemporaryFile(suffix=".pub") as keyring:
+diff --git a/system/t12_api/mirrors.py b/system/t12_api/mirrors.py
+index 88e1915b..6352b2ca 100644
+--- a/system/t12_api/mirrors.py
++++ b/system/t12_api/mirrors.py
+@@ -1,4 +1,4 @@
+-from api_lib import TASK_SUCCEEDED, APITest
++from api_lib import APITest
+ 
+ 
+ class MirrorsAPITestCreateShow(APITest):
+@@ -58,11 +58,8 @@ class MirrorsAPITestCreateUpdate(APITest):
+ 
+         mirror_desc["Name"] = self.random_name()
+         resp = self.put_task("/api/mirrors/" + mirror_name, json=mirror_desc)
+-        self.check_equal(resp.status_code, 200)
++        self.check_task(resp)
+         _id = resp.json()['ID']
+-        if resp.json()["State"] != TASK_SUCCEEDED:
+-            resp = self.get("/api/tasks/" + str(_id) + "/output")
+-            raise Exception("task failed: " + str(resp.json()))
+ 
+         resp = self.get("/api/tasks/" + str(_id) + "/detail")
+         self.check_equal(resp.status_code, 200)
+@@ -95,7 +92,7 @@ class MirrorsAPITestCreateDelete(APITest):
+         self.check_equal(resp.status_code, 201)
+ 
+         resp = self.delete_task("/api/mirrors/" + mirror_name)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(resp)
+ 
+ 
+ class MirrorsAPITestCreateList(APITest):
+@@ -154,8 +151,4 @@ class MirrorsAPITestSkipArchitectureCheck(APITest):
+         mirror_desc = {'Name': mirror_name,
+                        'IgnoreSignatures': True}
+         resp = self.put_task("/api/mirrors/" + mirror_name, json=mirror_desc)
+-        self.check_equal(resp.status_code, 200)
+-        _id = resp.json()['ID']
+-        if resp.json()["State"] != TASK_SUCCEEDED:
+-            resp = self.get("/api/tasks/" + str(_id) + "/output")
+-            raise Exception("task failed: " + str(resp.json()))
++        self.check_task(resp)
+diff --git a/system/t12_api/packages.py b/system/t12_api/packages.py
+index 90e8844e..86cf6ea1 100644
+--- a/system/t12_api/packages.py
++++ b/system/t12_api/packages.py
+@@ -2,7 +2,7 @@ import urllib.error
+ import urllib.parse
+ import urllib.request
+ 
+-from api_lib import TASK_SUCCEEDED, APITest
++from api_lib import APITest
+ 
+ 
+ class PackagesAPITestShow(APITest):
+@@ -19,7 +19,7 @@ class PackagesAPITestShow(APITest):
+                          "pyspi_0.6.1-1.3.dsc", "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz").status_code, 200)
+ 
+         resp = self.post_task("/api/repos/" + repo_name + "/file/" + d)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(resp)
+ 
+         # get information about package
+         pyspi_json = {
+diff --git a/system/t12_api/publish.py b/system/t12_api/publish.py
+index 94765ec3..4ecffbc1 100644
+--- a/system/t12_api/publish.py
++++ b/system/t12_api/publish.py
+@@ -27,11 +27,12 @@ class PublishAPITestRepo(APITest):
+                                      "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz",
+                                      "pyspi-0.6.1-1.3.stripped.dsc").status_code, 200)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+         # publishing under prefix, default distribution
+         prefix = self.random_name()
+-        resp = self.post_task(
++        task = self.post_task(
+             "/api/publish/" + prefix,
+             json={
+                  "SourceKind": "local",
+@@ -39,6 +40,7 @@ class PublishAPITestRepo(APITest):
+                  "Signing": DefaultSigningOptions,
+             }
+         )
++        self.check_task(task)
+         repo_expected = {
+             'AcquireByHash': False,
+             'Architectures': ['i386', 'source'],
+@@ -56,8 +58,6 @@ class PublishAPITestRepo(APITest):
+             'Storage': '',
+             'Suite': ''}
+ 
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
+-
+         all_repos = self.get("/api/publish")
+         self.check_equal(all_repos.status_code, 200)
+         self.check_in(repo_expected, all_repos.json())
+@@ -74,7 +74,7 @@ class PublishAPITestRepo(APITest):
+ 
+         # publishing under root, custom distribution, architectures
+         distribution = self.random_name()
+-        resp = self.post_task(
++        task = self.post_task(
+             "/api/publish/:.",
+             json={
+                  "SourceKind": "local",
+@@ -84,7 +84,7 @@ class PublishAPITestRepo(APITest):
+                  "Architectures": ["i386", "amd64"],
+             }
+         )
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+         repo2_expected = {
+             'AcquireByHash': False,
+             'Architectures': ['amd64', 'i386'],
+@@ -138,12 +138,14 @@ class PublishSnapshotAPITest(APITest):
+         self.check_equal(self.upload("/api/files/" + d,
+                                      "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name})
++        self.check_task(task)
+ 
+         prefix = self.random_name()
+-        resp = self.post_task(
++        task = self.post_task(
+             "/api/publish/" + prefix,
+             json={
+                 "AcquireByHash": True,
+@@ -157,9 +159,9 @@ class PublishSnapshotAPITest(APITest):
+                 "Label": "fun",
+             }
+         )
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+ 
+-        _id = resp.json()['ID']
++        _id = task.json()['ID']
+         resp = self.get("/api/tasks/" + str(_id) + "/detail")
+         self.check_equal(resp.json()['RemainingNumberOfPackages'], 0)
+         self.check_equal(resp.json()['TotalNumberOfPackages'], 1)
+@@ -213,10 +215,11 @@ class PublishUpdateAPITestRepo(APITest):
+                         "pyspi_0.6.1-1.3.dsc",
+                         "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz",
+                         "pyspi-0.6.1-1.3.stripped.dsc").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+         prefix = self.random_name()
+-        resp = self.post_task(
++        task = self.post_task(
+             "/api/publish/" + prefix,
+             json={
+                 "Architectures": ["i386", "source"],
+@@ -225,8 +228,7 @@ class PublishUpdateAPITestRepo(APITest):
+                 "Signing": DefaultSigningOptions,
+             }
+         )
+-
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+ 
+         self.check_not_exists(
+             "public/" + prefix + "/pool/main/b/boost-defaults/libboost-program-options-dev_1.49.0.1_i386.deb")
+@@ -236,20 +238,22 @@ class PublishUpdateAPITestRepo(APITest):
+         d = self.random_name()
+         self.check_equal(self.upload("/api/files/" + d,
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/repos/" + repo_name + "/packages/",
++                                json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']})
++        self.check_task(task)
+ 
+         # Update and switch AcquireByHash on.
+-        resp = self.put_task(
++        task = self.put_task(
+             "/api/publish/" + prefix + "/wheezy",
+             json={
+                 "AcquireByHash": True,
+                 "Signing": DefaultSigningOptions,
+             }
+         )
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+         repo_expected = {
+             'AcquireByHash': True,
+             'Architectures': ['i386', 'source'],
+@@ -279,7 +283,8 @@ class PublishUpdateAPITestRepo(APITest):
+         self.check_not_exists(
+             "public/" + prefix + "/pool/main/p/pyspi/pyspi-0.6.1-1.3.stripped.dsc")
+ 
+-        self.check_equal(self.delete_task("/api/publish/" + prefix + "/wheezy").json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/publish/" + prefix + "/wheezy")
++        self.check_task(task)
+         self.check_not_exists("public/" + prefix + "dists/")
+ 
+ 
+@@ -300,10 +305,11 @@ class PublishConcurrentUpdateAPITestRepo(APITest):
+                         "pyspi_0.6.1-1.3.dsc",
+                         "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz",
+                         "pyspi-0.6.1-1.3.stripped.dsc").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+         prefix = self.random_name()
+-        resp = self.post_task(
++        task = self.post_task(
+             "/api/publish/" + prefix,
+             json={
+                 "Architectures": ["i386", "source"],
+@@ -312,8 +318,7 @@ class PublishConcurrentUpdateAPITestRepo(APITest):
+                 "Signing": DefaultSigningOptions,
+             }
+         )
+-
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+ 
+         self.check_not_exists(
+             "public/" + prefix + "/pool/main/b/boost-defaults/libboost-program-options-dev_1.49.0.1_i386.deb")
+@@ -323,10 +328,12 @@ class PublishConcurrentUpdateAPITestRepo(APITest):
+         d = self.random_name()
+         self.check_equal(self.upload("/api/files/" + d,
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/repos/" + repo_name + "/packages/",
++                                json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']})
++        self.check_task(task)
+ 
+         def _do_update(result, index):
+             resp = self.put_task(
+@@ -379,7 +386,8 @@ class PublishConcurrentUpdateAPITestRepo(APITest):
+         self.check_not_exists(
+             "public/" + prefix + "/pool/main/p/pyspi/pyspi-0.6.1-1.3.stripped.dsc")
+ 
+-        self.check_equal(self.delete_task("/api/publish/" + prefix + "/wheezy").json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/publish/" + prefix + "/wheezy")
++        self.check_task(task)
+         self.check_not_exists("public/" + prefix + "dists/")
+ 
+ 
+@@ -400,18 +408,18 @@ class PublishUpdateSkipCleanupAPITestRepo(APITest):
+                         "pyspi_0.6.1-1.3.dsc",
+                         "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz",
+                         "pyspi-0.6.1-1.3.stripped.dsc").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+         prefix = self.random_name()
+-        resp = self.post_task("/api/publish/" + prefix,
++        task = self.post_task("/api/publish/" + prefix,
+                               json={
+                                   "Architectures": ["i386", "source"],
+                                   "SourceKind": "local",
+                                   "Sources": [{"Name": repo_name}],
+                                   "Signing": DefaultSigningOptions,
+                               })
+-
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+ 
+         self.check_not_exists(
+             "public/" + prefix + "/pool/main/b/boost-defaults/libboost-program-options-dev_1.49.0.1_i386.deb")
+@@ -420,7 +428,7 @@ class PublishUpdateSkipCleanupAPITestRepo(APITest):
+ 
+         # Publish two repos, so that deleting one while skipping cleanup will
+         # not delete the whole prefix.
+-        resp = self.post_task("/api/publish/" + prefix,
++        task = self.post_task("/api/publish/" + prefix,
+                               json={
+                                   "Architectures": ["i386", "source"],
+                                   "Distribution": "otherdist",
+@@ -428,23 +436,24 @@ class PublishUpdateSkipCleanupAPITestRepo(APITest):
+                                   "Sources": [{"Name": repo_name}],
+                                   "Signing": DefaultSigningOptions,
+                               })
+-
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+ 
+         d = self.random_name()
+         self.check_equal(self.upload("/api/files/" + d,
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/repos/" + repo_name + "/packages/",
++                                json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']})
++        self.check_task(task)
+ 
+-        resp = self.put_task("/api/publish/" + prefix + "/wheezy",
++        task = self.put_task("/api/publish/" + prefix + "/wheezy",
+                              json={
+                                  "Signing": DefaultSigningOptions,
+                                  "SkipCleanup": True,
+                              })
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+         repo_expected = {
+             'AcquireByHash': False,
+             'Architectures': ['i386', 'source'],
+@@ -471,7 +480,8 @@ class PublishUpdateSkipCleanupAPITestRepo(APITest):
+         self.check_exists("public/" + prefix +
+                           "/pool/main/p/pyspi/pyspi-0.6.1-1.3.stripped.dsc")
+ 
+-        self.check_equal(self.delete_task("/api/publish/" + prefix + "/wheezy", params={"SkipCleanup": "1"}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/publish/" + prefix + "/wheezy", params={"SkipCleanup": "1"})
++        self.check_task(task)
+         self.check_exists("public/" + prefix + "/pool/main/b/boost-defaults/libboost-program-options-dev_1.49.0.1_i386.deb")
+         self.check_exists("public/" + prefix + "/pool/main/p/pyspi/pyspi-0.6.1-1.3.stripped.dsc")
+ 
+@@ -493,13 +503,15 @@ class PublishSwitchAPITestRepo(APITest):
+                         "pyspi_0.6.1-1.3.dsc",
+                         "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz",
+                         "pyspi-0.6.1-1.3.stripped.dsc").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+         snapshot1_name = self.random_name()
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot1_name}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot1_name})
++        self.check_task(task)
+ 
+         prefix = self.random_name()
+-        resp = self.post_task(
++        task = self.post_task(
+             "/api/publish/" + prefix,
+             json={
+                 "Architectures": ["i386", "source"],
+@@ -507,8 +519,8 @@ class PublishSwitchAPITestRepo(APITest):
+                 "Sources": [{"Name": snapshot1_name}],
+                 "Signing": DefaultSigningOptions,
+             })
++        self.check_task(task)
+ 
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
+         repo_expected = {
+             'AcquireByHash': False,
+             'Architectures': ['i386', 'source'],
+@@ -537,22 +549,25 @@ class PublishSwitchAPITestRepo(APITest):
+         d = self.random_name()
+         self.check_equal(self.upload("/api/files/" + d,
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/repos/" + repo_name + "/packages/",
++                                json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']})
++        self.check_task(task)
+ 
+         snapshot2_name = self.random_name()
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot2_name}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot2_name})
++        self.check_task(task)
+ 
+-        resp = self.put_task(
++        task = self.put_task(
+             "/api/publish/" + prefix + "/wheezy",
+             json={
+                 "Snapshots": [{"Component": "main", "Name": snapshot2_name}],
+                 "Signing": DefaultSigningOptions,
+                 "SkipContents": True,
+             })
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+         repo_expected = {
+             'AcquireByHash': False,
+             'Architectures': ['i386', 'source'],
+@@ -579,7 +594,8 @@ class PublishSwitchAPITestRepo(APITest):
+         self.check_not_exists(
+             "public/" + prefix + "/pool/main/p/pyspi/pyspi-0.6.1-1.3.stripped.dsc")
+ 
+-        self.check_equal(self.delete_task("/api/publish/" + prefix + "/wheezy").json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/publish/" + prefix + "/wheezy")
++        self.check_task(task)
+         self.check_not_exists("public/" + prefix + "dists/")
+ 
+ 
+@@ -600,13 +616,15 @@ class PublishSwitchAPISkipCleanupTestRepo(APITest):
+                         "pyspi_0.6.1-1.3.dsc",
+                         "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz",
+                         "pyspi-0.6.1-1.3.stripped.dsc").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+         snapshot1_name = self.random_name()
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot1_name}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot1_name})
++        self.check_task(task)
+ 
+         prefix = self.random_name()
+-        resp = self.post_task("/api/publish/" + prefix,
++        task = self.post_task("/api/publish/" + prefix,
+                               json={
+                                   "Architectures": ["i386", "source"],
+                                   "SourceKind": "snapshot",
+@@ -614,7 +632,7 @@ class PublishSwitchAPISkipCleanupTestRepo(APITest):
+                                   "Signing": DefaultSigningOptions,
+                               })
+ 
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+         repo_expected = {
+             'AcquireByHash': False,
+             'Architectures': ['i386', 'source'],
+@@ -642,7 +660,7 @@ class PublishSwitchAPISkipCleanupTestRepo(APITest):
+ 
+         # Publish two snapshots, so that deleting one while skipping cleanup will
+         # not delete the whole prefix.
+-        resp = self.post_task("/api/publish/" + prefix,
++        task = self.post_task("/api/publish/" + prefix,
+                               json={
+                                   "Architectures": ["i386", "source"],
+                                   "Distribution": "otherdist",
+@@ -651,7 +669,7 @@ class PublishSwitchAPISkipCleanupTestRepo(APITest):
+                                   "Signing": DefaultSigningOptions,
+                               })
+ 
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+         repo_expected = {
+             'AcquireByHash': False,
+             'Architectures': ['i386', 'source'],
+@@ -675,22 +693,25 @@ class PublishSwitchAPISkipCleanupTestRepo(APITest):
+         d = self.random_name()
+         self.check_equal(self.upload("/api/files/" + d,
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/repos/" + repo_name + "/packages/",
++                                json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']})
++        self.check_task(task)
+ 
+         snapshot2_name = self.random_name()
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot2_name}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot2_name})
++        self.check_task(task)
+ 
+-        resp = self.put_task("/api/publish/" + prefix + "/wheezy",
++        task = self.put_task("/api/publish/" + prefix + "/wheezy",
+                              json={
+                                  "Snapshots": [{"Component": "main", "Name": snapshot2_name}],
+                                  "Signing": DefaultSigningOptions,
+                                  "SkipCleanup": True,
+                                  "SkipContents": True,
+                              })
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+         repo_expected = {
+             'AcquireByHash': False,
+             'Architectures': ['i386', 'source'],
+@@ -715,7 +736,8 @@ class PublishSwitchAPISkipCleanupTestRepo(APITest):
+         self.check_exists("public/" + prefix + "/pool/main/b/boost-defaults/libboost-program-options-dev_1.49.0.1_i386.deb")
+         self.check_exists("public/" + prefix + "/pool/main/p/pyspi/pyspi-0.6.1-1.3.stripped.dsc")
+ 
+-        self.check_equal(self.delete_task("/api/publish/" + prefix + "/wheezy", params={"SkipCleanup": "1"}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/publish/" + prefix + "/wheezy", params={"SkipCleanup": "1"})
++        self.check_task(task)
+         self.check_exists("public/" + prefix + "/pool/main/b/boost-defaults/libboost-program-options-dev_1.49.0.1_i386.deb")
+         self.check_exists("public/" + prefix + "/pool/main/p/pyspi/pyspi-0.6.1-1.3.stripped.dsc")
+ 
+diff --git a/system/t12_api/repos.py b/system/t12_api/repos.py
+index bc0a43cc..8cc8e4e5 100644
+--- a/system/t12_api/repos.py
++++ b/system/t12_api/repos.py
+@@ -1,4 +1,4 @@
+-from api_lib import TASK_FAILED, TASK_SUCCEEDED, APITest
++from api_lib import APITest
+ 
+ from .publish import DefaultSigningOptions
+ 
+@@ -41,7 +41,8 @@ class ReposAPITestCreateIndexDelete(APITest):
+         names = [repo["Name"] for repo in repos]
+         assert repo_name in names
+ 
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name).json()['State'], TASK_SUCCEEDED)
++        resp = self.delete_task("/api/repos/" + repo_name)
++        self.check_task(resp)
+         self.check_equal(self.delete("/api/repos/" + repo_name).status_code, 404)
+ 
+         self.check_equal(self.get("/api/repos/" + repo_name).status_code, 404)
+@@ -61,25 +62,32 @@ class ReposAPITestCreateIndexDelete(APITest):
+                          "pyspi_0.6.1-1.3.dsc", "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz").status_code, 200)
+ 
+         resp = self.post_task("/api/repos/" + repo_name + "/file/" + d)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(resp)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/snapshots", json={"Name": repo_name}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/snapshots", json={"Name": repo_name})
++        self.check_task(task)
+ 
+-        self.check_equal(self.post_task("/api/publish",
+-                         json={
+-                             "SourceKind": "local",
+-                             "Sources": [{"Name": repo_name}],
+-                             "Signing": DefaultSigningOptions,
+-                         }).json()['State'], TASK_SUCCEEDED)
++        resp = self.post_task("/api/publish",
++                              json={
++                                  "SourceKind": "local",
++                                  "Sources": [{"Name": repo_name}],
++                                  "Signing": DefaultSigningOptions,
++                              })
++        self.check_task(resp)
+ 
+         # repo is not deletable while it is published
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name).json()['State'], TASK_FAILED)
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name, params={"force": "1"}).json()['State'], TASK_FAILED)
++        task = self.delete_task("/api/repos/" + repo_name)
++        self.check_task_fail(task)
++        task = self.delete_task("/api/repos/" + repo_name, params={"force": "1"})
++        self.check_task_fail(task)
+ 
+         # drop published
+-        self.check_equal(self.delete_task("/api/publish//" + distribution).json()['State'], TASK_SUCCEEDED)
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name).json()['State'], TASK_FAILED)
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name, params={"force": "1"}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/publish//" + distribution)
++        self.check_task(task)
++        task = self.delete_task("/api/repos/" + repo_name)
++        self.check_task_fail(task)
++        task = self.delete_task("/api/repos/" + repo_name, params={"force": "1"})
++        self.check_task(task)
+         self.check_equal(self.get("/api/repos/" + repo_name).status_code, 404)
+ 
+ 
+@@ -97,7 +105,7 @@ class ReposAPITestAdd(APITest):
+                          "pyspi_0.6.1-1.3.dsc", "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz").status_code, 200)
+ 
+         resp = self.post_task("/api/repos/" + repo_name + "/file/" + d)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(resp)
+ 
+         resp = self.get("/api/tasks/" + str(resp.json()['ID']) + "/output")
+         self.check_equal(resp.status_code, 200)
+@@ -125,7 +133,8 @@ class ReposAPITestAddNotFullRemove(APITest):
+         self.check_equal(self.upload("/api/files/" + d,
+                          "pyspi_0.6.1-1.3.dsc", "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz", "aptly.pub").status_code, 200)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+         self.check_equal(self.get("/api/repos/" + repo_name + "/packages").json(), ['Psource pyspi 0.6.1-1.3 3a8b37cbd9a3559e'])
+ 
+         self.check_exists("upload/" + d + "/aptly.pub")
+@@ -145,7 +154,8 @@ class ReposAPITestAddNoRemove(APITest):
+         self.check_equal(self.upload("/api/files/" + d,
+                          "pyspi_0.6.1-1.3.dsc", "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz").status_code, 200)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d, params={"noRemove": 1}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d, params={"noRemove": 1})
++        self.check_task(task)
+         self.check_equal(self.get("/api/repos/" + repo_name + "/packages").json(), ['Psource pyspi 0.6.1-1.3 3a8b37cbd9a3559e'])
+ 
+         self.check_exists("upload/" + d + "/pyspi_0.6.1-1.3.dsc")
+@@ -165,7 +175,7 @@ class ReposAPITestAddFile(APITest):
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+ 
+         resp = self.post_task("/api/repos/" + repo_name + "/file/" + d + "/libboost-program-options-dev_1.49.0.1_i386.deb")
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(resp)
+ 
+         resp = self.get("/api/tasks/" + str(resp.json()['ID']) + "/output")
+         self.check_equal(resp.status_code, 200)
+@@ -197,7 +207,7 @@ class ReposAPITestInclude(APITest):
+         self.check_equal(resp.status_code, 200)
+ 
+         resp = self.post_task("/api/repos/" + repo_name + "/include/" + d, params={"ignoreSignature": 1})
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(resp)
+ 
+         resp = self.get("/api/tasks/" + str(resp.json()['ID']) + "/output")
+         self.check_equal(resp.status_code, 200)
+@@ -225,7 +235,8 @@ class ReposAPITestShowQuery(APITest):
+                         "libboost-program-options-dev_1.49.0.1_i386.deb", "pyspi_0.6.1-1.3.dsc",
+                         "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz",
+                         "pyspi-0.6.1-1.3.stripped.dsc").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+         self.check_equal(sorted(self.get("/api/repos/" + repo_name + "/packages", params={"q": "pyspi"}).json()),
+                          ['Psource pyspi 0.6.1-1.3 3a8b37cbd9a3559e', 'Psource pyspi 0.6.1-1.4 f8f1daa806004e89'])
+@@ -258,13 +269,15 @@ class ReposAPITestAddMultiple(APITest):
+                         "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz",
+                         "pyspi-0.6.1-1.3.stripped.dsc").status_code, 200)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d + "/pyspi_0.6.1-1.3.dsc",
+-                                        params={"noRemove": 1}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d + "/pyspi_0.6.1-1.3.dsc",
++                              params={"noRemove": 1})
++        self.check_task(task)
+ 
+         self.check_equal(sorted(self.get("/api/repos/" + repo_name + "/packages").json()),
+                          ['Psource pyspi 0.6.1-1.3 3a8b37cbd9a3559e'])
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d + "/pyspi-0.6.1-1.3.stripped.dsc").json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d + "/pyspi-0.6.1-1.3.stripped.dsc")
++        self.check_task(task)
+ 
+         self.check_equal(sorted(self.get("/api/repos/" + repo_name + "/packages").json()),
+                          ['Psource pyspi 0.6.1-1.3 3a8b37cbd9a3559e', 'Psource pyspi 0.6.1-1.4 f8f1daa806004e89'])
+@@ -286,34 +299,39 @@ class ReposAPITestPackagesAddDelete(APITest):
+                         "pyspi_0.6.1-1.3.diff.gz", "pyspi_0.6.1.orig.tar.gz",
+                         "pyspi-0.6.1-1.3.stripped.dsc").status_code, 200)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+         self.check_equal(sorted(self.get("/api/repos/" + repo_name + "/packages").json()),
+                          ['Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378',
+                           'Psource pyspi 0.6.1-1.3 3a8b37cbd9a3559e',
+                           'Psource pyspi 0.6.1-1.4 f8f1daa806004e89'])
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/packages/",
++                              json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']})
++        self.check_task(task)
+ 
+         self.check_equal(sorted(self.get("/api/repos/" + repo_name + "/packages").json()),
+                          ['Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378',
+                           'Psource pyspi 0.6.1-1.3 3a8b37cbd9a3559e',
+                           'Psource pyspi 0.6.1-1.4 f8f1daa806004e89'])
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89',
+-                                               'Psource no-such-package 0.6.1-1.4 f8f1daa806004e89']}).json()['State'], TASK_FAILED)
++        task = self.post_task("/api/repos/" + repo_name + "/packages/",
++                              json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89',
++                                                    'Psource no-such-package 0.6.1-1.4 f8f1daa806004e89']})
++        self.check_task_fail(task)
+ 
+-        self.check_equal(self.delete_task("/api/repos/" + repo_name + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/repos/" + repo_name + "/packages/",
++                                json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']})
++        self.check_task(task)
+ 
+         self.check_equal(sorted(self.get("/api/repos/" + repo_name + "/packages").json()),
+                          ['Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378',
+                           'Psource pyspi 0.6.1-1.3 3a8b37cbd9a3559e'])
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/packages/",
++                              json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89']})
++        self.check_task(task)
+ 
+         self.check_equal(sorted(self.get("/api/repos/" + repo_name + "/packages").json()),
+                          ['Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378',
+@@ -324,9 +342,10 @@ class ReposAPITestPackagesAddDelete(APITest):
+ 
+         self.check_equal(self.post("/api/repos", json={"Name": repo_name2, "Comment": "fun repo"}).status_code, 201)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name2 + "/packages/",
+-                         json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89',
+-                                               'Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378']}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name2 + "/packages/",
++                              json={"PackageRefs": ['Psource pyspi 0.6.1-1.4 f8f1daa806004e89',
++                                                    'Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378']})
++        self.check_task(task)
+ 
+         self.check_equal(sorted(self.get("/api/repos/" + repo_name2 + "/packages").json()),
+                          ['Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378',
+@@ -349,7 +368,7 @@ class ReposAPITestShowMaxVersion(APITest):
+                                      ).status_code, 200)
+ 
+         resp = self.post_task("/api/repos/" + repo_name + "/file/" + d)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(resp)
+ 
+         resp = self.get("/api/tasks/" + str(resp.json()['ID']) + "/output")
+         self.check_equal(resp.status_code, 200)
+@@ -377,7 +396,7 @@ class ReposAPITestCopyPackage(APITest):
+         d = self.random_name()
+         self.check_equal(self.upload(f"/api/files/{d}", f"{pkg_name}.deb").status_code, 200)
+         resp = self.post_task(f"/api/repos/{repo1_name}/file/{d}")
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(resp)
+ 
+         # Creating target repo
+         repo2_name = self.random_name()
+@@ -385,8 +404,15 @@ class ReposAPITestCopyPackage(APITest):
+ 
+         # Copy the package
+         resp = self.post_task(f"/api/repos/{repo2_name}/copy/{repo1_name}/{pkg_name}")
+-        self.check_equal(resp.status_code, 200)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(resp)
++
++        # Test bad query
++        resp = self.post_task(f"/api/repos/{repo2_name}/copy/{repo1_name}/lalala%20%3E%3E")
++        self.check_task_fail(resp, expected_output="Task failed with error: unable to parse query 'lalala >>': parsing failed: unexpected token >>: expecting end of query")
++
++        # Test non-existing package
++        resp = self.post_task(f"/api/repos/{repo2_name}/copy/{repo1_name}/lalala")
++        self.check_task_fail(resp, expected_output="Task failed with error: no package found for filter: 'lalala'")
+ 
+         self.check_equal(self.get(f"/api/repos/{repo2_name}/packages").json(),
+                          ['Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378'])
+diff --git a/system/t12_api/snapshots.py b/system/t12_api/snapshots.py
+index 0d12066a..28595a04 100644
+--- a/system/t12_api/snapshots.py
++++ b/system/t12_api/snapshots.py
+@@ -1,4 +1,4 @@
+-from api_lib import TASK_FAILED, TASK_SUCCEEDED, APITest
++from api_lib import APITest
+ 
+ from .publish import DefaultSigningOptions
+ 
+@@ -13,8 +13,8 @@ class SnapshotsAPITestCreateShowEmpty(APITest):
+                          'Name': snapshot_name}
+ 
+         # create empty snapshot
+-        resp = self.post_task("/api/snapshots", json=snapshot_desc)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/snapshots", json=snapshot_desc)
++        self.check_task(task)
+ 
+         self.check_subset(snapshot_desc, self.get("/api/snapshots/" + snapshot_name).json())
+         self.check_equal(self.get("/api/snapshots/" + snapshot_name).status_code, 200)
+@@ -26,8 +26,8 @@ class SnapshotsAPITestCreateShowEmpty(APITest):
+         self.check_equal(self.get("/api/snapshots/" + self.random_name()).status_code, 404)
+ 
+         # create snapshot with duplicate name
+-        resp = self.post_task("/api/snapshots", json=snapshot_desc)
+-        self.check_equal(resp.json()['State'], TASK_FAILED)
++        task = self.post_task("/api/snapshots", json=snapshot_desc)
++        self.check_task_fail(task)
+ 
+ 
+ class SnapshotsAPITestCreateFromRefs(APITest):
+@@ -47,8 +47,8 @@ class SnapshotsAPITestCreateFromRefs(APITest):
+ 
+         # create empty snapshot
+         empty_snapshot_name = self.random_name()
+-        resp = self.post_task("/api/snapshots", json={"Name": empty_snapshot_name})
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/snapshots", json={"Name": empty_snapshot_name})
++        self.check_task(task)
+         self.check_equal(
+             self.get("/api/snapshots/" + empty_snapshot_name).json()['Description'], "Created as empty"
+         )
+@@ -59,14 +59,15 @@ class SnapshotsAPITestCreateFromRefs(APITest):
+         d = self.random_name()
+         self.check_equal(self.upload("/api/files/" + d,
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+         # create snapshot with empty snapshot as source and package
+         snapshot = snapshot_desc.copy()
+         snapshot['PackageRefs'] = ["Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378"]
+         snapshot['SourceSnapshots'] = [empty_snapshot_name]
+-        resp = self.post_task("/api/snapshots", json=snapshot)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/snapshots", json=snapshot)
++        self.check_task(task)
+         snapshot.pop('SourceSnapshots')
+         snapshot.pop('PackageRefs')
+         resp = self.get("/api/snapshots/" + snapshot_name)
+@@ -79,10 +80,10 @@ class SnapshotsAPITestCreateFromRefs(APITest):
+         self.check_equal(resp.json(), ["Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378"])
+ 
+         # create snapshot with unreferenced package
+-        resp = self.post_task("/api/snapshots", json={
++        task = self.post_task("/api/snapshots", json={
+             "Name": self.random_name(),
+             "PackageRefs": ["Pi386 libboost-program-options-dev 1.49.0.1 918d2f433384e378", "Pamd64 no-such-package 1.2 91"]})
+-        self.check_equal(resp.json()['State'], TASK_FAILED)
++        self.check_task_fail(task)
+ 
+         # list snapshots
+         resp = self.get("/api/snapshots", params={"sort": "time"})
+@@ -100,8 +101,8 @@ class SnapshotsAPITestCreateFromRepo(APITest):
+         snapshot_name = self.random_name()
+         self.check_equal(self.post("/api/repos", json={"Name": repo_name}).status_code, 201)
+ 
+-        resp = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name})
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name})
++        self.check_task(task)
+         self.check_equal([],
+                          self.get("/api/snapshots/" + snapshot_name + "/packages", params={"format": "details"}).json())
+ 
+@@ -110,10 +111,11 @@ class SnapshotsAPITestCreateFromRepo(APITest):
+         self.check_equal(self.upload("/api/files/" + d,
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+-        resp = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name})
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name})
++        self.check_task(task)
+         self.check_equal(self.get("/api/snapshots/" + snapshot_name).status_code, 200)
+ 
+         self.check_subset({'Architecture': 'i386',
+@@ -130,8 +132,8 @@ class SnapshotsAPITestCreateFromRepo(APITest):
+                                    params={"format": "details", "q": "Version (> 0.6.1-1.4)"}).json()[0])
+ 
+         # duplicate snapshot name
+-        resp = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name})
+-        self.check_equal(resp.json()['State'], TASK_FAILED)
++        task = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name})
++        self.check_task_fail(task)
+ 
+ 
+ class SnapshotsAPITestCreateUpdate(APITest):
+@@ -143,13 +145,13 @@ class SnapshotsAPITestCreateUpdate(APITest):
+         snapshot_desc = {'Description': 'fun snapshot',
+                          'Name': snapshot_name}
+ 
+-        resp = self.post_task("/api/snapshots", json=snapshot_desc)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/snapshots", json=snapshot_desc)
++        self.check_task(task)
+ 
+         new_snapshot_name = self.random_name()
+-        resp = self.put_task("/api/snapshots/" + snapshot_name, json={'Name': new_snapshot_name,
++        task = self.put_task("/api/snapshots/" + snapshot_name, json={'Name': new_snapshot_name,
+                                                                       'Description': 'New description'})
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+ 
+         resp = self.get("/api/snapshots/" + new_snapshot_name)
+         self.check_equal(resp.status_code, 200)
+@@ -157,9 +159,9 @@ class SnapshotsAPITestCreateUpdate(APITest):
+                            "Description": "New description"}, resp.json())
+ 
+         # duplicate name
+-        resp = self.put_task("/api/snapshots/" + new_snapshot_name, json={'Name': new_snapshot_name,
++        task = self.put_task("/api/snapshots/" + new_snapshot_name, json={'Name': new_snapshot_name,
+                                                                           'Description': 'New description'})
+-        self.check_equal(resp.json()['State'], TASK_FAILED)
++        self.check_task_fail(task)
+ 
+         # missing snapshot
+         resp = self.put("/api/snapshots/" + snapshot_name, json={})
+@@ -176,29 +178,33 @@ class SnapshotsAPITestCreateDelete(APITest):
+                          'Name': snapshot_name}
+ 
+         # deleting unreferenced snapshot
+-        resp = self.post_task("/api/snapshots", json=snapshot_desc)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/snapshots", json=snapshot_desc)
++        self.check_task(task)
+ 
+-        self.check_equal(self.delete_task("/api/snapshots/" + snapshot_name).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/snapshots/" + snapshot_name)
++        self.check_task(task)
+ 
+         self.check_equal(self.get("/api/snapshots/" + snapshot_name).status_code, 404)
+ 
+         # deleting referenced snapshot
+         snap1, snap2 = self.random_name(), self.random_name()
+-        self.check_equal(self.post_task("/api/snapshots", json={"Name": snap1}).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/snapshots", json={"Name": snap1})
++        self.check_task(task)
+         self.check_equal(
+             self.post_task(
+                 "/api/snapshots", json={"Name": snap2, "SourceSnapshots": [snap1]}
+             ).json()['State'], 2
+         )
+ 
+-        self.check_equal(self.delete_task("/api/snapshots/" + snap1).json()['State'], TASK_FAILED)
++        task = self.delete_task("/api/snapshots/" + snap1)
++        self.check_task_fail(task)
+         self.check_equal(self.get("/api/snapshots/" + snap1).status_code, 200)
+-        self.check_equal(self.delete_task("/api/snapshots/" + snap1, params={"force": "1"}).json()['State'], TASK_SUCCEEDED)
++        task = self.delete_task("/api/snapshots/" + snap1, params={"force": "1"})
++        self.check_task(task)
+         self.check_equal(self.get("/api/snapshots/" + snap1).status_code, 404)
+ 
+         # deleting published snapshot
+-        resp = self.post_task(
++        task = self.post_task(
+             "/api/publish",
+             json={
+                  "SourceKind": "snapshot",
+@@ -208,10 +214,12 @@ class SnapshotsAPITestCreateDelete(APITest):
+                  "Signing": DefaultSigningOptions,
+             }
+         )
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        self.check_task(task)
+ 
+-        self.check_equal(self.delete_task("/api/snapshots/" + snap2).json()['State'], TASK_FAILED)
+-        self.check_equal(self.delete_task("/api/snapshots/" + snap2, params={"force": "1"}).json()['State'], TASK_FAILED)
++        task = self.delete_task("/api/snapshots/" + snap2)
++        self.check_task_fail(task)
++        task = self.delete_task("/api/snapshots/" + snap2, params={"force": "1"})
++        self.check_task_fail(task)
+ 
+ 
+ class SnapshotsAPITestSearch(APITest):
+@@ -228,10 +236,11 @@ class SnapshotsAPITestSearch(APITest):
+         self.check_equal(self.upload("/api/files/" + d,
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repo_name + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + "/file/" + d)
++        self.check_task(task)
+ 
+-        resp = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name})
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repo_name + '/snapshots', json={'Name': snapshot_name})
++        self.check_task(task)
+ 
+         resp = self.get("/api/snapshots/" + snapshot_name + "/packages",
+                         params={"q": "libboost-program-options-dev", "format": "details"})
+@@ -262,13 +271,14 @@ class SnapshotsAPITestDiff(APITest):
+         self.check_equal(self.upload("/api/files/" + d,
+                          "libboost-program-options-dev_1.49.0.1_i386.deb").status_code, 200)
+ 
+-        self.check_equal(self.post_task("/api/repos/" + repos[-1] + "/file/" + d).json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repos[-1] + "/file/" + d)
++        self.check_task(task)
+ 
+-        resp = self.post_task("/api/repos/" + repos[-1] + '/snapshots', json={'Name': snapshots[0]})
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/repos/" + repos[-1] + '/snapshots', json={'Name': snapshots[0]})
++        self.check_task(task)
+ 
+-        resp = self.post_task("/api/snapshots", json={'Name': snapshots[1]})
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.post_task("/api/snapshots", json={'Name': snapshots[1]})
++        self.check_task(task)
+ 
+         resp = self.get("/api/snapshots/" + snapshots[0] + "/diff/" + snapshots[1])
+         self.check_equal(resp.status_code, 200)
+@@ -302,19 +312,19 @@ class SnapshotsAPITestMerge(APITest):
+ 
+         # create source snapshots
+         for source in sources:
+-            resp = self.post_task("/api/snapshots", json=source)
+-            self.check_equal(resp.json()["State"], TASK_SUCCEEDED)
++            task = self.post_task("/api/snapshots", json=source)
++            self.check_task(task)
+ 
+         # create merge snapshot
+         merged_name = self.random_name()
+-        resp = self.post_task(
++        task = self.post_task(
+             "/api/snapshots/merge",
+             json={
+                 "Destination": merged_name,
+                 "Sources": [source["Name"] for source in sources],
+             },
+         )
+-        self.check_equal(resp.json()["State"], TASK_SUCCEEDED)
++        self.check_task(task)
+ 
+         # check merge snapshot
+         resp = self.get(f"/api/snapshots/{merged_name}")
+@@ -329,9 +339,8 @@ class SnapshotsAPITestMerge(APITest):
+         )
+ 
+         # remove merge snapshot
+-        self.check_equal(
+-            self.delete_task(f"/api/snapshots/{merged_name}").json()["State"], TASK_SUCCEEDED
+-        )
++        task = self.delete_task(f"/api/snapshots/{merged_name}")
++        self.check_task(task)
+ 
+         # create merge snapshot without sources
+         merged_name = self.random_name()
+diff --git a/system/t12_api/tasks.py b/system/t12_api/tasks.py
+index 42b17c98..8d393248 100644
+--- a/system/t12_api/tasks.py
++++ b/system/t12_api/tasks.py
+@@ -1,4 +1,4 @@
+-from api_lib import TASK_SUCCEEDED, APITest
++from api_lib import APITest
+ 
+ from .publish import DefaultSigningOptions
+ 
+@@ -49,9 +49,8 @@ class TaskAPITestParallelTasks(APITest):
+ 
+     def _wait_for_task(self, task_id):
+         uri = "/api/tasks/%d/wait" % int(task_id)
+-        resp = self.get(uri)
+-        self.check_equal(resp.status_code, 200)
+-        self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++        task = self.get(uri)
++        self.check_task(task)
+ 
+     def _wait_for_all_tasks(self):
+         resp = self.get("/api/tasks-wait")
+@@ -103,6 +102,5 @@ class TaskAPITestParallelTasks(APITest):
+         self._wait_for_all_tasks()
+ 
+         for publish_task_id in publish_task_ids:
+-            resp = self.get("/api/tasks/%d" % publish_task_id)
+-            self.check_equal(resp.status_code, 200)
+-            self.check_equal(resp.json()['State'], TASK_SUCCEEDED)
++            task = self.get("/api/tasks/%d" % publish_task_id)
++            self.check_task(task)
+diff --git a/system/t12_api/unix_socket.py b/system/t12_api/unix_socket.py
+index b14fe946..075ff688 100644
+--- a/system/t12_api/unix_socket.py
++++ b/system/t12_api/unix_socket.py
+@@ -6,19 +6,28 @@ import urllib.parse
+ import urllib.request
+ 
+ from lib import BaseTest
++from testout import TestOut
+ 
+ 
+ class UnixSocketAPITest(BaseTest):
+     aptly_server = None
+     socket_path = "/tmp/_aptly_test.sock"
+     base_url = ("unix://%s" % socket_path)
++    aptly_out = None
++    debugOutput = True
+ 
+     def prepare(self):
+         if self.aptly_server is None:
+-            self.aptly_server = self._start_process("aptly api serve -no-lock -listen=%s" % (self.base_url),)
++            UnixSocketAPITest.aptly_out = TestOut()
++            self.aptly_server = self._start_process("aptly api serve -no-lock -listen=%s" % (self.base_url), stdout=UnixSocketAPITest.aptly_out, stderr=UnixSocketAPITest.aptly_out)
+             time.sleep(1)
++        else:
++            UnixSocketAPITest.aptly_out.clear()
+         super(UnixSocketAPITest, self).prepare()
+ 
++    def debug_output(self):
++        return UnixSocketAPITest.aptly_out.get_contents()
++
+     def shutdown(self):
+         if self.aptly_server is not None:
+             self.aptly_server.terminate()
+diff --git a/system/testout.py b/system/testout.py
+new file mode 100644
+index 00000000..f7dc134d
+--- /dev/null
++++ b/system/testout.py
+@@ -0,0 +1,23 @@
++import tempfile
++
++
++class TestOut:
++    def __init__(self):
++        self.tmp_file = tempfile.NamedTemporaryFile(delete=False)
++        self.read_pos = 0
++
++    def fileno(self):
++        return self.tmp_file.fileno()
++
++    def write(self, text):
++        self.tmp_file.write(text.encode())
++
++    def get_contents(self):
++        self.tmp_file.seek(self.read_pos, 0)
++        return self.tmp_file.read().decode("utf-8")
++
++    def close(self):
++        self.tmp_file.close()
++
++    def clear(self):
++        self.read_pos = self.tmp_file.tell()
+diff --git a/utils/utils.go b/utils/utils.go
+index 598dc7c8..4d4734fc 100644
+--- a/utils/utils.go
++++ b/utils/utils.go
+@@ -10,13 +10,13 @@ import (
+ 
+ // DirIsAccessible verifies that directory exists and is accessible
+ func DirIsAccessible(filename string) error {
+-	_, err := os.Stat(filename)
++	fileStat, err := os.Stat(filename)
+ 	if err != nil {
+ 		if !os.IsNotExist(err) {
+ 			return fmt.Errorf("error checking directory '%s': %s", filename, err)
+ 		}
+ 	} else {
+-		if unix.Access(filename, unix.W_OK) != nil {
++		if fileStat.Mode().Perm() == 0000 || unix.Access(filename, unix.W_OK) != nil {
+ 			return fmt.Errorf("'%s' is inaccessible, check access rights", filename)
+ 		}
+ 	}

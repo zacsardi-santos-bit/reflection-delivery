@@ -1,0 +1,16 @@
+diff --git a/pkg/testutils/error_codes.go b/pkg/testutils/error_codes.go
+new file mode 100644
+index 0000000..849e3e4
+--- /dev/null
++++ b/pkg/testutils/error_codes.go
+@@ -0,0 +1,10 @@
++// SPDX-License-Identifier: Apache-2.0
++
++package testutils
++
++const (
++	CheckViolationErrorCode   string = "check_violation"
++	FKViolationErrorCode      string = "foreign_key_violation"
++	NotNullViolationErrorCode string = "not_null_violation"
++	UniqueViolationErrorCode  string = "unique_violation"
++)

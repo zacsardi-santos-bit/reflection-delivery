@@ -1,0 +1,23 @@
+{
+ "task": "prql-prql-5630",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden replaces `(SELECT NULL)` placeholder ORDER BY with `first_expr_from_projection(&projection)` when `is_distinct`; F2P `test_mssql_distinct_fetch` asserts `ORDER BY \"District\"`"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

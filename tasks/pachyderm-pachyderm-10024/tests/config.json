@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "service postgresql start 2>/dev/null; until pg_isready 2>/dev/null; do sleep 1; done; socat TCP-LISTEN:30228,fork,reuseaddr TCP:127.0.0.1:5432 & socat TCP-LISTEN:30229,fork,reuseaddr TCP:127.0.0.1:5432 & sleep 2 && DOCKER_MACHINE_NAME=127.0.0.1 SKIP_DOCKER_POSTGRES_CREATE=1 go test -json ./src/internal/clusterstate -count=1 -timeout 300s -run Test_v2_8_0_ClusterState",
+  "test_files": [
+    "src/internal/clusterstate/v2.10.0/pipelines_test.go",
+    "src/internal/clusterstate/v2.8.0_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/pachyderm/pachyderm/v2/src/internal/clusterstate::Test_v2_8_0_ClusterState"
+  ],
+  "PASS_TO_PASS": []
+}

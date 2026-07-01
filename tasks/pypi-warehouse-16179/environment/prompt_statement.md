@@ -1,0 +1,7 @@
+I'm working on the package index admin interface and need to add a quarantine feature for projects. Right now, when reviewing a suspicious package, admins can only mark it as "not malware" or permanently remove it — there's no reversible intermediate step.
+
+I need a way to place a project into quarantine, making it unavailable for installation and preventing the owner from making changes, while keeping the project in the system. This action should be reversible so that if an investigation finds no issue, the project can be restored.
+
+Specifically, I need utility functions for putting a project into quarantine and for clearing a project out of quarantine. Each function should accept an optional parameter to control whether a success notification is shown to the admin. The quarantine function should record who quarantined the project and when. Both the quarantine and quarantine-clear actions should produce a success notification that names the project and reminds the admin to update any related support conversations.
+
+I also need admin views so that admins can trigger quarantine directly from the malware reports list for a project, from the malware report detail page, and can reverse the quarantine from the project detail page. These should be registered as new admin routes. The quarantine actions from the malware reports views should not automatically add any verdict actions to the observation — they should just quarantine the project and redirect back to the malware reports list with the appropriate flash message.

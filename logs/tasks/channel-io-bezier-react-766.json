@@ -1,0 +1,23 @@
+{
+ "task": "channel-io-bezier-react-766",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'Size72 = 72' to AvatarSize and changes threshold 'let gap = (size >= AvatarSize.Size72 ? 4 : -2)' plus passes size (not statusSize) to StatusWrapper; F2P are new snapshot tests for Size72 with/without border"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

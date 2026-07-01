@@ -1,0 +1,9 @@
+patching file saleor/checkout/complete_checkout.py
+patching file saleor/checkout/utils.py
+patching file saleor/graphql/order/mutations/order_confirm.py
+patching file saleor/graphql/payment/mutations/transaction/transaction_initialize.py
+patching file saleor/graphql/payment/mutations/transaction/transaction_process.py
+patching file saleor/graphql/schema.graphql
+patching file saleor/order/actions.py
+patching file saleor/order/events.py
+patching file saleor/payment/error_codes.py

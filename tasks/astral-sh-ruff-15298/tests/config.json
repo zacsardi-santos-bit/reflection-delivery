@@ -1,0 +1,21 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p ruff_linter -E \"test(flake8_return)\"",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/flake8_return/RET503.py"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsecontinue_path_new_ret507_py_expects",
+    "(2/9) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryassign_path_new_ret504_py_expects",
+    "(3/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsebreak_path_new_ret508_py_expects",
+    "(4/9) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturnvalue_path_new_ret502_py_expects",
+    "(5/9) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects",
+    "(6/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselseraise_path_new_ret506_py_expects",
+    "(7/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsereturn_path_new_ret505_py_expects",
+    "(8/9) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryreturnnone_path_new_ret501_py_expects",
+    "(9/9) ruff_linter rules::flake8_return::tests::preview_rules::rule_implicitreturn_path_new_ret503_py_expects"
+  ],
+  "PASS_TO_PASS": []
+}

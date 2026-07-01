@@ -1,0 +1,1063 @@
+patching file compiler-core/src/language_server/tests/completion.rs
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_anonymous_function.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_as.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_bit_array.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_case_expression.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_function_call.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args_nested.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_returned.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_within_function.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignored.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_inside_nested_exprs.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_nested_anonymous_function.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe_with_args.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_string.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_tuple.snap
+   Compiling gleam-core v1.4.1 (/workspace/repo/compiler-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.84s
+────────────
+ Nextest run ID 7e70370a-58d1-495c-b016-41667e748d2c with nextest profile: default
+    Starting 22 tests across 1 binary (2690 tests skipped)
+        PASS [   0.105s] ( 1/22) gleam-core language_server::tests::definition::goto_definition_local_variable
+        PASS [   0.105s] ( 2/22) gleam-core language_server::tests::completion::local_variable_ignore_within_function
+        PASS [   0.085s] ( 3/22) gleam-core language_server::tests::signature_help::help_for_calling_local_variable_last_arg
+        PASS [   0.088s] ( 4/22) gleam-core language_server::tests::signature_help::help_for_calling_local_variable_first_arg
+        PASS [   0.076s] ( 5/22) gleam-core language_server::tests::signature_help::help_for_calling_local_variable_with_module_function
+        PASS [   0.085s] ( 6/22) gleam-core language_server::tests::signature_help::help_for_calling_local_variable_referencing_constant_referencing_function
+        FAIL [   1.263s] ( 7/22) gleam-core language_server::tests::completion::local_variable_pipe_with_args
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe_with_args.snap
+    Snapshot: local_variable_pipe_with_args
+    Source: compiler-core/src/language_server/tests/completion.rs:951
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    pub fn main() {
+      let add_one = fn(wibble: Int, wobble: Int) { wibble + wobble }
+      let wobble = 1
+      let wibble = 2
+      wobble |> add_one(1, wibble)
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       25    25 │ True
+       26    26 │   kind:   EnumMember
+       27    27 │   detail: gleam
+       28    28 │   sort:   4_True
+       29       │-add_one
+       30       │-  kind:   Variable
+       31       │-  detail: fn(Int, Int) -> Int
+       32       │-  sort:   2_add_one
+       33       │-  desc:   app
+       34       │-  docs:   "A locally defined variable."
+       35       │-  edits:
+       36       │-    [5:23-5:23]: "add_one"
+       37    29 │ main
+       38    30 │   kind:   Function
+       39    31 │   detail: fn() -> a
+       40    32 │   sort:   2_main
+       41    33 │   desc:   app
+       42    34 │   edits:
+       43       │-    [5:23-5:23]: "main"
+       44       │-wibble
+       45       │-  kind:   Variable
+       46       │-  detail: Int
+       47       │-  sort:   2_wibble
+       48       │-  desc:   app
+       49       │-  docs:   "A locally defined variable."
+       50       │-  edits:
+       51       │-    [5:23-5:23]: "wibble"
+       52       │-wobble
+       53       │-  kind:   Variable
+       54       │-  detail: Int
+       55       │-  sort:   2_wobble
+       56       │-  desc:   app
+       57       │-  docs:   "A locally defined variable."
+       58       │-  edits:
+       59       │-    [5:23-5:23]: "wobble"
+             35 │+    [5:23-5:23]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_pipe_with_args ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_pipe_with_args
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.23s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe_with_args.snap.new
+    thread 'language_server::tests::completion::local_variable_pipe_with_args' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_pipe_with_args' failed in line 951
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.266s] ( 8/22) gleam-core language_server::tests::completion::local_variable
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable.snap
+    Snapshot: local_variable
+    Source: compiler-core/src/language_server/tests/completion.rs:822
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    pub fn main(wibble: Int) {
+      let wobble = 1
+      w
+
+      let wabble = 2
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       31    31 │   detail: fn(Int) -> Int
+       32    32 │   sort:   2_main
+       33    33 │   desc:   app
+       34    34 │   edits:
+       35       │-    [3:2-3:2]: "main"
+       36       │-wibble
+       37       │-  kind:   Variable
+       38       │-  detail: Int
+       39       │-  sort:   2_wibble
+       40       │-  desc:   app
+       41       │-  docs:   "A locally defined variable."
+       42       │-  edits:
+       43       │-    [3:2-3:2]: "wibble"
+       44       │-wobble
+       45       │-  kind:   Variable
+       46       │-  detail: Int
+       47       │-  sort:   2_wobble
+       48       │-  desc:   app
+       49       │-  docs:   "A locally defined variable."
+       50       │-  edits:
+       51       │-    [3:2-3:2]: "wobble"
+             35 │+    [3:2-3:2]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.22s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable.snap.new
+    thread 'language_server::tests::completion::local_variable' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable' failed in line 822
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.273s] ( 9/22) gleam-core language_server::tests::completion::local_variable_function_call
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_function_call.snap
+    Snapshot: local_variable_function_call
+    Source: compiler-core/src/language_server/tests/completion.rs:967
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    fn add_one(wibble: Int) -> Int {
+      wibble + 1
+    }
+
+    pub fn main() {
+      let wobble = 1
+      add_one(wobble)
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       40    40 │   detail: fn() -> Int
+       41    41 │   sort:   2_main
+       42    42 │   desc:   app
+       43    43 │   edits:
+       44       │-    [7:10-7:10]: "main"
+       45       │-wobble
+       46       │-  kind:   Variable
+       47       │-  detail: Int
+       48       │-  sort:   2_wobble
+       49       │-  desc:   app
+       50       │-  docs:   "A locally defined variable."
+       51       │-  edits:
+       52       │-    [7:10-7:10]: "wobble"
+             44 │+    [7:10-7:10]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_function_call ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_function_call
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.23s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_function_call.snap.new
+    thread 'language_server::tests::completion::local_variable_function_call' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_function_call' failed in line 967
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.276s] (10/22) gleam-core language_server::tests::completion::local_variable_bit_array
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_bit_array.snap
+    Snapshot: local_variable_bit_array
+    Source: compiler-core/src/language_server/tests/completion.rs:1012
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    fn wibble() {
+      let assert <<h:1>> as i = <<1:1>>
+
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       23    23 │ True
+       24    24 │   kind:   EnumMember
+       25    25 │   detail: gleam
+       26    26 │   sort:   4_True
+       27       │-h
+       28       │-  kind:   Variable
+       29       │-  detail: Int
+       30       │-  sort:   2_h
+       31       │-  desc:   app
+       32       │-  docs:   "A locally defined variable."
+       33       │-  edits:
+       34       │-    [3:0-3:0]: "h"
+       35       │-i
+       36       │-  kind:   Variable
+       37       │-  detail: BitArray
+       38       │-  sort:   2_i
+       39       │-  desc:   app
+       40       │-  docs:   "A locally defined variable."
+       41       │-  edits:
+       42       │-    [3:0-3:0]: "i"
+       43    27 │ wibble
+       44    28 │   kind:   Function
+       45    29 │   detail: fn() -> BitArray
+       46    30 │   sort:   2_wibble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_bit_array ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_bit_array
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.24s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_bit_array.snap.new
+    thread 'language_server::tests::completion::local_variable_bit_array' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_bit_array' failed in line 1012
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.276s] (11/22) gleam-core language_server::tests::completion::local_variable_ignore_anonymous_function_args
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args.snap
+    Snapshot: local_variable_ignore_anonymous_function_args
+    Source: compiler-core/src/language_server/tests/completion.rs:863
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    pub fn main() {
+      let add_one = fn(wibble: Int) { wibble + 1 }
+      let wobble = 1
+      w
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       24    24 │ True
+       25    25 │   kind:   EnumMember
+       26    26 │   detail: gleam
+       27    27 │   sort:   4_True
+       28       │-add_one
+       29       │-  kind:   Variable
+       30       │-  detail: fn(Int) -> Int
+       31       │-  sort:   2_add_one
+       32       │-  desc:   app
+       33       │-  docs:   "A locally defined variable."
+       34       │-  edits:
+       35       │-    [4:2-4:2]: "add_one"
+       36    28 │ main
+       37    29 │   kind:   Function
+       38    30 │   detail: fn() -> a
+       39    31 │   sort:   2_main
+       40    32 │   desc:   app
+       41    33 │   edits:
+       42       │-    [4:2-4:2]: "main"
+       43       │-wobble
+       44       │-  kind:   Variable
+       45       │-  detail: Int
+       46       │-  sort:   2_wobble
+       47       │-  desc:   app
+       48       │-  docs:   "A locally defined variable."
+       49       │-  edits:
+       50       │-    [4:2-4:2]: "wobble"
+             34 │+    [4:2-4:2]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_ignore_anonymous_function_args ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_ignore_anonymous_function_args
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.24s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args.snap.new
+    thread 'language_server::tests::completion::local_variable_ignore_anonymous_function_args' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_ignore_anonymous_function_args' failed in line 863
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.279s] (12/22) gleam-core language_server::tests::completion::local_variable_pipe
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe.snap
+    Snapshot: local_variable_pipe
+    Source: compiler-core/src/language_server/tests/completion.rs:937
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    pub fn main() {
+      let add_one = fn(wibble: Int) { wibble + 1 }
+      let wobble = 1
+      wobble |> add_one
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       24    24 │ True
+       25    25 │   kind:   EnumMember
+       26    26 │   detail: gleam
+       27    27 │   sort:   4_True
+       28       │-add_one
+       29       │-  kind:   Variable
+       30       │-  detail: fn(Int) -> Int
+       31       │-  sort:   2_add_one
+       32       │-  desc:   app
+       33       │-  docs:   "A locally defined variable."
+       34       │-  edits:
+       35       │-    [4:12-4:12]: "add_one"
+       36    28 │ main
+       37    29 │   kind:   Function
+       38    30 │   detail: fn() -> Int
+       39    31 │   sort:   2_main
+       40    32 │   desc:   app
+       41    33 │   edits:
+       42       │-    [4:12-4:12]: "main"
+       43       │-wobble
+       44       │-  kind:   Variable
+       45       │-  detail: Int
+       46       │-  sort:   2_wobble
+       47       │-  desc:   app
+       48       │-  docs:   "A locally defined variable."
+       49       │-  edits:
+       50       │-    [4:12-4:12]: "wobble"
+             34 │+    [4:12-4:12]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_pipe ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_pipe
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.24s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe.snap.new
+    thread 'language_server::tests::completion::local_variable_pipe' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_pipe' failed in line 937
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.284s] (13/22) gleam-core language_server::tests::completion::local_variable_case_expression
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_case_expression.snap
+    Snapshot: local_variable_case_expression
+    Source: compiler-core/src/language_server/tests/completion.rs:908
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    pub fn main() {
+      case True {
+        True as wibble -> { todo }
+        False -> { todo }
+      }
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       31    31 │   detail: fn() -> a
+       32    32 │   sort:   2_main
+       33    33 │   desc:   app
+       34    34 │   edits:
+       35       │-    [3:24-3:24]: "main"
+       36       │-wibble
+       37       │-  kind:   Variable
+       38       │-  detail: Bool
+       39       │-  sort:   2_wibble
+       40       │-  desc:   app
+       41       │-  docs:   "A locally defined variable."
+       42       │-  edits:
+       43       │-    [3:24-3:24]: "wibble"
+             35 │+    [3:24-3:24]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_case_expression ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_case_expression
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.25s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_case_expression.snap.new
+    thread 'language_server::tests::completion::local_variable_case_expression' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_case_expression' failed in line 908
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.286s] (14/22) gleam-core language_server::tests::completion::local_variable_tuple
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_tuple.snap
+    Snapshot: local_variable_tuple
+    Source: compiler-core/src/language_server/tests/completion.rs:1001
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    fn wibble() {
+      let assert #([d, e] as f, g) = #([0, 1], 2)
+
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       23    23 │ True
+       24    24 │   kind:   EnumMember
+       25    25 │   detail: gleam
+       26    26 │   sort:   4_True
+       27       │-d
+       28       │-  kind:   Variable
+       29       │-  detail: Int
+       30       │-  sort:   2_d
+       31       │-  desc:   app
+       32       │-  docs:   "A locally defined variable."
+       33       │-  edits:
+       34       │-    [3:0-3:0]: "d"
+       35       │-e
+       36       │-  kind:   Variable
+       37       │-  detail: Int
+       38       │-  sort:   2_e
+       39       │-  desc:   app
+       40       │-  docs:   "A locally defined variable."
+       41       │-  edits:
+       42       │-    [3:0-3:0]: "e"
+       43       │-f
+       44       │-  kind:   Variable
+       45       │-  detail: List(Int)
+       46       │-  sort:   2_f
+       47       │-  desc:   app
+       48       │-  docs:   "A locally defined variable."
+       49       │-  edits:
+       50       │-    [3:0-3:0]: "f"
+       51       │-g
+       52       │-  kind:   Variable
+       53       │-  detail: Int
+       54       │-  sort:   2_g
+       55       │-  desc:   app
+       56       │-  docs:   "A locally defined variable."
+       57       │-  edits:
+       58       │-    [3:0-3:0]: "g"
+       59    27 │ wibble
+       60    28 │   kind:   Function
+       61    29 │   detail: fn() -> #(List(Int), Int)
+       62    30 │   sort:   2_wibble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_tuple ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_tuple
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.25s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_tuple.snap.new
+    thread 'language_server::tests::completion::local_variable_tuple' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_tuple' failed in line 1001
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.299s] (15/22) gleam-core language_server::tests::completion::local_variable_nested_anonymous_function
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_nested_anonymous_function.snap
+    Snapshot: local_variable_nested_anonymous_function
+    Source: compiler-core/src/language_server/tests/completion.rs:850
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    pub fn main() {
+      let add_one = fn(wibble: Int) {
+        let wabble = 1
+        let add_two = fn(wobble: Int) { wobble + 2 }
+        wibble + add_two(1)
+      }
+      add_one(1)
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       33    33 │   detail: fn() -> Int
+       34    34 │   sort:   2_main
+       35    35 │   desc:   app
+       36    36 │   edits:
+       37       │-    [4:36-4:36]: "main"
+       38       │-wabble
+       39       │-  kind:   Variable
+       40       │-  detail: Int
+       41       │-  sort:   2_wabble
+       42       │-  desc:   app
+       43       │-  docs:   "A locally defined variable."
+       44       │-  edits:
+       45       │-    [4:36-4:36]: "wabble"
+       46       │-wibble
+       47       │-  kind:   Variable
+       48       │-  detail: Int
+       49       │-  sort:   2_wibble
+       50       │-  desc:   app
+       51       │-  docs:   "A locally defined variable."
+       52       │-  edits:
+       53       │-    [4:36-4:36]: "wibble"
+       54       │-wobble
+       55       │-  kind:   Variable
+       56       │-  detail: Int
+       57       │-  sort:   2_wobble
+       58       │-  desc:   app
+       59       │-  docs:   "A locally defined variable."
+       60       │-  edits:
+       61       │-    [4:36-4:36]: "wobble"
+             37 │+    [4:36-4:36]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_nested_anonymous_function ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_nested_anonymous_function
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.27s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_nested_anonymous_function.snap.new
+    thread 'language_server::tests::completion::local_variable_nested_anonymous_function' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_nested_anonymous_function' failed in line 850
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.301s] (16/22) gleam-core language_server::tests::completion::local_variable_string
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_string.snap
+    Snapshot: local_variable_string
+    Source: compiler-core/src/language_server/tests/completion.rs:1023
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    fn wibble() {
+      let assert "a" <> j = "ab"
+
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       23    23 │ True
+       24    24 │   kind:   EnumMember
+       25    25 │   detail: gleam
+       26    26 │   sort:   4_True
+       27       │-j
+       28       │-  kind:   Variable
+       29       │-  detail: String
+       30       │-  sort:   2_j
+       31       │-  desc:   app
+       32       │-  docs:   "A locally defined variable."
+       33       │-  edits:
+       34       │-    [3:0-3:0]: "j"
+       35    27 │ wibble
+       36    28 │   kind:   Function
+       37    29 │   detail: fn() -> String
+       38    30 │   sort:   2_wibble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_string ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_string
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.26s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_string.snap.new
+    thread 'language_server::tests::completion::local_variable_string' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_string' failed in line 1023
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.303s] (17/22) gleam-core language_server::tests::completion::local_variable_anonymous_function
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_anonymous_function.snap
+    Snapshot: local_variable_anonymous_function
+    Source: compiler-core/src/language_server/tests/completion.rs:834
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    pub fn main() {
+      let add_one = fn(wibble: Int) { wibble + 1 }
+      add_one(1)
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       29    29 │   detail: fn() -> Int
+       30    30 │   sort:   2_main
+       31    31 │   desc:   app
+       32    32 │   edits:
+       33       │-    [2:34-2:34]: "main"
+       34       │-wibble
+       35       │-  kind:   Variable
+       36       │-  detail: Int
+       37       │-  sort:   2_wibble
+       38       │-  desc:   app
+       39       │-  docs:   "A locally defined variable."
+       40       │-  edits:
+       41       │-    [2:34-2:34]: "wibble"
+             33 │+    [2:34-2:34]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_anonymous_function ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_anonymous_function
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.28s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_anonymous_function.snap.new
+    thread 'language_server::tests::completion::local_variable_anonymous_function' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_anonymous_function' failed in line 834
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.304s] (18/22) gleam-core language_server::tests::completion::local_variable_ignore_anonymous_function_returned
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_returned.snap
+    Snapshot: local_variable_ignore_anonymous_function_returned
+    Source: compiler-core/src/language_server/tests/completion.rs:894
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    pub fn main() {
+      fn(wibble: Int) {
+        let wabble = 1
+        let add_two = fn(wobble: Int) { wobble + 2 }
+        wibble + add_two(1)
+      }
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       26    26 │ True
+       27    27 │   kind:   EnumMember
+       28    28 │   detail: gleam
+       29    29 │   sort:   4_True
+       30       │-add_two
+       31       │-  kind:   Variable
+       32       │-  detail: fn(Int) -> Int
+       33       │-  sort:   2_add_two
+       34       │-  desc:   app
+       35       │-  docs:   "A locally defined variable."
+       36       │-  edits:
+       37       │-    [5:4-5:4]: "add_two"
+       38    30 │ main
+       39    31 │   kind:   Function
+       40    32 │   detail: fn() -> fn(Int) -> Int
+       41    33 │   sort:   2_main
+       42    34 │   desc:   app
+       43    35 │   edits:
+       44       │-    [5:4-5:4]: "main"
+       45       │-wabble
+       46       │-  kind:   Variable
+       47       │-  detail: Int
+       48       │-  sort:   2_wabble
+       49       │-  desc:   app
+       50       │-  docs:   "A locally defined variable."
+       51       │-  edits:
+       52       │-    [5:4-5:4]: "wabble"
+       53       │-wibble
+       54       │-  kind:   Variable
+       55       │-  detail: Int
+       56       │-  sort:   2_wibble
+       57       │-  desc:   app
+       58       │-  docs:   "A locally defined variable."
+       59       │-  edits:
+       60       │-    [5:4-5:4]: "wibble"
+             36 │+    [5:4-5:4]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_ignore_anonymous_function_returned ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_ignore_anonymous_function_returned
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.27s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_returned.snap.new
+    thread 'language_server::tests::completion::local_variable_ignore_anonymous_function_returned' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_ignore_anonymous_function_returned' failed in line 894
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.313s] (19/22) gleam-core language_server::tests::completion::local_variable_ignore_anonymous_function_args_nested
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args_nested.snap
+    Snapshot: local_variable_ignore_anonymous_function_args_nested
+    Source: compiler-core/src/language_server/tests/completion.rs:879
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    pub fn main() {
+      let add_one = fn(wibble: Int) {
+        let wabble = 1
+        let add_two = fn(wobble: Int) { wobble + 2 }
+        wibble + add_two(1)
+      }
+      add_one(1)
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       27    27 │ True
+       28    28 │   kind:   EnumMember
+       29    29 │   detail: gleam
+       30    30 │   sort:   4_True
+       31       │-add_two
+       32       │-  kind:   Variable
+       33       │-  detail: fn(Int) -> Int
+       34       │-  sort:   2_add_two
+       35       │-  desc:   app
+       36       │-  docs:   "A locally defined variable."
+       37       │-  edits:
+       38       │-    [5:4-5:4]: "add_two"
+       39    31 │ main
+       40    32 │   kind:   Function
+       41    33 │   detail: fn() -> Int
+       42    34 │   sort:   2_main
+       43    35 │   desc:   app
+       44    36 │   edits:
+       45       │-    [5:4-5:4]: "main"
+       46       │-wabble
+       47       │-  kind:   Variable
+       48       │-  detail: Int
+       49       │-  sort:   2_wabble
+       50       │-  desc:   app
+       51       │-  docs:   "A locally defined variable."
+       52       │-  edits:
+       53       │-    [5:4-5:4]: "wabble"
+       54       │-wibble
+       55       │-  kind:   Variable
+       56       │-  detail: Int
+       57       │-  sort:   2_wibble
+       58       │-  desc:   app
+       59       │-  docs:   "A locally defined variable."
+       60       │-  edits:
+       61       │-    [5:4-5:4]: "wibble"
+             37 │+    [5:4-5:4]: "main"
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_ignore_anonymous_function_args_nested ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_ignore_anonymous_function_args_nested
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.28s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args_nested.snap.new
+    thread 'language_server::tests::completion::local_variable_ignore_anonymous_function_args_nested' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_ignore_anonymous_function_args_nested' failed in line 879
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.313s] (20/22) gleam-core language_server::tests::completion::local_variable_inside_nested_exprs
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_inside_nested_exprs.snap
+    Snapshot: local_variable_inside_nested_exprs
+    Source: compiler-core/src/language_server/tests/completion.rs:924
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    type Foo { Bar(List(#(Bool))) }
+    fn wibble() {
+      Bar([#(!{
+        let foo = True
+        foo
+      })])
+      todo
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       34    34 │ True
+       35    35 │   kind:   EnumMember
+       36    36 │   detail: gleam
+       37    37 │   sort:   4_True
+       38       │-foo
+       39       │-  kind:   Variable
+       40       │-  detail: Bool
+       41       │-  sort:   2_foo
+       42       │-  desc:   app
+       43       │-  docs:   "A locally defined variable."
+       44       │-  edits:
+       45       │-    [5:4-5:4]: "foo"
+       46    38 │ wibble
+       47    39 │   kind:   Function
+       48    40 │   detail: fn() -> a
+       49    41 │   sort:   2_wibble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_inside_nested_exprs ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_inside_nested_exprs
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.28s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_inside_nested_exprs.snap.new
+    thread 'language_server::tests::completion::local_variable_inside_nested_exprs' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_inside_nested_exprs' failed in line 924
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.314s] (21/22) gleam-core language_server::tests::completion::local_variable_as
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_as.snap
+    Snapshot: local_variable_as
+    Source: compiler-core/src/language_server/tests/completion.rs:990
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    fn wibble() {
+      let b as c = 5
+
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       23    23 │ True
+       24    24 │   kind:   EnumMember
+       25    25 │   detail: gleam
+       26    26 │   sort:   4_True
+       27       │-b
+       28       │-  kind:   Variable
+       29       │-  detail: Int
+       30       │-  sort:   2_b
+       31       │-  desc:   app
+       32       │-  docs:   "A locally defined variable."
+       33       │-  edits:
+       34       │-    [3:0-3:0]: "b"
+       35       │-c
+       36       │-  kind:   Variable
+       37       │-  detail: Int
+       38       │-  sort:   2_c
+       39       │-  desc:   app
+       40       │-  docs:   "A locally defined variable."
+       41       │-  edits:
+       42       │-    [3:0-3:0]: "c"
+       43    27 │ wibble
+       44    28 │   kind:   Function
+       45    29 │   detail: fn() -> Int
+       46    30 │   sort:   2_wibble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_as ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_as
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.27s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_as.snap.new
+    thread 'language_server::tests::completion::local_variable_as' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_as' failed in line 990
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.315s] (22/22) gleam-core language_server::tests::completion::local_variable_ignored
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignored.snap
+    Snapshot: local_variable_ignored
+    Source: compiler-core/src/language_server/tests/completion.rs:979
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    fn wibble() {
+      let a = 1
+      let _b = 2
+
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+       24    24 │ True
+       25    25 │   kind:   EnumMember
+       26    26 │   detail: gleam
+       27    27 │   sort:   4_True
+       28       │-a
+       29       │-  kind:   Variable
+       30       │-  detail: Int
+       31       │-  sort:   2_a
+       32       │-  desc:   app
+       33       │-  docs:   "A locally defined variable."
+       34       │-  edits:
+       35       │-    [4:0-4:0]: "a"
+       36    28 │ wibble
+       37    29 │   kind:   Function
+       38    30 │   detail: fn() -> Int
+       39    31 │   sort:   2_wibble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test language_server::tests::completion::local_variable_ignored ... FAILED
+
+    failures:
+
+    failures:
+        language_server::tests::completion::local_variable_ignored
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2711 filtered out; finished in 1.28s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignored.snap.new
+    thread 'language_server::tests::completion::local_variable_ignored' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'local_variable_ignored' failed in line 979
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   1.320s] 22 tests run: 6 passed, 16 failed, 2690 skipped
+        FAIL [   1.263s] ( 7/22) gleam-core language_server::tests::completion::local_variable_pipe_with_args
+        FAIL [   1.266s] ( 8/22) gleam-core language_server::tests::completion::local_variable
+        FAIL [   1.273s] ( 9/22) gleam-core language_server::tests::completion::local_variable_function_call
+        FAIL [   1.276s] (10/22) gleam-core language_server::tests::completion::local_variable_bit_array
+        FAIL [   1.276s] (11/22) gleam-core language_server::tests::completion::local_variable_ignore_anonymous_function_args
+        FAIL [   1.279s] (12/22) gleam-core language_server::tests::completion::local_variable_pipe
+        FAIL [   1.284s] (13/22) gleam-core language_server::tests::completion::local_variable_case_expression
+        FAIL [   1.286s] (14/22) gleam-core language_server::tests::completion::local_variable_tuple
+        FAIL [   1.299s] (15/22) gleam-core language_server::tests::completion::local_variable_nested_anonymous_function
+        FAIL [   1.301s] (16/22) gleam-core language_server::tests::completion::local_variable_string
+        FAIL [   1.303s] (17/22) gleam-core language_server::tests::completion::local_variable_anonymous_function
+        FAIL [   1.304s] (18/22) gleam-core language_server::tests::completion::local_variable_ignore_anonymous_function_returned
+        FAIL [   1.313s] (19/22) gleam-core language_server::tests::completion::local_variable_ignore_anonymous_function_args_nested
+        FAIL [   1.313s] (20/22) gleam-core language_server::tests::completion::local_variable_inside_nested_exprs
+        FAIL [   1.314s] (21/22) gleam-core language_server::tests::completion::local_variable_as
+        FAIL [   1.315s] (22/22) gleam-core language_server::tests::completion::local_variable_ignored
+error: test run failed
+reward=0 graded=22 found=5 failed=4 parsed=22 framework=cargo exit_code=100

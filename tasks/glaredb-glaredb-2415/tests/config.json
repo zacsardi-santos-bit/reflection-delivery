@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p glaredb --test drop_tables_test",
+  "test_files": [
+    "crates/glaredb/tests/drop_tables_test.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "glaredb::drop_tables_test test_drop_tables_removes_files"
+  ],
+  "PASS_TO_PASS": []
+}

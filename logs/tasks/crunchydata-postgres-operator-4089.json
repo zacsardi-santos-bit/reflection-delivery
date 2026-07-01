@@ -1,0 +1,23 @@
+{
+ "task": "crunchydata-postgres-operator-4089",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds instrumentation-driven exporters across internal/collector/*.go; F2P TestConfigToYAML/{NilInstrumentationSpec,InstrumentationSpecDefined} etc run via go -json in internal/collector"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

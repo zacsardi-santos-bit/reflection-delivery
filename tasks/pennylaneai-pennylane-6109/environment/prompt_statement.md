@@ -1,0 +1,7 @@
+I'm working on a quantum computing project that requires modular addition on quantum registers, and I'd like to add two new quantum operation templates to the library.
+
+The first should work on quantum registers that are already in the Fourier (frequency) domain — it should take a classical integer constant and add it to the encoded quantum value, modulo some integer. It should support negative constants, handle cases where no modulus is specified (defaulting to the largest value the wires can represent), require ancilla wires only when a non-trivial modulus is used, and reject float values for the constant or modulus with a clear error message. It should also enforce that ancilla wires don't overlap with the data wires.
+
+The second template should work on standard computational-basis registers and perform the same modular addition, but handle the Fourier transform internally. It should wrap the first operation by applying the transform, using the first adder, then undoing the transform. It should expose a similar interface and the same validation behavior.
+
+Both operations should be accessible from the top-level library namespace, support named as well as numeric wire labels, pass the library's standard operation validity checks, be compatible with just-in-time compilation, and support program capture (functional tracing). The Fourier-basis version should also expose its internal phase-rotation helper as a module-level function so the decomposition logic can be reused.

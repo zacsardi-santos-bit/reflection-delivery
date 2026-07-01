@@ -1,0 +1,21 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/recipes/terraform -run Test_InspectTFModuleConfig -count=1",
+  "test_files": [
+    "pkg/recipes/terraform/module_test.go",
+    "test/functional/shared/resources/recipe_terraform_test.go",
+    "test/functional/shared/resources/testdata/corerp-resources-terraform-redis.bicep",
+    "test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/modules/main.tf",
+    "test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/modules/variables.tf"
+  ],
+  "num_test_files": 5,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/radius-project/radius/pkg/recipes/terraform::Test_InspectTFModuleConfig/aws_provider_only",
+    "github.com/radius-project/radius/pkg/recipes/terraform::Test_InspectTFModuleConfig/aws_provider_with_recipe_context_variable,_output_and_parameters",
+    "github.com/radius-project/radius/pkg/recipes/terraform::Test_InspectTFModuleConfig/invalid_module_name_-_non_existent_module_directory",
+    "github.com/radius-project/radius/pkg/recipes/terraform::Test_InspectTFModuleConfig/submodule_path",
+    "github.com/radius-project/radius/pkg/recipes/terraform::Test_InspectTFModuleConfig"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,347 @@
+patching file crates/oxc_minifier/tests/ecmascript/may_have_side_effects.rs
+patching file crates/oxc_minifier/tests/ecmascript/to_boolean.rs
+patching file crates/oxc_minifier/tests/ecmascript/to_number.rs
+patching file crates/oxc_minifier/tests/ecmascript/to_string.rs
+patching file crates/oxc_minifier/tests/ecmascript/value_type.rs
+   Compiling oxc_traverse v0.73.2 (/workspace/repo/crates/oxc_traverse)
+   Compiling oxc_ecmascript v0.73.2 (/workspace/repo/crates/oxc_ecmascript)
+   Compiling oxc_semantic v0.73.2 (/workspace/repo/crates/oxc_semantic)
+   Compiling oxc_parser v0.73.2 (/workspace/repo/crates/oxc_parser)
+   Compiling oxc_codegen v0.73.2 (/workspace/repo/crates/oxc_codegen)
+   Compiling oxc_mangler v0.73.2 (/workspace/repo/crates/oxc_mangler)
+   Compiling oxc_minifier v0.73.2 (/workspace/repo/crates/oxc_minifier)
+    Finished `test` profile [unoptimized] target(s) in 20.28s
+────────────
+ Nextest run ID f1c471da-a096-42f2-82c0-46f3426980fa with nextest profile: default
+    Starting 328 tests across 2 binaries (48 tests skipped)
+        PASS [   0.027s] (  1/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_issue820
+        PASS [   0.029s] (  2/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_redeclaration_let_in_function
+        PASS [   0.030s] (  3/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_aggressive_redeclaration_in_for
+        PASS [   0.034s] (  4/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_collapsing
+        PASS [   0.035s] (  5/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_issue397
+        PASS [   0.035s] (  6/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_if_else_var_declarations_let
+        PASS [   0.036s] (  7/328) oxc_minifier peephole::collapse_variable_declarations::test::collapse_for::test_for_in
+        PASS [   0.036s] (  8/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_arrow_function
+        PASS [   0.037s] (  9/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_mixed_declaration_types
+        PASS [   0.038s] ( 10/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_if_else_var_declarations
+        PASS [   0.038s] ( 11/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_computed_to_member_expression
+        PASS [   0.038s] ( 12/328) oxc_minifier peephole::collapse_variable_declarations::test::collapse_for::test_for
+        PASS [   0.038s] ( 13/328) oxc_minifier peephole::collapse_variable_declarations::test::collapse_for::test_for_of
+        PASS [   0.038s] ( 14/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_uncollapsable_declarations
+        PASS [   0.039s] ( 15/328) oxc_minifier peephole::convert_to_dotted_properties::test::test5746867
+        PASS [   0.039s] ( 16/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_aggressive_redeclaration_of_let_in_for
+        PASS [   0.039s] ( 17/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_arguments_assignment
+        PASS [   0.039s] ( 18/328) oxc_minifier peephole::collapse_variable_declarations::test::join_vars::test_collapsing_let_const
+        PASS [   0.019s] ( 19/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_convert_to_dotted_properties_already_dotted
+        PASS [   0.020s] ( 20/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_convert_to_dotted_properties_computed_property_with_default_value
+        PASS [   0.024s] ( 21/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_convert_to_dotted_properties_computed_property_or_field
+        PASS [   0.025s] ( 22/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_convert_to_dotted_properties_convert
+        PASS [   0.027s] ( 23/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_convert_to_dotted_properties_continue_optional_chaining
+        PASS [   0.027s] ( 24/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_convert_to_dotted_properties_optional_chaining
+        PASS [   0.030s] ( 25/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_convert_to_dotted_properties_quoted_props
+        PASS [   0.031s] ( 26/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_convert_to_dotted_properties_do_not_convert
+        PASS [   0.027s] ( 27/328) oxc_minifier peephole::fold_constants::test::test_boolean_boolean_comparison
+        PASS [   0.030s] ( 28/328) oxc_minifier peephole::convert_to_dotted_properties::test::test_index
+        PASS [   0.030s] ( 29/328) oxc_minifier peephole::fold_constants::test::bigint::test_bigint_string_comparison
+        PASS [   0.030s] ( 30/328) oxc_minifier peephole::fold_constants::test::bigint::test_fold_bitwise_op_with_big_int
+        PASS [   0.029s] ( 31/328) oxc_minifier peephole::fold_constants::test::test_associative_fold_constants_with_variables
+        PASS [   0.030s] ( 32/328) oxc_minifier peephole::fold_constants::test::bigint::test_object_bigint_comparison
+        PASS [   0.032s] ( 33/328) oxc_minifier peephole::fold_constants::test::js_typeof
+        PASS [   0.035s] ( 34/328) oxc_minifier peephole::fold_constants::test::bigint::test_bigint_number_comparison
+        PASS [   0.026s] ( 35/328) oxc_minifier peephole::fold_constants::test::test_boolean_number_comparison
+        PASS [   0.035s] ( 36/328) oxc_minifier peephole::fold_constants::test::bigint::test_string_bigint_comparison
+        PASS [   0.036s] ( 37/328) oxc_minifier peephole::fold_constants::test::bigint::test_fold_object_spread
+        PASS [   0.025s] ( 38/328) oxc_minifier peephole::fold_constants::test::test_boolean_string_comparison
+        PASS [   0.024s] ( 39/328) oxc_minifier peephole::fold_constants::test::test_comparison
+        PASS [   0.023s] ( 40/328) oxc_minifier peephole::fold_constants::test::test_fold_arithmetic
+        PASS [   0.025s] ( 41/328) oxc_minifier peephole::fold_constants::test::test_fold_arithmetic_infinity
+        PASS [   0.028s] ( 42/328) oxc_minifier peephole::fold_constants::test::test_fold_add
+        PASS [   0.024s] ( 43/328) oxc_minifier peephole::fold_constants::test::test_fold_array_length
+        PASS [   0.027s] ( 44/328) oxc_minifier peephole::fold_constants::test::test_fold_bitwise_op
+        PASS [   0.027s] ( 45/328) oxc_minifier peephole::fold_constants::test::test_fold_bitwise_op_additional
+        PASS [   0.030s] ( 46/328) oxc_minifier peephole::fold_constants::test::test_fold_bitwise_not
+        PASS [   0.033s] ( 47/328) oxc_minifier peephole::fold_constants::test::test_fold_bit_shifts
+        PASS [   0.031s] ( 48/328) oxc_minifier peephole::fold_constants::test::test_fold_bitwise_op2
+        PASS [   0.031s] ( 49/328) oxc_minifier peephole::fold_constants::test::test_fold_division
+        PASS [   0.027s] ( 50/328) oxc_minifier peephole::fold_constants::test::test_fold_instance_of_additional
+        PASS [   0.031s] ( 51/328) oxc_minifier peephole::fold_constants::test::test_fold_exponential
+        PASS [   0.028s] ( 52/328) oxc_minifier peephole::fold_constants::test::test_fold_invalid_typeof_comparison
+        PASS [   0.028s] ( 53/328) oxc_minifier peephole::fold_constants::test::test_fold_left_child_op
+        PASS [   0.029s] ( 54/328) oxc_minifier peephole::fold_constants::test::test_fold_left
+        PASS [   0.032s] ( 55/328) oxc_minifier peephole::fold_constants::test::test_fold_instance_of
+        PASS [   0.025s] ( 56/328) oxc_minifier peephole::fold_constants::test::test_fold_logical_op2
+        PASS [   0.030s] ( 57/328) oxc_minifier peephole::fold_constants::test::test_fold_logical_op
+        PASS [   0.022s] ( 58/328) oxc_minifier peephole::fold_constants::test::test_fold_multiply
+        PASS [   0.025s] ( 59/328) oxc_minifier peephole::fold_constants::test::test_fold_nullish_coalesce
+        PASS [   0.025s] ( 60/328) oxc_minifier peephole::fold_constants::test::test_fold_opt_chain
+        PASS [   0.023s] ( 61/328) oxc_minifier peephole::fold_constants::test::test_fold_remainder
+        PASS [   0.024s] ( 62/328) oxc_minifier peephole::fold_constants::test::test_fold_same_typeof
+        PASS [   0.024s] ( 63/328) oxc_minifier peephole::fold_constants::test::test_fold_shift_right
+        PASS [   0.025s] ( 64/328) oxc_minifier peephole::fold_constants::test::test_fold_sub
+        PASS [   0.026s] ( 65/328) oxc_minifier peephole::fold_constants::test::test_fold_string_length
+        PASS [   0.030s] ( 66/328) oxc_minifier peephole::fold_constants::test::test_fold_shift_left
+        PASS [   0.029s] ( 67/328) oxc_minifier peephole::fold_constants::test::test_fold_shift_right_zero_fill
+        PASS [   0.029s] ( 68/328) oxc_minifier peephole::fold_constants::test::test_fold_unary_big_int
+        PASS [   0.028s] ( 69/328) oxc_minifier peephole::fold_constants::test::test_fold_useless_string_addition
+        PASS [   0.027s] ( 70/328) oxc_minifier peephole::fold_constants::test::test_issue_8782
+        PASS [   0.031s] ( 71/328) oxc_minifier peephole::fold_constants::test::test_fold_unary
+        PASS [   0.028s] ( 72/328) oxc_minifier peephole::fold_constants::test::test_inline_values_in_template_literal
+        PASS [   0.025s] ( 73/328) oxc_minifier peephole::fold_constants::test::test_number_boolean_comparison
+        PASS [   0.030s] ( 74/328) oxc_minifier peephole::fold_constants::test::test_fold_void
+        PASS [   0.030s] ( 75/328) oxc_minifier peephole::fold_constants::test::test_nan_comparison
+        PASS [   0.025s] ( 76/328) oxc_minifier peephole::fold_constants::test::test_number_string_comparison
+        PASS [   0.033s] ( 77/328) oxc_minifier peephole::fold_constants::test::test_null_comparison1
+        PASS [   0.027s] ( 78/328) oxc_minifier peephole::fold_constants::test::test_number_constructor
+        PASS [   0.027s] ( 79/328) oxc_minifier peephole::fold_constants::test::test_number_number_comparison
+        PASS [   0.021s] ( 80/328) oxc_minifier peephole::fold_constants::test::test_string_boolean_comparison
+        PASS [   0.028s] ( 81/328) oxc_minifier peephole::fold_constants::test::test_string_add
+        PASS [   0.027s] ( 82/328) oxc_minifier peephole::fold_constants::test::test_string_string_comparison
+        PASS [   0.028s] ( 83/328) oxc_minifier peephole::fold_constants::test::test_string_number_comparison
+        PASS [   0.027s] ( 84/328) oxc_minifier peephole::fold_constants::test::test_unary_ops_string_compare
+        PASS [   0.030s] ( 85/328) oxc_minifier peephole::fold_constants::test::test_to_number
+        PASS [   0.027s] ( 86/328) oxc_minifier peephole::fold_constants::test::test_undefined_comparison2
+        PASS [   0.027s] ( 87/328) oxc_minifier peephole::fold_constants::test::test_undefined_comparison3
+        PASS [   0.029s] ( 88/328) oxc_minifier peephole::minimize_conditional_expression::test::compress_conditional
+        PASS [   0.029s] ( 89/328) oxc_minifier peephole::minimize_conditions::test::compress_binary_boolean
+        PASS [   0.028s] ( 90/328) oxc_minifier peephole::minimize_conditions::test::compress_binary_number
+        PASS [   0.031s] ( 91/328) oxc_minifier peephole::minimize_conditional_expression::test::test_minimize_expr_condition
+        PASS [   0.025s] ( 92/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_boolean_result0
+        PASS [   0.035s] ( 93/328) oxc_minifier peephole::fold_constants::test::undefined_comparison1
+        PASS [   0.026s] ( 94/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_boxed_number_vs_zero
+        PASS [   0.027s] ( 95/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_boolean_result1
+        PASS [   0.035s] ( 96/328) oxc_minifier peephole::minimize_conditional_expression::test::minimize_conditional_exprs
+        PASS [   0.028s] ( 97/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_all_type
+        PASS [   0.025s] ( 98/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_boxed_primitives
+        PASS [   0.029s] ( 99/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_disabled
+        PASS [   0.024s] (100/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_expression
+        PASS [   0.026s] (101/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_hook
+        PASS [   0.026s] (102/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_non_number_vs_zero
+        PASS [   0.027s] (103/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_if
+        PASS [   0.026s] (104/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_primitives_vs_null
+        PASS [   0.028s] (105/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_not
+        PASS [   0.025s] (106/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_unknown_type
+        PASS [   0.024s] (107/328) oxc_minifier peephole::minimize_conditions::test::test_combine_ifs1
+        PASS [   0.028s] (108/328) oxc_minifier peephole::minimize_conditions::test::test_coercion_substitution_while
+        PASS [   0.025s] (109/328) oxc_minifier peephole::minimize_conditions::test::test_compress_conditional_expression_inside
+        PASS [   0.028s] (110/328) oxc_minifier peephole::minimize_conditions::test::test_combine_ifs2
+        PASS [   0.025s] (111/328) oxc_minifier peephole::minimize_conditions::test::test_compress_normal_assignment_to_combined_logical_assignment
+        PASS [   0.027s] (112/328) oxc_minifier peephole::minimize_conditions::test::test_compress_is_loose_boolean
+        PASS [   0.029s] (113/328) oxc_minifier peephole::minimize_conditions::test::test_combine_ifs3
+        PASS [   0.029s] (114/328) oxc_minifier peephole::minimize_conditions::test::test_dangling_else
+        PASS [   0.030s] (115/328) oxc_minifier peephole::minimize_conditions::test::test_dont_remove_duplicate_statements_without_normalization
+        PASS [   0.030s] (116/328) oxc_minifier peephole::minimize_conditions::test::test_fold_if_with_lower_operators_inside
+        PASS [   0.025s] (117/328) oxc_minifier peephole::minimize_conditions::test::test_fold_logical_expression_to_assignment_expression
+        PASS [   0.023s] (118/328) oxc_minifier peephole::minimize_conditions::test::test_fold_logical_op_string_compare
+        PASS [   0.029s] (119/328) oxc_minifier peephole::minimize_conditions::test::test_fold_is_null_or_undefined
+        PASS [   0.025s] (120/328) oxc_minifier peephole::minimize_conditions::test::test_fold_loop_break
+        PASS [   0.027s] (121/328) oxc_minifier peephole::minimize_conditions::test::test_fold_not
+        PASS [   0.026s] (122/328) oxc_minifier peephole::minimize_conditions::test::test_fold_returns
+        PASS [   0.025s] (123/328) oxc_minifier peephole::minimize_conditions::test::test_fold_triple_not
+        PASS [   0.029s] (124/328) oxc_minifier peephole::minimize_conditions::test::test_fold_one_child_blocks
+        PASS [   0.030s] (125/328) oxc_minifier peephole::minimize_conditions::test::test_fold_returns_integration2
+        PASS [   0.025s] (126/328) oxc_minifier peephole::minimize_conditions::test::test_issue925
+        PASS [   0.026s] (127/328) oxc_minifier peephole::minimize_conditions::test::test_minimize_condition_example1
+        PASS [   0.027s] (128/328) oxc_minifier peephole::minimize_conditions::test::test_minimize_comma
+        PASS [   0.026s] (129/328) oxc_minifier peephole::minimize_conditions::test::test_minimize_hook
+        PASS [   0.026s] (130/328) oxc_minifier peephole::minimize_conditions::test::test_minimize_if_with_new_target_condition
+        PASS [   0.025s] (131/328) oxc_minifier peephole::minimize_conditions::test::test_minimize_while_condition
+        PASS [   0.029s] (132/328) oxc_minifier peephole::minimize_conditions::test::test_minimize_for_condition
+        PASS [   0.025s] (133/328) oxc_minifier peephole::minimize_conditions::test::test_negate_empty_if_stmt_consequent
+        PASS [   0.024s] (134/328) oxc_minifier peephole::minimize_conditions::test::test_preserve_if
+        PASS [   0.029s] (135/328) oxc_minifier peephole::minimize_conditions::test::test_nested_if_combine
+        PASS [   0.025s] (136/328) oxc_minifier peephole::minimize_conditions::test::test_not_cond
+        PASS [   0.024s] (137/328) oxc_minifier peephole::minimize_conditions::test::test_remove_duplicate_throw
+        PASS [   0.028s] (138/328) oxc_minifier peephole::minimize_conditions::test::test_remove_duplicate_return
+        PASS [   0.026s] (139/328) oxc_minifier peephole::minimize_conditions::test::test_remove_else_cause
+        PASS [   0.027s] (140/328) oxc_minifier peephole::minimize_conditions::test::test_remove_else_cause2
+        PASS [   0.027s] (141/328) oxc_minifier peephole::minimize_conditions::test::test_remove_else_cause3
+        PASS [   0.024s] (142/328) oxc_minifier peephole::minimize_exit_points::test::test_dont_remove_break_in_try_finally
+        PASS [   0.032s] (143/328) oxc_minifier peephole::minimize_conditions::test::test_remove_else_cause1
+        PASS [   0.028s] (144/328) oxc_minifier peephole::minimize_conditions::test::test_remove_else_cause4
+        PASS [   0.028s] (145/328) oxc_minifier peephole::minimize_conditions::test::test_try_compress_type_of_equal_string
+        PASS [   0.026s] (146/328) oxc_minifier peephole::minimize_exit_points::test::test_function_return_optimization1
+        PASS [   0.029s] (147/328) oxc_minifier peephole::minimize_exit_points::test::test_dont_test_break_in_do_while_if_condition_has_side_effects
+        PASS [   0.030s] (148/328) oxc_minifier peephole::minimize_expression_in_boolean_context::test::test_try_fold_in_boolean_context
+        PASS [   0.032s] (149/328) oxc_minifier peephole::minimize_exit_points::test::test_function_return_scoped
+        PASS [   0.030s] (150/328) oxc_minifier peephole::minimize_not_expression::test::minimize_duplicate_nots
+        PASS [   0.033s] (151/328) oxc_minifier peephole::minimize_if_statement::test::test_minimize_if
+        PASS [   0.027s] (152/328) oxc_minifier peephole::normalize::test::drop_console
+        PASS [   0.028s] (153/328) oxc_minifier peephole::minimize_not_expression::test::minimize_nots_with_binary_expressions
+        PASS [   0.027s] (154/328) oxc_minifier peephole::normalize::test::drop_debugger
+        PASS [   0.025s] (155/328) oxc_minifier peephole::normalize::test::fold_number_nan
+        PASS [   0.027s] (156/328) oxc_minifier peephole::normalize::test::parens
+        PASS [   0.022s] (157/328) oxc_minifier peephole::normalize::test::test_void_ident
+        PASS [   0.027s] (158/328) oxc_minifier peephole::normalize::test::test_const_to_let
+        PASS [   0.031s] (159/328) oxc_minifier peephole::normalize::test::pure_constructors
+        PASS [   0.025s] (160/328) oxc_minifier peephole::remove_dead_code::test::keep_module_syntax
+        PASS [   0.027s] (161/328) oxc_minifier peephole::normalize::test::test_while
+        PASS [   0.025s] (162/328) oxc_minifier peephole::remove_dead_code::test::remove_unreachable
+        PASS [   0.026s] (163/328) oxc_minifier peephole::remove_dead_code::test::remove_empty_spread_arguments
+        PASS [   0.028s] (164/328) oxc_minifier peephole::remove_dead_code::test::remove_constant_value
+        PASS [   0.027s] (165/328) oxc_minifier peephole::remove_dead_code::test::remove_unused_expressions_in_for
+        PASS [   0.025s] (166/328) oxc_minifier peephole::remove_dead_code::test::remove_unused_expressions_in_sequence
+        PASS [   0.025s] (167/328) oxc_minifier peephole::remove_dead_code::test::test_fold_conditional
+        PASS [   0.028s] (168/328) oxc_minifier peephole::remove_dead_code::test::test_fold_block
+        PASS [   0.025s] (169/328) oxc_minifier peephole::remove_dead_code::test::test_remove_empty_static_block
+        PASS [   0.027s] (170/328) oxc_minifier peephole::remove_dead_code::test::test_minimize_loop_with_constant_condition_vanilla_for
+        PASS [   0.028s] (171/328) oxc_minifier peephole::remove_dead_code::test::test_fold_if_statement
+        PASS [   0.029s] (172/328) oxc_minifier peephole::remove_dead_code::test::test_fold_try_statement
+        PASS [   0.029s] (173/328) oxc_minifier peephole::remove_dead_code::test::test_fold_useless_for
+        PASS [   0.027s] (174/328) oxc_minifier peephole::remove_dead_code::test::test_remove_no_op_labelled_statement
+        PASS [   0.028s] (175/328) oxc_minifier peephole::remove_unused_expression::test::no_side_effects
+        PASS [   0.025s] (176/328) oxc_minifier peephole::remove_unused_expression::test::test_array_literal_containing_spread
+        PASS [   0.026s] (177/328) oxc_minifier peephole::remove_unused_expression::test::test_array_literal
+        PASS [   0.023s] (178/328) oxc_minifier peephole::remove_unused_expression::test::test_fold_conditional_expression
+        PASS [   0.026s] (179/328) oxc_minifier peephole::remove_unused_expression::test::test_fold_call_expression
+        PASS [   0.027s] (180/328) oxc_minifier peephole::remove_unused_expression::test::test_fold_binary_expression
+        PASS [   0.027s] (181/328) oxc_minifier peephole::remove_unused_expression::test::test_fold_iife
+        PASS [   0.028s] (182/328) oxc_minifier peephole::remove_unused_expression::test::test_fold_sequence_expr
+        PASS [   0.026s] (183/328) oxc_minifier peephole::remove_unused_expression::test::test_fold_template_literal
+        PASS [   0.026s] (184/328) oxc_minifier peephole::remove_unused_expression::test::test_fold_unary_expression_statement
+        PASS [   0.026s] (185/328) oxc_minifier peephole::remove_unused_expression::test::test_logical_expression
+        PASS [   0.025s] (186/328) oxc_minifier peephole::remove_unused_expression::test::test_new_constructor_side_effect
+        PASS [   0.026s] (187/328) oxc_minifier peephole::remove_unused_expression::test::test_remove_unused_expression
+        PASS [   0.028s] (188/328) oxc_minifier peephole::remove_unused_expression::test::test_object_literal
+        PASS [   0.027s] (189/328) oxc_minifier peephole::replace_known_methods::test::test_array_of_no_args
+        PASS [   0.027s] (190/328) oxc_minifier peephole::replace_known_methods::test::test_array_of_no_change
+        PASS [   0.027s] (191/328) oxc_minifier peephole::replace_known_methods::test::test_array_of_no_spread
+        PASS [   0.025s] (192/328) oxc_minifier peephole::replace_known_methods::test::test_array_of_spread
+        PASS [   0.024s] (193/328) oxc_minifier peephole::replace_known_methods::test::test_fold_array_bug
+        PASS [   0.024s] (194/328) oxc_minifier peephole::replace_known_methods::test::test_fold_integer_index_access
+        PASS [   0.027s] (195/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_abs
+        PASS [   0.026s] (196/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_ceil
+        PASS [   0.029s] (197/328) oxc_minifier peephole::replace_known_methods::test::test_fold_concat_chaining
+        PASS [   0.024s] (198/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_floor
+        PASS [   0.029s] (199/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_bug
+        PASS [   0.025s] (200/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_fround
+        PASS [   0.027s] (201/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_fround_j2cl
+        PASS [   0.028s] (202/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_max
+        PASS [   0.027s] (203/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_min
+        PASS [   0.026s] (204/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_round
+        PASS [   0.026s] (205/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_sign
+        PASS [   0.025s] (206/328) oxc_minifier peephole::replace_known_methods::test::test_fold_math_functions_trunc
+        PASS [   0.026s] (207/328) oxc_minifier peephole::replace_known_methods::test::test_fold_pow
+        PASS [   0.027s] (208/328) oxc_minifier peephole::replace_known_methods::test::test_fold_roots
+        PASS [   0.027s] (209/328) oxc_minifier peephole::replace_known_methods::test::test_fold_string_char_code_at
+        PASS [   0.030s] (210/328) oxc_minifier peephole::replace_known_methods::test::test_fold_string_char_at
+        PASS [   0.029s] (211/328) oxc_minifier peephole::replace_known_methods::test::test_fold_string_from_char_code
+        PASS [   0.032s] (212/328) oxc_minifier peephole::replace_known_methods::test::test_fold_string_concat
+        PASS [   0.027s] (213/328) oxc_minifier peephole::replace_known_methods::test::test_fold_string_replace
+        PASS [   0.025s] (214/328) oxc_minifier peephole::replace_known_methods::test::test_fold_string_trim
+        PASS [   0.028s] (215/328) oxc_minifier peephole::replace_known_methods::test::test_fold_string_slice
+        PASS [   0.026s] (216/328) oxc_minifier peephole::replace_known_methods::test::test_number_constants
+        PASS [   0.030s] (217/328) oxc_minifier peephole::replace_known_methods::test::test_fold_string_substring
+        PASS [   0.034s] (218/328) oxc_minifier peephole::replace_known_methods::test::test_fold_string_replace_all
+        PASS [   0.029s] (219/328) oxc_minifier peephole::replace_known_methods::test::test_remove_array_literal_from_front_of_concat
+        PASS [   0.026s] (220/328) oxc_minifier peephole::replace_known_methods::test::test_to_lower
+        PASS [   0.028s] (221/328) oxc_minifier peephole::replace_known_methods::test::test_string_index_of
+        PASS [   0.028s] (222/328) oxc_minifier peephole::replace_known_methods::test::test_to_string
+        PASS [   0.026s] (223/328) oxc_minifier peephole::statement_fusion::test::fold_block_into_if
+        PASS [   0.028s] (224/328) oxc_minifier peephole::replace_known_methods::test::test_to_upper
+        PASS [   0.027s] (225/328) oxc_minifier peephole::statement_fusion::test::fold_block_return
+        PASS [   0.022s] (226/328) oxc_minifier peephole::statement_fusion::test::fold_switch
+        PASS [   0.024s] (227/328) oxc_minifier peephole::statement_fusion::test::fold_block_with_statements
+        PASS [   0.028s] (228/328) oxc_minifier peephole::statement_fusion::test::fold_block_throw
+        PASS [   0.024s] (229/328) oxc_minifier peephole::statement_fusion::test::fuse_into_block
+        PASS [   0.024s] (230/328) oxc_minifier peephole::statement_fusion::test::fuse_into_for_in1
+        PASS [   0.026s] (231/328) oxc_minifier peephole::statement_fusion::test::fuse_into_for_in2
+        PASS [   0.024s] (232/328) oxc_minifier peephole::statement_fusion::test::fuse_into_vanilla_for1
+        PASS [   0.026s] (233/328) oxc_minifier peephole::statement_fusion::test::fuse_into_switch_cases
+        PASS [   0.026s] (234/328) oxc_minifier peephole::statement_fusion::test::fuse_into_vanilla_for2
+        PASS [   0.025s] (235/328) oxc_minifier peephole::statement_fusion::test::no_function_block_changes
+        PASS [   0.025s] (236/328) oxc_minifier peephole::statement_fusion::test::no_fuse_into_block
+        PASS [   0.024s] (237/328) oxc_minifier peephole::statement_fusion::test::no_fuse_into_do
+        PASS [   0.024s] (238/328) oxc_minifier peephole::statement_fusion::test::no_global_scope_changes
+        PASS [   0.026s] (239/328) oxc_minifier peephole::statement_fusion::test::no_fuse_into_while
+        PASS [   0.026s] (240/328) oxc_minifier peephole::substitute_alternate_syntax::test::nullish_coalesce
+        PASS [   0.025s] (241/328) oxc_minifier peephole::substitute_alternate_syntax::test::optional_catch_binding
+        PASS [   0.026s] (242/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_compress_destructuring_assignment_target
+        PASS [   0.025s] (243/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_big_int_constructor
+        PASS [   0.029s] (244/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_compress_typed_array_constructor
+        PASS [   0.033s] (245/328) oxc_minifier peephole::substitute_alternate_syntax::test::fold_function_spread_args
+        PASS [   0.027s] (246/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_boolean_constructor
+        PASS [   0.034s] (247/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_arrow_function_return
+        PASS [   0.027s] (248/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_is_object_and_not_null
+        PASS [   0.025s] (249/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_is_typeof_equals_undefined
+        PASS [   0.026s] (250/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_is_typeof_equals_undefined_resolved
+        PASS [   0.023s] (251/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_loose_equals_undefined
+        PASS [   0.028s] (252/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_literal_array_constructors
+        PASS [   0.027s] (253/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_literal_object_constructors
+        PASS [   0.027s] (254/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_new_expressions
+        PASS [   0.027s] (255/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_normal_assignment_to_combined_assignment
+        PASS [   0.025s] (256/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_number_constructor
+        PASS [   0.024s] (257/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_subtraction_assignment
+        PASS [   0.027s] (258/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_return_result
+        PASS [   0.028s] (259/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_string_constructor
+        PASS [   0.028s] (260/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_fold_true_false_comparison
+        PASS [   0.026s] (261/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_remove_name_from_expressions
+        PASS [   0.030s] (262/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_property_key
+        PASS [   0.026s] (263/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_remove_unary_plus
+        PASS [   0.025s] (264/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_rotate_associative_operators
+        PASS [   0.021s] (265/328) oxc_minifier::mod ecmascript::array_join::test
+        PASS [   0.026s] (266/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_string_array_splitting
+        PASS [   0.026s] (267/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_template_string_to_string
+        PASS [   0.028s] (268/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_swap_binary_expressions
+        PASS [   0.019s] (269/328) oxc_minifier::mod ecmascript::is_int32_or_uint32::literal_tests
+        PASS [   0.024s] (270/328) oxc_minifier::mod ecmascript::is_int32_or_uint32::binary_tests
+        PASS [   0.025s] (271/328) oxc_minifier::mod ecmascript::is_int32_or_uint32::conditional_tests
+        PASS [   0.030s] (272/328) oxc_minifier peephole::substitute_alternate_syntax::test::test_undefined
+        PASS [   0.024s] (273/328) oxc_minifier::mod ecmascript::is_int32_or_uint32::sequence_tests
+        PASS [   0.022s] (274/328) oxc_minifier::mod ecmascript::is_int32_or_uint32::unary_tests
+        PASS [   0.025s] (275/328) oxc_minifier::mod ecmascript::is_int32_or_uint32::logical_tests
+        PASS [   0.025s] (276/328) oxc_minifier::mod ecmascript::is_int32_or_uint32::undetermined_tests
+        PASS [   0.023s] (277/328) oxc_minifier::mod ecmascript::may_have_side_effects::closure_compiler_tests
+        PASS [   0.023s] (278/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_array_expression
+        PASS [   0.024s] (279/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_call_like_expressions
+        PASS [   0.024s] (280/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_class_expression
+        PASS [   0.023s] (281/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_identifier_reference
+        PASS [   0.026s] (282/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_binary_expressions
+        PASS [   0.023s] (283/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_object_expression
+        PASS [   0.026s] (284/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_is_pure_call_support
+        PASS [   0.025s] (285/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_object_with_to_primitive_related_properties_overridden
+        PASS [   0.027s] (286/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_logical_expressions
+        PASS [   0.025s] (287/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_other_expressions
+        PASS [   0.025s] (288/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_property_access
+        PASS [   0.022s] (289/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_unknown_global_side_effects_support
+        PASS [   0.025s] (290/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_simple_expressions
+        PASS [   0.026s] (291/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_property_read_side_effects_support
+        PASS [   0.024s] (292/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_unary_expressions
+        PASS [   0.025s] (293/328) oxc_minifier::mod ecmascript::may_have_side_effects::test_template_literal
+        PASS [   0.025s] (294/328) oxc_minifier::mod ecmascript::prop_name::test_prop_name
+        PASS [   0.024s] (295/328) oxc_minifier::mod ecmascript::to_boolean::test
+        PASS [   0.027s] (296/328) oxc_minifier::mod ecmascript::to_number::test
+        PASS [   0.025s] (297/328) oxc_minifier::mod ecmascript::to_string::test
+        PASS [   0.025s] (298/328) oxc_minifier::mod ecmascript::value_type::assignment_tests
+        PASS [   0.026s] (299/328) oxc_minifier::mod ecmascript::value_type::binary_tests
+        PASS [   0.024s] (300/328) oxc_minifier::mod ecmascript::value_type::identifier_tests
+        PASS [   0.027s] (301/328) oxc_minifier::mod ecmascript::value_type::conditional_tests
+        PASS [   0.025s] (302/328) oxc_minifier::mod ecmascript::value_type::literal_tests
+        PASS [   0.023s] (303/328) oxc_minifier::mod ecmascript::value_type::undetermined_tests
+        PASS [   0.025s] (304/328) oxc_minifier::mod ecmascript::value_type::sequence_tests
+        PASS [   0.030s] (305/328) oxc_minifier::mod ecmascript::value_type::unary_tests
+        PASS [   0.031s] (306/328) oxc_minifier::mod ecmascript::value_type::logical_tests
+        PASS [   0.028s] (307/328) oxc_minifier::mod mangler::direct_eval
+        PASS [   0.029s] (308/328) oxc_minifier::mod peephole::dead_code_elimination::dce_conditional_expression
+        PASS [   0.029s] (309/328) oxc_minifier::mod peephole::dead_code_elimination::dce_from_terser
+        PASS [   0.030s] (310/328) oxc_minifier::mod peephole::dead_code_elimination::dce_if_statement
+        PASS [   0.026s] (311/328) oxc_minifier::mod peephole::dead_code_elimination::dce_var_hoisting
+        PASS [   0.023s] (312/328) oxc_minifier::mod peephole::dead_code_elimination::dce_while_statement
+        PASS [   0.029s] (313/328) oxc_minifier::mod peephole::dead_code_elimination::dce_logical_expression
+        PASS [   0.027s] (314/328) oxc_minifier::mod peephole::dead_code_elimination::fold_number_nan
+        PASS [   0.028s] (315/328) oxc_minifier::mod peephole::dead_code_elimination::pure_comment_for_pure_global_constructors
+        PASS [   0.030s] (316/328) oxc_minifier::mod peephole::esbuild::constant_evaluation_test
+        PASS [   0.021s] (317/328) oxc_minifier::mod peephole::eval
+        PASS [   0.020s] (318/328) oxc_minifier::mod peephole::fold
+        PASS [   0.030s] (319/328) oxc_minifier::mod peephole::esbuild::test_minimize_exit_statements
+        PASS [   0.021s] (320/328) oxc_minifier::mod peephole::integration
+        PASS [   0.020s] (321/328) oxc_minifier::mod peephole::tagged_template
+        PASS [   0.028s] (322/328) oxc_minifier::mod peephole::esbuild::test_remove_dead_expr_nullish_related
+        PASS [   0.028s] (323/328) oxc_minifier::mod peephole::esbuild::test_remove_dead_expr_other
+        PASS [   0.037s] (324/328) oxc_minifier::mod peephole::esbuild::test_remove_dead_expr
+        PASS [   0.045s] (325/328) oxc_minifier::mod peephole::esbuild::test_flatten_values
+        PASS [   0.048s] (326/328) oxc_minifier::mod peephole::esbuild::test_mangle_boolean_with_side_effects
+        PASS [   0.088s] (327/328) oxc_minifier::mod peephole::esbuild::js_parser_test
+        PASS [   0.117s] (328/328) oxc_minifier::mod mangler::mangler
+────────────
+     Summary [   0.575s] 328 tests run: 328 passed, 48 skipped
+reward=1 graded=328 found=44 failed=0 parsed=328 framework=cargo exit_code=0

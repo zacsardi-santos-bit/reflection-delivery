@@ -1,0 +1,59 @@
+patching file test/regression/models/model_member_stripe_customer_spec.js
+patching file test/regression/models/model_members_spec.js
+patching file test/regression/models/model_stripe_customer_subscription_spec.js
+patching file test/unit/data/schema/integrity_spec.js
+patching file test/utils/fixture-utils.js
+patching file test/utils/fixtures/data-generator.js
+
+
+  DB version integrity
+    1) should not change without fixing this test
+
+  MemberStripeCustomer Model
+    subscriptions
+      - Is correctly mapped to the stripe subscriptions
+    member
+      ✓ Is correctly mapped to the member
+    destroy
+      ✓ Cascades to members_stripe_customers_subscriptions
+
+  Member Model
+    stripeSubscriptions
+      ✓ It is correctly mapped to all a members subscriptions, regardless of customer
+    stripeCustomers
+      ✓ Is correctly mapped to the stripe customers
+    destroy
+      ✓ Cascades to members_labels, members_stripe_customers & members_stripe_customers_subscriptions
+    findAll
+      ✓ can use search query
+    products
+      ✓ Products can be created & added to members by the product array
+    Filtering on products
+      ✓ Should allow filtering on products
+
+  StripeCustomerSubscription Model
+    customer
+      ✓ Is correctly mapped to the stripe customer
+
+
+  9 passing (2s)
+  1 pending
+  1 failing
+
+  1) DB version integrity
+       should not change without fixing this test:
+
+      AssertionError: expected 'b94aa62d6e50eb42280837605e3f4a66' to equal 'c31e5e88461bbc015a9e50561d07f6f7'
+      + expected - actual
+
+      -b94aa62d6e50eb42280837605e3f4a66
+      +c31e5e88461bbc015a9e50561d07f6f7
+      
+      at Assertion.fail (node_modules/should/cjs/should.js:275:17)
+      at Assertion.value (node_modules/should/cjs/should.js:356:19)
+      at Context.<anonymous> (test/unit/data/schema/integrity_spec.js:63:27)
+      at process.processImmediate (node:internal/timers:476:21)
+
+
+
+reward=0 graded=10 found=10 failed=1 parsed=12 framework=mocha exit_code=1

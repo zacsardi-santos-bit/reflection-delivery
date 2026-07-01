@@ -1,0 +1,12 @@
+patching file exporters/otlp/test/otlp_grpc_log_exporter_test.cc
+Starting local Bazel server and connecting to it...
+Loading: 
+Loading: 0 packages loaded
+ERROR: Skipping '//exporters/otlp:otlp_grpc_log_exporter_test': no such target '//exporters/otlp:otlp_grpc_log_exporter_test': target 'otlp_grpc_log_exporter_test' not declared in package 'exporters/otlp' (did you mean 'otlp_grpc_exporter_test'?) defined by /workspace/repo/exporters/otlp/BUILD
+WARNING: Target pattern parsing failed.
+ERROR: no such target '//exporters/otlp:otlp_grpc_log_exporter_test': target 'otlp_grpc_log_exporter_test' not declared in package 'exporters/otlp' (did you mean 'otlp_grpc_exporter_test'?) defined by /workspace/repo/exporters/otlp/BUILD
+INFO: Elapsed time: 3.101s
+INFO: 0 processes.
+FAILED: Build did NOT complete successfully (1 packages loaded)
+FAILED: Build did NOT complete successfully (1 packages loaded)
+reward=0 graded=3 found=0 failed=0 parsed=0 framework=gtest exit_code=1

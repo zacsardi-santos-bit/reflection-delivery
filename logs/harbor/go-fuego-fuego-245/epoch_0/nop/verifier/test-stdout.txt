@@ -1,0 +1,11 @@
+patching file serve_test.go
+patching file server_test.go
+# github.com/go-fuego/fuego [github.com/go-fuego/fuego.test]
+./serve_test.go:431:18: undefined: WithListener
+./server_test.go:355:4: undefined: WithListener
+./server_test.go:357:23: s.listener undefined (type *Server has no field or method listener)
+./server_test.go:362:20: s.listener undefined (type *Server has no field or method listener)
+{"Time":"2026-06-29T15:29:21.848963166Z","Action":"start","Package":"github.com/go-fuego/fuego"}
+{"Time":"2026-06-29T15:29:21.849118894Z","Action":"output","Package":"github.com/go-fuego/fuego","Output":"FAIL\tgithub.com/go-fuego/fuego [build failed]\n"}
+{"Time":"2026-06-29T15:29:21.849147709Z","Action":"fail","Package":"github.com/go-fuego/fuego","Elapsed":0}
+reward=0 graded=11 found=0 failed=0 parsed=1 framework=go exit_code=1

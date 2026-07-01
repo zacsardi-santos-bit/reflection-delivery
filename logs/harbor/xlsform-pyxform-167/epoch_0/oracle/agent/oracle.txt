@@ -1,0 +1,14 @@
+patching file .gitignore
+patching file pyxform/odk_validate/__init__.py
+patching file pyxform/survey.py
+patching file pyxform/tests_v1/pyxform_test_case.py
+patching file pyxform/validators/__init__.py
+patching file pyxform/validators/enketo_validate/__init__.py
+patching file pyxform/validators/enketo_validate/enketo_validate.js
+patching file pyxform/validators/error_cleaner.py
+patching file pyxform/validators/odk_validate/ODK_Validate.jar (renamed from pyxform/odk_validate/ODK_Validate.jar)
+patching file pyxform/validators/odk_validate/README.rst (renamed from pyxform/odk_validate/README.rst)
+patching file pyxform/validators/odk_validate/__init__.py
+patching file pyxform/validators/util.py
+patching file pyxform/xls2xform.py
+patching file setup.py

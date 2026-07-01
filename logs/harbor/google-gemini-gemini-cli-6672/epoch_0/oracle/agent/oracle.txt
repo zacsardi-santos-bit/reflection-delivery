@@ -1,0 +1,11 @@
+patching file packages/cli/src/config/settings.ts
+patching file packages/cli/src/gemini.tsx
+patching file packages/cli/src/test-utils/render.tsx
+patching file packages/cli/src/ui/App.tsx
+patching file packages/cli/src/ui/MainComponent.tsx
+patching file packages/cli/src/ui/contexts/SettingsContext.ts
+patching file packages/cli/src/ui/contexts/VimModeContext.tsx
+patching file packages/cli/src/ui/hooks/useAuthCommand.ts
+patching file packages/cli/src/ui/hooks/useEditorSettings.ts
+patching file packages/cli/src/ui/hooks/useFolderTrust.ts
+patching file packages/cli/src/ui/hooks/useThemeCommand.ts

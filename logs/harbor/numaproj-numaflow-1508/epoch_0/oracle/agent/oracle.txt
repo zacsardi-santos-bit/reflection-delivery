@@ -1,0 +1,24 @@
+patching file examples/11-join-on-reduce.yaml
+patching file examples/11-join-on-sink.yaml
+patching file examples/2-even-odd-pipeline.yaml
+patching file examples/6-reduce-fixed-window.yaml
+patching file examples/7-reduce-sliding-window.yaml
+patching file examples/8-reduce-complex-pipeline.yaml
+patching file pkg/reduce/data_forward.go
+patching file pkg/reduce/pbq/interfaces.go
+patching file pkg/reduce/pbq/pbq.go
+patching file pkg/reduce/pbq/pbqmanager.go
+patching file pkg/reduce/pbq/store/aligned/fs/bootstrap.go (renamed from pkg/reduce/pbq/store/aligned/wal/bootstrap.go)
+patching file pkg/reduce/pbq/store/aligned/fs/doc.go (renamed from pkg/reduce/pbq/store/aligned/wal/doc.go)
+patching file pkg/reduce/pbq/store/aligned/fs/manager.go
+patching file pkg/reduce/pbq/store/aligned/fs/metrics.go (renamed from pkg/reduce/pbq/store/aligned/wal/metrics.go)
+patching file pkg/reduce/pbq/store/aligned/fs/options.go (renamed from pkg/reduce/pbq/store/aligned/wal/options.go)
+patching file pkg/reduce/pbq/store/aligned/fs/wal_segment.go (renamed from pkg/reduce/pbq/store/aligned/wal/segment.go)
+patching file pkg/reduce/pbq/store/aligned/memory/manager.go (renamed from pkg/reduce/pbq/store/aligned/memory/stores.go)
+patching file pkg/reduce/pbq/store/aligned/memory/options.go
+patching file pkg/reduce/pbq/store/aligned/memory/wal.go (renamed from pkg/reduce/pbq/store/aligned/memory/store.go)
+patching file pkg/reduce/pbq/store/aligned/noop/manager.go (renamed from pkg/reduce/pbq/store/aligned/noop/stores.go)
+patching file pkg/reduce/pbq/store/aligned/noop/wal.go (renamed from pkg/reduce/pbq/store/aligned/noop/store.go)
+patching file pkg/reduce/pbq/store/aligned/wal/stores.go
+patching file pkg/reduce/pbq/store/interfaces.go (renamed from pkg/reduce/pbq/store/aligned/interfaces.go)
+patching file pkg/udf/reduce_udf.go

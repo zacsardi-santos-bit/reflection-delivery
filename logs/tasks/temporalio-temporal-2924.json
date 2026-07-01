@@ -1,0 +1,23 @@
+{
+ "task": "temporalio-temporal-2924",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden RegisterNamespace passes `true` to publish replication event; adds `clusterListChanged` and `shouldProcessTask`; HandleTransmissionTask gains `replicationClusterListUpdated` so single-cluster updates still replicate"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

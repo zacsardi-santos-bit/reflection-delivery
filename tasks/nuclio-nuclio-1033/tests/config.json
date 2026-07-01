@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /go/src/github.com/nuclio/nuclio && go test -json ./pkg/processor/build/test -count=1 -v -run TestIntegrationSuite/TestBuildFunctionFromSourceCodeDeployOnceNeverBuild",
+  "test_files": [
+    "pkg/processor/build/test/build_test.go",
+    "pkg/processor/test/suite/suite.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/nuclio/nuclio/pkg/processor/build/test::TestIntegrationSuite/TestBuildFunctionFromSourceCodeDeployOnceNeverBuild",
+    "github.com/nuclio/nuclio/pkg/processor/build/test::TestIntegrationSuite"
+  ],
+  "PASS_TO_PASS": []
+}

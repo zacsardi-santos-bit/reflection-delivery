@@ -1,0 +1,23 @@
+{
+ "task": "scalar-scalar-4340",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds packages/snippetz/src/plugins/dart/http/http.ts implementing dartHttp.generate (cookies/headers/basic-auth/body encoding) + index.ts + clients.ts registration"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 17,
+  "shallow": true
+ }
+}

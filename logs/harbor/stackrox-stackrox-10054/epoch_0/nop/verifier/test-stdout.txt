@@ -1,0 +1,12 @@
+patching file migrator/migrations/m_198_to_m_199_policy_description_and_criteria_updates/migration_test.go
+patching file migrator/migrations/m_198_to_m_199_policy_description_and_criteria_updates/schema/convert_policies_test.go
+patching file pkg/booleanpolicy/default_policies_test.go
+patching file qa-tests-backend/src/test/groovy/BuiltinPoliciesTest.groovy
+patching file qa-tests-backend/src/test/groovy/ImageManagementTest.groovy
+patching file qa-tests-backend/src/test/groovy/PaginationTest.groovy
+patching file tests/yamls/roxctl_verification.sh
+package github.com/stackrox/rox/migrator/migrations/m_198_to_m_199_policy_description_and_criteria_updates: build constraints exclude all Go files in /workspace/repo/migrator/migrations/m_198_to_m_199_policy_description_and_criteria_updates
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

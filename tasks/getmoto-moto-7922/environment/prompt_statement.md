@@ -1,0 +1,7 @@
+I'm trying to write unit tests for code that uses SageMaker Model Cards, but moto doesn't support these APIs yet. I need to be able to mock the full lifecycle of a Model Card: creating one, updating it (which should create a new version), describing it at a specific version or at the latest, listing all model cards with filtering and sorting options, listing versions of a specific card, deleting a card, and managing tags on a card.
+
+Specifically, I need the mock to handle error cases properly too — trying to create a model card that already exists should raise a conflict error, trying to update or describe or delete a card that doesn't exist should raise a not-found error, and describing a specific version that doesn't exist should also raise a not-found error with a message indicating both the card name and the version number.
+
+For listing, I need to be able to filter cards by whether the name contains a substring, by status, and by creation time range. I also need to sort ascending or descending, or sort by name instead of time. Version listing should similarly support sort order and status filtering.
+
+When describing a card, I expect to get back the ARN, name, version number, content, status, security config, and creator/modifier metadata. All versions of a card should share the same original creation time, but each version should have its own last-modified time that increases with newer versions.

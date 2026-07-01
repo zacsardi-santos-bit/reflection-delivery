@@ -1,0 +1,23 @@
+{
+ "task": "pulumi-pulumi-15421",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds new file sdk/nodejs/npm/workspaces.go with `func FindWorkspaceRoot(programDirectory string)` and main.go calls `npm.FindWorkspaceRoot(req.Info.ProgramDirectory)`; test.sh runs `go test ./nodejs/npm/...` with F2P TestNPMInstall/TestYarnInstall/TestFindWorkspaceRootNotInWorkspace"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 33,
+  "shallow": true
+ }
+}

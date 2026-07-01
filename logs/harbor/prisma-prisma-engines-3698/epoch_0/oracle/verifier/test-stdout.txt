@@ -1,0 +1,105 @@
+patching file introspection-engine/introspection-engine-tests/tests/rpc_calls/get_database_description.rs
+patching file libs/sql-schema-describer/tests/describers/mssql_describer_tests.rs
+patching file libs/sql-schema-describer/tests/describers/mysql_describer_tests.rs
+patching file libs/sql-schema-describer/tests/describers/postgres_describer_tests.rs
+patching file libs/sql-schema-describer/tests/describers/postgres_describer_tests/cockroach_describer_tests.rs
+patching file libs/sql-schema-describer/tests/describers/sqlite_describer_tests.rs
+patching file migration-engine/migration-engine-tests/tests/migrations/postgres/introspection.rs
+   Compiling enumflags2 v0.7.5
+   Compiling parser-database v0.1.0 (/workspace/repo/psl/parser-database)
+   Compiling tiberius v0.11.2
+   Compiling psl-core v0.1.0 (/workspace/repo/psl/psl-core)
+   Compiling builtin-psl-connectors v0.1.0 (/workspace/repo/psl/builtin-connectors)
+   Compiling quaint v0.2.0-alpha.13 (https://github.com/prisma/quaint#1550f6cf)
+   Compiling psl v0.1.0 (/workspace/repo/psl/psl)
+   Compiling test-setup v0.1.0 (/workspace/repo/libs/test-setup)
+   Compiling sql-schema-describer v0.1.0 (/workspace/repo/libs/sql-schema-describer)
+warning: unused import: `Capabilities`
+ --> libs/sql-schema-describer/tests/test_api/mod.rs:5:79
+  |
+5 | pub use test_setup::{runtime::run_with_thread_local_runtime as tok, BitFlags, Capabilities, Tags};
+  |                                                                               ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: `sql-schema-describer` (test "describer_tests") generated 1 warning (run `cargo fix --test "describer_tests"` to apply 1 suggestion)
+    Finished test [unoptimized + debuginfo] target(s) in 17.24s
+warning: the following packages contain code that will be rejected by a future version of Rust: connection-string v0.1.13
+note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
+    Starting 73 tests across 2 binaries
+        PASS [   0.111s] sql-schema-describer parsers::tests::unquoting_works
+        PASS [   0.111s] sql-schema-describer postgres::default::tests::parse_decimal_array_default
+        PASS [   0.108s] sql-schema-describer postgres::default::tests::parse_enum_array_default_with_quotes
+        PASS [   0.090s] sql-schema-describer tests::unquoting_works
+        PASS [   0.096s] sql-schema-describer postgres::default::tests::postgres_is_sequence_works
+        PASS [   0.112s] sql-schema-describer postgres::default::tests::parse_enum_array_default
+        PASS [   0.107s] sql-schema-describer postgres::default::tests::parse_int_array_default
+        PASS [   0.102s] sql-schema-describer postgres::default::tests::parse_string_array_default
+        PASS [   0.146s] sql-schema-describer::describer_tests describers::mssql_describer_tests::index_sort_order_desc_is_handled
+        PASS [   0.156s] sql-schema-describer::describer_tests describers::mssql_describer_tests::all_mssql_column_types_must_work
+        PASS [   0.107s] sql-schema-describer::describer_tests describers::mssql_describer_tests::primary_key_sort_order_desc_is_handled
+        PASS [   0.114s] sql-schema-describer::describer_tests describers::mssql_describer_tests::multiple_schemas_with_same_table_names_are_described
+        PASS [   0.123s] sql-schema-describer::describer_tests describers::mssql_describer_tests::multiple_schemas_with_same_foreign_key_are_described
+        PASS [   0.140s] sql-schema-describer::describer_tests describers::mssql_describer_tests::mssql_cross_schema_references_are_not_allowed
+        PASS [   0.133s] sql-schema-describer::describer_tests describers::mssql_describer_tests::mssql_foreign_key_on_delete_must_be_handled
+        PASS [   0.120s] sql-schema-describer::describer_tests describers::mssql_describer_tests::procedures_can_be_described
+        PASS [   0.112s] sql-schema-describer::describer_tests describers::mssql_describer_tests::views_can_be_described
+        PASS [   0.159s] sql-schema-describer::describer_tests describers::mssql_describer_tests::udts_can_be_described
+        PASS [   0.115s] sql-schema-describer::describer_tests describers::mysql_describer_tests::constraints_from_other_databases_should_not_be_introspected
+        PASS [   0.130s] sql-schema-describer::describer_tests describers::mysql_describer_tests::all_mysql_8_column_types_must_work
+        PASS [   0.139s] sql-schema-describer::describer_tests describers::mysql_describer_tests::all_mariadb_column_types_must_work
+        PASS [   0.107s] sql-schema-describer::describer_tests describers::mysql_describer_tests::dangling_foreign_keys_are_filtered_out
+        PASS [   0.124s] sql-schema-describer::describer_tests describers::mysql_describer_tests::all_mysql_column_types_must_work
+        PASS [   0.162s] sql-schema-describer::describer_tests describers::mysql_describer_tests::escaped_backslashes_in_string_literals_must_be_unescaped
+        PASS [   0.163s] sql-schema-describer::describer_tests describers::mysql_describer_tests::escaped_quotes_in_string_defaults_must_be_unescaped
+        PASS [   0.141s] sql-schema-describer::describer_tests describers::mysql_describer_tests::index_length_and_sorting_is_handled
+        PASS [   0.133s] sql-schema-describer::describer_tests describers::mysql_describer_tests::introspected_default_strings_should_be_unescaped
+        PASS [   0.155s] sql-schema-describer::describer_tests describers::mysql_describer_tests::function_expression_defaults_are_described_as_dbgenerated
+        PASS [   0.124s] sql-schema-describer::describer_tests describers::mysql_describer_tests::mysql_foreign_key_on_delete_must_be_handled
+        PASS [   0.106s] sql-schema-describer::describer_tests describers::mysql_describer_tests::primary_key_length_is_handled
+        PASS [   0.152s] sql-schema-describer::describer_tests describers::mysql_describer_tests::procedures_can_be_described
+        PASS [   0.171s] sql-schema-describer::describer_tests describers::mysql_describer_tests::mysql_join_table_unique_indexes_must_be_inferred
+        PASS [   0.113s] sql-schema-describer::describer_tests describers::postgres_describer_tests::array_column_defaults_with_array_constructor_syntax
+        PASS [   0.144s] sql-schema-describer::describer_tests describers::mysql_describer_tests::views_can_be_described
+        PASS [   0.105s] sql-schema-describer::describer_tests describers::postgres_describer_tests::cockroach_describer_tests::all_cockroach_column_types_must_work
+        PASS [   0.125s] sql-schema-describer::describer_tests describers::postgres_describer_tests::array_column_defaults
+        PASS [   0.134s] sql-schema-describer::describer_tests describers::postgres_describer_tests::all_postgres_column_types_must_work
+        PASS [   0.139s] sql-schema-describer::describer_tests describers::postgres_describer_tests::cockroach_describer_tests::array_column_defaults
+        PASS [   0.136s] sql-schema-describer::describer_tests describers::postgres_describer_tests::cockroach_describer_tests::escaped_characters_in_string_defaults
+        PASS [   0.117s] sql-schema-describer::describer_tests describers::postgres_describer_tests::cockroach_describer_tests::multi_field_indexes_must_be_inferred_in_the_right_order
+        PASS [   0.147s] sql-schema-describer::describer_tests describers::postgres_describer_tests::cockroach_describer_tests::cockroachdb_sequences_must_work
+        PASS [   0.110s] sql-schema-describer::describer_tests describers::postgres_describer_tests::cockroach_describer_tests::views_can_be_described
+        PASS [   0.102s] sql-schema-describer::describer_tests describers::postgres_describer_tests::cross_schema_references_are_not_allowed
+        PASS [   0.130s] sql-schema-describer::describer_tests describers::postgres_describer_tests::cockroach_describer_tests::int_expressions_in_defaults
+        PASS [   0.096s] sql-schema-describer::describer_tests describers::postgres_describer_tests::escaped_quotes_in_string_defaults_must_be_unescaped
+        PASS [   0.129s] sql-schema-describer::describer_tests describers::postgres_describer_tests::index_sort_order_composite_type_asc_desc_is_handled
+        PASS [   0.137s] sql-schema-describer::describer_tests describers::postgres_describer_tests::extensions_are_described_correctly
+        PASS [   0.122s] sql-schema-describer::describer_tests describers::postgres_describer_tests::index_sort_order_composite_type_desc_desc_is_handled
+        PASS [   0.094s] sql-schema-describer::describer_tests describers::postgres_describer_tests::multiple_schemas_are_described
+        PASS [   0.110s] sql-schema-describer::describer_tests describers::postgres_describer_tests::index_sort_order_is_handled
+        PASS [   0.103s] sql-schema-describer::describer_tests describers::postgres_describer_tests::int_expressions_in_defaults
+        PASS [   0.133s] sql-schema-describer::describer_tests describers::postgres_describer_tests::multiple_schemas_with_same_foreign_key_are_described
+        PASS [   0.117s] sql-schema-describer::describer_tests describers::postgres_describer_tests::postgres_enums_must_work
+        PASS [   0.110s] sql-schema-describer::describer_tests describers::postgres_describer_tests::postgres_foreign_key_on_delete_must_be_handled
+        PASS [   0.126s] sql-schema-describer::describer_tests describers::postgres_describer_tests::multiple_schemas_with_same_table_names_are_described
+        PASS [   0.099s] sql-schema-describer::describer_tests describers::postgres_describer_tests::postgres_many_namespaces
+        PASS [   0.093s] sql-schema-describer::describer_tests describers::postgres_describer_tests::postgres_multi_field_indexes_must_be_inferred_in_the_right_order
+        PASS [   0.095s] sql-schema-describer::describer_tests describers::postgres_describer_tests::postgres_sequences_must_work
+        PASS [   0.096s] sql-schema-describer::describer_tests describers::postgres_describer_tests::postgres_skips_ignored_namespaces
+        PASS [   0.097s] sql-schema-describer::describer_tests describers::postgres_describer_tests::seemingly_escaped_backslashes_in_string_literals_must_not_be_unescaped
+        PASS [   0.102s] sql-schema-describer::describer_tests describers::postgres_describer_tests::postgres_skips_public_when_ignored_namespaces
+        PASS [   0.108s] sql-schema-describer::describer_tests describers::postgres_describer_tests::postgres_skips_nonexisting_namespaces
+        PASS [   0.097s] sql-schema-describer::describer_tests describers::postgres_describer_tests::views_can_be_described
+        PASS [   0.139s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::broken_relations_are_filtered_out
+        PASS [   0.149s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::backslashes_in_string_literals
+        PASS [   0.143s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::index_sort_order_is_handled
+        PASS [   0.151s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::escaped_quotes_in_string_defaults_must_be_unescaped
+        PASS [   0.140s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::multi_column_foreign_keys_must_work
+        PASS [   0.148s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::integer_primary_keys_autoincrement
+        PASS [   0.134s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::sqlite_foreign_key_on_delete_must_be_handled
+        PASS [   0.132s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::sqlite_text_primary_keys_must_be_inferred_on_table_and_not_as_separate_indexes
+        PASS [   0.150s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::sqlite_column_types_must_work
+        PASS [   0.126s] sql-schema-describer::describer_tests describers::sqlite_describer_tests::views_can_be_described
+------------
+     Summary [   0.702s] 73 tests run: 73 passed, 0 skipped
+reward=1 graded=73 found=73 failed=0 parsed=73 framework=cargo exit_code=0

@@ -1,0 +1,44 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/cirq/google/engine/engine_test.py /workspace/repo/cirq/google/engine/env_config_test.py -v",
+  "test_files": [
+    "cirq/google/engine/engine_test.py",
+    "cirq/google/engine/env_config_test.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "cirq.google.engine.engine_test::test_repr",
+    "cirq.google.engine.engine_test::test_run_circuit",
+    "cirq.google.engine.engine_test::test_default_prefix",
+    "cirq.google.engine.engine_test::test_run_sweep_params",
+    "cirq.google.engine.engine_test::test_run_sweep_v1",
+    "cirq.google.engine.engine_test::test_run_sweep_v2",
+    "cirq.google.engine.engine_test::test_implied_job_config_gcs_prefix",
+    "cirq.google.engine.engine_test::test_implied_job_config",
+    "cirq.google.engine.engine_test::test_bad_job_config_inference_order",
+    "cirq.google.engine.engine_test::test_list_processors",
+    "cirq.google.engine.engine_test::test_latest_calibration",
+    "cirq.google.engine.engine_test::test_missing_latest_calibration",
+    "cirq.google.engine.engine_test::test_calibration_from_job",
+    "cirq.google.engine.engine_test::test_calibration_from_job_with_no_calibration",
+    "cirq.google.engine.engine_test::test_alternative_api_and_key",
+    "cirq.google.engine.engine_test::test_request_builder",
+    "cirq.google.engine.engine_test::test_not_both_version_and_discovery",
+    "cirq.google.engine.env_config_test::test_engine_from_environment"
+  ],
+  "PASS_TO_PASS": [
+    "cirq.google.engine.engine_test::test_circuit_device_validation_fails",
+    "cirq.google.engine.engine_test::test_schedule_device_validation_fails",
+    "cirq.google.engine.engine_test::test_circuit_device_validation_passes_non_xmon_gate",
+    "cirq.google.engine.engine_test::test_unsupported_program_type",
+    "cirq.google.engine.engine_test::test_run_circuit_failed",
+    "cirq.google.engine.engine_test::test_bad_result_proto",
+    "cirq.google.engine.engine_test::test_bad_sweep_proto",
+    "cirq.google.engine.engine_test::test_bad_priority",
+    "cirq.google.engine.engine_test::test_cancel",
+    "cirq.google.engine.engine_test::test_program_labels",
+    "cirq.google.engine.engine_test::test_job_labels",
+    "cirq.google.engine.engine_test::test_calibration_metrics"
+  ]
+}

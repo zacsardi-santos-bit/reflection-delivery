@@ -1,0 +1,24 @@
+patching file lib/components/Alert/__snapshots__/Alert.test.tsx.snap (renamed from lib/components/Alert/__snapshots__/Alert.test.js.snap)
+patching file lib/components/Box/__snapshots__/Box.test.tsx.snap (renamed from lib/components/Box/__snapshots__/Box.test.js.snap)
+patching file lib/components/Bullet/__snapshots__/Bullet.test.tsx.snap (renamed from lib/components/Bullet/__snapshots__/Bullet.test.js.snap)
+patching file lib/components/BulletList/__snapshots__/BulletList.test.tsx.snap (renamed from lib/components/BulletList/__snapshots__/BulletList.test.js.snap)
+patching file lib/components/Card/__snapshots__/Card.test.tsx.snap (renamed from lib/components/Card/__snapshots__/Card.test.js.snap)
+patching file lib/components/Checkbox/__snapshots__/Checkbox.test.tsx.snap (renamed from lib/components/Checkbox/__snapshots__/Checkbox.test.js.snap)
+patching file lib/components/ChecklistCard/__snapshots__/ChecklistCard.test.tsx.snap (renamed from lib/components/ChecklistCard/__snapshots__/ChecklistCard.test.js.snap)
+patching file lib/components/Divider/__snapshots__/Divider.test.tsx.snap (renamed from lib/components/Divider/__snapshots__/Divider.test.js.snap)
+patching file lib/components/FieldLabel/__snapshots__/FieldLabel.test.tsx.snap (renamed from lib/components/FieldLabel/__snapshots__/FieldLabel.test.js.snap)
+patching file lib/components/FieldMessage/__snapshots__/FieldMessage.test.tsx.snap (renamed from lib/components/FieldMessage/__snapshots__/FieldMessage.test.js.snap)
+patching file lib/components/Radio/__snapshots__/Radio.test.tsx.snap (renamed from lib/components/Radio/__snapshots__/Radio.test.js.snap)
+patching file lib/components/Reset/__snapshots__/Reset.test.tsx.snap (renamed from lib/components/Reset/__snapshots__/Reset.test.js.snap)
+patching file lib/components/Strong/__snapshots__/Strong.test.tsx.snap (renamed from lib/components/Strong/__snapshots__/Strong.test.js.snap)
+patching file lib/components/Text/__snapshots__/Text.test.tsx.snap (renamed from lib/components/Text/__snapshots__/Text.test.js.snap)
+patching file lib/components/icons/ChevronIcon/__snapshots__/ChevronIcon.test.tsx.snap (renamed from lib/components/icons/ChevronIcon/__snapshots__/ChevronIcon.test.js.snap)
+patching file lib/components/icons/ErrorIcon/__snapshots__/ErrorIcon.test.tsx.snap (renamed from lib/components/icons/ErrorIcon/__snapshots__/ErrorIcon.test.js.snap)
+patching file lib/components/icons/InfoIcon/__snapshots__/InfoIcon.test.tsx.snap (renamed from lib/components/icons/InfoIcon/__snapshots__/InfoIcon.test.js.snap)
+patching file lib/components/icons/TickCircleIcon/__snapshots__/TickCircleIcon.test.tsx.snap (renamed from lib/components/icons/TickCircleIcon/__snapshots__/TickCircleIcon.test.js.snap)
+patching file lib/components/icons/TickIcon/__snapshots__/TickIcon.test.tsx.snap (renamed from lib/components/icons/TickIcon/__snapshots__/TickIcon.test.js.snap)
+patching file lib/components/index.ts (renamed from lib/components/index.js)
+patching file package.json
+patching file playroom.config.js
+patching file sku.routes.js
+patching file yarn.lock

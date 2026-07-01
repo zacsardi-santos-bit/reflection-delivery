@@ -1,0 +1,23 @@
+{
+ "task": "cilium-cilium-10673",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'func runHeartbeat(heartBeat func(context.Context) error, timeout time.Duration, closeAllConns ...func())' skipping when LastSuccessInteraction recent + closing conns on timeout/error; adds 'LastSuccessInteraction eventTimestamper' metric; Test_runHeartbeat exercises all 5 branches"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 27,
+  "shallow": true
+ }
+}

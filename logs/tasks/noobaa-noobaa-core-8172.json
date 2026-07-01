@@ -1,0 +1,23 @@
+{
+ "task": "noobaa-noobaa-core-8172",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "ops tests call iam_create_user_op.handler(req,res) and assert err.code===IamError.ValidationError.code with message toMatch(/required|length|path/); golden adds iam_constants.js + validate_iam_path/validate_username/etc in iam_utils.js"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 10,
+  "shallow": true
+ }
+}

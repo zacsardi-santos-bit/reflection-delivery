@@ -1,0 +1,28 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/ray-curator/tests/stages/test_base.py -v -k 'not test_with_method_thread_safety'",
+  "test_files": [
+    "ray-curator/tests/backends/utils.py",
+    "ray-curator/tests/stages/test_base.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.stages.test_base.TestProcessingStageWith::test_all",
+    "tests.stages.test_base.TestProcessingStageWith::test_batch_size_override",
+    "tests.stages.test_base.TestProcessingStageWith::test_multiple_parameters",
+    "tests.stages.test_base.TestProcessingStageWith::test_none_parameters_preserve_original",
+    "tests.stages.test_base.TestProcessingStageWith::test_chained_with_calls",
+    "tests.stages.test_base.TestProcessingStageWith::test_class_variable_vs_instance_variable_isolation",
+    "tests.stages.test_base.TestCompositeStageWith::test_single_operation",
+    "tests.stages.test_base.TestCompositeStageWith::test_multiple_operations[configs0]",
+    "tests.stages.test_base.TestCompositeStageWith::test_multiple_operations[configs1]",
+    "tests.stages.test_base.TestCompositeStageWith::test_multiple_operations_with_name_changed[configs0-True]",
+    "tests.stages.test_base.TestCompositeStageWith::test_multiple_operations_with_name_changed[configs1-False]",
+    "tests.stages.test_base.TestCompositeStageWith::test_apply_with_non_unique_stage_names_error",
+    "tests.stages.test_base.TestCompositeStageWith::test_apply_with_unknown_stage_name_error",
+    "tests.stages.test_base.TestCompositeStageWith::test_apply_with_empty_operations",
+    "tests.stages.test_base.TestCompositeStageWith::test_composite_stage_inputs_and_outputs"
+  ],
+  "PASS_TO_PASS": []
+}

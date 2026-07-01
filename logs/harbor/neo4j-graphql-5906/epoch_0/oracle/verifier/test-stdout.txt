@@ -1,0 +1,1941 @@
+patching file packages/graphql/tests/integration/issues/5887.int.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/arguments/allow/allow.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/arguments/allow/interface-relationships/implementation-allow.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/arguments/roles-where.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/arguments/validate/interface-relationships/implementation-bind.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/arguments/validate/validate.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/arguments/where/connection-auth-filter.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/arguments/where/interface-relationships/implementation-where.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/arguments/where/where.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/projection-connection-union.test.ts
+patching file packages/graphql/tests/tck/directives/authorization/projection-connection.test.ts
+patching file packages/graphql/tests/tck/directives/node/node-with-auth-projection.test.ts
+patching file packages/graphql/tests/tck/directives/node/node-with-auth.test.ts
+patching file packages/graphql/tests/tck/issues/2396.test.ts
+patching file packages/graphql/tests/tck/issues/2871.test.ts
+patching file packages/graphql/tests/tck/issues/2925.test.ts
+patching file packages/graphql/tests/tck/issues/3901.test.ts
+patching file packages/graphql/tests/tck/issues/4077.test.ts
+patching file packages/graphql/tests/tck/issues/4095.test.ts
+patching file packages/graphql/tests/tck/issues/4110.test.ts
+patching file packages/graphql/tests/tck/issues/4115.test.ts
+patching file packages/graphql/tests/tck/issues/4116.test.ts
+patching file packages/graphql/tests/tck/issues/4118.test.ts
+patching file packages/graphql/tests/tck/issues/4170.test.ts
+patching file packages/graphql/tests/tck/issues/4214.test.ts
+patching file packages/graphql/tests/tck/issues/4223.test.ts
+patching file packages/graphql/tests/tck/issues/4292.test.ts
+patching file packages/graphql/tests/tck/issues/4429.test.ts
+patching file packages/graphql/tests/tck/issues/4450.test.ts
+patching file packages/graphql/tests/tck/issues/5023.test.ts
+patching file packages/graphql/tests/tck/issues/505.test.ts
+patching file packages/graphql/tests/tck/issues/5066.test.ts
+patching file packages/graphql/tests/tck/issues/5080.test.ts
+patching file packages/graphql/tests/tck/issues/5143.test.ts
+patching file packages/graphql/tests/tck/issues/5270.test.ts
+patching file packages/graphql/tests/tck/issues/5497.test.ts
+patching file packages/graphql/tests/tck/issues/5515.test.ts
+patching file packages/graphql/tests/tck/issues/5635.test.ts
+patching file packages/graphql/tests/tck/issues/5887.test.ts
+patching file packages/graphql/tests/tck/issues/missing-custom-cypher-on-unions.test.ts
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/arguments/validate/interface-relationships/implementation-bind.test.ts:115:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/arguments/allow/interface-relationships/implementation-allow.test.ts:92:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/arguments/where/where.test.ts:86:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/projection-connection.test.ts:74:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/arguments/roles-where.test.ts:95:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4214.test.ts:156:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/arguments/validate/validate.test.ts:85:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/arguments/where/connection-auth-filter.test.ts:90:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/2396.test.ts:149:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4214.test.ts:156:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/arguments/where/interface-relationships/implementation-where.test.ts:107:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/arguments/allow/allow.test.ts:114:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/2396.test.ts:149:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5023.test.ts:111:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4170.test.ts:105:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4223.test.ts:116:44)
+
+  console.warn
+    '@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request.
+
+    [0m [90m 32 |[39m                     [[32m"authentication"[39m[33m,[39m [32m"authorization"[39m[33m,[39m [32m"subscriptionsAuthorization"[39m][33m.[39mincludes(directive[33m.[39mname[33m.[39mvalue)
+     [90m 33 |[39m                 ) {
+    [31m[1m>[22m[39m[90m 34 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 35 |[39m                         [32m"'@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request."[39m
+     [90m 36 |[39m                     )[33m;[39m
+     [90m 37 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.Directive (packages/graphql/src/schema/validation/custom-rules/warnings/authorization-feature-disabled.ts:34:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5023.test.ts:111:44)
+
+  console.warn
+    '@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request.
+
+    [0m [90m 32 |[39m                     [[32m"authentication"[39m[33m,[39m [32m"authorization"[39m[33m,[39m [32m"subscriptionsAuthorization"[39m][33m.[39mincludes(directive[33m.[39mname[33m.[39mvalue)
+     [90m 33 |[39m                 ) {
+    [31m[1m>[22m[39m[90m 34 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 35 |[39m                         [32m"'@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request."[39m
+     [90m 36 |[39m                     )[33m;[39m
+     [90m 37 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.Directive (packages/graphql/src/schema/validation/custom-rules/warnings/authorization-feature-disabled.ts:34:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4170.test.ts:105:44)
+
+  console.warn
+    '@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request.
+
+    [0m [90m 32 |[39m                     [[32m"authentication"[39m[33m,[39m [32m"authorization"[39m[33m,[39m [32m"subscriptionsAuthorization"[39m][33m.[39mincludes(directive[33m.[39mname[33m.[39mvalue)
+     [90m 33 |[39m                 ) {
+    [31m[1m>[22m[39m[90m 34 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 35 |[39m                         [32m"'@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request."[39m
+     [90m 36 |[39m                     )[33m;[39m
+     [90m 37 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.Directive (packages/graphql/src/schema/validation/custom-rules/warnings/authorization-feature-disabled.ts:34:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4223.test.ts:116:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4170.test.ts:105:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5023.test.ts:111:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4223.test.ts:116:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4118.test.ts:107:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4429.test.ts:112:44)
+
+  console.warn
+    '@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request.
+
+    [0m [90m 32 |[39m                     [[32m"authentication"[39m[33m,[39m [32m"authorization"[39m[33m,[39m [32m"subscriptionsAuthorization"[39m][33m.[39mincludes(directive[33m.[39mname[33m.[39mvalue)
+     [90m 33 |[39m                 ) {
+    [31m[1m>[22m[39m[90m 34 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 35 |[39m                         [32m"'@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request."[39m
+     [90m 36 |[39m                     )[33m;[39m
+     [90m 37 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.Directive (packages/graphql/src/schema/validation/custom-rules/warnings/authorization-feature-disabled.ts:34:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4118.test.ts:107:44)
+
+  console.warn
+    '@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request.
+
+    [0m [90m 32 |[39m                     [[32m"authentication"[39m[33m,[39m [32m"authorization"[39m[33m,[39m [32m"subscriptionsAuthorization"[39m][33m.[39mincludes(directive[33m.[39mname[33m.[39mvalue)
+     [90m 33 |[39m                 ) {
+    [31m[1m>[22m[39m[90m 34 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 35 |[39m                         [32m"'@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request."[39m
+     [90m 36 |[39m                     )[33m;[39m
+     [90m 37 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.Directive (packages/graphql/src/schema/validation/custom-rules/warnings/authorization-feature-disabled.ts:34:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4429.test.ts:112:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4118.test.ts:107:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4429.test.ts:112:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/projection-connection.test.ts:245:44)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/arguments/validate/validate.test.ts (24.191 s)
+  Cypher Auth Allow
+    ✓ Create Node (189 ms)
+    ✓ Create Nested Node (6 ms)
+    ✓ Update Node (7 ms)
+    ✓ Update Nested Node (5 ms)
+    ✓ Connect Node (7 ms)
+    ✓ Disconnect Node (4 ms)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/arguments/validate/interface-relationships/implementation-bind.test.ts (24.198 s)
+  Cypher Auth Allow
+    ✓ Create Nested Node with bind (216 ms)
+    ✓ Create Nested Node without bind (4 ms)
+    ✓ Update Nested Node (9 ms)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/arguments/where/connection-auth-filter.test.ts (24.34 s)
+  Connection auth filter
+    ✓ Read Node (202 ms)
+    ✓ Read Node + User Defined Where (5 ms)
+    ✓ Read Relationship (5 ms)
+    ✓ Read Connection (4 ms)
+    ✓ Read Connection + User Defined Where (4 ms)
+    ✓ Read Union Relationship + User Defined Where (3 ms)
+    ✓ Read Union (4 ms)
+    ✓ Read Union Using Connection (145 ms)
+    ✓ Read Union Using Connection + User Defined Where (5 ms)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/projection-connection.test.ts (24.367 s)
+  Cypher Auth Projection On Connections
+    ✓ One connection (191 ms)
+    ✓ Two connection (5 ms)
+  Cypher Auth Projection On top-level connections
+    ✓ One connection (195 ms)
+    ✓ Two connection (5 ms)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/arguments/allow/interface-relationships/implementation-allow.test.ts (24.329 s)
+  @auth allow on specific interface implementation
+    ✓ read allow protected interface relationship (232 ms)
+    ✓ Read Two Relationships (153 ms)
+    ✓ Nested Update Node (11 ms)
+    ✓ Nested Delete Node (11 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4214.test.ts (24.335 s)
+  https://github.com/neo4j/graphql/issues/4214
+    ✓ should include checks for auth jwt param is not null (413 ms)
+
+PASS @neo4j/graphql tests/tck/issues/5023.test.ts (24.292 s)
+  https://github.com/neo4j/graphql/issues/5023
+    ✓ Update tenants (396 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4170.test.ts (24.314 s)
+  https://github.com/neo4j/graphql/issues/4170
+    ✓ should include checks for auth jwt param is not null (406 ms)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/arguments/allow/allow.test.ts (24.392 s)
+  Cypher Auth Allow
+    ✓ Read Node (216 ms)
+    ✓ Read Node & Protected Field (4 ms)
+    ✓ Read Relationship (4 ms)
+    ✓ Read Relationship & Protected Field (150 ms)
+    ✓ Read Two Relationships (7 ms)
+    ✓ Update Node (8 ms)
+    ✓ Update Node Property (3 ms)
+    ✓ Nested Update Node (4 ms)
+    ✓ Nested Update Property (4 ms)
+    ✓ Delete Node (9 ms)
+    ✓ Nested Delete Node (4 ms)
+    ✓ Disconnect Node (5 ms)
+    ✓ Nested Disconnect Node (4 ms)
+    ✓ Connect Node (4 ms)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/arguments/roles-where.test.ts (24.399 s)
+  Cypher Auth Where with Roles
+    ✓ Read Node (204 ms)
+    ✓ Read Node + User Defined Where (5 ms)
+    ✓ Read Relationship (4 ms)
+    ✓ Read Connection (4 ms)
+    ✓ Read Connection + User Defined Where (6 ms)
+    ✓ Read Union Relationship + User Defined Where (5 ms)
+    ✓ Read Union (10 ms)
+    ✓ Read Union Using Connection (4 ms)
+    ✓ Read Union Using Connection + User Defined Where (140 ms)
+    ✓ Update Node (6 ms)
+    ✓ Update Node + User Defined Where (5 ms)
+    ✓ Update Nested Node (6 ms)
+    ✓ Delete Node (12 ms)
+    ✓ Delete Nested Node (5 ms)
+    ✓ Connect Node (from create) (6 ms)
+    ✓ Connect Node + User Defined Where (from create) (4 ms)
+    ✓ Connect Node (from update update) (3 ms)
+    ✓ Connect Node + User Defined Where (from update update) (6 ms)
+    ✓ Disconnect Node (from update update) (5 ms)
+    ✓ Disconnect Node + User Defined Where (from update update) (4 ms)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/arguments/where/where.test.ts (24.371 s)
+  Cypher Auth Where
+    ✓ Read Node (204 ms)
+    ✓ Read Node + User Defined Where (4 ms)
+    ✓ Read Relationship (7 ms)
+    ✓ Read Connection (5 ms)
+    ✓ Read Connection + User Defined Where (4 ms)
+    ✓ Read Union Relationship + User Defined Where (4 ms)
+    ✓ Read Union (4 ms)
+    ✓ Read Union Using Connection (3 ms)
+    ✓ Read Union Using Connection + User Defined Where (143 ms)
+    ✓ Update Node (6 ms)
+    ✓ Update Node + User Defined Where (3 ms)
+    ✓ Update Nested Node (5 ms)
+    ✓ Delete Node (13 ms)
+    ✓ Delete Node + User Defined Where (4 ms)
+    ✓ Delete Nested Node (8 ms)
+    ✓ Connect Node (from create) (7 ms)
+    ✓ Connect Node + User Defined Where (from create) (5 ms)
+    ✓ Connect Node (from update update) (4 ms)
+    ✓ Connect Node + User Defined Where (from update update) (3 ms)
+    ✓ Disconnect Node (from update update) (5 ms)
+    ✓ Disconnect Node + User Defined Where (from update update) (4 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4429.test.ts (24.387 s)
+  https://github.com/neo4j/graphql/issues/4429
+    ✓ should include checks for auth jwt param is not null (397 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4118.test.ts (24.299 s)
+  https://github.com/neo4j/graphql/issues/2871
+    ✓ should include checks for auth jwt param is not null (407 ms)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/arguments/where/interface-relationships/implementation-where.test.ts (24.425 s)
+  Cypher Auth Where
+    ✓ Read Node (219 ms)
+    ✓ Read Node + User Defined Where (4 ms)
+    ✓ Read interface relationship field (6 ms)
+    ✓ Read interface relationship Using Connection (146 ms)
+    ✓ Read interface relationship Using Connection + User Defined Where (7 ms)
+    ✓ Update Node (8 ms)
+    ✓ Update Node + User Defined Where (3 ms)
+    ✓ Update Nested Node (4 ms)
+    ✓ Delete Node (17 ms)
+    ✓ Delete Node + User Defined Where (4 ms)
+    ✓ Delete Nested Node (3 ms)
+    ✓ Connect Node (from create) (5 ms)
+    ✓ Connect Node + User Defined Where (from create) (3 ms)
+    ✓ Connect Node (from update update) (3 ms)
+    ✓ Connect Node + User Defined Where (from update update) (5 ms)
+    ✓ Disconnect Node (from update update) (6 ms)
+    ✓ Disconnect Node + User Defined Where (from update update) (5 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4223.test.ts (24.425 s)
+  https://github.com/neo4j/graphql/issues/4223
+    ✓ should include checks for auth jwt param is not null (438 ms)
+
+PASS @neo4j/graphql tests/tck/issues/2396.test.ts (24.423 s)
+  https://github.com/neo4j/graphql/issues/2396
+    ✓ nested relationship filter (442 ms)
+    ✓ nested relationship filter with AND (6 ms)
+    ✓ query should not contain skip or limit (7 ms)
+    ✓ query should contain offset of 0 and limit of 20 (7 ms)
+    ✓ query should contain offset of 20 and limit of 40 (6 ms)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/505.test.ts:118:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4292.test.ts:182:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4292.test.ts:182:44)
+
+  console.warn
+    Found @relationship argument "queryDirection" used with UNDIRECTED_ONLY which is deprecated. Please use "DIRECTED" or "UNDIRECTED" instead.
+
+    [0m [90m 54 |[39m                     ][33m.[39mincludes([33mRelationshipQueryDirectionOption[39m[queryDirectionValue])
+     [90m 55 |[39m                 ) {
+    [31m[1m>[22m[39m[90m 56 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 57 |[39m                         [32m`Found @relationship argument "queryDirection" used with ${queryDirectionValue} which is deprecated. Please use "DIRECTED" or "UNDIRECTED" instead.`[39m
+     [90m 58 |[39m                     )[33m;[39m
+     [90m 59 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.Directive (packages/graphql/src/schema/validation/custom-rules/warnings/query-direction-deprecated-values.ts:56:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4292.test.ts:182:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/missing-custom-cypher-on-unions.test.ts:141:44)
+
+  console.warn
+    '@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request.
+
+    [0m [90m 32 |[39m                     [[32m"authentication"[39m[33m,[39m [32m"authorization"[39m[33m,[39m [32m"subscriptionsAuthorization"[39m][33m.[39mincludes(directive[33m.[39mname[33m.[39mvalue)
+     [90m 33 |[39m                 ) {
+    [31m[1m>[22m[39m[90m 34 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 35 |[39m                         [32m"'@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request."[39m
+     [90m 36 |[39m                     )[33m;[39m
+     [90m 37 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.Directive (packages/graphql/src/schema/validation/custom-rules/warnings/authorization-feature-disabled.ts:34:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5497.test.ts:91:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5497.test.ts:91:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/3901.test.ts:118:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5497.test.ts:91:44)
+
+  console.warn
+    Future library versions will require marking all types representing Neo4j nodes with the @node directive.
+
+    [0m [90m 43 |[39m                 }
+     [90m 44 |[39m                 [36mif[39m ([33m![39mhasNodeDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                         [32m`Future library versions will require marking all types representing Neo4j nodes with the @node directive.`[39m
+     [90m 47 |[39m                     )[33m;[39m
+     [90m 48 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/warn-if-type-is-not-marked-as-node.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5887.test.ts:65:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5887.test.ts:65:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4077.test.ts:112:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5066.test.ts:120:44)
+
+  console.warn
+    Future library versions will not support @private directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasPrivateDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @private directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-private.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5066.test.ts:120:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/2871.test.ts:61:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/2871.test.ts:61:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5066.test.ts:120:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/2925.test.ts:55:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5635.test.ts:76:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5080.test.ts:113:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5635.test.ts:76:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5080.test.ts:113:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/authorization/projection-connection-union.test.ts:84:44)
+
+PASS @neo4j/graphql tests/tck/issues/505.test.ts
+  https://github.com/neo4j/graphql/issues/505
+    ✓ Users query (132 ms)
+    ✓ Workspaces query (4 ms)
+    ✓ Pages query (2 ms)
+    ✓ All pages query (3 ms)
+
+PASS @neo4j/graphql tests/tck/issues/missing-custom-cypher-on-unions.test.ts
+  Missing custom Cypher on unions
+    ✓ should include checks for auth jwt param is not null (92 ms)
+
+PASS @neo4j/graphql tests/tck/issues/5887.test.ts
+  https://github.com/neo4j/graphql/issues/5887
+    ✓ should return relationship when first interface match (61 ms)
+    ✓ should return relationship when second interface match (3 ms)
+    ✓ should not return relationship when no interface match (3 ms)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/node/node-with-auth.test.ts:78:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4115.test.ts:90:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4115.test.ts:90:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4110.test.ts:68:44)
+
+PASS @neo4j/graphql tests/tck/issues/3901.test.ts
+  https://github.com/neo4j/graphql/issues/3901
+    ✓ should not add an authorization check for connects coming from create (103 ms)
+
+PASS @neo4j/graphql tests/tck/issues/2871.test.ts
+  https://github.com/neo4j/graphql/issues/2871
+    ✓ should be able to filter by SOME nested within single relationship (76 ms)
+    ✓ should be able to filter by ALL nested within single relationship (1 ms)
+    ✓ should not match if SOME second level relationships meet nested predicates (2 ms)
+
+PASS @neo4j/graphql tests/tck/issues/5497.test.ts
+  https://github.com/neo4j/graphql/issues/5497
+    ✓ should properly add where filters for auth (132 ms)
+
+PASS @neo4j/graphql tests/tck/issues/5635.test.ts
+  https://github.com/neo4j/graphql/issues/5635
+    ✓ validation should applied correctly without causing cypher errors (76 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4077.test.ts
+  https://github.com/neo4j/graphql/issues/4077
+    ✓ wrap authenticated subquery on top level read operation (102 ms)
+    ✓ wrap authenticated subquery on nested read operation (5 ms)
+
+PASS @neo4j/graphql tests/tck/issues/2925.test.ts
+  https://github.com/neo4j/graphql/issues/2925
+    ✓ should query relationship (76 ms)
+    ✓ should query required relationship (2 ms)
+    ✓ should query nested relationship (2 ms)
+    ✓ should query nested required relationship (2 ms)
+
+PASS @neo4j/graphql tests/tck/directives/authorization/projection-connection-union.test.ts
+  Cypher Auth Projection On Connections On Unions
+    ✓ Two connection (72 ms)
+
+PASS @neo4j/graphql tests/tck/issues/5066.test.ts
+  https://github.com/neo4j/graphql/issues/5066
+    ✓ filter unions with authotization (105 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4110.test.ts
+  https://github.com/neo4j/graphql/issues/4110
+    ✓ wrap authenticated subquery on top level read operation (65 ms)
+
+PASS @neo4j/graphql tests/tck/directives/node/node-with-auth.test.ts
+  Node Directive
+    ✓ Read User (70 ms)
+    ✓ Admin Deletes Post (11 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4115.test.ts
+  https://github.com/neo4j/graphql/issues/4115
+    ✓ should generate valid cypher on nested aggregation with combined rules (95 ms)
+
+PASS @neo4j/graphql tests/tck/issues/5080.test.ts
+  https://github.com/neo4j/graphql/issues/5080
+    ✓ custom cypher should apply correctly authorization validation rule (134 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4292.test.ts
+  https://github.com/neo4j/graphql/issues/4292
+    ✓ authorization subqueries should be wrapped in a Cypher.CALL (314 ms)
+
+  console.warn
+    '@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request.
+
+    [0m [90m 32 |[39m                     [[32m"authentication"[39m[33m,[39m [32m"authorization"[39m[33m,[39m [32m"subscriptionsAuthorization"[39m][33m.[39mincludes(directive[33m.[39mname[33m.[39mvalue)
+     [90m 33 |[39m                 ) {
+    [31m[1m>[22m[39m[90m 34 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 35 |[39m                         [32m"'@authentication', '@authorization' and/or @subscriptionsAuthorization detected - please ensure that you either specify authorization settings in 'features.authorization'. This warning can be ignored if you intend to pass a decoded JWT into 'context.jwt' on every request."[39m
+     [90m 36 |[39m                     )[33m;[39m
+     [90m 37 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.Directive (packages/graphql/src/schema/validation/custom-rules/warnings/authorization-feature-disabled.ts:34:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5515.test.ts:82:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5515.test.ts:82:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/directives/node/node-with-auth-projection.test.ts:70:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5515.test.ts:82:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5270.test.ts:81:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5270.test.ts:81:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4116.test.ts:81:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4116.test.ts:81:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4450.test.ts:59:44)
+
+  console.warn
+    Future library versions will not support @unique directive.
+
+    [0m [90m 43 |[39m
+     [90m 44 |[39m                 [36mif[39m (hasUniqueDirective) {
+    [31m[1m>[22m[39m[90m 45 |[39m                     console[33m.[39mwarn([32m`Future library versions will not support @unique directive.`[39m)[33m;[39m
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 46 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 47 |[39m                 }
+     [90m 48 |[39m             }[33m,[39m[0m
+
+      at ObjectTypeDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/deprecated-unique.ts:45:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4095.test.ts:71:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/4095.test.ts:71:44)
+
+  console.warn
+    Using @relationship directive on a non-list element is deprecated and will be removed in next major version.
+
+    [0m [90m 38 |[39m
+     [90m 39 |[39m                 [36mif[39m (isRelationship [33m&&[39m [33m![39misList) {
+    [31m[1m>[22m[39m[90m 40 |[39m                     console[33m.[39mwarn(
+     [90m    |[39m                             [31m[1m^[22m[39m
+     [90m 41 |[39m                         [32m"Using @relationship directive on a non-list element is deprecated and will be removed in next major version."[39m
+     [90m 42 |[39m                     )[33m;[39m
+     [90m 43 |[39m                     warningAlreadyIssued [33m=[39m [36mtrue[39m[33m;[39m[0m
+
+      at Object.FieldDefinition (packages/graphql/src/schema/validation/custom-rules/warnings/single-relationship.ts:40:29)
+      at Object.enter (node_modules/graphql/language/visitor.js:301:32)
+      at visit (node_modules/graphql/language/visitor.js:197:21)
+      at validateSDL (packages/graphql/src/schema/validation/validate-sdl.ts:38:10)
+      at runValidationRulesOnFilteredDocument (packages/graphql/src/schema/validation/validate-document.ts:213:31)
+      at validateDocument (packages/graphql/src/schema/validation/validate-document.ts:291:5)
+      at packages/graphql/src/classes/Neo4jGraphQL.ts:370:33
+      at Neo4jGraphQL.generateExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:359:16)
+      at Neo4jGraphQL.getExecutableSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:119:42)
+      at Neo4jGraphQL.getSchema (packages/graphql/src/classes/Neo4jGraphQL.ts:114:21)
+      at translateQuery (packages/graphql/tests/tck/utils/tck-test-utils.ts:63:86)
+      at Object.<anonymous> (packages/graphql/tests/tck/issues/5143.test.ts:74:44)
+
+PASS @neo4j/graphql tests/tck/directives/node/node-with-auth-projection.test.ts
+  Cypher Auth Projection On Connections
+    ✓ One connection (66 ms)
+
+PASS @neo4j/graphql tests/tck/issues/5270.test.ts
+  https://github.com/neo4j/graphql/issues/5270
+    ✓ should return filtered results according to authorization rule (87 ms)
+
+PASS @neo4j/graphql tests/tck/issues/5143.test.ts
+  https://github.com/neo4j/graphql/issues/5143
+    ✓ should return filtered results according to authorization rul (58 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4116.test.ts
+  https://github.com/neo4j/graphql/issues/4115
+    ✓ should generate valid cypher on nested aggregation with combined rules (94 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4450.test.ts
+  https://github.com/neo4j/graphql/issues/4450
+    ✓ filtering through a connection to a many-to-1 relationship should work (87 ms)
+
+PASS @neo4j/graphql tests/tck/issues/5515.test.ts
+  https://github.com/neo4j/graphql/issues/5515
+    ✓ should delete categories with auth filters (122 ms)
+
+PASS @neo4j/graphql tests/tck/issues/4095.test.ts
+  https://github.com/neo4j/graphql/issues/4095
+    ✓ query with nested aggregate count (83 ms)
+
+Test Suites: 39 passed, 39 total
+Tests:       144 passed, 144 total
+Snapshots:   288 passed, 288 total
+Time:        27.064 s
+Ran all test suites matching /tests\/tck\/directives\/authorization\/arguments\/allow\/allow.test.ts|tests\/tck\/directives\/authorization\/arguments\/allow\/interface-relationships\/implementation-allow.test.ts|tests\/tck\/directives\/authorization\/arguments\/roles-where.test.ts|tests\/tck\/directives\/authorization\/arguments\/validate\/interface-relationships\/implementation-bind.test.ts|tests\/tck\/directives\/authorization\/arguments\/validate\/validate.test.ts|tests\/tck\/directives\/authorization\/arguments\/where\/connection-auth-filter.test.ts|tests\/tck\/directives\/authorization\/arguments\/where\/interface-relationships\/implementation-where.test.ts|tests\/tck\/directives\/authorization\/arguments\/where\/where.test.ts|tests\/tck\/directives\/authorization\/projection-connection-union.test.ts|tests\/tck\/directives\/authorization\/projection-connection.test.ts|tests\/tck\/directives\/node\/node-with-auth-projection.test.ts|tests\/tck\/directives\/node\/node-with-auth.test.ts|tests\/tck\/issues\/2396.test.ts|tests\/tck\/issues\/2871.test.ts|tests\/tck\/issues\/2925.test.ts|tests\/tck\/issues\/3901.test.ts|tests\/tck\/issues\/4077.test.ts|tests\/tck\/issues\/4095.test.ts|tests\/tck\/issues\/4110.test.ts|tests\/tck\/issues\/4115.test.ts|tests\/tck\/issues\/4116.test.ts|tests\/tck\/issues\/4118.test.ts|tests\/tck\/issues\/4170.test.ts|tests\/tck\/issues\/4214.test.ts|tests\/tck\/issues\/4223.test.ts|tests\/tck\/issues\/4292.test.ts|tests\/tck\/issues\/4429.test.ts|tests\/tck\/issues\/4450.test.ts|tests\/tck\/issues\/5023.test.ts|tests\/tck\/issues\/505.test.ts|tests\/tck\/issues\/5066.test.ts|tests\/tck\/issues\/5080.test.ts|tests\/tck\/issues\/5143.test.ts|tests\/tck\/issues\/5270.test.ts|tests\/tck\/issues\/5497.test.ts|tests\/tck\/issues\/5515.test.ts|tests\/tck\/issues\/5635.test.ts|tests\/tck\/issues\/5887.test.ts|tests\/tck\/issues\/missing-custom-cypher-on-unions.test.ts/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":39,"numPassedTests":144,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":39,"numTotalTests":144,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":288,"total":288,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746092664,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["Cypher Auth Allow"],"duration":189,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Create Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Create Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Create Nested Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Create Nested Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Update Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Update Nested Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Nested Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Connect Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Disconnect Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Disconnect Node"}],"endTime":1782746117286,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/arguments/validate/validate.test.ts","startTime":1782746093095,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Cypher Auth Allow"],"duration":216,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Create Nested Node with bind","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Create Nested Node with bind"},{"ancestorTitles":["Cypher Auth Allow"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Create Nested Node without bind","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Create Nested Node without bind"},{"ancestorTitles":["Cypher Auth Allow"],"duration":9,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Update Nested Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Nested Node"}],"endTime":1782746117290,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/arguments/validate/interface-relationships/implementation-bind.test.ts","startTime":1782746093092,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Connection auth filter"],"duration":202,"failureDetails":[],"failureMessages":[],"fullName":"Connection auth filter Read Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node"},{"ancestorTitles":["Connection auth filter"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Connection auth filter Read Node + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node + User Defined Where"},{"ancestorTitles":["Connection auth filter"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Connection auth filter Read Relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Relationship"},{"ancestorTitles":["Connection auth filter"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Connection auth filter Read Connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Connection"},{"ancestorTitles":["Connection auth filter"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Connection auth filter Read Connection + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Connection + User Defined Where"},{"ancestorTitles":["Connection auth filter"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Connection auth filter Read Union Relationship + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union Relationship + User Defined Where"},{"ancestorTitles":["Connection auth filter"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Connection auth filter Read Union","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union"},{"ancestorTitles":["Connection auth filter"],"duration":145,"failureDetails":[],"failureMessages":[],"fullName":"Connection auth filter Read Union Using Connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union Using Connection"},{"ancestorTitles":["Connection auth filter"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Connection auth filter Read Union Using Connection + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union Using Connection + User Defined Where"}],"endTime":1782746117445,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/arguments/where/connection-auth-filter.test.ts","startTime":1782746093105,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Cypher Auth Projection On Connections"],"duration":191,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Projection On Connections One connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"One connection"},{"ancestorTitles":["Cypher Auth Projection On Connections"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Projection On Connections Two connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Two connection"},{"ancestorTitles":["Cypher Auth Projection On top-level connections"],"duration":195,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Projection On top-level connections One connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"One connection"},{"ancestorTitles":["Cypher Auth Projection On top-level connections"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Projection On top-level connections Two connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Two connection"}],"endTime":1782746117456,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/projection-connection.test.ts","startTime":1782746093089,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["@auth allow on specific interface implementation"],"duration":232,"failureDetails":[],"failureMessages":[],"fullName":"@auth allow on specific interface implementation read allow protected interface relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"read allow protected interface relationship"},{"ancestorTitles":["@auth allow on specific interface implementation"],"duration":153,"failureDetails":[],"failureMessages":[],"fullName":"@auth allow on specific interface implementation Read Two Relationships","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Two Relationships"},{"ancestorTitles":["@auth allow on specific interface implementation"],"duration":11,"failureDetails":[],"failureMessages":[],"fullName":"@auth allow on specific interface implementation Nested Update Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Nested Update Node"},{"ancestorTitles":["@auth allow on specific interface implementation"],"duration":11,"failureDetails":[],"failureMessages":[],"fullName":"@auth allow on specific interface implementation Nested Delete Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Nested Delete Node"}],"endTime":1782746117466,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/arguments/allow/interface-relationships/implementation-allow.test.ts","startTime":1782746093137,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4214"],"duration":413,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4214 should include checks for auth jwt param is not null","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should include checks for auth jwt param is not null"}],"endTime":1782746117473,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4214.test.ts","startTime":1782746093138,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5023"],"duration":396,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5023 Update tenants","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update tenants"}],"endTime":1782746117484,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/5023.test.ts","startTime":1782746093192,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4170"],"duration":406,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4170 should include checks for auth jwt param is not null","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should include checks for auth jwt param is not null"}],"endTime":1782746117499,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4170.test.ts","startTime":1782746093185,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Cypher Auth Allow"],"duration":216,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Read Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Read Node & Protected Field","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node & Protected Field"},{"ancestorTitles":["Cypher Auth Allow"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Read Relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Relationship"},{"ancestorTitles":["Cypher Auth Allow"],"duration":150,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Read Relationship & Protected Field","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Relationship & Protected Field"},{"ancestorTitles":["Cypher Auth Allow"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Read Two Relationships","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Two Relationships"},{"ancestorTitles":["Cypher Auth Allow"],"duration":8,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Update Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Update Node Property","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Node Property"},{"ancestorTitles":["Cypher Auth Allow"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Nested Update Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Nested Update Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Nested Update Property","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Nested Update Property"},{"ancestorTitles":["Cypher Auth Allow"],"duration":9,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Delete Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Delete Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Nested Delete Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Nested Delete Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Disconnect Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Disconnect Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Nested Disconnect Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Nested Disconnect Node"},{"ancestorTitles":["Cypher Auth Allow"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Allow Connect Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node"}],"endTime":1782746117501,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/arguments/allow/allow.test.ts","startTime":1782746093109,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":204,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Read Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Read Node + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node + User Defined Where"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Read Relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Relationship"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Read Connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Connection"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Read Connection + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Connection + User Defined Where"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Read Union Relationship + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union Relationship + User Defined Where"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":10,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Read Union","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Read Union Using Connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union Using Connection"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":140,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Read Union Using Connection + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union Using Connection + User Defined Where"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Update Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Node"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Update Node + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Node + User Defined Where"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Update Nested Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Nested Node"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":12,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Delete Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Delete Node"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Delete Nested Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Delete Nested Node"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Connect Node (from create)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node (from create)"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Connect Node + User Defined Where (from create)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node + User Defined Where (from create)"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Connect Node (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node (from update update)"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Connect Node + User Defined Where (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node + User Defined Where (from update update)"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Disconnect Node (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Disconnect Node (from update update)"},{"ancestorTitles":["Cypher Auth Where with Roles"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where with Roles Disconnect Node + User Defined Where (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Disconnect Node + User Defined Where (from update update)"}],"endTime":1782746117504,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/arguments/roles-where.test.ts","startTime":1782746093105,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Cypher Auth Where"],"duration":204,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Node + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Relationship"},{"ancestorTitles":["Cypher Auth Where"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Connection"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Connection + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Connection + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Union Relationship + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union Relationship + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Union","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union"},{"ancestorTitles":["Cypher Auth Where"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Union Using Connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union Using Connection"},{"ancestorTitles":["Cypher Auth Where"],"duration":143,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Union Using Connection + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Union Using Connection + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Update Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Update Node + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Node + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Update Nested Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Nested Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":13,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Delete Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Delete Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Delete Node + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Delete Node + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":8,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Delete Nested Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Delete Nested Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Connect Node (from create)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node (from create)"},{"ancestorTitles":["Cypher Auth Where"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Connect Node + User Defined Where (from create)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node + User Defined Where (from create)"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Connect Node (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node (from update update)"},{"ancestorTitles":["Cypher Auth Where"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Connect Node + User Defined Where (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node + User Defined Where (from update update)"},{"ancestorTitles":["Cypher Auth Where"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Disconnect Node (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Disconnect Node (from update update)"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Disconnect Node + User Defined Where (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Disconnect Node + User Defined Where (from update update)"}],"endTime":1782746117508,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/arguments/where/where.test.ts","startTime":1782746093137,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4429"],"duration":397,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4429 should include checks for auth jwt param is not null","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should include checks for auth jwt param is not null"}],"endTime":1782746117513,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4429.test.ts","startTime":1782746093126,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2871"],"duration":407,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2871 should include checks for auth jwt param is not null","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should include checks for auth jwt param is not null"}],"endTime":1782746117515,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4118.test.ts","startTime":1782746093216,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Cypher Auth Where"],"duration":219,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read Node + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read Node + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read interface relationship field","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read interface relationship field"},{"ancestorTitles":["Cypher Auth Where"],"duration":146,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read interface relationship Using Connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read interface relationship Using Connection"},{"ancestorTitles":["Cypher Auth Where"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Read interface relationship Using Connection + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read interface relationship Using Connection + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":8,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Update Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Update Node + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Node + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Update Nested Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Update Nested Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Delete Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Delete Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Delete Node + User Defined Where","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Delete Node + User Defined Where"},{"ancestorTitles":["Cypher Auth Where"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Delete Nested Node","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Delete Nested Node"},{"ancestorTitles":["Cypher Auth Where"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Connect Node (from create)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node (from create)"},{"ancestorTitles":["Cypher Auth Where"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Connect Node + User Defined Where (from create)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node + User Defined Where (from create)"},{"ancestorTitles":["Cypher Auth Where"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Connect Node (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node (from update update)"},{"ancestorTitles":["Cypher Auth Where"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Connect Node + User Defined Where (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Connect Node + User Defined Where (from update update)"},{"ancestorTitles":["Cypher Auth Where"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Disconnect Node (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Disconnect Node (from update update)"},{"ancestorTitles":["Cypher Auth Where"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Where Disconnect Node + User Defined Where (from update update)","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Disconnect Node + User Defined Where (from update update)"}],"endTime":1782746117516,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/arguments/where/interface-relationships/implementation-where.test.ts","startTime":1782746093091,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4223"],"duration":438,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4223 should include checks for auth jwt param is not null","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should include checks for auth jwt param is not null"}],"endTime":1782746117529,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4223.test.ts","startTime":1782746093104,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2396"],"duration":442,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2396 nested relationship filter","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"nested relationship filter"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2396"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2396 nested relationship filter with AND","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"nested relationship filter with AND"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2396"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2396 query should not contain skip or limit","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"query should not contain skip or limit"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2396"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2396 query should contain offset of 0 and limit of 20","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"query should contain offset of 0 and limit of 20"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2396"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2396 query should contain offset of 20 and limit of 40","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"query should contain offset of 20 and limit of 40"}],"endTime":1782746117536,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/2396.test.ts","startTime":1782746093113,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/505"],"duration":132,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/505 Users query","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Users query"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/505"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/505 Workspaces query","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Workspaces query"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/505"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/505 Pages query","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Pages query"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/505"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/505 All pages query","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"All pages query"}],"endTime":1782746118520,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/505.test.ts","startTime":1782746117443,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Missing custom Cypher on unions"],"duration":92,"failureDetails":[],"failureMessages":[],"fullName":"Missing custom Cypher on unions should include checks for auth jwt param is not null","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should include checks for auth jwt param is not null"}],"endTime":1782746118517,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/missing-custom-cypher-on-unions.test.ts","startTime":1782746117460,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5887"],"duration":61,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5887 should return relationship when first interface match","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return relationship when first interface match"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5887"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5887 should return relationship when second interface match","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return relationship when second interface match"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5887"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5887 should not return relationship when no interface match","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should not return relationship when no interface match"}],"endTime":1782746118528,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/5887.test.ts","startTime":1782746117515,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/3901"],"duration":103,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/3901 should not add an authorization check for connects coming from create","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should not add an authorization check for connects coming from create"}],"endTime":1782746118545,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/3901.test.ts","startTime":1782746117472,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2871"],"duration":76,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2871 should be able to filter by SOME nested within single relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should be able to filter by SOME nested within single relationship"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2871"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2871 should be able to filter by ALL nested within single relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should be able to filter by ALL nested within single relationship"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2871"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2871 should not match if SOME second level relationships meet nested predicates","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should not match if SOME second level relationships meet nested predicates"}],"endTime":1782746118564,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/2871.test.ts","startTime":1782746117533,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5497"],"duration":132,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5497 should properly add where filters for auth","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should properly add where filters for auth"}],"endTime":1782746118565,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/5497.test.ts","startTime":1782746117482,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5635"],"duration":76,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5635 validation should applied correctly without causing cypher errors","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"validation should applied correctly without causing cypher errors"}],"endTime":1782746118571,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/5635.test.ts","startTime":1782746117531,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4077"],"duration":102,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4077 wrap authenticated subquery on top level read operation","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"wrap authenticated subquery on top level read operation"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4077"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4077 wrap authenticated subquery on nested read operation","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"wrap authenticated subquery on nested read operation"}],"endTime":1782746118575,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4077.test.ts","startTime":1782746117490,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2925"],"duration":76,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2925 should query relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should query relationship"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2925"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2925 should query required relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should query required relationship"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2925"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2925 should query nested relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should query nested relationship"},{"ancestorTitles":["https://github.com/neo4j/graphql/issues/2925"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/2925 should query nested required relationship","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should query nested required relationship"}],"endTime":1782746118577,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/2925.test.ts","startTime":1782746117523,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Cypher Auth Projection On Connections On Unions"],"duration":72,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Projection On Connections On Unions Two connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Two connection"}],"endTime":1782746118579,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/authorization/projection-connection-union.test.ts","startTime":1782746117523,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5066"],"duration":105,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5066 filter unions with authotization","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"filter unions with authotization"}],"endTime":1782746118583,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/5066.test.ts","startTime":1782746117500,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4110"],"duration":65,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4110 wrap authenticated subquery on top level read operation","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"wrap authenticated subquery on top level read operation"}],"endTime":1782746118600,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4110.test.ts","startTime":1782746117559,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Node Directive"],"duration":70,"failureDetails":[],"failureMessages":[],"fullName":"Node Directive Read User","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Read User"},{"ancestorTitles":["Node Directive"],"duration":11,"failureDetails":[],"failureMessages":[],"fullName":"Node Directive Admin Deletes Post","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"Admin Deletes Post"}],"endTime":1782746118601,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/node/node-with-auth.test.ts","startTime":1782746117531,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4115"],"duration":95,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4115 should generate valid cypher on nested aggregation with combined rules","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should generate valid cypher on nested aggregation with combined rules"}],"endTime":1782746118623,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4115.test.ts","startTime":1782746117544,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5080"],"duration":134,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5080 custom cypher should apply correctly authorization validation rule","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"custom cypher should apply correctly authorization validation rule"}],"endTime":1782746118631,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/5080.test.ts","startTime":1782746117516,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4292"],"duration":314,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4292 authorization subqueries should be wrapped in a Cypher.CALL","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"authorization subqueries should be wrapped in a Cypher.CALL"}],"endTime":1782746118695,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4292.test.ts","startTime":1782746117441,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Cypher Auth Projection On Connections"],"duration":66,"failureDetails":[],"failureMessages":[],"fullName":"Cypher Auth Projection On Connections One connection","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"One connection"}],"endTime":1782746119178,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/directives/node/node-with-auth-projection.test.ts","startTime":1782746118523,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5270"],"duration":87,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5270 should return filtered results according to authorization rule","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return filtered results according to authorization rule"}],"endTime":1782746119209,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/5270.test.ts","startTime":1782746118526,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5143"],"duration":58,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5143 should return filtered results according to authorization rul","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return filtered results according to authorization rul"}],"endTime":1782746119216,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/5143.test.ts","startTime":1782746118573,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4115"],"duration":94,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4115 should generate valid cypher on nested aggregation with combined rules","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should generate valid cypher on nested aggregation with combined rules"}],"endTime":1782746119227,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4116.test.ts","startTime":1782746118548,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4450"],"duration":87,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4450 filtering through a connection to a many-to-1 relationship should work","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"filtering through a connection to a many-to-1 relationship should work"}],"endTime":1782746119228,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4450.test.ts","startTime":1782746118575,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/5515"],"duration":122,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/5515 should delete categories with auth filters","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should delete categories with auth filters"}],"endTime":1782746119231,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/5515.test.ts","startTime":1782746118530,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["https://github.com/neo4j/graphql/issues/4095"],"duration":83,"failureDetails":[],"failureMessages":[],"fullName":"https://github.com/neo4j/graphql/issues/4095 query with nested aggregate count","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"query with nested aggregate count"}],"endTime":1782746119240,"message":"","name":"/workspace/repo/packages/graphql/tests/tck/issues/4095.test.ts","startTime":1782746118572,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=144 found=144 failed=0 parsed=144 framework=jest exit_code=0

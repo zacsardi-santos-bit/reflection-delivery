@@ -1,0 +1,7 @@
+I'm working on the distributed table engine's query optimizer, and I need to improve how it handles primary key lookups when the WHERE clause uses OR conditions. Right now, the optimizer can find and use primary key values when there's a simple equality check or an IN-list, but it completely misses cases where the same primary key column appears on both sides of an OR. For example, "pk = 10 OR pk = 20" should let the optimizer extract both values {10, 20} so it can skip data blocks that can't possibly contain either — but instead it gives up and scans everything.
+
+I need the primary key expression extractor to recognize OR combinations where both branches involve the same primary key column, and collect all the candidate values into a unified set. This should work recursively for nested OR/AND combinations — as long as every branch of an OR ultimately refers to the primary key, the combined candidates can be extracted. If any branch of an OR involves a non-primary-key column, the whole thing should fall back to "cannot determine candidates."
+
+Related to this, I also need to add a helper that takes a list of primary key expressions (a mix of scalar values and in-vector expressions) and evaluates them all into a single sorted vector of candidate values.
+
+Finally, the function that iterates over blocks within a set of object statistics currently only passes block metadata to its callback. It should also pass the corresponding block-level object metadata, so the callback can use it for additional filtering without having to look it up separately.

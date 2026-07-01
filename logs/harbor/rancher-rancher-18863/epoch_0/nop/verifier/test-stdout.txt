@@ -1,0 +1,7 @@
+patching file pkg/controllers/user/logging/utils/testwrap_test.go
+# github.com/rancher/rancher/pkg/controllers/user/logging/utils [github.com/rancher/rancher/pkg/controllers/user/logging/utils.test]
+pkg/controllers/user/logging/utils/testwrap_test.go:23:17: undefined: loadCertsFromPEM
+pkg/controllers/user/logging/utils/testwrap_test.go:34:15: undefined: loadCertsFromPEM
+pkg/controllers/user/logging/utils/testwrap_test.go:47:13: undefined: isSignedBy
+FAIL	github.com/rancher/rancher/pkg/controllers/user/logging/utils [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

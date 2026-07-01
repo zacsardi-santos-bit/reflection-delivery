@@ -1,0 +1,27 @@
+patching file backend/src/apiserver/common/util_test.go
+patching file backend/src/apiserver/model/resource_reference_test.go
+patching file backend/src/apiserver/server/run_server_test.go
+patching file backend/src/apiserver/server/util_test.go
+# github.com/mattn/go-sqlite3
+sqlite3-binding.c: In function 'sqlite3SelectNew':
+sqlite3-binding.c:121469:10: warning: function may return address of local variable [-Wreturn-local-addr]
+121469 |   return pNew;
+       |          ^~~~
+sqlite3-binding.c:121431:10: note: declared here
+121431 |   Select standin;
+       |          ^~~~~~~
+# github.com/kubeflow/pipelines/backend/src/apiserver/model [github.com/kubeflow/pipelines/backend/src/apiserver/model.test]
+backend/src/apiserver/model/resource_reference_test.go:38:15: undefined: GetNamespaceFromModelResourceReferences
+backend/src/apiserver/model/resource_reference_test.go:49:14: undefined: GetNamespaceFromModelResourceReferences
+# github.com/kubeflow/pipelines/backend/src/apiserver/common [github.com/kubeflow/pipelines/backend/src/apiserver/common.test]
+backend/src/apiserver/common/util_test.go:37:15: undefined: GetNamespaceFromAPIResourceReferences
+backend/src/apiserver/common/util_test.go:47:14: undefined: GetNamespaceFromAPIResourceReferences
+FAIL	github.com/kubeflow/pipelines/backend/src/apiserver/common [build failed]
+FAIL	github.com/kubeflow/pipelines/backend/src/apiserver/model [build failed]
+# github.com/kubeflow/pipelines/backend/src/apiserver/server [github.com/kubeflow/pipelines/backend/src/apiserver/server.test]
+backend/src/apiserver/server/run_server_test.go:354:19: runServer.canAccessRun undefined (type RunServer has no field or method canAccessRun)
+backend/src/apiserver/server/run_server_test.go:387:19: runServer.canAccessRun undefined (type RunServer has no field or method canAccessRun)
+backend/src/apiserver/server/util_test.go:361:9: undefined: CanAccessNamespaceInResourceReferences
+backend/src/apiserver/server/util_test.go:378:9: undefined: CanAccessNamespaceInResourceReferences
+FAIL	github.com/kubeflow/pipelines/backend/src/apiserver/server [build failed]
+reward=0 graded=140 found=140 failed=140 parsed=3 framework=go exit_code=1

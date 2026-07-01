@@ -1,0 +1,7 @@
+patching file CHANGELOG.md
+patching file minijinja/src/compiler/codegen.rs
+patching file minijinja/src/compiler/instructions.rs
+patching file minijinja/src/vm/context.rs
+patching file minijinja/src/vm/fuel.rs
+patching file minijinja/src/vm/loop_object.rs
+patching file minijinja/src/vm/mod.rs

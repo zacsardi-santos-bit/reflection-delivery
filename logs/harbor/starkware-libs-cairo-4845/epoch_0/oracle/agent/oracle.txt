@@ -1,0 +1,3 @@
+patching file crates/cairo-lang-sierra-to-casm/src/metadata.rs
+patching file crates/cairo-lang-starknet/src/casm_contract_class.rs
+patching file crates/cairo-lang-test-runner/src/lib.rs

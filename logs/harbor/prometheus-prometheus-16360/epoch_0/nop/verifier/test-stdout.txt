@@ -1,0 +1,28 @@
+patching file storage/remote/otlptranslator/prometheusremotewrite/histograms_test.go
+patching file storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw_test.go
+patching file web/api/v1/errors_test.go
+# github.com/prometheus/prometheus/storage/remote/otlptranslator/prometheusremotewrite [github.com/prometheus/prometheus/storage/remote/otlptranslator/prometheusremotewrite.test]
+storage/remote/otlptranslator/prometheusremotewrite/histograms_test.go:569:75: too many arguments in call to exponentialToNativeHistogram
+	have (pmetric.ExponentialHistogramDataPoint, pmetric.AggregationTemporality)
+	want (pmetric.ExponentialHistogramDataPoint)
+storage/remote/otlptranslator/prometheusremotewrite/histograms_test.go:772:5: too many arguments in call to converter.addExponentialHistogramDataPoints
+	have (context.Context, pmetric.ExponentialHistogramDataPointSlice, pcommon.Resource, Settings, string, pmetric.AggregationTemporality)
+	want (context.Context, pmetric.ExponentialHistogramDataPointSlice, pcommon.Resource, Settings, string)
+storage/remote/otlptranslator/prometheusremotewrite/histograms_test.go:976:77: too many arguments in call to explicitHistogramToCustomBucketsHistogram
+	have (pmetric.HistogramDataPoint, pmetric.AggregationTemporality)
+	want (pmetric.HistogramDataPoint)
+storage/remote/otlptranslator/prometheusremotewrite/histograms_test.go:1141:5: too many arguments in call to converter.addCustomBucketsHistogramDataPoints
+	have (context.Context, pmetric.HistogramDataPointSlice, pcommon.Resource, Settings, string, pmetric.AggregationTemporality)
+	want (context.Context, pmetric.HistogramDataPointSlice, pcommon.Resource, Settings, string)
+storage/remote/otlptranslator/prometheusremotewrite/metrics_to_prw_test.go:444:5: unknown field AllowDeltaTemporality in struct literal of type Settings
+{"Time":"2026-06-29T15:22:13.198492792Z","Action":"start","Package":"github.com/prometheus/prometheus/storage/remote/otlptranslator/prometheusremotewrite"}
+{"Time":"2026-06-29T15:22:13.198613324Z","Action":"output","Package":"github.com/prometheus/prometheus/storage/remote/otlptranslator/prometheusremotewrite","Output":"FAIL\tgithub.com/prometheus/prometheus/storage/remote/otlptranslator/prometheusremotewrite [build failed]\n"}
+{"Time":"2026-06-29T15:22:13.198643206Z","Action":"fail","Package":"github.com/prometheus/prometheus/storage/remote/otlptranslator/prometheusremotewrite","Elapsed":0}
+# github.com/prometheus/prometheus/web/api/v1 [github.com/prometheus/prometheus/web/api/v1.test]
+web/api/v1/errors_test.go:147:3: too many arguments in call to NewAPI
+	have (*promql.Engine, "github.com/prometheus/prometheus/storage".SampleAndChunkQueryable, nil, nil, func(context.Context) ScrapePoolsRetriever, func(context.Context) TargetRetriever, func(context.Context) AlertmanagerRetriever, func() "github.com/prometheus/prometheus/config".Config, map[string]string, GlobalURLOptions, func(f "net/http".HandlerFunc) "net/http".HandlerFunc, nil, string, bool, *slog.Logger, func(context.Context) RulesRetriever, number, number, number, bool, *"github.com/grafana/regexp".Regexp, func() (RuntimeInfo, error), *PrometheusVersion, nil, nil, prometheus.Gatherer, nil, nil, bool, "github.com/prometheus/prometheus/config".RemoteWriteProtoMsgs, bool, bool, bool, bool)
+	want (promql.QueryEngine, "github.com/prometheus/prometheus/storage".SampleAndChunkQueryable, "github.com/prometheus/prometheus/storage".Appendable, "github.com/prometheus/prometheus/storage".ExemplarQueryable, func(context.Context) ScrapePoolsRetriever, func(context.Context) TargetRetriever, func(context.Context) AlertmanagerRetriever, func() "github.com/prometheus/prometheus/config".Config, map[string]string, GlobalURLOptions, func("net/http".HandlerFunc) "net/http".HandlerFunc, TSDBAdminStats, string, bool, *slog.Logger, func(context.Context) RulesRetriever, int, int, int, bool, *"github.com/grafana/regexp".Regexp, func() (RuntimeInfo, error), *PrometheusVersion, func() []notifications.Notification, func() (<-chan notifications.Notification, func(), bool), prometheus.Gatherer, prometheus.Registerer, StatsRenderer, bool, []"github.com/prometheus/prometheus/config".RemoteWriteProtoMsg, bool, bool, bool)
+{"Time":"2026-06-29T15:22:13.261692233Z","Action":"start","Package":"github.com/prometheus/prometheus/web/api/v1"}
+{"Time":"2026-06-29T15:22:13.261734476Z","Action":"output","Package":"github.com/prometheus/prometheus/web/api/v1","Output":"FAIL\tgithub.com/prometheus/prometheus/web/api/v1 [build failed]\n"}
+{"Time":"2026-06-29T15:22:13.261749952Z","Action":"fail","Package":"github.com/prometheus/prometheus/web/api/v1","Elapsed":0}
+reward=0 graded=734 found=0 failed=0 parsed=2 framework=go exit_code=1

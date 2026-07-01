@@ -1,0 +1,39 @@
+patching file frontend/src/__tests__/cypress/cypress/pages/components/table.ts
+patching file frontend/src/__tests__/cypress/cypress/pages/modelRegistryPermissions.ts
+patching file frontend/src/__tests__/cypress/cypress/pages/permissions.ts
+patching file frontend/src/__tests__/cypress/cypress/tests/mocked/modelRegistrySettings/modelRegistryPermissions.cy.ts
+patching file frontend/src/__tests__/cypress/cypress/tests/mocked/modelRegistrySettings/modelRegistrySettings.cy.ts
+patching file frontend/src/api/k8s/__tests__/roleBindings.spec.ts
+FAIL src/api/k8s/__tests__/roleBindings.spec.ts
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module ~/concepts/roleBinding/types mapped as:
+    /workspace/repo/frontend/src/$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/~\/(.*)/": "/workspace/repo/frontend/src/$1"
+      },
+      "resolver": undefined
+    }
+
+      21 | } from '~/api/k8s/roleBindings';
+      22 | import { RoleBindingModel } from '~/api/models/k8s';
+    > 23 | import {
+         | ^
+      24 |   RoleBindingPermissionsRBType,
+      25 |   RoleBindingPermissionsRoleType,
+      26 | } from '~/concepts/roleBinding/types';
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:900:17)
+      at Object.require (src/api/k8s/__tests__/roleBindings.spec.ts:23:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        1.916 s
+Ran all test suites matching /src\/api\/k8s\/__tests__\/roleBindings.spec.ts/i.
+reward=0 graded=16 found=0 failed=0 parsed=0 framework=jest exit_code=1

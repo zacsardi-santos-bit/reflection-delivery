@@ -1,0 +1,6 @@
+patching file api/enums/v1/predicate.pb.go
+patching file common/predicates/and.go
+patching file common/predicates/not.go
+patching file common/predicates/or.go
+patching file common/predicates/universal.go (renamed from common/predicates/all.go)
+patching file proto/internal/temporal/server/api/enums/v1/predicate.proto

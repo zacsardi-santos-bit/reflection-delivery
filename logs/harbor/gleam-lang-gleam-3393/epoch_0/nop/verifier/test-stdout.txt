@@ -1,0 +1,355 @@
+patching file compiler-core/src/type_/tests/exhaustiveness.rs
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_aliased_unqualified_value.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_alias.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_names.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_aliased_and_shadowed.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_shadowed.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_unqualified.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_when_shadowed.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_unqualifed_when_aliased.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_unqualified_value.snap
+   Compiling gleam-core v1.4.1 (/workspace/repo/compiler-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 18.93s
+────────────
+ Nextest run ID 81ef4c5c-3463-4210-a9ac-2f8074d6829f with nextest profile: default
+    Starting 9 tests across 1 binary (2547 tests skipped)
+        PASS [   0.232s] (1/9) gleam-core type_::tests::exhaustiveness::case_error_prints_unqualified_value
+        PASS [   0.236s] (2/9) gleam-core type_::tests::exhaustiveness::case_error_prints_prelude_module_unqualified
+        FAIL [   1.394s] (3/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_names
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_names.snap
+    Snapshot: case_error_prints_module_names
+    Source: compiler-core/src/type_/tests/exhaustiveness.rs:992
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    import wibble
+    pub type Things { Thing1 Thing2(Int) }
+    pub fn main() {
+        let wobble_thing = #(wibble.Wobble, Thing2(23))
+        case wobble_thing {
+            #(wibble.Wibble, Thing1) -> Nil
+        }
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        9     9 │ If it is run on one of the values without a pattern then it will crash.
+       10    10 │ 
+       11    11 │ The missing patterns are:
+       12    12 │ 
+       13       │-    #(_, Thing2(_))
+       14       │-    #(wibble.Wobble, Thing1)
+             13 │+    #(Wobble, Thing1)
+             14 │+    #(_, Thing2(_))
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test type_::tests::exhaustiveness::case_error_prints_module_names ... FAILED
+
+    failures:
+
+    failures:
+        type_::tests::exhaustiveness::case_error_prints_module_names
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2555 filtered out; finished in 1.31s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_names.snap.new
+    thread 'type_::tests::exhaustiveness::case_error_prints_module_names' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'case_error_prints_module_names' failed in line 992
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.399s] (4/9) gleam-core type_::tests::exhaustiveness::case_error_prints_prelude_module_when_shadowed
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_when_shadowed.snap
+    Snapshot: case_error_prints_prelude_module_when_shadowed
+    Source: compiler-core/src/type_/tests/exhaustiveness.rs:1068
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    import gleam
+    type MyResult { Ok Error }
+    pub fn main() {
+      let res = gleam.Ok(10)
+      case res {
+        gleam.Ok(n) -> Nil
+      }
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        9     9 │ If it is run on one of the values without a pattern then it will crash.
+       10    10 │ 
+       11    11 │ The missing patterns are:
+       12    12 │ 
+       13       │-    gleam.Error(_)
+             13 │+    Error(_)
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test type_::tests::exhaustiveness::case_error_prints_prelude_module_when_shadowed ... FAILED
+
+    failures:
+
+    failures:
+        type_::tests::exhaustiveness::case_error_prints_prelude_module_when_shadowed
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2555 filtered out; finished in 1.29s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_when_shadowed.snap.new
+    thread 'type_::tests::exhaustiveness::case_error_prints_prelude_module_when_shadowed' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'case_error_prints_prelude_module_when_shadowed' failed in line 1068
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.399s] (5/9) gleam-core type_::tests::exhaustiveness::case_error_prints_aliased_unqualified_value
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_aliased_unqualified_value.snap
+    Snapshot: case_error_prints_aliased_unqualified_value
+    Source: compiler-core/src/type_/tests/exhaustiveness.rs:1039
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    import wibble.{Wibble, Wobble as Wubble}
+    pub fn main() {
+        case Wibble {
+            Wibble -> Nil
+        }
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        9     9 │ If it is run on one of the values without a pattern then it will crash.
+       10    10 │ 
+       11    11 │ The missing patterns are:
+       12    12 │ 
+       13       │-    Wubble
+             13 │+    Wobble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test type_::tests::exhaustiveness::case_error_prints_aliased_unqualified_value ... FAILED
+
+    failures:
+
+    failures:
+        type_::tests::exhaustiveness::case_error_prints_aliased_unqualified_value
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2555 filtered out; finished in 1.30s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_aliased_unqualified_value.snap.new
+    thread 'type_::tests::exhaustiveness::case_error_prints_aliased_unqualified_value' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'case_error_prints_aliased_unqualified_value' failed in line 1039
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.406s] (6/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_alias
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_alias.snap
+    Snapshot: case_error_prints_module_alias
+    Source: compiler-core/src/type_/tests/exhaustiveness.rs:1009
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    import wibble as wobble
+    pub fn main() {
+        case wobble.Wobble {
+            wobble.Wibble -> Nil
+        }
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        9     9 │ If it is run on one of the values without a pattern then it will crash.
+       10    10 │ 
+       11    11 │ The missing patterns are:
+       12    12 │ 
+       13       │-    wobble.Wobble
+             13 │+    Wobble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test type_::tests::exhaustiveness::case_error_prints_module_alias ... FAILED
+
+    failures:
+
+    failures:
+        type_::tests::exhaustiveness::case_error_prints_module_alias
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2555 filtered out; finished in 1.31s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_alias.snap.new
+    thread 'type_::tests::exhaustiveness::case_error_prints_module_alias' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'case_error_prints_module_alias' failed in line 1009
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.406s] (7/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_when_shadowed
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_shadowed.snap
+    Snapshot: case_error_prints_module_when_shadowed
+    Source: compiler-core/src/type_/tests/exhaustiveness.rs:1084
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    import mod.{Wibble}
+    type Wibble { Wibble Wobble }
+    pub fn main() {
+      let wibble = mod.Wibble
+      case wibble {
+        mod.Wobble -> Nil
+      }
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        9     9 │ If it is run on one of the values without a pattern then it will crash.
+       10    10 │ 
+       11    11 │ The missing patterns are:
+       12    12 │ 
+       13       │-    mod.Wibble
+             13 │+    Wibble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test type_::tests::exhaustiveness::case_error_prints_module_when_shadowed ... FAILED
+
+    failures:
+
+    failures:
+        type_::tests::exhaustiveness::case_error_prints_module_when_shadowed
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2555 filtered out; finished in 1.32s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_shadowed.snap.new
+    thread 'type_::tests::exhaustiveness::case_error_prints_module_when_shadowed' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'case_error_prints_module_when_shadowed' failed in line 1084
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.407s] (8/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_when_aliased_and_shadowed
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_aliased_and_shadowed.snap
+    Snapshot: case_error_prints_module_when_aliased_and_shadowed
+    Source: compiler-core/src/type_/tests/exhaustiveness.rs:1101
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    import mod.{Wibble as Wobble}
+    type Wibble { Wobble Wubble }
+    pub fn main() {
+      let wibble = mod.Wibble
+      case wibble {
+        mod.Wobble -> Nil
+      }
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        9     9 │ If it is run on one of the values without a pattern then it will crash.
+       10    10 │ 
+       11    11 │ The missing patterns are:
+       12    12 │ 
+       13       │-    mod.Wibble
+             13 │+    Wibble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test type_::tests::exhaustiveness::case_error_prints_module_when_aliased_and_shadowed ... FAILED
+
+    failures:
+
+    failures:
+        type_::tests::exhaustiveness::case_error_prints_module_when_aliased_and_shadowed
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2555 filtered out; finished in 1.32s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_aliased_and_shadowed.snap.new
+    thread 'type_::tests::exhaustiveness::case_error_prints_module_when_aliased_and_shadowed' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'case_error_prints_module_when_aliased_and_shadowed' failed in line 1101
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   1.413s] (9/9) gleam-core type_::tests::exhaustiveness::case_error_prints_unqualifed_when_aliased
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_unqualifed_when_aliased.snap
+    Snapshot: case_error_prints_unqualifed_when_aliased
+    Source: compiler-core/src/type_/tests/exhaustiveness.rs:1118
+    ────────────────────────────────────────────────────────────────────────────────
+    Expression: 
+    import mod.{Wibble as Wobble}
+    type Wibble { Wibble Wubble }
+    pub fn main() {
+      let wibble = mod.Wibble
+      case wibble {
+        mod.Wobble -> Nil
+      }
+    }
+
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        9     9 │ If it is run on one of the values without a pattern then it will crash.
+       10    10 │ 
+       11    11 │ The missing patterns are:
+       12    12 │ 
+       13       │-    Wobble
+             13 │+    Wibble
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test type_::tests::exhaustiveness::case_error_prints_unqualifed_when_aliased ... FAILED
+
+    failures:
+
+    failures:
+        type_::tests::exhaustiveness::case_error_prints_unqualifed_when_aliased
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2555 filtered out; finished in 1.32s
+
+  stderr ───
+    stored new snapshot /workspace/repo/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_unqualifed_when_aliased.snap.new
+    thread 'type_::tests::exhaustiveness::case_error_prints_unqualifed_when_aliased' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'case_error_prints_unqualifed_when_aliased' failed in line 1118
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   1.419s] 9 tests run: 2 passed, 7 failed, 2547 skipped
+        FAIL [   1.394s] (3/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_names
+        FAIL [   1.399s] (4/9) gleam-core type_::tests::exhaustiveness::case_error_prints_prelude_module_when_shadowed
+        FAIL [   1.399s] (5/9) gleam-core type_::tests::exhaustiveness::case_error_prints_aliased_unqualified_value
+        FAIL [   1.406s] (6/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_alias
+        FAIL [   1.406s] (7/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_when_shadowed
+        FAIL [   1.407s] (8/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_when_aliased_and_shadowed
+        FAIL [   1.413s] (9/9) gleam-core type_::tests::exhaustiveness::case_error_prints_unqualifed_when_aliased
+error: test run failed
+reward=0 graded=9 found=1 failed=1 parsed=9 framework=cargo exit_code=100

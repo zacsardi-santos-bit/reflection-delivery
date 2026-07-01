@@ -1,0 +1,5 @@
+I'm working on a webhook proxy service and I want to simplify how the project identifier is handled. Right now, callers have to include a project name in every build trigger request payload, but this is redundant because the server already knows its own namespace, and the project can always be derived from that namespace by removing a standard suffix. I'd like to move the project to be a server-level configuration field that gets set once at startup, rather than being passed in with each request.
+
+As part of this, the internal event objects that get created when handling requests should no longer carry a project field — the server itself holds that context. The payload format for build trigger requests should stop accepting a project field entirely. Event validity checks should also be updated to no longer require a project field on the event.
+
+Essentially, the project should be derived from the namespace once when the server starts up by stripping a standard suffix from the namespace string, stored on the server, and used from there for all subsequent processing — including deriving component names and pipeline names.

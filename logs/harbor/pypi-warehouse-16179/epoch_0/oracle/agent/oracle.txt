@@ -1,0 +1,12 @@
+patching file warehouse/admin/routes.py
+patching file warehouse/admin/templates/admin/malware_reports/detail.html
+patching file warehouse/admin/templates/admin/malware_reports/project_list.html
+patching file warehouse/admin/templates/admin/projects/delete.html
+patching file warehouse/admin/templates/admin/projects/detail.html
+patching file warehouse/admin/views/malware_reports.py
+patching file warehouse/admin/views/projects.py
+patching file warehouse/events/tags.py
+patching file warehouse/migrations/versions/14ad61e054cf_add_project_lifecycle_status.py
+patching file warehouse/migrations/versions/c978a4eaa0f6_add_observation_related_name.py
+patching file warehouse/packaging/models.py
+patching file warehouse/utils/project.py

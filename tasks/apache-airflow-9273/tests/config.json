@@ -1,0 +1,24 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/api_connexion/endpoints/test_variable_endpoint.py -v",
+  "test_files": [
+    "tests/api_connexion/endpoints/test_variable_endpoint.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestDeleteVariable::test_should_delete_variable",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestDeleteVariable::test_should_response_404_if_key_does_not_exist",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestGetVariable::test_should_response_200",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestGetVariable::test_should_response_404_if_not_found",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestGetVariables::test_should_get_list_variables_0__api_v1_variables_limit_2_offset_0",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestGetVariables::test_should_get_list_variables_1__api_v1_variables_limit_2_offset_1",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestGetVariables::test_should_get_list_variables_2__api_v1_variables_limit_1_offset_2",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestGetVariables::test_should_honor_100_limit_default",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestPatchVariable::test_should_reject_invalid_update",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestPatchVariable::test_should_update_variable",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestPostVariables::test_should_create_variable",
+    "tests.api_connexion.endpoints.test_variable_endpoint.TestPostVariables::test_should_reject_invalid_request"
+  ],
+  "PASS_TO_PASS": []
+}

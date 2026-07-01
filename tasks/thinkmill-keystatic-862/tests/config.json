@@ -1,0 +1,21 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && NODE_OPTIONS=--experimental-vm-modules node_modules/.bin/jest packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx --coverage=false --watchAll=false --json",
+  "test_files": [
+    "packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx::basic",
+    "/workspace/repo/packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx::nested list",
+    "/workspace/repo/packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx::inline code",
+    "/workspace/repo/packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx::empty list item",
+    "/workspace/repo/packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx::link in code",
+    "/workspace/repo/packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx::code and bold",
+    "/workspace/repo/packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx::link in list",
+    "/workspace/repo/packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx::link in paragraph",
+    "/workspace/repo/packages/keystatic/src/form/fields/markdoc/editor/tests/mdx.test.tsx::code block with meta"
+  ],
+  "PASS_TO_PASS": []
+}

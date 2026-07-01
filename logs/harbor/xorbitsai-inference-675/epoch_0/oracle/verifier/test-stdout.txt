@@ -1,0 +1,16 @@
+patching file xinference/model/llm/ggml/tests/test_qwen.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.14.1, asyncio-1.4.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 3 items
+
+xinference/model/llm/ggml/tests/test_qwen.py::test_model_init[model_spec0-model_family0] PASSED [ 33%]
+xinference/model/llm/ggml/tests/test_qwen.py::test_model_chat[model_spec0-model_family0] PASSED [ 66%]
+xinference/model/llm/ggml/tests/test_qwen.py::test_model_generate[model_spec0-model_family0] PASSED [100%]
+
+============================== 3 passed in 0.09s ===============================
+reward=1 graded=3 found=0 failed=0 parsed=3 framework=pytest exit_code=0

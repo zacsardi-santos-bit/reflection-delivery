@@ -1,0 +1,17 @@
+patching file .chloggen/2393-automate-permissions-resourcedetection.yaml
+patching file bundle/manifests/opentelemetry-operator.clusterserviceversion.yaml
+patching file config/rbac/role.yaml
+patching file controllers/opentelemetrycollector_controller.go
+patching file internal/config/main.go
+patching file internal/config/options.go
+patching file internal/manifests/collector/adapters/config_to_ports.go
+patching file internal/manifests/collector/adapters/config_to_rbac.go
+patching file internal/manifests/collector/adapters/config_validate.go
+patching file internal/manifests/collector/collector.go
+patching file internal/manifests/collector/parser/processor/processor.go
+patching file internal/manifests/collector/parser/processor/processor_resourcedetection.go
+patching file internal/manifests/collector/rbac.go
+patching file internal/manifests/collector/testdata/rbac_resourcedetectionprocessor_k8s.yaml
+patching file internal/manifests/collector/testdata/rbac_resourcedetectionprocessor_openshift.yaml
+patching file internal/naming/main.go
+patching file main.go

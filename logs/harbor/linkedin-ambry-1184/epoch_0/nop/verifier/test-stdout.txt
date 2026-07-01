@@ -1,0 +1,141 @@
+patching file ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=512m; support was removed in 8.0
+To honour the JVM settings for this build a new JVM will be forked. Please consider using the daemon: https://docs.gradle.org/2.12/userguide/gradle_daemon.html.
+Configuration on demand is an incubating feature.
+:ambry-utils:compileJava UP-TO-DATE
+:ambry-utils:processResources UP-TO-DATE
+:ambry-utils:classes UP-TO-DATE
+:ambry-utils:jar UP-TO-DATE
+:ambry-api:compileJava UP-TO-DATE
+:ambry-api:processResources UP-TO-DATE
+:ambry-api:classes UP-TO-DATE
+:ambry-api:jar UP-TO-DATE
+:ambry-clustermap:compileJava UP-TO-DATE
+:ambry-clustermap:processResources UP-TO-DATE
+:ambry-clustermap:classes UP-TO-DATE
+:ambry-clustermap:jar UP-TO-DATE
+:ambry-messageformat:compileJava UP-TO-DATE
+:ambry-messageformat:processResources UP-TO-DATE
+:ambry-messageformat:classes UP-TO-DATE
+:ambry-messageformat:jar UP-TO-DATE
+:ambry-commons:compileJava UP-TO-DATE
+:ambry-commons:processResources UP-TO-DATE
+:ambry-commons:classes UP-TO-DATE
+:ambry-commons:jar UP-TO-DATE
+:ambry-account:compileJava UP-TO-DATE
+:ambry-account:processResources UP-TO-DATE
+:ambry-account:classes UP-TO-DATE
+:ambry-utils:compileTestJava UP-TO-DATE
+:ambry-utils:processTestResources UP-TO-DATE
+:ambry-utils:testClasses UP-TO-DATE
+:ambry-clustermap:compileTestJava UP-TO-DATE
+:ambry-clustermap:processTestResources UP-TO-DATE
+:ambry-clustermap:testClasses UP-TO-DATE
+:ambry-api:compileTestJava UP-TO-DATE
+:ambry-api:processTestResources UP-TO-DATE
+:ambry-api:testClasses UP-TO-DATE
+:ambry-commons:compileTestJava UP-TO-DATE
+:ambry-commons:processTestResources UP-TO-DATE
+:ambry-commons:testClasses UP-TO-DATE
+:ambry-account:compileTestJava UP-TO-DATE
+:ambry-account:processTestResources UP-TO-DATE
+:ambry-account:testClasses UP-TO-DATE
+:ambry-network:compileJava UP-TO-DATE
+:ambry-network:processResources UP-TO-DATE
+:ambry-network:classes UP-TO-DATE
+:ambry-network:jar UP-TO-DATE
+:ambry-network:compileTestJava UP-TO-DATE
+:ambry-network:processTestResources UP-TO-DATE
+:ambry-network:testClasses UP-TO-DATE
+:ambry-protocol:compileJava UP-TO-DATE
+:ambry-protocol:processResources UP-TO-DATE
+:ambry-protocol:classes UP-TO-DATE
+:ambry-protocol:jar UP-TO-DATE
+:ambry-router:compileJava UP-TO-DATE
+:ambry-router:processResources UP-TO-DATE
+:ambry-router:classes UP-TO-DATE
+:ambry-router:compileTestJava/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:186: error: cannot find symbol
+    Map<Resource, Histogram> localColoMap = routerMetrics.getBlobLocalDcResourceToLatency;
+                                                         ^
+  symbol:   variable getBlobLocalDcResourceToLatency
+  location: variable routerMetrics of type NonBlockingRouterMetrics
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:187: error: cannot find symbol
+    Map<Resource, Histogram> crossColoMap = routerMetrics.getBlobCrossDcResourceToLatency;
+                                                         ^
+  symbol:   variable getBlobCrossDcResourceToLatency
+  location: variable routerMetrics of type NonBlockingRouterMetrics
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:281: error: cannot find symbol
+    trackerScope = OperationTrackerScope.DataNode;
+                                        ^
+  symbol:   variable DataNode
+  location: class OperationTrackerScope
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:286: error: cannot find symbol
+    Map<Resource, Histogram> localColoMap = routerMetrics.getBlobLocalDcResourceToLatency;
+                                                         ^
+  symbol:   variable getBlobLocalDcResourceToLatency
+  location: variable routerMetrics of type NonBlockingRouterMetrics
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:287: error: cannot find symbol
+    Map<Resource, Histogram> crossColoMap = routerMetrics.getBlobCrossDcResourceToLatency;
+                                                         ^
+  symbol:   variable getBlobCrossDcResourceToLatency
+  location: variable routerMetrics of type NonBlockingRouterMetrics
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:373: error: cannot find symbol
+    trackerScope = OperationTrackerScope.Disk;
+                                        ^
+  symbol:   variable Disk
+  location: class OperationTrackerScope
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:378: error: cannot find symbol
+    Map<Resource, Histogram> localColoMap = routerMetrics.getBlobLocalDcResourceToLatency;
+                                                         ^
+  symbol:   variable getBlobLocalDcResourceToLatency
+  location: variable routerMetrics of type NonBlockingRouterMetrics
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:379: error: cannot find symbol
+    Map<Resource, Histogram> crossColoMap = routerMetrics.getBlobCrossDcResourceToLatency;
+                                                         ^
+  symbol:   variable getBlobCrossDcResourceToLatency
+  location: variable routerMetrics of type NonBlockingRouterMetrics
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:603: error: cannot find symbol
+        routerMetrics.getBlobInfoLocalDcResourceToLatency);
+                     ^
+  symbol:   variable getBlobInfoLocalDcResourceToLatency
+  location: variable routerMetrics of type NonBlockingRouterMetrics
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:605: error: cannot find symbol
+        routerMetrics.getBlobInfoCrossDcResourceToLatency);
+                     ^
+  symbol:   variable getBlobInfoCrossDcResourceToLatency
+  location: variable routerMetrics of type NonBlockingRouterMetrics
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:607: error: cannot find symbol
+        tracker.getResourceToLatencyMap(RouterOperation.GetBlobInfoOperation, true));
+               ^
+  symbol:   method getResourceToLatencyMap(RouterOperation,boolean)
+  location: variable tracker of type AdaptiveOperationTracker
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:609: error: cannot find symbol
+        tracker.getResourceToLatencyMap(RouterOperation.GetBlobInfoOperation, false));
+               ^
+  symbol:   method getResourceToLatencyMap(RouterOperation,boolean)
+  location: variable tracker of type AdaptiveOperationTracker
+/workspace/repo/ambry-router/src/test/java/com.github.ambry.router/AdaptiveOperationTrackerTest.java:612: error: cannot find symbol
+      tracker.getResourceToLatencyMap(RouterOperation.PutOperation, true);
+             ^
+  symbol:   method getResourceToLatencyMap(RouterOperation,boolean)
+  location: variable tracker of type AdaptiveOperationTracker
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+13 errors
+ FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':ambry-router:compileTestJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output.
+
+BUILD FAILED
+
+Total time: 15.47 secs
+reward=0 graded=10 found=8 failed=0 parsed=8 framework=junit exit_code=1

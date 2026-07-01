@@ -1,0 +1,23 @@
+{
+ "task": "influxdata-influxdb-14745",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds GET /checks/:id/query -> handleGetCheckQuery calling chk.GenerateFlux() and returning {\"flux\":...} JSON, plus swagger; F2P TestService_handleGetCheckQuery/get_a_check_query_by_id + TestValidSwagger"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 15,
+  "shallow": true
+ }
+}

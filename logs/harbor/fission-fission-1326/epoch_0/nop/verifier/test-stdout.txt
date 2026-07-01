@@ -1,0 +1,20 @@
+patching file pkg/fission-cli/cmd/httptrigger/parse_test.go
+patching file pkg/router/util/util_test.go
+patching file test/tests/test_ingress.sh
+# github.com/fission/fission/pkg/fission-cli/cmd/httptrigger [github.com/fission/fission/pkg/fission-cli/cmd/httptrigger.test]
+pkg/fission-cli/cmd/httptrigger/parse_test.go:261:6: unknown field TLS in struct literal of type "github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig
+pkg/fission-cli/cmd/httptrigger/parse_test.go:274:5: unknown field TLS in struct literal of type "github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig
+pkg/fission-cli/cmd/httptrigger/parse_test.go:291:5: unknown field TLS in struct literal of type "github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig
+pkg/fission-cli/cmd/httptrigger/parse_test.go:304:6: unknown field TLS in struct literal of type "github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig
+pkg/fission-cli/cmd/httptrigger/parse_test.go:317:5: unknown field TLS in struct literal of type "github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig
+pkg/fission-cli/cmd/httptrigger/parse_test.go:330:6: unknown field TLS in struct literal of type "github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig
+pkg/fission-cli/cmd/httptrigger/parse_test.go:343:5: unknown field TLS in struct literal of type "github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig
+pkg/fission-cli/cmd/httptrigger/parse_test.go:350:110: too many arguments in call to GetIngressConfig
+	have ([]string, string, string, string, *"github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig)
+	want ([]string, string, string, *"github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig)
+pkg/fission-cli/cmd/httptrigger/parse_test.go:577:25: undefined: getIngressTLS
+FAIL	github.com/fission/fission/pkg/fission-cli/cmd/httptrigger [build failed]
+# github.com/fission/fission/pkg/router/util [github.com/fission/fission/pkg/router/util.test]
+pkg/router/util/util_test.go:467:8: unknown field TLS in struct literal of type "github.com/fission/fission/pkg/apis/fission.io/v1".IngressConfig
+FAIL	github.com/fission/fission/pkg/router/util [build failed]
+reward=0 graded=45 found=45 failed=45 parsed=2 framework=go exit_code=1

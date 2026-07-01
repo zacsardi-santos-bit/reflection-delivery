@@ -1,0 +1,786 @@
+patching file cmd/otelcorecol/go.mod
+patching file cmd/otelcorecol/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 succeeded at 132 (offset 52 lines).
+Hunk #3 FAILED at 113.
+Hunk #4 succeeded at 287 with fuzz 3 (offset 79 lines).
+2 out of 4 hunks FAILED -- saving rejects to file cmd/otelcorecol/go.sum.rej
+patching file config/configgrpc/go.mod
+patching file config/configgrpc/go.sum
+Hunk #1 succeeded at 34 with fuzz 3 (offset 20 lines).
+Hunk #2 succeeded at 80 with fuzz 3 (offset 32 lines).
+Hunk #3 FAILED at 75.
+Hunk #4 succeeded at 144 with fuzz 3 (offset 47 lines).
+1 out of 4 hunks FAILED -- saving rejects to file config/configgrpc/go.sum.rej
+patching file config/confighttp/go.mod
+patching file config/confighttp/go.sum
+Hunk #1 succeeded at 35 (offset 20 lines).
+Hunk #2 succeeded at 76 with fuzz 3 (offset 29 lines).
+patching file config/confighttp/xconfighttp/go.mod
+patching file config/confighttp/xconfighttp/go.sum
+Hunk #1 succeeded at 35 (offset 20 lines).
+Hunk #2 succeeded at 76 with fuzz 3 (offset 29 lines).
+patching file exporter/otlpexporter/go.mod
+patching file exporter/otlpexporter/go.sum
+Hunk #1 succeeded at 38 with fuzz 3 (offset 20 lines).
+Hunk #2 succeeded at 96 with fuzz 3 (offset 32 lines).
+Hunk #3 FAILED at 91.
+Hunk #4 succeeded at 160 with fuzz 3 (offset 47 lines).
+1 out of 4 hunks FAILED -- saving rejects to file exporter/otlpexporter/go.sum.rej
+patching file exporter/otlphttpexporter/go.mod
+patching file exporter/otlphttpexporter/go.sum
+Hunk #1 succeeded at 40 with fuzz 3 (offset 20 lines).
+Hunk #2 succeeded at 98 with fuzz 3 (offset 30 lines).
+patching file extension/zpagesextension/go.mod
+patching file extension/zpagesextension/go.sum
+Hunk #1 succeeded at 37 (offset 20 lines).
+Hunk #2 succeeded at 90 with fuzz 3 (offset 29 lines).
+patching file internal/e2e/go.mod
+patching file internal/e2e/go.sum
+Hunk #1 FAILED at 29.
+Hunk #2 succeeded at 130 (offset 53 lines).
+Hunk #3 FAILED at 105.
+Hunk #4 succeeded at 283 with fuzz 3 (offset 83 lines).
+2 out of 4 hunks FAILED -- saving rejects to file internal/e2e/go.sum.rej
+patching file otelcol/go.mod
+patching file otelcol/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 succeeded at 130 (offset 52 lines).
+Hunk #3 FAILED at 111.
+Hunk #4 succeeded at 283 with fuzz 3 (offset 79 lines).
+2 out of 4 hunks FAILED -- saving rejects to file otelcol/go.sum.rej
+patching file otelcol/testdata/otelcol-invalid-yaml.yaml
+patching file receiver/otlpreceiver/go.mod
+patching file receiver/otlpreceiver/go.sum
+Hunk #1 succeeded at 38 with fuzz 3 (offset 20 lines).
+Hunk #2 succeeded at 98 with fuzz 3 (offset 30 lines).
+Hunk #3 succeeded at 164 with fuzz 3 (offset 45 lines).
+patching file service/attributes.go
+patching file service/go.mod
+patching file service/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 succeeded at 130 (offset 52 lines).
+Hunk #3 FAILED at 111.
+Hunk #4 succeeded at 283 with fuzz 3 (offset 79 lines).
+2 out of 4 hunks FAILED -- saving rejects to file service/go.sum.rej
+patching file service/hostcapabilities/go.mod
+patching file service/hostcapabilities/go.sum
+Hunk #1 succeeded at 44 with fuzz 3 (offset 36 lines).
+Hunk #2 FAILED at 22.
+Hunk #3 succeeded at 229 with fuzz 3 (offset 160 lines).
+1 out of 3 hunks FAILED -- saving rejects to file service/hostcapabilities/go.sum.rej
+patching file service/service.go
+patching file service/telemetry/config.go
+patching file service/telemetry/factory.go
+patching file service/telemetry/internal/migration/v0.2.0.go
+patching file service/telemetry/internal/migration/v0.3.0.go
+patching file cmd/otelcorecol/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/otelcorecol/go.mod.rej
+patching file cmd/otelcorecol/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 80.
+Hunk #3 FAILED at 113.
+Hunk #4 FAILED at 208.
+4 out of 4 hunks FAILED -- saving rejects to file cmd/otelcorecol/go.sum.rej
+patching file config/configgrpc/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/configgrpc/go.mod.rej
+patching file config/configgrpc/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file config/configgrpc/go.sum.rej
+patching file config/confighttp/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/confighttp/go.mod.rej
+patching file config/confighttp/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/confighttp/go.sum.rej
+patching file config/confighttp/xconfighttp/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/confighttp/xconfighttp/go.mod.rej
+patching file config/confighttp/xconfighttp/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/confighttp/xconfighttp/go.sum.rej
+patching file exporter/otlpexporter/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file exporter/otlpexporter/go.mod.rej
+patching file exporter/otlpexporter/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file exporter/otlpexporter/go.sum.rej
+patching file exporter/otlphttpexporter/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file exporter/otlphttpexporter/go.mod.rej
+patching file exporter/otlphttpexporter/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file exporter/otlphttpexporter/go.sum.rej
+patching file extension/zpagesextension/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file extension/zpagesextension/go.mod.rej
+patching file extension/zpagesextension/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file extension/zpagesextension/go.sum.rej
+patching file internal/e2e/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file internal/e2e/go.mod.rej
+patching file internal/e2e/go.sum
+Hunk #1 FAILED at 29.
+Hunk #2 FAILED at 77.
+Hunk #3 FAILED at 105.
+Hunk #4 FAILED at 200.
+4 out of 4 hunks FAILED -- saving rejects to file internal/e2e/go.sum.rej
+patching file otelcol/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file otelcol/go.mod.rej
+patching file otelcol/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 78.
+Hunk #3 FAILED at 111.
+Hunk #4 FAILED at 204.
+4 out of 4 hunks FAILED -- saving rejects to file otelcol/go.sum.rej
+The next patch would create the file otelcol/testdata/otelcol-invalid-yaml.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file receiver/otlpreceiver/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file receiver/otlpreceiver/go.mod.rej
+patching file receiver/otlpreceiver/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file receiver/otlpreceiver/go.sum.rej
+patching file service/attributes.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/attributes.go.rej
+patching file service/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file service/go.mod.rej
+patching file service/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 78.
+Hunk #3 FAILED at 111.
+Hunk #4 FAILED at 204.
+4 out of 4 hunks FAILED -- saving rejects to file service/go.sum.rej
+patching file service/hostcapabilities/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/hostcapabilities/go.mod.rej
+patching file service/hostcapabilities/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file service/hostcapabilities/go.sum.rej
+patching file service/service.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/service.go.rej
+patching file service/telemetry/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/config.go.rej
+patching file service/telemetry/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/factory.go.rej
+patching file service/telemetry/internal/migration/v0.2.0.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/internal/migration/v0.2.0.go.rej
+patching file service/telemetry/internal/migration/v0.3.0.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/internal/migration/v0.3.0.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/otelcorecol/go.mod b/cmd/otelcorecol/go.mod
+|index 80f6e9ed7..d24ec7921 100644
+|--- a/cmd/otelcorecol/go.mod
+|+++ b/cmd/otelcorecol/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 93
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/otelcorecol/go.sum b/cmd/otelcorecol/go.sum
+|index 4c1c7e3bd..1c626cf63 100644
+|--- a/cmd/otelcorecol/go.sum
+|+++ b/cmd/otelcorecol/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 244
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/configgrpc/go.mod b/config/configgrpc/go.mod
+|index c0b2f5e90..e2695c86a 100644
+|--- a/config/configgrpc/go.mod
+|+++ b/config/configgrpc/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 282
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/configgrpc/go.sum b/config/configgrpc/go.sum
+|index 12d86a293..d45025aa8 100644
+|--- a/config/configgrpc/go.sum
+|+++ b/config/configgrpc/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 362
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/confighttp/go.mod b/config/confighttp/go.mod
+|index c6e698b06..67e5a6021 100644
+|--- a/config/confighttp/go.mod
+|+++ b/config/confighttp/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 392
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/confighttp/go.sum b/config/confighttp/go.sum
+|index 044cf7a8d..2fbe9ee6b 100644
+|--- a/config/confighttp/go.sum
+|+++ b/config/confighttp/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 438
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/confighttp/xconfighttp/go.mod b/config/confighttp/xconfighttp/go.mod
+|index a2a0efb67..dc21c5ceb 100644
+|--- a/config/confighttp/xconfighttp/go.mod
+|+++ b/config/confighttp/xconfighttp/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 468
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/config/confighttp/xconfighttp/go.sum b/config/confighttp/xconfighttp/go.sum
+|index 044cf7a8d..2fbe9ee6b 100644
+|--- a/config/confighttp/xconfighttp/go.sum
+|+++ b/config/confighttp/xconfighttp/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 514
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/exporter/otlpexporter/go.mod b/exporter/otlpexporter/go.mod
+|index 59cec3d2c..e861ba76f 100644
+|--- a/exporter/otlpexporter/go.mod
+|+++ b/exporter/otlpexporter/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 551
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/exporter/otlpexporter/go.sum b/exporter/otlpexporter/go.sum
+|index 3f3b2bef4..46d2f4889 100644
+|--- a/exporter/otlpexporter/go.sum
+|+++ b/exporter/otlpexporter/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 631
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/exporter/otlphttpexporter/go.mod b/exporter/otlphttpexporter/go.mod
+|index eb3cff3e5..3838edd99 100644
+|--- a/exporter/otlphttpexporter/go.mod
+|+++ b/exporter/otlphttpexporter/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 654
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/exporter/otlphttpexporter/go.sum b/exporter/otlphttpexporter/go.sum
+|index 4fc0054c8..a31545880 100644
+|--- a/exporter/otlphttpexporter/go.sum
+|+++ b/exporter/otlphttpexporter/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 700
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/extension/zpagesextension/go.mod b/extension/zpagesextension/go.mod
+|index 602f037f9..ff970eab7 100644
+|--- a/extension/zpagesextension/go.mod
+|+++ b/extension/zpagesextension/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 732
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/extension/zpagesextension/go.sum b/extension/zpagesextension/go.sum
+|index 43fccac95..e41b8cef6 100644
+|--- a/extension/zpagesextension/go.sum
+|+++ b/extension/zpagesextension/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 782
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/e2e/go.mod b/internal/e2e/go.mod
+|index f7f1793ab..4e27531ab 100644
+|--- a/internal/e2e/go.mod
+|+++ b/internal/e2e/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 867
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/e2e/go.sum b/internal/e2e/go.sum
+|index 57dd3b498..4c9c68787 100644
+|--- a/internal/e2e/go.sum
+|+++ b/internal/e2e/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 1018
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/otelcol/go.mod b/otelcol/go.mod
+|index 317bb3f08..75740d6fb 100644
+|--- a/otelcol/go.mod
+|+++ b/otelcol/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 1104
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/otelcol/go.sum b/otelcol/go.sum
+|index 7c996a906..905212962 100644
+|--- a/otelcol/go.sum
+|+++ b/otelcol/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+patching file b/otelcol/testdata/otelcol-invalid-yaml.yaml
+can't find file to patch at input line 1275
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/receiver/otlpreceiver/go.mod b/receiver/otlpreceiver/go.mod
+|index d07a32fa6..dfc21fb0e 100644
+|--- a/receiver/otlpreceiver/go.mod
+|+++ b/receiver/otlpreceiver/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1311
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/receiver/otlpreceiver/go.sum b/receiver/otlpreceiver/go.sum
+|index fedec68ea..d4ccdb061 100644
+|--- a/receiver/otlpreceiver/go.sum
+|+++ b/receiver/otlpreceiver/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1372
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/attributes.go b/service/attributes.go
+|index 65c57b1b5..df74497cf 100644
+|--- a/service/attributes.go
+|+++ b/service/attributes.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1385
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/go.mod b/service/go.mod
+|index 6c3b0b641..13e2ec061 100644
+|--- a/service/go.mod
+|+++ b/service/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 1476
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/go.sum b/service/go.sum
+|index 7c996a906..905212962 100644
+|--- a/service/go.sum
+|+++ b/service/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 1623
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/hostcapabilities/go.mod b/service/hostcapabilities/go.mod
+|index 71d90ced8..edc75fd8f 100644
+|--- a/service/hostcapabilities/go.mod
+|+++ b/service/hostcapabilities/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1647
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/hostcapabilities/go.sum b/service/hostcapabilities/go.sum
+|index adb40d1f1..30954be08 100644
+|--- a/service/hostcapabilities/go.sum
+|+++ b/service/hostcapabilities/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1700
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/service.go b/service/service.go
+|index 14496506b..cd2dd30de 100644
+|--- a/service/service.go
+|+++ b/service/service.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1713
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/config.go b/service/telemetry/config.go
+|index 41bbf5426..31a3f57e0 100644
+|--- a/service/telemetry/config.go
+|+++ b/service/telemetry/config.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1726
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/factory.go b/service/telemetry/factory.go
+|index 310574743..0cff573e2 100644
+|--- a/service/telemetry/factory.go
+|+++ b/service/telemetry/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1739
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/internal/migration/v0.2.0.go b/service/telemetry/internal/migration/v0.2.0.go
+|index 2f1203e4a..41ee877a1 100644
+|--- a/service/telemetry/internal/migration/v0.2.0.go
+|+++ b/service/telemetry/internal/migration/v0.2.0.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1754
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/internal/migration/v0.3.0.go b/service/telemetry/internal/migration/v0.3.0.go
+|index 8444de56d..ceda52ce0 100644
+|--- a/service/telemetry/internal/migration/v0.3.0.go
+|+++ b/service/telemetry/internal/migration/v0.3.0.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file cmd/otelcorecol/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/otelcorecol/go.mod.rej
+patching file cmd/otelcorecol/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 80.
+Hunk #3 FAILED at 113.
+Hunk #4 FAILED at 208.
+4 out of 4 hunks FAILED -- saving rejects to file cmd/otelcorecol/go.sum.rej
+patching file config/configgrpc/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/configgrpc/go.mod.rej
+patching file config/configgrpc/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file config/configgrpc/go.sum.rej
+patching file config/confighttp/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/confighttp/go.mod.rej
+patching file config/confighttp/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/confighttp/go.sum.rej
+patching file config/confighttp/xconfighttp/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/confighttp/xconfighttp/go.mod.rej
+patching file config/confighttp/xconfighttp/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file config/confighttp/xconfighttp/go.sum.rej
+patching file exporter/otlpexporter/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file exporter/otlpexporter/go.mod.rej
+patching file exporter/otlpexporter/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file exporter/otlpexporter/go.sum.rej
+patching file exporter/otlphttpexporter/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file exporter/otlphttpexporter/go.mod.rej
+patching file exporter/otlphttpexporter/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file exporter/otlphttpexporter/go.sum.rej
+patching file extension/zpagesextension/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file extension/zpagesextension/go.mod.rej
+patching file extension/zpagesextension/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file extension/zpagesextension/go.sum.rej
+patching file internal/e2e/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file internal/e2e/go.mod.rej
+patching file internal/e2e/go.sum
+Hunk #1 FAILED at 29.
+Hunk #2 FAILED at 77.
+Hunk #3 FAILED at 105.
+Hunk #4 FAILED at 200.
+4 out of 4 hunks FAILED -- saving rejects to file internal/e2e/go.sum.rej
+patching file otelcol/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file otelcol/go.mod.rej
+patching file otelcol/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 78.
+Hunk #3 FAILED at 111.
+Hunk #4 FAILED at 204.
+4 out of 4 hunks FAILED -- saving rejects to file otelcol/go.sum.rej
+The next patch would create the file otelcol/testdata/otelcol-invalid-yaml.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file receiver/otlpreceiver/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file receiver/otlpreceiver/go.mod.rej
+patching file receiver/otlpreceiver/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file receiver/otlpreceiver/go.sum.rej
+patching file service/attributes.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/attributes.go.rej
+patching file service/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file service/go.mod.rej
+patching file service/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 78.
+Hunk #3 FAILED at 111.
+Hunk #4 FAILED at 204.
+4 out of 4 hunks FAILED -- saving rejects to file service/go.sum.rej
+patching file service/hostcapabilities/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/hostcapabilities/go.mod.rej
+patching file service/hostcapabilities/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file service/hostcapabilities/go.sum.rej
+patching file service/service.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/service.go.rej
+patching file service/telemetry/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/config.go.rej
+patching file service/telemetry/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/factory.go.rej
+patching file service/telemetry/internal/migration/v0.2.0.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/internal/migration/v0.2.0.go.rej
+patching file service/telemetry/internal/migration/v0.3.0.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/internal/migration/v0.3.0.go.rej
+ERROR: golden patch failed to apply by all strategies

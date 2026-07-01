@@ -1,0 +1,133 @@
+patching file firestore/tests/system.py
+patching file firestore/tests/unit/test_query.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo/firestore
+plugins: cov-5.0.0
+collecting ... collected 63 items
+
+firestore/tests/unit/test_query.py::TestQuery::test__client_property PASSED [  1%]
+firestore/tests/unit/test_query.py::TestQuery::test__cursor_helper_w_dict PASSED [  3%]
+firestore/tests/unit/test_query.py::TestQuery::test__cursor_helper_w_list PASSED [  4%]
+firestore/tests/unit/test_query.py::TestQuery::test__cursor_helper_w_snapshot PASSED [  6%]
+firestore/tests/unit/test_query.py::TestQuery::test__cursor_helper_w_tuple PASSED [  7%]
+firestore/tests/unit/test_query.py::TestQuery::test__filters_pb_empty PASSED [  9%]
+firestore/tests/unit/test_query.py::TestQuery::test__filters_pb_multi PASSED [ 11%]
+firestore/tests/unit/test_query.py::TestQuery::test__filters_pb_single PASSED [ 12%]
+firestore/tests/unit/test_query.py::TestQuery::test__normalize_cursor_as_dict_hit PASSED [ 14%]
+firestore/tests/unit/test_query.py::TestQuery::test__normalize_cursor_as_dict_mismatched_order PASSED [ 15%]
+firestore/tests/unit/test_query.py::TestQuery::test__normalize_cursor_as_list_hit PASSED [ 17%]
+firestore/tests/unit/test_query.py::TestQuery::test__normalize_cursor_as_list_mismatched_order PASSED [ 19%]
+firestore/tests/unit/test_query.py::TestQuery::test__normalize_cursor_no_order PASSED [ 20%]
+firestore/tests/unit/test_query.py::TestQuery::test__normalize_cursor_none PASSED [ 22%]
+firestore/tests/unit/test_query.py::TestQuery::test__to_protobuf_all_fields PASSED [ 23%]
+firestore/tests/unit/test_query.py::TestQuery::test__to_protobuf_end_at_only PASSED [ 25%]
+firestore/tests/unit/test_query.py::TestQuery::test__to_protobuf_limit_only PASSED [ 26%]
+firestore/tests/unit/test_query.py::TestQuery::test__to_protobuf_offset_only PASSED [ 28%]
+firestore/tests/unit/test_query.py::TestQuery::test__to_protobuf_order_by_only PASSED [ 30%]
+firestore/tests/unit/test_query.py::TestQuery::test__to_protobuf_select_only PASSED [ 31%]
+firestore/tests/unit/test_query.py::TestQuery::test__to_protobuf_start_at_only PASSED [ 33%]
+firestore/tests/unit/test_query.py::TestQuery::test__to_protobuf_where_only PASSED [ 34%]
+firestore/tests/unit/test_query.py::TestQuery::test_comparator_missing_order_by_field_in_data_raises PASSED [ 36%]
+firestore/tests/unit/test_query.py::TestQuery::test_comparator_no_ordering PASSED [ 38%]
+firestore/tests/unit/test_query.py::TestQuery::test_comparator_no_ordering_same_id PASSED [ 39%]
+firestore/tests/unit/test_query.py::TestQuery::test_comparator_ordering PASSED [ 41%]
+firestore/tests/unit/test_query.py::TestQuery::test_comparator_ordering_descending PASSED [ 42%]
+firestore/tests/unit/test_query.py::TestQuery::test_constructor_defaults PASSED [ 44%]
+firestore/tests/unit/test_query.py::TestQuery::test_constructor_explicit PASSED [ 46%]
+firestore/tests/unit/test_query.py::TestQuery::test_end_at PASSED        [ 47%]
+firestore/tests/unit/test_query.py::TestQuery::test_end_before PASSED    [ 49%]
+firestore/tests/unit/test_query.py::TestQuery::test_get_empty_after_first_response PASSED [ 50%]
+firestore/tests/unit/test_query.py::TestQuery::test_get_no_results PASSED [ 52%]
+firestore/tests/unit/test_query.py::TestQuery::test_get_second_response_in_empty_stream PASSED [ 53%]
+firestore/tests/unit/test_query.py::TestQuery::test_get_simple PASSED    [ 55%]
+firestore/tests/unit/test_query.py::TestQuery::test_get_with_skipped_results PASSED [ 57%]
+firestore/tests/unit/test_query.py::TestQuery::test_get_with_transaction PASSED [ 58%]
+firestore/tests/unit/test_query.py::TestQuery::test_limit PASSED         [ 60%]
+firestore/tests/unit/test_query.py::TestQuery::test_offset PASSED        [ 61%]
+firestore/tests/unit/test_query.py::TestQuery::test_on_snapshot PASSED   [ 63%]
+firestore/tests/unit/test_query.py::TestQuery::test_order_by PASSED      [ 65%]
+firestore/tests/unit/test_query.py::TestQuery::test_select PASSED        [ 66%]
+firestore/tests/unit/test_query.py::TestQuery::test_start_after PASSED   [ 68%]
+firestore/tests/unit/test_query.py::TestQuery::test_start_at PASSED      [ 69%]
+firestore/tests/unit/test_query.py::TestQuery::test_where PASSED         [ 71%]
+firestore/tests/unit/test_query.py::TestQuery::test_where_eq_nan PASSED  [ 73%]
+firestore/tests/unit/test_query.py::TestQuery::test_where_eq_null PASSED [ 74%]
+firestore/tests/unit/test_query.py::TestQuery::test_where_gt_null PASSED [ 76%]
+firestore/tests/unit/test_query.py::TestQuery::test_where_le_nan PASSED  [ 77%]
+firestore/tests/unit/test_query.py::Test__enum_from_op_string::test_failure PASSED [ 79%]
+firestore/tests/unit/test_query.py::Test__enum_from_op_string::test_success PASSED [ 80%]
+firestore/tests/unit/test_query.py::Test__isnan::test_invalid PASSED     [ 82%]
+firestore/tests/unit/test_query.py::Test__isnan::test_valid PASSED       [ 84%]
+firestore/tests/unit/test_query.py::Test__enum_from_direction::test_failure PASSED [ 85%]
+firestore/tests/unit/test_query.py::Test__enum_from_direction::test_success PASSED [ 87%]
+firestore/tests/unit/test_query.py::Test__filter_pb::test_bad_type PASSED [ 88%]
+firestore/tests/unit/test_query.py::Test__filter_pb::test_field PASSED   [ 90%]
+firestore/tests/unit/test_query.py::Test__filter_pb::test_unary PASSED   [ 92%]
+firestore/tests/unit/test_query.py::Test__cursor_pb::test_no_pair PASSED [ 93%]
+firestore/tests/unit/test_query.py::Test__cursor_pb::test_success PASSED [ 95%]
+firestore/tests/unit/test_query.py::Test__query_response_to_snapshot::test_after_offset PASSED [ 96%]
+firestore/tests/unit/test_query.py::Test__query_response_to_snapshot::test_empty PASSED [ 98%]
+firestore/tests/unit/test_query.py::Test__query_response_to_snapshot::test_response PASSED [100%]
+
+=============================== warnings summary ===============================
+tests/unit/test_query.py::TestQuery::test__client_property
+  /workspace/repo/firestore/google/cloud/firestore_v1beta1/__init__.py:17: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    from pkg_resources import get_distribution
+
+tests/unit/test_query.py::TestQuery::test__client_property
+tests/unit/test_query.py::TestQuery::test__client_property
+tests/unit/test_query.py::TestQuery::test__client_property
+tests/unit/test_query.py::TestQuery::test__client_property
+tests/unit/test_query.py::TestQuery::test__client_property
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+tests/unit/test_query.py::TestQuery::test__client_property
+tests/unit/test_query.py::TestQuery::test__client_property
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google.cloud')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+tests/unit/test_query.py::TestQuery::test__client_property
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:2563: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(parent)
+
+tests/unit/test_query.py::TestQuery::test__client_property
+  /workspace/repo/firestore/google/cloud/firestore_v1beta1/proto/document_pb2.py:388: DeprecationWarning: invalid escape sequence \`
+    __doc__ = """A Firestore document.
+
+tests/unit/test_query.py::TestQuery::test__client_property
+  /workspace/repo/firestore/google/cloud/firestore_v1beta1/proto/firestore_pb2.py:1603: DeprecationWarning: invalid escape sequence \_
+    __doc__ = """The request for
+
+tests/unit/test_query.py::TestQuery::test__client_property
+  /workspace/repo/firestore/google/cloud/firestore_v1beta1/proto/firestore_pb2.py:1797: DeprecationWarning: invalid escape sequence \_
+    __doc__ = """The streamed response for
+
+tests/unit/test_query.py::TestQuery::test__client_property
+  /workspace/repo/firestore/google/cloud/firestore_v1beta1/proto/firestore_pb2.py:1964: DeprecationWarning: invalid escape sequence \_
+    __doc__ = """The response for
+
+tests/unit/test_query.py::TestQuery::test__client_property
+  /workspace/repo/firestore/google/cloud/firestore_v1beta1/proto/firestore_pb2.py:2233: DeprecationWarning: invalid escape sequence \_
+    __doc__ = """Targets being watched have changed.
+
+tests/unit/test_query.py::TestQuery::test__client_property
+  /workspace/repo/firestore/google/cloud/firestore_v1beta1/proto/write_pb2.py:506: DeprecationWarning: invalid escape sequence \_
+    __doc__ = """A transformation of a field of the document.
+
+tests/unit/test_query.py::TestQuery::test__client_property
+  /workspace/repo/firestore/google/cloud/firestore_v1beta1/proto/write_pb2.py:563: DeprecationWarning: invalid escape sequence \_
+    __doc__ = """The result of applying a write.
+
+tests/unit/test_query.py::TestQuery::test__client_property
+  /workspace/repo/firestore/google/cloud/firestore_v1beta1/proto/write_pb2.py:677: DeprecationWarning: invalid escape sequence \_
+    __doc__ = """A digest of all the documents that match a given target.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 63 passed, 17 warnings in 0.85s ========================
+reward=1 graded=63 found=0 failed=0 parsed=63 framework=pytest exit_code=0

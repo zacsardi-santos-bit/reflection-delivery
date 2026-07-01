@@ -1,0 +1,1098 @@
+patching file packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx
+patching file packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx
+patching file packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx
+[?25l
+ RUN  v3.0.3 /workspace/repo/packages/manager
+
+Sourcemap for "/workspace/repo/node_modules/factory.ts/lib/index.js" points to missing source files
+ ❯ src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx (0 test)
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+stderr | src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx
+Warning: React.createFactory() is deprecated and will be removed in a future major release. Consider using JSX or use React.createElement() directly instead.
+
+stderr | src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx > Alert Row > should have the show details action item present inside action menu
+Warning: validateDOMNesting(...): <tr> cannot appear as a child of <div>.
+    at tr
+    at /workspace/repo/node_modules/@emotion/react/dist/emotion-element-9150ebbd.development.cjs.js:75:23
+    at TableRow (/workspace/repo/node_modules/@mui/material/node/TableRow/TableRow.js:70:59)
+    at /workspace/repo/node_modules/@emotion/react/dist/emotion-element-9150ebbd.development.cjs.js:75:23
+    at /workspace/repo/packages/manager/src/components/TableRow/TableRow.tsx:6:13
+    at AlertTableRow (/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.tsx:11:13)
+    at Router (/workspace/repo/node_modules/react-router/cjs/react-router.js:283:30)
+    at MemoryRouter (/workspace/repo/node_modules/react-router/cjs/react-router.js:385:35)
+    at SnackbarProvider (/workspace/repo/node_modules/notistack/notistack.cjs.development.js:1478:24)
+    at $ (/workspace/repo/node_modules/launchdarkly-react-client-sdk/lib/esm/index.js:3:34)
+    at DefaultPropsProvider (/workspace/repo/node_modules/@mui/system/DefaultPropsProvider/DefaultPropsProvider.js:18:3)
+    at RtlProvider (/workspace/repo/node_modules/@mui/system/RtlProvider/index.js:19:7)
+    at ThemeProvider (/workspace/repo/node_modules/@mui/private-theming/node/ThemeProvider/ThemeProvider.js:39:5)
+    at ThemeProvider (/workspace/repo/node_modules/@mui/system/ThemeProvider/ThemeProvider.js:52:5)
+    at ThemeProvider (/workspace/repo/node_modules/@mui/material/node/styles/ThemeProvider.js:21:14)
+    at StyledEngineProvider (/workspace/repo/node_modules/@mui/styled-engine/node/StyledEngineProvider/StyledEngineProvider.js:27:5)
+    at LinodeThemeWrapper (/workspace/repo/packages/manager/src/LinodeThemeWrapper.tsx:6:13)
+    at QueryClientProvider (file:///workspace/repo/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:20:3)
+    at Provider (/workspace/repo/node_modules/react-redux/lib/components/Provider.js:19:20)
+
+ ❯ src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx (4 tests | 2 failed) 337ms
+   ✓ Alert Row > should render an alert row
+   × Alert Row > should render the status field in green color if status is enabled 41ms
+     → Unable to find an element by: [data-testid="status-icon"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<table>[39m
+      [36m<tbody>[39m
+        [36m<tr[39m
+          [33mclass[39m=[32m"MuiTableRow-root css-ldtlyf-MuiTableRow-root-StyledTableRow"[39m
+          [33mdata-qa-alert-cell[39m=[32m"2"[39m
+        [36m>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [0mAlert-2[0m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [0mlinode[0m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"MuiTypography-root MuiTypography-body1 css-12bijfz-MuiTypography-root"[39m
+            [36m>[39m
+              [0mEnabled[0m
+            [36m</p>[39m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"MuiTypography-root MuiTypography-body1 css-4ofmxk-MuiTypography-root"[39m
+            [36m>[39m
+              [0m2026-06-29 15:19[0m
+            [36m</span>[39m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [0muser1[0m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-1866z1e-MuiTableCell-root-actionCell-root"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-haspopup[39m=[32m"true"[39m
+              [33maria-label[39m=[32m"Action menu for Alert Alert-2"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeLarge css-k7zvdk-MuiButtonBase-root-MuiIconButton-root"[39m
+              [33mid[39m=[32m"action-menu-for-alert-alert-2-button"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mviewBox[39m=[32m"0 0 20 20"[39m
+                [33mwidth[39m=[32m"20"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<g[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mfill-rule[39m=[32m"evenodd"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M10 8c.54 0 1.008.198 1.405.595.397.397.595.865.595 1.405s-.198 1.008-.595 1.405c-.397.397-.865.595-1.405.595s-1.008-.198-1.405-.595C8.198 11.008 8 10.54 8 10s.198-1.008.595-1.405C8.992 8.198 9.46 8 10 8zm8 0c.54 0 1.008.198 1.405.595.397.397.595.865.595 1.405s-.198 1.008-.595 1.405c-.397.397-.865.595-1.405.595s-1.008-.198-1.405-.595C16.198 11.008 16 10.54 16 10s.198-1.008.595-1.405C16.992 8.198 17.46 8 18 8zM2 8c.54 0 1.008.198 1.405.595C3.802 8.992 4 9.46 4 10s-.198 1.008-.595 1.405C3.008 11.802 2.54 12 2 12s-1.008-.198-1.405-.595C.198 11.008 0 10.54 0 10s.198-1.008.595-1.405C.992 8.198 1.46 8 2 8z"[39m
+                    [33mfill[39m=[32m"currentColor"[39m
+                  [36m/>[39m
+                [36m</g>[39m
+              [36m</svg>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+          [36m</td>[39m
+        [36m</tr>[39m
+      [36m</tbody>[39m
+    [36m</table>[39m
+  [36m</div>[39m
+[36m</body>[39m
+   × Alert Row > alert labels should have hyperlinks to the details page 24ms
+     → [2mexpect([22m[31mreceived[39m[2m).toHaveAttribute()[22m
+
+[31mreceived[39m value must be an HTMLElement or an SVGElement.
+
+   ✓ Alert Row > should have the show details action item present inside action menu
+ ❯ src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx (5 tests | 3 failed) 428ms
+   ✓ Alert Listing > should render the alert landing table with items
+   ✓ Alert Listing > should render the alert row
+   × Alert Listing > should filter the alerts with service filter 50ms
+     → Unable to find an element by: [data-testid="alert-service-filter"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiGrid-root css-1l6dni3-MuiGrid-root"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"css-1rr9936-StyledTableWrapper"[39m
+      [36m>[39m
+        [36m<table[39m
+          [33maria-colcount[39m=[32m"7"[39m
+          [33mclass[39m=[32m"MuiTable-root css-9dluxt-MuiTable-root"[39m
+          [33mrole[39m=[32m"table"[39m
+        [36m>[39m
+          [36m<thead[39m
+            [33mclass[39m=[32m"MuiTableHead-root css-15wwp11-MuiTableHead-root"[39m
+          [36m>[39m
+            [36m<tr[39m
+              [33mclass[39m=[32m"MuiTableRow-root MuiTableRow-head css-b1l0vt-MuiTableRow-root-StyledTableRow"[39m
+            [36m>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by alertName"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mAlert Name[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by service"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mService[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by status"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mStatus[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by lastModified"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mLast Modified[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [3...
+   × Alert Listing > should filter the alerts with status filter 40ms
+     → Unable to find an element by: [data-testid="alert-status-filter"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiGrid-root css-1l6dni3-MuiGrid-root"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"css-1rr9936-StyledTableWrapper"[39m
+      [36m>[39m
+        [36m<table[39m
+          [33maria-colcount[39m=[32m"7"[39m
+          [33mclass[39m=[32m"MuiTable-root css-9dluxt-MuiTable-root"[39m
+          [33mrole[39m=[32m"table"[39m
+        [36m>[39m
+          [36m<thead[39m
+            [33mclass[39m=[32m"MuiTableHead-root css-15wwp11-MuiTableHead-root"[39m
+          [36m>[39m
+            [36m<tr[39m
+              [33mclass[39m=[32m"MuiTableRow-root MuiTableRow-head css-b1l0vt-MuiTableRow-root-StyledTableRow"[39m
+            [36m>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by alertName"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mAlert Name[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by service"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mService[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by status"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mStatus[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by lastModified"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mLast Modified[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [3...
+   × Alert Listing > should filter the alerts with search text 39ms
+     → Unable to find an element with the placeholder text of: Search for Alerts
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiGrid-root css-1l6dni3-MuiGrid-root"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"css-1rr9936-StyledTableWrapper"[39m
+      [36m>[39m
+        [36m<table[39m
+          [33maria-colcount[39m=[32m"7"[39m
+          [33mclass[39m=[32m"MuiTable-root css-9dluxt-MuiTable-root"[39m
+          [33mrole[39m=[32m"table"[39m
+        [36m>[39m
+          [36m<thead[39m
+            [33mclass[39m=[32m"MuiTableHead-root css-15wwp11-MuiTableHead-root"[39m
+          [36m>[39m
+            [36m<tr[39m
+              [33mclass[39m=[32m"MuiTableRow-root MuiTableRow-head css-b1l0vt-MuiTableRow-root-StyledTableRow"[39m
+            [36m>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by alertName"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mAlert Name[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by service"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mService[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by status"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mStatus[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by lastModified"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mLast Modified[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [3...
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx [ src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx ]
+Error: Failed to resolve import "./AlertListTable" from "src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx:7:32
+  4  |  import { formatDate } from 'src/utilities/formatDate';
+  5  |  import { renderWithTheme } from 'src/utilities/testHelpers';
+  6  |  import { AlertsListTable } from './AlertListTable';
+     |                                   ^
+  7  |  describe('Alert List Table test', ()=>{
+  8  |      it('should render the alert landing table ', async ()=>{
+ ❯ TransformPluginContext._formatError ../../node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:47574:41
+ ❯ TransformPluginContext.error ../../node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:47569:16
+ ❯ normalizeUrl ../../node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:45818:23
+ ❯ ../../node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:45937:39
+ ❯ TransformPluginContext.transform ../../node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:45864:7
+ ❯ EnvironmentPluginContainer.transform ../../node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:47400:18
+ ❯ loadAndTransform ../../node_modules/vite/dist/node/chunks/dep-M1IYMR16.js:41198:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx > Alert Listing > should filter the alerts with service filter
+TestingLibraryElementError: Unable to find an element by: [data-testid="alert-service-filter"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiGrid-root css-1l6dni3-MuiGrid-root"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"css-1rr9936-StyledTableWrapper"[39m
+      [36m>[39m
+        [36m<table[39m
+          [33maria-colcount[39m=[32m"7"[39m
+          [33mclass[39m=[32m"MuiTable-root css-9dluxt-MuiTable-root"[39m
+          [33mrole[39m=[32m"table"[39m
+        [36m>[39m
+          [36m<thead[39m
+            [33mclass[39m=[32m"MuiTableHead-root css-15wwp11-MuiTableHead-root"[39m
+          [36m>[39m
+            [36m<tr[39m
+              [33mclass[39m=[32m"MuiTableRow-root MuiTableRow-head css-b1l0vt-MuiTableRow-root-StyledTableRow"[39m
+            [36m>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by alertName"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mAlert Name[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by service"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mService[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by status"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mStatus[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by lastModified"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mLast Modified[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [3...
+ ❯ Object.getElementError ../../node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ getByTestId ../../node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx:93:27
+     91|       <AlertListing />
+     92|     );
+     93|     const serviceFilter = getByTestId('alert-service-filter');
+       |                           ^
+     94|     expect(getByText(linodeAlert.label)).toBeVisible();
+     95|     expect(getByText(dbaasAlert.label)).toBeVisible();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx > Alert Listing > should filter the alerts with status filter
+TestingLibraryElementError: Unable to find an element by: [data-testid="alert-status-filter"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiGrid-root css-1l6dni3-MuiGrid-root"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"css-1rr9936-StyledTableWrapper"[39m
+      [36m>[39m
+        [36m<table[39m
+          [33maria-colcount[39m=[32m"7"[39m
+          [33mclass[39m=[32m"MuiTable-root css-9dluxt-MuiTable-root"[39m
+          [33mrole[39m=[32m"table"[39m
+        [36m>[39m
+          [36m<thead[39m
+            [33mclass[39m=[32m"MuiTableHead-root css-15wwp11-MuiTableHead-root"[39m
+          [36m>[39m
+            [36m<tr[39m
+              [33mclass[39m=[32m"MuiTableRow-root MuiTableRow-head css-b1l0vt-MuiTableRow-root-StyledTableRow"[39m
+            [36m>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by alertName"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mAlert Name[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by service"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mService[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by status"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mStatus[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by lastModified"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mLast Modified[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [3...
+ ❯ Object.getElementError ../../node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ getByTestId ../../node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx:127:26
+    125|       <AlertListing />
+    126|     );
+    127|     const statusFilter = getByTestId('alert-status-filter');
+       |                          ^
+    128|     expect(getByText(enabledAlert.label)).toBeVisible();
+    129|     expect(getByText(disabledAlert.label)).toBeVisible();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx > Alert Listing > should filter the alerts with search text
+TestingLibraryElementError: Unable to find an element with the placeholder text of: Search for Alerts
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"MuiGrid-root css-1l6dni3-MuiGrid-root"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"css-1rr9936-StyledTableWrapper"[39m
+      [36m>[39m
+        [36m<table[39m
+          [33maria-colcount[39m=[32m"7"[39m
+          [33mclass[39m=[32m"MuiTable-root css-9dluxt-MuiTable-root"[39m
+          [33mrole[39m=[32m"table"[39m
+        [36m>[39m
+          [36m<thead[39m
+            [33mclass[39m=[32m"MuiTableHead-root css-15wwp11-MuiTableHead-root"[39m
+          [36m>[39m
+            [36m<tr[39m
+              [33mclass[39m=[32m"MuiTableRow-root MuiTableRow-head css-b1l0vt-MuiTableRow-root-StyledTableRow"[39m
+            [36m>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by alertName"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mAlert Name[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by service"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mService[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by status"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mStatus[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [33mfill[39m=[32m"currentColor"[39m
+                      [33mtransform[39m=[32m"matrix(1 0 0 -1 0 10)"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+              [36m</th>[39m
+              [36m<th[39m
+                [33maria-sort[39m=[32m"ascending"[39m
+                [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-qie6x6-MuiTableCell-root-root"[39m
+                [33mrole[39m=[32m"columnheader"[39m
+                [33mscope[39m=[32m"col"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33maria-label[39m=[32m"Sort by lastModified"[39m
+                  [33mclass[39m=[32m"MuiButtonBase-root MuiTableSortLabel-root Mui-active css-wzt77n-MuiButtonBase-root-MuiTableSortLabel-root-label"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [0mLast Modified[0m
+                  [36m<svg[39m
+                    [33mclass[39m=[32m"MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-rzoejp-MuiTableSortLabel-icon"[39m
+                    [33mheight[39m=[32m"20"[39m
+                    [33mviewBox[39m=[32m"0 0 20 20"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M5.41 2L10 5.709 14.59 2 16 3.142 10 8 4 3.142z"[39m
+                      [3...
+ ❯ Object.getElementError ../../node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ getByPlaceholderText ../../node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx:162:25
+    160|       <AlertListing />
+    161|     );
+    162|     const searchInput = getByPlaceholderText('Search for Alerts');
+       |                         ^
+    163|     await userEvent.type(searchInput, 'alert1');
+    164| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx > Alert Row > should render the status field in green color if status is enabled
+TestingLibraryElementError: Unable to find an element by: [data-testid="status-icon"]
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<table>[39m
+      [36m<tbody>[39m
+        [36m<tr[39m
+          [33mclass[39m=[32m"MuiTableRow-root css-ldtlyf-MuiTableRow-root-StyledTableRow"[39m
+          [33mdata-qa-alert-cell[39m=[32m"2"[39m
+        [36m>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [0mAlert-2[0m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [0mlinode[0m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"MuiTypography-root MuiTypography-body1 css-12bijfz-MuiTypography-root"[39m
+            [36m>[39m
+              [0mEnabled[0m
+            [36m</p>[39m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"MuiTypography-root MuiTypography-body1 css-4ofmxk-MuiTypography-root"[39m
+            [36m>[39m
+              [0m2026-06-29 15:19[0m
+            [36m</span>[39m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-10p8wra-MuiTableCell-root-root"[39m
+          [36m>[39m
+            [0muser1[0m
+          [36m</td>[39m
+          [36m<td[39m
+            [33mclass[39m=[32m"MuiTableCell-root MuiTableCell-sizeMedium css-1866z1e-MuiTableCell-root-actionCell-root"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-haspopup[39m=[32m"true"[39m
+              [33maria-label[39m=[32m"Action menu for Alert Alert-2"[39m
+              [33mclass[39m=[32m"MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeLarge css-k7zvdk-MuiButtonBase-root-MuiIconButton-root"[39m
+              [33mid[39m=[32m"action-menu-for-alert-alert-2-button"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33mheight[39m=[32m"20"[39m
+                [33mviewBox[39m=[32m"0 0 20 20"[39m
+                [33mwidth[39m=[32m"20"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<g[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mfill-rule[39m=[32m"evenodd"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M10 8c.54 0 1.008.198 1.405.595.397.397.595.865.595 1.405s-.198 1.008-.595 1.405c-.397.397-.865.595-1.405.595s-1.008-.198-1.405-.595C8.198 11.008 8 10.54 8 10s.198-1.008.595-1.405C8.992 8.198 9.46 8 10 8zm8 0c.54 0 1.008.198 1.405.595.397.397.595.865.595 1.405s-.198 1.008-.595 1.405c-.397.397-.865.595-1.405.595s-1.008-.198-1.405-.595C16.198 11.008 16 10.54 16 10s.198-1.008.595-1.405C16.992 8.198 17.46 8 18 8zM2 8c.54 0 1.008.198 1.405.595C3.802 8.992 4 9.46 4 10s-.198 1.008-.595 1.405C3.008 11.802 2.54 12 2 12s-1.008-.198-1.405-.595C.198 11.008 0 10.54 0 10s.198-1.008.595-1.405C.992 8.198 1.46 8 2 8z"[39m
+                    [33mfill[39m=[32m"currentColor"[39m
+                  [36m/>[39m
+                [36m</g>[39m
+              [36m</svg>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"[39m
+              [36m/>[39m
+            [36m</button>[39m
+          [36m</td>[39m
+        [36m</tr>[39m
+      [36m</tbody>[39m
+    [36m</table>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError ../../node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ ../../node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ getByTestId ../../node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx:57:29
+     55|     expect(getByText(capitalize('enabled'))).toBeVisible();
+     56| 
+     57|     expect(getComputedStyle(getByTestId('status-icon')).backgroundColo…
+       |                             ^
+     58|       'rgb(0, 176, 80)'
+     59|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx > Alert Row > alert labels should have hyperlinks to the details page
+Error: [2mexpect([22m[31mreceived[39m[2m).toHaveAttribute()[22m
+
+[31mreceived[39m value must be an HTMLElement or an SVGElement.
+
+ ❯ src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx:81:39
+     79| 
+     80|     const labelElement = getByText(alert.label);
+     81|     expect(labelElement.closest('a')).toHaveAttribute('href', link);
+       |                                       ^
+     82|   });
+     83| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  5 failed | 4 passed (9)
+   Start at  15:19:05
+   Duration  10.14s (transform 1.05s, setup 5.54s, collect 13.15s, tests 765ms, environment 1.82s, prepare 541ms)
+
+[?25hreward=0 graded=12 found=0 failed=0 parsed=0 framework=vitest exit_code=1

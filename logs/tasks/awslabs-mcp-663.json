@@ -1,0 +1,23 @@
+{
+ "task": "awslabs-mcp-663",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds IAM group tools to server.py (@mcp.tool list_groups/get_group/create_group/delete_group[force]/add_user/remove_user/attach_policy/detach_policy) with Context.is_readonly() gating + group models + error categorization; F2P=22 group tests, PASS_TO_PASS\u224880 regression"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

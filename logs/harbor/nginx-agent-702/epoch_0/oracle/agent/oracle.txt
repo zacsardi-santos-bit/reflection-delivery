@@ -1,0 +1,8 @@
+patching file internal/bus/topics.go
+patching file internal/command/command_plugin.go
+patching file internal/command/command_service.go
+patching file internal/command/commandfakes/fake_command_service.go
+patching file internal/file/file_manager_service.go
+patching file internal/file/file_plugin.go
+patching file internal/watcher/instance/nginx_config_parser.go
+patching file nginx-agent.conf

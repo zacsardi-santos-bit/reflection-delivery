@@ -1,0 +1,39 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && yarn jest packages/perseus/src/widgets/__tests__/explanation.test.ts packages/perseus/src/widgets/__tests__/graded-group.test.ts --coverage=false --watchAll=false --verbose",
+  "test_files": [
+    "packages/perseus/src/widgets/__tests__/__snapshots__/explanation.test.ts.snap",
+    "packages/perseus/src/widgets/__tests__/__snapshots__/graded-group.test.ts.snap",
+    "packages/perseus/src/widgets/__tests__/explanation.cypress.ts",
+    "packages/perseus/src/widgets/__tests__/explanation.test.ts",
+    "packages/perseus/src/widgets/__tests__/graded-group.test.ts"
+  ],
+  "num_test_files": 5,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation should snapshot",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation should snapshot when expanded",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation can be expanded and collapsed with a mouse click",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation can be expanded and collapsed with the keyboard - Enter key",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation can be expanded and collapsed with the keyboard - Space bar",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation uses transitions when it is expanded/collapsed",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation does NOT use transitions when the user prefers reduced motion",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group should snapshot",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on desktop should be able to reveal the hint",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on desktop should be able to hide the hint",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on mobile should be able to reveal the hint",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on mobile should be able to hide the hint"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation communicates changes to its parent by using the provided 'onChange' callback",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation should return an empty object for getUserInput()",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation should return a zero score for simpleValidate()",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/explanation.test.ts::Explanation static validate should always return 0 points",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on desktop should be able to be answered correctly",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on desktop should be able to be answered incorrectly",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on desktop should display an error if not fully answered",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on mobile should be able to be answered correctly",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on mobile should be able to be answered incorrectly",
+    "/workspace/repo/packages/perseus/src/widgets/__tests__/graded-group.test.ts::graded-group on mobile should let the user retry when checked if not fully answered"
+  ]
+}

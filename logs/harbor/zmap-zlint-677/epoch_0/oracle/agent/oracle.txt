@@ -1,0 +1,6 @@
+patching file v3/lints/cabf_br/lint_ext_tor_service_descriptor_hash_invalid.go
+patching file v3/testdata/invalidOnionAddress.pem
+patching file v3/testdata/onionSANEV.pem
+patching file v3/testdata/onionSANEVBefore201.pem
+patching file v3/testdata/onionV3AndDNS.pem
+patching file v3/util/onion.go

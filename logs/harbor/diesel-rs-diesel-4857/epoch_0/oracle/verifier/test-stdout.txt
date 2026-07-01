@@ -1,0 +1,153 @@
+patching file diesel_derives/tests/as_changeset.rs
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling fnv v1.0.7
+   Compiling strsim v0.11.1
+   Compiling ident_case v1.0.1
+   Compiling libc v0.2.186
+   Compiling rustix v1.1.4
+   Compiling vcpkg v0.2.15
+   Compiling pkg-config v0.3.33
+   Compiling getrandom v0.4.3
+   Compiling either v1.16.0
+   Compiling diesel_derives v2.3.2 (/workspace/repo/diesel_derives)
+   Compiling cfg-if v1.0.4
+   Compiling heck v0.5.0
+   Compiling bitflags v2.13.0
+   Compiling linux-raw-sys v0.12.1
+   Compiling prettyplease v0.2.37
+   Compiling once_cell v1.21.4
+   Compiling fastrand v2.4.1
+   Compiling similar v2.7.0
+   Compiling downcast-rs v2.0.2
+   Compiling dotenvy v0.15.7
+   Compiling libsqlite3-sys v0.35.0
+   Compiling syn v2.0.118
+   Compiling console v0.16.3
+   Compiling tempfile v3.27.0
+   Compiling insta v1.48.0
+   Compiling darling_core v0.21.3
+   Compiling diesel_table_macro_syntax v0.3.0 (/workspace/repo/diesel_table_macro_syntax)
+   Compiling darling_macro v0.21.3
+   Compiling darling v0.21.3
+   Compiling dsl_auto_type v0.2.0 (/workspace/repo/dsl_auto_type)
+   Compiling diesel v2.3.1 (/workspace/repo/diesel)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.47s
+────────────
+ Nextest run ID 15263b52-a0f8-49d0-b373-f6c359dd476f with nextest profile: default
+    Starting 111 tests across 2 binaries
+        PASS [   0.061s] (  1/111) diesel_derives model::infer_table_name_properly_handles_underscores
+        PASS [   0.064s] (  2/111) diesel_derives model::infer_table_name_pluralizes_and_downcases
+        PASS [   0.223s] (  3/111) diesel_derives tests::from_sql_row::from_sql_row_1
+        PASS [   0.226s] (  4/111) diesel_derives tests::as_expression::as_expression_1
+        PASS [   0.226s] (  5/111) diesel_derives tests::insertable::insertable_1
+        PASS [   0.229s] (  6/111) diesel_derives tests::auto_type::auto_type_1
+        PASS [   0.229s] (  7/111) diesel_derives tests::diesel_public_if::diesel_public_if_1
+        PASS [   0.235s] (  8/111) diesel_derives tests::query_id::query_id_1
+        PASS [   0.236s] (  9/111) diesel_derives tests::diesel_for_each_tuple::diesel_for_each_tuple_1
+        PASS [   0.239s] ( 10/111) diesel_derives tests::queryable::queryable_1
+        PASS [   0.241s] ( 11/111) diesel_derives tests::diesel_numeric_ops::diesel_numeric_ops_1
+        PASS [   0.243s] ( 12/111) diesel_derives tests::as_changeset::as_changeset_1
+        PASS [   0.245s] ( 13/111) diesel_derives tests::associations::associations_1
+        PASS [   0.251s] ( 14/111) diesel_derives tests::identifiable::identifiable_1
+        PASS [   0.252s] ( 15/111) diesel_derives tests::queryable_by_name::queryable_by_name_1
+        PASS [   0.251s] ( 16/111) diesel_derives tests::declare_sql_function::declare_sql_function_1
+        PASS [   0.254s] ( 17/111) diesel_derives tests::has_query::has_query_1
+        PASS [   0.257s] ( 18/111) diesel_derives tests::define_sql_function::define_sql_function_1
+        PASS [   0.207s] ( 19/111) diesel_derives tests::sql_function::sql_function_1
+        PASS [   0.211s] ( 20/111) diesel_derives tests::selectable::selectable_1
+        PASS [   0.048s] ( 21/111) diesel_derives::tests as_changeset::embedded_struct
+        PASS [   0.045s] ( 22/111) diesel_derives::tests as_changeset::named_ref_struct
+        PASS [   0.046s] ( 23/111) diesel_derives::tests as_changeset::named_struct
+        PASS [   0.044s] ( 24/111) diesel_derives::tests as_changeset::option_fields_are_correctly_detected
+        PASS [   0.049s] ( 25/111) diesel_derives::tests as_changeset::option_fields_are_assigned_null_when_specified
+        PASS [   0.044s] ( 26/111) diesel_derives::tests as_changeset::optional_embedded_struct
+        PASS [   0.039s] ( 27/111) diesel_derives::tests as_changeset::primary_key_is_based_on_column_name
+        PASS [   0.045s] ( 28/111) diesel_derives::tests as_changeset::primary_key_is_not_updated
+        PASS [   0.051s] ( 29/111) diesel_derives::tests as_changeset::primary_key_is_not_updated_with_custom_composite_pk
+        PASS [   0.062s] ( 30/111) diesel_derives::tests as_changeset::option_fields_are_skipped
+        PASS [   0.049s] ( 31/111) diesel_derives::tests as_changeset::skip_update
+        PASS [   0.053s] ( 32/111) diesel_derives::tests as_changeset::primary_key_is_not_updated_with_custom_pk
+        PASS [   0.046s] ( 33/111) diesel_derives::tests as_changeset::struct_containing_single_field
+        PASS [   0.047s] ( 34/111) diesel_derives::tests as_changeset::tuple_struct
+        PASS [   0.046s] ( 35/111) diesel_derives::tests as_changeset::tuple_struct_containing_single_field
+        PASS [   0.048s] ( 36/111) diesel_derives::tests as_changeset::with_explicit_column_names
+        PASS [   0.045s] ( 37/111) diesel_derives::tests as_changeset::with_explicit_column_names_raw_type
+        PASS [   0.051s] ( 38/111) diesel_derives::tests as_changeset::tuple_struct_raw_type
+        PASS [   0.046s] ( 39/111) diesel_derives::tests as_changeset::with_explicit_table_name
+        PASS [   0.050s] ( 40/111) diesel_derives::tests as_changeset::with_lifetime
+        PASS [   0.052s] ( 41/111) diesel_derives::tests as_changeset::with_lifetime_constraints
+        PASS [   0.048s] ( 42/111) diesel_derives::tests as_changeset::with_multiple_lifetimes
+        PASS [   0.039s] ( 43/111) diesel_derives::tests as_expression::struct_with_sql_type
+        PASS [   0.044s] ( 44/111) diesel_derives::tests as_changeset::with_path_in_table_name
+        PASS [   0.047s] ( 45/111) diesel_derives::tests as_changeset::with_serialize_as
+        PASS [   0.042s] ( 46/111) diesel_derives::tests associations::custom_foreign_key
+        PASS [   0.047s] ( 47/111) diesel_derives::tests associations::foreign_key_field_with_column_rename
+        PASS [   0.046s] ( 48/111) diesel_derives::tests associations::multiple_associations
+        PASS [   0.044s] ( 49/111) diesel_derives::tests associations::self_referential
+        PASS [   0.043s] ( 50/111) diesel_derives::tests associations::simple_belongs_to
+        PASS [   0.045s] ( 51/111) diesel_derives::tests associations::tuple_struct
+        PASS [   0.044s] ( 52/111) diesel_derives::tests identifiable::derive_identifiable_on_simple_struct
+        PASS [   0.050s] ( 53/111) diesel_derives::tests associations::table_in_different_module
+        PASS [   0.036s] ( 54/111) diesel_derives::tests identifiable::derive_identifiable_when_id_is_not_first_field
+        PASS [   0.041s] ( 55/111) diesel_derives::tests identifiable::derive_identifiable_on_struct_with_non_integer_pk
+        PASS [   0.044s] ( 56/111) diesel_derives::tests identifiable::derive_identifiable_on_struct_with_lifetime
+        PASS [   0.041s] ( 57/111) diesel_derives::tests identifiable::derive_identifiable_on_tuple_struct
+        PASS [   0.041s] ( 58/111) diesel_derives::tests identifiable::derive_identifiable_with_composite_pk
+        PASS [   0.047s] ( 59/111) diesel_derives::tests identifiable::derive_identifiable_with_non_standard_pk
+        PASS [   0.048s] ( 60/111) diesel_derives::tests identifiable::derive_identifiable_with_non_copy_pk_serialize
+        PASS [   0.038s] ( 61/111) diesel_derives::tests identifiable::derive_identifiable_with_pk_serialize_as
+        PASS [   0.182s] ( 62/111) diesel_derives tests::valid_grouping::valid_grouping_1
+        PASS [   0.186s] ( 63/111) diesel_derives tests::sql_type::sql_type_1
+        PASS [   0.043s] ( 64/111) diesel_derives::tests insertable::multiple_tables
+        PASS [   0.051s] ( 65/111) diesel_derives::tests insertable::embedded_struct
+        PASS [   0.042s] ( 66/111) diesel_derives::tests insertable::named_struct_with_renamed_option_field
+        PASS [   0.046s] ( 67/111) diesel_derives::tests insertable::named_struct_with_borrowed_body
+        PASS [   0.042s] ( 68/111) diesel_derives::tests insertable::named_struct_with_renamed_option_field_raw_type
+        PASS [   0.048s] ( 69/111) diesel_derives::tests insertable::named_struct_with_renamed_field
+        PASS [   0.042s] ( 70/111) diesel_derives::tests insertable::named_struct_with_unusual_reference_type
+        PASS [   0.048s] ( 71/111) diesel_derives::tests insertable::pub_struct_definition
+        PASS [   0.048s] ( 72/111) diesel_derives::tests insertable::serialize_as_with_option
+        PASS [   0.046s] ( 73/111) diesel_derives::tests insertable::simple_reference_definition
+        PASS [   0.045s] ( 74/111) diesel_derives::tests insertable::simple_struct_definition
+        PASS [   0.040s] ( 75/111) diesel_derives::tests insertable::struct_with_pub_field
+        PASS [   0.042s] ( 76/111) diesel_derives::tests insertable::struct_with_option_field
+        PASS [   0.041s] ( 77/111) diesel_derives::tests insertable::struct_with_pub_option_field
+        PASS [   0.042s] ( 78/111) diesel_derives::tests insertable::tuple_struct_raw_type
+        PASS [   0.043s] ( 79/111) diesel_derives::tests insertable::with_implicit_table_name
+        PASS [   0.047s] ( 80/111) diesel_derives::tests insertable::tuple_struct
+        PASS [   0.232s] ( 81/111) diesel_derives tests::table::table_1
+        PASS [   0.035s] ( 82/111) diesel_derives::tests queryable::check_can_also_use_an_associated_function_with_try_into
+        PASS [   0.043s] ( 83/111) diesel_derives::tests insertable::with_path_in_table_name
+        PASS [   0.041s] ( 84/111) diesel_derives::tests multiconnection::check_queries_work
+        PASS [   0.234s] ( 85/111) diesel_derives tests::view::view_1
+        PASS [   0.040s] ( 86/111) diesel_derives::tests queryable::name_conflict
+        PASS [   0.043s] ( 87/111) diesel_derives::tests queryable::multiple_tables
+        PASS [   0.040s] ( 88/111) diesel_derives::tests queryable::tuple_struct
+        PASS [   0.043s] ( 89/111) diesel_derives::tests queryable::raw_ident_struct
+        PASS [   0.055s] ( 90/111) diesel_derives::tests multiconnection::contains_binds
+        PASS [   0.046s] ( 91/111) diesel_derives::tests queryable::named_struct_definition
+        PASS [   0.041s] ( 92/111) diesel_derives::tests queryable_by_name::embedded_struct
+        PASS [   0.045s] ( 93/111) diesel_derives::tests queryable_by_name::embedded_option
+        PASS [   0.050s] ( 94/111) diesel_derives::tests queryable::tuple_struct_without_column_name_annotations
+        PASS [   0.044s] ( 95/111) diesel_derives::tests queryable_by_name::named_struct_definition
+        PASS [   0.041s] ( 96/111) diesel_derives::tests queryable_by_name::struct_with_multiple_sql_types_for_text
+        PASS [   0.037s] ( 97/111) diesel_derives::tests queryable_by_name::struct_with_no_table
+        PASS [   0.036s] ( 98/111) diesel_derives::tests queryable_by_name::struct_with_non_ident_column_name
+        PASS [   0.045s] ( 99/111) diesel_derives::tests queryable_by_name::struct_with_multiple_sql_types_for_text_from_table
+        PASS [   0.040s] (100/111) diesel_derives::tests queryable_by_name::struct_with_path_in_name
+        PASS [   0.035s] (101/111) diesel_derives::tests selectable::check_with_lifetime_and_type_param
+        PASS [   0.039s] (102/111) diesel_derives::tests selectable::check_for_backend_with_deserialize_as
+        PASS [   0.042s] (103/111) diesel_derives::tests queryable_by_name::tuple_struct_raw_type
+        PASS [   0.037s] (104/111) diesel_derives::tests selectable::embedded_option
+        PASS [   0.044s] (105/111) diesel_derives::tests queryable_by_name::tuple_struct
+        PASS [   0.036s] (106/111) diesel_derives::tests selectable::embedded_option_with_nullable_field
+        PASS [   0.035s] (107/111) diesel_derives::tests selectable::named_struct_definition
+        PASS [   0.037s] (108/111) diesel_derives::tests selectable::embedded_struct
+        PASS [   0.038s] (109/111) diesel_derives::tests selectable::manually_specified_expression
+        PASS [   0.033s] (110/111) diesel_derives::tests selectable::tuple_struct_raw_type
+        PASS [   0.037s] (111/111) diesel_derives::tests selectable::tuple_struct
+────────────
+     Summary [   0.520s] 111 tests run: 111 passed, 0 skipped
+reward=1 graded=111 found=14 failed=0 parsed=111 framework=cargo exit_code=0

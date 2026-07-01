@@ -1,0 +1,17 @@
+patching file crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/_config.json
+patching file crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/artifacts.snap
+patching file crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/dynamic.js
+patching file crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/foo.js
+patching file crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/foo2.js
+patching file crates/rolldown/tests/rolldown/misc/preserve_entry_signature/issue-4880/main.js
+patching file crates/rolldown/tests/snapshots/integration_rolldown__filename_with_hash.snap
+   Compiling rolldown v0.1.0 (/workspace/repo/crates/rolldown)
+   Compiling rolldown_testing v0.1.0 (/workspace/repo/crates/rolldown_testing)
+    Finished `test` profile [unoptimized] target(s) in 29.66s
+────────────
+ Nextest run ID 0add48a6-3a96-4f29-9a66-dc4397ee58aa with nextest profile: default
+    Starting 1 test across 5 binaries (1393 tests skipped)
+        PASS [   2.894s] (1/1) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__preserve_entry_signature__issue_4880__config_json
+────────────
+     Summary [   6.671s] 1 test run: 1 passed, 1393 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

@@ -1,0 +1,33 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/packages/http-client-csharp/generator; dotnet test Microsoft.TypeSpec.Generator.ClientModel/test/Microsoft.TypeSpec.Generator.ClientModel.Tests.csproj --logger 'trx;LogFileName=/tmp/results.trx' --filter 'FullyQualifiedName~ListPageable|FullyQualifiedName~ListMethodWithImplicit' -v n 2>&1; python3 /root/parse_trx.py",
+  "test_files": [
+    "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/CollectionResultDefinitions/ListPageableTests.cs",
+    "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/CollectionResultDefinitions/TestData/ListPageableTests/NoNextLinkOrContinuationToken.cs",
+    "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/CollectionResultDefinitions/TestData/ListPageableTests/NoNextLinkOrContinuationTokenAsync.cs",
+    "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/CollectionResultDefinitions/TestData/ListPageableTests/NoNextLinkOrContinuationTokenOfT.cs",
+    "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/CollectionResultDefinitions/TestData/ListPageableTests/NoNextLinkOrContinuationTokenOfTAsync.cs",
+    "packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.ClientModel/test/Providers/ScmMethodProviderCollectionTests.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/Unbranded-TypeSpec.tsp",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/ListWithPagingAsyncCollectionResult.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/ListWithPagingAsyncCollectionResultOfT.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/ListWithPagingCollectionResult.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/ListWithPagingCollectionResultOfT.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/Models/PageThing.Serialization.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/Models/PageThing.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecClient.RestClient.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecClient.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/src/Generated/UnbrandedTypeSpecModelFactory.cs",
+    "packages/http-client-csharp/generator/TestProjects/Local/Unbranded-TypeSpec/tspCodeModel.json"
+  ],
+  "num_test_files": 17,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "NoNextLinkOrContinuationTokenOfTAsync",
+    "NoNextLinkOrContinuationTokenOfT",
+    "ListMethodWithImplicitPaging",
+    "NoNextLinkOrContinuationTokenAsync",
+    "NoNextLinkOrContinuationToken"
+  ],
+  "PASS_TO_PASS": []
+}

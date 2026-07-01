@@ -1,0 +1,41 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/components/builders/test_chat_prompt_builder.py -v",
+  "test_files": [
+    "test/components/builders/test_chat_prompt_builder.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_init",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_init_without_template",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_init_with_required_variables",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_init_with_custom_variables",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_template_variable",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_template_variable_overrides_variable",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_without_input",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_with_missing_input",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_with_missing_required_input",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_with_variables",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_with_variables_and_runtime_template",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_overwriting_default_template",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_overwriting_default_template_with_template_variables",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_overwriting_default_template_with_variables",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_with_invalid_template",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_init_with_invalid_template",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_without_template",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_run_with_empty_chat_message_list",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_chat_message_list_with_mixed_object_list",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_provided_template_variables",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_example_in_pipeline",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilder::test_example_in_pipeline_simple",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilderDynamic::test_multiple_templated_chat_messages",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilderDynamic::test_multiple_templated_chat_messages_in_place",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilderDynamic::test_some_templated_chat_messages",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilderDynamic::test_example_in_pipeline",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilderDynamic::test_example_in_pipeline_with_multiple_templated_messages",
+    "test.components.builders.test_chat_prompt_builder.TestChatPromptBuilderDynamic::test_pipeline_complex"
+  ],
+  "PASS_TO_PASS": []
+}

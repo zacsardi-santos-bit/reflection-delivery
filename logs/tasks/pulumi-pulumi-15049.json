@@ -1,0 +1,23 @@
+{
+ "task": "pulumi-pulumi-15049",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `type PulumiCommand interface`, `func NewPulumiCommand`, `func fixupPath(env, pulumiBin)`, and standalone version check; F2P includes TestFixupPath, TestOptionDefaults, TestMinimumVersion/* subtests, TestByPassesRemoteCheck"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 33,
+  "shallow": true
+ }
+}

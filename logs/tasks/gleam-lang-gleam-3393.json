@@ -1,0 +1,23 @@
+{
+ "task": "gleam-lang-gleam-3393",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden touches compiler-core/src/exhaustiveness/printer.rs (new file) + missing_patterns.rs to qualify pattern names; F2P=9 snapshot tests 'case_error_prints_*' assert real error output"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

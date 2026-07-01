@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -tags test_unit ./hack/scripts/releaser -count=1",
+  "test_files": [
+    "hack/scripts/releaser/releaser_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/nuclio/nuclio/hack/scripts/releaser::TestReleaserTestSuite/TestResolveDesiredPatchVersions",
+    "github.com/nuclio/nuclio/hack/scripts/releaser::TestReleaserTestSuite/TestSaveReleaseInfo",
+    "github.com/nuclio/nuclio/hack/scripts/releaser::TestReleaserTestSuite"
+  ],
+  "PASS_TO_PASS": []
+}

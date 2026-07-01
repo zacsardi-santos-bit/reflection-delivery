@@ -1,0 +1,23 @@
+{
+ "task": "tracel-ai-cubecl-430",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds tune/function_tunable.rs, input_generator.rs, key_generator.rs; test.patch rewrites dummy tune operation_sets.rs + integration_test.rs to supply bindings at exec time"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

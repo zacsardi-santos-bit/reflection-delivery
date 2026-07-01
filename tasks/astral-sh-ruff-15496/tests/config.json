@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p red_knot_python_semantic --test mdtest -E 'test(mdtest__intersection_types)'",
+  "test_files": [
+    "crates/red_knot_python_semantic/resources/mdtest/intersection_types.md"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) red_knot_python_semantic::mdtest mdtest__intersection_types"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,8 @@
+patching file controller/sync.go
+patching file controller/testdata/additional-image-replicas-deployment.yaml
+patching file controller/testdata/data.go
+patching file controller/testdata/live-deployment-env-vars.yaml
+patching file controller/testdata/live-httpproxy.yaml
+patching file controller/testdata/minimal-image-replicas-deployment.yaml
+patching file controller/testdata/target-deployment-env-vars.yaml
+patching file controller/testdata/target-httpproxy.yaml

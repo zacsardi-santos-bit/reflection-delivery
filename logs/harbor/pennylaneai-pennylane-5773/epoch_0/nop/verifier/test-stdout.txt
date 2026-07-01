@@ -1,0 +1,38 @@
+patching file tests/fermi/test_fermionic.py
+patching file tests/qchem/openfermion_pyscf_tests/test_convert_openfermion.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo/tests
+configfile: pytest.ini
+plugins: flaky-3.8.1, mock-3.15.1, benchmark-5.2.3, cov-7.1.0, xdist-3.8.0
+collecting ... collected 0 items / 2 errors
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting fermi/test_fermionic.py ___________________
+ImportError while importing test module '/workspace/repo/tests/fermi/test_fermionic.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/fermi/test_fermionic.py:23: in <module>
+    from pennylane.fermi.fermionic import FermiSentence, FermiWord, _to_string, from_string
+E   ImportError: cannot import name '_to_string' from 'pennylane.fermi.fermionic' (/workspace/repo/pennylane/fermi/fermionic.py)
+__ ERROR collecting qchem/openfermion_pyscf_tests/test_convert_openfermion.py __
+ImportError while importing test module '/workspace/repo/tests/qchem/openfermion_pyscf_tests/test_convert_openfermion.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/qchem/openfermion_pyscf_tests/test_convert_openfermion.py:26: in <module>
+    from pennylane.qchem.convert_openfermion import _from_openfermion_qubit
+E   ImportError: cannot import name '_from_openfermion_qubit' from 'pennylane.qchem.convert_openfermion' (/workspace/repo/pennylane/qchem/convert_openfermion.py)
+=========================== short test summary info ============================
+ERROR tests/fermi/test_fermionic.py
+ERROR tests/qchem/openfermion_pyscf_tests/test_convert_openfermion.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 2 errors in 0.40s ===============================
+reward=0 graded=303 found=0 failed=0 parsed=0 framework=pytest exit_code=2

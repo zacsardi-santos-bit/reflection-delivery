@@ -1,0 +1,137 @@
+patching file integration/sql/impl/tests/table_lineage/mod.rs
+patching file integration/sql/impl/tests/table_lineage/test_use.rs
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+   Compiling openlineage_sql v1.21.0 (/workspace/repo/integration/sql/impl)
+    Finished test [unoptimized + debuginfo] target(s) in 2.24s
+------------
+ Nextest run ID 0b28b85b-e200-4792-b592-6ec2c8eb42c1 with nextest profile: default
+    Starting 119 tests across 2 binaries (3 tests skipped)
+        PASS [   0.108s] openlineage_sql context::tests::test_coalesce_columns
+        PASS [   0.107s] openlineage_sql context::tests::test_collect_with_table
+        PASS [   0.106s] openlineage_sql tests::compare_db_meta
+        PASS [   0.104s] openlineage_sql visitor::test_extract_up_to_two_ident_values_empty_idents
+        PASS [   0.115s] openlineage_sql visitor::test_extract_up_to_two_ident_values_one_ident
+        PASS [   0.111s] openlineage_sql visitor::test_extract_up_to_two_ident_values_one_ident_with_quotes
+        PASS [   0.106s] openlineage_sql visitor::test_extract_up_to_two_ident_values_three_idents
+        PASS [   0.099s] openlineage_sql visitor::test_extract_up_to_two_ident_values_two_idents
+        PASS [   0.092s] openlineage_sql::tests column_lineage::tests_aliases::test_circular_alias
+        PASS [   0.117s] openlineage_sql::tests column_lineage::tests_aliases::test_deeply_nested_alias_chain
+        PASS [   0.108s] openlineage_sql::tests column_lineage::tests_aliases::test_long_alias_used
+        PASS [   0.141s] openlineage_sql::tests column_lineage::tests_aliases::test_multiple_tables
+        PASS [   0.133s] openlineage_sql::tests column_lineage::tests_aliases::test_nested_renaming
+        PASS [   0.126s] openlineage_sql::tests column_lineage::tests_aliases::test_nested_renaming_with_join
+        PASS [   0.118s] openlineage_sql::tests column_lineage::tests_cte::test_simple_cte
+        PASS [   0.126s] openlineage_sql::tests column_lineage::tests_select::test_deeply_nested_selects
+        PASS [   0.114s] openlineage_sql::tests column_lineage::tests_select::test_multiple_derived_tables
+        PASS [   0.109s] openlineage_sql::tests column_lineage::tests_simple::test_column_name_inference
+        PASS [   0.096s] openlineage_sql::tests column_lineage::tests_simple::test_compound_names
+        PASS [   0.088s] openlineage_sql::tests column_lineage::tests_simple::test_nested_select
+        PASS [   0.111s] openlineage_sql::tests column_lineage::tests_simple::test_simple_aggregate
+        PASS [   0.103s] openlineage_sql::tests column_lineage::tests_simple::test_simple_case
+        PASS [   0.136s] openlineage_sql::tests column_lineage::tests_simple::test_simple_count
+        PASS [   0.129s] openlineage_sql::tests column_lineage::tests_simple::test_simple_join
+        PASS [   0.121s] openlineage_sql::tests column_lineage::tests_simple::test_simple_operators
+        PASS [   0.113s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_catalog_keyword
+        PASS [   0.106s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_database_keyword
+        PASS [   0.096s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_schema_keyword
+        PASS [   0.089s] openlineage_sql::tests table_lineage::test_use::use_databricks_with_single_id
+        PASS [   0.158s] openlineage_sql::tests column_lineage::tests_simple::test_simple_renaming
+        PASS [   0.105s] openlineage_sql::tests table_lineage::test_use::use_generic_with_complex_select
+        PASS [   0.098s] openlineage_sql::tests table_lineage::test_use::use_generic_with_full_id
+        PASS [   0.151s] openlineage_sql::tests column_lineage::tests_simple::test_simple_select
+        PASS [   0.122s] openlineage_sql::tests table_lineage::test_use::use_generic_with_full_id_and_full_table_id
+        PASS [   0.115s] openlineage_sql::tests table_lineage::test_use::use_generic_with_multiple_use_statements
+        PASS [   0.109s] openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id
+        PASS [   0.135s] openlineage_sql::tests table_lineage::test_use::use_generic_with_single_id_and_single_table_id
+        PASS [   0.127s] openlineage_sql::tests table_lineage::test_use::use_hive_with_default_keyword
+        PASS [   0.116s] openlineage_sql::tests table_lineage::test_use::use_hive_with_single_id
+        PASS [   0.108s] openlineage_sql::tests table_lineage::test_use::use_mssql_with_single_id
+        PASS [   0.124s] openlineage_sql::tests table_lineage::test_use::use_mysql_with_single_id
+        PASS [   0.119s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_database_keyword
+        PASS [   0.112s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_full_id
+        PASS [   0.101s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_full_id
+        PASS [   0.127s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_schema_keyword_and_single_id
+        PASS [   0.120s] openlineage_sql::tests table_lineage::test_use::use_snowflake_with_single_id
+        PASS [   0.112s] openlineage_sql::tests table_lineage::tests_alter::alter_contains_modified_table_as_output
+        PASS [   0.124s] openlineage_sql::tests table_lineage::tests_alter::alter_multiple_operations
+        PASS [   0.122s] openlineage_sql::tests table_lineage::tests_alter::alter_snowflake_swap_with
+        PASS [   0.116s] openlineage_sql::tests table_lineage::tests_alter::alter_table_rename
+        PASS [   0.108s] openlineage_sql::tests table_lineage::tests_copy::parse_copy_into_table
+        PASS [   0.111s] openlineage_sql::tests table_lineage::tests_copy::parse_copy_into_with_snowflake_stage_locations
+        PASS [   0.101s] openlineage_sql::tests table_lineage::tests_copy::parse_pivot_table
+        PASS [   0.098s] openlineage_sql::tests table_lineage::tests_create::create_and_insert_multiple_stmts
+        PASS [   0.112s] openlineage_sql::tests table_lineage::tests_create::create_hive_external_table_if_not_exist
+        PASS [   0.103s] openlineage_sql::tests table_lineage::tests_create::create_replace_as_select
+        PASS [   0.096s] openlineage_sql::tests table_lineage::tests_create::create_stage
+        PASS [   0.152s] openlineage_sql::tests table_lineage::tests_copy::parse_copy_into_with_snowflake_internal_stages
+        PASS [   0.100s] openlineage_sql::tests table_lineage::tests_create::create_view
+        PASS [   0.100s] openlineage_sql::tests table_lineage::tests_create::test_create_and_insert
+        PASS [   0.093s] openlineage_sql::tests table_lineage::tests_create::test_create_table
+        PASS [   0.086s] openlineage_sql::tests table_lineage::tests_create::test_create_table_clone
+        PASS [   0.104s] openlineage_sql::tests table_lineage::tests_create::test_create_table_like
+        PASS [   0.101s] openlineage_sql::tests table_lineage::tests_cte::cte_insert_overwrite
+        PASS [   0.095s] openlineage_sql::tests table_lineage::tests_cte::multiple_ctes
+        PASS [   0.109s] openlineage_sql::tests table_lineage::tests_cte::parse_bugged_cte
+        PASS [   0.102s] openlineage_sql::tests table_lineage::tests_cte::parse_recursive_cte
+        PASS [   0.096s] openlineage_sql::tests table_lineage::tests_cte::parse_simple_cte
+        PASS [   0.095s] openlineage_sql::tests table_lineage::tests_delete::delete_from
+        PASS [   0.086s] openlineage_sql::tests table_lineage::tests_delete::delete_from_using
+        PASS [   0.096s] openlineage_sql::tests table_lineage::tests_delete::delete_without_from_bigquery
+        PASS [   0.089s] openlineage_sql::tests table_lineage::tests_drop::drop_table
+        PASS [   0.101s] openlineage_sql::tests table_lineage::tests_error_handling::test_failing_statement_tokenizer_failes
+        PASS [   0.109s] openlineage_sql::tests table_lineage::tests_error_handling::test_failing_statement_with_insert
+        PASS [   0.103s] openlineage_sql::tests table_lineage::tests_insert::insert_cols_values
+        PASS [   0.096s] openlineage_sql::tests table_lineage::tests_insert::insert_group_by
+        PASS [   0.091s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_multiple_subqueries
+        PASS [   0.082s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_multiple_unions
+        PASS [   0.095s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_partition
+        PASS [   0.088s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_partition_dates
+        PASS [   0.133s] openlineage_sql::tests table_lineage::tests_insert::insert_nested_select
+        PASS [   0.127s] openlineage_sql::tests table_lineage::tests_insert::insert_nested_with_select
+        PASS [   0.081s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_subqueries
+        PASS [   0.120s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_hive_sets_large
+        PASS [   0.083s] openlineage_sql::tests table_lineage::tests_insert::insert_overwrite_table
+        PASS [   0.077s] openlineage_sql::tests table_lineage::tests_insert::insert_select_table
+        PASS [   0.112s] openlineage_sql::tests table_lineage::tests_insert::insert_snowflake_table
+        PASS [   0.119s] openlineage_sql::tests table_lineage::tests_insert::insert_values
+        PASS [   0.134s] openlineage_sql::tests table_lineage::tests_insert::insert_select_table_2
+        PASS [   0.112s] openlineage_sql::tests table_lineage::tests_insert::set_before_insert
+        PASS [   0.105s] openlineage_sql::tests table_lineage::tests_insert::test_multiple_statements_delete_insert
+        PASS [   0.097s] openlineage_sql::tests table_lineage::tests_insert::test_multiple_statements_insert_insert
+        PASS [   0.091s] openlineage_sql::tests table_lineage::tests_insert::test_triple_statements_insert_insert_insert
+        PASS [   0.084s] openlineage_sql::tests table_lineage::tests_merge::merge_subquery_when_not_matched
+        PASS [   0.081s] openlineage_sql::tests table_lineage::tests_select::select_bigquery_escaping
+        PASS [   0.107s] openlineage_sql::tests table_lineage::tests_select::select_inner_join
+        PASS [   0.128s] openlineage_sql::tests table_lineage::tests_select::select_bq_array_function
+        PASS [   0.122s] openlineage_sql::tests table_lineage::tests_select::select_from_schema_table
+        PASS [   0.109s] openlineage_sql::tests table_lineage::tests_select::select_into
+        PASS [   0.101s] openlineage_sql::tests table_lineage::tests_select::select_join
+        PASS [   0.095s] openlineage_sql::tests table_lineage::tests_select::select_left_join
+        PASS [   0.121s] openlineage_sql::tests table_lineage::tests_select::select_redshift
+        PASS [   0.116s] openlineage_sql::tests table_lineage::tests_select::select_simple
+        PASS [   0.110s] openlineage_sql::tests table_lineage::tests_select::select_window_function
+        PASS [   0.084s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_2
+        PASS [   0.099s] openlineage_sql::tests table_lineage::tests_select::select_with_table_generator
+        PASS [   0.093s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_1
+        PASS [   0.078s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_3
+        PASS [   0.075s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_4
+        PASS [   0.078s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_5
+        PASS [   0.070s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_7
+        PASS [   0.077s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_6
+        PASS [   0.071s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_8
+        PASS [   0.076s] openlineage_sql::tests table_lineage::tests_tpcds::test_tcpds_query_9
+        PASS [   0.070s] openlineage_sql::tests table_lineage::tests_tpcds::test_tpcds_cte_query
+        PASS [   0.065s] openlineage_sql::tests table_lineage::tests_truncate::truncate_table
+        PASS [   0.061s] openlineage_sql::tests table_lineage::tests_update::update_table
+        PASS [   0.061s] openlineage_sql::tests table_lineage::tests_update::update_table_from
+        PASS [   0.061s] openlineage_sql::tests table_lineage::tests_update::update_table_from_subquery
+------------
+     Summary [   0.981s] 119 tests run: 119 passed, 3 skipped
+reward=1 graded=119 found=119 failed=0 parsed=119 framework=cargo exit_code=0

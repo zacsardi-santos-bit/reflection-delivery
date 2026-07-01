@@ -1,0 +1,15 @@
+patching file cmd/crank/beta/top/top_test.go
+# github.com/crossplane/crossplane/cmd/crank/beta/top [github.com/crossplane/crossplane/cmd/crank/beta/top.test]
+cmd/crank/beta/top/top_test.go:18:16: undefined: topMetrics
+cmd/crank/beta/top/top_test.go:31:19: undefined: topMetrics
+cmd/crank/beta/top/top_test.go:49:19: undefined: topMetrics
+cmd/crank/beta/top/top_test.go:73:19: undefined: topMetrics
+cmd/crank/beta/top/top_test.go:107:19: undefined: topMetrics
+cmd/crank/beta/top/top_test.go:135:19: undefined: topMetrics
+cmd/crank/beta/top/top_test.go:149:11: undefined: getCrossplanePods
+cmd/crank/beta/top/top_test.go:165:20: undefined: topMetrics
+cmd/crank/beta/top/top_test.go:170:22: undefined: topMetrics
+cmd/crank/beta/top/top_test.go:180:22: undefined: topMetrics
+cmd/crank/beta/top/top_test.go:180:22: too many errors
+FAIL	github.com/crossplane/crossplane/cmd/crank/beta/top [build failed]
+reward=0 graded=18 found=18 failed=18 parsed=1 framework=go exit_code=1

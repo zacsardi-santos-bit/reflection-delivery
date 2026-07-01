@@ -1,0 +1,17 @@
+patching file internal/ingress/annotations/opentracing/main_test.go
+patching file internal/ingress/controller/template/template_test.go
+patching file test/e2e/settings/opentracing.go
+patching file test/smoke/run-smoke-suite.sh
+k8s.io/ingress-nginx/internal/ingress/annotations/opentracing: no non-test Go files in /workspace/repo/internal/ingress/annotations/opentracing
+# k8s.io/ingress-nginx/internal/ingress/annotations/opentracing [k8s.io/ingress-nginx/internal/ingress/annotations/opentracing.test]
+internal/ingress/annotations/opentracing/main_test.go:78:38: undefined: enableOpentracingAnnotation
+internal/ingress/annotations/opentracing/main_test.go:81:14: undefined: NewParser
+internal/ingress/annotations/opentracing/main_test.go:100:38: undefined: enableOpentracingAnnotation
+internal/ingress/annotations/opentracing/main_test.go:103:14: undefined: NewParser
+internal/ingress/annotations/opentracing/main_test.go:121:38: undefined: enableOpentracingAnnotation
+internal/ingress/annotations/opentracing/main_test.go:122:38: undefined: opentracingTrustSpanAnnotation
+internal/ingress/annotations/opentracing/main_test.go:125:14: undefined: NewParser
+internal/ingress/annotations/opentracing/main_test.go:150:14: undefined: NewParser
+FAIL	k8s.io/ingress-nginx/internal/ingress/annotations/opentracing [build failed]
+FAIL	k8s.io/ingress-nginx/internal/ingress/controller/template [build failed]
+reward=0 graded=72 found=72 failed=72 parsed=2 framework=go exit_code=1

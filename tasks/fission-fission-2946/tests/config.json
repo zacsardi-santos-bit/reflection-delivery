@@ -1,0 +1,26 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/mqtrigger -count=1",
+  "test_files": [
+    "pkg/mqtrigger/mqtmanager_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/fission/fission/pkg/mqtrigger::TestMqtManager",
+    "github.com/fission/fission/pkg/mqtrigger::Test_toEnvVar/Empty_string",
+    "github.com/fission/fission/pkg/mqtrigger::Test_toEnvVar/Single_word",
+    "github.com/fission/fission/pkg/mqtrigger::Test_toEnvVar/CamelCase",
+    "github.com/fission/fission/pkg/mqtrigger::Test_toEnvVar",
+    "github.com/fission/fission/pkg/mqtrigger::Test_getEnvVarlist/Test_kafka_example",
+    "github.com/fission/fission/pkg/mqtrigger::Test_getEnvVarlist/Test_kafka_invalid_secret",
+    "github.com/fission/fission/pkg/mqtrigger::Test_getEnvVarlist",
+    "github.com/fission/fission/pkg/mqtrigger::Test_checkAndUpdateTriggerFields/With_diff",
+    "github.com/fission/fission/pkg/mqtrigger::Test_checkAndUpdateTriggerFields/With_no_diff",
+    "github.com/fission/fission/pkg/mqtrigger::Test_checkAndUpdateTriggerFields",
+    "github.com/fission/fission/pkg/mqtrigger::Test_getAuthTriggerSpec/With_secret",
+    "github.com/fission/fission/pkg/mqtrigger::Test_getAuthTriggerSpec/With_invalid_secret",
+    "github.com/fission/fission/pkg/mqtrigger::Test_getAuthTriggerSpec"
+  ],
+  "PASS_TO_PASS": []
+}

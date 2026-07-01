@@ -1,0 +1,5 @@
+patching file .pylintrc
+patching file app/iso8601.py
+patching file app/update.py
+patching file app/update_result.py
+patching file scripts/update-service

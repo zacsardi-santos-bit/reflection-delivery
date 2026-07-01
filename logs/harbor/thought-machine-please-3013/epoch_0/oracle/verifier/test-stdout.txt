@@ -1,0 +1,10 @@
+patching file src/parse/asp/lexer_test.go
+{"Time":"2026-06-29T15:20:19.661202516Z","Action":"start","Package":"github.com/thought-machine/please/src/parse/asp"}
+{"Time":"2026-06-29T15:20:19.691012897Z","Action":"run","Package":"github.com/thought-machine/please/src/parse/asp","Test":"TestOctal"}
+{"Time":"2026-06-29T15:20:19.691117315Z","Action":"output","Package":"github.com/thought-machine/please/src/parse/asp","Test":"TestOctal","Output":"=== RUN   TestOctal\n"}
+{"Time":"2026-06-29T15:20:19.691888362Z","Action":"output","Package":"github.com/thought-machine/please/src/parse/asp","Test":"TestOctal","Output":"--- PASS: TestOctal (0.00s)\n"}
+{"Time":"2026-06-29T15:20:19.692083146Z","Action":"pass","Package":"github.com/thought-machine/please/src/parse/asp","Test":"TestOctal","Elapsed":0}
+{"Time":"2026-06-29T15:20:19.692231088Z","Action":"output","Package":"github.com/thought-machine/please/src/parse/asp","Output":"PASS\n"}
+{"Time":"2026-06-29T15:20:19.693135285Z","Action":"output","Package":"github.com/thought-machine/please/src/parse/asp","Output":"ok  \tgithub.com/thought-machine/please/src/parse/asp\t0.031s\n"}
+{"Time":"2026-06-29T15:20:19.693185288Z","Action":"pass","Package":"github.com/thought-machine/please/src/parse/asp","Elapsed":0.032}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

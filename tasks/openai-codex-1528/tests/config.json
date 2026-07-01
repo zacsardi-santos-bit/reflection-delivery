@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run --no-fail-fast -p codex-chatgpt",
+  "test_files": [
+    "codex-rs/chatgpt/tests/apply_command_e2e.rs",
+    "codex-rs/chatgpt/tests/task_turn_fixture.json"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) codex-chatgpt::apply_command_e2e test_apply_command_creates_fibonacci_file",
+    "(2/2) codex-chatgpt::apply_command_e2e test_apply_command_with_merge_conflicts"
+  ],
+  "PASS_TO_PASS": []
+}

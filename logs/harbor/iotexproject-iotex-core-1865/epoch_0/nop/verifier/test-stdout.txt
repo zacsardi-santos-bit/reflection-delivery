@@ -1,0 +1,8 @@
+patching file ioctl/newcmd/node/nodereward_test.go
+patching file test/mock/mock_ioctlclient/mock_ioctlclient.go
+# github.com/iotexproject/iotex-core/ioctl/newcmd/node [github.com/iotexproject/iotex-core/ioctl/newcmd/node.test]
+ioctl/newcmd/node/nodereward_test.go:65:9: undefined: NewNodeRewardCmd
+FAIL	github.com/iotexproject/iotex-core/ioctl/newcmd/node [build failed]
+{"Time":"2026-06-29T15:21:14.590466464Z","Action":"output","Package":"github.com/iotexproject/iotex-core/test/mock/mock_ioctlclient","Output":"?   \tgithub.com/iotexproject/iotex-core/test/mock/mock_ioctlclient\t[no test files]\n"}
+{"Time":"2026-06-29T15:21:14.590969796Z","Action":"skip","Package":"github.com/iotexproject/iotex-core/test/mock/mock_ioctlclient","Elapsed":0.001}
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=2

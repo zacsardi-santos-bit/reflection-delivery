@@ -1,0 +1,34 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./physical/optimizer -count=1",
+  "test_files": [
+    "physical/optimizer/scenarios_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithFilter/not_mergable",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithFilter/not_mergable#01",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithFilter"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeRequalifiers/simple_single_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeRequalifiers/multi_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeRequalifiers/deeper_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeRequalifiers",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeFilters/simple_single_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeFilters/multi_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeFilters/deeper_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeFilters",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithRequalifier/simple_single_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithRequalifier/multi_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithRequalifier/simple_single_merge#01",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithRequalifier",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithFilter/simple_single_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithFilter/mergable",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithFilter/simple_partial_merge",
+    "github.com/cube2222/octosql/physical/optimizer::TestMergeDataSourceWithFilter/simple_partial_merge#01",
+    "github.com/cube2222/octosql/physical/optimizer::TestMultiOptimization/multiple_optimizations",
+    "github.com/cube2222/octosql/physical/optimizer::TestMultiOptimization"
+  ]
+}

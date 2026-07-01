@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tensorflow_quantum/python/layers/circuit_executors/expectation_test.py -v",
+  "test_files": [
+    "tensorflow_quantum/python/layers/circuit_executors/expectation_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationTest::test_expectation_instantiate",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationTest::test_expectation_type_inputs_error",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationTest::test_static_cases_noisy",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationFunctionalTests::test_dnn_qnn_dnn0",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationFunctionalTests::test_dnn_qnn_dnn1",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationFunctionalTests::test_simple_op_and_param_input0",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationFunctionalTests::test_simple_op_and_param_input1",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationFunctionalTests::test_simple_op_and_param_input2",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationFunctionalTests::test_simple_op_input0",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationFunctionalTests::test_simple_op_input1",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationFunctionalTests::test_simple_param_value_input0",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationFunctionalTests::test_simple_param_value_input1"
+  ],
+  "PASS_TO_PASS": [
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationTest::test_expectation_instantiate_error",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationTest::test_expectation_op_error",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationTest::test_expectation_simple_tf_train",
+    "tensorflow_quantum.python.layers.circuit_executors.expectation_test.ExpectationTest::test_static_cases"
+  ]
+}

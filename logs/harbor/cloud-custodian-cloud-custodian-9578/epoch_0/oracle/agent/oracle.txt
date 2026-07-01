@@ -1,0 +1,2 @@
+patching file c7n/resources/memorydb.py
+patching file c7n/resources/resource_map.py

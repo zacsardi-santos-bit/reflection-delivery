@@ -1,0 +1,23 @@
+{
+ "task": "astral-sh-ruff-9698",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `let needs_trailing_comma = self.ends_with_trailing_comma && first_non_trivia_token(...)` to avoid double comma; F2P includes rule_unsorteddunderall_path_new_ruf022_py_expects and rule_unsorteddunderslots_path_new_ruf023_py_expects"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

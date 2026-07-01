@@ -1,0 +1,29 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -gcflags=all=-l ./pkg/filter/stream/flowcontrol ./pkg/filter/stream/flowcontrol/data_source -count=1",
+  "test_files": [
+    "pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory_test.go",
+    "pkg/filter/stream/flowcontrol/stream_filter_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source::TestNacosDataSourceFactory",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::TestDefaultCallbacks",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::TestCallbacksRegistry",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::TestAfterBlock",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::TestDefaultCallbacks_SetConfig",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::TestStreamFilterFactory",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::TestIsValidCfg",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::Test_parseTrafficType/default-inbound",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::Test_parseTrafficType/outbound",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::Test_parseTrafficType/inbound",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::Test_parseTrafficType",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::Test_loadConfig/nil_config_return_default_config",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::Test_loadConfig/nil_config_return_default_config#01",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::Test_loadConfig",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::TestStreamFilter",
+    "mosn.io/mosn/pkg/filter/stream/flowcontrol::TestStreamFilter_Append"
+  ],
+  "PASS_TO_PASS": []
+}

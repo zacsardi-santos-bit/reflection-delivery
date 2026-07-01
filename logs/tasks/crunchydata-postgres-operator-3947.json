@@ -1,0 +1,23 @@
+{
+ "task": "crunchydata-postgres-operator-3947",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits embedded shell scripts in pgbackrest/config.go, pgbouncer/config.go, standalone_pgadmin/pod.go, postgres/config.go; F2P tests (TestPod/Defaults etc) assert generated pod spec content via go -json"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

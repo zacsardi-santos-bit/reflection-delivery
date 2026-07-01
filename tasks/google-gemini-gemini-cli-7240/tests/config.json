@@ -1,0 +1,42 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run src/mcp/token-storage/base-token-storage.test.ts src/mcp/token-storage/file-token-storage.test.ts",
+  "test_files": [
+    "packages/core/src/mcp/token-storage/base-token-storage.test.ts",
+    "packages/core/src/mcp/token-storage/file-token-storage.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage getCredentials should throw error when file does not exist",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage getCredentials should return null for expired tokens",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage getCredentials should return credentials for valid tokens",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage getCredentials should throw error for corrupted files",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage setCredentials should save credentials with encryption",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage setCredentials should update existing credentials",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage deleteCredentials should throw when credentials do not exist",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage deleteCredentials should delete file when last credential is removed",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage deleteCredentials should update file when other credentials remain",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage listServers should throw error when file does not exist",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage listServers should return list of server names",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage clearAll should delete the token file",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage clearAll should not throw when file does not exist",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage encryption should encrypt and decrypt data correctly",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage encryption should produce different encrypted output each time",
+    "/workspace/repo/packages/core/src/mcp/token-storage/file-token-storage.test.ts::FileTokenStorage encryption should throw on invalid encrypted data format"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage validateCredentials should validate valid credentials",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage validateCredentials should throw for missing server name",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage validateCredentials should throw for missing token",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage validateCredentials should throw for missing access token",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage validateCredentials should throw for missing token type",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage isTokenExpired should return false for tokens without expiry",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage isTokenExpired should return false for valid tokens",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage isTokenExpired should return true for expired tokens",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage isTokenExpired should apply 5-minute buffer for expiry check",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage sanitizeServerName should keep valid characters",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage sanitizeServerName should replace invalid characters with underscore",
+    "/workspace/repo/packages/core/src/mcp/token-storage/base-token-storage.test.ts::BaseTokenStorage sanitizeServerName should handle special characters"
+  ]
+}

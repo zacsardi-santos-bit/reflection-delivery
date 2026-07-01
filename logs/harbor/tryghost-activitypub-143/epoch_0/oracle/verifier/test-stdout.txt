@@ -1,0 +1,14 @@
+patching file src/helpers/gcloud-pubsub-mq.unit.test.ts
+patching file src/mq/gcloud-pubsub-mq.unit.test.ts
+
+ RUN  v2.1.5 /workspace/repo
+
+ ✓ src/helpers/gcloud-pubsub-mq.unit.test.ts (4 tests) 12ms
+ ✓ src/mq/gcloud-pubsub-mq.unit.test.ts (6 tests) 13ms
+
+ Test Files  2 passed (2)
+      Tests  10 passed (10)
+   Start at  15:18:29
+   Duration  1.46s (transform 148ms, setup 0ms, collect 1.01s, tests 25ms, environment 0ms, prepare 319ms)
+
+reward=1 graded=10 found=0 failed=0 parsed=0 framework=vitest exit_code=0

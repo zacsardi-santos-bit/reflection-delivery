@@ -1,0 +1,26 @@
+patching file fdbkubernetesmonitor/api/config_test.go
+{"Time":"2026-06-29T15:28:30.826615375Z","Action":"start","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api"}
+{"Time":"2026-06-29T15:28:30.830209643Z","Action":"run","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentsForDefaultConfig"}
+{"Time":"2026-06-29T15:28:30.830288371Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentsForDefaultConfig","Output":"=== RUN   TestGeneratingArgumentsForDefaultConfig\n"}
+{"Time":"2026-06-29T15:28:30.830676925Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentsForDefaultConfig","Output":"--- PASS: TestGeneratingArgumentsForDefaultConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:28:30.830735686Z","Action":"pass","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentsForDefaultConfig","Elapsed":0}
+{"Time":"2026-06-29T15:28:30.830772236Z","Action":"run","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentForEnvironmentVariable"}
+{"Time":"2026-06-29T15:28:30.830793045Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentForEnvironmentVariable","Output":"=== RUN   TestGeneratingArgumentForEnvironmentVariable\n"}
+{"Time":"2026-06-29T15:28:30.830821884Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentForEnvironmentVariable","Output":"--- PASS: TestGeneratingArgumentForEnvironmentVariable (0.00s)\n"}
+{"Time":"2026-06-29T15:28:30.830845296Z","Action":"pass","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentForEnvironmentVariable","Elapsed":0}
+{"Time":"2026-06-29T15:28:30.830867907Z","Action":"run","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentForIPList"}
+{"Time":"2026-06-29T15:28:30.830908103Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentForIPList","Output":"=== RUN   TestGeneratingArgumentForIPList\n"}
+{"Time":"2026-06-29T15:28:30.830931074Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentForIPList","Output":"--- PASS: TestGeneratingArgumentForIPList (0.00s)\n"}
+{"Time":"2026-06-29T15:28:30.830952844Z","Action":"pass","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestGeneratingArgumentForIPList","Elapsed":0}
+{"Time":"2026-06-29T15:28:30.830974664Z","Action":"run","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestLookupEnvForEnvironmentVariable"}
+{"Time":"2026-06-29T15:28:30.830995052Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestLookupEnvForEnvironmentVariable","Output":"=== RUN   TestLookupEnvForEnvironmentVariable\n"}
+{"Time":"2026-06-29T15:28:30.831017743Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestLookupEnvForEnvironmentVariable","Output":"--- PASS: TestLookupEnvForEnvironmentVariable (0.00s)\n"}
+{"Time":"2026-06-29T15:28:30.831045271Z","Action":"pass","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestLookupEnvForEnvironmentVariable","Elapsed":0}
+{"Time":"2026-06-29T15:28:30.831072108Z","Action":"run","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestLookupEnvForIPList"}
+{"Time":"2026-06-29T15:28:30.83109497Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestLookupEnvForIPList","Output":"=== RUN   TestLookupEnvForIPList\n"}
+{"Time":"2026-06-29T15:28:30.831127584Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestLookupEnvForIPList","Output":"--- PASS: TestLookupEnvForIPList (0.00s)\n"}
+{"Time":"2026-06-29T15:28:30.831154211Z","Action":"pass","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Test":"TestLookupEnvForIPList","Elapsed":0}
+{"Time":"2026-06-29T15:28:30.831185714Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Output":"PASS\n"}
+{"Time":"2026-06-29T15:28:30.831263811Z","Action":"output","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Output":"ok  \tgithub.com/apple/foundationdb/fdbkubernetesmonitor/api\t0.004s\n"}
+{"Time":"2026-06-29T15:28:30.831292821Z","Action":"pass","Package":"github.com/apple/foundationdb/fdbkubernetesmonitor/api","Elapsed":0.005}
+reward=1 graded=5 found=5 failed=0 parsed=5 framework=go exit_code=0

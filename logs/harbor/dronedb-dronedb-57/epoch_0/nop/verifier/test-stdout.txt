@@ -1,0 +1,58 @@
+patching file test/ddb_test.cpp
+patching file test/fs_test.cpp
+patching file test/utils_test.cpp
+CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+DDB Version: 0.9.2
+-- Found SpatiaLite: /usr/lib/x86_64-linux-gnu/libspatialite.so
+-- Found Sqlite3: /usr/lib/x86_64-linux-gnu/libsqlite3.so
+CMake Deprecation Warning at vendor/googletest/CMakeLists.txt:4 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+CMake Deprecation Warning at vendor/googletest/googletest/CMakeLists.txt:56 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /workspace/repo/build
+[ 10%] Built target exiv2
+Consolidate compiler generated dependencies of target gtest
+Consolidate compiler generated dependencies of target cctz
+[ 24%] Built target cctz
+[ 27%] Built target gtest
+Consolidate compiler generated dependencies of target gtest_main
+[ 29%] Built target gtest_main
+Consolidate compiler generated dependencies of target ddb
+[ 72%] Built target ddb
+Consolidate compiler generated dependencies of target test
+[ 74%] Building CXX object test/CMakeFiles/test.dir/ddb_test.cpp.o
+Consolidate compiler generated dependencies of target ddbcmd
+[ 75%] Linking CXX executable ddbcmd
+Created /workspace/repo/build/ddb
+[ 92%] Built target ddbcmd
+[ 93%] Building CXX object test/CMakeFiles/test.dir/fs_test.cpp.o
+/workspace/repo/test/fs_test.cpp:7:10: fatal error: mio.h: No such file or directory
+    7 | #include "mio.h"
+      |          ^~~~~~~
+compilation terminated.
+make[2]: *** [test/CMakeFiles/test.dir/build.make:118: test/CMakeFiles/test.dir/fs_test.cpp.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [CMakeFiles/Makefile2:455: test/CMakeFiles/test.dir/all] Error 2
+make: *** [Makefile:91: all] Error 2
+reward=0 graded=8 found=0 failed=0 parsed=0 framework=gtest exit_code=2

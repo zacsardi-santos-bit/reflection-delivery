@@ -1,0 +1,4 @@
+patching file internal/gcloud/gcs/gcscaching/fast_stat_bucket.go
+patching file internal/gcloud/gcs/gcscaching/mock_gcscaching/mock_stat_cache.go
+patching file internal/gcloud/gcs/gcscaching/stat_cache.go
+patching file internal/gcsx/bucket_manager.go

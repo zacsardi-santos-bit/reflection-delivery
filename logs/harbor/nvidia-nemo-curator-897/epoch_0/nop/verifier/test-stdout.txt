@@ -1,0 +1,36 @@
+patching file ray-curator/tests/stages/video/io/test_clip_writer.py
+patching file ray-curator/tests/utils/test_writer_utils.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/ray-curator
+configfile: pyproject.toml
+collecting ... collected 0 items / 2 errors
+
+==================================== ERRORS ====================================
+__________ ERROR collecting tests/stages/video/io/test_clip_writer.py __________
+ImportError while importing test module '/workspace/repo/ray-curator/tests/stages/video/io/test_clip_writer.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ray-curator/tests/stages/video/io/test_clip_writer.py:12: in <module>
+    from ray_curator.stages.video.io.clip_writer import ClipWriterStage
+E   ModuleNotFoundError: No module named 'ray_curator.stages.video.io.clip_writer'
+______________ ERROR collecting tests/utils/test_writer_utils.py _______________
+ImportError while importing test module '/workspace/repo/ray-curator/tests/utils/test_writer_utils.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ray-curator/tests/utils/test_writer_utils.py:13: in <module>
+    from ray_curator.utils.writer_utils import (
+E   ModuleNotFoundError: No module named 'ray_curator.utils.writer_utils'
+=========================== short test summary info ============================
+ERROR ray-curator/tests/stages/video/io/test_clip_writer.py
+ERROR ray-curator/tests/utils/test_writer_utils.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 2 errors in 0.94s ===============================
+reward=0 graded=57 found=0 failed=0 parsed=0 framework=pytest exit_code=2

@@ -1,0 +1,23 @@
+{
+ "task": "rerun-io-rerun-8591",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "FAIL_TO_PASS: 'as_components::tests::single_ascomponents_howto' ... tests call as_component_batches() on explicit &[red] slices and assert_eq on serialized Arrow arrays"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

@@ -1,0 +1,5 @@
+I'm working on the AlephAlpha OpenTelemetry instrumentation and I need to add support for emitting prompt and response data as structured log events, in addition to the existing span-attribute approach. Right now, all LLM data goes into span attributes, but the newer OpenTelemetry semantic conventions use log-based events for capturing inputs and outputs.
+
+I'd like to add a mode where the instrumentor emits two log events per completion — one for the user's prompt and one for the model's response — with proper event name and AI system attributes on each. This new mode should be opt-in so existing users aren't broken. The legacy behavior (span attributes only, no log events) should remain the default.
+
+The content-tracing toggle should also be respected in this new mode: when content tracing is on, the events should include the actual message content; when it's off, the events should still fire but their bodies should be empty or stripped of content. The instrumentor also needs to accept an event logger provider at instrument time so events can be routed properly.

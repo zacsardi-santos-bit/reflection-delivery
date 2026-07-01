@@ -1,0 +1,7 @@
+I'm trying to use pandera's Polars schema types as field types in pydantic models, but it doesn't work at all right now. When I try to declare a typed Polars DataFrame or a schema model class as a field, pydantic doesn't know how to validate it and I just get errors.
+
+I'd like to be able to annotate a pydantic model field with a typed Polars DataFrame (with a specific schema), and have pydantic automatically validate the input against that schema — raising a proper validation error if the data doesn't conform. I also need schema model classes themselves to be accepted as pydantic field values, including support for inheritance so that a child schema is accepted when a parent schema is declared. Passing the wrong type (like an integer or a plain schema object) should raise a validation error.
+
+Additionally, I'd like the typed Polars DataFrame to support reading from common data formats — including CSV, JSON, Parquet, Feather, and plain Python dicts — and writing back to those same formats. Unsupported formats like pickle should raise a helpful error message rather than failing in an unexpected way. When a dict or a pandas DataFrame is passed where a typed Polars DataFrame field is expected, it should be automatically converted rather than rejected.
+
+It should work with both older and newer versions of pydantic, and optional columns in schema models should behave correctly (missing optional columns are allowed, invalid types for optional columns are rejected, missing required columns are rejected).

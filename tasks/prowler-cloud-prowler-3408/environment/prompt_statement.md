@@ -1,0 +1,7 @@
+I'm working on extending our Azure security auditing tool with several new checks for virtual machine security. Right now, we have no way to verify whether Azure disks are encrypted using customer-managed keys or whether virtual machines are using managed disks rather than unmanaged ones. We also have no check that looks at cloud security assessment data to confirm endpoint protection is deployed on VMs.
+
+I need four new security checks added: one that flags attached disks not using customer-managed encryption, one that flags unattached disks not using customer-managed encryption, one that flags VMs not using managed disks for either their OS disk or any data disk, and one that reads Defender assessment data to report whether endpoint protection has been installed on virtual machines.
+
+To support the VM-related checks, I also need a new service layer that fetches virtual machine and disk information from Azure, including each disk's encryption type and which VMs it is attached to. This service should use the Azure compute management client and follow the same conventions as our other Azure service integrations.
+
+Each check should clearly report pass or fail per resource, with a human-readable message that identifies the specific resource and subscription. Checks should gracefully handle cases where no subscriptions exist or a subscription has no relevant resources, returning no results in those cases.

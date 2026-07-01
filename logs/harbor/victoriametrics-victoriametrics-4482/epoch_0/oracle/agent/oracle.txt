@@ -1,0 +1,15 @@
+patching file .gitignore
+patching file app/vlinsert/loki/loki.go
+patching file app/vlinsert/loki/loki_json.go
+patching file app/vlinsert/loki/loki_protobuf.go
+patching file app/vlinsert/loki/push_request.pb.go
+patching file app/vlinsert/loki/push_request.proto
+patching file app/vlinsert/loki/timestamp.go
+patching file app/vlinsert/loki/types.go
+patching file app/vlinsert/main.go
+patching file deployment/docker/victorialogs/promtail/config.yml
+patching file deployment/docker/victorialogs/promtail/docker-compose.yml
+patching file docs/VictoriaLogs/data-ingestion/Promtail.md
+patching file docs/VictoriaLogs/data-ingestion/README.md
+patching file lib/logstorage/tenant_id.go
+patching file lib/slicesutil/resize.go

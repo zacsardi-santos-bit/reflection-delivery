@@ -1,0 +1,38 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p burn-compute --no-fail-fast",
+  "test_files": [
+    "crates/burn-compute/tests/dummy/server.rs",
+    "crates/burn-compute/tests/dummy/tune/autotune_operations.rs",
+    "crates/burn-compute/tests/dummy/tune/operation_sets.rs",
+    "crates/burn-compute/tests/integration_test.rs"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/23) burn-compute storage::bytes_cpu::tests::test_can_alloc_and_dealloc",
+    "( 2/23) burn-compute memory_management::simple::tests::when_empty_chunk_is_cleaned_upexists_it_disappears",
+    "( 3/23) burn-compute memory_management::simple::tests::slice_strategy_ratio",
+    "( 4/23) burn-compute memory_management::simple::tests::slice_strategy_minimum_bytes",
+    "( 5/23) burn-compute storage::bytes_cpu::tests::test_slices",
+    "( 6/23) burn-compute memory_management::simple::tests::slice_strategy_maximum_bytes",
+    "( 7/23) burn-compute memory_management::simple::tests::period_tick_dealloc_strategy_should_dealloc_after_period",
+    "( 8/23) burn-compute memory_management::simple::tests::test_slice_mutability",
+    "( 9/23) burn-compute memory_management::simple::tests::two_tensor_references_remove_mutability",
+    "(10/23) burn-compute memory_management::simple::tests::test_handle_mutability",
+    "(11/23) burn-compute memory_management::simple::tests::when_non_empty_chunk_exists_and_other_one_created_there_should_be_two",
+    "(12/23) burn-compute memory_management::simple::tests::never_dealloc_strategy_never_deallocs",
+    "(13/23) burn-compute memory_management::simple::tests::can_mut_with_single_tensor_reference",
+    "(14/23) burn-compute::integration_test autotune_basic_multiplication_execution",
+    "(15/23) burn-compute::integration_test autotune_basic_addition_execution",
+    "(16/23) burn-compute::integration_test created_resource_is_the_same_when_read",
+    "(17/23) burn-compute::integration_test autotune_cache_file_path_creation_works_when_path_does_not_exist_yet",
+    "(18/23) burn-compute::integration_test execute_elementwise_addition",
+    "(19/23) burn-compute::integration_test empty_allocates_memory",
+    "(20/23) burn-compute::integration_test autotune_cache_same_key_return_a_cache_hit",
+    "(21/23) burn-compute::integration_test autotune_cache_different_checksums_return_a_cache_miss",
+    "(22/23) burn-compute::integration_test autotune_cache_different_keys_return_a_cache_miss",
+    "(23/23) burn-compute::integration_test autotune_cache_no_cache_on_disk_return_a_cache_miss"
+  ],
+  "PASS_TO_PASS": []
+}

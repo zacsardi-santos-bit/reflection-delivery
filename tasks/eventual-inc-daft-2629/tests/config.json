@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && maturin develop && pytest tests/dataframe/test_wildcard.py -v --noconftest",
+  "test_files": [
+    "tests/dataframe/test_wildcard.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.dataframe.test_wildcard::test_wildcard_select",
+    "tests.dataframe.test_wildcard::test_wildcard_select_expr",
+    "tests.dataframe.test_wildcard::test_wildcard_select_with_structs",
+    "tests.dataframe.test_wildcard::test_wildcard_select_struct_flatten",
+    "tests.dataframe.test_wildcard::test_wildcard_select_multiple_wildcards_different_expr",
+    "tests.dataframe.test_wildcard::test_wildcard_select_prevent_multiple_wildcards",
+    "tests.dataframe.test_wildcard::test_wildcard_unsupported_pattern",
+    "tests.dataframe.test_wildcard::test_wildcard_nonexistent_struct",
+    "tests.dataframe.test_wildcard::test_wildcard_not_a_struct",
+    "tests.dataframe.test_wildcard::test_wildcard_star_in_name",
+    "tests.dataframe.test_wildcard::test_wildcard_left_associative",
+    "tests.dataframe.test_wildcard::test_wildcard_multiple_matches_one_struct",
+    "tests.dataframe.test_wildcard::test_wildcard_explode",
+    "tests.dataframe.test_wildcard::test_wildcard_agg",
+    "tests.dataframe.test_wildcard::test_wildcard_struct_agg"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,20 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/service/cloudformation -count=1",
+  "test_files": [
+    "internal/service/cloudformation/stack_set_instance_test.go",
+    "internal/service/cloudformation/stack_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation::TestTypeVersionARNToTypeARNAndVersionID/empty_ARN",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation::TestTypeVersionARNToTypeARNAndVersionID/unparsable_ARN",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation::TestTypeVersionARNToTypeARNAndVersionID/invalid_ARN_resource_parts",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation::TestTypeVersionARNToTypeARNAndVersionID/invalid_ARN_resource_prefix",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation::TestTypeVersionARNToTypeARNAndVersionID/valid_ARN",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation::TestTypeVersionARNToTypeARNAndVersionID/invalid_ARN_service",
+    "github.com/hashicorp/terraform-provider-aws/internal/service/cloudformation::TestTypeVersionARNToTypeARNAndVersionID"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,18 @@
+patching file task_test.go
+patching file watch_test.go
+# github.com/go-task/task/v3_test [github.com/go-task/task/v3.test]
+./task_test.go:73:12: undefined: task.NewExecutor
+./task_test.go:74:8: undefined: task.ExecutorWithDir
+./task_test.go:75:8: undefined: task.ExecutorWithTempDir
+./task_test.go:79:8: undefined: task.ExecutorWithEntrypoint
+./task_test.go:80:8: undefined: task.ExecutorWithStdout
+./task_test.go:81:8: undefined: task.ExecutorWithStderr
+./task_test.go:103:12: undefined: task.NewExecutor
+./task_test.go:104:8: undefined: task.ExecutorWithDir
+./task_test.go:105:8: undefined: task.ExecutorWithStdout
+./task_test.go:106:8: undefined: task.ExecutorWithStderr
+./task_test.go:106:8: too many errors
+{"Time":"2026-06-29T15:20:43.588075468Z","Action":"start","Package":"github.com/go-task/task/v3"}
+{"Time":"2026-06-29T15:20:43.58819343Z","Action":"output","Package":"github.com/go-task/task/v3","Output":"FAIL\tgithub.com/go-task/task/v3 [build failed]\n"}
+{"Time":"2026-06-29T15:20:43.588206764Z","Action":"fail","Package":"github.com/go-task/task/v3","Elapsed":0}
+reward=0 graded=353 found=0 failed=0 parsed=1 framework=go exit_code=1

@@ -1,0 +1,10 @@
+patching file pkg/envoy/envoy.go
+patching file pkg/envoy/grpc.go
+patching file pkg/envoy/server.go
+patching file pkg/envoy/streamctrl.go
+patching file pkg/envoy/xds/ack.go
+patching file pkg/envoy/xds/cache.go
+patching file pkg/envoy/xds/doc.go
+patching file pkg/envoy/xds/node.go
+patching file pkg/envoy/xds/server.go
+patching file pkg/envoy/xds/set.go

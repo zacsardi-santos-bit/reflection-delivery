@@ -1,0 +1,22 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go install -v 2>/dev/null && SOURCE_MAP_SUPPORT=false GOROOT=/usr/local/go GOPHERJS_EXPERIMENT=generics bash /usr/local/bin/gopherjs-field-test",
+  "test_files": [
+    "compiler/natives/src/compress/gzip/example_test.go",
+    "compiler/natives/src/crypto/ed25519/ed25519vectors_test.go",
+    "compiler/natives/src/crypto/ed25519/internal/edwards25519/field/fe_test.go",
+    "compiler/natives/src/crypto/ed25519/internal/edwards25519/scalar_test.go",
+    "compiler/natives/src/crypto/internal/edwards25519/field/fe_alias_test.go",
+    "compiler/natives/src/crypto/internal/edwards25519/field/fe_test.go",
+    "compiler/natives/src/crypto/internal/edwards25519/scalar_test.go",
+    "compiler/natives/src/crypto/internal/edwards25519/scalarmult_test.go",
+    "compiler/natives/src/crypto/x509/name_constraints_test.go",
+    "compiler/natives/src/image/gif/fuzz_test.go"
+  ],
+  "num_test_files": 10,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "crypto/internal/edwards25519/field::TestGopherJSFieldCompilation"
+  ],
+  "PASS_TO_PASS": []
+}

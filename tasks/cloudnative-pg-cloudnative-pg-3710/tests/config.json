@@ -1,0 +1,25 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./api/v1 ./internal/management/controller/slots/infrastructure ./internal/management/controller/slots/reconciler -count=1",
+  "test_files": [
+    "api/v1/cluster_types_test.go",
+    "api/v1/cluster_webhook_test.go",
+    "internal/management/controller/slots/infrastructure/postgresmanager_test.go",
+    "internal/management/controller/slots/reconciler/replicationslot_test.go",
+    "tests/e2e/asserts_test.go",
+    "tests/e2e/fastfailover_test.go",
+    "tests/e2e/fastswitchover_test.go",
+    "tests/e2e/replication_slot_test.go",
+    "tests/e2e/scaling_test.go",
+    "tests/e2e/switchover_test.go",
+    "tests/utils/replication_slots.go"
+  ],
+  "num_test_files": 11,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cloudnative-pg/cloudnative-pg/internal/management/controller/slots/reconciler::TestReconciler",
+    "github.com/cloudnative-pg/cloudnative-pg/internal/management/controller/slots/infrastructure::TestReconciler",
+    "github.com/cloudnative-pg/cloudnative-pg/api/v1::TestApi"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,21 @@
+patching file test/brpc_abalist_unittest.cc
+patching file src/bthread/bthread.cpp
+Hunk #1 succeeded at 148 (offset -51 lines).
+patching file src/bthread/id.cpp
+patching file src/bthread/list_of_abafree_id.h
+patching file test/CMakeLists.txt
+Hunk #1 succeeded at 143 (offset -1 lines).
+patching file test/abalist_unittest.cc
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from AbaListTest
+[ RUN      ] AbaListTest.TestGc
+[       OK ] AbaListTest.TestGc (71 ms)
+[----------] 1 test from AbaListTest (71 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (71 ms total)
+[  PASSED  ] 1 test.
+AbaListTest::TestGc : OK
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cppunit exit_code=0

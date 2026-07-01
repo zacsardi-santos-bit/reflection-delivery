@@ -1,0 +1,14 @@
+{
+  "test_framework": "junit",
+  "test_command": "bash -c \"cd /workspace/repo && ./gradlew :openai-client:jvmTest --tests '*.TestBatches.batchSerialization' --tests '*.TestBatches.testDecodeOutput' --no-daemon --no-watch-fs; EXIT_CODE=\\$?; find . -path '*/build/test-results/*/TEST-*.xml' 2>/dev/null | xargs cat 2>/dev/null; exit \\$EXIT_CODE\"",
+  "test_files": [
+    "openai-client/src/commonTest/kotlin/com/aallam/openai/client/TestBatches.kt"
+  ],
+  "num_test_files": 1,
+  "language": "kotlin",
+  "FAIL_TO_PASS": [
+    "com.aallam.openai.client.TestBatches::testDecodeOutput[jvm]",
+    "com.aallam.openai.client.TestBatches::batchSerialization[jvm]"
+  ],
+  "PASS_TO_PASS": []
+}

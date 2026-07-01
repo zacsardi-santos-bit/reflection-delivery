@@ -1,0 +1,3 @@
+patching file pkg/idgen/task_id.go
+patching file pkg/storage/piece.go
+patching file pkg/storage/stat_task.go

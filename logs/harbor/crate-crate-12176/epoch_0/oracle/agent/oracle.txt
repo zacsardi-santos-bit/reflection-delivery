@@ -1,0 +1,12 @@
+patching file .gitignore
+patching file docs/appendices/release-notes/unreleased.rst
+patching file gradle/checkstyle/suppressions.xml
+patching file server/build.gradle
+patching file server/src/main/antlr/TypeSignatures.g4
+patching file server/src/main/java/io/crate/metadata/functions/SignatureBinder.java
+patching file server/src/main/java/io/crate/signatures/TypeSignatureParser.java
+patching file server/src/main/java/io/crate/signatures/TypeSignatureParsingException.java
+patching file server/src/main/java/io/crate/signatures/TypeSignaturesASTVisitor.java
+patching file server/src/main/java/io/crate/types/IntegerLiteralTypeSignature.java
+patching file server/src/main/java/io/crate/types/ParameterTypeSignature.java
+patching file server/src/main/java/io/crate/types/TypeSignature.java

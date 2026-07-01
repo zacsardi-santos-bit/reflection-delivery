@@ -1,0 +1,6 @@
+patching file pipeline/error_test.go
+# go.woodpecker-ci.org/woodpecker/v2/pipeline [go.woodpecker-ci.org/woodpecker/v2/pipeline.test]
+pipeline/error_test.go:23:3: unknown field UUID in struct literal of type ExitError
+pipeline/error_test.go:34:3: unknown field UUID in struct literal of type OomError
+FAIL	go.woodpecker-ci.org/woodpecker/v2/pipeline [build failed]
+reward=0 graded=2 found=2 failed=2 parsed=1 framework=go exit_code=1

@@ -1,0 +1,23 @@
+{
+ "task": "exercism-go-1044",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden adds exercises/rectangles/example.go implementing 'func Count(diagram []string) int'; test.sh runs 'go test ./exercises/rectangles'; TestRectangles iterates 13 canonical cases (empty..60-rectangle grid)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

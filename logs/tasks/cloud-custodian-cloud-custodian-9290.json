@@ -1,0 +1,23 @@
+{
+ "task": "cloud-custodian-cloud-custodian-9290",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `def get_path(path, resource)` and reworks DescribeMesh.augment to call `super().augment(resources)` before universal_augment; F2P includes test_appmesh, test_reporting (mesh + vgw)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 20,
+  "shallow": true
+ }
+}

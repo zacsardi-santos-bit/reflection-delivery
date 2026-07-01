@@ -1,0 +1,7 @@
+patching file flag_bool_with_inverse.go
+patching file flag_impl.go
+patching file flag_value_source.go
+patching file godoc-current.txt
+patching file internal/build/build.go
+patching file testdata/godoc-v3.x.txt
+patching file value_source.go

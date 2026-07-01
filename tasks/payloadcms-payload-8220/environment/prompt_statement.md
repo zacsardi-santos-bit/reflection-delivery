@@ -1,0 +1,5 @@
+I'm having trouble with the document duplication feature in Payload CMS when working with localized content. When I duplicate a document that has localized blocks containing nested arrays, or localized groups inside tab fields that contain nested array fields, the duplicated document doesn't retain the correct locale-specific data. It seems like the duplication process isn't recursively handling all levels of nested blocks and arrays — so while the top-level data copies correctly, deeper nested array items either lose their locale data or end up corrupted.
+
+Specifically, I have a collection with a blocks field where each block can contain an array of items, and I also have a tab with a localized group field that itself contains an array. When I duplicate a document with English and Spanish content in these structures, the duplicated document doesn't preserve the nested array data for each locale.
+
+I'd expect the duplicate operation to produce an exact copy of the original document, with all locale-specific content intact at every level of nesting, and with fresh database IDs for all block and array rows so there are no ID conflicts.

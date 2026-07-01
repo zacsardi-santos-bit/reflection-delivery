@@ -1,0 +1,143 @@
+patching file tests/test_pregel.py
+patching file tests/test_pregel_async.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: mock-3.14.0, dotenv-0.5.2, syrupy-4.6.1, anyio-4.3.0, cov-4.1.0, asyncio-0.20.3
+asyncio: mode=Mode.AUTO
+collecting ... collected 107 items
+
+tests/test_pregel.py::test_graph_validation PASSED                       [  0%]
+tests/test_pregel.py::test_invoke_single_process_in_out PASSED           [  1%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[None] PASSED [  2%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[False] PASSED [  3%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[0] PASSED [  4%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[] PASSED [  5%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[falsy_value4] PASSED [  6%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[falsy_value5] PASSED [  7%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[falsy_value6] PASSED [  8%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[falsy_value7] PASSED [  9%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[0.0] PASSED [ 10%]
+tests/test_pregel.py::test_invoke_single_process_in_out_falsy_values[0j] PASSED [ 11%]
+tests/test_pregel.py::test_invoke_single_process_in_write_kwargs PASSED  [ 12%]
+tests/test_pregel.py::test_invoke_single_process_in_out_dict PASSED      [ 13%]
+tests/test_pregel.py::test_invoke_single_process_in_dict_out_dict PASSED [ 14%]
+tests/test_pregel.py::test_invoke_two_processes_in_out PASSED            [ 14%]
+tests/test_pregel.py::test_invoke_two_processes_in_out_interrupt PASSED  [ 15%]
+tests/test_pregel.py::test_invoke_two_processes_in_dict_out PASSED       [ 16%]
+tests/test_pregel.py::test_batch_two_processes_in_out PASSED             [ 17%]
+tests/test_pregel.py::test_invoke_many_processes_in_out PASSED           [ 18%]
+tests/test_pregel.py::test_batch_many_processes_in_out PASSED            [ 19%]
+tests/test_pregel.py::test_invoke_two_processes_two_in_two_out_invalid PASSED [ 20%]
+tests/test_pregel.py::test_invoke_two_processes_two_in_two_out_valid PASSED [ 21%]
+tests/test_pregel.py::test_invoke_checkpoint PASSED                      [ 22%]
+tests/test_pregel.py::test_invoke_checkpoint_sqlite PASSED               [ 23%]
+tests/test_pregel.py::test_invoke_two_processes_two_in_join_two_out PASSED [ 24%]
+tests/test_pregel.py::test_invoke_join_then_call_other_pregel PASSED     [ 25%]
+tests/test_pregel.py::test_invoke_two_processes_one_in_two_out PASSED    [ 26%]
+tests/test_pregel.py::test_invoke_two_processes_no_out PASSED            [ 27%]
+tests/test_pregel.py::test_invoke_two_processes_no_in PASSED             [ 28%]
+tests/test_pregel.py::test_channel_enter_exit_timing PASSED              [ 28%]
+tests/test_pregel.py::test_conditional_graph PASSED                      [ 29%]
+tests/test_pregel.py::test_conditional_entrypoint_graph PASSED           [ 30%]
+tests/test_pregel.py::test_conditional_state_graph PASSED                [ 31%]
+tests/test_pregel.py::test_state_graph_w_config PASSED                   [ 32%]
+tests/test_pregel.py::test_state_graph_few_shot PASSED                   [ 33%]
+tests/test_pregel.py::test_conditional_entrypoint_graph_state PASSED     [ 34%]
+tests/test_pregel.py::test_prebuilt_tool_chat PASSED                     [ 35%]
+tests/test_pregel.py::test_prebuilt_chat PASSED                          [ 36%]
+tests/test_pregel.py::test_state_graph_packets PASSED                    [ 37%]
+tests/test_pregel.py::test_message_graph PASSED                          [ 38%]
+tests/test_pregel.py::test_root_graph PASSED                             [ 39%]
+tests/test_pregel.py::test_in_one_fan_out_out_one_graph_state PASSED     [ 40%]
+tests/test_pregel.py::test_start_branch_then PASSED                      [ 41%]
+tests/test_pregel.py::test_branch_then PASSED                            [ 42%]
+tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge PASSED [ 42%]
+tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_via_branch PASSED [ 43%]
+tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class PASSED [ 44%]
+tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_plus_regular PASSED [ 45%]
+tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple PASSED [ 46%]
+tests/test_pregel.py::test_in_one_fan_out_state_graph_waiting_edge_multiple_cond_edge PASSED [ 47%]
+tests/test_pregel.py::test_simple_multi_edge PASSED                      [ 48%]
+tests/test_pregel.py::test_nested_graph_xray PASSED                      [ 49%]
+tests/test_pregel.py::test_nested_graph PASSED                           [ 50%]
+tests/test_pregel.py::test_repeat_condition PASSED                       [ 51%]
+tests/test_pregel.py::test_checkpoint_metadata PASSED                    [ 52%]
+tests/test_pregel_async.py::test_node_cancellation_on_external_cancel PASSED [ 53%]
+tests/test_pregel_async.py::test_node_cancellation_on_other_node_exception PASSED [ 54%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out PASSED     [ 55%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[None] PASSED [ 56%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[False] PASSED [ 57%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[0] PASSED [ 57%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[] PASSED [ 58%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[falsy_value4] PASSED [ 59%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[falsy_value5] PASSED [ 60%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[falsy_value6] PASSED [ 61%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[falsy_value7] PASSED [ 62%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[0.0] PASSED [ 63%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_falsy_values[0j] PASSED [ 64%]
+tests/test_pregel_async.py::test_invoke_single_process_in_write_kwargs PASSED [ 65%]
+tests/test_pregel_async.py::test_invoke_single_process_in_out_dict PASSED [ 66%]
+tests/test_pregel_async.py::test_invoke_single_process_in_dict_out_dict PASSED [ 67%]
+tests/test_pregel_async.py::test_invoke_two_processes_in_out PASSED      [ 68%]
+tests/test_pregel_async.py::test_invoke_two_processes_in_out_interrupt PASSED [ 69%]
+tests/test_pregel_async.py::test_invoke_two_processes_in_dict_out PASSED [ 70%]
+tests/test_pregel_async.py::test_batch_two_processes_in_out PASSED       [ 71%]
+tests/test_pregel_async.py::test_invoke_many_processes_in_out PASSED     [ 71%]
+tests/test_pregel_async.py::test_batch_many_processes_in_out PASSED      [ 72%]
+tests/test_pregel_async.py::test_invoke_two_processes_two_in_two_out_invalid PASSED [ 73%]
+tests/test_pregel_async.py::test_invoke_two_processes_two_in_two_out_valid PASSED [ 74%]
+tests/test_pregel_async.py::test_invoke_checkpoint PASSED                [ 75%]
+tests/test_pregel_async.py::test_invoke_checkpoint_aiosqlite PASSED      [ 76%]
+tests/test_pregel_async.py::test_invoke_two_processes_two_in_join_two_out PASSED [ 77%]
+tests/test_pregel_async.py::test_invoke_join_then_call_other_pregel PASSED [ 78%]
+tests/test_pregel_async.py::test_invoke_two_processes_one_in_two_out PASSED [ 79%]
+tests/test_pregel_async.py::test_invoke_two_processes_no_out PASSED      [ 80%]
+tests/test_pregel_async.py::test_channel_enter_exit_timing PASSED        [ 81%]
+tests/test_pregel_async.py::test_conditional_graph PASSED                [ 82%]
+tests/test_pregel_async.py::test_conditional_graph_state PASSED          [ 83%]
+tests/test_pregel_async.py::test_state_graph_few_shot PASSED             [ 84%]
+tests/test_pregel_async.py::test_conditional_entrypoint_graph PASSED     [ 85%]
+tests/test_pregel_async.py::test_conditional_entrypoint_graph_state PASSED [ 85%]
+tests/test_pregel_async.py::test_prebuilt_tool_chat PASSED               [ 86%]
+tests/test_pregel_async.py::test_prebuilt_chat PASSED                    [ 87%]
+tests/test_pregel_async.py::test_state_graph_packets PASSED              [ 88%]
+tests/test_pregel_async.py::test_message_graph PASSED                    [ 89%]
+tests/test_pregel_async.py::test_in_one_fan_out_out_one_graph_state PASSED [ 90%]
+tests/test_pregel_async.py::test_start_branch_then PASSED                [ 91%]
+tests/test_pregel_async.py::test_branch_then PASSED                      [ 92%]
+tests/test_pregel_async.py::test_in_one_fan_out_state_graph_waiting_edge PASSED [ 93%]
+tests/test_pregel_async.py::test_in_one_fan_out_state_graph_waiting_edge_via_branch PASSED [ 94%]
+tests/test_pregel_async.py::test_in_one_fan_out_state_graph_waiting_edge_custom_state_class PASSED [ 95%]
+tests/test_pregel_async.py::test_in_one_fan_out_state_graph_waiting_edge_plus_regular PASSED [ 96%]
+tests/test_pregel_async.py::test_in_one_fan_out_state_graph_waiting_edge_multiple PASSED [ 97%]
+tests/test_pregel_async.py::test_in_one_fan_out_state_graph_waiting_edge_multiple_cond_edge PASSED [ 98%]
+tests/test_pregel_async.py::test_nested_graph PASSED                     [ 99%]
+tests/test_pregel_async.py::test_checkpoint_metadata PASSED              [100%]
+
+=============================== warnings summary ===============================
+tests/test_pregel.py::test_prebuilt_chat
+  /workspace/repo/tests/test_pregel.py:3330: LangGraphDeprecationWarning: create_function_calling_executor is deprecated as of version 0.0.44 and will be removed in a future version. Use create_react_agent instead.
+    app = create_function_calling_executor(
+
+tests/test_pregel_async.py::test_prebuilt_chat
+  /workspace/repo/tests/test_pregel_async.py:2956: LangGraphDeprecationWarning: create_function_calling_executor is deprecated as of version 0.0.44 and will be removed in a future version. Use create_react_agent instead.
+    app = create_function_calling_executor(
+
+tests/test_pregel_async.py::test_nested_graph
+  /usr/local/lib/python3.11/site-packages/langchain_core/_api/beta_decorator.py:87: LangChainBetaWarning: This API is in beta and may change in the future.
+    warn_beta(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+--------------------------- snapshot report summary ----------------------------
+44 snapshots passed.
+============================= slowest 5 durations ==============================
+7.01s call     tests/test_pregel_async.py::test_batch_many_processes_in_out
+5.71s call     tests/test_pregel.py::test_batch_many_processes_in_out
+4.68s call     tests/test_pregel_async.py::test_invoke_many_processes_in_out
+3.81s call     tests/test_pregel.py::test_invoke_many_processes_in_out
+3.42s call     tests/test_pregel.py::test_batch_two_processes_in_out
+======================= 107 passed, 3 warnings in 43.85s =======================
+reward=1 graded=107 found=0 failed=0 parsed=87 framework=pytest exit_code=0

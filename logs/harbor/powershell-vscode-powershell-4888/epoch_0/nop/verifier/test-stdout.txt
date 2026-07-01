@@ -1,0 +1,76 @@
+patching file test/features/DebugSession.test.ts
+
+> powershell@2024.0.0 build-test
+> tsc --incremental
+
+
+
+  DebugSessionFeature
+    Constructor
+      ✔ Registers debug configuration provider and factory
+    resolveDebugConfiguration
+      ✔ Defaults to LaunchCurrentFile if no request type was specified
+      ✔ Errors if current file config was specified but no file is open in the editor
+      ✔ Detects an untitled document
+    resolveDebugConfigurationWithSubstitutedVariables
+      ✔ Sets internalConsoleOptions to neverOpen
+      ✔ Rejects invalid request type
+      ✔ Uses createTemporaryIntegratedConsole config setting if not explicitly specified
+      ✔ LaunchCurrentFile: Rejects non-Powershell language active editor
+      ✔ LaunchScript: Rejects scripts without a powershell script extension
+      ✔ Prevents debugging untitled files in a temp console
+      ✔ Attach: Exits if session version details cannot be retrieved
+      ✔ Attach: Prevents attach on non-windows if not PS7.0 or higher
+      1) Attach: Prompts for PS Process if not specified
+      2) Attach: Exits if process was not selected from the picker
+      3) Attach: Prompts for Runspace if not specified
+      4) Attach: Exits if runspace was not selected from the picker
+      ✔ Starts dotnet attach debug session with default config
+      ✔ Prevents dotnet attach session if terminal is not temporary
+      ✔ Errors if dotnetDebuggerConfigName was provided but the config was not found
+    createDebugAdapterDescriptor
+      ✔ Creates a named pipe server for the debug adapter
+
+
+  16 passing (128ms)
+  4 failing
+
+  1) DebugSessionFeature
+       resolveDebugConfigurationWithSubstitutedVariables
+         Attach: Prompts for PS Process if not specified:
+     TypeError: Cannot stub non-existent property pickPSHostProcess
+      at Function.stub (node_modules/sinon/lib/sinon/stub.js:82:15)
+      at Sandbox.stub (node_modules/sinon/lib/sinon/sandbox.js:454:39)
+      at Context.<anonymous> (test/features/DebugSession.test.ts:243:49)
+      at processImmediate (node:internal/timers:476:21)
+
+  2) DebugSessionFeature
+       resolveDebugConfigurationWithSubstitutedVariables
+         Attach: Exits if process was not selected from the picker:
+     TypeError: Cannot stub non-existent property pickPSHostProcess
+      at Function.stub (node_modules/sinon/lib/sinon/stub.js:82:15)
+      at Sandbox.stub (node_modules/sinon/lib/sinon/sandbox.js:454:39)
+      at Context.<anonymous> (test/features/DebugSession.test.ts:268:49)
+      at processImmediate (node:internal/timers:476:21)
+
+  3) DebugSessionFeature
+       resolveDebugConfigurationWithSubstitutedVariables
+         Attach: Prompts for Runspace if not specified:
+     TypeError: Cannot stub non-existent property pickRunspace
+      at Function.stub (node_modules/sinon/lib/sinon/stub.js:82:15)
+      at Sandbox.stub (node_modules/sinon/lib/sinon/sandbox.js:454:39)
+      at Context.<anonymous> (test/features/DebugSession.test.ts:292:44)
+      at processImmediate (node:internal/timers:476:21)
+
+  4) DebugSessionFeature
+       resolveDebugConfigurationWithSubstitutedVariables
+         Attach: Exits if runspace was not selected from the picker:
+     TypeError: Cannot stub non-existent property pickRunspace
+      at Function.stub (node_modules/sinon/lib/sinon/stub.js:82:15)
+      at Sandbox.stub (node_modules/sinon/lib/sinon/sandbox.js:454:39)
+      at Context.<anonymous> (test/features/DebugSession.test.ts:316:44)
+      at processImmediate (node:internal/timers:476:21)
+
+
+
+reward=0 graded=20 found=20 failed=4 parsed=21 framework=mocha exit_code=4

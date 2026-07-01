@@ -1,0 +1,262 @@
+patching file api/genpb/cerbos/engine/v1/engine.pb.go
+patching file api/genpb/cerbos/engine/v1/engine_vtproto.pb.go
+patching file api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go
+patching file api/genpb/cerbos/private/v1/hashpb_helpers.pb.go
+patching file api/public/cerbos/engine/v1/engine.proto
+patching file internal/engine/evaluator.go
+patching file schema/jsonschema/cerbos/engine/v1/Request.schema.json
+patching file schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json
+patching file schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json
+patching file api/genpb/cerbos/engine/v1/engine.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file api/genpb/cerbos/engine/v1/engine.pb.go.rej
+patching file api/genpb/cerbos/engine/v1/engine_vtproto.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file api/genpb/cerbos/engine/v1/engine_vtproto.pb.go.rej
+patching file api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go.rej
+patching file api/genpb/cerbos/private/v1/hashpb_helpers.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file api/genpb/cerbos/private/v1/hashpb_helpers.pb.go.rej
+patching file api/public/cerbos/engine/v1/engine.proto
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file api/public/cerbos/engine/v1/engine.proto.rej
+patching file internal/engine/evaluator.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/engine/evaluator.go.rej
+patching file schema/jsonschema/cerbos/engine/v1/Request.schema.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file schema/jsonschema/cerbos/engine/v1/Request.schema.json.rej
+patching file schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json.rej
+patching file schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json.rej
+patching file api/genpb/cerbos/engine/v1/engine.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file api/genpb/cerbos/engine/v1/engine.pb.go.rej
+patching file api/genpb/cerbos/engine/v1/engine_vtproto.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file api/genpb/cerbos/engine/v1/engine_vtproto.pb.go.rej
+patching file api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go.rej
+patching file api/genpb/cerbos/private/v1/hashpb_helpers.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file api/genpb/cerbos/private/v1/hashpb_helpers.pb.go.rej
+patching file api/public/cerbos/engine/v1/engine.proto
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file api/public/cerbos/engine/v1/engine.proto.rej
+patching file internal/engine/evaluator.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/engine/evaluator.go.rej
+patching file schema/jsonschema/cerbos/engine/v1/Request.schema.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file schema/jsonschema/cerbos/engine/v1/Request.schema.json.rej
+patching file schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json.rej
+patching file schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/api/genpb/cerbos/engine/v1/engine.pb.go b/api/genpb/cerbos/engine/v1/engine.pb.go
+|index 1f1b2c48..89d46584 100644
+|--- a/api/genpb/cerbos/engine/v1/engine.pb.go
+|+++ b/api/genpb/cerbos/engine/v1/engine.pb.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 171
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/api/genpb/cerbos/engine/v1/engine_vtproto.pb.go b/api/genpb/cerbos/engine/v1/engine_vtproto.pb.go
+|index da2bcdd3..a9f1e920 100644
+|--- a/api/genpb/cerbos/engine/v1/engine_vtproto.pb.go
+|+++ b/api/genpb/cerbos/engine/v1/engine_vtproto.pb.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 389
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go b/api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go
+|index 4eb3b70a..f5f02045 100644
+|--- a/api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go
+|+++ b/api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 423
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/api/genpb/cerbos/private/v1/hashpb_helpers.pb.go b/api/genpb/cerbos/private/v1/hashpb_helpers.pb.go
+|index d6dbca4c..ac307438 100644
+|--- a/api/genpb/cerbos/private/v1/hashpb_helpers.pb.go
+|+++ b/api/genpb/cerbos/private/v1/hashpb_helpers.pb.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 457
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/api/public/cerbos/engine/v1/engine.proto b/api/public/cerbos/engine/v1/engine.proto
+|index f56a5db4..b8897b31 100644
+|--- a/api/public/cerbos/engine/v1/engine.proto
+|+++ b/api/public/cerbos/engine/v1/engine.proto
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 478
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/engine/evaluator.go b/internal/engine/evaluator.go
+|index 210731b3..9050d33d 100644
+|--- a/internal/engine/evaluator.go
+|+++ b/internal/engine/evaluator.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 507
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/schema/jsonschema/cerbos/engine/v1/Request.schema.json b/schema/jsonschema/cerbos/engine/v1/Request.schema.json
+|index d118642d..21858c4b 100644
+|--- a/schema/jsonschema/cerbos/engine/v1/Request.schema.json
+|+++ b/schema/jsonschema/cerbos/engine/v1/Request.schema.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 542
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json b/schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json
+|index d6f1b0db..49cfc795 100644
+|--- a/schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json
+|+++ b/schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 564
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json b/schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json
+|index 7de12519..7df7222c 100644
+|--- a/schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json
+|+++ b/schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file api/genpb/cerbos/engine/v1/engine.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file api/genpb/cerbos/engine/v1/engine.pb.go.rej
+patching file api/genpb/cerbos/engine/v1/engine_vtproto.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file api/genpb/cerbos/engine/v1/engine_vtproto.pb.go.rej
+patching file api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file api/genpb/cerbos/engine/v1/hashpb_helpers.pb.go.rej
+patching file api/genpb/cerbos/private/v1/hashpb_helpers.pb.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file api/genpb/cerbos/private/v1/hashpb_helpers.pb.go.rej
+patching file api/public/cerbos/engine/v1/engine.proto
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file api/public/cerbos/engine/v1/engine.proto.rej
+patching file internal/engine/evaluator.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file internal/engine/evaluator.go.rej
+patching file schema/jsonschema/cerbos/engine/v1/Request.schema.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file schema/jsonschema/cerbos/engine/v1/Request.schema.json.rej
+patching file schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file schema/jsonschema/cerbos/engine/v1/Request/Principal.schema.json.rej
+patching file schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file schema/jsonschema/cerbos/engine/v1/Request/Resource.schema.json.rej
+ERROR: golden patch failed to apply by all strategies

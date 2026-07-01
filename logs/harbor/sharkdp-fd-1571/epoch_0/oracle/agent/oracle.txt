@@ -1,0 +1,10 @@
+patching file CHANGELOG.md
+patching file Cargo.toml
+patching file contrib/completion/_fd
+patching file doc/fd.1
+patching file src/cli.rs
+patching file src/config.rs
+patching file src/hyperlink.rs
+patching file src/main.rs
+patching file src/output.rs
+patching file src/walk.rs

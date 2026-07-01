@@ -1,0 +1,25 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run --test integration -E 'test(artipacked) | test(template_injection) | test(gha_hazmat)'",
+  "test_files": [
+    "crates/zizmor/tests/integration/snapshots/integration__e2e__gha_hazmat.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__artipacked-2.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__artipacked-3.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__artipacked-4.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__artipacked-5.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__artipacked.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-2.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-4.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-5.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-8.snap"
+  ],
+  "num_test_files": 10,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(3/4) zizmor::integration snapshot::artipacked",
+    "(4/4) zizmor::integration snapshot::template_injection",
+    "(1/4) zizmor::integration acceptance::audit_template_injection",
+    "(2/4) zizmor::integration acceptance::audit_artipacked"
+  ],
+  "PASS_TO_PASS": []
+}

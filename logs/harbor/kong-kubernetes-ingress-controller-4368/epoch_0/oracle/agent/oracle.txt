@@ -1,0 +1,13 @@
+patching file CHANGELOG.md
+patching file config/variants/multi-gw/base/gateway_deployment.yaml
+patching file deploy/single/all-in-one-dbless-enterprise.yaml
+patching file deploy/single/all-in-one-dbless-k4k8s-enterprise.yaml
+patching file deploy/single/all-in-one-dbless-konnect-enterprise.yaml
+patching file deploy/single/all-in-one-dbless-konnect.yaml
+patching file deploy/single/all-in-one-dbless.yaml
+patching file internal/adminapi/client.go
+patching file internal/adminapi/endpoints.go
+patching file internal/clients/manager.go
+patching file internal/clients/readiness.go
+patching file internal/controllers/configuration/kongadminapi_controller.go
+patching file internal/manager/run.go

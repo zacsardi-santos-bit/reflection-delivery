@@ -1,0 +1,3 @@
+I'm working with the Tigera operator and noticed that the Dex authentication service container is missing some key security hardening settings in how it's configured for deployment. The container currently runs as a non-root user and group, which is good, but it doesn't drop all Linux capabilities and it doesn't specify a process-level isolation profile. This means it doesn't meet the requirements for a baseline pod security standard, which is causing issues in clusters where that policy is enforced.
+
+I'd like the Dex container's security configuration to also drop all Linux capabilities and apply the runtime default process isolation profile, in addition to the existing non-root settings that are already in place.

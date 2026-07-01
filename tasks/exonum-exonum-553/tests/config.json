@@ -1,0 +1,31 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p exonum-cryptocurrency --no-fail-fast",
+  "test_files": [
+    "examples/cryptocurrency/tests/api.rs",
+    "examples/cryptocurrency/tests/constants/mod.rs",
+    "examples/cryptocurrency/tests/tx_logic.rs",
+    "testkit/tests/currency/cryptocurrency.rs",
+    "testkit/tests/currency/main.rs"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/14) exonum-cryptocurrency::tx_logic test_transfer_to_nonexisting_wallet",
+    "( 2/14) exonum-cryptocurrency::api test_transfer_from_nonexisting_wallet",
+    "( 3/14) exonum-cryptocurrency::tx_logic test_create_wallet",
+    "( 4/14) exonum-cryptocurrency::api test_transfer_overcharge",
+    "( 5/14) exonum-cryptocurrency::tx_logic test_transfer",
+    "( 6/14) exonum-cryptocurrency::api test_unknown_wallet_request",
+    "( 7/14) exonum-cryptocurrency::api test_malformed_wallet_request",
+    "( 8/14) exonum-cryptocurrency::tx_logic test_transfers_in_single_block",
+    "( 9/14) exonum-cryptocurrency::api test_create_wallet",
+    "(10/14) exonum-cryptocurrency::tx_logic test_transfer_overcharge",
+    "(11/14) exonum-cryptocurrency::tx_logic test_transfer_from_nonexisting_wallet",
+    "(12/14) exonum-cryptocurrency::api test_transfer",
+    "(13/14) exonum-cryptocurrency::api test_transfer_to_nonexisting_wallet"
+  ],
+  "PASS_TO_PASS": [
+    "(14/14) exonum-cryptocurrency::tx_logic test_fuzz_transfers"
+  ]
+}

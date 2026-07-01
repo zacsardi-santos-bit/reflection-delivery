@@ -1,0 +1,53 @@
+patching file chia/_tests/core/full_node/test_address_manager.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: cov-6.1.0, mock-3.14.0, xdist-3.6.1, anyio-4.8.0
+created: 17/17 workers
+17 workers [19 items]
+
+scheduling tests via LoadScheduling
+
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_load_missing_file 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_eviction_works 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_new_bucket 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_select_collision_no_collision 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_no_evict 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_serialization 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_delete 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_get_peers 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_create 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_tried_bucket 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_find 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addr_manager_ports 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_select 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_collisions_new 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_collisions_tried 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_bad_ip_encoding 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addr_manager 
+[gw3] [ 1/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_collisions_new 
+[gw5] [ 2/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_create 
+[gw16] [ 3/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_load_missing_file 
+[gw7] [ 4/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_delete 
+[gw4] [ 5/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_find 
+[gw8] [ 6/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_tried_bucket 
+[gw15] [ 7/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_serialization 
+[gw10] [ 8/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_new_bucket 
+[gw14] [ 9/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_bad_ip_encoding 
+[gw2] [10/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_select 
+[gw0] [11/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addr_manager 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_cleanup 
+[gw1] [12/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addr_manager_ports 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_migration 
+[gw0] [13/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_cleanup 
+[gw1] [14/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_migration 
+[gw12] [15/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_select_collision_no_collision 
+[gw13] [16/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_eviction_works 
+[gw11] [17/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_no_evict 
+[gw6] [18/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_collisions_tried 
+[gw9] [19/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_get_peers 
+
+============================== 19 passed in 6.97s ==============================
+reward=1 graded=19 found=0 failed=0 parsed=19 framework=pytest exit_code=0

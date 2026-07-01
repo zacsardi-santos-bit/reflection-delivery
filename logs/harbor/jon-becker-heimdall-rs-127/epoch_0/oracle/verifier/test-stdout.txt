@@ -1,0 +1,40 @@
+patching file common/src/ether/evm/core/tests.rs
+patching file heimdall/tests/test_decompile.rs
+patching file heimdall/tests/test_snapshot.rs
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+warning: /workspace/repo/Cargo.toml: unused manifest key: workspace.version
+   Compiling heimdall-common v0.5.0 (/workspace/repo/common)
+    Finished test [unoptimized + debuginfo] target(s) in 14.56s
+------------
+ Nextest run ID c8befcc6-5cce-44fc-adb4-7ef336cfbb46 with nextest profile: default
+    Starting 20 tests across 1 binary (196 tests skipped)
+        PASS [   0.021s] heimdall-common ether::evm::core::tests::test_memory::test_expansion_cost
+        PASS [   0.020s] heimdall-common ether::evm::core::tests::test_memory::test_expansion_cost_2
+        PASS [   0.019s] heimdall-common ether::evm::core::tests::test_memory::test_memory_cost
+        PASS [   0.030s] heimdall-common ether::evm::core::tests::test_memory::test_memory_cost_2
+        PASS [   0.028s] heimdall-common ether::evm::core::tests::test_memory::test_mload_pad_large
+        PASS [   0.027s] heimdall-common ether::evm::core::tests::test_memory::test_mload_pad_one
+        PASS [   0.026s] heimdall-common ether::evm::core::tests::test_memory::test_mload_simple
+        PASS [   0.024s] heimdall-common ether::evm::core::tests::test_memory::test_mstore8
+        PASS [   0.022s] heimdall-common ether::evm::core::tests::test_memory::test_mstore_extend
+        PASS [   0.022s] heimdall-common ether::evm::core::tests::test_memory::test_mstore_large_nonstandard_offset
+        PASS [   0.024s] heimdall-common ether::evm::core::tests::test_memory::test_mstore_large_offser
+        PASS [   0.022s] heimdall-common ether::evm::core::tests::test_memory::test_mstore_offset
+        PASS [   0.023s] heimdall-common ether::evm::core::tests::test_memory::test_mstore_simple
+        PASS [   0.020s] heimdall-common ether::evm::core::tests::test_storage::test_storage_access_cost_warm
+        PASS [   0.019s] heimdall-common ether::evm::core::tests::test_storage::test_storage_storage_cost_cold
+        PASS [   0.026s] heimdall-common ether::evm::core::tests::test_storage::test_sstore_sload
+        PASS [   0.025s] heimdall-common ether::evm::core::tests::test_storage::test_storage_access_cost_cold
+        PASS [   0.018s] heimdall-common ether::evm::core::tests::test_storage::test_storage_storage_cost_warm
+        PASS [   0.021s] heimdall-common ether::evm::core::tests::test_storage::test_storage_storage_cost_cold_zero
+        PASS [   0.019s] heimdall-common ether::evm::core::tests::test_storage::test_storage_storage_cost_warm_zero
+------------
+     Summary [   0.052s] 20 tests run: 20 passed, 196 skipped
+reward=1 graded=20 found=20 failed=0 parsed=20 framework=cargo exit_code=0

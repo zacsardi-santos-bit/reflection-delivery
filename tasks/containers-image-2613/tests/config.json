@@ -1,0 +1,35 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -tags \"btrfs_noversion libdm_no_deferred_remove\" ./storage -count=1 -skip TestTransportParseReference",
+  "test_files": [
+    "storage/storage_dest_test.go",
+    "storage/storage_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/containers/image/v5/storage::TestLayerID",
+    "github.com/containers/image/v5/storage::TestNewReference",
+    "github.com/containers/image/v5/storage::TestStorageReferenceTransport",
+    "github.com/containers/image/v5/storage::TestStorageReferenceDockerReference",
+    "github.com/containers/image/v5/storage::TestStorageReferenceStringWithinTransport",
+    "github.com/containers/image/v5/storage::TestStorageReferencePolicyConfigurationIdentity",
+    "github.com/containers/image/v5/storage::TestStorageReferencePolicyConfigurationNamespaces",
+    "github.com/containers/image/v5/storage::TestResolveReference",
+    "github.com/containers/image/v5/storage::TestBuildLayerInfosForCopy",
+    "github.com/containers/image/v5/storage::TestParse",
+    "github.com/containers/image/v5/storage::TestParseWithGraphDriverOptions",
+    "github.com/containers/image/v5/storage::TestWriteRead",
+    "github.com/containers/image/v5/storage::TestDuplicateName",
+    "github.com/containers/image/v5/storage::TestDuplicateID",
+    "github.com/containers/image/v5/storage::TestDuplicateNameID",
+    "github.com/containers/image/v5/storage::TestNamespaces",
+    "github.com/containers/image/v5/storage::TestSize",
+    "github.com/containers/image/v5/storage::TestDuplicateBlob",
+    "github.com/containers/image/v5/storage::TestTransportName",
+    "github.com/containers/image/v5/storage::TestTransportSetGetStore",
+    "github.com/containers/image/v5/storage::TestTransportParseStoreReference",
+    "github.com/containers/image/v5/storage::TestTransportValidatePolicyConfigurationScope"
+  ],
+  "PASS_TO_PASS": []
+}

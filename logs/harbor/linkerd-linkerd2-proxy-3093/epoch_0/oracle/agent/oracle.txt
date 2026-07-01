@@ -1,0 +1,12 @@
+patching file Cargo.lock
+patching file linkerd/app/outbound/src/http/logical/policy/route.rs
+patching file linkerd/app/outbound/src/http/logical/policy/route/extensions.rs
+patching file linkerd/app/outbound/src/http/logical/policy/route/metrics.rs
+patching file linkerd/app/outbound/src/http/logical/policy/route/retry.rs
+patching file linkerd/app/outbound/src/http/retry.rs
+patching file linkerd/http/box/src/response.rs
+patching file linkerd/http/retry/Cargo.toml
+patching file linkerd/http/retry/src/lib.rs
+patching file linkerd/http/retry/src/peek_trailers.rs
+patching file linkerd/proxy/client-policy/src/grpc.rs
+patching file linkerd/proxy/client-policy/src/http.rs

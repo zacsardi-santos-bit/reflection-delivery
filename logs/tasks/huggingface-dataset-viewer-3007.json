@@ -1,0 +1,23 @@
+{
+ "task": "huggingface-dataset-viewer-3007",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds DatetimeStatisticsItem/DatetimeHistogram/DatetimeColumn and libcommon helpers 'def is_datetime', 'def datetime_to_string', 'def identify_datetime_format', 'def get_timezone'; tests build real datetime datasets (native, tz-aware, string-datetime, error) and assert computed stats"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 7,
+  "shallow": true
+ }
+}

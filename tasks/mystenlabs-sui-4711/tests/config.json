@@ -1,0 +1,31 @@
+{
+  "test_framework": "vitest",
+  "test_command": "node /workspace/mock-sui-rpc.js & sleep 2 && cd /workspace/repo && pnpm install --frozen-lockfile 2>&1 | tail -5 && bash /workspace/run-vitest.sh",
+  "test_files": [
+    "sdk/typescript/test/e2e/example.test.ts",
+    "sdk/typescript/test/e2e/local-txn-builder.test.ts",
+    "sdk/typescript/test/e2e/objects.test.ts",
+    "sdk/typescript/test/e2e/read-transactions.test.ts",
+    "sdk/typescript/test/e2e/rpc-txn-builder.test.ts",
+    "sdk/typescript/test/e2e/utils/setup.ts"
+  ],
+  "num_test_files": 6,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/sdk/typescript/test/e2e/read-transactions.test.ts:: Transaction Reading API Get Total Transactions",
+    "/workspace/repo/sdk/typescript/test/e2e/read-transactions.test.ts:: Transaction Reading API Get Transaction",
+    "/workspace/repo/sdk/typescript/test/e2e/objects.test.ts:: Object Reading API Get Owned Objects",
+    "/workspace/repo/sdk/typescript/test/e2e/objects.test.ts:: Object Reading API Get Object",
+    "/workspace/repo/sdk/typescript/test/e2e/rpc-txn-builder.test.ts:: RPC Transaction Builder Split coin",
+    "/workspace/repo/sdk/typescript/test/e2e/rpc-txn-builder.test.ts:: RPC Transaction Builder Merge coin",
+    "/workspace/repo/sdk/typescript/test/e2e/rpc-txn-builder.test.ts:: RPC Transaction Builder Move Call",
+    "/workspace/repo/sdk/typescript/test/e2e/rpc-txn-builder.test.ts:: RPC Transaction Builder Transfer Object",
+    "/workspace/repo/sdk/typescript/test/e2e/rpc-txn-builder.test.ts:: RPC Transaction Builder Transfer Sui",
+    "/workspace/repo/sdk/typescript/test/e2e/local-txn-builder.test.ts:: Local Transaction Builder Split coin",
+    "/workspace/repo/sdk/typescript/test/e2e/local-txn-builder.test.ts:: Local Transaction Builder Merge coin",
+    "/workspace/repo/sdk/typescript/test/e2e/local-txn-builder.test.ts:: Local Transaction Builder Move Call",
+    "/workspace/repo/sdk/typescript/test/e2e/local-txn-builder.test.ts:: Local Transaction Builder Transfer Sui",
+    "/workspace/repo/sdk/typescript/test/e2e/local-txn-builder.test.ts:: Local Transaction Builder Transfer Object"
+  ],
+  "PASS_TO_PASS": []
+}

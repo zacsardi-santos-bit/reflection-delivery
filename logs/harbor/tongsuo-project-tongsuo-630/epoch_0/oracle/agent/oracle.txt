@@ -1,0 +1,8 @@
+patching file CHANGES
+patching file ssl/record/rec_layer_s3.c
+patching file ssl/record/record.h
+patching file ssl/record/ssl3_buffer.c
+patching file ssl/record/ssl3_record.c
+patching file ssl/s3_enc.c
+patching file ssl/ssl_lib.c
+patching file ssl/t1_enc.c

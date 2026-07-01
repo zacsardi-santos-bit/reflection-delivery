@@ -1,0 +1,34 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/wagtail/admin/tests/test_editing_sessions.py -v",
+  "test_files": [
+    "wagtail/admin/tests/test_editing_sessions.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_invalid_data",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_must_post",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_existing_session",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_existing_session_with_editing_flag",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_new_session",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_new_session_with_editing_flag",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_new_session_with_revision",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_session_ordering",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_snippet_model",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_with_multiple_revisions_since_own_revision",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_with_new_revision_that_has_no_user",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_with_revision"
+  ],
+  "PASS_TO_PASS": [
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_invalid_model",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_non_existent_object",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_non_page_non_snippet_model",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_ping_snippet_model_without_permission",
+    "wagtail.admin.tests.test_editing_sessions.TestPingView::test_user_must_have_edit_permission_on_page",
+    "wagtail.admin.tests.test_editing_sessions.TestCleanup::test_cleanup",
+    "wagtail.admin.tests.test_editing_sessions.TestReleaseView::test_cannot_release_other_users_session",
+    "wagtail.admin.tests.test_editing_sessions.TestReleaseView::test_must_post",
+    "wagtail.admin.tests.test_editing_sessions.TestReleaseView::test_release"
+  ]
+}

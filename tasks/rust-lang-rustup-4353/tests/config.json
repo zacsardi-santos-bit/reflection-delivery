@@ -1,0 +1,40 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast --features test --test test_bonanza suite::cli_inst_interactive",
+  "test_files": [
+    "tests/suite/cli_inst_interactive.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/28) rustup::test_bonanza suite::cli_inst_interactive::installer_shows_default_profile_when_set_in_args",
+    "( 2/28) rustup::test_bonanza suite::cli_inst_interactive::installer_shows_default_toolchain_as_stable",
+    "( 3/28) rustup::test_bonanza suite::cli_inst_interactive::installer_shows_default_toolchain_when_set_in_args",
+    "( 4/28) rustup::test_bonanza suite::cli_inst_interactive::installer_shows_default_profile",
+    "( 5/28) rustup::test_bonanza suite::cli_inst_interactive::install_stops_if_cargo_exists",
+    "( 6/28) rustup::test_bonanza suite::cli_inst_interactive::installer_shows_default_for_modify_path",
+    "( 7/28) rustup::test_bonanza suite::cli_inst_interactive::installer_shows_default_host_triple",
+    "( 8/28) rustup::test_bonanza suite::cli_inst_interactive::install_warns_about_existing_settings_file",
+    "( 9/28) rustup::test_bonanza suite::cli_inst_interactive::install_stops_if_rustc_exists",
+    "(10/28) rustup::test_bonanza suite::cli_inst_interactive::installer_shows_default_for_modify_path_when_set_with_args",
+    "(11/28) rustup::test_bonanza suite::cli_inst_interactive::install_non_installable_toolchain",
+    "(12/28) rustup::test_bonanza suite::cli_inst_interactive::blank_lines_around_stderr_log_output_update",
+    "(13/28) rustup::test_bonanza suite::cli_inst_interactive::smoke_case_install_no_modify_path",
+    "(14/28) rustup::test_bonanza suite::cli_inst_interactive::set_nightly_toolchain",
+    "(15/28) rustup::test_bonanza suite::cli_inst_interactive::set_nightly_toolchain_and_unset",
+    "(16/28) rustup::test_bonanza suite::cli_inst_interactive::installing_when_already_installed_updates_toolchain",
+    "(17/28) rustup::test_bonanza suite::cli_inst_interactive::smoke_case_install_with_path_install",
+    "(18/28) rustup::test_bonanza suite::cli_inst_interactive::set_no_modify_path",
+    "(19/28) rustup::test_bonanza suite::cli_inst_interactive::user_says_nope",
+    "(20/28) rustup::test_bonanza suite::cli_inst_interactive::user_says_nope_after_advanced_install",
+    "(21/28) rustup::test_bonanza suite::cli_inst_interactive::install_forces_and_skips_rls",
+    "(22/28) rustup::test_bonanza suite::cli_inst_interactive::with_no_toolchain",
+    "(23/28) rustup::test_bonanza suite::cli_inst_interactive::install_with_components",
+    "(24/28) rustup::test_bonanza suite::cli_inst_interactive::test_warn_if_complete_profile_is_used",
+    "(25/28) rustup::test_bonanza suite::cli_inst_interactive::update",
+    "(26/28) rustup::test_bonanza suite::cli_inst_interactive::with_no_prompt_install_succeeds_if_rustc_exists",
+    "(27/28) rustup::test_bonanza suite::cli_inst_interactive::with_non_release_channel_non_default_toolchain",
+    "(28/28) rustup::test_bonanza suite::cli_inst_interactive::with_non_default_toolchain_still_prompts"
+  ],
+  "PASS_TO_PASS": []
+}

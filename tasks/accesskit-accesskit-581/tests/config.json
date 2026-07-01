@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p accesskit_consumer -E 'test(filters::tests)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "accesskit_consumer filters::tests::generic_container",
+    "accesskit_consumer filters::tests::hidden",
+    "accesskit_consumer filters::tests::hidden_but_focused",
+    "accesskit_consumer filters::tests::hidden_parent",
+    "accesskit_consumer filters::tests::hidden_parent_but_focused",
+    "accesskit_consumer filters::tests::normal",
+    "accesskit_consumer filters::tests::text_run"
+  ],
+  "PASS_TO_PASS": []
+}

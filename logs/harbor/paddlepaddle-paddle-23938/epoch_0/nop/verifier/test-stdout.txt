@@ -1,0 +1,225 @@
+patching file python/paddle/fluid/contrib/tests/test_fp16_utils.py
+patching file python/paddle/fluid/tests/unittests/CMakeLists.txt
+patching file python/paddle/fluid/tests/unittests/test_collective_optimizer.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace
+collecting ... collected 6 items
+
+../tests/test_fp16_utils.py::AMPTest::test_find_op_index FAILED          [ 16%]
+../tests/test_fp16_utils.py::AMPTest::test_find_true_post_op FAILED      [ 33%]
+../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy FAILED [ 50%]
+../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_ds_as_None PASSED [ 66%]
+../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_recompute_checkpoints FAILED [ 83%]
+../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_recompute_strategy FAILED [100%]
+
+=================================== FAILURES ===================================
+__________________________ AMPTest.test_find_op_index __________________________
+
+self = <test_fp16_utils.AMPTest testMethod=test_find_op_index>
+
+    def test_find_op_index(self):
+        block = fluid.default_main_program().global_block()
+        op_desc = core.OpDesc()
+>       idx = fp16_utils.find_op_index(block.desc, op_desc)
+E       AttributeError: module 'paddle.fluid.contrib.mixed_precision.fp16_utils' has no attribute 'find_op_index'
+
+../tests/test_fp16_utils.py:25: AttributeError
+________________________ AMPTest.test_find_true_post_op ________________________
+
+self = <test_fp16_utils.AMPTest testMethod=test_find_true_post_op>
+
+    def test_find_true_post_op(self):
+        block = fluid.default_main_program().global_block()
+    
+        var1 = block.create_var(name="X", shape=[3], dtype='float32')
+        var2 = block.create_var(name="Y", shape=[3], dtype='float32')
+        var3 = block.create_var(name="Z", shape=[3], dtype='float32')
+        op1 = block.append_op(
+            type="abs", inputs={"X": [var1]}, outputs={"Out": [var2]})
+        op2 = block.append_op(
+            type="abs", inputs={"X": [var2]}, outputs={"Out": [var3]})
+>       res = fp16_utils.find_true_post_op(block.ops, op1, "Y")
+E       AttributeError: module 'paddle.fluid.contrib.mixed_precision.fp16_utils' has no attribute 'find_true_post_op'
+
+../tests/test_fp16_utils.py:38: AttributeError
+__________________ CollectiveOptimizerTest.test_amp_strategy ___________________
+
+self = <test_collective_optimizer.CollectiveOptimizerTest testMethod=test_amp_strategy>
+
+    def test_amp_strategy(self):
+        optimizer = fluid.optimizer.AdamOptimizer()
+        optimizer = fluid.contrib.mixed_precision.decorate(
+            optimizer, init_loss_scaling=1.0, use_dynamic_loss_scaling=True)
+        dist_strategy = DistributedStrategy()
+        dist_strategy.use_amp = True
+        dist_optimizer = CollectiveOptimizer(optimizer, strategy=dist_strategy)
+>       self.assertRaises(ValueError, dist_optimizer.minimize, None)
+
+../tests/test_collective_optimizer.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def minimize(self,
+                 loss,
+                 startup_program=None,
+                 parameter_list=None,
+                 no_grad_set=None):
+        """
+        minimize a program through loss
+        Args:
+            loss (Variable|Variable List): loss variable or loss variable list to run optimization.
+            startup_program (Program): startup_program for initializing parameters
+                in `parameter_list`.
+            parameter_list (list): list of Variables to update.
+            no_grad_set (set|None): set of Variables should be ignored.
+        Returns:
+            tuple: (optimize_ops, params_grads) which are, list of operators appended;
+            and list of (param, grad) Variables pair for optimization.
+        Note that in parameter server mode, a worker will not get anything about optimize_os
+        Because optimizer algorithms run on pserver side. We will make this usable in pserver
+        process, but currently the optimization part is written into Fleet(). A user does not
+        need to care about how to startup a pserver node.
+        """
+>       main_program = loss.block.program
+E       AttributeError: 'NoneType' object has no attribute 'block'
+
+/usr/local/lib/python3.8/site-packages/paddle/fluid/incubate/fleet/collective/__init__.py:599: AttributeError
+______________ CollectiveOptimizerTest.test_recompute_checkpoints ______________
+
+self = <test_collective_optimizer.CollectiveOptimizerTest testMethod=test_recompute_checkpoints>
+
+    def test_recompute_checkpoints(self):
+        optimizer = fluid.optimizer.AdamOptimizer()
+        dist_strategy = DistributedStrategy()
+        dist_strategy.forward_recompute = True
+        dist_strategy.recompute_checkpoints = "NoneListTest"
+>       self.assertRaises(ValueError, CollectiveOptimizer, optimizer,
+                          dist_strategy)
+E       AssertionError: ValueError not raised by CollectiveOptimizer
+
+../tests/test_collective_optimizer.py:44: AssertionError
+_______________ CollectiveOptimizerTest.test_recompute_strategy ________________
+
+self = <test_collective_optimizer.CollectiveOptimizerTest testMethod=test_recompute_strategy>
+
+    def test_recompute_strategy(self):
+        optimizer = fluid.optimizer.AdamOptimizer()
+        optimizer = fluid.optimizer.RecomputeOptimizer(optimizer)
+        dist_strategy = DistributedStrategy()
+        dist_strategy.forward_recompute = True
+        dist_strategy.recompute_checkpoints = ["Test"]
+        dist_optimizer = CollectiveOptimizer(optimizer, strategy=dist_strategy)
+>       self.assertRaises(ValueError, dist_optimizer.minimize, None)
+
+../tests/test_collective_optimizer.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def minimize(self,
+                 loss,
+                 startup_program=None,
+                 parameter_list=None,
+                 no_grad_set=None):
+        """
+        minimize a program through loss
+        Args:
+            loss (Variable|Variable List): loss variable or loss variable list to run optimization.
+            startup_program (Program): startup_program for initializing parameters
+                in `parameter_list`.
+            parameter_list (list): list of Variables to update.
+            no_grad_set (set|None): set of Variables should be ignored.
+        Returns:
+            tuple: (optimize_ops, params_grads) which are, list of operators appended;
+            and list of (param, grad) Variables pair for optimization.
+        Note that in parameter server mode, a worker will not get anything about optimize_os
+        Because optimizer algorithms run on pserver side. We will make this usable in pserver
+        process, but currently the optimization part is written into Fleet(). A user does not
+        need to care about how to startup a pserver node.
+        """
+>       main_program = loss.block.program
+E       AttributeError: 'NoneType' object has no attribute 'block'
+
+/usr/local/lib/python3.8/site-packages/paddle/fluid/incubate/fleet/collective/__init__.py:599: AttributeError
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/framework.py:19
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/framework.py:19: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    from collections import Iterable
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/layers/utils.py:25
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/layers/utils.py:25: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    def convert_to_list(value, n, name, dtype=np.int):
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/dygraph/dygraph_to_static/utils.py:22
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/dygraph/dygraph_to_static/utils.py:22: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:838
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:838: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:932
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:932: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1480
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1480: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1594
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1594: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1710
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1710: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1976
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:1976: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2243
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2243: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2353
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2353: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2660
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2660: DeprecationWarning: invalid escape sequence \_
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2819
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:2819: DeprecationWarning: invalid escape sequence \|
+    """
+
+../../usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:4131
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/optimizer.py:4131: DeprecationWarning: invalid escape sequence \_
+    """
+
+tests/test_fp16_utils.py::AMPTest::test_find_true_post_op
+tests/test_fp16_utils.py::AMPTest::test_find_true_post_op
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/framework.py:2138: DeprecationWarning: an integer is required (got type paddle.fluid.core_avx.op_proto_and_checker_maker.OpRole).  Implicit conversion to integers using __int__ is deprecated, and may be removed in a future version of Python.
+    self.desc._set_attr(name, val)
+
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+  /usr/local/lib/python3.8/site-packages/paddle/fluid/framework.py:2138: DeprecationWarning: an integer is required (got type paddle.fluid.core_avx.VarType).  Implicit conversion to integers using __int__ is deprecated, and may be removed in a future version of Python.
+    self.desc._set_attr(name, val)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED ../tests/test_fp16_utils.py::AMPTest::test_find_op_index - AttributeEr...
+FAILED ../tests/test_fp16_utils.py::AMPTest::test_find_true_post_op - Attribu...
+FAILED ../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_amp_strategy
+FAILED ../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_recompute_checkpoints
+FAILED ../tests/test_collective_optimizer.py::CollectiveOptimizerTest::test_recompute_strategy
+=================== 5 failed, 1 passed, 24 warnings in 4.12s ===================
+reward=0 graded=6 found=0 failed=0 parsed=6 framework=pytest exit_code=1

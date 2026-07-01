@@ -1,0 +1,202 @@
+patching file test/__snapshots__/knative.spec.js.snap
+patching file test/__snapshots__/kubernetes.helm.spec.js.snap
+
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+yeoman-test: question istio was asked but answer was not provided
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+
+  JHipster Kubernetes Helm Sub Generator
+    only gateway
+      ✔ should match files snapshot (3ms)
+      ✔ creates expected registry files and content
+      ✔ creates expected gateway files and content (1ms)
+      ✔ create the apply script
+    gateway and mysql microservice
+      ✔ should match files snapshot (1ms)
+      ✔ creates expected registry files
+      ✔ creates expected gateway files
+      ✔ creates expected mysql files (1ms)
+      ✔ create the apply script (1ms)
+    mysql microservice with custom namespace
+      ✔ should match files snapshot (1ms)
+      ✔ creates expected registry files
+      ✔ creates expected mysql files
+      ✔ creates expected namespace file
+      ✔ create the apply script
+    gateway and ingress
+      ✔ should match files snapshot (1ms)
+      ✔ creates expected registry files
+      ✔ creates expected gateway files
+      ✔ creates expected ingress files (1ms)
+      ✔ create the apply script
+    MySQL and PostgreSQL microservices without gateway
+      ✔ should match files snapshot (1ms)
+      ✔ creates expected registry files (1ms)
+      ✔ doesn't creates gateway files (1ms)
+      ✔ creates expected mysql files
+      ✔ creates expected psql files
+      ✔ create the apply script
+    gateway, mysql, psql, mongodb, mariadb microservices
+      ✔ should match files snapshot (1ms)
+      ✔ creates expected registry files
+      ✔ creates expected gateway files (1ms)
+      ✔ creates expected mysql files (1ms)
+      ✔ creates expected psql files (1ms)
+      ✔ creates expected mongodb files (1ms)
+      ✔ creates expected mariadb files
+      ✔ create the apply script
+    monolith application
+      ✔ should match files snapshot (1ms)
+      ✔ doesn't creates registry files
+      ✔ creates expected default files
+      ✔ create the apply script
+    Kafka application
+      ✔ should match files snapshot (1ms)
+      ✔ creates expected default files (2ms)
+      ✔ create the apply script
+    mysql microservice with custom namespace and jhipster prometheus monitoring
+      ✔ should match files snapshot (4ms)
+      ✔ creates expected registry files
+      ✔ creates expected mysql files (1ms)
+      ✔ creates expected prometheus files
+      ✔ creates expected namespace file (1ms)
+      ✔ create the apply script
+    gateway with istio
+      ✔ should match files snapshot (1ms)
+      ✔ creates expected registry files (2ms)
+      ✔ creates expected service gateway files (2ms)
+      ✔ creates expected routing gateway and istio files
+      ✔ create the apply script
+
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+/bin/sh: 1: kubectl: not found
+
+  JHipster Knative Sub Generator
+    Using K8s generator type
+      only gateway
+        ✔ should match files snapshot (3ms)
+        ✔ creates expected registry files and content (37ms)
+        ✔ creates expected gateway files and content
+        ✔ create the apply script
+      gateway and mysql microservice
+        ✔ should match files snapshot (2ms)
+        ✔ creates expected registry files
+        ✔ creates expected gateway files
+        ✔ creates expected mysql files (1ms)
+        ✔ create the apply script
+      mysql microservice with custom namespace
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ creates expected mysql files (1ms)
+        ✔ creates expected namespace file
+        ✔ create the apply script
+      gateway and ingress
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files (1ms)
+        ✔ creates expected gateway files (1ms)
+        ✔ create the apply script
+      MySQL and PostgreSQL microservices without gateway
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ doesn't creates gateway files (1ms)
+        ✔ creates expected mysql files
+        ✔ creates expected psql files
+        ✔ create the apply script
+      gateway, mysql, psql, mongodb, mariadb, mssql microservices
+        ✔ should match files snapshot (2ms)
+        ✔ creates expected registry files
+        ✔ creates expected gateway files (1ms)
+        ✔ creates expected mysql files
+        ✔ creates expected psql files
+        ✔ creates expected mongodb files
+        ✔ creates expected mariadb files
+        ✔ creates expected mssql files
+        ✔ create the apply script
+      mysql microservice with custom namespace and jhipster prometheus monitoring
+        ✔ should match files snapshot (4ms)
+        ✔ creates expected registry files
+        ✔ creates expected mysql files
+        ✔ creates expected prometheus files (1ms)
+        ✔ creates expected namespace file
+        ✔ create the apply script
+      gateway with istio routing files
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ creates expected service gateway files
+        ✔ creates expected routing gateway and istio files
+        ✔ create the apply script
+    Using Helm generator type
+      only gateway
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files and content (1ms)
+        ✔ creates expected gateway files and content (1ms)
+        ✔ create the apply script
+      gateway and mysql microservice
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ creates expected gateway files
+        ✔ creates expected mysql files
+        ✔ create the apply script
+      mysql microservice with custom namespace
+        ✔ should match files snapshot (2ms)
+        ✔ creates expected registry files
+        ✔ creates expected mysql files
+        ✔ creates expected namespace file
+        ✔ create the apply script
+      gateway and ingress
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files (1ms)
+        ✔ creates expected gateway files (1ms)
+        ✔ creates expected ingress files
+        ✔ create the apply script
+      MySQL and PostgreSQL microservices without gateway
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files
+        ✔ doesn't creates gateway files
+        ✔ creates expected mysql files (1ms)
+        ✔ creates expected psql files
+        ✔ create the apply script
+      gateway, mysql, psql, mongodb, mariadb microservices
+        ✔ should match files snapshot (1ms)
+        ✔ creates expected registry files (1ms)
+        ✔ creates expected gateway files
+        ✔ creates expected mysql files
+        ✔ creates expected psql files
+        ✔ creates expected mongodb files
+        ✔ creates expected mariadb files (1ms)
+        ✔ create the apply script
+      mysql microservice with custom namespace and jhipster prometheus monitoring
+        ✔ should match files snapshot (3ms)
+        ✔ creates expected registry files
+        ✔ creates expected mysql files (1ms)
+        ✔ creates expected prometheus files
+        ✔ creates expected namespace file
+        ✔ create the apply script
+      gateway with istio routing files
+        ✔ should match files snapshot
+        ✔ creates expected registry files
+        ✔ creates expected service gateway files (1ms)
+        ✔ creates expected routing gateway and istio files
+        ✔ create the apply script
+
+
+  139 passing (11s)
+
+reward=1 graded=139 found=139 failed=0 parsed=19 framework=mocha exit_code=0

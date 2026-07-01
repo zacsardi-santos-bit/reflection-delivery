@@ -1,0 +1,12 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test ./internal/cmd -run=TestScript -count=1 -filter='^issue4181'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/twpayne/chezmoi/v2/internal/cmd::TestScript",
+    "github.com/twpayne/chezmoi/v2/internal/cmd::TestScript/issue4181"
+  ],
+  "PASS_TO_PASS": []
+}

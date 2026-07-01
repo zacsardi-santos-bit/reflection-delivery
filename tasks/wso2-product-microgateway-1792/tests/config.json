@@ -1,0 +1,38 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/adapter && MGW_HOME=/workspace/repo/resources go test -json ./internal/oasparser/envoyconf -count=1",
+  "test_files": [
+    "adapter/internal/oasparser/envoyconf/envoyconf_internal_test.go",
+    "integration/test-integration/src/test/java/org/wso2am/micro/gw/tests/testCaseBefore/MgwWithJwtConfig.java",
+    "integration/test-integration/src/test/java/org/wso2am/micro/gw/tests/testCases/security/CorsTestCase.java",
+    "integration/test-integration/src/test/resources/apim/config.toml",
+    "integration/test-integration/src/test/resources/jwtGenerator/config.toml",
+    "integration/test-integration/src/test/resources/openAPIs/cors_openAPI.yaml",
+    "integration/test-integration/src/test/resources/openAPIs/global_cors_openAPI.yaml",
+    "integration/test-integration/src/test/resources/testng.xml"
+  ],
+  "num_test_files": 8,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestGenerateRoutePaths",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRoute",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRouteClusterSpecifier",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRouteExtAuthzContext",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestGenerateTLSCert",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestGenerateRegex",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateUpstreamTLSContext",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestGetCorsPolicy",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateListenerWithRds",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateVirtualHost",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRoutesConfigForRds",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRoutesWithClustersForOpenAPIWithoutExtensions",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRoutesWithClustersForOpenAPIWithExtensionsOnly",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRoutesWithClustersForOpenAPIWithExtensionsServers",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRouteswithClustersWebsocketProdSand",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRouteswithClustersWebsocketProd",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRouteswithClustersWebsocketSand",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateHealthEndpoint",
+    "github.com/wso2/micro-gw/internal/oasparser/envoyconf::TestCreateRoutesWithClusters"
+  ],
+  "PASS_TO_PASS": []
+}

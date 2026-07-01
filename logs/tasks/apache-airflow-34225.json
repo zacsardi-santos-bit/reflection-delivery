@@ -1,0 +1,23 @@
+{
+ "task": "apache-airflow-34225",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds EmrServerlessS3LogsLink/EmrServerlessCloudWatchLogsLink/EmrServerlessDashboardLink and 'enable_application_ui_links ... Defaults to False'; test.sh runs pytest test_emr.py + test_emr_serverless.py"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 33,
+  "shallow": true
+ }
+}

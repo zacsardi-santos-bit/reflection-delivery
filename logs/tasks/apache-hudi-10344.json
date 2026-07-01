@@ -1,0 +1,23 @@
+{
+ "task": "apache-hudi-10344",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: 'ExternalSpillableMap ... implements Map, Serializable, Closeable' + null-guards e.g. 'return diskBasedMap == null ? 0 : diskBasedMap.size()' and isEmpty via getDiskBasedMapNumEntries()==0; test uses try(ExternalSpillableMap ...) and assertTrue(records.keySet().isEmpty())"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 13,
+  "shallow": true
+ }
+}

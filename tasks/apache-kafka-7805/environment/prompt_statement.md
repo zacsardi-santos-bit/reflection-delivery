@@ -1,0 +1,7 @@
+I'm running into a problem where consumers and producers get blocked during partition reassignments. The root cause seems to be that when an older broker sends metadata responses, the leader epoch information it includes isn't reliable — specifically, the broker doesn't accurately propagate updated epochs while a reassignment is underway. My client caches those stale epochs and then forwards them in requests, causing the broker to reject the requests because the epoch is "fenced."
+
+I need a way to signal, on the metadata response itself, whether the leader epochs it contains can be trusted. For responses received via an older version of the binary wire-format path that predates reliable epoch propagation, the epochs should not be trusted, and the client should store a sentinel "no epoch" value instead of whatever the response says. For responses received via a sufficiently modern wire-format version, or constructed from modern typed data objects, the epochs should be considered reliable.
+
+On top of that, when a metadata update arrives with a lower epoch than what is already cached for a partition, the update should be treated as stale and ignored — the existing cached partition info (ISR, epoch, replicas) should be left unchanged. The cached "last seen epoch" for the partition should also remain at the higher value, not be overwritten by the stale update.
+
+Fixing both issues should allow consumers and producers to keep working normally throughout the duration of a partition reassignment, rather than being blocked by fenced-epoch errors.

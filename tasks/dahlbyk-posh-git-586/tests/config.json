@@ -1,0 +1,24 @@
+{
+  "test_framework": "junit",
+  "test_command": "sed -i 's/if (($PSVersionTable.PSVersion.Major -lt 6) -or $IsWindows)/if ($true)/g' /workspace/repo/src/GitUtils.ps1 2>/dev/null; pwsh -Command \"Invoke-Pester -Path '/workspace/repo/test/Ssh.Tests.ps1' -OutputFile '/workspace/test-results/output.xml' -OutputFormat JUnitXml -PassThru\"; cat /workspace/test-results/output.xml",
+  "test_files": [
+    "test/Ssh.Tests.ps1"
+  ],
+  "num_test_files": 1,
+  "language": "powershell",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Win32-OpenSSH Tests.Finds the service",
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Win32-OpenSSH Tests.Starts the service when stopped and user is admin",
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Win32-OpenSSH Tests.Starts and Enables the service when disabled and user is admin",
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Win32-OpenSSH Tests.Doesn't enable the service when user is not an admin",
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Win32-OpenSSH Tests.Adds keys if not already added",
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Win32-OpenSSH Tests.Doesn't add keys if already added",
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Win32-OpenSSH Tests.Sets the sshCommand in .gitconfig",
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Win32-OpenSSH Tests.Doesn't set the sshCommand in .gitconfig if it's already populated"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Get-SshPath Tests.Returns the correct default path",
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Get-SshPath Tests.Returns the correct path for a given filename",
+    "/workspace/repo/test/Ssh.Tests.ps1::SSH Function Tests.Get-SshPath Tests.Returns the correct path, given $Env:Home is not defined ($null)"
+  ]
+}

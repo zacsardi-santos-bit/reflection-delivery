@@ -1,0 +1,75 @@
+patching file packages/theme/src/cli/services/profile.test.ts
+patching file packages/theme/src/cli/utilities/errors.test.ts
+patching file packages/theme/src/cli/utilities/theme-environment/hot-reload/server.test.ts
+patching file packages/theme/src/cli/utilities/theme-environment/proxy.test.ts
+patching file packages/theme/src/cli/utilities/theme-environment/storefront-renderer.test.ts
+patching file packages/theme/src/cli/utilities/theme-environment/theme-environment.test.ts
+
+ RUN  v1.6.1 /workspace/repo/packages/theme
+
+ ✓ src/cli/utilities/errors.test.ts > errors > renderThrownError > renders AbortError with fatal error UI
+ ✓ src/cli/utilities/errors.test.ts > errors > renderThrownError > renders regular Error with error UI and debug output
+ ✓ src/cli/utilities/errors.test.ts > errors > createSyncingCatchError > creates error handler for delete preset
+ ✓ src/cli/utilities/errors.test.ts > errors > createSyncingCatchError > creates error handler for upload preset
+ ✓ src/cli/utilities/errors.test.ts > errors > createSyncingCatchError > creates error handler with custom headline
+ ✓ src/cli/utilities/errors.test.ts > errors > createAbortCatchError > creates error handler that exits process
+ ✓ src/cli/utilities/errors.test.ts > errors > createFetchError > creates FetchError from Response-like object
+ ✓ src/cli/utilities/errors.test.ts > errors > createFetchError > creates FetchError with defaults for missing properties
+ ✓ src/cli/utilities/errors.test.ts > errors > extractFetchErrorInfo > extracts info from FetchError with all properties
+ ✓ src/cli/utilities/errors.test.ts > errors > extractFetchErrorInfo > extracts info with defaults for regular Error
+ ✓ src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using storefront API
+ ✓ src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using theme access API
+ ✓ src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using the section_id
+ ✓ src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using the app_block_id
+ ✓ src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using the section_id when section_id and app_block_id are provided
+ ✓ src/cli/utilities/theme-environment/storefront-renderer.test.ts > render > renders using query parameters
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies Vanity CDN to through local server
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies requests to main global CDN for known local assets through local server
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies requests to main global CDN for known local theme extension assets through local server
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies urls in JS files
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > injectCdnProxy > proxies urls in Link header
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > patchRenderingResponse > replaces CDN links in body and headers
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > getProxyStorefrontHeaders > filters out hop-by-hop headers and adds required headers
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy non-GET requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy Cart requests as they are not supported by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy Checkout requests as they are not supported by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy CDN requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy CDN requests for extensions
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy requests with file extensions
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy requests with a non-default accept header
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should not proxy requests with a default accept header and no extension, allowing them to be rendered by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should not proxy HTML requests (based on the extension), allowing them to be rendered by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should not proxy HTML requests (based on the "accept" header), allowing them to be rendered by the SFR client
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy the /account requests as it may result on a 302 that must be followd
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should not proxy the /account/login requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy /account/login/multipass and /account/login/multipass/ requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy /account/login/multipass/<token> requests
+ ✓ src/cli/utilities/theme-environment/proxy.test.ts > dev proxy > canProxyRequest > should proxy /account/logout requests
+ ✓ src/cli/services/profile.test.ts > profile > outputs JSON to stdout when asJson is true
+ ✓ src/cli/services/profile.test.ts > profile > opens profile in browser when asJson is false
+ ✓ src/cli/services/profile.test.ts > profile > uses provided passwords for authentication
+ ✓ src/cli/services/profile.test.ts > profile > throws error when fetch fails
+ ✓ src/cli/services/profile.test.ts > profile > throws error when response status is not 200
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > should upload the development theme to remote
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > should initialize theme editor sync if themeEditorSync flag is passed
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > should skip deletion of remote files if noDelete flag is passed
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > mocks known endpoints
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > serves proxied local assets
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > serves local assets from the root in a backward compatible way
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > gets the right content for assets with non-breaking spaces
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > renders HTML
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > proxies other requests to SFR
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > proxies .css.liquid assets with injected CDN
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > proxies .js.liquid assets replacing the error query string
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > falls back to proxying if a rendering request fails with 4xx status
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > forwards rendering error after proxy failure
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > renders error page on network errors with hot reload script injected
+ ✓ src/cli/utilities/theme-environment/theme-environment.test.ts > setupDevServer > request handling > renders error page on upload errors with hot reload script injected
+ ✓ src/cli/utilities/theme-environment/hot-reload/server.test.ts > hot-reload server > emits hot-reload events with proper data
+
+ Test Files  6 passed (6)
+      Tests  59 passed (59)
+   Start at  15:32:20
+   Duration  4.53s (transform 2.22s, setup 27ms, collect 12.99s, tests 247ms, environment 1ms, prepare 1.30s)
+
+reward=1 (grader error: Extra data: line 78 column 1 (char 10707); fell back to exit_code=0)

@@ -1,0 +1,26 @@
+{
+  "test_framework": "jest",
+  "test_command": "mkdir -p /data/db && mongod --logpath /var/log/mongod.log & sleep 5 && cd /workspace/repo && PAYLOAD_TEST_MONGO_URL=mongodb://127.0.0.1/payloadtests ./node_modules/.bin/jest test/database/int.spec.ts --coverage=false --verbose --forceExit --detectOpenHandles",
+  "test_files": [
+    "test/buildConfigWithDefaults.ts",
+    "test/database/.gitignore",
+    "test/database/config.ts",
+    "test/database/int.spec.ts",
+    "test/generateGraphQLSchema.ts",
+    "test/generateTypes.ts",
+    "test/helpers/setTestEnvPaths.ts"
+  ],
+  "num_test_files": 7,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/database/int.spec.ts::database migrations should run migrate:fresh"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/test/database/int.spec.ts::database migrations should run migrate:create",
+    "/workspace/repo/test/database/int.spec.ts::database migrations should run migrate",
+    "/workspace/repo/test/database/int.spec.ts::database migrations should run migrate:status",
+    "/workspace/repo/test/database/int.spec.ts::database transactions local api should commit multiple operations in isolation",
+    "/workspace/repo/test/database/int.spec.ts::database transactions local api should commit multiple operations async",
+    "/workspace/repo/test/database/int.spec.ts::database transactions local api should rollback operations on failure"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p cairo-lang-doc --no-fail-fast",
+  "test_files": [
+    "crates/cairo-lang-doc/src/tests/mod.rs",
+    "crates/cairo-lang-doc/src/tests/test-data/basic.txt",
+    "crates/cairo-lang-doc/src/tests/test-data/comment_markers.txt",
+    "crates/cairo-lang-doc/src/tests/test-data/signature.txt",
+    "crates/cairo-lang-doc/src/tests/test-data/signature_links.txt",
+    "crates/cairo-lang-doc/src/tests/test-data/trivia.txt",
+    "crates/cairo-lang-doc/src/tests/test.rs",
+    "crates/cairo-lang-doc/src/tests/test_documentable_formatter.rs",
+    "crates/cairo-lang-doc/src/tests/test_utils.rs"
+  ],
+  "num_test_files": 9,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/7) cairo-lang-doc markdown::test::fenced_code_blocks",
+    "(2/7) cairo-lang-doc tests::test::item_documentation::comment_markers",
+    "(3/7) cairo-lang-doc tests::test_documentable_formatter::item_documentation::signature_links",
+    "(4/7) cairo-lang-doc tests::test::item_documentation::trivia",
+    "(5/7) cairo-lang-doc tests::test::item_documentation::signature",
+    "(6/7) cairo-lang-doc tests::test::item_documentation::submodule",
+    "(7/7) cairo-lang-doc tests::test::item_documentation::basic"
+  ],
+  "PASS_TO_PASS": []
+}

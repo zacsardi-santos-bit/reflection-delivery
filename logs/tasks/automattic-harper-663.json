@@ -1,0 +1,23 @@
+{
+ "task": "automattic-harper-663",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden create_linter_map_phrase!(MutePoint, ExactPhrase::from_phrase(\"mute point\"), \"moot point\", ...); test.patch adds mute_point_corrects asserting assert_suggestion_result(\"mute point\", MutePoint::default(), \"moot point\")"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

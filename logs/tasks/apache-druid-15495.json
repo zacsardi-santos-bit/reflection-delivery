@@ -1,0 +1,23 @@
+{
+ "task": "apache-druid-15495",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden fixes eternity tombstone bug: 'if (Intervals.isEternity(overlap)) { ... retVal.add(overlap); }'; test.patch adds testTombstoneIntervalsForReplaceOverEternityInterval asserting 'ImmutableSet.of(Intervals.ETERNITY)' tombstone"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 51,
+  "shallow": true
+ }
+}

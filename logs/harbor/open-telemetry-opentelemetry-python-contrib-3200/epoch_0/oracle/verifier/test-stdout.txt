@@ -1,0 +1,26 @@
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_converse_with_content.yaml
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_converse_with_invalid_model.yaml
+patching file 'instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_content[amazon.nova].yaml'
+patching file 'instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_content[amazon.titan].yaml'
+patching file 'instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_content[anthropic.claude].yaml'
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_invalid_model.yaml
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/conftest.py
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: vcr-1.0.2
+collecting ... collected 6 items
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_converse_with_content PASSED [ 16%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_converse_with_invalid_model PASSED [ 33%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_invoke_model_with_content[amazon.nova] PASSED [ 50%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_invoke_model_with_content[amazon.titan] PASSED [ 66%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_invoke_model_with_content[anthropic.claude] PASSED [ 83%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_invoke_model_with_invalid_model PASSED [100%]
+
+============================== 6 passed in 0.52s ===============================
+reward=1 graded=6 found=0 failed=0 parsed=6 framework=pytest exit_code=0

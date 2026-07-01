@@ -1,0 +1,23 @@
+{
+ "task": "mimblewimble-grin-2951",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P test asserts real behavior: 'let header = chain.txhashset_archive_header().unwrap(); assert_eq!(10, header.height);' and golden adds 'pub fn txhashset_archive_header(&self)' computing head-threshold rounded to interval."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

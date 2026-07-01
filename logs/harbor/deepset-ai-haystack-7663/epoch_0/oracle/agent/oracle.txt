@@ -1,0 +1,3 @@
+patching file haystack/components/builders/chat_prompt_builder.py
+patching file haystack/components/builders/dynamic_chat_prompt_builder.py
+patching file releasenotes/notes/add-chatpromptbuilder-19acd18a6486909d.yaml

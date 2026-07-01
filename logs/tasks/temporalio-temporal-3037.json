@@ -1,0 +1,23 @@
+{
+ "task": "temporalio-temporal-3037",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden renames `All[T]()`/`AllImpl` to `Universal[T]()`/`UniversalImpl` (all.go -> universal.go) and updates and.go/or.go/not.go/proto; F2P=98 incl TestUniversalSuite plus And/Or/Not behavior suites"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

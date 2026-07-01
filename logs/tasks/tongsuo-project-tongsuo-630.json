@@ -1,0 +1,23 @@
+{
+ "task": "tongsuo-project-tongsuo-630",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'RECORD_LAYER_data_present' (checks rstate==SSL_ST_READ_BODY / processed_read_pending) and guards SSL_free_buffers with 'if (RECORD_LAYER_data_present(rl)) return 0;'; F2P=test_free_buffers (8 subtests incl partial-pipeline cases) run via ./test/sslbuffertest; P2P=test_func"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 23,
+  "shallow": true
+ }
+}

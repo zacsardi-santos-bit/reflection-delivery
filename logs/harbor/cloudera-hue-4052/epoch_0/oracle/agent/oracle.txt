@@ -1,0 +1,10 @@
+patching file desktop/core/src/desktop/js/apps/admin/Metrics/Metrics.scss
+patching file desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTab.tsx
+patching file desktop/core/src/desktop/js/apps/admin/Metrics/MetricsTable.tsx
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageDirectoryActions/FileAndFolder/ChangePermissionModal/ChangePermissionModal.tsx
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageDirectoryPage.scss
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageDirectoryPage.tsx
+patching file desktop/core/src/desktop/js/apps/storageBrowser/types.ts
+patching file desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.scss
+patching file desktop/core/src/desktop/js/reactComponents/PaginatedTable/PaginatedTable.tsx
+patching file desktop/core/src/desktop/js/reactComponents/Pagination/Pagination.tsx

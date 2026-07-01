@@ -1,0 +1,23 @@
+{
+ "task": "rust-lang-rust-analyzer-16372",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'ImportGranularity::One' variant + 'MergeBehavior::One'; test.patch's tests.rs adds TEST_CONFIG_IMPORT_ONE referencing ImportGranularity::One, so pre-patch the whole ide-assists crate fails to compile -> all 2218 F2P are compile-gated"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

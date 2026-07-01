@@ -1,0 +1,112 @@
+patching file cloud/store/store_test.go
+patching file cloud/transport/service_test.go
+patching file cloud/utils/utils_test.go (renamed from cloud/store/raft.go)
+{"Time":"2026-06-29T15:32:49.783817965Z","Action":"start","Package":"github.com/weaviate/weaviate/cloud/store"}
+{"Time":"2026-06-29T15:32:49.784046113Z","Action":"start","Package":"github.com/weaviate/weaviate/cloud/transport"}
+{"Time":"2026-06-29T15:32:49.784295322Z","Action":"start","Package":"github.com/weaviate/weaviate/cloud/utils"}
+{"Time":"2026-06-29T15:32:49.789696248Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/utils","Test":"TestFreeTcpPort"}
+{"Time":"2026-06-29T15:32:49.789764287Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/utils","Test":"TestFreeTcpPort","Output":"=== RUN   TestFreeTcpPort\n"}
+{"Time":"2026-06-29T15:32:49.790984959Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/utils","Test":"TestFreeTcpPort","Output":"--- PASS: TestFreeTcpPort (0.00s)\n"}
+{"Time":"2026-06-29T15:32:49.791033269Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/utils","Test":"TestFreeTcpPort","Elapsed":0}
+{"Time":"2026-06-29T15:32:49.791070239Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/utils","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:49.791430867Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/utils","Output":"ok  \tgithub.com/weaviate/weaviate/cloud/utils\t0.007s\n"}
+{"Time":"2026-06-29T15:32:49.791481326Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/utils","Elapsed":0.007}
+{"Time":"2026-06-29T15:32:49.807116568Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestBootStrapper"}
+{"Time":"2026-06-29T15:32:49.807156777Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestBootStrapper","Output":"=== RUN   TestBootStrapper\n"}
+{"Time":"2026-06-29T15:32:49.807360636Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService"}
+{"Time":"2026-06-29T15:32:49.807400656Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService","Output":"=== RUN   TestService\n"}
+{"Time":"2026-06-29T15:32:49.859168709Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Notify"}
+{"Time":"2026-06-29T15:32:49.859232949Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Notify","Output":"=== RUN   TestService/Notify\n"}
+{"Time":"2026-06-29T15:32:49.863299793Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Notify","Output":"--- PASS: TestService/Notify (0.00s)\n"}
+{"Time":"2026-06-29T15:32:49.863371893Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Notify","Elapsed":0}
+{"Time":"2026-06-29T15:32:49.863398962Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Join"}
+{"Time":"2026-06-29T15:32:49.863424242Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Join","Output":"=== RUN   TestService/Join\n"}
+{"Time":"2026-06-29T15:32:49.866777571Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Join","Output":"--- PASS: TestService/Join (0.00s)\n"}
+{"Time":"2026-06-29T15:32:49.866843781Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Join","Elapsed":0}
+{"Time":"2026-06-29T15:32:49.86687637Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Remove"}
+{"Time":"2026-06-29T15:32:49.86689947Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Remove","Output":"=== RUN   TestService/Remove\n"}
+{"Time":"2026-06-29T15:32:49.868728529Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Remove","Output":"--- PASS: TestService/Remove (0.00s)\n"}
+{"Time":"2026-06-29T15:32:49.868759429Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Remove","Elapsed":0}
+{"Time":"2026-06-29T15:32:49.868783928Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Apply"}
+{"Time":"2026-06-29T15:32:49.868823098Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Apply","Output":"=== RUN   TestService/Apply\n"}
+{"Time":"2026-06-29T15:32:49.870541177Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Apply","Output":"--- PASS: TestService/Apply (0.00s)\n"}
+{"Time":"2026-06-29T15:32:49.870591517Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService/Apply","Elapsed":0}
+{"Time":"2026-06-29T15:32:49.870621717Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService","Output":"--- PASS: TestService (0.06s)\n"}
+{"Time":"2026-06-29T15:32:49.870645237Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestService","Elapsed":0.06}
+{"Time":"2026-06-29T15:32:49.870669617Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient"}
+{"Time":"2026-06-29T15:32:49.870692876Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient","Output":"=== RUN   TestClient\n"}
+{"Time":"2026-06-29T15:32:49.870716626Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient","Output":"=== PAUSE TestClient\n"}
+{"Time":"2026-06-29T15:32:49.870738456Z","Action":"pause","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient"}
+{"Time":"2026-06-29T15:32:49.870761336Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestPCResolver"}
+{"Time":"2026-06-29T15:32:49.870783826Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestPCResolver","Output":"=== RUN   TestPCResolver\n"}
+{"Time":"2026-06-29T15:32:49.870807876Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestPCResolver","Output":"--- PASS: TestPCResolver (0.00s)\n"}
+{"Time":"2026-06-29T15:32:49.870830816Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestPCResolver","Elapsed":0}
+{"Time":"2026-06-29T15:32:49.870853515Z","Action":"cont","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient"}
+{"Time":"2026-06-29T15:32:49.870875905Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient","Output":"=== CONT  TestClient\n"}
+{"Time":"2026-06-29T15:32:49.870898475Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient/Resolve"}
+{"Time":"2026-06-29T15:32:49.870920255Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient/Resolve","Output":"=== RUN   TestClient/Resolve\n"}
+{"Time":"2026-06-29T15:32:49.870951045Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient/Resolve","Output":"--- PASS: TestClient/Resolve (0.00s)\n"}
+{"Time":"2026-06-29T15:32:49.870973795Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient/Resolve","Elapsed":0}
+{"Time":"2026-06-29T15:32:49.870997214Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient/Dial"}
+{"Time":"2026-06-29T15:32:49.871018784Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient/Dial","Output":"=== RUN   TestClient/Dial\n"}
+{"Time":"2026-06-29T15:32:49.871042314Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient/Dial","Output":"--- PASS: TestClient/Dial (0.00s)\n"}
+{"Time":"2026-06-29T15:32:49.871064914Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient/Dial","Elapsed":0}
+{"Time":"2026-06-29T15:32:49.871088124Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient","Output":"--- PASS: TestClient (0.00s)\n"}
+{"Time":"2026-06-29T15:32:49.871110084Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Test":"TestClient","Elapsed":0}
+{"Time":"2026-06-29T15:32:49.871146604Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:49.871562841Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/transport","Output":"ok  \tgithub.com/weaviate/weaviate/cloud/transport\t0.087s\n"}
+{"Time":"2026-06-29T15:32:49.87164116Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/transport","Elapsed":0.088}
+{"Time":"2026-06-29T15:32:50.013502275Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestBootStrapper","Output":"--- PASS: TestBootStrapper (0.21s)\n"}
+{"Time":"2026-06-29T15:32:50.013570775Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestBootStrapper","Elapsed":0.21}
+{"Time":"2026-06-29T15:32:50.013597715Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaReaderShardReplicas"}
+{"Time":"2026-06-29T15:32:50.013620294Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaReaderShardReplicas","Output":"=== RUN   TestSchemaReaderShardReplicas\n"}
+{"Time":"2026-06-29T15:32:50.013651664Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaReaderShardReplicas","Output":"--- PASS: TestSchemaReaderShardReplicas (0.00s)\n"}
+{"Time":"2026-06-29T15:32:50.013678754Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaReaderShardReplicas","Elapsed":0}
+{"Time":"2026-06-29T15:32:50.013703664Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaReaderClass"}
+{"Time":"2026-06-29T15:32:50.013726184Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaReaderClass","Output":"=== RUN   TestSchemaReaderClass\n"}
+{"Time":"2026-06-29T15:32:50.013749654Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaReaderClass","Output":"--- PASS: TestSchemaReaderClass (0.00s)\n"}
+{"Time":"2026-06-29T15:32:50.013776793Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaReaderClass","Elapsed":0}
+{"Time":"2026-06-29T15:32:50.013799353Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaSnapshot"}
+{"Time":"2026-06-29T15:32:50.013820953Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaSnapshot","Output":"=== RUN   TestSchemaSnapshot\n"}
+{"Time":"2026-06-29T15:32:50.014137881Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaSnapshot","Output":"--- PASS: TestSchemaSnapshot (0.00s)\n"}
+{"Time":"2026-06-29T15:32:50.014162631Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestSchemaSnapshot","Elapsed":0}
+{"Time":"2026-06-29T15:32:50.014185831Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints"}
+{"Time":"2026-06-29T15:32:50.014209141Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"=== RUN   TestServiceEndpoints\n"}
+{"Time":"2026-06-29T15:32:50.046953384Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:50.046Z [INFO]  raft: initial configuration: index=0 servers=[]\n"}
+{"Time":"2026-06-29T15:32:50.047179883Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:50.047Z [INFO]  raft: entering follower state: follower=\"Node at 127.0.0.1:64173 [Follower]\" leader-address= leader-id=\n"}
+{"Time":"2026-06-29T15:32:51.654637137Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.654Z [WARN]  raft: heartbeat timeout reached, starting election: last-leader-addr= last-leader-id=\n"}
+{"Time":"2026-06-29T15:32:51.654698227Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.654Z [INFO]  raft: entering candidate state: node=\"Node at 127.0.0.1:64173 [Candidate]\" term=2\n"}
+{"Time":"2026-06-29T15:32:51.654948935Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.654Z [INFO]  raft: election won: term=2 tally=1\n"}
+{"Time":"2026-06-29T15:32:51.654974605Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.654Z [INFO]  raft: entering leader state: leader=\"Node at 127.0.0.1:64173 [Leader]\"\n"}
+{"Time":"2026-06-29T15:32:51.758562172Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.758Z [INFO]  raft: updating configuration: command=AddVoter server-id=Node-1 server-addr=localhost:64173 servers=\"[{Suffrage:Voter ID:Node-1 Address:localhost:64173}]\"\n"}
+{"Time":"2026-06-29T15:32:51.758671362Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.758Z [INFO]  raft: updating configuration: command=AddNonvoter server-id=Node-1 server-addr=localhost:64173 servers=\"[{Suffrage:Voter ID:Node-1 Address:localhost:64173}]\"\n"}
+{"Time":"2026-06-29T15:32:51.75897165Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.758Z [INFO]  raft: starting snapshot up to: index=15\n"}
+{"Time":"2026-06-29T15:32:51.75900467Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.758Z [INFO]  snapshot: creating new snapshot: path=/tmp/TestServiceEndpoints2253552429/001/snapshots/2-15-1782747171758.tmp\n"}
+{"Time":"2026-06-29T15:32:51.759552156Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.759Z [INFO]  raft: snapshot complete up to: index=15\n"}
+{"Time":"2026-06-29T15:32:51.76057921Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.760Z [INFO]  raft: starting restore from snapshot: id=2-15-1782747171758 last-index=15 last-term=2 size-in-bytes=524\n"}
+{"Time":"2026-06-29T15:32:51.760822818Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.760Z [INFO]  raft: snapshot restore progress: id=2-15-1782747171758 last-index=15 last-term=2 size-in-bytes=524 read-bytes=524 percent-complete=\"100.00%\"\n"}
+{"Time":"2026-06-29T15:32:51.760847638Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.760Z [INFO]  raft: restored from snapshot: id=2-15-1782747171758 last-index=15 last-term=2 size-in-bytes=524\n"}
+{"Time":"2026-06-29T15:32:51.760871068Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.760Z [INFO]  raft: initial configuration: index=14 servers=\"[{Suffrage:Voter ID:Node-1 Address:localhost:64173}]\"\n"}
+{"Time":"2026-06-29T15:32:51.760900578Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:51.760Z [INFO]  raft: entering follower state: follower=\"Node at 127.0.0.1:64173 [Follower]\" leader-address= leader-id=\n"}
+{"Time":"2026-06-29T15:32:53.499247869Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:53.499Z [WARN]  raft: heartbeat timeout reached, starting election: last-leader-addr= last-leader-id=\n"}
+{"Time":"2026-06-29T15:32:53.499299109Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:53.499Z [INFO]  raft: entering candidate state: node=\"Node at 127.0.0.1:64173 [Candidate]\" term=3\n"}
+{"Time":"2026-06-29T15:32:53.499599697Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:53.499Z [INFO]  raft: election won: term=3 tally=1\n"}
+{"Time":"2026-06-29T15:32:53.499629557Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"2026-06-29T15:32:53.499Z [INFO]  raft: entering leader state: leader=\"Node at 127.0.0.1:64173 [Leader]\"\n"}
+{"Time":"2026-06-29T15:32:53.566352076Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Output":"--- PASS: TestServiceEndpoints (3.55s)\n"}
+{"Time":"2026-06-29T15:32:53.566431405Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceEndpoints","Elapsed":3.55}
+{"Time":"2026-06-29T15:32:53.566567854Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceStoreInit"}
+{"Time":"2026-06-29T15:32:53.566639284Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceStoreInit","Output":"=== RUN   TestServiceStoreInit\n"}
+{"Time":"2026-06-29T15:32:53.566668764Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceStoreInit","Output":"--- PASS: TestServiceStoreInit (0.00s)\n"}
+{"Time":"2026-06-29T15:32:53.566691584Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServiceStoreInit","Elapsed":0}
+{"Time":"2026-06-29T15:32:53.566715163Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServicePanics"}
+{"Time":"2026-06-29T15:32:53.566736863Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServicePanics","Output":"=== RUN   TestServicePanics\n"}
+{"Time":"2026-06-29T15:32:53.567162961Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServicePanics","Output":"--- PASS: TestServicePanics (0.00s)\n"}
+{"Time":"2026-06-29T15:32:53.56719312Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestServicePanics","Elapsed":0}
+{"Time":"2026-06-29T15:32:53.56721663Z","Action":"run","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestStoreApply"}
+{"Time":"2026-06-29T15:32:53.56723873Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestStoreApply","Output":"=== RUN   TestStoreApply\n"}
+{"Time":"2026-06-29T15:32:53.570733978Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestStoreApply","Output":"--- PASS: TestStoreApply (0.00s)\n"}
+{"Time":"2026-06-29T15:32:53.570770738Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/store","Test":"TestStoreApply","Elapsed":0}
+{"Time":"2026-06-29T15:32:53.570793518Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:53.571439204Z","Action":"output","Package":"github.com/weaviate/weaviate/cloud/store","Output":"ok  \tgithub.com/weaviate/weaviate/cloud/store\t3.787s\n"}
+{"Time":"2026-06-29T15:32:53.571486233Z","Action":"pass","Package":"github.com/weaviate/weaviate/cloud/store","Elapsed":3.7880000000000003}
+reward=1 graded=18 found=18 failed=0 parsed=18 framework=go exit_code=0

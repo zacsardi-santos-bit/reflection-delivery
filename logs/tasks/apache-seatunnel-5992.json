@@ -1,0 +1,23 @@
+{
+ "task": "apache-seatunnel-5992",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.patch asserts real deserialized rows now carry table id: \"SeaTunnelRow{tableId=.., kind=+I, fields=[101, scooter, ...]}\" vs old tableId= (empty); mvn test runs 29 real tests parsed via surefire."
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

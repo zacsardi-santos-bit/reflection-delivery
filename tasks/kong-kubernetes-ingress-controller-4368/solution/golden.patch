@@ -1,0 +1,733 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index cda7f6e2f..d9060d684 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -117,6 +117,11 @@ Adding a new version? You'll need three changes:
+   KIC restarts, it is now able to fetch the last good configuration from a running
+   proxy instance and store it in its internal cache.
+   [#4265](https://github.com/Kong/kubernetes-ingress-controller/pull/4265)
++- Gateway Discovery feature was adapted to handle Gateways that are not ready yet
++  in terms of accepting data-plane traffic, but are ready to accept configuration
++  updates. The controller will now send configuration to such Gateways and will
++  actively monitor their readiness for accepting configuration updates.
++  [#4368](https://github.com/Kong/kubernetes-ingress-controller/pull/4368
+ 
+ ### Changed
+ 
+@@ -132,6 +137,10 @@ Adding a new version? You'll need three changes:
+   sending stage (we've observed around 35% reduced time in config marshalling
+   time but be aware that your mileage may vary).
+   [#4222](https://github.com/Kong/kubernetes-ingress-controller/pull/4222)
++- Changed the Gateway's readiness probe in all-in-one manifests from `/status`
++  to `/status/ready`. Gateways will be considered ready only after an initial
++  configuration is applied by the controller.
++  [#4368](https://github.com/Kong/kubernetes-ingress-controller/pull/4368
+ 
+ [gojson]: https://github.com/goccy/go-json
+ [httproute-specification]: https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPRoute
+diff --git a/config/variants/multi-gw/base/gateway_deployment.yaml b/config/variants/multi-gw/base/gateway_deployment.yaml
+index 8e42d21a9..cc1e9c6fd 100644
+--- a/config/variants/multi-gw/base/gateway_deployment.yaml
++++ b/config/variants/multi-gw/base/gateway_deployment.yaml
+@@ -99,7 +99,7 @@ spec:
+           failureThreshold: 3
+         readinessProbe:
+           httpGet:
+-            path: /status
++            path: /status/ready
+             port: 8100
+             scheme: HTTP
+           initialDelaySeconds: 5
+diff --git a/deploy/single/all-in-one-dbless-enterprise.yaml b/deploy/single/all-in-one-dbless-enterprise.yaml
+index 60247c1ad..9a1a72670 100644
+--- a/deploy/single/all-in-one-dbless-enterprise.yaml
++++ b/deploy/single/all-in-one-dbless-enterprise.yaml
+@@ -2108,7 +2108,7 @@ spec:
+         readinessProbe:
+           failureThreshold: 3
+           httpGet:
+-            path: /status
++            path: /status/ready
+             port: 8100
+             scheme: HTTP
+           initialDelaySeconds: 5
+diff --git a/deploy/single/all-in-one-dbless-k4k8s-enterprise.yaml b/deploy/single/all-in-one-dbless-k4k8s-enterprise.yaml
+index 41f08bc09..bcfe7e1ba 100644
+--- a/deploy/single/all-in-one-dbless-k4k8s-enterprise.yaml
++++ b/deploy/single/all-in-one-dbless-k4k8s-enterprise.yaml
+@@ -2113,7 +2113,7 @@ spec:
+         readinessProbe:
+           failureThreshold: 3
+           httpGet:
+-            path: /status
++            path: /status/ready
+             port: 8100
+             scheme: HTTP
+           initialDelaySeconds: 5
+diff --git a/deploy/single/all-in-one-dbless-konnect-enterprise.yaml b/deploy/single/all-in-one-dbless-konnect-enterprise.yaml
+index 6277a4719..6c3584fc5 100644
+--- a/deploy/single/all-in-one-dbless-konnect-enterprise.yaml
++++ b/deploy/single/all-in-one-dbless-konnect-enterprise.yaml
+@@ -2123,7 +2123,7 @@ spec:
+         readinessProbe:
+           failureThreshold: 3
+           httpGet:
+-            path: /status
++            path: /status/ready
+             port: 8100
+             scheme: HTTP
+           initialDelaySeconds: 5
+diff --git a/deploy/single/all-in-one-dbless-konnect.yaml b/deploy/single/all-in-one-dbless-konnect.yaml
+index 0696a2123..baf44b23c 100644
+--- a/deploy/single/all-in-one-dbless-konnect.yaml
++++ b/deploy/single/all-in-one-dbless-konnect.yaml
+@@ -2123,7 +2123,7 @@ spec:
+         readinessProbe:
+           failureThreshold: 3
+           httpGet:
+-            path: /status
++            path: /status/ready
+             port: 8100
+             scheme: HTTP
+           initialDelaySeconds: 5
+diff --git a/deploy/single/all-in-one-dbless.yaml b/deploy/single/all-in-one-dbless.yaml
+index 58da6c20e..eb912ab56 100644
+--- a/deploy/single/all-in-one-dbless.yaml
++++ b/deploy/single/all-in-one-dbless.yaml
+@@ -2108,7 +2108,7 @@ spec:
+         readinessProbe:
+           failureThreshold: 3
+           httpGet:
+-            path: /status
++            path: /status/ready
+             port: 8100
+             scheme: HTTP
+           initialDelaySeconds: 5
+diff --git a/internal/adminapi/client.go b/internal/adminapi/client.go
+index 9a345e5f1..74d50d3e1 100644
+--- a/internal/adminapi/client.go
++++ b/internal/adminapi/client.go
+@@ -95,6 +95,12 @@ func (c *Client) NodeID(ctx context.Context) (string, error) {
+ 	return nodeID, nil
+ }
+ 
++// IsReady returns nil if the Admin API is ready to serve requests.
++func (c *Client) IsReady(ctx context.Context) error {
++	_, err := c.adminAPIClient.Status(ctx)
++	return err
++}
++
+ // GetKongVersion returns version of the kong gateway.
+ func (c *Client) GetKongVersion(ctx context.Context) (string, error) {
+ 	if c.isKonnect {
+diff --git a/internal/adminapi/endpoints.go b/internal/adminapi/endpoints.go
+index 675e091cc..bbeeec0bf 100644
+--- a/internal/adminapi/endpoints.go
++++ b/internal/adminapi/endpoints.go
+@@ -122,7 +122,7 @@ func (d *Discoverer) AdminAPIsFromEndpointSlice(
+ 		}
+ 
+ 		for _, e := range endpoints.Endpoints {
+-			if e.Conditions.Ready == nil || !*e.Conditions.Ready {
++			if e.Conditions.Terminating != nil && *e.Conditions.Terminating {
+ 				continue
+ 			}
+ 
+diff --git a/internal/clients/manager.go b/internal/clients/manager.go
+index b3b0a0f50..dd8fd10f1 100644
+--- a/internal/clients/manager.go
++++ b/internal/clients/manager.go
+@@ -4,24 +4,44 @@ import (
+ 	"context"
+ 	"errors"
+ 	"sync"
++	"time"
+ 
+ 	"github.com/samber/lo"
+ 	"github.com/sirupsen/logrus"
++	"golang.org/x/exp/maps"
+ 
+ 	"github.com/kong/kubernetes-ingress-controller/v2/internal/adminapi"
++	"github.com/kong/kubernetes-ingress-controller/v2/internal/util/clock"
+ )
+ 
++// DefaultReadinessReconciliationInterval is the interval at which the manager will run readiness reconciliation loop.
++// It's the same as the default interval of a Kubernetes container's readiness probe.
++const DefaultReadinessReconciliationInterval = 10 * time.Second
++
++// ClientFactory is responsible for creating Admin API clients.
+ type ClientFactory interface {
+ 	CreateAdminAPIClient(ctx context.Context, address adminapi.DiscoveredAdminAPI) (*adminapi.Client, error)
+ }
+ 
++// AdminAPIClientsProvider allows fetching the most recent list of Admin API clients of Gateways that
++// we should configure.
++type AdminAPIClientsProvider interface {
++	KonnectClient() *adminapi.KonnectClient
++	GatewayClients() []*adminapi.Client
++}
++
++// Ticker is an interface that allows to control a ticker.
++type Ticker interface {
++	Stop()
++	Channel() <-chan time.Time
++	Reset(d time.Duration)
++}
++
+ // AdminAPIClientsManager keeps track of current Admin API clients of Gateways that we should configure.
+-// In particular, it can be notified about the clients' list update with use of Notify method, and queried
+-// for the latest slice of those with use of Clients method.
++// In particular, it can be notified about the discovered clients' list with use of Notify method, and queried
++// for the latest slice of ready to be configured clients with use of GatewayClients method. It also runs periodic
++// readiness reconciliation loop which is responsible for checking readiness of the clients.
+ type AdminAPIClientsManager struct {
+-	// adminAPIClientFactory is a factory used for creating Admin API clients.
+-	adminAPIClientFactory ClientFactory
+-
+ 	// discoveredAdminAPIsNotifyChan is used for notifications that contain Admin API
+ 	// endpoints list that should be used for configuring the dataplane.
+ 	discoveredAdminAPIsNotifyChan    chan []adminapi.DiscoveredAdminAPI
+@@ -29,12 +49,21 @@ type AdminAPIClientsManager struct {
+ 
+ 	ctx                   context.Context
+ 	onceNotifyLoopRunning sync.Once
+-	notifyLoopRunningCh   chan struct{}
+-	isNotifyLoopRunning   bool
++	runningChan           chan struct{}
++	isRunning             bool
++
++	// readyGatewayClients represent all Kong Gateway data-planes that are ready to be configured.
++	readyGatewayClients map[string]*adminapi.Client
++
++	// pendingGatewayClients represent all Kong Gateway data-planes that were discovered but are not ready to be
++	// configured.
++	pendingGatewayClients map[string]adminapi.DiscoveredAdminAPI
++
++	// readinessChecker is used to check readiness of the clients.
++	readinessChecker ReadinessChecker
+ 
+-	// gatewayClients represent all Kong Gateway data-planes that are configured by this KIC instance with use of
+-	// their Admin API.
+-	gatewayClients []*adminapi.Client
++	// readinessReconciliationTicker is used to run readiness reconciliation loop.
++	readinessReconciliationTicker Ticker
+ 
+ 	// konnectClient represents a special-case of the data-plane which is Konnect cloud.
+ 	// This client is used to synchronise configuration with Konnect's Runtime Group Admin API.
+@@ -46,39 +75,61 @@ type AdminAPIClientsManager struct {
+ 	logger logrus.FieldLogger
+ }
+ 
++type AdminAPIClientsManagerOption func(*AdminAPIClientsManager)
++
++// WithReadinessReconciliationTicker allows to set a custom ticker for readiness reconciliation loop.
++func WithReadinessReconciliationTicker(ticker Ticker) AdminAPIClientsManagerOption {
++	return func(m *AdminAPIClientsManager) {
++		m.readinessReconciliationTicker = ticker
++	}
++}
++
+ func NewAdminAPIClientsManager(
+ 	ctx context.Context,
+ 	logger logrus.FieldLogger,
+ 	initialClients []*adminapi.Client,
+-	kongClientFactory ClientFactory,
++	readinessChecker ReadinessChecker,
++	opts ...AdminAPIClientsManagerOption,
+ ) (*AdminAPIClientsManager, error) {
+ 	if len(initialClients) == 0 {
+ 		return nil, errors.New("at least one initial client must be provided")
+ 	}
+ 
+-	return &AdminAPIClientsManager{
+-		gatewayClients:                initialClients,
+-		adminAPIClientFactory:         kongClientFactory,
++	readyClients := lo.SliceToMap(initialClients, func(c *adminapi.Client) (string, *adminapi.Client) {
++		return c.BaseRootURL(), c
++	})
++	c := &AdminAPIClientsManager{
++		readyGatewayClients:           readyClients,
++		pendingGatewayClients:         make(map[string]adminapi.DiscoveredAdminAPI),
++		readinessChecker:              readinessChecker,
++		readinessReconciliationTicker: clock.NewTicker(),
+ 		discoveredAdminAPIsNotifyChan: make(chan []adminapi.DiscoveredAdminAPI),
+ 		ctx:                           ctx,
+-		notifyLoopRunningCh:           make(chan struct{}),
++		runningChan:                   make(chan struct{}),
+ 		logger:                        logger,
+-	}, nil
++	}
++
++	for _, opt := range opts {
++		opt(c)
++	}
++
++	return c, nil
+ }
+ 
+ // Running returns a channel that is closed when the manager's background tasks are already running.
+ func (c *AdminAPIClientsManager) Running() chan struct{} {
+-	return c.notifyLoopRunningCh
++	return c.runningChan
+ }
+ 
+-// RunNotifyLoop runs a goroutine that will dynamically ingest new addresses of Kong Admin API endpoints.
+-func (c *AdminAPIClientsManager) RunNotifyLoop() {
++// Run runs a goroutine that will dynamically ingest new addresses of Kong Admin API endpoints.
++// It should only be called when Gateway Discovery is enabled.
++func (c *AdminAPIClientsManager) Run() {
+ 	c.onceNotifyLoopRunning.Do(func() {
+-		go c.adminAPIAddressNotifyLoop()
++		go c.gatewayClientsReconciliationLoop()
+ 
+ 		c.lock.Lock()
+ 		defer c.lock.Unlock()
+-		c.isNotifyLoopRunning = true
++		c.isRunning = true
+ 	})
+ }
+ 
+@@ -118,16 +169,13 @@ func (c *AdminAPIClientsManager) KonnectClient() *adminapi.KonnectClient {
+ func (c *AdminAPIClientsManager) GatewayClients() []*adminapi.Client {
+ 	c.lock.RLock()
+ 	defer c.lock.RUnlock()
+-
+-	copied := make([]*adminapi.Client, len(c.gatewayClients))
+-	copy(copied, c.gatewayClients)
+-	return copied
++	return lo.Values(c.readyGatewayClients)
+ }
+ 
+ func (c *AdminAPIClientsManager) GatewayClientsCount() int {
+ 	c.lock.RLock()
+ 	defer c.lock.RUnlock()
+-	return len(c.gatewayClients)
++	return len(c.readyGatewayClients)
+ }
+ 
+ // SubscribeToGatewayClientsChanges returns a channel that will receive a notification on every Gateway clients update.
+@@ -145,7 +193,7 @@ func (c *AdminAPIClientsManager) SubscribeToGatewayClientsChanges() (<-chan stru
+ 	}
+ 
+ 	// No notify loop running, there will be no updates, let's propagate that to the caller.
+-	if !c.isNotifyLoopRunning {
++	if !c.isRunning {
+ 		return nil, false
+ 	}
+ 
+@@ -154,39 +202,51 @@ func (c *AdminAPIClientsManager) SubscribeToGatewayClientsChanges() (<-chan stru
+ 	return ch, true
+ }
+ 
+-// adminAPIAddressNotifyLoop is an inner loop listening on notifyChan which are received via
+-// Notify() calls. Each time it receives on notifyChan tt will take the provided
+-// list of addresses and update the internally held list of clients such that:
+-//   - the internal list of kong clients contains only the provided addresses
+-//   - if a client for a provided address already exists it's not recreated again
+-//     (hence no external calls are made to check the provided endpoint if there
+-//     exists a client already using it)
+-//   - client that do not exist in the provided address list are removed if they
+-//     are present in the current state
+-//
+-// This function will acquire the internal lock to prevent the modification of
+-// internal clients list.
+-func (c *AdminAPIClientsManager) adminAPIAddressNotifyLoop() {
+-	close(c.notifyLoopRunningCh)
++// gatewayClientsReconciliationLoop is an inner loop listening on:
++// - discoveredAdminAPIsNotifyChan - triggered on every Notify() call.
++// - readinessReconciliationTicker - triggered on every readinessReconciliationTicker tick.
++func (c *AdminAPIClientsManager) gatewayClientsReconciliationLoop() {
++	c.readinessReconciliationTicker.Reset(DefaultReadinessReconciliationInterval)
++	defer c.readinessReconciliationTicker.Stop()
++
++	close(c.runningChan)
+ 	for {
+ 		select {
+ 		case <-c.ctx.Done():
+ 			c.logger.Infof("closing AdminAPIClientsManager: %s", c.ctx.Err())
+-			c.discoveredAdminAPIsNotifyChan = nil
+ 			c.closeGatewayClientsSubscribers()
+ 			return
+-
+ 		case discoveredAdminAPIs := <-c.discoveredAdminAPIsNotifyChan:
+-			c.logger.Debug("received notification about Admin API addresses change")
+-			if clientsChanged := c.adjustGatewayClients(discoveredAdminAPIs); clientsChanged {
+-				// Notify subscribers that the clients list has been updated.
+-				c.logger.Debug("notifying subscribers about gateway clients change")
+-				c.notifyGatewayClientsSubscribers()
+-			}
++			c.onDiscoveredAdminAPIsNotification(discoveredAdminAPIs)
++		case <-c.readinessReconciliationTicker.Channel():
++			c.onReadinessReconciliationTick()
+ 		}
+ 	}
+ }
+ 
++// onDiscoveredAdminAPIsNotification is called when a new notification about Admin API addresses change is received.
++// It will adjust lists of gateway clients and notify subscribers about the change if readyGatewayClients list has
++// changed.
++func (c *AdminAPIClientsManager) onDiscoveredAdminAPIsNotification(discoveredAdminAPIs []adminapi.DiscoveredAdminAPI) {
++	c.logger.Debug("received notification about Admin API addresses change")
++
++	clientsChanged := c.adjustGatewayClients(discoveredAdminAPIs)
++	readinessChanged := c.reconcileGatewayClientsReadiness()
++	if clientsChanged || readinessChanged {
++		c.notifyGatewayClientsSubscribers()
++	}
++}
++
++// onReadinessReconciliationTick is called on every readinessReconciliationTicker tick. It will reconcile readiness
++// of all gateway clients and notify subscribers about the change if readyGatewayClients list has changed.
++func (c *AdminAPIClientsManager) onReadinessReconciliationTick() {
++	c.logger.Debug("reconciling readiness of gateway clients")
++
++	if changed := c.reconcileGatewayClientsReadiness(); changed {
++		c.notifyGatewayClientsSubscribers()
++	}
++}
++
+ // adjustGatewayClients adjusts internally stored clients slice based on the provided
+ // discovered Admin APIs slice. It consults BaseRootURLs of already stored clients with each
+ // of the discovered Admin APIs and creates only those clients that we don't have.
+@@ -195,61 +255,89 @@ func (c *AdminAPIClientsManager) adjustGatewayClients(discoveredAdminAPIs []admi
+ 	c.lock.Lock()
+ 	defer c.lock.Unlock()
+ 
+-	// Short circuit
++	// Short circuit.
+ 	if len(discoveredAdminAPIs) == 0 {
+-		if len(c.gatewayClients) == 0 {
++		// If we have no clients and the provided list is empty, it means we're in sync. No change was made.
++		if len(c.readyGatewayClients) == 0 && len(c.pendingGatewayClients) == 0 {
+ 			return false
+ 		}
+-		c.gatewayClients = c.gatewayClients[:0]
++		// Otherwise, we have to clear the clients and return true to indicate that the change was made.
++		maps.Clear(c.readyGatewayClients)
++		maps.Clear(c.pendingGatewayClients)
+ 		return true
+ 	}
+ 
+-	toAdd := lo.Filter(discoveredAdminAPIs, func(api adminapi.DiscoveredAdminAPI, _ int) bool {
+-		// If we already have a client with a provided address then great, no need
+-		// to do anything.
++	// Make sure all discovered clients that are not in the ready list are in the pending list.
++	for _, d := range discoveredAdminAPIs {
++		if _, ok := c.readyGatewayClients[d.Address]; !ok {
++			c.pendingGatewayClients[d.Address] = d
++		}
++	}
+ 
+-		// If we don't have a client with new address then filter it and add
+-		// a client for this address.
+-		return !lo.ContainsBy(c.gatewayClients, func(cl *adminapi.Client) bool {
+-			return api.Address == cl.BaseRootURL()
++	// Remove ready clients that are not present in the discovered list.
++	for _, cl := range c.readyGatewayClients {
++		clientNotOnDiscoveredList := !lo.ContainsBy(discoveredAdminAPIs, func(d adminapi.DiscoveredAdminAPI) bool {
++			return d.Address == cl.BaseRootURL()
+ 		})
+-	})
++		if clientNotOnDiscoveredList {
++			delete(c.readyGatewayClients, cl.BaseRootURL())
++			changed = true
++		}
++	}
+ 
+-	var idxToRemove []int
+-	for i, cl := range c.gatewayClients {
+-		// If the new address set contains a client that we already have then
+-		// good, no need to do anything for it.
+-		if lo.ContainsBy(discoveredAdminAPIs, func(api adminapi.DiscoveredAdminAPI) bool {
+-			return api.Address == cl.BaseRootURL()
+-		}) {
+-			continue
++	// Remove pending clients that are not present in the discovered list.
++	for _, cl := range c.pendingGatewayClients {
++		clientNotOnDiscoveredList := !lo.ContainsBy(discoveredAdminAPIs, func(d adminapi.DiscoveredAdminAPI) bool {
++			return d.Address == cl.Address
++		})
++		if clientNotOnDiscoveredList {
++			delete(c.pendingGatewayClients, cl.Address)
++			changed = true
+ 		}
+-		// If the new address set does not contain an address that we already
+-		// have then remove it.
+-		idxToRemove = append(idxToRemove, i)
+ 	}
+ 
+-	for i := len(idxToRemove) - 1; i >= 0; i-- {
+-		idx := idxToRemove[i]
+-		c.gatewayClients = append(c.gatewayClients[:idx], c.gatewayClients[idx+1:]...)
++	return changed
++}
++
++// reconcileGatewayClientsReadiness reconciles the readiness of the gateway clients. It ensures that the clients on the
++// readyGatewayClients list are still ready and that the clients on the pendingGatewayClients list are still pending.
++// If any of the clients is not ready anymore, it will be moved to the pendingGatewayClients list. If any of the clients
++// is not pending anymore, it will be moved to the readyGatewayClients list. It returns true if any transition has been
++// made, false otherwise.
++func (c *AdminAPIClientsManager) reconcileGatewayClientsReadiness() bool {
++	// Reset the ticker after each readiness reconciliation despite the trigger (whether it was a tick or a notification).
++	// It's to ensure that the readiness is not reconciled too often when we receive a lot of notifications.
++	defer c.readinessReconciliationTicker.Reset(DefaultReadinessReconciliationInterval)
++
++	c.lock.Lock()
++	defer c.lock.Unlock()
++
++	// Short circuit.
++	if len(c.readyGatewayClients) == 0 && len(c.pendingGatewayClients) == 0 {
++		return false
+ 	}
+ 
+-	for _, adminAPI := range toAdd {
+-		client, err := c.adminAPIClientFactory.CreateAdminAPIClient(c.ctx, adminAPI)
+-		if err != nil {
+-			c.logger.WithError(err).Errorf("failed to create a client for %s", adminAPI)
+-			continue
+-		}
+-		client.AttachPodReference(adminAPI.PodRef)
++	readinessCheckResult := c.readinessChecker.CheckReadiness(
++		c.ctx,
++		lo.MapToSlice(c.readyGatewayClients, func(_ string, cl *adminapi.Client) AlreadyCreatedClient { return cl }),
++		lo.Values(c.pendingGatewayClients),
++	)
+ 
+-		c.gatewayClients = append(c.gatewayClients, client)
++	for _, cl := range readinessCheckResult.ClientsTurnedReady {
++		delete(c.pendingGatewayClients, cl.BaseRootURL())
++		c.readyGatewayClients[cl.BaseRootURL()] = cl
++	}
++	for _, cl := range readinessCheckResult.ClientsTurnedPending {
++		delete(c.readyGatewayClients, cl.Address)
++		c.pendingGatewayClients[cl.Address] = cl
+ 	}
+ 
+-	return len(toAdd) > 0 || len(idxToRemove) > 0
++	return readinessCheckResult.HasChanges()
+ }
+ 
+ // notifyGatewayClientsSubscribers sends notifications to all subscribers that have called SubscribeToGatewayClientsChanges.
+ func (c *AdminAPIClientsManager) notifyGatewayClientsSubscribers() {
++	c.logger.Debug("notifying subscribers about gateway clients change")
+ 	for _, sub := range c.gatewayClientsChangesSubscribers {
+ 		select {
+ 		case <-c.ctx.Done():
+@@ -265,10 +353,3 @@ func (c *AdminAPIClientsManager) closeGatewayClientsSubscribers() {
+ 		close(sub)
+ 	}
+ }
+-
+-// AdminAPIClientsProvider allows fetching the most recent list of Admin API clients of Gateways that
+-// we should configure.
+-type AdminAPIClientsProvider interface {
+-	KonnectClient() *adminapi.KonnectClient
+-	GatewayClients() []*adminapi.Client
+-}
+diff --git a/internal/clients/readiness.go b/internal/clients/readiness.go
+new file mode 100644
+index 000000000..0eb388101
+--- /dev/null
++++ b/internal/clients/readiness.go
+@@ -0,0 +1,159 @@
++package clients
++
++import (
++	"context"
++	"errors"
++	"fmt"
++	"time"
++
++	"github.com/go-logr/logr"
++	k8stypes "k8s.io/apimachinery/pkg/types"
++
++	"github.com/kong/kubernetes-ingress-controller/v2/internal/adminapi"
++	"github.com/kong/kubernetes-ingress-controller/v2/internal/util"
++)
++
++const (
++	readinessCheckTimeout = time.Second
++)
++
++// ReadinessCheckResult represents the result of a readiness check.
++type ReadinessCheckResult struct {
++	// ClientsTurnedReady are the clients that were pending and are now ready to be used.
++	ClientsTurnedReady []*adminapi.Client
++	// ClientsTurnedPending are the clients that were ready and are now pending to be created.
++	ClientsTurnedPending []adminapi.DiscoveredAdminAPI
++}
++
++// HasChanges returns true if there are any changes in the readiness check result.
++// When no changes are present, it means that the readiness check haven't successfully created any pending client
++// nor detected any already created client that became not ready.
++func (r ReadinessCheckResult) HasChanges() bool {
++	return len(r.ClientsTurnedReady) > 0 || len(r.ClientsTurnedPending) > 0
++}
++
++// ReadinessChecker is responsible for checking the readiness of Admin API clients.
++type ReadinessChecker interface {
++	// CheckReadiness checks readiness of the provided clients:
++	// - alreadyCreatedClients are the clients that have already been created. The readiness of these clients will be
++	//   checked by their IsReady() method.
++	// - pendingClients are the clients that have not been created yet and are pending to be created. The readiness of
++	//   these clients will be checked by trying to create them.
++	CheckReadiness(
++		ctx context.Context,
++		alreadyCreatedClients []AlreadyCreatedClient,
++		pendingClients []adminapi.DiscoveredAdminAPI,
++	) ReadinessCheckResult
++}
++
++// AlreadyCreatedClient represents an Admin API client that has already been created.
++type AlreadyCreatedClient interface {
++	IsReady(context.Context) error
++	PodReference() (k8stypes.NamespacedName, bool)
++	BaseRootURL() string
++}
++
++type DefaultReadinessChecker struct {
++	factory ClientFactory
++	logger  logr.Logger
++}
++
++func NewDefaultReadinessChecker(factory ClientFactory, logger logr.Logger) DefaultReadinessChecker {
++	return DefaultReadinessChecker{
++		factory: factory,
++		logger:  logger,
++	}
++}
++
++func (c DefaultReadinessChecker) CheckReadiness(
++	ctx context.Context,
++	readyClients []AlreadyCreatedClient,
++	pendingClients []adminapi.DiscoveredAdminAPI,
++) ReadinessCheckResult {
++	return ReadinessCheckResult{
++		ClientsTurnedReady:   c.checkPendingGatewayClients(ctx, pendingClients),
++		ClientsTurnedPending: c.checkAlreadyExistingClients(ctx, readyClients),
++	}
++}
++
++// checkPendingGatewayClients checks if the pending clients are ready to be used and returns the ones that are.
++func (c DefaultReadinessChecker) checkPendingGatewayClients(ctx context.Context, lastPending []adminapi.DiscoveredAdminAPI) (turnedReady []*adminapi.Client) {
++	for _, adminAPI := range lastPending {
++		if client := c.checkPendingClient(ctx, adminAPI); client != nil {
++			turnedReady = append(turnedReady, client)
++		}
++	}
++	return turnedReady
++}
++
++// checkPendingClient indirectly check readiness of the client by trying to create it. If it succeeds then it
++// means that the client is ready to be used. It returns a non-nil client if the client is ready to be used, otherwise
++// nil is returned.
++func (c DefaultReadinessChecker) checkPendingClient(
++	ctx context.Context,
++	pendingClient adminapi.DiscoveredAdminAPI,
++) (client *adminapi.Client) {
++	defer func() {
++		c.logger.V(util.DebugLevel).
++			Info(fmt.Sprintf("checking readiness of pending client for %q", pendingClient.Address),
++				"ok", client != nil,
++			)
++	}()
++
++	ctx, cancel := context.WithTimeout(ctx, readinessCheckTimeout)
++	defer cancel()
++	client, err := c.factory.CreateAdminAPIClient(ctx, pendingClient)
++	if err != nil {
++		// Despite the error reason we still want to keep the client in the pending list to retry later.
++		c.logger.V(util.DebugLevel).Error(err, fmt.Sprintf("pending client for %q is not ready yet", pendingClient.Address))
++		return nil
++	}
++
++	return client
++}
++
++// checkAlreadyExistingClients checks if the already existing clients are still ready to be used and returns the ones
++// that are not.
++func (c DefaultReadinessChecker) checkAlreadyExistingClients(ctx context.Context, alreadyCreatedClients []AlreadyCreatedClient) (turnedPending []adminapi.DiscoveredAdminAPI) {
++	for _, client := range alreadyCreatedClients {
++		// For ready clients we check readiness by calling the Status endpoint.
++		if ready := c.checkAlreadyCreatedClient(ctx, client); !ready {
++			podRef, ok := client.PodReference()
++			if !ok {
++				// This should never happen, but if it does, we want to log it.
++				c.logger.Error(
++					errors.New("missing pod reference"),
++					fmt.Sprintf("failed to get PodReference for client %q", client.BaseRootURL()),
++				)
++				continue
++			}
++			turnedPending = append(turnedPending, adminapi.DiscoveredAdminAPI{
++				Address: client.BaseRootURL(),
++				PodRef:  podRef,
++			})
++		}
++	}
++	return turnedPending
++}
++
++func (c DefaultReadinessChecker) checkAlreadyCreatedClient(ctx context.Context, client AlreadyCreatedClient) (ready bool) {
++	defer func() {
++		c.logger.V(util.DebugLevel).Info(
++			fmt.Sprintf("checking readiness of already created client for %q", client.BaseRootURL()),
++			"ok", ready,
++		)
++	}()
++
++	ctx, cancel := context.WithTimeout(ctx, readinessCheckTimeout)
++	defer cancel()
++	if err := client.IsReady(ctx); err != nil {
++		// Despite the error reason we still want to keep the client in the pending list to retry later.
++		c.logger.V(util.DebugLevel).Error(
++			err,
++			fmt.Sprintf("already created client for %q is not ready, moving to pending", client.BaseRootURL()),
++		)
++		return false
++	}
++
++	return true
++}
+diff --git a/internal/controllers/configuration/kongadminapi_controller.go b/internal/controllers/configuration/kongadminapi_controller.go
+index 96e4ae8ab..a5b6866b4 100644
+--- a/internal/controllers/configuration/kongadminapi_controller.go
++++ b/internal/controllers/configuration/kongadminapi_controller.go
+@@ -166,8 +166,9 @@ func (r *KongAdminAPIServiceReconciler) Reconcile(ctx context.Context, req ctrl.
+ 
+ func (r *KongAdminAPIServiceReconciler) notify() {
+ 	discovered := flattenDiscoveredAdminAPIs(r.Cache)
++	addresses := lo.Map(discovered, func(d adminapi.DiscoveredAdminAPI, _ int) string { return d.Address })
+ 	r.Log.V(util.DebugLevel).
+-		Info("notifying about newly detected Admin APIs", "admin_apis", discovered)
++		Info("notifying about newly detected Admin APIs", "admin_apis", addresses)
+ 	r.EndpointsNotifier.Notify(discovered)
+ }
+ 
+diff --git a/internal/manager/run.go b/internal/manager/run.go
+index f26d77395..a86b1ebaf 100644
+--- a/internal/manager/run.go
++++ b/internal/manager/run.go
+@@ -134,18 +134,19 @@ func Run(ctx context.Context, c *Config, diagnostic util.ConfigDumpDiagnostic, d
+ 	setupLog.Info("Initializing Dataplane Client")
+ 	eventRecorder := mgr.GetEventRecorderFor(KongClientEventRecorderComponentName)
+ 
++	readinessChecker := clients.NewDefaultReadinessChecker(adminAPIClientsFactory, setupLog.WithName("readiness-checker"))
+ 	clientsManager, err := clients.NewAdminAPIClientsManager(
+ 		ctx,
+ 		deprecatedLogger,
+ 		initialKongClients,
+-		adminAPIClientsFactory,
++		readinessChecker,
+ 	)
+ 	if err != nil {
+ 		return fmt.Errorf("failed to create AdminAPIClientsManager: %w", err)
+ 	}
+ 	if c.KongAdminSvc.IsPresent() {
+-		setupLog.Info("Running AdminAPIClientsManager notify loop")
+-		clientsManager.RunNotifyLoop()
++		setupLog.Info("Running AdminAPIClientsManager loop")
++		clientsManager.Run()
+ 	}
+ 
+ 	setupLog.Info("Starting Admission Server")

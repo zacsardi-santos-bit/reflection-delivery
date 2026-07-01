@@ -1,0 +1,5 @@
+I'm working on improving how the linter handles suppression comments, and I've run into two behavioral problems I need to fix.
+
+The first issue is that when a file already has a file-wide suppression comment that disables a specific lint rule across the entire file, and there's also a range suppression (start/end pair) targeting that same rule, the linter doesn't detect that the range suppression is redundant and has no effect. I'd like the linter to flag such range suppressions as unused warnings, and include a note pointing back to the file-wide suppression that is already in effect.
+
+The second issue is that when a file-wide suppression comment is placed somewhere other than the very beginning of the file, the linter currently warns about the misplacement but still silently applies the suppression — the targeted lint rules remain suppressed. This is wrong. A misplaced file-wide suppression should be truly ineffective: the lint violations it was trying to suppress should be reported as actual errors, each misplaced suppression comment should produce its own warning, and the command should exit with an error status rather than completing successfully.

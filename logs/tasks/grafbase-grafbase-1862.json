@@ -1,0 +1,23 @@
+{
+ "task": "grafbase-grafbase-1862",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "34 F2P tests across partial-caching query-splitting/response-merging/cache-merging plus type_conditions integration tests, e.g. 'partial-caching::query-splitting test_split_with_absurd_fragments'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

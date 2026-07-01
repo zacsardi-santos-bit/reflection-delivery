@@ -1,0 +1,23 @@
+{
+ "task": "aallam-openai-kotlin-334",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds openai-core batch/ data types (Batch.kt, RequestInput.kt, RequestOutput.kt, CompletionWindow.kt, etc.) and client BatchApi.kt (matches problem_statement). Graded FAIL_TO_PASS are only the offline tests batchSerialization + testDecodeOutput (JSON/JSONL round-trip, no network); the network"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 11,
+  "shallow": true
+ }
+}

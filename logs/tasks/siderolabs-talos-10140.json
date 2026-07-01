@@ -1,0 +1,23 @@
+{
+ "task": "siderolabs-talos-10140",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Dockerfile injects real reflection test: 'method, ok := reflect.TypeOf(&base.APISuite{}).MethodByName(\"UserDisks\") ... if method.Type.NumOut() != 1'; golden changes UserDisks from ([]string, error) to []string, so NumOut goes 2->1 (fails pre-patch, passes post-patch)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 25,
+  "shallow": true
+ }
+}

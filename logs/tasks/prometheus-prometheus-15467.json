@@ -1,0 +1,23 @@
+{
+ "task": "prometheus-prometheus-15467",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds CustomBucketsHistogramSamples Type=9 / CustomBucketsFloatHistogramSamples Type=10 record types + custom-values encode/decode; F2P TestRecord_EncodeDecode, TestRecord_Type exercise them"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 8,
+  "shallow": true
+ }
+}

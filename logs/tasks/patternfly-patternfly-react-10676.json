@@ -1,0 +1,23 @@
+{
+ "task": "patternfly-patternfly-react-10676",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "F2P=40 P2P=13; golden adds SimpleDropdown.tsx + SimpleSelect.tsx templates and updates CheckboxSelect.tsx/MenuToggle.tsx; jest+RTL tests render components and assert clicks/onSelect/onToggle/toggleWidth/toggleProps/focus"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 10,
+  "shallow": true
+ }
+}

@@ -1,0 +1,5 @@
+I'm working on Gemini CLI and I'd like to be able to configure telemetry settings using environment variables instead of always having to modify a settings file. Right now, if I want to enable telemetry, change the target backend, or set the export endpoint in a CI environment or container, I have to change the settings file every time, which isn't practical.
+
+I'd like environment variables to take priority over whatever is in the settings file when both are present. And if I also pass command-line arguments, those should take priority over the environment variables too. If I accidentally set an environment variable to an invalid value — like an unrecognized target backend — I'd expect a clear error message right away rather than a silent failure.
+
+This should cover all the major telemetry options: whether telemetry is enabled, the target backend, the endpoint and protocol for data export, whether prompts get logged, the output file path, and whether a collector is used. There should also be a fallback to a standard OpenTelemetry environment variable for the endpoint when the specific one isn't set.

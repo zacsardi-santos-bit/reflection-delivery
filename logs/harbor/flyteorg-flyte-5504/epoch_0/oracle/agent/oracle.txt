@@ -1,0 +1,786 @@
+patching file cmd/single/start.go
+patching file datacatalog/cmd/entrypoints/serve.go
+patching file datacatalog/go.mod
+patching file datacatalog/go.sum
+Hunk #1 succeeded at 68 with fuzz 3.
+Hunk #2 succeeded at 358 (offset 263 lines).
+Hunk #3 succeeded at 401 with fuzz 1 (offset 277 lines).
+Hunk #4 succeeded at 507 with fuzz 3 (offset 277 lines).
+Hunk #5 succeeded at 578 (offset 321 lines).
+Hunk #6 FAILED at 342.
+Hunk #7 FAILED at 391.
+Hunk #8 succeeded at 824 with fuzz 2 (offset 393 lines).
+2 out of 8 hunks FAILED -- saving rejects to file datacatalog/go.sum.rej
+patching file flyteadmin/cmd/entrypoints/serve.go
+patching file flyteadmin/go.mod
+patching file flyteadmin/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file flyteadmin/go.sum.rej
+patching file flytecopilot/go.mod
+patching file flytecopilot/go.sum
+Hunk #1 succeeded at 66 with fuzz 3.
+Hunk #2 succeeded at 356 (offset 263 lines).
+Hunk #3 succeeded at 400 (offset 279 lines).
+Hunk #4 FAILED at 223.
+Hunk #5 FAILED at 308.
+Hunk #6 FAILED at 361.
+Hunk #7 succeeded at 800 with fuzz 2 (offset 403 lines).
+Hunk #8 succeeded at 1137 with fuzz 1 (offset 415 lines).
+3 out of 8 hunks FAILED -- saving rejects to file flytecopilot/go.sum.rej
+patching file flytectl/go.mod
+patching file flytectl/go.sum
+Hunk #1 succeeded at 308 with fuzz 3 (offset 242 lines).
+Hunk #2 FAILED at 80.
+Hunk #3 FAILED at 101.
+Hunk #4 succeeded at 435 with fuzz 3 (offset 290 lines).
+Hunk #5 succeeded at 474 with fuzz 1 (offset 305 lines).
+Hunk #6 succeeded at 506 with fuzz 3 (offset 310 lines).
+Hunk #7 succeeded at 560 with fuzz 1 (offset 319 lines).
+Hunk #8 succeeded at 617 with fuzz 3 (offset 332 lines).
+Hunk #9 succeeded at 825 with fuzz 3 (offset 408 lines).
+Hunk #10 FAILED at 476.
+Hunk #11 succeeded at 1027 (offset 449 lines).
+Hunk #12 succeeded at 1040 (offset 449 lines).
+Hunk #13 succeeded at 1092 (offset 449 lines).
+Hunk #14 succeeded at 1116 (offset 449 lines).
+Hunk #15 succeeded at 1240 (offset 449 lines).
+Hunk #16 succeeded at 1253 (offset 449 lines).
+Hunk #17 succeeded at 1274 (offset 451 lines).
+Hunk #18 succeeded at 1291 (offset 451 lines).
+Hunk #19 succeeded at 1308 with fuzz 2 (offset 456 lines).
+3 out of 19 hunks FAILED -- saving rejects to file flytectl/go.sum.rej
+patching file flyteidl/go.mod
+patching file flyteidl/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 succeeded at 283 with fuzz 3 (offset 229 lines).
+Hunk #3 FAILED at 61.
+Hunk #4 succeeded at 353 with fuzz 3 (offset 262 lines).
+Hunk #5 FAILED at 111.
+Hunk #6 FAILED at 138.
+Hunk #7 succeeded at 504 with fuzz 1 (offset 292 lines).
+Hunk #8 FAILED at 220.
+Hunk #9 FAILED at 240.
+Hunk #10 succeeded at 660 with fuzz 3 (offset 359 lines).
+Hunk #11 FAILED at 322.
+Hunk #12 FAILED at 366.
+Hunk #13 succeeded at 809 (offset 397 lines).
+Hunk #14 succeeded at 855 (offset 397 lines).
+Hunk #15 succeeded at 868 (offset 397 lines).
+Hunk #16 succeeded at 883 (offset 397 lines).
+Hunk #17 succeeded at 902 (offset 399 lines).
+Hunk #18 FAILED at 518.
+Hunk #19 FAILED at 541.
+Hunk #20 FAILED at 563.
+11 out of 20 hunks FAILED -- saving rejects to file flyteidl/go.sum.rej
+patching file flyteplugins/go.mod
+patching file flyteplugins/go.sum
+Hunk #1 succeeded at 320 with fuzz 3 (offset 256 lines).
+Hunk #2 FAILED at 88.
+Hunk #3 FAILED at 103.
+Hunk #4 succeeded at 407 with fuzz 3 (offset 286 lines).
+Hunk #5 succeeded at 452 with fuzz 1 (offset 302 lines).
+Hunk #6 succeeded at 475 with fuzz 3 (offset 304 lines).
+Hunk #7 succeeded at 531 with fuzz 1 (offset 315 lines).
+Hunk #8 succeeded at 586 with fuzz 3 (offset 334 lines).
+Hunk #9 FAILED at 344.
+Hunk #10 FAILED at 399.
+Hunk #11 succeeded at 953 (offset 457 lines).
+Hunk #12 succeeded at 966 (offset 457 lines).
+Hunk #13 succeeded at 1014 (offset 457 lines).
+Hunk #14 succeeded at 1036 (offset 457 lines).
+Hunk #15 succeeded at 1158 (offset 457 lines).
+Hunk #16 succeeded at 1171 (offset 457 lines).
+Hunk #17 succeeded at 1192 (offset 459 lines).
+Hunk #18 succeeded at 1209 (offset 459 lines).
+Hunk #19 succeeded at 1226 with fuzz 2 (offset 464 lines).
+4 out of 19 hunks FAILED -- saving rejects to file flyteplugins/go.sum.rej
+patching file flytepropeller/cmd/controller/cmd/root.go
+patching file flytepropeller/go.mod
+patching file flytepropeller/go.sum
+Hunk #1 succeeded at 322 with fuzz 3 (offset 256 lines).
+Hunk #2 FAILED at 90.
+Hunk #3 FAILED at 105.
+Hunk #4 succeeded at 409 with fuzz 3 (offset 286 lines).
+Hunk #5 succeeded at 460 (offset 303 lines).
+Hunk #6 succeeded at 488 with fuzz 3 (offset 306 lines).
+Hunk #7 succeeded at 544 with fuzz 1 (offset 317 lines).
+Hunk #8 succeeded at 599 with fuzz 3 (offset 332 lines).
+Hunk #9 succeeded at 708 with fuzz 3 (offset 386 lines).
+Hunk #10 FAILED at 374.
+Hunk #11 FAILED at 427.
+Hunk #12 succeeded at 990 (offset 457 lines).
+Hunk #13 succeeded at 1003 (offset 457 lines).
+Hunk #14 succeeded at 1057 (offset 457 lines).
+Hunk #15 succeeded at 1066 (offset 457 lines).
+Hunk #16 succeeded at 1079 (offset 457 lines).
+Hunk #17 succeeded at 1203 (offset 457 lines).
+Hunk #18 succeeded at 1216 (offset 457 lines).
+Hunk #19 succeeded at 1237 (offset 459 lines).
+Hunk #20 succeeded at 1254 (offset 459 lines).
+Hunk #21 succeeded at 1275 (offset 465 lines).
+4 out of 21 hunks FAILED -- saving rejects to file flytepropeller/go.sum.rej
+patching file flytestdlib/go.mod
+patching file flytestdlib/go.sum
+Hunk #1 succeeded at 68 with fuzz 3.
+Hunk #2 succeeded at 356 (offset 261 lines).
+Hunk #3 succeeded at 399 with fuzz 1 (offset 269 lines).
+Hunk #4 succeeded at 501 with fuzz 3 (offset 269 lines).
+Hunk #5 succeeded at 570 (offset 311 lines).
+Hunk #6 FAILED at 344.
+Hunk #7 FAILED at 397.
+Hunk #8 succeeded at 796 with fuzz 2 (offset 363 lines).
+Hunk #9 succeeded at 861 (offset 366 lines).
+2 out of 9 hunks FAILED -- saving rejects to file flytestdlib/go.sum.rej
+patching file flytestdlib/otelutils/config.go
+patching file flytestdlib/otelutils/config_flags.go
+patching file flytestdlib/otelutils/factory.go
+patching file go.mod
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file go.sum.rej
+patching file cmd/single/start.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/single/start.go.rej
+patching file datacatalog/cmd/entrypoints/serve.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file datacatalog/cmd/entrypoints/serve.go.rej
+patching file datacatalog/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file datacatalog/go.mod.rej
+patching file datacatalog/go.sum
+Hunk #1 succeeded at 68 with fuzz 3.
+Hunk #2 FAILED at 95.
+Hunk #3 FAILED at 124.
+Hunk #4 succeeded at 230 with fuzz 3.
+Hunk #5 FAILED at 257.
+Hunk #6 FAILED at 342.
+Hunk #7 FAILED at 391.
+Hunk #8 FAILED at 431.
+6 out of 8 hunks FAILED -- saving rejects to file datacatalog/go.sum.rej
+patching file flyteadmin/cmd/entrypoints/serve.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file flyteadmin/cmd/entrypoints/serve.go.rej
+patching file flyteadmin/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file flyteadmin/go.mod.rej
+patching file flyteadmin/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file flyteadmin/go.sum.rej
+patching file flytecopilot/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file flytecopilot/go.mod.rej
+patching file flytecopilot/go.sum
+Hunk #1 succeeded at 66 with fuzz 3.
+Hunk #2 FAILED at 93.
+Hunk #3 FAILED at 121.
+Hunk #4 FAILED at 223.
+Hunk #5 FAILED at 308.
+Hunk #6 FAILED at 361.
+Hunk #7 FAILED at 397.
+Hunk #8 FAILED at 722.
+7 out of 8 hunks FAILED -- saving rejects to file flytecopilot/go.sum.rej
+patching file flytectl/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file flytectl/go.mod.rej
+patching file flytectl/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+19 out of 19 hunks ignored -- saving rejects to file flytectl/go.sum.rej
+patching file flyteidl/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file flyteidl/go.mod.rej
+patching file flyteidl/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 54.
+Hunk #3 FAILED at 62.
+Hunk #4 FAILED at 92.
+Hunk #5 FAILED at 115.
+Hunk #6 FAILED at 142.
+Hunk #7 FAILED at 216.
+Hunk #8 FAILED at 226.
+Hunk #9 FAILED at 246.
+Hunk #10 FAILED at 307.
+Hunk #11 FAILED at 329.
+Hunk #12 FAILED at 373.
+Hunk #13 FAILED at 419.
+Hunk #14 FAILED at 512.
+Hunk #15 FAILED at 532.
+Hunk #16 FAILED at 581.
+Hunk #17 FAILED at 645.
+Hunk #18 FAILED at 671.
+Hunk #19 FAILED at 694.
+Hunk #20 FAILED at 716.
+20 out of 20 hunks FAILED -- saving rejects to file flyteidl/go.sum.rej
+patching file flyteplugins/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file flyteplugins/go.mod.rej
+patching file flyteplugins/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+19 out of 19 hunks ignored -- saving rejects to file flyteplugins/go.sum.rej
+patching file flytepropeller/cmd/controller/cmd/root.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file flytepropeller/cmd/controller/cmd/root.go.rej
+patching file flytepropeller/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file flytepropeller/go.mod.rej
+patching file flytepropeller/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+21 out of 21 hunks ignored -- saving rejects to file flytepropeller/go.sum.rej
+patching file flytestdlib/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file flytestdlib/go.mod.rej
+patching file flytestdlib/go.sum
+Hunk #1 succeeded at 68 with fuzz 3.
+Hunk #2 FAILED at 95.
+Hunk #3 FAILED at 130.
+Hunk #4 succeeded at 232 with fuzz 3.
+Hunk #5 FAILED at 259.
+Hunk #6 FAILED at 344.
+Hunk #7 FAILED at 397.
+Hunk #8 FAILED at 433.
+Hunk #9 FAILED at 495.
+7 out of 9 hunks FAILED -- saving rejects to file flytestdlib/go.sum.rej
+patching file flytestdlib/otelutils/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file flytestdlib/otelutils/config.go.rej
+patching file flytestdlib/otelutils/config_flags.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file flytestdlib/otelutils/config_flags.go.rej
+patching file flytestdlib/otelutils/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file flytestdlib/otelutils/factory.go.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file go.sum.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/single/start.go b/cmd/single/start.go
+|index d415f8211..e60c0e565 100644
+|--- a/cmd/single/start.go
+|+++ b/cmd/single/start.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 18
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/datacatalog/cmd/entrypoints/serve.go b/datacatalog/cmd/entrypoints/serve.go
+|index 38f4fd07e..a641f165e 100644
+|--- a/datacatalog/cmd/entrypoints/serve.go
+|+++ b/datacatalog/cmd/entrypoints/serve.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 31
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/datacatalog/go.mod b/datacatalog/go.mod
+|index 145fc4617..b361dff68 100644
+|--- a/datacatalog/go.mod
+|+++ b/datacatalog/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 117
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/datacatalog/go.sum b/datacatalog/go.sum
+|index de1a4b99b..f9cad5c52 100644
+|--- a/datacatalog/go.sum
+|+++ b/datacatalog/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 248
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flyteadmin/cmd/entrypoints/serve.go b/flyteadmin/cmd/entrypoints/serve.go
+|index 7880cdd96..794b0d667 100644
+|--- a/flyteadmin/cmd/entrypoints/serve.go
+|+++ b/flyteadmin/cmd/entrypoints/serve.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 261
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flyteadmin/go.mod b/flyteadmin/go.mod
+|index 18f1eaa2d..d3e5e602d 100644
+|--- a/flyteadmin/go.mod
+|+++ b/flyteadmin/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 356
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flyteadmin/go.sum b/flyteadmin/go.sum
+|index 459a862f6..c570bfbf0 100644
+|--- a/flyteadmin/go.sum
+|+++ b/flyteadmin/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+13 out of 13 hunks ignored
+can't find file to patch at input line 532
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytecopilot/go.mod b/flytecopilot/go.mod
+|index c92d4636c..f1265198f 100644
+|--- a/flytecopilot/go.mod
+|+++ b/flytecopilot/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 601
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytecopilot/go.sum b/flytecopilot/go.sum
+|index 23ba7d005..5db592452 100644
+|--- a/flytecopilot/go.sum
+|+++ b/flytecopilot/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 733
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytectl/go.mod b/flytectl/go.mod
+|index bbae84571..47f9a1d5a 100644
+|--- a/flytectl/go.mod
+|+++ b/flytectl/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 788
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytectl/go.sum b/flytectl/go.sum
+|index 0fb9f7629..41cdcdea2 100644
+|--- a/flytectl/go.sum
+|+++ b/flytectl/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+19 out of 19 hunks ignored
+can't find file to patch at input line 1013
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flyteidl/go.mod b/flyteidl/go.mod
+|index d80bbbfa6..9f3ebc3f9 100644
+|--- a/flyteidl/go.mod
+|+++ b/flyteidl/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1072
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flyteidl/go.sum b/flyteidl/go.sum
+|index c407c8e14..293054755 100644
+|--- a/flyteidl/go.sum
+|+++ b/flyteidl/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+20 out of 20 hunks ignored
+can't find file to patch at input line 1704
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flyteplugins/go.mod b/flyteplugins/go.mod
+|index 3bd75d01d..bcf6dab61 100644
+|--- a/flyteplugins/go.mod
+|+++ b/flyteplugins/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 1770
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flyteplugins/go.sum b/flyteplugins/go.sum
+|index 6470a8c8a..0eadcd0b2 100644
+|--- a/flyteplugins/go.sum
+|+++ b/flyteplugins/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+19 out of 19 hunks ignored
+can't find file to patch at input line 2008
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytepropeller/cmd/controller/cmd/root.go b/flytepropeller/cmd/controller/cmd/root.go
+|index e1069650a..580a064ce 100644
+|--- a/flytepropeller/cmd/controller/cmd/root.go
+|+++ b/flytepropeller/cmd/controller/cmd/root.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2021
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytepropeller/go.mod b/flytepropeller/go.mod
+|index 353b4dbbc..76e81366a 100644
+|--- a/flytepropeller/go.mod
+|+++ b/flytepropeller/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 2104
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytepropeller/go.sum b/flytepropeller/go.sum
+|index bc945124b..1a3dc0f9f 100644
+|--- a/flytepropeller/go.sum
+|+++ b/flytepropeller/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+21 out of 21 hunks ignored
+can't find file to patch at input line 2369
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytestdlib/go.mod b/flytestdlib/go.mod
+|index 8ff05b6fc..a46362866 100644
+|--- a/flytestdlib/go.mod
+|+++ b/flytestdlib/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 2452
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytestdlib/go.sum b/flytestdlib/go.sum
+|index b5aec3b1d..54c23840d 100644
+|--- a/flytestdlib/go.sum
+|+++ b/flytestdlib/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+9 out of 9 hunks ignored
+can't find file to patch at input line 2588
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytestdlib/otelutils/config.go b/flytestdlib/otelutils/config.go
+|index e984eabff..53c445a80 100644
+|--- a/flytestdlib/otelutils/config.go
+|+++ b/flytestdlib/otelutils/config.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 2664
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytestdlib/otelutils/config_flags.go b/flytestdlib/otelutils/config_flags.go
+|index 2cef099f7..03aede06b 100755
+|--- a/flytestdlib/otelutils/config_flags.go
+|+++ b/flytestdlib/otelutils/config_flags.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2681
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/flytestdlib/otelutils/factory.go b/flytestdlib/otelutils/factory.go
+|index b0bb0582b..a8acc3e9d 100644
+|--- a/flytestdlib/otelutils/factory.go
+|+++ b/flytestdlib/otelutils/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 2812
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index ebd04b21f..2748b1f29 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 2876
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 85826851c..b4e9d0249 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+patching file cmd/single/start.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cmd/single/start.go.rej
+patching file datacatalog/cmd/entrypoints/serve.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file datacatalog/cmd/entrypoints/serve.go.rej
+patching file datacatalog/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file datacatalog/go.mod.rej
+patching file datacatalog/go.sum
+Hunk #1 succeeded at 68 with fuzz 3.
+Hunk #2 FAILED at 95.
+Hunk #3 FAILED at 124.
+Hunk #4 succeeded at 230 with fuzz 3.
+Hunk #5 FAILED at 257.
+Hunk #6 FAILED at 342.
+Hunk #7 FAILED at 391.
+Hunk #8 FAILED at 431.
+6 out of 8 hunks FAILED -- saving rejects to file datacatalog/go.sum.rej
+patching file flyteadmin/cmd/entrypoints/serve.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file flyteadmin/cmd/entrypoints/serve.go.rej
+patching file flyteadmin/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file flyteadmin/go.mod.rej
+patching file flyteadmin/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file flyteadmin/go.sum.rej
+patching file flytecopilot/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file flytecopilot/go.mod.rej
+patching file flytecopilot/go.sum
+Hunk #1 succeeded at 66 with fuzz 3.
+Hunk #2 FAILED at 93.
+Hunk #3 FAILED at 121.
+Hunk #4 FAILED at 223.
+Hunk #5 FAILED at 308.
+Hunk #6 FAILED at 361.
+Hunk #7 FAILED at 397.
+Hunk #8 FAILED at 722.
+7 out of 8 hunks FAILED -- saving rejects to file flytecopilot/go.sum.rej
+patching file flytectl/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file flytectl/go.mod.rej
+patching file flytectl/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+19 out of 19 hunks ignored -- saving rejects to file flytectl/go.sum.rej
+patching file flyteidl/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file flyteidl/go.mod.rej
+patching file flyteidl/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 54.
+Hunk #3 FAILED at 62.
+Hunk #4 FAILED at 92.
+Hunk #5 FAILED at 115.
+Hunk #6 FAILED at 142.
+Hunk #7 FAILED at 216.
+Hunk #8 FAILED at 226.
+Hunk #9 FAILED at 246.
+Hunk #10 FAILED at 307.
+Hunk #11 FAILED at 329.
+Hunk #12 FAILED at 373.
+Hunk #13 FAILED at 419.
+Hunk #14 FAILED at 512.
+Hunk #15 FAILED at 532.
+Hunk #16 FAILED at 581.
+Hunk #17 FAILED at 645.
+Hunk #18 FAILED at 671.
+Hunk #19 FAILED at 694.
+Hunk #20 FAILED at 716.
+20 out of 20 hunks FAILED -- saving rejects to file flyteidl/go.sum.rej
+patching file flyteplugins/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file flyteplugins/go.mod.rej
+patching file flyteplugins/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+19 out of 19 hunks ignored -- saving rejects to file flyteplugins/go.sum.rej
+patching file flytepropeller/cmd/controller/cmd/root.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file flytepropeller/cmd/controller/cmd/root.go.rej
+patching file flytepropeller/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file flytepropeller/go.mod.rej
+patching file flytepropeller/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+21 out of 21 hunks ignored -- saving rejects to file flytepropeller/go.sum.rej
+patching file flytestdlib/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file flytestdlib/go.mod.rej
+patching file flytestdlib/go.sum
+Hunk #1 succeeded at 68 with fuzz 3.
+Hunk #2 FAILED at 95.
+Hunk #3 FAILED at 130.
+Hunk #4 succeeded at 232 with fuzz 3.
+Hunk #5 FAILED at 259.
+Hunk #6 FAILED at 344.
+Hunk #7 FAILED at 397.
+Hunk #8 FAILED at 433.
+Hunk #9 FAILED at 495.
+7 out of 9 hunks FAILED -- saving rejects to file flytestdlib/go.sum.rej
+patching file flytestdlib/otelutils/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file flytestdlib/otelutils/config.go.rej
+patching file flytestdlib/otelutils/config_flags.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file flytestdlib/otelutils/config_flags.go.rej
+patching file flytestdlib/otelutils/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file flytestdlib/otelutils/factory.go.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file go.sum.rej
+ERROR: golden patch failed to apply by all strategies

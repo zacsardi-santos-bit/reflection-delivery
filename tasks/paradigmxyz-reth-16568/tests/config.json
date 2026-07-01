@@ -1,0 +1,11 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p reth-provider -E 'test(test_ommers_provider_on_db_provider)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) reth-provider providers::database::provider::tests::test_ommers_provider_on_db_provider"
+  ],
+  "PASS_TO_PASS": []
+}

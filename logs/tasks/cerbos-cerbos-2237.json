@@ -1,0 +1,23 @@
+{
+ "task": "cerbos-cerbos-2237",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden evaluator.go adds PolicyVersion/Scope to Request_Principal and Request_Resource; F2P TestCheck/case_10,11,23 + TestCheckWithLenientScopeSearch"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "task": "gardener-gardener-11192",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds validateExtensions (field.Duplicate on dup type) + DeleteResources/WaitCleanupResources; test.patch asserts 'spec.extensions[2].type' ErrorTypeDuplicate and DeleteResources -> extensionList.Items BeEmpty; test.sh 'go test -json ./.../validation ./.../extension'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 32,
+  "shallow": true
+ }
+}

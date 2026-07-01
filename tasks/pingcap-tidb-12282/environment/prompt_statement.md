@@ -1,0 +1,5 @@
+I've been working with the TiDB SQL optimizer and I noticed that the fast single-row lookup path isn't being applied to queries that use a table alias. For example, a simple point lookup on a primary key column fails to use the optimized path just because the table has an alias in the query. I'd expect aliased and non-aliased forms of the same query to use the same execution plan when the conditions are otherwise identical.
+
+Beyond the missing optimization, there are some related correctness issues. When a table alias is provided, it should completely replace the original table name — so referencing the original table name as a qualifier in the WHERE clause or SELECT list should produce an appropriate error. Similarly, mixing wildcards with specific column names in the SELECT list should return all expected columns in the correct order.
+
+I'd like to fix the optimizer so that aliased queries benefit from single-row lookup optimization, that alias-qualified column references in both SELECT and WHERE clauses are correctly resolved, and that invalid references (using the original table name or a completely unknown qualifier) produce the right errors.

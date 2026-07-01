@@ -1,0 +1,3 @@
+patching file pkg/ring/kv/consul/client.go
+patching file pkg/ring/kv/consul/mock.go
+patching file pkg/ring/kv/etcd/mock.go

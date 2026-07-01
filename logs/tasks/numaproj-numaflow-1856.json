@@ -1,0 +1,23 @@
+{
+ "task": "numaproj-numaflow-1856",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds `func (pls *PipelineStatus) IsHealthy() bool` and `func (isbsvc *InterStepBufferServiceStatus) IsHealthy()`, plus MapUDFCount/ReduceUDFCount; F2P includes Test_ISBSvcIsHealthy, TestPipelineStatus_IsHealthy, Test_PipelineVertexCounts"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

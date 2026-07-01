@@ -1,0 +1,74 @@
+patching file pyxform/tests/enketo_validate_tests.py
+patching file pyxform/tests/fixtures/strings.ini
+patching file pyxform/tests/odk_validate_tests.py
+patching file pyxform/tests/test_validator_util.py
+patching file pyxform/tests/xls2xform_tests.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-6.2.5, py-1.11.0, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 0 items / 2 errors
+
+==================================== ERRORS ====================================
+______________ ERROR collecting pyxform/tests/xls2xform_tests.py _______________
+ImportError while importing test module '/workspace/repo/pyxform/tests/xls2xform_tests.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.8/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+pyxform/tests/xls2xform_tests.py:7: in <module>
+    from pyxform.xls2xform import _create_parser, _validator_args_logic
+E   ImportError: cannot import name '_validator_args_logic' from 'pyxform.xls2xform' (/workspace/repo/pyxform/xls2xform.py)
+____________ ERROR collecting pyxform/tests/test_validator_util.py _____________
+ImportError while importing test module '/workspace/repo/pyxform/tests/test_validator_util.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.8/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+pyxform/tests/test_validator_util.py:4: in <module>
+    from pyxform.validators.error_cleaner import ErrorCleaner
+E   ModuleNotFoundError: No module named 'pyxform.validators'
+=============================== warnings summary ===============================
+pyxform/survey.py:587
+  /workspace/repo/pyxform/survey.py:587: DeprecationWarning: invalid escape sequence \s
+    text_re = re.compile('(>)\n\s*(\s[^<>\s].*?)\n\s*(\s</)', re.DOTALL)
+
+pyxform/survey.py:588
+  /workspace/repo/pyxform/survey.py:588: DeprecationWarning: invalid escape sequence \s
+    output_re = re.compile('\n.*(<output.*>)\n(\s\s)*')
+
+pyxform/survey.py:590
+  /workspace/repo/pyxform/survey.py:590: DeprecationWarning: invalid escape sequence \g
+    inline_output = output_re.sub('\g<1>', pretty_xml)
+
+pyxform/survey_element.py:249
+  /workspace/repo/pyxform/survey_element.py:249: SyntaxWarning: "is" with a literal. Did you mean "=="?
+    if display_element is u'label' \
+
+pyxform/xls2json.py:515
+  /workspace/repo/pyxform/xls2json.py:515: DeprecationWarning: invalid escape sequence \S
+    ')) (?P<list_name>\S+)')
+
+pyxform/odk_validate/__init__.py:85
+  /workspace/repo/pyxform/odk_validate/__init__.py:85: DeprecationWarning: invalid escape sequence \-
+    pattern = "(/[a-z0-9\-_]+(?:/[a-z0-9\-_]+)+)"
+
+pyxform/odk_validate/__init__.py:93
+  /workspace/repo/pyxform/odk_validate/__init__.py:93: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+    has_java_filename = line.find('.java:') is not -1
+
+pyxform/odk_validate/__init__.py:95
+  /workspace/repo/pyxform/odk_validate/__init__.py:95: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+    is_a_java_method = line.find('\tat') is not -1
+
+../../usr/local/lib/python3.8/site-packages/unittest2/compatibility.py:143
+  /usr/local/lib/python3.8/site-packages/unittest2/compatibility.py:143: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
+    class ChainMap(collections.MutableMapping):
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+=========================== short test summary info ============================
+ERROR pyxform/tests/xls2xform_tests.py
+ERROR pyxform/tests/test_validator_util.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+======================== 9 warnings, 2 errors in 0.48s =========================
+reward=0 graded=16 found=0 failed=0 parsed=0 framework=pytest exit_code=2

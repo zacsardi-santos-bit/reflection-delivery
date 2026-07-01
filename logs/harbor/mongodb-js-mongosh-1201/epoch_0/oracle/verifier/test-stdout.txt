@@ -1,0 +1,17 @@
+patching file packages/cli-repl/src/cli-repl.spec.ts
+patching file packages/cli-repl/test/e2e.spec.ts
+patching file packages/logging/src/analytics-helpers.spec.ts
+patching file packages/logging/src/setup-logger-and-telemetry.spec.ts
+patching file packages/node-runtime-worker-thread/src/worker-runtime.spec.ts
+patching file packages/shell-api/src/integration.spec.ts
+patching file packages/shell-api/src/shell-api.spec.ts
+
+
+  setupLoggerAndTelemetry
+    ✓ works (44ms)
+    ✓ buffers deprecated API calls
+
+
+  2 passing (55ms)
+
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=mocha exit_code=0

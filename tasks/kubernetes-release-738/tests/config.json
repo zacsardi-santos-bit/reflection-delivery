@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /go/src/github.com/kubernetes/release && go test -json ./debian -count=1",
+  "test_files": [
+    "debian/build_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kubernetes/release/debian::TestGetKubeadmDependencies/minimum_supported_kubernetes",
+    "github.com/kubernetes/release/debian::TestGetKubeadmDependencies/latest_stable_minor_kubernetes",
+    "github.com/kubernetes/release/debian::TestGetKubeadmDependencies"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/kubernetes/release/debian::TestGetKubeadmConfig"
+  ]
+}

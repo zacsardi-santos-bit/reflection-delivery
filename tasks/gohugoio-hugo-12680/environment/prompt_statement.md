@@ -1,0 +1,5 @@
+I'm working on Hugo templates and I've run into a limitation: there's no built-in support for trigonometric functions or angle conversions in the math template namespace. I'd like to be able to compute sine, cosine, and tangent from within my templates — for things like generating SVG arc paths or laying out elements in a circle — but those functions simply don't exist yet.
+
+I'd also like access to the mathematical constant pi, the inverse trig functions (arcsine, arccosine, arctangent, and a two-argument arctangent that preserves quadrant information), and helpers to convert between degrees and radians. These should all work with any numeric input type. If a non-numeric value is passed, the function should return an error. For inputs that are numerically valid but outside the mathematical domain of the function (like taking the arcsine of a value greater than 1), the function should return a not-a-number result rather than an error.
+
+Could you add these trigonometric and angle conversion functions to Hugo's math template namespace?

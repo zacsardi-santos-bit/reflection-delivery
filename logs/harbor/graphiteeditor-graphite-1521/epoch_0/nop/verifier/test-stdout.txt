@@ -1,0 +1,160 @@
+patching file node-graph/gcore/src/graphic_element/renderer.rs
+warning: /workspace/repo/libraries/bezier-rs/Cargo.toml: unused manifest key: dependencies.serde.version
+   Compiling graphene-core v0.1.0 (/workspace/repo/node-graph/gcore)
+    Finished test [optimized + debuginfo] target(s) in 10.98s
+────────────
+ Nextest run ID 81f1dcc9-6c20-4074-99bd-3abdd310d80d with nextest profile: default
+    Starting 136 tests across 2 binaries (2 tests skipped)
+        PASS [   0.057s] (  1/136) bezier-rs bezier::solvers::tests::test_inflections
+        PASS [   0.057s] (  2/136) bezier-rs bezier::lookup::tests::test_project
+        PASS [   0.058s] (  3/136) bezier-rs bezier::solvers::tests::test_bounding_box
+        PASS [   0.059s] (  4/136) bezier-rs bezier::solvers::tests::test_derivative
+        PASS [   0.060s] (  5/136) bezier-rs bezier::solvers::tests::test_extrema_quadratic
+        PASS [   0.062s] (  6/136) bezier-rs bezier::solvers::tests::tangent_at_point
+        PASS [   0.062s] (  7/136) bezier-rs bezier::solvers::tests::test_de_casteljau_points
+        PASS [   0.063s] (  8/136) bezier-rs bezier::solvers::tests::test_intersect_curve
+        PASS [   0.064s] (  9/136) bezier-rs bezier::solvers::tests::test_find_tvalues_for_x
+        PASS [   0.064s] ( 10/136) bezier-rs bezier::solvers::tests::test_extrema_linear
+        PASS [   0.064s] ( 11/136) bezier-rs bezier::lookup::tests::test_length
+        PASS [   0.065s] ( 12/136) bezier-rs bezier::solvers::tests::test_extrema_cubic
+        PASS [   0.065s] ( 13/136) bezier-rs bezier::solvers::tests::normal_at_point
+        PASS [   0.065s] ( 14/136) bezier-rs bezier::lookup::tests::test_compute_lookup_table
+        PASS [   0.067s] ( 15/136) bezier-rs bezier::lookup::tests::test_evaluate
+        PASS [   0.067s] ( 16/136) bezier-rs bezier::core::tests::test_cubic_through_points
+        PASS [   0.066s] ( 17/136) bezier-rs bezier::solvers::tests::test_curvature
+        PASS [   0.068s] ( 18/136) bezier-rs bezier::core::tests::test_quadratic_from_points
+        PASS [   0.050s] ( 19/136) bezier-rs bezier::solvers::tests::test_intersect_curve_cubic_anchor_handle_overlap
+        PASS [   0.049s] ( 20/136) bezier-rs bezier::solvers::tests::test_intersect_line_segment_cubic
+        PASS [   0.050s] ( 21/136) bezier-rs bezier::solvers::tests::test_intersect_curve_cubic_edge_case
+        PASS [   0.052s] ( 22/136) bezier-rs bezier::solvers::tests::test_intersect_line_segment_linear
+        PASS [   0.054s] ( 23/136) bezier-rs bezier::solvers::tests::test_intersect_line_segment_quadratic
+        PASS [   0.054s] ( 24/136) bezier-rs bezier::solvers::tests::test_intersect_with_self
+        PASS [   0.053s] ( 25/136) bezier-rs bezier::transform::tests::test_arcs_quadratic
+        PASS [   0.054s] ( 26/136) bezier-rs bezier::transform::tests::test_arcs_linear
+        PASS [   0.056s] ( 27/136) bezier-rs bezier::solvers::tests::test_tangent
+        PASS [   0.052s] ( 28/136) bezier-rs bezier::transform::tests::test_offset_linear
+        PASS [   0.053s] ( 29/136) bezier-rs bezier::transform::tests::test_offset_cubic
+        PASS [   0.053s] ( 30/136) bezier-rs bezier::transform::tests::test_outline
+        PASS [   0.057s] ( 31/136) bezier-rs bezier::transform::tests::test_arcs_cubic
+        PASS [   0.058s] ( 32/136) bezier-rs bezier::solvers::tests::test_normal
+        PASS [   0.056s] ( 33/136) bezier-rs bezier::transform::tests::test_graduated_scale
+        PASS [   0.054s] ( 34/136) bezier-rs bezier::transform::tests::test_offset_quadratic
+        PASS [   0.055s] ( 35/136) bezier-rs bezier::transform::tests::test_offset_curve_that_has_a_single_point_after_reduce
+        PASS [   0.060s] ( 36/136) bezier-rs bezier::transform::tests::test_graduated_scale_quadratic
+        PASS [   0.046s] ( 37/136) bezier-rs bezier::transform::tests::test_outline_single_point_square
+        PASS [   0.047s] ( 38/136) bezier-rs bezier::transform::tests::test_outline_single_point_circle
+        PASS [   0.047s] ( 39/136) bezier-rs bezier::transform::tests::test_reduce
+        PASS [   0.046s] ( 40/136) bezier-rs bezier::transform::tests::test_rotate
+        PASS [   0.051s] ( 41/136) bezier-rs bezier::transform::tests::test_split
+        PASS [   0.052s] ( 42/136) bezier-rs bezier::transform::tests::test_split_at_anchors
+        PASS [   0.052s] ( 43/136) bezier-rs subpath::lookup::tests::exact_start_end
+        PASS [   0.051s] ( 44/136) bezier-rs subpath::manipulators::tests::insert_at_exisiting_manipulator_group_of_open_subpath
+        PASS [   0.055s] ( 45/136) bezier-rs bezier::transform::tests::test_trim_t2_greater_than_t1
+        PASS [   0.056s] ( 46/136) bezier-rs bezier::transform::tests::test_translate
+        PASS [   0.057s] ( 47/136) bezier-rs bezier::transform::tests::test_trim
+        PASS [   0.050s] ( 48/136) bezier-rs subpath::manipulators::tests::insert_in_first_segment_of_open_subpath
+        PASS [   0.056s] ( 49/136) bezier-rs subpath::lookup::tests::length_mixed
+        PASS [   0.054s] ( 50/136) bezier-rs subpath::manipulators::tests::insert_at_last_manipulator_group_of_closed_subpath
+        PASS [   0.055s] ( 51/136) bezier-rs subpath::manipulators::tests::insert_at_last_segment_of_closed_subpath
+        PASS [   0.056s] ( 52/136) bezier-rs subpath::lookup::tests::t_value_to_parametric_global_parametric_closed_subpath
+        PASS [   0.056s] ( 53/136) bezier-rs subpath::lookup::tests::t_value_to_parametric_global_parametric_open_subpath
+        PASS [   0.056s] ( 54/136) bezier-rs subpath::lookup::tests::length_quadratic
+        PASS [   0.052s] ( 55/136) bezier-rs subpath::manipulators::tests::insert_in_last_segment_of_open_subpath
+        PASS [   0.052s] ( 56/136) bezier-rs subpath::solvers::tests::evaluate_multiple_subpath_curves
+        PASS [   0.051s] ( 57/136) bezier-rs subpath::solvers::tests::evaluate_one_subpath_curve
+        PASS [   0.050s] ( 58/136) bezier-rs subpath::solvers::tests::intersection_linear_multiple_subpath_curves_test_one
+        PASS [   0.047s] ( 59/136) bezier-rs subpath::solvers::tests::intersection_linear_multiple_subpath_curves_test_three
+        PASS [   0.046s] ( 60/136) bezier-rs subpath::solvers::tests::intersection_linear_multiple_subpath_curves_test_two
+        PASS [   0.052s] ( 61/136) bezier-rs subpath::solvers::tests::round_join_counter_clockwise_rotation
+        PASS [   0.054s] ( 62/136) bezier-rs subpath::solvers::tests::round_join_clockwise_rotation
+        PASS [   0.051s] ( 63/136) bezier-rs subpath::transform::tests::outline_single_point_square
+        PASS [   0.052s] ( 64/136) bezier-rs subpath::transform::tests::outline_with_single_point_segment
+        PASS [   0.054s] ( 65/136) bezier-rs subpath::transform::tests::outline_single_point_circle
+        PASS [   0.052s] ( 66/136) bezier-rs subpath::transform::tests::split_an_open_subpath
+        PASS [   0.053s] ( 67/136) bezier-rs subpath::transform::tests::reverse_an_open_subpath
+        PASS [   0.053s] ( 68/136) bezier-rs subpath::transform::tests::reverse_a_closed_subpath
+        PASS [   0.052s] ( 69/136) bezier-rs subpath::transform::tests::split_at_end_of_an_open_subpath
+        PASS [   0.053s] ( 70/136) bezier-rs subpath::transform::tests::split_a_closed_subpath
+        PASS [   0.052s] ( 71/136) bezier-rs subpath::transform::tests::split_at_start_of_a_closed_subpath
+        PASS [   0.054s] ( 72/136) bezier-rs subpath::transform::tests::split_at_end_of_a_closed_subpath
+        PASS [   0.048s] ( 73/136) bezier-rs subpath::transform::tests::trim_a_duplicate_subpath
+        PASS [   0.050s] ( 74/136) bezier-rs subpath::transform::tests::trim_a_closed_subpath
+        PASS [   0.051s] ( 75/136) bezier-rs subpath::transform::tests::split_at_start_of_an_open_subpath
+        PASS [   0.050s] ( 76/136) bezier-rs subpath::transform::tests::trim_a_reversed_duplicate_subpath
+        PASS [   0.047s] ( 77/136) bezier-rs subpath::transform::tests::trim_across_break_in_a_closed_subpath
+        PASS [   0.048s] ( 78/136) bezier-rs subpath::transform::tests::trim_across_break_in_a_closed_subpath_where_ends_are_in_same_segment
+        PASS [   0.050s] ( 79/136) bezier-rs subpath::transform::tests::trim_across_break_in_a_closed_subpath_where_result_is_multiple_segments
+        PASS [   0.049s] ( 80/136) bezier-rs subpath::transform::tests::trim_at_break_in_closed_subpath_from_1_to_0
+        PASS [   0.051s] ( 81/136) bezier-rs subpath::transform::tests::trim_an_open_subpath
+        PASS [   0.051s] ( 82/136) bezier-rs subpath::transform::tests::trim_reverse_in_open_subpath
+        PASS [   0.052s] ( 83/136) bezier-rs subpath::transform::tests::trim_middle_point
+        PASS [   0.051s] ( 84/136) bezier-rs subpath::transform::tests::trim_start_point
+        PASS [   0.052s] ( 85/136) bezier-rs subpath::transform::tests::trim_reversed_to_end_of_subpath
+        PASS [   0.053s] ( 86/136) bezier-rs subpath::transform::tests::trim_first_segment_of_an_open_subpath
+        PASS [   0.054s] ( 87/136) bezier-rs subpath::transform::tests::trim_at_break_in_closed_subpath_where_end_is_0
+        PASS [   0.053s] ( 88/136) bezier-rs subpath::transform::tests::trim_second_segment_of_an_open_subpath
+        PASS [   0.054s] ( 89/136) bezier-rs subpath::transform::tests::trim_reverse_within_a_bezier
+        PASS [   0.055s] ( 90/136) bezier-rs subpath::transform::tests::trim_at_break_in_closed_subpath_where_start_is_1
+        PASS [   0.050s] ( 91/136) bezier-rs subpath::transform::tests::trim_to_end_of_closed_subpath
+        PASS [   0.050s] ( 92/136) bezier-rs subpath::transform::tests::trim_within_a_bezier
+        PASS [   0.052s] ( 93/136) bezier-rs subpath::transform::tests::trim_to_end_of_subpath
+        PASS [   0.049s] ( 94/136) bezier-rs symmetrical_basis::tests::find_bernstein_roots
+        PASS [   0.048s] ( 95/136) bezier-rs utils::tests::test_are_points_collinear
+        PASS [   0.048s] ( 96/136) bezier-rs utils::tests::test_compute_circle_center_from_points
+        PASS [   0.046s] ( 97/136) bezier-rs utils::tests::test_do_rectangles_overlap
+        PASS [   0.048s] ( 98/136) bezier-rs utils::tests::test_find_intersection
+        PASS [   0.048s] ( 99/136) bezier-rs utils::tests::test_solve_cubic
+        PASS [   0.047s] (100/136) bezier-rs utils::tests::test_solve_linear
+        PASS [   0.055s] (101/136) graphene-core ops::test::clone_node
+        PASS [   0.057s] (102/136) graphene-core ops::test::add_node
+        PASS [   0.058s] (103/136) graphene-core graphic_element::renderer::quad::offset_quad
+        PASS [   0.059s] (104/136) graphene-core graphic_element::renderer::quad::quad_contains
+        PASS [   0.057s] (105/136) graphene-core ops::test::duplicate_node
+        PASS [   0.057s] (106/136) graphene-core ops::test::flat_map_result
+        PASS [   0.058s] (107/136) graphene-core ops::test::first_node
+        FAIL [   0.059s] (108/136) graphene-core graphic_element::renderer::quad_contains_test::test_quad_contains_large_point
+  stdout ───
+
+    running 1 test
+    test graphic_element::renderer::quad_contains_test::test_quad_contains_large_point ... FAILED
+
+    failures:
+
+    failures:
+        graphic_element::renderer::quad_contains_test::test_quad_contains_large_point
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 37 filtered out; finished in 0.01s
+
+  stderr ───
+    thread 'graphic_element::renderer::quad_contains_test::test_quad_contains_large_point' panicked at node-graph/gcore/src/graphic_element/renderer.rs:710:9:
+    assertion failed: Quad::from_box([DVec2::splat(300.),
+                    DVec2::splat(500.)]).contains(DVec2::splat(350.))
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 17 tests still running
+        PASS [   0.053s] (109/136) graphene-core ops::test::foo
+        PASS [   0.054s] (110/136) graphene-core ops::test::map_result
+        PASS [   0.057s] (111/136) graphene-core ops::test::identity_node
+        PASS [   0.056s] (112/136) graphene-core ops::test::object_safe
+        PASS [   0.055s] (113/136) graphene-core ops::test::second_node
+        PASS [   0.054s] (114/136) graphene-core quantization::test::quantize
+        PASS [   0.052s] (115/136) graphene-core quantization::test::quantize_black
+        PASS [   0.052s] (116/136) graphene-core quantization::test::test_getters
+        PASS [   0.054s] (117/136) graphene-core raster::adjustments::color_overlay_multiply
+        PASS [   0.054s] (118/136) graphene-core raster::brightness_contrast::tests::brightness_contrast_legacy_tests
+        PASS [   0.050s] (119/136) graphene-core raster::color::hsl_roundtrip
+        PASS [   0.050s] (120/136) graphene-core raster::discrete_srgb::tests::test_float_to_srgb_u8
+        PASS [   0.054s] (121/136) graphene-core raster::brightness_contrast::tests::brightness_contrast_tests
+        PASS [   0.051s] (122/136) graphene-core raster::test::window_node
+        PASS [   0.051s] (123/136) graphene-core storage::test::get_node_array
+        PASS [   0.050s] (124/136) graphene-core storage::test::get_node_vec
+        PASS [   0.051s] (125/136) graphene-core storage::test::get_node_slice
+────────────
+     Summary [   0.396s] 125/136 tests run: 124 passed, 1 failed, 2 skipped
+        FAIL [   0.059s] (108/136) graphene-core graphic_element::renderer::quad_contains_test::test_quad_contains_large_point
+warning: 11/136 tests were not run due to test failure (run with --no-fail-fast to run all tests, or run with --max-fail)
+error: test run failed
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

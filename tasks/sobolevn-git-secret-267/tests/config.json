@@ -1,0 +1,42 @@
+{
+  "test_framework": "junit",
+  "test_command": "make build && bats --formatter junit /workspace/repo/tests/test_killperson.bats /workspace/repo/tests/test_tell.bats /workspace/repo/tests/test_whoknows.bats",
+  "test_files": [
+    "tests/_test_base.bash",
+    "tests/fixtures/gpg/attacker1@gitsecret.io/private.key",
+    "tests/fixtures/gpg/attacker1@gitsecret.io/public.key",
+    "tests/fixtures/gpg/user1@gitsecret.io/private.key",
+    "tests/fixtures/gpg/user1@gitsecret.io/public.key",
+    "tests/fixtures/gpg/user2@gitsecret.io/private.key",
+    "tests/fixtures/gpg/user2@gitsecret.io/public.key",
+    "tests/fixtures/gpg/user3@gitsecret.io/private.key",
+    "tests/fixtures/gpg/user3@gitsecret.io/public.key",
+    "tests/test_killperson.bats",
+    "tests/test_tell.bats",
+    "tests/test_whoknows.bats"
+  ],
+  "num_test_files": 12,
+  "language": "ruby",
+  "FAIL_TO_PASS": [
+    "test_killperson.bats::run '#39;killperson'#39; with short name",
+    "test_tell.bats::run '#39;tell'#39; on substring of emails"
+  ],
+  "PASS_TO_PASS": [
+    "test_killperson.bats::run '#39;killperson'#39; without arguments",
+    "test_killperson.bats::run '#39;killperson'#39; with email",
+    "test_killperson.bats::run '#39;killperson'#39; with multiple arguments",
+    "test_tell.bats::fail on no users",
+    "test_tell.bats::constantly fail on no users",
+    "test_tell.bats::run '#39;tell'#39; with secret-key imported",
+    "test_tell.bats::run '#39;tell'#39; without '#39;.gitsecret'#39;",
+    "test_tell.bats::run '#39;tell'#39; without arguments",
+    "test_tell.bats::run '#39;tell'#39; normally",
+    "test_tell.bats::run '#39;tell'#39; with '#39;-m'#39;",
+    "test_tell.bats::run '#39;tell'#39; with '#39;-m'#39; (empty email)",
+    "test_tell.bats::run '#39;tell'#39; with multiple emails",
+    "test_tell.bats::run '#39;tell'#39; in subfolder",
+    "test_whoknows.bats::run '#39;whoknows'#39; normally",
+    "test_whoknows.bats::run '#39;whoknows'#39; in subfolder",
+    "test_whoknows.bats::run '#39;whoknows'#39; without any users"
+  ]
+}

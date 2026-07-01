@@ -1,0 +1,23 @@
+{
+ "task": "prebid-prebid-server-270",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds validateUser: 'if userExt.DigiTrust == nil || userExt.DigiTrust.Pref != 0 { return errors.New(\"request.user contains a digitrust object that is not valid.\") }' plus ExtUser/ExtUserDigiTrust; TestDigiTrust drives validateUser with pref=0 (accept) and pref=1 (reject)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

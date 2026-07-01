@@ -1,0 +1,8 @@
+patching file packages/cli/src/nonInteractiveCli.ts
+patching file packages/cli/src/ui/hooks/useGeminiStream.ts
+patching file packages/core/src/config/config.ts
+patching file packages/core/src/core/baseLlmClient.ts
+patching file packages/core/src/index.ts
+patching file packages/core/src/tools/smart-edit.ts
+patching file packages/core/src/utils/llm-edit-fixer.ts
+patching file packages/core/src/utils/promptIdContext.ts

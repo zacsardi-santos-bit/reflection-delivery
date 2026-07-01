@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "bash -c 'cd /workspace/repo && /usr/local/bin/crd-ref-docs --source-path=api/v1alpha1 --config=tools/crd-ref-docs/config.yaml --templates-dir=tools/crd-ref-docs/templates --output-path=/tmp/generated_docs.md --max-depth 10 --renderer=markdown 2>/dev/null && bash tools/hack/docs-headings.sh /tmp/generated_docs.md && T=$(date -u +%Y-%m-%dT%H:%M:%SZ) && echo \"{\\\"Time\\\":\\\"$T\\\",\\\"Action\\\":\\\"run\\\",\\\"Test\\\":\\\"TestDocumentationIsUpToDate\\\"}\" && if diff -q site/content/en/latest/api/extension_types.md /tmp/generated_docs.md > /dev/null 2>&1; then echo \"{\\\"Time\\\":\\\"$T\\\",\\\"Action\\\":\\\"pass\\\",\\\"Test\\\":\\\"TestDocumentationIsUpToDate\\\",\\\"Elapsed\\\":1.0}\"; else diff site/content/en/latest/api/extension_types.md /tmp/generated_docs.md | head -5; echo \"{\\\"Time\\\":\\\"$T\\\",\\\"Action\\\":\\\"fail\\\",\\\"Test\\\":\\\"TestDocumentationIsUpToDate\\\",\\\"Elapsed\\\":1.0}\"; exit 1; fi'",
+  "test_files": [
+    "site/content/en/latest/api/extension_types.md"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "TestDocumentationIsUpToDate"
+  ],
+  "PASS_TO_PASS": []
+}

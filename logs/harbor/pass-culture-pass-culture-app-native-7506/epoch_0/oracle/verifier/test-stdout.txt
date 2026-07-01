@@ -1,0 +1,64 @@
+patching file src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx
+patching file src/features/navigation/RootNavigator/Header/Header.web.test.tsx
+patching file src/features/navigation/TabBar/TabBar.native.test.tsx
+jest-haste-map: duplicate manual mock found: index
+  The following files share their name; please delete one of them:
+    * <rootDir>/src/libs/campaign/__mocks__/index.ts
+    * <rootDir>/src/libs/location/__mocks__/index.ts
+
+jest-haste-map: duplicate manual mock found: jwt
+  The following files share their name; please delete one of them:
+    * <rootDir>/src/libs/__mocks__/jwt.ts
+    * <rootDir>/src/libs/jwt/__mocks__/jwt.ts
+
+jest-haste-map: duplicate manual mock found: index
+  The following files share their name; please delete one of them:
+    * <rootDir>/src/libs/location/__mocks__/index.ts
+    * <rootDir>/src/libs/splashscreen/__mocks__/index.ts
+
+jest-haste-map: duplicate manual mock found: env
+  The following files share their name; please delete one of them:
+    * <rootDir>/src/libs/environment/__mocks__/env.ts
+    * <rootDir>/server/src/libs/environment/__mocks__/env.ts
+
+jest-haste-map: duplicate manual mock found: routes
+  The following files share their name; please delete one of them:
+    * <rootDir>/src/features/navigation/RootNavigator/__mocks__/routes.ts
+    * <rootDir>/src/features/navigation/TabBar/__mocks__/routes.ts
+
+jest-haste-map: duplicate manual mock found: routes
+  The following files share their name; please delete one of them:
+    * <rootDir>/src/features/navigation/TabBar/__mocks__/routes.ts
+    * <rootDir>/src/features/navigation/SearchStackNavigator/__mocks__/routes.ts
+
+jest-haste-map: duplicate manual mock found: index
+  The following files share their name; please delete one of them:
+    * <rootDir>/src/libs/splashscreen/__mocks__/index.ts
+    * <rootDir>/src/features/navigation/RootNavigator/linking/__mocks__/index.ts
+
+PASS src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx (18.999 s)
+  AccessibleTabBar
+    ✓ renders correclty when FF is enabled (91 ms)
+    ✓ should display the 5 following tabs (22 ms)
+    ✓ displays only one selected at a time (19 ms)
+    ✓ should identify only one tab as current page (18 ms)
+    ✓ should call navigate with searchState params on press "Recherche" (26 ms)
+    ✓ should reset params on press "Recherche" when already on Search tab (19 ms)
+
+PASS src/features/navigation/RootNavigator/Header/Header.web.test.tsx (19.522 s)
+  Header
+    ✓ should render correctly (100 ms)
+    ✓ should render correctly when FF is enabled (30 ms)
+    ✓ should render Header without Bookings item for non-beneficiary and logged out users (24 ms)
+    ✓ should render Header without Bookings item for non-beneficiary and logged in users (28 ms)
+    ✓ should render Header for beneficiary and logged in users (22 ms)
+    ✓ should identify one tab as current page (20 ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        24.54 s
+Ran all test suites matching /src\/features\/navigation\/RootNavigator\/Header\/AccessibleTabBar.web.test.tsx|src\/features\/navigation\/RootNavigator\/Header\/Header.web.test.tsx/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":2,"numPassedTests":12,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":12,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746568437,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["AccessibleTabBar"],"duration":91,"failureDetails":[],"failureMessages":[],"fullName":"AccessibleTabBar renders correclty when FF is enabled","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"renders correclty when FF is enabled"},{"ancestorTitles":["AccessibleTabBar"],"duration":22,"failureDetails":[],"failureMessages":[],"fullName":"AccessibleTabBar should display the 5 following tabs","invocations":1,"location":null,"numPassingAsserts":5,"retryReasons":[],"status":"passed","title":"should display the 5 following tabs"},{"ancestorTitles":["AccessibleTabBar"],"duration":19,"failureDetails":[],"failureMessages":[],"fullName":"AccessibleTabBar displays only one selected at a time","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"displays only one selected at a time"},{"ancestorTitles":["AccessibleTabBar"],"duration":18,"failureDetails":[],"failureMessages":[],"fullName":"AccessibleTabBar should identify only one tab as current page","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should identify only one tab as current page"},{"ancestorTitles":["AccessibleTabBar"],"duration":26,"failureDetails":[],"failureMessages":[],"fullName":"AccessibleTabBar should call navigate with searchState params on press \"Recherche\"","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should call navigate with searchState params on press \"Recherche\""},{"ancestorTitles":["AccessibleTabBar"],"duration":19,"failureDetails":[],"failureMessages":[],"fullName":"AccessibleTabBar should reset params on press \"Recherche\" when already on Search tab","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should reset params on press \"Recherche\" when already on Search tab"}],"endTime":1782746591362,"message":"","name":"/workspace/repo/src/features/navigation/RootNavigator/Header/AccessibleTabBar.web.test.tsx","startTime":1782746572363,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Header"],"duration":100,"failureDetails":[],"failureMessages":[],"fullName":"Header should render correctly","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should render correctly"},{"ancestorTitles":["Header"],"duration":30,"failureDetails":[],"failureMessages":[],"fullName":"Header should render correctly when FF is enabled","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should render correctly when FF is enabled"},{"ancestorTitles":["Header"],"duration":24,"failureDetails":[],"failureMessages":[],"fullName":"Header should render Header without Bookings item for non-beneficiary and logged out users","invocations":1,"location":null,"numPassingAsserts":5,"retryReasons":[],"status":"passed","title":"should render Header without Bookings item for non-beneficiary and logged out users"},{"ancestorTitles":["Header"],"duration":28,"failureDetails":[],"failureMessages":[],"fullName":"Header should render Header without Bookings item for non-beneficiary and logged in users","invocations":1,"location":null,"numPassingAsserts":5,"retryReasons":[],"status":"passed","title":"should render Header without Bookings item for non-beneficiary and logged in users"},{"ancestorTitles":["Header"],"duration":22,"failureDetails":[],"failureMessages":[],"fullName":"Header should render Header for beneficiary and logged in users","invocations":1,"location":null,"numPassingAsserts":5,"retryReasons":[],"status":"passed","title":"should render Header for beneficiary and logged in users"},{"ancestorTitles":["Header"],"duration":20,"failureDetails":[],"failureMessages":[],"fullName":"Header should identify one tab as current page","invocations":1,"location":null,"numPassingAsserts":5,"retryReasons":[],"status":"passed","title":"should identify one tab as current page"}],"endTime":1782746591881,"message":"","name":"/workspace/repo/src/features/navigation/RootNavigator/Header/Header.web.test.tsx","startTime":1782746572359,"status":"passed","summary":""}],"wasInterrupted":false}
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=1 graded=12 found=12 failed=0 parsed=12 framework=jest exit_code=0

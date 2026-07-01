@@ -1,0 +1,2 @@
+patching file changelog/59188.fixed
+patching file salt/modules/virt.py

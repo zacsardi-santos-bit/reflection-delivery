@@ -1,0 +1,23 @@
+{
+ "task": "siderolabs-talos-8469",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds etcd worker check 'errors.New(\"etcd config is only allowed on control plane machines\")' and 'PatchV1Alpha1(patcher func(*v1alpha1.Config) error)'; F2P TestValidate/EtcdConfigProvidedForWorker asserts that exact error and TestPatchV1Alpha1 asserts SideroLink doc preservation"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 24,
+  "shallow": true
+ }
+}

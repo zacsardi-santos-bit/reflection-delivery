@@ -1,0 +1,5 @@
+I'm working with a wRPC transport library in Rust and I want to be able to send custom structs and enums over the wire without writing manual serialization code for each type. Right now, every type that needs to be transported requires hand-written encoding and decoding implementations, which is tedious and error-prone.
+
+I'd like a derive macro approach where I can annotate my types and automatically get correct encoding and decoding behavior. The types I need to support include structs with fields that can be plain values, optional values, or lists of values. I also need enum support — both simple enums where variants carry no data, and more complex ones where variants hold either positional (tuple-style) or named fields, including enums that mix these styles.
+
+The critical requirement is that the roundtrip works: anything I encode must decode back to exactly the same value. After decoding, there should be no leftover unconsumed bytes — the encoding must be compact and exact. This should be a new crate that integrates naturally with the existing wRPC transport traits so that derived types work seamlessly alongside manually implemented ones.

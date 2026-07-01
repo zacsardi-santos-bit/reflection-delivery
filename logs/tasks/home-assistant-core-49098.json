@@ -1,0 +1,23 @@
+{
+ "task": "home-assistant-core-49098",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'async def async_migration_in_progress(hass)' helper and 'raise HomeAssistantError(f\"The system cannot {call.service} while a database upgrade in progress.\")'; F2P includes test_raises_when_db_upgrade_in_progress and test_migration_in_progress"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

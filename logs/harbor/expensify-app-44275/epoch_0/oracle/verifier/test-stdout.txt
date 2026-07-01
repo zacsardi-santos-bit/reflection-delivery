@@ -1,0 +1,187 @@
+patching file tests/actions/ReportFieldsTest.ts
+This is not a desktop build, adding babel-plugin-annotate-react
+babel.config.js
+  - api.version: 7.24.5
+  - api.env: test
+  - process.env.NODE_ENV: test
+  - process.env.BABEL_ENV: undefined
+  - running in:  babel-jest
+  console.log
+    DEBUG [OnyxUpdateManager] Listening for updates from the server
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] Unable to flush. No requests to process. - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] Called API write - {"command":"CreatePolicyReportField","policyID":"6F8FCA2C61E5347E","reportFields":"[{\"name\":\"Test Field\",\"type\":\"text\",\"defaultValue\":\"Default Value\",\"values\":[],\"disabledOptions\":[],\"fieldID\":\"field_id_TEST_FIELD\",\"orderWeight\":1,\"deletable\":false,\"value\":null,\"keys\":[],\"externalIDs\":[],\"isTax\":false}]"}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] Making API request - {"command":"CreatePolicyReportField"}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+          at Array.reduce (<anonymous>)
+          at async Promise.all (index 1)
+
+  console.log
+    DEBUG [info] [SequentialQueue] 'CreatePolicyReportField' command queued. Queue length is 1 - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] Finished API request in 11ms - {"command":"CreatePolicyReportField","jsonCode":200}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [OnyxUpdateManager] Applying update type: https with lastUpdateID: 0 - {"command":"CreatePolicyReportField"}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [OnyxUpdateManager] Applying https update
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [OnyxUpdateManager] Done applying HTTPS update
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] Unable to process. No requests to process. - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] Finished processing queue. - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] 'CreatePolicyReportField' removed from the queue. Queue length is 0 - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] Called API write - {"command":"CreatePolicyReportField","policyID":"57465321C3B1ADB6","reportFields":"[{\"name\":\"Test Field 2\",\"type\":\"date\",\"defaultValue\":\"2026-06-29\",\"values\":[],\"disabledOptions\":[],\"fieldID\":\"field_id_TEST_FIELD_2\",\"orderWeight\":1,\"deletable\":false,\"value\":null,\"keys\":[],\"externalIDs\":[],\"isTax\":false}]"}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] Making API request - {"command":"CreatePolicyReportField"}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+          at Array.reduce (<anonymous>)
+          at async Promise.all (index 1)
+
+  console.log
+    DEBUG [info] [SequentialQueue] 'CreatePolicyReportField' command queued. Queue length is 1 - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] Finished API request in 4ms - {"command":"CreatePolicyReportField","jsonCode":200}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [OnyxUpdateManager] Applying update type: https with lastUpdateID: 0 - {"command":"CreatePolicyReportField"}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [OnyxUpdateManager] Applying https update
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [OnyxUpdateManager] Done applying HTTPS update
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] Unable to process. No requests to process. - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] Finished processing queue. - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] 'CreatePolicyReportField' removed from the queue. Queue length is 0 - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] Called API write - {"command":"CreatePolicyReportField","policyID":"8FE3EC15BBB4C381","reportFields":"[{\"name\":\"Test Field 3\",\"type\":\"dropdown\",\"defaultValue\":\"\",\"values\":[\"Value 1\",\"Value 2\"],\"disabledOptions\":[false,true],\"fieldID\":\"field_id_TEST_FIELD_3\",\"orderWeight\":1,\"deletable\":false,\"value\":\"dropdown\",\"keys\":[],\"externalIDs\":[],\"isTax\":false}]"}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] Making API request - {"command":"CreatePolicyReportField"}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+          at Array.reduce (<anonymous>)
+          at async Promise.all (index 1)
+
+  console.log
+    DEBUG [info] [SequentialQueue] 'CreatePolicyReportField' command queued. Queue length is 1 - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] Finished API request in 9ms - {"command":"CreatePolicyReportField","jsonCode":200}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [OnyxUpdateManager] Applying update type: https with lastUpdateID: 0 - {"command":"CreatePolicyReportField"}
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [OnyxUpdateManager] Applying https update
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [OnyxUpdateManager] Done applying HTTPS update
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] Unable to process. No requests to process. - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] Finished processing queue. - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+  console.log
+    DEBUG [info] [SequentialQueue] 'CreatePolicyReportField' removed from the queue. Queue length is 0 - ""
+
+      at console.apply [as log] (src/libs/Console/index.ts:71:24)
+
+PASS tests/actions/ReportFieldsTest.ts (26.789 s)
+  actions/ReportFields
+    createReportField
+      ✓ creates a new text report field of a workspace (1624 ms)
+      ✓ creates a new date report field of a workspace (18 ms)
+      ✓ creates a new list report field of a workspace (24 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        29.223 s
+Ran all test suites matching /tests\/actions\/ReportFieldsTest.ts/i.
+reward=1 graded=3 found=0 failed=0 parsed=0 framework=jest exit_code=0

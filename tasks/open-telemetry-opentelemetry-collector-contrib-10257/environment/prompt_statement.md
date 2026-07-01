@@ -1,0 +1,5 @@
+I'm working on the Dynatrace exporter for the OpenTelemetry Collector, and I've found a bug in how histogram metrics are serialized. When we estimate min and max values from a histogram's bucket data, the logic can produce a range that doesn't actually contain the average of the data. 
+
+For example, if all measurements fall above the highest explicit bucket boundary, the estimated max is set to that boundary — but the true average could be significantly higher. The result is a min/max range that excludes the mean, which is mathematically impossible for a real distribution. The same issue can happen in reverse: if all data falls below the lowest boundary, the estimated minimum ends up higher than the actual average.
+
+I'd like the estimation logic to be fixed so that the min is always less than or equal to the average, and the max is always greater than or equal to the average. If the current estimated min exceeds the average, it should be clamped down to the average. Similarly, if the estimated max is below the average, it should be raised up to the average. This way the exported histogram always has an internally consistent min/max range relative to its mean.

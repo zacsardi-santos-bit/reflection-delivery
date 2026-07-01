@@ -1,0 +1,37 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_use_pathlib/PTH210.py
+patching file crates/ruff_linter/resources/test/fixtures/flake8_use_pathlib/PTH210_1.py
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_full_name_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_full_name_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_import_as_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_import_as_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_import_from_as_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_import_from_as_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_import_from_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_import_from_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_use_pathlib_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules::path_new_use_pathlib_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_glob_path_new_pth207_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_glob_path_new_pth207_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_invalidpathlibwithsuffix_path_new_pth210_1_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_invalidpathlibwithsuffix_path_new_pth210_1_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_invalidpathlibwithsuffix_path_new_pth210_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_invalidpathlibwithsuffix_path_new_pth210_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_oslistdir_path_new_pth208_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_oslistdir_path_new_pth208_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetatime_path_new_pth203_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetatime_path_new_pth203_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetctime_path_new_pth205_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetctime_path_new_pth205_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetmtime_path_new_pth204_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetmtime_path_new_pth204_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetsize_path_new_pth202_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ospathgetsize_path_new_pth202_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ossepsplit_path_new_pth206_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_ossepsplit_path_new_pth206_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_pathconstructorcurrentdirectory_path_new_pth201_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_pathconstructorcurrentdirectory_path_new_pth201_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_pypath_path_new_py_path_1_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_pypath_path_new_py_path_1_py_expects", "Elapsed": 0.001}
+{"Action": "run", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_pypath_path_new_py_path_2_py_expects"}
+{"Action": "pass", "Test": "rules::flake8_use_pathlib::tests::rules_pypath::rule_pypath_path_new_py_path_2_py_expects", "Elapsed": 0.001}
+reward=1 graded=17 found=17 failed=0 parsed=17 framework=go exit_code=0

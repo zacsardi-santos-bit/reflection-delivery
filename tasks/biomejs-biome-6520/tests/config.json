@@ -1,0 +1,28 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p biome_js_analyze --test spec_tests -E 'test(~no_floating_promises)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noFloatingPromises/01_invalid.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noFloatingPromises/01_invalid.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noFloatingPromises/04_invalid.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noFloatingPromises/04_invalid.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noFloatingPromises/invalid.ts",
+    "crates/biome_js_analyze/tests/specs/nursery/noFloatingPromises/invalid.ts.snap"
+  ],
+  "num_test_files": 6,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::promised_result_ts",
+    "( 2/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::return_promise_result_ts",
+    "( 3/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::panic_foo_ts",
+    "( 5/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::panic_bar_ts",
+    "( 6/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::valid_ts",
+    "( 7/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::_04_invalid_ts",
+    "( 8/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::_01_invalid_ts",
+    "( 9/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::invalid_js",
+    "(10/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::invalid_ts"
+  ],
+  "PASS_TO_PASS": [
+    "( 4/10) biome_js_analyze::spec_tests specs::nursery::no_floating_promises::valid_js"
+  ]
+}

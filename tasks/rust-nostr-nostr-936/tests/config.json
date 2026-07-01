@@ -1,0 +1,11 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p nostr --test nip05_integration",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) nostr::nip05_integration test_nip05_profile_from_json"
+  ],
+  "PASS_TO_PASS": []
+}

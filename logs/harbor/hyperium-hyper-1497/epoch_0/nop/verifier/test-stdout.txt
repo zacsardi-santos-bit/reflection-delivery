@@ -1,0 +1,591 @@
+patching file tests/client.rs
+   Compiling hyper v0.12.0-pre.0 (/workspace/repo)
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+290 | / test! {
+291 | |     name: client_get,
+292 | |
+293 | |     server:
+...   |
+308 | |             body: None,
+309 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+290 | / test! {
+291 | |     name: client_get,
+292 | |
+293 | |     server:
+...   |
+308 | |             body: None,
+309 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+311 | / test! {
+312 | |     name: client_get_query,
+313 | |
+314 | |     server:
+...   |
+329 | |             body: None,
+330 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+311 | / test! {
+312 | |     name: client_get_query,
+313 | |
+314 | |     server:
+...   |
+329 | |             body: None,
+330 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+332 | / test! {
+333 | |     name: client_get_implicitly_empty,
+334 | |
+335 | |     server:
+...   |
+350 | |             body: None,
+351 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+332 | / test! {
+333 | |     name: client_get_implicitly_empty,
+334 | |
+335 | |     server:
+...   |
+350 | |             body: None,
+351 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+353 | / test! {
+354 | |     name: client_post_sized,
+355 | |
+356 | |     server:
+...   |
+377 | |             body: None,
+378 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+353 | / test! {
+354 | |     name: client_post_sized,
+355 | |
+356 | |     server:
+...   |
+377 | |             body: None,
+378 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+380 | / test! {
+381 | |     name: client_post_chunked,
+382 | |
+383 | |     server:
+...   |
+406 | |             body: None,
+407 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+380 | / test! {
+381 | |     name: client_post_chunked,
+382 | |
+383 | |     server:
+...   |
+406 | |             body: None,
+407 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+409 | / test! {
+410 | |     name: client_post_empty,
+411 | |
+412 | |     server:
+...   |
+432 | |             body: None,
+433 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+409 | / test! {
+410 | |     name: client_post_empty,
+411 | |
+412 | |     server:
+...   |
+432 | |             body: None,
+433 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+461 | / test! {
+462 | |     name: client_head_ignores_body,
+463 | |
+464 | |     server:
+...   |
+486 | |             body: None,
+487 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+461 | / test! {
+462 | |     name: client_head_ignores_body,
+463 | |
+464 | |     server:
+...   |
+486 | |             body: None,
+487 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+489 | / test! {
+490 | |     name: client_pipeline_responses_extra,
+491 | |
+492 | |     server:
+...   |
+516 | |             body: None,
+517 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+489 | / test! {
+490 | |     name: client_pipeline_responses_extra,
+491 | |
+492 | |     server:
+...   |
+516 | |             body: None,
+517 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+520 | / test! {
+521 | |     name: client_error_unexpected_eof,
+522 | |
+523 | |     server:
+...   |
+539 | |         error: |err| err.to_string() == "message is incomplete",
+540 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+520 | / test! {
+521 | |     name: client_error_unexpected_eof,
+522 | |
+523 | |     server:
+...   |
+539 | |         error: |err| err.to_string() == "message is incomplete",
+540 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+542 | / test! {
+543 | |     name: client_error_parse_version,
+544 | |
+545 | |     server:
+...   |
+564 | |
+565 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+542 | / test! {
+543 | |     name: client_error_parse_version,
+544 | |
+545 | |     server:
+...   |
+564 | |
+565 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+567 | / test! {
+568 | |     name: client_100_continue,
+569 | |
+570 | |     server:
+...   |
+597 | |             body: None,
+598 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+567 | / test! {
+568 | |     name: client_100_continue,
+569 | |
+570 | |     server:
+...   |
+597 | |             body: None,
+598 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+601 | / test! {
+602 | |     name: client_101_upgrade,
+603 | |
+604 | |     server:
+...   |
+624 | |
+625 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+601 | / test! {
+602 | |     name: client_101_upgrade,
+603 | |
+604 | |     server:
+...   |
+624 | |
+625 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+627 | / test! {
+628 | |     name: client_connect_method,
+629 | |
+630 | |     server:
+...   |
+646 | |
+647 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+627 | / test! {
+628 | |     name: client_connect_method,
+629 | |
+630 | |     server:
+...   |
+646 | |
+647 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+649 | / test! {
+650 | |     name: client_set_host_false,
+651 | |
+652 | |     server:
+...   |
+674 | |             body: None,
+675 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+649 | / test! {
+650 | |     name: client_set_host_false,
+651 | |
+652 | |     server:
+...   |
+674 | |             body: None,
+675 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for struct `hyper::client::Builder` in the current scope
+   --> tests/client.rs:231:16
+    |
+231 |           config.http1_title_case_headers($title_case_headers);
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `Builder`
+...
+677 | / test! {
+678 | |     name: client_set_http1_title_case_headers,
+679 | |
+680 | |     server:
+...   |
+706 | |             body: None,
+707 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `http1_title_case_headers` found for mutable reference `&mut hyper::client::Builder` in the current scope
+   --> tests/client.rs:238:14
+    |
+236 |           let client = Client::builder()
+    |  ______________________-
+237 | |             .set_host($set_host)
+238 | |             .http1_title_case_headers($title_case_headers)
+    | |             -^^^^^^^^^^^^^^^^^^^^^^^^ method not found in `&mut Builder`
+    | |_____________|
+    | 
+...
+677 | / test! {
+678 | |     name: client_set_http1_title_case_headers,
+679 | |
+680 | |     server:
+...   |
+706 | |             body: None,
+707 | | }
+    | |_- in this macro invocation
+    |
+    = note: this error originates in the macro `test` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `hyper` (test "client") due to 30 previous errors
+error: command `/usr/local/rustup/toolchains/1.75.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --test client --locked` exited with code 101
+reward=0 (grader error: Extra data: line 45 column 1 (char 1981); fell back to exit_code=101)

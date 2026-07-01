@@ -1,0 +1,14 @@
+patching file sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamAggregationTransforms.java
+patching file sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamBuiltinAggregations.java
+patching file sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/BigDecimalConverter.java
+patching file sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceAccumulator.java
+patching file sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceFn.java
+patching file sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/package-info.java
+patching file sdks/python/apache_beam/runners/worker/opcounters.pxd
+patching file sdks/python/apache_beam/runners/worker/opcounters.py
+patching file sdks/python/apache_beam/runners/worker/opcounters_test.py
+patching file sdks/python/apache_beam/runners/worker/operations.py
+patching file sdks/python/apache_beam/runners/worker/sideinputs.py
+patching file sdks/python/apache_beam/runners/worker/sideinputs_test.py
+patching file sdks/python/apache_beam/runners/worker/statesampler_fast.pyx
+patching file sdks/python/apache_beam/utils/counters.py

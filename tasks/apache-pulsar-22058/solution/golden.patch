@@ -1,0 +1,508 @@
+diff --git a/pulsar-broker/pom.xml b/pulsar-broker/pom.xml
+index 18da38b43d..db839467ed 100644
+--- a/pulsar-broker/pom.xml
++++ b/pulsar-broker/pom.xml
+@@ -484,6 +484,11 @@
+       <version>${project.version}</version>
+     </dependency>
+ 
++    <dependency>
++      <groupId>io.opentelemetry</groupId>
++      <artifactId>opentelemetry-sdk-testing</artifactId>
++      <scope>test</scope>
++    </dependency>
+   </dependencies>
+ 
+   <build>
+diff --git a/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java b/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java
+index 3701f354b6..c1137bcfc2 100644
+--- a/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java
++++ b/pulsar-broker/src/main/java/org/apache/pulsar/broker/PulsarService.java
+@@ -30,6 +30,7 @@ import io.netty.channel.socket.SocketChannel;
+ import io.netty.util.HashedWheelTimer;
+ import io.netty.util.Timer;
+ import io.netty.util.concurrent.DefaultThreadFactory;
++import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdkBuilder;
+ import java.io.IOException;
+ import java.lang.reflect.Constructor;
+ import java.net.InetSocketAddress;
+@@ -249,7 +250,7 @@ public class PulsarService implements AutoCloseable, ShutdownService {
+     private final Timer brokerClientSharedTimer;
+ 
+     private MetricsGenerator metricsGenerator;
+-    private PulsarBrokerOpenTelemetry openTelemetry;
++    private final PulsarBrokerOpenTelemetry openTelemetry;
+ 
+     private TransactionMetadataStoreService transactionMetadataStoreService;
+     private TransactionBufferProvider transactionBufferProvider;
+@@ -305,6 +306,14 @@ public class PulsarService implements AutoCloseable, ShutdownService {
+                          WorkerConfig workerConfig,
+                          Optional<WorkerService> functionWorkerService,
+                          Consumer<Integer> processTerminator) {
++        this(config, workerConfig,  functionWorkerService, processTerminator, null);
++    }
++
++    public PulsarService(ServiceConfiguration config,
++                         WorkerConfig workerConfig,
++                         Optional<WorkerService> functionWorkerService,
++                         Consumer<Integer> processTerminator,
++                         Consumer<AutoConfiguredOpenTelemetrySdkBuilder> openTelemetrySdkBuilderCustomizer) {
+         state = State.Init;
+ 
+         // Validate correctness of configuration
+@@ -312,6 +321,8 @@ public class PulsarService implements AutoCloseable, ShutdownService {
+         TransactionBatchedWriteValidator.validate(config);
+         this.config = config;
+ 
++        this.openTelemetry = new PulsarBrokerOpenTelemetry(config, openTelemetrySdkBuilderCustomizer);
++
+         // validate `advertisedAddress`, `advertisedListeners`, `internalListenerName`
+         this.advertisedListeners = MultipleListenerValidator.validateAndAnalysisAdvertisedListener(config);
+ 
+@@ -902,7 +913,6 @@ public class PulsarService implements AutoCloseable, ShutdownService {
+             }
+ 
+             this.metricsGenerator = new MetricsGenerator(this);
+-            this.openTelemetry = new PulsarBrokerOpenTelemetry(config);
+ 
+             // Initialize the message protocol handlers.
+             // start the protocol handlers only after the broker is ready,
+diff --git a/pulsar-broker/src/main/java/org/apache/pulsar/broker/namespace/NamespaceService.java b/pulsar-broker/src/main/java/org/apache/pulsar/broker/namespace/NamespaceService.java
+index b55eda150a..dec8b098dd 100644
+--- a/pulsar-broker/src/main/java/org/apache/pulsar/broker/namespace/NamespaceService.java
++++ b/pulsar-broker/src/main/java/org/apache/pulsar/broker/namespace/NamespaceService.java
+@@ -25,6 +25,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
+ import static org.apache.commons.lang3.StringUtils.isNotBlank;
+ import static org.apache.pulsar.common.naming.NamespaceName.SYSTEM_NAMESPACE;
+ import com.google.common.hash.Hashing;
++import io.opentelemetry.api.common.AttributeKey;
++import io.opentelemetry.api.common.Attributes;
++import io.opentelemetry.api.metrics.DoubleHistogram;
+ import io.prometheus.client.Counter;
+ import java.net.URI;
+ import java.net.URL;
+@@ -97,10 +100,12 @@ import org.apache.pulsar.common.policies.data.NamespaceOwnershipStatus;
+ import org.apache.pulsar.common.policies.data.Policies;
+ import org.apache.pulsar.common.policies.data.stats.TopicStatsImpl;
+ import org.apache.pulsar.common.policies.impl.NamespaceIsolationPolicies;
++import org.apache.pulsar.common.stats.MetricsUtil;
+ import org.apache.pulsar.common.util.FutureUtil;
+ import org.apache.pulsar.common.util.collections.ConcurrentOpenHashMap;
+ import org.apache.pulsar.metadata.api.MetadataCache;
+ import org.apache.pulsar.metadata.api.MetadataStoreException;
++import org.apache.pulsar.opentelemetry.annotations.PulsarDeprecatedMetric;
+ import org.apache.pulsar.policies.data.loadbalancer.AdvertisedListener;
+ import org.apache.pulsar.policies.data.loadbalancer.LocalBrokerData;
+ import org.slf4j.Logger;
+@@ -146,18 +151,37 @@ public class NamespaceService implements AutoCloseable {
+ 
+     private final RedirectManager redirectManager;
+ 
+-
++    public static final String LOOKUP_REQUEST_DURATION_METRIC_NAME = "pulsar.broker.request.topic.lookup.duration";
++
++    private static final AttributeKey<String> PULSAR_LOOKUP_RESPONSE_ATTRIBUTE =
++            AttributeKey.stringKey("pulsar.lookup.response");
++    public static final Attributes PULSAR_LOOKUP_RESPONSE_BROKER_ATTRIBUTES = Attributes.builder()
++            .put(PULSAR_LOOKUP_RESPONSE_ATTRIBUTE, "broker")
++            .build();
++    public static final Attributes PULSAR_LOOKUP_RESPONSE_REDIRECT_ATTRIBUTES = Attributes.builder()
++            .put(PULSAR_LOOKUP_RESPONSE_ATTRIBUTE, "redirect")
++            .build();
++    public static final Attributes PULSAR_LOOKUP_RESPONSE_FAILURE_ATTRIBUTES = Attributes.builder()
++            .put(PULSAR_LOOKUP_RESPONSE_ATTRIBUTE, "failure")
++            .build();
++
++    @PulsarDeprecatedMetric(newMetricName = LOOKUP_REQUEST_DURATION_METRIC_NAME)
+     private static final Counter lookupRedirects = Counter.build("pulsar_broker_lookup_redirects", "-").register();
++
++    @PulsarDeprecatedMetric(newMetricName = LOOKUP_REQUEST_DURATION_METRIC_NAME)
+     private static final Counter lookupFailures = Counter.build("pulsar_broker_lookup_failures", "-").register();
++
++    @PulsarDeprecatedMetric(newMetricName = LOOKUP_REQUEST_DURATION_METRIC_NAME)
+     private static final Counter lookupAnswers = Counter.build("pulsar_broker_lookup_answers", "-").register();
+ 
++    @PulsarDeprecatedMetric(newMetricName = LOOKUP_REQUEST_DURATION_METRIC_NAME)
+     private static final Summary lookupLatency = Summary.build("pulsar_broker_lookup", "-")
+             .quantile(0.50)
+             .quantile(0.99)
+             .quantile(0.999)
+             .quantile(1.0)
+             .register();
+-
++    private final DoubleHistogram lookupLatencyHistogram;
+ 
+     /**
+      * Default constructor.
+@@ -175,6 +199,12 @@ public class NamespaceService implements AutoCloseable {
+         this.bundleSplitListeners = new CopyOnWriteArrayList<>();
+         this.localBrokerDataCache = pulsar.getLocalMetadataStore().getMetadataCache(LocalBrokerData.class);
+         this.redirectManager = new RedirectManager(pulsar);
++
++        this.lookupLatencyHistogram = pulsar.getOpenTelemetry().getMeter()
++                .histogramBuilder(LOOKUP_REQUEST_DURATION_METRIC_NAME)
++                .setDescription("The duration of topic lookup requests (either binary or HTTP)")
++                .setUnit("s")
++                .build();
+     }
+ 
+     public void initialize() {
+@@ -204,18 +234,28 @@ public class NamespaceService implements AutoCloseable {
+                     });
+                 });
+ 
+-        future.thenAccept(optResult -> {
+-            lookupLatency.observe(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
+-            if (optResult.isPresent()) {
+-                if (optResult.get().isRedirect()) {
+-                    lookupRedirects.inc();
++        future.whenComplete((lookupResult, throwable) -> {
++            var latencyNs = System.nanoTime() - startTime;
++            lookupLatency.observe(latencyNs, TimeUnit.NANOSECONDS);
++            Attributes attributes;
++            if (throwable == null) {
++                if (lookupResult.isPresent()) {
++                    if (lookupResult.get().isRedirect()) {
++                        lookupRedirects.inc();
++                        attributes = PULSAR_LOOKUP_RESPONSE_REDIRECT_ATTRIBUTES;
++                    } else {
++                        lookupAnswers.inc();
++                        attributes = PULSAR_LOOKUP_RESPONSE_BROKER_ATTRIBUTES;
++                    }
+                 } else {
+-                    lookupAnswers.inc();
++                    // No lookup result, default to reporting as failure.
++                    attributes = PULSAR_LOOKUP_RESPONSE_FAILURE_ATTRIBUTES;
+                 }
++            } else {
++                lookupFailures.inc();
++                attributes = PULSAR_LOOKUP_RESPONSE_FAILURE_ATTRIBUTES;
+             }
+-        }).exceptionally(ex -> {
+-            lookupFailures.inc();
+-            return null;
++            lookupLatencyHistogram.record(MetricsUtil.convertToSeconds(latencyNs, TimeUnit.NANOSECONDS), attributes);
+         });
+ 
+         return future;
+diff --git a/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/BrokerService.java b/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/BrokerService.java
+index 9b67ca26e8..98a0ed95b1 100644
+--- a/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/BrokerService.java
++++ b/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/BrokerService.java
+@@ -38,6 +38,7 @@ import io.netty.channel.EventLoopGroup;
+ import io.netty.channel.socket.SocketChannel;
+ import io.netty.handler.ssl.SslContext;
+ import io.netty.util.concurrent.DefaultThreadFactory;
++import io.opentelemetry.api.metrics.ObservableLongUpDownCounter;
+ import io.prometheus.client.Histogram;
+ import java.io.Closeable;
+ import java.io.IOException;
+@@ -179,6 +180,7 @@ import org.apache.pulsar.compaction.Compactor;
+ import org.apache.pulsar.metadata.api.MetadataStoreException;
+ import org.apache.pulsar.metadata.api.Notification;
+ import org.apache.pulsar.metadata.api.NotificationType;
++import org.apache.pulsar.opentelemetry.annotations.PulsarDeprecatedMetric;
+ import org.apache.pulsar.policies.data.loadbalancer.NamespaceBundleStats;
+ import org.apache.pulsar.transaction.coordinator.TransactionMetadataStore;
+ import org.slf4j.Logger;
+@@ -241,8 +243,19 @@ public class BrokerService implements Closeable {
+     protected final AtomicReference<Semaphore> lookupRequestSemaphore;
+     protected final AtomicReference<Semaphore> topicLoadRequestSemaphore;
+ 
++    public static final String TOPIC_LOOKUP_USAGE_METRIC_NAME = "pulsar.broker.request.topic.lookup.concurrent.usage";
++    public static final String TOPIC_LOOKUP_LIMIT_METRIC_NAME = "pulsar.broker.request.topic.lookup.concurrent.limit";
++    @PulsarDeprecatedMetric(newMetricName = TOPIC_LOOKUP_USAGE_METRIC_NAME)
+     private final ObserverGauge pendingLookupRequests;
++    private final ObservableLongUpDownCounter pendingLookupOperationsCounter;
++    private final ObservableLongUpDownCounter pendingLookupOperationsLimitCounter;
++
++    public static final String TOPIC_LOAD_USAGE_METRIC_NAME = "pulsar.broker.topic.load.concurrent.usage";
++    public static final String TOPIC_LOAD_LIMIT_METRIC_NAME = "pulsar.broker.topic.load.concurrent.limit";
++    @PulsarDeprecatedMetric(newMetricName = TOPIC_LOAD_USAGE_METRIC_NAME)
+     private final ObserverGauge pendingTopicLoadRequests;
++    private final ObservableLongUpDownCounter pendingTopicLoadOperationsCounter;
++    private final ObservableLongUpDownCounter pendingTopicLoadOperationsLimitCounter;
+ 
+     private final ScheduledExecutorService inactivityMonitor;
+     private final ScheduledExecutorService messageExpiryMonitor;
+@@ -346,7 +359,6 @@ public class BrokerService implements Closeable {
+         pulsar.getLocalMetadataStore().registerListener(this::handleMetadataChanges);
+         pulsar.getConfigurationMetadataStore().registerListener(this::handleMetadataChanges);
+ 
+-
+         this.inactivityMonitor = OrderedScheduler.newSchedulerBuilder()
+                 .name("pulsar-inactivity-monitor")
+                 .numThreads(1)
+@@ -374,9 +386,9 @@ public class BrokerService implements Closeable {
+         this.topicFactory = createPersistentTopicFactory();
+         // update dynamic configuration and register-listener
+         updateConfigurationAndRegisterListeners();
+-        this.lookupRequestSemaphore = new AtomicReference<Semaphore>(
++        this.lookupRequestSemaphore = new AtomicReference<>(
+                 new Semaphore(pulsar.getConfiguration().getMaxConcurrentLookupRequest(), false));
+-        this.topicLoadRequestSemaphore = new AtomicReference<Semaphore>(
++        this.topicLoadRequestSemaphore = new AtomicReference<>(
+                 new Semaphore(pulsar.getConfiguration().getMaxConcurrentTopicLoadRequest(), false));
+         if (pulsar.getConfiguration().getMaxUnackedMessagesPerBroker() > 0
+                 && pulsar.getConfiguration().getMaxUnackedMessagesPerSubscriptionOnBrokerBlocked() > 0.0) {
+@@ -403,15 +415,41 @@ public class BrokerService implements Closeable {
+         this.defaultServerBootstrap = defaultServerBootstrap();
+ 
+         this.pendingLookupRequests = ObserverGauge.build("pulsar_broker_lookup_pending_requests", "-")
+-                .supplier(() -> pulsar.getConfig().getMaxConcurrentLookupRequest()
+-                        - lookupRequestSemaphore.get().availablePermits())
++                .supplier(this::getPendingLookupRequest)
+                 .register();
++        this.pendingLookupOperationsCounter = pulsar.getOpenTelemetry().getMeter()
++                .upDownCounterBuilder(TOPIC_LOOKUP_USAGE_METRIC_NAME)
++                .setDescription("The number of pending lookup operations in the broker. "
++                        + "When it reaches threshold \"maxConcurrentLookupRequest\" defined in broker.conf, "
++                        + "new requests are rejected.")
++                .setUnit("{operation}")
++                .buildWithCallback(measurement -> measurement.record(getPendingLookupRequest()));
++        this.pendingLookupOperationsLimitCounter = pulsar.getOpenTelemetry().getMeter()
++                .upDownCounterBuilder(TOPIC_LOOKUP_LIMIT_METRIC_NAME)
++                .setDescription("The maximum number of pending lookup operations in the broker. "
++                        + "Equal to \"maxConcurrentLookupRequest\" defined in broker.conf.")
++                .setUnit("{operation}")
++                .buildWithCallback(
++                        measurement -> measurement.record(pulsar.getConfig().getMaxConcurrentLookupRequest()));
+ 
+         this.pendingTopicLoadRequests = ObserverGauge.build(
+-                "pulsar_broker_topic_load_pending_requests", "-")
+-                .supplier(() -> pulsar.getConfig().getMaxConcurrentTopicLoadRequest()
+-                        - topicLoadRequestSemaphore.get().availablePermits())
++                        "pulsar_broker_topic_load_pending_requests", "-")
++                .supplier(this::getPendingTopicLoadRequests)
+                 .register();
++        this.pendingTopicLoadOperationsCounter = pulsar.getOpenTelemetry().getMeter()
++                .upDownCounterBuilder(TOPIC_LOAD_USAGE_METRIC_NAME)
++                .setDescription("The number of pending topic load operations in the broker. "
++                        + "When it reaches threshold \"maxConcurrentTopicLoadRequest\" defined in broker.conf, "
++                        + "new requests are rejected.")
++                .setUnit("{operation}")
++                .buildWithCallback(measurement -> measurement.record(getPendingTopicLoadRequests()));
++        this.pendingTopicLoadOperationsLimitCounter = pulsar.getOpenTelemetry().getMeter()
++                .upDownCounterBuilder(TOPIC_LOAD_LIMIT_METRIC_NAME)
++                .setDescription("The maximum number of pending topic load operations in the broker. "
++                        + "Equal to \"maxConcurrentTopicLoadRequest\" defined in broker.conf.")
++                .setUnit("{operation}")
++                .buildWithCallback(
++                        measurement -> measurement.record(pulsar.getConfig().getMaxConcurrentTopicLoadRequest()));
+ 
+         this.brokerEntryMetadataInterceptors = BrokerEntryMetadataUtils
+                 .loadBrokerEntryMetadataInterceptors(pulsar.getConfiguration().getBrokerEntryMetadataInterceptors(),
+@@ -423,6 +461,15 @@ public class BrokerService implements Closeable {
+         this.bundlesQuotas = new BundlesQuotas(pulsar);
+     }
+ 
++    private int getPendingLookupRequest() {
++        return pulsar.getConfig().getMaxConcurrentLookupRequest() - lookupRequestSemaphore.get().availablePermits();
++    }
++
++    private int getPendingTopicLoadRequests() {
++        return pulsar.getConfig().getMaxConcurrentTopicLoadRequest()
++                - topicLoadRequestSemaphore.get().availablePermits();
++    }
++
+     public void addTopicEventListener(TopicEventsListener... listeners) {
+         topicEventsDispatcher.addTopicEventListener(listeners);
+         getTopics().keys().forEach(topic ->
+@@ -780,6 +827,8 @@ public class BrokerService implements Closeable {
+                                     log.warn("Error in closing authenticationService", e);
+                                 }
+                                 pulsarStats.close();
++                                pendingTopicLoadOperationsCounter.close();
++                                pendingLookupOperationsCounter.close();
+                                 try {
+                                     delayedDeliveryTrackerFactory.close();
+                                 } catch (Exception e) {
+diff --git a/pulsar-broker/src/main/java/org/apache/pulsar/broker/stats/PulsarBrokerOpenTelemetry.java b/pulsar-broker/src/main/java/org/apache/pulsar/broker/stats/PulsarBrokerOpenTelemetry.java
+index 4b76b99300..01ca65d2cc 100644
+--- a/pulsar-broker/src/main/java/org/apache/pulsar/broker/stats/PulsarBrokerOpenTelemetry.java
++++ b/pulsar-broker/src/main/java/org/apache/pulsar/broker/stats/PulsarBrokerOpenTelemetry.java
+@@ -18,8 +18,11 @@
+  */
+ package org.apache.pulsar.broker.stats;
+ 
++import com.google.common.annotations.VisibleForTesting;
+ import io.opentelemetry.api.metrics.Meter;
++import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdkBuilder;
+ import java.io.Closeable;
++import java.util.function.Consumer;
+ import lombok.Getter;
+ import org.apache.pulsar.PulsarVersion;
+ import org.apache.pulsar.broker.ServiceConfiguration;
+@@ -33,11 +36,13 @@ public class PulsarBrokerOpenTelemetry implements Closeable {
+     @Getter
+     private final Meter meter;
+ 
+-    public PulsarBrokerOpenTelemetry(ServiceConfiguration config) {
++    public PulsarBrokerOpenTelemetry(ServiceConfiguration config,
++                                 @VisibleForTesting Consumer<AutoConfiguredOpenTelemetrySdkBuilder> builderCustomizer) {
+         openTelemetryService = OpenTelemetryService.builder()
+                 .clusterName(config.getClusterName())
+                 .serviceName(SERVICE_NAME)
+                 .serviceVersion(PulsarVersion.getVersion())
++                .builderCustomizer(builderCustomizer)
+                 .build();
+         meter = openTelemetryService.getOpenTelemetry().getMeter("org.apache.pulsar.broker");
+     }
+diff --git a/pulsar-common/src/main/java/org/apache/pulsar/common/stats/MetricsUtil.java b/pulsar-common/src/main/java/org/apache/pulsar/common/stats/MetricsUtil.java
+new file mode 100644
+index 0000000000..f13abb6645
+--- /dev/null
++++ b/pulsar-common/src/main/java/org/apache/pulsar/common/stats/MetricsUtil.java
+@@ -0,0 +1,42 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.pulsar.common.stats;
++
++import java.util.concurrent.TimeUnit;
++
++/**
++ * Utility class for metrics.
++ */
++public class MetricsUtil {
++
++    private static final double NANOS_IN_SECOND = TimeUnit.SECONDS.toNanos(1);
++
++    /**
++     * Convert a duration to seconds. Unlike {@link TimeUnit#toSeconds(long)}, this method preserves fractional
++     * precision.
++     *
++     * @param duration the duration
++     * @param timeUnit the time unit
++     * @return the duration in seconds
++     */
++    public static double convertToSeconds(long duration, TimeUnit timeUnit) {
++        return timeUnit.toNanos(duration) / NANOS_IN_SECOND;
++    }
++
++}
+diff --git a/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/OpenTelemetryService.java b/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/OpenTelemetryService.java
+index 5ead1ff265..16c4264be6 100644
+--- a/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/OpenTelemetryService.java
++++ b/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/OpenTelemetryService.java
+@@ -39,7 +39,7 @@ import org.apache.commons.lang3.StringUtils;
+  */
+ public class OpenTelemetryService implements Closeable {
+ 
+-    static final String OTEL_SDK_DISABLED_KEY = "otel.sdk.disabled";
++    public static final String OTEL_SDK_DISABLED_KEY = "otel.sdk.disabled";
+     static final int MAX_CARDINALITY_LIMIT = 10000;
+ 
+     private final OpenTelemetrySdk openTelemetrySdk;
+@@ -54,14 +54,14 @@ public class OpenTelemetryService implements Closeable {
+      *      The name of the service. Optional.
+      * @param serviceVersion
+      *      The version of the service. Optional.
+-     * @param sdkBuilderConsumer
++     * @param builderCustomizer
+      *      Allows customizing the SDK builder; for testing purposes only.
+      */
+     @Builder
+     public OpenTelemetryService(String clusterName,
+                                 String serviceName,
+                                 String serviceVersion,
+-                                @VisibleForTesting Consumer<AutoConfiguredOpenTelemetrySdkBuilder> sdkBuilderConsumer) {
++                                @VisibleForTesting Consumer<AutoConfiguredOpenTelemetrySdkBuilder> builderCustomizer) {
+         checkArgument(StringUtils.isNotBlank(clusterName), "Cluster name cannot be empty");
+         var sdkBuilder = AutoConfiguredOpenTelemetrySdk.builder();
+ 
+@@ -90,8 +90,8 @@ public class OpenTelemetryService implements Closeable {
+                     return resource.merge(resourceBuilder.build());
+                 });
+ 
+-        if (sdkBuilderConsumer != null) {
+-            sdkBuilderConsumer.accept(sdkBuilder);
++        if (builderCustomizer != null) {
++            builderCustomizer.accept(sdkBuilder);
+         }
+ 
+         openTelemetrySdk = sdkBuilder.build().getOpenTelemetrySdk();
+diff --git a/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/annotations/PulsarDeprecatedMetric.java b/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/annotations/PulsarDeprecatedMetric.java
+new file mode 100644
+index 0000000000..52dbe5fa68
+--- /dev/null
++++ b/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/annotations/PulsarDeprecatedMetric.java
+@@ -0,0 +1,32 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.pulsar.opentelemetry.annotations;
++
++import java.lang.annotation.ElementType;
++import java.lang.annotation.Retention;
++import java.lang.annotation.Target;
++
++/**
++ * Marks a metric as deprecated and provides information about the new metric name.
++ */
++@Retention(java.lang.annotation.RetentionPolicy.SOURCE)
++@Target({java.lang.annotation.ElementType.TYPE, ElementType.LOCAL_VARIABLE, ElementType.FIELD})
++public @interface PulsarDeprecatedMetric {
++    String newMetricName() default "";
++}
+diff --git a/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/annotations/package-info.java b/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/annotations/package-info.java
+new file mode 100644
+index 0000000000..711884c7f6
+--- /dev/null
++++ b/pulsar-opentelemetry/src/main/java/org/apache/pulsar/opentelemetry/annotations/package-info.java
+@@ -0,0 +1,24 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++
++/**
++ * Provides OpenTelemetry related annotations for Pulsar components.
++ * @since 3.3.0
++ */
++package org.apache.pulsar.opentelemetry.annotations;
+\ No newline at end of file

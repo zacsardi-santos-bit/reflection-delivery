@@ -1,0 +1,22 @@
+patching file common/src/ether/evm/core/tests.rs
+patching file heimdall/tests/test_decompile.rs
+patching file heimdall/tests/test_snapshot.rs
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+warning: /workspace/repo/Cargo.toml: unused manifest key: workspace.version
+   Compiling heimdall-common v0.5.0 (/workspace/repo/common)
+    Finished test [unoptimized + debuginfo] target(s) in 16.33s
+------------
+ Nextest run ID 5bdf9bd8-a910-46a3-81a5-982ea8df421a with nextest profile: default
+    Starting 0 tests across 1 binary (134 tests skipped)
+------------
+     Summary [   0.001s] 0 tests run: 0 passed, 134 skipped
+error: no tests to run
+(hint: use `--no-tests` to customize)
+reward=0 graded=20 found=0 failed=0 parsed=0 framework=cargo exit_code=4

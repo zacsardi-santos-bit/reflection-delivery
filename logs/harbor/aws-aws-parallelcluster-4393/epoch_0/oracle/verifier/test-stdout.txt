@@ -1,0 +1,104 @@
+patching file cli/tests/pcluster/config/test_update_policy.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+metadata: {'Python': '3.9.25', 'Platform': 'Linux-4.19.0-gvisor-x86_64-with-glibc2.41', 'Packages': {'pytest': '8.4.2', 'pluggy': '1.6.0'}, 'Plugins': {'xdist': '3.8.0', 'mock': '3.15.1', 'cov': '7.1.0', 'metadata': '3.1.1', 'datadir': '1.8.0', 'html': '4.2.0'}}
+rootdir: /workspace/repo/cli
+plugins: xdist-3.8.0, mock-3.15.1, cov-7.1.0, metadata-3.1.1, datadir-1.8.0, html-4.2.0
+collecting ... collected 72 items
+
+cli/tests/pcluster/config/test_update_policy.py::test_max_count_policy[stopped fleet and new_max < old_max] PASSED [  1%]
+cli/tests/pcluster/config/test_update_policy.py::test_max_count_policy[stopped fleet new_max > old_max] PASSED [  2%]
+cli/tests/pcluster/config/test_update_policy.py::test_max_count_policy[running fleet and new_max < old_max] PASSED [  4%]
+cli/tests/pcluster/config/test_update_policy.py::test_max_count_policy[running fleet and new_max > old_max] PASSED [  5%]
+cli/tests/pcluster/config/test_update_policy.py::test_max_count_policy[running fleet and new_max < DEFAULT_MAX_COUNT] PASSED [  6%]
+cli/tests/pcluster/config/test_update_policy.py::test_max_count_policy[running fleet and new_max > DEFAULT_MAX_COUNT] PASSED [  8%]
+cli/tests/pcluster/config/test_update_policy.py::test_max_count_policy[running fleet and DEFAULT_MAX_COUNT < old_max] PASSED [  9%]
+cli/tests/pcluster/config/test_update_policy.py::test_max_count_policy[running fleet and DEFAULT_MAX_COUNT > old_max] PASSED [ 11%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[stopped fleet and custom AMI set] PASSED [ 12%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[stopped fleet and custom AMI unset] PASSED [ 13%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet and custom AMI set with no update strategy set] PASSED [ 15%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet and custom AMI change with no update strategy set] PASSED [ 16%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet and custom AMI change with update strategy COMPUTE_FLEET_STOP] PASSED [ 18%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet and custom AMI set with update strategy DRAIN] PASSED [ 19%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet and custom AMI unset with update strategy DRAIN] PASSED [ 20%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet with change outside SlurmQueues which requires COMPUTE_FLEET_STOP0] PASSED [ 22%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet with change outside SlurmQueues which requires COMPUTE_FLEET_STOP1] PASSED [ 23%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet with change outside SlurmQueues which requires COMPUTE_FLEET_STOP2] PASSED [ 25%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet and custom AMI set with update strategy TERMINATE] PASSED [ 26%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet and custom AMI unset with update strategy TERMINATE] PASSED [ 27%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet with change outside SlurmQueues which requires COMPUTE_FLEET_STOP3] PASSED [ 29%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet with change outside SlurmQueues which requires COMPUTE_FLEET_STOP4] PASSED [ 30%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_condition_checker[running fleet with change outside SlurmQueues which requires COMPUTE_FLEET_STOP5] PASSED [ 31%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_on_remove_condition_checker[stopped fleet and queue is added] PASSED [ 33%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_on_remove_condition_checker[stopped fleet and queue is removed] PASSED [ 34%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_on_remove_condition_checker[stopped fleet and compute is added] PASSED [ 36%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_on_remove_condition_checker[stopped fleet and compute is removed] PASSED [ 37%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_on_remove_condition_checker[running fleet and queue is added] PASSED [ 38%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_on_remove_condition_checker[running fleet and queue is removed] PASSED [ 40%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_on_remove_condition_checker[running fleet and compute is added] PASSED [ 41%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_on_remove_condition_checker[running fleet and compute is removed] PASSED [ 43%]
+cli/tests/pcluster/config/test_update_policy.py::test_queue_update_strategy_fail_reason_and_actions_needed[change within SlurmQueues] PASSED [ 44%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_on_remove_fail_reason_and_actions_needed[remove a Slurm queue] PASSED [ 45%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_fail_reason_and_actions_needed[change within SlurmQueues] PASSED [ 47%]
+cli/tests/pcluster/config/test_update_policy.py::test_compute_fleet_stop_fail_reason_and_actions_needed[change outside SlurmQueues] PASSED [ 48%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[stopped fleet and add new EBS section] PASSED [ 50%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[stopped fleet and remove EBS section] PASSED [ 51%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and adding a new EBS section with no update strategy set] PASSED [ 52%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and EBS changed with no update strategy set with awsbatch scheduler] PASSED [ 54%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and EBS changed with no update strategy set with plugin scheduler] PASSED [ 55%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and EBS added with update strategy TERMINATE] PASSED [ 56%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Ebs removed with update strategy DRAIN] PASSED [ 58%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and EFS added with update strategy TERMINATE] PASSED [ 59%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[stopped fleet and change EFS section] PASSED [ 61%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Efs removed with update strategy DRAIN] PASSED [ 62%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Efs removed with DeletionPolicy to Retain and update strategy DRAIN] PASSED [ 63%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Efs removed with DeletionPolicy to Retain] PASSED [ 65%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Efs removed with DeletionPolicy to Retain with awsbatch scheduler] PASSED [ 66%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Efs removed with DeletionPolicy to Retain with plugin scheduler] PASSED [ 68%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Efs removed with DeletionPolicy to Delete and update strategy DRAIN] PASSED [ 69%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[Stopped fleet and change FsxLustre section] PASSED [ 70%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Fsx added with update strategy DRAIN] PASSED [ 72%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Fsx removed with update strategy DRAIN] PASSED [ 73%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and FSx removed with DeletionPolicy to Retain and update strategy DRAIN] PASSED [ 75%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[Stopped fleet and change FsxOpenXfs section] PASSED [ 76%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[Stopped fleet and change FsxOntap section] PASSED [ 77%]
+cli/tests/pcluster/config/test_update_policy.py::test_shared_storage_update_policy_condition_checker[running fleet and Efs change with no update strategy set] PASSED [ 79%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config0-target_config0-change0-False-False-True-All compute nodes must be stopped] PASSED [ 80%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config1-target_config1-change1-False-False-True-All compute nodes must be stopped] PASSED [ 81%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config2-target_config2-change2-False-False-True-All compute nodes must be stopped] PASSED [ 83%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config3-target_config3-change3-False-False-True-All compute nodes must be stopped] PASSED [ 84%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config4-target_config4-change4-False-False-True-All compute nodes must be stopped] PASSED [ 86%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config5-target_config5-change5-False-False-True-All compute nodes must be stopped] PASSED [ 87%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config6-target_config6-change6-True-True-False-All compute nodes must be stopped for a managed placement group deletion] PASSED [ 88%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config7-target_config7-change7-False-True-True-All compute nodes must be stopped for a managed placement group deletion] PASSED [ 90%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config8-target_config8-change8-True-True-False-All compute nodes must be stopped for a managed placement group deletion] PASSED [ 91%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config9-target_config9-change9-False-False-True-All compute nodes must be stopped] PASSED [ 93%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config10-target_config10-change10-True-True-False-All compute nodes must be stopped for a managed placement group deletion] PASSED [ 94%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config11-target_config11-change11-True-True-False-All compute nodes must be stopped for a managed placement group deletion] PASSED [ 95%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config12-target_config12-change12-True-True-False-All compute nodes must be stopped for a managed placement group deletion] PASSED [ 97%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config13-target_config13-change13-True-True-False-All compute nodes must be stopped for a managed placement group deletion] PASSED [ 98%]
+cli/tests/pcluster/config/test_update_policy.py::test_condition_checker_managed_placement_group[base_config14-target_config14-change14-True-True-False-All compute nodes must be stopped for a managed placement group deletion] PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.9/site-packages/connexion/decorators/validation.py:16
+../../usr/local/lib/python3.9/site-packages/connexion/decorators/validation.py:16
+  /usr/local/lib/python3.9/site-packages/connexion/decorators/validation.py:16: DeprecationWarning: Accessing jsonschema.draft4_format_checker is deprecated and will be removed in a future release. Instead, use the FORMAT_CHECKER attribute on the corresponding Validator.
+    from jsonschema import Draft4Validator, ValidationError, draft4_format_checker
+
+../../usr/local/lib/python3.9/site-packages/connexion/json_schema.py:16
+../../usr/local/lib/python3.9/site-packages/connexion/json_schema.py:16
+  /usr/local/lib/python3.9/site-packages/connexion/json_schema.py:16: DeprecationWarning: jsonschema.RefResolver is deprecated as of v4.18.0, in favor of the https://github.com/python-jsonschema/referencing library, which provides more compliant referencing behavior as well as more flexible APIs for customization. A future release will remove RefResolver. Please file a feature request (on referencing) if you are missing an API for the kind of customization you need.
+    from jsonschema import Draft4Validator, RefResolver
+
+../../usr/local/lib/python3.9/site-packages/connexion/json_schema.py:17
+  /usr/local/lib/python3.9/site-packages/connexion/json_schema.py:17: DeprecationWarning: jsonschema.exceptions.RefResolutionError is deprecated as of version 4.18.0. If you wish to catch potential reference resolution errors, directly catch referencing.exceptions.Unresolvable.
+    from jsonschema.exceptions import RefResolutionError, ValidationError  # noqa
+
+cli/src/pcluster/api/util.py:17
+  /workspace/repo/cli/src/pcluster/api/util.py:17: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    from pkg_resources import packaging
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 72 passed, 6 warnings in 0.24s ========================
+reward=1 graded=72 found=0 failed=0 parsed=72 framework=pytest exit_code=0

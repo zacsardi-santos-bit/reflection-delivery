@@ -1,0 +1,23 @@
+{
+ "task": "grafana-beyla-650",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "deduper_test.go removes JustMark mode and asserts unset(oneIf2) with Id.IfIndex=InterfaceUnset, Id.Direction=DirectionUnset; go test ./pkg/internal/netolly/flow"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 20,
+  "shallow": true
+ }
+}

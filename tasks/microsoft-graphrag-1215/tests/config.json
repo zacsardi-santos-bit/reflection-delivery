@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/verbs/test_create_final_covariates.py /workspace/repo/tests/verbs/util.py -v",
+  "test_files": [
+    "tests/fixtures/text/config.json",
+    "tests/verbs/test_create_final_covariates.py",
+    "tests/verbs/util.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.verbs.test_create_final_covariates::test_create_final_covariates"
+  ],
+  "PASS_TO_PASS": []
+}

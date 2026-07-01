@@ -1,0 +1,23 @@
+{
+ "task": "home-assistant-core-46601",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden api.py adds 'CONFIG = \"config\"', 'websocket_register_command(...websocket_update_log_config)'/'...get_log_config', validation 'must be provided if logging to file'; new tests send 'zwave_js/update_log_config' and assert 'args[\"command\"] == \"update_log_config\"' and error messages"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

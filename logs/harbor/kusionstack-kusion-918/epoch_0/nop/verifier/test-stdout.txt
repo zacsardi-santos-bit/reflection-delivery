@@ -1,0 +1,6 @@
+patching file pkg/oci/client/build_test.go
+go: finding module for package github.com/fluxcd/pkg/tar
+# kusionstack.io/kusion/pkg/oci/client
+pkg/oci/client/build_test.go:12:2: cannot find module providing package github.com/fluxcd/pkg/tar: module lookup disabled by GOPROXY=off
+FAIL	kusionstack.io/kusion/pkg/oci/client [setup failed]
+reward=0 graded=7 found=0 failed=0 parsed=0 framework=go exit_code=1

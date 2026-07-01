@@ -1,0 +1,485 @@
+patching file src/bot/__tests__/TelegramConnector.spec.js
+patching file src/context/__tests__/TelegramEvent.spec.js
+PASS src/context/__tests__/TelegramEvent.spec.js
+  ✓ #rawEvent (3ms)
+  ✓ #isMessage (1ms)
+  ✓ #message (2ms)
+  ✓ #isText
+  ✓ #text (1ms)
+  ✓ #isAudio (1ms)
+  ✓ #audio
+  ✓ #isDocument (1ms)
+  ✓ #document (2ms)
+  ✓ #isGame (1ms)
+  ✓ #game (1ms)
+  ✓ #isPhoto
+  ✓ #photo (1ms)
+  ✓ #isSticker
+  ✓ #sticker
+  ✓ #isVideo (1ms)
+  ✓ #video
+  ✓ #isVoice (1ms)
+  ✓ #voice
+  ✓ #isVideoNote (1ms)
+  ✓ #videoNote
+  ✓ #isContact
+  ✓ #contact (1ms)
+  ✓ #isLocation
+  ✓ #location (1ms)
+  ✓ #isVenue
+  ✓ #venue (1ms)
+  ✓ #isEditedMessage
+  ✓ #editedMessage (1ms)
+  ✓ #isChannelPost
+  ✓ #channelPost (1ms)
+  ✓ #isEditedChannelPost (1ms)
+  ✓ #editedChannelPost (3ms)
+  ✓ #isInlineQuery (1ms)
+  ✓ #inlineQuery
+  ✓ #isChosenInlineResult (1ms)
+  ✓ #chosenInlineResult
+  ✓ #isCallbackQuery
+  ✓ #callbackQuery (1ms)
+  ✓ #isPayload
+  ✓ #payload (1ms)
+
+FAIL src/bot/__tests__/TelegramConnector.spec.js
+  #platform
+    ✓ should be telegram (3ms)
+  #client
+    ✓ should be client (1ms)
+    ✓ support custom client
+  #getUniqueSessionKey
+    ✓ extract correct sender id from messageRequest (1ms)
+    ✕ extract correct sender id from groupMessageRequest (8ms)
+    ✕ extract correct sender id from editedMessageRequest (2ms)
+    ✕ extract correct sender id from groupEditedMessageRequest (1ms)
+    ✕ extract correct sender id from channelPostRequest (1ms)
+    ✕ extract correct sender id from editedChannelPostRequest (1ms)
+    ✕ extract correct sender id from inlineQueryRequest (2ms)
+    ✕ extract correct sender id from chosenInlineResultRequest (2ms)
+    ✓ extract correct sender id from callbackQueryRequest
+    ✕ extract correct sender id from groupCallbackQueryRequest (1ms)
+    ✕ extract correct sender id from shippingQueryRequest (1ms)
+    ✕ extract correct sender id from preCheckoutQueryRequest (1ms)
+    ✓ return empty string if type is unknown (1ms)
+  #updateSession
+    ✓ update session with data needed from messageRequest (1ms)
+    ✕ update session with data needed from groupMessageRequest (7ms)
+    ✕ update session with data needed from editedMessageRequest (1ms)
+    ✕ update session with data needed from groupEditedMessageRequest (1ms)
+    ✕ update session with data needed from channelPostRequest
+    ✕ update session with data needed from editedChannelPostRequest (1ms)
+    ✕ update session with data needed from inlineQueryRequest
+    ✕ update session with data needed from chosenInlineResultRequest
+    ✓ update session with data needed from callbackQueryRequest
+    ✕ update session with data needed from groupCallbackQueryRequest (3ms)
+    ✕ update session with data needed from shippingQueryRequest (1ms)
+    ✕ update session with data needed from preCheckoutQueryRequest
+  #mapRequestToEvents
+    ✓ should map request to TelegramEvents (1ms)
+  #createContext
+    ✓ should create TelegramContext (1ms)
+
+  ● #getUniqueSessionKey › extract correct sender id from groupMessageRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "-225456171"
+    Received:
+      "427770117"
+
+      328 |     const { connector } = setup();
+      329 |     const senderId = connector.getUniqueSessionKey(groupMessageRequest.body);
+    > 330 |     expect(senderId).toBe('-225456171');
+      331 |   });
+      332 | 
+      333 |   it('extract correct sender id from editedMessageRequest', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:330:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #getUniqueSessionKey › extract correct sender id from editedMessageRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "427770117"
+    Received:
+      ""
+
+      334 |     const { connector } = setup();
+      335 |     const senderId = connector.getUniqueSessionKey(editedMessageRequest.body);
+    > 336 |     expect(senderId).toBe('427770117');
+      337 |   });
+      338 | 
+      339 |   it('extract correct sender id from groupEditedMessageRequest', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:336:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #getUniqueSessionKey › extract correct sender id from groupEditedMessageRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "-225456171"
+    Received:
+      ""
+
+      342 |       groupEditedMessageRequest.body
+      343 |     );
+    > 344 |     expect(senderId).toBe('-225456171');
+      345 |   });
+      346 | 
+      347 |   it('extract correct sender id from channelPostRequest', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:344:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #getUniqueSessionKey › extract correct sender id from channelPostRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "-1001305240521"
+    Received:
+      ""
+
+      348 |     const { connector } = setup();
+      349 |     const senderId = connector.getUniqueSessionKey(channelPostRequest.body);
+    > 350 |     expect(senderId).toBe('-1001305240521');
+      351 |   });
+      352 | 
+      353 |   it('extract correct sender id from editedChannelPostRequest', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:350:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #getUniqueSessionKey › extract correct sender id from editedChannelPostRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "-1001305240521"
+    Received:
+      ""
+
+      356 |       editedChannelPostRequest.body
+      357 |     );
+    > 358 |     expect(senderId).toBe('-1001305240521');
+      359 |   });
+      360 | 
+      361 |   it('extract correct sender id from inlineQueryRequest', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:358:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #getUniqueSessionKey › extract correct sender id from inlineQueryRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "427770117"
+    Received:
+      ""
+
+      362 |     const { connector } = setup();
+      363 |     const senderId = connector.getUniqueSessionKey(inlineQueryRequest.body);
+    > 364 |     expect(senderId).toBe('427770117');
+      365 |   });
+      366 | 
+      367 |   it('extract correct sender id from chosenInlineResultRequest', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:364:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #getUniqueSessionKey › extract correct sender id from chosenInlineResultRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "427770117"
+    Received:
+      ""
+
+      370 |       chosenInlineResultRequest.body
+      371 |     );
+    > 372 |     expect(senderId).toBe('427770117');
+      373 |   });
+      374 | 
+      375 |   it('extract correct sender id from callbackQueryRequest', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:372:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #getUniqueSessionKey › extract correct sender id from groupCallbackQueryRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "-225456171"
+    Received:
+      "427770117"
+
+      384 |       groupCallbackQueryRequest.body
+      385 |     );
+    > 386 |     expect(senderId).toBe('-225456171');
+      387 |   });
+      388 | 
+      389 |   it('extract correct sender id from shippingQueryRequest', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:386:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #getUniqueSessionKey › extract correct sender id from shippingQueryRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "427770117"
+    Received:
+      ""
+
+      390 |     const { connector } = setup();
+      391 |     const senderId = connector.getUniqueSessionKey(shippingQueryRequest.body);
+    > 392 |     expect(senderId).toBe('427770117');
+      393 |   });
+      394 | 
+      395 |   it('extract correct sender id from preCheckoutQueryRequest', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:392:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #getUniqueSessionKey › extract correct sender id from preCheckoutQueryRequest
+
+    expect(received).toBe(expected)
+    
+    Expected value to be (using Object.is):
+      "427770117"
+    Received:
+      ""
+
+      398 |       preCheckoutQueryRequest.body
+      399 |     );
+    > 400 |     expect(senderId).toBe('427770117');
+      401 |   });
+      402 | 
+      403 |   it('return empty string if type is unknown', () => {
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:400:22)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from groupMessageRequest
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"channel": undefined, "group": {"_updatedAt": Any<String>, "all_members_are_administrators": true, "id": -225456171, "title": "Bottender", "type": "group"}, "user": {"_updatedAt": Any<String>, "first_name": "user_first", "id": 427770117, "is_bot": false, "language_code": "en", "last_name": "user_last"}}
+    Received:
+      {"user": {"_updatedAt": "2026-06-29T15:19:32.763Z", "first_name": "user_first", "id": 427770117, "is_bot": false, "language_code": "en", "last_name": "user_last"}}
+    
+    Difference:
+    
+    - Expected
+    + Received
+    
+    @@ -1,16 +1,8 @@
+      Object {
+    -   "channel": undefined,
+    -   "group": Object {
+    -     "_updatedAt": Any<String>,
+    -     "all_members_are_administrators": true,
+    -     "id": -225456171,
+    -     "title": "Bottender",
+    -     "type": "group",
+    -   },
+        "user": Object {
+    -     "_updatedAt": Any<String>,
+    +     "_updatedAt": "2026-06-29T15:19:32.763Z",
+          "first_name": "user_first",
+          "id": 427770117,
+          "is_bot": false,
+          "language_code": "en",
+          "last_name": "user_last",
+
+      437 |     await connector.updateSession(session, groupMessageRequest.body);
+      438 | 
+    > 439 |     expect(session).toEqual({
+      440 |       channel: undefined,
+      441 |       group: {
+      442 |         id: -225456171,
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:439:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from editedMessageRequest
+
+    TypeError: Cannot set properties of undefined (setting '_updatedAt')
+
+      67 |       }
+      68 |       session.user = user;
+    > 69 |       session.user._updatedAt = new Date().toISOString();
+      70 |     }
+      71 | 
+      72 |     // TODO: remove later
+      
+      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:464:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from groupEditedMessageRequest
+
+    TypeError: Cannot set properties of undefined (setting '_updatedAt')
+
+      67 |       }
+      68 |       session.user = user;
+    > 69 |       session.user._updatedAt = new Date().toISOString();
+      70 |     }
+      71 | 
+      72 |     // TODO: remove later
+      
+      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:485:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from channelPostRequest
+
+    TypeError: Cannot set properties of undefined (setting '_updatedAt')
+
+      67 |       }
+      68 |       session.user = user;
+    > 69 |       session.user._updatedAt = new Date().toISOString();
+      70 |     }
+      71 | 
+      72 |     // TODO: remove later
+      
+      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:512:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from editedChannelPostRequest
+
+    TypeError: Cannot set properties of undefined (setting '_updatedAt')
+
+      67 |       }
+      68 |       session.user = user;
+    > 69 |       session.user._updatedAt = new Date().toISOString();
+      70 |     }
+      71 | 
+      72 |     // TODO: remove later
+      
+      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:531:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from inlineQueryRequest
+
+    TypeError: Cannot set properties of undefined (setting '_updatedAt')
+
+      67 |       }
+      68 |       session.user = user;
+    > 69 |       session.user._updatedAt = new Date().toISOString();
+      70 |     }
+      71 | 
+      72 |     // TODO: remove later
+      
+      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:549:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from chosenInlineResultRequest
+
+    TypeError: Cannot set properties of undefined (setting '_updatedAt')
+
+      67 |       }
+      68 |       session.user = user;
+    > 69 |       session.user._updatedAt = new Date().toISOString();
+      70 |     }
+      71 | 
+      72 |     // TODO: remove later
+      
+      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:569:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from groupCallbackQueryRequest
+
+    expect(received).toEqual(expected)
+    
+    Expected value to equal:
+      {"channel": undefined, "group": {"_updatedAt": Any<String>, "all_members_are_administrators": true, "id": -225456171, "title": "Bottender", "type": "group"}, "user": {"_updatedAt": Any<String>, "first_name": "user_first", "id": 427770117, "is_bot": false, "language_code": "en", "last_name": "user_last"}}
+    Received:
+      {"user": {"_updatedAt": "2026-06-29T15:19:32.773Z", "first_name": "user_first", "id": 427770117, "is_bot": false, "language_code": "en", "last_name": "user_last"}}
+    
+    Difference:
+    
+    - Expected
+    + Received
+    
+    @@ -1,16 +1,8 @@
+      Object {
+    -   "channel": undefined,
+    -   "group": Object {
+    -     "_updatedAt": Any<String>,
+    -     "all_members_are_administrators": true,
+    -     "id": -225456171,
+    -     "title": "Bottender",
+    -     "type": "group",
+    -   },
+        "user": Object {
+    -     "_updatedAt": Any<String>,
+    +     "_updatedAt": "2026-06-29T15:19:32.773Z",
+          "first_name": "user_first",
+          "id": 427770117,
+          "is_bot": false,
+          "language_code": "en",
+          "last_name": "user_last",
+
+      609 |     await connector.updateSession(session, groupCallbackQueryRequest.body);
+      610 | 
+    > 611 |     expect(session).toEqual({
+      612 |       channel: undefined,
+      613 |       group: {
+      614 |         id: -225456171,
+      
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:611:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from shippingQueryRequest
+
+    TypeError: Cannot set properties of undefined (setting '_updatedAt')
+
+      67 |       }
+      68 |       session.user = user;
+    > 69 |       session.user._updatedAt = new Date().toISOString();
+      70 |     }
+      71 | 
+      72 |     // TODO: remove later
+      
+      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:635:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● #updateSession › update session with data needed from preCheckoutQueryRequest
+
+    TypeError: Cannot set properties of undefined (setting '_updatedAt')
+
+      67 |       }
+      68 |       session.user = user;
+    > 69 |       session.user._updatedAt = new Date().toISOString();
+      70 |     }
+      71 | 
+      72 |     // TODO: remove later
+      
+      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)
+      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:654:21)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       20 failed, 51 passed, 71 total
+Snapshots:   0 total
+Time:        2.158s
+Ran all test suites matching /src\/bot\/__tests__\/TelegramConnector.spec.js|src\/context\/__tests__\/TelegramEvent.spec.js/i.
+{"numFailedTestSuites":1,"numFailedTests":20,"numPassedTestSuites":1,"numPassedTests":51,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTotalTestSuites":2,"numTotalTests":71,"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeys":[],"unmatched":0,"updated":0},"startTime":1782746370837,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":[],"failureMessages":[],"fullName":"#rawEvent","location":null,"status":"passed","title":"#rawEvent"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isMessage","location":null,"status":"passed","title":"#isMessage"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#message","location":null,"status":"passed","title":"#message"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isText","location":null,"status":"passed","title":"#isText"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#text","location":null,"status":"passed","title":"#text"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isAudio","location":null,"status":"passed","title":"#isAudio"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#audio","location":null,"status":"passed","title":"#audio"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isDocument","location":null,"status":"passed","title":"#isDocument"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#document","location":null,"status":"passed","title":"#document"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isGame","location":null,"status":"passed","title":"#isGame"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#game","location":null,"status":"passed","title":"#game"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isPhoto","location":null,"status":"passed","title":"#isPhoto"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#photo","location":null,"status":"passed","title":"#photo"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isSticker","location":null,"status":"passed","title":"#isSticker"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#sticker","location":null,"status":"passed","title":"#sticker"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isVideo","location":null,"status":"passed","title":"#isVideo"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#video","location":null,"status":"passed","title":"#video"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isVoice","location":null,"status":"passed","title":"#isVoice"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#voice","location":null,"status":"passed","title":"#voice"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isVideoNote","location":null,"status":"passed","title":"#isVideoNote"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#videoNote","location":null,"status":"passed","title":"#videoNote"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isContact","location":null,"status":"passed","title":"#isContact"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#contact","location":null,"status":"passed","title":"#contact"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isLocation","location":null,"status":"passed","title":"#isLocation"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#location","location":null,"status":"passed","title":"#location"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isVenue","location":null,"status":"passed","title":"#isVenue"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#venue","location":null,"status":"passed","title":"#venue"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isEditedMessage","location":null,"status":"passed","title":"#isEditedMessage"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#editedMessage","location":null,"status":"passed","title":"#editedMessage"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isChannelPost","location":null,"status":"passed","title":"#isChannelPost"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#channelPost","location":null,"status":"passed","title":"#channelPost"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isEditedChannelPost","location":null,"status":"passed","title":"#isEditedChannelPost"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#editedChannelPost","location":null,"status":"passed","title":"#editedChannelPost"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isInlineQuery","location":null,"status":"passed","title":"#isInlineQuery"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#inlineQuery","location":null,"status":"passed","title":"#inlineQuery"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isChosenInlineResult","location":null,"status":"passed","title":"#isChosenInlineResult"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#chosenInlineResult","location":null,"status":"passed","title":"#chosenInlineResult"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isCallbackQuery","location":null,"status":"passed","title":"#isCallbackQuery"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#callbackQuery","location":null,"status":"passed","title":"#callbackQuery"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#isPayload","location":null,"status":"passed","title":"#isPayload"},{"ancestorTitles":[],"failureMessages":[],"fullName":"#payload","location":null,"status":"passed","title":"#payload"}],"endTime":1782746372745,"message":"","name":"/workspace/repo/src/context/__tests__/TelegramEvent.spec.js","startTime":1782746372025,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["#platform"],"failureMessages":[],"fullName":"#platform should be telegram","location":null,"status":"passed","title":"should be telegram"},{"ancestorTitles":["#client"],"failureMessages":[],"fullName":"#client should be client","location":null,"status":"passed","title":"should be client"},{"ancestorTitles":["#client"],"failureMessages":[],"fullName":"#client support custom client","location":null,"status":"passed","title":"support custom client"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":[],"fullName":"#getUniqueSessionKey extract correct sender id from messageRequest","location":null,"status":"passed","title":"extract correct sender id from messageRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"-225456171\"\nReceived:\n  \"427770117\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:330:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from groupMessageRequest","location":null,"status":"failed","title":"extract correct sender id from groupMessageRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"427770117\"\nReceived:\n  \"\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:336:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from editedMessageRequest","location":null,"status":"failed","title":"extract correct sender id from editedMessageRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"-225456171\"\nReceived:\n  \"\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:344:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from groupEditedMessageRequest","location":null,"status":"failed","title":"extract correct sender id from groupEditedMessageRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"-1001305240521\"\nReceived:\n  \"\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:350:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from channelPostRequest","location":null,"status":"failed","title":"extract correct sender id from channelPostRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"-1001305240521\"\nReceived:\n  \"\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:358:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from editedChannelPostRequest","location":null,"status":"failed","title":"extract correct sender id from editedChannelPostRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"427770117\"\nReceived:\n  \"\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:364:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from inlineQueryRequest","location":null,"status":"failed","title":"extract correct sender id from inlineQueryRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"427770117\"\nReceived:\n  \"\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:372:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from chosenInlineResultRequest","location":null,"status":"failed","title":"extract correct sender id from chosenInlineResultRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":[],"fullName":"#getUniqueSessionKey extract correct sender id from callbackQueryRequest","location":null,"status":"passed","title":"extract correct sender id from callbackQueryRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"-225456171\"\nReceived:\n  \"427770117\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:386:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from groupCallbackQueryRequest","location":null,"status":"failed","title":"extract correct sender id from groupCallbackQueryRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"427770117\"\nReceived:\n  \"\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:392:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from shippingQueryRequest","location":null,"status":"failed","title":"extract correct sender id from shippingQueryRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":["Error: expect(received).toBe(expected)\n\nExpected value to be (using Object.is):\n  \"427770117\"\nReceived:\n  \"\"\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:400:22)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#getUniqueSessionKey extract correct sender id from preCheckoutQueryRequest","location":null,"status":"failed","title":"extract correct sender id from preCheckoutQueryRequest"},{"ancestorTitles":["#getUniqueSessionKey"],"failureMessages":[],"fullName":"#getUniqueSessionKey return empty string if type is unknown","location":null,"status":"passed","title":"return empty string if type is unknown"},{"ancestorTitles":["#updateSession"],"failureMessages":[],"fullName":"#updateSession update session with data needed from messageRequest","location":null,"status":"passed","title":"update session with data needed from messageRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["Error: expect(received).toEqual(expected)\n\nExpected value to equal:\n  {\"channel\": undefined, \"group\": {\"_updatedAt\": Any<String>, \"all_members_are_administrators\": true, \"id\": -225456171, \"title\": \"Bottender\", \"type\": \"group\"}, \"user\": {\"_updatedAt\": Any<String>, \"first_name\": \"user_first\", \"id\": 427770117, \"is_bot\": false, \"language_code\": \"en\", \"last_name\": \"user_last\"}}\nReceived:\n  {\"user\": {\"_updatedAt\": \"2026-06-29T15:19:32.763Z\", \"first_name\": \"user_first\", \"id\": 427770117, \"is_bot\": false, \"language_code\": \"en\", \"last_name\": \"user_last\"}}\n\nDifference:\n\n- Expected\n+ Received\n\n@@ -1,16 +1,8 @@\n  Object {\n-   \"channel\": undefined,\n-   \"group\": Object {\n-     \"_updatedAt\": Any<String>,\n-     \"all_members_are_administrators\": true,\n-     \"id\": -225456171,\n-     \"title\": \"Bottender\",\n-     \"type\": \"group\",\n-   },\n    \"user\": Object {\n-     \"_updatedAt\": Any<String>,\n+     \"_updatedAt\": \"2026-06-29T15:19:32.763Z\",\n      \"first_name\": \"user_first\",\n      \"id\": 427770117,\n      \"is_bot\": false,\n      \"language_code\": \"en\",\n      \"last_name\": \"user_last\",\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:439:21)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from groupMessageRequest","location":null,"status":"failed","title":"update session with data needed from groupMessageRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["TypeError: Cannot set properties of undefined (setting '_updatedAt')\n    at TelegramConnector.updateSession (/workspace/repo/src/bot/TelegramConnector.js:69:31)\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:464:21)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from editedMessageRequest","location":null,"status":"failed","title":"update session with data needed from editedMessageRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["TypeError: Cannot set properties of undefined (setting '_updatedAt')\n    at TelegramConnector.updateSession (/workspace/repo/src/bot/TelegramConnector.js:69:31)\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:485:21)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from groupEditedMessageRequest","location":null,"status":"failed","title":"update session with data needed from groupEditedMessageRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["TypeError: Cannot set properties of undefined (setting '_updatedAt')\n    at TelegramConnector.updateSession (/workspace/repo/src/bot/TelegramConnector.js:69:31)\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:512:21)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from channelPostRequest","location":null,"status":"failed","title":"update session with data needed from channelPostRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["TypeError: Cannot set properties of undefined (setting '_updatedAt')\n    at TelegramConnector.updateSession (/workspace/repo/src/bot/TelegramConnector.js:69:31)\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:531:21)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from editedChannelPostRequest","location":null,"status":"failed","title":"update session with data needed from editedChannelPostRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["TypeError: Cannot set properties of undefined (setting '_updatedAt')\n    at TelegramConnector.updateSession (/workspace/repo/src/bot/TelegramConnector.js:69:31)\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:549:21)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from inlineQueryRequest","location":null,"status":"failed","title":"update session with data needed from inlineQueryRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["TypeError: Cannot set properties of undefined (setting '_updatedAt')\n    at TelegramConnector.updateSession (/workspace/repo/src/bot/TelegramConnector.js:69:31)\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:569:21)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from chosenInlineResultRequest","location":null,"status":"failed","title":"update session with data needed from chosenInlineResultRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":[],"fullName":"#updateSession update session with data needed from callbackQueryRequest","location":null,"status":"passed","title":"update session with data needed from callbackQueryRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["Error: expect(received).toEqual(expected)\n\nExpected value to equal:\n  {\"channel\": undefined, \"group\": {\"_updatedAt\": Any<String>, \"all_members_are_administrators\": true, \"id\": -225456171, \"title\": \"Bottender\", \"type\": \"group\"}, \"user\": {\"_updatedAt\": Any<String>, \"first_name\": \"user_first\", \"id\": 427770117, \"is_bot\": false, \"language_code\": \"en\", \"last_name\": \"user_last\"}}\nReceived:\n  {\"user\": {\"_updatedAt\": \"2026-06-29T15:19:32.773Z\", \"first_name\": \"user_first\", \"id\": 427770117, \"is_bot\": false, \"language_code\": \"en\", \"last_name\": \"user_last\"}}\n\nDifference:\n\n- Expected\n+ Received\n\n@@ -1,16 +1,8 @@\n  Object {\n-   \"channel\": undefined,\n-   \"group\": Object {\n-     \"_updatedAt\": Any<String>,\n-     \"all_members_are_administrators\": true,\n-     \"id\": -225456171,\n-     \"title\": \"Bottender\",\n-     \"type\": \"group\",\n-   },\n    \"user\": Object {\n-     \"_updatedAt\": Any<String>,\n+     \"_updatedAt\": \"2026-06-29T15:19:32.773Z\",\n      \"first_name\": \"user_first\",\n      \"id\": 427770117,\n      \"is_bot\": false,\n      \"language_code\": \"en\",\n      \"last_name\": \"user_last\",\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:611:21)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from groupCallbackQueryRequest","location":null,"status":"failed","title":"update session with data needed from groupCallbackQueryRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["TypeError: Cannot set properties of undefined (setting '_updatedAt')\n    at TelegramConnector.updateSession (/workspace/repo/src/bot/TelegramConnector.js:69:31)\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:635:21)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from shippingQueryRequest","location":null,"status":"failed","title":"update session with data needed from shippingQueryRequest"},{"ancestorTitles":["#updateSession"],"failureMessages":["TypeError: Cannot set properties of undefined (setting '_updatedAt')\n    at TelegramConnector.updateSession (/workspace/repo/src/bot/TelegramConnector.js:69:31)\n    at Object.<anonymous> (/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js:654:21)\n    at Object.asyncFn (/workspace/repo/node_modules/jest-jasmine2/build/jasmine_async.js:124:345)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:51:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:40:274)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queue_runner.js:83:39\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"#updateSession update session with data needed from preCheckoutQueryRequest","location":null,"status":"failed","title":"update session with data needed from preCheckoutQueryRequest"},{"ancestorTitles":["#mapRequestToEvents"],"failureMessages":[],"fullName":"#mapRequestToEvents should map request to TelegramEvents","location":null,"status":"passed","title":"should map request to TelegramEvents"},{"ancestorTitles":["#createContext"],"failureMessages":[],"fullName":"#createContext should create TelegramContext","location":null,"status":"passed","title":"should create TelegramContext"}],"endTime":1782746372925,"message":"  ● #getUniqueSessionKey › extract correct sender id from groupMessageRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"-225456171\"\n    Received:\n      \"427770117\"\n\n      328 |     const { connector } = setup();\n      329 |     const senderId = connector.getUniqueSessionKey(groupMessageRequest.body);\n    > 330 |     expect(senderId).toBe('-225456171');\n      331 |   });\n      332 | \n      333 |   it('extract correct sender id from editedMessageRequest', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:330:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #getUniqueSessionKey › extract correct sender id from editedMessageRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"427770117\"\n    Received:\n      \"\"\n\n      334 |     const { connector } = setup();\n      335 |     const senderId = connector.getUniqueSessionKey(editedMessageRequest.body);\n    > 336 |     expect(senderId).toBe('427770117');\n      337 |   });\n      338 | \n      339 |   it('extract correct sender id from groupEditedMessageRequest', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:336:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #getUniqueSessionKey › extract correct sender id from groupEditedMessageRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"-225456171\"\n    Received:\n      \"\"\n\n      342 |       groupEditedMessageRequest.body\n      343 |     );\n    > 344 |     expect(senderId).toBe('-225456171');\n      345 |   });\n      346 | \n      347 |   it('extract correct sender id from channelPostRequest', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:344:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #getUniqueSessionKey › extract correct sender id from channelPostRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"-1001305240521\"\n    Received:\n      \"\"\n\n      348 |     const { connector } = setup();\n      349 |     const senderId = connector.getUniqueSessionKey(channelPostRequest.body);\n    > 350 |     expect(senderId).toBe('-1001305240521');\n      351 |   });\n      352 | \n      353 |   it('extract correct sender id from editedChannelPostRequest', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:350:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #getUniqueSessionKey › extract correct sender id from editedChannelPostRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"-1001305240521\"\n    Received:\n      \"\"\n\n      356 |       editedChannelPostRequest.body\n      357 |     );\n    > 358 |     expect(senderId).toBe('-1001305240521');\n      359 |   });\n      360 | \n      361 |   it('extract correct sender id from inlineQueryRequest', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:358:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #getUniqueSessionKey › extract correct sender id from inlineQueryRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"427770117\"\n    Received:\n      \"\"\n\n      362 |     const { connector } = setup();\n      363 |     const senderId = connector.getUniqueSessionKey(inlineQueryRequest.body);\n    > 364 |     expect(senderId).toBe('427770117');\n      365 |   });\n      366 | \n      367 |   it('extract correct sender id from chosenInlineResultRequest', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:364:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #getUniqueSessionKey › extract correct sender id from chosenInlineResultRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"427770117\"\n    Received:\n      \"\"\n\n      370 |       chosenInlineResultRequest.body\n      371 |     );\n    > 372 |     expect(senderId).toBe('427770117');\n      373 |   });\n      374 | \n      375 |   it('extract correct sender id from callbackQueryRequest', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:372:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #getUniqueSessionKey › extract correct sender id from groupCallbackQueryRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"-225456171\"\n    Received:\n      \"427770117\"\n\n      384 |       groupCallbackQueryRequest.body\n      385 |     );\n    > 386 |     expect(senderId).toBe('-225456171');\n      387 |   });\n      388 | \n      389 |   it('extract correct sender id from shippingQueryRequest', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:386:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #getUniqueSessionKey › extract correct sender id from shippingQueryRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"427770117\"\n    Received:\n      \"\"\n\n      390 |     const { connector } = setup();\n      391 |     const senderId = connector.getUniqueSessionKey(shippingQueryRequest.body);\n    > 392 |     expect(senderId).toBe('427770117');\n      393 |   });\n      394 | \n      395 |   it('extract correct sender id from preCheckoutQueryRequest', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:392:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #getUniqueSessionKey › extract correct sender id from preCheckoutQueryRequest\n\n    expect(received).toBe(expected)\n    \n    Expected value to be (using Object.is):\n      \"427770117\"\n    Received:\n      \"\"\n\n      398 |       preCheckoutQueryRequest.body\n      399 |     );\n    > 400 |     expect(senderId).toBe('427770117');\n      401 |   });\n      402 | \n      403 |   it('return empty string if type is unknown', () => {\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:400:22)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from groupMessageRequest\n\n    expect(received).toEqual(expected)\n    \n    Expected value to equal:\n      {\"channel\": undefined, \"group\": {\"_updatedAt\": Any<String>, \"all_members_are_administrators\": true, \"id\": -225456171, \"title\": \"Bottender\", \"type\": \"group\"}, \"user\": {\"_updatedAt\": Any<String>, \"first_name\": \"user_first\", \"id\": 427770117, \"is_bot\": false, \"language_code\": \"en\", \"last_name\": \"user_last\"}}\n    Received:\n      {\"user\": {\"_updatedAt\": \"2026-06-29T15:19:32.763Z\", \"first_name\": \"user_first\", \"id\": 427770117, \"is_bot\": false, \"language_code\": \"en\", \"last_name\": \"user_last\"}}\n    \n    Difference:\n    \n    - Expected\n    + Received\n    \n    @@ -1,16 +1,8 @@\n      Object {\n    -   \"channel\": undefined,\n    -   \"group\": Object {\n    -     \"_updatedAt\": Any<String>,\n    -     \"all_members_are_administrators\": true,\n    -     \"id\": -225456171,\n    -     \"title\": \"Bottender\",\n    -     \"type\": \"group\",\n    -   },\n        \"user\": Object {\n    -     \"_updatedAt\": Any<String>,\n    +     \"_updatedAt\": \"2026-06-29T15:19:32.763Z\",\n          \"first_name\": \"user_first\",\n          \"id\": 427770117,\n          \"is_bot\": false,\n          \"language_code\": \"en\",\n          \"last_name\": \"user_last\",\n\n      437 |     await connector.updateSession(session, groupMessageRequest.body);\n      438 | \n    > 439 |     expect(session).toEqual({\n      440 |       channel: undefined,\n      441 |       group: {\n      442 |         id: -225456171,\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:439:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from editedMessageRequest\n\n    TypeError: Cannot set properties of undefined (setting '_updatedAt')\n\n      67 |       }\n      68 |       session.user = user;\n    > 69 |       session.user._updatedAt = new Date().toISOString();\n      70 |     }\n      71 | \n      72 |     // TODO: remove later\n      \n      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)\n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:464:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from groupEditedMessageRequest\n\n    TypeError: Cannot set properties of undefined (setting '_updatedAt')\n\n      67 |       }\n      68 |       session.user = user;\n    > 69 |       session.user._updatedAt = new Date().toISOString();\n      70 |     }\n      71 | \n      72 |     // TODO: remove later\n      \n      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)\n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:485:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from channelPostRequest\n\n    TypeError: Cannot set properties of undefined (setting '_updatedAt')\n\n      67 |       }\n      68 |       session.user = user;\n    > 69 |       session.user._updatedAt = new Date().toISOString();\n      70 |     }\n      71 | \n      72 |     // TODO: remove later\n      \n      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)\n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:512:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from editedChannelPostRequest\n\n    TypeError: Cannot set properties of undefined (setting '_updatedAt')\n\n      67 |       }\n      68 |       session.user = user;\n    > 69 |       session.user._updatedAt = new Date().toISOString();\n      70 |     }\n      71 | \n      72 |     // TODO: remove later\n      \n      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)\n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:531:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from inlineQueryRequest\n\n    TypeError: Cannot set properties of undefined (setting '_updatedAt')\n\n      67 |       }\n      68 |       session.user = user;\n    > 69 |       session.user._updatedAt = new Date().toISOString();\n      70 |     }\n      71 | \n      72 |     // TODO: remove later\n      \n      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)\n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:549:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from chosenInlineResultRequest\n\n    TypeError: Cannot set properties of undefined (setting '_updatedAt')\n\n      67 |       }\n      68 |       session.user = user;\n    > 69 |       session.user._updatedAt = new Date().toISOString();\n      70 |     }\n      71 | \n      72 |     // TODO: remove later\n      \n      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)\n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:569:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from groupCallbackQueryRequest\n\n    expect(received).toEqual(expected)\n    \n    Expected value to equal:\n      {\"channel\": undefined, \"group\": {\"_updatedAt\": Any<String>, \"all_members_are_administrators\": true, \"id\": -225456171, \"title\": \"Bottender\", \"type\": \"group\"}, \"user\": {\"_updatedAt\": Any<String>, \"first_name\": \"user_first\", \"id\": 427770117, \"is_bot\": false, \"language_code\": \"en\", \"last_name\": \"user_last\"}}\n    Received:\n      {\"user\": {\"_updatedAt\": \"2026-06-29T15:19:32.773Z\", \"first_name\": \"user_first\", \"id\": 427770117, \"is_bot\": false, \"language_code\": \"en\", \"last_name\": \"user_last\"}}\n    \n    Difference:\n    \n    - Expected\n    + Received\n    \n    @@ -1,16 +1,8 @@\n      Object {\n    -   \"channel\": undefined,\n    -   \"group\": Object {\n    -     \"_updatedAt\": Any<String>,\n    -     \"all_members_are_administrators\": true,\n    -     \"id\": -225456171,\n    -     \"title\": \"Bottender\",\n    -     \"type\": \"group\",\n    -   },\n        \"user\": Object {\n    -     \"_updatedAt\": Any<String>,\n    +     \"_updatedAt\": \"2026-06-29T15:19:32.773Z\",\n          \"first_name\": \"user_first\",\n          \"id\": 427770117,\n          \"is_bot\": false,\n          \"language_code\": \"en\",\n          \"last_name\": \"user_last\",\n\n      609 |     await connector.updateSession(session, groupCallbackQueryRequest.body);\n      610 | \n    > 611 |     expect(session).toEqual({\n      612 |       channel: undefined,\n      613 |       group: {\n      614 |         id: -225456171,\n      \n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:611:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from shippingQueryRequest\n\n    TypeError: Cannot set properties of undefined (setting '_updatedAt')\n\n      67 |       }\n      68 |       session.user = user;\n    > 69 |       session.user._updatedAt = new Date().toISOString();\n      70 |     }\n      71 | \n      72 |     // TODO: remove later\n      \n      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)\n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:635:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● #updateSession › update session with data needed from preCheckoutQueryRequest\n\n    TypeError: Cannot set properties of undefined (setting '_updatedAt')\n\n      67 |       }\n      68 |       session.user = user;\n    > 69 |       session.user._updatedAt = new Date().toISOString();\n      70 |     }\n      71 | \n      72 |     // TODO: remove later\n      \n      at TelegramConnector.updateSession (src/bot/TelegramConnector.js:69:31)\n      at Object.<anonymous> (src/bot/__tests__/TelegramConnector.spec.js:654:21)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n","name":"/workspace/repo/src/bot/__tests__/TelegramConnector.spec.js","startTime":1782746372028,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=71 found=71 failed=20 parsed=71 framework=jest exit_code=1

@@ -1,0 +1,261 @@
+patching file packages/n4s/src/runtime/__tests__/enforceContext.test.ts
+yarn workspace v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ /workspace/repo/node_modules/.bin/jest --config /workspace/jest.config.wrapper.js packages/n4s/src/runtime/__tests__/enforceContext.test.ts --watchAll=false --coverage=false
+ts-jest[ts-compiler] (WARN) [96msrc/runtime/__tests__/enforceContext.test.ts[0m:[93m7[0m:[93m5[0m - [91merror[0m[90m TS2588: [0mCannot assign to 'keepContext' because it is a constant.
+
+[7m7[0m     keepContext = jest.fn();
+[7m [0m [91m    ~~~~~~~~~~~[0m
+[96msrc/runtime/__tests__/enforceContext.test.ts[0m:[93m44[0m:[93m9[0m - [91merror[0m[90m TS2739: [0mType 'TLazyRules' is missing the following properties from type 'TLazyRuleMethods': test, run
+
+[7m44[0m         name: enforce
+[7m  [0m [91m        ~~~~[0m
+[96msrc/runtime/__tests__/enforceContext.test.ts[0m:[93m49[0m:[93m9[0m - [91merror[0m[90m TS2322: [0mType 'TLazyRules' is not assignable to type 'TLazyRuleMethods'.
+
+[7m49[0m         siblings: enforce
+[7m  [0m [91m        ~~~~~~~~[0m
+[96msrc/runtime/__tests__/enforceContext.test.ts[0m:[93m73[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType 'TLazyRules' is not assignable to type 'TLazyRuleMethods'.
+
+[7m73[0m           name: enforce
+[7m  [0m [91m          ~~~~[0m
+[96msrc/runtime/__tests__/enforceContext.test.ts[0m:[93m78[0m:[93m11[0m - [91merror[0m[90m TS2322: [0mType 'TLazyRules' is not assignable to type 'TLazyRuleMethods'.
+
+[7m78[0m           siblings: enforce
+[7m  [0m [91m          ~~~~~~~~[0m
+[96msrc/runtime/__tests__/enforceContext.test.ts[0m:[93m152[0m:[93m11[0m - [91merror[0m[90m TS2345: [0mArgument of type 'TLazyRules' is not assignable to parameter of type 'TLazyRuleMethods'.
+
+[7m152[0m           enforce.isString().someCustomRule()
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/runtime/__tests__/enforceContext.test.ts[0m:[93m162[0m:[93m11[0m - [91merror[0m[90m TS2345: [0mArgument of type 'TLazyRules' is not assignable to parameter of type 'TLazyRuleMethods'.
+
+[7m162[0m           enforce.isString().someCustomRule()
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/runtime/__tests__/enforceContext.test.ts[0m:[93m210[0m:[93m51[0m - [91merror[0m[90m TS2339: [0mProperty 'username' does not exist on type '(...args: TArgs) => TLazyRules'.
+
+[7m210[0m     if (value === context.parent().parent().value.username) {
+[7m   [0m [91m                                                  ~~~~~~~~[0m
+FAIL src/runtime/__tests__/enforceContext.test.ts
+  enforce.context
+    base structure
+      ✕ Should match snapshot (3 ms)
+    When in top level
+      ✕ Should return top level value when not in a nested rule (1 ms)
+      ✕ context.parent() returns null when in top level
+    context.parent traversal
+      ✕ Allows traversal to parent values via "parent" (2 ms)
+      ✕ Should return null when no further parents to traverse to
+    In schema rules
+      enforce.shape
+        ✕ Should add the current value within shape rules
+        ✕ Adds name of current key to "meta"
+      enforce.loose
+        ✕ Should add the current value within shape rules (1 ms)
+        ✕ Adds name of current key to "meta"
+      enforce.isArrayOf
+        ✕ passes the current value into the context (1 ms)
+        ✕ passes the current index into the context meta field
+    real usecase example
+      ✓ Should fail if username is in the friends list (2 ms)
+      ✕ Should pass if username is not in the friends list (1 ms)
+
+  ● enforce.context › base structure › Should match snapshot
+
+    TypeError: enforce_1.default.context is not a function
+
+      198 | enforce.extend({
+      199 |   someCustomRule: () => {
+    > 200 |     const context = enforce.context();
+          |                             ^
+      201 |
+      202 |     // Just an easy way of peeking
+      203 |     // into the context from the test
+
+      at someCustomRule (src/runtime/__tests__/enforceContext.test.ts:200:29)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:42:13)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:12:19)
+
+  ● enforce.context › When in top level › Should return top level value when not in a nested rule
+
+    TypeError: enforce_1.default.context is not a function
+
+      198 | enforce.extend({
+      199 |   someCustomRule: () => {
+    > 200 |     const context = enforce.context();
+          |                             ^
+      201 |
+      202 |     // Just an easy way of peeking
+      203 |     // into the context from the test
+
+      at someCustomRule (src/runtime/__tests__/enforceContext.test.ts:200:29)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:42:13)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:25:29)
+
+  ● enforce.context › When in top level › context.parent() returns null when in top level
+
+    TypeError: enforce_1.default.context is not a function
+
+      198 | enforce.extend({
+      199 |   someCustomRule: () => {
+    > 200 |     const context = enforce.context();
+          |                             ^
+      201 |
+      202 |     // Just an easy way of peeking
+      203 |     // into the context from the test
+
+      at someCustomRule (src/runtime/__tests__/enforceContext.test.ts:200:29)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:42:13)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:31:29)
+
+  ● enforce.context › context.parent traversal › Allows traversal to parent values via "parent"
+
+    enforce/loose failed with {"name":{"first":"Elle"},"siblings":["Danny"]}
+
+       6 |   productionMessage?: string | null
+       7 | ): never {
+    >  8 |   throw new Error(__DEV__ ? devMessage : productionMessage ?? devMessage);
+         |         ^
+       9 | }
+      10 |
+
+      at Object.throwError [as default] (../shared/src/throwError.ts:8:9)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:50:21)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:43:10)
+
+  ● enforce.context › context.parent traversal › Should return null when no further parents to traverse to
+
+    enforce/loose failed with {"name":{"first":"Elle"},"siblings":["Danny"]}
+
+       6 |   productionMessage?: string | null
+       7 | ): never {
+    >  8 |   throw new Error(__DEV__ ? devMessage : productionMessage ?? devMessage);
+         |         ^
+       9 | }
+      10 |
+
+      at Object.throwError [as default] (../shared/src/throwError.ts:8:9)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:50:21)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:72:10)
+
+  ● enforce.context › In schema rules › enforce.shape › Should add the current value within shape rules
+
+    enforce/shape failed with {"name":{"first":"Elle","last":"Tester","middle":"Sophie"}}
+
+       6 |   productionMessage?: string | null
+       7 | ): never {
+    >  8 |   throw new Error(__DEV__ ? devMessage : productionMessage ?? devMessage);
+         |         ^
+       9 | }
+      10 |
+
+      at Object.throwError [as default] (../shared/src/throwError.ts:8:9)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:50:21)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:102:23)
+
+  ● enforce.context › In schema rules › enforce.shape › Adds name of current key to "meta"
+
+    enforce/shape failed with {"name":{"first":"Elle","last":"Tester","middle":"Sophie"}}
+
+       6 |   productionMessage?: string | null
+       7 | ): never {
+    >  8 |   throw new Error(__DEV__ ? devMessage : productionMessage ?? devMessage);
+         |         ^
+       9 | }
+      10 |
+
+      at Object.throwError [as default] (../shared/src/throwError.ts:8:9)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:50:21)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:134:23)
+
+  ● enforce.context › In schema rules › enforce.loose › Should add the current value within shape rules
+
+    enforce/loose failed with {"name":{"first":"Elle","last":"Tester","middle":"Sophie"}}
+
+       6 |   productionMessage?: string | null
+       7 | ): never {
+    >  8 |   throw new Error(__DEV__ ? devMessage : productionMessage ?? devMessage);
+         |         ^
+       9 | }
+      10 |
+
+      at Object.throwError [as default] (../shared/src/throwError.ts:8:9)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:50:21)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:102:23)
+
+  ● enforce.context › In schema rules › enforce.loose › Adds name of current key to "meta"
+
+    enforce/loose failed with {"name":{"first":"Elle","last":"Tester","middle":"Sophie"}}
+
+       6 |   productionMessage?: string | null
+       7 | ): never {
+    >  8 |   throw new Error(__DEV__ ? devMessage : productionMessage ?? devMessage);
+         |         ^
+       9 | }
+      10 |
+
+      at Object.throwError [as default] (../shared/src/throwError.ts:8:9)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:50:21)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:134:23)
+
+  ● enforce.context › In schema rules › enforce.isArrayOf › passes the current value into the context
+
+    enforce/isArrayOf failed with ["Elle","Tester","Sophie"]
+
+       6 |   productionMessage?: string | null
+       7 | ): never {
+    >  8 |   throw new Error(__DEV__ ? devMessage : productionMessage ?? devMessage);
+         |         ^
+       9 | }
+      10 |
+
+      at Object.throwError [as default] (../shared/src/throwError.ts:8:9)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:50:21)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:151:47)
+
+  ● enforce.context › In schema rules › enforce.isArrayOf › passes the current index into the context meta field
+
+    enforce/isArrayOf failed with ["Elle","Tester","Sophie"]
+
+       6 |   productionMessage?: string | null
+       7 | ): never {
+    >  8 |   throw new Error(__DEV__ ? devMessage : productionMessage ?? devMessage);
+         |         ^
+       9 | }
+      10 |
+
+      at Object.throwError [as default] (../shared/src/throwError.ts:8:9)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:50:21)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:161:47)
+
+  ● enforce.context › real usecase example › Should pass if username is not in the friends list
+
+    enforce/shape failed with {"username":"johndoe","friends":["Mike","Jim"]}
+
+       6 |   productionMessage?: string | null
+       7 | ): never {
+    >  8 |   throw new Error(__DEV__ ? devMessage : productionMessage ?? devMessage);
+         |         ^
+       9 | }
+      10 |
+
+      at Object.throwError [as default] (../shared/src/throwError.ts:8:9)
+      at Proxy.ruleCall (src/runtime/enforceEager.ts:50:21)
+      at Object.<anonymous> (src/runtime/__tests__/enforceContext.test.ts:190:10)
+
+Test Suites: 1 failed, 1 total
+Tests:       12 failed, 1 passed, 13 total
+Snapshots:   0 total
+Time:        2.405 s
+Ran all test suites matching /packages\/n4s\/src\/runtime\/__tests__\/enforceContext.test.ts/i.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+error Command failed.
+Exit code: 1
+Command: /usr/local/bin/node
+Arguments: /opt/yarn-v1.22.22/lib/cli.js jest --config /workspace/jest.config.wrapper.js packages/n4s/src/runtime/__tests__/enforceContext.test.ts --watchAll=false --coverage=false
+Directory: /workspace/repo/packages/n4s
+Output:
+
+info Visit https://yarnpkg.com/en/docs/cli/workspace for documentation about this command.
+reward=0 graded=13 found=0 failed=0 parsed=0 framework=jest exit_code=1

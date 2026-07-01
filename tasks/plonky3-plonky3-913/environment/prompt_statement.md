@@ -1,0 +1,5 @@
+I'm working on the Plonky3 repository and want to refactor the BN254 scalar field crate. Right now it relies on an external elliptic curve library under the hood to handle field arithmetic, but I'd like to replace that with a self-contained native implementation so we no longer need that external dependency. This would make the crate lighter and compatible with no-std builds.
+
+Along with this refactoring, I'd like to rename the crate and the exported field type to drop the scalar-field qualifier — other field crates in this project just use the curve name without that suffix, and I want to be consistent. The workspace manifest and all related dependency references should be updated to reflect the new names.
+
+The new implementation needs to pass a comprehensive set of correctness tests covering: standard prime field arithmetic, small integer conversions for both signed and unsigned types, serialization round-trips, two-adic field properties, and compatibility with the existing Poseidon2 hash permutation. All tests that currently exist for the old implementation should continue to pass under the new names.

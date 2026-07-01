@@ -1,0 +1,10 @@
+patching file pkg/scripts/funcs.go
+patching file pkg/scripts/os.go
+patching file pkg/scripts/os_amzn.go
+patching file pkg/scripts/os_centos.go
+patching file pkg/scripts/os_debian.go
+patching file pkg/scripts/os_flatcar.go
+patching file pkg/scripts/testdata/TestKubeadmAmazonLinux-with_cilium.golden
+patching file pkg/scripts/testdata/TestKubeadmCentOS-cilium_cluster.golden
+patching file pkg/scripts/testdata/TestKubeadmDebian-cilium_cluster.golden
+patching file pkg/scripts/testdata/TestKubeadmFlatcar-with_cilium.golden

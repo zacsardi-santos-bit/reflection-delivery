@@ -1,0 +1,399 @@
+diff --git a/.github/workflows/linux-ci-rust.yml b/.github/workflows/rust.yml
+similarity index 60%
+rename from .github/workflows/linux-ci-rust.yml
+rename to .github/workflows/rust.yml
+index d29404282..cf0b7dfe4 100644
+--- a/.github/workflows/linux-ci-rust.yml
++++ b/.github/workflows/rust.yml
+@@ -1,4 +1,4 @@
+-name: Linux CI Rust
++name: Rust CI
+ 
+ on:
+   push:
+@@ -16,7 +16,7 @@ concurrency:
+ 
+ jobs:
+   # Check formatting, clippy warnings, run tests and check code coverage.
+-  build-and-test:
++  rust-lints:
+     permissions:
+       contents: read
+       checks: write
+@@ -51,18 +51,6 @@ jobs:
+           cargo clippy -- -D warnings
+         working-directory: rust
+ 
+-      - name: Run tests
+-        run: |
+-          tools/rust-coverage
+-
+-      - name: Gather and check Rust code coverage
+-        run: |
+-          tools/check-coverage rust/coverage.stats rust/coverage.info
+-
+-      - name: Run Doc tests
+-        run: |
+-          tools/rust-test doc
+-
+   # Run Rust tests in WASM.
+   test-wasm:
+     runs-on: ubuntu-24.04
+@@ -163,3 +151,113 @@ jobs:
+           comment-author: 'github-actions[bot]'
+           edit-mode: replace
+           body-path: 'report-diff.md'
++
++  memory-profiler:
++    runs-on: ubuntu-24.04
++    if: github.event.pull_request.draft == false
++    steps:
++      - uses: actions/checkout@v4
++        with:
++          submodules: true
++
++      - name: Run sccache-cache
++        uses: mozilla-actions/sccache-action@v0.0.8
++
++      - name: Cache Rust
++        uses: Swatinem/rust-cache@v2
++        with:
++          workspaces: |
++            rust
++
++      - name: Install llvm
++        run: |
++          # to get the symbolizer for debug symbol resolution
++          sudo apt install llvm
++
++      - name: Install nightly
++        uses: dtolnay/rust-toolchain@nightly
++
++      - name: Enable debug symbols
++        run: |
++            cd rust
++            # to fix buggy leak analyzer:
++            # https://github.com/japaric/rust-san#unrealiable-leaksanitizer
++            # ensure there's a profile.dev section
++            if ! grep -qE '^[ \t]*[profile.dev]' Cargo.toml; then
++                echo >> Cargo.toml
++                echo '[profile.dev]' >> Cargo.toml
++            fi
++            # remove pre-existing opt-levels in profile.dev
++            sed -i '/^\s*\[profile.dev\]/,/^\s*\[/ {/^\s*opt-level/d}' Cargo.toml
++            # now set opt-level to 1
++            sed -i '/^\s*\[profile.dev\]/a opt-level = 1' Cargo.toml
++            cat Cargo.toml
++        
++      - name: cargo test -Zsanitizer=address
++        # only --lib --tests b/c of https://github.com/rust-lang/rust/issues/53945
++        run: |
++          cd rust
++          cargo test --lib --tests --all-features --target x86_64-unknown-linux-gnu
++        env:
++          ASAN_OPTIONS: "detect_odr_violation=0:detect_leaks=0"
++          RUSTFLAGS: "-Z sanitizer=address"
++
++      - name: cargo test -Zsanitizer=leak
++        if: always()
++        run: |
++          cd rust
++          cargo test --all-features --target x86_64-unknown-linux-gnu
++        env:
++          RUSTFLAGS: "-Z sanitizer=leak"
++
++  coverage:
++    runs-on: ubuntu-24.04
++    if: github.event.pull_request.draft == false
++
++    steps:
++      - uses: actions/checkout@v3
++      - name: Install system dependencies
++        run: |
++          tools/install-sys-dependencies-linux
++
++      - name: Run sccache-cache
++        uses: mozilla-actions/sccache-action@v0.0.8
++
++      - name: Cache Rust
++        uses: Swatinem/rust-cache@v2
++        with:
++          workspaces: |
++            rust
++
++      - name: Install Rust dependencies
++        run: |
++          tools/install-rust-dependencies dev
++        
++      - name: cargo generate-lockfile
++        if: hashFiles('Cargo.lock') == ''
++        run: |
++          cd rust
++          cargo generate-lockfile
++      
++      - name: Run tests
++        run: |
++          tools/rust-coverage
++    
++      - name: Run Doc tests
++        run: |
++          tools/rust-test doc
++      
++      - name: Record Rust version
++        run: echo "RUST=$(rustc --version)" >> "$GITHUB_ENV"
++      
++      # TODO: Uncomment this when we have a codecov token
++      # - name: Upload to codecov.io
++      #   uses: codecov/codecov-action@v5
++      #   with:
++      #     fail_ci_if_error: true
++      #     token: ${{ secrets.CODECOV_TOKEN }}
++      #     env_vars: OS,RUST
++
++      - name: Gather and check Rust code coverage
++        run: |
++          tools/check-coverage rust/coverage.stats rust/lcov.info
+diff --git a/.gitignore b/.gitignore
+index e7e97f128..327d4812e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -57,6 +57,7 @@ emsdk/
+ wasm-build/
+ 
+ # Code coverage files
++lcov.info
+ coverage.info
+ coverage/
+ swift/test_output/
+diff --git a/android/gradlew b/android/gradlew
+index aeb74cbb4..d0054d28a 100755
+--- a/android/gradlew
++++ b/android/gradlew
+@@ -104,7 +104,7 @@ cygwin=false
+ msys=false
+ darwin=false
+ nonstop=false
+-case "$( uname )" in                #(
++case "$( uname -s )" in             #(
+   CYGWIN* )         cygwin=true  ;; #(
+   Darwin* )         darwin=true  ;; #(
+   MSYS* | MINGW* )  msys=true    ;; #(
+diff --git a/bootstrap.sh b/bootstrap.sh
+index 1cc2636b9..10e5812aa 100755
+--- a/bootstrap.sh
++++ b/bootstrap.sh
+@@ -15,7 +15,7 @@ if isHelp; then
+ fi
+ 
+ echo "#### Installing system dependencies ... ####"
+-if [[ $(uname) == "Darwin" ]]; then
++if [[ $(uname -s) == "Darwin" ]]; then
+   tools/install-sys-dependencies-mac
+ else
+   tools/install-sys-dependencies-linux
+diff --git a/kotlin/gradlew b/kotlin/gradlew
+index f5feea6d6..46695364f 100755
+--- a/kotlin/gradlew
++++ b/kotlin/gradlew
+@@ -108,7 +108,7 @@ cygwin=false
+ msys=false
+ darwin=false
+ nonstop=false
+-case "$( uname )" in                #(
++case "$( uname -s )" in             #(
+   CYGWIN* )         cygwin=true  ;; #(
+   Darwin* )         darwin=true  ;; #(
+   MSYS* | MINGW* )  msys=true    ;; #(
+diff --git a/rust/wallet_core_rs/src/ffi/utils/uuid_ffi.rs b/rust/wallet_core_rs/src/ffi/utils/uuid_ffi.rs
+index 159a4a079..3fb5eddce 100644
+--- a/rust/wallet_core_rs/src/ffi/utils/uuid_ffi.rs
++++ b/rust/wallet_core_rs/src/ffi/utils/uuid_ffi.rs
+@@ -10,7 +10,7 @@ use std::ffi::{c_char, CString};
+ /// This uses the [`getrandom`] crate to utilise the operating system's RNG
+ /// as the source of random numbers.
+ #[no_mangle]
+-pub unsafe extern "C" fn tw_uuid_random() -> *const c_char {
++pub unsafe extern "C" fn tw_uuid_random() -> *mut c_char {
+     let res = uuid::Uuid::new_v4();
+     CString::new(res.to_string()).unwrap().into_raw()
+ }
+diff --git a/samples/android/gradlew b/samples/android/gradlew
+index cccdd3d51..fd461ae01 100755
+--- a/samples/android/gradlew
++++ b/samples/android/gradlew
+@@ -49,7 +49,7 @@ cygwin=false
+ msys=false
+ darwin=false
+ nonstop=false
+-case "`uname`" in
++case "$( uname -s )" in
+   CYGWIN* )
+     cygwin=true
+     ;;
+@@ -165,7 +165,7 @@ APP_ARGS=$(save "$@")
+ eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS "\"-Dorg.gradle.appname=$APP_BASE_NAME\"" -classpath "\"$CLASSPATH\"" org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"
+ 
+ # by default we should be in the correct project dir, but when run from Finder on Mac, the cwd is wrong
+-if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
++if [ "$(uname -s)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
+   cd "$(dirname "$0")"
+ fi
+ 
+diff --git a/samples/kmp/gradlew b/samples/kmp/gradlew
+index f5feea6d6..46695364f 100755
+--- a/samples/kmp/gradlew
++++ b/samples/kmp/gradlew
+@@ -108,7 +108,7 @@ cygwin=false
+ msys=false
+ darwin=false
+ nonstop=false
+-case "$( uname )" in                #(
++case "$( uname -s )" in             #(
+   CYGWIN* )         cygwin=true  ;; #(
+   Darwin* )         darwin=true  ;; #(
+   MSYS* | MINGW* )  msys=true    ;; #(
+diff --git a/tools/android-build b/tools/android-build
+index 8c4b1344a..e20312e43 100755
+--- a/tools/android-build
++++ b/tools/android-build
+@@ -7,7 +7,7 @@ set -e
+ source $(dirname $0)/library
+ version=$(wc_read_version $1)
+ 
+-if [[ `uname` == "Darwin" ]]; then
++if [[ $(uname -s) == "Darwin" ]]; then
+     export BOOST_ROOT=$(brew --prefix boost)
+ fi
+ 
+diff --git a/tools/android-release b/tools/android-release
+index 54b1a97f7..f69b77a88 100755
+--- a/tools/android-release
++++ b/tools/android-release
+@@ -8,7 +8,7 @@ set -e
+ source $(dirname $0)/library
+ version=$(wc_read_version  $1)
+ 
+-if [[ `uname` == "Darwin" ]]; then
++if [[ $(uname -s) == "Darwin" ]]; then
+     export BOOST_ROOT=$(brew --prefix boost)
+ fi
+ 
+diff --git a/tools/android-test b/tools/android-test
+index 7185d8607..fd6a4a49a 100755
+--- a/tools/android-test
++++ b/tools/android-test
+@@ -11,7 +11,7 @@ ANDROID_CMDTOOLS=$(find_android_cmdline_tools)
+ AVD_NAME="integration-tests"
+ PORT=5556
+ 
+-if [[ `uname` == "Darwin" ]]; then
++if [[ $(uname -s) == "Darwin" ]]; then
+     export BOOST_ROOT=$(brew --prefix boost)
+ fi
+ 
+diff --git a/tools/coverage b/tools/coverage
+index 88b246fec..9d8d952b6 100755
+--- a/tools/coverage
++++ b/tools/coverage
+@@ -28,7 +28,7 @@ EOF
+     sudo chmod 755 /tmp/llvm-gcov.sh
+ }
+ 
+-if [[ `uname` == "Darwin" ]]; then
++if [[ $(uname -s) == "Darwin" ]]; then
+     echo "gcov is llvm-cov on macOS"
+     lcov --capture --directory . --output-file coverage.info
+ else
+diff --git a/tools/install-dependencies b/tools/install-dependencies
+index acdcf8e56..e59287ba4 100755
+--- a/tools/install-dependencies
++++ b/tools/install-dependencies
+@@ -68,7 +68,7 @@ function build_protobuf() {
+     $CMAKE --install build --prefix $PREFIX
+     $CMAKE --build build --target clean
+ 
+-    if [[ -x "$(command -v swift)" && $(uname) == "Darwin" ]]; then
++    if [[ -x "$(command -v swift)" && $(uname -s) == "Darwin" ]]; then
+         build_swift_plugin
+     fi
+ }
+diff --git a/tools/install-rust-dependencies b/tools/install-rust-dependencies
+index 17173643a..5249f333d 100755
+--- a/tools/install-rust-dependencies
++++ b/tools/install-rust-dependencies
+@@ -10,7 +10,7 @@ rustup toolchain install $NIGHTLY-x86_64-apple-darwin --force-non-host
+ rustup toolchain install $NIGHTLY-aarch64-apple-darwin --force-non-host
+ rustup component add rust-src --toolchain $NIGHTLY-aarch64-apple-darwin
+ rustup component add rust-src --toolchain $NIGHTLY-x86_64-apple-darwin
+-if [[ `uname` == "Linux" ]]; then
++if [[ $(uname -s) == "Linux" ]]; then
+   rustup component add rust-src --toolchain $NIGHTLY-$(uname -m)-unknown-linux-gnu
+ fi
+ 
+diff --git a/tools/kotlin-build b/tools/kotlin-build
+index 4681910d3..1fb725438 100755
+--- a/tools/kotlin-build
++++ b/tools/kotlin-build
+@@ -2,7 +2,7 @@
+ 
+ set -e
+ 
+-if [[ `uname` == "Darwin" ]]; then
++if [[ $(uname -s) == "Darwin" ]]; then
+     export BOOST_ROOT=$(brew --prefix boost)
+ fi
+ 
+diff --git a/tools/kotlin-test b/tools/kotlin-test
+index 2c97cef3d..1efa9d64d 100755
+--- a/tools/kotlin-test
++++ b/tools/kotlin-test
+@@ -2,7 +2,7 @@
+ 
+ set -e
+ 
+-if [[ `uname` == "Darwin" ]]; then
++if [[ $(uname -s) == "Darwin" ]]; then
+     export BOOST_ROOT=$(brew --prefix boost)
+ fi
+ 
+diff --git a/tools/rust-bindgen b/tools/rust-bindgen
+index 2ed445233..1586f8fc3 100755
+--- a/tools/rust-bindgen
++++ b/tools/rust-bindgen
+@@ -55,7 +55,7 @@ if isTargetSpecified "android"; then
+   cargo build -Z build-std=std,panic_abort --target aarch64-linux-android --target armv7-linux-androideabi --target x86_64-linux-android --target i686-linux-android --release --lib
+ fi
+ 
+-if isTargetSpecified "ios" && [[ $(uname) == "Darwin" ]]; then
++if isTargetSpecified "ios" && [[ $(uname -s) == "Darwin" ]]; then
+   echo "Generating iOS targets"
+   cargo build -Z build-std=std,panic_abort --target aarch64-apple-ios --target aarch64-apple-ios-sim --target x86_64-apple-ios --target aarch64-apple-darwin --target x86_64-apple-darwin --target aarch64-apple-ios-macabi --target x86_64-apple-ios-macabi --release --lib &
+   wait
+@@ -75,7 +75,7 @@ cd -
+ echo "Generating C++ files..."
+ pushd codegen-v2 && cargo run -- cpp && popd
+ 
+-if isTargetSpecified "ios" && [[ $(uname) == "Darwin" ]]; then
++if isTargetSpecified "ios" && [[ $(uname -s) == "Darwin" ]]; then
+ cd rust
+ cat > $TARGET_XCFRAMEWORK_NAME/Info.plist << EOF
+ <?xml version="1.0" encoding="UTF-8"?>
+diff --git a/tools/rust-coverage b/tools/rust-coverage
+index 835b13997..e27775e76 100755
+--- a/tools/rust-coverage
++++ b/tools/rust-coverage
+@@ -19,11 +19,11 @@ pushd rust
+ # Generate HTML report if requested
+ if [[ "$1" == "html" ]]; then
+     cargo llvm-cov test --workspace --exclude wallet_core_bin --html
+-    cargo llvm-cov report --lcov --output-path coverage.info
++    cargo llvm-cov report --lcov --output-path lcov.info
+ else
+-    cargo llvm-cov test --workspace --exclude wallet_core_bin --lcov --output-path coverage.info
++    cargo llvm-cov test --workspace --exclude wallet_core_bin --lcov --output-path lcov.info
+ fi
+ 
+ popd
+ 
+-tools/check-coverage rust/coverage.stats rust/coverage.info
++tools/check-coverage rust/coverage.stats rust/lcov.info

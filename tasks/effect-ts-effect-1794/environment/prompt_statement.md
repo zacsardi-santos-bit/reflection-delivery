@@ -1,0 +1,5 @@
+I'm working with a schema library that handles encoding and decoding typed values to and from wire formats. It already has support for Either values when the wire format uses a tagged union, but I need something different: a combinator that handles the case where the wire format is an untagged union of two types, and I want to decode that into an Either.
+
+For example, I might have an API that returns a field that can be either a date string or a numeric string, with no discriminating tag. I'd like to express this as a schema that tries to interpret the input as the right case first, and if that fails, tries the left case — giving me a proper Either value as the result. Encoding should work in reverse: a Left value gets encoded using the left schema, and a Right value gets encoded using the right schema.
+
+I need this to support roundtripping (encoding and then decoding gives back the original Either value), to correctly prioritize the right schema when both schemas could match the same input, and to give clear error messages when neither schema can handle the input or when encoding fails.

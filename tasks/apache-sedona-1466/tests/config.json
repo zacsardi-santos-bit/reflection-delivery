@@ -1,0 +1,33 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl common -Dtest=ConstructorsTest -DfailIfNoTests=false",
+  "test_files": [
+    "common/src/test/java/org/apache/sedona/common/ConstructorsTest.java",
+    "flink/src/test/java/org/apache/sedona/flink/ConstructorTest.java",
+    "python/tests/sql/test_constructor_test.py",
+    "python/tests/sql/test_dataframe_api.py",
+    "snowflake-tester/src/test/java/org/apache/sedona/snowflake/snowsql/TestConstructors.java",
+    "spark/common/src/test/scala/org/apache/sedona/sql/constructorTestScala.scala",
+    "spark/common/src/test/scala/org/apache/sedona/sql/dataFrameAPITestScala.scala"
+  ],
+  "num_test_files": 7,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "org.apache.sedona:sedona-common::test_1",
+    "org.apache.sedona:sedona-common::test_2",
+    "org.apache.sedona:sedona-common::test_3",
+    "org.apache.sedona:sedona-common::test_4",
+    "org.apache.sedona:sedona-common::test_5",
+    "org.apache.sedona:sedona-common::test_6",
+    "org.apache.sedona:sedona-common::test_7",
+    "org.apache.sedona:sedona-common::test_8",
+    "org.apache.sedona:sedona-common::test_9",
+    "org.apache.sedona:sedona-common::test_10",
+    "org.apache.sedona:sedona-common::test_11",
+    "org.apache.sedona:sedona-common::test_12",
+    "org.apache.sedona:sedona-common::test_13",
+    "org.apache.sedona:sedona-common::test_14",
+    "org.apache.sedona:sedona-common::test_15"
+  ],
+  "PASS_TO_PASS": []
+}

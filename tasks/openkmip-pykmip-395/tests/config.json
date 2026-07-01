@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/kmip/tests/unit/core/messages/contents/test_authentication.py -v",
+  "test_files": [
+    "kmip/tests/unit/core/messages/contents/test_authentication.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_equal_on_equal",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_equal_on_not_equal_credentials",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_init",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_init_with_args",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_invalid_credentials",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_invalid_credentials_list",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_not_equal_on_equal",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_not_equal_on_not_equal_credentials",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_read",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_read_missing_credentials",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_repr",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_str",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_write",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_write_missing_credentials"
+  ],
+  "PASS_TO_PASS": [
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_equal_on_type_mismatch",
+    "kmip.tests.unit.core.messages.contents.test_authentication.TestAuthentication::test_not_equal_on_type_mismatch"
+  ]
+}

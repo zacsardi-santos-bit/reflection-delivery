@@ -1,0 +1,317 @@
+patching file tests/cli/actions/remoteAction.test.ts
+patching file tests/cli/cliPrint.test.ts
+patching file tests/config/configSchema.test.ts
+patching file tests/core/file/fileCollect.test.ts
+patching file tests/core/file/fileProcess.test.ts
+patching file tests/core/metrics/aggregateMetrics.test.ts
+patching file tests/core/metrics/calculateAllFileMetrics.test.ts
+patching file tests/core/metrics/calculateIndividualFileMetrics.test.ts
+patching file tests/core/metrics/calculateMetrics.test.ts
+patching file tests/core/metrics/calculateOutputMetrics.test.ts
+patching file tests/core/packager.test.ts
+patching file tests/core/packager/copyToClipboardIfEnabled.test.ts
+patching file tests/core/security/runSecurityCheckIfEnabled.test.ts
+patching file tests/core/security/securityCheck.test.ts
+patching file tests/core/security/validateFileSafety.test.ts
+patching file tests/core/security/workers/securityCheckWorker.test.ts
+patching file tests/integration-tests/packager.test.ts
+patching file tests/shared/processConcurrency.test.ts
+[?25l
+ RUN  v3.0.2 /workspace/repo
+
+ ❯ tests/core/security/workers/securityCheckWorker.test.ts (0 test)
+ ❯ tests/core/metrics/calculateOutputMetrics.test.ts (0 test)
+ ✓ tests/config/configSchema.test.ts (14 tests) 9ms
+ ❯ tests/shared/processConcurrency.test.ts (6 tests | 6 failed) 11ms
+   × processConcurrency > getProcessConcurrency > should use os.availableParallelism when available 8ms
+     → expected 3 to be 4 // Object.is equality
+   × processConcurrency > getWorkerThreadCount > should return minimum 1 thread 1ms
+     → getWorkerThreadCount is not a function
+   × processConcurrency > getWorkerThreadCount > should limit max threads based on number of tasks 1ms
+     → getWorkerThreadCount is not a function
+   × processConcurrency > getWorkerThreadCount > should scale max threads based on task count 0ms
+     → getWorkerThreadCount is not a function
+   × processConcurrency > getWorkerThreadCount > should handle large numbers of tasks 0ms
+     → getWorkerThreadCount is not a function
+   × processConcurrency > getWorkerThreadCount > should handle zero tasks 0ms
+     → getWorkerThreadCount is not a function
+ ✓ tests/core/packager/copyToClipboardIfEnabled.test.ts (2 tests) 4ms
+ ❯ tests/core/metrics/calculateAllFileMetrics.test.ts (0 test)
+ ❯ tests/core/file/fileCollect.test.ts (0 test)
+ ❯ tests/core/file/fileProcess.test.ts (0 test)
+ ✓ tests/cli/cliPrint.test.ts (8 tests) 26ms
+ ❯ tests/core/security/securityCheck.test.ts (0 test)
+ ❯ tests/core/security/validateFileSafety.test.ts (1 test | 1 failed) 6ms
+   × validateFileSafety > should validate file safety and return safe files and paths 6ms
+     → deps.runSecurityCheckIfEnabled is not a function
+ ❯ tests/core/metrics/calculateMetrics.test.ts (1 test | 1 failed) 12ms
+   × calculateMetrics > should calculate metrics and return the result 11ms
+     → expected "calculateAllFileMetrics" to be called with arguments: [ [ …(2) ], 'o200k_base', …(1) ][90m
+
+Received: 
+
+[1m  1st calculateAllFileMetrics call:
+
+[22m[2m  [[22m
+[2m    [[22m
+[2m      {[22m
+[2m        "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",[22m
+[2m        "path": "file1.txt",[22m
+[2m      },[22m
+[2m      {[22m
+[2m        "content": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",[22m
+[2m        "path": "file2.txt",[22m
+[2m      },[22m
+[2m    ],[22m
+[32m-   "o200k_base",[90m
+[31m+   {[90m
+[31m+     "countTokens": [Function spy],[90m
+[31m+     "free": [Function spy],[90m
+[31m+   },[90m
+[2m    [Function spy],[22m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m1[22m
+[39m
+ ❯ tests/integration-tests/packager.test.ts (0 test)
+ ❯ tests/core/packager.test.ts (1 test | 1 failed) 11ms
+   × packager > pack should orchestrate packing files and generating output 10ms
+     → expected "spy" to be called with arguments: [ …(3) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  [[22m
+[2m    [[22m
+[2m      "file1.txt",[22m
+[2m      "dir1/file2.txt",[22m
+[2m    ],[22m
+[2m    "root",[22m
+[32m-   [Function spy],[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m1[22m
+[39m
+✔ Repository cloned successfully!
+⠙ Calculating metrics... (1/1) README.md
+[2K[1A[2K[G✔ Packing completed successfully!
+ ✓ tests/cli/actions/remoteAction.test.ts (10 tests) 314ms
+   ✓ remoteAction functions > runRemoteAction > should clone the repository 303ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/integration-tests/packager.test.ts [ tests/integration-tests/packager.test.ts ]
+Error: Failed to load url ../../src/core/file/workers/fileCollectWorker.js (resolved id: ../../src/core/file/workers/fileCollectWorker.js) in /workspace/repo/tests/integration-tests/packager.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-DyBnyoVI.js:51857:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL  tests/core/metrics/calculateAllFileMetrics.test.ts [ tests/core/metrics/calculateAllFileMetrics.test.ts ]
+Error: Failed to load url ../../../src/core/metrics/workers/fileMetricsWorker.js (resolved id: ../../../src/core/metrics/workers/fileMetricsWorker.js) in /workspace/repo/tests/core/metrics/calculateAllFileMetrics.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-DyBnyoVI.js:51857:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL  tests/core/metrics/calculateOutputMetrics.test.ts [ tests/core/metrics/calculateOutputMetrics.test.ts ]
+Error: Failed to load url ../../../src/core/metrics/calculateOutputMetrics.js (resolved id: ../../../src/core/metrics/calculateOutputMetrics.js) in /workspace/repo/tests/core/metrics/calculateOutputMetrics.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-DyBnyoVI.js:51857:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL  tests/core/file/fileCollect.test.ts [ tests/core/file/fileCollect.test.ts ]
+Error: Failed to load url ../../../src/core/file/workers/fileCollectWorker.js (resolved id: ../../../src/core/file/workers/fileCollectWorker.js) in /workspace/repo/tests/core/file/fileCollect.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-DyBnyoVI.js:51857:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL  tests/core/file/fileProcess.test.ts [ tests/core/file/fileProcess.test.ts ]
+Error: Failed to load url ../../../src/core/file/workers/fileProcessWorker.js (resolved id: ../../../src/core/file/workers/fileProcessWorker.js) in /workspace/repo/tests/core/file/fileProcess.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-DyBnyoVI.js:51857:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+ FAIL  tests/core/security/securityCheck.test.ts [ tests/core/security/securityCheck.test.ts ]
+Error: Failed to load url ../../../src/core/security/workers/securityCheckWorker.js (resolved id: ../../../src/core/security/workers/securityCheckWorker.js) in /workspace/repo/tests/core/security/securityCheck.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-DyBnyoVI.js:51857:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+
+ FAIL  tests/core/security/workers/securityCheckWorker.test.ts [ tests/core/security/workers/securityCheckWorker.test.ts ]
+Error: Failed to load url ../../../../src/core/security/workers/securityCheckWorker.js (resolved id: ../../../../src/core/security/workers/securityCheckWorker.js) in /workspace/repo/tests/core/security/workers/securityCheckWorker.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/dep-DyBnyoVI.js:51857:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/core/packager.test.ts > packager > pack should orchestrate packing files and generating output
+AssertionError: expected "spy" to be called with arguments: [ …(3) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  [[22m
+[2m    [[22m
+[2m      "file1.txt",[22m
+[2m      "dir1/file2.txt",[22m
+[2m    ],[22m
+[2m    "root",[22m
+[32m-   [Function spy],[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m1[22m
+[39m
+ ❯ tests/core/packager.test.ts:75:35
+     73| 
+     74|     expect(mockDeps.searchFiles).toHaveBeenCalledWith('root', mockConf…
+     75|     expect(mockDeps.collectFiles).toHaveBeenCalledWith(mockFilePaths, …
+       |                                   ^
+     76|     expect(mockDeps.validateFileSafety).toHaveBeenCalled();
+     77|     expect(mockDeps.processFiles).toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+
+ FAIL  tests/shared/processConcurrency.test.ts > processConcurrency > getProcessConcurrency > should use os.availableParallelism when available
+AssertionError: expected 3 to be 4 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 4[39m
+[31m+ 3[39m
+
+ ❯ tests/shared/processConcurrency.test.ts:15:22
+     13|       const result = getProcessConcurrency();
+     14| 
+     15|       expect(result).toBe(4);
+       |                      ^
+     16|       expect(mockAvailableParallelism).toHaveBeenCalled();
+     17|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+
+ FAIL  tests/shared/processConcurrency.test.ts > processConcurrency > getWorkerThreadCount > should return minimum 1 thread
+TypeError: getWorkerThreadCount is not a function
+ ❯ tests/shared/processConcurrency.test.ts:26:42
+     24| 
+     25|     it('should return minimum 1 thread', () => {
+     26|       const { minThreads, maxThreads } = getWorkerThreadCount(1);
+       |                                          ^
+     27| 
+     28|       expect(minThreads).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+
+ FAIL  tests/shared/processConcurrency.test.ts > processConcurrency > getWorkerThreadCount > should limit max threads based on number of tasks
+TypeError: getWorkerThreadCount is not a function
+ ❯ tests/shared/processConcurrency.test.ts:33:42
+     31| 
+     32|     it('should limit max threads based on number of tasks', () => {
+     33|       const { minThreads, maxThreads } = getWorkerThreadCount(1000);
+       |                                          ^
+     34| 
+     35|       expect(minThreads).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/16]⎯
+
+ FAIL  tests/shared/processConcurrency.test.ts > processConcurrency > getWorkerThreadCount > should scale max threads based on task count
+TypeError: getWorkerThreadCount is not a function
+ ❯ tests/shared/processConcurrency.test.ts:40:43
+     38| 
+     39|     it('should scale max threads based on task count', () => {
+     40|       const { maxThreads: maxThreads1 } = getWorkerThreadCount(200);
+       |                                           ^
+     41|       const { maxThreads: maxThreads2 } = getWorkerThreadCount(400);
+     42| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/16]⎯
+
+ FAIL  tests/shared/processConcurrency.test.ts > processConcurrency > getWorkerThreadCount > should handle large numbers of tasks
+TypeError: getWorkerThreadCount is not a function
+ ❯ tests/shared/processConcurrency.test.ts:47:42
+     45| 
+     46|     it('should handle large numbers of tasks', () => {
+     47|       const { minThreads, maxThreads } = getWorkerThreadCount(10000);
+       |                                          ^
+     48| 
+     49|       expect(minThreads).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/16]⎯
+
+ FAIL  tests/shared/processConcurrency.test.ts > processConcurrency > getWorkerThreadCount > should handle zero tasks
+TypeError: getWorkerThreadCount is not a function
+ ❯ tests/shared/processConcurrency.test.ts:54:42
+     52| 
+     53|     it('should handle zero tasks', () => {
+     54|       const { minThreads, maxThreads } = getWorkerThreadCount(0);
+       |                                          ^
+     55| 
+     56|       expect(minThreads).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/16]⎯
+
+ FAIL  tests/core/metrics/calculateMetrics.test.ts > calculateMetrics > should calculate metrics and return the result
+AssertionError: expected "calculateAllFileMetrics" to be called with arguments: [ [ …(2) ], 'o200k_base', …(1) ][90m
+
+Received: 
+
+[1m  1st calculateAllFileMetrics call:
+
+[22m[2m  [[22m
+[2m    [[22m
+[2m      {[22m
+[2m        "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",[22m
+[2m        "path": "file1.txt",[22m
+[2m      },[22m
+[2m      {[22m
+[2m        "content": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",[22m
+[2m        "path": "file2.txt",[22m
+[2m      },[22m
+[2m    ],[22m
+[32m-   "o200k_base",[90m
+[31m+   {[90m
+[31m+     "countTokens": [Function spy],[90m
+[31m+     "free": [Function spy],[90m
+[31m+   },[90m
+[2m    [Function spy],[22m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m1[22m
+[39m
+ ❯ tests/core/metrics/calculateMetrics.test.ts:56:37
+     54| 
+     55|     expect(progressCallback).toHaveBeenCalledWith('Calculating metrics…
+     56|     expect(calculateAllFileMetrics).toHaveBeenCalledWith(processedFile…
+       |                                     ^
+     57|     expect(result).toEqual(aggregatedResult);
+     58|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/16]⎯
+
+ FAIL  tests/core/security/validateFileSafety.test.ts > validateFileSafety > should validate file safety and return safe files and paths
+TypeError: deps.runSecurityCheckIfEnabled is not a function
+ ❯ Module.validateFileSafety src/core/security/validateFileSafety.ts:18:45
+     16|   },
+     17| ) => {
+     18|   const suspiciousFilesResults = await deps.runSecurityCheckIfEnabled(…
+       |                                             ^
+     19|   const safeRawFiles = deps.filterOutUntrustedFiles(rawFiles, suspicio…
+     20|   const safeFilePaths = safeRawFiles.map((file) => file.path);
+ ❯ tests/core/security/validateFileSafety.test.ts:28:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/16]⎯
+
+
+ Test Files  11 failed | 4 passed (15)
+      Tests  9 failed | 34 passed (43)
+   Start at  15:16:16
+   Duration  1.69s (transform 1.86s, setup 0ms, collect 3.30s, tests 393ms, environment 3ms, prepare 2.10s)
+
+[?25hreward=0 graded=72 found=0 failed=0 parsed=0 framework=vitest exit_code=1

@@ -1,0 +1,23 @@
+{
+ "task": "particle-iot-particle-cli-710",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'this.id = result.logic_function.id; this.version = result.logic_function.version;' and 'showBusySpinnerUntilResolved(...)' + 'Logic Function' capitalization; test asserts .reply(200, { logic_function: { id: '1234', version: 1 } })"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

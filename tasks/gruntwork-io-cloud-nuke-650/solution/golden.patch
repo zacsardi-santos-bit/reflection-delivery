@@ -1,0 +1,487 @@
+diff --git a/README.md b/README.md
+index c07d41f..96b4161 100644
+--- a/README.md
++++ b/README.md
+@@ -68,6 +68,9 @@ Cloud-nuke suppports 🔎 inspecting and 🔥💀 deleting the following AWS res
+ | Lambda                  | Functions                                                |
+ | SQS                     | Queues                                                   |
+ | S3                      | Buckets                                                  |
++| S3                      | Access Points                                            |
++| S3                      | Object Lambda Access Points                              |
++| S3                      | Multi Region Access Points                               |
+ | VPC                     | Default VPCs                                             |
+ | VPC                     | Default rules in the un-deletable default security group |
+ | VPC                     | NAT Gateways                                             |
+@@ -553,6 +556,9 @@ of the file that are supported are listed here.
+ | rds-parameter-group         | RdsParameterGroup            | ✅ (Group Name)                        | ❌                                   | ❌    |
+ | rds-subnet-group            | DBSubnetGroups               | ✅ (DB Subnet Group Name)              | ❌                                   | ❌    |
+ | s3                          | s3                           | ✅ (Bucket Name)                       | ✅ (Creation Time)                   | ✅    |
++| s3-ap                       | s3AccessPoint                | ✅ (Access point Name)                 | ❌                                   | ❌    |
++| s3-olap                     | S3ObjectLambdaAccessPoint    | ✅ (Object Lambda Access point Name)   | ❌                                   | ❌    |
++| s3-mrap                     | S3MultiRegionAccessPoint     | ✅ (Multi region Access point Name)    | ✅ (Creation Time)                   | ❌    |
+ | ses-configuration-set       | SesConfigurationset          | ✅ (Configuration set name)            | ❌                                   | ❌    |
+ | ses-email-template          | SesEmailTemplates            | ✅ (Template Name)                     | ✅ (Creation Time)                   | ❌    |
+ | ses-identity                | SesIdentity                  | ✅ (Identity -Mail/Domain)             | ❌                                   | ❌    |
+diff --git a/aws/resource_registry.go b/aws/resource_registry.go
+index 6434183..80351c2 100644
+--- a/aws/resource_registry.go
++++ b/aws/resource_registry.go
+@@ -103,6 +103,9 @@ func getRegisteredRegionalResources() []AwsResource {
+ 		&resources.RdsParameterGroup{},
+ 		&resources.RedshiftClusters{},
+ 		&resources.S3Buckets{},
++		&resources.S3AccessPoint{},
++		&resources.S3ObjectLambdaAccessPoint{},
++		&resources.S3MultiRegionAccessPoint{},
+ 		&resources.SageMakerNotebookInstances{},
+ 		&resources.SecretsManagerSecrets{},
+ 		&resources.SecurityHub{},
+diff --git a/aws/resources/s3_access_point.go b/aws/resources/s3_access_point.go
+new file mode 100644
+index 0000000..f03cfdb
+--- /dev/null
++++ b/aws/resources/s3_access_point.go
+@@ -0,0 +1,77 @@
++package resources
++
++import (
++	"context"
++	"fmt"
++
++	"github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/service/s3control"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
++	"github.com/gruntwork-io/cloud-nuke/report"
++	"github.com/gruntwork-io/cloud-nuke/util"
++	"github.com/gruntwork-io/go-commons/errors"
++)
++
++func (ap *S3AccessPoint) getAll(c context.Context, configObj config.Config) ([]*string, error) {
++	accountID, ok := c.Value(util.AccountIdKey).(string)
++	if !ok {
++		logging.Errorf("unable to read the account-id from context")
++		return nil, errors.WithStackTrace(fmt.Errorf("unable to lookup the account id"))
++	}
++
++	// set the account id in object as this is mandatory to nuke an access point
++	ap.AccountID = aws.String(accountID)
++
++	var accessPoints []*string
++	err := ap.Client.ListAccessPointsPages(&s3control.ListAccessPointsInput{
++		AccountId: ap.AccountID,
++	}, func(lapo *s3control.ListAccessPointsOutput, lastPage bool) bool {
++		for _, accessPoint := range lapo.AccessPointList {
++			if configObj.S3AccessPoint.ShouldInclude(config.ResourceValue{
++				Name: accessPoint.Name,
++			}) {
++				accessPoints = append(accessPoints, accessPoint.Name)
++			}
++		}
++		return !lastPage
++	})
++	return accessPoints, errors.WithStackTrace(err)
++}
++
++func (ap *S3AccessPoint) nukeAll(identifiers []*string) error {
++	if len(identifiers) == 0 {
++		logging.Debugf("No Access point(s) to nuke in region %s", ap.Region)
++		return nil
++	}
++
++	logging.Debugf("Deleting all Access points in region %s", ap.Region)
++	var deleted []*string
++
++	for _, id := range identifiers {
++
++		_, err := ap.Client.DeleteAccessPoint(&s3control.DeleteAccessPointInput{
++			AccountId: ap.AccountID,
++			Name:      id,
++		})
++
++		// Record status of this resource
++		e := report.Entry{
++			Identifier:   aws.StringValue(id),
++			ResourceType: "S3 Access point",
++			Error:        err,
++		}
++		report.Record(e)
++
++		if err != nil {
++			logging.Debugf("[Failed] %s", err)
++		} else {
++			deleted = append(deleted, id)
++			logging.Debugf("Deleted S3 access point: %s", aws.StringValue(id))
++		}
++	}
++
++	logging.Debugf("[OK] %d S3 Access point(s) deleted in %s", len(deleted), ap.Region)
++
++	return nil
++}
+diff --git a/aws/resources/s3_access_point_types.go b/aws/resources/s3_access_point_types.go
+new file mode 100644
+index 0000000..758b68d
+--- /dev/null
++++ b/aws/resources/s3_access_point_types.go
+@@ -0,0 +1,54 @@
++package resources
++
++import (
++	"context"
++
++	awsgo "github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/aws/session"
++	"github.com/aws/aws-sdk-go/service/s3control"
++	"github.com/aws/aws-sdk-go/service/s3control/s3controliface"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/go-commons/errors"
++)
++
++type S3AccessPoint struct {
++	BaseAwsResource
++	Client       s3controliface.S3ControlAPI
++	Region       string
++	AccessPoints []string
++	AccountID    *string
++}
++
++func (ap *S3AccessPoint) Init(session *session.Session) {
++	ap.Client = s3control.New(session)
++}
++
++func (ap *S3AccessPoint) ResourceName() string {
++	return "s3-ap"
++}
++
++func (ap *S3AccessPoint) ResourceIdentifiers() []string {
++	return ap.AccessPoints
++}
++
++func (ap *S3AccessPoint) MaxBatchSize() int {
++	return 5
++}
++
++func (ap *S3AccessPoint) GetAndSetIdentifiers(c context.Context, configObj config.Config) ([]string, error) {
++	identifiers, err := ap.getAll(c, configObj)
++	if err != nil {
++		return nil, err
++	}
++
++	ap.AccessPoints = awsgo.StringValueSlice(identifiers)
++	return ap.AccessPoints, nil
++}
++
++func (ap *S3AccessPoint) Nuke(identifiers []string) error {
++	if err := ap.nukeAll(awsgo.StringSlice(identifiers)); err != nil {
++		return errors.WithStackTrace(err)
++	}
++
++	return nil
++}
+diff --git a/aws/resources/s3_multi_region_access_point.go b/aws/resources/s3_multi_region_access_point.go
+new file mode 100644
+index 0000000..272b5a3
+--- /dev/null
++++ b/aws/resources/s3_multi_region_access_point.go
+@@ -0,0 +1,83 @@
++package resources
++
++import (
++	"context"
++	"fmt"
++
++	"github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/service/s3control"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
++	"github.com/gruntwork-io/cloud-nuke/report"
++	"github.com/gruntwork-io/cloud-nuke/util"
++	"github.com/gruntwork-io/go-commons/errors"
++)
++
++func (ap *S3MultiRegionAccessPoint) getAll(c context.Context, configObj config.Config) ([]*string, error) {
++	accountID, ok := c.Value(util.AccountIdKey).(string)
++	if !ok {
++		logging.Errorf("unable to read the account-id from context")
++		return nil, errors.WithStackTrace(fmt.Errorf("unable to lookup the account id"))
++	}
++
++	// set the account id in object as this is mandatory to nuke an access point
++	ap.AccountID = aws.String(accountID)
++
++	var accessPoints []*string
++	err := ap.Client.ListMultiRegionAccessPointsPages(&s3control.ListMultiRegionAccessPointsInput{
++		AccountId: ap.AccountID,
++	}, func(lapo *s3control.ListMultiRegionAccessPointsOutput, lastPage bool) bool {
++		for _, accessPoint := range lapo.AccessPoints {
++			if configObj.S3MultiRegionAccessPoint.ShouldInclude(config.ResourceValue{
++				Name: accessPoint.Name,
++				Time: accessPoint.CreatedAt,
++			}) {
++				accessPoints = append(accessPoints, accessPoint.Name)
++			}
++		}
++		return !lastPage
++	})
++	if err != nil {
++		logging.Errorf("[FAILED] Multi region access point listing - %v", err)
++	}
++	return accessPoints, errors.WithStackTrace(err)
++}
++
++func (ap *S3MultiRegionAccessPoint) nukeAll(identifiers []*string) error {
++	if len(identifiers) == 0 {
++		logging.Debugf("No Multi region access point(s) to nuke in region %s", ap.Region)
++		return nil
++	}
++
++	logging.Debugf("Deleting all Multi region access points in region %s", ap.Region)
++	var deleted []*string
++
++	for _, id := range identifiers {
++
++		_, err := ap.Client.DeleteMultiRegionAccessPoint(&s3control.DeleteMultiRegionAccessPointInput{
++			AccountId: ap.AccountID,
++			Details: &s3control.DeleteMultiRegionAccessPointInput_{
++				Name: id,
++			},
++		})
++
++		// Record status of this resource
++		e := report.Entry{
++			Identifier:   aws.StringValue(id),
++			ResourceType: "S3 Multi Region Access point",
++			Error:        err,
++		}
++		report.Record(e)
++
++		if err != nil {
++			logging.Debugf("[Failed] %s", err)
++		} else {
++			deleted = append(deleted, id)
++			logging.Debugf("Deleted S3 Multi region access point: %s", aws.StringValue(id))
++		}
++	}
++
++	logging.Debugf("[OK] %d S3 Multi region access point(s) deleted in %s", len(deleted), ap.Region)
++
++	return nil
++}
+diff --git a/aws/resources/s3_multi_region_access_point_types.go b/aws/resources/s3_multi_region_access_point_types.go
+new file mode 100644
+index 0000000..24c840e
+--- /dev/null
++++ b/aws/resources/s3_multi_region_access_point_types.go
+@@ -0,0 +1,54 @@
++package resources
++
++import (
++	"context"
++
++	awsgo "github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/aws/session"
++	"github.com/aws/aws-sdk-go/service/s3control"
++	"github.com/aws/aws-sdk-go/service/s3control/s3controliface"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/go-commons/errors"
++)
++
++type S3MultiRegionAccessPoint struct {
++	BaseAwsResource
++	Client       s3controliface.S3ControlAPI
++	Region       string
++	AccessPoints []string
++	AccountID    *string
++}
++
++func (ap *S3MultiRegionAccessPoint) Init(session *session.Session) {
++	ap.Client = s3control.New(session)
++}
++
++func (ap *S3MultiRegionAccessPoint) ResourceName() string {
++	return "s3-mrap"
++}
++
++func (ap *S3MultiRegionAccessPoint) ResourceIdentifiers() []string {
++	return ap.AccessPoints
++}
++
++func (ap *S3MultiRegionAccessPoint) MaxBatchSize() int {
++	return 5
++}
++
++func (ap *S3MultiRegionAccessPoint) GetAndSetIdentifiers(c context.Context, configObj config.Config) ([]string, error) {
++	identifiers, err := ap.getAll(c, configObj)
++	if err != nil {
++		return nil, err
++	}
++
++	ap.AccessPoints = awsgo.StringValueSlice(identifiers)
++	return ap.AccessPoints, nil
++}
++
++func (ap *S3MultiRegionAccessPoint) Nuke(identifiers []string) error {
++	if err := ap.nukeAll(awsgo.StringSlice(identifiers)); err != nil {
++		return errors.WithStackTrace(err)
++	}
++
++	return nil
++}
+diff --git a/aws/resources/s3_object_lambda_access_point.go b/aws/resources/s3_object_lambda_access_point.go
+new file mode 100644
+index 0000000..3304259
+--- /dev/null
++++ b/aws/resources/s3_object_lambda_access_point.go
+@@ -0,0 +1,77 @@
++package resources
++
++import (
++	"context"
++	"fmt"
++
++	"github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/service/s3control"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/cloud-nuke/logging"
++	"github.com/gruntwork-io/cloud-nuke/report"
++	"github.com/gruntwork-io/cloud-nuke/util"
++	"github.com/gruntwork-io/go-commons/errors"
++)
++
++func (ap *S3ObjectLambdaAccessPoint) getAll(c context.Context, configObj config.Config) ([]*string, error) {
++	accountID, ok := c.Value(util.AccountIdKey).(string)
++	if !ok {
++		logging.Errorf("unable to read the account-id from context")
++		return nil, errors.WithStackTrace(fmt.Errorf("unable to lookup the account id"))
++	}
++
++	// set the account id in object as this is mandatory to nuke an access point
++	ap.AccountID = aws.String(accountID)
++
++	var accessPoints []*string
++	err := ap.Client.ListAccessPointsForObjectLambdaPages(&s3control.ListAccessPointsForObjectLambdaInput{
++		AccountId: ap.AccountID,
++	}, func(lapo *s3control.ListAccessPointsForObjectLambdaOutput, lastPage bool) bool {
++		for _, accessPoint := range lapo.ObjectLambdaAccessPointList {
++			if configObj.S3ObjectLambdaAccessPoint.ShouldInclude(config.ResourceValue{
++				Name: accessPoint.Name,
++			}) {
++				accessPoints = append(accessPoints, accessPoint.Name)
++			}
++		}
++		return !lastPage
++	})
++	return accessPoints, errors.WithStackTrace(err)
++}
++
++func (ap *S3ObjectLambdaAccessPoint) nukeAll(identifiers []*string) error {
++	if len(identifiers) == 0 {
++		logging.Debugf("No Object lambda access point(s) to nuke in region %s", ap.Region)
++		return nil
++	}
++
++	logging.Debugf("Deleting all Object lambda access points in region %s", ap.Region)
++	var deleted []*string
++
++	for _, id := range identifiers {
++
++		_, err := ap.Client.DeleteAccessPointForObjectLambda(&s3control.DeleteAccessPointForObjectLambdaInput{
++			AccountId: ap.AccountID,
++			Name:      id,
++		})
++
++		// Record status of this resource
++		e := report.Entry{
++			Identifier:   aws.StringValue(id),
++			ResourceType: "S3 Object Lambda Access point",
++			Error:        err,
++		}
++		report.Record(e)
++
++		if err != nil {
++			logging.Debugf("[Failed] %s", err)
++		} else {
++			deleted = append(deleted, id)
++			logging.Debugf("Deleted S3 object lambda access point: %s", aws.StringValue(id))
++		}
++	}
++
++	logging.Debugf("[OK] %d S3 Object lambda access point(s) deleted in %s", len(deleted), ap.Region)
++
++	return nil
++}
+diff --git a/aws/resources/s3_object_lambda_access_point_types.go b/aws/resources/s3_object_lambda_access_point_types.go
+new file mode 100644
+index 0000000..fa63696
+--- /dev/null
++++ b/aws/resources/s3_object_lambda_access_point_types.go
+@@ -0,0 +1,54 @@
++package resources
++
++import (
++	"context"
++
++	awsgo "github.com/aws/aws-sdk-go/aws"
++	"github.com/aws/aws-sdk-go/aws/session"
++	"github.com/aws/aws-sdk-go/service/s3control"
++	"github.com/aws/aws-sdk-go/service/s3control/s3controliface"
++	"github.com/gruntwork-io/cloud-nuke/config"
++	"github.com/gruntwork-io/go-commons/errors"
++)
++
++type S3ObjectLambdaAccessPoint struct {
++	BaseAwsResource
++	Client       s3controliface.S3ControlAPI
++	Region       string
++	AccessPoints []string
++	AccountID    *string
++}
++
++func (ap *S3ObjectLambdaAccessPoint) Init(session *session.Session) {
++	ap.Client = s3control.New(session)
++}
++
++func (ap *S3ObjectLambdaAccessPoint) ResourceName() string {
++	return "s3-olap"
++}
++
++func (ap *S3ObjectLambdaAccessPoint) ResourceIdentifiers() []string {
++	return ap.AccessPoints
++}
++
++func (ap *S3ObjectLambdaAccessPoint) MaxBatchSize() int {
++	return 5
++}
++
++func (ap *S3ObjectLambdaAccessPoint) GetAndSetIdentifiers(c context.Context, configObj config.Config) ([]string, error) {
++	identifiers, err := ap.getAll(c, configObj)
++	if err != nil {
++		return nil, err
++	}
++
++	ap.AccessPoints = awsgo.StringValueSlice(identifiers)
++	return ap.AccessPoints, nil
++}
++
++func (ap *S3ObjectLambdaAccessPoint) Nuke(identifiers []string) error {
++	if err := ap.nukeAll(awsgo.StringSlice(identifiers)); err != nil {
++		return errors.WithStackTrace(err)
++	}
++
++	return nil
++}
+diff --git a/config/config.go b/config/config.go
+index de5398d..1d62b80 100644
+--- a/config/config.go
++++ b/config/config.go
+@@ -76,6 +76,9 @@ type Config struct {
+ 	RdsSnapshot                     ResourceType               `yaml:"RdsSnapshot"`
+ 	RdsParameterGroup               ResourceType               `yaml:"RdsParameterGroup"`
+ 	S3                              ResourceType               `yaml:"s3"`
++	S3AccessPoint                   ResourceType               `yaml:"S3AccessPoint"`
++	S3ObjectLambdaAccessPoint       ResourceType               `yaml:"S3ObjectLambdaAccessPoint"`
++	S3MultiRegionAccessPoint        ResourceType               `yaml:"S3MultiRegionAccessPoint"`
+ 	SESIdentity                     ResourceType               `yaml:"SesIdentity"`
+ 	SESConfigurationSet             ResourceType               `yaml:"SesConfigurationset"`
+ 	SESReceiptRuleSet               ResourceType               `yaml:"SesReceiptRuleSet"`

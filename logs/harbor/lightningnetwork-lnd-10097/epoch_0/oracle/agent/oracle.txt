@@ -1,0 +1,9 @@
+patching file config.go
+patching file discovery/gossiper.go
+patching file discovery/sync_manager.go
+patching file discovery/syncer.go
+patching file docs/gossip_rate_limiting.md
+patching file docs/release-notes/release-notes-0.19.3.md
+patching file lncfg/gossip.go
+patching file sample-lnd.conf
+patching file server.go

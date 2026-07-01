@@ -1,0 +1,10 @@
+patching file cloud/store/store_test.go
+patching file cloud/transport/service_test.go
+patching file cloud/utils/utils_test.go (renamed from cloud/store/raft.go)
+github.com/weaviate/weaviate/cloud/utils: no non-test Go files in /workspace/repo/cloud/utils
+# github.com/weaviate/weaviate/cloud/utils [github.com/weaviate/weaviate/cloud/utils.test]
+cloud/utils/utils_test.go:21:10: undefined: MustGetFreeTCPPort
+FAIL	github.com/weaviate/weaviate/cloud/store [build failed]
+FAIL	github.com/weaviate/weaviate/cloud/transport [build failed]
+FAIL	github.com/weaviate/weaviate/cloud/utils [build failed]
+reward=0 graded=18 found=18 failed=18 parsed=3 framework=go exit_code=1

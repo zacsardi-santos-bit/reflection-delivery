@@ -1,0 +1,8 @@
+patching file cmd/task/task.go
+patching file executor.go
+patching file help.go
+patching file internal/flags/flags.go
+patching file setup.go
+patching file task.go
+patching file taskfile/reader.go
+patching file taskfile/snippet.go

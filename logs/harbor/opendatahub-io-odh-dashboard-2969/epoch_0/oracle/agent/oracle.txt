@@ -1,0 +1,27 @@
+patching file frontend/src/__mocks__/mockRoleBindingK8sResource.ts
+patching file frontend/src/api/k8s/roleBindings.ts
+patching file frontend/src/app/AppRoutes.tsx
+patching file frontend/src/concepts/roleBinding/RoleBindingPermissions.tsx
+patching file frontend/src/concepts/roleBinding/RoleBindingPermissionsNameInput.tsx (renamed from frontend/src/pages/projects/projectSharing/ProjectSharingNameInput.tsx)
+patching file frontend/src/concepts/roleBinding/RoleBindingPermissionsPermissionSelection.tsx
+patching file frontend/src/concepts/roleBinding/RoleBindingPermissionsTable.tsx
+patching file frontend/src/concepts/roleBinding/RoleBindingPermissionsTableRow.tsx (renamed from frontend/src/pages/projects/projectSharing/ProjectSharingTableRow.tsx)
+patching file frontend/src/concepts/roleBinding/RoleBindingPermissionsTableRowAdd.tsx (renamed from frontend/src/pages/projects/projectSharing/ProjectSharingTableRowAdd.tsx)
+patching file frontend/src/concepts/roleBinding/RoleBindingPermissionsTableSection.tsx (renamed from frontend/src/pages/projects/projectSharing/ProjectSharingTableSection.tsx)
+patching file frontend/src/concepts/roleBinding/data.ts (renamed from frontend/src/pages/projects/projectSharing/data.ts)
+patching file frontend/src/concepts/roleBinding/types.ts (renamed from frontend/src/pages/projects/projectSharing/types.ts)
+patching file frontend/src/concepts/roleBinding/utils.ts
+patching file frontend/src/k8sTypes.ts
+patching file frontend/src/pages/modelRegistrySettings/DeleteModelRegistryModal.tsx
+patching file frontend/src/pages/modelRegistrySettings/ManagePermissionsModal.tsx
+patching file frontend/src/pages/modelRegistrySettings/ModelRegistriesPermissions.tsx
+patching file frontend/src/pages/modelRegistrySettings/ModelRegistriesTableRow.tsx
+patching file frontend/src/pages/modelRegistrySettings/ModelRegistrySettingsRoutes.tsx
+patching file frontend/src/pages/modelRegistrySettings/useModelRegistryRoleBindings.ts
+patching file frontend/src/pages/projects/projectSharing/ProjectSharing.tsx
+patching file frontend/src/pages/projects/projectSharing/ProjectSharingPermissionSelection.tsx
+patching file frontend/src/pages/projects/projectSharing/ProjectSharingTable.tsx
+patching file frontend/src/pages/projects/projectSharing/utils.ts
+patching file frontend/src/services/roleBindingService.ts
+patching file frontend/src/types.ts
+patching file frontend/src/utilities/notebookControllerUtils.ts

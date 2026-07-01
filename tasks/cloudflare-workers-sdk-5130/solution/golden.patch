@@ -1,0 +1,1250 @@
+diff --git a/.changeset/config.json b/.changeset/config.json
+index c54a7aa4d..e2ab649bd 100644
+--- a/.changeset/config.json
++++ b/.changeset/config.json
+@@ -9,5 +9,9 @@
+ 	"access": "public",
+ 	"baseBranch": "main",
+ 	"updateInternalDependencies": "patch",
+-	"ignore": []
++	"ignore": [],
++	"privatePackages": {
++		"tag": true,
++		"version": true
++	}
+ }
+diff --git a/.github/workflows/README.md b/.github/workflows/README.md
+new file mode 100644
+index 000000000..58c90f563
+--- /dev/null
++++ b/.github/workflows/README.md
+@@ -0,0 +1,146 @@
++# Github Actions
++
++See below for a summary of this repo's Actions
++
++- _⚠️ means that the check is expected to sometimes fail._
++
++## PR related actions
++
++### Pull Request (pullrequests.yml)
++
++- Triggers
++  - Updates to PRs.
++- Actions
++  - Builds all the packages.
++  - Runs formatting, linting and type checks.
++  - Runs fixture tests, Wrangler unit tests, C3 unit tests, Miniflare unit tests, and ESLint + Prettier checks.
++  - Adds the PR to a Github project
++
++### E2E tests (e2e.yml)
++
++- Triggers
++  - Commits merged to the `changeset-release/main` branch (i.e. on "Version Packages" PRs).
++  - Updates to PRs, on the Cloudflare fork, with the `e2e` label applied.
++- Actions
++  - Runs the E2E tests for Wrangler.
++  - **If you're making a change that feels particularly risky, make sure you add the `e2e` label to get early warning of E2E test failures.**
++
++## Test old Node.js version (test-old-node-error.yml)
++
++- Triggers
++  - Updates to PRs.
++- Actions
++  - Makes sure that Wrangler's warning for old Node.js versions works.
++
++## Deploy Pages Previews (deploy-pages-preview.yml)
++
++- Triggers
++  - Updates to PRs that have one of the `preview:...` labels.
++- Actions
++  - Deploy a preview of the matching Pages project to Cloudflare.
++
++## Deploy (to testing) and Test Playground Preview Worker (worker-playground-preview-testing-env-deploy-and-test.yml)
++
++- Triggers
++  - Commits merged to the `main` branch, on the Cloudflare fork, which touch files in the `packages/playground-preview-worker` directory.
++  - Updates to PRs, on the Cloudflare fork, with the `playground-worker` label applied.
++- Actions
++  - Runs integrations tests to ensure the behaviour of the Worker powering the Workers Playground.
++
++## Create Pull Request Prerelease (create-pullrequest-prerelease.yml)
++
++- Triggers
++  - Updates to PRs.
++- Actions
++  - Creates an installable pre-release of any package containing `{ "workers-sdk": { "prerelease": true } }` in its `package.json` (e.g. Wrangler, C3, and Miniflare) on every PR.
++  - Adds a comment to the PR with links to the pre-releases.
++
++## Housekeeping actions
++
++### Add issues to DevProd project (issues.yml)
++
++- Triggers
++  - Updates to issues.
++- Actions
++  - Add the issue to a Github project.
++
++## Main branch actions
++
++### Main branch (main.yml)
++
++- Triggers
++  - Commits merged to the `main` branch, on the Cloudflare fork.
++- Actions
++  - Builds all the packages.
++  - Runs formatting, linting and type checks.
++  - Runs fixture tests, Wrangler unit tests, C3 unit tests, Miniflare unit tests, and ESLint + Prettier checks.
++
++### CodeCov Main Context Updater (codecov-context.yml)
++
++- Triggers
++  - Commits merged to the `main` branch, on the Cloudflare fork.
++- Actions
++  - Generated a code coverage report
++
++### Handle Changesets (changesets.yml)
++
++- Triggers
++  - Commits merged to the `main` branch, on the Cloudflare fork.
++- Actions
++  - If there are changeset in the working directory, create or update a "Version Packages" PR to prep for a release.
++  - If there are no changesets, release any packages that have a bump to their version in this change.
++    - Public packages are deployed to npm
++    - Private packages will run their `deploy` script, if they have one.
++
++### Prerelease (prereleases.yml)
++
++- Triggers
++  - Commits merged to the `main` branch, on the Cloudflare fork.
++- Actions
++  - Publishes the `wrangler` package to npm under the `beta` dist-tag.
++
++## C3 related actions
++
++### C3 E2E Tests (c3-e2e.yml)
++
++- Triggers
++  - Commits merged to the `main` branch, on the Cloudflare fork, which touch files in the `packages/create-cloudflare` directory.
++  - Updates to PRs, on the Cloudflare fork, which touch files in the `packages/create-cloudflare` directory.
++- Actions
++  - Runs the E2E tests for C3.
++
++### C3 E2E (Quarantine) (c3-e2e-quarantine.yml) ⚠️
++
++- Triggers
++  - Commits merged to the `main` branch, on the Cloudflare fork, which touch files in the `packages/create-cloudflare` directory.
++  - Updates to PRs, on the Cloudflare fork, which touch files in the `packages/create-cloudflare` directory.
++- Actions
++  - Runs the _quarantined_ E2E tests for C3. It is expected to sometimes fail.
++
++### C3: Generate changeset for dependabot PRs (c3-dependabot-versioning-prs.yml)
++
++- Triggers
++  - Updates to PRs, by the dependabot user, which update the frameworks dependencies in C3.
++- Actions
++  - Generates changesets for the updated framework.
++
++### C3 E2E Tests (Dependabot) (c3-e2e-dependabot.yml)
++
++- Triggers
++  - Updates to PRs, by the dependabot user, which touch c3-frameworks-update changesets.
++- Actions
++  - Runs the all the C3 E2E (including quarantined) tests for the framework that was updated.
++
++### C3 E2E Project Cleanup (c3-e2e-project-cleanup.yml)
++
++- Triggers
++  - Scheduled to run at 3am each day.
++- Actions
++  - Deletes any Workers and Pages projects that were not properly cleaned up by the C3 E2E tests.
++
++### Prerelease create-cloudflare (prerelease-create-cloudflare.yml)
++
++- Triggers
++  - Commits merged to the `main` branch, on the Cloudflare fork.
++- Actions
++  - Publishes the `create-cloudflare` package to npm under the `beta` dist-tag.
+diff --git a/.github/workflows/c3-e2e-quarantine.yml b/.github/workflows/c3-e2e-quarantine.yml
+index 21a710931..928500db5 100644
+--- a/.github/workflows/c3-e2e-quarantine.yml
++++ b/.github/workflows/c3-e2e-quarantine.yml
+@@ -2,6 +2,9 @@
+ 
+ name: C3 E2E (Quarantine)
+ on:
++  pull_request:
++    paths:
++      - packages/create-cloudflare/**
+   push:
+     branches:
+       - main
+diff --git a/.github/workflows/c3-e2e.yml b/.github/workflows/c3-e2e.yml
+index df2cd026e..d8aba0740 100644
+--- a/.github/workflows/c3-e2e.yml
++++ b/.github/workflows/c3-e2e.yml
+@@ -5,6 +5,11 @@ on:
+   pull_request:
+     paths:
+       - packages/create-cloudflare/**
++  push:
++    branches:
++      - main
++    paths:
++      - packages/create-cloudflare/**
+ env:
+   node-version: 18.17.1
+   bun-version: 1.0.3
+diff --git a/.github/workflows/release.yml b/.github/workflows/changesets.yml
+similarity index 84%
+rename from .github/workflows/release.yml
+rename to .github/workflows/changesets.yml
+index 0d00aab99..c9f505a9d 100644
+--- a/.github/workflows/release.yml
++++ b/.github/workflows/changesets.yml
+@@ -1,4 +1,4 @@
+-name: Release
++name: Handle Changesets
+ 
+ on:
+   push:
+@@ -13,7 +13,7 @@ jobs:
+       cancel-in-progress: true
+ 
+     if: ${{ github.repository_owner == 'cloudflare' }}
+-    name: Release
++    name: Handle Changesets
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout Repo
+@@ -22,9 +22,11 @@ jobs:
+           # See https://github.com/changesets/action/issues/187
+           token: ${{ secrets.GH_ACCESS_TOKEN }}
+           fetch-depth: 0
++
+       - uses: pnpm/action-setup@v2
+         with:
+           version: 8.8.0
++
+       - name: Use Node.js 16.18
+         uses: actions/setup-node@v3
+         with:
+@@ -46,7 +48,7 @@ jobs:
+         env:
+           CI_OS: ${{ runner.os }}
+ 
+-      - name: Check for other errors
++      - name: Check linting and formatting
+         run: pnpm run check
+         env:
+           NODE_OPTIONS: "--max_old_space_size=8192"
+@@ -68,3 +70,9 @@ jobs:
+           # This is the "production" key for sparrow analytics.
+           # Include this here because this step will rebuild Wrangler and needs to have this available
+           SPARROW_SOURCE_KEY: "50598e014ed44c739ec8074fdc16057c"
++
++      - name: Deploy non-NPM Packages
++        run: node -r esbuild-register tools/deployments/deploy-non-npm-packages.ts
++        env:
++          PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
++          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+diff --git a/.github/workflows/deploy-pages-previews.yml b/.github/workflows/deploy-pages-previews.yml
+new file mode 100644
+index 000000000..78a21ff2c
+--- /dev/null
++++ b/.github/workflows/deploy-pages-previews.yml
+@@ -0,0 +1,69 @@
++name: Deploy Pages Previews
++
++# This workflow is designed to deploy a "preview" version of a Pages project based on PR labels.
++
++# Triggers:
++# - update to a PR that has one of the `preview:...` labels
++#
++# Actions:
++# - deploy the matching Pages project to Cloudflare.
++#
++# PR Label                   | Pages Project
++# ---------------------------------------------------------
++# preview:wrangler-devtools  | packages/wrangler-devtools
++# preview:quick-edit         | packages/quick-edit
++# preview:workers-playground | packages/workers-playground
++#
++# Note: this workflow does not run tests against these packages, only for deploys previews.
++
++on:
++  pull_request:
++    types: [synchronize, opened, reopened, labeled, unlabeled]
++
++jobs:
++  deploy-pages-projects:
++    # Only run this on PRs that are for the "cloudflare" org and not "from" `main`
++    # - non-Cloudflare PRs will not have the secrets needed
++    # - PRs "from" main would accidentally do a production deployment
++    if: github.repository_owner == 'cloudflare' && github.head_ref != 'main'
++    timeout-minutes: 30
++    concurrency:
++      group: ${{ github.workflow }}-${{ github.ref }}
++      cancel-in-progress: true
++    runs-on: ubuntu-latest
++    steps:
++      - name: Checkout Repo
++        uses: actions/checkout@v3
++        with:
++          fetch-depth: 0
++
++      - name: Install Dependencies
++        uses: ./.github/actions/install-dependencies
++        env:
++          node-version: 16.18
++
++      - name: Build tools and libraries
++        run: pnpm run build
++        env:
++          NODE_ENV: "production"
++          CI_OS: ${{ runner.os }}
++
++      - name: Deploy Wrangler DevTools preview
++        if: contains(github.event.*.labels.*.name, 'preview:wrangler-devtools')
++        run: pnpm --filter @cloudflare/wrangler-devtools run deploy
++        env:
++          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
++
++      - name: Build and Deploy Quick Edit preview
++        if: contains(github.event.*.labels.*.name, 'preview:quick-edit')
++        # Quick Edit requires yarn, so needs fairly specific logic
++        run: cd packages/quick-edit && yarn setup && yarn custom:build && pnpm run deploy
++        env:
++          NPM_PUBLISH_TOKEN: NOT_USED # yarn will error if the env var from .npmrc can't be interpolated
++          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
++
++      - name: Deploy Workers Playground preview
++        if: contains(github.event.*.labels.*.name, 'preview:workers-playground')
++        run: pnpm --filter workers-playground run deploy
++        env:
++          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+diff --git a/.github/workflows/deploy-pages-project.yml b/.github/workflows/deploy-pages-project.yml
+deleted file mode 100644
+index fb72904ba..000000000
+--- a/.github/workflows/deploy-pages-project.yml
++++ /dev/null
+@@ -1,38 +0,0 @@
+-name: Deploy Pages Project
+-
+-on:
+-  workflow_call:
+-    inputs:
+-      package:
+-        required: true
+-        type: string
+-    secrets:
+-      CLOUDFLARE_API_TOKEN:
+-        required: true
+-
+-jobs:
+-  publish:
+-    timeout-minutes: 30
+-    concurrency:
+-      group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.package }}
+-      cancel-in-progress: true
+-    runs-on: ubuntu-latest
+-    steps:
+-      - name: Checkout Repo
+-        uses: actions/checkout@v3
+-        with:
+-          fetch-depth: 0
+-
+-      - name: Install Dependencies
+-        uses: ./.github/actions/install-dependencies
+-
+-      - name: Build
+-        run: pnpm run build
+-        env:
+-          CI_OS: ${{ runner.os }}
+-
+-      - name: Deploy to Pages
+-        run: pnpm --filter ${{ inputs.package }} run deploy
+-        env:
+-          CLOUDFLARE_ACCOUNT_ID: "e35fd947284363a46fd7061634477114"
+-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+diff --git a/.github/workflows/deploy-pages-projects.yml b/.github/workflows/deploy-pages-projects.yml
+deleted file mode 100644
+index e637c2374..000000000
+--- a/.github/workflows/deploy-pages-projects.yml
++++ /dev/null
+@@ -1,74 +0,0 @@
+-name: Deploy all Pages sites
+-
+-# On a push to `main` or a PR that has one of the `preview:...`` labels,
+-# deploy the matching Pages project to Cloudflare.
+-#
+-# PR Label                   | Pages Project
+-# ---------------------------------------------------------
+-# preview:wrangler-devtools  | packages/wrangler-devtools
+-# preview:quick-edit         | packages/quick-edit
+-# preview:workers-playground | packages/workers-playground
+-#
+-# Note: these actions are not for running tests against these packages,
+-# only for deploying.
+-
+-on:
+-  push:
+-    branches:
+-      - main
+-  pull_request:
+-    types: [synchronize, opened, reopened, labeled, unlabeled]
+-
+-# There's a fair amount of manual duplication in this file, but it's unfortunately all needed
+-# In particular, GH Actions doesn't support the `matrix` context in `if` conditions, and so
+-# using a matrix would make it impossible to skip a deploy at the job level
+-jobs:
+-  wrangler-devtools:
+-    name: Wrangler DevTools
+-    if: github.repository_owner == 'cloudflare' && (github.event_name != 'pull_request' || (github.event_name == 'pull_request' && contains(github.event.*.labels.*.name, 'preview:wrangler-devtools' )))
+-    uses: ./.github/workflows/deploy-pages-project.yml
+-    with:
+-      package: "wrangler-devtools"
+-    secrets:
+-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+-
+-  # Quick Edit requires yarn, so needs fairly specific logic
+-  quick-edit:
+-    name: Quick Edit
+-    if: github.repository_owner == 'cloudflare' && (github.event_name != 'pull_request' || (github.event_name == 'pull_request' && contains(github.event.*.labels.*.name, 'preview:quick-edit' )))
+-    runs-on: ubuntu-latest
+-
+-    steps:
+-      - name: Checkout Repo
+-        uses: actions/checkout@v3
+-        with:
+-          fetch-depth: 0
+-
+-      - name: Install Dependencies
+-        uses: ./.github/actions/install-dependencies
+-        env:
+-          node-version: 16.18
+-
+-      - name: Build
+-        run: pnpm run build
+-        env:
+-          CI_OS: ${{ runner.os }}
+-
+-      - name: Build Quick Edit
+-        run: cd packages/quick-edit && yarn setup && yarn custom:build
+-        env:
+-          NPM_PUBLISH_TOKEN: NOT_USED # yarn will error if the env var from .npmrc can't be interpolated
+-
+-      - name: Publish Quick Edit
+-        run: pnpm --filter quick-edit run deploy
+-        env:
+-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+-
+-  workers-playground:
+-    name: Workers Playground
+-    if: github.repository_owner == 'cloudflare' && (github.event_name != 'pull_request' || (github.event_name == 'pull_request' && contains(github.event.*.labels.*.name, 'preview:workers-playground' )))
+-    uses: ./.github/workflows/deploy-pages-project.yml
+-    with:
+-      package: "workers-playground"
+-    secrets:
+-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+diff --git a/.github/workflows/prereleases.yml b/.github/workflows/prereleases.yml
+index 3a920be6a..8f36c9c55 100644
+--- a/.github/workflows/prereleases.yml
++++ b/.github/workflows/prereleases.yml
+@@ -74,50 +74,3 @@ jobs:
+       - name: Get Package Version
+         run: echo "WRANGLER_VERSION=$(npm view wrangler@beta version)" >> $GITHUB_ENV
+         working-directory: packages/wrangler
+-
+-  publish_prerelease_registry:
+-    timeout-minutes: 30
+-    if: ${{ github.repository_owner == 'cloudflare' }}
+-    name: Publish Prerelease Registry
+-    needs: prerelease
+-    runs-on: ubuntu-latest
+-
+-    steps:
+-      - name: Checkout Repo
+-        uses: actions/checkout@v3
+-        with:
+-          fetch-depth: 0
+-      - uses: pnpm/action-setup@v2
+-        with:
+-          version: 8.8.0
+-      - name: Use Node.js 16.18
+-        uses: actions/setup-node@v3
+-        with:
+-          node-version: 16.18
+-          cache: "pnpm"
+-
+-      - name: Install workerd Dependencies
+-        if: ${{ runner.os == 'Linux' }}
+-        run: |
+-          export DEBIAN_FRONTEND=noninteractive
+-          sudo apt-get update
+-          sudo apt-get install -y libc++1
+-
+-      - name: Install NPM Dependencies
+-        run: pnpm install --frozen-lockfile
+-
+-      - name: Build wrangler
+-        run: pnpm run build
+-        env:
+-          NODE_ENV: "production"
+-          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+-          ALGOLIA_PUBLIC_KEY: ${{ secrets.ALGOLIA_PUBLIC_KEY }}
+-          SENTRY_DSN: "https://9edbb8417b284aa2bbead9b4c318918b@sentry10.cfdata.org/583"
+-          CI_OS: ${{ runner.os }}
+-
+-      - name: Build & Publish Prerelease Registry
+-        run: pnpm run publish
+-        env:
+-          NODE_ENV: "production"
+-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+-        working-directory: packages/prerelease-registry
+diff --git a/.github/workflows/worker-deploy-edge-preview-authenticated-proxy.yml b/.github/workflows/worker-deploy-edge-preview-authenticated-proxy.yml
+deleted file mode 100644
+index e7794e00e..000000000
+--- a/.github/workflows/worker-deploy-edge-preview-authenticated-proxy.yml
++++ /dev/null
+@@ -1,54 +0,0 @@
+-name: Deploy Edge Preview Authenticated Proxy Worker (production)
+-
+-# On a push to `deploy-worker/edge-preview-authenticated-proxy`, on Cloudflare,
+-# deploy to production.
+-on:
+-  push:
+-    branches:
+-      - deploy-worker/edge-preview-authenticated-proxy
+-
+-jobs:
+-  deploy_worker:
+-    if: ${{ github.repository_owner == 'cloudflare' }}
+-    name: Deploy Edge Preview Authenticated Proxy (production)
+-    runs-on: ubuntu-latest
+-
+-    steps:
+-      - name: Checkout Repo
+-        uses: actions/checkout@v3
+-        with:
+-          fetch-depth: 0
+-
+-      - name: Use pnpm 8.8.0
+-        uses: pnpm/action-setup@v2
+-        with:
+-          version: 8.8.0
+-
+-      - name: Use Node.js 16.18
+-        uses: actions/setup-node@v3
+-        with:
+-          node-version: 16.18
+-          cache: "pnpm"
+-
+-      - name: Install workerd dependencies
+-        if: ${{ runner.os == 'Linux' }}
+-        run: |
+-          export DEBIAN_FRONTEND=noninteractive
+-          sudo apt-get update
+-          sudo apt-get install -y libc++1
+-
+-      - name: Install NPM dependencies
+-        run: pnpm install --frozen-lockfile
+-
+-      - name: Build tools and libraries
+-        run: pnpm run build
+-        env:
+-          NODE_ENV: "production"
+-          CI_OS: ${{ runner.os }}
+-
+-      - name: Build & deploy Worker
+-        run: pnpm run deploy
+-        env:
+-          NODE_ENV: "production"
+-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+-        working-directory: packages/edge-preview-authenticated-proxy
+diff --git a/.github/workflows/worker-format-errors-deploy.yml b/.github/workflows/worker-format-errors-deploy.yml
+deleted file mode 100644
+index 4f9fce7ce..000000000
+--- a/.github/workflows/worker-format-errors-deploy.yml
++++ /dev/null
+@@ -1,54 +0,0 @@
+-name: Deploy Format Errors Worker (production)
+-
+-# On a push to `deploy-worker/format-errors`, on Cloudflare,
+-# deploy to production.
+-on:
+-  push:
+-    branches:
+-      - deploy-worker/format-errors
+-
+-jobs:
+-  deploy_worker:
+-    if: ${{ github.repository_owner == 'cloudflare' }}
+-    name: Deploy Format Errors Worker (production)
+-    runs-on: ubuntu-latest
+-
+-    steps:
+-      - name: Checkout repo
+-        uses: actions/checkout@v3
+-        with:
+-          fetch-depth: 0
+-
+-      - name: Use pnpm 8.8.0
+-        uses: pnpm/action-setup@v2
+-        with:
+-          version: 8.8.0
+-
+-      - name: Use Node.js 16.18
+-        uses: actions/setup-node@v3
+-        with:
+-          node-version: 16.18
+-          cache: "pnpm"
+-
+-      - name: Install workerd dependencies
+-        if: ${{ runner.os == 'Linux' }}
+-        run: |
+-          export DEBIAN_FRONTEND=noninteractive
+-          sudo apt-get update
+-          sudo apt-get install -y libc++1
+-
+-      - name: Install NPM dependencies
+-        run: pnpm install --frozen-lockfile
+-
+-      - name: Build tools and libraries
+-        run: pnpm run build
+-        env:
+-          NODE_ENV: "production"
+-          CI_OS: ${{ runner.os }}
+-
+-      - name: Build & deploy Worker
+-        run: pnpm run deploy
+-        env:
+-          NODE_ENV: "production"
+-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+-        working-directory: packages/format-errors
+diff --git a/.github/workflows/worker-playground-preview-deploy-production.yml b/.github/workflows/worker-playground-preview-deploy-production.yml
+deleted file mode 100644
+index 965c989c4..000000000
+--- a/.github/workflows/worker-playground-preview-deploy-production.yml
++++ /dev/null
+@@ -1,54 +0,0 @@
+-name: Deploy Playground Preview Worker (production)
+-
+-# On a push to `deploy-worker/playground-preview-worker`, on Cloudflare,
+-# deploy to production.
+-on:
+-  push:
+-    branches:
+-      - deploy-worker/playground-preview-worker
+-
+-jobs:
+-  deploy_worker:
+-    if: ${{ github.repository_owner == 'cloudflare' }}
+-    name: Deploy Playground Preview Worker (production)
+-    runs-on: ubuntu-latest
+-
+-    steps:
+-      - name: Checkout repo
+-        uses: actions/checkout@v3
+-        with:
+-          fetch-depth: 0
+-
+-      - name: Use pnpm 8.8.0
+-        uses: pnpm/action-setup@v2
+-        with:
+-          version: 8.8.0
+-
+-      - name: Use Node.js 16.18
+-        uses: actions/setup-node@v3
+-        with:
+-          node-version: 16.18
+-          cache: "pnpm"
+-
+-      - name: Install workerd dependencies
+-        if: ${{ runner.os == 'Linux' }}
+-        run: |
+-          export DEBIAN_FRONTEND=noninteractive
+-          sudo apt-get update
+-          sudo apt-get install -y libc++1
+-
+-      - name: Install NPM dependencies
+-        run: pnpm install --frozen-lockfile
+-
+-      - name: Build tools and libraries
+-        run: pnpm run build
+-        env:
+-          NODE_ENV: "production"
+-          CI_OS: ${{ runner.os }}
+-
+-      - name: Build & deploy Worker
+-        run: pnpm run deploy
+-        env:
+-          NODE_ENV: "production"
+-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+-        working-directory: packages/playground-preview-worker
+diff --git a/.github/workflows/worker-playground-preview-deploy-testing.yml b/.github/workflows/worker-playground-preview-testing-env-deploy-and-test.yml
+similarity index 79%
+rename from .github/workflows/worker-playground-preview-deploy-testing.yml
+rename to .github/workflows/worker-playground-preview-testing-env-deploy-and-test.yml
+index 203fc6de6..1a876aad2 100644
+--- a/.github/workflows/worker-playground-preview-deploy-testing.yml
++++ b/.github/workflows/worker-playground-preview-testing-env-deploy-and-test.yml
+@@ -1,8 +1,15 @@
+-name: Deploy Playground Preview Worker (testing)
++name: Deploy (to testing) and Test Playground Preview Worker
+ 
+-# On a push to `main`, on Cloudflare, where there are changes to the files in this worker's package,
+-# or an update to a PR, on Cloudflare, labelled as `playground-worker`,
+-# deploy to testing and then run the end-to-end tests against this deployment.
++# This workflow is designed to deploy a "testing" version of the Playground Preview Worker
++# and test it via integration tests.
++
++# Triggers:
++# - push to `main`, on Cloudflare, where there are changes to the files in this worker's package
++# - update to a PR, on Cloudflare, labelled as `playground-worker`
++#
++# Actions:
++# - deploy to testing environment
++# - run the end-to-end tests against testing deployment
+ on:
+   push:
+     branches:
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index ec21195f2..72950d21b 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -77,7 +77,7 @@ While each workspace has its own dependencies, you install the dependencies usin
+ 
+ ## Building and running
+ 
+-Each wrangler workspace in this project is written in [TypeScript](https://www.typescriptlang.org/) and compiled, by [esbuild](https://github.com/evanw/esbuild), into JavaScript bundles for distribution.
++Workspaces in this project are mostly written in [TypeScript](https://www.typescriptlang.org/) and compiled, by [esbuild](https://github.com/evanw/esbuild), into JavaScript bundles for distribution.
+ 
+ - Run a distributable for a specific workspace (e.g. wrangler)
+   ```sh
+@@ -197,7 +197,7 @@ Changes should be committed to a new local branch, which then gets pushed to you
+ 
+ ## PR Review
+ 
+-PR review is a critial and required step in the process for landing changes. This is an opportunity to catch potential issues, improve the quality of the work, celebrate good design, and learn from each other.
++PR review is a critical and required step in the process for landing changes. This is an opportunity to catch potential issues, improve the quality of the work, celebrate good design, and learn from each other.
+ 
+ As a reviewer, it's important to be thoughtful about the proposed changes and communicate any feedback. Examples of PR reviews that the community has identified as particularly high-caliber are labeled with the `highlight pr review` label. Please feel empowered to use these as a learning resource.
+ 
+@@ -227,35 +227,7 @@ If you need to test the interaction of Wrangler with a real Cloudflare account,
+ 
+ When you open a PR to the `workers-sdk` repo, you should expect several checks to run in CI. For most PRs (except for those which trigger the **C3 E2E (Quarantine)** Action), every check should pass (although some will be skipped).
+ 
+-See below for a summary of this repo's Actions, including for each:
+-
+-1. expected return status (✔️ means that the check should always pass or be skipped, ⚠️ means that the check is expected to sometimes fail)
+-2. when the action is run
+-3. intended purpose
+-
+-- **E2E tests ✔️**
+-  This runs on the `changeset-release/main` branch (i.e. on every release PR), and on any PRs with the `e2e` label applied. It runs the E2E tests for Wrangler. If you're making a change that feels particularly risky, make sure you add the `e2e` label to get early warning of E2E test failures.
+-
+-- **Pull Request ✔️**
+-  As the name suggests, this contains checks that run on every PR, including fixture tests, Wrangler unit tests, C3 unit tests, Miniflare unit tests, and ESLint + Prettier checks.
+-
+-- **Deploy all Pages sites ✔️**
+-  This runs on `main` (where it deploys production versions of `wrangler-devtools`, `quick-edit`, and `workers-playground`). It's usually skipped on PRs, but if you apply the label `preview:wrangler-devtools`, `preview:quick-edit`, or `preview:workers-playground` it will deploy a branch preview of the matching package.
+-
+-- **Test old Node.js version ✔️**
+-  This runs on all PRs, and makes sure that Wrangler's warning for old Node.js versions works.
+-
+-- **Playground Worker tests ✔️**
+-  This only runs on the `changeset-release/main` branch (i.e. on every release PR), and is intended to test the behaviour of the Worker powering the Workers Playground.
+-
+-- **Create Pull Request Prerelease ✔️**
+-  This creates an installable pre-release of Wrangler, C3, and Miniflare on every PR.
+-
+-- **C3 E2E Tests ✔️**
+-  This runs for all PRs that make changes to C3 (i.e. in the `packages/create-cloudflare` directory), and runs the E2E tests for C3.
+-
+-- **C3 E2E (Quarantine) ⚠️**
+-  This runs for all PRs that make changes to C3 (i.e. in the `packages/create-cloudflare` directory), and runs the _quarantined_ E2E tests for C3. It is expected to sometimes fail.
++A summary of this repositories actions can be found [here](.github/workflows/README.md)
+ 
+ ## Changesets
+ 
+diff --git a/packages/prerelease-registry/package.json b/packages/prerelease-registry/package.json
+index 1fe103214..9c547d15d 100644
+--- a/packages/prerelease-registry/package.json
++++ b/packages/prerelease-registry/package.json
+@@ -7,8 +7,8 @@
+ 		"build": "wrangler pages functions build --fallback-service='' ./functions/routes --outdir=dist",
+ 		"check:lint": "eslint .",
+ 		"check:type": "tsc",
+-		"prepublish": "pnpm run build",
+-		"publish": "wrangler deploy dist/index.js",
++		"predeploy": "pnpm run build",
++		"deploy": "wrangler deploy dist/index.js",
+ 		"prestart": "pnpm run build",
+ 		"start": "wrangler dev dist/index.js"
+ 	},
+diff --git a/packages/quick-edit/README.md b/packages/quick-edit/README.md
+index b04165d86..e8ee8d24b 100644
+--- a/packages/quick-edit/README.md
++++ b/packages/quick-edit/README.md
+@@ -15,12 +15,14 @@ Follow steps (1), (2) and (3) from above, and then run `yarn custom:build`
+ 
+ ## Deployment
+ 
+-Deployments are managed by the Github Action defined at .github/workflows/deploy-pages-projects.yaml.
+-
+-This action runs on:
+-
+-- every push to `main`. This will deploy the project to production, which can then be accessed via [https://quick-edit-cny.pages.dev/].
+-- any PR that has the `preview:quick-edit` label. This will deploy a preview, which can then be accessed via [https://<SHA>.quick-edit-cny.pages.dev/].
++Deployments are managed by Github Actions:
++
++- deploy-pages-previews.yml:
++  - Runs on any PR that has the `preview:quick-edit` label.
++  - Deploys a preview, which can then be accessed via [https://<SHA>.quick-edit-cny.pages.dev/].
++- changesets.yml:
++  - Runs when a "Version Packages" PR, containing a changeset that touches this package, is merged to `main`.
++  - Deploys this package to production, which can then be accessed via [https://quick-edit-cny.pages.dev/].
+ 
+ ## Patching VSCode
+ 
+diff --git a/packages/workers-playground/README.md b/packages/workers-playground/README.md
+index 93860896c..0023f84cb 100644
+--- a/packages/workers-playground/README.md
++++ b/packages/workers-playground/README.md
+@@ -20,9 +20,11 @@ This generates the files into the `dist` directory that can then be deployed to
+ 
+ ## Deployment
+ 
+-Deployments are managed by the Github Action defined at .github/workflows/deploy-pages-projects.yaml.
+-
+-This action runs on:
+-
+-- every push to `main`. This will deploy the project to production, which can then be accessed via [https://workers-playground.pages.dev/].
+-- any PR that has the `preview:workers-playground` label. This will deploy a preview, which can then be accessed via [https://<SHA>.workers-playground.pages.dev/].
++Deployments are managed by Github Actions:
++
++- deploy-pages-previews.yml:
++  - Runs on any PR that has the `preview:workers-playground` label.
++  - Deploys a preview, which can then be accessed via [https://<SHA>.workers-playground.pages.dev/].
++- changesets.yml:
++  - Runs when a "Version Packages" PR, containing a changeset that touches this package, is merged to `main`.
++  - Deploys this package to production, which can then be accessed via [https://workers-playground.pages.dev/].
+diff --git a/packages/workers-playground/package.json b/packages/workers-playground/package.json
+index 0f151b708..113a0e260 100644
+--- a/packages/workers-playground/package.json
++++ b/packages/workers-playground/package.json
+@@ -8,7 +8,7 @@
+ 		"dev": "vite",
+ 		"generate:default-hash": "pnpm exec tsx ./generate-default-hash.ts",
+ 		"check": "pnpm run generate:default-hash check",
+-		"deploy": "wrangler pages deploy --project-name workers-playground ./dist"
++		"deploy": "CLOUDFLARE_ACCOUNT_ID=e35fd947284363a46fd7061634477114 wrangler pages deploy --project-name workers-playground ./dist"
+ 	},
+ 	"dependencies": {
+ 		"@cloudflare/component-button": "^7.0.11",
+diff --git a/packages/wrangler-devtools/README.md b/packages/wrangler-devtools/README.md
+index 35ce555f2..d24a4659c 100644
+--- a/packages/wrangler-devtools/README.md
++++ b/packages/wrangler-devtools/README.md
+@@ -4,9 +4,11 @@ This package contains a Workers specific version of Chrome Devtools that is used
+ 
+ ## Deployment
+ 
+-Deployments are managed by the Github Action defined at .github/workflows/deploy-pages-projects.yaml.
+-
+-This action runs on:
+-
+-- every push to `main`. This will deploy the project to production, which can then be accessed via [https://cloudflare-devtools.pages.dev/].
+-- any PR that has the `preview:wrangler-devtools` label. This will deploy a preview, which can then be accessed via [https://<SHA>.cloudflare-devtools.pages.dev/].
++Deployments are managed by Github Actions:
++
++- deploy-pages-previews.yml:
++  - Runs on any PR that has the `preview:wrangler-devtools` label.
++  - Deploys a preview, which can then be accessed via [https://<SHA>.cloudflare-devtools.pages.dev/].
++- changesets.yml:
++  - Runs when a "Version Packages" PR, containing a changeset that touches this package, is merged to `main`.
++  - Deploys this package to production, which can then be accessed via [https://cloudflare-devtools.pages.dev/].
+diff --git a/packages/wrangler-devtools/package.json b/packages/wrangler-devtools/package.json
+index cedc0fc2c..b4da774b2 100644
+--- a/packages/wrangler-devtools/package.json
++++ b/packages/wrangler-devtools/package.json
+@@ -8,7 +8,7 @@
+ 		"url": "https://github.com/cloudflare/workers-sdk/issues"
+ 	},
+ 	"scripts": {
+-		"deploy": "make publish"
++		"deploy": "CLOUDFLARE_ACCOUNT_ID=e35fd947284363a46fd7061634477114 make publish"
+ 	},
+ 	"license": "BSD-3-Clause",
+ 	"author": "workers-devprod@cloudflare.com",
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 018da2e52..130bcc3e9 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -1761,6 +1761,21 @@ importers:
+         specifier: ^3.0.0
+         version: link:../wrangler
+ 
++  tools:
++    devDependencies:
++      '@cloudflare/eslint-config-worker':
++        specifier: workspace:*
++        version: link:../packages/eslint-config-worker
++      '@cloudflare/workers-tsconfig':
++        specifier: workspace:*
++        version: link:../packages/workers-tsconfig
++      '@typescript-eslint/eslint-plugin':
++        specifier: ^5.55.0
++        version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.57.0)(typescript@4.9.5)
++      '@typescript-eslint/parser':
++        specifier: ^5.55.0
++        version: 5.62.0(eslint@8.57.0)(typescript@4.9.5)
++
+ packages:
+ 
+   /@aashutoshrathi/word-wrap@1.2.6:
+@@ -6998,7 +7013,7 @@ packages:
+       minimatch: 9.0.1
+       node-plop: 0.26.3
+       proxy-agent: 6.3.1
+-      ts-node: 10.9.1(@types/node@20.1.7)(typescript@4.9.5)
++      ts-node: 10.9.2(@types/node@20.1.7)(typescript@4.9.5)
+       update-check: 1.5.4
+       validate-npm-package-name: 5.0.0
+     transitivePeerDependencies:
+@@ -12440,7 +12455,6 @@ packages:
+       glob-parent: 5.1.2
+       merge2: 1.4.1
+       micromatch: 4.0.5
+-    dev: true
+ 
+   /fast-json-stable-stringify@2.1.0:
+     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
+@@ -13089,7 +13103,7 @@ packages:
+       dir-glob: 3.0.1
+       fast-glob: 3.2.12
+       glob: 7.2.0
+-      ignore: 5.2.4
++      ignore: 5.3.1
+       merge2: 1.4.1
+       slash: 3.0.0
+ 
+@@ -13102,7 +13116,7 @@ packages:
+       dir-glob: 3.0.1
+       fast-glob: 3.2.12
+       glob: 7.2.0
+-      ignore: 5.2.4
++      ignore: 5.3.1
+       merge2: 1.4.1
+       slash: 3.0.0
+     dev: true
+@@ -13113,8 +13127,8 @@ packages:
+     dependencies:
+       array-union: 2.1.0
+       dir-glob: 3.0.1
+-      fast-glob: 3.2.12
+-      ignore: 5.2.4
++      fast-glob: 3.3.2
++      ignore: 5.3.1
+       merge2: 1.4.1
+       slash: 3.0.0
+ 
+@@ -13507,7 +13521,6 @@ packages:
+   /ignore@5.3.1:
+     resolution: {integrity: sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==}
+     engines: {node: '>= 4'}
+-    dev: true
+ 
+   /immediate@3.0.6:
+     resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
+@@ -15706,8 +15719,8 @@ packages:
+   /micromark-extension-mdxjs@1.0.0:
+     resolution: {integrity: sha512-TZZRZgeHvtgm+IhtgC2+uDMR7h8eTKF0QUX9YsgoL9+bADBpBY6SiLvWqnBlLbCEevITmTqmEuY3FoxMKVs1rQ==}
+     dependencies:
+-      acorn: 8.10.0
+-      acorn-jsx: 5.3.2(acorn@8.10.0)
++      acorn: 8.11.3
++      acorn-jsx: 5.3.2(acorn@8.11.3)
+       micromark-extension-mdx-expression: 1.0.3
+       micromark-extension-mdx-jsx: 1.0.3
+       micromark-extension-mdx-md: 1.0.0
+@@ -16139,7 +16152,7 @@ packages:
+   /mlly@1.4.2:
+     resolution: {integrity: sha512-i/Ykufi2t1EZ6NaPLdfnZk2AX8cs0d+mTzVKuPfqPKPatxLApaBoxJQ9x1/uckXtrS/U5oisPMDkNs0yQTaBRg==}
+     dependencies:
+-      acorn: 8.10.0
++      acorn: 8.11.3
+       pathe: 1.1.1
+       pkg-types: 1.0.3
+       ufo: 1.3.0
+@@ -19539,8 +19552,8 @@ packages:
+     engines: {node: '>=6.10'}
+     dev: true
+ 
+-  /ts-node@10.9.1(@types/node@20.1.7)(typescript@4.9.5):
+-    resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
++  /ts-node@10.9.2(@types/node@20.1.7)(typescript@4.9.5):
++    resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
+     hasBin: true
+     peerDependencies:
+       '@swc/core': '>=1.2.50'
+@@ -19559,8 +19572,8 @@ packages:
+       '@tsconfig/node14': 1.0.3
+       '@tsconfig/node16': 1.0.4
+       '@types/node': 20.1.7
+-      acorn: 8.10.0
+-      acorn-walk: 8.2.0
++      acorn: 8.11.3
++      acorn-walk: 8.3.2
+       arg: 4.1.3
+       create-require: 1.1.1
+       diff: 4.0.2
+diff --git a/pnpm-workspace.yaml b/pnpm-workspace.yaml
+index 2d2095ff3..ae60fd954 100644
+--- a/pnpm-workspace.yaml
++++ b/pnpm-workspace.yaml
+@@ -1,3 +1,4 @@
+ packages:
+   - "packages/*"
+   - "fixtures/*"
++  - "tools"
+diff --git a/tools/.eslintrc.js b/tools/.eslintrc.js
+new file mode 100644
+index 000000000..a478f67f5
+--- /dev/null
++++ b/tools/.eslintrc.js
+@@ -0,0 +1,4 @@
++module.exports = {
++	root: true,
++	extends: ["@cloudflare/eslint-config-worker"],
++};
+diff --git a/tools/README.md b/tools/README.md
+new file mode 100644
+index 000000000..410eb7468
+--- /dev/null
++++ b/tools/README.md
+@@ -0,0 +1,5 @@
++# Continuous Integration (CI) tools
++
++Tools for helping with CI
++
++- Deploy non-npm packages - this is used by the changesets.yml GitHub workflow to deploy non-npm packages (e.g. Workers and Pages projects).
+diff --git a/tools/deployments/deploy-non-npm-packages.ts b/tools/deployments/deploy-non-npm-packages.ts
+new file mode 100644
+index 000000000..50e3f5e76
+--- /dev/null
++++ b/tools/deployments/deploy-non-npm-packages.ts
+@@ -0,0 +1,127 @@
++import assert from "node:assert";
++import { execSync } from "node:child_process";
++import { readdirSync, readFileSync } from "node:fs";
++import { resolve } from "node:path";
++
++if (require.main === module) {
++	deployNonNpmPackages(getUpdatedPackages(), findDeployablePackageNames());
++}
++
++/**
++ * Deploy all packages that had updates but are not deployed to npm automatically by the changesets tooling.
++ *
++ * @param updatedPackages An array of all the packages that were updated by changesets.
++ * @param deployablePackageNames A set of the names of packages that can be deployed by this script.
++ */
++export function deployNonNpmPackages(
++	updatedPackages: UpdatedPackage[],
++	deployablePackageNames: Set<string>
++) {
++	let deployedPackageCount = 0;
++	console.log("Checking for non-npm packages to deploy...");
++	for (const pkg of updatedPackages) {
++		if (deployablePackageNames.has(pkg.name)) {
++			console.log(`Package "${pkg.name}@${pkg.version}": deploying...`);
++			deployPackage(pkg.name);
++			deployedPackageCount++;
++		} else {
++			console.log(
++				`Package "${pkg.name}@${pkg.version}": already deployed via npm.`
++			);
++		}
++	}
++	if (deployedPackageCount === 0) {
++		console.log("No non-npm packages to deploy.");
++	} else {
++		console.log(`Deployed ${deployedPackageCount} non-npm packages.`);
++	}
++}
++
++/**
++ * Get a list of all the packages that got bumped by changesets from the PUBLISHED_PACKAGES environment variable.
++ */
++export function getUpdatedPackages(): UpdatedPackage[] {
++	const packages = JSON.parse(process.env.PUBLISHED_PACKAGES ?? "[]");
++
++	assert(
++		Array.isArray(packages),
++		`Expected PUBLISHED_PACKAGES to be an array but got ${typeof packages}.`
++	);
++	packages.forEach((p, i) => {
++		assert(
++			typeof p === "object" && p !== null,
++			`Expected item ${i} in array to be an array but got ${typeof p}.`
++		);
++		assert(
++			typeof p.name === "string",
++			`Expected item ${i} to have a "name" property of type string but got ${p.name}.`
++		);
++		assert(
++			typeof p.version === "string",
++			`Expected item ${i} to have a "version" property of type string but got ${p.version}.`
++		);
++	});
++
++	return packages;
++}
++
++/**
++ * Look for all the packages (under the top-level "packages" directory of the monorepo)
++ * that can be deployed using this script.
++ *
++ * This is determined by the package containing a package.json that is marked as `"private": true`
++ * and has a `deploy` script.
++ */
++export function findDeployablePackageNames(): Set<string> {
++	const packagesDirectory = resolve(__dirname, "../../packages");
++	const allPackageDirectories = readdirSync(packagesDirectory).map((p) =>
++		resolve(packagesDirectory, p)
++	);
++	const allPackages: PackageJSON[] = [];
++	for (const dir of allPackageDirectories) {
++		try {
++			allPackages.push(
++				JSON.parse(readFileSync(resolve(dir, "package.json"), "utf-8"))
++			);
++		} catch {
++			// Do nothing
++		}
++	}
++	const deployablePackages = new Set<string>();
++	for (const pkg of allPackages) {
++		if (pkg.private && pkg.scripts?.deploy !== undefined) {
++			deployablePackages.add(pkg.name);
++		}
++	}
++	return deployablePackages;
++}
++
++/**
++ * Try to run `pnpm deploy` on the given package in the monorepo.
++ *
++ * If this deployment fails, log an error and continue.
++ *
++ * @param pkgName the package to deploy
++ */
++export function deployPackage(pkgName: string) {
++	try {
++		execSync(`pnpm -F ${pkgName} deploy`, {
++			env: process.env,
++			stdio: "inherit",
++		});
++	} catch (e) {
++		console.error(`::error::Failed to deploy "${pkgName}".`);
++		console.error(
++			"Work out why this happened and then potentially run a manual deployment."
++		);
++		console.error(e);
++	}
++}
++
++export type UpdatedPackage = { name: string; version: string };
++
++export type PackageJSON = {
++	name: string;
++	private?: boolean;
++	scripts?: Record<string, unknown>;
++};
+diff --git a/tools/package.json b/tools/package.json
+new file mode 100644
+index 000000000..b40c6c336
+--- /dev/null
++++ b/tools/package.json
+@@ -0,0 +1,16 @@
++{
++	"name": "tools",
++	"description": "Tooling for this monorepo CI",
++	"private": true,
++	"scripts": {
++		"check:type": "tsc",
++		"test": "vitest run",
++		"check:lint": "eslint ."
++	},
++	"devDependencies": {
++		"@cloudflare/eslint-config-worker": "workspace:*",
++		"@cloudflare/workers-tsconfig": "workspace:*",
++		"@typescript-eslint/eslint-plugin": "^5.55.0",
++		"@typescript-eslint/parser": "^5.55.0"
++	}
++}
+diff --git a/tools/tsconfig.json b/tools/tsconfig.json
+new file mode 100644
+index 000000000..3ab4a8395
+--- /dev/null
++++ b/tools/tsconfig.json
+@@ -0,0 +1,13 @@
++{
++	"root": true,
++	"extends": "@cloudflare/workers-tsconfig/tsconfig.json",
++	"include": ["**/*.ts"],
++	"exclude": ["node_modules"],
++	"compilerOptions": {
++		"module": "CommonJS",
++		"allowJs": false,
++		"outDir": "dist",
++		"types": ["node"],
++		"resolveJsonModule": true
++	}
++}
+diff --git a/tools/turbo.json b/tools/turbo.json
+new file mode 100644
+index 000000000..3e1e0f98b
+--- /dev/null
++++ b/tools/turbo.json
+@@ -0,0 +1,10 @@
++{
++	"$schema": "http://turbo.build/schema.json",
++	"extends": ["//"],
++
++	"pipeline": {
++		"build": {
++			"env": ["CLOUDFLARE_API_TOKEN", "PUBLISHED_PACKAGES"]
++		}
++	}
++}
+diff --git a/tools/vitest.config.ts b/tools/vitest.config.ts
+new file mode 100644
+index 000000000..2a5c0775c
+--- /dev/null
++++ b/tools/vitest.config.ts
+@@ -0,0 +1,11 @@
++import { defineProject, mergeConfig } from "vitest/config";
++import configShared from "../vitest.shared";
++
++export default mergeConfig(
++	configShared,
++	defineProject({
++		test: {
++			include: ["**/__tests__/*.test.ts"],
++		},
++	})
++);
+diff --git a/vitest.workspace.ts b/vitest.workspace.ts
+index 568eb2f43..edbed77fe 100644
+--- a/vitest.workspace.ts
++++ b/vitest.workspace.ts
+@@ -1 +1,5 @@
+-export default ["packages/*/vitest.config.ts", "fixtures/*/vitest.config.ts"];
++export default [
++	"packages/*/vitest.config.ts",
++	"fixtures/*/vitest.config.ts",
++	"tools/vitest.config.ts",
++];

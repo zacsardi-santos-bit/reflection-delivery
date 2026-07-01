@@ -1,0 +1,26 @@
+patching file cmd/mo-service/main.go
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 1579 (offset 332 lines).
+patching file pkg/backup/backup.go
+patching file pkg/cnservice/memory_engine.go
+patching file pkg/common/morpc/backend.go
+patching file pkg/container/types/rowid.go
+patching file pkg/container/types/uuid.go
+patching file pkg/frontend/computation_wrapper.go
+patching file pkg/frontend/mysql_cmd_executor.go
+patching file pkg/frontend/session.go
+patching file pkg/objectio/id.go
+patching file pkg/sql/compile/compile.go
+patching file pkg/sql/compile/operator.go
+patching file pkg/sql/plan/build_alter_table.go
+patching file pkg/sql/plan/build_constraint_util.go
+patching file pkg/sql/plan/function/func_builtin.go
+patching file pkg/sql/plan/function/udf.go
+patching file pkg/sql/plan/query_builder.go
+patching file pkg/sql/util/index_util.go
+patching file pkg/stream/adapter/kafka/adapter.go
+patching file pkg/txn/client/generator.go
+patching file pkg/txn/storage/memorystorage/storage_txn_client.go
+patching file pkg/vm/engine/tae/common/seqnum.go
+patching file pkg/vm/engine/tae/logtail/service/server.go

@@ -1,0 +1,5 @@
+patching file CHANGES.md
+patching file apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/main/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapper.java
+patching file apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/main/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInstrumentation.java
+patching file apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/main/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptor.java
+patching file apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/main/resources/skywalking-plugin.def

@@ -1,0 +1,23 @@
+{
+ "task": "apache-pulsar-4262",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden threads a deleteSchema flag through Topic/PersistentTopic/NonPersistentTopic delete() so GC removes the schema; test testGCWillDeleteSchema asserts topicHasSchema() false after GC and true while consumers/subscriptions exist"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

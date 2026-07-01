@@ -1,0 +1,23 @@
+{
+ "task": "chainsafe-lodestar-7663",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds hierarchicalLayers.ts with HierarchicalLayers.fromString (validation -> error codes), getArchiveLayers computing snapshotSlot+diffSlots, toString/totalLayers; F2P=35 vitest tests exercise these incl. 'should throw an error for invalid order of epochs'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

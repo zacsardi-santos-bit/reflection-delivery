@@ -1,0 +1,5 @@
+I need to implement a dependency management component for events. Events can depend on other events, and I need something that tracks all of these relationships in a tree structure. When I add an event, all of its transitive dependencies should be added automatically. When I remove an event, its dependencies should be cleaned up — but only if nothing else still relies on them. There's also a "soft" removal mode where an event is just deselected: if it turns out the event is still needed as a dependency of another event, it should stay in the tree untouched.
+
+I also need observer support — callers should be able to register callbacks that are invoked whenever a node is added to or removed from the tree, so the rest of the system can react accordingly. When a hard removal cascades up and removes dependent events, or cascades down and removes orphaned dependency events, the removal observers should fire for each of those nodes too.
+
+The component should live in its own dedicated package within the events directory, and the tree manager should be created with a function that resolves an event's dependencies by ID. The manager is not required to be thread-safe.

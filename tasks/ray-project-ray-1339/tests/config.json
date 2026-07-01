@@ -1,0 +1,21 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/ray/rllib/test/test_filters.py /workspace/repo/python/ray/rllib/test/test_optimizers.py -v",
+  "test_files": [
+    "python/ray/rllib/test/__init__.py",
+    "python/ray/rllib/test/mock_evaluator.py",
+    "python/ray/rllib/test/test_evaluators.py",
+    "python/ray/rllib/test/test_filters.py",
+    "python/ray/rllib/test/test_optimizers.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "ray.rllib.test.test_filters.RunningStatTest::testCombiningStat",
+    "ray.rllib.test.test_filters.RunningStatTest::testRunningStat",
+    "ray.rllib.test.test_filters.MSFTest::testBasic",
+    "ray.rllib.test.test_filters.FilterManagerTest::testSynchronize",
+    "ray.rllib.test.test_optimizers.AsyncOptimizerTest::testBasic"
+  ],
+  "PASS_TO_PASS": []
+}

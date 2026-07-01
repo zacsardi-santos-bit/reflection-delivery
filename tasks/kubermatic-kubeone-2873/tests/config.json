@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "bash -c 'go run ./test/generator/ -file ./test/tests.yml -type yaml -output /tmp/gen_prow.yaml 2>/dev/null; echo '\"'\"'{\"Action\":\"run\",\"Test\":\"TestProwYAMLConsistency\"}'\"'\"'; if diff /tmp/gen_prow.yaml ./test/e2e/prow.yaml >/dev/null 2>&1; then echo '\"'\"'{\"Action\":\"pass\",\"Test\":\"TestProwYAMLConsistency\",\"Elapsed\":0}'\"'\"'; else echo '\"'\"'{\"Action\":\"fail\",\"Test\":\"TestProwYAMLConsistency\",\"Elapsed\":0}'\"'\"'; exit 1; fi'",
+  "test_files": [
+    "test/e2e/prow.yaml",
+    "test/e2e/scenario_upgrade.go",
+    "test/tests.yml"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "TestProwYAMLConsistency"
+  ],
+  "PASS_TO_PASS": []
+}

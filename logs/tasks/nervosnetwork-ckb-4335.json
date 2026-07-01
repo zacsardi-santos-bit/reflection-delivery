@@ -1,0 +1,23 @@
+{
+ "task": "nervosnetwork-ckb-4335",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden moves helpers into util/test-chain-utils/src/{mock_chain.rs,mock_utils.rs}; test.patch rewrites chain/src/tests/*.rs imports; F2P=46 ckb-chain tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

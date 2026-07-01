@@ -1,0 +1,23 @@
+{
+ "task": "milvus-io-milvus-31077",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: retryErr := retry.Do(...); if retryErr != nil { return resp, retryErr }; return resp, err"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 22,
+  "shallow": true
+ }
+}

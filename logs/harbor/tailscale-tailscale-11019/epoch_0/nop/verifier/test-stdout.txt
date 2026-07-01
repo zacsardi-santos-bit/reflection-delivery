@@ -1,0 +1,10 @@
+patching file cmd/k8s-operator/dnsrecords_test.go
+patching file cmd/k8s-operator/nameserver_test.go
+# tailscale.com/cmd/k8s-operator [tailscale.com/cmd/k8s-operator.test]
+cmd/k8s-operator/dnsrecords_test.go:70:12: undefined: dnsRecordsReconciler
+cmd/k8s-operator/dnsrecords_test.go:187:47: undefined: operatorutils.DNSRecordsCMKey
+cmd/k8s-operator/nameserver_test.go:80:16: dnsCfg.Status.Nameserver undefined (type "tailscale.com/k8s-operator/apis/v1alpha1".DNSConfigStatus has no field or method Nameserver)
+{"Time":"2026-06-29T15:19:13.8650959Z","Action":"start","Package":"tailscale.com/cmd/k8s-operator"}
+{"Time":"2026-06-29T15:19:13.865160639Z","Action":"output","Package":"tailscale.com/cmd/k8s-operator","Output":"FAIL\ttailscale.com/cmd/k8s-operator [build failed]\n"}
+{"Time":"2026-06-29T15:19:13.865196879Z","Action":"fail","Package":"tailscale.com/cmd/k8s-operator","Elapsed":0}
+reward=0 graded=48 found=0 failed=0 parsed=1 framework=go exit_code=1

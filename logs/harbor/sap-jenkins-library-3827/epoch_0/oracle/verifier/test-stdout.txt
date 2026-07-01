@@ -1,0 +1,161 @@
+patching file pkg/kubernetes/helm_test.go
+patching file pkg/kubernetes/utils_test.go
+{"Time":"2026-06-29T15:33:13.245977027Z","Action":"start","Package":"github.com/SAP/jenkins-library/pkg/kubernetes"}
+{"Time":"2026-06-29T15:33:13.276601436Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInit"}
+{"Time":"2026-06-29T15:33:13.276745364Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInit","Output":"=== RUN   TestRunHelmInit\n"}
+{"Time":"2026-06-29T15:33:13.27720405Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInit/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.277253305Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInit/test_case:_0","Output":"=== RUN   TestRunHelmInit/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.27730226Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInit/test_case:_0","Output":"--- PASS: TestRunHelmInit/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.277323641Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInit/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.277347627Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInit","Output":"--- PASS: TestRunHelmInit (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.277370922Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInit","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.277399237Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd"}
+{"Time":"2026-06-29T15:33:13.277417121Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd","Output":"=== RUN   TestRunHelmAdd\n"}
+{"Time":"2026-06-29T15:33:13.277618059Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.277740566Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_0","Output":"=== RUN   TestRunHelmAdd/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.278848691Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.278910209Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_0","Output":"--- PASS: TestRunHelmAdd/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.279022982Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.279094941Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_1"}
+{"Time":"2026-06-29T15:33:13.279122745Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_1","Output":"=== RUN   TestRunHelmAdd/test_case:_1\n"}
+{"Time":"2026-06-29T15:33:13.279169565Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_1","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.279195385Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_1","Output":"--- PASS: TestRunHelmAdd/test_case:_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.279210204Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd/test_case:_1","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.279235522Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd","Output":"--- PASS: TestRunHelmAdd (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.279258166Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmAdd","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.279278335Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade"}
+{"Time":"2026-06-29T15:33:13.279338762Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade","Output":"=== RUN   TestRunHelmUpgrade\n"}
+{"Time":"2026-06-29T15:33:13.279367938Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.279380021Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_0","Output":"=== RUN   TestRunHelmUpgrade/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.279408306Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.279427253Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.27950365Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_0","Output":"--- PASS: TestRunHelmUpgrade/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.279573886Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.279602892Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_1"}
+{"Time":"2026-06-29T15:33:13.279622009Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_1","Output":"=== RUN   TestRunHelmUpgrade/test_case:_1\n"}
+{"Time":"2026-06-29T15:33:13.279676033Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_1","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.279736069Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_1","Output":"--- PASS: TestRunHelmUpgrade/test_case:_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.279774674Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade/test_case:_1","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.279795053Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade","Output":"--- PASS: TestRunHelmUpgrade (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.279818829Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUpgrade","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.279830291Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmLint"}
+{"Time":"2026-06-29T15:33:13.279843547Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmLint","Output":"=== RUN   TestRunHelmLint\n"}
+{"Time":"2026-06-29T15:33:13.27985576Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmLint/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.279870679Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmLint/test_case:_0","Output":"=== RUN   TestRunHelmLint/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.27991794Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmLint/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm lint ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.280071246Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmLint/test_case:_0","Output":"--- PASS: TestRunHelmLint/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.280219788Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmLint/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.280279894Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmLint","Output":"--- PASS: TestRunHelmLint (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.280297027Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmLint","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.280320082Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall"}
+{"Time":"2026-06-29T15:33:13.280332175Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall","Output":"=== RUN   TestRunHelmInstall\n"}
+{"Time":"2026-06-29T15:33:13.280352605Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.280364017Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_0","Output":"=== RUN   TestRunHelmInstall/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.280376651Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.280422961Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.280452427Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_0","Output":"--- PASS: TestRunHelmInstall/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.280470462Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.280505821Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_1"}
+{"Time":"2026-06-29T15:33:13.280520309Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_1","Output":"=== RUN   TestRunHelmInstall/test_case:_1\n"}
+{"Time":"2026-06-29T15:33:13.280555617Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_1","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.280589603Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_1","Output":"--- PASS: TestRunHelmInstall/test_case:_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.280625652Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_1","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.280645811Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_2"}
+{"Time":"2026-06-29T15:33:13.280665108Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_2","Output":"=== RUN   TestRunHelmInstall/test_case:_2\n"}
+{"Time":"2026-06-29T15:33:13.280700457Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_2","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.280722058Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_2","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.280741155Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_2","Output":"--- PASS: TestRunHelmInstall/test_case:_2 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.28078494Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall/test_case:_2","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.280798335Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall","Output":"--- PASS: TestRunHelmInstall (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.280822452Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmInstall","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.280855205Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall"}
+{"Time":"2026-06-29T15:33:13.280870665Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall","Output":"=== RUN   TestRunHelmUninstall\n"}
+{"Time":"2026-06-29T15:33:13.280881796Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.280907206Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_0","Output":"=== RUN   TestRunHelmUninstall/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.280924078Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.280942143Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_0","Output":"--- PASS: TestRunHelmUninstall/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.280960899Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.280972562Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_1"}
+{"Time":"2026-06-29T15:33:13.280985437Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_1","Output":"=== RUN   TestRunHelmUninstall/test_case:_1\n"}
+{"Time":"2026-06-29T15:33:13.281003832Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_1","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.281022628Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_1","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.281038209Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_1","Output":"--- PASS: TestRunHelmUninstall/test_case:_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281048368Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_1","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281058939Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_2"}
+{"Time":"2026-06-29T15:33:13.281068147Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_2","Output":"=== RUN   TestRunHelmUninstall/test_case:_2\n"}
+{"Time":"2026-06-29T15:33:13.281100358Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_2","Output":"--- PASS: TestRunHelmUninstall/test_case:_2 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281121009Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall/test_case:_2","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281135917Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall","Output":"--- PASS: TestRunHelmUninstall (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281162389Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmUninstall","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281204991Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage"}
+{"Time":"2026-06-29T15:33:13.28122513Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage","Output":"=== RUN   TestRunHelmPackage\n"}
+{"Time":"2026-06-29T15:33:13.281238686Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.281275006Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_0","Output":"=== RUN   TestRunHelmPackage/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.281294974Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.281306226Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_0","Output":"--- PASS: TestRunHelmPackage/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281324301Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281346374Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_1"}
+{"Time":"2026-06-29T15:33:13.281368436Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_1","Output":"=== RUN   TestRunHelmPackage/test_case:_1\n"}
+{"Time":"2026-06-29T15:33:13.281392633Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_1","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.28140667Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_1","Output":"--- PASS: TestRunHelmPackage/test_case:_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281418243Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage/test_case:_1","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281441357Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage","Output":"--- PASS: TestRunHelmPackage (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281469602Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPackage","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281480603Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest"}
+{"Time":"2026-06-29T15:33:13.281503156Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest","Output":"=== RUN   TestRunHelmTest\n"}
+{"Time":"2026-06-29T15:33:13.281550768Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.281594603Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_0","Output":"=== RUN   TestRunHelmTest/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.28160855Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.281625452Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_0","Output":"--- PASS: TestRunHelmTest/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281659899Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281694716Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_1"}
+{"Time":"2026-06-29T15:33:13.281723622Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_1","Output":"=== RUN   TestRunHelmTest/test_case:_1\n"}
+{"Time":"2026-06-29T15:33:13.281734824Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_1","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.281756826Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_1","Output":"--- PASS: TestRunHelmTest/test_case:_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281780041Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest/test_case:_1","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281793587Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest","Output":"--- PASS: TestRunHelmTest (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281814969Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmTest","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281853102Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency"}
+{"Time":"2026-06-29T15:33:13.281864975Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency","Output":"=== RUN   TestRunHelmDependency\n"}
+{"Time":"2026-06-29T15:33:13.281918879Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.281943316Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency/test_case:_0","Output":"=== RUN   TestRunHelmDependency/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.281968625Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency/test_case:_0","Output":"--- PASS: TestRunHelmDependency/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.281982482Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.281995647Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency/test_case:_1"}
+{"Time":"2026-06-29T15:33:13.282006148Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency/test_case:_1","Output":"=== RUN   TestRunHelmDependency/test_case:_1\n"}
+{"Time":"2026-06-29T15:33:13.28202292Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency/test_case:_1","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.28221734Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency/test_case:_1","Output":"--- PASS: TestRunHelmDependency/test_case:_1 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.282245134Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency/test_case:_1","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.282267417Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency","Output":"--- PASS: TestRunHelmDependency (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.282277947Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmDependency","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.282287927Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish"}
+{"Time":"2026-06-29T15:33:13.2823052Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish","Output":"=== RUN   TestRunHelmPublish\n"}
+{"Time":"2026-06-29T15:33:13.282434379Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish/success"}
+{"Time":"2026-06-29T15:33:13.282469657Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish/success","Output":"=== RUN   TestRunHelmPublish/success\n"}
+{"Time":"2026-06-29T15:33:13.282484285Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish/success","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm  ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.282508142Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish/success","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"publishing artifact: https://my.target.repository.local/test_helm_chart/test_helm_chart-1.2.3.tgz\" library=\n"}
+{"Time":"2026-06-29T15:33:13.282556685Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish/success","Output":"--- PASS: TestRunHelmPublish/success (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.282583577Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish/success","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.282598095Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish","Output":"--- PASS: TestRunHelmPublish (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.282634736Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmPublish","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.282657751Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmCommand"}
+{"Time":"2026-06-29T15:33:13.282675915Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmCommand","Output":"=== RUN   TestRunHelmCommand\n"}
+{"Time":"2026-06-29T15:33:13.282701124Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmCommand/test_case:_0"}
+{"Time":"2026-06-29T15:33:13.282712807Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmCommand/test_case:_0","Output":"=== RUN   TestRunHelmCommand/test_case:_0\n"}
+{"Time":"2026-06-29T15:33:13.282734318Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmCommand/test_case:_0","Output":"time=\"2026-06-29T15:33:13Z\" level=info msg=\"Calling helm lint_package_publish ...\" library=\n"}
+{"Time":"2026-06-29T15:33:13.282759777Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmCommand/test_case:_0","Output":"--- PASS: TestRunHelmCommand/test_case:_0 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.282772151Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmCommand/test_case:_0","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.282795586Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmCommand","Output":"--- PASS: TestRunHelmCommand (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.282836566Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunHelmCommand","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.282862796Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunUtils"}
+{"Time":"2026-06-29T15:33:13.282879439Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunUtils","Output":"=== RUN   TestRunUtils\n"}
+{"Time":"2026-06-29T15:33:13.282934875Z","Action":"run","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunUtils/Get_container_info"}
+{"Time":"2026-06-29T15:33:13.282956487Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunUtils/Get_container_info","Output":"=== RUN   TestRunUtils/Get_container_info\n"}
+{"Time":"2026-06-29T15:33:13.283429792Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunUtils/Get_container_info","Output":"--- PASS: TestRunUtils/Get_container_info (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.283464629Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunUtils/Get_container_info","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.283489006Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunUtils","Output":"--- PASS: TestRunUtils (0.00s)\n"}
+{"Time":"2026-06-29T15:33:13.283500749Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Test":"TestRunUtils","Elapsed":0}
+{"Time":"2026-06-29T15:33:13.283512131Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Output":"PASS\n"}
+{"Time":"2026-06-29T15:33:13.284898898Z","Action":"output","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Output":"ok  \tgithub.com/SAP/jenkins-library/pkg/kubernetes\t0.038s\n"}
+{"Time":"2026-06-29T15:33:13.284971078Z","Action":"pass","Package":"github.com/SAP/jenkins-library/pkg/kubernetes","Elapsed":0.039}
+reward=1 graded=33 found=33 failed=0 parsed=33 framework=go exit_code=0

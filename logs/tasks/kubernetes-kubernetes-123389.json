@@ -1,0 +1,23 @@
+{
+ "task": "kubernetes-kubernetes-123389",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden bumps sigs.k8s.io/knftables adding `Fake.ParseDump()` and `Fixed a bug in Fake.ParseDump() when using IPv6`; test.patch adds pkg/proxy/nftables/helpers_test.go + proxier_test.go; F2P=303"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 85,
+  "shallow": true
+ }
+}

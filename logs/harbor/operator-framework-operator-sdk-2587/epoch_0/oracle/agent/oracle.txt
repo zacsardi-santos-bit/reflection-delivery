@@ -1,0 +1,8 @@
+patching file cmd/operator-sdk/execentrypoint/ansible.go
+patching file doc/ansible/dev/finalizers.md
+patching file doc/ansible/user-guide.md
+patching file pkg/ansible/flags/flag.go
+patching file pkg/ansible/watches/testdata/ansible_collections/nameSpace/collection/roles/someRole/empty_file
+patching file pkg/ansible/watches/testdata/invalid_collection.yaml
+patching file pkg/ansible/watches/testdata/valid.yaml.tmpl
+patching file pkg/ansible/watches/watches.go

@@ -1,0 +1,23 @@
+{
+ "task": "openfga-openfga-2140",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds 'func (t *TypeSystem) UsersetCanFastPathWeight2(...)' with weighted-graph edge traversal + renames tuplemapper; test TestUsersetCanFastPathWeight2 covers eligible (union/exclusion) and ineligible (public/self-ref) cases"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

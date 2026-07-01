@@ -1,0 +1,5 @@
+I'm working with the TPM2 library and need two capabilities that are currently missing. First, I need a way to load an externally-generated RSA key pair into the TPM — providing both the public parameters and the private key material — and get back a handle I can use for subsequent TPM operations. Second, I need a way to certify a key held in the TPM: given a subject key and a signing key, the TPM should produce an attestation blob and a signature over it. The signature should be verifiable against the signer's public key using standard RSA signature verification.
+
+Beyond those new features, the existing functions for creating primary keys, creating child keys, loading keys, activating credentials, and evicting persistent keys currently conflate the authorization for the parent or hierarchy with the authorization for the key itself into a single password. These should be split into separate parameters so callers can provide distinct passwords for the parent authorization and the key authorization.
+
+The default RSA key size used in the library's key parameter defaults should also be updated to 2048 bits to align with modern security standards.

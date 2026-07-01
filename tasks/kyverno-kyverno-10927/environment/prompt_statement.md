@@ -1,0 +1,5 @@
+I'm working on the Kyverno policy engine and I've noticed that when you create a cluster policy with a global context reference that has no name specified, the API just emits a warning but still accepts the resource. This feels wrong — the name should be treated as required, and submitting a policy without it should be rejected with a clear validation error rather than silently accepted.
+
+I'd like the API to enforce this at admission time so that any policy with a missing or empty global context reference name gets rejected outright with an error message that clearly identifies the field as required. The underlying issue seems to be related to how the data structure is serialized — when the name is absent, it doesn't appear in the serialized form at all, which prevents the schema-level validation from catching it.
+
+Can you fix this so that the name is always present in the serialized representation (even when empty), enabling proper schema enforcement, and so that submitting an invalid policy results in a proper validation error rather than a warning?

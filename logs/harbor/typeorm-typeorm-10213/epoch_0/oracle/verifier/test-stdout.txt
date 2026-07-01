@@ -1,0 +1,16 @@
+patching file test/functional/query-builder/isolated-where/entity/User.ts
+patching file test/functional/query-builder/isolated-where/query-builder-isolated-where.ts
+patching file test/utils/test-utils.ts
+
+> typeorm@0.3.17 compile
+> rimraf ./build && tsc
+
+
+
+  query builder > isolated-where
+    ✔ should correctly apply brackets when where statement isolation is enabled
+
+
+  1 passing (121ms)
+
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=mocha exit_code=0

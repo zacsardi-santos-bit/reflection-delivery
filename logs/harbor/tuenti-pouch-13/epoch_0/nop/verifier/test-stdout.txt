@@ -1,0 +1,11 @@
+patching file state_test.go
+# github.com/tuenti/pouch [github.com/tuenti/pouch.test]
+/go/src/github.com/tuenti/pouch/state_test.go:167:17: undefined: SecretData
+/go/src/github.com/tuenti/pouch/state_test.go:172:17: undefined: SecretData
+/go/src/github.com/tuenti/pouch/state_test.go:177:17: undefined: SecretData
+/go/src/github.com/tuenti/pouch/state_test.go:182:17: undefined: SecretData
+/go/src/github.com/tuenti/pouch/state_test.go:248:40: invalid operation: foundTTU != c.TTU (mismatched types time.Duration and time.Time)
+/go/src/github.com/tuenti/pouch/state_test.go:256:27: assignment mismatch: 2 variables but c.TimeToUpdate returns 1 value
+/go/src/github.com/tuenti/pouch/state_test.go:257:29: assignment mismatch: 2 variables but c.TimeToUpdate returns 1 value
+FAIL	github.com/tuenti/pouch [build failed]
+reward=0 graded=10 found=10 failed=10 parsed=1 framework=go exit_code=1

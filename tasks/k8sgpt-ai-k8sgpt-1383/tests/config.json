@@ -1,0 +1,28 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/ai/bedrock_support -count=1",
+  "test_files": [
+    "pkg/ai/bedrock_support/completions_test.go",
+    "pkg/ai/bedrock_support/model_test.go",
+    "pkg/ai/bedrock_support/responses_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestCohereCompletion_GetCompletion",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestAI21_GetCompletion",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestAmazonCompletion_GetDefaultCompletion",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestAmazonCompletion_GetNovaCompletion",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestAmazonCompletion_GetCompletion_Nova",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestAmazonCompletion_GetCompletion_Default",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestAmazonCompletion_GetCompletion_UnsupportedModel",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::Test_isModelSupported",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestBedrockModelConfig",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestBedrockModel",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestCohereResponse_ParseResponse",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestAI21Response_ParseResponse",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestAmazonResponse_ParseResponse",
+    "github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support::TestNovaResponse_ParseResponse"
+  ],
+  "PASS_TO_PASS": []
+}

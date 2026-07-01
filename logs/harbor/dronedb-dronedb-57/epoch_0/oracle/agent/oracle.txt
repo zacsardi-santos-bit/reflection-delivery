@@ -1,0 +1,14 @@
+patching file CMakeLists.txt
+patching file platform/win32/ddb.bat
+patching file src/cmd/login.cpp
+patching file src/ddb.cpp
+patching file src/entry.cpp
+patching file src/fs.h
+patching file src/info.cpp
+patching file src/mio.cpp
+patching file src/mio.h
+patching file src/sensor_data.cpp
+patching file src/sqlite_database.cpp
+patching file src/timezone.cpp
+patching file src/utils.cpp
+patching file src/utils.h

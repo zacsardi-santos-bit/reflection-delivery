@@ -1,0 +1,23 @@
+{
+ "task": "apache-airflow-47814",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds dev/breeze/src/airflow_breeze/utils/publish_docs_to_s3.py S3DocsPublish; F2P=13 exercise get_all_eligible_docs (dot->hyphen exclude), publish_stable/all_docs source_dest_mapping, overwrite/skip"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 53,
+  "shallow": true
+ }
+}

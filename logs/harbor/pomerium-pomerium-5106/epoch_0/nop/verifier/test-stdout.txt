@@ -1,0 +1,17 @@
+patching file pkg/envoy/resource_monitor_test.go
+# github.com/pomerium/pomerium/pkg/envoy [github.com/pomerium/pomerium/pkg/envoy.test]
+pkg/envoy/resource_monitor_test.go:126:7: undefined: cgroupV2Driver
+pkg/envoy/resource_monitor_test.go:131:51: undefined: RootPath
+pkg/envoy/resource_monitor_test.go:132:71: undefined: MemoryUsagePath
+pkg/envoy/resource_monitor_test.go:133:67: undefined: MemoryLimitPath
+pkg/envoy/resource_monitor_test.go:134:38: undefined: CgroupFilePath
+pkg/envoy/resource_monitor_test.go:174:15: undefined: cgroupV2Driver
+pkg/envoy/resource_monitor_test.go:538:2: undefined: CgroupDriver
+pkg/envoy/resource_monitor_test.go:539:16: undefined: CgroupFilePath
+pkg/envoy/resource_monitor_test.go:542:7: undefined: CgroupDriver
+pkg/envoy/resource_monitor_test.go:544:53: undefined: CgroupFilePath
+pkg/envoy/resource_monitor_test.go:174:15: too many errors
+{"Time":"2026-06-29T15:29:28.655875823Z","Action":"start","Package":"github.com/pomerium/pomerium/pkg/envoy"}
+{"Time":"2026-06-29T15:29:28.656008146Z","Action":"output","Package":"github.com/pomerium/pomerium/pkg/envoy","Output":"FAIL\tgithub.com/pomerium/pomerium/pkg/envoy [build failed]\n"}
+{"Time":"2026-06-29T15:29:28.656087478Z","Action":"fail","Package":"github.com/pomerium/pomerium/pkg/envoy","Elapsed":0}
+reward=0 graded=55 found=0 failed=0 parsed=1 framework=go exit_code=1

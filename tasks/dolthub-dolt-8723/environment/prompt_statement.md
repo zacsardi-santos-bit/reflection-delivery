@@ -1,0 +1,5 @@
+I'm running into a data integrity problem with Dolt's JSON column support. When I insert a JSON document that has a very large string value — we're talking several megabytes — the data comes back truncated when I read it. In some cases the operation errors out entirely. This happens regardless of whether the large string is a value or a key in the JSON object.
+
+The problem seems to be in how Dolt stores large JSON documents internally. The indexed storage format has chunk size constraints, and when a string is too large to fit, there's no graceful fallback — the system either corrupts the data or fails. What I'd expect is that such documents get stored in a simpler, compatibility-safe format automatically, so the full content is preserved without any change needed on my end.
+
+I need the serialization logic to detect when a JSON document contains a string that exceeds the allowed size, and fall back to storing it as a plain blob instead of using the indexed format. After that fallback, the document should still be fully readable — I should be able to look up keys in it and get back the complete, untruncated original string value.

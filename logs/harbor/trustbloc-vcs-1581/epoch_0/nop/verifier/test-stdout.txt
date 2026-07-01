@@ -1,0 +1,15 @@
+patching file pkg/service/wellknown/provider/wellknown_service_test.go
+# github.com/trustbloc/vcs/pkg/service/wellknown/provider [github.com/trustbloc/vcs/pkg/service/wellknown/provider.test]
+pkg/service/wellknown/provider/wellknown_service_test.go:218:16: cannot infer T (/go/pkg/mod/github.com/samber/lo@v1.38.1/type_manipulation.go:23:14)
+pkg/service/wellknown/provider/wellknown_service_test.go:218:50: credentialConfigurationSupported.Claims undefined (type "github.com/trustbloc/vcs/pkg/restapi/v1/issuer".CredentialConfigurationsSupported has no field or method Claims)
+pkg/service/wellknown/provider/wellknown_service_test.go:228:72: cannot infer T (/go/pkg/mod/github.com/samber/lo@v1.38.1/type_manipulation.go:23:14)
+pkg/service/wellknown/provider/wellknown_service_test.go:228:84: definition.Context undefined (type *"github.com/trustbloc/vcs/pkg/restapi/v1/issuer".CredentialConfigurationsSupportedDefinition has no field or method Context)
+pkg/service/wellknown/provider/wellknown_service_test.go:245:41: cannot infer T (/go/pkg/mod/github.com/samber/lo@v1.38.1/type_manipulation.go:23:14)
+pkg/service/wellknown/provider/wellknown_service_test.go:245:75: credentialConfigurationSupported.Doctype undefined (type "github.com/trustbloc/vcs/pkg/restapi/v1/issuer".CredentialConfigurationsSupported has no field or method Doctype)
+pkg/service/wellknown/provider/wellknown_service_test.go:247:81: cannot infer T (/go/pkg/mod/github.com/samber/lo@v1.38.1/type_manipulation.go:23:14)
+pkg/service/wellknown/provider/wellknown_service_test.go:247:115: credentialConfigurationSupported.Order undefined (type "github.com/trustbloc/vcs/pkg/restapi/v1/issuer".CredentialConfigurationsSupported has no field or method Order)
+pkg/service/wellknown/provider/wellknown_service_test.go:250:37: cannot infer T (/go/pkg/mod/github.com/samber/lo@v1.38.1/type_manipulation.go:23:14)
+pkg/service/wellknown/provider/wellknown_service_test.go:250:71: credentialConfigurationSupported.Vct undefined (type "github.com/trustbloc/vcs/pkg/restapi/v1/issuer".CredentialConfigurationsSupported has no field or method Vct)
+pkg/service/wellknown/provider/wellknown_service_test.go:250:37: too many errors
+FAIL	github.com/trustbloc/vcs/pkg/service/wellknown/provider [build failed]
+reward=0 graded=7 found=7 failed=7 parsed=1 framework=go exit_code=1

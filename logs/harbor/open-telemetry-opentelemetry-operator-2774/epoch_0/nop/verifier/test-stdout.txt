@@ -1,0 +1,6 @@
+patching file cmd/operator-opamp-bridge/agent/agent_test.go
+# github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent [github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent.test]
+cmd/operator-opamp-bridge/agent/agent_test.go:150:79: undefined: protobufs.CustomCapabilities
+cmd/operator-opamp-bridge/agent/agent_test.go:154:64: undefined: protobufs.CustomMessage
+FAIL	github.com/open-telemetry/opentelemetry-operator/cmd/operator-opamp-bridge/agent [build failed]
+reward=0 graded=25 found=25 failed=25 parsed=1 framework=go exit_code=1

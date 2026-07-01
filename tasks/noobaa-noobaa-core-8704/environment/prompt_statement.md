@@ -1,0 +1,9 @@
+I'm working on the online upgrade mechanism for NooBaa's non-containerized storage system and need a few things fixed and verified.
+
+The first issue is an error message that appears when someone tries to downgrade the system. Currently it says something about "container versions" which doesn't make sense in this context — the actual problem is that the version being installed is older than what's already running on the server. The error message should clearly state that you're attempting to downgrade while the server is already at a newer version.
+
+The second issue is that I need integration test coverage for the upgrade blocking behavior. When a host's configuration directory is at an older version (as happens during a rolling upgrade), write operations through the management CLI — like creating, updating, or deleting buckets and accounts — should be blocked to prevent corruption. Read operations like listing or checking status should still work fine. The same rules apply through the S3 API: bucket modification operations should be rejected when the config directory is outdated, while object operations and read-only bucket queries should work normally.
+
+I also need to fix the lifecycle rule validation so that status values that aren't exactly the correct capitalized form return a malformed XML error instead of an invalid argument error. And bucket policy evaluation needs to correctly handle the case where a DENY for a specific principal should win over an ALLOW for all principals — currently this precedence isn't being respected in all cases.
+
+To support the integration tests for the CLI blocking behavior, I need helper utilities that can create and update a system configuration file with a mocked configuration directory version, so tests can simulate an outdated host state without running an actual upgrade.

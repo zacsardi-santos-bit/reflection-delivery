@@ -1,0 +1,28 @@
+patching file modules/socat/examples_test.go
+patching file modules/socat/options_test.go
+patching file modules/socat/socat_test.go
+{"Time":"2026-06-29T15:25:26.955489925Z","Action":"start","Package":"github.com/testcontainers/testcontainers-go/modules/socat"}
+{"Time":"2026-06-29T15:25:26.962355754Z","Action":"run","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget"}
+{"Time":"2026-06-29T15:25:26.962399795Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget","Output":"=== RUN   TestNewTarget\n"}
+{"Time":"2026-06-29T15:25:26.962472645Z","Action":"run","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/exposed-port"}
+{"Time":"2026-06-29T15:25:26.962493725Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/exposed-port","Output":"=== RUN   TestNewTarget/exposed-port\n"}
+{"Time":"2026-06-29T15:25:26.962526205Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/exposed-port","Output":"--- PASS: TestNewTarget/exposed-port (0.00s)\n"}
+{"Time":"2026-06-29T15:25:26.962547356Z","Action":"pass","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/exposed-port","Elapsed":0}
+{"Time":"2026-06-29T15:25:26.962577806Z","Action":"run","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/exposed-port-zero"}
+{"Time":"2026-06-29T15:25:26.962597466Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/exposed-port-zero","Output":"=== RUN   TestNewTarget/exposed-port-zero\n"}
+{"Time":"2026-06-29T15:25:26.962647806Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/exposed-port-zero","Output":"--- PASS: TestNewTarget/exposed-port-zero (0.00s)\n"}
+{"Time":"2026-06-29T15:25:26.962675267Z","Action":"pass","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/exposed-port-zero","Elapsed":0}
+{"Time":"2026-06-29T15:25:26.962698467Z","Action":"run","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/with-internal-port"}
+{"Time":"2026-06-29T15:25:26.962718237Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/with-internal-port","Output":"=== RUN   TestNewTarget/with-internal-port\n"}
+{"Time":"2026-06-29T15:25:26.962752137Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/with-internal-port","Output":"--- PASS: TestNewTarget/with-internal-port (0.00s)\n"}
+{"Time":"2026-06-29T15:25:26.962774547Z","Action":"pass","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/with-internal-port","Elapsed":0}
+{"Time":"2026-06-29T15:25:26.962796277Z","Action":"run","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/with-internal-port-zero"}
+{"Time":"2026-06-29T15:25:26.962822158Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/with-internal-port-zero","Output":"=== RUN   TestNewTarget/with-internal-port-zero\n"}
+{"Time":"2026-06-29T15:25:26.962849998Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/with-internal-port-zero","Output":"--- PASS: TestNewTarget/with-internal-port-zero (0.00s)\n"}
+{"Time":"2026-06-29T15:25:26.962870858Z","Action":"pass","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget/with-internal-port-zero","Elapsed":0}
+{"Time":"2026-06-29T15:25:26.962892678Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget","Output":"--- PASS: TestNewTarget (0.00s)\n"}
+{"Time":"2026-06-29T15:25:26.962926708Z","Action":"pass","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Test":"TestNewTarget","Elapsed":0}
+{"Time":"2026-06-29T15:25:26.962954849Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Output":"PASS\n"}
+{"Time":"2026-06-29T15:25:26.963030699Z","Action":"output","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Output":"ok  \tgithub.com/testcontainers/testcontainers-go/modules/socat\t0.007s\n"}
+{"Time":"2026-06-29T15:25:26.963062379Z","Action":"pass","Package":"github.com/testcontainers/testcontainers-go/modules/socat","Elapsed":0.008}
+reward=1 graded=5 found=5 failed=0 parsed=5 framework=go exit_code=0

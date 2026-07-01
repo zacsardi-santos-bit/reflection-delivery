@@ -1,0 +1,228 @@
+patching file spec/controllers/tokens_controller_spec.rb
+patching file spec/dummy/db/migrate/20111122132257_create_users.rb
+patching file spec/dummy/db/migrate/20120312140401_add_password_to_users.rb
+patching file spec/dummy/db/migrate/20151223192035_create_doorkeeper_tables.rb
+patching file spec/dummy/db/migrate/20151223200000_add_owner_to_application.rb
+patching file spec/dummy/db/migrate/20160320211015_add_previous_refresh_token_to_access_tokens.rb
+patching file spec/dummy/db/migrate/20180210183654_add_confidential_to_application.rb
+patching file spec/dummy/db/schema.rb
+patching file spec/lib/oauth/client/credentials_spec.rb
+patching file spec/models/doorkeeper/application_spec.rb
+patching file spec/requests/flows/password_spec.rb
+DEPRECATION WARNING: Static attributes will be removed in FactoryBot 5.0. Please use dynamic
+attributes instead by wrapping the attribute value in a block:
+
+redirect_uri { "https://app.com/callback" }
+
+To automatically update from static attributes to dynamic ones,
+install rubocop-rspec and run:
+
+rubocop \
+  --require rubocop-rspec \
+  --only FactoryBot/AttributeDefinedStatically \
+  --auto-correct
+
+ (called from block (2 levels) in <top (required)> at /workspace/repo/spec/factories.rb:5)
+DEPRECATION WARNING: Static attributes will be removed in FactoryBot 5.0. Please use dynamic
+attributes instead by wrapping the attribute value in a block:
+
+expires_in { 100 }
+
+To automatically update from static attributes to dynamic ones,
+install rubocop-rspec and run:
+
+rubocop \
+  --require rubocop-rspec \
+  --only FactoryBot/AttributeDefinedStatically \
+  --auto-correct
+
+ (called from block (2 levels) in <top (required)> at /workspace/repo/spec/factories.rb:6)
+DEPRECATION WARNING: Static attributes will be removed in FactoryBot 5.0. Please use dynamic
+attributes instead by wrapping the attribute value in a block:
+
+scopes { "public write" }
+
+To automatically update from static attributes to dynamic ones,
+install rubocop-rspec and run:
+
+rubocop \
+  --require rubocop-rspec \
+  --only FactoryBot/AttributeDefinedStatically \
+  --auto-correct
+
+ (called from block (2 levels) in <top (required)> at /workspace/repo/spec/factories.rb:7)
+DEPRECATION WARNING: Static attributes will be removed in FactoryBot 5.0. Please use dynamic
+attributes instead by wrapping the attribute value in a block:
+
+expires_in { 2 hours }
+
+To automatically update from static attributes to dynamic ones,
+install rubocop-rspec and run:
+
+rubocop \
+  --require rubocop-rspec \
+  --only FactoryBot/AttributeDefinedStatically \
+  --auto-correct
+
+ (called from block (2 levels) in <top (required)> at /workspace/repo/spec/factories.rb:13)
+DEPRECATION WARNING: Static attributes will be removed in FactoryBot 5.0. Please use dynamic
+attributes instead by wrapping the attribute value in a block:
+
+application { nil }
+
+To automatically update from static attributes to dynamic ones,
+install rubocop-rspec and run:
+
+rubocop \
+  --require rubocop-rspec \
+  --only FactoryBot/AttributeDefinedStatically \
+  --auto-correct
+
+ (called from block (3 levels) in <top (required)> at /workspace/repo/spec/factories.rb:16)
+DEPRECATION WARNING: Static attributes will be removed in FactoryBot 5.0. Please use dynamic
+attributes instead by wrapping the attribute value in a block:
+
+redirect_uri { "https://app.com/callback" }
+
+To automatically update from static attributes to dynamic ones,
+install rubocop-rspec and run:
+
+rubocop \
+  --require rubocop-rspec \
+  --only FactoryBot/AttributeDefinedStatically \
+  --auto-correct
+
+ (called from block (2 levels) in <top (required)> at /workspace/repo/spec/factories.rb:22)
+Coverage report generated for RSpec to /workspace/repo/coverage. 1170 / 1503 LOC (77.84%) covered.
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="rspec" tests="82" skipped="1" failures="7" errors="0" time="0.843664" timestamp="2026-06-29T15:20:42+00:00" hostname="modal">
+<properties>
+<property name="seed" value="1979"/>
+</properties>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when authorization has succeeded returns the authorization" file="./spec/controllers/tokens_controller_spec.rb" time="0.070967"><skipped/></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when requested token introspection token was issued to a different client than is making this request responds with only active state" file="./spec/controllers/tokens_controller_spec.rb" time="0.054987"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when requested token introspection when requested Access Token expired responds with only active state" file="./spec/controllers/tokens_controller_spec.rb" time="0.008331"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when requested token introspection authorized using Bearer token responds with full token introspection" file="./spec/controllers/tokens_controller_spec.rb" time="0.008188"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when requested token introspection authorized using Client Authentication responds with full token introspection" file="./spec/controllers/tokens_controller_spec.rb" time="0.007304"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when requested token introspection unauthorized (no bearer token or client credentials) responds with invalid_request error" file="./spec/controllers/tokens_controller_spec.rb" time="0.008195"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when requested token introspection public access token responds with full token introspection" file="./spec/controllers/tokens_controller_spec.rb" time="0.006424"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when requested token introspection using wrong token value responds with only active state" file="./spec/controllers/tokens_controller_spec.rb" time="0.004942"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when requested token introspection when requested Access Token revoked responds with only active state" file="./spec/controllers/tokens_controller_spec.rb" time="0.007156"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when requested token introspection using invalid credentials to authorize responds with invalid_client error" file="./spec/controllers/tokens_controller_spec.rb" time="0.007095"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when there is a failure due to a custom error returns the error response with a custom message" file="./spec/controllers/tokens_controller_spec.rb" time="0.004208"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController authorize response memoization memoizes the result of the authorization" file="./spec/controllers/tokens_controller_spec.rb" time="0.002123"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController when authorization has failed returns the error response" file="./spec/controllers/tokens_controller_spec.rb" time="0.002057"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController revoking tokens when associated app is public revokes the access token" file="./spec/controllers/tokens_controller_spec.rb" time="0.033823"><failure message="expected #&lt;Doorkeeper::AccessToken id: 1, resource_owner_id: 9, application_id: 1, token: &quot;9557ee74bee3a272dbc...: 7200, revoked_at: nil, created_at: &quot;2026-06-29 15:20:42&quot;, scopes: nil, previous_refresh_token: &quot;&quot;&gt; to have attributes {:revoked? =&gt; true} but had attributes {:revoked? =&gt; false}
+Diff:
+@@ -1 +1 @@
+-:revoked? =&gt; true,
++:revoked? =&gt; false,
+" type="RSpec::Expectations::ExpectationNotMetError">Failure/Error: expect(access_token.reload).to have_attributes(revoked?: true)
+
+  expected #&lt;Doorkeeper::AccessToken id: 1, resource_owner_id: 9, application_id: 1, token: &quot;9557ee74bee3a272dbc...: 7200, revoked_at: nil, created_at: &quot;2026-06-29 15:20:42&quot;, scopes: nil, previous_refresh_token: &quot;&quot;&gt; to have attributes {:revoked? =&gt; true} but had attributes {:revoked? =&gt; false}
+  Diff:
+  @@ -1 +1 @@
+  -:revoked? =&gt; true,
+  +:revoked? =&gt; false,
+./spec/controllers/tokens_controller_spec.rb:83:in `block (4 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController revoking tokens when associated app is public returns 200" file="./spec/controllers/tokens_controller_spec.rb" time="0.008841"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController revoking tokens when associated app is confidential returns 200" file="./spec/controllers/tokens_controller_spec.rb" time="0.011620"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController revoking tokens when associated app is confidential revokes the access token" file="./spec/controllers/tokens_controller_spec.rb" time="0.008978"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController revoking tokens when associated app is confidential when authorization fails does not revoke the access token" file="./spec/controllers/tokens_controller_spec.rb" time="0.008847"></testcase>
+<testcase classname="spec.controllers.tokens_controller_spec" name="Doorkeeper::TokensController revoking tokens when associated app is confidential when authorization fails returns 200" file="./spec/controllers/tokens_controller_spec.rb" time="0.007795"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow not set up with valid user credentials doesn&apos;t issue new token" file="./spec/requests/flows/password_spec.rb" time="0.125615"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with invalid confidential client credentials should not issue new token with bad client credentials" file="./spec/requests/flows/password_spec.rb" time="0.008734"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with invalid public client id should not issue new token with bad client id" file="./spec/requests/flows/password_spec.rb" time="0.008097"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with valid user credentials should issue a refresh token if enabled" file="./spec/requests/flows/password_spec.rb" time="0.010073"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with valid user credentials should return the same token if it is still accessible" file="./spec/requests/flows/password_spec.rb" time="0.013244"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with valid user credentials should issue new token without client credentials" file="./spec/requests/flows/password_spec.rb" time="0.010660"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with valid user credentials with non-confidential/public client when client_secret absent should issue new token" file="./spec/requests/flows/password_spec.rb" time="0.011443"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with valid user credentials with non-confidential/public client when client_secret present should issue new token" file="./spec/requests/flows/password_spec.rb" time="0.011020"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with valid user credentials with non-confidential/public client when client_secret present when client_secret incorrect should not issue new token" file="./spec/requests/flows/password_spec.rb" time="0.008361"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with valid user credentials with confidential/private client should issue new token" file="./spec/requests/flows/password_spec.rb" time="0.010598"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with valid user credentials with confidential/private client when client_secret absent should not issue new token" file="./spec/requests/flows/password_spec.rb" time="0.068689"><failure message="expected `Doorkeeper::AccessToken.count` not to have changed, but did change from 0 to 1" type="RSpec::Expectations::ExpectationNotMetError">Failure/Error:
+  expect do
+    post password_token_endpoint_url(client_id: @client.uid, resource_owner: @resource_owner)
+  end.not_to(change { Doorkeeper::AccessToken.count })
+
+  expected `Doorkeeper::AccessToken.count` not to have changed, but did change from 0 to 1
+./spec/requests/flows/password_spec.rb:85:in `block (5 levels) in &lt;top (required)&gt;&apos;</failure></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with valid user credentials with valid, default scope should issue new token" file="./spec/requests/flows/password_spec.rb" time="0.013235"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with invalid user credentials should not issue new token with bad password" file="./spec/requests/flows/password_spec.rb" time="0.008675"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with invalid user credentials should not issue new token without credentials" file="./spec/requests/flows/password_spec.rb" time="0.007107"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with invalid scopes should not issue new token" file="./spec/requests/flows/password_spec.rb" time="0.006675"></testcase>
+<testcase classname="spec.requests.flows.password_spec" name="Resource Owner Password Credentials Flow with invalid scopes should return invalid_scope error" file="./spec/requests/flows/password_spec.rb" time="0.005807"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application is invalid without uid" file="./spec/models/doorkeeper/application_spec.rb" time="0.003643"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application expects database to throw an error when uids are the same" file="./spec/models/doorkeeper/application_spec.rb" time="0.007462"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application is invalid without redirect_uri" file="./spec/models/doorkeeper/application_spec.rb" time="0.003502"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application generates uid on create unless one is set" file="./spec/models/doorkeeper/application_spec.rb" time="0.007177"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application generate secret on create if is blank string" file="./spec/models/doorkeeper/application_spec.rb" time="0.002853"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application generates uid on create if an empty string" file="./spec/models/doorkeeper/application_spec.rb" time="0.002706"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application generate secret on create" file="./spec/models/doorkeeper/application_spec.rb" time="0.002447"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application checks uniqueness of uid" file="./spec/models/doorkeeper/application_spec.rb" time="0.005027"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application generate secret on create unless one is set" file="./spec/models/doorkeeper/application_spec.rb" time="0.002477"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application is invalid without secret" file="./spec/models/doorkeeper/application_spec.rb" time="0.003375"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application generates uid on create" file="./spec/models/doorkeeper/application_spec.rb" time="0.002386"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application is invalid without a name" file="./spec/models/doorkeeper/application_spec.rb" time="0.001909"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application is invalid without determining confidentiality" file="./spec/models/doorkeeper/application_spec.rb" time="0.001738"><failure message="expected #&lt;Doorkeeper::Application id: nil, name: &quot;Application 49&quot;, uid: &quot;3afd6a566844aece43eae758164020a30f3df4f91bb3f9d068...&quot;, secret: &quot;f303e6153931b185adeca177cf29dd026b89cb34cbf40825f5...&quot;, redirect_uri: &quot;https://app.com/callback&quot;, scopes: &quot;&quot;, created_at: nil, updated_at: nil, owner_id: nil, owner_type: nil, confidential: nil&gt; not to be valid" type="RSpec::Expectations::ExpectationNotMetError">Failure/Error: expect(new_application).not_to be_valid
+  expected #&lt;Doorkeeper::Application id: nil, name: &quot;Application 49&quot;, uid: &quot;3afd6a566844aece43eae758164020a30f3df4f91bb3f9d068...&quot;, secret: &quot;f303e6153931b185adeca177cf29dd026b89cb34cbf40825f5...&quot;, redirect_uri: &quot;https://app.com/callback&quot;, scopes: &quot;&quot;, created_at: nil, updated_at: nil, owner_id: nil, owner_type: nil, confidential: nil&gt; not to be valid
+./spec/models/doorkeeper/application_spec.rb:54:in `block (2 levels) in &lt;module:Doorkeeper&gt;&apos;</failure></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application confidential? when application is public/non-confidential is expected to eq false" file="./spec/models/doorkeeper/application_spec.rb" time="0.002621"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application confidential? when application is private/confidential is expected to eq true" file="./spec/models/doorkeeper/application_spec.rb" time="0.002692"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application authorized_for returns only application for a specific resource owner" file="./spec/models/doorkeeper/application_spec.rb" time="0.008674"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application authorized_for excludes revoked tokens" file="./spec/models/doorkeeper/application_spec.rb" time="0.010477"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application authorized_for returns only one application even if it has been authorized twice" file="./spec/models/doorkeeper/application_spec.rb" time="0.016729"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application authorized_for is empty if the application is not authorized for anyone" file="./spec/models/doorkeeper/application_spec.rb" time="0.004623"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application authorized_for returns all applications that have been authorized" file="./spec/models/doorkeeper/application_spec.rb" time="0.019758"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application destroy related models on cascade should destroy its access grants" file="./spec/models/doorkeeper/application_spec.rb" time="0.033336"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application destroy related models on cascade should destroy its access tokens" file="./spec/models/doorkeeper/application_spec.rb" time="0.020133"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application application_owner is enabled application owner is not required is valid given valid attributes" file="./spec/models/doorkeeper/application_spec.rb" time="0.003401"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application application_owner is enabled application owner is required is invalid without an owner" file="./spec/models/doorkeeper/application_spec.rb" time="0.002340"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application application_owner is enabled application owner is required is valid with an owner" file="./spec/models/doorkeeper/application_spec.rb" time="0.001999"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application supports_confidentiality? when column returns true" file="./spec/models/doorkeeper/application_spec.rb" time="0.001876"><failure message="undefined method `supports_confidentiality?&apos; for #&lt;Class:0x0000557f18835008&gt;" type="NoMethodError">Failure/Error: expect(Application.supports_confidentiality?).to eq(true)
+
+NoMethodError:
+  undefined method `supports_confidentiality?&apos; for #&lt;Class:0x0000557f18835008&gt;
+/usr/local/bundle/gems/activerecord-5.1.7/lib/active_record/dynamic_matchers.rb:22:in `method_missing&apos;
+./spec/models/doorkeeper/application_spec.rb:281:in `block (4 levels) in &lt;module:Doorkeeper&gt;&apos;</failure></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application supports_confidentiality? when no column returns false" file="./spec/models/doorkeeper/application_spec.rb" time="0.000957"><failure message="undefined method `supports_confidentiality?&apos; for #&lt;Class:0x0000557f18835008&gt;" type="NoMethodError">Failure/Error: expect(Application.supports_confidentiality?).to eq(false)
+
+NoMethodError:
+  undefined method `supports_confidentiality?&apos; for #&lt;Class:0x0000557f18835008&gt;
+/usr/local/bundle/gems/activerecord-5.1.7/lib/active_record/dynamic_matchers.rb:22:in `method_missing&apos;
+./spec/models/doorkeeper/application_spec.rb:275:in `block (4 levels) in &lt;module:Doorkeeper&gt;&apos;</failure></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application ordered_by when a direction is not specified calls order with a default order of asc" file="./spec/models/doorkeeper/application_spec.rb" time="0.008964"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application ordered_by when a direction is specified calls order with specified direction" file="./spec/models/doorkeeper/application_spec.rb" time="0.009286"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application by_uid_and_secret when application is private/confidential finds the application via uid/secret" file="./spec/models/doorkeeper/application_spec.rb" time="0.003274"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application by_uid_and_secret when application is private/confidential when secret is wrong should not find the application" file="./spec/models/doorkeeper/application_spec.rb" time="0.003068"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application by_uid_and_secret when application is public/non-confidential when secret is wrong should not find the application" file="./spec/models/doorkeeper/application_spec.rb" time="0.003053"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application by_uid_and_secret when application is public/non-confidential when secret is blank should find the application" file="./spec/models/doorkeeper/application_spec.rb" time="0.003490"><failure message="
+expected: #&lt;Doorkeeper::Application id: 1, name: &quot;Application 76&quot;, uid: &quot;54568b9b9dd3a778f3f13194f2c6bb2109efa3...9 15:20:43&quot;, updated_at: &quot;2026-06-29 15:20:43&quot;, owner_id: nil, owner_type: nil, confidential: false&gt;
+     got: nil
+
+(compared using ==)
+" type="RSpec::Expectations::ExpectationNotMetError">Failure/Error: expect(authenticated).to eq(app)
+
+  expected: #&lt;Doorkeeper::Application id: 1, name: &quot;Application 76&quot;, uid: &quot;54568b9b9dd3a778f3f13194f2c6bb2109efa3...9 15:20:43&quot;, updated_at: &quot;2026-06-29 15:20:43&quot;, owner_id: nil, owner_type: nil, confidential: false&gt;
+       got: nil
+
+  (compared using ==)
+./spec/models/doorkeeper/application_spec.rb:230:in `block (5 levels) in &lt;module:Doorkeeper&gt;&apos;</failure></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application confidential when application is private/confidential is expected to eq true" file="./spec/models/doorkeeper/application_spec.rb" time="0.002943"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application confidential when application is public/non-confidential is expected to eq false" file="./spec/models/doorkeeper/application_spec.rb" time="0.002942"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application#redirect_uri= when array of valid redirect_uris should join by newline" file="./spec/models/doorkeeper/application_spec.rb" time="0.001660"></testcase>
+<testcase classname="spec.models.doorkeeper.application_spec" name="Doorkeeper::Application#redirect_uri= when string of valid redirect_uris should store as-is" file="./spec/models/doorkeeper/application_spec.rb" time="0.001011"></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials is blank when the uid in credentials is blank" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.001078"><failure message="expected `#&lt;struct Doorkeeper::OAuth::Client::Credentials uid=&quot;something&quot;, secret=nil&gt;.present?` to return true, got false" type="RSpec::Expectations::ExpectationNotMetError">Failure/Error: expect(Credentials.new(&apos;something&apos;, nil)).to be_present
+  expected `#&lt;struct Doorkeeper::OAuth::Client::Credentials uid=&quot;something&quot;, secret=nil&gt;.present?` to return true, got false
+./spec/lib/oauth/client/credentials_spec.rb:13:in `block (2 levels) in &lt;class:Client&gt;&apos;</failure></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials from_request delegates methods received as symbols to Credentials class" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.001335"></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials from_request stops at the first credentials found" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.000972"></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials from_request accepts anything that responds to #call" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.001212"></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials from_request returns new Credentials" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.002335"></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials from_request returns uid and secret from extractor method" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.001106"></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials from_params is blank when there are no credentials" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.000930"></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials from_params returns credentials from parameters when Authorization header is not available" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.000914"></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials from_basic decodes the credentials" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.000916"></testcase>
+<testcase classname="spec.lib.oauth.client.credentials_spec" name="Doorkeeper::OAuth::Client::Credentials from_basic is blank if Authorization is not Basic" file="./spec/lib/oauth/client/credentials_spec.rb" time="0.001644"></testcase>
+</testsuite>
+reward=0 graded=81 found=81 failed=7 parsed=82 framework=junit exit_code=0

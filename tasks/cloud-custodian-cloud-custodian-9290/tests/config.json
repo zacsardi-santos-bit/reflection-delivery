@@ -1,0 +1,30 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tests/test_appmesh.py -v",
+  "test_files": [
+    "tests/apicallcaptor.py",
+    "tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json",
+    "tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json",
+    "tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_3.json",
+    "tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json",
+    "tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json",
+    "tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json",
+    "tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json",
+    "tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json",
+    "tests/data/placebo/test_appmesh_virtualgateway_event/appmesh.DescribeVirtualGateway_2.json",
+    "tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json",
+    "tests/test_appmesh.py"
+  ],
+  "num_test_files": 12,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_appmesh.TestAppmeshMesh::test_appmesh",
+    "tests.test_appmesh.TestAppmeshMesh::test_appmesh_event",
+    "tests.test_appmesh.TestAppmeshMesh::test_reporting",
+    "tests.test_appmesh.TestAppmeshVirtualGateway::test_reporting"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_appmesh.TestAppmeshVirtualGateway::test_appmesh_virtualgateway",
+    "tests.test_appmesh.TestAppmeshVirtualGateway::test_appmesh_virtualgateway_event"
+  ]
+}

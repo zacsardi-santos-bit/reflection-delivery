@@ -1,0 +1,82 @@
+patching file tests/tensorflow_autolog/test_tensorflow2_autolog.py
+patching file tests/tensorflow_autolog/test_tensorflow_autolog.py
+============================= test session starts ==============================
+platform linux -- Python 3.7.17, pytest-7.4.4, pluggy-1.2.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: forked-1.6.0, cov-4.1.0
+collecting ... collected 38 items / 26 deselected / 12 selected
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[True-0-early-True] PASSED [  8%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[True-1-early-True] PASSED [ 16%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[True-5-early-True] PASSED [ 25%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[False-0-early-True] PASSED [ 33%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[False-1-early-True] PASSED [ 41%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_logs[False-5-early-True] PASSED [ 50%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_stop_does_not_log[True-11-early-True] PASSED [ 58%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_stop_does_not_log[False-11-early-True] PASSED [ 66%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_restore_doesnt_log[True-5-early-False] PASSED [ 75%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_early_stop_no_restore_doesnt_log[False-5-early-False] PASSED [ 83%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_non_early_stop_callback_no_log[True-5-not-early-False] PASSED [ 91%]
+tests/tensorflow_autolog/test_tensorflow2_autolog.py::test_tf_keras_autolog_non_early_stop_callback_no_log[False-5-not-early-False] PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.7/site-packages/tensorflow/python/autograph/impl/api.py:22
+  /usr/local/lib/python3.7/site-packages/tensorflow/python/autograph/impl/api.py:22: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:64
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:64: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:86
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:86: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:130
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:130: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:167
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:167: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:203
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:203: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:233
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:233: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:259
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:259: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:284
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:284: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:353
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:353: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:362
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:362: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:381
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:381: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:391
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:391: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+tests/tensorflow_autolog/test_tensorflow2_autolog.py:409
+  /workspace/repo/tests/tensorflow_autolog/test_tensorflow2_autolog.py:409: PytestUnknownMarkWarning: Unknown pytest.mark.large - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.large
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============== 12 passed, 26 deselected, 14 warnings in 17.27s ================
+reward=1 graded=12 found=0 failed=0 parsed=38 framework=pytest exit_code=0

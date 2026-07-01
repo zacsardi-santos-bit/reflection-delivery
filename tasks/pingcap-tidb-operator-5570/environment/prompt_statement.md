@@ -1,0 +1,5 @@
+I'm working on the TiDB Operator and I'd like to add scale-out parallelism support for the TiDB component — similar to what already exists for TiFlash and TiKV. Right now, when scaling out TiDB, the operator can only bring up one new pod per reconciliation loop, no matter how many replicas the user wants to add. I'd like the TiDB spec to accept a scale policy with a configurable parallelism setting that controls how many new TiDB pods can start simultaneously during a scale-out.
+
+The behavior should match what TiFlash and TiKV already do: if the parallelism is set to 2, the operator should try to advance up to 2 replicas per loop (skipping any that are blocked by a pending PVC deletion), and if all attempts are blocked, it should return an error and try again next round. The same pattern should work correctly when the advanced scheduling feature with delete slot support is enabled.
+
+I'd also like the same pattern applied to scale-in for TiDB: a configurable parallelism that controls how many TiDB pods can be removed in a single reconciliation round, with all pods removed in the same round sharing the same scale-in timestamp on their PVCs.

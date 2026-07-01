@@ -1,0 +1,23 @@
+{
+ "task": "eventual-inc-daft-4517",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden sets node names 'DistributedInMemoryScan'/'DistributedScan'/'DistributedLimit'/'DistributedIntermediateNode' and adds viz_distributed_pipeline_ascii/Mermaid; F2P=40 run via 'cargo nextest run -p daft-distributed'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 6,
+  "shallow": true
+ }
+}

@@ -1,0 +1,14 @@
+{
+  "test_framework": "junit",
+  "test_command": "bash -c 'mkdir -p /workspace/repo/target/surefire-reports && kotlinc -cp /opt/android-stubs.jar:/opt/kotlinc/lib/kotlin-stdlib.jar:/opt/junit.jar:/opt/hamcrest.jar /workspace/repo/BrickKit/bricks/src/main/java/com/wayfair/brickkit/brick/DataModel.kt /workspace/repo/BrickKit/bricks/src/androidTest/java/com/wayfair/brickkit/brick/DataModelTest.kt -d /tmp/test-classes.jar && java -jar /opt/junit-console.jar --class-path /opt/android-stubs.jar:/opt/kotlinc/lib/kotlin-stdlib.jar:/opt/junit.jar:/opt/hamcrest.jar:/tmp/test-classes.jar --select-class=com.wayfair.brickkit.brick.DataModelTest --reports-dir=/workspace/repo/target/surefire-reports; EXIT=$?; cat /workspace/repo/target/surefire-reports/TEST-*.xml 2>/dev/null; exit $EXIT'",
+  "test_files": [
+    "BrickKit/bricks/src/androidTest/java/com/wayfair/brickkit/brick/DataModelTest.kt"
+  ],
+  "num_test_files": 1,
+  "language": "kotlin",
+  "FAIL_TO_PASS": [
+    "com.wayfair.brickkit.brick.DataModelTest::testNotifyChange",
+    "com.wayfair.brickkit.brick.DataModelTest::testIsReady"
+  ],
+  "PASS_TO_PASS": []
+}

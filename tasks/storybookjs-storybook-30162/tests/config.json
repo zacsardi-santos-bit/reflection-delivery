@@ -1,0 +1,48 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/code/lib/cli-storybook && NODE_OPTIONS=--max_old_space_size=4096 node ../../node_modules/.bin/vitest run src/automigrate/fixes/addon-a11y-addon-test.test.ts --reporter=verbose",
+  "test_files": [
+    "code/addons/a11y/src/preview.test.tsx",
+    "code/addons/test/src/components/TestProviderRender.tsx",
+    "code/addons/test/src/postinstall.ts",
+    "code/addons/test/src/vitest-plugin/index.ts",
+    "code/addons/test/src/vitest-plugin/test-utils.ts",
+    "code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts",
+    "docs/writing-tests/accessibility-testing.mdx"
+  ],
+  "num_test_files": 7,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return setupFile and transformedSetupCode if vitest.setup file exists",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return previewFile and transformedPreviewCode if preview file exists",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return setupFile and null transformedSetupCode if transformation fails",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return previewFile and null transformedPreviewCode if transformation fails",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return skipPreviewTransformation=true if preview file has the necessary change",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return skipVitestSetupTransformation=true if setup file has the necessary change",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest prompt should return manual prompt if transformedSetupCode is null and if transformedPreviewCode is null",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest prompt should return auto prompt if transformedSetupCode is null and if transformedPreviewCode is defined",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest prompt should return auto prompt if transformedSetupCode is defined and if transformedPreviewCode is null",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest prompt should return auto prompt if transformedSetupCode is defined and if transformedPreviewCode is skipped",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest prompt should return auto prompt if transformedPreviewCode is defined and if transformedSetupCode is skipped",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest run should write transformed preview code to file",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformPreviewFile should add a new tags property if it does not exist",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformPreviewFile should add a new tags property if it does not exist and a default export does not exist",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformPreviewFile should extend the existing tags property",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformPreviewFile should not add a11y-test if it already exists in the tags property",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformPreviewFile should handle the default export without type annotations",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformPreviewFile should extend the existing tags property without type annotations"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return null if a11y addon is not present",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return null if test addon is not present",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return null if configDir is not provided",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return null if provided framework is not supported",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest check should return null if vitest.setup file and preview file have the necessary transformations",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest run should write transformed setup code to file",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest run should not write to file if setupFile or transformedSetupCode is null",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformSetupFile should throw",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformSetupFile should transform setup file correctly - 1",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformSetupFile should transform setup file correctly - 2 (different format)",
+    "/workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/addon-a11y-addon-test.test.ts::addonA11yAddonTest transformSetupFile should transform setup file correctly - project annotation is not an array"
+  ]
+}

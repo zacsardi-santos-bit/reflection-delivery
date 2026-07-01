@@ -1,0 +1,130 @@
+patching file apps/fluent-tester/package.json
+patching file apps/fluent-tester/src/RNTester/TestComponents/ContextualMenu/ContextualMenuTest.tsx
+patching file apps/ios/package.json
+patching file apps/macos/package.json
+patching file apps/web/package.json
+patching file apps/win32/package.json
+patching file apps/windows/package.json
+patching file change/@fluentui-react-native-contextual-menu-2020-08-20-10-43-20-contextual-menu.json
+patching file change/@fluentui-react-native-experimental-framework-2020-08-18-10-50-19-split-foundation-settings.json
+patching file change/@fluentui-react-native-tester-2020-08-20-10-43-20-contextual-menu.json
+patching file lage.config.js
+patching file packages/components/Button/package.json
+patching file packages/components/Callout/package.json
+patching file packages/components/Checkbox/package.json
+patching file packages/components/ContextualMenu/package.json
+patching file packages/components/ContextualMenu/src/ContextualMenu.tsx
+patching file packages/components/ContextualMenu/src/ContextualMenu.types.ts
+patching file packages/components/ContextualMenu/src/ContextualMenuItem.settings.ts
+patching file packages/components/FocusTrapZone/package.json
+patching file packages/components/Link/package.json
+patching file packages/components/Persona/package.json
+patching file packages/components/PersonaCoin/package.json
+patching file packages/components/Pressable/package.json
+patching file packages/components/RadioGroup/package.json
+patching file packages/components/Separator/package.json
+patching file packages/components/Stack/package.json
+patching file packages/components/text/package.json
+patching file packages/experimental/Button/package.json
+patching file packages/experimental/Button/src/Button.styling.ts
+patching file packages/experimental/Button/src/Button.tsx
+patching file packages/experimental/Button/src/PrimaryButton/PrimaryButton.settings.ts
+patching file packages/experimental/Button/src/StealthButton/StealthButton.settings.ts
+patching file packages/experimental/Stack/package.json
+patching file packages/experimental/Stack/src/Stack.styling.ts
+patching file packages/experimental/Stack/src/Stack.tsx
+patching file packages/experimental/Stack/src/StackItem/StackItem.styles.ts
+patching file packages/experimental/Stack/src/StackItem/StackItem.tsx
+patching file packages/experimental/Text/package.json
+patching file packages/experimental/Text/src/Text.tsx
+patching file packages/experimental/composition/package.json
+patching file packages/experimental/experimental-framework/.babelrc (renamed from packages/experimental/framework/.babelrc)
+patching file packages/experimental/experimental-framework/.eslintrc.js (renamed from packages/experimental/framework/.eslintrc.js)
+patching file packages/experimental/experimental-framework/.npmignore (renamed from packages/experimental/framework/.npmignore)
+patching file packages/experimental/experimental-framework/CHANGELOG.json (renamed from packages/experimental/framework/CHANGELOG.json)
+patching file packages/experimental/experimental-framework/CHANGELOG.md (renamed from packages/experimental/framework/CHANGELOG.md)
+patching file packages/experimental/experimental-framework/babel.config.js (renamed from packages/experimental/framework/babel.config.js)
+patching file packages/experimental/experimental-framework/just.config.js (renamed from packages/experimental/framework/just.config.js)
+patching file packages/experimental/experimental-framework/package.json (renamed from packages/experimental/framework/package.json)
+patching file packages/experimental/experimental-framework/src/compose.ts (renamed from packages/experimental/framework/src/compose.ts)
+patching file packages/experimental/experimental-framework/src/index.ts (renamed from packages/experimental/framework/src/index.ts)
+patching file packages/experimental/experimental-framework/src/themeHelper.ts (renamed from packages/experimental/framework/src/themeHelper.ts)
+patching file packages/experimental/experimental-framework/src/useStyling.ts (renamed from packages/experimental/framework/src/useStyling.ts)
+patching file packages/experimental/experimental-framework/tsconfig.json (renamed from packages/experimental/framework/tsconfig.json)
+patching file packages/experimental/experimental-framework/webpack.config.js (renamed from packages/experimental/framework/webpack.config.js)
+patching file packages/experimental/use-slots/CHANGELOG.json
+patching file packages/experimental/use-slots/CHANGELOG.md
+patching file packages/experimental/use-slots/package.json
+patching file packages/experimental/use-slots/src/buildUseSlots.ts
+patching file packages/framework/foundation-composable/CHANGELOG.json
+patching file packages/framework/foundation-composable/CHANGELOG.md
+patching file packages/framework/foundation-composable/package.json
+patching file packages/framework/foundation-composable/src/Composable.slots.ts
+patching file packages/framework/foundation-compose/package.json
+patching file packages/framework/foundation-settings/CHANGELOG.json
+patching file packages/framework/foundation-settings/CHANGELOG.md
+patching file packages/framework/foundation-settings/package.json
+patching file packages/framework/foundation-settings/src/Settings.merge.test.ts
+patching file packages/framework/foundation-settings/src/Settings.ts
+patching file packages/framework/foundation-settings/src/Styles.test.ts (renamed from packages/framework/merge-props/src/mergeStyles.test.ts)
+patching file packages/framework/foundation-settings/src/Styles.ts (renamed from packages/framework/merge-props/src/mergeStyles.ts)
+patching file packages/framework/foundation-settings/src/Styles.types.ts (renamed from packages/framework/merge-props/src/mergeStyles.types.ts)
+patching file packages/framework/foundation-settings/src/index.ts
+patching file packages/framework/foundation-tokens/CHANGELOG.json
+patching file packages/framework/foundation-tokens/CHANGELOG.md
+patching file packages/framework/foundation-tokens/package.json
+patching file packages/framework/foundation-tokens/src/MockComponent.ts
+patching file packages/framework/foundation-tokens/src/Token.function.ts
+patching file packages/framework/foundation-tokens/src/Token.types.ts
+patching file packages/framework/merge-props/.eslintignore
+patching file packages/framework/merge-props/.eslintrc.js
+patching file packages/framework/merge-props/CHANGELOG.json
+patching file packages/framework/merge-props/CHANGELOG.md
+patching file packages/framework/merge-props/README.md
+patching file packages/framework/merge-props/api-extractor.json
+patching file packages/framework/merge-props/babel.config.js
+patching file packages/framework/merge-props/jest.config.js
+patching file packages/framework/merge-props/package.json
+patching file packages/framework/merge-props/src/index.ts
+patching file packages/framework/merge-props/src/mergeProps.ts
+patching file packages/framework/merge-props/tsconfig.json
+patching file packages/framework/themed-settings/package.json
+patching file packages/framework/theming-ramp/package.json
+patching file packages/framework/theming-react-native/package.json
+patching file packages/libraries/core/package.json
+patching file packages/libraries/framework/.babelrc
+patching file packages/libraries/framework/.eslintrc.js
+patching file packages/libraries/framework/.npmignore (renamed from packages/framework/merge-props/.npmignore)
+patching file packages/libraries/framework/README.md
+patching file packages/libraries/framework/babel.config.js
+patching file packages/libraries/framework/just.config.js (renamed from packages/framework/merge-props/just.config.js)
+patching file packages/libraries/framework/package.json
+patching file packages/libraries/framework/src/index.ts
+patching file packages/libraries/framework/tsconfig.json
+patching file packages/libraries/framework/webpack.config.js
+patching file packages/utils/build-tools/just.config.js
+patching file packages/utils/tokens/package.json
+patching file scripts/babel.config.js
+patching file scripts/clean-all.js (renamed from scripts/src/clean-all.js)
+patching file scripts/debug-metro-pack.js (renamed from scripts/src/debug-metro-pack.js)
+patching file scripts/eslintrc.js
+patching file scripts/index.js
+patching file scripts/just.config.js
+patching file scripts/package.json
+patching file scripts/src/eslintPreset.ts
+patching file scripts/src/index.ts
+patching file scripts/src/justPreset.ts
+patching file scripts/tasks/api-extractor.js (renamed from scripts/src/tasks/api-extractor.js)
+patching file scripts/tasks/check-for-modified-files.js (renamed from scripts/src/tasks/check-for-modified-files.js)
+patching file scripts/tasks/clean.js (renamed from scripts/src/tasks/clean.js)
+patching file scripts/tasks/copy.js (renamed from scripts/src/tasks/copy.js)
+patching file scripts/tasks/depcheck.js (renamed from scripts/src/tasks/depcheck.js)
+patching file scripts/tasks/eslint.js (renamed from scripts/src/tasks/eslint.js)
+patching file scripts/tasks/jest.js (renamed from scripts/src/tasks/jest.js)
+patching file scripts/tasks/prettier.js
+patching file scripts/tasks/ts.js (renamed from scripts/src/tasks/ts.js)
+patching file scripts/tasks/webpack.js (renamed from scripts/src/tasks/webpack.js)
+patching file scripts/test.js
+patching file scripts/tsconfig.json
+patching file scripts/webpack/webpack-resources.js (renamed from scripts/src/webpack/webpack-resources.js)
+patching file test-projects/yarn-metro/packages/simple-win32/package.json

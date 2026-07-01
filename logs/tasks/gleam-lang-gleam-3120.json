@@ -1,0 +1,23 @@
+{
+ "task": "gleam-lang-gleam-3120",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden rewrites compiler-core/src/analyse.rs (large) for fault-tolerant module analysis; F2P includes real behavior tests e.g. 'erlang::tests::external_fn::no_target_supported_function_fault_tolerance', 'both_externals_no_valid_impl', 'no_body_or_implementation'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

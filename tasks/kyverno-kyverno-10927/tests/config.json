@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /tmp/marshaltest && go test -v -count=1 ./...",
+  "test_files": [
+    "test/conformance/chainsaw/globalcontext/validate-reference/chainsaw-test.yaml"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "marshaltest::TestGlobalContextEntryReferenceNameRequired"
+  ],
+  "PASS_TO_PASS": []
+}

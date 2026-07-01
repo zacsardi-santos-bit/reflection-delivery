@@ -1,0 +1,306 @@
+patching file api/tests/conftest.py
+patching file api/tests/test_audio_service.py
+patching file api/tests/test_chunker.py
+patching file api/tests/test_text_processing.py
+patching file api/tests/test_tts_implementations.py
+patching file api/tests/test_tts_service.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.0.0, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: asyncio-0.23.5, anyio-4.2.0, cov-6.0.0
+asyncio: mode=Mode.STRICT
+collecting ... collected 44 items / 5 deselected / 39 selected
+
+api/tests/test_audio_service.py::test_convert_to_wav PASSED              [  2%]
+api/tests/test_audio_service.py::test_convert_to_mp3 PASSED              [  5%]
+api/tests/test_audio_service.py::test_convert_to_opus PASSED             [  7%]
+api/tests/test_audio_service.py::test_convert_to_flac PASSED             [ 10%]
+api/tests/test_audio_service.py::test_convert_to_aac_raises_error PASSED [ 12%]
+api/tests/test_audio_service.py::test_convert_to_pcm PASSED              [ 15%]
+api/tests/test_audio_service.py::test_convert_to_invalid_format_raises_error PASSED [ 17%]
+api/tests/test_audio_service.py::test_normalization_wav PASSED           [ 20%]
+api/tests/test_audio_service.py::test_normalization_pcm PASSED           [ 23%]
+api/tests/test_audio_service.py::test_invalid_audio_data PASSED          [ 25%]
+api/tests/test_audio_service.py::test_different_sample_rates PASSED      [ 28%]
+api/tests/test_audio_service.py::test_buffer_position_after_conversion PASSED [ 30%]
+api/tests/test_chunker.py::test_split_text PASSED                        [ 33%]
+api/tests/test_chunker.py::test_split_text_empty PASSED                  [ 35%]
+api/tests/test_chunker.py::test_split_text_single_sentence PASSED        [ 38%]
+api/tests/test_chunker.py::test_split_text_with_custom_chunk_size PASSED [ 41%]
+api/tests/test_text_processing.py::test_phonemize_empty_text FAILED      [ 43%]
+api/tests/test_tts_implementations.py::test_get_device_error PASSED      [ 46%]
+api/tests/test_tts_implementations.py::test_setup_cuda_available PASSED  [ 48%]
+api/tests/test_tts_implementations.py::test_setup_cuda_unavailable PASSED [ 51%]
+api/tests/test_tts_implementations.py::test_cpu_initialize_missing_model PASSED [ 53%]
+api/tests/test_tts_implementations.py::test_cpu_generate_uninitialized PASSED [ 56%]
+api/tests/test_tts_implementations.py::test_cpu_process_text PASSED      [ 58%]
+api/tests/test_tts_implementations.py::test_gpu_initialize_cuda_unavailable PASSED [ 61%]
+api/tests/test_tts_implementations.py::test_gpu_length_to_mask PASSED    [ 64%]
+api/tests/test_tts_implementations.py::test_gpu_generate_uninitialized PASSED [ 66%]
+api/tests/test_tts_implementations.py::test_gpu_process_text PASSED      [ 69%]
+api/tests/test_tts_service.py::test_audio_to_bytes ERROR                 [ 71%]
+api/tests/test_tts_service.py::test_list_voices ERROR                    [ 74%]
+api/tests/test_tts_service.py::test_list_voices_error ERROR              [ 76%]
+api/tests/test_tts_service.py::test_model_initialization_cuda PASSED     [ 79%]
+api/tests/test_tts_service.py::test_model_initialization_cpu PASSED      [ 82%]
+api/tests/test_tts_service.py::test_generate_audio_empty_text ERROR      [ 84%]
+api/tests/test_tts_service.py::test_generate_audio_phonemize_error ERROR [ 87%]
+api/tests/test_tts_service.py::test_generate_audio_error ERROR           [ 89%]
+api/tests/test_tts_service.py::test_save_audio ERROR                     [ 92%]
+api/tests/test_tts_service.py::test_combine_voices ERROR                 [ 94%]
+api/tests/test_tts_service.py::test_combine_voices_invalid_input ERROR   [ 97%]
+api/tests/test_tts_service.py::test_voicepack_loading_error FAILED       [100%]
+
+==================================== ERRORS ====================================
+____________________ ERROR at setup of test_audio_to_bytes _____________________
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:89: in annotated_getattr
+    obj = getattr(obj, name)
+E   AttributeError: type object 'TTSCPUModel' has no attribute 'get_instance'
+
+The above exception was the direct cause of the following exception:
+api/tests/test_tts_service.py:28: in tts_service
+    monkeypatch.setattr("api.src.services.tts_model.TTSModel.get_instance", MagicMock(return_value=mock_model))
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:105: in derive_importpath
+    annotated_getattr(target, attr, ann=module)
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:91: in annotated_getattr
+    raise AttributeError(
+E   AttributeError: 'ABCMeta' object at api.src.services.tts_model.TTSModel has no attribute 'get_instance'
+______________________ ERROR at setup of test_list_voices ______________________
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:89: in annotated_getattr
+    obj = getattr(obj, name)
+E   AttributeError: type object 'TTSCPUModel' has no attribute 'get_instance'
+
+The above exception was the direct cause of the following exception:
+api/tests/test_tts_service.py:28: in tts_service
+    monkeypatch.setattr("api.src.services.tts_model.TTSModel.get_instance", MagicMock(return_value=mock_model))
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:105: in derive_importpath
+    annotated_getattr(target, attr, ann=module)
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:91: in annotated_getattr
+    raise AttributeError(
+E   AttributeError: 'ABCMeta' object at api.src.services.tts_model.TTSModel has no attribute 'get_instance'
+___________________ ERROR at setup of test_list_voices_error ___________________
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:89: in annotated_getattr
+    obj = getattr(obj, name)
+E   AttributeError: type object 'TTSCPUModel' has no attribute 'get_instance'
+
+The above exception was the direct cause of the following exception:
+api/tests/test_tts_service.py:28: in tts_service
+    monkeypatch.setattr("api.src.services.tts_model.TTSModel.get_instance", MagicMock(return_value=mock_model))
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:105: in derive_importpath
+    annotated_getattr(target, attr, ann=module)
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:91: in annotated_getattr
+    raise AttributeError(
+E   AttributeError: 'ABCMeta' object at api.src.services.tts_model.TTSModel has no attribute 'get_instance'
+_______________ ERROR at setup of test_generate_audio_empty_text _______________
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:89: in annotated_getattr
+    obj = getattr(obj, name)
+E   AttributeError: type object 'TTSCPUModel' has no attribute 'get_instance'
+
+The above exception was the direct cause of the following exception:
+api/tests/test_tts_service.py:28: in tts_service
+    monkeypatch.setattr("api.src.services.tts_model.TTSModel.get_instance", MagicMock(return_value=mock_model))
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:105: in derive_importpath
+    annotated_getattr(target, attr, ann=module)
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:91: in annotated_getattr
+    raise AttributeError(
+E   AttributeError: 'ABCMeta' object at api.src.services.tts_model.TTSModel has no attribute 'get_instance'
+____________ ERROR at setup of test_generate_audio_phonemize_error _____________
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:89: in annotated_getattr
+    obj = getattr(obj, name)
+E   AttributeError: type object 'TTSCPUModel' has no attribute 'get_instance'
+
+The above exception was the direct cause of the following exception:
+api/tests/test_tts_service.py:28: in tts_service
+    monkeypatch.setattr("api.src.services.tts_model.TTSModel.get_instance", MagicMock(return_value=mock_model))
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:105: in derive_importpath
+    annotated_getattr(target, attr, ann=module)
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:91: in annotated_getattr
+    raise AttributeError(
+E   AttributeError: 'ABCMeta' object at api.src.services.tts_model.TTSModel has no attribute 'get_instance'
+_________________ ERROR at setup of test_generate_audio_error __________________
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:89: in annotated_getattr
+    obj = getattr(obj, name)
+E   AttributeError: type object 'TTSCPUModel' has no attribute 'get_instance'
+
+The above exception was the direct cause of the following exception:
+api/tests/test_tts_service.py:28: in tts_service
+    monkeypatch.setattr("api.src.services.tts_model.TTSModel.get_instance", MagicMock(return_value=mock_model))
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:105: in derive_importpath
+    annotated_getattr(target, attr, ann=module)
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:91: in annotated_getattr
+    raise AttributeError(
+E   AttributeError: 'ABCMeta' object at api.src.services.tts_model.TTSModel has no attribute 'get_instance'
+______________________ ERROR at setup of test_save_audio _______________________
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:89: in annotated_getattr
+    obj = getattr(obj, name)
+E   AttributeError: type object 'TTSCPUModel' has no attribute 'get_instance'
+
+The above exception was the direct cause of the following exception:
+api/tests/test_tts_service.py:28: in tts_service
+    monkeypatch.setattr("api.src.services.tts_model.TTSModel.get_instance", MagicMock(return_value=mock_model))
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:105: in derive_importpath
+    annotated_getattr(target, attr, ann=module)
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:91: in annotated_getattr
+    raise AttributeError(
+E   AttributeError: 'ABCMeta' object at api.src.services.tts_model.TTSModel has no attribute 'get_instance'
+____________________ ERROR at setup of test_combine_voices _____________________
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:89: in annotated_getattr
+    obj = getattr(obj, name)
+E   AttributeError: type object 'TTSCPUModel' has no attribute 'get_instance'
+
+The above exception was the direct cause of the following exception:
+api/tests/test_tts_service.py:28: in tts_service
+    monkeypatch.setattr("api.src.services.tts_model.TTSModel.get_instance", MagicMock(return_value=mock_model))
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:105: in derive_importpath
+    annotated_getattr(target, attr, ann=module)
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:91: in annotated_getattr
+    raise AttributeError(
+E   AttributeError: 'ABCMeta' object at api.src.services.tts_model.TTSModel has no attribute 'get_instance'
+_____________ ERROR at setup of test_combine_voices_invalid_input ______________
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:89: in annotated_getattr
+    obj = getattr(obj, name)
+E   AttributeError: type object 'TTSCPUModel' has no attribute 'get_instance'
+
+The above exception was the direct cause of the following exception:
+api/tests/test_tts_service.py:28: in tts_service
+    monkeypatch.setattr("api.src.services.tts_model.TTSModel.get_instance", MagicMock(return_value=mock_model))
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:105: in derive_importpath
+    annotated_getattr(target, attr, ann=module)
+/usr/local/lib/python3.11/site-packages/_pytest/monkeypatch.py:91: in annotated_getattr
+    raise AttributeError(
+E   AttributeError: 'ABCMeta' object at api.src.services.tts_model.TTSModel has no attribute 'get_instance'
+=================================== FAILURES ===================================
+__________________________ test_phonemize_empty_text ___________________________
+api/tests/test_text_processing.py:41: in test_phonemize_empty_text
+    response = await async_client.post("/text/phonemize", json={
+/usr/local/lib/python3.11/site-packages/httpx/_client.py:1877: in post
+    return await self.request(
+/usr/local/lib/python3.11/site-packages/httpx/_client.py:1559: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+/usr/local/lib/python3.11/site-packages/httpx/_client.py:1646: in send
+    response = await self._send_handling_auth(
+/usr/local/lib/python3.11/site-packages/httpx/_client.py:1674: in _send_handling_auth
+    response = await self._send_handling_redirects(
+/usr/local/lib/python3.11/site-packages/httpx/_client.py:1711: in _send_handling_redirects
+    response = await self._send_single_request(request)
+/usr/local/lib/python3.11/site-packages/httpx/_client.py:1748: in _send_single_request
+    response = await transport.handle_async_request(request)
+/usr/local/lib/python3.11/site-packages/httpx/_transports/asgi.py:162: in handle_async_request
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.11/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+/usr/local/lib/python3.11/site-packages/starlette/applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+/usr/local/lib/python3.11/site-packages/starlette/middleware/cors.py:85: in __call__
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.11/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+/usr/local/lib/python3.11/site-packages/starlette/routing.py:715: in __call__
+    await self.middleware_stack(scope, receive, send)
+/usr/local/lib/python3.11/site-packages/starlette/routing.py:735: in app
+    await route.handle(scope, receive, send)
+/usr/local/lib/python3.11/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+/usr/local/lib/python3.11/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+/usr/local/lib/python3.11/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+/usr/local/lib/python3.11/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+/usr/local/lib/python3.11/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+/usr/local/lib/python3.11/site-packages/fastapi/routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+api/src/routers/text_processing.py:21: in phonemize_text
+    phonemes = phonemize(request.text, request.language)
+api/src/services/text_processing/phonemizer.py:97: in phonemize
+    return phonemizer.phonemize(text)
+api/src/services/text_processing/phonemizer.py:48: in phonemize
+    ps = ps[0] if ps else ""
+E   TypeError: 'Mock' object is not subscriptable
+_________________________ test_voicepack_loading_error _________________________
+/usr/local/lib/python3.11/unittest/mock.py:1375: in patched
+    with self.decoration_helper(patched,
+/usr/local/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+/usr/local/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+/usr/local/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+/usr/local/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+/usr/local/lib/python3.11/unittest/mock.py:1419: in get_original
+    raise AttributeError(
+E   AttributeError: <class 'api.src.services.tts_cpu.TTSCPUModel'> does not have the attribute 'get_instance'
+=============================== warnings summary ===============================
+api/src/services/text_processing/normalizer.py:22
+  /workspace/repo/api/src/services/text_processing/normalizer.py:22: DeprecationWarning: invalid escape sequence '\.'
+    "|".join(VALID_TLDS) + "))+|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})(:[0-9]+)?([/?][^\s]*)?",
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+
+---------- coverage: platform linux, python 3.11.15-final-0 ----------
+Name                                             Stmts   Miss  Cover   Missing
+------------------------------------------------------------------------------
+api/__init__.py                                      0      0   100%
+api/src/main.py                                     31     11    65%   22-47, 77, 83
+api/src/routers/__init__.py                          0      0   100%
+api/src/routers/openai_compatible.py                65     46    29%   20, 26-45, 50-57, 67-126, 134-139, 160-173
+api/src/routers/text_processing.py                  10      3    70%   24-27
+api/src/services/__init__.py                         2      0   100%
+api/src/services/audio.py                           58      3    95%   30, 96, 109
+api/src/services/text_processing/__init__.py         4      0   100%
+api/src/services/text_processing/chunker.py         29      4    86%   18, 30, 40, 50
+api/src/services/text_processing/normalizer.py     106     64    40%   28-48, 52-67, 71-72, 76-82, 86-123
+api/src/services/text_processing/phonemizer.py      31      8    74%   51-60, 78
+api/src/services/text_processing/vocabulary.py      13      3    77%   24, 36-37
+api/src/services/tts_base.py                        77     12    84%   31-33, 41, 54-60, 65
+api/src/services/tts_cpu.py                         58     26    55%   22, 27-73, 108-113, 131-144
+api/src/services/tts_gpu.py                         76     44    42%   40-80, 95-102, 112-120, 155-160, 178-183
+api/src/services/tts_model.py                        5      1    80%   4
+api/src/services/tts_service.py                    155    120    23%   29, 33-34, 40-41, 47-109, 121-197, 206-207, 211-213, 217-254, 258-266
+api/src/structures/__init__.py                       2      0   100%
+api/src/structures/schemas.py                       18      0   100%
+api/src/structures/text_schemas.py                   7      0   100%
+api/tests/__init__.py                                0      0   100%
+api/tests/conftest.py                              136     53    61%   15, 46-49, 52-56, 59-62, 65-69, 76-78, 81-83, 86, 89, 92, 134, 138-140, 144-147, 151-153, 157-159, 163, 167, 173-181, 187-190
+ui/app.py                                            1      1     0%   1
+ui/lib/__init__.py                                   0      0   100%
+ui/lib/api.py                                       51     51     0%   1-84
+ui/lib/components/__init__.py                        4      4     0%   1-5
+ui/lib/components/input.py                          19     19     0%   1-58
+ui/lib/components/model.py                          14     14     0%   1-41
+ui/lib/components/output.py                         14     14     0%   1-42
+ui/lib/config.py                                     9      9     0%   1-19
+ui/lib/files.py                                     82     82     0%   1-122
+ui/lib/handlers.py                                  89     89     0%   1-228
+ui/lib/interface.py                                 29     29     0%   1-97
+------------------------------------------------------------------------------
+TOTAL                                             1195    710    41%
+
+=========================== short test summary info ============================
+FAILED api/tests/test_text_processing.py::test_phonemize_empty_text - TypeErr...
+FAILED api/tests/test_tts_service.py::test_voicepack_loading_error - Attribut...
+ERROR api/tests/test_tts_service.py::test_audio_to_bytes - AttributeError: 'A...
+ERROR api/tests/test_tts_service.py::test_list_voices - AttributeError: 'ABCM...
+ERROR api/tests/test_tts_service.py::test_list_voices_error - AttributeError:...
+ERROR api/tests/test_tts_service.py::test_generate_audio_empty_text - Attribu...
+ERROR api/tests/test_tts_service.py::test_generate_audio_phonemize_error - At...
+ERROR api/tests/test_tts_service.py::test_generate_audio_error - AttributeErr...
+ERROR api/tests/test_tts_service.py::test_save_audio - AttributeError: 'ABCMe...
+ERROR api/tests/test_tts_service.py::test_combine_voices - AttributeError: 'A...
+ERROR api/tests/test_tts_service.py::test_combine_voices_invalid_input - Attr...
+======= 2 failed, 28 passed, 5 deselected, 1 warning, 9 errors in 3.06s ========
+reward=0 graded=39 found=0 failed=0 parsed=39 framework=pytest exit_code=1

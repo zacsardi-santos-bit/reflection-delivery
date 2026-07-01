@@ -1,0 +1,489 @@
+patching file tests/test_decryption_key_index.rs
+patching file tests/test_interop_scenarios.rs
+patching file tests/test_managed_api.rs
+patching file tests/test_managed_group.rs
+patching file tests/test_tree_kem_kat.rs
+warning: variable does not need to be mutable
+   --> tls-codec-derive/src/lib.rs:113:60
+    |
+113 |                         path.segments.iter_mut().for_each(|mut p| {
+    |                                                            ----^
+    |                                                            |
+    |                                                            help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: `tls-codec-derive` (lib) generated 1 warning (run `cargo fix --lib -p tls-codec-derive` to apply 1 suggestion)
+   Compiling evercrypt-sys v0.0.7
+   Compiling evercrypt v0.0.8
+   Compiling hpke-rs v0.0.7
+   Compiling tls-codec v0.1.0 (/workspace/repo/tls-codec)
+   Compiling openmls v0.3.0 (/workspace/repo)
+warning: unused import: `codec::*`
+  --> src/config/mod.rs:13:9
+   |
+13 | pub use codec::*;
+   |         ^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `codec::*`
+ --> src/credentials/mod.rs:3:9
+  |
+3 | pub use codec::*;
+  |         ^^^^^^^^
+
+warning: unused import: `codec::*`
+  --> src/group/mod.rs:24:9
+   |
+24 | pub use codec::*;
+   |         ^^^^^^^^
+
+warning: unused import: `group_context::*`
+  --> src/group/mod.rs:26:9
+   |
+26 | pub use group_context::*;
+   |         ^^^^^^^^^^^^^^^^
+
+warning: elided lifetime has a name
+   --> src/key_store/mod.rs:174:17
+    |
+171 |     pub(crate) fn get_credential_bundle<'key_store>(
+    |                                         ---------- lifetime `'key_store` declared here
+...
+174 |     ) -> Option<CbGuard> {
+    |                 ^^^^^^^ this elided lifetime gets resolved as `'key_store`
+    |
+    = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: unused import: `codec::*`
+  --> src/messages/mod.rs:19:9
+   |
+19 | pub use codec::*;
+   |         ^^^^^^^^
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> src/prelude.rs:41:7
+   |
+41 | #[cfg(fuzzing)]
+   |       ^^^^^^^
+   |
+   = help: expected names are: `clippy`, `debug_assertions`, `doc`, `docsrs`, `doctest`, `feature`, `fmt_debug`, `miri`, `overflow_checks`, `panic`, `proc_macro`, `relocation_model`, `rustfmt`, `sanitize`, `sanitizer_cfi_generalize_pointers`, `sanitizer_cfi_normalize_integers`, `target_abi`, `target_arch`, `target_endian`, `target_env`, `target_family`, `target_feature`, `target_has_atomic`, `target_has_atomic_equal_alignment`, `target_has_atomic_load_store`, `target_os`, `target_pointer_width`, `target_thread_local`, `target_vendor`, `test`, `ub_checks`, `unix`, and `windows`
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: ambiguous glob re-exports
+  --> src/prelude.rs:22:9
+   |
+22 | pub use crate::config::*;
+   |         ^^^^^^^^^^^^^^^^ the name `codec` in the type namespace is first re-exported here
+...
+25 | pub use crate::framing::{errors::*, sender::Sender, *};
+   |                                                     - but the name `codec` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: ambiguous glob re-exports
+  --> src/prelude.rs:22:9
+   |
+22 | pub use crate::config::*;
+   |         ^^^^^^^^^^^^^^^^ the name `errors` in the type namespace is first re-exported here
+...
+28 | pub use crate::key_store::*;
+   |         ------------------- but the name `errors` in the type namespace is also re-exported here
+
+warning: unused import: `errors::*`
+  --> src/prelude.rs:25:26
+   |
+25 | pub use crate::framing::{errors::*, sender::Sender, *};
+   |                          ^^^^^^^^^
+
+warning: field `signature_scheme` is never read
+   --> src/ciphersuite/mod.rs:501:5
+    |
+500 | pub struct SignatureKeypair {
+    |            ---------------- field in this struct
+501 |     signature_scheme: SignatureScheme,
+    |     ^^^^^^^^^^^^^^^^
+    |
+    = note: `SignatureKeypair` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `verify` is never used
+  --> src/ciphersuite/signable.rs:21:8
+   |
+6  | pub trait Signable: Sized {
+   |           -------- method in this trait
+...
+21 |     fn verify(
+   |        ^^^^^^
+
+warning: field `padding` is never read
+   --> src/framing/ciphertext.rs:291:16
+    |
+287 | pub(crate) struct MlsCiphertextContent {
+    |                   -------------------- field in this struct
+...
+291 |     pub(crate) padding: Vec<u8>,
+    |                ^^^^^^^
+    |
+    = note: `MlsCiphertextContent` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | |
+    | `Serialize` is not local
+    | move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: `#[warn(non_local_definitions)]` on by default
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | |
+    | `Send` is not local
+    | `Serialize` is not local
+    | move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | |
+    | `Sync` is not local
+    | `Serialize` is not local
+    | move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | |
+    | `Send` is not local
+    | `Sync` is not local
+    | `Serialize` is not local
+    | move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | |
+    | `Strictest` is not local
+    | move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | -^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | |
+    | `Box` is not local
+    | `Send` is not local
+    | `Sync` is not local
+    | `Deserialize` is not local
+    | move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | -^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | |
+    | `Box` is not local
+    | `Deserialize` is not local
+    | move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | -^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | |
+    | `Box` is not local
+    | `Send` is not local
+    | `Deserialize` is not local
+    | move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: non-local `impl` definition, `impl` blocks should be written at the same level as their item
+   --> src/extensions/mod.rs:189:1
+    |
+189 | #[typetag::serde(tag = "type")]
+    | -^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | |
+    | `Box` is not local
+    | `Sync` is not local
+    | `Deserialize` is not local
+    | move the `impl` block outside of this constant `_Extension_registry`
+190 | pub trait Extension: Debug + ExtensionHelper + Send + Sync {
+    |           --------- `Extension` is not local
+    |
+    = note: the attribute macro `typetag::serde` defines the non-local `impl`, and may need to be changed
+    = note: the attribute macro `typetag::serde` may come from an old version of the `typetag_impl` crate, try updating your dependency with `cargo update -p typetag_impl`
+    = note: an `impl` is never scoped, even when it is nested inside an item, as it may impact type checking outside of that item, which can be the case if neither the trait or the self type are at the same nesting level as the `impl`
+    = note: items in an anonymous const item (`const _: () = { ... }`) are treated as in the same scope as the anonymous const's declaration for the purpose of this lint
+    = note: this warning originates in the attribute macro `typetag::serde` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `openmls` (lib) generated 23 warnings (run `cargo fix --lib -p openmls` to apply 6 suggestions)
+warning: field `clients` is never read
+  --> tests/utils/mls_utils/mod.rs:61:9
+   |
+59 | pub(crate) struct TestSetup {
+   |                   --------- field in this struct
+60 |     pub(crate) _key_store: RefCell<HashMap<(&'static str, CiphersuiteName), Vec<KeyPackage>>>,
+61 |     pub clients: RefCell<HashMap<&'static str, RefCell<TestClient>>>,
+   |         ^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `openmls` (test "test_key_packages") generated 1 warning (1 duplicate)
+warning: `openmls` (test "test_managed_api") generated 1 warning
+warning: `openmls` (test "test_tree_kem_kat") generated 1 warning (1 duplicate)
+warning: `openmls` (test "test_interop_scenarios") generated 1 warning (1 duplicate)
+warning: `openmls` (test "test_decryption_key_index") generated 1 warning (1 duplicate)
+warning: `openmls` (lib test) generated 23 warnings (23 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.16s
+────────────
+ Nextest run ID bf0ae6eb-54a0-4777-8313-3eac5792f6dd with nextest profile: default
+    Starting 148 tests across 17 binaries (2 tests skipped)
+        PASS [   0.153s] openmls codec::test_primitives
+        PASS [   0.157s] openmls credentials::test_protocol_version
+        PASS [   0.158s] openmls ciphersuite::test_xor
+        PASS [   0.166s] openmls codec::test_encode_vec
+        PASS [   0.164s] openmls codec::test_cursor
+        PASS [   0.169s] openmls ciphersuite::test_ciphersuite::supported_ciphersuites
+        PASS [   0.169s] openmls extensions::test_extensions::key_package_id
+        PASS [   0.176s] openmls ciphersuite::test_secrets::secret_incompatible
+        PASS [   0.177s] openmls ciphersuite::test_ciphersuite::test_sign_verify
+        PASS [   0.180s] openmls extensions::test_extensions::capabilities
+        PASS [   0.178s] openmls ciphersuite::test_secrets::secret_init
+        PASS [   0.185s] openmls ciphersuite::test_ciphersuite::test_hpke_seal_open
+        PASS [   0.190s] openmls framing::test_framing::codec
+        PASS [   0.218s] openmls extensions::test_extensions::ratchet_tree_extension_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.224s] openmls extensions::test_extensions::ratchet_tree_extension_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.222s] openmls framing::test_framing::confirmation_tag_presence
+        PASS [   0.231s] openmls extensions::test_extensions::ratchet_tree_extension_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.175s] openmls framing::test_framing::membership_tag
+        PASS [   0.183s] openmls group::managed_group::test_managed_group::export_secret_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.186s] openmls group::managed_group::test_managed_group::export_secret_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.191s] openmls group::managed_group::test_managed_group::export_secret_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.192s] openmls group::mls_group::test_mls_group::test_failed_groupinfo_decryption
+        PASS [   0.200s] openmls group::mls_group::test_duplicate_extension::duplicate_ratchet_tree_extension_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.202s] openmls group::mls_group::test_duplicate_extension::duplicate_ratchet_tree_extension_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.213s] openmls group::mls_group::test_duplicate_extension::duplicate_ratchet_tree_extension_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.221s] openmls group::managed_group::test_managed_group::remover
+        PASS [   0.204s] openmls group::mls_group::test_mls_group::test_psks_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.193s] openmls group::mls_group::test_mls_group::test_psks_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.193s] openmls group::mls_group::test_mls_group::test_psks_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.261s] openmls framing::test_framing::unknown_sender
+        PASS [   0.227s] openmls group::mls_group::test_mls_group::test_update_path
+        PASS [   0.151s] openmls key_packages::test_key_packages::key_package_id_extension
+        PASS [   0.124s] openmls messages::tests::test_codec::test_pre_shared_key_proposal_codec
+        PASS [   0.136s] openmls key_packages::test_key_packages::test_mismatch
+        PASS [   0.157s] openmls key_packages::test_key_packages::generate_key_package
+        PASS [   0.146s] openmls key_store::test_key_store::key_storage_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.155s] openmls key_packages::test_key_packages::test_codec
+        PASS [   0.144s] openmls key_store::test_key_store::key_storage_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.143s] openmls key_store::test_key_store::key_storage_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.123s] openmls messages::tests::test_codec::test_reinit_proposal_codec
+        PASS [   0.229s] openmls group::tests::kat_transcripts::read_test_vectors
+        PASS [   0.150s] openmls messages::tests::test_proposals::proposal_queue_functions
+        PASS [   0.171s] openmls messages::tests::test_pgs::test_pgs
+        PASS [   0.142s] openmls messages::tests::test_proposals::proposal_queue_order
+        PASS [   0.103s] openmls messages::tests::test_proposals::proposals_codec
+        PASS [   0.110s] openmls messages::tests::test_welcome::invalid_welcomes
+        PASS [   0.123s] openmls messages::tests::test_welcome::test_welcome_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.134s] openmls messages::tests::test_welcome::test_welcome_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.126s] openmls messages::tests::test_welcome::test_welcome_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.088s] openmls tree::tests::test_index::test_leaf_parent
+        PASS [   0.333s] openmls group::tests::kat_transcripts::write_test_vectors
+        PASS [   0.142s] openmls tree::tests::kat_treemath::write_test_vectors
+        PASS [   0.167s] openmls tree::tests::kat_treemath::read_test_vectors
+        PASS [   0.131s] openmls tree::tests::test_private_tree::create_private_tree_from_secret
+        PASS [   0.092s] openmls tree::tests::test_secret_tree::secret_tree
+        PASS [   0.132s] openmls tree::tests::test_resolution::test_original_child_resolution
+        PASS [   0.182s] openmls tree::tests::test_path_keys::test_insert_retrieve
+        PASS [   0.210s] openmls tree::tests::test_hashes::test_parent_hash
+        PASS [   0.078s] openmls tree::tests::test_treemath::invalid_inputs
+        PASS [   0.081s] openmls tree::tests::test_treemath::test_dir_path
+        PASS [   0.146s] openmls tree::tests::test_secret_tree::test_boundaries
+        PASS [   0.187s] openmls tree::tests::test_resolution::test_exclusion_list
+        PASS [   0.197s] openmls tree::tests::test_secret_tree::increment_generation
+        PASS [   0.075s] openmls tree::tests::test_treemath::test_treemath_functions
+        PASS [   0.112s] openmls tree::tests::test_treemath::test_tree_hash
+        PASS [   0.076s] openmls tree::treemath::test_leaf_in_tree
+        PASS [   0.077s] openmls tree::treemath::invalid_inputs
+        PASS [   0.075s] openmls tree::treemath::test_leaf_not_in_tree
+        PASS [   0.099s] openmls tree::tests::test_treemath::verify_descendants
+        PASS [   0.078s] openmls tree::treemath::test_node_in_tree
+        PASS [   0.069s] openmls::test_codec string_codec
+        PASS [   0.735s] openmls group::mls_group::test_mls_group::test_mls_group_persistence
+        PASS [   0.080s] openmls tree::treemath::test_node_not_in_tree
+        PASS [   0.075s] openmls::test_codec vec_codec
+        PASS [   0.071s] openmls::test_config default_ciphersuites
+        PASS [   0.411s] openmls schedule::kat_key_schedule::read_test_vectors
+        PASS [   0.080s] openmls::test_config default_constants
+        PASS [   0.080s] openmls::test_config default_extensions
+        PASS [   0.081s] openmls::test_config protocol_version
+        PASS [   0.820s] openmls group::managed_group::test_managed_group::test_managed_group_persistence
+        PASS [   0.085s] openmls::test_decryption_key_index utils::mls_utils::test_random
+        PASS [   0.082s] openmls::test_encoding utils::mls_utils::test_random
+        PASS [   0.141s] openmls::test_decryption_key_index utils::mls_utils::test_setup
+        PASS [   0.534s] openmls schedule::kat_key_schedule::write_test_vectors
+        PASS [   0.124s] openmls::test_encoding utils::mls_utils::test_setup
+        PASS [   0.081s] openmls::test_framing utils::mls_utils::test_random
+        PASS [   0.216s] openmls::test_encoding test_add_proposal_encoding
+        PASS [   0.213s] openmls::test_encoding test_remove_proposal_encoding
+        PASS [   0.234s] openmls::test_encoding test_commit_encoding
+        PASS [   0.211s] openmls::test_encoding test_update_proposal_encoding
+        PASS [   0.265s] openmls::test_decryption_key_index decryption_key_index_computation_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   1.166s] openmls extensions::test_extensions::lifetime
+        PASS [   0.285s] openmls::test_decryption_key_index decryption_key_index_computation_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.242s] openmls::test_encoding test_welcome_message_encoding
+        PASS [   0.129s] openmls::test_group basic_group_setup
+        PASS [   0.136s] openmls::test_framing utils::mls_utils::test_setup
+        PASS [   0.179s] openmls::test_group create_commit_optional_path
+        PASS [   0.143s] openmls::test_interop_scenarios multiple_joins_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.147s] openmls::test_interop_scenarios multiple_joins_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.156s] openmls::test_interop_scenarios one_to_one_join_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.132s] openmls::test_interop_scenarios one_to_one_join_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.134s] openmls::test_interop_scenarios one_to_one_join_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.172s] openmls::test_interop_scenarios multiple_joins_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.144s] openmls::test_interop_scenarios remove_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.453s] openmls::test_encoding test_application_message_encoding
+        PASS [   0.272s] openmls::test_group group_operations
+        PASS [   0.121s] openmls::test_interop_scenarios remove_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.128s] openmls::test_interop_scenarios remove_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.067s] openmls::test_interop_scenarios utils::mls_utils::test_random
+        PASS [   0.128s] openmls::test_interop_scenarios update_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.139s] openmls::test_interop_scenarios three_party_join_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.139s] openmls::test_interop_scenarios three_party_join_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.131s] openmls::test_interop_scenarios update_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.596s] openmls::test_decryption_key_index decryption_key_index_computation_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.156s] openmls::test_interop_scenarios update_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.174s] openmls::test_interop_scenarios three_party_join_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.094s] openmls::test_key_packages key_package_generation_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.123s] openmls::test_interop_scenarios utils::mls_utils::test_setup
+        PASS [   0.099s] openmls::test_key_packages key_package_generation_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.097s] openmls::test_key_packages key_package_generation_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.082s] openmls::test_key_packages utils::mls_utils::test_random
+        PASS [   0.081s] openmls::test_managed_api utils::mls_utils::test_random
+        PASS [   0.050s] test_macros::tests better_test_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.135s] openmls::test_key_packages utils::mls_utils::test_setup
+        PASS [   0.051s] test_macros::tests better_test_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.139s] openmls::test_managed_api utils::mls_utils::test_setup
+        PASS [   0.084s] openmls::test_tree_kem_kat utils::mls_utils::test_random
+        PASS [   0.122s] openmls::test_managed_group test_empty_input_errors
+        PASS [   0.074s] test_macros::tests better_test_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.078s] test_macros::tests ciphersuite_test_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [   0.096s] test_macros::tests ciphersuite_test_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   0.098s] test_macros::tests ciphersuite_test_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   0.228s] openmls::test_managed_group managed_group_ratchet_tree_extension
+        PASS [   0.113s] tls-codec::decode deserialize_primitives
+        PASS [   0.105s] tls-codec::decode deserialize_tls_vec
+        PASS [   0.193s] openmls::test_tree_kem_kat utils::mls_utils::test_setup
+        PASS [   0.078s] tls-codec::encode serialize_primitives
+        PASS [   0.075s] tls-codec::encode serialize_tls_vec
+        PASS [   0.375s] openmls::test_managed_api test_managed_api
+        PASS [   1.115s] openmls::test_framing padding
+        PASS [   2.865s] openmls group::tests::kat_messages::write_test_vectors
+        PASS [   2.322s] openmls::test_interop_scenarios large_group_lifecycle_MLS10_128_DHKEMX25519_CHACHA20POLY1305_SHA256_Ed25519
+        PASS [   2.340s] openmls::test_interop_scenarios large_group_lifecycle_MLS10_128_DHKEMX25519_AES128GCM_SHA256_Ed25519
+        PASS [   3.223s] openmls::test_managed_group managed_group_operations
+        PASS [   4.333s] openmls tree::tests::kat_encryption::write_test_vectors
+        PASS [   8.911s] openmls::test_interop_scenarios large_group_lifecycle_MLS10_128_DHKEMP256_AES128GCM_SHA256_P256
+        PASS [  12.490s] openmls::test_tree_kem_kat test_tree_kem_kat
+        PASS [  39.119s] openmls tree::tests::kat_encryption::read_test_vectors
+────────────
+     Summary [  39.661s] 148 tests run: 148 passed, 2 skipped
+reward=1 graded=148 found=148 failed=0 parsed=148 framework=cargo exit_code=0

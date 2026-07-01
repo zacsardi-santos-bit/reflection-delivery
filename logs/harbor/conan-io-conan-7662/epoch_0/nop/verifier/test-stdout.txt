@@ -1,0 +1,133 @@
+patching file conans/test/assets/sources.py
+patching file conans/test/integration/toolchains/test_meson.py
+============================= test session starts ==============================
+platform linux -- Python 3.6.9, pytest-6.2.5, py-1.11.0, pluggy-1.0.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: xdist-3.0.2
+collecting ... collected 3 items
+
+conans/test/integration/toolchains/test_meson.py::MesonToolchainTest::test_linux FAILED [ 33%]
+conans/test/integration/toolchains/test_meson.py::MesonToolchainTest::test_macosx SKIPPED [ 66%]
+conans/test/integration/toolchains/test_meson.py::MesonToolchainTest::test_win32 SKIPPED [100%]
+
+=================================== FAILURES ===================================
+________________________ MesonToolchainTest.test_linux _________________________
+
+self = <repo.conans.test.integration.toolchains.test_meson.MesonToolchainTest testMethod=test_linux>
+
+    @unittest.skipUnless(platform.system() == "Linux", "Only for Linux")
+    def test_linux(self):
+        setttings = {"compiler": "gcc",
+                     "compiler.version": "5",
+                     "compiler.libcxx": "libstdc++",
+                     "arch": "x86_64",
+                     "build_type": "Release"}
+>       self._build(setttings)
+
+conans/test/integration/toolchains/test_meson.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+conans/test/integration/toolchains/test_meson.py:132: in _build
+    self.t.run("install . %s" % settings_str)
+conans/test/utils/tools.py:708: in run
+    error = self.run_cli(command_line, user_io=user_io, assert_error=assert_error)
+conans/test/utils/tools.py:693: in run_cli
+    self._handle_cli_result(command_line, assert_error=assert_error, error=error)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <conans.test.utils.tools.TestClient object at 0x2a60b99c5a90>
+command = 'install . -s compiler="gcc" -s compiler.version="5" -s compiler.libcxx="libstdc++" -s arch="x86_64" -s build_type="Release"'
+assert_error = False, error = 1
+
+    def _handle_cli_result(self, command, assert_error, error):
+        if (assert_error and not error) or (not assert_error and error):
+            if assert_error:
+                msg = " Command succeeded (failure expected): "
+            else:
+                msg = " Command failed (unexpectedly): "
+            exc_message = "\n{header}\n{cmd}\n{output_header}\n{output}\n{output_footer}\n".format(
+                header='{:-^80}'.format(msg),
+                output_header='{:-^80}'.format(" Output: "),
+                output_footer='-' * 80,
+                cmd=command,
+                output=self.out
+            )
+>           raise Exception(exc_message)
+E           Exception: 
+E           ------------------------ Command failed (unexpectedly): ------------------------
+E           install . -s compiler="gcc" -s compiler.version="5" -s compiler.libcxx="libstdc++" -s arch="x86_64" -s build_type="Release"
+E           ----------------------------------- Output: ------------------------------------
+E           Configuration:
+E           [settings]
+E           arch=x86_64
+E           arch_build=x86_64
+E           build_type=Release
+E           compiler=gcc
+E           compiler.libcxx=libstdc++
+E           compiler.version=5
+E           os=Linux
+E           os_build=Linux
+E           [options]
+E           [build_requires]
+E           [env]
+E           
+E           ERROR: Error loading conanfile at '/tmp/tmp0qg772tzconans/path with spaces/conanfile.py': Unable to load conanfile in /tmp/tmp0qg772tzconans/path with spaces/conanfile.py
+E             File "/usr/lib/python3.6/imp.py", line 172, in load_source
+E               module = _load(spec)
+E             File "<frozen importlib._bootstrap>", line 684, in _load
+E             File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+E             File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+E             File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+E             File "/tmp/tmp0qg772tzconans/path with spaces/conanfile.py", line 2, in <module>
+E               from conans import ConanFile, MesonToolchain, tools
+E           ImportError: cannot import name 'MesonToolchain'
+E           
+E           
+E           --------------------------------------------------------------------------------
+
+conans/test/utils/tools.py:733: Exception
+=============================== warnings summary ===============================
+conans/model/ref.py:96
+  /workspace/repo/conans/model/ref.py:96: DeprecationWarning: invalid escape sequence \+
+    _validation_pattern = re.compile("^[a-zA-Z0-9_][a-zA-Z0-9_\+\.-]{%s,%s}$"
+
+conans/util/config_parser.py:33
+  /workspace/repo/conans/util/config_parser.py:33: DeprecationWarning: invalid escape sequence \[
+    pattern = re.compile("^\[([a-z_]{2,50})\]")
+
+conans/client/build/msbuild.py:277
+  /workspace/repo/conans/client/build/msbuild.py:277: DeprecationWarning: invalid escape sequence \d
+    prog = re.compile("(\d+\.){2,3}\d+")
+
+conans/assets/templates/search_table_html.py:167
+  /workspace/repo/conans/assets/templates/search_table_html.py:167: DeprecationWarning: invalid escape sequence \s
+    """
+
+conans/client/conf/detect.py:44
+  /workspace/repo/conans/client/conf/detect.py:44: DeprecationWarning: invalid escape sequence \.
+    installed_version = re.search("([0-9]+(\.[0-9])?)", out).group()
+
+conans/client/conf/detect.py:64
+  /workspace/repo/conans/client/conf/detect.py:64: DeprecationWarning: invalid escape sequence \.
+    installed_version = re.search("([0-9]+\.[0-9])", out).group()
+
+conans/client/conf/detect.py:76
+  /workspace/repo/conans/client/conf/detect.py:76: DeprecationWarning: invalid escape sequence \.
+    installed_version = re.search("Sun C.*([0-9]+\.[0-9]+)", out)
+
+conans/client/conf/detect.py:80
+  /workspace/repo/conans/client/conf/detect.py:80: DeprecationWarning: invalid escape sequence \.
+    installed_version = re.search("([0-9]+\.[0-9]+)", out).group()
+
+conans/client/loader.py:2
+  /workspace/repo/conans/client/loader.py:2: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+    import imp
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+=========================== short test summary info ============================
+FAILED conans/test/integration/toolchains/test_meson.py::MesonToolchainTest::test_linux
+=================== 1 failed, 2 skipped, 9 warnings in 1.27s ===================
+  File "/tests/grade.py", line 1
+    from __future__ import annotations
+    ^
+SyntaxError: future feature annotations is not defined

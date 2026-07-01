@@ -1,0 +1,27 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./ovh -count=1",
+  "test_files": [
+    "ovh/data_iam_permissions_group_test.go",
+    "ovh/resource_iam_permissions_group_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/ovh/terraform-provider-ovh/ovh::TestAccMePaymentmeanBankaccountDataSource_basic",
+    "github.com/ovh/terraform-provider-ovh/ovh::TestAccMePaymentmeanCreditcardDataSource_basic",
+    "github.com/ovh/terraform-provider-ovh/ovh::TestProvider",
+    "github.com/ovh/terraform-provider-ovh/ovh::TestProvider_impl",
+    "github.com/ovh/terraform-provider-ovh/ovh::Test_parseKubeconfig/expected_kubeconfig_content",
+    "github.com/ovh/terraform-provider-ovh/ovh::Test_parseKubeconfig",
+    "github.com/ovh/terraform-provider-ovh/ovh::TestCustomIPVSIPTablesSchemaSetFunc/Input_with_P0D_value",
+    "github.com/ovh/terraform-provider-ovh/ovh::TestCustomIPVSIPTablesSchemaSetFunc/Input_without_P0D_value",
+    "github.com/ovh/terraform-provider-ovh/ovh::TestCustomIPVSIPTablesSchemaSetFunc",
+    "github.com/ovh/terraform-provider-ovh/ovh::TestCustomApiServerAdmissionPluginsSchemaSetFunc/No_plugins",
+    "github.com/ovh/terraform-provider-ovh/ovh::TestCustomApiServerAdmissionPluginsSchemaSetFunc/Should_reorder_plugins",
+    "github.com/ovh/terraform-provider-ovh/ovh::TestCustomApiServerAdmissionPluginsSchemaSetFunc",
+    "github.com/ovh/terraform-provider-ovh/ovh::Test_readApiServerAdmissionPlugins/expected_admission_plugins",
+    "github.com/ovh/terraform-provider-ovh/ovh::Test_readApiServerAdmissionPlugins"
+  ],
+  "PASS_TO_PASS": []
+}

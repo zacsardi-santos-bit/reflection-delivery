@@ -1,0 +1,7 @@
+patching file go/pkg/sysdb/coordinator/table_catalog.go
+patching file go/pkg/sysdb/grpc/collection_service.go
+patching file go/pkg/sysdb/metastore/db/dao/collection.go
+patching file go/pkg/sysdb/metastore/db/dbmodel/collection.go
+patching file go/pkg/sysdb/metastore/db/dbmodel/mocks/ICollectionDb.go
+patching file go/pkg/sysdb/metastore/s3/impl.go
+patching file idl/chromadb/proto/coordinator.proto

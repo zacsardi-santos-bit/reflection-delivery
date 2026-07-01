@@ -1,0 +1,20 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/ironfish && npx jest src/telemetry/submit.test.ts src/telemetry/telemetry.test.ts src/telemetry/telemetryBackgroundTask.test.ts --coverage=false --verbose --json",
+  "test_files": [
+    "ironfish/src/telemetry/submit.test.ts",
+    "ironfish/src/telemetry/telemetry.test.ts",
+    "ironfish/src/telemetry/telemetryBackgroundTask.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/ironfish/src/telemetry/telemetry.test.ts::Telemetry submit when disabled does nothing",
+    "/workspace/repo/ironfish/src/telemetry/telemetry.test.ts::Telemetry submit when submitting a metric without fields throws an error",
+    "/workspace/repo/ironfish/src/telemetry/telemetry.test.ts::Telemetry submit when the queue max size has been reached flushes the queue",
+    "/workspace/repo/ironfish/src/telemetry/telemetry.test.ts::Telemetry submit stores the metric",
+    "/workspace/repo/ironfish/src/telemetry/telemetry.test.ts::Telemetry flush when the pool throws an error and the queue is not saturated retries the points and logs an error",
+    "/workspace/repo/ironfish/src/telemetry/telemetry.test.ts::Telemetry flush submits telemetry to the pool"
+  ],
+  "PASS_TO_PASS": []
+}

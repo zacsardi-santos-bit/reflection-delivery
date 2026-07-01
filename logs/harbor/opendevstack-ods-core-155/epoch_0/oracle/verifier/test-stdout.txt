@@ -1,0 +1,78 @@
+patching file jenkins/webhook-proxy/main_test.go
+patching file jenkins/webhook-proxy/test/fixtures/build-broken-payload.txt
+patching file jenkins/webhook-proxy/test/fixtures/build-invalid-payload.json
+patching file jenkins/webhook-proxy/test/fixtures/build-rejected-openshift-response.json
+patching file jenkins/webhook-proxy/test/fixtures/build-rejected-payload.json
+{"Time":"2026-06-29T15:14:29.997907219Z","Action":"start","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy"}
+{"Time":"2026-06-29T15:14:30.017129111Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestMakePipelineName"}
+{"Time":"2026-06-29T15:14:30.017260504Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestMakePipelineName","Output":"=== RUN   TestMakePipelineName\n"}
+{"Time":"2026-06-29T15:14:30.01790016Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestMakePipelineName","Output":"--- PASS: TestMakePipelineName (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.017921951Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestMakePipelineName","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.018122676Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestIsProtectedBranch"}
+{"Time":"2026-06-29T15:14:30.018228889Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestIsProtectedBranch","Output":"=== RUN   TestIsProtectedBranch\n"}
+{"Time":"2026-06-29T15:14:30.018330481Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestIsProtectedBranch","Output":"--- PASS: TestIsProtectedBranch (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.018355202Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestIsProtectedBranch","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.018372042Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret"}
+{"Time":"2026-06-29T15:14:30.018473515Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret","Output":"=== RUN   TestHandleRootRequiresTriggerSecret\n"}
+{"Time":"2026-06-29T15:14:30.019578773Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/with_wrong_trigger_secret_param"}
+{"Time":"2026-06-29T15:14:30.019612874Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/with_wrong_trigger_secret_param","Output":"=== RUN   TestHandleRootRequiresTriggerSecret/with_wrong_trigger_secret_param\n"}
+{"Time":"2026-06-29T15:14:30.024827604Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/with_wrong_trigger_secret_param","Output":"--- PASS: TestHandleRootRequiresTriggerSecret/with_wrong_trigger_secret_param (0.01s)\n"}
+{"Time":"2026-06-29T15:14:30.024915936Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/with_wrong_trigger_secret_param","Elapsed":0.01}
+{"Time":"2026-06-29T15:14:30.024948027Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/without_trigger_secret_param:"}
+{"Time":"2026-06-29T15:14:30.024970858Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/without_trigger_secret_param:","Output":"=== RUN   TestHandleRootRequiresTriggerSecret/without_trigger_secret_param:\n"}
+{"Time":"2026-06-29T15:14:30.026100716Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/without_trigger_secret_param:","Output":"--- PASS: TestHandleRootRequiresTriggerSecret/without_trigger_secret_param: (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.026176858Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/without_trigger_secret_param:","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.026222609Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/with_empty_trigger_secret_param"}
+{"Time":"2026-06-29T15:14:30.02626439Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/with_empty_trigger_secret_param","Output":"=== RUN   TestHandleRootRequiresTriggerSecret/with_empty_trigger_secret_param\n"}
+{"Time":"2026-06-29T15:14:30.027239595Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/with_empty_trigger_secret_param","Output":"--- PASS: TestHandleRootRequiresTriggerSecret/with_empty_trigger_secret_param (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.027272066Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret/with_empty_trigger_secret_param","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.027700436Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret","Output":"--- PASS: TestHandleRootRequiresTriggerSecret (0.01s)\n"}
+{"Time":"2026-06-29T15:14:30.027732717Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootRequiresTriggerSecret","Elapsed":0.01}
+{"Time":"2026-06-29T15:14:30.027764288Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootReadsRequests"}
+{"Time":"2026-06-29T15:14:30.027779188Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootReadsRequests","Output":"=== RUN   TestHandleRootReadsRequests\n"}
+{"Time":"2026-06-29T15:14:30.032197639Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootReadsRequests","Output":"--- PASS: TestHandleRootReadsRequests (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.03222721Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestHandleRootReadsRequests","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.032253651Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestForward"}
+{"Time":"2026-06-29T15:14:30.032355313Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestForward","Output":"=== RUN   TestForward\n"}
+{"Time":"2026-06-29T15:14:30.033615095Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestForward","Output":"--- PASS: TestForward (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.033710937Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestForward","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.033734028Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint"}
+{"Time":"2026-06-29T15:14:30.033757668Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint","Output":"=== RUN   TestBuildEndpoint\n"}
+{"Time":"2026-06-29T15:14:30.033780669Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/valid_payload"}
+{"Time":"2026-06-29T15:14:30.033800659Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/valid_payload","Output":"=== RUN   TestBuildEndpoint/valid_payload\n"}
+{"Time":"2026-06-29T15:14:30.036773714Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/valid_payload","Output":"--- PASS: TestBuildEndpoint/valid_payload (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.036835506Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/valid_payload","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.036853606Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/valid_payload_with_param"}
+{"Time":"2026-06-29T15:14:30.036873356Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/valid_payload_with_param","Output":"=== RUN   TestBuildEndpoint/valid_payload_with_param\n"}
+{"Time":"2026-06-29T15:14:30.040319813Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/valid_payload_with_param","Output":"--- PASS: TestBuildEndpoint/valid_payload_with_param (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.040352954Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/valid_payload_with_param","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.040385805Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/broken_payload"}
+{"Time":"2026-06-29T15:14:30.040397835Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/broken_payload","Output":"=== RUN   TestBuildEndpoint/broken_payload\n"}
+{"Time":"2026-06-29T15:14:30.041496412Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/broken_payload","Output":"--- PASS: TestBuildEndpoint/broken_payload (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.041544704Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/broken_payload","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.041565084Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/invalid_payload"}
+{"Time":"2026-06-29T15:14:30.041576065Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/invalid_payload","Output":"=== RUN   TestBuildEndpoint/invalid_payload\n"}
+{"Time":"2026-06-29T15:14:30.042627101Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/invalid_payload","Output":"--- PASS: TestBuildEndpoint/invalid_payload (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.042679112Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/invalid_payload","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.042965879Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/accepted_payload_rejected_by_OpenShift"}
+{"Time":"2026-06-29T15:14:30.043046451Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/accepted_payload_rejected_by_OpenShift","Output":"=== RUN   TestBuildEndpoint/accepted_payload_rejected_by_OpenShift\n"}
+{"Time":"2026-06-29T15:14:30.046633661Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/accepted_payload_rejected_by_OpenShift","Output":"--- PASS: TestBuildEndpoint/accepted_payload_rejected_by_OpenShift (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.046666702Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/accepted_payload_rejected_by_OpenShift","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.046702643Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/request_without_trigger_secret"}
+{"Time":"2026-06-29T15:14:30.046739394Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/request_without_trigger_secret","Output":"=== RUN   TestBuildEndpoint/request_without_trigger_secret\n"}
+{"Time":"2026-06-29T15:14:30.047871083Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/request_without_trigger_secret","Output":"--- PASS: TestBuildEndpoint/request_without_trigger_secret (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.047904903Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint/request_without_trigger_secret","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.047942334Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint","Output":"--- PASS: TestBuildEndpoint (0.01s)\n"}
+{"Time":"2026-06-29T15:14:30.047977055Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestBuildEndpoint","Elapsed":0.01}
+{"Time":"2026-06-29T15:14:30.048069557Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestNotFound"}
+{"Time":"2026-06-29T15:14:30.048098608Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestNotFound","Output":"=== RUN   TestNotFound\n"}
+{"Time":"2026-06-29T15:14:30.048887078Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestNotFound","Output":"--- PASS: TestNotFound (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.04895838Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestNotFound","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.049015701Z","Action":"run","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestGetBuildConfig"}
+{"Time":"2026-06-29T15:14:30.049056682Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestGetBuildConfig","Output":"=== RUN   TestGetBuildConfig\n"}
+{"Time":"2026-06-29T15:14:30.049822461Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestGetBuildConfig","Output":"--- PASS: TestGetBuildConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:14:30.049911774Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Test":"TestGetBuildConfig","Elapsed":0}
+{"Time":"2026-06-29T15:14:30.049948595Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Output":"PASS\n"}
+{"Time":"2026-06-29T15:14:30.051384131Z","Action":"output","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Output":"ok  \tgithub.com/opendevstack/ods-core/jenkins/webhook-proxy\t0.053s\n"}
+{"Time":"2026-06-29T15:14:30.051428422Z","Action":"pass","Package":"github.com/opendevstack/ods-core/jenkins/webhook-proxy","Elapsed":0.054}
+reward=1 graded=17 found=17 failed=0 parsed=17 framework=go exit_code=0

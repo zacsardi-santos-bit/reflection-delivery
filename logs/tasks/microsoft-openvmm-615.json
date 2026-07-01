@@ -1,0 +1,23 @@
+{
+ "task": "microsoft-openvmm-615",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden drops the Send bound: 'unsafe fn send_message<T: MeshField>(port: &Port, ...)'; F2P includes new 'mesh_channel_core::nosend test_no_send'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

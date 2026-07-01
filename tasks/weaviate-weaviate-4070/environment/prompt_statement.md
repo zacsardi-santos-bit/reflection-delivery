@@ -1,0 +1,7 @@
+I'm working on the cloud cluster transport layer and need to make a few improvements. First, there's a utility function for finding a free TCP port that currently lives inside a test file in one package, but now I need it in another package's tests too. Instead of duplicating it, I want to move it into a shared utility package so it can be imported from anywhere.
+
+Second, the gRPC server component's constructor and type name are out of date — they were renamed at some point but the actual code wasn't updated to match.
+
+Third, when the client methods fail during address resolution or when dialing a connection, they currently return bare errors with no context about which step failed. I'd like those errors to clearly indicate whether the failure happened during address resolution or during the connection setup, so callers can tell them apart.
+
+Finally, the server component has no tests. I'd like to add tests that cover: starting the server with an empty address (should fail), starting with an invalid address (should fail with a network error), and the full request/response cycle for join, notify, remove, and apply operations — verifying that specific internal error conditions are translated into the correct gRPC status codes. There should also be tests for the address resolver that computes the RPC port from a raft address, covering both the fixed-port and increment modes, and their respective error cases.

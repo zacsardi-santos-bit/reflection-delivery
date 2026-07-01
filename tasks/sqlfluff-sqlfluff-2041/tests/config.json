@@ -1,0 +1,42 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest test/dialects/dialects_test.py -v -k 'materialized_view or create_table_as'",
+  "test_files": [
+    "test/fixtures/dialects/postgres/postgres_alter_materialized_view.sql",
+    "test/fixtures/dialects/postgres/postgres_alter_materialized_view.yml",
+    "test/fixtures/dialects/postgres/postgres_create_materialized_view.sql",
+    "test/fixtures/dialects/postgres/postgres_create_materialized_view.yml",
+    "test/fixtures/dialects/postgres/postgres_create_table_as.sql",
+    "test/fixtures/dialects/postgres/postgres_create_table_as.yml",
+    "test/fixtures/dialects/postgres/postgres_drop_materialized_view.sql",
+    "test/fixtures/dialects/postgres/postgres_drop_materialized_view.yml",
+    "test/fixtures/dialects/postgres/postgres_refresh_materialized_view.sql",
+    "test/fixtures/dialects/postgres/postgres_refresh_materialized_view.yml"
+  ],
+  "num_test_files": 10,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.dialects.dialects_test::test__dialect__base_file_parse[postgres-postgres_alter_materialized_view.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[postgres-postgres_create_materialized_view.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[postgres-postgres_create_table_as.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[postgres-postgres_drop_materialized_view.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[postgres-postgres_refresh_materialized_view.sql]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[postgres-postgres_alter_materialized_view.sql-True-postgres_alter_materialized_view.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[postgres-postgres_create_materialized_view.sql-True-postgres_create_materialized_view.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[postgres-postgres_create_table_as.sql-True-postgres_create_table_as.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[postgres-postgres_drop_materialized_view.sql-True-postgres_drop_materialized_view.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[postgres-postgres_refresh_materialized_view.sql-True-postgres_refresh_materialized_view.yml]"
+  ],
+  "PASS_TO_PASS": [
+    "test.dialects.dialects_test::test__dialect__base_file_parse[tsql-create_table_as_select.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[hive-create_table_as_select.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[ansi-create_table_as.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[ansi-create_table_as_select_cte_parentheses.sql]",
+    "test.dialects.dialects_test::test__dialect__base_file_parse[ansi-create_table_as_select_cte_no_parentheses.sql]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[tsql-create_table_as_select.sql-True-create_table_as_select.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[hive-create_table_as_select.sql-True-create_table_as_select.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[ansi-create_table_as.sql-True-create_table_as.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[ansi-create_table_as_select_cte_parentheses.sql-True-create_table_as_select_cte_parentheses.yml]",
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[ansi-create_table_as_select_cte_no_parentheses.sql-True-create_table_as_select_cte_no_parentheses.yml]"
+  ]
+}

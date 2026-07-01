@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./backends/batch -count=1",
+  "test_files": [
+    "backends/batch/replays_test.go",
+    "backends/batch/schemas_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/batchcorp/plumber/backends/batch::TestAuthenticate",
+    "github.com/batchcorp/plumber/backends/batch::TestReadUsername",
+    "github.com/batchcorp/plumber/backends/batch::TestReadPassword",
+    "github.com/batchcorp/plumber/backends/batch::TestAPISuite"
+  ],
+  "PASS_TO_PASS": []
+}

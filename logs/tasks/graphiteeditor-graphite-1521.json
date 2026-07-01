@@ -1,0 +1,23 @@
+{
+ "task": "graphiteeditor-graphite-1521",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "Golden fixes operator precedence in quad.rs contains(): `(self.0[j].x - self.0[i].x) * (p.y - ...)`; F2P (105/138) test_quad_contains_large_point asserts Quad::from_box([splat(300.),splat(500.)]).contains(splat(350.))"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 14,
+  "shallow": true
+ }
+}

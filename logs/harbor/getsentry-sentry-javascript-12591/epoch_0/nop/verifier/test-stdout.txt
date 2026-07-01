@@ -1,0 +1,210 @@
+patching file dev-packages/e2e-tests/test-applications/create-remix-app-express-vite-dev/instrument.mjs
+patching file dev-packages/e2e-tests/test-applications/node-express-esm-preload/tests/server.test.ts
+patching file dev-packages/e2e-tests/test-applications/node-profiling/build.mjs
+patching file dev-packages/e2e-tests/test-applications/node-profiling/index.ts (renamed from dev-packages/e2e-tests/test-applications/node-profiling/index.js)
+patching file dev-packages/e2e-tests/test-applications/node-profiling/package.json
+patching file dev-packages/e2e-tests/test-applications/node-profiling/tsconfig.json
+patching file packages/core/test/lib/tracing/trace.test.ts
+patching file packages/opentelemetry/test/trace.test.ts
+patching file packages/profiling-node/test/cpu_profiler.test.ts
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[ts-compiler] (WARN) [96mtest/lib/tracing/trace.test.ts[0m:[93m277[0m:[93m41[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ name: string; parentSpan: SentrySpan; }' is not assignable to parameter of type 'StartSpanOptions'.
+  Object literal may only specify known properties, and 'parentSpan' does not exist in type 'StartSpanOptions'.
+
+[7m277[0m     startSpan({ name: 'GET users/[id]', parentSpan }, span => {
+[7m   [0m [91m                                        ~~~~~~~~~~[0m
+[96mtest/lib/tracing/trace.test.ts[0m:[93m686[0m:[93m47[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ name: string; parentSpan: SentrySpan; }' is not assignable to parameter of type 'StartSpanOptions'.
+  Object literal may only specify known properties, and 'parentSpan' does not exist in type 'StartSpanOptions'.
+
+[7m686[0m     startSpanManual({ name: 'GET users/[id]', parentSpan }, span => {
+[7m   [0m [91m                                              ~~~~~~~~~~[0m
+[96mtest/lib/tracing/trace.test.ts[0m:[93m1007[0m:[93m62[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ name: string; parentSpan: SentrySpan; }' is not assignable to parameter of type 'StartSpanOptions'.
+  Object literal may only specify known properties, and 'parentSpan' does not exist in type 'StartSpanOptions'.
+
+[7m1007[0m     const span = startInactiveSpan({ name: 'GET users/[id]', parentSpan });
+[7m    [0m [91m                                                             ~~~~~~~~~~[0m
+FAIL test/lib/tracing/trace.test.ts
+  startSpan
+    ✓ returns a non recording span if tracing is disabled (1 ms)
+    ✓ creates & finishes span (1 ms)
+    ✓ allows to pass a `startTime`
+    ✓ forks the scope (4 ms)
+    ✓ allows to pass a scope (1 ms)
+    ✕ allows to pass a parentSpan (2 ms)
+    ✓ allows to force a transaction with forceTransaction=true (3 ms)
+    ✓ picks up the trace id off the parent scope's propagation context (1 ms)
+    ✓ samples with a tracesSampler (2 ms)
+    ✓ includes the scope at the time the span was started when finished (4 ms)
+    ✓ sets a child span reference on the parent span (1 ms)
+    ✓ uses implementation from ACS, if it exists (1 ms)
+    with async callback and error false
+      ✓ should return the same value as the callback (7 ms)
+      ✓ creates a transaction (2 ms)
+      ✓ allows for transaction to be mutated (1 ms)
+      ✓ creates a span with correct description (2 ms)
+      ✓ allows for span to be mutated (1 ms)
+      ✓ correctly sets the span origin (1 ms)
+    with sync callback and error false
+      ✓ should return the same value as the callback
+      ✓ creates a transaction (1 ms)
+      ✓ allows for transaction to be mutated (1 ms)
+      ✓ creates a span with correct description (1 ms)
+      ✓ allows for span to be mutated (1 ms)
+      ✓ correctly sets the span origin (1 ms)
+    with async callback and error true
+      ✓ should return the same value as the callback (1 ms)
+      ✓ creates a transaction (1 ms)
+      ✓ allows for transaction to be mutated (1 ms)
+      ✓ creates a span with correct description (1 ms)
+      ✓ allows for span to be mutated (1 ms)
+      ✓ correctly sets the span origin (1 ms)
+    with sync callback and error true
+      ✓ should return the same value as the callback (1 ms)
+      ✓ creates a transaction (1 ms)
+      ✓ allows for transaction to be mutated
+      ✓ creates a span with correct description (1 ms)
+      ✓ allows for span to be mutated (1 ms)
+      ✓ correctly sets the span origin (1 ms)
+    onlyIfParent
+      ✓ starts a non recording span if there is no parent
+      ✓ creates a span if there is a parent (1 ms)
+    parentSpanIsAlwaysRootSpan
+      ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (1 ms)
+      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (1 ms)
+    [experimental] standalone spans
+      ✓ starts a standalone segment span if standalone is set (1 ms)
+      ✓ doesn't set segment properties if standalone is falsy (undefined)
+      ✓ doesn't set segment properties if standalone is falsy (false) (1 ms)
+  startSpanManual
+    ✓ returns a non recording span if tracing is disabled (1 ms)
+    ✓ creates & finishes span
+    ✓ forks the scope automatically (1 ms)
+    ✓ allows to pass a scope (1 ms)
+    ✕ allows to pass a parentSpan
+    ✓ allows to force a transaction with forceTransaction=true (2 ms)
+    ✓ allows to pass a `startTime` (1 ms)
+    ✓ picks up the trace id off the parent scope's propagation context
+    ✓ sets a child span reference on the parent span
+    ✓ uses implementation from ACS, if it exists (1 ms)
+    onlyIfParent
+      ✓ does not create a span if there is no parent
+      ✓ creates a span if there is a parent (1 ms)
+    parentSpanIsAlwaysRootSpan
+      ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (1 ms)
+      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (1 ms)
+  startInactiveSpan
+    ✓ returns a non recording span if tracing is disabled
+    ✓ creates & finishes span (1 ms)
+    ✓ does not set span on scope (3 ms)
+    ✓ allows to pass a scope (1 ms)
+    ✕ allows to pass a parentSpan
+    ✓ allows to force a transaction with forceTransaction=true (2 ms)
+    ✓ allows to pass a `startTime`
+    ✓ picks up the trace id off the parent scope's propagation context (1 ms)
+    ✓ includes the scope at the time the span was started when finished (6 ms)
+    ✓ sets a child span reference on the parent span (1 ms)
+    ✓ uses implementation from ACS, if it exists
+    onlyIfParent
+      ✓ does not create a span if there is no parent
+      ✓ creates a span if there is a parent (1 ms)
+    parentSpanIsAlwaysRootSpan
+      ✓ creates a span as child of root span if parentSpanIsAlwaysRootSpan=true (1 ms)
+      ✓ does not creates a span as child of root span if parentSpanIsAlwaysRootSpan=false (1 ms)
+  continueTrace
+    ✓ works without trace & baggage data
+    ✓ works with trace data (1 ms)
+    ✓ works with trace & baggage data
+    ✓ works with trace & 3rd party baggage data (1 ms)
+    ✓ returns response of callback
+  getActiveSpan
+    ✓ works without an active span on the scope
+    ✓ works with an active span on the scope (1 ms)
+    ✓ uses implementation from ACS, if it exists
+  withActiveSpan()
+    ✓ should set the active span within the callback (1 ms)
+    ✓ should create child spans when calling startSpan within the callback
+    ✓ when `null` is passed, no span should be active within the callback (1 ms)
+    ✓ uses implementation from ACS, if it exists
+  span hooks
+    ✓ correctly emits span hooks (1 ms)
+  suppressTracing
+    ✓ works for a root span
+    ✓ works for a child span (1 ms)
+    ✓ works for a child span with forceTransaction=true (1 ms)
+  startNewTrace
+    ✓ creates a new propagation context on the current scope
+    ✓ keeps the propagation context on the isolation scope as-is (1 ms)
+
+  ● startSpan › allows to pass a parentSpan
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "parent-span-id"
+    Received: undefined
+
+      277 |     startSpan({ name: 'GET users/[id]', parentSpan }, span => {
+      278 |       expect(getActiveSpan()).toBe(span);
+    > 279 |       expect(spanToJSON(span).parent_span_id).toBe('parent-span-id');
+          |                                               ^
+      280 |     });
+      281 |
+      282 |     expect(getActiveSpan()).toBe(undefined);
+
+      at test/lib/tracing/trace.test.ts:279:47
+      at status.status (src/tracing/trace.ts:59:13)
+      at handleCallbackErrors (src/utils/handleCallbackErrors.ts:25:26)
+      at src/tracing/trace.ts:58:32
+      at AsyncContextStack.withScope (src/asyncContext/stackStrategy.ts:48:28)
+      at Object.withScope (src/asyncContext/stackStrategy.ts:141:33)
+      at withScope (src/currentScopes.ts:59:18)
+      at startSpan (src/tracing/trace.ts:43:19)
+      at Object.<anonymous> (test/lib/tracing/trace.test.ts:277:14)
+
+  ● startSpanManual › allows to pass a parentSpan
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "parent-span-id"
+    Received: undefined
+
+      686 |     startSpanManual({ name: 'GET users/[id]', parentSpan }, span => {
+      687 |       expect(getActiveSpan()).toBe(span);
+    > 688 |       expect(spanToJSON(span).parent_span_id).toBe('parent-span-id');
+          |                                               ^
+      689 |
+      690 |       span.end();
+      691 |     });
+
+      at test/lib/tracing/trace.test.ts:688:47
+      at status.status (src/tracing/trace.ts:110:13)
+      at handleCallbackErrors (src/utils/handleCallbackErrors.ts:25:26)
+      at src/tracing/trace.ts:109:32
+      at AsyncContextStack.withScope (src/asyncContext/stackStrategy.ts:48:28)
+      at Object.withScope (src/asyncContext/stackStrategy.ts:141:33)
+      at withScope (src/currentScopes.ts:59:18)
+      at startSpanManual (src/tracing/trace.ts:90:19)
+      at Object.<anonymous> (test/lib/tracing/trace.test.ts:686:20)
+
+  ● startInactiveSpan › allows to pass a parentSpan
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "parent-span-id"
+    Received: undefined
+
+      1007 |     const span = startInactiveSpan({ name: 'GET users/[id]', parentSpan });
+      1008 |
+    > 1009 |     expect(spanToJSON(span).parent_span_id).toBe('parent-span-id');
+           |                                             ^
+      1010 |     expect(getActiveSpan()).toBe(undefined);
+      1011 |
+      1012 |     span.end();
+
+      at Object.<anonymous> (test/lib/tracing/trace.test.ts:1009:45)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 87 passed, 90 total
+Snapshots:   0 total
+Time:        3.449 s
+Ran all test suites matching /test\/lib\/tracing\/trace.test.ts/i.
+reward=0 graded=58 found=0 failed=0 parsed=0 framework=jest exit_code=1

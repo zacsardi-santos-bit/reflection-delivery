@@ -1,0 +1,23 @@
+{
+ "task": "envoyproxy-gateway-2895",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "test.sh runs crd-ref-docs then 'diff site/content/en/latest/api/extension_types.md /tmp/generated_docs.md'; golden replaces custom ClientTrafficPolicyStatus with shared PolicyStatus in clienttrafficpolicy_types.go"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 4,
+  "shallow": true
+ }
+}

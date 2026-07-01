@@ -1,0 +1,23 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/sdk/nodejs && ./node_modules/.bin/tsc --skipLibCheck && cp -R proto/. bin/proto/ && mkdir -p bin/tests/runtime/langhost/cases/ && find tests/runtime/langhost/cases/ -mindepth 1 -maxdepth 1 -type d -exec cp -R {} bin/tests/runtime/langhost/cases/ \\; && ./node_modules/.bin/mocha --timeout 30000 bin/tests/runtime/langhost/run.spec.js --grep 'exported_function|exported_promise_function|exported_async_function|resource_creation_in_function'",
+  "test_files": [
+    "sdk/nodejs/tests/runtime/langhost/cases/047.exported_function/index.js",
+    "sdk/nodejs/tests/runtime/langhost/cases/048.exported_promise_function/index.js",
+    "sdk/nodejs/tests/runtime/langhost/cases/049.exported_async_function/index.js",
+    "sdk/nodejs/tests/runtime/langhost/cases/050.resource_creation_in_function/index.js",
+    "sdk/nodejs/tests/runtime/langhost/cases/051.resource_creation_in_function_with_result/index.js",
+    "sdk/nodejs/tests/runtime/langhost/cases/052.resource_creation_in_async_function_with_result/index.js",
+    "sdk/nodejs/tests/runtime/langhost/run.spec.ts"
+  ],
+  "num_test_files": 7,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "::rpc run test: exported_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/047.exported_function)",
+    "::rpc run test: exported_promise_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/048.exported_promise_function)",
+    "::rpc run test: exported_async_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/049.exported_async_function)",
+    "::rpc run test: resource_creation_in_function (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/050.resource_creation_in_function)",
+    "::rpc run test: resource_creation_in_function_with_result (pwd=undefined,prog=/workspace/repo/sdk/nodejs/bin/tests/runtime/langhost/cases/051.resource_creation_in_function_with_result)"
+  ],
+  "PASS_TO_PASS": []
+}

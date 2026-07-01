@@ -1,0 +1,1 @@
+cd /workspace/repo/packages/server && NODE_ENV=test CYPRESS_INTERNAL_ENV=test node --max-http-header-size=1048576 node_modules/.bin/mocha test/unit/open_project_spec.js --timeout 10000 -r @packages/ts/register --reporter spec --exit

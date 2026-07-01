@@ -1,0 +1,15 @@
+patching file plugins/serializers/csv/csv_test.go
+# github.com/influxdata/telegraf/plugins/serializers/csv [github.com/influxdata/telegraf/plugins/serializers/csv.test]
+plugins/serializers/csv/csv_test.go:18:12: undefined: NewSerializer
+plugins/serializers/csv/csv_test.go:23:12: undefined: NewSerializer
+plugins/serializers/csv/csv_test.go:26:21: undefined: NewSerializer
+plugins/serializers/csv/csv_test.go:83:23: undefined: NewSerializer
+plugins/serializers/csv/csv_test.go:83:41: cfg.TimestampFormat undefined (type *Config has no field or method TimestampFormat)
+plugins/serializers/csv/csv_test.go:83:62: cfg.Separator undefined (type *Config has no field or method Separator)
+plugins/serializers/csv/csv_test.go:83:77: cfg.Header undefined (type *Config has no field or method Header)
+plugins/serializers/csv/csv_test.go:83:89: cfg.Prefix undefined (type *Config has no field or method Prefix)
+plugins/serializers/csv/csv_test.go:148:23: undefined: NewSerializer
+plugins/serializers/csv/csv_test.go:159:13: undefined: Serializer
+plugins/serializers/csv/csv_test.go:148:23: too many errors
+FAIL	github.com/influxdata/telegraf/plugins/serializers/csv [build failed]
+reward=0 graded=16 found=16 failed=16 parsed=1 framework=go exit_code=1

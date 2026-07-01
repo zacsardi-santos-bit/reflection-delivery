@@ -1,0 +1,1290 @@
+diff --git a/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamAggregationTransforms.java b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamAggregationTransforms.java
+index 3fbea649dc2..4c6511b4cde 100644
+--- a/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamAggregationTransforms.java
++++ b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamAggregationTransforms.java
+@@ -36,6 +36,8 @@ import org.apache.beam.sdk.extensions.sql.BeamRecordSqlType;
+ import org.apache.beam.sdk.extensions.sql.BeamSqlRecordHelper;
+ import org.apache.beam.sdk.extensions.sql.impl.interpreter.operator.BeamSqlInputRefExpression;
+ import org.apache.beam.sdk.extensions.sql.impl.interpreter.operator.UdafImpl;
++import org.apache.beam.sdk.extensions.sql.impl.transform.agg.BigDecimalConverter;
++import org.apache.beam.sdk.extensions.sql.impl.transform.agg.VarianceFn;
+ import org.apache.beam.sdk.extensions.sql.impl.utils.CalciteUtils;
+ import org.apache.beam.sdk.transforms.Combine.CombineFn;
+ import org.apache.beam.sdk.transforms.Count;
+@@ -46,6 +48,7 @@ import org.apache.beam.sdk.transforms.windowing.IntervalWindow;
+ import org.apache.beam.sdk.values.BeamRecord;
+ import org.apache.beam.sdk.values.KV;
+ import org.apache.calcite.rel.core.AggregateCall;
++import org.apache.calcite.sql.type.SqlTypeName;
+ import org.apache.calcite.sql.validate.SqlUserDefinedAggFunction;
+ import org.apache.calcite.util.ImmutableBitSet;
+ import org.joda.time.Instant;
+@@ -167,7 +170,8 @@ public class BeamAggregationTransforms implements Serializable{
+         sourceFieldExps.add(sourceExp);
+ 
+         outFieldsName.add(call.name);
+-        int outFieldType = CalciteUtils.toJavaType(call.type.getSqlTypeName());
++        SqlTypeName outFieldSqlType = call.type.getSqlTypeName();
++        int outFieldType = CalciteUtils.toJavaType(outFieldSqlType);
+         outFieldsType.add(outFieldType);
+ 
+         switch (call.getAggregation().getName()) {
+@@ -175,24 +179,24 @@ public class BeamAggregationTransforms implements Serializable{
+             aggregators.add(Count.combineFn());
+             break;
+           case "MAX":
+-            aggregators.add(BeamBuiltinAggregations.createMax(call.type.getSqlTypeName()));
++            aggregators.add(BeamBuiltinAggregations.createMax(outFieldSqlType));
+             break;
+           case "MIN":
+-            aggregators.add(BeamBuiltinAggregations.createMin(call.type.getSqlTypeName()));
++            aggregators.add(BeamBuiltinAggregations.createMin(outFieldSqlType));
+             break;
+           case "SUM":
+-            aggregators.add(BeamBuiltinAggregations.createSum(call.type.getSqlTypeName()));
++            aggregators.add(BeamBuiltinAggregations.createSum(outFieldSqlType));
+             break;
+           case "AVG":
+-            aggregators.add(BeamBuiltinAggregations.createAvg(call.type.getSqlTypeName()));
++            aggregators.add(BeamBuiltinAggregations.createAvg(outFieldSqlType));
+             break;
+           case "VAR_POP":
+-            aggregators.add(BeamBuiltinAggregations.createVar(call.type.getSqlTypeName(),
+-                    false));
++            aggregators.add(
++                VarianceFn.newPopulation(BigDecimalConverter.forSqlType(outFieldSqlType)));
+             break;
+           case "VAR_SAMP":
+-            aggregators.add(BeamBuiltinAggregations.createVar(call.type.getSqlTypeName(),
+-                    true));
++            aggregators.add(
++                VarianceFn.newSample(BigDecimalConverter.forSqlType(outFieldSqlType)));
+             break;
+           default:
+             if (call.getAggregation() instanceof SqlUserDefinedAggFunction) {
+diff --git a/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamBuiltinAggregations.java b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamBuiltinAggregations.java
+index 0d45c6b24f0..c70b22626a8 100644
+--- a/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamBuiltinAggregations.java
++++ b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamBuiltinAggregations.java
+@@ -17,7 +17,6 @@
+  */
+ package org.apache.beam.sdk.extensions.sql.impl.transform;
+ 
+-import java.io.Serializable;
+ import java.math.BigDecimal;
+ import java.math.MathContext;
+ import java.math.RoundingMode;
+@@ -25,11 +24,9 @@ import java.util.Date;
+ import javax.annotation.Nullable;
+ import org.apache.beam.sdk.coders.BigDecimalCoder;
+ import org.apache.beam.sdk.coders.BigEndianIntegerCoder;
+-import org.apache.beam.sdk.coders.CannotProvideCoderException;
+ import org.apache.beam.sdk.coders.Coder;
+ import org.apache.beam.sdk.coders.CoderRegistry;
+ import org.apache.beam.sdk.coders.KvCoder;
+-import org.apache.beam.sdk.coders.SerializableCoder;
+ import org.apache.beam.sdk.transforms.Combine;
+ import org.apache.beam.sdk.transforms.Combine.CombineFn;
+ import org.apache.beam.sdk.transforms.Max;
+@@ -148,31 +145,6 @@ class BeamBuiltinAggregations {
+     }
+   }
+ 
+-  /**
+-   * {@link CombineFn} for VAR_POP and VAR_SAMP.
+-   */
+-  public static CombineFn createVar(SqlTypeName fieldType, boolean isSamp) {
+-    switch (fieldType) {
+-      case INTEGER:
+-        return new IntegerVar(isSamp);
+-      case SMALLINT:
+-        return new ShortVar(isSamp);
+-      case TINYINT:
+-        return new ByteVar(isSamp);
+-      case BIGINT:
+-        return new LongVar(isSamp);
+-      case FLOAT:
+-        return new FloatVar(isSamp);
+-      case DOUBLE:
+-        return new DoubleVar(isSamp);
+-      case DECIMAL:
+-        return new BigDecimalVar(isSamp);
+-      default:
+-        throw new UnsupportedOperationException(
+-            String.format("[%s] is not support in AVG", fieldType));
+-    }
+-  }
+-
+   static class CustMax<T extends Comparable<T>> extends Combine.BinaryCombineFn<T> {
+     public T apply(T left, T right) {
+       return (right == null || right.compareTo(left) < 0) ? left : right;
+@@ -238,19 +210,20 @@ class BeamBuiltinAggregations {
+ 
+     @Override
+     public Coder<KV<Integer, BigDecimal>> getAccumulatorCoder(CoderRegistry registry,
+-        Coder<T> inputCoder) throws CannotProvideCoderException {
++                                                              Coder<T> inputCoder) {
+       return KvCoder.of(BigEndianIntegerCoder.of(), BigDecimalCoder.of());
+     }
+ 
+-    protected BigDecimal prepareOutput(KV<Integer, BigDecimal> accumulator){
++    protected BigDecimal prepareOutput(KV<Integer, BigDecimal> accumulator) {
+       return accumulator.getValue().divide(new BigDecimal(accumulator.getKey()), mc);
+     }
+ 
+     public abstract T extractOutput(KV<Integer, BigDecimal> accumulator);
++
+     public abstract BigDecimal toBigDecimal(T record);
+   }
+ 
+-  static class IntegerAvg extends Avg<Integer>{
++  static class IntegerAvg extends Avg<Integer> {
+     @Nullable
+     public Integer extractOutput(KV<Integer, BigDecimal> accumulator) {
+       return accumulator.getKey() == 0 ? null : prepareOutput(accumulator).intValue();
+@@ -261,7 +234,7 @@ class BeamBuiltinAggregations {
+     }
+   }
+ 
+-  static class LongAvg extends Avg<Long>{
++  static class LongAvg extends Avg<Long> {
+     @Nullable
+     public Long extractOutput(KV<Integer, BigDecimal> accumulator) {
+       return accumulator.getKey() == 0 ? null : prepareOutput(accumulator).longValue();
+@@ -272,7 +245,7 @@ class BeamBuiltinAggregations {
+     }
+   }
+ 
+-  static class ShortAvg extends Avg<Short>{
++  static class ShortAvg extends Avg<Short> {
+     @Nullable
+     public Short extractOutput(KV<Integer, BigDecimal> accumulator) {
+       return accumulator.getKey() == 0 ? null : prepareOutput(accumulator).shortValue();
+@@ -294,7 +267,7 @@ class BeamBuiltinAggregations {
+     }
+   }
+ 
+-  static class FloatAvg extends Avg<Float>{
++  static class FloatAvg extends Avg<Float> {
+     @Nullable
+     public Float extractOutput(KV<Integer, BigDecimal> accumulator) {
+       return accumulator.getKey() == 0 ? null : prepareOutput(accumulator).floatValue();
+@@ -305,7 +278,7 @@ class BeamBuiltinAggregations {
+     }
+   }
+ 
+-  static class DoubleAvg extends Avg<Double>{
++  static class DoubleAvg extends Avg<Double> {
+     @Nullable
+     public Double extractOutput(KV<Integer, BigDecimal> accumulator) {
+       return accumulator.getKey() == 0 ? null : prepareOutput(accumulator).doubleValue();
+@@ -316,7 +289,7 @@ class BeamBuiltinAggregations {
+     }
+   }
+ 
+-  static class BigDecimalAvg extends Avg<BigDecimal>{
++  static class BigDecimalAvg extends Avg<BigDecimal> {
+     @Nullable
+     public BigDecimal extractOutput(KV<Integer, BigDecimal> accumulator) {
+       return accumulator.getKey() == 0 ? null : prepareOutput(accumulator);
+@@ -326,229 +299,4 @@ class BeamBuiltinAggregations {
+       return record;
+     }
+   }
+-
+-  static class VarAgg implements Serializable {
+-    long count; // number of elements
+-    BigDecimal sum; // sum of elements
+-
+-    public VarAgg(long count, BigDecimal sum) {
+-      this.count = count;
+-      this.sum = sum;
+-   }
+-  }
+-
+-  /**
+-   * {@link CombineFn} for <em>Var</em> on {@link Number} types.
+-   * Variance Pop and Variance Sample
+-   * <p>Evaluate the variance using the algorithm described by Chan, Golub, and LeVeque in
+-   * "Algorithms for computing the sample variance: analysis and recommendations"
+-   * The American Statistician, 37 (1983) pp. 242--247.</p>
+-   * <p>variance = variance1 + variance2 + n/(m*(m+n)) * pow(((m/n)*t1 - t2),2)</p>
+-   * <p>where: - variance is sum[x-avg^2] (this is actually n times the variance)
+-   * and is updated at every step. - n is the count of elements in chunk1 - m is
+-   * the count of elements in chunk2 - t1 = sum of elements in chunk1, t2 =
+-   * sum of elements in chunk2.</p>
+-   */
+-  abstract static class Var<T extends Number>
+-          extends CombineFn<T, KV<BigDecimal, VarAgg>, T> {
+-    boolean isSamp;  // flag to determine return value should be Variance Pop or Variance Sample
+-
+-    public Var(boolean isSamp){
+-      this.isSamp = isSamp;
+-    }
+-
+-    @Override
+-    public KV<BigDecimal, VarAgg> createAccumulator() {
+-      VarAgg varagg = new VarAgg(0L, BigDecimal.ZERO);
+-      return KV.of(BigDecimal.ZERO, varagg);
+-    }
+-
+-    @Override
+-    public KV<BigDecimal, VarAgg> addInput(KV<BigDecimal, VarAgg> accumulator, T input) {
+-      BigDecimal v;
+-      if (input == null) {
+-        return accumulator;
+-      } else {
+-        v = new BigDecimal(input.toString());
+-        accumulator.getValue().count++;
+-        accumulator.getValue().sum = accumulator.getValue().sum
+-                .add(new BigDecimal(input.toString()));
+-        BigDecimal variance;
+-        if (accumulator.getValue().count > 1) {
+-
+-//          pseudo code for the formula
+-//          t = count * v - sum;
+-//          variance = (t^2) / (count * (count - 1));
+-          BigDecimal t = v.multiply(new BigDecimal(accumulator.getValue().count))
+-                                    .subtract(accumulator.getValue().sum);
+-          variance = t.pow(2)
+-                  .divide(new BigDecimal(accumulator.getValue().count)
+-                            .multiply(new BigDecimal(accumulator.getValue().count)
+-                                      .subtract(BigDecimal.ONE)), mc);
+-        } else {
+-          variance = BigDecimal.ZERO;
+-        }
+-       return KV.of(accumulator.getKey().add(variance), accumulator.getValue());
+-      }
+-    }
+-
+-    @Override
+-    public KV<BigDecimal, VarAgg> mergeAccumulators(
+-            Iterable<KV<BigDecimal, VarAgg>> accumulators) {
+-      BigDecimal variance = BigDecimal.ZERO;
+-      long count = 0;
+-      BigDecimal sum = BigDecimal.ZERO;
+-
+-      for (KV<BigDecimal, VarAgg> r : accumulators) {
+-        BigDecimal b = r.getValue().sum;
+-
+-        count += r.getValue().count;
+-        sum = sum.add(b);
+-
+-//        t = ( r.count / count ) * sum - b;
+-//        d = t^2 * ( ( count / r.count ) / ( count + r.count ) );
+-        BigDecimal t = new BigDecimal(r.getValue().count).divide(new BigDecimal(count), mc)
+-                .multiply(sum).subtract(b);
+-        BigDecimal d =
+-            t.pow(2)
+-                .multiply(
+-                    new BigDecimal(r.getValue().count)
+-                        .divide(new BigDecimal(count), mc)
+-                        .divide(new BigDecimal(count).add(new BigDecimal(r.getValue().count))),
+-                    mc);
+-        variance = variance.add(r.getKey().add(d));
+-      }
+-
+-      return KV.of(variance, new VarAgg(count, sum));
+-    }
+-
+-    @Override
+-    public Coder<KV<BigDecimal, VarAgg>> getAccumulatorCoder(CoderRegistry registry,
+-        Coder<T> inputCoder) throws CannotProvideCoderException {
+-      return KvCoder.of(BigDecimalCoder.of(), SerializableCoder.of(VarAgg.class));
+-    }
+-
+-    protected BigDecimal prepareOutput(KV<BigDecimal, VarAgg> accumulator){
+-      BigDecimal decimalVar;
+-      if (accumulator.getValue().count > 1) {
+-        BigDecimal a = accumulator.getKey();
+-        BigDecimal b = new BigDecimal(accumulator.getValue().count)
+-                .subtract(this.isSamp ? BigDecimal.ONE : BigDecimal.ZERO);
+-
+-        decimalVar = a.divide(b, mc);
+-      } else {
+-        decimalVar = BigDecimal.ZERO;
+-      }
+-      return decimalVar;
+-    }
+-
+-    public abstract T extractOutput(KV<BigDecimal, VarAgg> accumulator);
+-
+-    public abstract BigDecimal toBigDecimal(T record);
+-  }
+-
+-  static class IntegerVar extends Var<Integer> {
+-    public IntegerVar(boolean isSamp) {
+-      super(isSamp);
+-    }
+-
+-    public Integer extractOutput(KV<BigDecimal, VarAgg> accumulator) {
+-      return prepareOutput(accumulator).intValue();
+-    }
+-
+-    @Override
+-    public BigDecimal toBigDecimal(Integer record) {
+-      return new BigDecimal(record);
+-    }
+-  }
+-
+-  static class ShortVar extends Var<Short> {
+-    public ShortVar(boolean isSamp) {
+-      super(isSamp);
+-    }
+-
+-    public Short extractOutput(KV<BigDecimal, VarAgg> accumulator) {
+-      return prepareOutput(accumulator).shortValue();
+-    }
+-
+-    @Override
+-    public BigDecimal toBigDecimal(Short record) {
+-      return new BigDecimal(record);
+-    }
+-  }
+-
+-  static class ByteVar extends Var<Byte> {
+-    public ByteVar(boolean isSamp) {
+-      super(isSamp);
+-    }
+-
+-    public Byte extractOutput(KV<BigDecimal, VarAgg> accumulator) {
+-      return prepareOutput(accumulator).byteValue();
+-    }
+-
+-    @Override
+-    public BigDecimal toBigDecimal(Byte record) {
+-      return new BigDecimal(record);
+-    }
+-  }
+-
+-  static class LongVar extends Var<Long> {
+-    public LongVar(boolean isSamp) {
+-      super(isSamp);
+-    }
+-
+-    public Long extractOutput(KV<BigDecimal, VarAgg> accumulator) {
+-      return prepareOutput(accumulator).longValue();
+-    }
+-
+-    @Override
+-    public BigDecimal toBigDecimal(Long record) {
+-      return new BigDecimal(record);
+-    }
+-  }
+-
+-  static class FloatVar extends Var<Float> {
+-    public FloatVar(boolean isSamp) {
+-      super(isSamp);
+-    }
+-
+-    public Float extractOutput(KV<BigDecimal, VarAgg> accumulator) {
+-      return prepareOutput(accumulator).floatValue();
+-    }
+-
+-    @Override
+-    public BigDecimal toBigDecimal(Float record) {
+-      return new BigDecimal(record);
+-    }
+-  }
+-
+-  static class DoubleVar extends Var<Double> {
+-    public DoubleVar(boolean isSamp) {
+-      super(isSamp);
+-    }
+-
+-    public Double extractOutput(KV<BigDecimal, VarAgg> accumulator) {
+-      return prepareOutput(accumulator).doubleValue();
+-    }
+-
+-    @Override
+-    public BigDecimal toBigDecimal(Double record) {
+-      return new BigDecimal(record);
+-    }
+-  }
+-
+-  static class BigDecimalVar extends Var<BigDecimal> {
+-    public BigDecimalVar(boolean isSamp) {
+-      super(isSamp);
+-    }
+-
+-    public BigDecimal extractOutput(KV<BigDecimal, VarAgg> accumulator) {
+-      return prepareOutput(accumulator);
+-    }
+-
+-    @Override
+-    public BigDecimal toBigDecimal(BigDecimal record) {
+-      return record;
+-    }
+-  }
+ }
+diff --git a/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/BigDecimalConverter.java b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/BigDecimalConverter.java
+new file mode 100644
+index 00000000000..4f3e338f92b
+--- /dev/null
++++ b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/BigDecimalConverter.java
+@@ -0,0 +1,55 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.beam.sdk.extensions.sql.impl.transform.agg;
++
++import com.google.common.collect.ImmutableMap;
++import java.math.BigDecimal;
++import java.util.Map;
++import org.apache.beam.sdk.transforms.SerializableFunction;
++import org.apache.calcite.sql.type.SqlTypeName;
++
++/**
++ * Provides converters from {@link BigDecimal} to other numeric types based on
++ * the input {@link SqlTypeName}.
++ */
++public class BigDecimalConverter {
++
++  private static final Map<SqlTypeName, SerializableFunction<BigDecimal, ? extends Number>>
++      CONVERTER_MAP = ImmutableMap
++      .<SqlTypeName, SerializableFunction<BigDecimal, ? extends Number>>builder()
++      .put(SqlTypeName.INTEGER, BigDecimal::intValue)
++      .put(SqlTypeName.SMALLINT, BigDecimal::shortValue)
++      .put(SqlTypeName.TINYINT, BigDecimal::byteValue)
++      .put(SqlTypeName.BIGINT, BigDecimal::longValue)
++      .put(SqlTypeName.FLOAT, BigDecimal::floatValue)
++      .put(SqlTypeName.DOUBLE, BigDecimal::doubleValue)
++      .put(SqlTypeName.DECIMAL, v -> v)
++      .build();
++
++  public static SerializableFunction<BigDecimal, ? extends Number> forSqlType(
++      SqlTypeName sqlTypeName) {
++
++    if (!CONVERTER_MAP.containsKey(sqlTypeName)) {
++      throw new UnsupportedOperationException(
++          "Conversion from " + sqlTypeName + " to BigDecimal is not supported");
++    }
++
++    return CONVERTER_MAP.get(sqlTypeName);
++  }
++}
+diff --git a/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceAccumulator.java b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceAccumulator.java
+new file mode 100644
+index 00000000000..3236054df7f
+--- /dev/null
++++ b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceAccumulator.java
+@@ -0,0 +1,97 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.beam.sdk.extensions.sql.impl.transform.agg;
++
++import com.google.auto.value.AutoValue;
++import java.io.Serializable;
++import java.math.BigDecimal;
++
++/**
++ * Accumulates current variance of a sample, its sum, and number of elements.
++ */
++@AutoValue
++abstract class VarianceAccumulator implements Serializable {
++  static final VarianceAccumulator EMPTY =
++      newVarianceAccumulator(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
++
++  abstract BigDecimal variance();
++  abstract BigDecimal count();
++  abstract BigDecimal sum();
++
++  static VarianceAccumulator newVarianceAccumulator(
++      BigDecimal variance,
++      BigDecimal count,
++      BigDecimal sum) {
++
++    return new AutoValue_VarianceAccumulator(variance, count, sum);
++  }
++
++  static VarianceAccumulator ofZeroElements() {
++    return EMPTY;
++  }
++
++  static VarianceAccumulator ofSingleElement(BigDecimal inputElement) {
++    return newVarianceAccumulator(BigDecimal.ZERO, BigDecimal.ONE, inputElement);
++  }
++
++  /**
++   * See {@link VarianceFn} doc above for explanation.
++   */
++  VarianceAccumulator combineWith(VarianceAccumulator otherVariance) {
++    if (EMPTY.equals(this)) {
++      return otherVariance;
++    }
++
++    if (EMPTY.equals(otherVariance)) {
++      return this;
++    }
++
++    BigDecimal increment = calculateIncrement(this, otherVariance);
++    BigDecimal combinedVariance =
++        this.variance()
++            .add(otherVariance.variance())
++            .add(increment);
++
++    return newVarianceAccumulator(
++        combinedVariance,
++        this.count().add(otherVariance.count()),
++        this.sum().add(otherVariance.sum()));
++  }
++
++  /**
++   * Implements this part: {@code increment = m/(n(m+n)) * (sum(x) * n/m  - sum(y))^2 }.
++   */
++  private BigDecimal calculateIncrement(
++      VarianceAccumulator varianceX,
++      VarianceAccumulator varianceY) {
++
++    BigDecimal m = varianceX.count();
++    BigDecimal n = varianceY.count();
++    BigDecimal sumX = varianceX.sum();
++    BigDecimal sumY = varianceY.sum();
++
++    // m/(n(m+n))
++    BigDecimal multiplier = m.divide(n.multiply(m.add(n)), VarianceFn.MATH_CTX);
++
++    // (n/m * sum(x) - sum(y))^2
++    BigDecimal square = (sumX.multiply(n).divide(m, VarianceFn.MATH_CTX)).subtract(sumY).pow(2);
++
++    return multiplier.multiply(square);
++  }
++}
+diff --git a/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceFn.java b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceFn.java
+new file mode 100644
+index 00000000000..bde282e2e26
+--- /dev/null
++++ b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceFn.java
+@@ -0,0 +1,138 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.beam.sdk.extensions.sql.impl.transform.agg;
++
++import java.math.BigDecimal;
++import java.math.MathContext;
++import java.math.RoundingMode;
++import java.util.stream.StreamSupport;
++import org.apache.beam.sdk.annotations.Internal;
++import org.apache.beam.sdk.coders.Coder;
++import org.apache.beam.sdk.coders.CoderRegistry;
++import org.apache.beam.sdk.coders.SerializableCoder;
++import org.apache.beam.sdk.transforms.Combine;
++import org.apache.beam.sdk.transforms.SerializableFunction;
++
++/**
++ * {@link Combine.CombineFn} for <em>Variance</em> on {@link Number} types.
++ *
++ * <p>Calculates Population Variance and Sample Variance using incremental formulas described,
++ * for example, by Chan, Golub, and LeVeque in "Algorithms for computing the sample variance:
++ * analysis and recommendations", The American Statistician, 37 (1983) pp. 242--247.</p>
++ *
++ * <p>If variance is defined like this:
++ * <ul>
++ *   <li>Input elements: {@code (x[1], ... , x[n])}</li>
++ *   <li>Sum of elements: {sum(x) = x[1] + ... + x[n]}</li>
++ *   <li>Average of all elements in the input: {@code mean(x) = sum(x) / n}</li>
++ *   <li>Deviation of {@code i}th element from the current mean:
++ *         {@code deviation(x, i) = x[i] - mean(n)}</li>
++ *   <li>Variance: {@code variance(x) = deviation(x, 1)^2 + ... + deviation(x, n)^2}</li>
++ * </ul>
++ *
++ * <p>Then variance of combined input of 2 samples {@code (x[1], ... , x[n])}
++ * and {@code (y[1], ... , y[m])} is calculated using this formula:</p>
++ *
++ * <ul>
++ *   <li>{@code variance(concat(x,y)) = variance(x) + variance(y) + increment}, where:</li>
++ *   <li>{@code increment = m/(n(m+n)) * (n/m * sum(x) - sum(y))^2}</li>
++ * </ul>
++ *
++ * <p>This is also applicable for a single element increment, assuming that variance of
++ * a single element input is zero</p>
++ *
++ * <p>To implement the above formula we keep track of the current variation, sum,
++ * and count of elements, and then use the formula whenever new element comes or we need to merge
++ * variances for 2 samples.
++ */
++@Internal
++public class VarianceFn<T extends Number>
++    extends Combine.CombineFn<T, VarianceAccumulator, T> {
++
++  static final MathContext MATH_CTX = new MathContext(10, RoundingMode.HALF_UP);
++
++  private static final boolean SAMPLE = true;
++  private static final boolean POP = false;
++
++  private boolean isSample; // flag to determine return value should be Variance Pop or Sample
++  private SerializableFunction<BigDecimal, T> decimalConverter;
++
++  public static <V extends Number> VarianceFn newPopulation(
++      SerializableFunction<BigDecimal, V> decimalConverter) {
++
++    return new VarianceFn<>(POP, decimalConverter);
++  }
++
++  public static <V extends Number> VarianceFn newSample(
++      SerializableFunction<BigDecimal, V> decimalConverter) {
++
++    return new VarianceFn<>(SAMPLE, decimalConverter);
++  }
++
++  private VarianceFn(boolean isSample, SerializableFunction<BigDecimal, T> decimalConverter){
++    this.isSample = isSample;
++    this.decimalConverter = decimalConverter;
++  }
++
++  @Override
++  public VarianceAccumulator createAccumulator() {
++    return VarianceAccumulator.ofZeroElements();
++  }
++
++  @Override
++  public VarianceAccumulator addInput(VarianceAccumulator currentVariance, T rawInput) {
++
++    if (rawInput == null) {
++      return currentVariance;
++    }
++
++    return currentVariance.combineWith(VarianceAccumulator.ofSingleElement(toBigDecimal(rawInput)));
++  }
++
++  @Override
++  public VarianceAccumulator mergeAccumulators(Iterable<VarianceAccumulator> variances) {
++    return StreamSupport
++        .stream(variances.spliterator(), false)
++        .reduce(VarianceAccumulator.ofZeroElements(), VarianceAccumulator::combineWith);
++  }
++
++  @Override
++  public Coder<VarianceAccumulator> getAccumulatorCoder(CoderRegistry registry,
++                                                        Coder<T> inputCoder) {
++    return SerializableCoder.of(VarianceAccumulator.class);
++  }
++
++  @Override
++  public T extractOutput(VarianceAccumulator accumulator) {
++    return decimalConverter.apply(getVariance(accumulator));
++  }
++
++  private BigDecimal getVariance(VarianceAccumulator variance) {
++
++    BigDecimal adjustedCount = this.isSample
++        ? variance.count().subtract(BigDecimal.ONE)
++        : variance.count();
++
++    return variance.variance().divide(adjustedCount, MATH_CTX);
++  }
++
++  private BigDecimal toBigDecimal(T rawInput) {
++    return new BigDecimal(rawInput.toString());
++  }
++}
+diff --git a/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/package-info.java b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/package-info.java
+new file mode 100644
+index 00000000000..b1878ae365d
+--- /dev/null
++++ b/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/package-info.java
+@@ -0,0 +1,26 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++/**
++ * Implementation of standard SQL aggregation functions, e.g. VAR_POP, VAR_SAMP.
++ */
++@DefaultAnnotation(NonNull.class)
++package org.apache.beam.sdk.extensions.sql.impl.transform.agg;
++
++import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
++import edu.umd.cs.findbugs.annotations.NonNull;
+diff --git a/sdks/python/apache_beam/runners/worker/opcounters.pxd b/sdks/python/apache_beam/runners/worker/opcounters.pxd
+index 40ca72dde7e..5c1079f6465 100644
+--- a/sdks/python/apache_beam/runners/worker/opcounters.pxd
++++ b/sdks/python/apache_beam/runners/worker/opcounters.pxd
+@@ -21,23 +21,6 @@ cimport libc.stdint
+ from apache_beam.utils.counters cimport Counter
+ 
+ 
+-cdef class TransformIOCounter(object):
+-  cpdef update_current_step(self)
+-  cpdef add_bytes_read(self, libc.stdint.int64_t n)
+-  cpdef __enter__(self)
+-  cpdef __exit__(self, exc_type, exc_value, traceback)
+-
+-
+-cdef class SideInputReadCounter(TransformIOCounter):
+-  cdef readonly object _counter_factory
+-  cdef readonly object _state_sampler
+-  cdef readonly object declaring_step
+-  cdef readonly object input_index
+-
+-  cdef Counter bytes_read_counter
+-  cdef object scoped_state
+-
+-
+ cdef class SumAccumulator(object):
+   cdef libc.stdint.int64_t _value
+   cpdef update(self, libc.stdint.int64_t value)
+diff --git a/sdks/python/apache_beam/runners/worker/opcounters.py b/sdks/python/apache_beam/runners/worker/opcounters.py
+index 17fead28ed2..f4ba6b9a9a8 100644
+--- a/sdks/python/apache_beam/runners/worker/opcounters.py
++++ b/sdks/python/apache_beam/runners/worker/opcounters.py
+@@ -24,119 +24,11 @@ from __future__ import absolute_import
+ import math
+ import random
+ 
+-from apache_beam.utils import counters
+ from apache_beam.utils.counters import Counter
+-from apache_beam.utils.counters import CounterName
+ 
+ # This module is experimental. No backwards-compatibility guarantees.
+ 
+ 
+-class TransformIOCounter(object):
+-  """Class to track time and bytes consumed while reading from IO.
+-
+-  Subclasses should be able to track consumption of IO across steps
+-  in the same stage - for instance, if a Shuffle or Side Input iterable
+-  is passed down to a next step.
+-
+-  Some examples of IO can be side inputs, shuffle, or streaming state.
+-  """
+-
+-  def update_current_step(self):
+-    """Update the current step within a stage as it may have changed.
+-
+-    If the state changed, it would mean that an initial step passed a
+-    data-accessor (such as a side input / shuffle Iterable) down to the
+-    next step in a stage.
+-    """
+-    pass
+-
+-  def add_bytes_read(self, count):
+-    pass
+-
+-  def __exit__(self, exc_type, exc_value, traceback):
+-    """Exit the IO state."""
+-    pass
+-
+-  def __enter__(self):
+-    """Enter the IO state. This should track time spent blocked on IO."""
+-    pass
+-
+-
+-class SideInputReadCounter(TransformIOCounter):
+-  """Tracks time and bytes consumed while reading from side inputs.
+-
+-  This class is designed to track consumption of side inputs across fused steps.
+-  We represent a side input as a declaring step, and an input index.
+-
+-  The declaring step is the step that originally receives the side input for
+-  consumption, and the input index in which the declaring step receives the side
+-  input that we want to identify.
+-
+-  Note that the declaring step originally receives the side input, but it may
+-  not be the only step that spends time reading from this side input.
+-  """
+-
+-  def __init__(self, counter_factory, state_sampler, declaring_step,
+-               input_index):
+-    """Create a side input read counter.
+-
+-    Args:
+-      counter_factory: A counters.CounterFactory to create byte counters.
+-      state_sampler: A statesampler.StateSampler to transition into read states.
+-      declaring_step: A string with the step name of the step that directly
+-        receives the side input initially.
+-      input_index: The index of the side input in the list of inputs of the
+-        declaring step.
+-
+-    The side input is uniquely identified by (declaring_step, input_index);
+-    where declaring_step is the step that receives the PCollectionView as a
+-    side input, and input_index is the index of the PCollectionView within
+-    the list of inputs.
+-    """
+-    self._counter_factory = counter_factory
+-    self._state_sampler = state_sampler
+-    self.declaring_step = declaring_step
+-    self.input_index = input_index
+-
+-    # Side inputs are set up within the start state of the first receiving
+-    # step. We check the current state to create the internal counters.
+-    self.update_current_step()
+-
+-  def update_current_step(self):
+-    """Update the current running step.
+-
+-    Due to the fusion optimization, user code may choose to emit the data
+-    structure that holds side inputs (Iterable, Dict, or others). This call
+-    updates the current step, to attribute the data consumption to the step
+-    that is responsible for actual consumption.
+-
+-    CounterName uses the io_target field for information pertinent to the
+-    consumption of side inputs.
+-    """
+-    current_state = self._state_sampler.current_state()
+-    operation_name = current_state.name.step_name
+-    self.scoped_state = self._state_sampler.scoped_state(
+-        self.declaring_step,
+-        'read-sideinput',
+-        io_target=counters.side_input_id(operation_name, self.input_index))
+-    self.bytes_read_counter = self._counter_factory.get_counter(
+-        CounterName(
+-            'read-sideinput-byte-count',
+-            step_name=self.declaring_step,
+-            io_target=counters.side_input_id(operation_name, self.input_index)),
+-        Counter.SUM)
+-
+-  def add_bytes_read(self, count):
+-    if count > 0:
+-      self.bytes_read_counter.update(count)
+-
+-  def __enter__(self):
+-    self.scoped_state.__enter__()
+-
+-  def __exit__(self, exception_type, exception_value, traceback):
+-    self.scoped_state.__exit__(exception_type, exception_value, traceback)
+-
+-
+ class SumAccumulator(object):
+   """Accumulator for collecting byte counts."""
+ 
+diff --git a/sdks/python/apache_beam/runners/worker/opcounters_test.py b/sdks/python/apache_beam/runners/worker/opcounters_test.py
+index 3a922c8db28..008720f9493 100644
+--- a/sdks/python/apache_beam/runners/worker/opcounters_test.py
++++ b/sdks/python/apache_beam/runners/worker/opcounters_test.py
+@@ -21,11 +21,8 @@ import random
+ import unittest
+ 
+ from apache_beam import coders
+-from apache_beam.runners.worker import opcounters
+-from apache_beam.runners.worker import statesampler
+ from apache_beam.runners.worker.opcounters import OperationCounters
+ from apache_beam.transforms.window import GlobalWindows
+-from apache_beam.utils import counters
+ from apache_beam.utils.counters import CounterFactory
+ 
+ # Classes to test that we can handle a variety of objects.
+@@ -44,49 +41,6 @@ class ObjectThatDoesNotImplementLen(object):
+     pass
+ 
+ 
+-class TransformIoCounterTest(unittest.TestCase):
+-
+-  def test_basic_counters(self):
+-    counter_factory = CounterFactory()
+-    sampler = statesampler.StateSampler('stage1', counter_factory)
+-    sampler.start()
+-
+-    with sampler.scoped_state('step1', 'stateA'):
+-      counter = opcounters.SideInputReadCounter(counter_factory, sampler,
+-                                                declaring_step='step1',
+-                                                input_index=1)
+-    with sampler.scoped_state('step2', 'stateB'):
+-      with counter:
+-        counter.add_bytes_read(10)
+-
+-      counter.update_current_step()
+-
+-    sampler.stop()
+-    sampler.commit_counters()
+-
+-    actual_counter_names = set([c.name for c in counter_factory.get_counters()])
+-    expected_counter_names = set([
+-        # Counter names for STEP 1
+-        counters.CounterName('read-sideinput-msecs',
+-                             stage_name='stage1',
+-                             step_name='step1',
+-                             io_target=counters.side_input_id('step1', 1)),
+-        counters.CounterName('read-sideinput-byte-count',
+-                             step_name='step1',
+-                             io_target=counters.side_input_id('step1', 1)),
+-
+-        # Counter names for STEP 2
+-        counters.CounterName('read-sideinput-msecs',
+-                             stage_name='stage1',
+-                             step_name='step1',
+-                             io_target=counters.side_input_id('step2', 1)),
+-        counters.CounterName('read-sideinput-byte-count',
+-                             step_name='step1',
+-                             io_target=counters.side_input_id('step2', 1)),
+-    ])
+-    self.assertTrue(actual_counter_names.issuperset(expected_counter_names))
+-
+-
+ class OperationCountersTest(unittest.TestCase):
+ 
+   def verify_counters(self, opcounts, expected_elements, expected_size=None):
+diff --git a/sdks/python/apache_beam/runners/worker/operations.py b/sdks/python/apache_beam/runners/worker/operations.py
+index 8a072e83d4a..576dc60a9ad 100644
+--- a/sdks/python/apache_beam/runners/worker/operations.py
++++ b/sdks/python/apache_beam/runners/worker/operations.py
+@@ -28,7 +28,6 @@ from apache_beam.internal import pickler
+ from apache_beam.io import iobase
+ from apache_beam.metrics.execution import MetricsContainer
+ from apache_beam.metrics.execution import ScopedMetricsContainer
+-from apache_beam.options.value_provider import RuntimeValueProvider
+ from apache_beam.portability.api import beam_fn_api_pb2
+ from apache_beam.runners import common
+ from apache_beam.runners.common import Receiver
+@@ -287,10 +286,6 @@ class DoOperation(Operation):
+     # provided directly.
+     assert self.side_input_maps is None
+ 
+-    # Get experiments active in the worker to check for side input metrics exp.
+-    experiments = set(RuntimeValueProvider(
+-        'experiments', str, '').get().split(','))
+-
+     # We will read the side inputs in the order prescribed by the
+     # tags_and_types argument because this is exactly the order needed to
+     # replace the ArgumentPlaceholder objects in the args/kwargs of the DoFn
+@@ -299,7 +294,7 @@ class DoOperation(Operation):
+     # Note that for each tag there could be several read operations in the
+     # specification. This can happen for instance if the source has been
+     # sharded into several files.
+-    for i, (side_tag, view_class, view_options) in enumerate(tags_and_types):
++    for side_tag, view_class, view_options in tags_and_types:
+       sources = []
+       # Using the side_tag in the lambda below will trigger a pylint warning.
+       # However in this case it is fine because the lambda is used right away
+@@ -311,19 +306,7 @@ class DoOperation(Operation):
+         if not isinstance(si, operation_specs.WorkerSideInputSource):
+           raise NotImplementedError('Unknown side input type: %r' % si)
+         sources.append(si.source)
+-        # The tracking of time spend reading and bytes read from side inputs is
+-        # behind an experiment flag to test its performance impact.
+-        if 'sideinput_io_metrics' in experiments:
+-          si_counter = opcounters.SideInputReadCounter(
+-              self.counter_factory,
+-              self.state_sampler,
+-              declaring_step=self.operation_name,
+-              # Inputs are 1-indexed, so we add 1 to i in the side input id
+-              input_index=i + 1)
+-        else:
+-          si_counter = opcounters.TransformIOCounter()
+-      iterator_fn = sideinputs.get_iterator_fn_for_sources(
+-          sources, read_counter=si_counter)
++      iterator_fn = sideinputs.get_iterator_fn_for_sources(sources)
+ 
+       # Backwards compatibility for pre BEAM-733 SDKs.
+       if isinstance(view_options, tuple):
+diff --git a/sdks/python/apache_beam/runners/worker/sideinputs.py b/sdks/python/apache_beam/runners/worker/sideinputs.py
+index 8b7e14ee8d1..6c7831d4136 100644
+--- a/sdks/python/apache_beam/runners/worker/sideinputs.py
++++ b/sdks/python/apache_beam/runners/worker/sideinputs.py
+@@ -23,10 +23,7 @@ import Queue
+ import threading
+ import traceback
+ 
+-from apache_beam.coders import observable
+ from apache_beam.io import iobase
+-from apache_beam.options.value_provider import RuntimeValueProvider
+-from apache_beam.runners.worker import opcounters
+ from apache_beam.transforms import window
+ 
+ # This module is experimental. No backwards-compatibility guarantees.
+@@ -53,10 +50,8 @@ _globally_windowed = window.GlobalWindows.windowed_value(None).with_value
+ class PrefetchingSourceSetIterable(object):
+   """Value iterator that reads concurrently from a set of sources."""
+ 
+-  def __init__(self,
+-               sources,
+-               max_reader_threads=MAX_SOURCE_READER_THREADS,
+-               read_counter=None):
++  def __init__(self, sources,
++               max_reader_threads=MAX_SOURCE_READER_THREADS):
+     self.sources = sources
+     self.num_reader_threads = min(max_reader_threads, len(self.sources))
+ 
+@@ -73,29 +68,9 @@ class PrefetchingSourceSetIterable(object):
+     # Whether an error was encountered in any source reader.
+     self.has_errored = False
+ 
+-    self.read_counter = read_counter or opcounters.TransformIOCounter()
+-
+     self.reader_threads = []
+     self._start_reader_threads()
+ 
+-  def add_byte_counter(self, reader):
+-    """Adds byte counter observer to a side input reader.
+-
+-    If the 'sideinput_io_metrics' experiment flag is not passed in, then nothing
+-    is attached to the reader.
+-
+-    Args:
+-      reader: A reader that should inherit from ObservableMixin to have
+-        bytes tracked.
+-    """
+-    def update_bytes_read(record_size, is_record_size=False, **kwargs):
+-      # Let the reader report block size.
+-      if is_record_size:
+-        self.read_counter.add_bytes_read(record_size)
+-
+-    if isinstance(reader, observable.ObservableMixin):
+-      reader.register_observer(update_bytes_read)
+-
+   def _start_reader_threads(self):
+     for _ in range(0, self.num_reader_threads):
+       t = threading.Thread(target=self._reader_thread)
+@@ -105,8 +80,6 @@ class PrefetchingSourceSetIterable(object):
+ 
+   def _reader_thread(self):
+     # pylint: disable=too-many-nested-blocks
+-    experiments = set(
+-        RuntimeValueProvider('experiments', str, '').get().split(','))
+     try:
+       while True:
+         try:
+@@ -123,11 +96,6 @@ class PrefetchingSourceSetIterable(object):
+           else:
+             # Native dataflow source.
+             with source.reader() as reader:
+-              # The tracking of time spend reading and bytes read from side
+-              # inputs is kept behind an experiment flag to test performance
+-              # impact.
+-              if 'sideinput_io_metrics' in experiments:
+-                self.add_byte_counter(reader)
+               returns_windowed_values = reader.returns_windowed_values
+               for value in reader:
+                 if self.has_errored:
+@@ -184,17 +152,12 @@ class PrefetchingSourceSetIterable(object):
+         t.join()
+ 
+ 
+-def get_iterator_fn_for_sources(sources,
+-                                max_reader_threads=MAX_SOURCE_READER_THREADS,
+-                                read_counter=None):
++def get_iterator_fn_for_sources(
++    sources, max_reader_threads=MAX_SOURCE_READER_THREADS):
+   """Returns callable that returns iterator over elements for given sources."""
+   def _inner():
+-    return iter(
+-        PrefetchingSourceSetIterable(
+-            sources,
+-            max_reader_threads=max_reader_threads,
+-            read_counter=read_counter))
+-
++    return iter(PrefetchingSourceSetIterable(
++        sources, max_reader_threads=max_reader_threads))
+   return _inner
+ 
+ 
+diff --git a/sdks/python/apache_beam/runners/worker/sideinputs_test.py b/sdks/python/apache_beam/runners/worker/sideinputs_test.py
+index 212dc19fde9..bb688dd1c92 100644
+--- a/sdks/python/apache_beam/runners/worker/sideinputs_test.py
++++ b/sdks/python/apache_beam/runners/worker/sideinputs_test.py
+@@ -21,10 +21,6 @@ import logging
+ import time
+ import unittest
+ 
+-import mock
+-
+-from apache_beam.coders import observable
+-from apache_beam.options.value_provider import RuntimeValueProvider
+ from apache_beam.runners.worker import sideinputs
+ 
+ 
+@@ -34,28 +30,22 @@ def strip_windows(iterator):
+ 
+ class FakeSource(object):
+ 
+-  def __init__(self, items, notify_observers=False):
++  def __init__(self, items):
+     self.items = items
+-    self._should_notify_observers = notify_observers
+ 
+   def reader(self):
+-    return FakeSourceReader(self.items, self._should_notify_observers)
++    return FakeSourceReader(self.items)
+ 
+ 
+-class FakeSourceReader(observable.ObservableMixin):
++class FakeSourceReader(object):
+ 
+-  def __init__(self, items, notify_observers=False):
+-    super(FakeSourceReader, self).__init__()
++  def __init__(self, items):
+     self.items = items
+     self.entered = False
+     self.exited = False
+-    self._should_notify_observers = notify_observers
+ 
+   def __iter__(self):
+-    if self._should_notify_observers:
+-      self.notify_observers(len(self.items), is_record_size=True)
+-    for item in self.items:
+-      yield item
++    return iter(self.items)
+ 
+   def __enter__(self):
+     self.entered = True
+@@ -79,33 +69,6 @@ class PrefetchingSourceIteratorTest(unittest.TestCase):
+         sources, max_reader_threads=2)
+     assert list(strip_windows(iterator_fn())) == range(6)
+ 
+-  def test_bytes_read_behind_experiment(self):
+-    mock_read_counter = mock.MagicMock()
+-    source_records = ['a', 'b', 'c', 'd']
+-    sources = [
+-        FakeSource(source_records, notify_observers=True),
+-    ]
+-    iterator_fn = sideinputs.get_iterator_fn_for_sources(
+-        sources, max_reader_threads=3, read_counter=mock_read_counter)
+-    assert list(strip_windows(iterator_fn())) == source_records
+-    mock_read_counter.add_bytes_read.assert_not_called()
+-
+-  def test_bytes_read_are_reported(self):
+-    RuntimeValueProvider.set_runtime_options(
+-        {'experiments': 'sideinput_io_metrics,other'})
+-    mock_read_counter = mock.MagicMock()
+-    source_records = ['a', 'b', 'c', 'd']
+-    sources = [
+-        FakeSource(source_records, notify_observers=True),
+-    ]
+-    iterator_fn = sideinputs.get_iterator_fn_for_sources(
+-        sources, max_reader_threads=3, read_counter=mock_read_counter)
+-    assert list(strip_windows(iterator_fn())) == source_records
+-    mock_read_counter.add_bytes_read.assert_called_with(4)
+-
+-    # Remove runtime options from the runtime value provider.
+-    RuntimeValueProvider.set_runtime_options({})
+-
+   def test_multiple_sources_iterator_fn(self):
+     sources = [
+         FakeSource([0]),
+diff --git a/sdks/python/apache_beam/runners/worker/statesampler_fast.pyx b/sdks/python/apache_beam/runners/worker/statesampler_fast.pyx
+index 57cfe0be649..d0b187818c1 100644
+--- a/sdks/python/apache_beam/runners/worker/statesampler_fast.pyx
++++ b/sdks/python/apache_beam/runners/worker/statesampler_fast.pyx
+@@ -36,8 +36,6 @@ runtime profile to be produced.
+ """
+ import threading
+ 
+-from apache_beam.utils.counters import CounterName
+-
+ cimport cython
+ from cpython cimport pythread
+ from libc.stdint cimport int32_t, int64_t
+@@ -96,8 +94,7 @@ cdef class StateSampler(object):
+     self.current_state_index = 0
+     self.time_since_transition = 0
+     self.state_transition_count = 0
+-    unknown_state = ScopedState(
+-        self, CounterName('unknown'), self.current_state_index)
++    unknown_state = ScopedState(self, 'unknown', self.current_state_index)
+     pythread.PyThread_acquire_lock(self.lock, pythread.WAIT_LOCK)
+     self.scoped_states_by_index = [unknown_state]
+     pythread.PyThread_release_lock(self.lock)
+diff --git a/sdks/python/apache_beam/utils/counters.py b/sdks/python/apache_beam/utils/counters.py
+index a803bcde12f..95b2117cf38 100644
+--- a/sdks/python/apache_beam/utils/counters.py
++++ b/sdks/python/apache_beam/utils/counters.py
+@@ -29,46 +29,17 @@ from collections import namedtuple
+ from apache_beam.transforms import cy_combiners
+ 
+ # Information identifying the IO being measured by a counter.
+-#
+-# A CounterName with IOTarget helps identify the IO being measured by a
+-# counter.
+-#
+-# It may represent the consumption of Shuffle IO, or the consumption of
+-# side inputs. The way in which each is represented is explained in the
+-# documentation of the side_input_id, and shuffle_id functions.
+ IOTargetName = namedtuple('IOTargetName', ['requesting_step_name',
+                                            'input_index'])
+ 
+ 
+ def side_input_id(step_name, input_index):
+-  """Create an IOTargetName that identifies the reading of a side input.
+-
+-  Given a step "s4" that receives two side inputs, then the CounterName
+-  that represents the consumption of side input number 2 is:
+-  * step_name: s4    <---|
+-  * input_index: 2   <---|-- Identifying the side input itself
+-  * requesting_step_name: s4   <-- Identifying the step that reads from it.
+-
+-  If "s4" emits the whole AsIter of the side input, down to a step, say "s5",
+-  then the requesting_step_name of the subsequent consumption will be "s5".
+-  """
++  """Create an IOTargetName that identifies the reading of a side input."""
+   return IOTargetName(step_name, input_index)
+ 
+ 
+ def shuffle_id(step_name):
+-  """Create an IOTargetName that identifies a GBK step.
+-
+-  Given a step "s6" that is downstream from a GBK "s5", then "s6" will read
+-  from shuffle. The CounterName that quantifies the consumption of data from
+-  shuffle has:
+-  * step_name: s5
+-  * requesting_step_name: s6
+-
+-  If "s6" emits the whole iterable down to a step, say "s7", and "s7" continues
+-  to consume data from the iterable, then a new CounterName will be:
+-  * step_name: s5    <--- Identifying the GBK
+-  * requesting_step_name: s6
+-  """
++  """Create an IOTargetName that identifies a GBK step."""
+   return IOTargetName(step_name, None)
+ 
+ 

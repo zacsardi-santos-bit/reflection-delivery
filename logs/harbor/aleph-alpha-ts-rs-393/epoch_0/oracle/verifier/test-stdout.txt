@@ -1,0 +1,519 @@
+patching file ts-rs/tests/integration/export_to.rs
+patching file ts-rs/tests/integration/main.rs
+patching file ts-rs/tests/integration/optional_field.rs
+patching file ts-rs/tests/integration/serde_skip_serializing.rs
+   Compiling ts-rs-macros v10.1.0 (/workspace/repo/macros)
+   Compiling ts-rs v10.1.0 (/workspace/repo/ts-rs)
+warning: unused import: `impl_primitives`
+    --> ts-rs/src/lib.rs:1142:16
+     |
+1142 | pub(crate) use impl_primitives;
+     |                ^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `impl_shadow`
+    --> ts-rs/src/lib.rs:1144:16
+     |
+1144 | pub(crate) use impl_shadow;
+     |                ^^^^^^^^^^^
+
+warning: unused import: `impl_wrapper`
+    --> ts-rs/src/lib.rs:1146:16
+     |
+1146 | pub(crate) use impl_wrapper;
+     |                ^^^^^^^^^^^^
+
+   Compiling example v0.1.0 (/workspace/repo/example)
+warning: `ts-rs` (lib) generated 3 warnings (run `cargo fix --lib -p ts-rs` to apply 3 suggestions)
+warning: `ts-rs` (lib test) generated 3 warnings (3 duplicates)
+warning: failed to parse serde attribute
+  | 
+  | with = "deser"
+  | 
+  = note: ts-rs failed to parse this attribute. It will be ignored.
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.30s
+────────────
+ Nextest run ID 00665acb-6fd6-4ddd-9df9-1949c9bde33c with nextest profile: default
+    Starting 478 tests across 4 binaries
+        PASS [   0.114s] (  1/478) ts-rs::integration arrays::newtype
+        PASS [   0.119s] (  2/478) ts-rs::integration complex_flattened_type::complex_flattened_type
+        PASS [   0.123s] (  3/478) example export_bindings_gender
+        PASS [   0.124s] (  4/478) example export_bindings_role
+        PASS [   0.124s] (  5/478) example export_bindings_simpleenum
+        PASS [   0.125s] (  6/478) example export_bindings_user
+        PASS [   0.127s] (  7/478) example export_bindings_inlinecomplexenum
+        PASS [   0.124s] (  8/478) ts-rs::integration bound::test_bound
+        PASS [   0.124s] (  9/478) example export_bindings_complexstruct
+        PASS [   0.126s] ( 10/478) example export_bindings_vehicle
+        PASS [   0.129s] ( 11/478) ts-rs::integration arrays::free
+        PASS [   0.130s] ( 12/478) example export_bindings_complexenum
+        PASS [   0.126s] ( 13/478) ts-rs::integration arrays::interface
+        PASS [   0.124s] ( 14/478) example export_bindings_point
+        PASS [   0.131s] ( 15/478) example export_bindings_series
+        PASS [   0.140s] ( 16/478) ts-rs::integration arrays::export_bindings_interface
+        PASS [   0.143s] ( 17/478) ts-rs::integration bound::export_bindings_inner
+        PASS [   0.147s] ( 18/478) ts-rs::integration bound::export_bindings_outer
+        PASS [   0.093s] ( 19/478) ts-rs::integration concrete_generic::issue_261::concrete_generic_param
+        PASS [   0.091s] ( 20/478) ts-rs::integration concrete_generic::simple::simple
+        PASS [   0.106s] ( 21/478) ts-rs::integration complex_flattened_type::export_bindings_inputfield
+        PASS [   0.104s] ( 22/478) ts-rs::integration concrete_generic::issue_261::export_bindings_consumer1
+        PASS [   0.102s] ( 23/478) ts-rs::integration concrete_generic::issue_261::export_bindings_otherdriver
+        PASS [   0.102s] ( 24/478) ts-rs::integration concrete_generic::issue_261::export_bindings_otherinfo
+        PASS [   0.102s] ( 25/478) ts-rs::integration concrete_generic::simple::export_bindings_simple
+        PASS [   0.098s] ( 26/478) ts-rs::integration docs::export_c
+        PASS [   0.102s] ( 27/478) ts-rs::integration concrete_generic::simple::export_bindings_withoption
+        PASS [   0.100s] ( 28/478) ts-rs::integration docs::export_b
+        PASS [   0.101s] ( 29/478) ts-rs::integration docs::export_e
+        PASS [   0.102s] ( 30/478) ts-rs::integration docs::export_d
+        PASS [   0.103s] ( 31/478) ts-rs::integration docs::export_a
+        PASS [   0.107s] ( 32/478) ts-rs::integration concrete_generic::simple::export_bindings_tuple
+        PASS [   0.114s] ( 33/478) ts-rs::integration concrete_generic::issue_261::export_bindings_consumer2
+        PASS [   0.101s] ( 34/478) ts-rs::integration docs::export_f
+        PASS [   0.099s] ( 35/478) ts-rs::integration docs::export_g
+        PASS [   0.098s] ( 36/478) ts-rs::integration docs::export_h
+        PASS [   0.091s] ( 37/478) ts-rs::integration enum_flattening::adjacently_tagged
+        PASS [   0.103s] ( 38/478) ts-rs::integration docs::export_i
+        PASS [   0.102s] ( 39/478) ts-rs::integration enum_flattening::export_bindings_barinternally
+        PASS [   0.102s] ( 40/478) ts-rs::integration enum_flattening::export_bindings_barexternally
+        PASS [   0.097s] ( 41/478) ts-rs::integration enum_flattening::internally_tagged
+        PASS [   0.098s] ( 42/478) ts-rs::integration enum_flattening::externally_tagged
+        PASS [   0.105s] ( 43/478) ts-rs::integration enum_flattening::export_bindings_fooexternally
+        PASS [   0.106s] ( 44/478) ts-rs::integration enum_flattening::export_bindings_baruntagged
+        PASS [   0.108s] ( 45/478) ts-rs::integration enum_flattening::export_bindings_baradjecently
+        PASS [   0.106s] ( 46/478) ts-rs::integration enum_flattening::export_bindings_fooadjecently
+        PASS [   0.105s] ( 47/478) ts-rs::integration enum_flattening::export_bindings_foointernally
+        PASS [   0.100s] ( 48/478) ts-rs::integration enum_flattening::untagged
+        PASS [   0.106s] ( 49/478) ts-rs::integration enum_flattening::export_bindings_nestedexternally
+        PASS [   0.107s] ( 50/478) ts-rs::integration enum_flattening::export_bindings_foountagged
+        PASS [   0.100s] ( 51/478) ts-rs::integration enum_flattening_nested::adjacently_tagged
+        PASS [   0.106s] ( 52/478) ts-rs::integration enum_flattening_nested::export_bindings_baradjecently
+        PASS [   0.105s] ( 53/478) ts-rs::integration enum_flattening_nested::export_bindings_barexternally
+        PASS [   0.102s] ( 54/478) ts-rs::integration enum_flattening_nested::export_bindings_barinternally
+        PASS [   0.103s] ( 55/478) ts-rs::integration enum_flattening_nested::export_bindings_baruntagged
+        PASS [   0.102s] ( 56/478) ts-rs::integration enum_flattening_nested::export_bindings_fooadjecently
+        PASS [   0.087s] ( 57/478) ts-rs::integration enum_struct_rename_all::enum_struct_rename_all_fields
+        PASS [   0.089s] ( 58/478) ts-rs::integration enum_struct_rename_all::enum_struct_rename_all
+        PASS [   0.091s] ( 59/478) ts-rs::integration enum_flattening_nested::internally_tagged
+        PASS [   0.098s] ( 60/478) ts-rs::integration enum_flattening_nested::export_bindings_foountagged
+        PASS [   0.098s] ( 61/478) ts-rs::integration enum_flattening_nested::export_bindings_nestedadjecentlylonely
+        PASS [   0.100s] ( 62/478) ts-rs::integration enum_flattening_nested::export_bindings_foointernally
+        PASS [   0.094s] ( 63/478) ts-rs::integration enum_flattening_nested::externally_tagged
+        PASS [   0.092s] ( 64/478) ts-rs::integration enum_flattening_nested::untagged
+        PASS [   0.100s] ( 65/478) ts-rs::integration enum_flattening_nested::export_bindings_fooexternally
+        PASS [   0.096s] ( 66/478) ts-rs::integration enum_flattening_nested::export_bindings_nestedinternallylonely
+        PASS [   0.098s] ( 67/478) ts-rs::integration enum_flattening_nested::export_bindings_nestedexternallylonely
+        PASS [   0.100s] ( 68/478) ts-rs::integration enum_flattening_nested::export_bindings_nestedexternally
+        PASS [   0.100s] ( 69/478) ts-rs::integration enum_flattening_nested::export_bindings_nesteduntaggedlonely
+        PASS [   0.095s] ( 70/478) ts-rs::integration enum_struct_rename_all::export_bindings_taskstatus
+        PASS [   0.097s] ( 71/478) ts-rs::integration enum_variant_annotation::export_bindings_a
+        PASS [   0.100s] ( 72/478) ts-rs::integration enum_struct_rename_all::export_bindings_taskstatus2
+        PASS [   0.091s] ( 73/478) ts-rs::integration enum_variant_annotation::test_empty_struct_variant_with_tag
+        PASS [   0.091s] ( 74/478) ts-rs::integration enum_variant_annotation::test_enum_variant_rename
+        PASS [   0.105s] ( 75/478) ts-rs::integration enum_variant_annotation::export_bindings_b
+        PASS [   0.101s] ( 76/478) ts-rs::integration enum_variant_annotation::export_bindings_c
+        PASS [   0.090s] ( 77/478) ts-rs::integration enum_variant_annotation::test_variant_quoted
+        PASS [   0.091s] ( 78/478) ts-rs::integration enum_variant_annotation::test_tag_and_content_quoted
+        PASS [   0.095s] ( 79/478) ts-rs::integration enum_variant_annotation::test_enum_variant_rename_all
+        PASS [   0.100s] ( 80/478) ts-rs::integration enum_variant_annotation::export_bindings_d
+        PASS [   0.100s] ( 81/478) ts-rs::integration enum_variant_annotation::test_enum_variant_with_tag
+        PASS [   0.105s] ( 82/478) ts-rs::integration enum_variant_annotation::export_bindings_e
+        PASS [   0.102s] ( 83/478) ts-rs::integration export_manually::export_manually_dir
+        PASS [   0.103s] ( 84/478) ts-rs::integration export_manually::export_manually
+        PASS [   0.098s] ( 85/478) ts-rs::integration export_to::export_bindings_withstringreftodir
+        PASS [   0.095s] ( 86/478) ts-rs::integration export_to::export_bindings_withstringreftofile
+        PASS [   0.110s] ( 87/478) ts-rs::integration export_to::export_bindings_toabsolutefilepath
+        PASS [   0.097s] ( 88/478) ts-rs::integration export_to::export_bindings_withstringtodir
+        PASS [   0.116s] ( 89/478) ts-rs::integration export_to::export_bindings_toabsolutedirpath
+        PASS [   0.132s] ( 90/478) ts-rs::integration export_to::check_export_complete
+        PASS [   0.092s] ( 91/478) ts-rs::integration field_rename::test
+        PASS [   0.096s] ( 92/478) ts-rs::integration export_to::export_bindings_withstrreftodir
+        PASS [   0.098s] ( 93/478) ts-rs::integration export_to::export_bindings_withstringtofile
+        PASS [   0.098s] ( 94/478) ts-rs::integration export_to::export_bindings_withstrtofile
+        PASS [   0.098s] ( 95/478) ts-rs::integration export_to::export_bindings_withstrtodir
+        PASS [   0.102s] ( 96/478) ts-rs::integration export_to::export_bindings_withstrreftofile
+        PASS [   0.090s] ( 97/478) ts-rs::integration generic_fields::alias_nested
+        PASS [   0.090s] ( 98/478) ts-rs::integration generic_fields::alias
+        PASS [   0.094s] ( 99/478) ts-rs::integration flatten::test_def
+        PASS [   0.102s] (100/478) ts-rs::integration flatten::export_bindings_a
+        PASS [   0.101s] (101/478) ts-rs::integration flatten::export_bindings_b
+        PASS [   0.102s] (102/478) ts-rs::integration flatten::export_bindings_c
+        PASS [   0.103s] (103/478) ts-rs::integration generic_fields::export_bindings_newtype
+        PASS [   0.103s] (104/478) ts-rs::integration generic_fields::export_bindings_struct
+        PASS [   0.105s] (105/478) ts-rs::integration generic_fields::export_bindings_newtypenested
+        PASS [   0.101s] (106/478) ts-rs::integration generic_fields::export_bindings_tuple
+        PASS [   0.105s] (107/478) ts-rs::integration generic_fields::export_bindings_structnested
+        PASS [   0.106s] (108/478) ts-rs::integration generic_fields::export_bindings_tuplenested
+        PASS [   0.098s] (109/478) ts-rs::integration generic_fields::named
+        PASS [   0.098s] (110/478) ts-rs::integration generic_fields::named_nested
+        PASS [   0.097s] (111/478) ts-rs::integration generic_fields::newtype_nested
+        PASS [   0.098s] (112/478) ts-rs::integration generic_fields::newtype
+        PASS [   0.096s] (113/478) ts-rs::integration generic_fields::tuple_nested
+        PASS [   0.100s] (114/478) ts-rs::integration generic_fields::tuple
+        PASS [   0.097s] (115/478) ts-rs::integration generics::default
+        PASS [   0.098s] (116/478) ts-rs::integration generics::deeply_nested
+        PASS [   0.106s] (117/478) ts-rs::integration generics::export_bindings_adefault
+        PASS [   0.106s] (118/478) ts-rs::integration generics::export_bindings_atraitbounds
+        PASS [   0.107s] (119/478) ts-rs::integration generics::export_bindings_btraitbounds
+        PASS [   0.113s] (120/478) ts-rs::integration generics::export_bindings_bdefault
+        PASS [   0.108s] (121/478) ts-rs::integration generics::export_bindings_containerinline
+        PASS [   0.104s] (122/478) ts-rs::integration generics::export_bindings_ctraitbounds
+        PASS [   0.107s] (123/478) ts-rs::integration generics::export_bindings_containerwithdefault
+        PASS [   0.112s] (124/478) ts-rs::integration generics::export_bindings_containerwithbounds
+        PASS [   0.117s] (125/478) ts-rs::integration generics::export_bindings_container
+        PASS [   0.106s] (126/478) ts-rs::integration generics::export_bindings_generic
+        PASS [   0.100s] (127/478) ts-rs::integration generics::export_bindings_genericinline
+        PASS [   0.101s] (128/478) ts-rs::integration generics::export_bindings_genericenum
+        PASS [   0.105s] (129/478) ts-rs::integration generics::export_bindings_genericautobound
+        PASS [   0.100s] (130/478) ts-rs::integration generics::export_bindings_genericwithbounds
+        PASS [   0.106s] (131/478) ts-rs::integration generics::export_bindings_genericautobound2
+        PASS [   0.100s] (132/478) ts-rs::integration generics::export_bindings_genericwithdefault
+        PASS [   0.106s] (133/478) ts-rs::integration generics::export_bindings_myenum
+        PASS [   0.102s] (134/478) ts-rs::integration generics::export_bindings_p0
+        PASS [   0.104s] (135/478) ts-rs::integration generics::export_bindings_newtype
+        PASS [   0.098s] (136/478) ts-rs::integration generics::export_bindings_p1
+        PASS [   0.125s] (137/478) ts-rs::integration generics::export_bindings_genericparent
+        PASS [   0.098s] (138/478) ts-rs::integration generics::export_bindings_sometype
+        PASS [   0.102s] (139/478) ts-rs::integration generics::export_bindings_t1
+        PASS [   0.106s] (140/478) ts-rs::integration generics::export_bindings_struct
+        PASS [   0.123s] (141/478) ts-rs::integration generics::export_bindings_parent
+        PASS [   0.105s] (142/478) ts-rs::integration generics::export_bindings_t0
+        PASS [   0.108s] (143/478) ts-rs::integration generics::export_bindings_parentenum
+        PASS [   0.107s] (144/478) ts-rs::integration generics::export_bindings_tuple
+        PASS [   0.097s] (145/478) ts-rs::integration generics::generic_newtype
+        PASS [   0.098s] (146/478) ts-rs::integration generics::generic_enum
+        PASS [   0.097s] (147/478) ts-rs::integration generics::generic_struct
+        PASS [   0.098s] (148/478) ts-rs::integration generics::generic_tuple
+        PASS [   0.097s] (149/478) ts-rs::integration generics::inline
+        PASS [   0.111s] (150/478) ts-rs::integration generics::export_bindings_ydefault
+        PASS [   0.095s] (151/478) ts-rs::integration generics::inline_with_bounds
+        PASS [   0.093s] (152/478) ts-rs::integration generics::inline_with_default
+        PASS [   0.097s] (153/478) ts-rs::integration generics::inline_generic_enum
+        PASS [   0.118s] (154/478) ts-rs::integration generics::export_bindings_typegroup
+        PASS [   0.101s] (155/478) ts-rs::integration generics::test
+        PASS [   0.096s] (156/478) ts-rs::integration generics::trait_bounds
+        PASS [   0.092s] (157/478) ts-rs::integration generics_flatten::flattened_generic_parameters
+        PASS [   0.098s] (158/478) ts-rs::integration generics_flatten::export_bindings_item
+        PASS [   0.099s] (159/478) ts-rs::integration generics_flatten::export_bindings_twoparameters
+        PASS [   0.099s] (160/478) ts-rs::integration generics_flatten::export_bindings_enum
+        PASS [   0.110s] (161/478) ts-rs::integration hashmap::export_bindings_btreemapwithcustomtypes
+        PASS [   0.100s] (162/478) ts-rs::integration hashmap::export_bindings_customkey
+        PASS [   0.096s] (163/478) ts-rs::integration hashmap::export_bindings_customvalue
+        PASS [   0.098s] (164/478) ts-rs::integration hashmap::export_bindings_hashes
+        PASS [   0.089s] (165/478) ts-rs::integration hashmap::hashmap
+        PASS [   0.099s] (166/478) ts-rs::integration hashmap::export_bindings_hasheshasher
+        PASS [   0.090s] (167/478) ts-rs::integration hashmap::hashmap_with_custom_hasher
+        PASS [   0.090s] (168/478) ts-rs::integration hashmap::with_custom_types
+        PASS [   0.107s] (169/478) ts-rs::integration hashmap::export_bindings_hashmapwithcustomtypes
+        PASS [   0.098s] (170/478) ts-rs::integration hashset::export_bindings_customvalue
+        PASS [   0.101s] (171/478) ts-rs::integration hashset::export_bindings_btreesetwithcustomtype
+        PASS [   0.090s] (172/478) ts-rs::integration hashset::with_custom_types
+        PASS [   0.087s] (173/478) ts-rs::integration impl_primitive::impl_primitive_uuid
+        PASS [   0.105s] (174/478) ts-rs::integration hashset::export_bindings_hashsetwithcustomtype
+        PASS [   0.092s] (175/478) ts-rs::integration infer_as::test
+        PASS [   0.097s] (176/478) ts-rs::integration infer_as::export_bindings_foo
+        PASS [   0.097s] (177/478) ts-rs::integration issue_168::export_bindings_bar
+        PASS [   0.107s] (178/478) ts-rs::integration imports::test_def
+        PASS [   0.098s] (179/478) ts-rs::integration issue_168::export_bindings_baz
+        PASS [   0.104s] (180/478) ts-rs::integration issue_168::export_bindings_foo
+        PASS [   0.095s] (181/478) ts-rs::integration issue_168::export_bindings_fooinlined
+        PASS [   0.094s] (182/478) ts-rs::integration issue_232::export_bindings_enum
+        PASS [   0.095s] (183/478) ts-rs::integration issue_168::issue_168
+        PASS [   0.101s] (184/478) ts-rs::integration issue_232::export_bindings_enumwithname
+        PASS [   0.103s] (185/478) ts-rs::integration issue_232::export_bindings_stateinlined
+        PASS [   0.092s] (186/478) ts-rs::integration issue_308::export_bindings_mystruct
+        PASS [   0.106s] (187/478) ts-rs::integration issue_232::export_bindings_state
+        PASS [   0.100s] (188/478) ts-rs::integration issue_232::export_bindings_stateinlinedvec
+        PASS [   0.100s] (189/478) ts-rs::integration issue_232::issue_232
+        PASS [   0.098s] (190/478) ts-rs::integration issue_338::export_bindings_myenum
+        PASS [   0.095s] (191/478) ts-rs::integration issue_338::export_bindings_mystruct
+        PASS [   0.103s] (192/478) ts-rs::integration issue_317::export_bindings_container
+        PASS [   0.084s] (193/478) ts-rs::integration issue_338::test
+        PASS [   0.092s] (194/478) ts-rs::integration issue_397::entities::posts::export_bindings_model
+        PASS [   0.093s] (195/478) ts-rs::integration issue_397::entities::users::export_bindings_model
+        PASS [   0.105s] (196/478) ts-rs::integration issue_338::export_bindings_mytype
+        PASS [   0.107s] (197/478) ts-rs::integration issue_70::export_bindings_container
+        PASS [   0.095s] (198/478) ts-rs::integration issue_70::export_bindings_enum
+        PASS [   0.085s] (199/478) ts-rs::integration issue_70::generic
+        PASS [   0.097s] (200/478) ts-rs::integration issue_70::export_bindings_struct
+        PASS [   0.098s] (201/478) ts-rs::integration issue_70::export_bindings_generictype
+        PASS [   0.085s] (202/478) ts-rs::integration issue_80::issue_80
+        PASS [   0.088s] (203/478) ts-rs::integration issue_70::issue_70
+        PASS [   0.105s] (204/478) ts-rs::integration issue_70::export_bindings_genericcontainer
+        PASS [   0.087s] (205/478) ts-rs::integration lifetimes::contains_borrow
+        PASS [   0.092s] (206/478) ts-rs::integration issue_80::export_bindings_sometypelist
+        PASS [   0.091s] (207/478) ts-rs::integration lifetimes::contains_borrow_type_args
+        PASS [   0.094s] (208/478) ts-rs::integration lifetimes::export_bindings_b
+        PASS [   0.096s] (209/478) ts-rs::integration lifetimes::export_bindings_s
+        PASS [   0.088s] (210/478) ts-rs::integration list::list
+        PASS [   0.097s] (211/478) ts-rs::integration list::export_bindings_list
+        PASS [   0.106s] (212/478) ts-rs::integration lifetimes::export_bindings_a
+        PASS [   0.097s] (213/478) ts-rs::integration nested::export_bindings_a
+        PASS [   0.107s] (214/478) ts-rs::integration merge_same_file_imports::merge_same_file_imports
+        PASS [   0.109s] (215/478) ts-rs::integration nested::export_bindings_b
+        PASS [   0.092s] (216/478) ts-rs::integration nested::test_nested
+        PASS [   0.112s] (217/478) ts-rs::integration nested::export_bindings_c
+        PASS [   0.099s] (218/478) ts-rs::integration optional_field::export_bindings_flatten
+        PASS [   0.101s] (219/478) ts-rs::integration optional_field::export_bindings_inline
+        PASS [   0.099s] (220/478) ts-rs::integration optional_field::export_bindings_nullablestruct
+        PASS [   0.098s] (221/478) ts-rs::integration optional_field::export_bindings_optionalinenum
+        PASS [   0.101s] (222/478) ts-rs::integration optional_field::export_bindings_optionalflatten
+        PASS [   0.102s] (223/478) ts-rs::integration optional_field::export_bindings_nullabletuple
+        PASS [   0.099s] (224/478) ts-rs::integration optional_field::export_bindings_optionalinline
+        PASS [   0.097s] (225/478) ts-rs::integration optional_field::export_bindings_optionalinstruct
+        PASS [   0.097s] (226/478) ts-rs::integration optional_field::export_bindings_optionalintuple
+        PASS [   0.094s] (227/478) ts-rs::integration optional_field::export_bindings_optionalstruct
+        PASS [   0.088s] (228/478) ts-rs::integration optional_field::flatten
+        PASS [   0.088s] (229/478) ts-rs::integration optional_field::in_enum
+        PASS [   0.092s] (230/478) ts-rs::integration optional_field::export_bindings_optionaltuple
+        PASS [   0.087s] (231/478) ts-rs::integration optional_field::in_struct
+        PASS [   0.085s] (232/478) ts-rs::integration optional_field::in_tuple
+        PASS [   0.086s] (233/478) ts-rs::integration optional_field::inline
+        PASS [   0.086s] (234/478) ts-rs::integration optional_field::struct_nullable
+        PASS [   0.085s] (235/478) ts-rs::integration optional_field::struct_optional
+        PASS [   0.087s] (236/478) ts-rs::integration optional_field::tuple_nullable
+        PASS [   0.085s] (237/478) ts-rs::integration optional_field::tuple_optional
+        PASS [   0.084s] (238/478) ts-rs::integration r#unsized::contains_str
+        PASS [   0.094s] (239/478) ts-rs::integration r#unsized::export_bindings_s
+        PASS [   0.099s] (240/478) ts-rs::integration path_bug::export_bindings_foo
+        PASS [   0.106s] (241/478) ts-rs::integration ranges::export_bindings_inner
+        PASS [   0.095s] (242/478) ts-rs::integration raw_idents::raw_idents
+        PASS [   0.137s] (243/478) ts-rs::integration path_bug::path_bug
+        PASS [   0.124s] (244/478) ts-rs::integration ranges::range
+        PASS [   0.126s] (245/478) ts-rs::integration recursion_limit::export_bindings_iso4217currencycode
+        PASS [   0.128s] (246/478) ts-rs::integration raw_idents::export_bindings_struct
+        PASS [   0.175s] (247/478) ts-rs::integration ranges::export_bindings_rangetest
+        PASS [   0.284s] (248/478) ts-rs::integration recursion_limit::export_bindings_t000
+        PASS [   0.295s] (249/478) ts-rs::integration recursion_limit::export_bindings_t001
+        PASS [   0.297s] (250/478) ts-rs::integration recursion_limit::export_bindings_t002
+        PASS [   0.273s] (251/478) ts-rs::integration recursion_limit::export_bindings_t005
+        PASS [   0.240s] (252/478) ts-rs::integration recursion_limit::export_bindings_t010
+        PASS [   0.279s] (253/478) ts-rs::integration recursion_limit::export_bindings_t004
+        PASS [   0.263s] (254/478) ts-rs::integration recursion_limit::export_bindings_t008
+        PASS [   0.284s] (255/478) ts-rs::integration recursion_limit::export_bindings_t003
+        PASS [   0.270s] (256/478) ts-rs::integration recursion_limit::export_bindings_t007
+        PASS [   0.273s] (257/478) ts-rs::integration recursion_limit::export_bindings_t006
+        PASS [   0.247s] (258/478) ts-rs::integration recursion_limit::export_bindings_t012
+        PASS [   0.248s] (259/478) ts-rs::integration recursion_limit::export_bindings_t011
+        PASS [   0.276s] (260/478) ts-rs::integration recursion_limit::export_bindings_t009
+        PASS [   0.250s] (261/478) ts-rs::integration recursion_limit::export_bindings_t014
+        PASS [   0.225s] (262/478) ts-rs::integration recursion_limit::export_bindings_t016
+        PASS [   0.226s] (263/478) ts-rs::integration recursion_limit::export_bindings_t015
+        PASS [   0.264s] (264/478) ts-rs::integration recursion_limit::export_bindings_t013
+        PASS [   0.225s] (265/478) ts-rs::integration recursion_limit::export_bindings_t017
+        PASS [   0.190s] (266/478) ts-rs::integration recursion_limit::export_bindings_t018
+        PASS [   0.188s] (267/478) ts-rs::integration recursion_limit::export_bindings_t019
+        PASS [   0.185s] (268/478) ts-rs::integration recursion_limit::export_bindings_t020
+        PASS [   0.184s] (269/478) ts-rs::integration recursion_limit::export_bindings_t021
+        PASS [   0.185s] (270/478) ts-rs::integration recursion_limit::export_bindings_t023
+        PASS [   0.180s] (271/478) ts-rs::integration recursion_limit::export_bindings_t027
+        PASS [   0.187s] (272/478) ts-rs::integration recursion_limit::export_bindings_t025
+        PASS [   0.190s] (273/478) ts-rs::integration recursion_limit::export_bindings_t024
+        PASS [   0.188s] (274/478) ts-rs::integration recursion_limit::export_bindings_t026
+        PASS [   0.193s] (275/478) ts-rs::integration recursion_limit::export_bindings_t022
+        PASS [   0.183s] (276/478) ts-rs::integration recursion_limit::export_bindings_t029
+        PASS [   0.185s] (277/478) ts-rs::integration recursion_limit::export_bindings_t028
+        PASS [   0.184s] (278/478) ts-rs::integration recursion_limit::export_bindings_t030
+        PASS [   0.179s] (279/478) ts-rs::integration recursion_limit::export_bindings_t031
+        PASS [   0.179s] (280/478) ts-rs::integration recursion_limit::export_bindings_t034
+        PASS [   0.177s] (281/478) ts-rs::integration recursion_limit::export_bindings_t035
+        PASS [   0.183s] (282/478) ts-rs::integration recursion_limit::export_bindings_t033
+        PASS [   0.184s] (283/478) ts-rs::integration recursion_limit::export_bindings_t032
+        PASS [   0.164s] (284/478) ts-rs::integration recursion_limit::export_bindings_t036
+        PASS [   0.165s] (285/478) ts-rs::integration recursion_limit::export_bindings_t037
+        PASS [   0.167s] (286/478) ts-rs::integration recursion_limit::export_bindings_t038
+        PASS [   0.165s] (287/478) ts-rs::integration recursion_limit::export_bindings_t039
+        PASS [   0.159s] (288/478) ts-rs::integration recursion_limit::export_bindings_t041
+        PASS [   0.161s] (289/478) ts-rs::integration recursion_limit::export_bindings_t040
+        PASS [   0.159s] (290/478) ts-rs::integration recursion_limit::export_bindings_t045
+        PASS [   0.162s] (291/478) ts-rs::integration recursion_limit::export_bindings_t043
+        PASS [   0.167s] (292/478) ts-rs::integration recursion_limit::export_bindings_t042
+        PASS [   0.167s] (293/478) ts-rs::integration recursion_limit::export_bindings_t044
+        PASS [   0.162s] (294/478) ts-rs::integration recursion_limit::export_bindings_t046
+        PASS [   0.163s] (295/478) ts-rs::integration recursion_limit::export_bindings_t047
+        PASS [   0.161s] (296/478) ts-rs::integration recursion_limit::export_bindings_t049
+        PASS [   0.164s] (297/478) ts-rs::integration recursion_limit::export_bindings_t048
+        PASS [   0.148s] (298/478) ts-rs::integration recursion_limit::export_bindings_t053
+        PASS [   0.153s] (299/478) ts-rs::integration recursion_limit::export_bindings_t052
+        PASS [   0.157s] (300/478) ts-rs::integration recursion_limit::export_bindings_t050
+        PASS [   0.159s] (301/478) ts-rs::integration recursion_limit::export_bindings_t051
+        PASS [   0.141s] (302/478) ts-rs::integration recursion_limit::export_bindings_t054
+        PASS [   0.146s] (303/478) ts-rs::integration recursion_limit::export_bindings_t055
+        PASS [   0.138s] (304/478) ts-rs::integration recursion_limit::export_bindings_t058
+        PASS [   0.147s] (305/478) ts-rs::integration recursion_limit::export_bindings_t056
+        PASS [   0.144s] (306/478) ts-rs::integration recursion_limit::export_bindings_t057
+        PASS [   0.142s] (307/478) ts-rs::integration recursion_limit::export_bindings_t059
+        PASS [   0.134s] (308/478) ts-rs::integration recursion_limit::export_bindings_t063
+        PASS [   0.141s] (309/478) ts-rs::integration recursion_limit::export_bindings_t061
+        PASS [   0.144s] (310/478) ts-rs::integration recursion_limit::export_bindings_t060
+        PASS [   0.140s] (311/478) ts-rs::integration recursion_limit::export_bindings_t062
+        PASS [   0.135s] (312/478) ts-rs::integration recursion_limit::export_bindings_t068
+        PASS [   0.146s] (313/478) ts-rs::integration recursion_limit::export_bindings_t065
+        PASS [   0.145s] (314/478) ts-rs::integration recursion_limit::export_bindings_t067
+        PASS [   0.151s] (315/478) ts-rs::integration recursion_limit::export_bindings_t064
+        PASS [   0.138s] (316/478) ts-rs::integration recursion_limit::export_bindings_t070
+        PASS [   0.147s] (317/478) ts-rs::integration recursion_limit::export_bindings_t066
+        PASS [   0.142s] (318/478) ts-rs::integration recursion_limit::export_bindings_t069
+        PASS [   0.139s] (319/478) ts-rs::integration recursion_limit::export_bindings_t071
+        PASS [   0.123s] (320/478) ts-rs::integration recursion_limit::export_bindings_t072
+        PASS [   0.107s] (321/478) ts-rs::integration recursion_limit::export_bindings_t077
+        PASS [   0.098s] (322/478) ts-rs::integration recursion_limit::export_bindings_t080
+        PASS [   0.100s] (323/478) ts-rs::integration recursion_limit::export_bindings_t081
+        PASS [   0.105s] (324/478) ts-rs::integration recursion_limit::export_bindings_t078
+        PASS [   0.114s] (325/478) ts-rs::integration recursion_limit::export_bindings_t075
+        PASS [   0.116s] (326/478) ts-rs::integration recursion_limit::export_bindings_t074
+        PASS [   0.111s] (327/478) ts-rs::integration recursion_limit::export_bindings_t076
+        PASS [   0.105s] (328/478) ts-rs::integration recursion_limit::export_bindings_t079
+        PASS [   0.121s] (329/478) ts-rs::integration recursion_limit::export_bindings_t073
+        PASS [   0.083s] (330/478) ts-rs::integration recursion_limit::very_big_enum
+        PASS [   0.088s] (331/478) ts-rs::integration recursion_limit::export_bindings_t083
+        PASS [   0.097s] (332/478) ts-rs::integration recursion_limit::export_bindings_t082
+        PASS [   0.089s] (333/478) ts-rs::integration references::references
+        PASS [   0.091s] (334/478) ts-rs::integration references::export_bindings_fullofrefs
+        PASS [   0.095s] (335/478) ts-rs::integration recursion_limit::export_bindings_verybigenum
+        PASS [   0.097s] (336/478) ts-rs::integration same_file_export::export_bindings_a
+        PASS [   0.096s] (337/478) ts-rs::integration same_file_export::export_bindings_b
+        PASS [   0.100s] (338/478) ts-rs::integration same_file_export::export_bindings_c
+        PASS [   0.085s] (339/478) ts-rs::integration self_referential::enum_adjacently_tagged
+        PASS [   0.090s] (340/478) ts-rs::integration same_file_export::export_bindings_depb
+        PASS [   0.088s] (341/478) ts-rs::integration self_referential::enum_externally_tagged
+        PASS [   0.087s] (342/478) ts-rs::integration self_referential::enum_internally_tagged
+        PASS [   0.096s] (343/478) ts-rs::integration same_file_export::export_bindings_depa
+        PASS [   0.081s] (344/478) ts-rs::integration self_referential::named
+        PASS [   0.095s] (345/478) ts-rs::integration self_referential::export_bindings_externallytagged
+        PASS [   0.097s] (346/478) ts-rs::integration self_referential::export_bindings_adjacentlytagged
+        PASS [   0.077s] (347/478) ts-rs::integration serde_skip_serializing::named
+        PASS [   0.099s] (348/478) ts-rs::integration self_referential::export_bindings_t
+        PASS [   0.102s] (349/478) ts-rs::integration self_referential::export_bindings_hast
+        PASS [   0.078s] (350/478) ts-rs::integration serde_skip_serializing::overrides
+        PASS [   0.088s] (351/478) ts-rs::integration serde_skip_serializing::export_bindings_overrides
+        PASS [   0.094s] (352/478) ts-rs::integration serde_skip_serializing::export_bindings_named
+        PASS [   0.091s] (353/478) ts-rs::integration serde_skip_serializing::export_bindings_tuple
+        PASS [   0.084s] (354/478) ts-rs::integration serde_skip_serializing::tuple
+        PASS [   0.089s] (355/478) ts-rs::integration serde_skip_with_default::export_bindings_foobar
+        PASS [   0.081s] (356/478) ts-rs::integration serde_skip_with_default::serde_skip_with_default
+        PASS [   0.081s] (357/478) ts-rs::integration serde_with::serde_compat_as
+        PASS [   0.078s] (358/478) ts-rs::integration simple::test_def
+        PASS [   0.081s] (359/478) ts-rs::integration serde_with::serde_compat_type
+        PASS [   0.083s] (360/478) ts-rs::integration skip::adjacently_tagged
+        PASS [   0.092s] (361/478) ts-rs::integration simple::export_bindings_simple
+        PASS [   0.080s] (362/478) ts-rs::integration skip::externally_tagged
+        PASS [   0.089s] (363/478) ts-rs::integration skip::export_bindings_adjacently
+        PASS [   0.088s] (364/478) ts-rs::integration skip::export_bindings_externally
+        PASS [   0.092s] (365/478) ts-rs::integration skip::export_bindings_internally
+        PASS [   0.080s] (366/478) ts-rs::integration slices::boxed_free
+        PASS [   0.086s] (367/478) ts-rs::integration skip::internally_tagged
+        PASS [   0.086s] (368/478) ts-rs::integration skip::simple
+        PASS [   0.080s] (369/478) ts-rs::integration slices::boxed_interface
+        PASS [   0.079s] (370/478) ts-rs::integration slices::boxed_newtype
+        PASS [   0.093s] (371/478) ts-rs::integration skip::export_bindings_skip
+        PASS [   0.083s] (372/478) ts-rs::integration slices::export_bindings_innermost
+        PASS [   0.090s] (373/478) ts-rs::integration slices::export_bindings_interface
+        PASS [   0.091s] (374/478) ts-rs::integration slices::export_bindings_interfaceboxed
+        PASS [   0.090s] (375/478) ts-rs::integration slices::export_bindings_interfaceref
+        PASS [   0.073s] (376/478) ts-rs::integration slices::slice_ref
+        PASS [   0.090s] (377/478) ts-rs::integration slices::export_bindings_newtype
+        PASS [   0.080s] (378/478) ts-rs::integration slices::free
+        PASS [   0.078s] (379/478) ts-rs::integration slices::interface
+        PASS [   0.078s] (380/478) ts-rs::integration slices::newtype
+        PASS [   0.097s] (381/478) ts-rs::integration slices::export_bindings_nested
+        PASS [   0.089s] (382/478) ts-rs::integration slices::export_bindings_newtypeboxed
+        PASS [   0.092s] (383/478) ts-rs::integration struct_rename::export_bindings_renameserdespecialchar
+        PASS [   0.090s] (384/478) ts-rs::integration struct_rename::export_bindings_withstrexpression
+        PASS [   0.094s] (385/478) ts-rs::integration struct_rename::export_bindings_renameallpascal
+        PASS [   0.094s] (386/478) ts-rs::integration struct_rename::export_bindings_renameallcamel
+        PASS [   0.092s] (387/478) ts-rs::integration struct_rename::export_bindings_renameusingmodulename
+        PASS [   0.095s] (388/478) ts-rs::integration struct_rename::export_bindings_renameallscreamingkebab
+        PASS [   0.095s] (389/478) ts-rs::integration struct_rename::export_bindings_renameallupper
+        PASS [   0.094s] (390/478) ts-rs::integration struct_rename::export_bindings_withstringexpression
+        PASS [   0.088s] (391/478) ts-rs::integration struct_rename::export_bindings_withstrliteral
+        PASS [   0.081s] (392/478) ts-rs::integration struct_rename::rename_all
+        PASS [   0.081s] (393/478) ts-rs::integration struct_rename::rename_all_camel_case
+        PASS [   0.084s] (394/478) ts-rs::integration struct_rename::test_rename_using_module_name
+        PASS [   0.086s] (395/478) ts-rs::integration struct_rename::rename_all_screaming_kebab_case
+        PASS [   0.086s] (396/478) ts-rs::integration struct_rename::rename_all_pascal_case
+        PASS [   0.086s] (397/478) ts-rs::integration struct_rename::serde_rename_special_char
+        PASS [   0.083s] (398/478) ts-rs::integration struct_rename::test_rename_with_str_expression
+        PASS [   0.084s] (399/478) ts-rs::integration struct_rename::test_rename_with_str_literal
+        PASS [   0.084s] (400/478) ts-rs::integration struct_rename::test_rename_with_string_expression
+        PASS [   0.081s] (401/478) ts-rs::integration top_level_type_as::top_level_type_as_enum
+        PASS [   0.083s] (402/478) ts-rs::integration struct_tag::test
+        PASS [   0.085s] (403/478) ts-rs::integration top_level_type_as::top_level_type_as_struct
+        PASS [   0.088s] (404/478) ts-rs::integration top_level_type_override::export_bindings_dataurl
+        PASS [   0.089s] (405/478) ts-rs::integration top_level_type_as::export_bindings_foo
+        PASS [   0.078s] (406/478) ts-rs::integration top_level_type_override::top_level_type_override_enum
+        PASS [   0.096s] (407/478) ts-rs::integration top_level_type_as::export_bindings_bar
+        PASS [   0.096s] (408/478) ts-rs::integration top_level_type_as::export_bindings_biz
+        PASS [   0.091s] (409/478) ts-rs::integration top_level_type_override::export_bindings_incompleteenum
+        PASS [   0.087s] (410/478) ts-rs::integration top_level_type_override::top_level_type_override_struct
+        PASS [   0.095s] (411/478) ts-rs::integration tuple::export_bindings_dep1
+        PASS [   0.082s] (412/478) ts-rs::integration tuple::struct_with_tuples
+        PASS [   0.088s] (413/478) ts-rs::integration tuple::export_bindings_dep2
+        PASS [   0.090s] (414/478) ts-rs::integration tuple::export_bindings_dep4
+        PASS [   0.091s] (415/478) ts-rs::integration tuple::export_bindings_dep3
+        PASS [   0.092s] (416/478) ts-rs::integration tuple::export_bindings_tuplenewtype
+        PASS [   0.081s] (417/478) ts-rs::integration tuple::test_decl
+        PASS [   0.081s] (418/478) ts-rs::integration tuple::test_newtype
+        PASS [   0.079s] (419/478) ts-rs::integration tuple::test_tuple
+        PASS [   0.082s] (420/478) ts-rs::integration tuple::test_tuple_newtype
+        PASS [   0.109s] (421/478) ts-rs::integration tuple::export_bindings_tuplewithdependencies
+        PASS [   0.110s] (422/478) ts-rs::integration tuple::export_bindings_structwithtuples
+        PASS [   0.083s] (423/478) ts-rs::integration tuple::tuple_with_dependencies
+        PASS [   0.085s] (424/478) ts-rs::integration type_as::complex
+        PASS [   0.084s] (425/478) ts-rs::integration type_as::enum_variants
+        PASS [   0.091s] (426/478) ts-rs::integration type_as::export_bindings_externaltypedef
+        PASS [   0.094s] (427/478) ts-rs::integration type_as::export_bindings_outer
+        PASS [   0.075s] (428/478) ts-rs::integration type_override::enum_newtype_representations
+        PASS [   0.084s] (429/478) ts-rs::integration type_as::struct_properties
+        PASS [   0.092s] (430/478) ts-rs::integration type_as::export_bindings_overridevariant
+        PASS [   0.091s] (431/478) ts-rs::integration type_override::export_bindings_adjacent
+        PASS [   0.105s] (432/478) ts-rs::integration type_as::export_bindings_override
+        PASS [   0.091s] (433/478) ts-rs::integration type_override::export_bindings_internal
+        PASS [   0.098s] (434/478) ts-rs::integration type_as::export_bindings_overrideenum
+        PASS [   0.079s] (435/478) ts-rs::integration type_override::newtype
+        PASS [   0.079s] (436/478) ts-rs::integration union::test_empty
+        PASS [   0.080s] (437/478) ts-rs::integration type_override::simple
+        PASS [   0.089s] (438/478) ts-rs::integration type_override::export_bindings_new2
+        PASS [   0.091s] (439/478) ts-rs::integration type_override::export_bindings_new1
+        PASS [   0.092s] (440/478) ts-rs::integration type_override::export_bindings_override
+        PASS [   0.081s] (441/478) ts-rs::integration union::test_simple_enum
+        PASS [   0.088s] (442/478) ts-rs::integration union::export_bindings_simpleenum
+        PASS [   0.084s] (443/478) ts-rs::integration union_named_serde_skip::export_bindings_testadjacently
+        PASS [   0.087s] (444/478) ts-rs::integration union_named_serde_skip::export_bindings_testexternally
+        PASS [   0.087s] (445/478) ts-rs::integration union_named_serde_skip::export_bindings_testinternally
+        PASS [   0.088s] (446/478) ts-rs::integration union_named_serde_skip::export_bindings_testuntagged
+        PASS [   0.082s] (447/478) ts-rs::integration union_named_serde_skip::test
+        PASS [   0.078s] (448/478) ts-rs::integration union_rename::test_rename_using_module_name
+        PASS [   0.077s] (449/478) ts-rs::integration union_rename::test_rename_with_str_expression
+        PASS [   0.088s] (450/478) ts-rs::integration union_rename::export_bindings_renamedenum
+        PASS [   0.079s] (451/478) ts-rs::integration union_rename::test_simple_enum
+        PASS [   0.087s] (452/478) ts-rs::integration union_rename::export_bindings_withstrexpression
+        PASS [   0.090s] (453/478) ts-rs::integration union_rename::export_bindings_withstringexpression
+        PASS [   0.090s] (454/478) ts-rs::integration union_rename::export_bindings_renameusingmodulename
+        PASS [   0.084s] (455/478) ts-rs::integration union_rename::test_rename_with_string_expression
+        PASS [   0.079s] (456/478) ts-rs::integration union_serde::test_serde_enum
+        PASS [   0.088s] (457/478) ts-rs::integration union_serde::export_bindings_simpleenum
+        PASS [   0.089s] (458/478) ts-rs::integration union_serde::export_bindings_untagged
+        PASS [   0.086s] (459/478) ts-rs::integration union_unnamed_serde_skip::export_bindings_testadjacently
+        PASS [   0.089s] (460/478) ts-rs::integration union_unnamed_serde_skip::export_bindings_testexternally
+        PASS [   0.100s] (461/478) ts-rs::integration union_serde::export_bindings_complexenum
+        PASS [   0.088s] (462/478) ts-rs::integration union_unnamed_serde_skip::export_bindings_testinternally
+        PASS [   0.086s] (463/478) ts-rs::integration union_unnamed_serde_skip::export_bindings_testuntagged
+        PASS [   0.083s] (464/478) ts-rs::integration union_unnamed_serde_skip::test
+        PASS [   0.090s] (465/478) ts-rs::integration union_with_data::export_bindings_bar
+        PASS [   0.086s] (466/478) ts-rs::integration union_with_data::test_stateful_enum
+        PASS [   0.084s] (467/478) ts-rs::integration union_with_internal_tag::test_enums_with_internal_tags
+        PASS [   0.091s] (468/478) ts-rs::integration union_with_internal_tag::export_bindings_enumwithinternaltag
+        PASS [   0.089s] (469/478) ts-rs::integration union_with_internal_tag::export_bindings_innerb
+        PASS [   0.090s] (470/478) ts-rs::integration union_with_internal_tag::export_bindings_innera
+        PASS [   0.097s] (471/478) ts-rs::integration union_with_data::export_bindings_simpleenum
+        PASS [   0.101s] (472/478) ts-rs::integration union_with_data::export_bindings_foo
+        PASS [   0.089s] (473/478) ts-rs::integration unit::export_bindings_unit
+        PASS [   0.098s] (474/478) ts-rs::integration union_with_internal_tag::export_bindings_enumwithinternaltag2
+        PASS [   0.078s] (475/478) ts-rs::integration unit::test
+        PASS [   0.087s] (476/478) ts-rs::integration unit::export_bindings_unit2
+        PASS [   0.086s] (477/478) ts-rs::integration unit::export_bindings_unit3
+        PASS [   0.086s] (478/478) ts-rs::integration unit::export_bindings_unit4
+────────────
+     Summary [   2.991s] 478 tests run: 478 passed, 0 skipped
+reward=1 graded=478 found=67 failed=0 parsed=478 framework=cargo exit_code=0

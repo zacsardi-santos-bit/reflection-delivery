@@ -1,0 +1,2 @@
+patching file packages/opentelemetry-instrumentation-openai/opentelemetry/instrumentation/openai/v1/__init__.py
+patching file packages/opentelemetry-instrumentation-openai/opentelemetry/instrumentation/openai/v1/responses_wrappers.py

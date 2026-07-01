@@ -1,0 +1,201 @@
+patching file beacon_node/lighthouse_network/gossipsub/src/behaviour/tests.rs (renamed from beacon_node/lighthouse_network/src/gossipsub/behaviour/tests.rs)
+patching file beacon_node/lighthouse_network/gossipsub/src/peer_score/tests.rs (renamed from beacon_node/lighthouse_network/src/gossipsub/peer_score/tests.rs)
+patching file beacon_node/lighthouse_network/tests/common.rs
+patching file beacon_node/network/src/service/tests.rs
+   Compiling futures-io v0.3.30
+   Compiling subtle v2.4.1
+   Compiling syn v1.0.109
+   Compiling libc v0.2.153
+   Compiling futures-channel v0.3.30
+   Compiling generic-array v0.14.7
+   Compiling smallvec v1.13.1
+   Compiling unsigned-varint v0.7.2
+   Compiling zeroize v1.7.0
+   Compiling signature v2.2.0
+   Compiling tracing-core v0.1.32
+   Compiling syn v2.0.52
+   Compiling curve25519-dalek v4.1.2
+   Compiling core2 v0.4.0
+   Compiling ed25519 v2.2.3
+   Compiling serde v1.0.197
+   Compiling url v2.5.0
+   Compiling crossbeam-utils v0.8.19
+   Compiling env_logger v0.8.4
+   Compiling multihash v0.19.1
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.6
+   Compiling getrandom v0.2.12
+   Compiling num_cpus v1.16.0
+   Compiling parking_lot_core v0.9.9
+   Compiling digest v0.10.7
+   Compiling rand_core v0.6.4
+   Compiling parking_lot v0.12.1
+   Compiling sha2 v0.10.8
+   Compiling hmac v0.12.1
+   Compiling rand_chacha v0.3.1
+   Compiling hkdf v0.12.4
+   Compiling rand v0.8.5
+   Compiling concurrent-queue v2.4.0
+   Compiling async-channel v1.9.0
+   Compiling data-encoding-macro-internal v0.1.12
+   Compiling quickcheck v1.0.3
+   Compiling data-encoding-macro v0.1.14
+   Compiling multibase v0.9.1
+   Compiling futures-macro v0.3.30
+   Compiling curve25519-dalek-derive v0.1.1
+   Compiling thiserror-impl v1.0.57
+   Compiling tracing-attributes v0.1.27
+   Compiling pin-project-internal v1.1.4
+   Compiling prometheus-client-derive-encode v0.4.2
+   Compiling prometheus-client v0.22.1
+   Compiling futures-util v0.3.30
+   Compiling thiserror v1.0.57
+   Compiling pin-project v1.1.4
+   Compiling tracing v0.1.40
+   Compiling ed25519-dalek v2.1.1
+   Compiling libp2p-identity v0.2.8
+   Compiling multiaddr v0.18.1
+   Compiling futures-executor v0.3.30
+   Compiling asynchronous-codec v0.7.0
+   Compiling quick-protobuf-codec v0.3.1
+   Compiling futures v0.3.30
+   Compiling rw-stream-sink v0.4.0
+   Compiling multistream-select v0.13.0
+   Compiling futures-ticker v0.0.3
+   Compiling libp2p-core v0.41.2
+   Compiling libp2p-swarm v0.44.1
+   Compiling libp2p-allow-block-list v0.3.0
+   Compiling libp2p-connection-limits v0.3.1
+   Compiling libp2p v0.53.2
+   Compiling gossipsub v0.5.0 (/workspace/repo/beacon_node/lighthouse_network/gossipsub)
+    Finished test [unoptimized + debuginfo] target(s) in 19.70s
+────────────
+ Nextest run ID 85649065-65d9-4b52-9c46-0c4491e9a81d with nextest profile: default
+    Starting 124 tests across 1 binary
+        PASS [   0.115s] (  1/124) gossipsub behaviour::tests::do_not_graft_explicit_peer
+        PASS [   0.116s] (  2/124) gossipsub behaviour::tests::explicit_peers_not_added_to_mesh_on_receiving_subscription
+        PASS [   0.117s] (  3/124) gossipsub behaviour::tests::explicit_peers_not_added_to_mesh_on_subscribe
+        PASS [   0.117s] (  4/124) gossipsub behaviour::tests::explicit_peers_not_added_to_mesh_from_fanout_on_subscribe
+        PASS [   0.117s] (  5/124) gossipsub behaviour::tests::do_forward_messages_to_explicit_peers
+        PASS [   0.120s] (  6/124) gossipsub behaviour::tests::no_gossip_gets_sent_to_explicit_peers
+        PASS [   0.131s] (  7/124) gossipsub behaviour::tests::test_add_outbound_peers_if_min_is_not_satisfied
+        PASS [   0.131s] (  8/124) gossipsub behaviour::tests::test_accept_only_outbound_peer_grafts_when_mesh_full
+        PASS [   0.116s] (  9/124) gossipsub behaviour::tests::test_connect_to_px_peers_on_handle_prune
+        PASS [   0.118s] ( 10/124) gossipsub behaviour::tests::test_do_not_flood_publish_to_peer_below_publish_threshold
+        PASS [   0.124s] ( 11/124) gossipsub behaviour::tests::test_do_not_publish_to_peer_below_publish_threshold
+        PASS [   0.133s] ( 12/124) gossipsub behaviour::tests::test_do_not_gossip_to_peers_below_gossip_threshold
+        PASS [   0.121s] ( 13/124) gossipsub behaviour::tests::test_do_not_use_floodsub_in_fanout
+        PASS [   0.100s] ( 14/124) gossipsub behaviour::tests::test_dont_add_floodsub_peers_to_mesh_in_heartbeat
+        PASS [   0.098s] ( 15/124) gossipsub behaviour::tests::test_dont_add_floodsub_peers_to_mesh_on_join
+        PASS [   0.097s] ( 16/124) gossipsub behaviour::tests::test_dont_send_floodsub_peers_in_px
+        PASS [   0.095s] ( 17/124) gossipsub behaviour::tests::test_dont_send_px_to_old_gossipsub_peers
+        PASS [   0.110s] ( 18/124) gossipsub behaviour::tests::test_dont_graft_to_negative_scored_peers
+        PASS [   0.089s] ( 19/124) gossipsub behaviour::tests::test_explicit_peer_gets_connected
+        PASS [   0.095s] ( 20/124) gossipsub behaviour::tests::test_explicit_peer_reconnects
+        PASS [   0.318s] ( 21/124) gossipsub behaviour::tests::test_do_not_graft_within_default_backoff_period_after_receiving_prune_without_backoff
+        PASS [   0.315s] ( 22/124) gossipsub behaviour::tests::test_do_not_remove_too_many_outbound_peers
+        PASS [   0.123s] ( 23/124) gossipsub behaviour::tests::test_get_random_peers
+        PASS [   0.132s] ( 24/124) gossipsub behaviour::tests::test_fanout
+        PASS [   0.133s] ( 25/124) gossipsub behaviour::tests::test_flood_publish
+        PASS [   0.104s] ( 26/124) gossipsub behaviour::tests::test_graft_without_subscribe
+        PASS [   0.124s] ( 27/124) gossipsub behaviour::tests::test_gossip_to_at_least_gossip_lazy_peers
+        PASS [   0.104s] ( 28/124) gossipsub behaviour::tests::test_handle_graft_explicit_peer
+        PASS [   0.175s] ( 29/124) gossipsub behaviour::tests::test_gossip_to_at_most_gossip_factor_peers
+        PASS [   0.131s] ( 30/124) gossipsub behaviour::tests::test_handle_graft_is_subscribed
+        PASS [   0.134s] ( 31/124) gossipsub behaviour::tests::test_handle_graft_is_not_subscribed
+        PASS [   0.131s] ( 32/124) gossipsub behaviour::tests::test_handle_graft_multiple_topics
+        PASS [   0.120s] ( 33/124) gossipsub behaviour::tests::test_handle_ihave_not_subscribed
+        PASS [   0.128s] ( 34/124) gossipsub behaviour::tests::test_handle_ihave_subscribed_and_msg_cached
+        PASS [   0.131s] ( 35/124) gossipsub behaviour::tests::test_handle_ihave_subscribed_and_msg_not_cached
+        PASS [   0.130s] ( 36/124) gossipsub behaviour::tests::test_handle_iwant_msg_cached
+        PASS [   0.124s] ( 37/124) gossipsub behaviour::tests::test_handle_iwant_msg_cached_shifted
+        PASS [   0.126s] ( 38/124) gossipsub behaviour::tests::test_handle_iwant_msg_not_cached
+        PASS [   0.135s] ( 39/124) gossipsub behaviour::tests::test_handle_prune_peer_in_mesh
+        PASS [   0.103s] ( 40/124) gossipsub behaviour::tests::test_ignore_graft_from_unknown_topic
+        PASS [   0.109s] ( 41/124) gossipsub behaviour::tests::test_ignore_px_from_negative_scored_peer
+        PASS [   0.139s] ( 42/124) gossipsub behaviour::tests::test_handle_received_subscriptions
+        PASS [   0.112s] ( 43/124) gossipsub behaviour::tests::test_ignore_px_from_peers_below_accept_px_threshold
+        PASS [   0.115s] ( 44/124) gossipsub behaviour::tests::test_ignore_rpc_from_peers_below_graylist_threshold
+        PASS [   0.129s] ( 45/124) gossipsub behaviour::tests::test_ignore_too_many_ihaves
+        PASS [   0.130s] ( 46/124) gossipsub behaviour::tests::test_ignore_too_many_iwants_from_same_peer_for_same_message
+        PASS [   0.129s] ( 47/124) gossipsub behaviour::tests::test_ignore_too_many_messages_in_ihave
+        PASS [   0.127s] ( 48/124) gossipsub behaviour::tests::test_ihave_msg_from_peer_below_gossip_threshold_gets_ignored
+        PASS [   0.135s] ( 49/124) gossipsub behaviour::tests::test_inject_connected
+        PASS [   0.124s] ( 50/124) gossipsub behaviour::tests::test_iwant_msg_from_peer_below_gossip_threshold_gets_ignored
+        PASS [   0.139s] ( 51/124) gossipsub behaviour::tests::test_join
+        PASS [   0.111s] ( 52/124) gossipsub behaviour::tests::test_mesh_addition
+        PASS [   0.127s] ( 53/124) gossipsub behaviour::tests::test_mesh_subtraction
+        PASS [   0.185s] ( 54/124) gossipsub behaviour::tests::test_keep_best_scoring_peers_on_oversubscription
+        PASS [   0.099s] ( 55/124) gossipsub behaviour::tests::test_only_send_nonnegative_scoring_peers_in_px
+        PASS [   0.108s] ( 56/124) gossipsub behaviour::tests::test_opportunistic_grafting
+        PASS [   0.221s] ( 57/124) gossipsub behaviour::tests::test_limit_number_of_message_ids_inside_ihave
+        PASS [   0.099s] ( 58/124) gossipsub behaviour::tests::test_prune_backoffed_peer_on_graft
+        PASS [   0.101s] ( 59/124) gossipsub behaviour::tests::test_prune_negative_scored_peers
+        PASS [   0.104s] ( 60/124) gossipsub behaviour::tests::test_public_api
+        PASS [   0.108s] ( 61/124) gossipsub behaviour::tests::test_publish_to_floodsub_peers_without_flood_publish
+        PASS [   0.116s] ( 62/124) gossipsub behaviour::tests::test_scoring_p2
+        PASS [   0.136s] ( 63/124) gossipsub behaviour::tests::test_publish_without_flood_publishing
+        PASS [   0.108s] ( 64/124) gossipsub behaviour::tests::test_scoring_p4_application_invalid_message_from_two_peers
+        PASS [   1.220s] ( 65/124) gossipsub behaviour::tests::test_do_not_graft_within_backoff_period
+        PASS [   0.094s] ( 66/124) gossipsub behaviour::tests::test_scoring_p4_application_invalidated_message
+        PASS [   0.091s] ( 67/124) gossipsub behaviour::tests::test_scoring_p4_decay
+        PASS [   0.088s] ( 68/124) gossipsub behaviour::tests::test_scoring_p4_ignored_message
+        PASS [   0.093s] ( 69/124) gossipsub behaviour::tests::test_scoring_p4_message_from_self
+        PASS [   0.097s] ( 70/124) gossipsub behaviour::tests::test_scoring_p4_invalid_signature
+        PASS [   0.098s] ( 71/124) gossipsub behaviour::tests::test_scoring_p4_three_application_invalid_messages
+        PASS [   0.099s] ( 72/124) gossipsub behaviour::tests::test_scoring_p4_valid_message
+        PASS [   0.096s] ( 73/124) gossipsub behaviour::tests::test_scoring_p5
+        PASS [   0.101s] ( 74/124) gossipsub behaviour::tests::test_scoring_p6
+        PASS [   0.113s] ( 75/124) gossipsub behaviour::tests::test_send_px_and_backoff_in_prune
+        PASS [   0.095s] ( 76/124) gossipsub behaviour::tests::test_subscribe_and_graft_with_negative_score
+        PASS [   0.115s] ( 77/124) gossipsub behaviour::tests::test_subscribe
+        PASS [   0.074s] ( 78/124) gossipsub behaviour::tests::test_subscribe_to_invalid_topic
+        PASS [   0.251s] ( 79/124) gossipsub behaviour::tests::test_scoring_p7_grafts_before_backoff
+        PASS [   0.073s] ( 80/124) gossipsub config::test::create_config_with_custom_protocol_id
+        PASS [   0.113s] ( 81/124) gossipsub behaviour::tests::test_unsubscribe
+        PASS [   0.086s] ( 82/124) gossipsub config::test::create_config_with_message_id_as_closure
+        PASS [   0.659s] ( 83/124) gossipsub behaviour::tests::test_scoring_p1
+        PASS [   0.076s] ( 84/124) gossipsub config::test::create_config_with_message_id_as_closure_with_variable_capture
+        PASS [   0.076s] ( 85/124) gossipsub config::test::create_config_with_message_id_as_plain_function
+        PASS [   0.070s] ( 86/124) gossipsub config::test::create_config_with_protocol_id_prefix
+        PASS [   0.086s] ( 87/124) gossipsub mcache::tests::test_empty_shift
+        PASS [   0.072s] ( 88/124) gossipsub mcache::tests::test_get_empty
+        PASS [   0.087s] ( 89/124) gossipsub mcache::tests::test_get_wrong
+        PASS [   0.071s] ( 90/124) gossipsub mcache::tests::test_new_cache
+        PASS [   0.075s] ( 91/124) gossipsub mcache::tests::test_put_get_one
+        PASS [   0.075s] ( 92/124) gossipsub mcache::tests::test_remove_last_from_shift
+        PASS [   0.079s] ( 93/124) gossipsub mcache::tests::test_shift
+        PASS [   0.077s] ( 94/124) gossipsub peer_score::tests::test_application_score
+        PASS [   0.072s] ( 95/124) gossipsub peer_score::tests::test_score_behaviour_penality
+        PASS [   0.079s] ( 96/124) gossipsub peer_score::tests::test_score_first_message_deliveries
+        PASS [   0.077s] ( 97/124) gossipsub peer_score::tests::test_score_first_message_deliveries_cap
+        PASS [   0.080s] ( 98/124) gossipsub peer_score::tests::test_score_first_message_deliveries_decay
+        PASS [   0.085s] ( 99/124) gossipsub peer_score::tests::test_score_invalid_message_deliveries
+        PASS [   0.077s] (100/124) gossipsub peer_score::tests::test_score_invalid_message_deliveris_decay
+        PASS [   0.079s] (101/124) gossipsub peer_score::tests::test_score_ip_colocation
+        PASS [   0.082s] (102/124) gossipsub peer_score::tests::test_score_mesh_failure_penalty
+        PASS [   0.076s] (103/124) gossipsub peer_score::tests::test_score_mesh_message_deliveries_decay
+        PASS [   0.072s] (104/124) gossipsub peer_score::tests::test_score_reject_message_deliveries
+        PASS [   0.081s] (105/124) gossipsub peer_score::tests::test_score_time_in_mesh_cap
+        PASS [   1.144s] (106/124) gossipsub behaviour::tests::test_scoring_p3
+        PASS [   0.042s] (107/124) gossipsub protocol::tests::support_floodsub_with_custom_protocol
+        PASS [   0.032s] (108/124) gossipsub rpc_proto::test::test_multi_topic_message_compatibility
+        PASS [   0.034s] (109/124) gossipsub subscription_filter::test::test_callback_filter
+        PASS [   0.254s] (110/124) gossipsub peer_score::tests::test_score_time_in_mesh
+        PASS [   0.037s] (111/124) gossipsub subscription_filter::test::test_filter_incoming_allow_all_with_duplicates
+        PASS [   0.046s] (112/124) gossipsub subscription_filter::test::test_filter_incoming_max_subscribed_valid
+        PASS [   0.045s] (113/124) gossipsub subscription_filter::test::test_filter_incoming_too_many_subscriptions
+        PASS [   0.036s] (114/124) gossipsub subscription_filter::test::test_filter_incoming_too_many_subscriptions_per_request
+        PASS [   0.044s] (115/124) gossipsub subscription_filter::test::test_filter_incoming_whitelist
+        PASS [   0.041s] (116/124) gossipsub time_cache::test::cache_added_entries_exist
+        PASS [   0.055s] (117/124) gossipsub subscription_filter::test::test_regex_subscription_filter
+        PASS [   0.133s] (118/124) gossipsub time_cache::test::cache_entries_expire
+        PASS [   1.203s] (119/124) gossipsub behaviour::tests::test_unsubscribe_backoff
+        PASS [   1.110s] (120/124) gossipsub peer_score::tests::test_score_mesh_message_deliveries
+        PASS [   1.113s] (121/124) gossipsub peer_score::tests::test_score_retention
+        PASS [   1.187s] (122/124) gossipsub protocol::tests::encode_decode
+        PASS [   2.338s] (123/124) gossipsub behaviour::tests::test_scoring_p3b
+        PASS [   4.322s] (124/124) gossipsub behaviour::tests::test_iwant_penalties
+────────────
+     Summary [   5.176s] 124 tests run: 124 passed, 0 skipped
+reward=1 graded=124 found=42 failed=0 parsed=124 framework=cargo exit_code=0

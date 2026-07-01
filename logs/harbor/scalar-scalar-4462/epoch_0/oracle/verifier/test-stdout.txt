@@ -1,0 +1,12 @@
+patching file packages/api-reference/src/hooks/useNavState.test.ts
+
+ RUN  v1.6.0 /workspace/repo/packages/api-reference
+
+ ✓ src/hooks/useNavState.test.ts  (13 tests) 13ms
+
+ Test Files  1 passed (1)
+      Tests  13 passed (13)
+   Start at  15:14:03
+   Duration  3.24s (transform 598ms, setup 0ms, collect 1.52s, tests 13ms, environment 524ms, prepare 300ms)
+
+reward=1 graded=13 found=0 failed=0 parsed=0 framework=vitest exit_code=0

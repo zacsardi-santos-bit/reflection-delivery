@@ -1,0 +1,16 @@
+patching file src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx
+PASS src/Apps/Artist/Routes/WorksForSale/Components/__tests__/ArtistMediumsTitle.jest.tsx
+  ArtistMediumsTitle
+    ✓ renders default title when no mediums are selected (18 ms)
+    ✓ renders title with single medium when one medium is selected (7 ms)
+    ✓ renders title with multiple mediums when multiple are selected (4 ms)
+    ✓ renders title with multiple mediums in alphabetical order (3 ms)
+    ✓ renders default title when filters are reset (10 ms)
+    ✓ uses URL params for initial render (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        3.554 s
+Ran all test suites matching /src\/Apps\/Artist\/Routes\/WorksForSale\/Components\/__tests__\/ArtistMediumsTitle.jest.tsx/i.
+reward=1 graded=6 found=0 failed=0 parsed=0 framework=jest exit_code=0

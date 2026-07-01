@@ -1,0 +1,13 @@
+patching file pkg/virt-handler/device-manager/device_controller_test.go
+patching file pkg/virt-handler/device-manager/generic_device_test.go
+patching file tests/BUILD.bazel
+patching file tests/utils.go
+patching file tests/vmi_lifecycle_test.go
+# kubevirt.io/kubevirt/pkg/virt-handler/device-manager [kubevirt.io/kubevirt/pkg/virt-handler/device-manager.test]
+pkg/virt-handler/device-manager/device_controller_test.go:99:21: deviceController.backoff undefined (type *DeviceController has no field or method backoff)
+pkg/virt-handler/device-manager/device_controller_test.go:108:21: deviceController.backoff undefined (type *DeviceController has no field or method backoff)
+pkg/virt-handler/device-manager/generic_device_test.go:36:7: dpi.done undefined (type *GenericDevicePlugin has no field or method done)
+pkg/virt-handler/device-manager/generic_device_test.go:37:7: dpi.deviceRoot undefined (type *GenericDevicePlugin has no field or method deviceRoot)
+FAIL	kubevirt.io/kubevirt/pkg/virt-handler/device-manager [build failed]
+FAIL
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

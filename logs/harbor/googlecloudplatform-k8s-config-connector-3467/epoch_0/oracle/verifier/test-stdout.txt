@@ -1,0 +1,24 @@
+patching file pkg/test/resourcefixture/testdata/basic/bigqueryconnection/v1beta1/bigqueryconnectionconnection/cloudspannerconnectionbasic/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerdatabase/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerdatabase/_vcr_cassettes/nontf.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerdatabase/_vcr_cassettes/oauth.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerdatabase/_vcr_cassettes/tf.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-basic/_generated_object_spannerinstance-basic.golden.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-basic/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-basic/update.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-direct-full/_generated_object_spannerinstance-direct-full.golden.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-direct-full/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-direct-full/create.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-direct-full/update.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-full/_generated_object_spannerinstance-full.golden.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-full/_http.log
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance-full/update.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance/_generated_object_spannerinstance.golden.yaml
+patching file pkg/test/resourcefixture/testdata/basic/spanner/v1beta1/spannerinstance/_http.log
+patching file pkg/test/resourcefixture/testdata/externalref/externalwithsubresource/_http.log
+patching file tests/apichecks/testdata/exceptions/missingfields.txt
+=== RUN   TestCRDFieldPresenceInUnstructured
+--- PASS: TestCRDFieldPresenceInUnstructured (3.31s)
+PASS
+ok  	github.com/GoogleCloudPlatform/k8s-config-connector/tests/apichecks	3.454s
+reward=1 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=0

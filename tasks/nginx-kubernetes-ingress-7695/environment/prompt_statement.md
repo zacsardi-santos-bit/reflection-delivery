@@ -1,0 +1,5 @@
+I'm working on the telemetry collector for the NGINX Kubernetes Ingress Controller. Right now, our telemetry reporting doesn't include any information about which configuration settings administrators have actually set in their ConfigMaps. We have two ConfigMaps — one for the main ingress controller configuration and one for the management/licensing configuration — and I'd like to start tracking which recognized configuration keys appear in each one.
+
+The idea is that when we collect telemetry, we look up both ConfigMaps, filter their keys against a known list of recognized settings for each one, and include those filtered key lists in the telemetry payload. Unknown or unrelated keys should be silently ignored — we only want to report the keys we know about. If no recognized keys are present, the list should be absent rather than an empty collection.
+
+The collector configuration should also gain fields to specify where each ConfigMap lives (using a "namespace/name" format), so the collector knows which Kubernetes objects to look up when gathering this data.

@@ -1,0 +1,23 @@
+{
+ "task": "bytecodealliance-wasmtime-9217",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden edits crates/wit-bindgen/src/lib.rs to wrap async closure bodies in a block; test.patch updates 24 expanded/*_async.rs fixtures; F2P='wasmtime-component-macro::expanded expand_wits'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 36,
+  "shallow": true
+ }
+}

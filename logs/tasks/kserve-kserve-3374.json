@@ -1,0 +1,23 @@
+{
+ "task": "kserve-kserve-3374",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden v2_datamodels.py: 'is_pydantic_2 = pydantic.__version__.startswith(\"2.\")'; test asserts resp.content == b'{\"name\":\"TestModel\",\"ready\":true}' when is_pydantic_2 else stringified"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 24,
+  "shallow": true
+ }
+}

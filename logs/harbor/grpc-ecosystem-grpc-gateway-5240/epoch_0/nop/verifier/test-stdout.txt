@@ -1,0 +1,8 @@
+patching file examples/internal/integration/integration_test.go
+# github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/integration_test [github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/integration.test]
+examples/internal/integration/integration_test.go:2741:22: undefined: server.NoBodyPostServer_RetrieveContextRPC
+examples/internal/integration/integration_test.go:2770:22: undefined: server.NoBodyPostServer_RetrieveContextStream
+{"Time":"2026-06-29T15:18:47.605305949Z","Action":"start","Package":"github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/integration"}
+{"Time":"2026-06-29T15:18:47.605377055Z","Action":"output","Package":"github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/integration","Output":"FAIL\tgithub.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/integration [build failed]\n"}
+{"Time":"2026-06-29T15:18:47.605408522Z","Action":"fail","Package":"github.com/grpc-ecosystem/grpc-gateway/v2/examples/internal/integration","Elapsed":0}
+reward=0 graded=48 found=0 failed=0 parsed=1 framework=go exit_code=1

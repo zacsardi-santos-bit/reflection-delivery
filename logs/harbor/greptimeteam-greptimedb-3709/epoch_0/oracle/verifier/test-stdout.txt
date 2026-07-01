@@ -1,0 +1,345 @@
+patching file src/mito2/src/engine/catchup_test.rs
+patching file src/mito2/src/engine/open_test.rs
+patching file src/mito2/src/engine/set_readonly_test.rs
+patching file src/mito2/src/manifest/tests/checkpoint.rs
+   Compiling common-error v0.7.2 (/workspace/repo/src/common/error)
+   Compiling common-telemetry v0.7.2 (/workspace/repo/src/common/telemetry)
+   Compiling common-base v0.7.2 (/workspace/repo/src/common/base)
+   Compiling common-decimal v0.7.2 (/workspace/repo/src/common/decimal)
+   Compiling common-time v0.7.2 (/workspace/repo/src/common/time)
+   Compiling common-catalog v0.7.2 (/workspace/repo/src/common/catalog)
+   Compiling puffin v0.7.2 (/workspace/repo/src/puffin)
+   Compiling common-config v0.7.2 (/workspace/repo/src/common/config)
+   Compiling datatypes v0.7.2 (/workspace/repo/src/datatypes)
+   Compiling common-runtime v0.7.2 (/workspace/repo/src/common/runtime)
+   Compiling object-store v0.7.2 (/workspace/repo/src/object-store)
+   Compiling common-wal v0.7.2 (/workspace/repo/src/common/wal)
+   Compiling index v0.7.2 (/workspace/repo/src/index)
+   Compiling common-procedure v0.7.2 (/workspace/repo/src/common/procedure)
+   Compiling common-procedure-test v0.7.2 (/workspace/repo/src/common/procedure-test)
+   Compiling common-recordbatch v0.7.2 (/workspace/repo/src/common/recordbatch)
+   Compiling api v0.7.2 (/workspace/repo/src/api)
+   Compiling common-query v0.7.2 (/workspace/repo/src/common/query)
+   Compiling common-datasource v0.7.2 (/workspace/repo/src/common/datasource)
+   Compiling common-grpc v0.7.2 (/workspace/repo/src/common/grpc)
+   Compiling store-api v0.7.2 (/workspace/repo/src/store-api)
+   Compiling table v0.7.2 (/workspace/repo/src/table)
+   Compiling common-grpc-expr v0.7.2 (/workspace/repo/src/common/grpc-expr)
+   Compiling mito2 v0.7.2 (/workspace/repo/src/mito2)
+   Compiling common-meta v0.7.2 (/workspace/repo/src/common/meta)
+   Compiling client v0.7.2 (/workspace/repo/src/client)
+   Compiling log-store v0.7.2 (/workspace/repo/src/log-store)
+   Compiling common-test-util v0.7.2 (/workspace/repo/src/common/test-util)
+    Finished test [unoptimized + debuginfo] target(s) in 1m 10s
+------------
+ Nextest run ID d7ad774e-32e6-4c45-98d6-1b7d7c657e72 with nextest profile: default
+    Starting 306 tests across 1 binary
+        PASS [   0.038s] mito2 cache::file_cache::tests::test_cache_file_path
+        PASS [   0.044s] mito2 cache::cache_size::tests::test_parquet_meta_size
+        PASS [   0.044s] mito2 cache::tests::test_page_cache
+        PASS [   0.049s] mito2 cache::file_cache::tests::test_parse_file_name
+        PASS [   0.065s] mito2 cache::file_cache::tests::test_file_cache_file_removed
+        PASS [   0.065s] mito2 cache::file_cache::tests::test_file_cache_read_ranges
+        PASS [   0.060s] mito2 cache::tests::test_parquet_meta_cache
+        PASS [   0.062s] mito2 cache::tests::test_repeated_vector_cache
+        PASS [   0.069s] mito2 cache::tests::test_disable_cache
+        PASS [   0.078s] mito2 cache::file_cache::tests::test_file_cache_basic
+        PASS [   0.062s] mito2 compaction::twcs::tests::test_build_twcs_output
+        PASS [   0.050s] mito2 compaction::twcs::tests::test_time_bucket
+        PASS [   0.069s] mito2 compaction::twcs::tests::test_assign_to_windows
+        PASS [   0.059s] mito2 compaction::twcs::tests::test_infer_time_buckets
+        PASS [   0.071s] mito2 compaction::twcs::tests::test_get_latest_window_in_seconds
+        PASS [   0.085s] mito2 cache::write_cache::tests::test_read_metadata_from_write_cache
+        PASS [   0.050s] mito2 config::tests::test_deserialize_config
+        PASS [   0.106s] mito2 cache::file_cache::tests::test_file_cache_recover
+        PASS [   0.092s] mito2 compaction::tests::test_schedule_empty
+        PASS [   0.105s] mito2 cache::write_cache::tests::test_write_and_upload_sst
+        PASS [   0.105s] mito2 compaction::tests::test_schedule_on_finished
+        PASS [   0.112s] mito2 engine::basic_test::test_absent_and_invalid_columns
+        PASS [   0.114s] mito2 engine::basic_test::test_delete_not_null_fields
+        PASS [   0.113s] mito2 engine::basic_test::test_different_order
+        PASS [   0.112s] mito2 engine::basic_test::test_different_order_and_type
+        PASS [   0.132s] mito2 engine::append_mode_test::test_append_mode_write_query
+        PASS [   0.080s] mito2 engine::catchup_test::test_catchup_not_exist
+        PASS [   0.107s] mito2 engine::basic_test::test_put_overwrite
+        PASS [   0.119s] mito2 engine::basic_test::test_engine_new_stop
+        PASS [   0.115s] mito2 engine::basic_test::test_put_delete
+        PASS [   0.147s] mito2 engine::alter_test::test_alter_region_retry
+        PASS [   0.113s] mito2 engine::basic_test::test_region_usage
+        PASS [   0.101s] mito2 engine::basic_test::test_write_to_region
+        PASS [   0.168s] mito2 engine::alter_test::test_alter_region
+        PASS [   0.119s] mito2 engine::basic_test::test_write_query_region
+        PASS [   0.163s] mito2 engine::basic_test::test_region_replay
+        PASS [   0.207s] mito2 engine::alter_test::test_put_after_alter
+        PASS [   0.183s] mito2 engine::basic_test::test_engine_with_write_cache
+        PASS [   0.229s] mito2 engine::append_mode_test::test_append_mode_compaction
+        PASS [   0.103s] mito2 engine::close_test::test_engine_close_region
+        PASS [   0.145s] mito2 engine::catchup_test::test_catchup_with_incorrect_last_entry_id
+        PASS [   0.115s] mito2 engine::create_test::test_engine_create_with_custom_store
+        PASS [   0.124s] mito2 engine::create_test::test_engine_create_existing_region
+        PASS [   0.138s] mito2 engine::create_test::test_engine_create_close_create_region
+        PASS [   0.166s] mito2 engine::catchup_test::test_catchup_with_last_entry_id
+        PASS [   0.129s] mito2 engine::create_test::test_engine_create_with_different_schema
+        PASS [   0.157s] mito2 engine::catchup_test::test_catchup_without_last_entry_id
+        PASS [   0.147s] mito2 engine::create_test::test_engine_create_new_region
+        PASS [   0.140s] mito2 engine::create_test::test_engine_create_with_different_primary_key
+        PASS [   0.146s] mito2 engine::create_test::test_engine_create_with_different_id
+        PASS [   0.104s] mito2 engine::create_test::test_engine_create_with_options
+        PASS [   0.199s] mito2 engine::compaction_test::test_readonly_during_compaction
+        PASS [   0.214s] mito2 engine::compaction_test::test_compaction_region
+        PASS [   0.159s] mito2 engine::create_test::test_engine_create_with_memtable_opts
+        PASS [   0.089s] mito2 engine::flush_test::test_flush_empty
+        PASS [   0.251s] mito2 engine::catchup_test::test_catchup_with_manifest_update
+        PASS [   0.098s] mito2 engine::open_test::test_engine_open_empty
+        PASS [   0.125s] mito2 engine::flush_test::test_flush_engine
+        PASS [   0.102s] mito2 engine::open_test::test_engine_open_existing
+        PASS [   0.097s] mito2 engine::open_test::test_engine_region_open_with_custom_store
+        PASS [   0.102s] mito2 engine::open_test::test_engine_open_readonly
+        PASS [   0.112s] mito2 engine::flush_test::test_manual_flush
+        PASS [   0.171s] mito2 engine::filter_deleted_test::test_scan_without_filtering_deleted
+        PASS [   0.152s] mito2 engine::flush_test::test_auto_flush_engine
+        PASS [   0.137s] mito2 engine::flush_test::test_flush_reopen_region
+        PASS [   0.134s] mito2 engine::flush_test::test_write_stall
+        PASS [   0.129s] mito2 engine::open_test::test_engine_region_open_with_options
+        PASS [   0.241s] mito2 engine::drop_test::test_engine_drop_region
+        PASS [   0.119s] mito2 engine::open_test::test_engine_reopen_region
+        PASS [   0.105s] mito2 engine::projection_test::test_scan_projection
+        PASS [   0.052s] mito2 engine::tests::test_is_valid_region_edit
+        PASS [   0.248s] mito2 engine::drop_test::test_engine_drop_region_for_custom_store
+        PASS [   0.096s] mito2 engine::set_readonly_test::test_set_readonly_gracefully_not_exist
+        PASS [   0.044s] mito2 flush::tests::test_get_mutable_limit
+        PASS [   0.047s] mito2 flush::tests::test_over_mutable_limit
+        PASS [   0.052s] mito2 flush::tests::test_over_global
+        PASS [   0.112s] mito2 engine::set_readonly_test::test_set_readonly_gracefully
+        PASS [   0.128s] mito2 engine::prune_test::test_prune_memtable_complex_expr
+        PASS [   0.169s] mito2 engine::open_test::test_open_region_skip_wal_replay
+        PASS [   0.128s] mito2 engine::prune_test::test_prune_tag
+        PASS [   0.107s] mito2 engine::truncate_test::test_engine_put_data_after_truncate
+        PASS [   0.090s] mito2 engine::truncate_test::test_engine_truncate_region_basic
+        PASS [   0.118s] mito2 engine::truncate_test::test_engine_truncate_after_flush
+        PASS [   0.156s] mito2 engine::prune_test::test_prune_memtable
+        PASS [   0.064s] mito2 flush::tests::test_schedule_empty
+        PASS [   0.045s] mito2 manifest::action::tests::test_encode_decode_action_list
+        PASS [   0.050s] mito2 manifest::action::tests::test_encode_decode_region_checkpoint
+        PASS [   0.160s] mito2 engine::prune_test::test_prune_tag_and_field
+        PASS [   0.055s] mito2 manifest::action::tests::test_region_manifest_builder
+        PASS [   0.174s] mito2 engine::prune_test::test_read_parquet_stats
+        PASS [   0.050s] mito2 manifest::storage::tests::test_compress_file_path_generation
+        PASS [   0.129s] mito2 engine::truncate_test::test_engine_truncate_reopen
+        PASS [   0.067s] mito2 manifest::manager::test::create_manifest_manager
+        PASS [   0.066s] mito2 manifest::manager::test::open_manifest_manager
+        PASS [   0.077s] mito2 manifest::action::tests::test_region_manifest_compatibility
+        PASS [   0.059s] mito2 manifest::storage::tests::test_file_version
+        PASS [   0.080s] mito2 manifest::manager::test::region_change_add_column
+        PASS [   0.101s] mito2 manifest::manager::test::test_manifest_size
+        PASS [   0.046s] mito2 memtable::key_values::tests::test_empty_key_values
+        PASS [   0.206s] mito2 engine::truncate_test::test_engine_truncate_during_flush
+        PASS [   0.043s] mito2 memtable::key_values::tests::test_sparse_field
+        PASS [   0.050s] mito2 memtable::key_values::tests::test_no_field
+        PASS [   0.051s] mito2 memtable::key_values::tests::test_no_tag
+        PASS [   0.112s] mito2 manifest::storage::tests::test_compress_backward_compatible
+        PASS [   0.071s] mito2 manifest::tests::checkpoint::manager_without_checkpoint
+        PASS [   0.047s] mito2 memtable::key_values::tests::test_sparse_tag_field
+        PASS [   0.047s] mito2 memtable::key_values::tests::test_tag_field
+        PASS [   0.110s] mito2 manifest::storage::tests::test_compressed_manifest_files_size
+        PASS [   0.102s] mito2 manifest::storage::tests::test_uncompressed_manifest_files_size
+        PASS [   0.120s] mito2 manifest::storage::tests::test_manifest_log_store_compress
+        PASS [   0.120s] mito2 manifest::storage::tests::test_manifest_log_store_uncompress
+        PASS [   0.044s] mito2 memtable::key_values::tests::test_ts_only
+        PASS [   0.049s] mito2 memtable::partition_tree::data::tests::test_data_buffer_dedup
+        PASS [   0.068s] mito2 memtable::partition_tree::data::tests::test_iter_data_buffer
+        PASS [   0.071s] mito2 memtable::partition_tree::data::tests::test_encode_data_buffer
+        PASS [   0.060s] mito2 memtable::partition_tree::data::tests::test_search_next_pk_range
+        PASS [   0.072s] mito2 memtable::partition_tree::data::tests::test_iter_empty_data_buffer
+        PASS [   0.062s] mito2 memtable::partition_tree::dict::tests::test_builder_finish
+        PASS [   0.070s] mito2 memtable::partition_tree::data::tests::test_lazy_mutable_vector_builder
+        PASS [   0.079s] mito2 memtable::partition_tree::data::tests::test_iter_data_part
+        PASS [   0.086s] mito2 memtable::partition_tree::data::tests::test_data_buffer_freeze
+        PASS [   0.066s] mito2 memtable::partition_tree::dict::tests::test_dict_memory_size
+        PASS [   0.060s] mito2 memtable::partition_tree::dict::tests::test_write_scan_builder
+        PASS [   0.061s] mito2 memtable::partition_tree::merger::tests::test_merger
+        PASS [   0.065s] mito2 memtable::partition_tree::merger::tests::test_merger2
+        PASS [   0.090s] mito2 memtable::partition_tree::dedup::tests::test_data_parts_reader_dedup
+        PASS [   0.069s] mito2 memtable::partition_tree::merger::tests::test_merger_overlapping
+        PASS [   0.173s] mito2 manifest::tests::checkpoint::test_corrupted_data_causing_checksum_error
+        PASS [   0.049s] mito2 memtable::partition_tree::merger::tests::test_merger_overlapping_3
+        PASS [   0.198s] mito2 manifest::tests::checkpoint::manager_with_checkpoint_distance_1
+        PASS [   0.069s] mito2 memtable::partition_tree::merger::tests::test_merger_overlapping_2
+        PASS [   0.063s] mito2 memtable::partition_tree::shard_builder::tests::test_write_read_shard_builder
+        PASS [   0.073s] mito2 memtable::partition_tree::merger::tests::test_merger_parts_and_buffer
+        PASS [   0.072s] mito2 memtable::partition_tree::shard::tests::test_write_read_shard
+        PASS [   0.069s] mito2 memtable::partition_tree::tests::test_deserialize_config
+        PASS [   0.086s] mito2 memtable::partition_tree::shard::tests::test_shard_freeze
+        PASS [   0.078s] mito2 memtable::partition_tree::tests::test_memtable_projection
+        PASS [   0.453s] mito2 engine::parallel_test::test_parallel_scan
+        PASS [   0.068s] mito2 memtable::tests::test_alloc_tracker_with_manager
+        PASS [   0.097s] mito2 memtable::partition_tree::tests::test_memtable_sorted_input
+        PASS [   0.110s] mito2 memtable::partition_tree::shard_builder::tests::test_write_shard_builder
+        PASS [   0.074s] mito2 memtable::tests::test_alloc_tracker_without_manager
+        PASS [   0.078s] mito2 memtable::tests::test_alloc_tracker_without_done_allocating
+        PASS [   0.058s] mito2 memtable::time_partition::tests::test_write_multi_parts
+        PASS [   0.073s] mito2 memtable::tests::test_deserialize_memtable_config
+        PASS [   0.073s] mito2 memtable::time_partition::tests::test_no_duration
+        PASS [   0.112s] mito2 memtable::partition_tree::tests::test_memtable_unsorted_input
+        PASS [   0.054s] mito2 memtable::time_series::tests::test_series
+        PASS [   0.046s] mito2 memtable::time_series::tests::test_values_sort
+        PASS [   0.056s] mito2 memtable::time_series::tests::test_series_with_nulls
+        PASS [   0.093s] mito2 memtable::time_partition::tests::test_write_single_part
+        PASS [   0.089s] mito2 memtable::time_series::tests::test_memtable
+        PASS [   0.052s] mito2 read::compat::tests::test_compat_reader
+        PASS [   0.050s] mito2 read::compat::tests::test_different_pk
+        PASS [   0.080s] mito2 memtable::time_series::tests::test_series_set_concurrency
+        PASS [   0.054s] mito2 read::compat::tests::test_compat_reader_projection
+        PASS [   0.059s] mito2 read::compat::tests::test_compat_reader_different_order
+        PASS [   0.099s] mito2 memtable::time_series::tests::test_memtable_projection
+        PASS [   0.055s] mito2 read::compat::tests::test_invalid_pk_len
+        PASS [   0.050s] mito2 read::compat::tests::test_same_pk
+        PASS [   0.064s] mito2 read::compat::tests::test_same_fields
+        PASS [   0.058s] mito2 read::merge::tests::test_merge_deleted
+        PASS [   0.061s] mito2 read::merge::tests::test_merge_keep_duplicate
+        PASS [   0.051s] mito2 read::merge::tests::test_merge_many_duplicates
+        PASS [   0.057s] mito2 read::merge::tests::test_merge_large_range
+        PASS [   0.052s] mito2 read::merge::tests::test_merge_non_overlapping
+        PASS [   0.057s] mito2 read::merge::tests::test_merge_overlapping
+        PASS [   0.053s] mito2 read::merge::tests::test_merge_top_node_empty
+        PASS [   0.064s] mito2 read::merge::tests::test_merge_reader_empty
+        PASS [   0.076s] mito2 read::merge::tests::test_merge_next_node_empty
+        PASS [   0.064s] mito2 read::projection::tests::test_projection_mapper_with_projection
+        PASS [   0.070s] mito2 read::merge::tests::test_merge_reheap_hot
+        PASS [   0.071s] mito2 read::projection::tests::test_projection_mapper_all
+        PASS [   0.060s] mito2 read::tests::test_concat_different_fields
+        PASS [   0.070s] mito2 read::tests::test_concat_different
+        PASS [   0.058s] mito2 read::tests::test_concat_multiple
+        PASS [   0.063s] mito2 read::tests::test_concat_empty
+        PASS [   0.060s] mito2 read::tests::test_concat_one
+        PASS [   0.058s] mito2 read::tests::test_empty_batch
+        PASS [   0.052s] mito2 read::tests::test_filter_deleted
+        PASS [   0.259s] mito2 memtable::partition_tree::tests::test_memtable_filter
+        PASS [   0.065s] mito2 read::tests::test_filter
+        PASS [   0.046s] mito2 read::tests::test_first_last_multiple
+        PASS [   0.054s] mito2 read::tests::test_filter_deleted_empty
+        PASS [   0.044s] mito2 read::tests::test_first_last_one
+        PASS [   0.049s] mito2 read::tests::test_slice
+        PASS [   0.050s] mito2 read::tests::test_sort_and_dedup
+        PASS [   0.052s] mito2 read::tests::test_timestamps_native
+        PASS [   0.053s] mito2 region::options::tests::test_empty_region_options
+        PASS [   0.054s] mito2 region::options::tests::test_with_any_wal_options
+        PASS [   0.056s] mito2 region::options::tests::test_with_compaction_type
+        PASS [   0.066s] mito2 region::options::tests::test_unknown_memtable_type
+        PASS [   0.056s] mito2 region::options::tests::test_with_index
+        PASS [   0.064s] mito2 region::options::tests::test_with_storage
+        PASS [   0.086s] mito2 region::options::tests::test_with_all
+        PASS [   0.072s] mito2 region::options::tests::test_with_ttl
+        PASS [   0.070s] mito2 region::options::tests::test_without_compaction_type
+        PASS [   0.078s] mito2 region::options::tests::test_with_memtable
+        PASS [   0.053s] mito2 request::tests::test_fill_missing_columns
+        PASS [   0.073s] mito2 region::tests::test_region_state_lock_free
+        PASS [   0.060s] mito2 request::tests::test_column_nullable
+        PASS [   0.073s] mito2 request::tests::test_column_default
+        PASS [   0.076s] mito2 request::tests::test_check_schema
+        PASS [   0.067s] mito2 request::tests::test_column_type
+        PASS [   0.060s] mito2 request::tests::test_fill_missing_for_delete
+        PASS [   0.050s] mito2 request::tests::test_missing_and_invalid
+        PASS [   0.051s] mito2 request::tests::test_no_default
+        PASS [   0.049s] mito2 request::tests::test_semantic_type
+        PASS [   0.059s] mito2 request::tests::test_fill_missing_without_default_in_delete
+        PASS [   0.043s] mito2 request::tests::test_unknown_column
+        PASS [   0.049s] mito2 request::tests::test_valid_write_request
+        PASS [   0.047s] mito2 request::tests::test_write_request_column_num
+        PASS [   0.054s] mito2 request::tests::test_write_request_duplicate_column
+        PASS [   0.055s] mito2 row_converter::tests::test_encode_multiple_rows
+        PASS [   0.055s] mito2 row_converter::tests::test_encode_null
+        PASS [   0.056s] mito2 row_converter::tests::test_memcmp
+        PASS [   0.056s] mito2 row_converter::tests::test_memcmp_binary
+        PASS [   0.561s] mito2 manifest::tests::checkpoint::checkpoint_with_different_compression_types
+        PASS [   0.058s] mito2 row_converter::tests::test_memcmp_string
+        PASS [   0.388s] mito2 memtable::partition_tree::tests::test_write_iter_multi_keys
+        PASS [   0.068s] mito2 row_converter::tests::test_memcmp_duration
+        PASS [   0.067s] mito2 row_converter::tests::test_memcmp_timestamp
+        PASS [   0.063s] mito2 sst::file::tests::test_deserialize_file_meta
+        PASS [   0.061s] mito2 sst::file::tests::test_deserialize_from_string
+        PASS [   0.057s] mito2 sst::file::tests::test_file_id_as_parquet
+        PASS [   0.062s] mito2 sst::file::tests::test_file_id
+        PASS [   0.090s] mito2 schedule::scheduler::tests::test_scheduler_continuous_stop
+        PASS [   0.055s] mito2 sst::file::tests::test_file_id_serialization
+        PASS [   0.093s] mito2 schedule::scheduler::tests::test_sum_consumer_num
+        PASS [   0.057s] mito2 sst::index::applier::builder::between::tests::test_collect_between_basic
+        PASS [   0.052s] mito2 sst::index::applier::builder::between::tests::test_collect_between_negated
+        PASS [   0.060s] mito2 sst::index::applier::builder::between::tests::test_collect_between_field_column
+        PASS [   0.112s] mito2 schedule::scheduler::tests::test_scheduler_many
+        PASS [   0.062s] mito2 sst::index::applier::builder::between::tests::test_collect_between_nonexistent_column
+        PASS [   0.054s] mito2 sst::index::applier::builder::comparison::tests::test_collect_comparison_field_column
+        PASS [   0.066s] mito2 sst::index::applier::builder::comparison::tests::test_collect_comparison_basic
+        PASS [   0.123s] mito2 schedule::scheduler::tests::test_sum_cap
+        PASS [   0.071s] mito2 sst::index::applier::builder::between::tests::test_collect_between_type_mismatch
+        PASS [   0.053s] mito2 sst::index::applier::builder::comparison::tests::test_collect_comparison_type_mismatch
+        PASS [   0.063s] mito2 sst::index::applier::builder::comparison::tests::test_collect_comparison_nonexistent_column
+        PASS [   0.099s] mito2 sst::file_purger::tests::test_file_purge
+        PASS [   0.056s] mito2 sst::index::applier::builder::eq_list::tests::test_collect_eq_basic
+        PASS [   0.105s] mito2 sst::file_purger::tests::test_file_purge_with_index
+        PASS [   0.058s] mito2 sst::index::applier::builder::eq_list::tests::test_collect_eq_type_mismatch
+        PASS [   0.064s] mito2 sst::index::applier::builder::eq_list::tests::test_collect_eq_field_column
+        PASS [   0.066s] mito2 sst::index::applier::builder::eq_list::tests::test_collect_eq_nonexistent_column
+        PASS [   0.055s] mito2 sst::index::applier::builder::eq_list::tests::test_collect_or_eq_list_invalid_op
+        PASS [   0.061s] mito2 sst::index::applier::builder::eq_list::tests::test_collect_or_eq_list_basic
+        PASS [   0.059s] mito2 sst::index::applier::builder::eq_list::tests::test_collect_or_eq_list_multiple_columns
+        PASS [   0.059s] mito2 sst::index::applier::builder::in_list::tests::test_collect_in_list_basic
+        PASS [   0.059s] mito2 sst::index::applier::builder::in_list::tests::test_collect_in_list_field_column
+        PASS [   0.059s] mito2 sst::index::applier::builder::in_list::tests::test_collect_in_list_nonexistent_column
+        PASS [   0.067s] mito2 sst::index::applier::builder::in_list::tests::test_collect_in_list_negated
+        PASS [   0.055s] mito2 sst::index::applier::builder::regex_match::tests::test_regex_match_basic
+        PASS [   0.052s] mito2 sst::index::applier::builder::regex_match::tests::test_regex_match_type_mismatch
+        PASS [   0.060s] mito2 sst::index::applier::builder::in_list::tests::test_collect_in_list_type_mismatch
+        PASS [   0.057s] mito2 sst::index::applier::builder::regex_match::tests::test_regex_match_field_column
+        PASS [   0.056s] mito2 sst::index::applier::builder::regex_match::tests::test_regex_match_type_nonexist_column
+        PASS [   0.056s] mito2 sst::index::applier::builder::tests::test_collect_and_basic
+        PASS [   0.047s] mito2 sst::index::codec::tests::test_encode_value_basic
+        PASS [   0.058s] mito2 sst::index::codec::tests::test_decode_primary_key_basic
+        PASS [   0.059s] mito2 sst::index::codec::tests::test_encode_null_value
+        PASS [   0.069s] mito2 sst::index::applier::tests::test_index_applier_apply_basic
+        PASS [   0.053s] mito2 sst::index::codec::tests::test_encode_value_type_mismatch
+        PASS [   0.056s] mito2 sst::index::creator::statistics::tests::test_statistics_basic
+        PASS [   0.075s] mito2 sst::index::applier::tests::test_index_applier_apply_invalid_blob_type
+        PASS [   0.065s] mito2 sst::index::creator::tests::test_create_and_query_comparison
+        PASS [   0.064s] mito2 sst::index::creator::tests::test_create_and_query_get_key
+        PASS [   0.056s] mito2 sst::index::store::tests::test_instrumented_store_read_write
+        PASS [   0.081s] mito2 sst::index::creator::temp_provider::tests::test_temp_file_provider_basic
+        PASS [   0.070s] mito2 sst::index::intermediate::tests::test_manager
+        PASS [   0.079s] mito2 sst::index::creator::tests::test_create_and_query_range
+        PASS [   0.057s] mito2 sst::index::tests::test_build_indexer_zero_row_group
+        PASS [   0.071s] mito2 sst::index::tests::test_build_indexer_basic
+        PASS [   0.066s] mito2 sst::index::tests::test_build_indexer_no_tag
+        PASS [   0.071s] mito2 sst::index::tests::test_build_indexer_disable_create
+        PASS [   0.055s] mito2 sst::location::tests::test_sst_file_path
+        PASS [   0.061s] mito2 sst::location::tests::test_index_file_path
+        PASS [   0.055s] mito2 sst::parquet::format::tests::test_convert_empty_record_batch
+        PASS [   0.061s] mito2 sst::parquet::format::tests::test_convert_batch
+        PASS [   0.059s] mito2 sst::parquet::format::tests::test_convert_record_batch
+        PASS [   0.039s] mito2 sst::parquet::format::tests::test_primary_key_offsets_one_series
+        PASS [   0.041s] mito2 sst::parquet::format::tests::test_projection_indices
+        PASS [   0.057s] mito2 sst::parquet::format::tests::test_new_primary_key_array
+        PASS [   0.068s] mito2 sst::parquet::format::tests::test_empty_primary_key_offsets
+        PASS [   0.055s] mito2 sst::parquet::format::tests::test_primary_key_offsets_multi_series
+        PASS [   0.050s] mito2 sst::parquet::format::tests::test_to_sst_arrow_schema
+        PASS [   0.055s] mito2 sst::parquet::row_selection::tests::test_adjacent_ranges
+        PASS [   0.051s] mito2 sst::parquet::row_selection::tests::test_single_contiguous_range
+        PASS [   0.055s] mito2 sst::parquet::row_selection::tests::test_large_gap_between_ranges
+        PASS [   0.056s] mito2 sst::parquet::row_selection::tests::test_non_contiguous_ranges
+        PASS [   0.137s] mito2 sst::index::intermediate::tests::test_intermediate_location
+        PASS [   0.063s] mito2 sst::parquet::row_selection::tests::test_empty_range
+        PASS [   0.049s] mito2 sst::version::tests::test_add_files
+        PASS [   0.155s] mito2 sst::index::creator::tests::test_create_and_query_regex
+        PASS [   0.033s] mito2 worker::tests::test_region_id_to_index
+        PASS [   0.073s] mito2 sst::parquet::tests::test_read_empty_batch
+        PASS [   0.088s] mito2 sst::parquet::tests::test_parquet_metadata_eq
+        PASS [   0.063s] mito2 wal::tests::test_write_wal
+        PASS [   0.071s] mito2 wal::tests::test_obsolete_wal
+        PASS [   0.085s] mito2 sst::parquet::tests::test_read_with_field_filter
+        PASS [   0.069s] mito2 wal::tests::test_scan_wal
+        PASS [   0.084s] mito2 sst::parquet::tests::test_read_with_tag_filter
+        PASS [   0.080s] mito2 sst::parquet::tests::test_write_read
+        PASS [   0.097s] mito2 sst::parquet::tests::test_read_with_cache
+        PASS [   0.059s] mito2 worker::tests::test_worker_group_start_stop
+------------
+     Summary [   1.511s] 306 tests run: 306 passed, 0 skipped
+reward=1 graded=306 found=306 failed=0 parsed=306 framework=cargo exit_code=0

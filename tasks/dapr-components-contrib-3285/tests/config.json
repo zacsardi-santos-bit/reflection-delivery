@@ -1,0 +1,45 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./state/aws/dynamodb -count=1",
+  "test_files": [
+    "state/aws/dynamodb/dynamodb_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestInit/Init_with_bad_table_name_or_permissions",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestInit"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestInit/NewDynamoDBStateStore_Default_Partition_Key",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestInit/Init_with_valid_metadata",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestInit/Init_with_missing_table",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestInit/Init_with_valid_table",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestInit/Init_with_partition_key",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestGet/Successfully_retrieve_item",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestGet/Successfully_retrieve_item_(with_unexpired_ttl)",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestGet/Successfully_retrieve_item_(with_expired_ttl)",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestGet/Unsuccessfully_get_item",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestGet/Unsuccessfully_with_empty_response",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestGet/Unsuccessfully_with_no_required_key",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestGet",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Successfully_set_item",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Successfully_set_item_with_matching_etag",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Unsuccessfully_set_item_with_mismatched_etag",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Successfully_set_item_with_first-write-concurrency",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Unsuccessfully_set_item_with_first-write-concurrency",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Successfully_set_item_with_ttl_=_-1",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Successfully_set_item_with_'correct'_ttl",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Unsuccessfully_set_item",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Successfully_set_item_with_correct_ttl_but_without_component_metadata",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet/Unsuccessfully_set_item_with_ttl_(invalid_value)",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestSet",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestDelete/Successfully_delete_item",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestDelete/Successfully_delete_item_with_matching_etag",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestDelete/Unsuccessfully_delete_item_with_mismatched_etag",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestDelete/Unsuccessfully_delete_item",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestDelete",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestMultiTx/Successfully_Multiple_Transaction_Operations",
+    "github.com/dapr/components-contrib/state/aws/dynamodb::TestMultiTx"
+  ]
+}

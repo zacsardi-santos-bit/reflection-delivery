@@ -1,0 +1,434 @@
+patching file tests/langchain/test_langchain_autolog.py
+patching file tests/store/artifact/test_optimized_s3_artifact_repo.py
+patching file tests/tracking/fluent/test_fluent_autolog.py
+patching file tests/tracking/test_client.py
+patching file tests/transformers/test_transformers_model_export.py
+patching file tests/transformers/test_transformers_prompt_templating.py
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: cov-7.1.0, timeout-2.4.0
+timeout: 1200.0s
+timeout method: signal
+timeout func_only: False
+[1mcollecting ... [0mcollected 15 items
+
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_hits_cache [32mPASSED[0m[33m [  6%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[0-None] [31mFAILED[0m[31m [ 13%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[1-False] [31mFAILED[0m[31m [ 20%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[true-False] [31mFAILED[0m[31m [ 26%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[false-None] [31mFAILED[0m[31m [ 33%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly[True] [32mPASSED[0m[31m [ 40%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly[False] [32mPASSED[0m[31m [ 46%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly_with_non_throwing_response [31mFAILED[0m[31m [ 53%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_s3_client_config_set_correctly [32mPASSED[0m[31m [ 60%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_s3_creds_passed_to_client [31mFAILED[0m[31m [ 66%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_log_artifacts_in_parallel_when_necessary [32mPASSED[0m[31m [ 73%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[None-False] [32mPASSED[0m[31m [ 80%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[100-False] [32mPASSED[0m[31m [ 86%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[524287999-False] [32mPASSED[0m[31m [ 93%][0m
+tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[524288000-True] [32mPASSED[0m[31m [100%][0m
+
+=================================== FAILURES ===================================
+[31m[1m____________ test_get_s3_client_verify_param_set_correctly[0-None] _____________[0m
+
+s3_artifact_root = 's3://mock-bucket', ignore_tls_env = '0', verify = None
+monkeypatch = <tests.conftest.ExtendedMonkeyPatch object at 0x2af39aab6d90>
+
+    @pytest.mark.parametrize(
+        ("ignore_tls_env", "verify"), [("0", None), ("1", False), ("true", False), ("false", None)]
+    )
+    def test_get_s3_client_verify_param_set_correctly(
+        s3_artifact_root, ignore_tls_env, verify, monkeypatch
+    ):
+        monkeypatch.setenv("MLFLOW_S3_IGNORE_TLS", ignore_tls_env)
+        with mock.patch("boto3.client") as mock_get_s3_client:
+            s3_client_mock = mock.Mock()
+            s3_client_mock.head_bucket.return_value = {
+                "ResponseMetadata": {
+                    "HTTPHeaders": {"x-amz-bucket-region": DEFAULT_REGION_NAME},
+                }
+            }
+            mock_get_s3_client.return_value = s3_client_mock
+>           repo = OptimizedS3ArtifactRepository(posixpath.join(s3_artifact_root, "some/path"))
+
+ignore_tls_env = '0'
+mock_get_s3_client = <MagicMock name='client' id='47225777995664'>
+monkeypatch = <tests.conftest.ExtendedMonkeyPatch object at 0x2af39aab6d90>
+s3_artifact_root = 's3://mock-bucket'
+s3_client_mock = <Mock name='client()' id='47225765749328'>
+verify     = None
+
+[1m[31mtests/store/artifact/test_optimized_s3_artifact_repo.py[0m:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:55: in __init__
+    self._region_name = self._get_region_name()
+        __class__  = <class 'mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository'>
+        access_key_id = None
+        addressing_style = 'path'
+        artifact_uri = 's3://mock-bucket/some/path'
+        s3_endpoint_url = None
+        secret_access_key = None
+        self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af3981337d0>
+        session_token = None
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af3981337d0>
+
+    def _get_region_name(self):
+        from botocore.exceptions import ClientError
+    
+        temp_client = _get_s3_client(
+            addressing_style="path",
+            access_key_id=self._access_key_id,
+            secret_access_key=self._secret_access_key,
+            session_token=self._session_token,
+            s3_endpoint_url=self._s3_endpoint_url,
+        )
+        try:
+>           return temp_client.head_bucket(Bucket=self.bucket)["BucketRegion"]
+[1m[31mE           KeyError: 'BucketRegion'[0m
+
+ClientError = <class 'botocore.exceptions.ClientError'>
+self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af3981337d0>
+temp_client = <Mock name='client()' id='47225765749328'>
+
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:68: KeyError
+[31m[1m____________ test_get_s3_client_verify_param_set_correctly[1-False] ____________[0m
+
+s3_artifact_root = 's3://mock-bucket', ignore_tls_env = '1', verify = False
+monkeypatch = <tests.conftest.ExtendedMonkeyPatch object at 0x2af39bb8b3d0>
+
+    @pytest.mark.parametrize(
+        ("ignore_tls_env", "verify"), [("0", None), ("1", False), ("true", False), ("false", None)]
+    )
+    def test_get_s3_client_verify_param_set_correctly(
+        s3_artifact_root, ignore_tls_env, verify, monkeypatch
+    ):
+        monkeypatch.setenv("MLFLOW_S3_IGNORE_TLS", ignore_tls_env)
+        with mock.patch("boto3.client") as mock_get_s3_client:
+            s3_client_mock = mock.Mock()
+            s3_client_mock.head_bucket.return_value = {
+                "ResponseMetadata": {
+                    "HTTPHeaders": {"x-amz-bucket-region": DEFAULT_REGION_NAME},
+                }
+            }
+            mock_get_s3_client.return_value = s3_client_mock
+>           repo = OptimizedS3ArtifactRepository(posixpath.join(s3_artifact_root, "some/path"))
+
+ignore_tls_env = '1'
+mock_get_s3_client = <MagicMock name='client' id='47225762723344'>
+monkeypatch = <tests.conftest.ExtendedMonkeyPatch object at 0x2af39bb8b3d0>
+s3_artifact_root = 's3://mock-bucket'
+s3_client_mock = <Mock name='client()' id='47225762722256'>
+verify     = False
+
+[1m[31mtests/store/artifact/test_optimized_s3_artifact_repo.py[0m:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:55: in __init__
+    self._region_name = self._get_region_name()
+        __class__  = <class 'mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository'>
+        access_key_id = None
+        addressing_style = 'path'
+        artifact_uri = 's3://mock-bucket/some/path'
+        s3_endpoint_url = None
+        secret_access_key = None
+        self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39bba8710>
+        session_token = None
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39bba8710>
+
+    def _get_region_name(self):
+        from botocore.exceptions import ClientError
+    
+        temp_client = _get_s3_client(
+            addressing_style="path",
+            access_key_id=self._access_key_id,
+            secret_access_key=self._secret_access_key,
+            session_token=self._session_token,
+            s3_endpoint_url=self._s3_endpoint_url,
+        )
+        try:
+>           return temp_client.head_bucket(Bucket=self.bucket)["BucketRegion"]
+[1m[31mE           KeyError: 'BucketRegion'[0m
+
+ClientError = <class 'botocore.exceptions.ClientError'>
+self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39bba8710>
+temp_client = <Mock name='client()' id='47225762722256'>
+
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:68: KeyError
+[31m[1m__________ test_get_s3_client_verify_param_set_correctly[true-False] ___________[0m
+
+s3_artifact_root = 's3://mock-bucket', ignore_tls_env = 'true', verify = False
+monkeypatch = <tests.conftest.ExtendedMonkeyPatch object at 0x2af39aca7110>
+
+    @pytest.mark.parametrize(
+        ("ignore_tls_env", "verify"), [("0", None), ("1", False), ("true", False), ("false", None)]
+    )
+    def test_get_s3_client_verify_param_set_correctly(
+        s3_artifact_root, ignore_tls_env, verify, monkeypatch
+    ):
+        monkeypatch.setenv("MLFLOW_S3_IGNORE_TLS", ignore_tls_env)
+        with mock.patch("boto3.client") as mock_get_s3_client:
+            s3_client_mock = mock.Mock()
+            s3_client_mock.head_bucket.return_value = {
+                "ResponseMetadata": {
+                    "HTTPHeaders": {"x-amz-bucket-region": DEFAULT_REGION_NAME},
+                }
+            }
+            mock_get_s3_client.return_value = s3_client_mock
+>           repo = OptimizedS3ArtifactRepository(posixpath.join(s3_artifact_root, "some/path"))
+
+ignore_tls_env = 'true'
+mock_get_s3_client = <MagicMock name='client' id='47225740495760'>
+monkeypatch = <tests.conftest.ExtendedMonkeyPatch object at 0x2af39aca7110>
+s3_artifact_root = 's3://mock-bucket'
+s3_client_mock = <Mock name='client()' id='47225740676816'>
+verify     = False
+
+[1m[31mtests/store/artifact/test_optimized_s3_artifact_repo.py[0m:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:55: in __init__
+    self._region_name = self._get_region_name()
+        __class__  = <class 'mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository'>
+        access_key_id = None
+        addressing_style = 'path'
+        artifact_uri = 's3://mock-bucket/some/path'
+        s3_endpoint_url = None
+        secret_access_key = None
+        self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af3987fb910>
+        session_token = None
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af3987fb910>
+
+    def _get_region_name(self):
+        from botocore.exceptions import ClientError
+    
+        temp_client = _get_s3_client(
+            addressing_style="path",
+            access_key_id=self._access_key_id,
+            secret_access_key=self._secret_access_key,
+            session_token=self._session_token,
+            s3_endpoint_url=self._s3_endpoint_url,
+        )
+        try:
+>           return temp_client.head_bucket(Bucket=self.bucket)["BucketRegion"]
+[1m[31mE           KeyError: 'BucketRegion'[0m
+
+ClientError = <class 'botocore.exceptions.ClientError'>
+self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af3987fb910>
+temp_client = <Mock name='client()' id='47225740676816'>
+
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:68: KeyError
+[31m[1m__________ test_get_s3_client_verify_param_set_correctly[false-None] ___________[0m
+
+s3_artifact_root = 's3://mock-bucket', ignore_tls_env = 'false', verify = None
+monkeypatch = <tests.conftest.ExtendedMonkeyPatch object at 0x2af3997e80d0>
+
+    @pytest.mark.parametrize(
+        ("ignore_tls_env", "verify"), [("0", None), ("1", False), ("true", False), ("false", None)]
+    )
+    def test_get_s3_client_verify_param_set_correctly(
+        s3_artifact_root, ignore_tls_env, verify, monkeypatch
+    ):
+        monkeypatch.setenv("MLFLOW_S3_IGNORE_TLS", ignore_tls_env)
+        with mock.patch("boto3.client") as mock_get_s3_client:
+            s3_client_mock = mock.Mock()
+            s3_client_mock.head_bucket.return_value = {
+                "ResponseMetadata": {
+                    "HTTPHeaders": {"x-amz-bucket-region": DEFAULT_REGION_NAME},
+                }
+            }
+            mock_get_s3_client.return_value = s3_client_mock
+>           repo = OptimizedS3ArtifactRepository(posixpath.join(s3_artifact_root, "some/path"))
+
+ignore_tls_env = 'false'
+mock_get_s3_client = <MagicMock name='client' id='47225789190928'>
+monkeypatch = <tests.conftest.ExtendedMonkeyPatch object at 0x2af3997e80d0>
+s3_artifact_root = 's3://mock-bucket'
+s3_client_mock = <Mock name='client()' id='47225789198800'>
+verify     = None
+
+[1m[31mtests/store/artifact/test_optimized_s3_artifact_repo.py[0m:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:55: in __init__
+    self._region_name = self._get_region_name()
+        __class__  = <class 'mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository'>
+        access_key_id = None
+        addressing_style = 'path'
+        artifact_uri = 's3://mock-bucket/some/path'
+        s3_endpoint_url = None
+        secret_access_key = None
+        self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39c61b910>
+        session_token = None
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39c61b910>
+
+    def _get_region_name(self):
+        from botocore.exceptions import ClientError
+    
+        temp_client = _get_s3_client(
+            addressing_style="path",
+            access_key_id=self._access_key_id,
+            secret_access_key=self._secret_access_key,
+            session_token=self._session_token,
+            s3_endpoint_url=self._s3_endpoint_url,
+        )
+        try:
+>           return temp_client.head_bucket(Bucket=self.bucket)["BucketRegion"]
+[1m[31mE           KeyError: 'BucketRegion'[0m
+
+ClientError = <class 'botocore.exceptions.ClientError'>
+self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39c61b910>
+temp_client = <Mock name='client()' id='47225789198800'>
+
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:68: KeyError
+[31m[1m___ test_get_s3_client_region_name_set_correctly_with_non_throwing_response ____[0m
+
+s3_artifact_root = 's3://mock-bucket'
+
+    def test_get_s3_client_region_name_set_correctly_with_non_throwing_response(s3_artifact_root):
+        region_name = "us_random_region_42"
+        with mock.patch("boto3.client") as mock_get_s3_client:
+            s3_client_mock = mock.Mock()
+            mock_get_s3_client.return_value = s3_client_mock
+            s3_client_mock.head_bucket.return_value = {
+                "ResponseMetadata": {
+                    "HTTPHeaders": {"x-amz-bucket-region": region_name},
+                }
+            }
+>           repo = OptimizedS3ArtifactRepository(posixpath.join(s3_artifact_root, "some/path"))
+
+mock_get_s3_client = <MagicMock name='client' id='47225777242320'>
+region_name = 'us_random_region_42'
+s3_artifact_root = 's3://mock-bucket'
+s3_client_mock = <Mock name='client()' id='47225777254928'>
+
+[1m[31mtests/store/artifact/test_optimized_s3_artifact_repo.py[0m:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:55: in __init__
+    self._region_name = self._get_region_name()
+        __class__  = <class 'mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository'>
+        access_key_id = None
+        addressing_style = 'path'
+        artifact_uri = 's3://mock-bucket/some/path'
+        s3_endpoint_url = None
+        secret_access_key = None
+        self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39c002650>
+        session_token = None
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39c002650>
+
+    def _get_region_name(self):
+        from botocore.exceptions import ClientError
+    
+        temp_client = _get_s3_client(
+            addressing_style="path",
+            access_key_id=self._access_key_id,
+            secret_access_key=self._secret_access_key,
+            session_token=self._session_token,
+            s3_endpoint_url=self._s3_endpoint_url,
+        )
+        try:
+>           return temp_client.head_bucket(Bucket=self.bucket)["BucketRegion"]
+[1m[31mE           KeyError: 'BucketRegion'[0m
+
+ClientError = <class 'botocore.exceptions.ClientError'>
+self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39c002650>
+temp_client = <Mock name='client()' id='47225777254928'>
+
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:68: KeyError
+[31m[1m________________________ test_s3_creds_passed_to_client ________________________[0m
+
+s3_artifact_root = 's3://mock-bucket'
+
+    def test_s3_creds_passed_to_client(s3_artifact_root):
+        with mock.patch("boto3.client") as mock_get_s3_client:
+            s3_client_mock = mock.Mock()
+            s3_client_mock.head_bucket.return_value = {
+                "ResponseMetadata": {
+                    "HTTPHeaders": {"x-amz-bucket-region": DEFAULT_REGION_NAME},
+                }
+            }
+            mock_get_s3_client.return_value = s3_client_mock
+>           repo = OptimizedS3ArtifactRepository(
+                s3_artifact_root,
+                access_key_id="my-id",
+                secret_access_key="my-key",
+                session_token="my-session-token",
+            )
+
+mock_get_s3_client = <MagicMock name='client' id='47225762986896'>
+s3_artifact_root = 's3://mock-bucket'
+s3_client_mock = <Mock name='client()' id='47225762973904'>
+
+[1m[31mtests/store/artifact/test_optimized_s3_artifact_repo.py[0m:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:55: in __init__
+    self._region_name = self._get_region_name()
+        __class__  = <class 'mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository'>
+        access_key_id = 'my-id'
+        addressing_style = 'path'
+        artifact_uri = 's3://mock-bucket'
+        s3_endpoint_url = None
+        secret_access_key = 'my-key'
+        self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39ad3bf10>
+        session_token = 'my-session-token'
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39ad3bf10>
+
+    def _get_region_name(self):
+        from botocore.exceptions import ClientError
+    
+        temp_client = _get_s3_client(
+            addressing_style="path",
+            access_key_id=self._access_key_id,
+            secret_access_key=self._secret_access_key,
+            session_token=self._session_token,
+            s3_endpoint_url=self._s3_endpoint_url,
+        )
+        try:
+>           return temp_client.head_bucket(Bucket=self.bucket)["BucketRegion"]
+[1m[31mE           KeyError: 'BucketRegion'[0m
+
+ClientError = <class 'botocore.exceptions.ClientError'>
+self       = <mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository object at 0x2af39ad3bf10>
+temp_client = <Mock name='client()' id='47225762973904'>
+
+[1m[31mmlflow/store/artifact/optimized_s3_artifact_repo.py[0m:68: KeyError
+[33m=============================== warnings summary ===============================[0m
+mlflow/utils/requirements_utils.py:20
+  /workspace/repo/mlflow/utils/requirements_utils.py:20: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources  # noqa: TID251
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================= slowest 10 durations =============================
+0.96s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_hits_cache
+0.31s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[1-False]
+0.25s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[None-False]
+0.24s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly_with_non_throwing_response
+0.23s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_s3_creds_passed_to_client
+0.15s call     tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[524287999-False]
+0.12s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[0-None]
+0.12s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[100-False]
+0.12s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_download_file_in_parallel_when_necessary[524287999-False]
+0.12s setup    tests/store/artifact/test_optimized_s3_artifact_repo.py::test_log_artifacts_in_parallel_when_necessary
+======================= command to run failed test cases =======================
+pytest 'tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[0-None]' 'tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[1-False]' 'tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[true-False]' 'tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_verify_param_set_correctly[false-None]' 'tests/store/artifact/test_optimized_s3_artifact_repo.py::test_get_s3_client_region_name_set_correctly_with_non_throwing_response' 'tests/store/artifact/test_optimized_s3_artifact_repo.py::test_s3_creds_passed_to_client'
+
+[36m[1m=========================== short test summary info ============================[0m
+[31mFAILED[0m tests/store/artifact/test_optimized_s3_artifact_repo.py::[1mtest_get_s3_client_verify_param_set_correctly[0-None][0m - KeyError: 'BucketRegion'
+[31mFAILED[0m tests/store/artifact/test_optimized_s3_artifact_repo.py::[1mtest_get_s3_client_verify_param_set_correctly[1-False][0m - KeyError: 'BucketRegion'
+[31mFAILED[0m tests/store/artifact/test_optimized_s3_artifact_repo.py::[1mtest_get_s3_client_verify_param_set_correctly[true-False][0m - KeyError: 'BucketRegion'
+[31mFAILED[0m tests/store/artifact/test_optimized_s3_artifact_repo.py::[1mtest_get_s3_client_verify_param_set_correctly[false-None][0m - KeyError: 'BucketRegion'
+[31mFAILED[0m tests/store/artifact/test_optimized_s3_artifact_repo.py::[1mtest_get_s3_client_region_name_set_correctly_with_non_throwing_response[0m - KeyError: 'BucketRegion'
+[31mFAILED[0m tests/store/artifact/test_optimized_s3_artifact_repo.py::[1mtest_s3_creds_passed_to_client[0m - KeyError: 'BucketRegion'
+[31m==================== [31m[1m6 failed[0m, [32m9 passed[0m, [33m1 warning[0m[31m in 3.76s[0m[31m ====================[0m
+reward=0 graded=15 found=0 failed=0 parsed=9 framework=pytest exit_code=1

@@ -1,0 +1,13 @@
+patching file api/alembic_version_conflict_detection.txt
+patching file api/src/pcapi/alembic/versions/20240307T153355_b1c9eff03366_add_offer_price_limitation_rule_table.py
+patching file api/src/pcapi/core/offers/factories.py
+patching file api/src/pcapi/core/offers/models.py
+patching file api/src/pcapi/routes/backoffice/__init__.py
+patching file api/src/pcapi/routes/backoffice/offer_price_limitation_rules/__init__.py
+patching file api/src/pcapi/routes/backoffice/offer_price_limitation_rules/blueprint.py
+patching file api/src/pcapi/routes/backoffice/offer_price_limitation_rules/forms.py
+patching file api/src/pcapi/routes/backoffice/templates/layouts/connected.html
+patching file api/src/pcapi/routes/backoffice/templates/offer_price_limitation_rules/list_rules.html
+patching file api/src/pcapi/sandboxes/scripts/creators/industrial/__init__.py
+patching file api/src/pcapi/sandboxes/scripts/creators/industrial/create_industrial_offer_price_limitation_rules.py
+patching file api/src/pcapi/sandboxes/scripts/creators/test_cases/__init__.py

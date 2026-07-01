@@ -1,0 +1,26 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest desktop/core/src/desktop/js/reactComponents/TaskServer/ScheduleTaskModal/ScheduleTaskModal.test.tsx desktop/core/src/desktop/js/reactComponents/TaskServer/TaskLogsModal/TaskLogsModal.test.tsx desktop/core/src/desktop/js/reactComponents/TaskServer/TaskServer.test.tsx --coverage=false --verbose --json",
+  "test_files": [
+    "desktop/core/src/desktop/js/reactComponents/TaskServer/ScheduleTaskModal/ScheduleTaskModal.test.tsx",
+    "desktop/core/src/desktop/js/reactComponents/TaskServer/TaskLogsModal/TaskLogsModal.test.tsx",
+    "desktop/core/src/desktop/js/reactComponents/TaskServer/TaskServer.test.tsx"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/TaskLogsModal/TaskLogsModal.test.tsx::TaskLogsModal renders the modal with task logs",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/TaskLogsModal/TaskLogsModal.test.tsx::TaskLogsModal calls onClose when the close button is clicked",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/ScheduleTaskModal/ScheduleTaskModal.test.tsx::ScheduleTaskModal should render the radio group",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/ScheduleTaskModal/ScheduleTaskModal.test.tsx::ScheduleTaskModal should render one input when document_cleanup is selected",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/ScheduleTaskModal/ScheduleTaskModal.test.tsx::ScheduleTaskModal should render one input when temp_cleanup is selected",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/ScheduleTaskModal/ScheduleTaskModal.test.tsx::ScheduleTaskModal should call onClose when the close button is clicked",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/ScheduleTaskModal/ScheduleTaskModal.test.tsx::ScheduleTaskModal should trigger handleSubmit when the submit button is clicked",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/TaskServer.test.tsx::TaskServer Component should open schedule task modal on button click",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/TaskServer.test.tsx::TaskServer Component should call save API when clicking \"Kill Task\" button",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/TaskServer.test.tsx::TaskServer Component should render task list with correct data",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/TaskServer.test.tsx::TaskServer Component should filter tasks based on search input",
+    "/workspace/repo/desktop/core/src/desktop/js/reactComponents/TaskServer/TaskServer.test.tsx::TaskServer Component should change status filter when status checkbox is clicked"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "TF_ACC=1 TF_TEST_DOMAIN=scaleway-terraform.com SCW_ACCESS_KEY=SCWXXXXXXXXXXXXXFAKE SCW_SECRET_KEY=11111111-1111-1111-1111-111111111111 go test -json ./scaleway -count=1 -run TestAccScalewayJobDefinition_Cron",
+  "test_files": [
+    "scaleway/resource_job_definition_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/scaleway/terraform-provider-scaleway/v2/scaleway::TestAccScalewayJobDefinition_Cron"
+  ],
+  "PASS_TO_PASS": []
+}

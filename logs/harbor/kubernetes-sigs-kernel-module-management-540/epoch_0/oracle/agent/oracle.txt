@@ -1,0 +1,15 @@
+patching file api/v1beta1/nodemodulesconfig_types.go
+patching file api/v1beta1/zz_generated.deepcopy.go
+patching file cmd/worker/main.go
+patching file config/crd/bases/kmm.sigs.x-k8s.io_nodemodulesconfigs.yaml
+patching file internal/controllers/mock_nmc_reconciler.go
+patching file internal/controllers/module_nmc_reconciler.go
+patching file internal/controllers/nmc_reconciler.go
+patching file internal/nmc/helper.go
+patching file internal/nmc/mock_helper.go
+patching file internal/worker/constants.go
+patching file internal/worker/imagepuller.go
+patching file internal/worker/pullsecrets.go
+patching file internal/worker/testdata/pull-secrets/sub0/sub0sub/.dockerconfigjson
+patching file internal/worker/testdata/pull-secrets/sub1/.dockercfg
+patching file internal/worker/testdata/pull-secrets/sub2/random-file

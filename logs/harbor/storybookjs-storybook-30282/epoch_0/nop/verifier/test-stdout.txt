@@ -1,0 +1,22 @@
+patching file code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts
+patching file code/lib/codemod/src/transforms/__tests__/csf-3-to-4.test.ts
+[?25l
+ RUN  v3.0.0-beta.4 /workspace/repo/code
+
+ ❯ lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts [ lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts ]
+Error: Failed to load url ./csf-factories (resolved id: ./csf-factories) in /workspace/repo/code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/vitest/node_modules/vite/dist/node/chunks/dep-BJP6rrE_.js:41024:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  15:14:25
+   Duration  6.45s (transform 1.98s, setup 319ms, collect 0ms, tests 0ms, environment 0ms, prepare 230ms)
+
+[?25hreward=0 graded=12 found=0 failed=0 parsed=0 framework=vitest exit_code=1

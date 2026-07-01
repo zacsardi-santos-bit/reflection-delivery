@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/providers/aws/services/rds/rds_instance_event_subscription_security_groups/rds_instance_event_subscription_security_groups_test.py /workspace/repo/tests/providers/aws/services/rds/rds_service_test.py -v",
+  "test_files": [
+    "tests/providers/aws/services/rds/rds_instance_event_subscription_security_groups/rds_instance_event_subscription_security_groups_test.py",
+    "tests/providers/aws/services/rds/rds_service_test.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.providers.aws.services.rds.rds_instance_event_subscription_security_groups.rds_instance_event_subscription_security_groups_test.Test_rds_instance__no_event_subscriptions::test_rds_no_security_group_event_subscription",
+    "tests.providers.aws.services.rds.rds_instance_event_subscription_security_groups.rds_instance_event_subscription_security_groups_test.Test_rds_instance__no_event_subscriptions::test_rds_security_event_subscription_enabled",
+    "tests.providers.aws.services.rds.rds_instance_event_subscription_security_groups.rds_instance_event_subscription_security_groups_test.Test_rds_instance__no_event_subscriptions::test_rds_no_events",
+    "tests.providers.aws.services.rds.rds_instance_event_subscription_security_groups.rds_instance_event_subscription_security_groups_test.Test_rds_instance__no_event_subscriptions::test_rds_no_events_ignoring",
+    "tests.providers.aws.services.rds.rds_instance_event_subscription_security_groups.rds_instance_event_subscription_security_groups_test.Test_rds_instance__no_event_subscriptions::test_rds_security_event_configuration_change_only_subscription",
+    "tests.providers.aws.services.rds.rds_instance_event_subscription_security_groups.rds_instance_event_subscription_security_groups_test.Test_rds_instance__no_event_subscriptions::test_rds_no_event_subscription",
+    "tests.providers.aws.services.rds.rds_instance_event_subscription_security_groups.rds_instance_event_subscription_security_groups_test.Test_rds_instance__no_event_subscriptions::test_rds_security_event_failure_only_subscription",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test__describe_db_event_subscriptions_"
+  ],
+  "PASS_TO_PASS": [
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test__describe_db_engine_versions__",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test__describe_db_snapshots__",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test__describe_db_cluster_snapshots__",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test__describe_db_parameters__",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test_service",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test_audited_account",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test__describe_db_clusters__",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test__describe_db_instances__",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test__get_session__",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test_client",
+    "tests.providers.aws.services.rds.rds_service_test.Test_RDS_Service::test__describe_db_certificate__"
+  ]
+}

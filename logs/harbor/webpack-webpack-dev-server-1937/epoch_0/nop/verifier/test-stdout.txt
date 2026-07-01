@@ -1,0 +1,209 @@
+patching file test/GetSocketServerImplementation.test.js
+patching file test/ServerMode.test.js
+patching file test/options.test.js
+Browserslist: caniuse-lite is outdated. Please run next command `npm update`
+Browserslist: caniuse-lite is outdated. Please run next command `npm update`
+FAIL test/GetSocketServerImplementation.test.js
+  ● Test suite failed to run
+
+    Cannot find module '../lib/utils/getSocketServerImplementation' from 'GetSocketServerImplementation.test.js'
+
+      1 | 'use strict';
+      2 | 
+    > 3 | const getSocketServerImplementation = require('../lib/utils/getSocketServerImplementation');
+        |                                       ^
+      4 | const SockJSServer = require('../lib/servers/SockJSServer');
+      5 | 
+      6 | describe('getSocketServerImplementation', () => {
+
+      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:230:17)
+      at Object.require (test/GetSocketServerImplementation.test.js:3:39)
+
+FAIL test/ServerMode.test.js
+  serverMode
+    supplying 'sockjs' as a string
+      ✕ sockjs path responds with a 200 (124ms)
+    supplying path to sockjs implementation
+      ✕ sockjs path responds with a 200 (4ms)
+    supplying sockjs implementation class
+      ✕ sockjs path responds with a 200 (4ms)
+    custom sockjs implementation
+      ✕ uses supplied server implementation (4ms)
+    supplying nonexistent path
+      ✕ should throw an error (19ms)
+
+  ● serverMode › supplying 'sockjs' as a string › sockjs path responds with a 200
+
+    ValidationError: webpack Dev Server Invalid Options
+
+    options should NOT have additional properties
+
+      53 |     }
+      54 | 
+    > 55 |     validateOptions(schema, options, 'webpack Dev Server');
+         |     ^
+      56 | 
+      57 |     updateCompiler(compiler, options);
+      58 | 
+
+      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)
+      at new validateOptions (lib/Server.js:55:5)
+      at startFullSetup (test/helpers/test-server.js:39:12)
+      at startFullSetup (test/helpers/test-server.js:73:21)
+      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)
+      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)
+      at Object.start (test/ServerMode.test.js:24:27)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● serverMode › supplying 'sockjs' as a string › sockjs path responds with a 200
+
+    TypeError: Cannot read properties of undefined (reading 'get')
+
+      33 | 
+      34 |     it('sockjs path responds with a 200', (done) => {
+    > 35 |       req.get('/sockjs-node').expect(200, done);
+         |           ^
+      36 |     });
+      37 |   });
+      38 | 
+
+      at Object.get (test/ServerMode.test.js:35:11)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● serverMode › supplying path to sockjs implementation › sockjs path responds with a 200
+
+    ValidationError: webpack Dev Server Invalid Options
+
+    options should NOT have additional properties
+
+      53 |     }
+      54 | 
+    > 55 |     validateOptions(schema, options, 'webpack Dev Server');
+         |     ^
+      56 | 
+      57 |     updateCompiler(compiler, options);
+      58 | 
+
+      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)
+      at new validateOptions (lib/Server.js:55:5)
+      at startFullSetup (test/helpers/test-server.js:39:12)
+      at startFullSetup (test/helpers/test-server.js:73:21)
+      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)
+      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)
+      at Object.start (test/ServerMode.test.js:41:27)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● serverMode › supplying path to sockjs implementation › sockjs path responds with a 200
+
+    TypeError: Cannot read properties of null (reading 'get')
+
+      50 | 
+      51 |     it('sockjs path responds with a 200', (done) => {
+    > 52 |       req.get('/sockjs-node').expect(200, done);
+         |           ^
+      53 |     });
+      54 |   });
+      55 | 
+
+      at Object.get (test/ServerMode.test.js:52:11)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● serverMode › supplying sockjs implementation class › sockjs path responds with a 200
+
+    ValidationError: webpack Dev Server Invalid Options
+
+    options should NOT have additional properties
+
+      53 |     }
+      54 | 
+    > 55 |     validateOptions(schema, options, 'webpack Dev Server');
+         |     ^
+      56 | 
+      57 |     updateCompiler(compiler, options);
+      58 | 
+
+      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)
+      at new validateOptions (lib/Server.js:55:5)
+      at startFullSetup (test/helpers/test-server.js:39:12)
+      at startFullSetup (test/helpers/test-server.js:73:21)
+      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)
+      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)
+      at Object.start (test/ServerMode.test.js:58:27)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● serverMode › supplying sockjs implementation class › sockjs path responds with a 200
+
+    TypeError: Cannot read properties of null (reading 'get')
+
+      67 | 
+      68 |     it('sockjs path responds with a 200', (done) => {
+    > 69 |       req.get('/sockjs-node').expect(200, done);
+         |           ^
+      70 |     });
+      71 |   });
+      72 | 
+
+      at Object.get (test/ServerMode.test.js:69:11)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● serverMode › custom sockjs implementation › uses supplied server implementation
+
+    ValidationError: webpack Dev Server Invalid Options
+
+    options should NOT have additional properties
+
+      53 |     }
+      54 | 
+    > 55 |     validateOptions(schema, options, 'webpack Dev Server');
+         |     ^
+      56 | 
+      57 |     updateCompiler(compiler, options);
+      58 | 
+
+      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)
+      at new validateOptions (lib/Server.js:55:5)
+      at startFullSetup (test/helpers/test-server.js:39:12)
+      at startFullSetup (test/helpers/test-server.js:73:21)
+      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)
+      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)
+      at Object.start (test/ServerMode.test.js:75:27)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  ● serverMode › supplying nonexistent path › should throw an error
+
+    expect(received).toThrow(expected)
+
+    Expected pattern: /serverMode must be a string/
+    Received message: "webpack Dev Server Invalid Options
+
+    options should NOT have additional properties
+    "
+
+          53 |     }
+          54 | 
+        > 55 |     validateOptions(schema, options, 'webpack Dev Server');
+             |     ^
+          56 | 
+          57 |     updateCompiler(compiler, options);
+          58 | 
+
+      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)
+      at new validateOptions (lib/Server.js:55:5)
+      at startFullSetup (test/helpers/test-server.js:39:12)
+      at startFullSetup (test/helpers/test-server.js:73:21)
+      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)
+      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)
+      at start (test/ServerMode.test.js:123:29)
+      at Object.<anonymous> (node_modules/expect/build/toThrowMatchers.js:81:11)
+      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:342:33)
+      at Object.toThrow (test/ServerMode.test.js:130:10)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at Object.toThrow (test/ServerMode.test.js:130:10)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Test Suites: 2 failed, 2 total
+Tests:       5 failed, 5 total
+Snapshots:   0 total
+Time:        3.152s
+Ran all test suites matching /test\/GetSocketServerImplementation.test.js|test\/ServerMode.test.js/i.
+{"numFailedTestSuites":2,"numFailedTests":5,"numPassedTestSuites":0,"numPassedTests":0,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":1,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":5,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746962270,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782746965423,"message":"  ● Test suite failed to run\n\n    Cannot find module '../lib/utils/getSocketServerImplementation' from 'GetSocketServerImplementation.test.js'\n\n      1 | 'use strict';\n      2 | \n    > 3 | const getSocketServerImplementation = require('../lib/utils/getSocketServerImplementation');\n        |                                       ^\n      4 | const SockJSServer = require('../lib/servers/SockJSServer');\n      5 | \n      6 | describe('getSocketServerImplementation', () => {\n\n      at Resolver.resolveModule (node_modules/jest-resolve/build/index.js:230:17)\n      at Object.require (test/GetSocketServerImplementation.test.js:3:39)\n","name":"/workspace/repo/test/GetSocketServerImplementation.test.js","startTime":1782746965423,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":["serverMode","supplying 'sockjs' as a string"],"failureMessages":["ValidationError: webpack Dev Server Invalid Options\n\noptions should NOT have additional properties\n\n    at validateOptions (/workspace/repo/node_modules/schema-utils/src/validateOptions.js:32:11)\n    at new validateOptions (/workspace/repo/lib/Server.js:55:5)\n    at startFullSetup (/workspace/repo/test/helpers/test-server.js:39:12)\n    at startFullSetup (/workspace/repo/test/helpers/test-server.js:73:21)\n    at startAwaitingCompilationFullSetup (/workspace/repo/test/helpers/test-server.js:83:10)\n    at Object.startAwaitingCompilation [as start] (/workspace/repo/test/helpers/test-server.js:93:10)\n    at Object.start (/workspace/repo/test/ServerMode.test.js:24:27)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:43:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:26:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:73:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","TypeError: Cannot read properties of undefined (reading 'get')\n    at Object.get (/workspace/repo/test/ServerMode.test.js:35:11)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:43:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:26:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:73:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"serverMode supplying 'sockjs' as a string sockjs path responds with a 200","location":null,"status":"failed","title":"sockjs path responds with a 200"},{"ancestorTitles":["serverMode","supplying path to sockjs implementation"],"failureMessages":["ValidationError: webpack Dev Server Invalid Options\n\noptions should NOT have additional properties\n\n    at validateOptions (/workspace/repo/node_modules/schema-utils/src/validateOptions.js:32:11)\n    at new validateOptions (/workspace/repo/lib/Server.js:55:5)\n    at startFullSetup (/workspace/repo/test/helpers/test-server.js:39:12)\n    at startFullSetup (/workspace/repo/test/helpers/test-server.js:73:21)\n    at startAwaitingCompilationFullSetup (/workspace/repo/test/helpers/test-server.js:83:10)\n    at Object.startAwaitingCompilation [as start] (/workspace/repo/test/helpers/test-server.js:93:10)\n    at Object.start (/workspace/repo/test/ServerMode.test.js:41:27)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:43:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:26:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:73:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","TypeError: Cannot read properties of null (reading 'get')\n    at Object.get (/workspace/repo/test/ServerMode.test.js:52:11)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:43:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:26:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:73:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"serverMode supplying path to sockjs implementation sockjs path responds with a 200","location":null,"status":"failed","title":"sockjs path responds with a 200"},{"ancestorTitles":["serverMode","supplying sockjs implementation class"],"failureMessages":["ValidationError: webpack Dev Server Invalid Options\n\noptions should NOT have additional properties\n\n    at validateOptions (/workspace/repo/node_modules/schema-utils/src/validateOptions.js:32:11)\n    at new validateOptions (/workspace/repo/lib/Server.js:55:5)\n    at startFullSetup (/workspace/repo/test/helpers/test-server.js:39:12)\n    at startFullSetup (/workspace/repo/test/helpers/test-server.js:73:21)\n    at startAwaitingCompilationFullSetup (/workspace/repo/test/helpers/test-server.js:83:10)\n    at Object.startAwaitingCompilation [as start] (/workspace/repo/test/helpers/test-server.js:93:10)\n    at Object.start (/workspace/repo/test/ServerMode.test.js:58:27)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:43:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:26:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:73:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","TypeError: Cannot read properties of null (reading 'get')\n    at Object.get (/workspace/repo/test/ServerMode.test.js:69:11)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:43:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:26:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:73:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"serverMode supplying sockjs implementation class sockjs path responds with a 200","location":null,"status":"failed","title":"sockjs path responds with a 200"},{"ancestorTitles":["serverMode","custom sockjs implementation"],"failureMessages":["ValidationError: webpack Dev Server Invalid Options\n\noptions should NOT have additional properties\n\n    at validateOptions (/workspace/repo/node_modules/schema-utils/src/validateOptions.js:32:11)\n    at new validateOptions (/workspace/repo/lib/Server.js:55:5)\n    at startFullSetup (/workspace/repo/test/helpers/test-server.js:39:12)\n    at startFullSetup (/workspace/repo/test/helpers/test-server.js:73:21)\n    at startAwaitingCompilationFullSetup (/workspace/repo/test/helpers/test-server.js:83:10)\n    at Object.startAwaitingCompilation [as start] (/workspace/repo/test/helpers/test-server.js:93:10)\n    at Object.start (/workspace/repo/test/ServerMode.test.js:75:27)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:43:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:26:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:73:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"serverMode custom sockjs implementation uses supplied server implementation","location":null,"status":"failed","title":"uses supplied server implementation"},{"ancestorTitles":["serverMode","supplying nonexistent path"],"failureMessages":["Error: expect(received).toThrow(expected)\n\nExpected pattern: /serverMode must be a string/\nReceived message: \"webpack Dev Server Invalid Options\n\noptions should NOT have additional properties\n\"\n\n      53 |     }\n      54 | \n    > 55 |     validateOptions(schema, options, 'webpack Dev Server');\n         |     ^\n      56 | \n      57 |     updateCompiler(compiler, options);\n      58 | \n\n      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)\n      at new validateOptions (lib/Server.js:55:5)\n      at startFullSetup (test/helpers/test-server.js:39:12)\n      at startFullSetup (test/helpers/test-server.js:73:21)\n      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)\n      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)\n      at start (test/ServerMode.test.js:123:29)\n      at Object.<anonymous> (node_modules/expect/build/toThrowMatchers.js:81:11)\n      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:342:33)\n      at Object.toThrow (test/ServerMode.test.js:130:10)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at Object.toThrow (/workspace/repo/test/ServerMode.test.js:130:10)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:102:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:43:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:26:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:73:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"serverMode supplying nonexistent path should throw an error","location":null,"status":"failed","title":"should throw an error"}],"endTime":1782746965413,"message":"  ● serverMode › supplying 'sockjs' as a string › sockjs path responds with a 200\n\n    ValidationError: webpack Dev Server Invalid Options\n\n    options should NOT have additional properties\n\n      53 |     }\n      54 | \n    > 55 |     validateOptions(schema, options, 'webpack Dev Server');\n         |     ^\n      56 | \n      57 |     updateCompiler(compiler, options);\n      58 | \n\n      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)\n      at new validateOptions (lib/Server.js:55:5)\n      at startFullSetup (test/helpers/test-server.js:39:12)\n      at startFullSetup (test/helpers/test-server.js:73:21)\n      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)\n      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)\n      at Object.start (test/ServerMode.test.js:24:27)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● serverMode › supplying 'sockjs' as a string › sockjs path responds with a 200\n\n    TypeError: Cannot read properties of undefined (reading 'get')\n\n      33 | \n      34 |     it('sockjs path responds with a 200', (done) => {\n    > 35 |       req.get('/sockjs-node').expect(200, done);\n         |           ^\n      36 |     });\n      37 |   });\n      38 | \n\n      at Object.get (test/ServerMode.test.js:35:11)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● serverMode › supplying path to sockjs implementation › sockjs path responds with a 200\n\n    ValidationError: webpack Dev Server Invalid Options\n\n    options should NOT have additional properties\n\n      53 |     }\n      54 | \n    > 55 |     validateOptions(schema, options, 'webpack Dev Server');\n         |     ^\n      56 | \n      57 |     updateCompiler(compiler, options);\n      58 | \n\n      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)\n      at new validateOptions (lib/Server.js:55:5)\n      at startFullSetup (test/helpers/test-server.js:39:12)\n      at startFullSetup (test/helpers/test-server.js:73:21)\n      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)\n      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)\n      at Object.start (test/ServerMode.test.js:41:27)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● serverMode › supplying path to sockjs implementation › sockjs path responds with a 200\n\n    TypeError: Cannot read properties of null (reading 'get')\n\n      50 | \n      51 |     it('sockjs path responds with a 200', (done) => {\n    > 52 |       req.get('/sockjs-node').expect(200, done);\n         |           ^\n      53 |     });\n      54 |   });\n      55 | \n\n      at Object.get (test/ServerMode.test.js:52:11)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● serverMode › supplying sockjs implementation class › sockjs path responds with a 200\n\n    ValidationError: webpack Dev Server Invalid Options\n\n    options should NOT have additional properties\n\n      53 |     }\n      54 | \n    > 55 |     validateOptions(schema, options, 'webpack Dev Server');\n         |     ^\n      56 | \n      57 |     updateCompiler(compiler, options);\n      58 | \n\n      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)\n      at new validateOptions (lib/Server.js:55:5)\n      at startFullSetup (test/helpers/test-server.js:39:12)\n      at startFullSetup (test/helpers/test-server.js:73:21)\n      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)\n      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)\n      at Object.start (test/ServerMode.test.js:58:27)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● serverMode › supplying sockjs implementation class › sockjs path responds with a 200\n\n    TypeError: Cannot read properties of null (reading 'get')\n\n      67 | \n      68 |     it('sockjs path responds with a 200', (done) => {\n    > 69 |       req.get('/sockjs-node').expect(200, done);\n         |           ^\n      70 |     });\n      71 |   });\n      72 | \n\n      at Object.get (test/ServerMode.test.js:69:11)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● serverMode › custom sockjs implementation › uses supplied server implementation\n\n    ValidationError: webpack Dev Server Invalid Options\n\n    options should NOT have additional properties\n\n      53 |     }\n      54 | \n    > 55 |     validateOptions(schema, options, 'webpack Dev Server');\n         |     ^\n      56 | \n      57 |     updateCompiler(compiler, options);\n      58 | \n\n      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)\n      at new validateOptions (lib/Server.js:55:5)\n      at startFullSetup (test/helpers/test-server.js:39:12)\n      at startFullSetup (test/helpers/test-server.js:73:21)\n      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)\n      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)\n      at Object.start (test/ServerMode.test.js:75:27)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n\n  ● serverMode › supplying nonexistent path › should throw an error\n\n    expect(received).toThrow(expected)\n\n    Expected pattern: /serverMode must be a string/\n    Received message: \"webpack Dev Server Invalid Options\n\n    options should NOT have additional properties\n    \"\n\n          53 |     }\n          54 | \n        > 55 |     validateOptions(schema, options, 'webpack Dev Server');\n             |     ^\n          56 | \n          57 |     updateCompiler(compiler, options);\n          58 | \n\n      at validateOptions (node_modules/schema-utils/src/validateOptions.js:32:11)\n      at new validateOptions (lib/Server.js:55:5)\n      at startFullSetup (test/helpers/test-server.js:39:12)\n      at startFullSetup (test/helpers/test-server.js:73:21)\n      at startAwaitingCompilationFullSetup (test/helpers/test-server.js:83:10)\n      at Object.startAwaitingCompilation [as start] (test/helpers/test-server.js:93:10)\n      at start (test/ServerMode.test.js:123:29)\n      at Object.<anonymous> (node_modules/expect/build/toThrowMatchers.js:81:11)\n      at Object.throwingMatcher [as toThrow] (node_modules/expect/build/index.js:342:33)\n      at Object.toThrow (test/ServerMode.test.js:130:10)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n      at Object.toThrow (test/ServerMode.test.js:130:10)\n      at processTicksAndRejections (node:internal/process/task_queues:95:5)\n","name":"/workspace/repo/test/ServerMode.test.js","startTime":1782746963123,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=9 found=5 failed=5 parsed=6 framework=jest exit_code=1

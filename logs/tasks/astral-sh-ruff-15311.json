@@ -1,0 +1,23 @@
+{
+ "task": "astral-sh-ruff-15311",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden sections.rs adds `if previous_line.map_or(false, |line| line.trim().is_empty()) { return true; }` so a keyword after a blank line is a section header regardless of case"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

@@ -1,0 +1,24 @@
+{
+  "test_framework": "pytest",
+  "test_command": "sed -i '10s/.*/pass/' /workspace/repo/pyro/distributions/torch_patch.py && sed -i 's/v.symeig(eigenvectors=False)\\[0\\]/torch.linalg.eigvalsh(v)/g' /workspace/repo/pyro/distributions/torch_patch.py && pytest /workspace/repo/tests/contrib/funsor/test_infer_discrete.py -v",
+  "test_files": [
+    "tests/contrib/funsor/test_infer_discrete.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.contrib.funsor.test_infer_discrete::test_hmm_smoke[1]",
+    "tests.contrib.funsor.test_infer_discrete::test_hmm_smoke[2]",
+    "tests.contrib.funsor.test_infer_discrete::test_hmm_smoke[10]",
+    "tests.contrib.funsor.test_infer_discrete::test_hmm_smoke[100]",
+    "tests.contrib.funsor.test_infer_discrete::test_distribution_1",
+    "tests.contrib.funsor.test_infer_discrete::test_distribution_2",
+    "tests.contrib.funsor.test_infer_discrete::test_distribution_3_simple",
+    "tests.contrib.funsor.test_infer_discrete::test_distribution_3",
+    "tests.contrib.funsor.test_infer_discrete::test_svi_model_side_enumeration[model_zzxx]",
+    "tests.contrib.funsor.test_infer_discrete::test_svi_model_side_enumeration[model2]",
+    "tests.contrib.funsor.test_infer_discrete::test_mcmc_model_side_enumeration[model_zzxx]",
+    "tests.contrib.funsor.test_infer_discrete::test_mcmc_model_side_enumeration[model2]"
+  ],
+  "PASS_TO_PASS": []
+}

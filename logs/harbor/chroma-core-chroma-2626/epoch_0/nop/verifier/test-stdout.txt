@@ -1,0 +1,25 @@
+patching file chromadb/test/db/test_system.py
+patching file chromadb/test/segment/distributed/test_protobuf_translation.py
+patching file go/pkg/coordinator/grpc/proto_model_convert_test.go
+{"Time":"2026-06-29T15:30:06.81883093Z","Action":"start","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc"}
+{"Time":"2026-06-29T15:30:06.867472961Z","Action":"run","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto"}
+{"Time":"2026-06-29T15:30:06.867520144Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"=== RUN   TestConvertSegmentToProto\n"}
+{"Time":"2026-06-29T15:30:06.868121362Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"    proto_model_convert_test.go:196: \n"}
+{"Time":"2026-06-29T15:30:06.868208056Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \tError Trace:\t/workspace/repo/go/pkg/coordinator/grpc/proto_model_convert_test.go:196\n"}
+{"Time":"2026-06-29T15:30:06.868262607Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \tError:      \tNot equal: \n"}
+{"Time":"2026-06-29T15:30:06.868272411Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \t            \texpected: string(\"00000000-0000-0000-0000-000000000000\")\n"}
+{"Time":"2026-06-29T15:30:06.868297838Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \t            \tactual  : *string((*string)(nil))\n"}
+{"Time":"2026-06-29T15:30:06.868307855Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \t            \t\n"}
+{"Time":"2026-06-29T15:30:06.868316719Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \t            \tDiff:\n"}
+{"Time":"2026-06-29T15:30:06.86832396Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \t            \t--- Expected\n"}
+{"Time":"2026-06-29T15:30:06.868331414Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \t            \t+++ Actual\n"}
+{"Time":"2026-06-29T15:30:06.868342949Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \t            \t@@ -1 +1 @@\n"}
+{"Time":"2026-06-29T15:30:06.868350392Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \t            \t-00000000-0000-0000-0000-000000000000\n"}
+{"Time":"2026-06-29T15:30:06.868359143Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \t            \t+\u003c*string Value\u003e\n"}
+{"Time":"2026-06-29T15:30:06.868367896Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"        \tTest:       \tTestConvertSegmentToProto\n"}
+{"Time":"2026-06-29T15:30:06.86838085Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Output":"--- FAIL: TestConvertSegmentToProto (0.00s)\n"}
+{"Time":"2026-06-29T15:30:06.868388859Z","Action":"fail","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Test":"TestConvertSegmentToProto","Elapsed":0}
+{"Time":"2026-06-29T15:30:06.868411171Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:30:06.869731125Z","Action":"output","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Output":"FAIL\tgithub.com/chroma-core/chroma/go/pkg/coordinator/grpc\t0.050s\n"}
+{"Time":"2026-06-29T15:30:06.869789924Z","Action":"fail","Package":"github.com/chroma-core/chroma/go/pkg/coordinator/grpc","Elapsed":0.051}
+reward=0 graded=1 found=1 failed=1 parsed=2 framework=go exit_code=1

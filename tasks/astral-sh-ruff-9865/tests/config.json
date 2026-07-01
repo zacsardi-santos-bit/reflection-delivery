@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p ruff_linter -E 'test(ruf027)' --status-level pass",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/ruff/RUF027.py",
+    "crates/ruff_linter/resources/test/fixtures/ruff/RUF027_0.py",
+    "crates/ruff_linter/resources/test/fixtures/ruff/RUF027_1.py"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) ruff_linter rules::ruff::tests::rules::rule_missingfstringsyntax_path_new_ruf027_1_py_expects",
+    "(2/2) ruff_linter rules::ruff::tests::rules::rule_missingfstringsyntax_path_new_ruf027_0_py_expects"
+  ],
+  "PASS_TO_PASS": []
+}

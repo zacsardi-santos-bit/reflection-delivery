@@ -1,0 +1,5 @@
+I'm working on improving observability for dispatch rate limiting in Apache Pulsar. Right now, when the broker throttles message delivery to consumers, there's no way to tell from the stats whether the throttle came from a broker-level policy, a topic-level policy, or a subscription-level policy. This makes diagnosing performance problems really difficult.
+
+I'd like to add separate counters that track how many times dispatch was throttled due to each of these three levels, for both message count and byte count. These should be visible in the subscription statistics returned by the admin API, so each subscription reports independently whether it was throttled by subscription, topic, or broker limits. They should also appear as Prometheus metrics with a label that identifies the level of throttling, so monitoring systems can distinguish the three causes.
+
+When only one level of rate limiting is active, only the counters for that level should be non-zero — the other levels should stay at zero. This way, operators can immediately identify which policy tier is responsible for any observed dispatch throttling.

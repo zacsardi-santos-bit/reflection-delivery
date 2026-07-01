@@ -1,0 +1,9 @@
+I'm trying to write integration-style component tests that exercise the full Apollo Client data-fetching stack without spinning up a real server. Right now I have no good way to do this — the existing test helpers only mock at low levels and skip too much of the actual client behavior.
+
+What I need is a set of testing utilities that work together: one that takes a GraphQL schema and automatically fills in placeholder values for all scalar fields (including custom scalars), so I don't have to hand-write every resolver; a second that wraps a mocked schema and lets me layer custom resolvers on top of the defaults, with the ability to create isolated "fork" copies for individual tests so changes in one test don't bleed into another; and a third that intercepts the global network layer during a test, routes GraphQL requests through my local schema instead of a real server, and automatically restores the original network behavior when the test finishes.
+
+The forking capability in particular needs to be additive — I should be able to call a method to add resolvers incrementally over time, and when I fork the schema, the fork should inherit all those accumulated resolvers. The original schema should not be affected by what happens in a fork.
+
+The network-intercepting utility should also handle edge cases: if a resolver throws a GraphQL error, that error should be returned to the Apollo Client as a proper GraphQL error. If I accidentally pass an invalid schema object, the utility should return a meaningful validation error rather than crashing silently. And the utility should be compatible with modern resource management so it can clean up automatically using a standard language-level disposal mechanism.
+
+All three utilities should be exported from the testing package so they're accessible to consumers.

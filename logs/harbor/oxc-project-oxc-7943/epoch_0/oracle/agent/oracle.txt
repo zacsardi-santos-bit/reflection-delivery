@@ -1,0 +1,4 @@
+patching file crates/oxc_linter/src/rules/eslint/no_restricted_imports.rs
+patching file crates/oxc_linter/src/rules/unicorn/no_useless_spread/const_eval.rs
+patching file crates/oxc_linter/src/rules/unicorn/no_useless_spread/mod.rs
+patching file crates/oxc_linter/src/snapshots/eslint_no_restricted_imports.snap

@@ -1,0 +1,23 @@
+{
+ "task": "rust-lang-rust-analyzer-18908",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds CompletedMarker::last_token and checks 'if token == T![']'}']' to emit 'right curly brace `}` before `else`...not allowed'; test.patch adds fixture 0065_let_else_right_curly_brace_struct.rs/.rast with 'error 63: right curly brace...not allowed'"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

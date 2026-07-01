@@ -1,0 +1,21 @@
+patching file pkg/k8s/client_test.go
+# github.com/cilium/cilium/pkg/k8s [github.com/cilium/cilium/pkg/k8s.test]
+pkg/k8s/client_test.go:185:13: undefined: k8smetrics.LastSuccessInteraction
+pkg/k8s/client_test.go:195:3: too many arguments in call to runHeartbeat
+	have (func(ctx "context".Context) error, time.Duration, func())
+	want ([]func(), chan struct{})
+pkg/k8s/client_test.go:221:3: too many arguments in call to runHeartbeat
+	have (func(ctx "context".Context) error, time.Duration, func())
+	want ([]func(), chan struct{})
+pkg/k8s/client_test.go:234:13: undefined: k8smetrics.LastSuccessInteraction
+pkg/k8s/client_test.go:243:3: too many arguments in call to runHeartbeat
+	have (func(ctx "context".Context) error, time.Duration, func())
+	want ([]func(), chan struct{})
+pkg/k8s/client_test.go:266:3: too many arguments in call to runHeartbeat
+	have (func(ctx "context".Context) error, time.Duration, func())
+	want ([]func(), chan struct{})
+pkg/k8s/client_test.go:293:3: too many arguments in call to runHeartbeat
+	have (func(ctx "context".Context) error, time.Duration, func())
+	want ([]func(), chan struct{})
+FAIL	github.com/cilium/cilium/pkg/k8s [build failed]
+reward=0 graded=48 found=48 failed=48 parsed=1 framework=go exit_code=1

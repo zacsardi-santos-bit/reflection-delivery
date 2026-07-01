@@ -1,0 +1,43 @@
+{
+  "test_framework": "go",
+  "test_command": "mkdir -p integration/validate/integration/validate && ln -sfn $(pwd)/integration/validate/manifests integration/validate/integration/validate/manifests 2>/dev/null || true; go test -tags=integration -json ./integration/validate ./pkg/schema -count=1 -run \"TestValidateManifests|TestValidateNonExistentFile|Test_Schema\"",
+  "test_files": [
+    "integration/okteto/generate_schema_test.go",
+    "integration/validate/validate_test.go",
+    "pkg/schema/schema_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-movies-rental.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-movies-frontend.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/invalid-empty.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-go-getting-started.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateNonExistentFile",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-movies.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-aws-lambda-with-terraform.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-tacopshop-with-cloudflare.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-okteto-load-testing-with-artillery.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-movies-multi-repo.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/invalid-syntax.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/invalid-dev.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-go-getting-started-chart.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/valid-gcp-cloud-credentials.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests/invalid-non-existing-root-level-prop.yml",
+    "github.com/okteto/okteto/integration/validate::TestValidateManifests"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto/go-getting-started",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto/movies",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto/movies-multi-repo",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto/movies-rentals",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto/movies-frontend",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto-community/aws-lambda-with-terraform",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto-community/gcp-cloud-credentials",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto-community/tacopshop-with-cloudflare",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto-community/okteto-load-testing-with-artillery",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/okteto-community/go-getting-started-chart",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema/broken_example",
+    "github.com/okteto/okteto/pkg/schema::Test_Schema"
+  ]
+}

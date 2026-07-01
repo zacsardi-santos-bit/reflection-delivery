@@ -1,0 +1,23 @@
+{
+ "task": "quantumlib-cirq-1830",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds cx/cy/cz/ch/swap/cswap/ccx to qelib_gates and extracts assert_qiskit_parsed_qasm_consistent_with_unitary; 26 F2P incl test_two_qubit_gates and unitary round-trip, plus PASS_TO_PASS regression"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

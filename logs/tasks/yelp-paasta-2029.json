@@ -1,0 +1,23 @@
+{
+ "task": "yelp-paasta-2029",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden renames cluster_boost.py->load_boost.py, changes get_boosted_load(region,pool,...) to get_boosted_load(zk_boost_path,...) and adds get_zk_cluster_boost_path; F2P=[test_get_zk_cluster_boost_path, test_set_boost_factor, test_main, test_paasta_cluster_boost, ...] exercise real ZK path/boost logi"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

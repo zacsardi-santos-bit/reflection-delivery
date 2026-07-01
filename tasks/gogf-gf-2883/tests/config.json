@@ -1,0 +1,24 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./os/gmutex -count=1",
+  "test_files": [
+    "os/gmutex/gmutex_z_bench_test.go",
+    "os/gmutex/gmutex_z_unit_mutex_test.go",
+    "os/gmutex/gmutex_z_unit_rwmutex_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/gogf/gf/v2/os/gmutex::Test_Mutex_Unlock",
+    "github.com/gogf/gf/v2/os/gmutex::Test_Mutex_LockFunc",
+    "github.com/gogf/gf/v2/os/gmutex::Test_Mutex_TryLockFunc",
+    "github.com/gogf/gf/v2/os/gmutex::Test_RWMutex_RUnlock",
+    "github.com/gogf/gf/v2/os/gmutex::Test_RWMutex_IsLocked",
+    "github.com/gogf/gf/v2/os/gmutex::Test_RWMutex_Unlock",
+    "github.com/gogf/gf/v2/os/gmutex::Test_RWMutex_LockFunc",
+    "github.com/gogf/gf/v2/os/gmutex::Test_RWMutex_TryLockFunc",
+    "github.com/gogf/gf/v2/os/gmutex::Test_RWMutex_RLockFunc",
+    "github.com/gogf/gf/v2/os/gmutex::Test_RWMutex_TryRLockFunc"
+  ],
+  "PASS_TO_PASS": []
+}

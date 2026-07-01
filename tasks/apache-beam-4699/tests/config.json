@@ -1,0 +1,13 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl sdks/java/nexmark -am -Dtest=\"SqlQuery7Test\" -DfailIfNoTests=false -B",
+  "test_files": [
+    "sdks/java/nexmark/src/test/java/org/apache/beam/sdk/nexmark/queries/sql/SqlQuery7Test.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Apache::test_1"
+  ],
+  "PASS_TO_PASS": []
+}

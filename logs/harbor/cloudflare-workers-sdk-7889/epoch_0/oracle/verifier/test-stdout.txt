@@ -1,0 +1,18 @@
+patching file packages/wrangler/e2e/provision.test.ts
+patching file packages/wrangler/src/__tests__/provision.test.ts
+
+ RUN  v2.1.8 /workspace/repo/packages/wrangler
+
+Sourcemap for "/workspace/repo/packages/miniflare/dist/src/index.js" points to missing source files
+(node:99) ExperimentalWarning: buffer.File is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ src/__tests__/provision.test.ts (12 tests) 1391ms
+
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  15:26:28
+   Duration  6.71s (transform 2.61s, setup 356ms, collect 4.41s, tests 1.39s, environment 0ms, prepare 164ms)
+
+ HTML  Report is generated
+       You can run npx vite preview --outDir .e2e-test-report to see the test results.
+reward=1 graded=12 found=0 failed=0 parsed=0 framework=vitest exit_code=0

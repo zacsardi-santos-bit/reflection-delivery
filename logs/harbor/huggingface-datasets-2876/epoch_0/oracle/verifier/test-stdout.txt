@@ -1,0 +1,28 @@
+patching file tests/test_streaming_download_manager.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: xdist-3.8.0
+collecting ... collected 50 items / 40 deselected / 10 selected
+
+tests/test_streaming_download_manager.py::test_xpathglob[tmp_path-*.txt-expected_paths0] PASSED [ 10%]
+tests/test_streaming_download_manager.py::test_xpathglob[mock://-*-expected_paths1] PASSED [ 20%]
+tests/test_streaming_download_manager.py::test_xpathglob[mock://-top_*-expected_paths2] PASSED [ 30%]
+tests/test_streaming_download_manager.py::test_xpathglob[mock://top_level/second_level-date=2019-10-0[1-4]-expected_paths3] PASSED [ 40%]
+tests/test_streaming_download_manager.py::test_xpathglob[mock://top_level/second_level-date=2019-10-0[1-4]/*-expected_paths4] PASSED [ 50%]
+tests/test_streaming_download_manager.py::test_xpathrglob[tmp_path-*.txt-expected_paths0] PASSED [ 60%]
+tests/test_streaming_download_manager.py::test_xpathrglob[mock://-date=2019-10-0[1-4]-expected_paths1] PASSED [ 70%]
+tests/test_streaming_download_manager.py::test_xpathrglob[mock://top_level-date=2019-10-0[1-4]-expected_paths2] PASSED [ 80%]
+tests/test_streaming_download_manager.py::test_xpathrglob[mock://-date=2019-10-0[1-4]/*-expected_paths3] PASSED [ 90%]
+tests/test_streaming_download_manager.py::test_xpathrglob[mock://top_level-date=2019-10-0[1-4]/*-expected_paths4] PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.9/site-packages/fsspec/spec.py:92
+../../usr/local/lib/python3.9/site-packages/fsspec/spec.py:92
+  /usr/local/lib/python3.9/site-packages/fsspec/spec.py:92: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    if pa_version and LooseVersion(pa_version) < LooseVersion("2.0"):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================ 10 passed, 40 deselected, 2 warnings in 0.07s =================
+reward=1 graded=10 found=0 failed=0 parsed=50 framework=pytest exit_code=0

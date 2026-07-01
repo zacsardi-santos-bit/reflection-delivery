@@ -1,0 +1,9 @@
+patching file adapters/rubicon/rubicon_test.go
+patching file endpoints/openrtb2/auction_test.go
+# github.com/prebid/prebid-server/endpoints/openrtb2 [github.com/prebid/prebid-server/endpoints/openrtb2.test]
+/go/src/github.com/prebid/prebid-server/endpoints/openrtb2/auction_test.go:262:9: undefined: validateUser
+# github.com/prebid/prebid-server/adapters/rubicon [github.com/prebid/prebid-server/adapters/rubicon.test]
+/go/src/github.com/prebid/prebid-server/adapters/rubicon/rubicon_test.go:1024:15: userExt.DigiTrust undefined (type rubiconUserExt has no field or method DigiTrust)
+FAIL	github.com/prebid/prebid-server/adapters/rubicon [build failed]
+FAIL	github.com/prebid/prebid-server/endpoints/openrtb2 [build failed]
+reward=0 graded=32 found=32 failed=32 parsed=2 framework=go exit_code=1

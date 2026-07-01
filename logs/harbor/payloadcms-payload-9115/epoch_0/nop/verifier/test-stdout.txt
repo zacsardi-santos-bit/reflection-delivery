@@ -1,0 +1,90 @@
+patching file packages/db-mongodb/src/utilities/sanitizeRelationshipIDs.spec.ts
+patching file test/collections-rest/int.spec.ts
+patching file test/database/config.ts
+patching file test/database/int.spec.ts
+patching file test/helpers/seed.ts
+patching file test/package.json
+patching file test/relationships/config.ts
+patching file test/relationships/int.spec.ts
+patching file test/relationships/payload-types.ts
+jest-haste-map: Haste module naming collision: template-blank-3.0
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/templates/blank/package.json
+    * <rootDir>/templates/_template/package.json
+
+jest-haste-map: Haste module naming collision: payload-example-form-builder-website
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/examples/form-builder/next-pages/package.json
+    * <rootDir>/examples/form-builder/next-app/package.json
+
+
+Found 1 test suites.
+
+Wrote mongodb db adapter
+    [1m[31m[FAIL][0m sanitizeRelationshipIDs > should sanitize relationships [1m[30m(14ms)[0m
+Test case result: {
+  ancestorTitles: [ 'sanitizeRelationshipIDs' ],
+  duration: 14,
+  failureDetails: [ { matcherResult: [Object] } ],
+  failureMessages: [
+    'Error: expect(received).toBeInstanceOf(expected)\n' +
+      '\n' +
+      'Expected constructor: ObjectId\n' +
+      '\n' +
+      'Received value has no prototype\n' +
+      'Received value: "6a428dfef4cdb3d19770ef40"\n' +
+      '    at toBeInstanceOf (/workspace/repo/packages/db-mongodb/src/utilities/sanitizeRelationshipIDs.spec.ts:340:21)\n' +
+      '    at Array.forEach (<anonymous>)\n' +
+      '    at Object.forEach (/workspace/repo/packages/db-mongodb/src/utilities/sanitizeRelationshipIDs.spec.ts:339:24)\n' +
+      '    at Promise.then.completed (/workspace/repo/node_modules/.pnpm/jest-circus@29.7.0_babel-plugin-macros@3.1.0/node_modules/jest-circus/build/utils.js:298:28)\n' +
+      '    at new Promise (<anonymous>)\n' +
+      '    at callAsyncCircusFn (/workspace/repo/node_modules/.pnpm/jest-circus@29.7.0_babel-plugin-macros@3.1.0/node_modules/jest-circus/build/utils.js:231:10)\n' +
+      '    at _callCircusTest (/workspace/repo/node_modules/.pnpm/jest-circus@29.7.0_babel-plugin-macros@3.1.0/node_modules/jest-circus/build/run.js:316:40)\n' +
+      '    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n' +
+      '    at _runTest (/workspace/repo/node_modules/.pnpm/jest-circus@29.7.0_babel-plugin-macros@3.1.0/node_modules/jest-circus/build/run.js:252:3)\n' +
+      '    at _runTestsForDescribeBlock (/workspace/repo/node_modules/.pnpm/jest-circus@29.7.0_babel-plugin-macros@3.1.0/node_modules/jest-circus/build/run.js:126:9)\n' +
+      '    at _runTestsForDescribeBlock (/workspace/repo/node_modules/.pnpm/jest-circus@29.7.0_babel-plugin-macros@3.1.0/node_modules/jest-circus/build/run.js:121:9)\n' +
+      '    at run (/workspace/repo/node_modules/.pnpm/jest-circus@29.7.0_babel-plugin-macros@3.1.0/node_modules/jest-circus/build/run.js:71:3)\n' +
+      '    at runAndTransformResultsToJestFormat (/workspace/repo/node_modules/.pnpm/jest-circus@29.7.0_babel-plugin-macros@3.1.0/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n' +
+      '    at jestAdapter (/workspace/repo/node_modules/.pnpm/jest-circus@29.7.0_babel-plugin-macros@3.1.0/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n' +
+      '    at runTestInternal (/workspace/repo/node_modules/.pnpm/jest-runner@29.7.0/node_modules/jest-runner/build/runTest.js:367:16)\n' +
+      '    at runTest (/workspace/repo/node_modules/.pnpm/jest-runner@29.7.0/node_modules/jest-runner/build/runTest.js:444:34)'
+  ],
+  fullName: 'sanitizeRelationshipIDs should sanitize relationships',
+  invocations: 1,
+  location: null,
+  numPassingAsserts: 24,
+  retryReasons: [],
+  status: 'failed',
+  title: 'should sanitize relationships'
+}
+
+
+[1m[30mALL RESULTS[0m
+    [1m[31m[FAIL][0m sanitizeRelationshipIDs > should sanitize relationships [1m[30m(14ms)[0m
+  ● sanitizeRelationshipIDs › should sanitize relationships
+
+    expect(received).toBeInstanceOf(expected)
+
+    Expected constructor: ObjectId
+
+    Received value has no prototype
+    Received value: "6a428dfef4cdb3d19770ef40"
+
+      338 |
+      339 |     flattenValuesAfter.forEach((value, i) => {
+    > 340 |       expect(value).toBeInstanceOf(Types.ObjectId)
+          |                     ^
+      341 |       expect(flattenValuesBefore[i]).toBe(value.toHexString())
+      342 |     })
+      343 |   })
+
+      at toBeInstanceOf (packages/db-mongodb/src/utilities/sanitizeRelationshipIDs.spec.ts:340:21)
+          at Array.forEach (<anonymous>)
+      at Object.forEach (packages/db-mongodb/src/utilities/sanitizeRelationshipIDs.spec.ts:339:24)
+
+
+Executed 1 of 1 (skipped 0) FAILED (3.726 secs)
+TOTAL: 1 FAILED
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=jest exit_code=1

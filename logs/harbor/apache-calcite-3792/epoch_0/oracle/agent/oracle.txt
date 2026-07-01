@@ -1,0 +1,6 @@
+patching file core/src/main/java/org/apache/calcite/adapter/enumerable/RexImpTable.java
+patching file core/src/main/java/org/apache/calcite/runtime/SqlFunctions.java
+patching file core/src/main/java/org/apache/calcite/sql/SqlBasicFunction.java
+patching file core/src/main/java/org/apache/calcite/sql/fun/SqlLibraryOperators.java
+patching file core/src/main/java/org/apache/calcite/util/BuiltInMethod.java
+patching file core/src/main/java/org/apache/calcite/util/format/PostgresqlDateTimeFormatter.java

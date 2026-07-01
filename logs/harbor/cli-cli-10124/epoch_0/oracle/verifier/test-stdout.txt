@@ -1,0 +1,75 @@
+patching file pkg/cmd/repo/autolink/list/http_test.go
+patching file pkg/cmd/repo/autolink/list/list_test.go
+{"Time":"2026-06-29T15:32:19.609214664Z","Action":"start","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list"}
+{"Time":"2026-06-29T15:32:19.622716245Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List"}
+{"Time":"2026-06-29T15:32:19.622767589Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List","Output":"=== RUN   TestAutoLinkLister_List\n"}
+{"Time":"2026-06-29T15:32:19.622828707Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/no_autolinks"}
+{"Time":"2026-06-29T15:32:19.62283969Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/no_autolinks","Output":"=== RUN   TestAutoLinkLister_List/no_autolinks\n"}
+{"Time":"2026-06-29T15:32:19.623294125Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/no_autolinks","Output":"--- PASS: TestAutoLinkLister_List/no_autolinks (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.623322948Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/no_autolinks","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.623396939Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/two_autolinks"}
+{"Time":"2026-06-29T15:32:19.623468315Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/two_autolinks","Output":"=== RUN   TestAutoLinkLister_List/two_autolinks\n"}
+{"Time":"2026-06-29T15:32:19.623549777Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/two_autolinks","Output":"--- PASS: TestAutoLinkLister_List/two_autolinks (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.623567241Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/two_autolinks","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.623596484Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/http_error"}
+{"Time":"2026-06-29T15:32:19.623606881Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/http_error","Output":"=== RUN   TestAutoLinkLister_List/http_error\n"}
+{"Time":"2026-06-29T15:32:19.623622203Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/http_error","Output":"--- PASS: TestAutoLinkLister_List/http_error (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.623643604Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List/http_error","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.623654823Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List","Output":"--- PASS: TestAutoLinkLister_List (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.623673151Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestAutoLinkLister_List","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.623758543Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestJSONFields"}
+{"Time":"2026-06-29T15:32:19.623785695Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestJSONFields","Output":"=== RUN   TestJSONFields\n"}
+{"Time":"2026-06-29T15:32:19.623893276Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestJSONFields","Output":"--- PASS: TestJSONFields (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.623933948Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestJSONFields","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.623949011Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList"}
+{"Time":"2026-06-29T15:32:19.623973003Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList","Output":"=== RUN   TestNewCmdList\n"}
+{"Time":"2026-06-29T15:32:19.624014956Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/no_argument"}
+{"Time":"2026-06-29T15:32:19.624025486Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/no_argument","Output":"=== RUN   TestNewCmdList/no_argument\n"}
+{"Time":"2026-06-29T15:32:19.624162391Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/no_argument","Output":"--- PASS: TestNewCmdList/no_argument (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.62418864Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/no_argument","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.624200957Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/web_flag"}
+{"Time":"2026-06-29T15:32:19.624213634Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/web_flag","Output":"=== RUN   TestNewCmdList/web_flag\n"}
+{"Time":"2026-06-29T15:32:19.624238015Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/web_flag","Output":"--- PASS: TestNewCmdList/web_flag (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.624246636Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/web_flag","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.624264074Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/json_flag"}
+{"Time":"2026-06-29T15:32:19.624271928Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/json_flag","Output":"=== RUN   TestNewCmdList/json_flag\n"}
+{"Time":"2026-06-29T15:32:19.624289302Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/json_flag","Output":"--- PASS: TestNewCmdList/json_flag (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.624313231Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/json_flag","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.624323043Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/invalid_json_flag"}
+{"Time":"2026-06-29T15:32:19.624333058Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/invalid_json_flag","Output":"=== RUN   TestNewCmdList/invalid_json_flag\n"}
+{"Time":"2026-06-29T15:32:19.62527691Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/invalid_json_flag","Output":"--- PASS: TestNewCmdList/invalid_json_flag (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.625299061Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList/invalid_json_flag","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.625308777Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList","Output":"--- PASS: TestNewCmdList (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.625330708Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestNewCmdList","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.625347774Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun"}
+{"Time":"2026-06-29T15:32:19.625357067Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun","Output":"=== RUN   TestListRun\n"}
+{"Time":"2026-06-29T15:32:19.625365098Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_tty"}
+{"Time":"2026-06-29T15:32:19.62537228Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_tty","Output":"=== RUN   TestListRun/list_tty\n"}
+{"Time":"2026-06-29T15:32:19.625399783Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_tty","Output":"--- PASS: TestListRun/list_tty (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.625408043Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_tty","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.625417355Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_json"}
+{"Time":"2026-06-29T15:32:19.625425128Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_json","Output":"=== RUN   TestListRun/list_json\n"}
+{"Time":"2026-06-29T15:32:19.625437079Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_json","Output":"--- PASS: TestListRun/list_json (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.625450581Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_json","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.625467311Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_non-tty"}
+{"Time":"2026-06-29T15:32:19.625474254Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_non-tty","Output":"=== RUN   TestListRun/list_non-tty\n"}
+{"Time":"2026-06-29T15:32:19.625490605Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_non-tty","Output":"--- PASS: TestListRun/list_non-tty (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.625498669Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/list_non-tty","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.625511771Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/no_results"}
+{"Time":"2026-06-29T15:32:19.62552605Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/no_results","Output":"=== RUN   TestListRun/no_results\n"}
+{"Time":"2026-06-29T15:32:19.62554436Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/no_results","Output":"--- PASS: TestListRun/no_results (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.62556092Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/no_results","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.62557581Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/client_error"}
+{"Time":"2026-06-29T15:32:19.625583679Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/client_error","Output":"=== RUN   TestListRun/client_error\n"}
+{"Time":"2026-06-29T15:32:19.625604252Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/client_error","Output":"--- PASS: TestListRun/client_error (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.625615792Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/client_error","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.625623483Z","Action":"run","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/web_mode"}
+{"Time":"2026-06-29T15:32:19.625630179Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/web_mode","Output":"=== RUN   TestListRun/web_mode\n"}
+{"Time":"2026-06-29T15:32:19.625643904Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/web_mode","Output":"--- PASS: TestListRun/web_mode (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.625653145Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun/web_mode","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.625661954Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun","Output":"--- PASS: TestListRun (0.00s)\n"}
+{"Time":"2026-06-29T15:32:19.625704122Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Test":"TestListRun","Elapsed":0}
+{"Time":"2026-06-29T15:32:19.625712273Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:19.626367663Z","Action":"output","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Output":"ok  \tgithub.com/cli/cli/v2/pkg/cmd/repo/autolink/list\t0.017s\n"}
+{"Time":"2026-06-29T15:32:19.626394533Z","Action":"pass","Package":"github.com/cli/cli/v2/pkg/cmd/repo/autolink/list","Elapsed":0.017}
+reward=1 graded=17 found=17 failed=0 parsed=17 framework=go exit_code=0

@@ -1,0 +1,23 @@
+{
+ "task": "google-gemini-gemini-cli-9113",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden: 'argv.telemetry ?? parseBooleanEnvFlag(env[...]) ?? settings.enabled' and 'env[OTEL_EXPORTER_OTLP_ENDPOINT]' fallback + FatalConfigError match problem's precedence/error requirements"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 5,
+  "shallow": true
+ }
+}

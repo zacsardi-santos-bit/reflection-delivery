@@ -1,0 +1,5 @@
+I'm working on the Cairo compiler's smart contract compilation pipeline. When a contract is compiled from its source representation into its final executable compiled class, the output doesn't include any information about how the bytecode is organized into distinct segments. I'd like to add a field to the compiled contract class that captures the length of each bytecode segment, so that this structural metadata is part of the compiled output.
+
+Specifically, for contracts compiled using the current version of Sierra, this segment length information should always be present in the resulting compiled class. The field should be optional so that compiled classes from older Sierra versions can leave it absent, but for the current version it must be populated.
+
+The compiled class is produced by a function that takes a contract class and a boolean flag for pythonic hints. After this change, calling that function on a contract compiled with the current Sierra version should result in a compiled class where the bytecode segment lengths field is set and not empty.

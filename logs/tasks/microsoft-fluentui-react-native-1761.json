@@ -1,0 +1,23 @@
+{
+ "task": "microsoft-fluentui-react-native-1761",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden creates a new Notification component (Notification.tsx, useNotification.ts, styling, tokens, types); F2P incl 'does not invalidate styling' + 're-renders correctly' behavioral tests"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 3,
+  "shallow": true
+ }
+}

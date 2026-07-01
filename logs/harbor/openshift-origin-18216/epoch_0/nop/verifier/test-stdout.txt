@@ -1,0 +1,5 @@
+patching file vendor/k8s.io/kubernetes/pkg/controller/podautoscaler/horizontal_test.go
+# github.com/openshift/origin/vendor/k8s.io/kubernetes/pkg/controller/podautoscaler [github.com/openshift/origin/vendor/k8s.io/kubernetes/pkg/controller/podautoscaler.test]
+/go/src/github.com/openshift/origin/vendor/k8s.io/kubernetes/pkg/controller/podautoscaler/horizontal_test.go:1772:57: undefined: convertDesiredReplicasWithRules
+FAIL	github.com/openshift/origin/vendor/k8s.io/kubernetes/pkg/controller/podautoscaler [build failed]
+reward=0 graded=70 found=70 failed=70 parsed=1 framework=go exit_code=1

@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --profile ci -p boa_engine -E 'test(create_byte_data_block)'",
+  "test_files": [
+    "core/engine/src/builtins/array_buffer/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "boa_engine builtins::array_buffer::tests::create_byte_data_block"
+  ],
+  "PASS_TO_PASS": []
+}

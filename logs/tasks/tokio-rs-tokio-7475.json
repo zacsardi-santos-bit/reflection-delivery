@@ -1,0 +1,23 @@
+{
+ "task": "tokio-rs-tokio-7475",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds future adapter with_cancellation_token (new file future/with_cancellation_token.rs + future.rs + cancellation_token.rs) with borrowed+owned forms; F2P=12 incl 'pending_only_on_first_poll_with_cancellation_token_test','ready_fut_with_already_cancelled_token_owned_test' via 'cargo nextest "
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 2,
+  "shallow": true
+ }
+}

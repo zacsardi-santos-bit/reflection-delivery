@@ -1,0 +1,3 @@
+patching file .changelog/9758.txt
+patching file google/services/compute/resource_compute_instance_group_manager.go
+patching file google/services/compute/resource_compute_region_instance_group_manager.go

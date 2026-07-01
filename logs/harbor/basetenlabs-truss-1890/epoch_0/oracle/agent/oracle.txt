@@ -1,0 +1,6 @@
+patching file truss/base/constants.py
+patching file truss/cli/train/core.py
+patching file truss/cli/train/deploy_checkpoints/deploy_checkpoints.py
+patching file truss/cli/train_commands.py
+patching file truss/templates/train/config.py
+patching file truss/templates/train/run.sh

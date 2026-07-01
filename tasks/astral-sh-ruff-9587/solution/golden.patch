@@ -1,0 +1,1254 @@
+diff --git a/crates/ruff_linter/resources/test/fixtures/flake8_debugger/T100.py b/crates/ruff_linter/resources/test/fixtures/flake8_debugger/T100.py
+index 8154f1a4cd..d0f173db57 100644
+--- a/crates/ruff_linter/resources/test/fixtures/flake8_debugger/T100.py
++++ b/crates/ruff_linter/resources/test/fixtures/flake8_debugger/T100.py
+@@ -7,19 +7,7 @@ from pdb import set_trace as st
+ from celery.contrib.rdb import set_trace
+ from celery.contrib import rdb
+ import celery.contrib.rdb
+-from debugpy import wait_for_client
+-import debugpy
+-from ptvsd import break_into_debugger
+-from ptvsd import enable_attach
+-from ptvsd import wait_for_attach
+-import ptvsd
+ 
+ breakpoint()
+ st()
+ set_trace()
+-debugpy.breakpoint()
+-wait_for_client()
+-debugpy.listen(1234)
+-enable_attach()
+-break_into_debugger()
+-wait_for_attach()
+diff --git a/crates/ruff_linter/src/rules/flake8_debugger/rules/debugger.rs b/crates/ruff_linter/src/rules/flake8_debugger/rules/debugger.rs
+index 3656bbb52b..5cfc68a2bf 100644
+--- a/crates/ruff_linter/src/rules/flake8_debugger/rules/debugger.rs
++++ b/crates/ruff_linter/src/rules/flake8_debugger/rules/debugger.rs
+@@ -109,8 +109,6 @@ fn is_debugger_call(call_path: &CallPath) -> bool {
+             ]
+             | ["celery", "contrib", "rdb", "set_trace"]
+             | ["builtins" | "", "breakpoint"]
+-            | ["debugpy", "breakpoint" | "listen" | "wait_for_client"]
+-            | ["ptvsd", "break_into_debugger" | "wait_for_attach"]
+     )
+ }
+ 
+@@ -121,7 +119,7 @@ fn is_debugger_import(call_path: &CallPath) -> bool {
+     // than (e.g.) `import celery.contrib.rdb`.
+     matches!(
+         call_path.as_slice(),
+-        ["pdb" | "pudb" | "ipdb" | "debugpy" | "ptvsd"]
++        ["pdb" | "pudb" | "ipdb"]
+             | ["IPython", "terminal", "embed"]
+             | ["IPython", "frontend", "terminal", "embed",]
+             | ["celery", "contrib", "rdb"]
+diff --git a/crates/ruff_linter/src/rules/flake8_debugger/snapshots/ruff_linter__rules__flake8_debugger__tests__T100_T100.py.snap b/crates/ruff_linter/src/rules/flake8_debugger/snapshots/ruff_linter__rules__flake8_debugger__tests__T100_T100.py.snap
+index 9fe528f183..6bc248c15b 100644
+--- a/crates/ruff_linter/src/rules/flake8_debugger/snapshots/ruff_linter__rules__flake8_debugger__tests__T100_T100.py.snap
++++ b/crates/ruff_linter/src/rules/flake8_debugger/snapshots/ruff_linter__rules__flake8_debugger__tests__T100_T100.py.snap
+@@ -55,131 +55,34 @@ T100.py:9:1: T100 Import for `celery.contrib.rdb` found
+  8 | from celery.contrib import rdb
+  9 | import celery.contrib.rdb
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^ T100
+-10 | from debugpy import wait_for_client
+-11 | import debugpy
++10 | 
++11 | breakpoint()
+    |
+ 
+-T100.py:10:1: T100 Import for `debugpy.wait_for_client` found
+-   |
+- 8 | from celery.contrib import rdb
+- 9 | import celery.contrib.rdb
+-10 | from debugpy import wait_for_client
+-   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ T100
+-11 | import debugpy
+-12 | from ptvsd import break_into_debugger
+-   |
+-
+-T100.py:11:1: T100 Import for `debugpy` found
++T100.py:11:1: T100 Trace found: `builtins.breakpoint` used
+    |
+  9 | import celery.contrib.rdb
+-10 | from debugpy import wait_for_client
+-11 | import debugpy
+-   | ^^^^^^^^^^^^^^ T100
+-12 | from ptvsd import break_into_debugger
+-13 | from ptvsd import enable_attach
+-   |
+-
+-T100.py:12:1: T100 Import for `ptvsd.break_into_debugger` found
+-   |
+-10 | from debugpy import wait_for_client
+-11 | import debugpy
+-12 | from ptvsd import break_into_debugger
+-   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ T100
+-13 | from ptvsd import enable_attach
+-14 | from ptvsd import wait_for_attach
+-   |
+-
+-T100.py:14:1: T100 Import for `ptvsd.wait_for_attach` found
+-   |
+-12 | from ptvsd import break_into_debugger
+-13 | from ptvsd import enable_attach
+-14 | from ptvsd import wait_for_attach
+-   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ T100
+-15 | import ptvsd
+-   |
+-
+-T100.py:15:1: T100 Import for `ptvsd` found
+-   |
+-13 | from ptvsd import enable_attach
+-14 | from ptvsd import wait_for_attach
+-15 | import ptvsd
++10 | 
++11 | breakpoint()
+    | ^^^^^^^^^^^^ T100
+-16 | 
+-17 | breakpoint()
++12 | st()
++13 | set_trace()
+    |
+ 
+-T100.py:17:1: T100 Trace found: `builtins.breakpoint` used
+-   |
+-15 | import ptvsd
+-16 | 
+-17 | breakpoint()
+-   | ^^^^^^^^^^^^ T100
+-18 | st()
+-19 | set_trace()
++T100.py:12:1: T100 Trace found: `pdb.set_trace` used
+    |
+-
+-T100.py:18:1: T100 Trace found: `pdb.set_trace` used
+-   |
+-17 | breakpoint()
+-18 | st()
++11 | breakpoint()
++12 | st()
+    | ^^^^ T100
+-19 | set_trace()
+-20 | debugpy.breakpoint()
++13 | set_trace()
+    |
+ 
+-T100.py:19:1: T100 Trace found: `celery.contrib.rdb.set_trace` used
++T100.py:13:1: T100 Trace found: `celery.contrib.rdb.set_trace` used
+    |
+-17 | breakpoint()
+-18 | st()
+-19 | set_trace()
++11 | breakpoint()
++12 | st()
++13 | set_trace()
+    | ^^^^^^^^^^^ T100
+-20 | debugpy.breakpoint()
+-21 | wait_for_client()
+-   |
+-
+-T100.py:20:1: T100 Trace found: `debugpy.breakpoint` used
+-   |
+-18 | st()
+-19 | set_trace()
+-20 | debugpy.breakpoint()
+-   | ^^^^^^^^^^^^^^^^^^^^ T100
+-21 | wait_for_client()
+-22 | debugpy.listen(1234)
+    |
+ 
+-T100.py:21:1: T100 Trace found: `debugpy.wait_for_client` used
+-   |
+-19 | set_trace()
+-20 | debugpy.breakpoint()
+-21 | wait_for_client()
+-   | ^^^^^^^^^^^^^^^^^ T100
+-22 | debugpy.listen(1234)
+-23 | enable_attach()
+-   |
+ 
+-T100.py:22:1: T100 Trace found: `debugpy.listen` used
+-   |
+-20 | debugpy.breakpoint()
+-21 | wait_for_client()
+-22 | debugpy.listen(1234)
+-   | ^^^^^^^^^^^^^^^^^^^^ T100
+-23 | enable_attach()
+-24 | break_into_debugger()
+-   |
+-
+-T100.py:24:1: T100 Trace found: `ptvsd.break_into_debugger` used
+-   |
+-22 | debugpy.listen(1234)
+-23 | enable_attach()
+-24 | break_into_debugger()
+-   | ^^^^^^^^^^^^^^^^^^^^^ T100
+-25 | wait_for_attach()
+-   |
+-
+-T100.py:25:1: T100 Trace found: `ptvsd.wait_for_attach` used
+-   |
+-23 | enable_attach()
+-24 | break_into_debugger()
+-25 | wait_for_attach()
+-   | ^^^^^^^^^^^^^^^^^ T100
+-   |
+diff --git a/crates/ruff_linter/src/rules/pylint/rules/unnecessary_dunder_call.rs b/crates/ruff_linter/src/rules/pylint/rules/unnecessary_dunder_call.rs
+index c1e10eef8c..6af9bfe4e5 100644
+--- a/crates/ruff_linter/src/rules/pylint/rules/unnecessary_dunder_call.rs
++++ b/crates/ruff_linter/src/rules/pylint/rules/unnecessary_dunder_call.rs
+@@ -124,21 +124,30 @@ pub(crate) fn unnecessary_dunder_call(checker: &mut Checker, call: &ast::ExprCal
+                 title = Some(message.to_string());
+             }
+             ([arg], DunderReplacement::Operator(replacement, message)) => {
+-                fixed = Some(format!(
+-                    "{} {} {}",
+-                    checker.locator().slice(value.as_ref()),
+-                    replacement,
+-                    checker.locator().slice(arg),
+-                ));
++                let value_slice = checker.locator().slice(value.as_ref());
++                let arg_slice = checker.locator().slice(arg);
++
++                if can_be_represented_without_parentheses(arg) {
++                    // if it's something that can reasonably be removed from parentheses,
++                    // we'll do that.
++                    fixed = Some(format!("{value_slice} {replacement} {arg_slice}"));
++                } else {
++                    fixed = Some(format!("{value_slice} {replacement} ({arg_slice})"));
++                }
++
+                 title = Some(message.to_string());
+             }
+             ([arg], DunderReplacement::ROperator(replacement, message)) => {
+-                fixed = Some(format!(
+-                    "{} {} {}",
+-                    checker.locator().slice(arg),
+-                    replacement,
+-                    checker.locator().slice(value.as_ref()),
+-                ));
++                let value_slice = checker.locator().slice(value.as_ref());
++                let arg_slice = checker.locator().slice(arg);
++
++                if arg.is_attribute_expr() || arg.is_name_expr() || arg.is_literal_expr() {
++                    // if it's something that can reasonably be removed from parentheses,
++                    // we'll do that.
++                    fixed = Some(format!("{arg_slice} {replacement} {value_slice}"));
++                } else {
++                    fixed = Some(format!("({arg_slice}) {replacement} {value_slice}"));
++                }
+                 title = Some(message.to_string());
+             }
+             (_, DunderReplacement::MessageOnly(message)) => {
+@@ -156,8 +165,25 @@ pub(crate) fn unnecessary_dunder_call(checker: &mut Checker, call: &ast::ExprCal
+         call.range(),
+     );
+ 
+-    if let Some(fixed) = fixed {
+-        diagnostic.set_fix(Fix::safe_edit(Edit::range_replacement(fixed, call.range())));
++    if let Some(mut fixed) = fixed {
++        // by the looks of it, we don't need to wrap the expression in parens if
++        // it's the only argument to a call expression.
++        // being in any other kind of expression though, we *will* add parens.
++        // e.g. `print(a.__add__(3))` -> `print(a + 3)` instead of `print((a + 3))`
++        // a multiplication expression example: `x = 2 * a.__add__(3)` -> `x = 2 * (a + 3)`
++        let wrap_in_paren = checker
++            .semantic()
++            .current_expression_parent()
++            .is_some_and(|parent| !can_be_represented_without_parentheses(parent));
++
++        if wrap_in_paren {
++            fixed = format!("({fixed})");
++        }
++
++        diagnostic.set_fix(Fix::unsafe_edit(Edit::range_replacement(
++            fixed,
++            call.range(),
++        )));
+     };
+ 
+     checker.diagnostics.push(diagnostic);
+@@ -358,3 +384,24 @@ fn in_dunder_method_definition(semantic: &SemanticModel) -> bool {
+         func_def.name.starts_with("__") && func_def.name.ends_with("__")
+     })
+ }
++
++/// Returns `true` if the [`Expr`] can be represented without parentheses.
++fn can_be_represented_without_parentheses(expr: &Expr) -> bool {
++    expr.is_attribute_expr()
++        || expr.is_name_expr()
++        || expr.is_literal_expr()
++        || expr.is_call_expr()
++        || expr.is_lambda_expr()
++        || expr.is_if_exp_expr()
++        || expr.is_generator_exp_expr()
++        || expr.is_subscript_expr()
++        || expr.is_starred_expr()
++        || expr.is_slice_expr()
++        || expr.is_dict_expr()
++        || expr.is_dict_comp_expr()
++        || expr.is_list_expr()
++        || expr.is_list_comp_expr()
++        || expr.is_tuple_expr()
++        || expr.is_set_comp_expr()
++        || expr.is_set_expr()
++}
+diff --git a/crates/ruff_linter/src/rules/pylint/snapshots/ruff_linter__rules__pylint__tests__PLC2801_unnecessary_dunder_call.py.snap b/crates/ruff_linter/src/rules/pylint/snapshots/ruff_linter__rules__pylint__tests__PLC2801_unnecessary_dunder_call.py.snap
+index d8a2c8f1d4..48923d03a1 100644
+--- a/crates/ruff_linter/src/rules/pylint/snapshots/ruff_linter__rules__pylint__tests__PLC2801_unnecessary_dunder_call.py.snap
++++ b/crates/ruff_linter/src/rules/pylint/snapshots/ruff_linter__rules__pylint__tests__PLC2801_unnecessary_dunder_call.py.snap
+@@ -3,6 +3,7 @@ source: crates/ruff_linter/src/rules/pylint/mod.rs
+ ---
+ unnecessary_dunder_call.py:4:7: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
+   |
++3 | a = 2
+ 4 | print((3.0).__add__(4.0))  # PLC2801
+   |       ^^^^^^^^^^^^^^^^^^ PLC2801
+ 5 | print((3.0).__sub__(4.0))  # PLC2801
+@@ -10,10 +11,10 @@ unnecessary_dunder_call.py:4:7: PLC2801 [*] Unnecessary dunder call to `__add__`
+   |
+   = help: Use `+` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 1 1 | from typing import Any
+ 2 2 | 
+-3 3 | 
++3 3 | a = 2
+ 4   |-print((3.0).__add__(4.0))  # PLC2801
+   4 |+print(3.0 + 4.0)  # PLC2801
+ 5 5 | print((3.0).__sub__(4.0))  # PLC2801
+@@ -22,6 +23,7 @@ unnecessary_dunder_call.py:4:7: PLC2801 [*] Unnecessary dunder call to `__add__`
+ 
+ unnecessary_dunder_call.py:5:7: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
+   |
++3 | a = 2
+ 4 | print((3.0).__add__(4.0))  # PLC2801
+ 5 | print((3.0).__sub__(4.0))  # PLC2801
+   |       ^^^^^^^^^^^^^^^^^^ PLC2801
+@@ -30,9 +32,9 @@ unnecessary_dunder_call.py:5:7: PLC2801 [*] Unnecessary dunder call to `__sub__`
+   |
+   = help: Use `-` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 2 2 | 
+-3 3 | 
++3 3 | a = 2
+ 4 4 | print((3.0).__add__(4.0))  # PLC2801
+ 5   |-print((3.0).__sub__(4.0))  # PLC2801
+   5 |+print(3.0 - 4.0)  # PLC2801
+@@ -51,8 +53,8 @@ unnecessary_dunder_call.py:6:7: PLC2801 [*] Unnecessary dunder call to `__mul__`
+   |
+   = help: Use `*` operator
+ 
+-ℹ Safe fix
+-3 3 | 
++ℹ Unsafe fix
++3 3 | a = 2
+ 4 4 | print((3.0).__add__(4.0))  # PLC2801
+ 5 5 | print((3.0).__sub__(4.0))  # PLC2801
+ 6   |-print((3.0).__mul__(4.0))  # PLC2801
+@@ -72,7 +74,7 @@ unnecessary_dunder_call.py:7:7: PLC2801 [*] Unnecessary dunder call to `__truedi
+   |
+   = help: Use `/` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 4 4 | print((3.0).__add__(4.0))  # PLC2801
+ 5 5 | print((3.0).__sub__(4.0))  # PLC2801
+ 6 6 | print((3.0).__mul__(4.0))  # PLC2801
+@@ -93,7 +95,7 @@ unnecessary_dunder_call.py:8:7: PLC2801 [*] Unnecessary dunder call to `__floord
+    |
+    = help: Use `//` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 5 5 | print((3.0).__sub__(4.0))  # PLC2801
+ 6 6 | print((3.0).__mul__(4.0))  # PLC2801
+ 7 7 | print((3.0).__truediv__(4.0))  # PLC2801
+@@ -114,7 +116,7 @@ unnecessary_dunder_call.py:9:7: PLC2801 [*] Unnecessary dunder call to `__mod__`
+    |
+    = help: Use `%` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 6  6  | print((3.0).__mul__(4.0))  # PLC2801
+ 7  7  | print((3.0).__truediv__(4.0))  # PLC2801
+ 8  8  | print((3.0).__floordiv__(4.0))  # PLC2801
+@@ -135,7 +137,7 @@ unnecessary_dunder_call.py:10:7: PLC2801 [*] Unnecessary dunder call to `__eq__`
+    |
+    = help: Use `==` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 7  7  | print((3.0).__truediv__(4.0))  # PLC2801
+ 8  8  | print((3.0).__floordiv__(4.0))  # PLC2801
+ 9  9  | print((3.0).__mod__(4.0))  # PLC2801
+@@ -156,7 +158,7 @@ unnecessary_dunder_call.py:11:7: PLC2801 [*] Unnecessary dunder call to `__ne__`
+    |
+    = help: Use `!=` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 8  8  | print((3.0).__floordiv__(4.0))  # PLC2801
+ 9  9  | print((3.0).__mod__(4.0))  # PLC2801
+ 10 10 | print((3.0).__eq__(4.0))  # PLC2801
+@@ -177,7 +179,7 @@ unnecessary_dunder_call.py:12:7: PLC2801 [*] Unnecessary dunder call to `__lt__`
+    |
+    = help: Use `<` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 9  9  | print((3.0).__mod__(4.0))  # PLC2801
+ 10 10 | print((3.0).__eq__(4.0))  # PLC2801
+ 11 11 | print((3.0).__ne__(4.0))  # PLC2801
+@@ -198,7 +200,7 @@ unnecessary_dunder_call.py:13:7: PLC2801 [*] Unnecessary dunder call to `__le__`
+    |
+    = help: Use `<=` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 10 10 | print((3.0).__eq__(4.0))  # PLC2801
+ 11 11 | print((3.0).__ne__(4.0))  # PLC2801
+ 12 12 | print((3.0).__lt__(4.0))  # PLC2801
+@@ -219,7 +221,7 @@ unnecessary_dunder_call.py:14:7: PLC2801 [*] Unnecessary dunder call to `__gt__`
+    |
+    = help: Use `>` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 11 11 | print((3.0).__ne__(4.0))  # PLC2801
+ 12 12 | print((3.0).__lt__(4.0))  # PLC2801
+ 13 13 | print((3.0).__le__(4.0))  # PLC2801
+@@ -240,7 +242,7 @@ unnecessary_dunder_call.py:15:7: PLC2801 [*] Unnecessary dunder call to `__ge__`
+    |
+    = help: Use `>=` operator
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 12 12 | print((3.0).__lt__(4.0))  # PLC2801
+ 13 13 | print((3.0).__le__(4.0))  # PLC2801
+ 14 14 | print((3.0).__gt__(4.0))  # PLC2801
+@@ -261,7 +263,7 @@ unnecessary_dunder_call.py:16:7: PLC2801 [*] Unnecessary dunder call to `__str__
+    |
+    = help: Use `str()` builtin
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 13 13 | print((3.0).__le__(4.0))  # PLC2801
+ 14 14 | print((3.0).__gt__(4.0))  # PLC2801
+ 15 15 | print((3.0).__ge__(4.0))  # PLC2801
+@@ -282,7 +284,7 @@ unnecessary_dunder_call.py:17:7: PLC2801 [*] Unnecessary dunder call to `__repr_
+    |
+    = help: Use `repr()` builtin
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 14 14 | print((3.0).__gt__(4.0))  # PLC2801
+ 15 15 | print((3.0).__ge__(4.0))  # PLC2801
+ 16 16 | print((3.0).__str__())  # PLC2801
+@@ -290,7 +292,7 @@ unnecessary_dunder_call.py:17:7: PLC2801 [*] Unnecessary dunder call to `__repr_
+    17 |+print(repr(3.0))  # PLC2801
+ 18 18 | print([1, 2, 3].__len__())  # PLC2801
+ 19 19 | print((1).__neg__())  # PLC2801
+-20 20 | 
++20 20 | print(-a.__sub__(1))  # PLC2801
+ 
+ unnecessary_dunder_call.py:18:7: PLC2801 [*] Unnecessary dunder call to `__len__`. Use `len()` builtin.
+    |
+@@ -299,18 +301,19 @@ unnecessary_dunder_call.py:18:7: PLC2801 [*] Unnecessary dunder call to `__len__
+ 18 | print([1, 2, 3].__len__())  # PLC2801
+    |       ^^^^^^^^^^^^^^^^^^^ PLC2801
+ 19 | print((1).__neg__())  # PLC2801
++20 | print(-a.__sub__(1))  # PLC2801
+    |
+    = help: Use `len()` builtin
+ 
+-ℹ Safe fix
++ℹ Unsafe fix
+ 15 15 | print((3.0).__ge__(4.0))  # PLC2801
+ 16 16 | print((3.0).__str__())  # PLC2801
+ 17 17 | print((3.0).__repr__())  # PLC2801
+ 18    |-print([1, 2, 3].__len__())  # PLC2801
+    18 |+print(len([1, 2, 3]))  # PLC2801
+ 19 19 | print((1).__neg__())  # PLC2801
+-20 20 | 
+-21 21 | 
++20 20 | print(-a.__sub__(1))  # PLC2801
++21 21 | print(-(a).__sub__(1))  # PLC2801
+ 
+ unnecessary_dunder_call.py:19:7: PLC2801 Unnecessary dunder call to `__neg__`. Multiply by -1 instead.
+    |
+@@ -318,16 +321,764 @@ unnecessary_dunder_call.py:19:7: PLC2801 Unnecessary dunder call to `__neg__`. M
+ 18 | print([1, 2, 3].__len__())  # PLC2801
+ 19 | print((1).__neg__())  # PLC2801
+    |       ^^^^^^^^^^^^^ PLC2801
++20 | print(-a.__sub__(1))  # PLC2801
++21 | print(-(a).__sub__(1))  # PLC2801
+    |
+    = help: Multiply by -1 instead
+ 
+-unnecessary_dunder_call.py:31:16: PLC2801 Unnecessary dunder call to `__getattribute__`. Access attribute directly or use getattr built-in function.
++unnecessary_dunder_call.py:20:8: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
+    |
+-30 |     def do_thing(self, item):
+-31 |         return object.__getattribute__(self, item)  # PLC2801
++18 | print([1, 2, 3].__len__())  # PLC2801
++19 | print((1).__neg__())  # PLC2801
++20 | print(-a.__sub__(1))  # PLC2801
++   |        ^^^^^^^^^^^^ PLC2801
++21 | print(-(a).__sub__(1))  # PLC2801
++22 | print(-(-a.__sub__(1)))  # PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++17 17 | print((3.0).__repr__())  # PLC2801
++18 18 | print([1, 2, 3].__len__())  # PLC2801
++19 19 | print((1).__neg__())  # PLC2801
++20    |-print(-a.__sub__(1))  # PLC2801
++   20 |+print(-(a - 1))  # PLC2801
++21 21 | print(-(a).__sub__(1))  # PLC2801
++22 22 | print(-(-a.__sub__(1)))  # PLC2801
++23 23 | print((5 - a).__sub__(1))  # PLC2801
++
++unnecessary_dunder_call.py:21:8: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++19 | print((1).__neg__())  # PLC2801
++20 | print(-a.__sub__(1))  # PLC2801
++21 | print(-(a).__sub__(1))  # PLC2801
++   |        ^^^^^^^^^^^^^^ PLC2801
++22 | print(-(-a.__sub__(1)))  # PLC2801
++23 | print((5 - a).__sub__(1))  # PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++18 18 | print([1, 2, 3].__len__())  # PLC2801
++19 19 | print((1).__neg__())  # PLC2801
++20 20 | print(-a.__sub__(1))  # PLC2801
++21    |-print(-(a).__sub__(1))  # PLC2801
++   21 |+print(-(a - 1))  # PLC2801
++22 22 | print(-(-a.__sub__(1)))  # PLC2801
++23 23 | print((5 - a).__sub__(1))  # PLC2801
++24 24 | print(-(5 - a).__sub__(1))  # PLC2801
++
++unnecessary_dunder_call.py:22:10: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++20 | print(-a.__sub__(1))  # PLC2801
++21 | print(-(a).__sub__(1))  # PLC2801
++22 | print(-(-a.__sub__(1)))  # PLC2801
++   |          ^^^^^^^^^^^^ PLC2801
++23 | print((5 - a).__sub__(1))  # PLC2801
++24 | print(-(5 - a).__sub__(1))  # PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++19 19 | print((1).__neg__())  # PLC2801
++20 20 | print(-a.__sub__(1))  # PLC2801
++21 21 | print(-(a).__sub__(1))  # PLC2801
++22    |-print(-(-a.__sub__(1)))  # PLC2801
++   22 |+print(-(-(a - 1)))  # PLC2801
++23 23 | print((5 - a).__sub__(1))  # PLC2801
++24 24 | print(-(5 - a).__sub__(1))  # PLC2801
++25 25 | print(-(-5 - a).__sub__(1))  # PLC2801
++
++unnecessary_dunder_call.py:23:7: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++21 | print(-(a).__sub__(1))  # PLC2801
++22 | print(-(-a.__sub__(1)))  # PLC2801
++23 | print((5 - a).__sub__(1))  # PLC2801
++   |       ^^^^^^^^^^^^^^^^^^ PLC2801
++24 | print(-(5 - a).__sub__(1))  # PLC2801
++25 | print(-(-5 - a).__sub__(1))  # PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++20 20 | print(-a.__sub__(1))  # PLC2801
++21 21 | print(-(a).__sub__(1))  # PLC2801
++22 22 | print(-(-a.__sub__(1)))  # PLC2801
++23    |-print((5 - a).__sub__(1))  # PLC2801
++   23 |+print(5 - a - 1)  # PLC2801
++24 24 | print(-(5 - a).__sub__(1))  # PLC2801
++25 25 | print(-(-5 - a).__sub__(1))  # PLC2801
++26 26 | print(+-+-+-a.__sub__(1))  # PLC2801
++
++unnecessary_dunder_call.py:24:8: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++22 | print(-(-a.__sub__(1)))  # PLC2801
++23 | print((5 - a).__sub__(1))  # PLC2801
++24 | print(-(5 - a).__sub__(1))  # PLC2801
++   |        ^^^^^^^^^^^^^^^^^^ PLC2801
++25 | print(-(-5 - a).__sub__(1))  # PLC2801
++26 | print(+-+-+-a.__sub__(1))  # PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++21 21 | print(-(a).__sub__(1))  # PLC2801
++22 22 | print(-(-a.__sub__(1)))  # PLC2801
++23 23 | print((5 - a).__sub__(1))  # PLC2801
++24    |-print(-(5 - a).__sub__(1))  # PLC2801
++   24 |+print(-(5 - a - 1))  # PLC2801
++25 25 | print(-(-5 - a).__sub__(1))  # PLC2801
++26 26 | print(+-+-+-a.__sub__(1))  # PLC2801
++27 27 | print(a.__rsub__(2 - 1))  # PLC2801
++
++unnecessary_dunder_call.py:25:8: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++23 | print((5 - a).__sub__(1))  # PLC2801
++24 | print(-(5 - a).__sub__(1))  # PLC2801
++25 | print(-(-5 - a).__sub__(1))  # PLC2801
++   |        ^^^^^^^^^^^^^^^^^^^ PLC2801
++26 | print(+-+-+-a.__sub__(1))  # PLC2801
++27 | print(a.__rsub__(2 - 1))  # PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++22 22 | print(-(-a.__sub__(1)))  # PLC2801
++23 23 | print((5 - a).__sub__(1))  # PLC2801
++24 24 | print(-(5 - a).__sub__(1))  # PLC2801
++25    |-print(-(-5 - a).__sub__(1))  # PLC2801
++   25 |+print(-(-5 - a - 1))  # PLC2801
++26 26 | print(+-+-+-a.__sub__(1))  # PLC2801
++27 27 | print(a.__rsub__(2 - 1))  # PLC2801
++28 28 | print(a.__sub__(((((1))))))  # PLC2801
++
++unnecessary_dunder_call.py:26:13: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++24 | print(-(5 - a).__sub__(1))  # PLC2801
++25 | print(-(-5 - a).__sub__(1))  # PLC2801
++26 | print(+-+-+-a.__sub__(1))  # PLC2801
++   |             ^^^^^^^^^^^^ PLC2801
++27 | print(a.__rsub__(2 - 1))  # PLC2801
++28 | print(a.__sub__(((((1))))))  # PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++23 23 | print((5 - a).__sub__(1))  # PLC2801
++24 24 | print(-(5 - a).__sub__(1))  # PLC2801
++25 25 | print(-(-5 - a).__sub__(1))  # PLC2801
++26    |-print(+-+-+-a.__sub__(1))  # PLC2801
++   26 |+print(+-+-+-(a - 1))  # PLC2801
++27 27 | print(a.__rsub__(2 - 1))  # PLC2801
++28 28 | print(a.__sub__(((((1))))))  # PLC2801
++29 29 | print(a.__sub__(((((2 - 1))))))  # PLC2801
++
++unnecessary_dunder_call.py:27:7: PLC2801 [*] Unnecessary dunder call to `__rsub__`. Use `-` operator.
++   |
++25 | print(-(-5 - a).__sub__(1))  # PLC2801
++26 | print(+-+-+-a.__sub__(1))  # PLC2801
++27 | print(a.__rsub__(2 - 1))  # PLC2801
++   |       ^^^^^^^^^^^^^^^^^ PLC2801
++28 | print(a.__sub__(((((1))))))  # PLC2801
++29 | print(a.__sub__(((((2 - 1))))))  # PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++24 24 | print(-(5 - a).__sub__(1))  # PLC2801
++25 25 | print(-(-5 - a).__sub__(1))  # PLC2801
++26 26 | print(+-+-+-a.__sub__(1))  # PLC2801
++27    |-print(a.__rsub__(2 - 1))  # PLC2801
++   27 |+print((2 - 1) - a)  # PLC2801
++28 28 | print(a.__sub__(((((1))))))  # PLC2801
++29 29 | print(a.__sub__(((((2 - 1))))))  # PLC2801
++30 30 | print(a.__sub__(
++
++unnecessary_dunder_call.py:28:7: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++26 | print(+-+-+-a.__sub__(1))  # PLC2801
++27 | print(a.__rsub__(2 - 1))  # PLC2801
++28 | print(a.__sub__(((((1))))))  # PLC2801
++   |       ^^^^^^^^^^^^^^^^^^^^ PLC2801
++29 | print(a.__sub__(((((2 - 1))))))  # PLC2801
++30 | print(a.__sub__(
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++25 25 | print(-(-5 - a).__sub__(1))  # PLC2801
++26 26 | print(+-+-+-a.__sub__(1))  # PLC2801
++27 27 | print(a.__rsub__(2 - 1))  # PLC2801
++28    |-print(a.__sub__(((((1))))))  # PLC2801
++   28 |+print(a - 1)  # PLC2801
++29 29 | print(a.__sub__(((((2 - 1))))))  # PLC2801
++30 30 | print(a.__sub__(
++31 31 |     3
++
++unnecessary_dunder_call.py:29:7: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++27 | print(a.__rsub__(2 - 1))  # PLC2801
++28 | print(a.__sub__(((((1))))))  # PLC2801
++29 | print(a.__sub__(((((2 - 1))))))  # PLC2801
++   |       ^^^^^^^^^^^^^^^^^^^^^^^^ PLC2801
++30 | print(a.__sub__(
++31 |     3
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++26 26 | print(+-+-+-a.__sub__(1))  # PLC2801
++27 27 | print(a.__rsub__(2 - 1))  # PLC2801
++28 28 | print(a.__sub__(((((1))))))  # PLC2801
++29    |-print(a.__sub__(((((2 - 1))))))  # PLC2801
++   29 |+print(a - (2 - 1))  # PLC2801
++30 30 | print(a.__sub__(
++31 31 |     3
++32 32 |     +
++
++unnecessary_dunder_call.py:30:7: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++28 |   print(a.__sub__(((((1))))))  # PLC2801
++29 |   print(a.__sub__(((((2 - 1))))))  # PLC2801
++30 |   print(a.__sub__(
++   |  _______^
++31 | |     3
++32 | |     +
++33 | |     4
++34 | | ))
++   | |_^ PLC2801
++35 |   print(a.__rsub__(
++36 |       3
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++27 27 | print(a.__rsub__(2 - 1))  # PLC2801
++28 28 | print(a.__sub__(((((1))))))  # PLC2801
++29 29 | print(a.__sub__(((((2 - 1))))))  # PLC2801
++30    |-print(a.__sub__(
++31    |-    3
++   30 |+print(a - (3
++32 31 |     +
++33    |-    4
++34    |-))
++   32 |+    4))
++35 33 | print(a.__rsub__(
++36 34 |     3
++37 35 |     +
++
++unnecessary_dunder_call.py:35:7: PLC2801 [*] Unnecessary dunder call to `__rsub__`. Use `-` operator.
++   |
++33 |       4
++34 |   ))
++35 |   print(a.__rsub__(
++   |  _______^
++36 | |     3
++37 | |     +
++38 | |     4
++39 | | ))
++   | |_^ PLC2801
++40 |   print(2 * a.__add__(3))  # PLC2801
++41 |   x = 2 * a.__add__(3)  # PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++32 32 |     +
++33 33 |     4
++34 34 | ))
++35    |-print(a.__rsub__(
++36    |-    3
++   35 |+print((3
++37 36 |     +
++38    |-    4
++39    |-))
++   37 |+    4) - a)
++40 38 | print(2 * a.__add__(3))  # PLC2801
++41 39 | x = 2 * a.__add__(3)  # PLC2801
++42 40 | x = 2 * -a.__add__(3)  # PLC2801
++
++unnecessary_dunder_call.py:40:11: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++38 |     4
++39 | ))
++40 | print(2 * a.__add__(3))  # PLC2801
++   |           ^^^^^^^^^^^^ PLC2801
++41 | x = 2 * a.__add__(3)  # PLC2801
++42 | x = 2 * -a.__add__(3)  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++37 37 |     +
++38 38 |     4
++39 39 | ))
++40    |-print(2 * a.__add__(3))  # PLC2801
++   40 |+print(2 * (a + 3))  # PLC2801
++41 41 | x = 2 * a.__add__(3)  # PLC2801
++42 42 | x = 2 * -a.__add__(3)  # PLC2801
++43 43 | x = a.__add__(3)  # PLC2801
++
++unnecessary_dunder_call.py:41:9: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++39 | ))
++40 | print(2 * a.__add__(3))  # PLC2801
++41 | x = 2 * a.__add__(3)  # PLC2801
++   |         ^^^^^^^^^^^^ PLC2801
++42 | x = 2 * -a.__add__(3)  # PLC2801
++43 | x = a.__add__(3)  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++38 38 |     4
++39 39 | ))
++40 40 | print(2 * a.__add__(3))  # PLC2801
++41    |-x = 2 * a.__add__(3)  # PLC2801
++   41 |+x = 2 * (a + 3)  # PLC2801
++42 42 | x = 2 * -a.__add__(3)  # PLC2801
++43 43 | x = a.__add__(3)  # PLC2801
++44 44 | x = -a.__add__(3)  # PLC2801
++
++unnecessary_dunder_call.py:42:10: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++40 | print(2 * a.__add__(3))  # PLC2801
++41 | x = 2 * a.__add__(3)  # PLC2801
++42 | x = 2 * -a.__add__(3)  # PLC2801
++   |          ^^^^^^^^^^^^ PLC2801
++43 | x = a.__add__(3)  # PLC2801
++44 | x = -a.__add__(3)  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++39 39 | ))
++40 40 | print(2 * a.__add__(3))  # PLC2801
++41 41 | x = 2 * a.__add__(3)  # PLC2801
++42    |-x = 2 * -a.__add__(3)  # PLC2801
++   42 |+x = 2 * -(a + 3)  # PLC2801
++43 43 | x = a.__add__(3)  # PLC2801
++44 44 | x = -a.__add__(3)  # PLC2801
++45 45 | x = (-a).__add__(3)  # PLC2801
++
++unnecessary_dunder_call.py:43:5: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++41 | x = 2 * a.__add__(3)  # PLC2801
++42 | x = 2 * -a.__add__(3)  # PLC2801
++43 | x = a.__add__(3)  # PLC2801
++   |     ^^^^^^^^^^^^ PLC2801
++44 | x = -a.__add__(3)  # PLC2801
++45 | x = (-a).__add__(3)  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++40 40 | print(2 * a.__add__(3))  # PLC2801
++41 41 | x = 2 * a.__add__(3)  # PLC2801
++42 42 | x = 2 * -a.__add__(3)  # PLC2801
++43    |-x = a.__add__(3)  # PLC2801
++   43 |+x = a + 3  # PLC2801
++44 44 | x = -a.__add__(3)  # PLC2801
++45 45 | x = (-a).__add__(3)  # PLC2801
++46 46 | x = -(-a).__add__(3)  # PLC2801
++
++unnecessary_dunder_call.py:44:6: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++42 | x = 2 * -a.__add__(3)  # PLC2801
++43 | x = a.__add__(3)  # PLC2801
++44 | x = -a.__add__(3)  # PLC2801
++   |      ^^^^^^^^^^^^ PLC2801
++45 | x = (-a).__add__(3)  # PLC2801
++46 | x = -(-a).__add__(3)  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++41 41 | x = 2 * a.__add__(3)  # PLC2801
++42 42 | x = 2 * -a.__add__(3)  # PLC2801
++43 43 | x = a.__add__(3)  # PLC2801
++44    |-x = -a.__add__(3)  # PLC2801
++   44 |+x = -(a + 3)  # PLC2801
++45 45 | x = (-a).__add__(3)  # PLC2801
++46 46 | x = -(-a).__add__(3)  # PLC2801
++47 47 | 
++
++unnecessary_dunder_call.py:45:5: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++43 | x = a.__add__(3)  # PLC2801
++44 | x = -a.__add__(3)  # PLC2801
++45 | x = (-a).__add__(3)  # PLC2801
++   |     ^^^^^^^^^^^^^^^ PLC2801
++46 | x = -(-a).__add__(3)  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++42 42 | x = 2 * -a.__add__(3)  # PLC2801
++43 43 | x = a.__add__(3)  # PLC2801
++44 44 | x = -a.__add__(3)  # PLC2801
++45    |-x = (-a).__add__(3)  # PLC2801
++   45 |+x = -a + 3  # PLC2801
++46 46 | x = -(-a).__add__(3)  # PLC2801
++47 47 | 
++48 48 | # Calls
++
++unnecessary_dunder_call.py:46:6: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++44 | x = -a.__add__(3)  # PLC2801
++45 | x = (-a).__add__(3)  # PLC2801
++46 | x = -(-a).__add__(3)  # PLC2801
++   |      ^^^^^^^^^^^^^^^ PLC2801
++47 | 
++48 | # Calls
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++43 43 | x = a.__add__(3)  # PLC2801
++44 44 | x = -a.__add__(3)  # PLC2801
++45 45 | x = (-a).__add__(3)  # PLC2801
++46    |-x = -(-a).__add__(3)  # PLC2801
++   46 |+x = -(-a + 3)  # PLC2801
++47 47 | 
++48 48 | # Calls
++49 49 | print(a.__call__())  # PLC2801 (no fix, intentional)
++
++unnecessary_dunder_call.py:49:7: PLC2801 Unnecessary dunder call to `__call__`
++   |
++48 | # Calls
++49 | print(a.__call__())  # PLC2801 (no fix, intentional)
++   |       ^^^^^^^^^^^^ PLC2801
++50 | 
++51 | # Lambda expressions
++   |
++
++unnecessary_dunder_call.py:52:16: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++51 | # Lambda expressions
++52 | blah = lambda: a.__add__(1)  # PLC2801
++   |                ^^^^^^^^^^^^ PLC2801
++53 | 
++54 | # If expressions
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++49 49 | print(a.__call__())  # PLC2801 (no fix, intentional)
++50 50 | 
++51 51 | # Lambda expressions
++52    |-blah = lambda: a.__add__(1)  # PLC2801
++   52 |+blah = lambda: a + 1  # PLC2801
++53 53 | 
++54 54 | # If expressions
++55 55 | print(a.__add__(1) if a > 0 else a.__sub__(1))  # PLC2801
++
++unnecessary_dunder_call.py:55:7: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++54 | # If expressions
++55 | print(a.__add__(1) if a > 0 else a.__sub__(1))  # PLC2801
++   |       ^^^^^^^^^^^^ PLC2801
++56 | 
++57 | # Dict/Set/List/Tuple
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++52 52 | blah = lambda: a.__add__(1)  # PLC2801
++53 53 | 
++54 54 | # If expressions
++55    |-print(a.__add__(1) if a > 0 else a.__sub__(1))  # PLC2801
++   55 |+print(a + 1 if a > 0 else a.__sub__(1))  # PLC2801
++56 56 | 
++57 57 | # Dict/Set/List/Tuple
++58 58 | print({"a": a.__add__(1)})  # PLC2801
++
++unnecessary_dunder_call.py:55:34: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++54 | # If expressions
++55 | print(a.__add__(1) if a > 0 else a.__sub__(1))  # PLC2801
++   |                                  ^^^^^^^^^^^^ PLC2801
++56 | 
++57 | # Dict/Set/List/Tuple
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++52 52 | blah = lambda: a.__add__(1)  # PLC2801
++53 53 | 
++54 54 | # If expressions
++55    |-print(a.__add__(1) if a > 0 else a.__sub__(1))  # PLC2801
++   55 |+print(a.__add__(1) if a > 0 else a - 1)  # PLC2801
++56 56 | 
++57 57 | # Dict/Set/List/Tuple
++58 58 | print({"a": a.__add__(1)})  # PLC2801
++
++unnecessary_dunder_call.py:58:13: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++57 | # Dict/Set/List/Tuple
++58 | print({"a": a.__add__(1)})  # PLC2801
++   |             ^^^^^^^^^^^^ PLC2801
++59 | print({a.__add__(1)})  # PLC2801
++60 | print([a.__add__(1)])  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++55 55 | print(a.__add__(1) if a > 0 else a.__sub__(1))  # PLC2801
++56 56 | 
++57 57 | # Dict/Set/List/Tuple
++58    |-print({"a": a.__add__(1)})  # PLC2801
++   58 |+print({"a": a + 1})  # PLC2801
++59 59 | print({a.__add__(1)})  # PLC2801
++60 60 | print([a.__add__(1)])  # PLC2801
++61 61 | print((a.__add__(1),))  # PLC2801
++
++unnecessary_dunder_call.py:59:8: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++57 | # Dict/Set/List/Tuple
++58 | print({"a": a.__add__(1)})  # PLC2801
++59 | print({a.__add__(1)})  # PLC2801
++   |        ^^^^^^^^^^^^ PLC2801
++60 | print([a.__add__(1)])  # PLC2801
++61 | print((a.__add__(1),))  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++56 56 | 
++57 57 | # Dict/Set/List/Tuple
++58 58 | print({"a": a.__add__(1)})  # PLC2801
++59    |-print({a.__add__(1)})  # PLC2801
++   59 |+print({a + 1})  # PLC2801
++60 60 | print([a.__add__(1)])  # PLC2801
++61 61 | print((a.__add__(1),))  # PLC2801
++62 62 | 
++
++unnecessary_dunder_call.py:60:8: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++58 | print({"a": a.__add__(1)})  # PLC2801
++59 | print({a.__add__(1)})  # PLC2801
++60 | print([a.__add__(1)])  # PLC2801
++   |        ^^^^^^^^^^^^ PLC2801
++61 | print((a.__add__(1),))  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++57 57 | # Dict/Set/List/Tuple
++58 58 | print({"a": a.__add__(1)})  # PLC2801
++59 59 | print({a.__add__(1)})  # PLC2801
++60    |-print([a.__add__(1)])  # PLC2801
++   60 |+print([a + 1])  # PLC2801
++61 61 | print((a.__add__(1),))  # PLC2801
++62 62 | 
++63 63 | # Comprehension variants
++
++unnecessary_dunder_call.py:61:8: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++59 | print({a.__add__(1)})  # PLC2801
++60 | print([a.__add__(1)])  # PLC2801
++61 | print((a.__add__(1),))  # PLC2801
++   |        ^^^^^^^^^^^^ PLC2801
++62 | 
++63 | # Comprehension variants
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++58 58 | print({"a": a.__add__(1)})  # PLC2801
++59 59 | print({a.__add__(1)})  # PLC2801
++60 60 | print([a.__add__(1)])  # PLC2801
++61    |-print((a.__add__(1),))  # PLC2801
++   61 |+print((a + 1,))  # PLC2801
++62 62 | 
++63 63 | # Comprehension variants
++64 64 | print({i: i.__add__(1) for i in range(5)})  # PLC2801
++
++unnecessary_dunder_call.py:64:11: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++63 | # Comprehension variants
++64 | print({i: i.__add__(1) for i in range(5)})  # PLC2801
++   |           ^^^^^^^^^^^^ PLC2801
++65 | print({i.__add__(1) for i in range(5)})  # PLC2801
++66 | print([i.__add__(1) for i in range(5)])  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++61 61 | print((a.__add__(1),))  # PLC2801
++62 62 | 
++63 63 | # Comprehension variants
++64    |-print({i: i.__add__(1) for i in range(5)})  # PLC2801
++   64 |+print({i: i + 1 for i in range(5)})  # PLC2801
++65 65 | print({i.__add__(1) for i in range(5)})  # PLC2801
++66 66 | print([i.__add__(1) for i in range(5)])  # PLC2801
++67 67 | print((i.__add__(1) for i in range(5)))  # PLC2801
++
++unnecessary_dunder_call.py:65:8: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++63 | # Comprehension variants
++64 | print({i: i.__add__(1) for i in range(5)})  # PLC2801
++65 | print({i.__add__(1) for i in range(5)})  # PLC2801
++   |        ^^^^^^^^^^^^ PLC2801
++66 | print([i.__add__(1) for i in range(5)])  # PLC2801
++67 | print((i.__add__(1) for i in range(5)))  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++62 62 | 
++63 63 | # Comprehension variants
++64 64 | print({i: i.__add__(1) for i in range(5)})  # PLC2801
++65    |-print({i.__add__(1) for i in range(5)})  # PLC2801
++   65 |+print({i + 1 for i in range(5)})  # PLC2801
++66 66 | print([i.__add__(1) for i in range(5)])  # PLC2801
++67 67 | print((i.__add__(1) for i in range(5)))  # PLC2801
++68 68 | 
++
++unnecessary_dunder_call.py:66:8: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++64 | print({i: i.__add__(1) for i in range(5)})  # PLC2801
++65 | print({i.__add__(1) for i in range(5)})  # PLC2801
++66 | print([i.__add__(1) for i in range(5)])  # PLC2801
++   |        ^^^^^^^^^^^^ PLC2801
++67 | print((i.__add__(1) for i in range(5)))  # PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++63 63 | # Comprehension variants
++64 64 | print({i: i.__add__(1) for i in range(5)})  # PLC2801
++65 65 | print({i.__add__(1) for i in range(5)})  # PLC2801
++66    |-print([i.__add__(1) for i in range(5)])  # PLC2801
++   66 |+print([i + 1 for i in range(5)])  # PLC2801
++67 67 | print((i.__add__(1) for i in range(5)))  # PLC2801
++68 68 | 
++69 69 | # Generators
++
++unnecessary_dunder_call.py:67:8: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++65 | print({i.__add__(1) for i in range(5)})  # PLC2801
++66 | print([i.__add__(1) for i in range(5)])  # PLC2801
++67 | print((i.__add__(1) for i in range(5)))  # PLC2801
++   |        ^^^^^^^^^^^^ PLC2801
++68 | 
++69 | # Generators
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++64 64 | print({i: i.__add__(1) for i in range(5)})  # PLC2801
++65 65 | print({i.__add__(1) for i in range(5)})  # PLC2801
++66 66 | print([i.__add__(1) for i in range(5)])  # PLC2801
++67    |-print((i.__add__(1) for i in range(5)))  # PLC2801
++   67 |+print((i + 1 for i in range(5)))  # PLC2801
++68 68 | 
++69 69 | # Generators
++70 70 | gen = (i.__add__(1) for i in range(5))  # PLC2801
++
++unnecessary_dunder_call.py:70:8: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++69 | # Generators
++70 | gen = (i.__add__(1) for i in range(5))  # PLC2801
++   |        ^^^^^^^^^^^^ PLC2801
++71 | print(next(gen))
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++67 67 | print((i.__add__(1) for i in range(5)))  # PLC2801
++68 68 | 
++69 69 | # Generators
++70    |-gen = (i.__add__(1) for i in range(5))  # PLC2801
++   70 |+gen = (i + 1 for i in range(5))  # PLC2801
++71 71 | print(next(gen))
++72 72 | 
++73 73 | # Subscripts
++
++unnecessary_dunder_call.py:74:13: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++73 | # Subscripts
++74 | print({"a": a.__add__(1)}["a"])  # PLC2801
++   |             ^^^^^^^^^^^^ PLC2801
++75 | 
++76 | # Starred
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++71 71 | print(next(gen))
++72 72 | 
++73 73 | # Subscripts
++74    |-print({"a": a.__add__(1)}["a"])  # PLC2801
++   74 |+print({"a": a + 1}["a"])  # PLC2801
++75 75 | 
++76 76 | # Starred
++77 77 | print(*[a.__add__(1)])  # PLC2801
++
++unnecessary_dunder_call.py:77:9: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++76 | # Starred
++77 | print(*[a.__add__(1)])  # PLC2801
++   |         ^^^^^^^^^^^^ PLC2801
++78 | 
++79 | # Slices
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++74 74 | print({"a": a.__add__(1)}["a"])  # PLC2801
++75 75 | 
++76 76 | # Starred
++77    |-print(*[a.__add__(1)])  # PLC2801
++   77 |+print(*[a + 1])  # PLC2801
++78 78 | 
++79 79 | # Slices
++80 80 | print([a.__add__(1), a.__sub__(1)][0:1])  # PLC2801
++
++unnecessary_dunder_call.py:80:8: PLC2801 [*] Unnecessary dunder call to `__add__`. Use `+` operator.
++   |
++79 | # Slices
++80 | print([a.__add__(1), a.__sub__(1)][0:1])  # PLC2801
++   |        ^^^^^^^^^^^^ PLC2801
++   |
++   = help: Use `+` operator
++
++ℹ Unsafe fix
++77 77 | print(*[a.__add__(1)])  # PLC2801
++78 78 | 
++79 79 | # Slices
++80    |-print([a.__add__(1), a.__sub__(1)][0:1])  # PLC2801
++   80 |+print([a + 1, a.__sub__(1)][0:1])  # PLC2801
++81 81 | 
++82 82 | 
++83 83 | class Thing:
++
++unnecessary_dunder_call.py:80:22: PLC2801 [*] Unnecessary dunder call to `__sub__`. Use `-` operator.
++   |
++79 | # Slices
++80 | print([a.__add__(1), a.__sub__(1)][0:1])  # PLC2801
++   |                      ^^^^^^^^^^^^ PLC2801
++   |
++   = help: Use `-` operator
++
++ℹ Unsafe fix
++77 77 | print(*[a.__add__(1)])  # PLC2801
++78 78 | 
++79 79 | # Slices
++80    |-print([a.__add__(1), a.__sub__(1)][0:1])  # PLC2801
++   80 |+print([a.__add__(1), a - 1][0:1])  # PLC2801
++81 81 | 
++82 82 | 
++83 83 | class Thing:
++
++unnecessary_dunder_call.py:92:16: PLC2801 Unnecessary dunder call to `__getattribute__`. Access attribute directly or use getattr built-in function.
++   |
++91 |     def do_thing(self, item):
++92 |         return object.__getattribute__(self, item)  # PLC2801
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ PLC2801
+-32 | 
+-33 |     def use_descriptor(self, item):
++93 | 
++94 |     def use_descriptor(self, item):
+    |
+    = help: Access attribute directly or use getattr built-in function
+ 

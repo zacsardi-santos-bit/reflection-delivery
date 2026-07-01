@@ -1,0 +1,5 @@
+I'm working on adding write-access control to the flight data ingestion path. Right now, all API keys are treated as plain strings with no access level — any client with a valid key (or even without any key) can push data via the flight protocol, which is a security gap.
+
+I want to introduce a distinction between read-only and read-write keys. Keys would be configured as strings, where a special suffix designates write access. When comparing an incoming bearer token against a configured key, only the key portion (before the suffix) should be used for matching. Read-only keys would only grant read access, while read-write keys would grant both read and write access.
+
+On the flight data ingestion endpoint, I need proper authorization enforcement: unauthenticated requests should be rejected, requests from clients using a read-only key should also be rejected, and only clients using a read-write key should be allowed to ingest data. The existing flight and HTTP authentication flows for read operations should continue to work as before.

@@ -1,0 +1,23 @@
+{
+ "task": "kumahq-kuma-10869",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds reachable-backend-ref validation (dataplane_validator.go) and reachable_backend_refs_graph.go under meshtrafficpermission/graph; F2P TestMesh (dataplane_validator_test.go) & TestGraph (reachable_backend_refs_graph_test.go)"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 9,
+  "shallow": true
+ }
+}

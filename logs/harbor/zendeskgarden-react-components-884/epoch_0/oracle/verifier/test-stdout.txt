@@ -1,0 +1,41 @@
+patching file packages/modals/src/elements/DrawerModal/Body.spec.tsx
+patching file packages/modals/src/elements/DrawerModal/Close.spec.tsx
+patching file packages/modals/src/elements/DrawerModal/DrawerModal.spec.tsx
+patching file packages/modals/src/elements/DrawerModal/Header.spec.tsx
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+PASS packages/modals/src/elements/DrawerModal/Body.spec.tsx (19.702 s)
+  DrawerModal.Body
+    ✓ passes ref to underlying DOM element (41 ms)
+
+PASS packages/modals/src/elements/DrawerModal/Header.spec.tsx (19.704 s)
+  DrawerModal.Header
+    ✓ passes ref to underlying DOM element (43 ms)
+
+PASS packages/modals/src/elements/DrawerModal/Close.spec.tsx (19.747 s)
+  DrawerModal.Close
+    ✓ passes ref to underlying DOM element (86 ms)
+
+PASS packages/modals/src/elements/DrawerModal/DrawerModal.spec.tsx (20.023 s)
+  DrawerModal
+    ✓ passes ref to underlying DOM element (109 ms)
+    ✓ only locks page scrolling when drawer modal is opened (56 ms)
+    ✓ applies backdropProps to Backdrop element (15 ms)
+    ✓ applies title a11y attributes to Title element (12 ms)
+    ✓ applies content a11y attributes to Body element (10 ms)
+    ✓ closes the drawer modal when user clicks the close modal button (90 ms)
+    ✓ closes the drawer modal when user clicks the modal backdrop (25 ms)
+    ✓ closes the drawer modal when user presses the ESC key (34 ms)
+
+Test Suites: 4 passed, 4 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        21.383 s
+Ran all test suites matching /packages\/modals\/src\/elements\/DrawerModal\/Body.spec.tsx|packages\/modals\/src\/elements\/DrawerModal\/Close.spec.tsx|packages\/modals\/src\/elements\/DrawerModal\/DrawerModal.spec.tsx|packages\/modals\/src\/elements\/DrawerModal\/Header.spec.tsx/i.
+reward=1 graded=11 found=0 failed=0 parsed=0 framework=jest exit_code=0

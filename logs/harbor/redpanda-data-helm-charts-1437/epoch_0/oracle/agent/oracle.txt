@@ -1,0 +1,8 @@
+patching file charts/console/service.go
+patching file charts/console/templates/_service.go.tpl
+patching file charts/console/templates/service.yaml
+patching file charts/console/testdata/template-cases.golden.txtar
+patching file charts/console/testdata/template-cases.txtar
+patching file charts/console/values.go
+patching file charts/console/values_partial.gen.go
+patching file pkg/gotohelm/transpiler.go

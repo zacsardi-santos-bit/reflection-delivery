@@ -1,0 +1,780 @@
+patching file core/engine/src/tests/mod.rs
+   Compiling proc-macro2 v1.0.95
+   Compiling unicode-ident v1.0.18
+   Compiling serde v1.0.219
+   Compiling either v1.15.0
+   Compiling stable_deref_trait v1.2.0
+   Compiling typeid v1.0.3
+   Compiling autocfg v1.4.0
+   Compiling cobs v0.2.3
+   Compiling libc v0.2.172
+   Compiling cfg-if v1.0.1
+   Compiling libm v0.2.15
+   Compiling itoa v1.0.15
+   Compiling portable-atomic v1.11.1
+   Compiling icu_properties_data v2.0.1
+   Compiling paste v1.0.15
+   Compiling ryu v1.0.20
+   Compiling crossbeam-utils v0.8.21
+   Compiling equivalent v1.0.2
+   Compiling allocator-api2 v0.2.21
+   Compiling siphasher v1.0.1
+   Compiling foldhash v0.1.5
+   Compiling rand_core v0.6.4
+   Compiling critical-section v1.2.0
+   Compiling writeable v0.6.1
+   Compiling rustc-hash v2.1.1
+   Compiling regex-syntax v0.8.5
+   Compiling phf_shared v0.11.3
+   Compiling rand v0.8.5
+   Compiling hashbrown v0.15.4
+   Compiling icu_normalizer_data v2.0.0
+   Compiling static_assertions v1.1.0
+   Compiling num-traits v0.2.19
+   Compiling tag_ptr v0.1.0 (/workspace/repo/utils/tag_ptr)
+   Compiling fast-float2 v0.2.3
+   Compiling ryu-js v1.0.2
+   Compiling zerocopy v0.8.25
+   Compiling cow-utils v0.1.3
+   Compiling getrandom v0.3.3
+   Compiling memchr v2.7.4
+   Compiling phf_generator v0.11.3
+   Compiling indexmap v2.9.0
+   Compiling winnow v0.7.10
+   Compiling quote v1.0.40
+   Compiling toml_datetime v0.6.11
+   Compiling thin-vec v0.2.14
+   Compiling serde_json v1.0.140
+   Compiling syn v2.0.103
+   Compiling shlex v1.3.0
+   Compiling boa_string v0.20.0 (/workspace/repo/core/string)
+   Compiling once_cell v1.21.3
+   Compiling boa_profiler v0.20.0 (/workspace/repo/core/profiler)
+   Compiling cc v1.2.26
+   Compiling regex-automata v0.4.9
+   Compiling core_maths v0.1.1
+   Compiling crossbeam-epoch v0.9.18
+   Compiling lock_api v0.4.13
+   Compiling memoffset v0.9.1
+   Compiling utf16_iter v1.0.5
+   Compiling rayon-core v1.12.1
+   Compiling num-integer v0.1.46
+   Compiling parking_lot_core v0.9.11
+   Compiling write16 v1.0.0
+   Compiling utf8_iter v1.0.4
+   Compiling crossbeam-deque v0.8.6
+   Compiling rand_core v0.9.3
+   Compiling half v2.6.0
+   Compiling num-conv v0.1.0
+   Compiling time-core v0.1.4
+   Compiling plotters-backend v0.3.7
+   Compiling clap_lex v0.7.4
+   Compiling anstyle v1.0.11
+   Compiling ciborium-io v0.2.2
+   Compiling thiserror v2.0.12
+   Compiling scopeguard v1.2.0
+   Compiling powerfmt v0.2.0
+   Compiling bitflags v2.9.1
+   Compiling plotters-svg v0.3.7
+   Compiling deranged v0.4.0
+   Compiling clap_builder v4.5.40
+   Compiling ciborium-ll v0.2.2
+   Compiling time-macros v0.2.22
+   Compiling regress v0.10.3
+   Compiling itertools v0.10.5
+   Compiling futures-io v0.3.31
+   Compiling toml_edit v0.22.27
+   Compiling cast v0.3.0
+   Compiling jemalloc-sys v0.5.4+5.3.0-patched
+   Compiling futures-core v0.3.31
+   Compiling parking v2.2.1
+   Compiling ppv-lite86 v0.2.21
+   Compiling pin-project-lite v0.2.16
+   Compiling same-file v1.0.6
+   Compiling fastrand v2.3.0
+   Compiling num_threads v0.1.7
+   Compiling hashbrown v0.14.5
+   Compiling futures-lite v2.6.0
+   Compiling walkdir v2.5.0
+   Compiling rayon v1.10.0
+   Compiling intrusive-collections v0.9.7
+   Compiling rand_chacha v0.9.0
+   Compiling plotters v0.3.7
+   Compiling is-terminal v0.4.16
+   Compiling rand v0.9.1
+   Compiling itertools v0.14.0
+   Compiling anes v0.1.6
+   Compiling regex v1.11.1
+   Compiling clap v4.5.40
+   Compiling criterion-plot v0.5.0
+   Compiling smawk v0.3.2
+   Compiling time v0.3.41
+   Compiling oorandom v11.1.5
+   Compiling proc-macro-crate v3.3.0
+   Compiling unicode-width v0.2.0
+   Compiling unicode-linebreak v0.1.5
+   Compiling sys-locale v0.3.2
+   Compiling arrayvec v0.7.6
+   Compiling tap v1.0.1
+   Compiling synstructure v0.13.2
+   Compiling test-case-core v3.3.1
+   Compiling textwrap v0.16.2
+   Compiling float-cmp v0.10.0
+   Compiling indoc v2.0.6
+   Compiling serde_derive v1.0.219
+   Compiling zerofrom-derive v0.1.6
+   Compiling yoke-derive v0.8.0
+   Compiling databake-derive v0.2.0
+   Compiling zerovec-derive v0.11.1
+   Compiling displaydoc v0.2.5
+   Compiling boa_macros v0.20.0 (/workspace/repo/core/macros)
+   Compiling phf_macros v0.11.3
+   Compiling thiserror-impl v2.0.12
+   Compiling bytemuck_derive v1.9.3
+   Compiling num_enum_derive v0.7.3
+   Compiling databake v0.2.0
+   Compiling calendrical_calculations v0.2.0
+   Compiling phf v0.11.3
+   Compiling test-case-macros v3.3.1
+   Compiling zerofrom v0.1.6
+   Compiling bytemuck v1.23.1
+   Compiling test-case v3.3.1
+   Compiling num_enum v0.7.3
+   Compiling yoke v0.8.0
+   Compiling litemap v0.8.0
+   Compiling postcard v1.1.1
+   Compiling erased-serde v0.4.6
+   Compiling smallvec v1.15.0
+   Compiling num-bigint v0.4.6
+   Compiling ciborium v0.2.2
+   Compiling zerovec v0.11.2
+   Compiling fixed_decimal v0.7.0
+   Compiling dashmap v6.1.0
+   Compiling tinytemplate v1.2.1
+   Compiling criterion v0.5.1
+   Compiling tinystr v0.8.1
+   Compiling zerotrie v0.2.2
+   Compiling potential_utf v0.1.2
+   Compiling icu_pattern v0.4.0
+   Compiling icu_collections v2.0.0
+   Compiling icu_locale_core v2.0.0
+   Compiling icu_provider v2.0.0
+   Compiling boa_gc v0.20.0 (/workspace/repo/core/gc)
+   Compiling icu_properties v2.0.1
+   Compiling icu_calendar v2.0.2
+   Compiling icu_decimal v2.0.0
+   Compiling icu_plurals v2.0.0
+   Compiling icu_locale v2.0.0
+   Compiling icu_provider_blob v2.0.0
+   Compiling icu_list v2.0.0
+   Compiling icu_segmenter v2.0.0
+   Compiling boa_interner v0.20.0 (/workspace/repo/core/interner)
+   Compiling boa_ast v0.20.0 (/workspace/repo/core/ast)
+   Compiling icu_provider_adapters v2.0.0
+   Compiling icu_time v2.0.0
+   Compiling icu_normalizer v2.0.0
+   Compiling icu_casemap v2.0.0
+   Compiling icu_datetime v2.0.0
+   Compiling icu_collator v2.0.0
+   Compiling boa_parser v0.20.0 (/workspace/repo/core/parser)
+   Compiling boa_icu_provider v0.20.0 (/workspace/repo/core/icu_provider)
+   Compiling boa_engine v0.20.0 (/workspace/repo/core/engine)
+   Compiling jemallocator v0.5.4
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 24s
+────────────
+ Nextest run ID f573aab9-34ee-407f-95d3-3df07879dddf with nextest profile: default
+    Starting 811 tests across 5 binaries
+        PASS [   0.053s] (  1/811) boa_engine builtins::array::tests::array_keys_simple
+        PASS [   0.055s] (  2/811) boa_engine builtins::array::tests::fill
+        PASS [   0.057s] (  3/811) boa_engine builtins::array::tests::array_values_simple
+        PASS [   0.062s] (  4/811) boa_engine builtins::array::tests::fill_obj_ref
+        PASS [   0.066s] (  5/811) boa_engine builtins::array::tests::array_values_sparse
+        PASS [   0.070s] (  6/811) boa_engine builtins::array::tests::array_sort
+        PASS [   0.071s] (  7/811) boa_engine builtins::array::tests::array_spread_non_iterable
+        PASS [   0.074s] (  8/811) boa_engine builtins::array::tests::array_values_symbol_iterator
+        PASS [   0.076s] (  9/811) boa_engine builtins::array::tests::every
+        PASS [   0.077s] ( 10/811) boa_engine builtins::array::tests::call_array_constructor_with_one_argument
+        PASS [   0.078s] ( 11/811) boa_engine builtins::array::tests::concat
+        PASS [   0.079s] ( 12/811) boa_engine builtins::array::tests::array_entries_simple
+        PASS [   0.081s] ( 13/811) boa_engine builtins::array::tests::array_length_is_not_enumerable
+        PASS [   0.081s] ( 14/811) boa_engine builtins::array::tests::array_symbol_iterator
+        PASS [   0.081s] ( 15/811) boa_engine builtins::array::tests::array_values_empty
+        PASS [   0.082s] ( 16/811) boa_engine builtins::array::tests::array_spread_arrays
+        PASS [   0.084s] ( 17/811) boa_engine builtins::array::tests::array_of_neg_zero
+        PASS [   0.084s] ( 18/811) boa_engine builtins::array::tests::copy_within
+        PASS [   0.042s] ( 19/811) boa_engine builtins::array::tests::find
+        PASS [   0.047s] ( 20/811) boa_engine builtins::array::tests::filter
+        PASS [   0.049s] ( 21/811) boa_engine builtins::array::tests::find_index
+        PASS [   0.049s] ( 22/811) boa_engine builtins::array::tests::flat_map
+        PASS [   0.061s] ( 23/811) boa_engine builtins::array::tests::flat
+        PASS [   0.055s] ( 24/811) boa_engine builtins::array::tests::flat_map_not_callable
+        PASS [   0.049s] ( 25/811) boa_engine builtins::array::tests::get_relative_end
+        PASS [   0.051s] ( 26/811) boa_engine builtins::array::tests::for_each_push_value
+        PASS [   0.059s] ( 27/811) boa_engine builtins::array::tests::flat_map_with_hole
+        PASS [   0.064s] ( 28/811) boa_engine builtins::array::tests::for_each
+        PASS [   0.063s] ( 29/811) boa_engine builtins::array::tests::get_relative_start
+        PASS [   0.062s] ( 30/811) boa_engine builtins::array::tests::is_array
+        PASS [   0.067s] ( 31/811) boa_engine builtins::array::tests::includes_value
+        PASS [   0.067s] ( 32/811) boa_engine builtins::array::tests::index_of
+        PASS [   0.064s] ( 33/811) boa_engine builtins::array::tests::of
+        PASS [   0.067s] ( 34/811) boa_engine builtins::array::tests::last_index_of
+        PASS [   0.069s] ( 35/811) boa_engine builtins::array::tests::join
+        PASS [   0.066s] ( 36/811) boa_engine builtins::array::tests::map
+        PASS [   0.054s] ( 37/811) boa_engine builtins::array::tests::pop
+        PASS [   0.054s] ( 38/811) boa_engine builtins::array::tests::push
+        PASS [   0.056s] ( 39/811) boa_engine builtins::array::tests::reduce
+        PASS [   0.051s] ( 40/811) boa_engine builtins::array::tests::reduce_right
+        PASS [   0.050s] ( 41/811) boa_engine builtins::array::tests::slice
+        PASS [   0.055s] ( 42/811) boa_engine builtins::array::tests::reverse
+        PASS [   0.056s] ( 43/811) boa_engine builtins::array::tests::to_string
+        PASS [   0.051s] ( 44/811) boa_engine builtins::array_buffer::tests::create_byte_data_block
+        PASS [   0.065s] ( 45/811) boa_engine builtins::array::tests::some
+        PASS [   0.067s] ( 46/811) boa_engine builtins::array::tests::shift
+        PASS [   0.052s] ( 47/811) boa_engine builtins::array_buffer::tests::create_shared_byte_data_block
+        PASS [   0.057s] ( 48/811) boa_engine builtins::array::tests::unshift
+        PASS [   0.051s] ( 49/811) boa_engine builtins::array_buffer::tests::resize
+        PASS [   0.061s] ( 50/811) boa_engine builtins::array_buffer::tests::get_values
+        PASS [   0.060s] ( 51/811) boa_engine builtins::bigint::tests::as_int_n
+        PASS [   0.063s] ( 52/811) boa_engine builtins::bigint::tests::as_uint_n
+        PASS [   0.055s] ( 53/811) boa_engine builtins::bigint::tests::bigint_function_conversion_from_integer
+        PASS [   0.071s] ( 54/811) boa_engine builtins::array_buffer::tests::sort
+        PASS [   0.071s] ( 55/811) boa_engine builtins::array_buffer::tests::sort_negative_zero
+        PASS [   0.067s] ( 56/811) boa_engine builtins::bigint::tests::as_uint_n_errors
+        PASS [   0.056s] ( 57/811) boa_engine builtins::bigint::tests::bigint_function_conversion_from_rational
+        PASS [   0.074s] ( 58/811) boa_engine builtins::bigint::tests::as_int_n_errors
+        PASS [   0.053s] ( 59/811) boa_engine builtins::bigint::tests::bigint_function_conversion_from_string
+        PASS [   0.056s] ( 60/811) boa_engine builtins::bigint::tests::bigint_function_throws
+        PASS [   0.052s] ( 61/811) boa_engine builtins::bigint::tests::equality
+        PASS [   0.049s] ( 62/811) boa_engine builtins::bigint::tests::to_string_invalid_radix
+        PASS [   0.053s] ( 63/811) boa_engine builtins::bigint::tests::to_string
+        PASS [   0.053s] ( 64/811) boa_engine builtins::bigint::tests::operations
+        PASS [   0.049s] ( 65/811) boa_engine builtins::boolean::tests::constructor_gives_true_instance
+        PASS [   0.053s] ( 66/811) boa_engine builtins::boolean::tests::construct_and_call
+        PASS [   0.052s] ( 67/811) boa_engine builtins::boolean::tests::instances_have_correct_proto_set
+        PASS [   0.051s] ( 68/811) boa_engine builtins::date::tests::date_ctor_call
+        PASS [   0.047s] ( 69/811) boa_engine builtins::date::tests::date_ctor_call_multiple_90s
+        PASS [   0.055s] ( 70/811) boa_engine builtins::date::tests::date_ctor_call_date
+        PASS [   0.055s] ( 71/811) boa_engine builtins::date::tests::date_ctor_call_multiple
+        PASS [   0.053s] ( 72/811) boa_engine builtins::date::tests::date_ctor_call_string
+        PASS [   0.060s] ( 73/811) boa_engine builtins::date::tests::date_ctor_call_number
+        PASS [   0.066s] ( 74/811) boa_engine builtins::date::tests::date_ctor_call_multiple_nan
+        PASS [   0.065s] ( 75/811) boa_engine builtins::date::tests::date_ctor_call_string_invalid
+        PASS [   0.058s] ( 76/811) boa_engine builtins::date::tests::date_ctor_parse_call
+        PASS [   0.065s] ( 77/811) boa_engine builtins::date::tests::date_ctor_now_call
+        PASS [   0.058s] ( 78/811) boa_engine builtins::date::tests::date_ctor_utc_call_nan
+        PASS [   0.056s] ( 79/811) boa_engine builtins::date::tests::date_json
+        PASS [   0.062s] ( 80/811) boa_engine builtins::date::tests::date_ctor_utc_call
+        PASS [   0.058s] ( 81/811) boa_engine builtins::date::tests::date_neg
+        PASS [   0.062s] ( 82/811) boa_engine builtins::date::tests::date_proto_get_date_call
+        PASS [   0.063s] ( 83/811) boa_engine builtins::date::tests::date_proto_get_day_call
+        PASS [   0.061s] ( 84/811) boa_engine builtins::date::tests::date_proto_get_full_year_call
+        PASS [   0.055s] ( 85/811) boa_engine builtins::date::tests::date_proto_get_milliseconds_call
+        PASS [   0.062s] ( 86/811) boa_engine builtins::date::tests::date_proto_get_hours_call
+        PASS [   0.057s] ( 87/811) boa_engine builtins::date::tests::date_proto_get_month
+        PASS [   0.058s] ( 88/811) boa_engine builtins::date::tests::date_proto_get_minutes_call
+        PASS [   0.053s] ( 89/811) boa_engine builtins::date::tests::date_proto_get_time
+        PASS [   0.059s] ( 90/811) boa_engine builtins::date::tests::date_proto_get_seconds
+        PASS [   0.053s] ( 91/811) boa_engine builtins::date::tests::date_proto_get_timezone_offset
+        PASS [   0.053s] ( 92/811) boa_engine builtins::date::tests::date_proto_get_utc_day_call
+        PASS [   0.055s] ( 93/811) boa_engine builtins::date::tests::date_proto_get_utc_full_year_call
+        PASS [   0.059s] ( 94/811) boa_engine builtins::date::tests::date_proto_get_utc_date_call
+        PASS [   0.058s] ( 95/811) boa_engine builtins::date::tests::date_proto_get_utc_hours_call
+        PASS [   0.055s] ( 96/811) boa_engine builtins::date::tests::date_proto_get_utc_month
+        PASS [   0.056s] ( 97/811) boa_engine builtins::date::tests::date_proto_get_utc_milliseconds_call
+        PASS [   0.055s] ( 98/811) boa_engine builtins::date::tests::date_proto_get_utc_seconds
+        PASS [   0.060s] ( 99/811) boa_engine builtins::date::tests::date_proto_get_utc_minutes_call
+        PASS [   0.052s] (100/811) boa_engine builtins::date::tests::date_proto_get_year
+        PASS [   0.058s] (101/811) boa_engine builtins::date::tests::date_proto_set_full_year
+        PASS [   0.050s] (102/811) boa_engine builtins::date::tests::date_proto_set_minutes
+        PASS [   0.066s] (103/811) boa_engine builtins::date::tests::date_proto_set_date
+        PASS [   0.061s] (104/811) boa_engine builtins::date::tests::date_proto_set_milliseconds
+        PASS [   0.064s] (105/811) boa_engine builtins::date::tests::date_proto_set_hours
+        PASS [   0.057s] (106/811) boa_engine builtins::date::tests::date_proto_set_month
+        PASS [   0.053s] (107/811) boa_engine builtins::date::tests::date_proto_set_time
+        PASS [   0.054s] (108/811) boa_engine builtins::date::tests::date_proto_set_seconds
+        PASS [   0.053s] (109/811) boa_engine builtins::date::tests::date_proto_set_utc_date
+        PASS [   0.051s] (110/811) boa_engine builtins::date::tests::date_proto_set_utc_full_year
+        PASS [   0.050s] (111/811) boa_engine builtins::date::tests::date_proto_set_utc_milliseconds
+        PASS [   0.054s] (112/811) boa_engine builtins::date::tests::date_proto_set_utc_minutes
+        PASS [   0.059s] (113/811) boa_engine builtins::date::tests::date_proto_set_utc_hours
+        PASS [   0.052s] (114/811) boa_engine builtins::date::tests::date_proto_set_utc_seconds
+        PASS [   0.056s] (115/811) boa_engine builtins::date::tests::date_proto_set_utc_month
+        PASS [   0.053s] (116/811) boa_engine builtins::date::tests::date_proto_to_date_string
+        PASS [   0.060s] (117/811) boa_engine builtins::date::tests::date_proto_to_iso_string
+        PASS [   0.053s] (118/811) boa_engine builtins::date::tests::date_proto_to_json
+        PASS [   0.048s] (119/811) boa_engine builtins::date::tests::date_proto_to_utc_string
+        PASS [   0.067s] (120/811) boa_engine builtins::date::tests::date_proto_to_gmt_string
+        PASS [   0.043s] (121/811) boa_engine builtins::date::tests::parse_ascii_digits
+        PASS [   0.058s] (122/811) boa_engine builtins::date::tests::date_proto_to_string
+        PASS [   0.056s] (123/811) boa_engine builtins::date::tests::date_proto_to_time_string
+        PASS [   0.051s] (124/811) boa_engine builtins::date::tests::set_year
+        PASS [   0.058s] (125/811) boa_engine builtins::date::tests::date_proto_value_of
+        PASS [   0.055s] (126/811) boa_engine builtins::date::tests::date_this_time_value
+        PASS [   0.054s] (127/811) boa_engine builtins::error::tests::error_lengths
+        PASS [   0.049s] (128/811) boa_engine builtins::error::tests::error_names
+        PASS [   0.047s] (129/811) boa_engine builtins::function::tests::arguments_object
+        PASS [   0.047s] (130/811) boa_engine builtins::function::tests::closure_capture_clone
+        PASS [   0.055s] (131/811) boa_engine builtins::error::tests::error_to_string
+        PASS [   0.047s] (132/811) boa_engine builtins::function::tests::function_constructor_early_errors_super
+        PASS [   0.044s] (133/811) boa_engine builtins::function::tests::function_prototype
+        PASS [   0.053s] (134/811) boa_engine builtins::function::tests::function_prototype_apply
+        PASS [   0.051s] (135/811) boa_engine builtins::function::tests::function_prototype_call
+        PASS [   0.054s] (136/811) boa_engine builtins::function::tests::function_prototype_apply_on_object
+        PASS [   0.052s] (137/811) boa_engine builtins::function::tests::function_prototype_call_throw
+        PASS [   0.053s] (138/811) boa_engine builtins::function::tests::function_prototype_call_multiple_args
+        PASS [   0.052s] (139/811) boa_engine builtins::function::tests::self_mutating_function_when_calling
+        PASS [   0.045s] (140/811) boa_engine builtins::intl::locale::utils::tests::best_fit
+        PASS [   0.051s] (141/811) boa_engine builtins::function::tests::self_mutating_function_when_constructing
+        PASS [   0.048s] (142/811) boa_engine builtins::intl::locale::utils::tests::lookup_match
+        PASS [   0.049s] (143/811) boa_engine builtins::intl::number_format::tests::u16_to_rounding_increment_rainy_day
+        PASS [   0.048s] (144/811) boa_engine builtins::intl::number_format::tests::u16_to_rounding_increment_sunny_day
+        PASS [   0.058s] (145/811) boa_engine builtins::intl::locale::tests::locale_resolution
+        PASS [   0.053s] (146/811) boa_engine builtins::json::tests::json_fields_should_be_enumerable
+        PASS [   0.047s] (147/811) boa_engine builtins::json::tests::json_parse_with_no_args_throws_syntax_error
+        PASS [   0.050s] (148/811) boa_engine builtins::json::tests::json_sanity
+        PASS [   0.056s] (149/811) boa_engine builtins::json::tests::json_parse_array_with_reviver
+        PASS [   0.053s] (150/811) boa_engine builtins::json::tests::json_parse_sets_prototypes
+        PASS [   0.055s] (151/811) boa_engine builtins::json::tests::json_parse_object_with_reviver
+        PASS [   0.044s] (152/811) boa_engine builtins::json::tests::json_stringify_array_converts_function_to_null
+        PASS [   0.041s] (153/811) boa_engine builtins::json::tests::json_stringify_array_converts_undefined_to_null
+        PASS [   0.053s] (154/811) boa_engine builtins::json::tests::json_stringify_array_converts_symbol_to_null
+        PASS [   0.050s] (155/811) boa_engine builtins::json::tests::json_stringify_fractional_numbers
+        PASS [   0.053s] (156/811) boa_engine builtins::json::tests::json_stringify_function
+        PASS [   0.053s] (157/811) boa_engine builtins::json::tests::json_stringify_no_args
+        PASS [   0.059s] (158/811) boa_engine builtins::json::tests::json_stringify_function_replacer_propagate_error
+        PASS [   0.061s] (159/811) boa_engine builtins::json::tests::json_stringify_arrays
+        PASS [   0.054s] (160/811) boa_engine builtins::json::tests::json_stringify_pretty_print
+        PASS [   0.057s] (161/811) boa_engine builtins::json::tests::json_stringify_object_array
+        PASS [   0.053s] (162/811) boa_engine builtins::json::tests::json_stringify_pretty_print_four_spaces
+        PASS [   0.063s] (163/811) boa_engine builtins::json::tests::json_stringify_pretty_print_bad_space_argument
+        PASS [   0.054s] (164/811) boa_engine builtins::json::tests::json_stringify_pretty_print_with_number_object
+        PASS [   0.059s] (165/811) boa_engine builtins::json::tests::json_stringify_pretty_print_twenty_spaces
+        PASS [   0.051s] (166/811) boa_engine builtins::json::tests::json_stringify_remove_function_values_from_objects
+        PASS [   0.057s] (167/811) boa_engine builtins::json::tests::json_stringify_pretty_print_with_too_long_string
+        PASS [   0.056s] (168/811) boa_engine builtins::json::tests::json_stringify_remove_symbols_from_objects
+        PASS [   0.059s] (169/811) boa_engine builtins::json::tests::json_stringify_pretty_print_with_string_object
+        PASS [   0.056s] (170/811) boa_engine builtins::json::tests::json_stringify_remove_undefined_values_from_objects
+        PASS [   0.053s] (171/811) boa_engine builtins::json::tests::json_stringify_replacer_array_numbers
+        PASS [   0.048s] (172/811) boa_engine builtins::json::tests::json_stringify_replacer_array_strings
+        PASS [   0.049s] (173/811) boa_engine builtins::json::tests::json_stringify_replacer_function
+        PASS [   0.057s] (174/811) boa_engine builtins::json::tests::json_stringify_symbol
+        PASS [   0.051s] (175/811) boa_engine builtins::map::tests::construct
+        PASS [   0.057s] (176/811) boa_engine builtins::json::tests::json_stringify_undefined
+        PASS [   0.055s] (177/811) boa_engine builtins::map::tests::clear
+        PASS [   0.055s] (178/811) boa_engine builtins::map::tests::delete
+        PASS [   0.061s] (179/811) boa_engine builtins::map::tests::clone
+        PASS [   0.058s] (180/811) boa_engine builtins::map::tests::entries
+        PASS [   0.054s] (181/811) boa_engine builtins::map::tests::for_each
+        PASS [   0.056s] (182/811) boa_engine builtins::map::tests::for_each_delete
+        PASS [   0.058s] (183/811) boa_engine builtins::map::tests::for_of_delete
+        PASS [   0.063s] (184/811) boa_engine builtins::map::tests::get
+        PASS [   0.051s] (185/811) boa_engine builtins::map::tests::not_a_function
+        PASS [   0.060s] (186/811) boa_engine builtins::map::tests::recursive_display
+        PASS [   0.072s] (187/811) boa_engine builtins::map::tests::modify_key
+        PASS [   0.075s] (188/811) boa_engine builtins::map::tests::has
+        PASS [   0.075s] (189/811) boa_engine builtins::map::tests::keys
+        PASS [   0.047s] (190/811) boa_engine builtins::map::tests::set
+        PASS [   0.074s] (191/811) boa_engine builtins::map::tests::merge
+        PASS [   0.064s] (192/811) boa_engine builtins::map::tests::order
+        PASS [   0.045s] (193/811) boa_engine builtins::math::tests::acos
+        PASS [   0.048s] (194/811) boa_engine builtins::math::tests::abs
+        PASS [   0.052s] (195/811) boa_engine builtins::map::tests::values
+        PASS [   0.055s] (196/811) boa_engine builtins::map::tests::symbol_iterator
+        PASS [   0.048s] (197/811) boa_engine builtins::math::tests::acosh
+        PASS [   0.049s] (198/811) boa_engine builtins::math::tests::asin
+        PASS [   0.043s] (199/811) boa_engine builtins::math::tests::atan
+        PASS [   0.048s] (200/811) boa_engine builtins::math::tests::asinh
+        PASS [   0.044s] (201/811) boa_engine builtins::math::tests::atan2
+        PASS [   0.041s] (202/811) boa_engine builtins::math::tests::cbrt
+        PASS [   0.052s] (203/811) boa_engine builtins::math::tests::ceil
+        PASS [   0.060s] (204/811) boa_engine builtins::math::tests::fround
+        PASS [   0.063s] (205/811) boa_engine builtins::math::tests::expm1
+        PASS [   0.060s] (206/811) boa_engine builtins::math::tests::log
+        PASS [   0.068s] (207/811) boa_engine builtins::math::tests::exp
+        PASS [   0.070s] (208/811) boa_engine builtins::math::tests::clz32
+        PASS [   0.073s] (209/811) boa_engine builtins::math::tests::cosh
+        PASS [   0.073s] (210/811) boa_engine builtins::math::tests::cos
+        PASS [   0.055s] (211/811) boa_engine builtins::math::tests::min
+        PASS [   0.070s] (212/811) boa_engine builtins::math::tests::hypot
+        PASS [   0.065s] (213/811) boa_engine builtins::math::tests::log10
+        PASS [   0.060s] (214/811) boa_engine builtins::math::tests::log2
+        PASS [   0.069s] (215/811) boa_engine builtins::math::tests::imul
+        PASS [   0.074s] (216/811) boa_engine builtins::math::tests::floor
+        PASS [   0.063s] (217/811) boa_engine builtins::math::tests::log1p
+        PASS [   0.058s] (218/811) boa_engine builtins::math::tests::max
+        PASS [   0.052s] (219/811) boa_engine builtins::math::tests::round
+        PASS [   0.056s] (220/811) boa_engine builtins::math::tests::pow
+        PASS [   0.031s] (221/811) boa_engine builtins::math::tests::sign
+        PASS [   0.046s] (222/811) boa_engine builtins::math::tests::sin
+        PASS [   0.046s] (223/811) boa_engine builtins::math::tests::sinh
+        PASS [   0.045s] (224/811) boa_engine builtins::math::tests::tan
+        PASS [   0.040s] (225/811) boa_engine builtins::number::conversions::f64_to_int32_conversion
+        PASS [   0.051s] (226/811) boa_engine builtins::math::tests::sqrt
+        PASS [   0.051s] (227/811) boa_engine builtins::math::tests::tanh
+        PASS [   0.056s] (228/811) boa_engine builtins::number::tests::call_number
+        PASS [   0.056s] (229/811) boa_engine builtins::number::tests::less_than
+        PASS [   0.058s] (230/811) boa_engine builtins::number::tests::equal
+        PASS [   0.058s] (231/811) boa_engine builtins::number::tests::integer_number_primitive_to_number_object
+        PASS [   0.061s] (232/811) boa_engine builtins::number::tests::issue_2609
+        PASS [   0.065s] (233/811) boa_engine builtins::number::tests::global_is_finite
+        PASS [   0.067s] (234/811) boa_engine builtins::math::tests::trunc
+        PASS [   0.066s] (235/811) boa_engine builtins::number::tests::issue_2717
+        PASS [   0.060s] (236/811) boa_engine builtins::number::tests::number_constants
+        PASS [   0.069s] (237/811) boa_engine builtins::number::tests::global_is_nan
+        PASS [   0.070s] (238/811) boa_engine builtins::number::tests::from_bigint
+        PASS [   0.068s] (239/811) boa_engine builtins::number::tests::num_to_string_exponential
+        PASS [   0.050s] (240/811) boa_engine builtins::number::tests::number_is_finite
+        PASS [   0.050s] (241/811) boa_engine builtins::number::tests::number_is_nan
+        PASS [   0.057s] (242/811) boa_engine builtins::number::tests::number_is_integer
+        PASS [   0.053s] (243/811) boa_engine builtins::number::tests::parse_float
+        PASS [   0.050s] (244/811) boa_engine builtins::number::tests::parse_int
+        PASS [   0.042s] (245/811) boa_engine builtins::number::tests::same_value
+        PASS [   0.061s] (246/811) boa_engine builtins::number::tests::number_is_safe_integer
+        PASS [   0.046s] (247/811) boa_engine builtins::number::tests::same_value_zero
+        PASS [   0.052s] (248/811) boa_engine builtins::number::tests::to_exponential
+        PASS [   0.063s] (249/811) boa_engine builtins::number::tests::parse_int_varying_radix
+        PASS [   0.056s] (250/811) boa_engine builtins::number::tests::to_locale_string
+        PASS [   0.063s] (251/811) boa_engine builtins::number::tests::to_fixed
+        PASS [   0.056s] (252/811) boa_engine builtins::object::tests::define_symbol_property
+        PASS [   0.060s] (253/811) boa_engine builtins::number::tests::to_precision
+        PASS [   0.058s] (254/811) boa_engine builtins::number::tests::value_of
+        PASS [   0.058s] (255/811) boa_engine builtins::object::tests::get_own_property_descriptor
+        PASS [   0.059s] (256/811) boa_engine builtins::object::tests::get_own_property_descriptor_1_arg_returns_undefined
+        PASS [   0.066s] (257/811) boa_engine builtins::number::tests::to_string
+        PASS [   0.046s] (258/811) boa_engine builtins::object::tests::object_create_length
+        PASS [   0.044s] (259/811) boa_engine builtins::object::tests::object_create_with_undefined
+        PASS [   0.061s] (260/811) boa_engine builtins::object::tests::get_own_property_descriptors
+        PASS [   0.052s] (261/811) boa_engine builtins::object::tests::object_create_with_number
+        PASS [   0.052s] (262/811) boa_engine builtins::object::tests::object_create_with_regular_object
+        PASS [   0.058s] (263/811) boa_engine builtins::object::tests::object_create_with_function
+        PASS [   0.048s] (264/811) boa_engine builtins::object::tests::object_from_entries
+        PASS [   0.052s] (265/811) boa_engine builtins::object::tests::object_define_properties
+        PASS [   0.046s] (266/811) boa_engine builtins::object::tests::object_from_entries_invalid_args
+        PASS [   0.051s] (267/811) boa_engine builtins::object::tests::object_get_own_property_names
+        PASS [   0.049s] (268/811) boa_engine builtins::object::tests::object_get_own_property_names_invalid_args
+        PASS [   0.043s] (269/811) boa_engine builtins::object::tests::object_is
+        PASS [   0.045s] (270/811) boa_engine builtins::object::tests::object_has_own_property
+        PASS [   0.049s] (271/811) boa_engine builtins::object::tests::object_get_own_property_symbols
+        PASS [   0.055s] (272/811) boa_engine builtins::object::tests::object_get_own_property_symbols_invalid_args
+        PASS [   0.050s] (273/811) boa_engine builtins::object::tests::object_property_is_enumerable
+        PASS [   0.056s] (274/811) boa_engine builtins::object::tests::object_has_own
+        PASS [   0.058s] (275/811) boa_engine builtins::object::tests::object_is_prototype_of
+        PASS [   0.057s] (276/811) boa_engine builtins::object::tests::object_to_string
+        PASS [   0.052s] (277/811) boa_engine builtins::promise::tests::promise
+        PASS [   0.051s] (278/811) boa_engine builtins::reflect::tests::apply
+        PASS [   0.054s] (279/811) boa_engine builtins::reflect::tests::define_property
+        PASS [   0.055s] (280/811) boa_engine builtins::reflect::tests::construct
+        PASS [   0.052s] (281/811) boa_engine builtins::reflect::tests::get_own_property_descriptor
+        PASS [   0.056s] (282/811) boa_engine builtins::reflect::tests::get
+        PASS [   0.063s] (283/811) boa_engine builtins::reflect::tests::delete_property
+        PASS [   0.058s] (284/811) boa_engine builtins::reflect::tests::get_prototype_of
+        PASS [   0.054s] (285/811) boa_engine builtins::reflect::tests::is_extensible
+        PASS [   0.056s] (286/811) boa_engine builtins::reflect::tests::own_keys
+        PASS [   0.057s] (287/811) boa_engine builtins::reflect::tests::set
+        PASS [   0.059s] (288/811) boa_engine builtins::reflect::tests::prevent_extensions
+        PASS [   0.063s] (289/811) boa_engine builtins::reflect::tests::has
+        PASS [   0.052s] (290/811) boa_engine builtins::reflect::tests::set_prototype_of
+        PASS [   0.054s] (291/811) boa_engine builtins::regexp::tests::constructors
+        PASS [   0.056s] (292/811) boa_engine builtins::regexp::tests::exec
+        PASS [   0.055s] (293/811) boa_engine builtins::regexp::tests::flags
+        PASS [   0.054s] (294/811) boa_engine builtins::regexp::tests::last_index
+        PASS [   0.054s] (295/811) boa_engine builtins::regexp::tests::no_panic_on_parse_fail
+        PASS [   0.054s] (296/811) boa_engine builtins::regexp::tests::regular_expression_construction_independant_of_global_reg_exp
+        PASS [   0.049s] (297/811) boa_engine builtins::regexp::tests::to_string
+        PASS [   0.053s] (298/811) boa_engine builtins::regexp::tests::species
+        PASS [   0.044s] (299/811) boa_engine builtins::set::tests::construct
+        PASS [   0.048s] (300/811) boa_engine builtins::set::tests::clone
+        PASS [   0.058s] (301/811) boa_engine builtins::regexp::tests::search
+        PASS [   0.059s] (302/811) boa_engine builtins::set::tests::clear
+        PASS [   0.051s] (303/811) boa_engine builtins::set::tests::delete
+        PASS [   0.064s] (304/811) boa_engine builtins::set::tests::difference
+        PASS [   0.061s] (305/811) boa_engine builtins::set::tests::difference_equal_set
+        PASS [   0.060s] (306/811) boa_engine builtins::set::tests::for_each
+        PASS [   0.061s] (307/811) boa_engine builtins::set::tests::entries
+        PASS [   0.055s] (308/811) boa_engine builtins::set::tests::intersection
+        PASS [   0.064s] (309/811) boa_engine builtins::set::tests::difference_empty
+        PASS [   0.062s] (310/811) boa_engine builtins::set::tests::has
+        PASS [   0.061s] (311/811) boa_engine builtins::set::tests::is_dist_joint_from
+        PASS [   0.051s] (312/811) boa_engine builtins::set::tests::not_a_function
+        PASS [   0.064s] (313/811) boa_engine builtins::set::tests::is_subset_of
+        PASS [   0.060s] (314/811) boa_engine builtins::set::tests::merge
+        PASS [   0.061s] (315/811) boa_engine builtins::set::tests::is_superset_of
+        PASS [   0.060s] (316/811) boa_engine builtins::set::tests::recursive_display
+        PASS [   0.055s] (317/811) boa_engine builtins::set::tests::symmetric_difference_different_sets_strings
+        PASS [   0.058s] (318/811) boa_engine builtins::set::tests::symbol_iterator
+        PASS [   0.054s] (319/811) boa_engine builtins::set::tests::symmetric_difference_same_set
+        PASS [   0.059s] (320/811) boa_engine builtins::set::tests::symmetric_difference_different_sets_numbers
+        PASS [   0.046s] (321/811) boa_engine builtins::set::tests::symmetric_difference_with_identical_content
+        PASS [   0.050s] (322/811) boa_engine builtins::set::tests::union
+        PASS [   0.051s] (323/811) boa_engine builtins::set::tests::union_same_set
+        PASS [   0.059s] (324/811) boa_engine builtins::set::tests::values_and_keys
+        PASS [   0.050s] (325/811) boa_engine builtins::string::tests::construct_and_call
+        PASS [   0.060s] (326/811) boa_engine builtins::string::tests::char_code_at
+        PASS [   0.062s] (327/811) boa_engine builtins::string::tests::char_at
+        PASS [   0.063s] (328/811) boa_engine builtins::string::tests::ascii_iter
+        PASS [   0.055s] (329/811) boa_engine builtins::string::tests::concat
+        PASS [   0.062s] (330/811) boa_engine builtins::string::tests::code_point_at
+        PASS [   0.054s] (331/811) boa_engine builtins::string::tests::ends_with
+        PASS [   0.055s] (332/811) boa_engine builtins::string::tests::empty_iter
+        PASS [   0.055s] (333/811) boa_engine builtins::string::tests::ends_with_with_regex_arg
+        PASS [   0.050s] (334/811) boa_engine builtins::string::tests::generic_concat
+        PASS [   0.047s] (335/811) boa_engine builtins::string::tests::includes_with_regex_arg
+        PASS [   0.058s] (336/811) boa_engine builtins::string::tests::from_code_point
+        PASS [   0.057s] (337/811) boa_engine builtins::string::tests::generic_last_index_of
+        PASS [   0.060s] (338/811) boa_engine builtins::string::tests::generic_index_of
+        PASS [   0.061s] (339/811) boa_engine builtins::string::tests::includes
+        PASS [   0.041s] (340/811) boa_engine builtins::string::tests::index_of_empty_search_string
+        PASS [   0.044s] (341/811) boa_engine builtins::string::tests::index_of_with_from_index_argument
+        PASS [   0.042s] (342/811) boa_engine builtins::string::tests::index_of_with_no_arguments
+        PASS [   0.054s] (343/811) boa_engine builtins::string::tests::last_index_non_integer_position_argument
+        PASS [   0.056s] (344/811) boa_engine builtins::string::tests::last_index_of_with_non_string_search_string_argument
+        PASS [   0.062s] (345/811) boa_engine builtins::string::tests::last_index_of_with_from_index_argument
+        PASS [   0.065s] (346/811) boa_engine builtins::string::tests::index_of_with_non_string_search_string_argument
+        PASS [   0.065s] (347/811) boa_engine builtins::string::tests::index_of_with_string_search_string_argument
+        PASS [   0.063s] (348/811) boa_engine builtins::string::tests::last_index_of_with_no_arguments
+        PASS [   0.057s] (349/811) boa_engine builtins::string::tests::length
+        PASS [   0.060s] (350/811) boa_engine builtins::string::tests::last_index_of_with_string_search_string_argument
+        PASS [   0.059s] (351/811) boa_engine builtins::string::tests::last_index_with_empty_search_string
+        PASS [   0.062s] (352/811) boa_engine builtins::string::tests::match_all_one
+        PASS [   0.056s] (353/811) boa_engine builtins::string::tests::new_string_has_length
+        PASS [   0.064s] (354/811) boa_engine builtins::string::tests::match_all_two
+        PASS [   0.055s] (355/811) boa_engine builtins::string::tests::new_utf8_string_has_length
+        PASS [   0.061s] (356/811) boa_engine builtins::string::tests::new_string_has_length_not_enumerable
+        PASS [   0.056s] (357/811) boa_engine builtins::string::tests::repeat
+        PASS [   0.057s] (358/811) boa_engine builtins::string::tests::repeat_generic
+        PASS [   0.052s] (359/811) boa_engine builtins::string::tests::repeat_throws_when_count_is_infinity
+        PASS [   0.048s] (360/811) boa_engine builtins::string::tests::repeat_throws_when_count_is_negative
+        PASS [   0.040s] (361/811) boa_engine builtins::string::tests::repeat_throws_when_count_overflows_max_length
+        PASS [   0.042s] (362/811) boa_engine builtins::string::tests::replace
+        PASS [   0.056s] (363/811) boa_engine builtins::string::tests::replace_with_tenth_capture_group
+        PASS [   0.060s] (364/811) boa_engine builtins::string::tests::replace_with_capture_groups
+        PASS [   0.060s] (365/811) boa_engine builtins::string::tests::slice
+        PASS [   0.065s] (366/811) boa_engine builtins::string::tests::replace_with_function
+        PASS [   0.068s] (367/811) boa_engine builtins::string::tests::replace_no_match
+        PASS [   0.064s] (368/811) boa_engine builtins::string::tests::search
+        PASS [   0.059s] (369/811) boa_engine builtins::string::tests::split_with_symbol_split_method
+        PASS [   0.058s] (370/811) boa_engine builtins::string::tests::starts_with
+        PASS [   0.073s] (371/811) boa_engine builtins::string::tests::replace_substitutions
+        PASS [   0.058s] (372/811) boa_engine builtins::string::tests::string_get_property
+        PASS [   0.057s] (373/811) boa_engine builtins::string::tests::trim
+        PASS [   0.070s] (374/811) boa_engine builtins::string::tests::split
+        PASS [   0.066s] (375/811) boa_engine builtins::string::tests::starts_with_with_regex_arg
+        PASS [   0.058s] (376/811) boa_engine builtins::string::tests::trim_end
+        PASS [   0.058s] (377/811) boa_engine builtins::string::tests::trim_start
+        PASS [   0.062s] (378/811) boa_engine builtins::string::tests::test_match
+        PASS [   0.044s] (379/811) boa_engine builtins::symbol::tests::call_symbol_and_check_return_type
+        PASS [   0.056s] (380/811) boa_engine builtins::string::tests::unicode_iter
+        PASS [   0.038s] (381/811) boa_engine builtins::symbol::tests::print_symbol_expect_description
+        PASS [   0.036s] (382/811) boa_engine builtins::uri::tests::decode_byte
+        PASS [   0.037s] (383/811) boa_engine context::time::basic
+        PASS [   0.047s] (384/811) boa_engine builtins::symbol::tests::symbol_access
+        PASS [   0.045s] (385/811) boa_engine environments::tests::let_is_block_scoped
+        PASS [   0.041s] (386/811) boa_engine module::loader::tests::resolve_test::none_other_k_js_ok_base_other_k_js_expects
+        PASS [   0.052s] (387/811) boa_engine environments::tests::functions_use_declaration_scope
+        PASS [   0.057s] (388/811) boa_engine environments::tests::const_is_block_scoped
+        PASS [   0.060s] (389/811) boa_engine builtins::weak::weak_ref::tests::weak_ref_collected
+        PASS [   0.047s] (390/811) boa_engine module::loader::tests::resolve_test::none_n_js_err_expects
+        PASS [   0.051s] (391/811) boa_engine environments::tests::set_outer_var_in_block_scope
+        PASS [   0.057s] (392/811) boa_engine environments::tests::set_outer_let_in_block_scope
+        PASS [   0.052s] (393/811) boa_engine module::loader::tests::resolve_test::none_i_js_err_expects
+        PASS [   0.055s] (394/811) boa_engine environments::tests::var_not_block_scoped
+        PASS [   0.055s] (395/811) boa_engine module::loader::tests::resolve_test::none_other_l_js_err_expects
+        PASS [   0.053s] (396/811) boa_engine module::loader::tests::resolve_test::some_base_other_ref_js_c_js_ok_base_other_c_js_expects
+        PASS [   0.051s] (397/811) boa_engine module::loader::tests::resolve_test::some_base_other_ref_js_d_js_ok_base_d_js_expects
+        PASS [   0.058s] (398/811) boa_engine module::loader::tests::resolve_test::none_j_js_ok_base_j_js_expects
+        PASS [   0.046s] (399/811) boa_engine module::loader::tests::resolve_test::some_base_ref_js_b_js_ok_base_b_js_expects
+        PASS [   0.040s] (400/811) boa_engine module::loader::tests::resolve_test::some_base_ref_js_other_m_js_err_expects
+        PASS [   0.050s] (401/811) boa_engine module::loader::tests::resolve_test::some_base_ref_js_e_js_ok_base_e_js_expects
+        PASS [   0.046s] (402/811) boa_engine module::loader::tests::resolve_test::some_base_ref_js_f_js_ok_base_f_js_expects
+        PASS [   0.046s] (403/811) boa_engine module::loader::tests::resolve_test::some_hello_ref_js_a_js_ok_base_a_js_expects
+        PASS [   0.047s] (404/811) boa_engine module::loader::tests::resolve_test::some_other_ref_js_other_h1_js_ok_base_other_h1_js_expects
+        PASS [   0.047s] (405/811) boa_engine module::loader::tests::resolve_test_no_base::none_i_js_err_expects
+        PASS [   0.054s] (406/811) boa_engine module::loader::tests::resolve_test::some_other_ref_js_h2_js_ok_base_h2_js_expects
+        PASS [   0.050s] (407/811) boa_engine module::loader::tests::resolve_test_no_base::none_j_js_ok_j_js_expects
+        PASS [   0.054s] (408/811) boa_engine module::loader::tests::resolve_test::some_other_ref_js_other_h_js_ok_base_other_other_h_js_expects
+        PASS [   0.053s] (409/811) boa_engine module::loader::tests::resolve_test::some_ref_js_g_js_ok_base_g_js_expects
+        PASS [   0.049s] (410/811) boa_engine module::loader::tests::resolve_test_no_base::none_other_k_js_ok_other_k_js_expects
+        PASS [   0.047s] (411/811) boa_engine module::loader::tests::resolve_test_no_base::some_base_ref_js_b_js_ok_base_b_js_expects
+        PASS [   0.056s] (412/811) boa_engine module::loader::tests::resolve_test_no_base::none_n_js_err_expects
+        PASS [   0.048s] (413/811) boa_engine module::loader::tests::resolve_test_no_base::some_base_ref_js_e_js_ok_e_js_expects
+        PASS [   0.053s] (414/811) boa_engine module::loader::tests::resolve_test_no_base::some_base_other_ref_js_c_js_ok_base_other_c_js_expects
+        PASS [   0.052s] (415/811) boa_engine module::loader::tests::resolve_test_no_base::some_base_other_ref_js_d_js_ok_base_d_js_expects
+        PASS [   0.063s] (416/811) boa_engine module::loader::tests::resolve_test_no_base::none_other_l_js_err_expects
+        PASS [   0.049s] (417/811) boa_engine module::loader::tests::resolve_test_no_base::some_base_ref_js_other_m_js_err_expects
+        PASS [   0.049s] (418/811) boa_engine module::loader::tests::resolve_test_no_base::some_hello_ref_js_a_js_ok_a_js_expects
+        PASS [   0.057s] (419/811) boa_engine module::loader::tests::resolve_test_no_base::some_base_ref_js_f_js_ok_base_f_js_expects
+        PASS [   0.048s] (420/811) boa_engine module::loader::tests::resolve_test_no_base::some_other_ref_js_h2_js_ok_h2_js_expects
+        PASS [   0.042s] (421/811) boa_engine module::loader::tests::resolve_test_no_base::some_other_ref_js_other_h1_js_ok_other_h1_js_expects
+        PASS [   0.041s] (422/811) boa_engine object::builtins::jstypedarray::typed_iterators_f32
+        PASS [   0.036s] (423/811) boa_engine object::shape::shared_shape::tests::test_prune_property_on_counter_limit
+        PASS [   0.049s] (424/811) boa_engine module::loader::tests::resolve_test_no_base::some_other_ref_js_other_h_js_ok_other_other_h_js_expects
+        PASS [   0.045s] (425/811) boa_engine object::builtins::jstypedarray::typed_iterators_uint32
+        PASS [   0.050s] (426/811) boa_engine module::loader::tests::resolve_test_no_base::some_ref_js_g_js_ok_g_js_expects
+        PASS [   0.046s] (427/811) boa_engine object::shape::shared_shape::tests::test_prune_prototype_on_counter_limit
+        PASS [   0.048s] (428/811) boa_engine object::builtins::jstypedarray::typed_iterators_uint8
+        PASS [   0.042s] (429/811) boa_engine property::attribute::tests::configurable
+        PASS [   0.043s] (430/811) boa_engine property::attribute::tests::clear
+        PASS [   0.044s] (431/811) boa_engine property::attribute::tests::default
+        PASS [   0.040s] (432/811) boa_engine property::attribute::tests::enumerable
+        PASS [   0.052s] (433/811) boa_engine object::tests::ordinary_has_instance_nonobject_prototype
+        PASS [   0.039s] (434/811) boa_engine property::attribute::tests::set_configurable_to_true
+        PASS [   0.041s] (435/811) boa_engine property::attribute::tests::enumerable_configurable
+        PASS [   0.041s] (436/811) boa_engine property::attribute::tests::set_configurable_to_false
+        PASS [   0.056s] (437/811) boa_engine object::tests::object_properties_return_order
+        PASS [   0.042s] (438/811) boa_engine property::attribute::tests::set_enumerable_to_false
+        PASS [   0.044s] (439/811) boa_engine property::attribute::tests::set_enumerable_to_true
+        PASS [   0.036s] (440/811) boa_engine property::attribute::tests::writable
+        PASS [   0.039s] (441/811) boa_engine property::attribute::tests::set_writable_to_false
+        PASS [   0.043s] (442/811) boa_engine property::attribute::tests::set_writable_to_true
+        PASS [   0.037s] (443/811) boa_engine property::attribute::tests::writable_and_enumerable
+        PASS [   0.037s] (444/811) boa_engine string::tests::as_str
+        PASS [   0.035s] (445/811) boa_engine string::tests::conversion_to_known_static_js_string
+        PASS [   0.043s] (446/811) boa_engine property::attribute::tests::writable_enumerable_configurable
+        PASS [   0.037s] (447/811) boa_engine string::tests::hash
+        PASS [   0.045s] (448/811) boa_engine string::tests::concat
+        PASS [   0.043s] (449/811) boa_engine string::tests::empty
+        PASS [   0.042s] (450/811) boa_engine string::tests::static_refcount
+        PASS [   0.047s] (451/811) boa_engine string::tests::refcount
+        PASS [   0.045s] (452/811) boa_engine string::tests::trim_start_non_ascii_to_ascii
+        PASS [   0.052s] (453/811) boa_engine tests::array_field_set
+        PASS [   0.056s] (454/811) boa_engine tests::array_creation_benchmark
+        PASS [   0.048s] (455/811) boa_engine tests::async_generator::return_on_then_queue
+        PASS [   0.059s] (456/811) boa_engine tests::array_pop_benchmark
+        PASS [   0.049s] (457/811) boa_engine tests::check_this_binding_in_object_literal
+        PASS [   0.065s] (458/811) boa_engine tests::async_generator::return_on_then_infinite_loop
+        PASS [   0.056s] (459/811) boa_engine tests::async_generator::return_on_then_single
+        PASS [   0.054s] (460/811) boa_engine tests::class::class_field_initializer_name
+        PASS [   0.057s] (461/811) boa_engine tests::class::class_can_access_super_from_static_initializer
+        PASS [   0.053s] (462/811) boa_engine tests::class::class_superclass_from_regex_error
+        PASS [   0.051s] (463/811) boa_engine tests::control_flow::break_labelled_if_statement
+        PASS [   0.057s] (464/811) boa_engine tests::class::class_field_initializer_name_static
+        PASS [   0.048s] (465/811) boa_engine tests::control_flow::catch
+        PASS [   0.056s] (466/811) boa_engine tests::control_flow::bigger_switch_example
+        PASS [   0.053s] (467/811) boa_engine tests::control_flow::break_labelled_try_statement
+        PASS [   0.046s] (468/811) boa_engine tests::control_flow::catch_binding
+        PASS [   0.053s] (469/811) boa_engine tests::control_flow::catch_binding_pattern_array
+        PASS [   0.055s] (470/811) boa_engine tests::control_flow::catch_binding_finally
+        PASS [   0.047s] (471/811) boa_engine tests::control_flow::catch_finally
+        PASS [   0.051s] (472/811) boa_engine tests::control_flow::catch_binding_pattern_object
+        PASS [   0.045s] (473/811) boa_engine tests::control_flow::default_taken_switch
+        PASS [   0.050s] (474/811) boa_engine tests::control_flow::default_not_taken_switch
+        PASS [   0.046s] (475/811) boa_engine tests::control_flow::finally
+        PASS [   0.044s] (476/811) boa_engine tests::control_flow::finally_with_loop_break
+        PASS [   0.050s] (477/811) boa_engine tests::control_flow::loops::break_environment_gauntlet
+        PASS [   0.048s] (478/811) boa_engine tests::control_flow::loops::do_loop_early_break
+        PASS [   0.051s] (479/811) boa_engine tests::control_flow::loops::continue_inner_loop
+        PASS [   0.055s] (480/811) boa_engine tests::control_flow::loops::break_nested_labels_loops_and_try
+        PASS [   0.054s] (481/811) boa_engine tests::control_flow::loops::break_out_of_inner_loop
+        PASS [   0.054s] (482/811) boa_engine tests::control_flow::loops::do_loop_late_break
+        PASS [   0.051s] (483/811) boa_engine tests::control_flow::loops::do_while_loop_at_least_once
+        PASS [   0.052s] (484/811) boa_engine tests::control_flow::loops::do_while_loop_continue
+        PASS [   0.058s] (485/811) boa_engine tests::control_flow::loops::do_while_in_block
+        PASS [   0.057s] (486/811) boa_engine tests::control_flow::loops::do_while_loop
+        PASS [   0.052s] (487/811) boa_engine tests::control_flow::loops::do_while_post_inc
+        PASS [   0.055s] (488/811) boa_engine tests::control_flow::loops::for_in_break_label
+        PASS [   0.051s] (489/811) boa_engine tests::control_flow::loops::for_in_continue_label
+        PASS [   0.056s] (490/811) boa_engine tests::control_flow::loops::for_in_declaration
+        PASS [   0.059s] (491/811) boa_engine tests::control_flow::loops::for_in_const_array
+        PASS [   0.059s] (492/811) boa_engine tests::control_flow::loops::for_in_let_object
+        PASS [   0.056s] (493/811) boa_engine tests::control_flow::loops::for_in_var_object
+        PASS [   0.059s] (494/811) boa_engine tests::control_flow::loops::for_in_var_array
+        PASS [   0.051s] (495/811) boa_engine tests::control_flow::loops::for_loop
+        PASS [   0.047s] (496/811) boa_engine tests::control_flow::loops::for_loop_break
+        PASS [   0.050s] (497/811) boa_engine tests::control_flow::loops::for_loop_continue_label
+        PASS [   0.054s] (498/811) boa_engine tests::control_flow::loops::for_loop_break_label
+        PASS [   0.052s] (499/811) boa_engine tests::control_flow::loops::for_loop_continue_out_of_switch
+        PASS [   0.047s] (500/811) boa_engine tests::control_flow::loops::for_of_loop_break
+        PASS [   0.052s] (501/811) boa_engine tests::control_flow::loops::for_loop_iteration_variable_does_not_leak
+        PASS [   0.051s] (502/811) boa_engine tests::control_flow::loops::for_of_loop_const
+        PASS [   0.057s] (503/811) boa_engine tests::control_flow::loops::for_loop_return
+        PASS [   0.053s] (504/811) boa_engine tests::control_flow::loops::for_of_loop_continue
+        PASS [   0.049s] (505/811) boa_engine tests::control_flow::loops::for_of_loop_declaration
+        PASS [   0.047s] (506/811) boa_engine tests::control_flow::loops::for_of_loop_let
+        PASS [   0.046s] (507/811) boa_engine tests::control_flow::loops::test_invalid_break_target
+        PASS [   0.056s] (508/811) boa_engine tests::control_flow::loops::for_of_loop_return
+        PASS [   0.052s] (509/811) boa_engine tests::control_flow::loops::for_of_loop_var
+        PASS [   0.051s] (510/811) boa_engine tests::control_flow::loops::try_break_finally_edge_cases
+        PASS [   0.049s] (511/811) boa_engine tests::control_flow::loops::while_loop_early_break
+        PASS [   0.053s] (512/811) boa_engine tests::control_flow::loops::while_loop_continue
+        PASS [   0.059s] (513/811) boa_engine tests::control_flow::loops::try_break_labels
+        PASS [   0.053s] (514/811) boa_engine tests::control_flow::no_cases_switch
+        PASS [   0.058s] (515/811) boa_engine tests::control_flow::loops::while_loop_late_break
+        PASS [   0.056s] (516/811) boa_engine tests::control_flow::no_true_case_switch
+        PASS [   0.052s] (517/811) boa_engine tests::control_flow::test_invalid_break
+        PASS [   0.059s] (518/811) boa_engine tests::control_flow::simple_try
+        PASS [   0.059s] (519/811) boa_engine tests::control_flow::single_case_switch
+        PASS [   0.059s] (520/811) boa_engine tests::control_flow::string_switch
+        PASS [   0.052s] (521/811) boa_engine tests::control_flow::test_invalid_continue_target
+        PASS [   0.057s] (522/811) boa_engine tests::control_flow::test_invalid_continue
+        PASS [   0.053s] (523/811) boa_engine tests::control_flow::test_labelled_block
+        PASS [   0.050s] (524/811) boa_engine tests::control_flow::two_case_no_break_switch
+        PASS [   0.060s] (525/811) boa_engine tests::control_flow::three_case_partial_fallthrough
+        PASS [   0.051s] (526/811) boa_engine tests::empty_let_decl_undefined
+        PASS [   0.054s] (527/811) boa_engine tests::control_flow::two_case_switch
+        PASS [   0.045s] (528/811) boa_engine tests::empty_var_decl_undefined
+        PASS [   0.052s] (529/811) boa_engine tests::empty_statement
+        PASS [   0.048s] (530/811) boa_engine tests::env::fun_block_eval_2317
+        PASS [   0.045s] (531/811) boa_engine tests::function::calling_function_with_unspecified_arguments
+        PASS [   0.052s] (532/811) boa_engine tests::env::with_env_not_panic
+        PASS [   0.047s] (533/811) boa_engine tests::function::duplicate_function_name
+        PASS [   0.047s] (534/811) boa_engine tests::function::function_declaration_returns_undefined
+        PASS [   0.051s] (535/811) boa_engine tests::function::empty_function_returns_undefined
+        PASS [   0.055s] (536/811) boa_engine tests::function::early_return
+        PASS [   0.055s] (537/811) boa_engine tests::function::not_a_function
+        PASS [   0.057s] (538/811) boa_engine tests::function::property_accessor_member_expression_bracket_notation_on_function
+        PASS [   0.053s] (539/811) boa_engine tests::function::property_accessor_member_expression_dot_notation_on_function
+        PASS [   0.052s] (540/811) boa_engine tests::function::should_type_error_when_new_is_not_constructor
+        PASS [   0.066s] (541/811) boa_engine tests::function::new_instance_should_point_to_prototype
+        PASS [   0.063s] (542/811) boa_engine tests::function::should_set_this_value
+        PASS [   0.056s] (543/811) boa_engine tests::function::strict_mode_dup_func_parameters
+        PASS [   0.057s] (544/811) boa_engine tests::function_decl_hoisting
+        PASS [   0.056s] (545/811) boa_engine tests::identifier_op
+        PASS [   0.057s] (546/811) boa_engine tests::identifier_on_global_object_undefined
+        FAIL [   0.048s] (547/811) boa_engine tests::locale_variants
+  stdout ───
+
+    running 1 test
+    test tests::locale_variants ... FAILED
+
+    failures:
+
+    failures:
+        tests::locale_variants
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 806 filtered out; finished in 0.01s
+
+  stderr ───
+
+    thread 'tests::locale_variants' panicked at core/engine/src/tests/mod.rs:522:5:
+
+
+    Test case 1: 
+    ```
+        'variants' in Intl.Locale.prototype
+    ```
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 17 tests still running
+        PASS [   0.056s] (548/811) boa_engine tests::length_correct_value_on_string_literal
+        PASS [   0.063s] (549/811) boa_engine tests::iterators::iterator_close_in_continue_before_jobs
+        PASS [   0.067s] (550/811) boa_engine tests::iterators::async_iterator_close_in_continue_is_awaited
+        PASS [   0.051s] (551/811) boa_engine tests::multiline_str_concat
+        PASS [   0.065s] (552/811) boa_engine tests::iterators::mixed_iterators_close_in_continue
+        PASS [   0.049s] (553/811) boa_engine tests::number_object_access_benchmark
+        PASS [   0.057s] (554/811) boa_engine tests::null_bool_in_object_pattern
+        PASS [   0.051s] (555/811) boa_engine tests::operators::assign_to_array_decl
+        PASS [   0.057s] (556/811) boa_engine tests::object_field_set
+        PASS [   0.043s] (557/811) boa_engine tests::operators::assignment_to_non_assignable_ctd
+        PASS [   0.048s] (558/811) boa_engine tests::operators::assignment_to_non_assignable
+        PASS [   0.053s] (559/811) boa_engine tests::operators::assign_to_object_decl
+        PASS [   0.057s] (560/811) boa_engine tests::operators::assign_operator_precedence
+        PASS [   0.042s] (561/811) boa_engine tests::operators::comma_operator
+        PASS [   0.049s] (562/811) boa_engine tests::operators::assignmentoperator_lhs_not_defined
+        PASS [   0.045s] (563/811) boa_engine tests::operators::assignmentoperator_rhs_throws_error
+        PASS [   0.043s] (564/811) boa_engine tests::operators::conditional_op
+────────────
+     Summary [   1.737s] 564/811 tests run: 563 passed, 1 failed, 0 skipped
+        FAIL [   0.048s] (547/811) boa_engine tests::locale_variants
+warning: 247/811 tests were not run due to test failure (run with --no-fail-fast to run all tests, or run with --max-fail)
+error: test run failed
+reward=0 graded=811 found=65 failed=0 parsed=564 framework=cargo exit_code=100

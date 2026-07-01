@@ -1,0 +1,5 @@
+I'm working on the `re_query_cache` crate in the rerun project. There's a known issue where the range query cache doesn't properly invalidate stale entries when underlying data changes. If I log some data, query it through the cache, then update that data (or add new data at a different time), the cache keeps returning the old results instead of the new ones.
+
+This needs to be fixed so that after any data insertion or update — whether the modified data is in the past, present, or future relative to a range query, or is timeless — the cache correctly detects the invalidation and returns up-to-date results matching what an uncached query would return. Timeless data updates should invalidate the entire cache for the affected archetype, while timeful data updates should evict only the cache entries at or after the modified timepoint.
+
+There's also a pre-existing bug in the latest-at invalidation tests where the frame time points used for testing are incorrect — "frame_122" and "frame_124" are both set to frame number 123 instead of 122 and 124 respectively, so the test isn't actually checking distinct timepoints. That should be fixed too.

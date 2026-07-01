@@ -1,0 +1,23 @@
+{
+ "task": "gruntwork-io-cloud-nuke-646",
+ "validation": {
+  "nop": 0.0,
+  "oracle": 1.0,
+  "pass": true
+ },
+ "qc": {
+  "verdict": "PASS_CLEAN",
+  "reason_code": "PASS_CLEAN",
+  "evidence": "golden adds Route53CidrCollection/Route53HostedZone/Route53TrafficPolicy resources (CIDR blocks removed before collection delete) + registry + config; tests mock route53 API and assert getAll honors NamesRegExp exclusion"
+ },
+ "git_contract": {
+  "contract_pass": true,
+  "head_eq_base": true,
+  "no_remote": true,
+  "no_reflog": true,
+  "no_tags": true,
+  "size_ok": true,
+  "git_mb": 1,
+  "shallow": true
+ }
+}

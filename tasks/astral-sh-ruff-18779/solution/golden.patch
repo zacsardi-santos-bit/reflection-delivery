@@ -1,0 +1,1475 @@
+diff --git a/.github/workflows/ci.yaml b/.github/workflows/ci.yaml
+index 3b6c3ff364..1d7124e09e 100644
+--- a/.github/workflows/ci.yaml
++++ b/.github/workflows/ci.yaml
+@@ -240,11 +240,11 @@ jobs:
+       - name: "Install mold"
+         uses: rui314/setup-mold@b3958095189f34b95d402a680b6e96b7f194f7b9 # v1
+       - name: "Install cargo nextest"
+-        uses: taiki-e/install-action@d12e869b89167df346dd0ff65da342d1fb1202fb # v2.53.2
++        uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
+         with:
+           tool: cargo-nextest
+       - name: "Install cargo insta"
+-        uses: taiki-e/install-action@d12e869b89167df346dd0ff65da342d1fb1202fb # v2.53.2
++        uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
+         with:
+           tool: cargo-insta
+       - name: ty mdtests (GitHub annotations)
+@@ -298,11 +298,11 @@ jobs:
+       - name: "Install mold"
+         uses: rui314/setup-mold@b3958095189f34b95d402a680b6e96b7f194f7b9 # v1
+       - name: "Install cargo nextest"
+-        uses: taiki-e/install-action@d12e869b89167df346dd0ff65da342d1fb1202fb # v2.53.2
++        uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
+         with:
+           tool: cargo-nextest
+       - name: "Install cargo insta"
+-        uses: taiki-e/install-action@d12e869b89167df346dd0ff65da342d1fb1202fb # v2.53.2
++        uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
+         with:
+           tool: cargo-insta
+       - name: "Run tests"
+@@ -325,7 +325,7 @@ jobs:
+       - name: "Install Rust toolchain"
+         run: rustup show
+       - name: "Install cargo nextest"
+-        uses: taiki-e/install-action@d12e869b89167df346dd0ff65da342d1fb1202fb # v2.53.2
++        uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
+         with:
+           tool: cargo-nextest
+       - name: "Run tests"
+@@ -408,11 +408,11 @@ jobs:
+       - name: "Install mold"
+         uses: rui314/setup-mold@b3958095189f34b95d402a680b6e96b7f194f7b9 # v1
+       - name: "Install cargo nextest"
+-        uses: taiki-e/install-action@d12e869b89167df346dd0ff65da342d1fb1202fb # v2.53.2
++        uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
+         with:
+           tool: cargo-nextest
+       - name: "Install cargo insta"
+-        uses: taiki-e/install-action@d12e869b89167df346dd0ff65da342d1fb1202fb # v2.53.2
++        uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
+         with:
+           tool: cargo-insta
+       - name: "Run tests"
+@@ -912,7 +912,7 @@ jobs:
+         run: rustup show
+ 
+       - name: "Install codspeed"
+-        uses: taiki-e/install-action@d12e869b89167df346dd0ff65da342d1fb1202fb # v2.53.2
++        uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
+         with:
+           tool: cargo-codspeed
+ 
+@@ -945,7 +945,7 @@ jobs:
+         run: rustup show
+ 
+       - name: "Install codspeed"
+-        uses: taiki-e/install-action@d12e869b89167df346dd0ff65da342d1fb1202fb # v2.53.2
++        uses: taiki-e/install-action@735e5933943122c5ac182670a935f54a949265c1 # v2.52.4
+         with:
+           tool: cargo-codspeed
+ 
+diff --git a/crates/ruff_linter/resources/test/fixtures/flake8_async/ASYNC116.py b/crates/ruff_linter/resources/test/fixtures/flake8_async/ASYNC116.py
+index ecd5268664..4141f64e8d 100644
+--- a/crates/ruff_linter/resources/test/fixtures/flake8_async/ASYNC116.py
++++ b/crates/ruff_linter/resources/test/fixtures/flake8_async/ASYNC116.py
+@@ -128,11 +128,3 @@ async def test_trio_async116_helpers():
+ 
+     await trio.sleep(seconds=86401)  # ASYNC116
+     await trio.sleep(delay=86401)  # OK
+-
+-
+-async def _():
+-    import trio
+-    from trio import sleep
+-
+-    await sleep(18446744073709551616)
+-    await trio.sleep(99999999999999999999)
+diff --git a/crates/ruff_linter/resources/test/fixtures/flake8_comprehensions/C420.py b/crates/ruff_linter/resources/test/fixtures/flake8_comprehensions/C420.py
+index 03a6f44628..8f971d2bf1 100644
+--- a/crates/ruff_linter/resources/test/fixtures/flake8_comprehensions/C420.py
++++ b/crates/ruff_linter/resources/test/fixtures/flake8_comprehensions/C420.py
+@@ -90,14 +90,3 @@ def func():
+ 
+ def func():
+     {(a, b): a + b for (a, b) in [(1, 2), (3, 4)]}  # OK
+-
+-# https://github.com/astral-sh/ruff/issues/18764
+-{ # 1
+-a # 2
+-: # 3
+-None # 4
+-for # 5
+-a # 6
+-in # 7
+-iterable # 8
+-} # 9
+diff --git a/crates/ruff_linter/resources/test/fixtures/flake8_return/RET501.py b/crates/ruff_linter/resources/test/fixtures/flake8_return/RET501.py
+index 6c60a6499f..70346bef98 100644
+--- a/crates/ruff_linter/resources/test/fixtures/flake8_return/RET501.py
++++ b/crates/ruff_linter/resources/test/fixtures/flake8_return/RET501.py
+@@ -49,13 +49,3 @@ class Baz:
+     def prop4(self) -> None:
+         print("I've run out of things to say")
+         return None
+-
+-
+-# https://github.com/astral-sh/ruff/issues/18774
+-class _:
+-    def foo(bar):
+-        if not bar:
+-            return
+-        return (
+-            None # comment
+-        )
+diff --git a/crates/ruff_linter/resources/test/fixtures/ruff/RUF064.py b/crates/ruff_linter/resources/test/fixtures/ruff/RUF064.py
+deleted file mode 100644
+index 4f565ae15a..0000000000
+--- a/crates/ruff_linter/resources/test/fixtures/ruff/RUF064.py
++++ /dev/null
+@@ -1,53 +0,0 @@
+-import dbm.gnu
+-import dbm.ndbm
+-import os
+-from pathlib import Path
+-
+-os.chmod("foo", 444)  # Error
+-os.chmod("foo", 0o444)  # OK
+-os.chmod("foo", 7777)  # Error
+-os.chmod("foo", 10000)  # Error
+-os.chmod("foo", 99999)  # Error
+-
+-os.umask(777)  # Error
+-os.umask(0o777)  # OK
+-
+-os.fchmod(0, 400)  # Error
+-os.fchmod(0, 0o400)  # OK
+-
+-os.lchmod("foo", 755)  # Error
+-os.lchmod("foo", 0o755)  # OK
+-
+-os.mkdir("foo", 600)  # Error
+-os.mkdir("foo", 0o600)  # OK
+-
+-os.makedirs("foo", 644)  # Error
+-os.makedirs("foo", 0o644)  # OK
+-
+-os.mkfifo("foo", 640)  # Error
+-os.mkfifo("foo", 0o640)  # OK
+-
+-os.mknod("foo", 660)  # Error
+-os.mknod("foo", 0o660)  # OK
+-
+-os.open("foo", os.O_CREAT, 644)  # Error
+-os.open("foo", os.O_CREAT, 0o644)  # OK
+-
+-Path("bar").chmod(755)  # Error
+-Path("bar").chmod(0o755)  # OK
+-
+-path = Path("bar")
+-path.chmod(755)  # Error
+-path.chmod(0o755)  # OK
+-
+-dbm.open("db", "r", 600)  # Error
+-dbm.open("db", "r", 0o600)  # OK
+-
+-dbm.gnu.open("db", "r", 600)  # Error
+-dbm.gnu.open("db", "r", 0o600)  # OK
+-
+-dbm.ndbm.open("db", "r", 600)  # Error
+-dbm.ndbm.open("db", "r", 0o600)  # OK
+-
+-os.fchmod(0, 256)  # 0o400
+-os.fchmod(0, 493)  # 0o755
+diff --git a/crates/ruff_linter/src/checkers/ast/analyze/expression.rs b/crates/ruff_linter/src/checkers/ast/analyze/expression.rs
+index 09f1f4f4e9..377a50cc39 100644
+--- a/crates/ruff_linter/src/checkers/ast/analyze/expression.rs
++++ b/crates/ruff_linter/src/checkers/ast/analyze/expression.rs
+@@ -1205,9 +1205,6 @@ pub(crate) fn expression(expr: &Expr, checker: &Checker) {
+             if checker.enabled(Rule::FromisoformatReplaceZ) {
+                 refurb::rules::fromisoformat_replace_z(checker, call);
+             }
+-            if checker.enabled(Rule::NonOctalPermissions) {
+-                ruff::rules::non_octal_permissions(checker, call);
+-            }
+         }
+         Expr::Dict(dict) => {
+             if checker.any_enabled(&[
+diff --git a/crates/ruff_linter/src/codes.rs b/crates/ruff_linter/src/codes.rs
+index 144006b07d..80fcc0708f 100644
+--- a/crates/ruff_linter/src/codes.rs
++++ b/crates/ruff_linter/src/codes.rs
+@@ -1028,7 +1028,6 @@ pub fn code_to_rule(linter: Linter, code: &str) -> Option<(RuleGroup, Rule)> {
+         (Ruff, "059") => (RuleGroup::Preview, rules::ruff::rules::UnusedUnpackedVariable),
+         (Ruff, "060") => (RuleGroup::Preview, rules::ruff::rules::InEmptyCollection),
+         (Ruff, "061") => (RuleGroup::Preview, rules::ruff::rules::LegacyFormPytestRaises),
+-        (Ruff, "064") => (RuleGroup::Preview, rules::ruff::rules::NonOctalPermissions),
+         (Ruff, "100") => (RuleGroup::Stable, rules::ruff::rules::UnusedNOQA),
+         (Ruff, "101") => (RuleGroup::Stable, rules::ruff::rules::RedirectedNOQA),
+         (Ruff, "102") => (RuleGroup::Preview, rules::ruff::rules::InvalidRuleCode),
+diff --git a/crates/ruff_linter/src/rules/flake8_async/rules/long_sleep_not_forever.rs b/crates/ruff_linter/src/rules/flake8_async/rules/long_sleep_not_forever.rs
+index 8680dce16b..981dccfe3f 100644
+--- a/crates/ruff_linter/src/rules/flake8_async/rules/long_sleep_not_forever.rs
++++ b/crates/ruff_linter/src/rules/flake8_async/rules/long_sleep_not_forever.rs
+@@ -100,10 +100,14 @@ pub(crate) fn long_sleep_not_forever(checker: &Checker, call: &ExprCall) {
+     // TODO(ekohilas): Replace with Duration::from_days(1).as_secs(); when available.
+     let one_day_in_secs = 60 * 60 * 24;
+     match value {
+-        Number::Int(int_value) => match int_value.as_u64() {
+-            Some(int_value) if int_value <= one_day_in_secs => return,
+-            _ => {} // The number is too large, and more than 24 hours
+-        },
++        Number::Int(int_value) => {
++            let Some(int_value) = int_value.as_u64() else {
++                return;
++            };
++            if int_value <= one_day_in_secs {
++                return;
++            }
++        }
+         Number::Float(float_value) =>
+         {
+             #[expect(clippy::cast_precision_loss)]
+diff --git a/crates/ruff_linter/src/rules/flake8_async/snapshots/ruff_linter__rules__flake8_async__tests__ASYNC116_ASYNC116.py.snap b/crates/ruff_linter/src/rules/flake8_async/snapshots/ruff_linter__rules__flake8_async__tests__ASYNC116_ASYNC116.py.snap
+index 1e04f8065a..3e2e1aead7 100644
+--- a/crates/ruff_linter/src/rules/flake8_async/snapshots/ruff_linter__rules__flake8_async__tests__ASYNC116_ASYNC116.py.snap
++++ b/crates/ruff_linter/src/rules/flake8_async/snapshots/ruff_linter__rules__flake8_async__tests__ASYNC116_ASYNC116.py.snap
+@@ -330,38 +330,3 @@ ASYNC116.py:129:11: ASYNC116 [*] `trio.sleep()` with >24 hour interval should us
+ 129     |-    await trio.sleep(seconds=86401)  # ASYNC116
+     129 |+    await trio.sleep_forever()  # ASYNC116
+ 130 130 |     await trio.sleep(delay=86401)  # OK
+-131 131 | 
+-132 132 | 
+-
+-ASYNC116.py:137:11: ASYNC116 [*] `trio.sleep()` with >24 hour interval should usually be `trio.sleep_forever()`
+-    |
+-135 |     from trio import sleep
+-136 |
+-137 |     await sleep(18446744073709551616)
+-    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^ ASYNC116
+-138 |     await trio.sleep(99999999999999999999)
+-    |
+-    = help: Replace with `trio.sleep_forever()`
+-
+-ℹ Unsafe fix
+-134 134 |     import trio
+-135 135 |     from trio import sleep
+-136 136 | 
+-137     |-    await sleep(18446744073709551616)
+-    137 |+    await trio.sleep_forever()
+-138 138 |     await trio.sleep(99999999999999999999)
+-
+-ASYNC116.py:138:11: ASYNC116 [*] `trio.sleep()` with >24 hour interval should usually be `trio.sleep_forever()`
+-    |
+-137 |     await sleep(18446744073709551616)
+-138 |     await trio.sleep(99999999999999999999)
+-    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ASYNC116
+-    |
+-    = help: Replace with `trio.sleep_forever()`
+-
+-ℹ Unsafe fix
+-135 135 |     from trio import sleep
+-136 136 | 
+-137 137 |     await sleep(18446744073709551616)
+-138     |-    await trio.sleep(99999999999999999999)
+-    138 |+    await trio.sleep_forever()
+diff --git a/crates/ruff_linter/src/rules/flake8_comprehensions/rules/unnecessary_dict_comprehension_for_iterable.rs b/crates/ruff_linter/src/rules/flake8_comprehensions/rules/unnecessary_dict_comprehension_for_iterable.rs
+index b4bf05e41a..d7defe6c8b 100644
+--- a/crates/ruff_linter/src/rules/flake8_comprehensions/rules/unnecessary_dict_comprehension_for_iterable.rs
++++ b/crates/ruff_linter/src/rules/flake8_comprehensions/rules/unnecessary_dict_comprehension_for_iterable.rs
+@@ -1,5 +1,4 @@
+ use ast::ExprName;
+-use ruff_diagnostics::Applicability;
+ use ruff_macros::{ViolationMetadata, derive_message_formats};
+ use ruff_python_ast::comparable::ComparableExpr;
+ use ruff_python_ast::helpers::any_over_expr;
+@@ -32,19 +31,6 @@ use crate::{Edit, Fix, FixAvailability, Violation};
+ /// dict.fromkeys(iterable, 1)
+ /// ```
+ ///
+-/// ## Fix safety
+-/// This rule's fix is marked as unsafe if there's comments inside the dict comprehension,
+-/// as comments may be removed.
+-///
+-/// For example, the fix would be marked as unsafe in the following case:
+-/// ```python
+-/// {  # comment 1
+-///     a:  # comment 2
+-///     None  # comment 3
+-///     for a in iterable  # comment 4
+-/// }
+-/// ```
+-///
+ /// ## References
+ /// - [Python documentation: `dict.fromkeys`](https://docs.python.org/3/library/stdtypes.html#dict.fromkeys)
+ #[derive(ViolationMetadata)]
+@@ -135,7 +121,7 @@ pub(crate) fn unnecessary_dict_comprehension_for_iterable(
+     );
+ 
+     if checker.semantic().has_builtin_binding("dict") {
+-        let edit = Edit::range_replacement(
++        diagnostic.set_fix(Fix::safe_edit(Edit::range_replacement(
+             checker
+                 .generator()
+                 .expr(&fix_unnecessary_dict_comprehension(
+@@ -143,15 +129,7 @@ pub(crate) fn unnecessary_dict_comprehension_for_iterable(
+                     generator,
+                 )),
+             dict_comp.range(),
+-        );
+-        diagnostic.set_fix(Fix::applicable_edit(
+-            edit,
+-            if checker.comment_ranges().intersects(dict_comp.range()) {
+-                Applicability::Unsafe
+-            } else {
+-                Applicability::Safe
+-            },
+-        ));
++        )));
+     }
+ }
+ 
+diff --git a/crates/ruff_linter/src/rules/flake8_comprehensions/snapshots/ruff_linter__rules__flake8_comprehensions__tests__C420_C420.py.snap b/crates/ruff_linter/src/rules/flake8_comprehensions/snapshots/ruff_linter__rules__flake8_comprehensions__tests__C420_C420.py.snap
+index 0914f762bf..2a45889f36 100644
+--- a/crates/ruff_linter/src/rules/flake8_comprehensions/snapshots/ruff_linter__rules__flake8_comprehensions__tests__C420_C420.py.snap
++++ b/crates/ruff_linter/src/rules/flake8_comprehensions/snapshots/ruff_linter__rules__flake8_comprehensions__tests__C420_C420.py.snap
+@@ -202,34 +202,3 @@ C420.py:59:6: C420 [*] Unnecessary dict comprehension for iterable; use `dict.fr
+ 60 60 | 
+ 61 61 | 
+ 62 62 | # Non-violation cases: RUF025
+-
+-C420.py:95:1: C420 [*] Unnecessary dict comprehension for iterable; use `dict.fromkeys` instead
+-    |
+- 94 |   # https://github.com/astral-sh/ruff/issues/18764
+- 95 | / { # 1
+- 96 | | a # 2
+- 97 | | : # 3
+- 98 | | None # 4
+- 99 | | for # 5
+-100 | | a # 6
+-101 | | in # 7
+-102 | | iterable # 8
+-103 | | } # 9
+-    | |_^ C420
+-    |
+-    = help: Replace with `dict.fromkeys(iterable, value)`)
+-
+-ℹ Unsafe fix
+-92 92 |     {(a, b): a + b for (a, b) in [(1, 2), (3, 4)]}  # OK
+-93 93 | 
+-94 94 | # https://github.com/astral-sh/ruff/issues/18764
+-95    |-{ # 1
+-96    |-a # 2
+-97    |-: # 3
+-98    |-None # 4
+-99    |-for # 5
+-100    |-a # 6
+-101    |-in # 7
+-102    |-iterable # 8
+-103    |-} # 9
+-   95 |+dict.fromkeys(iterable) # 9
+diff --git a/crates/ruff_linter/src/rules/flake8_pytest_style/rules/fixture.rs b/crates/ruff_linter/src/rules/flake8_pytest_style/rules/fixture.rs
+index 433aca9834..9f7138336c 100644
+--- a/crates/ruff_linter/src/rules/flake8_pytest_style/rules/fixture.rs
++++ b/crates/ruff_linter/src/rules/flake8_pytest_style/rules/fixture.rs
+@@ -896,7 +896,7 @@ fn check_fixture_addfinalizer(checker: &Checker, parameters: &Parameters, body:
+ 
+ /// PT024, PT025
+ fn check_fixture_marks(checker: &Checker, decorators: &[Decorator]) {
+-    for (expr, marker) in get_mark_decorators(decorators) {
++    for (expr, marker) in get_mark_decorators(decorators, checker.semantic()) {
+         if checker.enabled(Rule::PytestUnnecessaryAsyncioMarkOnFixture) {
+             if marker == "asyncio" {
+                 let mut diagnostic =
+diff --git a/crates/ruff_linter/src/rules/flake8_pytest_style/rules/helpers.rs b/crates/ruff_linter/src/rules/flake8_pytest_style/rules/helpers.rs
+index 24d3a987a6..43429c8c4f 100644
+--- a/crates/ruff_linter/src/rules/flake8_pytest_style/rules/helpers.rs
++++ b/crates/ruff_linter/src/rules/flake8_pytest_style/rules/helpers.rs
+@@ -1,21 +1,24 @@
+-use crate::checkers::ast::Checker;
++use std::fmt;
++
+ use ruff_python_ast::helpers::map_callable;
+-use ruff_python_ast::name::UnqualifiedName;
+ use ruff_python_ast::{self as ast, Decorator, Expr, ExprCall, Keyword, Stmt, StmtFunctionDef};
+ use ruff_python_semantic::analyze::visibility;
+ use ruff_python_semantic::{ScopeKind, SemanticModel};
+ use ruff_python_trivia::PythonWhitespace;
+-use std::fmt;
+ 
+-pub(super) fn get_mark_decorators(
+-    decorators: &[Decorator],
+-) -> impl Iterator<Item = (&Decorator, &str)> {
+-    decorators.iter().filter_map(|decorator| {
+-        let name = UnqualifiedName::from_expr(map_callable(&decorator.expression))?;
+-        let ["pytest", "mark", marker] = name.segments() else {
+-            return None;
+-        };
+-        Some((decorator, *marker))
++use crate::checkers::ast::Checker;
++
++pub(super) fn get_mark_decorators<'a>(
++    decorators: &'a [Decorator],
++    semantic: &'a SemanticModel,
++) -> impl Iterator<Item = (&'a Decorator, &'a str)> + 'a {
++    decorators.iter().filter_map(move |decorator| {
++        let expr = map_callable(&decorator.expression);
++        let qualified_name = semantic.resolve_qualified_name(expr)?;
++        match qualified_name.segments() {
++            ["pytest", "mark", marker] => Some((decorator, *marker)),
++            _ => None,
++        }
+     })
+ }
+ 
+diff --git a/crates/ruff_linter/src/rules/flake8_pytest_style/rules/marks.rs b/crates/ruff_linter/src/rules/flake8_pytest_style/rules/marks.rs
+index 8b80c6b289..36bbd312a6 100644
+--- a/crates/ruff_linter/src/rules/flake8_pytest_style/rules/marks.rs
++++ b/crates/ruff_linter/src/rules/flake8_pytest_style/rules/marks.rs
+@@ -214,7 +214,7 @@ pub(crate) fn marks(checker: &Checker, decorators: &[Decorator]) {
+     let enforce_parentheses = checker.enabled(Rule::PytestIncorrectMarkParenthesesStyle);
+     let enforce_useless_usefixtures = checker.enabled(Rule::PytestUseFixturesWithoutParameters);
+ 
+-    for (decorator, marker) in get_mark_decorators(decorators) {
++    for (decorator, marker) in get_mark_decorators(decorators, checker.semantic()) {
+         if enforce_parentheses {
+             check_mark_parentheses(checker, decorator, marker);
+         }
+diff --git a/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_default.snap b/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_default.snap
+index 8240fc440b..20466f29fe 100644
+--- a/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_default.snap
++++ b/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_default.snap
+@@ -1,101 +1,100 @@
+ ---
+ source: crates/ruff_linter/src/rules/flake8_pytest_style/mod.rs
+-snapshot_kind: text
+ ---
+-PT023.py:46:1: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+-   |
+-46 | @pytest.mark.foo()
+-   | ^^^^^^^^^^^^^^^^^^ PT023
+-47 | def test_something():
+-48 |     pass
+-   |
+-   = help: Remove parentheses
+-
+-ℹ Safe fix
+-43 43 | # With parentheses
+-44 44 | 
+-45 45 | 
+-46    |-@pytest.mark.foo()
+-   46 |+@pytest.mark.foo
+-47 47 | def test_something():
+-48 48 |     pass
+-49 49 | 
+-
+ PT023.py:51:1: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+    |
+ 51 | @pytest.mark.foo()
+    | ^^^^^^^^^^^^^^^^^^ PT023
+-52 | class TestClass:
+-53 |     def test_something():
++52 | def test_something():
++53 |     pass
+    |
+    = help: Remove parentheses
+ 
+ ℹ Safe fix
+-48 48 |     pass
++48 48 | # With parentheses
+ 49 49 | 
+ 50 50 | 
+ 51    |-@pytest.mark.foo()
+    51 |+@pytest.mark.foo
+-52 52 | class TestClass:
+-53 53 |     def test_something():
+-54 54 |         pass
++52 52 | def test_something():
++53 53 |     pass
++54 54 | 
+ 
+-PT023.py:58:5: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
++PT023.py:56:1: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+    |
++56 | @pytest.mark.foo()
++   | ^^^^^^^^^^^^^^^^^^ PT023
+ 57 | class TestClass:
+-58 |     @pytest.mark.foo()
+-   |     ^^^^^^^^^^^^^^^^^^ PT023
+-59 |     def test_something():
+-60 |         pass
++58 |     def test_something():
+    |
+    = help: Remove parentheses
+ 
+ ℹ Safe fix
++53 53 |     pass
++54 54 | 
+ 55 55 | 
+-56 56 | 
++56    |-@pytest.mark.foo()
++   56 |+@pytest.mark.foo
+ 57 57 | class TestClass:
+-58    |-    @pytest.mark.foo()
+-   58 |+    @pytest.mark.foo
+-59 59 |     def test_something():
+-60 60 |         pass
+-61 61 | 
++58 58 |     def test_something():
++59 59 |         pass
+ 
+-PT023.py:64:5: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
++PT023.py:63:5: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+    |
+-63 | class TestClass:
+-64 |     @pytest.mark.foo()
++62 | class TestClass:
++63 |     @pytest.mark.foo()
+    |     ^^^^^^^^^^^^^^^^^^ PT023
+-65 |     class TestNestedClass:
+-66 |         def test_something():
++64 |     def test_something():
++65 |         pass
+    |
+    = help: Remove parentheses
+ 
+ ℹ Safe fix
++60 60 | 
+ 61 61 | 
+-62 62 | 
+-63 63 | class TestClass:
+-64    |-    @pytest.mark.foo()
+-   64 |+    @pytest.mark.foo
+-65 65 |     class TestNestedClass:
+-66 66 |         def test_something():
+-67 67 |             pass
++62 62 | class TestClass:
++63    |-    @pytest.mark.foo()
++   63 |+    @pytest.mark.foo
++64 64 |     def test_something():
++65 65 |         pass
++66 66 | 
++
++PT023.py:69:5: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
++   |
++68 | class TestClass:
++69 |     @pytest.mark.foo()
++   |     ^^^^^^^^^^^^^^^^^^ PT023
++70 |     class TestNestedClass:
++71 |         def test_something():
++   |
++   = help: Remove parentheses
++
++ℹ Safe fix
++66 66 | 
++67 67 | 
++68 68 | class TestClass:
++69    |-    @pytest.mark.foo()
++   69 |+    @pytest.mark.foo
++70 70 |     class TestNestedClass:
++71 71 |         def test_something():
++72 72 |             pass
+ 
+-PT023.py:72:9: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
++PT023.py:77:9: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+    |
+-70 | class TestClass:
+-71 |     class TestNestedClass:
+-72 |         @pytest.mark.foo()
++75 | class TestClass:
++76 |     class TestNestedClass:
++77 |         @pytest.mark.foo()
+    |         ^^^^^^^^^^^^^^^^^^ PT023
+-73 |         def test_something():
+-74 |             pass
++78 |         def test_something():
++79 |             pass
+    |
+    = help: Remove parentheses
+ 
+ ℹ Safe fix
+-69 69 | 
+-70 70 | class TestClass:
+-71 71 |     class TestNestedClass:
+-72    |-        @pytest.mark.foo()
+-   72 |+        @pytest.mark.foo
+-73 73 |         def test_something():
+-74 74 |             pass
++74 74 | 
++75 75 | class TestClass:
++76 76 |     class TestNestedClass:
++77    |-        @pytest.mark.foo()
++   77 |+        @pytest.mark.foo
++78 78 |         def test_something():
++79 79 |             pass
+diff --git a/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_parentheses.snap b/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_parentheses.snap
+index 4021157c87..a992327458 100644
+--- a/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_parentheses.snap
++++ b/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_parentheses.snap
+@@ -1,102 +1,101 @@
+ ---
+ source: crates/ruff_linter/src/rules/flake8_pytest_style/mod.rs
+-snapshot_kind: text
+ ---
+-PT023.py:12:1: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+-   |
+-12 | @pytest.mark.foo
+-   | ^^^^^^^^^^^^^^^^ PT023
+-13 | def test_something():
+-14 |     pass
+-   |
+-   = help: Add parentheses
+-
+-ℹ Safe fix
+-9  9  | # Without parentheses
+-10 10 | 
+-11 11 | 
+-12    |-@pytest.mark.foo
+-   12 |+@pytest.mark.foo()
+-13 13 | def test_something():
+-14 14 |     pass
+-15 15 | 
+-
+ PT023.py:17:1: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+    |
+ 17 | @pytest.mark.foo
+    | ^^^^^^^^^^^^^^^^ PT023
+-18 | class TestClass:
+-19 |     def test_something():
++18 | def test_something():
++19 |     pass
+    |
+    = help: Add parentheses
+ 
+ ℹ Safe fix
+-14 14 |     pass
++14 14 | # Without parentheses
+ 15 15 | 
+ 16 16 | 
+ 17    |-@pytest.mark.foo
+    17 |+@pytest.mark.foo()
+-18 18 | class TestClass:
+-19 19 |     def test_something():
+-20 20 |         pass
++18 18 | def test_something():
++19 19 |     pass
++20 20 | 
+ 
+-PT023.py:24:5: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
++PT023.py:22:1: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+    |
++22 | @pytest.mark.foo
++   | ^^^^^^^^^^^^^^^^ PT023
+ 23 | class TestClass:
+-24 |     @pytest.mark.foo
+-   |     ^^^^^^^^^^^^^^^^ PT023
+-25 |     def test_something():
+-26 |         pass
++24 |     def test_something():
+    |
+    = help: Add parentheses
+ 
+ ℹ Safe fix
++19 19 |     pass
++20 20 | 
+ 21 21 | 
+-22 22 | 
++22    |-@pytest.mark.foo
++   22 |+@pytest.mark.foo()
+ 23 23 | class TestClass:
+-24    |-    @pytest.mark.foo
+-   24 |+    @pytest.mark.foo()
+-25 25 |     def test_something():
+-26 26 |         pass
+-27 27 | 
++24 24 |     def test_something():
++25 25 |         pass
+ 
+-PT023.py:30:5: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
++PT023.py:29:5: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+    |
+-29 | class TestClass:
+-30 |     @pytest.mark.foo
++28 | class TestClass:
++29 |     @pytest.mark.foo
+    |     ^^^^^^^^^^^^^^^^ PT023
+-31 |     class TestNestedClass:
+-32 |         def test_something():
++30 |     def test_something():
++31 |         pass
+    |
+    = help: Add parentheses
+ 
+ ℹ Safe fix
++26 26 | 
+ 27 27 | 
+-28 28 | 
+-29 29 | class TestClass:
+-30    |-    @pytest.mark.foo
+-   30 |+    @pytest.mark.foo()
+-31 31 |     class TestNestedClass:
+-32 32 |         def test_something():
+-33 33 |             pass
++28 28 | class TestClass:
++29    |-    @pytest.mark.foo
++   29 |+    @pytest.mark.foo()
++30 30 |     def test_something():
++31 31 |         pass
++32 32 | 
++
++PT023.py:35:5: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
++   |
++34 | class TestClass:
++35 |     @pytest.mark.foo
++   |     ^^^^^^^^^^^^^^^^ PT023
++36 |     class TestNestedClass:
++37 |         def test_something():
++   |
++   = help: Add parentheses
++
++ℹ Safe fix
++32 32 | 
++33 33 | 
++34 34 | class TestClass:
++35    |-    @pytest.mark.foo
++   35 |+    @pytest.mark.foo()
++36 36 |     class TestNestedClass:
++37 37 |         def test_something():
++38 38 |             pass
+ 
+-PT023.py:38:9: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
++PT023.py:43:9: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+    |
+-36 | class TestClass:
+-37 |     class TestNestedClass:
+-38 |         @pytest.mark.foo
++41 | class TestClass:
++42 |     class TestNestedClass:
++43 |         @pytest.mark.foo
+    |         ^^^^^^^^^^^^^^^^ PT023
+-39 |         def test_something():
+-40 |             pass
++44 |         def test_something():
++45 |             pass
+    |
+    = help: Add parentheses
+ 
+ ℹ Safe fix
+-35 35 | 
+-36 36 | class TestClass:
+-37 37 |     class TestNestedClass:
+-38    |-        @pytest.mark.foo
+-   38 |+        @pytest.mark.foo()
+-39 39 |         def test_something():
+-40 40 |             pass
+-41 41 |
++40 40 | 
++41 41 | class TestClass:
++42 42 |     class TestNestedClass:
++43    |-        @pytest.mark.foo
++   43 |+        @pytest.mark.foo()
++44 44 |         def test_something():
++45 45 |             pass
++46 46 |
+diff --git a/crates/ruff_linter/src/rules/flake8_return/rules/function.rs b/crates/ruff_linter/src/rules/flake8_return/rules/function.rs
+index d74cc58c33..c4bdcb4f3c 100644
+--- a/crates/ruff_linter/src/rules/flake8_return/rules/function.rs
++++ b/crates/ruff_linter/src/rules/flake8_return/rules/function.rs
+@@ -1,6 +1,5 @@
+ use anyhow::Result;
+ 
+-use ruff_diagnostics::Applicability;
+ use ruff_macros::{ViolationMetadata, derive_message_formats};
+ use ruff_python_ast::helpers::{is_const_false, is_const_true};
+ use ruff_python_ast::stmt_if::elif_else_range;
+@@ -51,11 +50,6 @@ use super::super::visitor::{ReturnVisitor, Stack};
+ ///         return
+ ///     return
+ /// ```
+-///
+-/// ## Fix Safety
+-/// This rule's fix is marked as unsafe for cases in which comments would be
+-/// dropped from the `return` statement.
+-///
+ #[derive(ViolationMetadata)]
+ pub(crate) struct UnnecessaryReturnNone;
+ 
+@@ -387,15 +381,10 @@ fn unnecessary_return_none(checker: &Checker, decorator_list: &[Decorator], stac
+         }
+ 
+         let mut diagnostic = checker.report_diagnostic(UnnecessaryReturnNone, stmt.range());
+-        let edit = Edit::range_replacement("return".to_string(), stmt.range());
+-        diagnostic.set_fix(Fix::applicable_edit(
+-            edit,
+-            if checker.comment_ranges().intersects(stmt.range()) {
+-                Applicability::Unsafe
+-            } else {
+-                Applicability::Safe
+-            },
+-        ));
++        diagnostic.set_fix(Fix::safe_edit(Edit::range_replacement(
++            "return".to_string(),
++            stmt.range(),
++        )));
+     }
+ }
+ 
+diff --git a/crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__RET501_RET501.py.snap b/crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__RET501_RET501.py.snap
+index 6afa398d94..0dcc8a8491 100644
+--- a/crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__RET501_RET501.py.snap
++++ b/crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__RET501_RET501.py.snap
+@@ -40,23 +40,3 @@ RET501.py:14:9: RET501 [*] Do not explicitly `return None` in function if it is
+ 15 15 | 
+ 16 16 |     @property
+ 17 17 |     def prop(self) -> None:
+-
+-RET501.py:59:9: RET501 [*] Do not explicitly `return None` in function if it is the only possible return value
+-   |
+-57 |           if not bar:
+-58 |               return
+-59 | /         return (
+-60 | |             None # comment
+-61 | |         )
+-   | |_________^ RET501
+-   |
+-   = help: Remove explicit `return None`
+-
+-ℹ Unsafe fix
+-56 56 |     def foo(bar):
+-57 57 |         if not bar:
+-58 58 |             return
+-59    |-        return (
+-60    |-            None # comment
+-61    |-        )
+-   59 |+        return
+diff --git a/crates/ruff_linter/src/rules/ruff/mod.rs b/crates/ruff_linter/src/rules/ruff/mod.rs
+index d9901d6b17..5873a8d1ed 100644
+--- a/crates/ruff_linter/src/rules/ruff/mod.rs
++++ b/crates/ruff_linter/src/rules/ruff/mod.rs
+@@ -109,7 +109,6 @@ mod tests {
+     #[test_case(Rule::LegacyFormPytestRaises, Path::new("RUF061_raises.py"))]
+     #[test_case(Rule::LegacyFormPytestRaises, Path::new("RUF061_warns.py"))]
+     #[test_case(Rule::LegacyFormPytestRaises, Path::new("RUF061_deprecated_call.py"))]
+-    #[test_case(Rule::NonOctalPermissions, Path::new("RUF064.py"))]
+     #[test_case(Rule::RedirectedNOQA, Path::new("RUF101_0.py"))]
+     #[test_case(Rule::RedirectedNOQA, Path::new("RUF101_1.py"))]
+     #[test_case(Rule::InvalidRuleCode, Path::new("RUF102.py"))]
+diff --git a/crates/ruff_linter/src/rules/ruff/rules/mod.rs b/crates/ruff_linter/src/rules/ruff/rules/mod.rs
+index 39df796762..a8344ad987 100644
+--- a/crates/ruff_linter/src/rules/ruff/rules/mod.rs
++++ b/crates/ruff_linter/src/rules/ruff/rules/mod.rs
+@@ -29,7 +29,6 @@ pub(crate) use mutable_dataclass_default::*;
+ pub(crate) use mutable_fromkeys_value::*;
+ pub(crate) use needless_else::*;
+ pub(crate) use never_union::*;
+-pub(crate) use non_octal_permissions::*;
+ pub(crate) use none_not_at_end_of_union::*;
+ pub(crate) use parenthesize_chained_operators::*;
+ pub(crate) use post_init_default::*;
+@@ -92,7 +91,6 @@ mod mutable_dataclass_default;
+ mod mutable_fromkeys_value;
+ mod needless_else;
+ mod never_union;
+-mod non_octal_permissions;
+ mod none_not_at_end_of_union;
+ mod parenthesize_chained_operators;
+ mod post_init_default;
+diff --git a/crates/ruff_linter/src/rules/ruff/rules/non_octal_permissions.rs b/crates/ruff_linter/src/rules/ruff/rules/non_octal_permissions.rs
+deleted file mode 100644
+index 90e70f9201..0000000000
+--- a/crates/ruff_linter/src/rules/ruff/rules/non_octal_permissions.rs
++++ /dev/null
+@@ -1,213 +0,0 @@
+-use ruff_diagnostics::{Edit, Fix};
+-use ruff_macros::{ViolationMetadata, derive_message_formats};
+-use ruff_python_ast::name::QualifiedName;
+-use ruff_python_ast::{self as ast, Expr, ExprCall};
+-use ruff_python_semantic::{SemanticModel, analyze};
+-use ruff_text_size::Ranged;
+-
+-use crate::checkers::ast::Checker;
+-use crate::{FixAvailability, Violation};
+-
+-/// ## What it does
+-/// Checks for standard library functions which take a numeric `mode` argument
+-/// where a non-octal integer literal is passed.
+-///
+-/// ## Why is this bad?
+-///
+-/// Numeric modes are made up of one to four octal digits. Converting a non-octal
+-/// integer to octal may not be the mode the author intended.
+-///
+-/// ## Example
+-///
+-/// ```python
+-/// os.chmod("foo", 644)
+-/// ```
+-///
+-/// Use instead:
+-///
+-/// ```python
+-/// os.chmod("foo", 0o644)
+-/// ```
+-///
+-/// ## Fix safety
+-///
+-/// There are two categories of fix, the first of which is where it looks like
+-/// the author intended to use an octal literal but the `0o` prefix is missing:
+-///
+-/// ```python
+-/// os.chmod("foo", 400)
+-/// os.chmod("foo", 644)
+-/// ```
+-///
+-/// This class of fix changes runtime behaviour. In the first case, `400`
+-/// corresponds to `0o620` (`u=rw,g=w,o=`). As this mode is not deemed likely,
+-/// it is changed to `0o400` (`u=r,go=`). Similarly, `644` corresponds to
+-/// `0o1204` (`u=ws,g=,o=r`) and is changed to `0o644` (`u=rw,go=r`).
+-///
+-/// The second category is decimal literals which are recognised as likely valid
+-/// but in decimal form:
+-///
+-/// ```python
+-/// os.chmod("foo", 256)
+-/// os.chmod("foo", 493)
+-/// ```
+-///
+-/// `256` corresponds to `0o400` (`u=r,go=`) and `493` corresponds to `0o755`
+-/// (`u=rwx,go=rx`). Both of these fixes keep runtime behavior unchanged. If the
+-/// original code really intended to use `0o256` (`u=w,g=rx,o=rw`) instead of
+-/// `256`, this fix should not be accepted.
+-///
+-/// ## Fix availability
+-///
+-/// A fix is only available if the integer literal matches a set of common modes.
+-#[derive(ViolationMetadata)]
+-pub(crate) struct NonOctalPermissions;
+-
+-impl Violation for NonOctalPermissions {
+-    const FIX_AVAILABILITY: FixAvailability = FixAvailability::Sometimes;
+-
+-    #[derive_message_formats]
+-    fn message(&self) -> String {
+-        "Non-octal mode".to_string()
+-    }
+-
+-    fn fix_title(&self) -> Option<String> {
+-        Some("Replace with octal literal".to_string())
+-    }
+-}
+-
+-/// RUF064
+-pub(crate) fn non_octal_permissions(checker: &Checker, call: &ExprCall) {
+-    let mode_arg = find_func_mode_arg(call, checker.semantic())
+-        .or_else(|| find_method_mode_arg(call, checker.semantic()));
+-
+-    let Some(mode_arg) = mode_arg else {
+-        return;
+-    };
+-
+-    let Expr::NumberLiteral(ast::ExprNumberLiteral {
+-        value: ast::Number::Int(int),
+-        ..
+-    }) = mode_arg
+-    else {
+-        return;
+-    };
+-
+-    let mode_literal = &checker.locator().contents()[mode_arg.range()];
+-
+-    if mode_literal.starts_with("0o") || mode_literal.starts_with("0O") || mode_literal == "0" {
+-        return;
+-    }
+-
+-    let mut diagnostic = checker.report_diagnostic(NonOctalPermissions, mode_arg.range());
+-
+-    // Don't suggest a fix for 0x or 0b literals.
+-    if mode_literal.starts_with('0') {
+-        return;
+-    }
+-
+-    let Some(suggested) = int.as_u16().and_then(suggest_fix) else {
+-        return;
+-    };
+-
+-    let edit = Edit::range_replacement(format!("{suggested:#o}"), mode_arg.range());
+-    diagnostic.set_fix(Fix::unsafe_edit(edit));
+-}
+-
+-fn find_func_mode_arg<'a>(call: &'a ExprCall, semantic: &SemanticModel) -> Option<&'a Expr> {
+-    let qualified_name = semantic.resolve_qualified_name(&call.func)?;
+-
+-    match qualified_name.segments() {
+-        ["os", "umask"] => call.arguments.find_argument_value("mode", 0),
+-        [
+-            "os",
+-            "chmod" | "fchmod" | "lchmod" | "mkdir" | "makedirs" | "mkfifo" | "mknod",
+-        ] => call.arguments.find_argument_value("mode", 1),
+-        ["os", "open"] => call.arguments.find_argument_value("mode", 2),
+-        ["dbm", "open"] | ["dbm", "gnu" | "ndbm", "open"] => {
+-            call.arguments.find_argument_value("mode", 2)
+-        }
+-        _ => None,
+-    }
+-}
+-
+-fn find_method_mode_arg<'a>(call: &'a ExprCall, semantic: &SemanticModel) -> Option<&'a Expr> {
+-    let (type_name, attr_name) = resolve_method_call(&call.func, semantic)?;
+-
+-    match (type_name.segments(), attr_name) {
+-        (
+-            ["pathlib", "Path" | "PosixPath" | "WindowsPath"],
+-            "chmod" | "lchmod" | "mkdir" | "touch",
+-        ) => call.arguments.find_argument_value("mode", 0),
+-        _ => None,
+-    }
+-}
+-
+-fn resolve_method_call<'a>(
+-    func: &'a Expr,
+-    semantic: &'a SemanticModel,
+-) -> Option<(QualifiedName<'a>, &'a str)> {
+-    let Expr::Attribute(ast::ExprAttribute { attr, value, .. }) = func else {
+-        return None;
+-    };
+-
+-    // First: is this an inlined call like `pathlib.Path.chmod`?
+-    // ```python
+-    // from pathlib import Path
+-    // Path("foo").chmod(0o644)
+-    // ```
+-    if let Expr::Call(call) = value.as_ref() {
+-        let qualified_name = semantic.resolve_qualified_name(&call.func)?;
+-        return Some((qualified_name, attr));
+-    }
+-
+-    // Second, is this a call like `pathlib.Path.chmod` via a variable?
+-    // ```python
+-    // from pathlib import Path
+-    // path = Path("foo")
+-    // path.chmod()
+-    // ```
+-    let Expr::Name(name) = value.as_ref() else {
+-        return None;
+-    };
+-
+-    let binding_id = semantic.resolve_name(name)?;
+-
+-    let binding = semantic.binding(binding_id);
+-
+-    let Some(Expr::Call(call)) = analyze::typing::find_binding_value(binding, semantic) else {
+-        return None;
+-    };
+-
+-    let qualified_name = semantic.resolve_qualified_name(&call.func)?;
+-
+-    Some((qualified_name, attr))
+-}
+-
+-/// Try to determine whether the integer literal
+-fn suggest_fix(mode: u16) -> Option<u16> {
+-    // These suggestions are in the form of
+-    // <missing `0o` prefix> | <mode as decimal> => <octal>
+-    // If <as decimal> could theoretically be a valid octal literal, the
+-    // comment explains why it's deemed unlikely to be intentional.
+-    match mode {
+-        400 | 256 => Some(0o400), // -w-r-xrw-, group/other > user unlikely
+-        440 | 288 => Some(0o440),
+-        444 | 292 => Some(0o444),
+-        600 | 384 => Some(0o600),
+-        640 | 416 => Some(0o640), // r----xrw-, other > user unlikely
+-        644 | 420 => Some(0o644), // r---w----, group write but not read unlikely
+-        660 | 432 => Some(0o660), // r---wx-w-, write but not read unlikely
+-        664 | 436 => Some(0o664), // r---wxrw-, other > user unlikely
+-        666 | 438 => Some(0o666),
+-        700 | 448 => Some(0o700),
+-        744 | 484 => Some(0o744),
+-        750 | 488 => Some(0o750),
+-        755 | 493 => Some(0o755),
+-        770 | 504 => Some(0o770), // r-x---r--, other > group unlikely
+-        775 | 509 => Some(0o775),
+-        776 | 510 => Some(0o776), // r-x--x---, seems unlikely
+-        777 | 511 => Some(0o777), // r-x--x--x, seems unlikely
+-        _ => None,
+-    }
+-}
+diff --git a/crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__RUF064_RUF064.py.snap b/crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__RUF064_RUF064.py.snap
+deleted file mode 100644
+index e42b87b266..0000000000
+--- a/crates/ruff_linter/src/rules/ruff/snapshots/ruff_linter__rules__ruff__tests__RUF064_RUF064.py.snap
++++ /dev/null
+@@ -1,347 +0,0 @@
+----
+-source: crates/ruff_linter/src/rules/ruff/mod.rs
+----
+-RUF064.py:6:17: RUF064 [*] Non-octal mode
+-  |
+-4 | from pathlib import Path
+-5 |
+-6 | os.chmod("foo", 444)  # Error
+-  |                 ^^^ RUF064
+-7 | os.chmod("foo", 0o444)  # OK
+-8 | os.chmod("foo", 7777)  # Error
+-  |
+-  = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-3 3 | import os
+-4 4 | from pathlib import Path
+-5 5 | 
+-6   |-os.chmod("foo", 444)  # Error
+-  6 |+os.chmod("foo", 0o444)  # Error
+-7 7 | os.chmod("foo", 0o444)  # OK
+-8 8 | os.chmod("foo", 7777)  # Error
+-9 9 | os.chmod("foo", 10000)  # Error
+-
+-RUF064.py:8:17: RUF064 Non-octal mode
+-   |
+- 6 | os.chmod("foo", 444)  # Error
+- 7 | os.chmod("foo", 0o444)  # OK
+- 8 | os.chmod("foo", 7777)  # Error
+-   |                 ^^^^ RUF064
+- 9 | os.chmod("foo", 10000)  # Error
+-10 | os.chmod("foo", 99999)  # Error
+-   |
+-   = help: Replace with octal literal
+-
+-RUF064.py:9:17: RUF064 Non-octal mode
+-   |
+- 7 | os.chmod("foo", 0o444)  # OK
+- 8 | os.chmod("foo", 7777)  # Error
+- 9 | os.chmod("foo", 10000)  # Error
+-   |                 ^^^^^ RUF064
+-10 | os.chmod("foo", 99999)  # Error
+-   |
+-   = help: Replace with octal literal
+-
+-RUF064.py:10:17: RUF064 Non-octal mode
+-   |
+- 8 | os.chmod("foo", 7777)  # Error
+- 9 | os.chmod("foo", 10000)  # Error
+-10 | os.chmod("foo", 99999)  # Error
+-   |                 ^^^^^ RUF064
+-11 |
+-12 | os.umask(777)  # Error
+-   |
+-   = help: Replace with octal literal
+-
+-RUF064.py:12:10: RUF064 [*] Non-octal mode
+-   |
+-10 | os.chmod("foo", 99999)  # Error
+-11 |
+-12 | os.umask(777)  # Error
+-   |          ^^^ RUF064
+-13 | os.umask(0o777)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-9  9  | os.chmod("foo", 10000)  # Error
+-10 10 | os.chmod("foo", 99999)  # Error
+-11 11 | 
+-12    |-os.umask(777)  # Error
+-   12 |+os.umask(0o777)  # Error
+-13 13 | os.umask(0o777)  # OK
+-14 14 | 
+-15 15 | os.fchmod(0, 400)  # Error
+-
+-RUF064.py:15:14: RUF064 [*] Non-octal mode
+-   |
+-13 | os.umask(0o777)  # OK
+-14 |
+-15 | os.fchmod(0, 400)  # Error
+-   |              ^^^ RUF064
+-16 | os.fchmod(0, 0o400)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-12 12 | os.umask(777)  # Error
+-13 13 | os.umask(0o777)  # OK
+-14 14 | 
+-15    |-os.fchmod(0, 400)  # Error
+-   15 |+os.fchmod(0, 0o400)  # Error
+-16 16 | os.fchmod(0, 0o400)  # OK
+-17 17 | 
+-18 18 | os.lchmod("foo", 755)  # Error
+-
+-RUF064.py:18:18: RUF064 [*] Non-octal mode
+-   |
+-16 | os.fchmod(0, 0o400)  # OK
+-17 |
+-18 | os.lchmod("foo", 755)  # Error
+-   |                  ^^^ RUF064
+-19 | os.lchmod("foo", 0o755)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-15 15 | os.fchmod(0, 400)  # Error
+-16 16 | os.fchmod(0, 0o400)  # OK
+-17 17 | 
+-18    |-os.lchmod("foo", 755)  # Error
+-   18 |+os.lchmod("foo", 0o755)  # Error
+-19 19 | os.lchmod("foo", 0o755)  # OK
+-20 20 | 
+-21 21 | os.mkdir("foo", 600)  # Error
+-
+-RUF064.py:21:17: RUF064 [*] Non-octal mode
+-   |
+-19 | os.lchmod("foo", 0o755)  # OK
+-20 |
+-21 | os.mkdir("foo", 600)  # Error
+-   |                 ^^^ RUF064
+-22 | os.mkdir("foo", 0o600)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-18 18 | os.lchmod("foo", 755)  # Error
+-19 19 | os.lchmod("foo", 0o755)  # OK
+-20 20 | 
+-21    |-os.mkdir("foo", 600)  # Error
+-   21 |+os.mkdir("foo", 0o600)  # Error
+-22 22 | os.mkdir("foo", 0o600)  # OK
+-23 23 | 
+-24 24 | os.makedirs("foo", 644)  # Error
+-
+-RUF064.py:24:20: RUF064 [*] Non-octal mode
+-   |
+-22 | os.mkdir("foo", 0o600)  # OK
+-23 |
+-24 | os.makedirs("foo", 644)  # Error
+-   |                    ^^^ RUF064
+-25 | os.makedirs("foo", 0o644)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-21 21 | os.mkdir("foo", 600)  # Error
+-22 22 | os.mkdir("foo", 0o600)  # OK
+-23 23 | 
+-24    |-os.makedirs("foo", 644)  # Error
+-   24 |+os.makedirs("foo", 0o644)  # Error
+-25 25 | os.makedirs("foo", 0o644)  # OK
+-26 26 | 
+-27 27 | os.mkfifo("foo", 640)  # Error
+-
+-RUF064.py:27:18: RUF064 [*] Non-octal mode
+-   |
+-25 | os.makedirs("foo", 0o644)  # OK
+-26 |
+-27 | os.mkfifo("foo", 640)  # Error
+-   |                  ^^^ RUF064
+-28 | os.mkfifo("foo", 0o640)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-24 24 | os.makedirs("foo", 644)  # Error
+-25 25 | os.makedirs("foo", 0o644)  # OK
+-26 26 | 
+-27    |-os.mkfifo("foo", 640)  # Error
+-   27 |+os.mkfifo("foo", 0o640)  # Error
+-28 28 | os.mkfifo("foo", 0o640)  # OK
+-29 29 | 
+-30 30 | os.mknod("foo", 660)  # Error
+-
+-RUF064.py:30:17: RUF064 [*] Non-octal mode
+-   |
+-28 | os.mkfifo("foo", 0o640)  # OK
+-29 |
+-30 | os.mknod("foo", 660)  # Error
+-   |                 ^^^ RUF064
+-31 | os.mknod("foo", 0o660)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-27 27 | os.mkfifo("foo", 640)  # Error
+-28 28 | os.mkfifo("foo", 0o640)  # OK
+-29 29 | 
+-30    |-os.mknod("foo", 660)  # Error
+-   30 |+os.mknod("foo", 0o660)  # Error
+-31 31 | os.mknod("foo", 0o660)  # OK
+-32 32 | 
+-33 33 | os.open("foo", os.O_CREAT, 644)  # Error
+-
+-RUF064.py:33:28: RUF064 [*] Non-octal mode
+-   |
+-31 | os.mknod("foo", 0o660)  # OK
+-32 |
+-33 | os.open("foo", os.O_CREAT, 644)  # Error
+-   |                            ^^^ RUF064
+-34 | os.open("foo", os.O_CREAT, 0o644)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-30 30 | os.mknod("foo", 660)  # Error
+-31 31 | os.mknod("foo", 0o660)  # OK
+-32 32 | 
+-33    |-os.open("foo", os.O_CREAT, 644)  # Error
+-   33 |+os.open("foo", os.O_CREAT, 0o644)  # Error
+-34 34 | os.open("foo", os.O_CREAT, 0o644)  # OK
+-35 35 | 
+-36 36 | Path("bar").chmod(755)  # Error
+-
+-RUF064.py:36:19: RUF064 [*] Non-octal mode
+-   |
+-34 | os.open("foo", os.O_CREAT, 0o644)  # OK
+-35 |
+-36 | Path("bar").chmod(755)  # Error
+-   |                   ^^^ RUF064
+-37 | Path("bar").chmod(0o755)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-33 33 | os.open("foo", os.O_CREAT, 644)  # Error
+-34 34 | os.open("foo", os.O_CREAT, 0o644)  # OK
+-35 35 | 
+-36    |-Path("bar").chmod(755)  # Error
+-   36 |+Path("bar").chmod(0o755)  # Error
+-37 37 | Path("bar").chmod(0o755)  # OK
+-38 38 | 
+-39 39 | path = Path("bar")
+-
+-RUF064.py:40:12: RUF064 [*] Non-octal mode
+-   |
+-39 | path = Path("bar")
+-40 | path.chmod(755)  # Error
+-   |            ^^^ RUF064
+-41 | path.chmod(0o755)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-37 37 | Path("bar").chmod(0o755)  # OK
+-38 38 | 
+-39 39 | path = Path("bar")
+-40    |-path.chmod(755)  # Error
+-   40 |+path.chmod(0o755)  # Error
+-41 41 | path.chmod(0o755)  # OK
+-42 42 | 
+-43 43 | dbm.open("db", "r", 600)  # Error
+-
+-RUF064.py:43:21: RUF064 [*] Non-octal mode
+-   |
+-41 | path.chmod(0o755)  # OK
+-42 |
+-43 | dbm.open("db", "r", 600)  # Error
+-   |                     ^^^ RUF064
+-44 | dbm.open("db", "r", 0o600)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-40 40 | path.chmod(755)  # Error
+-41 41 | path.chmod(0o755)  # OK
+-42 42 | 
+-43    |-dbm.open("db", "r", 600)  # Error
+-   43 |+dbm.open("db", "r", 0o600)  # Error
+-44 44 | dbm.open("db", "r", 0o600)  # OK
+-45 45 | 
+-46 46 | dbm.gnu.open("db", "r", 600)  # Error
+-
+-RUF064.py:46:25: RUF064 [*] Non-octal mode
+-   |
+-44 | dbm.open("db", "r", 0o600)  # OK
+-45 |
+-46 | dbm.gnu.open("db", "r", 600)  # Error
+-   |                         ^^^ RUF064
+-47 | dbm.gnu.open("db", "r", 0o600)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-43 43 | dbm.open("db", "r", 600)  # Error
+-44 44 | dbm.open("db", "r", 0o600)  # OK
+-45 45 | 
+-46    |-dbm.gnu.open("db", "r", 600)  # Error
+-   46 |+dbm.gnu.open("db", "r", 0o600)  # Error
+-47 47 | dbm.gnu.open("db", "r", 0o600)  # OK
+-48 48 | 
+-49 49 | dbm.ndbm.open("db", "r", 600)  # Error
+-
+-RUF064.py:49:26: RUF064 [*] Non-octal mode
+-   |
+-47 | dbm.gnu.open("db", "r", 0o600)  # OK
+-48 |
+-49 | dbm.ndbm.open("db", "r", 600)  # Error
+-   |                          ^^^ RUF064
+-50 | dbm.ndbm.open("db", "r", 0o600)  # OK
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-46 46 | dbm.gnu.open("db", "r", 600)  # Error
+-47 47 | dbm.gnu.open("db", "r", 0o600)  # OK
+-48 48 | 
+-49    |-dbm.ndbm.open("db", "r", 600)  # Error
+-   49 |+dbm.ndbm.open("db", "r", 0o600)  # Error
+-50 50 | dbm.ndbm.open("db", "r", 0o600)  # OK
+-51 51 | 
+-52 52 | os.fchmod(0, 256)  # 0o400
+-
+-RUF064.py:52:14: RUF064 [*] Non-octal mode
+-   |
+-50 | dbm.ndbm.open("db", "r", 0o600)  # OK
+-51 |
+-52 | os.fchmod(0, 256)  # 0o400
+-   |              ^^^ RUF064
+-53 | os.fchmod(0, 493)  # 0o755
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-49 49 | dbm.ndbm.open("db", "r", 600)  # Error
+-50 50 | dbm.ndbm.open("db", "r", 0o600)  # OK
+-51 51 | 
+-52    |-os.fchmod(0, 256)  # 0o400
+-   52 |+os.fchmod(0, 0o400)  # 0o400
+-53 53 | os.fchmod(0, 493)  # 0o755
+-
+-RUF064.py:53:14: RUF064 [*] Non-octal mode
+-   |
+-52 | os.fchmod(0, 256)  # 0o400
+-53 | os.fchmod(0, 493)  # 0o755
+-   |              ^^^ RUF064
+-   |
+-   = help: Replace with octal literal
+-
+-ℹ Unsafe fix
+-50 50 | dbm.ndbm.open("db", "r", 0o600)  # OK
+-51 51 | 
+-52 52 | os.fchmod(0, 256)  # 0o400
+-53    |-os.fchmod(0, 493)  # 0o755
+-   53 |+os.fchmod(0, 0o755)  # 0o755
+diff --git a/docs/requirements-insiders.txt b/docs/requirements-insiders.txt
+index ecc4692ad2..9927a86fd7 100644
+--- a/docs/requirements-insiders.txt
++++ b/docs/requirements-insiders.txt
+@@ -1,5 +1,5 @@
+ PyYAML==6.0.2
+-ruff==0.12.0
++ruff==0.11.13
+ mkdocs==1.6.1
+ mkdocs-material @ git+ssh://git@github.com/astral-sh/mkdocs-material-insiders.git@39da7a5e761410349e9a1b8abf593b0cdd5453ff
+ mkdocs-redirects==1.2.2
+diff --git a/docs/requirements.txt b/docs/requirements.txt
+index 137aa25783..dee97e99b4 100644
+--- a/docs/requirements.txt
++++ b/docs/requirements.txt
+@@ -1,5 +1,5 @@
+ PyYAML==6.0.2
+-ruff==0.12.0
++ruff==0.11.13
+ mkdocs==1.6.1
+ mkdocs-material==9.5.38
+ mkdocs-redirects==1.2.2
+diff --git a/ruff.schema.json b/ruff.schema.json
+index ae2a8d4b1e..e8c6c30e85 100644
+Binary files a/ruff.schema.json and b/ruff.schema.json differ

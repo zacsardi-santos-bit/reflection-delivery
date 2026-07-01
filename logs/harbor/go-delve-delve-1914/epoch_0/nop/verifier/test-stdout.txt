@@ -1,0 +1,36 @@
+patching file service/dap/daptest/client.go
+patching file service/dap/server_test.go
+{"Time":"2026-06-29T15:17:58.783078684Z","Action":"run","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry"}
+{"Time":"2026-06-29T15:17:58.783518438Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"=== RUN   TestStopOnEntry\n"}
+{"Time":"2026-06-29T15:17:59.123177994Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"DAP server listening at: [::]:38880\n"}
+{"Time":"2026-06-29T15:17:59.22414893Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"Connecting to server at: [::]:38880\n"}
+{"Time":"2026-06-29T15:17:59.266725365Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"2026-06-29T15:17:59Z error layer=dap Unsupported command: cannot process 'threads' request\n"}
+{"Time":"2026-06-29T15:17:59.267780302Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"--- FAIL: TestStopOnEntry (0.48s)\n"}
+{"Time":"2026-06-29T15:17:59.270759008Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"panic: interface conversion: dap.Message is *dap.ErrorResponse, not *dap.ThreadsResponse [recovered]\n"}
+{"Time":"2026-06-29T15:17:59.270831088Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\tpanic: interface conversion: dap.Message is *dap.ErrorResponse, not *dap.ThreadsResponse\n"}
+{"Time":"2026-06-29T15:17:59.270846231Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\n"}
+{"Time":"2026-06-29T15:17:59.270870378Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"goroutine 21 [running]:\n"}
+{"Time":"2026-06-29T15:17:59.27087817Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"testing.tRunner.func1.2({0x6e3220, 0xc00083b740})\n"}
+{"Time":"2026-06-29T15:17:59.270894826Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\t/usr/local/go/src/testing/testing.go:1209 +0x24e\n"}
+{"Time":"2026-06-29T15:17:59.270903409Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-06-29T15:17:59.270914596Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\t/usr/local/go/src/testing/testing.go:1212 +0x218\n"}
+{"Time":"2026-06-29T15:17:59.270954427Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"panic({0x6e3220, 0xc00083b740})\n"}
+{"Time":"2026-06-29T15:17:59.270978194Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\t/usr/local/go/src/runtime/panic.go:1038 +0x215\n"}
+{"Time":"2026-06-29T15:17:59.27099527Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"github.com/go-delve/delve/service/dap/daptest.(*Client).ExpectThreadsResponse(0xc000208020, 0xc0001b0820)\n"}
+{"Time":"2026-06-29T15:17:59.27102134Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\t/workspace/repo/service/dap/daptest/client.go:123 +0x65\n"}
+{"Time":"2026-06-29T15:17:59.271106701Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"github.com/go-delve/delve/service/dap.TestStopOnEntry.func1(0xc000026090, {{0x73cf7d, 0x9}, {0xc00016a0d8, 0x17}, {0xc000128120, 0x26}, {0xc00016c1a0, 0x19}})\n"}
+{"Time":"2026-06-29T15:17:59.271121664Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\t/workspace/repo/service/dap/server_test.go:150 +0x387\n"}
+{"Time":"2026-06-29T15:17:59.271154504Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"github.com/go-delve/delve/service/dap.runTest(0xc0001b0820, {0x73cf7d, 0x2eac8249}, 0xc00015ff50)\n"}
+{"Time":"2026-06-29T15:17:59.271185491Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\t/workspace/repo/service/dap/server_test.go:68 +0x36f\n"}
+{"Time":"2026-06-29T15:17:59.271200434Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"github.com/go-delve/delve/service/dap.TestStopOnEntry(0x0)\n"}
+{"Time":"2026-06-29T15:17:59.271235879Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\t/workspace/repo/service/dap/server_test.go:101 +0x45\n"}
+{"Time":"2026-06-29T15:17:59.271258643Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"testing.tRunner(0xc0001b0820, 0x751d08)\n"}
+{"Time":"2026-06-29T15:17:59.27128901Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\t/usr/local/go/src/testing/testing.go:1259 +0x102\n"}
+{"Time":"2026-06-29T15:17:59.271312336Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"created by testing.(*T).Run\n"}
+{"Time":"2026-06-29T15:17:59.271343443Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Output":"\t/usr/local/go/src/testing/testing.go:1306 +0x35a\n"}
+{"Time":"2026-06-29T15:17:59.272478954Z","Action":"fail","Package":"github.com/go-delve/delve/service/dap","Test":"TestStopOnEntry","Elapsed":0.48}
+{"Time":"2026-06-29T15:17:59.272572167Z","Action":"output","Package":"github.com/go-delve/delve/service/dap","Output":"FAIL\tgithub.com/go-delve/delve/service/dap\t0.499s\n"}
+{"Time":"2026-06-29T15:17:59.272614802Z","Action":"fail","Package":"github.com/go-delve/delve/service/dap","Elapsed":0.499}
+{"Time":"2026-06-29T15:17:59.272999281Z","Action":"output","Package":"github.com/go-delve/delve/service/dap/daptest","Output":"?   \tgithub.com/go-delve/delve/service/dap/daptest\t[no test files]\n"}
+{"Time":"2026-06-29T15:17:59.283534739Z","Action":"skip","Package":"github.com/go-delve/delve/service/dap/daptest","Elapsed":0.011}
+reward=0 graded=7 found=1 failed=1 parsed=2 framework=go exit_code=1

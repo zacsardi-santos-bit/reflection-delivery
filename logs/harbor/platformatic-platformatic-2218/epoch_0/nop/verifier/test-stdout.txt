@@ -1,0 +1,408 @@
+patching file packages/db/test/generator.test.js
+patching file packages/generators/test/base-generator.test.js
+patching file packages/generators/test/file-generator.test.js
+patching file packages/generators/test/fixtures/sample-runtime/.env
+patching file packages/generators/test/fixtures/sample-runtime/platformatic.json
+patching file packages/generators/test/fixtures/sample-runtime/services/rival/platformatic.json
+patching file packages/generators/test/helpers.js
+patching file packages/generators/test/utils.test.js
+patching file packages/runtime/test/generator.test.js
+patching file packages/runtime/test/helpers.js
+patching file packages/runtime/test/update.test.js
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testsuite name="generator" time="0.062813" disabled="0" errors="0" tests="13" failures="1" skipped="0" hostname="modal">
+		<testcase name="should export a Generator property" time="0.001342" classname="test"/>
+		<testcase name="should have default config" time="0.016546" classname="test" failure="Expected values to be loosely deep-equal:{  connectionString: 'sqlite://./db.sqlite',  createMigrations: true,  database: 'sqlite',  dependencies: {    '@platformatic/db': '^1.28.1'  },  devDependencies: {},  dynamicWorkspaceGitHubActions: false,  env: {    DATABASE_URL: 'sqlite://./db.sqlite',    PLT_APPLY_MIGRATIONS: 'true',    PLT_SERVER_HOSTNAME: '0.0.0.0',    PLT_SERVER_LOGGER_LEVEL: 'info',    PLT_TYPESCRIPT: false,    PORT: 3042  },  envPrefix: '',  hostname: '0.0.0.0',  initGitRepository: false,  isRuntimeContext: fa...should loosely deep-equal{  connectionString: 'sqlite://./db.sqlite',  createMigrations: true,  database: 'sqlite',  dependencies: {    '@platformatic/db': '^1.28.1'  },  devDependencies: {},  dynamicWorkspaceGitHubActions: false,  env: {    DATABASE_URL: 'sqlite://./db.sqlite',    PLT_APPLY_MIGRATIONS: 'true',    PLT_SERVER_HOSTNAME: '0.0.0.0',    PLT_SERVER_LOGGER_LEVEL: 'info',    PLT_TYPESCRIPT: false,    PORT: 3042  },  envPrefix: '',  hostname: '0.0.0.0',  initGitRepository: false,  isRuntimeContext: fa...">
+			<failure type="testCodeFailure" message="Expected values to be loosely deep-equal:{  connectionString: 'sqlite://./db.sqlite',  createMigrations: true,  database: 'sqlite',  dependencies: {    '@platformatic/db': '^1.28.1'  },  devDependencies: {},  dynamicWorkspaceGitHubActions: false,  env: {    DATABASE_URL: 'sqlite://./db.sqlite',    PLT_APPLY_MIGRATIONS: 'true',    PLT_SERVER_HOSTNAME: '0.0.0.0',    PLT_SERVER_LOGGER_LEVEL: 'info',    PLT_TYPESCRIPT: false,    PORT: 3042  },  envPrefix: '',  hostname: '0.0.0.0',  initGitRepository: false,  isRuntimeContext: fa...should loosely deep-equal{  connectionString: 'sqlite://./db.sqlite',  createMigrations: true,  database: 'sqlite',  dependencies: {    '@platformatic/db': '^1.28.1'  },  devDependencies: {},  dynamicWorkspaceGitHubActions: false,  env: {    DATABASE_URL: 'sqlite://./db.sqlite',    PLT_APPLY_MIGRATIONS: 'true',    PLT_SERVER_HOSTNAME: '0.0.0.0',    PLT_SERVER_LOGGER_LEVEL: 'info',    PLT_TYPESCRIPT: false,    PORT: 3042  },  envPrefix: '',  hostname: '0.0.0.0',  initGitRepository: false,  isRuntimeContext: fa...">
+[Error [ERR_TEST_FAILURE]: Expected values to be loosely deep-equal:
+
+{
+  connectionString: 'sqlite://./db.sqlite',
+  createMigrations: true,
+  database: 'sqlite',
+  dependencies: {
+    '@platformatic/db': '^1.28.1'
+  },
+  devDependencies: {},
+  dynamicWorkspaceGitHubActions: false,
+  env: {
+    DATABASE_URL: 'sqlite://./db.sqlite',
+    PLT_APPLY_MIGRATIONS: 'true',
+    PLT_SERVER_HOSTNAME: '0.0.0.0',
+    PLT_SERVER_LOGGER_LEVEL: 'info',
+    PLT_TYPESCRIPT: false,
+    PORT: 3042
+  },
+  envPrefix: '',
+  hostname: '0.0.0.0',
+  initGitRepository: false,
+  isRuntimeContext: fa...
+
+should loosely deep-equal
+
+{
+  connectionString: 'sqlite://./db.sqlite',
+  createMigrations: true,
+  database: 'sqlite',
+  dependencies: {
+    '@platformatic/db': '^1.28.1'
+  },
+  devDependencies: {},
+  dynamicWorkspaceGitHubActions: false,
+  env: {
+    DATABASE_URL: 'sqlite://./db.sqlite',
+    PLT_APPLY_MIGRATIONS: 'true',
+    PLT_SERVER_HOSTNAME: '0.0.0.0',
+    PLT_SERVER_LOGGER_LEVEL: 'info',
+    PLT_TYPESCRIPT: false,
+    PORT: 3042
+  },
+  envPrefix: '',
+  hostname: '0.0.0.0',
+  initGitRepository: false,
+  isRuntimeContext: fa...] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: AssertionError [ERR_ASSERTION]: Expected values to be loosely deep-equal:
+  
+  {
+    connectionString: 'sqlite://./db.sqlite',
+    createMigrations: true,
+    database: 'sqlite',
+    dependencies: {
+      '@platformatic/db': '^1.28.1'
+    },
+    devDependencies: {},
+    dynamicWorkspaceGitHubActions: false,
+    env: {
+      DATABASE_URL: 'sqlite://./db.sqlite',
+      PLT_APPLY_MIGRATIONS: 'true',
+      PLT_SERVER_HOSTNAME: '0.0.0.0',
+      PLT_SERVER_LOGGER_LEVEL: 'info',
+      PLT_TYPESCRIPT: false,
+      PORT: 3042
+    },
+    envPrefix: '',
+    hostname: '0.0.0.0',
+    initGitRepository: false,
+    isRuntimeContext: fa...
+  
+  should loosely deep-equal
+  
+  {
+    connectionString: 'sqlite://./db.sqlite',
+    createMigrations: true,
+    database: 'sqlite',
+    dependencies: {
+      '@platformatic/db': '^1.28.1'
+    },
+    devDependencies: {},
+    dynamicWorkspaceGitHubActions: false,
+    env: {
+      DATABASE_URL: 'sqlite://./db.sqlite',
+      PLT_APPLY_MIGRATIONS: 'true',
+      PLT_SERVER_HOSTNAME: '0.0.0.0',
+      PLT_SERVER_LOGGER_LEVEL: 'info',
+      PLT_TYPESCRIPT: false,
+      PORT: 3042
+    },
+    envPrefix: '',
+    hostname: '0.0.0.0',
+    initGitRepository: false,
+    isRuntimeContext: fa...
+      at TestContext.&lt;anonymous> (/workspace/repo/packages/db/test/generator.test.js:22:12)
+      at async Test.run (node:internal/test_runner/test:797:9)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:526:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { port: 3042, hostname: '0.0.0.0', plugin: false, tests: false, typescript: false, initGitRepository: false, dependencies: [Object], devDependencies: {}, staticWorkspaceGitHubActions: false, dynamicWorkspaceGitHubActions: false, isRuntimeContext: false, serviceName: '', envPrefix: '', env: [Object], database: 'sqlite', connectionString: 'sqlite://./db.sqlite', types: true, migrations: 'migrations', createMigrations: true },
+    expected: { port: 3042, hostname: '0.0.0.0', plugin: false, tests: false, typescript: false, initGitRepository: false, dependencies: [Object], devDependencies: {}, staticWorkspaceGitHubActions: false, dynamicWorkspaceGitHubActions: false, isRuntimeContext: false, serviceName: '', envPrefix: '', env: [Object], database: 'sqlite', connectionString: 'sqlite://./db.sqlite', types: true, migrations: 'migrations', createMigrations: true, isUpdating: false },
+    operator: 'deepEqual'
+  }
+}
+			</failure>
+		</testcase>
+		<testcase name="generate correct .env file" time="0.007564" classname="test"/>
+		<testcase name="have @platformatic/db dependency" time="0.004091" classname="test"/>
+		<testcase name="have global.d.ts" time="0.002216" classname="test"/>
+		<testcase name="config" time="0.003151" classname="test"/>
+		<testcase name="generate tests with correct helper" time="0.008348" classname="test"/>
+		<testcase name="should have default connection string" time="0.002220" classname="test"/>
+		<testcase name="should return config fields" time="0.000471" classname="test"/>
+		<testcase name="should get database from connectionString" time="0.000368" classname="test"/>
+		<testcase name="should set config fields" time="0.000294" classname="test"/>
+		<testcase name="support packages" time="0.008264" classname="test"/>
+		<testsuite name="runtime context" time="0.005659" disabled="0" errors="0" tests="2" failures="0" skipped="0" hostname="modal">
+			<testcase name="should have env prefix" time="0.003247" classname="test"/>
+			<testcase name="should not have server.config" time="0.002002" classname="test"/>
+		</testsuite>
+	</testsuite>
+	<testcase name="should write file and dirs" time="0.040207" classname="test"/>
+	<testcase name="extended class should generate config" time="0.002281" classname="test"/>
+	<testcase name="setConfig" time="0.004071" classname="test" failure="Expected values to be loosely deep-equal:{  dependencies: {},  devDependencies: {},  dynamicWorkspaceGitHubActions: false,  env: {},  envPrefix: '',  hostname: '0.0.0.0',  initGitRepository: false,  isRuntimeContext: false,  plugin: false,  port: 3042,  serviceName: '',  staticWorkspaceGitHubActions: false,  tests: false,  typescript: false}should loosely deep-equal{  dependencies: {},  devDependencies: {},  dynamicWorkspaceGitHubActions: false,  env: {},  envPrefix: '',  hostname: '0.0.0.0',  initGitRepository: false,  isRuntimeContext: false,  isUpdating: false,  plugin: false,  port: 3042,  serviceName: '',  staticWorkspaceGitHubActions: false,  tests: false,  typescript: false}">
+		<failure type="testCodeFailure" message="Expected values to be loosely deep-equal:{  dependencies: {},  devDependencies: {},  dynamicWorkspaceGitHubActions: false,  env: {},  envPrefix: '',  hostname: '0.0.0.0',  initGitRepository: false,  isRuntimeContext: false,  plugin: false,  port: 3042,  serviceName: '',  staticWorkspaceGitHubActions: false,  tests: false,  typescript: false}should loosely deep-equal{  dependencies: {},  devDependencies: {},  dynamicWorkspaceGitHubActions: false,  env: {},  envPrefix: '',  hostname: '0.0.0.0',  initGitRepository: false,  isRuntimeContext: false,  isUpdating: false,  plugin: false,  port: 3042,  serviceName: '',  staticWorkspaceGitHubActions: false,  tests: false,  typescript: false}">
+[Error [ERR_TEST_FAILURE]: Expected values to be loosely deep-equal:
+
+{
+  dependencies: {},
+  devDependencies: {},
+  dynamicWorkspaceGitHubActions: false,
+  env: {},
+  envPrefix: '',
+  hostname: '0.0.0.0',
+  initGitRepository: false,
+  isRuntimeContext: false,
+  plugin: false,
+  port: 3042,
+  serviceName: '',
+  staticWorkspaceGitHubActions: false,
+  tests: false,
+  typescript: false
+}
+
+should loosely deep-equal
+
+{
+  dependencies: {},
+  devDependencies: {},
+  dynamicWorkspaceGitHubActions: false,
+  env: {},
+  envPrefix: '',
+  hostname: '0.0.0.0',
+  initGitRepository: false,
+  isRuntimeContext: false,
+  isUpdating: false,
+  plugin: false,
+  port: 3042,
+  serviceName: '',
+  staticWorkspaceGitHubActions: false,
+  tests: false,
+  typescript: false
+}] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: AssertionError [ERR_ASSERTION]: Expected values to be loosely deep-equal:
+  
+  {
+    dependencies: {},
+    devDependencies: {},
+    dynamicWorkspaceGitHubActions: false,
+    env: {},
+    envPrefix: '',
+    hostname: '0.0.0.0',
+    initGitRepository: false,
+    isRuntimeContext: false,
+    plugin: false,
+    port: 3042,
+    serviceName: '',
+    staticWorkspaceGitHubActions: false,
+    tests: false,
+    typescript: false
+  }
+  
+  should loosely deep-equal
+  
+  {
+    dependencies: {},
+    devDependencies: {},
+    dynamicWorkspaceGitHubActions: false,
+    env: {},
+    envPrefix: '',
+    hostname: '0.0.0.0',
+    initGitRepository: false,
+    isRuntimeContext: false,
+    isUpdating: false,
+    plugin: false,
+    port: 3042,
+    serviceName: '',
+    staticWorkspaceGitHubActions: false,
+    tests: false,
+    typescript: false
+  }
+      at TestContext.&lt;anonymous> (/workspace/repo/packages/generators/test/base-generator.test.js:88:10)
+      at async Test.run (node:internal/test_runner/test:797:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:526:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { port: 3042, hostname: '0.0.0.0', plugin: false, tests: false, typescript: false, initGitRepository: false, dependencies: {}, devDependencies: {}, staticWorkspaceGitHubActions: false, dynamicWorkspaceGitHubActions: false, isRuntimeContext: false, serviceName: '', envPrefix: '', env: {} },
+    expected: { port: 3042, hostname: '0.0.0.0', plugin: false, typescript: false, initGitRepository: false, staticWorkspaceGitHubActions: false, dynamicWorkspaceGitHubActions: false, env: {}, dependencies: {}, devDependencies: {}, isRuntimeContext: false, serviceName: '', envPrefix: '', tests: false, isUpdating: false },
+    operator: 'deepEqual'
+  }
+}
+		</failure>
+	</testcase>
+	<testcase name="should append env values" time="0.003843" classname="test"/>
+	<testcase name="should prepare the questions" time="0.002230" classname="test"/>
+	<testcase name="should prepare the questions with a targetDirectory" time="0.001201" classname="test"/>
+	<testcase name="should prepare the questions in runtime context" time="0.001691" classname="test"/>
+	<testcase name="should return service metadata" time="0.004100" classname="test"/>
+	<testcase name="should generate javascript plugin, routes and tests" time="0.002261" classname="test"/>
+	<testcase name="should generate tsConfig file and typescript files" time="0.002825" classname="test"/>
+	<testcase name="should throw if preapare fails" time="0.002318" classname="test"/>
+	<testcase name="should throw if there is a missing env variable" time="0.001905" classname="test"/>
+	<testcase name="should add package" time="0.003055" classname="test"/>
+	<testcase name="support packages" time="1.012571" classname="test"/>
+	<testcase name="should load data from directory" time="0.001006" classname="test" failure="bg.loadFromDir is not a function">
+		<failure type="testCodeFailure" message="bg.loadFromDir is not a function">
+[Error [ERR_TEST_FAILURE]: bg.loadFromDir is not a function] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: TypeError [Error]: bg.loadFromDir is not a function
+      at TestContext.&lt;anonymous> (/workspace/repo/packages/generators/test/base-generator.test.js:728:25)
+      at Test.runInAsyncScope (node:async_hooks:206:9)
+      at Test.run (node:internal/test_runner/test:796:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+      at Test.postRun (node:internal/test_runner/test:889:19)
+      at Test.run (node:internal/test_runner/test:835:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+}
+		</failure>
+	</testcase>
+	<testcase name="on update should just touch the packages configuration" time="0.012337" classname="test" failure="5 == 1">
+		<failure type="testCodeFailure" message="5 == 1">
+[Error [ERR_TEST_FAILURE]: 5 == 1] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: AssertionError [ERR_ASSERTION]: 5 == 1
+      at TestContext.&lt;anonymous> (/workspace/repo/packages/generators/test/base-generator.test.js:799:10)
+      at async Test.run (node:internal/test_runner/test:797:9)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:526:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 5,
+    expected: 1,
+    operator: '=='
+  }
+}
+		</failure>
+	</testcase>
+	<!-- 'only' and 'runOnly' require the &#45;&#45;test-only command-line option. -->
+	<testsuite name="runtime context" time="0.007716" disabled="0" errors="0" tests="4" failures="0" skipped="0" hostname="modal">
+		<testcase name="should set config.envPrefix correctly" time="0.002501" classname="test"/>
+		<testcase name="should generate correct env file from config.env" time="0.001776" classname="test"/>
+		<testcase name="should return service metadata" time="0.001440" classname="test"/>
+		<testcase name="should generate service name if not provided" time="0.001471" classname="test"/>
+	</testsuite>
+	<testsuite name="FileGenerator" time="0.056433" disabled="0" errors="0" tests="9" failures="1" skipped="0" hostname="modal">
+		<testcase name="should return null if file is not found" time="0.001030" classname="test"/>
+		<testcase name="should throw if no targeDirectory is set" time="0.000505" classname="test"/>
+		<testcase name="should replace a file with same name and path" time="0.000268" classname="test"/>
+		<testcase name="should list files" time="0.000749" classname="test"/>
+		<testcase name="should append file content" time="0.000234" classname="test"/>
+		<testcase name="should reset all files" time="0.000169" classname="test"/>
+		<testcase name="should write files" time="0.022073" classname="test"/>
+		<testcase name="should not write empty files" time="0.002458" classname="test"/>
+		<testcase name="should load file from filesystem" time="0.026466" classname="test" failure="fg.loadFile is not a function">
+			<failure type="testCodeFailure" message="fg.loadFile is not a function">
+[Error [ERR_TEST_FAILURE]: fg.loadFile is not a function] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: TypeError [Error]: fg.loadFile is not a function
+      at TestContext.&lt;anonymous> (/workspace/repo/packages/generators/test/file-generator.test.js:120:33)
+      at async Test.run (node:internal/test_runner/test:797:9)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+}
+			</failure>
+		</testcase>
+	</testsuite>
+	<testsuite name="utils" time="0.006579" disabled="0" errors="0" tests="9" failures="3" skipped="0" hostname="modal">
+		<testsuite name="stripVersion" time="0.001809" disabled="0" errors="0" tests="2" failures="0" skipped="0" hostname="modal">
+			<testcase name="should return the same string if not semver" time="0.000873" classname="test"/>
+			<testcase name="should match semver" time="0.000254" classname="test"/>
+		</testsuite>
+		<testsuite name="convertServiceNameToPrefix" time="0.000364" disabled="0" errors="0" tests="1" failures="0" skipped="0" hostname="modal">
+			<testcase name="should convert service name to env prefix" time="0.000217" classname="test"/>
+		</testsuite>
+		<testsuite name="envObjectToString" time="0.000300" disabled="0" errors="0" tests="1" failures="0" skipped="0" hostname="modal">
+			<testcase name="should convert env object to string" time="0.000188" classname="test"/>
+		</testsuite>
+		<testsuite name="extractEnvVariablesFromText" time="0.001066" disabled="0" errors="0" tests="3" failures="0" skipped="0" hostname="modal">
+			<testcase name="should extract env vars from text" time="0.000384" classname="test"/>
+			<testcase name="should not extract {} as empty env var" time="0.000175" classname="test"/>
+			<testcase name="should return empty array if no env vars are detected" time="0.000199" classname="test"/>
+		</testsuite>
+		<testcase name="getPackageConfigurationObject" time="0.000077" classname="test"/>
+		<testsuite name="addPrefixToString" time="0.000403" disabled="0" errors="0" tests="1" failures="0" skipped="0" hostname="modal">
+			<testcase name="should add prefix to string" time="0.000235" classname="test"/>
+		</testsuite>
+		<testsuite name="flattenObject" time="0.000627" disabled="0" errors="0" tests="1" failures="1" skipped="0" hostname="modal">
+			<testcase name="should return a single depth object" time="0.000378" classname="test" failure="flattenObject is not a function">
+				<failure type="testCodeFailure" message="flattenObject is not a function">
+Error [ERR_TEST_FAILURE]: flattenObject is not a function
+    at new Promise (&lt;anonymous>)
+    at Array.map (&lt;anonymous>) {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: TypeError [Error]: flattenObject is not a function
+      at TestContext.&lt;anonymous> (/workspace/repo/packages/generators/test/utils.test.js:190:24)
+      at Test.runInAsyncScope (node:async_hooks:206:9)
+      at Test.run (node:internal/test_runner/test:796:25)
+      at Test.start (node:internal/test_runner/test:702:17)
+      at node:internal/test_runner/test:1133:71
+      at node:internal/per_context/primordials:482:82
+      at new Promise (&lt;anonymous>)
+      at new SafePromise (node:internal/per_context/primordials:450:29)
+      at node:internal/per_context/primordials:482:9
+      at Array.map (&lt;anonymous>)
+}
+				</failure>
+			</testcase>
+		</testsuite>
+		<testsuite name="getServiceTemplateFromSchemaUrl" time="0.000402" disabled="0" errors="0" tests="1" failures="1" skipped="0" hostname="modal">
+			<testcase name="should get the right template name from schema url" time="0.000289" classname="test" failure="getServiceTemplateFromSchemaUrl is not a function">
+				<failure type="testCodeFailure" message="getServiceTemplateFromSchemaUrl is not a function">
+Error [ERR_TEST_FAILURE]: getServiceTemplateFromSchemaUrl is not a function
+    at new Promise (&lt;anonymous>)
+    at Array.map (&lt;anonymous>) {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: TypeError [Error]: getServiceTemplateFromSchemaUrl is not a function
+      at TestContext.&lt;anonymous> (/workspace/repo/packages/generators/test/utils.test.js:200:20)
+      at Test.runInAsyncScope (node:async_hooks:206:9)
+      at Test.run (node:internal/test_runner/test:796:25)
+      at Test.start (node:internal/test_runner/test:702:17)
+      at node:internal/test_runner/test:1133:71
+      at node:internal/per_context/primordials:482:82
+      at new Promise (&lt;anonymous>)
+      at new SafePromise (node:internal/per_context/primordials:450:29)
+      at node:internal/per_context/primordials:482:9
+      at Array.map (&lt;anonymous>)
+}
+				</failure>
+			</testcase>
+		</testsuite>
+		<testsuite name="envStringToObject" time="0.000323" disabled="0" errors="0" tests="1" failures="1" skipped="0" hostname="modal">
+			<testcase name="should convert .env-like string to object" time="0.000214" classname="test" failure="envStringToObject is not a function">
+				<failure type="testCodeFailure" message="envStringToObject is not a function">
+Error [ERR_TEST_FAILURE]: envStringToObject is not a function
+    at new Promise (&lt;anonymous>)
+    at Array.map (&lt;anonymous>) {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: TypeError [Error]: envStringToObject is not a function
+      at TestContext.&lt;anonymous> (/workspace/repo/packages/generators/test/utils.test.js:220:24)
+      at Test.runInAsyncScope (node:async_hooks:206:9)
+      at Test.run (node:internal/test_runner/test:796:25)
+      at Test.start (node:internal/test_runner/test:702:17)
+      at node:internal/test_runner/test:1133:71
+      at node:internal/per_context/primordials:482:82
+      at new Promise (&lt;anonymous>)
+      at new SafePromise (node:internal/per_context/primordials:450:29)
+      at node:internal/per_context/primordials:482:9
+      at Array.map (&lt;anonymous>)
+}
+				</failure>
+			</testcase>
+		</testsuite>
+	</testsuite>
+	<!-- tests 54 -->
+	<!-- suites 14 -->
+	<!-- pass 46 -->
+	<!-- fail 8 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 3359.317383 -->
+</testsuites>
+reward=0 graded=53 found=53 failed=8 parsed=53 framework=junit exit_code=0
